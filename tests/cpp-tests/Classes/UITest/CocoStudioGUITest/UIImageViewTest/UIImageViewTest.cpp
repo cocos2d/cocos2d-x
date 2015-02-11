@@ -62,6 +62,50 @@ bool UIImageViewTest_Scale9::init()
     return false;
 }
 
+// UIImageViewTest_Scale9_State_Change
+
+bool UIImageViewTest_Scale9_State_Change::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+
+        Text* alert = Text::create("Click The Image", "fonts/Marker Felt.ttf", 26);
+        alert->setColor(Color3B(159, 168, 176));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f,
+            widgetSize.height / 2.0f - alert->getContentSize().height * 2.125f));
+
+        _uiLayer->addChild(alert);
+
+        // Create the imageview
+        ImageView* imageView = ImageView::create("cocosui/ccicon.png");
+        imageView->ignoreContentAdaptWithSize(false);
+        imageView->setScale9Enabled(true);
+        imageView->setContentSize(Size(100, 100));
+        imageView->setCapInsets(Rect(20,20,20,20));
+        imageView->setPosition(Vec2(widgetSize.width / 2.0f,
+            widgetSize.height / 2.0f));
+
+        imageView->setTouchEnabled(true);
+        imageView->addTouchEventListener([=](Ref* sender, Widget::TouchEventType type){
+            if (type == Widget::TouchEventType::ENDED) {
+                if (imageView->isScale9Enabled())
+                {
+                    imageView->setScale9Enabled(false);
+                }
+                else
+                    imageView->setScale9Enabled(true);
+            }
+        });
+
+        _uiLayer->addChild(imageView);
+
+        return true;
+    }
+    return false;
+}
+
+
 // UIImageViewTest_ContentSize
 
 bool UIImageViewTest_ContentSize::init()

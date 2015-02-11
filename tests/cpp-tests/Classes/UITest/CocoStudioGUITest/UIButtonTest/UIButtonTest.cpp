@@ -67,16 +67,16 @@ void UIButtonTest::touchEvent(Ref *pSender, Widget::TouchEventType type)
     switch (type)
     {
         case Widget::TouchEventType::BEGAN:
-            _displayValueLabel->setString(String::createWithFormat("Touch Down")->getCString());
+            _displayValueLabel->setString("Touch Down");
             break;
             
         case Widget::TouchEventType::MOVED:
-            _displayValueLabel->setString(String::createWithFormat("Touch Move")->getCString());
+            _displayValueLabel->setString("Touch Move");
             break;
             
         case Widget::TouchEventType::ENDED:
         {
-            _displayValueLabel->setString(String::createWithFormat("Touch Up")->getCString());
+            _displayValueLabel->setString("Touch Up");
             ImageView* imageView = (ImageView*)_uiLayer->getChildByTag(12);
             imageView->setVisible(false);
             imageView->loadTexture("cocosui/ccicon.png");
@@ -89,7 +89,7 @@ void UIButtonTest::touchEvent(Ref *pSender, Widget::TouchEventType type)
             break;
             
         case Widget::TouchEventType::CANCELED:
-            _displayValueLabel->setString(String::createWithFormat("Touch Cancelled")->getCString());
+            _displayValueLabel->setString("Touch Cancelled");
             break;
             
         default:
@@ -158,16 +158,16 @@ void UIButtonTest_Scale9::touchEvent(Ref *pSender, Widget::TouchEventType type)
     switch (type)
     {
         case Widget::TouchEventType::BEGAN:
-            _displayValueLabel->setString(String::createWithFormat("Touch Down")->getCString());
+            _displayValueLabel->setString("Touch Down");
             break;
             
         case Widget::TouchEventType::MOVED:
-            _displayValueLabel->setString(String::createWithFormat("Touch Move")->getCString());
+            _displayValueLabel->setString("Touch Move");
             break;
             
         case Widget::TouchEventType::ENDED:
         {
-            _displayValueLabel->setString(String::createWithFormat("Touch Up")->getCString());
+            _displayValueLabel->setString("Touch Up");
             Button *btn = (Button*)_uiLayer->getChildByName("normal");
             btn->loadTextureNormal("cocosui/animationbuttonnormal.png");
             btn->loadTexturePressed("cocosui/animationbuttonpressed.png");
@@ -176,11 +176,103 @@ void UIButtonTest_Scale9::touchEvent(Ref *pSender, Widget::TouchEventType type)
             break;
             
         case Widget::TouchEventType::CANCELED:
-            _displayValueLabel->setString(String::createWithFormat("Touch Cancelled")->getCString());
+            _displayValueLabel->setString("Touch Cancelled");
             break;
             
         default:
             break;
+    }
+}
+
+// UIButtonTest_Scale9_State_Change
+UIButtonTest_Scale9_State_Change::UIButtonTest_Scale9_State_Change()
+    : _displayValueLabel(nullptr)
+{
+
+}
+
+UIButtonTest_Scale9_State_Change::~UIButtonTest_Scale9_State_Change()
+{
+
+}
+
+bool UIButtonTest_Scale9_State_Change::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+
+        // Add a label in which the button events will be displayed
+        _displayValueLabel = Text::create("No Event", "fonts/Marker Felt.ttf", 32);
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        _uiLayer->addChild(_displayValueLabel);
+
+        // Add the alert
+        Text* alert = Text::create("Button scale9 render", "fonts/Marker Felt.ttf", 30);
+        alert->setColor(Color3B(159, 168, 176));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f,
+            widgetSize.height / 2.0f - alert->getContentSize().height * 1.75f));
+        _uiLayer->addChild(alert);
+
+        // Create the button
+        Button* button = Button::create("cocosui/button.png");
+        // open scale9 render
+        button->ignoreContentAdaptWithSize(false);
+        button->setScale9Enabled(true);
+        button->setPosition(Vec2(widgetSize.width / 2.0f - 100, widgetSize.height / 2.0f));
+        button->setContentSize(Size(180, 60));
+        button->setTitleText("Hello Scale9");
+        button->setPressedActionEnabled(false);
+        button->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_Scale9_State_Change::touchEvent, this));
+        _uiLayer->addChild(button);
+
+        Button* button2 = Button::create("cocosui/button.png", "cocosui/buttonHighlighted.png");
+        // open scale9 render
+        button2->ignoreContentAdaptWithSize(false);
+        button2->setScale9Enabled(true);
+        button2->setTitleText("Hello scale9");
+        button2->setPosition(Vec2(widgetSize.width / 2.0f + 100, widgetSize.height / 2.0f));
+        button2->setContentSize(Size(180, 60));
+        button2->setPressedActionEnabled(true);
+        button2->addTouchEventListener(CC_CALLBACK_2(UIButtonTest_Scale9_State_Change::touchEvent, this));
+        _uiLayer->addChild(button2);
+        return true;
+    }
+    return false;
+}
+
+void UIButtonTest_Scale9_State_Change::touchEvent(Ref *pSender, Widget::TouchEventType type)
+{
+    switch (type)
+    {
+    case Widget::TouchEventType::BEGAN:
+        _displayValueLabel->setString("Touch Down");
+        break;
+
+    case Widget::TouchEventType::MOVED:
+        _displayValueLabel->setString("Touch Move");
+        break;
+
+    case Widget::TouchEventType::ENDED:
+    {
+        _displayValueLabel->setString("Touch Up");
+        Button *btn = (Button*)pSender;
+        if (btn->isScale9Enabled())
+        {
+            btn->setScale9Enabled(false);
+        }
+        else
+            btn->setScale9Enabled(true);
+    }
+        break;
+
+    case Widget::TouchEventType::CANCELED:
+        _displayValueLabel->setString("Touch Cancelled");
+        break;
+
+    default:
+        break;
     }
 }
 
@@ -240,16 +332,16 @@ void UIButtonTest_PressedAction::touchEvent(Ref *pSender, Widget::TouchEventType
     switch (type)
     {
         case Widget::TouchEventType::BEGAN:
-            _displayValueLabel->setString(String::createWithFormat("Touch Down")->getCString());
+            _displayValueLabel->setString("Touch Down");
             break;
             
         case Widget::TouchEventType::MOVED:
-            _displayValueLabel->setString(String::createWithFormat("Touch Move")->getCString());
+            _displayValueLabel->setString("Touch Move");
             break;
             
         case Widget::TouchEventType::ENDED:
         {
-            _displayValueLabel->setString(String::createWithFormat("Touch Up")->getCString());
+            _displayValueLabel->setString("Touch Up");
             Button* btn = (Button*)_uiLayer->getChildByName("button");
             btn->loadTextureNormal("cocosui/animationbuttonnormal.png");
             
@@ -259,7 +351,7 @@ void UIButtonTest_PressedAction::touchEvent(Ref *pSender, Widget::TouchEventType
             break;
             
         case Widget::TouchEventType::CANCELED:
-            _displayValueLabel->setString(String::createWithFormat("Touch Cancelled")->getCString());
+            _displayValueLabel->setString("Touch Cancelled");
             break;
             
         default:
@@ -333,16 +425,16 @@ void UIButtonTest_Title::touchEvent(Ref *pSender, Widget::TouchEventType type)
     switch (type)
     {
         case Widget::TouchEventType::BEGAN:
-            _displayValueLabel->setString(String::createWithFormat("Touch Down")->getCString());
+            _displayValueLabel->setString("Touch Down");
             break;
             
         case Widget::TouchEventType::MOVED:
-            _displayValueLabel->setString(String::createWithFormat("Touch Move")->getCString());
+            _displayValueLabel->setString("Touch Move");
             break;
             
         case Widget::TouchEventType::ENDED:
         {
-            _displayValueLabel->setString(String::createWithFormat("Touch Up")->getCString());
+            _displayValueLabel->setString("Touch Up");
             TextBMFont *text = (TextBMFont*)_uiLayer->getChildByName("text");
             text->setFntFile("cocosui/bitmapFontTest2.fnt");
             if (text->getString() == "BMFont") {
@@ -355,7 +447,7 @@ void UIButtonTest_Title::touchEvent(Ref *pSender, Widget::TouchEventType type)
             break;
             
         case Widget::TouchEventType::CANCELED:
-            _displayValueLabel->setString(String::createWithFormat("Touch Cancelled")->getCString());
+            _displayValueLabel->setString("Touch Cancelled");
             break;
             
         default:
@@ -426,23 +518,23 @@ void UIButtonTestRemoveSelf::touchEvent(Ref *pSender, Widget::TouchEventType typ
     switch (type)
     {
         case Widget::TouchEventType::BEGAN:
-            _displayValueLabel->setString(String::createWithFormat("Touch Down")->getCString());
+            _displayValueLabel->setString("Touch Down");
             break;
             
         case Widget::TouchEventType::MOVED:
-            _displayValueLabel->setString(String::createWithFormat("Touch Move")->getCString());
+            _displayValueLabel->setString("Touch Move");
             break;
             
         case Widget::TouchEventType::ENDED:
         {
-            _displayValueLabel->setString(String::createWithFormat("Touch Up")->getCString());
+            _displayValueLabel->setString("Touch Up");
             auto layout = _uiLayer->getChildByTag(12);
             layout->removeFromParentAndCleanup(true);
         }
             break;
             
         case Widget::TouchEventType::CANCELED:
-            _displayValueLabel->setString(String::createWithFormat("Touch Cancelled")->getCString());
+            _displayValueLabel->setString("Touch Cancelled");
             break;
             
         default:
@@ -496,16 +588,16 @@ void UIButtonTestSwitchScale9::touchEvent(Ref *pSender, Widget::TouchEventType t
     switch (type)
     {
         case Widget::TouchEventType::BEGAN:
-            _displayValueLabel->setString(String::createWithFormat("Touch Down")->getCString());
+            _displayValueLabel->setString("Touch Down");
             break;
             
         case Widget::TouchEventType::MOVED:
-            _displayValueLabel->setString(String::createWithFormat("Touch Move")->getCString());
+            _displayValueLabel->setString("Touch Move");
             break;
             
         case Widget::TouchEventType::ENDED:
         {
-            _displayValueLabel->setString(String::createWithFormat("Touch Up")->getCString());
+            _displayValueLabel->setString("Touch Up");
             auto btn = ((Button*)pSender);
             btn->setScale9Enabled(!btn->isScale9Enabled());
             btn->setContentSize(Size(200,100));
@@ -513,7 +605,7 @@ void UIButtonTestSwitchScale9::touchEvent(Ref *pSender, Widget::TouchEventType t
             break;
             
         case Widget::TouchEventType::CANCELED:
-            _displayValueLabel->setString(String::createWithFormat("Touch Cancelled")->getCString());
+            _displayValueLabel->setString("Touch Cancelled");
             break;
             
         default:
@@ -582,7 +674,7 @@ void UIButtonTestZoomScale::sliderEvent(Ref *pSender, Slider::EventType type)
         Button* btn = (Button*)_uiLayer->getChildByName("button");
         float zoomScale = percent * 0.01;
         btn->setZoomScale(zoomScale);
-        _displayValueLabel->setString(String::createWithFormat("Zoom Scale: %f", zoomScale)->getCString());
+        _displayValueLabel->setString(StringUtils::format("Zoom Scale: %f", zoomScale));
     }
 }
 
@@ -761,7 +853,7 @@ bool UIButtonFlipTest::init()
         
         // Add a label in which the button events will be displayed
         _displayValueLabel = Text::create("Button X Flipped", "fonts/Marker Felt.ttf",20);
-        _displayValueLabel->setNormalizedPosition(Vec2(0.3, 0.7));
+        _displayValueLabel->setNormalizedPosition(Vec2(0.3f, 0.7f));
         _uiLayer->addChild(_displayValueLabel);
         
         
@@ -788,7 +880,7 @@ bool UIButtonFlipTest::init()
         _uiLayer->addChild(button2);
         
         auto titleLabel = Text::create("Button Y flipped", "Arial", 20);
-        titleLabel->setNormalizedPosition(Vec2(0.8, 0.7));
+        titleLabel->setNormalizedPosition(Vec2(0.8f, 0.7f));
         this->addChild(titleLabel);
         
         return true;

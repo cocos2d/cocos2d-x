@@ -1057,7 +1057,7 @@ const char* LabelTTFTest::getCurrentAlignment()
             break;
     }
 
-    return String::createWithFormat("Alignment %s %s", vertical, horizontal)->getCString();
+    return StringUtils::format("Alignment %s %s", vertical, horizontal).c_str();
 }
 
 std::string LabelTTFTest::title() const
@@ -1537,11 +1537,7 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     strokeShaodwTextDef._fontFillColor   = tintColorBlue;
     
     // shadow + stroke label
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-    auto fontStrokeAndShadow = LabelTTF::createWithFontDefinition("Stroke && Shadow Blue Text", strokeShaodwTextDef);
-#else
-    auto fontStrokeAndShadow = LabelTTF::createWithFontDefinition("Stroke &Shadow Blue Text", strokeShaodwTextDef);
-#endif 
+    auto fontStrokeAndShadow = LabelTTF::createWithFontDefinition("Stroke & Shadow Blue Text", strokeShaodwTextDef);
     
     // add label to the scene
     this->addChild(fontStrokeAndShadow);

@@ -375,6 +375,7 @@ void GLProgramState::applyAttributes(bool applyAttribFlags)
 {
     // Don't set attributes if they weren't set
     // Use Case: Auto-batching
+    updateUniformsAndAttributes();
     if(_vertexAttribsFlags) {
         // enable/disable vertex attribs
         if (applyAttribFlags)
@@ -389,6 +390,7 @@ void GLProgramState::applyAttributes(bool applyAttribFlags)
 void GLProgramState::applyUniforms()
 {
     // set uniforms
+    updateUniformsAndAttributes();
     for(auto& uniform : _uniforms) {
         uniform.second.apply();
     }

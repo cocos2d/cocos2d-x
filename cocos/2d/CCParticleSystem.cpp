@@ -51,8 +51,8 @@ THE SOFTWARE.
 #include "base/base64.h"
 #include "base/ZipUtils.h"
 #include "base/CCDirector.h"
+#include "base/ccUTF8.h"
 #include "renderer/CCTextureCache.h"
-#include "deprecated/CCString.h"
 #include "platform/CCFileUtils.h"
 
 using namespace std;
@@ -1180,4 +1180,3 @@ void ParticleSystem::setScaleY(float newScaleY)
 
 
 NS_CC_END
-

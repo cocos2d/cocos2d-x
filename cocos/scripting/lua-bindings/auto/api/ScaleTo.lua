@@ -21,6 +21,7 @@
 -- @function [parent=#ScaleTo] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return ScaleTo#ScaleTo self (return value: cc.ScaleTo)
         
 --------------------------------
 -- 
@@ -35,9 +36,10 @@
 -- @return ScaleTo#ScaleTo ret (return value: cc.ScaleTo)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#ScaleTo] update 
 -- @param self
 -- @param #float time
+-- @return ScaleTo#ScaleTo self (return value: cc.ScaleTo)
         
 return nil

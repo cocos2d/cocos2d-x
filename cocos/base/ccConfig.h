@@ -269,6 +269,11 @@ To enable set it to a value different than 0. Disabled by default.
 #define CC_USE_PHYSICS 1
 #endif
 
+/** Use culling or not */
+#ifndef CC_USE_CULLING
+#define CC_USE_CULLING 1
+#endif
+
 /** Support JPEG or not. If your application don't use jpeg format picture, you can undefine this macro to save package size.
  */
 #ifndef CC_USE_JPEG
@@ -284,7 +289,9 @@ To enable set it to a value different than 0. Disabled by default.
 /** Support webp or not. If your application don't use webp format picture, you can undefine this macro to save package size.
  */
 #ifndef CC_USE_WEBP
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #define CC_USE_WEBP  1
+#endif
 #endif // CC_USE_WEBP
 
 /** Enable Script binding */
@@ -299,7 +306,7 @@ To enable set it to a value different than 0. Disabled by default.
  protected by default.
  */
 #ifndef CC_CONSTRUCTOR_ACCESS
-#define CC_CONSTRUCTOR_ACCESS protected
+#define CC_CONSTRUCTOR_ACCESS public
 #endif
 
 /** @def CC_ENABLE_ALLOCATOR

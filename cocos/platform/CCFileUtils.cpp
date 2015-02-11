@@ -779,9 +779,8 @@ std::string FileUtils::fullPathForFilename(const std::string &filename)
         CCLOG("cocos2d: fullPathForFilename: No file found at %s. Possible missing file.", filename.c_str());
     }
 
-    // FIXME: Should it return nullptr ? or an empty string ?
-    // The file wasn't found, return the file name passed in.
-    return filename;
+    // The file wasn't found, return empty string.
+    return "";
 }
 
 std::string FileUtils::fullPathFromRelativeFile(const std::string &filename, const std::string &relativeFile)
@@ -1104,7 +1103,7 @@ bool FileUtils::createDirectory(const std::string& path)
     if ((GetFileAttributesA(path.c_str())) == INVALID_FILE_ATTRIBUTES)
     {
 		subpath = "";
-		for (int i = 0; i < dirs.size(); ++i)
+		for (unsigned int i = 0; i < dirs.size(); ++i)
 		{
 			subpath += dirs[i];
 			if (!isDirectoryExist(subpath))

@@ -202,10 +202,10 @@ static const char* inet_ntop(int af, const void* src, char* dst, int cnt)
 }
 #endif
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 static const int CCLOG_STRING_TAG = 1;
 void SendLogToWindow(const char *log)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     // Send data as a message
     COPYDATASTRUCT myCDS;
     myCDS.dwData = CCLOG_STRING_TAG;
@@ -219,8 +219,12 @@ void SendLogToWindow(const char *log)
             (WPARAM)(HWND)hwnd,
             (LPARAM)(LPVOID)&myCDS);
     }
-#endif
 }
+#else
+void SendLogToWindow(const char *log)
+{
+}
+#endif
 
 //
 // Free functions to log

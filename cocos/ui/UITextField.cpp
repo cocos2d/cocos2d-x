@@ -329,9 +329,9 @@ TextField* TextField::create(const std::string &placeholder, const std::string &
     TextField* widget = new (std::nothrow) TextField();
     if (widget && widget->init())
     {
-        widget->setPlaceHolder(placeholder);
         widget->setFontName(fontName);
         widget->setFontSize(fontSize);
+        widget->setPlaceHolder(placeholder);
         widget->autorelease();
         return widget;
     }
@@ -594,31 +594,35 @@ const char* TextField::getPasswordStyleText()const
 
 void TextField::update(float dt)
 {
-    if (getAttachWithIME())
-    {
-        attachWithIMEEvent();
-        setAttachWithIME(false);
-    }
     if (getDetachWithIME())
     {
         detachWithIMEEvent();
         setDetachWithIME(false);
     }
+    
+    if (getAttachWithIME())
+    {
+        attachWithIMEEvent();
+        setAttachWithIME(false);
+    }
+    
     if (getInsertText())
     {
+        //we update the content size first such that when user call getContentSize() in event callback won't be wrong
+        _textFieldRendererAdaptDirty = true;
+        updateContentSizeWithTextureSize(_textFieldRenderer->getContentSize());
+        
         insertTextEvent();
         setInsertText(false);
-        
-        _textFieldRendererAdaptDirty = true;
-        updateContentSizeWithTextureSize(_textFieldRenderer->getContentSize());
     }
+    
     if (getDeleteBackward())
     {
-        deleteBackwardEvent();
-        setDeleteBackward(false);
-        
         _textFieldRendererAdaptDirty = true;
         updateContentSizeWithTextureSize(_textFieldRenderer->getContentSize());
+        
+        deleteBackwardEvent();
+        setDeleteBackward(false);
     }
 }
 
@@ -766,6 +770,19 @@ void TextField::textfieldRendererScaleChangedWithSize()
         _textFieldRenderer->setDimensions(_contentSize.width, _contentSize.height);
     }
     _textFieldRenderer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
+}
+
+Size TextField::getAutoRenderSize()
+{
+    Size virtualSize = _textFieldRenderer->getContentSize();
+    if (!_ignoreSize)
+    {
+        _textFieldRenderer->setDimensions(0, 0);
+        virtualSize = _textFieldRenderer->getContentSize();
+        _textFieldRenderer->setDimensions(_contentSize.width, _contentSize.height);
+    }
+
+    return virtualSize;
 }
 
 Size TextField::getVirtualRendererSize() const

@@ -394,6 +394,12 @@ namespace ui {
             virtual void setVisible(bool visible) override;
             virtual void setContentSize(const Size& size) override;
             virtual void setAnchorPoint(const Vec2& anchorPoint) override;
+
+            /**
+             * Returns the "class name" of widget.
+             */
+            virtual std::string getDescription() const override;
+
             /**
              * @js NA
              * @lua NA

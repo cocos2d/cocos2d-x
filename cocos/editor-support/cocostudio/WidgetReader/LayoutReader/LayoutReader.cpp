@@ -188,7 +188,7 @@ namespace cocostudio
         bool adaptScrenn = DICTOOL->getBooleanValue_json(options, P_AdaptScreen);
         if (adaptScrenn)
         {
-            Size screenSize = CCDirector::getInstance()->getWinSize();
+            auto& screenSize = Director::getInstance()->getWinSize();
             w = screenSize.width;
             h = screenSize.height;
         }
@@ -570,10 +570,10 @@ namespace cocostudio
         Layout* panel = static_cast<Layout*>(node);
         auto options = (PanelOptions*)layoutOptions;
         
-        bool clipEnabled = options->clipEnabled();
+        bool clipEnabled = options->clipEnabled() != 0;
         panel->setClippingEnabled(clipEnabled);
         
-        bool backGroundScale9Enabled = options->backGroundScale9Enabled();
+        bool backGroundScale9Enabled = options->backGroundScale9Enabled() != 0;
         panel->setBackGroundImageScale9Enabled(backGroundScale9Enabled);
         
         
@@ -660,7 +660,7 @@ namespace cocostudio
             else
             {
                 auto label = Label::create();
-                label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+                label->setString(errorFilePath + " missed");
                 panel->addChild(label);
             }
         }

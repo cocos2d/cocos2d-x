@@ -311,9 +311,9 @@ void Scheduler::schedule(const ccSchedulerFunc& callback, void *target, float in
     {
         for (int i = 0; i < element->timers->num; ++i)
         {
-            TimerTargetCallback *timer = static_cast<TimerTargetCallback*>(element->timers->arr[i]);
+            TimerTargetCallback *timer = dynamic_cast<TimerTargetCallback*>(element->timers->arr[i]);
 
-            if (key == timer->getKey())
+            if (timer && key == timer->getKey())
             {
                 CCLOG("CCScheduler#scheduleSelector. Selector already scheduled. Updating interval from: %.4f to %.4f", timer->getInterval(), interval);
                 timer->setInterval(interval);
@@ -1012,9 +1012,9 @@ void Scheduler::schedule(SEL_SCHEDULE selector, Ref *target, float interval, uns
     {
         for (int i = 0; i < element->timers->num; ++i)
         {
-            TimerTargetSelector *timer = static_cast<TimerTargetSelector*>(element->timers->arr[i]);
+            TimerTargetSelector *timer = dynamic_cast<TimerTargetSelector*>(element->timers->arr[i]);
             
-            if (selector == timer->getSelector())
+            if (timer && selector == timer->getSelector())
             {
                 CCLOG("CCScheduler#scheduleSelector. Selector already scheduled. Updating interval from: %.4f to %.4f", timer->getInterval(), interval);
                 timer->setInterval(interval);

@@ -406,10 +406,9 @@ void MotionStreak::draw(Renderer *renderer, const Mat4 &transform, uint32_t flag
 {
     if(_nuPoints <= 1)
         return;
-    _customCommand.init(_globalZOrder);
+    _customCommand.init(_globalZOrder, transform, flags);
     _customCommand.func = CC_CALLBACK_0(MotionStreak::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }
 
 NS_CC_END
-

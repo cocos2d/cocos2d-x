@@ -292,7 +292,7 @@ namespace cocostudio
         Text* label = static_cast<Text*>(node);
         auto options = (TextOptions*)textOptions;
         
-        bool touchScaleEnabled = options->touchScaleEnable();
+        bool touchScaleEnabled = options->touchScaleEnable() != 0;
         label->setTouchScaleChangeEnabled(touchScaleEnabled);
         
         std::string text = options->text()->c_str();
@@ -338,7 +338,7 @@ namespace cocostudio
             else
             {
                 auto alert = Label::create();
-                alert->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+                alert->setString(errorFilePath + " missed");
                 label->addChild(alert);
             }
         }
@@ -348,7 +348,7 @@ namespace cocostudio
         
         label->setUnifySizeEnabled(false);
         
-        bool IsCustomSize = options->isCustomSize();
+        bool IsCustomSize = options->isCustomSize() != 0;
         label->ignoreContentAdaptWithSize(!IsCustomSize);
         
         auto widgetOptions = options->widgetOptions();

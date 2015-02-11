@@ -50,6 +50,13 @@ struct NodeData;
 class CC_DLL Sprite3D : public Node, public BlendProtocol
 {
 public:
+    /**
+     * Creates an empty sprite3D without 3D model and texture.
+     *
+     * @return An autoreleased sprite3D object.
+     */
+    static Sprite3D* create();
+    
     /** creates a Sprite3D*/
     static Sprite3D* create(const std::string &modelPath);
   
@@ -120,6 +127,22 @@ public:
     const AABB& getAABB() const;
     
     /**
+     * Executes an action, and returns the action that is executed. For Sprite3D special logic are needed to take care of Fading.
+     *
+     * This node becomes the action's target. Refer to Action::getTarget()
+     * @warning Actions don't retain their target.
+     *
+     * @return An Action pointer
+     */
+    virtual Action* runAction(Action* action) override;
+    
+    /**
+     * Force to write to depth buffer, this is useful if you want to achieve effects like fading.
+     */
+    void setForceDepthWrite(bool value) { _forceDepthWrite = value; }
+    bool isForceDepthWrite() const { return _forceDepthWrite;};
+    
+    /**
      * Returns 2d bounding-box
      * Note: the bouding-box is just get from the AABB which as Z=0, so that is not very accurate.
      */
@@ -138,6 +161,9 @@ CC_CONSTRUCTOR_ACCESS:
     
     Sprite3D();
     virtual ~Sprite3D();
+    
+    bool init();
+    
     bool initWithFile(const std::string &path);
     
     bool initFrom(const NodeDatas& nodedatas, const MeshDatas& meshdatas, const MaterialDatas& materialdatas);
@@ -148,6 +174,12 @@ CC_CONSTRUCTOR_ACCESS:
     /** load file and set it to meshedatas, nodedatas and materialdatas, obj file .mtl file should be at the same directory if exist */
     bool loadFromFile(const std::string& path, NodeDatas* nodedatas, MeshDatas* meshdatas,  MaterialDatas* materialdatas);
 
+    /**
+     * Visits this Sprite3D's children and draw them recursively.
+     * Note: all its children will rendered as 3D objects
+     */
+    virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags) override;
+    
     /**draw*/
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     
@@ -184,6 +216,7 @@ protected:
     bool                         _aabbDirty;
     unsigned int                 _lightMask;
     bool                         _shaderUsingLight; // is current shader using light ?
+    bool                         _forceDepthWrite; // Always write to depth buffer
     
     struct AsyncLoadParam
     {

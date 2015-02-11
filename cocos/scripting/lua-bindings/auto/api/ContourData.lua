@@ -15,6 +15,7 @@
 -- @function [parent=#ContourData] addVertex 
 -- @param self
 -- @param #vec2_table vertex
+-- @return ContourData#ContourData self (return value: ccs.ContourData)
         
 --------------------------------
 -- 
@@ -26,5 +27,6 @@
 -- js ctor
 -- @function [parent=#ContourData] ContourData 
 -- @param self
+-- @return ContourData#ContourData self (return value: ccs.ContourData)
         
 return nil

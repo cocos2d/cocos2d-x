@@ -199,7 +199,7 @@ namespace cocostudio
         if (!fileExist)
         {
             auto label = Label::create();
-            label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+            label->setString(errorFilePath + " missed");
             sprite->addChild(label);
         }
         
@@ -224,8 +224,8 @@ namespace cocostudio
             sprite->setColor(Color3B(red, green, blue));
         }
         
-        bool flipX   = nodeOptions->flipX();
-        bool flipY   = nodeOptions->flipY();
+        bool flipX   = nodeOptions->flipX() != 0;
+        bool flipY   = nodeOptions->flipY() != 0;
         
         if(flipX != false)
             sprite->setFlippedX(flipX);

@@ -18,6 +18,7 @@
 -- @function [parent=#MoveTo] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return MoveTo#MoveTo self (return value: cc.MoveTo)
         
 --------------------------------
 -- 

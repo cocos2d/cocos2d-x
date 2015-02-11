@@ -37,12 +37,9 @@ THE SOFTWARE.
 #include "base/CCNS.h"
 #include "base/ccMacros.h"
 #include "base/CCDirector.h"
+#include "base/ccUTF8.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCTextureCache.h"
-
-
-#include "deprecated/CCString.h"
-
 
 using namespace std;
 
@@ -235,10 +232,18 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, const s
 void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist)
 {
     CCASSERT(plist.size()>0, "plist filename should not be nullptr");
+    
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(plist);
+    if (fullPath.size() == 0)
+    {
+        // return if plist file doesn't exist
+        CCLOG("cocos2d: SpriteFrameCache: can not find %s", plist.c_str());
+        return;
+    }
 
     if (_loadedFileNames->find(plist) == _loadedFileNames->end())
     {
-        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(plist);
+        
         ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(fullPath);
 
         string texturePath("");
@@ -428,4 +433,3 @@ SpriteFrame* SpriteFrameCache::getSpriteFrameByName(const std::string& name)
 }
 
 NS_CC_END
-

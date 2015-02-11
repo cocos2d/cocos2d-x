@@ -11,12 +11,14 @@
 -- @param #vec2_table rtBegin
 -- @param #rect_table fullRect
 -- @param #rect_table fullViewport
+-- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 --------------------------------
 --  clears the texture with a specified stencil value 
 -- @function [parent=#RenderTexture] clearStencil 
 -- @param self
 -- @param #int stencilValue
+-- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 --------------------------------
 --  Value for clearDepth. Valid only when "autoDraw" is true. 
@@ -34,18 +36,21 @@
 --  ends grabbing
 -- @function [parent=#RenderTexture] end 
 -- @param self
+-- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 --------------------------------
 -- 
 -- @function [parent=#RenderTexture] setClearStencil 
 -- @param self
 -- @param #int clearStencil
+-- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 --------------------------------
 --  Sets the Sprite being used. 
 -- @function [parent=#RenderTexture] setSprite 
 -- @param self
 -- @param #cc.Sprite sprite
+-- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 --------------------------------
 --  Gets the Sprite being used. 
@@ -65,17 +70,20 @@
 -- @function [parent=#RenderTexture] setKeepMatrix 
 -- @param self
 -- @param #bool keepMatrix
+-- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 --------------------------------
 -- 
 -- @function [parent=#RenderTexture] setClearFlags 
 -- @param self
 -- @param #unsigned int clearFlags
+-- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 --------------------------------
 --  starts grabbing 
 -- @function [parent=#RenderTexture] begin 
 -- @param self
+-- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 --------------------------------
 -- @overload self, string, int, bool, function         
@@ -93,17 +101,20 @@
 -- @function [parent=#RenderTexture] setAutoDraw 
 -- @param self
 -- @param #bool isAutoDraw
+-- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 --------------------------------
 -- 
 -- @function [parent=#RenderTexture] setClearColor 
 -- @param self
 -- @param #color4f_table clearColor
+-- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 --------------------------------
 --  end is key word of lua, use other name to export to lua. 
 -- @function [parent=#RenderTexture] endToLua 
 -- @param self
+-- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 --------------------------------
 -- @overload self, float, float, float, float, float         
@@ -117,12 +128,14 @@
 -- @param #float a
 -- @param #float depthValue
 -- @param #int stencilValue
+-- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
 
 --------------------------------
 --  clears the texture with a specified depth value 
 -- @function [parent=#RenderTexture] clearDepth 
 -- @param self
 -- @param #float depthValue
+-- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 --------------------------------
 --  Clear color value. Valid only when "autoDraw" is true. 
@@ -138,6 +151,7 @@
 -- @param #float g
 -- @param #float b
 -- @param #float a
+-- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 --------------------------------
 --  Valid flags: GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_STENCIL_BUFFER_BIT. They can be OR'ed. Valid when "autoDraw" is true. 
@@ -156,6 +170,7 @@
 -- @function [parent=#RenderTexture] setClearDepth 
 -- @param self
 -- @param #float clearDepth
+-- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 --------------------------------
 -- @overload self, int, int, int, unsigned int         
@@ -187,6 +202,7 @@
 -- @param #cc.Renderer renderer
 -- @param #mat4_table transform
 -- @param #unsigned int flags
+-- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 --------------------------------
 -- 
@@ -195,10 +211,12 @@
 -- @param #cc.Renderer renderer
 -- @param #mat4_table parentTransform
 -- @param #unsigned int parentFlags
+-- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 --------------------------------
 -- 
 -- @function [parent=#RenderTexture] RenderTexture 
 -- @param self
+-- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 return nil

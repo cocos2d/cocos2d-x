@@ -170,6 +170,10 @@ static int processTask(HttpRequest *request, NSString* requestType, void *stream
     //if request type is post or put,set header and data
     if([requestType  isEqual: @"POST"] || [requestType isEqual: @"PUT"])
     {
+        if ([requestType isEqual: @"PUT"])
+        {
+            [nsrequest setValue: @"application/x-www-form-urlencoded" forHTTPHeaderField: @"Content-Type"];
+        }
         /* get custom header data (if set) */
         std::vector<std::string> headers=request->getHeaders();
         if(!headers.empty())
@@ -187,9 +191,12 @@ static int processTask(HttpRequest *request, NSString* requestType, void *stream
             }
         }
         
-        NSString* requestData = [NSString stringWithUTF8String:request->getRequestData()];
-        NSData *postData = [requestData dataUsingEncoding:NSUTF8StringEncoding];
-        [nsrequest setHTTPBody:postData];
+        char* requestDataBuffer = request->getRequestData();
+        if (nullptr !=  requestDataBuffer && 0 != strlen(requestDataBuffer))
+        {
+            NSData *postData = [NSData dataWithBytes:requestDataBuffer length:request->getRequestDataSize()];
+            [nsrequest setHTTPBody:postData];
+        }
     }
 
     //read cookie propertities from file and set cookie
@@ -275,6 +282,7 @@ static int processTask(HttpRequest *request, NSString* requestType, void *stream
     
     //handle response header
     NSMutableString *header = [NSMutableString new];
+    [header appendFormat:@"HTTP/1.1 %ld %@\n", httpAsynConn.responseCode, httpAsynConn.statusString];
     for (id key in httpAsynConn.responseHeader)
     {
         [header appendFormat:@"%@: %@\n", key, [httpAsynConn.responseHeader objectForKey:key]];

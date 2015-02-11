@@ -35,15 +35,13 @@ THE SOFTWARE.
 #include "base/CCConfiguration.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventListenerCustom.h"
+#include "base/ccUTF8.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTexture2D.h"
 #include "platform/CCGL.h"
-
-
-#include "deprecated/CCString.h"
 
 //According to some tests GL_TRIANGLE_STRIP is slower, MUCH slower. Probably I'm doing something very wrong
 
@@ -606,15 +604,6 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
     if(!numberOfQuads)
         return;
     
-    //Check depth write
-    GLboolean depthWirte;
-    glGetBooleanv(GL_DEPTH_WRITEMASK, &depthWirte);
-    //Turn depth write off if necessary
-    if(depthWirte)
-    {
-        glDepthMask(false);
-    }
-    
     GL::bindTexture2D(_texture->getName());
 
     if (Configuration::getInstance()->supportsShareableVAO())
@@ -651,7 +640,9 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
 #endif
 
         glDrawElements(GL_TRIANGLES, (GLsizei) numberOfQuads*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(_indices[0])) );
-
+        
+        GL::bindVAO(0);
+        
 #if CC_REBIND_INDICES_BUFFER
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 #endif
@@ -694,12 +685,6 @@ void TextureAtlas::drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start)
     }
 
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,numberOfQuads*6);
-
-    //Turn depth write on if necessary
-    if(depthWirte)
-    {
-        glDepthMask(true);
-    }
     
     CHECK_GL_ERROR_DEBUG();
 }

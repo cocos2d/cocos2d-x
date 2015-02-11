@@ -20,18 +20,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
-    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
-    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
-    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
-    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
   </PropertyGroup>
@@ -50,7 +44,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <_ProjectFileVersion>12.0.21005.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration).win32\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration).win32\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkIncremental>
@@ -85,7 +79,7 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <CompileAs>CompileAsCpp</CompileAs>
@@ -408,11 +402,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\physics\CCPhysicsJoint.cpp" />
     <ClCompile Include="..\physics\CCPhysicsShape.cpp" />
     <ClCompile Include="..\physics\CCPhysicsWorld.cpp" />
-    <ClCompile Include="..\physics\chipmunk\CCPhysicsBodyInfo_chipmunk.cpp" />
-    <ClCompile Include="..\physics\chipmunk\CCPhysicsContactInfo_chipmunk.cpp" />
-    <ClCompile Include="..\physics\chipmunk\CCPhysicsJointInfo_chipmunk.cpp" />
-    <ClCompile Include="..\physics\chipmunk\CCPhysicsShapeInfo_chipmunk.cpp" />
-    <ClCompile Include="..\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.cpp" />
     <ClCompile Include="..\platform\CCFileUtils.cpp" />
     <ClCompile Include="..\platform\CCGLView.cpp" />
     <ClCompile Include="..\platform\CCImage.cpp" />
@@ -592,7 +581,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\..\external\unzip\ioapi.h" />
     <ClInclude Include="..\..\external\unzip\unzip.h" />
     <ClInclude Include="..\..\external\xxhash\xxhash.h" />
-    <ClInclude Include="..\3d\3dExport.h" />
     <ClInclude Include="..\3d\CCAABB.h" />
     <ClInclude Include="..\3d\CCAnimate3D.h" />
     <ClInclude Include="..\3d\CCAnimation3D.h" />
@@ -663,8 +651,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\base\ccMacros.h" />
     <ClInclude Include="..\base\CCMap.h" />
     <ClInclude Include="..\base\CCNS.h" />
-    <ClInclude Include="..\base\CCPlatformConfig.h" />
-    <ClInclude Include="..\base\CCPlatformMacros.h" />
     <ClInclude Include="..\base\CCProfiling.h" />
     <ClInclude Include="..\base\CCProtocols.h" />
     <ClInclude Include="..\base\ccRandom.h" />
@@ -820,15 +806,10 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\network\WebSocket.h" />
     <ClInclude Include="..\physics\CCPhysicsBody.h" />
     <ClInclude Include="..\physics\CCPhysicsContact.h" />
+    <ClInclude Include="..\physics\CCPhysicsHelper.h" />
     <ClInclude Include="..\physics\CCPhysicsJoint.h" />
     <ClInclude Include="..\physics\CCPhysicsShape.h" />
     <ClInclude Include="..\physics\CCPhysicsWorld.h" />
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsBodyInfo_chipmunk.h" />
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsContactInfo_chipmunk.h" />
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsHelper_chipmunk.h" />
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsJointInfo_chipmunk.h" />
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsShapeInfo_chipmunk.h" />
-    <ClInclude Include="..\physics\chipmunk\CCPhysicsWorldInfo_chipmunk.h" />
     <ClInclude Include="..\platform\CCApplicationProtocol.h" />
     <ClInclude Include="..\platform\CCCommon.h" />
     <ClInclude Include="..\platform\CCDevice.h" />

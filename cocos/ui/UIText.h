@@ -144,6 +144,8 @@ public:
     //override "getVirtualRenderer" method of widget.
     virtual Node* getVirtualRenderer() override;
 
+    virtual Size getAutoRenderSize();
+
     /**
      * Returns the "class name" of widget.
      */

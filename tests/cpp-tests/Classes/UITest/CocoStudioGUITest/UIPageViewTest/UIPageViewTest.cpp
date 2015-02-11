@@ -89,7 +89,7 @@ void UIPageViewTest::pageViewEvent(Ref *pSender, PageView::EventType type)
         {
             PageView* pageView = dynamic_cast<PageView*>(pSender);
             
-            _displayValueLabel->setString(CCString::createWithFormat("page = %ld", pageView->getCurPageIndex() + 1)->getCString());
+            _displayValueLabel->setString(StringUtils::format("page = %ld", pageView->getCurPageIndex() + 1));
         }
             break;
             
@@ -199,7 +199,7 @@ void UIPageViewButtonTest::pageViewEvent(Ref *pSender, PageView::EventType type)
         {
             PageView* pageView = dynamic_cast<PageView*>(pSender);
             
-            _displayValueLabel->setString(CCString::createWithFormat("page = %ld", pageView->getCurPageIndex() + 1)->getCString());
+            _displayValueLabel->setString(StringUtils::format("page = %ld", pageView->getCurPageIndex() + 1));
         }
             break;
             
@@ -304,7 +304,7 @@ void UIPageViewCustomScrollThreshold::sliderEvent(Ref *pSender, Slider::EventTyp
         }
         pageView->setCustomScrollThreshold(percent * 0.01 * pageView->getContentSize().width);
         
-        _displayValueLabel->setString(String::createWithFormat("Scroll Threshold: %f", pageView->getCustomScrollThreshold())->getCString());
+        _displayValueLabel->setString(StringUtils::format("Scroll Threshold: %f", pageView->getCustomScrollThreshold()));
     }
 }
 
@@ -495,7 +495,7 @@ void UIPageViewTouchPropagationTest::pageViewEvent(Ref *pSender, PageView::Event
         {
             PageView* pageView = dynamic_cast<PageView*>(pSender);
             
-            _displayValueLabel->setString(CCString::createWithFormat("page = %ld", pageView->getCurPageIndex() + 1)->getCString());
+            _displayValueLabel->setString(StringUtils::format("page = %ld", pageView->getCurPageIndex() + 1));
         }
             break;
             
@@ -584,9 +584,9 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
         
         //add buttons
         auto button = Button::create();
-        button->setNormalizedPosition(Vec2(0.12,0.7));
+        button->setNormalizedPosition(Vec2(0.12f,0.7f));
         button->setTitleText("Add A Page");
-        button->setZoomScale(0.3);
+        button->setZoomScale(0.3f);
         button->setPressedActionEnabled(true);
         button->setTitleColor(Color3B::RED);
         button->addClickEventListener([=](Ref* sender)
@@ -616,15 +616,15 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
             }
             
             pageView->addPage(outerBox);
-            _displayValueLabel->setString(CCString::createWithFormat("page count = %ld", pageView->getPages().size())->getCString());
+            _displayValueLabel->setString(StringUtils::format("page count = %ld", pageView->getPages().size()));
 
         });
         _uiLayer->addChild(button);
         
         auto button2 = Button::create();
-        button2->setNormalizedPosition(Vec2(0.12,0.5));
+        button2->setNormalizedPosition(Vec2(0.12f,0.5f));
         button2->setTitleText("Remove A Page");
-        button2->setZoomScale(0.3);
+        button2->setZoomScale(0.3f);
         button2->setPressedActionEnabled(true);
         button2->setTitleColor(Color3B::RED);
         button2->addClickEventListener([=](Ref* sender)
@@ -637,21 +637,21 @@ bool UIPageViewDynamicAddAndRemoveTest::init()
             {
                 CCLOG("There is no page to remove!");
             }
-            _displayValueLabel->setString(CCString::createWithFormat("page count = %ld", pageView->getPages().size())->getCString());
+            _displayValueLabel->setString(StringUtils::format("page count = %ld", pageView->getPages().size()));
 
         });
         _uiLayer->addChild(button2);
         
         auto button3 = Button::create();
-        button3->setNormalizedPosition(Vec2(0.12,0.3));
+        button3->setNormalizedPosition(Vec2(0.12f,0.3f));
         button3->setTitleText("Remove All Pages");
-        button3->setZoomScale(0.3);
+        button3->setZoomScale(0.3f);
         button3->setPressedActionEnabled(true);
         button3->setTitleColor(Color3B::RED);
         button3->addClickEventListener([=](Ref* sender)
         {
             pageView->removeAllPages();
-            _displayValueLabel->setString(CCString::createWithFormat("page count = %ld", pageView->getPages().size())->getCString());
+            _displayValueLabel->setString(StringUtils::format("page count = %ld", pageView->getPages().size()));
 
         });
         _uiLayer->addChild(button3);
@@ -672,7 +672,7 @@ void UIPageViewDynamicAddAndRemoveTest::pageViewEvent(Ref *pSender, PageView::Ev
         {
             PageView* pageView = dynamic_cast<PageView*>(pSender);
             
-            _displayValueLabel->setString(CCString::createWithFormat("page = %ld", pageView->getCurPageIndex() + 1)->getCString());
+            _displayValueLabel->setString(StringUtils::format("page = %ld", pageView->getCurPageIndex() + 1));
         }
             break;
             

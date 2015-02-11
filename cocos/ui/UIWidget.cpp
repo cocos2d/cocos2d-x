@@ -1443,7 +1443,8 @@ void Widget::enableDpadNavigation(bool enable)
         if (nullptr == _focusNavigationController)
         {
             _focusNavigationController = new (std::nothrow) FocusNavigationController;
-            if (_focusedWidget) {
+            if (_focusedWidget)
+            {
                 _focusNavigationController->setFirstFocsuedWidget(_focusedWidget);
             }
         }
@@ -1452,7 +1453,11 @@ void Widget::enableDpadNavigation(bool enable)
     {
         CC_SAFE_DELETE(_focusNavigationController);
     }
-    _focusNavigationController->enableFocusNavigation(enable);
+    
+    if (nullptr != _focusNavigationController)
+    {
+        _focusNavigationController->enableFocusNavigation(enable);
+    }
 }
 
 

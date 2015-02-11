@@ -29,10 +29,22 @@
 #include "platform/CCPlatformMacros.h"
 #include <vector>
 #include <string>
+#include <functional>
+#include <sstream>
 
 NS_CC_BEGIN
 
 namespace StringUtils {
+    
+template<typename T>
+std::string toString(T arg)
+{
+    std::stringstream ss;
+    ss << arg;
+    return ss.str();
+}
+    
+std::string CC_DLL format(const char* format, ...) CC_FORMAT_PRINTF(1, 2);
 
 /**
  *  @brief Converts utf8 string to utf16 string

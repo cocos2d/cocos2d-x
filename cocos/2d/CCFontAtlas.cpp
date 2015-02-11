@@ -36,7 +36,8 @@ NS_CC_BEGIN
 
 const int FontAtlas::CacheTextureWidth = 512;
 const int FontAtlas::CacheTextureHeight = 512;
-const char* FontAtlas::EVENT_PURGE_TEXTURES = "__cc_FontAtlasPurgeTextures";
+const char* FontAtlas::CMD_PURGE_FONTATLAS = "__cc_PURGE_FONTATLAS";
+const char* FontAtlas::CMD_RESET_FONTATLAS = "__cc_RESET_FONTATLAS";
 
 FontAtlas::FontAtlas(Font &theFont) 
 : _font(&theFont)
@@ -44,7 +45,6 @@ FontAtlas::FontAtlas(Font &theFont)
 , _fontAscender(0)
 , _rendererRecreatedListener(nullptr)
 , _antialiasEnabled(true)
-, _rendererRecreate(false)
 {
     _font->retain();
 
@@ -122,25 +122,9 @@ void FontAtlas::purgeTexturesAtlas()
     FontFreeType* fontTTf = dynamic_cast<FontFreeType*>(_font);
     if (fontTTf && _atlasTextures.size() > 1)
     {
-        for( auto &item: _atlasTextures)
-        {
-            if (item.first != 0)
-            {
-                item.second->release();
-            }
-        }
-        auto temp = _atlasTextures[0];
-        _atlasTextures.clear();
-        _atlasTextures[0] = temp;
-
-        _fontLetterDefinitions.clear();
-        memset(_currentPageData,0,_currentPageDataSize);
-        _currentPage = 0;
-        _currentPageOrigX = 0;
-        _currentPageOrigY = 0;
-
         auto eventDispatcher = Director::getInstance()->getEventDispatcher();
-        eventDispatcher->dispatchCustomEvent(EVENT_PURGE_TEXTURES,this);
+        eventDispatcher->dispatchCustomEvent(CMD_PURGE_FONTATLAS,this);
+        eventDispatcher->dispatchCustomEvent(CMD_RESET_FONTATLAS,this);
     }
 }
 
@@ -149,27 +133,9 @@ void FontAtlas::listenRendererRecreated(EventCustom *event)
     FontFreeType* fontTTf = dynamic_cast<FontFreeType*>(_font);
     if (fontTTf)
     {
-        for( auto &item: _atlasTextures)
-        {
-            if (item.first != 0)
-            {
-                item.second->release();
-            }
-        }
-        auto temp = _atlasTextures[0];
-        _atlasTextures.clear();
-        _atlasTextures[0] = temp;
-
-        _fontLetterDefinitions.clear();
-        memset(_currentPageData,0,_currentPageDataSize);
-        _currentPage = 0;
-        _currentPageOrigX = 0;
-        _currentPageOrigY = 0;
-
-        _rendererRecreate = true;
         auto eventDispatcher = Director::getInstance()->getEventDispatcher();
-        eventDispatcher->dispatchCustomEvent(EVENT_PURGE_TEXTURES,this);
-        _rendererRecreate = false;
+        eventDispatcher->dispatchCustomEvent(CMD_PURGE_FONTATLAS,this);
+        eventDispatcher->dispatchCustomEvent(CMD_RESET_FONTATLAS,this);
     }
 }
 
@@ -309,25 +275,17 @@ bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16String)
 
     if(existNewLetter)
     {
-        if (_rendererRecreate)
+        unsigned char *data = nullptr;
+        if(pixelFormat == Texture2D::PixelFormat::AI88)
         {
-            _atlasTextures[_currentPage]->initWithData(_currentPageData, _currentPageDataSize, 
-                pixelFormat, CacheTextureWidth, CacheTextureHeight, Size(CacheTextureWidth,CacheTextureHeight) );
-        } 
+            data = _currentPageData + CacheTextureWidth * (int)startY * 2;
+        }
         else
         {
-            unsigned char *data = nullptr;
-            if(pixelFormat == Texture2D::PixelFormat::AI88)
-            {
-                data = _currentPageData + CacheTextureWidth * (int)startY * 2;
-            }
-            else
-            {
-                data = _currentPageData + CacheTextureWidth * (int)startY;
-            }
-            _atlasTextures[_currentPage]->updateWithData(data, 0, startY, 
-                CacheTextureWidth, _currentPageOrigY - startY + _commonLineHeight);
+            data = _currentPageData + CacheTextureWidth * (int)startY;
         }
+        _atlasTextures[_currentPage]->updateWithData(data, 0, startY,
+                                                     CacheTextureWidth, _currentPageOrigY - startY + _commonLineHeight);
     }
     return true;
 }

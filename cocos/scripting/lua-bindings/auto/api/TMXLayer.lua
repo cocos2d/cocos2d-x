@@ -16,6 +16,7 @@
 -- @function [parent=#TMXLayer] setLayerOrientation 
 -- @param self
 -- @param #int orientation
+-- @return experimental::TMXLayer#experimental::TMXLayer self (return value: cc.experimental::TMXLayer)
         
 --------------------------------
 --  size of the layer in tiles 
@@ -28,6 +29,7 @@
 -- @function [parent=#TMXLayer] setMapTileSize 
 -- @param self
 -- @param #size_table size
+-- @return experimental::TMXLayer#experimental::TMXLayer self (return value: cc.experimental::TMXLayer)
         
 --------------------------------
 --  Layer orientation, which is the same as the map orientation 
@@ -40,18 +42,21 @@
 -- @function [parent=#TMXLayer] setProperties 
 -- @param self
 -- @param #map_table properties
+-- @return experimental::TMXLayer#experimental::TMXLayer self (return value: cc.experimental::TMXLayer)
         
 --------------------------------
 -- 
 -- @function [parent=#TMXLayer] setLayerName 
 -- @param self
 -- @param #string layerName
+-- @return experimental::TMXLayer#experimental::TMXLayer self (return value: cc.experimental::TMXLayer)
         
 --------------------------------
 --  removes a tile at given tile coordinate 
 -- @function [parent=#TMXLayer] removeTileAt 
 -- @param self
 -- @param #vec2_table tileCoordinate
+-- @return experimental::TMXLayer#experimental::TMXLayer self (return value: cc.experimental::TMXLayer)
         
 --------------------------------
 -- @overload self         
@@ -64,6 +69,7 @@
 --  Creates the tiles 
 -- @function [parent=#TMXLayer] setupTiles 
 -- @param self
+-- @return experimental::TMXLayer#experimental::TMXLayer self (return value: cc.experimental::TMXLayer)
         
 --------------------------------
 -- 
@@ -72,6 +78,7 @@
 -- @param #cc.Sprite sprite
 -- @param #vec2_table pos
 -- @param #int gid
+-- @return experimental::TMXLayer#experimental::TMXLayer self (return value: cc.experimental::TMXLayer)
         
 --------------------------------
 -- @overload self, int, vec2_table, int         
@@ -81,6 +88,7 @@
 -- @param #int gid
 -- @param #vec2_table tileCoordinate
 -- @param #int flags
+-- @return experimental::TMXLayer#experimental::TMXLayer self (return value: cc.experimental::TMXLayer)
 
 --------------------------------
 --  size of the map's tile (could be different from the tile's size) 
@@ -100,6 +108,7 @@
 -- @function [parent=#TMXLayer] setLayerSize 
 -- @param self
 -- @param #size_table size
+-- @return experimental::TMXLayer#experimental::TMXLayer self (return value: cc.experimental::TMXLayer)
         
 --------------------------------
 -- 
@@ -112,6 +121,7 @@
 -- @function [parent=#TMXLayer] setTileSet 
 -- @param self
 -- @param #cc.TMXTilesetInfo info
+-- @return experimental::TMXLayer#experimental::TMXLayer self (return value: cc.experimental::TMXLayer)
         
 --------------------------------
 --  Tileset information for the layer 
@@ -145,6 +155,7 @@
 -- @param self
 -- @param #cc.Node child
 -- @param #bool cleanup
+-- @return experimental::TMXLayer#experimental::TMXLayer self (return value: cc.experimental::TMXLayer)
         
 --------------------------------
 -- 
@@ -153,6 +164,7 @@
 -- @param #cc.Renderer renderer
 -- @param #mat4_table transform
 -- @param #unsigned int flags
+-- @return experimental::TMXLayer#experimental::TMXLayer self (return value: cc.experimental::TMXLayer)
         
 --------------------------------
 -- 
@@ -164,5 +176,6 @@
 -- js ctor
 -- @function [parent=#TMXLayer] TMXLayer 
 -- @param self
+-- @return experimental::TMXLayer#experimental::TMXLayer self (return value: cc.experimental::TMXLayer)
         
 return nil

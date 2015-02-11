@@ -12,6 +12,7 @@
 -- @param #float p1
 -- @param #float p2
 -- @param #float p3
+-- @return EaseBezierAction#EaseBezierAction self (return value: cc.EaseBezierAction)
         
 --------------------------------
 --  creates the action 
@@ -27,10 +28,11 @@
 -- @return EaseBezierAction#EaseBezierAction ret (return value: cc.EaseBezierAction)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#EaseBezierAction] update 
 -- @param self
 -- @param #float time
+-- @return EaseBezierAction#EaseBezierAction self (return value: cc.EaseBezierAction)
         
 --------------------------------
 -- 

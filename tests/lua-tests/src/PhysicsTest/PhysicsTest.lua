@@ -799,7 +799,7 @@ local function PhysicsDemoPump()
     sgearB:setCategoryBitmask(4);
     sgearB:setCollisionBitmask(4);
     sgearB:setTag(1);
-    world:addJoint(cc.PhysicsJointPin:construct(body, sgearB, sgearB:getPosition()));
+    world:addJoint(cc.PhysicsJointPin:construct(body, sgearB, cc.p(sgear:getPosition())));
     
     
     -- big gear
@@ -809,7 +809,7 @@ local function PhysicsDemoPump()
     bgear:setPosition(cc.p(VisibleRect:leftBottom().x + 275, VisibleRect:leftBottom().y));
     layer:addChild(bgear);
     bgearB:setCategoryBitmask(4);
-    world:addJoint(cc.PhysicsJointPin:construct(body, bgearB, bgearB:getPosition()));
+    world:addJoint(cc.PhysicsJointPin:construct(body, bgearB, cc.p(bgear:getPosition())));
     
     
     -- pump
@@ -840,7 +840,7 @@ local function PhysicsDemoPump()
     sgearB:setCollisionBitmask(5);
     world:addJoint(cc.PhysicsJointPin:construct(body, pluggerB, cc.p(VisibleRect:leftBottom().x + 75, VisibleRect:leftBottom().y-90)));
     world:addJoint(cc.PhysicsJointDistance:construct(pluggerB, sgearB, 
-      pluggerB:world2Local(cc.p(VisibleRect:leftBottom().x + 75, VisibleRect:leftBottom().y)), cc.p(44, 0)));
+      pluggerB:world2Local(cc.p(0,0)), cc.p(44, 0)));
   end
 
   initWithLayer(layer, onEnter)
@@ -1246,7 +1246,7 @@ local function PhysicsPositionRotationTest()
       local leftBall = cc.Sprite:create("Images/ball.png");
       leftBall:setPosition(-30, 0);
       leftBall:setScale(2);
-      leftBall:setPhysicsBody(cc.PhysicsBody:createCircle(leftBall:getContentSize().width/4));
+      leftBall:setPhysicsBody(cc.PhysicsBody:createCircle(leftBall:getContentSize().width));
       leftBall:getPhysicsBody():setTag(DRAG_BODYS_TAG);
       parent:addChild(leftBall);
       

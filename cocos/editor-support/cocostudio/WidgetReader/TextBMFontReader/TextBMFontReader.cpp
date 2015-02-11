@@ -232,7 +232,7 @@ namespace cocostudio
         {
             errorFilePath = path;
             auto label = Label::create();
-            label->setString(__String::createWithFormat("%s %s", errorFilePath.c_str(), errorContent.c_str())->getCString());
+            label->setString(errorFilePath + " " + errorContent);
             labelBMFont->addChild(label);
         }
         
@@ -241,6 +241,8 @@ namespace cocostudio
         
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
+        
+        labelBMFont->ignoreContentAdaptWithSize(true);
     }
     
     Node* TextBMFontReader::createNodeWithFlatBuffers(const flatbuffers::Table *textBMFontOptions)

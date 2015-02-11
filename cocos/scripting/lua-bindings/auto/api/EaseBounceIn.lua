@@ -18,10 +18,11 @@
 -- @return EaseBounceIn#EaseBounceIn ret (return value: cc.EaseBounceIn)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#EaseBounceIn] update 
 -- @param self
 -- @param #float time
+-- @return EaseBounceIn#EaseBounceIn self (return value: cc.EaseBounceIn)
         
 --------------------------------
 -- 

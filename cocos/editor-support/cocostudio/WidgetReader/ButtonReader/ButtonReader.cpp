@@ -544,7 +544,7 @@ namespace cocostudio
         Button* button = static_cast<Button*>(node);
         auto options = (ButtonOptions*)buttonOptions;
         
-        bool scale9Enabled = options->scale9Enabled();
+        bool scale9Enabled = options->scale9Enabled() != 0;
         button->setScale9Enabled(scale9Enabled);
         
         bool normalFileExist = false;
@@ -605,7 +605,7 @@ namespace cocostudio
         else
         {
             auto label = Label::create();
-            label->setString(__String::createWithFormat("%s missed", normalErrorFilePath.c_str())->getCString());
+            label->setString(normalErrorFilePath + " missed");
             button->addChild(label);
         }
         
@@ -669,7 +669,7 @@ namespace cocostudio
         else
         {
             auto label = Label::create();
-            label->setString(__String::createWithFormat("%s missed", pressedErrorFilePath.c_str())->getCString());
+            label->setString(pressedErrorFilePath + " missed");
             button->addChild(label);
         }
         
@@ -733,7 +733,7 @@ namespace cocostudio
         else
         {
             auto label = Label::create();
-            label->setString(__String::createWithFormat("%s missed", disabledErrorFilePath.c_str())->getCString());
+            label->setString(disabledErrorFilePath + " missed");
             button->addChild(label);
         }
         
@@ -772,12 +772,12 @@ namespace cocostudio
             else
             {
                 auto label = Label::create();
-                label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+                label->setString(errorFilePath + " missed");
                 button->addChild(label);
             }
         }
         
-        bool displaystate = options->displaystate();
+        bool displaystate = options->displaystate() != 0;
         button->setBright(displaystate);
         button->setEnabled(displaystate);
         

@@ -42,7 +42,8 @@ int lua_cocos2dx_csloader_CSLoader_setJsonPath(lua_State* tolua_S)
             return 0;
         }
         cobj->setJsonPath(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:setJsonPath",argc, 1);
     return 0;
@@ -297,7 +298,8 @@ int lua_cocos2dx_csloader_CSLoader_purge(lua_State* tolua_S)
             return 0;
         }
         cobj->purge();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:purge",argc, 0);
     return 0;
@@ -343,7 +345,8 @@ int lua_cocos2dx_csloader_CSLoader_init(lua_State* tolua_S)
             return 0;
         }
         cobj->init();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:init",argc, 0);
     return 0;
@@ -536,7 +539,8 @@ int lua_cocos2dx_csloader_CSLoader_setRecordJsonPath(lua_State* tolua_S)
             return 0;
         }
         cobj->setRecordJsonPath(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:setRecordJsonPath",argc, 1);
     return 0;
@@ -621,7 +625,8 @@ int lua_cocos2dx_csloader_CSLoader_destroyInstance(lua_State* tolua_S)
             return 0;
         }
         cocos2d::CSLoader::destroyInstance();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.CSLoader:destroyInstance",argc, 0);
     return 0;

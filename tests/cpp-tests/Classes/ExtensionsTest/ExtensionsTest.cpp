@@ -1,7 +1,6 @@
 #include "ExtensionsTest.h"
 #include "../testResource.h"
 #include "AssetsManagerExTest/AssetsManagerExTest.h"
-#include "NotificationCenterTest/NotificationCenterTest.h"
 #include "ControlExtensionTest/CCControlSceneManager.h"
 #include "CocosBuilderTest/CocosBuilderTest.h"
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN) && (CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
@@ -34,8 +33,6 @@ static struct {
         AssetsManagerExLoaderScene *scene = new AssetsManagerExLoaderScene();
         scene->runThisTest();
     } },
-	{ "NotificationCenterTest", [](Ref* sender) { runNotificationCenterTest(); }
-	},
 	{ "CCControlButtonTest", [](Ref *sender){
 		ControlSceneManager* pManager = ControlSceneManager::sharedControlSceneManager();
 		auto scene = pManager->currentControlScene();

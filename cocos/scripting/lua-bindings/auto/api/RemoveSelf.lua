@@ -17,10 +17,11 @@
 -- @return RemoveSelf#RemoveSelf ret (return value: cc.RemoveSelf)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#RemoveSelf] update 
 -- @param self
 -- @param #float time
+-- @return RemoveSelf#RemoveSelf self (return value: cc.RemoveSelf)
         
 --------------------------------
 -- 

@@ -43,7 +43,7 @@ THE SOFTWARE.
 #include "renderer/CCRenderer.h"
 #include "renderer/CCVertexIndexBuffer.h"
 #include "base/CCDirector.h"
-#include "deprecated/CCString.h"
+#include "base/ccUTF8.h"
 
 NS_CC_BEGIN
 namespace experimental {
@@ -154,7 +154,7 @@ void TMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
         _dirty = false;
     }
     
-    if(_renderCommands.size() < _primitives.size())
+    if(_renderCommands.size() < static_cast<size_t>(_primitives.size()))
     {
         _renderCommands.resize(_primitives.size());
     }
@@ -165,7 +165,7 @@ void TMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
         if(iter.second->getCount() > 0)
         {
             auto& cmd = _renderCommands[index++];
-            cmd.init(iter.first, _texture->getName(), getGLProgramState(), BlendFunc::ALPHA_NON_PREMULTIPLIED, iter.second, _modelViewTransform);
+            cmd.init(iter.first, _texture->getName(), getGLProgramState(), BlendFunc::ALPHA_NON_PREMULTIPLIED, iter.second, _modelViewTransform, flags);
             renderer->addCommand(&cmd);
         }
     }
