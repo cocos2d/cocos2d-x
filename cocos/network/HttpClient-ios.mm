@@ -166,31 +166,32 @@ static int processTask(HttpRequest *request, NSString* requestType, void *stream
     
     //set request type
     [nsrequest setHTTPMethod:requestType];
-
-    //if request type is post or put,set header and data
-    if([requestType  isEqual: @"POST"] || [requestType isEqual: @"PUT"])
+    [nsrequest setTimeoutInterval:30.0];
+    
+    /* get custom header data (if set) */
+    std::vector<std::string> headers=request->getHeaders();
+    if(!headers.empty())
     {
-        /* get custom header data (if set) */
-        std::vector<std::string> headers=request->getHeaders();
-        if(!headers.empty())
+        /* append custom headers one by one */
+        for (std::vector<std::string>::iterator it = headers.begin(); it != headers.end(); ++it)
         {
-            /* append custom headers one by one */
-            for (std::vector<std::string>::iterator it = headers.begin(); it != headers.end(); ++it)
-            {
-                unsigned long i = it->find(':', 0);
-                unsigned long length = it->size();
-                std::string field = it->substr(0, i);
-                std::string value = it->substr(i+1, length-i);
-                NSString *headerField = [NSString stringWithUTF8String:field.c_str()];
-                NSString *headerValue = [NSString stringWithUTF8String:value.c_str()];
-                [nsrequest setValue:headerValue forHTTPHeaderField:headerField];
-            }
+            unsigned long i = it->find(':', 0);
+            unsigned long length = it->size();
+            std::string field = it->substr(0, i);
+            std::string value = it->substr(i+1, length-i);
+            NSString *headerField = [NSString stringWithUTF8String:field.c_str()];
+            NSString *headerValue = [NSString stringWithUTF8String:value.c_str()];
+            [nsrequest setValue:headerValue forHTTPHeaderField:headerField];
         }
-        
+    }
+    
+    //if request type is post or put,set header and data
+    if([requestType isEqual: @"POST"] || [requestType isEqual: @"PUT"])
+    {
         char* requestDataBuffer = request->getRequestData();
-        if (nullptr !=  requestDataBuffer && 0 != strlen(requestDataBuffer))
+        if (nullptr != requestDataBuffer && 0 != strlen(requestDataBuffer))
         {
-            NSString* requestData  = [NSString stringWithUTF8String:requestDataBuffer];
+            NSString* requestData = [NSString stringWithUTF8String:requestDataBuffer];
             NSData *postData = [requestData dataUsingEncoding:NSUTF8StringEncoding];
             [nsrequest setHTTPBody:postData];
         }
@@ -279,7 +280,7 @@ static int processTask(HttpRequest *request, NSString* requestType, void *stream
     
     //handle response header
     NSMutableString *header = [NSMutableString new];
-    [header appendFormat:@"HTTP/1.1 %ld %@\n", httpAsynConn.responseCode, httpAsynConn.statusString];
+    [header appendFormat:@"HTTP/1.1 %ld %@\n", (long)httpAsynConn.responseCode, httpAsynConn.statusString];
     for (id key in httpAsynConn.responseHeader)
     {
         [header appendFormat:@"%@: %@\n", key, [httpAsynConn.responseHeader objectForKey:key]];
