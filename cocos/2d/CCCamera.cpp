@@ -47,6 +47,7 @@ Camera* Camera::getDefaultCamera()
     Camera* camera = new (std::nothrow) Camera();
     camera->initDefault();
     camera->autorelease();
+    camera->setDepth(0.f);
     
     return camera;
 }
@@ -82,6 +83,7 @@ Camera::Camera()
 , _viewProjectionDirty(true)
 , _cameraFlag(1)
 , _frustumDirty(true)
+, _depth(-1)
 {
     _frustum.setClipZ(true);
 }
@@ -275,13 +277,28 @@ float Camera::getDepthInView(const Mat4& transform) const
     return depth;
 }
 
+void Camera::setDepth(int depth)
+{
+    if (_depth != depth)
+    {
+        _depth = depth;
+        if (_scene)
+        {
+            //notify scene that the camera order is dirty
+            _scene->setCameraOrderDirty();
+        }
+    }
+}
+
 void Camera::onEnter()
 {
     if (_scene == nullptr)
     {
         auto scene = getScene();
         if (scene)
+        {
             setScene(scene);
+        }
     }
     Node::onEnter();
 }
@@ -313,7 +330,11 @@ void Camera::setScene(Scene* scene)
             auto& cameras = _scene->_cameras;
             auto it = std::find(cameras.begin(), cameras.end(), this);
             if (it == cameras.end())
+            {
                 _scene->_cameras.push_back(this);
+                //notify scene that the camera order is dirty
+                _scene->setCameraOrderDirty();
+            }
         }
     }
 }

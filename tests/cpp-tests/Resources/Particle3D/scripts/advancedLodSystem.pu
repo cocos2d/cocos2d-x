@@ -1,0 +1,57 @@
+system advancedLodSystem
+{
+    smooth_lod                                  true
+    main_camera_name                            MainCamera
+    lod_distances                               21 60 
+    technique 
+    {
+        visual_particle_quota                   100
+        material                                ParticleUniverse/Barrel_02
+        default_particle_width                  0.99
+        default_particle_height                 1.05
+        default_particle_depth                  1.05
+        renderer                                Entity
+        {
+            mesh_name                           Sprite3DTest/sphere.c3b
+        }
+        emitter                                 Box 
+        {
+            emission_rate                       5
+            angle                               25
+            time_to_live                        dyn_random
+            {
+                min                             2
+                max                             6
+            }
+            velocity                            2.4
+            box_width                           3
+            box_height                          3
+            box_depth                           3
+        }
+    }
+    technique 
+    {
+        material                                ParticleUniverse/Barrel_01
+        lod_index                               1
+        default_particle_width                  0.96
+        default_particle_height                 1.26
+        default_particle_depth                  1.5
+        renderer                                Billboard
+        {
+        }
+        emitter                                 Box 
+        {
+            emission_rate                       5
+            angle                               25
+            time_to_live                        dyn_random
+            {
+                min                             2
+                max                             6
+            }
+            velocity                            2.4
+            box_width                           3
+            box_height                          3
+            box_depth                           3
+        }
+    }
+}
