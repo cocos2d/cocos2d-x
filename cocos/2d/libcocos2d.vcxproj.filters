@@ -1639,12 +1639,6 @@
     <ClInclude Include="..\base\CCNS.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="..\base\CCPlatformConfig.h">
-      <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\base\CCPlatformMacros.h">
-      <Filter>base</Filter>
-    </ClInclude>
     <ClInclude Include="..\base\CCProfiling.h">
       <Filter>base</Filter>
     </ClInclude>
@@ -1875,9 +1869,6 @@
     </ClInclude>
     <ClInclude Include="..\base\ccRandom.h">
       <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3d\3dExport.h">
-      <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="..\3d\CCAABB.h">
       <Filter>3d</Filter>
@@ -2547,6 +2538,12 @@
     <ClInclude Include="..\3d\CCPlane.h" />
     <ClInclude Include="..\physics\CCPhysicsHelper.h">
       <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCPlatformConfig.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCPlatformMacros.h">
+      <Filter>platform</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
