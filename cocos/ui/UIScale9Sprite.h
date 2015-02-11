@@ -331,7 +331,7 @@ namespace ui {
         /**
          * Sets whether the widget should be flipped horizontally or not.
          *
-         * @param bFlippedX true if the widget should be flipped horizaontally, false otherwise.
+         * @param bFlippedX true if the widget should be flipped horizontally, false otherwise.
          */
         virtual void setFlippedX(bool flippedX);
         
@@ -343,14 +343,14 @@ namespace ui {
          * If you want to flip the anchorPoint too, and/or to flip the children too use:
          * widget->setScaleX(sprite->getScaleX() * -1);
          *
-         * @return true if the widget is flipped horizaontally, false otherwise.
+         * @return true if the widget is flipped horizontally, false otherwise.
          */
         virtual bool isFlippedX()const;
         
         /**
          * Sets whether the widget should be flipped vertically or not.
          *
-         * @param bFlippedY true if the widget should be flipped vertically, flase otherwise.
+         * @param bFlippedY true if the widget should be flipped vertically, false otherwise.
          */
         virtual void setFlippedY(bool flippedY);
 
@@ -370,7 +370,7 @@ namespace ui {
         virtual void setScaleX(float scaleX) override;
         virtual void setScaleY(float scaleY) override;
         virtual void setScale(float scale) override;
-        virtual void setScale(float scalex, float scaley) override;
+        virtual void setScale(float scaleX, float scaleY) override;
         using Node::setScaleZ;
         virtual float getScaleX() const override;
         virtual float getScaleY() const override;
@@ -384,7 +384,7 @@ namespace ui {
         void adjustScale9ImagePosition();
         /**
          * Sorts the children array once before drawing, instead of every time when a child is added or reordered.
-         * This appraoch can improves the performance massively.
+         * This approach can improves the performance massively.
          * @note Don't call this manually unless a child added needs to be removed in the same frame
          */
         virtual void sortAllProtectedChildren();
@@ -396,15 +396,15 @@ namespace ui {
         bool _positionsAreDirty;
         
         Sprite* _scale9Image; //the original sprite
-        Sprite* _topLeft;
-        Sprite* _top;
-        Sprite* _topRight;
-        Sprite* _left;
-        Sprite* _centre;
-        Sprite* _right;
-        Sprite* _bottomLeft;
-        Sprite* _bottom;
-        Sprite* _bottomRight;
+        Sprite* _topLeftSprite;
+        Sprite* _topSprite;
+        Sprite* _topRightSprite;
+        Sprite* _leftSprite;
+        Sprite* _centerSprite;
+        Sprite* _rightSprite;
+        Sprite* _bottomLeftSprite;
+        Sprite* _bottomSprite;
+        Sprite* _bottomRightSprite;
         
         bool _scale9Enabled;
         
@@ -416,7 +416,7 @@ namespace ui {
         /** Original sprite's size. */
         Size _originalSize;
         Vec2 _offset;
-        /** Prefered sprite's size. By default the prefered size is the original size. */
+        /** Preferred sprite's size. By default the preferred size is the original size. */
         
         //if the preferredSize component is given as -1, it is ignored
         Size _preferredSize;

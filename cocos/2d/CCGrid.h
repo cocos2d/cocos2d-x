@@ -165,6 +165,7 @@ protected:
     GLushort *_indices;
     bool _needDepthTestForBlit;
     bool _oldDepthTestValue;
+    bool _oldDepthWriteValue;
 };
 
 /**

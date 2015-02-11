@@ -54,6 +54,15 @@ public:
     virtual void onEnter() override;
 };
 
+class Sprite3DEmptyTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DEmptyTest);
+    Sprite3DEmptyTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 class Sprite3DBasicTest : public Sprite3DTestDemo
 {
 public:
@@ -444,6 +453,32 @@ protected:
     float              _arcSpeed;
     float              _radius;
     float              _accAngle;
+};
+
+class UseCaseSprite3D : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(UseCaseSprite3D);
+    UseCaseSprite3D();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    virtual void update(float delta) override;
+    
+protected:
+    
+    void switchCase();
+    
+    enum class USECASE{
+        _3D_WITH_2D,
+        MAX_CASE_NUM,
+    };
+    cocos2d::Label*      _label;
+    int                  _caseIdx; // use case index
+    std::string          _useCaseTitles[(int)USECASE::MAX_CASE_NUM];
+    
+    cocos2d::Sprite3D*   _sprite3d;
+    cocos2d::Sprite3D*   _sprite2d;
 };
 
 class Sprite3DTestScene : public TestScene

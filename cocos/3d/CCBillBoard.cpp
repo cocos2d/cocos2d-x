@@ -32,8 +32,7 @@
 NS_CC_BEGIN
 
 BillBoard::BillBoard()
-: _zDepthInView(0.0f)
-, _mode(Mode::VIEW_POINT_ORIENTED)
+: _mode(Mode::VIEW_POINT_ORIENTED)
 , _modeDirty(false)
 {
     Node::setAnchorPoint(Vec2(0.5f,0.5f));
@@ -96,42 +95,108 @@ BillBoard* BillBoard::create(Mode mode)
     return nullptr;
 }
 
-void BillBoard::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+void BillBoard::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags)
 {
+    // quick return if not visible. children won't be drawn.
+    if (!_visible)
+    {
+        return;
+    }
+    
+    uint32_t flags = processParentFlags(parentTransform, parentFlags);
+    
+    //Add 3D flag so all the children will be rendered as 3D object
+    flags |= FLAGS_RENDER_AS_3D;
+    
+    //Update Billboard transform
+    bool dirty = calculateBillbaordTransform();
+    if(dirty)
+    {
+        flags |= FLAGS_TRANSFORM_DIRTY;
+    }
+    
+    Director* director = Director::getInstance();
+    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
+    
+    bool visibleByCamera = isVisitableByVisitingCamera();
+    
+    int i = 0;
+    
+    if(!_children.empty())
+    {
+        sortAllChildren();
+        // draw children zOrder < 0
+        for( ; i < _children.size(); i++ )
+        {
+            auto node = _children.at(i);
+            
+            if (node && node->getLocalZOrder() < 0)
+                node->visit(renderer, _modelViewTransform, flags);
+            else
+                break;
+        }
+        // self draw
+        if (visibleByCamera)
+            this->draw(renderer, _modelViewTransform, flags);
+        
+        for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
+            (*it)->visit(renderer, _modelViewTransform, flags);
+    }
+    else if (visibleByCamera)
+    {
+        this->draw(renderer, _modelViewTransform, flags);
+    }
+    
+    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+}
+
+bool BillBoard::calculateBillbaordTransform()
+{
+    //Get camera world position
     auto camera = Camera::getVisitingCamera();
     const Mat4& camWorldMat = camera->getNodeToWorldTransform();
-    if (memcmp(_camWorldMat.m, camWorldMat.m, sizeof(float) * 16) != 0 || memcmp(_mvTransform.m, transform.m, sizeof(float) * 16) != 0 || _modeDirty)
+    
+    //TODO: use math lib to calculate math lib Make it easier to read and maintain
+    if (memcmp(_camWorldMat.m, camWorldMat.m, sizeof(float) * 16) != 0 || _transformDirty || _modeDirty)
     {
+        //Rotate based on anchor point
         Vec3 anchorPoint(_anchorPointInPoints.x , _anchorPointInPoints.y , 0.0f);
-        Mat4 localToWorld = transform;
+        Mat4 localToWorld = _modelViewTransform;
         localToWorld.translate(anchorPoint);
+        
+        //Decide billboard mode
         Vec3 camDir;
         switch (_mode)
         {
-        case Mode::VIEW_POINT_ORIENTED:
-            camDir = Vec3(localToWorld.m[12] - camWorldMat.m[12], localToWorld.m[13] - camWorldMat.m[13], localToWorld.m[14] - camWorldMat.m[14]);
-            break;
-        case Mode::VIEW_PLANE_ORIENTED:
-            camWorldMat.transformVector(Vec3(0.0f, 0.0f, -1.0f), &camDir);
-            break;
-        default:
+            case Mode::VIEW_POINT_ORIENTED:
+                camDir = Vec3(localToWorld.m[12] - camWorldMat.m[12], localToWorld.m[13] - camWorldMat.m[13], localToWorld.m[14] - camWorldMat.m[14]);
+                break;
+            case Mode::VIEW_PLANE_ORIENTED:
+                camWorldMat.transformVector(Vec3(0.0f, 0.0f, -1.0f), &camDir);
+                break;
+            default:
                 CCASSERT(false, "invalid billboard mode");
-            break;
+                break;
         }
         _modeDirty = false;
+        
         if (camDir.length() < MATH_TOLERANCE)
         {
             camDir.set(camWorldMat.m[8], camWorldMat.m[9], camWorldMat.m[10]);
         }
         camDir.normalize();
+        
         Quaternion rotationQuaternion;
         this->getNodeToWorldTransform().getRotation(&rotationQuaternion);
+        
         // fetch the rotation angle of z
         float rotationZ = atan2(2*(rotationQuaternion.w*rotationQuaternion.z + rotationQuaternion.x*rotationQuaternion.y),
-            (1 - 2* (rotationQuaternion.y*rotationQuaternion.y + rotationQuaternion.z *rotationQuaternion.z)));
+                                (1 - 2* (rotationQuaternion.y*rotationQuaternion.y + rotationQuaternion.z *rotationQuaternion.z)));
         Mat4 rotationMatrix;
         rotationMatrix.setIdentity();
         rotationMatrix.rotateZ(rotationZ);
+        
         Vec3 upAxis = Vec3(rotationMatrix.m[4],rotationMatrix.m[5],rotationMatrix.m[6]);
         Vec3 x, y;
         camWorldMat.transformVector(upAxis, &y);
@@ -139,30 +204,36 @@ void BillBoard::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         x.normalize();
         Vec3::cross(x, camDir, &y);
         y.normalize();
-
+        
         float xlen = sqrtf(localToWorld.m[0] * localToWorld.m[0] + localToWorld.m[1] * localToWorld.m[1] + localToWorld.m[2] * localToWorld.m[2]);
         float ylen = sqrtf(localToWorld.m[4] * localToWorld.m[4] + localToWorld.m[5] * localToWorld.m[5] + localToWorld.m[6] * localToWorld.m[6]);
         float zlen = sqrtf(localToWorld.m[8] * localToWorld.m[8] + localToWorld.m[9] * localToWorld.m[9] + localToWorld.m[10] * localToWorld.m[10]);
-
-        _billboardTransform.m[0] = x.x * xlen; _billboardTransform.m[1] = x.y * xlen; _billboardTransform.m[2] = x.z * xlen;
-        _billboardTransform.m[4] = y.x * ylen; _billboardTransform.m[5] = y.y * ylen; _billboardTransform.m[6] = y.z * ylen;
-        _billboardTransform.m[8] = -camDir.x * zlen; _billboardTransform.m[9] = -camDir.y * zlen; _billboardTransform.m[10] = -camDir.z * zlen;
-        _billboardTransform.m[12] = localToWorld.m[12]; _billboardTransform.m[13] = localToWorld.m[13]; _billboardTransform.m[14] = localToWorld.m[14];
-
-        _billboardTransform.translate(-anchorPoint);
-
-        const Mat4 &viewMat = camWorldMat.getInversed();
-        _zDepthInView = -(viewMat.m[2] * _billboardTransform.m[12] + viewMat.m[6] * _billboardTransform.m[13] + viewMat.m[10] * _billboardTransform.m[14] + viewMat.m[14]);
-        _mvTransform = transform;
+        
+        Mat4 billboardTransform;
+        
+        billboardTransform.m[0] = x.x * xlen; billboardTransform.m[1] = x.y * xlen; billboardTransform.m[2] = x.z * xlen;
+        billboardTransform.m[4] = y.x * ylen; billboardTransform.m[5] = y.y * ylen; billboardTransform.m[6] = y.z * ylen;
+        billboardTransform.m[8] = -camDir.x * zlen; billboardTransform.m[9] = -camDir.y * zlen; billboardTransform.m[10] = -camDir.z * zlen;
+        billboardTransform.m[12] = localToWorld.m[12]; billboardTransform.m[13] = localToWorld.m[13]; billboardTransform.m[14] = localToWorld.m[14];
+        
+        billboardTransform.translate(-anchorPoint);
+        _modelViewTransform = billboardTransform;
+        
         _camWorldMat = camWorldMat;
+        
+        return true;
     }
+    
+    return false;
+}
 
+void BillBoard::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+{
     //FIXME: frustum culling here
-    {
-        _quadCommand.init(_zDepthInView, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, _billboardTransform);
-        _quadCommand.setTransparent(true);
-        renderer->addCommand(&_quadCommand);
-    }
+    _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, _modelViewTransform, flags);
+    _quadCommand.setTransparent(true);
+    _quadCommand.setSkipBatching(true);
+    renderer->addCommand(&_quadCommand);
 }
 
 void BillBoard::setMode( Mode mode )

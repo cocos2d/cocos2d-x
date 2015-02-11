@@ -28,6 +28,7 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.egl.EGLDisplay;
 
 import org.cocos2dx.lib.Cocos2dxHelper.Cocos2dxHelperListener;
+import com.chukong.cocosplay.client.CocosPlayClient;
 
 import android.app.Activity;
 import android.content.Context;
@@ -62,6 +63,127 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     private static Cocos2dxActivity sContext = null;
     private Cocos2dxVideoHelper mVideoHelper = null;
     private Cocos2dxWebViewHelper mWebViewHelper = null;
+
+    public class Cocos2dxEGLConfigChooser implements GLSurfaceView.EGLConfigChooser
+    {
+        protected int[] configAttribs;
+        public Cocos2dxEGLConfigChooser(int redSize, int greenSize, int blueSize, int alphaSize, int depthSize, int stencilSize)
+        {
+            configAttribs = new int[] {redSize, greenSize, blueSize, alphaSize, depthSize, stencilSize};
+        }
+        public Cocos2dxEGLConfigChooser(int[] attribs)
+        {
+            configAttribs = attribs;
+        }
+        
+        public EGLConfig selectConfig(EGL10 egl, EGLDisplay display, EGLConfig[] configs, int[] attribs)
+        {
+            for (EGLConfig config : configs) {
+                int d = findConfigAttrib(egl, display, config,
+                        EGL10.EGL_DEPTH_SIZE, 0);
+                int s = findConfigAttrib(egl, display, config,
+                        EGL10.EGL_STENCIL_SIZE, 0);
+                if ((d >= attribs[4]) && (s >= attribs[5])) {
+                    int r = findConfigAttrib(egl, display, config,
+                            EGL10.EGL_RED_SIZE, 0);
+                    int g = findConfigAttrib(egl, display, config,
+                             EGL10.EGL_GREEN_SIZE, 0);
+                    int b = findConfigAttrib(egl, display, config,
+                              EGL10.EGL_BLUE_SIZE, 0);
+                    int a = findConfigAttrib(egl, display, config,
+                            EGL10.EGL_ALPHA_SIZE, 0);
+                    if ((r >= attribs[0]) && (g >= attribs[1])
+                            && (b >= attribs[2]) && (a >= attribs[3])) {
+                        return config;
+                    }
+                }
+            }
+            return null;
+        }
+
+        private int findConfigAttrib(EGL10 egl, EGLDisplay display,
+                EGLConfig config, int attribute, int defaultValue) {
+            int[] value = new int[1];
+            if (egl.eglGetConfigAttrib(display, config, attribute, value)) {
+                return value[0];
+            }
+            return defaultValue;
+        }
+        
+        @Override
+        public EGLConfig chooseConfig(EGL10 egl, EGLDisplay display) 
+        {
+            int[] numConfigs = new int[1];
+            if(egl.eglGetConfigs(display, null, 0, numConfigs))
+            {
+                EGLConfig[] configs = new EGLConfig[numConfigs[0]];
+                int[] EGLattribs = {
+                        EGL10.EGL_RED_SIZE, configAttribs[0], 
+                        EGL10.EGL_GREEN_SIZE, configAttribs[1],
+                        EGL10.EGL_BLUE_SIZE, configAttribs[2],
+                        EGL10.EGL_ALPHA_SIZE, configAttribs[3],
+                        EGL10.EGL_DEPTH_SIZE, configAttribs[4],
+                        EGL10.EGL_STENCIL_SIZE,configAttribs[5],
+                        EGL10.EGL_RENDERABLE_TYPE, 4, //EGL_OPENGL_ES2_BIT
+                        EGL10.EGL_NONE
+                                    };
+                int[] choosedConfigNum = new int[1];
+                
+                egl.eglChooseConfig(display, EGLattribs, configs, numConfigs[0], choosedConfigNum);
+                if(choosedConfigNum[0]>0)
+                {
+                    return selectConfig(egl, display, configs, configAttribs);
+                }
+                else
+                {
+                    int[] defaultEGLattribs = {
+                            EGL10.EGL_RED_SIZE, 5, 
+                            EGL10.EGL_GREEN_SIZE, 6,
+                            EGL10.EGL_BLUE_SIZE, 5,
+                            EGL10.EGL_ALPHA_SIZE, 0,
+                            EGL10.EGL_DEPTH_SIZE, 0,
+                            EGL10.EGL_STENCIL_SIZE,0,
+                            EGL10.EGL_RENDERABLE_TYPE, 4, //EGL_OPENGL_ES2_BIT
+                            EGL10.EGL_NONE
+                                        };
+                    int[] defaultEGLattribsAlpha = {
+                            EGL10.EGL_RED_SIZE, 4, 
+                            EGL10.EGL_GREEN_SIZE, 4,
+                            EGL10.EGL_BLUE_SIZE, 4,
+                            EGL10.EGL_ALPHA_SIZE, 4,
+                            EGL10.EGL_DEPTH_SIZE, 0,
+                            EGL10.EGL_STENCIL_SIZE,0,
+                            EGL10.EGL_RENDERABLE_TYPE, 4, //EGL_OPENGL_ES2_BIT
+                            EGL10.EGL_NONE
+                                        };
+                    int[] attribs = null;
+                    //choose one can use
+                    if(this.configAttribs[3] == 0)
+                    {
+                        egl.eglChooseConfig(display, defaultEGLattribs, configs, numConfigs[0], choosedConfigNum);
+                        attribs = new int[]{5,6,5,0,0,0};
+                    }
+                    else
+                    {
+                        egl.eglChooseConfig(display, defaultEGLattribsAlpha, configs, numConfigs[0], choosedConfigNum);
+                        attribs = new int[]{4,4,4,4,0,0};
+                    }
+                    if(choosedConfigNum[0] > 0)
+                    {
+                        return selectConfig(egl, display, configs, attribs);
+                    }
+                    else
+                    {
+                        Log.e(DEVICE_POLICY_SERVICE, "Can not select an EGLConfig for rendering.");
+                        return null;
+                    }
+                }
+            }
+            Log.e(DEVICE_POLICY_SERVICE, "Can not select an EGLConfig for rendering.");
+            return null;
+        }
+
+    }
     
     public static Context getContext() {
         return sContext;
@@ -95,6 +217,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        CocosPlayClient.init(this, false);
 
         onLoadNativeLibraries();
 
@@ -223,128 +346,8 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         Cocos2dxGLSurfaceView glSurfaceView = new Cocos2dxGLSurfaceView(this);
         //this line is need on some device if we specify an alpha bits
         if(this.mGLContextAttrs[3] > 0) glSurfaceView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
-        
-        class cocos2dEGLConfigChooser implements GLSurfaceView.EGLConfigChooser
-        {
-        	protected int[] configAttribs;
-        	public cocos2dEGLConfigChooser(int redSize, int greenSize, int blueSize, int alphaSize, int depthSize, int stencilSize)
-        	{
-        		configAttribs = new int[] {redSize, greenSize, blueSize, alphaSize, depthSize, stencilSize};
-        	}
-        	public cocos2dEGLConfigChooser(int[] attribs)
-        	{
-        		configAttribs = attribs;
-        	}
-        	
-            public EGLConfig selectConfig(EGL10 egl, EGLDisplay display, EGLConfig[] configs, int[] attribs)
-            {
-                for (EGLConfig config : configs) {
-                    int d = findConfigAttrib(egl, display, config,
-                            EGL10.EGL_DEPTH_SIZE, 0);
-                    int s = findConfigAttrib(egl, display, config,
-                            EGL10.EGL_STENCIL_SIZE, 0);
-                    if ((d >= attribs[4]) && (s >= attribs[5])) {
-                        int r = findConfigAttrib(egl, display, config,
-                                EGL10.EGL_RED_SIZE, 0);
-                        int g = findConfigAttrib(egl, display, config,
-                                 EGL10.EGL_GREEN_SIZE, 0);
-                        int b = findConfigAttrib(egl, display, config,
-                                  EGL10.EGL_BLUE_SIZE, 0);
-                        int a = findConfigAttrib(egl, display, config,
-                                EGL10.EGL_ALPHA_SIZE, 0);
-                        if ((r >= attribs[0]) && (g >= attribs[1])
-                                && (b >= attribs[2]) && (a >= attribs[3])) {
-                            return config;
-                        }
-                    }
-                }
-                return null;
-            }
 
-            private int findConfigAttrib(EGL10 egl, EGLDisplay display,
-                    EGLConfig config, int attribute, int defaultValue) {
-            	int[] value = new int[1];
-                if (egl.eglGetConfigAttrib(display, config, attribute, value)) {
-                    return value[0];
-                }
-                return defaultValue;
-            }
-            
-            @Override
-            public EGLConfig chooseConfig(EGL10 egl, EGLDisplay display) 
-            {
-                int[] numConfigs = new int[1];
-                if(egl.eglGetConfigs(display, null, 0, numConfigs))
-                {
-                    EGLConfig[] configs = new EGLConfig[numConfigs[0]];
-                    int[] EGLattribs = {
-                            EGL10.EGL_RED_SIZE, configAttribs[0], 
-                            EGL10.EGL_GREEN_SIZE, configAttribs[1],
-                            EGL10.EGL_BLUE_SIZE, configAttribs[2],
-                            EGL10.EGL_ALPHA_SIZE, configAttribs[3],
-                            EGL10.EGL_DEPTH_SIZE, configAttribs[4],
-                            EGL10.EGL_STENCIL_SIZE,configAttribs[5],
-                            EGL10.EGL_RENDERABLE_TYPE, 4, //EGL_OPENGL_ES2_BIT
-                            EGL10.EGL_NONE
-                                        };
-                    int[] choosedConfigNum = new int[1];
-                    
-                    egl.eglChooseConfig(display, EGLattribs, configs, numConfigs[0], choosedConfigNum);
-                    if(choosedConfigNum[0]>0)
-                    {
-                        return selectConfig(egl, display, configs, configAttribs);
-                    }
-                    else
-                    {
-                        int[] defaultEGLattribs = {
-                                EGL10.EGL_RED_SIZE, 5, 
-                                EGL10.EGL_GREEN_SIZE, 6,
-                                EGL10.EGL_BLUE_SIZE, 5,
-                                EGL10.EGL_ALPHA_SIZE, 0,
-                                EGL10.EGL_DEPTH_SIZE, 0,
-                                EGL10.EGL_STENCIL_SIZE,0,
-                                EGL10.EGL_RENDERABLE_TYPE, 4, //EGL_OPENGL_ES2_BIT
-                                EGL10.EGL_NONE
-                                            };
-                        int[] defaultEGLattribsAlpha = {
-                                EGL10.EGL_RED_SIZE, 4, 
-                                EGL10.EGL_GREEN_SIZE, 4,
-                                EGL10.EGL_BLUE_SIZE, 4,
-                                EGL10.EGL_ALPHA_SIZE, 4,
-                                EGL10.EGL_DEPTH_SIZE, 0,
-                                EGL10.EGL_STENCIL_SIZE,0,
-                                EGL10.EGL_RENDERABLE_TYPE, 4, //EGL_OPENGL_ES2_BIT
-                                EGL10.EGL_NONE
-                                            };
-                        int[] attribs = null;
-                        //choose one can use
-                        if(this.configAttribs[3] == 0)
-                        {
-                            egl.eglChooseConfig(display, defaultEGLattribs, configs, numConfigs[0], choosedConfigNum);
-                            attribs = new int[]{5,6,5,0,0,0};
-                        }
-                        else
-                        {
-                            egl.eglChooseConfig(display, defaultEGLattribsAlpha, configs, numConfigs[0], choosedConfigNum);
-                            attribs = new int[]{4,4,4,4,0,0};
-                        }
-                        if(choosedConfigNum[0] > 0)
-                        {
-                            return selectConfig(egl, display, configs, attribs);
-                        }
-                        else
-                        {
-                            Log.e(DEVICE_POLICY_SERVICE, "Can not select an EGLConfig for rendering.");
-                            return null;
-                        }
-                    }
-                }
-                Log.e(DEVICE_POLICY_SERVICE, "Can not select an EGLConfig for rendering.");
-                return null;
-            }
-
-        }
-        cocos2dEGLConfigChooser chooser = new cocos2dEGLConfigChooser(this.mGLContextAttrs);
+        Cocos2dxEGLConfigChooser chooser = new Cocos2dxEGLConfigChooser(this.mGLContextAttrs);
         glSurfaceView.setEGLConfigChooser(chooser);
 
         return glSurfaceView;

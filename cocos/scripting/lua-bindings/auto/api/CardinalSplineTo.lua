@@ -15,9 +15,11 @@
 -- @function [parent=#CardinalSplineTo] updatePosition 
 -- @param self
 -- @param #vec2_table newPos
+-- @return CardinalSplineTo#CardinalSplineTo self (return value: cc.CardinalSplineTo)
         
 --------------------------------
---  initializes the action with a duration and an array of points 
+-- initializes the action with a duration and an array of points<br>
+-- param duration in seconds
 -- @function [parent=#CardinalSplineTo] initWithDuration 
 -- @param self
 -- @param #float duration
@@ -30,6 +32,7 @@
 -- @function [parent=#CardinalSplineTo] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return CardinalSplineTo#CardinalSplineTo self (return value: cc.CardinalSplineTo)
         
 --------------------------------
 -- 
@@ -44,15 +47,17 @@
 -- @return CardinalSplineTo#CardinalSplineTo ret (return value: cc.CardinalSplineTo)
         
 --------------------------------
--- 
+-- param time in seconds.
 -- @function [parent=#CardinalSplineTo] update 
 -- @param self
 -- @param #float time
+-- @return CardinalSplineTo#CardinalSplineTo self (return value: cc.CardinalSplineTo)
         
 --------------------------------
 -- js NA<br>
 -- lua NA
 -- @function [parent=#CardinalSplineTo] CardinalSplineTo 
 -- @param self
+-- @return CardinalSplineTo#CardinalSplineTo self (return value: cc.CardinalSplineTo)
         
 return nil

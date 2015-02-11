@@ -15,6 +15,7 @@
 -- @function [parent=#PhysicsJointRotarySpring] setRestAngle 
 -- @param self
 -- @param #float restAngle
+-- @return PhysicsJointRotarySpring#PhysicsJointRotarySpring self (return value: cc.PhysicsJointRotarySpring)
         
 --------------------------------
 -- 
@@ -24,15 +25,23 @@
         
 --------------------------------
 -- 
+-- @function [parent=#PhysicsJointRotarySpring] createConstraints 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#PhysicsJointRotarySpring] setStiffness 
 -- @param self
 -- @param #float stiffness
+-- @return PhysicsJointRotarySpring#PhysicsJointRotarySpring self (return value: cc.PhysicsJointRotarySpring)
         
 --------------------------------
 -- 
 -- @function [parent=#PhysicsJointRotarySpring] setDamping 
 -- @param self
 -- @param #float damping
+-- @return PhysicsJointRotarySpring#PhysicsJointRotarySpring self (return value: cc.PhysicsJointRotarySpring)
         
 --------------------------------
 -- 

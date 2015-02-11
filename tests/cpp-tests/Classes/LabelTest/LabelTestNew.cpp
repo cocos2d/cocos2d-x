@@ -83,7 +83,10 @@ static std::function<Layer*()> createFunctions[] =
     CL(LabelAdditionalKerningTest),
     CL(LabelIssue8492Test),
     CL(LabelMultilineWithOutline),
-    CL(LabelIssue9255Test)
+    CL(LabelIssue9255Test),
+    CL(LabelSmallDimensionsTest),
+    CL(LabelIssue10089Test),
+    CL(LabelSystemFontColor)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -1838,7 +1841,7 @@ std::string LabelIssue8492Test::subtitle() const
 
 LabelMultilineWithOutline::LabelMultilineWithOutline()
 {
-    auto label =  Label::createWithTTF("Multiline txet\nwith\noutline feature", "fonts/arial.ttf", 24);
+    auto label =  Label::createWithTTF("Multi-line text\nwith\noutline feature", "fonts/arial.ttf", 24);
     label->enableOutline(Color4B::ORANGE,1);
     label->setPosition(VisibleRect::center());
     addChild(label);
@@ -1876,4 +1879,83 @@ std::string LabelIssue9255Test::title() const
 std::string LabelIssue9255Test::subtitle() const
 {
     return "switch to desktop and switch back. Crashed!!!";
+}
+
+LabelSmallDimensionsTest::LabelSmallDimensionsTest()
+{
+    auto label = Label::createWithSystemFont("Hello World!", "fonts/arial.ttf", 24, Size(30,100));
+    label->setPosition(VisibleRect::center());
+    addChild(label);
+}
+
+std::string LabelSmallDimensionsTest::title() const
+{
+    return "Test create Label[system font] with small dimensions";
+}
+
+std::string LabelSmallDimensionsTest::subtitle() const
+{
+    return "Program should not dead loop";
+}
+
+LabelIssue10089Test::LabelIssue10089Test()
+{
+    auto center = VisibleRect::center();
+
+    auto labelA = Label::createWithSystemFont("create label with system font", "fonts/arial.ttf", 24);
+    auto size = labelA->getContentSize();
+    labelA->setDimensions(size.width, size.height);
+    labelA->setPosition(center.x, center.y + 50);
+    addChild(labelA);
+
+    auto labelB = Label::createWithTTF("create label with TTF", "fonts/arial.ttf", 24);
+    size = labelB->getContentSize();
+    labelB->setDimensions(size.width, size.height);
+    labelB->setPosition(center.x, center.y - 50);
+    addChild(labelB);
+}
+
+std::string LabelIssue10089Test::title() const
+{
+    return "Test for Issue #10089";
+}
+
+std::string LabelIssue10089Test::subtitle() const
+{
+    return "Should be able to see two single-line text";
+}
+
+LabelSystemFontColor::LabelSystemFontColor()
+{
+    auto size = Director::getInstance()->getWinSize();
+
+    auto label1 = Label::createWithSystemFont("Color4B::Red", "fonts/arial.ttf", 20);
+    label1->setPosition(Vec2(size.width / 2, size.height * 0.3f));
+    label1->setTextColor(Color4B::RED);
+    addChild(label1);
+
+    auto label2 = Label::createWithSystemFont("Color4B::Green", "fonts/arial.ttf", 20);
+    label2->setPosition(Vec2(size.width / 2, size.height * 0.4f));
+    label2->setTextColor(Color4B::GREEN);
+    addChild(label2);
+
+    auto label3 = Label::createWithSystemFont("Color4B::Blue", "fonts/arial.ttf", 20);
+    label3->setPosition(Vec2(size.width / 2, size.height * 0.5f));
+    label3->setTextColor(Color4B::BLUE);
+    addChild(label3);
+
+    auto label4 = Label::createWithSystemFont("Color4B(0, 0, 255, 100)", "fonts/arial.ttf", 20);
+    label4->setPosition(Vec2(size.width / 2, size.height * 0.6f));
+    label4->setTextColor(Color4B(0, 0, 255, 100));
+    addChild(label4);
+}
+
+std::string LabelSystemFontColor::title() const
+{
+    return "New Label + system font";
+}
+
+std::string LabelSystemFontColor::subtitle() const
+{
+    return "Testing text color of system font";
 }

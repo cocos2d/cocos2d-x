@@ -9,11 +9,13 @@
 -- @function [parent=#MenuItem] setEnabled 
 -- @param self
 -- @param #bool value
+-- @return MenuItem#MenuItem self (return value: cc.MenuItem)
         
 --------------------------------
 --  Activate the item 
 -- @function [parent=#MenuItem] activate 
 -- @param self
+-- @return MenuItem#MenuItem self (return value: cc.MenuItem)
         
 --------------------------------
 --  returns whether or not the item is enabled 
@@ -25,6 +27,7 @@
 --  The item was selected (not activated), similar to "mouse-over" 
 -- @function [parent=#MenuItem] selected 
 -- @param self
+-- @return MenuItem#MenuItem self (return value: cc.MenuItem)
         
 --------------------------------
 --  returns whether or not the item is selected 
@@ -36,6 +39,7 @@
 --  The item was unselected 
 -- @function [parent=#MenuItem] unselected 
 -- @param self
+-- @return MenuItem#MenuItem self (return value: cc.MenuItem)
         
 --------------------------------
 --  Returns the outside box 

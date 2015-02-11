@@ -124,8 +124,8 @@ void init()
 
 void free()
 {
-	CC_SAFE_RELEASE_NULL(s_shader);
-	s_initialized = false;
+    CC_SAFE_RELEASE_NULL(s_shader);
+    s_initialized = false;
 }
 
 void drawPoint(const Vec2& point)

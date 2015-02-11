@@ -54,27 +54,15 @@ public:
     void sort();
     RenderCommand* operator[](ssize_t index) const;
     void clear();
+    ssize_t getOpaqueQueueSize() const { return _queue3DOpaque.size(); }
+    const std::vector<RenderCommand*>& getOpaqueCommands() const { return _queue3DOpaque; }
 
 protected:
+    std::vector<RenderCommand*> _queue3DOpaque;
+    std::vector<RenderCommand*> _queue3DTransparent;
     std::vector<RenderCommand*> _queueNegZ;
     std::vector<RenderCommand*> _queue0;
     std::vector<RenderCommand*> _queuePosZ;
-};
-
-//render queue for transparency object, NOTE that the _globalOrder of RenderCommand is the distance to the camera when added to the transparent queue
-class TransparentRenderQueue {
-public:
-    void push_back(RenderCommand* command);
-    ssize_t size() const
-    {
-        return _queueCmd.size();
-    }
-    void sort();
-    RenderCommand* operator[](ssize_t index) const;
-    void clear();
-    
-protected:
-    std::vector<RenderCommand*> _queueCmd;
 };
 
 struct RenderStackElement
@@ -125,6 +113,11 @@ public:
     /** Cleans all `RenderCommand`s in the queue */
     void clean();
 
+    /** Clear GL buffer and screen */
+    void clear();
+
+    /** set color for clear screen */
+    void setClearColor(const Color4F& clearColor);
     /* returns the number of drawn batches in the last frame */
     ssize_t getDrawnBatches() const { return _drawnBatches; }
     /* RenderCommands (except) QuadCommand should update this value */
@@ -136,6 +129,13 @@ public:
     /* clear draw stats */
     void clearDrawStats() { _drawnBatches = _drawnVertices = 0; }
 
+    /**
+     * Enable/Disable depth test
+     * For 3D object depth test is enabled by default and can not be changed
+     * For 2D object depth test is disabled by default
+     */
+    void setDepthTest(bool enable);
+    
     inline GroupCommandManager* getGroupCommandManager() const { return _groupCommandManager; };
 
     /** returns whether or not a rectangle is visible or not */
@@ -157,26 +157,29 @@ protected:
     void flush2D();
     
     void flush3D();
-    
+
+    void flushQuads();
+    void flushTriangles();
+
+    void processRenderCommand(RenderCommand* command);
     void visitRenderQueue(const RenderQueue& queue);
-    
-    void visitTransparentRenderQueue(const TransparentRenderQueue& queue);
 
     void fillVerticesAndIndices(const TrianglesCommand* cmd);
     void fillQuads(const QuadCommand* cmd);
-    
+
+    /* clear color set outside be used in setGLDefaultValues() */
+    Color4F _clearColor;
+
     std::stack<int> _commandGroupStack;
     
     std::vector<RenderQueue> _renderGroups;
-    TransparentRenderQueue   _transparentRenderGroups; //transparency objects
 
     uint32_t _lastMaterialID;
 
     MeshCommand*              _lastBatchedMeshCommand;
     std::vector<TrianglesCommand*> _batchedCommands;
     std::vector<QuadCommand*> _batchQuadCommands;
-    
-    
+
     //for TrianglesCommand
     V3F_C4B_T2F _verts[VBO_SIZE];
     GLushort _indices[INDEX_VBO_SIZE];
@@ -200,6 +203,8 @@ protected:
     ssize_t _drawnVertices;
     //the flag for checking whether renderer is rendering
     bool _isRendering;
+    
+    bool _isDepthTestFor2D;
     
     GroupCommandManager* _groupCommandManager;
     

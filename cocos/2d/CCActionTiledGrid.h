@@ -39,18 +39,27 @@ NS_CC_BEGIN
 class CC_DLL ShakyTiles3D : public TiledGrid3DAction
 {
 public:
-    /** creates the action with a range, whether or not to shake Z vertices, a grid size, and duration */
+    /** 
+     * creates the action with a range, whether or not to shake Z vertices, a grid size, and duration 
+     * @param duration in seconds
+     */
     static ShakyTiles3D* create(float duration, const Size& gridSize, int range, bool shakeZ);
 
     // Override
 	virtual ShakyTiles3D* clone() const override;
+    /**
+     * @param time in seconds
+     */
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
     ShakyTiles3D() {}
     virtual ~ShakyTiles3D() {}
 
-    /** initializes the action with a range, whether or not to shake Z vertices, a grid size, and duration */
+    /** 
+     * initializes the action with a range, whether or not to shake Z vertices, a grid size, and duration
+     * @param duration in seconds
+     */
     bool initWithDuration(float duration, const Size& gridSize, int range, bool shakeZ);
 
 protected:
@@ -65,18 +74,25 @@ private:
 class CC_DLL ShatteredTiles3D : public TiledGrid3DAction
 {
 public:
-    /** creates the action with a range, whether of not to shatter Z vertices, a grid size and duration */
+    /** 
+     * creates the action with a range, whether of not to shatter Z vertices, a grid size and duration 
+     * @param duration in seconds
+     */
     static ShatteredTiles3D* create(float duration, const Size& gridSize, int range, bool shatterZ);
 
     // Override
 	virtual ShatteredTiles3D* clone() const override;
+    /**
+     * @param time in seconds
+     */
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
     ShatteredTiles3D() {}
     virtual ~ShatteredTiles3D() {}
 
-    /** initializes the action with a range, whether or not to shatter Z vertices, a grid size and duration */
+    /** 
+     * initializes the action with a range, whether or not to shatter Z vertices, a grid size and duration */
     bool initWithDuration(float duration, const Size& gridSize, int range, bool shatterZ);
 
 protected:
@@ -95,7 +111,10 @@ struct Tile;
 class CC_DLL ShuffleTiles : public TiledGrid3DAction
 {
 public:
-    /** creates the action with a random seed, the grid size and the duration */
+    /** 
+     * creates the action with a random seed, the grid size and the duration
+     * @param duration in seconds
+     */
     static ShuffleTiles* create(float duration, const Size& gridSize, unsigned int seed);
 
     void shuffle(unsigned int *array, unsigned int len);
@@ -104,6 +123,9 @@ public:
 
     // Overrides
     virtual void startWithTarget(Node *target) override;
+    /**
+     * @param time in seconds
+     */
     virtual void update(float time) override;
 	virtual ShuffleTiles* clone() const override;
     
@@ -111,7 +133,10 @@ CC_CONSTRUCTOR_ACCESS:
     ShuffleTiles() {}
     virtual ~ShuffleTiles();
 
-    /** initializes the action with a random seed, the grid size and the duration */
+    /** 
+     * initializes the action with a random seed, the grid size and the duration
+     * @param duration in seconds
+     */
     bool initWithDuration(float duration, const Size& gridSize, unsigned int seed);
 
 protected:
@@ -130,7 +155,10 @@ private:
 class CC_DLL FadeOutTRTiles : public TiledGrid3DAction
 {
 public:
-    /** creates the action with the grid size and the duration */
+    /** 
+     * creates the action with the grid size and the duration
+     * @param duration in seconds
+     */
     static FadeOutTRTiles* create(float duration, const Size& gridSize);
 
     virtual float testFunc(const Size& pos, float time);
@@ -139,6 +167,9 @@ public:
     virtual void transformTile(const Vec2& pos, float distance);
 
     // Overrides
+    /**
+     * @param time in seconds
+     */
     virtual void update(float time) override;
 	virtual FadeOutTRTiles* clone() const override;
 
@@ -156,7 +187,10 @@ private:
 class CC_DLL FadeOutBLTiles : public FadeOutTRTiles
 {
 public:
-    /** creates the action with the grid size and the duration */
+    /** 
+     * creates the action with the grid size and the duration 
+     * @param duration in seconds
+     */
     static FadeOutBLTiles* create(float duration, const Size& gridSize);
 
     // Overrides
@@ -177,7 +211,10 @@ private:
 class CC_DLL FadeOutUpTiles : public FadeOutTRTiles
 {
 public:
-    /** creates the action with the grid size and the duration */
+    /** 
+     * creates the action with the grid size and the duration 
+     * @param duration in seconds
+     */
     static FadeOutUpTiles* create(float duration, const Size& gridSize);
 
     virtual void transformTile(const Vec2& pos, float distance);
@@ -200,7 +237,10 @@ private:
 class CC_DLL FadeOutDownTiles : public FadeOutUpTiles
 {
 public:
-    /** creates the action with the grid size and the duration */
+    /** 
+     * creates the action with the grid size and the duration
+     * @param duration in seconds
+     */
     static FadeOutDownTiles* create(float duration, const Size& gridSize);
 
     // Overrides
@@ -221,9 +261,15 @@ private:
 class CC_DLL TurnOffTiles : public TiledGrid3DAction
 {
 public:
-    /** creates the action with the grid size and the duration */
+    /** 
+     * creates the action with the grid size and the duration 
+     * @param duration in seconds
+     */
     static TurnOffTiles* create(float duration, const Size& gridSize);
-    /** creates the action with a random seed, the grid size and the duration */
+    /** 
+     * creates the action with a random seed, the grid size and the duration 
+     * @param duration in seconds
+     */
     static TurnOffTiles* create(float duration, const Size& gridSize, unsigned int seed);
 
     void shuffle(unsigned int *array, unsigned int len);
@@ -255,7 +301,10 @@ private:
 class CC_DLL WavesTiles3D : public TiledGrid3DAction
 {
 public:
-    /** creates the action with a number of waves, the waves amplitude, the grid size and the duration */
+    /** 
+     * creates the action with a number of waves, the waves amplitude, the grid size and the duration 
+     * @param duration in seconds
+     */
     static WavesTiles3D* create(float duration, const Size& gridSize, unsigned int waves, float amplitude);
 
     /** waves amplitude */
@@ -268,6 +317,9 @@ public:
 
     // Override
 	virtual WavesTiles3D* clone() const override;
+    /**
+     * @param duration in seconds
+     */
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -292,7 +344,10 @@ private:
 class CC_DLL JumpTiles3D : public TiledGrid3DAction
 {
 public:
-    /** creates the action with the number of jumps, the sin amplitude, the grid size and the duration */
+    /** 
+     * creates the action with the number of jumps, the sin amplitude, the grid size and the duration 
+     * @param duration in seconds
+     */
     static JumpTiles3D* create(float duration, const Size& gridSize, unsigned int numberOfJumps, float amplitude);
 
     /** amplitude of the sin*/
@@ -305,6 +360,9 @@ public:
 
     // Override
 	virtual JumpTiles3D* clone() const override;
+    /**
+     * @param time in seconds
+     */
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -327,7 +385,10 @@ private:
 class CC_DLL SplitRows : public TiledGrid3DAction
 {
 public :
-    /** creates the action with the number of rows to split and the duration */
+    /** 
+     * creates the action with the number of rows to split and the duration 
+     * @param duration in seconds
+     */
     static SplitRows* create(float duration, unsigned int rows);
 
     // Overrides
@@ -354,11 +415,17 @@ private:
 class CC_DLL SplitCols : public TiledGrid3DAction
 {
 public:
-    /** creates the action with the number of columns to split and the duration */
+    /** 
+     * creates the action with the number of columns to split and the duration 
+     * @param duration in seconds
+     */
     static SplitCols* create(float duration, unsigned int cols);
 
     // Overrides
 	virtual SplitCols* clone() const override;
+    /**
+     * @param time in seconds
+     */
     virtual void update(float time) override;
     virtual void startWithTarget(Node *target) override;
     

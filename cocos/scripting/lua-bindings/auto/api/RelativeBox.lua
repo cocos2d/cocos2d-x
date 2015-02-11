@@ -16,5 +16,6 @@
 -- Default constructor
 -- @function [parent=#RelativeBox] RelativeBox 
 -- @param self
+-- @return RelativeBox#RelativeBox self (return value: ccui.RelativeBox)
         
 return nil

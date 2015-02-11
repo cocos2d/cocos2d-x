@@ -15,6 +15,7 @@
 -- @function [parent=#ActionInterval] setAmplitudeRate 
 -- @param self
 -- @param #float amp
+-- @return ActionInterval#ActionInterval self (return value: cc.ActionInterval)
         
 --------------------------------
 --  how many seconds had elapsed since the actions started to run. 
@@ -27,12 +28,14 @@
 -- @function [parent=#ActionInterval] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return ActionInterval#ActionInterval self (return value: cc.ActionInterval)
         
 --------------------------------
--- 
+-- param dt in seconds
 -- @function [parent=#ActionInterval] step 
 -- @param self
 -- @param #float dt
+-- @return ActionInterval#ActionInterval self (return value: cc.ActionInterval)
         
 --------------------------------
 -- 

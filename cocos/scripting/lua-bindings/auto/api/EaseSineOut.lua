@@ -18,10 +18,11 @@
 -- @return EaseSineOut#EaseSineOut ret (return value: cc.EaseSineOut)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#EaseSineOut] update 
 -- @param self
 -- @param #float time
+-- @return EaseSineOut#EaseSineOut self (return value: cc.EaseSineOut)
         
 --------------------------------
 -- 

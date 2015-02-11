@@ -649,6 +649,261 @@ local function runLayoutEditorTestScene()
     LayoutEditorTest.create()
 end
 
+local LayoutComponentTest = class("LayoutComponentTest",UIScene)
+LayoutComponentTest._displayValueLabel = nil
+
+function LayoutComponentTest.extend(target)
+    local t = tolua.getpeer(target)
+    if not t then
+        t = {}
+        tolua.setpeer(target, t)
+    end
+    setmetatable(t, LayoutComponentTest)
+    return target
+end
+
+function LayoutComponentTest:configureGUIScene()
+    
+    local screenSize = cc.Director:getInstance():getWinSize()
+    local rootSize   = self._layout:getContentSize()
+    self._uiLayer:setPosition(cc.p((screenSize.width - rootSize.width) / 2, (screenSize.height - rootSize.height) / 2))
+
+
+    local scheduler = cc.Director:getInstance():getScheduler()
+    local schedulerEntry = 0
+
+    local root = self._layout:getChildByName("root_Panel")
+
+    local back_label = ccui.Helper:seekWidgetByName(root, "back")
+    back_label:addTouchEventListener(function(sender, eventType)
+        scheduler:unscheduleScriptEntry(schedulerEntry)
+        schedulerEntry = 0
+        runCocoStudioUIEditorTestScene()
+    end)
+
+    local sceneTitle = ccui.Helper:seekWidgetByName(root, "UItest")
+
+
+    local hUnchecked = ccui.Helper:seekWidgetByName(root, "Button_h_unchecked")
+    local vUnchecked = ccui.Helper:seekWidgetByName(root, "Button_v_unchecked")
+    local hChecked   = ccui.Helper:seekWidgetByName(root, "Button_h_checked")
+    local vChecked   = ccui.Helper:seekWidgetByName(root, "Button_v_checked")
+    local lPinUnchecked = ccui.Helper:seekWidgetByName(root, "Button_Pin_Left")
+    local rPinUnchecked = ccui.Helper:seekWidgetByName(root, "Button_Pin_Right")
+    local tPinUnchecked = ccui.Helper:seekWidgetByName(root, "Button_Pin_Top")
+    local bPinUnchecked = ccui.Helper:seekWidgetByName(root, "Button_Pin_Bottom")
+    local lPinChecked   = ccui.Helper:seekWidgetByName(root, "Button_Pin_Left_Checked")
+    local rPinChecked   = ccui.Helper:seekWidgetByName(root, "Button_Pin_Right_Checked")
+    local tPinChecked   = ccui.Helper:seekWidgetByName(root, "Button_Pin_Top_Checked")
+    local bPinChecked   = ccui.Helper:seekWidgetByName(root, "Button_Pin_Bottom_Checked")
+
+    local textPin = ccui.Helper:seekWidgetByName(root, "Text_Pin")
+    local textStretch = ccui.Helper:seekWidgetByName(root, "Text_Stretch")
+    local widget = ccui.Helper:seekWidgetByName(root, "Image_Widget")
+    local container = ccui.Helper:seekWidgetByName(root, "background_Panel")
+
+    local strenchStartIndex = 0
+    local function onChangeLayoutComponent(sender)
+        local statusStretch = textStretch:getString()
+        --if statusStretch == nil
+        local statusPin = textPin:getString()
+        local hPinStatus = " Left"
+        local vPinStatus = " Bottom" 
+
+        if sender == hUnchecked then
+            hUnchecked:setVisible(false)
+            hChecked:setVisible(true)
+            statusStretch = statusStretch .. " Horizontal"
+            textStretch:setString(statusStretch)
+        elseif sender == hChecked then
+            hChecked:setVisible(false)
+            hUnchecked:setVisible(true)
+            strenchStartIndex = string.find(statusStretch, " Horizontal")
+            if strenchStartIndex ~= nil then
+                statusStretch = string.gsub(statusStretch, " Horizontal", "")
+            end
+            textStretch:setString(statusStretch)
+        elseif sender == vUnchecked then
+            vUnchecked:setVisible(false)
+            vChecked:setVisible(true)
+            statusStretch = statusStretch .. " Vertical"
+            textStretch:setString(statusStretch)
+        elseif sender == vChecked then
+            vChecked:setVisible(false)
+            vUnchecked:setVisible(true)
+            strenchStartIndex = string.find(statusStretch, " Vertical")
+            if strenchStartIndex ~= nil then
+                statusStretch = string.gsub(statusStretch, " Vertical", "")
+            end
+            textStretch:setString(statusStretch)
+        elseif sender == lPinUnchecked then
+            lPinUnchecked:setVisible(false)
+            lPinChecked:setVisible(true)
+        elseif sender == lPinChecked then
+            lPinChecked:setVisible(false)
+            lPinUnchecked:setVisible(true)
+        elseif sender == rPinUnchecked then
+            rPinUnchecked:setVisible(false)
+            rPinChecked:setVisible(true)
+        elseif sender == rPinChecked then
+            rPinChecked:setVisible(false)
+            rPinUnchecked:setVisible(true)
+        elseif sender == tPinUnchecked then
+            tPinUnchecked:setVisible(false)
+            tPinChecked:setVisible(true)
+        elseif sender == tPinChecked then
+            tPinChecked:setVisible(false)
+            tPinUnchecked:setVisible(true)
+        elseif sender == bPinUnchecked then
+            bPinUnchecked:setVisible(false)
+            bPinChecked:setVisible(true)
+        elseif (sender == bPinChecked) then
+            bPinChecked:setVisible(false)
+            bPinUnchecked:setVisible(true)
+        end
+
+        if rPinChecked:isVisible() then
+            if lPinChecked:isVisible() then
+                hPinStatus = " Left Right"
+            else
+                hPinStatus = " Right"
+            end
+        end
+
+        if tPinChecked:isVisible() then
+            if bPinChecked:isVisible() then
+                vPinStatus = " Top Bottom"
+            else
+                vPinStatus = " Top"
+            end
+        end
+
+        statusPin = string.format("Pin:%s%s", hPinStatus, vPinStatus)
+        textPin:setString(statusPin)
+
+        local layoutComponent = ccui.LayoutComponent:bindLayoutComponent(widget)
+        local widthEnableFlag = false
+        if string.find(statusStretch, "Horizontal") ~= nil then
+            widthEnableFlag = true
+        end
+        layoutComponent:setStretchWidthEnabled(widthEnableFlag)
+
+        local heightEnableFlag = false
+        if string.find(statusStretch, "Vertical") ~= nil then
+            heightEnableFlag = true
+        end
+        layoutComponent:setStretchHeightEnabled(heightEnableFlag)
+
+        local horizontalEdgeType = ccui.LayoutComponent.HorizontalEdge.None
+        if string.find(statusPin, "Left") ~= nil and string.find(statusPin, "Right") == nil then
+            horizontalEdgeType = ccui.LayoutComponent.HorizontalEdge.Left
+        elseif string.find(statusPin, "Left") == nil and string.find(statusPin, "Right") ~= nil then
+            horizontalEdgeType = ccui.LayoutComponent.HorizontalEdge.Right
+        elseif string.find(statusPin, "Left") ~= nil and string.find(statusPin, "Right") ~= nil then
+            horizontalEdgeType = ccui.LayoutComponent.HorizontalEdge.Center
+        end
+        layoutComponent:setHorizontalEdge(horizontalEdgeType)
+
+        local verticalEdgeType = ccui.LayoutComponent.VerticalEdge.None
+        if string.find(statusPin, "Top") ~= nil and string.find(statusPin, "Bottom") == nil then
+            verticalEdgeType = ccui.LayoutComponent.VerticalEdge.Top
+        elseif string.find(statusPin, "Top") == nil and string.find(statusPin, "Bottom") ~= nil then
+            verticalEdgeType = ccui.LayoutComponent.VerticalEdge.Bottom
+        elseif string.find(statusPin, "Top") ~= nil and string.find(statusPin, "Bottom") ~= nil then
+            verticalEdgeType = ccui.LayoutComponent.VerticalEdge.Center
+        end
+        layoutComponent:setVerticalEdge(verticalEdgeType)
+    end
+
+    hUnchecked:addClickEventListener(onChangeLayoutComponent)
+    vUnchecked:addClickEventListener(onChangeLayoutComponent)
+    hChecked:addClickEventListener(onChangeLayoutComponent)
+    vChecked:addClickEventListener(onChangeLayoutComponent)
+    lPinUnchecked:addClickEventListener(onChangeLayoutComponent)
+    rPinUnchecked:addClickEventListener(onChangeLayoutComponent)
+    tPinUnchecked:addClickEventListener(onChangeLayoutComponent)
+    bPinUnchecked:addClickEventListener(onChangeLayoutComponent)
+    lPinChecked:addClickEventListener(onChangeLayoutComponent)
+    rPinChecked:addClickEventListener(onChangeLayoutComponent)
+    tPinChecked:addClickEventListener(onChangeLayoutComponent)
+    bPinChecked:addClickEventListener(onChangeLayoutComponent)
+
+    local btnSwitch = ccui.Helper:seekWidgetByName(root, "Button_Switch")
+    local scheduleTimes = 0
+    btnSwitch:addClickEventListener(function(sender)
+        local layoutController = ccui.Helper:seekWidgetByName(root, "Panel_Controller")
+        local size = container:getContentSize()
+        local switchButton = ccui.Helper:seekWidgetByName(root, "Button_Switch")
+        switchButton:setEnabled(false)
+        switchButton:setBright(false)
+
+        if size.width < 200 then
+            layoutController:setVisible(false)
+
+            scheduler:unscheduleScriptEntry(schedulerEntry)
+
+            schedulerEntry = scheduler:scheduleScriptFunc(function(dt)
+
+                local increaseSize = container:getContentSize()
+                increaseSize.width = increaseSize.width + 303.0 / 40.0
+                increaseSize.height = increaseSize.height + 70.0 / 40.0
+                container:setContentSize(increaseSize)
+                ccui.Helper:doLayout(container)
+
+                if increaseSize.width > 390 then
+                    switchButton:setEnabled(true)
+                    switchButton:setBright(true)
+                    scheduler:unscheduleScriptEntry(schedulerEntry)
+                    schedulerEntry = 0
+                end
+            end, 0.025, false)
+        else
+            layoutController:setVisible(true)
+
+            scheduler:unscheduleScriptEntry(schedulerEntry)
+            schedulerEntry = scheduler:scheduleScriptFunc(function(dt)
+
+                local decreaseSize = container:getContentSize()
+                decreaseSize.width = decreaseSize.width - 303.0 / 40.0
+                decreaseSize.height = decreaseSize.height - 70.0 / 40.0
+                container:setContentSize(decreaseSize)
+                ccui.Helper:doLayout(container)
+
+                if decreaseSize.width < 110 then
+                    switchButton:setEnabled(true)
+                    switchButton:setBright(true)
+                    scheduler:unscheduleScriptEntry(schedulerEntry)
+                    schedulerEntry = 0
+                end
+            end, 0.025, false)
+        end
+    end)
+end
+
+function LayoutComponentTest:initExtend()
+    self:init()
+
+    local node = cc.CSLoader:createNode("cocosui/UIEditorTest/UILayout/LayoutComponent/UILayoutComponent.csb")
+    local child = node:getChildByTag(5)
+    child:removeFromParent()
+    self._layout = child
+    self._uiLayer:addChild(self._layout)
+
+    self:configureGUIScene()
+end
+
+function LayoutComponentTest.create()
+    local scene = cc.Scene:create()
+    local layer = LayoutComponentTest.extend(cc.Layer:create())
+    layer:initExtend()
+    scene:addChild(layer)
+    cc.Director:getInstance():replaceScene(scene) 
+end
+
+local function runLayoutComponentTestScene()
+    LayoutComponentTest.create()
+end
+
 local ScrollViewEditorTest = class("ScrollViewEditorTest",UIScene)
 ScrollViewEditorTest._displayValueLabel = nil
 
@@ -924,6 +1179,13 @@ local UIEditorTestItemNames =
         itemTitle = "gui Editor LayoutTest",
         testScene = function () 
             runLayoutEditorTestScene()
+        end
+    },
+
+    {
+        itemTitle = "gui Editor UILayoutComponentTest",
+        testScene = function () 
+            runLayoutComponentTestScene()
         end
     },
 

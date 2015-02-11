@@ -49,11 +49,11 @@ PageTurn3D* PageTurn3D::create(float duration, const Size& gridSize)
 
 PageTurn3D *PageTurn3D::clone() const
 {
-	// no copy constructor	
-	auto a = new (std::nothrow) PageTurn3D();
-	a->initWithDuration(_duration, _gridSize);
-	a->autorelease();
-	return a;
+    // no copy constructor    
+    auto a = new (std::nothrow) PageTurn3D();
+    a->initWithDuration(_duration, _gridSize);
+    a->autorelease();
+    return a;
 }
 
 GridBase* PageTurn3D::getGrid()

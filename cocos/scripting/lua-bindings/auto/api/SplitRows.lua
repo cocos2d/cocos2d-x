@@ -5,7 +5,8 @@
 -- @parent_module cc
 
 --------------------------------
---  creates the action with the number of rows to split and the duration 
+-- creates the action with the number of rows to split and the duration <br>
+-- param duration in seconds
 -- @function [parent=#SplitRows] create 
 -- @param self
 -- @param #float duration
@@ -17,6 +18,7 @@
 -- @function [parent=#SplitRows] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return SplitRows#SplitRows self (return value: cc.SplitRows)
         
 --------------------------------
 -- 
@@ -29,5 +31,6 @@
 -- @function [parent=#SplitRows] update 
 -- @param self
 -- @param #float time
+-- @return SplitRows#SplitRows self (return value: cc.SplitRows)
         
 return nil

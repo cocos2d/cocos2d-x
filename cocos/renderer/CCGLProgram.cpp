@@ -50,7 +50,11 @@ const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP = "ShaderPositi
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST = "ShaderPositionTextureColorAlphaTest";
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV = "ShaderPositionTextureColorAlphaTest_NoMV";
 const char* GLProgram::SHADER_NAME_POSITION_COLOR = "ShaderPositionColor";
+const char* GLProgram::SHADER_NAME_POSITION_COLOR_TEXASPOINTSIZE = "ShaderPositionColorTexAsPointsize";
 const char* GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP = "ShaderPositionColor_noMVP";
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || defined(WP8_SHADER_COMPILER)
+const char* GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP_GRAYSCALE = "ShaderPositionColor_noMVP_GrayScale";
+#endif
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE = "ShaderPositionTexture";
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_U_COLOR = "ShaderPositionTexture_uColor";
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_A8_COLOR = "ShaderPositionTextureA8Color";
@@ -672,11 +676,13 @@ bool GLProgram::updateUniformLocation(GLint location, const GLvoid* data, unsign
         }
         else
         {
-            if (element->second.second < bytes){
+            if (element->second.second < bytes)
+            {
                 GLvoid* value = realloc(element->second.first, bytes);
                 memcpy(value, data, bytes );
                 _hashForUniforms[location] = std::make_pair(value, bytes);
-            }else
+            }
+            else
                 memcpy(element->second.first, data, bytes);
         }
     }

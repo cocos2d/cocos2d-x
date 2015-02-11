@@ -16,6 +16,7 @@
 -- @function [parent=#Console] log 
 -- @param self
 -- @param #char buf
+-- @return Console#Console self (return value: cc.Console)
         
 --------------------------------
 -- set bind address<br>
@@ -23,11 +24,13 @@
 -- @function [parent=#Console] setBindAddress 
 -- @param self
 -- @param #string address
+-- @return Console#Console self (return value: cc.Console)
         
 --------------------------------
 --  stops the Console. 'stop' will be called at destruction time as well 
 -- @function [parent=#Console] stop 
 -- @param self
+-- @return Console#Console self (return value: cc.Console)
         
 --------------------------------
 --  starts listening to specifed file descriptor 

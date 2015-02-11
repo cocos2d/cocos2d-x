@@ -275,7 +275,7 @@ ssize_t Skeleton3D::getBoneCount() const
 //get bone
 Bone3D* Skeleton3D::getBoneByIndex(unsigned int index) const
 {
-    if (index < _bones.size())
+    if (index < static_cast<unsigned int>(_bones.size()))
         return _bones.at(index);
     
     return nullptr;

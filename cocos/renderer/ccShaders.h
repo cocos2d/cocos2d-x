@@ -42,6 +42,8 @@ extern CC_DLL const GLchar * ccPosition_uColor_vert;
 extern CC_DLL const GLchar * ccPositionColor_frag;
 extern CC_DLL const GLchar * ccPositionColor_vert;
 
+extern CC_DLL const GLchar * ccPositionColorTextureAsPointsize_vert;
+
 extern CC_DLL const GLchar * ccPositionTexture_frag;
 extern CC_DLL const GLchar * ccPositionTexture_vert;
 
