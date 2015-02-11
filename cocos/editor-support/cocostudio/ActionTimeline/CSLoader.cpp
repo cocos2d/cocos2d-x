@@ -243,7 +243,7 @@ void CSLoader::init()
     
 }
 
-Node* CSLoader::createNode(const std::string& filename)
+Node* CSLoader::createNode(const std::string& filename, cocos2d::Node* deleget)
 {
     std::string path = filename;
     size_t pos = path.find_last_of('.');
@@ -254,7 +254,7 @@ Node* CSLoader::createNode(const std::string& filename)
     
     if (suffix == "csb")
     {
-        return load->createNodeWithFlatBuffersFile(filename);
+        return load->createNodeWithFlatBuffersFile(filename, deleget);
     }
     else if (suffix == "json" || suffix == "ExportJson")
     {
@@ -767,16 +767,16 @@ Component* CSLoader::loadComAudio(const rapidjson::Value &json)
     return audio;
 }
 
-Node* CSLoader::createNodeWithFlatBuffersFile(const std::string &filename)
+Node* CSLoader::createNodeWithFlatBuffersFile(const std::string &filename, cocos2d::Node* deleget)
 {
-    Node* node = nodeWithFlatBuffersFile(filename);
+    Node* node = nodeWithFlatBuffersFile(filename, deleget);
     
     _rootNode = nullptr;
     
     return node;
 }
 
-Node* CSLoader::nodeWithFlatBuffersFile(const std::string &fileName)
+Node* CSLoader::nodeWithFlatBuffersFile(const std::string &fileName, cocos2d::Node* deleget)
 {
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(fileName);
     
@@ -813,12 +813,12 @@ Node* CSLoader::nodeWithFlatBuffersFile(const std::string &fileName)
         SpriteFrameCache::getInstance()->addSpriteFramesWithFile(textures->Get(i)->c_str());        
     }
        
-    Node* node = nodeWithFlatBuffers(csparsebinary->nodeTree());
+    Node* node = nodeWithFlatBuffers(csparsebinary->nodeTree(), deleget);
     
     return node;
 }
 
-Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree)
+Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree, cocos2d::Node* deleget)
 {
     Node* node = nullptr;
     
@@ -875,13 +875,16 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree)
         NodeReaderProtocol* reader = dynamic_cast<NodeReaderProtocol*>(ObjectFactory::getInstance()->createObject(readername));
         node = reader->createNodeWithFlatBuffers(options->data());
         
-        Widget* widget = dynamic_cast<Widget*>(node);
-        if (widget)
+        if (deleget)
         {
-            std::string callbackName = widget->getCallbackName();
-            std::string callbackType = widget->getCallbackType();
-            
-            bindCallback(callbackName, callbackType, widget, _rootNode);
+            Widget* widget = dynamic_cast<Widget*>(node);
+            if (widget)
+            {
+                std::string callbackName = widget->getCallbackName();
+                std::string callbackType = widget->getCallbackType();
+                
+                bindCallback(callbackName, callbackType, widget, deleget);
+            }
         }
         
         if (_rootNode == nullptr)
@@ -903,7 +906,7 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree)
     for (int i = 0; i < size; ++i)
     {
         auto subNodeTree = children->Get(i);
-        Node* child = nodeWithFlatBuffers(subNodeTree);
+        Node* child = nodeWithFlatBuffers(subNodeTree, deleget);
         CCLOG("child = %p", child);
         if (child)
         {

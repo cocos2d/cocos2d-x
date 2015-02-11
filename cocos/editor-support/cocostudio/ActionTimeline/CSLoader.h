@@ -73,8 +73,8 @@ public:
     void purge();
     
     void init();
-    
-    static cocos2d::Node* createNode(const std::string& filename);
+   
+    static cocos2d::Node* createNode(const std::string& filename, cocos2d::Node* deleget = nullptr);
     static cocostudio::timeline::ActionTimeline* createTimeline(const std::string& filename);
 
     /*
@@ -92,9 +92,9 @@ public:
     void setJsonPath(std::string jsonPath) { _jsonPath = jsonPath; }
     std::string getJsonPath() const { return _jsonPath; }
     
-    cocos2d::Node* createNodeWithFlatBuffersFile(const std::string& filename);
-    cocos2d::Node* nodeWithFlatBuffersFile(const std::string& fileName);
-    cocos2d::Node* nodeWithFlatBuffers(const flatbuffers::NodeTree* nodetree);
+    cocos2d::Node* createNodeWithFlatBuffersFile(const std::string& filename, cocos2d::Node* deleget = nullptr);
+    cocos2d::Node* nodeWithFlatBuffersFile(const std::string& fileName, cocos2d::Node* deleget = nullptr);
+    cocos2d::Node* nodeWithFlatBuffers(const flatbuffers::NodeTree* nodetree, cocos2d::Node* deleget = nullptr);
     
     bool bindCallback(const std::string& callbackName,
                       const std::string& callbackType,
