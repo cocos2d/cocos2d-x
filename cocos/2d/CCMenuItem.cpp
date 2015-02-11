@@ -82,7 +82,6 @@ MenuItem* MenuItem::create( const ccMenuCallback& callback)
 bool MenuItem::initWithTarget(cocos2d::Ref *target, SEL_MenuHandler selector )
 {
     _target = target;
-    CC_SAFE_RETAIN(_target);
     return initWithCallback( std::bind(selector,target, std::placeholders::_1) );
 }
 
@@ -99,12 +98,6 @@ MenuItem::~MenuItem()
 {
 }
 
-void MenuItem::onExit()
-{
-    Node::onExit();
-    CC_SAFE_RELEASE(_target);
-}
-
 void MenuItem::selected()
 {
     _selected = true;
@@ -119,6 +112,7 @@ void MenuItem::activate()
 {
     if (_enabled)
     {
+        this->retain();
         if( _callback )
         {
             _callback(this);
@@ -131,6 +125,7 @@ void MenuItem::activate()
             ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
         }
 #endif
+        this->release();
     }
 }
 
@@ -160,7 +155,6 @@ bool MenuItem::isSelected() const
 void MenuItem::setTarget(Ref *target, SEL_MenuHandler selector)
 {
     _target = target;
-    CC_SAFE_RETAIN(_target);
     setCallback( std::bind( selector, target, std::placeholders::_1) );
 }
 
