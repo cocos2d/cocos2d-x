@@ -38,6 +38,8 @@
 #import<CoreMotion/CoreMotion.h>
 #import<CoreFoundation/CoreFoundation.h>
 
+#define SENSOR_DELAY_GAME 0.02
+
 @interface CCAccelerometerDispatcher : NSObject<UIAccelerometerDelegate>
 {
     cocos2d::Acceleration *_acceleration;
@@ -69,6 +71,7 @@ static CCAccelerometerDispatcher* s_pAccelerometerDispatcher;
     if( (self = [super init]) ) {
         _acceleration = new cocos2d::Acceleration();
         _motionManager = [[CMMotionManager alloc] init];
+        _motionManager.accelerometerUpdateInterval = SENSOR_DELAY_GAME;
     }
     return self;
 }
