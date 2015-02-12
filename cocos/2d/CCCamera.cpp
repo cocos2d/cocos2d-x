@@ -197,6 +197,9 @@ bool Camera::initDefault()
             break;
         }
         case Director::Projection::CUSTOM:
+            //load matrices from stack
+            _projection = cocos2d::Director::getInstance()->getMatrix(cocos2d::MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+            _frustumDirty = true;
             break;
         default:
             CCLOG("unrecognized projection");
