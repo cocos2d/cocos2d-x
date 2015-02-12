@@ -1640,10 +1640,10 @@
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="..\base\CCPlatformConfig.h">
-      <Filter>platform</Filter>
+      <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="..\base\CCPlatformMacros.h">
-      <Filter>platform</Filter>
+      <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="..\base\CCProfiling.h">
       <Filter>base</Filter>
