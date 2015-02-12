@@ -5,6 +5,16 @@
 -- @parent_module cc
 
 --------------------------------
+--  initializes the action with duration and color 
+-- @function [parent=#TintBy] initWithDuration 
+-- @param self
+-- @param #float duration
+-- @param #short deltaRed
+-- @param #short deltaGreen
+-- @param #short deltaBlue
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- creates an action with duration and color<br>
 -- param duration in seconds
 -- @function [parent=#TintBy] create 
@@ -39,6 +49,12 @@
 -- @function [parent=#TintBy] update 
 -- @param self
 -- @param #float time
+-- @return TintBy#TintBy self (return value: cc.TintBy)
+        
+--------------------------------
+-- 
+-- @function [parent=#TintBy] TintBy 
+-- @param self
 -- @return TintBy#TintBy self (return value: cc.TintBy)
         
 return nil

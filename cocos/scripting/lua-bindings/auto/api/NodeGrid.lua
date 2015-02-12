@@ -41,4 +41,10 @@
 -- @param #unsigned int parentFlags
 -- @return NodeGrid#NodeGrid self (return value: cc.NodeGrid)
         
+--------------------------------
+-- 
+-- @function [parent=#NodeGrid] NodeGrid 
+-- @param self
+-- @return NodeGrid#NodeGrid self (return value: cc.NodeGrid)
+        
 return nil

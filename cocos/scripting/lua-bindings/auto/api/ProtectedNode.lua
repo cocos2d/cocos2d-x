@@ -126,4 +126,10 @@
 -- @param self
 -- @return ProtectedNode#ProtectedNode self (return value: cc.ProtectedNode)
         
+--------------------------------
+-- 
+-- @function [parent=#ProtectedNode] ProtectedNode 
+-- @param self
+-- @return ProtectedNode#ProtectedNode self (return value: cc.ProtectedNode)
+        
 return nil

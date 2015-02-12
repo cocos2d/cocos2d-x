@@ -6,6 +6,29 @@
 
 --------------------------------
 -- 
+-- @function [parent=#Liquid] setAmplitudeRate 
+-- @param self
+-- @param #float amplitudeRate
+-- @return Liquid#Liquid self (return value: cc.Liquid)
+        
+--------------------------------
+--  initializes the action with amplitude, a grid and duration 
+-- @function [parent=#Liquid] initWithDuration 
+-- @param self
+-- @param #float duration
+-- @param #size_table gridSize
+-- @param #unsigned int waves
+-- @param #float amplitude
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#Liquid] getAmplitude 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
+-- 
 -- @function [parent=#Liquid] getAmplitudeRate 
 -- @param self
 -- @return float#float ret (return value: float)
@@ -16,19 +39,6 @@
 -- @param self
 -- @param #float amplitude
 -- @return Liquid#Liquid self (return value: cc.Liquid)
-        
---------------------------------
--- 
--- @function [parent=#Liquid] setAmplitudeRate 
--- @param self
--- @param #float amplitudeRate
--- @return Liquid#Liquid self (return value: cc.Liquid)
-        
---------------------------------
--- 
--- @function [parent=#Liquid] getAmplitude 
--- @param self
--- @return float#float ret (return value: float)
         
 --------------------------------
 --  creates the action with amplitude, a grid and duration 
@@ -51,6 +61,12 @@
 -- @function [parent=#Liquid] update 
 -- @param self
 -- @param #float time
+-- @return Liquid#Liquid self (return value: cc.Liquid)
+        
+--------------------------------
+-- 
+-- @function [parent=#Liquid] Liquid 
+-- @param self
 -- @return Liquid#Liquid self (return value: cc.Liquid)
         
 return nil

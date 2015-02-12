@@ -53,4 +53,10 @@
 -- @param self
 -- @return string#string ret (return value: string)
         
+--------------------------------
+-- js ctor
+-- @function [parent=#MenuItem] MenuItem 
+-- @param self
+-- @return MenuItem#MenuItem self (return value: cc.MenuItem)
+        
 return nil

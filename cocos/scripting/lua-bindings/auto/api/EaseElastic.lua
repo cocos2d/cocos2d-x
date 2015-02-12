@@ -12,6 +12,14 @@
 -- @return EaseElastic#EaseElastic self (return value: cc.EaseElastic)
         
 --------------------------------
+--  Initializes the action with the inner action and the period in radians (default is 0.3) 
+-- @function [parent=#EaseElastic] initWithAction 
+-- @param self
+-- @param #cc.ActionInterval action
+-- @param #float period
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  get period of the wave in radians. default is 0.3 
 -- @function [parent=#EaseElastic] getPeriod 
 -- @param self
