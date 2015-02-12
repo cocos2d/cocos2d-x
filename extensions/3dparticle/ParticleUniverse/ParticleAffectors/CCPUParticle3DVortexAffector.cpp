@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -36,7 +36,7 @@ PUParticle3DVortexAffector::PUParticle3DVortexAffector(void) :
     PUParticle3DAffector(),
     _rotationVector(DEFAULT_ROTATION_VECTOR)
 {
-    _dynRotationSpeed = new PUDynamicAttributeFixed();
+    _dynRotationSpeed = new (std::nothrow) PUDynamicAttributeFixed();
     (static_cast<PUDynamicAttributeFixed*>(_dynRotationSpeed))->setValue(DEFAULT_ROTATION_SPEED);
 }
 //-----------------------------------------------------------------------
@@ -117,7 +117,7 @@ void PUParticle3DVortexAffector::preUpdateAffector( float deltaTime )
 
 PUParticle3DVortexAffector* PUParticle3DVortexAffector::create()
 {
-    auto pvf = new PUParticle3DVortexAffector();
+    auto pvf = new (std::nothrow) PUParticle3DVortexAffector();
     pvf->autorelease();
     return pvf;
 }

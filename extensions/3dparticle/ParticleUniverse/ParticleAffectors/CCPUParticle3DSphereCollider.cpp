@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -193,7 +193,7 @@ void PUParticle3DSphereCollider::preUpdateAffector( float deltaTime )
 
 PUParticle3DSphereCollider* PUParticle3DSphereCollider::create()
 {
-    auto psc = new PUParticle3DSphereCollider();
+    auto psc = new (std::nothrow) PUParticle3DSphereCollider();
     psc->autorelease();
     return psc;
 }

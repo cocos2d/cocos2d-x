@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -96,7 +96,7 @@ void PUParticle3DCollisionAvoidanceAffector::updatePUAffector( PUParticle3D *par
 
 PUParticle3DCollisionAvoidanceAffector* PUParticle3DCollisionAvoidanceAffector::create()
 {
-    auto pcaa = new PUParticle3DCollisionAvoidanceAffector();
+    auto pcaa = new (std::nothrow) PUParticle3DCollisionAvoidanceAffector();
     pcaa->autorelease();
     return pcaa;
 }

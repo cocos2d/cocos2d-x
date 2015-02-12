@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -56,7 +56,7 @@ void PUParticle3DLinearForceAffector::updatePUAffector( PUParticle3D *particle, 
 
 PUParticle3DLinearForceAffector* PUParticle3DLinearForceAffector::create()
 {
-    auto plfa = new PUParticle3DLinearForceAffector();
+    auto plfa = new (std::nothrow) PUParticle3DLinearForceAffector();
     plfa->autorelease();
     return plfa;
 }

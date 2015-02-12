@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -45,24 +45,24 @@ void PUParticle3DDynamicAttributeTranslator::translate(PUScriptCompiler* compile
 
     if (type == token[TOKEN_DYN_RANDOM])
     {
-        _dynamicAttribute = new PUDynamicAttributeRandom();
+        _dynamicAttribute = new (std::nothrow) PUDynamicAttributeRandom();
     }
     else if (type == token[TOKEN_DYN_CURVED_LINEAR])
     {
-        _dynamicAttribute = new PUDynamicAttributeCurved();
+        _dynamicAttribute = new (std::nothrow) PUDynamicAttributeCurved();
     }
     else if (type == token[TOKEN_DYN_CURVED_SPLINE])
     {
-        _dynamicAttribute = new PUDynamicAttributeCurved();
+        _dynamicAttribute = new (std::nothrow) PUDynamicAttributeCurved();
     }
     else if (type == token[TOKEN_DYN_OSCILLATE])
     {
-        _dynamicAttribute = new PUDynamicAttributeOscillate();
+        _dynamicAttribute = new (std::nothrow) PUDynamicAttributeOscillate();
     }
     else
     {
         // Create a fixed one.
-        _dynamicAttribute = new PUDynamicAttributeFixed();
+        _dynamicAttribute = new (std::nothrow) PUDynamicAttributeFixed();
     }
 
     // Run through properties

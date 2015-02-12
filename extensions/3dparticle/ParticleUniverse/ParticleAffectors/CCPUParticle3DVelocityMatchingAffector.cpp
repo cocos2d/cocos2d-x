@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -111,7 +111,7 @@ void PUParticle3DVelocityMatchingAffector::updatePUAffector( PUParticle3D *parti
 
 PUParticle3DVelocityMatchingAffector* PUParticle3DVelocityMatchingAffector::create()
 {
-    auto pvma = new PUParticle3DVelocityMatchingAffector();
+    auto pvma = new (std::nothrow) PUParticle3DVelocityMatchingAffector();
     pvma->autorelease();
     return pvma;
 }

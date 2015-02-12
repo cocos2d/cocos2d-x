@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -105,22 +105,22 @@ public:
     /**
      * particle system play control
      */
-    virtual void startParticle();
+    virtual void startParticleSystem();
     
     /**
      * stop particle
      */
-    virtual void stopParticle();
+    virtual void stopParticleSystem();
     
     /**
      * pause particle
      */
-    virtual void pauseParticle();
+    virtual void pauseParticleSystem();
     
     /**
      * resume particle
      */
-    virtual void resumeParticle();
+    virtual void resumeParticleSystem();
     
     /**
      * set emitter for particle system, can set your own particle emitter
@@ -160,7 +160,7 @@ public:
         return  _particlePool;
     }
     
-    virtual int getAliveParticleCnt() const
+    virtual int getAliveParticleCount() const
     {
         return 0;
     }

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -97,29 +97,29 @@ _originEnabledSet(false)
 {
     //particleType = PT_EMITTER;
     //mAliasType = AT_EMITTER;
-    _dynEmissionRate = new PUDynamicAttributeFixed();
+    _dynEmissionRate = new (std::nothrow) PUDynamicAttributeFixed();
     (static_cast<PUDynamicAttributeFixed*>(_dynEmissionRate))->setValue(DEFAULT_EMISSION_RATE);
-    _dynTotalTimeToLive = new PUDynamicAttributeFixed();
+    _dynTotalTimeToLive = new (std::nothrow) PUDynamicAttributeFixed();
     (static_cast<PUDynamicAttributeFixed*>(_dynTotalTimeToLive))->setValue(DEFAULT_TIME_TO_LIVE);
-    _dynParticleMass = new PUDynamicAttributeFixed();
+    _dynParticleMass = new (std::nothrow) PUDynamicAttributeFixed();
     (static_cast<PUDynamicAttributeFixed*>(_dynParticleMass))->setValue(DEFAULT_MASS);
-    _dynVelocity = new PUDynamicAttributeFixed();
+    _dynVelocity = new (std::nothrow) PUDynamicAttributeFixed();
     (static_cast<PUDynamicAttributeFixed*>(_dynVelocity))->setValue(DEFAULT_VELOCITY);
-    _dynDuration = new PUDynamicAttributeFixed();
+    _dynDuration = new (std::nothrow) PUDynamicAttributeFixed();
     (static_cast<PUDynamicAttributeFixed*>(_dynDuration))->setValue(DEFAULT_DURATION);
-    _dynRepeatDelay = new PUDynamicAttributeFixed();
+    _dynRepeatDelay = new (std::nothrow) PUDynamicAttributeFixed();
     (static_cast<PUDynamicAttributeFixed*>(_dynRepeatDelay))->setValue(DEFAULT_REPEAT_DELAY);
-    _dynAngle = new PUDynamicAttributeFixed();
+    _dynAngle = new (std::nothrow) PUDynamicAttributeFixed();
     (static_cast<PUDynamicAttributeFixed*>(_dynAngle))->setValue(DEFAULT_ANGLE);
 
     // Set the dimensions attributes to 0; the default is to use the default dimensions of the ParticleTechnique
-    _dynParticleAllDimensions = new PUDynamicAttributeFixed();
+    _dynParticleAllDimensions = new (std::nothrow) PUDynamicAttributeFixed();
     (static_cast<PUDynamicAttributeFixed*>(_dynParticleAllDimensions))->setValue(DEFAULT_DIMENSIONS);
-    _dynParticleWidth = new PUDynamicAttributeFixed();
+    _dynParticleWidth = new (std::nothrow) PUDynamicAttributeFixed();
     (static_cast<PUDynamicAttributeFixed*>(_dynParticleWidth))->setValue(DEFAULT_WIDTH);
-    _dynParticleHeight = new PUDynamicAttributeFixed();
+    _dynParticleHeight = new (std::nothrow) PUDynamicAttributeFixed();
     (static_cast<PUDynamicAttributeFixed*>(_dynParticleHeight))->setValue(DEFAULT_HEIGHT);
-    _dynParticleDepth = new PUDynamicAttributeFixed();
+    _dynParticleDepth = new (std::nothrow) PUDynamicAttributeFixed();
     (static_cast<PUDynamicAttributeFixed*>(_dynParticleDepth))->setValue(DEFAULT_DEPTH);
 }
 

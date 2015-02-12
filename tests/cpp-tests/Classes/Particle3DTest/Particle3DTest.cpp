@@ -366,7 +366,7 @@ bool Particle3DAdvancedLodSystemDemo::init()
     auto rotate = RotateBy::create(1.0f, Vec3(0.0f, 0.0f, 100.0f));
     rootps->runAction(RepeatForever::create(Sequence::create(rotate, nullptr)));
     rootps->runAction(RepeatForever::create(Sequence::create(scale, scale->reverse(), nullptr)));
-    rootps->startParticle();
+    rootps->startParticleSystem();
 
 
     this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
@@ -394,7 +394,7 @@ bool Particle3DBlackHoleDemo::init()
     rootps->runAction(RepeatForever::create(Sequence::create(moveby, moveby1, nullptr)));
     //rootps->runAction(RepeatForever::create(Sequence::create(scale, scale->reverse(), nullptr)));
     //rootps->runAction(RepeatForever::create(Sequence::create(rotate, nullptr)));
-    rootps->startParticle();
+    rootps->startParticleSystem();
 
     this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
 
@@ -417,7 +417,7 @@ bool Particle3DHypnoDemo::init()
 //    auto rotate = RotateBy::create(1.0f, Vec3(0.0, 100.0f, 0.0f));
     //rootps->runAction(RepeatForever::create(Sequence::create(scale, scale->reverse(), nullptr)));
     //rootps->runAction(RepeatForever::create(Sequence::create(rotate, nullptr)));
-    rootps->startParticle();
+    rootps->startParticleSystem();
 
     this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
 
@@ -437,7 +437,7 @@ bool Particle3DTimeShiftDemo::init()
     auto rootps = PUParticleSystem3D::create("timeShift.pu", "pu_mediapack_01.material");
     rootps->setScale(2.0f);
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
-    rootps->startParticle();
+    rootps->startParticleSystem();
 
     this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
 
@@ -456,7 +456,7 @@ bool Particle3DUVAnimDemo::init()
 
     auto rootps = PUParticleSystem3D::create("UVAnimation.pu", "pu_mediapack_01.material");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
-    rootps->startParticle();
+    rootps->startParticleSystem();
 
     this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
 
@@ -476,7 +476,7 @@ bool Particle3DFirePlaceDemo::init()
     auto rootps = PUParticleSystem3D::create("mp_torch.pu", "pu_mediapack_01.material");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
     rootps->setScale(5.0f);
-    rootps->startParticle();
+    rootps->startParticleSystem();
 
     this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
 
@@ -498,7 +498,7 @@ bool Particle3DLineStreakDemo::init()
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
     rootps->setScale(5.0f);
     //rootps->runAction(RepeatForever::create(Sequence::create(rotate, nullptr)));
-    rootps->startParticle();
+    rootps->startParticleSystem();
     this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
 
     //auto sprite = Sprite::create("pump_streak_04.png");
@@ -522,7 +522,7 @@ bool Particle3DElectricBeamSystemDemo::init()
 
     auto rootps = PUParticleSystem3D::create("electricBeamSystem.pu");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
-    rootps->startParticle();
+    rootps->startParticleSystem();
     this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
 
     return true;
@@ -542,7 +542,7 @@ bool Particle3DExplosionBlueDemo::init()
     auto rootps = PUParticleSystem3D::create("mp_explosion_04_blue.pu");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
     rootps->setScale(0.25f);
-    rootps->startParticle();
+    rootps->startParticleSystem();
     this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
 
     return true;

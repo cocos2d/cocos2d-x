@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -265,13 +265,13 @@ void PURealTimeForceFieldCalculationFactory::determineForce(const Vec3& position
 //
 //	deleteMatrix();
 //	mForceFieldSize = preq.forceFieldSize;
-//	mMatrixPositions = new MatrixPosition**[mForceFieldSize];
+//	mMatrixPositions = new (std::nothrow) MatrixPosition**[mForceFieldSize];
 //	for(unsigned int i = 0; i < mForceFieldSize; ++i)
 //	{
-//		mMatrixPositions[i] = new MatrixPosition*[mForceFieldSize];
+//		mMatrixPositions[i] = new (std::nothrow) MatrixPosition*[mForceFieldSize];
 //		for(unsigned int j = 0; j < mForceFieldSize; ++j)
 //		{
-//			mMatrixPositions[i][j] = new MatrixPosition[mForceFieldSize];
+//			mMatrixPositions[i][j] = new (std::nothrow) MatrixPosition[mForceFieldSize];
 //		}
 //	}
 //
@@ -416,13 +416,13 @@ PUForceFieldCalculationFactory* PUForceField::createForceFieldCalculationFactory
     if (type == FF_MATRIX_CALC)
     {
         // Use precreated matrix
-        //setForceFieldCalculationFactory(new MatrixForceFieldCalculationFactory());
+        //setForceFieldCalculationFactory(new (std::nothrow) MatrixForceFieldCalculationFactory());
         return getForceFieldCalculationFactory();
     }
     else
     {
         // Use realtime calculation
-        setForceFieldCalculationFactory(new PURealTimeForceFieldCalculationFactory());
+        setForceFieldCalculationFactory(new (std::nothrow) PURealTimeForceFieldCalculationFactory());
         return getForceFieldCalculationFactory();
     }
 }

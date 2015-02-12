@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -98,7 +98,7 @@ void PUParticle3DParticleFollower::firstParticleUpdate( PUParticle3D *particle, 
 
 PUParticle3DParticleFollower* PUParticle3DParticleFollower::create()
 {
-    auto ppf = new PUParticle3DParticleFollower();
+    auto ppf = new (std::nothrow) PUParticle3DParticleFollower();
     ppf->autorelease();
     return ppf;
 }

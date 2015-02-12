@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -158,7 +158,7 @@ void PUParticle3DLineAffector::firstParticleUpdate( PUParticle3D *particle, floa
 
 PUParticle3DLineAffector* PUParticle3DLineAffector::create()
 {
-    auto pla = new PUParticle3DLineAffector();
+    auto pla = new (std::nothrow) PUParticle3DLineAffector();
     pla->autorelease();
     return pla;
 }

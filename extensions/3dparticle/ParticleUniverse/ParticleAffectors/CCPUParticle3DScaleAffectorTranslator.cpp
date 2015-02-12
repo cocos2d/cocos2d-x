@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -47,7 +47,7 @@ bool PUParticle3DScaleAffectorTranslator::translateChildProperty( PUScriptCompil
             float val = 0.0f;
             if(getFloat(*prop->values.front(), &val))
             {
-                PUDynamicAttributeFixed* dynamicAttributeFixed = new PUDynamicAttributeFixed();
+                PUDynamicAttributeFixed* dynamicAttributeFixed = new (std::nothrow) PUDynamicAttributeFixed();
                 dynamicAttributeFixed->setValue(val);
                 affector->setDynScaleXYZ(dynamicAttributeFixed);
                 return true;
@@ -62,7 +62,7 @@ bool PUParticle3DScaleAffectorTranslator::translateChildProperty( PUScriptCompil
             float val = 0.0f;
             if(getFloat(*prop->values.front(), &val))
             {
-                PUDynamicAttributeFixed* dynamicAttributeFixed = new PUDynamicAttributeFixed();
+                PUDynamicAttributeFixed* dynamicAttributeFixed = new (std::nothrow) PUDynamicAttributeFixed();
                 dynamicAttributeFixed->setValue(val);
                 affector->setDynScaleX(dynamicAttributeFixed);
                 return true;
@@ -77,7 +77,7 @@ bool PUParticle3DScaleAffectorTranslator::translateChildProperty( PUScriptCompil
             float val = 0.0f;
             if(getFloat(*prop->values.front(), &val))
             {
-                PUDynamicAttributeFixed* dynamicAttributeFixed = new PUDynamicAttributeFixed();
+                PUDynamicAttributeFixed* dynamicAttributeFixed = new (std::nothrow) PUDynamicAttributeFixed();
                 dynamicAttributeFixed->setValue(val);
                 affector->setDynScaleY(dynamicAttributeFixed);
                 return true;
@@ -92,7 +92,7 @@ bool PUParticle3DScaleAffectorTranslator::translateChildProperty( PUScriptCompil
             float val = 0.0f;
             if(getFloat(*prop->values.front(), &val))
             {
-                PUDynamicAttributeFixed* dynamicAttributeFixed = new PUDynamicAttributeFixed();
+                PUDynamicAttributeFixed* dynamicAttributeFixed = new (std::nothrow) PUDynamicAttributeFixed();
                 dynamicAttributeFixed->setValue(val);
                 affector->setDynScaleZ(dynamicAttributeFixed);
                 return true;

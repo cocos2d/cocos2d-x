@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -249,7 +249,7 @@ void PUParticle3DTextureAnimator::updatePUAffector( PUParticle3D *particle, floa
 
 PUParticle3DTextureAnimator* PUParticle3DTextureAnimator::create()
 {
-    auto pta = new PUParticle3DTextureAnimator();
+    auto pta = new (std::nothrow) PUParticle3DTextureAnimator();
     pta->autorelease();
     return pta;
 }

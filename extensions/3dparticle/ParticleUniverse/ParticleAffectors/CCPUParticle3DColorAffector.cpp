@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -126,7 +126,7 @@ void PUParticle3DColorAffector::updatePUAffector( PUParticle3D *particle, float 
 
 PUParticle3DColorAffector* PUParticle3DColorAffector::create()
 {
-    auto pca = new PUParticle3DColorAffector();
+    auto pca = new (std::nothrow) PUParticle3DColorAffector();
     pca->autorelease();
     return pca;
 }

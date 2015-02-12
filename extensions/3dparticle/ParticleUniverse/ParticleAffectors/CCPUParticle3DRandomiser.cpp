@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -150,7 +150,7 @@ void PUParticle3DRandomiser::postUpdateAffector(float deltaTime)
 
 PUParticle3DRandomiser* PUParticle3DRandomiser::create()
 {
-    auto pr = new PUParticle3DRandomiser();
+    auto pr = new (std::nothrow) PUParticle3DRandomiser();
     pr->autorelease();
     return pr;
 }

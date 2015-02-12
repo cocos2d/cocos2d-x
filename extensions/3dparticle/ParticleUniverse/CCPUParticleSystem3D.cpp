@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -148,7 +148,7 @@ PUParticleSystem3D::~PUParticleSystem3D()
 
 PUParticleSystem3D* PUParticleSystem3D::create()
 {
-    auto pups = new PUParticleSystem3D();
+    auto pups = new (std::nothrow) PUParticleSystem3D();
     pups->autorelease();
     return pups;
 }
@@ -194,9 +194,9 @@ PUParticleSystem3D* PUParticleSystem3D::create( const std::string &filePath )
     return ps;
 }
 
-void PUParticleSystem3D::startParticle()
+void PUParticleSystem3D::startParticleSystem()
 {
-    stopParticle();
+    stopParticleSystem();
     if (!_emitters.empty()){
         if (_state != State::RUNNING)
         {
@@ -230,11 +230,11 @@ void PUParticleSystem3D::startParticle()
     {
         PUParticleSystem3D *system = dynamic_cast<PUParticleSystem3D *>(iter);
         if (system)
-            system->startParticle();
+            system->startParticleSystem();
     }
 }
 
-void PUParticleSystem3D::stopParticle()
+void PUParticleSystem3D::stopParticleSystem()
 {
     if (!_emitters.empty()){
         if (_state != State::STOP)
@@ -268,11 +268,11 @@ void PUParticleSystem3D::stopParticle()
     {
         PUParticleSystem3D *system = dynamic_cast<PUParticleSystem3D *>(iter);
         if (system)
-            system->stopParticle();
+            system->stopParticleSystem();
     }
 }
 
-void PUParticleSystem3D::pauseParticle()
+void PUParticleSystem3D::pauseParticleSystem()
 {
     if (_state == State::RUNNING)
     {
@@ -299,11 +299,11 @@ void PUParticleSystem3D::pauseParticle()
     {
         PUParticleSystem3D *system = dynamic_cast<PUParticleSystem3D *>(iter);
         if (system)
-            system->pauseParticle();
+            system->pauseParticleSystem();
     }
 }
 
-void PUParticleSystem3D::resumeParticle()
+void PUParticleSystem3D::resumeParticleSystem()
 {
     if (_state == State::PAUSE)
     {
@@ -330,11 +330,11 @@ void PUParticleSystem3D::resumeParticle()
     {
         PUParticleSystem3D *system = dynamic_cast<PUParticleSystem3D *>(iter);
         if (system)
-            system->resumeParticle();
+            system->resumeParticleSystem();
     }
 }
 
-int PUParticleSystem3D::getAliveParticleCnt() const
+int PUParticleSystem3D::getAliveParticleCount() const
 {
     return (int)_particlePool.getActiveParticleList().size();
 }
@@ -345,7 +345,7 @@ void PUParticleSystem3D::update(float delta)
     {
         if (_state == State::PAUSE)
             return;
-        else if (_state == State::STOP && getAliveParticleCnt() == 0)
+        else if (_state == State::STOP && getAliveParticleCount() == 0)
         {
             //
             if (_render)
@@ -397,7 +397,7 @@ void PUParticleSystem3D::prepared()
         }
         
         for (unsigned short i = 0; i < _particleQuota; ++i){
-            _particlePool.addParticle(new PUParticle3D());
+            _particlePool.addParticle(new (std::nothrow) PUParticle3D());
         }
         _prepared = true;
     }
@@ -441,7 +441,7 @@ void PUParticleSystem3D::preUpdator( float elapsedTime )
 
     if (hasNoEmitted){
         if (_particlePool.getActiveParticleList().empty())
-            stopParticle();
+            stopParticleSystem();
     }
 
     for (auto it : _affectors) {

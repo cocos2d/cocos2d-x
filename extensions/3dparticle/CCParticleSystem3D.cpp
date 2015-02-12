@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -142,13 +142,13 @@ ParticleSystem3D::ParticleSystem3D()
 }
 ParticleSystem3D::~ParticleSystem3D()
 {
-    stopParticle();
+    stopParticleSystem();
     removeAllAffector();
     CC_SAFE_RELEASE(_emitter);
     CC_SAFE_RELEASE(_render);
 }
 
-void ParticleSystem3D::startParticle()
+void ParticleSystem3D::startParticleSystem()
 {
     if (_state != State::RUNNING)
     {
@@ -160,7 +160,7 @@ void ParticleSystem3D::startParticle()
     }
 }
 
-void ParticleSystem3D::stopParticle()
+void ParticleSystem3D::stopParticleSystem()
 {
     if (_state != State::STOP)
     {
@@ -172,7 +172,7 @@ void ParticleSystem3D::stopParticle()
     }
 }
 
-void ParticleSystem3D::pauseParticle()
+void ParticleSystem3D::pauseParticleSystem()
 {
     if (_state == State::RUNNING)
     {
@@ -180,7 +180,7 @@ void ParticleSystem3D::pauseParticle()
     }
 }
 
-void ParticleSystem3D::resumeParticle()
+void ParticleSystem3D::resumeParticleSystem()
 {
     if (_state == State::PAUSE)
     {
@@ -262,7 +262,7 @@ void ParticleSystem3D::update(float delta)
 
 void ParticleSystem3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    if (getAliveParticleCnt() && _render)
+    if (getAliveParticleCount() && _render)
     {
         _render->render(renderer, transform, this);
     }

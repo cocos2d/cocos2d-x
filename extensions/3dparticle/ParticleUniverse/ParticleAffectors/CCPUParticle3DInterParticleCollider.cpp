@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -169,7 +169,7 @@ void PUParticle3DInterParticleCollider::updatePUAffector( PUParticle3D *particle
 
 PUParticle3DInterParticleCollider* PUParticle3DInterParticleCollider::create()
 {
-    auto pipc = new PUParticle3DInterParticleCollider();
+    auto pipc = new (std::nothrow) PUParticle3DInterParticleCollider();
     pipc->autorelease();
     return pipc;
 }

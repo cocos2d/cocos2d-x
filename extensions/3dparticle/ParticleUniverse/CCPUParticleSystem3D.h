@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -193,22 +193,22 @@ public:
     /**
      * particle system play control
      */
-    virtual void startParticle() override;
+    virtual void startParticleSystem() override;
     
     /**
      * stop particle
      */
-    virtual void stopParticle() override;
+    virtual void stopParticleSystem() override;
     
     /**
      * pause particle
      */
-    virtual void pauseParticle() override;
+    virtual void pauseParticleSystem() override;
     
     /**
      * resume particle
      */
-    virtual void resumeParticle() override;
+    virtual void resumeParticleSystem() override;
 
     /** Returns the velocity scale, defined in the particle system, but passed to the technique for convenience.
     */
@@ -259,7 +259,7 @@ public:
      */
     void addEmitter(PUParticle3DEmitter* emitter);
     
-    virtual int getAliveParticleCnt() const override;
+    virtual int getAliveParticleCount() const override;
 
 CC_CONSTRUCTOR_ACCESS:
     PUParticleSystem3D();

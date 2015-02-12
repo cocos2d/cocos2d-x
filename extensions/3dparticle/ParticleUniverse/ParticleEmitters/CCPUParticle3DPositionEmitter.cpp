@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -120,7 +120,7 @@ void PUParticle3DPositionEmitter::initParticlePosition(PUParticle3D* particle)
 
 PUParticle3DPositionEmitter* PUParticle3DPositionEmitter::create()
 {
-    auto pe = new PUParticle3DPositionEmitter();
+    auto pe = new (std::nothrow) PUParticle3DPositionEmitter();
     pe->autorelease();
     return pe;
 }

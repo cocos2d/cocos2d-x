@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -38,9 +38,9 @@ PUParticle3DTextureRotator::PUParticle3DTextureRotator(void) :
     _scaledRotationSpeed(0.0f),
     _twoPiRad(float(2.0 * M_PI))
 {
-    _dynRotation = new PUDynamicAttributeFixed();
+    _dynRotation = new (std::nothrow) PUDynamicAttributeFixed();
     (static_cast<PUDynamicAttributeFixed*>(_dynRotation))->setValue(DEFAULT_ROTATION);
-    _dynRotationSpeed = new PUDynamicAttributeFixed();
+    _dynRotationSpeed = new (std::nothrow) PUDynamicAttributeFixed();
     (static_cast<PUDynamicAttributeFixed*>(_dynRotationSpeed))->setValue(DEFAULT_ROTATION_SPEED);
 }
 //-----------------------------------------------------------------------
@@ -156,7 +156,7 @@ void PUParticle3DTextureRotator::updatePUAffector( PUParticle3D *particle, float
 
 PUParticle3DTextureRotator* PUParticle3DTextureRotator::create()
 {
-    auto ptr = new PUParticle3DTextureRotator();
+    auto ptr = new (std::nothrow) PUParticle3DTextureRotator();
     ptr->autorelease();
     return ptr;
 }

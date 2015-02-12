@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -35,7 +35,7 @@ PUParticle3DJetAffector::PUParticle3DJetAffector (void) :
     PUParticle3DAffector(),
     _scaled(0.0f)
 {
-    _dynAcceleration = new PUDynamicAttributeFixed();
+    _dynAcceleration = new (std::nothrow) PUDynamicAttributeFixed();
     (static_cast<PUDynamicAttributeFixed*>(_dynAcceleration))->setValue(DEFAULT_ACCELERATION);
 }
 //-----------------------------------------------------------------------
@@ -76,7 +76,7 @@ void PUParticle3DJetAffector::updatePUAffector( PUParticle3D *particle, float de
 
 PUParticle3DJetAffector* PUParticle3DJetAffector::create()
 {
-    auto pja = new PUParticle3DJetAffector();
+    auto pja = new (std::nothrow) PUParticle3DJetAffector();
     pja->autorelease();
     return pja;
 }

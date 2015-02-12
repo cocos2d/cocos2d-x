@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -168,7 +168,7 @@ void PUParticle3DPlaneCollider::updatePUAffector( PUParticle3D *particle, float 
 
 PUParticle3DPlaneCollider* PUParticle3DPlaneCollider::create()
 {
-    auto ppc = new PUParticle3DPlaneCollider();
+    auto ppc = new (std::nothrow) PUParticle3DPlaneCollider();
     ppc->autorelease();
     return ppc;
 }

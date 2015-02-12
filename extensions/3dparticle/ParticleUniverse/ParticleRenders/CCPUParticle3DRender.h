@@ -96,7 +96,7 @@ protected:
 
     void getOriginOffset(int &offsetX, int &offsetY);
     void determineUVCoords(PUParticle3D *particle);
-    void fillVertex(unsigned short index, const cocos2d::Vec3 &pos, const cocos2d::Vec4 &color, const cocos2d::Vec2 &uv);
+    void fillVertex(unsigned short index, const Vec3 &pos, const Vec4 &color, const Vec2 &uv);
     void fillTriangle(unsigned short index, unsigned short v0, unsigned short v1, unsigned short v2);
 
 protected:

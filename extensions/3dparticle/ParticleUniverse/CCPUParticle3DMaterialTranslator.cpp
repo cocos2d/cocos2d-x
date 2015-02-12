@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -114,7 +114,7 @@ void PUParticle3DMaterialTranslator::translate(PUScriptCompiler* compiler, PUAbs
     PUObjectAbstractNode* obj = reinterpret_cast<PUObjectAbstractNode*>(node);
     //PUObjectAbstractNode* parent = obj->parent ? reinterpret_cast<PUObjectAbstractNode*>(obj->parent) : 0;
 
-    _material = new PUParticle3DMaterial();
+    _material = new (std::nothrow) PUParticle3DMaterial();
     _material->fileName = obj->file;
     _material->name = obj->name;
     _material->autorelease();

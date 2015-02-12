@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -185,7 +185,7 @@ void PUParticle3DCircleEmitter::initParticleDirection(PUParticle3D* particle)
 
 PUParticle3DCircleEmitter* PUParticle3DCircleEmitter::create()
 {
-    auto pe = new PUParticle3DCircleEmitter();
+    auto pe = new (std::nothrow) PUParticle3DCircleEmitter();
     pe->autorelease();
     return pe;
 }

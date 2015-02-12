@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -56,9 +56,19 @@ Particle3DQuadRender::~Particle3DQuadRender()
 
 Particle3DQuadRender* Particle3DQuadRender::create(const std::string& texFile)
 {
-    auto ret = new Particle3DQuadRender();
-    ret->autorelease();
-    ret->initQuadRender(texFile);
+    auto ret = new (std::nothrow)Particle3DQuadRender();
+    if (ret && ret->initQuadRender(texFile))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    else
+    {
+        delete ret;
+        ret = nullptr;
+    }
+    CC_SAFE_DELETE(ret);
+    
     return ret;
 }
 
@@ -145,7 +155,7 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
     renderer->addCommand(_meshCommand);
 }
 
-void Particle3DQuadRender::initQuadRender( const std::string& texFile )
+bool Particle3DQuadRender::initQuadRender( const std::string& texFile )
 {
     GLProgram* glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_PARTICLE_COLOR);
     if (!texFile.empty())
@@ -172,12 +182,14 @@ void Particle3DQuadRender::initQuadRender( const std::string& texFile )
     //ret->_indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, 6 * 10000);
     //ret->_indexBuffer->retain();
 
-    _meshCommand = new MeshCommand();
+    _meshCommand = new (std::nothrow)MeshCommand();
     _meshCommand->setTransparent(true);
     _meshCommand->setDepthTestEnabled(_depthTest);
     _meshCommand->setDepthWriteEnabled(_depthWrite);
     _meshCommand->setCullFace(GL_BACK);
     _meshCommand->setCullFaceEnabled(true);
+    
+    return true;
 }
 
 void Particle3DQuadRender::setDepthTest( bool isDepthTest )
@@ -208,7 +220,7 @@ Particle3DModelRender::~Particle3DModelRender()
 
 Particle3DModelRender* Particle3DModelRender::create(const std::string& modelFile, const std::string &texFile)
 {
-    auto ret = new Particle3DModelRender();
+    auto ret = new (std::nothrow) Particle3DModelRender();
     ret->_modelFile = modelFile;
     ret->_texFile = texFile;
     return ret;

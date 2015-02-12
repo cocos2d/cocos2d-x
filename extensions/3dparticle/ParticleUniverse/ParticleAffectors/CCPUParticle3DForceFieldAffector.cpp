@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -316,7 +316,7 @@ void PUParticle3DForceFieldAffector::prepare()
 
 PUParticle3DForceFieldAffector* PUParticle3DForceFieldAffector::create()
 {
-    auto pffa = new PUParticle3DForceFieldAffector();
+    auto pffa = new (std::nothrow) PUParticle3DForceFieldAffector();
     pffa->autorelease();
     return pffa;
 }

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -280,7 +280,7 @@ void PUParticle3DBoxCollider::preUpdateAffector( float deltaTime )
 
 PUParticle3DBoxCollider* PUParticle3DBoxCollider::create()
 {
-    auto pbc = new PUParticle3DBoxCollider();
+    auto pbc = new (std::nothrow) PUParticle3DBoxCollider();
     pbc->autorelease();
     return pbc;
 }
