@@ -1,4 +1,5 @@
 cocos2d-x-3.5 ??
+    [FIX]           Audio: audio can not resume if it is interrupt, and back from background
     [FIX]           C++: compiling error when using CC_USE_CULLING
     [FIX]           Label: texture size of string has unexpected padding on iOS 7 and upper version
     
