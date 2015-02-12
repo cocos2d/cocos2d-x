@@ -6,6 +6,19 @@
 
 --------------------------------
 -- 
+-- @function [parent=#ParticleFlower] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#ParticleFlower] initWithTotalParticles 
+-- @param self
+-- @param #int numberOfParticles
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#ParticleFlower] create 
 -- @param self
 -- @return ParticleFlower#ParticleFlower ret (return value: cc.ParticleFlower)
@@ -16,5 +29,11 @@
 -- @param self
 -- @param #int numberOfParticles
 -- @return ParticleFlower#ParticleFlower ret (return value: cc.ParticleFlower)
+        
+--------------------------------
+-- js ctor
+-- @function [parent=#ParticleFlower] ParticleFlower 
+-- @param self
+-- @return ParticleFlower#ParticleFlower self (return value: cc.ParticleFlower)
         
 return nil

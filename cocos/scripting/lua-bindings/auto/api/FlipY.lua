@@ -5,6 +5,13 @@
 -- @parent_module cc
 
 --------------------------------
+--  init the action 
+-- @function [parent=#FlipY] initWithFlipY 
+-- @param self
+-- @param #bool y
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  create the action 
 -- @function [parent=#FlipY] create 
 -- @param self
@@ -29,5 +36,11 @@
 -- @function [parent=#FlipY] reverse 
 -- @param self
 -- @return FlipY#FlipY ret (return value: cc.FlipY)
+        
+--------------------------------
+-- 
+-- @function [parent=#FlipY] FlipY 
+-- @param self
+-- @return FlipY#FlipY self (return value: cc.FlipY)
         
 return nil

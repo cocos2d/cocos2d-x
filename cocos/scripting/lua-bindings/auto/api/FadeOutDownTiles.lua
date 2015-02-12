@@ -27,4 +27,10 @@
 -- @param #float time
 -- @return float#float ret (return value: float)
         
+--------------------------------
+-- 
+-- @function [parent=#FadeOutDownTiles] FadeOutDownTiles 
+-- @param self
+-- @return FadeOutDownTiles#FadeOutDownTiles self (return value: cc.FadeOutDownTiles)
+        
 return nil

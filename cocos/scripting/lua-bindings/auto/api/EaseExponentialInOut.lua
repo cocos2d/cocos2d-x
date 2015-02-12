@@ -30,4 +30,10 @@
 -- @param self
 -- @return EaseExponentialInOut#EaseExponentialInOut ret (return value: cc.EaseExponentialInOut)
         
+--------------------------------
+-- 
+-- @function [parent=#EaseExponentialInOut] EaseExponentialInOut 
+-- @param self
+-- @return EaseExponentialInOut#EaseExponentialInOut self (return value: cc.EaseExponentialInOut)
+        
 return nil

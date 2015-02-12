@@ -5,6 +5,15 @@
 -- @parent_module cc
 
 --------------------------------
+-- param t in seconds
+-- @function [parent=#SkewBy] initWithDuration 
+-- @param self
+-- @param #float t
+-- @param #float sx
+-- @param #float sy
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- creates the action<br>
 -- param t in seconds
 -- @function [parent=#SkewBy] create 
@@ -32,5 +41,11 @@
 -- @function [parent=#SkewBy] reverse 
 -- @param self
 -- @return SkewBy#SkewBy ret (return value: cc.SkewBy)
+        
+--------------------------------
+-- 
+-- @function [parent=#SkewBy] SkewBy 
+-- @param self
+-- @return SkewBy#SkewBy self (return value: cc.SkewBy)
         
 return nil

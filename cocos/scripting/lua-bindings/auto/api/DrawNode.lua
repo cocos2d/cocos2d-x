@@ -48,6 +48,12 @@
 -- @return DrawNode#DrawNode self (return value: cc.DrawNode)
         
 --------------------------------
+-- 
+-- @function [parent=#DrawNode] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  draw a dot at a position, with a given radius and color 
 -- @function [parent=#DrawNode] drawDot 
 -- @param self
@@ -185,6 +191,12 @@
 -- @param #cc.Renderer renderer
 -- @param #mat4_table transform
 -- @param #unsigned int flags
+-- @return DrawNode#DrawNode self (return value: cc.DrawNode)
+        
+--------------------------------
+-- 
+-- @function [parent=#DrawNode] DrawNode 
+-- @param self
 -- @return DrawNode#DrawNode self (return value: cc.DrawNode)
         
 return nil

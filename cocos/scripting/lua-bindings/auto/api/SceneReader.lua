@@ -33,7 +33,7 @@
         
 --------------------------------
 -- js purge<br>
--- lua destroySceneReader
+-- lua destroyInstance
 -- @function [parent=#SceneReader] destroyInstance 
 -- @param self
 -- @return SceneReader#SceneReader self (return value: ccs.SceneReader)

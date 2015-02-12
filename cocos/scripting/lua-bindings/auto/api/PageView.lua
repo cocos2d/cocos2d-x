@@ -151,6 +151,12 @@
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
+-- 
+-- @function [parent=#PageView] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- Sets LayoutType.<br>
 -- see LayoutType<br>
 -- param type LayoutType

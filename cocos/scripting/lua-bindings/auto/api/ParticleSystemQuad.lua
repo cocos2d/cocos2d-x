@@ -55,4 +55,10 @@
 -- @param self
 -- @return string#string ret (return value: string)
         
+--------------------------------
+-- js ctor
+-- @function [parent=#ParticleSystemQuad] ParticleSystemQuad 
+-- @param self
+-- @return ParticleSystemQuad#ParticleSystemQuad self (return value: cc.ParticleSystemQuad)
+        
 return nil

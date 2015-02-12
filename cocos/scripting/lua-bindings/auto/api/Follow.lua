@@ -12,6 +12,17 @@
 -- @return Follow#Follow self (return value: cc.Follow)
         
 --------------------------------
+-- Initializes the action with a set boundary or with no boundary.<br>
+-- param followedNode  The node to be followed.<br>
+-- param rect  The boundary. If \p rect is equal to Rect::ZERO, it'll work<br>
+-- with no boundary.
+-- @function [parent=#Follow] initWithTarget 
+-- @param self
+-- @param #cc.Node followedNode
+-- @param #rect_table rect
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- 
 -- @function [parent=#Follow] isBoundarySet 
 -- @param self
@@ -58,5 +69,11 @@
 -- @function [parent=#Follow] isDone 
 -- @param self
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- js ctor
+-- @function [parent=#Follow] Follow 
+-- @param self
+-- @return Follow#Follow self (return value: cc.Follow)
         
 return nil

@@ -55,4 +55,10 @@
 -- @param self
 -- @return string#string ret (return value: string)
         
+--------------------------------
+-- 
+-- @function [parent=#LabelAtlas] LabelAtlas 
+-- @param self
+-- @return LabelAtlas#LabelAtlas self (return value: cc.LabelAtlas)
+        
 return nil

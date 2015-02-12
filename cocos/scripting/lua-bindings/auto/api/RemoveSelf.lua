@@ -5,6 +5,13 @@
 -- @parent_module cc
 
 --------------------------------
+--  init the action 
+-- @function [parent=#RemoveSelf] init 
+-- @param self
+-- @param #bool isNeedCleanUp
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  create the action 
 -- @function [parent=#RemoveSelf] create 
 -- @param self
@@ -28,5 +35,11 @@
 -- @function [parent=#RemoveSelf] reverse 
 -- @param self
 -- @return RemoveSelf#RemoveSelf ret (return value: cc.RemoveSelf)
+        
+--------------------------------
+-- 
+-- @function [parent=#RemoveSelf] RemoveSelf 
+-- @param self
+-- @return RemoveSelf#RemoveSelf self (return value: cc.RemoveSelf)
         
 return nil

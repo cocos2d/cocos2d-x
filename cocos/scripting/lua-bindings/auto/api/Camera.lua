@@ -5,6 +5,13 @@
 -- @parent_module cc
 
 --------------------------------
+-- 
+-- @function [parent=#Camera] setScene 
+-- @param self
+-- @param #cc.Scene scene
+-- @return Camera#Camera self (return value: cc.Camera)
+        
+--------------------------------
 -- Gets the camera's projection matrix.<br>
 -- return The camera projection matrix.
 -- @function [parent=#Camera] getProjectionMatrix 
@@ -69,6 +76,39 @@
 -- @return Camera#Camera self (return value: cc.Camera)
         
 --------------------------------
+-- 
+-- @function [parent=#Camera] initOrthographic 
+-- @param self
+-- @param #float zoomX
+-- @param #float zoomY
+-- @param #float nearPlane
+-- @param #float farPlane
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#Camera] initPerspective 
+-- @param self
+-- @param #float fieldOfView
+-- @param #float aspectRatio
+-- @param #float nearPlane
+-- @param #float farPlane
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+--  init camera 
+-- @function [parent=#Camera] initDefault 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- set additional matrix for the projection matrix, it multiplys mat to projection matrix when called, used by WP8
+-- @function [parent=#Camera] setAdditionalProjection 
+-- @param self
+-- @param #mat4_table mat
+-- @return Camera#Camera self (return value: cc.Camera)
+        
+--------------------------------
 --  create default camera, the camera type depends on Director::getProjection 
 -- @function [parent=#Camera] create 
 -- @param self
@@ -114,5 +154,11 @@
 -- @function [parent=#Camera] getVisitingCamera 
 -- @param self
 -- @return Camera#Camera ret (return value: cc.Camera)
+        
+--------------------------------
+-- 
+-- @function [parent=#Camera] Camera 
+-- @param self
+-- @return Camera#Camera self (return value: cc.Camera)
         
 return nil

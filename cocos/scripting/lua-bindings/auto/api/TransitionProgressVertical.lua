@@ -12,4 +12,10 @@
 -- @param #cc.Scene scene
 -- @return TransitionProgressVertical#TransitionProgressVertical ret (return value: cc.TransitionProgressVertical)
         
+--------------------------------
+-- js ctor
+-- @function [parent=#TransitionProgressVertical] TransitionProgressVertical 
+-- @param self
+-- @return TransitionProgressVertical#TransitionProgressVertical self (return value: cc.TransitionProgressVertical)
+        
 return nil
