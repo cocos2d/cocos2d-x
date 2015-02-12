@@ -82,11 +82,21 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
     if (_vertexBuffer == nullptr){
         GLsizei stride = sizeof(Particle3DQuadRender::posuvcolor);
         _vertexBuffer = VertexBuffer::create(stride, 4 * particleSystem->getParticleQuota());
+        if (_vertexBuffer == nullptr)
+        {
+            CCLOG("Particle3DQuadRender::render create vertex buffer failed");
+            return;
+        }
         _vertexBuffer->retain();
     }
 
     if (_indexBuffer == nullptr){
         _indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, 6 * particleSystem->getParticleQuota());
+        if (_indexBuffer == nullptr)
+        {
+            CCLOG("Particle3DQuadRender::render create index buffer failed");
+            return;
+        }
         _indexBuffer->retain();
     }
     ParticlePool::PoolList activeParticleList = particlePool.getActiveParticleList();
