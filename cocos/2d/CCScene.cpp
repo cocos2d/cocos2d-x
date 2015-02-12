@@ -121,7 +121,7 @@ void Scene::onProjectionChanged(EventCustom* event)
     }
 }
 
-bool camera_cmp(const Camera* a, const Camera* b)
+static bool camera_cmp(const Camera* a, const Camera* b)
 {
     return a->getDepth() < b->getDepth();
 }
@@ -146,7 +146,6 @@ void Scene::render(Renderer* renderer)
         if (Camera::_visitingCamera->getCameraFlag() == CameraFlag::DEFAULT)
         {
             defaultCamera = Camera::_visitingCamera;
-//            continue;
         }
         
         director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
@@ -158,19 +157,7 @@ void Scene::render(Renderer* renderer)
         
         director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     }
-//    //draw with default camera
-//    if (defaultCamera)
-//    {
-//        Camera::_visitingCamera = defaultCamera;
-//        director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-//        director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
-//        
-//        //visit the scene
-//        visit(renderer, transform, 0);
-//        renderer->render();
-//        
-//        director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-//    }
+
     Camera::_visitingCamera = nullptr;
 }
 
