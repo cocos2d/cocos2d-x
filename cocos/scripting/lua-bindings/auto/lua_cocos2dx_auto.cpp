@@ -46595,6 +46595,20 @@ int lua_cocos2dx_SpriteBatchNode_initWithTexture(lua_State* tolua_S)
 #endif
 
     argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Texture2D* arg0;
+
+        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_SpriteBatchNode_initWithTexture'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->initWithTexture(arg0);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
     if (argc == 2) 
     {
         cocos2d::Texture2D* arg0;
@@ -46612,7 +46626,7 @@ int lua_cocos2dx_SpriteBatchNode_initWithTexture(lua_State* tolua_S)
         tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SpriteBatchNode:initWithTexture",argc, 2);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SpriteBatchNode:initWithTexture",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
@@ -46801,6 +46815,20 @@ int lua_cocos2dx_SpriteBatchNode_initWithFile(lua_State* tolua_S)
 #endif
 
     argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        std::string arg0;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.SpriteBatchNode:initWithFile");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_SpriteBatchNode_initWithFile'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->initWithFile(arg0);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
     if (argc == 2) 
     {
         std::string arg0;
@@ -46818,7 +46846,7 @@ int lua_cocos2dx_SpriteBatchNode_initWithFile(lua_State* tolua_S)
         tolua_pushboolean(tolua_S,(bool)ret);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SpriteBatchNode:initWithFile",argc, 2);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SpriteBatchNode:initWithFile",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
