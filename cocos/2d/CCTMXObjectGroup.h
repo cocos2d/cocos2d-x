@@ -55,7 +55,7 @@ public:
      */
     virtual ~TMXObjectGroup();
 
-    inline const std::string& getGroupName(){ return _groupName; }
+    inline const std::string& getGroupName() const { return _groupName; }
     inline void setGroupName(const std::string& groupName){ _groupName = groupName; }
 
     /** return the value for the specific property name */
