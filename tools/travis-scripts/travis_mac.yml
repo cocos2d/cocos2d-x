@@ -18,4 +18,4 @@ env:
 # whitelist
 branches:
   only:
-    - v3
+    - v4-develop
