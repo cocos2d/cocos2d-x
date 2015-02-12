@@ -498,4 +498,13 @@ public:
     virtual void runThisTest();
 };
 
+class TestSprite3D : public Sprite3DTestDemo
+{
+public:
+	CREATE_FUNC(TestSprite3D);
+	TestSprite3D();
+	virtual std::string title() const override;
+	virtual std::string subtitle() const override;
+};
+
 #endif

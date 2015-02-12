@@ -1936,6 +1936,12 @@
 		B63990CD1A490AFE00B07923 /* CCAsyncTaskPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B63990CA1A490AFE00B07923 /* CCAsyncTaskPool.cpp */; };
 		B63990CE1A490AFE00B07923 /* CCAsyncTaskPool.h in Headers */ = {isa = PBXBuildFile; fileRef = B63990CB1A490AFE00B07923 /* CCAsyncTaskPool.h */; };
 		B63990CF1A490AFE00B07923 /* CCAsyncTaskPool.h in Headers */ = {isa = PBXBuildFile; fileRef = B63990CB1A490AFE00B07923 /* CCAsyncTaskPool.h */; };
+		CCBD59E31A8CCAD700765618 /* CSSprite3D_generated.h in Headers */ = {isa = PBXBuildFile; fileRef = CCBD59E01A8CCAD700765618 /* CSSprite3D_generated.h */; };
+		CCBD59E41A8CCAD700765618 /* CSSprite3D_generated.h in Headers */ = {isa = PBXBuildFile; fileRef = CCBD59E01A8CCAD700765618 /* CSSprite3D_generated.h */; };
+		CCBD59E51A8CCAD700765618 /* Sprite3DReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CCBD59E11A8CCAD700765618 /* Sprite3DReader.cpp */; };
+		CCBD59E61A8CCAD700765618 /* Sprite3DReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CCBD59E11A8CCAD700765618 /* Sprite3DReader.cpp */; };
+		CCBD59E71A8CCAD700765618 /* Sprite3DReader.h in Headers */ = {isa = PBXBuildFile; fileRef = CCBD59E21A8CCAD700765618 /* Sprite3DReader.h */; };
+		CCBD59E81A8CCAD700765618 /* Sprite3DReader.h in Headers */ = {isa = PBXBuildFile; fileRef = CCBD59E21A8CCAD700765618 /* Sprite3DReader.h */; };
 		D0FD03491A3B51AA00825BB5 /* CCAllocatorBase.h in Headers */ = {isa = PBXBuildFile; fileRef = D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */; };
 		D0FD034A1A3B51AA00825BB5 /* CCAllocatorBase.h in Headers */ = {isa = PBXBuildFile; fileRef = D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */; };
 		D0FD034B1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FD033C1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp */; };
@@ -3033,6 +3039,9 @@
 		B67C624319D4186F00F11FC6 /* ccShader_3D_ColorNormal.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_ColorNormal.frag; sourceTree = "<group>"; };
 		B67C624419D4186F00F11FC6 /* ccShader_3D_ColorNormalTex.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_ColorNormalTex.frag; sourceTree = "<group>"; };
 		B67C624519D4186F00F11FC6 /* ccShader_3D_PositionNormalTex.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_PositionNormalTex.vert; sourceTree = "<group>"; };
+		CCBD59E01A8CCAD700765618 /* CSSprite3D_generated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CSSprite3D_generated.h; path = Sprite3DReader/CSSprite3D_generated.h; sourceTree = "<group>"; };
+		CCBD59E11A8CCAD700765618 /* Sprite3DReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sprite3DReader.cpp; path = Sprite3DReader/Sprite3DReader.cpp; sourceTree = "<group>"; };
+		CCBD59E21A8CCAD700765618 /* Sprite3DReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sprite3DReader.h; path = Sprite3DReader/Sprite3DReader.h; sourceTree = "<group>"; };
 		D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAllocatorBase.h; sourceTree = "<group>"; };
 		D0FD033C1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAllocatorDiagnostics.cpp; sourceTree = "<group>"; };
 		D0FD033D1A3B51AA00825BB5 /* CCAllocatorDiagnostics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAllocatorDiagnostics.h; sourceTree = "<group>"; };
@@ -5018,6 +5027,7 @@
 		50FCEB6818C72017004AD434 /* WidgetReader */ = {
 			isa = PBXGroup;
 			children = (
+				CCBD59DF1A8CCA8A00765618 /* Sprite3DReader */,
 				38F5263A1A48363B000DB7F7 /* ArmatureNodeReader */,
 				382384251A2590F9002C4610 /* NodeReader */,
 				3823843A1A259140002C4610 /* SingleNodeReader */,
@@ -5215,6 +5225,16 @@
 			path = ../cocos/3d;
 			sourceTree = "<group>";
 		};
+		CCBD59DF1A8CCA8A00765618 /* Sprite3DReader */ = {
+			isa = PBXGroup;
+			children = (
+				CCBD59E01A8CCAD700765618 /* CSSprite3D_generated.h */,
+				CCBD59E11A8CCAD700765618 /* Sprite3DReader.cpp */,
+				CCBD59E21A8CCAD700765618 /* Sprite3DReader.h */,
+			);
+			name = Sprite3DReader;
+			sourceTree = "<group>";
+		};
 		D0FD03391A3B51AA00825BB5 /* allocator */ = {
 			isa = PBXGroup;
 			children = (
@@ -5378,6 +5398,7 @@
 				B29A7E2B19EE1B7700872B35 /* AtlasAttachmentLoader.h in Headers */,
 				50ED2BE219BEAF7900A0AB90 /* UIEditBoxImpl-wp8.h in Headers */,
 				15AE1B6819AADA9900C27E9E /* UIScale9Sprite.h in Headers */,
+				CCBD59E31A8CCAD700765618 /* CSSprite3D_generated.h in Headers */,
 				1A570121180BC90D0088DEC7 /* CCGrid.h in Headers */,
 				5034CA2D191D591100CE6051 /* ccShader_PositionTextureA8Color.frag in Headers */,
 				382383F21A258FA7002C4610 /* idl.h in Headers */,
@@ -5480,6 +5501,7 @@
 				15AE189319AAD33D00C27E9E /* CCLayerGradientLoader.h in Headers */,
 				B29A7DF919EE1B7700872B35 /* Json.h in Headers */,
 				15AE18EF19AAD35000C27E9E /* CCArmature.h in Headers */,
+				CCBD59E71A8CCAD700765618 /* Sprite3DReader.h in Headers */,
 				15AE19A719AAD39600C27E9E /* TextReader.h in Headers */,
 				1A570227180BCC1A0088DEC7 /* CCParticleExamples.h in Headers */,
 				1A57022B180BCC1A0088DEC7 /* CCParticleSystem.h in Headers */,
@@ -5932,6 +5954,7 @@
 				15AE1ACB19AAD40300C27E9E /* b2MouseJoint.h in Headers */,
 				50ABBD3F1925AB0000A911A9 /* CCGeometry.h in Headers */,
 				B29A7DD019EE1B7700872B35 /* RegionAttachment.h in Headers */,
+				CCBD59E41A8CCAD700765618 /* CSSprite3D_generated.h in Headers */,
 				D0FD034A1A3B51AA00825BB5 /* CCAllocatorBase.h in Headers */,
 				15AE1AD319AAD40300C27E9E /* b2RopeJoint.h in Headers */,
 				50ABBFFE1926664800A911A9 /* CCFileUtils-apple.h in Headers */,
@@ -6109,6 +6132,7 @@
 				50ABBE2A1925AB6F00A911A9 /* CCAutoreleasePool.h in Headers */,
 				1A57030F180BCF190088DEC7 /* CCComponent.h in Headers */,
 				15AE1AD519AAD40300C27E9E /* b2WeldJoint.h in Headers */,
+				CCBD59E81A8CCAD700765618 /* Sprite3DReader.h in Headers */,
 				15AE18B019AAD33D00C27E9E /* CCBKeyframe.h in Headers */,
 				15AE18C419AAD33D00C27E9E /* CCLayerGradientLoader.h in Headers */,
 				1A570313180BCF190088DEC7 /* CCComponentContainer.h in Headers */,
@@ -6425,6 +6449,7 @@
 				15AE188C19AAD33D00C27E9E /* CCLabelBMFontLoader.cpp in Sources */,
 				DA8C62A219E52C6400000516 /* ioapi_mem.cpp in Sources */,
 				1A570069180BC5A10088DEC7 /* CCActionCatmullRom.cpp in Sources */,
+				CCBD59E51A8CCAD700765618 /* Sprite3DReader.cpp in Sources */,
 				B257B44E1989D5E800D9A687 /* CCPrimitive.cpp in Sources */,
 				299CF1FB19A434BC00C378C1 /* ccRandom.cpp in Sources */,
 				15AE18E819AAD35000C27E9E /* CCActionManagerEx.cpp in Sources */,
@@ -6919,6 +6944,7 @@
 				B29A7DCC19EE1B7700872B35 /* Skeleton.c in Sources */,
 				15AE1A4919AAD3D500C27E9E /* b2CircleShape.cpp in Sources */,
 				15AE184119AAD2F700C27E9E /* CCSprite3D.cpp in Sources */,
+				CCBD59E61A8CCAD700765618 /* Sprite3DReader.cpp in Sources */,
 				50ABBE5A1925AB6F00A911A9 /* CCEventKeyboard.cpp in Sources */,
 				15AE193A19AAD35100C27E9E /* CCArmatureDataManager.cpp in Sources */,
 				3EACC9A519F5014D00EB3C5E /* CCLight.cpp in Sources */,

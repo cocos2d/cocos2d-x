@@ -248,6 +248,9 @@
     <Filter Include="base\allocator">
       <UniqueIdentifier>{b870ea4f-2751-4a44-92f5-a7fb3b3672cb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\Sprite3DReader">
+      <UniqueIdentifier>{e1b83431-a8e2-4e39-b72e-6b2ef53be562}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCAction.cpp">
@@ -1328,6 +1331,9 @@
     </ClCompile>
     <ClCompile Include="..\base\allocator\CCAllocatorGlobalNewDelete.cpp">
       <Filter>base\allocator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\Sprite3DReader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2597,6 +2603,12 @@
     </ClInclude>
     <ClInclude Include="..\physics\CCPhysicsHelper.h">
       <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Sprite3DReader\CSSprite3D_generated.h">
+      <Filter>cocostudio\reader\WidgetReader\Sprite3DReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.h">
+      <Filter>cocostudio\reader\WidgetReader\Sprite3DReader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

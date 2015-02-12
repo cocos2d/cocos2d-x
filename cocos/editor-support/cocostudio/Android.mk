@@ -61,6 +61,7 @@ WidgetReader/TextAtlasReader/TextAtlasReader.cpp \
 WidgetReader/TextBMFontReader/TextBMFontReader.cpp \
 WidgetReader/TextFieldReader/TextFieldReader.cpp \
 WidgetReader/TextReader/TextReader.cpp \
+WidgetReader/Sprite3DReader/Sprite3DReader.cpp \
 ActionTimeline/CCNodeReader.cpp \
 ActionTimeline/CCActionTimelineCache.cpp \
 ActionTimeline/CCFrame.cpp \

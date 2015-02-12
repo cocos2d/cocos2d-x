@@ -32,6 +32,7 @@
 #include "3d/CCSprite3D.h"
 #include "renderer/CCVertexIndexBuffer.h"
 #include "DrawNode3D.h"
+#include "cocostudio/CocoStudio.h"
 
 #include <algorithm>
 #include "../testResource.h"
@@ -71,7 +72,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(QuaternionTest),
     CL(Sprite3DEmptyTest),
     CL(UseCaseSprite3D),
-    CL(Sprite3DForceDepthTest)
+    CL(Sprite3DForceDepthTest),
+	CL(TestSprite3D)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -2322,4 +2324,26 @@ void UseCaseSprite3D::update(float delta)
         circle->setPositionX(x);
         circle->setPositionZ(z);
     }
+}
+
+//------------------------------------------------------------------
+//
+// TestSprite3D
+//
+//------------------------------------------------------------------
+TestSprite3D::TestSprite3D()
+{
+	auto s = Director::getInstance()->getWinSize();
+	auto sprite3d = CSLoader::createNode("Sprite3DTest/TestSprite3D.csb");
+	sprite3d->setPosition(Vec2(s.width / 2, s.height / 3));
+	addChild(sprite3d);
+}
+
+std::string TestSprite3D::title() const
+{
+	return "Test Sprite3D";
+}
+std::string TestSprite3D::subtitle() const
+{
+	return "Csb file loaded";
 }
