@@ -142,7 +142,7 @@
         
 --------------------------------
 --  creates a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and capacity of children.<br>
--- The capacity will be increased in 33% in runtime if it run out of space.<br>
+-- The capacity will be increased in 33% in runtime if it runs out of space.<br>
 -- The file will be loaded using the TextureMgr.
 -- @function [parent=#SpriteBatchNode] create 
 -- @param self
@@ -152,7 +152,7 @@
         
 --------------------------------
 --  creates a SpriteBatchNode with a texture2d and capacity of children.<br>
--- The capacity will be increased in 33% in runtime if it run out of space.
+-- The capacity will be increased in 33% in runtime if it runs out of space.
 -- @function [parent=#SpriteBatchNode] createWithTexture 
 -- @param self
 -- @param #cc.Texture2D tex
