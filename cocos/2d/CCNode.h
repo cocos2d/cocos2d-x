@@ -1575,7 +1575,7 @@ public:
     
     /** get & set camera mask, the node is visible by the camera whose camera flag & node's camera mask is true */
     unsigned short getCameraMask() const { return _cameraMask; }
-    void setCameraMask(unsigned short mask, bool applyChildren = true);
+    virtual void setCameraMask(unsigned short mask, bool applyChildren = true);
 
 CC_CONSTRUCTOR_ACCESS:
     // Nodes should be created using create();
