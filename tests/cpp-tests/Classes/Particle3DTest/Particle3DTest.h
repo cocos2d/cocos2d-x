@@ -27,7 +27,7 @@
 
 #include "../testBasic.h"
 #include "../BaseTest.h"
-#include "3dparticle/CCParticleSystem3D.h"
+#include "Particle3D/CCParticleSystem3D.h"
 #include <string>
 class Particle3DTestDemo : public BaseTest
 {
