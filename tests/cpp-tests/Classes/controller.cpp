@@ -12,7 +12,7 @@
 #include "testResource.h"
 #include "tests.h"
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -91,10 +91,8 @@ Controller g_aTestNames[] = {
     { "ReleasePool", [](){ return new ReleasePoolTestScene(); } },
 	{ "Rotate World", [](){return new RotateWorldTestScene(); } },
 	{ "Scheduler", [](){return new SchedulerTestScene(); } },
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
 	{ "Shader - Basic", []() { return new ShaderTestScene(); } },
     { "Shader - Sprite", []() { return new ShaderTestScene2(); } },
-#endif
 	{ "Texture2D", [](){return new TextureTestScene(); } },
 	{ "TextureCache", []() { return new TextureCacheTestScene(); } },
 	{ "TexturePacker Encryption", []() { return new TextureAtlasEncryptionTestScene(); } },
@@ -186,7 +184,7 @@ void TestController::menuCallback(Ref * sender)
 
 void TestController::closeCallback(Ref * sender)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 	MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
     return;
 #endif
@@ -515,7 +513,7 @@ void TestController::autorun()
     hints.ai_flags = 0;
     hints.ai_protocol = 0;          /* Any protocol */
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     WSADATA wsaData;
     WSAStartup(MAKEWORD(2, 2),&wsaData);
 #endif
@@ -541,7 +539,7 @@ void TestController::autorun()
         if (connect(sfd, rp->ai_addr, rp->ai_addrlen) != -1)
             break;                  /* Success */
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
         closesocket(sfd);
 #else
         close(sfd);
@@ -577,7 +575,7 @@ void TestController::autorun()
     strcpy(cmd, tmp.c_str());
     send(sfd,cmd,strlen(cmd),0);
     wait(1);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
         closesocket(sfd);
         WSACleanup();
 #else
