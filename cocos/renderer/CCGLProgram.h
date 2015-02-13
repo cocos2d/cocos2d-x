@@ -178,12 +178,6 @@ public:
      * @lua initWithString
      */
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-    /** Initializes the CCGLProgram with precompiled shader program */
-    static GLProgram* createWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
-    bool initWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
-#endif
-
     /** Initializes the GLProgram with a vertex and fragment with bytes array 
      * @js initWithString
      * @lua initWithString
