@@ -260,6 +260,11 @@ void RuntimeJsImpl::onReload(const rapidjson::Document &dArgParse, rapidjson::Do
     dReplyParse.AddMember("code", 0, dReplyParse.GetAllocator());
 }
 
+void RuntimeJsImpl::onRemove(const std::string &filename)
+{
+    ScriptingCore::getInstance()->cleanScript(filename.c_str());
+}
+
 void RuntimeJsImpl::end()
 {
     ScriptEngineManager::destroyInstance();

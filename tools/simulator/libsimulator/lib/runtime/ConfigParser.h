@@ -43,6 +43,7 @@ public:
     
 private:
     ConfigParser(void);
+    void setDebugPort(int port);
     static ConfigParser *s_sharedConfigParserInstance;
     ScreenSizeArray _screenSizeArray;
     cocos2d::Size _initViewSize;

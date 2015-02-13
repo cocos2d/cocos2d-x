@@ -86,21 +86,15 @@ void ConfigParser::readConfig(const string &filepath)
             }
             if (objectInitView.HasMember("consolePort"))
             {
-                _consolePort = objectInitView["consolePort"].GetUint();
-                if(_consolePort <= 0)
-                    _consolePort = kProjectConfigConsolePort;
+                setConsolePort(objectInitView["consolePort"].GetUint());
             }
             if (objectInitView.HasMember("debugPort"))
             {
-                _debugPort = objectInitView["debugPort"].GetUint();
-                if(_debugPort <= 0)
-                    _debugPort = kProjectConfigDebugPort;
+                setDebugPort(objectInitView["debugPort"].GetUint());
             }
             if (objectInitView.HasMember("uploadPort"))
             {
-                _uploadPort = objectInitView["uploadPort"].GetUint();
-                if(_uploadPort <= 0)
-                    _uploadPort = kProjectConfigUploadPort;
+                setUploadPort(objectInitView["uploadPort"].GetUint());
             }
             if (objectInitView.HasMember("isWindowTop") && objectInitView["isWindowTop"].IsBool())
             {
@@ -169,11 +163,24 @@ bool ConfigParser::isWindowTop()
 }
 void ConfigParser::setConsolePort(int port)
 {
-    _consolePort = port;
+    if (port > 0)
+    {
+        _consolePort = port;
+    }
 }
 void ConfigParser::setUploadPort(int port)
 {
-    _uploadPort = port;
+    if (port > 0)
+    {
+        _uploadPort = port;
+    }
+}
+void ConfigParser::setDebugPort(int port)
+{
+    if (port > 0)
+    {
+        _debugPort = port;
+    }
 }
 int ConfigParser::getConsolePort()
 {

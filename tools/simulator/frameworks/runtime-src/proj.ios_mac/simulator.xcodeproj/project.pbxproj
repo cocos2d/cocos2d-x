@@ -129,6 +129,13 @@
 			remoteGlobalIDString = 15EFA59E198B2DAA000C57D3;
 			remoteInfo = "libluacocos2d iOS";
 		};
+		9F78A2531A89B7EA00EB22E3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9FB5D5CE1A68F9FF002361CA /* cocos2d_js_bindings.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A07A4FB5178387750073F6A7;
+			remoteInfo = "libjscocos2d iOS";
+		};
 		9FB5D5D31A68FA00002361CA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9FB5D5CE1A68F9FF002361CA /* cocos2d_js_bindings.xcodeproj */;
@@ -541,6 +548,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9F78A2541A89B7EA00EB22E3 /* PBXTargetDependency */,
 				9FF504CC1A5EB19500AFDA55 /* PBXTargetDependency */,
 				9F7214261A5C1D4200DAED06 /* PBXTargetDependency */,
 				15D1F3091994BBCA00302043 /* PBXTargetDependency */,
@@ -747,6 +755,11 @@
 			isa = PBXTargetDependency;
 			name = "libluacocos2d iOS";
 			targetProxy = 9F7214251A5C1D4200DAED06 /* PBXContainerItemProxy */;
+		};
+		9F78A2541A89B7EA00EB22E3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libjscocos2d iOS";
+			targetProxy = 9F78A2531A89B7EA00EB22E3 /* PBXContainerItemProxy */;
 		};
 		9FB5D5E91A69054A002361CA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
