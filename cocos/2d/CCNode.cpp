@@ -97,6 +97,7 @@ Node::Node(void)
 , _inverseDirty(true)
 , _useAdditionalTransform(false)
 , _transformUpdated(true)
+, _childrenDirty(false)
 // children (lazy allocs)
 // lazy alloc
 , _localZOrder(0)
@@ -1228,6 +1229,7 @@ void Node::detachChild(Node *child, ssize_t childIndex, bool doCleanup)
     child->setParent(nullptr);
 
     _children.erase(childIndex);
+    _childrenDirty = true;
 }
 
 
@@ -1238,6 +1240,7 @@ void Node::insertChild(Node* child, int z)
     _reorderChildDirty = true;
     _children.pushBack(child);
     child->_localZOrder = z;
+    _childrenDirty = true;
 }
 
 void Node::reorderChild(Node *child, int zOrder)
@@ -1399,9 +1402,19 @@ void Node::onEnter()
 #endif
     
     _isTransitionFinished = false;
-    
-    for( const auto &child: _children)
-        child->onEnter();
+
+    _childrenDirty = false;
+    for (ssize_t i = 0; i < _children.size(); i++)
+    {
+        auto child = _children.at(i);
+        if (!child->isRunning())
+            child->onEnter();
+        if (_childrenDirty)
+        {
+            i = -1;
+            _childrenDirty = false;
+        }
+    }
     
     this->resume();
     
@@ -1480,9 +1493,20 @@ void Node::onExit()
     this->pause();
     
     _running = false;
+
+    _childrenDirty = false;
+    for (ssize_t i = 0; i < _children.size(); i++)
+    {
+        auto child = _children.at(i);
+        if (child->isRunning())
+            child->onExit();
+        if (_childrenDirty)
+        {
+            i = -1;
+            _childrenDirty = false;
+        }
+    }
     
-    for( const auto &child: _children)
-        child->onExit();
     
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeLua)
