@@ -28,7 +28,7 @@
 #include "2d/CCNode.h"
 #include "base/CCProtocols.h"
 #include "math/CCMath.h"
-#include "Particle3D/CCParticleSystem3D.h"
+#include "extensions/Particle3D/CCParticleSystem3D.h"
 #include <vector>
 #include <map>
 

@@ -25,8 +25,8 @@
 #ifndef __CC_PU_PARTICLE_3D_MATERIAL_TRANSLATOR_H__
 #define __CC_PU_PARTICLE_3D_MATERIAL_TRANSLATOR_H__
 
-#include "Particle3D/ParticleUniverse/CCPUParticle3DScriptTranslator.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DScriptCompiler.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DScriptTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DScriptCompiler.h"
 
 NS_CC_BEGIN
 class PUParticle3DMaterial;

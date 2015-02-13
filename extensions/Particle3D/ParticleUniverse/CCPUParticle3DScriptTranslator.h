@@ -29,7 +29,7 @@
 
 #include "base/CCRef.h"
 #include "math/CCMath.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DScriptCompiler.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DScriptCompiler.h"
 
 
 NS_CC_BEGIN

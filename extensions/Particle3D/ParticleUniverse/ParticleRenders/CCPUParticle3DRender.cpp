@@ -22,10 +22,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "Particle3D/CCParticleSystem3D.h"
-#include "Particle3D/ParticleUniverse/ParticleRenders/CCPUParticle3DRender.h"
-#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DUtil.h"
+#include "extensions/Particle3D/CCParticleSystem3D.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleRenders/CCPUParticle3DRender.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DUtil.h"
 #include "renderer/CCMeshCommand.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTextureCache.h"

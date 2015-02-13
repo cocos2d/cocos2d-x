@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
-#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 

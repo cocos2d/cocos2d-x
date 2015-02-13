@@ -26,8 +26,8 @@
 #ifndef __CC_PU_PARTICLE_3D_VORTEX_AFFECTOR_H__
 #define __CC_PU_PARTICLE_3D_VORTEX_AFFECTOR_H__
 
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DDynamicAttribute.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DDynamicAttribute.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN

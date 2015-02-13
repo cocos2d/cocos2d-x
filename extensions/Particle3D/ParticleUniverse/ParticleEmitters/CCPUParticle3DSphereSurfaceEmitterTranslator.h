@@ -25,9 +25,9 @@
 #ifndef __CC_PU_PARTICLE_3D_SPHERE_SURFACE_TRANSLATOR_H__
 #define __CC_PU_PARTICLE_3D_SPHERE_SURFACE_TRANSLATOR_H__
 
-#include "Particle3D/ParticleUniverse/CCPUParticle3DScriptTranslator.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DScriptCompiler.h"
-#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DSphereSurfaceEmitter.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DScriptTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DScriptCompiler.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DSphereSurfaceEmitter.h"
 
 NS_CC_BEGIN
 

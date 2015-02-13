@@ -25,9 +25,9 @@
 #ifndef __CC_PU_PARTICLE_3D_COLLISION_AVOIDDANCE_AFFECTOR_TRANSLATOR_H__
 #define __CC_PU_PARTICLE_3D_COLLISION_AVOIDDANCE_AFFECTOR_TRANSLATOR_H__
 
-#include "Particle3D/ParticleUniverse/CCPUParticle3DScriptTranslator.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DScriptCompiler.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DCollisionAvoidanceAffector.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DScriptTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DScriptCompiler.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DCollisionAvoidanceAffector.h"
 
 NS_CC_BEGIN
 

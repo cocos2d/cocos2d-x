@@ -23,8 +23,8 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DLineEmitter.h"
-#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DUtil.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DUtil.h"
 
 NS_CC_BEGIN
 // Constants

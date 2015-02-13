@@ -22,13 +22,13 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
-#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
-#include "Particle3D/CCParticle3DRender.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DScriptCompiler.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DMaterialManager.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DTranslateManager.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
+#include "extensions/Particle3D/CCParticle3DRender.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DScriptCompiler.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DMaterialManager.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DTranslateManager.h"
 #include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN

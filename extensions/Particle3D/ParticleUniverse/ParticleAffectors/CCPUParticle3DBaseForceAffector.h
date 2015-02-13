@@ -27,7 +27,7 @@
 #define __CC_PU_PARTICLE_3D_BASE_FORCE_AFFECTOR_H__
 
 #include "math/CCMath.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
 
 NS_CC_BEGIN
 

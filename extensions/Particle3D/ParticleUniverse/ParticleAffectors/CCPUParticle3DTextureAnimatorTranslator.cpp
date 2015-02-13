@@ -23,9 +23,9 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DTextureAnimatorTranslator.h"
-#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DDynamicAttribute.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DDynamicAttributeTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DDynamicAttribute.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DDynamicAttributeTranslator.h"
 
 NS_CC_BEGIN
 

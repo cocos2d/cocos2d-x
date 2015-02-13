@@ -25,9 +25,9 @@
 #ifndef __CC_PU_PARTICLE_3D_INNER_PARTICLE_COLLIDER_TRANSLATOR_H__
 #define __CC_PU_PARTICLE_3D_INNER_PARTICLE_COLLIDER_TRANSLATOR_H__
 
-#include "Particle3D/ParticleUniverse/CCPUParticle3DScriptTranslator.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DScriptCompiler.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DInterParticleCollider.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DScriptTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DScriptCompiler.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DInterParticleCollider.h"
 
 NS_CC_BEGIN
 

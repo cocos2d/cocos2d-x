@@ -26,7 +26,7 @@
 #ifndef __CC_PU_PARTICLE_MESH_SURFACE_EMITTER_H__
 #define __CC_PU_PARTICLE_MESH_SURFACE_EMITTER_H__
 
-#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
 
 NS_CC_BEGIN
 

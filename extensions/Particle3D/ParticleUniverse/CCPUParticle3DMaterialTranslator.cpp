@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DMaterialTranslator.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DMaterialManager.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DMaterialManager.h"
 
 NS_CC_BEGIN
 

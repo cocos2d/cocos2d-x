@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "Particle3D/CCParticleSystem3D.h"
-#include "Particle3D/CCParticle3DRender.h"
+#include "extensions/Particle3D/CCParticleSystem3D.h"
+#include "extensions/Particle3D/CCParticle3DRender.h"
 #include "renderer/CCMeshCommand.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTextureCache.h"

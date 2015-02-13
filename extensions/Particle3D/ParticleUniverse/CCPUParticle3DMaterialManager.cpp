@@ -23,8 +23,8 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DMaterialManager.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DScriptCompiler.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DTranslateManager.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DScriptCompiler.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DTranslateManager.h"
 #include "platform/CCFileUtils.h"
 #include "platform/CCPlatformMacros.h"
 

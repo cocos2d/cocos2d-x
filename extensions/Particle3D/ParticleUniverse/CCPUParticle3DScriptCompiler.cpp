@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DScriptCompiler.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DTranslateManager.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DTranslateManager.h"
 #include "platform/CCFileUtils.h"
 NS_CC_BEGIN
 

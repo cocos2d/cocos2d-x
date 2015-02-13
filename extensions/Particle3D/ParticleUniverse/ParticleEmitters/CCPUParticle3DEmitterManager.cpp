@@ -23,14 +23,14 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DEmitterManager.h"
-#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DBoxEmitter.h"
-#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DCircleEmitter.h"
-#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DLineEmitter.h"
-#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DMeshSurfaceEmitter.h"
-#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DPointEmitter.h"
-#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DPositionEmitter.h"
-#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DSlaveEmitter.h"
-#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DSphereSurfaceEmitter.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DBoxEmitter.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DCircleEmitter.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DLineEmitter.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DMeshSurfaceEmitter.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DPointEmitter.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DPositionEmitter.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DSlaveEmitter.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DSphereSurfaceEmitter.h"
 
 NS_CC_BEGIN
 PUParticle3DEmitterManager::PUParticle3DEmitterManager()

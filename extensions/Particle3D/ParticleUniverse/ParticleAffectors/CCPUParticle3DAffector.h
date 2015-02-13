@@ -27,7 +27,7 @@
 
 #include "base/CCRef.h"
 #include "math/CCMath.h"
-#include "Particle3D/CCParticle3DAffector.h"
+#include "extensions/Particle3D/CCParticle3DAffector.h"
 #include <vector>
 #include <string>
 

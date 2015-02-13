@@ -23,10 +23,10 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DSphereColliderTranslator.h"
-#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DDynamicAttribute.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DDynamicAttributeTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DBaseColliderTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DDynamicAttribute.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DDynamicAttributeTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DBaseColliderTranslator.h"
 
 NS_CC_BEGIN
 

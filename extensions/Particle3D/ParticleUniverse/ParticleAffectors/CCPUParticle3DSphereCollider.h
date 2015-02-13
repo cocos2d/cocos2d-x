@@ -27,7 +27,7 @@
 #define __CC_PU_PARTICLE_3D_SPHERE_COLLIDER_H__
 
 #include "CCPUParticle3DBaseCollider.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DSphere.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DSphere.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN

@@ -33,7 +33,7 @@
 
 
 #include "base/CCRef.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DScriptLexer.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DScriptLexer.h"
 
 NS_CC_BEGIN
 

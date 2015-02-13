@@ -27,7 +27,7 @@
 
 #include "base/CCRef.h"
 #include "math/CCMath.h"
-#include "Particle3D/CCParticle3DRender.h"
+#include "extensions/Particle3D/CCParticle3DRender.h"
 #include <vector>
 
 NS_CC_BEGIN

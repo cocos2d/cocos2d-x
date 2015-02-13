@@ -26,15 +26,15 @@
 #define __CC_PU_PARTICLE_3D_TRANSLATE_MANAGER_H__
 
 #include "base/CCRef.h"
-//#include "Particle3D/ParticleUniverse/Script/Translater/CCParticle3DSystemTranslator.h"
-//#include "Particle3D/ParticleUniverse/Script/Translater/CCAliasTranslator.h"
-//#include "Particle3D/ParticleUniverse/Script/Translater/CCParticle3DTechniqueTranslator.h"
-#include "Particle3D/ParticleUniverse/CCPUParticleSystem3DTranslator.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DTechniqueTranslator.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DRendererTranslator.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DMaterialTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitterTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffectorTranslator.h"
+//#include "extensions/Particle3D/ParticleUniverse/Script/Translater/CCParticle3DSystemTranslator.h"
+//#include "extensions/Particle3D/ParticleUniverse/Script/Translater/CCAliasTranslator.h"
+//#include "extensions/Particle3D/ParticleUniverse/Script/Translater/CCParticle3DTechniqueTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3DTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DTechniqueTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DRendererTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DMaterialTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitterTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffectorTranslator.h"
 
 using namespace std;
 NS_CC_BEGIN

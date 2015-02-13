@@ -25,9 +25,9 @@
 #ifndef __CC_PU_PARTICLE_3D_BOX_EMITTER_TRANSLATOR_H__
 #define __CC_PU_PARTICLE_3D_BOX_EMITTER_TRANSLATOR_H__
 
-#include "Particle3D/ParticleUniverse/CCPUParticle3DScriptTranslator.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DScriptCompiler.h"
-#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DBoxEmitter.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DScriptTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DScriptCompiler.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DBoxEmitter.h"
 
 NS_CC_BEGIN
 

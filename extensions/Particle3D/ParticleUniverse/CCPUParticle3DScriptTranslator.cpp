@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DScriptTranslator.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DTranslateManager.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DTranslateManager.h"
 
 NS_CC_BEGIN
 PUScriptTranslator::PUScriptTranslator(void)

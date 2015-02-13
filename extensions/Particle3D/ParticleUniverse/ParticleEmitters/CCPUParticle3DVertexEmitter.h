@@ -26,7 +26,7 @@
 #ifndef __CC_PU_PARTICLE_3D_VERTEX_EMITTER_H__
 #define __CC_PU_PARTICLE_3D_VERTEX_EMITTER_H__
 
-#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
 #include <list>
 
 //Particle3DVertexEmitter NOT SUPPORT YET
