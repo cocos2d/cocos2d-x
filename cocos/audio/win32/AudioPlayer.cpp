@@ -64,7 +64,7 @@ AudioPlayer::~AudioPlayer()
         if (_rotateBufferThread.joinable()) {
             _rotateBufferThread.join();
         }
-        alDeleteBuffers(3, _bufferIds);
+        alDeleteBuffers(QUEUEBUFFER_NUM, _bufferIds);
     }
 }
 
@@ -93,7 +93,7 @@ bool AudioPlayer::play2d(AudioCache* cache)
         alSourcei(_alSource, AL_LOOPING, AL_FALSE);
 
         auto alError = alGetError();
-        alGenBuffers(3, _bufferIds);
+        alGenBuffers(QUEUEBUFFER_NUM, _bufferIds);
         alError = alGetError();
         if (alError == AL_NO_ERROR) {
             _rotateBufferThread = std::thread(&AudioPlayer::rotateBufferThread,this, _audioCache->_queBufferFrames * QUEUEBUFFER_NUM + 1);
