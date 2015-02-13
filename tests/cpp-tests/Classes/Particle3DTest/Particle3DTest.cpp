@@ -24,33 +24,8 @@
  ****************************************************************************/
 
 #include "Particle3DTest.h"
-#include "Particle3D/CCParticle3DEmitter.h"
-#include "Particle3D/CCParticle3DAffector.h"
-#include "Particle3D/CCParticle3DRender.h"
-#include "Particle3D/ParticleUniverse/ParticleRenders/CCPUParticle3DRender.h"
-#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DPointEmitter.h"
-#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DBoxEmitter.h"
-#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DCircleEmitter.h"
-#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DLineEmitter.h"
-#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DPositionEmitter.h"
-#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DSphereSurfaceEmitter.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAlignAffector.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DBoxCollider.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DColorAffector.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DGravityAffector.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DScaleAffector.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DFlockCenteringAffector.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DForceFieldAffector.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DLinearForceAffector.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DParticleFollower.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DPathFollower.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DPlaneCollider.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DRandomiser.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DSineForceAffector.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DTextureRotator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DVortexAffector.h"
+#include "Particle3D/CCParticleSystem3D.h"
 #include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DScriptCompiler.h"
 
 enum
 {
@@ -200,123 +175,6 @@ void Particle3DTestDemo::onTouchesMoved(const std::vector<Touch*>& touches, coco
 void Particle3DTestDemo::onTouchesEnded(const std::vector<Touch*>& touches, cocos2d::Event  *event)
 {
     
-}
-
-ParticleSystem3D* Particle3DTestDemo::createParticleSystem()
-{
-    auto ps = PUParticleSystem3D::create();
-    BlendFunc blend;
-    blend.src = GL_ONE;
-    blend.dst = GL_ONE;
-    ps->setBlendFunc(blend);
-    ps->setParticleQuota(2500);
-    ps->setKeepLocal(false);
-    //emitter
-    {
-        auto ppe = PUParticle3DSphereSurfaceEmitter::create();
-        ppe->setRadius(12.0f);
-
-        //PUDynamicAttributeFixed *angle = new PUDynamicAttributeFixed();
-        //angle->setValue(0.0f);
-        //ppe->setDynAngle(angle);
-        PUDynamicAttributeFixed *velocity = new PUDynamicAttributeFixed();
-        velocity->setValue(3.0f);
-        ppe->setDynVelocity(velocity);
-        PUDynamicAttributeFixed *alive = new PUDynamicAttributeFixed();
-        alive->setValue(3.0f);
-        ppe->setDynTotalTimeToLive(alive);
-        PUDynamicAttributeFixed *dim = new PUDynamicAttributeFixed();
-        dim->setValue(12.0f);
-        ppe->setDynParticleAllDimensions(dim);
-        PUDynamicAttributeFixed *rate = new PUDynamicAttributeFixed();
-        rate->setValue(200.0f);
-        ppe->setDynEmissionRate(rate);
-        //ppe->setParticleColorRangeStart(Vec4(0.0f, 0.0f, 0.0f, 1.0f));
-        //ppe->setParticleColorRangeEnd(Vec4(1.0f, 1.0f, 1.0f, 1.0f));
-        ps->setEmitter(ppe);
-    }
-
-    //affector
-    {
-        auto pca = PUParticle3DColorAffector::create();
-        pca->addColor(0.0f, Vec4(0.0f, 0.0f, 0.2f, 1.0f));
-        pca->addColor(0.9f, Vec4(0.8f, 0.8f, 1.0f, 1.0f));
-        pca->addColor(1.0f, Vec4(1.0f, 1.0f, 1.0f, 1.0f));
-        ps->addAffector(pca);
-
-        auto pga = PUParticle3DGravityAffector::create();
-        pga->setGravity(2700);
-        ps->addAffector(pga);
-
-        auto psa = PUParticle3DScaleAffector::create();
-        PUDynamicAttributeFixed *scl = new PUDynamicAttributeFixed();
-        scl->setValue(-4.5f);
-        psa->setDynScaleXYZ(scl);
-        ps->addAffector(psa);
-
-  //      auto pfca = PUParticle3DFlockCenteringAffector::create();
-  //      ps->addAffector(pfca);
-
-        //auto pffa = PUParticle3DForceFieldAffector::create();
-        //ps->addAffector(pffa);
-
-        //auto plfa = PUParticle3DLinearForceAffector::create();
-        //plfa->setForceVector(Vec3(0.0f, 10.0f, 0.0f));
-        //ps->addAffector(plfa);
-
-        //auto ppf = PUParticle3DParticleFollower::create();
-        //ps->addAffector(ppf);
-
-        //auto pptf = PUParticle3DPathFollower::create();
-        //pptf->addPoint(Vec3(0.0f, 0.0f, 0.0f));
-        //pptf->addPoint(Vec3(50.0f, 50.0f, -50.0f));
-        //pptf->addPoint(Vec3(0.0f, 50.0f, -50.0f));
-        //pptf->addPoint(Vec3(50.0f, 0.0f, 0.0f));
-        //pptf->addPoint(Vec3(0.0f, 0.0f, 0.0f));
-        //ps->addAffector(pptf);
-
-        //auto ppc = PUParticle3DPlaneCollider::create();
-        //ppc->setNormal(Vec3(0.0f, 1.0f, 0.0f));
-        //ps->addAffector(ppc);
-
-        //auto pr = PUParticle3DRandomiser::create();
-        //ps->addAffector(pr);
-
-        //auto psfa = PUParticle3DSineForceAffector::create();
-        //psfa->setForceVector(Vec3(0.0f, 10.0f, 0.0f));
-        //psfa->setFrequencyMax(10.0f);
-        //ps->addAffector(psfa);
-
-        //auto ptr = PUParticle3DTextureRotator::create();
-        //PUDynamicAttributeFixed *rSpeed = new PUDynamicAttributeFixed();
-        //rSpeed->setValue(2.0f);
-        //ptr->setRotationSpeed(rSpeed);
-        //ps->addAffector(ptr);
-
-        //auto pva = PUParticle3DVortexAffector::create();
-        //PUDynamicAttributeFixed *rSpeed = new PUDynamicAttributeFixed();
-        //rSpeed->setValue(10.0f);
-        //pva->setRotationSpeed(rSpeed);
-        //pva->setRotationVector(Vec3(0.0f, 1.0f, 0.0f));
-        //ps->addAffector(pva);
-    }
-
-    //render
-    {
-        auto pr = PUParticle3DQuadRender::create("pump_flare_04.png");
-        ps->setRender(pr);
-    }
-
-
-    //auto pr = Particle3DModelRender::create(Sprite3D::create("Sprite3DTest/axe.c3b"));
-    //ps->setRender(pr);
-
-    //ps->startParticle();
-    //this->addChild(ps);
-
-    ps->setCameraMask((unsigned short)CameraFlag::USER1);
-    
-    return ps;
 }
 
 Particle3DTestDemo::Particle3DTestDemo( void )

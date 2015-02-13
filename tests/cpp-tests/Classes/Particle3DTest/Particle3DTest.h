@@ -45,8 +45,6 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     virtual void update(float delta) override;
-
-    cocos2d::ParticleSystem3D* createParticleSystem();
     
     void onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event  *event);
     void onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event);
