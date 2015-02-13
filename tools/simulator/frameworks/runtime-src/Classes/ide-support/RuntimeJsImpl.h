@@ -23,6 +23,7 @@ public:
     void onClearCompile(const rapidjson::Document& dArgParse, rapidjson::Document& dReplyParse);
     void onPrecompile(const rapidjson::Document& dArgParse, rapidjson::Document& dReplyParse);
     void onReload(const rapidjson::Document& dArgParse, rapidjson::Document& dReplyParse);
+    void onRemove(const std::string &filename);
     void end();
     
     bool startWithDebugger();

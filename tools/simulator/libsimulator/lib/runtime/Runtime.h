@@ -35,7 +35,7 @@ void sendBuf(int fd, const char *pbuf, unsigned long bufsize);
 
 std::string& replaceAll(std::string& str, const std::string& old_value, const std::string& new_value);
 
-std::string getIPAddress(int runtimeType);
+std::string getIPAddress();
 
 const char* getRuntimeVersion();
 
@@ -71,7 +71,6 @@ public:
     void addRuntime(RuntimeProtocol *runtime, int type);
     RuntimeProtocol *getRuntime();
     
-    int getRunTimeType();
 private:
     RuntimeEngine();
     bool startNetwork();
