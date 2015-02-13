@@ -330,4 +330,16 @@ public:
     virtual void runThisTest();
 };
 
+class SchedulerIssue10232 : public SchedulerTestLayer
+{
+public:
+    CREATE_FUNC(SchedulerIssue10232);
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    void onEnter();
+    void update(float dt);
+};
+
 #endif

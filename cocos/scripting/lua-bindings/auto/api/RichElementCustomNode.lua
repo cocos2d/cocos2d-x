@@ -28,5 +28,6 @@
 -- 
 -- @function [parent=#RichElementCustomNode] RichElementCustomNode 
 -- @param self
+-- @return RichElementCustomNode#RichElementCustomNode self (return value: ccui.RichElementCustomNode)
         
 return nil

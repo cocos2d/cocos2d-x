@@ -9,9 +9,11 @@
 -- @function [parent=#FadeIn] setReverseAction 
 -- @param self
 -- @param #cc.FadeTo ac
+-- @return FadeIn#FadeIn self (return value: cc.FadeIn)
         
 --------------------------------
---  creates the action 
+-- creates the action<br>
+-- param d in seconds
 -- @function [parent=#FadeIn] create 
 -- @param self
 -- @param #float d
@@ -22,6 +24,7 @@
 -- @function [parent=#FadeIn] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return FadeIn#FadeIn self (return value: cc.FadeIn)
         
 --------------------------------
 -- 

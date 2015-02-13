@@ -67,7 +67,7 @@ SpriteBatchNode* SpriteBatchNode::create(const std::string& fileImage, ssize_t c
 /*
 * init with Texture2D
 */
-bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity)
+bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity/* = DEFAULT_CAPACITY*/)
 {
     CCASSERT(capacity>=0, "Capacity must be >= 0");
     
@@ -105,7 +105,7 @@ bool SpriteBatchNode::init()
 /*
 * init with FileImage
 */
-bool SpriteBatchNode::initWithFile(const std::string& fileImage, ssize_t capacity)
+bool SpriteBatchNode::initWithFile(const std::string& fileImage, ssize_t capacity/* = DEFAULT_CAPACITY*/)
 {
     Texture2D *texture2D = Director::getInstance()->getTextureCache()->addImage(fileImage);
     return initWithTexture(texture2D, capacity);
@@ -366,15 +366,19 @@ void SpriteBatchNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t f
         return;
     }
 
-    for(const auto &child: _children)
+    for (const auto &child : _children)
+    {
+#if CC_USE_PHYSICS
+        auto physicsBody = child->getPhysicsBody();
+        if (physicsBody)
+        {
+            child->updateTransformFromPhysics(transform, flags);
+        }
+#endif
         child->updateTransform();
+    }
 
-    _batchCommand.init(
-                       _globalZOrder,
-                       getGLProgram(),
-                       _blendFunc,
-                       _textureAtlas,
-                       transform);
+    _batchCommand.init(_globalZOrder, getGLProgram(), _blendFunc, _textureAtlas, transform, flags);
     renderer->addCommand(&_batchCommand);
 }
 
@@ -644,22 +648,22 @@ void SpriteBatchNode::updateQuadFromSprite(Sprite *sprite, ssize_t index)
     CCASSERT(sprite != nullptr, "Argument must be non-nil");
     CCASSERT(dynamic_cast<Sprite*>(sprite) != nullptr, "CCSpriteBatchNode only supports Sprites as children");
     
-	// make needed room
-	while (index >= _textureAtlas->getCapacity() || _textureAtlas->getCapacity() == _textureAtlas->getTotalQuads())
+    // make needed room
+    while (index >= _textureAtlas->getCapacity() || _textureAtlas->getCapacity() == _textureAtlas->getTotalQuads())
     {
-		this->increaseAtlasCapacity();
+        this->increaseAtlasCapacity();
     }
     
-	//
-	// update the quad directly. Don't add the sprite to the scene graph
-	//
-	sprite->setBatchNode(this);
+    //
+    // update the quad directly. Don't add the sprite to the scene graph
+    //
+    sprite->setBatchNode(this);
     sprite->setAtlasIndex(index);
     
-	sprite->setDirty(true);
-	
-	// UpdateTransform updates the textureAtlas quad
-	sprite->updateTransform();
+    sprite->setDirty(true);
+    
+    // UpdateTransform updates the textureAtlas quad
+    sprite->updateTransform();
 }
 
 SpriteBatchNode * SpriteBatchNode::addSpriteWithoutQuad(Sprite*child, int z, int aTag)

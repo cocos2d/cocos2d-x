@@ -117,11 +117,11 @@ bool Speed::initWithAction(ActionInterval *action, float speed)
 
 Speed *Speed::clone() const
 {
-	// no copy constructor
-	auto a = new (std::nothrow) Speed();
-	a->initWithAction(_innerAction->clone(), _speed);
-	a->autorelease();
-	return a;
+    // no copy constructor
+    auto a = new (std::nothrow) Speed();
+    a->initWithAction(_innerAction->clone(), _speed);
+    a->autorelease();
+    return a;
 }
 
 void Speed::startWithTarget(Node* target)
@@ -148,8 +148,7 @@ bool Speed::isDone() const
 
 Speed *Speed::reverse() const
 {
-
-	return Speed::create(_innerAction->reverse(), _speed);
+    return Speed::create(_innerAction->reverse(), _speed);
 }
 
 void Speed::setInnerAction(ActionInterval *action)
@@ -184,11 +183,11 @@ Follow* Follow::create(Node *followedNode, const Rect& rect/* = Rect::ZERO*/)
 
 Follow* Follow::clone() const
 {
-	// no copy constructor
-	auto a = new (std::nothrow) Follow();
-	a->initWithTarget(_followedNode, _worldRect);
-	a->autorelease();
-	return a;
+    // no copy constructor
+    auto a = new (std::nothrow) Follow();
+    a->initWithTarget(_followedNode, _worldRect);
+    a->autorelease();
+    return a;
 }
 
 Follow* Follow::reverse() const
@@ -202,16 +201,8 @@ bool Follow::initWithTarget(Node *followedNode, const Rect& rect/* = Rect::ZERO*
  
     followedNode->retain();
     _followedNode = followedNode;
-	_worldRect = rect;
-    if (rect.equals(Rect::ZERO))
-    {
-        _boundarySet = false;
-    }
-    else
-    {
-        _boundarySet = true;
-    }
-    
+    _worldRect = rect;
+    _boundarySet = !rect.equals(Rect::ZERO);
     _boundaryFullyCovered = false;
 
     Size winSize = Director::getInstance()->getWinSize();
@@ -255,7 +246,9 @@ void Follow::step(float dt)
     {
         // whole map fits inside a single screen, no need to modify the position - unless map boundaries are increased
         if(_boundaryFullyCovered)
+        {
             return;
+        }
 
         Vec2 tempPos = _halfScreenSize - _followedNode->getPosition();
 

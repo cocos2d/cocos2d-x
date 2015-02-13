@@ -20,10 +20,11 @@
 -- @return EaseElasticInOut#EaseElasticInOut ret (return value: cc.EaseElasticInOut)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#EaseElasticInOut] update 
 -- @param self
 -- @param #float time
+-- @return EaseElasticInOut#EaseElasticInOut self (return value: cc.EaseElasticInOut)
         
 --------------------------------
 -- 

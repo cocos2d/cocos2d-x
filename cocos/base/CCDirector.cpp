@@ -61,6 +61,14 @@ THE SOFTWARE.
 #include "platform/CCApplication.h"
 //#include "platform/CCGLViewImpl.h"
 
+#if CC_ENABLE_SCRIPT_BINDING
+#include "CCScriptSupport.h"
+#endif
+
+#if CC_USE_PHYSICS
+#include "physics/CCPhysicsWorld.h"
+#endif
+
 /**
  Position of the FPS
  
@@ -127,6 +135,9 @@ bool Director::init(void)
 
     // purge ?
     _purgeDirectorInNextLoop = false;
+    
+    // restart ?
+    _restartDirectorInNextLoop = false;
 
     _winSizeInPoints = Size::ZERO;
 
@@ -158,12 +169,6 @@ bool Director::init(void)
     _renderer = new (std::nothrow) Renderer;
 
     _console = new (std::nothrow) Console;
-    
-    // default clear color
-    _clearColor.r = 0;
-    _clearColor.g = 0;
-    _clearColor.b = 0;
-    _clearColor.a = 1.0;
 
     return true;
 }
@@ -247,9 +252,6 @@ void Director::setGLDefaultValues()
     // [self setDepthTest: view_.depthFormat];
     setDepthTest(false);
     setProjection(_projection);
-
-    // set other opengl default values
-    glClearColor(_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a);
 }
 
 // Draw the Scene
@@ -258,12 +260,6 @@ void Director::drawScene()
     // calculate "global" dt
     calculateDeltaTime();
     
-    // skip one flame when _deltaTime equal to zero.
-    if(_deltaTime < FLT_EPSILON)
-    {
-        return;
-    }
-
     if (_openGLView)
     {
         _openGLView->pollEvents();
@@ -276,7 +272,7 @@ void Director::drawScene()
         _eventDispatcher->dispatchEvent(_eventAfterUpdate);
     }
 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    _renderer->clear();
 
     /* to avoid flickr, nextScene MUST be here: after tick and before draw.
      * FIXME: Which bug is this one. It seems that it can't be reproduced with v0.9
@@ -290,6 +286,13 @@ void Director::drawScene()
     
     if (_runningScene)
     {
+#if CC_USE_PHYSICS
+        auto physicsWorld = _runningScene->getPhysicsWorld();
+        if (physicsWorld && physicsWorld->isAutoStep())
+        {
+            physicsWorld->update(_deltaTime, false);
+        }
+#endif
         //clear draw stats
         _renderer->clearDrawStats();
         
@@ -297,6 +300,12 @@ void Director::drawScene()
         _runningScene->render(_renderer);
         
         _eventDispatcher->dispatchEvent(_eventAfterVisit);
+#if CC_USE_PHYSICS
+        if(physicsWorld)
+        {
+            physicsWorld->_updateBodyTransform = false;
+        }
+#endif
     }
 
     // draw the notifications node
@@ -698,24 +707,12 @@ void Director::setAlphaBlending(bool on)
 
 void Director::setDepthTest(bool on)
 {
-    if (on)
-    {
-        glClearDepth(1.0f);
-        glEnable(GL_DEPTH_TEST);
-        glDepthFunc(GL_LEQUAL);
-//        glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-    }
-    else
-    {
-        glDisable(GL_DEPTH_TEST);
-    }
-    CHECK_GL_ERROR_DEBUG();
+    _renderer->setDepthTest(on);
 }
 
 void Director::setClearColor(const Color4F& clearColor)
 {
-    _clearColor = clearColor;
-    glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
+    _renderer->setClearColor(clearColor);
 }
 
 static void GLToClipTransform(Mat4 *transformOut)
@@ -941,17 +938,22 @@ void Director::end()
     _purgeDirectorInNextLoop = true;
 }
 
-void Director::purgeDirector()
+void Director::restart()
+{
+    _restartDirectorInNextLoop = true;
+}
+
+void Director::reset()
 {
     // cleanup scheduler
     getScheduler()->unscheduleAll();
     
-    // Disable event dispatching
+    // Remove all events
     if (_eventDispatcher)
     {
-        _eventDispatcher->setEnabled(false);
+        _eventDispatcher->removeAllEventListeners();
     }
-
+    
     if (_runningScene)
     {
         _runningScene->onExit();
@@ -961,22 +963,22 @@ void Director::purgeDirector()
     
     _runningScene = nullptr;
     _nextScene = nullptr;
-
+    
     // remove all objects, but don't release it.
     // runWithScene might be executed after 'end'.
     _scenesStack.clear();
-
+    
     stopAnimation();
-
+    
     CC_SAFE_RELEASE_NULL(_FPSLabel);
     CC_SAFE_RELEASE_NULL(_drawnBatchesLabel);
     CC_SAFE_RELEASE_NULL(_drawnVerticesLabel);
-
+    
     // purge bitmap cache
     FontFNT::purgeCachedData();
-
+    
     FontFreeType::shutdownFreeType();
-
+    
     // purge all managed caches
     
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
@@ -985,7 +987,10 @@ void Director::purgeDirector()
 #pragma warning (push)
 #pragma warning (disable: 4996)
 #endif
+//it will crash clang static analyzer so hide it if __clang_analyzer__ defined
+#ifndef __clang_analyzer__
     DrawPrimitives::free();
+#endif
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic warning "-Wdeprecated-declarations"
 #elif _MSC_VER >= 1400 //vs 2005 or higher
@@ -997,13 +1002,18 @@ void Director::purgeDirector()
     GLProgramStateCache::destroyInstance();
     FileUtils::destroyInstance();
     AsyncTaskPool::destoryInstance();
-
+    
     // cocos2d-x specific data structures
     UserDefault::destroyInstance();
     
     GL::invalidateStateCache();
     
     destroyTextureCache();
+}
+
+void Director::purgeDirector()
+{
+    reset();
 
     CHECK_GL_ERROR_DEBUG();
     
@@ -1016,6 +1026,26 @@ void Director::purgeDirector()
 
     // delete Director
     release();
+}
+
+void Director::restartDirector()
+{
+    reset();
+    
+    // Texture cache need to be reinitialized
+    initTextureCache();
+    
+    // Reschedule for action manager
+    getScheduler()->scheduleUpdate(getActionManager(), Scheduler::PRIORITY_SYSTEM, false);
+    
+    // release the objects
+    PoolManager::getInstance()->getCurrentPool()->clear();
+    
+    // Real restart in script level
+#if CC_ENABLE_SCRIPT_BINDING
+    ScriptEvent scriptEvent(kRestartGame, NULL);
+    ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
+#endif
 }
 
 void Director::setNextScene()
@@ -1090,8 +1120,8 @@ void Director::showStats()
 {
     static unsigned long prevCalls = 0;
     static unsigned long prevVerts = 0;
-    static float prevDeltaTime  = 0.016; // 60FPS
-    static const float FPS_FILTER = 0.10;
+    static float prevDeltaTime  = 0.016f; // 60FPS
+    static const float FPS_FILTER = 0.10f;
 
     _accumDt += _deltaTime;
     
@@ -1137,7 +1167,7 @@ void Director::showStats()
 void Director::calculateMPF()
 {
     static float prevSecondsPerFrame = 0;
-    static const float MPF_FILTER = 0.10;
+    static const float MPF_FILTER = 0.10f;
 
     struct timeval now;
     gettimeofday(&now, nullptr);
@@ -1304,6 +1334,11 @@ void DisplayLinkDirector::mainLoop()
     {
         _purgeDirectorInNextLoop = false;
         purgeDirector();
+    }
+    else if (_restartDirectorInNextLoop)
+    {
+        _restartDirectorInNextLoop = false;
+        restartDirector();
     }
     else if (! _invalid)
     {

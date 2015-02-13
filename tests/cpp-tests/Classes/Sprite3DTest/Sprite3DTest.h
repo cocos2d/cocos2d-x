@@ -54,6 +54,24 @@ public:
     virtual void onEnter() override;
 };
 
+class Sprite3DForceDepthTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DForceDepthTest);
+    Sprite3DForceDepthTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class Sprite3DEmptyTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DEmptyTest);
+    Sprite3DEmptyTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 class Sprite3DBasicTest : public Sprite3DTestDemo
 {
 public:
@@ -71,6 +89,7 @@ class Sprite3DUVAnimationTest : public Sprite3DTestDemo
 public:
     CREATE_FUNC(Sprite3DUVAnimationTest);
     Sprite3DUVAnimationTest();
+    virtual ~Sprite3DUVAnimationTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
@@ -80,6 +99,10 @@ protected:
     float _cylinder_texture_offset;
     float _shining_duraion;
     GLProgramState * _state;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    EventListenerCustom* _backToForegroundListener;
+#endif
 };
 
 class Sprite3DFakeShadowTest : public Sprite3DTestDemo
@@ -94,6 +117,7 @@ public:
     };
     CREATE_FUNC(Sprite3DFakeShadowTest);
     Sprite3DFakeShadowTest();
+    virtual ~Sprite3DFakeShadowTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     void Move(cocos2d::Ref* sender,int value);
@@ -110,6 +134,11 @@ private:
     unsigned int   _curState;
     cocos2d::Sprite3D * _plane;
     cocos2d::Sprite3D * _orc;
+    GLProgramState * _state;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    EventListenerCustom* _backToForegroundListener;
+#endif
 };
 
 class Sprite3DLightMapTest : public Sprite3DTestDemo
@@ -117,6 +146,7 @@ class Sprite3DLightMapTest : public Sprite3DTestDemo
 public:
     CREATE_FUNC(Sprite3DLightMapTest);
     Sprite3DLightMapTest();
+    virtual ~Sprite3DLightMapTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
@@ -129,8 +159,16 @@ class Sprite3DBasicToonShaderTest : public Sprite3DTestDemo
 public:
     CREATE_FUNC(Sprite3DBasicToonShaderTest);
     Sprite3DBasicToonShaderTest();
+    virtual ~Sprite3DBasicToonShaderTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+    
+protected:
+    GLProgramState * _state;
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    EventListenerCustom* _backToForegroundListener;
+#endif
 
 };
 class EffectSprite3D;
@@ -358,11 +396,11 @@ protected:
     int                      _curSkin[(int)SkinType::MAX_TYPE]; //current skin index
     cocos2d::Sprite3D* _sprite;
 };
-class Sprite3DWithOBBPerfromanceTest : public Sprite3DTestDemo
+class Sprite3DWithOBBPerformanceTest : public Sprite3DTestDemo
 {
 public:
-    CREATE_FUNC(Sprite3DWithOBBPerfromanceTest);
-    Sprite3DWithOBBPerfromanceTest();
+    CREATE_FUNC(Sprite3DWithOBBPerformanceTest);
+    Sprite3DWithOBBPerformanceTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     virtual void update(float dt) override;
@@ -424,6 +462,33 @@ protected:
     float              _arcSpeed;
     float              _radius;
     float              _accAngle;
+};
+
+// 3d + 2d use case
+class UseCaseSprite3D : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(UseCaseSprite3D);
+    UseCaseSprite3D();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    virtual void update(float delta) override;
+    
+    void menuCallback_Message(Ref* sender);
+    
+protected:
+    
+    void switchCase();
+    
+    enum class USECASE{
+        _3D_WITH_2D,
+        _UI_3D_UI,
+        MAX_CASE_NUM,
+    };
+    cocos2d::Label*      _label;
+    int                  _caseIdx; // use case index
+    std::string          _useCaseTitles[(int)USECASE::MAX_CASE_NUM];
 };
 
 class Sprite3DTestScene : public TestScene

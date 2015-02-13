@@ -16,6 +16,7 @@
 -- @function [parent=#ReuseGrid] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return ReuseGrid#ReuseGrid self (return value: cc.ReuseGrid)
         
 --------------------------------
 -- 

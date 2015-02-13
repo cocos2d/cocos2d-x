@@ -106,8 +106,13 @@ namespace cocostudio
        
         textField->setFontSize(DICTOOL->getIntValue_json(options, P_FontSize,20));
     
-       
-        textField->setFontName(DICTOOL->getStringValue_json(options, P_FontName, ""));
+        std::string jsonPath = GUIReader::getInstance()->getFilePath();
+        std::string fontName = DICTOOL->getStringValue_json(options, P_FontName, "");
+        std::string fontFilePath = jsonPath.append(fontName);
+        if (FileUtils::getInstance()->isFileExist(fontFilePath))
+            textField->setFontName(fontFilePath);
+        else
+            textField->setFontName(fontName);
         
         bool tsw = DICTOOL->checkObjectExist_json(options, P_TouchSizeWidth);
         bool tsh = DICTOOL->checkObjectExist_json(options, P_TouchSizeHeight);
@@ -286,7 +291,7 @@ namespace cocostudio
         std::string fontName = options->fontName()->c_str();
         textField->setFontName(fontName);
         
-        bool maxLengthEnabled = options->maxLengthEnabled();
+        bool maxLengthEnabled = options->maxLengthEnabled() != 0;
         textField->setMaxLengthEnabled(maxLengthEnabled);
         
         if (maxLengthEnabled)
@@ -294,7 +299,7 @@ namespace cocostudio
             int maxLength = options->maxLength();
             textField->setMaxLength(maxLength);
         }
-        bool passwordEnabled = options->passwordEnabled();
+        bool passwordEnabled = options->passwordEnabled() != 0;
         textField->setPasswordEnabled(passwordEnabled);
         if (passwordEnabled)
         {

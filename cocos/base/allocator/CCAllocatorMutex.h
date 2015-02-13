@@ -51,7 +51,7 @@
     WaitForSingleObject(m, INFINITE)
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 #define MUTEX_INIT(m) \
-    m = OpenMutex(0, FALSE, 0)
+	m = CreateMutexEx(NULL,FALSE,0,NULL);
 #define MUTEX_LOCK(m) \
     WaitForSingleObjectEx(m, INFINITE, false)
 #endif

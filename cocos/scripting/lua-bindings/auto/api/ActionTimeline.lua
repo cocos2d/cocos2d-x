@@ -5,16 +5,11 @@
 -- @parent_module ccs
 
 --------------------------------
---  Set ActionTimeline's frame event callback function 
--- @function [parent=#ActionTimeline] setFrameEventCallFunc 
--- @param self
--- @param #function listener
-        
---------------------------------
 --  add Timeline to ActionTimeline 
 -- @function [parent=#ActionTimeline] addTimeline 
 -- @param self
 -- @param #ccs.Timeline timeline
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
         
 --------------------------------
 --  Get current frame. 
@@ -32,19 +27,8 @@
 --  Pause the animation. 
 -- @function [parent=#ActionTimeline] pause 
 -- @param self
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
         
---------------------------------
--- @overload self, int, bool         
--- @overload self, int         
--- @overload self, int, int, bool         
--- @overload self, int, int, int, bool         
--- @function [parent=#ActionTimeline] gotoFrameAndPlay
--- @param self
--- @param #int startIndex
--- @param #int endIndex
--- @param #int currentFrameIndex
--- @param #bool loop
-
 --------------------------------
 -- 
 -- @function [parent=#ActionTimeline] init 
@@ -56,12 +40,20 @@
 -- @function [parent=#ActionTimeline] removeTimeline 
 -- @param self
 -- @param #ccs.Timeline timeline
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
+        
+--------------------------------
+-- 
+-- @function [parent=#ActionTimeline] clearFrameEventCallFunc 
+-- @param self
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
         
 --------------------------------
 --  Last frame callback will call when arriving last frame 
 -- @function [parent=#ActionTimeline] setLastFrameCallFunc 
 -- @param self
 -- @param #function listener
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
         
 --------------------------------
 -- 
@@ -73,19 +65,42 @@
 -- 
 -- @function [parent=#ActionTimeline] play 
 -- @param self
--- @param #string name
+-- @param #string animationName
 -- @param #bool loop
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
+        
+--------------------------------
+-- 
+-- @function [parent=#ActionTimeline] getAnimationInfo 
+-- @param self
+-- @param #string animationName
+-- @return AnimationInfo#AnimationInfo ret (return value: ccs.AnimationInfo)
         
 --------------------------------
 --  Resume the animation. 
 -- @function [parent=#ActionTimeline] resume 
 -- @param self
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
+        
+--------------------------------
+-- 
+-- @function [parent=#ActionTimeline] removeAnimationInfo 
+-- @param self
+-- @param #string animationName
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
         
 --------------------------------
 --  Get current animation speed. 
 -- @function [parent=#ActionTimeline] getTimeSpeed 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+--  AnimationInfo
+-- @function [parent=#ActionTimeline] addAnimationInfo 
+-- @param self
+-- @param #ccs.AnimationInfo animationInfo
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
         
 --------------------------------
 -- 
@@ -99,6 +114,7 @@
 -- @function [parent=#ActionTimeline] gotoFrameAndPause 
 -- @param self
 -- @param #int startIndex
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
         
 --------------------------------
 --  Whether or not Action is playing. 
@@ -107,15 +123,24 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
--- @function [parent=#ActionTimeline] removeIndexes 
+-- @overload self, int, bool         
+-- @overload self, int         
+-- @overload self, int, int, bool         
+-- @overload self, int, int, int, bool         
+-- @function [parent=#ActionTimeline] gotoFrameAndPlay
 -- @param self
--- @param #string name
-        
+-- @param #int startIndex
+-- @param #int endIndex
+-- @param #int currentFrameIndex
+-- @param #bool loop
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
+
 --------------------------------
 -- 
--- @function [parent=#ActionTimeline] clearFrameEventCallFunc 
+-- @function [parent=#ActionTimeline] IsAnimationInfoExists 
 -- @param self
+-- @param #string animationName
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 --  End frame of this action.<br>
@@ -126,33 +151,31 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
---  Set current frame index, this will cause action plays to this frame. 
--- @function [parent=#ActionTimeline] setCurrentFrame 
--- @param self
--- @param #int frameIndex
-        
---------------------------------
 --  Set the animation speed, this will speed up or slow down the speed. 
 -- @function [parent=#ActionTimeline] setTimeSpeed 
 -- @param self
 -- @param #float speed
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
         
 --------------------------------
 -- 
 -- @function [parent=#ActionTimeline] clearLastFrameCallFunc 
 -- @param self
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
         
 --------------------------------
 --  duration of the whole action
 -- @function [parent=#ActionTimeline] setDuration 
 -- @param self
 -- @param #int duration
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
         
 --------------------------------
---  add ActionIndexes 
--- @function [parent=#ActionTimeline] addIndexes 
+--  Set current frame index, this will cause action plays to this frame. 
+-- @function [parent=#ActionTimeline] setCurrentFrame 
 -- @param self
--- @param #ccs.ActionIndexes indexes
+-- @param #int frameIndex
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
         
 --------------------------------
 -- 
@@ -165,12 +188,14 @@
 -- @function [parent=#ActionTimeline] step 
 -- @param self
 -- @param #float delta
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
         
 --------------------------------
 -- 
 -- @function [parent=#ActionTimeline] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
         
 --------------------------------
 --  Returns a clone of ActionTimeline 
@@ -195,5 +220,6 @@
 -- 
 -- @function [parent=#ActionTimeline] ActionTimeline 
 -- @param self
+-- @return ActionTimeline#ActionTimeline self (return value: ccs.ActionTimeline)
         
 return nil

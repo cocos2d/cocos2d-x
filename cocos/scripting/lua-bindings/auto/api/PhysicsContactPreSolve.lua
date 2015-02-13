@@ -20,11 +20,13 @@
 -- @function [parent=#PhysicsContactPreSolve] setFriction 
 -- @param self
 -- @param #float friction
+-- @return PhysicsContactPreSolve#PhysicsContactPreSolve self (return value: cc.PhysicsContactPreSolve)
         
 --------------------------------
 --  ignore the rest of the contact presolve and postsolve callbacks 
 -- @function [parent=#PhysicsContactPreSolve] ignore 
 -- @param self
+-- @return PhysicsContactPreSolve#PhysicsContactPreSolve self (return value: cc.PhysicsContactPreSolve)
         
 --------------------------------
 --  get surface velocity between two bodies
@@ -37,11 +39,13 @@
 -- @function [parent=#PhysicsContactPreSolve] setSurfaceVelocity 
 -- @param self
 -- @param #vec2_table velocity
+-- @return PhysicsContactPreSolve#PhysicsContactPreSolve self (return value: cc.PhysicsContactPreSolve)
         
 --------------------------------
 --  set the restitution
 -- @function [parent=#PhysicsContactPreSolve] setRestitution 
 -- @param self
 -- @param #float restitution
+-- @return PhysicsContactPreSolve#PhysicsContactPreSolve self (return value: cc.PhysicsContactPreSolve)
         
 return nil

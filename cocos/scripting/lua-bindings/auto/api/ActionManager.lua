@@ -19,11 +19,13 @@
 -- @param self
 -- @param #int tag
 -- @param #cc.Node target
+-- @return ActionManager#ActionManager self (return value: cc.ActionManager)
         
 --------------------------------
 --  Removes all actions from all the targets.
 -- @function [parent=#ActionManager] removeAllActions 
 -- @param self
+-- @return ActionManager#ActionManager self (return value: cc.ActionManager)
         
 --------------------------------
 --  Adds an action with a target. <br>
@@ -35,24 +37,28 @@
 -- @param #cc.Action action
 -- @param #cc.Node target
 -- @param #bool paused
+-- @return ActionManager#ActionManager self (return value: cc.ActionManager)
         
 --------------------------------
 --  Resumes the target. All queued actions will be resumed.
 -- @function [parent=#ActionManager] resumeTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return ActionManager#ActionManager self (return value: cc.ActionManager)
         
 --------------------------------
--- 
+-- param dt in seconds
 -- @function [parent=#ActionManager] update 
 -- @param self
 -- @param #float dt
+-- @return ActionManager#ActionManager self (return value: cc.ActionManager)
         
 --------------------------------
 --  Pauses the target: all running actions and newly added actions will be paused.
 -- @function [parent=#ActionManager] pauseTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return ActionManager#ActionManager self (return value: cc.ActionManager)
         
 --------------------------------
 --  Returns the numbers of actions that are running in a certain target. <br>
@@ -70,18 +76,21 @@
 -- @function [parent=#ActionManager] removeAllActionsFromTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return ActionManager#ActionManager self (return value: cc.ActionManager)
         
 --------------------------------
 --  Resume a set of targets (convenience function to reverse a pauseAllRunningActions call)
 -- @function [parent=#ActionManager] resumeTargets 
 -- @param self
 -- @param #array_table targetsToResume
+-- @return ActionManager#ActionManager self (return value: cc.ActionManager)
         
 --------------------------------
 --  Removes an action given an action reference.
 -- @function [parent=#ActionManager] removeAction 
 -- @param self
 -- @param #cc.Action action
+-- @return ActionManager#ActionManager self (return value: cc.ActionManager)
         
 --------------------------------
 --  Removes all actions given its tag and the target 
@@ -89,6 +98,7 @@
 -- @param self
 -- @param #int tag
 -- @param #cc.Node target
+-- @return ActionManager#ActionManager self (return value: cc.ActionManager)
         
 --------------------------------
 --  Pauses all running actions, returning a list of targets whose actions were paused.
@@ -100,5 +110,6 @@
 -- js ctor
 -- @function [parent=#ActionManager] ActionManager 
 -- @param self
+-- @return ActionManager#ActionManager self (return value: cc.ActionManager)
         
 return nil

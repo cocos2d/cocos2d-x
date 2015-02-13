@@ -81,7 +81,7 @@ public:
 
     unsigned char* initWithString(const char * text, const FontDefinition& textDefinition, Device::TextAlign align, int &width, int &height, ssize_t& dataLength);
 
-
+    static const std::string DEFAULT_FONT;
 
 private:
 
@@ -132,6 +132,7 @@ private:
     int             m_fontFillColorR;
     int             m_fontFillColorG;
     int             m_fontFillColorB;
+    int             m_fontFillColorA;
 };
 
 NS_CC_END

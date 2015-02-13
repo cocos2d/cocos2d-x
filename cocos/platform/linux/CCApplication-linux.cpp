@@ -104,7 +104,7 @@ int Application::run()
         director = nullptr;
     }
     glview->release();
-    return -1;
+    return EXIT_SUCCESS;
 }
 
 void Application::setAnimationInterval(double interval)

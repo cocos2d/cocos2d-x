@@ -9,12 +9,19 @@
 -- @function [parent=#PhysicsJointMotor] setRate 
 -- @param self
 -- @param #float rate
+-- @return PhysicsJointMotor#PhysicsJointMotor self (return value: cc.PhysicsJointMotor)
         
 --------------------------------
 -- 
 -- @function [parent=#PhysicsJointMotor] getRate 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- 
+-- @function [parent=#PhysicsJointMotor] createConstraints 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 

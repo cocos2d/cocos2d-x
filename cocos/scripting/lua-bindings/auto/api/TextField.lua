@@ -9,6 +9,7 @@
 -- @function [parent=#TextField] setAttachWithIME 
 -- @param self
 -- @param #bool attach
+-- @return TextField#TextField self (return value: ccui.TextField)
         
 --------------------------------
 -- 
@@ -27,6 +28,7 @@
 -- @function [parent=#TextField] setPasswordStyleText 
 -- @param self
 -- @param #char styleText
+-- @return TextField#TextField self (return value: ccui.TextField)
         
 --------------------------------
 -- 
@@ -51,6 +53,7 @@
 -- @function [parent=#TextField] setFontName 
 -- @param self
 -- @param #string name
+-- @return TextField#TextField self (return value: ccui.TextField)
         
 --------------------------------
 -- 
@@ -63,12 +66,14 @@
 -- @function [parent=#TextField] setInsertText 
 -- @param self
 -- @param #bool insertText
+-- @return TextField#TextField self (return value: ccui.TextField)
         
 --------------------------------
 -- 
 -- @function [parent=#TextField] setString 
 -- @param self
 -- @param #string text
+-- @return TextField#TextField self (return value: ccui.TextField)
         
 --------------------------------
 -- 
@@ -81,17 +86,20 @@
 -- @function [parent=#TextField] setTextVerticalAlignment 
 -- @param self
 -- @param #int alignment
+-- @return TextField#TextField self (return value: ccui.TextField)
         
 --------------------------------
 -- 
 -- @function [parent=#TextField] addEventListener 
 -- @param self
 -- @param #function callback
+-- @return TextField#TextField self (return value: ccui.TextField)
         
 --------------------------------
 -- 
 -- @function [parent=#TextField] didNotSelectSelf 
 -- @param self
+-- @return TextField#TextField self (return value: ccui.TextField)
         
 --------------------------------
 -- 
@@ -104,11 +112,13 @@
 -- @function [parent=#TextField] setTextAreaSize 
 -- @param self
 -- @param #size_table size
+-- @return TextField#TextField self (return value: ccui.TextField)
         
 --------------------------------
 -- 
 -- @function [parent=#TextField] attachWithIME 
 -- @param self
+-- @return TextField#TextField self (return value: ccui.TextField)
         
 --------------------------------
 -- 
@@ -118,9 +128,16 @@
         
 --------------------------------
 -- 
+-- @function [parent=#TextField] getAutoRenderSize 
+-- @param self
+-- @return size_table#size_table ret (return value: size_table)
+        
+--------------------------------
+-- 
 -- @function [parent=#TextField] setPasswordEnabled 
 -- @param self
 -- @param #bool enable
+-- @return TextField#TextField self (return value: ccui.TextField)
         
 --------------------------------
 -- 
@@ -139,6 +156,7 @@
 -- @function [parent=#TextField] setMaxLengthEnabled 
 -- @param self
 -- @param #bool enable
+-- @return TextField#TextField self (return value: ccui.TextField)
         
 --------------------------------
 -- 
@@ -151,18 +169,21 @@
 -- @function [parent=#TextField] setDeleteBackward 
 -- @param self
 -- @param #bool deleteBackward
+-- @return TextField#TextField self (return value: ccui.TextField)
         
 --------------------------------
 -- 
 -- @function [parent=#TextField] setFontSize 
 -- @param self
 -- @param #int size
+-- @return TextField#TextField self (return value: ccui.TextField)
         
 --------------------------------
 -- 
 -- @function [parent=#TextField] setPlaceHolder 
 -- @param self
 -- @param #string value
+-- @return TextField#TextField self (return value: ccui.TextField)
         
 --------------------------------
 -- @overload self, color4b_table         
@@ -170,18 +191,21 @@
 -- @function [parent=#TextField] setPlaceHolderColor
 -- @param self
 -- @param #color3b_table color
+-- @return TextField#TextField self (return value: ccui.TextField)
 
 --------------------------------
 -- 
 -- @function [parent=#TextField] setTextHorizontalAlignment 
 -- @param self
 -- @param #int alignment
+-- @return TextField#TextField self (return value: ccui.TextField)
         
 --------------------------------
 -- 
 -- @function [parent=#TextField] setTextColor 
 -- @param self
 -- @param #color4b_table textColor
+-- @return TextField#TextField self (return value: ccui.TextField)
         
 --------------------------------
 -- 
@@ -200,12 +224,14 @@
 -- @function [parent=#TextField] setDetachWithIME 
 -- @param self
 -- @param #bool detach
+-- @return TextField#TextField self (return value: ccui.TextField)
         
 --------------------------------
 -- 
 -- @function [parent=#TextField] setTouchAreaEnabled 
 -- @param self
 -- @param #bool enable
+-- @return TextField#TextField self (return value: ccui.TextField)
         
 --------------------------------
 -- 
@@ -219,12 +245,14 @@
 -- @function [parent=#TextField] setMaxLength 
 -- @param self
 -- @param #int length
+-- @return TextField#TextField self (return value: ccui.TextField)
         
 --------------------------------
 -- 
 -- @function [parent=#TextField] setTouchSize 
 -- @param self
 -- @param #size_table size
+-- @return TextField#TextField self (return value: ccui.TextField)
         
 --------------------------------
 -- 
@@ -265,6 +293,7 @@
 -- @function [parent=#TextField] update 
 -- @param self
 -- @param #float dt
+-- @return TextField#TextField self (return value: ccui.TextField)
         
 --------------------------------
 -- 
@@ -276,5 +305,6 @@
 -- 
 -- @function [parent=#TextField] TextField 
 -- @param self
+-- @return TextField#TextField self (return value: ccui.TextField)
         
 return nil

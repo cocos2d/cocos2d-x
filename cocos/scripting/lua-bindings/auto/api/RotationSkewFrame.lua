@@ -15,6 +15,7 @@
 -- @function [parent=#RotationSkewFrame] apply 
 -- @param self
 -- @param #float percent
+-- @return RotationSkewFrame#RotationSkewFrame self (return value: ccs.RotationSkewFrame)
         
 --------------------------------
 -- 
@@ -26,5 +27,6 @@
 -- 
 -- @function [parent=#RotationSkewFrame] RotationSkewFrame 
 -- @param self
+-- @return RotationSkewFrame#RotationSkewFrame self (return value: ccs.RotationSkewFrame)
         
 return nil

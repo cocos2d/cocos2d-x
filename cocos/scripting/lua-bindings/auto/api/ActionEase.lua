@@ -15,6 +15,7 @@
 -- @function [parent=#ActionEase] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return ActionEase#ActionEase self (return value: cc.ActionEase)
         
 --------------------------------
 -- 
@@ -26,6 +27,7 @@
 -- 
 -- @function [parent=#ActionEase] stop 
 -- @param self
+-- @return ActionEase#ActionEase self (return value: cc.ActionEase)
         
 --------------------------------
 -- 
@@ -34,9 +36,10 @@
 -- @return ActionEase#ActionEase ret (return value: cc.ActionEase)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#ActionEase] update 
 -- @param self
 -- @param #float time
+-- @return ActionEase#ActionEase self (return value: cc.ActionEase)
         
 return nil

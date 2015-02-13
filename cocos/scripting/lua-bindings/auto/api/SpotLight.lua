@@ -17,6 +17,7 @@
 -- @function [parent=#SpotLight] setDirection 
 -- @param self
 -- @param #vec3_table dir
+-- @return SpotLight#SpotLight self (return value: cc.SpotLight)
         
 --------------------------------
 --  get cos innerAngle 
@@ -54,6 +55,7 @@
 -- @function [parent=#SpotLight] setOuterAngle 
 -- @param self
 -- @param #float angle
+-- @return SpotLight#SpotLight self (return value: cc.SpotLight)
         
 --------------------------------
 -- Sets the inner angle of a spot light (in radians).<br>
@@ -61,6 +63,7 @@
 -- @function [parent=#SpotLight] setInnerAngle 
 -- @param self
 -- @param #float angle
+-- @return SpotLight#SpotLight self (return value: cc.SpotLight)
         
 --------------------------------
 -- Returns direction in world.
@@ -74,6 +77,7 @@
 -- @function [parent=#SpotLight] setRange 
 -- @param self
 -- @param #float range
+-- @return SpotLight#SpotLight self (return value: cc.SpotLight)
         
 --------------------------------
 -- Creates a spot light.<br>

@@ -372,7 +372,7 @@ void ParticleSystemQuad::draw(Renderer *renderer, const Mat4 &transform, uint32_
     //quad command
     if(_particleIdx > 0)
     {
-        _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _quads, _particleIdx, transform);
+        _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _quads, _particleIdx, transform, flags);
         renderer->addCommand(&_quadCommand);
     }
 }
@@ -513,8 +513,12 @@ void ParticleSystemQuad::setupVBO()
 
 void ParticleSystemQuad::listenRendererRecreated(EventCustom* event)
 {
+    //when comes to foreground in android, _buffersVBO and _VAOname is a wild handle
+    //before recreating, we need to reset them to 0
+    memset(_buffersVBO, 0, sizeof(_buffersVBO));
     if (Configuration::getInstance()->supportsShareableVAO())
     {
+        _VAOname = 0;
         setupVBOandVAO();
     }
     else

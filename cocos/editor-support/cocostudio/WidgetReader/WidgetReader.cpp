@@ -772,40 +772,14 @@ namespace cocostudio
         widget->setAnchorPoint(Vec2::ZERO);
         
         widget->setUnifySizeEnabled(true);
-        bool ignoreSize = options->ignoreSize();
+        bool ignoreSize = options->ignoreSize() != 0;
         widget->ignoreContentAdaptWithSize(ignoreSize);
 
-        std::string versionString = CSLoader::getInstance()->getCsdVersion();
-        //assume versionString is like "2.0.6.0"
-        if (versionString.length() > 0)
-        {
-            int p1, p2, p3, v1, v2, v3;
-            p1 = p2 = p3 = v1 = v2 = v3 = 0;
-            p1 = versionString.find('.');
-            if (p1 > 0)
-            {
-                p2 = versionString.find('.', p1 + 1);
-                v1 = atoi(versionString.substr(0, p1).c_str());
-            }
-            if (p2 > p1)
-            {
-                p3 = versionString.find('.', p2 + 1);
-                v2 = atoi(versionString.substr(p1 + 1, p2 - p1 - 1).c_str());
-            }
-            if (p3 > p2)
-            {
-                v3 = atoi(versionString.substr(p2 + 1, p3 - p2 - 1).c_str());
-            }
-
-            if (!(v1 <= 2 && v2 == 0 && v3 <= 6))
-            {
-                widget->setUnifySizeEnabled(false);
-                widget->setLayoutComponentEnabled(true);
-                widget->ignoreContentAdaptWithSize(false);
-                Size contentSize(options->size()->width(), options->size()->height());
-                widget->setContentSize(contentSize);
-            }
-        }
+        widget->setUnifySizeEnabled(false);
+        widget->setLayoutComponentEnabled(true);
+        widget->ignoreContentAdaptWithSize(false);
+        Size contentSize(options->size()->width(), options->size()->height());
+        widget->setContentSize(contentSize);
         
         int tag = options->tag();
         widget->setTag(tag);
@@ -814,7 +788,7 @@ namespace cocostudio
         widget->setActionTag(actionTag);
         widget->setUserObject(timeline::ActionTimelineData::create(actionTag));
         
-        bool touchEnabled = options->touchEnabled();
+        bool touchEnabled = options->touchEnabled() != 0;
         widget->setTouchEnabled(touchEnabled);
         
         std::string name = options->name()->c_str();
@@ -833,7 +807,7 @@ namespace cocostudio
         float rotationSkewY = options->rotationSkew()->rotationSkewY();
         widget->setRotationSkewY(rotationSkewY);
         
-        bool visible = options->visible();
+        bool visible = options->visible() != 0;
         widget->setVisible(visible);
         
         int zOrder = options->zOrder();
@@ -850,9 +824,9 @@ namespace cocostudio
         Vec2 anchorPoint(f_anchorPoint->scaleX(), f_anchorPoint->scaleY());
         widget->setAnchorPoint(anchorPoint);
         
-        bool flippedX = options->flipX();
+        bool flippedX = options->flipX() != 0;
         widget->setFlippedX(flippedX);
-        bool flippedY = options->flipY();
+        bool flippedY = options->flipY() != 0;
         widget->setFlippedY(flippedY);
         
         std::string callbackType = options->callBackType()->c_str();
@@ -870,16 +844,16 @@ namespace cocostudio
 
         auto layoutComponent = ui::LayoutComponent::bindLayoutComponent(node);
 
-        bool positionXPercentEnabled = layoutComponentTable->positionXPercentEnabled();
-        bool positionYPercentEnabled = layoutComponentTable->positionYPercentEnabled();
+        bool positionXPercentEnabled = layoutComponentTable->positionXPercentEnabled() != 0;
+        bool positionYPercentEnabled = layoutComponentTable->positionYPercentEnabled() != 0;
         float positionXPercent = layoutComponentTable->positionXPercent();
         float positionYPercent = layoutComponentTable->positionYPercent();
-        bool sizeXPercentEnable = layoutComponentTable->sizeXPercentEnable();
-        bool sizeYPercentEnable = layoutComponentTable->sizeYPercentEnable();
+        bool sizeXPercentEnable = layoutComponentTable->sizeXPercentEnable() != 0;
+        bool sizeYPercentEnable = layoutComponentTable->sizeYPercentEnable() != 0;
         float sizeXPercent = layoutComponentTable->sizeXPercent();
         float sizeYPercent = layoutComponentTable->sizeYPercent();
-        bool stretchHorizontalEnabled = layoutComponentTable->stretchHorizontalEnabled();
-        bool stretchVerticalEnabled = layoutComponentTable->stretchVerticalEnabled();
+        bool stretchHorizontalEnabled = layoutComponentTable->stretchHorizontalEnabled() != 0;
+        bool stretchVerticalEnabled = layoutComponentTable->stretchVerticalEnabled() != 0;
         std::string horizontalEdge = layoutComponentTable->horizontalEdge()->c_str();
         std::string verticalEdge = layoutComponentTable->verticalEdge()->c_str();
         float leftMargin = layoutComponentTable->leftMargin();

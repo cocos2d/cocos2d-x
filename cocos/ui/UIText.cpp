@@ -95,9 +95,9 @@ bool Text::init(const std::string &textContent, const std::string &fontName, int
             ret = false;
             break;
         }
-        this->setString(textContent);
         this->setFontName(fontName);
         this->setFontSize(fontSize);
+        this->setString(textContent);
     } while (0);
     return ret;
 }
@@ -285,6 +285,19 @@ void Text::adaptRenderers()
 Size Text::getVirtualRendererSize() const
 {
     return _labelRenderer->getContentSize();
+}
+
+Size Text::getAutoRenderSize()
+{
+    Size virtualSize = _labelRenderer->getContentSize();
+    if (!_ignoreSize)
+    {
+        _labelRenderer->setDimensions(0, 0);
+        virtualSize = _labelRenderer->getContentSize();
+        _labelRenderer->setDimensions(_contentSize.width, _contentSize.height);
+    }
+
+    return virtualSize;
 }
 
 Node* Text::getVirtualRenderer()

@@ -1,9 +1,5 @@
 set(cocos_root ${Cocos2d-X_SOURCE_DIR})
 
-if(WINDOWS)
-  add_definitions(-DLUASOCKET_INET_ATON -DLUASOCKET_INET_PTON)
-endif()
-
 include_directories(
   ${cocos_root}/external/lua/tolua
   ${cocos_root}/external/lua/lua
@@ -14,6 +10,7 @@ include_directories(
   ${cocos_root}/cocos/ui
   ${cocos_root}/cocos/2d
   ${cocos_root}/cocos/3d
+  ${cocos_root}/cocos/base
   ${cocos_root}/cocos/editor-support/spine
   ${cocos_root}/cocos/editor-support/cocostudio
   ${cocos_root}/cocos/editor-support/cocostudio/ActionTimeline
@@ -52,6 +49,10 @@ list(APPEND lua_cocos2d_source_files
 	)
 
 if(WINDOWS)
+    if(MINGW)
+        add_definitions(-DLUASOCKET_INET_ATON -DLUASOCKET_INET_PTON)
+    endif()
+    add_definitions(-DWIN32 -D_WINDOWS)
     list(APPEND lua_cocos2d_source_files
         ${cocos_root}/external/lua/luasocket/wsocket.c
         )
@@ -93,6 +94,7 @@ set(lua_bindings_manual_files
     manual/cocosdenshion/lua_cocos2dx_cocosdenshion_manual.cpp
     manual/cocostudio/CustomGUIReader.cpp
     manual/cocostudio/lua_cocos2dx_coco_studio_manual.cpp
+    manual/cocostudio/lua-cocos-studio-conversions.cpp
     manual/cocostudio/lua_cocos2dx_csloader_manual.cpp
     manual/controller/lua_cocos2dx_controller_manual.cpp
     manual/extension/lua_cocos2dx_extension_manual.cpp

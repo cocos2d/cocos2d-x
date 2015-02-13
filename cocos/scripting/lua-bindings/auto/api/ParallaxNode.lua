@@ -12,12 +12,14 @@
 -- @param #int z
 -- @param #vec2_table parallaxRatio
 -- @param #vec2_table positionOffset
+-- @return ParallaxNode#ParallaxNode self (return value: cc.ParallaxNode)
         
 --------------------------------
 -- 
 -- @function [parent=#ParallaxNode] removeAllChildrenWithCleanup 
 -- @param self
 -- @param #bool cleanup
+-- @return ParallaxNode#ParallaxNode self (return value: cc.ParallaxNode)
         
 --------------------------------
 -- 
@@ -33,6 +35,7 @@
 -- @param #cc.Node child
 -- @param #int zOrder
 -- @param #int tag
+-- @return ParallaxNode#ParallaxNode self (return value: cc.ParallaxNode)
 
 --------------------------------
 -- 
@@ -41,6 +44,7 @@
 -- @param #cc.Renderer renderer
 -- @param #mat4_table parentTransform
 -- @param #unsigned int parentFlags
+-- @return ParallaxNode#ParallaxNode self (return value: cc.ParallaxNode)
         
 --------------------------------
 -- 
@@ -48,5 +52,6 @@
 -- @param self
 -- @param #cc.Node child
 -- @param #bool cleanup
+-- @return ParallaxNode#ParallaxNode self (return value: cc.ParallaxNode)
         
 return nil

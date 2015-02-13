@@ -28,11 +28,13 @@
 -- 
 -- @function [parent=#ActionTimelineCache] purge 
 -- @param self
+-- @return ActionTimelineCache#ActionTimelineCache self (return value: ccs.ActionTimelineCache)
         
 --------------------------------
 -- 
 -- @function [parent=#ActionTimelineCache] init 
 -- @param self
+-- @return ActionTimelineCache#ActionTimelineCache self (return value: ccs.ActionTimelineCache)
         
 --------------------------------
 -- 
@@ -54,6 +56,7 @@
 -- @function [parent=#ActionTimelineCache] removeAction 
 -- @param self
 -- @param #string fileName
+-- @return ActionTimelineCache#ActionTimelineCache self (return value: ccs.ActionTimelineCache)
         
 --------------------------------
 -- 
@@ -66,6 +69,7 @@
 --  Destroys the singleton 
 -- @function [parent=#ActionTimelineCache] destroyInstance 
 -- @param self
+-- @return ActionTimelineCache#ActionTimelineCache self (return value: ccs.ActionTimelineCache)
         
 --------------------------------
 -- 
