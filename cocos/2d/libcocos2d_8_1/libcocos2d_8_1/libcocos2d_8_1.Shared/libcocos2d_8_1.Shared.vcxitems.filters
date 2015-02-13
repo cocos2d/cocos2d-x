@@ -1291,6 +1291,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCPhysicsHelper.h">
       <Filter>physics</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Sprite3DReader\CSSprite3D_generated.h">
+      <Filter>cocostudio\reader\WidgetReader\Sprite3DReader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.h">
+      <Filter>cocostudio\reader\WidgetReader\Sprite3DReader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos2d.cpp" />
@@ -2378,6 +2384,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\allocator\CCAllocatorGlobalNewDelete.cpp">
       <Filter>base\allocator</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\Sprite3DReader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="2d">
@@ -2613,6 +2622,9 @@
     </Filter>
     <Filter Include="base\allocator">
       <UniqueIdentifier>{673ca2c5-2183-424e-a2aa-728cd5231b62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\Sprite3DReader">
+      <UniqueIdentifier>{2a46d70f-859d-48f9-8d19-1c95a9c0a853}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

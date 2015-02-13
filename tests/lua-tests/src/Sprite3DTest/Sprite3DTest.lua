@@ -1026,6 +1026,52 @@ function AsyncLoadSprite3DTest:onExit()
 
 end
 
+----------------------------------------
+----TestSprite3D
+----------------------------------------
+local TestSprite3D = class("TestSprite3D", function ()
+    local layer = cc.Layer:create()
+    Helper.initWithLayer(layer)
+    return layer
+end)
+
+function TestSprite3D :ctor()
+    -- body
+    self:init()
+end
+
+function TestSprite3D :init()
+    Helper.titleLabel:setString(self:title())
+    Helper.subtitleLabel:setString(self:subtitle())
+
+    self:registerScriptHandler(function (event)
+        if event == "enter" then
+            self:onEnter()
+        elseif event == "exit" then
+            self:onExit()
+        end
+    end)
+end
+
+function TestSprite3D:title()
+    return "Testing Sprite3D"
+end
+
+function TestSprite3D:subtitle()
+    return "Csb file loaded"
+end
+
+function TestSprite3D:onEnter()
+    local s = cc.Director:getInstance():getWinSize();
+	local sprite3d = cc.CSLoader:createNode("Sprite3DTest/TestSprite3D.csb");
+	sprite3d:setPosition(cc.p(s.width / 2, s.height / 3));
+	self:addChild(sprite3d);
+end
+
+function TestSprite3D:onExit()
+
+end
+
 function Sprite3DTest()
     local scene = cc.Scene:create()
 
@@ -1039,7 +1085,8 @@ function Sprite3DTest()
         Sprite3DReskinTest.create,
         Sprite3DWithOBBPerfromanceTest.create,
         Sprite3DMirrorTest.create,
-        AsyncLoadSprite3DTest.create
+        AsyncLoadSprite3DTest.create,
+		TestSprite3D.create
     }
 
     scene:addChild(Sprite3DBasicTest.create())

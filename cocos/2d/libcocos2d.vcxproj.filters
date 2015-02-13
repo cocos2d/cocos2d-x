@@ -244,6 +244,9 @@
     <Filter Include="ui\shaders">
       <UniqueIdentifier>{e6eaa24a-a21e-4c1d-b6b2-19326d129af2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\Sprite3DReader">
+      <UniqueIdentifier>{69f10060-6ffe-41b8-b3c7-4855b9980b5b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
@@ -1302,6 +1305,9 @@
     <ClCompile Include="..\3d\CCPlane.cpp" />
     <ClCompile Include="..\3d\CCAABB.cpp">
       <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\Sprite3DReader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2547,6 +2553,12 @@
     <ClInclude Include="..\3d\CCPlane.h" />
     <ClInclude Include="..\physics\CCPhysicsHelper.h">
       <Filter>physics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Sprite3DReader\CSSprite3D_generated.h">
+      <Filter>cocostudio\reader\WidgetReader\Sprite3DReader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.h">
+      <Filter>cocostudio\reader\WidgetReader\Sprite3DReader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
