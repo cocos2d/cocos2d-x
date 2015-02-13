@@ -1086,7 +1086,7 @@ function Sprite3DTest()
         Sprite3DWithOBBPerfromanceTest.create,
         Sprite3DMirrorTest.create,
         AsyncLoadSprite3DTest.create,
-		TestSprite3D.create
+        TestSprite3D.create
     }
 
     scene:addChild(Sprite3DBasicTest.create())
