@@ -29,21 +29,21 @@ THE SOFTWARE.
 #include "platform/CCPlatformConfig.h"
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
-    #include "platform/ios/CCGLViewImpl-ios.h"
+#include "platform/ios/CCGLViewImpl-ios.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    #include "platform/android/CCGLViewImpl-android.h"
+#include "platform/android/CCGLViewImpl-android.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY
-    #include "platform/blackberry/CCGLViewImpl.h"
+#include "platform/blackberry/CCGLViewImpl.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-    #include "platform/desktop/CCGLViewImpl-desktop.h"
+#include "platform/desktop/CCGLViewImpl-desktop.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_MAC
-    #include "platform/desktop/CCGLViewImpl-desktop.h"
+#include "platform/desktop/CCGLViewImpl-desktop.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
-    #include "platform/desktop/CCGLViewImpl-desktop.h"
+#include "platform/desktop/CCGLViewImpl-desktop.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
-	#include "platform/winrt/CCGLViewImpl-winrt.h"
+#include "platform/winrt/CCGLViewImpl-winrt.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-	#include "platform/wp8/CCGLViewImpl-wp8.h"
+#include "platform/wp8/CCGLViewImpl-wp8.h"
 #endif
 
 #endif /* __PLATFORM_CCGLVIEWIMPL_H__ */
