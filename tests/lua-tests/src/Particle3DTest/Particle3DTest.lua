@@ -7,8 +7,14 @@ local function baseInit(self)
 
     self._angle = 0
 
-    cc.FileUtils:getInstance():addSearchPath("Particle3D/materials")
-    cc.FileUtils:getInstance():addSearchPath("Particle3D/scripts")
+    local targetPlatform = cc.Application:getInstance():getTargetPlatform()
+    if targetPlatform == cc.PLATFORM_OS_MAC  or targetPlatform == cc.PLATFORM_OS_IPHONE  or targetPlatform == cc.PLATFORM_OS_IPAD  then
+        cc.FileUtils:getInstance():addSearchPath("Particle3D/materials")
+        cc.FileUtils:getInstance():addSearchPath("Particle3D/scripts")
+    else
+        cc.FileUtils:getInstance():addSearchPath("res/Particle3D/materials")
+        cc.FileUtils:getInstance():addSearchPath("res/Particle3D/scripts")
+    end
 
     local size = cc.Director:getInstance():getWinSize()
     self._camera = cc.Camera:createPerspective(30.0, size.width / size.height, 1.0, 1000.0)
