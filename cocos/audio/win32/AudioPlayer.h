@@ -78,7 +78,8 @@ protected:
     std::thread _rotateBufferThread;
     std::mutex _sleepMutex;
     std::condition_variable _sleepCondition;
-    bool _exitThread; 
+    bool _exitThread;
+    bool _streamingEnd;
     
     friend class AudioEngineImpl;
 };
