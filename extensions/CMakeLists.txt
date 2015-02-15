@@ -82,8 +82,8 @@ set(COCOS_EXTENSIONS_SRC
   ../extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DLineAffectorTranslator.cpp
   ../extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DLinearForceAffector.cpp
   ../extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DLinearForceAffectorTranslator.cpp
-  ../extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticleParticle3DFollower.cpp
-  ../extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticleParticle3DFollowerTranslator.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DParticleFollower.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DParticleFollowerTranslator.cpp
   ../extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DPathFollower.cpp
   ../extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DPathFollowerTranslator.cpp
   ../extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DPlaneCollider.cpp
