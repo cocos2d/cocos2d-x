@@ -43,6 +43,7 @@ set(COCOS_EXTENSIONS_SRC
   ../extensions/Particle3D/ParticleUniverse/CCPUParticle3DPlane.cpp
   ../extensions/Particle3D/ParticleUniverse/CCPUParticle3DRendererTranslator.cpp
   ../extensions/Particle3D/ParticleUniverse/CCPUParticle3DScriptCompiler.cpp
+  ../extensions/Particle3D/ParticleUniverse/CCPUParticle3DScriptLexer.cpp
   ../extensions/Particle3D/ParticleUniverse/CCPUParticle3DScriptParser.cpp
   ../extensions/Particle3D/ParticleUniverse/CCPUParticle3DScriptTranslator.cpp
   ../extensions/Particle3D/ParticleUniverse/CCPUParticle3DSimpleSpline.cpp
