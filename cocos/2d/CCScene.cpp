@@ -47,6 +47,8 @@ Scene::Scene()
     _ignoreAnchorPointForPosition = true;
     setAnchorPoint(Vec2(0.5f, 0.5f));
     
+    _cameraOrderDirty = true;
+    
     //create default camera
     _defaultCamera = Camera::create();
     addChild(_defaultCamera);
@@ -119,11 +121,22 @@ void Scene::onProjectionChanged(EventCustom* event)
     }
 }
 
+static bool camera_cmp(const Camera* a, const Camera* b)
+{
+    return a->getDepth() < b->getDepth();
+}
+
 void Scene::render(Renderer* renderer)
 {
     auto director = Director::getInstance();
     Camera* defaultCamera = nullptr;
     const auto& transform = getNodeToParentTransform();
+    if (_cameraOrderDirty)
+    {
+        stable_sort(_cameras.begin(), _cameras.end(), camera_cmp);
+        _cameraOrderDirty = false;
+    }
+    
     for (const auto& camera : _cameras)
     {
         if (!camera->isVisible())
@@ -133,7 +146,6 @@ void Scene::render(Renderer* renderer)
         if (Camera::_visitingCamera->getCameraFlag() == CameraFlag::DEFAULT)
         {
             defaultCamera = Camera::_visitingCamera;
-            continue;
         }
         
         director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
@@ -145,19 +157,7 @@ void Scene::render(Renderer* renderer)
         
         director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     }
-    //draw with default camera
-    if (defaultCamera)
-    {
-        Camera::_visitingCamera = defaultCamera;
-        director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-        director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
-        
-        //visit the scene
-        visit(renderer, transform, 0);
-        renderer->render();
-        
-        director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    }
+
     Camera::_visitingCamera = nullptr;
 }
 

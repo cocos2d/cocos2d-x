@@ -367,7 +367,7 @@ void Renderer::addCommand(RenderCommand* command, int renderQueue)
     CCASSERT(!_isRendering, "Cannot add command while rendering");
     CCASSERT(renderQueue >=0, "Invalid render queue");
     CCASSERT(command->getType() != RenderCommand::Type::UNKNOWN_COMMAND, "Invalid Command Type");
-    
+
     _renderGroups[renderQueue].push_back(command);
 }
 
