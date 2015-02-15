@@ -312,7 +312,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\CCGLViewImpl-winrt.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\CCGL_Angle.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\CCPlatformDefine-winrt.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\CCPrecompiledShaders.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\CCPThreadWinRT.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\CCStdC.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\CCWinRTUtils.h" />
@@ -703,7 +702,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\CCFileUtilsWinRT.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\CCFreeTypeFont.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\CCGLViewImpl-winrt.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\CCPrecompiledShaders.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\CCPThreadWinRT.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\CCStdC.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\CCWinRTUtils.cpp" />

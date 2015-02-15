@@ -51,18 +51,14 @@ static std::function<Layer*()> createFunctions[] =
     CL(Sprite3DBasicTest),
     CL(Sprite3DHitTest),
     CL(AsyncLoadSprite3DTest),
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     // 3DEffect use custom shader which is not supported on WP8/WinRT yet. 
     CL(Sprite3DEffectTest),
     CL(Sprite3DUVAnimationTest),
     CL(Sprite3DFakeShadowTest),
     CL(Sprite3DBasicToonShaderTest),
     CL(Sprite3DLightMapTest),
-#endif
     CL(Sprite3DWithSkinTest),
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     CL(Sprite3DWithSkinOutlineTest),
-#endif
     CL(Animate3DTest),
     CL(AttachmentTest),
     CL(Sprite3DReskinTest),
@@ -359,7 +355,7 @@ Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
     //the callback function update cylinder's texcoord
     schedule(schedule_selector(Sprite3DUVAnimationTest::cylinderUpdate));
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
                                                             [this](EventCustom*)
                                                             {
@@ -376,7 +372,7 @@ Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
 
 Sprite3DUVAnimationTest::~Sprite3DUVAnimationTest()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 }
@@ -484,7 +480,7 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
 
     schedule(CC_SCHEDULE_SELECTOR(Sprite3DFakeShadowTest::updateCamera), 0.0f);
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
                                                             [this](EventCustom*)
                                                             {
@@ -513,7 +509,7 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
 
 Sprite3DFakeShadowTest::~Sprite3DFakeShadowTest()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 }
@@ -713,7 +709,7 @@ Sprite3DBasicToonShaderTest::Sprite3DBasicToonShaderTest()
     addChild(_camera);
     setCameraMask(2);
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
                                                             [this](EventCustom*)
                                                             {
@@ -730,7 +726,7 @@ Sprite3DBasicToonShaderTest::Sprite3DBasicToonShaderTest()
 
 Sprite3DBasicToonShaderTest::~Sprite3DBasicToonShaderTest()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 }
@@ -1029,7 +1025,7 @@ Effect3DOutline::Effect3DOutline()
 , _outlineColor(1, 1, 1)
 , _sprite(nullptr)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
                                                           [this](EventCustom*)
                                                           {
@@ -1046,7 +1042,7 @@ Effect3DOutline::Effect3DOutline()
 
 Effect3DOutline::~Effect3DOutline()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 }
