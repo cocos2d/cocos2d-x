@@ -387,7 +387,12 @@ void PUParticle3DModelRender::render( Renderer* renderer, const Mat4 &transform,
 
     if (_spriteList.empty()){
         for (unsigned int i = 0; i < particleSystem->getParticleQuota(); ++i){
-            Sprite3D *sprite = Sprite3D::create(_modelFile);
+            auto sprite = Sprite3D::create(_modelFile);
+            if (sprite == nullptr)
+            {
+                CCLOG("failed to load file %s", _modelFile.c_str());
+                continue;
+            }
             sprite->setTexture(_texFile);
             sprite->retain();
             _spriteList.push_back(sprite);
@@ -433,7 +438,10 @@ PUParticle3DModelRender::PUParticle3DModelRender()
 
 PUParticle3DModelRender::~PUParticle3DModelRender()
 {
-
+    for (auto it : _spriteList) {
+        it->release();
+    }
+    _spriteList.clear();
 }
 
 NS_CC_END
