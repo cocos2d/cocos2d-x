@@ -585,7 +585,7 @@ void EditBoxImplIOS::setVisible(bool visible)
 void EditBoxImplIOS::setContentSize(const Size& size)
 {
     _contentSize = size;
-    CCLOG("[Edit text] content size = (%f, %f)", size.width, size.height);
+//    CCLOG("[Edit text] content size = (%f, %f)", size.width, size.height);
     placeInactiveLabels();
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
     CGSize controlSize = CGSizeMake(size.width * glview->getScaleX(),size.height * glview->getScaleY());
@@ -600,7 +600,7 @@ void EditBoxImplIOS::setContentSize(const Size& size)
 
 void EditBoxImplIOS::setAnchorPoint(const Vec2& anchorPoint)
 {
-    CCLOG("[Edit text] anchor point = (%f, %f)", anchorPoint.x, anchorPoint.y);
+//    CCLOG("[Edit text] anchor point = (%f, %f)", anchorPoint.x, anchorPoint.y);
 	_anchorPoint = anchorPoint;
 	setPosition(_position);
 }

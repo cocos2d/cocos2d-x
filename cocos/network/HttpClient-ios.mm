@@ -135,7 +135,7 @@ void HttpClient::networkThreadAlone(HttpRequest* request)
 
     auto scheduler = Director::getInstance()->getScheduler();
     scheduler->performFunctionInCocosThread([response, request]{
-        const ccHttpRequestCallback& callback = request->getCallback();
+        const ccHttpRequestCompleteCallback& callback = request->getCompleteCallback();
         Ref* pTarget = request->getTarget();
         SEL_HttpResponse pSelector = request->getSelector();
 
@@ -161,12 +161,11 @@ static int processTask(HttpRequest *request, NSString* requestType, void *stream
     NSURL *url = [NSURL URLWithString:urlstring];
 
     NSMutableURLRequest *nsrequest = [NSMutableURLRequest requestWithURL:url
-                                               cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
-                                           timeoutInterval:HttpClient::getInstance()->getTimeoutForConnect()];
+                                                             cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+                                                         timeoutInterval:HttpClient::getInstance()->getTimeoutForConnect()];
     
     //set request type
     [nsrequest setHTTPMethod:requestType];
-    [nsrequest setTimeoutInterval:30.0];
     
     /* get custom header data (if set) */
     std::vector<std::string> headers=request->getHeaders();
@@ -235,9 +234,19 @@ static int processTask(HttpRequest *request, NSString* requestType, void *stream
     }
     [httpAsynConn startRequest:nsrequest];
     
-    while( httpAsynConn.finish != true)
+    long long cachedDownloadProgress = 0;
+    while (httpAsynConn.finish != true)
     {
         [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+        if (httpAsynConn.downloadProgress != cachedDownloadProgress)
+        {
+            const ccHttpRequestProgressCallback& callback = request->getProgressCallback();
+            if (callback)
+            {
+                callback(request, (long)httpAsynConn.downloadSize, (long)httpAsynConn.downloadProgress);
+            }
+            cachedDownloadProgress = httpAsynConn.downloadProgress;
+        }
     }
     
     //if http connection return error
@@ -495,7 +504,7 @@ void HttpClient::dispatchResponseCallbacks()
     if (response)
     {
         HttpRequest *request = response->getHttpRequest();
-        const ccHttpRequestCallback& callback = request->getCallback();
+        const ccHttpRequestCompleteCallback& callback = request->getCompleteCallback();
         Ref* pTarget = request->getTarget();
         SEL_HttpResponse pSelector = request->getSelector();
 

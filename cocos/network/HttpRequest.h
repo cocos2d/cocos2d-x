@@ -36,9 +36,11 @@ NS_CC_BEGIN
 namespace network {
 
 class HttpClient;
+class HttpRequest;
 class HttpResponse;
 
-typedef std::function<void(HttpClient* client, HttpResponse* response)> ccHttpRequestCallback;
+typedef std::function<int(HttpRequest* request, long totalToDownload, long downloadProgress)> ccHttpRequestProgressCallback;
+typedef std::function<void(HttpClient* client, HttpResponse* response)> ccHttpRequestCompleteCallback;
 typedef void (cocos2d::Ref::*SEL_HttpResponse)(HttpClient* client, HttpResponse* response);
 #define httpresponse_selector(_SELECTOR) (cocos2d::network::SEL_HttpResponse)(&_SELECTOR)
 
@@ -81,7 +83,8 @@ public:
         _tag.clear();
         _pTarget = nullptr;
         _pSelector = nullptr;
-        _pCallback = nullptr;
+        _pProgressCallback = nullptr;
+        _pCompleteCallback = nullptr;
         _pUserData = nullptr;
     };
     
@@ -196,9 +199,14 @@ public:
         }
     }
     
-    inline void setResponseCallback(const ccHttpRequestCallback& callback)
+    inline void setResponseProgressCallback(const ccHttpRequestProgressCallback& callback)
     {
-        _pCallback = callback;
+        _pProgressCallback = callback;
+    }
+    
+    inline void setResponseCompleteCallback(const ccHttpRequestCompleteCallback& callback)
+    {
+        _pCompleteCallback = callback;
     }
     
     /** Get the target of callback selector funtion, mainly used by HttpClient */
@@ -226,9 +234,14 @@ public:
         return _prxy(_pSelector);
     }
     
-    inline const ccHttpRequestCallback& getCallback()
+    inline const ccHttpRequestProgressCallback& getProgressCallback()
     {
-        return _pCallback;
+        return _pProgressCallback;
+    }
+    
+    inline const ccHttpRequestCompleteCallback& getCompleteCallback()
+    {
+        return _pCompleteCallback;
     }
     
     /** Set any custom headers **/
@@ -245,15 +258,16 @@ public:
     
 protected:
     // properties
-    Type                        _requestType;    /// kHttpRequestGet, kHttpRequestPost or other enums
-    std::string                 _url;            /// target url that this request is sent to
-    std::vector<char>           _requestData;    /// used for POST
-    std::string                 _tag;            /// user defined tag, to identify different requests in response callback
-    Ref*                        _pTarget;        /// callback target of pSelector function
-    SEL_HttpResponse            _pSelector;      /// callback function, e.g. MyLayer::onHttpResponse(HttpClient *sender, HttpResponse * response)
-    ccHttpRequestCallback       _pCallback;      /// C++11 style callbacks
-    void*                       _pUserData;      /// You can add your customed data here 
-    std::vector<std::string>    _headers;		      /// custom http headers
+    Type                          _requestType;       /// kHttpRequestGet, kHttpRequestPost or other enums
+    std::string                   _url;               /// target url that this request is sent to
+    std::vector<char>             _requestData;       /// used for POST
+    std::string                   _tag;               /// user defined tag, to identify different requests in response callback
+    Ref*                          _pTarget;           /// callback target of pSelector function
+    SEL_HttpResponse              _pSelector;         /// callback function, e.g. MyLayer::onHttpResponse(HttpClient *sender, HttpResponse * response)
+    ccHttpRequestProgressCallback _pProgressCallback; /// C++11 style callbacks
+    ccHttpRequestCompleteCallback _pCompleteCallback; /// C++11 style callbacks
+    void*                         _pUserData;         /// You can add your customed data here
+    std::vector<std::string>      _headers;		      /// custom http headers
 };
 
 }

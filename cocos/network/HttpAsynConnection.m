@@ -28,6 +28,8 @@
 
 @synthesize srcURL;
 @synthesize sslFile;
+@synthesize downloadSize;
+@synthesize downloadProgress;
 @synthesize responseHeader;
 @synthesize responseData;
 @synthesize getDataTime;
@@ -65,14 +67,14 @@
  * Therefore, it is important to reset the data on each call.  Do not assume that it is the first call
  * of this method.
  **/
-- (void) connection:(NSURLConnection *)connection 
- didReceiveResponse:(NSURLResponse *)response {
+- (void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
 //    NSLog(@"Received response from request to url %@", srcURL);
     
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
     //NSLog(@"All headers = %@", [httpResponse allHeaderFields]);
     responseHeader = [[httpResponse allHeaderFields] copy];
-
+    downloadSize = [response expectedContentLength];
+    
     responseCode = httpResponse.statusCode;
     statusString = [[NSHTTPURLResponse localizedStringForStatusCode:responseCode] copy];
     if(responseCode == 200)
@@ -107,6 +109,7 @@
 {
     //NSLog(@"get some data");
     [responseData appendData:data];
+    downloadProgress = [responseData length];
     getDataTime++;
 }
 
@@ -114,8 +117,7 @@
  * This delegate methodis called if the connection cannot be established to the server.  
  * The error object will have a description of the error
  **/
-- (void)connection:(NSURLConnection *)connection 
-  didFailWithError:(NSError *)error
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
     //NSLog(@"Load failed with error %@", [error localizedDescription]);
     responseError = [error copy];
