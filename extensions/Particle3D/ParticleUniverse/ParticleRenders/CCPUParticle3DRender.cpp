@@ -377,6 +377,7 @@ PUParticle3DModelRender* PUParticle3DModelRender::create( const std::string& mod
     auto ret = new PUParticle3DModelRender();
     ret->_modelFile = modelFile;
     ret->_texFile = texFile;
+    ret->autorelease();
     return ret;
 }
 
