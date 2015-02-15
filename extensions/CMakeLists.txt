@@ -72,6 +72,7 @@ set(COCOS_EXTENSIONS_SRC
   ../extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DForceFieldAffector.cpp
   ../extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DForceFieldAffectorTranslator.cpp
   ../extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DGeometryRotator.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DGeometryRotatorTranslator.cpp
   ../extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DGravityAffector.cpp
   ../extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DGravityAffectorTranslator.cpp
   ../extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DInterParticleCollider.cpp
