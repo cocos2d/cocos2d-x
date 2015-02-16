@@ -179,8 +179,8 @@ bool PUParticle3DMaterialCache::loadMaterialsFromSearchPaths( const std::string 
             continue;
         }
         
-        std::string fullpath = fileFolder + "/" + ent->d_name;
-        if (strlen(ent->d_name) > 9 && strcmp(".material", ent->d_name + strlen(ent->d_name) - 9))
+        std::string fullpath = fileFolder + "/" + file->d_name;
+        if (strlen(file->d_name) > 9 && strcmp(".material", file->d_name + strlen(file->d_name) - 9))
         {
             CCLOG("%s", fullpath.c_str());
             loadMaterials(fullpath);
