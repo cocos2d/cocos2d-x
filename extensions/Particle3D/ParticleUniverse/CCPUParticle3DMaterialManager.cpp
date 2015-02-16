@@ -37,6 +37,7 @@
 #include <ftw.h>
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
 #include <sys/types.h>
+#include <sys/stat.h>
 #include <dirent.h>
 #endif
 NS_CC_BEGIN
