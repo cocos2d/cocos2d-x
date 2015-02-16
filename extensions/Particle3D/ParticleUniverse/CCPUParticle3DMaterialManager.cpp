@@ -170,8 +170,8 @@ bool PUParticle3DMaterialCache::loadMaterialsFromSearchPaths( const std::string 
     
     if(!(d = opendir(fileFolder.c_str())))
     {
-        printf("error opendir %s!!!\n",path);
-        return -1;
+        CCLOG("error opendir %s!!!\n",fileFolder.c_str());
+        return false;
     }
     while((file = readdir(d)) != NULL)
     {
