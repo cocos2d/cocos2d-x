@@ -90,11 +90,35 @@
 -- @return SpriteFrame#SpriteFrame self (return value: cc.SpriteFrame)
         
 --------------------------------
+-- @overload self, cc.Texture2D, rect_table, bool, vec2_table, size_table         
+-- @overload self, cc.Texture2D, rect_table         
+-- @function [parent=#SpriteFrame] initWithTexture
+-- @param self
+-- @param #cc.Texture2D pobTexture
+-- @param #rect_table rect
+-- @param #bool rotated
+-- @param #vec2_table offset
+-- @param #size_table originalSize
+-- @return bool#bool ret (return value: bool)
+
+--------------------------------
 -- 
 -- @function [parent=#SpriteFrame] isRotated 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
+--------------------------------
+-- @overload self, string, rect_table, bool, vec2_table, size_table         
+-- @overload self, string, rect_table         
+-- @function [parent=#SpriteFrame] initWithTextureFilename
+-- @param self
+-- @param #string filename
+-- @param #rect_table rect
+-- @param #bool rotated
+-- @param #vec2_table offset
+-- @param #size_table originalSize
+-- @return bool#bool ret (return value: bool)
+
 --------------------------------
 --  set rect of the frame 
 -- @function [parent=#SpriteFrame] setRect 
@@ -138,4 +162,10 @@
 -- @param #size_table originalSize
 -- @return SpriteFrame#SpriteFrame ret (return value: cc.SpriteFrame)
 
+--------------------------------
+-- lua NA
+-- @function [parent=#SpriteFrame] SpriteFrame 
+-- @param self
+-- @return SpriteFrame#SpriteFrame self (return value: cc.SpriteFrame)
+        
 return nil

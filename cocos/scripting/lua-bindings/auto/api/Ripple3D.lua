@@ -12,6 +12,18 @@
 -- @return Ripple3D#Ripple3D self (return value: cc.Ripple3D)
         
 --------------------------------
+--  initializes the action with radius, number of waves, amplitude, a grid size and duration 
+-- @function [parent=#Ripple3D] initWithDuration 
+-- @param self
+-- @param #float duration
+-- @param #size_table gridSize
+-- @param #vec2_table position
+-- @param #float radius
+-- @param #unsigned int waves
+-- @param #float amplitude
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- 
 -- @function [parent=#Ripple3D] getAmplitudeRate 
 -- @param self
@@ -66,6 +78,12 @@
 -- @function [parent=#Ripple3D] update 
 -- @param self
 -- @param #float time
+-- @return Ripple3D#Ripple3D self (return value: cc.Ripple3D)
+        
+--------------------------------
+-- 
+-- @function [parent=#Ripple3D] Ripple3D 
+-- @param self
 -- @return Ripple3D#Ripple3D self (return value: cc.Ripple3D)
         
 return nil

@@ -405,13 +405,9 @@ void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false *
         _commonLineHeight = _fontAtlas->getCommonLineHeight();
         _contentDirty = true;
     }
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
-    _useDistanceField = distanceFieldEnabled;
-#else
     // some older Windows Phones cannot run the ccShader_Label_df.frag program
     // so we must disable distance field
     _useDistanceField = false;
-#endif
     _useA8Shader = useA8Shader;
 
     if (_currentLabelType != LabelType::TTF)
@@ -895,8 +891,8 @@ void Label::drawShadowWithoutBlur()
 void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     // Don't do calculate the culling if the transform was not updated
-#if CC_USE_CULLING
     bool transformUpdated = flags & FLAGS_TRANSFORM_DIRTY;
+#if CC_USE_CULLING
     _insideBounds = transformUpdated ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
 
     if(_insideBounds)

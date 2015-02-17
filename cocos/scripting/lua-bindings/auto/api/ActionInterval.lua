@@ -11,6 +11,13 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+--  initializes the action 
+-- @function [parent=#ActionInterval] initWithDuration 
+-- @param self
+-- @param #float d
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- 
 -- @function [parent=#ActionInterval] setAmplitudeRate 
 -- @param self

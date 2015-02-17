@@ -13,6 +13,26 @@
         
 --------------------------------
 -- 
+-- @function [parent=#Scene] onProjectionChanged 
+-- @param self
+-- @param #cc.EventCustom event
+-- @return Scene#Scene self (return value: cc.Scene)
+        
+--------------------------------
+-- 
+-- @function [parent=#Scene] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#Scene] initWithSize 
+-- @param self
+-- @param #size_table size
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#Scene] getDefaultCamera 
 -- @param self
 -- @return Camera#Camera ret (return value: cc.Camera)
@@ -45,5 +65,11 @@
 -- @function [parent=#Scene] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
+        
+--------------------------------
+-- 
+-- @function [parent=#Scene] Scene 
+-- @param self
+-- @return Scene#Scene self (return value: cc.Scene)
         
 return nil

@@ -12,6 +12,12 @@
 -- @return Speed#Speed self (return value: cc.Speed)
         
 --------------------------------
+-- 
+-- @function [parent=#Speed] getSpeed 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
 --  alter the speed of the inner function in runtime 
 -- @function [parent=#Speed] setSpeed 
 -- @param self
@@ -19,16 +25,18 @@
 -- @return Speed#Speed self (return value: cc.Speed)
         
 --------------------------------
+--  initializes the action 
+-- @function [parent=#Speed] initWithAction 
+-- @param self
+-- @param #cc.ActionInterval action
+-- @param #float speed
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- 
 -- @function [parent=#Speed] getInnerAction 
 -- @param self
 -- @return ActionInterval#ActionInterval ret (return value: cc.ActionInterval)
-        
---------------------------------
--- 
--- @function [parent=#Speed] getSpeed 
--- @param self
--- @return float#float ret (return value: float)
         
 --------------------------------
 --  create the action 
@@ -75,5 +83,11 @@
 -- @function [parent=#Speed] isDone 
 -- @param self
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#Speed] Speed 
+-- @param self
+-- @return Speed#Speed self (return value: cc.Speed)
         
 return nil

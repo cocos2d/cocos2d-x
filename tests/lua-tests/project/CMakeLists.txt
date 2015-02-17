@@ -30,9 +30,9 @@ endif()
 include_directories(
   Classes
   ../../../cocos/scripting/lua-bindings/manual
+  ../../../cocos/scripting/lua-bindings/manual/tolua
   ../../../cocos/scripting/lua-bindings/auto
   ../../../external/lua/lua
-  ../../../external/lua/tolua
 )
 
 # add the executable

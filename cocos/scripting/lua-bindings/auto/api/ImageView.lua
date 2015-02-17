@@ -15,6 +15,14 @@
 -- @return ImageView#ImageView self (return value: ccui.ImageView)
         
 --------------------------------
+-- 
+-- @function [parent=#ImageView] init 
+-- @param self
+-- @param #string imageFileName
+-- @param #int texType
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- Sets if imageview is using scale9 renderer.<br>
 -- param able true that using scale9 renderer, false otherwise.
 -- @function [parent=#ImageView] setScale9Enabled 
@@ -70,6 +78,12 @@
 -- @function [parent=#ImageView] getVirtualRenderer 
 -- @param self
 -- @return Node#Node ret (return value: cc.Node)
+        
+--------------------------------
+-- 
+-- @function [parent=#ImageView] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- Returns the "class name" of widget.

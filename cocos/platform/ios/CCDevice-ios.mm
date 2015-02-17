@@ -38,6 +38,8 @@
 #import<CoreMotion/CoreMotion.h>
 #import<CoreFoundation/CoreFoundation.h>
 
+#define SENSOR_DELAY_GAME 0.02
+
 @interface CCAccelerometerDispatcher : NSObject<UIAccelerometerDelegate>
 {
     cocos2d::Acceleration *_acceleration;
@@ -69,6 +71,7 @@ static CCAccelerometerDispatcher* s_pAccelerometerDispatcher;
     if( (self = [super init]) ) {
         _acceleration = new cocos2d::Acceleration();
         _motionManager = [[CMMotionManager alloc] init];
+        _motionManager.accelerometerUpdateInterval = SENSOR_DELAY_GAME;
     }
     return self;
 }
@@ -468,7 +471,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         info.strokeColorR           = textDefinition._stroke._strokeColor.r / 255.0f;
         info.strokeColorG           = textDefinition._stroke._strokeColor.g / 255.0f;
         info.strokeColorB           = textDefinition._stroke._strokeColor.b / 255.0f;
-        info.strokeColorB           = textDefinition._stroke._strokeAlpha / 255.0f;
+        info.strokeColorA           = textDefinition._stroke._strokeAlpha / 255.0f;
         info.strokeSize             = textDefinition._stroke._strokeSize;
         info.tintColorR             = textDefinition._fontFillColor.r / 255.0f;
         info.tintColorG             = textDefinition._fontFillColor.g / 255.0f;

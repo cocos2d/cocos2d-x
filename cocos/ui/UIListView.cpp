@@ -385,14 +385,15 @@ void ListView::setDirection(Direction dir)
 {
     switch (dir)
     {
+        case Direction::NONE:
+        case Direction::BOTH:
+            break;
         case Direction::VERTICAL:
             setLayoutType(Type::VERTICAL);
             break;
         case Direction::HORIZONTAL:
             setLayoutType(Type::HORIZONTAL);
             break;
-        case Direction::BOTH:
-            return;
         default:
             return;
             break;

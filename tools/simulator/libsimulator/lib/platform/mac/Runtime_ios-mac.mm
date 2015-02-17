@@ -10,7 +10,7 @@
 
 using namespace std;
 
-string getIPAddress(int runtimeType)
+string getIPAddress()
 {
     BOOL success;
     struct ifaddrs * addrs;

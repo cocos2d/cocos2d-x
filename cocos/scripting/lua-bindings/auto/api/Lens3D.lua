@@ -5,18 +5,21 @@
 -- @parent_module cc
 
 --------------------------------
--- 
--- @function [parent=#Lens3D] setPosition 
--- @param self
--- @param #vec2_table position
--- @return Lens3D#Lens3D self (return value: cc.Lens3D)
-        
---------------------------------
 --  Set whether lens is concave 
 -- @function [parent=#Lens3D] setConcave 
 -- @param self
 -- @param #bool concave
 -- @return Lens3D#Lens3D self (return value: cc.Lens3D)
+        
+--------------------------------
+--  initializes the action with center position, radius, a grid size and duration 
+-- @function [parent=#Lens3D] initWithDuration 
+-- @param self
+-- @param #float duration
+-- @param #size_table gridSize
+-- @param #vec2_table position
+-- @param #float radius
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 --  Set lens center position 
@@ -26,16 +29,23 @@
 -- @return Lens3D#Lens3D self (return value: cc.Lens3D)
         
 --------------------------------
--- 
--- @function [parent=#Lens3D] getPosition 
--- @param self
--- @return vec2_table#vec2_table ret (return value: vec2_table)
-        
---------------------------------
 --  Get lens center position 
 -- @function [parent=#Lens3D] getLensEffect 
 -- @param self
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- 
+-- @function [parent=#Lens3D] setPosition 
+-- @param self
+-- @param #vec2_table position
+-- @return Lens3D#Lens3D self (return value: cc.Lens3D)
+        
+--------------------------------
+-- 
+-- @function [parent=#Lens3D] getPosition 
+-- @param self
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 --  creates the action with center position, radius, a grid size and duration 
@@ -58,6 +68,12 @@
 -- @function [parent=#Lens3D] update 
 -- @param self
 -- @param #float time
+-- @return Lens3D#Lens3D self (return value: cc.Lens3D)
+        
+--------------------------------
+-- 
+-- @function [parent=#Lens3D] Lens3D 
+-- @param self
 -- @return Lens3D#Lens3D self (return value: cc.Lens3D)
         
 return nil

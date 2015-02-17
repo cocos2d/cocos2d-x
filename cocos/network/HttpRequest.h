@@ -48,7 +48,7 @@ typedef void (cocos2d::Ref::*SEL_HttpResponse)(HttpClient* client, HttpResponse*
  @since v2.0.2
  */
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #ifdef DELETE
 #undef DELETE
 #endif

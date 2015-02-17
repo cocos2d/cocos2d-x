@@ -18,6 +18,12 @@
 -- @return EventListenerTouchOneByOne#EventListenerTouchOneByOne self (return value: cc.EventListenerTouchOneByOne)
         
 --------------------------------
+-- 
+-- @function [parent=#EventListenerTouchOneByOne] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- / Overrides
 -- @function [parent=#EventListenerTouchOneByOne] clone 
 -- @param self
@@ -28,5 +34,11 @@
 -- @function [parent=#EventListenerTouchOneByOne] checkAvailable 
 -- @param self
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#EventListenerTouchOneByOne] EventListenerTouchOneByOne 
+-- @param self
+-- @return EventListenerTouchOneByOne#EventListenerTouchOneByOne self (return value: cc.EventListenerTouchOneByOne)
         
 return nil

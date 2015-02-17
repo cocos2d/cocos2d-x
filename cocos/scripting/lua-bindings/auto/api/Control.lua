@@ -129,6 +129,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#Control] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#Control] isOpacityModifyRGB 
 -- @param self
 -- @return bool#bool ret (return value: bool)
@@ -138,6 +144,12 @@
 -- @function [parent=#Control] setOpacityModifyRGB 
 -- @param self
 -- @param #bool bOpacityModifyRGB
+-- @return Control#Control self (return value: cc.Control)
+        
+--------------------------------
+-- js ctor
+-- @function [parent=#Control] Control 
+-- @param self
 -- @return Control#Control self (return value: cc.Control)
         
 return nil

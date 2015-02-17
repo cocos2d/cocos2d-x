@@ -28,4 +28,10 @@
 -- @param self
 -- @return Sprite3DCache#Sprite3DCache ret (return value: cc.Sprite3DCache)
         
+--------------------------------
+-- 
+-- @function [parent=#Sprite3DCache] Sprite3DCache 
+-- @param self
+-- @return Sprite3DCache#Sprite3DCache self (return value: cc.Sprite3DCache)
+        
 return nil

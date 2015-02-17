@@ -55,7 +55,7 @@ typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
 *   @lua NA
 */
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #ifdef ABSOLUTE
 #undef ABSOLUTE
 #endif

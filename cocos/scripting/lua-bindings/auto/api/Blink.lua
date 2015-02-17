@@ -5,6 +5,15 @@
 -- @parent_module cc
 
 --------------------------------
+-- initializes the action <br>
+-- param duration in seconds
+-- @function [parent=#Blink] initWithDuration 
+-- @param self
+-- @param #float duration
+-- @param #int blinks
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- creates the action <br>
 -- param duration in seconds
 -- @function [parent=#Blink] create 
@@ -43,6 +52,12 @@
 -- @function [parent=#Blink] update 
 -- @param self
 -- @param #float time
+-- @return Blink#Blink self (return value: cc.Blink)
+        
+--------------------------------
+-- 
+-- @function [parent=#Blink] Blink 
+-- @param self
 -- @return Blink#Blink self (return value: cc.Blink)
         
 return nil

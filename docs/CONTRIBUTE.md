@@ -35,7 +35,7 @@ If you want to contribute code, please follow these steps:
 ```
 $ git clone git://github.com/cocos2d/cocos2d-x.git
 $ cd cocos2d-x
-$ git checkout v3
+$ git checkout v4-develop
 $ ./download-deps.py
 $ git submodule update --init
 ```
@@ -81,6 +81,6 @@ Help us promote cocos2d-x by using the cocos2d logo in your game, or by mentioni
 [Logo Resources of Cocos2d-x][2]
 
 
-[1]: https://github.com/cocos2d/cocos2d-x/blob/v3/docs/CODING_STYLE.md
+[1]: https://github.com/cocos2d/cocos2d-x/blob/v4-develop/docs/CODING_STYLE.md
 [2]: http://www.cocos2d-x.org/wiki/Logo_Resources_of_Cocos2d-x
 [3]: https://www.python.org/dev/peps/pep-0008
