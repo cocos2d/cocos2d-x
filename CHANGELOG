@@ -1,3 +1,9 @@
+cocos2d-x-3.5 ??
+    [FIX]           Audio: audio can not resume if it is interrupt, and back from background
+    [FIX]           C++: compiling error when using CC_USE_CULLING
+    [FIX]           Label: texture size of string has unexpected padding on iOS 7 and upper version
+    [FIX]           Sprite3D: `getAttachNode()` will fail when there is no bone with name
+    
 cocos2d-x-3.4 Jan.30 2015
     [FIX]           Animate3D: `setSpeed` has not effect if `Animate3D` is used in Sequence
     [FIX]           C++: will crash if built with armeabi-v7a enabled on Android devices that with armeabi-v7a architecture but doesn't support NEON instructions

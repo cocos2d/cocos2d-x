@@ -38,6 +38,8 @@
 #import<CoreMotion/CoreMotion.h>
 #import<CoreFoundation/CoreFoundation.h>
 
+#define SENSOR_DELAY_GAME 0.02
+
 @interface CCAccelerometerDispatcher : NSObject<UIAccelerometerDelegate>
 {
     cocos2d::Acceleration *_acceleration;
@@ -69,6 +71,7 @@ static CCAccelerometerDispatcher* s_pAccelerometerDispatcher;
     if( (self = [super init]) ) {
         _acceleration = new cocos2d::Acceleration();
         _motionManager = [[CMMotionManager alloc] init];
+        _motionManager.accelerometerUpdateInterval = SENSOR_DELAY_GAME;
     }
     return self;
 }
@@ -226,7 +229,7 @@ static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize
     CGSize dim;
     if(s_isIOS7OrHigher){
         NSDictionary *attibutes = @{NSFontAttributeName:font};
-        dim = [str boundingRectWithSize:textRect options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading) attributes:attibutes context:nil].size;
+        dim = [str boundingRectWithSize:textRect options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin) attributes:attibutes context:nil].size;
     }
     else {
         dim = [str sizeWithFont:font constrainedToSize:textRect];

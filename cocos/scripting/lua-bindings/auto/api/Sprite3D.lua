@@ -135,6 +135,15 @@
 -- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
+-- draw
+-- @function [parent=#Sprite3D] draw 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #mat4_table transform
+-- @param #unsigned int flags
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
+        
+--------------------------------
 --  set GLProgramState, you should bind attributes by yourself 
 -- @function [parent=#Sprite3D] setGLProgramState 
 -- @param self

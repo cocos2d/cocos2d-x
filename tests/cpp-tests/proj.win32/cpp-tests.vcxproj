@@ -174,6 +174,7 @@
     <ClCompile Include="..\Classes\NewAudioEngineTest\NewAudioEngineTest.cpp" />
     <ClCompile Include="..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.cpp" />
     <ClCompile Include="..\Classes\NewRendererTest\NewRendererTest.cpp" />
+    <ClCompile Include="..\Classes\Particle3DTest\Particle3DTest.cpp" />
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceAllocTest.cpp" />
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceContainerTest.cpp" />
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceEventDispatcherTest.cpp" />
@@ -371,6 +372,7 @@
     <ClInclude Include="..\Classes\NewAudioEngineTest\NewAudioEngineTest.h" />
     <ClInclude Include="..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.h" />
     <ClInclude Include="..\Classes\NewRendererTest\NewRendererTest.h" />
+    <ClInclude Include="..\Classes\Particle3DTest\Particle3DTest.h" />
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceAllocTest.h" />
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceContainerTest.h" />
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceEventDispatcherTest.h" />
