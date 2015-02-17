@@ -35,6 +35,7 @@ require "NodeTest/NodeTest"
 require "OpenGLTest/OpenGLTest"
 require "ParallaxTest/ParallaxTest"
 require "ParticleTest/ParticleTest"
+require "Particle3DTest/Particle3DTest"
 require "PerformanceTest/PerformanceTest"
 require "RenderTextureTest/RenderTextureTest"
 require "RotateWorldTest/RotateWorldTest"
@@ -110,8 +111,9 @@ local _allTests = {
     { isSupported = true,   name = "OpenGLTest"             , create_func=          OpenGLTestMain     },
     { isSupported = true,  name = "ParallaxTest"           , create_func   =              ParallaxTestMain  },
     { isSupported = true,  name = "ParticleTest"           , create_func   =              ParticleTest      }, 
+    { isSupported = true,  name = "Particle3DTest"           , create_func   =              Particle3DTest  },
     { isSupported = true,  name = "PerformanceTest"        , create_func=           PerformanceTestMain  },
-	{ isSupported = true,  name = "PhysicsTest"            , create_func =          PhysicsTest  },
+    { isSupported = true,  name = "PhysicsTest"            , create_func =          PhysicsTest  },
     { isSupported = true,  name = "RenderTextureTest"      , create_func   =         RenderTextureTestMain  },
     { isSupported = true,  name = "RotateWorldTest"        , create_func   =           RotateWorldTest      },
     { isSupported = true,  name = "SceneTest"              , create_func   =                 SceneTestMain  },

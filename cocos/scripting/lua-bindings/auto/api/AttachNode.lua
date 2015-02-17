@@ -38,5 +38,11 @@
 -- @function [parent=#AttachNode] AttachNode 
 -- @param self
 -- @return AttachNode#AttachNode self (return value: cc.AttachNode)
+
+--------------------------------
+-- 
+-- @function [parent=#AttachNode] getNodeToParentTransform 
+-- @param self
+-- @return mat4_table#mat4_table ret (return value: mat4_table)
         
 return nil

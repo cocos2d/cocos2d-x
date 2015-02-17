@@ -1,0 +1,1302 @@
+//-----------------------------------------------------------------------------------------------------------------------
+// This script is part of the Particle Universe Media Pack product.
+//
+// Copyright (c) 2008 Henry van Merode
+//
+// Usage of this program is licensed under the terms of the Particle Universe Commercial License.
+// You can find a copy of the Commercial License in the Particle Universe package.
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Bubble
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend alpha_blend
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_bubble.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/BlurredBubble
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend alpha_blend
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_bubble_blurred.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Streak_01
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_streak_01.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Streak_02
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+            texture_unit
+            {
+                texture pump_streak_02.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Streak_03
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_streak_03.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Streak_04
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_streak_04.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Flare_01
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_flare_01.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Flare_02
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_flare_02.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Flare_03
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_flare_03.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Flare_04
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_flare_04.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Flare_05
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_flare_05.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Flare_06
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_flare_06.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Watch
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            scene_blend add
+
+            texture_unit
+            {
+                texture pump_watch.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Hourglass
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            scene_blend add
+
+            texture_unit
+            {
+                texture pump_hourglass.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Leave
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend alpha_blend
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_leave.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Smoke_01
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_smoke_01.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Smoke_11
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend alpha_blend
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_smoke_01.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Dirt_11
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend alpha_blend
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_dirt_01.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Dirt_12
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend alpha_blend
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_dirt_02.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Lightning_01
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_lightning_01.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Lightning_02
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_lightning_02.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Lightning_03
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_lightning_03.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Lightning_04
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_lightning_04.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Spark_01
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_spark_01.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Star_01
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_star_01.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Star_02
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_star_02.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Star_03
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_star_03.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Star_04
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_star_04.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Star_05
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_star_05.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Genesis_11
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend alpha_blend
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_genesis_01.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------
+material PUMediaPack/Genesis_12
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend alpha_blend
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_genesis_02.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------
+material ParticleUniverse/Swirl_01
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_swirl_01.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------
+material ParticleUniverse/Swirl_02
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_swirl_02.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------
+material ParticleUniverse/Swirl_03
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_swirl_03.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------
+material PUMediaPack/Ring_01
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_ring_01.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------
+material PUMediaPack/Ring_02
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_ring_02.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------
+material PUMediaPack/Ring_03
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_ring_03.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------
+material PUMediaPack/Ring_14
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend alpha_blend
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_ring_04.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------
+material PUMediaPack/Ring_05
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_ring_05.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Metal_01
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_metal_01.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Metal_02
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_metal_02.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Fire_01
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_flame_01.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//---------------------------------------------------------------------
+material PUMediaPack/Fire_02
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_flame_02.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//---------------------------------------------------------------------
+material PUMediaPack/Fire_03
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_flame_03.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//---------------------------------------------------------------------
+material PUMediaPack/Fire_04
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_flame_04.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//---------------------------------------------------------------------
+material PUMediaPack/AtlasSmoke
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend alpha_blend
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_atlas_smoke.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//---------------------------------------------------------------------
+material PUMediaPack/Snow_01
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend alpha_blend
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_snow_01.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/BBal
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+
+            texture_unit
+            {
+                texture pu_bbal.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/BioHazzard
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_biohazzard.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/CelticKnot
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_celticknot.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Pentagram_01
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_pentagram_01.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Pentagram_02
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_pentagram_02.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
+
+//-----------------------------------------------------------------------------------------------------------------------
+// This script is part of the Particle Universe Media Pack 1 product.
+//
+// Copyright (c) 2010 Henry van Merode
+//
+// Usage of this program is licensed under the terms of the Particle Universe Commercial License Media Pack 1.
+// You can find a copy of the Commercial License in the Media Pack 1 package.
+//-----------------------------------------------------------------------------------------------------------------------
+
+material mp_explosion_smoke_01
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            scene_blend alpha_blend
+
+            texture_unit
+            {
+                texture mp_explosion_smoke_01.dds
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------
+material mp_explosion_smoke_01_add
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            scene_blend add
+            texture_unit
+            {
+                texture mp_explosion_smoke_01_add.dds
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------
+material mp_explosion_flare_01
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            scene_blend add
+
+            texture_unit
+            {
+                texture mp_explosion_flare_01.dds
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------
+material mp_explosion_flare_02
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            scene_blend add
+
+            texture_unit
+            {
+                texture mp_explosion_flare_02.dds
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------
+material mp_explosion_dirt
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            scene_blend alpha_blend
+
+            texture_unit
+            {
+                texture mp_explosion_dirt.dds
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------
+material mp_explosion_flame_01
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            scene_blend add
+
+            texture_unit
+            {
+                texture mp_explosion_flame_01.dds
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------
+material mp_explosion_flame_02
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            scene_blend add
+
+            texture_unit
+            {
+                texture mp_explosion_flame_02.dds
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------
+material mp_explosion_smoke_02
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            scene_blend alpha_blend
+
+            texture_unit
+            {
+                texture mp_explosion_smoke_02.dds
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------
+material mp_explosion_smoke_03
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            scene_blend alpha_blend
+
+            texture_unit
+            {
+                texture mp_explosion_smoke_03.dds
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------
+material mp_explosion_debris
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            scene_blend add
+
+            texture_unit
+            {
+                texture mp_explosion_debris.dds
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------
+material mp_explosion_debris_large
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            scene_blend alpha_blend
+
+            texture_unit
+            {
+                texture mp_explosion_debris_large_4x4.dds
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------
+material mp_explosion_04
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            scene_blend add
+            texture_unit
+            {
+                texture mp_explosion_04.dds
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------
+material mp_explosion_trail
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            scene_blend add
+
+            texture_unit
+            {
+                texture mp_explosion_trail_01.dds
+            }
+        }
+    }
+}
+//-----------------------------------------------------------------------------------------------------------------------
+material mp_explosion_water
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            depth_write off
+            scene_blend alpha_blend
+
+            texture_unit
+            {
+                texture mp_explosion_water.dds
+            }
+        }
+    }
+}
+

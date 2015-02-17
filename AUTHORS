@@ -1076,6 +1076,9 @@ Developers:
         
     tmr111116
         fix random int overflow
+        
+    flamefox
+        fix the bug that Sprite3D::getAttachNode() should failed when there is no bone with name
 
 Retired Core Developers:
     WenSheng Yang

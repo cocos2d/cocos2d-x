@@ -137,8 +137,8 @@ void RenderQueue::clear()
 
 void RenderQueue::saveRenderState()
 {
-    _isDepthEnabled = glIsEnabled(GL_DEPTH_TEST);
-    _isCullEnabled = glIsEnabled(GL_CULL_FACE);
+    _isDepthEnabled = glIsEnabled(GL_DEPTH_TEST) != GL_FALSE;
+    _isCullEnabled = glIsEnabled(GL_CULL_FACE) != GL_FALSE;
     glGetBooleanv(GL_DEPTH_WRITEMASK, &_isDepthWrite);
     
     CHECK_GL_ERROR_DEBUG();
@@ -367,7 +367,7 @@ void Renderer::addCommand(RenderCommand* command, int renderQueue)
     CCASSERT(!_isRendering, "Cannot add command while rendering");
     CCASSERT(renderQueue >=0, "Invalid render queue");
     CCASSERT(command->getType() != RenderCommand::Type::UNKNOWN_COMMAND, "Invalid Command Type");
-    
+
     _renderGroups[renderQueue].push_back(command);
 }
 

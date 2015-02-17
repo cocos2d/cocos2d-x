@@ -33,10 +33,10 @@ def send_mail(sub,title,content):
         return False
 
 def sendEmail(pr, html_url, target_url):
-	sub = "Pull request #" + str(pr) + " build is failed!"
-	title = "build failed!"
-	content = 'to view build result, check:\r\n'+target_url + '\r\nYou can view the failed pr at:\r\n'+html_url
-	send_mail(sub, title, content)
+    sub = "Pull request #" + str(pr) + " build is failed!"
+    title = "build failed!"
+    content = 'to view build result, check:\r\n'+target_url + '\r\nYou can view the failed pr at:\r\n'+html_url
+    send_mail(sub, title, content)
 
 payload_str = os.environ['payload']
 payload_str = payload_str.decode('utf-8','ignore')

@@ -57,6 +57,11 @@ enum {
     kShaderType_3DPositionNormal,
     kShaderType_3DPositionNormalTex,
     kShaderType_3DSkinPositionNormalTex,
+    kShaderType_3DParticleTex,
+    kShaderType_3DParticleColor,
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || defined(WP8_SHADER_COMPILER)
+    kShaderType_PositionColor_noMVP_GrayScale,
+#endif
     kShaderType_MAX,
 };
 
@@ -226,6 +231,14 @@ void GLProgramCache::loadDefaultGLPrograms()
     p = new GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DSkinPositionNormalTex);
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_SKINPOSITION_NORMAL_TEXTURE, p));
+    
+    p = new GLProgram();
+    loadDefaultGLProgram(p, kShaderType_3DParticleColor);
+    _programs.insert(std::make_pair(GLProgram::SHADER_3D_PARTICLE_COLOR, p));
+    
+    p = new GLProgram();
+    loadDefaultGLProgram(p, kShaderType_3DParticleTex);
+    _programs.insert(std::make_pair(GLProgram::SHADER_3D_PARTICLE_TEXTURE, p));
 
 }
 
@@ -344,6 +357,14 @@ void GLProgramCache::reloadDefaultGLPrograms()
     p = getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_NORMAL_TEXTURE);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_3DSkinPositionNormalTex);
+    
+    p = getGLProgram(GLProgram::SHADER_3D_PARTICLE_TEXTURE);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_3DParticleTex);
+    
+    p = getGLProgram(GLProgram::SHADER_3D_PARTICLE_COLOR);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_3DParticleColor);
 }
 
 void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
@@ -425,7 +446,20 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
                 p->initWithByteArrays((def + std::string(cc3D_SkinPositionNormalTex_vert)).c_str(), (def + std::string(cc3D_ColorNormalTex_frag)).c_str());
             }
             break;
-         default:
+        case kShaderType_3DParticleTex:
+           {
+                p->initWithByteArrays(cc3D_Particle_vert, cc3D_Particle_tex_frag);
+           }
+            break;
+        case kShaderType_3DParticleColor:
+            p->initWithByteArrays(cc3D_Particle_vert, cc3D_Particle_color_frag);
+            break;
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || defined(WP8_SHADER_COMPILER)
+        case kShaderType_PositionColor_noMVP_GrayScale:
+            p->initWithByteArrays(ccPositionTextureColor_noMVP_vert, ccUIGrayScale_frag);
+            break;
+#endif
+        default:
             CCLOG("cocos2d: %s:%d, error shader type", __FUNCTION__, __LINE__);
             return;
     }
