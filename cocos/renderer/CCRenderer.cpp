@@ -31,6 +31,8 @@
 #include "renderer/CCBatchCommand.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCGroupCommand.h"
+#include "renderer/CCScissorCommand.h"
+#include "renderer/CCStencilCommand.h"
 #include "renderer/CCPrimitiveCommand.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
@@ -393,6 +395,35 @@ int Renderer::createRenderQueue()
 void Renderer::processRenderCommand(RenderCommand* command)
 {
     auto commandType = command->getType();
+    
+    switch (commandType)
+    {
+    case RenderCommand::Type::BEGIN_SCISSOR_COMMAND:
+        flush();
+        command->execute<BeginScissorCommand>();
+        return;
+        
+    case RenderCommand::Type::END_SCISSOR_COMMAND:
+        flush();
+        command->execute<EndScissorCommand>();
+        return;
+        
+    case RenderCommand::Type::BEGIN_STENCIL_COMMAND:
+        flush();
+        command->execute<BeginStencilCommand>();
+        return;
+        
+    case RenderCommand::Type::AFTER_STENCIL_COMMAND:
+        flush();
+        command->execute<AfterStencilCommand>();
+        return;
+        
+    case RenderCommand::Type::END_STENCIL_COMMAND:
+        flush();
+        command->execute<EndStencilCommand>();
+        return;
+    }
+    
     if( RenderCommand::Type::TRIANGLES_COMMAND == commandType)
     {
         //Draw if we have batched other commands which are not triangle command
