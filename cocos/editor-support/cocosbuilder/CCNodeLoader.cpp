@@ -384,7 +384,7 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * ccbRe
                 break;
             }
             default:
-                ASSERT_FAIL_UNEXPECTED_PROPERTYTYPE(type);
+                ASSERT_FAIL_UNEXPECTED_PROPERTYTYPE(static_cast<int>(type));
                 break;
         }
     }

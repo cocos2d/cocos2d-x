@@ -25,40 +25,40 @@ print 'remote_port',int(remote_port[0])
 
 all_machines = {}
 def set_default_value_to_all_machines():
-	for idx, item in enumerate(remote_machines):
-		all_machines[item]={}
-		all_machines[item]['ip']=remote_ip[idx]
-		all_machines[item]['dir']=remote_dir[idx]
-		all_machines[item]['port']=remote_port[idx]
-		all_machines[item]['user']=remote_user[idx]
-		all_machines[item]['pwd']=os.environ[item+'_PWD']
+    for idx, item in enumerate(remote_machines):
+        all_machines[item]={}
+        all_machines[item]['ip']=remote_ip[idx]
+        all_machines[item]['dir']=remote_dir[idx]
+        all_machines[item]['port']=remote_port[idx]
+        all_machines[item]['user']=remote_user[idx]
+        all_machines[item]['pwd']=os.environ[item+'_PWD']
 
 def reboot_machine(machine, item):
-	print 'machine:',machine, 'item:', item
-	remote_ip = machine['ip']
-	remote_port = machine['port']
-	remote_user = machine['user']
-	remote_pwd = machine['pwd']
-	remote_dir = os.path.join(machine['dir'],'workspace','reboot', 'reboot.py')
-	print remote_dir
-	ssh = paramiko.SSHClient()
-	print 'ssh:',ssh
-	ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-	ssh.connect(remote_ip, int(remote_port), remote_user, remote_pwd)
-	# excute reboot.py on machine
-	cmd = 'python '+remote_dir
-	if item == 'win32_win7':
-		cmd = 'cmd.exe /c "python '+remote_dir+'"'
-	stdin, stdout, stderr = ssh.exec_command(cmd)
-	print stdout.readlines()
-	ssh.close()
-	print 'OK'
+    print 'machine:',machine, 'item:', item
+    remote_ip = machine['ip']
+    remote_port = machine['port']
+    remote_user = machine['user']
+    remote_pwd = machine['pwd']
+    remote_dir = os.path.join(machine['dir'],'workspace','reboot', 'reboot.py')
+    print remote_dir
+    ssh = paramiko.SSHClient()
+    print 'ssh:',ssh
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh.connect(remote_ip, int(remote_port), remote_user, remote_pwd)
+    # excute reboot.py on machine
+    cmd = 'python '+remote_dir
+    if item == 'win32_win7':
+        cmd = 'cmd.exe /c "python '+remote_dir+'"'
+    stdin, stdout, stderr = ssh.exec_command(cmd)
+    print stdout.readlines()
+    ssh.close()
+    print 'OK'
 
 def main():
-	print 'in main'
-	set_default_value_to_all_machines()
-	for item in all_machines:
-		reboot_machine( all_machines[item], item )
+    print 'in main'
+    set_default_value_to_all_machines()
+    for item in all_machines:
+        reboot_machine( all_machines[item], item )
 
 # -------------- main --------------
 if __name__ == '__main__':

@@ -722,10 +722,10 @@ void EventFrame::setNode(cocos2d::Node* node)
 
 void EventFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
-    if(_frameIndex < _action->getStartFrame() || _frameIndex > _action->getEndFrame())
+    if (static_cast<int>(_frameIndex) < _action->getStartFrame() || static_cast<int>(_frameIndex) > _action->getEndFrame())
         return;
 
-    if(currentFrameIndex >= _frameIndex)
+    if (currentFrameIndex >= static_cast<int>(_frameIndex))
         emitEvent();
 }
 
