@@ -163,4 +163,10 @@
 -- @param self
 -- @return int#int ret (return value: int)
         
+--------------------------------
+-- 
+-- @function [parent=#PUParticleSystem3D] PUParticleSystem3D 
+-- @param self
+-- @return PUParticleSystem3D#PUParticleSystem3D self (return value: cc.PUParticleSystem3D)
+        
 return nil
