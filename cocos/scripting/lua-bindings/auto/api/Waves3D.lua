@@ -15,12 +15,14 @@
 -- @function [parent=#Waves3D] setAmplitude 
 -- @param self
 -- @param #float amplitude
+-- @return Waves3D#Waves3D self (return value: cc.Waves3D)
         
 --------------------------------
 --  sets the ampliture rate 
 -- @function [parent=#Waves3D] setAmplitudeRate 
 -- @param self
 -- @param #float amplitudeRate
+-- @return Waves3D#Waves3D self (return value: cc.Waves3D)
         
 --------------------------------
 --  returns the amplitude of the effect 
@@ -45,9 +47,10 @@
 -- @return Waves3D#Waves3D ret (return value: cc.Waves3D)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#Waves3D] update 
 -- @param self
 -- @param #float time
+-- @return Waves3D#Waves3D self (return value: cc.Waves3D)
         
 return nil

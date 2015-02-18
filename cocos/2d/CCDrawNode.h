@@ -154,7 +154,7 @@ protected:
     
     int         _bufferCapacityGLPoint;
     GLsizei     _bufferCountGLPoint;
-    V2F_C4B_PF *_bufferGLPoint;
+    V2F_C4B_T2F *_bufferGLPoint;
     Color4F     _pointColor;
     int         _pointSize;
     

@@ -5,7 +5,8 @@
 -- @parent_module cc
 
 --------------------------------
---  creates the action 
+-- creates the action<br>
+-- param duration in seconds
 -- @function [parent=#JumpTo] create 
 -- @param self
 -- @param #float duration
@@ -19,6 +20,7 @@
 -- @function [parent=#JumpTo] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return JumpTo#JumpTo self (return value: cc.JumpTo)
         
 --------------------------------
 -- 

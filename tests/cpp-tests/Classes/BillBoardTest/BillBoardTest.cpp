@@ -41,12 +41,13 @@ static int sceneIdx = -1;
 
 static std::function<Layer*()> createFunctions[] =
 {
+    CL(BillBoardRotationTest),
     CL(BillBoardTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
 
-static Layer* nextSpriteTestAction()
+static Layer* nextTest()
 {
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
@@ -55,7 +56,7 @@ static Layer* nextSpriteTestAction()
     return layer;
 }
 
-static Layer* backSpriteTestAction()
+static Layer* backTest()
 {
     sceneIdx--;
     int total = MAX_LAYER;
@@ -66,12 +67,106 @@ static Layer* backSpriteTestAction()
     return layer;
 }
 
-static Layer* restartSpriteTestAction()
+static Layer* restartTest()
 {
     auto layer = (createFunctions[sceneIdx])();
     return layer;
 }
 
+//------------------------------------------------------------------
+//
+// Billboard Rotation Test
+//
+//------------------------------------------------------------------
+BillBoardRotationTest::BillBoardRotationTest()
+{
+    auto root = Sprite3D::create();
+    root->setNormalizedPosition(Vec2(.5,.25));
+    addChild(root);
+    
+    auto model = Sprite3D::create("Sprite3DTest/orc.c3b");
+    model->setScale(5);
+    model->setRotation3D(Vec3(0,180,0));
+    root->addChild(model);
+    
+    auto bill = BillBoard::create();
+    bill->setPosition(0, 120);
+    root->addChild(bill);
+    
+    auto sp = Sprite::create("Images/SpookyPeas.png");
+    sp->setScale(2);
+    bill->addChild(sp);
+    
+    auto lbl = Label::create();
+    lbl->setPosition(0, 30);
+    lbl->setString("+100");
+    bill->addChild(lbl);
+    
+    auto r = RotateBy::create(10, Vec3(0,360,0));
+    auto rp = RepeatForever::create(r);
+    root->runAction(rp);
+    
+    auto jump = JumpBy::create(1, Vec2(0, 0), 30, 1);
+    auto scale = ScaleBy::create(2, 2, 2, 0.1);
+    auto seq = Sequence::create(jump,scale, NULL);
+    
+    auto rot = RotateBy::create(2, Vec3(-90, 0, 0));
+    auto act = Spawn::create(seq, rot,NULL);
+    
+    auto scale2 = scale->reverse();
+    auto rot2 = rot->reverse();
+    auto act2 = Spawn::create(scale2, rot2, NULL);
+    
+    auto seq2 = Sequence::create(act, act2, NULL);
+    auto repeat = RepeatForever::create(seq2);
+    model->runAction(repeat);
+}
+
+BillBoardRotationTest::~BillBoardRotationTest()
+{
+    
+}
+
+std::string BillBoardRotationTest::title() const
+{
+    return "Rotation Test";
+}
+
+std::string BillBoardRotationTest::subtitle() const
+{
+    return "All the sprites should still facing camera";
+}
+
+void BillBoardRotationTest::restartCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) BillBoardTestScene();
+    s->addChild(restartTest());
+    
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+void BillBoardRotationTest::nextCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) BillBoardTestScene();
+    s->addChild(nextTest());
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+void BillBoardRotationTest::backCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) BillBoardTestScene();
+    s->addChild(backTest());
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+//------------------------------------------------------------------
+//
+// Billboard Rendering Test
+//
+//------------------------------------------------------------------
 BillBoardTest::BillBoardTest()
 :  _camera(nullptr)
 {
@@ -268,9 +363,35 @@ void BillBoardTest::rotateCameraCallback(Ref* sender,float value)
     _camera->setRotation3D(rotation3D);
 }
 
+
+void BillBoardTest::restartCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) BillBoardTestScene();
+    s->addChild(restartTest());
+    
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+void BillBoardTest::nextCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) BillBoardTestScene();
+    s->addChild(nextTest());
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+void BillBoardTest::backCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) BillBoardTestScene();
+    s->addChild(backTest());
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
 void BillBoardTestScene::runThisTest()
 {
-    auto layer = nextSpriteTestAction();
+    auto layer = nextTest();
     addChild(layer);
     Director::getInstance()->replaceScene(this);
 }

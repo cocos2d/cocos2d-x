@@ -9,6 +9,7 @@
 -- @function [parent=#Spawn] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return Spawn#Spawn self (return value: cc.Spawn)
         
 --------------------------------
 -- 
@@ -20,6 +21,7 @@
 -- 
 -- @function [parent=#Spawn] stop 
 -- @param self
+-- @return Spawn#Spawn self (return value: cc.Spawn)
         
 --------------------------------
 -- 
@@ -28,9 +30,10 @@
 -- @return Spawn#Spawn ret (return value: cc.Spawn)
         
 --------------------------------
--- 
+-- param dt in seconds
 -- @function [parent=#Spawn] update 
 -- @param self
 -- @param #float time
+-- @return Spawn#Spawn self (return value: cc.Spawn)
         
 return nil

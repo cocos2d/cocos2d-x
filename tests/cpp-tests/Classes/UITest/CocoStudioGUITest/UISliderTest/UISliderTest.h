@@ -53,6 +53,19 @@ protected:
     Text* _displayValueLabel;
 };
 
+class UISliderTest_Scale9_State_Change : public UIScene
+{
+public:
+    UISliderTest_Scale9_State_Change();
+    ~UISliderTest_Scale9_State_Change();
+    bool init();
+    void sliderEvent(Ref* pSender, Slider::EventType type);
+
+protected:
+    UI_SCENE_CREATE_FUNC(UISliderTest_Scale9_State_Change)
+        Text* _displayValueLabel;
+};
+
 
 class UISliderNormalDefaultTest : public UIScene
 {

@@ -9,12 +9,14 @@
 -- @function [parent=#ControlPotentiometer] setPreviousLocation 
 -- @param self
 -- @param #vec2_table var
+-- @return ControlPotentiometer#ControlPotentiometer self (return value: cc.ControlPotentiometer)
         
 --------------------------------
 -- 
 -- @function [parent=#ControlPotentiometer] setValue 
 -- @param self
 -- @param #float value
+-- @return ControlPotentiometer#ControlPotentiometer self (return value: cc.ControlPotentiometer)
         
 --------------------------------
 -- 
@@ -43,12 +45,14 @@
 -- @function [parent=#ControlPotentiometer] potentiometerBegan 
 -- @param self
 -- @param #vec2_table location
+-- @return ControlPotentiometer#ControlPotentiometer self (return value: cc.ControlPotentiometer)
         
 --------------------------------
 -- 
 -- @function [parent=#ControlPotentiometer] setMaximumValue 
 -- @param self
 -- @param #float maximumValue
+-- @return ControlPotentiometer#ControlPotentiometer self (return value: cc.ControlPotentiometer)
         
 --------------------------------
 -- 
@@ -61,6 +65,7 @@
 -- @function [parent=#ControlPotentiometer] setThumbSprite 
 -- @param self
 -- @param #cc.Sprite var
+-- @return ControlPotentiometer#ControlPotentiometer self (return value: cc.ControlPotentiometer)
         
 --------------------------------
 -- 
@@ -87,18 +92,21 @@
 -- @function [parent=#ControlPotentiometer] potentiometerEnded 
 -- @param self
 -- @param #vec2_table location
+-- @return ControlPotentiometer#ControlPotentiometer self (return value: cc.ControlPotentiometer)
         
 --------------------------------
 -- 
 -- @function [parent=#ControlPotentiometer] setProgressTimer 
 -- @param self
 -- @param #cc.ProgressTimer var
+-- @return ControlPotentiometer#ControlPotentiometer self (return value: cc.ControlPotentiometer)
         
 --------------------------------
 -- 
 -- @function [parent=#ControlPotentiometer] setMinimumValue 
 -- @param self
 -- @param #float minimumValue
+-- @return ControlPotentiometer#ControlPotentiometer self (return value: cc.ControlPotentiometer)
         
 --------------------------------
 -- 
@@ -122,6 +130,7 @@
 -- @function [parent=#ControlPotentiometer] potentiometerMoved 
 -- @param self
 -- @param #vec2_table location
+-- @return ControlPotentiometer#ControlPotentiometer self (return value: cc.ControlPotentiometer)
         
 --------------------------------
 -- Creates potentiometer with a track filename and a progress filename.
@@ -144,6 +153,7 @@
 -- @function [parent=#ControlPotentiometer] setEnabled 
 -- @param self
 -- @param #bool enabled
+-- @return ControlPotentiometer#ControlPotentiometer self (return value: cc.ControlPotentiometer)
         
 --------------------------------
 -- 
@@ -151,6 +161,7 @@
 -- @param self
 -- @param #cc.Touch pTouch
 -- @param #cc.Event pEvent
+-- @return ControlPotentiometer#ControlPotentiometer self (return value: cc.ControlPotentiometer)
         
 --------------------------------
 -- 
@@ -158,6 +169,7 @@
 -- @param self
 -- @param #cc.Touch pTouch
 -- @param #cc.Event pEvent
+-- @return ControlPotentiometer#ControlPotentiometer self (return value: cc.ControlPotentiometer)
         
 --------------------------------
 -- 
@@ -171,5 +183,6 @@
 -- js ctor
 -- @function [parent=#ControlPotentiometer] ControlPotentiometer 
 -- @param self
+-- @return ControlPotentiometer#ControlPotentiometer self (return value: cc.ControlPotentiometer)
         
 return nil

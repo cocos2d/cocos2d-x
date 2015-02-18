@@ -56,6 +56,9 @@ public:
 
 	// Overrides
 	virtual Waves3D* clone() const override;
+    /**
+     * @param time in seconds
+     */
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -83,6 +86,9 @@ public:
 
     // Override
 	virtual FlipX3D* clone() const override;
+    /**
+     * @param time in seconds
+     */
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -105,6 +111,9 @@ public:
     static FlipY3D* create(float duration);
 
     // Overrides
+    /**
+     * @param time in seconds
+     */
     virtual void update(float time) override;
 	virtual FlipY3D* clone() const override;
 
@@ -134,6 +143,9 @@ public:
 
     // Overrides
 	virtual Lens3D* clone() const override;
+    /**
+     * @param time in seconds
+     */
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -178,6 +190,9 @@ public:
 
     // Override
 	virtual Ripple3D* clone() const override;
+    /**
+     * @param time in seconds
+     */
     virtual void update(float time) override;
 
 CC_CONSTRUCTOR_ACCESS:
@@ -214,7 +229,10 @@ CC_CONSTRUCTOR_ACCESS:
     Shaky3D() {}
     virtual ~Shaky3D() {}
     
-    /** initializes the action with a range, shake Z vertices, a grid and duration */
+    /** 
+     * initializes the action with a range, shake Z vertices, a grid and duration
+     * @param duration in seconds
+     */
     bool initWithDuration(float duration, const Size& gridSize, int range, bool shakeZ);
 
 protected:
@@ -240,6 +258,9 @@ public:
 
     // Overrides
 	virtual Liquid* clone() const override;
+    /**
+     * @param time in seconds
+     */
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -273,6 +294,9 @@ public:
 
     // Overrides
 	virtual Waves* clone() const override;
+    /**
+     * @param time in seconds
+     */
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -314,6 +338,9 @@ public:
 
     // Overrides
 	virtual Twirl* clone() const override;
+    /**
+     * @param time in seconds
+     */
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:

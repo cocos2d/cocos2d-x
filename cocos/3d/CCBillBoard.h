@@ -105,6 +105,7 @@ protected:
     bool calculateBillbaordTransform();
     
     Mat4 _camWorldMat;
+    Mat4 _mvTransform;
 
     Mode _mode;
     bool _modeDirty;

@@ -15,6 +15,7 @@
 -- @function [parent=#EventController] setConnectStatus 
 -- @param self
 -- @param #bool isConnected
+-- @return EventController#EventController self (return value: cc.EventController)
         
 --------------------------------
 -- 
@@ -27,6 +28,7 @@
 -- @function [parent=#EventController] setKeyCode 
 -- @param self
 -- @param #int keyCode
+-- @return EventController#EventController self (return value: cc.EventController)
         
 --------------------------------
 -- 
@@ -48,5 +50,6 @@
 -- @param #int type
 -- @param #cc.Controller controller
 -- @param #int keyCode
+-- @return EventController#EventController self (return value: cc.EventController)
 
 return nil

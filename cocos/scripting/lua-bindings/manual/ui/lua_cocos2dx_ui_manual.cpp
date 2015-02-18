@@ -103,6 +103,62 @@ tolua_lerror:
 #endif
 }
 
+static int lua_cocos2dx_Widget_addClickEventListener(lua_State* L)
+{
+    if (nullptr == L)
+        return 0;
+    
+    int argc = 0;
+    Widget* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(L,1,"ccui.Widget",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = static_cast<Widget*>(tolua_tousertype(L,1,0));
+    
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self) {
+        tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_Widget_addClickEventListener'\n", NULL);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    
+    if (1 == argc)
+    {
+#if COCOS2D_DEBUG >= 1
+        if (!toluafix_isfunction(L,2,"LUA_FUNCTION",0,&tolua_err))
+        {
+            goto tolua_lerror;
+        }
+#endif
+        
+        LUA_FUNCTION handler = (  toluafix_ref_function(L,2,0));
+        
+        self->addClickEventListener([=](cocos2d::Ref* sender){
+            LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
+            stack->pushObject(sender, "cc.Ref");
+            stack->executeFunctionByHandler(handler, 1);
+            stack->clean();
+        });
+        
+        ScriptHandlerMgr::getInstance()->addCustomHandler((void*)self, handler);
+        return 0;
+    }
+    
+    luaL_error(L, "'addClickEventListener' function of Widget has wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'addClickEventListener'.",&tolua_err);
+    return 0;
+#endif
+}
+
 static void extendWidget(lua_State* L)
 {
     lua_pushstring(L, "ccui.Widget");
@@ -110,6 +166,7 @@ static void extendWidget(lua_State* L)
     if (lua_istable(L,-1))
     {
         tolua_function(L, "addTouchEventListener", lua_cocos2dx_Widget_addTouchEventListener);
+        tolua_function(L, "addClickEventListener", lua_cocos2dx_Widget_addClickEventListener);
     }
     lua_pop(L, 1);
 }

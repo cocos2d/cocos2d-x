@@ -187,11 +187,15 @@ static int processTask(HttpRequest *request, NSString* requestType, void *stream
     //if request type is post or put,set header and data
     if([requestType isEqual: @"POST"] || [requestType isEqual: @"PUT"])
     {
+        if ([requestType isEqual: @"PUT"])
+        {
+            [nsrequest setValue: @"application/x-www-form-urlencoded" forHTTPHeaderField: @"Content-Type"];
+        }
+
         char* requestDataBuffer = request->getRequestData();
         if (nullptr != requestDataBuffer && 0 != strlen(requestDataBuffer))
         {
-            NSString* requestData = [NSString stringWithUTF8String:requestDataBuffer];
-            NSData *postData = [requestData dataUsingEncoding:NSUTF8StringEncoding];
+            NSData *postData = [NSData dataWithBytes:requestDataBuffer length:request->getRequestDataSize()];
             [nsrequest setHTTPBody:postData];
         }
     }

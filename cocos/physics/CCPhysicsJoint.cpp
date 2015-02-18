@@ -40,9 +40,9 @@ PhysicsJoint::PhysicsJoint()
 , _enable(false)
 , _collisionEnable(true)
 , _destoryMark(false)
-, _initDirty(true)
 , _tag(0)
 , _maxForce(PHYSICS_INFINITY)
+, _initDirty(true)
 {
 
 }

@@ -10,6 +10,7 @@
 -- @function [parent=#ActionRotationFrame] setRotation 
 -- @param self
 -- @param #float rotation
+-- @return ActionRotationFrame#ActionRotationFrame self (return value: ccs.ActionRotationFrame)
         
 --------------------------------
 -- @overload self, float, ccs.ActionFrame         
@@ -31,5 +32,6 @@
 -- Default constructor
 -- @function [parent=#ActionRotationFrame] ActionRotationFrame 
 -- @param self
+-- @return ActionRotationFrame#ActionRotationFrame self (return value: ccs.ActionRotationFrame)
         
 return nil

@@ -1071,6 +1071,12 @@ Developers:
     
     AknEp
         Fix FileUtils::fullPathForFilename return empty string if file not found
+        
+    kompjoefriek
+        Fix compiling warnings
+        
+    tmr111116
+        fix random int overflow
 
 Retired Core Developers:
     WenSheng Yang

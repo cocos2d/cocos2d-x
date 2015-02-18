@@ -22,12 +22,14 @@
 -- @function [parent=#ControlSlider] setSelectedThumbSprite 
 -- @param self
 -- @param #cc.Sprite var
+-- @return ControlSlider#ControlSlider self (return value: cc.ControlSlider)
         
 --------------------------------
 -- 
 -- @function [parent=#ControlSlider] setProgressSprite 
 -- @param self
 -- @param #cc.Sprite var
+-- @return ControlSlider#ControlSlider self (return value: cc.ControlSlider)
         
 --------------------------------
 -- 
@@ -52,41 +54,48 @@
 -- @function [parent=#ControlSlider] setThumbSprite 
 -- @param self
 -- @param #cc.Sprite var
+-- @return ControlSlider#ControlSlider self (return value: cc.ControlSlider)
         
 --------------------------------
 -- 
 -- @function [parent=#ControlSlider] setMinimumValue 
 -- @param self
 -- @param #float val
+-- @return ControlSlider#ControlSlider self (return value: cc.ControlSlider)
         
 --------------------------------
 -- 
 -- @function [parent=#ControlSlider] setMinimumAllowedValue 
 -- @param self
 -- @param #float var
+-- @return ControlSlider#ControlSlider self (return value: cc.ControlSlider)
         
 --------------------------------
 -- 
 -- @function [parent=#ControlSlider] setEnabled 
 -- @param self
 -- @param #bool enabled
+-- @return ControlSlider#ControlSlider self (return value: cc.ControlSlider)
         
 --------------------------------
 -- 
 -- @function [parent=#ControlSlider] setValue 
 -- @param self
 -- @param #float val
+-- @return ControlSlider#ControlSlider self (return value: cc.ControlSlider)
         
 --------------------------------
 -- 
 -- @function [parent=#ControlSlider] setMaximumValue 
 -- @param self
 -- @param #float val
+-- @return ControlSlider#ControlSlider self (return value: cc.ControlSlider)
         
 --------------------------------
 -- 
 -- @function [parent=#ControlSlider] needsLayout 
 -- @param self
+-- @return ControlSlider#ControlSlider self (return value: cc.ControlSlider)
         
 --------------------------------
 -- 
@@ -141,12 +150,14 @@
 -- @function [parent=#ControlSlider] setBackgroundSprite 
 -- @param self
 -- @param #cc.Sprite var
+-- @return ControlSlider#ControlSlider self (return value: cc.ControlSlider)
         
 --------------------------------
 -- 
 -- @function [parent=#ControlSlider] setMaximumAllowedValue 
 -- @param self
 -- @param #float var
+-- @return ControlSlider#ControlSlider self (return value: cc.ControlSlider)
         
 --------------------------------
 -- @overload self, cc.Sprite, cc.Sprite, cc.Sprite         
@@ -165,5 +176,6 @@
 -- js ctor
 -- @function [parent=#ControlSlider] ControlSlider 
 -- @param self
+-- @return ControlSlider#ControlSlider self (return value: cc.ControlSlider)
         
 return nil

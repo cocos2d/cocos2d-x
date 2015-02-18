@@ -32,6 +32,10 @@ THE SOFTWARE.
 #include "base/ccMacros.h"
 #include "base/CCConfiguration.h"
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8  || defined(WP8_SHADER_COMPILER)
+#include "ui/shaders/UIShaders.h"
+#endif
+
 NS_CC_BEGIN
 
 enum {
@@ -40,7 +44,7 @@ enum {
     kShaderType_PositionTextureColorAlphaTest,
     kShaderType_PositionTextureColorAlphaTestNoMV,
     kShaderType_PositionColor,
-    kShaderType_PositionColorPointsize,
+    kShaderType_PositionColorTextureAsPointsize,
     kShaderType_PositionColor_noMVP,
     kShaderType_PositionTexture,
     kShaderType_PositionTexture_uColor,
@@ -57,6 +61,9 @@ enum {
     kShaderType_3DPositionNormal,
     kShaderType_3DPositionNormalTex,
     kShaderType_3DSkinPositionNormalTex,
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || defined(WP8_SHADER_COMPILER)
+    kShaderType_PositionColor_noMVP_GrayScale,
+#endif
     kShaderType_MAX,
 };
 
@@ -142,8 +149,8 @@ void GLProgramCache::loadDefaultGLPrograms()
     
     // Position, Color, PointSize shader
     p = new (std::nothrow) GLProgram();
-    loadDefaultGLProgram(p, kShaderType_PositionColorPointsize);
-    _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_COLOR_POINTSIZE, p) );
+    loadDefaultGLProgram(p, kShaderType_PositionColorTextureAsPointsize);
+    _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_COLOR_TEXASPOINTSIZE, p) );
     
     //
     // Position, Color shader no MVP
@@ -228,6 +235,13 @@ void GLProgramCache::loadDefaultGLPrograms()
     p = new GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DSkinPositionNormalTex);
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_SKINPOSITION_NORMAL_TEXTURE, p));
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || defined(WP8_SHADER_COMPILER)
+    p = new GLProgram();
+    loadDefaultGLProgram(p, kShaderType_PositionColor_noMVP_GrayScale);
+    _programs.insert(std::make_pair(GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP_GRAYSCALE, p));
+#endif
+
 }
 
 void GLProgramCache::reloadDefaultGLPrograms()
@@ -261,9 +275,9 @@ void GLProgramCache::reloadDefaultGLPrograms()
     loadDefaultGLProgram(p, kShaderType_PositionColor);
     
     // Position, Color, PointSize shader
-    p = getGLProgram(GLProgram::SHADER_NAME_POSITION_COLOR_POINTSIZE);
+    p = getGLProgram(GLProgram::SHADER_NAME_POSITION_COLOR_TEXASPOINTSIZE);
     p->reset();
-    loadDefaultGLProgram(p, kShaderType_PositionColorPointsize);
+    loadDefaultGLProgram(p, kShaderType_PositionColorTextureAsPointsize);
 
     //
     // Position, Color shader no MVP
@@ -358,7 +372,6 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
         case kShaderType_PositionTextureColor_noMVP:
             p->initWithByteArrays(ccPositionTextureColor_noMVP_vert, ccPositionTextureColor_noMVP_frag);
             break;
-
         case kShaderType_PositionTextureColorAlphaTest:
             p->initWithByteArrays(ccPositionTextureColor_vert, ccPositionTextureColorAlphaTest_frag);
             break;
@@ -368,8 +381,8 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
         case kShaderType_PositionColor:  
             p->initWithByteArrays(ccPositionColor_vert ,ccPositionColor_frag);
             break;
-        case kShaderType_PositionColorPointsize:
-            p->initWithByteArrays(ccPositionColorPointsize_vert ,ccPositionColor_frag);
+        case kShaderType_PositionColorTextureAsPointsize:
+            p->initWithByteArrays(ccPositionColorTextureAsPointsize_vert ,ccPositionColor_frag);
             break;
         case kShaderType_PositionColor_noMVP:
             p->initWithByteArrays(ccPositionTextureColor_noMVP_vert ,ccPositionColor_frag);
@@ -431,6 +444,11 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
                 p->initWithByteArrays((def + std::string(cc3D_SkinPositionNormalTex_vert)).c_str(), (def + std::string(cc3D_ColorNormalTex_frag)).c_str());
             }
             break;
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || defined(WP8_SHADER_COMPILER)
+        case kShaderType_PositionColor_noMVP_GrayScale:
+            p->initWithByteArrays(ccPositionTextureColor_noMVP_vert, ccUIGrayScale_frag);
+            break;
+#endif
         default:
             CCLOG("cocos2d: %s:%d, error shader type", __FUNCTION__, __LINE__);
             return;

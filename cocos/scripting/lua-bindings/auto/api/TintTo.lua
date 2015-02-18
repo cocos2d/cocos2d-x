@@ -20,6 +20,7 @@
 -- @function [parent=#TintTo] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return TintTo#TintTo self (return value: cc.TintTo)
         
 --------------------------------
 -- 
@@ -34,9 +35,10 @@
 -- @return TintTo#TintTo ret (return value: cc.TintTo)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#TintTo] update 
 -- @param self
 -- @param #float time
+-- @return TintTo#TintTo self (return value: cc.TintTo)
         
 return nil

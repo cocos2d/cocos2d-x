@@ -59,7 +59,7 @@ typedef struct
     unsigned char*  data;
 } tImageInfo;
 
-static bool _initWithString(const char * text, Device::TextAlign align, const char * fontName, int size, tImageInfo* info, const Color3B* strokeColor)
+static bool _initWithString(const char * text, Device::TextAlign align, const char * fontName, int size, tImageInfo* info, const Color3B* fontColor, int fontAlpha)
 {
     bool ret = false;
     
@@ -90,8 +90,8 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
 		
 		// color
 		NSColor* foregroundColor;
-		if (strokeColor) {
-			foregroundColor = [NSColor colorWithDeviceRed:strokeColor->r/255.0 green:strokeColor->g/255.0 blue:strokeColor->b/255.0 alpha:1];
+        if (fontColor) {
+            foregroundColor = [NSColor colorWithDeviceRed:fontColor->r/255.0 green:fontColor->g/255.0 blue:fontColor->b/255.0 alpha:fontAlpha/255.0];
 		} else {
 			foregroundColor = [NSColor whiteColor];
 		}
@@ -132,9 +132,9 @@ static bool _initWithString(const char * text, Device::TextAlign align, const ch
                         lastBreakLocation = i + insertCount;
                     }
                     textSize = [lineBreak sizeWithAttributes:tokenAttributesDict];
-                    if(info->height > 0 && textSize.height > info->height)
+                    if(info->height > 0 && (int)textSize.height > info->height)
                         break;
-					if (textSize.width > info->width) {
+                    if ((int)textSize.width > info->width) {
                         if(lastBreakLocation > 0) {
                             [lineBreak insertString:@"\r" atIndex:lastBreakLocation];
                             lastBreakLocation = 0;
@@ -235,7 +235,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         info.width = textDefinition._dimensions.width;
         info.height = textDefinition._dimensions.height;
         
-        if (! _initWithString(text, align, textDefinition._fontName.c_str(), textDefinition._fontSize, &info, &textDefinition._fontFillColor)) //pStrokeColor))
+        if (! _initWithString(text, align, textDefinition._fontName.c_str(), textDefinition._fontSize, &info, &textDefinition._fontFillColor, textDefinition._fontAlpha))
         {
             break;
         }

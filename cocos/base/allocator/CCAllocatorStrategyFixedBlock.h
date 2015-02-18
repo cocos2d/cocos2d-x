@@ -249,7 +249,7 @@ protected:
         _allocated += _pageSize;
         size_t aligned_size = AllocatorBase::nextPow2BlockSize(block_size);
         uint8_t* block = (uint8_t*)p;
-        for (int i = 0; i < _pageSize; ++i, block += aligned_size)
+        for (unsigned int i = 0; i < _pageSize; ++i, block += aligned_size)
         {
             push_front(block);
         }
