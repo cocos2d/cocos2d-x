@@ -192,7 +192,7 @@ static int processTask(HttpRequest *request, NSString* requestType, void *stream
         }
         
         char* requestDataBuffer = request->getRequestData();
-        if (nullptr !=  requestDataBuffer && 0 != strlen(requestDataBuffer))
+        if (nullptr !=  requestDataBuffer && 0 != request->getRequestDataSize())
         {
             NSData *postData = [NSData dataWithBytes:requestDataBuffer length:request->getRequestDataSize()];
             [nsrequest setHTTPBody:postData];
