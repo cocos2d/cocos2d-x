@@ -62,7 +62,6 @@ ScrollView::ScrollView()
 , _touchLength(0.0f)
 , _minScale(0.0f)
 , _maxScale(0.0f)
-, _scissorRestored(false)
 , _touchListener(nullptr)
 {
 
@@ -513,70 +512,6 @@ void ScrollView::addChild(Node * child, int zOrder, const std::string &name)
     }
 }
 
-void ScrollView::beforeDraw()
-{
-    //ScrollView don't support drawing in 3D space
-    _beforeDrawCommand.init(_globalZOrder);
-    _beforeDrawCommand.func = CC_CALLBACK_0(ScrollView::onBeforeDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_beforeDrawCommand);
-}
-
-/**
- * clip this view so that outside of the visible bounds can be hidden.
- */
-void ScrollView::onBeforeDraw()
-{
-    if (_clippingToBounds)
-    {
-		_scissorRestored = false;
-        Rect frame = getViewRect();
-        auto glview = Director::getInstance()->getOpenGLView();
-
-        if (glview->isScissorEnabled()) {
-            _scissorRestored = true;
-            _parentScissorRect = glview->getScissorRect();
-            //set the intersection of _parentScissorRect and frame as the new scissor rect
-            if (frame.intersectsRect(_parentScissorRect)) {
-                float x = MAX(frame.origin.x, _parentScissorRect.origin.x);
-                float y = MAX(frame.origin.y, _parentScissorRect.origin.y);
-                float xx = MIN(frame.origin.x+frame.size.width, _parentScissorRect.origin.x+_parentScissorRect.size.width);
-                float yy = MIN(frame.origin.y+frame.size.height, _parentScissorRect.origin.y+_parentScissorRect.size.height);
-                glview->setScissorInPoints(x, y, xx-x, yy-y);
-            }
-        }
-        else {
-            glEnable(GL_SCISSOR_TEST);
-            glview->setScissorInPoints(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
-        }
-    }
-}
-
-void ScrollView::afterDraw()
-{
-    _afterDrawCommand.init(_globalZOrder);
-    _afterDrawCommand.func = CC_CALLBACK_0(ScrollView::onAfterDraw, this);
-    Director::getInstance()->getRenderer()->addCommand(&_afterDrawCommand);
-}
-
-/**
- * retract what's done in beforeDraw so that there's no side effect to
- * other nodes.
- */
-void ScrollView::onAfterDraw()
-{
-    if (_clippingToBounds)
-    {
-        if (_scissorRestored) {//restore the parent's scissor rect
-            auto glview = Director::getInstance()->getOpenGLView();
-
-            glview->setScissorInPoints(_parentScissorRect.origin.x, _parentScissorRect.origin.y, _parentScissorRect.size.width, _parentScissorRect.size.height);
-        }
-        else {
-            glDisable(GL_SCISSOR_TEST);
-        }
-    }
-}
-
 void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     // quick return if not visible
@@ -594,8 +529,13 @@ void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
-
-    this->beforeDraw();
+    
+    if (_clippingToBounds)
+    {
+        _beginScissorCommand.init(_globalZOrder, getViewRect());
+        renderer->addCommand(&_beginScissorCommand);
+    }
+    
     bool visibleByCamera = isVisitableByVisitingCamera();
 
     if (!_children.empty())
@@ -632,7 +572,11 @@ void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t
         this->draw(renderer, _modelViewTransform, flags);
     }
 
-    this->afterDraw();
+    if (_clippingToBounds)
+    {
+        _endScissorCommand.init(_globalZOrder);
+        renderer->addCommand(&_endScissorCommand);
+    }
 
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
