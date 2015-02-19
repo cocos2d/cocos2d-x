@@ -43,9 +43,9 @@ public:
         TOP           = 0x13, ///< Horizontal center and vertical top.
         TOP_RIGHT     = 0x12, ///< Horizontal right and vertical top.
         RIGHT         = 0x32, ///< Horizontal right and vertical center.
-        BOTTOM_RIGHT = 0x22, ///< Horizontal right and vertical bottom.
+        BOTTOM_RIGHT  = 0x22, ///< Horizontal right and vertical bottom.
         BOTTOM        = 0x23, ///< Horizontal center and vertical bottom.
-        BOTTOM_LEFT  = 0x21, ///< Horizontal left and vertical bottom.
+        BOTTOM_LEFT   = 0x21, ///< Horizontal left and vertical bottom.
         LEFT          = 0x31, ///< Horizontal left and vertical center.
         TOP_LEFT      = 0x11, ///< Horizontal left and vertical top.
     };
@@ -63,10 +63,29 @@ public:
      *  Sets the interval of accelerometer.
      */
     static void setAccelerometerInterval(float interval);
-
+    
     static Data getTextureDataForText(const char * text, const FontDefinition& textDefinition, TextAlign align, int &width, int &height, bool& hasPremultipliedAlpha);
     
     static void setKeepScreenOn(bool value);
+    
+    /**
+     *  Checks whether vibrate is supported on the current platform and device
+     *  @return Returns true if vibrate is supported, otherwise returns false
+     */
+    static bool isVibrateSupported();
+    
+    /**
+     *  Vibrate for the specified amount of time.
+     *  If vibrate is not supported, then invoking this method has no effect.
+     *  @param duration The duration in milliseconds
+     */
+    static void startVibrate(int duration);
+
+    /**
+     *  Stop any vibrate currently in progress.
+     *  If vibrate is not supported, then invoking this method has no effect.
+     */
+	static void stopVibrate();
 
 private:
     CC_DISALLOW_IMPLICIT_CONSTRUCTORS(Device);
