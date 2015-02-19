@@ -105,6 +105,7 @@ Controller g_aTestNames[] = {
     { "URL Open Test", []() { return new OpenURLTestScene(); } },
 	{ "UserDefault", []() { return new UserDefaultTestScene(); } },
 	{ "Zwoptex", []() { return new ZwoptexTestScene(); } },
+    { "CocosStudio3D Test", []() { return new CS3DTestScene(); } },
 };
 
 static int g_testCount = sizeof(g_aTestNames) / sizeof(g_aTestNames[0]);
