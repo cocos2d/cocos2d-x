@@ -45,6 +45,9 @@ namespace CocosDenshion {
             s_pEngine = NULL;
         }
     }
+    
+    void SimpleAudioEngine::configure(AudioManagerMode mode) {
+    }
 
     SimpleAudioEngine::SimpleAudioEngine() {
     }

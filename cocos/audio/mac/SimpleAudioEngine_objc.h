@@ -53,6 +53,9 @@
 /** returns the shared instance of the SimpleAudioEngine object */
 + (SimpleAudioEngine*) sharedEngine;
 
+/** Configures the shared singleton with a mode*/
++ (void) configure: (tAudioManagerMode) mode;;
+
 /** Preloads a music file so it will be ready to play as background music */
 -(void) preloadBackgroundMusic:(NSString*) filePath;
 

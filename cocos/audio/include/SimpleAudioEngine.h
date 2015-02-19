@@ -45,6 +45,14 @@ namespace CocosDenshion {
   @note           Make sure to call SimpleAudioEngine::end() when the sound engine is not needed anymore
                   to release allocated resources.
  */
+    
+enum class AudioManagerMode{
+    Ambient,                    //!Other apps will be able to play audio
+    SoloAmbient,                //!Only this app will play audio
+    FxPlusMusicIfNoOtherAudio,    //!If another app is playing audio at start up then allow it to continue - default mode
+    MediaPlayback,                //!Other apps will be able to play audio and ignore silence mode
+    SoloMediaPlayback,             //!Only this app will play audio and ignore silence mode
+};
 
 class EXPORT_DLL SimpleAudioEngine
 {
@@ -64,6 +72,8 @@ public:
      @warning It must be called before the application exit, or a memory leak will be casued.
      */
     static void end();
+    
+    static void configure(AudioManagerMode mode);
 
 protected:
     SimpleAudioEngine();

@@ -264,14 +264,20 @@ static BOOL configured = FALSE;
     }    
 }    
 
--(BOOL) audioSessionSetCategory:(NSString*) category {
+-(BOOL) audioSessionSetCategory:(NSString*) category withOptions:(AVAudioSessionCategoryOptions)options {
     NSError *categoryError = nil;
-    if ([[AVAudioSession sharedInstance] setCategory:category error:&categoryError]) {
-        CDLOGINFO(@"Denshion::CDAudioManager - Audio session set category %@ succeeded", category); 
+    //[[AVAudioSession sharedInstance] setCategory:category withOptions:options error:&categoryError];
+    BOOL succes;
+    if([[AVAudioSession sharedInstance] respondsToSelector:@selector(setCategory:withOptions:)])
+        succes = [[AVAudioSession sharedInstance] setCategory:category withOptions:options error:&categoryError];
+    else
+        succes = [[AVAudioSession sharedInstance] setCategory:category error:&categoryError];
+    if (succes) {
+        CDLOGINFO(@"Denshion::CDAudioManager - Audio session set category %@ withOptions %d succeeded", category, (int)options);
         return YES;
     } else {
         //Failed
-        CDLOG(@"Denshion::CDAudioManager - Audio session set category %@ failed with error %@", category, categoryError); 
+        CDLOG(@"Denshion::CDAudioManager - Audio session set category %@  withOptions %d failed with error %@", category, (int)options, categoryError);
         return NO;
     }    
 }    
@@ -339,6 +345,7 @@ static BOOL configured = FALSE;
 -(void) setMode:(tAudioManagerMode) mode {
 
     _mode = mode;
+    AVAudioSessionCategoryOptions options = 0;
     switch (_mode) {
             
         case kAMM_FxOnly:
@@ -363,6 +370,15 @@ static BOOL configured = FALSE;
             //_audioSessionCategory = kAudioSessionCategory_MediaPlayback;
             _audioSessionCategory = AVAudioSessionCategoryPlayback;
             willPlayBackgroundMusic = YES;
+            break;
+          
+        case kAMM_MediaPlaybackAndMix:
+            //Use audio exclusively, ignore mute switch and sleep, has inputs and outputs
+            CDLOGINFO(@"Denshion::CDAudioManager -  Play and record mode, audio will be exclusive");
+            //_audioSessionCategory = kAudioSessionCategory_PlayAndRecord;
+            _audioSessionCategory = AVAudioSessionCategoryPlayAndRecord;
+            willPlayBackgroundMusic = YES;
+            options |= AVAudioSessionCategoryOptionMixWithOthers;
             break;
             
         case kAMM_PlayAndRecord:
@@ -390,7 +406,7 @@ static BOOL configured = FALSE;
             break;
     }
      
-    [self audioSessionSetCategory:_audioSessionCategory];
+    [self audioSessionSetCategory:_audioSessionCategory withOptions:options];
     
 }    
 

@@ -41,6 +41,11 @@ static CDBufferManager *bufferManager = nil;
     return sharedEngine;
 }
 
++ (void) configure: (tAudioManagerMode) mode
+{
+    [CDAudioManager configure:mode];
+}
+
 + (id) alloc
 {
     @synchronized(self)     {
