@@ -100,6 +100,10 @@
 		182C5CC41A95D05900C30D34 /* CocosStudio3DTest in Resources */ = {isa = PBXBuildFile; fileRef = 182C5CC21A95D05900C30D34 /* CocosStudio3DTest */; };
 		182C5CC51A95D05900C30D34 /* CocosStudio3DTest in Resources */ = {isa = PBXBuildFile; fileRef = 182C5CC21A95D05900C30D34 /* CocosStudio3DTest */; };
 		182C5CC61A95D05900C30D34 /* CocosStudio3DTest in Resources */ = {isa = PBXBuildFile; fileRef = 182C5CC21A95D05900C30D34 /* CocosStudio3DTest */; };
+		182C5CCD1A95D9BA00C30D34 /* src in Resources */ = {isa = PBXBuildFile; fileRef = 182C5CCC1A95D9BA00C30D34 /* src */; };
+		182C5CCE1A95D9BA00C30D34 /* src in Resources */ = {isa = PBXBuildFile; fileRef = 182C5CCC1A95D9BA00C30D34 /* src */; };
+		182C5CCF1A95D9BA00C30D34 /* src in Resources */ = {isa = PBXBuildFile; fileRef = 182C5CCC1A95D9BA00C30D34 /* src */; };
+		182C5CD01A95D9BA00C30D34 /* src in Resources */ = {isa = PBXBuildFile; fileRef = 182C5CCC1A95D9BA00C30D34 /* src */; };
 		1A0EE2A218CDF6DA004CD58F /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2d Mac.a */; };
 		1A0EE2A518CDF6DA004CD58F /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 		1A0EE2A718CDF6DA004CD58F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
@@ -535,8 +539,6 @@
 		1AC35D5D18CEDE9E00F37B72 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D5618CEDE9E00F37B72 /* MainMenu.xib */; };
 		1AC35D5E18CEDE9E00F37B72 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D5918CEDE9E00F37B72 /* Icon.icns */; };
 		1AC35D6018CEDE9E00F37B72 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D5B18CEDE9E00F37B72 /* main.cpp */; };
-		1AC35D7518CEE58500F37B72 /* src in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D7418CEE58500F37B72 /* src */; };
-		1AC35D7618CEE58500F37B72 /* src in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D7418CEE58500F37B72 /* src */; };
 		1AC35D7918CEE59900F37B72 /* cocosbuilderRes in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D7818CEE59900F37B72 /* cocosbuilderRes */; };
 		1AC35D7A18CEE59900F37B72 /* cocosbuilderRes in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D7818CEE59900F37B72 /* cocosbuilderRes */; };
 		1AC35D8118CEE5B100F37B72 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7D18CEE5B100F37B72 /* AppDelegate.cpp */; };
@@ -1082,6 +1084,7 @@
 		182C5CB81A95B2FD00C30D34 /* CocosStudio3DTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CocosStudio3DTest.cpp; path = CocosStudio3DTest/CocosStudio3DTest.cpp; sourceTree = "<group>"; };
 		182C5CB91A95B2FD00C30D34 /* CocosStudio3DTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CocosStudio3DTest.h; path = CocosStudio3DTest/CocosStudio3DTest.h; sourceTree = "<group>"; };
 		182C5CC21A95D05900C30D34 /* CocosStudio3DTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = CocosStudio3DTest; path = "../tests/cpp-tests/Resources/CocosStudio3DTest"; sourceTree = "<group>"; };
+		182C5CCC1A95D9BA00C30D34 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = "../tests/lua-tests/src"; sourceTree = "<group>"; };
 		1A0EE2B218CDF6DA004CD58F /* cpp-empty-test Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-empty-test Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A0EE31418CDF733004CD58F /* lua-empty-test Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lua-empty-test Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A0EE41318CDF775004CD58F /* cpp-empty-test iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-empty-test iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1527,7 +1530,6 @@
 		1AC35D5918CEDE9E00F37B72 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		1AC35D5A18CEDE9E00F37B72 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1AC35D5B18CEDE9E00F37B72 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		1AC35D7418CEE58500F37B72 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = "../tests/lua-tests/src"; sourceTree = "<group>"; };
 		1AC35D7818CEE59900F37B72 /* cocosbuilderRes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = cocosbuilderRes; path = "../tests/lua-tests/res/cocosbuilderRes"; sourceTree = "<group>"; };
 		1AC35D7D18CEE5B100F37B72 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		1AC35D7E18CEE5B100F37B72 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -3324,9 +3326,9 @@
 		1AC35D7118CEE4AE00F37B72 /* lua-tests */ = {
 			isa = PBXGroup;
 			children = (
+				182C5CCC1A95D9BA00C30D34 /* src */,
 				1AC35D7B18CEE5A100F37B72 /* project */,
 				1AC35D7718CEE58D00F37B72 /* res */,
-				1AC35D7418CEE58500F37B72 /* src */,
 			);
 			name = "lua-tests";
 			sourceTree = "<group>";
@@ -4353,6 +4355,7 @@
 				157B08EC1A90864100B7BEA4 /* Particle3D in Resources */,
 				15B13E5219F0FD4D008A1ADC /* Manifests in Resources */,
 				156EAE071977D0BD00F53709 /* ActionTimeline in Resources */,
+				182C5CCE1A95D9BA00C30D34 /* src in Resources */,
 				15E66FD6192DC8C700C20A52 /* Sprite3DTest in Resources */,
 				3E2F27BC19D00D7200E7C490 /* audio in Resources */,
 				1AC35DC318CEE65100F37B72 /* Misc in Resources */,
@@ -4369,7 +4372,6 @@
 				1AC35DBC18CEE65100F37B72 /* configs in Resources */,
 				1AC35DE118CEE65900F37B72 /* background.ogg in Resources */,
 				1AC35DDF18CEE65900F37B72 /* music.mid in Resources */,
-				1AC35D7518CEE58500F37B72 /* src in Resources */,
 				1AC35DE018CEE65900F37B72 /* background.mp3 in Resources */,
 				1A1645A6191B6281008C7C7F /* ccs-res in Resources */,
 				C08689C218D370C90093E810 /* background.caf in Resources */,
@@ -4408,6 +4410,7 @@
 				1AC35DCC18CEE65200F37B72 /* ccb in Resources */,
 				1AC35DD218CEE65200F37B72 /* hd in Resources */,
 				1AC35DD718CEE65200F37B72 /* Particles in Resources */,
+				182C5CD01A95D9BA00C30D34 /* src in Resources */,
 				3E2BDB0219C5E5D40055CDCD /* background.wav in Resources */,
 				1AC35D9D18CEE5D100F37B72 /* Icon-120.png in Resources */,
 				1AC35DA018CEE5D100F37B72 /* Icon-57.png in Resources */,
@@ -4419,7 +4422,6 @@
 				527B1F4419EFAE13000A1F82 /* Default-667h@2x.png in Resources */,
 				1AC35D9B18CEE5D100F37B72 /* Default@2x.png in Resources */,
 				1AC35DCE18CEE65200F37B72 /* components in Resources */,
-				1AC35D7618CEE58500F37B72 /* src in Resources */,
 				1AC35DDC18CEE65200F37B72 /* zwoptex in Resources */,
 				1AC35DEC18CEE65B00F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */,
 				1AC35DED18CEE65B00F37B72 /* music.mid in Resources */,
@@ -4455,6 +4457,7 @@
 				1AC35CFE18CED84500F37B72 /* Particles in Resources */,
 				1AC35CF418CED84500F37B72 /* Images in Resources */,
 				1AC35CE018CED84500F37B72 /* configs in Resources */,
+				182C5CCD1A95D9BA00C30D34 /* src in Resources */,
 				1AC35CE618CED84500F37B72 /* effect2.ogg in Resources */,
 				1AC35CFA18CED84500F37B72 /* Misc in Resources */,
 				38FA2E76194AECF800FF2BE4 /* ActionTimeline in Resources */,
@@ -4543,6 +4546,7 @@
 				1AC35CE118CED84500F37B72 /* configs in Resources */,
 				1AC35CE918CED84500F37B72 /* extensions in Resources */,
 				3E2BDAD219BEA3E20055CDCD /* audio in Resources */,
+				182C5CCF1A95D9BA00C30D34 /* src in Resources */,
 				C08689C318D370C90093E810 /* background.caf in Resources */,
 				1AC35C9518CECF1400F37B72 /* Icon-72.png in Resources */,
 				15B3709419EE5D1000ABE682 /* Manifests in Resources */,
