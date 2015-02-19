@@ -29,6 +29,7 @@ import java.util.Locale;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.lang.Runnable;
+import java.lang.reflect.Method;
 
 import com.chukong.cocosplay.client.CocosPlayClient;
 
@@ -40,6 +41,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Vibrator;
 import android.preference.PreferenceManager.OnActivityResultListener;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -67,6 +69,7 @@ public class Cocos2dxHelper {
     private static Activity sActivity = null;
     private static Cocos2dxHelperListener sCocos2dxHelperListener;
     private static Set<OnActivityResultListener> onActivityResultListeners = new LinkedHashSet<OnActivityResultListener>();
+    private static Vibrator sVibrateService = null;
 
 
     // ===========================================================
@@ -102,6 +105,8 @@ public class Cocos2dxHelper {
     
             Cocos2dxBitmap.setContext(activity);
             sActivity = activity;
+            
+            Cocos2dxHelper.sVibrateService = (Vibrator)activity.getSystemService(Context.VIBRATOR_SERVICE);
 
             sInited = true;
 
@@ -179,6 +184,27 @@ public class Cocos2dxHelper {
     
     public static void setKeepScreenOn(boolean value) {
         ((Cocos2dxActivity)sActivity).setKeepScreenOn(value);
+    }
+    
+    public static boolean isVibrateSupported() {
+        boolean ret = true; // Default true
+        try {
+            // Using reflection because Vibrator.hasVibrator() was added in API 11
+            Method hasVibratorMethod = sVibrateService.getClass().getMethod("hasVibrator", (Class<?>[])null);
+            Object result = hasVibratorMethod.invoke(sVibrateService);
+            ret = (Boolean)result;
+        } catch (Exception e) {
+        	ret = false;
+        }
+        return ret;
+    }
+    
+    public static void startVibrate(int duration) {
+        sVibrateService.vibrate(duration);
+    }
+    
+    public static void stopVibrate() {
+        sVibrateService.cancel();
     }
     
     public static boolean openURL(String url) { 
