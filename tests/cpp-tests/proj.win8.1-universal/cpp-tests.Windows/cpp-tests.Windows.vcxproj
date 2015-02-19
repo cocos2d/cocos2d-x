@@ -89,6 +89,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <PackageCertificateKeyFile>cpp-tests.Windows_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <AppxBundlePlatforms>x86</AppxBundlePlatforms>
   </PropertyGroup>
   <Import Project="..\cpp-tests.Shared\cpp-tests.Shared.vcxitems" Label="Shared" />
   <ItemDefinitionGroup Condition="'$(Platform)'=='ARM'">
