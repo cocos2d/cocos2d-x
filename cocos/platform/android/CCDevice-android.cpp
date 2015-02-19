@@ -173,17 +173,17 @@ void Device::setKeepScreenOn(bool value)
 
 bool Device::isVibrateSupported()
 {
-    // See http://developer.android.com/reference/android/os/Vibrator.html
-    return false;
+    return isVibrateSupportedJni();
 }
 
 void Device::startVibrate(int duration)
 {
-    CC_UNUSED_PARAM(duration);
+    startVibrateJni(duration);
 }
 
 void Device::stopVibrate()
 {
+    stopVibrateJni();
 }
 
 NS_CC_END
