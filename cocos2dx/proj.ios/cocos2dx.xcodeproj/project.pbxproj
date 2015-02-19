@@ -1778,6 +1778,7 @@
 					CC_TARGET_OS_IPHONE,
 					"COCOS2D_DEBUG=1",
 				);
+				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/..\"",
 					"\"$(SRCROOT)/../kazmath/include\"",
@@ -1805,6 +1806,7 @@
 					CC_TARGET_OS_IPHONE,
 					"COCOS2D_DEBUG=1",
 				);
+				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/..\"",
 					"\"$(SRCROOT)/../kazmath/include\"",
