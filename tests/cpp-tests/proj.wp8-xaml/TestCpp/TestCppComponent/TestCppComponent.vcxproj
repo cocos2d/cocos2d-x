@@ -314,6 +314,7 @@
     <ClCompile Include="..\..\..\Classes\UnitTest\UnitTest.cpp" />
     <ClCompile Include="..\..\..\Classes\UserDefaultTest\UserDefaultTest.cpp" />
     <ClCompile Include="..\..\..\Classes\VisibleRect.cpp" />
+    <ClCompile Include="..\..\..\Classes\VibrateTest\VibrateTest.cpp" />
     <ClCompile Include="..\..\..\Classes\ZwoptexTest\ZwoptexTest.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -522,6 +523,7 @@
     <ClInclude Include="..\..\..\Classes\UnitTest\UnitTest.h" />
     <ClInclude Include="..\..\..\Classes\UserDefaultTest\UserDefaultTest.h" />
     <ClInclude Include="..\..\..\Classes\VisibleRect.h" />
+    <ClInclude Include="..\..\..\Classes\VibrateTest\VibrateTest.h" />
     <ClInclude Include="..\..\..\Classes\ZwoptexTest\ZwoptexTest.h" />
   </ItemGroup>
   <ItemGroup>
