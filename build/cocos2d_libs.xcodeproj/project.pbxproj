@@ -818,6 +818,12 @@
 		15EFA212198A2BB5000C57D3 /* CCProtectedNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15EFA20F198A2BB5000C57D3 /* CCProtectedNode.cpp */; };
 		15EFA213198A2BB5000C57D3 /* CCProtectedNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 15EFA210198A2BB5000C57D3 /* CCProtectedNode.h */; };
 		15EFA214198A2BB5000C57D3 /* CCProtectedNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 15EFA210198A2BB5000C57D3 /* CCProtectedNode.h */; };
+		182C5CAE1A95961600C30D34 /* CSParse3DBinary_generated.h in Headers */ = {isa = PBXBuildFile; fileRef = 182C5CAD1A95961600C30D34 /* CSParse3DBinary_generated.h */; };
+		182C5CB21A95964700C30D34 /* Node3DReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 182C5CB01A95964700C30D34 /* Node3DReader.cpp */; };
+		182C5CB31A95964700C30D34 /* Node3DReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 182C5CB11A95964700C30D34 /* Node3DReader.h */; };
+		182C5CB41A95964C00C30D34 /* Node3DReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 182C5CB01A95964700C30D34 /* Node3DReader.cpp */; };
+		182C5CB51A95964F00C30D34 /* Node3DReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 182C5CB11A95964700C30D34 /* Node3DReader.h */; };
+		182C5CB61A95965500C30D34 /* CSParse3DBinary_generated.h in Headers */ = {isa = PBXBuildFile; fileRef = 182C5CAD1A95961600C30D34 /* CSParse3DBinary_generated.h */; };
 		1A01C68418F57BE800EFE3A6 /* CCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A01C67618F57BE800EFE3A6 /* CCArray.cpp */; };
 		1A01C68518F57BE800EFE3A6 /* CCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A01C67618F57BE800EFE3A6 /* CCArray.cpp */; };
 		1A01C68618F57BE800EFE3A6 /* CCArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A01C67718F57BE800EFE3A6 /* CCArray.h */; };
@@ -2436,6 +2442,9 @@
 		15B3707719EE414C00ABE682 /* Manifest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Manifest.h; sourceTree = "<group>"; };
 		15EFA20F198A2BB5000C57D3 /* CCProtectedNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCProtectedNode.cpp; sourceTree = "<group>"; };
 		15EFA210198A2BB5000C57D3 /* CCProtectedNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProtectedNode.h; sourceTree = "<group>"; };
+		182C5CAD1A95961600C30D34 /* CSParse3DBinary_generated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSParse3DBinary_generated.h; sourceTree = "<group>"; };
+		182C5CB01A95964700C30D34 /* Node3DReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Node3DReader.cpp; path = Node3DReader/Node3DReader.cpp; sourceTree = "<group>"; };
+		182C5CB11A95964700C30D34 /* Node3DReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Node3DReader.h; path = Node3DReader/Node3DReader.h; sourceTree = "<group>"; };
 		1A01C67618F57BE800EFE3A6 /* CCArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCArray.cpp; sourceTree = "<group>"; };
 		1A01C67718F57BE800EFE3A6 /* CCArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArray.h; sourceTree = "<group>"; };
 		1A01C67818F57BE800EFE3A6 /* CCBool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBool.h; sourceTree = "<group>"; };
@@ -3771,6 +3780,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		182C5CAF1A95961E00C30D34 /* Node3DReader */ = {
+			isa = PBXGroup;
+			children = (
+				182C5CB01A95964700C30D34 /* Node3DReader.cpp */,
+				182C5CB11A95964700C30D34 /* Node3DReader.h */,
+			);
+			name = Node3DReader;
+			sourceTree = "<group>";
+		};
 		1A01C67518F57BE800EFE3A6 /* deprecated */ = {
 			isa = PBXGroup;
 			children = (
@@ -4391,6 +4409,7 @@
 			isa = PBXGroup;
 			children = (
 				382384021A259005002C4610 /* CSParseBinary_generated.h */,
+				182C5CAD1A95961600C30D34 /* CSParse3DBinary_generated.h */,
 				382384051A25900F002C4610 /* FlatBuffersSerialize.cpp */,
 				382384061A25900F002C4610 /* FlatBuffersSerialize.h */,
 				38ACD1FA1A27111900C3093D /* WidgetCallBackHandlerProtocol.cpp */,
@@ -5613,6 +5632,7 @@
 		50FCEB6818C72017004AD434 /* WidgetReader */ = {
 			isa = PBXGroup;
 			children = (
+				182C5CAF1A95961E00C30D34 /* Node3DReader */,
 				38F5263A1A48363B000DB7F7 /* ArmatureNodeReader */,
 				382384251A2590F9002C4610 /* NodeReader */,
 				3823843A1A259140002C4610 /* SingleNodeReader */,
@@ -6181,6 +6201,7 @@
 				15AE188719AAD33D00C27E9E /* CCBSequenceProperty.h in Headers */,
 				B68779F61A8CA88500643ABF /* CCPUParticle3DVertexEmitter.h in Headers */,
 				1A01C69A18F57BE800EFE3A6 /* CCSet.h in Headers */,
+				182C5CB31A95964700C30D34 /* Node3DReader.h in Headers */,
 				1A570083180BC5A10088DEC7 /* CCActionManager.h in Headers */,
 				1A570087180BC5A10088DEC7 /* CCActionPageTurn3D.h in Headers */,
 				50ABBD911925AB4100A911A9 /* CCGLProgramCache.h in Headers */,
@@ -6614,6 +6635,7 @@
 				50ABC00F1926664800A911A9 /* CCFileUtils.h in Headers */,
 				B68779BA1A8CA88500643ABF /* CCPUParticle3DEmitter.h in Headers */,
 				15AE1A3719AAD3D500C27E9E /* b2PolygonShape.h in Headers */,
+				182C5CAE1A95961600C30D34 /* CSParse3DBinary_generated.h in Headers */,
 				B6877AA41A8CA8A700643ABF /* CCPUParticle3DFlockCenteringAffector.h in Headers */,
 				15AE1B5419AADA9900C27E9E /* UIRichText.h in Headers */,
 				50ABBE3B1925AB6F00A911A9 /* CCData.h in Headers */,
@@ -6809,6 +6831,7 @@
 				B6877B311A8CA8A700643ABF /* CCPUParticle3DTextureRotatorTranslator.h in Headers */,
 				B29A7E2419EE1B7700872B35 /* IkConstraint.h in Headers */,
 				1A01C68918F57BE800EFE3A6 /* CCBool.h in Headers */,
+				182C5CB61A95965500C30D34 /* CSParse3DBinary_generated.h in Headers */,
 				15AE184319AAD2F700C27E9E /* CCSprite3D.h in Headers */,
 				50CB247E19D9C5A100687767 /* AudioPlayer.h in Headers */,
 				1A57007C180BC5A10088DEC7 /* CCActionInstant.h in Headers */,
@@ -7212,6 +7235,7 @@
 				299CF1FE19A434BC00C378C1 /* ccRandom.h in Headers */,
 				50ABBDBC1925AB4100A911A9 /* CCTextureAtlas.h in Headers */,
 				15AE182319AAD2F700C27E9E /* CCBundleReader.h in Headers */,
+				182C5CB51A95964F00C30D34 /* Node3DReader.h in Headers */,
 				50ABBE541925AB6F00A911A9 /* CCEventDispatcher.h in Headers */,
 				1A12775A18DFCC4F0005F345 /* CCTweenFunction.h in Headers */,
 				15AE192819AAD35100C27E9E /* TriggerBase.h in Headers */,
@@ -7582,6 +7606,7 @@
 				292DB13D19B4574100A80320 /* UIEditBox.cpp in Sources */,
 				50ABBE551925AB6F00A911A9 /* CCEventFocus.cpp in Sources */,
 				15AE1A8819AAD40300C27E9E /* b2PrismaticJoint.cpp in Sources */,
+				182C5CB21A95964700C30D34 /* Node3DReader.cpp in Sources */,
 				50ABBE491925AB6F00A911A9 /* CCEventAcceleration.cpp in Sources */,
 				3823843D1A259140002C4610 /* SingleNodeReader.cpp in Sources */,
 				B6877A8E1A8CA8A700643ABF /* CCPUParticle3DBoxColliderTranslator.cpp in Sources */,
@@ -8447,6 +8472,7 @@
 				15AE180919AAD2F700C27E9E /* CCAABB.cpp in Sources */,
 				15AE1AA719AAD40300C27E9E /* b2Island.cpp in Sources */,
 				3E6176741960F89B00DE83F5 /* CCEventController.cpp in Sources */,
+				182C5CB41A95964C00C30D34 /* Node3DReader.cpp in Sources */,
 				B63990CD1A490AFE00B07923 /* CCAsyncTaskPool.cpp in Sources */,
 				50ABBE361925AB6F00A911A9 /* CCConsole.cpp in Sources */,
 				B29A7E1419EE1B7700872B35 /* Bone.c in Sources */,
