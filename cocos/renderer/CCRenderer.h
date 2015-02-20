@@ -59,10 +59,7 @@ public:
     };
 
 public:
-    RenderQueue()
-    {
-        clear();
-    }
+    RenderQueue();
     void push_back(RenderCommand* command);
     ssize_t size() const;
     void sort();
@@ -75,8 +72,7 @@ public:
     void restoreRenderState();
     
 protected:
-    
-    std::vector<std::vector<RenderCommand*>> _commands;
+    std::vector<RenderCommand*> _commands[QUEUE_COUNT];
     
     //Render State related
     bool _isCullEnabled;
