@@ -296,7 +296,7 @@ void VibrateTestScene::runThisTest()
 
 void VibrateTestDemo::onExit()
 {
-    AudioEngine::stopAll();
+	Device::stopVibrate();
     BaseTest::onExit();
 }
 
@@ -368,7 +368,7 @@ bool VibrateControlTest::init()
 	durationSlider->setCallBack([&](SliderEx* sender, float ratio, SliderEx::TouchEvent event){
         // From 100ms to 1000ms
         _duration = ratio * 900 + 100;
-		CCLOG("Duration set to: %d", _duration);
+		//CCLOG("Duration set to: %d", _duration);
     });
 	durationSlider->setPosition(Vec2(layerSize.width * 0.5f, layerSize.height * 0.35f));
 	addChild(durationSlider);

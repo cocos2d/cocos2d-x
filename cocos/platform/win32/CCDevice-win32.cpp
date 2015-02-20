@@ -92,7 +92,7 @@ public:
             pwszBuffer = new wchar_t[nBufLen];
             CC_BREAK_IF(! pwszBuffer);
             memset(pwszBuffer,0,nBufLen);
-            nLen = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), nLen, pwszBuffer, nBufLen);     
+            nLen = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), nLen, pwszBuffer, nBufLen);
             pwszBuffer[nLen] = '\0';
         } while (0);
         return pwszBuffer;
