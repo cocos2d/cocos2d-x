@@ -31,8 +31,6 @@
 #include "../testBasic.h"
 #include "../BaseTest.h"
 
-#include "audio/include/AudioEngine.h"
-
 using namespace cocos2d;
 
 class VibrateTestScene : public TestScene
