@@ -37,6 +37,14 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+-- @overload self, cc.Node         
+-- @overload self         
+-- @function [parent=#ClippingNode] init
+-- @param self
+-- @param #cc.Node stencil
+-- @return bool#bool ret (return value: bool)
+
+--------------------------------
 --  The Node to use as a stencil to do the clipping.<br>
 -- The stencil node will be retained.<br>
 -- This default to nil.

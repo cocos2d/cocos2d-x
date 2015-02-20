@@ -79,6 +79,13 @@
         
 --------------------------------
 -- 
+-- @function [parent=#ControlButton] initWithBackgroundSprite 
+-- @param self
+-- @param #ccui.Scale9Sprite sprite
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#ControlButton] getTitleTTFSizeForState 
 -- @param self
 -- @param #int state
@@ -128,6 +135,13 @@
 -- @return ControlButton#ControlButton self (return value: cc.ControlButton)
         
 --------------------------------
+-- 
+-- @function [parent=#ControlButton] setBackgroundSprite 
+-- @param self
+-- @param #ccui.Scale9Sprite var
+-- @return ControlButton#ControlButton self (return value: cc.ControlButton)
+        
+--------------------------------
 -- Returns the background sprite used for a state.<br>
 -- param state The state that uses the background sprite. Possible values are<br>
 -- described in "CCControlState".
@@ -147,6 +161,15 @@
 -- @function [parent=#ControlButton] needsLayout 
 -- @param self
 -- @return ControlButton#ControlButton self (return value: cc.ControlButton)
+        
+--------------------------------
+-- 
+-- @function [parent=#ControlButton] initWithTitleAndFontNameAndFontSize 
+-- @param self
+-- @param #string title
+-- @param #string fontName
+-- @param #float fontSize
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @overload self         
@@ -233,10 +256,11 @@
         
 --------------------------------
 -- 
--- @function [parent=#ControlButton] setBackgroundSprite 
+-- @function [parent=#ControlButton] initWithLabelAndBackgroundSprite 
 -- @param self
--- @param #ccui.Scale9Sprite var
--- @return ControlButton#ControlButton self (return value: cc.ControlButton)
+-- @param #cc.Node label
+-- @param #ccui.Scale9Sprite backgroundSprite
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 
@@ -366,6 +390,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#ControlButton] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#ControlButton] updateDisplayedColor 
 -- @param self
 -- @param #color3b_table parentColor
@@ -378,5 +408,11 @@
 -- @param #cc.Touch touch
 -- @param #cc.Event event
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- js ctor
+-- @function [parent=#ControlButton] ControlButton 
+-- @param self
+-- @return ControlButton#ControlButton self (return value: cc.ControlButton)
         
 return nil

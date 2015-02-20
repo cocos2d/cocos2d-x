@@ -5,6 +5,13 @@
 -- @parent_module cc
 
 --------------------------------
+-- init Animation3D from bundle data
+-- @function [parent=#Animation3D] init 
+-- @param self
+-- @param #cc.Animation3DData data
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- get duration
 -- @function [parent=#Animation3D] getDuration 
 -- @param self
@@ -17,5 +24,11 @@
 -- @param #string filename
 -- @param #string animationName
 -- @return Animation3D#Animation3D ret (return value: cc.Animation3D)
+        
+--------------------------------
+-- 
+-- @function [parent=#Animation3D] Animation3D 
+-- @param self
+-- @return Animation3D#Animation3D self (return value: cc.Animation3D)
         
 return nil

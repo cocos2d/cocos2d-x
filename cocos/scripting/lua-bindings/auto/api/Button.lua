@@ -6,6 +6,12 @@
 
 --------------------------------
 -- 
+-- @function [parent=#Button] getNormalTextureSize 
+-- @param self
+-- @return size_table#size_table ret (return value: size_table)
+        
+--------------------------------
+-- 
 -- @function [parent=#Button] getTitleText 
 -- @param self
 -- @return string#string ret (return value: string)
@@ -77,6 +83,16 @@
 -- @param #string disabled
 -- @param #int texType
 -- @return Button#Button self (return value: ccui.Button)
+        
+--------------------------------
+-- 
+-- @function [parent=#Button] init 
+-- @param self
+-- @param #string normalImage
+-- @param #string selectedImage
+-- @param #string disableImage
+-- @param #int texType
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 
@@ -217,6 +233,12 @@
 -- @function [parent=#Button] getVirtualRenderer 
 -- @param self
 -- @return Node#Node ret (return value: cc.Node)
+        
+--------------------------------
+-- 
+-- @function [parent=#Button] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- Returns the "class name" of widget.

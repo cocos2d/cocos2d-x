@@ -12,6 +12,10 @@ else
 MATHNEONFILE := math/MathUtil.cpp
 endif
 
+ifeq ($(COCOS_SIMULATOR_BUILD),1)
+LOCAL_ARM_MODE := arm
+endif
+
 LOCAL_SRC_FILES := \
 cocos2d.cpp \
 2d/CCAction.cpp \

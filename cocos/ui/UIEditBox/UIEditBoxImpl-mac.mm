@@ -28,9 +28,8 @@
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
 #include "base/CCDirector.h"
+#include "base/ccUTF8.h"
 #include "UIEditBox.h"
-#include "deprecated/CCString.h"
-
 
 #define getEditBoxImplMac() ((cocos2d::ui::EditBoxImplMac*)editBox_)
 

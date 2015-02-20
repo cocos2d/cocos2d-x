@@ -12,6 +12,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#Animate3D] removeFromMap 
+-- @param self
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
+        
+--------------------------------
+-- 
 -- @function [parent=#Animate3D] setWeight 
 -- @param self
 -- @param #float weight
@@ -111,6 +117,12 @@
 -- @function [parent=#Animate3D] step 
 -- @param self
 -- @param #float dt
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
+        
+--------------------------------
+-- 
+-- @function [parent=#Animate3D] Animate3D 
+-- @param self
 -- @return Animate3D#Animate3D self (return value: cc.Animate3D)
         
 return nil

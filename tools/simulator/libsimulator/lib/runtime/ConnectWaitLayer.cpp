@@ -79,6 +79,11 @@ ConnectWaitLayer::ConnectWaitLayer()
     addChild(shineSprite, 9998);
 
     std::string strip = getIPAddress();
+	if (strip.empty())
+	{
+		strip = "0.0.0.0";
+	}
+
     char szIPAddress[64] = {0};
     sprintf(szIPAddress, "IP: %s", strip.c_str());
     auto IPlabel = Label::createWithSystemFont(szIPAddress, "", 72);

@@ -45,7 +45,7 @@
 --------------------------------
 -- Purges ActionManager point.<br>
 -- js purge<br>
--- lua destroyActionManager
+-- lua destroyInstance
 -- @function [parent=#ActionManagerEx] destroyInstance 
 -- @param self
 -- @return ActionManagerEx#ActionManagerEx self (return value: ccs.ActionManagerEx)

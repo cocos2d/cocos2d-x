@@ -86,15 +86,15 @@ void ConfigParser::readConfig(const string &filepath)
             }
             if (objectInitView.HasMember("consolePort"))
             {
-                _consolePort = objectInitView["consolePort"].GetUint();
-                if(_consolePort <= 0)
-                    _consolePort = kProjectConfigConsolePort;
+                setConsolePort(objectInitView["consolePort"].GetUint());
+            }
+            if (objectInitView.HasMember("debugPort"))
+            {
+                setDebugPort(objectInitView["debugPort"].GetUint());
             }
             if (objectInitView.HasMember("uploadPort"))
             {
-                _uploadPort = objectInitView["uploadPort"].GetUint();
-                if(_uploadPort <= 0)
-                    _uploadPort = kProjectConfigUploadPort;
+                setUploadPort(objectInitView["uploadPort"].GetUint());
             }
             if (objectInitView.HasMember("isWindowTop") && objectInitView["isWindowTop"].IsBool())
             {
@@ -124,8 +124,9 @@ _isLandscape(true),
 _isWindowTop(false),
 _consolePort(kProjectConfigConsolePort),
 _uploadPort(kProjectConfigUploadPort),
+_debugPort(kProjectConfigDebugger),
 _viewName("simulator"),
-_entryfile("src/main.lua"),
+_entryfile(""),
 _initViewSize(ProjectConfig::DEFAULT_HEIGHT, ProjectConfig::DEFAULT_WIDTH),
 _bindAddress("")
 {
@@ -162,11 +163,24 @@ bool ConfigParser::isWindowTop()
 }
 void ConfigParser::setConsolePort(int port)
 {
-    _consolePort = port;
+    if (port > 0)
+    {
+        _consolePort = port;
+    }
 }
 void ConfigParser::setUploadPort(int port)
 {
-    _uploadPort = port;
+    if (port > 0)
+    {
+        _uploadPort = port;
+    }
+}
+void ConfigParser::setDebugPort(int port)
+{
+    if (port > 0)
+    {
+        _debugPort = port;
+    }
 }
 int ConfigParser::getConsolePort()
 {
@@ -175,6 +189,10 @@ int ConfigParser::getConsolePort()
 int ConfigParser::getUploadPort()
 {
     return _uploadPort;
+}
+int ConfigParser::getDebugPort()
+{
+    return _debugPort;
 }
 int ConfigParser::getScreenSizeCount(void)
 {

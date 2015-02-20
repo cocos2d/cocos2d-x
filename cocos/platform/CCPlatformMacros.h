@@ -53,28 +53,6 @@ static __TYPE__* create() \
     } \
 }
 
-/**
- * define a node function for a specific type, such as Layer
- * @param \__TYPE__  class type to add node(), such as Layer
- * @deprecated  This interface will be deprecated sooner or later.
- */
-#define NODE_FUNC(__TYPE__) \
-CC_DEPRECATED_ATTRIBUTE static __TYPE__* node() \
-{ \
-    __TYPE__ *pRet = new(std::nothrow) __TYPE__(); \
-    if (pRet && pRet->init()) \
-    { \
-        pRet->autorelease(); \
-        return pRet; \
-    } \
-    else \
-    { \
-        delete pRet; \
-        pRet = NULL; \
-        return NULL; \
-    } \
-}
-
 /** @def CC_ENABLE_CACHE_TEXTURE_DATA
 Enable it if you want to cache the texture data.
 Not enabling for Emscripten any more -- doesn't seem necessary and don't want
@@ -82,7 +60,7 @@ to be different from other platforms unless there's a good reason.
 
 It's new in cocos2d-x since v0.99.5
 */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) 
     #define CC_ENABLE_CACHE_TEXTURE_DATA       1
 #else
     #define CC_ENABLE_CACHE_TEXTURE_DATA       0

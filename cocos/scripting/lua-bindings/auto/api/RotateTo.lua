@@ -5,6 +5,16 @@
 -- @parent_module cc
 
 --------------------------------
+-- @overload self, float, vec3_table         
+-- @overload self, float, float, float         
+-- @function [parent=#RotateTo] initWithDuration
+-- @param self
+-- @param #float duration
+-- @param #float dstAngleX
+-- @param #float dstAngleY
+-- @return bool#bool ret (return value: bool)
+
+--------------------------------
 -- @overload self, float, float         
 -- @overload self, float, float, float         
 -- @overload self, float, vec3_table         
@@ -39,6 +49,12 @@
 -- @function [parent=#RotateTo] update 
 -- @param self
 -- @param #float time
+-- @return RotateTo#RotateTo self (return value: cc.RotateTo)
+        
+--------------------------------
+-- 
+-- @function [parent=#RotateTo] RotateTo 
+-- @param self
 -- @return RotateTo#RotateTo self (return value: cc.RotateTo)
         
 return nil

@@ -74,6 +74,12 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+--  initializes a ParticleSystem
+-- @function [parent=#ParticleSystem] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  end size variance in pixels of each particle 
 -- @function [parent=#ParticleSystem] getEndSizeVar 
 -- @param self
@@ -185,6 +191,13 @@
 -- @param self
 -- @param #float duration
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
+        
+--------------------------------
+--  Initializes a system with a fixed number of particles
+-- @function [parent=#ParticleSystem] initWithTotalParticles 
+-- @param self
+-- @param #int numberOfParticles
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 
@@ -451,6 +464,16 @@
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
         
 --------------------------------
+--  initializes a ParticleSystem from a plist file.<br>
+-- This plist files can be created manually or with Particle Designer:<br>
+-- http:particledesigner.71squared.com/<br>
+-- since v0.99.3
+-- @function [parent=#ParticleSystem] initWithFile 
+-- @param self
+-- @param #string plistFile
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  angle variance of each particle 
 -- @function [parent=#ParticleSystem] getAngleVar 
 -- @param self
@@ -619,6 +642,15 @@
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
         
 --------------------------------
+-- @overload self, map_table, string         
+-- @overload self, map_table         
+-- @function [parent=#ParticleSystem] initWithDictionary
+-- @param self
+-- @param #map_table dictionary
+-- @param #string dirname
+-- @return bool#bool ret (return value: bool)
+
+--------------------------------
 -- 
 -- @function [parent=#ParticleSystem] isAutoRemoveOnFinish 
 -- @param self
@@ -682,6 +714,12 @@
 -- @function [parent=#ParticleSystem] update 
 -- @param self
 -- @param #float dt
+-- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
+        
+--------------------------------
+-- js ctor
+-- @function [parent=#ParticleSystem] ParticleSystem 
+-- @param self
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
         
 return nil

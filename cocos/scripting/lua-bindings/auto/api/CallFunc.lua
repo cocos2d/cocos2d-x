@@ -42,4 +42,10 @@
 -- @param self
 -- @return CallFunc#CallFunc ret (return value: cc.CallFunc)
         
+--------------------------------
+-- 
+-- @function [parent=#CallFunc] CallFunc 
+-- @param self
+-- @return CallFunc#CallFunc self (return value: cc.CallFunc)
+        
 return nil

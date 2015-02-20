@@ -11,6 +11,32 @@ using namespace std;
 using namespace cocos2d;
 using namespace cocos2d::extension;
 
+namespace 
+{
+    //Designed for make data type has an associated reference count 
+    template <class DataType>
+    class RefFactory : public Ref
+    {
+    public:
+        static RefFactory<DataType>* create()
+        {
+            auto ret = new (std::nothrow) RefFactory<DataType>();
+            if (ret)
+            {
+                ret->autorelease();
+            }
+
+            return ret;
+        }
+
+        DataType data;
+
+    protected:
+        RefFactory<DataType>() {}
+    };
+}
+
+
 namespace cocosbuilder {
 
 NodeLoader::NodeLoader()
@@ -79,13 +105,11 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * ccbRe
                 pNode = ccbNode->getCCBFileNode();
                 
                 // Skip properties that doesn't have a value to override
-                __Array *extraPropsNames = (__Array*)pNode->getUserObject();
-                Ref* pObj = nullptr;
+                auto extraPropsNames = (RefFactory<std::vector<std::string>>*)pNode->getUserObject();
                 bool bFound = false;
-                CCARRAY_FOREACH(extraPropsNames, pObj)
+                for (auto& name : extraPropsNames->data)
                 {
-                    __String* pStr = static_cast<__String*>(pObj);
-                    if (0 == pStr->compare(propertyName.c_str()))
+                    if (0 == name.compare(propertyName.c_str()))
                     {
                         bFound = true;
                         break;
@@ -96,14 +120,13 @@ void NodeLoader::parseProperties(Node * pNode, Node * pParent, CCBReader * ccbRe
         }
         else if (isExtraProp && pNode == ccbReader->getAnimationManager()->getRootNode())
         {
-            __Array *extraPropsNames = static_cast<__Array*>(pNode->getUserObject());
+            auto extraPropsNames = (RefFactory<std::vector<std::string>>*)(pNode->getUserObject());
             if (! extraPropsNames)
             {
-                extraPropsNames = Array::create();
+                extraPropsNames = RefFactory<std::vector<std::string>>::create();
                 pNode->setUserObject(extraPropsNames);
             }
-            
-            extraPropsNames->addObject(String::create(propertyName));
+            extraPropsNames->data.push_back(propertyName);
         }
 
         switch(type) 

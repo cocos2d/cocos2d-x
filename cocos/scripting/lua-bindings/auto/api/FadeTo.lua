@@ -5,6 +5,15 @@
 -- @parent_module cc
 
 --------------------------------
+-- initializes the action with duration and opacity <br>
+-- param duration in seconds
+-- @function [parent=#FadeTo] initWithDuration 
+-- @param self
+-- @param #float duration
+-- @param #unsigned char opacity
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- creates an action with duration and opacity <br>
 -- param duration in seconds
 -- @function [parent=#FadeTo] create 
@@ -37,6 +46,12 @@
 -- @function [parent=#FadeTo] update 
 -- @param self
 -- @param #float time
+-- @return FadeTo#FadeTo self (return value: cc.FadeTo)
+        
+--------------------------------
+-- 
+-- @function [parent=#FadeTo] FadeTo 
+-- @param self
 -- @return FadeTo#FadeTo self (return value: cc.FadeTo)
         
 return nil

@@ -37,12 +37,9 @@ THE SOFTWARE.
 #include "base/CCNS.h"
 #include "base/ccMacros.h"
 #include "base/CCDirector.h"
+#include "base/ccUTF8.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCTextureCache.h"
-
-
-#include "deprecated/CCString.h"
-
 
 using namespace std;
 

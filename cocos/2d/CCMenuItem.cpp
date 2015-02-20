@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "2d/CCSprite.h"
 #include "2d/CCLabelAtlas.h"
 #include "2d/CCLabel.h"
-#include "deprecated/CCString.h"
+#include "base/ccUTF8.h"
 #include <stdarg.h>
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
@@ -82,7 +82,6 @@ MenuItem* MenuItem::create( const ccMenuCallback& callback)
 bool MenuItem::initWithTarget(cocos2d::Ref *target, SEL_MenuHandler selector )
 {
     _target = target;
-    CC_SAFE_RETAIN(_target);
     return initWithCallback( std::bind(selector,target, std::placeholders::_1) );
 }
 
@@ -99,12 +98,6 @@ MenuItem::~MenuItem()
 {
 }
 
-void MenuItem::onExit()
-{
-    Node::onExit();
-    CC_SAFE_RELEASE(_target);
-}
-
 void MenuItem::selected()
 {
     _selected = true;
@@ -119,6 +112,7 @@ void MenuItem::activate()
 {
     if (_enabled)
     {
+        this->retain();
         if( _callback )
         {
             _callback(this);
@@ -131,6 +125,7 @@ void MenuItem::activate()
             ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
         }
 #endif
+        this->release();
     }
 }
 
@@ -160,7 +155,6 @@ bool MenuItem::isSelected() const
 void MenuItem::setTarget(Ref *target, SEL_MenuHandler selector)
 {
     _target = target;
-    CC_SAFE_RETAIN(_target);
     setCallback( std::bind( selector, target, std::placeholders::_1) );
 }
 
@@ -842,7 +836,7 @@ MenuItemToggle * MenuItemToggle::createWithTarget(Ref* target, SEL_MenuHandler s
     return ret;
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 MenuItemToggle * MenuItemToggle::createWithCallbackVA(const ccMenuCallback &callback, MenuItem* item, ...)
 {
     va_list args;

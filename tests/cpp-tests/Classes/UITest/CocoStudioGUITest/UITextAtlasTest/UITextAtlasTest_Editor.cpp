@@ -72,7 +72,7 @@ void UITextAtlasTest_Editor::switchLoadMethod(cocos2d::Ref *pSender)
 
 void UITextAtlasTest_Editor::configureGUIScene()
 {
-    Size screenSize = CCDirector::getInstance()->getWinSize();
+    Size screenSize = Director::getInstance()->getWinSize();
     Size rootSize = _layout->getContentSize();
     _touchGroup->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
                                   (screenSize.height - rootSize.height) / 2));

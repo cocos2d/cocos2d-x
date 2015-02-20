@@ -378,7 +378,7 @@ Node* NodeReader::loadSprite(const rapidjson::Value& json)
 
         if(!sprite)
         {
-            sprite = CCSprite::create();
+            sprite = Sprite::create();
             CCLOG("filePath is empty. Create a sprite with no texture");
         }
     }

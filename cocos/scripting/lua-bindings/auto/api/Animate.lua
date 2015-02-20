@@ -12,6 +12,13 @@
 -- @return Animation#Animation ret (return value: cc.Animation)
 
 --------------------------------
+--  initializes the action with an Animation and will restore the original frame when the animation is over 
+-- @function [parent=#Animate] initWithAnimation 
+-- @param self
+-- @param #cc.Animation animation
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  sets the Animation object to be animated 
 -- @function [parent=#Animate] setAnimation 
 -- @param self
@@ -55,6 +62,12 @@
 -- @function [parent=#Animate] update 
 -- @param self
 -- @param #float t
+-- @return Animate#Animate self (return value: cc.Animate)
+        
+--------------------------------
+-- 
+-- @function [parent=#Animate] Animate 
+-- @param self
 -- @return Animate#Animate self (return value: cc.Animate)
         
 return nil

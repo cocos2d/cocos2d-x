@@ -31,6 +31,27 @@
 NS_CC_BEGIN
 
 namespace StringUtils {
+    
+std::string format(const char* format, ...)
+{
+#define CC_MAX_STRING_LENGTH (102400)
+        
+    std::string ret;
+        
+    va_list ap;
+    va_start(ap, format);
+        
+    char* buf = (char*)malloc(CC_MAX_STRING_LENGTH);
+    if (buf != nullptr)
+    {
+        vsnprintf(buf, CC_MAX_STRING_LENGTH, format, ap);
+        ret = buf;
+        free(buf);
+    }
+    va_end(ap);
+#undef CC_MAX_STRING_LENGTH 
+    return ret;
+}
 
 /*
  * @str:    the string to search through.

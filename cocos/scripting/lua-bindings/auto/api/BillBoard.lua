@@ -48,4 +48,10 @@
 -- @param #int mode
 -- @return BillBoard#BillBoard ret (return value: cc.BillBoard)
         
+--------------------------------
+-- 
+-- @function [parent=#BillBoard] BillBoard 
+-- @param self
+-- @return BillBoard#BillBoard self (return value: cc.BillBoard)
+        
 return nil

@@ -232,7 +232,7 @@ namespace cocostudio
         {
             errorFilePath = path;
             auto label = Label::create();
-            label->setString(__String::createWithFormat("%s %s", errorFilePath.c_str(), errorContent.c_str())->getCString());
+            label->setString(errorFilePath + " " + errorContent);
             labelBMFont->addChild(label);
         }
         
