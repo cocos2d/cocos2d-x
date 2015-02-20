@@ -1,5 +1,7 @@
+
 cocos2d-x-4.0alph0 Feb.27 2015
     [NEW]           C++: merge JSB
+    [NEW]           C++: merge draw call migration to VertexData
 
     [FIX]           Audio: audio can not resume if it is interrupt, and back from background
     [FIX]           C++: remove deprecated functions that are deprecated in v2.x
