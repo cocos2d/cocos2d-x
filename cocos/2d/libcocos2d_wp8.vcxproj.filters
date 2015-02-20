@@ -125,6 +125,9 @@
     <Filter Include="cocostudio\reader\WidgetReader\TextReader">
       <UniqueIdentifier>{89da718e-f2fa-4437-83e8-40755f6fc3a2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\Node3DReader">
+      <UniqueIdentifier>{89da718e-f2fa-4437-83e8-40104f6fc3a2}</UniqueIdentifier>
+    </Filter>
     <Filter Include="cocostudio\json">
       <UniqueIdentifier>{20e787a6-57c3-4122-88ad-d803c892e7f4}</UniqueIdentifier>
     </Filter>
@@ -1018,6 +1021,9 @@
     </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\TextReader\TextReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\TextReader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\Node3DReader\Node3DReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\Node3DReader</Filter>
     </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\CocoLoader.cpp">
       <Filter>cocostudio\json</Filter>
@@ -2513,6 +2519,9 @@
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\TextReader\TextReader.h">
       <Filter>cocostudio\reader\WidgetReader\TextReader</Filter>
     </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Node3DReader\Node3DReader.h">
+      <Filter>cocostudio\reader\WidgetReader\Node3DReader</Filter>
+    </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\CocoLoader.h">
       <Filter>cocostudio\json</Filter>
     </ClInclude>
@@ -2842,6 +2851,9 @@
       <Filter>cocostudio\json</Filter>
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\CSParseBinary_generated.h">
+      <Filter>cocostudio\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\CSParse3DBinary_generated.h">
       <Filter>cocostudio\json</Filter>
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\FlatBuffersSerialize.h">

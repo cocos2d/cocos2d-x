@@ -59,6 +59,7 @@
 #include "cocostudio/WidgetReader/PageViewReader/PageViewReader.h"
 #include "cocostudio/WidgetReader/ListViewReader/ListViewReader.h"
 #include "cocostudio/WidgetReader/ArmatureNodeReader/ArmatureNodeReader.h"
+#include "cocostudio/WidgetReader/Node3DReader/Node3DReader.h"
 
 #include "flatbuffers/flatbuffers.h"
 #include "flatbuffers/util.h"
@@ -204,7 +205,7 @@ CSLoader::CSLoader()
     CREATE_CLASS_NODE_READER_INFO(ListViewReader);
     
     CREATE_CLASS_NODE_READER_INFO(ArmatureNodeReader);
-    
+    CREATE_CLASS_NODE_READER_INFO(Node3DReader);
 }
 
 void CSLoader::purge()
