@@ -55,6 +55,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ClickAndMoveTest\ClickAndMoveTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ClippingNodeTest\ClippingNodeTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\CocosDenshionTest\CocosDenshionTest.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\CocosStudio3DTest\CocosStudio3DTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ConfigurationTest\ConfigurationTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ConsoleTest\ConsoleTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\controller.cpp" />
@@ -299,6 +300,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ClickAndMoveTest\ClickAndMoveTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ClippingNodeTest\ClippingNodeTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\CocosDenshionTest\CocosDenshionTest.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\CocosStudio3DTest\CocosStudio3DTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ConfigurationTest\ConfigurationTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ConsoleTest\ConsoleTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\controller.h" />
