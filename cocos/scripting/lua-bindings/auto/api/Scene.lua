@@ -5,6 +5,12 @@
 -- @parent_module cc
 
 --------------------------------
+-- 
+-- @function [parent=#Scene] setCameraOrderDirty 
+-- @param self
+-- @return Scene#Scene self (return value: cc.Scene)
+        
+--------------------------------
 --  render the scene 
 -- @function [parent=#Scene] render 
 -- @param self

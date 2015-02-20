@@ -92,7 +92,7 @@
         
 --------------------------------
 --  initializes a SpriteBatchNode with a texture2d and capacity of children.<br>
--- The capacity will be increased in 33% in runtime if it run out of space.
+-- The capacity will be increased in 33% in runtime if it runs out of space.
 -- @function [parent=#SpriteBatchNode] initWithTexture 
 -- @param self
 -- @param #cc.Texture2D tex
@@ -125,7 +125,7 @@
         
 --------------------------------
 --  initializes a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.<br>
--- The capacity will be increased in 33% in runtime if it run out of space.<br>
+-- The capacity will be increased in 33% in runtime if it runs out of space.<br>
 -- The file will be loaded using the TextureMgr.<br>
 -- js init<br>
 -- lua init
