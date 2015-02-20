@@ -50,7 +50,12 @@ public:
         GROUP_COMMAND,
         MESH_COMMAND,
         PRIMITIVE_COMMAND,
-        TRIANGLES_COMMAND
+        TRIANGLES_COMMAND,
+        BEGIN_SCISSOR_COMMAND,
+        END_SCISSOR_COMMAND,
+        BEGIN_STENCIL_COMMAND,
+        AFTER_STENCIL_COMMAND,
+        END_STENCIL_COMMAND
     };
 
     /**
@@ -79,6 +84,13 @@ public:
     inline void set3D(bool value) { _is3D = value; }
     
     inline float getDepth() const { return _depth; }
+    
+    /** templated execute method to avoid vtable lookup and make code more readable */
+    template <class T>
+    inline void execute()
+    {
+        static_cast<T*>(this)->execute();
+    }
     
 protected:
     RenderCommand();
