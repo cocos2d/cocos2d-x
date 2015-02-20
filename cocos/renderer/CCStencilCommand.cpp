@@ -24,12 +24,12 @@
  ****************************************************************************/
 
 #include "CCStencilCommand.h"
-#include "ccMacros.h"
-#include "CCDirector.h"
-#include "CCRenderer.h"
-#include "CCGLProgram.h"
-#include "CCGLProgramCache.h"
-#include "ccGLStateCache.h"
+#include "base/ccMacros.h"
+#include "base/CCDirector.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/CCGLProgramCache.h"
+#include "renderer/ccGLStateCache.h"
 
 NS_CC_BEGIN
 

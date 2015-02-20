@@ -24,7 +24,7 @@
  ****************************************************************************/
 
 #include "CCScissorCommand.h"
-#include "CCDirector.h"
+#include "base/CCDirector.h"
 
 NS_CC_BEGIN
 
