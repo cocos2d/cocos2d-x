@@ -1662,15 +1662,16 @@ void LabelBMFontCrashTest::onEnter()
     
     auto winSize = Director::getInstance()->getWinSize();
     //Create a label and add it
-    auto label1 = new (std::nothrow) LabelBMFont();
-    label1->initWithString("test", "fonts/bitmapFontTest2.fnt");
+    auto label1 = LabelBMFont::create("test", "fonts/bitmapFontTest2.fnt");
     this->addChild(label1);
     // Visit will call draw where the function "ccGLBindVAO(m_uVAOname);" will be invoked.
-    label1->visit();
+    
+    auto renderer = _director->getRenderer();
+    auto& parentTransform = _director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    label1->visit(renderer, parentTransform, true);
     
     // Remove this label
     label1->removeFromParentAndCleanup(true);
-    label1->release();
     
     // Create a new label and add it (then crashes)
     auto label2 = LabelBMFont::create("test 2", "fonts/bitmapFontTest.fnt");

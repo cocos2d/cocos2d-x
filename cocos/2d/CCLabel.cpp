@@ -1144,7 +1144,7 @@ void Label::setSystemFontSize(float fontSize)
 }
 
 ///// PROTOCOL STUFF
-Sprite * Label::getLetter(int letterIndex)
+Sprite* Label::getLetter(int letterIndex)
 {
     if (_systemFontDirty || _currentLabelType == LabelType::STRING_TEXTURE)
     {
@@ -1163,7 +1163,8 @@ Sprite * Label::getLetter(int letterIndex)
         if(! letter.def.validDefinition)
             return nullptr;
 
-        Sprite* sp = static_cast<Sprite*>(this->getChildByTag(letterIndex));
+        // jag TODO : this does a linear search for the tag, where it's really an index.
+        Sprite* sp = static_cast<Sprite*>(Node::getChildByTag(letterIndex));
 
         if (!sp)
         {

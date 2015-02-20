@@ -207,7 +207,7 @@ public:
     /** update content immediately.*/
     virtual void updateContent();
 
-    virtual Sprite * getLetter(int lettetIndex);
+    virtual Sprite * getLetter(int letterIndex);
 
     /** clip upper and lower margin for reduce height of label.
      */
