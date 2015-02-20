@@ -405,9 +405,8 @@ void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false *
         _commonLineHeight = _fontAtlas->getCommonLineHeight();
         _contentDirty = true;
     }
-    // some older Windows Phones cannot run the ccShader_Label_df.frag program
-    // so we must disable distance field
-    _useDistanceField = false;
+
+    _useDistanceField = distanceFieldEnabled;
     _useA8Shader = useA8Shader;
 
     if (_currentLabelType != LabelType::TTF)
@@ -1145,7 +1144,7 @@ void Label::setSystemFontSize(float fontSize)
 }
 
 ///// PROTOCOL STUFF
-Sprite * Label::getLetter(int letterIndex)
+Sprite* Label::getLetter(int letterIndex)
 {
     if (_systemFontDirty || _currentLabelType == LabelType::STRING_TEXTURE)
     {
@@ -1164,7 +1163,8 @@ Sprite * Label::getLetter(int letterIndex)
         if(! letter.def.validDefinition)
             return nullptr;
 
-        Sprite* sp = static_cast<Sprite*>(this->getChildByTag(letterIndex));
+        // jag TODO : this does a linear search for the tag, where it's really an index.
+        Sprite* sp = static_cast<Sprite*>(Node::getChildByTag(letterIndex));
 
         if (!sp)
         {

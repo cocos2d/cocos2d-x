@@ -1,8 +1,9 @@
+
 /****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -31,129 +32,116 @@ Use any of these editors to generate BMFonts:
   http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 
 ****************************************************************************/
+
 #ifndef __CCBITMAP_FONT_ATLAS_H__
 #define __CCBITMAP_FONT_ATLAS_H__
 
 #include "2d/CCLabel.h"
+#include "2d/CCSprite.h"
+
 #if CC_LABELBMFONT_DEBUG_DRAW
-#include "renderer/CCCustomCommand.h"
-#include "2d/CCDrawNode.h"
+#    include "renderer/CCCustomCommand.h"
+#    include "2d/CCDrawNode.h"
 #endif
 
 NS_CC_BEGIN
 
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (push)
-#pragma warning (disable: 4996)
-#endif
-/** @brief LabelBMFont is a subclass of SpriteBatchNode.
+/**
+ * @addtogroup GUI
+ * @{
+ * @addtogroup label
+ * @{
+ */
 
-Features:
-- Treats each character like a Sprite. This means that each individual character can be:
-- rotated
-- scaled
-- translated
-- tinted
-- change the opacity
-- It can be used as part of a menu item.
-- anchorPoint can be used to align the "label"
-- Supports AngelCode text format
-
-Limitations:
-- All inner characters are using an anchorPoint of (0.5f, 0.5f) and it is not recommend to change it
-because it might affect the rendering
-
-LabelBMFont implements the protocol LabelProtocol, like Label and LabelAtlas.
-LabelBMFont has the flexibility of Label, the speed of LabelAtlas and all the features of Sprite.
-If in doubt, use LabelBMFont instead of LabelAtlas / Label.
-
-Supported editors:
-http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
-http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
-http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
-http://www.angelcode.com/products/bmfont/ (Free, Windows only)
-
-@since v0.8
-*/
-
-class CC_DLL CC_DEPRECATED_ATTRIBUTE LabelBMFont : public Node, public LabelProtocol, public BlendProtocol
+class CC_DEPRECATED_ATTRIBUTE LabelBMFont
+    : public Label
 {
 public:
-    /**
-     * @js ctor
-     */
-    LabelBMFont();
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual ~LabelBMFont();
-
-    /** creates a bitmap font atlas with an initial string and the FNT file */
-    static LabelBMFont * create(const std::string& str, const std::string& fntFile, float width = 0, TextHAlignment alignment = TextHAlignment::LEFT,const Vec2& imageOffset = Vec2::ZERO);
-
-    /** Creates an label.
-     */
-    static LabelBMFont * create();
-
-    /** init a bitmap font atlas with an initial string and the FNT file */
-    bool initWithString(const std::string& str, const std::string& fntFile, float width = 0, TextHAlignment alignment = TextHAlignment::LEFT,const Vec2& imageOffset = Vec2::ZERO);
-
-    // super method
-    virtual void setString(const std::string& newString) override;
-
-    virtual const std::string& getString() const override;
-
-    virtual void setAlignment(TextHAlignment alignment);
-    virtual void setWidth(float width);
-    virtual void setLineBreakWithoutSpace(bool breakWithoutSpace);
     
-    // RGBAProtocol 
-    virtual bool isOpacityModifyRGB() const;
-    virtual void setOpacityModifyRGB(bool isOpacityModifyRGB);
-
-    void setFntFile(const std::string& fntFile, const Vec2& imageOffset = Vec2::ZERO);
-    const std::string& getFntFile() const;
-
-    virtual void setBlendFunc(const BlendFunc &blendFunc) override;
-
-    virtual const BlendFunc &getBlendFunc() const override;
-
-    virtual Sprite * getLetter(int ID);
-    virtual Node * getChildByTag(int tag) const override;
-
-    virtual void setColor(const Color3B& color) override;
-
-    virtual const Size& getContentSize() const override;
-    virtual Rect getBoundingBox() const override;
-
-    virtual std::string getDescription() const override;
-#if CC_LABELBMFONT_DEBUG_DRAW
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
-#endif
-
-private:
-#if CC_LABELBMFONT_DEBUG_DRAW
-    DrawNode *_debugDrawNode;
-#endif
+    static LabelBMFont* create()
+    {
+        auto ret = new (std::nothrow) LabelBMFont;
+        if (ret)
+        {
+            ret->autorelease();
+            return ret;
+        }
+        CC_SAFE_DELETE(ret);
+        return nullptr;
+    }
     
-    // name of fntFile
-    std::string _fntFile;
-
-    Label*      _label;
-
+    static LabelBMFont* create(const std::string& str, const std::string& fntFile, float width = 0, TextHAlignment alignment = TextHAlignment::LEFT, const Vec2& imageOffset = Vec2::ZERO)
+    {
+        auto ret = new (std::nothrow) LabelBMFont;
+        if (ret)
+        {
+            if (ret->setBMFontFilePath(fntFile, imageOffset))
+            {
+                ret->setMaxLineWidth(width);
+                ret->setAlignment(alignment);
+                ret->setString(str);
+                
+                ret->autorelease();
+                return ret;
+            }
+        }
+        CC_SAFE_DELETE(ret);
+        return nullptr;
+    }
+    
+    void setOpacityModifyRGB(bool var)
+    {
+        Label::setOpacityModifyRGB(var);
+        for(const auto &child : _children)
+            child->setOpacityModifyRGB(var);
+    }
+    
+    void setWidth(float width)
+    {
+        setMaxLineWidth(width);
+    }
+    
+    void setFntFile(const std::string& fntFile, const Vec2& imageOffset = Vec2::ZERO)
+    {
+        setBMFontFilePath(fntFile, imageOffset);
+    }
+    
+    std::string getDescription() const
+    {
+        return StringUtils::format("<LabelBMFont | Tag = %d, Label = '%s'>", getTag(), getString().c_str());
+    }
+    
+    Node* getChildByTag(int tag) const
+    {
+        return const_cast<LabelBMFont*>(this)->getLetter(tag);
+    }
+    
+#if CC_LABELBMFONT_DEBUG_DRAW
+    void draw(Renderer* renderer, const Mat4& transform, uint32_t flags)
+    {
+        Node::draw(renderer, transform, _transformUpdated);
+    
+        _debugDrawNode->clear();
+        auto size = getContentSize();
+        Vec2 vertices[4]=
+        {
+            Vec2::ZERO,
+            Vec2(size.width, 0),
+            Vec2(size.width, size.height),
+            Vec2(0, size.height)
+        };
+        _debugDrawNode->drawPoly(vertices, 4, true, Color4F(1.0, 1.0, 1.0, 1.0));
+    }
+    
+protected:
+    DrawNode _debugDrawNode;
+#endif
 };
 
 // end of GUI group
 /// @}
 /// @}
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic warning "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (pop)
-#endif
+
 NS_CC_END
 
 #endif //__CCBITMAP_FONT_ATLAS_H__

@@ -965,16 +965,12 @@
 		1A5701BE180BCB5A0088DEC7 /* CCLabelAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570192180BCB590088DEC7 /* CCLabelAtlas.cpp */; };
 		1A5701BF180BCB5A0088DEC7 /* CCLabelAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570193180BCB590088DEC7 /* CCLabelAtlas.h */; };
 		1A5701C0180BCB5A0088DEC7 /* CCLabelAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570193180BCB590088DEC7 /* CCLabelAtlas.h */; };
-		1A5701C1180BCB5A0088DEC7 /* CCLabelBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570194180BCB590088DEC7 /* CCLabelBMFont.cpp */; };
-		1A5701C2180BCB5A0088DEC7 /* CCLabelBMFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570194180BCB590088DEC7 /* CCLabelBMFont.cpp */; };
 		1A5701C3180BCB5A0088DEC7 /* CCLabelBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570195180BCB590088DEC7 /* CCLabelBMFont.h */; };
 		1A5701C4180BCB5A0088DEC7 /* CCLabelBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570195180BCB590088DEC7 /* CCLabelBMFont.h */; };
 		1A5701C7180BCB5A0088DEC7 /* CCLabelTextFormatter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570197180BCB590088DEC7 /* CCLabelTextFormatter.cpp */; };
 		1A5701C8180BCB5A0088DEC7 /* CCLabelTextFormatter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570197180BCB590088DEC7 /* CCLabelTextFormatter.cpp */; };
 		1A5701C9180BCB5A0088DEC7 /* CCLabelTextFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570198180BCB590088DEC7 /* CCLabelTextFormatter.h */; };
 		1A5701CA180BCB5A0088DEC7 /* CCLabelTextFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A570198180BCB590088DEC7 /* CCLabelTextFormatter.h */; };
-		1A5701CB180BCB5A0088DEC7 /* CCLabelTTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570199180BCB590088DEC7 /* CCLabelTTF.cpp */; };
-		1A5701CC180BCB5A0088DEC7 /* CCLabelTTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A570199180BCB590088DEC7 /* CCLabelTTF.cpp */; };
 		1A5701CD180BCB5A0088DEC7 /* CCLabelTTF.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A57019A180BCB590088DEC7 /* CCLabelTTF.h */; };
 		1A5701CE180BCB5A0088DEC7 /* CCLabelTTF.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A57019A180BCB590088DEC7 /* CCLabelTTF.h */; };
 		1A5701DE180BCB8C0088DEC7 /* CCLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A5701D4180BCB8C0088DEC7 /* CCLayer.cpp */; };
@@ -1746,12 +1742,8 @@
 		50ED2BDB19BE76D500A0AB90 /* UIVideoPlayer-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0FB6A191C841D00B170C8 /* UIVideoPlayer-ios.mm */; };
 		50ED2BE019BEAF7900A0AB90 /* UIEditBoxImpl-win32.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ED2BDC19BEAF7900A0AB90 /* UIEditBoxImpl-win32.h */; };
 		50ED2BE119BEAF7900A0AB90 /* UIEditBoxImpl-win32.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ED2BDC19BEAF7900A0AB90 /* UIEditBoxImpl-win32.h */; };
-		50ED2BE219BEAF7900A0AB90 /* UIEditBoxImpl-wp8.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ED2BDD19BEAF7900A0AB90 /* UIEditBoxImpl-wp8.h */; };
-		50ED2BE319BEAF7900A0AB90 /* UIEditBoxImpl-wp8.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ED2BDD19BEAF7900A0AB90 /* UIEditBoxImpl-wp8.h */; };
 		50ED2BE419BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ED2BDE19BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp */; };
 		50ED2BE519BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ED2BDE19BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp */; };
-		50ED2BE619BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ED2BDF19BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp */; };
-		50ED2BE719BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ED2BDF19BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp */; };
 		52B47A1E1A53489B004E4C60 /* HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A1D1A53489B004E4C60 /* HttpClient.cpp */; };
 		52B47A2E1A5349A3004E4C60 /* HttpAsynConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 52B47A291A5349A3004E4C60 /* HttpAsynConnection.h */; };
 		52B47A2F1A5349A3004E4C60 /* HttpAsynConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2A1A5349A3004E4C60 /* HttpAsynConnection.m */; };
@@ -2508,11 +2500,9 @@
 		1A570191180BCB590088DEC7 /* CCLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabel.h; sourceTree = "<group>"; };
 		1A570192180BCB590088DEC7 /* CCLabelAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelAtlas.cpp; sourceTree = "<group>"; };
 		1A570193180BCB590088DEC7 /* CCLabelAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelAtlas.h; sourceTree = "<group>"; };
-		1A570194180BCB590088DEC7 /* CCLabelBMFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelBMFont.cpp; sourceTree = "<group>"; };
 		1A570195180BCB590088DEC7 /* CCLabelBMFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelBMFont.h; sourceTree = "<group>"; };
 		1A570197180BCB590088DEC7 /* CCLabelTextFormatter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelTextFormatter.cpp; sourceTree = "<group>"; };
 		1A570198180BCB590088DEC7 /* CCLabelTextFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelTextFormatter.h; sourceTree = "<group>"; };
-		1A570199180BCB590088DEC7 /* CCLabelTTF.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLabelTTF.cpp; sourceTree = "<group>"; };
 		1A57019A180BCB590088DEC7 /* CCLabelTTF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelTTF.h; sourceTree = "<group>"; };
 		1A5701D4180BCB8C0088DEC7 /* CCLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = CCLayer.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		1A5701D5180BCB8C0088DEC7 /* CCLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLayer.h; sourceTree = "<group>"; };
@@ -3287,9 +3277,7 @@
 		50E6D33218E174130051CA34 /* UIVBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIVBox.cpp; sourceTree = "<group>"; };
 		50E6D33318E174130051CA34 /* UIVBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIVBox.h; sourceTree = "<group>"; };
 		50ED2BDC19BEAF7900A0AB90 /* UIEditBoxImpl-win32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIEditBoxImpl-win32.h"; sourceTree = "<group>"; };
-		50ED2BDD19BEAF7900A0AB90 /* UIEditBoxImpl-wp8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIEditBoxImpl-wp8.h"; sourceTree = "<group>"; };
 		50ED2BDE19BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "UIEditBoxImpl-win32.cpp"; sourceTree = "<group>"; };
-		50ED2BDF19BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "UIEditBoxImpl-wp8.cpp"; sourceTree = "<group>"; };
 		50FCEB6A18C72017004AD434 /* ButtonReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ButtonReader.cpp; sourceTree = "<group>"; };
 		50FCEB6B18C72017004AD434 /* ButtonReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonReader.h; sourceTree = "<group>"; };
 		50FCEB6D18C72017004AD434 /* CheckBoxReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CheckBoxReader.cpp; sourceTree = "<group>"; };
@@ -4014,11 +4002,9 @@
 				1A570191180BCB590088DEC7 /* CCLabel.h */,
 				1A570192180BCB590088DEC7 /* CCLabelAtlas.cpp */,
 				1A570193180BCB590088DEC7 /* CCLabelAtlas.h */,
-				1A570194180BCB590088DEC7 /* CCLabelBMFont.cpp */,
 				1A570195180BCB590088DEC7 /* CCLabelBMFont.h */,
 				1A570197180BCB590088DEC7 /* CCLabelTextFormatter.cpp */,
 				1A570198180BCB590088DEC7 /* CCLabelTextFormatter.h */,
-				1A570199180BCB590088DEC7 /* CCLabelTTF.cpp */,
 				1A57019A180BCB590088DEC7 /* CCLabelTTF.h */,
 			);
 			name = "label-nodes";
@@ -4805,9 +4791,7 @@
 			isa = PBXGroup;
 			children = (
 				50ED2BDC19BEAF7900A0AB90 /* UIEditBoxImpl-win32.h */,
-				50ED2BDD19BEAF7900A0AB90 /* UIEditBoxImpl-wp8.h */,
 				50ED2BDE19BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp */,
-				50ED2BDF19BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp */,
 				292DB12F19B4574100A80320 /* UIEditBox.cpp */,
 				292DB13019B4574100A80320 /* UIEditBox.h */,
 				292DB13119B4574100A80320 /* UIEditBoxImpl.h */,
@@ -6239,7 +6223,6 @@
 				B6877AA01A8CA8A700643ABF /* CCPUParticle3DColorAffectorTranslator.h in Headers */,
 				B29A7E2B19EE1B7700872B35 /* AtlasAttachmentLoader.h in Headers */,
 				B68779601A8CA84900643ABF /* CCPUParticle3DSimpleSpline.h in Headers */,
-				50ED2BE219BEAF7900A0AB90 /* UIEditBoxImpl-wp8.h in Headers */,
 				15AE1B6819AADA9900C27E9E /* UIScale9Sprite.h in Headers */,
 				1A570121180BC90D0088DEC7 /* CCGrid.h in Headers */,
 				5034CA2D191D591100CE6051 /* ccShader_PositionTextureA8Color.frag in Headers */,
@@ -7138,7 +7121,6 @@
 				15AE1A9519AAD40300C27E9E /* b2BlockAllocator.h in Headers */,
 				5034CA48191D591100CE6051 /* ccShader_Label_normal.frag in Headers */,
 				15AE183F19AAD2F700C27E9E /* CCSkeleton3D.h in Headers */,
-				50ED2BE319BEAF7900A0AB90 /* UIEditBoxImpl-wp8.h in Headers */,
 				B6877B0D1A8CA8A700643ABF /* CCPUParticle3DScaleVelocityAffector.h in Headers */,
 				50ABBD531925AB0000A911A9 /* Quaternion.h in Headers */,
 				15AE19B119AAD39700C27E9E /* ScrollViewReader.h in Headers */,
@@ -7586,7 +7568,6 @@
 				50ABBE491925AB6F00A911A9 /* CCEventAcceleration.cpp in Sources */,
 				3823843D1A259140002C4610 /* SingleNodeReader.cpp in Sources */,
 				B6877A8E1A8CA8A700643ABF /* CCPUParticle3DBoxColliderTranslator.cpp in Sources */,
-				1A5701C1180BCB5A0088DEC7 /* CCLabelBMFont.cpp in Sources */,
 				15AE182C19AAD2F700C27E9E /* CCMeshVertexIndexData.cpp in Sources */,
 				15AE1A8C19AAD40300C27E9E /* b2RevoluteJoint.cpp in Sources */,
 				50ABBD4C1925AB0000A911A9 /* MathUtil.cpp in Sources */,
@@ -7598,7 +7579,6 @@
 				1A5701C7180BCB5A0088DEC7 /* CCLabelTextFormatter.cpp in Sources */,
 				B68779521A8CA84900643ABF /* CCPUParticle3DScriptLexer.cpp in Sources */,
 				15AE18A819AAD33D00C27E9E /* CCSpriteLoader.cpp in Sources */,
-				1A5701CB180BCB5A0088DEC7 /* CCLabelTTF.cpp in Sources */,
 				50ABBE711925AB6F00A911A9 /* CCEventListenerMouse.cpp in Sources */,
 				1A5701DE180BCB8C0088DEC7 /* CCLayer.cpp in Sources */,
 				15AE1B5919AADA9900C27E9E /* UIText.cpp in Sources */,
@@ -7918,7 +7898,6 @@
 				15AE1BB719AADFEF00C27E9E /* WebSocket.cpp in Sources */,
 				B6877AAA1A8CA8A700643ABF /* CCPUParticle3DForceFieldAffector.cpp in Sources */,
 				15AE1B5119AADA9900C27E9E /* UIPageView.cpp in Sources */,
-				50ED2BE619BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp in Sources */,
 				B6877AC21A8CA8A700643ABF /* CCPUParticle3DInterParticleCollider.cpp in Sources */,
 				B6877AFA1A8CA8A700643ABF /* CCPUParticle3DRandomiser.cpp in Sources */,
 				15AE18EC19AAD35000C27E9E /* CCActionObject.cpp in Sources */,
@@ -8190,7 +8169,6 @@
 				1A5701BE180BCB5A0088DEC7 /* CCLabelAtlas.cpp in Sources */,
 				15AE1A3D19AAD3D500C27E9E /* b2CollideEdge.cpp in Sources */,
 				B687796F1A8CA84900643ABF /* CCPUParticle3DUtil.cpp in Sources */,
-				1A5701C2180BCB5A0088DEC7 /* CCLabelBMFont.cpp in Sources */,
 				1A087AE91860400400196EF5 /* edtaa3func.cpp in Sources */,
 				B68779E11A8CA88500643ABF /* CCPUParticle3DPositionEmitterTranslator.cpp in Sources */,
 				B687793F1A8CA84900643ABF /* CCPUParticle3DMaterialTranslator.cpp in Sources */,
@@ -8199,7 +8177,6 @@
 				15AE1B7C19AADA9A00C27E9E /* UISlider.cpp in Sources */,
 				15AE1AA519AAD40300C27E9E /* b2Fixture.cpp in Sources */,
 				B29A7DE219EE1B7700872B35 /* MeshAttachment.c in Sources */,
-				50ED2BE719BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp in Sources */,
 				15AE1BAD19AADFDF00C27E9E /* UILayoutParameter.cpp in Sources */,
 				B6877AD31A8CA8A700643ABF /* CCPUParticle3DLineAffector.cpp in Sources */,
 				3823843E1A259140002C4610 /* SingleNodeReader.cpp in Sources */,
@@ -8207,7 +8184,6 @@
 				B29A7DDE19EE1B7700872B35 /* BoneData.c in Sources */,
 				15AE19AA19AAD39700C27E9E /* ListViewReader.cpp in Sources */,
 				1A5701C8180BCB5A0088DEC7 /* CCLabelTextFormatter.cpp in Sources */,
-				1A5701CC180BCB5A0088DEC7 /* CCLabelTTF.cpp in Sources */,
 				382384291A2590F9002C4610 /* NodeReader.cpp in Sources */,
 				15AE193419AAD35100C27E9E /* CCActionObject.cpp in Sources */,
 				15AE1AD619AAD40300C27E9E /* b2WheelJoint.cpp in Sources */,
@@ -8535,7 +8511,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-                USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external $(SRCROOT)/../extensions";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../external $(SRCROOT)/../extensions";
 				VALID_ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 			};
 			name = Debug;
