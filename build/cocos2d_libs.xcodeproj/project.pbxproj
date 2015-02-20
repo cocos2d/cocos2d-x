@@ -3615,10 +3615,6 @@
 		B6877A631A8CA8A700643ABF /* CCPUParticle3DVortexAffector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPUParticle3DVortexAffector.h; path = Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DVortexAffector.h; sourceTree = "<group>"; };
 		B6877A641A8CA8A700643ABF /* CCPUParticle3DVortexAffectorTranslator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPUParticle3DVortexAffectorTranslator.cpp; path = Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DVortexAffectorTranslator.cpp; sourceTree = "<group>"; };
 		B6877A651A8CA8A700643ABF /* CCPUParticle3DVortexAffectorTranslator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPUParticle3DVortexAffectorTranslator.h; path = Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DVortexAffectorTranslator.h; sourceTree = "<group>"; };
-		D06473911A5B136400A6BA08 /* CCScissorCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScissorCommand.cpp; sourceTree = "<group>"; };
-		D06473921A5B136400A6BA08 /* CCScissorCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScissorCommand.h; sourceTree = "<group>"; };
-		D06473931A5B136400A6BA08 /* CCStencilCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCStencilCommand.cpp; sourceTree = "<group>"; };
-		D06473941A5B136400A6BA08 /* CCStencilCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCStencilCommand.h; sourceTree = "<group>"; };
 		D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAllocatorBase.h; sourceTree = "<group>"; };
 		D0FD033C1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAllocatorDiagnostics.cpp; sourceTree = "<group>"; };
 		D0FD033D1A3B51AA00825BB5 /* CCAllocatorDiagnostics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAllocatorDiagnostics.h; sourceTree = "<group>"; };
@@ -5410,10 +5406,6 @@
 		500DC89819105D41007B91BF /* renderer */ = {
 			isa = PBXGroup;
 			children = (
-				D06473911A5B136400A6BA08 /* CCScissorCommand.cpp */,
-				D06473921A5B136400A6BA08 /* CCScissorCommand.h */,
-				D06473931A5B136400A6BA08 /* CCStencilCommand.cpp */,
-				D06473941A5B136400A6BA08 /* CCStencilCommand.h */,
 				B276EF5B1988D1D500CD400F /* CCVertexIndexData.h */,
 				B276EF5C1988D1D500CD400F /* CCVertexIndexData.cpp */,
 				B276EF5D1988D1D500CD400F /* CCVertexIndexBuffer.h */,
