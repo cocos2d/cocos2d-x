@@ -709,11 +709,8 @@ void Camera3DTestDemo::updateCamera(float fDelta)
         }
     }
 }
-bool Camera3DTestDemo::isState(unsigned int state,unsigned int bit) const
-{
-    return (state & bit) == bit;
-}
-bool Camera3DTestDemo::onTouchesZoomOut(Touch* touch, Event* event)
+template<typename T>
+bool Camera3DTestDemo::onTouchesCommon(Touch* touch, Event* event, T touchProperty)
 {
     auto target = static_cast<Label*>(event->getCurrentTarget());
     
@@ -723,10 +720,18 @@ bool Camera3DTestDemo::onTouchesZoomOut(Touch* touch, Event* event)
     
     if (rect.containsPoint(locationInNode))
     {
-        _bZoomOut = true;
+        touchProperty = true;
         return true;
     }
     return false;
+}
+bool Camera3DTestDemo::isState(unsigned int state,unsigned int bit) const
+{
+    return (state & bit) == bit;
+}
+bool Camera3DTestDemo::onTouchesZoomOut(Touch* touch, Event* event)
+{
+    return Camera3DTestDemo::onTouchesCommon(touch, event, _bZoomOut);
 }
 void Camera3DTestDemo::onTouchesZoomOutEnd(Touch* touch, Event* event)
 {
@@ -734,18 +739,7 @@ void Camera3DTestDemo::onTouchesZoomOutEnd(Touch* touch, Event* event)
 }
 bool Camera3DTestDemo::onTouchesZoomIn(Touch* touch, Event* event)
 {
-    auto target = static_cast<Label*>(event->getCurrentTarget());
-    
-    Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
-    Size s = target->getContentSize();
-    Rect rect = Rect(0, 0, s.width, s.height);
-    
-    if (rect.containsPoint(locationInNode))
-    {
-        _bZoomIn = true;
-        return true;
-    }
-    return false;
+    return Camera3DTestDemo::onTouchesCommon(touch, event, _bZoomIn);
 }
 void Camera3DTestDemo::onTouchesZoomInEnd(Touch* touch, Event* event)
 {
@@ -753,18 +747,7 @@ void Camera3DTestDemo::onTouchesZoomInEnd(Touch* touch, Event* event)
 }
 bool Camera3DTestDemo::onTouchesRotateLeft(Touch* touch, Event* event)
 {
-    auto target = static_cast<Label*>(event->getCurrentTarget());
-    
-    Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
-    Size s = target->getContentSize();
-    Rect rect = Rect(0, 0, s.width, s.height);
-    
-    if (rect.containsPoint(locationInNode))
-    {
-        _bRotateLeft = true;
-        return true;
-    }
-    return false;
+    return Camera3DTestDemo::onTouchesCommon(touch, event, _bRotateLeft);
 }
 void Camera3DTestDemo::onTouchesRotateLeftEnd(Touch* touch, Event* event)
 {
@@ -772,18 +755,7 @@ void Camera3DTestDemo::onTouchesRotateLeftEnd(Touch* touch, Event* event)
 }
 bool Camera3DTestDemo::onTouchesRotateRight(Touch* touch, Event* event)
 {
-    auto target = static_cast<Label*>(event->getCurrentTarget());
-    
-    Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
-    Size s = target->getContentSize();
-    Rect rect = Rect(0, 0, s.width, s.height);
-    
-    if (rect.containsPoint(locationInNode))
-    {
-        _bRotateRight = true;
-        return true;
-    }
-    return false;
+    return Camera3DTestDemo::onTouchesCommon(touch, event, _bRotateRight);
 }
 void Camera3DTestDemo::onTouchesRotateRightEnd(Touch* touch, Event* event)
 {
