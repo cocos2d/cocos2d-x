@@ -21,6 +21,7 @@ else()
 endif()
 
 set(TESTS_SRC
+  Classes/CocosStudio3DTest/CocosStudio3DTest.cpp
   Classes/ActionManagerTest/ActionManagerTest.cpp
   Classes/ActionsEaseTest/ActionsEaseTest.cpp
   Classes/ActionsProgressTest/ActionsProgressTest.cpp
