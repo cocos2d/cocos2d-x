@@ -7,7 +7,7 @@ LOCAL_MODULE := cpp_tests_shared
 LOCAL_MODULE_FILENAME := libcpp_tests
 
 LOCAL_SRC_FILES := main.cpp \
-../../Classes/CocosStudio3DTest/CocosStudio3DTest.cpp
+../../Classes/CocosStudio3DTest/CocosStudio3DTest.cpp \
 ../../Classes/AppDelegate.cpp \
 ../../Classes/BaseTest.cpp \
 ../../Classes/controller.cpp \
