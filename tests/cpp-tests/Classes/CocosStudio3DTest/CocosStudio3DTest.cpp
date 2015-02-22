@@ -38,7 +38,8 @@ static int sceneIdx = -1;
 
 static std::function<Layer*()> createFunctions[] =
 {
-    CL(CSNode3DTest)
+    CL(CSNode3DTest),
+    CL(CSSprite3DTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -138,13 +139,43 @@ CSNode3DTest::CSNode3DTest()
 
 std::string CSNode3DTest::title() const
 {
-    return "CocosStudio Node3D Test";
+    return "Node3DReader Test";
 }
 
 std::string CSNode3DTest::subtitle() const
 {
     return "CCNode in 3D space";
 }
+
+//------------------------------------------------------------------
+//
+// CSSprite3DTest
+//
+//------------------------------------------------------------------
+CSSprite3DTest::CSSprite3DTest()
+{
+    auto node = CSLoader::createNode("CocosStudio3DTest/Sprite3D.csb");
+    
+    auto size = Director::getInstance()->getWinSize();
+    auto sprite3D = node->getChildByTag(8);
+    
+    sprite3D->setPosition(size.width / 2, size.height / 2 - 50);
+    sprite3D->setColor(Color3B::WHITE);
+    sprite3D->setOpacity(255);
+    
+    addChild(node);
+}
+
+std::string CSSprite3DTest::title() const
+{
+    return "Sprite3DReader Test";
+}
+
+std::string CSSprite3DTest::subtitle() const
+{
+    return "";
+}
+
 
 //------------------------------------------------------------------
 //

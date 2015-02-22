@@ -824,6 +824,10 @@
 		182C5CB41A95964C00C30D34 /* Node3DReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 182C5CB01A95964700C30D34 /* Node3DReader.cpp */; };
 		182C5CB51A95964F00C30D34 /* Node3DReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 182C5CB11A95964700C30D34 /* Node3DReader.h */; };
 		182C5CB61A95965500C30D34 /* CSParse3DBinary_generated.h in Headers */ = {isa = PBXBuildFile; fileRef = 182C5CAD1A95961600C30D34 /* CSParse3DBinary_generated.h */; };
+		182C5CD61A98F30500C30D34 /* Sprite3DReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 182C5CD41A98F30500C30D34 /* Sprite3DReader.cpp */; };
+		182C5CD71A98F30500C30D34 /* Sprite3DReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 182C5CD41A98F30500C30D34 /* Sprite3DReader.cpp */; };
+		182C5CD81A98F30500C30D34 /* Sprite3DReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 182C5CD51A98F30500C30D34 /* Sprite3DReader.h */; };
+		182C5CD91A98F30500C30D34 /* Sprite3DReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 182C5CD51A98F30500C30D34 /* Sprite3DReader.h */; };
 		1A01C68418F57BE800EFE3A6 /* CCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A01C67618F57BE800EFE3A6 /* CCArray.cpp */; };
 		1A01C68518F57BE800EFE3A6 /* CCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A01C67618F57BE800EFE3A6 /* CCArray.cpp */; };
 		1A01C68618F57BE800EFE3A6 /* CCArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A01C67718F57BE800EFE3A6 /* CCArray.h */; };
@@ -2445,6 +2449,8 @@
 		182C5CAD1A95961600C30D34 /* CSParse3DBinary_generated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSParse3DBinary_generated.h; sourceTree = "<group>"; };
 		182C5CB01A95964700C30D34 /* Node3DReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Node3DReader.cpp; path = Node3DReader/Node3DReader.cpp; sourceTree = "<group>"; };
 		182C5CB11A95964700C30D34 /* Node3DReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Node3DReader.h; path = Node3DReader/Node3DReader.h; sourceTree = "<group>"; };
+		182C5CD41A98F30500C30D34 /* Sprite3DReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sprite3DReader.cpp; path = Sprite3DReader/Sprite3DReader.cpp; sourceTree = "<group>"; };
+		182C5CD51A98F30500C30D34 /* Sprite3DReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sprite3DReader.h; path = Sprite3DReader/Sprite3DReader.h; sourceTree = "<group>"; };
 		1A01C67618F57BE800EFE3A6 /* CCArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCArray.cpp; sourceTree = "<group>"; };
 		1A01C67718F57BE800EFE3A6 /* CCArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArray.h; sourceTree = "<group>"; };
 		1A01C67818F57BE800EFE3A6 /* CCBool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBool.h; sourceTree = "<group>"; };
@@ -3787,6 +3793,15 @@
 				182C5CB11A95964700C30D34 /* Node3DReader.h */,
 			);
 			name = Node3DReader;
+			sourceTree = "<group>";
+		};
+		182C5CD31A98F2F400C30D34 /* Sprite3DReader */ = {
+			isa = PBXGroup;
+			children = (
+				182C5CD41A98F30500C30D34 /* Sprite3DReader.cpp */,
+				182C5CD51A98F30500C30D34 /* Sprite3DReader.h */,
+			);
+			name = Sprite3DReader;
 			sourceTree = "<group>";
 		};
 		1A01C67518F57BE800EFE3A6 /* deprecated */ = {
@@ -5632,6 +5647,7 @@
 		50FCEB6818C72017004AD434 /* WidgetReader */ = {
 			isa = PBXGroup;
 			children = (
+				182C5CD31A98F2F400C30D34 /* Sprite3DReader */,
 				182C5CAF1A95961E00C30D34 /* Node3DReader */,
 				38F5263A1A48363B000DB7F7 /* ArmatureNodeReader */,
 				382384251A2590F9002C4610 /* NodeReader */,
@@ -6461,6 +6477,7 @@
 				15AE187D19AAD33D00C27E9E /* CCBFileLoader.h in Headers */,
 				15AE181219AAD2F700C27E9E /* CCAnimation3D.h in Headers */,
 				B6877A681A8CA8A700643ABF /* CCPUParticle3DAffector.h in Headers */,
+				182C5CD81A98F30500C30D34 /* Sprite3DReader.h in Headers */,
 				1A5702F0180BCE750088DEC7 /* CCTMXLayer.h in Headers */,
 				50ABC01B1926664800A911A9 /* CCSAXParser.h in Headers */,
 				50ABBED51925AB6F00A911A9 /* utlist.h in Headers */,
@@ -7171,6 +7188,7 @@
 				B6877AA91A8CA8A700643ABF /* CCPUParticle3DFlockCenteringAffectorTranslator.h in Headers */,
 				B68779EF1A8CA88500643ABF /* CCPUParticle3DSphereSurfaceEmitter.h in Headers */,
 				5034CA3E191D591100CE6051 /* ccShader_PositionColor.frag in Headers */,
+				182C5CD91A98F30500C30D34 /* Sprite3DReader.h in Headers */,
 				50ABBE301925AB6F00A911A9 /* ccConfig.h in Headers */,
 				15AE195819AAD35100C27E9E /* CCInputDelegate.h in Headers */,
 				50ABBDAC1925AB4100A911A9 /* CCRenderCommandPool.h in Headers */,
@@ -7955,6 +7973,7 @@
 				50ABBE931925AB6F00A911A9 /* CCProfiling.cpp in Sources */,
 				15AE188819AAD33D00C27E9E /* CCControlButtonLoader.cpp in Sources */,
 				15AE18A419AAD33D00C27E9E /* CCScale9SpriteLoader.cpp in Sources */,
+				182C5CD61A98F30500C30D34 /* Sprite3DReader.cpp in Sources */,
 				15AE1B5719AADA9900C27E9E /* UISlider.cpp in Sources */,
 				B6877B161A8CA8A700643ABF /* CCPUParticle3DSineForceAffectorTranslator.cpp in Sources */,
 				1ABA68AE1888D700007D1BB4 /* CCFontCharMap.cpp in Sources */,
@@ -8385,6 +8404,7 @@
 				50ABBE2C1925AB6F00A911A9 /* ccCArray.cpp in Sources */,
 				15AE193219AAD35100C27E9E /* CCActionNode.cpp in Sources */,
 				15AE195319AAD35100C27E9E /* CCDisplayFactory.cpp in Sources */,
+				182C5CD71A98F30500C30D34 /* Sprite3DReader.cpp in Sources */,
 				B687796B1A8CA84900643ABF /* CCPUParticle3DTranslateManager.cpp in Sources */,
 				50ABC0061926664800A911A9 /* CCThread-apple.mm in Sources */,
 				50ABBEB61925AB6F00A911A9 /* CCUserDefault-android.cpp in Sources */,

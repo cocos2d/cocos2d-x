@@ -58,6 +58,16 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class CSSprite3DTest : public CocosStudio3DTestDemo
+{
+public:
+    CREATE_FUNC(CSSprite3DTest);
+    CSSprite3DTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+};
+
 class CS3DTestScene : public TestScene
 {
 public:
