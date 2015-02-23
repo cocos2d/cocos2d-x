@@ -24,6 +24,12 @@
 
 #import "HttpAsynConnection.h"
 
+@interface HttpAsynConnection ()
+
+@property (readwrite) NSString *statusString;
+
+@end
+
 @implementation HttpAsynConnection
 
 @synthesize srcURL;
@@ -38,14 +44,28 @@
 @synthesize finish;
 @synthesize runLoop;
 
+- (void)dealloc
+{
+    [srcURL release];
+    [sslFile release];
+    [responseHeader release];
+    [responseData release];
+    [statusString release];
+    [responseError release];
+    [conn release];
+    [runLoop release];
+    
+    [super dealloc];
+}
+
 - (void) startRequest:(NSURLRequest *)request
 {
     NSLog(@"Starting to load %@", srcURL);
     finish = false;
 
-    responseData = [NSMutableData new];
+    self.responseData = [NSMutableData new];
     getDataTime = 0;
-    responseError = nil;
+    self.responseError = nil;
     
     // create the connection with the target request and this class as the delegate
     self.conn = [[NSURLConnection alloc] initWithRequest:request
@@ -71,12 +91,12 @@
     
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
     //NSLog(@"All headers = %@", [httpResponse allHeaderFields]);
-    responseHeader = [[httpResponse allHeaderFields] copy];
+    self.responseHeader = [[httpResponse allHeaderFields] copy];
 
     responseCode = httpResponse.statusCode;
-    statusString = [[NSHTTPURLResponse localizedStringForStatusCode:responseCode] copy];
+    self.statusString = [[NSHTTPURLResponse localizedStringForStatusCode:responseCode] copy];
     if(responseCode == 200)
-        statusString = @"OK";
+        self.statusString = @"OK";
  
     /*The individual values of the numeric status codes defined for HTTP/1.1
     | “200”  ; OK
@@ -118,7 +138,7 @@
   didFailWithError:(NSError *)error
 {
     //NSLog(@"Load failed with error %@", [error localizedDescription]);
-    responseError = [error copy];
+    self.responseError = [error copy];
     
     finish = true;
 }

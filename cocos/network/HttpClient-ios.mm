@@ -77,8 +77,8 @@ void HttpClient::networkThread()
 {    
     auto scheduler = Director::getInstance()->getScheduler();
     
-    while (true) 
-    {
+    while (true) @autoreleasepool {
+        
         HttpRequest *request;
 
         // step 1: send http request if the requestQueue isn't empty
@@ -224,16 +224,16 @@ static int processTask(HttpRequest *request, NSString* requestType, void *stream
         }
     }
     
-    HttpAsynConnection *httpAsynConn = [HttpAsynConnection new];
+    HttpAsynConnection *httpAsynConn = [[HttpAsynConnection new] autorelease];
     httpAsynConn.srcURL = urlstring;
     httpAsynConn.sslFile = nil;
-    NSString *sslFile = nil;
+    
     if(!s_sslCaFilename.empty())
     {
         long len = s_sslCaFilename.length();
         long pos = s_sslCaFilename.rfind('.', len-1);
-        [sslFile initWithUTF8String:s_sslCaFilename.substr(0, pos-1).c_str()];
-        httpAsynConn.sslFile = sslFile;
+        
+        httpAsynConn.sslFile = [NSString stringWithUTF8String:s_sslCaFilename.substr(0, pos-1).c_str()];
     }
     [httpAsynConn startRequest:nsrequest];
     
@@ -282,7 +282,7 @@ static int processTask(HttpRequest *request, NSString* requestType, void *stream
     
     //handle response header
     NSMutableString *header = [NSMutableString new];
-    [header appendFormat:@"HTTP/1.1 %ld %@\n", httpAsynConn.responseCode, httpAsynConn.statusString];
+    [header appendFormat:@"HTTP/1.1 %ld %@\n", (long)httpAsynConn.responseCode, httpAsynConn.statusString];
     for (id key in httpAsynConn.responseHeader)
     {
         [header appendFormat:@"%@: %@\n", key, [httpAsynConn.responseHeader objectForKey:key]];
@@ -335,7 +335,7 @@ static void processResponse(HttpResponse* response, char* errorBuffer)
         break;
 
     default:
-        CCASSERT(true, "CCHttpClient: unkown request type, only GET and POSt are supported");
+        CCASSERT(true, "CCHttpClient: unkown request type, only GET, POST, PUT, DELETE are supported");
         break;
     }
     
