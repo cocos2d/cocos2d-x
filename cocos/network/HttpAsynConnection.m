@@ -91,7 +91,7 @@
     
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
     //NSLog(@"All headers = %@", [httpResponse allHeaderFields]);
-    self.responseHeader = [[httpResponse allHeaderFields] copy];
+    self.responseHeader = [httpResponse allHeaderFields];
 
     responseCode = httpResponse.statusCode;
     self.statusString = [[NSHTTPURLResponse localizedStringForStatusCode:responseCode] copy];

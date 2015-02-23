@@ -36,7 +36,7 @@
 
 @property (strong) NSString *sslFile;
 
-@property (strong) NSDictionary *responseHeader;
+@property (copy) NSDictionary *responseHeader;
 
 @property (strong) NSMutableData *responseData;
 
