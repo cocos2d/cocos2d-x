@@ -174,8 +174,8 @@ public:
      http://particledesigner.71squared.com/
      @since v2.0
      */
-    CC_DEPRECATED_ATTRIBUTE static ParticleSystem* create(const std::string& plistFile) {CCASSERT(false, "deprecated method");}
-    CC_DEPRECATED_ATTRIBUTE static ParticleSystem* createWithTotalParticles(int numberOfParticles) {CCASSERT(false, "deprecated method");}
+    CC_DEPRECATED_ATTRIBUTE static ParticleSystem* create(const std::string& plistFile) {CCASSERT(false, "deprecated method"); return nullptr;}
+    CC_DEPRECATED_ATTRIBUTE static ParticleSystem* createWithTotalParticles(int numberOfParticles) {CCASSERT(false, "deprecated method");return nullptr;}
 
     //! Add a particle to the emitter
     bool addParticle();
