@@ -44,9 +44,6 @@ namespace ui {
     
 static const int BACKGROUNDIMAGE_Z = (-1);
 static const int BCAKGROUNDCOLORRENDERER_Z = (-2);
-
-static GLint g_sStencilBits = -1;
-static GLint s_layer = -1;
     
 IMPLEMENT_CLASS_GUI_INFO(Layout)
 
