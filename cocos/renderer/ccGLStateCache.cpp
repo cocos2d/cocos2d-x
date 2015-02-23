@@ -50,6 +50,7 @@ namespace
     static GLenum    s_blendingDest = -1;
     static int       s_GLServerState = 0;
     static GLuint    s_VAO = 0;
+    static GLuint    s_VBO = 0;
     static GLenum    s_activeTexture = -1;
 
 #endif // CC_ENABLE_GL_STATE_CACHE
@@ -213,6 +214,19 @@ void bindVAO(GLuint vaoId)
     }
 }
 
+void bindVBO(GLenum target, GLuint vboId)
+{
+#if CC_ENABLE_GL_STATE_CACHE
+    if (s_VBO != vboId)
+    {
+        s_VBO = vboId;
+        glBindBuffer(target, vboId);
+    }
+#else
+    glBindBuffer(target, vboId);
+#endif // CC_ENABLE_GL_STATE_CACHE
+}
+    
 // GL Vertex Attrib functions
 
 void enableVertexAttribs(uint32_t flags)

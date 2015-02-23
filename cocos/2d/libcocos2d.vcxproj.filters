@@ -751,12 +751,6 @@
     <ClCompile Include="CCProtectedNode.cpp">
       <Filter>2d</Filter>
     </ClCompile>
-    <ClCompile Include="..\renderer\CCPrimitive.cpp">
-      <Filter>renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\renderer\CCPrimitiveCommand.cpp">
-      <Filter>renderer</Filter>
-    </ClCompile>
     <ClCompile Include="..\renderer\CCVertexIndexBuffer.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
@@ -2172,12 +2166,6 @@
     </ClInclude>
     <ClInclude Include="CCProtectedNode.h">
       <Filter>2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\renderer\CCPrimitive.h">
-      <Filter>renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\renderer\CCPrimitiveCommand.h">
-      <Filter>renderer</Filter>
     </ClInclude>
     <ClInclude Include="..\renderer\CCVertexIndexBuffer.h">
       <Filter>renderer</Filter>

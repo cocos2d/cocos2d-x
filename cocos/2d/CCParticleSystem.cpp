@@ -88,7 +88,6 @@ ParticleSystem::ParticleSystem()
 , _particleIdx(0)
 , _batchNode(nullptr)
 , _atlasIndex(0)
-, _transformSystemDirty(false)
 , _allocatedParticles(0)
 , _isActive(true)
 , _particleCount(0)
@@ -131,31 +130,8 @@ ParticleSystem::ParticleSystem()
     modeB.rotatePerSecond = 0;
     modeB.rotatePerSecondVar = 0;
 }
+
 // implementation ParticleSystem
-
-ParticleSystem * ParticleSystem::create(const std::string& plistFile)
-{
-    ParticleSystem *ret = new (std::nothrow) ParticleSystem();
-    if (ret && ret->initWithFile(plistFile))
-    {
-        ret->autorelease();
-        return ret;
-    }
-    CC_SAFE_DELETE(ret);
-    return ret;
-}
-
-ParticleSystem* ParticleSystem::createWithTotalParticles(int numberOfParticles)
-{
-    ParticleSystem *ret = new (std::nothrow) ParticleSystem();
-    if (ret && ret->initWithTotalParticles(numberOfParticles))
-    {
-        ret->autorelease();
-        return ret;
-    }
-    CC_SAFE_DELETE(ret);
-    return ret;
-}
 
 bool ParticleSystem::init()
 {
@@ -469,8 +445,6 @@ bool ParticleSystem::initWithTotalParticles(int numberOfParticles)
     // Optimization: compile updateParticle method
     //updateParticleSel = @selector(updateQuadWithParticle:newPosition:);
     //updateParticleImp = (CC_UPDATE_PARTICLE_IMP) [self methodForSelector:updateParticleSel];
-    //for batchNode
-    _transformSystemDirty = false;
 
     return true;
 }
@@ -668,12 +642,12 @@ void ParticleSystem::update(float dt)
             _emitCounter += dt;
         }
         
-        while (_particleCount < _totalParticles && _emitCounter > rate) 
+        while (_particleCount < _totalParticles && _emitCounter > rate)
         {
             this->addParticle();
             _emitCounter -= rate;
         }
-
+        
         _elapsed += dt;
         if (_duration != -1 && _duration < _elapsed)
         {
@@ -796,7 +770,6 @@ void ParticleSystem::update(float dt)
                 }
 
                 updateQuadWithParticle(p, newPos);
-                //updateParticleImp(self, updateParticleSel, p, newPos);
 
                 // update particle counter
                 ++_particleIdx;
@@ -818,7 +791,6 @@ void ParticleSystem::update(float dt)
                     _particles[_particleCount-1].atlasIndex = currentIndex;
                 }
 
-
                 --_particleCount;
 
                 if( _particleCount == 0 && _isAutoRemoveOnFinish )
@@ -829,7 +801,6 @@ void ParticleSystem::update(float dt)
                 }
             }
         } //while
-        _transformSystemDirty = false;
     }
     
     // only update gl buffer when visible
@@ -844,18 +815,6 @@ void ParticleSystem::update(float dt)
 void ParticleSystem::updateWithNoTime(void)
 {
     this->update(0.0f);
-}
-
-void ParticleSystem::updateQuadWithParticle(tParticle* particle, const Vec2& newPosition)
-{
-    CC_UNUSED_PARAM(particle);
-    CC_UNUSED_PARAM(newPosition);
-    // should be overridden
-}
-
-void ParticleSystem::postStep()
-{
-    // should be overridden
 }
 
 // ParticleSystem - Texture protocol
@@ -1152,31 +1111,5 @@ void ParticleSystem::setBatchNode(ParticleBatchNode* batchNode)
         }
     }
 }
-
-//don't use a transform matrix, this is faster
-void ParticleSystem::setScale(float s)
-{
-    _transformSystemDirty = true;
-    Node::setScale(s);
-}
-
-void ParticleSystem::setRotation(float newRotation)
-{
-    _transformSystemDirty = true;
-    Node::setRotation(newRotation);
-}
-
-void ParticleSystem::setScaleX(float newScaleX)
-{
-    _transformSystemDirty = true;
-    Node::setScaleX(newScaleX);
-}
-
-void ParticleSystem::setScaleY(float newScaleY)
-{
-    _transformSystemDirty = true;
-    Node::setScaleY(newScaleY);
-}
-
 
 NS_CC_END

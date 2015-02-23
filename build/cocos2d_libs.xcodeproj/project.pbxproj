@@ -1769,7 +1769,6 @@
 		5E9F612C1A3FFE3D0038DE01 /* CCPlane.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E9F61251A3FFE3D0038DE01 /* CCPlane.h */; };
 		5E9F612D1A3FFE3D0038DE01 /* CCPlane.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E9F61251A3FFE3D0038DE01 /* CCPlane.h */; };
 		A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
-		B2165EEA19921124000BE3E6 /* CCPrimitiveCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B257B45E198A353E00D9A687 /* CCPrimitiveCommand.cpp */; };
 		B217703C1977ECB4009EE11B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703B1977ECB4009EE11B /* IOKit.framework */; };
 		B21770401977ECE6009EE11B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703F1977ECE6009EE11B /* OpenGL.framework */; };
 		B21770421977ECF8009EE11B /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B21770411977ECF8009EE11B /* ApplicationServices.framework */; };
@@ -1789,12 +1788,6 @@
 		B24AA98A195A675C007B4522 /* CCFastTMXTiledMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24AA983195A675C007B4522 /* CCFastTMXTiledMap.cpp */; };
 		B24AA98B195A675C007B4522 /* CCFastTMXTiledMap.h in Headers */ = {isa = PBXBuildFile; fileRef = B24AA984195A675C007B4522 /* CCFastTMXTiledMap.h */; };
 		B24AA98C195A675C007B4522 /* CCFastTMXTiledMap.h in Headers */ = {isa = PBXBuildFile; fileRef = B24AA984195A675C007B4522 /* CCFastTMXTiledMap.h */; };
-		B257B44E1989D5E800D9A687 /* CCPrimitive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B257B44C1989D5E800D9A687 /* CCPrimitive.cpp */; };
-		B257B44F1989D5E800D9A687 /* CCPrimitive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B257B44C1989D5E800D9A687 /* CCPrimitive.cpp */; };
-		B257B4501989D5E800D9A687 /* CCPrimitive.h in Headers */ = {isa = PBXBuildFile; fileRef = B257B44D1989D5E800D9A687 /* CCPrimitive.h */; };
-		B257B4511989D5E800D9A687 /* CCPrimitive.h in Headers */ = {isa = PBXBuildFile; fileRef = B257B44D1989D5E800D9A687 /* CCPrimitive.h */; };
-		B257B460198A353E00D9A687 /* CCPrimitiveCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B257B45E198A353E00D9A687 /* CCPrimitiveCommand.cpp */; };
-		B257B461198A353E00D9A687 /* CCPrimitiveCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = B257B45F198A353E00D9A687 /* CCPrimitiveCommand.h */; };
 		B276EF5F1988D1D500CD400F /* CCVertexIndexData.h in Headers */ = {isa = PBXBuildFile; fileRef = B276EF5B1988D1D500CD400F /* CCVertexIndexData.h */; };
 		B276EF601988D1D500CD400F /* CCVertexIndexData.h in Headers */ = {isa = PBXBuildFile; fileRef = B276EF5B1988D1D500CD400F /* CCVertexIndexData.h */; };
 		B276EF611988D1D500CD400F /* CCVertexIndexData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B276EF5C1988D1D500CD400F /* CCVertexIndexData.cpp */; };
@@ -2334,6 +2327,8 @@
 		B6877B3F1A8CA8A700643ABF /* CCPUParticle3DVortexAffectorTranslator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6877A641A8CA8A700643ABF /* CCPUParticle3DVortexAffectorTranslator.cpp */; };
 		B6877B401A8CA8A700643ABF /* CCPUParticle3DVortexAffectorTranslator.h in Headers */ = {isa = PBXBuildFile; fileRef = B6877A651A8CA8A700643ABF /* CCPUParticle3DVortexAffectorTranslator.h */; };
 		B6877B411A8CA8A700643ABF /* CCPUParticle3DVortexAffectorTranslator.h in Headers */ = {isa = PBXBuildFile; fileRef = B6877A651A8CA8A700643ABF /* CCPUParticle3DVortexAffectorTranslator.h */; };
+		D0773DBE1A7B0FFB008F2EBB /* CCVertexAttribute.h in Headers */ = {isa = PBXBuildFile; fileRef = D0773DBD1A7B0FFB008F2EBB /* CCVertexAttribute.h */; };
+		D0773DBF1A7B0FFB008F2EBB /* CCVertexAttribute.h in Headers */ = {isa = PBXBuildFile; fileRef = D0773DBD1A7B0FFB008F2EBB /* CCVertexAttribute.h */; };
 		D0FD03491A3B51AA00825BB5 /* CCAllocatorBase.h in Headers */ = {isa = PBXBuildFile; fileRef = D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */; };
 		D0FD034A1A3B51AA00825BB5 /* CCAllocatorBase.h in Headers */ = {isa = PBXBuildFile; fileRef = D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */; };
 		D0FD034B1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FD033C1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp */; };
@@ -3349,10 +3344,6 @@
 		B24AA982195A675C007B4522 /* CCFastTMXLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFastTMXLayer.h; sourceTree = "<group>"; };
 		B24AA983195A675C007B4522 /* CCFastTMXTiledMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFastTMXTiledMap.cpp; sourceTree = "<group>"; };
 		B24AA984195A675C007B4522 /* CCFastTMXTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFastTMXTiledMap.h; sourceTree = "<group>"; };
-		B257B44C1989D5E800D9A687 /* CCPrimitive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPrimitive.cpp; sourceTree = "<group>"; };
-		B257B44D1989D5E800D9A687 /* CCPrimitive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPrimitive.h; sourceTree = "<group>"; };
-		B257B45E198A353E00D9A687 /* CCPrimitiveCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPrimitiveCommand.cpp; sourceTree = "<group>"; };
-		B257B45F198A353E00D9A687 /* CCPrimitiveCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPrimitiveCommand.h; sourceTree = "<group>"; };
 		B276EF5B1988D1D500CD400F /* CCVertexIndexData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVertexIndexData.h; sourceTree = "<group>"; };
 		B276EF5C1988D1D500CD400F /* CCVertexIndexData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCVertexIndexData.cpp; sourceTree = "<group>"; };
 		B276EF5D1988D1D500CD400F /* CCVertexIndexBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVertexIndexBuffer.h; sourceTree = "<group>"; };
@@ -3630,6 +3621,7 @@
 		B6877A631A8CA8A700643ABF /* CCPUParticle3DVortexAffector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPUParticle3DVortexAffector.h; path = Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DVortexAffector.h; sourceTree = "<group>"; };
 		B6877A641A8CA8A700643ABF /* CCPUParticle3DVortexAffectorTranslator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPUParticle3DVortexAffectorTranslator.cpp; path = Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DVortexAffectorTranslator.cpp; sourceTree = "<group>"; };
 		B6877A651A8CA8A700643ABF /* CCPUParticle3DVortexAffectorTranslator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPUParticle3DVortexAffectorTranslator.h; path = Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DVortexAffectorTranslator.h; sourceTree = "<group>"; };
+		D0773DBD1A7B0FFB008F2EBB /* CCVertexAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVertexAttribute.h; sourceTree = "<group>"; };
 		D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAllocatorBase.h; sourceTree = "<group>"; };
 		D0FD033C1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAllocatorDiagnostics.cpp; sourceTree = "<group>"; };
 		D0FD033D1A3B51AA00825BB5 /* CCAllocatorDiagnostics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAllocatorDiagnostics.h; sourceTree = "<group>"; };
@@ -5433,10 +5425,6 @@
 		500DC89819105D41007B91BF /* renderer */ = {
 			isa = PBXGroup;
 			children = (
-				B276EF5B1988D1D500CD400F /* CCVertexIndexData.h */,
-				B276EF5C1988D1D500CD400F /* CCVertexIndexData.cpp */,
-				B276EF5D1988D1D500CD400F /* CCVertexIndexBuffer.h */,
-				B276EF5E1988D1D500CD400F /* CCVertexIndexBuffer.cpp */,
 				50ABBD641925AB4100A911A9 /* CCBatchCommand.cpp */,
 				50ABBD651925AB4100A911A9 /* CCBatchCommand.h */,
 				50ABBD661925AB4100A911A9 /* CCCustomCommand.cpp */,
@@ -5455,8 +5443,6 @@
 				50ABBD731925AB4100A911A9 /* CCGroupCommand.h */,
 				B29594B21926D5EC003EEF37 /* CCMeshCommand.cpp */,
 				B29594B31926D5EC003EEF37 /* CCMeshCommand.h */,
-				B230ED6F19B417AE00364AA8 /* CCTrianglesCommand.cpp */,
-				B230ED7019B417AE00364AA8 /* CCTrianglesCommand.h */,
 				50ABBD741925AB4100A911A9 /* CCQuadCommand.cpp */,
 				50ABBD751925AB4100A911A9 /* CCQuadCommand.h */,
 				50ABBD761925AB4100A911A9 /* CCRenderCommand.cpp */,
@@ -5472,10 +5458,13 @@
 				50ABBD801925AB4100A911A9 /* CCTextureAtlas.h */,
 				50ABBD811925AB4100A911A9 /* CCTextureCache.cpp */,
 				50ABBD821925AB4100A911A9 /* CCTextureCache.h */,
-				B257B44C1989D5E800D9A687 /* CCPrimitive.cpp */,
-				B257B44D1989D5E800D9A687 /* CCPrimitive.h */,
-				B257B45E198A353E00D9A687 /* CCPrimitiveCommand.cpp */,
-				B257B45F198A353E00D9A687 /* CCPrimitiveCommand.h */,
+				B230ED6F19B417AE00364AA8 /* CCTrianglesCommand.cpp */,
+				B230ED7019B417AE00364AA8 /* CCTrianglesCommand.h */,
+				B276EF5E1988D1D500CD400F /* CCVertexIndexBuffer.cpp */,
+				B276EF5D1988D1D500CD400F /* CCVertexIndexBuffer.h */,
+				B276EF5C1988D1D500CD400F /* CCVertexIndexData.cpp */,
+				B276EF5B1988D1D500CD400F /* CCVertexIndexData.h */,
+				D0773DBD1A7B0FFB008F2EBB /* CCVertexAttribute.h */,
 				5034CA5D191D591900CE6051 /* shaders */,
 			);
 			name = renderer;
@@ -6548,7 +6537,6 @@
 				B68779BE1A8CA88500643ABF /* CCPUParticle3DEmitterManager.h in Headers */,
 				50ABBE9D1925AB6F00A911A9 /* CCRefPtr.h in Headers */,
 				15AE198319AAD36400C27E9E /* WidgetReader.h in Headers */,
-				B257B461198A353E00D9A687 /* CCPrimitiveCommand.h in Headers */,
 				B68779381A8CA84900643ABF /* CCPUParticle3DForceField.h in Headers */,
 				5034CA31191D591100CE6051 /* ccShader_PositionTexture_uColor.vert in Headers */,
 				15AE189E19AAD33D00C27E9E /* CCNodeLoader.h in Headers */,
@@ -6567,7 +6555,6 @@
 				15AE1B9E19AADFDF00C27E9E /* UIVBox.h in Headers */,
 				B6877A8C1A8CA8A700643ABF /* CCPUParticle3DBoxCollider.h in Headers */,
 				15AE192319AAD35000C27E9E /* DictionaryHelper.h in Headers */,
-				B257B4501989D5E800D9A687 /* CCPrimitive.h in Headers */,
 				B29A7DCF19EE1B7700872B35 /* RegionAttachment.h in Headers */,
 				15B3707E19EE414C00ABE682 /* CCEventAssetsManagerEx.h in Headers */,
 				50ABBE6B1925AB6F00A911A9 /* CCEventListenerFocus.h in Headers */,
@@ -6594,6 +6581,7 @@
 				50ABBE251925AB6F00A911A9 /* base64.h in Headers */,
 				15AE1B9C19AADFDF00C27E9E /* UIRelativeBox.h in Headers */,
 				15AE1A7519AAD40300C27E9E /* b2EdgeAndCircleContact.h in Headers */,
+				D0773DBE1A7B0FFB008F2EBB /* CCVertexAttribute.h in Headers */,
 				15AE18A919AAD33D00C27E9E /* CCSpriteLoader.h in Headers */,
 				B68779681A8CA84900643ABF /* CCPUParticle3DTechniqueTranslator.h in Headers */,
 				15AE198419AAD36400C27E9E /* WidgetReaderProtocol.h in Headers */,
@@ -6779,7 +6767,6 @@
 				50ABBEC21925AB6F00A911A9 /* CCValue.h in Headers */,
 				50ABBECA1925AB6F00A911A9 /* firePngData.h in Headers */,
 				B68779791A8CA84900643ABF /* CCPUParticleSystem3DTranslator.h in Headers */,
-				B257B4511989D5E800D9A687 /* CCPrimitive.h in Headers */,
 				50643BE319BFCF1800EF68ED /* CCPlatformConfig.h in Headers */,
 				B6877AD51A8CA8A700643ABF /* CCPUParticle3DLineAffector.h in Headers */,
 				15AE181F19AAD2F700C27E9E /* CCBundle3DData.h in Headers */,
@@ -7206,6 +7193,7 @@
 				15AE1B8319AADA9A00C27E9E /* UITextBMFont.h in Headers */,
 				B29A7E2A19EE1B7700872B35 /* SkeletonData.h in Headers */,
 				50ABBD8E1925AB4100A911A9 /* CCGLProgram.h in Headers */,
+				D0773DBF1A7B0FFB008F2EBB /* CCVertexAttribute.h in Headers */,
 				38B8E2D819E66581002D7CE7 /* CSLoader.h in Headers */,
 				50ABC0081926664800A911A9 /* CCApplicationProtocol.h in Headers */,
 				1ABA68B11888D700007D1BB4 /* CCFontCharMap.h in Headers */,
@@ -7485,7 +7473,6 @@
 				DA8C62A219E52C6400000516 /* ioapi_mem.cpp in Sources */,
 				B68779001A8CA82E00643ABF /* CCParticle3DRender.cpp in Sources */,
 				1A570069180BC5A10088DEC7 /* CCActionCatmullRom.cpp in Sources */,
-				B257B44E1989D5E800D9A687 /* CCPrimitive.cpp in Sources */,
 				299CF1FB19A434BC00C378C1 /* ccRandom.cpp in Sources */,
 				15AE18E819AAD35000C27E9E /* CCActionManagerEx.cpp in Sources */,
 				B29A7DDB19EE1B7700872B35 /* Event.c in Sources */,
@@ -7532,7 +7519,6 @@
 				B6877B021A8CA8A700643ABF /* CCPUParticle3DScaleAffector.cpp in Sources */,
 				1A57009E180BC5D20088DEC7 /* CCNode.cpp in Sources */,
 				50ED2BD919BE5D5D00A0AB90 /* CCEventListenerController.cpp in Sources */,
-				B257B460198A353E00D9A687 /* CCPrimitiveCommand.cpp in Sources */,
 				15AE19A419AAD39600C27E9E /* TextFieldReader.cpp in Sources */,
 				B6877B0A1A8CA8A700643ABF /* CCPUParticle3DScaleVelocityAffector.cpp in Sources */,
 				B68779E01A8CA88500643ABF /* CCPUParticle3DPositionEmitterTranslator.cpp in Sources */,
@@ -7992,7 +7978,6 @@
 				B29A7E1C19EE1B7700872B35 /* SkeletonJson.c in Sources */,
 				B2CC507C19776DD10041958E /* CCPhysicsJoint.cpp in Sources */,
 				38B8E2E219E671D2002D7CE7 /* UILayoutComponent.cpp in Sources */,
-				B2165EEA19921124000BE3E6 /* CCPrimitiveCommand.cpp in Sources */,
 				15AE185C19AAD31200C27E9E /* CDOpenALSupport.m in Sources */,
 				15AE186119AAD31200C27E9E /* SimpleAudioEngine_objc.m in Sources */,
 				15AE182519AAD2F700C27E9E /* CCMesh.cpp in Sources */,
@@ -8001,7 +7986,6 @@
 				46A170FC1807CECB005B8026 /* CCPhysicsBody.cpp in Sources */,
 				15AE1BEA19AAE01E00C27E9E /* CCControlButton.cpp in Sources */,
 				50ABBD941925AB4100A911A9 /* CCGLProgramState.cpp in Sources */,
-				B257B44F1989D5E800D9A687 /* CCPrimitive.cpp in Sources */,
 				B6877B3F1A8CA8A700643ABF /* CCPUParticle3DVortexAffectorTranslator.cpp in Sources */,
 				B687794B1A8CA84900643ABF /* CCPUParticle3DRendererTranslator.cpp in Sources */,
 				50ABBE281925AB6F00A911A9 /* CCAutoreleasePool.cpp in Sources */,

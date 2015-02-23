@@ -432,8 +432,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\ccGLStateCache.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCGroupCommand.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCMeshCommand.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCPrimitive.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCPrimitiveCommand.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCQuadCommand.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCRenderCommand.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCRenderCommandPool.h" />
@@ -925,8 +923,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\ccGLStateCache.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCGroupCommand.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCMeshCommand.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCPrimitive.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCPrimitiveCommand.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCQuadCommand.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCRenderCommand.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCRenderer.cpp" />

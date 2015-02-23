@@ -522,8 +522,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\renderer\ccGLStateCache.cpp" />
     <ClCompile Include="..\renderer\CCGroupCommand.cpp" />
     <ClCompile Include="..\renderer\CCMeshCommand.cpp" />
-    <ClCompile Include="..\renderer\CCPrimitive.cpp" />
-    <ClCompile Include="..\renderer\CCPrimitiveCommand.cpp" />
     <ClCompile Include="..\renderer\CCQuadCommand.cpp" />
     <ClCompile Include="..\renderer\CCRenderCommand.cpp" />
     <ClCompile Include="..\renderer\CCRenderer.cpp" />
@@ -1037,8 +1035,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\renderer\ccGLStateCache.h" />
     <ClInclude Include="..\renderer\CCGroupCommand.h" />
     <ClInclude Include="..\renderer\CCMeshCommand.h" />
-    <ClInclude Include="..\renderer\CCPrimitive.h" />
-    <ClInclude Include="..\renderer\CCPrimitiveCommand.h" />
     <ClInclude Include="..\renderer\CCQuadCommand.h" />
     <ClInclude Include="..\renderer\CCRenderCommand.h" />
     <ClInclude Include="..\renderer\CCRenderCommandPool.h" />
