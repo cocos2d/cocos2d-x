@@ -343,6 +343,9 @@
     <Filter Include="Classes\Particle3DTest">
       <UniqueIdentifier>{e45d4916-24d0-49b8-a864-d273ea13a248}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\CocosStudio3DTest">
+      <UniqueIdentifier>{e4104916-24d0-49b8-a864-d273ea13a248}</UniqueIdentifier>
+    </Filter>    
     <Filter Include="Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest">
       <UniqueIdentifier>{65be3b70-58d6-47f4-bc67-fac9ee134c42}</UniqueIdentifier>
     </Filter>
@@ -900,6 +903,9 @@
     <ClCompile Include="..\Classes\Particle3DTest\Particle3DTest.cpp">
       <Filter>Classes\Particle3DTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\CocosStudio3DTest\CocosStudio3DTest.cpp">
+      <Filter>Classes\CocosStudio3DTest</Filter>
+    </ClCompile>    
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceMathTest.cpp">
       <Filter>Classes\PerformanceTest</Filter>
     </ClCompile>
@@ -1664,6 +1670,9 @@
     <ClInclude Include="..\Classes\Particle3DTest\Particle3DTest.h">
       <Filter>Classes\Particle3DTest</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\CocosStudio3DTest\CocosStudio3DTest.h">
+      <Filter>Classes\CocosStudio3DTest</Filter>
+    </ClInclude>    
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceMathTest.h">
       <Filter>Classes\PerformanceTest</Filter>
     </ClInclude>
