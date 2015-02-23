@@ -804,7 +804,7 @@ void HttpClient::networkThreadAlone(HttpRequest* request)
 
     auto scheduler = Director::getInstance()->getScheduler();
     scheduler->performFunctionInCocosThread([response, request]{
-        const ccHttpRequestCallback& callback = request->getCallback();
+        const ccHttpRequestCompleteCallback& callback = request->getCompleteCallback();
         Ref* pTarget = request->getTarget();
         SEL_HttpResponse pSelector = request->getSelector();
 
@@ -947,7 +947,7 @@ void HttpClient::dispatchResponseCallbacks()
     if (response)
     {
         HttpRequest *request = response->getHttpRequest();
-        const ccHttpRequestCallback& callback = request->getCallback();
+        const ccHttpRequestCompleteCallback& callback = request->getCompleteCallback();
         Ref* pTarget = request->getTarget();
         SEL_HttpResponse pSelector = request->getSelector();
 
