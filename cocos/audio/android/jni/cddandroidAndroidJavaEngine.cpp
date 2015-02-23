@@ -291,7 +291,7 @@ namespace CocosDenshion {
             methodInfo.env->DeleteLocalRef(methodInfo.classID);
         }
 
-        void AndroidJavaEngine::loadEffect(const char* pszFilePath, String loadEffectName) {
+        void AndroidJavaEngine::loadEffect(const char* pszFilePath, char* loadEffectName) {
             cocos2d::JniMethodInfo methodInfo;
             std::string fullPath = CocosDenshion::android::getFullPathWithoutAssetsPrefix(pszFilePath);
         
@@ -311,6 +311,7 @@ namespace CocosDenshion {
         }
 
         void AndroidJavaEngine::unloadEffect(const char* pszFilePath) {
-            AndroidJavaEngine::loadEffect(pszFilePath, "unloadEffect");       }
+            AndroidJavaEngine::loadEffect(pszFilePath, "unloadEffect");       
+        }
     }
 }
