@@ -146,12 +146,12 @@ public:
     
     bool hasClient() const
     {
-        return _arrayType & ArrayType::Client;
+        return _arrayType & ArrayType::Client ? true : false;
     }
     
     bool hasNative() const
     {
-        return _arrayType & ArrayType::Native;
+        return _arrayType & ArrayType::Native ? true : false;
     }
     
     bool isDirty() const
