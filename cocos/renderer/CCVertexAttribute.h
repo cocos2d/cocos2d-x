@@ -1,18 +1,19 @@
+
 /****************************************************************************
  Copyright (c) 2013-2014 Chukong Technologies Inc.
-
+ 
  http://www.cocos2d-x.org
-
+ 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
-
+ 
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
-
+ 
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -22,48 +23,45 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CC_PRIMITIVE_H__
-#define __CC_PRIMITIVE_H__
+#ifndef __CC_VERTEX_ATTRIBUTE_H__
+#define __CC_VERTEX_ATTRIBUTE_H__
 
-#include "renderer/CCVertexIndexData.h"
-
-NS_CC_BEGIN
-
-class IndexBuffer;
-
-class CC_DLL Primitive : public Ref
+enum class DataType
 {
-public:
-    static Primitive* create(VertexData* verts, IndexBuffer* indices, int type);
-    
-    const VertexData* getVertexData() const;
-    
-    const IndexBuffer* getIndexData() const;
-    
-    int getType() const { return _type; }
-    
-    //called by rendering framework
-    void draw();
-    
-    int getStart() const { return _start; }
-    int getCount() const { return _count; }
-    void setStart(int start) { _start = start; }
-    void setCount(int count) { _count = count; }
-    
-protected:
-    Primitive();
-    virtual ~Primitive();
-    
-    bool init(VertexData* verts, IndexBuffer* indices, int type);
-    
-protected:
-    VertexData* _verts;
-    IndexBuffer* _indices;
-    int _start;
-    int _count;
-    int _type;
+    Invalid = -1,
+    Byte,
+    UByte,
+    Short,
+    UShort,
+    Int,
+    UInt,
+    Float,
+    Fixed
 };
 
-NS_CC_END
+struct CC_DLL VertexAttribute
+{
+    VertexAttribute()
+    : _normalize(false)
+    , _offset(0)
+    , _semantic(0)
+    , _type(DataType::Invalid)
+    , _size(0)
+    {}
+    
+    VertexAttribute(int offset, int semantic, DataType type, int size, bool normalize = false)
+    : _normalize(normalize)
+    , _offset(offset)
+    , _semantic(semantic)
+    , _type(type)
+    , _size(size)
+    {}
+    
+    bool _normalize;
+    int  _offset;
+    int  _semantic;
+    DataType _type;
+    int  _size;
+};
 
-#endif //__CC_PRIMITIVE_H__
+#endif // __CC_VERTEX_ATTRIBUTE_H__

@@ -49,7 +49,6 @@ public:
         BATCH_COMMAND,
         GROUP_COMMAND,
         MESH_COMMAND,
-        PRIMITIVE_COMMAND,
         TRIANGLES_COMMAND
     };
 

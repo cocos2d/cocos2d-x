@@ -419,7 +419,7 @@ void Texture2D::convertRGBA8888ToRGB5A1(const unsigned char* data, ssize_t dataL
             |  (data[i + 3] & 0x0080) >> 7;   //A
     }
 }
-// conventer function end
+// converter function end
 //////////////////////////////////////////////////////////////////////////
 
 Texture2D::Texture2D()

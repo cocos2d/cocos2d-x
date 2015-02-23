@@ -432,12 +432,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCMeshCommand.h">
       <Filter>renderer</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCPrimitive.h">
-      <Filter>renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCPrimitiveCommand.h">
-      <Filter>renderer</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCQuadCommand.h">
       <Filter>renderer</Filter>
     </ClInclude>
@@ -1937,12 +1931,6 @@
       <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCMeshCommand.cpp">
-      <Filter>renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCPrimitive.cpp">
-      <Filter>renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCPrimitiveCommand.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCQuadCommand.cpp">
