@@ -66,9 +66,9 @@ struct WIN32INPUTBOX_PARAM
 	IN LPCSTR szTitle, szPrompt;
 
 	// Return buffer
-    std::string* pstrResult;
+	std::string* pstrResult;
 
-    IN DWORD nMaxLength;
+	IN DWORD nMaxLength;
 
 	// Owner window
 	HWND hwndOwner;
@@ -101,7 +101,7 @@ public:
 	static INT_PTR InputBox(
 		LPCSTR szTitle,
 		LPCSTR szPrompt,
-        std::string* pstrResult,
+		std::string* pstrResult,
 		DWORD nMaxLength,
 		bool bMultiLine = false,
 		HWND hwndParent = 0);
@@ -325,13 +325,13 @@ void CWin32InputBox::InitDialog()
 		::SetDlgItemText(_param->hDlg, (int)definputbox_buttonids[i], definputbox_buttonnames[i]);
 
 	// Set other controls
-    std::u16string utf16Title;
-    cocos2d::StringUtils::UTF8ToUTF16(_param->szTitle, utf16Title);
-    ::SetWindowTextW(_param->hDlg, (LPCWSTR) utf16Title.c_str());
+	std::u16string utf16Title;
+	cocos2d::StringUtils::UTF8ToUTF16(_param->szTitle, utf16Title);
+	::SetWindowTextW(_param->hDlg, (LPCWSTR) utf16Title.c_str());
 
-    std::u16string utf16Prompt;
-    cocos2d::StringUtils::UTF8ToUTF16(_param->szTitle, utf16Prompt);
-    ::SetDlgItemTextW(_param->hDlg, definputbox_id_prompt, (LPCWSTR) utf16Prompt.c_str());
+	std::u16string utf16Prompt;
+	cocos2d::StringUtils::UTF8ToUTF16(_param->szTitle, utf16Prompt);
+	::SetDlgItemTextW(_param->hDlg, definputbox_id_prompt, (LPCWSTR) utf16Prompt.c_str());
 
 	HWND hwndEdit1 = ::GetDlgItem(_param->hDlg, definputbox_id_edit1);
 	HWND hwndEdit2 = ::GetDlgItem(_param->hDlg, definputbox_id_edit2);
@@ -341,9 +341,9 @@ void CWin32InputBox::InitDialog()
 	else
 		_hwndEditCtrl = hwndEdit1;
 
-    std::u16string utf16Result;
-    cocos2d::StringUtils::UTF8ToUTF16(_param->pstrResult->c_str(), utf16Result);
-    ::SetWindowTextW(_hwndEditCtrl, (LPCWSTR) utf16Result.c_str());
+	std::u16string utf16Result;
+	cocos2d::StringUtils::UTF8ToUTF16(_param->pstrResult->c_str(), utf16Result);
+	::SetWindowTextW(_hwndEditCtrl, (LPCWSTR) utf16Result.c_str());
 
 	RECT rectDlg, rectEdit1, rectEdit2;
 
@@ -421,40 +421,40 @@ LRESULT CALLBACK CWin32InputBox::DlgProc(HWND hDlg, UINT message, WPARAM wParam,
 					   {
 						   if (buttonId == definputbox_buttonids[i])
 						   {
-                               std::u16string wstrResult;
-                               std::string utf8Result;
+							   std::u16string wstrResult;
+							   std::string utf8Result;
 
-                               int inputLength = ::GetWindowTextLengthW(_this->_hwndEditCtrl);
-                               wstrResult.resize(inputLength);
+							   int inputLength = ::GetWindowTextLengthW(_this->_hwndEditCtrl);
+							   wstrResult.resize(inputLength);
 
 							   ::GetWindowTextW(
 								   _this->_hwndEditCtrl,
 								   (LPWSTR) const_cast<char16_t*>(wstrResult.c_str()),
 								   inputLength+1);
 
-                               bool conversionResult = cocos2d::StringUtils::UTF16ToUTF8(wstrResult, utf8Result);
-                               _this->_param->pstrResult->clear();
-                               if (conversionResult)
-                               {
-                                   if((_this->_param->nMaxLength > 0) && (_this->_param->nMaxLength < (DWORD) cocos2d::StringUtils::getCharacterCountInUTF8String(utf8Result)))
-                                    {
-                                       // LengthFilter
-                                        for(size_t pos=0; pos < _this->_param->nMaxLength; pos++)
-                                        {
-                                            std::string utf8Bytes;
-                                            std::u16string utf16Character(1, wstrResult[pos]);
+							   bool conversionResult = cocos2d::StringUtils::UTF16ToUTF8(wstrResult, utf8Result);
+							   _this->_param->pstrResult->clear();
+							   if (conversionResult)
+							   {
+								   if((_this->_param->nMaxLength > 0) && (_this->_param->nMaxLength < (DWORD) cocos2d::StringUtils::getCharacterCountInUTF8String(utf8Result)))
+								   {
+									   // LengthFilter
+									   for(size_t pos=0; pos < _this->_param->nMaxLength; pos++)
+									   {
+										   std::string utf8Bytes;
+										   std::u16string utf16Character(1, wstrResult[pos]);
 
-                                            if(cocos2d::StringUtils::UTF16ToUTF8(utf16Character, utf8Bytes))
-                                            {
-                                                _this->_param->pstrResult->append(utf8Bytes);
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        *(_this->_param->pstrResult) = utf8Result;
-                                    }
-                               }
+										   if(cocos2d::StringUtils::UTF16ToUTF8(utf16Character, utf8Bytes))
+										   {
+											   _this->_param->pstrResult->append(utf8Bytes);
+										   }
+									   }
+								   }
+								   else
+								   {
+									   *(_this->_param->pstrResult) = utf8Result;
+								   }
+							   }
 
 							   ::EndDialog(hDlg, buttonId);
 							   return TRUE;
