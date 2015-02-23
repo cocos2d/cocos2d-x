@@ -87,30 +87,9 @@
         
 --------------------------------
 -- 
--- @function [parent=#ParticleSystem] setRotation 
--- @param self
--- @param #float newRotation
--- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
-        
---------------------------------
--- 
 -- @function [parent=#ParticleSystem] setTangentialAccel 
 -- @param self
 -- @param #float t
--- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
-        
---------------------------------
--- 
--- @function [parent=#ParticleSystem] setScaleY 
--- @param self
--- @param #float newScaleY
--- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
-        
---------------------------------
--- 
--- @function [parent=#ParticleSystem] setScaleX 
--- @param self
--- @param #float newScaleX
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
         
 --------------------------------
@@ -551,13 +530,6 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
--- @function [parent=#ParticleSystem] setScale 
--- @param self
--- @param #float s
--- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
-        
---------------------------------
 --  emission rate of the particles 
 -- @function [parent=#ParticleSystem] getEmissionRate 
 -- @param self
@@ -691,23 +663,6 @@
 -- @function [parent=#ParticleSystem] getStartColorVar 
 -- @param self
 -- @return color4f_table#color4f_table ret (return value: color4f_table)
-        
---------------------------------
---  creates an initializes a ParticleSystem from a plist file.<br>
--- This plist files can be created manually or with Particle Designer:<br>
--- http:particledesigner.71squared.com/<br>
--- since v2.0
--- @function [parent=#ParticleSystem] create 
--- @param self
--- @param #string plistFile
--- @return ParticleSystem#ParticleSystem ret (return value: cc.ParticleSystem)
-        
---------------------------------
---  create a system with a fixed number of particles
--- @function [parent=#ParticleSystem] createWithTotalParticles 
--- @param self
--- @param #int numberOfParticles
--- @return ParticleSystem#ParticleSystem ret (return value: cc.ParticleSystem)
         
 --------------------------------
 -- 
