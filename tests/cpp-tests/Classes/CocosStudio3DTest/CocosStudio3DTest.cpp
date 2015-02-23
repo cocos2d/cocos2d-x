@@ -144,7 +144,7 @@ std::string CSNode3DTest::title() const
 
 std::string CSNode3DTest::subtitle() const
 {
-    return "CCNode in 3D space";
+    return "";
 }
 
 //------------------------------------------------------------------
