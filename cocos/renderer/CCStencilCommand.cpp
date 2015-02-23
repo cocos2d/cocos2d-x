@@ -24,12 +24,12 @@
  ****************************************************************************/
 
 #include "CCStencilCommand.h"
-#include "ccMacros.h"
-#include "CCDirector.h"
-#include "CCRenderer.h"
-#include "CCGLProgram.h"
-#include "CCGLProgramCache.h"
-#include "ccGLStateCache.h"
+#include "base/ccMacros.h"
+#include "base/CCDirector.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/CCGLProgramCache.h"
+#include "renderer/ccGLStateCache.h"
 
 NS_CC_BEGIN
 
@@ -212,9 +212,9 @@ void BeginStencilCommand::execute()
     if (_alphaThreshold < 1) {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
         // manually save the alpha test state
-        _currentAlphaTestEnabled = glIsEnabled(GL_ALPHA_TEST);
-        glGetIntegerv(GL_ALPHA_TEST_FUNC, (GLint *)&_currentAlphaTestFunc);
-        glGetFloatv(GL_ALPHA_TEST_REF, &_currentAlphaTestRef);
+//        _currentAlphaTestEnabled = glIsEnabled(GL_ALPHA_TEST);
+//        glGetIntegerv(GL_ALPHA_TEST_FUNC, (GLint *)&_currentAlphaTestFunc);
+//        glGetFloatv(GL_ALPHA_TEST_REF, &_currentAlphaTestRef);
         // enable alpha testing
         glEnable(GL_ALPHA_TEST);
         // check for OpenGL error while enabling alpha test
