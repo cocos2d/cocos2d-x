@@ -152,11 +152,10 @@ void ScriptHandlerMgr::addObjectHandler(void* object,int handler,ScriptHandlerMg
         return;
     
     //may be not need
-    removeObjectHandler(object,handlerType);
+//    removeObjectHandler(object,handlerType);
     
     auto iter = _mapObjectHandlers.find(object);
     VecHandlerPairs vecHandlers;
-    vecHandlers.clear();
     if (_mapObjectHandlers.end() != iter)
     {
         vecHandlers = iter->second;
