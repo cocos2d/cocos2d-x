@@ -209,6 +209,14 @@ public:
      * @lua NA
      */
 	void releaseGLTexture();
+    
+    /** sets whether the texture2d instance will delete the GL texture when it's destructor is called
+     */
+    void setDeleteGLOnDestruction(bool deleteGLOnDestruction) { _deleteGLOnDestruction = deleteGLOnDestruction; }
+    
+    /** gets whether the texture2d instance will delete the GL texture when it's destructor is called
+     */
+    bool getDeleteGLOnDestruction() { return _deleteGLOnDestruction; }
 
     /** Initializes with a texture2d with data 
      * @js NA
@@ -434,6 +442,8 @@ protected:
     static const PixelFormatInfoMap _pixelFormatInfoTables;
 
     bool _antialiasEnabled;
+    
+    bool _deleteGLOnDestruction;
 };
 
 
