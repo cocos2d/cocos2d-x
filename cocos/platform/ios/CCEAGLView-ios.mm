@@ -729,7 +729,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     double aniDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     
     CGSize viewSize = self.frame.size;
-    CGFloat tmp;
     
     switch (getFixedOrientation([[UIApplication sharedApplication] statusBarOrientation]))
     {
@@ -744,52 +743,33 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
             break;
             
         case UIInterfaceOrientationLandscapeLeft:
-            std::swap(begin.size.width, begin.size.height);
-            std::swap(end.size.width, end.size.height);
-            std::swap(viewSize.width, viewSize.height);
-            
-            tmp = begin.origin.x;
-            begin.origin.x = begin.origin.y;
-            begin.origin.y = viewSize.height - tmp - begin.size.height;
-            tmp = end.origin.x;
-            end.origin.x = end.origin.y;
-            end.origin.y = viewSize.height - tmp - end.size.height;
+            begin.origin.y = viewSize.height - begin.origin.y - begin.size.height;
+            end.origin.y = viewSize.height - end.origin.y - end.size.height;
             break;
             
         case UIInterfaceOrientationLandscapeRight:
-            std::swap(begin.size.width, begin.size.height);
-            std::swap(end.size.width, end.size.height);
-            std::swap(viewSize.width, viewSize.height);
-            
-            tmp = begin.origin.x;
-            begin.origin.x = begin.origin.y;
-            begin.origin.y = tmp;
-            tmp = end.origin.x;
-            end.origin.x = end.origin.y;
-            end.origin.y = tmp;
+            begin.origin.y = viewSize.height - (begin.origin.y + begin.size.height);
+            end.origin.y = viewSize.height - (end.origin.y + end.size.height);
             break;
             
         default:
             break;
     }
-
+    
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
     float scaleX = glview->getScaleX();
 	float scaleY = glview->getScaleY();
-    
-    
     
     // Convert to pixel coordinate
     begin = CGRectApplyAffineTransform(begin, CGAffineTransformScale(CGAffineTransformIdentity, self.contentScaleFactor, self.contentScaleFactor));
     end = CGRectApplyAffineTransform(end, CGAffineTransformScale(CGAffineTransformIdentity, self.contentScaleFactor, self.contentScaleFactor));
     
-    float offestY = glview->getViewPortRect().origin.y;
-    CCLOG("offestY = %f", offestY);
-    if (offestY < 0.0f)
+    float offsetY = glview->getViewPortRect().origin.y;
+    if (offsetY < 0.0f)
     {
-        begin.origin.y += offestY;
-        begin.size.height -= offestY;
-        end.size.height -= offestY;
+        begin.origin.y += offsetY;
+        begin.size.height -= offsetY;
+        end.size.height -= offsetY;
     }
     
     // Convert to desigin coordinate
@@ -871,11 +851,11 @@ UIInterfaceOrientation getFixedOrientation(UIInterfaceOrientation statusBarOrien
             break;
             
         case UIInterfaceOrientationLandscapeLeft:
-            self.frame = CGRectMake(originalRect_.origin.x - dis, originalRect_.origin.y , originalRect_.size.width, originalRect_.size.height);
+            self.frame = CGRectMake(originalRect_.origin.x, originalRect_.origin.y - dis, originalRect_.size.width, originalRect_.size.height);
             break;
             
         case UIInterfaceOrientationLandscapeRight:
-            self.frame = CGRectMake(originalRect_.origin.x + dis, originalRect_.origin.y , originalRect_.size.width, originalRect_.size.height);
+            self.frame = CGRectMake(originalRect_.origin.x, originalRect_.origin.y - dis, originalRect_.size.width, originalRect_.size.height);
             break;
             
         default:
