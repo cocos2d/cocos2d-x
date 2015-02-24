@@ -680,6 +680,8 @@
         "cocos/editor-support/cocostudio/WidgetReader/SingleNodeReader/SingleNodeReader.h", 
         "cocos/editor-support/cocostudio/WidgetReader/SliderReader/SliderReader.cpp", 
         "cocos/editor-support/cocostudio/WidgetReader/SliderReader/SliderReader.h", 
+        "cocos/editor-support/cocostudio/WidgetReader/Sprite3DReader/Sprite3DReader.cpp", 
+        "cocos/editor-support/cocostudio/WidgetReader/Sprite3DReader/Sprite3DReader.h", 
         "cocos/editor-support/cocostudio/WidgetReader/SpriteReader/SpriteReader.cpp", 
         "cocos/editor-support/cocostudio/WidgetReader/SpriteReader/SpriteReader.h", 
         "cocos/editor-support/cocostudio/WidgetReader/TextAtlasReader/TextAtlasReader.cpp", 
