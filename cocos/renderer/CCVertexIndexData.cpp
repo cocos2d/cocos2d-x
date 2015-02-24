@@ -35,6 +35,7 @@
 #include "base/CCEventType.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
+#include "base/CCDirector.h"
 #define SUPPORT_EVENT_RENDERER_RECREATED
 #endif
 
