@@ -115,6 +115,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\OpenURLTest\OpenURLTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ParallaxTest\ParallaxTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\Particle3DTest\Particle3DTest.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\CocosStudio3DTest\CocosStudio3DTest.cpp" />    
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ParticleTest\ParticleTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceAllocTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceCallbackTest.cpp" />
@@ -374,6 +375,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\OpenURLTest\OpenURLTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ParallaxTest\ParallaxTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\Particle3DTest\Particle3DTest.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\CocosStudio3DTest\CocosStudio3DTest.h" />    
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ParticleTest\ParticleTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceAllocTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceCallbackTest.h" />

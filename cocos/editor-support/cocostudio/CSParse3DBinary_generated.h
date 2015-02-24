@@ -57,7 +57,25 @@ struct ResourceData;
 namespace flatbuffers {
 
 struct Node3DOption;
+struct Sprite3DOptions;
+struct Particle3DOptions;
+struct UserCameraOptions;
+struct Vector2;
 struct Vector3;
+
+MANUALLY_ALIGNED_STRUCT(4) Vector2 {
+ private:
+  float x_;
+  float y_;
+
+ public:
+  Vector2(float x, float y)
+    : x_(flatbuffers::EndianScalar(x)), y_(flatbuffers::EndianScalar(y)) { }
+
+  float x() const { return flatbuffers::EndianScalar(x_); }
+  float y() const { return flatbuffers::EndianScalar(y_); }
+};
+STRUCT_END(Vector2, 8);
 
 MANUALLY_ALIGNED_STRUCT(4) Vector3 {
  private:
@@ -121,6 +139,130 @@ inline flatbuffers::Offset<Node3DOption> CreateNode3DOption(flatbuffers::FlatBuf
   builder_.add_rotation3D(rotation3D);
   builder_.add_position3D(position3D);
   builder_.add_nodeOptions(nodeOptions);
+  return builder_.Finish();
+}
+
+struct Sprite3DOptions : private flatbuffers::Table {
+  const Node3DOption *node3DOption() const { return GetPointer<const Node3DOption *>(4); }
+  const flatbuffers::ResourceData *fileData() const { return GetPointer<const flatbuffers::ResourceData *>(6); }
+  uint8_t runAction() const { return GetField<uint8_t>(8, 0); }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* node3DOption */) &&
+           verifier.VerifyTable(node3DOption()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 6 /* fileData */) &&
+           verifier.VerifyTable(fileData()) &&
+           VerifyField<uint8_t>(verifier, 8 /* runAction */) &&
+           verifier.EndTable();
+  }
+};
+
+struct Sprite3DOptionsBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_node3DOption(flatbuffers::Offset<Node3DOption> node3DOption) { fbb_.AddOffset(4, node3DOption); }
+  void add_fileData(flatbuffers::Offset<flatbuffers::ResourceData> fileData) { fbb_.AddOffset(6, fileData); }
+  void add_runAction(uint8_t runAction) { fbb_.AddElement<uint8_t>(8, runAction, 0); }
+  Sprite3DOptionsBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+  Sprite3DOptionsBuilder &operator=(const Sprite3DOptionsBuilder &);
+  flatbuffers::Offset<Sprite3DOptions> Finish() {
+    auto o = flatbuffers::Offset<Sprite3DOptions>(fbb_.EndTable(start_, 3));
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<Sprite3DOptions> CreateSprite3DOptions(flatbuffers::FlatBufferBuilder &_fbb,
+   flatbuffers::Offset<Node3DOption> node3DOption = 0,
+   flatbuffers::Offset<flatbuffers::ResourceData> fileData = 0,
+   uint8_t runAction = 0) {
+  Sprite3DOptionsBuilder builder_(_fbb);
+  builder_.add_fileData(fileData);
+  builder_.add_node3DOption(node3DOption);
+  builder_.add_runAction(runAction);
+  return builder_.Finish();
+}
+
+struct Particle3DOptions : private flatbuffers::Table {
+  const Node3DOption *node3DOption() const { return GetPointer<const Node3DOption *>(4); }
+  const flatbuffers::ResourceData *fileData() const { return GetPointer<const flatbuffers::ResourceData *>(6); }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* node3DOption */) &&
+           verifier.VerifyTable(node3DOption()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 6 /* fileData */) &&
+           verifier.VerifyTable(fileData()) &&
+           verifier.EndTable();
+  }
+};
+
+struct Particle3DOptionsBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_node3DOption(flatbuffers::Offset<Node3DOption> node3DOption) { fbb_.AddOffset(4, node3DOption); }
+  void add_fileData(flatbuffers::Offset<flatbuffers::ResourceData> fileData) { fbb_.AddOffset(6, fileData); }
+  Particle3DOptionsBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+  Particle3DOptionsBuilder &operator=(const Particle3DOptionsBuilder &);
+  flatbuffers::Offset<Particle3DOptions> Finish() {
+    auto o = flatbuffers::Offset<Particle3DOptions>(fbb_.EndTable(start_, 2));
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<Particle3DOptions> CreateParticle3DOptions(flatbuffers::FlatBufferBuilder &_fbb,
+   flatbuffers::Offset<Node3DOption> node3DOption = 0,
+   flatbuffers::Offset<flatbuffers::ResourceData> fileData = 0) {
+  Particle3DOptionsBuilder builder_(_fbb);
+  builder_.add_fileData(fileData);
+  builder_.add_node3DOption(node3DOption);
+  return builder_.Finish();
+}
+
+struct UserCameraOptions : private flatbuffers::Table {
+  const Node3DOption *node3DOption() const { return GetPointer<const Node3DOption *>(4); }
+  float fov() const { return GetField<float>(6, 60); }
+  float near() const { return GetField<float>(8, 1); }
+  float far() const { return GetField<float>(10, 1000); }
+  int32_t cameraFlag() const { return GetField<int32_t>(12, 0); }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* node3DOption */) &&
+           verifier.VerifyTable(node3DOption()) &&
+           VerifyField<float>(verifier, 6 /* fov */) &&
+           VerifyField<float>(verifier, 8 /* near */) &&
+           VerifyField<float>(verifier, 10 /* far */) &&
+           VerifyField<int32_t>(verifier, 12 /* cameraFlag */) &&
+           verifier.EndTable();
+  }
+};
+
+struct UserCameraOptionsBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_node3DOption(flatbuffers::Offset<Node3DOption> node3DOption) { fbb_.AddOffset(4, node3DOption); }
+  void add_fov(float fov) { fbb_.AddElement<float>(6, fov, 60); }
+  void add_near(float near) { fbb_.AddElement<float>(8, near, 1); }
+  void add_far(float far) { fbb_.AddElement<float>(10, far, 1000); }
+  void add_cameraFlag(int32_t cameraFlag) { fbb_.AddElement<int32_t>(12, cameraFlag, 0); }
+  UserCameraOptionsBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+  UserCameraOptionsBuilder &operator=(const UserCameraOptionsBuilder &);
+  flatbuffers::Offset<UserCameraOptions> Finish() {
+    auto o = flatbuffers::Offset<UserCameraOptions>(fbb_.EndTable(start_, 5));
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<UserCameraOptions> CreateUserCameraOptions(flatbuffers::FlatBufferBuilder &_fbb,
+   flatbuffers::Offset<Node3DOption> node3DOption = 0,
+   float fov = 60,
+   float near = 1,
+   float far = 1000,
+   int32_t cameraFlag = 0) {
+  UserCameraOptionsBuilder builder_(_fbb);
+  builder_.add_cameraFlag(cameraFlag);
+  builder_.add_far(far);
+  builder_.add_near(near);
+  builder_.add_fov(fov);
+  builder_.add_node3DOption(node3DOption);
   return builder_.Finish();
 }
 

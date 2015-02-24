@@ -372,6 +372,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Node3DReader\Node3DReader.h">
       <Filter>cocostudio\reader\WidgetReader\Node3DReader</Filter>
     </ClInclude>    
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.h">
+      <Filter>cocostudio\reader\WidgetReader\Sprite3DReader</Filter>
+    </ClInclude>        
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\WidgetReader.h">
       <Filter>cocostudio\reader\WidgetReader</Filter>
     </ClInclude>
@@ -1903,6 +1906,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Node3DReader\Node3DReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\Node3DReader</Filter>
     </ClCompile>    
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\Sprite3DReader</Filter>
+    </ClCompile>        
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\WidgetReader.cpp">
       <Filter>cocostudio\reader\WidgetReader</Filter>
     </ClCompile>
@@ -3139,6 +3145,9 @@
     <Filter Include="cocostudio\reader\WidgetReader\Node3DReader">
       <UniqueIdentifier>{c03ed815-ce08-4801-bdd6-1104ff3c014e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\Sprite3DReader">
+      <UniqueIdentifier>{c03ed815-ce10-4301-bdd6-1104ff3c014e}</UniqueIdentifier>
+    </Filter>    
     <Filter Include="ui\BaseClasses">
       <UniqueIdentifier>{48ae1ce9-b81f-479f-b59c-b10e344699d8}</UniqueIdentifier>
     </Filter>
