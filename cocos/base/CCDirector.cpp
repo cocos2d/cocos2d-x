@@ -60,6 +60,8 @@ THE SOFTWARE.
 #include "base/CCAsyncTaskPool.h"
 #include "platform/CCApplication.h"
 //#include "platform/CCGLViewImpl.h"
+#include "renderer/abstraction/GraphicsAPIManager.h"
+#include "renderer/abstraction/interface/GraphicsInterface.h"
 
 #if CC_ENABLE_SCRIPT_BINDING
 #include "CCScriptSupport.h"
@@ -112,6 +114,10 @@ Director::Director()
 
 bool Director::init(void)
 {
+    // this needs to come first so that anyone logging doesn't crash
+    // CCLOG calls Director::getInstance()->getConsole()->log(...)
+    _console = new (std::nothrow) Console;
+
     setDefaultValues();
 
     // scenes
@@ -161,14 +167,14 @@ bool Director::init(void)
     _eventProjectionChanged = new (std::nothrow) EventCustom(EVENT_PROJECTION_CHANGED);
     _eventProjectionChanged->setUserData(this);
 
-
+    _graphicsAPIManager = GraphicsAPIManager::create();
+    _graphicsAPIManager->createAPI("opengles2.0");
+    
     //init TextureCache
     initTextureCache();
     initMatrixStack();
 
     _renderer = new (std::nothrow) Renderer;
-
-    _console = new (std::nothrow) Console;
 
     return true;
 }
@@ -446,6 +452,18 @@ void Director::setViewport()
 void Director::setNextDeltaTimeZero(bool nextDeltaTimeZero)
 {
     _nextDeltaTimeZero = nextDeltaTimeZero;
+}
+
+// MARK: graphics API
+GraphicsInterface* Director::getGraphicsInterface() const
+{
+    return _graphicsInterface.get();
+}
+
+void Director::selectGraphicsAPI(const char* name)
+{
+    auto api = _graphicsAPIManager->createAPI(name);
+    _graphicsInterface = std::move(api);
 }
 
 //

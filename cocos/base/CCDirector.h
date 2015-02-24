@@ -58,8 +58,9 @@ class EventListenerCustom;
 class TextureCache;
 class Renderer;
 class Camera;
-
 class Console;
+class GraphicsAPIManager;
+class GraphicsInterface;
 
 /**
 @brief Class that creates and handles the main Window and manages how
@@ -129,7 +130,7 @@ public:
      */
     virtual ~Director();
     virtual bool init();
-
+    
     // attribute
 
     /** Get current running Scene. Director can only run one Scene at a time */
@@ -399,6 +400,9 @@ public:
     const Mat4& getMatrix(MATRIX_STACK_TYPE type);
     void resetMatrixStack();
 
+    GraphicsInterface* getGraphicsInterface() const;
+    void selectGraphicsAPI(const char* name);
+    
 protected:
     void reset();
     
@@ -443,7 +447,17 @@ protected:
      */
     EventDispatcher* _eventDispatcher;
     EventCustom *_eventProjectionChanged, *_eventAfterDraw, *_eventAfterVisit, *_eventAfterUpdate;
-        
+    
+    /** Graphics API Manager
+     @since v4.0
+     */
+    std::unique_ptr<GraphicsAPIManager> _graphicsAPIManager;
+    
+    /** Selected Graphics Interface
+     @since v4.0
+     */
+    std::unique_ptr<GraphicsInterface> _graphicsInterface;
+    
     /* delta time since last tick to main loop */
 	float _deltaTime;
     
