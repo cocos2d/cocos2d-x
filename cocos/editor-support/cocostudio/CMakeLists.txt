@@ -59,6 +59,7 @@ set(COCOS_CS_SRC
   editor-support/cocostudio/WidgetReader/SliderReader/SliderReader.cpp
   editor-support/cocostudio/WidgetReader/PageViewReader/PageViewReader.cpp
   editor-support/cocostudio/WidgetReader/TextReader/TextReader.cpp
+  editor-support/cocostudio/WidgetReader/Node3DReader/Node3DReader.cpp  
   editor-support/cocostudio/WidgetReader/TextAtlasReader/TextAtlasReader.cpp
   editor-support/cocostudio/WidgetReader/LayoutReader/LayoutReader.cpp
   editor-support/cocostudio/WidgetReader/TextBMFontReader/TextBMFontReader.cpp

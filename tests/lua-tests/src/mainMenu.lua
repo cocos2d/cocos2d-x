@@ -56,6 +56,7 @@ require "CaptureScreenTest/CaptureScreenTest"
 require "VideoPlayerTest/VideoPlayerTest"
 require "FastTiledMapTest/FastTiledMapTest"
 require "NewAudioEngineTest/NewAudioEngineTest"
+require "CocosStudio3DTest/CocosStudio3DTest"
 
 local LINE_SPACE = 40
 
@@ -87,6 +88,7 @@ local _allTests = {
     { isSupported = false,  name = "ChipmunkAccelTouchTest" , create_func=    ChipmunkAccelTouchTestMain  },
     { isSupported = true,  name = "ClickAndMoveTest"       , create_func   =          ClickAndMoveTest      },
     { isSupported = true,  name = "CocosDenshionTest"      , create_func   =         CocosDenshionTestMain  },
+    { isSupported = true,  name = "CocosStudio3DTest"      , create_func   =               CocosStudio3DTest},
     { isSupported = true,  name = "CocoStudioTest"         , create_func   =         CocoStudioTestMain  },  
     { isSupported = false,  name = "CurlTest"               , create_func=                  CurlTestMain  },
     { isSupported = true,  name = "CurrentLanguageTest"    , create_func=   CurrentLanguageTestMain      },
