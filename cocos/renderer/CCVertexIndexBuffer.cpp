@@ -190,7 +190,10 @@ void GLArrayBuffer::moveElements(size_t source, size_t dest, size_t count)
 void GLArrayBuffer::bindAndCommit(const void* elements, size_t count, size_t begin)
 {
     CCASSERT(true == hasNative(), "GLArrayBuffer::bindAndCommit : array has no native buffer");
-    
+
+    if (_vbo)
+        GL::bindVBO(_target, _vbo);
+
     if (false == isDirty())
         return;
     
