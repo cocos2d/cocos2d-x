@@ -25,7 +25,14 @@
 #include "Sprite3DReader.h"
 
 #include "cocostudio/CSParseBinary_generated.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+// conflict with near and far defines in windows.h
+#undef near
+#undef far
+#endif
 #include "cocostudio/CSParse3DBinary_generated.h"
+
 #include "cocostudio/FlatBuffersSerialize.h"
 #include "cocostudio/WidgetReader/Node3DReader/Node3DReader.h"
 
