@@ -785,6 +785,9 @@ CC_DEPRECATED_ATTRIBUTE typedef __RGBAProtocol RGBAProtocol;
 CC_DEPRECATED_ATTRIBUTE typedef __NodeRGBA NodeRGBA;
 CC_DEPRECATED_ATTRIBUTE typedef __LayerRGBA LayerRGBA;
 
+CC_DEPRECATED_ATTRIBUTE typedef __LabelBMFont LabelBMFont;
+CC_DEPRECATED_ATTRIBUTE typedef __LabelTTF LabelTTF;
+
 //deprecated attributes and methods for kazMath
 CC_DEPRECATED_ATTRIBUTE typedef float kmScalar;
 
