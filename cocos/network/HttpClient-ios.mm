@@ -335,7 +335,7 @@ static void processResponse(HttpResponse* response, char* errorBuffer)
         break;
 
     default:
-        CCASSERT(true, "CCHttpClient: unkown request type, only GET and POSt are supported");
+        CCASSERT(true, "CCHttpClient: unknown request type, only GET and POSt are supported");
         break;
     }
     

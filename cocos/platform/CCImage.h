@@ -92,7 +92,7 @@ public:
         //! Raw Data
         RAW_DATA,
         //! Unknown format
-        UNKOWN
+        UNKNOWN
     };
 
     /**
