@@ -63,14 +63,14 @@
     NSLog(@"Starting to load %@", srcURL);
     finish = false;
 
-    self.responseData = [NSMutableData new];
+    self.responseData = [NSMutableData data];
     getDataTime = 0;
     self.responseError = nil;
     
     // create the connection with the target request and this class as the delegate
-    self.conn = [[NSURLConnection alloc] initWithRequest:request
-                                                delegate:self
-                                        startImmediately:NO];
+    self.conn = [[[NSURLConnection alloc] initWithRequest:request
+                                                 delegate:self
+                                         startImmediately:NO] autorelease];
     
     [self.conn scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     

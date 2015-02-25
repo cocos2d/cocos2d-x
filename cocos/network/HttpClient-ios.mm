@@ -281,7 +281,7 @@ static int processTask(HttpRequest *request, NSString* requestType, void *stream
     }
     
     //handle response header
-    NSMutableString *header = [NSMutableString new];
+    NSMutableString *header = [NSMutableString string];
     [header appendFormat:@"HTTP/1.1 %ld %@\n", (long)httpAsynConn.responseCode, httpAsynConn.statusString];
     for (id key in httpAsynConn.responseHeader)
     {
