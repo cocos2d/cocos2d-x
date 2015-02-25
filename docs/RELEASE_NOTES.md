@@ -125,7 +125,7 @@ addChild(rootps);
 rootps->startParticleSystem();
 ```
 
-Option 2, you can also create 3d particle with particle (.pu) file only, it will all the material files in the material path
+Option 2, you can also create 3d particle with particle (.pu) file only, it will load all the material files in the material path
 ```c++
 auto rootps = PUParticleSystem3D::create("advancedLodSystem.pu");
 addChild(rootps);
