@@ -65,4 +65,12 @@ protected:
     UI_SCENE_CREATE_FUNC(UITextTest_TTF)
 };
 
+class UITextTest_IgnoreConentSize : public UIScene
+{
+public:
+    bool init();
+protected:
+    UI_SCENE_CREATE_FUNC(UITextTest_IgnoreConentSize)
+};
+
 #endif /* defined(__TestCpp__UITextTest__) */

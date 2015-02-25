@@ -18,15 +18,22 @@
 -- @return EaseCircleActionIn#EaseCircleActionIn ret (return value: cc.EaseCircleActionIn)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#EaseCircleActionIn] update 
 -- @param self
 -- @param #float time
+-- @return EaseCircleActionIn#EaseCircleActionIn self (return value: cc.EaseCircleActionIn)
         
 --------------------------------
 -- 
 -- @function [parent=#EaseCircleActionIn] reverse 
 -- @param self
 -- @return EaseCircleActionIn#EaseCircleActionIn ret (return value: cc.EaseCircleActionIn)
+        
+--------------------------------
+-- 
+-- @function [parent=#EaseCircleActionIn] EaseCircleActionIn 
+-- @param self
+-- @return EaseCircleActionIn#EaseCircleActionIn self (return value: cc.EaseCircleActionIn)
         
 return nil

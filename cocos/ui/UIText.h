@@ -144,11 +144,20 @@ public:
     //override "getVirtualRenderer" method of widget.
     virtual Node* getVirtualRenderer() override;
 
+    virtual Size getAutoRenderSize();
+
     /**
      * Returns the "class name" of widget.
      */
     virtual std::string getDescription() const override;
 
+    /**
+     * Set the rendering size of the text, you should call this method
+     * along with calling `ignoreContentAdaptWithSize(false)`, otherwise the text area
+     * size is caculated by the real size of the text content
+     * @param size   The text rendering area size
+     *
+     */
     void setTextAreaSize(const Size &size);
 
     const Size& getTextAreaSize()const;
@@ -197,8 +206,6 @@ protected:
     virtual void onPressStateChangedToDisabled() override;
     virtual void onSizeChanged() override;
    
-    virtual void updateFlippedX() override;
-    virtual void updateFlippedY() override;
     void labelScaleChangedWithSize();
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;

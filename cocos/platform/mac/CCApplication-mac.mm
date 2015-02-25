@@ -155,18 +155,16 @@ LanguageType Application::getCurrentLanguage()
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSArray *languages = [defaults objectForKey:@"AppleLanguages"];
     NSString *currentLanguage = [languages objectAtIndex:0];
-
+    
     // get the current language code.(such as English is "en", Chinese is "zh" and so on)
     NSDictionary* temp = [NSLocale componentsFromLocaleIdentifier:currentLanguage];
     NSString * languageCode = [temp objectForKey:NSLocaleLanguageCode];
-
+    
     LanguageType ret = LanguageType::ENGLISH;
-    if ([languageCode isEqualToString:@"zh"])
-    {
+    if ([languageCode isEqualToString:@"zh"]){
         ret = LanguageType::CHINESE;
     }
-    else if ([languageCode isEqualToString:@"en"])
-    {
+    else if ([languageCode isEqualToString:@"en"]){
         ret = LanguageType::ENGLISH;
     }
     else if ([languageCode isEqualToString:@"fr"]){
@@ -196,12 +194,10 @@ LanguageType Application::getCurrentLanguage()
     else if ([languageCode isEqualToString:@"hu"]){
         ret = LanguageType::HUNGARIAN;
     }
-    else if ([languageCode isEqualToString:@"pt"])
-    {
+    else if ([languageCode isEqualToString:@"pt"]){
         ret = LanguageType::PORTUGUESE;
     }
-    else if ([languageCode isEqualToString:@"ar"])
-    {
+    else if ([languageCode isEqualToString:@"ar"]){
         ret = LanguageType::ARABIC;
     }
     else if ([languageCode isEqualToString:@"nb"]){
@@ -209,6 +205,12 @@ LanguageType Application::getCurrentLanguage()
     }
     else if ([languageCode isEqualToString:@"pl"]){
         ret = LanguageType::POLISH;
+    }
+    else if ([languageCode isEqualToString:@"tr"]){
+        ret = LanguageType::TURKISH;
+    }
+    else if ([languageCode isEqualToString:@"uk"]){
+        ret = LanguageType::UKRAINIAN;
     }
     return ret;
 }
@@ -218,24 +220,6 @@ bool Application::openURL(const std::string &url)
     NSString* msg = [NSString stringWithCString:url.c_str() encoding:NSUTF8StringEncoding];
     NSURL* nsUrl = [NSURL URLWithString:msg];
     return [[NSWorkspace sharedWorkspace] openURL:nsUrl];
-}
-
-void Application::setResourceRootPath(const std::string& rootResDir)
-{
-    _resourceRootPath = rootResDir;
-    if (_resourceRootPath[_resourceRootPath.length() - 1] != '/')
-    {
-        _resourceRootPath += '/';
-    }
-    FileUtils* pFileUtils = FileUtils::getInstance();
-    std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
-    searchPaths.insert(searchPaths.begin(), _resourceRootPath);
-    pFileUtils->setSearchPaths(searchPaths);
-}
-
-const std::string& Application::getResourceRootPath(void)
-{
-    return _resourceRootPath;
 }
 
 void Application::setStartupScriptFilename(const std::string& startupScriptFile)

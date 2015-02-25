@@ -61,4 +61,12 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class MathUtilTest : public UnitTestDemo
+{
+public:
+    CREATE_FUNC(MathUtilTest);
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
 #endif /* __UNIT_TEST__ */

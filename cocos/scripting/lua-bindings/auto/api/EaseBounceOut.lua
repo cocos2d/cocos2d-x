@@ -18,15 +18,22 @@
 -- @return EaseBounceOut#EaseBounceOut ret (return value: cc.EaseBounceOut)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#EaseBounceOut] update 
 -- @param self
 -- @param #float time
+-- @return EaseBounceOut#EaseBounceOut self (return value: cc.EaseBounceOut)
         
 --------------------------------
 -- 
 -- @function [parent=#EaseBounceOut] reverse 
 -- @param self
 -- @return EaseBounce#EaseBounce ret (return value: cc.EaseBounce)
+        
+--------------------------------
+-- 
+-- @function [parent=#EaseBounceOut] EaseBounceOut 
+-- @param self
+-- @return EaseBounceOut#EaseBounceOut self (return value: cc.EaseBounceOut)
         
 return nil

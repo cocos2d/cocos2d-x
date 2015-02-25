@@ -58,7 +58,7 @@ static int lua_cocos2dx_experimental_TMXLayer_getTileGIDAt(lua_State* tolua_S)
         tolua_pushnumber(tolua_S,(lua_Number)arg1);
         return 2;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "ccexp.TMXLayer:getTileGIDAt",argc, 1);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccexp.TMXLayer:getTileGIDAt",argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1

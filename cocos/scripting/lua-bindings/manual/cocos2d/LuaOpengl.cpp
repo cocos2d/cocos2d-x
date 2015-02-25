@@ -26,7 +26,6 @@
 #include <string>
 #include "tolua_fix.h"
 #include "cocos2d.h"
-#include "extensions/cocos-ext.h"
 #include "CCLuaStack.h"
 #include "CCLuaValue.h"
 #include "CCLuaEngine.h"
@@ -34,8 +33,6 @@
 #include "LuaBasicConversions.h"
 
 using namespace cocos2d;
-using namespace cocos2d::extension;
-
 
     
 void GLNode::draw(Renderer *renderer, const cocos2d::Mat4& transform, uint32_t flags)
@@ -697,11 +694,11 @@ static int tolua_Cocos2d_glClearColor00(lua_State* tolua_S)
     else
 #endif
     {
-        unsigned int red   = (unsigned int)tolua_tonumber(tolua_S,1,0);
-        unsigned int green   = (unsigned int)tolua_tonumber(tolua_S,2,0);
-        unsigned int blue   = (unsigned int)tolua_tonumber(tolua_S,3,0);
-        unsigned int alpha   = (unsigned int)tolua_tonumber(tolua_S,4,0);
-        glClearColor((GLclampf)red , (GLclampf)green , (GLclampf)blue , (GLclampf)alpha);
+        GLclampf red   = (GLclampf)tolua_tonumber(tolua_S,1,0);
+        GLclampf green   = (GLclampf)tolua_tonumber(tolua_S,2,0);
+        GLclampf blue   = (GLclampf)tolua_tonumber(tolua_S,3,0);
+        GLclampf alpha   = (GLclampf)tolua_tonumber(tolua_S,4,0);
+        glClearColor(red , green , blue , alpha);
     }
     return 0;
 #ifndef TOLUA_RELEASE

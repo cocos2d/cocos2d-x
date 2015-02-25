@@ -32,8 +32,8 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 
 ****************************************************************************/
 #include "2d/CCLabelBMFont.h"
-#include "deprecated/CCString.h"
 #include "2d/CCSprite.h"
+#include "base/ccUTF8.h"
 
 #if CC_LABELBMFONT_DEBUG_DRAW
 #include "renderer/CCRenderer.h"
@@ -213,7 +213,7 @@ Rect LabelBMFont::getBoundingBox() const
 #if CC_LABELBMFONT_DEBUG_DRAW
 void LabelBMFont::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    Node::draw(renderer, transform, transformUpdated);
+    Node::draw(renderer, transform, _transformUpdated);
 
     _debugDrawNode->clear();
     auto size = getContentSize();

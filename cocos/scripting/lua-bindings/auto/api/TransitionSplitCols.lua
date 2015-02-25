@@ -32,5 +32,12 @@
 -- @param #cc.Renderer renderer
 -- @param #mat4_table transform
 -- @param #unsigned int flags
+-- @return TransitionSplitCols#TransitionSplitCols self (return value: cc.TransitionSplitCols)
+        
+--------------------------------
+-- 
+-- @function [parent=#TransitionSplitCols] TransitionSplitCols 
+-- @param self
+-- @return TransitionSplitCols#TransitionSplitCols self (return value: cc.TransitionSplitCols)
         
 return nil

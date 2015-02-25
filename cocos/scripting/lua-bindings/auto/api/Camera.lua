@@ -5,6 +5,23 @@
 -- @parent_module cc
 
 --------------------------------
+-- 
+-- @function [parent=#Camera] setScene 
+-- @param self
+-- @param #cc.Scene scene
+-- @return Camera#Camera self (return value: cc.Camera)
+        
+--------------------------------
+-- 
+-- @function [parent=#Camera] initPerspective 
+-- @param self
+-- @param #float fieldOfView
+-- @param #float aspectRatio
+-- @param #float nearPlane
+-- @param #float farPlane
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- Gets the camera's projection matrix.<br>
 -- return The camera projection matrix.
 -- @function [parent=#Camera] getProjectionMatrix 
@@ -38,24 +55,74 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
--- Creates a view matrix based on the specified input parameters.<br>
--- param eyePosition The eye position.<br>
--- param targetPosition The target's center position.<br>
--- param up The up vector.<br>
--- param dst A matrix to store the result in.
+--  init camera 
+-- @function [parent=#Camera] initDefault 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- Get object depth towards camera
+-- @function [parent=#Camera] getDepthInView 
+-- @param self
+-- @param #mat4_table transform
+-- @return float#float ret (return value: float)
+        
+--------------------------------
+-- Make Camera looks at target<br>
+-- param target The target camera is point at<br>
+-- param up The up vector, usually it's Y axis
 -- @function [parent=#Camera] lookAt 
 -- @param self
 -- @param #vec3_table target
 -- @param #vec3_table up
+-- @return Camera#Camera self (return value: cc.Camera)
+        
+--------------------------------
+-- Is this aabb visible in frustum
+-- @function [parent=#Camera] isVisibleInFrustum 
+-- @param self
+-- @param #cc.AABB aabb
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 
 -- @function [parent=#Camera] setCameraFlag 
 -- @param self
 -- @param #int flag
+-- @return Camera#Camera self (return value: cc.Camera)
         
 --------------------------------
---  create default camera, the camera type depends on Director::getProjection 
+-- 
+-- @function [parent=#Camera] initOrthographic 
+-- @param self
+-- @param #float zoomX
+-- @param #float zoomY
+-- @param #float nearPlane
+-- @param #float farPlane
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- set additional matrix for the projection matrix, it multiplys mat to projection matrix when called, used by WP8
+-- @function [parent=#Camera] setAdditionalProjection 
+-- @param self
+-- @param #mat4_table mat
+-- @return Camera#Camera self (return value: cc.Camera)
+        
+--------------------------------
+-- get depth, camera with larger depth is drawn on top of camera with smaller depth, the depth of camera with CameraFlag::DEFAULT is 0, user defined camera is -1 by default
+-- @function [parent=#Camera] getDepth 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
+-- set depth, camera with larger depth is drawn on top of camera with smaller depth, the depth of camera with CameraFlag::DEFAULT is 0, user defined camera is -1 by default
+-- @function [parent=#Camera] setDepth 
+-- @param self
+-- @param #int depth
+-- @return Camera#Camera self (return value: cc.Camera)
+        
+--------------------------------
+--  create default camera, the camera type depends on Director::getProjection, the depth of the default camera is 0 
 -- @function [parent=#Camera] create 
 -- @param self
 -- @return Camera#Camera ret (return value: cc.Camera)
@@ -91,14 +158,20 @@
         
 --------------------------------
 -- 
+-- @function [parent=#Camera] getDefaultCamera 
+-- @param self
+-- @return Camera#Camera ret (return value: cc.Camera)
+        
+--------------------------------
+-- 
 -- @function [parent=#Camera] getVisitingCamera 
 -- @param self
 -- @return Camera#Camera ret (return value: cc.Camera)
         
 --------------------------------
--- Sets the position (X, Y, and Z) in its parent's coordinate system
--- @function [parent=#Camera] setPosition3D 
+-- 
+-- @function [parent=#Camera] Camera 
 -- @param self
--- @param #vec3_table position
+-- @return Camera#Camera self (return value: cc.Camera)
         
 return nil

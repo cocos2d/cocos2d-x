@@ -184,10 +184,14 @@ struct CC_DLL Color4F
 /** A texcoord composed of 2 floats: u, y
  @since v3.0
  */
-struct CC_DLL Tex2F {
+struct CC_DLL Tex2F
+{
     Tex2F(float _u, float _v): u(_u), v(_v) {}
-    
     Tex2F(): u(0.f), v(0.f) {}
+    Tex2F(const Vec2& _v)
+    : u(_v.x)
+    , v(_v.y)
+    {}
     
     GLfloat u;
     GLfloat v;
@@ -229,6 +233,26 @@ struct V2F_C4B_T2F
     Color4B        colors;
     //! tex coords (2F)
     Tex2F          texCoords;
+};
+
+//! a Vec2 with a vertex point, and a color 4B
+struct V2F_C4B
+{
+    //! vertices (2F)
+    Vec2       vertices;
+    //! colors (4B)
+    Color4B        colors;
+};
+
+//! a Vec2 with a vertex point, a point size and a color 4B
+struct V2F_C4B_PF
+{
+    //! vertices (2F)
+    Vec2       vertices;
+    //! colors (4B)
+    Color4B        colors;
+    //! pointsize
+    float      pointSize;
 };
 
 //! a Vec2 with a vertex point, a tex coord point and a color 4F
@@ -439,6 +463,7 @@ public:
     FontStroke()
 	    : _strokeEnabled(false)
         , _strokeColor(Color3B::BLACK)
+        , _strokeAlpha(255)
         , _strokeSize(0)
     {}
     
@@ -446,6 +471,8 @@ public:
     bool      _strokeEnabled;
     // stroke color
 	Color3B   _strokeColor;
+    // stroke alpha
+    GLubyte   _strokeAlpha;
     // stroke size
     float     _strokeSize;
     
@@ -465,6 +492,7 @@ public:
         , _vertAlignment(TextVAlignment::TOP)
     	, _dimensions(Size::ZERO)
         , _fontFillColor(Color3B::WHITE)
+        , _fontAlpha(255)
     {}
     
     // font name
@@ -479,6 +507,8 @@ public:
     Size                  _dimensions;
     // font color
     Color3B               _fontFillColor;
+    //font alpha
+    GLubyte               _fontAlpha;
     // font shadow
     FontShadow            _shadow;
     // font stroke

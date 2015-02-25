@@ -5,7 +5,19 @@
 -- @parent_module cc
 
 --------------------------------
---  creates an initializes the action with the property name (key), and the from and to parameters. 
+-- initializes the action with the property name (key), and the from and to parameters. <br>
+-- param duration in seconds
+-- @function [parent=#ActionTween] initWithDuration 
+-- @param self
+-- @param #float duration
+-- @param #string key
+-- @param #float from
+-- @param #float to
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- creates an initializes the action with the property name (key), and the from and to parameters. <br>
+-- param duration in seconds
 -- @function [parent=#ActionTween] create 
 -- @param self
 -- @param #float duration
@@ -19,6 +31,7 @@
 -- @function [parent=#ActionTween] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return ActionTween#ActionTween self (return value: cc.ActionTween)
         
 --------------------------------
 -- 
@@ -27,10 +40,11 @@
 -- @return ActionTween#ActionTween ret (return value: cc.ActionTween)
         
 --------------------------------
--- 
+-- param dt in seconds
 -- @function [parent=#ActionTween] update 
 -- @param self
 -- @param #float dt
+-- @return ActionTween#ActionTween self (return value: cc.ActionTween)
         
 --------------------------------
 -- 

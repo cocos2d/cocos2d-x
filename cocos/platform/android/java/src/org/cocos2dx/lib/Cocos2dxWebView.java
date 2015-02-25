@@ -6,6 +6,7 @@ import java.net.URI;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
+import android.view.Gravity;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -14,8 +15,8 @@ import android.widget.FrameLayout;
 public class Cocos2dxWebView extends WebView {
     private static final String TAG = Cocos2dxWebViewHelper.class.getSimpleName();
 
-    private int viewTag;
-    private String jsScheme;
+    private int mViewTag;
+    private String mJSScheme;
 
     public Cocos2dxWebView(Context context) {
         this(context, -1);
@@ -24,8 +25,8 @@ public class Cocos2dxWebView extends WebView {
     @SuppressLint("SetJavaScriptEnabled")
     public Cocos2dxWebView(Context context, int viewTag) {
         super(context);
-        this.viewTag = viewTag;
-        this.jsScheme = "";
+        this.mViewTag = viewTag;
+        this.mJSScheme = "";
 
         this.setFocusable(true);
         this.setFocusableInTouchMode(true);
@@ -47,7 +48,7 @@ public class Cocos2dxWebView extends WebView {
     }
 
     public void setJavascriptInterfaceScheme(String scheme) {
-        this.jsScheme = scheme != null ? scheme : "";
+        this.mJSScheme = scheme != null ? scheme : "";
     }
 
     public void setScalesPageToFit(boolean scalesPageToFit) {
@@ -58,37 +59,34 @@ public class Cocos2dxWebView extends WebView {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String urlString) {
             URI uri = URI.create(urlString);
-            if (uri != null && uri.getScheme().equals(jsScheme)) {
-                Cocos2dxWebViewHelper._onJsCallback(viewTag, urlString);
+            if (uri != null && uri.getScheme().equals(mJSScheme)) {
+                Cocos2dxWebViewHelper._onJsCallback(mViewTag, urlString);
                 return true;
             }
-            return Cocos2dxWebViewHelper._shouldStartLoading(viewTag, urlString);
+            return Cocos2dxWebViewHelper._shouldStartLoading(mViewTag, urlString);
         }
 
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            Cocos2dxWebViewHelper._didFinishLoading(viewTag, url);
+            Cocos2dxWebViewHelper._didFinishLoading(mViewTag, url);
         }
 
         @Override
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
             super.onReceivedError(view, errorCode, description, failingUrl);
-            Cocos2dxWebViewHelper._didFailLoading(viewTag, failingUrl);
+            Cocos2dxWebViewHelper._didFailLoading(mViewTag, failingUrl);
         }
     }
-
+    
     public void setWebViewRect(int left, int top, int maxWidth, int maxHeight) {
-        fixSize(left, top, maxWidth, maxHeight);
-    }
-
-    private void fixSize(int left, int top, int width, int height) {
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,
                 FrameLayout.LayoutParams.WRAP_CONTENT);
         layoutParams.leftMargin = left;
         layoutParams.topMargin = top;
-        layoutParams.width = width;
-        layoutParams.height = height;
+        layoutParams.width = maxWidth;
+        layoutParams.height = maxHeight;
+        layoutParams.gravity = Gravity.TOP | Gravity.LEFT;
         this.setLayoutParams(layoutParams);
     }
 }

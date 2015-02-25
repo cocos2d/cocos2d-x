@@ -1,5 +1,6 @@
-
-ccui = ccui or {}
+if nil == ccui then
+    return
+end
 
 ccui.BrightStyle =
 {
@@ -177,4 +178,18 @@ ccui.ListViewGravity = {
 ccui.TextType = {
     SYSTEM = 0,
     TTF    = 1,
+}
+
+ccui.LayoutComponent.HorizontalEdge = {
+    None = 0,
+    Left = 1,
+    Right = 2,
+    Center = 3,
+}
+
+ccui.LayoutComponent.VerticalEdge = {
+    None = 0,
+    Bottom = 1,
+    Top = 2,
+    Center = 3,
 }

@@ -6,9 +6,16 @@
 
 --------------------------------
 -- 
+-- @function [parent=#PhysicsJointDistance] createConstraints 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#PhysicsJointDistance] setDistance 
 -- @param self
 -- @param #float distance
+-- @return PhysicsJointDistance#PhysicsJointDistance self (return value: cc.PhysicsJointDistance)
         
 --------------------------------
 -- 

@@ -24,7 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "platform/CCPlatformConfig.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) ||  (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 
 #include "cocos2d.h"
 #include "platform/CCDevice.h"
@@ -42,14 +42,7 @@ CCFreeTypeFont sFT;
 
 int Device::getDPI()
 {
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-	static const float dipsPerInch = 96.0f;
-	return floor(DisplayProperties::LogicalDpi / dipsPerInch + 0.5f); // Round to nearest integer.
-#elif defined WP8_SHADER_COMPILER
-    return 0;
-#else
     return cocos2d::GLViewImpl::sharedOpenGLView()->GetDPI();
-#endif
 }
 
 static Accelerometer^ sAccelerometer = nullptr;
@@ -57,7 +50,6 @@ static Accelerometer^ sAccelerometer = nullptr;
 
 void Device::setAccelerometerEnabled(bool isEnabled)
 {
-#ifndef WP8_SHADER_COMPILER
     static Windows::Foundation::EventRegistrationToken sToken;
     static bool sEnabled = false;
 
@@ -100,48 +92,53 @@ void Device::setAccelerometerEnabled(bool isEnabled)
 
             auto orientation = GLViewImpl::sharedOpenGLView()->getDeviceOrientation();
 
+            // from http://msdn.microsoft.com/en-us/library/windows/apps/dn440593
             switch (orientation)
             {
             case DisplayOrientations::Portrait:
- 				acc.x = reading->AccelerationX;
-				acc.y = reading->AccelerationY;
+                acc.x = reading->AccelerationY;
+                acc.y = -reading->AccelerationX;
                 break;
-                
+
             case DisplayOrientations::Landscape:
-				acc.x = -reading->AccelerationY;
-				acc.y = reading->AccelerationX;
+                acc.x = reading->AccelerationX;
+                acc.y = reading->AccelerationY;
                 break;
-                
+
             case DisplayOrientations::PortraitFlipped:
-				acc.x = -reading->AccelerationX;
-				acc.y = reading->AccelerationY;
+                acc.x = -reading->AccelerationY;
+                acc.y = reading->AccelerationX;
                 break;
-                
+
             case DisplayOrientations::LandscapeFlipped:
- 				acc.x = reading->AccelerationY;
-				acc.y = reading->AccelerationX;
-                    break;
-              
+                acc.x = -reading->AccelerationX;
+                acc.y = -reading->AccelerationY;
+                break;
+
             default:
-  				acc.x = reading->AccelerationX;
-				acc.y = reading->AccelerationY;
+                acc.x = reading->AccelerationY;
+                acc.y = -reading->AccelerationX;
                 break;
             }
-
 	        std::shared_ptr<cocos2d::InputEvent> event(new AccelerometerEvent(acc));
             cocos2d::GLViewImpl::sharedOpenGLView()->QueueEvent(event);
 		});
 	}
-#endif
 }
 
 void Device::setAccelerometerInterval(float interval)
 {
     if (sAccelerometer)
     {
-        int minInterval = sAccelerometer->MinimumReportInterval;
-	    int reqInterval = (int) interval;
-        sAccelerometer->ReportInterval = reqInterval < minInterval ? minInterval : reqInterval;
+        try {
+            int minInterval = sAccelerometer->MinimumReportInterval;
+            int reqInterval = (int) interval;
+            sAccelerometer->ReportInterval = reqInterval < minInterval ? minInterval : reqInterval;
+        }
+        catch (Platform::COMException^)
+        {
+            CCLOG("Device::setAccelerometerInterval not supported on this device");
+        }
     }
     else
     {
@@ -173,4 +170,4 @@ void Device::setKeepScreenOn(bool value)
 
 NS_CC_END
 
-#endif // (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) ||  (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) 
+#endif // (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) 

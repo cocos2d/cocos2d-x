@@ -55,8 +55,8 @@ public class Cocos2dxAccelerometer implements SensorEventListener {
     // Constructors
     // ===========================================================
 
-    public Cocos2dxAccelerometer(final Context pContext) {
-        this.mContext = pContext;
+    public Cocos2dxAccelerometer(final Context context) {
+        this.mContext = context;
 
         this.mSensorManager = (SensorManager) this.mContext.getSystemService(Context.SENSOR_SERVICE);
         this.mAccelerometer = this.mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -92,14 +92,14 @@ public class Cocos2dxAccelerometer implements SensorEventListener {
     // ===========================================================
 
     @Override
-    public void onSensorChanged(final SensorEvent pSensorEvent) {
-        if (pSensorEvent.sensor.getType() != Sensor.TYPE_ACCELEROMETER) {
+    public void onSensorChanged(final SensorEvent sensorEvent) {
+        if (sensorEvent.sensor.getType() != Sensor.TYPE_ACCELEROMETER) {
             return;
         }
 
-        float x = pSensorEvent.values[0];
-        float y = pSensorEvent.values[1];
-        final float z = pSensorEvent.values[2];
+        float x = sensorEvent.values[0];
+        float y = sensorEvent.values[1];
+        final float z = sensorEvent.values[2];
 
         /*
          * Because the axes are not swapped when the device's screen orientation
@@ -118,17 +118,17 @@ public class Cocos2dxAccelerometer implements SensorEventListener {
             y = -tmp;
         }       
         
-        Cocos2dxGLSurfaceView.queueAccelerometer(x,y,z,pSensorEvent.timestamp);
+        Cocos2dxGLSurfaceView.queueAccelerometer(x,y,z,sensorEvent.timestamp);
         
         /*
         if(BuildConfig.DEBUG) {
-            Log.d(TAG, "x = " + pSensorEvent.values[0] + " y = " + pSensorEvent.values[1] + " z = " + pSensorEvent.values[2]);
+            Log.d(TAG, "x = " + sensorEvent.values[0] + " y = " + sensorEvent.values[1] + " z = " + pSensorEvent.values[2]);
         }
         */
     }
 
     @Override
-    public void onAccuracyChanged(final Sensor pSensor, final int pAccuracy) {
+    public void onAccuracyChanged(final Sensor sensor, final int accuracy) {
     }
 
     // ===========================================================
@@ -136,7 +136,7 @@ public class Cocos2dxAccelerometer implements SensorEventListener {
         // Native method called from Cocos2dxGLSurfaceView (To be in the same thread)
     // ===========================================================
     
-    public static native void onSensorChanged(final float pX, final float pY, final float pZ, final long pTimestamp);
+    public static native void onSensorChanged(final float x, final float y, final float z, final long timestamp);
 
     // ===========================================================
     // Inner and Anonymous Classes

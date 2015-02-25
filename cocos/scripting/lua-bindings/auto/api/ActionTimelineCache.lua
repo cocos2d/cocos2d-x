@@ -12,28 +12,14 @@
         
 --------------------------------
 -- 
--- @function [parent=#ActionTimelineCache] createActionFromProtocolBuffers 
+-- @function [parent=#ActionTimelineCache] createActionWithFlatBuffersFile 
 -- @param self
 -- @param #string fileName
 -- @return ActionTimeline#ActionTimeline ret (return value: ccs.ActionTimeline)
         
 --------------------------------
 -- 
--- @function [parent=#ActionTimelineCache] createActionFromXML 
--- @param self
--- @param #string fileName
--- @return ActionTimeline#ActionTimeline ret (return value: ccs.ActionTimeline)
-        
---------------------------------
--- 
--- @function [parent=#ActionTimelineCache] loadAnimationActionWithFileFromProtocolBuffers 
--- @param self
--- @param #string fileName
--- @return ActionTimeline#ActionTimeline ret (return value: ccs.ActionTimeline)
-        
---------------------------------
--- 
--- @function [parent=#ActionTimelineCache] loadAnimationActionWithFileFromXML 
+-- @function [parent=#ActionTimelineCache] loadAnimationActionWithFlatBuffersFile 
 -- @param self
 -- @param #string fileName
 -- @return ActionTimeline#ActionTimeline ret (return value: ccs.ActionTimeline)
@@ -42,11 +28,13 @@
 -- 
 -- @function [parent=#ActionTimelineCache] purge 
 -- @param self
+-- @return ActionTimelineCache#ActionTimelineCache self (return value: ccs.ActionTimelineCache)
         
 --------------------------------
 -- 
 -- @function [parent=#ActionTimelineCache] init 
 -- @param self
+-- @return ActionTimelineCache#ActionTimelineCache self (return value: ccs.ActionTimelineCache)
         
 --------------------------------
 -- 
@@ -68,11 +56,20 @@
 -- @function [parent=#ActionTimelineCache] removeAction 
 -- @param self
 -- @param #string fileName
+-- @return ActionTimelineCache#ActionTimelineCache self (return value: ccs.ActionTimelineCache)
+        
+--------------------------------
+-- 
+-- @function [parent=#ActionTimelineCache] createActionWithFlatBuffersForSimulator 
+-- @param self
+-- @param #string fileName
+-- @return ActionTimeline#ActionTimeline ret (return value: ccs.ActionTimeline)
         
 --------------------------------
 --  Destroys the singleton 
 -- @function [parent=#ActionTimelineCache] destroyInstance 
 -- @param self
+-- @return ActionTimelineCache#ActionTimelineCache self (return value: ccs.ActionTimelineCache)
         
 --------------------------------
 -- 

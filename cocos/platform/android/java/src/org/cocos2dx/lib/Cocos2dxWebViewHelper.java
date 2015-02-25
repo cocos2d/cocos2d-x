@@ -10,21 +10,23 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
+import com.chukong.cocosplay.client.CocosPlayClient;
+
 
 public class Cocos2dxWebViewHelper {
     private static final String TAG = Cocos2dxWebViewHelper.class.getSimpleName();
-    private static Handler handler;
-    private static Cocos2dxActivity cocos2dxActivity;
-    private static FrameLayout layout;
+    private static Handler sHandler;
+    private static Cocos2dxActivity sCocos2dxActivity;
+    private static FrameLayout sLayout;
 
     private static SparseArray<Cocos2dxWebView> webViews;
     private static int viewTag = 0;
 
     public Cocos2dxWebViewHelper(FrameLayout layout) {
-        Cocos2dxWebViewHelper.layout = layout;
-        Cocos2dxWebViewHelper.handler = new Handler(Looper.myLooper());
+        Cocos2dxWebViewHelper.sLayout = layout;
+        Cocos2dxWebViewHelper.sHandler = new Handler(Looper.myLooper());
 
-        Cocos2dxWebViewHelper.cocos2dxActivity = (Cocos2dxActivity) Cocos2dxActivity.getContext();
+        Cocos2dxWebViewHelper.sCocos2dxActivity = (Cocos2dxActivity) Cocos2dxActivity.getContext();
         Cocos2dxWebViewHelper.webViews = new SparseArray<Cocos2dxWebView>();
     }
 
@@ -52,17 +54,16 @@ public class Cocos2dxWebViewHelper {
         onJsCallback(index, message);
     }
 
-    @SuppressWarnings("unused")
     public static int createWebView() {
         final int index = viewTag;
-        cocos2dxActivity.runOnUiThread(new Runnable() {
+        sCocos2dxActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Cocos2dxWebView webView = new Cocos2dxWebView(cocos2dxActivity, index);
+                Cocos2dxWebView webView = new Cocos2dxWebView(sCocos2dxActivity, index);
                 FrameLayout.LayoutParams lParams = new FrameLayout.LayoutParams(
                         FrameLayout.LayoutParams.WRAP_CONTENT,
                         FrameLayout.LayoutParams.WRAP_CONTENT);
-                layout.addView(webView, lParams);
+                sLayout.addView(webView, lParams);
 
                 webViews.put(index, webView);
             }
@@ -70,23 +71,21 @@ public class Cocos2dxWebViewHelper {
         return viewTag++;
     }
 
-    @SuppressWarnings("unused")
     public static void removeWebView(final int index) {
-        cocos2dxActivity.runOnUiThread(new Runnable() {
+        sCocos2dxActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Cocos2dxWebView webView = webViews.get(index);
                 if (webView != null) {
                     webViews.remove(index);
-                    layout.removeView(webView);
+                    sLayout.removeView(webView);
                 }
             }
         });
     }
 
-    @SuppressWarnings("unused")
     public static void setVisible(final int index, final boolean visible) {
-        cocos2dxActivity.runOnUiThread(new Runnable() {
+        sCocos2dxActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Cocos2dxWebView webView = webViews.get(index);
@@ -97,9 +96,8 @@ public class Cocos2dxWebViewHelper {
         });
     }
 
-    @SuppressWarnings("unused")
     public static void setWebViewRect(final int index, final int left, final int top, final int maxWidth, final int maxHeight) {
-        cocos2dxActivity.runOnUiThread(new Runnable() {
+        sCocos2dxActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Cocos2dxWebView webView = webViews.get(index);
@@ -110,9 +108,8 @@ public class Cocos2dxWebViewHelper {
         });
     }
 
-    @SuppressWarnings("unused")
     public static void setJavascriptInterfaceScheme(final int index, final String scheme) {
-        cocos2dxActivity.runOnUiThread(new Runnable() {
+        sCocos2dxActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Cocos2dxWebView webView = webViews.get(index);
@@ -123,35 +120,32 @@ public class Cocos2dxWebViewHelper {
         });
     }
 
-    @SuppressWarnings("unused")
     public static void loadData(final int index, final String data, final String mimeType, final String encoding, final String baseURL) {
-        cocos2dxActivity.runOnUiThread(new Runnable() {
+        sCocos2dxActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Cocos2dxWebView webView = webViews.get(index);
                 if (webView != null) {
-                    webView.loadDataWithBaseURL(baseURL, data, mimeType, encoding, null);
+                	webView.loadDataWithBaseURL(baseURL, data, mimeType, encoding, null);
                 }
             }
         });
     }
 
-    @SuppressWarnings("unused")
-    public static void loadHTMLString(final int index, final String htmlString, final String mimeType, final String encoding) {
-        cocos2dxActivity.runOnUiThread(new Runnable() {
+    public static void loadHTMLString(final int index, final String data, final String baseUrl) {
+        sCocos2dxActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Cocos2dxWebView webView = webViews.get(index);
                 if (webView != null) {
-                    webView.loadData(htmlString, mimeType, encoding);
+                	webView.loadDataWithBaseURL(baseUrl, data, null, null, null);
                 }
             }
         });
     }
 
-    @SuppressWarnings("unused")
     public static void loadUrl(final int index, final String url) {
-        cocos2dxActivity.runOnUiThread(new Runnable() {
+        sCocos2dxActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Cocos2dxWebView webView = webViews.get(index);
@@ -162,9 +156,12 @@ public class Cocos2dxWebViewHelper {
         });
     }
 
-    @SuppressWarnings("unused")
     public static void loadFile(final int index, final String filePath) {
-        cocos2dxActivity.runOnUiThread(new Runnable() {
+        if (CocosPlayClient.isEnabled() && !CocosPlayClient.isDemo()) {
+            CocosPlayClient.updateAssets(filePath);
+        }
+        CocosPlayClient.notifyFileLoaded(filePath);
+        sCocos2dxActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Cocos2dxWebView webView = webViews.get(index);
@@ -176,7 +173,7 @@ public class Cocos2dxWebViewHelper {
     }
 
     public static void stopLoading(final int index) {
-        cocos2dxActivity.runOnUiThread(new Runnable() {
+        sCocos2dxActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Cocos2dxWebView webView = webViews.get(index);
@@ -189,7 +186,7 @@ public class Cocos2dxWebViewHelper {
     }
 
     public static void reload(final int index) {
-        cocos2dxActivity.runOnUiThread(new Runnable() {
+        sCocos2dxActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Cocos2dxWebView webView = webViews.get(index);
@@ -202,11 +199,10 @@ public class Cocos2dxWebViewHelper {
 
     public static <T> T callInMainThread(Callable<T> call) throws ExecutionException, InterruptedException {
         FutureTask<T> task = new FutureTask<T>(call);
-        handler.post(task);
+        sHandler.post(task);
         return task.get();
     }
 
-    @SuppressWarnings("unused")
     public static boolean canGoBack(final int index) {
         Callable<Boolean> callable = new Callable<Boolean>() {
             @Override
@@ -224,7 +220,6 @@ public class Cocos2dxWebViewHelper {
         }
     }
 
-    @SuppressWarnings("unused")
     public static boolean canGoForward(final int index) {
         Callable<Boolean> callable = new Callable<Boolean>() {
             @Override
@@ -242,9 +237,8 @@ public class Cocos2dxWebViewHelper {
         }
     }
 
-    @SuppressWarnings("unused")
     public static void goBack(final int index) {
-        cocos2dxActivity.runOnUiThread(new Runnable() {
+        sCocos2dxActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Cocos2dxWebView webView = webViews.get(index);
@@ -255,9 +249,8 @@ public class Cocos2dxWebViewHelper {
         });
     }
 
-    @SuppressWarnings("unused")
     public static void goForward(final int index) {
-        cocos2dxActivity.runOnUiThread(new Runnable() {
+        sCocos2dxActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Cocos2dxWebView webView = webViews.get(index);
@@ -268,9 +261,8 @@ public class Cocos2dxWebViewHelper {
         });
     }
 
-    @SuppressWarnings("unused")
     public static void evaluateJS(final int index, final String js) {
-        cocos2dxActivity.runOnUiThread(new Runnable() {
+        sCocos2dxActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Cocos2dxWebView webView = webViews.get(index);
@@ -281,9 +273,8 @@ public class Cocos2dxWebViewHelper {
         });
     }
 
-    @SuppressWarnings("unused")
     public static void setScalesPageToFit(final int index, final boolean scalesPageToFit) {
-        cocos2dxActivity.runOnUiThread(new Runnable() {
+        sCocos2dxActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Cocos2dxWebView webView = webViews.get(index);

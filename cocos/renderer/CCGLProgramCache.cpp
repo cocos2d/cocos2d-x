@@ -40,6 +40,7 @@ enum {
     kShaderType_PositionTextureColorAlphaTest,
     kShaderType_PositionTextureColorAlphaTestNoMV,
     kShaderType_PositionColor,
+    kShaderType_PositionColorTextureAsPointsize,
     kShaderType_PositionColor_noMVP,
     kShaderType_PositionTexture,
     kShaderType_PositionTexture_uColor,
@@ -56,6 +57,11 @@ enum {
     kShaderType_3DPositionNormal,
     kShaderType_3DPositionNormalTex,
     kShaderType_3DSkinPositionNormalTex,
+    kShaderType_3DParticleTex,
+    kShaderType_3DParticleColor,
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || defined(WP8_SHADER_COMPILER)
+    kShaderType_PositionColor_noMVP_GrayScale,
+#endif
     kShaderType_MAX,
 };
 
@@ -138,7 +144,12 @@ void GLProgramCache::loadDefaultGLPrograms()
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_PositionColor);
     _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_COLOR, p) );
-
+    
+    // Position, Color, PointSize shader
+    p = new (std::nothrow) GLProgram();
+    loadDefaultGLProgram(p, kShaderType_PositionColorTextureAsPointsize);
+    _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_COLOR_TEXASPOINTSIZE, p) );
+    
     //
     // Position, Color shader no MVP
     //
@@ -181,7 +192,6 @@ void GLProgramCache::loadDefaultGLPrograms()
     loadDefaultGLProgram(p, kShaderType_PositionLengthTexureColor);
     _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR, p) );
 
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_LabelDistanceFieldNormal);
     _programs.insert( std::make_pair(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL, p) );
@@ -189,7 +199,6 @@ void GLProgramCache::loadDefaultGLPrograms()
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_LabelDistanceFieldGlow);
     _programs.insert( std::make_pair(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_GLOW, p) );
-#endif
 
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_LabelNormal);
@@ -222,6 +231,15 @@ void GLProgramCache::loadDefaultGLPrograms()
     p = new GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DSkinPositionNormalTex);
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_SKINPOSITION_NORMAL_TEXTURE, p));
+    
+    p = new GLProgram();
+    loadDefaultGLProgram(p, kShaderType_3DParticleColor);
+    _programs.insert(std::make_pair(GLProgram::SHADER_3D_PARTICLE_COLOR, p));
+    
+    p = new GLProgram();
+    loadDefaultGLProgram(p, kShaderType_3DParticleTex);
+    _programs.insert(std::make_pair(GLProgram::SHADER_3D_PARTICLE_TEXTURE, p));
+
 }
 
 void GLProgramCache::reloadDefaultGLPrograms()
@@ -254,6 +272,11 @@ void GLProgramCache::reloadDefaultGLPrograms()
     p->reset();
     loadDefaultGLProgram(p, kShaderType_PositionColor);
     
+    // Position, Color, PointSize shader
+    p = getGLProgram(GLProgram::SHADER_NAME_POSITION_COLOR_TEXASPOINTSIZE);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_PositionColorTextureAsPointsize);
+
     //
     // Position, Color shader no MVP
     //
@@ -295,7 +318,6 @@ void GLProgramCache::reloadDefaultGLPrograms()
     p->reset();
     loadDefaultGLProgram(p, kShaderType_PositionLengthTexureColor);
 
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
     p = getGLProgram(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_LabelDistanceFieldNormal);
@@ -303,7 +325,6 @@ void GLProgramCache::reloadDefaultGLPrograms()
     p = getGLProgram(GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_GLOW);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_LabelDistanceFieldGlow);
-#endif
 
     p = getGLProgram(GLProgram::SHADER_NAME_LABEL_NORMAL);
     p->reset();
@@ -336,6 +357,14 @@ void GLProgramCache::reloadDefaultGLPrograms()
     p = getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_NORMAL_TEXTURE);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_3DSkinPositionNormalTex);
+    
+    p = getGLProgram(GLProgram::SHADER_3D_PARTICLE_TEXTURE);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_3DParticleTex);
+    
+    p = getGLProgram(GLProgram::SHADER_3D_PARTICLE_COLOR);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_3DParticleColor);
 }
 
 void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
@@ -347,7 +376,6 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
         case kShaderType_PositionTextureColor_noMVP:
             p->initWithByteArrays(ccPositionTextureColor_noMVP_vert, ccPositionTextureColor_noMVP_frag);
             break;
-
         case kShaderType_PositionTextureColorAlphaTest:
             p->initWithByteArrays(ccPositionTextureColor_vert, ccPositionTextureColorAlphaTest_frag);
             break;
@@ -356,6 +384,9 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
             break;
         case kShaderType_PositionColor:  
             p->initWithByteArrays(ccPositionColor_vert ,ccPositionColor_frag);
+            break;
+        case kShaderType_PositionColorTextureAsPointsize:
+            p->initWithByteArrays(ccPositionColorTextureAsPointsize_vert ,ccPositionColor_frag);
             break;
         case kShaderType_PositionColor_noMVP:
             p->initWithByteArrays(ccPositionTextureColor_noMVP_vert ,ccPositionColor_frag);
@@ -376,14 +407,12 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
         case kShaderType_PositionLengthTexureColor:
             p->initWithByteArrays(ccPositionColorLengthTexture_vert, ccPositionColorLengthTexture_frag);
             break;
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
         case kShaderType_LabelDistanceFieldNormal:
             p->initWithByteArrays(ccLabel_vert, ccLabelDistanceFieldNormal_frag);
             break;
         case kShaderType_LabelDistanceFieldGlow:
             p->initWithByteArrays(ccLabel_vert, ccLabelDistanceFieldGlow_frag);
             break;
-#endif
         case kShaderType_LabelNormal:
             p->initWithByteArrays(ccLabel_vert, ccLabelNormal_frag);
             break;
@@ -417,6 +446,19 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
                 p->initWithByteArrays((def + std::string(cc3D_SkinPositionNormalTex_vert)).c_str(), (def + std::string(cc3D_ColorNormalTex_frag)).c_str());
             }
             break;
+        case kShaderType_3DParticleTex:
+           {
+                p->initWithByteArrays(cc3D_Particle_vert, cc3D_Particle_tex_frag);
+           }
+            break;
+        case kShaderType_3DParticleColor:
+            p->initWithByteArrays(cc3D_Particle_vert, cc3D_Particle_color_frag);
+            break;
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || defined(WP8_SHADER_COMPILER)
+        case kShaderType_PositionColor_noMVP_GrayScale:
+            p->initWithByteArrays(ccPositionTextureColor_noMVP_vert, ccUIGrayScale_frag);
+            break;
+#endif
         default:
             CCLOG("cocos2d: %s:%d, error shader type", __FUNCTION__, __LINE__);
             return;

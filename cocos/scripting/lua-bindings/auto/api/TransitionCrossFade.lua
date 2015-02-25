@@ -20,5 +20,12 @@
 -- @param #cc.Renderer renderer
 -- @param #mat4_table transform
 -- @param #unsigned int flags
+-- @return TransitionCrossFade#TransitionCrossFade self (return value: cc.TransitionCrossFade)
+        
+--------------------------------
+-- 
+-- @function [parent=#TransitionCrossFade] TransitionCrossFade 
+-- @param self
+-- @return TransitionCrossFade#TransitionCrossFade self (return value: cc.TransitionCrossFade)
         
 return nil

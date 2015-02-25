@@ -12,6 +12,7 @@
 #include "PerformanceEventDispatcherTest.h"
 #include "PerformanceScenarioTest.h"
 #include "PerformanceCallbackTest.h"
+#include "PerformanceMathTest.h"
 
 enum
 {
@@ -36,6 +37,7 @@ struct {
     { "EventDispatcher Perf Test", [](Ref* sender ) { runEventDispatcherPerformanceTest(); } },
     { "Scenario Perf Test", [](Ref* sender ) { runScenarioTest(); } },
     { "Callback Perf Test", [](Ref* sender ) { runCallbackPerformanceTest(); } },
+    { "Math Perf Test", [](Ref* sender ) { runMathPerformanceTest(); } },
 };
 
 static const int g_testMax = sizeof(g_testsName)/sizeof(g_testsName[0]);

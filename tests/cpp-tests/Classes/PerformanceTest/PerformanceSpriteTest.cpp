@@ -27,6 +27,14 @@
 
 #include "PerformanceSpriteTest.h"
 
+#include <cmath>
+
+#if defined(_MSC_VER) && _MSC_VER<1800
+#define CC_ROUND(__f__) __f__
+#else
+#define CC_ROUND(__f__) roundf(__f__)
+#endif
+
 enum {
     kMaxNodes = 50000,
     kNodesIncrease = 250,
@@ -53,9 +61,9 @@ SubTest::~SubTest()
 
 void SubTest::initWithSubTest(int subtest, Node* p)
 {
-    srand(0);
+    std::srand(0);
 
-    subtestNumber = subtest;
+    _subtestNumber = subtest;
     _parentNode = nullptr;
     /*
      * Tests:
@@ -73,6 +81,8 @@ void SubTest::initWithSubTest(int subtest, Node* p)
      *10: 64 (32-bit) sprites of 32 x 32 each that belong to on texture atlas
      *11: 64 (32-bit) PNG Batch Node of 32 x 32 each
      *12: 64 (16-bit) PNG Batch Node of 32 x 32 each
+     *
+     *13:    (16-bit) PNG sprites. 33% from test4, 33% from test8, 33% from test12
     */
 
     // purge textures
@@ -81,7 +91,7 @@ void SubTest::initWithSubTest(int subtest, Node* p)
     mgr->removeTextureForKey("Images/grossini_dance_atlas.png");
     mgr->removeTextureForKey("Images/spritesheet1.png");
 
-    switch ( subtestNumber)
+    switch ( _subtestNumber)
     {
             ///
         case 1:
@@ -147,7 +157,7 @@ Sprite* SubTest::createSpriteWithTag(int tag)
     TextureCache *cache = Director::getInstance()->getTextureCache();
 
     Sprite* sprite = nullptr;
-    switch (subtestNumber)
+    switch (_subtestNumber)
     {
         ///
         case 1:
@@ -327,25 +337,25 @@ void SpriteMenuLayer::showCurrentTest()
     switch (_curCase)
     {
     case 0:
-        scene = new (std::nothrow) SpritePerformTest1;
+        scene = new (std::nothrow) SpritePerformTestA;
         break;
     case 1:
-        scene = new (std::nothrow) SpritePerformTest2;
+        scene = new (std::nothrow) SpritePerformTestB;
         break;
     case 2:
-        scene = new (std::nothrow) SpritePerformTest3;
+        scene = new (std::nothrow) SpritePerformTestC;
         break;
     case 3:
-        scene = new (std::nothrow) SpritePerformTest4;
+        scene = new (std::nothrow) SpritePerformTestD;
         break;
     case 4:
-        scene = new (std::nothrow) SpritePerformTest5;
+        scene = new (std::nothrow) SpritePerformTestE;
         break;
     case 5:
-        scene = new (std::nothrow) SpritePerformTest6;
+        scene = new (std::nothrow) SpritePerformTestF;
         break;
     case 6:
-        scene = new (std::nothrow) SpritePerformTest7;
+        scene = new (std::nothrow) SpritePerformTestG;
         break;
     }
     
@@ -364,21 +374,31 @@ void SpriteMenuLayer::showCurrentTest()
 //
 ////////////////////////////////////////////////////////
 
+// FIXME: This should be part of the class, but VC2013 doesn't support constexpr as static members yet
+static const float SECONDS_PER_TESTS = 4.0f;
+static const int MAX_SPRITE_TEST_CASE = 7; // A...G
+static const int MAX_SUB_TEST_NUMS = 13;  // 1...13
+
+// 500 sprites, 1500 sprites, etc...
 bool SpriteMainScene::_s_autoTest = false;
-int  SpriteMainScene::_s_nSpriteCurCase = 0;
+int SpriteMainScene::_s_nSpriteCurCase = 0;
+int SpriteMainScene::_s_spritesQuatityIndex = 0;
+int SpriteMainScene::_s_spritesQuanityArray[] = {1000, 3000, 0};
+// FIXME: to make VS2012 happy. Once VS2012 is deprecated, we can just simply replace it with {}
+std::vector<float> SpriteMainScene::_s_saved_fps = std::vector<float>(); 
 
 void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
 {
-    //srandom(0);
+     std::srand(0);
 
-    subtestNumber = asubtest;
+    _subtestNumber = asubtest;
     _subTest = new (std::nothrow) SubTest;
     _subTest->initWithSubTest(asubtest, this);
 
     auto s = Director::getInstance()->getWinSize();
 
-    lastRenderedCount = 0;
-    quantityNodes = 0;
+    _lastRenderedCount = 0;
+    _quantityNodes = 0;
 
     MenuItemFont::setFontSize(65);
     auto decrease = MenuItemFont::create(" - ", CC_CALLBACK_1(SpriteMainScene::onDecrease, this));
@@ -464,7 +484,7 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
         l->setPosition( Vec2(VisibleRect::center().x, VisibleRect::top().y - 60) );
     }
 
-    while(quantityNodes < nNodes)
+    while(_quantityNodes < nNodes)
         onIncrease(this);
 }
 
@@ -496,34 +516,34 @@ void SpriteMainScene::testNCallback(Ref* sender)
         return;
     }
     
-    subtestNumber = static_cast<MenuItemFont*>(sender)->getTag();
+    _subtestNumber = static_cast<MenuItemFont*>(sender)->getTag();
     auto menu = static_cast<SpriteMenuLayer*>( getChildByTag(kTagMenuLayer) );
     menu->restartCallback(sender);
 }
 
 void SpriteMainScene::updateNodes()
 {
-    if( quantityNodes != lastRenderedCount )
+    if( _quantityNodes != _lastRenderedCount )
     {
         auto infoLabel = (Label *) getChildByTag(kTagInfoLayer);
         char str[16] = {0};
-        sprintf(str, "%u nodes", quantityNodes);
+        sprintf(str, "%u nodes", _quantityNodes);
         infoLabel->setString(str);
 
-        lastRenderedCount = quantityNodes;
+        _lastRenderedCount = _quantityNodes;
     }
 }
 
 void SpriteMainScene::onIncrease(Ref* sender)
 {    
-    if( quantityNodes >= kMaxNodes)
+    if( _quantityNodes >= kMaxNodes)
         return;
 
     for( int i=0;i< kNodesIncrease;i++)
     {
-        auto sprite = _subTest->createSpriteWithTag(quantityNodes);
+        auto sprite = _subTest->createSpriteWithTag(_quantityNodes);
         doTest(sprite);
-        quantityNodes++;
+        _quantityNodes++;
     }
 
     updateNodes();
@@ -532,13 +552,13 @@ void SpriteMainScene::onIncrease(Ref* sender)
 void SpriteMainScene::onDecrease(Ref* sender)
 {
     
-    if( quantityNodes <= 0 )
+    if( _quantityNodes <= 0 )
         return;
 
     for( int i=0;i < kNodesIncrease;i++)
     {
-        quantityNodes--;
-        _subTest->removeByTag(quantityNodes);
+        _quantityNodes--;
+        _subTest->removeByTag(_quantityNodes);
     }
 
     updateNodes();
@@ -546,42 +566,42 @@ void SpriteMainScene::onDecrease(Ref* sender)
 
 void  SpriteMainScene::dumpProfilerFPS()
 {
-    if (_vecFPS.empty())
-    {
-        log("Error: the FPS vector is empty");
-        return;
-    }
-    
-    auto iter = _vecFPS.begin();
-    float minFPS = *iter;
-    float maxFPS = *iter;
-    float totalFPS = 0.0f;
-    float averagerFPS = 0.0f;
-    for (auto fps : _vecFPS)
-    {
-        CCLOG("fps is :%f\n",fps);
-        minFPS = std::min(minFPS, fps);
-        maxFPS = std::max(maxFPS, fps);
-        totalFPS += fps;
-    }
-    
-    averagerFPS = totalFPS / _vecFPS.size();
-    log("Cur test: %d, cur sub item :%d,cur sprite nums:%d, the min FPS value is %.1f,the max FPS value is %.1f,the averager FPS is %.1f", SpriteMainScene::_s_nSpriteCurCase, subtestNumber, quantityNodes, minFPS, maxFPS, averagerFPS);
-    
+    log("COPY & PASTE into Cocos2d-x Performance Test spreadsheet");
+    log("https://docs.google.com/spreadsheets/d/1XolpgYfoWszA2rxnVRCAVS7ILAGiV049o5mpL29cwLs/edit#gid=1561044615");
+    log("");
+    int index = 0;
+    int sprites = 0;
+    while((sprites = _s_spritesQuanityArray[index])) {
+        log("Number of sprites: %d", sprites);
+        for(int i=0; i < MAX_SPRITE_TEST_CASE; i++)
+        {
+            char buffer[512];
+            buffer[0]=0;
+            for(int j=0; j < MAX_SUB_TEST_NUMS; j++)
+            {
+                float fps = _s_saved_fps[j + i*MAX_SUB_TEST_NUMS + MAX_SUB_TEST_NUMS * MAX_SPRITE_TEST_CASE * index];
+                char fps_str[64];
+                sprintf(fps_str, "\t%d", (int)CC_ROUND(fps));
+                strcat(buffer, fps_str);
+            }
+            log("%c%s", i + 'A', buffer);
+        }
+
+        index++;
+    };
+}
+
+void SpriteMainScene::saveFPS()
+{
+    float fps = Director::getInstance()->getFrameRate();
+    _s_saved_fps.push_back(fps);
+    log("Nodes: %d, Test: %c, SubTest: %d = %.1f", _quantityNodes, 'A'+_s_nSpriteCurCase, _subtestNumber, fps);
 }
 
 void SpriteMainScene::updateAutoTest(float dt)
 {
-    if (SpriteMainScene::_s_autoTest)
-    {
-        _executeTimes += 1;
-        _vecFPS.push_back(Director::getInstance()->getFrameRate());
-        if ( _executeTimes >= SpriteMainScene::MAX_AUTO_TEST_TIMES )
-        {
-            dumpProfilerFPS();
-            nextAutoTest();
-        }
-    }
+    saveFPS();
+    nextAutoTest();
 }
 
 void SpriteMainScene::onEnter()
@@ -590,14 +610,11 @@ void SpriteMainScene::onEnter()
     
     if ( SpriteMainScene::_s_autoTest )
     {
-        _vecFPS.clear();
-        _executeTimes = 0;
-        
         auto director = Director::getInstance();
         auto sched = director->getScheduler();
-        
-        sched->schedule(CC_SCHEDULE_SELECTOR(SpriteMainScene::updateAutoTest), this, 0.2f, false);
-        
+
+        // schedule it only once. Call me after 3 seconds
+        sched->schedule(CC_SCHEDULE_SELECTOR(SpriteMainScene::updateAutoTest), this, SECONDS_PER_TESTS, 0, 0, false);
     }
 }
 
@@ -607,14 +624,13 @@ void SpriteMainScene::onExit()
     {
         auto director = Director::getInstance();
         auto sched = director->getScheduler();
-        
         sched->unschedule(CC_SCHEDULE_SELECTOR(SpriteMainScene::updateAutoTest), this );
     }
     
     Scene::onExit();
 }
 
-void  SpriteMainScene::autoShowSpriteTests(int curCase, int subTest,int nodes)
+void  SpriteMainScene::autoShowSpriteTests(int curCase, int subTest, int nodes)
 {
     
     SpriteMainScene* scene = nullptr;
@@ -622,30 +638,31 @@ void  SpriteMainScene::autoShowSpriteTests(int curCase, int subTest,int nodes)
     switch (curCase)
     {
         case 0:
-            scene = new (std::nothrow) SpritePerformTest1;
+            scene = new (std::nothrow) SpritePerformTestA;
             break;
         case 1:
-            scene = new (std::nothrow) SpritePerformTest2;
+            scene = new (std::nothrow) SpritePerformTestB;
             break;
         case 2:
-            scene = new (std::nothrow) SpritePerformTest3;
+            scene = new (std::nothrow) SpritePerformTestC;
             break;
         case 3:
-            scene = new (std::nothrow) SpritePerformTest4;
+            scene = new (std::nothrow) SpritePerformTestD;
             break;
         case 4:
-            scene = new (std::nothrow) SpritePerformTest5;
+            scene = new (std::nothrow) SpritePerformTestE;
             break;
         case 5:
-            scene = new (std::nothrow) SpritePerformTest6;
+            scene = new (std::nothrow) SpritePerformTestF;
             break;
         case 6:
-            scene = new (std::nothrow) SpritePerformTest7;
+            scene = new (std::nothrow) SpritePerformTestG;
+            break;
+        default:
+            CCASSERT(false, "Invalid scene value");
             break;
     }
-    
-    SpriteMainScene::_s_nSpriteCurCase = curCase;
-    
+
     if (scene)
     {
         scene->initWithSubTest(subTest, nodes);
@@ -656,15 +673,14 @@ void  SpriteMainScene::autoShowSpriteTests(int curCase, int subTest,int nodes)
 
 void SpriteMainScene::beginAutoTest()
 {
-    if (0 != SpriteMainScene::_s_nSpriteCurCase)
-    {
-        SpriteMainScene::_s_nSpriteCurCase = 0;
-    }
-    
-    auto scene = new (std::nothrow) SpritePerformTest1;
-    scene->initWithSubTest(1, 500);
-    Director::getInstance()->replaceScene(scene);
-    scene->release();
+    _s_spritesQuatityIndex = 0;
+    _s_nSpriteCurCase = 0;
+    _s_saved_fps.clear();
+
+    _subtestNumber = 0;
+    _quantityNodes = _s_spritesQuanityArray[_s_spritesQuatityIndex];
+
+    nextAutoTest();
 }
 
 void  SpriteMainScene::endAutoTest()
@@ -679,25 +695,32 @@ void  SpriteMainScene::endAutoTest()
 
 void  SpriteMainScene::nextAutoTest()
 {
-    if ( SpriteMainScene::_s_nSpriteCurCase < SpriteMainScene::MAX_SPRITE_TEST_CASE )
+    if (SpriteMainScene::_s_nSpriteCurCase < MAX_SPRITE_TEST_CASE)
     {
-        if ( subtestNumber < SpriteMainScene::MAX_SUB_TEST_NUMS )
+        if (_subtestNumber < MAX_SUB_TEST_NUMS)
         {
-            subtestNumber += 1;
-            autoShowSpriteTests(SpriteMainScene::_s_nSpriteCurCase, subtestNumber, quantityNodes);
+            // Increase Sub Main Test (1, 2, 3, 4, ...)
+            _subtestNumber += 1;
+            autoShowSpriteTests(_s_nSpriteCurCase, _subtestNumber, _quantityNodes);
         }
-        else if ( subtestNumber == SpriteMainScene::MAX_SUB_TEST_NUMS )
+        else if (_subtestNumber == MAX_SUB_TEST_NUMS)
         {
-            if (quantityNodes == SpriteMainScene::AUTO_TEST_NODE_NUM1)
+            if (SpriteMainScene::_s_nSpriteCurCase + 1 < MAX_SPRITE_TEST_CASE)
             {
-                autoShowSpriteTests(SpriteMainScene::_s_nSpriteCurCase, 1, SpriteMainScene::AUTO_TEST_NODE_NUM2);
+                // Increase Main Test (A, B, C, ...)
+                _subtestNumber = 1;
+                _s_nSpriteCurCase++;
+                autoShowSpriteTests(_s_nSpriteCurCase, _subtestNumber, _quantityNodes);
             }
             else
             {
-                if (SpriteMainScene::_s_nSpriteCurCase + 1 < SpriteMainScene::MAX_SPRITE_TEST_CASE)
-                {
-                    SpriteMainScene::_s_nSpriteCurCase += 1;
-                    autoShowSpriteTests(SpriteMainScene::_s_nSpriteCurCase, 1, SpriteMainScene::AUTO_TEST_NODE_NUM1);
+                // Increase quanity of sprites, or finish
+                int sprites = _s_spritesQuanityArray[++_s_spritesQuatityIndex];
+                if (sprites != 0) {
+                    _quantityNodes = sprites;
+                    _subtestNumber = 1;
+                    _s_nSpriteCurCase = 0;
+                    autoShowSpriteTests(_s_nSpriteCurCase, _subtestNumber, _quantityNodes);
                 }
                 else
                 {
@@ -725,25 +748,25 @@ void  SpriteMainScene::finishAutoTest()
         }
     }
     
-    log("Sprite performance test is  finish ");
+    log("Sprite performance test is finished");
+
+    dumpProfilerFPS();
 }
 
 void  SpriteMainScene::onAutoTest(Ref* sender)
 {
     SpriteMainScene::_s_autoTest = !SpriteMainScene::_s_autoTest;
     MenuItemFont* menuItem = dynamic_cast<MenuItemFont*>(sender);
-    if (nullptr != menuItem)
+
+    if (SpriteMainScene::_s_autoTest)
     {
-        if (SpriteMainScene::_s_autoTest)
-        {
-            menuItem->setString("Auto Test On");
-            beginAutoTest();
-        }
-        else
-        {
-            menuItem->setString("Auto Test Off");
-            endAutoTest();
-        }
+        menuItem->setString("Auto Test On");
+        beginAutoTest();
+    }
+    else
+    {
+        menuItem->setString("Auto Test Off");
+        endAutoTest();
     }
 }
 
@@ -827,161 +850,126 @@ void performanceScale(Sprite* sprite)
 
 ////////////////////////////////////////////////////////
 //
-// SpritePerformTest1
+// SpritePerformTestA
 //
 ////////////////////////////////////////////////////////
-std::string SpritePerformTest1::title() const
+std::string SpritePerformTestA::title() const
 {
     char str[32] = {0};
-    sprintf(str, "A (%d) position", subtestNumber);
+    sprintf(str, "A (%d) position", _subtestNumber);
     std::string strRet = str;
     return strRet;
 }
 
-std::string SpritePerformTest1::subtitle() const
-{
-    return "test 1";
-}
 
-
-void SpritePerformTest1::doTest(Sprite* sprite)
+void SpritePerformTestA::doTest(Sprite* sprite)
 {
     performancePosition(sprite);
 }
 ////////////////////////////////////////////////////////
 //
-// SpritePerformTest2
+// SpritePerformTestB
 //
 ////////////////////////////////////////////////////////
-std::string SpritePerformTest2::title() const
+std::string SpritePerformTestB::title() const
 {
     char str[32] = {0};
-    sprintf(str, "B (%d) scale", subtestNumber);
+    sprintf(str, "B (%d) scale", _subtestNumber);
     std::string strRet = str;
     return strRet;
 }
 
-std::string SpritePerformTest2::subtitle() const
-{
-    return "test 2";
-}
-
-void SpritePerformTest2::doTest(Sprite* sprite)
+void SpritePerformTestB::doTest(Sprite* sprite)
 {
     performanceScale(sprite);
 }
 
 ////////////////////////////////////////////////////////
 //
-// SpritePerformTest3
+// SpritePerformTestC
 //
 ////////////////////////////////////////////////////////
-std::string SpritePerformTest3::title() const
+std::string SpritePerformTestC::title() const
 {
     char str[32] = {0};
-    sprintf(str, "C (%d) scale + rot", subtestNumber);
+    sprintf(str, "C (%d) scale + rot", _subtestNumber);
     std::string strRet = str;
     return strRet;
 }
 
-std::string SpritePerformTest3::subtitle() const
-{
-    return "test 3";
-}
-
-void SpritePerformTest3::doTest(Sprite* sprite)
+void SpritePerformTestC::doTest(Sprite* sprite)
 {
     performanceRotationScale(sprite);
 }
 
 ////////////////////////////////////////////////////////
 //
-// SpritePerformTest4
+// SpritePerformTestD
 //
 ////////////////////////////////////////////////////////
-std::string SpritePerformTest4::title() const
+std::string SpritePerformTestD::title() const
 {
     char str[32] = {0};
-    sprintf(str, "D (%d) 100%% out", subtestNumber);
+    sprintf(str, "D (%d) 100%% out", _subtestNumber);
     std::string strRet = str;
     return strRet;
 }
 
-std::string SpritePerformTest4::subtitle() const
-{
-    return "test 4";
-}
-
-void SpritePerformTest4::doTest(Sprite* sprite)
+void SpritePerformTestD::doTest(Sprite* sprite)
 {
     performanceOut100(sprite);
 }
 
 ////////////////////////////////////////////////////////
 //
-// SpritePerformTest5
+// SpritePerformTestE
 //
 ////////////////////////////////////////////////////////
-std::string SpritePerformTest5::title() const
+std::string SpritePerformTestE::title() const
 {
     char str[32] = {0};
-    sprintf(str, "E (%d) 80%% out", subtestNumber);
+    sprintf(str, "E (%d) 80%% out", _subtestNumber);
     std::string strRet = str;
     return strRet;
 }
 
-std::string SpritePerformTest5::subtitle() const
-{
-    return "test 5";
-}
-
-void SpritePerformTest5::doTest(Sprite* sprite)
+void SpritePerformTestE::doTest(Sprite* sprite)
 {
     performanceout20(sprite);
 }
 
 ////////////////////////////////////////////////////////
 //
-// SpritePerformTest6
+// SpritePerformTestF
 //
 ////////////////////////////////////////////////////////
-std::string SpritePerformTest6::title() const
+std::string SpritePerformTestF::title() const
 {
     char str[32] = {0};
-    sprintf(str, "F (%d) actions", subtestNumber);
+    sprintf(str, "F (%d) actions", _subtestNumber);
     std::string strRet = str;
     return strRet;
 }
 
-std::string SpritePerformTest6::subtitle() const
-{
-    return "test 6";
-}
-
-void SpritePerformTest6::doTest(Sprite* sprite)
+void SpritePerformTestF::doTest(Sprite* sprite)
 {
     performanceActions(sprite);
 }
 
 ////////////////////////////////////////////////////////
 //
-// SpritePerformTest7
+// SpritePerformTestG
 //
 ////////////////////////////////////////////////////////
-std::string SpritePerformTest7::title() const
+std::string SpritePerformTestG::title() const
 {
     char str[32] = {0};
-    sprintf(str, "G (%d) actions 80%% out", subtestNumber);
+    sprintf(str, "G (%d) actions 80%% out", _subtestNumber);
     std::string strRet = str;
     return strRet;
 }
 
-std::string SpritePerformTest7::subtitle() const
-{
-    return "test 7";
-}
-
-void SpritePerformTest7::doTest(Sprite* sprite)
+void SpritePerformTestG::doTest(Sprite* sprite)
 {
     performanceActions20(sprite);
 }
@@ -989,7 +977,7 @@ void SpritePerformTest7::doTest(Sprite* sprite)
 void runSpriteTest()
 {
     SpriteMainScene::_s_autoTest = false;
-    auto scene = new (std::nothrow) SpritePerformTest1;
+    auto scene = new (std::nothrow) SpritePerformTestA;
     scene->initWithSubTest(1, 50);
     Director::getInstance()->replaceScene(scene);
     scene->release();

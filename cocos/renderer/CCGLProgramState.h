@@ -204,6 +204,7 @@ protected:
     ~GLProgramState();
     bool init(GLProgram* program);
     void resetGLProgram();
+    void updateUniformsAndAttributes();
     VertexAttribValue* getVertexAttribValue(const std::string &attributeName);
     UniformValue* getUniformValue(const std::string &uniformName);
     UniformValue* getUniformValue(GLint uniformLocation);
@@ -218,7 +219,7 @@ protected:
     uint32_t _vertexAttribsFlags;
     GLProgram *_glprogram;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     EventListenerCustom* _backToForegroundlistener;
 #endif
 };

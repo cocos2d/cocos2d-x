@@ -274,10 +274,59 @@ int LuaStack::executeString(const char *codes)
 
 int LuaStack::executeScriptFile(const char* filename)
 {
-    std::string code("require \"");
-    code.append(filename);
-    code.append("\"");
-    return executeString(code.c_str());
+    CCAssert(filename, "CCLuaStack::executeScriptFile() - invalid filename");
+    
+    static const std::string BYTECODE_FILE_EXT    = ".luac";
+    static const std::string NOT_BYTECODE_FILE_EXT = ".lua";
+    
+    std::string buf(filename);
+    //
+    // remove .lua or .luac
+    //
+    size_t pos = buf.rfind(BYTECODE_FILE_EXT);
+    if (pos != std::string::npos)
+    {
+        buf = buf.substr(0, pos);
+    }
+    else
+    {
+        pos = buf.rfind(NOT_BYTECODE_FILE_EXT);
+        if (pos == buf.length() - NOT_BYTECODE_FILE_EXT.length())
+        {
+            buf = buf.substr(0, pos);
+        }
+    }
+    
+    FileUtils *utils = FileUtils::getInstance();
+    //
+    // 1. check .lua suffix
+    // 2. check .luac suffix
+    //
+    std::string tmpfilename = buf + NOT_BYTECODE_FILE_EXT;
+    if (utils->isFileExist(tmpfilename))
+    {
+        buf = tmpfilename;
+    }
+    else
+    {
+        tmpfilename = buf + BYTECODE_FILE_EXT;
+        if (utils->isFileExist(tmpfilename))
+        {
+            buf = tmpfilename;
+        }
+    }
+    
+    std::string fullPath = utils->fullPathForFilename(buf);
+    Data data = utils->getDataFromFile(fullPath);
+    int rn = 0;
+    if (!data.isNull())
+    {
+        if (luaLoadBuffer(_state, (const char*)data.getBytes(), (int)data.getSize(), fullPath.c_str()) == 0)
+        {
+            rn = executeFunction(0);
+        }
+    }
+    return rn;
 }
 
 int LuaStack::executeGlobalFunction(const char* functionName)
@@ -793,6 +842,19 @@ int LuaStack::luaLoadChunksFromZIP(lua_State *L)
                 ssize_t bufferSize = 0;
                 unsigned char *zbuffer = zip->getFileData(filename.c_str(), &bufferSize);
                 if (bufferSize) {
+                    // remove extension
+                    std::size_t found = filename.rfind(".lua");
+                    if (found != std::string::npos)
+                    {
+                        filename.erase(found);
+                    }
+                    // replace path seperator '/' '\' to '.'
+                    for (int i=0; i<filename.size(); i++) {
+                        if (filename[i] == '/' || filename[i] == '\\') {
+                            filename[i] = '.';
+                        }
+                    }
+                    CCLOG("[luaLoadChunksFromZIP] add %s to preload", filename.c_str());
                     if (stack->luaLoadBuffer(L, (char*)zbuffer, (int)bufferSize, filename.c_str()) == 0) {
                         lua_setfield(L, -2, filename.c_str());
                         ++count;

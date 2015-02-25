@@ -7,7 +7,10 @@ if(WINDOWS)
     set(COCOS_AUDIO_PLATFORM_SRC
         audio/win32/SimpleAudioEngine.cpp
         audio/win32/MciPlayer.cpp
-	    audio/win32/MciPlayer.h
+        audio/win32/MciPlayer.h
+        audio/win32/AudioEngine-win32.cpp
+        audio/win32/AudioCache.cpp
+        audio/win32/AudioPlayer.cpp
     )
 
 elseif(LINUX)
@@ -17,8 +20,6 @@ elseif(LINUX)
         audio/linux/FmodAudioPlayer.h
         audio/linux/AudioPlayer.h
     )
-
-    include_directories( ../external/linux-specific/fmod/include/${ARCH_DIR} )
 
 elseif(MACOSX)
     # split it in _C and non C
@@ -45,16 +46,3 @@ elseif(MACOSX)
 endif()
 
 list(APPEND COCOS_AUDIO_SRC ${COCOS_AUDIO_PLATFORM_SRC})
-
-if(LINUX)
-  if ( CMAKE_SIZEOF_VOID_P EQUAL 8 )
-    set(FMOD_LIB "fmodex64")
-  else()
-    set(FMOD_LIB "fmodex")
-  endif()
-  set(AUDIO_LIB ${FMOD_LIB})
-elseif(WINDOWS)
-  set(AUDIO_LIB Winmm)
-endif()
-
-include_directories( audio/include )

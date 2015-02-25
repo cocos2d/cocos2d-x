@@ -99,11 +99,11 @@ LanguageType Application::getCurrentLanguage()
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSArray *languages = [defaults objectForKey:@"AppleLanguages"];
     NSString *currentLanguage = [languages objectAtIndex:0];
-
+    
     // get the current language code.(such as English is "en", Chinese is "zh" and so on)
     NSDictionary* temp = [NSLocale componentsFromLocaleIdentifier:currentLanguage];
     NSString * languageCode = [temp objectForKey:NSLocaleLanguageCode];
-
+    
     LanguageType ret = LanguageType::ENGLISH;
     if ([languageCode isEqualToString:@"zh"])
     {
@@ -151,6 +151,12 @@ LanguageType Application::getCurrentLanguage()
     }
     else if ([languageCode isEqualToString:@"pl"]){
         ret = LanguageType::POLISH;
+    }
+    else if ([languageCode isEqualToString:@"tr"]){
+        ret = LanguageType::TURKISH;
+    }
+    else if ([languageCode isEqualToString:@"uk"]){
+        ret = LanguageType::UKRAINIAN;
     }
     return ret;
 }

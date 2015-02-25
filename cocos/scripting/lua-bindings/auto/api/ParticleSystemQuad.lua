@@ -11,6 +11,7 @@
 -- @function [parent=#ParticleSystemQuad] setDisplayFrame 
 -- @param self
 -- @param #cc.SpriteFrame spriteFrame
+-- @return ParticleSystemQuad#ParticleSystemQuad self (return value: cc.ParticleSystemQuad)
         
 --------------------------------
 --  Sets a new texture with a rect. The rect is in Points.<br>
@@ -21,14 +22,7 @@
 -- @param self
 -- @param #cc.Texture2D texture
 -- @param #rect_table rect
-        
---------------------------------
---  listen the event that renderer was recreated on Android/WP8<br>
--- js NA<br>
--- lua NA
--- @function [parent=#ParticleSystemQuad] listenRendererRecreated 
--- @param self
--- @param #cc.EventCustom event
+-- @return ParticleSystemQuad#ParticleSystemQuad self (return value: cc.ParticleSystemQuad)
         
 --------------------------------
 -- @overload self, string         
@@ -51,5 +45,11 @@
 -- @function [parent=#ParticleSystemQuad] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
+        
+--------------------------------
+-- js ctor
+-- @function [parent=#ParticleSystemQuad] ParticleSystemQuad 
+-- @param self
+-- @return ParticleSystemQuad#ParticleSystemQuad self (return value: cc.ParticleSystemQuad)
         
 return nil

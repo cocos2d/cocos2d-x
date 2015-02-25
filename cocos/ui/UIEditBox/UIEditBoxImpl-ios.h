@@ -132,7 +132,6 @@ private:
     Vec2         _anchorPoint;
     UIEditBoxImplIOS_objc* _systemControl;
     int             _maxTextLength;
-    bool            _inRetinaMode;
 };
 
 

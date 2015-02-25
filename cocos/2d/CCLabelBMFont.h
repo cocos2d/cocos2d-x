@@ -37,6 +37,7 @@ Use any of these editors to generate BMFonts:
 #include "2d/CCLabel.h"
 #if CC_LABELBMFONT_DEBUG_DRAW
 #include "renderer/CCCustomCommand.h"
+#include "2d/CCDrawNode.h"
 #endif
 
 NS_CC_BEGIN

@@ -11,42 +11,77 @@ CPP_SAMPLES = ['cpp-empty-test', 'cpp-tests', 'game-controller-test']
 LUA_SAMPLES = ['lua-empty-test', 'lua-tests', 'lua-game-controller-test']
 ALL_SAMPLES = CPP_SAMPLES + LUA_SAMPLES
 
-def get_num_of_cpu():
+class BUILD_CONSTANT:
+    SDK_ROOT = None
+    COCOS_ROOT = None
+    NDK_BUILD_COMMAND = None
+    
+def initBuildConstant(ndk_build_param, build_mode):
+    ''' Checking the environment NDK_ROOT, which will be used for building
+    '''
+    try:
+        ndk_root = os.environ['NDK_ROOT']
+        ndk_build_path = os.path.join(ndk_root, "ndk-build")
+    except Exception:
+        print "NDK_ROOT not defined. Please define NDK_ROOT in your environment"
+        sys.exit(1)
+    
+    toolchainVersion = '4.8'
+    try:
+        versionFile = open(os.path.join(ndk_root, "RELEASE.TXT"))
+        firstLine = versionFile.readline()
+        if firstLine :
+            ndkVersion = firstLine[firstLine.index('r') : firstLine.index(' ')]
+            ndkVersionValue = int(filter(str.isdigit,ndkVersion))
+            if ndkVersionValue < 10 or cmp(ndkVersion,'r10c') < 0 :
+                print '''Please use NDK r10c above.
+If you do not,your application may crash or freeze on Android L(5.0) when use BMFont and HttpClient.
+For More information:
+    https://github.com/cocos2d/cocos2d-x/issues/9114
+    https://github.com/cocos2d/cocos2d-x/issues/9138\n'''
+            else:
+                toolchainVersion = '4.9'
+        versionFile.close()
+    except Exception:
+        print "Can not be determined your NDK version"
+        
+    if toolchainVersion == '4.8':
+        print 'NDK_TOOLCHAIN_VERSION is 4.8,your application may crash on Androud when use c++ 11 regular\n'
+        
+    current_dir = os.path.dirname(os.path.realpath(__file__))
+    cocos_root = os.path.join(current_dir, "..")
+    BUILD_CONSTANT.COCOS_ROOT = cocos_root
+    
+    # windows should use ";" to seperate module paths
+    platform = sys.platform
+    if platform == 'win32':
+        ndk_module_path = 'NDK_MODULE_PATH=%s;%s/external;%s/cocos' % (cocos_root, cocos_root, cocos_root)
+    else:
+        ndk_module_path = 'NDK_MODULE_PATH=%s:%s/external:%s/cocos' % (cocos_root, cocos_root, cocos_root)
+    
     ''' The build process can be accelerated by running multiple concurrent job processes using the -j-option.
     '''
     try:
         import multiprocessing
-        return multiprocessing.cpu_count()
+        num_of_cpu = multiprocessing.cpu_count()
     except Exception:
         print "Can't know cpuinfo, use default 1 cpu"
-        return 1
-
-def check_environment_variables():
-    ''' Checking the environment NDK_ROOT, which will be used for building
-    '''
-
-    try:
-        NDK_ROOT = os.environ['NDK_ROOT']
-    except Exception:
-        print "NDK_ROOT not defined. Please define NDK_ROOT in your environment"
-        sys.exit(1)
-
-    return NDK_ROOT
-
+        num_of_cpu = 1
+        
+    if ndk_build_param == None:
+        BUILD_CONSTANT.NDK_BUILD_COMMAND = '%s -j%d NDK_DEBUG=%d %s NDK_TOOLCHAIN_VERSION=%s' % (ndk_build_path, num_of_cpu, build_mode=='debug', ndk_module_path, toolchainVersion)
+    else:
+        BUILD_CONSTANT.NDK_BUILD_COMMAND = '%s -j%d NDK_DEBUG=%d %s %s NDK_TOOLCHAIN_VERSION=%s' % (ndk_build_path, num_of_cpu, build_mode=='debug', ndk_build_param, ndk_module_path, toolchainVersion)
+    
 def check_environment_variables_sdk():
     ''' Checking the environment ANDROID_SDK_ROOT, which will be used for building
     '''
 
     try:
-        SDK_ROOT = os.environ['ANDROID_SDK_ROOT']
+        BUILD_CONSTANT.SDK_ROOT = os.environ['ANDROID_SDK_ROOT']
     except Exception:
         print "ANDROID_SDK_ROOT not defined. Please define ANDROID_SDK_ROOT in your environment"
         sys.exit(1)
-
-    return SDK_ROOT
-
-def select_toolchain_version():
-    pass
 
 def caculate_built_samples(args):
     ''' Compute the sampels to be built
@@ -72,28 +107,14 @@ def caculate_built_samples(args):
     targets = set(targets)
     return list(targets)
 
-def do_build(cocos_root, ndk_root, app_android_root, ndk_build_param,sdk_root,android_platform,build_mode):
-
-    ndk_path = os.path.join(ndk_root, "ndk-build")
-
-    # windows should use ";" to seperate module paths
-    platform = sys.platform
-    if platform == 'win32':
-        ndk_module_path = 'NDK_MODULE_PATH=%s;%s/external;%s/cocos' % (cocos_root, cocos_root, cocos_root)
-    else:
-        ndk_module_path = 'NDK_MODULE_PATH=%s:%s/external:%s/cocos' % (cocos_root, cocos_root, cocos_root)
-
-    num_of_cpu = get_num_of_cpu()
-    if ndk_build_param == None:
-        command = '%s -j%d -C %s NDK_DEBUG=%d %s' % (ndk_path, num_of_cpu, app_android_root, build_mode=='debug', ndk_module_path)
-    else:
-        command = '%s -j%d -C %s NDK_DEBUG=%d %s %s' % (ndk_path, num_of_cpu, app_android_root, build_mode=='debug', ndk_build_param, ndk_module_path)
+def do_build(app_android_root, android_platform, build_mode):
+    command = '%s -C %s' % (BUILD_CONSTANT.NDK_BUILD_COMMAND, app_android_root)
     print command
     if os.system(command) != 0:
         raise Exception("Build dynamic library for project [ " + app_android_root + " ] fails!")
     elif android_platform is not None:
-        sdk_tool_path = os.path.join(sdk_root, "tools/android")
-        cocoslib_path = os.path.join(cocos_root, "cocos/platform/android/java")
+        sdk_tool_path = os.path.join(BUILD_CONSTANT.SDK_ROOT, "tools/android")
+        cocoslib_path = os.path.join(BUILD_CONSTANT.COCOS_ROOT, "cocos/platform/android/java")
         command = '%s update lib-project -t %s -p %s' % (sdk_tool_path,android_platform,cocoslib_path)
         if os.system(command) != 0:
             raise Exception("update cocos lib-project [ " + cocoslib_path + " ] fails!")
@@ -101,7 +122,7 @@ def do_build(cocos_root, ndk_root, app_android_root, ndk_build_param,sdk_root,an
         if os.system(command) != 0:
             raise Exception("update project [ " + app_android_root + " ] fails!")
         buildfile_path = os.path.join(app_android_root, "build.xml")
-        command = 'ant clean %s -f %s -Dsdk.dir=%s' % (build_mode,buildfile_path,sdk_root)
+        command = 'ant clean %s -f %s -Dsdk.dir=%s' % (build_mode,buildfile_path,BUILD_CONSTANT.SDK_ROOT)
         os.system(command)
 
 def copy_files(src, dst):
@@ -180,26 +201,22 @@ def copy_resources(target, app_android_root):
 
 def build_samples(target,ndk_build_param,android_platform,build_mode):
 
-    ndk_root = check_environment_variables()
-    sdk_root = None
-    select_toolchain_version()
+    if build_mode is None:
+        build_mode = 'debug'
+    elif build_mode != 'release':
+        build_mode = 'debug'
+        
+    initBuildConstant(ndk_build_param, build_mode)
+    
     build_targets = caculate_built_samples(target)
-
-    current_dir = os.path.dirname(os.path.realpath(__file__))
-    cocos_root = os.path.join(current_dir, "..")
-
+    
     if android_platform is not None:
-        sdk_root = check_environment_variables_sdk()
+        check_environment_variables_sdk()
         if android_platform.isdigit():
             android_platform = 'android-'+android_platform
         else:
             print 'please use vaild android platform'
             exit(1)
-
-    if build_mode is None:
-        build_mode = 'debug'
-    elif build_mode != 'release':
-        build_mode = 'debug'
 
     app_android_root = ''
 
@@ -214,13 +231,13 @@ def build_samples(target,ndk_build_param,android_platform,build_mode):
 
     for target in build_targets:
         if target in target_proj_path_map:
-            app_android_root = os.path.join(cocos_root, target_proj_path_map[target])
+            app_android_root = os.path.join(BUILD_CONSTANT.COCOS_ROOT, target_proj_path_map[target])
         else:
             print 'unknown target: %s' % target
             continue
 
         copy_resources(target, app_android_root)
-        do_build(cocos_root, ndk_root, app_android_root, ndk_build_param,sdk_root,android_platform,build_mode)
+        do_build(app_android_root, android_platform, build_mode)
 
 # -------------- main --------------
 if __name__ == '__main__':
@@ -249,7 +266,8 @@ if __name__ == '__main__':
     parser.add_option("-b", "--build", dest="build_mode",
     help='The build mode for java project,debug[default] or release. Get more information,please refer to http://developer.android.com/tools/building/building-cmdline.html')
     (opts, args) = parser.parse_args()
-
+    
+    print "We will use cocos console to build tests built-in with cocos2d-x and remove this script next version.\n"
     if len(args) == 0:
         parser.print_help()
         sys.exit(1)

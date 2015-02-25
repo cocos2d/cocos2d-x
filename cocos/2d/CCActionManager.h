@@ -126,7 +126,9 @@ public:
     /** Resume a set of targets (convenience function to reverse a pauseAllRunningActions call)
      */
     void resumeTargets(const Vector<Node*>& targetsToResume);
-
+    /**
+     * @param dt in seconds
+     */
     void update(float dt);
     
 protected:

@@ -32,5 +32,6 @@
 -- 
 -- @function [parent=#RichElementText] RichElementText 
 -- @param self
+-- @return RichElementText#RichElementText self (return value: ccui.RichElementText)
         
 return nil

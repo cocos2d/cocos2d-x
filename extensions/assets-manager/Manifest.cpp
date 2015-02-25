@@ -63,33 +63,48 @@ Manifest::Manifest(const std::string& manifestUrl/* = ""*/)
         parse(manifestUrl);
 }
 
-void Manifest::parse(const std::string& manifestUrl)
+void Manifest::loadJson(const std::string& url)
 {
     clear();
-	std::string content;
-	if (_fileUtils->isFileExist(manifestUrl))
-	{
-		// Load file content
-		content = _fileUtils->getStringFromFile(manifestUrl);
+    std::string content;
+    if (_fileUtils->isFileExist(url))
+    {
+        // Load file content
+        content = _fileUtils->getStringFromFile(url);
+        
+        if (content.size() == 0)
+        {
+            CCLOG("Fail to retrieve local file content: %s\n", url.c_str());
+        }
+        else
+        {
+            // Parse file with rapid json
+            _json.Parse<0>(content.c_str());
+            // Print error
+            if (_json.HasParseError()) {
+                size_t offset = _json.GetErrorOffset();
+                if (offset > 0)
+                    offset--;
+                std::string errorSnippet = content.substr(offset, 10);
+                CCLOG("File parse error %s at <%s>\n", _json.GetParseError(), errorSnippet.c_str());
+            }
+        }
+    }
+}
 
-		if (content.size() == 0)
-		{
-			CCLOG("Fail to retrieve local file content: %s\n", manifestUrl.c_str());
-		}
-		else
-		{
-			// Parse file with rapid json
-			_json.Parse<0>(content.c_str());
-			// Print error
-			if (_json.HasParseError()) {
-			size_t offset = _json.GetErrorOffset();
-			if (offset > 0)
-			offset--;
-			std::string errorSnippet = content.substr(offset, 10);
-			CCLOG("File parse error %s at <%s>\n", _json.GetParseError(), errorSnippet.c_str());
-			}
-		}
-	}
+void Manifest::parseVersion(const std::string& versionUrl)
+{
+    loadJson(versionUrl);
+    
+    if (_json.IsObject())
+    {
+        loadVersion(_json);
+    }
+}
+
+void Manifest::parse(const std::string& manifestUrl)
+{
+    loadJson(manifestUrl);
 	
     if (_json.IsObject())
     {
@@ -129,7 +144,7 @@ bool Manifest::versionEquals(const Manifest *b) const
             return false;
         
         // Check groups version
-        for (int i = 0; i < _groups.size(); ++i) {
+        for (unsigned int i = 0; i < _groups.size(); ++i) {
             std::string gid =_groups[i];
             // Check group name
             if (gid != bGroups[i])
@@ -219,6 +234,21 @@ void Manifest::genResumeAssetsList(Downloader::DownloadUnits *units) const
     }
 }
 
+std::vector<std::string> Manifest::getSearchPaths() const
+{
+    std::vector<std::string> searchPaths;
+    searchPaths.push_back(_manifestRoot);
+    
+    for (int i = (int)_searchPaths.size()-1; i >= 0; i--)
+    {
+        std::string path = _searchPaths[i];
+        if (path.size() > 0 && path[path.size() - 1] != '/')
+            path.append("/");
+        path = _manifestRoot + path;
+        searchPaths.push_back(path);
+    }
+    return searchPaths;
+}
 
 void Manifest::prependSearchPaths()
 {

@@ -187,6 +187,12 @@ void WsThreadHelper::update(float dt)
 {
     WsMessage *msg = nullptr;
 
+    /* Avoid locking if, in most cases, the queue is empty. This could be a little faster.
+    size() is not thread-safe, it might return a strange value, but it should be OK in our scenario.
+    */
+    if (0 == _UIWsMessageQueue->size()) 
+        return;	
+
     // Returns quickly if no message
     _UIWsMessageQueueMutex.lock();
 
@@ -534,7 +540,8 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
 
                         size_t remaining = data->len - data->issued;
                         size_t n = std::min(remaining, c_bufferSize );
-                        CCLOG("[websocket:send] total: %d, sent: %d, remaining: %d, buffer size: %d", static_cast<int>(data->len), static_cast<int>(data->issued), static_cast<int>(remaining), static_cast<int>(n));
+                        //fixme: the log is not thread safe
+//                        CCLOG("[websocket:send] total: %d, sent: %d, remaining: %d, buffer size: %d", static_cast<int>(data->len), static_cast<int>(data->issued), static_cast<int>(remaining), static_cast<int>(n));
 
                         unsigned char* buf = new unsigned char[LWS_SEND_BUFFER_PRE_PADDING + n + LWS_SEND_BUFFER_POST_PADDING];
 
@@ -564,7 +571,8 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
                         }
 
                         bytesWrite = libwebsocket_write(wsi,  &buf[LWS_SEND_BUFFER_PRE_PADDING], n, (libwebsocket_write_protocol)writeProtocol);
-                        CCLOG("[websocket:send] bytesWrite => %d", bytesWrite);
+                        //fixme: the log is not thread safe
+//                        CCLOG("[websocket:send] bytesWrite => %d", bytesWrite);
 
                         // Buffer overrun?
                         if (bytesWrite < 0)
@@ -597,8 +605,8 @@ int WebSocket::onSocketCallback(struct libwebsocket_context *ctx,
             
         case LWS_CALLBACK_CLOSED:
             {
-                
-                CCLOG("%s", "connection closing..");
+                //fixme: the log is not thread safe
+//                CCLOG("%s", "connection closing..");
 
                 _wsHelper->quitSubThread();
                 

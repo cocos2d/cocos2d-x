@@ -4,6 +4,7 @@
 #include "CocoStudioGUITest.h"
 #include "CustomTest/CustomImageTest/CustomImageTest.h"
 #include "CustomTest/CustomParticleWidgetTest/CustomParticleWidgetTest.h"
+#include "CustomTest/CustomWidgetCallbackBindTest/CustomWidgetCallbackBindTest.h"
 
 
 enum
@@ -19,6 +20,16 @@ static struct
 }
 g_guisTests[] =
 {
+    {
+        "custom widget call back bind Test",
+        [](Ref* sender)
+        {
+            CustomWidgetCallbackBindScene* pScene = new (std::nothrow) CustomWidgetCallbackBindScene();
+            pScene->runThisTest();
+            pScene->release();
+        }
+    },
+    /*
 	{
         "custom gui image Test",
         [](Ref* sender)
@@ -37,6 +48,7 @@ g_guisTests[] =
             pScene->release();
         }
 	},
+     */
 };
 
 static const int g_maxTests = sizeof(g_guisTests) / sizeof(g_guisTests[0]);
@@ -116,7 +128,7 @@ void CustomGUITestMainLayer::onTouchesMoved(const std::vector<Touch *> &touches,
 
 void CustomGUITestScene::onEnter()
 {
-    CCScene::onEnter();
+    Scene::onEnter();
     
     auto label = Label::createWithTTF("Back", "fonts/arial.ttf", 20);
     //#endif
@@ -136,7 +148,7 @@ void CustomGUITestScene::runThisTest()
     addChild(pLayer);
     pLayer->release();
     
-    CCDirector::getInstance()->replaceScene(this);
+    Director::getInstance()->replaceScene(this);
 }
 
 void CustomGUITestScene::BackCallback(Ref* pSender)

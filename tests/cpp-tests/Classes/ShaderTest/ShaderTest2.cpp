@@ -151,10 +151,12 @@ public:
 
     void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override
     {
+#if CC_USE_CULLING
         // Don't do calculate the culling if the transform was not updated
         _insideBounds = (flags & FLAGS_TRANSFORM_DIRTY) ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
 
         if(_insideBounds)
+#endif
         {
             // negative effects: order < 0
             int idx=0;
@@ -163,20 +165,20 @@ public:
                 if(std::get<0>(effect) >=0)
                     break;
                 QuadCommand &q = std::get<2>(effect);
-                q.init(_globalZOrder, _texture->getName(), std::get<1>(effect)->getGLProgramState(), _blendFunc, &_quad, 1, transform);
+                q.init(_globalZOrder, _texture->getName(), std::get<1>(effect)->getGLProgramState(), _blendFunc, &_quad, 1, transform, flags);
                 renderer->addCommand(&q);
                 idx++;
 
             }
 
             // normal effect: order == 0
-            _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, transform);
+            _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, transform, flags);
             renderer->addCommand(&_quadCommand);
 
             // postive effects: oder >= 0
             for(auto it = std::begin(_effects)+idx; it != std::end(_effects); ++it) {
                 QuadCommand &q = std::get<2>(*it);
-                q.init(_globalZOrder, _texture->getName(), std::get<1>(*it)->getGLProgramState(), _blendFunc, &_quad, 1, transform);
+                q.init(_globalZOrder, _texture->getName(), std::get<1>(*it)->getGLProgramState(), _blendFunc, &_quad, 1, transform, flags);
                 renderer->addCommand(&q);
                 idx++;
             }
@@ -209,7 +211,7 @@ bool Effect::initGLProgramState(const std::string &fragmentFilename)
     auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
     auto glprogram = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource.c_str());
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     _fragSource = fragSource;
 #endif
     
@@ -222,7 +224,7 @@ bool Effect::initGLProgramState(const std::string &fragmentFilename)
 Effect::Effect()
 : _glprogramstate(nullptr)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     _backgroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
                                                       [this](EventCustom*)
                                                       {
@@ -240,7 +242,7 @@ Effect::Effect()
 Effect::~Effect()
 {
     CC_SAFE_RELEASE_NULL(_glprogramstate);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backgroundListener);
 #endif
 }

@@ -5,19 +5,34 @@
 -- @parent_module cc
 
 --------------------------------
+--  initializes a Menu with a NSArray of MenuItem objects 
+-- @function [parent=#Menu] initWithArray 
+-- @param self
+-- @param #array_table arrayOfItems
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- 
 -- @function [parent=#Menu] setEnabled 
 -- @param self
 -- @param #bool value
+-- @return Menu#Menu self (return value: cc.Menu)
         
 --------------------------------
 --  align items vertically 
 -- @function [parent=#Menu] alignItemsVertically 
 -- @param self
+-- @return Menu#Menu self (return value: cc.Menu)
         
 --------------------------------
 -- 
 -- @function [parent=#Menu] isEnabled 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+--  initializes an empty Menu 
+-- @function [parent=#Menu] init 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
@@ -27,6 +42,7 @@
 -- @function [parent=#Menu] alignItemsHorizontallyWithPadding 
 -- @param self
 -- @param #float padding
+-- @return Menu#Menu self (return value: cc.Menu)
         
 --------------------------------
 --  align items vertically with padding<br>
@@ -34,11 +50,13 @@
 -- @function [parent=#Menu] alignItemsVerticallyWithPadding 
 -- @param self
 -- @param #float padding
+-- @return Menu#Menu self (return value: cc.Menu)
         
 --------------------------------
 --  align items horizontally 
 -- @function [parent=#Menu] alignItemsHorizontally 
 -- @param self
+-- @return Menu#Menu self (return value: cc.Menu)
         
 --------------------------------
 -- @overload self, cc.Node, int         
@@ -50,6 +68,7 @@
 -- @param #cc.Node child
 -- @param #int zOrder
 -- @param #string name
+-- @return Menu#Menu self (return value: cc.Menu)
 
 --------------------------------
 -- 
@@ -68,6 +87,7 @@
 -- @function [parent=#Menu] setOpacityModifyRGB 
 -- @param self
 -- @param #bool bValue
+-- @return Menu#Menu self (return value: cc.Menu)
         
 --------------------------------
 -- 
@@ -75,5 +95,12 @@
 -- @param self
 -- @param #cc.Node child
 -- @param #bool cleanup
+-- @return Menu#Menu self (return value: cc.Menu)
+        
+--------------------------------
+-- js ctor
+-- @function [parent=#Menu] Menu 
+-- @param self
+-- @return Menu#Menu self (return value: cc.Menu)
         
 return nil

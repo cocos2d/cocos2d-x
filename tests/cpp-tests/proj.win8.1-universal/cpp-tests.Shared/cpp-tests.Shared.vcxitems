@@ -29,6 +29,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ActionsEaseTest\ActionsEaseTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ActionsProgressTest\ActionsProgressTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ActionsTest\ActionsTest.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\AllocatorTest\AllocatorTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\AppDelegate.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BaseTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\BillBoardTest\BillBoardTest.cpp" />
@@ -59,7 +60,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\controller.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\CurlTest\CurlTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\CurrentLanguageTest\CurrentLanguageTest.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\DataVisitorTest\DataVisitorTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\DrawPrimitivesTest\DrawPrimitivesTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\EffectsAdvancedTest\EffectsAdvancedTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\EffectsTest\EffectsTest.cpp" />
@@ -94,7 +94,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\NetworkTest\SocketIOTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\NotificationCenterTest\NotificationCenterTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\TableViewTest\CustomTableViewCell.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\FileUtilsTest\FileUtilsTest.cpp" />
@@ -113,12 +112,14 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\NodeTest\NodeTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\OpenURLTest\OpenURLTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ParallaxTest\ParallaxTest.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\Particle3DTest\Particle3DTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ParticleTest\ParticleTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceAllocTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceCallbackTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceContainerTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceEventDispatcherTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceLabelTest.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceMathTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceNodeChildrenTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceParticleTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceRendererTest.cpp" />
@@ -157,6 +158,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomGUIScene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomImageTest\CustomImageTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest\CustomParticleWidgetTest.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNode.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNodeReader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomWidgetCallbackBindTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomImageView.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomImageViewReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomParticleWidget.cpp" />
@@ -218,6 +222,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ActionsEaseTest\ActionsEaseTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ActionsProgressTest\ActionsProgressTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ActionsTest\ActionsTest.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\AllocatorTest\AllocatorTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\AppDelegate.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BaseTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\BillBoardTest\BillBoardTest.h" />
@@ -297,7 +302,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\controller.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\CurlTest\CurlTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\CurrentLanguageTest\CurrentLanguageTest.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\DataVisitorTest\DataVisitorTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\DrawPrimitivesTest\DrawPrimitivesTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\EffectsAdvancedTest\EffectsAdvancedTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\EffectsTest\EffectsTest.h" />
@@ -347,7 +351,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\NetworkTest\HttpClientTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\NetworkTest\SocketIOTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\NetworkTest\WebSocketTest.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\NotificationCenterTest\NotificationCenterTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\TableViewTest\CustomTableViewCell.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\FileUtilsTest\FileUtilsTest.h" />
@@ -366,12 +369,14 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\NodeTest\NodeTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\OpenURLTest\OpenURLTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ParallaxTest\ParallaxTest.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\Particle3DTest\Particle3DTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ParticleTest\ParticleTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceAllocTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceCallbackTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceContainerTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceEventDispatcherTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceLabelTest.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceMathTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceNodeChildrenTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceParticleTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceRendererTest.h" />
@@ -414,6 +419,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomGUIScene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomImageTest\CustomImageTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest\CustomParticleWidgetTest.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNode.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNodeReader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomWidgetCallbackBindTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomImageView.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomImageViewReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomParticleWidget.h" />

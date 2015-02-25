@@ -209,7 +209,7 @@ void Box2DTestLayer::addNewSpriteAtPosition(Vec2 p)
     parent->addChild(sprite);
     sprite->setB2Body(body);
     sprite->setPTMRatio(PTM_RATIO);
-    sprite->setPosition(p.x, p.y);
+    sprite->setPosition(cocos2d::Vec2(p.x, p.y));
 #endif
 }
 

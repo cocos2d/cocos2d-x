@@ -15,5 +15,6 @@
 -- @function [parent=#EventCustom] EventCustom 
 -- @param self
 -- @param #string eventName
+-- @return EventCustom#EventCustom self (return value: cc.EventCustom)
         
 return nil

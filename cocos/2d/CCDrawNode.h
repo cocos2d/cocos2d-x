@@ -1,6 +1,7 @@
+
 /* Copyright (c) 2012 Scott Lembcke and Howling Moon Software
  * Copyright (c) 2012 cocos2d-x.org
- * Copyright (c) 2013-2014 Chukong Technologies Inc.
+ * Copyright (c) 2013-2015 Chukong Technologies Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,30 +34,37 @@
 
 #include "2d/CCNode.h"
 #include "base/ccTypes.h"
-#include "renderer/CCCustomCommand.h"
+#include "renderer/CCBatchCommand.h"
 #include "math/CCMath.h"
 
 NS_CC_BEGIN
 
-/** DrawNode
- Node that draws dots, segments and polygons.
- Faster than the "drawing primitives" since they draws everything in one single batch.
- 
- @since v2.1
- */
-
+class VertexData;
+class VertexBuffer;
 class PointArray;
 
 class CC_DLL DrawNode : public Node
 {
 public:
-    /** creates and initialize a DrawNode node */
-    static DrawNode* create();
+    
+    template <class T = DrawNode>
+    static T* create()
+    {
+        auto ret = new (std::nothrow) T;
+        if (ret && ret->init())
+        {
+            ret->autorelease();
+            return ret;
+        }
+        CC_SAFE_DELETE(ret);
+        return nullptr;
+    }
+    
+    void drawPoint(const Vec2& point, float pointSize, const Color4F &color);
+    
+    void drawPoints(const Vec2* position, unsigned int numberOfPoints, const Color4F &color, float pointSize = 1);
+    CC_DEPRECATED_ATTRIBUTE void drawPoints(const Vec2* position, unsigned int numberOfPoints, double pointSize, const Color4F& color);
 
-    void drawPoint(const Vec2& point, const float pointSize, const Color4F &color);
-    
-    void drawPoints(const Vec2 *position, unsigned int numberOfPoints, const Color4F &color);
-    
     void drawLine(const Vec2 &origin, const Vec2 &destination, const Color4F &color);
     
     void drawRect(const Vec2 &origin, const Vec2 &destination, const Color4F &color);
@@ -79,7 +87,7 @@ public:
     /** draw a dot at a position, with a given radius and color */
     void drawDot(const Vec2 &pos, float radius, const Color4F &color);
     
-    void drawRect(const Vec2 &lb, const Vec2 &lt, const Vec2 &rt, const Vec2& rb, const Color4F &color);
+    void drawRect(const Vec2 &p1, const Vec2 &p2, const Vec2 &p3, const Vec2& p4, const Color4F &color);
     
     void drawSolidRect(const Vec2 &origin, const Vec2 &destination, const Color4F &color);
     
@@ -113,7 +121,11 @@ public:
     * @js NA
     * @lua NA
     */
-    const BlendFunc& getBlendFunc() const;
+    const BlendFunc& getBlendFunc() const
+    {
+        return _blendFunc;
+    }
+    
     /**
     * @code
     * When this function bound into js or lua,the parameter will be changed
@@ -121,54 +133,42 @@ public:
     * @endcode
     * @lua NA
     */
-    void setBlendFunc(const BlendFunc &blendFunc);
-
-    void onDraw(const Mat4 &transform, uint32_t flags);
-    void onDrawGLLine(const Mat4 &transform, uint32_t flags);
-    void onDrawGLPoint(const Mat4 &transform, uint32_t flags);
+    void setBlendFunc(const BlendFunc &blendFunc)
+    {
+        _blendFunc = blendFunc;
+    }
     
     // Overrides
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    virtual void draw(Renderer* renderer, const Mat4& transform, uint32_t flags) override;
     
+    // deprecated access method for DrawPrimitives to use DrawNode
+    CC_DEPRECATED_ATTRIBUTE virtual void drawImmediate(Renderer* renderer, const Mat4& transform, uint32_t flags);
+    
+    // need these for Lua bindings to keep functioning
+    CC_DEPRECATED_ATTRIBUTE void onDraw(const Mat4 &transform, uint32_t flags) {CCASSERT(false, "deprecated method");}
+    CC_DEPRECATED_ATTRIBUTE void onDrawGLLine(const Mat4 &transform, uint32_t flags) {CCASSERT(false, "deprecated method");}
+    CC_DEPRECATED_ATTRIBUTE void onDrawGLPoint(const Mat4 &transform, uint32_t flags) {CCASSERT(false, "deprecated method");}
+
 CC_CONSTRUCTOR_ACCESS:
     DrawNode();
     virtual ~DrawNode();
     virtual bool init();
 
 protected:
-    void ensureCapacity(int count);
-    void ensureCapacityGLPoint(int count);
-    void ensureCapacityGLLine(int count);
 
-    GLuint      _vao;
-    GLuint      _vbo;
-    GLuint      _vaoGLPoint;
-    GLuint      _vboGLPoint;
-    GLuint      _vaoGLLine;
-    GLuint      _vboGLLine;
-
-    int         _bufferCapacity;
-    GLsizei     _bufferCount;
-    V2F_C4B_T2F *_buffer;
+    BlendFunc _blendFunc;
     
-    int         _bufferCapacityGLPoint;
-    GLsizei     _bufferCountGLPoint;
-    V2F_C4B_T2F *_bufferGLPoint;
-    Color4F     _pointColor;
-    int         _pointSize;
-    
-    int         _bufferCapacityGLLine;
-    GLsizei     _bufferCountGLLine;
-    V2F_C4B_T2F *_bufferGLLine;
+    BatchCommand  _batchCommandTriangles;
+    VertexData*   _vdTriangles;
+    VertexBuffer* _vbTriangles;
 
-    BlendFunc   _blendFunc;
-    CustomCommand _customCommand;
-    CustomCommand _customCommandGLPoint;
-    CustomCommand _customCommandGLLine;
+    BatchCommand  _batchCommandPoints;
+    VertexData*   _vdPoints;
+    VertexBuffer* _vbPoints;
 
-    bool        _dirty;
-    bool        _dirtyGLPoint;
-    bool        _dirtyGLLine;
+    BatchCommand  _batchCommandLines;
+    VertexData*   _vdLines;
+    VertexBuffer* _vbLines;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(DrawNode);

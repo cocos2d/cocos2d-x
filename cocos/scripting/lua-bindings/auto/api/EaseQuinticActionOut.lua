@@ -18,15 +18,22 @@
 -- @return EaseQuinticActionOut#EaseQuinticActionOut ret (return value: cc.EaseQuinticActionOut)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#EaseQuinticActionOut] update 
 -- @param self
 -- @param #float time
+-- @return EaseQuinticActionOut#EaseQuinticActionOut self (return value: cc.EaseQuinticActionOut)
         
 --------------------------------
 -- 
 -- @function [parent=#EaseQuinticActionOut] reverse 
 -- @param self
 -- @return EaseQuinticActionOut#EaseQuinticActionOut ret (return value: cc.EaseQuinticActionOut)
+        
+--------------------------------
+-- 
+-- @function [parent=#EaseQuinticActionOut] EaseQuinticActionOut 
+-- @param self
+-- @return EaseQuinticActionOut#EaseQuinticActionOut self (return value: cc.EaseQuinticActionOut)
         
 return nil

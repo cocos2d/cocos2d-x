@@ -42,6 +42,8 @@ extern CC_DLL const GLchar * ccPosition_uColor_vert;
 extern CC_DLL const GLchar * ccPositionColor_frag;
 extern CC_DLL const GLchar * ccPositionColor_vert;
 
+extern CC_DLL const GLchar * ccPositionColorTextureAsPointsize_vert;
+
 extern CC_DLL const GLchar * ccPositionTexture_frag;
 extern CC_DLL const GLchar * ccPositionTexture_vert;
 
@@ -77,6 +79,9 @@ extern CC_DLL const GLchar * cc3D_PositionNormalTex_vert;
 extern CC_DLL const GLchar * cc3D_SkinPositionNormalTex_vert;
 extern CC_DLL const GLchar * cc3D_ColorNormalTex_frag;
 extern CC_DLL const GLchar * cc3D_ColorNormal_frag;
+extern CC_DLL const GLchar * cc3D_Particle_vert;
+extern CC_DLL const GLchar * cc3D_Particle_tex_frag;
+extern CC_DLL const GLchar * cc3D_Particle_color_frag;
 // end of shaders group
 /// @}
 

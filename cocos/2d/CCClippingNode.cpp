@@ -151,7 +151,7 @@ void ClippingNode::onExit()
 
 void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
-    if(!_visible)
+    if (!_visible || !hasContent())
         return;
     
     uint32_t flags = processParentFlags(parentTransform, parentFlags);
@@ -223,6 +223,11 @@ void ClippingNode::setStencil(Node *stencil)
     CC_SAFE_RETAIN(stencil);
     CC_SAFE_RELEASE(_stencil);
     _stencil = stencil;
+}
+
+bool ClippingNode::hasContent() const
+{
+    return _children.size() > 0;
 }
 
 GLfloat ClippingNode::getAlphaThreshold() const

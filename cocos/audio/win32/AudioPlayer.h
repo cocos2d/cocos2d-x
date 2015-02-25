@@ -31,7 +31,11 @@
 #include <string>
 #include <condition_variable>
 #include <thread>
-#include "AL/al.h"
+#ifdef OPENAL_PLAIN_INCLUDES
+#include <al.h>
+#else
+#include <AL/al.h>
+#endif
 #include "CCPlatformMacros.h"
 
 NS_CC_BEGIN

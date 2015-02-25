@@ -10,6 +10,7 @@
 -- @param self
 -- @param #float width
 -- @param #float height
+-- @return GLView#GLView self (return value: cc.GLView)
         
 --------------------------------
 -- Get the opengl view port rectangle.
@@ -35,6 +36,7 @@
 -- @function [parent=#GLView] setIMEKeyboardState 
 -- @param self
 -- @param #bool open
+-- @return GLView#GLView self (return value: cc.GLView)
         
 --------------------------------
 -- Set Scissor rectangle with points.
@@ -44,6 +46,7 @@
 -- @param #float y
 -- @param #float w
 -- @param #float h
+-- @return GLView#GLView self (return value: cc.GLView)
         
 --------------------------------
 -- 
@@ -61,6 +64,7 @@
 --  Force destroying EGL view, subclass must implement this method. 
 -- @function [parent=#GLView] end 
 -- @param self
+-- @return GLView#GLView self (return value: cc.GLView)
         
 --------------------------------
 -- Get scale factor of the vertical direction.
@@ -93,6 +97,7 @@
 -- @function [parent=#GLView] setFrameZoomFactor 
 -- @param self
 -- @param #float zoomFactor
+-- @return GLView#GLView self (return value: cc.GLView)
         
 --------------------------------
 -- 
@@ -117,6 +122,7 @@
 --  Exchanges the front and back buffers, subclass must implement this method. 
 -- @function [parent=#GLView] swapBuffers 
 -- @param self
+-- @return GLView#GLView self (return value: cc.GLView)
         
 --------------------------------
 -- Set the design resolution size.<br>
@@ -131,6 +137,7 @@
 -- @param #float width
 -- @param #float height
 -- @param #int resolutionPolicy
+-- @return GLView#GLView self (return value: cc.GLView)
         
 --------------------------------
 --  returns the current Resolution policy 
@@ -152,6 +159,7 @@
 -- @param #float y
 -- @param #float w
 -- @param #float h
+-- @return GLView#GLView self (return value: cc.GLView)
         
 --------------------------------
 -- Get the current scissor rectangle
@@ -170,6 +178,7 @@
 -- @function [parent=#GLView] setViewName 
 -- @param self
 -- @param #string viewname
+-- @return GLView#GLView self (return value: cc.GLView)
         
 --------------------------------
 -- Get the visible rectangle of opengl viewport.
@@ -193,12 +202,14 @@
 -- 
 -- @function [parent=#GLView] pollEvents 
 -- @param self
+-- @return GLView#GLView self (return value: cc.GLView)
         
 --------------------------------
 -- 
 -- @function [parent=#GLView] setGLContextAttrs 
 -- @param self
 -- @param #GLContextAttrs glContextAttrs
+-- @return GLView#GLView self (return value: cc.GLView)
         
 --------------------------------
 -- 

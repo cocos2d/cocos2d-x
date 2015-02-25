@@ -1247,8 +1247,8 @@
 
 
 --------------------------------------------------------
--- the cc CSLoader
--- @field [parent=#cc] CSLoader#CSLoader CSLoader preloaded module
+-- the cc AsyncTaskPool
+-- @field [parent=#cc] AsyncTaskPool#AsyncTaskPool AsyncTaskPool preloaded module
 
 
 return nil

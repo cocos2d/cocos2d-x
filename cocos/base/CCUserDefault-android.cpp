@@ -40,7 +40,7 @@ THE SOFTWARE.
 
 #ifdef KEEP_COMPATABILITY
 #include "platform/CCFileUtils.h"
-#include "../tinyxml2/tinyxml2.h"
+#include "tinyxml2.h"
 #endif
 
 using namespace std;

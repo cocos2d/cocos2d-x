@@ -10,6 +10,7 @@
 -- @function [parent=#Sprite] setSpriteFrame
 -- @param self
 -- @param #string spriteFrameName
+-- @return Sprite#Sprite self (return value: cc.Sprite)
 
 --------------------------------
 -- @overload self, cc.Texture2D         
@@ -17,6 +18,7 @@
 -- @function [parent=#Sprite] setTexture
 -- @param self
 -- @param #string filename
+-- @return Sprite#Sprite self (return value: cc.Sprite)
 
 --------------------------------
 --  returns the Texture2D object used by the sprite 
@@ -30,6 +32,7 @@
 -- @function [parent=#Sprite] setFlippedY 
 -- @param self
 -- @param #bool flippedY
+-- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
 -- Sets whether the sprite should be flipped horizontally or not.<br>
@@ -37,7 +40,30 @@
 -- @function [parent=#Sprite] setFlippedX 
 -- @param self
 -- @param #bool flippedX
+-- @return Sprite#Sprite self (return value: cc.Sprite)
         
+--------------------------------
+-- Initializes a sprite with an sprite frame name.<br>
+-- A SpriteFrame will be fetched from the SpriteFrameCache by name.<br>
+-- If the SpriteFrame doesn't exist it will raise an exception.<br>
+-- param   spriteFrameName  A key string that can fected a volid SpriteFrame from SpriteFrameCache<br>
+-- return  true if the sprite is initialized properly, false otherwise.
+-- @function [parent=#Sprite] initWithSpriteFrameName 
+-- @param self
+-- @param #string spriteFrameName
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- @overload self, cc.Texture2D, rect_table         
+-- @overload self, cc.Texture2D         
+-- @overload self, cc.Texture2D, rect_table, bool         
+-- @function [parent=#Sprite] initWithTexture
+-- @param self
+-- @param #cc.Texture2D texture
+-- @param #rect_table rect
+-- @param #bool rotated
+-- @return bool#bool ret (return value: bool)
+
 --------------------------------
 -- Returns the batch node object if this sprite is rendered by SpriteBatchNode<br>
 -- return The SpriteBatchNode object if this sprite is rendered by SpriteBatchNode,<br>
@@ -57,11 +83,13 @@
 -- @function [parent=#Sprite] removeAllChildrenWithCleanup 
 -- @param self
 -- @param #bool cleanup
+-- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
 -- Updates the quad according the rotation, position, scale values.
 -- @function [parent=#Sprite] updateTransform 
 -- @param self
+-- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
 -- @overload self, rect_table, bool, size_table         
@@ -71,12 +99,19 @@
 -- @param #rect_table rect
 -- @param #bool rotated
 -- @param #size_table untrimmedSize
+-- @return Sprite#Sprite self (return value: cc.Sprite)
 
+--------------------------------
+-- 
+-- @function [parent=#Sprite] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
 --------------------------------
 -- Returns whether or not a SpriteFrame is being displayed
 -- @function [parent=#Sprite] isFrameDisplayed 
 -- @param self
--- @param #cc.SpriteFrame pFrame
+-- @param #cc.SpriteFrame frame
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -97,6 +132,14 @@
 -- @function [parent=#Sprite] setBatchNode 
 -- @param self
 -- @param #cc.SpriteBatchNode spriteBatchNode
+-- @return Sprite#Sprite self (return value: cc.Sprite)
+        
+--------------------------------
+-- js  NA<br>
+-- lua NA
+-- @function [parent=#Sprite] getBlendFunc 
+-- @param self
+-- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
         
 --------------------------------
 -- / @{/ @name Animation methods<br>
@@ -106,12 +149,14 @@
 -- @param self
 -- @param #string animationName
 -- @param #long frameIndex
+-- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
 -- Sets the weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode
 -- @function [parent=#Sprite] setTextureAtlas 
 -- @param self
--- @param #cc.TextureAtlas pobTextureAtlas
+-- @param #cc.TextureAtlas textureAtlas
+-- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
 -- Returns the current displayed frame.
@@ -132,12 +177,14 @@
 -- @function [parent=#Sprite] setAtlasIndex 
 -- @param self
 -- @param #long atlasIndex
+-- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
 -- Makes the Sprite to be updated in the Atlas.
 -- @function [parent=#Sprite] setDirty 
 -- @param self
 -- @param #bool dirty
+-- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
 -- Returns whether or not the texture rectangle is rotated.
@@ -152,10 +199,40 @@
 -- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
+-- @overload self, string, rect_table         
+-- @overload self, string         
+-- @function [parent=#Sprite] initWithFile
+-- @param self
+-- @param #string filename
+-- @param #rect_table rect
+-- @return bool#bool ret (return value: bool)
+
+--------------------------------
+-- / @{/ @name Functions inherited from TextureProtocol<br>
+-- code<br>
+-- When this function bound into js or lua,the parameter will be changed<br>
+-- In js: var setBlendFunc(var src, var dst)<br>
+-- In lua: local setBlendFunc(local src, local dst)<br>
+-- endcode
+-- @function [parent=#Sprite] setBlendFunc 
+-- @param self
+-- @param #cc.BlendFunc blendFunc
+-- @return Sprite#Sprite self (return value: cc.Sprite)
+        
+--------------------------------
 -- Gets the weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode
 -- @function [parent=#Sprite] getTextureAtlas 
 -- @param self
 -- @return TextureAtlas#TextureAtlas ret (return value: cc.TextureAtlas)
+        
+--------------------------------
+-- Initializes a sprite with an SpriteFrame. The texture and rect in SpriteFrame will be applied on this sprite<br>
+-- param   pSpriteFrame  A SpriteFrame object. It should includes a valid texture and a rect<br>
+-- return  true if the sprite is initialized properly, false otherwise.
+-- @function [parent=#Sprite] initWithSpriteFrame 
+-- @param self
+-- @param #cc.SpriteFrame spriteFrame
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- Returns the flag which indicates whether the sprite is flipped horizontally or not.<br>
@@ -187,6 +264,7 @@
 -- @function [parent=#Sprite] setVertexRect 
 -- @param self
 -- @param #rect_table rect
+-- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
 -- @overload self, string         
@@ -235,6 +313,7 @@
 -- @param #cc.Renderer renderer
 -- @param #mat4_table transform
 -- @param #unsigned int flags
+-- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
 -- @overload self, cc.Node, int, string         
@@ -244,18 +323,21 @@
 -- @param #cc.Node child
 -- @param #int zOrder
 -- @param #int tag
+-- @return Sprite#Sprite self (return value: cc.Sprite)
 
 --------------------------------
 -- 
 -- @function [parent=#Sprite] setScaleY 
 -- @param self
 -- @param #float scaleY
+-- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
 -- / @{/ @name Functions inherited from Node
 -- @function [parent=#Sprite] setScaleX 
 -- @param self
 -- @param #float scaleX
+-- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
 -- 
@@ -268,18 +350,21 @@
 -- @function [parent=#Sprite] setPositionZ 
 -- @param self
 -- @param #float positionZ
+-- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
 -- 
 -- @function [parent=#Sprite] setAnchorPoint 
 -- @param self
 -- @param #vec2_table anchor
+-- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
 -- 
 -- @function [parent=#Sprite] setRotationSkewX 
 -- @param self
 -- @param #float rotationX
+-- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
 -- / @}
@@ -292,6 +377,7 @@
 -- @function [parent=#Sprite] setRotationSkewY 
 -- @param self
 -- @param #float rotationY
+-- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
 -- @overload self, float         
@@ -300,6 +386,7 @@
 -- @param self
 -- @param #float scaleX
 -- @param #float scaleY
+-- @return Sprite#Sprite self (return value: cc.Sprite)
 
 --------------------------------
 -- 
@@ -307,6 +394,7 @@
 -- @param self
 -- @param #cc.Node child
 -- @param #int zOrder
+-- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
 -- 
@@ -314,46 +402,60 @@
 -- @param self
 -- @param #cc.Node child
 -- @param #bool cleanup
+-- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
 -- 
 -- @function [parent=#Sprite] sortAllChildren 
 -- @param self
+-- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
 -- 
 -- @function [parent=#Sprite] setOpacityModifyRGB 
 -- @param self
 -- @param #bool modify
+-- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
 -- 
 -- @function [parent=#Sprite] setRotation 
 -- @param self
 -- @param #float rotation
+-- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
 -- 
 -- @function [parent=#Sprite] setSkewY 
 -- @param self
 -- @param #float sy
+-- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
 -- 
 -- @function [parent=#Sprite] setVisible 
 -- @param self
 -- @param #bool bVisible
+-- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
 -- 
 -- @function [parent=#Sprite] setSkewX 
 -- @param self
 -- @param #float sx
+-- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
 -- 
 -- @function [parent=#Sprite] ignoreAnchorPointForPosition 
 -- @param self
 -- @param #bool value
+-- @return Sprite#Sprite self (return value: cc.Sprite)
+        
+--------------------------------
+-- / @}
+-- @function [parent=#Sprite] Sprite 
+-- @param self
+-- @return Sprite#Sprite self (return value: cc.Sprite)
         
 return nil

@@ -5,10 +5,11 @@
 -- @parent_module cc
 
 --------------------------------
---  Inverted. If this is set to true,<br>
--- the stencil is inverted, so the content is drawn where the stencil is NOT drawn.<br>
--- This default to false.
--- @function [parent=#ClippingNode] isInverted 
+--  If stencil has no childre it will not be drawn.<br>
+-- If you have custom stencil-based node with stencil drawing mechanics other then children-based,<br>
+-- then this method should return true every time you wish stencil to be visited.<br>
+-- By default returns true if has any children attached.
+-- @function [parent=#ClippingNode] hasContent 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
@@ -17,12 +18,14 @@
 -- @function [parent=#ClippingNode] setInverted 
 -- @param self
 -- @param #bool inverted
+-- @return ClippingNode#ClippingNode self (return value: cc.ClippingNode)
         
 --------------------------------
 -- 
 -- @function [parent=#ClippingNode] setStencil 
 -- @param self
 -- @param #cc.Node stencil
+-- @return ClippingNode#ClippingNode self (return value: cc.ClippingNode)
         
 --------------------------------
 --  The alpha threshold.<br>
@@ -33,6 +36,14 @@
 -- @param self
 -- @return float#float ret (return value: float)
         
+--------------------------------
+-- @overload self, cc.Node         
+-- @overload self         
+-- @function [parent=#ClippingNode] init
+-- @param self
+-- @param #cc.Node stencil
+-- @return bool#bool ret (return value: bool)
+
 --------------------------------
 --  The Node to use as a stencil to do the clipping.<br>
 -- The stencil node will be retained.<br>
@@ -46,6 +57,15 @@
 -- @function [parent=#ClippingNode] setAlphaThreshold 
 -- @param self
 -- @param #float alphaThreshold
+-- @return ClippingNode#ClippingNode self (return value: cc.ClippingNode)
+        
+--------------------------------
+--  Inverted. If this is set to true,<br>
+-- the stencil is inverted, so the content is drawn where the stencil is NOT drawn.<br>
+-- This default to false.
+-- @function [parent=#ClippingNode] isInverted 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @overload self, cc.Node         
@@ -62,5 +82,6 @@
 -- @param #cc.Renderer renderer
 -- @param #mat4_table parentTransform
 -- @param #unsigned int parentFlags
+-- @return ClippingNode#ClippingNode self (return value: cc.ClippingNode)
         
 return nil

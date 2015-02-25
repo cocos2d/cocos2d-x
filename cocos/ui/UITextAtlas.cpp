@@ -103,6 +103,10 @@ void TextAtlas::setProperty(const std::string& stringValue, const std::string& c
 
 void TextAtlas::setString(const std::string& value)
 {
+    if (value == _labelAtlasRenderer->getString())
+    {
+        return;
+    }
     _stringValue = value;
     _labelAtlasRenderer->setString(value);
     updateContentSizeWithTextureSize(_labelAtlasRenderer->getContentSize());

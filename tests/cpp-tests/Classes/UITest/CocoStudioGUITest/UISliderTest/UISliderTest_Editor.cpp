@@ -85,7 +85,7 @@ void UISliderTest_Editor::switchLoadMethod(cocos2d::Ref *pSender)
 
 void UISliderTest_Editor::configureGUIScene()
 {
-    Size screenSize = CCDirector::getInstance()->getWinSize();
+    Size screenSize = Director::getInstance()->getWinSize();
     Size rootSize = _layout->getContentSize();
     _touchGroup->setPosition(Vec2((screenSize.width - rootSize.width) / 2,
                                   (screenSize.height - rootSize.height) / 2));
@@ -100,9 +100,6 @@ void UISliderTest_Editor::configureGUIScene()
     
     Slider* slider = static_cast<Slider*>(Helper::seekWidgetByName(root, "Slider_738"));
     slider->addEventListener(CC_CALLBACK_2(UISliderTest_Editor::sliderEvent, this));
-    
-    Slider* scale9_slider = static_cast<Slider*>(Helper::seekWidgetByName(root, "Slider_740"));
-    scale9_slider->addEventListener(CC_CALLBACK_2(UISliderTest_Editor::sliderEvent, this));
 }
 
 bool UISliderTest_Editor::init()
@@ -138,7 +135,7 @@ void UISliderTest_Editor::sliderEvent(Ref *pSender, Slider::EventType type)
         case Slider::EventType::ON_PERCENTAGE_CHANGED:
         {
             Slider* slider = static_cast<Slider*>(pSender);
-            _displayValueLabel->setString(CCString::createWithFormat("percent %d", slider->getPercent())->getCString());
+            _displayValueLabel->setString(StringUtils::format("percent %d", slider->getPercent()));
         }
             break;
             

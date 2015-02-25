@@ -85,7 +85,11 @@ public:
     float getWeight() const { return _weight; }
     void setWeight(float weight);
     
-    /** animate transistion time */
+    /**get & set origin interval*/
+    void setOriginInterval(float interval);
+    float getOriginInterval() const {return _originInterval; }
+    
+    /** animate transition time */
     static float getTransitionTime() { return _transTime; }
     
     /**get & set play reverse, these are deprecated, use set negative speed instead*/
@@ -117,6 +121,7 @@ protected:
     static float      _transTime; //transition time from one animate3d to another
     float      _accTransTime; // acculate transition time
     float      _lastTime;     // last t (0 - 1)
+    float      _originInterval;// save origin interval time
     std::unordered_map<Bone3D*, Animation3D::Curve*> _boneCurves; //weak ref
 
     //sprite animates

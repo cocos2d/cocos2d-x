@@ -52,8 +52,14 @@ public:
         KEY_RETURN,
         KEY_CAPS_LOCK,
         KEY_SHIFT,
+        KEY_LEFT_SHIFT = KEY_SHIFT,
+        KEY_RIGHT_SHIFT,
         KEY_CTRL,
+        KEY_LEFT_CTRL = KEY_CTRL,
+        KEY_RIGHT_CTRL,
         KEY_ALT,
+        KEY_LEFT_ALT = KEY_ALT,
+        KEY_RIGHT_ALT,
         KEY_MENU,
         KEY_HYPER,
         KEY_INSERT,
@@ -201,7 +207,7 @@ public:
         KEY_DPAD_DOWN,
         KEY_DPAD_CENTER,
         KEY_ENTER,
-        KEY_PLAY,
+        KEY_PLAY
     };
     
     EventKeyboard(KeyCode keyCode, bool isPressed);

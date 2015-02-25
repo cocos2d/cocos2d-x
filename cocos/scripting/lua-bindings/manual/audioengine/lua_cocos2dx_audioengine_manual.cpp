@@ -279,7 +279,7 @@ int lua_cocos2dx_audioengine_AudioEngine_setFinishCallback(lua_State* tolua_S)
     
         return 0;
     }
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n ", "ccexp.AudioEngine:setFinishCallback",argc, 2);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccexp.AudioEngine:setFinishCallback",argc, 2);
     return 0;
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:

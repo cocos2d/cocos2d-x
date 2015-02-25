@@ -59,7 +59,7 @@ public:
  *  @js NA
  *  @lua NA
  */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #ifdef RELATIVE
 #undef RELATIVE
 #endif
@@ -271,7 +271,7 @@ public:
     /**
      * force refresh widget layout
      */
-    void forceDoLayout();
+    virtual void forceDoLayout();
     
     /**
      * request to refresh widget layout

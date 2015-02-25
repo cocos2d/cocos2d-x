@@ -41,12 +41,13 @@ static int sceneIdx = -1;
 
 static std::function<Layer*()> createFunctions[] =
 {
+    CL(BillBoardRotationTest),
     CL(BillBoardTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
 
-static Layer* nextSpriteTestAction()
+static Layer* nextTest()
 {
     sceneIdx++;
     sceneIdx = sceneIdx % MAX_LAYER;
@@ -55,7 +56,7 @@ static Layer* nextSpriteTestAction()
     return layer;
 }
 
-static Layer* backSpriteTestAction()
+static Layer* backTest()
 {
     sceneIdx--;
     int total = MAX_LAYER;
@@ -66,18 +67,114 @@ static Layer* backSpriteTestAction()
     return layer;
 }
 
-static Layer* restartSpriteTestAction()
+static Layer* restartTest()
 {
     auto layer = (createFunctions[sceneIdx])();
     return layer;
 }
 
+//------------------------------------------------------------------
+//
+// Billboard Rotation Test
+//
+//------------------------------------------------------------------
+BillBoardRotationTest::BillBoardRotationTest()
+{
+    auto root = Sprite3D::create();
+    root->setNormalizedPosition(Vec2(.5,.25));
+    addChild(root);
+    
+    auto model = Sprite3D::create("Sprite3DTest/orc.c3b");
+    model->setScale(5);
+    model->setRotation3D(Vec3(0,180,0));
+    root->addChild(model);
+    
+    auto bill = BillBoard::create();
+    bill->setPosition(0, 120);
+    root->addChild(bill);
+    
+    auto sp = Sprite::create("Images/SpookyPeas.png");
+    sp->setScale(2);
+    bill->addChild(sp);
+    
+    auto lbl = Label::create();
+    lbl->setPosition(0, 30);
+    lbl->setString("+100");
+    bill->addChild(lbl);
+    
+    auto r = RotateBy::create(10, Vec3(0,360,0));
+    auto rp = RepeatForever::create(r);
+    root->runAction(rp);
+    
+    auto jump = JumpBy::create(1, Vec2(0, 0), 30, 1);
+    auto scale = ScaleBy::create(2, 2, 2, 0.1);
+    auto seq = Sequence::create(jump,scale, NULL);
+    
+    auto rot = RotateBy::create(2, Vec3(-90, 0, 0));
+    auto act = Spawn::create(seq, rot,NULL);
+    
+    auto scale2 = scale->reverse();
+    auto rot2 = rot->reverse();
+    auto act2 = Spawn::create(scale2, rot2, NULL);
+    
+    auto seq2 = Sequence::create(act, act2, NULL);
+    auto repeat = RepeatForever::create(seq2);
+    model->runAction(repeat);
+}
+
+BillBoardRotationTest::~BillBoardRotationTest()
+{
+    
+}
+
+std::string BillBoardRotationTest::title() const
+{
+    return "Rotation Test";
+}
+
+std::string BillBoardRotationTest::subtitle() const
+{
+    return "All the sprites should still facing camera";
+}
+
+void BillBoardRotationTest::restartCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) BillBoardTestScene();
+    s->addChild(restartTest());
+    
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+void BillBoardRotationTest::nextCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) BillBoardTestScene();
+    s->addChild(nextTest());
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+void BillBoardRotationTest::backCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) BillBoardTestScene();
+    s->addChild(backTest());
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+//------------------------------------------------------------------
+//
+// Billboard Rendering Test
+//
+//------------------------------------------------------------------
 BillBoardTest::BillBoardTest()
 :  _camera(nullptr)
 {
+    //Create touch listener
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesMoved = CC_CALLBACK_2(BillBoardTest::onTouchesMoved, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
     auto layer3D=Layer::create();
     addChild(layer3D,0);
     _layerBillBorad=layer3D;
@@ -89,6 +186,7 @@ BillBoardTest::BillBoardTest()
         _layerBillBorad->addChild(_camera);
     }
 
+    //Create rotating billboards
     std::string imgs[3] = {"Images/Icon.png", "Images/r2.png"};
     for (unsigned int i = 0; i < 4; ++i)
     {
@@ -96,12 +194,11 @@ BillBoardTest::BillBoardTest()
         auto billboard = BillBoard::create(imgs[(unsigned int)(CCRANDOM_0_1() * 1 + 0.5)]);
         billboard->setScale(0.5f);
         billboard->setPosition3D(Vec3(0.0f, 0.0f,  CCRANDOM_MINUS1_1() * 150.0f));
-        billboard->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
         billboard->setOpacity(CCRANDOM_0_1() * 128 + 128);
         _billboards.push_back(billboard);
         layer->addChild(billboard);
         _layerBillBorad->addChild(layer);
-        layer->runAction( RepeatForever::create( RotateBy::create( CCRANDOM_0_1(), Vec3(0.0f, 45.0f, 0.0f) ) ) );
+        layer->runAction( RepeatForever::create( RotateBy::create( CCRANDOM_0_1() * 10, Vec3(0.0f, 45.0f, 0.0f) ) ) );
     }
 
     {
@@ -127,11 +224,13 @@ BillBoardTest::BillBoardTest()
     addNewBillBoradWithCoords(Vec3(100,5,0));
     addNewBillBoradWithCoords(Vec3(140,5,0));
     addNewBillBoradWithCoords(Vec3(180,5,0));
+    
     addNewAniBillBoradWithCoords(Vec3(-20,0,0));
     addNewAniBillBoradWithCoords(Vec3(-60,0,0));
     addNewAniBillBoradWithCoords(Vec3(-100,0,0));
     addNewAniBillBoradWithCoords(Vec3(-140,0,0));
     addNewAniBillBoradWithCoords(Vec3(-180,0,0));
+    
     _camera->setPosition3D(Vec3(0, 100, 230));
     _camera->lookAt(Vec3(0,0,0), Vec3(0,1,0));
 
@@ -158,6 +257,8 @@ BillBoardTest::BillBoardTest()
     menu->setPosition(Vec2(0,0));
     this->addChild(menu, 10);
     menuCallback_orientedPoint(nullptr);
+    
+    schedule(schedule_selector(BillBoardTest::update));
 }
 
 void BillBoardTest::menuCallback_orientedPoint(Ref* sender)
@@ -183,7 +284,7 @@ BillBoardTest::~BillBoardTest()
 }
 std::string BillBoardTest::title() const
 {
-    return "Testing BillBoard";
+    return "BillBoard Test";
 }
 std::string BillBoardTest::subtitle() const
 {
@@ -197,8 +298,8 @@ void BillBoardTest::addNewBillBoradWithCoords(Vec3 p)
         auto billborad = BillBoard::create(imgs[(unsigned int)(CCRANDOM_0_1() * 1 + 0.5)]);
         billborad->setScale(0.5f);
         billborad->setPosition3D(Vec3(p.x, p.y,  -150.0f + 30 * i));
-        billborad->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
         billborad->setOpacity(CCRANDOM_0_1() * 128 + 128);
+        
         _layerBillBorad->addChild(billborad);
         _billboards.push_back(billborad);
     }
@@ -207,10 +308,10 @@ void BillBoardTest::addNewAniBillBoradWithCoords(Vec3 p)
 {
     for (unsigned int i = 0; i < 10; ++i)
     {
-        auto billboradAni = BillBoard::create("Images/grossini.png");
-        billboradAni->setScale(0.5f);
-        billboradAni->setPosition3D(Vec3(p.x, p.y,  -150.0f + 30 * i));
-        _layerBillBorad->addChild(billboradAni);
+        auto billboardAni = BillBoard::create("Images/grossini.png");
+        billboardAni->setScale(0.5f);
+        billboardAni->setPosition3D(Vec3(p.x, p.y,  -150.0f + 30 * i));
+        _layerBillBorad->addChild(billboardAni);
 
         auto animation = Animation::create();
         for( int i=1;i<15;i++)
@@ -224,15 +325,13 @@ void BillBoardTest::addNewAniBillBoradWithCoords(Vec3 p)
         animation->setRestoreOriginalFrame(true);
 
         auto action = Animate::create(animation);
-        billboradAni->runAction(RepeatForever::create(action));
-        billboradAni->setBlendFunc(cocos2d::BlendFunc::ALPHA_NON_PREMULTIPLIED);
-        billboradAni->setOpacity(CCRANDOM_0_1() * 128 + 128);
-        _billboards.push_back(billboradAni);
+        billboardAni->runAction(RepeatForever::create(action));
+        billboardAni->setOpacity(CCRANDOM_0_1() * 128 + 128);
+        _billboards.push_back(billboardAni);
     }
 }
 void BillBoardTest::update(float dt)
 {
-
 }
 void BillBoardTest::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
 {
@@ -264,9 +363,35 @@ void BillBoardTest::rotateCameraCallback(Ref* sender,float value)
     _camera->setRotation3D(rotation3D);
 }
 
+
+void BillBoardTest::restartCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) BillBoardTestScene();
+    s->addChild(restartTest());
+    
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+void BillBoardTest::nextCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) BillBoardTestScene();
+    s->addChild(nextTest());
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
+void BillBoardTest::backCallback(Ref* sender)
+{
+    auto s = new (std::nothrow) BillBoardTestScene();
+    s->addChild(backTest());
+    Director::getInstance()->replaceScene(s);
+    s->release();
+}
+
 void BillBoardTestScene::runThisTest()
 {
-    auto layer = nextSpriteTestAction();
+    auto layer = nextTest();
     addChild(layer);
     Director::getInstance()->replaceScene(this);
 }

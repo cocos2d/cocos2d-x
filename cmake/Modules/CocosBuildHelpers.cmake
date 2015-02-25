@@ -36,6 +36,74 @@ function(cocos_mark_resources)
     endforeach()
 endfunction()
 
+# cocos_find_package(pkg args...)
+# works same as find_package, but do additional care to properly find
+# prebuilt libs for cocos
+macro(cocos_find_package pkg_name pkg_prefix)
+  if(NOT USE_PREBUILT_LIBS OR NOT ${pkg_prefix}_FOUND)
+    find_package(${pkg_name} ${ARGN})
+  endif()
+  if(NOT ${pkg_prefix}_INCLUDE_DIRS AND ${pkg_prefix}_INCLUDE_DIR)
+    set(${pkg_prefix}_INCLUDE_DIRS ${${pkg_prefix}_INCLUDE_DIR})
+  endif()
+  if(NOT ${pkg_prefix}_LIBRARIES AND ${pkg_prefix}_LIBRARY)
+    set(${pkg_prefix}_LIBRARIES ${${pkg_prefix}_LIBRARY})
+  endif()
+
+  message(STATUS "${pkg_name} include dirs: ${${pkg_prefix}_INCLUDE_DIRS}")
+endmacro()
+
+# cocos_use_pkg(pkg) function.
+# This function applies standard package variables (after find_package(pkg) call) to current scope
+# Recognized variables: <pkg>_INCLUDE_DIRS, <pkg>_LIBRARIES, <pkg>_LIBRARY_DIRS
+# Also if BUILD_SHARED_LIBS variable off, it is try to use <pkg>_STATIC_* vars before
+function(cocos_use_pkg target pkg)
+  set(prefix ${pkg})
+  
+  set(_include_dirs)
+  if(NOT _include_dirs)
+    set(_include_dirs ${${prefix}_INCLUDE_DIRS})
+  endif()
+  if(NOT _include_dirs)
+    # backward compat with old package-find scripts
+    set(_include_dirs ${${prefix}_INCLUDE_DIR})
+  endif()
+  if(_include_dirs)
+    include_directories(${_include_dirs})
+    message(STATUS "${pkg} add to include_dirs: ${_include_dirs}")
+  endif()
+  
+  set(_library_dirs)
+  if(NOT _library_dirs)
+    set(_library_dirs ${${prefix}_LIBRARY_DIRS})
+  endif()
+  if(_library_dirs)
+    link_directories(${_library_dirs})
+    message(STATUS "${pkg} add to link_dirs: ${_library_dirs}")
+  endif()
+  
+  set(_libs)
+  if(NOT _libs)
+    set(_libs ${${prefix}_LIBRARIES})
+  endif()
+  if(NOT _libs)
+    set(_libs ${${prefix}_LIBRARY})
+  endif()
+  if(_libs)
+    target_link_libraries(${target} ${_libs})
+    message(STATUS "${pkg} libs added to '${target}': ${_libs}")
+  endif()
+  
+  set(_defs)
+  if(NOT _defs)
+    set(_defs ${${prefix}_DEFINITIONS})
+  endif()
+  if(_defs)
+    add_definitions(${_defs})
+    message(STATUS "${pkg} add definitions: ${_defs}")
+  endif()
+endfunction()
+
 #cmake has some strange defaults, this should help us a lot
 #Please use them everywhere
 

@@ -57,7 +57,7 @@ public:
     static SceneReader* getInstance();
     /**
      *  @js purge
-     *  @lua destroySceneReader
+     *  @lua destroyInstance
      */
     static void destroyInstance();
     static const char* sceneReaderVersion();

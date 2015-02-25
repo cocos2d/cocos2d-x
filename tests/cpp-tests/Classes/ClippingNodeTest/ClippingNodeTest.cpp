@@ -887,7 +887,7 @@ void RawStencilBufferTest6::setup()
     glClear(GL_STENCIL_BUFFER_BIT);
     glFlush();
     glReadPixels(0, 0, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_BYTE, &bits);
-    auto clearToZeroLabel = Label::createWithTTF(String::createWithFormat("00=%02x", bits[0])->getCString(), "fonts/arial.ttf", 20);
+    auto clearToZeroLabel = Label::createWithTTF(StringUtils::format("00=%02x", bits[0]), "fonts/arial.ttf", 20);
     clearToZeroLabel->setPosition((winPoint.x / 3) * 1, winPoint.y - 10);
     this->addChild(clearToZeroLabel);
     glStencilMask(0x0F);
@@ -895,7 +895,7 @@ void RawStencilBufferTest6::setup()
     glClear(GL_STENCIL_BUFFER_BIT);
     glFlush();
     glReadPixels(0, 0, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_BYTE, &bits);
-    auto clearToMaskLabel = Label::createWithTTF(String::createWithFormat("0a=%02x", bits[0])->getCString(), "fonts/arial.ttf", 20);
+    auto clearToMaskLabel = Label::createWithTTF(StringUtils::format("0a=%02x", bits[0]), "fonts/arial.ttf", 20);
     clearToMaskLabel->setPosition((winPoint.x / 3) * 2, winPoint.y - 10);
     this->addChild(clearToMaskLabel);
 #endif
@@ -1092,12 +1092,13 @@ void ClippingToRenderTextureTest::reproduceBug()
     img->drawPolygon(triangle, 3, red, 0, red);
     clipper->addChild(img);
 
-    // container rendered on Texture the size of the screen
-    RenderTexture* rt = RenderTexture::create(visibleSize.width, visibleSize.height);
+    // container rendered on Texture the size of the screen and because Clipping node use stencil buffer so we need to
+    // create RenderTexture with depthStencil format parameter
+    RenderTexture* rt = RenderTexture::create(visibleSize.width, visibleSize.height, Texture2D::PixelFormat::RGBA8888, GL_DEPTH24_STENCIL8);
     rt->setPosition(visibleSize.width/2, visibleSize.height/2);
     this->addChild(rt);
 
-    rt->beginWithClear(0.3f, 0, 0, 1);
+    rt->begin();
     container->visit();
     rt->end();
 }

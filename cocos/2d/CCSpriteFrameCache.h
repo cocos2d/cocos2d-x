@@ -70,11 +70,6 @@ public:
     /** @deprecated Use destroyInstance() instead  */
     CC_DEPRECATED_ATTRIBUTE static void purgeSharedSpriteFrameCache() { return SpriteFrameCache::destroyInstance(); }
 
-protected:
-    // MARMALADE: Made this protected not private, as deriving from this class is pretty useful
-    SpriteFrameCache(){}
-
-public:
     /**
      * @js NA
      * @lua NA
@@ -82,7 +77,6 @@ public:
     virtual ~SpriteFrameCache();
     bool init();
 
-public:
     /** Adds multiple Sprite Frames from a plist file.
      * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png
      * If you want to use another texture, you should use the addSpriteFramesWithFile(const std::string& plist, const std::string& textureFileName) method.
@@ -162,7 +156,10 @@ public:
     /** @deprecated use getSpriteFrameByName() instead */
     CC_DEPRECATED_ATTRIBUTE SpriteFrame* spriteFrameByName(const std::string&name) { return getSpriteFrameByName(name); }
 
-private:
+protected:
+    // MARMALADE: Made this protected not private, as deriving from this class is pretty useful
+    SpriteFrameCache(){}
+
     /*Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
      */
     void addSpriteFramesWithDictionary(ValueMap& dictionary, Texture2D *texture);
@@ -172,7 +169,7 @@ private:
     */
     void removeSpriteFramesFromDictionary(ValueMap& dictionary);
 
-protected:
+
     Map<std::string, SpriteFrame*> _spriteFrames;
     ValueMap _spriteFramesAliases;
     std::set<std::string>*  _loadedFileNames;

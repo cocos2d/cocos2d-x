@@ -81,7 +81,7 @@ public:
         PAUSED
     };
     
-    static const int INVAILD_AUDIO_ID;
+    static const int INVALID_AUDIO_ID;
 
     static const float TIME_UNKNOWN;
 
@@ -262,7 +262,7 @@ protected:
     //profileName,ProfileHelper
     static std::unordered_map<std::string, ProfileHelper> _audioPathProfileHelperMap;
     
-    static int _maxInstances;
+    static unsigned int _maxInstances;
     
     static ProfileHelper* _defaultProfileHelper;
     

@@ -12,6 +12,7 @@
 -- @param self
 -- @param #string backGroundSelected
 -- @param #int texType
+-- @return CheckBox#CheckBox self (return value: ccui.CheckBox)
         
 --------------------------------
 -- Load backGroundDisabled texture for checkbox.<br>
@@ -21,18 +22,21 @@
 -- @param self
 -- @param #string backGroundDisabled
 -- @param #int texType
+-- @return CheckBox#CheckBox self (return value: ccui.CheckBox)
         
 --------------------------------
 -- 
 -- @function [parent=#CheckBox] setSelected 
 -- @param self
 -- @param #bool selected
+-- @return CheckBox#CheckBox self (return value: ccui.CheckBox)
         
 --------------------------------
 -- 
 -- @function [parent=#CheckBox] addEventListener 
 -- @param self
 -- @param #function callback
+-- @return CheckBox#CheckBox self (return value: ccui.CheckBox)
         
 --------------------------------
 -- Load cross texture for checkbox.<br>
@@ -42,11 +46,24 @@
 -- @param self
 -- @param #string 
 -- @param #int texType
+-- @return CheckBox#CheckBox self (return value: ccui.CheckBox)
         
 --------------------------------
 -- 
 -- @function [parent=#CheckBox] isSelected 
 -- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#CheckBox] init 
+-- @param self
+-- @param #string backGround
+-- @param #string backGroundSeleted
+-- @param #string cross
+-- @param #string backGroundDisabled
+-- @param #string frontCrossDisabled
+-- @param #int texType
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
@@ -64,6 +81,14 @@
 -- @param #string backGroundDisabled
 -- @param #string frontCrossDisabled
 -- @param #int texType
+-- @return CheckBox#CheckBox self (return value: ccui.CheckBox)
+        
+--------------------------------
+-- brief Return a zoom scale<br>
+-- since v3.3
+-- @function [parent=#CheckBox] getZoomScale 
+-- @param self
+-- @return float#float ret (return value: float)
         
 --------------------------------
 -- Load backGround texture for checkbox.<br>
@@ -73,6 +98,16 @@
 -- @param self
 -- @param #string backGround
 -- @param #int type
+-- @return CheckBox#CheckBox self (return value: ccui.CheckBox)
+        
+--------------------------------
+--  When user pressed the button, the button will zoom to a scale.<br>
+-- The final scale of the button  equals (button original scale + _zoomScale)<br>
+-- since v3.3
+-- @function [parent=#CheckBox] setZoomScale 
+-- @param self
+-- @param #float scale
+-- @return CheckBox#CheckBox self (return value: ccui.CheckBox)
         
 --------------------------------
 -- Load frontCrossDisabled texture for checkbox.<br>
@@ -82,10 +117,12 @@
 -- @param self
 -- @param #string frontCrossDisabled
 -- @param #int texType
+-- @return CheckBox#CheckBox self (return value: ccui.CheckBox)
         
 --------------------------------
 -- @overload self, string, string, string, string, string, int         
 -- @overload self         
+-- @overload self, string, string, int         
 -- @function [parent=#CheckBox] create
 -- @param self
 -- @param #string backGround
@@ -109,6 +146,12 @@
 -- @return Node#Node ret (return value: cc.Node)
         
 --------------------------------
+-- 
+-- @function [parent=#CheckBox] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- Returns the "class name" of widget.
 -- @function [parent=#CheckBox] getDescription 
 -- @param self
@@ -124,5 +167,6 @@
 -- Default constructor
 -- @function [parent=#CheckBox] CheckBox 
 -- @param self
+-- @return CheckBox#CheckBox self (return value: ccui.CheckBox)
         
 return nil

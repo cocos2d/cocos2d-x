@@ -63,11 +63,9 @@ int Application::run()
     PVRFrameEnableControlWindow(false);
 
     // Main message loop:
-    LARGE_INTEGER nFreq;
     LARGE_INTEGER nLast;
     LARGE_INTEGER nNow;
 
-    QueryPerformanceFrequency(&nFreq);
     QueryPerformanceCounter(&nLast);
 
     initGLContextAttrs();
@@ -89,14 +87,14 @@ int Application::run()
         QueryPerformanceCounter(&nNow);
         if (nNow.QuadPart - nLast.QuadPart > _animationInterval.QuadPart)
         {
-            nLast.QuadPart = nNow.QuadPart;
+            nLast.QuadPart = nNow.QuadPart - (nNow.QuadPart % _animationInterval.QuadPart);
             
             director->mainLoop();
             glview->pollEvents();
         }
         else
         {
-            Sleep(0);
+            Sleep(1);
         }
     }
 
@@ -136,7 +134,7 @@ Application* Application::sharedApplication()
 LanguageType Application::getCurrentLanguage()
 {
     LanguageType ret = LanguageType::ENGLISH;
-
+    
     LCID localeID = GetUserDefaultLCID();
     unsigned short primaryLanguageID = localeID & 0xFF;
     
@@ -181,14 +179,20 @@ LanguageType Application::getCurrentLanguage()
         case LANG_ARABIC:
             ret = LanguageType::ARABIC;
             break;
-	    case LANG_NORWEGIAN:
+        case LANG_NORWEGIAN:
             ret = LanguageType::NORWEGIAN;
             break;
- 	    case LANG_POLISH:
+        case LANG_POLISH:
             ret = LanguageType::POLISH;
             break;
+        case LANG_TURKISH:
+            ret = LanguageType::TURKISH;
+            break;
+        case LANG_UKRAINIAN:
+            ret = LanguageType::UKRAINIAN;
+            break;
     }
-
+    
     return ret;
 }
 
@@ -214,25 +218,6 @@ bool Application::openURL(const std::string &url)
     HINSTANCE r = ShellExecuteW(NULL, L"open", temp, NULL, NULL, SW_SHOWNORMAL);
     delete[] temp;
     return (size_t)r>32;
-}
-
-void Application::setResourceRootPath(const std::string& rootResDir)
-{
-    _resourceRootPath = rootResDir;
-    std::replace(_resourceRootPath.begin(), _resourceRootPath.end(), '\\', '/');
-    if (_resourceRootPath[_resourceRootPath.length() - 1] != '/')
-    {
-        _resourceRootPath += '/';
-    }
-    FileUtils* pFileUtils = FileUtils::getInstance();
-    std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
-    searchPaths.insert(searchPaths.begin(), _resourceRootPath);
-    pFileUtils->setSearchPaths(searchPaths);
-}
-
-const std::string& Application::getResourceRootPath(void)
-{
-    return _resourceRootPath;
 }
 
 void Application::setStartupScriptFilename(const std::string& startupScriptFile)

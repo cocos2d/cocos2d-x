@@ -34,6 +34,33 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
+namespace
+{
+    //Designed for make data type has an associated reference count 
+    template <class DataType>
+    class RefFactory : public Ref
+    {
+    public:
+        static RefFactory<DataType>* create()
+        {
+            auto ret = new (std::nothrow) RefFactory<DataType>();
+            if (ret)
+            {
+                ret->autorelease();
+            }
+
+            return ret;
+        }
+
+        DataType data;
+
+    protected:
+        RefFactory<DataType>() {}
+    };
+
+    typedef RefFactory<Map<const char*, Ref*>> DelegateMap;
+}
+
 class LuaScrollViewDelegate:public Ref, public ScrollViewDelegate
 {
 public:
@@ -108,7 +135,7 @@ static int tolua_cocos2dx_ScrollView_setDelegate(lua_State* tolua_S)
         return 0;
     }
     
-    CCLOG("'setDelegate' function of ScrollView wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    luaL_error(tolua_S, "'setDelegate' function of ScrollView wrong number of arguments: %d, was expecting %d\n", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -156,7 +183,7 @@ static int tolua_cocos2d_ScrollView_registerScriptHandler(lua_State* tolua_S)
         return 0;
     }
     
-    CCLOG("%s function of ScrollView has wrong number of arguments: %d, was expecting %d\n", "cc.ScrollView:registerScriptHandler",argc, 2);
+    luaL_error(tolua_S, "%s function of ScrollView has wrong number of arguments: %d, was expecting %d\n", "cc.ScrollView:registerScriptHandler",argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -201,7 +228,7 @@ static int tolua_cocos2d_ScrollView_unregisterScriptHandler(lua_State* tolua_S)
         return 0;
     }
     
-    CCLOG("%s function of ScrollView  has wrong number of arguments: %d, was expecting %d\n", "cc.ScrollView:unregisterScriptHandler", argc, 1);
+    luaL_error(tolua_S, "%s function of ScrollView  has wrong number of arguments: %d, was expecting %d\n", "cc.ScrollView:unregisterScriptHandler", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -277,7 +304,7 @@ static int tolua_cocos2d_Control_registerControlEventHandler(lua_State* tolua_S)
         return 0;
     }
     
-    CCLOG("%s function of Control has wrong number of arguments: %d, was expecting %d\n", "cc.Control:registerControlEventHandler", argc, 2);
+    luaL_error(tolua_S, "%s function of Control has wrong number of arguments: %d, was expecting %d\n", "cc.Control:registerControlEventHandler", argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -330,7 +357,7 @@ static int tolua_cocos2d_control_unregisterControlEventHandler(lua_State* tolua_
         return 0;
     }
     
-    CCLOG("%s function of Control  has wrong number of arguments: %d, was expecting %d\n", "cc.Control:unregisterControlEventHandler", argc, 1);
+    luaL_error(tolua_S, "%s function of Control  has wrong number of arguments: %d, was expecting %d\n", "cc.Control:unregisterControlEventHandler", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -451,7 +478,7 @@ static int lua_cocos2dx_AssetsManager_setDelegate(lua_State* L)
         return 0;
     }
     
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n", "cc.AssetsManager:setDelegate", argc, 2);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n", "cc.AssetsManager:setDelegate", argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -599,25 +626,24 @@ static int lua_cocos2dx_TableView_setDelegate(lua_State* L)
         if (nullptr == delegate)
             return 0;
         
-        __Dictionary* userDict = static_cast<__Dictionary*>(self->getUserObject());
+        auto userDict = static_cast<DelegateMap*>(self->getUserObject());
         if (nullptr == userDict)
         {
-            userDict = new __Dictionary();
+            userDict = DelegateMap::create();
             if (NULL == userDict)
                 return 0;
             
             self->setUserObject(userDict);
-            userDict->release();
         }
+        userDict->data.insert(KEY_TABLEVIEW_DELEGATE, delegate);
         
-        userDict->setObject(delegate, KEY_TABLEVIEW_DELEGATE);
         self->setDelegate(delegate);
         delegate->release();
         
         return 0;
     }
     
-    CCLOG("'setDelegate' function of TableView wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    luaL_error(L, "'setDelegate' function of TableView wrong number of arguments: %d, was expecting %d\n", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -736,18 +762,17 @@ static int lua_cocos2dx_TableView_setDataSource(lua_State* L)
         if (nullptr == dataSource)
             return 0;
         
-        __Dictionary* userDict = static_cast<__Dictionary*>(self->getUserObject());
+        auto userDict = static_cast<DelegateMap*>(self->getUserObject());
         if (nullptr == userDict)
         {
-            userDict = new __Dictionary();
+            userDict = DelegateMap::create();
             if (NULL == userDict)
                 return 0;
             
             self->setUserObject(userDict);
-            userDict->release();
         }
         
-        userDict->setObject(dataSource, KEY_TABLEVIEW_DATA_SOURCE);
+        userDict->data.insert(KEY_TABLEVIEW_DATA_SOURCE, dataSource);
         
         self->setDataSource(dataSource);
         
@@ -756,7 +781,7 @@ static int lua_cocos2dx_TableView_setDataSource(lua_State* L)
         return 0;
     }
     
-    CCLOG("'setDataSource' function of TableView wrong number of arguments: %d, was expecting %d\n", argc, 0);
+    luaL_error(L, "'setDataSource' function of TableView wrong number of arguments: %d, was expecting %d\n", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -807,13 +832,11 @@ static int lua_cocos2dx_TableView_create(lua_State* L)
         
         ret->reloadData();
         
-        __Dictionary* userDict = new __Dictionary();
-        userDict->setObject(dataSource, KEY_TABLEVIEW_DATA_SOURCE);
+        auto userDict = DelegateMap::create();
+        userDict->data.insert(KEY_TABLEVIEW_DATA_SOURCE, dataSource);
         ret->setUserObject(userDict);
-        userDict->release();
         
         dataSource->release();
-        
         
         int  nID = (int)ret->_ID;
         int* pLuaID =  &ret->_luaID;
@@ -821,7 +844,7 @@ static int lua_cocos2dx_TableView_create(lua_State* L)
         
         return 1;
     }
-    CCLOG("'create' function of TableView wrong number of arguments: %d, was expecting %d\n", argc, 1);
+    luaL_error(L, "'create' function of TableView wrong number of arguments: %d, was expecting %d\n", argc, 1);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -869,7 +892,7 @@ static int lua_cocos2d_TableView_registerScriptHandler(lua_State* L)
         return 0;
     }
     
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n", "cc.TableView:registerScriptHandler",argc, 2);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n", "cc.TableView:registerScriptHandler",argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -914,7 +937,7 @@ static int lua_cocos2d_TableView_unregisterScriptHandler(lua_State* L)
         return 0;
     }
     
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d\n", "cc.TableView:unregisterScriptHandler", argc, 0);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n", "cc.TableView:unregisterScriptHandler", argc, 0);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -985,7 +1008,7 @@ static int lua_cocos2dx_Extension_EventListenerAssetsManagerEx_create(lua_State*
         return 1;
     }
     
-    CCLOG("%s has wrong number of arguments: %d, was expecting %d \n", "create",argc, 2);
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "create",argc, 2);
     return 0;
     
 #if COCOS2D_DEBUG >= 1
@@ -1006,6 +1029,140 @@ static void extendEventListenerAssetsManagerEx(lua_State* L)
     lua_pop(L, 1);
 }
 
+int lua_cocos2dx_extension_ParticleSystem3D_getParticlePool(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ParticleSystem3D* cobj = nullptr;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.ParticleSystem3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (cocos2d::ParticleSystem3D*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_ParticleSystem3D_getParticlePool'", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_ParticleSystem3D_getParticlePool'", nullptr);
+            return 0;
+        }
+        const cocos2d::ParticlePool& ret = cobj->getParticlePool();
+        tolua_pushusertype(tolua_S,(void*)&ret, "cc.ParticlePool");
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ParticleSystem3D:getParticlePool",argc, 0);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_ParticleSystem3D_getParticlePool'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+
+static void extendParticleSystem3D(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "cc.ParticleSystem3D");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S, "getParticlePool", lua_cocos2dx_extension_ParticleSystem3D_getParticlePool);
+    }
+    lua_pop(tolua_S, 1);
+}
+
+int lua_cocos2dx_extension_ParticlePool_getActiveParticleList(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ParticlePool* cobj = nullptr;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.ParticlePool",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (cocos2d::ParticlePool*)tolua_tousertype(tolua_S,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_extension_ParticlePool_getActiveParticleList'", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_extension_ParticlePool_getActiveParticleList'", nullptr);
+            return 0;
+        }
+        const ParticlePool::PoolList& ret = cobj->getActiveParticleList();
+        
+        lua_newtable(tolua_S);
+        if (ret.empty())
+            return 1;
+        
+        int index = 1;
+        for (const auto& obj : ret)
+        {
+            if (nullptr == obj)
+                continue;
+            
+            lua_pushnumber(tolua_S, (lua_Number)index);
+            tolua_pushusertype(tolua_S,(void*)&ret, "cc.ParticlePool");
+            lua_rawset(tolua_S, -3);
+            ++index;
+        }
+        
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.ParticlePool:getActiveParticleList",argc, 0);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_extension_ParticlePool_getActiveParticleList'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+
+static void extendParticlePool(lua_State* tolua_S)
+{
+    lua_pushstring(tolua_S, "cc.ParticlePool");
+    lua_rawget(tolua_S, LUA_REGISTRYINDEX);
+    if (lua_istable(tolua_S,-1))
+    {
+        tolua_function(tolua_S, "getActiveParticleList", lua_cocos2dx_extension_ParticlePool_getActiveParticleList);
+    }
+    lua_pop(tolua_S, 1);
+}
+
 int register_all_cocos2dx_extension_manual(lua_State* tolua_S)
 {
     extendControl(tolua_S);
@@ -1014,6 +1171,8 @@ int register_all_cocos2dx_extension_manual(lua_State* tolua_S)
     extendTableView(tolua_S);
     extendManifest(tolua_S);
     extendEventListenerAssetsManagerEx(tolua_S);
+    extendParticleSystem3D(tolua_S);
+    extendParticlePool(tolua_S);
     return 0;
 }
 

@@ -71,11 +71,9 @@ extern "C"
 #include "base/pvr.h"
 #include "base/TGAlib.h"
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #if CC_USE_WEBP
 #include "decode.h"
 #endif // CC_USE_WEBP
-#endif
 
 #include "base/ccMacros.h"
 #include "CCCommon.h"
@@ -471,7 +469,7 @@ Image::~Image()
 {
     if(_unpack)
     {
-        for (unsigned int i = 0; i < _numberOfMipmaps; ++i)
+        for (int i = 0; i < _numberOfMipmaps; ++i)
             CC_SAFE_DELETE_ARRAY(_mipmaps[i].address);
     }
     else
@@ -1727,14 +1725,17 @@ bool Image::initWithTGAData(tImageTGA* tgaData)
     
     if (ret)
     {
-        const unsigned char tgaSuffix[] = ".tga";
-        for(int i = 0; i < 4; ++i)
+        if (_filePath.length() > 0)
         {
-            if (tolower(_filePath[_filePath.length() - i - 1]) != tgaSuffix[3 - i])
+            const unsigned char tgaSuffix [] = ".tga";
+            for (int i = 0; i < 4; ++i)
             {
-                CCLOG("Image WARNING: the image file suffix is not tga, but parsed as a tga image file. FILE: %s", _filePath.c_str());
-                break;
-            };
+                if (tolower(_filePath[_filePath.length() - i - 1]) != tgaSuffix[3 - i])
+                {
+                    CCLOG("Image WARNING: the image file suffix is not tga, but parsed as a tga image file. FILE: %s", _filePath.c_str());
+                    break;
+                };
+            }
         }
     }
     else
@@ -2024,7 +2025,7 @@ bool Image::initWithWebpData(const unsigned char * data, ssize_t dataLen)
 #if CC_USE_WEBP
 	bool ret = false;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     CCLOG("WEBP image format not supported on WinRT or WP8");
 #else
 	do
@@ -2038,6 +2039,9 @@ bool Image::initWithWebpData(const unsigned char * data, ssize_t dataLen)
         _renderFormat = Texture2D::PixelFormat::RGBA8888;
         _width    = config.input.width;
         _height   = config.input.height;
+        
+        //webp doesn't have premultipliedAlpha
+        _hasPremultipliedAlpha = false;
         
         _dataLen = _width * _height * 4;
         _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
@@ -2056,7 +2060,7 @@ bool Image::initWithWebpData(const unsigned char * data, ssize_t dataLen)
         
         ret = true;
 	} while (0);
-#endif // (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#endif //(CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 	return ret;
 #else 
     CCLOG("webp is not enabled, please enable it in ccConfig.h");

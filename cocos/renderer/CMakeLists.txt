@@ -9,8 +9,6 @@ set(COCOS_RENDERER_SRC
   renderer/CCGLProgramStateCache.cpp
   renderer/CCGroupCommand.cpp
   renderer/CCMeshCommand.cpp
-  renderer/CCPrimitive.cpp
-  renderer/CCPrimitiveCommand.cpp
   renderer/CCQuadCommand.cpp
   renderer/CCRenderCommand.cpp
   renderer/CCRenderer.cpp

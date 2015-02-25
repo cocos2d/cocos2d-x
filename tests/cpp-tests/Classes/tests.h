@@ -30,8 +30,10 @@
 #include "SpriteTest/SpriteTest.h"
 #include "SchedulerTest/SchedulerTest.h"
 #include "RenderTextureTest/RenderTextureTest.h"
+#if CC_ENABLE_BOX2D_INTEGRATION
 #include "Box2DTest/Box2dTest.h"
 #include "Box2DTestBed/Box2dView.h"
+#endif
 #include "EffectsAdvancedTest/EffectsAdvancedTest.h"
 #include "InputTest/MouseTest.h"
 #include "PerformanceTest/PerformanceTest.h"
@@ -66,7 +68,6 @@
 #include "FileUtilsTest/FileUtilsTest.h"
 #include "SpineTest/SpineTest.h"
 #include "TexturePackerEncryptionTest/TextureAtlasEncryptionTest.h"
-#include "DataVisitorTest/DataVisitorTest.h"
 #include "ConfigurationTest/ConfigurationTest.h"
 #include "PhysicsTest/PhysicsTest.h"
 #include "ReleasePoolTest/ReleasePoolTest.h"
@@ -75,7 +76,9 @@
 #include "Camera3DTest/Camera3DTest.h"
 #include "BillBoardTest/BillBoardTest.h"
 #include "LightTest/LightTest.h"
+#include "Particle3DTest/Particle3DTest.h"
 
 #include "OpenURLTest/OpenURLTest.h"
+#include "AllocatorTest/AllocatorTest.h"
 
 #endif

@@ -517,6 +517,8 @@ void EditBoxImplWin::doAnimationWhenKeyboardMove(float duration, float distance)
 {
 }
 
+static const int CC_EDIT_BOX_PADDING = 5;
+
 bool EditBoxImplWin::initWithSize(const Size& size)
 {
     //! int fontSize = getFontSizeAccordingHeightJni(size.height-12);
@@ -524,7 +526,7 @@ bool EditBoxImplWin::initWithSize(const Size& size)
     _label->setSystemFontSize(size.height-12);
 	// align the text vertically center
     _label->setAnchorPoint(Vec2(0, 0.5f));
-    _label->setPosition(Vec2(5, size.height / 2.0f));
+    _label->setPosition(Vec2(CC_EDIT_BOX_PADDING, size.height / 2.0f));
     _label->setColor(_colText);
     _editBox->addChild(_label);
 
@@ -532,7 +534,7 @@ bool EditBoxImplWin::initWithSize(const Size& size)
     _labelPlaceHolder->setSystemFontSize(size.height-12);
 	// align the text vertically center
     _labelPlaceHolder->setAnchorPoint(Vec2(0, 0.5f));
-    _labelPlaceHolder->setPosition(5, size.height / 2.0f);
+    _labelPlaceHolder->setPosition(CC_EDIT_BOX_PADDING, size.height / 2.0f);
     _labelPlaceHolder->setVisible(false);
     _labelPlaceHolder->setColor(_colPlaceHolder);
     _editBox->addChild(_labelPlaceHolder);
@@ -631,7 +633,14 @@ void EditBoxImplWin::setText(const char* pText)
 
             //! std::string strWithEllipsis = getStringWithEllipsisJni(strToShow.c_str(), _editSize.width, _editSize.height-12);
             //! _label->setString(strWithEllipsis.c_str());
-			_label->setString(strToShow.c_str());
+            _label->setString(strToShow.c_str());
+            
+            float maxWidth = _editSize.width - 2 * CC_EDIT_BOX_PADDING;
+            auto labelSize = _label->getContentSize();
+            if (labelSize.width > maxWidth)
+            {
+                _label->setDimensions(maxWidth, labelSize.height);
+            }
         }
         else
         {
@@ -690,14 +699,16 @@ void EditBoxImplWin::openKeyboard()
     {
         _delegate->editBoxEditingDidBegin(_editBox);
     }
-    
-    EditBox* pEditBox = this->getEditBox();
-    if (nullptr != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
+
+#if CC_ENABLE_SCRIPT_BINDING
+    auto editBox = this->getEditBox();
+    if (editBox && editBox->getScriptEditBoxHandler())
     {
-        CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
+        CommonScriptData data(editBox->getScriptEditBoxHandler(), "began",editBox);
         ScriptEvent event(kCommonEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
     }
+#endif
     
 	std::string placeHolder = _labelPlaceHolder->getString();
 	if (placeHolder.length() == 0)

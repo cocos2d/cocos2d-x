@@ -38,7 +38,7 @@ Animation3D* Animation3D::create(const std::string& fileName, const std::string&
     
     //load animation here
     animation = new (std::nothrow) Animation3D();
-    auto bundle = Bundle3D::getInstance();
+    auto bundle = Bundle3D::createBundle();
     Animation3DData animationdata;
     if (bundle->load(fullPath) && bundle->loadAnimationData(animationName, &animationdata) && animation->init(animationdata))
     {
@@ -51,6 +51,7 @@ Animation3D* Animation3D::create(const std::string& fileName, const std::string&
         animation = nullptr;
     }
     
+    Bundle3D::destroyBundle(bundle);
     return animation;
 }
 

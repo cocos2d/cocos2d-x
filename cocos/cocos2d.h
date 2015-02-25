@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 // 0x00 HI ME LO
 // 00   03 03 00
-#define COCOS2D_VERSION 0x00030300
+#define COCOS2D_VERSION 0x00040000
 
 //
 // all cocos2d include files
@@ -160,8 +160,6 @@ THE SOFTWARE.
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCVertexIndexBuffer.h"
 #include "renderer/CCVertexIndexData.h"
-#include "renderer/CCPrimitive.h"
-#include "renderer/CCPrimitiveCommand.h"
 #include "renderer/CCTrianglesCommand.h"
 
 // physics
@@ -230,14 +228,6 @@ THE SOFTWARE.
 	#include "platform/winrt/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	#include "platform/winrt/CCApplication.h"
-	#include "platform/wp8/CCGLViewImpl-wp8.h"
-	#include "platform/winrt/CCGL.h"
-	#include "platform/winrt/CCStdC.h"
-	#include "platform/winrt/CCPrecompiledShaders.h"
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-
 // script_support
 #include "base/CCScriptSupport.h"
 
@@ -283,6 +273,8 @@ THE SOFTWARE.
 #include "3d/CCMeshVertexIndexData.h"
 #include "3d/CCSkeleton3D.h"
 #include "3d/CCBillBoard.h"
+#include "3d/CCFrustum.h"
+#include "3d/CCPlane.h"
 
 // Deprecated include
 #include "deprecated/CCDictionary.h"

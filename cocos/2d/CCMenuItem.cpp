@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "2d/CCSprite.h"
 #include "2d/CCLabelAtlas.h"
 #include "2d/CCLabel.h"
-#include "deprecated/CCString.h"
+#include "base/ccUTF8.h"
 #include <stdarg.h>
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
@@ -81,15 +81,14 @@ MenuItem* MenuItem::create( const ccMenuCallback& callback)
 // FIXME: deprecated
 bool MenuItem::initWithTarget(cocos2d::Ref *target, SEL_MenuHandler selector )
 {
-	_target = target;
-	CC_SAFE_RETAIN(_target);
-	return initWithCallback( std::bind(selector,target, std::placeholders::_1) );
+    _target = target;
+    return initWithCallback( std::bind(selector,target, std::placeholders::_1) );
 }
 
 bool MenuItem::initWithCallback(const ccMenuCallback& callback)
 {
     setAnchorPoint(Vec2(0.5f, 0.5f));
-	_callback = callback;
+    _callback = callback;
     _enabled = true;
     _selected = false;
     return true;
@@ -97,12 +96,6 @@ bool MenuItem::initWithCallback(const ccMenuCallback& callback)
 
 MenuItem::~MenuItem()
 {
-}
-
-void MenuItem::onExit()
-{
-	Node::onExit();
-	CC_SAFE_RELEASE(_target);
 }
 
 void MenuItem::selected()
@@ -119,9 +112,10 @@ void MenuItem::activate()
 {
     if (_enabled)
     {
+        this->retain();
         if( _callback )
         {
-			_callback(this);
+            _callback(this);
         }
 #if CC_ENABLE_SCRIPT_BINDING
         if (kScriptTypeNone != _scriptType)
@@ -131,6 +125,7 @@ void MenuItem::activate()
             ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&scriptEvent);
         }
 #endif
+        this->release();
     }
 }
 
@@ -159,14 +154,13 @@ bool MenuItem::isSelected() const
 // FIXME: deprecated
 void MenuItem::setTarget(Ref *target, SEL_MenuHandler selector)
 {
-	_target = target;
-	CC_SAFE_RETAIN(_target);
-	setCallback( std::bind( selector, target, std::placeholders::_1) );
+    _target = target;
+    setCallback( std::bind( selector, target, std::placeholders::_1) );
 }
 
 void MenuItem::setCallback(const ccMenuCallback& callback)
 {
-	_callback = callback;
+    _callback = callback;
 }
 
 std::string MenuItem::getDescription() const
@@ -223,9 +217,9 @@ MenuItemLabel* MenuItemLabel::create(Node *label)
 // FIXME:: deprecated
 bool MenuItemLabel::initWithLabel(Node* label, Ref* target, SEL_MenuHandler selector)
 {
-	_target = target;
-	CC_SAFE_RETAIN(_target);
-	return initWithLabel(label, std::bind(selector,target, std::placeholders::_1) );
+    _target = target;
+    CC_SAFE_RETAIN(_target);
+    return initWithLabel(label, std::bind(selector,target, std::placeholders::_1) );
 }
 
 bool MenuItemLabel::initWithLabel(Node* label, const ccMenuCallback& callback)
@@ -345,9 +339,9 @@ MenuItemAtlasFont * MenuItemAtlasFont::create(const std::string& value, const st
 // FIXME:: deprecated
 bool MenuItemAtlasFont::initWithString(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap, Ref* target, SEL_MenuHandler selector)
 {
-	_target = target;
-	CC_SAFE_RETAIN(_target);
-	return initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap, std::bind(selector,target, std::placeholders::_1) );
+    _target = target;
+    CC_SAFE_RETAIN(_target);
+    return initWithString(value, charMapFile, itemWidth, itemHeight, startCharMap, std::bind(selector,target, std::placeholders::_1) );
 }
 
 bool MenuItemAtlasFont::initWithString(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback)
@@ -431,9 +425,9 @@ bool MenuItemFont::initWithString(const std::string& value, Ref* target, SEL_Men
 {
     CCASSERT( !value.empty(), "Value length must be greater than 0");
 
-	_target = target;
+    _target = target;
     CC_SAFE_RETAIN(target);
-	return initWithString(value, std::bind(selector,target, std::placeholders::_1) );
+    return initWithString(value, std::bind(selector,target, std::placeholders::_1) );
 }
 
 bool MenuItemFont::initWithString(const std::string& value, const ccMenuCallback& callback)
@@ -580,9 +574,9 @@ MenuItemSprite * MenuItemSprite::create(Node *normalSprite, Node *selectedSprite
 // FIXME: deprecated
 bool MenuItemSprite::initWithNormalSprite(Node* normalSprite, Node* selectedSprite, Node* disabledSprite, Ref* target, SEL_MenuHandler selector)
 {
-	_target = target;
-	CC_SAFE_RETAIN(_target);
-	return initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, std::bind(selector,target, std::placeholders::_1) );
+    _target = target;
+    CC_SAFE_RETAIN(_target);
+    return initWithNormalSprite(normalSprite, selectedSprite, disabledSprite, std::bind(selector,target, std::placeholders::_1) );
 }
 
 bool MenuItemSprite::initWithNormalSprite(Node* normalSprite, Node* selectedSprite, Node* disabledSprite, const ccMenuCallback& callback)
@@ -760,9 +754,9 @@ MenuItemImage * MenuItemImage::create(const std::string& normalImage, const std:
 // FIXME:: deprecated
 bool MenuItemImage::initWithNormalImage(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage, Ref* target, SEL_MenuHandler selector)
 {
-	_target = target;
-	CC_SAFE_RETAIN(_target);
-	return initWithNormalImage(normalImage, selectedImage, disabledImage, std::bind(selector,target, std::placeholders::_1) );
+    _target = target;
+    CC_SAFE_RETAIN(_target);
+    return initWithNormalImage(normalImage, selectedImage, disabledImage, std::bind(selector,target, std::placeholders::_1) );
 }
 bool MenuItemImage::initWithNormalImage(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage, const ccMenuCallback& callback)
 {
@@ -842,7 +836,7 @@ MenuItemToggle * MenuItemToggle::createWithTarget(Ref* target, SEL_MenuHandler s
     return ret;
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 MenuItemToggle * MenuItemToggle::createWithCallbackVA(const ccMenuCallback &callback, MenuItem* item, ...)
 {
     va_list args;
@@ -877,9 +871,9 @@ MenuItemToggle * MenuItemToggle::create()
 // FIXME:: deprecated
 bool MenuItemToggle::initWithTarget(Ref* target, SEL_MenuHandler selector, MenuItem* item, va_list args)
 {
-	_target = target;
-	CC_SAFE_RETAIN(_target);
-	return initWithCallback(std::bind( selector, target, std::placeholders::_1), item, args);
+    _target = target;
+    CC_SAFE_RETAIN(_target);
+    return initWithCallback(std::bind( selector, target, std::placeholders::_1), item, args);
 }
 
 bool MenuItemToggle::initWithCallback(const ccMenuCallback &callback, MenuItem *item, va_list args)

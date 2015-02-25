@@ -893,17 +893,6 @@ void Mat4::subtract(const Mat4& m1, const Mat4& m2, Mat4* dst)
 #endif
 }
 
-void Mat4::transformPoint(Vec3* point) const
-{
-    GP_ASSERT(point);
-    transformVector(point->x, point->y, point->z, 1.0f, point);
-}
-
-void Mat4::transformPoint(const Vec3& point, Vec3* dst) const
-{
-    transformVector(point.x, point.y, point.z, 1.0f, dst);
-}
-
 void Mat4::transformVector(Vec3* vector) const
 {
     GP_ASSERT(vector);

@@ -5,6 +5,13 @@
 -- @parent_module cc
 
 --------------------------------
+--  Initializes a progress timer with the sprite as the shape the timer goes through 
+-- @function [parent=#ProgressTimer] initWithSprite 
+-- @param self
+-- @param #cc.Sprite sp
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- 
 -- @function [parent=#ProgressTimer] isReverseDirection 
 -- @param self
@@ -18,6 +25,7 @@
 -- @function [parent=#ProgressTimer] setBarChangeRate 
 -- @param self
 -- @param #vec2_table barChangeRate
+-- @return ProgressTimer#ProgressTimer self (return value: cc.ProgressTimer)
         
 --------------------------------
 --  Percentages are from 0 to 100 
@@ -30,6 +38,7 @@
 -- @function [parent=#ProgressTimer] setSprite 
 -- @param self
 -- @param #cc.Sprite sprite
+-- @return ProgressTimer#ProgressTimer self (return value: cc.ProgressTimer)
         
 --------------------------------
 --  Change the percentage to change progress. 
@@ -55,6 +64,7 @@
 -- @function [parent=#ProgressTimer] setMidpoint 
 -- @param self
 -- @param #vec2_table point
+-- @return ProgressTimer#ProgressTimer self (return value: cc.ProgressTimer)
         
 --------------------------------
 --  Returns the BarChangeRate 
@@ -68,6 +78,7 @@
 -- @function [parent=#ProgressTimer] setReverseDirection
 -- @param self
 -- @param #bool reverse
+-- @return ProgressTimer#ProgressTimer self (return value: cc.ProgressTimer)
 
 --------------------------------
 --  Returns the Midpoint 
@@ -80,12 +91,14 @@
 -- @function [parent=#ProgressTimer] setPercentage 
 -- @param self
 -- @param #float percentage
+-- @return ProgressTimer#ProgressTimer self (return value: cc.ProgressTimer)
         
 --------------------------------
 -- 
 -- @function [parent=#ProgressTimer] setType 
 -- @param self
 -- @param #int type
+-- @return ProgressTimer#ProgressTimer self (return value: cc.ProgressTimer)
         
 --------------------------------
 --  Creates a progress timer with the sprite as the shape the timer goes through 
@@ -99,6 +112,7 @@
 -- @function [parent=#ProgressTimer] setAnchorPoint 
 -- @param self
 -- @param #vec2_table anchorPoint
+-- @return ProgressTimer#ProgressTimer self (return value: cc.ProgressTimer)
         
 --------------------------------
 -- 
@@ -107,12 +121,14 @@
 -- @param #cc.Renderer renderer
 -- @param #mat4_table transform
 -- @param #unsigned int flags
+-- @return ProgressTimer#ProgressTimer self (return value: cc.ProgressTimer)
         
 --------------------------------
 -- 
 -- @function [parent=#ProgressTimer] setColor 
 -- @param self
 -- @param #color3b_table color
+-- @return ProgressTimer#ProgressTimer self (return value: cc.ProgressTimer)
         
 --------------------------------
 -- 
@@ -125,11 +141,18 @@
 -- @function [parent=#ProgressTimer] setOpacity 
 -- @param self
 -- @param #unsigned char opacity
+-- @return ProgressTimer#ProgressTimer self (return value: cc.ProgressTimer)
         
 --------------------------------
 -- 
 -- @function [parent=#ProgressTimer] getOpacity 
 -- @param self
 -- @return unsigned char#unsigned char ret (return value: unsigned char)
+        
+--------------------------------
+-- js ctor
+-- @function [parent=#ProgressTimer] ProgressTimer 
+-- @param self
+-- @return ProgressTimer#ProgressTimer self (return value: cc.ProgressTimer)
         
 return nil

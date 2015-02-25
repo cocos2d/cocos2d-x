@@ -36,6 +36,7 @@ NS_CC_EXT_BEGIN
 #define MAX_REDIRS          2
 #define DEFAULT_TIMEOUT     5
 #define HTTP_CODE_SUPPORT_RESUME    206
+#define MAX_WAIT_MSECS 30*1000 /* Wait max. 30 seconds */
 
 #define TEMP_EXT            ".temp"
 
@@ -51,7 +52,7 @@ size_t bufferWriteFunc(void *ptr, size_t size, size_t nmemb, void *userdata)
     Downloader::StreamData *streamBuffer = (Downloader::StreamData *)userdata;
     size_t written = size * nmemb;
     // Avoid pointer overflow
-    if (streamBuffer->offset + written <= streamBuffer->total)
+	if (streamBuffer->offset + written <= static_cast<size_t>(streamBuffer->total))
     {
         memcpy(streamBuffer->buffer + streamBuffer->offset, ptr, written);
         streamBuffer->offset += written;
@@ -471,46 +472,45 @@ void Downloader::batchDownloadAsync(const DownloadUnits &units, const std::strin
 
 void Downloader::batchDownloadSync(const DownloadUnits &units, const std::string &batchId/* = ""*/)
 {
-    if (units.size() == 0)
-    {
-        return;
-    }
     // Make sure downloader won't be released
     std::weak_ptr<Downloader> ptr = shared_from_this();
     
-    // Test server download resuming support with the first unit
-    _supportResuming = false;
-    CURL *header = curl_easy_init();
-    // Make a resume request
-    curl_easy_setopt(header, CURLOPT_RESUME_FROM_LARGE, 0);
-    if (prepareHeader(header, units.begin()->second.srcUrl))
+    if (units.size() != 0)
     {
-        long responseCode;
-        curl_easy_getinfo(header, CURLINFO_RESPONSE_CODE, &responseCode);
-        if (responseCode == HTTP_CODE_SUPPORT_RESUME)
+        // Test server download resuming support with the first unit
+        _supportResuming = false;
+        CURL *header = curl_easy_init();
+        // Make a resume request
+        curl_easy_setopt(header, CURLOPT_RESUME_FROM_LARGE, 0);
+        if (prepareHeader(header, units.begin()->second.srcUrl))
         {
-            _supportResuming = true;
+            long responseCode;
+            curl_easy_getinfo(header, CURLINFO_RESPONSE_CODE, &responseCode);
+            if (responseCode == HTTP_CODE_SUPPORT_RESUME)
+            {
+                _supportResuming = true;
+            }
         }
-    }
-    curl_easy_cleanup(header);
-    
-    int count = 0;
-    DownloadUnits group;
-    for (auto it = units.cbegin(); it != units.cend(); ++it, ++count)
-    {
-        if (count == FOPEN_MAX)
+        curl_easy_cleanup(header);
+        
+        int count = 0;
+        DownloadUnits group;
+        for (auto it = units.cbegin(); it != units.cend(); ++it, ++count)
+        {
+            if (count == FOPEN_MAX)
+            {
+                groupBatchDownload(group);
+                group.clear();
+                count = 0;
+            }
+            const std::string &key = it->first;
+            const DownloadUnit &unit = it->second;
+            group.emplace(key, unit);
+        }
+        if (group.size() > 0)
         {
             groupBatchDownload(group);
-            group.clear();
-            count = 0;
         }
-        const std::string &key = it->first;
-        const DownloadUnit &unit = it->second;
-        group.emplace(key, unit);
-    }
-    if (group.size() > 0)
-    {
-        groupBatchDownload(group);
     }
     
     Director::getInstance()->getScheduler()->performFunctionInCocosThread([ptr, batchId]{
@@ -627,8 +627,13 @@ void Downloader::groupBatchDownload(const DownloadUnits &units)
             FD_ZERO(&fdread);
             FD_ZERO(&fdwrite);
             FD_ZERO(&fdexcep);
+// FIXME: when jenkins migrate to ubuntu, we should remove this hack code
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
             curl_multi_fdset(multi_handle, &fdread, &fdwrite, &fdexcep, &maxfd);
             rc = select(maxfd + 1, &fdread, &fdwrite, &fdexcep, &select_tv);
+#else          
+            rc = curl_multi_wait(multi_handle,nullptr, 0, MAX_WAIT_MSECS, &maxfd);
+#endif            
             
             switch(rc)
             {

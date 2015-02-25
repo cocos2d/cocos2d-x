@@ -31,7 +31,6 @@
 #include "CCEAGLView-ios.h"
 #include "CCDirectorCaller-ios.h"
 #include "CCGLViewImpl-ios.h"
-#include "CCSet.h"
 #include "base/CCTouch.h"
 
 NS_CC_BEGIN
@@ -128,7 +127,7 @@ bool GLViewImpl::initWithRect(const std::string& viewName, Rect rect, float fram
                                         sharegroup: nil
                                      multiSampling: NO
                                    numberOfSamples: 0];
-    
+
     [eaglview setMultipleTouchEnabled:YES];
 
     _screenSize.width = _designResolutionSize.width = [eaglview getWidth];
@@ -182,12 +181,13 @@ float GLViewImpl::getContentScaleFactor() const
 void GLViewImpl::end()
 {
     [CCDirectorCaller destroy];
-    
+
     // destroy EAGLView
     CCEAGLView *eaglview = (CCEAGLView*) _eaglview;
 
     [eaglview removeFromSuperview];
     //[eaglview release];
+    release();
 }
 
 

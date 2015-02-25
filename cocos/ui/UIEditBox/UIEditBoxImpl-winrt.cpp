@@ -302,19 +302,19 @@ void EditBoxWinRT::QueueText()
 
 EditBoxImpl* __createSystemEditBox(EditBox* pEditBox)
 {
-	return new UIEditBoxImplWinrt(pEditBox);
+    return new UIEditBoxImplWinrt(pEditBox);
 }
 
 UIEditBoxImplWinrt::UIEditBoxImplWinrt( EditBox* pEditText )
-	: EditBoxImpl(pEditText)
-	, m_pLabel(NULL)
-	, m_pLabelPlaceHolder(NULL)
-	, m_eEditBoxInputMode(EditBox::InputMode::SINGLE_LINE)
-	, m_eEditBoxInputFlag(EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS)
-	, m_eKeyboardReturnType(EditBox::KeyboardReturnType::DEFAULT)
-	, m_colText(Color3B::WHITE)
-	, m_colPlaceHolder(Color3B::GRAY)
-	, m_nMaxLength(-1)
+    : EditBoxImpl(pEditText)
+    , m_pLabel(NULL)
+    , m_pLabelPlaceHolder(NULL)
+    , m_eEditBoxInputMode(EditBox::InputMode::SINGLE_LINE)
+    , m_eEditBoxInputFlag(EditBox::InputFlag::INTIAL_CAPS_ALL_CHARACTERS)
+    , m_eKeyboardReturnType(EditBox::KeyboardReturnType::DEFAULT)
+    , m_colText(Color3B::WHITE)
+    , m_colPlaceHolder(Color3B::GRAY)
+    , m_nMaxLength(-1)
 {
 
 }
@@ -326,27 +326,27 @@ UIEditBoxImplWinrt::~UIEditBoxImplWinrt()
 
 void UIEditBoxImplWinrt::openKeyboard()
 {
-	if (_delegate != NULL)
-	{
-		_delegate->editBoxEditingDidBegin(_editBox);
-	}
-
-	EditBox* pEditBox = this->getEditBox();
-	if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
-	{
+    if (_delegate != NULL)
+    {
+        _delegate->editBoxEditingDidBegin(_editBox);
+    }
+#if CC_ENABLE_SCRIPT_BINDING
+    EditBox* pEditBox = this->getEditBox();
+    if (NULL != pEditBox && 0 != pEditBox->getScriptEditBoxHandler())
+    {
         CommonScriptData data(pEditBox->getScriptEditBoxHandler(), "began",pEditBox);
         ScriptEvent event(kCommonEvent,(void*)&data);
         ScriptEngineManager::getInstance()->getScriptEngine()->sendEvent(&event);
-	}
+    }
+#endif
+    std::string placeHolder = m_pLabelPlaceHolder->getString();
+    if (placeHolder.length() == 0)
+        placeHolder = "Enter value";
 
-	std::string placeHolder = m_pLabelPlaceHolder->getString();
-	if (placeHolder.length() == 0)
-		placeHolder = "Enter value";
-
-	char pText[100]= {0};
-	std::string text = getText();
-	if (text.length())
-		strncpy(pText, text.c_str(), 100);
+    char pText[100]= {0};
+    std::string text = getText();
+    if (text.length())
+        strncpy(pText, text.c_str(), 100);
 
 
     if (!m_editBoxWinrt)
@@ -370,144 +370,144 @@ void UIEditBoxImplWinrt::openKeyboard()
 
 bool UIEditBoxImplWinrt::initWithSize( const Size& size )
 {
-	//! int fontSize = getFontSizeAccordingHeightJni(size.height-12);
-	m_pLabel = Label::createWithSystemFont("", "", size.height-12);
-	// align the text vertically center
-	m_pLabel->setAnchorPoint(Vec2(0.0f, 0.5f));
-	m_pLabel->setPosition(Vec2(5.0, size.height / 2.0f));
-	m_pLabel->setColor(m_colText);
-	_editBox->addChild(m_pLabel);
+    //! int fontSize = getFontSizeAccordingHeightJni(size.height-12);
+    m_pLabel = Label::createWithSystemFont("", "", size.height-12);
+    // align the text vertically center
+    m_pLabel->setAnchorPoint(Vec2(0.0f, 0.5f));
+    m_pLabel->setPosition(Vec2(5.0, size.height / 2.0f));
+    m_pLabel->setColor(m_colText);
+    _editBox->addChild(m_pLabel);
 
-	m_pLabelPlaceHolder = Label::createWithSystemFont("", "", size.height-12);
-	// align the text vertically center
-	m_pLabelPlaceHolder->setAnchorPoint(Vec2(0.0f, 0.5f));
-	m_pLabelPlaceHolder->setPosition(Vec2(5.0f, size.height / 2.0f));
-	m_pLabelPlaceHolder->setVisible(false);
-	m_pLabelPlaceHolder->setColor(m_colPlaceHolder);
-	_editBox->addChild(m_pLabelPlaceHolder);
+    m_pLabelPlaceHolder = Label::createWithSystemFont("", "", size.height-12);
+    // align the text vertically center
+    m_pLabelPlaceHolder->setAnchorPoint(Vec2(0.0f, 0.5f));
+    m_pLabelPlaceHolder->setPosition(Vec2(5.0f, size.height / 2.0f));
+    m_pLabelPlaceHolder->setVisible(false);
+    m_pLabelPlaceHolder->setColor(m_colPlaceHolder);
+    _editBox->addChild(m_pLabelPlaceHolder);
 
-	m_EditSize = size;
-	return true;
+    m_EditSize = size;
+    return true;
 }
 
 void UIEditBoxImplWinrt::setFont( const char* pFontName, int fontSize )
 {
-	if(m_pLabel != NULL) {
-		m_pLabel->setSystemFontName(pFontName);
-		m_pLabel->setSystemFontSize(fontSize);
-	}
+    if(m_pLabel != NULL) {
+        m_pLabel->setSystemFontName(pFontName);
+        m_pLabel->setSystemFontSize(fontSize);
+    }
 
-	if(m_pLabelPlaceHolder != NULL) {
-		m_pLabelPlaceHolder->setSystemFontName(pFontName);
-		m_pLabelPlaceHolder->setSystemFontSize(fontSize);
-	}
+    if(m_pLabelPlaceHolder != NULL) {
+        m_pLabelPlaceHolder->setSystemFontName(pFontName);
+        m_pLabelPlaceHolder->setSystemFontSize(fontSize);
+    }
 }
 
 void UIEditBoxImplWinrt::setFontColor( const Color3B& color )
 {
-	m_colText = color;
-	m_pLabel->setColor(color);
+    m_colText = color;
+    m_pLabel->setColor(color);
 }
 
 void UIEditBoxImplWinrt::setPlaceholderFont( const char* pFontName, int fontSize )
 {
-	if(m_pLabelPlaceHolder != NULL) {
-		m_pLabelPlaceHolder->setSystemFontName(pFontName);
-		m_pLabelPlaceHolder->setSystemFontSize(fontSize);
-	}
+    if(m_pLabelPlaceHolder != NULL) {
+        m_pLabelPlaceHolder->setSystemFontName(pFontName);
+        m_pLabelPlaceHolder->setSystemFontSize(fontSize);
+    }
 }
 
 void UIEditBoxImplWinrt::setPlaceholderFontColor( const Color3B& color )
 {
-	m_colPlaceHolder = color;
-	m_pLabelPlaceHolder->setColor(color);
+    m_colPlaceHolder = color;
+    m_pLabelPlaceHolder->setColor(color);
 }
 
 void UIEditBoxImplWinrt::setInputMode( EditBox::InputMode inputMode )
 {
-	m_eEditBoxInputMode = inputMode;
+    m_eEditBoxInputMode = inputMode;
 }
 
 void UIEditBoxImplWinrt::setInputFlag(EditBox::InputFlag inputFlag )
 {
-	m_eEditBoxInputFlag = inputFlag;
+    m_eEditBoxInputFlag = inputFlag;
 }
 
 void UIEditBoxImplWinrt::setMaxLength( int maxLength )
 {
-	m_nMaxLength = maxLength;
+    m_nMaxLength = maxLength;
 }
 
 int UIEditBoxImplWinrt::getMaxLength()
 {
-	return m_nMaxLength;
+    return m_nMaxLength;
 }
 
 void UIEditBoxImplWinrt::setReturnType( EditBox::KeyboardReturnType returnType )
 {
-	m_eKeyboardReturnType = returnType;
+    m_eKeyboardReturnType = returnType;
 }
 
 bool UIEditBoxImplWinrt::isEditing()
 {
-	return false;
+    return false;
 }
 
 void UIEditBoxImplWinrt::setText( const char* pText )
 {
-	if (pText != NULL)
-	{
-		m_strText = pText;
+    if (pText != NULL)
+    {
+        m_strText = pText;
 
-		if (m_strText.length() > 0)
-		{
-			m_pLabelPlaceHolder->setVisible(false);
+        if (m_strText.length() > 0)
+        {
+            m_pLabelPlaceHolder->setVisible(false);
 
-			std::string strToShow;
+            std::string strToShow;
 
-			if (EditBox::InputFlag::PASSWORD == m_eEditBoxInputFlag)
-			{
-				long length = cc_utf8_strlen(m_strText.c_str(), -1);
-				for (long i = 0; i < length; i++)
-				{
-					strToShow.append("*");
-				}
-			}
-			else
-			{
-				strToShow = m_strText;
-			}
+            if (EditBox::InputFlag::PASSWORD == m_eEditBoxInputFlag)
+            {
+                long length = cc_utf8_strlen(m_strText.c_str(), -1);
+                for (long i = 0; i < length; i++)
+                {
+                    strToShow.append("*");
+                }
+            }
+            else
+            {
+                strToShow = m_strText;
+            }
 
-			//! std::string strWithEllipsis = getStringWithEllipsisJni(strToShow.c_str(), m_EditSize.width, m_EditSize.height-12);
-			//! m_pLabel->setString(strWithEllipsis.c_str());
-			m_pLabel->setString(strToShow.c_str());
-		}
-		else
-		{
-			m_pLabelPlaceHolder->setVisible(true);
-			m_pLabel->setString("");
-		}
+            //! std::string strWithEllipsis = getStringWithEllipsisJni(strToShow.c_str(), m_EditSize.width, m_EditSize.height-12);
+            //! m_pLabel->setString(strWithEllipsis.c_str());
+            m_pLabel->setString(strToShow.c_str());
+        }
+        else
+        {
+            m_pLabelPlaceHolder->setVisible(true);
+            m_pLabel->setString("");
+        }
 
-	}
+    }
 }
 
 const char* UIEditBoxImplWinrt::getText( void )
 {
-	return m_strText.c_str();
+    return m_strText.c_str();
 }
 
 void UIEditBoxImplWinrt::setPlaceHolder( const char* pText )
 {
-	if (pText != NULL)
-	{
-		m_strPlaceHolder = pText;
-		if (m_strPlaceHolder.length() > 0 && m_strText.length() == 0)
-		{
-			m_pLabelPlaceHolder->setVisible(true);
-		}
+    if (pText != NULL)
+    {
+        m_strPlaceHolder = pText;
+        if (m_strPlaceHolder.length() > 0 && m_strText.length() == 0)
+        {
+            m_pLabelPlaceHolder->setVisible(true);
+        }
 
-		m_pLabelPlaceHolder->setString(m_strPlaceHolder.c_str());
-	}
+        m_pLabelPlaceHolder->setString(m_strPlaceHolder.c_str());
+    }
 }
 
 void UIEditBoxImplWinrt::setPosition( const Vec2& pos )
@@ -552,28 +552,28 @@ void UIEditBoxImplWinrt::onEnter( void )
 
 Platform::String^ UIEditBoxImplWinrt::stringToPlatformString( std::string strSrc )
 {
-	// to wide char
-	int nStrLen = MultiByteToWideChar(CP_UTF8, 0, strSrc.c_str(), -1, NULL, 0);  
-	wchar_t* pWStr = new wchar_t[nStrLen + 1];  
-	memset(pWStr, 0, nStrLen + 1);  
-	MultiByteToWideChar(CP_UTF8, 0, strSrc.c_str(), -1, pWStr, nStrLen);  
-	Platform::String^ strDst = ref new Platform::String(pWStr);
-	delete[] pWStr;
-	return strDst;
+    // to wide char
+    int nStrLen = MultiByteToWideChar(CP_UTF8, 0, strSrc.c_str(), -1, NULL, 0);  
+    wchar_t* pWStr = new wchar_t[nStrLen + 1];  
+    memset(pWStr, 0, nStrLen + 1);  
+    MultiByteToWideChar(CP_UTF8, 0, strSrc.c_str(), -1, pWStr, nStrLen);  
+    Platform::String^ strDst = ref new Platform::String(pWStr);
+    delete[] pWStr;
+    return strDst;
 }
 
 std::string UIEditBoxImplWinrt::PlatformStringTostring( Platform::String^ strSrc )
 {
-	const wchar_t* pWStr = strSrc->Data();
-	int nStrLen = WideCharToMultiByte(CP_UTF8, 0, pWStr, -1, NULL, 0, NULL, NULL);  
-	char* pStr = new char[nStrLen + 1];  
-	memset(pStr, 0, nStrLen + 1);  
-	WideCharToMultiByte(CP_UTF8, 0, pWStr, -1, pStr, nStrLen, NULL, NULL);  ;  
+    const wchar_t* pWStr = strSrc->Data();
+    int nStrLen = WideCharToMultiByte(CP_UTF8, 0, pWStr, -1, NULL, 0, NULL, NULL);  
+    char* pStr = new char[nStrLen + 1];  
+    memset(pStr, 0, nStrLen + 1);  
+    WideCharToMultiByte(CP_UTF8, 0, pWStr, -1, pStr, nStrLen, NULL, NULL);  ;  
 
-	std::string strDst = std::string(pStr);
+    std::string strDst = std::string(pStr);
 
-	delete[] pStr;
-	return strDst;
+    delete[] pStr;
+    return strDst;
 }
 
 }

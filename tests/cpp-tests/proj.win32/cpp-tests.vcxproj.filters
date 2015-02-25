@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="win32">
@@ -130,9 +130,6 @@
     <Filter Include="Classes\ExtensionsTest\ControlExtensionTest\CCControlSwitchTest">
       <UniqueIdentifier>{8eaa1432-0ee2-46d9-9717-40a71efb3fb1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\ExtensionsTest\NotificationCenterTest">
-      <UniqueIdentifier>{73050120-a703-4a41-a797-54b3fe4c6997}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\ExtensionsTest\CocosBuilderTest">
       <UniqueIdentifier>{2a3d945a-4162-4f91-8178-47f4608b4932}</UniqueIdentifier>
     </Filter>
@@ -210,9 +207,6 @@
     </Filter>
     <Filter Include="Classes\TexturePackerEncryptionTest">
       <UniqueIdentifier>{4031c3bb-97f8-4b43-91e5-48dd94ca2d24}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\DataVisitorTest">
-      <UniqueIdentifier>{8049d378-12f7-46ba-ba96-091f3c0a4600}</UniqueIdentifier>
     </Filter>
     <Filter Include="Classes\ConfigurationTest">
       <UniqueIdentifier>{81ec2355-7efd-49e0-b6cb-b1bba23fbbc8}</UniqueIdentifier>
@@ -339,6 +333,15 @@
     </Filter>
     <Filter Include="Classes\OpenURLTest">
       <UniqueIdentifier>{fc47533b-f876-4254-b0f8-4af8f5e2837f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\Particle3DTest">
+      <UniqueIdentifier>{e45d4916-24d0-49b8-a864-d273ea13a248}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest">
+      <UniqueIdentifier>{65be3b70-58d6-47f4-bc67-fac9ee134c42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\AllocatorTest">
+      <UniqueIdentifier>{eed1887a-757e-4625-b21c-bbfcfaa5200f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -531,9 +534,6 @@
     <ClCompile Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlSwitchTest\CCControlSwitchTest.cpp">
       <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlSwitchTest</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\ExtensionsTest\NotificationCenterTest\NotificationCenterTest.cpp">
-      <Filter>Classes\ExtensionsTest\NotificationCenterTest</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\ExtensionsTest\CocosBuilderTest\CocosBuilderTest.cpp">
       <Filter>Classes\ExtensionsTest\CocosBuilderTest</Filter>
     </ClCompile>
@@ -611,9 +611,6 @@
     </ClCompile>
     <ClCompile Include="..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.cpp">
       <Filter>Classes\TexturePackerEncryptionTest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\DataVisitorTest\DataVisitorTest.cpp">
-      <Filter>Classes\DataVisitorTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\ConfigurationTest\ConfigurationTest.cpp">
       <Filter>Classes\ConfigurationTest</Filter>
@@ -888,6 +885,24 @@
     <ClCompile Include="..\Classes\OpenURLTest\OpenURLTest.cpp">
       <Filter>Classes\OpenURLTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Particle3DTest\Particle3DTest.cpp">
+      <Filter>Classes\Particle3DTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PerformanceTest\PerformanceMathTest.cpp">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNode.cpp">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNodeReader.cpp">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomWidgetCallbackBindTest.cpp">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AllocatorTest\AllocatorTest.cpp">
+      <Filter>Classes\AllocatorTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -1084,9 +1099,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\ControlExtensionTest\CCControlSwitchTest\CCControlSwitchTest.h">
       <Filter>Classes\ExtensionsTest\ControlExtensionTest\CCControlSwitchTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ExtensionsTest\NotificationCenterTest\NotificationCenterTest.h">
-      <Filter>Classes\ExtensionsTest\NotificationCenterTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ExtensionsTest\CocosBuilderTest\CocosBuilderTest.h">
       <Filter>Classes\ExtensionsTest\CocosBuilderTest</Filter>
@@ -1339,9 +1351,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.h">
       <Filter>Classes\TexturePackerEncryptionTest</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\DataVisitorTest\DataVisitorTest.h">
-      <Filter>Classes\DataVisitorTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\ConfigurationTest\ConfigurationTest.h">
       <Filter>Classes\ConfigurationTest</Filter>
@@ -1633,6 +1642,24 @@
     </ClInclude>
     <ClInclude Include="..\Classes\OpenURLTest\OpenURLTest.h">
       <Filter>Classes\OpenURLTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Particle3DTest\Particle3DTest.h">
+      <Filter>Classes\Particle3DTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PerformanceTest\PerformanceMathTest.h">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNode.h">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNodeReader.h">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomWidgetCallbackBindTest.h">
+      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AllocatorTest\AllocatorTest.h">
+      <Filter>Classes\AllocatorTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

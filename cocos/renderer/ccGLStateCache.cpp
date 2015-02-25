@@ -50,6 +50,7 @@ namespace
     static GLenum    s_blendingDest = -1;
     static int       s_GLServerState = 0;
     static GLuint    s_VAO = 0;
+    static GLuint    s_VBO = 0;
     static GLenum    s_activeTexture = -1;
 
 #endif // CC_ENABLE_GL_STATE_CACHE
@@ -213,6 +214,19 @@ void bindVAO(GLuint vaoId)
     }
 }
 
+void bindVBO(GLenum target, GLuint vboId)
+{
+#if CC_ENABLE_GL_STATE_CACHE
+    if (s_VBO != vboId)
+    {
+        s_VBO = vboId;
+        glBindBuffer(target, vboId);
+    }
+#else
+    glBindBuffer(target, vboId);
+#endif // CC_ENABLE_GL_STATE_CACHE
+}
+    
 // GL Vertex Attrib functions
 
 void enableVertexAttribs(uint32_t flags)
@@ -222,9 +236,11 @@ void enableVertexAttribs(uint32_t flags)
     // hardcoded!
     for(int i=0; i < MAX_ATTRIBUTES; i++) {
         unsigned int bit = 1 << i;
-        bool enabled = flags & bit;
-        bool enabledBefore = s_attributeFlags & bit;
-        if(enabled != enabledBefore) {
+        //FIXME:Cache is disabled, try to enable cache as before
+        bool enabled = (flags & bit) != 0;
+        bool enabledBefore = (s_attributeFlags & bit) != 0;
+        if(enabled != enabledBefore) 
+        {
             if( enabled )
                 glEnableVertexAttribArray(i);
             else

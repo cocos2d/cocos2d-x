@@ -74,19 +74,6 @@ inline const Vec3 Vec3::operator/(const float s) const
     return Vec3(this->x / s, this->y / s, this->z / s);
 }
 
-inline bool Vec3::operator<(const Vec3& v) const
-{
-    if (x == v.x)
-    {
-        if (y == v.y)
-        {
-            return z < v.z;
-        }
-        return y < v.y;
-    }
-    return x < v.x;
-}
-
 inline bool Vec3::operator==(const Vec3& v) const
 {
     return x==v.x && y==v.y && z==v.z;

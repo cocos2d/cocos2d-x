@@ -13,13 +13,12 @@
         {
             "from": "../../../res",
             "to": "res"
-        },
+        }
+    ],
+    "must_copy_resources": [
         {
-            "from": "../../cocos2d-x/external/lua/luasocket",
-            "to": "src",
-            "include": [
-                "*.lua"
-            ]
+            "from": "../../../config.json",
+            "to": ""
         }
     ]
 }

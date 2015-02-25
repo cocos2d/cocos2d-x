@@ -190,7 +190,7 @@ public:
     void removeChild(Node* child, bool cleanup) override;
     virtual std::string getDescription() const override;
 
-private:
+protected:
     Vec2 getPositionForIsoAt(const Vec2& pos);
     Vec2 getPositionForOrthoAt(const Vec2& pos);
     Vec2 getPositionForHexAt(const Vec2& pos);
@@ -211,23 +211,23 @@ private:
     // index
     ssize_t atlasIndexForExistantZ(int z);
     ssize_t atlasIndexForNewZ(int z);
-    
-protected:
+
+
     //! name of the layer
     std::string _layerName;
     //! TMX Layer supports opacity
-    unsigned char        _opacity;
+    unsigned char _opacity;
     
     //! Only used when vertexZ is used
-    int                    _vertexZvalue;
-    bool                _useAutomaticVertexZ;
+    int _vertexZvalue;
+    bool _useAutomaticVertexZ;
 
     //! used for optimization
-    Sprite            *_reusedTile;
-    ccCArray            *_atlasIndexArray;
+    Sprite *_reusedTile;
+    ccCArray *_atlasIndexArray;
     
     // used for retina display
-    float               _contentScaleFactor;
+    float _contentScaleFactor;
     
     /** size of the layer in tiles */
     Size _layerSize;

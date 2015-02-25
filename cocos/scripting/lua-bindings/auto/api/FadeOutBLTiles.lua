@@ -5,7 +5,8 @@
 -- @parent_module cc
 
 --------------------------------
---  creates the action with the grid size and the duration 
+-- creates the action with the grid size and the duration <br>
+-- param duration in seconds
 -- @function [parent=#FadeOutBLTiles] create 
 -- @param self
 -- @param #float duration
@@ -25,5 +26,11 @@
 -- @param #size_table pos
 -- @param #float time
 -- @return float#float ret (return value: float)
+        
+--------------------------------
+-- 
+-- @function [parent=#FadeOutBLTiles] FadeOutBLTiles 
+-- @param self
+-- @return FadeOutBLTiles#FadeOutBLTiles self (return value: cc.FadeOutBLTiles)
         
 return nil

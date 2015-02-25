@@ -9,6 +9,43 @@
 -- @function [parent=#SpriteBatchNode] appendChild 
 -- @param self
 -- @param #cc.Sprite sprite
+-- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
+        
+--------------------------------
+-- 
+-- @function [parent=#SpriteBatchNode] reorderBatch 
+-- @param self
+-- @param #bool reorder
+-- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
+        
+--------------------------------
+-- 
+-- @function [parent=#SpriteBatchNode] getTexture 
+-- @param self
+-- @return Texture2D#Texture2D ret (return value: cc.Texture2D)
+        
+--------------------------------
+-- 
+-- @function [parent=#SpriteBatchNode] setTexture 
+-- @param self
+-- @param #cc.Texture2D texture
+-- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
+        
+--------------------------------
+--  removes a child given a certain index. It will also cleanup the running actions depending on the cleanup parameter.<br>
+-- warning Removing a child from a SpriteBatchNode is very slow
+-- @function [parent=#SpriteBatchNode] removeChildAtIndex 
+-- @param self
+-- @param #long index
+-- @param #bool doCleanup
+-- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
+        
+--------------------------------
+-- 
+-- @function [parent=#SpriteBatchNode] removeSpriteFromAtlas 
+-- @param self
+-- @param #cc.Sprite sprite
+-- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
         
 --------------------------------
 -- 
@@ -21,15 +58,23 @@
         
 --------------------------------
 -- 
--- @function [parent=#SpriteBatchNode] reorderBatch 
+-- @function [parent=#SpriteBatchNode] atlasIndexForChild 
 -- @param self
--- @param #bool reorder
+-- @param #cc.Sprite sprite
+-- @param #int z
+-- @return long#long ret (return value: long)
         
 --------------------------------
 -- 
--- @function [parent=#SpriteBatchNode] removeAllChildrenWithCleanup 
+-- @function [parent=#SpriteBatchNode] increaseAtlasCapacity 
 -- @param self
--- @param #bool cleanup
+-- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
+        
+--------------------------------
+-- 
+-- @function [parent=#SpriteBatchNode] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 
@@ -39,35 +84,34 @@
 -- @return long#long ret (return value: long)
         
 --------------------------------
--- 
--- @function [parent=#SpriteBatchNode] atlasIndexForChild 
+-- js NA<br>
+-- lua NA
+-- @function [parent=#SpriteBatchNode] getBlendFunc 
 -- @param self
--- @param #cc.Sprite sprite
--- @param #int z
--- @return long#long ret (return value: long)
+-- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
+        
+--------------------------------
+--  initializes a SpriteBatchNode with a texture2d and capacity of children.<br>
+-- The capacity will be increased in 33% in runtime if it runs out of space.
+-- @function [parent=#SpriteBatchNode] initWithTexture 
+-- @param self
+-- @param #cc.Texture2D tex
+-- @param #long capacity
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 --  sets the TextureAtlas object 
 -- @function [parent=#SpriteBatchNode] setTextureAtlas 
 -- @param self
 -- @param #cc.TextureAtlas textureAtlas
+-- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
         
 --------------------------------
 -- 
--- @function [parent=#SpriteBatchNode] getTexture 
+-- @function [parent=#SpriteBatchNode] removeAllChildrenWithCleanup 
 -- @param self
--- @return Texture2D#Texture2D ret (return value: cc.Texture2D)
-        
---------------------------------
--- 
--- @function [parent=#SpriteBatchNode] increaseAtlasCapacity 
--- @param self
-        
---------------------------------
---  returns the TextureAtlas object 
--- @function [parent=#SpriteBatchNode] getTextureAtlas 
--- @param self
--- @return TextureAtlas#TextureAtlas ret (return value: cc.TextureAtlas)
+-- @param #bool cleanup
+-- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
         
 --------------------------------
 --  Inserts a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.<br>
@@ -77,12 +121,30 @@
 -- @param self
 -- @param #cc.Sprite sprite
 -- @param #long index
+-- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
         
 --------------------------------
--- 
--- @function [parent=#SpriteBatchNode] setTexture 
+--  initializes a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.<br>
+-- The capacity will be increased in 33% in runtime if it runs out of space.<br>
+-- The file will be loaded using the TextureMgr.<br>
+-- js init<br>
+-- lua init
+-- @function [parent=#SpriteBatchNode] initWithFile 
 -- @param self
--- @param #cc.Texture2D texture
+-- @param #string fileImage
+-- @param #long capacity
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- code<br>
+-- When this function bound into js or lua,the parameter will be changed<br>
+-- In js: var setBlendFunc(var src, var dst)<br>
+-- endcode<br>
+-- lua NA 
+-- @function [parent=#SpriteBatchNode] setBlendFunc 
+-- @param self
+-- @param #cc.BlendFunc blendFunc
+-- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
         
 --------------------------------
 -- 
@@ -93,6 +155,12 @@
 -- @return long#long ret (return value: long)
         
 --------------------------------
+--  returns the TextureAtlas object 
+-- @function [parent=#SpriteBatchNode] getTextureAtlas 
+-- @param self
+-- @return TextureAtlas#TextureAtlas ret (return value: cc.TextureAtlas)
+        
+--------------------------------
 -- 
 -- @function [parent=#SpriteBatchNode] highestAtlasIndexInChild 
 -- @param self
@@ -100,22 +168,8 @@
 -- @return long#long ret (return value: long)
         
 --------------------------------
---  removes a child given a certain index. It will also cleanup the running actions depending on the cleanup parameter.<br>
--- warning Removing a child from a SpriteBatchNode is very slow
--- @function [parent=#SpriteBatchNode] removeChildAtIndex 
--- @param self
--- @param #long index
--- @param #bool doCleanup
-        
---------------------------------
--- 
--- @function [parent=#SpriteBatchNode] removeSpriteFromAtlas 
--- @param self
--- @param #cc.Sprite sprite
-        
---------------------------------
 --  creates a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and capacity of children.<br>
--- The capacity will be increased in 33% in runtime if it run out of space.<br>
+-- The capacity will be increased in 33% in runtime if it runs out of space.<br>
 -- The file will be loaded using the TextureMgr.
 -- @function [parent=#SpriteBatchNode] create 
 -- @param self
@@ -125,7 +179,7 @@
         
 --------------------------------
 --  creates a SpriteBatchNode with a texture2d and capacity of children.<br>
--- The capacity will be increased in 33% in runtime if it run out of space.
+-- The capacity will be increased in 33% in runtime if it runs out of space.
 -- @function [parent=#SpriteBatchNode] createWithTexture 
 -- @param self
 -- @param #cc.Texture2D tex
@@ -140,6 +194,7 @@
 -- @param #cc.Node child
 -- @param #int zOrder
 -- @param #int tag
+-- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
 
 --------------------------------
 -- 
@@ -148,6 +203,7 @@
 -- @param #cc.Renderer renderer
 -- @param #mat4_table transform
 -- @param #unsigned int flags
+-- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
         
 --------------------------------
 -- 
@@ -162,11 +218,13 @@
 -- @param #cc.Renderer renderer
 -- @param #mat4_table parentTransform
 -- @param #unsigned int parentFlags
+-- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
         
 --------------------------------
 -- 
 -- @function [parent=#SpriteBatchNode] sortAllChildren 
 -- @param self
+-- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
         
 --------------------------------
 -- 
@@ -174,6 +232,7 @@
 -- @param self
 -- @param #cc.Node child
 -- @param #bool cleanup
+-- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
         
 --------------------------------
 -- 
@@ -181,5 +240,12 @@
 -- @param self
 -- @param #cc.Node child
 -- @param #int zOrder
+-- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
+        
+--------------------------------
+-- js ctor
+-- @function [parent=#SpriteBatchNode] SpriteBatchNode 
+-- @param self
+-- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
         
 return nil

@@ -45,7 +45,6 @@ THE SOFTWARE.
 #include "cocostudio/CCArmatureDataManager.h"
 #include "cocostudio/CCArmatureDefine.h"
 #include "cocostudio/CCDataReaderHelper.h"
-#include "cocostudio/CCSpriteFrameCacheHelper.h"
 #include "cocostudio/CCTransformHelp.h"
 #include "cocostudio/CCUtilMath.h"
 #include "cocostudio/CCComBase.h"
@@ -62,6 +61,7 @@ THE SOFTWARE.
 #include "cocostudio/ActionTimeline/CCFrame.h"
 #include "cocostudio/ActionTimeline/CCTimeLine.h"
 #include "cocostudio/ActionTimeline/CCActionTimeline.h"
+#include "cocostudio/ActionTimeline/CCActionTimelineNode.h"
 #include "cocostudio/CocosStudioExport.h"
 #include "cocostudio/ActionTimeline/CSLoader.h"
 

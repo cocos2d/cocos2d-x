@@ -28,6 +28,7 @@
 #include "math/CCMath.h"
 #include "3d/CCAABB.h"
 #include "3d/CCOBB.h"
+#include "3d/CCPlane.h"
 
 NS_CC_BEGIN
 
@@ -58,15 +59,18 @@ public:
     ~Ray();
 
     /**
-     * Check whether this ray intersects the specified bounding box.
+     * Check whether this ray intersects with the specified AABB.
      */
-    bool intersects(const AABB& aabb) const;
-
+    bool intersects(const AABB& aabb, float* distance = nullptr) const;
+    
     /**
-     * Check whether this ray intersects the specified obb.
+     * Check whether this ray intersects with the specified OBB.
      */
-    bool intersects(const OBB& obb) const;
+    bool intersects(const OBB& obb, float* distance = nullptr) const;
 
+    float dist(const Plane& plane) const;
+    Vec3 intersects(const Plane& plane) const;
+    
     /**
      * Sets this ray to the specified values.
      *

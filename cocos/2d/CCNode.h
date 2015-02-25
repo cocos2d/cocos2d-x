@@ -49,6 +49,7 @@ class ComponentContainer;
 class EventDispatcher;
 class Scene;
 class Renderer;
+class Director;
 class GLProgram;
 class GLProgramState;
 #if CC_USE_PHYSICS
@@ -107,6 +108,7 @@ public:
     enum {
         FLAGS_TRANSFORM_DIRTY = (1 << 0),
         FLAGS_CONTENT_SIZE_DIRTY = (1 << 1),
+        FLAGS_RENDER_AS_3D = (1 << 3),
 
         FLAGS_DIRTY_MASK = (FLAGS_TRANSFORM_DIRTY | FLAGS_CONTENT_SIZE_DIRTY),
     };
@@ -541,6 +543,17 @@ public:
      * returns the rotation (X,Y,Z) in degrees.
      */
     virtual Vec3 getRotation3D() const;
+    
+    /**
+     * set rotation by quaternion
+     */
+    virtual void setRotationQuat(const Quaternion& quat);
+    
+    /**
+     * return the rotation by quaternion, Note that when _rotationZ_X == _rotationZ_Y, the returned quaternion equals to RotationZ_X * RotationY * RotationX, 
+     * it equals to RotationY * RotationX otherwise
+     */
+    virtual Quaternion getRotationQuat() const;
 
     /**
      * Sets the X rotation (angle) of the node in degrees which performs a horizontal rotational skew.
@@ -1109,7 +1122,7 @@ public:
      *
      * @return An Action pointer
      */
-    Action* runAction(Action* action);
+    virtual Action* runAction(Action* action);
 
     /**
      * Stops and removes all actions from the running action list .
@@ -1521,13 +1534,16 @@ public:
     /**
      *   get the PhysicsBody the sprite have
      */
-    PhysicsBody* getPhysicsBody() const;
+    PhysicsBody* getPhysicsBody() const { return _physicsBody; }
     
     /**
      *   remove this node from physics world. it will remove all the physics bodies in it's children too.
      */
     void removeFromPhysicsWorld();
+    
+    void updateTransformFromPhysics(const Mat4& parentTransform, uint32_t parentFlags);
 
+    virtual void updatePhysicsBodyTransform(const Mat4& parentTransform, uint32_t parentFlags, float parentScaleX, float parentScaleY);
 #endif
     
     // overrides
@@ -1596,12 +1612,10 @@ protected:
     //check whether this camera mask is visible by the current visiting camera
     bool isVisitableByVisitingCamera() const;
     
-#if CC_USE_PHYSICS
-    void updatePhysicsBodyTransform(Scene* layer);
-    virtual void updatePhysicsBodyPosition(Scene* layer);
-    virtual void updatePhysicsBodyRotation(Scene* layer);
-    virtual void updatePhysicsBodyScale(Scene* scene);
-#endif // CC_USE_PHYSICS
+    // update quaternion from Rotation3D
+    void updateRotationQuat();
+    // update Rotation3D from quaternion
+    void updateRotation3D();
     
 private:
     void addChildHelper(Node* child, int localZOrder, int tag, const std::string &name, bool setTag);
@@ -1614,6 +1628,8 @@ protected:
     // rotation Z is decomposed in 2 to simulate Skew for Flash animations
     float _rotationZ_X;             ///< rotation angle on Z-axis, component X
     float _rotationZ_Y;             ///< rotation angle on Z-axis, component Y
+    
+    Quaternion _rotationQuat;      ///rotation using quaternion, if _rotationZ_X == _rotationZ_Y, _rotationQuat = RotationZ_X * RotationY * RotationX, else _rotationQuat = RotationY * RotationX
 
     float _scaleX;                  ///< scaling factor on x-axis
     float _scaleY;                  ///< scaling factor on y-axis
@@ -1650,7 +1666,7 @@ protected:
 
     Vector<Node*> _children;        ///< array of children nodes
     Node *_parent;                  ///< weak reference to parent node
-
+    Director* _director;            //cached director pointer to improve rendering performance
     int _tag;                         ///< a tag. Can be any number you assigned just to identify this node
     
     std::string _name;               ///<a string label, an user defined string to identify this node
@@ -1691,6 +1707,9 @@ protected:
     PhysicsBody* _physicsBody;        ///< the physicsBody the node have
     float _physicsScaleStartX;         ///< the scale x value when setPhysicsBody
     float _physicsScaleStartY;         ///< the scale y value when setPhysicsBody
+    float _physicsRotation;
+    bool _physicsTransformDirty;
+    bool _updateTransformFromPhysics;
 #endif
     
     // opacity controls

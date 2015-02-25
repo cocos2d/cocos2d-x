@@ -8,5 +8,5 @@ ret = os.system('python -u tools/jenkins-scripts/cocos-console-test.py')
 os.system('git reset --hard')
 print ret
 if(ret > 0):
-  ret = 1
+    ret = 1
 exit(ret)

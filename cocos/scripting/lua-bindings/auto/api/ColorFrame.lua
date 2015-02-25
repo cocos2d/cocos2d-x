@@ -21,12 +21,14 @@
 -- @function [parent=#ColorFrame] setAlpha 
 -- @param self
 -- @param #unsigned char alpha
+-- @return ColorFrame#ColorFrame self (return value: ccs.ColorFrame)
         
 --------------------------------
 -- 
 -- @function [parent=#ColorFrame] setColor 
 -- @param self
 -- @param #color3b_table color
+-- @return ColorFrame#ColorFrame self (return value: ccs.ColorFrame)
         
 --------------------------------
 -- 
@@ -39,6 +41,7 @@
 -- @function [parent=#ColorFrame] apply 
 -- @param self
 -- @param #float percent
+-- @return ColorFrame#ColorFrame self (return value: ccs.ColorFrame)
         
 --------------------------------
 -- 
@@ -50,5 +53,6 @@
 -- 
 -- @function [parent=#ColorFrame] ColorFrame 
 -- @param self
+-- @return ColorFrame#ColorFrame self (return value: ccs.ColorFrame)
         
 return nil

@@ -79,35 +79,35 @@ public:
     inline const Rect& getRectInPixels() const { return _rectInPixels; }
     void setRectInPixels(const Rect& rectInPixels);
 
-    inline bool isRotated(void) const { return _rotated; }
+    inline bool isRotated() const { return _rotated; }
     inline void setRotated(bool rotated) { _rotated = rotated; }
 
     /** get rect of the frame */
-    inline const Rect& getRect(void) const { return _rect; }
+    inline const Rect& getRect() const { return _rect; }
     /** set rect of the frame */
     void setRect(const Rect& rect);
 
     /** get offset of the frame */
-    const Vec2& getOffsetInPixels(void) const;
+    const Vec2& getOffsetInPixels() const;
     /** set offset of the frame */
     void setOffsetInPixels(const Vec2& offsetInPixels);
 
     /** get original size of the trimmed image */
-    inline const Size& getOriginalSizeInPixels(void) const { return _originalSizeInPixels; }
+    inline const Size& getOriginalSizeInPixels() const { return _originalSizeInPixels; }
     /** set original size of the trimmed image */
     inline void setOriginalSizeInPixels(const Size& sizeInPixels) { _originalSizeInPixels = sizeInPixels; }
 
     /** get original size of the trimmed image */
-    inline const Size& getOriginalSize(void) const { return _originalSize; }
+    inline const Size& getOriginalSize() const { return _originalSize; }
     /** set original size of the trimmed image */
     inline void setOriginalSize(const Size& sizeInPixels) { _originalSize = sizeInPixels; }
 
     /** get texture of the frame */
-    Texture2D* getTexture(void);
+    Texture2D* getTexture();
     /** set texture of the frame, the texture is retained */
     void setTexture(Texture2D* pobTexture);
 
-    const Vec2& getOffset(void) const;
+    const Vec2& getOffset() const;
     void setOffset(const Vec2& offsets);
 
     // Overrides
@@ -117,12 +117,12 @@ CC_CONSTRUCTOR_ACCESS:
     /**
      * @lua NA
      */
-    SpriteFrame(void);
+    SpriteFrame();
     
     /**
      * @lua NA
      */
-    virtual ~SpriteFrame(void);
+    virtual ~SpriteFrame();
     
     /** Initializes a SpriteFrame with a texture, rect in points.
      It is assumed that the frame was not trimmed.

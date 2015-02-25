@@ -28,12 +28,14 @@
 -- @function [parent=#LayerGradient] setVector 
 -- @param self
 -- @param #vec2_table alongVector
+-- @return LayerGradient#LayerGradient self (return value: cc.LayerGradient)
         
 --------------------------------
 --  Returns the start opacity of the gradient 
 -- @function [parent=#LayerGradient] setStartOpacity 
 -- @param self
 -- @param #unsigned char startOpacity
+-- @return LayerGradient#LayerGradient self (return value: cc.LayerGradient)
         
 --------------------------------
 --  Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors<br>
@@ -41,12 +43,14 @@
 -- @function [parent=#LayerGradient] setCompressedInterpolation 
 -- @param self
 -- @param #bool compressedInterpolation
+-- @return LayerGradient#LayerGradient self (return value: cc.LayerGradient)
         
 --------------------------------
 --  Returns the end opacity of the gradient 
 -- @function [parent=#LayerGradient] setEndOpacity 
 -- @param self
 -- @param #unsigned char endOpacity
+-- @return LayerGradient#LayerGradient self (return value: cc.LayerGradient)
         
 --------------------------------
 --  Returns the directional vector used for the gradient 
@@ -55,11 +59,28 @@
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
+-- 
+-- @function [parent=#LayerGradient] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  Sets the end color of the gradient 
 -- @function [parent=#LayerGradient] setEndColor 
 -- @param self
 -- @param #color3b_table endColor
+-- @return LayerGradient#LayerGradient self (return value: cc.LayerGradient)
         
+--------------------------------
+-- @overload self, color4b_table, color4b_table, vec2_table         
+-- @overload self, color4b_table, color4b_table         
+-- @function [parent=#LayerGradient] initWithColor
+-- @param self
+-- @param #color4b_table start
+-- @param #color4b_table end
+-- @param #vec2_table v
+-- @return bool#bool ret (return value: bool)
+
 --------------------------------
 --  Returns the end color of the gradient 
 -- @function [parent=#LayerGradient] getEndColor 
@@ -77,6 +98,7 @@
 -- @function [parent=#LayerGradient] setStartColor 
 -- @param self
 -- @param #color3b_table startColor
+-- @return LayerGradient#LayerGradient self (return value: cc.LayerGradient)
         
 --------------------------------
 -- @overload self, color4b_table, color4b_table         
@@ -94,5 +116,11 @@
 -- @function [parent=#LayerGradient] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
+        
+--------------------------------
+-- 
+-- @function [parent=#LayerGradient] LayerGradient 
+-- @param self
+-- @return LayerGradient#LayerGradient self (return value: cc.LayerGradient)
         
 return nil

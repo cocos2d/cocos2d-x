@@ -34,14 +34,10 @@ THE SOFTWARE.
 
 #include "base/CCDirector.h"
 #include "base/uthash.h"
+#include "base/ccUTF8.h"
 #include "renderer/ccGLStateCache.h"
 #include "platform/CCFileUtils.h"
 
-#include "deprecated/CCString.h"
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || defined(WP8_SHADER_COMPILER)
-#include "CCPrecompiledShaders.h"
-#endif
 
 NS_CC_BEGIN
 
@@ -50,6 +46,7 @@ const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP = "ShaderPositi
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST = "ShaderPositionTextureColorAlphaTest";
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV = "ShaderPositionTextureColorAlphaTest_NoMV";
 const char* GLProgram::SHADER_NAME_POSITION_COLOR = "ShaderPositionColor";
+const char* GLProgram::SHADER_NAME_POSITION_COLOR_TEXASPOINTSIZE = "ShaderPositionColorTexAsPointsize";
 const char* GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP = "ShaderPositionColor_noMVP";
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE = "ShaderPositionTexture";
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_U_COLOR = "ShaderPositionTexture_uColor";
@@ -68,6 +65,8 @@ const char* GLProgram::SHADER_3D_SKINPOSITION_TEXTURE = "Shader3DSkinPositionTex
 const char* GLProgram::SHADER_3D_POSITION_NORMAL = "Shader3DPositionNormal";
 const char* GLProgram::SHADER_3D_POSITION_NORMAL_TEXTURE = "Shader3DPositionNormalTexture";
 const char* GLProgram::SHADER_3D_SKINPOSITION_NORMAL_TEXTURE = "Shader3DSkinPositionNormalTexture";
+const char* GLProgram::SHADER_3D_PARTICLE_COLOR = "Shader3DParticleColor";
+const char* GLProgram::SHADER_3D_PARTICLE_TEXTURE = "Shader3DParticleTexture";
 
 
 // uniform names
@@ -131,6 +130,8 @@ GLProgram::GLProgram()
 , _fragShader(0)
 , _flags()
 {
+    _director = Director::getInstance();
+    CCASSERT(nullptr != _director, "Director is null when init a GLProgram");
     memset(_builtInUniforms, 0, sizeof(_builtInUniforms));
 }
 
@@ -157,25 +158,13 @@ GLProgram::~GLProgram()
 
     for (auto e : _hashForUniforms)
     {
-        free(e.second);
+        free(e.second.first);
     }
     _hashForUniforms.clear();
 }
 
 bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
 {
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-    GLboolean hasCompiler = false;
-    glGetBooleanv(GL_SHADER_COMPILER, &hasCompiler);
-    _hasShaderCompiler = (hasCompiler == GL_TRUE);
-
-    if(!_hasShaderCompiler)
-    {
-        return initWithPrecompiledProgramByteArray(vShaderByteArray,fShaderByteArray);
-    }
-#endif
-
     _program = glCreateProgram();
     CHECK_GL_ERROR_DEBUG();
 
@@ -215,47 +204,9 @@ bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar*
     
     CHECK_GL_ERROR_DEBUG();
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || defined(WP8_SHADER_COMPILER)
-    _shaderId = CCPrecompiledShaders::getInstance()->addShaders(vShaderByteArray, fShaderByteArray);
-#endif
-
     return true;
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-GLProgram* GLProgram::createWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
-{
-    auto ret = new (std::nothrow) GLProgram();
-    if(ret && ret->initWithPrecompiledProgramByteArray(vShaderByteArray, fShaderByteArray)) {
-        ret->link();
-        ret->updateUniforms();
-        ret->autorelease();
-        return ret;
-    }
-
-    CC_SAFE_DELETE(ret);
-    return nullptr;
-}
-
-bool GLProgram::initWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
-{
-    bool haveProgram = false;
-
-    _program = glCreateProgram();
-    CHECK_GL_ERROR_DEBUG();
-
-    _vertShader = _fragShader = 0;
-
-    haveProgram = CCPrecompiledShaders::getInstance()->loadProgram(_program, vShaderByteArray, fShaderByteArray);
-
-    CHECK_GL_ERROR_DEBUG();
-    _hashForUniforms.clear();
-
-    CHECK_GL_ERROR_DEBUG();  
-
-    return haveProgram;
-}
-#endif
 
 bool GLProgram::initWithFilenames(const std::string &vShaderFilename, const std::string &fShaderFilename)
 {
@@ -319,6 +270,12 @@ void GLProgram::parseVertexAttribs()
             }
         }
     }
+    else
+    {
+        GLchar ErrorLog[1024];
+        glGetProgramInfoLog(_program, sizeof(ErrorLog), NULL, ErrorLog);
+        CCLOG("Error linking shader program: '%s'\n", ErrorLog);
+    }
 }
 
 void GLProgram::parseUniforms()
@@ -371,6 +328,14 @@ void GLProgram::parseUniforms()
             }
         }
     }
+    else
+    {
+        GLchar ErrorLog[1024];
+        glGetProgramInfoLog(_program, sizeof(ErrorLog), NULL, ErrorLog);
+        CCLOG("Error linking shader program: '%s'\n", ErrorLog);
+
+    }
+
 }
 
 Uniform* GLProgram::getUniform(const std::string &name)
@@ -520,18 +485,6 @@ bool GLProgram::link()
 {
     CCASSERT(_program != 0, "Cannot link invalid program");
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-    if(!_hasShaderCompiler)
-    {
-        // precompiled shader program is already linked
-
-        //bindPredefinedVertexAttribs();
-        parseVertexAttribs();
-        parseUniforms();
-        return true;
-    }
-#endif
-
     GLint status = GL_TRUE;
 
     bindPredefinedVertexAttribs();
@@ -553,7 +506,7 @@ bool GLProgram::link()
     
     _vertShader = _fragShader = 0;
     
-#if DEBUG || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if DEBUG
     glGetProgramiv(_program, GL_LINK_STATUS, &status);
     
     if (status == GL_FALSE)
@@ -561,13 +514,6 @@ bool GLProgram::link()
         CCLOG("cocos2d: ERROR: Failed to link program: %i", _program);
         GL::deleteProgram(_program);
         _program = 0;
-    }
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || defined(WP8_SHADER_COMPILER)
-    if (status == GL_TRUE)
-    {
-        CCPrecompiledShaders::getInstance()->addProgram(_program, _shaderId);
     }
 #endif
 
@@ -579,18 +525,36 @@ void GLProgram::use()
     GL::useProgram(_program);
 }
 
-std::string GLProgram::logForOpenGLObject(GLuint object, GLInfoFunction infoFunc, GLLogFunction logFunc) const
+static std::string logForOpenGLShader(GLuint shader)
 {
     std::string ret;
     GLint logLength = 0, charsWritten = 0;
 
-    infoFunc(object, GL_INFO_LOG_LENGTH, &logLength);
+    glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logLength);
     if (logLength < 1)
         return "";
 
-    char *logBytes = (char*)malloc(logLength);
-    logFunc(object, logLength, &charsWritten, logBytes);
+    char *logBytes = (char*)malloc(logLength + 1);
+    glGetShaderInfoLog(shader, logLength, &charsWritten, logBytes);
+    logBytes[logLength] = '\0';
+    ret = logBytes;
 
+    free(logBytes);
+    return ret;
+}
+
+static std::string logForOpenGLProgram(GLuint program)
+{
+    std::string ret;
+    GLint logLength = 0, charsWritten = 0;
+
+    glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLength);
+    if (logLength < 1)
+        return "";
+
+    char *logBytes = (char*)malloc(logLength + 1);
+    glGetProgramInfoLog(program, logLength, &charsWritten, logBytes);
+    logBytes[logLength] = '\0';
     ret = logBytes;
 
     free(logBytes);
@@ -599,17 +563,17 @@ std::string GLProgram::logForOpenGLObject(GLuint object, GLInfoFunction infoFunc
 
 std::string GLProgram::getVertexShaderLog() const
 {
-    return this->logForOpenGLObject(_vertShader, (GLInfoFunction)&glGetShaderiv, (GLLogFunction)&glGetShaderInfoLog);
+    return cocos2d::logForOpenGLShader(_vertShader);
 }
 
 std::string GLProgram::getFragmentShaderLog() const
 {
-    return this->logForOpenGLObject(_fragShader, (GLInfoFunction)&glGetShaderiv, (GLLogFunction)&glGetShaderInfoLog);
+    return cocos2d::logForOpenGLShader(_fragShader);
 }
 
 std::string GLProgram::getProgramLog() const
 {
-    return this->logForOpenGLObject(_program, (GLInfoFunction)&glGetProgramiv, (GLLogFunction)&glGetProgramInfoLog);
+    return logForOpenGLProgram(_program);
 }
 
 // Uniform cache
@@ -628,17 +592,24 @@ bool GLProgram::updateUniformLocation(GLint location, const GLvoid* data, unsign
     {
         GLvoid* value = malloc(bytes);
         memcpy(value, data, bytes );
-        _hashForUniforms.insert(std::make_pair(location, value));
+        _hashForUniforms.insert(std::make_pair(location, std::make_pair(value, bytes)));
     }
     else
     {
-        if (memcmp(element->second, data, bytes) == 0)
+        if (memcmp(element->second.first, data, bytes) == 0)
         {
             updated = false;
         }
         else
         {
-            memcpy(element->second, data, bytes);
+            if (element->second.second < bytes)
+            {
+                GLvoid* value = realloc(element->second.first, bytes);
+                memcpy(value, data, bytes );
+                _hashForUniforms[location] = std::make_pair(value, bytes);
+            }
+            else
+                memcpy(element->second.first, data, bytes);
         }
     }
 
@@ -841,17 +812,12 @@ void GLProgram::setUniformLocationWithMatrix4fv(GLint location, const GLfloat* m
 
 void GLProgram::setUniformsForBuiltins()
 {
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    
-    auto matrixMV = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-
-    setUniformsForBuiltins(matrixMV);
+    setUniformsForBuiltins(_director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW));
 }
 
 void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
 {
-    auto matrixP = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    auto& matrixP = _director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
     if(_flags.usesP)
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_P_MATRIX], matrixP.m, 1);
@@ -878,11 +844,10 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
     }
 
     if(_flags.usesTime) {
-        Director *director = Director::getInstance();
         // This doesn't give the most accurate global time value.
         // Cocos2D doesn't store a high precision time value, so this will have to do.
         // Getting Mach time per frame per shader using time could be extremely expensive.
-        float time = director->getTotalFrames() * director->getAnimationInterval();
+        float time = _director->getTotalFrames() * _director->getAnimationInterval();
         
         setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_TIME], time/10.0, time, time*2, time*4);
         setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_SIN_TIME], time/8.0, time/4.0, time/2.0, sinf(time));
@@ -905,7 +870,7 @@ void GLProgram::reset()
 
     for (auto e: _hashForUniforms)
     {
-        free(e.second);
+        free(e.second.first);
     }
     
     _hashForUniforms.clear();

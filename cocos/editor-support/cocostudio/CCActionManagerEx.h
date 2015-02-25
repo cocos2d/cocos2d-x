@@ -61,7 +61,7 @@ public:
 	/**
 	* Purges ActionManager point.
 	* @js purge
-	* @lua destroyActionManager
+	* @lua destroyInstance
 	*/
 	static void destroyInstance();
 
@@ -97,6 +97,17 @@ public:
 	* @param func ui action call back
 	*/
 	ActionObject* playActionByName(const char* jsonName,const char* actionName, cocos2d::CallFunc* func);
+
+	/**
+	* Stop an Action with a name.
+	*
+	* @param jsonName  UI file name
+	*
+	* @param actionName  action name in teh UIfile.
+	*
+	* @return  ActionObject which named as the param name
+	*/
+	ActionObject* stopActionByName(const char* jsonName,const char* actionName);
 
 	/*init properties with json dictionay*/
 	void initWithDictionary(const char* jsonName,const rapidjson::Value &dic, Ref* root);

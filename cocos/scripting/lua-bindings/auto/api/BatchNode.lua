@@ -5,12 +5,6 @@
 -- @parent_module ccs
 
 --------------------------------
--- js NA
--- @function [parent=#BatchNode] init 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
 -- 
 -- @function [parent=#BatchNode] create 
 -- @param self
@@ -24,7 +18,14 @@
 -- @param #cc.Node pChild
 -- @param #int zOrder
 -- @param #int tag
+-- @return BatchNode#BatchNode self (return value: ccs.BatchNode)
 
+--------------------------------
+-- js NA
+-- @function [parent=#BatchNode] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
 --------------------------------
 -- 
 -- @function [parent=#BatchNode] draw 
@@ -32,6 +33,7 @@
 -- @param #cc.Renderer renderer
 -- @param #mat4_table transform
 -- @param #unsigned int flags
+-- @return BatchNode#BatchNode self (return value: ccs.BatchNode)
         
 --------------------------------
 -- 
@@ -39,5 +41,6 @@
 -- @param self
 -- @param #cc.Node child
 -- @param #bool cleanup
+-- @return BatchNode#BatchNode self (return value: ccs.BatchNode)
         
 return nil

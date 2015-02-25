@@ -232,7 +232,7 @@ public class Cocos2dxVideoHelper {
         }
     }
     
-    public static void setVideoUrl(int index,int videoSource,String videoUrl) {
+    public static void setVideoUrl(int index, int videoSource, String videoUrl) {
         Message msg = new Message();
         msg.what = VideoTaskSetSource;
         msg.arg1 = index;
@@ -241,7 +241,7 @@ public class Cocos2dxVideoHelper {
         mVideoHandler.sendMessage(msg);
     }
     
-    private void _setVideoURL(int index,int videoSource,String videoUrl) {
+    private void _setVideoURL(int index, int videoSource, String videoUrl) {
         Cocos2dxVideoView videoView = sVideoViews.get(index);
         if (videoView != null) {
             switch (videoSource) {
@@ -257,7 +257,7 @@ public class Cocos2dxVideoHelper {
         }
     }
     
-    public static void setVideoRect(int index,int left,int top,int maxWidth,int maxHeight) {
+    public static void setVideoRect(int index, int left, int top, int maxWidth, int maxHeight) {
         Message msg = new Message();
         msg.what = VideoTaskSetRect;
         msg.arg1 = index;
@@ -265,14 +265,14 @@ public class Cocos2dxVideoHelper {
         mVideoHandler.sendMessage(msg);
     }
     
-    private void _setVideoRect(int index,int left,int top,int maxWidth,int maxHeight) {
+    private void _setVideoRect(int index, int left, int top, int maxWidth, int maxHeight) {
         Cocos2dxVideoView videoView = sVideoViews.get(index);
         if (videoView != null) {
             videoView.setVideoRect(left,top,maxWidth,maxHeight);
         }
     }
     
-    public static void setFullScreenEnabled(int index,boolean enabled, int width,int height) {
+    public static void setFullScreenEnabled(int index, boolean enabled, int width, int height) {
         Message msg = new Message();
         msg.what = VideoTaskFullScreen;
         msg.arg1 = index;

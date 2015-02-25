@@ -327,8 +327,11 @@ cc.KeyCodeKey =
     "KEY_RETURN",
     "KEY_CAPS_LOCK",
     "KEY_SHIFT",
+    "KEY_RIGHT_SHIFT",
     "KEY_CTRL",
+    "KEY_RIGHT_CTRL",
     "KEY_ALT",
+    "KEY_RIGHT_ALT",
     "KEY_MENU",
     "KEY_HYPER",
     "KEY_INSERT",
@@ -488,10 +491,13 @@ for k,v in ipairs(cc.KeyCodeKey) do
 end
 
 cc.KeyCode.KEY_BACK = cc.KeyCode.KEY_ESCAPE
+cc.KeyCode.KEY_LEFT_SHIFT = cc.KeyCode.KEY_SHIFT
+cc.KeyCode.KEY_LEFT_CTRL  = cc.KeyCode.KEY_CTRL
+cc.KeyCode.KEY_LEFT_ALT   = cc.KeyCode.KEY_ALT
 
 cc.EventAssetsManagerEx =
 {
-    EventCode = 
+    EventCode =
     {
         ERROR_NO_LOCAL_MANIFEST = 0,
         ERROR_DOWNLOAD_MANIFEST = 1,
@@ -577,7 +583,7 @@ cc.MATRIX_STACK_TYPE =
     TEXTURE = 2,
 }
 
-cc.LightType = 
+cc.LightType =
 {
     DIRECTIONAL = 0,
     POINT = 1,
@@ -585,7 +591,7 @@ cc.LightType =
     AMBIENT = 3,
 }
 
-cc.LightFlag = 
+cc.LightFlag =
 {
     LIGHT0  = math.pow(2,0),
     LIGHT1  = math.pow(2,1),
@@ -604,3 +610,14 @@ cc.LightFlag =
     LIGHT14 = math.pow(2,14),
     LIGHT15 = math.pow(2,15),
 }
+
+cc.AsyncTaskPool = cc.AsyncTaskPool or {}
+
+cc.AsyncTaskPool.TaskType =
+{
+    TASK_IO = 0,
+    TASK_NETWORK = 1,
+    TASK_OTHER = 2,
+    TASK_MAX_TYPE = 3,
+}
+

@@ -5,6 +5,13 @@
 
 --------------------------------
 -- 
+-- @function [parent=#CSLoader] setJsonPath 
+-- @param self
+-- @param #string jsonPath
+-- @return CSLoader#CSLoader self (return value: cc.CSLoader)
+        
+--------------------------------
+-- 
 -- @function [parent=#CSLoader] createNodeFromJson 
 -- @param self
 -- @param #string filename
@@ -12,27 +19,10 @@
         
 --------------------------------
 -- 
--- @function [parent=#CSLoader] createNodeFromProtocolBuffers 
+-- @function [parent=#CSLoader] createNodeWithFlatBuffersFile 
 -- @param self
 -- @param #string filename
 -- @return Node#Node ret (return value: cc.Node)
-        
---------------------------------
--- 
--- @function [parent=#CSLoader] init 
--- @param self
-        
---------------------------------
--- 
--- @function [parent=#CSLoader] setRecordXMLPath 
--- @param self
--- @param #bool record
-        
---------------------------------
--- 
--- @function [parent=#CSLoader] setJsonPath 
--- @param self
--- @param #string jsonPath
         
 --------------------------------
 -- 
@@ -43,6 +33,28 @@
         
 --------------------------------
 -- 
+-- @function [parent=#CSLoader] bindCallback 
+-- @param self
+-- @param #string callbackName
+-- @param #string callbackType
+-- @param #ccui.Widget sender
+-- @param #cc.Node handler
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#CSLoader] purge 
+-- @param self
+-- @return CSLoader#CSLoader self (return value: cc.CSLoader)
+        
+--------------------------------
+-- 
+-- @function [parent=#CSLoader] init 
+-- @param self
+-- @return CSLoader#CSLoader self (return value: cc.CSLoader)
+        
+--------------------------------
+-- 
 -- @function [parent=#CSLoader] loadNodeWithContent 
 -- @param self
 -- @param #string content
@@ -50,46 +62,9 @@
         
 --------------------------------
 -- 
--- @function [parent=#CSLoader] isRecordProtocolBuffersPath 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- 
--- @function [parent=#CSLoader] isRecordXMLPath 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- 
--- @function [parent=#CSLoader] getProtocolBuffersPath 
--- @param self
--- @return string#string ret (return value: string)
-        
---------------------------------
--- 
--- @function [parent=#CSLoader] getXMLPath 
--- @param self
--- @return string#string ret (return value: string)
-        
---------------------------------
--- 
--- @function [parent=#CSLoader] createNodeFromXML 
--- @param self
--- @param #string filename
--- @return Node#Node ret (return value: cc.Node)
-        
---------------------------------
--- 
 -- @function [parent=#CSLoader] isRecordJsonPath 
 -- @param self
 -- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- 
--- @function [parent=#CSLoader] setRecordProtocolBuffersPath 
--- @param self
--- @param #bool record
         
 --------------------------------
 -- 
@@ -102,28 +77,20 @@
 -- @function [parent=#CSLoader] setRecordJsonPath 
 -- @param self
 -- @param #bool record
+-- @return CSLoader#CSLoader self (return value: cc.CSLoader)
         
 --------------------------------
 -- 
--- @function [parent=#CSLoader] setProtocolBuffersPath 
+-- @function [parent=#CSLoader] createNodeWithFlatBuffersForSimulator 
 -- @param self
--- @param #string protocolBuffersPath
-        
---------------------------------
--- 
--- @function [parent=#CSLoader] purge 
--- @param self
-        
---------------------------------
--- 
--- @function [parent=#CSLoader] setXMLPath 
--- @param self
--- @param #string xmlPath
+-- @param #string filename
+-- @return Node#Node ret (return value: cc.Node)
         
 --------------------------------
 -- 
 -- @function [parent=#CSLoader] destroyInstance 
 -- @param self
+-- @return CSLoader#CSLoader self (return value: cc.CSLoader)
         
 --------------------------------
 -- 
@@ -142,5 +109,6 @@
 -- 
 -- @function [parent=#CSLoader] CSLoader 
 -- @param self
+-- @return CSLoader#CSLoader self (return value: cc.CSLoader)
         
 return nil

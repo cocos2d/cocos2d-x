@@ -8,6 +8,7 @@
 -- @function [parent=#PhysicsWorld] setGravity 
 -- @param self
 -- @param #vec2_table gravity
+-- @return PhysicsWorld#PhysicsWorld self (return value: cc.PhysicsWorld)
         
 --------------------------------
 --  Get all the bodys that in the physics world. 
@@ -28,6 +29,7 @@
 -- @function [parent=#PhysicsWorld] setSubsteps 
 -- @param self
 -- @param #int steps
+-- @return PhysicsWorld#PhysicsWorld self (return value: cc.PhysicsWorld)
         
 --------------------------------
 -- To control the step of physics, if you want control it by yourself( fixed-timestep for example ), you can set this to false and call step by yourself.<br>
@@ -36,17 +38,20 @@
 -- @function [parent=#PhysicsWorld] setAutoStep 
 -- @param self
 -- @param #bool autoStep
+-- @return PhysicsWorld#PhysicsWorld self (return value: cc.PhysicsWorld)
         
 --------------------------------
 --  Adds a joint to the physics world.
 -- @function [parent=#PhysicsWorld] addJoint 
 -- @param self
 -- @param #cc.PhysicsJoint joint
+-- @return PhysicsWorld#PhysicsWorld self (return value: cc.PhysicsWorld)
         
 --------------------------------
 --  Remove all joints from physics world.
 -- @function [parent=#PhysicsWorld] removeAllJoints 
 -- @param self
+-- @return PhysicsWorld#PhysicsWorld self (return value: cc.PhysicsWorld)
         
 --------------------------------
 --  Get the auto step 
@@ -60,6 +65,7 @@
 -- @function [parent=#PhysicsWorld] removeBody
 -- @param self
 -- @param #cc.PhysicsBody body
+-- @return PhysicsWorld#PhysicsWorld self (return value: cc.PhysicsWorld)
 
 --------------------------------
 --  Remove a joint from physics world.
@@ -67,6 +73,7 @@
 -- @param self
 -- @param #cc.PhysicsJoint joint
 -- @param #bool destroy
+-- @return PhysicsWorld#PhysicsWorld self (return value: cc.PhysicsWorld)
         
 --------------------------------
 --  Get phsyics shapes that contains the point. 
@@ -81,12 +88,14 @@
 -- @function [parent=#PhysicsWorld] step 
 -- @param self
 -- @param #float delta
+-- @return PhysicsWorld#PhysicsWorld self (return value: cc.PhysicsWorld)
         
 --------------------------------
 --  set the debug draw mask 
 -- @function [parent=#PhysicsWorld] setDebugDrawMask 
 -- @param self
 -- @param #int mask
+-- @return PhysicsWorld#PhysicsWorld self (return value: cc.PhysicsWorld)
         
 --------------------------------
 --  get the gravity value 
@@ -102,6 +111,7 @@
 -- @function [parent=#PhysicsWorld] setUpdateRate 
 -- @param self
 -- @param #int rate
+-- @return PhysicsWorld#PhysicsWorld self (return value: cc.PhysicsWorld)
         
 --------------------------------
 --  get the number of substeps 
@@ -125,6 +135,7 @@
 --  Remove all bodies from physics world. 
 -- @function [parent=#PhysicsWorld] removeAllBodies 
 -- @param self
+-- @return PhysicsWorld#PhysicsWorld self (return value: cc.PhysicsWorld)
         
 --------------------------------
 -- Set the speed of physics world, speed is the rate at which the simulation executes. default value is 1.0<br>
@@ -132,6 +143,7 @@
 -- @function [parent=#PhysicsWorld] setSpeed 
 -- @param self
 -- @param #float speed
+-- @return PhysicsWorld#PhysicsWorld self (return value: cc.PhysicsWorld)
         
 --------------------------------
 --  return physics shape that contains the point. 

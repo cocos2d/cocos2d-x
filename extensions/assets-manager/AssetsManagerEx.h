@@ -120,6 +120,8 @@ protected:
     
     std::string get(const std::string& key) const;
     
+    void initManifests(const std::string& manifestUrl);
+    
     void loadLocalManifest(const std::string& manifestUrl);
     
     void prepareLocalManifest();
@@ -259,6 +261,9 @@ private:
     int _totalToDownload;
     //! Total number of assets still waiting to be downloaded
     int _totalWaitToDownload;
+    
+    //! Marker for whether the assets manager is inited
+    bool _inited;
 };
 
 NS_CC_EXT_END

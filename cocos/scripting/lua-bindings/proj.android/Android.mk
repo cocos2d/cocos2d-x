@@ -11,7 +11,7 @@ LOCAL_SRC_FILES := ../manual/platform/android/CCLuaJavaBridge.cpp \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../.. \
                     $(LOCAL_PATH)/../manual \
-                    $(LOCAL_PATH)/../../../../external/lua/tolua \
+                    $(LOCAL_PATH)/../manual/tolua \
                     $(LOCAL_PATH)/../manual/platform/android \
                     $(LOCAL_PATH)/../manual/platform/android/jni
 
@@ -47,12 +47,12 @@ LOCAL_SRC_FILES := ../manual/CCLuaBridge.cpp \
           ../manual/cocos2d/lua_cocos2dx_physics_manual.cpp \
           ../manual/cocos2d/LuaOpengl.cpp \
           ../manual/cocos2d/LuaScriptHandlerMgr.cpp \
-          ../manual/tolua_fix.cpp \
-          ../../../../external/lua/tolua/tolua_event.c \
-          ../../../../external/lua/tolua/tolua_is.c \
-          ../../../../external/lua/tolua/tolua_map.c \
-          ../../../../external/lua/tolua/tolua_push.c \
-          ../../../../external/lua/tolua/tolua_to.c \
+          ../manual/tolua/tolua_fix.cpp \
+          ../manual/tolua/tolua_event.c \
+          ../manual/tolua/tolua_is.c \
+          ../manual/tolua/tolua_map.c \
+          ../manual/tolua/tolua_push.c \
+          ../manual/tolua/tolua_to.c \
           ../../../../external/xxtea/xxtea.cpp \
           ../auto/lua_cocos2dx_audioengine_auto.cpp \
           ../manual/audioengine/lua_cocos2dx_audioengine_manual.cpp
@@ -95,7 +95,10 @@ LOCAL_SRC_FILES += ../manual/cocosbuilder/lua_cocos2dx_cocosbuilder_manual.cpp \
 #cocostudio
 LOCAL_SRC_FILES += ../manual/cocostudio/lua_cocos2dx_coco_studio_manual.cpp \
                    ../manual/cocostudio/CustomGUIReader.cpp \
-                   ../auto/lua_cocos2dx_studio_auto.cpp
+                   ../manual/cocostudio/lua_cocos2dx_csloader_manual.cpp \
+                   ../auto/lua_cocos2dx_csloader_auto.cpp \
+                   ../auto/lua_cocos2dx_studio_auto.cpp \
+                   ../manual/cocostudio/lua-cocos-studio-conversions.cpp
 
 #spine
 LOCAL_SRC_FILES += ../manual/spine/lua_cocos2dx_spine_manual.cpp \
@@ -108,19 +111,11 @@ LOCAL_SRC_FILES += ../manual/ui/lua_cocos2dx_experimental_video_manual.cpp \
                    ../auto/lua_cocos2dx_experimental_video_auto.cpp \
                    ../auto/lua_cocos2dx_ui_auto.cpp
 
-#quick
-LOCAL_SRC_FILES += ../../../../external/lua/quick/lua_cocos2dx_quick_manual.cpp \
-                   ../../../../external/lua/quick/LuaEventNode.cpp \
-                   ../../../../external/lua/quick/LuaNodeManager.cpp \
-                   ../../../../external/lua/quick/LuaTouchEventManager.cpp \
-                   ../../../../external/lua/quick/LuaTouchTargetNode.cpp
-
 #extension
 LOCAL_SRC_FILES += ../manual/extension/lua_cocos2dx_extension_manual.cpp \
                    ../auto/lua_cocos2dx_extension_auto.cpp \
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
-                    $(LOCAL_PATH)/../../../../external/lua/luajit/include \
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/luajit/include \
                     $(LOCAL_PATH)/../../../2d \
                     $(LOCAL_PATH)/../../../3d \
                     $(LOCAL_PATH)/../../../network \
@@ -132,6 +127,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
                     $(LOCAL_PATH)/../../../../extensions \
                     $(LOCAL_PATH)/../auto \
                     $(LOCAL_PATH)/../manual \
+                    $(LOCAL_PATH)/../manual/tolua \
                     $(LOCAL_PATH)/../manual/cocos2d \
                     $(LOCAL_PATH)/../manual/3d \
                     $(LOCAL_PATH)/../manual/cocosdenshion \
@@ -144,13 +140,12 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
                     $(LOCAL_PATH)/../manual/ui \
                     $(LOCAL_PATH)/../../../../external/xxtea \
                     $(LOCAL_PATH)/../../../.. \
-                    $(LOCAL_PATH)/../../../../external/lua \
-                    $(LOCAL_PATH)/../../../../external/lua/quick
+                    $(LOCAL_PATH)/../../../../external/lua
 
-LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
-                           $(LOCAL_PATH)/../../../../external/lua/luajit/include \
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/luajit/include \
                            $(LOCAL_PATH)/../auto \
                            $(LOCAL_PATH)/../manual \
+                           $(LOCAL_PATH)/../manual/tolua \
                            $(LOCAL_PATH)/../manual/cocos2d \
                            $(LOCAL_PATH)/../manual/3d \
                            $(LOCAL_PATH)/../manual/cocosdenshion \
@@ -161,7 +156,6 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../../../../external/lua/tolua \
                            $(LOCAL_PATH)/../manual/spine \
                            $(LOCAL_PATH)/../manual/extension \
                            $(LOCAL_PATH)/../manual/ui \
-                           $(LOCAL_PATH)/../../../../external/lua/quick \
                            $(LOCAL_PATH)/../../../..
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_lua_android_static

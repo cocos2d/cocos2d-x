@@ -19,15 +19,22 @@
 -- @return EaseIn#EaseIn ret (return value: cc.EaseIn)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#EaseIn] update 
 -- @param self
 -- @param #float time
+-- @return EaseIn#EaseIn self (return value: cc.EaseIn)
         
 --------------------------------
 -- 
 -- @function [parent=#EaseIn] reverse 
 -- @param self
 -- @return EaseIn#EaseIn ret (return value: cc.EaseIn)
+        
+--------------------------------
+-- 
+-- @function [parent=#EaseIn] EaseIn 
+-- @param self
+-- @return EaseIn#EaseIn self (return value: cc.EaseIn)
         
 return nil

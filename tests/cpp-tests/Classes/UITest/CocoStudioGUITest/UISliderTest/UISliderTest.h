@@ -53,4 +53,42 @@ protected:
     Text* _displayValueLabel;
 };
 
+class UISliderTest_Scale9_State_Change : public UIScene
+{
+public:
+    UISliderTest_Scale9_State_Change();
+    ~UISliderTest_Scale9_State_Change();
+    bool init();
+    void sliderEvent(Ref* pSender, Slider::EventType type);
+
+protected:
+    UI_SCENE_CREATE_FUNC(UISliderTest_Scale9_State_Change)
+        Text* _displayValueLabel;
+};
+
+
+class UISliderNormalDefaultTest : public UIScene
+{
+public:
+    UISliderNormalDefaultTest();
+    ~UISliderNormalDefaultTest();
+    bool init();
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UISliderNormalDefaultTest)
+    Text* _displayValueLabel;
+};
+
+class UISliderDisabledDefaultTest : public UIScene
+{
+public:
+    UISliderDisabledDefaultTest();
+    ~UISliderDisabledDefaultTest();
+    bool init();
+    
+protected:
+    UI_SCENE_CREATE_FUNC(UISliderDisabledDefaultTest)
+    Text* _displayValueLabel;
+};
+
 #endif /* defined(__TestCpp__UISliderTest__) */

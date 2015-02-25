@@ -18,15 +18,22 @@
 -- @return EaseQuarticActionInOut#EaseQuarticActionInOut ret (return value: cc.EaseQuarticActionInOut)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#EaseQuarticActionInOut] update 
 -- @param self
 -- @param #float time
+-- @return EaseQuarticActionInOut#EaseQuarticActionInOut self (return value: cc.EaseQuarticActionInOut)
         
 --------------------------------
 -- 
 -- @function [parent=#EaseQuarticActionInOut] reverse 
 -- @param self
 -- @return EaseQuarticActionInOut#EaseQuarticActionInOut ret (return value: cc.EaseQuarticActionInOut)
+        
+--------------------------------
+-- 
+-- @function [parent=#EaseQuarticActionInOut] EaseQuarticActionInOut 
+-- @param self
+-- @return EaseQuarticActionInOut#EaseQuarticActionInOut self (return value: cc.EaseQuarticActionInOut)
         
 return nil
