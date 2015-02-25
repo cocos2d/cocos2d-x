@@ -33,6 +33,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+
 class Node;
 /**
  * @addtogroup actions
@@ -106,10 +107,11 @@ public:
 
     inline int getTag() const { return _tag; }
     inline void setTag(int tag) { _tag = tag; }
-
+     
 CC_CONSTRUCTOR_ACCESS:
     Action();
     virtual ~Action();
+
 
 protected:
     Node    *_originalTarget;

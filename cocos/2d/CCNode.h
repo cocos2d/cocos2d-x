@@ -69,6 +69,7 @@ enum {
     kNodeOnCleanup
 };
 
+
 bool CC_DLL nodeComparisonLess(Node* n1, Node* n2);
 
 class EventListener;
@@ -104,7 +105,7 @@ class CC_DLL Node : public Ref
 public:
     /// Default tag used for all the nodes
     static const int INVALID_TAG = -1;
-
+    
     enum {
         FLAGS_TRANSFORM_DIRTY = (1 << 0),
         FLAGS_CONTENT_SIZE_DIRTY = (1 << 1),

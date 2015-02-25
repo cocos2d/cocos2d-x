@@ -830,6 +830,7 @@ void EventDispatcher::dispatchCustomEvent(const std::string &eventName, void *op
 
 void EventDispatcher::dispatchTouchEvent(EventTouch* event)
 {
+    Director::getInstance()->setAnimationInterval(1/60.0f);
     sortEventListeners(EventListenerTouchOneByOne::LISTENER_ID);
     sortEventListeners(EventListenerTouchAllAtOnce::LISTENER_ID);
     
@@ -1019,6 +1020,7 @@ void EventDispatcher::dispatchTouchEvent(EventTouch* event)
     }
     
     updateListeners(event);
+
 }
 
 void EventDispatcher::updateListeners(Event* event)

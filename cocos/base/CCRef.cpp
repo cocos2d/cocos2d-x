@@ -38,7 +38,7 @@ NS_CC_BEGIN
 static void trackRef(Ref* ref);
 static void untrackRef(Ref* ref);
 #endif
-
+int Ref::_s_iActionCounts=0;
 Ref::Ref()
 : _referenceCount(1) // when the Ref is created, the reference count of it is 1
 {
