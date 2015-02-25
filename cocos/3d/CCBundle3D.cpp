@@ -1797,7 +1797,7 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
                 CCLOG("warning: Failed to read nodedata: uvMapping '%s'.", _path.c_str());
                 return nullptr;
             }
-            for(int j = 0 ;j < uvMapping ; j++ )
+            for(int j = 0 ; j < uvMapping ; j++)
             {
                 unsigned int textureIndexSize=0;
                 if (_binaryReader.read(&textureIndexSize, 4, 1) != 1)
