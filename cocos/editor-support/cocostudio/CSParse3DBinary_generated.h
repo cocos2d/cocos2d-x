@@ -220,16 +220,16 @@ inline flatbuffers::Offset<Particle3DOptions> CreateParticle3DOptions(flatbuffer
 struct UserCameraOptions : private flatbuffers::Table {
   const Node3DOption *node3DOption() const { return GetPointer<const Node3DOption *>(4); }
   float fov() const { return GetField<float>(6, 60); }
-  float near() const { return GetField<float>(8, 1); }
-  float far() const { return GetField<float>(10, 1000); }
+  float nearClip() const { return GetField<float>(8, 1); }
+  float farClip() const { return GetField<float>(10, 1000); }
   int32_t cameraFlag() const { return GetField<int32_t>(12, 0); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* node3DOption */) &&
            verifier.VerifyTable(node3DOption()) &&
            VerifyField<float>(verifier, 6 /* fov */) &&
-           VerifyField<float>(verifier, 8 /* near */) &&
-           VerifyField<float>(verifier, 10 /* far */) &&
+           VerifyField<float>(verifier, 8 /* nearClip */) &&
+           VerifyField<float>(verifier, 10 /* farClip */) &&
            VerifyField<int32_t>(verifier, 12 /* cameraFlag */) &&
            verifier.EndTable();
   }
@@ -240,8 +240,8 @@ struct UserCameraOptionsBuilder {
   flatbuffers::uoffset_t start_;
   void add_node3DOption(flatbuffers::Offset<Node3DOption> node3DOption) { fbb_.AddOffset(4, node3DOption); }
   void add_fov(float fov) { fbb_.AddElement<float>(6, fov, 60); }
-  void add_near(float near) { fbb_.AddElement<float>(8, near, 1); }
-  void add_far(float far) { fbb_.AddElement<float>(10, far, 1000); }
+  void add_nearClip(float nearClip) { fbb_.AddElement<float>(8, nearClip, 1); }
+  void add_farClip(float farClip) { fbb_.AddElement<float>(10, farClip, 1000); }
   void add_cameraFlag(int32_t cameraFlag) { fbb_.AddElement<int32_t>(12, cameraFlag, 0); }
   UserCameraOptionsBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   UserCameraOptionsBuilder &operator=(const UserCameraOptionsBuilder &);
@@ -254,13 +254,13 @@ struct UserCameraOptionsBuilder {
 inline flatbuffers::Offset<UserCameraOptions> CreateUserCameraOptions(flatbuffers::FlatBufferBuilder &_fbb,
    flatbuffers::Offset<Node3DOption> node3DOption = 0,
    float fov = 60,
-   float near = 1,
-   float far = 1000,
+   float nearClip = 1,
+   float farClip = 1000,
    int32_t cameraFlag = 0) {
   UserCameraOptionsBuilder builder_(_fbb);
   builder_.add_cameraFlag(cameraFlag);
-  builder_.add_far(far);
-  builder_.add_near(near);
+  builder_.add_farClip(farClip);
+  builder_.add_nearClip(nearClip);
   builder_.add_fov(fov);
   builder_.add_node3DOption(node3DOption);
   return builder_.Finish();
