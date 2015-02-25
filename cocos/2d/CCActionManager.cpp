@@ -33,6 +33,7 @@ THE SOFTWARE.
 #include "base/ccMacros.h"
 #include "base/ccCArray.h"
 #include "base/uthash.h"
+#include "base/CCDirector.h"
 
 NS_CC_BEGIN
 //
@@ -108,6 +109,7 @@ void ActionManager::removeActionAtIndex(ssize_t index, tHashElement *element)
 
     if (element->actions->num == 0)
     {
+        
         if (_currentTarget == element)
         {
             _currentTargetSalvaged = true;
@@ -170,7 +172,7 @@ void ActionManager::addAction(Action *action, Node *target, bool paused)
 {
     CCASSERT(action != nullptr, "");
     CCASSERT(target != nullptr, "");
-
+    cocos2d::Director::getInstance()->setAnimationInterval(1/60.0f);
     tHashElement *element = nullptr;
     // we should convert it to Ref*, because we save it as Ref*
     Ref *tmp = target;
@@ -418,6 +420,7 @@ void ActionManager::update(float dt)
         if (_currentTargetSalvaged && _currentTarget->actions->num == 0)
         {
             deleteHashElement(_currentTarget);
+              Director::getInstance()->setAnimationInterval(1);
         }
     }
 
