@@ -59,4 +59,4 @@ namespace cocostudio
     };
 }
 
-#endif /* defined(__cocos2d_libs__SpriteReader__) */
+#endif /* defined(__cocos2d_libs__Node3DReader__) */
