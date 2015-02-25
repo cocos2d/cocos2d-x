@@ -692,6 +692,8 @@
         "cocos/editor-support/cocostudio/WidgetReader/TextFieldReader/TextFieldReader.h", 
         "cocos/editor-support/cocostudio/WidgetReader/TextReader/TextReader.cpp", 
         "cocos/editor-support/cocostudio/WidgetReader/TextReader/TextReader.h", 
+        "cocos/editor-support/cocostudio/WidgetReader/UserCameraReader/UserCameraReader.cpp", 
+        "cocos/editor-support/cocostudio/WidgetReader/UserCameraReader/UserCameraReader.h", 
         "cocos/editor-support/cocostudio/WidgetReader/WidgetReader.cpp", 
         "cocos/editor-support/cocostudio/WidgetReader/WidgetReader.h", 
         "cocos/editor-support/cocostudio/WidgetReader/WidgetReaderProtocol.h", 
