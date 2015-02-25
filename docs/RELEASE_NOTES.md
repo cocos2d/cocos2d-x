@@ -16,7 +16,7 @@
 - [v3.5beta0](#v35beta0)
   - [Highlights of v3.5beta0](#highlights-of-v35beta0)
   - [Features in detail](#features-in-detail)
-    - [3D Particles](#3D-Particles)
+    - [3D Particles](#3d-particles)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
