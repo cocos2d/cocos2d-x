@@ -191,6 +191,9 @@ LanguageType Application::getCurrentLanguage()
         case LANG_UKRAINIAN:
             ret = LanguageType::UKRAINIAN;
             break;
+        case LANG_ROMANIAN:
+            ret = LanguageType::ROMANIAN;
+            break;
     }
     
     return ret;
