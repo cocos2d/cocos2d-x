@@ -1,6 +1,6 @@
 
 /****************************************************************************
- Copyright (c) 2013-2015 Chukong Technologies Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -23,51 +23,33 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "renderer/abstraction/opengles2.0/GraphicsOpenGLES2.0.h"
-#include "platform/CCGLView.h"
+#ifndef _CC_GRAPHICS_INTERFACE_H_
+#define _CC_GRAPHICS_INTERFACE_H_
+
+#include <memory>
+#include "platform/CCPlatformMacros.h"
 
 NS_CC_BEGIN
 
-auto GraphicsOpenGLES20::create() -> std::unique_ptr<GraphicsInterface>
-{
-    auto obj = new GraphicsOpenGLES20;
-    if (obj && obj->init())
-        return std::unique_ptr<GraphicsInterface>(obj);
-    CC_SAFE_DELETE(obj);
-    return nullptr;
-}
+class ViewInterface;
 
-// @brief create a uninitialized view.
-handle GraphicsOpenGLES20::viewCreate()
-{
-    return nullptr;
-}
+using handle = void*;
 
-// @brief create a view with coordinates.
-handle GraphicsOpenGLES20::viewCreateWithRect(const Rect& rect)
+class GraphicsInterface
 {
-    return nullptr;
-}
+public:
+    
+    virtual ~GraphicsInterface() {}
+    
+    // @brief shuts down this interface, releasing all resources.
+    // All weak references and cached interfaces are invalidated.
+    virtual void shutdown() = 0;
 
-// @brief create a full screen view.
-handle GraphicsOpenGLES20::viewCreateFullscreen()
-{
-    return nullptr;
-}
-
-// @brief create a view from a native object.
-handle GraphicsOpenGLES20::viewCreateWithNative(handle native)
-{
-    return nullptr;
-}
-
-//
-// Protected Methods
-//
-
-auto GraphicsOpenGLES20::init() -> bool
-{
-    return true;
-}
+    // @brief gets/creates the view for the currently selected api.
+    // no need to delete or lifetime manage in any way.
+    virtual ViewInterface* getView() const = 0;
+};
 
 NS_CC_END
+
+#endif // _CC_GRAPHICS_INTERFACE_H_

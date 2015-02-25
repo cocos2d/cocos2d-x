@@ -23,37 +23,42 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef _CC_GRAPHICS_API_MANAGER_H_
-#define _CC_GRAPHICS_API_MANAGER_H_
+#ifndef _CC_GRAPHICS_OPEN_GL_ES_20_H_
+#define _CC_GRAPHICS_OPEN_GL_ES_20_H_
 
 #include "platform/CCPlatformMacros.h"
-#include <memory>
+#include "base/CCRef.h"
+#include "renderer/abstraction/interface/CCGraphicsInterface.h"
 
 NS_CC_BEGIN
 
-class GraphicsInterface;
+class ViewInterface;
+class GLView;
 
-class GraphicsAPIManager
+class GraphicsOpenGLES20
+    : public Ref
+    , public GraphicsInterface
 {
 public:
     
-    // @brief creates the Graphics API Manager
-    static auto create() -> std::unique_ptr<GraphicsAPIManager>;
+    static GraphicsInterface* create(const char* name);
     
-    // @brief creates a specific graphics API instance
-    auto createAPI(const char* api) -> std::unique_ptr<GraphicsInterface>;
-    
-protected:
-    
-    auto registerFactories() -> void;
+    // @brief shuts down this interface.
+    void shutdown();
+
+    // @brief get the view
+    ViewInterface* getView() const;
     
 protected:
     
-    using tAPIFactory = auto () -> std::unique_ptr<GraphicsInterface>;
-    using tRegisteredGraphicsAPIFactories = std::unordered_map<size_t, std::function<tAPIFactory>>;
-    tRegisteredGraphicsAPIFactories _factories;
+    // @brief initialize the API
+    bool init(const char* name);
+    
+protected:
+    
+    GLView* _view;
 };
 
 NS_CC_END
 
-#endif // _CC_GRAPHICS_API_MANAGER_H_
+#endif // _CC_GRAPHICS_OPEN_GL_ES_20_H_

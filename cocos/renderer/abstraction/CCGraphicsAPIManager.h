@@ -23,45 +23,44 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef _CC_GRAPHICS_OPEN_GL_ES_20_H_
-#define _CC_GRAPHICS_OPEN_GL_ES_20_H_
+#ifndef _CC_GRAPHICS_API_MANAGER_H_
+#define _CC_GRAPHICS_API_MANAGER_H_
 
+#include <memory>
 #include "platform/CCPlatformMacros.h"
 #include "base/CCRef.h"
-#include "renderer/abstraction/interface/GraphicsInterface.h"
 
 NS_CC_BEGIN
 
-class GraphicsOpenGLES20
+class GraphicsInterface;
+
+class GraphicsAPIManager
     : public Ref
-    , public GraphicsInterface
 {
 public:
     
-    static auto create() -> std::unique_ptr<GraphicsInterface>;
+    // @brief creates the Graphics API Manager
+    static GraphicsAPIManager* create();
     
-    //
-    // View Interface Commands
-    //
+    // @brief creates a specific graphics API instance
+    GraphicsInterface* createAPI(const char* api, const char* title);
     
-    // @brief create a uninitialized view.
-    handle viewCreate();
+    // @brief destroy a graphics API instance
+    void destroyAPI(GraphicsInterface* api);
     
-    // @brief create a view with coordinates.
-    handle viewCreateWithRect(const Rect& rect);
-    
-    // @brief create a full screen view.
-    handle viewCreateFullscreen();
-    
-    // @brief create a view from a native object.
-    handle viewCreateWithNative(handle native);
-
 protected:
     
-    // @brief initialize the API
-    auto init() -> bool;
+    void registerFactories();
+    
+protected:
+    
+    using tConstructor = std::function<GraphicsInterface* (const char* title)>;
+    using tDestructor  = std::function<void (GraphicsInterface* instance)>;
+    
+    using tRegisteredGraphicsAPIFactories = std::unordered_map<size_t, std::pair<tConstructor, tDestructor>>;
+    tRegisteredGraphicsAPIFactories _factories;
 };
 
 NS_CC_END
 
-#endif // _CC_GRAPHICS_OPEN_GL_ES_20_H_
+#endif // _CC_GRAPHICS_API_MANAGER_H_

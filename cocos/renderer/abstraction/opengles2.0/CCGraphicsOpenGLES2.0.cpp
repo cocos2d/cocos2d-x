@@ -1,6 +1,6 @@
 
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -23,40 +23,49 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef _CC_GRAPHICS_INTERFACE_H_
-#define _CC_GRAPHICS_INTERFACE_H_
-
-#include "platform/CCPlatformMacros.h"
+#include "renderer/abstraction/opengles2.0/CCGraphicsOpenGLES2.0.h"
+#include "cocos2d.h"
 
 NS_CC_BEGIN
 
-class Rect;
-
-using handle = void*;
-
-class GraphicsInterface
+GraphicsInterface* GraphicsOpenGLES20::create(const char* name)
 {
-public:
+    auto obj = new GraphicsOpenGLES20;
+    if (obj && obj->init(name))
+    {
+        obj->autorelease();
+        return obj;
+    }
+    CC_SAFE_DELETE(obj);
+    return nullptr;
+}
+
+void GraphicsOpenGLES20::shutdown()
+{
+    CC_SAFE_RELEASE_NULL(_view);
+}
+
+// @brief create a uninitialized view.
+ViewInterface* GraphicsOpenGLES20::getView() const
+{
+    return nullptr;//_view;
+}
+
+//
+// Protected Methods
+//
+
+bool GraphicsOpenGLES20::init(const char* name)
+{
+    bool result = true;
     
-    virtual ~GraphicsInterface() {}
+    _view = GLViewImpl::create(name);
+    if (_view)
+        _view->retain();
+
+    result = _view ? result : false;
     
-    //
-    // View Interface Commands
-    //
-    
-    // @brief create a uninitialized view.
-    virtual handle viewCreate() = 0;
-    
-    // @brief create a view with coordinates.
-    virtual handle viewCreateWithRect(const Rect& rect) = 0;
-    
-    // @brief create a full screen view.
-    virtual handle viewCreateFullscreen() = 0;
-    
-    // @brief create a view from a native object.
-    virtual handle viewCreateWithNative(handle native) = 0;
-};
+    return result;
+}
 
 NS_CC_END
-
-#endif // _CC_GRAPHICS_INTERFACE_H_

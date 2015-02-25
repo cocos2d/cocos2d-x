@@ -24,23 +24,24 @@
  ****************************************************************************/
 
 #include <memory>
-#include "renderer/abstraction/GraphicsAPIManager.h"
-#include "renderer/abstraction/interface/GraphicsInterface.h"
+#include "renderer/abstraction/CCGraphicsAPIManager.h"
+#include "renderer/abstraction/interface/CCGraphicsInterface.h"
 #include "base/CCConsole.h"
 
 //#if ALL_PLATFORMS
-#include "renderer/abstraction/opengles2.0/GraphicsOpenGLES2.0.h"
+#include "renderer/abstraction/opengles2.0/CCGraphicsOpenGLES2.0.h"
 //#endif ALL_PLATFORMS
 
 NS_CC_BEGIN
 
-auto GraphicsAPIManager::create() -> std::unique_ptr<GraphicsAPIManager>
+auto GraphicsAPIManager::create() -> GraphicsAPIManager*
 {
     auto manager = new (std::nothrow) GraphicsAPIManager;
     if (manager)
     {
         manager->registerFactories();
-        return std::unique_ptr<GraphicsAPIManager>(manager);
+        manager->autorelease();
+        return manager;
     }
     return nullptr;
 }
@@ -49,12 +50,15 @@ auto GraphicsAPIManager::registerFactories() -> void
 {
     #define REGISTER_FACTORY(name, cls) \
     { \
-        auto factory = []() -> std::unique_ptr<GraphicsInterface> { \
-            return cls::create(); \
-        }; \
+        auto constructor = tConstructor{[](const char* title) -> GraphicsInterface* { \
+            return cls::create(title); \
+        }}; \
+        auto destructor = tDestructor{[](GraphicsInterface* instance) -> void { \
+            static_cast<cls*>(instance)->release(); \
+        }}; \
+        auto pair = std::pair<tConstructor, tDestructor>{constructor, destructor}; \
         auto hash = std::hash<std::string>{}; \
-        auto hval = size_t{hash(name)}; \
-        _factories.insert(tRegisteredGraphicsAPIFactories::value_type(hval, factory)); \
+        _factories.insert(tRegisteredGraphicsAPIFactories::value_type(size_t{hash(name)}, pair)); \
         CCLOG("Registered factory for graphics API %s", name); \
     }
     
@@ -63,7 +67,7 @@ auto GraphicsAPIManager::registerFactories() -> void
     #undef REGISTER_FACTORY
 }
 
-auto GraphicsAPIManager::createAPI(const char* name) -> std::unique_ptr<GraphicsInterface>
+GraphicsInterface* GraphicsAPIManager::createAPI(const char* name, const char* title)
 {
     auto hash = std::hash<std::string>{};
     auto hval = size_t{hash(name)};
@@ -71,7 +75,12 @@ auto GraphicsAPIManager::createAPI(const char* name) -> std::unique_ptr<Graphics
     auto fi = _factories.find(hval);
     if (fi == _factories.end())
         return nullptr;
-    return (*fi).second();
+    return (*fi).second.first(title);
+}
+
+void GraphicsAPIManager::destroyAPI(GraphicsInterface* api)
+{
+    
 }
 
 NS_CC_END
