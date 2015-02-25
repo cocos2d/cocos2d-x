@@ -4,13 +4,6 @@
 #include "../testBasic.h"
 #include "../BaseTest.h"
 
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (push)
-#pragma warning (disable: 4996)
-#endif
-
 class AtlasDemo : public BaseTest
 {
 protected:
@@ -439,12 +432,6 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
-
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic warning "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (pop)
-#endif
 
 // we don't support linebreak mode
 
