@@ -1645,7 +1645,7 @@ void LabelAlignmentTest::setAlignmentBottom(Ref* sender)
     _label->setString(getCurrentAlignment());
 }
 
-const char* LabelAlignmentTest::getCurrentAlignment()
+std::string LabelAlignmentTest::getCurrentAlignment()
 {
     const char* vertical = nullptr;
     const char* horizontal = nullptr;
@@ -1672,7 +1672,7 @@ const char* LabelAlignmentTest::getCurrentAlignment()
         break;
     }
 
-    return StringUtils::format("Alignment %s %s", vertical, horizontal).c_str();
+    return StringUtils::format("Alignment %s %s", vertical, horizontal);
 }
 
 std::string LabelAlignmentTest::title() const
