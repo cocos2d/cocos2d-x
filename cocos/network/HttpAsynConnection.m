@@ -94,7 +94,7 @@
     self.responseHeader = [httpResponse allHeaderFields];
 
     responseCode = httpResponse.statusCode;
-    self.statusString = [[NSHTTPURLResponse localizedStringForStatusCode:responseCode] copy];
+    self.statusString = [NSHTTPURLResponse localizedStringForStatusCode:responseCode];
     if(responseCode == 200)
         self.statusString = @"OK";
  
@@ -138,7 +138,7 @@
   didFailWithError:(NSError *)error
 {
     //NSLog(@"Load failed with error %@", [error localizedDescription]);
-    self.responseError = [error copy];
+    self.responseError = error;
     
     finish = true;
 }
