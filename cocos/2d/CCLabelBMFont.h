@@ -42,7 +42,7 @@ Use any of these editors to generate BMFonts:
 
 NS_CC_BEGIN
 
-/** @brief LabelBMFont is a subclass of SpriteBatchNode.
+/** @brief __LabelBMFont is a subclass of SpriteBatchNode.
 
 Features:
 - Treats each character like a Sprite. This means that each individual character can be:
@@ -59,9 +59,9 @@ Limitations:
 - All inner characters are using an anchorPoint of (0.5f, 0.5f) and it is not recommend to change it
 because it might affect the rendering
 
-LabelBMFont implements the protocol LabelProtocol, like Label and LabelAtlas.
-LabelBMFont has the flexibility of Label, the speed of LabelAtlas and all the features of Sprite.
-If in doubt, use LabelBMFont instead of LabelAtlas / Label.
+__LabelBMFont implements the protocol LabelProtocol, like Label and LabelAtlas.
+__LabelBMFont has the flexibility of Label, the speed of LabelAtlas and all the features of Sprite.
+If in doubt, use __LabelBMFont instead of LabelAtlas / Label.
 
 Supported editors:
 http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
@@ -72,25 +72,25 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 @since v0.8
 */
 
-class CC_DLL CC_DEPRECATED_ATTRIBUTE LabelBMFont : public Node, public LabelProtocol, public BlendProtocol
+class CC_DLL __LabelBMFont : public Node, public LabelProtocol, public BlendProtocol
 {
 public:
     /**
      * @js ctor
      */
-    LabelBMFont();
+    __LabelBMFont();
     /**
      * @js NA
      * @lua NA
      */
-    virtual ~LabelBMFont();
+    virtual ~__LabelBMFont();
 
     /** creates a bitmap font atlas with an initial string and the FNT file */
-    static LabelBMFont * create(const std::string& str, const std::string& fntFile, float width = 0, TextHAlignment alignment = TextHAlignment::LEFT,const Vec2& imageOffset = Vec2::ZERO);
+    static __LabelBMFont * create(const std::string& str, const std::string& fntFile, float width = 0, TextHAlignment alignment = TextHAlignment::LEFT,const Vec2& imageOffset = Vec2::ZERO);
 
     /** Creates an label.
      */
-    static LabelBMFont * create();
+    static __LabelBMFont * create();
 
     /** init a bitmap font atlas with an initial string and the FNT file */
     bool initWithString(const std::string& str, const std::string& fntFile, float width = 0, TextHAlignment alignment = TextHAlignment::LEFT,const Vec2& imageOffset = Vec2::ZERO);
