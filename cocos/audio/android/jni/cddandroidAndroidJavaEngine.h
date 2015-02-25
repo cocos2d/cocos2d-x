@@ -53,6 +53,7 @@ namespace CocosDenshion {
             void resumeAllEffects();
             void stopEffect(unsigned int nSoundId);
             void stopAllEffects();
+            void loadEffect(const char* pszFilePath, char* loadEffectName);
             void preloadEffect(const char* pszFilePath);
             void unloadEffect(const char* pszFilePath);
 
