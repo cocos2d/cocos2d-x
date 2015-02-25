@@ -828,6 +828,10 @@
 		182C5CD71A98F30500C30D34 /* Sprite3DReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 182C5CD41A98F30500C30D34 /* Sprite3DReader.cpp */; };
 		182C5CD81A98F30500C30D34 /* Sprite3DReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 182C5CD51A98F30500C30D34 /* Sprite3DReader.h */; };
 		182C5CD91A98F30500C30D34 /* Sprite3DReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 182C5CD51A98F30500C30D34 /* Sprite3DReader.h */; };
+		182C5CE51A9D725400C30D34 /* UserCameraReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 182C5CE31A9D725400C30D34 /* UserCameraReader.cpp */; };
+		182C5CE61A9D725400C30D34 /* UserCameraReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 182C5CE31A9D725400C30D34 /* UserCameraReader.cpp */; };
+		182C5CE71A9D725400C30D34 /* UserCameraReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 182C5CE41A9D725400C30D34 /* UserCameraReader.h */; };
+		182C5CE81A9D725400C30D34 /* UserCameraReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 182C5CE41A9D725400C30D34 /* UserCameraReader.h */; };
 		1A01C68418F57BE800EFE3A6 /* CCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A01C67618F57BE800EFE3A6 /* CCArray.cpp */; };
 		1A01C68518F57BE800EFE3A6 /* CCArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A01C67618F57BE800EFE3A6 /* CCArray.cpp */; };
 		1A01C68618F57BE800EFE3A6 /* CCArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A01C67718F57BE800EFE3A6 /* CCArray.h */; };
@@ -2451,6 +2455,8 @@
 		182C5CB11A95964700C30D34 /* Node3DReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Node3DReader.h; path = Node3DReader/Node3DReader.h; sourceTree = "<group>"; };
 		182C5CD41A98F30500C30D34 /* Sprite3DReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sprite3DReader.cpp; path = Sprite3DReader/Sprite3DReader.cpp; sourceTree = "<group>"; };
 		182C5CD51A98F30500C30D34 /* Sprite3DReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sprite3DReader.h; path = Sprite3DReader/Sprite3DReader.h; sourceTree = "<group>"; };
+		182C5CE31A9D725400C30D34 /* UserCameraReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UserCameraReader.cpp; path = UserCameraReader/UserCameraReader.cpp; sourceTree = "<group>"; };
+		182C5CE41A9D725400C30D34 /* UserCameraReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserCameraReader.h; path = UserCameraReader/UserCameraReader.h; sourceTree = "<group>"; };
 		1A01C67618F57BE800EFE3A6 /* CCArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCArray.cpp; sourceTree = "<group>"; };
 		1A01C67718F57BE800EFE3A6 /* CCArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArray.h; sourceTree = "<group>"; };
 		1A01C67818F57BE800EFE3A6 /* CCBool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBool.h; sourceTree = "<group>"; };
@@ -3802,6 +3808,15 @@
 				182C5CD51A98F30500C30D34 /* Sprite3DReader.h */,
 			);
 			name = Sprite3DReader;
+			sourceTree = "<group>";
+		};
+		182C5CE21A9D70C000C30D34 /* UserCameraReader */ = {
+			isa = PBXGroup;
+			children = (
+				182C5CE31A9D725400C30D34 /* UserCameraReader.cpp */,
+				182C5CE41A9D725400C30D34 /* UserCameraReader.h */,
+			);
+			name = UserCameraReader;
 			sourceTree = "<group>";
 		};
 		1A01C67518F57BE800EFE3A6 /* deprecated */ = {
@@ -5647,6 +5662,7 @@
 		50FCEB6818C72017004AD434 /* WidgetReader */ = {
 			isa = PBXGroup;
 			children = (
+				182C5CE21A9D70C000C30D34 /* UserCameraReader */,
 				182C5CD31A98F2F400C30D34 /* Sprite3DReader */,
 				182C5CAF1A95961E00C30D34 /* Node3DReader */,
 				38F5263A1A48363B000DB7F7 /* ArmatureNodeReader */,
@@ -6369,6 +6385,7 @@
 				1A570204180BCBD40088DEC7 /* CCClippingNode.h in Headers */,
 				15AE1A7B19AAD40300C27E9E /* b2PolygonContact.h in Headers */,
 				15AE1A2919AAD3D500C27E9E /* b2Collision.h in Headers */,
+				182C5CE71A9D725400C30D34 /* UserCameraReader.h in Headers */,
 				38B8E2D719E66581002D7CE7 /* CSLoader.h in Headers */,
 				50643BE419BFCF1800EF68ED /* CCPlatformMacros.h in Headers */,
 				15AE184219AAD2F700C27E9E /* CCSprite3D.h in Headers */,
@@ -6941,6 +6958,7 @@
 				15AE1C0219AAE01E00C27E9E /* CCScrollView.h in Headers */,
 				B6877AA11A8CA8A700643ABF /* CCPUParticle3DColorAffectorTranslator.h in Headers */,
 				1A5701A8180BCB590088DEC7 /* CCFontAtlasCache.h in Headers */,
+				182C5CE81A9D725400C30D34 /* UserCameraReader.h in Headers */,
 				15AE1A4C19AAD3D500C27E9E /* b2EdgeShape.h in Headers */,
 				1A5701B4180BCB590088DEC7 /* CCFontFNT.h in Headers */,
 				B6877ABD1A8CA8A700643ABF /* CCPUParticle3DGravityAffector.h in Headers */,
@@ -7664,6 +7682,7 @@
 				B6877ACA1A8CA8A700643ABF /* CCPUParticle3DJetAffector.cpp in Sources */,
 				B6877A7A1A8CA8A700643ABF /* CCPUParticle3DBaseCollider.cpp in Sources */,
 				B63990CC1A490AFE00B07923 /* CCAsyncTaskPool.cpp in Sources */,
+				182C5CE51A9D725400C30D34 /* UserCameraReader.cpp in Sources */,
 				1A5701EA180BCB8C0088DEC7 /* CCTransitionPageTurn.cpp in Sources */,
 				15AE186B19AAD31D00C27E9E /* SimpleAudioEngine.mm in Sources */,
 				50ABBDAD1925AB4100A911A9 /* CCRenderer.cpp in Sources */,
@@ -8020,6 +8039,7 @@
 				B68779371A8CA84900643ABF /* CCPUParticle3DForceField.cpp in Sources */,
 				B29A7E1C19EE1B7700872B35 /* SkeletonJson.c in Sources */,
 				B2CC507C19776DD10041958E /* CCPhysicsJoint.cpp in Sources */,
+				182C5CE61A9D725400C30D34 /* UserCameraReader.cpp in Sources */,
 				38B8E2E219E671D2002D7CE7 /* UILayoutComponent.cpp in Sources */,
 				B2165EEA19921124000BE3E6 /* CCPrimitiveCommand.cpp in Sources */,
 				15AE185C19AAD31200C27E9E /* CDOpenALSupport.m in Sources */,

@@ -65,7 +65,15 @@ public:
     CSSprite3DTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+};
 
+class CSUserCameraTest : public CocosStudio3DTestDemo
+{
+public:
+    CREATE_FUNC(CSUserCameraTest);
+    CSUserCameraTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
 };
 
 class CS3DTestScene : public TestScene

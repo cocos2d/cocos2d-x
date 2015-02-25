@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __cocos2d_libs__Sprite3DReader__
-#define __cocos2d_libs__Sprite3DReader__
+#ifndef __cocos2d_libs__UserCameraReader__
+#define __cocos2d_libs__UserCameraReader__
 
 #include "cocos2d.h"
 #include "cocostudio/CocosStudioExport.h"
@@ -37,21 +37,21 @@ namespace tinyxml2
 
 namespace cocostudio
 {
-    class CC_STUDIO_DLL Sprite3DReader : public cocos2d::Ref, public NodeReaderProtocol
+    class CC_STUDIO_DLL UserCameraReader : public cocos2d::Ref, public NodeReaderProtocol
     {
         DECLARE_CLASS_NODE_READER_INFO
         
     public:
-        Sprite3DReader();
-        ~Sprite3DReader();
+        UserCameraReader();
+        ~UserCameraReader();
         
-        static Sprite3DReader* getInstance();
+        static UserCameraReader* getInstance();
         static void purge();
         
         flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
                                                                              flatbuffers::FlatBufferBuilder* builder);
-        void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* sprite3DOptions);
-        cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* sprite3DOptions);
+        void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* userCameraOptions);
+        cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* userCameraOptions);
         
     protected:
         
@@ -59,4 +59,4 @@ namespace cocostudio
     };
 }
 
-#endif /* defined(__cocos2d_libs__Sprite3DReader__) */
+#endif /* defined(__cocos2d_libs__UserCameraReader__) */
