@@ -89,6 +89,7 @@ public:
         VERTEX_ATTRIB_NORMAL,
         VERTEX_ATTRIB_BLEND_WEIGHT,
         VERTEX_ATTRIB_BLEND_INDEX,
+        VERTEX_ATTRIB_POINTSIZE,
         VERTEX_ATTRIB_MAX,
 
         // backward compatibility
@@ -121,9 +122,6 @@ public:
     static const char* SHADER_NAME_POSITION_COLOR;
     static const char* SHADER_NAME_POSITION_COLOR_TEXASPOINTSIZE;
     static const char* SHADER_NAME_POSITION_COLOR_NO_MVP;
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || defined(WP8_SHADER_COMPILER)
-    static const char* SHADER_NAME_POSITION_COLOR_NO_MVP_GRAYSCALE;
-#endif
     static const char* SHADER_NAME_POSITION_TEXTURE;
     static const char* SHADER_NAME_POSITION_TEXTURE_U_COLOR;
     static const char* SHADER_NAME_POSITION_TEXTURE_A8_COLOR;
@@ -143,6 +141,8 @@ public:
     static const char* SHADER_3D_POSITION_NORMAL;
     static const char* SHADER_3D_POSITION_NORMAL_TEXTURE;
     static const char* SHADER_3D_SKINPOSITION_NORMAL_TEXTURE;
+    static const char* SHADER_3D_PARTICLE_TEXTURE;
+    static const char* SHADER_3D_PARTICLE_COLOR;
     
     // uniform names
     static const char* UNIFORM_NAME_AMBIENT_COLOR;
@@ -177,12 +177,6 @@ public:
      * @js initWithString
      * @lua initWithString
      */
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-    /** Initializes the CCGLProgram with precompiled shader program */
-    static GLProgram* createWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
-    bool initWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
-#endif
 
     /** Initializes the GLProgram with a vertex and fragment with bytes array 
      * @js initWithString
@@ -343,10 +337,6 @@ protected:
     GLuint            _fragShader;
     GLint             _builtInUniforms[UNIFORM_MAX];
     bool              _hasShaderCompiler;
-        
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || defined(WP8_SHADER_COMPILER)
-    std::string       _shaderId;
-#endif
 
     struct flag_struct {
         unsigned int usesTime:1;

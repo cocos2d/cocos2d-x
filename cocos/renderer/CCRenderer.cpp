@@ -31,7 +31,6 @@
 #include "renderer/CCBatchCommand.h"
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCGroupCommand.h"
-#include "renderer/CCPrimitiveCommand.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCMeshCommand.h"
@@ -137,8 +136,8 @@ void RenderQueue::clear()
 
 void RenderQueue::saveRenderState()
 {
-    _isDepthEnabled = glIsEnabled(GL_DEPTH_TEST);
-    _isCullEnabled = glIsEnabled(GL_CULL_FACE);
+    _isDepthEnabled = glIsEnabled(GL_DEPTH_TEST) != GL_FALSE;
+    _isCullEnabled = glIsEnabled(GL_CULL_FACE) != GL_FALSE;
     glGetBooleanv(GL_DEPTH_WRITEMASK, &_isDepthWrite);
     
     CHECK_GL_ERROR_DEBUG();
@@ -367,7 +366,7 @@ void Renderer::addCommand(RenderCommand* command, int renderQueue)
     CCASSERT(!_isRendering, "Cannot add command while rendering");
     CCASSERT(renderQueue >=0, "Invalid render queue");
     CCASSERT(command->getType() != RenderCommand::Type::UNKNOWN_COMMAND, "Invalid Command Type");
-    
+
     _renderGroups[renderQueue].push_back(command);
 }
 
@@ -490,12 +489,6 @@ void Renderer::processRenderCommand(RenderCommand* command)
     {
         flush();
         auto cmd = static_cast<BatchCommand*>(command);
-        cmd->execute();
-    }
-    else if(RenderCommand::Type::PRIMITIVE_COMMAND == commandType)
-    {
-        flush();
-        auto cmd = static_cast<PrimitiveCommand*>(command);
         cmd->execute();
     }
     else

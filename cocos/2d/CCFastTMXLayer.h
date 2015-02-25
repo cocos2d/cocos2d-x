@@ -31,7 +31,8 @@ THE SOFTWARE.
 #include <unordered_map>
 #include "2d/CCNode.h"
 #include "2d/CCTMXXMLParser.h"
-#include "renderer/CCPrimitiveCommand.h"
+#include "renderer/CCBatchCommand.h"
+#include "renderer/CCVertexIndexBuffer.h"
 #include "base/CCMap.h"
 
 NS_CC_BEGIN
@@ -197,12 +198,12 @@ protected:
     //
     void updateTotalQuads();
     
-    void onDraw(Primitive* primitive);
     inline int getTileIndexByPos(int x, int y) const { return x + y * (int) _layerSize.width; }
     
     void updateVertexBuffer();
     void updateIndexBuffer();
-    void updatePrimitives();
+    void updateBatchCommands();
+    
 protected:
     
     //! name of the layer
@@ -221,7 +222,7 @@ protected:
     /** properties from the layer. They can be added using Tiled */
     ValueMap _properties;
 
-    Texture2D *_texture;
+    Texture2D* _texture;
     
     /** container for sprite children. map<index, pair<sprite, gid> > */
     std::map<int, std::pair<Sprite*, int> > _spriteContainer;
@@ -244,16 +245,12 @@ protected:
     std::vector<GLushort> _indices;
     std::map<int/*vertexZ*/, int/*offset to _indices by quads*/> _indicesVertexZOffsets;
     std::unordered_map<int/*vertexZ*/, int/*number to quads*/> _indicesVertexZNumber;
-    std::vector<PrimitiveCommand> _renderCommands;
+    std::vector<BatchCommand> _renderCommands;
     bool _dirty;
     
+    VertexData*   _vData;
     VertexBuffer* _vertexBuffer;
-    
-    VertexData* _vData;
-    
-    IndexBuffer* _indexBuffer;
-    
-    Map<int , Primitive*> _primitives;
+    IndexBuffer*  _indexBuffer;
     
 public:
     /** Possible orientations of the TMX map */

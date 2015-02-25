@@ -92,7 +92,7 @@ MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
     
     int offset = 0;
     for (const auto& it : meshdata.attribs) {
-        vertexdata->_vertexData->setStream(vertexdata->_vertexBuffer, VertexStreamAttribute(offset, it.vertexAttrib, it.type, it.size));
+        vertexdata->_vertexData->setStream(vertexdata->_vertexBuffer, VertexAttribute(offset, it.vertexAttrib, (DataType)it.type, it.size));
         offset += it.attribSizeBytes;
     }
     

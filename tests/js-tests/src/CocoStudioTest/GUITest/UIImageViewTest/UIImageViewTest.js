@@ -27,7 +27,7 @@
 var UIImageViewEditorTest = UIBaseLayer.extend({
     ctor: function () {
         this._super();
-        var root = ccs.uiReader.widgetFromJsonFile("res/cocosui/UIEditorTest/UIImageView_Editor/ui_ImageView_editor_1.json");
+        var root = ccs.uiReader.widgetFromJsonFile(s_imageView_editor_json);
         this._mainNode.addChild(root);
 
         var back_label =ccui.helper.seekWidgetByName(root, "back");

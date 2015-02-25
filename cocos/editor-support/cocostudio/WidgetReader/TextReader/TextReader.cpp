@@ -338,7 +338,7 @@ namespace cocostudio
             else
             {
                 auto alert = Label::create();
-                alert->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+                alert->setString(errorFilePath + " missed");
                 label->addChild(alert);
             }
         }

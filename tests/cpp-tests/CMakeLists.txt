@@ -1,5 +1,8 @@
 set(APP_NAME cpp-tests)
 
+# Use same method as in cocos library
+cocos_find_package(CURL CURL REQUIRED)
+
 if(WIN32)
   set(PLATFORM_SRC proj.win32/main.cpp)
   set(RES_PREFIX "")
@@ -65,7 +68,6 @@ set(TESTS_SRC
   Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp
   Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp
   Classes/ExtensionsTest/ExtensionsTest.cpp
-  Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp
   Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp
   Classes/ExtensionsTest/CocoStudioArmatureTest/ArmatureScene.cpp
   Classes/ExtensionsTest/CocoStudioActionTimelineTest/ActionTimelineTestScene.cpp
@@ -146,6 +148,7 @@ set(TESTS_SRC
   Classes/OpenURLTest/OpenURLTest.cpp
   Classes/ParallaxTest/ParallaxTest.cpp
   Classes/ParticleTest/ParticleTest.cpp
+  Classes/Particle3DTest/Particle3DTest.cpp
   Classes/PerformanceTest/PerformanceAllocTest.cpp
   Classes/PerformanceTest/PerformanceNodeChildrenTest.cpp
   Classes/PerformanceTest/PerformanceParticleTest.cpp
@@ -185,7 +188,6 @@ set(TESTS_SRC
   Classes/ZwoptexTest/ZwoptexTest.cpp
   Classes/FileUtilsTest/FileUtilsTest.cpp
   Classes/SpineTest/SpineTest.cpp
-  Classes/DataVisitorTest/DataVisitorTest.cpp
   Classes/ConfigurationTest/ConfigurationTest.cpp
   Classes/ConsoleTest/ConsoleTest.cpp
   Classes/UnitTest/RefPtrTest.cpp
@@ -251,6 +253,8 @@ add_executable(${APP_NAME}
 target_link_libraries(${APP_NAME}
   cocos2d
 )
+
+cocos_use_pkg(${APP_NAME} CURL)
 
 if(MACOSX OR APPLE)
   set_target_properties(${APP_NAME} PROPERTIES

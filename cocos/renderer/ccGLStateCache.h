@@ -146,6 +146,12 @@ void CC_DLL activeTexture(GLenum texture);
  */
 void CC_DLL bindVAO(GLuint vaoId);
 
+/** If the vertex buffer is not already bound, it binds it.
+ If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glBindBuffer directly.
+ @since v2.0.0
+ */
+void CC_DLL bindVBO(GLenum target, GLuint vaoId);
+
 // end of shaders group
 /// @}
 

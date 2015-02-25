@@ -13,54 +13,9 @@
         
 --------------------------------
 -- 
--- @function [parent=#SpriteBatchNode] addSpriteWithoutQuad 
--- @param self
--- @param #cc.Sprite child
--- @param #int z
--- @param #int aTag
--- @return SpriteBatchNode#SpriteBatchNode ret (return value: cc.SpriteBatchNode)
-        
---------------------------------
--- 
 -- @function [parent=#SpriteBatchNode] reorderBatch 
 -- @param self
 -- @param #bool reorder
--- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
-        
---------------------------------
--- 
--- @function [parent=#SpriteBatchNode] removeAllChildrenWithCleanup 
--- @param self
--- @param #bool cleanup
--- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
-        
---------------------------------
--- js NA<br>
--- lua NA
--- @function [parent=#SpriteBatchNode] getBlendFunc 
--- @param self
--- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
-        
---------------------------------
--- 
--- @function [parent=#SpriteBatchNode] lowestAtlasIndexInChild 
--- @param self
--- @param #cc.Sprite sprite
--- @return long#long ret (return value: long)
-        
---------------------------------
--- 
--- @function [parent=#SpriteBatchNode] atlasIndexForChild 
--- @param self
--- @param #cc.Sprite sprite
--- @param #int z
--- @return long#long ret (return value: long)
-        
---------------------------------
---  sets the TextureAtlas object 
--- @function [parent=#SpriteBatchNode] setTextureAtlas 
--- @param self
--- @param #cc.TextureAtlas textureAtlas
 -- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
         
 --------------------------------
@@ -71,47 +26,10 @@
         
 --------------------------------
 -- 
--- @function [parent=#SpriteBatchNode] increaseAtlasCapacity 
--- @param self
--- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
-        
---------------------------------
---  returns the TextureAtlas object 
--- @function [parent=#SpriteBatchNode] getTextureAtlas 
--- @param self
--- @return TextureAtlas#TextureAtlas ret (return value: cc.TextureAtlas)
-        
---------------------------------
---  Inserts a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.<br>
--- This method should be called only when you are dealing with very big AtlasSrite and when most of the Sprite won't be updated.<br>
--- For example: a tile map (TMXMap) or a label with lots of characters (LabelBMFont)
--- @function [parent=#SpriteBatchNode] insertQuadFromSprite 
--- @param self
--- @param #cc.Sprite sprite
--- @param #long index
--- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
-        
---------------------------------
--- 
 -- @function [parent=#SpriteBatchNode] setTexture 
 -- @param self
 -- @param #cc.Texture2D texture
 -- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
-        
---------------------------------
--- 
--- @function [parent=#SpriteBatchNode] rebuildIndexInOrder 
--- @param self
--- @param #cc.Sprite parent
--- @param #long index
--- @return long#long ret (return value: long)
-        
---------------------------------
--- 
--- @function [parent=#SpriteBatchNode] highestAtlasIndexInChild 
--- @param self
--- @param #cc.Sprite sprite
--- @return long#long ret (return value: long)
         
 --------------------------------
 --  removes a child given a certain index. It will also cleanup the running actions depending on the cleanup parameter.<br>
@@ -130,6 +48,94 @@
 -- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
         
 --------------------------------
+-- 
+-- @function [parent=#SpriteBatchNode] addSpriteWithoutQuad 
+-- @param self
+-- @param #cc.Sprite child
+-- @param #int z
+-- @param #int aTag
+-- @return SpriteBatchNode#SpriteBatchNode ret (return value: cc.SpriteBatchNode)
+        
+--------------------------------
+-- 
+-- @function [parent=#SpriteBatchNode] atlasIndexForChild 
+-- @param self
+-- @param #cc.Sprite sprite
+-- @param #int z
+-- @return long#long ret (return value: long)
+        
+--------------------------------
+-- 
+-- @function [parent=#SpriteBatchNode] increaseAtlasCapacity 
+-- @param self
+-- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
+        
+--------------------------------
+-- 
+-- @function [parent=#SpriteBatchNode] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#SpriteBatchNode] lowestAtlasIndexInChild 
+-- @param self
+-- @param #cc.Sprite sprite
+-- @return long#long ret (return value: long)
+        
+--------------------------------
+-- js NA<br>
+-- lua NA
+-- @function [parent=#SpriteBatchNode] getBlendFunc 
+-- @param self
+-- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
+        
+--------------------------------
+--  initializes a SpriteBatchNode with a texture2d and capacity of children.<br>
+-- The capacity will be increased in 33% in runtime if it runs out of space.
+-- @function [parent=#SpriteBatchNode] initWithTexture 
+-- @param self
+-- @param #cc.Texture2D tex
+-- @param #long capacity
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+--  sets the TextureAtlas object 
+-- @function [parent=#SpriteBatchNode] setTextureAtlas 
+-- @param self
+-- @param #cc.TextureAtlas textureAtlas
+-- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
+        
+--------------------------------
+-- 
+-- @function [parent=#SpriteBatchNode] removeAllChildrenWithCleanup 
+-- @param self
+-- @param #bool cleanup
+-- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
+        
+--------------------------------
+--  Inserts a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.<br>
+-- This method should be called only when you are dealing with very big AtlasSrite and when most of the Sprite won't be updated.<br>
+-- For example: a tile map (TMXMap) or a label with lots of characters (LabelBMFont)
+-- @function [parent=#SpriteBatchNode] insertQuadFromSprite 
+-- @param self
+-- @param #cc.Sprite sprite
+-- @param #long index
+-- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
+        
+--------------------------------
+--  initializes a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.<br>
+-- The capacity will be increased in 33% in runtime if it runs out of space.<br>
+-- The file will be loaded using the TextureMgr.<br>
+-- js init<br>
+-- lua init
+-- @function [parent=#SpriteBatchNode] initWithFile 
+-- @param self
+-- @param #string fileImage
+-- @param #long capacity
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- code<br>
 -- When this function bound into js or lua,the parameter will be changed<br>
 -- In js: var setBlendFunc(var src, var dst)<br>
@@ -141,8 +147,29 @@
 -- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
         
 --------------------------------
+-- 
+-- @function [parent=#SpriteBatchNode] rebuildIndexInOrder 
+-- @param self
+-- @param #cc.Sprite parent
+-- @param #long index
+-- @return long#long ret (return value: long)
+        
+--------------------------------
+--  returns the TextureAtlas object 
+-- @function [parent=#SpriteBatchNode] getTextureAtlas 
+-- @param self
+-- @return TextureAtlas#TextureAtlas ret (return value: cc.TextureAtlas)
+        
+--------------------------------
+-- 
+-- @function [parent=#SpriteBatchNode] highestAtlasIndexInChild 
+-- @param self
+-- @param #cc.Sprite sprite
+-- @return long#long ret (return value: long)
+        
+--------------------------------
 --  creates a SpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and capacity of children.<br>
--- The capacity will be increased in 33% in runtime if it run out of space.<br>
+-- The capacity will be increased in 33% in runtime if it runs out of space.<br>
 -- The file will be loaded using the TextureMgr.
 -- @function [parent=#SpriteBatchNode] create 
 -- @param self
@@ -152,7 +179,7 @@
         
 --------------------------------
 --  creates a SpriteBatchNode with a texture2d and capacity of children.<br>
--- The capacity will be increased in 33% in runtime if it run out of space.
+-- The capacity will be increased in 33% in runtime if it runs out of space.
 -- @function [parent=#SpriteBatchNode] createWithTexture 
 -- @param self
 -- @param #cc.Texture2D tex
@@ -213,6 +240,12 @@
 -- @param self
 -- @param #cc.Node child
 -- @param #int zOrder
+-- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
+        
+--------------------------------
+-- js ctor
+-- @function [parent=#SpriteBatchNode] SpriteBatchNode 
+-- @param self
 -- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
         
 return nil

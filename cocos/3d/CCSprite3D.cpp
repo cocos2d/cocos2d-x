@@ -42,8 +42,6 @@
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCGLProgramCache.h"
 
-#include "deprecated/CCString.h" // For StringUtils::format
-
 NS_CC_BEGIN
 
 std::string s_attributeNames[] = {GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::ATTRIBUTE_NAME_TEX_COORD1, GLProgram::ATTRIBUTE_NAME_TEX_COORD2,GLProgram::ATTRIBUTE_NAME_TEX_COORD3,GLProgram::ATTRIBUTE_NAME_NORMAL, GLProgram::ATTRIBUTE_NAME_BLEND_WEIGHT, GLProgram::ATTRIBUTE_NAME_BLEND_INDEX};
@@ -578,10 +576,13 @@ AttachNode* Sprite3D::getAttachNode(const std::string& boneName)
     if (_skeleton)
     {
         auto bone = _skeleton->getBoneByName(boneName);
-        auto attachNode = AttachNode::create(bone);
-        addChild(attachNode);
-        _attachments[boneName] = attachNode;
-        return attachNode;
+        if (bone)
+        {
+            auto attachNode = AttachNode::create(bone);
+            addChild(attachNode);
+            _attachments[boneName] = attachNode;
+            return attachNode;
+        }
     }
     
     return nullptr;

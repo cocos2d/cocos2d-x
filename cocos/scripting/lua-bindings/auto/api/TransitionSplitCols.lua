@@ -34,4 +34,10 @@
 -- @param #unsigned int flags
 -- @return TransitionSplitCols#TransitionSplitCols self (return value: cc.TransitionSplitCols)
         
+--------------------------------
+-- 
+-- @function [parent=#TransitionSplitCols] TransitionSplitCols 
+-- @param self
+-- @return TransitionSplitCols#TransitionSplitCols self (return value: cc.TransitionSplitCols)
+        
 return nil

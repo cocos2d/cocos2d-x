@@ -30,4 +30,10 @@
 -- @param self
 -- @return EaseCubicActionIn#EaseCubicActionIn ret (return value: cc.EaseCubicActionIn)
         
+--------------------------------
+-- 
+-- @function [parent=#EaseCubicActionIn] EaseCubicActionIn 
+-- @param self
+-- @return EaseCubicActionIn#EaseCubicActionIn self (return value: cc.EaseCubicActionIn)
+        
 return nil

@@ -65,7 +65,7 @@ void Cocos2dRenderer::Resume()
         glview->setPanel(m_panel.Get());
         glview->Create(static_cast<float>(m_width), static_cast<float>(m_height), m_dpi, m_orientation);
         director->setOpenGLView(glview);
-        CCApplication::getInstance()->run();
+        Application::getInstance()->run();
     }
     else
     {

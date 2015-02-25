@@ -45,7 +45,6 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/ConsoleTest/ConsoleTest.cpp \
 ../../Classes/CurlTest/CurlTest.cpp \
 ../../Classes/CurrentLanguageTest/CurrentLanguageTest.cpp \
-../../Classes/DataVisitorTest/DataVisitorTest.cpp \
 ../../Classes/DrawPrimitivesTest/DrawPrimitivesTest.cpp \
 ../../Classes/EffectsAdvancedTest/EffectsAdvancedTest.cpp \
 ../../Classes/EffectsTest/EffectsTest.cpp \
@@ -134,7 +133,6 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp \
 ../../Classes/ExtensionsTest/NetworkTest/SocketIOTest.cpp \
 ../../Classes/ExtensionsTest/NetworkTest/WebSocketTest.cpp \
-../../Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp \
 ../../Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp \
 ../../Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp \
 ../../Classes/FileUtilsTest/FileUtilsTest.cpp \
@@ -153,6 +151,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/NodeTest/NodeTest.cpp \
 ../../Classes/ParallaxTest/ParallaxTest.cpp \
 ../../Classes/ParticleTest/ParticleTest.cpp \
+../../Classes/Particle3DTest/Particle3DTest.cpp \
 ../../Classes/PerformanceTest/PerformanceAllocTest.cpp \
 ../../Classes/PerformanceTest/PerformanceNodeChildrenTest.cpp \
 ../../Classes/PerformanceTest/PerformanceParticleTest.cpp \

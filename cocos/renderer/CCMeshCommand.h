@@ -79,7 +79,7 @@ public:
     
     uint32_t getMaterialID() const { return _materialID; }
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     void listenRendererRecreated(EventCustom* event);
 #endif
 
@@ -129,16 +129,17 @@ protected:
     bool _depthWriteEnabled;
     bool _forceDepthWrite;
     
-    bool _renderStateCullFace;
+    bool _renderStateCullFaceEnabled;
     bool _renderStateDepthTest;
     GLboolean _renderStateDepthWrite;
+    GLenum    _renderStateCullFace;
 
     // ModelView transform
     Mat4 _mv;
 
     unsigned int _lightMask;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     EventListenerCustom* _rendererRecreatedListener;
 #endif
 };

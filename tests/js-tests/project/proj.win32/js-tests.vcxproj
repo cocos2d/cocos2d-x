@@ -18,14 +18,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -42,7 +42,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
+    <_ProjectFileVersion>12.0.21005.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration).win32\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration).win32\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkIncremental>
@@ -107,17 +107,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\websockets\prebuilt\win32\*.*" "$
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PreBuildEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-if exist "$(OutDir)\js-tests-res" rd /s /q "$(OutDir)\js-tests-res"
-mkdir "$(OutDir)\js-tests-res"
-mkdir "$(OutDir)\js-tests-res\script"
-mkdir "$(OutDir)\js-tests-res\src"
-mkdir "$(OutDir)\js-tests-res\res"
-xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\js-bindings\script\*" "$(OutDir)\js-tests-res\script" /e /Y
-xcopy "$(ProjectDir)..\..\src" "$(OutDir)\js-tests-res\src\" /e /Y
-xcopy "$(ProjectDir)..\..\res" "$(OutDir)\js-tests-res\res\" /e /Y
-copy "$(ProjectDir)..\..\main.js" "$(OutDir)\js-tests-res"
-copy "$(ProjectDir)..\..\project.json" "$(OutDir)\js-tests-res"</Command>
+      <Command>if not exist "$(ProjectDir)..\..\script" mkdir "$(ProjectDir)..\..\script"
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\js-bindings\script" "$(ProjectDir)..\..\script" /e /Y
+xcopy "$(ProjectDir)..\..\..\cpp-tests\Resources" "$(ProjectDir)..\..\res" /e /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy js and resource files.</Message>
@@ -168,17 +160,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\websockets\prebuilt\win32\*.*" "$
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-if exist "$(OutDir)\js-tests-res" rd /s /q "$(OutDir)\js-tests-res"
-mkdir "$(OutDir)\js-tests-res"
-mkdir "$(OutDir)\js-tests-res\script"
-mkdir "$(OutDir)\js-tests-res\src"
-mkdir "$(OutDir)\js-tests-res\res"
-xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\js-bindings\script\*" "$(OutDir)\js-tests-res\script" /e /Y
-xcopy "$(ProjectDir)..\..\src" "$(OutDir)\js-tests-res\src\" /e /Y
-xcopy "$(ProjectDir)..\..\res" "$(OutDir)\js-tests-res\res\" /e /Y
-copy "$(ProjectDir)..\..\main.js" "$(OutDir)\js-tests-res"
-copy "$(ProjectDir)..\..\project.json" "$(OutDir)\js-tests-res"</Command>
+      <Command>if not exist "$(ProjectDir)..\..\script" mkdir "$(ProjectDir)..\..\script"
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\js-bindings\script" "$(ProjectDir)..\..\script" /e /Y
+xcopy "$(ProjectDir)..\..\..\cpp-tests\Resources" "$(ProjectDir)..\..\res" /e /Y</Command>
       <Message>Copy js and resource files.</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>

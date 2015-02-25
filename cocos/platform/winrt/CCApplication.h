@@ -26,7 +26,7 @@ THE SOFTWARE.
 #define __CC_APPLICATION_WINRT_H__
 
 #include "platform/CCPlatformConfig.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 
 #include "platform/CCStdC.h"
 #include "platform/CCCommon.h"
@@ -80,18 +80,6 @@ public:
         m_openURLDelegate = del;
     }
 
-    /**
-     *  Sets the Resource root path.
-     *  @deprecated Please use CCFileUtils::sharedFileUtils()->setSearchPaths() instead.
-     */
-    CC_DEPRECATED_ATTRIBUTE void setResourceRootPath(const std::string& rootResDir);
-
-    /** 
-     *  Gets the Resource root path.
-     *  @deprecated Please use CCFileUtils::sharedFileUtils()->getSearchPaths() instead. 
-     */
-    CC_DEPRECATED_ATTRIBUTE const std::string& getResourceRootPath(void);
-
     void setStartupScriptFilename(const std::string& startupScriptFile);
 
     const std::string& getStartupScriptFilename(void)
@@ -101,7 +89,6 @@ public:
 
 protected:
     LARGE_INTEGER       m_nAnimationInterval;
-    std::string         m_resourceRootPath;
     std::string         m_startupScriptFilename;
 
     std::function<void(::Platform::String^)> m_openURLDelegate;
@@ -111,6 +98,6 @@ protected:
 
 NS_CC_END
 
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WP8
+#endif
 
 #endif    // __CC_APPLICATION_WINRT_H__

@@ -39,10 +39,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(CameraRotationTest),
     CL(Camera3DTestDemo),
     CL(CameraCullingDemo),
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
-    // 3DEffect use custom shader which is not supported on WP8 yet. 
     CL(FogTestDemo),
-#endif
     CL(CameraArcBallDemo)
 };
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -152,7 +149,7 @@ CameraRotationTest::CameraRotationTest()
     l1->setScale(3);
     bill1->addChild(l1);
 
-    auto p1 = CCParticleSystemQuad::create("Particles/SmallSun.plist");
+    auto p1 = ParticleSystemQuad::create("Particles/SmallSun.plist");
     p1->setPosition(30,80);
     bill1->addChild(p1);
     
@@ -168,7 +165,7 @@ CameraRotationTest::CameraRotationTest()
     l2->setScale(3);
     bill2->addChild(l2);
     
-    auto p2 = CCParticleSystemQuad::create("Particles/SmallSun.plist");
+    auto p2 = ParticleSystemQuad::create("Particles/SmallSun.plist");
     p2->setPosition(30,80);
     bill2->addChild(p2);
 
@@ -245,6 +242,7 @@ Camera3DTestDemo::Camera3DTestDemo(void)
 , _bZoomIn(false)
 , _bRotateLeft(false)
 , _bRotateRight(false)
+, _cameraType(CameraType::Free)
 {
 }
 Camera3DTestDemo::~Camera3DTestDemo(void)
@@ -1408,7 +1406,7 @@ void FogTestDemo::onEnter()
     _layer3D->setCameraMask(2);
 
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
                                                             [this](EventCustom*)
                                                             {
@@ -1471,7 +1469,7 @@ void FogTestDemo::onExit()
         _camera = nullptr;
     }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 }

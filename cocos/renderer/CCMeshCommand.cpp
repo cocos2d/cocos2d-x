@@ -84,14 +84,14 @@ MeshCommand::MeshCommand()
 , _depthTestEnabled(false)
 , _depthWriteEnabled(false)
 , _forceDepthWrite(false)
-, _renderStateCullFace(false)
+, _renderStateCullFaceEnabled(false)
 , _renderStateDepthTest(false)
 , _renderStateDepthWrite(GL_FALSE)
 , _lightMask(-1)
 {
     _type = RenderCommand::Type::MESH_COMMAND;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    // listen the event that renderer was recreated on Android/WP8
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    // listen the event that renderer was recreated on Android/WinRT
     _rendererRecreatedListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, CC_CALLBACK_1(MeshCommand::listenRendererRecreated, this));
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_rendererRecreatedListener, -1);
 #endif
@@ -185,55 +185,62 @@ void MeshCommand::setTransparent(bool value)
 MeshCommand::~MeshCommand()
 {
     releaseVAO();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_rendererRecreatedListener);
 #endif
 }
 
 void MeshCommand::applyRenderState()
 {
-    _renderStateCullFace = glIsEnabled(GL_CULL_FACE);
-    _renderStateDepthTest = glIsEnabled(GL_DEPTH_TEST);
+    _renderStateCullFaceEnabled = glIsEnabled(GL_CULL_FACE) != GL_FALSE;
+    _renderStateDepthTest = glIsEnabled(GL_DEPTH_TEST) != GL_FALSE;
     glGetBooleanv(GL_DEPTH_WRITEMASK, &_renderStateDepthWrite);
+    GLint cullface;
+    glGetIntegerv(GL_CULL_FACE_MODE, &cullface);
+    _renderStateCullFace = (GLenum)cullface;
     
-    if (_cullFaceEnabled && !_renderStateCullFace)
+    if (_cullFaceEnabled != _renderStateCullFaceEnabled)
     {
-        glEnable(GL_CULL_FACE);
+        _cullFaceEnabled ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
     }
     
-    glCullFace(_cullFace);
-    
-    if (_depthTestEnabled && !_renderStateDepthTest)
+    if (_cullFace != _renderStateCullFace)
     {
-        glEnable(GL_DEPTH_TEST);
+        glCullFace(_cullFace);
     }
-    if (_depthWriteEnabled && !_renderStateDepthWrite)
+    
+    if (_depthTestEnabled != _renderStateDepthTest)
     {
-        glDepthMask(GL_TRUE);
+        _depthTestEnabled ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+    }
+    
+    if (_depthWriteEnabled != _renderStateDepthWrite)
+    {
+        glDepthMask(_depthWriteEnabled);
     }
 }
 
 void MeshCommand::restoreRenderState()
 {
-    if (_renderStateCullFace)
+    if (_cullFaceEnabled != _renderStateCullFaceEnabled)
     {
-        glEnable(GL_CULL_FACE);
-    }
-    else
-    {
-        glDisable(GL_CULL_FACE);
+        _renderStateCullFaceEnabled ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
     }
     
-    if (_renderStateDepthTest)
+    if (_cullFace != _renderStateCullFace)
     {
-        glEnable(GL_DEPTH_TEST);
-    }
-    else
-    {
-        glDisable(GL_DEPTH_TEST);
+        glCullFace(_renderStateCullFace);
     }
     
-    glDepthMask(_renderStateDepthTest);
+    if (_depthTestEnabled != _renderStateDepthTest)
+    {
+        _renderStateDepthTest ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+    }
+    
+    if (_depthWriteEnabled != _renderStateDepthWrite)
+    {
+        glDepthMask(_renderStateDepthWrite);
+    }
 }
 
 void MeshCommand::genMaterialID(GLuint texID, void* glProgramState, GLuint vertexBuffer, GLuint indexBuffer, const BlendFunc& blend)
@@ -539,7 +546,7 @@ void MeshCommand::resetLightUniformValues()
     s_spotLightUniformRangeInverseValues.assign(maxSpotLight, 0.0f);
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 void MeshCommand::listenRendererRecreated(EventCustom* event)
 {
     _vao = 0;

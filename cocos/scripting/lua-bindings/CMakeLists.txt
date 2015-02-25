@@ -1,11 +1,6 @@
 set(cocos_root ${Cocos2d-X_SOURCE_DIR})
 
-if(WINDOWS)
-  add_definitions(-DLUASOCKET_INET_ATON -DLUASOCKET_INET_PTON)
-endif()
-
 include_directories(
-  ${cocos_root}/external/lua/tolua
   ${cocos_root}/external/lua/lua
   ${cocos_root}/external/lua
   ${cocos_root}/external/xxtea
@@ -23,6 +18,7 @@ include_directories(
   ${cocos_root}/cocos/platform
   ${cocos_root}/cocos/audio/include
   manual
+  manual/tolua
   manual/extension
   manual/cocostudio
   manual/ui
@@ -32,7 +28,6 @@ include_directories(
 
 file(GLOB lua_cocos2d_source_files
     "${cocos_root}/external/lua/lua/*.c"
-    "${cocos_root}/external/lua/tolua/*.c"
     "${cocos_root}/external/xxtea/xxtea.cpp"
     )
 
@@ -50,9 +45,13 @@ list(APPEND lua_cocos2d_source_files
         ${cocos_root}/external/lua/luasocket/udp.c
         ${cocos_root}/external/lua/luasocket/mime.c
         ${cocos_root}/external/lua/luasocket/luasocket_scripts.c
-	)
+  )
 
 if(WINDOWS)
+    if(MINGW)
+        add_definitions(-DLUASOCKET_INET_ATON -DLUASOCKET_INET_PTON)
+    endif()
+    add_definitions(-DWIN32 -D_WINDOWS)
     list(APPEND lua_cocos2d_source_files
         ${cocos_root}/external/lua/luasocket/wsocket.c
         )
@@ -80,7 +79,6 @@ set(lua_bindings_manual_files
     manual/CCLuaValue.cpp
     manual/Cocos2dxLuaLoader.cpp
     manual/LuaBasicConversions.cpp
-    manual/tolua_fix.cpp
     manual/cocos2d/LuaOpengl.cpp
     manual/cocos2d/LuaScriptHandlerMgr.cpp
     manual/cocos2d/lua_cocos2dx_deprecated.cpp
@@ -108,6 +106,12 @@ set(lua_bindings_manual_files
     manual/ui/lua_cocos2dx_ui_manual.cpp
     manual/video/lua_cocos2dx_experimental_video_manual.cpp
     manual/audioengine/lua_cocos2dx_audioengine_manual.cpp
+    manual/tolua/tolua_event.c
+    manual/tolua/tolua_is.c
+    manual/tolua/tolua_map.c
+    manual/tolua/tolua_push.c
+    manual/tolua/tolua_to.c
+    manual/tolua/tolua_fix.cpp
     )
 
 set(lua_bindings_auto_files

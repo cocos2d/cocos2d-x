@@ -18,4 +18,10 @@
 -- @param #cc.Scene scene
 -- @return TransitionSlideInB#TransitionSlideInB ret (return value: cc.TransitionSlideInB)
         
+--------------------------------
+-- 
+-- @function [parent=#TransitionSlideInB] TransitionSlideInB 
+-- @param self
+-- @return TransitionSlideInB#TransitionSlideInB self (return value: cc.TransitionSlideInB)
+        
 return nil

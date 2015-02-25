@@ -170,12 +170,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     fileUtils->setSearchPaths(searchPaths);
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-    // a bug in DirectX 11 level9-x on the device prevents ResolutionPolicy::NO_BORDER from working correctly
     glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::SHOW_ALL);
-#else
-    glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::SHOW_ALL);
-#endif
 
     auto scene = Scene::create();
     auto layer = new (std::nothrow) TestController();

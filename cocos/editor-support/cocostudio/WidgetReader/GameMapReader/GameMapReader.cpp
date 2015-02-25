@@ -225,7 +225,9 @@ namespace cocostudio
                 Node* node = Node::create();
                 setPropsWithFlatBuffers(node, (Table*)gameMapOptions);
                 auto label = Label::create();
-                label->setString(__String::createWithFormat("Some error of gid are in TMX Layer '%s'", layerName.c_str())->getCString());
+                std::string errorMsg = "Some error of gid are in TMX Layer ";
+                errorMsg += layerName;
+                label->setString(errorMsg);
                 node->setScale(1.0f);
                 node->addChild(label);
                 return node;
@@ -243,7 +245,7 @@ namespace cocostudio
             Node* node = Node::create();
             setPropsWithFlatBuffers(node, (Table*)gameMapOptions);
             auto label = Label::create();
-            label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+            label->setString(errorFilePath + " missed");
             node->addChild(label);
             return node;
         }

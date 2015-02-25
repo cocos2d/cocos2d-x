@@ -5,6 +5,14 @@
 -- @parent_module cc
 
 --------------------------------
+--  initializes the action with the number of columns to split and the duration 
+-- @function [parent=#SplitCols] initWithDuration 
+-- @param self
+-- @param #float duration
+-- @param #unsigned int cols
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- creates the action with the number of columns to split and the duration <br>
 -- param duration in seconds
 -- @function [parent=#SplitCols] create 
@@ -31,6 +39,12 @@
 -- @function [parent=#SplitCols] update 
 -- @param self
 -- @param #float time
+-- @return SplitCols#SplitCols self (return value: cc.SplitCols)
+        
+--------------------------------
+-- 
+-- @function [parent=#SplitCols] SplitCols 
+-- @param self
 -- @return SplitCols#SplitCols self (return value: cc.SplitCols)
         
 return nil

@@ -12,8 +12,6 @@ LOCAL_SRC_FILES := main.cpp \
                    ../../../../../cocos/scripting/lua-bindings/manual/controller/lua_cocos2dx_controller_manual.cpp \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
-                    $(LOCAL_PATH)/../../../../../external/lua/tolua \
-                    $(LOCAL_PATH)/../../../../../cocos/scripting/lua-bindings/auto \
                     $(LOCAL_PATH)/../../../../../cocos/scripting/lua-bindings/manual\controller \
                     $(LOCAL_PATH)/../../../../../cocos/base
 

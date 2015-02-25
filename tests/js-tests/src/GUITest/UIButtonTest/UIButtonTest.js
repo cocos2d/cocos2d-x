@@ -34,7 +34,7 @@ var UIButtonTest = UIScene.extend({
             // Create the button
             var button = new ccui.Button();
             button.setTouchEnabled(true);
-            button.loadTextures("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png", "");
+            button.loadTextures(s_animation_button_normal_png, s_animation_button_pressed_png, "");
             button.x = widgetSize.width / 2.0;
             button.y = widgetSize.height / 2.0;
             button.addTouchEventListener(this.touchEvent, this);
@@ -79,7 +79,7 @@ var UIButtonTest_Scale9 = UIScene.extend({
             var button = new ccui.Button();
             button.setTouchEnabled(true);
             button.setScale9Enabled(true);
-            button.loadTextures("res/cocosui/button.png", "res/cocosui/buttonHighlighted.png", "");
+            button.loadTextures(s_ui_button_png, s_ui_button_highlighted_png, "");
             button.x = this._widget.width / 2.0;
             button.y = this._widget.height / 2.0;
             button.setContentSize(cc.size(150, 48));
@@ -124,7 +124,7 @@ var UIButtonTest_PressedAction = UIScene.extend({
             var button = new ccui.Button();
             button.setTouchEnabled(true);
             button.setPressedActionEnabled(true);
-            button.loadTextures("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png", "");
+            button.loadTextures(s_animation_button_normal_png, s_animation_button_pressed_png, "");
             button.x = widgetSize.width / 2;
             button.y = widgetSize.height / 2;
             button.addTouchEventListener(this.touchEvent ,this);
@@ -165,7 +165,7 @@ var UIButtonTest_Title = UIScene.extend({
             // Create the text button
             var textButton = new ccui.Button();
             textButton.setTouchEnabled(true);
-            textButton.loadTextures("res/cocosui/backtotopnormal.png", "res/cocosui/backtotoppressed.png", "");
+            textButton.loadTextures(s_ui_backtotop_normal_png, s_ui_backtotop_pressed_png, "");
             textButton.setTitleText("Title Button");
             textButton.x = widgetSize.width / 2.0;
             textButton.y = widgetSize.height / 2.0;

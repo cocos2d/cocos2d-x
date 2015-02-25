@@ -12,6 +12,17 @@
 -- @return Twirl#Twirl self (return value: cc.Twirl)
         
 --------------------------------
+--  initializes the action with center position, number of twirls, amplitude, a grid size and duration 
+-- @function [parent=#Twirl] initWithDuration 
+-- @param self
+-- @param #float duration
+-- @param #size_table gridSize
+-- @param #vec2_table position
+-- @param #unsigned int twirls
+-- @param #float amplitude
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- 
 -- @function [parent=#Twirl] getAmplitudeRate 
 -- @param self
@@ -65,6 +76,12 @@
 -- @function [parent=#Twirl] update 
 -- @param self
 -- @param #float time
+-- @return Twirl#Twirl self (return value: cc.Twirl)
+        
+--------------------------------
+-- 
+-- @function [parent=#Twirl] Twirl 
+-- @param self
 -- @return Twirl#Twirl self (return value: cc.Twirl)
         
 return nil

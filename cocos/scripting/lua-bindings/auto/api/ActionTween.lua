@@ -5,6 +5,17 @@
 -- @parent_module cc
 
 --------------------------------
+-- initializes the action with the property name (key), and the from and to parameters. <br>
+-- param duration in seconds
+-- @function [parent=#ActionTween] initWithDuration 
+-- @param self
+-- @param #float duration
+-- @param #string key
+-- @param #float from
+-- @param #float to
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- creates an initializes the action with the property name (key), and the from and to parameters. <br>
 -- param duration in seconds
 -- @function [parent=#ActionTween] create 

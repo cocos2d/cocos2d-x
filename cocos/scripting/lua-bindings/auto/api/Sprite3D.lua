@@ -6,12 +6,6 @@
 
 --------------------------------
 -- 
--- @function [parent=#Sprite3D] isForceDepthWrite 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- 
 -- @function [parent=#Sprite3D] setCullFaceEnabled 
 -- @param self
 -- @param #bool enable
@@ -32,16 +26,47 @@
 -- @return unsigned int#unsigned int ret (return value: unsigned int)
         
 --------------------------------
+-- 
+-- @function [parent=#Sprite3D] createAttachSprite3DNode 
+-- @param self
+-- @param #cc.NodeData nodedata
+-- @param #cc.MaterialDatas matrialdatas
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
+        
+--------------------------------
+--  load file and set it to meshedatas, nodedatas and materialdatas, obj file .mtl file should be at the same directory if exist 
+-- @function [parent=#Sprite3D] loadFromFile 
+-- @param self
+-- @param #string path
+-- @param #cc.NodeDatas nodedatas
+-- @param #cc.MeshDatas meshdatas
+-- @param #cc.MaterialDatas materialdatas
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#Sprite3D] setCullFace 
+-- @param self
+-- @param #unsigned int cullFace
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
+        
+--------------------------------
+-- 
+-- @function [parent=#Sprite3D] addMesh 
+-- @param self
+-- @param #cc.Mesh mesh
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
+        
+--------------------------------
 -- remove all attach nodes
 -- @function [parent=#Sprite3D] removeAllAttachNode 
 -- @param self
 -- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
         
 --------------------------------
--- 
--- @function [parent=#Sprite3D] setBlendFunc 
+-- generate default GLProgramState
+-- @function [parent=#Sprite3D] genGLProgramState 
 -- @param self
--- @param #cc.BlendFunc blendFunc
 -- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
         
 --------------------------------
@@ -52,9 +77,72 @@
         
 --------------------------------
 -- 
--- @function [parent=#Sprite3D] setCullFace 
+-- @function [parent=#Sprite3D] createSprite3DNode 
 -- @param self
--- @param #unsigned int cullFace
+-- @param #cc.NodeData nodedata
+-- @param #cc.ModelData modeldata
+-- @param #cc.MaterialDatas matrialdatas
+-- @return Sprite3D#Sprite3D ret (return value: cc.Sprite3D)
+        
+--------------------------------
+-- 
+-- @function [parent=#Sprite3D] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+--  get mesh count 
+-- @function [parent=#Sprite3D] getMeshCount 
+-- @param self
+-- @return long#long ret (return value: long)
+        
+--------------------------------
+-- 
+-- @function [parent=#Sprite3D] onAABBDirty 
+-- @param self
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
+        
+--------------------------------
+-- get Mesh by index
+-- @function [parent=#Sprite3D] getMeshByIndex 
+-- @param self
+-- @param #int index
+-- @return Mesh#Mesh ret (return value: cc.Mesh)
+        
+--------------------------------
+-- 
+-- @function [parent=#Sprite3D] createNode 
+-- @param self
+-- @param #cc.NodeData nodedata
+-- @param #cc.Node root
+-- @param #cc.MaterialDatas matrialdatas
+-- @param #bool singleSprite
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
+        
+--------------------------------
+-- 
+-- @function [parent=#Sprite3D] isForceDepthWrite 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#Sprite3D] getBlendFunc 
+-- @param self
+-- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
+        
+--------------------------------
+-- get MeshIndexData by Id
+-- @function [parent=#Sprite3D] getMeshIndexData 
+-- @param self
+-- @param #string indexId
+-- @return MeshIndexData#MeshIndexData ret (return value: cc.MeshIndexData)
+        
+--------------------------------
+-- remove attach node
+-- @function [parent=#Sprite3D] removeAttachNode 
+-- @param self
+-- @param #string boneName
 -- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
         
 --------------------------------
@@ -66,21 +154,46 @@
         
 --------------------------------
 -- 
--- @function [parent=#Sprite3D] getBlendFunc 
+-- @function [parent=#Sprite3D] afterAsyncLoad 
 -- @param self
--- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
+-- @param #void param
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
         
 --------------------------------
---  get mesh count 
--- @function [parent=#Sprite3D] getMeshCount 
+-- load sprite3d from cache, return true if succeed, false otherwise
+-- @function [parent=#Sprite3D] loadFromCache 
 -- @param self
--- @return long#long ret (return value: long)
+-- @param #string path
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- remove attach node
--- @function [parent=#Sprite3D] removeAttachNode 
+-- 
+-- @function [parent=#Sprite3D] initFrom 
+-- @param self
+-- @param #cc.NodeDatas nodedatas
+-- @param #cc.MeshDatas meshdatas
+-- @param #cc.MaterialDatas materialdatas
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- get AttachNode by bone name, return nullptr if not exist
+-- @function [parent=#Sprite3D] getAttachNode 
 -- @param self
 -- @param #string boneName
+-- @return AttachNode#AttachNode ret (return value: cc.AttachNode)
+        
+--------------------------------
+-- 
+-- @function [parent=#Sprite3D] initWithFile 
+-- @param self
+-- @param #string path
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#Sprite3D] setBlendFunc 
+-- @param self
+-- @param #cc.BlendFunc blendFunc
 -- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
         
 --------------------------------
@@ -88,13 +201,6 @@
 -- @function [parent=#Sprite3D] getSkeleton 
 -- @param self
 -- @return Skeleton3D#Skeleton3D ret (return value: cc.Skeleton3D)
-        
---------------------------------
--- get Mesh by index
--- @function [parent=#Sprite3D] getMeshByIndex 
--- @param self
--- @param #int index
--- @return Mesh#Mesh ret (return value: cc.Mesh)
         
 --------------------------------
 -- Force to write to depth buffer, this is useful if you want to achieve effects like fading.
@@ -111,13 +217,6 @@
 -- @return Mesh#Mesh ret (return value: cc.Mesh)
         
 --------------------------------
--- get AttachNode by bone name, return nullptr if not exist
--- @function [parent=#Sprite3D] getAttachNode 
--- @param self
--- @param #string boneName
--- @return AttachNode#AttachNode ret (return value: cc.AttachNode)
-        
---------------------------------
 -- @overload self, string         
 -- @overload self         
 -- @overload self, string, string         
@@ -128,17 +227,22 @@
 -- @return Sprite3D#Sprite3D ret (return value: cc.Sprite3D)
 
 --------------------------------
--- Returns 2d bounding-box<br>
--- Note: the bouding-box is just get from the AABB which as Z=0, so that is not very accurate.
--- @function [parent=#Sprite3D] getBoundingBox 
+-- draw
+-- @function [parent=#Sprite3D] draw 
 -- @param self
--- @return rect_table#rect_table ret (return value: rect_table)
+-- @param #cc.Renderer renderer
+-- @param #mat4_table transform
+-- @param #unsigned int flags
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
         
 --------------------------------
---  set GLProgramState, you should bind attributes by yourself 
--- @function [parent=#Sprite3D] setGLProgramState 
+-- Visits this Sprite3D's children and draw them recursively.<br>
+-- Note: all its children will rendered as 3D objects
+-- @function [parent=#Sprite3D] visit 
 -- @param self
--- @param #cc.GLProgramState glProgramState
+-- @param #cc.Renderer renderer
+-- @param #mat4_table parentTransform
+-- @param #unsigned int parentFlags
 -- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
         
 --------------------------------
@@ -156,6 +260,26 @@
 -- @function [parent=#Sprite3D] setGLProgram 
 -- @param self
 -- @param #cc.GLProgram glprogram
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
+        
+--------------------------------
+-- Returns 2d bounding-box<br>
+-- Note: the bouding-box is just get from the AABB which as Z=0, so that is not very accurate.
+-- @function [parent=#Sprite3D] getBoundingBox 
+-- @param self
+-- @return rect_table#rect_table ret (return value: rect_table)
+        
+--------------------------------
+--  set GLProgramState, you should bind attributes by yourself 
+-- @function [parent=#Sprite3D] setGLProgramState 
+-- @param self
+-- @param #cc.GLProgramState glProgramState
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
+        
+--------------------------------
+-- 
+-- @function [parent=#Sprite3D] Sprite3D 
+-- @param self
 -- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
         
 return nil
