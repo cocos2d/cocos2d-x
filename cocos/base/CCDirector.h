@@ -401,7 +401,7 @@ public:
     void resetMatrixStack();
 
     GraphicsInterface* getGraphicsInterface() const;
-    void selectGraphicsAPI(const char* name);
+    void selectGraphicsAPI(const char* name, const char* title);
     
 protected:
     void reset();
@@ -451,12 +451,12 @@ protected:
     /** Graphics API Manager
      @since v4.0
      */
-    std::unique_ptr<GraphicsAPIManager> _graphicsAPIManager;
+    GraphicsAPIManager* _graphicsAPIManager;
     
     /** Selected Graphics Interface
      @since v4.0
      */
-    std::unique_ptr<GraphicsInterface> _graphicsInterface;
+    GraphicsInterface* _graphicsInterface;
     
     /* delta time since last tick to main loop */
 	float _deltaTime;
