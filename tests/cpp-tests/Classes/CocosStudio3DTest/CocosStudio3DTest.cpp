@@ -133,7 +133,7 @@ void CocosStudio3DTestDemo::backCallback(Ref* sender)
 //------------------------------------------------------------------
 CSNode3DTest::CSNode3DTest()
 {
-    auto node = CSLoader::createNode("CocosStudio3DTest/Node3D.csb");
+    auto node = CSLoader::createNode("ccs-res/CocosStudio3DTest/Node3D.csb");
 
     addChild(node);
 }
@@ -155,7 +155,7 @@ std::string CSNode3DTest::subtitle() const
 //------------------------------------------------------------------
 CSSprite3DTest::CSSprite3DTest()
 {
-    auto node = CSLoader::createNode("CocosStudio3DTest/Sprite3D.csb");
+    auto node = CSLoader::createNode("ccs-res/CocosStudio3DTest/Sprite3D.csb");
     
     auto size = Director::getInstance()->getWinSize();
     auto sprite3D = node->getChildByTag(8);
@@ -184,9 +184,9 @@ std::string CSSprite3DTest::subtitle() const
 //------------------------------------------------------------------
 CSUserCameraTest::CSUserCameraTest()
 {
-    auto node = CSLoader::createNode("CocosStudio3DTest/UserCamera.csb");
+    auto node = CSLoader::createNode("ccs-res/CocosStudio3DTest/UserCamera.csb");
     
-    auto sprite3D = Sprite3D::create("CocosStudio3DTest/dragon/dragon.c3b");
+    auto sprite3D = Sprite3D::create("ccs-res/CocosStudio3DTest/dragon/dragon.c3b");
     sprite3D->setPosition3D(Vec3(100, 95, 80));
     sprite3D->setCameraMask((unsigned int)CameraFlag::USER1);
     

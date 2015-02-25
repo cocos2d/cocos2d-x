@@ -10,7 +10,7 @@ function CSNode3DTest.create()
     Helper.initWithLayer(layer)
     Helper.titleLabel:setString("Node3DReader Test")
 
-    local node = cc.CSLoader:createNode("CocosStudio3DTest/Node3D.csb");
+    local node = cc.CSLoader:createNode("ccs-res/CocosStudio3DTest/Node3D.csb");
     layer:addChild(node);
 
     return layer;
@@ -28,7 +28,7 @@ function CSSprite3DTest.create()
     Helper.initWithLayer(layer)
     Helper.titleLabel:setString("Sprite3DReader Test")
 
-    local node = cc.CSLoader:createNode("CocosStudio3DTest/Sprite3D.csb")
+    local node = cc.CSLoader:createNode("ccs-res/CocosStudio3DTest/Sprite3D.csb")
 
     local sprite3D = node:getChildByTag(8)
     local size = cc.Director:getInstance():getWinSize()
@@ -54,9 +54,9 @@ function CSUserCameraTest.create()
     Helper.initWithLayer(layer)
     Helper.titleLabel:setString("UserCameraReader Test")
 
-    local node = cc.CSLoader:createNode("CocosStudio3DTest/UserCamera.csb")
+    local node = cc.CSLoader:createNode("ccs-res/CocosStudio3DTest/UserCamera.csb")
 
-    local sprite3D = cc.Sprite3D:create("CocosStudio3DTest/dragon/dragon.c3b")
+    local sprite3D = cc.Sprite3D:create("ccs-res/CocosStudio3DTest/dragon/dragon.c3b")
     sprite3D:setPosition3D(cc.vec3(100, 95, 80))
     sprite3D:setCameraMask(cc.CameraFlag.USER1)
 

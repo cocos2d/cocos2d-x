@@ -96,10 +96,6 @@
 		15EFA68D198B3AD8000C57D3 /* libluacocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15EFA665198B33EE000C57D3 /* libluacocos2d iOS.a */; };
 		182C5CBA1A95B2FD00C30D34 /* CocosStudio3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 182C5CB81A95B2FD00C30D34 /* CocosStudio3DTest.cpp */; };
 		182C5CBB1A95B30500C30D34 /* CocosStudio3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 182C5CB81A95B2FD00C30D34 /* CocosStudio3DTest.cpp */; };
-		182C5CC31A95D05900C30D34 /* CocosStudio3DTest in Resources */ = {isa = PBXBuildFile; fileRef = 182C5CC21A95D05900C30D34 /* CocosStudio3DTest */; };
-		182C5CC41A95D05900C30D34 /* CocosStudio3DTest in Resources */ = {isa = PBXBuildFile; fileRef = 182C5CC21A95D05900C30D34 /* CocosStudio3DTest */; };
-		182C5CC51A95D05900C30D34 /* CocosStudio3DTest in Resources */ = {isa = PBXBuildFile; fileRef = 182C5CC21A95D05900C30D34 /* CocosStudio3DTest */; };
-		182C5CC61A95D05900C30D34 /* CocosStudio3DTest in Resources */ = {isa = PBXBuildFile; fileRef = 182C5CC21A95D05900C30D34 /* CocosStudio3DTest */; };
 		182C5CCD1A95D9BA00C30D34 /* src in Resources */ = {isa = PBXBuildFile; fileRef = 182C5CCC1A95D9BA00C30D34 /* src */; };
 		182C5CCE1A95D9BA00C30D34 /* src in Resources */ = {isa = PBXBuildFile; fileRef = 182C5CCC1A95D9BA00C30D34 /* src */; };
 		182C5CCF1A95D9BA00C30D34 /* src in Resources */ = {isa = PBXBuildFile; fileRef = 182C5CCC1A95D9BA00C30D34 /* src */; };
@@ -1083,7 +1079,6 @@
 		15EE465A19A7200300AF29F1 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../external/curl/prebuilt/ios/libcurl.a; sourceTree = "<group>"; };
 		182C5CB81A95B2FD00C30D34 /* CocosStudio3DTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CocosStudio3DTest.cpp; path = CocosStudio3DTest/CocosStudio3DTest.cpp; sourceTree = "<group>"; };
 		182C5CB91A95B2FD00C30D34 /* CocosStudio3DTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CocosStudio3DTest.h; path = CocosStudio3DTest/CocosStudio3DTest.h; sourceTree = "<group>"; };
-		182C5CC21A95D05900C30D34 /* CocosStudio3DTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = CocosStudio3DTest; path = "../tests/cpp-tests/Resources/CocosStudio3DTest"; sourceTree = "<group>"; };
 		182C5CCC1A95D9BA00C30D34 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = "../tests/lua-tests/src"; sourceTree = "<group>"; };
 		1A0EE2B218CDF6DA004CD58F /* cpp-empty-test Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-empty-test Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A0EE31418CDF733004CD58F /* lua-empty-test Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lua-empty-test Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3210,7 +3205,6 @@
 		1AC35CA818CED83500F37B72 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				182C5CC21A95D05900C30D34 /* CocosStudio3DTest */,
 				B63993301A49359F00B07923 /* Particle3D */,
 				15B3709219EE5D1000ABE682 /* Manifests */,
 				3E2BDB0019C5E5D40055CDCD /* background.wav */,
@@ -4389,7 +4383,6 @@
 				1AC35DC918CEE65100F37B72 /* zwoptex in Resources */,
 				1AC35DBD18CEE65100F37B72 /* extensions in Resources */,
 				1AC35DC718CEE65100F37B72 /* spine in Resources */,
-				182C5CC41A95D05900C30D34 /* CocosStudio3DTest in Resources */,
 				1AC35DB718CEE65100F37B72 /* animations in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4434,7 +4427,6 @@
 				1AC35DCA18CEE65200F37B72 /* animations in Resources */,
 				1A1645A9191B6283008C7C7F /* ccs-res in Resources */,
 				1AC35DA118CEE5D100F37B72 /* Icon-72.png in Resources */,
-				182C5CC61A95D05900C30D34 /* CocosStudio3DTest in Resources */,
 				1AC35DA218CEE5D100F37B72 /* Icon-76.png in Resources */,
 				1AC35DF418CEE65B00F37B72 /* effect1.raw in Resources */,
 				1AC35DD918CEE65200F37B72 /* Shaders in Resources */,
@@ -4492,7 +4484,6 @@
 				1AC35CD418CED84500F37B72 /* ccb in Resources */,
 				C08689C118D370C90093E810 /* background.caf in Resources */,
 				1AC35CE418CED84500F37B72 /* effect1.wav in Resources */,
-				182C5CC31A95D05900C30D34 /* CocosStudio3DTest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4536,7 +4527,6 @@
 				1AC35C8A18CECF1400F37B72 /* Default@2x.png in Resources */,
 				1AC35CE318CED84500F37B72 /* effect1.raw in Resources */,
 				1A221C9D191771E400FD2BE4 /* ccs-res in Resources */,
-				182C5CC51A95D05900C30D34 /* CocosStudio3DTest in Resources */,
 				1AC35C9018CECF1400F37B72 /* Icon-29.png in Resources */,
 				1AC35D0918CED84500F37B72 /* TileMaps in Resources */,
 				1AC35CFF18CED84500F37B72 /* Particles in Resources */,
