@@ -42,13 +42,6 @@ http://www.angelcode.com/products/bmfont/ (Free, Windows only)
 
 using namespace std;
 
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (push)
-#pragma warning (disable: 4996)
-#endif
-
 NS_CC_BEGIN
 
 LabelBMFont * LabelBMFont::create()
@@ -226,12 +219,6 @@ void LabelBMFont::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags
     };
     _debugDrawNode->drawPoly(vertices, 4, true, Color4F(1.0, 1.0, 1.0, 1.0));
 }
-#endif
-
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic warning "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (pop)
 #endif
 
 NS_CC_END

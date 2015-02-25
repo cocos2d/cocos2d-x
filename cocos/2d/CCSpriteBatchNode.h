@@ -45,6 +45,7 @@ NS_CC_BEGIN
 
 
 class Sprite;
+class Texture2D;
 
 /** SpriteBatchNode is like a batch node: if it contains children, it will draw them in 1 single OpenGL call
 * (often known as "batch draw").
