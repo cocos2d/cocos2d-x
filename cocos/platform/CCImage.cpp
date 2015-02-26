@@ -54,16 +54,16 @@ extern "C"
     }
 #endif
 #endif
-#include "png.h"
+#include "png/png.h"
     
 #if CC_USE_TIFF
-#include "tiffio.h"
+#include "tiff/tiffio.h"
 #endif //CC_USE_TIFF
 
 #include "base/etc1.h"
     
 #if CC_USE_JPEG
-#include "jpeglib.h"
+#include "jpeg/jpeglib.h"
 #endif // CC_USE_JPEG
 }
 #include "base/s3tc.h"
@@ -72,7 +72,7 @@ extern "C"
 #include "base/TGAlib.h"
 
 #if CC_USE_WEBP
-#include "decode.h"
+#include "webp/decode.h"
 #endif // CC_USE_WEBP
 
 #include "base/ccMacros.h"

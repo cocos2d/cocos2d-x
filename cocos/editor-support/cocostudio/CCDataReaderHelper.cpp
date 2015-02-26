@@ -27,7 +27,7 @@ THE SOFTWARE.
 #include "base/CCScheduler.h"
 #include "base/ccUtils.h"
 
-#include "tinyxml2.h"
+#include "tinyxml2/tinyxml2.h"
 
 #include "cocostudio/CCDataReaderHelper.h"
 #include "cocostudio/CCArmatureDataManager.h"

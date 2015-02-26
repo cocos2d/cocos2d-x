@@ -29,7 +29,7 @@
 #endif
 
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
-#include "chipmunk.h"
+#include "chipmunk/chipmunk.h"
 #elif CC_ENABLE_BOX2D_INTEGRATION
 #include "Box2D/Box2D.h"
 #endif

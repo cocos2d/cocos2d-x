@@ -177,24 +177,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\math\Vec4.h">
       <Filter>math</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\ConvertUTF\ConvertUTF.h">
-      <Filter>external\ConvertUTF</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\edtaa3func\edtaa3func.h">
-      <Filter>external\edtaa</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\xxhash\xxhash.h">
-      <Filter>external\xxhash</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\unzip\ioapi.h">
-      <Filter>external\unzip</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\unzip\unzip.h">
-      <Filter>external\unzip</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\tinyxml2\tinyxml2.h">
-      <Filter>external\tinyxml2</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCPhysicsBody.h">
       <Filter>physics</Filter>
     </ClInclude>
@@ -769,9 +751,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\sha1.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\unzip\ioapi_mem.h">
-      <Filter>external\unzip</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CSLoader.h">
       <Filter>cocostudio\TimelineAction</Filter>
     </ClInclude>
@@ -1182,15 +1161,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ZipUtils.h">
       <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\flatbuffers.h">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\idl.h">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\util.h">
-      <Filter>cocostudio\json\flatbuffers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\CSParseBinary_generated.h">
       <Filter>cocostudio\json</Filter>
@@ -1732,27 +1702,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\math\Vec4.cpp">
       <Filter>math</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\ConvertUTF\ConvertUTF.c">
-      <Filter>external\ConvertUTF</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\ConvertUTF\ConvertUTFWrapper.cpp">
-      <Filter>external\ConvertUTF</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\edtaa3func\edtaa3func.cpp">
-      <Filter>external\edtaa</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\xxhash\xxhash.c">
-      <Filter>external\xxhash</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\unzip\ioapi.cpp">
-      <Filter>external\unzip</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\unzip\unzip.cpp">
-      <Filter>external\unzip</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\tinyxml2\tinyxml2.cpp">
-      <Filter>external\tinyxml2</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCPhysicsBody.cpp">
       <Filter>physics</Filter>
     </ClCompile>
@@ -2204,9 +2153,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\sha1.cpp">
       <Filter>platform\winrt</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\unzip\ioapi_mem.cpp">
-      <Filter>external\unzip</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CSLoader.cpp">
       <Filter>cocostudio\TimelineAction</Filter>
     </ClCompile>
@@ -2581,24 +2527,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ZipUtils.cpp">
       <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\idl_gen_cpp.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\idl_gen_fbs.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\idl_gen_general.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\idl_gen_go.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\idl_gen_text.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\idl_parser.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\FlatBuffersSerialize.cpp">
       <Filter>cocostudio\json</Filter>
@@ -2992,9 +2920,6 @@
     <Filter Include="extension">
       <UniqueIdentifier>{99e5454f-55e7-4a86-bf56-823dc80f02cd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="external">
-      <UniqueIdentifier>{650a2fa5-095e-4d93-86d6-5b38663c2dcf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="math">
       <UniqueIdentifier>{862c9f7f-fb24-4ab3-9713-76eed9341c50}</UniqueIdentifier>
     </Filter>
@@ -3021,21 +2946,6 @@
     </Filter>
     <Filter Include="cocosbuilder\Source Files">
       <UniqueIdentifier>{5367d407-978c-4535-aa47-65a659dcc490}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="external\ConvertUTF">
-      <UniqueIdentifier>{3ab7ab3b-98c2-428e-8715-df40a5f8deca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="external\edtaa">
-      <UniqueIdentifier>{becaa915-a665-4657-8aae-722c99ae368b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="external\tinyxml2">
-      <UniqueIdentifier>{0b41a5be-2392-4079-b980-14c701c7e349}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="external\unzip">
-      <UniqueIdentifier>{c2fddcbf-b255-4fb6-8f55-9ca85bd3809b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="external\xxhash">
-      <UniqueIdentifier>{9a5d5bc4-80f9-42aa-8865-c79711dfa7d6}</UniqueIdentifier>
     </Filter>
     <Filter Include="cocostudio\action">
       <UniqueIdentifier>{7345e280-b8a5-4d89-a27c-60cf351952d2}</UniqueIdentifier>
@@ -3168,9 +3078,6 @@
     </Filter>
     <Filter Include="cocosdenshion\Source Files">
       <UniqueIdentifier>{5f37f118-5902-4683-9243-fcc77bdbf3e1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="cocostudio\json\flatbuffers">
-      <UniqueIdentifier>{ea248cf4-798f-418c-8beb-39c9c864a802}</UniqueIdentifier>
     </Filter>
     <Filter Include="cocostudio\reader\WidgetReader\ComAudioReader">
       <UniqueIdentifier>{a9889035-45b0-4671-97a0-61df5b0d9283}</UniqueIdentifier>

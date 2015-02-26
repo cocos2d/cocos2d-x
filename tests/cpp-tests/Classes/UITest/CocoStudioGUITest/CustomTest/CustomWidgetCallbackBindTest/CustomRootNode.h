@@ -2,7 +2,7 @@
 #define __TestCpp__CustomRootNode__
 
 #include "cocos2d.h"
-#include "cocostudio/WidgetCallBackHandlerProtocol.h"
+#include "cocostudio/CocoStudio.h"
 
 class CustomRootNode : public cocos2d::Node, public cocostudio::WidgetCallBackHandlerProtocol
 {

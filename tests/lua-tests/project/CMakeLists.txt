@@ -1,4 +1,5 @@
 set(APP_NAME lua-tests)
+set(cocos_root ${Cocos2d-X_SOURCE_DIR})
 
 set(SAMPLE_SRC
     Classes/AppDelegate.cpp
@@ -32,13 +33,18 @@ include_directories(
   ../../../cocos/scripting/lua-bindings/manual
   ../../../cocos/scripting/lua-bindings/manual/tolua
   ../../../cocos/scripting/lua-bindings/auto
-  ../../../external/lua/lua
+  ${cocos_root}/external/${PLATFORM_FOLDER}/${ARCH_DIR}/include
+  ${cocos_root}/external/${PLATFORM_FOLDER}/${ARCH_DIR}/include/luajit
 )
 
 # add the executable
 add_executable(${APP_NAME} ${SAMPLE_SRC})
 
-target_link_libraries(${APP_NAME} luacocos2d cocos2d)
+if(MACOSX OR APPLE)
+set(lua_other_linker_flags  "-pagezero_size 10000 -image_base 100000000")
+endif()
+
+target_link_libraries(${APP_NAME} luacocos2d cocos2d ${lua_other_linker_flags})
 
 if(MACOSX OR APPLE)
   set_target_properties(${APP_NAME} PROPERTIES

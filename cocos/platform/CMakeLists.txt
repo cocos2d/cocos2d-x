@@ -23,13 +23,6 @@ set(COCOS_PLATFORM_SPECIFIC_SRC
 )
 
 elseif(LINUX)
-
-  include_directories(
-    /usr/include
-    /usr/include/GLFW
-    /usr/local/include/GLFW
-  )
-
 set(COCOS_PLATFORM_SPECIFIC_SRC
   platform/linux/CCStdC-linux.cpp
   platform/linux/CCFileUtils-linux.cpp
@@ -65,8 +58,7 @@ endif()
 include_directories(
   platform/desktop
   platform
-  ../external/ConvertUTF
-  ../external/edtaa3func
+  platform/../../external/${PLATFORM_FOLDER}/${ARCH_DIR}/include
 )
 
 set(COCOS_PLATFORM_SRC
@@ -76,9 +68,6 @@ set(COCOS_PLATFORM_SRC
   platform/CCGLView.cpp
   platform/CCFileUtils.cpp
   platform/CCImage.cpp
-  ../external/edtaa3func/edtaa3func.cpp
-  ../external/ConvertUTF/ConvertUTFWrapper.cpp
-  ../external/ConvertUTF/ConvertUTF.c
   ${COCOS_PLATFORM_SPECIFIC_SRC}
 
 )

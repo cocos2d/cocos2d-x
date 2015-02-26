@@ -82,6 +82,18 @@
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundlePlatforms>arm</AppxBundlePlatforms>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <LibraryPath>$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(Platform)\libs\Debug;$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(Platform)\libs\Release;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LibraryPath>$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(Platform)\libs\Debug;$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(Platform)\libs\Release;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <LibraryPath>$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(Platform)\libs\Release;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LibraryPath>$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(Platform)\libs\Release;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
@@ -141,9 +153,6 @@
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\cocos\editor-support\spine\proj.win8.1-universal\libSpine.WindowsPhone\libSpine.WindowsPhone.vcxproj">
       <Project>{cc1da216-a80d-4be4-b309-acb6af313aff}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\external\Box2D\proj.win8.1-universal\libbox2d.WindowsPhone\libbox2d.WindowsPhone.vcxproj">
-      <Project>{22f798d8-bfff-4754-996f-a5395343d5ec}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

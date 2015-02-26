@@ -24,7 +24,7 @@
 
 #include "physics/CCPhysicsJoint.h"
 #if CC_USE_PHYSICS
-#include "chipmunk.h"
+#include "chipmunk/chipmunk.h"
 
 #include "CCPhysicsBody.h"
 #include "CCPhysicsWorld.h"

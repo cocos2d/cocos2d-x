@@ -122,6 +122,9 @@
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>../../Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(Platform)\libs\Debug;$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(Platform)\libs\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
@@ -130,6 +133,9 @@
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>../../Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(Platform)\libs\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -138,6 +144,9 @@
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>../../Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(Platform)\libs\Debug;$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(Platform)\libs\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -146,6 +155,9 @@
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>../../Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(Platform)\libs\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -154,6 +166,9 @@
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>../../Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(Platform)\libs\Debug;$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(Platform)\libs\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -162,6 +177,9 @@
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>../../Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(Platform)\libs\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -181,9 +199,6 @@
     </ProjectReference>
     <ProjectReference Include="..\..\cocos2d\cocos\editor-support\spine\proj.win8.1-universal\libSpine.Windows\libSpine.Windows.vcxproj">
       <Project>{f3550fe0-c795-44f6-8feb-093eb68143ae}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\cocos2d\external\Box2D\proj.win8.1-universal\libbox2d.Windows\libbox2d.Windows.vcxproj">
-      <Project>{3b26a12d-3a44-47ea-82d2-282660fc844d}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -75,7 +75,7 @@
     cocos2d::GLView *glview = cocos2d::Director::getInstance()->getOpenGLView();
     if (glview)
     {
-        cocos2d::CCEGLView *eaglview = (cocos2d::CCEGLView*) glview->getEAGLView();
+        CCEAGLView *eaglview = (CCEAGLView*) glview->getEAGLView();
         
         if (eaglview)
         {

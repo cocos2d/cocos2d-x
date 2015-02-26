@@ -29,7 +29,7 @@
 #include <thread>
 #include <algorithm>
 #include "base/CCConsole.h"
-#include "mpg123.h"
+#include "MP3Decoder/mpg123.h"
 #include "vorbis/codec.h"
 #include "vorbis/vorbisfile.h"
 #include "base/ccUtils.h"

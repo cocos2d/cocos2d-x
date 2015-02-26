@@ -55,9 +55,9 @@ For More information:
     # windows should use ";" to seperate module paths
     platform = sys.platform
     if platform == 'win32':
-        ndk_module_path = 'NDK_MODULE_PATH=%s;%s/external;%s/cocos' % (cocos_root, cocos_root, cocos_root)
+        ndk_module_path = 'NDK_MODULE_PATH=%s;%s;%s/cocos' % (cocos_root, cocos_root, cocos_root)
     else:
-        ndk_module_path = 'NDK_MODULE_PATH=%s:%s/external:%s/cocos' % (cocos_root, cocos_root, cocos_root)
+        ndk_module_path = 'NDK_MODULE_PATH=%s:%s:%s/cocos' % (cocos_root, cocos_root, cocos_root)
     
     ''' The build process can be accelerated by running multiple concurrent job processes using the -j-option.
     '''
@@ -69,9 +69,9 @@ For More information:
         num_of_cpu = 1
         
     if ndk_build_param == None:
-        BUILD_CONSTANT.NDK_BUILD_COMMAND = '%s -j%d NDK_DEBUG=%d %s NDK_TOOLCHAIN_VERSION=%s' % (ndk_build_path, num_of_cpu, build_mode=='debug', ndk_module_path, toolchainVersion)
+        BUILD_CONSTANT.NDK_BUILD_COMMAND = '%s -j%d V=1 NDK_DEBUG=%d %s NDK_TOOLCHAIN_VERSION=%s' % (ndk_build_path, num_of_cpu, build_mode=='debug', ndk_module_path, toolchainVersion)
     else:
-        BUILD_CONSTANT.NDK_BUILD_COMMAND = '%s -j%d NDK_DEBUG=%d %s %s NDK_TOOLCHAIN_VERSION=%s' % (ndk_build_path, num_of_cpu, build_mode=='debug', ndk_build_param, ndk_module_path, toolchainVersion)
+        BUILD_CONSTANT.NDK_BUILD_COMMAND = '%s -j%d V=1 NDK_DEBUG=%d %s %s NDK_TOOLCHAIN_VERSION=%s' % (ndk_build_path, num_of_cpu, build_mode=='debug', ndk_build_param, ndk_module_path, toolchainVersion)
     
 def check_environment_variables_sdk():
     ''' Checking the environment ANDROID_SDK_ROOT, which will be used for building
