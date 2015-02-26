@@ -44,6 +44,8 @@
 		15427B7A198B87AA00DC375D /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2d iOS.a */; };
 		15427B7D198B880100DC375D /* lua_cocos2dx_controller_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15427B7B198B880100DC375D /* lua_cocos2dx_controller_manual.cpp */; };
 		156EAE071977D0BD00F53709 /* ActionTimeline in Resources */ = {isa = PBXBuildFile; fileRef = 38FA2E75194AECF800FF2BE4 /* ActionTimeline */; };
+		157B08EC1A90864100B7BEA4 /* Particle3D in Resources */ = {isa = PBXBuildFile; fileRef = B63993301A49359F00B07923 /* Particle3D */; };
+		157B08ED1A90865600B7BEA4 /* Particle3D in Resources */ = {isa = PBXBuildFile; fileRef = B63993301A49359F00B07923 /* Particle3D */; };
 		15AECE0B195C0F8A00907DB0 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA0FB65191B933000B170C8 /* MediaPlayer.framework */; };
 		15AECE0F195C1FDD00907DB0 /* cocosvideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */; };
 		15AECE25195D467D00907DB0 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA0FB65191B933000B170C8 /* MediaPlayer.framework */; };
@@ -92,6 +94,12 @@
 		15EFA66F198B356E000C57D3 /* libluacocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15EFA665198B33EE000C57D3 /* libluacocos2d iOS.a */; };
 		15EFA68B198B3AD8000C57D3 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2d iOS.a */; };
 		15EFA68D198B3AD8000C57D3 /* libluacocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15EFA665198B33EE000C57D3 /* libluacocos2d iOS.a */; };
+		182C5CBA1A95B2FD00C30D34 /* CocosStudio3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 182C5CB81A95B2FD00C30D34 /* CocosStudio3DTest.cpp */; };
+		182C5CBB1A95B30500C30D34 /* CocosStudio3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 182C5CB81A95B2FD00C30D34 /* CocosStudio3DTest.cpp */; };
+		182C5CCD1A95D9BA00C30D34 /* src in Resources */ = {isa = PBXBuildFile; fileRef = 182C5CCC1A95D9BA00C30D34 /* src */; };
+		182C5CCE1A95D9BA00C30D34 /* src in Resources */ = {isa = PBXBuildFile; fileRef = 182C5CCC1A95D9BA00C30D34 /* src */; };
+		182C5CCF1A95D9BA00C30D34 /* src in Resources */ = {isa = PBXBuildFile; fileRef = 182C5CCC1A95D9BA00C30D34 /* src */; };
+		182C5CD01A95D9BA00C30D34 /* src in Resources */ = {isa = PBXBuildFile; fileRef = 182C5CCC1A95D9BA00C30D34 /* src */; };
 		1A0EE2A218CDF6DA004CD58F /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2d Mac.a */; };
 		1A0EE2A518CDF6DA004CD58F /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 		1A0EE2A718CDF6DA004CD58F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
@@ -527,8 +535,6 @@
 		1AC35D5D18CEDE9E00F37B72 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D5618CEDE9E00F37B72 /* MainMenu.xib */; };
 		1AC35D5E18CEDE9E00F37B72 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D5918CEDE9E00F37B72 /* Icon.icns */; };
 		1AC35D6018CEDE9E00F37B72 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D5B18CEDE9E00F37B72 /* main.cpp */; };
-		1AC35D7518CEE58500F37B72 /* src in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D7418CEE58500F37B72 /* src */; };
-		1AC35D7618CEE58500F37B72 /* src in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D7418CEE58500F37B72 /* src */; };
 		1AC35D7918CEE59900F37B72 /* cocosbuilderRes in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D7818CEE59900F37B72 /* cocosbuilderRes */; };
 		1AC35D7A18CEE59900F37B72 /* cocosbuilderRes in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D7818CEE59900F37B72 /* cocosbuilderRes */; };
 		1AC35D8118CEE5B100F37B72 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7D18CEE5B100F37B72 /* AppDelegate.cpp */; };
@@ -808,6 +814,10 @@
 		B2507B6C192589AF00FA4972 /* Shaders3D in Resources */ = {isa = PBXBuildFile; fileRef = B2507B6A192589AF00FA4972 /* Shaders3D */; };
 		B609E67319C18DAD003D0074 /* BillBoardTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B609E67119C18DAD003D0074 /* BillBoardTest.cpp */; };
 		B609E67419C18DAD003D0074 /* BillBoardTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B609E67119C18DAD003D0074 /* BillBoardTest.cpp */; };
+		B639932E1A490EC700B07923 /* Particle3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B639932C1A490EC700B07923 /* Particle3DTest.cpp */; };
+		B639932F1A490EC700B07923 /* Particle3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B639932C1A490EC700B07923 /* Particle3DTest.cpp */; };
+		B63993311A49359F00B07923 /* Particle3D in Resources */ = {isa = PBXBuildFile; fileRef = B63993301A49359F00B07923 /* Particle3D */; };
+		B63993321A49359F00B07923 /* Particle3D in Resources */ = {isa = PBXBuildFile; fileRef = B63993301A49359F00B07923 /* Particle3D */; };
 		B6C039D919C95D83007207DC /* LightTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6C039D719C95D83007207DC /* LightTest.cpp */; };
 		B6C039DA19C95D83007207DC /* LightTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6C039D719C95D83007207DC /* LightTest.cpp */; };
 		C04F935A1941B05400E9FEAB /* TileMapTest2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C04F93581941B05400E9FEAB /* TileMapTest2.cpp */; };
@@ -1067,6 +1077,9 @@
 		15CBA9EB196F7BD8005877BB /* lua_cocos2dx_controller_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lua_cocos2dx_controller_auto.cpp; path = "../../../../cocos/scripting/lua-bindings/auto/lua_cocos2dx_controller_auto.cpp"; sourceTree = "<group>"; };
 		15CBA9EC196F7BD8005877BB /* lua_cocos2dx_controller_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = lua_cocos2dx_controller_auto.hpp; path = "../../../../cocos/scripting/lua-bindings/auto/lua_cocos2dx_controller_auto.hpp"; sourceTree = "<group>"; };
 		15EE465A19A7200300AF29F1 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../external/curl/prebuilt/ios/libcurl.a; sourceTree = "<group>"; };
+		182C5CB81A95B2FD00C30D34 /* CocosStudio3DTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CocosStudio3DTest.cpp; path = CocosStudio3DTest/CocosStudio3DTest.cpp; sourceTree = "<group>"; };
+		182C5CB91A95B2FD00C30D34 /* CocosStudio3DTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CocosStudio3DTest.h; path = CocosStudio3DTest/CocosStudio3DTest.h; sourceTree = "<group>"; };
+		182C5CCC1A95D9BA00C30D34 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = "../tests/lua-tests/src"; sourceTree = "<group>"; };
 		1A0EE2B218CDF6DA004CD58F /* cpp-empty-test Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-empty-test Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A0EE31418CDF733004CD58F /* lua-empty-test Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lua-empty-test Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A0EE41318CDF775004CD58F /* cpp-empty-test iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-empty-test iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1512,7 +1525,6 @@
 		1AC35D5918CEDE9E00F37B72 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		1AC35D5A18CEDE9E00F37B72 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1AC35D5B18CEDE9E00F37B72 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		1AC35D7418CEE58500F37B72 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = "../tests/lua-tests/src"; sourceTree = "<group>"; };
 		1AC35D7818CEE59900F37B72 /* cocosbuilderRes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = cocosbuilderRes; path = "../tests/lua-tests/res/cocosbuilderRes"; sourceTree = "<group>"; };
 		1AC35D7D18CEE5B100F37B72 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		1AC35D7E18CEE5B100F37B72 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -1737,6 +1749,9 @@
 		B2507B6A192589AF00FA4972 /* Shaders3D */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders3D; path = "../tests/cpp-tests/Resources/Shaders3D"; sourceTree = "<group>"; };
 		B609E67119C18DAD003D0074 /* BillBoardTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BillBoardTest.cpp; path = BillBoardTest/BillBoardTest.cpp; sourceTree = "<group>"; };
 		B609E67219C18DAD003D0074 /* BillBoardTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BillBoardTest.h; path = BillBoardTest/BillBoardTest.h; sourceTree = "<group>"; };
+		B639932C1A490EC700B07923 /* Particle3DTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Particle3DTest.cpp; path = Particle3DTest/Particle3DTest.cpp; sourceTree = "<group>"; };
+		B639932D1A490EC700B07923 /* Particle3DTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Particle3DTest.h; path = Particle3DTest/Particle3DTest.h; sourceTree = "<group>"; };
+		B63993301A49359F00B07923 /* Particle3D */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Particle3D; path = "../tests/cpp-tests/Resources/Particle3D"; sourceTree = "<group>"; };
 		B6C039D719C95D83007207DC /* LightTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LightTest.cpp; path = LightTest/LightTest.cpp; sourceTree = "<group>"; };
 		B6C039D819C95D83007207DC /* LightTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LightTest.h; path = LightTest/LightTest.h; sourceTree = "<group>"; };
 		C04F93581941B05400E9FEAB /* TileMapTest2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TileMapTest2.cpp; sourceTree = "<group>"; };
@@ -2017,6 +2032,15 @@
 			path = res;
 			sourceTree = "<group>";
 		};
+		182C5CB71A95B28A00C30D34 /* CocosStudio3DTest */ = {
+			isa = PBXGroup;
+			children = (
+				182C5CB81A95B2FD00C30D34 /* CocosStudio3DTest.cpp */,
+				182C5CB91A95B2FD00C30D34 /* CocosStudio3DTest.h */,
+			);
+			name = CocosStudio3DTest;
+			sourceTree = "<group>";
+		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -2135,10 +2159,10 @@
 		1AC3592118CECEFF00F37B72 /* cpp-tests */ = {
 			isa = PBXGroup;
 			children = (
+				1AC35CA818CED83500F37B72 /* Resources */,
 				1AC3592418CECF0A00F37B72 /* Classes */,
 				1AC35C6D18CECF1400F37B72 /* proj.ios */,
 				1AC35C9A18CECF1E00F37B72 /* proj.mac */,
-				1AC35CA818CED83500F37B72 /* Resources */,
 			);
 			name = "cpp-tests";
 			sourceTree = "<group>";
@@ -2146,6 +2170,8 @@
 		1AC3592418CECF0A00F37B72 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				182C5CB71A95B28A00C30D34 /* CocosStudio3DTest */,
+				B639932B1A490E9900B07923 /* Particle3DTest */,
 				D0FD03611A3B543700825BB5 /* AllocatorTest */,
 				B6C039D619C95D28007207DC /* LightTest */,
 				B609E67019C18D90003D0074 /* BillBoardTest */,
@@ -3179,6 +3205,7 @@
 		1AC35CA818CED83500F37B72 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B63993301A49359F00B07923 /* Particle3D */,
 				15B3709219EE5D1000ABE682 /* Manifests */,
 				3E2BDB0019C5E5D40055CDCD /* background.wav */,
 				3E2BDAD119BEA3E20055CDCD /* audio */,
@@ -3293,9 +3320,9 @@
 		1AC35D7118CEE4AE00F37B72 /* lua-tests */ = {
 			isa = PBXGroup;
 			children = (
+				182C5CCC1A95D9BA00C30D34 /* src */,
 				1AC35D7B18CEE5A100F37B72 /* project */,
 				1AC35D7718CEE58D00F37B72 /* res */,
-				1AC35D7418CEE58500F37B72 /* src */,
 			);
 			name = "lua-tests";
 			sourceTree = "<group>";
@@ -3921,6 +3948,15 @@
 			name = BillBoardTest;
 			sourceTree = "<group>";
 		};
+		B639932B1A490E9900B07923 /* Particle3DTest */ = {
+			isa = PBXGroup;
+			children = (
+				B639932C1A490EC700B07923 /* Particle3DTest.cpp */,
+				B639932D1A490EC700B07923 /* Particle3DTest.h */,
+			);
+			name = Particle3DTest;
+			sourceTree = "<group>";
+		};
 		B6C039D619C95D28007207DC /* LightTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -4310,8 +4346,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				157B08EC1A90864100B7BEA4 /* Particle3D in Resources */,
 				15B13E5219F0FD4D008A1ADC /* Manifests in Resources */,
 				156EAE071977D0BD00F53709 /* ActionTimeline in Resources */,
+				182C5CCE1A95D9BA00C30D34 /* src in Resources */,
 				15E66FD6192DC8C700C20A52 /* Sprite3DTest in Resources */,
 				3E2F27BC19D00D7200E7C490 /* audio in Resources */,
 				1AC35DC318CEE65100F37B72 /* Misc in Resources */,
@@ -4328,7 +4366,6 @@
 				1AC35DBC18CEE65100F37B72 /* configs in Resources */,
 				1AC35DE118CEE65900F37B72 /* background.ogg in Resources */,
 				1AC35DDF18CEE65900F37B72 /* music.mid in Resources */,
-				1AC35D7518CEE58500F37B72 /* src in Resources */,
 				1AC35DE018CEE65900F37B72 /* background.mp3 in Resources */,
 				1A1645A6191B6281008C7C7F /* ccs-res in Resources */,
 				C08689C218D370C90093E810 /* background.caf in Resources */,
@@ -4354,6 +4391,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				157B08ED1A90865600B7BEA4 /* Particle3D in Resources */,
 				15B3709A19EE5EED00ABE682 /* Manifests in Resources */,
 				15AECE0F195C1FDD00907DB0 /* cocosvideo.mp4 in Resources */,
 				15B0870D195AD52000D6F62B /* ActionTimeline in Resources */,
@@ -4365,6 +4403,7 @@
 				1AC35DCC18CEE65200F37B72 /* ccb in Resources */,
 				1AC35DD218CEE65200F37B72 /* hd in Resources */,
 				1AC35DD718CEE65200F37B72 /* Particles in Resources */,
+				182C5CD01A95D9BA00C30D34 /* src in Resources */,
 				3E2BDB0219C5E5D40055CDCD /* background.wav in Resources */,
 				1AC35D9D18CEE5D100F37B72 /* Icon-120.png in Resources */,
 				1AC35DA018CEE5D100F37B72 /* Icon-57.png in Resources */,
@@ -4376,7 +4415,6 @@
 				527B1F4419EFAE13000A1F82 /* Default-667h@2x.png in Resources */,
 				1AC35D9B18CEE5D100F37B72 /* Default@2x.png in Resources */,
 				1AC35DCE18CEE65200F37B72 /* components in Resources */,
-				1AC35D7618CEE58500F37B72 /* src in Resources */,
 				1AC35DDC18CEE65200F37B72 /* zwoptex in Resources */,
 				1AC35DEC18CEE65B00F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */,
 				1AC35DED18CEE65B00F37B72 /* music.mid in Resources */,
@@ -4411,6 +4449,7 @@
 				1AC35CFE18CED84500F37B72 /* Particles in Resources */,
 				1AC35CF418CED84500F37B72 /* Images in Resources */,
 				1AC35CE018CED84500F37B72 /* configs in Resources */,
+				182C5CCD1A95D9BA00C30D34 /* src in Resources */,
 				1AC35CE618CED84500F37B72 /* effect2.ogg in Resources */,
 				1AC35CFA18CED84500F37B72 /* Misc in Resources */,
 				38FA2E76194AECF800FF2BE4 /* ActionTimeline in Resources */,
@@ -4427,6 +4466,7 @@
 				1AC35CE218CED84500F37B72 /* effect1.raw in Resources */,
 				1AC35CF218CED84500F37B72 /* Hello.png in Resources */,
 				1AC35CA518CECF1E00F37B72 /* Icon.icns in Resources */,
+				B63993311A49359F00B07923 /* Particle3D in Resources */,
 				1AC35CEC18CED84500F37B72 /* fonts in Resources */,
 				1AC35CCA18CED84500F37B72 /* animations in Resources */,
 				1AC35CEA18CED84500F37B72 /* fileLookup.plist in Resources */,
@@ -4481,6 +4521,7 @@
 				1AC35CDF18CED84500F37B72 /* components in Resources */,
 				1AC35C8E18CECF1400F37B72 /* Icon-144.png in Resources */,
 				1AC35C9218CECF1400F37B72 /* Icon-50.png in Resources */,
+				B63993321A49359F00B07923 /* Particle3D in Resources */,
 				1AC35CE518CED84500F37B72 /* effect1.wav in Resources */,
 				1AC35C9618CECF1400F37B72 /* Icon-76.png in Resources */,
 				1AC35C8A18CECF1400F37B72 /* Default@2x.png in Resources */,
@@ -4495,6 +4536,7 @@
 				1AC35CE118CED84500F37B72 /* configs in Resources */,
 				1AC35CE918CED84500F37B72 /* extensions in Resources */,
 				3E2BDAD219BEA3E20055CDCD /* audio in Resources */,
+				182C5CCF1A95D9BA00C30D34 /* src in Resources */,
 				C08689C318D370C90093E810 /* background.caf in Resources */,
 				1AC35C9518CECF1400F37B72 /* Icon-72.png in Resources */,
 				15B3709419EE5D1000ABE682 /* Manifests in Resources */,
@@ -4767,6 +4809,7 @@
 				1AC35C2F18CECF0C00F37B72 /* PerformanceParticleTest.cpp in Sources */,
 				1AC35B4918CECF0C00F37B72 /* Bug-914.cpp in Sources */,
 				1AC35B6318CECF0C00F37B72 /* EffectsAdvancedTest.cpp in Sources */,
+				B639932E1A490EC700B07923 /* Particle3DTest.cpp in Sources */,
 				1AC35C5F18CECF0C00F37B72 /* Paddle.cpp in Sources */,
 				1AC35BDB18CECF0C00F37B72 /* SceneEditorTest.cpp in Sources */,
 				1AC35B4B18CECF0C00F37B72 /* BugsTest.cpp in Sources */,
@@ -4814,6 +4857,7 @@
 				29080DA3191B595E0066F8DF /* UIButtonTest.cpp in Sources */,
 				1AC35C5518CECF0C00F37B72 /* Texture2dTest.cpp in Sources */,
 				1AC35C0718CECF0C00F37B72 /* MouseTest.cpp in Sources */,
+				182C5CBA1A95B2FD00C30D34 /* CocosStudio3DTest.cpp in Sources */,
 				1AC35C5D18CECF0C00F37B72 /* Ball.cpp in Sources */,
 				1AC35B7B18CECF0C00F37B72 /* GameOverScene.cpp in Sources */,
 				1AC35BF318CECF0C00F37B72 /* ExtensionsTest.cpp in Sources */,
@@ -4937,6 +4981,7 @@
 				1AC35BFA18CECF0C00F37B72 /* WebSocketTest.cpp in Sources */,
 				38FA2E74194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp in Sources */,
 				2958245A1987415900F9746D /* UIScale9SpriteTest.cpp in Sources */,
+				B639932F1A490EC700B07923 /* Particle3DTest.cpp in Sources */,
 				1AC35B3A18CECF0C00F37B72 /* Bug-1174.cpp in Sources */,
 				1AC35BE418CECF0C00F37B72 /* CCControlColourPickerTest.cpp in Sources */,
 				29080DD4191B595E0066F8DF /* UITextAtlasTest.cpp in Sources */,
@@ -5099,6 +5144,7 @@
 				1AC35B5A18CECF0C00F37B72 /* controller.cpp in Sources */,
 				1AC35C2A18CECF0C00F37B72 /* PerformanceEventDispatcherTest.cpp in Sources */,
 				1AC35BEA18CECF0C00F37B72 /* CCControlSceneManager.cpp in Sources */,
+				182C5CBB1A95B30500C30D34 /* CocosStudio3DTest.cpp in Sources */,
 				1AC35B7418CECF0C00F37B72 /* TimelineCallbackTestLayer.cpp in Sources */,
 				29080D9E191B595E0066F8DF /* CustomParticleWidgetReader.cpp in Sources */,
 				1AC35BFC18CECF0C00F37B72 /* NotificationCenterTest.cpp in Sources */,

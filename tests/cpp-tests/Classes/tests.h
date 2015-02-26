@@ -77,8 +77,10 @@
 #include "Camera3DTest/Camera3DTest.h"
 #include "BillBoardTest/BillBoardTest.h"
 #include "LightTest/LightTest.h"
+#include "Particle3DTest/Particle3DTest.h"
 
 #include "OpenURLTest/OpenURLTest.h"
 #include "AllocatorTest/AllocatorTest.h"
+#include "CocosStudio3DTest/CocosStudio3DTest.h"
 
 #endif

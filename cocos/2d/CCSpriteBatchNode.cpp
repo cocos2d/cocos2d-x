@@ -67,7 +67,7 @@ SpriteBatchNode* SpriteBatchNode::create(const std::string& fileImage, ssize_t c
 /*
 * init with Texture2D
 */
-bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity)
+bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity/* = DEFAULT_CAPACITY*/)
 {
     CCASSERT(capacity>=0, "Capacity must be >= 0");
     
@@ -105,7 +105,7 @@ bool SpriteBatchNode::init()
 /*
 * init with FileImage
 */
-bool SpriteBatchNode::initWithFile(const std::string& fileImage, ssize_t capacity)
+bool SpriteBatchNode::initWithFile(const std::string& fileImage, ssize_t capacity/* = DEFAULT_CAPACITY*/)
 {
     Texture2D *texture2D = Director::getInstance()->getTextureCache()->addImage(fileImage);
     return initWithTexture(texture2D, capacity);

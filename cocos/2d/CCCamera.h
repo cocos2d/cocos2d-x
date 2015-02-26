@@ -89,7 +89,7 @@ public:
     */
     static Camera* createOrthographic(float zoomX, float zoomY, float nearPlane, float farPlane);
 
-    /** create default camera, the camera type depends on Director::getProjection */
+    /** create default camera, the camera type depends on Director::getProjection, the depth of the default camera is 0 */
     static Camera* create();
     
     /**
@@ -102,10 +102,6 @@ public:
     /**get & set Camera flag*/
     CameraFlag getCameraFlag() const { return (CameraFlag)_cameraFlag; }
     void setCameraFlag(CameraFlag flag) { _cameraFlag = (unsigned short)flag; }
-    /**
-    * Sets the position (X, Y, and Z) in its parent's coordinate system
-    */
-    virtual void setPosition3D(const Vec3& position) override;
 
     /**
     * Make Camera looks at target
@@ -165,6 +161,16 @@ public:
      */
     float getDepthInView(const Mat4& transform) const;
     
+    /**
+     * set depth, camera with larger depth is drawn on top of camera with smaller depth, the depth of camera with CameraFlag::DEFAULT is 0, user defined camera is -1 by default
+     */
+    void setDepth(int depth);
+    
+    /**
+     * get depth, camera with larger depth is drawn on top of camera with smaller depth, the depth of camera with CameraFlag::DEFAULT is 0, user defined camera is -1 by default
+     */
+    int getDepth() const { return _depth; }
+    
     //override
     virtual void onEnter() override;
     virtual void onExit() override;
@@ -204,6 +210,7 @@ protected:
     unsigned short _cameraFlag; // camera flag
     mutable Frustum _frustum;   // camera frustum
     mutable bool _frustumDirty;
+    int  _depth;                 //camera depth, the depth of camera with CameraFlag::DEFAULT flag is 0 by default, a camera with larger depth is drawn on top of camera with smaller detph
     static Camera* _visitingCamera;
     
     friend class Director;

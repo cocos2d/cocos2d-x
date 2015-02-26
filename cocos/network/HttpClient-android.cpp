@@ -646,7 +646,7 @@ static void processResponse(HttpResponse* response, std::string& responseMessage
         HttpRequest::Type::PUT != requestType &&
         HttpRequest::Type::DELETE != requestType)
     {
-        CCASSERT(true, "CCHttpClient: unkown request type, only GET、POST、PUT、DELETE are supported");
+        CCASSERT(true, "CCHttpClient: unknown request type, only GET、POST、PUT、DELETE are supported");
         return;
     }
 
@@ -687,6 +687,7 @@ static void processResponse(HttpResponse* response, std::string& responseMessage
     {
         response->setSucceed(false);
         response->setErrorBuffer("connect failed");
+        response->setResponseCode(responseCode);
         return;
     }
 

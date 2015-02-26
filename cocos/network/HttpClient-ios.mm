@@ -77,8 +77,8 @@ void HttpClient::networkThread()
 {    
     auto scheduler = Director::getInstance()->getScheduler();
     
-    while (true) 
-    {
+    while (true) @autoreleasepool {
+        
         HttpRequest *request;
 
         // step 1: send http request if the requestQueue isn't empty
@@ -167,31 +167,35 @@ static int processTask(HttpRequest *request, NSString* requestType, void *stream
     //set request type
     [nsrequest setHTTPMethod:requestType];
 
+    /* get custom header data (if set) */
+    std::vector<std::string> headers=request->getHeaders();
+    if(!headers.empty())
+    {
+        /* append custom headers one by one */
+        for (std::vector<std::string>::iterator it = headers.begin(); it != headers.end(); ++it)
+        {
+            unsigned long i = it->find(':', 0);
+            unsigned long length = it->size();
+            std::string field = it->substr(0, i);
+            std::string value = it->substr(i+1, length-i);
+            NSString *headerField = [NSString stringWithUTF8String:field.c_str()];
+            NSString *headerValue = [NSString stringWithUTF8String:value.c_str()];
+            [nsrequest setValue:headerValue forHTTPHeaderField:headerField];
+        }
+    }
+
     //if request type is post or put,set header and data
     if([requestType  isEqual: @"POST"] || [requestType isEqual: @"PUT"])
     {
-        /* get custom header data (if set) */
-        std::vector<std::string> headers=request->getHeaders();
-        if(!headers.empty())
+        if ([requestType isEqual: @"PUT"])
         {
-            /* append custom headers one by one */
-            for (std::vector<std::string>::iterator it = headers.begin(); it != headers.end(); ++it)
-            {
-                unsigned long i = it->find(':', 0);
-                unsigned long length = it->size();
-                std::string field = it->substr(0, i);
-                std::string value = it->substr(i+1, length-i);
-                NSString *headerField = [NSString stringWithUTF8String:field.c_str()];
-                NSString *headerValue = [NSString stringWithUTF8String:value.c_str()];
-                [nsrequest setValue:headerValue forHTTPHeaderField:headerField];
-            }
+            [nsrequest setValue: @"application/x-www-form-urlencoded" forHTTPHeaderField: @"Content-Type"];
         }
         
         char* requestDataBuffer = request->getRequestData();
-        if (nullptr !=  requestDataBuffer && 0 != strlen(requestDataBuffer))
+        if (nullptr !=  requestDataBuffer && 0 != request->getRequestDataSize())
         {
-            NSString* requestData  = [NSString stringWithUTF8String:requestDataBuffer];
-            NSData *postData = [requestData dataUsingEncoding:NSUTF8StringEncoding];
+            NSData *postData = [NSData dataWithBytes:requestDataBuffer length:request->getRequestDataSize()];
             [nsrequest setHTTPBody:postData];
         }
     }
@@ -221,16 +225,16 @@ static int processTask(HttpRequest *request, NSString* requestType, void *stream
         }
     }
     
-    HttpAsynConnection *httpAsynConn = [HttpAsynConnection new];
+    HttpAsynConnection *httpAsynConn = [[HttpAsynConnection new] autorelease];
     httpAsynConn.srcURL = urlstring;
     httpAsynConn.sslFile = nil;
-    NSString *sslFile = nil;
+    
     if(!s_sslCaFilename.empty())
     {
         long len = s_sslCaFilename.length();
         long pos = s_sslCaFilename.rfind('.', len-1);
-        [sslFile initWithUTF8String:s_sslCaFilename.substr(0, pos-1).c_str()];
-        httpAsynConn.sslFile = sslFile;
+        
+        httpAsynConn.sslFile = [NSString stringWithUTF8String:s_sslCaFilename.substr(0, pos-1).c_str()];
     }
     [httpAsynConn startRequest:nsrequest];
     
@@ -278,8 +282,8 @@ static int processTask(HttpRequest *request, NSString* requestType, void *stream
     }
     
     //handle response header
-    NSMutableString *header = [NSMutableString new];
-    [header appendFormat:@"HTTP/1.1 %ld %@\n", httpAsynConn.responseCode, httpAsynConn.statusString];
+    NSMutableString *header = [NSMutableString string];
+    [header appendFormat:@"HTTP/1.1 %ld %@\n", (long)httpAsynConn.responseCode, httpAsynConn.statusString];
     for (id key in httpAsynConn.responseHeader)
     {
         [header appendFormat:@"%@: %@\n", key, [httpAsynConn.responseHeader objectForKey:key]];
@@ -332,7 +336,7 @@ static void processResponse(HttpResponse* response, char* errorBuffer)
         break;
 
     default:
-        CCASSERT(true, "CCHttpClient: unkown request type, only GET and POSt are supported");
+        CCASSERT(true, "CCHttpClient: unknown request type, only GET and POSt are supported");
         break;
     }
     

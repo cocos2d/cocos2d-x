@@ -241,6 +241,8 @@ namespace cocostudio
         
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
+        
+        labelBMFont->ignoreContentAdaptWithSize(true);
     }
     
     Node* TextBMFontReader::createNodeWithFlatBuffers(const flatbuffers::Table *textBMFontOptions)

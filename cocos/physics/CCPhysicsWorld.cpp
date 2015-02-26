@@ -291,7 +291,6 @@ int PhysicsWorld::collisionPreSolveCallback(PhysicsContact& contact)
 {
     if (!contact.isNotificationEnabled())
     {
-        cpArbiterIgnore(static_cast<cpArbiter*>(contact._contactInfo));
         return true;
     }
     
@@ -334,7 +333,7 @@ void PhysicsWorld::rayCast(PhysicsRayCastCallbackFunc func, const Vec2& point1, 
     {
         if (!_delayAddBodies.empty() || !_delayRemoveBodies.empty())
         {
-            _scene->updatePhysicsBodyTransform(_scene, _scene->getNodeToParentTransform(), 0, 1.0f, 1.0f);
+            _scene->updatePhysicsBodyTransform(_scene->getNodeToParentTransform(), 0, 1.0f, 1.0f);
             updateBodies();
         }
         RayCastCallbackInfo info = { this, func, point1, point2, data };
@@ -358,7 +357,7 @@ void PhysicsWorld::queryRect(PhysicsQueryRectCallbackFunc func, const Rect& rect
     {
         if (!_delayAddBodies.empty() || !_delayRemoveBodies.empty())
         {
-            _scene->updatePhysicsBodyTransform(_scene, _scene->getNodeToParentTransform(), 0, 1.0f, 1.0f);
+            _scene->updatePhysicsBodyTransform(_scene->getNodeToParentTransform(), 0, 1.0f, 1.0f);
             updateBodies();
         }
         RectQueryCallbackInfo info = {this, func, data};
@@ -381,7 +380,7 @@ void PhysicsWorld::queryPoint(PhysicsQueryPointCallbackFunc func, const Vec2& po
     {
         if (!_delayAddBodies.empty() || !_delayRemoveBodies.empty())
         {
-            _scene->updatePhysicsBodyTransform(_scene, _scene->getNodeToParentTransform(), 0, 1.0f, 1.0f);
+            _scene->updatePhysicsBodyTransform(_scene->getNodeToParentTransform(), 0, 1.0f, 1.0f);
             updateBodies();
         }
         PointQueryCallbackInfo info = {this, func, data};
@@ -823,9 +822,13 @@ void PhysicsWorld::update(float delta, bool userCall/* = false*/)
         return;
     }
 
-    _scene->updatePhysicsBodyTransform(_scene, _scene->getNodeToParentTransform(), 0, 1.0f, 1.0f);
-
-    if (!_delayAddBodies.empty() || !_delayRemoveBodies.empty())
+    if(_updateBodyTransform || !_delayAddBodies.empty())
+    {
+        _scene->updatePhysicsBodyTransform(_scene->getNodeToParentTransform(), 0, 1.0f, 1.0f);
+        updateBodies();
+        _updateBodyTransform = false;
+    }
+    else if (!_delayRemoveBodies.empty())
     {
         updateBodies();
     }
@@ -880,6 +883,7 @@ PhysicsWorld::PhysicsWorld()
 , _autoStep(true)
 , _debugDraw(nullptr)
 , _debugDrawMask(DEBUGDRAW_NONE)
+, _updateBodyTransform(false)
 {
     
 }

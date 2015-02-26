@@ -26,9 +26,11 @@
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
 
 #include "AudioEngine-inl.h"
-#include "audio/include/AudioEngine.h"
 
 #import <OpenAL/alc.h>
+#import <AVFoundation/AVFoundation.h>
+
+#include "audio/include/AudioEngine.h"
 #include "platform/CCFileUtils.h"
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
@@ -127,11 +129,61 @@ namespace cocos2d {
     }
 }
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+@interface AudioEngineSessionHandler : NSObject
+{
+}
+
+-(id) init;
+-(void)handleInterruption:(NSNotification*)notification;
+
+@end
+
+@implementation AudioEngineSessionHandler
+
+-(id) init
+{
+    if (self == [super init])
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleInterruption:) name:AVAudioSessionInterruptionNotification object:[AVAudioSession sharedInstance]];
+    }
+    return self;
+}
+
+-(void)handleInterruption:(NSNotification*)notification
+{
+    if ([notification.name isEqualToString:AVAudioSessionInterruptionNotification]) {
+        NSInteger reason = [[[notification userInfo] objectForKey:AVAudioSessionInterruptionTypeKey] integerValue];
+        if (reason == AVAudioSessionInterruptionTypeBegan) {
+            alcMakeContextCurrent(NULL);
+        }
+        
+        if (reason == AVAudioSessionInterruptionTypeEnded) {
+            OSStatus result = AudioSessionSetActive(true);
+            if (result) NSLog(@"Error setting audio session active! %d\n", result);
+            
+            alcMakeContextCurrent(s_ALContext);
+        }
+    }
+}
+
+-(void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVAudioSessionInterruptionNotification object:nil];
+    
+    [super dealloc];
+}
+@end
+
+static id s_AudioEngineSessionHandler = nullptr;
+#endif
+
 AudioEngineImpl::AudioEngineImpl()
 : _threadPool(nullptr)
 , _lazyInitLoop(true)
 , _currentAudioID(0)
 {
+    
 }
 
 AudioEngineImpl::~AudioEngineImpl()
@@ -151,12 +203,19 @@ AudioEngineImpl::~AudioEngineImpl()
         _threadPool->destroy();
         delete _threadPool;
     }
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+    [s_AudioEngineSessionHandler release];
+#endif
 }
 
 bool AudioEngineImpl::init()
 {
     bool ret = false;
     do{
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+        s_AudioEngineSessionHandler = [[AudioEngineSessionHandler alloc] init];
+#endif
+        
         s_ALDevice = alcOpenDevice(nullptr);
         
         if (s_ALDevice) {

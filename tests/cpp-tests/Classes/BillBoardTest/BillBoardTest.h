@@ -43,6 +43,10 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
+    virtual void restartCallback(Ref* sender) override;
+    virtual void nextCallback(Ref* sender) override;
+    virtual void backCallback(Ref* sender) override;
+    
 protected:
 };
 
@@ -63,6 +67,10 @@ public:
     void menuCallback_orientedPoint(Ref* sender);
     void menuCallback_orientedPlane(Ref* sender);
 
+    virtual void restartCallback(Ref* sender) override;
+    virtual void nextCallback(Ref* sender) override;
+    virtual void backCallback(Ref* sender) override;
+    
 protected:
     Camera*           _camera;
     Layer*            _layerBillBorad;
