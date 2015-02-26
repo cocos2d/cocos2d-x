@@ -198,6 +198,7 @@ PUParticleSystem3D* PUParticleSystem3D::create( const std::string &filePath )
 void PUParticleSystem3D::startParticleSystem()
 {
     stopParticleSystem();
+    _particlePool.lockAllParticles();
     if (!_emitters.empty()){
         if (_state != State::RUNNING)
         {
