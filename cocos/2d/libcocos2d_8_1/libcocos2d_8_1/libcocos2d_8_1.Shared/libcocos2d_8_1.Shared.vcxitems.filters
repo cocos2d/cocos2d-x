@@ -374,7 +374,13 @@
     </ClInclude>    
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.h">
       <Filter>cocostudio\reader\WidgetReader\Sprite3DReader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\UserCameraReader\UserCameraReader.h">
+      <Filter>cocostudio\reader\WidgetReader\UserCameraReader</Filter>
     </ClInclude>        
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.h">
+      <Filter>cocostudio\reader\WidgetReader\Particle3DReader</Filter>
+    </ClInclude>    
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\WidgetReader.h">
       <Filter>cocostudio\reader\WidgetReader</Filter>
     </ClInclude>
@@ -1908,7 +1914,13 @@
     </ClCompile>    
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\Sprite3DReader</Filter>
-    </ClCompile>        
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\UserCameraReader\UserCameraReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\UserCameraReader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\UserCameraReader</Filter>
+    </ClCompile>                
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\WidgetReader.cpp">
       <Filter>cocostudio\reader\WidgetReader</Filter>
     </ClCompile>
@@ -3147,7 +3159,13 @@
     </Filter>
     <Filter Include="cocostudio\reader\WidgetReader\Sprite3DReader">
       <UniqueIdentifier>{c03ed815-ce10-4301-bdd6-1104ff3c014e}</UniqueIdentifier>
-    </Filter>    
+    </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\UserCameraReader">
+      <UniqueIdentifier>{c0310482-ce10-4301-bdd6-110fff3c014e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\Particle3DReader">
+      <UniqueIdentifier>{c0310485-ce10-420b-bdd6-1104ff3c014e}</UniqueIdentifier>
+    </Filter>            
     <Filter Include="ui\BaseClasses">
       <UniqueIdentifier>{48ae1ce9-b81f-479f-b59c-b10e344699d8}</UniqueIdentifier>
     </Filter>
