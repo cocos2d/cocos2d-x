@@ -34,11 +34,9 @@ THE SOFTWARE.
 #include "2d/CCAnimation.h"
 #include "base/CCProtocols.h"
 #include "base/CCVector.h"
-#include "base/CCDirector.h"
+
 NS_CC_BEGIN
 
-
-    
 class Node;
 class SpriteFrame;
 class EventCustom;
@@ -391,9 +389,7 @@ public:
     
 CC_CONSTRUCTOR_ACCESS:
     RotateTo();
-    virtual ~RotateTo() {
-        TRY_STOP_FULL_CYCLE;
-    }
+    virtual ~RotateTo() {}
 
     /** 
      * initializes the action
@@ -460,9 +456,7 @@ public:
     
 CC_CONSTRUCTOR_ACCESS:
     RotateBy();
-    virtual ~RotateBy() {
-        TRY_STOP_FULL_CYCLE;
-    }
+    virtual ~RotateBy() {}
 
     /** initializes the action */
     bool initWithDuration(float duration, float deltaAngle);
@@ -515,12 +509,8 @@ public:
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
-    MoveBy():_is3D(false) {
-        TRIGGER_FULL_CYCLE;
-    }
-    virtual ~MoveBy() {
-        TRY_STOP_FULL_CYCLE;
-    }
+    MoveBy():_is3D(false) {}
+    virtual ~MoveBy() {}
 
     /** initializes the action */
     bool initWithDuration(float duration, const Vec2& deltaPosition);
@@ -562,12 +552,8 @@ public:
     virtual void startWithTarget(Node *target) override;
     
 CC_CONSTRUCTOR_ACCESS:
-    MoveTo() {
-    TRIGGER_FULL_CYCLE;
-    }
-    virtual ~MoveTo() {
-        TRY_STOP_FULL_CYCLE;
-    }
+    MoveTo() {}
+    virtual ~MoveTo() {}
 
     /** 
      * initializes the action

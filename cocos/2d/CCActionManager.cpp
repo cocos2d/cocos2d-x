@@ -172,7 +172,7 @@ void ActionManager::addAction(Action *action, Node *target, bool paused)
 {
     CCASSERT(action != nullptr, "");
     CCASSERT(target != nullptr, "");
-//    cocos2d::Director::getInstance()->setAnimationInterval(1/60.0f);
+    cocos2d::Director::getInstance()->setAnimationInterval(1/60.0f);
     tHashElement *element = nullptr;
     // we should convert it to Ref*, because we save it as Ref*
     Ref *tmp = target;
@@ -184,7 +184,6 @@ void ActionManager::addAction(Action *action, Node *target, bool paused)
         target->retain();
         element->target = target;
         HASH_ADD_PTR(_targets, target, element);
-        ++_iAllActionCounts;
     }
 
      actionAllocWithHashElement(element);
@@ -243,7 +242,6 @@ void ActionManager::removeAllActionsFromTarget(Node *target)
 
 void ActionManager::removeAction(Action *action)
 {
-
     // explicit null handling
     if (action == nullptr)
     {
@@ -259,16 +257,11 @@ void ActionManager::removeAction(Action *action)
         if (i != CC_INVALID_INDEX)
         {
             removeActionAtIndex(i, element);
-            --_iAllActionCounts;
         }
     }
     else
     {
         CCLOG("cocos2d: removeAction: Target not found");
-    }
-    if(_iAllActionCounts==0)
-    {
-         // cocos2d::Director::getInstance()->setAnimationInterval(1);
     }
 }
 
@@ -427,7 +420,7 @@ void ActionManager::update(float dt)
         if (_currentTargetSalvaged && _currentTarget->actions->num == 0)
         {
             deleteHashElement(_currentTarget);
-            
+              Director::getInstance()->setAnimationInterval(1);
         }
     }
 

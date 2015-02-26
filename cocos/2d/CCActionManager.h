@@ -142,7 +142,6 @@ protected:
     struct _hashElement    *_targets;
     struct _hashElement    *_currentTarget;
     bool            _currentTargetSalvaged;
-    int             _iAllActionCounts;
 };
 
 // end of actions group
