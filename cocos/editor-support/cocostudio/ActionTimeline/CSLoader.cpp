@@ -59,6 +59,10 @@
 #include "cocostudio/WidgetReader/PageViewReader/PageViewReader.h"
 #include "cocostudio/WidgetReader/ListViewReader/ListViewReader.h"
 #include "cocostudio/WidgetReader/ArmatureNodeReader/ArmatureNodeReader.h"
+#include "cocostudio/WidgetReader/Node3DReader/Node3DReader.h"
+#include "cocostudio/WidgetReader/Sprite3DReader/Sprite3DReader.h"
+#include "cocostudio/WidgetReader/UserCameraReader/UserCameraReader.h"
+#include "cocostudio/WidgetReader/Particle3DReader/Particle3DReader.h"
 
 #include "flatbuffers/flatbuffers.h"
 #include "flatbuffers/util.h"
@@ -204,7 +208,10 @@ CSLoader::CSLoader()
     CREATE_CLASS_NODE_READER_INFO(ListViewReader);
     
     CREATE_CLASS_NODE_READER_INFO(ArmatureNodeReader);
-    
+    CREATE_CLASS_NODE_READER_INFO(Node3DReader);
+    CREATE_CLASS_NODE_READER_INFO(Sprite3DReader);
+    CREATE_CLASS_NODE_READER_INFO(UserCameraReader);
+    CREATE_CLASS_NODE_READER_INFO(Particle3DReader);
 }
 
 void CSLoader::purge()

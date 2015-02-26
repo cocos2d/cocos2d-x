@@ -143,6 +143,8 @@ public:
     static const char* SHADER_3D_POSITION_NORMAL;
     static const char* SHADER_3D_POSITION_NORMAL_TEXTURE;
     static const char* SHADER_3D_SKINPOSITION_NORMAL_TEXTURE;
+    static const char* SHADER_3D_PARTICLE_TEXTURE;
+    static const char* SHADER_3D_PARTICLE_COLOR;
     
     // uniform names
     static const char* UNIFORM_NAME_AMBIENT_COLOR;

@@ -69,7 +69,20 @@
 -- @return Camera#Camera self (return value: cc.Camera)
         
 --------------------------------
---  create default camera, the camera type depends on Director::getProjection 
+-- get depth, camera with larger depth is drawn on top of camera with smaller depth, the depth of camera with CameraFlag::DEFAULT is 0, user defined camera is -1 by default
+-- @function [parent=#Camera] getDepth 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
+-- set depth, camera with larger depth is drawn on top of camera with smaller depth, the depth of camera with CameraFlag::DEFAULT is 0, user defined camera is -1 by default
+-- @function [parent=#Camera] setDepth 
+-- @param self
+-- @param #int depth
+-- @return Camera#Camera self (return value: cc.Camera)
+        
+--------------------------------
+--  create default camera, the camera type depends on Director::getProjection, the depth of the default camera is 0 
 -- @function [parent=#Camera] create 
 -- @param self
 -- @return Camera#Camera ret (return value: cc.Camera)
