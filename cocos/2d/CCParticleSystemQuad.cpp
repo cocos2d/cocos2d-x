@@ -173,7 +173,7 @@ void ParticleSystemQuad::initTexCoordsWithRect(const Rect& pointRect)
     }
     else
     {
-        quads = _vbParticles->getElementsT<V3F_C4B_T2F_Quad>();
+        quads = _vbParticles->getElementsOfType<V3F_C4B_T2F_Quad>();
         start = 0;
         end = _totalParticles;
     }
@@ -239,7 +239,7 @@ void ParticleSystemQuad::setupIndices(size_t count, size_t begin)
     if (0 == count)
         return;
     
-    auto indices = 6 * begin + _ibParticles->getElementsT<uint16_t>();
+    auto indices = 6 * begin + _ibParticles->getElementsOfType<uint16_t>();
     auto end = begin + count;
     
     // count is in quads, begin is in indices, so quads * 6
@@ -289,7 +289,7 @@ void ParticleSystemQuad::updateQuadWithParticle(tParticle* particle, const Vec2&
     }
     else
     {
-        auto quads = _vbParticles->getElementsT<V3F_C4B_T2F_Quad>();
+        auto quads = _vbParticles->getElementsOfType<V3F_C4B_T2F_Quad>();
         quad = &(quads[_particleIdx]);
     }
     Color4B color = (_opacityModifyRGB)
@@ -390,9 +390,9 @@ void ParticleSystemQuad::setTotalParticles(int tp)
         if (amount > 0)
         {
             auto begin = _ibParticles->getCapacity() / 6;     // determine first quad to update
-            _ibParticles->addCapacityT<uint16_t>(6 * amount); // add capacity 6 indices per quad
+            _ibParticles->addCapacityOfType<uint16_t>(6 * amount); // add capacity 6 indices per quad
             setupIndices(amount, begin);                  // update new indices for quads
-            _vbParticles->addCapacityT<V3F_C4B_T2F_Quad>(amount);
+            _vbParticles->addCapacityOfType<V3F_C4B_T2F_Quad>(amount);
         }
     
         _allocatedParticles = tp;
@@ -443,7 +443,7 @@ void ParticleSystemQuad::setBatchNode(ParticleBatchNode* batchNode)
             // copy current state to batch
             V3F_C4B_T2F_Quad* batchQuads = _batchNode->getTextureAtlas()->getQuads();
             V3F_C4B_T2F_Quad* dest = &(batchQuads[_atlasIndex]);
-            auto source = _vbParticles->getElementsT<V3F_C4B_T2F_Quad>();
+            auto source = _vbParticles->getElementsOfType<V3F_C4B_T2F_Quad>();
             memcpy(dest, source, _totalParticles * sizeof(V3F_C4B_T2F_Quad));
 
             CC_SAFE_RELEASE_NULL(_ibParticles);

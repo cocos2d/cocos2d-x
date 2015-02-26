@@ -90,6 +90,12 @@ bool GLArrayBuffer::init(size_t elementSize, size_t maxElements, ArrayType array
     return true;
 }
 
+void GLArrayBuffer::setElements(const void* elements, size_t count, bool defer)
+{
+    setElementCount(count);
+    updateElements(elements, count, 0, defer);
+}
+
 void GLArrayBuffer::updateElements(const void* elements, size_t count, size_t begin, bool defer)
 {
     CCASSERT(hasClient() || hasNative(), "Can only update elements if there is an attached buffer");

@@ -91,12 +91,12 @@ V3F_C4B_T2F_Quad* TextureAtlas::getQuads()
     // if someone accesses the quads directly, presume that changes will be made
     // jag. ugh really? surely the burden should be on the changer of verts?
     _vbAtlas->setDirty(true);
-    return _vbAtlas->getElementsT<V3F_C4B_T2F_Quad>();
+    return _vbAtlas->getElementsOfType<V3F_C4B_T2F_Quad>();
 }
 
 void TextureAtlas::setQuads(V3F_C4B_T2F_Quad* quads)
 {
-    _vbAtlas->updateElementsT<V3F_C4B_T2F_Quad>(quads, _quadCount, 0);
+    _vbAtlas->updateElementsOfType<V3F_C4B_T2F_Quad>(quads, _quadCount, 0);
 }
 
 // TextureAtlas - alloc & init
@@ -178,7 +178,7 @@ void TextureAtlas::setupIndices(size_t count, size_t begin)
     if (0 == count)
         return;
 
-    auto indices = 6 * begin + _ibAtlas->getElementsT<uint16_t>();
+    auto indices = 6 * begin + _ibAtlas->getElementsOfType<uint16_t>();
     auto end = begin + count;
     
     // count is in quads, begin is in indices, so quads * 6
@@ -200,36 +200,36 @@ void TextureAtlas::setupIndices(size_t count, size_t begin)
 void TextureAtlas::updateQuad(V3F_C4B_T2F_Quad *quad, size_t index)
 {
     _quadCount = std::max(index + 1, _quadCount);
-    _vbAtlas->updateElementsT<V3F_C4B_T2F_Quad>(quad, 1, index);
+    _vbAtlas->updateElementsOfType<V3F_C4B_T2F_Quad>(quad, 1, index);
 }
 
 void TextureAtlas::insertQuad(V3F_C4B_T2F_Quad *quad, size_t index)
 {
     ++_quadCount;
-    _vbAtlas->insertElementsT<V3F_C4B_T2F_Quad>(quad, 1, index);
+    _vbAtlas->insertElementsOfType<V3F_C4B_T2F_Quad>(quad, 1, index);
 }
 
 void TextureAtlas::insertQuads(V3F_C4B_T2F_Quad* quads, size_t index, size_t amount)
 {
     _quadCount += amount;
-    _vbAtlas->insertElementsT<V3F_C4B_T2F_Quad>(quads, amount, index);
+    _vbAtlas->insertElementsOfType<V3F_C4B_T2F_Quad>(quads, amount, index);
 }
 
 void TextureAtlas::insertQuadFromIndex(size_t oldIndex, size_t newIndex)
 {
-    _vbAtlas->swapElementsT<V3F_C4B_T2F_Quad>(oldIndex, newIndex, 1);
+    _vbAtlas->swapElementsOfType<V3F_C4B_T2F_Quad>(oldIndex, newIndex, 1);
 }
 
 void TextureAtlas::removeQuadAtIndex(size_t index)
 {
     --_quadCount;
-    _vbAtlas->removeElementsT<V3F_C4B_T2F_Quad>(1, index);
+    _vbAtlas->removeElementsOfType<V3F_C4B_T2F_Quad>(1, index);
 }
 
 void TextureAtlas::removeQuadsAtIndex(size_t index, size_t amount)
 {
     _quadCount -= amount;
-    _vbAtlas->removeElementsT<V3F_C4B_T2F_Quad>(amount, index);
+    _vbAtlas->removeElementsOfType<V3F_C4B_T2F_Quad>(amount, index);
 }
 
 void TextureAtlas::removeAllQuads()
@@ -244,10 +244,10 @@ bool TextureAtlas::resizeCapacity(size_t newCapacity)
     if (amount > 0)
     {
         auto begin = _ibAtlas->getCapacity() / 6;     // determine first quad to update
-        _ibAtlas->addCapacityT<uint16_t>(6 * amount); // add capacity 6 indices per quad
+        _ibAtlas->addCapacityOfType<uint16_t>(6 * amount); // add capacity 6 indices per quad
         setupIndices(amount, begin);                  // update new indices for quads
         
-        _vbAtlas->addCapacityT<V3F_C4B_T2F_Quad>(amount);
+        _vbAtlas->addCapacityOfType<V3F_C4B_T2F_Quad>(amount);
         
         _quadCapacity = newCapacity;
     }
@@ -264,18 +264,18 @@ void TextureAtlas::increaseTotalQuadsWith(size_t amount)
 
 void TextureAtlas::moveQuadsFromIndex(size_t oldIndex, size_t amount, size_t newIndex)
 {
-    _vbAtlas->swapElementsT<V3F_C4B_T2F_Quad>(oldIndex, newIndex, amount);
+    _vbAtlas->swapElementsOfType<V3F_C4B_T2F_Quad>(oldIndex, newIndex, amount);
 }
 
 void TextureAtlas::moveQuadsFromIndex(size_t index, size_t newIndex)
 {
     CCASSERT(newIndex + (_quadCount - index) <= _vbAtlas->getCapacity(), "moveQuadsFromIndex move is out of bounds");
-    _vbAtlas->moveElementsT<V3F_C4B_T2F_Quad>(index, newIndex, _quadCount - index);
+    _vbAtlas->moveElementsOfType<V3F_C4B_T2F_Quad>(index, newIndex, _quadCount - index);
 }
 
 void TextureAtlas::fillWithEmptyQuadsFromIndex(size_t index, size_t amount)
 {
-    _vbAtlas->updateElementsT<V3F_C4B_T2F_Quad>(nullptr, amount, index);
+    _vbAtlas->updateElementsOfType<V3F_C4B_T2F_Quad>(nullptr, amount, index);
 }
 
 // TextureAtlas - Drawing
