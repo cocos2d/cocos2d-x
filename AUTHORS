@@ -1080,6 +1080,9 @@ Developers:
         
     flamefox
         fix the bug that Sprite3D::getAttachNode() should failed when there is no bone with name
+        
+    ryule
+        Fixed HttpClient-ios request to work when the data is started by 0x00
 
 Retired Core Developers:
     WenSheng Yang
