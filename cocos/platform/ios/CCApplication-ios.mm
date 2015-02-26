@@ -158,6 +158,9 @@ LanguageType Application::getCurrentLanguage()
     else if ([languageCode isEqualToString:@"uk"]){
         ret = LanguageType::UKRAINIAN;
     }
+    else if ([languageCode isEqualToString:@"ro"]){
+        ret = LanguageType::ROMANIAN;
+    }
     return ret;
 }
 

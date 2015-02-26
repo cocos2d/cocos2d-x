@@ -51,10 +51,6 @@ public:
         OS_ANDROID,
         OS_IPHONE,
         OS_IPAD,
-        OS_BLACKBERRY,
-        OS_NACL,
-        OS_EMSCRIPTEN,
-        OS_TIZEN,
         OS_WINRT,
         OS_WP8
     };

@@ -2,12 +2,15 @@
 cocos2d-x-4.0alph0 Feb.27 2015
     [NEW]           C++: merge JSB
     [NEW]           C++: merge draw call migration to VertexData
+    [NEW]           C++: add Romanian language support
 
     [FIX]           Audio: audio can not resume if it is interrupt, and back from background
     [FIX]           C++: remove deprecated functions that are deprecated in v2.x
     [FIX]           C++: compiling error when using CC_USE_CULLING
     [FIX]           C++: remove WP8 support
     [FIX]           C++: remove VS2012 support
+    [FIX]           HttpClient: memory leak on iOS
+    [FIX]           HttpClient: if the request data is started by a null character, it does not fill http body
     [FIX]           Label: texture size of string has unexpected padding on iOS 7 and upper version
     [FIX]           Label: stroke color of system font is incorrect on iOS
     [FIX]           MenuItem: crash if `MenuItem::onExit` is called multiple times
