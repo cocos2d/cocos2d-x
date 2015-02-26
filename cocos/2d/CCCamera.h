@@ -149,7 +149,7 @@ public:
      * @param src The screen-space position.
      * @param dst The world-space position.
      */
-    CC_DEPRECATED_ATTRIBUTE void unproject(const Size& viewport, const Vec3* src, Vec3* dst) const;
+    CC_DEPRECATED(3.5) void unproject(const Size& viewport, const Vec3* src, Vec3* dst) const;
     
     /**
      * Is this aabb visible in frustum
