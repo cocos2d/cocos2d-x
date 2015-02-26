@@ -695,10 +695,6 @@ CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetMacOS        = Applic
 CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetAndroid      = Application::Platform::OS_ANDROID;
 CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetIphone       = Application::Platform::OS_IPHONE;
 CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetIpad         = Application::Platform::OS_IPAD;
-CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetBlackBerry   = Application::Platform::OS_BLACKBERRY;
-CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetNaCl         = Application::Platform::OS_NACL;
-CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetEmscripten   = Application::Platform::OS_EMSCRIPTEN;
-CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetTizen        = Application::Platform::OS_TIZEN;
 CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetWinRT        = Application::Platform::OS_WINRT;
 CC_DEPRECATED_ATTRIBUTE const Application::Platform kTargetWP8          = Application::Platform::OS_WP8;
 CC_DEPRECATED_ATTRIBUTE typedef Application::Platform TargetPlatform;

@@ -1238,30 +1238,6 @@ cc._initSys = function(config, CONFIG_KEY){
      * @default
      * @type {Number}
      */
-    locSys.BLACKBERRY = 6;
-    /**
-     * @constant
-     * @default
-     * @type {Number}
-     */
-    locSys.NACL = 7;
-    /**
-     * @constant
-     * @default
-     * @type {Number}
-     */
-    locSys.EMSCRIPTEN = 8;
-    /**
-     * @constant
-     * @default
-     * @type {Number}
-     */
-    locSys.TIZEN = 9;
-    /**
-     * @constant
-     * @default
-     * @type {Number}
-     */
     locSys.WINRT = 10;
     /**
      * @constant

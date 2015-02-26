@@ -40,11 +40,6 @@ THE SOFTWARE.
 #include "base/ccUtils.h"
 #include "base/ccUTF8.h"
 
-#ifdef EMSCRIPTEN
-#include <emscripten/emscripten.h>
-#include "platform/emscripten/CCTextureCacheEmscripten.h"
-#endif // EMSCRIPTEN
-
 using namespace std;
 
 NS_CC_BEGIN
