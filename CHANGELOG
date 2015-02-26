@@ -6,6 +6,7 @@ cocos2d-x-3.5beta0  Feb.27 2015
     [FIX]           C++: compiling error when using CC_USE_CULLING
     [FIX]           Label: texture size of string has unexpected padding on iOS 7 and upper version
     [FIX]           HttpClient: if the request data is started by a null character, it does not fill http body
+    [FIX]           HttpClient: memory leak
     [FIX]           Sprite3D: `getAttachNode()` will fail when there is no bone with name
     
 cocos2d-x-3.4 Jan.30 2015
