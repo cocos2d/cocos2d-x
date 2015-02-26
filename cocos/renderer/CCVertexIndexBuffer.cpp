@@ -90,6 +90,12 @@ bool GLArrayBuffer::init(size_t elementSize, size_t maxElements, ArrayType array
     return true;
 }
 
+void GLArrayBuffer::setElements(const void* elements, size_t count, bool defer)
+{
+    setElementCount(count);
+    updateElements(elements, count, 0, defer);
+}
+
 void GLArrayBuffer::updateElements(const void* elements, size_t count, size_t begin, bool defer)
 {
     CCASSERT(hasClient() || hasNative(), "Can only update elements if there is an attached buffer");
@@ -211,7 +217,8 @@ void GLArrayBuffer::bindAndCommit(const void* elements, size_t count, size_t beg
         _vboSize = getCapacityInBytes();
         CCASSERT(_vboSize, "_vboSize should not be 0");
         GL::bindVBO(_target, _vbo);
-        glBufferData(_target, _vboSize, elements, _usage);
+        glBufferData(_target, _vboSize, nullptr, _usage);
+        glBufferData(_target, count * getElementSize(), elements, _usage);
         CHECK_GL_ERROR_DEBUG();
     }
     else
@@ -219,7 +226,7 @@ void GLArrayBuffer::bindAndCommit(const void* elements, size_t count, size_t beg
         GL::bindVBO(_target, _vbo);
         const auto size = getCapacityInBytes();
         CCASSERT(size, "size should not be 0");
-        if (size > _vboSize)
+        if (size >= _vboSize)
         {
             _vboSize = size;
             glBufferData(_target, size, elements, _usage);
