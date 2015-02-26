@@ -268,6 +268,7 @@ Vec3 Camera::unproject(const Vec3* src) const
     CCASSERT(src, "vec3 being projected can not be null");
     
     auto viewport = Director::getInstance()->getWinSize();
+
     Vec4 screen(src->x / viewport.width, ((viewport.height - src->y)) / viewport.height, src->z, 1.0f);
     screen.x = screen.x * 2.0f - 1.0f;
     screen.y = screen.y * 2.0f - 1.0f;

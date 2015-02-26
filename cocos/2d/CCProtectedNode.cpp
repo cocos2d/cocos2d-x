@@ -431,4 +431,17 @@ void ProtectedNode::disableCascadeOpacity()
     }
 }
 
+void ProtectedNode::setCameraMask(unsigned short mask, bool applyChildren)
+{
+    Node::setCameraMask(mask, applyChildren);
+    if (applyChildren)
+    {
+        for (auto& iter: _protectedChildren)
+        {
+            iter->setCameraMask(mask);
+        }
+    }
+    
+}
+
 NS_CC_END
