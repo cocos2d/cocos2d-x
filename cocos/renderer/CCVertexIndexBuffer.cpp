@@ -225,7 +225,7 @@ void GLArrayBuffer::bindAndCommit(const void* elements, size_t count, size_t beg
         GL::bindVBO(_target, _vbo);
         const auto size = getCapacityInBytes();
         CCASSERT(size, "size should not be 0");
-        if (size > _vboSize)
+        if (size >= _vboSize)
         {
             _vboSize = size;
             glBufferData(_target, size, elements, _usage);
