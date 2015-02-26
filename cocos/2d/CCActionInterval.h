@@ -392,7 +392,7 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     RotateTo();
     virtual ~RotateTo() {
-
+        TRY_STOP_FULL_CYCLE;
     }
 
     /** 
@@ -461,7 +461,7 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     RotateBy();
     virtual ~RotateBy() {
-
+        TRY_STOP_FULL_CYCLE;
     }
 
     /** initializes the action */
@@ -516,10 +516,10 @@ public:
     
 CC_CONSTRUCTOR_ACCESS:
     MoveBy():_is3D(false) {
-        
+        TRIGGER_FULL_CYCLE;
     }
     virtual ~MoveBy() {
-        
+        TRY_STOP_FULL_CYCLE;
     }
 
     /** initializes the action */
@@ -563,12 +563,10 @@ public:
     
 CC_CONSTRUCTOR_ACCESS:
     MoveTo() {
-        log("%d\n",Ref::_s_iActionCounts);
-   // TRIGGER_FULL_CYCLE;
+    TRIGGER_FULL_CYCLE;
     }
     virtual ~MoveTo() {
-      //  TRY_STOP_FULL_CYCLE;
-      
+        TRY_STOP_FULL_CYCLE;
     }
 
     /** 

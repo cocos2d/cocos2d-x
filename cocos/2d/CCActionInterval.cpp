@@ -757,7 +757,7 @@ RotateTo* RotateTo::create(float duration, const Vec3& dstAngle3D)
 RotateTo::RotateTo()
 : _is3D(false)
 {
-   
+    TRIGGER_FULL_CYCLE;
 }
 
 bool RotateTo::initWithDuration(float duration, float dstAngleX, float dstAngleY)
@@ -911,7 +911,7 @@ RotateBy* RotateBy::create(float duration, const Vec3& deltaAngle3D)
 RotateBy::RotateBy()
 : _is3D(false)
 {
-    
+    TRIGGER_FULL_CYCLE;
 }
 
 bool RotateBy::initWithDuration(float duration, float deltaAngle)

@@ -32,12 +32,12 @@ THE SOFTWARE.
 #define CC_REF_LEAK_DETECTION 0
 
 #define TRIGGER_FULL_CYCLE \
-++Ref::_s_iActionCounts; \
+++Node::_s_iActionCounts; \
 cocos2d::Director::getInstance()->setAnimationInterval(1/60.0f);
 
 #define TRY_STOP_FULL_CYCLE \
---Ref::_s_iActionCounts;\
-if(Ref::_s_iActionCounts==0)\
+--Node::_s_iActionCounts;\
+if(_s_iActionCounts==0)\
 {\
 Director::getInstance()->setAnimationInterval(1);\
 }

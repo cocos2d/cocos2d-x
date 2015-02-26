@@ -61,12 +61,10 @@ public:
     
 CC_CONSTRUCTOR_ACCESS:
     ProgressTo() {
-    //    TRIGGER_FULL_CYCLE ;
+        TRIGGER_FULL_CYCLE ;
 
     }
-    virtual ~ProgressTo() {
-//        TRY_STOP_FULL_CYCLE;
-    }
+    virtual ~ProgressTo() {TRY_STOP_FULL_CYCLE;}
 
     /** 
      * Initializes with a duration and a percent 
@@ -107,11 +105,9 @@ public:
     virtual void update(float time) override;
     
 CC_CONSTRUCTOR_ACCESS:
-    ProgressFromTo() {
-    //    TRIGGER_FULL_CYCLE ;
-    }
+    ProgressFromTo() {   TRIGGER_FULL_CYCLE ;}
     virtual ~ProgressFromTo() {
-      //  TRY_STOP_FULL_CYCLE;
+        TRY_STOP_FULL_CYCLE;
     }
 
     /** Initializes the action with a duration, a "from" percentage and a "to" percentage */
