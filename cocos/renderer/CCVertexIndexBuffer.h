@@ -29,10 +29,6 @@
 #include "base/ccMacros.h"
 #include "base/CCRef.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN)
-    #define SUPPORT_NO_CLIENT_SIDE_ARRAYS
-#endif
-
 NS_CC_BEGIN
 
 class EventListenerCustom;
