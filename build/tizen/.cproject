@@ -219,79 +219,13 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/ConvertUTF}&quot;"/>
 									<listOptionValue builtIn="false" value="../../../"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/cocos}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/webp/src/webp}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/webp/include/tizen}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/cocos/editor-support}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/protobuf-lite/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/libwebsockets/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/xxtea}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/tiff/include/tizen}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/json}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/tinyxml2}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/libxml2&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SDK_INSTALL_PATH}/library&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/AL&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/appcore-agent&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/appfw&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/base&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/cairo&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/calendar-service2&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/ckm&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/contacts-svc&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/content&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/curl&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/dbus-1.0&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/lib/dbus-1.0/include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/dlog&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/ecore-1&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/e_dbus-1&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/edje-1&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/eet-1&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/efreet-1&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/eina-1/eina&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/eina-1&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/elementary-1&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/ethumb-1&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/evas-1&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/fontconfig&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/freetype2&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/gio-unix-2.0&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/glib-2.0&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/lib/glib-2.0/include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/json-glib-1.0&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/json-glib-1.0/json-glib&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/libexif&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/media-content&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/media&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/minizip&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/network&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/notification&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/shortcut&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/storage&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/system&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/ui&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/vconf&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/web&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/EGL&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/GLES&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/GLES2&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/KHR&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/badge&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/eio-1&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/email-service&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/embryo-1&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/messaging&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/msg-service&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/ug-1&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/context-manager&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/telephony&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/telephony-client&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/ewebkit2-0&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/location&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/sensor&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/efl-extension&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/wifi-direct&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/libcocos2dx/external/png/include/tizen}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/libcocos2dx/external/jpeg/include/tizen}&quot;"/>
 								</option>
@@ -341,46 +275,12 @@
 							<tool id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.1298039336" name="C++ Compiler" superClass="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.1192678710">
 								<inputType id="sbi.gnu.cpp.compiler.tizen.inputType.1495183138"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.925438406" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.1298039336.423009189"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.1298039336.483160056"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.1298039336.1894793504"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.1298039336.2057916868"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.1298039336.247921068"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.1298039336.1571969065"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.1298039336.1798217123"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.1298039336.1311824345"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.1298039336.382573305"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.1298039336.90482182"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.1298039336.329902869"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.1298039336.1317598343"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.1298039336.262493691"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.1298039336.732554189"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.1298039336.2130809663"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.1298039336.321739151"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.1298039336.470337253"/>
 								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.1298039336.1225008802"/>
 							</tool>
 							<tool id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.677899078" name="C Compiler" superClass="org.tizen.nativecore.tool.sbi.gnu.c.compiler.85030265">
 								<option id="gnu.c.compiler.option.dialect.std.1806502218" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" value="gnu.c.compiler.dialect.default" valueType="enumerated"/>
 								<inputType id="sbi.gnu.c.compiler.tizen.inputType.835776111"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1830101390" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.677899078.1429189586"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.677899078.1709215975"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.677899078.25444712"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.677899078.849289348"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.677899078.333738969"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.677899078.2130427823"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.677899078.1699928218"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.677899078.1654431755"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.677899078.1178167407"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.677899078.2097784221"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.677899078.910642982"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.677899078.452678666"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.677899078.1822580338"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.677899078.2104204590"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.677899078.1817631677"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.677899078.558644401"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.677899078.484566918"/>
 								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.677899078.1909676037"/>
 							</tool>
 							<tool id="org.tizen.nativeide.tool.sbi.gnu.c.linker.base.300928002" name="C Linker" superClass="org.tizen.nativeide.tool.sbi.gnu.c.linker.base.1220871656"/>
@@ -400,7 +300,6 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="extensions"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="external"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="res"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -506,11 +405,9 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/ConvertUTF}&quot;"/>
 									<listOptionValue builtIn="false" value="../../"/>
 									<listOptionValue builtIn="false" value="../../../"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/webp/src/webp}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/webp/include/tizen}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/cocos}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/cocos/editor-support}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/protobuf-lite/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/libwebsockets/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/xxtea}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/tiff/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/png/src}&quot;"/>
@@ -615,10 +512,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/ConvertUTF}&quot;"/>
 									<listOptionValue builtIn="false" value="../../../"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/cocos}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/webp/src/webp}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/webp/include/tizen}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/cocos/editor-support}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/protobuf-lite/src}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/libwebsockets/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/xxtea}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/tiff/src}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/external/png/src}&quot;"/>
@@ -671,46 +566,12 @@
 							<tool id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.2119985883" name="C++ Compiler" superClass="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.650668146">
 								<inputType id="sbi.gnu.cpp.compiler.tizen.inputType.804249420"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1917555118" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.2119985883.377748590"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.2119985883.1744711026"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.2119985883.471581497"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.2119985883.992396914"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.2119985883.1641886393"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.2119985883.1023732344"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.2119985883.868870674"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.2119985883.1334739011"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.2119985883.1100356375"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.2119985883.1918949182"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.2119985883.672372030"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.2119985883.594772640"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.2119985883.122904145"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.2119985883.1053800264"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.2119985883.2023757152"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.2119985883.139138878"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.2119985883.1119282999"/>
 								<inputType id="org.tizen.nativecore.tool.sbi.gnu.cpp.compiler.2119985883.55248110"/>
 							</tool>
 							<tool id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.69297097" name="C Compiler" superClass="org.tizen.nativecore.tool.sbi.gnu.c.compiler.1598717447">
 								<option id="gnu.c.compiler.option.dialect.std.2076507883" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" value="gnu.c.compiler.dialect.default" valueType="enumerated"/>
 								<inputType id="sbi.gnu.c.compiler.tizen.inputType.1173044039"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1148706754" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.69297097.970210753"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.69297097.2095604727"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.69297097.68025168"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.69297097.1523569569"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.69297097.97506105"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.69297097.1664928009"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.69297097.13082848"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.69297097.1099172599"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.69297097.649457729"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.69297097.385771110"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.69297097.803346776"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.69297097.1431891890"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.69297097.1803485767"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.69297097.1925248193"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.69297097.745943889"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.69297097.1510681020"/>
-								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.69297097.1061446938"/>
 								<inputType id="org.tizen.nativecore.tool.sbi.gnu.c.compiler.69297097.1273633635"/>
 							</tool>
 							<tool id="org.tizen.nativeide.tool.sbi.gnu.c.linker.base.416005391" name="C Linker" superClass="org.tizen.nativeide.tool.sbi.gnu.c.linker.base.80630159"/>
@@ -730,7 +591,6 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="extensions"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="external"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="res"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
