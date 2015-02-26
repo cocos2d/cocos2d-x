@@ -130,11 +130,30 @@ public:
 
     /**get view projection matrix*/
     const Mat4& getViewProjectionMatrix() const;
+    
+    /* convert the specified point of viewport from world-space coordinates into the screen-space coordinates.
+     *
+     * @param src The world-space position.
+     * @return The screen-space position.
+     */
+    Vec2 project(const Vec3* src) const;
+    
+    /**
+     * Convert the specified point of viewport from screen-space coordinate into the world-space coordinate.
+     *
+     * @param src The screen-space position.
+     * @return The world-space position.
+     */
+    Vec3 unproject(const Vec3* src) const;
 
     /**
-    * Convert the specified point of viewport from screenspace coordinate into the worldspace coordinate.
-    */
-    void unproject(const Size& viewport, Vec3* src, Vec3* dst) const;
+     * Convert the specified point of viewport from screen-space coordinate into the world-space coordinate.
+     *
+     * @param viewport The viewport size to use.
+     * @param src The screen-space position.
+     * @param dst The world-space position.
+     */
+    CC_DEPRECATED_ATTRIBUTE void unproject(const Size& viewport, const Vec3* src, Vec3* dst) const;
     
     /**
      * Is this aabb visible in frustum
