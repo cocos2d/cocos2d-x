@@ -1083,6 +1083,9 @@ Developers:
         
     ryule
         Fixed HttpClient-ios request to work when the data is started by 0x00
+        
+    loadrunner
+        Added romanian languange support
 
 Retired Core Developers:
     WenSheng Yang
