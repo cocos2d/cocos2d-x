@@ -524,7 +524,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\renderer\CCQuadCommand.cpp" />
     <ClCompile Include="..\renderer\CCRenderCommand.cpp" />
     <ClCompile Include="..\renderer\CCRenderer.cpp" />
+    <ClCompile Include="..\renderer\CCScissorCommand.cpp" />
     <ClCompile Include="..\renderer\ccShaders.cpp" />
+    <ClCompile Include="..\renderer\CCStencilCommand.cpp" />
     <ClCompile Include="..\renderer\CCTexture2D.cpp" />
     <ClCompile Include="..\renderer\CCTextureAtlas.cpp" />
     <ClCompile Include="..\renderer\CCTextureCache.cpp" />
@@ -1036,7 +1038,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\renderer\CCRenderCommand.h" />
     <ClInclude Include="..\renderer\CCRenderCommandPool.h" />
     <ClInclude Include="..\renderer\CCRenderer.h" />
+    <ClInclude Include="..\renderer\CCScissorCommand.h" />
     <ClInclude Include="..\renderer\ccShaders.h" />
+    <ClInclude Include="..\renderer\CCStencilCommand.h" />
     <ClInclude Include="..\renderer\CCTexture2D.h" />
     <ClInclude Include="..\renderer\CCTextureAtlas.h" />
     <ClInclude Include="..\renderer\CCTextureCache.h" />
