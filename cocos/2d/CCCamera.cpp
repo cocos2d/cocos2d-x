@@ -226,14 +226,14 @@ bool Camera::initOrthographic(float zoomX, float zoomY, float nearPlane, float f
 
 Vec2 Camera::project(const Vec3* src) const
 {
-    GP_ASSERT(src);
+    CCASSERT(src, "");
     Vec2 screenPos;
     
     auto viewport = Director::getInstance()->getWinSize();
     Vec4 clipPos;
     getViewProjectionMatrix().transformVector(Vec4(src->x, src->y, src->z, 1.0f), &clipPos);
     
-    GP_ASSERT(clipPos.w != 0.0f);
+    CCASSERT(clipPos.w != 0.0f, "");
     float ndcX = clipPos.x / clipPos.w;
     float ndcY = clipPos.y / clipPos.w;
     
