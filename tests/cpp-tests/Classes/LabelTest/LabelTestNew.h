@@ -450,7 +450,7 @@ private:
     void  setAlignmentTop(Ref* sender);
     void  setAlignmentMiddle(Ref* sender);
     void  setAlignmentBottom(Ref* sender);
-    const char* getCurrentAlignment();
+    std::string getCurrentAlignment();
 
     Label* _label;
     TextHAlignment _horizAlign;

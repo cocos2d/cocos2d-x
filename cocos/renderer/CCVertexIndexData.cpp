@@ -35,6 +35,7 @@
 #include "base/CCEventType.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
+#include "base/CCDirector.h"
 #define SUPPORT_EVENT_RENDERER_RECREATED
 #endif
 
@@ -48,7 +49,7 @@ VertexData::VertexData(Primitive primitive)
     , _drawingPrimitive(primitive)
 {
 #ifdef SUPPORT_EVENT_RENDERER_RECREATED
-    _recreateEventListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(EVENT_RENDERER_RECREATED, [this](EventCustom* event){this->recreate();};);
+    _recreateEventListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(EVENT_RENDERER_RECREATED, [this](EventCustom* event){this->recreate();});
 #endif
 }
 

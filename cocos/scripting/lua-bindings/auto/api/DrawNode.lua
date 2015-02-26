@@ -41,14 +41,6 @@
 
 --------------------------------
 -- 
--- @function [parent=#DrawNode] onDrawGLPoint 
--- @param self
--- @param #mat4_table transform
--- @param #unsigned int flags
--- @return DrawNode#DrawNode self (return value: cc.DrawNode)
-        
---------------------------------
--- 
 -- @function [parent=#DrawNode] init 
 -- @param self
 -- @return bool#bool ret (return value: bool)
@@ -80,14 +72,6 @@
 -- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
         
 --------------------------------
--- 
--- @function [parent=#DrawNode] onDraw 
--- @param self
--- @param #mat4_table transform
--- @param #unsigned int flags
--- @return DrawNode#DrawNode self (return value: cc.DrawNode)
-        
---------------------------------
 -- @overload self, vec2_table, float, float, unsigned int, bool, color4f_table         
 -- @overload self, vec2_table, float, float, unsigned int, bool, float, float, color4f_table         
 -- @function [parent=#DrawNode] drawCircle
@@ -111,14 +95,6 @@
 -- @param #vec2_table destination
 -- @param #unsigned int segments
 -- @param #color4f_table color
--- @return DrawNode#DrawNode self (return value: cc.DrawNode)
-        
---------------------------------
--- 
--- @function [parent=#DrawNode] onDrawGLLine 
--- @param self
--- @param #mat4_table transform
--- @param #unsigned int flags
 -- @return DrawNode#DrawNode self (return value: cc.DrawNode)
         
 --------------------------------
@@ -177,12 +153,6 @@
 -- @param #unsigned int segments
 -- @param #color4f_table color
 -- @return DrawNode#DrawNode self (return value: cc.DrawNode)
-        
---------------------------------
---  creates and initialize a DrawNode node 
--- @function [parent=#DrawNode] create 
--- @param self
--- @return DrawNode#DrawNode ret (return value: cc.DrawNode)
         
 --------------------------------
 -- 

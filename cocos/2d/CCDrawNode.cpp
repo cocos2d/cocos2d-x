@@ -89,19 +89,19 @@ void DrawNode::draw(Renderer* renderer, const Mat4& transform, uint32_t flags)
 {
     if (!_vdTriangles->empty())
     {
-        _batchCommandTriangles.init(_globalZOrder, getGLProgram(), _blendFunc, nullptr, _vdTriangles, _transform);
+        _batchCommandTriangles.init(_globalZOrder, getGLProgram(), _blendFunc, nullptr, _vdTriangles, transform);
         renderer->addCommand(&_batchCommandTriangles);
     }
     
     if (!_vdLines->empty())
     {
-        _batchCommandLines.init(_globalZOrder, getGLProgram(), _blendFunc, nullptr, _vdLines, _transform);
+        _batchCommandLines.init(_globalZOrder, getGLProgram(), _blendFunc, nullptr, _vdLines, transform);
         renderer->addCommand(&_batchCommandLines);
     }
     
     if (!_vdPoints->empty())
     {
-        _batchCommandPoints.init(_globalZOrder, getGLProgram(), _blendFunc, nullptr, _vdPoints, _transform);
+        _batchCommandPoints.init(_globalZOrder, getGLProgram(), _blendFunc, nullptr, _vdPoints, transform);
         renderer->addCommand(&_batchCommandPoints);
     }
 }

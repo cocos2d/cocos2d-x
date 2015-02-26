@@ -405,9 +405,8 @@ void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false *
         _commonLineHeight = _fontAtlas->getCommonLineHeight();
         _contentDirty = true;
     }
-    // some older Windows Phones cannot run the ccShader_Label_df.frag program
-    // so we must disable distance field
-    _useDistanceField = false;
+
+    _useDistanceField = distanceFieldEnabled;
     _useA8Shader = useA8Shader;
 
     if (_currentLabelType != LabelType::TTF)

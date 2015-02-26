@@ -1,6 +1,6 @@
 {
-    "version":"v4-deps-2",
-    "zip_file_size":"118971367",
+    "version":"v4-deps-3",
+    "zip_file_size":"107901517",
     "repo_name":"cocos2d-x-3rd-party-libs-bin",
     "repo_parent":"https://github.com/cocos2d/",
     "move_dirs":{

@@ -29,14 +29,7 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (push)
-#pragma warning (disable: 4996)
-#endif
-
-LabelTTF::LabelTTF()
+__LabelTTF::__LabelTTF()
 {
     _renderLabel = Label::create();
     _renderLabel->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
@@ -48,13 +41,13 @@ LabelTTF::LabelTTF()
     _cascadeOpacityEnabled = true;
 }
 
-LabelTTF::~LabelTTF()
+__LabelTTF::~__LabelTTF()
 {
 }
 
-LabelTTF * LabelTTF::create()
+__LabelTTF * __LabelTTF::create()
 {
-    LabelTTF * ret = new (std::nothrow) LabelTTF();
+    __LabelTTF * ret = new (std::nothrow) __LabelTTF();
     if (ret)
     {
         ret->autorelease();
@@ -66,11 +59,11 @@ LabelTTF * LabelTTF::create()
     return ret;
 }
 
-LabelTTF* LabelTTF::create(const std::string& string, const std::string& fontName, float fontSize,
+__LabelTTF* __LabelTTF::create(const std::string& string, const std::string& fontName, float fontSize,
                                const Size &dimensions, TextHAlignment hAlignment, 
                                TextVAlignment vAlignment)
 {
-    LabelTTF *ret = new (std::nothrow) LabelTTF();
+    __LabelTTF *ret = new (std::nothrow) __LabelTTF();
     if(ret && ret->initWithString(string, fontName, fontSize, dimensions, hAlignment, vAlignment))
     {
         ret->autorelease();
@@ -80,9 +73,9 @@ LabelTTF* LabelTTF::create(const std::string& string, const std::string& fontNam
     return nullptr;
 }
 
-LabelTTF * LabelTTF::createWithFontDefinition(const std::string& string, FontDefinition &textDefinition)
+__LabelTTF * __LabelTTF::createWithFontDefinition(const std::string& string, FontDefinition &textDefinition)
 {
-    LabelTTF *ret = new (std::nothrow) LabelTTF();
+    __LabelTTF *ret = new (std::nothrow) __LabelTTF();
     if(ret && ret->initWithStringAndTextDefinition(string, textDefinition))
     {
         ret->autorelease();
@@ -92,7 +85,7 @@ LabelTTF * LabelTTF::createWithFontDefinition(const std::string& string, FontDef
     return nullptr;
 }
 
-bool LabelTTF::initWithString(const std::string& string, const std::string& fontName, float fontSize,
+bool __LabelTTF::initWithString(const std::string& string, const std::string& fontName, float fontSize,
                                 const cocos2d::Size &dimensions, TextHAlignment hAlignment,
                                 TextVAlignment vAlignment)
 {
@@ -106,7 +99,7 @@ bool LabelTTF::initWithString(const std::string& string, const std::string& font
     return true;
 }
 
-bool LabelTTF::initWithStringAndTextDefinition(const std::string& string, FontDefinition &textDefinition)
+bool __LabelTTF::initWithStringAndTextDefinition(const std::string& string, FontDefinition &textDefinition)
 {
     _renderLabel->setFontDefinition(textDefinition);
     _renderLabel->setString(string);
@@ -115,78 +108,78 @@ bool LabelTTF::initWithStringAndTextDefinition(const std::string& string, FontDe
     return true;
 }
 
-void LabelTTF::setString(const std::string &string)
+void __LabelTTF::setString(const std::string &string)
 {
     _renderLabel->setString(string);
     _contentDirty = true;
 }
 
-const std::string& LabelTTF::getString() const
+const std::string& __LabelTTF::getString() const
 {
     return _renderLabel->getString();
 }
 
-std::string LabelTTF::getDescription() const
+std::string __LabelTTF::getDescription() const
 {
-    return StringUtils::format("<LabelTTF | FontName = %s, FontSize = %f, Label = '%s'>", _renderLabel->getSystemFontName().c_str(), _renderLabel->getSystemFontSize(), _renderLabel->getString().c_str());
+    return StringUtils::format("<__LabelTTF | FontName = %s, FontSize = %f, Label = '%s'>", _renderLabel->getSystemFontName().c_str(), _renderLabel->getSystemFontSize(), _renderLabel->getString().c_str());
 }
 
-TextHAlignment LabelTTF::getHorizontalAlignment() const
+TextHAlignment __LabelTTF::getHorizontalAlignment() const
 {
     return _renderLabel->getHorizontalAlignment();
 }
 
-void LabelTTF::setHorizontalAlignment(TextHAlignment alignment)
+void __LabelTTF::setHorizontalAlignment(TextHAlignment alignment)
 {
     _renderLabel->setHorizontalAlignment(alignment);
     _contentDirty = true;
 }
 
-TextVAlignment LabelTTF::getVerticalAlignment() const
+TextVAlignment __LabelTTF::getVerticalAlignment() const
 {
     return _renderLabel->getVerticalAlignment();
 }
 
-void LabelTTF::setVerticalAlignment(TextVAlignment verticalAlignment)
+void __LabelTTF::setVerticalAlignment(TextVAlignment verticalAlignment)
 {
     _renderLabel->setVerticalAlignment(verticalAlignment);
     _contentDirty = true;
 }
 
-const Size& LabelTTF::getDimensions() const
+const Size& __LabelTTF::getDimensions() const
 {
     return _renderLabel->getDimensions();
 }
 
-void LabelTTF::setDimensions(const Size &dim)
+void __LabelTTF::setDimensions(const Size &dim)
 {
     _renderLabel->setDimensions(dim.width,dim.height);
     _contentDirty = true;
 }
 
-float LabelTTF::getFontSize() const
+float __LabelTTF::getFontSize() const
 {
     return _renderLabel->getSystemFontSize();
 }
 
-void LabelTTF::setFontSize(float fontSize)
+void __LabelTTF::setFontSize(float fontSize)
 {
     _renderLabel->setSystemFontSize(fontSize);
     _contentDirty = true;
 }
 
-const std::string& LabelTTF::getFontName() const
+const std::string& __LabelTTF::getFontName() const
 {
     return _renderLabel->getSystemFontName();
 }
 
-void LabelTTF::setFontName(const std::string& fontName)
+void __LabelTTF::setFontName(const std::string& fontName)
 {
     _renderLabel->setSystemFontName(fontName);
     _contentDirty = true;
 }
 
-void LabelTTF::enableShadow(const Size &shadowOffset, float shadowOpacity, float shadowBlur, bool updateTexture)
+void __LabelTTF::enableShadow(const Size &shadowOffset, float shadowOpacity, float shadowBlur, bool updateTexture)
 {
     Color4B temp(Color3B::BLACK);
     temp.a = 255 * shadowOpacity;
@@ -194,51 +187,51 @@ void LabelTTF::enableShadow(const Size &shadowOffset, float shadowOpacity, float
     _contentDirty = true;
 }
 
-void LabelTTF::disableShadow(bool updateTexture)
+void __LabelTTF::disableShadow(bool updateTexture)
 {
     _renderLabel->disableEffect();
     _contentDirty = true;
 }
 
-void LabelTTF::enableStroke(const Color3B &strokeColor, float strokeSize, bool updateTexture)
+void __LabelTTF::enableStroke(const Color3B &strokeColor, float strokeSize, bool updateTexture)
 {
     _renderLabel->enableOutline(Color4B(strokeColor),strokeSize);
     _contentDirty = true;
 }
 
-void LabelTTF::disableStroke(bool updateTexture)
+void __LabelTTF::disableStroke(bool updateTexture)
 {
     _renderLabel->disableEffect();
     _contentDirty = true;
 }
 
-void LabelTTF::setFontFillColor(const Color3B &tintColor, bool updateTexture)
+void __LabelTTF::setFontFillColor(const Color3B &tintColor, bool updateTexture)
 {
     _renderLabel->setTextColor(Color4B(tintColor));
 }
 
-void LabelTTF::setTextDefinition(const FontDefinition& theDefinition)
+void __LabelTTF::setTextDefinition(const FontDefinition& theDefinition)
 {
     _renderLabel->setFontDefinition(theDefinition);
     _contentDirty = true;
 }
 
-const FontDefinition& LabelTTF::getTextDefinition() const
+const FontDefinition& __LabelTTF::getTextDefinition() const
 {
     return _renderLabel->getFontDefinition();
 }
 
-void LabelTTF::setBlendFunc(const BlendFunc &blendFunc)
+void __LabelTTF::setBlendFunc(const BlendFunc &blendFunc)
 {
     _renderLabel->setBlendFunc(blendFunc);
 }
 
-const BlendFunc &LabelTTF::getBlendFunc() const
+const BlendFunc &__LabelTTF::getBlendFunc() const
 {
     return _renderLabel->getBlendFunc();
 }
 
-void LabelTTF::setFlippedX(bool flippedX)
+void __LabelTTF::setFlippedX(bool flippedX)
 {
     if (flippedX)
     {
@@ -250,7 +243,7 @@ void LabelTTF::setFlippedX(bool flippedX)
     }
 }
 
-void LabelTTF::setFlippedY(bool flippedY)
+void __LabelTTF::setFlippedY(bool flippedY)
 {
     if (flippedY)
     {
@@ -262,7 +255,7 @@ void LabelTTF::setFlippedY(bool flippedY)
     }
 }
 
-void LabelTTF::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
+void __LabelTTF::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     if (_contentDirty)
     {
@@ -272,22 +265,16 @@ void LabelTTF::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t p
     Node::visit(renderer,parentTransform, parentFlags);
 }
 
-const Size& LabelTTF::getContentSize() const
+const Size& __LabelTTF::getContentSize() const
 {
-    const_cast<LabelTTF*>(this)->setContentSize(_renderLabel->getContentSize());
+    const_cast<__LabelTTF*>(this)->setContentSize(_renderLabel->getContentSize());
     return _contentSize;
 }
 
-Rect LabelTTF::getBoundingBox() const
+Rect __LabelTTF::getBoundingBox() const
 {
-    const_cast<LabelTTF*>(this)->setContentSize(_renderLabel->getContentSize());
+    const_cast<__LabelTTF*>(this)->setContentSize(_renderLabel->getContentSize());
     return Node::getBoundingBox();
 }
-
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic warning "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (pop)
-#endif
 
 NS_CC_END

@@ -44,9 +44,6 @@ namespace ui {
     
 static const int BACKGROUNDIMAGE_Z = (-1);
 static const int BCAKGROUNDCOLORRENDERER_Z = (-2);
-
-static GLint g_sStencilBits = -1;
-static GLint s_layer = -1;
     
 IMPLEMENT_CLASS_GUI_INFO(Layout)
 
@@ -75,18 +72,6 @@ _scissorRectDirty(false),
 _clippingRect(Rect::ZERO),
 _clippingParent(nullptr),
 _clippingRectDirty(true),
-_currentStencilEnabled(GL_FALSE),
-_currentStencilWriteMask(~0),
-_currentStencilFunc(GL_ALWAYS),
-_currentStencilRef(0),
-_currentStencilValueMask(~0),
-_currentStencilFail(GL_KEEP),
-_currentStencilPassDepthFail(GL_KEEP),
-_currentStencilPassDepthPass(GL_KEEP),
-_currentDepthWriteMask(GL_TRUE),
-_currentAlphaTestEnabled(GL_FALSE),
-_currentAlphaTestFunc(GL_ALWAYS),
-_currentAlphaTestRef(1),
 _doLayoutDirty(true),
 _isInterceptTouch(false),
 _loopFocus(false),
@@ -256,15 +241,13 @@ void Layout::stencilClippingVisit(Renderer *renderer, const Mat4& parentTransfor
     
     renderer->pushGroup(_groupCommand.getRenderQueueID());
     
-    _beforeVisitCmdStencil.init(_globalZOrder);
-    _beforeVisitCmdStencil.func = CC_CALLBACK_0(Layout::onBeforeVisitStencil, this);
-    renderer->addCommand(&_beforeVisitCmdStencil);
+    _beginStencilCommand.init(_globalZOrder, false, 1, _clippingStencil);
+    renderer->addCommand(&_beginStencilCommand);
     
     _clippingStencil->visit(renderer, _modelViewTransform, flags);
     
-    _afterDrawStencilCmd.init(_globalZOrder);
-    _afterDrawStencilCmd.func = CC_CALLBACK_0(Layout::onAfterDrawStencil, this);
-    renderer->addCommand(&_afterDrawStencilCmd);
+    _afterStencilCommand.init(_globalZOrder);
+    renderer->addCommand(&_afterStencilCommand);
     
     int i = 0;      // used by _children
     int j = 0;      // used by _protectedChildren
@@ -310,129 +293,23 @@ void Layout::stencilClippingVisit(Renderer *renderer, const Mat4& parentTransfor
         (*it)->visit(renderer, _modelViewTransform, flags);
 
     
-    _afterVisitCmdStencil.init(_globalZOrder);
-    _afterVisitCmdStencil.func = CC_CALLBACK_0(Layout::onAfterVisitStencil, this);
-    renderer->addCommand(&_afterVisitCmdStencil);
+    _endStencilCommand.init(_globalZOrder);
+    renderer->addCommand(&_endStencilCommand);
     
     renderer->popGroup();
     
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
     
-void Layout::onBeforeVisitStencil()
-{
-    s_layer++;
-    GLint mask_layer = 0x1 << s_layer;
-    GLint mask_layer_l = mask_layer - 1;
-    _mask_layer_le = mask_layer | mask_layer_l;
-    _currentStencilEnabled = glIsEnabled(GL_STENCIL_TEST);
-    glGetIntegerv(GL_STENCIL_WRITEMASK, (GLint *)&_currentStencilWriteMask);
-    glGetIntegerv(GL_STENCIL_FUNC, (GLint *)&_currentStencilFunc);
-    glGetIntegerv(GL_STENCIL_REF, &_currentStencilRef);
-    glGetIntegerv(GL_STENCIL_VALUE_MASK, (GLint *)&_currentStencilValueMask);
-    glGetIntegerv(GL_STENCIL_FAIL, (GLint *)&_currentStencilFail);
-    glGetIntegerv(GL_STENCIL_PASS_DEPTH_FAIL, (GLint *)&_currentStencilPassDepthFail);
-    glGetIntegerv(GL_STENCIL_PASS_DEPTH_PASS, (GLint *)&_currentStencilPassDepthPass);
-    
-    glEnable(GL_STENCIL_TEST);
-    CHECK_GL_ERROR_DEBUG();
-    glStencilMask(mask_layer);
-    glGetBooleanv(GL_DEPTH_WRITEMASK, &_currentDepthWriteMask);
-    glDepthMask(GL_FALSE);
-    glStencilFunc(GL_NEVER, mask_layer, mask_layer);
-    glStencilOp(GL_ZERO, GL_KEEP, GL_KEEP);
-
-    this->drawFullScreenQuadClearStencil();
-    
-    glStencilFunc(GL_NEVER, mask_layer, mask_layer);
-    glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
-}
-    
-void Layout::drawFullScreenQuadClearStencil()
-{
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    
-    Vec2 vertices[] =
-    {
-        Vec2(-1, -1),
-        Vec2(1, -1),
-        Vec2(1, 1),
-        Vec2(-1, 1)
-    };
-    
-    auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
-    
-    int colorLocation = glProgram->getUniformLocation("u_color");
-    CHECK_GL_ERROR_DEBUG();
-    
-    Color4F color(1, 1, 1, 1);
-    
-    glProgram->use();
-    glProgram->setUniformsForBuiltins();
-    glProgram->setUniformLocationWith4fv(colorLocation, (GLfloat*) &color.r, 1);
-    
-    GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
-    
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-    
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
-    
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-}
-
-void Layout::onAfterDrawStencil()
-{
-    glDepthMask(_currentDepthWriteMask);
-    glStencilFunc(GL_EQUAL, _mask_layer_le, _mask_layer_le);
-    glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-}
-
-
-void Layout::onAfterVisitStencil()
-{
-    glStencilFunc(_currentStencilFunc, _currentStencilRef, _currentStencilValueMask);
-    glStencilOp(_currentStencilFail, _currentStencilPassDepthFail, _currentStencilPassDepthPass);
-    glStencilMask(_currentStencilWriteMask);
-    if (!_currentStencilEnabled)
-    {
-        glDisable(GL_STENCIL_TEST);
-    }
-    s_layer--;
-}
-    
-void Layout::onBeforeVisitScissor()
-{
-    Rect clippingRect = getClippingRect();
-    glEnable(GL_SCISSOR_TEST);
-    auto glview = Director::getInstance()->getOpenGLView();
-    glview->setScissorInPoints(clippingRect.origin.x, clippingRect.origin.y, clippingRect.size.width, clippingRect.size.height);
-}
-
-void Layout::onAfterVisitScissor()
-{
-    glDisable(GL_SCISSOR_TEST);
-}
-    
 void Layout::scissorClippingVisit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags)
 {
-    _beforeVisitCmdScissor.init(_globalZOrder);
-    _beforeVisitCmdScissor.func = CC_CALLBACK_0(Layout::onBeforeVisitScissor, this);
-    renderer->addCommand(&_beforeVisitCmdScissor);
-
+    _beginScissorCommand.init(_globalZOrder, getClippingRect());
+    renderer->addCommand(&_beginScissorCommand);
+    
     ProtectedNode::visit(renderer, parentTransform, parentFlags);
     
-    _afterVisitCmdScissor.init(_globalZOrder);
-    _afterVisitCmdScissor.func = CC_CALLBACK_0(Layout::onAfterVisitScissor, this);
-    renderer->addCommand(&_afterVisitCmdScissor);
+    _endScissorCommand.init(_globalZOrder);
+    renderer->addCommand(&_endScissorCommand);
 }
 
 void Layout::setClippingEnabled(bool able)
@@ -447,16 +324,6 @@ void Layout::setClippingEnabled(bool able)
         case ClippingType::STENCIL:
             if (able)
             {
-                static bool once = true;
-                if (once)
-                {
-                    glGetIntegerv(GL_STENCIL_BITS, &g_sStencilBits);
-                    if (g_sStencilBits <= 0)
-                    {
-                        CCLOG("Stencil buffer is not enabled.");
-                    }
-                    once = false;
-                }
                 _clippingStencil = DrawNode::create();
                 if (_running)
                 {

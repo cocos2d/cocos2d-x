@@ -31,7 +31,7 @@
 #include "2d/CCNode.h"
 #include "platform/CCGL.h"
 #include "renderer/CCGroupCommand.h"
-#include "renderer/CCCustomCommand.h"
+#include "renderer/CCStencilCommand.h"
 
 NS_CC_BEGIN
 
@@ -123,39 +123,15 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init(Node *stencil);
 
 protected:
-    /**draw fullscreen quad to clear stencil bits
-    */
-    void drawFullScreenQuadClearStencil();
 
     Node* _stencil;
     GLfloat _alphaThreshold;
     bool    _inverted;
 
-    //renderData and callback
-    void onBeforeVisit();
-    void onAfterDrawStencil();
-    void onAfterVisit();
-
-    GLboolean _currentStencilEnabled;
-    GLuint _currentStencilWriteMask;
-    GLenum _currentStencilFunc;
-    GLint _currentStencilRef;
-    GLuint _currentStencilValueMask;
-    GLenum _currentStencilFail;
-    GLenum _currentStencilPassDepthFail;
-    GLenum _currentStencilPassDepthPass;
-    GLboolean _currentDepthWriteMask;
-
-    GLboolean _currentAlphaTestEnabled;
-    GLenum _currentAlphaTestFunc;
-    GLclampf _currentAlphaTestRef;
-
-    GLint _mask_layer_le;
-    
     GroupCommand _groupCommand;
-    CustomCommand _beforeVisitCmd;
-    CustomCommand _afterDrawStencilCmd;
-    CustomCommand _afterVisitCmd;
+    BeginStencilCommand _beginStencilCommand;
+    AfterStencilCommand _afterStencilCommand;
+    EndStencilCommand   _endStencilCommand;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ClippingNode);

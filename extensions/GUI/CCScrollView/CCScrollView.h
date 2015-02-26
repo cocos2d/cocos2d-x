@@ -31,6 +31,7 @@
 #include "2d/CCActionTween.h"
 #include "extensions/ExtensionMacros.h"
 #include "extensions/ExtensionExport.h"
+#include "renderer/CCScissorCommand.h"
 
 NS_CC_EXT_BEGIN
 
@@ -281,17 +282,6 @@ protected:
      */
     void stoppedAnimatedScroll(Node* node);
     /**
-     * clip this view so that outside of the visible bounds can be hidden.
-     */
-    void beforeDraw();
-    void onBeforeDraw();
-    /**
-     * retract what's done in beforeDraw so that there's no side effect to
-     * other nodes.
-     */
-    void afterDraw();
-    void onAfterDraw();
-    /**
      * Zoom handling
      */
     void handleZoom();
@@ -363,17 +353,12 @@ protected:
      * max and min scale
      */
     float _minScale, _maxScale;
-    /**
-     * scissor rect for parent, just for restoring GL_SCISSOR_BOX
-     */
-    Rect _parentScissorRect;
-    bool _scissorRestored;
     
     /** Touch listener */
     EventListenerTouchOneByOne* _touchListener;
     
-    CustomCommand _beforeDrawCommand;
-    CustomCommand _afterDrawCommand;
+    BeginScissorCommand _beginScissorCommand;
+    EndScissorCommand   _endScissorCommand;
 };
 
 // end of GUI group
