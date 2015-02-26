@@ -850,6 +850,7 @@ Developers:
         EditBox: mac secure input
         Fix a bug that can not get/set text in password mode on Mac OS X
         Make sure TableView parents are visible before handling touch
+        Fixed memory leak in HttpRequest
         
     iSevenDays
         Fixed a bug that the result of 'malloc' is incompatible with type 'unsigned char *' in Image::saveImageToPNG
