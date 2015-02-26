@@ -709,8 +709,7 @@ void Camera3DTestDemo::updateCamera(float fDelta)
         }
     }
 }
-template<typename T>
-bool Camera3DTestDemo::onTouchesCommon(Touch* touch, Event* event, T touchProperty)
+bool Camera3DTestDemo::onTouchesCommon(Touch* touch, Event* event, bool* touchProperty)
 {
     auto target = static_cast<Label*>(event->getCurrentTarget());
     
@@ -720,7 +719,7 @@ bool Camera3DTestDemo::onTouchesCommon(Touch* touch, Event* event, T touchProper
     
     if (rect.containsPoint(locationInNode))
     {
-        touchProperty = true;
+        *touchProperty = true;
         return true;
     }
     return false;
@@ -731,7 +730,7 @@ bool Camera3DTestDemo::isState(unsigned int state,unsigned int bit) const
 }
 bool Camera3DTestDemo::onTouchesZoomOut(Touch* touch, Event* event)
 {
-    return Camera3DTestDemo::onTouchesCommon(touch, event, _bZoomOut);
+    return Camera3DTestDemo::onTouchesCommon(touch, event, &_bZoomOut);
 }
 void Camera3DTestDemo::onTouchesZoomOutEnd(Touch* touch, Event* event)
 {
@@ -739,7 +738,7 @@ void Camera3DTestDemo::onTouchesZoomOutEnd(Touch* touch, Event* event)
 }
 bool Camera3DTestDemo::onTouchesZoomIn(Touch* touch, Event* event)
 {
-    return Camera3DTestDemo::onTouchesCommon(touch, event, _bZoomIn);
+    return Camera3DTestDemo::onTouchesCommon(touch, event, &_bZoomIn);
 }
 void Camera3DTestDemo::onTouchesZoomInEnd(Touch* touch, Event* event)
 {
@@ -747,7 +746,7 @@ void Camera3DTestDemo::onTouchesZoomInEnd(Touch* touch, Event* event)
 }
 bool Camera3DTestDemo::onTouchesRotateLeft(Touch* touch, Event* event)
 {
-    return Camera3DTestDemo::onTouchesCommon(touch, event, _bRotateLeft);
+    return Camera3DTestDemo::onTouchesCommon(touch, event, &_bRotateLeft);
 }
 void Camera3DTestDemo::onTouchesRotateLeftEnd(Touch* touch, Event* event)
 {
@@ -755,7 +754,7 @@ void Camera3DTestDemo::onTouchesRotateLeftEnd(Touch* touch, Event* event)
 }
 bool Camera3DTestDemo::onTouchesRotateRight(Touch* touch, Event* event)
 {
-    return Camera3DTestDemo::onTouchesCommon(touch, event, _bRotateRight);
+    return Camera3DTestDemo::onTouchesCommon(touch, event, &_bRotateRight);
 }
 void Camera3DTestDemo::onTouchesRotateRightEnd(Touch* touch, Event* event)
 {

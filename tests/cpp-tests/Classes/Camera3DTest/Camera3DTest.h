@@ -126,8 +126,7 @@ public:
     bool isState(unsigned int state,unsigned int bit) const;
     void reachEndCallBack();
     
-    template<typename T>
-    bool onTouchesCommon(Touch* touch, Event* event, T touchProperty);
+    bool onTouchesCommon(Touch* touch, Event* event, bool* touchProperty);
     bool onTouchesZoomOut(Touch* touch, Event* event);
     void onTouchesZoomOutEnd(Touch* touch, Event* event);
     bool onTouchesZoomIn(Touch* touch, Event* event);
