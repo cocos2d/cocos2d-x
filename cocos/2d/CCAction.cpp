@@ -41,18 +41,13 @@ Action::Action()
 ,_target(nullptr)
 ,_tag(Action::INVALID_TAG)
 {
-//    ++_s_iActionCounts;
-//    Director::getInstance()->setAnimationInterval(1/60.0f);
+ 
 }
 
 Action::~Action()
 {
     CCLOGINFO("deallocing Action: %p - tag: %i", this, _tag);
-//    --_s_iActionCounts;
-//    if(_s_iActionCounts==0)
-//    {
-//          Director::getInstance()->setAnimationInterval(1);
-//    }
+ 
 }
 
 std::string Action::description() const
