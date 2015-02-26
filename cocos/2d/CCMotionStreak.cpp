@@ -371,19 +371,16 @@ void MotionStreak::update(float delta)
 
         _nuPoints ++;
         
-        _vbPosition->updateElements(_vertices, 2 * _nuPoints);
-        _vbColor->updateElements(_colorPointer, 2 * _nuPoints);
-        
-        _vbPosition->setElementCount(2 * _nuPoints);
-        _vbColor->setElementCount(2 * _nuPoints);
+        _vbPosition->setElements(_vertices, 2 * _nuPoints);
+        _vbColor->setElements(_colorPointer, 2 * _nuPoints);
     }
 
     if( ! _fastMode )
     {
         ccVertexLineToPolygon(_pointVertexes, _stroke, _vertices, 0, _nuPoints);
         
-        _vbPosition->updateElements(_vertices, 2 * _nuPoints);
-        _vbColor->updateElements(_colorPointer, 2 * _nuPoints);
+        _vbPosition->setElements(_vertices, 2 * _nuPoints);
+        _vbColor->setElements(_colorPointer, 2 * _nuPoints);
     }
 
     // Updated Tex Coords only if they are different than previous step
@@ -394,8 +391,7 @@ void MotionStreak::update(float delta)
             _texCoords[i*2+1] = Tex2F(1, texDelta*i);
         }
 
-        _vbTexel->updateElements(_texCoords, 2 * _nuPoints);
-        _vbTexel->setElementCount(2 * _nuPoints);
+        _vbTexel->setElements(_texCoords, 2 * _nuPoints);
 
         _previousNuPoints = _nuPoints;
     }
