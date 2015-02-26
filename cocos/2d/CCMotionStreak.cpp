@@ -135,11 +135,11 @@ bool MotionStreak::initWithFade(float fade, float minSeg, float stroke, const Co
 
     _vd = VertexData::create(VertexData::Primitive::TriangleStrip);
     _vbPosition = VertexBuffer::create(sizeof(Vec2),    2 * _maxPoints, VertexBuffer::ArrayType::Native, VertexBuffer::ArrayMode::Dynamic);
-    _vbColor    = VertexBuffer::create(sizeof(uint8_t), 8 * _maxPoints, VertexBuffer::ArrayType::Native, VertexBuffer::ArrayMode::Dynamic);
+    _vbColor    = VertexBuffer::create(sizeof(Color4B), 2 * _maxPoints, VertexBuffer::ArrayType::Native, VertexBuffer::ArrayMode::Dynamic);
     _vbTexel    = VertexBuffer::create(sizeof(Tex2F),   2 * _maxPoints, VertexBuffer::ArrayType::Native, VertexBuffer::ArrayMode::Dynamic);
-    _vd->addStream(_vbPosition, VertexAttribute(0, GLProgram::VERTEX_ATTRIB_POSITION,  DataType::Float, 2));
-    _vd->addStream(_vbColor,    VertexAttribute(0, GLProgram::VERTEX_ATTRIB_COLOR,     DataType::UByte, 4, true));
-    _vd->addStream(_vbTexel,    VertexAttribute(0, GLProgram::VERTEX_ATTRIB_TEX_COORD, DataType::Float, 2));
+    _vd->addStream(_vbPosition, {0, GLProgram::VERTEX_ATTRIB_POSITION,  DataType::Float, 2});
+    _vd->addStream(_vbColor,    {0, GLProgram::VERTEX_ATTRIB_COLOR,     DataType::UByte, 4, true});
+    _vd->addStream(_vbTexel,    {0, GLProgram::VERTEX_ATTRIB_TEX_COORD, DataType::Float, 2});
     CC_SAFE_RETAIN(_vd);
     CC_SAFE_RETAIN(_vbPosition);
     CC_SAFE_RETAIN(_vbColor);
@@ -370,11 +370,20 @@ void MotionStreak::update(float delta)
         }
 
         _nuPoints ++;
+        
+        _vbPosition->updateElements(_vertices, 2 * _nuPoints);
+        _vbColor->updateElements(_colorPointer, 2 * _nuPoints);
+        
+        _vbPosition->setElementCount(2 * _nuPoints);
+        _vbColor->setElementCount(2 * _nuPoints);
     }
 
     if( ! _fastMode )
     {
         ccVertexLineToPolygon(_pointVertexes, _stroke, _vertices, 0, _nuPoints);
+        
+        _vbPosition->updateElements(_vertices, 2 * _nuPoints);
+        _vbColor->updateElements(_colorPointer, 2 * _nuPoints);
     }
 
     // Updated Tex Coords only if they are different than previous step
@@ -385,6 +394,9 @@ void MotionStreak::update(float delta)
             _texCoords[i*2+1] = Tex2F(1, texDelta*i);
         }
 
+        _vbTexel->updateElements(_texCoords, 2 * _nuPoints);
+        _vbTexel->setElementCount(2 * _nuPoints);
+
         _previousNuPoints = _nuPoints;
     }
 }
@@ -394,53 +406,13 @@ void MotionStreak::reset()
     _nuPoints = 0;
 }
 
-//void MotionStreak::onDraw(const Mat4 &transform, uint32_t flags)
-//{  
-//    getGLProgram()->use();
-//    getGLProgram()->setUniformsForBuiltins(transform);
-//
-//    GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX );
-//    GL::blendFunc( _blendFunc.src, _blendFunc.dst );
-//
-//    GL::bindTexture2D( _texture->getName() );
-//
-//#ifdef EMSCRIPTEN
-//    // Size calculations from ::initWithFade
-//    setGLBufferData(_vertices, (sizeof(Vec2) * _maxPoints * 2), 0);
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, 0);
-//
-//    setGLBufferData(_texCoords, (sizeof(Tex2F) * _maxPoints * 2), 1);
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, 0);
-//
-//    setGLBufferData(_colorPointer, (sizeof(uint8_t) * _maxPoints * 2 * 4), 2);
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, 0);
-//#else
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, _vertices);
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, 0, _texCoords);
-//    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, _colorPointer);
-//#endif // EMSCRIPTEN
-//
-//    glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei)_nuPoints*2);
-//    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _nuPoints*2);
-//}
-
 void MotionStreak::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     if(_nuPoints <= 1)
         return;
     
-    _vd->clear();
-    // submit verts to vertex buffers
-    _vbPosition->updateElements(_vertices, 2 * _nuPoints);
-    _vbColor->updateElements(_colorPointer, 2 * _nuPoints);
-    _vbTexel->updateElements(_texCoords, 2 * _nuPoints);
-    
     _batchCommand.init(_globalZOrder, getGLProgram(), _blendFunc, _texture, _vd, transform);
     renderer->addCommand(&_batchCommand);
-    
-//    _customCommand.init(_globalZOrder, transform, flags);
-//    _customCommand.func = CC_CALLBACK_0(MotionStreak::onDraw, this, transform, flags);
-//    renderer->addCommand(&_customCommand);
 }
 
 NS_CC_END
