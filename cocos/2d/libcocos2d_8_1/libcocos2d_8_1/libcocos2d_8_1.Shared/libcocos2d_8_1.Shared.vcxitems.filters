@@ -371,10 +371,16 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Node3DReader\Node3DReader.h">
       <Filter>cocostudio\reader\WidgetReader\Node3DReader</Filter>
-    </ClInclude>
+    </ClInclude>    
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.h">
       <Filter>cocostudio\reader\WidgetReader\Sprite3DReader</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\UserCameraReader\UserCameraReader.h">
+      <Filter>cocostudio\reader\WidgetReader\UserCameraReader</Filter>
+    </ClInclude>        
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.h">
+      <Filter>cocostudio\reader\WidgetReader\Particle3DReader</Filter>
+    </ClInclude>    
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\WidgetReader.h">
       <Filter>cocostudio\reader\WidgetReader</Filter>
     </ClInclude>
@@ -1597,9 +1603,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\ParticleUniverse\CCPUParticleSystem3DTranslator.h">
       <Filter>extension\Particle3D\ParticleUniverse</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\UserCameraReader\UserCameraReader.h">
-      <Filter>cocostudio\reader\WidgetReader\UserCameraReader</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos2d.cpp" />
@@ -1908,10 +1911,16 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Node3DReader\Node3DReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\Node3DReader</Filter>
-    </ClCompile>
+    </ClCompile>    
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\Sprite3DReader</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\UserCameraReader\UserCameraReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\UserCameraReader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\UserCameraReader</Filter>
+    </ClCompile>                
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\WidgetReader.cpp">
       <Filter>cocostudio\reader\WidgetReader</Filter>
     </ClCompile>
@@ -2990,9 +2999,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\ParticleUniverse\CCPUParticleSystem3DTranslator.cpp">
       <Filter>extension\Particle3D\ParticleUniverse</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\UserCameraReader\UserCameraReader.cpp">
-      <Filter>cocostudio\reader\WidgetReader\UserCameraReader</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="2d">
@@ -3154,6 +3160,12 @@
     <Filter Include="cocostudio\reader\WidgetReader\Sprite3DReader">
       <UniqueIdentifier>{c03ed815-ce10-4301-bdd6-1104ff3c014e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\UserCameraReader">
+      <UniqueIdentifier>{c0310482-ce10-4301-bdd6-110fff3c014e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\Particle3DReader">
+      <UniqueIdentifier>{c0310485-ce10-420b-bdd6-1104ff3c014e}</UniqueIdentifier>
+    </Filter>            
     <Filter Include="ui\BaseClasses">
       <UniqueIdentifier>{48ae1ce9-b81f-479f-b59c-b10e344699d8}</UniqueIdentifier>
     </Filter>
@@ -3249,9 +3261,6 @@
     </Filter>
     <Filter Include="extension\Particle3D\ParticleUniverse\ParticleRenders">
       <UniqueIdentifier>{949f443a-1147-4e25-96e0-4f6516dbffb4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="cocostudio\reader\WidgetReader\UserCameraReader">
-      <UniqueIdentifier>{00495c97-f8fc-4817-bd6a-c1e02a9c6b46}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

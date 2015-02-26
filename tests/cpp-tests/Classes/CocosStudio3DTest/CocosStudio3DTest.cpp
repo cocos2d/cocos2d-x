@@ -40,7 +40,8 @@ static std::function<Layer*()> createFunctions[] =
 {
     CL(CSNode3DTest),
     CL(CSSprite3DTest),
-    CL(CSUserCameraTest)
+    CL(CSUserCameraTest),
+    CL(CSParticle3DTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -200,6 +201,28 @@ std::string CSUserCameraTest::title() const
 }
 
 std::string CSUserCameraTest::subtitle() const
+{
+    return "";
+}
+
+//------------------------------------------------------------------
+//
+// CSParticle3DTest
+//
+//------------------------------------------------------------------
+CSParticle3DTest::CSParticle3DTest()
+{
+    auto node = CSLoader::createNode("ccs-res/CocosStudio3DTest/Particle3D.csb");
+    
+    addChild(node);
+}
+
+std::string CSParticle3DTest::title() const
+{
+    return "Particle3DReader Test";
+}
+
+std::string CSParticle3DTest::subtitle() const
 {
     return "";
 }

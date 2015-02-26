@@ -694,6 +694,8 @@
         "cocos/editor-support/cocostudio/WidgetReader/TextReader/TextReader.h", 
         "cocos/editor-support/cocostudio/WidgetReader/UserCameraReader/UserCameraReader.cpp", 
         "cocos/editor-support/cocostudio/WidgetReader/UserCameraReader/UserCameraReader.h", 
+        "cocos/editor-support/cocostudio/WidgetReader/Particle3DReader/Particle3DReader.cpp", 
+        "cocos/editor-support/cocostudio/WidgetReader/Particle3DReader/Particle3DReader.h",         
         "cocos/editor-support/cocostudio/WidgetReader/WidgetReader.cpp", 
         "cocos/editor-support/cocostudio/WidgetReader/WidgetReader.h", 
         "cocos/editor-support/cocostudio/WidgetReader/WidgetReaderProtocol.h", 
