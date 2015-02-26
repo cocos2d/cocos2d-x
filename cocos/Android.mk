@@ -176,6 +176,8 @@ renderer/ccShaders.cpp \
 renderer/CCVertexIndexBuffer.cpp \
 renderer/CCVertexIndexData.cpp \
 renderer/CCTrianglesCommand.cpp \
+renderer/CCScissorCommand.cpp \
+renderer/CCStencilCommand.cpp \
 deprecated/CCArray.cpp \
 deprecated/CCSet.cpp \
 deprecated/CCString.cpp \

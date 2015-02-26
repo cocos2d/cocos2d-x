@@ -37,48 +37,15 @@ void ClippingRectangleNode::setClippingRegion(const Rect &clippingRegion)
     _clippingRegion = clippingRegion;
 }
 
-void ClippingRectangleNode::onBeforeVisitScissor()
-{
-    if (_clippingEnabled) {
-        glEnable(GL_SCISSOR_TEST);
-        
-        float scaleX = _scaleX;
-        float scaleY = _scaleY;
-        Node *parent = this->getParent();
-        while (parent) {
-            scaleX *= parent->getScaleX();
-            scaleY *= parent->getScaleY();
-            parent = parent->getParent();
-        }
-        
-        const Point pos = convertToWorldSpace(Point(_clippingRegion.origin.x, _clippingRegion.origin.y));
-        GLView* glView = Director::getInstance()->getOpenGLView();
-        glView->setScissorInPoints(pos.x * scaleX,
-                                   pos.y * scaleY,
-                                   _clippingRegion.size.width * scaleX,
-                                   _clippingRegion.size.height * scaleY);
-    }
-}
-
-void ClippingRectangleNode::onAfterVisitScissor()
-{
-    if (_clippingEnabled)
-    {
-        glDisable(GL_SCISSOR_TEST);
-    }
-}
-
 void ClippingRectangleNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
-    _beforeVisitCmdScissor.init(_globalZOrder);
-    _beforeVisitCmdScissor.func = CC_CALLBACK_0(ClippingRectangleNode::onBeforeVisitScissor, this);
-    renderer->addCommand(&_beforeVisitCmdScissor);
+    _beginScissorCommand.init(_globalZOrder, _clippingRegion);
+    renderer->addCommand(&_beginScissorCommand);
     
     Node::visit(renderer, parentTransform, parentFlags);
     
-    _afterVisitCmdScissor.init(_globalZOrder);
-    _afterVisitCmdScissor.func = CC_CALLBACK_0(ClippingRectangleNode::onAfterVisitScissor, this);
-    renderer->addCommand(&_afterVisitCmdScissor);
+    _endScissorCommand.init(_globalZOrder);
+    renderer->addCommand(&_endScissorCommand);
 }
 
 NS_CC_END

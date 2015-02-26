@@ -34,6 +34,8 @@
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCMeshCommand.h"
+#include "renderer/CCScissorCommand.h"
+#include "renderer/CCStencilCommand.h"
 #include "base/CCConfiguration.h"
 #include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"
@@ -490,6 +492,31 @@ void Renderer::processRenderCommand(RenderCommand* command)
         flush();
         auto cmd = static_cast<BatchCommand*>(command);
         cmd->execute();
+    }
+    else if(RenderCommand::Type::BEGIN_SCISSOR_COMMAND == commandType)
+    {
+        flush();
+        command->execute<BeginScissorCommand>();
+    }
+    else if(RenderCommand::Type::END_SCISSOR_COMMAND == commandType)
+    {
+        flush();
+        command->execute<EndScissorCommand>();
+    }
+    else if(RenderCommand::Type::BEGIN_STENCIL_COMMAND == commandType)
+    {
+        flush();
+        command->execute<BeginStencilCommand>();
+    }
+    else if(RenderCommand::Type::AFTER_STENCIL_COMMAND == commandType)
+    {
+        flush();
+        command->execute<AfterStencilCommand>();
+    }
+    else if(RenderCommand::Type::END_STENCIL_COMMAND == commandType)
+    {
+        flush();
+        command->execute<EndStencilCommand>();
     }
     else
     {
