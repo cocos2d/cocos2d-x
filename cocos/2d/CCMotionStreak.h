@@ -29,6 +29,9 @@ THE SOFTWARE.
 #include "base/CCProtocols.h"
 #include "2d/CCNode.h"
 #include "renderer/CCCustomCommand.h"
+#include "renderer/CCBatchCommand.h"
+#include "renderer/CCVertexIndexBuffer.h"
+#include "renderer/CCVertexIndexData.h"
 
 NS_CC_BEGIN
 
@@ -114,7 +117,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     //renderer callback
-    void onDraw(const Mat4 &transform, uint32_t flags);
+    //void onDraw(const Mat4 &transform, uint32_t flags);
 
     bool _fastMode;
     bool _startingPositionInitialized;
@@ -138,10 +141,17 @@ protected:
 
     // Opengl
     Vec2* _vertices;
-    GLubyte* _colorPointer;
+    uint8_t* _colorPointer;
     Tex2F* _texCoords;
     
-    CustomCommand _customCommand;
+    //CustomCommand _customCommand;
+    
+    BatchCommand  _batchCommand;
+    VertexData*   _vd;
+    VertexBuffer* _vbPosition;
+    VertexBuffer* _vbColor;
+    VertexBuffer* _vbTexel;
+
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(MotionStreak);
