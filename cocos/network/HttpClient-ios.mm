@@ -167,28 +167,29 @@ static int processTask(HttpRequest *request, NSString* requestType, void *stream
     //set request type
     [nsrequest setHTTPMethod:requestType];
 
+    /* get custom header data (if set) */
+    std::vector<std::string> headers=request->getHeaders();
+    if(!headers.empty())
+    {
+        /* append custom headers one by one */
+        for (std::vector<std::string>::iterator it = headers.begin(); it != headers.end(); ++it)
+        {
+            unsigned long i = it->find(':', 0);
+            unsigned long length = it->size();
+            std::string field = it->substr(0, i);
+            std::string value = it->substr(i+1, length-i);
+            NSString *headerField = [NSString stringWithUTF8String:field.c_str()];
+            NSString *headerValue = [NSString stringWithUTF8String:value.c_str()];
+            [nsrequest setValue:headerValue forHTTPHeaderField:headerField];
+        }
+    }
+
     //if request type is post or put,set header and data
     if([requestType  isEqual: @"POST"] || [requestType isEqual: @"PUT"])
     {
         if ([requestType isEqual: @"PUT"])
         {
             [nsrequest setValue: @"application/x-www-form-urlencoded" forHTTPHeaderField: @"Content-Type"];
-        }
-        /* get custom header data (if set) */
-        std::vector<std::string> headers=request->getHeaders();
-        if(!headers.empty())
-        {
-            /* append custom headers one by one */
-            for (std::vector<std::string>::iterator it = headers.begin(); it != headers.end(); ++it)
-            {
-                unsigned long i = it->find(':', 0);
-                unsigned long length = it->size();
-                std::string field = it->substr(0, i);
-                std::string value = it->substr(i+1, length-i);
-                NSString *headerField = [NSString stringWithUTF8String:field.c_str()];
-                NSString *headerValue = [NSString stringWithUTF8String:value.c_str()];
-                [nsrequest setValue:headerValue forHTTPHeaderField:headerField];
-            }
         }
         
         char* requestDataBuffer = request->getRequestData();
