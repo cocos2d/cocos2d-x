@@ -490,7 +490,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\TextReader\TextReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\Node3DReader\Node3DReader.cpp" />   
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.cpp" />
-    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\UserCameraReader\UserCameraReader.cpp" />            
+    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\UserCameraReader\UserCameraReader.cpp" />
+    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.cpp" />    
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\WidgetReader.cpp" />
     <ClCompile Include="..\math\CCAffineTransform.cpp" />
     <ClCompile Include="..\math\CCGeometry.cpp" />
@@ -995,7 +996,8 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\TextReader\TextReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Node3DReader\Node3DReader.h" />  
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.h" />
-    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\UserCameraReader\UserCameraReader.h" />            
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\UserCameraReader\UserCameraReader.h" />  
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.h" />                
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\WidgetReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\WidgetReaderProtocol.h" />
     <ClInclude Include="..\math\CCAffineTransform.h" />

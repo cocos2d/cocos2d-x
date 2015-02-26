@@ -163,6 +163,9 @@
     <Filter Include="cocostudio\reader\WidgetReader\UserCameraReader">
       <UniqueIdentifier>{9421e104-69f8-4cee-8e59-51043ba06f15}</UniqueIdentifier>
     </Filter>    
+    <Filter Include="cocostudio\reader\WidgetReader\Particle3DReader">
+      <UniqueIdentifier>{9421e104-1028-4cee-8e59-51043ba06f15}</UniqueIdentifier>
+    </Filter>    
     <Filter Include="cocostudio\reader\WidgetReader\Sprite3DReader">
       <UniqueIdentifier>{94210432-69f8-4cee-8e59-51043ba06f15}</UniqueIdentifier>
     </Filter>       
@@ -993,6 +996,9 @@
     </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\UserCameraReader\UserCameraReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\UserCameraReader</Filter>
+    </ClCompile>    
+    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\Particle3DReader</Filter>
     </ClCompile>    
     <ClCompile Include="..\editor-support\cocostudio\CocoLoader.cpp">
       <Filter>cocostudio\json</Filter>
@@ -2460,6 +2466,9 @@
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\UserCameraReader\UserCameraReader.h">
       <Filter>cocostudio\reader\WidgetReader\UserCameraReader</Filter>
+    </ClInclude>    
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.h">
+      <Filter>cocostudio\reader\WidgetReader\Particle3DReader</Filter>
     </ClInclude>    
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.h">
       <Filter>cocostudio\reader\WidgetReader\Sprite3DReader</Filter>

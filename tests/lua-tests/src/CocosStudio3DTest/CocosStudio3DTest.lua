@@ -66,6 +66,25 @@ function CSUserCameraTest.create()
     return layer
 end
 
+----------------------------------------
+----CSParticle3DTest
+----------------------------------------
+
+local CSParticle3DTest = {}
+CSParticle3DTest.__index = CSParticle3DTest
+
+function CSParticle3DTest.create()
+    local layer = cc.Layer:create()
+    Helper.initWithLayer(layer)
+    Helper.titleLabel:setString("Particle3DReader Test")
+
+    local node = cc.CSLoader:createNode("ccs-res/CocosStudio3DTest/Particle3D.csb")
+
+    layer:addChild(node)
+
+    return layer
+end
+
 function CocosStudio3DTest()
     local scene = cc.Scene:create()
 
@@ -73,7 +92,8 @@ function CocosStudio3DTest()
     {
         CSNode3DTest.create,
         CSSprite3DTest.create,
-        CSUserCameraTest.create
+        CSUserCameraTest.create,
+        CSParticle3DTest.create
     }
 
     scene:addChild(CSNode3DTest.create())
