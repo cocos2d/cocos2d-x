@@ -1,4 +1,4 @@
-cocos2d-x-3.5 ??
+cocos2d-x-3.5beta0  Feb.27 2015
     [NEW]           Added Particle3D
 
     [FIX]           Audio: audio can not resume if it is interrupt, and back from background
