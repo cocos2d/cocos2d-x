@@ -128,8 +128,11 @@ foreach(pkg ZLIB MINIZIP JPEG PNG TIFF TINYXML2 FREETYPE WEBSOCKETS CURL FLATBUF
   cocos_use_pkg(cocos2d ${pkg})
 endforeach()
 
-target_link_libraries(cocos2d ${PLATFORM_SPECIFIC_LIBS} Xrandr Xi Xrender drm
-Xdamage Xxf86vm Xext X11 pthread)
+if(LINUX)
+  set(other_glfw_linker_flags "Xrandr Xi Xrender drm Xdamage Xxf86vm Xext X11 pthread")
+endif()
+
+target_link_libraries(cocos2d ${PLATFORM_SPECIFIC_LIBS} ${other_glfw_linker_flags})
 
 if(USE_WEBP)
   add_definitions(-DCC_USE_WEBP=1)

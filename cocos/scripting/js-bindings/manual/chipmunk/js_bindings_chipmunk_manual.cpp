@@ -1567,7 +1567,7 @@ bool JSB_cpSpace_nearestPointQuery(JSContext *cx, uint32_t argc, jsval *vp)
     cpSpace* space = (cpSpace*) proxy->handle;
 
     cpVect point;
-    cpFloat maxDistance;
+    double maxDistance;
     cpLayers layers;
     cpGroup group;
 
