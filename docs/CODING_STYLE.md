@@ -2150,7 +2150,7 @@ If your TODO is of the form "At a future date do something" make sure that you e
 
 ## Deprecation Comments
 
-Use the `CC_DEPRECATED_ATTRIBUTE` macro to mark an methods as deprecated.
+Use the `CC_DEPRECATED(v3)` macro to mark an methods as deprecated.
 
 Also use the ` ``deprecated ` doxygen docstring to mark it as deprecated in the documentation.
 
