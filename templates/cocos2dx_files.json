@@ -6057,6 +6057,7 @@
         "tools/bindings-generator/tools/win32/cygiconv-2.dll", 
         "tools/bindings-generator/tools/win32/cygintl-8.dll", 
         "tools/bindings-generator/tools/win32/cygwin1.dll", 
+        "tools/bindings-generator/tools/win32/dos2unix.exe", 
         "tools/tolua/README.mdown", 
         "tools/tolua/cocos2dx.ini", 
         "tools/tolua/cocos2dx_3d.ini", 
