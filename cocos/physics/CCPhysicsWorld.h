@@ -133,14 +133,14 @@ public:
      */
     inline void setSpeed(float speed) { if(speed > 0.0f) { _speed = speed; } }
     /** get the speed of physics world */
-    inline float getSpeed() { return _speed; }
+    inline float getSpeed() const { return _speed; }
 
     /** Set the time step of physics world
      * Unit:second, default value is 0.02
      * Note: if you disable auto step, this won't work.
      */
     void setTimeStep(float timeStep);
-    float getTimeStep() { return _timeStep; }
+    float getTimeStep() const { return _timeStep; }
     
     /**
      * set the update rate of physics world, update rate is the value of EngineUpdateTimes/PhysicsWorldUpdateTimes.
@@ -151,7 +151,7 @@ public:
      */
     CC_DEPRECATED(v4) void setUpdateRate(int rate);
     /** get the update rate */
-    CC_DEPRECATED(v4) int getUpdateRate() { return _updateRate; }
+    CC_DEPRECATED(v4) int getUpdateRate() const { return _updateRate; }
     /**
      * set the number of substeps in an update of the physics world.
      * One physics update will be divided into several substeps to increase its accuracy.
