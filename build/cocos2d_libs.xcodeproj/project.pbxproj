@@ -2340,6 +2340,8 @@
 		D09B005D1A9D69B10026864A /* CCStencilCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D09B00561A9D69B10026864A /* CCStencilCommand.cpp */; };
 		D09B005E1A9D69B10026864A /* CCStencilCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = D09B00571A9D69B10026864A /* CCStencilCommand.h */; };
 		D09B005F1A9D69B10026864A /* CCStencilCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = D09B00571A9D69B10026864A /* CCStencilCommand.h */; };
+		D0F335941A9FE3DB0099D9FD /* CCGraphicsMetal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0F335921A9FE3DB0099D9FD /* CCGraphicsMetal.cpp */; };
+		D0F335951A9FE3DB0099D9FD /* CCGraphicsMetal.h in Headers */ = {isa = PBXBuildFile; fileRef = D0F335931A9FE3DB0099D9FD /* CCGraphicsMetal.h */; };
 		D0FD03491A3B51AA00825BB5 /* CCAllocatorBase.h in Headers */ = {isa = PBXBuildFile; fileRef = D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */; };
 		D0FD034A1A3B51AA00825BB5 /* CCAllocatorBase.h in Headers */ = {isa = PBXBuildFile; fileRef = D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */; };
 		D0FD034B1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FD033C1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp */; };
@@ -3640,6 +3642,8 @@
 		D09B00551A9D69B10026864A /* CCScissorCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScissorCommand.h; sourceTree = "<group>"; };
 		D09B00561A9D69B10026864A /* CCStencilCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCStencilCommand.cpp; sourceTree = "<group>"; };
 		D09B00571A9D69B10026864A /* CCStencilCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCStencilCommand.h; sourceTree = "<group>"; };
+		D0F335921A9FE3DB0099D9FD /* CCGraphicsMetal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCGraphicsMetal.cpp; path = metal/CCGraphicsMetal.cpp; sourceTree = "<group>"; };
+		D0F335931A9FE3DB0099D9FD /* CCGraphicsMetal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCGraphicsMetal.h; path = metal/CCGraphicsMetal.h; sourceTree = "<group>"; };
 		D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAllocatorBase.h; sourceTree = "<group>"; };
 		D0FD033C1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAllocatorDiagnostics.cpp; sourceTree = "<group>"; };
 		D0FD033D1A3B51AA00825BB5 /* CCAllocatorDiagnostics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAllocatorDiagnostics.h; sourceTree = "<group>"; };
@@ -6068,6 +6072,7 @@
 				D01937611A9CF9FE00E7FE47 /* CCGraphicsAPIManager.h */,
 				D01937521A9CEABE00E7FE47 /* interface */,
 				D01937561A9CEDC500E7FE47 /* opengles2.0 */,
+				D0F335911A9FE2A00099D9FD /* metal */,
 			);
 			path = abstraction;
 			sourceTree = "<group>";
@@ -6088,6 +6093,15 @@
 				D01937581A9CEDC500E7FE47 /* CCGraphicsOpenGLES2.0.h */,
 			);
 			path = opengles2.0;
+			sourceTree = "<group>";
+		};
+		D0F335911A9FE2A00099D9FD /* metal */ = {
+			isa = PBXGroup;
+			children = (
+				D0F335921A9FE3DB0099D9FD /* CCGraphicsMetal.cpp */,
+				D0F335931A9FE3DB0099D9FD /* CCGraphicsMetal.h */,
+			);
+			name = metal;
 			sourceTree = "<group>";
 		};
 		D0FD03391A3B51AA00825BB5 /* allocator */ = {
@@ -6825,6 +6839,7 @@
 				15AE18DB19AAD33D00C27E9E /* CocosBuilder.h in Headers */,
 				15AE1ACD19AAD40300C27E9E /* b2PrismaticJoint.h in Headers */,
 				50ABBEBA1925AB6F00A911A9 /* ccUTF8.h in Headers */,
+				D0F335951A9FE3DB0099D9FD /* CCGraphicsMetal.h in Headers */,
 				50643BD619BFAEDA00EF68ED /* CCPlatformDefine.h in Headers */,
 				B68779CF1A8CA88500643ABF /* CCPUParticle3DMeshSurfaceEmitter.h in Headers */,
 				1A570068180BC5A10088DEC7 /* CCActionCamera.h in Headers */,
@@ -8031,6 +8046,7 @@
 				15AE182519AAD2F700C27E9E /* CCMesh.cpp in Sources */,
 				503DD8EE1926736A00CD74DD /* CCImage-ios.mm in Sources */,
 				B6877B3B1A8CA8A700643ABF /* CCPUParticle3DVortexAffector.cpp in Sources */,
+				D0F335941A9FE3DB0099D9FD /* CCGraphicsMetal.cpp in Sources */,
 				46A170FC1807CECB005B8026 /* CCPhysicsBody.cpp in Sources */,
 				15AE1BEA19AAE01E00C27E9E /* CCControlButton.cpp in Sources */,
 				50ABBD941925AB4100A911A9 /* CCGLProgramState.cpp in Sources */,

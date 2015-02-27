@@ -27,6 +27,7 @@
 #define _CC_GRAPHICS_API_MANAGER_H_
 
 #include <memory>
+#include <string>
 #include "platform/CCPlatformMacros.h"
 #include "base/CCRef.h"
 
@@ -43,7 +44,8 @@ public:
     static GraphicsAPIManager* create();
     
     // @brief creates a specific graphics API instance
-    GraphicsInterface* createAPI(const char* api, const char* title);
+    // @usage take a null terminated pointer to array of const char*
+    GraphicsInterface* createAPI(const char* apis[], const char* title);
     
     // @brief destroy a graphics API instance
     void destroyAPI(GraphicsInterface* api);
@@ -56,9 +58,15 @@ protected:
     
     using tConstructor = std::function<GraphicsInterface* (const char* title)>;
     using tDestructor  = std::function<void (GraphicsInterface* instance)>;
-    
-    using tRegisteredGraphicsAPIFactories = std::unordered_map<size_t, std::pair<tConstructor, tDestructor>>;
+    struct tFactoryType
+    {
+        tConstructor _constructor;
+        tDestructor  _destructor;
+        std::string  _name;
+    };
+    using tRegisteredGraphicsAPIFactories = std::unordered_map<size_t, tFactoryType>;
     tRegisteredGraphicsAPIFactories _factories;
+    tFactoryType _currentAPIFactory;
 };
 
 NS_CC_END

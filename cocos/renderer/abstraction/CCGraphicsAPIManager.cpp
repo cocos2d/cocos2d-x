@@ -28,13 +28,12 @@
 #include "renderer/abstraction/interface/CCGraphicsInterface.h"
 #include "base/CCConsole.h"
 
-//#if ALL_PLATFORMS
 #include "renderer/abstraction/opengles2.0/CCGraphicsOpenGLES2.0.h"
-//#endif ALL_PLATFORMS
+#include "renderer/abstraction/metal/CCGraphicsMetal.h"
 
 NS_CC_BEGIN
 
-auto GraphicsAPIManager::create() -> GraphicsAPIManager*
+GraphicsAPIManager* GraphicsAPIManager::create()
 {
     auto manager = new (std::nothrow) GraphicsAPIManager;
     if (manager)
@@ -56,31 +55,47 @@ auto GraphicsAPIManager::registerFactories() -> void
         auto destructor = tDestructor{[](GraphicsInterface* instance) -> void { \
             static_cast<cls*>(instance)->release(); \
         }}; \
-        auto pair = std::pair<tConstructor, tDestructor>{constructor, destructor}; \
+        auto fact = tFactoryType{constructor, destructor, name}; \
         auto hash = std::hash<std::string>{}; \
-        _factories.insert(tRegisteredGraphicsAPIFactories::value_type(size_t{hash(name)}, pair)); \
+        _factories.insert(tRegisteredGraphicsAPIFactories::value_type(size_t{hash(name)}, fact)); \
         CCLOG("Registered factory for graphics API %s", name); \
     }
     
     REGISTER_FACTORY("opengles2.0", GraphicsOpenGLES20);
-        
+#ifdef CC_METAL_AVAILABLE
+    REGISTER_FACTORY("metal", GraphicsMetal);
+#endif//CC_METAL_AVAILABLE
+    
     #undef REGISTER_FACTORY
 }
 
-GraphicsInterface* GraphicsAPIManager::createAPI(const char* name, const char* title)
+GraphicsInterface* GraphicsAPIManager::createAPI(const char* apis[], const char* title)
 {
-    auto hash = std::hash<std::string>{};
-    auto hval = size_t{hash(name)};
+    GraphicsInterface* api = nullptr;
     
-    auto fi = _factories.find(hval);
-    if (fi == _factories.end())
-        return nullptr;
-    return (*fi).second.first(title);
+    while (apis && *apis)
+    {
+        auto name = *apis++;
+        
+        auto hash = std::hash<std::string>{};
+        auto hval = size_t{hash(name)};
+        
+        auto fi = _factories.find(hval);
+        if (fi == _factories.end())
+            return nullptr;
+        
+        _currentAPIFactory = (*fi).second;
+        api = _currentAPIFactory._constructor(title);
+    }
+    
+    return api;
 }
 
 void GraphicsAPIManager::destroyAPI(GraphicsInterface* api)
 {
-    
+    if (_currentAPIFactory._destructor)
+        _currentAPIFactory._destructor(api);
+    _currentAPIFactory = tFactoryType();
 }
 
 NS_CC_END

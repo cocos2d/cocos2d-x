@@ -401,7 +401,7 @@ public:
     void resetMatrixStack();
 
     GraphicsInterface* getGraphicsInterface() const;
-    void selectGraphicsAPI(const char* name, const char* title);
+    void selectGraphicsAPI(const char* apis[], const char* title);
     
 protected:
     void reset();

@@ -169,7 +169,8 @@ bool Director::init(void)
 
     _graphicsAPIManager = GraphicsAPIManager::create();
     _graphicsAPIManager->retain();
-    _graphicsAPIManager->createAPI("opengles2.0", "");
+//    const char* apis[] = {"opengles2.0", nullptr};
+//    _graphicsAPIManager->createAPI(apis, "");
     
     //init TextureCache
     initTextureCache();
@@ -458,10 +459,10 @@ GraphicsInterface* Director::getGraphicsInterface() const
     return _graphicsInterface;
 }
 
-void Director::selectGraphicsAPI(const char* name, const char* title)
+void Director::selectGraphicsAPI(const char* apis[], const char* title)
 {
     // weak pointer to current graphics interface.
-    _graphicsInterface = _graphicsAPIManager->createAPI(name, title);
+    _graphicsInterface = _graphicsAPIManager->createAPI(apis, title);
 }
 
 //

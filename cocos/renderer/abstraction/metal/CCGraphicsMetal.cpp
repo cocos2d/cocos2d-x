@@ -1,6 +1,6 @@
 
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -23,38 +23,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef _CC_GRAPHICS_INTERFACE_H_
-#define _CC_GRAPHICS_INTERFACE_H_
-
-#include <memory>
-#include "platform/CCPlatformMacros.h"
+#include "renderer/abstraction/metal/CCGraphicsMetal.h"
 
 NS_CC_BEGIN
 
-class ViewInterface;
-
-using handle = void*;
-
-class GraphicsInterface
-{
-public:
-    
-    virtual ~GraphicsInterface() {}
-    
-    // @brief shuts down this interface, releasing all resources.
-    // All weak references and cached interfaces are invalidated.
-    virtual void shutdown() = 0;
-
-    // @brief gets/creates the view for the currently selected api.
-    // no need to delete or lifetime manage in any way.
-    virtual ViewInterface* getView() const = 0;
-    
-    // @brief converts the GraphicsInterface into one of its organizational sub interfaces
-    // @usage this->as<ViewInterface>()->someMethod. Compile time check is performed.
-    template <class T>
-    T* as() { return static_cast<T*>(this); }
-};
+#ifdef CC_METAL_AVAILABLE
+#endif // CC_METAL_AVAILABLE
 
 NS_CC_END
-
-#endif // _CC_GRAPHICS_INTERFACE_H_
