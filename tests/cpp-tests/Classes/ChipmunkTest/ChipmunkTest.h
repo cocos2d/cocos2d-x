@@ -3,11 +3,11 @@
 //
 #ifndef __CHIPMUNKTEST_H__
 #define __CHIPMUNKTEST_H__
+//FIXME:  chipmunk/chipmunk.h must comes before 2d/CCLayer.h
 
-#include "cocos2d.h"
-#include "chipmunk.h"
 #include "../testBasic.h"
 #include "extensions/cocos-ext.h"
+#include "2d/CCLayer.h"
 
 USING_NS_CC_EXT;
 

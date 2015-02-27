@@ -38,7 +38,7 @@
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 #include "platform/CCFileUtils.h"
-#include "mpg123.h"
+#include "MP3Decoder/mpg123.h"
 
 using namespace cocos2d;
 using namespace cocos2d::experimental;

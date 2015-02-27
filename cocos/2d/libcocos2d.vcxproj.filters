@@ -31,24 +31,6 @@
     <Filter Include="math">
       <UniqueIdentifier>{a565f213-2d13-4d2d-a3a0-5b2d06cbd05f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="external">
-      <UniqueIdentifier>{ec174f10-2de3-4568-9f30-b2f0a4e9396e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="external\tinyxml2">
-      <UniqueIdentifier>{364c3b8c-77eb-46ed-a866-a8686b1b65bc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="external\unzip">
-      <UniqueIdentifier>{589928bf-e550-41f1-ae21-64443dd5fe21}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="external\edtaa">
-      <UniqueIdentifier>{1849ae10-8a10-4784-bbad-66fa67a1ed04}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="external\ConvertUTF">
-      <UniqueIdentifier>{6c1e4a6b-c168-436b-aa63-0af7f4caebf9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="external\xxhash">
-      <UniqueIdentifier>{b4e2b1e5-2d79-44a3-af45-728d47b7bdb2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="storage">
       <UniqueIdentifier>{44bdf58f-4af2-433c-b4af-58dc05ef96b5}</UniqueIdentifier>
     </Filter>
@@ -211,9 +193,6 @@
     <Filter Include="cocostudio\TimelineAction\trigger">
       <UniqueIdentifier>{0554a5b1-03a1-4d38-87a5-976dbe9a39d9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cocostudio\json\flatbuffers">
-      <UniqueIdentifier>{db915acb-1838-413d-b290-dc280365eabc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="cocostudio\reader\WidgetReader\ComAudioReader">
       <UniqueIdentifier>{b71e98df-9863-4ee5-9818-04fad2ef8da1}</UniqueIdentifier>
     </Filter>
@@ -276,9 +255,6 @@
     <ClCompile Include="..\physics\CCPhysicsWorld.cpp">
       <Filter>physics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\external\xxhash\xxhash.c">
-      <Filter>external\xxhash</Filter>
-    </ClCompile>
     <ClCompile Include="..\deprecated\CCArray.cpp">
       <Filter>deprecated</Filter>
     </ClCompile>
@@ -298,12 +274,6 @@
       <Filter>deprecated</Filter>
     </ClCompile>
     <ClCompile Include="..\cocos2d.cpp" />
-    <ClCompile Include="..\..\external\ConvertUTF\ConvertUTF.c">
-      <Filter>external\ConvertUTF</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\ConvertUTF\ConvertUTFWrapper.cpp">
-      <Filter>external\ConvertUTF</Filter>
-    </ClCompile>
     <ClCompile Include="CCAction.cpp">
       <Filter>2d</Filter>
     </ClCompile>
@@ -708,21 +678,6 @@
     </ClCompile>
     <ClCompile Include="..\platform\CCThread.cpp">
       <Filter>platform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\tinyxml2\tinyxml2.cpp">
-      <Filter>external\tinyxml2</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\unzip\ioapi_mem.cpp">
-      <Filter>external\unzip</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\unzip\ioapi.cpp">
-      <Filter>external\unzip</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\unzip\unzip.cpp">
-      <Filter>external\unzip</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\edtaa3func\edtaa3func.cpp">
-      <Filter>external\edtaa</Filter>
     </ClCompile>
     <ClCompile Include="..\base\CCIMEDispatcher.cpp">
       <Filter>base</Filter>
@@ -1232,27 +1187,6 @@
     <ClCompile Include="CCLight.cpp">
       <Filter>2d</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\external\flatbuffers\flatc.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\flatbuffers\idl_gen_cpp.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\flatbuffers\idl_gen_fbs.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\flatbuffers\idl_gen_general.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\flatbuffers\idl_gen_go.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\flatbuffers\idl_gen_text.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\external\flatbuffers\idl_parser.cpp">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\FlatBuffersSerialize.cpp">
       <Filter>cocostudio\json</Filter>
     </ClCompile>
@@ -1632,9 +1566,6 @@
     <ClInclude Include="..\physics\CCPhysicsWorld.h">
       <Filter>physics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\external\xxhash\xxhash.h">
-      <Filter>external\xxhash</Filter>
-    </ClInclude>
     <ClInclude Include="..\deprecated\CCArray.h">
       <Filter>deprecated</Filter>
     </ClInclude>
@@ -1666,9 +1597,6 @@
       <Filter>deprecated</Filter>
     </ClInclude>
     <ClInclude Include="..\cocos2d.h" />
-    <ClInclude Include="..\..\external\ConvertUTF\ConvertUTF.h">
-      <Filter>external\ConvertUTF</Filter>
-    </ClInclude>
     <ClInclude Include="CCAction.h">
       <Filter>2d</Filter>
     </ClInclude>
@@ -2124,21 +2052,6 @@
     </ClInclude>
     <ClInclude Include="..\platform\CCThread.h">
       <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\tinyxml2\tinyxml2.h">
-      <Filter>external\tinyxml2</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\unzip\unzip.h">
-      <Filter>external\unzip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\unzip\ioapi.h">
-      <Filter>external\unzip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\unzip\ioapi_mem.h">
-      <Filter>external\unzip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\edtaa3func\edtaa3func.h">
-      <Filter>external\edtaa</Filter>
     </ClInclude>
     <ClInclude Include="..\base\CCIMEDelegate.h">
       <Filter>base</Filter>
@@ -2752,15 +2665,6 @@
     </ClInclude>
     <ClInclude Include="CCLight.h">
       <Filter>2d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\flatbuffers\flatbuffers.h">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\flatbuffers\idl.h">
-      <Filter>cocostudio\json\flatbuffers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\flatbuffers\util.h">
-      <Filter>cocostudio\json\flatbuffers</Filter>
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\CSParseBinary_generated.h">
       <Filter>cocostudio\json</Filter>

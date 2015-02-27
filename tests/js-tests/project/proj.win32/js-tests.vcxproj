@@ -57,10 +57,10 @@
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>
@@ -77,7 +77,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\base;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(ProjectDir)..\Classes;$(ProjectDir)..\..\..\..\external\spidermonkey\include\win32;$(ProjectDir)..\..\..\..\cocos\scripting\js-bindings\auto;$(ProjectDir)..\..\..\..\cocos\scripting\js-bindings\manual;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\base;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\audio\include;$(EngineRoot)extensions;$(ProjectDir)..\Classes;$(ProjectDir)..\..\..\..\cocos\scripting\js-bindings\auto;$(EngineRoot)external\win32\i386\include\spidermonkey;$(ProjectDir)..\..\..\..\cocos\scripting\js-bindings\manual;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;_DEBUG;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_DEBUG=1;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -95,13 +95,12 @@
       <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <PreLinkEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\spidermonkey\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\websockets\prebuilt\win32\*.*" "$(OutDir)"</Command>
+      <Command>
+      </Command>
     </PreLinkEvent>
     <Link>
       <AdditionalDependencies>libcurl_imp.lib;mozjs-28.lib;ws2_32.lib;sqlite3.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -129,7 +128,7 @@ xcopy "$(ProjectDir)..\..\..\cpp-tests\Resources" "$(ProjectDir)..\..\res" /e /Y
       <ProxyFileName>js-tests_p.c</ProxyFileName>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\base;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(ProjectDir)..\Classes;$(ProjectDir)..\..\..\..\external\spidermonkey\include\win32;$(ProjectDir)..\..\..\..\cocos\scripting\js-bindings\auto;$(ProjectDir)..\..\..\..\cocos\scripting\js-bindings\manual;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot);$(EngineRoot)cocos;$(EngineRoot)cocos\base;$(EngineRoot)cocos\storage;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\audio\include;$(EngineRoot)extensions;$(ProjectDir)..\Classes;$(ProjectDir)..\..\..\..\cocos\scripting\js-bindings\auto;$(EngineRoot)external\win32\i386\include\spidermonkey;$(ProjectDir)..\..\..\..\cocos\scripting\js-bindings\manual;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_WINDOWS;STRICT;NDEBUG;XP_WIN;JS_HAVE___INTN;JS_INTPTR_TYPE=int;COCOS2D_JAVASCRIPT=1;CC_ENABLE_CHIPMUNK_INTEGRATION=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -148,13 +147,12 @@ xcopy "$(ProjectDir)..\..\..\cpp-tests\Resources" "$(ProjectDir)..\..\res" /e /Y
       <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <PreLinkEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\spidermonkey\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\websockets\prebuilt\win32\*.*" "$(OutDir)"</Command>
+      <Command>
+      </Command>
     </PreLinkEvent>
     <Link>
       <AdditionalDependencies>libcurl_imp.lib;mozjs-28.lib;ws2_32.lib;sqlite3.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <GenerateDebugInformation>true</GenerateDebugInformation>

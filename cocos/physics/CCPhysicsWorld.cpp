@@ -27,7 +27,7 @@
 #include <algorithm>
 #include <climits>
 
-#include "chipmunk.h"
+#include "chipmunk/chipmunk.h"
 #include "CCPhysicsBody.h"
 #include "CCPhysicsShape.h"
 #include "CCPhysicsContact.h"

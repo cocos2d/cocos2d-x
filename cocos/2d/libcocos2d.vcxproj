@@ -59,10 +59,10 @@
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>../../external/sqlite3/libraries/win32;$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LibraryPath>../../external/sqlite3/libraries/win32;$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <PreBuildEvent>
@@ -71,7 +71,7 @@
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(EngineRoot)external\box2d;$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\win32;$(EngineRoot)external\jpeg\include\win32;$(EngineRoot)external\tiff\include\win32;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\win32;$(EngineRoot)external\win32-specific\OpenalSoft\include;$(EngineRoot)external\win32-specific\MP3Decoder\include;$(EngineRoot)external\win32-specific\OggDecoder\include;$(EngineRoot)external\win32-specific\icon\include;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\xxhash;$(EngineRoot)external\ConvertUTF;$(EngineRoot)external\curl\include\win32;$(EngineRoot)external\websockets\include\win32;$(EngineRoot)external;$(EngineRoot)cocos;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\audio\include;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(EngineRoot)cocos;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\audio\include;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_USRDLL;_DEBUG;_WINDOWS;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_USE3DDLL;_EXPORT_DLL_;_USRSTUDIODLL;_USREXDLL;_USEGUIDLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;PROTOBUF_USE_DLLS;LIBPROTOBUF_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -86,26 +86,12 @@
     </ClCompile>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\freetype2\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\glfw3\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\curl\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\jpeg\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\png\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\tiff\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\webp\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\websockets\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\zlib\prebuilt\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\icon\prebuilt\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\OpenalSoft\prebuilt\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\MP3Decoder\prebuilt\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\OggDecoder\prebuilt\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\sqlite3\libraries\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\debug-lib\*.*" "$(OutDir)"</Command>
+xcopy /Y /Q "$(EngineRoot)external/win32/i386/libs/Release\*.*" "$(OutDir)"
+xcopy /Y /Q "$(EngineRoot)external/win32/i386/libs/Debug\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
     <Link>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(EngineRoot)external/win32/i386/libs/Debug;$(EngineRoot)external/win32/i386/libs/Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>libcmtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -126,13 +112,13 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\debug-lib\*.*" 
       </Command>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\win32;$(EngineRoot)external\jpeg\include\win32;$(EngineRoot)external\tiff\include\win32;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\win32;$(EngineRoot)external\win32-specific\MP3Decoder\include;$(EngineRoot)external\win32-specific\OggDecoder\include;$(EngineRoot)external\win32-specific\OpenalSoft\include;$(EngineRoot)external\win32-specific\icon\include;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\xxhash;$(EngineRoot)external\ConvertUTF;$(EngineRoot)external\Box2d;$(EngineRoot)external\curl\include\win32;$(EngineRoot)external\websockets\include\win32\;$(EngineRoot)external;$(EngineRoot)cocos;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\audio\include;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(EngineRoot)cocos;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\audio\include;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_USRDLL;NDEBUG;_WINDOWS;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_USE3DDLL;_EXPORT_DLL_;_USRSTUDIODLL;_USREXDLL;_USEGUIDLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;PROTOBUF_USE_DLLS;LIBPROTOBUF_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>None</DebugInformationFormat>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4267;4251;4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <CompileAs>CompileAsCpp</CompileAs>
@@ -141,28 +127,12 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\debug-lib\*.*" 
     </ClCompile>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\freetype2\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\glfw3\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\curl\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\jpeg\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\png\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\tiff\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\webp\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\websockets\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\zlib\prebuilt\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\icon\prebuilt\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\gles\prebuilt\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\OpenalSoft\prebuilt\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\MP3Decoder\prebuilt\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\win32-specific\OggDecoder\prebuilt\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\sqlite3\libraries\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*" "$(OutDir)"
-</Command>
+xcopy /Y /Q "$(EngineRoot)external/win32/i386/libs/Release\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
     <Link>
       <AdditionalDependencies>sqlite3.lib;libcurl_imp.lib;websockets.lib;libmpg123.lib;libogg.lib;libvorbis.lib;libvorbisfile.lib;OpenAL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(EngineRoot)external/win32/i386/libs/Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>LIBCMTD.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -299,21 +269,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\..\extensions\GUI\CCScrollView\CCTableViewCell.cpp" />
     <ClCompile Include="..\..\extensions\physics-nodes\CCPhysicsDebugNode.cpp" />
     <ClCompile Include="..\..\extensions\physics-nodes\CCPhysicsSprite.cpp" />
-    <ClCompile Include="..\..\external\ConvertUTF\ConvertUTF.c" />
-    <ClCompile Include="..\..\external\ConvertUTF\ConvertUTFWrapper.cpp" />
-    <ClCompile Include="..\..\external\edtaa3func\edtaa3func.cpp" />
-    <ClCompile Include="..\..\external\flatbuffers\flatc.cpp" />
-    <ClCompile Include="..\..\external\flatbuffers\idl_gen_cpp.cpp" />
-    <ClCompile Include="..\..\external\flatbuffers\idl_gen_fbs.cpp" />
-    <ClCompile Include="..\..\external\flatbuffers\idl_gen_general.cpp" />
-    <ClCompile Include="..\..\external\flatbuffers\idl_gen_go.cpp" />
-    <ClCompile Include="..\..\external\flatbuffers\idl_gen_text.cpp" />
-    <ClCompile Include="..\..\external\flatbuffers\idl_parser.cpp" />
-    <ClCompile Include="..\..\external\tinyxml2\tinyxml2.cpp" />
-    <ClCompile Include="..\..\external\unzip\ioapi_mem.cpp" />
-    <ClCompile Include="..\..\external\unzip\ioapi.cpp" />
-    <ClCompile Include="..\..\external\unzip\unzip.cpp" />
-    <ClCompile Include="..\..\external\xxhash\xxhash.c" />
     <ClCompile Include="..\3d\CCAABB.cpp" />
     <ClCompile Include="..\3d\CCAnimate3D.cpp" />
     <ClCompile Include="..\3d\CCAnimation3D.cpp" />
@@ -759,11 +714,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\..\extensions\GUI\CCScrollView\CCTableViewCell.h" />
     <ClInclude Include="..\..\extensions\physics-nodes\CCPhysicsDebugNode.h" />
     <ClInclude Include="..\..\extensions\physics-nodes\CCPhysicsSprite.h" />
-    <ClInclude Include="..\..\external\ConvertUTF\ConvertUTF.h" />
-    <ClInclude Include="..\..\external\edtaa3func\edtaa3func.h" />
-    <ClInclude Include="..\..\external\flatbuffers\flatbuffers.h" />
-    <ClInclude Include="..\..\external\flatbuffers\idl.h" />
-    <ClInclude Include="..\..\external\flatbuffers\util.h" />
     <ClInclude Include="..\..\external\json\document.h" />
     <ClInclude Include="..\..\external\json\filestream.h" />
     <ClInclude Include="..\..\external\json\internal\pow10.h" />
@@ -774,11 +724,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\..\external\json\reader.h" />
     <ClInclude Include="..\..\external\json\stringbuffer.h" />
     <ClInclude Include="..\..\external\json\writer.h" />
-    <ClInclude Include="..\..\external\tinyxml2\tinyxml2.h" />
-    <ClInclude Include="..\..\external\unzip\ioapi_mem.h" />
-    <ClInclude Include="..\..\external\unzip\ioapi.h" />
-    <ClInclude Include="..\..\external\unzip\unzip.h" />
-    <ClInclude Include="..\..\external\xxhash\xxhash.h" />
     <ClInclude Include="..\3d\CCAABB.h" />
     <ClInclude Include="..\3d\CCAnimate3D.h" />
     <ClInclude Include="..\3d\CCAnimation3D.h" />
@@ -1163,9 +1108,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <None Include="cocos2d.def" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\external\Box2D\proj.win32\libbox2d.vcxproj">
-      <Project>{929480e7-23c0-4df6-8456-096d71547116}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\editor-support\spine\proj.win32\libSpine.vcxproj">
       <Project>{b7c2a162-dec9-4418-972e-240ab3cbfcae}</Project>
     </ProjectReference>

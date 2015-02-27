@@ -139,11 +139,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\ParticleUniverse\ParticleRenders\CCPUParticle3DRender.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\physics-nodes\CCPhysicsDebugNode.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\physics-nodes\CCPhysicsSprite.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\ConvertUTF\ConvertUTF.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\edtaa3func\edtaa3func.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\flatbuffers.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\idl.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\util.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\document.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\filestream.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\internal\pow10.h" />
@@ -154,11 +149,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\reader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\stringbuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\writer.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\tinyxml2\tinyxml2.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\unzip\ioapi.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\unzip\ioapi_mem.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\unzip\unzip.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\xxhash\xxhash.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCAABB.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCAnimate3D.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCAnimation3D.h" />
@@ -667,24 +657,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\ParticleUniverse\ParticleRenders\CCPUParticle3DRender.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\physics-nodes\CCPhysicsDebugNode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\physics-nodes\CCPhysicsSprite.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\ConvertUTF\ConvertUTF.c">
-      <CompileAs>CompileAsCpp</CompileAs>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\ConvertUTF\ConvertUTFWrapper.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\edtaa3func\edtaa3func.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\idl_gen_cpp.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\idl_gen_fbs.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\idl_gen_general.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\idl_gen_go.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\idl_gen_text.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\idl_parser.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\tinyxml2\tinyxml2.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\unzip\ioapi.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\unzip\ioapi_mem.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\unzip\unzip.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\xxhash\xxhash.c">
-      <CompileAs>CompileAsCpp</CompileAs>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCAABB.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCAnimate3D.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCAnimation3D.cpp" />

@@ -63,7 +63,6 @@
 		15C64829165F396B007D4F18 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64828165F396B007D4F18 /* OpenAL.framework */; };
 		15C6482B165F3979007D4F18 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482A165F3979007D4F18 /* ApplicationServices.framework */; };
 		15C6482D165F3988007D4F18 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482C165F3988007D4F18 /* AudioToolbox.framework */; };
-		15C6482F165F399D007D4F18 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		15C64833165F3AFD007D4F18 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
 		15CBA9AF196EE80B005877BB /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 3E6177F01960FEFE00DE83F5 /* fonts */; };
 		15CBA9B0196EE80B005877BB /* ipad in Resources */ = {isa = PBXBuildFile; fileRef = 3E6177F11960FEFE00DE83F5 /* ipad */; };
@@ -707,6 +706,20 @@
 		295824591987415900F9746D /* UIScale9SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295824571987415900F9746D /* UIScale9SpriteTest.cpp */; };
 		2958245A1987415900F9746D /* UIScale9SpriteTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295824571987415900F9746D /* UIScale9SpriteTest.cpp */; };
 		298D7F6F19AC31F300FF096D /* UIWebViewTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 298D7F6D19AC31F300FF096D /* UIWebViewTest.cpp */; };
+		29AC14A61A8BC84C002DEB6D /* libbox2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AC14A51A8BC84C002DEB6D /* libbox2d.a */; };
+		29AC14EF1A8C73B3002DEB6D /* libbox2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AC14EE1A8C73B3002DEB6D /* libbox2d.a */; };
+		29AC14F11A8C7404002DEB6D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AC14F01A8C7404002DEB6D /* CoreFoundation.framework */; };
+		29AC14F21A8C740F002DEB6D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C8B621A7F6F6F006DCCB1 /* AudioToolbox.framework */; };
+		29AC14F31A8C7419002DEB6D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C8B661A7F6F88006DCCB1 /* QuartzCore.framework */; };
+		29AC14F41A8C741E002DEB6D /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C8B641A7F6F7C006DCCB1 /* OpenAL.framework */; };
+		29AC14F51A8C7427002DEB6D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C8B6C1A7F6FA0006DCCB1 /* UIKit.framework */; };
+		29AC14F61A8C742B002DEB6D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C8B6A1A7F6F99006DCCB1 /* OpenGLES.framework */; };
+		29AC14F71A8C743B002DEB6D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C8B681A7F6F91006DCCB1 /* CoreGraphics.framework */; };
+		29AC14F81A8C7447002DEB6D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C8B6E1A7F6FA8006DCCB1 /* AVFoundation.framework */; };
+		29AC14F91A8C745D002DEB6D /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C8B5C1A7F6F4E006DCCB1 /* CoreMotion.framework */; };
+		29AC14FA1A8C748D002DEB6D /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C8B541A7F6ECA006DCCB1 /* MediaPlayer.framework */; };
+		29AC14FE1A8C77B1002DEB6D /* libxxtea.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AC14FD1A8C77B0002DEB6D /* libxxtea.a */; };
+		29AC15011A8C7CF5002DEB6D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C8B5E1A7F6F58006DCCB1 /* libz.dylib */; };
 		29AFEF6719ACCAA000F6B10A /* Test.html in Resources */ = {isa = PBXBuildFile; fileRef = 29AFEF6619ACCAA000F6B10A /* Test.html */; };
 		29FBBBFE196A9ECD00E65826 /* CocostudioParserJsonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29FBBBFC196A9ECD00E65826 /* CocostudioParserJsonTest.cpp */; };
 		29FBBBFF196A9ECD00E65826 /* CocostudioParserJsonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29FBBBFC196A9ECD00E65826 /* CocostudioParserJsonTest.cpp */; };
@@ -772,7 +785,6 @@
 		3E9E75D0199324CB005B7047 /* Camera3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E9E75CE199324CB005B7047 /* Camera3DTest.cpp */; };
 		3E9E75D1199324CB005B7047 /* Camera3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E9E75CE199324CB005B7047 /* Camera3DTest.cpp */; };
 		3EA0FB5E191B92F100B170C8 /* cocosvideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */; };
-		3EA0FB66191B933000B170C8 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA0FB65191B933000B170C8 /* MediaPlayer.framework */; };
 		3EA0FB72191C844400B170C8 /* UIVideoPlayerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0FB70191C844400B170C8 /* UIVideoPlayerTest.cpp */; };
 		42AE83AA1A89D201009476C9 /* res in Resources */ = {isa = PBXBuildFile; fileRef = AC1C88E81A7F507D006DCCB1 /* res */; };
 		42AE83AB1A89D279009476C9 /* res in Resources */ = {isa = PBXBuildFile; fileRef = AC1C88E81A7F507D006DCCB1 /* res */; };
@@ -795,15 +807,6 @@
 		5EBEECB01995247000429821 /* DrawNode3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EBEECAE1995247000429821 /* DrawNode3D.cpp */; };
 		5EBEECB11995247000429821 /* DrawNode3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EBEECAE1995247000429821 /* DrawNode3D.cpp */; };
 		A05FCACA177C124500BE600E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
-		A07A521E1783A1D20073F6A7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
-		A07A521F1783A1D20073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
-		A07A52201783A1D20073F6A7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482C165F3988007D4F18 /* AudioToolbox.framework */; };
-		A07A52221783A1D20073F6A7 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64828165F396B007D4F18 /* OpenAL.framework */; };
-		A07A52231783A1D20073F6A7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64826165F394E007D4F18 /* QuartzCore.framework */; };
-		A07A52BE1783AF1E0073F6A7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52BB1783AEB80073F6A7 /* CoreGraphics.framework */; };
-		A07A52BF1783AF210073F6A7 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B91783AE900073F6A7 /* OpenGLES.framework */; };
-		A07A52C01783AF250073F6A7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52B71783AE6D0073F6A7 /* UIKit.framework */; };
-		A07A52C31783B02C0073F6A7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A07A52C11783B01F0073F6A7 /* AVFoundation.framework */; };
 		A5030C3519D059DA000E78E7 /* OpenURLTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5030C3319D059DA000E78E7 /* OpenURLTest.cpp */; };
 		A5030C3619D059DA000E78E7 /* OpenURLTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5030C3319D059DA000E78E7 /* OpenURLTest.cpp */; };
 		AC1C832D1A7F46CC006DCCB1 /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2d Mac.a */; };
@@ -845,7 +848,6 @@
 		AC1C8A3A1A7F56ED006DCCB1 /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = AC1C83C61A7F4F52006DCCB1 /* Icon-76.png */; };
 		AC1C8A3B1A7F5711006DCCB1 /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = AC1C83981A7F4F52006DCCB1 /* main.js */; };
 		AC1C8A3C1A7F5711006DCCB1 /* project.json in Resources */ = {isa = PBXBuildFile; fileRef = AC1C83E41A7F4F52006DCCB1 /* project.json */; };
-		AC1C8A711A7F5E0D006DCCB1 /* jsb_pluginx.js in Resources */ = {isa = PBXBuildFile; fileRef = AC1C8A701A7F5E06006DCCB1 /* jsb_pluginx.js */; };
 		AC1C8A791A7F5FBB006DCCB1 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = AC1C83BC1A7F4F52006DCCB1 /* AppController.mm */; };
 		AC1C8A7A1A7F5FBB006DCCB1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AC1C83C81A7F4F52006DCCB1 /* main.m */; };
 		AC1C8A7B1A7F5FBB006DCCB1 /* NativeOcClass.m in Sources */ = {isa = PBXBuildFile; fileRef = AC1C83CA1A7F4F52006DCCB1 /* NativeOcClass.m */; };
@@ -860,7 +862,6 @@
 		AC1C8B591A7F6EDD006DCCB1 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C8B581A7F6EDD006DCCB1 /* AdSupport.framework */; };
 		AC1C8B5B1A7F6EF0006DCCB1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C8B5A1A7F6EF0006DCCB1 /* SystemConfiguration.framework */; };
 		AC1C8B5D1A7F6F4E006DCCB1 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C8B5C1A7F6F4E006DCCB1 /* CoreMotion.framework */; };
-		AC1C8B5F1A7F6F58006DCCB1 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C8B5E1A7F6F58006DCCB1 /* libz.dylib */; };
 		AC1C8B611A7F6F61006DCCB1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C8B601A7F6F61006DCCB1 /* Foundation.framework */; };
 		AC1C8B631A7F6F6F006DCCB1 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C8B621A7F6F6F006DCCB1 /* AudioToolbox.framework */; };
 		AC1C8B651A7F6F7C006DCCB1 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C8B641A7F6F7C006DCCB1 /* OpenAL.framework */; };
@@ -869,12 +870,6 @@
 		AC1C8B6B1A7F6F99006DCCB1 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C8B6A1A7F6F99006DCCB1 /* OpenGLES.framework */; };
 		AC1C8B6D1A7F6FA0006DCCB1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C8B6C1A7F6FA0006DCCB1 /* UIKit.framework */; };
 		AC1C8B6F1A7F6FA8006DCCB1 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C8B6E1A7F6FA8006DCCB1 /* AVFoundation.framework */; };
-		AC1C8B701A7F6FD2006DCCB1 /* libPluginAdmob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C8AAC1A7F61BA006DCCB1 /* libPluginAdmob.a */; };
-		AC1C8B711A7F6FD2006DCCB1 /* libPluginFacebook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C8AAF1A7F61BA006DCCB1 /* libPluginFacebook.a */; };
-		AC1C8B721A7F6FD2006DCCB1 /* libPluginFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C8AB21A7F61BA006DCCB1 /* libPluginFlurry.a */; };
-		AC1C8B731A7F6FD2006DCCB1 /* libPluginIAP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C8AB51A7F61BA006DCCB1 /* libPluginIAP.a */; };
-		AC1C8B741A7F6FD2006DCCB1 /* libPluginProtocol.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C8AB81A7F61BA006DCCB1 /* libPluginProtocol.a */; };
-		AC1C8B751A7F6FD2006DCCB1 /* libPluginTwitter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C8ABB1A7F61BA006DCCB1 /* libPluginTwitter.a */; };
 		AC1C8B781A7F6FFC006DCCB1 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C8A7E1A7F5FF7006DCCB1 /* FacebookSDK.framework */; };
 		AC1C8B831A7F7944006DCCB1 /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2d iOS.a */; };
 		AC1C8B841A7F7944006DCCB1 /* libjscocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C83831A7F4DFF006DCCB1 /* libjscocos2d iOS.a */; };
@@ -896,7 +891,6 @@
 		C08689C418D370C90093E810 /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
 		D0FD03641A3B546400825BB5 /* AllocatorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FD03621A3B546400825BB5 /* AllocatorTest.cpp */; };
 		D0FD03651A3B546400825BB5 /* AllocatorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FD03621A3B546400825BB5 /* AllocatorTest.cpp */; };
-		D60AE43417F7FFE100757E4B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
 		EDCC747F17C455FD007B692C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -1145,90 +1139,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = AC1C89141A7F547A006DCCB1;
 			remoteInfo = "js-tests iOS";
-		};
-		AC1C8AAB1A7F61BA006DCCB1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AC1C8A9E1A7F61BA006DCCB1 /* PluginAdmob.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FADC44A7176EA82000B2D5ED;
-			remoteInfo = PluginAdmob;
-		};
-		AC1C8AAE1A7F61BA006DCCB1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AC1C8A951A7F61BA006DCCB1 /* PluginFacebook.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BA34A75D195AA8C7002D0ECD;
-			remoteInfo = PluginFacebook;
-		};
-		AC1C8AB11A7F61BA006DCCB1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AC1C8A9B1A7F61BA006DCCB1 /* PluginFlurry.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FA09A372168AFD41008C1C7B;
-			remoteInfo = PluginFlurry;
-		};
-		AC1C8AB41A7F61BA006DCCB1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AC1C8A981A7F61BA006DCCB1 /* PluginIAP.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 05A9357E19260E2E00F08DC0;
-			remoteInfo = PluginIAP;
-		};
-		AC1C8AB71A7F61BA006DCCB1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AC1C8A921A7F61BA006DCCB1 /* PluginProtocol.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FA09A321168ADBC2008C1C7B;
-			remoteInfo = PluginProtocol;
-		};
-		AC1C8ABA1A7F61BA006DCCB1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AC1C8AA11A7F61BA006DCCB1 /* PluginTwitter.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FACAD8881762C1B500D75ADE;
-			remoteInfo = PluginTwitter;
-		};
-		AC1C8ACD1A7F622D006DCCB1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AC1C8A921A7F61BA006DCCB1 /* PluginProtocol.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = FA09A320168ADBC2008C1C7B;
-			remoteInfo = PluginProtocol;
-		};
-		AC1C8ACF1A7F622D006DCCB1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AC1C8A951A7F61BA006DCCB1 /* PluginFacebook.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = BA34A75C195AA8C7002D0ECD;
-			remoteInfo = PluginFacebook;
-		};
-		AC1C8AD11A7F622D006DCCB1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AC1C8A981A7F61BA006DCCB1 /* PluginIAP.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 05A9357D19260E2E00F08DC0;
-			remoteInfo = PluginIAP;
-		};
-		AC1C8AD31A7F622D006DCCB1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AC1C8A9B1A7F61BA006DCCB1 /* PluginFlurry.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = FA09A371168AFD41008C1C7B;
-			remoteInfo = PluginFlurry;
-		};
-		AC1C8AD51A7F622D006DCCB1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AC1C8A9E1A7F61BA006DCCB1 /* PluginAdmob.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = FADC44A6176EA82000B2D5ED;
-			remoteInfo = PluginAdmob;
-		};
-		AC1C8AD71A7F622D006DCCB1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = AC1C8AA11A7F61BA006DCCB1 /* PluginTwitter.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = FACAD8871762C1B500D75ADE;
-			remoteInfo = PluginTwitter;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -1862,6 +1772,12 @@
 		295824581987415900F9746D /* UIScale9SpriteTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScale9SpriteTest.h; sourceTree = "<group>"; };
 		298D7F6D19AC31F300FF096D /* UIWebViewTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UIWebViewTest.cpp; path = UIWebViewTest/UIWebViewTest.cpp; sourceTree = "<group>"; };
 		298D7F6E19AC31F300FF096D /* UIWebViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIWebViewTest.h; path = UIWebViewTest/UIWebViewTest.h; sourceTree = "<group>"; };
+		29AC14A51A8BC84C002DEB6D /* libbox2d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libbox2d.a; path = "../external/mac/x86-64/libs/libbox2d.a"; sourceTree = "<group>"; };
+		29AC14A71A8BCC2E002DEB6D /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
+		29AC14EE1A8C73B3002DEB6D /* libbox2d.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libbox2d.a; path = ../external/ios/libs/libbox2d.a; sourceTree = "<group>"; };
+		29AC14F01A8C7404002DEB6D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
+		29AC14FD1A8C77B0002DEB6D /* libxxtea.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libxxtea.a; path = ../external/ios/libs/libxxtea.a; sourceTree = "<group>"; };
+		29AC14FF1A8C7C7D002DEB6D /* libjs_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjs_static.a; path = ../external/ios/libs/libjs_static.a; sourceTree = "<group>"; };
 		29AFEF6619ACCAA000F6B10A /* Test.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = Test.html; path = "../tests/cpp-tests/Resources/Test.html"; sourceTree = "<group>"; };
 		29FBBBFC196A9ECD00E65826 /* CocostudioParserJsonTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocostudioParserJsonTest.cpp; sourceTree = "<group>"; };
 		29FBBBFD196A9ECD00E65826 /* CocostudioParserJsonTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocostudioParserJsonTest.h; sourceTree = "<group>"; };
@@ -1983,14 +1899,7 @@
 		AC1C88E91A7F507D006DCCB1 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; path = src; sourceTree = "<group>"; };
 		AC1C89111A7F532A006DCCB1 /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; name = script; path = "../../cocos/scripting/js-bindings/script"; sourceTree = "<group>"; };
 		AC1C8A1E1A7F547A006DCCB1 /* js-tests iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "js-tests iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		AC1C8A701A7F5E06006DCCB1 /* jsb_pluginx.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = jsb_pluginx.js; sourceTree = "<group>"; };
 		AC1C8A7E1A7F5FF7006DCCB1 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../plugin/plugins/facebook/proj.ios/sdk/FacebookSDK.framework; sourceTree = "<group>"; };
-		AC1C8A921A7F61BA006DCCB1 /* PluginProtocol.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginProtocol.xcodeproj; path = ../plugin/protocols/proj.ios/PluginProtocol.xcodeproj; sourceTree = "<group>"; };
-		AC1C8A951A7F61BA006DCCB1 /* PluginFacebook.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginFacebook.xcodeproj; path = ../plugin/plugins/facebook/proj.ios/PluginFacebook.xcodeproj; sourceTree = "<group>"; };
-		AC1C8A981A7F61BA006DCCB1 /* PluginIAP.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginIAP.xcodeproj; path = ../plugin/plugins/iosiap/proj.ios/PluginIAP.xcodeproj; sourceTree = "<group>"; };
-		AC1C8A9B1A7F61BA006DCCB1 /* PluginFlurry.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginFlurry.xcodeproj; path = ../plugin/plugins/flurry/proj.ios/PluginFlurry.xcodeproj; sourceTree = "<group>"; };
-		AC1C8A9E1A7F61BA006DCCB1 /* PluginAdmob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginAdmob.xcodeproj; path = ../plugin/plugins/admob/proj.ios/PluginAdmob.xcodeproj; sourceTree = "<group>"; };
-		AC1C8AA11A7F61BA006DCCB1 /* PluginTwitter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PluginTwitter.xcodeproj; path = ../plugin/plugins/twitter/proj.ios/PluginTwitter.xcodeproj; sourceTree = "<group>"; };
 		AC1C8AFA1A7F67C4006DCCB1 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/usr/lib/libsqlite3.dylib; sourceTree = DEVELOPER_DIR; };
 		AC1C8B4E1A7F6E95006DCCB1 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/GameController.framework; sourceTree = DEVELOPER_DIR; };
 		AC1C8B501A7F6EAB006DCCB1 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -2107,6 +2016,7 @@
 			files = (
 				15EFA68B198B3AD8000C57D3 /* libcocos2d iOS.a in Frameworks */,
 				15EFA68D198B3AD8000C57D3 /* libluacocos2d iOS.a in Frameworks */,
+				29AC14FE1A8C77B1002DEB6D /* libxxtea.a in Frameworks */,
 				15AECE25195D467D00907DB0 /* MediaPlayer.framework in Frameworks */,
 				1A0EE42C18CDF799004CD58F /* libz.dylib in Frameworks */,
 				1A0EE42D18CDF799004CD58F /* CoreMotion.framework in Frameworks */,
@@ -2166,8 +2076,8 @@
 			files = (
 				1AAF534D180E2F4E000584C8 /* libcocos2d Mac.a in Frameworks */,
 				EDCC747F17C455FD007B692C /* IOKit.framework in Frameworks */,
-				15C6482F165F399D007D4F18 /* libz.dylib in Frameworks */,
 				15C64833165F3AFD007D4F18 /* Foundation.framework in Frameworks */,
+				29AC14A61A8BC84C002DEB6D /* libbox2d.a in Frameworks */,
 				15C6482D165F3988007D4F18 /* AudioToolbox.framework in Frameworks */,
 				15C6482B165F3979007D4F18 /* ApplicationServices.framework in Frameworks */,
 				15C64829165F396B007D4F18 /* OpenAL.framework in Frameworks */,
@@ -2200,19 +2110,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29AC14FA1A8C748D002DEB6D /* MediaPlayer.framework in Frameworks */,
+				29AC14F91A8C745D002DEB6D /* CoreMotion.framework in Frameworks */,
+				29AC14F81A8C7447002DEB6D /* AVFoundation.framework in Frameworks */,
+				29AC14F71A8C743B002DEB6D /* CoreGraphics.framework in Frameworks */,
+				29AC14F61A8C742B002DEB6D /* OpenGLES.framework in Frameworks */,
+				29AC14F51A8C7427002DEB6D /* UIKit.framework in Frameworks */,
+				29AC14F41A8C741E002DEB6D /* OpenAL.framework in Frameworks */,
+				29AC14F31A8C7419002DEB6D /* QuartzCore.framework in Frameworks */,
+				29AC14F21A8C740F002DEB6D /* AudioToolbox.framework in Frameworks */,
+				29AC14F11A8C7404002DEB6D /* CoreFoundation.framework in Frameworks */,
+				29AC14EF1A8C73B3002DEB6D /* libbox2d.a in Frameworks */,
 				52B47A341A534B2B004E4C60 /* Security.framework in Frameworks */,
-				3EA0FB66191B933000B170C8 /* MediaPlayer.framework in Frameworks */,
 				1AAF5400180E39D4000584C8 /* libcocos2d iOS.a in Frameworks */,
-				D60AE43417F7FFE100757E4B /* CoreMotion.framework in Frameworks */,
-				A07A521E1783A1D20073F6A7 /* libz.dylib in Frameworks */,
-				A07A521F1783A1D20073F6A7 /* Foundation.framework in Frameworks */,
-				A07A52201783A1D20073F6A7 /* AudioToolbox.framework in Frameworks */,
-				A07A52221783A1D20073F6A7 /* OpenAL.framework in Frameworks */,
-				A07A52231783A1D20073F6A7 /* QuartzCore.framework in Frameworks */,
-				A07A52BE1783AF1E0073F6A7 /* CoreGraphics.framework in Frameworks */,
-				A07A52BF1783AF210073F6A7 /* OpenGLES.framework in Frameworks */,
-				A07A52C01783AF250073F6A7 /* UIKit.framework in Frameworks */,
-				A07A52C31783B02C0073F6A7 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2240,15 +2150,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29AC15011A8C7CF5002DEB6D /* libz.dylib in Frameworks */,
 				AC1C8B831A7F7944006DCCB1 /* libcocos2d iOS.a in Frameworks */,
 				AC1C8B841A7F7944006DCCB1 /* libjscocos2d iOS.a in Frameworks */,
 				AC1C8B781A7F6FFC006DCCB1 /* FacebookSDK.framework in Frameworks */,
-				AC1C8B701A7F6FD2006DCCB1 /* libPluginAdmob.a in Frameworks */,
-				AC1C8B711A7F6FD2006DCCB1 /* libPluginFacebook.a in Frameworks */,
-				AC1C8B721A7F6FD2006DCCB1 /* libPluginFlurry.a in Frameworks */,
-				AC1C8B731A7F6FD2006DCCB1 /* libPluginIAP.a in Frameworks */,
-				AC1C8B741A7F6FD2006DCCB1 /* libPluginProtocol.a in Frameworks */,
-				AC1C8B751A7F6FD2006DCCB1 /* libPluginTwitter.a in Frameworks */,
 				AC1C8B6F1A7F6FA8006DCCB1 /* AVFoundation.framework in Frameworks */,
 				AC1C8B6D1A7F6FA0006DCCB1 /* UIKit.framework in Frameworks */,
 				AC1C8B6B1A7F6F99006DCCB1 /* OpenGLES.framework in Frameworks */,
@@ -2257,7 +2162,6 @@
 				AC1C8B651A7F6F7C006DCCB1 /* OpenAL.framework in Frameworks */,
 				AC1C8B631A7F6F6F006DCCB1 /* AudioToolbox.framework in Frameworks */,
 				AC1C8B611A7F6F61006DCCB1 /* Foundation.framework in Frameworks */,
-				AC1C8B5F1A7F6F58006DCCB1 /* libz.dylib in Frameworks */,
 				AC1C8B5D1A7F6F4E006DCCB1 /* CoreMotion.framework in Frameworks */,
 				AC1C8B5B1A7F6EF0006DCCB1 /* SystemConfiguration.framework in Frameworks */,
 				AC1C8B591A7F6EDD006DCCB1 /* AdSupport.framework in Frameworks */,
@@ -3482,6 +3386,7 @@
 		1AC35C9A18CECF1E00F37B72 /* proj.mac */ = {
 			isa = PBXGroup;
 			children = (
+				29AC14A71A8BCC2E002DEB6D /* Prefix.pch */,
 				1AC35D0C18CED89100F37B72 /* Info.plist */,
 				1AC35C9B18CECF1E00F37B72 /* InfoPlist.strings */,
 				1AC35C9D18CECF1E00F37B72 /* MainMenu.xib */,
@@ -3973,7 +3878,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				AC1C8A3D1A7F5D35006DCCB1 /* pluginx */,
 				AC1C837B1A7F4DFE006DCCB1 /* cocos2d_js_bindings.xcodeproj */,
 				46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */,
 				1ABCA27618CD90A40087CE3A /* cocos2d_lua_bindings.xcodeproj */,
@@ -3987,6 +3891,11 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				29AC14FF1A8C7C7D002DEB6D /* libjs_static.a */,
+				29AC14FD1A8C77B0002DEB6D /* libxxtea.a */,
+				29AC14F01A8C7404002DEB6D /* CoreFoundation.framework */,
+				29AC14EE1A8C73B3002DEB6D /* libbox2d.a */,
+				29AC14A51A8BC84C002DEB6D /* libbox2d.a */,
 				AC1C8B6E1A7F6FA8006DCCB1 /* AVFoundation.framework */,
 				AC1C8B6C1A7F6FA0006DCCB1 /* UIKit.framework */,
 				AC1C8B6A1A7F6F99006DCCB1 /* OpenGLES.framework */,
@@ -4332,77 +4241,6 @@
 			path = proj.mac;
 			sourceTree = "<group>";
 		};
-		AC1C8A3D1A7F5D35006DCCB1 /* pluginx */ = {
-			isa = PBXGroup;
-			children = (
-				AC1C8A921A7F61BA006DCCB1 /* PluginProtocol.xcodeproj */,
-				AC1C8A951A7F61BA006DCCB1 /* PluginFacebook.xcodeproj */,
-				AC1C8A981A7F61BA006DCCB1 /* PluginIAP.xcodeproj */,
-				AC1C8A9B1A7F61BA006DCCB1 /* PluginFlurry.xcodeproj */,
-				AC1C8A9E1A7F61BA006DCCB1 /* PluginAdmob.xcodeproj */,
-				AC1C8AA11A7F61BA006DCCB1 /* PluginTwitter.xcodeproj */,
-				AC1C8A6F1A7F5E06006DCCB1 /* script */,
-			);
-			name = pluginx;
-			sourceTree = "<group>";
-		};
-		AC1C8A6F1A7F5E06006DCCB1 /* script */ = {
-			isa = PBXGroup;
-			children = (
-				AC1C8A701A7F5E06006DCCB1 /* jsb_pluginx.js */,
-			);
-			name = script;
-			path = ../plugin/jsbindings/script;
-			sourceTree = "<group>";
-		};
-		AC1C8A931A7F61BA006DCCB1 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				AC1C8AB81A7F61BA006DCCB1 /* libPluginProtocol.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		AC1C8A961A7F61BA006DCCB1 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				AC1C8AAF1A7F61BA006DCCB1 /* libPluginFacebook.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		AC1C8A991A7F61BA006DCCB1 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				AC1C8AB51A7F61BA006DCCB1 /* libPluginIAP.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		AC1C8A9C1A7F61BA006DCCB1 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				AC1C8AB21A7F61BA006DCCB1 /* libPluginFlurry.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		AC1C8A9F1A7F61BA006DCCB1 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				AC1C8AAC1A7F61BA006DCCB1 /* libPluginAdmob.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		AC1C8AA21A7F61BA006DCCB1 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				AC1C8ABB1A7F61BA006DCCB1 /* libPluginTwitter.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		B609E67019C18D90003D0074 /* BillBoardTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -4666,12 +4504,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				AC1C8ACE1A7F622D006DCCB1 /* PBXTargetDependency */,
-				AC1C8AD01A7F622D006DCCB1 /* PBXTargetDependency */,
-				AC1C8AD21A7F622D006DCCB1 /* PBXTargetDependency */,
-				AC1C8AD41A7F622D006DCCB1 /* PBXTargetDependency */,
-				AC1C8AD61A7F622D006DCCB1 /* PBXTargetDependency */,
-				AC1C8AD81A7F622D006DCCB1 /* PBXTargetDependency */,
 				AC1C8A731A7F5E68006DCCB1 /* PBXTargetDependency */,
 				AC1C89151A7F547A006DCCB1 /* PBXTargetDependency */,
 			);
@@ -4714,30 +4546,6 @@
 				{
 					ProductGroup = 1ABCA27718CD90A40087CE3A /* Products */;
 					ProjectRef = 1ABCA27618CD90A40087CE3A /* cocos2d_lua_bindings.xcodeproj */;
-				},
-				{
-					ProductGroup = AC1C8A9F1A7F61BA006DCCB1 /* Products */;
-					ProjectRef = AC1C8A9E1A7F61BA006DCCB1 /* PluginAdmob.xcodeproj */;
-				},
-				{
-					ProductGroup = AC1C8A961A7F61BA006DCCB1 /* Products */;
-					ProjectRef = AC1C8A951A7F61BA006DCCB1 /* PluginFacebook.xcodeproj */;
-				},
-				{
-					ProductGroup = AC1C8A9C1A7F61BA006DCCB1 /* Products */;
-					ProjectRef = AC1C8A9B1A7F61BA006DCCB1 /* PluginFlurry.xcodeproj */;
-				},
-				{
-					ProductGroup = AC1C8A991A7F61BA006DCCB1 /* Products */;
-					ProjectRef = AC1C8A981A7F61BA006DCCB1 /* PluginIAP.xcodeproj */;
-				},
-				{
-					ProductGroup = AC1C8A931A7F61BA006DCCB1 /* Products */;
-					ProjectRef = AC1C8A921A7F61BA006DCCB1 /* PluginProtocol.xcodeproj */;
-				},
-				{
-					ProductGroup = AC1C8AA21A7F61BA006DCCB1 /* Products */;
-					ProjectRef = AC1C8AA11A7F61BA006DCCB1 /* PluginTwitter.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -4801,48 +4609,6 @@
 			fileType = archive.ar;
 			path = "libjscocos2d iOS.a";
 			remoteRef = AC1C83821A7F4DFF006DCCB1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AC1C8AAC1A7F61BA006DCCB1 /* libPluginAdmob.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libPluginAdmob.a;
-			remoteRef = AC1C8AAB1A7F61BA006DCCB1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AC1C8AAF1A7F61BA006DCCB1 /* libPluginFacebook.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libPluginFacebook.a;
-			remoteRef = AC1C8AAE1A7F61BA006DCCB1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AC1C8AB21A7F61BA006DCCB1 /* libPluginFlurry.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libPluginFlurry.a;
-			remoteRef = AC1C8AB11A7F61BA006DCCB1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AC1C8AB51A7F61BA006DCCB1 /* libPluginIAP.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libPluginIAP.a;
-			remoteRef = AC1C8AB41A7F61BA006DCCB1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AC1C8AB81A7F61BA006DCCB1 /* libPluginProtocol.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libPluginProtocol.a;
-			remoteRef = AC1C8AB71A7F61BA006DCCB1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		AC1C8ABB1A7F61BA006DCCB1 /* libPluginTwitter.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libPluginTwitter.a;
-			remoteRef = AC1C8ABA1A7F61BA006DCCB1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -5190,7 +4956,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC1C8A711A7F5E0D006DCCB1 /* jsb_pluginx.js in Resources */,
 				AC1C8A3B1A7F5711006DCCB1 /* main.js in Resources */,
 				AC1C8A3C1A7F5711006DCCB1 /* project.json in Resources */,
 				AC1C8A311A7F56ED006DCCB1 /* Default-568h@2x.png in Resources */,
@@ -5986,36 +5751,6 @@
 			target = AC1C89141A7F547A006DCCB1 /* js-tests iOS */;
 			targetProxy = AC1C8A771A7F5F17006DCCB1 /* PBXContainerItemProxy */;
 		};
-		AC1C8ACE1A7F622D006DCCB1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = PluginProtocol;
-			targetProxy = AC1C8ACD1A7F622D006DCCB1 /* PBXContainerItemProxy */;
-		};
-		AC1C8AD01A7F622D006DCCB1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = PluginFacebook;
-			targetProxy = AC1C8ACF1A7F622D006DCCB1 /* PBXContainerItemProxy */;
-		};
-		AC1C8AD21A7F622D006DCCB1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = PluginIAP;
-			targetProxy = AC1C8AD11A7F622D006DCCB1 /* PBXContainerItemProxy */;
-		};
-		AC1C8AD41A7F622D006DCCB1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = PluginFlurry;
-			targetProxy = AC1C8AD31A7F622D006DCCB1 /* PBXContainerItemProxy */;
-		};
-		AC1C8AD61A7F622D006DCCB1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = PluginAdmob;
-			targetProxy = AC1C8AD51A7F622D006DCCB1 /* PBXContainerItemProxy */;
-		};
-		AC1C8AD81A7F622D006DCCB1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = PluginTwitter;
-			targetProxy = AC1C8AD71A7F622D006DCCB1 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -6123,7 +5858,7 @@
 				PRODUCT_NAME = "lua-game-controller-test iOS";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/scripting/lua-bindings/manual/tolua";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external/ios/include/luajit $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/scripting/lua-bindings/manual/tolua";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
@@ -6149,7 +5884,7 @@
 				PRODUCT_NAME = "lua-game-controller-test iOS";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/scripting/lua-bindings/manual/tolua";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external/ios/include/luajit $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/scripting/lua-bindings/manual/tolua";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "arm64 armv7";
 			};
@@ -6165,7 +5900,7 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-empty-test/proj.mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/mac/x86-64/include";
 			};
 			name = Debug;
 		};
@@ -6179,7 +5914,7 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-empty-test/proj.mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/mac/x86-64/include";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -6199,7 +5934,7 @@
 					"-image_base",
 					100000000,
 				);
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto $(SRCROOT)/../cocos/scripting/lua-bindings/manual/tolua";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/mac/x86-64/include $(SRCROOT)/../external/mac/x86-64/include/luajit $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto $(SRCROOT)/../cocos/scripting/lua-bindings/manual/tolua";
 			};
 			name = Debug;
 		};
@@ -6218,7 +5953,7 @@
 					"-image_base",
 					100000000,
 				);
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto $(SRCROOT)/../cocos/scripting/lua-bindings/manual/tolua";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/mac/x86-64/include $(SRCROOT)/../external/mac/x86-64/include/luajit $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto $(SRCROOT)/../cocos/scripting/lua-bindings/manual/tolua";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -6235,7 +5970,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../cocos/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../cocos/platform/ios/Simulation $(SRCROOT)/../external/ios/include";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
@@ -6252,7 +5987,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../cocos/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../cocos/platform/ios/Simulation $(SRCROOT)/../external/ios/include";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "arm64 armv7";
 			};
@@ -6270,11 +6005,11 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../external/curl/prebuilt/ios",
+					"$(SRCROOT)/../external/ios/libs",
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto $(SRCROOT)/../cocos/scripting/lua-bindings/manual/tolua";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external/ios/include/luajit $(SRCROOT)/../external/ios/include $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto $(SRCROOT)/../cocos/scripting/lua-bindings/manual/tolua";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
@@ -6291,11 +6026,11 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../external/curl/prebuilt/ios",
+					"$(SRCROOT)/../external/ios/libs",
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto $(SRCROOT)/../cocos/scripting/lua-bindings/manual/tolua";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external/ios/include/luajit $(SRCROOT)/../external/ios/include $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto $(SRCROOT)/../cocos/scripting/lua-bindings/manual/tolua";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "arm64 armv7";
 			};
@@ -6316,7 +6051,7 @@
 					"-image_base",
 					100000000,
 				);
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto $(SRCROOT)/../cocos/scripting/lua-bindings/manual/tolua";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/mac/x86-64/include $(SRCROOT)/../external/mac/x86-64/include/luajit $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto $(SRCROOT)/../cocos/scripting/lua-bindings/manual/tolua";
 			};
 			name = Debug;
 		};
@@ -6335,7 +6070,7 @@
 					"-image_base",
 					100000000,
 				);
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto $(SRCROOT)/../cocos/scripting/lua-bindings/manual/tolua";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/mac/x86-64/include $(SRCROOT)/../external/mac/x86-64/include/luajit $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto $(SRCROOT)/../cocos/scripting/lua-bindings/manual/tolua";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -6356,7 +6091,7 @@
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto $(SRCROOT)/../cocos/scripting/lua-bindings/manual/tolua";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external/ios/include/ $(SRCROOT)/../external/ios/include/luajit $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto $(SRCROOT)/../cocos/scripting/lua-bindings/manual/tolua";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
@@ -6377,7 +6112,7 @@
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external $(SRCROOT)/../external/lua/luajit/include $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto $(SRCROOT)/../cocos/scripting/lua-bindings/manual/tolua";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external/ios/include/ $(SRCROOT)/../external/ios/include/luajit $(SRCROOT)/../cocos/scripting/lua-bindings/manual $(SRCROOT)/../cocos/scripting/lua-bindings/auto $(SRCROOT)/../cocos/scripting/lua-bindings/manual/tolua";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "arm64 armv7";
 			};
@@ -6391,10 +6126,15 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_MAC,
+					"CP_USE_CGPOINTS=0",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-tests/proj.mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../external/mac/x86-64/libs",
+				);
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/mac/x86-64/include $(SRCROOT)/../extensions";
 			};
 			name = Debug;
 		};
@@ -6406,10 +6146,15 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_MAC,
+					"CP_USE_CGPOINTS=0",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-tests/proj.mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../external/mac/x86-64/libs",
+				);
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/mac/x86-64/include $(SRCROOT)/../extensions";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -6494,16 +6239,17 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
+					"CP_USE_CGPOINTS=0",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-tests/proj.ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../external/curl/prebuilt/ios",
+					"$(SRCROOT)/../external/ios/libs",
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../cocos/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../cocos/platform/ios/Simulation $(SRCROOT)/../external/ios/include $(SRCROOT)/../extensions";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
@@ -6517,16 +6263,17 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
+					"CP_USE_CGPOINTS=0",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-tests/proj.ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../external/curl/prebuilt/ios",
+					"$(SRCROOT)/../external/ios/libs",
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../cocos/platform/ios/Simulation $(SRCROOT)/../external/curl/include/ios";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../cocos/platform/ios/Simulation $(SRCROOT)/../external/ios/include $(SRCROOT)/../extensions";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "arm64 armv7";
 			};
@@ -6554,7 +6301,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "js-tests Mac";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/spidermonkey/include/mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/mac/x86-64/include/spidermonkey $(SRCROOT)/../external/mac/x86-64/include $(SRCROOT)/../cocos/scripting/js-bindings/auto $(SRCROOT)/../cocos/scripting/js-bindings/manual";
 			};
 			name = Debug;
 		};
@@ -6580,7 +6327,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "js-tests Mac";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/spidermonkey/include/mac";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/mac/x86-64/include/spidermonkey $(SRCROOT)/../external/mac/x86-64/include $(SRCROOT)/../cocos/scripting/js-bindings/auto $(SRCROOT)/../cocos/scripting/js-bindings/manual";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -6604,14 +6351,14 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/js-tests/project/proj.ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "/Users/guanghui/cocos2d-x/external/ios/libs";
 				MACOSX_DEPLOYMENT_TARGET = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "js-tests iOS";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external/spidermonkey/include/ios $(SRCROOT)/../plugin/jsbindings/auto $(SRCROOT)/../plugin/jsbindings/manual";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external/ios/include/spidermonkey $(SRCROOT)/../external/ios/include $(SRCROOT)/../plugin/jsbindings/auto $(SRCROOT)/../plugin/jsbindings/manual $(SRCROOT)/../cocos/scripting/js-bindings/auto $(SRCROOT)/../cocos/scripting/js-bindings/manual";
 				VALID_ARCHS = "arm64 armv7";
 			};
 			name = Debug;
@@ -6636,14 +6383,14 @@
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/js-tests/project/proj.ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = "/Users/guanghui/cocos2d-x/external/ios/libs";
 				MACOSX_DEPLOYMENT_TARGET = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "js-tests iOS";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external/spidermonkey/include/ios $(SRCROOT)/../plugin/jsbindings/auto $(SRCROOT)/../plugin/jsbindings/manual";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../external/ios/include/spidermonkey $(SRCROOT)/../external/ios/include $(SRCROOT)/../plugin/jsbindings/auto $(SRCROOT)/../plugin/jsbindings/manual $(SRCROOT)/../cocos/scripting/js-bindings/auto $(SRCROOT)/../cocos/scripting/js-bindings/manual";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "arm64 armv7";
 			};
@@ -6675,7 +6422,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../ $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/gui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../cocos/scripting/js-bindings/auto $(SRCROOT)/../cocos/scripting/js-bindings/manual";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../ $(SRCROOT)/../cocos $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/base";
 			};
 			name = Debug;
 		};
@@ -6702,7 +6449,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../ $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/gui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../cocos/scripting/js-bindings/auto $(SRCROOT)/../cocos/scripting/js-bindings/manual";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../ $(SRCROOT)/../cocos $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/base";
 			};
 			name = Release;
 		};

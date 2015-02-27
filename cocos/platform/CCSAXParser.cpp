@@ -27,7 +27,7 @@
 #include <vector> // because its based on windows 8 build :P
 
 #include "platform/CCFileUtils.h"
-#include "tinyxml2.h"
+#include "tinyxml2/tinyxml2.h"
 
 
 NS_CC_BEGIN

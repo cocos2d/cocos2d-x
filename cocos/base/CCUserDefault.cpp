@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "base/CCUserDefault.h"
 #include "platform/CCCommon.h"
 #include "platform/CCFileUtils.h"
-#include "tinyxml2.h"
+#include "tinyxml2/tinyxml2.h"
 #include "base/base64.h"
 #include "base/ccUtils.h"
 

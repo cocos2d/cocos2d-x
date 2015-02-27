@@ -38,7 +38,7 @@
 #include "renderer/CCTextureAtlas.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/ccGLStateCache.h"
-#include "xxhash.h"
+#include "xxhash/xxhash.h"
 
 NS_CC_BEGIN
 

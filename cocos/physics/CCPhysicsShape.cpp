@@ -28,8 +28,8 @@
 #include <climits>
 #include <unordered_map>
 
-#include "chipmunk.h"
-#include "chipmunk_unsafe.h"
+#include "chipmunk/chipmunk.h"
+#include "chipmunk/chipmunk_unsafe.h"
 
 #include "CCPhysicsBody.h"
 #include "CCPhysicsWorld.h"

@@ -41,11 +41,14 @@
 #include "base/CCUserDefault.h"
 #include "platform/CCFileUtils.h"
 
+extern "C"{
 #ifdef MINIZIP_FROM_SYSTEM
 #include <minizip/unzip.h>
 #else // from our embedded sources
-#include "unzip.h"
+#include "minizip/unzip.h"
 #endif
+}
+
 
 using namespace cocos2d;
 using namespace std;

@@ -16,6 +16,6 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../external/curl/include/android \
 
 LOCAL_STATIC_LIBRARIES := cocos2dx_internal_static
 LOCAL_STATIC_LIBRARIES += cocos_curl_static
-LOCAL_STATIC_LIBRARIES += libwebsockets_static
+LOCAL_STATIC_LIBRARIES += cocos_websockets_static
 
 include $(BUILD_STATIC_LIBRARY)

@@ -31,7 +31,6 @@
 		503AE10517EB98FF00D1A890 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 503AE10317EB98FF00D1A890 /* main.cpp */; };
 		503AE11B17EB9C5A00D1A890 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503AE11A17EB9C5A00D1A890 /* IOKit.framework */; };
 		5087E76317EB910900C73F5D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
-		5087E76717EB910900C73F5D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		5087E76817EB910900C73F5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 		5087E76917EB910900C73F5D /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		5087E76A17EB910900C73F5D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
@@ -184,7 +183,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1AC6FB21180E996B004C840B /* libcocos2d Mac.a in Frameworks */,
-				5087E76717EB910900C73F5D /* libz.dylib in Frameworks */,
 				503AE11B17EB9C5A00D1A890 /* IOKit.framework in Frameworks */,
 				5087E78B17EB975400C73F5D /* OpenGL.framework in Frameworks */,
 				5087E78917EB974C00C73F5D /* AppKit.framework in Frameworks */,
@@ -612,7 +610,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../cocos2d/cocos/platform/mac",
-					"$(SRCROOT)/../cocos2d/external/glfw3/include/mac",
+					"$(SRCROOT)/../cocos2d/external/mac/x86-64/include",
 				);
 				INFOPLIST_FILE = mac/Info.plist;
 				LIBRARY_SEARCH_PATHS = "";
@@ -643,7 +641,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../cocos2d/cocos/platform/mac",
-					"$(SRCROOT)/../cocos2d/external/glfw3/include/mac",
+					"$(SRCROOT)/../cocos2d/external/mac/x86-64/include",
 				);
 				INFOPLIST_FILE = mac/Info.plist;
 				LIBRARY_SEARCH_PATHS = "";

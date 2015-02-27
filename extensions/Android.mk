@@ -130,7 +130,7 @@ Particle3D/ParticleUniverse/ParticleRenders/CCPUParticle3DRender.cpp \
 
 LOCAL_STATIC_LIBRARIES := cocos2dx_internal_static
 LOCAL_STATIC_LIBRARIES += cocos_curl_static
-LOCAL_STATIC_LIBRARIES += box2d_static
+LOCAL_STATIC_LIBRARIES += cocos_box2d_static
 
 LOCAL_CXXFLAGS += -fexceptions
 

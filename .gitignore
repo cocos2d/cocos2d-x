@@ -156,3 +156,14 @@ tests/cpp-tests/Resources/audio
 /external/protobuf-lite/
 /external/flatbuffers/
 /external/spidermonkey/
+/external/mac/
+/external/ios/
+/external/linux/
+/external/win32/
+/external/wp8/
+/external/android/
+/external/wp-8.1/
+/external/winrt/
+/external/winrt-8.1/
+/external/winrt_8.1/
+/external/wp_8.1/

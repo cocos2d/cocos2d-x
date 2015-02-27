@@ -33,7 +33,7 @@ THE SOFTWARE.
 
 #include "cocostudio/CSParseBinary_generated.h"
 
-#include "tinyxml2.h"
+#include "tinyxml2/tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
 #include "flatbuffers/util.h"
 

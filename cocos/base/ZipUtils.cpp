@@ -27,7 +27,7 @@
 #ifdef MINIZIP_FROM_SYSTEM
 #include <minizip/unzip.h>
 #else // from our embedded sources
-#include "unzip.h"
+#include "minizip/unzip.h"
 #endif
 
 #include "base/ZipUtils.h"
@@ -42,10 +42,8 @@
 #include <map>
 
 // FIXME: Other platforms should use upstream minizip like mingw-w64  
-#ifdef MINIZIP_FROM_SYSTEM
 #define unzGoToFirstFile64(A,B,C,D) unzGoToFirstFile2(A,B,C,D, NULL, 0, NULL, 0)
 #define unzGoToNextFile64(A,B,C,D) unzGoToNextFile2(A,B,C,D, NULL, 0, NULL, 0)
-#endif
 
 NS_CC_BEGIN
 

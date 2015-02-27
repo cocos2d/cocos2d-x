@@ -64,5 +64,6 @@ THE SOFTWARE.
 #include "cocostudio/ActionTimeline/CCActionTimelineNode.h"
 #include "cocostudio/CocosStudioExport.h"
 #include "cocostudio/ActionTimeline/CSLoader.h"
+#include "cocostudio/WidgetCallBackHandlerProtocol.h"
 
 #endif

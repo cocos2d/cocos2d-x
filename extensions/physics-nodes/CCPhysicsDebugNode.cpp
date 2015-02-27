@@ -22,7 +22,7 @@
 #include "CCPhysicsDebugNode.h"
 
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
-#include "chipmunk.h"
+#include "chipmunk/chipmunk.h"
 #endif
 
 #include "base/ccTypes.h"

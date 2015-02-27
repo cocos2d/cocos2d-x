@@ -35,7 +35,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#include "sqlite3/sqlite3.h"
+#else
 #include <sqlite3.h>
+#endif
 
 static int _initialized = 0;
 static sqlite3 *_db;

@@ -115,6 +115,24 @@
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundlePlatforms>x86</AppxBundlePlatforms>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
       <AdditionalOptions>/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
@@ -134,6 +152,9 @@ xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(Engine
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq</Command>
     </PostBuildEvent>
+    <Link>
+      <AdditionalLibraryDirectories>$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(Platform)\libs\Debug;$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(Platform)\libs\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
@@ -157,6 +178,7 @@ xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templat
     </PostBuildEvent>
     <Link>
       <LinkTimeCodeGeneration />
+      <AdditionalLibraryDirectories>$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(Platform)\libs\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -178,6 +200,9 @@ xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(Engine
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq</Command>
     </PostBuildEvent>
+    <Link>
+      <AdditionalLibraryDirectories>$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(Platform)\libs\Debug;$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(Platform)\libs\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -201,6 +226,7 @@ xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templat
     </PostBuildEvent>
     <Link>
       <LinkTimeCodeGeneration />
+      <AdditionalLibraryDirectories>$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(Platform)\libs\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -222,6 +248,9 @@ xcopy "$(EngineRoot)cocos\platform\win8.1-universal\Cocos2dRenderer.h" "$(Engine
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.cpp" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq
 xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templates\cpp-template-default\proj.win8.1-universal\App.Shared\*" /eiycq</Command>
     </PostBuildEvent>
+    <Link>
+      <AdditionalLibraryDirectories>$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(Platform)\libs\Debug;$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(Platform)\libs\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -245,6 +274,7 @@ xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templat
     </PostBuildEvent>
     <Link>
       <LinkTimeCodeGeneration />
+      <AdditionalLibraryDirectories>$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(Platform)\libs\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -265,9 +295,6 @@ xcopy "$(EngineRoot)cocos\platform\win8.1-universal\pch.h" "$(EngineRoot)templat
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\cocos\editor-support\spine\proj.win8.1-universal\libSpine.Windows\libSpine.Windows.vcxproj">
       <Project>{f3550fe0-c795-44f6-8feb-093eb68143ae}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\external\Box2D\proj.win8.1-universal\libbox2d.Windows\libbox2d.Windows.vcxproj">
-      <Project>{3b26a12d-3a44-47ea-82d2-282660fc844d}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
