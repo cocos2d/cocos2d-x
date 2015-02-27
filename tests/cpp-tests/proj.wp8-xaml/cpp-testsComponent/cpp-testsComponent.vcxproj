@@ -102,6 +102,7 @@
       <AdditionalIncludeDirectories>..\..\Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
+      <SDLCheck>false</SDLCheck>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -123,6 +124,7 @@
       <AdditionalIncludeDirectories>..\..\Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
+      <SDLCheck>false</SDLCheck>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -144,6 +146,7 @@
       <AdditionalIncludeDirectories>..\..\Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
+      <SDLCheck>false</SDLCheck>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -165,6 +168,7 @@
       <AdditionalIncludeDirectories>..\..\Classes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <AdditionalOptions>/Zm200 %(AdditionalOptions)</AdditionalOptions>
+      <SDLCheck>false</SDLCheck>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -233,7 +237,7 @@
     <ClCompile Include="..\..\Classes\NewRendererTest\NewRendererTest.cpp" />
     <ClCompile Include="..\..\Classes\OpenURLTest\OpenURLTest.cpp" />
     <ClCompile Include="..\..\Classes\Particle3DTest\Particle3DTest.cpp" />
-    <ClCompile Include="..\..\Classes\CocosStudio3DTest\CocosStudio3DTest.cpp" />    
+    <ClCompile Include="..\..\Classes\CocosStudio3DTest\CocosStudio3DTest.cpp" />
     <ClCompile Include="..\..\Classes\PerformanceTest\PerformanceAllocTest.cpp" />
     <ClCompile Include="..\..\Classes\PerformanceTest\PerformanceContainerTest.cpp" />
     <ClCompile Include="..\..\Classes\PerformanceTest\PerformanceEventDispatcherTest.cpp" />
@@ -437,7 +441,7 @@
     <ClInclude Include="..\..\Classes\NewRendererTest\NewRendererTest.h" />
     <ClInclude Include="..\..\Classes\OpenURLTest\OpenURLTest.h" />
     <ClInclude Include="..\..\Classes\Particle3DTest\Particle3DTest.h" />
-    <ClInclude Include="..\..\Classes\CocosStudio3DTest\CocosStudio3DTest.h" />    
+    <ClInclude Include="..\..\Classes\CocosStudio3DTest\CocosStudio3DTest.h" />
     <ClInclude Include="..\..\Classes\PerformanceTest\PerformanceAllocTest.h" />
     <ClInclude Include="..\..\Classes\PerformanceTest\PerformanceContainerTest.h" />
     <ClInclude Include="..\..\Classes\PerformanceTest\PerformanceEventDispatcherTest.h" />

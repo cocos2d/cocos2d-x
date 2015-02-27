@@ -2838,9 +2838,6 @@
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\NodeReaderProtocol.h">
       <Filter>cocostudio\reader\WidgetReader</Filter>
     </ClInclude>
-    <ClInclude Include="..\editor-support\cocostudio\CSParseBinary.pb.h">
-      <Filter>cocostudio\json</Filter>
-    </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\CSParseBinary_generated.h">
       <Filter>cocostudio\json</Filter>
     </ClInclude>
