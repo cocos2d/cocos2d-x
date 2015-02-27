@@ -135,7 +135,8 @@ public:
     /** get the speed of physics world */
     inline float getSpeed() { return _speed; }
 
-    /** Set the time step of physics world. default value is 0.02
+    /** Set the time step of physics world
+     * Unit:second, default value is 0.02
      * Note: if you disable auto step, this won't work.
      */
     void setTimeStep(float timeStep);
@@ -146,6 +147,7 @@ public:
      * set it higher can improve performance, set it lower can improve accuracy of physics world simulation.
      * default value is 1.0
      * Note: if you setAutoStep(false), this won't work.
+     * @deprecated Use setTimeStep() instead
      */
     CC_DEPRECATED(v4) void setUpdateRate(int rate);
     /** get the update rate */
@@ -154,6 +156,7 @@ public:
      * set the number of substeps in an update of the physics world.
      * One physics update will be divided into several substeps to increase its accuracy.
      * default value is 1
+     * @deprecated Use setTimeStep() instead
      */
     CC_DEPRECATED(v4) void setSubsteps(int steps);
     /** get the number of substeps */
