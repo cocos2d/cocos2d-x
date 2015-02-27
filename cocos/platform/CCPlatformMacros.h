@@ -240,11 +240,11 @@ public: virtual void set##funName(varType var)   \
  * only certain compilers support __attribute__((deprecated))
  */
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-    #define CC_DEPRECATED(v3) __attribute__((deprecated))
+    #define CC_DEPRECATED_ATTRIBUTE __attribute__((deprecated))
 #elif _MSC_VER >= 1400 //vs 2005 or higher
-    #define CC_DEPRECATED(v3) __declspec(deprecated) 
+    #define CC_DEPRECATED_ATTRIBUTE __declspec(deprecated) 
 #else
-    #define CC_DEPRECATED(v3)
+    #define CC_DEPRECATED_ATTRIBUTE
 #endif 
 
 /*
@@ -252,7 +252,7 @@ public: virtual void set##funName(varType var)   \
  * can be used with artibrary parameters which are thrown away
  * e.g. CC_DEPRECATED(4.0) or CC_DEPRECATED(4.0, "not going to need this anymore") etc.
  */
-#define CC_DEPRECATED_ATTRIBUTE(...) CC_DEPRECATED(v3)
+#define CC_DEPRECATED(...) CC_DEPRECATED_ATTRIBUTE
 
 /*
  * only certain compiler support __attribute__((format))
