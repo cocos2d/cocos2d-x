@@ -38,6 +38,13 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
+-- 
+-- @function [parent=#Camera] project 
+-- @param self
+-- @param #vec3_table src
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
+        
+--------------------------------
 -- Get object depth towards camera
 -- @function [parent=#Camera] getDepthInView 
 -- @param self
