@@ -169,8 +169,8 @@ bool Director::init(void)
 
     _graphicsAPIManager = GraphicsAPIManager::create();
     _graphicsAPIManager->retain();
-//    const char* apis[] = {"opengles2.0", nullptr};
-//    _graphicsAPIManager->createAPI(apis, "");
+    const char* apis[] = {"opengles2.0", nullptr};
+    _graphicsAPIManager->createAPI(apis, "");
     
     //init TextureCache
     initTextureCache();

@@ -59,7 +59,8 @@ bool GraphicsOpenGLES20::init(const char* name)
 {
     bool result = true;
     
-    _view = GLViewImpl::create(name);
+    // for now, to support easy backwards compatibility we just steal the default GL view.
+    _view = Director::getInstance()->getOpenGLView();
     if (_view)
         _view->retain();
 

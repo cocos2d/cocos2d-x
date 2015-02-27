@@ -53,6 +53,15 @@ public:
     // @usage this->as<ViewInterface>()->someMethod. Compile time check is performed.
     template <class T>
     T* as() { return static_cast<T*>(this); }
+    
+    
+    /* texture API
+     - create texture from pixels, store pixels to texture buffer
+     - set sampling options (interpolation, clamping etc.)
+     - mipmaps
+     - upload new data
+     */
+    
 };
 
 NS_CC_END
