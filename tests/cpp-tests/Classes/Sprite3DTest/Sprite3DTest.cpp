@@ -650,8 +650,8 @@ void Sprite3DFakeShadowTest::onTouchesEnded(const std::vector<Touch*>& touches, 
                 Vec3 nearP(location.x, location.y, -1.0f), farP(location.x, location.y, 1.0f);
 
                 auto size = Director::getInstance()->getWinSize();
-                _camera->unproject(size, &nearP, &nearP);
-                _camera->unproject(size, &farP, &farP);
+                nearP = _camera->unproject(nearP);
+                farP = _camera->unproject(farP);
                 Vec3 dir(farP - nearP);
                 float dist=0.0f;
                 float ndd = Vec3::dot(Vec3(0,1,0),dir);

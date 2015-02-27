@@ -563,8 +563,8 @@ void Camera3DTestDemo::onTouchesEnded(const std::vector<Touch*>& touches, cocos2
                 Vec3 nearP(location.x, location.y, -1.0f), farP(location.x, location.y, 1.0f);
                 
                 auto size = Director::getInstance()->getWinSize();
-                _camera->unproject(size, &nearP, &nearP);
-                _camera->unproject(size, &farP, &farP);
+                nearP = _camera->unproject(nearP);
+                farP = _camera->unproject(farP);
                 Vec3 dir(farP - nearP);
                 float dist=0.0f;
                 float ndd = Vec3::dot(Vec3(0,1,0),dir);
@@ -1000,30 +1000,30 @@ void CameraCullingDemo::drawCameraFrustum()
     // top-left
     Vec3 tl_0,tl_1;
     Vec3 src(0,0,0);
-    _cameraFirst->unproject(size, &src, &tl_0);
+    tl_0 = _cameraFirst->unproject(src);
     src = Vec3(0,0,1);
-    _cameraFirst->unproject(size, &src, &tl_1);
+    tl_1 = _cameraFirst->unproject(src);
     
     // top-right
     Vec3 tr_0,tr_1;
     src = Vec3(size.width,0,0);
-    _cameraFirst->unproject(size, &src, &tr_0);
+    tr_0 = _cameraFirst->unproject(src);
     src = Vec3(size.width,0,1);
-    _cameraFirst->unproject(size, &src, &tr_1);
+    tr_1 = _cameraFirst->unproject(src);
     
     // bottom-left
     Vec3 bl_0,bl_1;
     src = Vec3(0,size.height,0);
-    _cameraFirst->unproject(size, &src, &bl_0);
+    bl_0 = _cameraFirst->unproject(src);
     src = Vec3(0,size.height,1);
-    _cameraFirst->unproject(size, &src, &bl_1);
+    bl_1 = _cameraFirst->unproject(src);
     
     // bottom-right
     Vec3 br_0,br_1;
     src = Vec3(size.width,size.height,0);
-    _cameraFirst->unproject(size, &src, &br_0);
+    br_0 = _cameraFirst->unproject(src);
     src = Vec3(size.width,size.height,1);
-    _cameraFirst->unproject(size, &src, &br_1);
+    br_1 = _cameraFirst->unproject(src);
     
     _drawFrustum->drawLine(tl_0, tl_1, color);
     _drawFrustum->drawLine(tr_0, tr_1, color);

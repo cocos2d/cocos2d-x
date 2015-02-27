@@ -223,10 +223,9 @@ function Camera3DTestDemo:onEnter()
             if self._camera ~= nil and self._sprite3D ~= nil and self._cameraType == CameraType.ThirdCamera then
                 local nearP = cc.vec3(location.x, location.y, -1.0)
                 local farP  = cc.vec3(location.x, location.y, 1.0)
-                
-                local size = cc.Director:getInstance():getWinSize()
-                nearP = self._camera:unproject(size, nearP, nearP)
-                farP  = self._camera:unproject(size, farP, farP)
+
+                nearP = self._camera:unproject(nearP)
+                farP  = self._camera:unproject(farP)
                 local dir = cc.vec3(farP.x - nearP.x, farP.y - nearP.y, farP.z - nearP.z)
                 local dist=0.0
                 local ndd = dir.x * 0 + dir.y * 1 + dir.z * 0
