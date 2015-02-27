@@ -147,17 +147,17 @@ public:
      * default value is 1.0
      * Note: if you setAutoStep(false), this won't work.
      */
-    CC_DEPRECATED_ATTRIBUTE void setUpdateRate(int rate);
+    CC_DEPRECATED(v4) void setUpdateRate(int rate);
     /** get the update rate */
-    CC_DEPRECATED_ATTRIBUTE int getUpdateRate() { return _updateRate; }
+    CC_DEPRECATED(v4) int getUpdateRate() { return _updateRate; }
     /**
      * set the number of substeps in an update of the physics world.
      * One physics update will be divided into several substeps to increase its accuracy.
      * default value is 1
      */
-    CC_DEPRECATED_ATTRIBUTE void setSubsteps(int steps);
+    CC_DEPRECATED(v4) void setSubsteps(int steps);
     /** get the number of substeps */
-    CC_DEPRECATED_ATTRIBUTE int getSubsteps() const { return _substeps; }
+    CC_DEPRECATED(v4) int getSubsteps() const { return _substeps; }
 
     /** set the debug draw mask */
     void setDebugDrawMask(int mask);
