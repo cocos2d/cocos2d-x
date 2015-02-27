@@ -115,7 +115,7 @@ public:
         return getCapacity() * getElementSize();
     }
     
-    CC_DEPRECATED_ATTRIBUTE uint32_t getVBO() const
+    CC_DEPRECATED(v3) uint32_t getVBO() const
     {
         return _vbo;
     }
@@ -291,9 +291,9 @@ public:
         return nullptr;
     }
     
-    CC_DEPRECATED_ATTRIBUTE int getSizePerVertex() const { return (int)getElementSize(); }
-    CC_DEPRECATED_ATTRIBUTE int getVertexNumber() const { return (int)getElementCount(); }
-    CC_DEPRECATED_ATTRIBUTE bool updateVertices(const void* vertices, int count, int begin) { updateElements(vertices, count, begin); return true; }
+    CC_DEPRECATED(v3) int getSizePerVertex() const { return (int)getElementSize(); }
+    CC_DEPRECATED(v3) int getVertexNumber() const { return (int)getElementCount(); }
+    CC_DEPRECATED(v3) bool updateVertices(const void* vertices, int count, int begin) { updateElements(vertices, count, begin); return true; }
 
 protected:
     
@@ -330,9 +330,9 @@ public:
         return _type;
     }
     
-    CC_DEPRECATED_ATTRIBUTE int getSizePerIndex() const { return (int)getElementSize(); }
-    CC_DEPRECATED_ATTRIBUTE int getIndexNumber() const { return (int)getElementCount(); }
-    CC_DEPRECATED_ATTRIBUTE bool updateIndices(const void* indices, int count, int begin) { updateElements(indices, count, begin); return true; }
+    CC_DEPRECATED(v3) int getSizePerIndex() const { return (int)getElementSize(); }
+    CC_DEPRECATED(v3) int getIndexNumber() const { return (int)getElementCount(); }
+    CC_DEPRECATED(v3) bool updateIndices(const void* indices, int count, int begin) { updateElements(indices, count, begin); return true; }
 
 protected:
     

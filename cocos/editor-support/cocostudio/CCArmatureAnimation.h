@@ -96,8 +96,8 @@ public:
      * This method is deprecated, please use setSpeedScale.
      * @param animationScale Scale value
      */
-    CC_DEPRECATED_ATTRIBUTE virtual void setAnimationScale(float animationScale);
-    CC_DEPRECATED_ATTRIBUTE virtual float getAnimationScale() const;
+    CC_DEPRECATED(v3) virtual void setAnimationScale(float animationScale);
+    CC_DEPRECATED(v3) virtual float getAnimationScale() const;
 
     /**
      * Scale animation play speed.
@@ -107,7 +107,7 @@ public:
     virtual float getSpeedScale() const;
 
     //! The animation update speed
-    CC_DEPRECATED_ATTRIBUTE virtual void setAnimationInternal(float animationInternal) {}
+    CC_DEPRECATED(v3) virtual void setAnimationInternal(float animationInternal) {}
 
     using ProcessBase::play;
     /**
@@ -131,7 +131,7 @@ public:
      * @deprecated, please use playWithIndex
      * @param  animationIndex  the animation index you want to play
      */
-    CC_DEPRECATED_ATTRIBUTE virtual void playByIndex(int animationIndex,  int durationTo = -1, int loop = -1);
+    CC_DEPRECATED(v3) virtual void playByIndex(int animationIndex,  int durationTo = -1, int loop = -1);
     virtual void playWithIndex(int animationIndex,  int durationTo = -1, int loop = -1);
 
     virtual void playWithNames(const std::vector<std::string>& movementNames, int durationTo = -1, bool loop = true);
@@ -185,13 +185,13 @@ public:
      * Set armature's movement event callback function
      * To disconnect this event, just setMovementEventCallFunc(nullptr, nullptr);
      */
-    CC_DEPRECATED_ATTRIBUTE void setMovementEventCallFunc(cocos2d::Ref *target, SEL_MovementEventCallFunc callFunc);
+    CC_DEPRECATED(v3) void setMovementEventCallFunc(cocos2d::Ref *target, SEL_MovementEventCallFunc callFunc);
 
     /**
      * Set armature's frame event callback function
      * To disconnect this event, just setFrameEventCallFunc(nullptr, nullptr);
      */
-    CC_DEPRECATED_ATTRIBUTE void setFrameEventCallFunc(cocos2d::Ref *target, SEL_FrameEventCallFunc callFunc);
+    CC_DEPRECATED(v3) void setFrameEventCallFunc(cocos2d::Ref *target, SEL_FrameEventCallFunc callFunc);
     
     void setMovementEventCallFunc(std::function<void(Armature *armature, MovementEventType movementType, const std::string& movementID)> listener);
     void setFrameEventCallFunc(std::function<void(Bone *bone, const std::string& frameEventName, int originFrameIndex, int currentFrameIndex)> listener);

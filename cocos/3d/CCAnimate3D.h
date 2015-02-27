@@ -93,8 +93,8 @@ public:
     static float getTransitionTime() { return _transTime; }
     
     /**get & set play reverse, these are deprecated, use set negative speed instead*/
-    CC_DEPRECATED_ATTRIBUTE bool getPlayBack() const { return _playReverse; }
-    CC_DEPRECATED_ATTRIBUTE void setPlayBack(bool reverse) { _playReverse = reverse; }
+    CC_DEPRECATED(v3) bool getPlayBack() const { return _playReverse; }
+    CC_DEPRECATED(v3) void setPlayBack(bool reverse) { _playReverse = reverse; }
     
 CC_CONSTRUCTOR_ACCESS:
     

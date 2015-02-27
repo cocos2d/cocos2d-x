@@ -55,8 +55,8 @@ namespace cocostudio {
 class CC_STUDIO_DLL GUIReader : public cocos2d::Ref
 {
 public:
-    CC_DEPRECATED_ATTRIBUTE static GUIReader* shareReader() { return GUIReader::getInstance(); };
-    CC_DEPRECATED_ATTRIBUTE static void purgeGUIReader() { GUIReader::destroyInstance(); };
+    CC_DEPRECATED(v3) static GUIReader* shareReader() { return GUIReader::getInstance(); };
+    CC_DEPRECATED(v3) static void purgeGUIReader() { GUIReader::destroyInstance(); };
     
     static GUIReader* getInstance();
     static void destroyInstance();

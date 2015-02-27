@@ -103,7 +103,7 @@ public:
      */
     static SIOClient* connect(const std::string& uri, SocketIO::SIODelegate& delegate);
 
-    CC_DEPRECATED_ATTRIBUTE  static SIOClient* connect(SocketIO::SIODelegate& delegate, const std::string& uri);
+    CC_DEPRECATED(v3)  static SIOClient* connect(SocketIO::SIODelegate& delegate, const std::string& uri);
 
 private:
 

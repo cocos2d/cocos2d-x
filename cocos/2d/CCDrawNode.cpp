@@ -107,7 +107,7 @@ void DrawNode::draw(Renderer* renderer, const Mat4& transform, uint32_t flags)
 }
 
 // deprecated access method for DrawPrimitives to use DrawNode
-CC_DEPRECATED_ATTRIBUTE void DrawNode::drawImmediate(Renderer* renderer, const Mat4& transform, uint32_t flags)
+CC_DEPRECATED(v3) void DrawNode::drawImmediate(Renderer* renderer, const Mat4& transform, uint32_t flags)
 {
     if (!_vdTriangles->empty())
     {
@@ -139,7 +139,7 @@ void DrawNode::drawPoints(const Vec2* position, unsigned int numberOfPoints, con
         _vdPoints->append<V2F_C4B_PF>({position[i], Color4B(color), pointSize});
 }
 
-CC_DEPRECATED_ATTRIBUTE void DrawNode::drawPoints(const Vec2* position, unsigned int numberOfPoints, double pointSize, const Color4F& color)
+CC_DEPRECATED(v3) void DrawNode::drawPoints(const Vec2* position, unsigned int numberOfPoints, double pointSize, const Color4F& color)
 {
     drawPoints(position, numberOfPoints, color, pointSize);
 }

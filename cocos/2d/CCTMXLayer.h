@@ -103,13 +103,13 @@ public:
     - or layer->removeTileAt(Vec2(x,y));
     */
     Sprite* getTileAt(const Vec2& tileCoordinate);
-    CC_DEPRECATED_ATTRIBUTE Sprite* tileAt(const Vec2& tileCoordinate) { return getTileAt(tileCoordinate); };
+    CC_DEPRECATED(v3) Sprite* tileAt(const Vec2& tileCoordinate) { return getTileAt(tileCoordinate); };
     
     /** returns the tile gid at a given tile coordinate. It also returns the tile flags.
      This method requires the the tile map has not been previously released (eg. don't call [layer releaseMap])
      */
     uint32_t getTileGIDAt(const Vec2& tileCoordinate, TMXTileFlags* flags = nullptr);
-    CC_DEPRECATED_ATTRIBUTE uint32_t tileGIDAt(const Vec2& tileCoordinate, TMXTileFlags* flags = nullptr){
+    CC_DEPRECATED(v3) uint32_t tileGIDAt(const Vec2& tileCoordinate, TMXTileFlags* flags = nullptr){
         return getTileGIDAt(tileCoordinate, flags);
     };
 
@@ -133,11 +133,11 @@ public:
 
     /** returns the position in points of a given tile coordinate */
     Vec2 getPositionAt(const Vec2& tileCoordinate);
-    CC_DEPRECATED_ATTRIBUTE Vec2 positionAt(const Vec2& tileCoordinate) { return getPositionAt(tileCoordinate); };
+    CC_DEPRECATED(v3) Vec2 positionAt(const Vec2& tileCoordinate) { return getPositionAt(tileCoordinate); };
 
     /** return the value for the specific property name */
     Value getProperty(const std::string& propertyName) const;
-    CC_DEPRECATED_ATTRIBUTE Value propertyNamed(const std::string& propertyName) const { return getProperty(propertyName); };
+    CC_DEPRECATED(v3) Value propertyNamed(const std::string& propertyName) const { return getProperty(propertyName); };
 
     /** Creates the tiles */
     void setupTiles();

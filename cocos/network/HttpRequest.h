@@ -180,12 +180,12 @@ public:
     
     /** Required field. You should set the callback selector function at ack the http request completed
      */
-    CC_DEPRECATED_ATTRIBUTE inline void setResponseCallback(Ref* pTarget, SEL_CallFuncND pSelector)
+    CC_DEPRECATED(v3) inline void setResponseCallback(Ref* pTarget, SEL_CallFuncND pSelector)
     {
         setResponseCallback(pTarget, (SEL_HttpResponse) pSelector);
     }
 
-    CC_DEPRECATED_ATTRIBUTE inline void setResponseCallback(Ref* pTarget, SEL_HttpResponse pSelector)
+    CC_DEPRECATED(v3) inline void setResponseCallback(Ref* pTarget, SEL_HttpResponse pSelector)
     {
         _pTarget = pTarget;
         _pSelector = pSelector;
@@ -215,7 +215,7 @@ public:
         _prxy( SEL_HttpResponse cb ) :_cb(cb) {}
         ~_prxy(){};
         operator SEL_HttpResponse() const { return _cb; }
-        CC_DEPRECATED_ATTRIBUTE operator SEL_CallFuncND()   const { return (SEL_CallFuncND) _cb; }
+        CC_DEPRECATED(v3) operator SEL_CallFuncND()   const { return (SEL_CallFuncND) _cb; }
     protected:
         SEL_HttpResponse _cb;
     };

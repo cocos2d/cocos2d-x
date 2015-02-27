@@ -70,10 +70,10 @@ public:
     static void setDelegate(FileUtils *delegate);
 
     /** @deprecated Use getInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static FileUtils* sharedFileUtils() { return getInstance(); }
+    CC_DEPRECATED(v3) static FileUtils* sharedFileUtils() { return getInstance(); }
 
     /** @deprecated Use destroyInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static void purgeFileUtils() { destroyInstance(); }
+    CC_DEPRECATED(v3) static void purgeFileUtils() { destroyInstance(); }
 
     /**
      *  The destructor of FileUtils.
@@ -112,7 +112,7 @@ public:
      *  @return Upon success, a pointer to the data is returned, otherwise NULL.
      *  @warning Recall: you are responsible for calling free() on any Non-NULL pointer returned.
      */
-    CC_DEPRECATED_ATTRIBUTE virtual unsigned char* getFileData(const std::string& filename, const char* mode, ssize_t *size);
+    CC_DEPRECATED(v3) virtual unsigned char* getFileData(const std::string& filename, const char* mode, ssize_t *size);
 
     /**
      *  Gets resource file data from a zip file.
