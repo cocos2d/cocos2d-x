@@ -395,6 +395,7 @@ void ParticleSystemQuad::setTotalParticles(int tp)
             _vbParticles->addCapacityOfType<V3F_C4B_T2F_Quad>(amount);
         }
     
+        _particles = (tParticle*)realloc(_particles, tp * sizeof(tParticle));
         _allocatedParticles = tp;
         _totalParticles = tp;
 
