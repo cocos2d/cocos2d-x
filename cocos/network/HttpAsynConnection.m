@@ -108,11 +108,10 @@
     | “206”  ; Partial Content
     */
     if (responseCode < 200 || responseCode >= 300)
-    {// something went wrong, abort the whole thing
-        
-        [connection cancel];
-        finish = true;
-        return;
+    {// something went wrong, record a response error
+        self.responseError = [NSError errorWithDomain:@"CCBackendDomain"
+                                                 code:responseCode
+                                             userInfo:@{NSLocalizedDescriptionKey: @"Bad HTTP Response Code"}];
     }
     
     [responseData setLength:0];
