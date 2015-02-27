@@ -129,7 +129,7 @@ foreach(pkg ZLIB MINIZIP JPEG PNG TIFF TINYXML2 FREETYPE WEBSOCKETS CURL FLATBUF
 endforeach()
 
 if(LINUX)
-  set(other_glfw_linker_flags "Xrandr Xi Xrender drm Xdamage Xxf86vm Xext X11 pthread")
+  set(other_glfw_linker_flags Xrandr Xi Xrender drm Xdamage Xxf86vm Xext X11 pthread)
 endif()
 
 target_link_libraries(cocos2d ${PLATFORM_SPECIFIC_LIBS} ${other_glfw_linker_flags})
