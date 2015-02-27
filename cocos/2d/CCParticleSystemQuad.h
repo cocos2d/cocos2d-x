@@ -89,7 +89,7 @@ public:
      * @lua NA
      */
     // needed for Lua bindings to compile
-    CC_DEPRECATED_ATTRIBUTE void listenRendererRecreated(cocos2d::EventCustom*) {CCASSERT(false, "deprecated method");}
+    CC_DEPRECATED(v3) void listenRendererRecreated(cocos2d::EventCustom*) {CCASSERT(false, "deprecated method");}
 
     /**
      * @js NA

@@ -71,7 +71,7 @@ public:
     size_t getVertexStreamCount() const;
     
     // @brief add vertex stream descriptors to a buffer 
-    CC_DEPRECATED_ATTRIBUTE bool setStream(GLArrayBuffer* buffer, const VertexAttribute& stream) { return addStream(buffer, stream); }
+    CC_DEPRECATED(v3) bool setStream(GLArrayBuffer* buffer, const VertexAttribute& stream) { return addStream(buffer, stream); }
     bool addStream(GLArrayBuffer* vertices, const VertexAttribute& stream);
     void removeStream(int semantic);
     

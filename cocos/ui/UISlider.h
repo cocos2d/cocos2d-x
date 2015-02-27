@@ -189,7 +189,7 @@ public:
     /**
      * Add call back function called when slider's percent has changed to slider.
      */
-    CC_DEPRECATED_ATTRIBUTE void addEventListenerSlider(Ref* target,SEL_SlidPercentChangedEvent selector);
+    CC_DEPRECATED(v3) void addEventListenerSlider(Ref* target,SEL_SlidPercentChangedEvent selector);
     void addEventListener(const ccSliderCallback& callback);
     
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;

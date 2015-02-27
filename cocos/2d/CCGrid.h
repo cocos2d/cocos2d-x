@@ -131,7 +131,7 @@ public:
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE Vec3 vertex(const Vec2& pos) const { return getVertex(pos); }
+    CC_DEPRECATED(v3) Vec3 vertex(const Vec2& pos) const { return getVertex(pos); }
     /** returns the original (non-transformed) vertex at a given position
      * @js NA
      * @lua NA
@@ -141,7 +141,7 @@ public:
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE Vec3 originalVertex(const Vec2& pos) const { return getOriginalVertex(pos); }
+    CC_DEPRECATED(v3) Vec3 originalVertex(const Vec2& pos) const { return getOriginalVertex(pos); }
 
     /** sets a new vertex at a given position 
      * @js NA
@@ -198,7 +198,7 @@ public:
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE Quad3 tile(const Vec2& pos) const { return getTile(pos); }
+    CC_DEPRECATED(v3) Quad3 tile(const Vec2& pos) const { return getTile(pos); }
     /** returns the original tile (untransformed) at the given position 
      * @js NA
      * @lua NA
@@ -208,7 +208,7 @@ public:
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE Quad3 originalTile(const Vec2& pos) const { return getOriginalTile(pos); }
+    CC_DEPRECATED(v3) Quad3 originalTile(const Vec2& pos) const { return getOriginalTile(pos); }
 
     /** sets a new tile 
      * @js NA

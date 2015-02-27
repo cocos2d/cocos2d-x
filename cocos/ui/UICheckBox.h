@@ -173,20 +173,20 @@ public:
      *
      * @param selected    true that checkbox is selected, false otherwise.
      */
-    CC_DEPRECATED_ATTRIBUTE void setSelectedState(bool selected){this->setSelected(selected);}
+    CC_DEPRECATED(v3) void setSelectedState(bool selected){this->setSelected(selected);}
 
     /**
      * Gets selcted state of checkbox.
      *
      * @return selected    true that checkbox is selected, false otherwise.
      */
-    CC_DEPRECATED_ATTRIBUTE bool getSelectedState()const{return this->isSelected();}
+    CC_DEPRECATED(v3) bool getSelectedState()const{return this->isSelected();}
     
     bool isSelected()const;
     void setSelected(bool selected);
 
     //add a call back function would called when checkbox is selected or unselected.
-    CC_DEPRECATED_ATTRIBUTE void addEventListenerCheckBox(Ref* target,SEL_SelectedStateEvent selector);
+    CC_DEPRECATED(v3) void addEventListenerCheckBox(Ref* target,SEL_SelectedStateEvent selector);
     void addEventListener(const ccCheckBoxCallback& callback);
 
 

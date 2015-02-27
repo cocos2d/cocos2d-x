@@ -511,12 +511,12 @@ public:
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE static ScriptEngineManager* sharedManager() { return ScriptEngineManager::getInstance(); };
+    CC_DEPRECATED(v3) static ScriptEngineManager* sharedManager() { return ScriptEngineManager::getInstance(); };
     /**
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE static void purgeSharedManager() { ScriptEngineManager::destroyInstance(); };
+    CC_DEPRECATED(v3) static void purgeSharedManager() { ScriptEngineManager::destroyInstance(); };
     
 private:
     ScriptEngineManager(void)
