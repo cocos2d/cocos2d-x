@@ -240,14 +240,13 @@ bool Camera::initOrthographic(float zoomX, float zoomY, float nearPlane, float f
     return true;
 }
 
-Vec2 Camera::project(const Vec3* src) const
+Vec2 Camera::project(const Vec3& src) const
 {
-    CCASSERT(src, "");
     Vec2 screenPos;
     
     auto viewport = Director::getInstance()->getWinSize();
     Vec4 clipPos;
-    getViewProjectionMatrix().transformVector(Vec4(src->x, src->y, src->z, 1.0f), &clipPos);
+    getViewProjectionMatrix().transformVector(Vec4(src.x, src.y, src.z, 1.0f), &clipPos);
     
     CCASSERT(clipPos.w != 0.0f, "");
     float ndcX = clipPos.x / clipPos.w;
@@ -258,13 +257,11 @@ Vec2 Camera::project(const Vec3* src) const
     return screenPos;
 }
 
-Vec3 Camera::unproject(const Vec3* src) const
+Vec3 Camera::unproject(const Vec3& src) const
 {
-    CCASSERT(src, "vec3 being projected can not be null");
-    
     auto viewport = Director::getInstance()->getWinSize();
 
-    Vec4 screen(src->x / viewport.width, ((viewport.height - src->y)) / viewport.height, src->z, 1.0f);
+    Vec4 screen(src.x / viewport.width, ((viewport.height - src.y)) / viewport.height, src.z, 1.0f);
     screen.x = screen.x * 2.0f - 1.0f;
     screen.y = screen.y * 2.0f - 1.0f;
     screen.z = screen.z * 2.0f - 1.0f;
@@ -282,8 +279,8 @@ Vec3 Camera::unproject(const Vec3* src) const
 
 void Camera::unproject(const Size& viewport, const Vec3* src, Vec3* dst) const
 {
-    CCASSERT(dst, "vec3 can not be null");
-    *dst = unproject(src);
+    CCASSERT(src && dst, "vec3 can not be null");
+    *dst = unproject(*src);
 }
 
 bool Camera::isVisibleInFrustum(const AABB* aabb) const

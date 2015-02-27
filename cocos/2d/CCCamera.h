@@ -132,7 +132,7 @@ public:
      * @param src The world-space position.
      * @return The screen-space position.
      */
-    Vec2 project(const Vec3* src) const;
+    Vec2 project(const Vec3& src) const;
     
     /**
      * Convert the specified point of viewport from screen-space coordinate into the world-space coordinate.
@@ -140,7 +140,7 @@ public:
      * @param src The screen-space position.
      * @return The world-space position.
      */
-    Vec3 unproject(const Vec3* src) const;
+    Vec3 unproject(const Vec3& src) const;
 
     /**
      * Convert the specified point of viewport from screen-space coordinate into the world-space coordinate.
@@ -149,7 +149,7 @@ public:
      * @param src The screen-space position.
      * @param dst The world-space position.
      */
-    CC_DEPRECATED(3.5) void unproject(const Size& viewport, const Vec3* src, Vec3* dst) const;
+    void unproject(const Size& viewport, const Vec3* src, Vec3* dst) const;
     
     /**
      * Is this aabb visible in frustum
