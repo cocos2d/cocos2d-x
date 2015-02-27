@@ -130,21 +130,15 @@
     </Filter>
     <Filter Include="cocostudio\reader\WidgetReader\UserCameraReader">
       <UniqueIdentifier>{89da718e-f2fa-1043-83e8-40104f6fc3a2}</UniqueIdentifier>
-    </Filter>    
+    </Filter>
     <Filter Include="cocostudio\reader\WidgetReader\Particle3DReader">
       <UniqueIdentifier>{89da718e-102a-1043-83e8-40104f6fc3a2}</UniqueIdentifier>
-    </Filter>    
+    </Filter>
     <Filter Include="cocostudio\reader\WidgetReader\Sprite3DReader">
       <UniqueIdentifier>{8910718e-f2fa-4437-83e8-40104f6fc3a2}</UniqueIdentifier>
     </Filter>
     <Filter Include="cocostudio\json">
       <UniqueIdentifier>{20e787a6-57c3-4122-88ad-d803c892e7f4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="cocostudio\json\rapidjson">
-      <UniqueIdentifier>{472edbc0-fbb6-41a4-8759-40c11a78b47c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="cocostudio\json\rapidjson\internal">
-      <UniqueIdentifier>{77da5935-5a02-4f2b-82fa-d76be5533241}</UniqueIdentifier>
     </Filter>
     <Filter Include="cocostudio\components">
       <UniqueIdentifier>{38b491dc-2676-4d85-a50c-da867dc22ba8}</UniqueIdentifier>
@@ -1039,10 +1033,10 @@
     </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\UserCameraReader\UserCameraReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\UserCameraReader</Filter>
-    </ClCompile>    
+    </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\Particle3DReader</Filter>
-    </ClCompile>    
+    </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\CocoLoader.cpp">
       <Filter>cocostudio\json</Filter>
     </ClCompile>
@@ -2542,48 +2536,18 @@
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.h">
       <Filter>cocostudio\reader\WidgetReader\Sprite3DReader</Filter>
-    </ClInclude> 
+    </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\UserCameraReader\UserCameraReader.h">
       <Filter>cocostudio\reader\WidgetReader\UserCameraReader</Filter>
-    </ClInclude>       
+    </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.h">
       <Filter>cocostudio\reader\WidgetReader\Particle3DReader</Filter>
-    </ClInclude>    
+    </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\CocoLoader.h">
       <Filter>cocostudio\json</Filter>
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\DictionaryHelper.h">
       <Filter>cocostudio\json</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\json\document.h">
-      <Filter>cocostudio\json\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\json\filestream.h">
-      <Filter>cocostudio\json\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\json\prettywriter.h">
-      <Filter>cocostudio\json\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\json\rapidjson.h">
-      <Filter>cocostudio\json\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\json\reader.h">
-      <Filter>cocostudio\json\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\json\stringbuffer.h">
-      <Filter>cocostudio\json\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\json\writer.h">
-      <Filter>cocostudio\json\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\json\internal\pow10.h">
-      <Filter>cocostudio\json\rapidjson\internal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\json\internal\stack.h">
-      <Filter>cocostudio\json\rapidjson\internal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\external\json\internal\strfunc.h">
-      <Filter>cocostudio\json\rapidjson\internal</Filter>
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\CCComAttribute.h">
       <Filter>cocostudio\components</Filter>
