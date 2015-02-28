@@ -291,5 +291,14 @@
 				<arguments>1.0-name-matches-true-false-openal</arguments>
 			</matcher>
 		</filter>
+		<filter>
+			<id>1425101958563</id>
+			<name>external/flatbuffers</name>
+			<type>6</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-flatc.cpp</arguments>
+			</matcher>
+		</filter>
 	</filteredResources>
 </projectDescription>
