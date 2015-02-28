@@ -539,3 +539,23 @@ material ParticleUniverse/Beam_2
         }
     }
 }
+
+//-----------------------------------------------------------------------------------------------------------------------
+material PUMediaPack/Pentagram_02
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+
+            texture_unit
+            {
+                texture pump_pentagram_02.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}

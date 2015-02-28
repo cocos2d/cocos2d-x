@@ -47,7 +47,6 @@ static std::function<Layer*()> createFunctions[] =
     CL(Particle3DUVAnimDemo),
     CL(Particle3DFirePlaceDemo),
     CL(Particle3DElectricBeamSystemDemo),
-    CL(Particle3DExplosionBlueDemo),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -242,7 +241,7 @@ bool Particle3DBlackHoleDemo::init()
     if (!Particle3DTestDemo::init()) 
         return false;
 
-    auto rootps = PUParticleSystem3D::create("blackHole.pu", "pu_mediapack_01.material");
+    auto rootps = PUParticleSystem3D::create("blackHole.pu", "pu_example.material");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
     rootps->setPosition(-25.0f, 0.0f);
     auto moveby = MoveBy::create(2.0f, Vec2(50.0f, 0.0f));
@@ -269,7 +268,7 @@ bool Particle3DHypnoDemo::init()
     if (!Particle3DTestDemo::init()) 
         return false;
 
-    auto rootps = PUParticleSystem3D::create("hypno.pu", "pu_mediapack_01.material");
+    auto rootps = PUParticleSystem3D::create("hypno.pu", "pu_example.material");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
 //    auto scale = ScaleBy::create(1.0f, 2.0f, 2.0f, 2.0f);
 //    auto rotate = RotateBy::create(1.0f, Vec3(0.0, 100.0f, 0.0f));
@@ -292,7 +291,7 @@ bool Particle3DTimeShiftDemo::init()
     if (!Particle3DTestDemo::init()) 
         return false;
 
-    auto rootps = PUParticleSystem3D::create("timeShift.pu", "pu_mediapack_01.material");
+    auto rootps = PUParticleSystem3D::create("timeShift.pu", "pu_example.material");
     rootps->setScale(2.0f);
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
     rootps->startParticleSystem();
@@ -312,7 +311,7 @@ bool Particle3DUVAnimDemo::init()
     if (!Particle3DTestDemo::init()) 
         return false;
 
-    auto rootps = PUParticleSystem3D::create("UVAnimation.pu", "pu_mediapack_01.material");
+    auto rootps = PUParticleSystem3D::create("UVAnimation.pu", "pu_example.material");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
     rootps->startParticleSystem();
 
@@ -331,7 +330,7 @@ bool Particle3DFirePlaceDemo::init()
     if (!Particle3DTestDemo::init()) 
         return false;
 
-    auto rootps = PUParticleSystem3D::create("mp_torch.pu", "pu_mediapack_01.material");
+    auto rootps = PUParticleSystem3D::create("mp_torch.pu", "pu_example.material");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
     rootps->setScale(5.0f);
     rootps->startParticleSystem();
@@ -352,7 +351,7 @@ bool Particle3DLineStreakDemo::init()
         return false;
 
 
-    auto rootps = PUParticleSystem3D::create("lineStreak.pu", "pu_mediapack_01.material");
+    auto rootps = PUParticleSystem3D::create("lineStreak.pu");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
     rootps->setScale(5.0f);
     //rootps->runAction(RepeatForever::create(Sequence::create(rotate, nullptr)));
@@ -380,26 +379,6 @@ bool Particle3DElectricBeamSystemDemo::init()
 
     auto rootps = PUParticleSystem3D::create("electricBeamSystem.pu");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
-    rootps->startParticleSystem();
-    this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
-
-    return true;
-}
-
-std::string Particle3DExplosionBlueDemo::subtitle() const 
-{
-    return "ExplosionBlue";
-}
-
-bool Particle3DExplosionBlueDemo::init()
-{
-    if (!Particle3DTestDemo::init()) 
-        return false;
-
-
-    auto rootps = PUParticleSystem3D::create("mp_explosion_04_blue.pu");
-    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
-    rootps->setScale(0.25f);
     rootps->startParticleSystem();
     this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
 

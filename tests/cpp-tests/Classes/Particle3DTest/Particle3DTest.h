@@ -162,19 +162,6 @@ public:
     virtual bool init() override;
 };
 
-class Particle3DExplosionBlueDemo : public Particle3DTestDemo
-{
-public:
-
-    CREATE_FUNC(Particle3DExplosionBlueDemo);
-    Particle3DExplosionBlueDemo(){};
-    virtual ~Particle3DExplosionBlueDemo(){};
-
-    virtual std::string subtitle() const override;
-
-    virtual bool init() override;
-};
-
 class Particle3DTestScene : public TestScene
 {
 public:
