@@ -106,7 +106,7 @@ function Particle3DLineStreakDemo:subtitle()
 end
 
 function Particle3DLineStreakDemo:onEnter()
-    local rootps = cc.PUParticleSystem3D:create("lineStreak.pu", "pu_mediapack_01.material")
+    local rootps = cc.PUParticleSystem3D:create("lineStreak.pu", "pu_example.material")
     rootps:setCameraMask(cc.CameraFlag.USER1)
     rootps:setScale(5.0)
     rootps:startParticleSystem()
