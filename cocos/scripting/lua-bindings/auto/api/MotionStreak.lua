@@ -91,6 +91,13 @@
         
 --------------------------------
 -- 
+-- @function [parent=#MotionStreak] setOpacity 
+-- @param self
+-- @param #unsigned char opacity
+-- @return MotionStreak#MotionStreak self (return value: cc.MotionStreak)
+        
+--------------------------------
+-- 
 -- @function [parent=#MotionStreak] setPositionY 
 -- @param self
 -- @param #float y
@@ -117,10 +124,9 @@
         
 --------------------------------
 -- 
--- @function [parent=#MotionStreak] setOpacity 
+-- @function [parent=#MotionStreak] getPosition3D 
 -- @param self
--- @param #unsigned char opacity
--- @return MotionStreak#MotionStreak self (return value: cc.MotionStreak)
+-- @return vec3_table#vec3_table ret (return value: vec3_table)
         
 --------------------------------
 -- 
