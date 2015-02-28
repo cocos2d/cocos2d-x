@@ -23,12 +23,12 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
--- set the number of substeps in an update of the physics world.<br>
--- One physics update will be divided into several substeps to increase its accuracy.<br>
--- default value is 1
--- @function [parent=#PhysicsWorld] setSubsteps 
+--  Set the time step of physics world<br>
+-- Unit:second, default value is 0.02<br>
+-- Note: if you disable auto step, this won't work.
+-- @function [parent=#PhysicsWorld] setTimeStep 
 -- @param self
--- @param #int steps
+-- @param #float timeStep
 -- @return PhysicsWorld#PhysicsWorld self (return value: cc.PhysicsWorld)
         
 --------------------------------
@@ -39,6 +39,12 @@
 -- @param self
 -- @param #bool autoStep
 -- @return PhysicsWorld#PhysicsWorld self (return value: cc.PhysicsWorld)
+        
+--------------------------------
+-- 
+-- @function [parent=#PhysicsWorld] getTimeStep 
+-- @param self
+-- @return float#float ret (return value: float)
         
 --------------------------------
 --  Adds a joint to the physics world.
@@ -104,32 +110,10 @@
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
--- set the update rate of physics world, update rate is the value of EngineUpdateTimes/PhysicsWorldUpdateTimes.<br>
--- set it higher can improve performance, set it lower can improve accuracy of physics world simulation.<br>
--- default value is 1.0<br>
--- Note: if you setAutoStep(false), this won't work.
--- @function [parent=#PhysicsWorld] setUpdateRate 
--- @param self
--- @param #int rate
--- @return PhysicsWorld#PhysicsWorld self (return value: cc.PhysicsWorld)
-        
---------------------------------
---  get the number of substeps 
--- @function [parent=#PhysicsWorld] getSubsteps 
--- @param self
--- @return int#int ret (return value: int)
-        
---------------------------------
 --  get the speed of physics world 
 -- @function [parent=#PhysicsWorld] getSpeed 
 -- @param self
 -- @return float#float ret (return value: float)
-        
---------------------------------
---  get the update rate 
--- @function [parent=#PhysicsWorld] getUpdateRate 
--- @param self
--- @return int#int ret (return value: int)
         
 --------------------------------
 --  Remove all bodies from physics world. 
