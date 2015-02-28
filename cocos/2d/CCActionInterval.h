@@ -1018,6 +1018,38 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(FadeTo);
 };
 
+/** @brief Fades an object that implements the RGBAProtocol protocol. It modifies the opacity from the current value by a specified values.
+*/
+class CC_DLL FadeBy : public ActionInterval
+{
+public:
+    /** creates an action with duration and opacity */
+    static FadeBy* create(float duration, GLubyte opacity, bool additive);
+
+    //
+    // Overrides
+    //
+    virtual FadeBy* clone() const override;
+    virtual FadeBy* reverse(void) const override;
+    virtual void startWithTarget(Node *target) override;
+    virtual void update(float time) override;
+
+CC_CONSTRUCTOR_ACCESS:
+    FadeBy() {}
+    virtual ~FadeBy() {}
+
+    /** initializes the action with duration and opacity */
+    bool initWithDuration(float duration, GLubyte opacity, bool additive);
+
+protected:
+    GLubyte _byOpacity;
+    float _lastTime;
+    float _lastFrac;
+    bool _additive;
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(FadeBy);
+};
+
 /** @brief Fades In an object that implements the RGBAProtocol protocol. It modifies the opacity from 0 to 255.
  The "reverse" of this action is FadeOut
  */

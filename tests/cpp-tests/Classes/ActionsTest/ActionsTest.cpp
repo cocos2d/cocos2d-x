@@ -669,7 +669,7 @@ void ActionFade::onEnter()
 {
     ActionsDemo::onEnter();
 
-    centerSprites(2);
+    centerSprites(3);
 
     _tamara->setOpacity( 0 );
     auto action1 = FadeIn::create(1.0f);
@@ -680,15 +680,20 @@ void ActionFade::onEnter()
     auto action2BackReverse = action2Back->reverse();
     auto action2BackReverseReverse = action2BackReverse->reverse();
 
+    auto action3 = FadeBy::create(1.0f, 255, true);
+    auto action3Back = action3->reverse(); // FadeBy::create(1.0, 253, false);
+	
     _tamara->setOpacity(122);
     _tamara->runAction( Sequence::create( action1, action1Back, nullptr));
     _kathia->setOpacity(122);
     _kathia->runAction( Sequence::create( action2, action2Back,action2BackReverse,action2BackReverseReverse, nullptr));
+    _grossini->setOpacity(122);
+    _grossini->runAction( Sequence::create( action3, action3Back, action3, nullptr));
 }
 
 std::string  ActionFade::subtitle() const
 {
-    return "FadeIn / FadeOut";
+    return "FadeIn / FadeBy / FadeOut";
 }
 
 //------------------------------------------------------------------
