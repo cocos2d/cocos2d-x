@@ -36,6 +36,7 @@ include(CocosBuildHelpers)
 # libcocos2d
 set(BUILD_CPP_TESTS OFF CACHE BOOL "turn off build cpp-tests")
 set(BUILD_LUA_LIBS OFF CACHE BOOL "turn off build lua-tests")
+set(BUILD_CPP_EMPTY_TESTS OFF CACHE BOOL "turn off build cpp-empty-test")
 add_subdirectory(${COCOS2D_ROOT})
 
 # Some macro definitions
@@ -106,10 +107,17 @@ set(PLATFORM_SPECIFIC_HEADERS
 )
 endif()
 
+if ( CMAKE_SIZEOF_VOID_P EQUAL 8 )
+  set(ARCH_DIR "x86-64")
+elseif ( CMAKE_SIZEOF_VOID_P EQUAL 4 )
+  set(ARCH_DIR "i386")
+else()
+  message( FATAL_ERROR "Unsupported architecture, CMake will exit" )
+endif()
+
 include_directories(
-  /usr/local/include/GLFW
-  /usr/include/GLFW
   ${COCOS2D_ROOT}/cocos
+  ${COCOS2D_ROOT}/external/${PLATFORM_FOLDER}/${ARCH_DIR}/include
   Classes
 )
 
@@ -143,8 +151,8 @@ if ( WIN32 )
   pre_build(${APP_NAME}
     COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
     COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}/Resources
-    COMMAND ${CMAKE_COMMAND} -E copy ${COCOS2D_ROOT}/external/win32-specific/gles/prebuilt/glew32.dll ${APP_BIN_DIR}/${CMAKE_BUILD_TYPE}
-	COMMAND ${CMAKE_COMMAND} -E copy ${COCOS2D_ROOT}/external/win32-specific/zlib/prebuilt/zlib1.dll ${APP_BIN_DIR}/${CMAKE_BUILD_TYPE}
+    COMMAND ${CMAKE_COMMAND} -E copy ${COCOS2D_ROOT}/external/win32/i386/libs/glew32.dll ${APP_BIN_DIR}/${CMAKE_BUILD_TYPE}
+	COMMAND ${CMAKE_COMMAND} -E copy ${COCOS2D_ROOT}/external/win32/i386/libs/zlib1.dll ${APP_BIN_DIR}/${CMAKE_BUILD_TYPE}
 	)
 else()
   pre_build(${APP_NAME}
