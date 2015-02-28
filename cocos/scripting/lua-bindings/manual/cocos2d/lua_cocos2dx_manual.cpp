@@ -3408,6 +3408,41 @@ tolua_lerror:
     return 0;
 }
 
+int tolua_cocos2dx_DrawNode_create(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.DrawNode",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    argc = lua_gettop(tolua_S) - 1;
+    
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'tolua_cocos2dx_DrawNode_create'", nullptr);
+            return 0;
+        }
+        cocos2d::DrawNode* ret = cocos2d::DrawNode::create();
+        object_to_luaval<cocos2d::DrawNode>(tolua_S, "cc.DrawNode",(cocos2d::DrawNode*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.DrawNode:create",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'tolua_cocos2dx_DrawNode_create'.",&tolua_err);
+#endif
+    return 0;
+}
+
 // setBlendFunc
 template<class T>
 static int tolua_cocos2dx_setBlendFunc(lua_State* tolua_S,const char* className)
@@ -5028,6 +5063,10 @@ static void extendDrawNode(lua_State* tolua_S)
 
         lua_pushstring(tolua_S,"setBlendFunc");
         lua_pushcfunction(tolua_S,tolua_cocos2dx_DrawNode_setBlendFunc01);
+        lua_rawset(tolua_S,-3);
+        
+        lua_pushstring(tolua_S,"create");
+        lua_pushcfunction(tolua_S,tolua_cocos2dx_DrawNode_create);
         lua_rawset(tolua_S,-3);
     }
     lua_pop(tolua_S, 1);
