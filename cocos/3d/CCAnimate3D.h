@@ -89,8 +89,11 @@ public:
     void setOriginInterval(float interval);
     float getOriginInterval() const {return _originInterval; }
     
-    /** animate transition time */
+    /** get animate transition time between 3d animations */
     static float getTransitionTime() { return _transTime; }
+    
+    /** set animate transition time between 3d animations */
+    static void setTransitionTime(float transTime) { if (transTime > 0.f) _transTime = transTime; }
     
     /**get & set play reverse, these are deprecated, use set negative speed instead*/
     CC_DEPRECATED_ATTRIBUTE bool getPlayBack() const { return _playReverse; }
