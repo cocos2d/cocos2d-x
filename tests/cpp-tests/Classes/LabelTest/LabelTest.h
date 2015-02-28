@@ -227,7 +227,7 @@ private:
     void  setAlignmentMiddle(Ref* sender);
     void  setAlignmentBottom(Ref* sender);
     void  updateAlignment();
-    const char* getCurrentAlignment();
+    std::string getCurrentAlignment();
 private:
     TextHAlignment _horizAlign;
     LabelTTF* _label;

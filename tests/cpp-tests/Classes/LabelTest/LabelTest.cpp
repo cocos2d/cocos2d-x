@@ -1023,7 +1023,7 @@ void LabelTTFTest::setAlignmentBottom(Ref* sender)
     this->updateAlignment();
 }
 
-const char* LabelTTFTest::getCurrentAlignment()
+std::string LabelTTFTest::getCurrentAlignment()
 {
     const char* vertical = nullptr;
     const char* horizontal = nullptr;
@@ -1050,7 +1050,7 @@ const char* LabelTTFTest::getCurrentAlignment()
             break;
     }
 
-    return StringUtils::format("Alignment %s %s", vertical, horizontal).c_str();
+    return StringUtils::format("Alignment %s %s", vertical, horizontal);
 }
 
 std::string LabelTTFTest::title() const
