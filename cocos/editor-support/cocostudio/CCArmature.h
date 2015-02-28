@@ -39,34 +39,34 @@ struct cpBody;
 
 namespace cocostudio {
 
-CC_DEPRECATED_ATTRIBUTE typedef ProcessBase CCProcessBase;
-CC_DEPRECATED_ATTRIBUTE typedef BaseData CCBaseData;
-CC_DEPRECATED_ATTRIBUTE typedef DisplayData CCDisplayData;
-CC_DEPRECATED_ATTRIBUTE typedef SpriteDisplayData CCSpriteDisplayData;
-CC_DEPRECATED_ATTRIBUTE typedef ArmatureDisplayData CCArmatureDisplayData;
-CC_DEPRECATED_ATTRIBUTE typedef ParticleDisplayData CCParticleDisplayData;
-CC_DEPRECATED_ATTRIBUTE typedef BoneData CCBoneData;
-CC_DEPRECATED_ATTRIBUTE typedef FrameData CCFrameData;
-CC_DEPRECATED_ATTRIBUTE typedef MovementBoneData CCMovementBoneData;
-CC_DEPRECATED_ATTRIBUTE typedef MovementData CCMovementData;
-CC_DEPRECATED_ATTRIBUTE typedef AnimationData CCAnimationData;
-CC_DEPRECATED_ATTRIBUTE typedef ContourData CCContourData;
-CC_DEPRECATED_ATTRIBUTE typedef TextureData CCTextureData;
-CC_DEPRECATED_ATTRIBUTE typedef DecorativeDisplay CCDecorativeDisplay;
-CC_DEPRECATED_ATTRIBUTE typedef DisplayData CCDisplayData;
-CC_DEPRECATED_ATTRIBUTE typedef DisplayFactory CCDisplayFactory;
-CC_DEPRECATED_ATTRIBUTE typedef BatchNode CCBatchNode;
-CC_DEPRECATED_ATTRIBUTE typedef DecorativeDisplay CCDecorativeDisplay;
-CC_DEPRECATED_ATTRIBUTE typedef DisplayManager CCDisplayManager;
-CC_DEPRECATED_ATTRIBUTE typedef ColliderBody CCColliderBody;
-CC_DEPRECATED_ATTRIBUTE typedef ColliderDetector CCColliderDetector;
-CC_DEPRECATED_ATTRIBUTE typedef SpriteFrameCacheHelper CCSpriteFrameCacheHelper;
-CC_DEPRECATED_ATTRIBUTE typedef ArmatureData CCArmatureData;
-CC_DEPRECATED_ATTRIBUTE typedef Bone CCBone;
-CC_DEPRECATED_ATTRIBUTE typedef ArmatureAnimation CCArmatureAnimation;
-CC_DEPRECATED_ATTRIBUTE typedef Armature CCArmature;
-CC_DEPRECATED_ATTRIBUTE typedef ArmatureDataManager CCArmatureDataManager;
-CC_DEPRECATED_ATTRIBUTE typedef cocos2d::tweenfunc::TweenType CCTweenType;
+CC_DEPRECATED(v3) typedef ProcessBase CCProcessBase;
+CC_DEPRECATED(v3) typedef BaseData CCBaseData;
+CC_DEPRECATED(v3) typedef DisplayData CCDisplayData;
+CC_DEPRECATED(v3) typedef SpriteDisplayData CCSpriteDisplayData;
+CC_DEPRECATED(v3) typedef ArmatureDisplayData CCArmatureDisplayData;
+CC_DEPRECATED(v3) typedef ParticleDisplayData CCParticleDisplayData;
+CC_DEPRECATED(v3) typedef BoneData CCBoneData;
+CC_DEPRECATED(v3) typedef FrameData CCFrameData;
+CC_DEPRECATED(v3) typedef MovementBoneData CCMovementBoneData;
+CC_DEPRECATED(v3) typedef MovementData CCMovementData;
+CC_DEPRECATED(v3) typedef AnimationData CCAnimationData;
+CC_DEPRECATED(v3) typedef ContourData CCContourData;
+CC_DEPRECATED(v3) typedef TextureData CCTextureData;
+CC_DEPRECATED(v3) typedef DecorativeDisplay CCDecorativeDisplay;
+CC_DEPRECATED(v3) typedef DisplayData CCDisplayData;
+CC_DEPRECATED(v3) typedef DisplayFactory CCDisplayFactory;
+CC_DEPRECATED(v3) typedef BatchNode CCBatchNode;
+CC_DEPRECATED(v3) typedef DecorativeDisplay CCDecorativeDisplay;
+CC_DEPRECATED(v3) typedef DisplayManager CCDisplayManager;
+CC_DEPRECATED(v3) typedef ColliderBody CCColliderBody;
+CC_DEPRECATED(v3) typedef ColliderDetector CCColliderDetector;
+CC_DEPRECATED(v3) typedef SpriteFrameCacheHelper CCSpriteFrameCacheHelper;
+CC_DEPRECATED(v3) typedef ArmatureData CCArmatureData;
+CC_DEPRECATED(v3) typedef Bone CCBone;
+CC_DEPRECATED(v3) typedef ArmatureAnimation CCArmatureAnimation;
+CC_DEPRECATED(v3) typedef Armature CCArmature;
+CC_DEPRECATED(v3) typedef ArmatureDataManager CCArmatureDataManager;
+CC_DEPRECATED(v3) typedef cocos2d::tweenfunc::TweenType CCTweenType;
 
 class CC_STUDIO_DLL Armature : public cocos2d::Node, public cocos2d::BlendProtocol
 {
@@ -195,7 +195,7 @@ public:
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     virtual void setColliderFilter(ColliderFilter *filter);
 #elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
-    CC_DEPRECATED_ATTRIBUTE virtual void drawContour();
+    CC_DEPRECATED(v3) virtual void drawContour();
 #endif
 
 

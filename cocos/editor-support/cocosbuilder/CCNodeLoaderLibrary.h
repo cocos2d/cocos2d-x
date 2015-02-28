@@ -60,22 +60,22 @@ public:
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE void registerDefaultCCNodeLoaders() { registerDefaultNodeLoaders(); }
+    CC_DEPRECATED(v3) void registerDefaultCCNodeLoaders() { registerDefaultNodeLoaders(); }
     /**
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE void registerCCNodeLoader(const char * pClassName, NodeLoader * pNodeLoader) { registerNodeLoader(pClassName, pNodeLoader); };
+    CC_DEPRECATED(v3) void registerCCNodeLoader(const char * pClassName, NodeLoader * pNodeLoader) { registerNodeLoader(pClassName, pNodeLoader); };
     /**
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE void unregisterCCNodeLoader(const char * pClassName) { unregisterNodeLoader(pClassName); };
+    CC_DEPRECATED(v3) void unregisterCCNodeLoader(const char * pClassName) { unregisterNodeLoader(pClassName); };
     /**
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE NodeLoader * getCCNodeLoader(const char * pClassName) { return getNodeLoader(pClassName); };
+    CC_DEPRECATED(v3) NodeLoader * getCCNodeLoader(const char * pClassName) { return getNodeLoader(pClassName); };
     
 public:
     /**
@@ -97,17 +97,17 @@ public:
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE static NodeLoaderLibrary * sharedNodeLoaderLibrary() { return NodeLoaderLibrary::getInstance(); };
+    CC_DEPRECATED(v3) static NodeLoaderLibrary * sharedNodeLoaderLibrary() { return NodeLoaderLibrary::getInstance(); };
     /**
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE static void purgeSharedNodeLoaderLibrary() { NodeLoaderLibrary::destroyInstance(); };
+    CC_DEPRECATED(v3) static void purgeSharedNodeLoaderLibrary() { NodeLoaderLibrary::destroyInstance(); };
     /**
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE static NodeLoaderLibrary * newDefaultCCNodeLoaderLibrary() { return NodeLoaderLibrary::newDefaultNodeLoaderLibrary(); };
+    CC_DEPRECATED(v3) static NodeLoaderLibrary * newDefaultCCNodeLoaderLibrary() { return NodeLoaderLibrary::newDefaultNodeLoaderLibrary(); };
     
 private:
     NodeLoaderMap _nodeLoaders;

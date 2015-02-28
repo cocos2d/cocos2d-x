@@ -40,16 +40,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\GUI\CCScrollView\CCTableViewCell.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\physics-nodes\CCPhysicsDebugNode.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\physics-nodes\CCPhysicsSprite.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\document.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\filestream.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\internal\pow10.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\internal\stack.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\internal\strfunc.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\prettywriter.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\rapidjson.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\reader.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\stringbuffer.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\writer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCAABB.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCAnimate3D.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCAnimation3D.h" />
@@ -843,9 +833,6 @@
     <None Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\ccShader_PositionTextureColor_noMVP.vert" />
     <None Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\ccShader_PositionTexture_uColor.frag" />
     <None Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\ccShader_PositionTexture_uColor.vert" />
-    <None Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\ccShader_Position_uColor-no-gl_PointSize.vert">
-      <FileType>Document</FileType>
-    </None>
     <None Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\ccShader_Position_uColor.frag" />
     <None Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\ccShader_Position_uColor.vert" />
     <None Include="$(MSBuildThisFileDirectory)..\..\..\..\ui\shaders\ccShader_grayscale.frag" />

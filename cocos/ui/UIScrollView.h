@@ -251,7 +251,7 @@ public:
     /**
      * Add call back function called scrollview event triggered
      */
-    CC_DEPRECATED_ATTRIBUTE void addEventListenerScrollView(Ref* target, SEL_ScrollViewEvent selector);
+    CC_DEPRECATED(v3) void addEventListenerScrollView(Ref* target, SEL_ScrollViewEvent selector);
     virtual void addEventListener(const ccScrollViewCallback& callback);
     
     //all of these functions are related to innerContainer.

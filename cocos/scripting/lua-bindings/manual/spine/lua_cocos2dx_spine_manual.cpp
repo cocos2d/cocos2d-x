@@ -322,7 +322,7 @@ tolua_lerror:
 
 extern int lua_cocos2dx_spine_SkeletonRenderer_setBlendFunc(lua_State* tolua_S);
 
-CC_DEPRECATED_ATTRIBUTE static int tolua_spine_SkeletoneAnimation_setBlendFunc(lua_State* tolua_S)
+CC_DEPRECATED(v3) static int tolua_spine_SkeletoneAnimation_setBlendFunc(lua_State* tolua_S)
 {
     int argc = lua_gettop(tolua_S) - 1;
     if (argc == 2)

@@ -30,8 +30,8 @@
 
 #import "SimulatorApp.h"
 #include "AppDelegate.h"
-#include "glfw3.h"
-#include "glfw3native.h"
+#include "glfw/glfw3.h"
+#include "glfw/glfw3native.h"
 #include "runtime/Runtime.h"
 #include "runtime/ConfigParser.h"
 

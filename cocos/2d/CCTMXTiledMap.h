@@ -125,7 +125,7 @@ public:
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE TMXLayer* layerNamed(const std::string& layerName) const { return getLayer(layerName); };
+    CC_DEPRECATED(v3) TMXLayer* layerNamed(const std::string& layerName) const { return getLayer(layerName); };
 
     /** return the TMXObjectGroup for the specific group */
     TMXObjectGroup* getObjectGroup(const std::string& groupName) const;
@@ -133,7 +133,7 @@ public:
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE TMXObjectGroup* objectGroupNamed(const std::string& groupName) const { return getObjectGroup(groupName); };
+    CC_DEPRECATED(v3) TMXObjectGroup* objectGroupNamed(const std::string& groupName) const { return getObjectGroup(groupName); };
 
     /** return the value for the specific property name */
     Value getProperty(const std::string& propertyName) const;
@@ -141,11 +141,11 @@ public:
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE Value propertyNamed(const char *propertyName) const { return getProperty(propertyName); };
+    CC_DEPRECATED(v3) Value propertyNamed(const char *propertyName) const { return getProperty(propertyName); };
 
     /** return properties dictionary for tile GID */
     Value getPropertiesForGID(int GID) const;
-    CC_DEPRECATED_ATTRIBUTE Value propertiesForGID(int GID) const { return getPropertiesForGID(GID); };
+    CC_DEPRECATED(v3) Value propertiesForGID(int GID) const { return getPropertiesForGID(GID); };
 
     /** Assings properties to argument value, returns true if it did found properties 
         for that GID and did assinged a value, else it returns false.

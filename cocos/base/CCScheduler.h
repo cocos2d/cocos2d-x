@@ -377,7 +377,7 @@ public:
      @deprecated Please use 'Scheduler::schedule' instead.
      @since v0.99.3, repeat and delay added in v1.1
      */
-    CC_DEPRECATED_ATTRIBUTE void scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, unsigned int repeat, float delay, bool paused)
+    CC_DEPRECATED(v3) void scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, unsigned int repeat, float delay, bool paused)
     {
         schedule(selector, target, interval, repeat, delay, paused);
     };
@@ -385,7 +385,7 @@ public:
     /** calls scheduleSelector with CC_REPEAT_FOREVER and a 0 delay 
      *  @deprecated Please use 'Scheduler::schedule' instead.
      */
-    CC_DEPRECATED_ATTRIBUTE void scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, bool paused)
+    CC_DEPRECATED(v3) void scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, bool paused)
     {
         schedule(selector, target, interval, paused);
     };
@@ -397,26 +397,26 @@ public:
      @since v0.99.3
      */
     template <class T>
-    CC_DEPRECATED_ATTRIBUTE void scheduleUpdateForTarget(T* target, int priority, bool paused) { scheduleUpdate(target, priority, paused); };
+    CC_DEPRECATED(v3) void scheduleUpdateForTarget(T* target, int priority, bool paused) { scheduleUpdate(target, priority, paused); };
     
     /** Unschedule a selector for a given target.
      If you want to unschedule the "update", use unscheudleUpdateForTarget.
      @deprecated Please use 'Scheduler::unschedule' instead.
      @since v0.99.3
      */
-    CC_DEPRECATED_ATTRIBUTE void unscheduleSelector(SEL_SCHEDULE selector, Ref *target) { unschedule(selector, target); };
+    CC_DEPRECATED(v3) void unscheduleSelector(SEL_SCHEDULE selector, Ref *target) { unschedule(selector, target); };
     
     /** Checks whether a selector for a given taget is scheduled.
      @deprecated Please use 'Scheduler::isScheduled' instead.
      @since v0.99.3
      */
-    CC_DEPRECATED_ATTRIBUTE bool isScheduledForTarget(Ref *target, SEL_SCHEDULE selector) { return isScheduled(selector, target); };
+    CC_DEPRECATED(v3) bool isScheduledForTarget(Ref *target, SEL_SCHEDULE selector) { return isScheduled(selector, target); };
     
     /** Unschedules the update selector for a given target
      @deprecated Please use 'Scheduler::unscheduleUpdate' instead.
      @since v0.99.3
      */
-    CC_DEPRECATED_ATTRIBUTE void unscheduleUpdateForTarget(Ref *target) { return unscheduleUpdate(target); };
+    CC_DEPRECATED(v3) void unscheduleUpdateForTarget(Ref *target) { return unscheduleUpdate(target); };
     
 protected:
     

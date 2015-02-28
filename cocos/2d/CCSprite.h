@@ -227,7 +227,7 @@ public:
     virtual void setSpriteFrame(SpriteFrame* newFrame);
 
     /** @deprecated Use `setSpriteFrame()` instead. */
-    CC_DEPRECATED_ATTRIBUTE virtual void setDisplayFrame(SpriteFrame *newFrame) { setSpriteFrame(newFrame); }
+    CC_DEPRECATED(v3) virtual void setDisplayFrame(SpriteFrame *newFrame) { setSpriteFrame(newFrame); }
 
     /**
      * Returns whether or not a SpriteFrame is being displayed
@@ -239,9 +239,9 @@ public:
      */
     virtual SpriteFrame* getSpriteFrame() const;
     /** @deprecated Use `getSpriteFrame()` instead */
-    CC_DEPRECATED_ATTRIBUTE virtual SpriteFrame* getDisplayFrame() const { return getSpriteFrame(); }
+    CC_DEPRECATED(v3) virtual SpriteFrame* getDisplayFrame() const { return getSpriteFrame(); }
     /** @deprecated Use `getSpriteFrame()` instead */
-    CC_DEPRECATED_ATTRIBUTE virtual SpriteFrame* displayFrame() const { return getSpriteFrame(); };
+    CC_DEPRECATED(v3) virtual SpriteFrame* displayFrame() const { return getSpriteFrame(); };
 
     /// @} End of frames methods
 
@@ -337,9 +337,9 @@ public:
     * @js NA
     * @lua NA
     */
-    CC_DEPRECATED_ATTRIBUTE bool isFlipX() { return isFlippedX(); };
+    CC_DEPRECATED(v3) bool isFlipX() { return isFlippedX(); };
     /** @deprecated Use setFlippedX() instead */
-    CC_DEPRECATED_ATTRIBUTE void setFlipX(bool flippedX) { setFlippedX(flippedX); };
+    CC_DEPRECATED(v3) void setFlipX(bool flippedX) { setFlippedX(flippedX); };
 
     /**
      * Return the flag which indicates whether the sprite is flipped vertically or not.
@@ -362,9 +362,9 @@ public:
     /// @} End of Sprite properties getter/setters
 
     /** @deprecated Use isFlippedY() instead */
-    CC_DEPRECATED_ATTRIBUTE bool isFlipY() { return isFlippedY(); };
+    CC_DEPRECATED(v3) bool isFlipY() { return isFlippedY(); };
     /** @deprecated Use setFlippedY() instead */
-    CC_DEPRECATED_ATTRIBUTE void setFlipY(bool flippedY) { setFlippedY(flippedY); };
+    CC_DEPRECATED(v3) void setFlipY(bool flippedY) { setFlippedY(flippedY); };
 
     //
     // Overrides

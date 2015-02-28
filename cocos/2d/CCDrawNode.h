@@ -63,7 +63,7 @@ public:
     void drawPoint(const Vec2& point, float pointSize, const Color4F &color);
     
     void drawPoints(const Vec2* position, unsigned int numberOfPoints, const Color4F &color, float pointSize = 1);
-    CC_DEPRECATED_ATTRIBUTE void drawPoints(const Vec2* position, unsigned int numberOfPoints, double pointSize, const Color4F& color);
+    CC_DEPRECATED(v3) void drawPoints(const Vec2* position, unsigned int numberOfPoints, double pointSize, const Color4F& color);
 
     void drawLine(const Vec2 &origin, const Vec2 &destination, const Color4F &color);
     
@@ -113,7 +113,7 @@ public:
     void drawTriangle(const Vec2 &p1, const Vec2 &p2, const Vec2 &p3, const Color4F &color);
 
     /** draw a quadratic bezier curve with color and number of segments, use drawQuadBezier instead*/
-    CC_DEPRECATED_ATTRIBUTE void drawQuadraticBezier(const Vec2& from, const Vec2& control, const Vec2& to, unsigned int segments, const Color4F &color);
+    CC_DEPRECATED(v3) void drawQuadraticBezier(const Vec2& from, const Vec2& control, const Vec2& to, unsigned int segments, const Color4F &color);
     
     /** Clear the geometry in the node's buffer. */
     void clear();
@@ -142,12 +142,12 @@ public:
     virtual void draw(Renderer* renderer, const Mat4& transform, uint32_t flags) override;
     
     // deprecated access method for DrawPrimitives to use DrawNode
-    CC_DEPRECATED_ATTRIBUTE virtual void drawImmediate(Renderer* renderer, const Mat4& transform, uint32_t flags);
+    CC_DEPRECATED(v3) virtual void drawImmediate(Renderer* renderer, const Mat4& transform, uint32_t flags);
     
     // need these for Lua bindings to keep functioning
-    CC_DEPRECATED_ATTRIBUTE void onDraw(const Mat4 &transform, uint32_t flags) {CCASSERT(false, "deprecated method");}
-    CC_DEPRECATED_ATTRIBUTE void onDrawGLLine(const Mat4 &transform, uint32_t flags) {CCASSERT(false, "deprecated method");}
-    CC_DEPRECATED_ATTRIBUTE void onDrawGLPoint(const Mat4 &transform, uint32_t flags) {CCASSERT(false, "deprecated method");}
+    CC_DEPRECATED(v3) void onDraw(const Mat4 &transform, uint32_t flags) {CCASSERT(false, "deprecated method");}
+    CC_DEPRECATED(v3) void onDrawGLLine(const Mat4 &transform, uint32_t flags) {CCASSERT(false, "deprecated method");}
+    CC_DEPRECATED(v3) void onDrawGLPoint(const Mat4 &transform, uint32_t flags) {CCASSERT(false, "deprecated method");}
 
 CC_CONSTRUCTOR_ACCESS:
     DrawNode();

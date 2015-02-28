@@ -95,7 +95,7 @@ public:
     ssize_t getMeshCount() const { return _meshes.size(); }
     
     /**get skin*/
-    CC_DEPRECATED_ATTRIBUTE MeshSkin* getSkin() const;
+    CC_DEPRECATED(v3) MeshSkin* getSkin() const;
     
     Skeleton3D* getSkeleton() const { return _skeleton; }
     

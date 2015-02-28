@@ -282,36 +282,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\CCInputDelegate.h">
       <Filter>cocostudio\components</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\internal\pow10.h">
-      <Filter>cocostudio\json\rapidjson\internal</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\internal\stack.h">
-      <Filter>cocostudio\json\rapidjson\internal</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\internal\strfunc.h">
-      <Filter>cocostudio\json\rapidjson\internal</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\document.h">
-      <Filter>cocostudio\json\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\filestream.h">
-      <Filter>cocostudio\json\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\prettywriter.h">
-      <Filter>cocostudio\json\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\rapidjson.h">
-      <Filter>cocostudio\json\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\reader.h">
-      <Filter>cocostudio\json\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\stringbuffer.h">
-      <Filter>cocostudio\json\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\writer.h">
-      <Filter>cocostudio\json\rapidjson</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ButtonReader\ButtonReader.h">
       <Filter>cocostudio\reader\WidgetReader\ButtonReader</Filter>
     </ClInclude>
@@ -2389,12 +2359,6 @@
     <Filter Include="cocostudio\armature\utils">
       <UniqueIdentifier>{7dfddab5-351a-48e7-9cd4-1df5268badfd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cocostudio\json\rapidjson">
-      <UniqueIdentifier>{7225fe7b-80b7-40a8-a674-435183a8c45a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="cocostudio\json\rapidjson\internal">
-      <UniqueIdentifier>{cc361288-af78-4806-939c-538c560996f0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="cocostudio\reader\WidgetReader">
       <UniqueIdentifier>{c88afb13-dccb-4ff6-be05-fd91f19d9202}</UniqueIdentifier>
     </Filter>
@@ -2615,9 +2579,6 @@
       <Filter>renderer</Filter>
     </None>
     <None Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\ccShader_PositionTextureColorAlphaTest.frag">
-      <Filter>renderer</Filter>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\ccShader_Position_uColor-no-gl_PointSize.vert">
       <Filter>renderer</Filter>
     </None>
     <None Include="$(MSBuildThisFileDirectory)..\..\..\libcocos2d.vcxproj.filters">
