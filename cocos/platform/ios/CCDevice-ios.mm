@@ -484,8 +484,8 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         }
         height = (short)info.height;
         width = (short)info.width;
-		ret.fastSet(info.data,width * height * 4);
-		hasPremultipliedAlpha = true;
+        ret.fastSet(info.data,width * height * 4);
+        hasPremultipliedAlpha = true;
     } while (0);
     
     return ret;
@@ -494,6 +494,21 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
 void Device::setKeepScreenOn(bool value)
 {
     [[UIApplication sharedApplication] setIdleTimerDisabled:(BOOL)value];
+}
+
+bool Device::isVibrateSupported()
+{
+    // See https://developer.apple.com/library/ios/documentation/AudioToolbox/Reference/SystemSoundServicesReference/index.html#//apple_ref/c/econst/kSystemSoundID_Vibrate
+    return false;
+}
+
+void Device::startVibrate(float duration)
+{
+    CC_UNUSED_PARAM(duration);
+}
+
+void Device::stopVibrate()
+{
 }
 
 NS_CC_END

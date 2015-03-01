@@ -218,6 +218,38 @@ void setKeepScreenOnJni(bool value) {
     }
 }
 
+extern bool isVibrateSupportedJni() {
+    JniMethodInfo t;
+    
+    bool ret = false;
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "isVibrateSupported", "()Z")) {
+        ret = t.env->CallStaticBooleanMethod(t.classID, t.methodID);
+        
+        t.env->DeleteLocalRef(t.classID);
+    }
+    return ret;
+}
+
+void startVibrateJni(float duration) {
+    JniMethodInfo t;
+    
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "startVibrate", "(F)V")) {
+        t.env->CallStaticVoidMethod(t.classID, t.methodID, duration);
+        
+        t.env->DeleteLocalRef(t.classID);
+    }
+}
+
+void stopVibrateJni() {
+    JniMethodInfo t;
+    
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "stopVibrate", "()V")) {
+        t.env->CallStaticVoidMethod(t.classID, t.methodID);
+        
+        t.env->DeleteLocalRef(t.classID);
+    }
+}
+
 extern bool openURLJNI(const char* url) {
     JniMethodInfo t;
     

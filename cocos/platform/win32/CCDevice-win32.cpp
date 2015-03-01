@@ -88,13 +88,13 @@ public:
             }
             // utf-8 to utf-16
             int nLen = str.size();
-            int nBufLen  = nLen + 1;			
+            int nBufLen  = nLen + 1;
             pwszBuffer = new wchar_t[nBufLen];
             CC_BREAK_IF(! pwszBuffer);
             memset(pwszBuffer,0,nBufLen);
-            nLen = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), nLen, pwszBuffer, nBufLen);		
+            nLen = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), nLen, pwszBuffer, nBufLen);
             pwszBuffer[nLen] = '\0';
-        } while (0);	
+        } while (0);
         return pwszBuffer;
 
     }
@@ -121,7 +121,7 @@ public:
                     int nFindPos = fontName.rfind("/");
                     fontName = &fontName[nFindPos+1];
                     nFindPos = fontName.rfind(".");
-                    fontName = fontName.substr(0,nFindPos);                
+                    fontName = fontName.substr(0,nFindPos);
                 }
                 else
                 {
@@ -167,7 +167,7 @@ public:
                     if(AddFontResource(pwszBuffer))
                     {
                         SendMessage( _wnd, WM_FONTCHANGE, 0, 0);
-                    }						
+                    }
                     delete [] pwszBuffer;
                     pwszBuffer = nullptr;
                 }
@@ -403,7 +403,7 @@ private:
     HWND    _wnd;
     std::string _curFontPath;
 
-    void removeCustomFont() 
+    void removeCustomFont()
     {
         HFONT hDefFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
         if (hDefFont != _font)
@@ -411,7 +411,7 @@ private:
             DeleteObject(_font);
             _font = hDefFont;
         }
-        // release temp font resource	
+        // release temp font resource
         if (_curFontPath.size() > 0)
         {
             wchar_t * pwszBuffer = utf8ToUtf16(_curFontPath);
@@ -423,7 +423,7 @@ private:
                 pwszBuffer = nullptr;
             }
             _curFontPath.clear();
-        }	
+        }
     }
 };
 
@@ -495,6 +495,24 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
 
 void Device::setKeepScreenOn(bool value)
 {
+    CC_UNUSED_PARAM(value);
+}
+
+bool Device::isVibrateSupported()
+{
+    log("Device::isVibrateSupported"); // REMOVE ME
+    return false;
+}
+
+void Device::startVibrate(float duration)
+{
+    log("Device::startVibrate(%f)", duration); // REMOVE ME
+    CC_UNUSED_PARAM(duration);
+}
+
+void Device::stopVibrate()
+{
+    log("Device::stopVibrate");  // REMOVE ME
 }
 
 NS_CC_END

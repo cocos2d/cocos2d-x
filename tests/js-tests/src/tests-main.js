@@ -626,6 +626,14 @@ var testNames = [
         }
     },
     {
+        title:"Vibrate Test",
+        platforms: PLATFORM_ALL,
+        linksrc:"src/VibrateTest/VibrateTest.js",
+        testScene:function () {
+            return new VibrateTestScene();
+        }
+    },
+    {
         title:"cocos2d JS Presentation",
         platforms: PLATFORM_JSB,
         linksrc:"src/Presentation/Presentation.js",

@@ -340,6 +340,9 @@
     <Filter Include="Classes\AllocatorTest">
       <UniqueIdentifier>{eed1887a-757e-4625-b21c-bbfcfaa5200f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\VibrateTest">
+      <UniqueIdentifier>{3bd8ffaa-c24f-455b-bb31-25b038490329}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -896,6 +899,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\AllocatorTest\AllocatorTest.cpp">
       <Filter>Classes\AllocatorTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\VibrateTest\VibrateTest.cpp">
+      <Filter>Classes\VibrateTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1651,6 +1657,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\AllocatorTest\AllocatorTest.h">
       <Filter>Classes\AllocatorTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\VibrateTest\VibrateTest.h">
+      <Filter>Classes\VibrateTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
