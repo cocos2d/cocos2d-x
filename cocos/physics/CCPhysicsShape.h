@@ -102,6 +102,8 @@ public:
     void setFriction(float friction);
     const PhysicsMaterial& getMaterial() const { return _material; }
     void setMaterial(const PhysicsMaterial& material);
+    inline bool isSensor() const { return _sensor; }
+    void setSensor(bool sensor);
     
     /** Calculate the default moment value */
     virtual float calculateDefaultMoment() { return 0.0f; }
@@ -169,6 +171,7 @@ protected:
     float _area;
     float _mass;
     float _moment;
+    bool _sensor;
     float _scaleX;
     float _scaleY;
     float _newScaleX;
