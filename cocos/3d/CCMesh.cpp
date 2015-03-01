@@ -77,7 +77,7 @@ const MeshVertexAttrib& Mesh::getMeshVertexAttribute(int idx)
 
 int Mesh::getVertexSizeInBytes() const
 {
-    return _meshIndexData->getVertexBuffer()->getSizePerVertex();
+    return _meshIndexData->getVertexBuffer()->getElementSize();
 }
 
 Mesh* Mesh::create(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const IndexArray& indices)
@@ -291,7 +291,7 @@ GLenum Mesh::getPrimitiveType() const
 
 ssize_t Mesh::getIndexCount() const
 {
-    return _meshIndexData->getIndexBuffer()->getIndexNumber();
+    return _meshIndexData->getIndexBuffer()->getElementCount();
 }
 
 GLenum Mesh::getIndexFormat() const
