@@ -1770,7 +1770,6 @@
 		50ED2BE519BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ED2BDE19BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp */; };
 		50ED2BE619BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ED2BDF19BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp */; };
 		50ED2BE719BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ED2BDF19BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp */; };
-		52B47A1E1A53489B004E4C60 /* HttpClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A1D1A53489B004E4C60 /* HttpClient.cpp */; };
 		52B47A2E1A5349A3004E4C60 /* HttpAsynConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 52B47A291A5349A3004E4C60 /* HttpAsynConnection.h */; };
 		52B47A2F1A5349A3004E4C60 /* HttpAsynConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2A1A5349A3004E4C60 /* HttpAsynConnection.m */; };
 		52B47A301A5349A3004E4C60 /* HttpClient-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2B1A5349A3004E4C60 /* HttpClient-ios.mm */; };
@@ -1784,6 +1783,9 @@
 		5E9F612B1A3FFE3D0038DE01 /* CCPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E9F61241A3FFE3D0038DE01 /* CCPlane.cpp */; };
 		5E9F612C1A3FFE3D0038DE01 /* CCPlane.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E9F61251A3FFE3D0038DE01 /* CCPlane.h */; };
 		5E9F612D1A3FFE3D0038DE01 /* CCPlane.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E9F61251A3FFE3D0038DE01 /* CCPlane.h */; };
+		8235C6C41AA35348008B84EB /* HttpClient-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2B1A5349A3004E4C60 /* HttpClient-ios.mm */; };
+		8235C6C51AA353F4008B84EB /* HttpAsynConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2A1A5349A3004E4C60 /* HttpAsynConnection.m */; };
+		8235C6C61AA35411008B84EB /* HttpCookie.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2C1A5349A3004E4C60 /* HttpCookie.cpp */; };
 		A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
 		B2165EEA19921124000BE3E6 /* CCPrimitiveCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B257B45E198A353E00D9A687 /* CCPrimitiveCommand.cpp */; };
 		B217703C1977ECB4009EE11B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703B1977ECB4009EE11B /* IOKit.framework */; };
@@ -3346,7 +3348,6 @@
 		50FCEB9018C72017004AD434 /* WidgetReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WidgetReader.cpp; sourceTree = "<group>"; };
 		50FCEB9118C72017004AD434 /* WidgetReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetReader.h; sourceTree = "<group>"; };
 		50FCEB9218C72017004AD434 /* WidgetReaderProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetReaderProtocol.h; sourceTree = "<group>"; };
-		52B47A1D1A53489B004E4C60 /* HttpClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpClient.cpp; sourceTree = "<group>"; };
 		52B47A291A5349A3004E4C60 /* HttpAsynConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpAsynConnection.h; sourceTree = "<group>"; };
 		52B47A2A1A5349A3004E4C60 /* HttpAsynConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpAsynConnection.m; sourceTree = "<group>"; };
 		52B47A2B1A5349A3004E4C60 /* HttpClient-ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "HttpClient-ios.mm"; sourceTree = "<group>"; };
@@ -4564,7 +4565,6 @@
 				52B47A2B1A5349A3004E4C60 /* HttpClient-ios.mm */,
 				52B47A2C1A5349A3004E4C60 /* HttpCookie.cpp */,
 				52B47A2D1A5349A3004E4C60 /* HttpCookie.h */,
-				52B47A1D1A53489B004E4C60 /* HttpClient.cpp */,
 				1AAF5363180E3374000584C8 /* HttpClient.h */,
 				1AAF5364180E3374000584C8 /* HttpRequest.h */,
 				1AAF5365180E3374000584C8 /* HttpResponse.h */,
@@ -7673,6 +7673,7 @@
 				1A087AE81860400400196EF5 /* edtaa3func.cpp in Sources */,
 				50ABBD831925AB4100A911A9 /* CCBatchCommand.cpp in Sources */,
 				B687796A1A8CA84900643ABF /* CCPUParticle3DTranslateManager.cpp in Sources */,
+				8235C6C41AA35348008B84EB /* HttpClient-ios.mm in Sources */,
 				15AE18FF19AAD35000C27E9E /* CCComAudio.cpp in Sources */,
 				1A5701C7180BCB5A0088DEC7 /* CCLabelTextFormatter.cpp in Sources */,
 				B68779521A8CA84900643ABF /* CCPUParticle3DScriptLexer.cpp in Sources */,
@@ -7725,6 +7726,7 @@
 				292DB14D19B4574100A80320 /* UIEditBoxImpl-mac.mm in Sources */,
 				B6877ADE1A8CA8A700643ABF /* CCPUParticle3DLinearForceAffectorTranslator.cpp in Sources */,
 				B6877ABE1A8CA8A700643ABF /* CCPUParticle3DGravityAffectorTranslator.cpp in Sources */,
+				8235C6C51AA353F4008B84EB /* HttpAsynConnection.m in Sources */,
 				B6877B3A1A8CA8A700643ABF /* CCPUParticle3DVortexAffector.cpp in Sources */,
 				50ABBDB51925AB4100A911A9 /* CCTexture2D.cpp in Sources */,
 				B68779361A8CA84900643ABF /* CCPUParticle3DForceField.cpp in Sources */,
@@ -7768,6 +7770,7 @@
 				B6877B1E1A8CA8A700643ABF /* CCPUParticle3DSphereColliderTranslator.cpp in Sources */,
 				15AE181A19AAD2F700C27E9E /* CCBundle3D.cpp in Sources */,
 				15B3708019EE414C00ABE682 /* CCEventListenerAssetsManagerEx.cpp in Sources */,
+				8235C6C61AA35411008B84EB /* HttpCookie.cpp in Sources */,
 				1A570292180BCCAB0088DEC7 /* CCAnimation.cpp in Sources */,
 				1A570296180BCCAB0088DEC7 /* CCAnimationCache.cpp in Sources */,
 				B29A7E1B19EE1B7700872B35 /* SkeletonJson.c in Sources */,
@@ -7857,7 +7860,6 @@
 				50ABBEB51925AB6F00A911A9 /* CCUserDefault-android.cpp in Sources */,
 				5E9F61261A3FFE3D0038DE01 /* CCFrustum.cpp in Sources */,
 				B6877A9E1A8CA8A700643ABF /* CCPUParticle3DColorAffectorTranslator.cpp in Sources */,
-				52B47A1E1A53489B004E4C60 /* HttpClient.cpp in Sources */,
 				29394CF619B01DBA00D2DE1A /* UIWebViewImpl-ios.mm in Sources */,
 				382383FC1A258FA7002C4610 /* idl_gen_text.cpp in Sources */,
 				50ABBE831925AB6F00A911A9 /* ccFPSImages.c in Sources */,
