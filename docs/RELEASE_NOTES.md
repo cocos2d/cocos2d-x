@@ -1,4 +1,4 @@
-# cocos2d-x v3.4 Release Notes #
+# cocos2d-x v4.0 Release Notes #
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
@@ -25,8 +25,8 @@
 
 # Misc Information
 
-* [Full Changelog](https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.4/CHANGELOG)
-* v3.0 Release Notes can be found here: [v3.0 Release Notes](https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.0/docs/RELEASE_NOTES.md)
+* [Full Changelog](https://github.com/cocos2d/cocos2d-x/blob/v4-develop/CHANGELOG)
+* v4.0 Release Notes can be found here: [v4.0 Release Notes](https://github.com/cocos2d/cocos2d-x/blob/v4-develop/docs/RELEASE_NOTES.md)
 
 # Requirements
 
