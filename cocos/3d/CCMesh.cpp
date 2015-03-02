@@ -75,23 +75,21 @@ const MeshVertexAttrib& Mesh::getMeshVertexAttribute(int idx)
     return _meshIndexData->getMeshVertexData()->getMeshVertexAttrib(idx);
 }
 
-int Mesh::getVertexSizeInBytes() const
+ssize_t Mesh::getVertexSizeInBytes() const
 {
     return _meshIndexData->getVertexBuffer()->getElementSize();
 }
 
 Mesh* Mesh::create(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texs, const IndexArray& indices)
 {
-    int perVertexSizeInFloat = 0;
+    ssize_t perVertexSizeInFloat = 0;
     std::vector<float> vertices;
     std::vector<MeshVertexAttrib> attribs;
     MeshVertexAttrib att;
     att.size = 3;
     att.type = GL_FLOAT;
-    att.attribSizeBytes = att.size * sizeof(float);
+    att.attribSizeBytes = att.size * sizeof(GLfloat);
 
-    CCASSERT(att.attribSizeBytes < 65536, "Too big");
-    
     if (positions.size())
     {
         perVertexSizeInFloat += 3;
@@ -109,7 +107,7 @@ Mesh* Mesh::create(const std::vector<float>& positions, const std::vector<float>
         perVertexSizeInFloat += 2;
         att.vertexAttrib = GLProgram::VERTEX_ATTRIB_TEX_COORD;
         att.size = 2;
-        att.attribSizeBytes = att.size * sizeof(float);
+        att.attribSizeBytes = att.size * sizeof(GLfloat);
         attribs.push_back(att);
     }
     
@@ -139,8 +137,10 @@ Mesh* Mesh::create(const std::vector<float>& positions, const std::vector<float>
     return create(vertices, perVertexSizeInFloat, indices, attribs);
 }
 
-Mesh* Mesh::create(const std::vector<float>& vertices, int perVertexSizeInFloat, const IndexArray& indices, const std::vector<MeshVertexAttrib>& attribs)
+Mesh* Mesh::create(const std::vector<float>& vertices, ssize_t perVertexSizeInFloat, const IndexArray& indices, const std::vector<MeshVertexAttrib>& attribs)
 {
+    CCASSERT(perVertexSizeInFloat >=0, "invalid value for perVertexSizeInFloat");
+
     MeshData meshdata;
     meshdata.attribs = attribs;
     meshdata.vertex = vertices;
@@ -154,8 +154,6 @@ Mesh* Mesh::create(const std::vector<float>& vertices, int perVertexSizeInFloat,
 
 Mesh* Mesh::create(const std::string& name, MeshIndexData* indexData, MeshSkin* skin)
 {
-    CCASSERT(indexData && skin, "indexData and skin must not be null");
-
     auto state = new (std::nothrow) Mesh();
     state->autorelease();
     state->bindMeshCommand();
