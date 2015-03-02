@@ -92,7 +92,7 @@ MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
     
     int offset = 0;
     for (const auto& it : meshdata.attribs) {
-        vertexdata->_vertexData->setStream(vertexdata->_vertexBuffer, VertexAttribute(offset, it.vertexAttrib, (DataType)it.type, it.size));
+        vertexdata->_vertexData->addStream(vertexdata->_vertexBuffer, VertexAttribute(offset, it.vertexAttrib, (DataType)it.type, it.size));
         offset += it.attribSizeBytes;
     }
     
@@ -100,7 +100,7 @@ MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
     
     if(vertexdata->_vertexBuffer)
     {
-        vertexdata->_vertexBuffer->updateVertices((void*)&meshdata.vertex[0], (int)meshdata.vertex.size() * 4 / vertexdata->_vertexBuffer->getSizePerVertex(), 0);
+        vertexdata->_vertexBuffer->updateElements((void*)&meshdata.vertex[0], (int)meshdata.vertex.size() * 4 / vertexdata->_vertexBuffer->getElementSize(), 0);
     }
     
     bool needCalcAABB = (meshdata.subMeshAABB.size() != meshdata.subMeshIndices.size());
@@ -108,7 +108,7 @@ MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
 
         auto& index = meshdata.subMeshIndices[i];
         auto indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, (int)(index.size()));
-        indexBuffer->updateIndices(&index[0], (int)index.size(), 0);
+        indexBuffer->updateElements(&index[0], (int)index.size(), 0);
         std::string id = (i < meshdata.subMeshIds.size() ? meshdata.subMeshIds[i] : "");
         MeshIndexData* indexdata = nullptr;
         if (needCalcAABB)
