@@ -60,6 +60,7 @@ THE SOFTWARE.
 #include "base/CCAsyncTaskPool.h"
 #include "platform/CCApplication.h"
 //#include "platform/CCGLViewImpl.h"
+#include "3d/CCSprite3D.h"
 
 #if CC_ENABLE_SCRIPT_BINDING
 #include "CCScriptSupport.h"
@@ -996,12 +997,13 @@ void Director::reset()
     GLProgramStateCache::destroyInstance();
     FileUtils::destroyInstance();
     AsyncTaskPool::destoryInstance();
-    
+    Sprite3DCache::destroyInstance();
+
     // cocos2d-x specific data structures
     UserDefault::destroyInstance();
-    
+
     GL::invalidateStateCache();
-    
+
     destroyTextureCache();
 }
 
