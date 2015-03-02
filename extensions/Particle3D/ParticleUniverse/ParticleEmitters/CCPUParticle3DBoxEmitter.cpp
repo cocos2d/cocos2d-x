@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DBoxEmitter.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -107,9 +106,29 @@ void PUParticle3DBoxEmitter::initParticlePosition(PUParticle3D* particle)
 
 PUParticle3DBoxEmitter* PUParticle3DBoxEmitter::create()
 {
-    auto pe = new (std::nothrow) PUParticle3DBoxEmitter();
+    auto pe = new PUParticle3DBoxEmitter();
     pe->autorelease();
     return pe;
+}
+
+void PUParticle3DBoxEmitter::copyAttributesTo( PUParticle3DEmitter* emitter )
+{
+    PUParticle3DEmitter::copyAttributesTo(emitter);
+
+    PUParticle3DBoxEmitter* boxEmitter = static_cast<PUParticle3DBoxEmitter*>(emitter);
+    boxEmitter->_height = _height;
+    boxEmitter->_width = _width;
+    boxEmitter->_depth = _depth;
+    boxEmitter->_xRange = _xRange;
+    boxEmitter->_yRange = _yRange;
+    boxEmitter->_zRange = _zRange;
+}
+
+PUParticle3DBoxEmitter* PUParticle3DBoxEmitter::clone()
+{
+    auto be = PUParticle3DBoxEmitter::create();
+    copyAttributesTo(be);
+    return be;
 }
 
 NS_CC_END

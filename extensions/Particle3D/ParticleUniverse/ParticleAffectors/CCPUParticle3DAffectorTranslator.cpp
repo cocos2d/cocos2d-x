@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,8 +23,8 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DAffectorTranslator.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
-#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffectorManager.h"
+#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffectorManager.h"
 
 NS_CC_BEGIN
 
@@ -65,7 +64,8 @@ void PUParticle3DAffectorTranslator::translate(PUScriptCompiler* compiler, PUAbs
     //}
     _affector = PUParticle3DAffectorManager::Instance()->createAffector(type);
     if (!_affector) return;
-    
+    _affector->setAffectorType(type);
+
     if (parent && parent->context)
     {
         PUParticleSystem3D* system = static_cast<PUParticleSystem3D*>(parent->context);
@@ -150,22 +150,17 @@ void PUParticle3DAffectorTranslator::translate(PUScriptCompiler* compiler, PUAbs
             }
             else if (prop->name == token[TOKEN_AFFECTOR_EXCLUDE_EMITTER])
             {
-                //if (passValidatePropertyNoValues(compiler, prop, token[TOKEN_AFFECTOR_EXCLUDE_EMITTER]))
-                //{
-                //    for(AbstractNodeList::iterator j = prop->values.begin(); j != prop->values.end(); ++j)
-                //    {
-                //        String val;
-                //        if(getString(*j, &val))
-                //        {
-                //            mAffector->addEmitterToExclude(val);
-                //        }
-                //        else
-                //        {
-                //            compiler->addError(ScriptCompiler::CE_NUMBEREXPECTED, prop->file, prop->line,
-                //                               "PU Compiler: Error in exclude_emitter arguments");
-                //        }
-                //    }
-                //}
+                if (passValidatePropertyNoValues(compiler, prop, token[TOKEN_AFFECTOR_EXCLUDE_EMITTER]))
+                {
+                    for(PUAbstractNodeList::iterator j = prop->values.begin(); j != prop->values.end(); ++j)
+                    {
+                        std::string val;
+                        if(getString(**j, &val))
+                        {
+                            _affector->addEmitterToExclude(val);
+                        }
+                    }
+                }
             }
             else if (particleAffectorTranlator->translateChildProperty(compiler, *i))
             {

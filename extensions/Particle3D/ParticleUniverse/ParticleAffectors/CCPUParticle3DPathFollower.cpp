@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DPathFollower.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -70,9 +69,21 @@ void PUParticle3DPathFollower::updatePUAffector( PUParticle3D *particle, float d
 
 PUParticle3DPathFollower* PUParticle3DPathFollower::create()
 {
-    auto ppf = new (std::nothrow) PUParticle3DPathFollower();
+    auto ppf = new PUParticle3DPathFollower();
     ppf->autorelease();
     return ppf;
+}
+
+void PUParticle3DPathFollower::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DAffector::copyAttributesTo(affector);
+    PUParticle3DPathFollower* pathFollower = static_cast<PUParticle3DPathFollower*>(affector);
+    unsigned short numPoints = _spline.getNumPoints();
+    pathFollower->_spline.clear();
+    for (unsigned short i = 0; i < numPoints; ++i)
+    {
+        pathFollower->_spline.addPoint(_spline.getPoint(i));
+    }
 }
 
 NS_CC_END

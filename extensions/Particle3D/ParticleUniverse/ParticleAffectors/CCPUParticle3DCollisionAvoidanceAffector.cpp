@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DCollisionAvoidanceAffector.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 // Constants
@@ -97,9 +96,16 @@ void PUParticle3DCollisionAvoidanceAffector::updatePUAffector( PUParticle3D *par
 
 PUParticle3DCollisionAvoidanceAffector* PUParticle3DCollisionAvoidanceAffector::create()
 {
-    auto pcaa = new (std::nothrow) PUParticle3DCollisionAvoidanceAffector();
+    auto pcaa = new PUParticle3DCollisionAvoidanceAffector();
     pcaa->autorelease();
     return pcaa;
+}
+
+void PUParticle3DCollisionAvoidanceAffector::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DAffector::copyAttributesTo(affector);
+    PUParticle3DCollisionAvoidanceAffector* collisionAvoidanceAffector = static_cast<PUParticle3DCollisionAvoidanceAffector*>(affector);
+    collisionAvoidanceAffector->_radius = _radius;
 }
 
 NS_CC_END

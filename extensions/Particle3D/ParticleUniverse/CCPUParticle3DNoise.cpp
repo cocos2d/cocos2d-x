@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -75,7 +74,7 @@ void PUNoise3D::initialise(unsigned short octaves, double frequency, double ampl
 //	double y = 0.0;
 //	double step = 1.0 / (double)dimension;
 //	size_t buffSize = 4 * dimension * dimension; // Assume Image of pixelformat 32 bits (i.e. PF_R8G8B8A8)
-//	unsigned char* buff = new (std::nothrow) unsigned char[buffSize];
+//	unsigned char* buff = new unsigned char[buffSize];
 //	size_t p = 0;
 //	while (p < buffSize)
 //	{
@@ -93,7 +92,7 @@ void PUNoise3D::initialise(unsigned short octaves, double frequency, double ampl
 //			y += step;
 //		}
 //	}
-//	Ogre::Image* image = new (std::nothrow) Ogre::Image();
+//	Ogre::Image* image = new Ogre::Image();
 //	image->loadDynamicImage(buff, dimension, dimension, 0, Ogre::PF_R8G8B8A8 , false, 1, 0);
 //	image->save("noise2img.png");
 //	delete image;

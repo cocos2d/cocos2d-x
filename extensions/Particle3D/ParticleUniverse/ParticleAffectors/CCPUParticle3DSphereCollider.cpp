@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DSphereCollider.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 // Constants
@@ -194,9 +193,19 @@ void PUParticle3DSphereCollider::preUpdateAffector( float deltaTime )
 
 PUParticle3DSphereCollider* PUParticle3DSphereCollider::create()
 {
-    auto psc = new (std::nothrow) PUParticle3DSphereCollider();
+    auto psc = new PUParticle3DSphereCollider();
     psc->autorelease();
     return psc;
+}
+
+void PUParticle3DSphereCollider::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DAffector::copyAttributesTo(affector);
+
+    PUParticle3DSphereCollider* sphereCollider = static_cast<PUParticle3DSphereCollider*>(affector);
+    sphereCollider->_radius = _radius;
+    sphereCollider->_sphere = _sphere;
+    sphereCollider->_innerCollision = _innerCollision;
 }
 
 NS_CC_END

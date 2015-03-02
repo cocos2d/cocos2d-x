@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DTechniqueTranslator.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DMaterialManager.h"
+#include "Particle3D/ParticleUniverse/CCPUParticle3DMaterialManager.h"
 
 NS_CC_BEGIN
 
@@ -125,15 +124,15 @@ void PUParticle3DTechniqueTranslator::translate(PUScriptCompiler* compiler, PUAb
             }
             else if (prop->name == token[TOKEN_TECH_EMITTED_EMITTER_QUOTA])
             {
-                //// Property: emitted_emitter_quota
-                //if (passValidateProperty(compiler, prop, token[TOKEN_TECH_EMITTED_EMITTER_QUOTA], VAL_UINT))
-                //{
-                //    uint val = 0;
-                //    if(getUInt(prop->values.front(), &val))
-                //    {
-                //        mTechnique->setEmittedEmitterQuota(val);
-                //    }
-                //}
+                // Property: emitted_emitter_quota
+                if (passValidateProperty(compiler, prop, token[TOKEN_TECH_EMITTED_EMITTER_QUOTA], VAL_UINT))
+                {
+                    unsigned int val = 0;
+                    if(getUInt(*prop->values.front(), &val))
+                    {
+                        _system->setEmittedEmitterQuota(val);
+                    }
+                }
             }
             else if (prop->name == token[TOKEN_TECH_EMITTED_AFFECTOR_QUOTA])
             {
@@ -149,15 +148,15 @@ void PUParticle3DTechniqueTranslator::translate(PUScriptCompiler* compiler, PUAb
             }
             else if (prop->name == token[TOKEN_TECH_EMITTED_TECHNIQUE_QUOTA])
             {
-                //// Property: emitted_technique_quota
-                //if (passValidateProperty(compiler, prop, token[TOKEN_TECH_EMITTED_TECHNIQUE_QUOTA], VAL_UINT))
-                //{
-                //    uint val = 0;
-                //    if(getUInt(prop->values.front(), &val))
-                //    {
-                //        mTechnique->setEmittedTechniqueQuota(val);
-                //    }
-                //}
+                // Property: emitted_technique_quota
+                if (passValidateProperty(compiler, prop, token[TOKEN_TECH_EMITTED_TECHNIQUE_QUOTA], VAL_UINT))
+                {
+                    unsigned int val = 0;
+                    if(getUInt(*prop->values.front(), &val))
+                    {
+                        _system->setEmittedSystemQuota(val);
+                    }
+                }
             }
             else if (prop->name == token[TOKEN_TECH_EMITTED_SYSTEM_QUOTA])
             {

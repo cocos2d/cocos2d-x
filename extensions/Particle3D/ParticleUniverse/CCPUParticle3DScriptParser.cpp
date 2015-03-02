@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -57,6 +56,8 @@ void traceScriptParser(PUConcreteNodeList& nodes)
     
 }
 
+
+//解析脚本,生成nodeList//
 void PUScriptParser::parse(PUConcreteNodeList& nodes,const PUScriptTokenList& tokens)
 {
     // MEMCATEGORY_GENERAL because SharedPtr can only free using that category
@@ -83,7 +84,7 @@ void PUScriptParser::parse(PUConcreteNodeList& nodes,const PUScriptTokenList& to
                 {
                     if(token->lexeme == "import")
                     {
-                        node = new (std::nothrow) PUConcreteNode;
+                        node = new PUConcreteNode;
                         
                         node->token = token->lexeme;
                         node->file = token->file;
@@ -96,7 +97,7 @@ void PUScriptParser::parse(PUConcreteNodeList& nodes,const PUScriptTokenList& to
                         {
                             printf("Except,expected import target at line :%d,ScriptParser::parse",node->line);
                         }
-                        PUConcreteNode* temp = new (std::nothrow) PUConcreteNode;
+                        PUConcreteNode* temp = new PUConcreteNode;
                         temp->parent = node;
                         temp->file = (*i)->file;
                         temp->line = (*i)->line;
@@ -114,7 +115,7 @@ void PUScriptParser::parse(PUConcreteNodeList& nodes,const PUScriptTokenList& to
                         {
                             printf("expected import source at line :%d,ScriptParser::parse",node->line);
                         }
-                        temp = new (std::nothrow) PUConcreteNode;
+                        temp = new PUConcreteNode;
                         temp->parent = node;
                         temp->file = (*i)->file;
                         temp->line = (*i)->line;
@@ -144,7 +145,7 @@ void PUScriptParser::parse(PUConcreteNodeList& nodes,const PUScriptTokenList& to
                     }
                     else if(token->lexeme == "set")
                     {
-                        node = new (std::nothrow) PUConcreteNode;
+                        node = new PUConcreteNode;
                         node->token = token->lexeme;
                         node->file = token->file;
                         node->line = token->line;
@@ -155,8 +156,12 @@ void PUScriptParser::parse(PUConcreteNodeList& nodes,const PUScriptTokenList& to
                         if(i == end || (*i)->type != TID_VARIABLE)
                         {
                             printf("Exception");
+//							OGRE_EXCEPT(Exception::ERR_INVALID_STATE,
+//                                        Ogre::String("expected variable name at line ") +
+//                                        Ogre::StringConverter::toString(node->line),
+//                                        "ScriptParser::parse");
                         }
-                        PUConcreteNode* temp = new (std::nothrow) PUConcreteNode;
+                        PUConcreteNode* temp = new PUConcreteNode;
                         temp->parent = node;
                         temp->file = (*i)->file;
                         temp->line = (*i)->line;
@@ -170,7 +175,7 @@ void PUScriptParser::parse(PUConcreteNodeList& nodes,const PUScriptTokenList& to
                         {
                             printf("expected variable value at line %d ScriptParser::parse\n",node->line);
                         }
-                        temp = new (std::nothrow) PUConcreteNode;
+                        temp = new PUConcreteNode;
                         temp->parent = node;
                         temp->file = (*i)->file;
                         temp->line = (*i)->line;
@@ -199,7 +204,7 @@ void PUScriptParser::parse(PUConcreteNodeList& nodes,const PUScriptTokenList& to
                     }
                     else
                     {
-                        node = new (std::nothrow) PUConcreteNode();
+                        node = new PUConcreteNode();
                         node->file = token->file;
                         node->line = token->line;
                         node->type = token->type == TID_WORD ? CNT_WORD : CNT_QUOTE;
@@ -235,7 +240,7 @@ void PUScriptParser::parse(PUConcreteNodeList& nodes,const PUScriptTokenList& to
                     if(parent)
                         parent = parent->parent;
                     
-                    node = new (std::nothrow) PUConcreteNode();
+                    node = new PUConcreteNode();
                     node->token = token->lexeme;
                     node->file = token->file;
                     node->line = token->line;
@@ -278,7 +283,7 @@ void PUScriptParser::parse(PUConcreteNodeList& nodes,const PUScriptTokenList& to
                 }
                 else if(token->type == TID_COLON)
                 {
-                    node = new (std::nothrow) PUConcreteNode();
+                    node = new PUConcreteNode();
                     node->token = token->lexeme;
                     node->file = token->file;
                     node->line = token->line;
@@ -296,7 +301,7 @@ void PUScriptParser::parse(PUConcreteNodeList& nodes,const PUScriptTokenList& to
                     
                     while(j != end && ((*j)->type == TID_WORD || (*j)->type == TID_QUOTE))
                     {
-                        PUConcreteNode* tempNode = new (std::nothrow) PUConcreteNode;
+                        PUConcreteNode* tempNode = new PUConcreteNode;
                         tempNode->token = (*j)->lexeme;
                         tempNode->file = (*j)->file;
                         tempNode->line = (*j)->line;
@@ -325,7 +330,7 @@ void PUScriptParser::parse(PUConcreteNodeList& nodes,const PUScriptTokenList& to
                 }
                 else if(token->type == TID_LBRACKET)
                 {
-                    node = new (std::nothrow) PUConcreteNode;
+                    node = new PUConcreteNode;
                     node->token = token->lexeme;
                     node->file = token->file;
                     node->line = token->line;
@@ -364,7 +369,7 @@ void PUScriptParser::parse(PUConcreteNodeList& nodes,const PUScriptTokenList& to
                     if(parent && parent->type == CNT_LBRACE && parent->parent)
                         parent = parent->parent;
                     
-                    node = new (std::nothrow) PUConcreteNode;
+                    node = new PUConcreteNode;
                     node->token = token->lexeme;
                     node->file = token->file;
                     node->line = token->line;
@@ -394,7 +399,7 @@ void PUScriptParser::parse(PUConcreteNodeList& nodes,const PUScriptTokenList& to
                 }
                 else if(token->type == TID_VARIABLE)
                 {
-                    node = new (std::nothrow) PUConcreteNode;
+                    node = new PUConcreteNode;
                     node->token = token->lexeme;
                     node->file = token->file;
                     node->line = token->line;
@@ -415,7 +420,7 @@ void PUScriptParser::parse(PUConcreteNodeList& nodes,const PUScriptTokenList& to
                 }
                 else if(token->type == TID_QUOTE)
                 {
-                    node = new (std::nothrow) PUConcreteNode;
+                    node = new PUConcreteNode;
                     node->token = token->lexeme.substr(1, token->lexeme.size() - 2);
                     node->file = token->file;
                     node->line = token->line;
@@ -436,7 +441,7 @@ void PUScriptParser::parse(PUConcreteNodeList& nodes,const PUScriptTokenList& to
                 }
                 else if(token->type == TID_WORD)
                 {
-                    node = new (std::nothrow) PUConcreteNode;
+                    node = new PUConcreteNode;
                     node->token = token->lexeme;
                     node->file = token->file;
                     node->line = token->line;
@@ -483,7 +488,7 @@ void PUScriptParser::parseChunk(PUConcreteNodeList& nodes, const PUScriptTokenLi
         switch(token->type)
         {
             case TID_VARIABLE:
-                node = new (std::nothrow) PUConcreteNode;
+                node = new PUConcreteNode;
                 node->file = token->file;
                 node->line = token->line;
                 node->parent = 0;
@@ -491,7 +496,7 @@ void PUScriptParser::parseChunk(PUConcreteNodeList& nodes, const PUScriptTokenLi
                 node->type = CNT_VARIABLE;
                 break;
             case TID_WORD:
-                node = new (std::nothrow) PUConcreteNode;
+                node = new PUConcreteNode;
                 node->file = token->file;
                 node->line = token->line;
                 node->parent = 0;
@@ -499,7 +504,7 @@ void PUScriptParser::parseChunk(PUConcreteNodeList& nodes, const PUScriptTokenLi
                 node->type = CNT_WORD;
                 break;
             case TID_QUOTE:
-                node = new (std::nothrow) PUConcreteNode;
+                node = new PUConcreteNode;
                 node->file = token->file;
                 node->line = token->line;
                 node->parent = 0;
@@ -507,6 +512,10 @@ void PUScriptParser::parseChunk(PUConcreteNodeList& nodes, const PUScriptTokenLi
                 node->type = CNT_QUOTE;
             default:
                 printf("unexpected token,%s,%d\n",token->lexeme.c_str(),token->line);
+//				OGRE_EXCEPT(Exception::ERR_INVALID_STATE, 
+//                            Ogre::String("unexpected token") + token->lexeme + " at line " + 
+//                            Ogre::StringConverter::toString(token->line),
+//                            "ScriptParser::parseChunk");
         }
         
         if(node != nullptr)

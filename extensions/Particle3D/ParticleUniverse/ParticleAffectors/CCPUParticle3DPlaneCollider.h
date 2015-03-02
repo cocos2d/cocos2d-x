@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -28,7 +27,7 @@
 #define __CC_PU_PARTICLE_3D_PLANE_COLLIDER_H__
 
 #include "CCPUParticle3DBaseCollider.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DPlane.h"
+#include "Particle3D/ParticleUniverse/CCPUParticle3DPlane.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN
@@ -39,7 +38,7 @@ public:
     // Constants
     static const Vec3 DEFAULT_NORMAL;
 
-	static PUParticle3DPlaneCollider* create();
+    static PUParticle3DPlaneCollider* create();
 
     virtual void notifyRescaled(const Vec3& scale) override;
     virtual void updatePUAffector(PUParticle3D *particle, float deltaTime) override;
@@ -56,9 +55,11 @@ public:
     */
     void calculateDirectionAfterCollision(PUParticle3D* particle, float timeElapsed);
 
+    virtual void copyAttributesTo (PUParticle3DAffector* affector);
+
 CC_CONSTRUCTOR_ACCESS:	
-	PUParticle3DPlaneCollider(void);
-	virtual ~PUParticle3DPlaneCollider(void);
+    PUParticle3DPlaneCollider(void);
+    virtual ~PUParticle3DPlaneCollider(void);
 
 protected:
     Vec3 _normal;

@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DScaleVelocityAffector.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 // Constants
@@ -36,7 +35,7 @@ PUParticle3DScaleVelocityAffector::PUParticle3DScaleVelocityAffector(void) :
     _sinceStartSystem(false),
     _stopAtFlip(false)
 {
-    _dynScaleVelocity = new (std::nothrow) PUDynamicAttributeFixed();
+    _dynScaleVelocity = new PUDynamicAttributeFixed();
     (static_cast<PUDynamicAttributeFixed*>(_dynScaleVelocity))->setValue(DEFAULT_VELOCITY_SCALE);
 }
 //-----------------------------------------------------------------------
@@ -99,16 +98,26 @@ void PUParticle3DScaleVelocityAffector::resetDynScaleVelocity(bool resetToDefaul
     if (resetToDefault)
     {
         CC_SAFE_DELETE(_dynScaleVelocity);
-        _dynScaleVelocity = new (std::nothrow) PUDynamicAttributeFixed();
+        _dynScaleVelocity = new PUDynamicAttributeFixed();
         (static_cast<PUDynamicAttributeFixed*>(_dynScaleVelocity))->setValue(DEFAULT_VELOCITY_SCALE);
     }
 }
 
 PUParticle3DScaleVelocityAffector* PUParticle3DScaleVelocityAffector::create()
 {
-    auto psva = new (std::nothrow) PUParticle3DScaleVelocityAffector();
+    auto psva = new PUParticle3DScaleVelocityAffector();
     psva->autorelease();
     return psva;
+}
+
+void PUParticle3DScaleVelocityAffector::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DAffector::copyAttributesTo(affector);
+
+    PUParticle3DScaleVelocityAffector* scaleVelocityAffector = static_cast<PUParticle3DScaleVelocityAffector*>(affector);
+    scaleVelocityAffector->setDynScaleVelocity(getDynScaleVelocity()->clone());
+    scaleVelocityAffector->_sinceStartSystem = _sinceStartSystem;
+    scaleVelocityAffector->_stopAtFlip = _stopAtFlip;
 }
 
 NS_CC_END

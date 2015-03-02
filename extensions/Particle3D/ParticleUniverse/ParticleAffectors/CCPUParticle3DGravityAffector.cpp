@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DGravityAffector.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -83,9 +82,17 @@ void PUParticle3DGravityAffector::preUpdateAffector( float deltaTime )
 
 PUParticle3DGravityAffector* PUParticle3DGravityAffector::create()
 {
-    auto pga = new (std::nothrow) PUParticle3DGravityAffector();
+    auto pga = new PUParticle3DGravityAffector();
     pga->autorelease();
     return pga;
+}
+
+void PUParticle3DGravityAffector::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DAffector::copyAttributesTo(affector);
+
+    PUParticle3DGravityAffector* gravityAffector = static_cast<PUParticle3DGravityAffector*>(affector);
+    gravityAffector->_gravity = _gravity;
 }
 
 NS_CC_END

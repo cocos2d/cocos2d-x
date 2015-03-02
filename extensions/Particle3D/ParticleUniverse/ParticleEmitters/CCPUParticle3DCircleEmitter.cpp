@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,8 +23,8 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DCircleEmitter.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DUtil.h"
+#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/ParticleUniverse/CCPUParticle3DUtil.h"
 #include "base/ccRandom.h"
 
 NS_CC_BEGIN
@@ -186,7 +185,7 @@ void PUParticle3DCircleEmitter::initParticleDirection(PUParticle3D* particle)
 
 PUParticle3DCircleEmitter* PUParticle3DCircleEmitter::create()
 {
-    auto pe = new (std::nothrow) PUParticle3DCircleEmitter();
+    auto pe = new PUParticle3DCircleEmitter();
     pe->autorelease();
     return pe;
 }
@@ -245,6 +244,27 @@ cocos2d::Quaternion PUParticle3DCircleEmitter::getRotationTo( const Vec3 &src, c
         q.normalize();
     }
     return q;
+}
+
+void PUParticle3DCircleEmitter::copyAttributesTo( PUParticle3DEmitter* emitter )
+{
+    PUParticle3DEmitter::copyAttributesTo(emitter);
+
+    PUParticle3DCircleEmitter* circleEmitter = static_cast<PUParticle3DCircleEmitter*>(emitter);
+    circleEmitter->_radius = _radius;
+    circleEmitter->_circleAngle = _circleAngle;
+    circleEmitter->_originalCircleAngle = _originalCircleAngle;
+    circleEmitter->_step = _step;
+    circleEmitter->_random = _random;
+    circleEmitter->_normal = _normal;
+    circleEmitter->_orientation = _orientation; 
+}
+
+PUParticle3DCircleEmitter* PUParticle3DCircleEmitter::clone()
+{
+    auto be = PUParticle3DCircleEmitter::create();
+    copyAttributesTo(be);
+    return be;
 }
 
 NS_CC_END

@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -27,7 +26,7 @@
 #ifndef __CC_PU_PARTICLE_3D_FLOCK_CENTERING_AFFECTOR_H__
 #define __CC_PU_PARTICLE_3D_FLOCK_CENTERING_AFFECTOR_H__
 
-#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
+#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
 
 NS_CC_BEGIN
 
@@ -39,6 +38,8 @@ public:
 
     virtual void preUpdateAffector(float deltaTime) override;
     virtual void updatePUAffector(PUParticle3D *particle, float deltaTime) override;
+
+    virtual void copyAttributesTo (PUParticle3DAffector* affector);
 
 CC_CONSTRUCTOR_ACCESS:
     PUParticle3DFlockCenteringAffector();

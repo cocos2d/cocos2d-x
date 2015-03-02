@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -27,7 +26,7 @@
 #ifndef __CC_PU_PARTICLE_MESH_SURFACE_EMITTER_H__
 #define __CC_PU_PARTICLE_MESH_SURFACE_EMITTER_H__
 
-#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
+#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
 
 NS_CC_BEGIN
 
@@ -234,6 +233,9 @@ public:
     /** Determine the particle direction.
     */
     virtual void initParticleDirection(PUParticle3D* particle) override;
+
+    virtual PUParticle3DMeshSurfaceEmitter* clone();
+    virtual void copyAttributesTo (PUParticle3DEmitter* emitter);
 
 CC_CONSTRUCTOR_ACCESS:
     PUParticle3DMeshSurfaceEmitter(void);

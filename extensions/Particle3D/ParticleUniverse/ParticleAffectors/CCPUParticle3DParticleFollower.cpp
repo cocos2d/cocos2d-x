@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DParticleFollower.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -99,9 +98,18 @@ void PUParticle3DParticleFollower::firstParticleUpdate( PUParticle3D *particle, 
 
 PUParticle3DParticleFollower* PUParticle3DParticleFollower::create()
 {
-    auto ppf = new (std::nothrow) PUParticle3DParticleFollower();
+    auto ppf = new PUParticle3DParticleFollower();
     ppf->autorelease();
     return ppf;
+}
+
+void PUParticle3DParticleFollower::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DAffector::copyAttributesTo(affector);
+
+    PUParticle3DParticleFollower* particleFollower = static_cast<PUParticle3DParticleFollower*>(affector);
+    particleFollower->_maxDistance = _maxDistance;
+    particleFollower->_minDistance = _minDistance;
 }
 
 NS_CC_END

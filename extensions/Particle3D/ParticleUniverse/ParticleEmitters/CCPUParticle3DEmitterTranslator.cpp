@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,10 +23,10 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DEmitterTranslator.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DDynamicAttribute.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DDynamicAttributeTranslator.h"
-#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitterManager.h"
+#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/ParticleUniverse/CCPUParticle3DDynamicAttribute.h"
+#include "Particle3D/ParticleUniverse/CCPUParticle3DDynamicAttributeTranslator.h"
+#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitterManager.h"
 
 NS_CC_BEGIN
 
@@ -69,6 +68,7 @@ void PUParticle3DEmitterTranslator::translate(PUScriptCompiler* compiler, PUAbst
     //}
     _emitter = PUParticle3DEmitterManager::Instance()->createEmitter(type);
     if (!_emitter) return;
+	_emitter->setEmitterType(type);
 
     if (parent && parent->context)
     {
@@ -200,7 +200,7 @@ void PUParticle3DEmitterTranslator::translate(PUScriptCompiler* compiler, PUAbst
                     float val = 0.0f;
                     if(getFloat(*prop->values.front(), &val))
                     {
-                        PUDynamicAttributeFixed* dynamicAttributeFixed = new (std::nothrow) PUDynamicAttributeFixed();
+                        PUDynamicAttributeFixed* dynamicAttributeFixed = new PUDynamicAttributeFixed();
                         dynamicAttributeFixed->setValue(val);
                         _emitter->setDynEmissionRate(dynamicAttributeFixed);
                     }
@@ -215,7 +215,7 @@ void PUParticle3DEmitterTranslator::translate(PUScriptCompiler* compiler, PUAbst
                     float val = 0.0f;
                     if(getFloat(*prop->values.front(), &val))
                     {
-                        PUDynamicAttributeFixed* dynamicAttributeFixed = new (std::nothrow) PUDynamicAttributeFixed();
+                        PUDynamicAttributeFixed* dynamicAttributeFixed = new PUDynamicAttributeFixed();
                         dynamicAttributeFixed->setValue(val);
                         _emitter->setDynTotalTimeToLive(dynamicAttributeFixed);
                     }
@@ -230,7 +230,7 @@ void PUParticle3DEmitterTranslator::translate(PUScriptCompiler* compiler, PUAbst
                     float val = 0.0f;
                     if(getFloat(*prop->values.front(), &val))
                     {
-                        PUDynamicAttributeFixed* dynamicAttributeFixed = new (std::nothrow) PUDynamicAttributeFixed();
+                        PUDynamicAttributeFixed* dynamicAttributeFixed = new PUDynamicAttributeFixed();
                         dynamicAttributeFixed->setValue(val);
                         _emitter->setDynParticleMass(dynamicAttributeFixed);
                     }
@@ -341,7 +341,7 @@ void PUParticle3DEmitterTranslator::translate(PUScriptCompiler* compiler, PUAbst
                     float val = 0.0f;
                     if(getFloat(*prop->values.front(), &val))
                     {
-                        PUDynamicAttributeFixed* dynamicAttributeFixed = new (std::nothrow) PUDynamicAttributeFixed();
+                        PUDynamicAttributeFixed* dynamicAttributeFixed = new PUDynamicAttributeFixed();
                         dynamicAttributeFixed->setValue(val);
                         _emitter->setDynVelocity(dynamicAttributeFixed);
                     }
@@ -356,7 +356,7 @@ void PUParticle3DEmitterTranslator::translate(PUScriptCompiler* compiler, PUAbst
                     float val = 0.0f;
                     if(getFloat(*prop->values.front(), &val))
                     {
-                        PUDynamicAttributeFixed* dynamicAttributeFixed = new (std::nothrow) PUDynamicAttributeFixed();
+                        PUDynamicAttributeFixed* dynamicAttributeFixed = new PUDynamicAttributeFixed();
                         dynamicAttributeFixed->setValue(val);
                         _emitter->setDynDuration(dynamicAttributeFixed);
                     }
@@ -371,7 +371,7 @@ void PUParticle3DEmitterTranslator::translate(PUScriptCompiler* compiler, PUAbst
                     float val = 0.0f;
                     if(getFloat(*prop->values.front(), &val))
                     {
-                        PUDynamicAttributeFixed* dynamicAttributeFixed = new (std::nothrow) PUDynamicAttributeFixed();
+                        PUDynamicAttributeFixed* dynamicAttributeFixed = new PUDynamicAttributeFixed();
                         dynamicAttributeFixed->setValue(val);
                         _emitter->setDynRepeatDelay(dynamicAttributeFixed);
                     }
@@ -379,41 +379,41 @@ void PUParticle3DEmitterTranslator::translate(PUScriptCompiler* compiler, PUAbst
             }
             else if (prop->name == token[TOKEN_EMITTER_EMITS])
             {
-                //// Property: emits
-                //if (passValidatePropertyNumberOfValues(compiler, prop, token[TOKEN_EMITTER_EMITS], 2))
-                //{
-                //	String particleType;
-                //	String name;
-                //	AbstractNodeList::const_iterator i = prop->values.begin();
-                //	if (getString(*i, &particleType))
-                //	{
-                //		if (particleType == token[TOKEN_VISUAL_PARTICLE])
-                //		{
-                //			mEmitter->setEmitsType(Particle::PT_VISUAL);
-                //		}
-                //		else if (particleType == token[TOKEN_EMITTER_PARTICLE])
-                //		{
-                //			mEmitter->setEmitsType(Particle::PT_EMITTER);
-                //		}
-                //		else if (particleType == token[TOKEN_AFFECTOR_PARTICLE])
-                //		{
-                //			mEmitter->setEmitsType(Particle::PT_AFFECTOR);
-                //		}
-                //		else if (particleType == token[TOKEN_TECHNIQUE_PARTICLE])
-                //		{
-                //			mEmitter->setEmitsType(Particle::PT_TECHNIQUE);
-                //		}
-                //		else if (particleType == token[TOKEN_SYSTEM_PARTICLE])
-                //		{
-                //			mEmitter->setEmitsType(Particle::PT_SYSTEM);
-                //		}
-                //		++i;
-                //		if (getString(*i, &name))
-                //		{
-                //			mEmitter->setEmitsName(name);
-                //		}
-                //	}
-                //}
+                // Property: emits
+                if (passValidatePropertyNumberOfValues(compiler, prop, token[TOKEN_EMITTER_EMITS], 2))
+                {
+                    std::string particleType;
+                    std::string name;
+                    PUAbstractNodeList::const_iterator i = prop->values.begin();
+                    if (getString(**i, &particleType))
+                    {
+                        if (particleType == token[TOKEN_VISUAL_PARTICLE])
+                        {
+                            _emitter->setEmitsType(PUParticle3D::PT_VISUAL);
+                        }
+                        else if (particleType == token[TOKEN_EMITTER_PARTICLE])
+                        {
+                            _emitter->setEmitsType(PUParticle3D::PT_EMITTER);
+                        }
+                        else if (particleType == token[TOKEN_AFFECTOR_PARTICLE])
+                        {
+                            _emitter->setEmitsType(PUParticle3D::PT_AFFECTOR);
+                        }
+                        else if (particleType == token[TOKEN_TECHNIQUE_PARTICLE])
+                        {
+                            _emitter->setEmitsType(PUParticle3D::PT_TECHNIQUE);
+                        }
+                        else if (particleType == token[TOKEN_SYSTEM_PARTICLE])
+                        {
+                            _emitter->setEmitsType(PUParticle3D::PT_SYSTEM);
+                        }
+                        ++i;
+                        if (getString(**i, &name))
+                        {
+                            _emitter->setEmitsName(name);
+                        }
+                    }
+                }
             }
             else if (prop->name == token[TOKEN_ANGLE])
             {
@@ -424,7 +424,7 @@ void PUParticle3DEmitterTranslator::translate(PUScriptCompiler* compiler, PUAbst
                     float val = 0.0f;
                     if(getFloat(*prop->values.front(), &val))
                     {
-                        PUDynamicAttributeFixed* dynamicAttributeFixed = new (std::nothrow) PUDynamicAttributeFixed();
+                        PUDynamicAttributeFixed* dynamicAttributeFixed = new PUDynamicAttributeFixed();
                         dynamicAttributeFixed->setValue(val);
                         _emitter->setDynAngle(dynamicAttributeFixed);
                     }
@@ -439,7 +439,7 @@ void PUParticle3DEmitterTranslator::translate(PUScriptCompiler* compiler, PUAbst
                     float val = 0.0f;
                     if(getFloat(*prop->values.front(), &val))
                     {
-                        PUDynamicAttributeFixed* dynamicAttributeFixed = new (std::nothrow) PUDynamicAttributeFixed();
+                        PUDynamicAttributeFixed* dynamicAttributeFixed = new PUDynamicAttributeFixed();
                         dynamicAttributeFixed->setValue(val);
                         _emitter->setDynParticleAllDimensions(dynamicAttributeFixed);
                     }
@@ -454,7 +454,7 @@ void PUParticle3DEmitterTranslator::translate(PUScriptCompiler* compiler, PUAbst
                     float val = 0.0f;
                     if(getFloat(*prop->values.front(), &val))
                     {
-                        PUDynamicAttributeFixed* dynamicAttributeFixed = new (std::nothrow) PUDynamicAttributeFixed();
+                        PUDynamicAttributeFixed* dynamicAttributeFixed = new PUDynamicAttributeFixed();
                         dynamicAttributeFixed->setValue(val);
                         _emitter->setDynParticleWidth(dynamicAttributeFixed);
                     }
@@ -469,7 +469,7 @@ void PUParticle3DEmitterTranslator::translate(PUScriptCompiler* compiler, PUAbst
                     float val = 0.0f;
                     if(getFloat(*prop->values.front(), &val))
                     {
-                        PUDynamicAttributeFixed* dynamicAttributeFixed = new (std::nothrow) PUDynamicAttributeFixed();
+                        PUDynamicAttributeFixed* dynamicAttributeFixed = new PUDynamicAttributeFixed();
                         dynamicAttributeFixed->setValue(val);
                         _emitter->setDynParticleHeight(dynamicAttributeFixed);
                     }
@@ -484,7 +484,7 @@ void PUParticle3DEmitterTranslator::translate(PUScriptCompiler* compiler, PUAbst
                     float val = 0.0f;
                     if(getFloat(*prop->values.front(), &val))
                     {
-                        PUDynamicAttributeFixed* dynamicAttributeFixed = new (std::nothrow) PUDynamicAttributeFixed();
+                        PUDynamicAttributeFixed* dynamicAttributeFixed = new PUDynamicAttributeFixed();
                         dynamicAttributeFixed->setValue(val);
                         _emitter->setDynParticleDepth(dynamicAttributeFixed);
                     }

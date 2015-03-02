@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -27,16 +26,16 @@
 #define __CC_PU_PARTICLE_3D_EMITTER_MANAGER_H__
 
 #include "base/CCRef.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DScriptTranslator.h"
-#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
-#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DBoxEmitterTranslator.h"
-#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DCircleEmitterTranslator.h"
-#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DLineEmitterTranslator.h"
-#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DMeshSurfaceEmitterTranslator.h"
-#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DPointEmitterTranslator.h"
-#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DPositionEmitterTranslator.h"
-#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DSlaveEmitterTranslator.h"
-#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DSphereSurfaceEmitterTranslator.h"
+#include "Particle3D/ParticleUniverse/CCPUParticle3DScriptTranslator.h"
+#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
+#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DBoxEmitterTranslator.h"
+#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DCircleEmitterTranslator.h"
+#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DLineEmitterTranslator.h"
+#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DMeshSurfaceEmitterTranslator.h"
+#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DPointEmitterTranslator.h"
+#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DPositionEmitterTranslator.h"
+#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DSlaveEmitterTranslator.h"
+#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DSphereSurfaceEmitterTranslator.h"
 
 using namespace std;
 NS_CC_BEGIN

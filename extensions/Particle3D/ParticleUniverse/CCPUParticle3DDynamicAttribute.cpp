@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -72,6 +71,23 @@ float PUDynamicAttributeFixed::getValue (float x)
 {
     return _value;
 }
+
+void PUDynamicAttributeFixed::copyAttributesTo( PUDynamicAttribute* dynamicAttribute )
+{
+    if (!dynamicAttribute || dynamicAttribute->getType() != PUDynamicAttribute::DAT_FIXED)
+        return;
+
+    PUDynamicAttributeFixed* dynAttr = static_cast<PUDynamicAttributeFixed*>(dynamicAttribute);
+    dynAttr->_value = _value;
+}
+
+PUDynamicAttributeFixed* PUDynamicAttributeFixed::clone()
+{
+    auto af = new PUDynamicAttributeFixed();
+    this->copyAttributesTo(af);
+    return af;
+}
+
 //-----------------------------------------------------------------------
 PUDynamicAttributeRandom::PUDynamicAttributeRandom (void) : _min(0), _max(0)
 {
@@ -118,6 +134,23 @@ void PUDynamicAttributeRandom::setMinMax (float min, float max)
 float PUDynamicAttributeRandom::getValue (float x)
 {
     return cocos2d::random(_min, _max);
+}
+
+void PUDynamicAttributeRandom::copyAttributesTo( PUDynamicAttribute* dynamicAttribute )
+{
+    if (!dynamicAttribute || dynamicAttribute->getType() != PUDynamicAttribute::DAT_RANDOM)
+        return;
+
+    PUDynamicAttributeRandom* dynAttr = static_cast<PUDynamicAttributeRandom*>(dynamicAttribute);
+    dynAttr->_min = _min;
+    dynAttr->_max = _max;
+}
+
+PUDynamicAttributeRandom* PUDynamicAttributeRandom::clone()
+{
+    auto ar = new PUDynamicAttributeRandom();
+    this->copyAttributesTo(ar);
+    return ar;
 }
 
 //-----------------------------------------------------------------------
@@ -279,6 +312,34 @@ PUDynamicAttributeCurved::ControlPointList::iterator PUDynamicAttributeCurved::g
     return _controlPoints.end() - 1;
 }
 
+void PUDynamicAttributeCurved::copyAttributesTo( PUDynamicAttribute* dynamicAttribute )
+{
+    if (!dynamicAttribute || dynamicAttribute->getType() != PUDynamicAttribute::DAT_CURVED)
+        return;
+
+    PUDynamicAttributeCurved* dynAttr = static_cast<PUDynamicAttributeCurved*>(dynamicAttribute);
+    dynAttr->_interpolationType = _interpolationType;
+    dynAttr->_spline = _spline;
+    dynAttr->_range = _range;
+
+    // Copy controlpoints
+    PUDynamicAttributeCurved::ControlPointList::const_iterator it; // Need const_iterator here!
+    PUDynamicAttributeCurved::ControlPointList::const_iterator itEnd = _controlPoints.end();
+    for (it = _controlPoints.begin(); it != itEnd; ++it)
+    {
+        Vec2 controlPoint = *it;
+        dynAttr->_controlPoints.push_back(controlPoint);
+    }
+    dynAttr->processControlPoints();
+}
+
+PUDynamicAttributeCurved* PUDynamicAttributeCurved::clone()
+{
+    auto ac = new PUDynamicAttributeCurved();
+    this->copyAttributesTo(ac);
+    return ac;
+}
+
 //-----------------------------------------------------------------------
 PUDynamicAttributeOscillate::PUDynamicAttributeOscillate (void) :
     _oscillationType(PUDynamicAttributeOscillate::OSCT_SINE),
@@ -370,6 +431,27 @@ float PUDynamicAttributeOscillate::getValue (float x)
 
     return 0;
 }
+
+void PUDynamicAttributeOscillate::copyAttributesTo( PUDynamicAttribute* dynamicAttribute )
+{
+    if (!dynamicAttribute || dynamicAttribute->getType() != PUDynamicAttribute::DAT_OSCILLATE)
+        return;
+
+    PUDynamicAttributeOscillate* dynAttr = static_cast<PUDynamicAttributeOscillate*>(dynamicAttribute);
+    dynAttr->_oscillationType = _oscillationType;
+    dynAttr->_frequency = _frequency;
+    dynAttr->_phase = _phase;
+    dynAttr->_base = _base;
+    dynAttr->_amplitude = _amplitude;
+}
+
+PUDynamicAttributeOscillate* PUDynamicAttributeOscillate::clone()
+{
+    auto ao = new PUDynamicAttributeOscillate();
+    this->copyAttributesTo(ao);
+    return ao;
+}
+
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------
 //-----------------------------------------------------------------------

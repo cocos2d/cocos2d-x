@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -29,7 +28,7 @@
 #include "2d/CCNode.h"
 #include "base/CCProtocols.h"
 #include "math/CCMath.h"
-#include "extensions/Particle3D/CCParticleSystem3D.h"
+#include "Particle3D/CCParticleSystem3D.h"
 #include <vector>
 #include <map>
 
@@ -38,9 +37,22 @@ NS_CC_BEGIN
 /**
  * 3d particle system
  */
+class PUParticle3DListener;
+class PUParticle3DObserver;
+class PUParticle3DBehaviour;
 class PUParticle3DEmitter;
 class PUParticle3DAffector;
 class Particle3DRender;
+
+enum PUComponentType
+{
+    CT_PARTICLE,
+    CT_SYSTEM,
+    CT_TECHNIQUE,
+    CT_EMITTER,
+    CT_AFFECTOR,
+    CT_OBSERVER
+};
 
 struct CC_DLL PUParticle3D : public Particle3D
 {
@@ -48,6 +60,19 @@ struct CC_DLL PUParticle3D : public Particle3D
     static float DEFAULT_MASS;
 
     PUParticle3D();
+    virtual ~PUParticle3D();
+
+    typedef std::vector<PUParticle3DBehaviour*> ParticleBehaviourList;
+
+    enum ParticleType
+    {
+        PT_VISUAL,
+        PT_TECHNIQUE,
+        PT_EMITTER,
+        PT_AFFECTOR,
+        PT_SYSTEM,
+    };
+
         /** Enumeration which lists a number of reserved event flags. Although custom flags can be used to
         indicate that a certain condition occurs, the first number of flags may not be used as custom flags.
     */
@@ -58,10 +83,14 @@ struct CC_DLL PUParticle3D : public Particle3D
         PEF_COLLIDED = 1<<2
     };
 
+    Ref *particleEntityPtr;
     PUParticle3DEmitter* parentEmitter;
 
+    Ref *visualData;
+
+    ParticleType particleType;
     // Values that are assigned as soon as the particle is emitted (non-transformed)
-    Vec3 positionInWorld;
+    //Vec3 positionInWorld;
     Vec3 originalPosition;
     Vec3 latestPosition;
     // Direction (and speed)
@@ -82,7 +111,7 @@ struct CC_DLL PUParticle3D : public Particle3D
         in 2D. */
     float zRotationSpeed; //radian
 
-    Quaternion orientationInWorld;
+    //Quaternion orientationInWorld;
     /*@remarks
         The orientation of the particle is only visible if the Particle Renderer - such as the Box renderer - 
         supports orientation.
@@ -98,6 +127,9 @@ struct CC_DLL PUParticle3D : public Particle3D
     */
     float radius;
 
+    ParticleBehaviourList behaviours;
+    void copyBehaviours(const ParticleBehaviourList &list);
+
     float calculateVelocity() const;
 
     /** Set own dimensions
@@ -106,6 +138,8 @@ struct CC_DLL PUParticle3D : public Particle3D
     void calculateBoundingSphereRadius();
 
     void initForEmission();
+    void initForExpiration(float timeElapsed);
+    void process(float timeElapsed);
 
     /** Does this particle have it's own dimensions? */
     bool ownDimensions;
@@ -170,26 +204,34 @@ struct CC_DLL PUParticle3D : public Particle3D
 
     float depthInView;//depth in camera view
     float zRotation; //zRotation is used to rotate the particle in 2D (around the Z-axis)   (radian)
-    float widthInWorld;
-    float heightInWorld;
-    float depthInWorld;
+    //float widthInWorld;
+    //float heightInWorld;
+    //float depthInWorld;
+    
 };
 
 class CC_DLL PUParticleSystem3D : public ParticleSystem3D
 {
 public:
 
+    typedef std::map<std::string, ParticlePool> ParticlePoolMap;
+
     static const float DEFAULT_WIDTH;
     static const float DEFAULT_HEIGHT;
     static const float DEFAULT_DEPTH;
-    static const unsigned short DEFAULT_PARTICLE_QUOTA;
+    static const unsigned int DEFAULT_PARTICLE_QUOTA;
+    static const unsigned int DEFAULT_EMITTED_EMITTER_QUOTA;
+    static const unsigned int DEFAULT_EMITTED_SYSTEM_QUOTA;
     static const float DEFAULT_MAX_VELOCITY;
 
     static PUParticleSystem3D* create();
     static PUParticleSystem3D* create(const std::string &filePath);
     static PUParticleSystem3D* create(const std::string &filePath, const std::string &materialPath);
     
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+
     virtual void update(float delta) override;
+    void forceUpdate(float delta);
     
     /**
      * particle system play control
@@ -210,6 +252,8 @@ public:
      * resume particle
      */
     virtual void resumeParticleSystem() override;
+
+    virtual int getAliveParticleCnt() const override;
 
     /** Returns the velocity scale, defined in the particle system, but passed to the technique for convenience.
     */
@@ -255,12 +299,54 @@ public:
     void setMaterialName(const std::string &name) { _matName = name; };
     const std::string getMaterialName() const { return _matName; };
 
+    /** Forces emission of particles.
+    @remarks
+        The number of requested particles are the exact number that are emitted. No down-scalling is applied.
+    */
+    void forceEmission(PUParticle3DEmitter* emitter, unsigned requested);
+
         /**
      * add particle affector
      */
     void addEmitter(PUParticle3DEmitter* emitter);
-    
-    virtual int getAliveParticleCount() const override;
+
+    PUParticle3DAffector* getAffector(const std::string &name);
+    PUParticle3DEmitter* getEmitter(const std::string &name);
+    void removeAllEmitter();
+
+
+    void addListener(PUParticle3DListener *listener);
+    void removeListener(PUParticle3DListener *listener);
+    void removeAllListener();
+
+    void addObserver(PUParticle3DObserver *observer);
+    PUParticle3DObserver* getObserver(const std::string &name);
+    void removerAllObserver();
+
+    void addBehaviourTemplate(PUParticle3DBehaviour *behaviour);
+    void removeAllBehaviourTemplate();
+
+    bool isMarkedForEmission() const {return _isMarkedForEmission;};
+    void setMarkedForEmission(bool isMarked) {_isMarkedForEmission = isMarked;};
+
+    void clearAllParticles();
+
+    unsigned int getEmittedEmitterQuota() const { return _emittedEmitterQuota; };
+    void setEmittedEmitterQuota(unsigned int quota) { _emittedEmitterQuota = quota; };
+
+    unsigned int getEmittedSystemQuota() const { return _emittedSystemQuota; };
+    void setEmittedSystemQuota(unsigned int quota) { _emittedSystemQuota = quota; };
+
+    PUParticleSystem3D* getParentParticleSystem()const { return _parentParticleSystem; };
+
+    const ParticlePoolMap& getEmittedEmitterParticlePool() const { return _emittedEmitterParticlePool; };
+    const ParticlePoolMap& getEmittedSystemParticlePool() const { return _emittedSystemParticlePool; };
+
+    bool makeParticleLocal(PUParticle3D* particle);
+    void calulateRotationOffset(void);
+
+    virtual PUParticleSystem3D* clone();
+    virtual void copyAttributesTo (PUParticleSystem3D* system);
 
 CC_CONSTRUCTOR_ACCESS:
     PUParticleSystem3D();
@@ -274,6 +360,13 @@ protected:
     void updator(float elapsedTime);
     void postUpdator(float elapsedTime);
     void emitParticles(float elapsedTime);
+    void executeEmitParticles(PUParticle3DEmitter* emitter, unsigned requested, float elapsedTime);
+    void emitParticles(ParticlePool &pool, PUParticle3DEmitter* emitter, unsigned requested, float elapsedTime);
+    void processParticle(ParticlePool &pool, bool &firstActiveParticle, bool &firstParticle, float elapsedTime);
+    void processMotion(PUParticle3D* particle, float timeElapsed, bool firstParticle);
+    void notifyRescaled(const Vec3 &scl);
+    void initParticleForEmission(PUParticle3D* particle);
+    void initParticleForExpiration(PUParticle3D* particle, float timeElapsed);
     
     inline bool isExpired(PUParticle3D* particle, float timeElapsed);
 
@@ -283,8 +376,21 @@ protected:
 protected:
 
     std::vector<PUParticle3DEmitter*> _emitters;
+    std::vector<PUParticle3DObserver *> _observers;
+
+    ParticlePoolMap _emittedEmitterParticlePool;
+    ParticlePoolMap _emittedSystemParticlePool;
+    //EmitterPoolMap _emittedEmitters;
+    //SystemPoolMap  _emittedSystems;
+    unsigned int _emittedEmitterQuota;
+    unsigned int _emittedSystemQuota;
+
+    //internal
+    PUParticle3D::ParticleBehaviourList _behaviourTemplates;
+    std::vector<PUParticle3DListener *> _listeners;
 
     bool _prepared;
+    bool _poolPrepared;
 
     float _particleSystemScaleVelocity;
     float _timeElapsedSinceStart;
@@ -315,6 +421,16 @@ protected:
     bool _maxVelocitySet;
 
     std::string _matName;
+
+    bool _isMarkedForEmission;
+
+    // Keep latest position
+    Vec3 _latestPositionDiff;
+    Vec3 _latestPosition;
+
+    Quaternion _latestOrientation;
+
+    PUParticleSystem3D *_parentParticleSystem;
 };
 
 NS_CC_END

@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DForceFieldAffector.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 //-----------------------------------------------------------------------
@@ -317,9 +316,31 @@ void PUParticle3DForceFieldAffector::prepare()
 
 PUParticle3DForceFieldAffector* PUParticle3DForceFieldAffector::create()
 {
-    auto pffa = new (std::nothrow) PUParticle3DForceFieldAffector();
+    auto pffa = new PUParticle3DForceFieldAffector();
     pffa->autorelease();
     return pffa;
+}
+
+void PUParticle3DForceFieldAffector::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DAffector::copyAttributesTo(affector);
+
+    PUParticle3DForceFieldAffector* forceFieldAffector = static_cast<PUParticle3DForceFieldAffector*>(affector);
+    forceFieldAffector->_forceFieldType = _forceFieldType;
+    forceFieldAffector->_delta = _delta;
+    forceFieldAffector->_scaleForce = _scaleForce;
+    forceFieldAffector->_octaves = _octaves;
+    forceFieldAffector->_frequency = _frequency;
+    forceFieldAffector->_amplitude = _amplitude;
+    forceFieldAffector->_persistence = _persistence;
+    forceFieldAffector->_forceFieldSize = _forceFieldSize;
+    forceFieldAffector->_worldSize = _worldSize;
+    forceFieldAffector->_ignoreNegativeX = _ignoreNegativeX;
+    forceFieldAffector->_ignoreNegativeY = _ignoreNegativeY;
+    forceFieldAffector->_ignoreNegativeZ = _ignoreNegativeZ;
+    forceFieldAffector->_movementSet = _movementSet;
+    forceFieldAffector->_movementFrequency = _movementFrequency;
+    forceFieldAffector->_movement = _movement;
 }
 
 NS_CC_END

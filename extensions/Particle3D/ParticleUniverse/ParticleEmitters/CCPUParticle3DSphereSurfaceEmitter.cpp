@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,8 +23,8 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DSphereSurfaceEmitter.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DUtil.h"
+#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/ParticleUniverse/CCPUParticle3DUtil.h"
 
 NS_CC_BEGIN
 // Constants
@@ -100,9 +99,24 @@ void PUParticle3DSphereSurfaceEmitter::initParticleDirection(PUParticle3D* parti
 
 PUParticle3DSphereSurfaceEmitter* PUParticle3DSphereSurfaceEmitter::create()
 {
-    auto pe = new (std::nothrow) PUParticle3DSphereSurfaceEmitter();
+    auto pe = new PUParticle3DSphereSurfaceEmitter();
     pe->autorelease();
     return pe;
+}
+
+void PUParticle3DSphereSurfaceEmitter::copyAttributesTo( PUParticle3DEmitter* emitter )
+{
+    PUParticle3DEmitter::copyAttributesTo(emitter);
+
+    PUParticle3DSphereSurfaceEmitter* sphereSurfaceEmitter = static_cast<PUParticle3DSphereSurfaceEmitter*>(emitter);
+    sphereSurfaceEmitter->_radius = _radius;
+}
+
+PUParticle3DSphereSurfaceEmitter* PUParticle3DSphereSurfaceEmitter::clone()
+{
+    auto be = PUParticle3DSphereSurfaceEmitter::create();
+    copyAttributesTo(be);
+    return be;
 }
 
 NS_CC_END

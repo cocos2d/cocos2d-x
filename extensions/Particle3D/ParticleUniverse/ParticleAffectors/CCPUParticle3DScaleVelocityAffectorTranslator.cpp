@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,9 +23,9 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DScaleVelocityAffectorTranslator.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DDynamicAttribute.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DDynamicAttributeTranslator.h"
+#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/ParticleUniverse/CCPUParticle3DDynamicAttribute.h"
+#include "Particle3D/ParticleUniverse/CCPUParticle3DDynamicAttributeTranslator.h"
 
 NS_CC_BEGIN
 
@@ -48,7 +47,7 @@ bool PUParticle3DScaleVelocityAffectorTranslator::translateChildProperty( PUScri
             float val = 0.0f;
             if(getFloat(*prop->values.front(), &val))
             {
-                PUDynamicAttributeFixed* dynamicAttributeFixed = new (std::nothrow) PUDynamicAttributeFixed();
+                PUDynamicAttributeFixed* dynamicAttributeFixed = new PUDynamicAttributeFixed();
                 dynamicAttributeFixed->setValue(val);
                 affector->setDynScaleVelocity(dynamicAttributeFixed);
                 return true;

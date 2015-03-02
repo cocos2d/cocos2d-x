@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DLineAffector.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -103,7 +102,7 @@ void PUParticle3DLineAffector::notifyRescaled(const Vec3& scale)
 //-----------------------------------------------------------------------
 void PUParticle3DLineAffector::preUpdateAffector(float deltaTime)
 {
-    if (/*technique->getNumberOfEmittedParticles()*/_particleSystem->getParticlePool().getActiveParticleList().size() > 0)
+    if (/*technique->getNumberOfEmittedParticles()*/static_cast<PUParticleSystem3D *>(_particleSystem)->getAliveParticleCnt() > 0)
     {
         _timeSinceLastUpdate += deltaTime;
         while (_timeSinceLastUpdate > _timeStep)
@@ -159,9 +158,21 @@ void PUParticle3DLineAffector::firstParticleUpdate( PUParticle3D *particle, floa
 
 PUParticle3DLineAffector* PUParticle3DLineAffector::create()
 {
-    auto pla = new (std::nothrow) PUParticle3DLineAffector();
+    auto pla = new PUParticle3DLineAffector();
     pla->autorelease();
     return pla;
+}
+
+void PUParticle3DLineAffector::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DAffector::copyAttributesTo(affector);
+
+    PUParticle3DLineAffector* lineAffector = static_cast<PUParticle3DLineAffector*>(affector);
+    lineAffector->setMaxDeviation(_maxDeviation);
+    lineAffector->_end = _end;
+    lineAffector->_timeStep = _timeStep;
+    lineAffector->_drift = _drift;
+    lineAffector->_oneMinusDrift = _oneMinusDrift;
 }
 
 NS_CC_END

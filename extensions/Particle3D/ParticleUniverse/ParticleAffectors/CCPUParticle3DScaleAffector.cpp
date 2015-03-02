@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DScaleAffector.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -43,10 +42,10 @@ PUParticle3DScaleAffector::PUParticle3DScaleAffector(void) :
     _dynScaleXYZSet(false),
     _sinceStartSystem(false)
 {
-    _dynScaleX = new (std::nothrow) PUDynamicAttributeFixed();
-    _dynScaleY = new (std::nothrow) PUDynamicAttributeFixed();
-    _dynScaleZ = new (std::nothrow) PUDynamicAttributeFixed();
-    _dynScaleXYZ = new (std::nothrow) PUDynamicAttributeFixed();
+    _dynScaleX = new PUDynamicAttributeFixed();
+    _dynScaleY = new PUDynamicAttributeFixed();
+    _dynScaleZ = new PUDynamicAttributeFixed();
+    _dynScaleXYZ = new PUDynamicAttributeFixed();
     (static_cast<PUDynamicAttributeFixed*>(_dynScaleX))->setValue(DEFAULT_X_SCALE);
     (static_cast<PUDynamicAttributeFixed*>(_dynScaleY))->setValue(DEFAULT_Y_SCALE);
     (static_cast<PUDynamicAttributeFixed*>(_dynScaleZ))->setValue(DEFAULT_Z_SCALE);
@@ -88,7 +87,7 @@ void PUParticle3DScaleAffector::setDynScaleX(PUDynamicAttribute* dynScaleX)
     if (resetToDefault)
     {
         CC_SAFE_DELETE(_dynScaleX);
-        _dynScaleX = new (std::nothrow) PUDynamicAttributeFixed();
+        _dynScaleX = new PUDynamicAttributeFixed();
         (static_cast<PUDynamicAttributeFixed*>(_dynScaleX))->setValue(DEFAULT_X_SCALE);
         _dynScaleXSet = false;
     }
@@ -113,7 +112,7 @@ void PUParticle3DScaleAffector::resetDynScaleY(bool resetToDefault)
     {
 
         CC_SAFE_DELETE(_dynScaleY);
-        _dynScaleY = new (std::nothrow) PUDynamicAttributeFixed();
+        _dynScaleY = new PUDynamicAttributeFixed();
         (static_cast<PUDynamicAttributeFixed*>(_dynScaleY))->setValue(DEFAULT_X_SCALE);
         _dynScaleYSet = false;
     }
@@ -137,7 +136,7 @@ void PUParticle3DScaleAffector::resetDynScaleZ(bool resetToDefault)
     if (resetToDefault)
     {
         CC_SAFE_DELETE(_dynScaleZ);
-        _dynScaleZ = new (std::nothrow) PUDynamicAttributeFixed();
+        _dynScaleZ = new PUDynamicAttributeFixed();
         (static_cast<PUDynamicAttributeFixed*>(_dynScaleZ))->setValue(DEFAULT_X_SCALE);
         _dynScaleYSet = false;
     }
@@ -161,7 +160,7 @@ void PUParticle3DScaleAffector::resetDynScaleXYZ(bool resetToDefault)
     if (resetToDefault)
     {
         CC_SAFE_DELETE(_dynScaleXYZ);
-        _dynScaleXYZ = new (std::nothrow) PUDynamicAttributeFixed();
+        _dynScaleXYZ = new PUDynamicAttributeFixed();
         (static_cast<PUDynamicAttributeFixed*>(_dynScaleXYZ))->setValue(DEFAULT_XYZ_SCALE);
         _dynScaleXYZSet = false;
     }
@@ -260,9 +259,25 @@ void PUParticle3DScaleAffector::updatePUAffector( PUParticle3D *particle, float 
 
 PUParticle3DScaleAffector* PUParticle3DScaleAffector::create()
 {
-    auto psa = new (std::nothrow) PUParticle3DScaleAffector();
+    auto psa = new PUParticle3DScaleAffector();
     psa->autorelease();
     return psa;
+}
+
+void PUParticle3DScaleAffector::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DAffector::copyAttributesTo(affector);
+
+    PUParticle3DScaleAffector* scaleAffector = static_cast<PUParticle3DScaleAffector*>(affector);
+    scaleAffector->setDynScaleX(getDynScaleX()->clone());
+    scaleAffector->setDynScaleY(getDynScaleY()->clone());
+    scaleAffector->setDynScaleZ(getDynScaleZ()->clone());
+    scaleAffector->setDynScaleXYZ(getDynScaleXYZ()->clone());
+    scaleAffector->_dynScaleXSet = _dynScaleXSet;
+    scaleAffector->_dynScaleYSet = _dynScaleYSet;
+    scaleAffector->_dynScaleZSet = _dynScaleZSet;
+    scaleAffector->_dynScaleXYZSet = _dynScaleXYZSet;
+    scaleAffector->_sinceStartSystem = _sinceStartSystem;
 }
 
 NS_CC_END

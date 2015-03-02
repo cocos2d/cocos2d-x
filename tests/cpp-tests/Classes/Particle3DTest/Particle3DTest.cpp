@@ -39,6 +39,7 @@ static int sceneIdx = -1;
 
 static std::function<Layer*()> createFunctions[] =
 {
+    CL(Particle3DExplosionSystemDemo),
     CL(Particle3DLineStreakDemo),
     CL(Particle3DBlackHoleDemo),
     CL(Particle3DHypnoDemo),
@@ -48,6 +49,11 @@ static std::function<Layer*()> createFunctions[] =
     CL(Particle3DFirePlaceDemo),
     CL(Particle3DElectricBeamSystemDemo),
     CL(Particle3DExplosionBlueDemo),
+    CL(Particle3DFlareShieldDemo),
+    CL(Particle3DLightningBoltDemo),
+    CL(Particle3DCanOfWormsDemo),
+    CL(Particle3DRibbonTrailDemo),
+    CL(Particle3DWeaponTrailDemo),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -192,7 +198,7 @@ void Particle3DTestDemo::update( float delta )
         for (auto iter : children){
             ParticleSystem3D *child = dynamic_cast<ParticleSystem3D *>(iter);
             if (child){
-                count += child->getParticlePool().getActiveParticleList().size();
+                count += child->getAliveParticleCnt();
             }
         }
 
@@ -400,6 +406,125 @@ bool Particle3DExplosionBlueDemo::init()
     auto rootps = PUParticleSystem3D::create("mp_explosion_04_blue.pu");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
     rootps->setScale(0.25f);
+    rootps->startParticleSystem();
+    this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
+
+    return true;
+}
+
+
+std::string Particle3DFlareShieldDemo::subtitle() const 
+{
+    return "flareShield";
+}
+
+bool Particle3DFlareShieldDemo::init()
+{
+    if (!Particle3DTestDemo::init()) 
+        return false;
+
+
+    auto rootps = PUParticleSystem3D::create("flareShield.pu");
+    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+    //rootps->setScale(0.25f);
+    rootps->startParticleSystem();
+    this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
+
+    return true;
+}
+
+std::string Particle3DLightningBoltDemo::subtitle() const 
+{
+    return "LightningBolt";
+}
+
+bool Particle3DLightningBoltDemo::init()
+{
+    if (!Particle3DTestDemo::init()) 
+        return false;
+
+
+    auto rootps = PUParticleSystem3D::create("lightningBolt.pu");
+    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+    //rootps->setScale(0.25f);
+    rootps->startParticleSystem();
+    this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
+
+    return true;
+}
+
+std::string Particle3DExplosionSystemDemo::subtitle() const 
+{
+    return "ExplosionSystem";
+}
+
+bool Particle3DExplosionSystemDemo::init()
+{
+    if (!Particle3DTestDemo::init()) 
+        return false;
+
+
+    auto rootps = PUParticleSystem3D::create("explosionSystem.pu");
+    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+    //rootps->setScale(5.0f);
+    //rootps->setPosition(-25.0f, 0.0f);
+    //auto moveby = MoveBy::create(2.0f, Vec2(50.0f, 0.0f));
+    //auto moveby1 = MoveBy::create(2.0f, Vec2(-50.0f, 0.0f));
+    //rootps->runAction(RepeatForever::create(Sequence::create(moveby, moveby1, nullptr)));
+    rootps->startParticleSystem();
+    this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
+
+    return true;
+}
+
+std::string Particle3DCanOfWormsDemo::subtitle() const 
+{
+    return "CanOfWorms";
+}
+
+bool Particle3DCanOfWormsDemo::init()
+{
+    if (!Particle3DTestDemo::init()) 
+        return false;
+
+    auto rootps = PUParticleSystem3D::create("canOfWorms.pu");
+    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+    rootps->startParticleSystem();
+    this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
+
+    return true;
+}
+
+std::string Particle3DRibbonTrailDemo::subtitle() const 
+{
+    return "RibbonTrailTest";
+}
+
+bool Particle3DRibbonTrailDemo::init()
+{
+    if (!Particle3DTestDemo::init()) 
+        return false;
+
+    auto rootps = PUParticleSystem3D::create("ribbonTrailTest.pu");
+    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+    rootps->startParticleSystem();
+    this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
+
+    return true;
+}
+
+std::string Particle3DWeaponTrailDemo::subtitle() const 
+{
+    return "WeaponTrail";
+}
+
+bool Particle3DWeaponTrailDemo::init()
+{
+    if (!Particle3DTestDemo::init()) 
+        return false;
+
+    auto rootps = PUParticleSystem3D::create("weaponTrail.pu");
+    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
     rootps->startParticleSystem();
     this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
 

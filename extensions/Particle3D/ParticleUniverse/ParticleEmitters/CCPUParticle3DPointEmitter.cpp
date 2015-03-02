@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,12 +23,12 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DPointEmitter.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
 
-    PUParticle3DPointEmitter::PUParticle3DPointEmitter( void )
+PUParticle3DPointEmitter::PUParticle3DPointEmitter( void )
 {
 
 }
@@ -41,9 +40,21 @@ PUParticle3DPointEmitter::~PUParticle3DPointEmitter( void )
 
 PUParticle3DPointEmitter* PUParticle3DPointEmitter::create()
 {
-    auto pe = new (std::nothrow) PUParticle3DPointEmitter();
+    auto pe = new PUParticle3DPointEmitter();
     pe->autorelease();
     return pe;
+}
+
+void PUParticle3DPointEmitter::copyAttributesTo( PUParticle3DEmitter* emitter )
+{
+    PUParticle3DEmitter::copyAttributesTo(emitter);
+}
+
+PUParticle3DPointEmitter* PUParticle3DPointEmitter::clone()
+{
+    auto be = PUParticle3DPointEmitter::create();
+    copyAttributesTo(be);
+    return be;
 }
 
 NS_CC_END

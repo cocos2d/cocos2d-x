@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -28,8 +27,9 @@
 
 #include "base/CCRef.h"
 #include "math/CCMath.h"
-#include "extensions/Particle3D/CCParticle3DEmitter.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DDynamicAttribute.h"
+#include "Particle3D/CCParticle3DEmitter.h"
+#include "Particle3D/ParticleUniverse/CCPUParticle3DDynamicAttribute.h"
+#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 #include <vector>
 #include <string>
 
@@ -188,6 +188,11 @@ public:
     */
     inline const std::string& getEmitsName(void) const {return _emitsName;};
     void setEmitsName(const std::string& emitsName);
+    inline PUParticle3D::ParticleType getEmitsType() const {return _emitsType;};
+    void setEmitsType(PUParticle3D::ParticleType type) {_emitsType = type;};
+    Ref* getEmitsEntityPtr() const;
+    bool isMarkedForEmission() const {return _isMarkedForEmission;};
+    void setMarkedForEmission(bool isMarked) {_isMarkedForEmission = isMarked;};
 
         /** Returns the base direction of the particle that is going to be emitted.
     */
@@ -312,6 +317,9 @@ public:
     */
     bool makeParticleLocal(PUParticle3D* particle);
 
+    virtual PUParticle3DEmitter* clone() = 0;
+    virtual void copyAttributesTo (PUParticle3DEmitter* emitter);
+
 protected:
 
     /** Todo
@@ -347,13 +355,13 @@ protected:
         /**  Internal method for generating the angle.
     */
     void generateAngle(float &angle);
-
     
 protected:
 
     Vec3 _position;
 
     Vec3 _latestPosition;
+    Vec3 _latestPositionDiff;
 
     Vec3 _derivedPosition;
     /** Although the scale is on a Particle System level, the emitter can also be scaled.
@@ -559,6 +567,11 @@ protected:
 
     bool _originEnabled;
     bool _originEnabledSet;
+
+    PUParticle3D::ParticleType _emitsType;
+    Ref *_emitsEntity;
+
+    bool _isMarkedForEmission;
 };
 
 NS_CC_END

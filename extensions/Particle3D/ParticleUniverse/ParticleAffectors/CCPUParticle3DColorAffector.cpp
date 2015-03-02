@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DColorAffector.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -127,9 +126,18 @@ void PUParticle3DColorAffector::updatePUAffector( PUParticle3D *particle, float 
 
 PUParticle3DColorAffector* PUParticle3DColorAffector::create()
 {
-    auto pca = new (std::nothrow) PUParticle3DColorAffector();
+    auto pca = new PUParticle3DColorAffector();
     pca->autorelease();
     return pca;
+}
+
+void PUParticle3DColorAffector::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DAffector::copyAttributesTo(affector);
+
+    PUParticle3DColorAffector* colourAffector = static_cast<PUParticle3DColorAffector*>(affector);
+    colourAffector->_colorMap = _colorMap;
+    colourAffector->_colorOperation = _colorOperation;
 }
 
 NS_CC_END

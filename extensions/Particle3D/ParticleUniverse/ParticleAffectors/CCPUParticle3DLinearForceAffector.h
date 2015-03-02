@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -40,6 +39,8 @@ public:
 
     virtual void preUpdateAffector(float deltaTime) override;
     virtual void updatePUAffector(PUParticle3D *particle, float deltaTime) override;
+
+    virtual void copyAttributesTo (PUParticle3DAffector* affector);
 
 CC_CONSTRUCTOR_ACCESS:          
     PUParticle3DLinearForceAffector(void){};

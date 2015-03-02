@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DDynamicAttributeTranslator.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 PUParticle3DDynamicAttributeTranslator::PUParticle3DDynamicAttributeTranslator()
@@ -46,24 +45,24 @@ void PUParticle3DDynamicAttributeTranslator::translate(PUScriptCompiler* compile
 
     if (type == token[TOKEN_DYN_RANDOM])
     {
-        _dynamicAttribute = new (std::nothrow) PUDynamicAttributeRandom();
+        _dynamicAttribute = new PUDynamicAttributeRandom();
     }
     else if (type == token[TOKEN_DYN_CURVED_LINEAR])
     {
-        _dynamicAttribute = new (std::nothrow) PUDynamicAttributeCurved();
+        _dynamicAttribute = new PUDynamicAttributeCurved();
     }
     else if (type == token[TOKEN_DYN_CURVED_SPLINE])
     {
-        _dynamicAttribute = new (std::nothrow) PUDynamicAttributeCurved();
+        _dynamicAttribute = new PUDynamicAttributeCurved();
     }
     else if (type == token[TOKEN_DYN_OSCILLATE])
     {
-        _dynamicAttribute = new (std::nothrow) PUDynamicAttributeOscillate();
+        _dynamicAttribute = new PUDynamicAttributeOscillate();
     }
     else
     {
         // Create a fixed one.
-        _dynamicAttribute = new (std::nothrow) PUDynamicAttributeFixed();
+        _dynamicAttribute = new PUDynamicAttributeFixed();
     }
 
     // Run through properties

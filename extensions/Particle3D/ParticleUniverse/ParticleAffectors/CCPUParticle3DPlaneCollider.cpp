@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DPlaneCollider.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -169,9 +168,16 @@ void PUParticle3DPlaneCollider::updatePUAffector( PUParticle3D *particle, float 
 
 PUParticle3DPlaneCollider* PUParticle3DPlaneCollider::create()
 {
-    auto ppc = new (std::nothrow) PUParticle3DPlaneCollider();
+    auto ppc = new PUParticle3DPlaneCollider();
     ppc->autorelease();
     return ppc;
+}
+
+void PUParticle3DPlaneCollider::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DBaseCollider::copyAttributesTo(affector);
+    PUParticle3DPlaneCollider* planeCollider = static_cast<PUParticle3DPlaneCollider*>(affector);
+    planeCollider->setNormal(_normal);
 }
 
 NS_CC_END

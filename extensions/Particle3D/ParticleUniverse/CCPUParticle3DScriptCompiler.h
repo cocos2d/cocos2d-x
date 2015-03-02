@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -26,7 +25,7 @@
 #ifndef __CC_PU_SCRIPT_COMPILER_H__
 #define __CC_PU_SCRIPT_COMPILER_H__
 #include "base/CCRef.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DScriptParser.h"
+#include "Particle3D/ParticleUniverse/CCPUParticle3DScriptParser.h"
 
 NS_CC_BEGIN
 

@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DScriptCompiler.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DTranslateManager.h"
+#include "Particle3D/ParticleUniverse/CCPUParticle3DTranslateManager.h"
 #include "platform/CCFileUtils.h"
 NS_CC_BEGIN
 
@@ -37,7 +36,7 @@ PUObjectAbstractNode::PUObjectAbstractNode(PUAbstractNode *ptr)
 
 PUAbstractNode *PUObjectAbstractNode::clone() const
 {
-    PUObjectAbstractNode *node = new (std::nothrow) PUObjectAbstractNode(parent);
+    PUObjectAbstractNode *node = new PUObjectAbstractNode(parent);
     node->file = file;
     node->line = line;
     node->type = type;
@@ -126,7 +125,7 @@ PUPropertyAbstractNode::PUPropertyAbstractNode(PUAbstractNode *ptr)
 
 PUAbstractNode *PUPropertyAbstractNode::clone() const
 {
-    PUPropertyAbstractNode *node = new (std::nothrow) PUPropertyAbstractNode(parent);
+    PUPropertyAbstractNode *node = new PUPropertyAbstractNode(parent);
     node->file = file;
     node->line = line;
     node->type = type;
@@ -162,7 +161,7 @@ PUAtomAbstractNode::PUAtomAbstractNode(PUAbstractNode *ptr)
 
 PUAbstractNode *PUAtomAbstractNode::clone() const
 {
-    PUAtomAbstractNode *node = new (std::nothrow) PUAtomAbstractNode(parent);
+    PUAtomAbstractNode *node = new PUAtomAbstractNode(parent);
     node->file = file;
     node->line = line;
     node->id = id;
@@ -236,12 +235,12 @@ const PUAbstractNodeList* PUScriptCompiler::compile(const std::string &file, boo
     parser.parse(creteNodeList, tokenList);
     bool state = compile(creteNodeList, file);
 
-    for (auto iter1 : creteNodeList){
-        delete iter1;
+    for (auto iter : creteNodeList){
+        delete iter;
     }
 
-    for (auto iter2 : tokenList){
-        delete iter2;
+    for (auto iter : tokenList){
+        delete iter;
     }
 
     isFirstCompile = true;
@@ -311,7 +310,7 @@ void PUScriptCompiler::visit(PUConcreteNode *node)
                 return;
             }
             
-            PUObjectAbstractNode *impl = new  (std::nothrow) PUObjectAbstractNode(_current);
+            PUObjectAbstractNode *impl = new  PUObjectAbstractNode(_current);
             impl->line = node->line;
             impl->file = node->file;
             impl->abstract = false;
@@ -342,7 +341,7 @@ void PUScriptCompiler::visit(PUConcreteNode *node)
             while(iter1 != temp.end() && (*iter1)->type != CNT_LBRACE)
             {
                 
-                PUAtomAbstractNode *atom = new (std::nothrow) PUAtomAbstractNode(impl);
+                PUAtomAbstractNode *atom = new PUAtomAbstractNode(impl);
                 atom->file = (*iter1)->file;
                 atom->line = (*iter1)->line;
                 atom->type = ANT_ATOM;
@@ -360,7 +359,7 @@ void PUScriptCompiler::visit(PUConcreteNode *node)
         //no brance//
         else
         {
-            PUPropertyAbstractNode *impl = new (std::nothrow) PUPropertyAbstractNode(_current);
+            PUPropertyAbstractNode *impl = new PUPropertyAbstractNode(_current);
             impl->line = node->line;
             impl->file = node->file;
             impl->name = node->token;
@@ -380,7 +379,7 @@ void PUScriptCompiler::visit(PUConcreteNode *node)
     }
     else
     {
-        PUAtomAbstractNode *impl = new (std::nothrow) PUAtomAbstractNode(_current);
+        PUAtomAbstractNode *impl = new PUAtomAbstractNode(_current);
         impl->line = node->line;
         impl->file = node->file;
         impl->value = node->token;

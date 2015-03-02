@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DSineForceAffector.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 // Constants
@@ -108,9 +107,20 @@ void PUParticle3DSineForceAffector::updatePUAffector( PUParticle3D *particle, fl
 
 PUParticle3DSineForceAffector* PUParticle3DSineForceAffector::create()
 {
-    auto psfa = new (std::nothrow) PUParticle3DSineForceAffector();
+    auto psfa = new PUParticle3DSineForceAffector();
     psfa->autorelease();
     return psfa;
+}
+
+void PUParticle3DSineForceAffector::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DAffector::copyAttributesTo(affector);
+
+    PUParticle3DSineForceAffector* sineForceAffector = static_cast<PUParticle3DSineForceAffector*>(affector);
+    sineForceAffector->_frequencyMin = _frequencyMin;
+    sineForceAffector->_frequencyMax = _frequencyMax;
+    sineForceAffector->_frequency = _frequency;
+    sineForceAffector->_angle = _angle;
 }
 
 NS_CC_END

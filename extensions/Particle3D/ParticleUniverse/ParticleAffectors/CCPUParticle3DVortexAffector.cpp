@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DVortexAffector.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -37,7 +36,7 @@ PUParticle3DVortexAffector::PUParticle3DVortexAffector(void) :
     PUParticle3DAffector(),
     _rotationVector(DEFAULT_ROTATION_VECTOR)
 {
-    _dynRotationSpeed = new (std::nothrow) PUDynamicAttributeFixed();
+    _dynRotationSpeed = new PUDynamicAttributeFixed();
     (static_cast<PUDynamicAttributeFixed*>(_dynRotationSpeed))->setValue(DEFAULT_ROTATION_SPEED);
 }
 //-----------------------------------------------------------------------
@@ -118,9 +117,19 @@ void PUParticle3DVortexAffector::preUpdateAffector( float deltaTime )
 
 PUParticle3DVortexAffector* PUParticle3DVortexAffector::create()
 {
-    auto pvf = new (std::nothrow) PUParticle3DVortexAffector();
+    auto pvf = new PUParticle3DVortexAffector();
     pvf->autorelease();
     return pvf;
+}
+
+void PUParticle3DVortexAffector::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DAffector::copyAttributesTo(affector);
+
+    PUParticle3DVortexAffector* vortexAffector = static_cast<PUParticle3DVortexAffector*>(affector);
+    vortexAffector->_rotation = _rotation;
+    vortexAffector->_rotationVector = _rotationVector;
+    vortexAffector->setRotationSpeed(getRotationSpeed()->clone());
 }
 
 NS_CC_END

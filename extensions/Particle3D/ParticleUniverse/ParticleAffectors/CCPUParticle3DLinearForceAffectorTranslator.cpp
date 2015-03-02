@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,10 +23,10 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DLinearForceAffectorTranslator.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DDynamicAttribute.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DDynamicAttributeTranslator.h"
-#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DBaseForceAffectorTranslator.h"
+#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/ParticleUniverse/CCPUParticle3DDynamicAttribute.h"
+#include "Particle3D/ParticleUniverse/CCPUParticle3DDynamicAttributeTranslator.h"
+#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DBaseForceAffectorTranslator.h"
 
 NS_CC_BEGIN
 
@@ -37,6 +36,9 @@ PUParticle3DLinearForceAffectorTranslator::PUParticle3DLinearForceAffectorTransl
 //-------------------------------------------------------------------------
 bool PUParticle3DLinearForceAffectorTranslator::translateChildProperty( PUScriptCompiler* compiler, PUAbstractNode *node )
 {
+    PUPropertyAbstractNode* prop = reinterpret_cast<PUPropertyAbstractNode*>(node);
+   // PUParticle3DAffector* af = static_cast<PUParticle3DAffector*>(prop->parent->context);
+
     // No own properties. Parse the BaseForceAffector
     PUParticle3DBaseForceAffectorTranslator BaseForceAffectorTranslator;
     return BaseForceAffectorTranslator.translateChildProperty(compiler, node);

@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -27,8 +26,8 @@
 #ifndef __CC_PU_PARTICLE_3D_PATH_FOLLOWER_H__
 #define __CC_PU_PARTICLE_3D_PATH_FOLLOWER_H__
 
-#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DSimpleSpline.h"
+#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
+#include "Particle3D/ParticleUniverse/CCPUParticle3DSimpleSpline.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN
@@ -55,6 +54,8 @@ public:
     /** 
     */
     const Vec3& getPoint(unsigned short index) const {return _spline.getPoint(index);};
+
+    virtual void copyAttributesTo (PUParticle3DAffector* affector);
 
 CC_CONSTRUCTOR_ACCESS:
     PUParticle3DPathFollower(void);

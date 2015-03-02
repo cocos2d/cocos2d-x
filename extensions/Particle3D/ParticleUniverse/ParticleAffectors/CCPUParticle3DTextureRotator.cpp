@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DTextureRotator.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 // Constants
@@ -39,9 +38,9 @@ PUParticle3DTextureRotator::PUParticle3DTextureRotator(void) :
     _scaledRotationSpeed(0.0f),
     _twoPiRad(float(2.0 * M_PI))
 {
-    _dynRotation = new (std::nothrow) PUDynamicAttributeFixed();
+    _dynRotation = new PUDynamicAttributeFixed();
     (static_cast<PUDynamicAttributeFixed*>(_dynRotation))->setValue(DEFAULT_ROTATION);
-    _dynRotationSpeed = new (std::nothrow) PUDynamicAttributeFixed();
+    _dynRotationSpeed = new PUDynamicAttributeFixed();
     (static_cast<PUDynamicAttributeFixed*>(_dynRotationSpeed))->setValue(DEFAULT_ROTATION_SPEED);
 }
 //-----------------------------------------------------------------------
@@ -157,9 +156,19 @@ void PUParticle3DTextureRotator::updatePUAffector( PUParticle3D *particle, float
 
 PUParticle3DTextureRotator* PUParticle3DTextureRotator::create()
 {
-    auto ptr = new (std::nothrow) PUParticle3DTextureRotator();
+    auto ptr = new PUParticle3DTextureRotator();
     ptr->autorelease();
     return ptr;
+}
+
+void PUParticle3DTextureRotator::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DAffector::copyAttributesTo(affector);
+
+    PUParticle3DTextureRotator* textureRotator = static_cast<PUParticle3DTextureRotator*>(affector);
+    textureRotator->setRotation(getRotation()->clone());
+    textureRotator->setRotationSpeed(getRotationSpeed()->clone());
+    textureRotator->_useOwnRotationSpeed = _useOwnRotationSpeed;
 }
 
 NS_CC_END

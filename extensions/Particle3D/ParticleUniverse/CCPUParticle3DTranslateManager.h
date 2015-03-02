@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -27,15 +26,18 @@
 #define __CC_PU_PARTICLE_3D_TRANSLATE_MANAGER_H__
 
 #include "base/CCRef.h"
-//#include "extensions/Particle3D/ParticleUniverse/Script/Translater/CCParticle3DSystemTranslator.h"
-//#include "extensions/Particle3D/ParticleUniverse/Script/Translater/CCAliasTranslator.h"
-//#include "extensions/Particle3D/ParticleUniverse/Script/Translater/CCParticle3DTechniqueTranslator.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3DTranslator.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DTechniqueTranslator.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DRendererTranslator.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DMaterialTranslator.h"
-#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitterTranslator.h"
-#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffectorTranslator.h"
+//#include "3dparticle/ParticleUniverse/Script/Translater/CCParticle3DSystemTranslator.h"
+//#include "3dparticle/ParticleUniverse/Script/Translater/CCAliasTranslator.h"
+//#include "3dparticle/ParticleUniverse/Script/Translater/CCParticle3DTechniqueTranslator.h"
+#include "Particle3D/ParticleUniverse/CCPUParticleSystem3DTranslator.h"
+#include "Particle3D/ParticleUniverse/CCPUParticle3DTechniqueTranslator.h"
+#include "Particle3D/ParticleUniverse/CCPUParticle3DRendererTranslator.h"
+#include "Particle3D/ParticleUniverse/CCPUParticle3DMaterialTranslator.h"
+#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitterTranslator.h"
+#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffectorTranslator.h"
+#include "Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DEventHandlerTranslator.h"
+#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DObserverTranslator.h"
+#include "Particle3D/ParticleUniverse/ParticleBehaviours/CCPUParticle3DBehaviourTranslator.h"
 
 using namespace std;
 NS_CC_BEGIN
@@ -51,13 +53,15 @@ private:
         PUParticle3DEmitterTranslator _emitterTranslator;
         PUParticle3DAffectorTranslator _affectorTranslator;
         PUParticle3DMaterialTranslator _materialTranslator;
+		PUParticle3DEventHandlerTranslator _eventHandlerTranslator;
+		PUParticle3DObserverTranslator _observerTranslator;
+		PUParticle3DBehaviourTranslator _behaviourTranslator;
         //EmitterTranslator mEmitterTranslator;
         //AffectorTranslator mAffectorTranslator;
         //BehaviourTranslator mBehaviourTranslator;
         //ObserverTranslator mObserverTranslator;
         //ParticleEventHandlerTranslator mParticleEventHandlerTranslator;
         //ExternTranslator mExternTranslator;
-    
 
 public:
     

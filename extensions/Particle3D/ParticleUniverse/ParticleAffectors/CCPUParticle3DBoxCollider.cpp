@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DBoxCollider.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -245,6 +244,7 @@ void PUParticle3DBoxCollider::updatePUAffector( PUParticle3D *particle, float de
                 }
                 else
                 {
+                    AABB box;
                     populateAlignedBox(box,
                         _predictedPosition, 
                         particle->width, 
@@ -272,6 +272,7 @@ void PUParticle3DBoxCollider::updatePUAffector( PUParticle3D *particle, float de
 
 void PUParticle3DBoxCollider::preUpdateAffector( float deltaTime )
 {
+    PUParticle3DBaseCollider::preUpdateAffector(deltaTime);
     // Calculate the affectors' center position in worldspace, set the box and calculate the bounds
     // Applied scaling in V 1.3.1.
     populateAlignedBox(_box, getDerivedPosition(), _affectorScale.x * _width, _affectorScale.y * _height, _affectorScale.z * _depth);
@@ -280,9 +281,20 @@ void PUParticle3DBoxCollider::preUpdateAffector( float deltaTime )
 
 PUParticle3DBoxCollider* PUParticle3DBoxCollider::create()
 {
-    auto pbc = new (std::nothrow) PUParticle3DBoxCollider();
+    auto pbc = new PUParticle3DBoxCollider();
     pbc->autorelease();
     return pbc;
+}
+
+void PUParticle3DBoxCollider::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DBaseCollider::copyAttributesTo(affector);
+
+    PUParticle3DBoxCollider* boxCollider = static_cast<PUParticle3DBoxCollider*>(affector);
+    boxCollider->_width = _width;
+    boxCollider->_height = _height;
+    boxCollider->_depth = _depth;
+    boxCollider->_innerCollision = _innerCollision;
 }
 
 NS_CC_END

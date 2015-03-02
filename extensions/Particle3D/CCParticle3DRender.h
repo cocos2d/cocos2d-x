@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -45,16 +45,17 @@ class Texture2D;
  */
 class CC_DLL Particle3DRender : public Ref
 {
+    friend class ParticleSystem3D;
 public:
 
     virtual void render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem) = 0;
 
     /** Perform activities when a Renderer is started.
     */
-    virtual void notifyStart();
+    virtual void notifyStart(void);
     /** Perform activities when a Renderer is stopped.
     */
-    virtual void notifyStop();
+    virtual void notifyStop(void);
     /** Notify that the Particle System is rescaled.
     */
     virtual void notifyRescaled(const Vec3& scale);
@@ -68,12 +69,16 @@ public:
     
 CC_CONSTRUCTOR_ACCESS:
     Particle3DRender()
-        : _depthTest(true)
+        : _particleSystem(nullptr)
+        , _isVisible(true)
+        , _rendererScale(Vec3::ONE)
+        , _depthTest(true)
         , _depthWrite(false)
     {};
     virtual ~Particle3DRender(){};
     
 protected:
+    ParticleSystem3D *_particleSystem;
     bool  _isVisible;
     Vec3 _rendererScale;
     bool _depthTest;
@@ -97,7 +102,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
 
-    bool initQuadRender(const std::string& texFile);
+    void initQuadRender(const std::string& texFile);
     
 protected:
     MeshCommand* _meshCommand;

@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,8 +23,8 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DRendererTranslator.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DMaterialManager.h"
+#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/ParticleUniverse/CCPUParticle3DMaterialManager.h"
 
 NS_CC_BEGIN
 PUParticle3DRendererTranslator::PUParticle3DRendererTranslator()
@@ -246,8 +245,7 @@ void PUParticle3DRendererTranslator::translate(PUScriptCompiler* compiler, PUAbs
                 }
             }
         }
-
-        if (type == "Entity"){
+        else if (type == "Entity"){
             for(PUAbstractNodeList::iterator i = obj->children.begin(); i != obj->children.end(); ++i)
             {
                 if((*i)->type == ANT_PROPERTY)
@@ -271,11 +269,337 @@ void PUParticle3DRendererTranslator::translate(PUScriptCompiler* compiler, PUAbs
                 }
             }
         }
+        else if (type == "Box"){
+            if (material) 
+                _renderer = PUParticle3DBoxRender::create(texFolder + material->textureFile);
+            else
+                _renderer = PUParticle3DBoxRender::create();
+        }
+        else if (type == "Sphere"){
+            if (material) 
+                _renderer = PUParticle3DSphereRender::create(texFolder + material->textureFile);
+            else
+                _renderer = PUParticle3DSphereRender::create();
+        }
+        else if (type == "Beam"){
+            if (material) 
+                _renderer = PUParticle3DBeamRender::create(texFolder + material->textureFile);
+            else
+                _renderer = PUParticle3DBeamRender::create();
+
+            for(PUAbstractNodeList::iterator i = obj->children.begin(); i != obj->children.end(); ++i)
+            {
+                if((*i)->type == ANT_PROPERTY)
+                {
+                    PUPropertyAbstractNode* prop = reinterpret_cast<PUPropertyAbstractNode*>((*i));
+
+                    if (prop->name == token[TOKEN_UPDATE_INTERVAL])
+                    {
+                        // Property: update_interval
+                        if (passValidateProperty(compiler, prop, token[TOKEN_UPDATE_INTERVAL], VAL_REAL))
+                        {
+                            float val = 0.0f;
+                            if(getFloat(*prop->values.front(), &val))
+                            {
+                                static_cast<PUParticle3DBeamRender *>(_renderer)->setUpdateInterval(val);
+                            }
+                        }
+                    }
+                    else if (prop->name == token[TOKEN_BEAMRENDERER_UPDATE_INTERVAL])
+                    {
+                        // Property: beam_update_interval (deprecated and replaced by 'update_interval')
+                        if (passValidateProperty(compiler, prop, token[TOKEN_BEAMRENDERER_UPDATE_INTERVAL], VAL_REAL))
+                        {
+                            float val = 0.0f;
+                            if(getFloat(*prop->values.front(), &val))
+                            {
+                                static_cast<PUParticle3DBeamRender *>(_renderer)->setUpdateInterval(val);
+                            }
+                        }
+                    }
+                    else if (prop->name == token[TOKEN_BEAMRENDERER_DEVIATION])
+                    {
+                        // Property: beam_deviation
+                        if (passValidateProperty(compiler, prop, token[TOKEN_BEAMRENDERER_DEVIATION], VAL_REAL))
+                        {
+                            float val = 0.0f;
+                            if(getFloat(*prop->values.front(), &val))
+                            {
+                                static_cast<PUParticle3DBeamRender *>(_renderer)->setDeviation(val);
+                            }
+                        }
+                    }
+                    else if (prop->name == token[TOKEN_NUMBER_OF_SEGMENTS])
+                    {
+                        // Property: number_of_segments
+                        if (passValidateProperty(compiler, prop, token[TOKEN_NUMBER_OF_SEGMENTS], VAL_UINT))
+                        {
+                            unsigned int val = 0;
+                            if(getUInt(*prop->values.front(), &val))
+                            {
+                                static_cast<PUParticle3DBeamRender *>(_renderer)->setNumberOfSegments(val);
+                            }
+                        }
+                    }
+                    else if (prop->name == token[TOKEN_BEAMRENDERER_NUMBER_OF_SEGMENTS])
+                    {
+                        // Property: beam_number_segments (deprecated and replaced by 'number_of_segments')
+                        if (passValidateProperty(compiler, prop, token[TOKEN_BEAMRENDERER_NUMBER_OF_SEGMENTS], VAL_UINT))
+                        {
+                            unsigned int val = 0;
+                            if(getUInt(*prop->values.front(), &val))
+                            {
+                                static_cast<PUParticle3DBeamRender *>(_renderer)->setNumberOfSegments(val);
+                            }
+                        }
+                    }
+                    else if (prop->name == token[TOKEN_BEAMRENDERER_JUMP])
+                    {
+                        // Property: beam_jump_segments
+                        if (passValidateProperty(compiler, prop, token[TOKEN_BEAMRENDERER_JUMP], VAL_BOOL))
+                        {
+                            bool val;
+                            if(getBoolean(*prop->values.front(), &val))
+                            {
+                                static_cast<PUParticle3DBeamRender *>(_renderer)->setJump(val);
+                            }
+                        }
+                    }
+                    else if (prop->name == token[TOKEN_BEAMRENDERER_TEXCOORD_DIRECTION])
+                    {
+                        // Property: beam_texcoord_direction
+                        if (passValidateProperty(compiler, prop, token[TOKEN_BEAMRENDERER_TEXCOORD_DIRECTION], VAL_STRING))
+                        {
+                            std::string val;
+                            if(getString(*prop->values.front(), &val))
+                            {
+                                if (val == token[TOKEN_BEAMRENDERER_TCD_U])
+                                {
+                                    static_cast<PUParticle3DBeamRender *>(_renderer)->setTexCoordDirection(PUBillboardChain::TCD_U);
+                                }
+                                else if (val == token[TOKEN_BEAMRENDERER_TCD_V])
+                                {
+                                    static_cast<PUParticle3DBeamRender *>(_renderer)->setTexCoordDirection(PUBillboardChain::TCD_V);
+                                }
+                            }
+                        }
+                    }
+                    else if (prop->name == token[TOKEN_USE_VERTEX_COLOURS])
+                    {
+                        // Property: use_vertex_colours
+                        if (passValidateProperty(compiler, prop, token[TOKEN_USE_VERTEX_COLOURS], VAL_BOOL))
+                        {
+                            bool val;
+                            if(getBoolean(*prop->values.front(), &val))
+                            {
+                                static_cast<PUParticle3DBeamRender *>(_renderer)->setUseVertexColours(val);
+                            }
+                        }
+                    }
+                    else if (prop->name == token[TOKEN_BEAMRENDERER_VERTEX_COLOURS])
+                    {
+                        // Property: beam_vertex_colours (deprecated and replaced by 'use_vertex_colours')
+                        if (passValidateProperty(compiler, prop, token[TOKEN_BEAMRENDERER_VERTEX_COLOURS], VAL_BOOL))
+                        {
+                            bool val;
+                            if(getBoolean(*prop->values.front(), &val))
+                            {
+                                static_cast<PUParticle3DBeamRender *>(_renderer)->setUseVertexColours(val);
+                            }
+                        }
+                    }
+                    else if (prop->name == token[TOKEN_MAX_ELEMENTS])
+                    {
+                        // Property: max_elements
+                        if (passValidateProperty(compiler, prop, token[TOKEN_MAX_ELEMENTS], VAL_UINT))
+                        {
+                            unsigned int val = 0;
+                            if(getUInt(*prop->values.front(), &val))
+                            {
+                                static_cast<PUParticle3DBeamRender *>(_renderer)->setMaxChainElements(val);
+                            }
+                        }
+                    }
+                    else if (prop->name == token[TOKEN_BEAMRENDERER_MAX_ELEMENTS])
+                    {
+                        // Property: beam_max_elements (deprecated and replaced by 'max_elements')
+                        if (passValidateProperty(compiler, prop, token[TOKEN_BEAMRENDERER_MAX_ELEMENTS], VAL_UINT))
+                        {
+                            unsigned int val = 0;
+                            if(getUInt(*prop->values.front(), &val))
+                            {
+                                static_cast<PUParticle3DBeamRender *>(_renderer)->setMaxChainElements(val);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else if (type == "RibbonTrail"){
+            if (material) 
+                _renderer = PUParticle3DRibbonTrailRender::create(texFolder + material->textureFile);
+            else
+                _renderer = PUParticle3DRibbonTrailRender::create();
+
+            for(PUAbstractNodeList::iterator i = obj->children.begin(); i != obj->children.end(); ++i)
+            {
+                if((*i)->type == ANT_PROPERTY)
+                {
+                    PUPropertyAbstractNode* prop = reinterpret_cast<PUPropertyAbstractNode*>((*i));
+
+                    if (prop->name == token[TOKEN_USE_VERTEX_COLOURS])
+                    {
+                        // Property: use_vertex_colours
+                        if (passValidateProperty(compiler, prop, token[TOKEN_USE_VERTEX_COLOURS], VAL_BOOL))
+                        {
+                            bool val;
+                            if(getBoolean(*prop->values.front(), &val))
+                            {
+                                static_cast<PUParticle3DRibbonTrailRender *>(_renderer)->setUseVertexColors(val);
+                            }
+                        }
+                    }
+                    else if (prop->name == token[TOKEN_RIBBONTRAIL_VERTEX_COLOURS])
+                    {
+                        // Property: ribbontrail_vertex_colours (deprecated and replaced by 'use_vertex_colours')
+                        if (passValidateProperty(compiler, prop, token[TOKEN_RIBBONTRAIL_VERTEX_COLOURS], VAL_BOOL))
+                        {
+                            bool val;
+                            if(getBoolean(*prop->values.front(), &val))
+                            {
+                                static_cast<PUParticle3DRibbonTrailRender *>(_renderer)->setUseVertexColors(val);
+                            }
+                        }
+                    }
+                    else if (prop->name == token[TOKEN_MAX_ELEMENTS])
+                    {
+                        // Property: max_elements
+                        if (passValidateProperty(compiler, prop, token[TOKEN_MAX_ELEMENTS], VAL_UINT))
+                        {
+                            unsigned int val = 0;
+                            if(getUInt(*prop->values.front(), &val))
+                            {
+                                static_cast<PUParticle3DRibbonTrailRender *>(_renderer)->setMaxChainElements(val);
+                            }
+                        }
+                    }
+                    else if (prop->name == token[TOKEN_RIBBONTRAIL_MAX_ELEMENTS])
+                    {
+                        // Property: ribbontrail_max_elements (deprecated and replaced by 'max_elements')
+                        if (passValidateProperty(compiler, prop, token[TOKEN_RIBBONTRAIL_MAX_ELEMENTS], VAL_UINT))
+                        {
+                            unsigned int val = 0;
+                            if(getUInt(*prop->values.front(), &val))
+                            {
+                                static_cast<PUParticle3DRibbonTrailRender *>(_renderer)->setMaxChainElements(val);
+                            }
+                        }
+                    }
+                    else if (prop->name == token[TOKEN_RIBBONTRAIL_LENGTH])
+                    {
+                        // Property: ribbontrail_length
+                        if (passValidateProperty(compiler, prop, token[TOKEN_RIBBONTRAIL_MAX_ELEMENTS], VAL_REAL))
+                        {
+                            float val = 0;
+                            if(getFloat(*prop->values.front(), &val))
+                            {
+                                static_cast<PUParticle3DRibbonTrailRender *>(_renderer)->setTrailLength(val);
+                            }
+                        }
+                    }
+                    else if (prop->name == token[TOKEN_RIBBONTRAIL_WIDTH])
+                    {
+                        // Property: ribbontrail_width
+                        if (passValidateProperty(compiler, prop, token[TOKEN_RIBBONTRAIL_WIDTH], VAL_REAL))
+                        {
+                            float val = 0;
+                            if(getFloat(*prop->values.front(), &val))
+                            {
+                                static_cast<PUParticle3DRibbonTrailRender *>(_renderer)->setTrailWidth(val);
+                            }
+                        }
+                    }
+                    else if (prop->name == token[TOKEN_RANDOM_INITIAL_COLOUR])
+                    {
+                        // Property: random_initial_colour
+                        if (passValidateProperty(compiler, prop, token[TOKEN_RANDOM_INITIAL_COLOUR], VAL_BOOL))
+                        {
+                            bool val;
+                            if(getBoolean(*prop->values.front(), &val))
+                            {
+                                static_cast<PUParticle3DRibbonTrailRender *>(_renderer)->setRandomInitialColor(val);
+                            }
+                        }
+                    }
+                    else if (prop->name == token[TOKEN_RIBBONTRAIL_RANDOM_INITIAL_COLOUR])
+                    {
+                        // Property: ribbontrail_random_initial_colour (deprecated and replaced by 'random_initial_colour'))
+                        if (passValidateProperty(compiler, prop, token[TOKEN_RIBBONTRAIL_RANDOM_INITIAL_COLOUR], VAL_BOOL))
+                        {
+                            bool val;
+                            if(getBoolean(*prop->values.front(), &val))
+                            {
+                                static_cast<PUParticle3DRibbonTrailRender *>(_renderer)->setRandomInitialColor(val);
+                            }
+                        }
+                    }
+                    else if (prop->name == token[TOKEN_INITIAL_COLOUR])
+                    {
+                        // Property: initial_colour
+                        if (passValidateProperty(compiler, prop, token[TOKEN_INITIAL_COLOUR], VAL_COLOURVALUE))
+                        {
+                            Vec4 val;
+                            if(getVector4(prop->values.begin(), prop->values.end(), &val))
+                            {
+                                static_cast<PUParticle3DRibbonTrailRender *>(_renderer)->setInitialColor(val);
+                            }
+                        }
+                    }
+                    else if (prop->name == token[TOKEN_RIBBONTRAIL_INITIAL_COLOUR])
+                    {
+                        // Property: ribbontrail_initial_colour (deprecated and replaced by 'initial_colour')
+                        if (passValidateProperty(compiler, prop, token[TOKEN_RIBBONTRAIL_INITIAL_COLOUR], VAL_COLOURVALUE))
+                        {
+                            Vec4 val;
+                            if(getVector4(prop->values.begin(), prop->values.end(), &val))
+                            {
+                                static_cast<PUParticle3DRibbonTrailRender *>(_renderer)->setInitialColor(val);
+                            }
+                        }
+                    }
+                    else if (prop->name == token[TOKEN_COLOUR_CHANGE])
+                    {
+                        // Property: colour_change
+                        if (passValidateProperty(compiler, prop, token[TOKEN_COLOUR_CHANGE], VAL_COLOURVALUE))
+                        {
+                            Vec4 val;
+                            if(getVector4(prop->values.begin(), prop->values.end(), &val))
+                            {
+                                static_cast<PUParticle3DRibbonTrailRender *>(_renderer)->setColorChange(val);
+                            }
+                        }
+                    }
+                    else if (prop->name == token[TOKEN_RIBBONTRAIL_COLOUR_CHANGE])
+                    {
+                        // Property: ribbontrail_colour_change (deprecated and replaced by 'colour_change')
+                        if (passValidateProperty(compiler, prop, token[TOKEN_RIBBONTRAIL_COLOUR_CHANGE], VAL_COLOURVALUE))
+                        {
+                            Vec4 val;
+                            if(getVector4(prop->values.begin(), prop->values.end(), &val))
+                            {
+                                static_cast<PUParticle3DRibbonTrailRender *>(_renderer)->setColorChange(val);
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         if (_renderer){
             if (material){
                 _renderer->setDepthTest(material->depthTest);
                 _renderer->setDepthWrite(material->depthWrite);
+                static_cast<PUParticle3DRender *>(_renderer)->setRenderType(type);
             }
             system->setRender(_renderer);
         }

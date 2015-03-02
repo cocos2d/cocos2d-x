@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "extensions/Particle3D/CCParticleSystem3D.h"
-#include "extensions/Particle3D/CCParticle3DRender.h"
+#include "Particle3D/CCParticleSystem3D.h"
+#include "Particle3D/CCParticle3DRender.h"
 #include "renderer/CCMeshCommand.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTextureCache.h"
@@ -56,19 +56,9 @@ Particle3DQuadRender::~Particle3DQuadRender()
 
 Particle3DQuadRender* Particle3DQuadRender::create(const std::string& texFile)
 {
-    auto ret = new (std::nothrow)Particle3DQuadRender();
-    if (ret && ret->initQuadRender(texFile))
-    {
-        ret->autorelease();
-        return ret;
-    }
-    else
-    {
-        delete ret;
-        ret = nullptr;
-    }
-    CC_SAFE_DELETE(ret);
-    
+    auto ret = new Particle3DQuadRender();
+    ret->autorelease();
+    ret->initQuadRender(texFile);
     return ret;
 }
 
@@ -82,24 +72,14 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
     if (_vertexBuffer == nullptr){
         GLsizei stride = sizeof(Particle3DQuadRender::posuvcolor);
         _vertexBuffer = VertexBuffer::create(stride, 4 * particleSystem->getParticleQuota());
-        if (_vertexBuffer == nullptr)
-        {
-            CCLOG("Particle3DQuadRender::render create vertex buffer failed");
-            return;
-        }
         _vertexBuffer->retain();
     }
 
     if (_indexBuffer == nullptr){
         _indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, 6 * particleSystem->getParticleQuota());
-        if (_indexBuffer == nullptr)
-        {
-            CCLOG("Particle3DQuadRender::render create index buffer failed");
-            return;
-        }
         _indexBuffer->retain();
     }
-    ParticlePool::PoolList activeParticleList = particlePool.getActiveParticleList();
+    ParticlePool::PoolList activeParticleList = particlePool.getActiveDataList();
     if (_posuvcolors.size() < activeParticleList.size() * 4)
     {
         _posuvcolors.resize(activeParticleList.size() * 4);
@@ -165,7 +145,7 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
     renderer->addCommand(_meshCommand);
 }
 
-bool Particle3DQuadRender::initQuadRender( const std::string& texFile )
+void Particle3DQuadRender::initQuadRender( const std::string& texFile )
 {
     GLProgram* glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_PARTICLE_COLOR);
     if (!texFile.empty())
@@ -192,14 +172,12 @@ bool Particle3DQuadRender::initQuadRender( const std::string& texFile )
     //ret->_indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, 6 * 10000);
     //ret->_indexBuffer->retain();
 
-    _meshCommand = new (std::nothrow)MeshCommand();
+    _meshCommand = new MeshCommand();
     _meshCommand->setTransparent(true);
     _meshCommand->setDepthTestEnabled(_depthTest);
     _meshCommand->setDepthWriteEnabled(_depthWrite);
     _meshCommand->setCullFace(GL_BACK);
     _meshCommand->setCullFaceEnabled(true);
-    
-    return true;
 }
 
 void Particle3DQuadRender::setDepthTest( bool isDepthTest )
@@ -230,7 +208,7 @@ Particle3DModelRender::~Particle3DModelRender()
 
 Particle3DModelRender* Particle3DModelRender::create(const std::string& modelFile, const std::string &texFile)
 {
-    auto ret = new (std::nothrow) Particle3DModelRender();
+    auto ret = new Particle3DModelRender();
     ret->_modelFile = modelFile;
     ret->_texFile = texFile;
     return ret;
@@ -258,15 +236,16 @@ void Particle3DModelRender::render(Renderer* renderer, const Mat4 &transform, Pa
 
 
     const ParticlePool& particlePool = particleSystem->getParticlePool();
-    ParticlePool::PoolList activeParticleList = particlePool.getActiveParticleList();
+    ParticlePool::PoolList activeParticleList = particlePool.getActiveDataList();
     Mat4 mat;
     Mat4 rotMat;
     Mat4 sclMat;
     Quaternion q;
     transform.decompose(nullptr, &q, nullptr);
-    for (unsigned int i = 0; i < activeParticleList.size(); ++i)
+    unsigned int index = 0;
+    for (auto iter : activeParticleList)
     {
-        auto particle = activeParticleList[i];
+        auto particle = iter;
         q *= particle->orientation;
         Mat4::createRotation(q, &rotMat);
         sclMat.m[0] = particle->width / _spriteSize.x;
@@ -276,7 +255,7 @@ void Particle3DModelRender::render(Renderer* renderer, const Mat4 &transform, Pa
         mat.m[12] = particle->position.x;
         mat.m[13] = particle->position.y;
         mat.m[14] = particle->position.z;
-        _spriteList[i]->draw(renderer, mat, 0);
+        _spriteList[index++]->draw(renderer, mat, 0);
     }
 }
 

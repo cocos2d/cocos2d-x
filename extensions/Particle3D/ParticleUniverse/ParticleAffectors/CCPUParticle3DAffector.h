@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -28,7 +27,7 @@
 
 #include "base/CCRef.h"
 #include "math/CCMath.h"
-#include "extensions/Particle3D/CCParticle3DAffector.h"
+#include "Particle3D/CCParticle3DAffector.h"
 #include <vector>
 #include <string>
 
@@ -60,11 +59,11 @@ public:
     virtual void prepare();
     virtual void unPrepare();
     virtual void preUpdateAffector(float deltaTime);
-    virtual void updateAffector(Particle3D *particle, float deltaTime);
     virtual void updatePUAffector(PUParticle3D* particle, float delta);
     virtual void postUpdateAffector(float deltaTime);
     virtual void firstParticleUpdate(PUParticle3D *particle, float deltaTime);
     virtual void initParticleForEmission(PUParticle3D* particle);
+    void process(PUParticle3D* particle, float delta, bool firstParticle);
 
     void setLocalPosition(const Vec3 &pos) { _position = pos; };
     const Vec3 getLocalPosition() const { return _position; };
@@ -89,10 +88,21 @@ public:
     const std::string& getAffectorType(void) const {return _affectorType;};
     void setAffectorType(const std::string& affectorType) {_affectorType = affectorType;};
 
+    /** Add a ParticleEmitter name that excludes Particles emitted by this ParticleEmitter from being
+        affected.
+    */
+    void addEmitterToExclude(const std::string& emitterName);
+
+    /** Remove a ParticleEmitter name that excludes Particles emitted by this ParticleEmitter.
+    */
+    void removeEmitterToExclude(const std::string& emitterName);
+
     /** Todo
     */
     const std::string& getName(void) const {return _name;};
     void setName(const std::string& name) {_name = name;};
+
+    virtual void copyAttributesTo (PUParticle3DAffector* affector);
 
 CC_CONSTRUCTOR_ACCESS:
     PUParticle3DAffector();
@@ -121,6 +131,8 @@ protected:
 
         // Type of the affector
     std::string _affectorType;
+
+    std::vector<std::string> _excludedEmitters;
 
     // Name of the affector (optional)
     std::string _name;

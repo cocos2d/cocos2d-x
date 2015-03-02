@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -46,92 +46,10 @@ Particle3D::~Particle3D()
 
 }
 
-
-ParticlePool::ParticlePool()
-{
-
-}
-
-ParticlePool::~ParticlePool()
-{
-
-}
-
-Particle3D* ParticlePool::createParticle()
-{
-    if (_locked.empty()) return nullptr;
-    Particle3D* p = _locked.front();
-    _released.push_back(p);
-    _locked.erase(_locked.begin());
-    //_released.splice(_released.end(), _locked, _locked.begin());
-    return p;
-}
-
-void ParticlePool::lockLatestParticle()
-{
-    _locked.push_back(*_releasedIter);
-    _releasedIter = _released.erase(_releasedIter);
-    if (_releasedIter != _released.begin() && _releasedIter != _released.end())
-    {
-        --_releasedIter;
-    }
-}
-
-void ParticlePool::lockAllParticles()
-{
-    //_locked.splice(_locked.end(), _released);
-    _locked.insert(_locked.end(), _released.begin(), _released.end());
-    _released.clear();
-    _releasedIter = _released.begin();
-}
-
-Particle3D* ParticlePool::getFirst()
-{
-    _releasedIter = _released.begin();
-    if (_releasedIter == _released.end()) return nullptr;
-    return *_releasedIter;
-}
-
-Particle3D* ParticlePool::getNext()
-{
-    if (_releasedIter == _released.end()) return nullptr;
-    ++_releasedIter;
-    if (_releasedIter == _released.end()) return nullptr;
-    return *_releasedIter;
-}
-
-void ParticlePool::addParticle( Particle3D *particle )
-{
-    _locked.push_back(particle);
-}
-
-bool ParticlePool::empty() const
-{
-    return _released.empty();
-}
-
-void ParticlePool::removeAllParticles( bool needDelete /*= false*/ )
-{
-    lockAllParticles();
-    if (needDelete){
-        for (auto iter : _locked){
-            delete iter;
-        }
-        _locked.clear();
-    }
-    else{
-        _locked.clear();
-    }
-}
-
-const ParticlePool::PoolList& ParticlePool::getActiveParticleList() const
-{
-    return _released;
-}
-
 ParticleSystem3D::ParticleSystem3D()
 : _emitter(nullptr)
 , _render(nullptr)
+, _aliveParticlesCnt(0)
 , _particleQuota(0)
 , _state(State::STOP)
 , _blend(BlendFunc::ALPHA_NON_PREMULTIPLIED)
@@ -142,7 +60,7 @@ ParticleSystem3D::ParticleSystem3D()
 }
 ParticleSystem3D::~ParticleSystem3D()
 {
-    stopParticleSystem();
+    //stopParticle();
     removeAllAffector();
     CC_SAFE_RELEASE(_emitter);
     CC_SAFE_RELEASE(_render);
@@ -205,6 +123,7 @@ void ParticleSystem3D::setRender(Particle3DRender* render)
     {
         CC_SAFE_RELEASE(_render);
         _render = render;
+        _render->_particleSystem = this;
         CC_SAFE_RETAIN(_render);
     }
 }
@@ -262,7 +181,7 @@ void ParticleSystem3D::update(float delta)
 
 void ParticleSystem3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    if (getAliveParticleCount() && _render)
+    if (getAliveParticleCnt() && _render)
     {
         _render->render(renderer, transform, this);
     }

@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (C) 2013 Henry van Merode. All rights reserved.
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,7 +23,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DBaseCollider.h"
-#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -103,6 +102,9 @@ void PUParticle3DBaseCollider::populateAlignedBox( AABB& box, const Vec3& positi
 
 void PUParticle3DBaseCollider::calculateRotationSpeedAfterCollision( PUParticle3D* particle )
 {
+    if (particle->particleType != PUParticle3D::PT_VISUAL)
+        return;
+
     float signedFriction = CCRANDOM_0_1() > 0.5 ? -(_friction - 1) : (_friction - 1);
 
     particle->rotationSpeed *= signedFriction;
@@ -113,6 +115,17 @@ void PUParticle3DBaseCollider::preUpdateAffector( float deltaTime )
 {
     // Take scaled velocity into account
     _velocityScale = deltaTime * (static_cast<PUParticleSystem3D *>(_particleSystem))->getParticleSystemScaleVelocity();
+}
+
+void PUParticle3DBaseCollider::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DAffector::copyAttributesTo(affector);
+
+    PUParticle3DBaseCollider* baseCollider = static_cast<PUParticle3DBaseCollider*>(affector);
+    baseCollider->_bouncyness = _bouncyness;
+    baseCollider->_friction = _friction;
+    baseCollider->_intersectionType = _intersectionType;
+    baseCollider->_collisionType = _collisionType;
 }
 
 NS_CC_END
