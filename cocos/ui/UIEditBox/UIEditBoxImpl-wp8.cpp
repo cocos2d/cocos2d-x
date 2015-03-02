@@ -133,10 +133,10 @@ void UIEditBoxImplWp8::setFont( const char* pFontName, int fontSize )
 	}
 }
 
-void UIEditBoxImplWp8::setFontColor( const Color3B& color )
+void UIEditBoxImplWp8::setFontColor( const Color4B& color )
 {
 	m_colText = color;
-	m_pLabel->setColor(color);
+	m_pLabel->setTextColor(color);
 }
 
 void UIEditBoxImplWp8::setPlaceholderFont( const char* pFontName, int fontSize )
@@ -147,10 +147,10 @@ void UIEditBoxImplWp8::setPlaceholderFont( const char* pFontName, int fontSize )
 	}
 }
 
-void UIEditBoxImplWp8::setPlaceholderFontColor( const Color3B& color )
+void UIEditBoxImplWp8::setPlaceholderFontColor( const Color4B& color )
 {
 	m_colPlaceHolder = color;
-	m_pLabelPlaceHolder->setColor(color);
+	m_pLabelPlaceHolder->setTextColor(color);
 }
 
 void UIEditBoxImplWp8::setInputMode( EditBox::InputMode inputMode )

@@ -105,10 +105,10 @@ void EditBoxImplAndroid::setFont(const char* pFontName, int fontSize)
 	}
 }
 
-void EditBoxImplAndroid::setFontColor(const Color3B& color)
+void EditBoxImplAndroid::setFontColor(const Color4B& color)
 {
     _colText = color;
-    _label->setColor(color);
+    _label->setTextColor(color);
 }
 
 void EditBoxImplAndroid::setPlaceholderFont(const char* pFontName, int fontSize)
@@ -119,10 +119,10 @@ void EditBoxImplAndroid::setPlaceholderFont(const char* pFontName, int fontSize)
 	}
 }
 
-void EditBoxImplAndroid::setPlaceholderFontColor(const Color3B& color)
+void EditBoxImplAndroid::setPlaceholderFontColor(const Color4B& color)
 {
     _colPlaceHolder = color;
-    _labelPlaceHolder->setColor(color);
+    _labelPlaceHolder->setTextColor(color);
 }
 
 void EditBoxImplAndroid::setInputMode(EditBox::InputMode inputMode)

@@ -316,6 +316,7 @@ namespace ui {
              * Set the font color of the widget's text.
              */
             void setFontColor(const Color3B& color);
+            void setFontColor(const Color4B& color);
             
             /**
              * Set the placeholder's font.
@@ -338,9 +339,9 @@ namespace ui {
             
             /**
              * Set the font color of the placeholder text when the edit box is empty.
-             * Not supported on IOS.
              */
             void setPlaceholderFontColor(const Color3B& color);
+            void setPlaceholderFontColor(const Color4B& color);
             
             /**
              * Set a text in the edit box that acts as a placeholder when an
@@ -463,8 +464,8 @@ namespace ui {
             int _fontSize;
             int _placeholderFontSize;
             
-            Color3B _colText;
-            Color3B _colPlaceHolder;
+            Color4B _colText;
+            Color4B _colPlaceHolder;
             
             int   _maxLength;
             float _adjustHeight;

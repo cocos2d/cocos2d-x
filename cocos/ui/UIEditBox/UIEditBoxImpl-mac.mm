@@ -370,16 +370,16 @@ void EditBoxImplMac::setPlaceholderFont(const char* pFontName, int fontSize)
     }
 }
 
-void EditBoxImplMac::setFontColor(const Color3B& color)
+void EditBoxImplMac::setFontColor(const Color4B& color)
 {
-    NSColor *newColor = [NSColor colorWithCalibratedRed:color.r / 255.0f green:color.g / 255.0f blue:color.b / 255.0f alpha:1.0f];
+    NSColor *newColor = [NSColor colorWithCalibratedRed:color.r / 255.0f green:color.g / 255.0f blue:color.b / 255.0f alpha:color.a / 255.f];
     _sysEdit.textField.textColor = newColor;
     _sysEdit.secureTextField.textColor = newColor;
 }
-
-void EditBoxImplMac::setPlaceholderFontColor(const Color3B& color)
+    
+void EditBoxImplMac::setPlaceholderFontColor(const Color4B& color)
 {
-    NSColor *nsColor = [NSColor colorWithCalibratedRed:color.r/255.f green:color.g / 255.f blue:color.b / 255.f alpha:1.0f];
+    NSColor *nsColor = [NSColor colorWithCalibratedRed:color.r/255.f green:color.g / 255.f blue:color.b / 255.f alpha:color.a / 255.f];
     [_sysEdit.placeholderAttributes setObject:nsColor forKey:NSForegroundColorAttributeName];
     
     /* reload placeholder */

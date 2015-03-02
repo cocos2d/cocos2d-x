@@ -556,10 +556,10 @@ void EditBoxImplWin::setFont(const char* pFontName, int fontSize)
 	}
 }
 
-void EditBoxImplWin::setFontColor(const Color3B& color)
+void EditBoxImplWin::setFontColor(const Color4B& color)
 {
     _colText = color;
-    _label->setColor(color);
+    _label->setTextColor(color);
 }
 
 void EditBoxImplWin::setPlaceholderFont(const char* pFontName, int fontSize)
@@ -570,10 +570,10 @@ void EditBoxImplWin::setPlaceholderFont(const char* pFontName, int fontSize)
 	}
 }
 
-void EditBoxImplWin::setPlaceholderFontColor(const Color3B& color)
+void EditBoxImplWin::setPlaceholderFontColor(const Color4B& color)
 {
     _colPlaceHolder = color;
-    _labelPlaceHolder->setColor(color);
+    _labelPlaceHolder->setTextColor(color);
 }
 
 void EditBoxImplWin::setInputMode(EditBox::InputMode inputMode)
