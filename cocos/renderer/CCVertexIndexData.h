@@ -68,7 +68,7 @@ public:
     virtual ~VertexData();
     
     // @brief Return the number of vertex streams
-    size_t getVertexStreamCount() const;
+    ssize_t getVertexStreamCount() const;
     
     // @brief add vertex stream descriptors to a buffer 
     CC_DEPRECATED(v3) bool setStream(GLArrayBuffer* buffer, const VertexAttribute& stream) { return addStream(buffer, stream); }
@@ -83,7 +83,7 @@ public:
     VertexAttribute* getStreamAttribute(int semantic);
         
     // @brief update and draw the buffer.
-    size_t draw(size_t start = 0, size_t count = 0);
+    ssize_t draw(ssize_t start = 0, ssize_t count = 0);
     
     // @brief true/false if all vertex buffers are empty
     bool empty() const;
@@ -92,10 +92,10 @@ public:
     void clear();
     
     // @brief returns the count of vertices added
-    size_t getCount() const;
+    ssize_t getCount() const;
     
     // @brief returns the capacity of the buffer in bytes
-    size_t getCapacity() const;
+    ssize_t getCapacity() const;
 
     // @brief returns the dirty status of the data or vertex streams
     bool isDirty() const;
@@ -133,7 +133,7 @@ protected:
     VertexData(Primitive primitive);
     
     bool determineInterleave() const;
-    void append(GLArrayBuffer* buffer, void* source, size_t count = 1);
+    void append(GLArrayBuffer* buffer, void* source, ssize_t count = 1);
     int DataTypeToGL(DataType type);
 
 protected:

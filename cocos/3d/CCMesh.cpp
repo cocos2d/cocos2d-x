@@ -89,6 +89,8 @@ Mesh* Mesh::create(const std::vector<float>& positions, const std::vector<float>
     att.size = 3;
     att.type = GL_FLOAT;
     att.attribSizeBytes = att.size * sizeof(float);
+
+    CCASSERT(att.attribSizeBytes < 65536, "Too big");
     
     if (positions.size())
     {
@@ -152,6 +154,8 @@ Mesh* Mesh::create(const std::vector<float>& vertices, int perVertexSizeInFloat,
 
 Mesh* Mesh::create(const std::string& name, MeshIndexData* indexData, MeshSkin* skin)
 {
+    CCASSERT(indexData && skin, "indexData and skin must not be null");
+
     auto state = new (std::nothrow) Mesh();
     state->autorelease();
     state->bindMeshCommand();
@@ -279,7 +283,7 @@ void Mesh::setBlendFunc(const BlendFunc &blendFunc)
         bindMeshCommand();
     }
 }
-const BlendFunc &Mesh::getBlendFunc() const
+const BlendFunc& Mesh::getBlendFunc() const
 {
     return _blend;
 }

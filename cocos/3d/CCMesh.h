@@ -127,6 +127,7 @@ CC_CONSTRUCTOR_ACCESS:
     void calcuateAABB();
     
     void bindMeshCommand();
+
 protected:
     Texture2D* _texture;  //texture that submesh is using
     MeshSkin*  _skin;     //skin
@@ -134,11 +135,11 @@ protected:
     bool       _isTransparent; // is this mesh transparent, it is a property of material in fact
     
     std::string  _name;
-    MeshIndexData*     _meshIndexData;
+    MeshIndexData*  _meshIndexData;
     GLProgramState* _glProgramState;
     MeshCommand     _meshCommand;
     BlendFunc       _blend;
-    AABB         _aabb;
+    AABB            _aabb;
     std::function<void()> _visibleChanged;
 };
 
