@@ -52,10 +52,10 @@ public:
 
     /** Perform activities when a Renderer is started.
     */
-    virtual void notifyStart(void);
+    virtual void notifyStart();
     /** Perform activities when a Renderer is stopped.
     */
-    virtual void notifyStop(void);
+    virtual void notifyStop();
     /** Notify that the Particle System is rescaled.
     */
     virtual void notifyRescaled(const Vec3& scale);
@@ -102,7 +102,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
 
-    void initQuadRender(const std::string& texFile);
+    bool initQuadRender(const std::string& texFile);
     
 protected:
     MeshCommand* _meshCommand;

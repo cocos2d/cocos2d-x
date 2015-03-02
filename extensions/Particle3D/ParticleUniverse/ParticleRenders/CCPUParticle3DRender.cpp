@@ -58,8 +58,14 @@ static bool compareParticle3D(PUParticle3D* left, PUParticle3D* right)
 PUParticle3DQuadRender* PUParticle3DQuadRender::create(const std::string& texFile)
 {
     auto ret = new (std::nothrow) PUParticle3DQuadRender();
-    ret->autorelease();
-    ret->initRender(texFile);
+    if (ret && ret->initRender(texFile))
+    {
+        ret->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(ret);
+    }
     return ret;
 }
 
@@ -507,7 +513,7 @@ PUParticle3DEntityRender::~PUParticle3DEntityRender()
     CC_SAFE_RELEASE(_indexBuffer);
 }
 
-void PUParticle3DEntityRender::initRender( const std::string &texFile )
+bool PUParticle3DEntityRender::initRender( const std::string &texFile )
 {
     GLProgram* glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_PARTICLE_COLOR);
     if (!texFile.empty())
@@ -537,6 +543,7 @@ void PUParticle3DEntityRender::initRender( const std::string &texFile )
     _meshCommand->setDepthWriteEnabled(_depthWrite);
     _meshCommand->setCullFace(GL_BACK);
     _meshCommand->setCullFaceEnabled(true);
+    return true;
 }
 
 void PUParticle3DEntityRender::setDepthTest( bool isDepthTest )
@@ -567,10 +574,16 @@ PUParticle3DBoxRender::~PUParticle3DBoxRender()
 
 PUParticle3DBoxRender* PUParticle3DBoxRender::create( const std::string &texFile )
 {
-    auto br = new (std::nothrow) PUParticle3DBoxRender();
-    br->autorelease();
-    br->initRender(texFile);
-    return br;
+    auto ret = new (std::nothrow) PUParticle3DBoxRender();
+    if (ret && ret->initRender(texFile))
+    {
+        ret->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(ret);
+    }
+    return ret;
 }
 
 void PUParticle3DBoxRender::render( Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem )
@@ -718,10 +731,16 @@ PUParticle3DBoxRender* PUParticle3DBoxRender::clone()
 
 PUParticle3DSphereRender* PUParticle3DSphereRender::create( const std::string &texFile)
 {
-    auto sr = new (std::nothrow) PUParticle3DSphereRender();
-    sr->autorelease();
-    sr->initRender(texFile);
-    return sr;
+    auto ret = new (std::nothrow) PUParticle3DSphereRender();
+    if (ret && ret->initRender(texFile))
+    {
+        ret->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(ret);
+    }
+    return ret;
 }
 
 void PUParticle3DSphereRender::render( Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem )

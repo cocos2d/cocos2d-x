@@ -368,6 +368,7 @@ protected:
     void notifyRescaled(const Vec3 &scl);
     void initParticleForEmission(PUParticle3D* particle);
     void initParticleForExpiration(PUParticle3D* particle, float timeElapsed);
+    void forceStopParticleSystem();
     
     inline bool isExpired(PUParticle3D* particle, float timeElapsed);
 

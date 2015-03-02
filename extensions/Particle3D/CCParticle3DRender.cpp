@@ -56,9 +56,16 @@ Particle3DQuadRender::~Particle3DQuadRender()
 
 Particle3DQuadRender* Particle3DQuadRender::create(const std::string& texFile)
 {
-    auto ret = new (std::nothrow) Particle3DQuadRender();
-    ret->autorelease();
-    ret->initQuadRender(texFile);
+    auto ret = new (std::nothrow)Particle3DQuadRender();
+    if (ret && ret->initQuadRender(texFile))
+    {
+        ret->autorelease();
+    }
+    else
+    {
+        CC_SAFE_DELETE(ret);
+    }
+
     return ret;
 }
 
@@ -72,11 +79,21 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
     if (_vertexBuffer == nullptr){
         GLsizei stride = sizeof(Particle3DQuadRender::posuvcolor);
         _vertexBuffer = VertexBuffer::create(stride, 4 * particleSystem->getParticleQuota());
+        if (_vertexBuffer == nullptr)
+        {
+            CCLOG("Particle3DQuadRender::render create vertex buffer failed");
+            return;
+        }
         _vertexBuffer->retain();
     }
 
     if (_indexBuffer == nullptr){
         _indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, 6 * particleSystem->getParticleQuota());
+        if (_indexBuffer == nullptr)
+        {
+            CCLOG("Particle3DQuadRender::render create index buffer failed");
+            return;
+        }
         _indexBuffer->retain();
     }
     ParticlePool::PoolList activeParticleList = particlePool.getActiveDataList();
@@ -145,7 +162,7 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
     renderer->addCommand(_meshCommand);
 }
 
-void Particle3DQuadRender::initQuadRender( const std::string& texFile )
+bool Particle3DQuadRender::initQuadRender( const std::string& texFile )
 {
     GLProgram* glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_PARTICLE_COLOR);
     if (!texFile.empty())
@@ -178,6 +195,7 @@ void Particle3DQuadRender::initQuadRender( const std::string& texFile )
     _meshCommand->setDepthWriteEnabled(_depthWrite);
     _meshCommand->setCullFace(GL_BACK);
     _meshCommand->setCullFaceEnabled(true);
+    return true;
 }
 
 void Particle3DQuadRender::setDepthTest( bool isDepthTest )
@@ -260,12 +278,12 @@ void Particle3DModelRender::render(Renderer* renderer, const Mat4 &transform, Pa
 }
 
 
-void Particle3DRender::notifyStart( void )
+void Particle3DRender::notifyStart()
 {
     setVisible(true);
 }
 
-void Particle3DRender::notifyStop( void )
+void Particle3DRender::notifyStop()
 {
     setVisible(false);
 }

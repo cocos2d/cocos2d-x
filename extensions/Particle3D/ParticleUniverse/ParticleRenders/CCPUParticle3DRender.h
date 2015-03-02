@@ -74,7 +74,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
 
-    void initRender(const std::string &texFile);
+    bool initRender(const std::string &texFile);
 
 protected:
 

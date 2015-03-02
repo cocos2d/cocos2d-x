@@ -40,7 +40,7 @@ class Particle3DEmitter;
 class Particle3DAffector;
 class Particle3DRender;
 
-struct CC_DLL Particle3D : Ref
+struct CC_DLL Particle3D
 {
     Particle3D();
     virtual ~Particle3D();
@@ -123,7 +123,6 @@ public:
     const PoolList& getUnActiveDataList() const { return _locked; };
 
     void addData(T* data){
-        data->retain();
         _locked.push_back(data); 
     };
 
@@ -132,7 +131,7 @@ public:
     void removeAllDatas(){
         lockAllDatas();
         for (auto iter : _locked){
-            iter->release();
+            delete iter;
         }
         _locked.clear();
     };

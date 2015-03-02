@@ -288,12 +288,7 @@ void PUParticleSystem3D::startParticleSystem()
 
     if (_state != State::RUNNING)
     {
-        //if (_emitter)
-        //{
-        //    auto emitter = static_cast<PUParticle3DEmitter*>(_emitter);
-        //    emitter->notifyStart();
-        //}
-
+        forceStopParticleSystem();
         if (_render)
             _render->notifyStart();
 
@@ -410,28 +405,8 @@ void PUParticleSystem3D::update(float delta)
         if (_state == State::PAUSE) 
             return;
         else if (_state == State::STOP && getAliveParticleCount() <= 0){
-            if (!_emitters.empty()){
-                if (_render)
-                    _render->notifyStop();
-
-                for (auto &it : _observers){
-                    it->notifyStop();
-                }
-
-                for (auto& it : _emitters) {
-                    auto emitter = static_cast<PUParticle3DEmitter*>(it);
-                    emitter->notifyStop();
-                }
-
-                for (auto& it : _affectors) {
-                    auto affector = static_cast<PUParticle3DAffector*>(it);
-                    affector->notifyStop();
-                }
-
-                unscheduleUpdate();
-                unPrepared();
-                return;
-            }
+            forceStopParticleSystem();
+            return;
         }
     }
 
@@ -505,7 +480,6 @@ void PUParticleSystem3D::prepared()
                         p->particleType = PUParticle3D::PT_EMITTER;
                         p->particleEntityPtr = emitted->clone();
                         p->particleEntityPtr->retain();
-                        p->autorelease();
                         p->copyBehaviours(_behaviourTemplates);
                         _emittedEmitterParticlePool[emitted->getName()].addData(p);
                     }
@@ -518,7 +492,6 @@ void PUParticleSystem3D::prepared()
                         p->particleType = PUParticle3D::PT_TECHNIQUE;
                         p->particleEntityPtr = clonePS;
                         p->particleEntityPtr->retain();
-                        p->autorelease();
                         p->copyBehaviours(_behaviourTemplates);
                         _emittedSystemParticlePool[emitted->getName()].addData(p);
                         clonePS->prepared();
@@ -530,7 +503,6 @@ void PUParticleSystem3D::prepared()
 
             for (unsigned int i = 0; i < _particleQuota; ++i){
                 auto p = new (std::nothrow) PUParticle3D();
-                p->autorelease();
                 p->copyBehaviours(_behaviourTemplates);
                 _particlePool.addData(p);
             }
@@ -551,45 +523,46 @@ void PUParticleSystem3D::unPrepared()
     //     auto emitter = static_cast<PUParticle3DEmitter*>(_emitter);
     //    emitter->unPrepare();
     //}
+    if (_prepared){
+        if (_render)
+            static_cast<PUParticle3DRender *>(_render)->unPrepare();
 
-    if (_render)
-        static_cast<PUParticle3DRender *>(_render)->unPrepare();
-
-    for (auto it : _behaviourTemplates) {
-        it->unPrepare();
-    }
-
-    for (auto it : _emitters) {
-        if (it->isEnabled())
-            (static_cast<PUParticle3DEmitter*>(it))->unPrepare();
-    }
-
-    for (auto it : _affectors) {
-        if (it->isEnabled())
-            (static_cast<PUParticle3DAffector*>(it))->unPrepare();
-    }
-
-    _particlePool.lockAllDatas();
-    for (auto &iter : _emittedEmitterParticlePool){
-        PUParticle3D *particle = static_cast<PUParticle3D *>(iter.second.getFirst());
-        while (particle)
-        {
-            static_cast<PUParticle3DEmitter*>(particle->particleEntityPtr)->unPrepare();
-            particle = static_cast<PUParticle3D *>(iter.second.getNext());
+        for (auto it : _behaviourTemplates) {
+            it->unPrepare();
         }
-        iter.second.lockAllDatas();
-    }
 
-    for (auto &iter : _emittedSystemParticlePool){
-        PUParticle3D *particle = static_cast<PUParticle3D *>(iter.second.getFirst());
-        while (particle)
-        {
-            static_cast<PUParticleSystem3D*>(particle->particleEntityPtr)->unPrepared();
-            particle = static_cast<PUParticle3D *>(iter.second.getNext());
+        for (auto it : _emitters) {
+            if (it->isEnabled())
+                (static_cast<PUParticle3DEmitter*>(it))->unPrepare();
         }
-        iter.second.lockAllDatas();
+
+        for (auto it : _affectors) {
+            if (it->isEnabled())
+                (static_cast<PUParticle3DAffector*>(it))->unPrepare();
+        }
+
+        _particlePool.lockAllDatas();
+        for (auto &iter : _emittedEmitterParticlePool){
+            PUParticle3D *particle = static_cast<PUParticle3D *>(iter.second.getFirst());
+            while (particle)
+            {
+                static_cast<PUParticle3DEmitter*>(particle->particleEntityPtr)->unPrepare();
+                particle = static_cast<PUParticle3D *>(iter.second.getNext());
+            }
+            iter.second.lockAllDatas();
+        }
+
+        for (auto &iter : _emittedSystemParticlePool){
+            PUParticle3D *particle = static_cast<PUParticle3D *>(iter.second.getFirst());
+            while (particle)
+            {
+                static_cast<PUParticleSystem3D*>(particle->particleEntityPtr)->unPrepared();
+                particle = static_cast<PUParticle3D *>(iter.second.getNext());
+            }
+            iter.second.lockAllDatas();
+        }
+        _prepared = false;
     }
-    _prepared = false;
 }
 
 void PUParticleSystem3D::preUpdator( float elapsedTime )
@@ -1385,6 +1358,31 @@ int PUParticleSystem3D::getAliveParticleCount() const
         }
     }
     return sz;
+}
+
+void PUParticleSystem3D::forceStopParticleSystem()
+{
+    if (!_emitters.empty()){
+        if (_render)
+            _render->notifyStop();
+
+        for (auto &it : _observers){
+            it->notifyStop();
+        }
+
+        for (auto& it : _emitters) {
+            auto emitter = static_cast<PUParticle3DEmitter*>(it);
+            emitter->notifyStop();
+        }
+
+        for (auto& it : _affectors) {
+            auto affector = static_cast<PUParticle3DAffector*>(it);
+            affector->notifyStop();
+        }
+
+        unscheduleUpdate();
+        unPrepared();
+    }
 }
 
 NS_CC_END

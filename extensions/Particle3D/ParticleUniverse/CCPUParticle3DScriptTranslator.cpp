@@ -240,10 +240,10 @@ bool PUScriptTranslator::getQuaternion(PUAbstractNodeList::const_iterator i,
 //-------------------------------------------------------------------------
 bool PUScriptTranslator::passValidateProperty(PUScriptCompiler* compiler,
                                             PUPropertyAbstractNode* prop,
-                                            const std::string& token,
+                                            const std::string& token2,
                                             ValidationType validationType)
 {
-    if (!passValidatePropertyNoValues(compiler, prop, token))
+    if (!passValidatePropertyNoValues(compiler, prop, token2))
     {
         return false;
     }
@@ -253,52 +253,52 @@ bool PUScriptTranslator::passValidateProperty(PUScriptCompiler* compiler,
     {
         case VAL_BOOL:
         {
-            ret = passValidatePropertyNumberOfValues(compiler, prop, token, 1) && passValidatePropertyValidBool(compiler, prop);
+            ret = passValidatePropertyNumberOfValues(compiler, prop, token2, 1) && passValidatePropertyValidBool(compiler, prop);
         }
             break;
         case VAL_COLOURVALUE:
         {
-            ret = passValidatePropertyNumberOfValuesRange(compiler, prop, token, 3, 4);
+            ret = passValidatePropertyNumberOfValuesRange(compiler, prop, token2, 3, 4);
         }
             break;
         case VAL_INT:
         {
-            ret = passValidatePropertyNumberOfValues(compiler, prop, token, 1) && passValidatePropertyValidInt(compiler, prop);
+            ret = passValidatePropertyNumberOfValues(compiler, prop, token2, 1) && passValidatePropertyValidInt(compiler, prop);
         }
             break;
         case VAL_QUATERNION:
         {
-            ret = passValidatePropertyNumberOfValues(compiler, prop, token, 4) && passValidatePropertyValidQuaternion(compiler, prop);
+            ret = passValidatePropertyNumberOfValues(compiler, prop, token2, 4) && passValidatePropertyValidQuaternion(compiler, prop);
         }
             break;
         case VAL_REAL:
         {
-            ret = passValidatePropertyNumberOfValues(compiler, prop, token, 1) && passValidatePropertyValidReal(compiler, prop);
+            ret = passValidatePropertyNumberOfValues(compiler, prop, token2, 1) && passValidatePropertyValidReal(compiler, prop);
         }
             break;
         case VAL_STRING:
         {
-            ret = passValidatePropertyNumberOfValues(compiler, prop, token, 1);
+            ret = passValidatePropertyNumberOfValues(compiler, prop, token2, 1);
         }
             break;
         case VAL_UINT:
         {
-            ret = passValidatePropertyNumberOfValues(compiler, prop, token, 1) && passValidatePropertyValidUint(compiler, prop);
+            ret = passValidatePropertyNumberOfValues(compiler, prop, token2, 1) && passValidatePropertyValidUint(compiler, prop);
         }
             break;
         case VAL_VECTOR2:
         {
-            ret = passValidatePropertyNumberOfValues(compiler, prop, token, 2) && passValidatePropertyValidVector2(compiler, prop);
+            ret = passValidatePropertyNumberOfValues(compiler, prop, token2, 2) && passValidatePropertyValidVector2(compiler, prop);
         }
             break;
         case VAL_VECTOR3:
         {
-            ret = passValidatePropertyNumberOfValues(compiler, prop, token, 3) && passValidatePropertyValidVector3(compiler, prop);
+            ret = passValidatePropertyNumberOfValues(compiler, prop, token2, 3) && passValidatePropertyValidVector3(compiler, prop);
         }
             break;
         case VAL_VECTOR4:
         {
-            ret = passValidatePropertyNumberOfValues(compiler, prop, token, 4) && passValidatePropertyValidVector4(compiler, prop);
+            ret = passValidatePropertyNumberOfValues(compiler, prop, token2, 4) && passValidatePropertyValidVector4(compiler, prop);
         }
             break;
     }
@@ -309,11 +309,11 @@ bool PUScriptTranslator::passValidateProperty(PUScriptCompiler* compiler,
 //-------------------------------------------------------------------------
 bool PUScriptTranslator::passValidatePropertyNoValues(PUScriptCompiler* compiler,
                                                     PUPropertyAbstractNode* prop,
-                                                    const std::string& token)
+                                                    const std::string& token2)
 {
     if(prop->values.empty())
     {
-//        compiler->addError(ScriptCompiler::CE_INVALIDPARAMETERS, prop->file, prop->line, "PU Compiler: No values found for " + token + ".");
+//        compiler->addError(ScriptCompiler::CE_INVALIDPARAMETERS, prop->file, prop->line, "PU Compiler: No values found for " + token2 + ".");
         return false;
     }
     return true;
@@ -321,7 +321,7 @@ bool PUScriptTranslator::passValidatePropertyNoValues(PUScriptCompiler* compiler
 //-------------------------------------------------------------------------
 bool PUScriptTranslator::passValidatePropertyNumberOfValues(PUScriptCompiler* compiler,
                                                           PUPropertyAbstractNode* prop,
-                                                          const std::string& token,
+                                                          const std::string& token2,
                                                           unsigned short numberOfValues)
 {
     if(prop->values.size() > numberOfValues)
@@ -329,7 +329,7 @@ bool PUScriptTranslator::passValidatePropertyNumberOfValues(PUScriptCompiler* co
 //        compiler->addError(ScriptCompiler::CE_FEWERPARAMETERSEXPECTED,
 //                           prop->file,
 //                           prop->line,
-//                           "PU Compiler: " + token + " must have " + StringConverter::toString(numberOfValues) + " argument(s).");
+//                           "PU Compiler: " + token2 + " must have " + StringConverter::toString(numberOfValues) + " argument(s).");
         return false;
     }
     return true;
@@ -337,7 +337,7 @@ bool PUScriptTranslator::passValidatePropertyNumberOfValues(PUScriptCompiler* co
 //-------------------------------------------------------------------------
 bool PUScriptTranslator::passValidatePropertyNumberOfValuesRange(PUScriptCompiler* compiler,
                                                                PUPropertyAbstractNode* prop,
-                                                               const std::string& token,
+                                                               const std::string& token2,
                                                                unsigned short minNumberOfValues,
                                                                unsigned short maxNumberOfValues)
 {
@@ -346,7 +346,7 @@ bool PUScriptTranslator::passValidatePropertyNumberOfValuesRange(PUScriptCompile
 //        compiler->addError(ScriptCompiler::CE_FEWERPARAMETERSEXPECTED,
 //                           prop->file,
 //                           prop->line,
-//                           "PU Compiler: " + token + " must have between" +
+//                           "PU Compiler: " + token2 + " must have between" +
 //                           StringConverter::toString(minNumberOfValues) +
 //                           " and " +
 //                           StringConverter::toString(maxNumberOfValues) +
@@ -471,9 +471,9 @@ bool PUScriptTranslator::passValidatePropertyValidQuaternion(PUScriptCompiler* c
 }
 //-------------------------------------------------------------------------
 void PUScriptTranslator::errorUnexpectedToken(PUScriptCompiler* compiler, 
-                                            PUAbstractNode* token)
+                                            PUAbstractNode* token2)
 {
-//    CCLOGERROR("PU Compiler: token is not recognized tokenFile:%s tokenLine:%s",)
+//    CCLOGERROR("PU Compiler: token2 is not recognized tokenFile:%s tokenLine:%s",)
 //    printf()
 //    compiler->addError(ScriptCompiler::CE_UNEXPECTEDTOKEN, token.getPointer()->file, token.getPointer()->line, 
 //                       );
