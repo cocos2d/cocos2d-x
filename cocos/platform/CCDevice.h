@@ -85,7 +85,7 @@ public:
      *  Stop any vibrate currently in progress.
      *  If vibrate is not supported, then invoking this method has no effect.
      */
-	static void stopVibrate();
+    static void stopVibrate();
 
 private:
     CC_DISALLOW_IMPLICIT_CONSTRUCTORS(Device);
