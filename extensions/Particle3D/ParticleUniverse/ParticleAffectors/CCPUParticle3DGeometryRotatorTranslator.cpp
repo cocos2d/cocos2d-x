@@ -74,7 +74,7 @@ bool PUParticle3DGeometryRotatorTranslator::translateChildProperty( PUScriptComp
             float val = 0.0f;
             if(getFloat(*prop->values.front(), &val))
             {
-                PUDynamicAttributeFixed* dynamicAttributeFixed = new PUDynamicAttributeFixed();
+                PUDynamicAttributeFixed* dynamicAttributeFixed = new (std::nothrow) PUDynamicAttributeFixed();
                 dynamicAttributeFixed->setValue(val);
                 affector->setRotationSpeed(dynamicAttributeFixed);
                 return true;
@@ -89,7 +89,7 @@ bool PUParticle3DGeometryRotatorTranslator::translateChildProperty( PUScriptComp
             float val = 0.0f;
             if(getFloat(*prop->values.front(), &val))
             {
-                PUDynamicAttributeFixed* dynamicAttributeFixed = new PUDynamicAttributeFixed();
+                PUDynamicAttributeFixed* dynamicAttributeFixed = new (std::nothrow) PUDynamicAttributeFixed();
                 dynamicAttributeFixed->setValue(val);
                 affector->setRotationSpeed(dynamicAttributeFixed);
                 return true;

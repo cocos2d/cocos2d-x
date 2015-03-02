@@ -254,7 +254,7 @@ public:
      */
     virtual void resumeParticleSystem() override;
 
-    virtual int getAliveParticleCnt() const override;
+    virtual int getAliveParticleCount() const override;
 
     /** Returns the velocity scale, defined in the particle system, but passed to the technique for convenience.
     */

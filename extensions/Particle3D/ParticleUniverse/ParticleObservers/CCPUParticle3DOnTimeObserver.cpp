@@ -52,7 +52,7 @@ void PUParticle3DOnTimeObserver::preUpdateObserver(float deltaTime)
 
     // Also observe if there are no particles emitted, because some of the event handlers do not only
     // perform an action on a particle.
-    if (static_cast<PUParticleSystem3D *>(_particleSystem)->getAliveParticleCnt() <= 0)
+    if (static_cast<PUParticleSystem3D *>(_particleSystem)->getAliveParticleCount() <= 0)
     {
         handleObserve(0, deltaTime);
     }

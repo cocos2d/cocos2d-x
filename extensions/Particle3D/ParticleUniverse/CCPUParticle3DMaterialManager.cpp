@@ -31,17 +31,15 @@
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include <io.h>
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID/* || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX*/)
-//#include <sys/io.h>
-//#include <sys/dir.h>
-//#include <sys/types.h>
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "android/CCFileUtils-android.h"
 #include <android/asset_manager.h>
-//#include <sys/stat.h>
-//#include <dirent.h>
-//#include <unistd.h>
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 #include <ftw.h>
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <dirent.h>
 #endif
 NS_CC_BEGIN
 
@@ -217,6 +215,32 @@ bool PUParticle3DMaterialCache::loadMaterialsFromSearchPaths( const std::string 
 
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     ftw(fileFolder.c_str(), iterPath, 500);
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+    DIR *d; //dir handle
+    struct dirent *file; //readdir
+    struct stat statbuf;
+
+    if(!(d = opendir(fileFolder.c_str())))
+    {
+        CCLOG("error opendir %s!!!\n",fileFolder.c_str());
+        return false;
+    }
+    while((file = readdir(d)) != NULL)
+    {
+        if(strncmp(file->d_name, ".", 1) == 0 || (stat(file->d_name, &statbuf) >= 0 && S_ISDIR(statbuf.st_mode)))
+        {
+            continue;
+        }
+
+        std::string fullpath = fileFolder + "/" + file->d_name;
+        if (strlen(file->d_name) > 9 && strcmp(".material", file->d_name + strlen(file->d_name) - 9))
+        {
+            CCLOG("%s", fullpath.c_str());
+            loadMaterials(fullpath);
+            state = true;
+        }
+    }
+    closedir(d);
 #endif
 
     return state;

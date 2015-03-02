@@ -115,7 +115,7 @@ void PUParticle3DMaterialTranslator::translate(PUScriptCompiler* compiler, PUAbs
     PUObjectAbstractNode* obj = reinterpret_cast<PUObjectAbstractNode*>(node);
     //PUObjectAbstractNode* parent = obj->parent ? reinterpret_cast<PUObjectAbstractNode*>(obj->parent) : 0;
 
-    _material = new PUParticle3DMaterial();
+    _material = new (std::nothrow) PUParticle3DMaterial();
     _material->fileName = obj->file;
     _material->name = obj->name;
     _material->autorelease();

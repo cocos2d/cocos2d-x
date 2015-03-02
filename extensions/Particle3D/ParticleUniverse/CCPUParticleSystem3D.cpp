@@ -409,7 +409,7 @@ void PUParticleSystem3D::update(float delta)
     if (_state != State::RUNNING){
         if (_state == State::PAUSE) 
             return;
-        else if (_state == State::STOP && getAliveParticleCnt() <= 0){
+        else if (_state == State::STOP && getAliveParticleCount() <= 0){
             if (!_emitters.empty()){
                 if (_render)
                     _render->notifyStop();
@@ -1156,7 +1156,7 @@ void PUParticleSystem3D::removeAllListener()
 
 void PUParticleSystem3D::draw( Renderer *renderer, const Mat4 &transform, uint32_t flags )
 {
-    if (getAliveParticleCnt() <= 0) return;
+    if (getAliveParticleCount() <= 0) return;
     if (_render)
         _render->render(renderer, transform, this);
 
@@ -1360,7 +1360,7 @@ void PUParticleSystem3D::calulateRotationOffset( void )
     _rotationOffset = getDerivedOrientation() * latestOrientationInverse;
 }
 
-int PUParticleSystem3D::getAliveParticleCnt() const
+int PUParticleSystem3D::getAliveParticleCount() const
 {
     int sz = 0;
     sz += _particlePool.getActiveDataList().size();
@@ -1380,7 +1380,7 @@ int PUParticleSystem3D::getAliveParticleCnt() const
         PUParticle3D *particle = static_cast<PUParticle3D *>(pool.getFirst());
         while (particle)
         {
-            sz += static_cast<PUParticleSystem3D*>(particle->particleEntityPtr)->getAliveParticleCnt();
+            sz += static_cast<PUParticleSystem3D*>(particle->particleEntityPtr)->getAliveParticleCount();
             particle = static_cast<PUParticle3D *>(pool.getNext());
         }
     }

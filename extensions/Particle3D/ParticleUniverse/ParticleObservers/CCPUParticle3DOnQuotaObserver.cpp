@@ -63,7 +63,7 @@ void PUParticle3DOnQuotaObserver::postUpdateObserver(float deltaTime)
         }
 
         //_result = particleTechnique->getNumberOfEmittedParticles(_particleTypeToObserve) >= quota;
-        _result = static_cast<PUParticleSystem3D *>(_particleSystem)->getAliveParticleCnt() >= quota;
+        _result = static_cast<PUParticleSystem3D *>(_particleSystem)->getAliveParticleCount() >= quota;
     }
     else
     {
@@ -77,7 +77,7 @@ void PUParticle3DOnQuotaObserver::postUpdateObserver(float deltaTime)
             + static_cast<PUParticleSystem3D *>(_particleSystem)->getEmittedEmitterQuota()
             + static_cast<PUParticleSystem3D *>(_particleSystem)->getEmittedSystemQuota();
         //_result = particleTechnique->getNumberOfEmittedParticles() >= quota;
-        _result = static_cast<PUParticleSystem3D *>(_particleSystem)->getAliveParticleCnt() >= quota;
+        _result = static_cast<PUParticleSystem3D *>(_particleSystem)->getAliveParticleCount() >= quota;
     }
 }
 

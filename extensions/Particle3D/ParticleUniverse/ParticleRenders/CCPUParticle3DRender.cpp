@@ -470,7 +470,9 @@ PUParticle3DModelRender::PUParticle3DModelRender()
 
 PUParticle3DModelRender::~PUParticle3DModelRender()
 {
-
+    for (auto iter : _spriteList){
+        iter->release();
+    }
 }
 
 void PUParticle3DModelRender::copyAttributesTo( PUParticle3DRender *render )

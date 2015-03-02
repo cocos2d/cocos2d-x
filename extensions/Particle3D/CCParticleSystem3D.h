@@ -223,9 +223,9 @@ public:
         return  _particlePool;
     }
     
-    virtual int getAliveParticleCnt() const
+    virtual int getAliveParticleCount() const
     {
-        return _aliveParticlesCnt;
+        return 0;
     }
     
     State getState() const { return _state; }

@@ -48,7 +48,7 @@ bool PUParticle3DJetAffectorTranslator::translateChildProperty( PUScriptCompiler
             float val = 0.0f;
             if(getFloat(*prop->values.front(), &val))
             {
-                PUDynamicAttributeFixed* dynamicAttributeFixed = new PUDynamicAttributeFixed();
+                PUDynamicAttributeFixed* dynamicAttributeFixed = new (std::nothrow) PUDynamicAttributeFixed();
                 dynamicAttributeFixed->setValue(val);
                 affector->setDynAcceleration(dynamicAttributeFixed);
                 return true;
@@ -63,7 +63,7 @@ bool PUParticle3DJetAffectorTranslator::translateChildProperty( PUScriptCompiler
             float val = 0.0f;
             if(getFloat(*prop->values.front(), &val))
             {
-                PUDynamicAttributeFixed* dynamicAttributeFixed = new PUDynamicAttributeFixed();
+                PUDynamicAttributeFixed* dynamicAttributeFixed = new (std::nothrow) PUDynamicAttributeFixed();
                 dynamicAttributeFixed->setValue(val);
                 affector->setDynAcceleration(dynamicAttributeFixed);
                 return true;
