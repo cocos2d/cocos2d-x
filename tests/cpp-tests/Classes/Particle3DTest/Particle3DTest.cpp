@@ -358,12 +358,28 @@ bool Particle3DLineStreakDemo::init()
         return false;
 
 
+    std::string c3bfileName = "Sprite3DTest/orc.c3b";
+    auto sprite = Sprite3D::create(c3bfileName);
+    this->addChild(sprite);
+    //sprite->setPosition3D(Vec3(0, -20, -25));
+    //sprite->setScale(5, 5);
+    sprite->setRotation3D(Vec3(0, 180, 0));
+    sprite->setCameraMask((unsigned short)CameraFlag::USER1);
+    //sprite->setOpacity(100);
+    auto animation = Animation3D::create(c3bfileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        sprite->runAction(RepeatForever::create(animate));
+    }
+
     auto rootps = PUParticleSystem3D::create("lineStreak.pu", "pu_mediapack_01.material");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
     rootps->setScale(5.0f);
     //rootps->runAction(RepeatForever::create(Sequence::create(rotate, nullptr)));
     rootps->startParticleSystem();
     this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
+
 
     //auto sprite = Sprite::create("pump_streak_04.png");
     //sprite->setCameraMask((unsigned short)CameraFlag::USER1);
