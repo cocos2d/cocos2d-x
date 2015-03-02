@@ -266,11 +266,13 @@ def main():
                     save_build_stats(db, pr_num, 'liblua_empty_test', filesize / 1024)
                     
                 close_db(db)
-        elif(node_name == 'win32_win7'):
+        elif(node_name == 'win32'):
             ret = subprocess.call('"%VS120COMNTOOLS%..\IDE\devenv.com" "build\cocos2d-win32.vc2013.sln" /Build "Debug|Win32"', shell=True)
+        elif(node_name == 'windows-universal'):
+            ret = subprocess.call('"%VS120COMNTOOLS%..\IDE\devenv.com" "build\cocos2d-win8.1-universal.sln" /Build "Debug|Win32"', shell=True)
         elif(node_name == 'ios_mac'):
             ret = os.system(jenkins_script_path + "ios-build.sh")
-        elif(node_name == 'mac_mac'):
+        elif(node_name == 'mac'):
             ret = os.system(jenkins_script_path + "mac-build.sh")
         elif(node_name == 'linux_centos'):
             ret = os.system(jenkins_script_path + "linux-build.sh")
