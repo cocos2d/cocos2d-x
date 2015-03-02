@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (C) 2013 Henry van Merode. All rights reserved.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -27,10 +28,10 @@
 
 #include "base/CCRef.h"
 #include "math/CCMath.h"
-#include "Particle3D/CCParticle3DRender.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DListener.h"
-#include "Particle3D/ParticleUniverse/ParticleRenders/CCPUParticle3DBillboardChain.h"
-#include "Particle3D/ParticleUniverse/ParticleRenders/CCPUParticle3DRender.h"
+#include "extensions/Particle3D/CCParticle3DRender.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DListener.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleRenders/CCPUParticle3DBillboardChain.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleRenders/CCPUParticle3DRender.h"
 #include <vector>
 
 NS_CC_BEGIN

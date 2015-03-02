@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (C) 2013 Henry van Merode. All rights reserved.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -23,7 +24,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DBehaviourManager.h"
-#include "Particle3D/ParticleUniverse/ParticleBehaviours/CCPUParticle3DSlaveBehaviour.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleBehaviours/CCPUParticle3DSlaveBehaviour.h"
 
 NS_CC_BEGIN
 PUParticle3DBehaviourManager::PUParticle3DBehaviourManager()

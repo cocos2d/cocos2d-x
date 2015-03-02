@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (C) 2013 Henry van Merode. All rights reserved.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -26,19 +27,19 @@
 #define __CC_PU_PARTICLE_3D_OBSERVER_MANAGER_H__
 
 #include "base/CCRef.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DScriptTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DObserver.h"
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnClearObserverTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnCollisionObserverTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnCountObserverTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnEmissionObserverTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnEventFlagObserverTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnExpireObserverTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnPositionObserverTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnQuotaObserverTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnRandomObserverTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnTimeObserverTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnVelocityObserverTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DScriptTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DObserver.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnClearObserverTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnCollisionObserverTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnCountObserverTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnEmissionObserverTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnEventFlagObserverTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnExpireObserverTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnPositionObserverTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnQuotaObserverTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnRandomObserverTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnTimeObserverTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnVelocityObserverTranslator.h"
 
 
 NS_CC_BEGIN

@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (C) 2013 Henry van Merode. All rights reserved.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -21,20 +22,19 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
 #ifndef __CC_PU_PARTICLE_3D_EVENT_HANDLER_MANAGER_H__
 #define __CC_PU_PARTICLE_3D_EVENT_HANDLER_MANAGER_H__
 
 #include "base/CCRef.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DScriptTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DEventHandler.h"
-#include "Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoAffectorEventHandlerTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoEnableComponentEventHandlerTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoExpireEventHandlerTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoFreezeEventHandlerTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoPlacementParticleEventHandlerTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoScaleEventHandlerTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoStopSystemEventHandlerTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DScriptTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DEventHandler.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoAffectorEventHandlerTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoEnableComponentEventHandlerTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoExpireEventHandlerTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoFreezeEventHandlerTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoPlacementParticleEventHandlerTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoScaleEventHandlerTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoStopSystemEventHandlerTranslator.h"
 
 
 NS_CC_BEGIN

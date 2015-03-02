@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (C) 2013 Henry van Merode. All rights reserved.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -23,7 +24,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DTranslateManager.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DScriptCompiler.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DScriptCompiler.h"
 
 NS_CC_BEGIN
 PUParticle3DTranslateManager::PUParticle3DTranslateManager()

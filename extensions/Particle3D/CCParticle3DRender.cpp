@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -22,8 +22,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "Particle3D/CCParticleSystem3D.h"
-#include "Particle3D/CCParticle3DRender.h"
+#include "extensions/Particle3D/CCParticleSystem3D.h"
+#include "extensions/Particle3D/CCParticle3DRender.h"
 #include "renderer/CCMeshCommand.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTextureCache.h"
@@ -56,7 +56,7 @@ Particle3DQuadRender::~Particle3DQuadRender()
 
 Particle3DQuadRender* Particle3DQuadRender::create(const std::string& texFile)
 {
-    auto ret = new Particle3DQuadRender();
+    auto ret = new (std::nothrow) Particle3DQuadRender();
     ret->autorelease();
     ret->initQuadRender(texFile);
     return ret;
@@ -172,7 +172,7 @@ void Particle3DQuadRender::initQuadRender( const std::string& texFile )
     //ret->_indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, 6 * 10000);
     //ret->_indexBuffer->retain();
 
-    _meshCommand = new MeshCommand();
+    _meshCommand = new (std::nothrow) MeshCommand();
     _meshCommand->setTransparent(true);
     _meshCommand->setDepthTestEnabled(_depthTest);
     _meshCommand->setDepthWriteEnabled(_depthWrite);
@@ -208,7 +208,7 @@ Particle3DModelRender::~Particle3DModelRender()
 
 Particle3DModelRender* Particle3DModelRender::create(const std::string& modelFile, const std::string &texFile)
 {
-    auto ret = new Particle3DModelRender();
+    auto ret = new (std::nothrow) Particle3DModelRender();
     ret->_modelFile = modelFile;
     ret->_texFile = texFile;
     return ret;

@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (C) 2013 Henry van Merode. All rights reserved.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -23,7 +24,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DGeometryRotator.h"
-#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 //-----------------------------------------------------------------------
@@ -41,7 +42,7 @@ PUParticle3DGeometryRotator::PUParticle3DGeometryRotator() :
     _rotationAxis(DEFAULT_ROTATION_AXIS),
     _rotationAxisSet(false)
 {
-    _dynRotationSpeed = new PUDynamicAttributeFixed();
+    _dynRotationSpeed = new (std::nothrow) PUDynamicAttributeFixed();
     (static_cast<PUDynamicAttributeFixed*>(_dynRotationSpeed))->setValue(DEFAULT_ROTATION_SPEED);
 };
 //-----------------------------------------------------------------------
@@ -64,7 +65,7 @@ void PUParticle3DGeometryRotator::setRotationAxis(const Vec3& rotationAxis)
 //-----------------------------------------------------------------------
 void PUParticle3DGeometryRotator::resetRotationAxis(void)
 {
-    _dynRotationSpeed = new PUDynamicAttributeFixed();
+    _dynRotationSpeed = new (std::nothrow) PUDynamicAttributeFixed();
     (static_cast<PUDynamicAttributeFixed*>(_dynRotationSpeed))->setValue(DEFAULT_ROTATION_SPEED);
     _rotationAxisSet = false;
 }
@@ -164,7 +165,7 @@ void PUParticle3DGeometryRotator::updatePUAffector( PUParticle3D *particle, floa
 
 PUParticle3DGeometryRotator* PUParticle3DGeometryRotator::create()
 {
-    auto pgr = new PUParticle3DGeometryRotator();
+    auto pgr = new (std::nothrow) PUParticle3DGeometryRotator();
     pgr->autorelease();
     return pgr;
 }

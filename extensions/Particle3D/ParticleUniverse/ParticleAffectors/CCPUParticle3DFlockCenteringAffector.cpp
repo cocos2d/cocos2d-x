@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (C) 2013 Henry van Merode. All rights reserved.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -23,7 +24,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DFlockCenteringAffector.h"
-#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 //-----------------------------------------------------------------------
@@ -67,7 +68,7 @@ void PUParticle3DFlockCenteringAffector::preUpdateAffector( float deltaTime )
 
 PUParticle3DFlockCenteringAffector* PUParticle3DFlockCenteringAffector::create()
 {
-    auto pfca = new PUParticle3DFlockCenteringAffector();
+    auto pfca = new (std::nothrow) PUParticle3DFlockCenteringAffector();
     pfca->autorelease();
     return pfca;
 }

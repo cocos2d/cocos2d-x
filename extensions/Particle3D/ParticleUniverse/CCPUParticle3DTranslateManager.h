@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (C) 2013 Henry van Merode. All rights reserved.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -29,15 +30,15 @@
 //#include "3dparticle/ParticleUniverse/Script/Translater/CCParticle3DSystemTranslator.h"
 //#include "3dparticle/ParticleUniverse/Script/Translater/CCAliasTranslator.h"
 //#include "3dparticle/ParticleUniverse/Script/Translater/CCParticle3DTechniqueTranslator.h"
-#include "Particle3D/ParticleUniverse/CCPUParticleSystem3DTranslator.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DTechniqueTranslator.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DRendererTranslator.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DMaterialTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitterTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffectorTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DEventHandlerTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DObserverTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleBehaviours/CCPUParticle3DBehaviourTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3DTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DTechniqueTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DRendererTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DMaterialTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitterTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffectorTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DEventHandlerTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DObserverTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleBehaviours/CCPUParticle3DBehaviourTranslator.h"
 
 using namespace std;
 NS_CC_BEGIN

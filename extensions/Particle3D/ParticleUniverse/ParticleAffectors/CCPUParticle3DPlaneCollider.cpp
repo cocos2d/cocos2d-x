@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (C) 2013 Henry van Merode. All rights reserved.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -21,9 +22,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
 #include "CCPUParticle3DPlaneCollider.h"
-#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -168,7 +168,7 @@ void PUParticle3DPlaneCollider::updatePUAffector( PUParticle3D *particle, float 
 
 PUParticle3DPlaneCollider* PUParticle3DPlaneCollider::create()
 {
-    auto ppc = new PUParticle3DPlaneCollider();
+    auto ppc = new (std::nothrow) PUParticle3DPlaneCollider();
     ppc->autorelease();
     return ppc;
 }

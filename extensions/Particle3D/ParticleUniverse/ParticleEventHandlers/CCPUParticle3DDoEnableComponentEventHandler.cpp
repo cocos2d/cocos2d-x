@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (C) 2013 Henry van Merode. All rights reserved.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -22,10 +23,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoEnableComponentEventHandler.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
-#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DObserver.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoEnableComponentEventHandler.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DObserver.h"
 
 NS_CC_BEGIN
 //-----------------------------------------------------------------------
@@ -153,7 +154,7 @@ void PUParticle3DDoEnableComponentEventHandler::handle (PUParticleSystem3D* part
 
 PUParticle3DDoEnableComponentEventHandler* PUParticle3DDoEnableComponentEventHandler::create()
 {
-    auto peh = new PUParticle3DDoEnableComponentEventHandler();
+    auto peh = new (std::nothrow) PUParticle3DDoEnableComponentEventHandler();
     peh->autorelease();
     return peh;
 }

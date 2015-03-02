@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (C) 2013 Henry van Merode. All rights reserved.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -83,7 +84,7 @@ void PUDynamicAttributeFixed::copyAttributesTo( PUDynamicAttribute* dynamicAttri
 
 PUDynamicAttributeFixed* PUDynamicAttributeFixed::clone()
 {
-    auto af = new PUDynamicAttributeFixed();
+    auto af = new (std::nothrow) PUDynamicAttributeFixed();
     this->copyAttributesTo(af);
     return af;
 }
@@ -148,7 +149,7 @@ void PUDynamicAttributeRandom::copyAttributesTo( PUDynamicAttribute* dynamicAttr
 
 PUDynamicAttributeRandom* PUDynamicAttributeRandom::clone()
 {
-    auto ar = new PUDynamicAttributeRandom();
+    auto ar = new (std::nothrow) PUDynamicAttributeRandom();
     this->copyAttributesTo(ar);
     return ar;
 }
@@ -335,7 +336,7 @@ void PUDynamicAttributeCurved::copyAttributesTo( PUDynamicAttribute* dynamicAttr
 
 PUDynamicAttributeCurved* PUDynamicAttributeCurved::clone()
 {
-    auto ac = new PUDynamicAttributeCurved();
+    auto ac = new (std::nothrow) PUDynamicAttributeCurved();
     this->copyAttributesTo(ac);
     return ac;
 }
@@ -447,7 +448,7 @@ void PUDynamicAttributeOscillate::copyAttributesTo( PUDynamicAttribute* dynamicA
 
 PUDynamicAttributeOscillate* PUDynamicAttributeOscillate::clone()
 {
-    auto ao = new PUDynamicAttributeOscillate();
+    auto ao = new (std::nothrow) PUDynamicAttributeOscillate();
     this->copyAttributesTo(ao);
     return ao;
 }

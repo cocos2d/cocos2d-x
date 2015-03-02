@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (C) 2013 Henry van Merode. All rights reserved.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -22,18 +23,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DObserverManager.h"
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnClearObserver.h"
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnCollisionObserver.h"
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnCountObserver.h"
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnEmissionObserver.h"
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnEventFlagObserver.h"
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnExpireObserver.h"
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnPositionObserver.h"
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnQuotaObserver.h"
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnRandomObserver.h"
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnTimeObserver.h"
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnVelocityObserver.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DObserverManager.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnClearObserver.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnCollisionObserver.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnCountObserver.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnEmissionObserver.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnEventFlagObserver.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnExpireObserver.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnPositionObserver.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnQuotaObserver.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnRandomObserver.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnTimeObserver.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnVelocityObserver.h"
 
 NS_CC_BEGIN
 PUParticle3DObserverManager::PUParticle3DObserverManager()

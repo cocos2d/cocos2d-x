@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (C) 2013 Henry van Merode. All rights reserved.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -23,7 +24,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DAlignAffector.h"
-#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -81,7 +82,7 @@ void PUParticle3DAlignAffector::firstParticleUpdate( PUParticle3D *particle, flo
 
 PUParticle3DAlignAffector* PUParticle3DAlignAffector::create()
 {
-    auto paa = new PUParticle3DAlignAffector();
+    auto paa = new (std::nothrow) PUParticle3DAlignAffector();
     paa->autorelease();
     return paa;
 }

@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (C) 2013 Henry van Merode. All rights reserved.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -22,11 +23,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "Particle3D/CCParticleSystem3D.h"
-#include "Particle3D/ParticleUniverse/ParticleRenders/CCPUParticle3DBeamRender.h"
-#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DUtil.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DSimpleSpline.h"
+#include "extensions/Particle3D/CCParticleSystem3D.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleRenders/CCPUParticle3DBeamRender.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DUtil.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DSimpleSpline.h"
 #include "renderer/CCMeshCommand.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTextureCache.h"
@@ -51,7 +52,7 @@ const PUBillboardChain::TexCoordDirection PUParticle3DBeamRender::DEFAULT_TEXTUR
 
 PUParticle3DBeamRender* PUParticle3DBeamRender::create( const std::string &texFile )
 {
-    auto br = new PUParticle3DBeamRender();
+    auto br = new (std::nothrow) PUParticle3DBeamRender();
     br->autorelease();
     br->_texFile = texFile;
     return br;
@@ -248,7 +249,7 @@ void PUParticle3DBeamRender::prepare()
     std::stringstream ss; 
     ss << this;
     _billboardChainName = "Beam" + ss.str();
-    _billboardChain = new PUBillboardChain(_billboardChainName, _texFile);
+    _billboardChain = new (std::nothrow) PUBillboardChain(_billboardChainName, _texFile);
     _billboardChain->setDynamic(true);
     _billboardChain->setNumberOfChains(_quota);
     _billboardChain->setMaxChainElements(_maxChainElements);
@@ -268,7 +269,7 @@ void PUParticle3DBeamRender::prepare()
             _billboardChain->addChainElement(i, element);
         }
 
-        PUParticle3DBeamVisualData* visualData = new PUParticle3DBeamVisualData(i, _billboardChain);
+        PUParticle3DBeamVisualData* visualData = new (std::nothrow) PUParticle3DBeamVisualData(i, _billboardChain);
         for (size_t numDev = 0; numDev < _numberOfSegments; ++numDev)
         {
             // Initialise the positions

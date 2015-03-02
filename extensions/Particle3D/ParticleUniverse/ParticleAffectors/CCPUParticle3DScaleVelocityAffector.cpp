@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (C) 2013 Henry van Merode. All rights reserved.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -23,7 +24,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DScaleVelocityAffector.h"
-#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 // Constants
@@ -35,7 +36,7 @@ PUParticle3DScaleVelocityAffector::PUParticle3DScaleVelocityAffector(void) :
     _sinceStartSystem(false),
     _stopAtFlip(false)
 {
-    _dynScaleVelocity = new PUDynamicAttributeFixed();
+    _dynScaleVelocity = new (std::nothrow) PUDynamicAttributeFixed();
     (static_cast<PUDynamicAttributeFixed*>(_dynScaleVelocity))->setValue(DEFAULT_VELOCITY_SCALE);
 }
 //-----------------------------------------------------------------------
@@ -98,14 +99,14 @@ void PUParticle3DScaleVelocityAffector::resetDynScaleVelocity(bool resetToDefaul
     if (resetToDefault)
     {
         CC_SAFE_DELETE(_dynScaleVelocity);
-        _dynScaleVelocity = new PUDynamicAttributeFixed();
+        _dynScaleVelocity = new (std::nothrow) PUDynamicAttributeFixed();
         (static_cast<PUDynamicAttributeFixed*>(_dynScaleVelocity))->setValue(DEFAULT_VELOCITY_SCALE);
     }
 }
 
 PUParticle3DScaleVelocityAffector* PUParticle3DScaleVelocityAffector::create()
 {
-    auto psva = new PUParticle3DScaleVelocityAffector();
+    auto psva = new (std::nothrow) PUParticle3DScaleVelocityAffector();
     psva->autorelease();
     return psva;
 }

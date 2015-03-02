@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (C) 2013 Henry van Merode. All rights reserved.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -22,19 +23,19 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
-#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
-#include "Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitterManager.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffectorManager.h"
-#include "Particle3D/CCParticle3DRender.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DScriptCompiler.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DMaterialManager.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DTranslateManager.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DListener.h"
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DObserver.h"
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DObserverManager.h"
-#include "Particle3D/ParticleUniverse/ParticleBehaviours/CCPUParticle3DBehaviour.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitterManager.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffectorManager.h"
+#include "extensions/Particle3D/CCParticle3DRender.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DScriptCompiler.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DMaterialManager.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DTranslateManager.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DListener.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DObserver.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DObserverManager.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleBehaviours/CCPUParticle3DBehaviour.h"
 #include "platform/CCFileUtils.h"
 
 NS_CC_BEGIN
@@ -235,7 +236,7 @@ PUParticleSystem3D::~PUParticleSystem3D()
 
 PUParticleSystem3D* PUParticleSystem3D::create()
 {
-    auto pups = new PUParticleSystem3D();
+    auto pups = new (std::nothrow) PUParticleSystem3D();
     pups->autorelease();
     return pups;
 }
@@ -500,7 +501,7 @@ void PUParticleSystem3D::prepared()
                 if (emitter->getEmitsType() == PUParticle3D::PT_EMITTER){
                     PUParticle3DEmitter *emitted = static_cast<PUParticle3DEmitter*>(emitter->getEmitsEntityPtr());
                     for (unsigned int i = 0; i < _emittedEmitterQuota; ++i){
-                        auto p = new PUParticle3D();
+                        auto p = new (std::nothrow) PUParticle3D();
                         p->particleType = PUParticle3D::PT_EMITTER;
                         p->particleEntityPtr = emitted->clone();
                         p->particleEntityPtr->retain();
@@ -513,7 +514,7 @@ void PUParticleSystem3D::prepared()
                     PUParticleSystem3D *emitted = static_cast<PUParticleSystem3D*>(emitter->getEmitsEntityPtr());
                     for (unsigned int i = 0; i < _emittedSystemQuota; ++i){
                         PUParticleSystem3D *clonePS = emitted->clone();
-                        auto p = new PUParticle3D();
+                        auto p = new (std::nothrow) PUParticle3D();
                         p->particleType = PUParticle3D::PT_TECHNIQUE;
                         p->particleEntityPtr = clonePS;
                         p->particleEntityPtr->retain();
@@ -528,7 +529,7 @@ void PUParticleSystem3D::prepared()
             }
 
             for (unsigned int i = 0; i < _particleQuota; ++i){
-                auto p = new PUParticle3D();
+                auto p = new (std::nothrow) PUParticle3D();
                 p->autorelease();
                 p->copyBehaviours(_behaviourTemplates);
                 _particlePool.addData(p);

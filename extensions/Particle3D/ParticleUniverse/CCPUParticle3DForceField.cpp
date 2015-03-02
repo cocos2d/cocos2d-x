@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (C) 2013 Henry van Merode. All rights reserved.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -422,7 +423,7 @@ PUForceFieldCalculationFactory* PUForceField::createForceFieldCalculationFactory
     else
     {
         // Use realtime calculation
-        setForceFieldCalculationFactory(new PURealTimeForceFieldCalculationFactory());
+        setForceFieldCalculationFactory(new (std::nothrow) PURealTimeForceFieldCalculationFactory());
         return getForceFieldCalculationFactory();
     }
 }

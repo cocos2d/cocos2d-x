@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (C) 2013 Henry van Merode. All rights reserved.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -23,8 +24,8 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DMeshSurfaceEmitter.h"
-#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DUtil.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DUtil.h"
 
 NS_CC_BEGIN
 // Constants
@@ -305,9 +306,9 @@ const PUTriangle::PositionAndNormal MeshInfo::getRandomPositionAndNormal (const 
 //	}
 //
 //	// Allocate space for the vertices and indices
-//	vertices = new Vec3[vertexCount];
-//	normals = new Vec3[vertexCount];
-//	indices = new unsigned long[indexCount];
+//	vertices = new (std::nothrow) Vec3[vertexCount];
+//	normals = new (std::nothrow) Vec3[vertexCount];
+//	indices = new (std::nothrow) unsigned long[indexCount];
 //	added_shared = false;
 //
 //	// Run through the submeshes again, adding the data into the arrays
@@ -572,12 +573,12 @@ void PUParticle3DMeshSurfaceEmitter::build(void)
     }
 
     // Generate meshinfo.
-    _meshInfo = new MeshInfo(_meshName, _distribution, _orientation, _scale);
+    _meshInfo = new (std::nothrow) MeshInfo(_meshName, _distribution, _orientation, _scale);
 }
 
 PUParticle3DMeshSurfaceEmitter* PUParticle3DMeshSurfaceEmitter::create()
 {
-    auto pe = new PUParticle3DMeshSurfaceEmitter();
+    auto pe = new (std::nothrow) PUParticle3DMeshSurfaceEmitter();
     pe->autorelease();
     return pe;
 }

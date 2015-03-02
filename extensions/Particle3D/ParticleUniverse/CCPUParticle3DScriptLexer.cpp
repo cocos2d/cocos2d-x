@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (C) 2013 Henry van Merode. All rights reserved.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -242,7 +243,7 @@ void PUScriptLexer::setToken(const std::string &lexeme, int line, const std::str
         const char openBracket = '{', closeBracket = '}', colon = ':', 
         quote = '\"', var = '$';
 
-        PUScriptToken* token  = new PUScriptToken;
+        PUScriptToken* token  = new (std::nothrow) PUScriptToken;
         
         token->lexeme = lexeme;
         token->line = line;

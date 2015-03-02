@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (C) 2013 Henry van Merode. All rights reserved.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -23,7 +24,7 @@
  ****************************************************************************/
 
 #include "CCPUParticle3DBoxCollider.h"
-#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -281,7 +282,7 @@ void PUParticle3DBoxCollider::preUpdateAffector( float deltaTime )
 
 PUParticle3DBoxCollider* PUParticle3DBoxCollider::create()
 {
-    auto pbc = new PUParticle3DBoxCollider();
+    auto pbc = new (std::nothrow) PUParticle3DBoxCollider();
     pbc->autorelease();
     return pbc;
 }

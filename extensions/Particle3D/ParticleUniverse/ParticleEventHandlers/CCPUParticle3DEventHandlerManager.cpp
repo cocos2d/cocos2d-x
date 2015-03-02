@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (C) 2013 Henry van Merode. All rights reserved.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -22,14 +23,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DEventHandlerManager.h"
-#include "Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoAffectorEventHandler.h"
-#include "Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoEnableComponentEventHandler.h"
-#include "Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoExpireEventHandler.h"
-#include "Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoFreezeEventHandler.h"
-#include "Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoPlacementParticleEventHandler.h"
-#include "Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoScaleEventHandler.h"
-#include "Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoStopSystemEventHandler.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DEventHandlerManager.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoAffectorEventHandler.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoEnableComponentEventHandler.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoExpireEventHandler.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoFreezeEventHandler.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoPlacementParticleEventHandler.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoScaleEventHandler.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoStopSystemEventHandler.h"
 
 NS_CC_BEGIN
 PUParticle3DEventHandlerManager::PUParticle3DEventHandlerManager()

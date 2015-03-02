@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (C) 2013 Henry van Merode. All rights reserved.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -22,8 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnRandomObserver.h"
-#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnRandomObserver.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 
@@ -32,42 +33,42 @@ const float PUParticle3DOnRandomObserver::DEFAULT_THRESHOLD = 0.5f;
 
 //-----------------------------------------------------------------------
 PUParticle3DOnRandomObserver::PUParticle3DOnRandomObserver(void) : 
-	PUParticle3DObserver(),
-	_threshold(DEFAULT_THRESHOLD)
+    PUParticle3DObserver(),
+    _threshold(DEFAULT_THRESHOLD)
 {
 }
 //-----------------------------------------------------------------------
 void PUParticle3DOnRandomObserver::preUpdateObserver(float deltaTime)
 {
-	// Call parent
-	PUParticle3DObserver::preUpdateObserver(deltaTime);
+    // Call parent
+    PUParticle3DObserver::preUpdateObserver(deltaTime);
 
-	// Handle the _observe here
-	handleObserve(0, deltaTime);
+    // Handle the _observe here
+    handleObserve(0, deltaTime);
 }
 //-----------------------------------------------------------------------
 void PUParticle3DOnRandomObserver::updateObserver(PUParticle3D *particle, float deltaTime, bool firstParticle)
 {
-	// No need to determine per particle
+    // No need to determine per particle
 }
 //-----------------------------------------------------------------------
 bool PUParticle3DOnRandomObserver::observe (PUParticle3D* particle, float timeElapsed)
 {
-	return (CCRANDOM_0_1() > _threshold);
+    return (CCRANDOM_0_1() > _threshold);
 }
 
 PUParticle3DOnRandomObserver* PUParticle3DOnRandomObserver::create()
 {
-	auto pro = new PUParticle3DOnRandomObserver();
-	pro->autorelease();
-	return pro;
+    auto pro = new (std::nothrow) PUParticle3DOnRandomObserver();
+    pro->autorelease();
+    return pro;
 }
 
 void PUParticle3DOnRandomObserver::copyAttributesTo( PUParticle3DObserver* observer )
 {
-	PUParticle3DObserver::copyAttributesTo(observer);
-	PUParticle3DOnRandomObserver* onRandomObserver = static_cast<PUParticle3DOnRandomObserver*>(observer);
-	onRandomObserver->_threshold = _threshold;
+    PUParticle3DObserver::copyAttributesTo(observer);
+    PUParticle3DOnRandomObserver* onRandomObserver = static_cast<PUParticle3DOnRandomObserver*>(observer);
+    onRandomObserver->_threshold = _threshold;
 }
 
 NS_CC_END

@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (C) 2013 Henry van Merode. All rights reserved.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -22,10 +23,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "Particle3D/CCParticleSystem3D.h"
-#include "Particle3D/ParticleUniverse/ParticleRenders/CCPUParticle3DRibbonTrailRender.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DUtil.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DSimpleSpline.h"
+#include "extensions/Particle3D/CCParticleSystem3D.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleRenders/CCPUParticle3DRibbonTrailRender.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DUtil.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DSimpleSpline.h"
 #include "renderer/CCMeshCommand.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTextureCache.h"
@@ -51,7 +52,7 @@ const Vec4 PUParticle3DRibbonTrailRender::DEFAULT_COLOUR_CHANGE(0.5, 0.5, 0.5, 0
 
 PUParticle3DRibbonTrailRender* PUParticle3DRibbonTrailRender::create( const std::string &texFile )
 {
-    auto br = new PUParticle3DRibbonTrailRender();
+    auto br = new (std::nothrow) PUParticle3DRibbonTrailRender();
     br->autorelease();
     br->_texFile = texFile;
     return br;
@@ -239,7 +240,7 @@ void PUParticle3DRibbonTrailRender::prepare()
     {
         // Create RibbonTrail
         //Ogre::SceneManager* sceneManager = mParentTechnique->getParentSystem()->getSceneManager();
-        _trail = new PURibbonTrail(_ribbonTrailName, _texFile);
+        _trail = new (std::nothrow) PURibbonTrail(_ribbonTrailName, _texFile);
         _trail->setNumberOfChains(_quota);
         _trail->setMaxChainElements(_maxChainElements);
         if (_setLength)
@@ -264,7 +265,7 @@ void PUParticle3DRibbonTrailRender::prepare()
             //visualData->node->setInheritOrientation(false);
             auto node = Node::create();
             _childNode->addChild(node);
-            PUParticle3DRibbonTrailVisualData* visualData = new PUParticle3DRibbonTrailVisualData(node, _trail);
+            PUParticle3DRibbonTrailVisualData* visualData = new (std::nothrow) PUParticle3DRibbonTrailVisualData(node, _trail);
             visualData->index = i;
             _allVisualData.push_back(visualData); // Managed by this renderer
             _visualData.push_back(visualData); // Used to assign to a particle

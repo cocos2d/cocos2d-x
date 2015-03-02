@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (C) 2013 Henry van Merode. All rights reserved.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -26,7 +27,7 @@
 #ifndef __CC_PU_PARTICLE_3D_LINE_AFFECTOR_H__
 #define __CC_PU_PARTICLE_3D_LINE_AFFECTOR_H__
 
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
 #include "base/ccTypes.h"
 
 NS_CC_BEGIN

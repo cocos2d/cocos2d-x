@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (C) 2013 Henry van Merode. All rights reserved.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -26,34 +27,34 @@
 #define __CC_PU_PARTICLE_3D_AFFECTOR_MANAGER_H__
 
 #include "base/CCRef.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DScriptTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAlignAffectorTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DBaseColliderTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DBaseForceAffectorTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DBoxColliderTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DCollisionAvoidanceAffectorTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DColorAffectorTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DFlockCenteringAffectorTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DForceFieldAffectorTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DGeometryRotatorTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DGravityAffectorTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DInterParticleColliderTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DJetAffectorTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DLineAffectorTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DLinearForceAffectorTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DParticleFollowerTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DPathFollowerTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DPlaneColliderTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DRandomiserTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DScaleAffectorTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DScaleVelocityAffectorTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DSineForceAffectorTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DSphereColliderTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DTextureAnimatorTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DTextureRotatorTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DVelocityMatchingAffectorTranslator.h"
-#include "Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DVortexAffectorTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DScriptTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAlignAffectorTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DBaseColliderTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DBaseForceAffectorTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DBoxColliderTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DCollisionAvoidanceAffectorTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DColorAffectorTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DFlockCenteringAffectorTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DForceFieldAffectorTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DGeometryRotatorTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DGravityAffectorTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DInterParticleColliderTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DJetAffectorTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DLineAffectorTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DLinearForceAffectorTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DParticleFollowerTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DPathFollowerTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DPlaneColliderTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DRandomiserTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DScaleAffectorTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DScaleVelocityAffectorTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DSineForceAffectorTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DSphereColliderTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DTextureAnimatorTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DTextureRotatorTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DVelocityMatchingAffectorTranslator.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DVortexAffectorTranslator.h"
 
 using namespace std;
 NS_CC_BEGIN

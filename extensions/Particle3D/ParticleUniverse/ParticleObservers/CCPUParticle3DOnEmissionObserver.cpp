@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (C) 2013 Henry van Merode. All rights reserved.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -22,8 +23,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnEmissionObserver.h"
-#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnEmissionObserver.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
 //-----------------------------------------------------------------------
@@ -37,7 +38,7 @@ bool PUParticle3DOnEmissionObserver::observe (PUParticle3D* particle, float time
 
 PUParticle3DOnEmissionObserver* PUParticle3DOnEmissionObserver::create()
 {
-    auto peo = new PUParticle3DOnEmissionObserver();
+    auto peo = new (std::nothrow) PUParticle3DOnEmissionObserver();
     peo->autorelease();
     return peo;
 }

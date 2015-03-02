@@ -1,5 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (C) 2013 Henry van Merode. All rights reserved.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -22,10 +23,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "Particle3D/CCParticleSystem3D.h"
-#include "Particle3D/ParticleUniverse/ParticleRenders/CCPUParticle3DRender.h"
-#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
-#include "Particle3D/ParticleUniverse/CCPUParticle3DUtil.h"
+#include "extensions/Particle3D/CCParticleSystem3D.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleRenders/CCPUParticle3DRender.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DUtil.h"
 #include "renderer/CCMeshCommand.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCTextureCache.h"
@@ -56,7 +57,7 @@ static bool compareParticle3D(PUParticle3D* left, PUParticle3D* right)
 
 PUParticle3DQuadRender* PUParticle3DQuadRender::create(const std::string& texFile)
 {
-    auto ret = new PUParticle3DQuadRender();
+    auto ret = new (std::nothrow) PUParticle3DQuadRender();
     ret->autorelease();
     ret->initRender(texFile);
     return ret;
@@ -408,7 +409,7 @@ PUParticle3DQuadRender* PUParticle3DQuadRender::clone()
 
 PUParticle3DModelRender* PUParticle3DModelRender::create( const std::string& modelFile, const std::string &texFile /*= ""*/ )
 {
-    auto ret = new PUParticle3DModelRender();
+    auto ret = new (std::nothrow) PUParticle3DModelRender();
     ret->_modelFile = modelFile;
     ret->_texFile = texFile;
     return ret;
@@ -528,7 +529,7 @@ void PUParticle3DEntityRender::initRender( const std::string &texFile )
 
     _glProgramState = glProgramState;
 
-    _meshCommand = new MeshCommand();
+    _meshCommand = new (std::nothrow) MeshCommand();
     _meshCommand->setTransparent(true);
     _meshCommand->setDepthTestEnabled(_depthTest);
     _meshCommand->setDepthWriteEnabled(_depthWrite);
@@ -564,7 +565,7 @@ PUParticle3DBoxRender::~PUParticle3DBoxRender()
 
 PUParticle3DBoxRender* PUParticle3DBoxRender::create( const std::string &texFile )
 {
-    auto br = new PUParticle3DBoxRender();
+    auto br = new (std::nothrow) PUParticle3DBoxRender();
     br->autorelease();
     br->initRender(texFile);
     return br;
@@ -715,7 +716,7 @@ PUParticle3DBoxRender* PUParticle3DBoxRender::clone()
 
 PUParticle3DSphereRender* PUParticle3DSphereRender::create( const std::string &texFile)
 {
-    auto sr = new PUParticle3DSphereRender();
+    auto sr = new (std::nothrow) PUParticle3DSphereRender();
     sr->autorelease();
     sr->initRender(texFile);
     return sr;
