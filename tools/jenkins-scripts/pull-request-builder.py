@@ -225,7 +225,7 @@ def main():
     node_name = os.environ['NODE_NAME']
     jenkins_script_path = 'tools/jenkins-scripts/'
     if(branch == 'v3' or branch == 'v4-develop'):
-        if(node_name == 'android_mac') or (node_name == 'android_win7'):
+        if(node_name == 'android') or (node_name == 'android_bak'):
             #modify tests/cpp-empty-test/Classes/AppDelegate.cpp to support Console
             # FIXME: We should use patch instead
             modify_file = 'tests/cpp-empty-test/Classes/AppDelegate.cpp'
@@ -266,15 +266,15 @@ def main():
                     save_build_stats(db, pr_num, 'liblua_empty_test', filesize / 1024)
                     
                 close_db(db)
-        elif(node_name == 'win32'):
+        elif(node_name == 'win32' or node_name == 'win32_win7' or node_name == 'win32_bak'):
             ret = subprocess.call('"%VS120COMNTOOLS%..\IDE\devenv.com" "build\cocos2d-win32.vc2013.sln" /Build "Debug|Win32"', shell=True)
-        elif(node_name == 'windows-universal'):
+        elif(node_name == 'windows-universal' or node_name == 'windows-universal_bak'):
             ret = subprocess.call('"%VS120COMNTOOLS%..\IDE\devenv.com" "build\cocos2d-win8.1-universal.sln" /Build "Debug|Win32"', shell=True)
-        elif(node_name == 'ios_mac'):
+        elif(node_name == 'ios_mac' or node_name == 'ios' or node_name == 'ios_bak'):
             ret = os.system(jenkins_script_path + "ios-build.sh")
-        elif(node_name == 'mac'):
+        elif(node_name == 'mac' or node_name == 'mac_bak'):
             ret = os.system(jenkins_script_path + "mac-build.sh")
-        elif(node_name == 'linux_centos'):
+        elif(node_name == 'linux_centos' or node_name == 'linux' or node_name == 'linux_bak'):
             ret = os.system(jenkins_script_path + "linux-build.sh")
 
     #get build result
