@@ -79,11 +79,21 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
     if (_vertexBuffer == nullptr){
         GLsizei stride = sizeof(VertexInfo);
         _vertexBuffer = VertexBuffer::create(stride, 4 * particleSystem->getParticleQuota());
+        if (_vertexBuffer == nullptr)
+        {
+            CCLOG("PUParticle3DQuadRender::render create vertex buffer failed");
+            return;
+        }
         _vertexBuffer->retain();
     }
 
     if (_indexBuffer == nullptr){
         _indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, 6 * particleSystem->getParticleQuota());
+        if (_indexBuffer == nullptr)
+        {
+            CCLOG("PUParticle3DQuadRender::render create index buffer failed");
+            return;
+        }
         _indexBuffer->retain();
     }
     const ParticlePool::PoolList &activeParticleList = particlePool.getActiveDataList();
@@ -601,10 +611,20 @@ void PUParticle3DBoxRender::render( Renderer* renderer, const Mat4 &transform, P
     if (_vertexBuffer == nullptr && _indexBuffer == nullptr){
         GLsizei stride = sizeof(VertexInfo);
         _vertexBuffer = VertexBuffer::create(stride, 8 * particleSystem->getParticleQuota());
+        if (_vertexBuffer == nullptr)
+        {
+            CCLOG("PUParticle3DBoxRender::render create vertex buffer failed");
+            return;
+        }
         _vertexBuffer->retain();
         _vertices.resize(8 * particleSystem->getParticleQuota());
 
         _indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, 36 * particleSystem->getParticleQuota());
+        if (_indexBuffer == nullptr)
+        {
+            CCLOG("PUParticle3DBoxRender::render create index buffer failed");
+            return;
+        }
         _indexBuffer->retain();
         _indices.resize(36 * particleSystem->getParticleQuota());
         reBuildIndices(particleSystem->getParticleQuota());
@@ -760,10 +780,20 @@ void PUParticle3DSphereRender::render( Renderer* renderer, const Mat4 &transform
     if (_vertexBuffer == nullptr && _indexBuffer == nullptr){
         GLsizei stride = sizeof(VertexInfo);
         _vertexBuffer = VertexBuffer::create(stride, vertexCount * particleSystem->getParticleQuota());
+        if (_vertexBuffer == nullptr)
+        {
+            CCLOG("PUParticle3DSphereRender::render create vertex buffer failed");
+            return;
+        }
         _vertexBuffer->retain();
         _vertices.resize(vertexCount * particleSystem->getParticleQuota());
 
         _indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, indexCount * particleSystem->getParticleQuota());
+        if (_indexBuffer == nullptr)
+        {
+            CCLOG("PUParticle3DSphereRender::render create index buffer failed");
+            return;
+        }
         _indexBuffer->retain();
         _indices.resize(indexCount * particleSystem->getParticleQuota());
 
