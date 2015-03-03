@@ -37,7 +37,6 @@ NS_CC_BEGIN
     **/
 #define MAX_CHUNKES 256
 
-
     /*
     * Terrain
     * Defines a Terrain that is capable of rendering large landscapes from 2D heightmap images.
@@ -139,6 +138,7 @@ private:
         cocos2d::Vec3 normal;
     };
 
+    struct QuadTree;
     /*
     *the terminal node of quad, use to subdivision terrain mesh and LOD
     **/
@@ -174,11 +174,17 @@ private:
         void calculateSlope();
         /*current LOD of the chunk*/
         int _currentLod;
+
+        int _oldLod;
+
+        int _neighborOldLOD[4];
         /*the left,right,front,back neighbors*/
         Chunk * left;
         Chunk * right;
         Chunk * front;
         Chunk * back;
+
+        QuadTree * _parent;
 
         //the position
         int pos_x;
@@ -202,6 +208,7 @@ private:
         void draw();
         void resetNeedDraw(bool value);
         void cullByCamera(const Camera * camera,const Mat4 & worldTransform);
+        void updateAABB(const Mat4 & worldTransform);
         QuadTree * tl;
         QuadTree * tr;
         QuadTree * bl;
@@ -214,9 +221,10 @@ private:
         int width;
         QuadTree * parent;
         AABB _aabb;
+        AABB _worldSpaceAABB;
+        Terrain * _terrain;
         bool _needDraw;
     };
-
     friend QuadTree;
     friend Chunk;
 public:
@@ -225,7 +233,6 @@ public:
     void initHeightMap(const char* heightMap);
     /*create entry*/
     static Terrain * create(TerrainData &parameter);
-
     /*get specified position's height mapping to the terrain*/
     float getHeight(float x,float z,Vec3 * normal= nullptr);
     float getHeight(Vec2 pos,Vec3*Normal = nullptr);
@@ -255,6 +262,8 @@ protected:
     //calculate Normal Line for each Vertex
     void calculateNormal();
 protected:
+    Mat4 _CameraMatrix;
+    bool _isCameraViewChanged;
     TerrainData _terrainData;
     bool _isDrawWire;
     unsigned char * _data;
@@ -276,6 +285,8 @@ protected:
     cocos2d::Image * _heightMapImage;
     Mat4 _oldCameraModelMatrix;
     Mat4 _oldTerrrainModelMatrix;
+    bool _isTerrainModelMatrixChanged;
+    GLuint _normalLocation;
 };
 NS_CC_END
 #endif
