@@ -92,7 +92,7 @@ public:
     /**
      * Hide or Show the mouse cursor if there is one.
      */
-    virtual void setCursorVisible( bool isVisible );
+    virtual void setCursorVisible(bool isVisible) override;
     /** Retina support is disabled by default
      *  @note This method is only available on Mac.
      */

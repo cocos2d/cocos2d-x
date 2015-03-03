@@ -143,7 +143,7 @@ public:
     /**
      * Hide or Show the mouse cursor if there is one.
      */
-    virtual void setCursorVisible( bool isVisible ){ /* do nothing by default*/ }
+    virtual void setCursorVisible(bool isVisible) {}
 
     /** Get retina factor */
     virtual int getRetinaFactor() const { return 1; }
