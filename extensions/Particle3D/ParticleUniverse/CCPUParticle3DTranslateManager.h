@@ -27,9 +27,6 @@
 #define __CC_PU_PARTICLE_3D_TRANSLATE_MANAGER_H__
 
 #include "base/CCRef.h"
-//#include "3dparticle/ParticleUniverse/Script/Translater/CCParticle3DSystemTranslator.h"
-//#include "3dparticle/ParticleUniverse/Script/Translater/CCAliasTranslator.h"
-//#include "3dparticle/ParticleUniverse/Script/Translater/CCParticle3DTechniqueTranslator.h"
 #include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3DTranslator.h"
 #include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DTechniqueTranslator.h"
 #include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DRendererTranslator.h"
@@ -54,9 +51,9 @@ private:
         PUParticle3DEmitterTranslator _emitterTranslator;
         PUParticle3DAffectorTranslator _affectorTranslator;
         PUParticle3DMaterialTranslator _materialTranslator;
-		PUParticle3DEventHandlerTranslator _eventHandlerTranslator;
-		PUParticle3DObserverTranslator _observerTranslator;
-		PUParticle3DBehaviourTranslator _behaviourTranslator;
+        PUParticle3DEventHandlerTranslator _eventHandlerTranslator;
+        PUParticle3DObserverTranslator _observerTranslator;
+        PUParticle3DBehaviourTranslator _behaviourTranslator;
         //EmitterTranslator mEmitterTranslator;
         //AffectorTranslator mAffectorTranslator;
         //BehaviourTranslator mBehaviourTranslator;

@@ -48,7 +48,6 @@ void traceScriptParserCell(PUConcreteNodeList& nodes,int level)
     }
 }
 
-//trace出scriptParser//
 void traceScriptParser(PUConcreteNodeList& nodes)
 {
     
@@ -56,8 +55,6 @@ void traceScriptParser(PUConcreteNodeList& nodes)
     
 }
 
-
-//解析脚本,生成nodeList//
 void PUScriptParser::parse(PUConcreteNodeList& nodes,const PUScriptTokenList& tokens)
 {
     // MEMCATEGORY_GENERAL because SharedPtr can only free using that category
@@ -156,10 +153,6 @@ void PUScriptParser::parse(PUConcreteNodeList& nodes,const PUScriptTokenList& to
                         if(i == end || (*i)->type != TID_VARIABLE)
                         {
                             printf("Exception");
-//							OGRE_EXCEPT(Exception::ERR_INVALID_STATE,
-//                                        Ogre::String("expected variable name at line ") +
-//                                        Ogre::StringConverter::toString(node->line),
-//                                        "ScriptParser::parse");
                         }
                         PUConcreteNode* temp = new (std::nothrow) PUConcreteNode;
                         temp->parent = node;
@@ -512,10 +505,6 @@ void PUScriptParser::parseChunk(PUConcreteNodeList& nodes, const PUScriptTokenLi
                 node->type = CNT_QUOTE;
             default:
                 printf("unexpected token,%s,%d\n",token->lexeme.c_str(),token->line);
-//				OGRE_EXCEPT(Exception::ERR_INVALID_STATE, 
-//                            Ogre::String("unexpected token") + token->lexeme + " at line " + 
-//                            Ogre::StringConverter::toString(token->line),
-//                            "ScriptParser::parseChunk");
         }
         
         if(node != nullptr)

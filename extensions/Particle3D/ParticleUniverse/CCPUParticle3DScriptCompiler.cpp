@@ -162,7 +162,7 @@ PUAtomAbstractNode::PUAtomAbstractNode(PUAbstractNode *ptr)
 
 PUAbstractNode *PUAtomAbstractNode::clone() const
 {
-    PUAtomAbstractNode *node = new PUAtomAbstractNode(parent);
+    PUAtomAbstractNode *node = new (std::nothrow) PUAtomAbstractNode(parent);
     node->file = file;
     node->line = line;
     node->id = id;

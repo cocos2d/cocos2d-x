@@ -326,10 +326,6 @@ bool PUScriptTranslator::passValidatePropertyNumberOfValues(PUScriptCompiler* co
 {
     if(prop->values.size() > numberOfValues)
     {
-//        compiler->addError(ScriptCompiler::CE_FEWERPARAMETERSEXPECTED,
-//                           prop->file,
-//                           prop->line,
-//                           "PU Compiler: " + token2 + " must have " + StringConverter::toString(numberOfValues) + " argument(s).");
         return false;
     }
     return true;
@@ -343,14 +339,6 @@ bool PUScriptTranslator::passValidatePropertyNumberOfValuesRange(PUScriptCompile
 {
     if(prop->values.size() < minNumberOfValues || prop->values.size() > maxNumberOfValues)
     {
-//        compiler->addError(ScriptCompiler::CE_FEWERPARAMETERSEXPECTED,
-//                           prop->file,
-//                           prop->line,
-//                           "PU Compiler: " + token2 + " must have between" +
-//                           StringConverter::toString(minNumberOfValues) +
-//                           " and " +
-//                           StringConverter::toString(maxNumberOfValues) +
-//                           " argument(s).");
         return false;
     }
     return true;
