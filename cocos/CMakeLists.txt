@@ -23,135 +23,166 @@
 # THE SOFTWARE.
 # ****************************************************************************/
 
-# this CMakeLists is to generate libcocos2d.a
+project(COCOS2D)
 
-cmake_minimum_required(VERSION 2.8)
-
-if(WINDOWS)
-  ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
+#===============================================================================
+#Options for 'cocos2d' library.
+if(NOT WINDOWS_PHONE AND NOT WINDOWS_STORE)
+    option(BUILD_USE_WEBP "Use WebP codec" "ON")
 endif()
 
-include_directories(${COCOS_EXTERNAL_DIR}/${PLATFORM_FOLDER}/${ARCH_DIR}/include)
+#===============================================================================
+# Define library target 'cocos2d'.
+set(COCOS2D_TARGET cocos2d CACHE INTERNAL "")
+add_library(${COCOS2D_TARGET} ${CMAKE_CURRENT_LIST_FILE})
+cocos_tweak_target_output_directory(${COCOS2D_TARGET})
 
-include(2d/CMakeLists.txt)
-include(3d/CMakeLists.txt)
-include(platform/CMakeLists.txt)
-include(physics/CMakeLists.txt)
-include(math/CMakeLists.txt)
-include(renderer/CMakeLists.txt)
-include(base/CMakeLists.txt)
-include(deprecated/CMakeLists.txt)
-include(ui/CMakeLists.txt)
-include(network/CMakeLists.txt)
-include(audio/CMakeLists.txt)
-include_directories(audio/include)
-include(storage/CMakeLists.txt)
-
-if(BUILD_EDITOR_COCOSBUILDER)
-include(editor-support/cocosbuilder/CMakeLists.txt)
-set(COCOS_EDITOR_SUPPORT_SRC ${COCOS_EDITOR_SUPPORT_SRC} ${COCOS_CCB_SRC})
-endif(BUILD_EDITOR_COCOSBUILDER)
-
-if(BUILD_EDITOR_COCOSTUDIO)
-include(editor-support/cocostudio/CMakeLists.txt)
-set(COCOS_EDITOR_SUPPORT_SRC ${COCOS_EDITOR_SUPPORT_SRC} ${COCOS_CS_SRC})
-endif(BUILD_EDITOR_COCOSTUDIO)
-
-if(BUILD_EDITOR_SPINE)
-include(editor-support/spine/CMakeLists.txt)
-set(COCOS_EDITOR_SUPPORT_SRC ${COCOS_EDITOR_SUPPORT_SRC} ${COCOS_SPINE_SRC})
-endif(BUILD_EDITOR_SPINE)
-
-include(../extensions/CMakeLists.txt)
-
-set(COCOS_SRC cocos2d.cpp
-    ${COCOS_2D_SRC}
-    ${COCOS_3D_SRC}
-    ${COCOS_PLATFORM_SRC}
-    ${COCOS_PHYSICS_SRC}
-    ${COCOS_MATH_SRC}
-    ${COCOS_RENDERER_SRC}
-    ${COCOS_BASE_SRC}
-    ${COCOS_AUDIO_SRC}
-    ${COCOS_UI_SRC}
-    ${COCOS_DEPRECATED_SRC}
-    ${COCOS_NETWORK_SRC}
-    ${COCOS_EDITOR_SUPPORT_SRC}
-    ${COCOS_EXTENSIONS_SRC}
+#===============================================================================
+# Set cocos public include directories.
+target_include_directories(${COCOS2D_TARGET} PUBLIC 
+    "${CMAKE_CURRENT_LIST_DIR}"
+    "${CMAKE_CURRENT_LIST_DIR}/audio/include"
+    "${CMAKE_CURRENT_LIST_DIR}/platform"
     )
 
+# Set cocos private include directories.
+target_include_directories(${COCOS2D_TARGET} PRIVATE
+    ".."
+    "../external"
+    )
 
-add_library(cocos2d ${COCOS_SRC})
+#===============================================================================
+# Include all subdirectories, each subdirectory maybe has headers, sources, 
+#   and special definations.
+cocos_target_sources(${COCOS2D_TARGET} GROUP "${COCOS2D_TARGET}" FILES
+    "cocos2d.h"
+    "cocos2d.cpp"
+    )
 
-set(PLATFORM_SPECIFIC_LIBS)
-if(WINDOWS)
-  foreach(_pkg OPENGL GLEW GLFW3 VORBIS MPG123 OPENAL)
-    cocos_use_pkg(cocos2d ${_pkg})
-  endforeach()
-  list(APPEND PLATFORM_SPECIFIC_LIBS ws2_32 winmm)
-elseif(LINUX)
-  foreach(_pkg OPENGL GLEW GLFW3 FMODEX FONTCONFIG THREADS)
-    cocos_use_pkg(cocos2d ${_pkg})
-  endforeach()
-elseif(MACOSX OR APPLE)
-  cocos_use_pkg(cocos2d GLFW3)
+include("platform/CMakeLists.txt")
 
- INCLUDE_DIRECTORIES ( /System/Library/Frameworks )
+include("2d/CMakeLists.txt")
+include("3d/CMakeLists.txt")
+include("audio/CMakeLists.txt")
+include("base/CMakeLists.txt")
+include("deprecated/CMakeLists.txt")
+include("editor-support/CMakeLists.txt")
+include("math/CMakeLists.txt")
+include("network/CMakeLists.txt")
+include("physics/CMakeLists.txt")
+include("renderer/CMakeLists.txt")
+include("storage/CMakeLists.txt")
+include("ui/CMakeLists.txt")
 
- FIND_LIBRARY(COCOA_LIBRARY Cocoa)
- FIND_LIBRARY(OPENGL_LIBRARY OpenGL )
- FIND_LIBRARY(AUDIOTOOLBOX_LIBRARY AudioToolbox)
- FIND_LIBRARY(OPENAL_LIBRARY OpenAL )
- FIND_LIBRARY(QUARTZCORE_LIBRARY QuartzCore )
- FIND_LIBRARY(APPLICATIONSERVICES_LIBRARY ApplicationServices)
- FIND_LIBRARY(IOKIT_LIBRARY IOKit)
- FIND_LIBRARY(FOUNDATION_LIBRARY Foundation)
+include("../extensions/CMakeLists.txt")
 
-  set(PLATFORM_SPECIFIC_LIBS
-    ${COCOA_LIBRARY}
-    ${OPENGL_LIBRARY}
-    ${OPENAL_LIBRARY}
-    ${AUDIOTOOLBOX_LIBRARY}
-    ${QUARTZCORE_LIBRARY}
-    ${APPLICATIONSERVICES_LIBRARY}
-    ${IOKIT_LIBRARY}
-    ${FOUNDATION_LIBRARY}
-  )
+#===============================================================================
+# Add dependent libraries.
 
-elseif(ANDROID)
-  set(PLATFORM_SPECIFIC_LIBS GLESv2 log android)
+cocos_use_package(${COCOS2D_TARGET} CONVERTUTF REQUIRED)
+cocos_use_package(${COCOS2D_TARGET} EDTAA3FUNC REQUIRED)
+cocos_use_package(${COCOS2D_TARGET} TINYXML2 REQUIRED)
+cocos_use_package(${COCOS2D_TARGET} MINIZIP REQUIRED)
+cocos_use_package(${COCOS2D_TARGET} XXHASH REQUIRED)
+cocos_use_package(${COCOS2D_TARGET} FREETYPE REQUIRED)
+cocos_use_package(${COCOS2D_TARGET} JPEG REQUIRED)
+cocos_use_package(${COCOS2D_TARGET} PNG REQUIRED)
+cocos_use_package(${COCOS2D_TARGET} TIFF REQUIRED)
+cocos_use_package(${COCOS2D_TARGET} ZLIB REQUIRED)
+
+if(BUILD_USE_WEBP)
+    # target_compile_definitions(-DCC_USE_WEBP=1)
+    cocos_use_package(${COCOS2D_TARGET} WEBP REQUIRED)
+    # target_compile_definitions "HAVE_NEON=1")
+endif()
+#target_compile_definitions(-DCC_USE_WEBP=0)
+
+if(COCOS_TARGET_SYSTEM_WINDOWS OR COCOS_TARGET_SYSTEM_LINUX)
+    cocos_use_package(${COCOS2D_TARGET} GLEW REQUIRED)
+endif()
+
+if(COCOS_TARGET_SYSTEM_MACOSX OR
+        COCOS_TARGET_SYSTEM_WINDOWS OR
+        COCOS_TARGET_SYSTEM_LINUX)
+    cocos_use_package(${COCOS2D_TARGET} GLFW3 REQUIRED)
+endif()
+
+if(COCOS_TARGET_SYSTEM_MACOSX)
+    # There is no specific libs for MacOSX.
+elseif(COCOS_TARGET_SYSTEM_WINDOWS)
+    # Cocos::Console depend ws2_32.lib on windows.
+    target_link_libraries(${COCOS2D_TARGET} "ws2_32.lib")
+
+elseif(COCOS_TARGET_SYSTEM_LINUX)
+    # OpenGL libs have GLU GL SM ICE X11 Xext, we just need GL and X11.
+    cocos_find_package(OpenGL OPENGL REQUIRED)
+    #cocos_use_package(${COCOS2D_TARGET} OpenGL REQUIRED)
+    # Fontconfig libs have fontconfig and freetype, we just need fontconfig.
+    cocos_find_package(Fontconfig FONTCONFIG REQUIRED)
+    target_link_libraries(${COCOS2D_TARGET} "${OPENGL_gl_LIBRARY}" fontconfig)
+    # cocos_use_package don't satisfy the Threads library, use find_package
+    #   instead.
+    set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
+    cocos_use_package(${COCOS2D_TARGET} Threads REQUIRED)
+    # find_package(Threads REQUIRED)
+    # target_link_libraries(${COCOS2D_TARGET} Threads::Threads)
+    #GLFW3 dependent libs
+    target_link_libraries(${COCOS2D_TARGET}
+        rt m Xxf86vm X11 Xrandr Xi Xinerama Xcursor
+        )
+
+elseif(COCOS_TARGET_SYSTEM_IOS)
+    target_link_libraries(${COCOS2D_TARGET}
+        "-framework AVFoundation"
+        "-framework CoreGraphics"
+        "-framework CoreMotion"
+        "-framework Foundation"
+        "-framework MediaPlayer"
+        "-framework OpenGLES"
+        "-framework QuartzCore"
+        "-framework UIKit"
+        )
+
+elseif(COCOS_TARGET_SYSTEM_ANDROID)
+    # math and webp depends cpufeatures
+    target_link_libraries(${COCOS2D_TARGET}
+        "GLESv1_CM"
+        "GLESv2"
+        "EGL"
+        "log"
+        "android"
+        "cpufeatures"
+        )
+
 else()
-  message( FATAL_ERROR "Unsupported platform, CMake will exit" )
+    message(FATAL_ERROR "${CMAKE_CURRENT_LIST_FILE} build for unsupported os.")
 endif()
 
-foreach(pkg ZLIB MINIZIP JPEG PNG TIFF TINYXML2 FREETYPE WEBSOCKETS CURL FLATBUFFERS XXHASH EDTAA3FUNC CONVERTUTF)
-  cocos_use_pkg(cocos2d ${pkg})
-endforeach()
+#===============================================================================
+#  Specific settings.
+if(COCOS_TARGET_SYSTEM_WINDOWS)
+    target_compile_definitions(${COCOS2D_TARGET} PUBLIC UNICODE _UNICODE)
+    if(BUILD_SHARED_LIBS)
+        target_compile_definitions(${COCOS2D_TARGET} PRIVATE _USRDLL _USE3DDLL)
+    else()
+        target_compile_definitions(${COCOS2D_TARGET} PUBLIC CC_STATIC)
+    endif()
 
-if(LINUX)
-  set(other_glfw_linker_flags Xrandr Xi Xrender drm Xdamage Xxf86vm Xext X11 pthread)
 endif()
 
-target_link_libraries(cocos2d ${PLATFORM_SPECIFIC_LIBS} ${other_glfw_linker_flags})
+# Show cocos2d includes and libraries information.
+get_target_property(COCOS_INTERFACE_INCLUDES ${COCOS2D_TARGET}
+    INTERFACE_INCLUDE_DIRECTORIES
+    )
+message(STATUS
+    "Target '${COCOS2D_TARGET}' public header dir: ${COCOS_INTERFACE_INCLUDES}"
+    )
+get_target_property(COCOS_INCLUDES ${COCOS2D_TARGET} INCLUDE_DIRECTORIES)
+message(STATUS "Target '${COCOS2D_TARGET}' include dirs: ${COCOS_INCLUDES}")
+get_target_property(_INTERFACE_LINK_LIBRARIES ${COCOS2D_TARGET}
+    INTERFACE_LINK_LIBRARIES
+    )
+message(STATUS
+    "Target '${COCOS2D_TARGET}' dependent libs: ${_INTERFACE_LINK_LIBRARIES}"
+    )
 
-if(USE_WEBP)
-  add_definitions(-DCC_USE_WEBP=1)
-  cocos_use_pkg(cocos2d WEBP)
-else()
-  add_definitions(-DCC_USE_WEBP=0)
-endif()
-
-if(USE_CHIPMUNK)
-  cocos_use_pkg(cocos2d CHIPMUNK)
-endif()
-
-if(USE_BOX2D)
-  cocos_use_pkg(cocos2d Box2D)
-endif()
-
-set_target_properties(cocos2d
-    PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-    VERSION "${COCOS2D_X_VERSION}"
-)
