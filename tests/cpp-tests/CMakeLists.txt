@@ -62,6 +62,27 @@ set(TESTS_SRC
   Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp
   Classes/ExtensionsTest/ExtensionsTest.cpp
   Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp
+  Classes/UITest/CocoStudioGUITest/CocoStudioGUITest.cpp
+  Classes/UITest/CocoStudioGUITest/CocosGUIScene.cpp
+  Classes/UITest/CocoStudioGUITest/UIScene.cpp
+  Classes/UITest/CocoStudioGUITest/UIScale9SpriteTest.cpp
+  Classes/UITest/CocoStudioGUITest/UISceneManager.cpp
+  Classes/UITest/CocoStudioGUITest/UIButtonTest/UIButtonTest.cpp
+  Classes/UITest/CocoStudioGUITest/UIFocusTest/UIFocusTest.cpp
+  Classes/UITest/CocoStudioGUITest/UICheckBoxTest/UICheckBoxTest.cpp
+  Classes/UITest/CocoStudioGUITest/UIImageViewTest/UIImageViewTest.cpp
+  Classes/UITest/CocoStudioGUITest/UILayoutTest/UILayoutTest.cpp
+  Classes/UITest/CocoStudioGUITest/UIListViewTest/UIListViewTest.cpp
+  Classes/UITest/CocoStudioGUITest/UILoadingBarTest/UILoadingBarTest.cpp
+  Classes/UITest/CocoStudioGUITest/UIPageViewTest/UIPageViewTest.cpp
+  Classes/UITest/CocoStudioGUITest/UIScrollViewTest/UIScrollViewTest.cpp
+  Classes/UITest/CocoStudioGUITest/UISliderTest/UISliderTest.cpp
+  Classes/UITest/CocoStudioGUITest/UITextTest/UITextTest.cpp
+  Classes/UITest/CocoStudioGUITest/UITextAtlasTest/UITextAtlasTest.cpp
+  Classes/UITest/CocoStudioGUITest/UITextBMFontTest/UITextBMFontTest.cpp
+  Classes/UITest/CocoStudioGUITest/UITextFieldTest/UITextFieldTest.cpp
+  Classes/UITest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest.cpp
+  Classes/UITest/CocoStudioGUITest/UIRichTextTest/UIRichTextTest.cpp
   Classes/NewRendererTest/NewRendererTest.cpp
   Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp
   Classes/NewAudioEngineTest/NewAudioEngineTest.cpp
