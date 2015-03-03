@@ -529,12 +529,14 @@ bool EditBoxImplWin::initWithSize(const Size& size)
 
 void EditBoxImplWin::setFont(const char* pFontName, int fontSize)
 {
-	if (_label != nullptr) {
+	if (_label != nullptr)
+	{
 		_label->setSystemFontName(pFontName);
 		_label->setSystemFontSize(fontSize);
 	}
 	
-	if (_labelPlaceHolder != nullptr) {
+	if (_labelPlaceHolder != nullptr)
+	{
 		_labelPlaceHolder->setSystemFontName(pFontName);
 		_labelPlaceHolder->setSystemFontSize(fontSize);
 	}
@@ -548,7 +550,8 @@ void EditBoxImplWin::setFontColor(const Color3B& color)
 
 void EditBoxImplWin::setPlaceholderFont(const char* pFontName, int fontSize)
 {
-	if (_labelPlaceHolder != nullptr) {
+	if (_labelPlaceHolder != nullptr)
+	{
 		_labelPlaceHolder->setSystemFontName(pFontName);
 		_labelPlaceHolder->setSystemFontSize(fontSize);
 	}
@@ -706,7 +709,8 @@ void EditBoxImplWin::openKeyboard()
 	if (didChange) 	
 		setText(text.c_str());
 
-	if (_delegate != nullptr) {
+	if (_delegate != nullptr)
+	{
 		if (didChange)
 			_delegate->editBoxTextChanged(_editBox, getText());
 		_delegate->editBoxEditingDidEnd(_editBox);
