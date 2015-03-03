@@ -200,7 +200,7 @@ WIN32INPUTBOX_PARAM::WIN32INPUTBOX_PARAM()
 	xPos = yPos = -1;
 
 	pstrResult = nullptr;
-    nMaxLength = (DWORD) -1;
+	nMaxLength = (DWORD) -1;
 }
 
 CWin32InputBox::CWin32InputBox(WIN32INPUTBOX_PARAM *param)
