@@ -9,8 +9,6 @@ cocos_target_sources(${COCOS2D_TARGET} GROUP "renderer" FILES
     "renderer/CCGLProgramStateCache.cpp"
     "renderer/CCGroupCommand.cpp"
     "renderer/CCMeshCommand.cpp"
-    "renderer/CCPrimitive.cpp"
-    "renderer/CCPrimitiveCommand.cpp"
     "renderer/CCQuadCommand.cpp"
     "renderer/CCRenderCommand.cpp"
     "renderer/CCRenderer.cpp"
@@ -22,5 +20,7 @@ cocos_target_sources(${COCOS2D_TARGET} GROUP "renderer" FILES
     "renderer/CCVertexIndexData.cpp"
     "renderer/ccGLStateCache.cpp"
     "renderer/ccShaders.cpp"
+    "renderer/CCStencilCommand.cpp"
+    "renderer/CCScissorCommand.cpp"
 )
 

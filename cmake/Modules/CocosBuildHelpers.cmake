@@ -1,7 +1,7 @@
-#if(_COCOS_BUILD_HELPERS_CMAKE)
-#    return()
-#endif()
-#set(_COCOS_BUILD_HELPERS_CMAKE TRUE)
+if(_COCOS_BUILD_HELPERS_CMAKE)
+    return()
+endif()
+set(_COCOS_BUILD_HELPERS_CMAKE TRUE)
 
 include(CMakeDependentOption)
 
@@ -121,6 +121,9 @@ if(COCOS_TARGET_SYSTEM_MACOSX)
     if(BUILD_USE_PREBUILT_LIBS)
         unset(CMAKE_OSX_ARCHITECTURES CACHE)
         set(CMAKE_OSX_ARCHITECTURES "x86_64")
+        set(COCOS_ARCH_FOLDER_SUFFIX "x86-64" CACHE INTERNAL "")
+    else()
+        set(COCOS_ARCH_FOLDER_SUFFIX "universal" CACHE STRING "")
     endif()
 
 elseif(COCOS_TARGET_SYSTEM_WINDOWS)
@@ -128,7 +131,10 @@ elseif(COCOS_TARGET_SYSTEM_WINDOWS)
     if(CMAKE_CL_64)
         message(FATAL_ERROR "Cocos only support i386 architecture on Windows!")
     endif()
- 
+    if(BUILD_USE_PREBUILT_LIBS)
+        set(COCOS_ARCH_FOLDER_SUFFIX "i386" CACHE INTERNAL "")
+    endif()
+
 elseif(COCOS_TARGET_SYSTEM_LINUX)
     # Decide the target system architecture.
     # As default, target system arch same as host system.
@@ -138,19 +144,23 @@ elseif(COCOS_TARGET_SYSTEM_LINUX)
         set(default_arch "i386")
     endif()
 
-    set(BUILD_TARGET_ARCHITECTURE ${default_arch}
-        CACHE STRING "Build project for i386 or x86_64."
-        )
+    if(BUILD_USE_PREBUILT_LIBS)
+        set(BUILD_TARGET_ARCHITECTURE "x86_64" CACHE INTERNAL "")
+    else()
+        set(BUILD_TARGET_ARCHITECTURE ${default_arch}
+            CACHE STRING "Build project for i386 or x86_64."
+            )
+    endif()
 
     # COCOS_ARCH_FOLDER_SUFFIX variable for choose the prebuilt libraries in external.
     if(BUILD_TARGET_ARCHITECTURE MATCHES "x86_64")
         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m64")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64")
-        set(COCOS_ARCH_FOLDER_SUFFIX "64-bit")
+        set(COCOS_ARCH_FOLDER_SUFFIX "x86-64")
     elseif(BUILD_TARGET_ARCHITECTURE MATCHES "i386")
         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m32")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32")
-        set(COCOS_ARCH_FOLDER_SUFFIX "32-bit")
+        set(COCOS_ARCH_FOLDER_SUFFIX "i386")
     else()
         message(FATAL_ERROR "Unsupported architecture '${BUILD_TARGET_ARCHITECTURE}'!")
     endif()
@@ -173,11 +183,13 @@ elseif(COCOS_TARGET_SYSTEM_ANDROID)
             CACHE STRING "Android API level for native code" FORCE
             )
     endif()
-
+    set(COCOS_ARCH_FOLDER_SUFFIX "${ANDROID_ABI}" CACHE INTERNAL "" FORCE)
     include(../AndroidNdkModules)
     android_ndk_import_module_cpufeatures()
 else()
-    message(FATAL_ERROR "${CMAKE_CURRENT_LIST_FILE} build on unsupported target platform!")
+    message(FATAL_ERROR
+        "${CMAKE_CURRENT_LIST_FILE} build on unsupported target platform!"
+        )
 endif()
 
 #===============================================================================
@@ -219,23 +231,37 @@ endmacro()
 # Also if BUILD_SHARED_LIBS variable off, it is try to use <pkg>_STATIC_* vars before
 function(cocos_use_package target pkg)
     string(TOUPPER "${pkg}" pkg_upper)
+    set(pkg_target "")
+
+    # Use prebuilt library if it exists.
     if(TARGET ${pkg_upper}::${pkg_upper})
-        target_link_libraries(${target} ${pkg_upper}::${pkg_upper})
-        message(STATUS "Add prebuilt package '${pkg_upper}' to target '${target}'.")
-        return()
+        set(pkg_target "${pkg_upper}::${pkg_upper}")
+    elseif(TARGET ${pkg}::${pkg})
+        set(pkg_target "${pkg}::${pkg}")
     endif()
-    if(NOT pkg_upper MATCHES pkg AND TARGET ${pkg}::${pkg})
-        target_link_libraries(${target} ${pkg}::${pkg})
+    if(pkg_target)
+        target_link_libraries(${target} ${pkg_target})
         message(STATUS "Add prebuilt package '${pkg}' to target '${target}'.")
         return()
     endif()
 
-    # If pkg hasn't found, find it first.
-    if(NOT ${pkg_upper}_FOUND)
-        cocos_find_package(${pkg} ${pkg_upper} ${ARGN})
-    endif()
-    set(pkg ${pkg_upper})
+    # If pkg hasn't found, find it by cmake.
+    cocos_find_package(${pkg} ${pkg_upper} ${ARGN})
 
+    # If pakcage define target, use it.
+    if(TARGET ${pkg_upper}::${pkg_upper})
+        set(pkg_target "${pkg_upper}::${pkg_upper}")
+    elseif(TARGET ${pkg}::${pkg})
+        set(pkg_target "${pkg}::${pkg}")
+    endif()
+    if(pkg_target)
+        target_link_libraries(${target} ${pkg_target})
+        message(STATUS "Add package ${pkg}'s target '${pkg_target}' to target '${target}'.")
+        return()
+    endif()
+
+    # Add include dirs, libs, macros which defined by package to target.
+    set(pkg ${pkg_upper})
     message(STATUS "Add package '${pkg}' to target '${target}':")
 
     set(prefix ${pkg})
@@ -296,18 +322,74 @@ function(cocos_tweak_target_output_directory _target)
 # camke issue:http://public.kitware.com/Bug/bug_relationship_graph.php?bug_id=14853&graph=dependency
 # It seems there is no way to change the product path, so redirect all target
 #   build location to the default product path.
-if(XCODE_VERSION)
-    set(_default_dir "${CMAKE_BINARY_DIR}/build/${CMAKE_CFG_INTDIR}")
-    set_target_properties(${_target} PROPERTIES
-        ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${_default_dir}"
-        LIBRARY_OUTPUT_DIRECTORY_DEBUG "${_default_dir}"
-        RUNTIME_OUTPUT_DIRECTORY_DEBUG "${_default_dir}"
-        ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${_default_dir}"
-        LIBRARY_OUTPUT_DIRECTORY_RELEASE "${_default_dir}"
-        RUNTIME_OUTPUT_DIRECTORY_RELEASE "${_default_dir}"
-        )
-endif()
+    if(XCODE_VERSION)
+        set(_default_dir "${CMAKE_BINARY_DIR}/build/${CMAKE_CFG_INTDIR}")
+        set_target_properties(${_target} PROPERTIES
+            ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${_default_dir}"
+            LIBRARY_OUTPUT_DIRECTORY_DEBUG "${_default_dir}"
+            RUNTIME_OUTPUT_DIRECTORY_DEBUG "${_default_dir}"
+            ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${_default_dir}"
+            LIBRARY_OUTPUT_DIRECTORY_RELEASE "${_default_dir}"
+            RUNTIME_OUTPUT_DIRECTORY_RELEASE "${_default_dir}"
+            )
+    endif()
 
+    if(CMAKE_GENERATOR MATCHES "Makefiles")
+        set(_default_dir "${CMAKE_BINARY_DIR}/build/${CMAKE_BUILD_TYPE}")
+        set_target_properties(${_target} PROPERTIES
+            ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${_default_dir}"
+            LIBRARY_OUTPUT_DIRECTORY_DEBUG "${_default_dir}"
+            RUNTIME_OUTPUT_DIRECTORY_DEBUG "${_default_dir}"
+            ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${_default_dir}"
+            LIBRARY_OUTPUT_DIRECTORY_RELEASE "${_default_dir}"
+            RUNTIME_OUTPUT_DIRECTORY_RELEASE "${_default_dir}"
+            )
+    endif()
+endfunction()
+
+#===============================================================================
+# Define a helper function for copy depends dll to exe directory.
+function(_get_depends_dll _target)
+    get_target_property(_deps ${_target} INTERFACE_LINK_LIBRARIES)
+    foreach(_lib ${_deps})
+        if(TARGET ${_lib})
+            get_target_property(_dlls ${_lib} IMPORTED_LOCATION)
+            get_target_property(_implib ${_lib} IMPORTED_IMPLIB)
+            if(_implib)
+                foreach(_dll ${_dlls})
+                    set(_DEPENDS_DLL "${_DEPENDS_DLL};${_dll}"
+                        CACHE INTERNAL "" FORCE
+                        )
+                endforeach()
+            endif()
+            _get_depends_dll(${_lib})
+        endif()
+    endforeach()
+endfunction()
+
+function(cocos_add_copy_depends_dll_command _target)
+    if(NOT COCOS_TARGET_SYSTEM_WINDOWS)
+        message(AUTHOR_WARNING 
+            "function cocos_copy_depends_dll_command on for win32."
+            )
+        return()
+    endif()
+    if(NOT TARGET ${_target})
+        message(AUTHOR_WARNING "Input target '${_target}' is invalid.")
+        return()
+    endif()
+    
+    set(_DEPENDS_DLL "" CACHE INTERNAL "" FORCE)
+    _get_depends_dll(${_target})
+    #message("Get Dlls: ${_DEPENDS_DLL}")
+    foreach(_dll ${_DEPENDS_DLL})
+        add_custom_command(TARGET ${_target} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${_dll}"
+            "$<TARGET_FILE_DIR:${app_name}>"
+            )
+    endforeach()
+    unset(_DEPENDS_DLL CACHE)
 endfunction()
 
 #===============================================================================
@@ -339,7 +421,7 @@ function(cocos_target_sources _target)
 endfunction()
 
 # Define a helper function for adding resources to deployment target.
-# usage: cocos_target_resource(<target_name> 
+# usage: cocos_target_resource(<target_name>
 #           [GROUP name]
 #           [LOCATION "relative/path/to/package/root"]
 #           [FLAT_TO_LOCATION <TRUE|FALSE>]

@@ -1,3 +1,27 @@
+#/****************************************************************************
+# Copyright (c) 2014 Chukong Technologies Inc.
+# 
+# http://www.cocos2d-x.org
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+# ****************************************************************************/
+
 project(LUA_TESTS)
 
 #===============================================================================
@@ -18,7 +42,7 @@ set_target_properties(${app_name} PROPERTIES
 # Set include directories.
 target_include_directories(${app_name} PRIVATE
     "Classes"
-    "../../.."
+    "${COCOS2D-X_SOURCE_DIR}"
     "../../../external"
     )
 
@@ -73,7 +97,7 @@ file(GLOB_RECURSE cpp_res "${CPP_TESTS_SOURCE_DIR}/Resources/*")
 target_link_libraries(${app_name} ${LUACOCOS2D_TARGET} ${SPINE_TARGET})
 
 #===============================================================================
-# Specific settings and copy resources.
+# Specific settings.
 if(COCOS_TARGET_SYSTEM_MACOSX)
     # Add resources to xcodeproj.
     file(GLOB_RECURSE app_resources "../res/*")
@@ -172,34 +196,12 @@ elseif(COCOS_TARGET_SYSTEM_IOS)
         )
 endif()
 
+#===============================================================================
+# Copy resources.
 if(XCODE_VERSION)
     # Nothing to do.
 elseif(MSVC_IDE)
-    # Copy cocos2d dll to OUTPUT_DIRECTORY
-    if(BUILD_SHARED_LIBS)
-        add_custom_command(TARGET ${app_name} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            "\"$(SolutionDir)cocos\\$(Configuration)\\${COCOS2D_TARGET}.dll\""
-            "\"$(ProjectDir)$(Configuration)\""
-            )
-    endif()
-
-    # Copy all 'cocos2d' depends Dlls to OUTPUT_DIRECTORY.
-    get_target_property(libs cocos2d INTERFACE_LINK_LIBRARIES)
-    foreach(lib ${libs})
-        if(TARGET ${lib})
-            get_target_property(location ${lib} IMPORTED_LOCATION)
-            get_target_property(implib ${lib} IMPORTED_IMPLIB)
-            if(implib)
-                string(REPLACE "/" "\\" loc_dos ${location})
-                add_custom_command(TARGET ${app_name} POST_BUILD
-                    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                    "\"${loc_dos}\""
-                    "\"$(ProjectDir)$(Configuration)\""
-                    )
-            endif()
-        endif()
-    endforeach()
+    cocos_add_copy_depends_dll_command(${app_name})
 
     # Copy resource folders to WorkingDir(is $(ProjectDir) in VS).
     file(TO_NATIVE_PATH "${CMAKE_CURRENT_LIST_DIR}/../res" res_dir)

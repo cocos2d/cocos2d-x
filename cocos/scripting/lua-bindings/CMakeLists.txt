@@ -1,3 +1,27 @@
+#/****************************************************************************
+# Copyright (c) 2014 Chukong Technologies Inc.
+# 
+# http://www.cocos2d-x.org
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+# ****************************************************************************/
+
 project(LUACOCOS2D)
 
 set(cocos_root ${COCOS2D-X_SOURCE_DIR})
@@ -12,25 +36,26 @@ cocos_tweak_target_output_directory(${LUACOCOS2D_TARGET})
 # Set include directories.
 target_include_directories(${LUACOCOS2D_TARGET} PUBLIC
     "manual"
+    "manual/tolua"
     )
 target_include_directories(${LUACOCOS2D_TARGET} PRIVATE
-    "${cocos_root}/external/lua"
     "${cocos_root}"
     "${cocos_root}/external"
+    "${cocos_root}/external/lua"
     "${COCOS2D_SOURCE_DIR}/2d"
     "${COCOS2D_SOURCE_DIR}/3d"
     "${COCOS2D_SOURCE_DIR}/base"
-    "${COCOS2D_SOURCE_DIR}/editor-support/spine"
     "${COCOS2D_SOURCE_DIR}/editor-support/cocostudio"
-    "${COCOS2D_SOURCE_DIR}/editor-support/cocostudio/ActionTimeline"
     "${COCOS2D_SOURCE_DIR}/editor-support/cocosbuilder"
+    "${COCOS2D_SOURCE_DIR}/editor-support/cocostudio/ActionTimeline"
+    "${COCOS2D_SOURCE_DIR}/editor-support/spine"
     "${COCOS2D_SOURCE_DIR}/ui"
-    "manual/extension"
-    "manual/cocostudio"
-    "manual/ui"
-    "manual/cocos2d"
     "auto"
-)
+    "manual/cocos2d"
+    "manual/cocostudio"
+    "manual/extension"
+    "manual/ui"
+    )
 
 #===============================================================================
 # Add sources.
@@ -41,7 +66,6 @@ cocos_target_sources(${LUACOCOS2D_TARGET} GROUP "manual-binding" FILES
     "manual/CCLuaValue.cpp"
     "manual/Cocos2dxLuaLoader.cpp"
     "manual/LuaBasicConversions.cpp"
-    "manual/tolua_fix.cpp"
     "manual/cocos2d/LuaOpengl.cpp"
     "manual/cocos2d/LuaScriptHandlerMgr.cpp"
     "manual/cocos2d/lua_cocos2dx_deprecated.cpp"
@@ -69,6 +93,12 @@ cocos_target_sources(${LUACOCOS2D_TARGET} GROUP "manual-binding" FILES
     "manual/ui/lua_cocos2dx_ui_manual.cpp"
     "manual/video/lua_cocos2dx_experimental_video_manual.cpp"
     "manual/audioengine/lua_cocos2dx_audioengine_manual.cpp"
+    "manual/tolua/tolua_event.c"
+    "manual/tolua/tolua_is.c"
+    "manual/tolua/tolua_map.c"
+    "manual/tolua/tolua_push.c"
+    "manual/tolua/tolua_to.c"
+    "manual/tolua/tolua_fix.cpp"
     )
 
 if(COCOS_TARGET_SYSTEM_MACOSX)
@@ -110,28 +140,16 @@ cocos_target_sources(${LUACOCOS2D_TARGET} GROUP "auto-binding" FILES
 
 #===============================================================================
 # Link dependent libraries.
-if(COCOS_TARGET_SYSTEM_ANDROID OR
-        COCOS_TARGET_SYSTEM_WINDOWS OR
-        COCOS_TARGET_SYSTEM_MACOSX)
-    cocos_use_package(${LUACOCOS2D_TARGET} LUAJIT REQUIRED)
-elseif(COCOS_TARGET_SYSTEM_IOS)
-    # luajit for arch: i386, x86_64, arm7, arm7s
-    cocos_use_package(${LUACOCOS2D_TARGET} LUAJIT REQUIRED)
+cocos_use_package(${LUACOCOS2D_TARGET} LUAJIT REQUIRED)
+if(COCOS_TARGET_SYSTEM_IOS)
     # lua for arch: arm64
-    add_subdirectory("../../../external/lua/lua"    "external/lua")
-    target_link_libraries(${LUACOCOS2D_TARGET} lua)
-elseif(COCOS_TARGET_SYSTEM_LINUX)
-    add_subdirectory("../../../external/lua/lua"    "external/lua")
-    target_link_libraries(${LUACOCOS2D_TARGET} lua)
-else()
+    cocos_use_package(${LUACOCOS2D_TARGET} LUA REQUIRED)
 endif()
-add_subdirectory("../../../external/xxtea"          "external/xxtea")
-add_subdirectory("../../../external/lua/luasocket"  "external/luasocket")
-add_subdirectory("../../../external/lua/tolua"      "external/tolua")
 
-target_link_libraries(${LUACOCOS2D_TARGET}
-    ${COCOS2D_TARGET} xxtea luasocket tolua
-    )
+cocos_use_package(${LUACOCOS2D_TARGET} XXTEA REQUIRED)
+cocos_use_package(${LUACOCOS2D_TARGET} LUASOCKET REQUIRED)
+
+target_link_libraries(${LUACOCOS2D_TARGET} ${COCOS2D_TARGET})
 
 # Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge.cpp include CCLuaJavaBridge.h,
 #    need modify sometime.

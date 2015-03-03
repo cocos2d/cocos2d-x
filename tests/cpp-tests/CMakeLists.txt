@@ -73,7 +73,6 @@ cocos_target_sources(${app_name} GROUP "Classes" FILES
     "Classes/ExtensionsTest/TableViewTest/TableViewTestScene.cpp"
     "Classes/ExtensionsTest/TableViewTest/CustomTableViewCell.cpp"
     "Classes/ExtensionsTest/ExtensionsTest.cpp"
-    "Classes/ExtensionsTest/NotificationCenterTest/NotificationCenterTest.cpp"
     "Classes/ExtensionsTest/NetworkTest/HttpClientTest.cpp"
     "Classes/NewRendererTest/NewRendererTest.cpp"
     "Classes/NewEventDispatcherTest/NewEventDispatcherTest.cpp"
@@ -130,7 +129,6 @@ cocos_target_sources(${app_name} GROUP "Classes" FILES
     "Classes/UserDefaultTest/UserDefaultTest.cpp"
     "Classes/ZwoptexTest/ZwoptexTest.cpp"
     "Classes/FileUtilsTest/FileUtilsTest.cpp"
-    "Classes/DataVisitorTest/DataVisitorTest.cpp"
     "Classes/ConfigurationTest/ConfigurationTest.cpp"
     "Classes/ConsoleTest/ConsoleTest.cpp"
     "Classes/UnitTest/RefPtrTest.cpp"
@@ -312,6 +310,13 @@ target_link_libraries(${app_name} ${COCOS2D_TARGET})
 
 #===============================================================================
 # Specific settings.
+
+# If build chipmunktests, it's type Recte...will conflict with mac and ios type.
+# Define macro to resove this program.
+if(COCOS_TARGET_SYSTEM_MACOSX OR COCOS_TARGET_SYSTEM_IOS)
+    target_compile_definitions(${app_name} PRIVATE "CP_USE_CGPOINTS=0")
+endif()
+
 if(COCOS_TARGET_SYSTEM_MACOSX)
     cocos_target_resource(${app_name} GROUP "Resources"
         LOCATION "Resources"
@@ -381,31 +386,7 @@ endif()
 if(XCODE_VERSION)
     # Nothing to do.
 elseif(MSVC_IDE)
-    # Copy cocos2d dll to OUTPUT_DIRECTORY
-    if(BUILD_SHARED_LIBS)
-        add_custom_command(TARGET ${app_name} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            "\"$(SolutionDir)cocos\\$(Configuration)\\${COCOS2D_TARGET}.dll\""
-            "\"$(ProjectDir)$(Configuration)\""
-            )
-    endif()
-
-    # Copy all 'cocos2d' depends Dlls to OUTPUT_DIRECTORY.
-    get_target_property(libs cocos2d INTERFACE_LINK_LIBRARIES)
-    foreach(lib ${libs})
-        if(TARGET ${lib})
-            get_target_property(location ${lib} IMPORTED_LOCATION)
-            get_target_property(implib ${lib} IMPORTED_IMPLIB)
-            if(implib)
-                string(REPLACE "/" "\\" loc_dos ${location})
-                add_custom_command(TARGET ${app_name} POST_BUILD
-                    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                    "\"${loc_dos}\""
-                    "\"$(ProjectDir)$(Configuration)\""
-                    )
-            endif()
-        endif()
-    endforeach()
+    cocos_add_copy_depends_dll_command(${app_name})
 
     # Copy resource folder "Resources" to WorkingDir(is $(ProjectDir) in VS).
     file(TO_NATIVE_PATH "${CMAKE_CURRENT_LIST_DIR}/Resources" res_dir)

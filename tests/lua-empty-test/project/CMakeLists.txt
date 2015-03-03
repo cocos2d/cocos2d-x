@@ -139,8 +139,7 @@ elseif(COCOS_TARGET_SYSTEM_IOS)
 
     set_target_properties(${app_name} PROPERTIES
         MACOSX_BUNDLE_BUNDLE_NAME "${app_name}"
-        MACOSX_BUNDLE_BUNDLE_VERSION "${COCOS2D_X_VERSION}"
-        MACOSX_BUNDLE_GUI_IDENTIFIER "org.cocos.$(PRODUCT_NAME)"
+        MACOSX_BUNDLE_BUNDLE_VERSION "${COCOS2D_X_VERSION}" MACOSX_BUNDLE_GUI_IDENTIFIER "org.cocos.$(PRODUCT_NAME)"
         MACOSX_BUNDLE_ICON_FILE "Icon-57.png"
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_LIST_DIR}/proj.ios/InfoCMake.plist"
         MACOSX_BUNDLE_SHORT_VERSION_STRING "${COCOS2D_X_VERSION}"
@@ -150,31 +149,7 @@ endif()
 if(XCODE_VERSION)
     # Nothing to do.
 elseif(MSVC_IDE)
-    # Copy cocos2d dll to OUTPUT_DIRECTORY
-    if(BUILD_SHARED_LIBS)
-        add_custom_command(TARGET ${app_name} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            "\"$(SolutionDir)cocos\\$(Configuration)\\${COCOS2D_TARGET}.dll\""
-            "\"$(ProjectDir)$(Configuration)\""
-            )
-    endif()
-
-    # Copy all 'cocos2d' depends Dlls to OUTPUT_DIRECTORY.
-    get_target_property(libs cocos2d INTERFACE_LINK_LIBRARIES)
-    foreach(lib ${libs})
-        if(TARGET ${lib})
-            get_target_property(location ${lib} IMPORTED_LOCATION)
-            get_target_property(implib ${lib} IMPORTED_IMPLIB)
-            if(implib)
-                string(REPLACE "/" "\\" loc_dos ${location})
-                add_custom_command(TARGET ${app_name} POST_BUILD
-                    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-                    "\"${loc_dos}\""
-                    "\"$(ProjectDir)$(Configuration)\""
-                    )
-            endif()
-        endif()
-    endforeach()
+    cocos_add_copy_depends_dll_command(${app_name})
 
     # Copy resource folders to WorkingDir(is $(ProjectDir) in VS).
     file(TO_NATIVE_PATH "${CMAKE_CURRENT_LIST_DIR}/../res" res_dir)

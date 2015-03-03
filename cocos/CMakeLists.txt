@@ -79,46 +79,11 @@ include("../extensions/CMakeLists.txt")
 #===============================================================================
 # Add dependent libraries.
 
-add_subdirectory("../external/ConvertUTF" "external/ConvertUTF")
-add_subdirectory("../external/edtaa3func" "external/edtaa3func")
-
-# Tinyxml2 (not prebuilded, exists as source)
-if(BUILD_USE_PREBUILT_LIBS)
-    add_subdirectory("../external/tinyxml2" "external/tinyxml2")
-
-    target_link_libraries(${COCOS2D_TARGET} tinyxml2)
-else()
-    cocos_use_package(${COCOS2D_TARGET} TinyXML2 REQUIRED)
-endif()
-
-# minizip(we try to migrate to minizip from https://github.com/nmoinvaz/minizip)
-# only msys2 currently provides package for this variant, all other
-# dists have packages from zlib, thats very old for us.
-# moreover our embedded version modified to quick provide
-# functionality needed by cocos.
-if(BUILD_USE_PREBUILT_LIBS OR NOT MINGW)
-    add_subdirectory("../external/unzip" "external/unzip")
-
-    target_link_libraries(${COCOS2D_TARGET} unzip)
-else()
-    cocos_find_package(MINIZIP MINIZIP REQUIRED)
-    # double check that we have needed functions
-    include(CheckLibraryExists)
-    check_library_exists(${MINIZIP_LIBRARIES} "unzGoToFirstFile2" "" MINIZIP_HAS_GOTOFIRSTFILE2)
-    if(NOT MINIZIP_HAS_GOTOFIRSTFILE2)
-        message(FATAL_ERROR "Minizip library on you system very old. Please use recent version from https://github.com/nmoinvaz/minizip or enable BUILD_USE_PREBUILT_LIBS")
-    endif()
-    add_definitions(-DMINIZIP_FROM_SYSTEM)
-    
-    cocos_use_package(${COCOS2D_TARGET} MINIZIP REQUIRED)
-endif()
-
-add_subdirectory("../external/xxhash" "external/xxhash")
-
-target_link_libraries(${COCOS2D_TARGET}
-    ConvertUTF edtaa3func tinyxml2 unzip xxhash
-    )
-
+cocos_use_package(${COCOS2D_TARGET} CONVERTUTF REQUIRED)
+cocos_use_package(${COCOS2D_TARGET} EDTAA3FUNC REQUIRED)
+cocos_use_package(${COCOS2D_TARGET} TINYXML2 REQUIRED)
+cocos_use_package(${COCOS2D_TARGET} MINIZIP REQUIRED)
+cocos_use_package(${COCOS2D_TARGET} XXHASH REQUIRED)
 cocos_use_package(${COCOS2D_TARGET} FREETYPE REQUIRED)
 cocos_use_package(${COCOS2D_TARGET} JPEG REQUIRED)
 cocos_use_package(${COCOS2D_TARGET} PNG REQUIRED)
@@ -220,15 +185,4 @@ get_target_property(_INTERFACE_LINK_LIBRARIES ${COCOS2D_TARGET}
 message(STATUS
     "Target '${COCOS2D_TARGET}' dependent libs: ${_INTERFACE_LINK_LIBRARIES}"
     )
-return()
-
-#==============================================================================
-
-if(USE_CHIPMUNK)
-  cocos_use_pkg(cocos2d CHIPMUNK)
-endif()
-
-if(USE_BOX2D)
-  cocos_use_pkg(cocos2d Box2D)
-endif()
 
