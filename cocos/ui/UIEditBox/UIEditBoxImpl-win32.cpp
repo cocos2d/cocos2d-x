@@ -311,8 +311,8 @@ INT_PTR CWin32InputBox::InputBox(
 
 	param.szTitle = szTitle;
 	param.szPrompt = szPrompt;
-    param.pstrResult = pstrResult;
-    param.nMaxLength = nResultSize;
+	param.pstrResult = pstrResult;
+	param.nMaxLength = nResultSize;
 	param.bMultiline = bMultiLine;
 	param.hwndOwner = hwndParent;
 	return InputBoxEx(&param);
@@ -436,15 +436,18 @@ LRESULT CALLBACK CWin32InputBox::DlgProc(HWND hDlg, UINT message, WPARAM wParam,
 							   _this->_param->pstrResult->clear();
 							   if (conversionResult)
 							   {
-								   if((_this->_param->nMaxLength > 0) && (_this->_param->nMaxLength < (DWORD) cocos2d::StringUtils::getCharacterCountInUTF8String(utf8Result)))
+								   DWORD inputLengthAsUTF8 = (DWORD) cocos2d::StringUtils::getCharacterCountInUTF8String(utf8Result);
+								   if ((_this->_param->nMaxLength > 0) &&
+									   (_this->_param->nMaxLength < inputLengthAsUTF8))
 								   {
 									   // LengthFilter
-									   for(size_t pos=0; pos < _this->_param->nMaxLength; pos++)
+									   for (size_t pos=0; pos < _this->_param->nMaxLength; pos++)
 									   {
 										   std::string utf8Bytes;
 										   std::u16string utf16Character(1, wstrResult[pos]);
 
-										   if(cocos2d::StringUtils::UTF16ToUTF8(utf16Character, utf8Bytes))
+										   bool utf16toutf8ConversionResult = cocos2d::StringUtils::UTF16ToUTF8(utf16Character, utf8Bytes);
+										   if (utf16toutf8ConversionResult)
 										   {
 											   _this->_param->pstrResult->append(utf8Bytes);
 										   }
@@ -526,12 +529,12 @@ bool EditBoxImplWin::initWithSize(const Size& size)
 
 void EditBoxImplWin::setFont(const char* pFontName, int fontSize)
 {
-	if(_label != nullptr) {
+	if (_label != nullptr) {
 		_label->setSystemFontName(pFontName);
 		_label->setSystemFontSize(fontSize);
 	}
 	
-	if(_labelPlaceHolder != nullptr) {
+	if (_labelPlaceHolder != nullptr) {
 		_labelPlaceHolder->setSystemFontName(pFontName);
 		_labelPlaceHolder->setSystemFontSize(fontSize);
 	}
@@ -545,7 +548,7 @@ void EditBoxImplWin::setFontColor(const Color3B& color)
 
 void EditBoxImplWin::setPlaceholderFont(const char* pFontName, int fontSize)
 {
-	if(_labelPlaceHolder != nullptr) {
+	if (_labelPlaceHolder != nullptr) {
 		_labelPlaceHolder->setSystemFontName(pFontName);
 		_labelPlaceHolder->setSystemFontSize(fontSize);
 	}
