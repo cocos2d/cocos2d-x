@@ -563,7 +563,7 @@ bool Particle3DWithSprite3DDemo::init()
     this->addChild(billboard);
 
 
-    auto rootps = PUParticleSystem3D::create("star.pu");
+    auto rootps = PUParticleSystem3D::create("lineStreak.pu");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
     rootps->startParticleSystem();
     this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
