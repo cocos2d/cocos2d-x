@@ -253,6 +253,19 @@ public:
     virtual bool init() override;
 };
 
+class Particle3DWithSprite3DDemo : public Particle3DTestDemo
+{
+public:
+
+    CREATE_FUNC(Particle3DWithSprite3DDemo);
+    Particle3DWithSprite3DDemo(){};
+    virtual ~Particle3DWithSprite3DDemo(){};
+
+    virtual std::string subtitle() const override;
+
+    virtual bool init() override;
+};
+
 class Particle3DTestScene : public TestScene
 {
 public:

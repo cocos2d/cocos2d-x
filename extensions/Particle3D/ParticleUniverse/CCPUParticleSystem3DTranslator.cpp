@@ -165,18 +165,18 @@ void PUParticleSystem3DTranslator::translate(PUScriptCompiler* compiler, PUAbstr
                         }
                     }
                 }
-            //	else if (prop->name == token[TOKEN_PS_SCALE_VELOCITY])
-            //	{
-            //		// Property: scale_velocity
-            //		if (passValidateProperty(compiler, prop, token[TOKEN_PS_ITERATION_INTERVAL], VAL_REAL))
-            //		{
-            //			Real val = 0.0f;
-            //			if(getReal(prop->values.front(), &val))
-            //			{
-            //				mSystem->setScaleVelocity(val);
-            //			}
-            //		}
-            //	}
+                else if (prop->name == token[TOKEN_PS_SCALE_VELOCITY])
+                {
+                    // Property: scale_velocity
+                    if (passValidateProperty(compiler, prop, token[TOKEN_PS_ITERATION_INTERVAL], VAL_REAL))
+                    {
+                        float val = 0.0f;
+                        if(getFloat(*prop->values.front(), &val))
+                        {
+                            _system->setParticleSystemScaleVelocity(val);
+                        }
+                    }
+                }
             //	else if (prop->name == token[TOKEN_PS_SCALE_TIME])
             //	{
             //		// Property: scale_time
