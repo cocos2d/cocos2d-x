@@ -11,7 +11,6 @@
 #include "AppDelegate.h"
 #include "BaseTest.h"
 #include "testResource.h"
-#include "cocostudio/CocoStudio.h"
 #include "UITest/UITest.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
@@ -77,7 +76,6 @@ Controller g_aTestNames[] = {
 	{ "Node: Physics", []() { return new PhysicsTestScene(); } },
 	{ "Node: RenderTexture", [](){return new RenderTextureScene(); } },
 	{ "Node: Scene", [](){return new SceneTestScene();} },
-	{ "Node: Spine", []() { return new SpineTestScene(); } },
 	{ "Node: Sprite", [](){return new SpriteTestScene(); } },
     { "Node: Sprite3D", [](){  return new Sprite3DTestScene(); }},
 	{ "Node: TileMap", [](){return new TileMapTestScene(); } },
@@ -366,7 +364,6 @@ void TestController::addConsoleAutoTest()
                     scene->addChild(layer);
                     layer->release();
                     Director::getInstance()->replaceScene(scene);
-                    cocostudio::ArmatureDataManager::destroyInstance();
                 } );
                 return;
             }
