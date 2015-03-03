@@ -12,19 +12,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\auto\jsb_cocos2dx_auto.cpp" />
-    <ClCompile Include="..\auto\jsb_cocos2dx_builder_auto.cpp" />
     <ClCompile Include="..\auto\jsb_cocos2dx_extension_auto.cpp" />
-    <ClCompile Include="..\auto\jsb_cocos2dx_spine_auto.cpp" />
-    <ClCompile Include="..\auto\jsb_cocos2dx_studio_auto.cpp" />
     <ClCompile Include="..\auto\jsb_cocos2dx_ui_auto.cpp" />
     <ClCompile Include="..\manual\chipmunk\js_bindings_chipmunk_auto_classes.cpp" />
     <ClCompile Include="..\manual\chipmunk\js_bindings_chipmunk_functions.cpp" />
     <ClCompile Include="..\manual\chipmunk\js_bindings_chipmunk_manual.cpp" />
     <ClCompile Include="..\manual\chipmunk\js_bindings_chipmunk_registration.cpp" />
     <ClCompile Include="..\manual\cocos2d_specifics.cpp" />
-    <ClCompile Include="..\manual\cocosbuilder\js_bindings_ccbreader.cpp" />
-    <ClCompile Include="..\manual\cocostudio\jsb_cocos2dx_studio_conversions.cpp" />
-    <ClCompile Include="..\manual\cocostudio\jsb_cocos2dx_studio_manual.cpp" />
     <ClCompile Include="..\manual\extension\jsb_cocos2dx_extension_manual.cpp" />
     <ClCompile Include="..\manual\jsb_event_dispatcher_manual.cpp" />
     <ClCompile Include="..\manual\jsb_opengl_functions.cpp" />
@@ -39,15 +33,11 @@
     <ClCompile Include="..\manual\network\jsb_websocket.cpp" />
     <ClCompile Include="..\manual\network\XMLHTTPRequest.cpp" />
     <ClCompile Include="..\manual\ScriptingCore.cpp" />
-    <ClCompile Include="..\manual\spine\jsb_cocos2dx_spine_manual.cpp" />
     <ClCompile Include="..\manual\ui\jsb_cocos2dx_ui_manual.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\auto\jsb_cocos2dx_auto.hpp" />
-    <ClInclude Include="..\auto\jsb_cocos2dx_builder_auto.hpp" />
     <ClInclude Include="..\auto\jsb_cocos2dx_extension_auto.hpp" />
-    <ClInclude Include="..\auto\jsb_cocos2dx_spine_auto.hpp" />
-    <ClInclude Include="..\auto\jsb_cocos2dx_studio_auto.hpp" />
     <ClInclude Include="..\auto\jsb_cocos2dx_ui_auto.hpp" />
     <ClInclude Include="..\manual\chipmunk\js_bindings_chipmunk_auto_classes.h" />
     <ClInclude Include="..\manual\chipmunk\js_bindings_chipmunk_auto_classes_registration.h" />
@@ -56,10 +46,6 @@
     <ClInclude Include="..\manual\chipmunk\js_bindings_chipmunk_manual.h" />
     <ClInclude Include="..\manual\chipmunk\js_bindings_chipmunk_registration.h" />
     <ClInclude Include="..\manual\cocos2d_specifics.hpp" />
-    <ClInclude Include="..\manual\cocosbuilder\cocosbuilder_specifics.hpp" />
-    <ClInclude Include="..\manual\cocosbuilder\js_bindings_ccbreader.h" />
-    <ClInclude Include="..\manual\cocostudio\jsb_cocos2dx_studio_conversions.h" />
-    <ClInclude Include="..\manual\cocostudio\jsb_cocos2dx_studio_manual.h" />
     <ClInclude Include="..\manual\extension\jsb_cocos2dx_extension_manual.h" />
     <ClInclude Include="..\manual\jsb_event_dispatcher_manual.h" />
     <ClInclude Include="..\manual\jsb_helper.h" />
@@ -78,7 +64,6 @@
     <ClInclude Include="..\manual\network\XMLHTTPRequest.h" />
     <ClInclude Include="..\manual\ScriptingCore.h" />
     <ClInclude Include="..\manual\spidermonkey_specifics.h" />
-    <ClInclude Include="..\manual\spine\jsb_cocos2dx_spine_manual.h" />
     <ClInclude Include="..\manual\ui\jsb_cocos2dx_ui_manual.h" />
   </ItemGroup>
   <ItemGroup>
@@ -149,7 +134,7 @@
     </Link>
     <PreBuildEvent>
       <Command>
-</Command>
+      </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -174,7 +159,7 @@
     </Link>
     <PreBuildEvent>
       <Command>
-</Command>
+      </Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
