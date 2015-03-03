@@ -709,6 +709,7 @@ Developers:
     seobyeongky
         Updates spine runtime.
         Fixed a potential bug in Data's copy constructor. 
+        Fixed the bug that MotionStreak can not work with MoveTo and MoveBy
         
     luocker
         Fix a bug that string itself is also modified in `String::componentsSeparatedByString`.

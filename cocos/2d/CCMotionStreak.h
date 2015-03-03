@@ -75,6 +75,7 @@ public:
     virtual void setPositionY(float y) override;
     virtual float getPositionX(void) const override;
     virtual float getPositionY(void) const override;
+    virtual Vec3 getPosition3D() const override;
     /**
     * @js NA
     * @lua NA
