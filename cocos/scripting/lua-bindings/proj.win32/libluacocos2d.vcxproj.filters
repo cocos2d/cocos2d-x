@@ -19,15 +19,6 @@
     <Filter Include="manual\cocosdenshion">
       <UniqueIdentifier>{e88a3956-3c72-495d-bef5-75aa1b1e28a7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="manual\cocosbuilder">
-      <UniqueIdentifier>{21be021b-accb-4bf7-9ab5-327661740a5b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="manual\cocostudio">
-      <UniqueIdentifier>{7118046c-b71e-4510-b1ea-71916d909276}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="manual\spine">
-      <UniqueIdentifier>{4422fdad-3112-45d1-8eb4-87d8c08fac74}</UniqueIdentifier>
-    </Filter>
     <Filter Include="manual\extension">
       <UniqueIdentifier>{c8af8add-e72c-43a7-b89c-c6b9417f3cff}</UniqueIdentifier>
     </Filter>
@@ -114,9 +105,6 @@
     <ClCompile Include="..\auto\lua_cocos2dx_3d_auto.cpp">
       <Filter>auto</Filter>
     </ClCompile>
-    <ClCompile Include="..\auto\lua_cocos2dx_cocosbuilder_auto.cpp">
-      <Filter>auto</Filter>
-    </ClCompile>
     <ClCompile Include="..\auto\lua_cocos2dx_cocosdenshion_auto.cpp">
       <Filter>auto</Filter>
     </ClCompile>
@@ -124,12 +112,6 @@
       <Filter>auto</Filter>
     </ClCompile>
     <ClCompile Include="..\auto\lua_cocos2dx_extension_auto.cpp">
-      <Filter>auto</Filter>
-    </ClCompile>
-    <ClCompile Include="..\auto\lua_cocos2dx_spine_auto.cpp">
-      <Filter>auto</Filter>
-    </ClCompile>
-    <ClCompile Include="..\auto\lua_cocos2dx_studio_auto.cpp">
       <Filter>auto</Filter>
     </ClCompile>
     <ClCompile Include="..\auto\lua_cocos2dx_ui_auto.cpp">
@@ -140,15 +122,6 @@
     </ClCompile>
     <ClCompile Include="..\manual\cocosdenshion\lua_cocos2dx_cocosdenshion_manual.cpp">
       <Filter>manual\cocosdenshion</Filter>
-    </ClCompile>
-    <ClCompile Include="..\manual\cocosbuilder\CCBProxy.cpp">
-      <Filter>manual\cocosbuilder</Filter>
-    </ClCompile>
-    <ClCompile Include="..\manual\cocosbuilder\lua_cocos2dx_cocosbuilder_manual.cpp">
-      <Filter>manual\cocosbuilder</Filter>
-    </ClCompile>
-    <ClCompile Include="..\manual\cocostudio\lua_cocos2dx_coco_studio_manual.cpp">
-      <Filter>manual\cocostudio</Filter>
     </ClCompile>
     <ClCompile Include="..\manual\extension\lua_cocos2dx_extension_manual.cpp">
       <Filter>manual\extension</Filter>
@@ -165,35 +138,17 @@
     <ClCompile Include="..\manual\network\lua_xml_http_request.cpp">
       <Filter>manual\network</Filter>
     </ClCompile>
-    <ClCompile Include="..\manual\spine\lua_cocos2dx_spine_manual.cpp">
-      <Filter>manual\spine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\manual\spine\LuaSkeletonAnimation.cpp">
-      <Filter>manual\spine</Filter>
-    </ClCompile>
     <ClCompile Include="..\manual\ui\lua_cocos2dx_experimental_video_manual.cpp">
       <Filter>manual\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\manual\ui\lua_cocos2dx_ui_manual.cpp">
       <Filter>manual\ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\manual\cocostudio\CustomGUIReader.cpp">
-      <Filter>manual\cocostudio</Filter>
-    </ClCompile>
     <ClCompile Include="..\auto\lua_cocos2dx_audioengine_auto.cpp">
       <Filter>auto</Filter>
     </ClCompile>
     <ClCompile Include="..\manual\audioengine\lua_cocos2dx_audioengine_manual.cpp">
       <Filter>manual\audioengine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\auto\lua_cocos2dx_csloader_auto.cpp">
-      <Filter>auto</Filter>
-    </ClCompile>
-    <ClCompile Include="..\manual\cocostudio\lua_cocos2dx_csloader_manual.cpp">
-      <Filter>manual\cocostudio</Filter>
-    </ClCompile>
-    <ClCompile Include="..\manual\cocostudio\lua-cocos-studio-conversions.cpp">
-      <Filter>manual\cocostudio</Filter>
     </ClCompile>
     <ClCompile Include="..\manual\tolua\tolua_event.c">
       <Filter>manual\tolua</Filter>
@@ -263,9 +218,6 @@
     <ClInclude Include="..\auto\lua_cocos2dx_3d_auto.hpp">
       <Filter>auto</Filter>
     </ClInclude>
-    <ClInclude Include="..\auto\lua_cocos2dx_cocosbuilder_auto.hpp">
-      <Filter>auto</Filter>
-    </ClInclude>
     <ClInclude Include="..\auto\lua_cocos2dx_cocosdenshion_auto.hpp">
       <Filter>auto</Filter>
     </ClInclude>
@@ -273,12 +225,6 @@
       <Filter>auto</Filter>
     </ClInclude>
     <ClInclude Include="..\auto\lua_cocos2dx_extension_auto.hpp">
-      <Filter>auto</Filter>
-    </ClInclude>
-    <ClInclude Include="..\auto\lua_cocos2dx_spine_auto.hpp">
-      <Filter>auto</Filter>
-    </ClInclude>
-    <ClInclude Include="..\auto\lua_cocos2dx_studio_auto.hpp">
       <Filter>auto</Filter>
     </ClInclude>
     <ClInclude Include="..\auto\lua_cocos2dx_ui_auto.hpp">
@@ -289,15 +235,6 @@
     </ClInclude>
     <ClInclude Include="..\manual\cocosdenshion\lua_cocos2dx_cocosdenshion_manual.h">
       <Filter>manual\cocosdenshion</Filter>
-    </ClInclude>
-    <ClInclude Include="..\manual\cocosbuilder\CCBProxy.h">
-      <Filter>manual\cocosbuilder</Filter>
-    </ClInclude>
-    <ClInclude Include="..\manual\cocosbuilder\lua_cocos2dx_cocosbuilder_manual.h">
-      <Filter>manual\cocosbuilder</Filter>
-    </ClInclude>
-    <ClInclude Include="..\manual\cocostudio\lua_cocos2dx_coco_studio_manual.hpp">
-      <Filter>manual\cocostudio</Filter>
     </ClInclude>
     <ClInclude Include="..\manual\extension\lua_cocos2dx_extension_manual.h">
       <Filter>manual\extension</Filter>
@@ -314,35 +251,17 @@
     <ClInclude Include="..\manual\network\lua_xml_http_request.h">
       <Filter>manual\network</Filter>
     </ClInclude>
-    <ClInclude Include="..\manual\spine\lua_cocos2dx_spine_manual.hpp">
-      <Filter>manual\spine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\manual\spine\LuaSkeletonAnimation.h">
-      <Filter>manual\spine</Filter>
-    </ClInclude>
     <ClInclude Include="..\manual\ui\lua_cocos2dx_experimental_video_manual.hpp">
       <Filter>manual\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\manual\ui\lua_cocos2dx_ui_manual.hpp">
       <Filter>manual\ui</Filter>
     </ClInclude>
-    <ClInclude Include="..\manual\cocostudio\CustomGUIReader.h">
-      <Filter>manual\cocostudio</Filter>
-    </ClInclude>
     <ClInclude Include="..\auto\lua_cocos2dx_audioengine_auto.hpp">
       <Filter>auto</Filter>
     </ClInclude>
     <ClInclude Include="..\manual\audioengine\lua_cocos2dx_audioengine_manual.h">
       <Filter>manual\audioengine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\auto\lua_cocos2dx_csloader_auto.hpp">
-      <Filter>auto</Filter>
-    </ClInclude>
-    <ClInclude Include="..\manual\cocostudio\lua_cocos2dx_csloader_manual.hpp">
-      <Filter>manual\cocostudio</Filter>
-    </ClInclude>
-    <ClInclude Include="..\manual\cocostudio\lua-cocos-studio-conversions.h">
-      <Filter>manual\cocostudio</Filter>
     </ClInclude>
     <ClInclude Include="..\manual\tolua\tolua_event.h">
       <Filter>manual\tolua</Filter>

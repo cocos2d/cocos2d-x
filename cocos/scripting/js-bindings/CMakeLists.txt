@@ -35,10 +35,7 @@ set(cocos_root "../../..")
 
 set(JSBINDING_SRC
   auto/jsb_cocos2dx_auto.cpp
-  auto/jsb_cocos2dx_builder_auto.cpp
   auto/jsb_cocos2dx_extension_auto.cpp
-  auto/jsb_cocos2dx_spine_auto.cpp
-  auto/jsb_cocos2dx_studio_auto.cpp
   auto/jsb_cocos2dx_ui_auto.cpp
   manual/ScriptingCore.cpp
   manual/cocos2d_specifics.cpp
@@ -53,16 +50,12 @@ set(JSBINDING_SRC
   manual/chipmunk/js_bindings_chipmunk_functions.cpp
   manual/chipmunk/js_bindings_chipmunk_auto_classes.cpp
   manual/chipmunk/js_bindings_chipmunk_registration.cpp
-  manual/cocosbuilder/js_bindings_ccbreader.cpp
-  manual/cocostudio/jsb_cocos2dx_studio_conversions.cpp
-  manual/cocostudio/jsb_cocos2dx_studio_manual.cpp
   manual/extension/jsb_cocos2dx_extension_manual.cpp
   manual/localstorage/js_bindings_system_functions.cpp
   manual/localstorage/js_bindings_system_registration.cpp
   manual/network/XMLHTTPRequest.cpp
   manual/network/jsb_websocket.cpp
   manual/network/jsb_socketio.cpp
-  manual/spine/jsb_cocos2dx_spine_manual.cpp
   manual/ui/jsb_cocos2dx_ui_manual.cpp
   ${cocos_root}/cocos/storage/local-storage/LocalStorage.cpp
 )
@@ -70,7 +63,6 @@ set(JSBINDING_SRC
 include_directories(
   auto
   manual
-  manual/cocostudio
   ${cocos_root}/external/spidermonkey/include/${PLATFORM_FOLDER}
   ${cocos_root}/cocos/base
   ${cocos_root}/cocos/2d
@@ -81,10 +73,6 @@ include_directories(
   ${cocos_root}/cocos/platform
   ${cocos_root}/extensions
   ${cocos_root}/external
-  ${cocos_root}/cocos/editor-support
-  ${cocos_root}/cocos/editor-support/spine
-  ${cocos_root}/cocos/editor-support/cocosbuilder
-  ${cocos_root}/cocos/editor-support/cocostudio
   ${cocos_root}/external/chipmunk/include/chipmunk
 )
 

@@ -5,23 +5,16 @@
 #include "ScriptingCore.h"
 #include "jsb_cocos2dx_auto.hpp"
 #include "jsb_cocos2dx_extension_auto.hpp"
-#include "jsb_cocos2dx_builder_auto.hpp"
-#include "jsb_cocos2dx_spine_auto.hpp"
 #include "extension/jsb_cocos2dx_extension_manual.h"
-#include "cocostudio/jsb_cocos2dx_studio_manual.h"
-#include "jsb_cocos2dx_studio_auto.hpp"
 #include "jsb_cocos2dx_ui_auto.hpp"
 #include "ui/jsb_cocos2dx_ui_manual.h"
-#include "spine/jsb_cocos2dx_spine_manual.h"
 #include "cocos2d_specifics.hpp"
-#include "cocosbuilder/cocosbuilder_specifics.hpp"
 #include "chipmunk/js_bindings_chipmunk_registration.h"
 #include "localstorage/js_bindings_system_registration.h"
 #include "jsb_opengl_registration.h"
 #include "network/XMLHTTPRequest.h"
 #include "network/jsb_websocket.h"
 #include "network/jsb_socketio.h"
-#include "cocosbuilder/js_bindings_ccbreader.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "jsb_pluginx_extension_registration.h"
@@ -81,17 +74,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(MinXmlHttpRequest::_js_register);
     sc->addRegisterCallback(register_jsb_websocket);
 	sc->addRegisterCallback(register_jsb_socketio);
-
-    sc->addRegisterCallback(register_all_cocos2dx_builder);
-    sc->addRegisterCallback(register_CCBuilderReader);
-
+    
     sc->addRegisterCallback(register_all_cocos2dx_ui);
     sc->addRegisterCallback(register_all_cocos2dx_ui_manual);
-    sc->addRegisterCallback(register_all_cocos2dx_studio);
-    sc->addRegisterCallback(register_all_cocos2dx_studio_manual);
-    
-    sc->addRegisterCallback(register_all_cocos2dx_spine);
-    sc->addRegisterCallback(register_all_cocos2dx_spine_manual);
     
     //TODO: add plugin-x later
 //#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)

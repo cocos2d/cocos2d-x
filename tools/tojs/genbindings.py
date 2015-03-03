@@ -136,10 +136,7 @@ def main():
 
         cmd_args = {'cocos2dx.ini' : ('cocos2d-x', 'jsb_cocos2dx_auto'), \
                     'cocos2dx_extension.ini' : ('cocos2dx_extension', 'jsb_cocos2dx_extension_auto'), \
-                    'cocos2dx_builder.ini' : ('cocos2dx_builder', 'jsb_cocos2dx_builder_auto'), \
                     'cocos2dx_ui.ini' : ('cocos2dx_ui', 'jsb_cocos2dx_ui_auto'), \
-                    'cocos2dx_studio.ini' : ('cocos2dx_studio', 'jsb_cocos2dx_studio_auto'), \
-                    'cocos2dx_spine.ini' : ('cocos2dx_spine', 'jsb_cocos2dx_spine_auto'), \
                     }
         target = 'spidermonkey'
         generator_py = '%s/generator.py' % cxx_generator_root

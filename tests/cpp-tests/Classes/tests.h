@@ -66,7 +66,6 @@
 #include "ExtensionsTest/ExtensionsTest.h"
 #include "MutiTouchTest/MutiTouchTest.h"
 #include "FileUtilsTest/FileUtilsTest.h"
-#include "SpineTest/SpineTest.h"
 #include "TexturePackerEncryptionTest/TextureAtlasEncryptionTest.h"
 #include "ConfigurationTest/ConfigurationTest.h"
 #include "PhysicsTest/PhysicsTest.h"
