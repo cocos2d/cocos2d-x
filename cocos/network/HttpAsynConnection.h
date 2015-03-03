@@ -46,6 +46,7 @@
 @property (readonly) NSString *statusString;
 
 @property (strong) NSError *responseError;
+@property (strong) NSError *connError;
 
 @property (strong) NSURLConnection *conn;
 

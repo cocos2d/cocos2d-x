@@ -243,11 +243,18 @@ static int processTask(HttpRequest *request, NSString* requestType, void *stream
     }
     
     //if http connection return error
+    if (httpAsynConn.connError != nil)
+    {
+        NSString* errorString = [httpAsynConn.connError localizedDescription];
+        strcpy(errorBuffer, [errorString UTF8String]);
+        return 0;
+    }
+
+    //if http response got error, just log the error
     if (httpAsynConn.responseError != nil)
     {
         NSString* errorString = [httpAsynConn.responseError localizedDescription];
         strcpy(errorBuffer, [errorString UTF8String]);
-        return 0;
     }
     
     *responseCode = httpAsynConn.responseCode;

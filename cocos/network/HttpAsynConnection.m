@@ -34,6 +34,7 @@
 @synthesize responseCode;
 @synthesize statusString;
 @synthesize responseError;
+@synthesize connError;
 @synthesize conn;
 @synthesize finish;
 @synthesize runLoop;
@@ -46,6 +47,7 @@
     responseData = [NSMutableData new];
     getDataTime = 0;
     responseError = nil;
+    connError = nil;
     
     // create the connection with the target request and this class as the delegate
     self.conn = [[NSURLConnection alloc] initWithRequest:request
@@ -118,7 +120,7 @@
   didFailWithError:(NSError *)error
 {
     //NSLog(@"Load failed with error %@", [error localizedDescription]);
-    responseError = [error copy];
+    connError = [error copy];
     
     finish = true;
 }
