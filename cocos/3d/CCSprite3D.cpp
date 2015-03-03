@@ -723,15 +723,11 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         GLuint textureID = mesh->getTexture() ? mesh->getTexture()->getName() : 0;
 #endif
 
-        float globalZ = _globalZOrder;
         bool isTransparent = (mesh->_isTransparent || color.a < 1.f);
-        if (isTransparent && Camera::getVisitingCamera())
-        {
-            // use the view matrix for Applying to recalculating transparent mesh's Z-Order
-            const auto& viewMat = Camera::getVisitingCamera()->getViewMatrix();
-            //fetch the Z from the result matrix
-            globalZ = -(viewMat.m[2] * transform.m[12] + viewMat.m[6] * transform.m[13] + viewMat.m[10] * transform.m[14] + viewMat.m[14]);
-        }
+        float globalZ = isTransparent ? 0 : _globalZOrder;
+        if (isTransparent)
+            flags |= Node::FLAGS_RENDER_AS_3D;
+
         meshCommand.init(globalZ, textureID, programstate, _blend, mesh->getVertexBuffer(), mesh->getIndexBuffer(), mesh->getPrimitiveType(), mesh->getIndexFormat(), mesh->getIndexCount(), transform, flags);
         
         meshCommand.setLightMask(_lightMask);
