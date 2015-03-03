@@ -47,3 +47,4 @@ public:
 NS_CC_END
 
 #endif /* defined(__cocos2d_libs__CCParticle3DAffectorTranslator__) */
+
