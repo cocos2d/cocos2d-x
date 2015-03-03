@@ -29,8 +29,7 @@ var ITEM_TAG_BASIC = 1000;
 
 var TEST_NOTIFICATIONCENTER = 0;
 var TEST_CCCONTROLBUTTON = 1;
-var TEST_COCOSBUILDER = 2;
-var TEST_HTTPCLIENT = 3;
+var TEST_HTTPCLIENT = 2;
 
 var extensionsTestItemNames = [
     /*    {
@@ -46,15 +45,6 @@ var extensionsTestItemNames = [
             var pManager = ControlSceneManager.getInstance();
             var pScene = pManager.currentControlScene();
 	        cc.director.runScene(pScene);
-        }
-    },
-    {
-        itemTitle:"CocosBuilderTest",
-        testScene:function () {
-            var pScene = new CocosBuilderTestScene();
-            if (pScene) {
-                pScene.runThisTest();
-            }
         }
     },
     /*    {
@@ -92,13 +82,6 @@ var extensionsTestItemNames = [
         itemTitle:"CCPoolTest",
         testScene:function () {
             runCCPoolTest();
-        }
-    },
-    {
-        itemTitle:"ActionTimelineTestScene",
-        testScene:function () {
-            var scene = new ActionTimelineTestScene();
-            scene.runThisTest();
         }
     }
 ];
