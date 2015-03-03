@@ -60,10 +60,12 @@ static const char * fragment_shader_RGB_4_DETAIL ="\n#ifdef GL_ES\n\
                                                   }\
                                                   }";
 NS_CC_BEGIN
-    Terrain * Terrain::create(TerrainData &parameter)
+Terrain * Terrain::create(TerrainData &parameter)
 {
     Terrain * terrain = new (std::nothrow)Terrain();
     terrain->_terrainData = parameter;
+    terrain->_isCameraViewChanged = true;
+    terrain->_isTerrainModelMatrixChanged = true;
     //chunksize
     terrain->_chunkSize = parameter.chunkSize;
     //heightmap
@@ -78,16 +80,16 @@ NS_CC_BEGIN
     }else
     {
         //alpha map
-        auto textImage = new (std::nothrow)Image(); 
-        textImage->initWithImageFile(parameter.alphaMapSrc);
+        auto image = new (std::nothrow)Image(); 
+        image->initWithImageFile(parameter.alphaMapSrc);
         terrain->_alphaMap = new (std::nothrow)Texture2D();
-        terrain->_alphaMap->initWithImage(textImage);
+        terrain->_alphaMap->initWithImage(image);
         for(int i =0;i<4;i++)
         {
-            auto image = new (std::nothrow)Image();
-            image->initWithImageFile(parameter.detailMaps[i].detailMapSrc);
+            auto textImage = new (std::nothrow)Image();
+            textImage->initWithImageFile(parameter.detailMaps[i].detailMapSrc);
             auto texture = new (std::nothrow)Texture2D();
-            texture->initWithImage(image);
+            texture->initWithImage(textImage);
             terrain->textures.push_back(texture);
             terrain->detailSize[i] = parameter.detailMaps[i].detailMapSize;
         }
@@ -107,6 +109,7 @@ bool Terrain::init()
     auto state = GLProgramState::create(shader);
     
     setGLProgramState(state);
+    _normalLocation = glGetAttribLocation(this->getGLProgram()->getProgram(),"a_normal");
     setDrawWire(false);
     setIsEnableFrustumCull(true);
     return true;
@@ -114,9 +117,7 @@ bool Terrain::init()
 
 void Terrain::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags)
 {
-    _customCommand.init(getGlobalZOrder());
     _customCommand.func = CC_CALLBACK_0(Terrain::onDraw, this, transform, flags);
-    _customCommand.setTransparent(true);
     renderer->addCommand(&_customCommand);
 }
 
@@ -176,13 +177,47 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
         auto alpha_map_location = glGetUniformLocation(glProgram->getProgram(),"u_alphaMap");
         glUniform1i(alpha_map_location,4);
     }
-    //set lod
-    setChunksLOD(Camera::getVisitingCamera()->getPosition3D());
-    //camera frustum culling
+
     auto camera = Camera::getVisitingCamera();
-    quad->cullByCamera(camera,getNodeToWorldTransform());
+
+    if(memcmp(&_CameraMatrix,&camera->getViewMatrix(),sizeof(Mat4))!=0)
+    {
+        _isCameraViewChanged = true;
+        _CameraMatrix = camera->getViewMatrix();
+    }
+
+    auto terrainWorldTransform = getNodeToWorldTransform();
+    if(memcmp(&_oldTerrrainModelMatrix,&terrainWorldTransform,sizeof(Mat4))!=0)
+    {
+        _isTerrainModelMatrixChanged = true;
+        _oldTerrrainModelMatrix = terrainWorldTransform;
+    }
+
+    quad->updateAABB(_oldTerrrainModelMatrix);
+
+    if(_isCameraViewChanged || _isTerrainModelMatrixChanged)
+    {
+        auto camPos = camera->getPosition3D();
+        //set lod
+        setChunksLOD(camPos);
+    }
+
+    
+    if(_isCameraViewChanged || _isTerrainModelMatrixChanged)
+    {
+        quad->resetNeedDraw(true);//reset it 
+        //camera frustum culling
+        quad->cullByCamera(camera,_oldTerrrainModelMatrix);
+    }
     quad->draw();
-    quad->resetNeedDraw(true);//reset it 
+    if(_isCameraViewChanged)
+    {
+        _isCameraViewChanged = false;
+    }
+    if(_isTerrainModelMatrixChanged)
+    {
+        _isTerrainModelMatrixChanged = false;
+    }
     glActiveTexture(GL_TEXTURE0);
     if(depthTestCheck)
     {
@@ -191,10 +226,10 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
     {
         glDisable(GL_DEPTH_TEST);
     }
-if(blendCheck)
-{
-    glEnable(GL_BLEND);
-}
+    if(blendCheck)
+    {
+        glEnable(GL_BLEND);
+    }
 }
 
 void Terrain::initHeightMap(const char * heightMap)
@@ -250,8 +285,7 @@ void Terrain::setChunksLOD(Vec3 cameraPos)
     for(int m=0;m<chunk_amount_y;m++)
         for(int n =0;n<chunk_amount_x;n++)
         {
-            AABB aabb = _chunkesArray[m][n]->_aabb;
-            aabb.transform(this->getNodeToWorldTransform());
+            AABB aabb = _chunkesArray[m][n]->_parent->_worldSpaceAABB;
             auto center = aabb.getCenter();
             float dist = Vec3(center.x,0,center.z).distance(Vec3(cameraPos.x,0,cameraPos.z));
             _chunkesArray[m][n]->_currentLod = 3;
@@ -518,8 +552,11 @@ void Terrain::Chunk::bindAndDraw()
 #endif
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-    updateVerticesForLOD();
-    updateIndices();
+    if(_terrain->_isCameraViewChanged)
+    {
+        updateVerticesForLOD();
+        updateIndices();
+    }
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,vbo[1]);
     GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORD| GL::VERTEX_ATTRIB_FLAG_NORMAL);
     unsigned long offset = 0;
@@ -529,8 +566,7 @@ void Terrain::Chunk::bindAndDraw()
     //texcoord
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD,2,GL_FLOAT,GL_FALSE,sizeof(TerrainVertexData),(GLvoid *)offset);
     offset +=sizeof(Tex2F);
-    auto normal_location = glGetAttribLocation(_terrain->getGLProgram()->getProgram(),"a_normal");
-    glEnableVertexAttribArray(normal_location);
+    glEnableVertexAttribArray(_terrain->_normalLocation);
     //normal
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_NORMAL,3,GL_FLOAT,GL_FALSE,sizeof(TerrainVertexData),(GLvoid *)offset);
     glDrawElements(GL_TRIANGLES, (GLsizei)_lod[_currentLod].indices.size(), GL_UNSIGNED_SHORT, 0);
@@ -565,10 +601,39 @@ Terrain::Chunk::Chunk()
     right = nullptr;
     back = nullptr;
     front = nullptr;
+    _oldLod = -1;
+    for(int i =0;i<4;i++)
+    {
+        _neighborOldLOD[i] = -1;
+    }
 }
 
 void Terrain::Chunk::updateIndices()
 {
+    int currentNeighborLOD[4];
+    if(left)
+    {
+        currentNeighborLOD[0] = left->_currentLod;
+    }else{currentNeighborLOD[0] = -1;}
+    if(right)
+    {
+        currentNeighborLOD[1] = right->_currentLod;
+    }else{currentNeighborLOD[1] = -1;}
+    if(back)
+    {
+        currentNeighborLOD[2] = back->_currentLod;
+    }else{currentNeighborLOD[2] = -1;}
+    if(front)
+    {
+        currentNeighborLOD[3] = front->_currentLod;
+    }else{currentNeighborLOD[3] = -1;}
+
+    if(_oldLod == _currentLod &&(memcmp(currentNeighborLOD,_neighborOldLOD,sizeof(currentNeighborLOD))==0) )
+    {
+        return;// no need to update
+    }
+    memcpy(_neighborOldLOD,currentNeighborLOD,sizeof(currentNeighborLOD)); 
+    _oldLod = _currentLod;
     int gridY = _size.height;
     int gridX = _size.width;
 
@@ -591,8 +656,6 @@ void Terrain::Chunk::updateIndices()
                 _lod[_currentLod].indices.push_back (nLocIndex + step);
                 _lod[_currentLod].indices.push_back (nLocIndex + step * (gridX+1));
                 _lod[_currentLod].indices.push_back (nLocIndex + step * (gridX+1) + step);
-FINISH_INNER_INDICES_SET:
-                ;
             }
         }
         //fix T-crack
@@ -662,7 +725,6 @@ FINISH_INNER_INDICES_SET:
                 _lod[_currentLod].indices.push_back((i+step)*(gridX+1)+gridX);
             }
         }
-
         if(front&&front->_currentLod > _currentLod)//front
         {
             for(int i =0;i<gridX;i+=next_step)
@@ -782,6 +844,7 @@ void Terrain::Chunk::calculateSlope()
 
 void Terrain::Chunk::updateVerticesForLOD()
 {
+    if(_oldLod == _currentLod){ return;} // no need to update vertices
     vertices_tmp = vertices;
     int gridY = _size.height;
     int gridX = _size.width;
@@ -819,6 +882,7 @@ Terrain::Chunk::~Chunk()
 
 Terrain::QuadTree::QuadTree(int x,int y,int w,int h,Terrain * terrain)
 {
+    _terrain = terrain;
     _needDraw = true;
     parent = nullptr;
     tl =nullptr;
@@ -852,7 +916,10 @@ Terrain::QuadTree::QuadTree(int x,int y,int w,int h,Terrain * terrain)
         _chunk = terrain->_chunkesArray[m][n];
         _isTerminal = true;
         _aabb = _chunk->_aabb;
+        _chunk->_parent = this;
     }
+    _worldSpaceAABB = _aabb;
+    _worldSpaceAABB.transform(_terrain->getNodeToWorldTransform());
 }
 
 void Terrain::QuadTree::draw()
@@ -883,9 +950,12 @@ void Terrain::QuadTree::resetNeedDraw(bool value)
 
 void Terrain::QuadTree::cullByCamera(const Camera * camera,const Mat4 & worldTransform)
 {
-    auto aabb = _aabb;
-    aabb.transform(worldTransform);
-    if(!camera->isVisibleInFrustum(&aabb))
+    if(_terrain->_isTerrainModelMatrixChanged)
+    {
+        _worldSpaceAABB = _aabb;
+        _worldSpaceAABB.transform(worldTransform);
+    }
+    if(!camera->isVisibleInFrustum(&_worldSpaceAABB))
     {
         this->resetNeedDraw(false);
     }else
@@ -899,6 +969,21 @@ void Terrain::QuadTree::cullByCamera(const Camera * camera,const Mat4 & worldTra
     }
 }
 
+void Terrain::QuadTree::updateAABB(const Mat4 & worldTransform)
+{
+    if(_terrain->_isTerrainModelMatrixChanged)
+    {
+        _worldSpaceAABB = _aabb;
+        _worldSpaceAABB.transform(worldTransform);
+    }
+    if(!_isTerminal){
+        tl->updateAABB(worldTransform);
+        tr->updateAABB(worldTransform);
+        bl->updateAABB(worldTransform);
+        br->updateAABB(worldTransform);
+    }
+}
+
 Terrain::TerrainData::TerrainData(const char * heightMapsrc ,const char * textureSrc,const Size & chunksize,float height,float scale)
 { 
     this->heightMapSrc = heightMapsrc;
@@ -906,7 +991,7 @@ Terrain::TerrainData::TerrainData(const char * heightMapsrc ,const char * textur
     this->alphaMapSrc = nullptr;
     this->chunkSize = chunksize;
     this->mapHeight = height;
-    this->mapScale = scale;
+    this->mapScale = scale; 
 }
 
 Terrain::TerrainData::TerrainData(const char * heightMapsrc ,const char * alphamap,const DetailMap& detail1,const DetailMap& detail2,const DetailMap& detail3,const DetailMap& detail4,const Size & chunksize,float height,float scale)
