@@ -550,6 +550,9 @@ void MeshCommand::resetLightUniformValues()
 void MeshCommand::listenRendererRecreated(EventCustom* event)
 {
     _vao = 0;
+
+    // FIXME XXX BUG
+    CCASSERT(false, "Not implemented. Must recreate the previous state");
 }
 
 #endif
