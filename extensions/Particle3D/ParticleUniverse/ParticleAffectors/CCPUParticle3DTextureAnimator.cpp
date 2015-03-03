@@ -255,4 +255,16 @@ PUParticle3DTextureAnimator* PUParticle3DTextureAnimator::create()
     return pta;
 }
 
+void PUParticle3DTextureAnimator::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DAffector::copyAttributesTo(affector);
+    PUParticle3DTextureAnimator* textureAnimator = static_cast<PUParticle3DTextureAnimator*>(affector);
+    textureAnimator->_animationTimeStep = _animationTimeStep;
+    textureAnimator->_animationTimeStepSet = _animationTimeStepSet;
+    textureAnimator->_textureAnimationType = _textureAnimationType;
+    textureAnimator->_textureCoordsStart = _textureCoordsStart;
+    textureAnimator->_textureCoordsEnd = _textureCoordsEnd;
+    textureAnimator->_startRandom = _startRandom;
+}
+
 NS_CC_END

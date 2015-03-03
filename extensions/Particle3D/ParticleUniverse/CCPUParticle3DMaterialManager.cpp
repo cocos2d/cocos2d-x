@@ -89,9 +89,6 @@ PUParticle3DMaterial* PUParticle3DMaterialCache::getMaterial( const std::string 
 
 bool PUParticle3DMaterialCache::loadMaterials( const std::string &file )
 {
-    //std::string data = FileUtils::getInstance()->getStringFromFile(file);
-    //auto iter = _materialMap.find(file);
-    //if (iter != _materialMap.end()) return true;
     bool isFirstCompile = true;
     auto list = PUScriptCompiler::Instance()->compile(file, isFirstCompile);
     if (list == nullptr || list->empty()) return false;
@@ -131,7 +128,6 @@ bool PUParticle3DMaterialCache::loadMaterialsFromSearchPaths( const std::string 
 {
     bool state = false;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    //for (auto iter : FileUtils::getInstance()->getSearchPaths()){
         std::string seg("/");
         std::string fullPath = fileFolder + seg + std::string("*.material");
         _finddata_t data;
@@ -144,7 +140,6 @@ bool PUParticle3DMaterialCache::loadMaterialsFromSearchPaths( const std::string 
             state = true;
         }
         _findclose(handle);
-   // }
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID/* || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX*/)
     std::string::size_type pos = fileFolder.find("assets/");
     std::string relativePath = fileFolder;
@@ -168,7 +163,7 @@ bool PUParticle3DMaterialCache::loadMaterialsFromSearchPaths( const std::string 
     DIR *d; //dir handle
     struct dirent *file; //readdir
     struct stat statbuf;
-    
+
     if(!(d = opendir(fileFolder.c_str())))
     {
         CCLOG("error opendir %s!!!\n",fileFolder.c_str());
@@ -180,7 +175,7 @@ bool PUParticle3DMaterialCache::loadMaterialsFromSearchPaths( const std::string 
         {
             continue;
         }
-        
+
         std::string fullpath = fileFolder + "/" + file->d_name;
         if (strlen(file->d_name) > 9 && strcmp(".material", file->d_name + strlen(file->d_name) - 9))
         {

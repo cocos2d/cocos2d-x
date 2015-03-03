@@ -94,7 +94,10 @@ _particleTextureCoordsRangeStart(DEFAULT_START_TEXTURE_COORDS),
 _particleTextureCoordsRangeEnd(DEFAULT_END_TEXTURE_COORDS),
 _particleTextureCoordsRangeSet(false),
 _originEnabled(true),
-_originEnabledSet(false)
+_originEnabledSet(false),
+_emitsType(PUParticle3D::PT_VISUAL),
+_emitsEntity(nullptr),
+_isMarkedForEmission(false)
 {
     //particleType = PT_EMITTER;
     //mAliasType = AT_EMITTER;
@@ -184,16 +187,15 @@ void PUParticle3DEmitter::initParticlePosition( PUParticle3D* particle )
 
 const Vec3& PUParticle3DEmitter::getDerivedPosition()
 {
-    PUParticleSystem3D *ps = static_cast<PUParticleSystem3D *>(_particleSystem);
-    if (ps){
+    if (_isMarkedForEmission){
+        _derivedPosition = _position;
+    }else {
+        PUParticleSystem3D *ps = static_cast<PUParticleSystem3D *>(_particleSystem);
         Mat4 rotMat;
         Mat4::createRotation(ps->getDerivedOrientation(), &rotMat);
         _derivedPosition = ps->getDerivedPosition() + rotMat * Vec3(_position.x * _emitterScale.x, _position.y * _emitterScale.y, _position.z * _emitterScale.z);
         //_particleSystem->getNodeToWorldTransform().transformPoint(_position, &_derivedPosition);
     }
-    else
-        _derivedPosition = Vec3::ZERO;
-
     return _derivedPosition;
 }
 
@@ -349,7 +351,7 @@ void PUParticle3DEmitter::notifyRescaled( const Vec3& scale )
 
 void PUParticle3DEmitter::notifyStop()
 {
-    setEnabled(false);
+
 }
 
 void PUParticle3DEmitter::notifyPause()
@@ -364,12 +366,34 @@ void PUParticle3DEmitter::notifyResume()
 
 void PUParticle3DEmitter::prepare()
 {
-
+    if (!_emitsEntity){
+        if (_emitsType == PUParticle3D::PT_EMITTER){
+            auto emitter = static_cast<PUParticleSystem3D *>(_particleSystem)->getEmitter(_emitsName);
+            if (emitter){
+                emitter->setMarkedForEmission(true);
+                _emitsEntity = emitter;
+            }
+        }
+        else if (_emitsType == PUParticle3D::PT_TECHNIQUE){
+            PUParticleSystem3D *system = static_cast<PUParticleSystem3D *>(_particleSystem)->getParentParticleSystem();
+            if (system){
+                auto children = system->getChildren();
+                for (auto it : children){
+                    if (it->getName() == _emitsName)
+                    {
+                        static_cast<PUParticleSystem3D *>(it)->setMarkedForEmission(true);
+                        _emitsEntity = it;
+                        break;
+                    }
+                }
+            }
+        }
+    }
 }
 
 void PUParticle3DEmitter::unPrepare()
 {
-
+    setForceEmission(_forceEmission);
 }
 
 void PUParticle3DEmitter::preUpdateEmitter( float deltaTime )
@@ -379,7 +403,9 @@ void PUParticle3DEmitter::preUpdateEmitter( float deltaTime )
 
 void PUParticle3DEmitter::postUpdateEmitter( float deltaTime )
 {
-
+    Vec3 currentPos = getDerivedPosition();
+    _latestPositionDiff = currentPos - _latestPosition;
+    _latestPosition = currentPos;
 }
 
 //-----------------------------------------------------------------------
@@ -401,8 +427,7 @@ bool PUParticle3DEmitter::makeParticleLocal(PUParticle3D* particle)
     if (!_keepLocal/* || hasEventFlags(PUParticle3D::PEF_EXPIRED)*/)
         return false;
 
-    Vec3 diff = getDerivedPosition() - _latestPosition;
-    particle->position += diff;
+    particle->position += _latestPositionDiff;
     return true;
 }
 
@@ -475,6 +500,7 @@ void PUParticle3DEmitter::setParticleTextureCoordsRangeEnd(const unsigned short&
 void PUParticle3DEmitter::setEmitsName(const std::string& emitsName)
 {
     _emitsName = emitsName;
+    _emitsEntity = nullptr;
     //if (!_emitsName.empty())
     //{
     //	markedForEmission = true;
@@ -753,10 +779,22 @@ void PUParticle3DEmitter::initParticleColor( PUParticle3D* particle )
 {
     if (_particleColorRangeSet)
     {
-        particle->color.x = cocos2d::random(_particleColorRangeStart.x, _particleColorRangeEnd.x);
-        particle->color.y = cocos2d::random(_particleColorRangeStart.y, _particleColorRangeEnd.y);
-        particle->color.z = cocos2d::random(_particleColorRangeStart.z, _particleColorRangeEnd.z);
-        particle->color.w = cocos2d::random(_particleColorRangeStart.w, _particleColorRangeEnd.w);
+        if (_particleColorRangeStart.x < _particleColorRangeEnd.x)
+            particle->color.x = cocos2d::random(_particleColorRangeStart.x, _particleColorRangeEnd.x);
+        else
+            particle->color.x = cocos2d::random(_particleColorRangeEnd.x, _particleColorRangeStart.x);
+        if (_particleColorRangeStart.y < _particleColorRangeEnd.y)
+            particle->color.y = cocos2d::random(_particleColorRangeStart.y, _particleColorRangeEnd.y);
+        else
+            particle->color.y = cocos2d::random(_particleColorRangeEnd.y, _particleColorRangeStart.y);
+        if (_particleColorRangeStart.z < _particleColorRangeEnd.z)
+            particle->color.z = cocos2d::random(_particleColorRangeStart.z, _particleColorRangeEnd.z);
+        else
+            particle->color.z = cocos2d::random(_particleColorRangeEnd.z, _particleColorRangeStart.z);
+        if (_particleColorRangeStart.w < _particleColorRangeEnd.w)
+            particle->color.w = cocos2d::random(_particleColorRangeStart.w, _particleColorRangeEnd.w);
+        else
+            particle->color.w = cocos2d::random(_particleColorRangeEnd.w, _particleColorRangeStart.w);
     }
     else
     {
@@ -838,6 +876,90 @@ void PUParticle3DEmitter::initParticleDimensions( PUParticle3D* particle )
 bool PUParticle3DEmitter::isEmitterDone() const
 {
     return !(_isEnabled || _dynRepeatDelaySet);
+}
+
+Ref* PUParticle3DEmitter::getEmitsEntityPtr() const
+{
+    return _emitsEntity;
+}
+
+void PUParticle3DEmitter::copyAttributesTo( PUParticle3DEmitter* emitter )
+{
+    emitter->setName(_name);
+    emitter->setEmitterType(_emitterType);
+    emitter->setEmitsName(_emitsName);
+    emitter->setEmitsType(_emitsType);
+    emitter->_particleDirection = _particleDirection;
+    emitter->_originalParticleDirection = _originalParticleDirection;
+    emitter->_particleOrientation = _particleOrientation;
+    emitter->_particleOrientationRangeStart = _particleOrientationRangeStart;
+    emitter->_particleOrientationRangeEnd = _particleOrientationRangeEnd;
+    emitter->_particleOrientationRangeSet = _particleOrientationRangeSet;
+    emitter->_isMarkedForEmission = _isMarkedForEmission;
+    emitter->_particleSystem = _particleSystem;
+    emitter->_autoDirection = _autoDirection;
+    emitter->setForceEmission(_forceEmission);
+    emitter->_dynDurationSet = _dynDurationSet;
+    emitter->_dynRepeatDelaySet = _dynRepeatDelaySet;
+    emitter->_dynParticleAllDimensionsSet = _dynParticleAllDimensionsSet;
+    emitter->_dynParticleWidthSet = _dynParticleWidthSet;
+    emitter->_dynParticleHeightSet = _dynParticleHeightSet;
+    emitter->_dynParticleDepthSet = _dynParticleDepthSet;
+    emitter->_emitterScale = _emitterScale;
+    emitter->_particleColor = _particleColor;
+    emitter->_particleColorRangeStart = _particleColorRangeStart;
+    emitter->_particleColorRangeEnd = _particleColorRangeEnd;
+    emitter->_particleColorRangeSet = _particleColorRangeSet;
+    emitter->_particleTextureCoords = _particleTextureCoords;
+    emitter->_particleTextureCoordsRangeStart = _particleTextureCoordsRangeStart;
+    emitter->_particleTextureCoordsRangeEnd = _particleTextureCoordsRangeEnd;
+    emitter->_particleTextureCoordsRangeSet = _particleTextureCoordsRangeSet;
+    emitter->_keepLocal = _keepLocal;
+
+    // Copy Dyn. Emission rate if available
+    emitter->setDynEmissionRate(getDynEmissionRate()->clone());
+
+    // Copy Dyn. Total time to live if available
+    emitter->setDynTotalTimeToLive(getDynTotalTimeToLive()->clone());
+
+    // Copy Dyn. Velocity if available
+    emitter->setDynVelocity(getDynVelocity()->clone());
+
+    // Copy Dyn. Duration if available
+    if (_dynDurationSet)
+    {
+        emitter->setDynDuration(getDynDuration()->clone());
+    }
+
+    // Copy Dyn. RepeatDelay if available
+    if (_dynRepeatDelaySet)
+    {
+        emitter->setDynRepeatDelay(getDynRepeatDelay()->clone());
+    }
+
+    // Copy Dyn. Particle Mass if available
+    emitter->setDynParticleMass(getDynParticleMass()->clone());
+
+    // Copy Dyn. Angle if available
+    emitter->setDynAngle(getDynAngle()->clone());
+
+    // Copy Dyn. own width, height and depth if available
+    if (_dynParticleAllDimensionsSet)
+    {
+        emitter->setDynParticleAllDimensions(getDynParticleAllDimensions()->clone());
+    }
+    if (_dynParticleWidthSet)
+    {
+        emitter->setDynParticleWidth(getDynParticleWidth()->clone());
+    }
+    if (_dynParticleHeightSet)
+    {
+        emitter->setDynParticleHeight(getDynParticleHeight()->clone());
+    }
+    if (_dynParticleDepthSet)
+    {
+        emitter->setDynParticleDepth(getDynParticleDepth()->clone());
+    }
 }
 
 NS_CC_END

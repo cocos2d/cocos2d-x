@@ -24,6 +24,7 @@
  ****************************************************************************/
 
 #include "extensions/Particle3D/ParticleUniverse/ParticleAffectors/CCPUParticle3DAffector.h"
+#include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
 #include "extensions/Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
 
 NS_CC_BEGIN
@@ -41,11 +42,6 @@ PUParticle3DAffector::~PUParticle3DAffector()
     _particleSystem = nullptr;
 }
 
-void PUParticle3DAffector::updateAffector(Particle3D *particle, float deltaTime)
-{
-    updatePUAffector(static_cast<PUParticle3D*>(particle), deltaTime);
-}
-
 void PUParticle3DAffector::updatePUAffector(PUParticle3D* particle, float delta)
 {
     
@@ -61,9 +57,10 @@ const Vec3& PUParticle3DAffector::getDerivedPosition()
         //_particleSystem->getNodeToWorldTransform().transformPoint(_position, &_derivedPosition);
     }
     else
-        _derivedPosition = Vec3::ZERO;
+        _derivedPosition = _position;
 
     return _derivedPosition;
+
     //if (mMarkedForEmission)
     //{
     //	// Use the affector position, because it is emitted
@@ -77,10 +74,6 @@ const Vec3& PUParticle3DAffector::getDerivedPosition()
     //		mParentTechnique->getParentSystem()->getDerivedOrientation() * (_mAffectorScale * position);
     //}
     //return _derivedPosition;
-    
-
-    ////incorrect result (FIXME)
-    //return _position;
 }
 
 float PUParticle3DAffector::calculateAffectSpecialisationFactor( const PUParticle3D* particle )
@@ -189,6 +182,50 @@ void PUParticle3DAffector::setMass( float mass )
 float PUParticle3DAffector::getMass() const
 {
     return _mass;
+}
+
+void PUParticle3DAffector::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    affector->setName(_name);
+    affector->_isEnabled = _isEnabled;
+    affector->_particleSystem = _particleSystem;
+    affector->_affectorScale = _affectorScale;
+    affector->_affectSpecialisation = _affectSpecialisation;
+}
+
+void PUParticle3DAffector::addEmitterToExclude( const std::string& emitterName )
+{
+    auto iter  = std::find(_excludedEmitters.begin(), _excludedEmitters.end(), emitterName);
+    if (iter == _excludedEmitters.end()){
+        _excludedEmitters.push_back(emitterName);
+    }
+}
+
+void PUParticle3DAffector::removeEmitterToExclude( const std::string& emitterName )
+{
+    auto iter  = std::find(_excludedEmitters.begin(), _excludedEmitters.end(), emitterName);
+    if (iter != _excludedEmitters.end()){
+        _excludedEmitters.erase(iter);
+    }
+}
+
+void PUParticle3DAffector::process( PUParticle3D* particle, float delta, bool firstParticle )
+{
+    if (firstParticle){
+        firstParticleUpdate(particle, delta);
+    }
+
+    if (!_excludedEmitters.empty() && particle->parentEmitter){
+        // Return if the emitter which emits this particle is part of the vector
+        std::string emitterName = particle->parentEmitter->getName();
+        auto iter = std::find(_excludedEmitters.begin(), _excludedEmitters.end(), emitterName);
+        if (iter != _excludedEmitters.end())
+        {
+            return;
+        }
+    }
+
+    updatePUAffector(particle, delta);
 }
 
 NS_CC_END

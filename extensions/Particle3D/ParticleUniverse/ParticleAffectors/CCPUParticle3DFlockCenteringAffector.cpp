@@ -73,4 +73,13 @@ PUParticle3DFlockCenteringAffector* PUParticle3DFlockCenteringAffector::create()
     return pfca;
 }
 
+void PUParticle3DFlockCenteringAffector::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DAffector::copyAttributesTo(affector);
+    PUParticle3DFlockCenteringAffector* flockCenteringAffector = static_cast<PUParticle3DFlockCenteringAffector*>(affector);
+    flockCenteringAffector->_sum = _sum;
+    flockCenteringAffector->_average = _average;
+    flockCenteringAffector->_count = _count;
+}
+
 NS_CC_END

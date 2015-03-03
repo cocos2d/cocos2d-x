@@ -162,4 +162,14 @@ PUParticle3DTextureRotator* PUParticle3DTextureRotator::create()
     return ptr;
 }
 
+void PUParticle3DTextureRotator::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DAffector::copyAttributesTo(affector);
+
+    PUParticle3DTextureRotator* textureRotator = static_cast<PUParticle3DTextureRotator*>(affector);
+    textureRotator->setRotation(getRotation()->clone());
+    textureRotator->setRotationSpeed(getRotationSpeed()->clone());
+    textureRotator->_useOwnRotationSpeed = _useOwnRotationSpeed;
+}
+
 NS_CC_END

@@ -75,6 +75,8 @@ public:
     bool isSinceStartSystem(void) const {return _sinceStartSystem;};
     void setSinceStartSystem(bool sinceStartSystem){_sinceStartSystem = sinceStartSystem;};
 
+    virtual void copyAttributesTo (PUParticle3DAffector* affector);
+
 CC_CONSTRUCTOR_ACCESS:
     PUParticle3DScaleAffector(void);
     virtual ~PUParticle3DScaleAffector(void);

@@ -81,6 +81,8 @@ public:
     /** @copydoc ParticleAffector::_initParticleForEmission */
     virtual void initParticleForEmission(PUParticle3D* particle);
 
+    virtual void copyAttributesTo (PUParticle3DAffector* affector);
+
 CC_CONSTRUCTOR_ACCESS:	
     PUParticle3DTextureRotator(void);
     virtual ~PUParticle3DTextureRotator(void);

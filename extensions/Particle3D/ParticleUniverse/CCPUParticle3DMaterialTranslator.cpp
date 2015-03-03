@@ -222,12 +222,12 @@ void PUParticle3DMaterialPassTranslator::translate( PUScriptCompiler* compiler, 
             }
             else if (prop->name == matToken[TOKEN_MAT_SPECULAR])
             {
-                PUAbstractNodeList::const_iterator it = prop->values.begin();
+                PUAbstractNodeList::const_iterator i = prop->values.begin();
                 PUAbstractNodeList::const_iterator end = prop->values.end();
                 unsigned int n = 0;
                 Vec4 color;
                 float shininess;
-                while(it != end)
+                while(i != end)
                 {
                     float v = 0;
                     if(getFloat(**i, &v))
@@ -252,7 +252,7 @@ void PUParticle3DMaterialPassTranslator::translate( PUScriptCompiler* compiler, 
                         }
                     }
                     ++n;
-                    ++it;
+                    ++i;
                 }
 
                 material->specularColor = color;
@@ -399,7 +399,9 @@ void PUParticle3DMaterialTextureUnitTranslator::translate( PUScriptCompiler* com
             PUPropertyAbstractNode *prop = reinterpret_cast<PUPropertyAbstractNode*>((*i));
             if (prop->name == matToken[TOKEN_MAT_TEXTURE_FILE])
             {
-                if (passValidateProperty(compiler, prop, matToken[TOKEN_MAT_TEXTURE_FILE], VAL_STRING))
+
+                //if (passValidateProperty(compiler, prop, matToken[TOKEN_MAT_TEXTURE_FILE], VAL_STRING))
+                if (!prop->values.empty())
                 {
                     std::string val;
                     if(getString(*prop->values.front(), &val))

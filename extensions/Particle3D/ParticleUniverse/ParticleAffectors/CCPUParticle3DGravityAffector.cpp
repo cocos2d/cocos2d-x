@@ -88,4 +88,12 @@ PUParticle3DGravityAffector* PUParticle3DGravityAffector::create()
     return pga;
 }
 
+void PUParticle3DGravityAffector::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DAffector::copyAttributesTo(affector);
+
+    PUParticle3DGravityAffector* gravityAffector = static_cast<PUParticle3DGravityAffector*>(affector);
+    gravityAffector->_gravity = _gravity;
+}
+
 NS_CC_END

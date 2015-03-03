@@ -103,7 +103,7 @@ void PUParticle3DLineAffector::notifyRescaled(const Vec3& scale)
 //-----------------------------------------------------------------------
 void PUParticle3DLineAffector::preUpdateAffector(float deltaTime)
 {
-    if (/*technique->getNumberOfEmittedParticles()*/_particleSystem->getParticlePool().getActiveParticleList().size() > 0)
+    if (/*technique->getNumberOfEmittedParticles()*/static_cast<PUParticleSystem3D *>(_particleSystem)->getAliveParticleCount() > 0)
     {
         _timeSinceLastUpdate += deltaTime;
         while (_timeSinceLastUpdate > _timeStep)
@@ -162,6 +162,18 @@ PUParticle3DLineAffector* PUParticle3DLineAffector::create()
     auto pla = new (std::nothrow) PUParticle3DLineAffector();
     pla->autorelease();
     return pla;
+}
+
+void PUParticle3DLineAffector::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DAffector::copyAttributesTo(affector);
+
+    PUParticle3DLineAffector* lineAffector = static_cast<PUParticle3DLineAffector*>(affector);
+    lineAffector->setMaxDeviation(_maxDeviation);
+    lineAffector->_end = _end;
+    lineAffector->_timeStep = _timeStep;
+    lineAffector->_drift = _drift;
+    lineAffector->_oneMinusDrift = _oneMinusDrift;
 }
 
 NS_CC_END

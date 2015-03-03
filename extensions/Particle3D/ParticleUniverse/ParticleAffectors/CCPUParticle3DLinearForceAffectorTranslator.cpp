@@ -37,6 +37,9 @@ PUParticle3DLinearForceAffectorTranslator::PUParticle3DLinearForceAffectorTransl
 //-------------------------------------------------------------------------
 bool PUParticle3DLinearForceAffectorTranslator::translateChildProperty( PUScriptCompiler* compiler, PUAbstractNode *node )
 {
+    PUPropertyAbstractNode* prop = reinterpret_cast<PUPropertyAbstractNode*>(node);
+   // PUParticle3DAffector* af = static_cast<PUParticle3DAffector*>(prop->parent->context);
+
     // No own properties. Parse the BaseForceAffector
     PUParticle3DBaseForceAffectorTranslator BaseForceAffectorTranslator;
     return BaseForceAffectorTranslator.translateChildProperty(compiler, node);

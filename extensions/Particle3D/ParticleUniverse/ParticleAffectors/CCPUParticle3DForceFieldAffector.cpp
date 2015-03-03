@@ -322,4 +322,26 @@ PUParticle3DForceFieldAffector* PUParticle3DForceFieldAffector::create()
     return pffa;
 }
 
+void PUParticle3DForceFieldAffector::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DAffector::copyAttributesTo(affector);
+
+    PUParticle3DForceFieldAffector* forceFieldAffector = static_cast<PUParticle3DForceFieldAffector*>(affector);
+    forceFieldAffector->_forceFieldType = _forceFieldType;
+    forceFieldAffector->_delta = _delta;
+    forceFieldAffector->_scaleForce = _scaleForce;
+    forceFieldAffector->_octaves = _octaves;
+    forceFieldAffector->_frequency = _frequency;
+    forceFieldAffector->_amplitude = _amplitude;
+    forceFieldAffector->_persistence = _persistence;
+    forceFieldAffector->_forceFieldSize = _forceFieldSize;
+    forceFieldAffector->_worldSize = _worldSize;
+    forceFieldAffector->_ignoreNegativeX = _ignoreNegativeX;
+    forceFieldAffector->_ignoreNegativeY = _ignoreNegativeY;
+    forceFieldAffector->_ignoreNegativeZ = _ignoreNegativeZ;
+    forceFieldAffector->_movementSet = _movementSet;
+    forceFieldAffector->_movementFrequency = _movementFrequency;
+    forceFieldAffector->_movement = _movement;
+}
+
 NS_CC_END

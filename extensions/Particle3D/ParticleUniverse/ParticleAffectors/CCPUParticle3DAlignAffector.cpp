@@ -87,4 +87,12 @@ PUParticle3DAlignAffector* PUParticle3DAlignAffector::create()
     return paa;
 }
 
+void PUParticle3DAlignAffector::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DAffector::copyAttributesTo(affector);
+
+    PUParticle3DAlignAffector* alignAffector = static_cast<PUParticle3DAlignAffector*>(affector);
+    alignAffector->_resize = _resize;
+}
+
 NS_CC_END

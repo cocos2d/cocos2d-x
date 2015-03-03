@@ -28,10 +28,11 @@
 #define __CC_PU_PARTICLE_3D_SLAVE_EMITTER_H__
 
 #include "extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DEmitter.h"
+#include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DListener.h"
 
 NS_CC_BEGIN
 //FIXME
-class  CC_DLL PUParticle3DSlaveEmitter : public PUParticle3DEmitter/*, public TechniqueListener*/
+class  CC_DLL PUParticle3DSlaveEmitter : public PUParticle3DEmitter, public PUParticle3DListener
 {
 public:
 
@@ -71,15 +72,18 @@ public:
 
     /** Initialise the emitted particle. This means that its position is set.
     */
-    //virtual void particleEmitted(ParticleTechnique* particleTechnique, PUParticle3D* particle);
+    virtual void particleEmitted(PUParticleSystem3D* particleSystem, PUParticle3D* particle) override;
 
     /** No implementation.
     */
-    //virtual void particleExpired(ParticleTechnique* particleTechnique, PUParticle3D* particle){};
+    virtual void particleExpired(PUParticleSystem3D* particleSystem, PUParticle3D* particle) override{};
 
     /** 
     */
     void setMasterEmitterName(const std::string& masterEmitterName);
+
+    virtual PUParticle3DSlaveEmitter* clone();
+    virtual void copyAttributesTo (PUParticle3DEmitter* emitter);
 
 CC_CONSTRUCTOR_ACCESS:
     PUParticle3DSlaveEmitter(void);

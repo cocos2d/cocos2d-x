@@ -85,21 +85,21 @@ PUScriptTranslator* PUParticle3DTranslateManager::getTranslator(PUAbstractNode *
             // Parse Particle Affector
             translator = &_affectorTranslator;
         }
-        //else if(obj->cls == token[TOKEN_BEHAVIOUR] && parent && (parent->cls == token[TOKEN_TECHNIQUE] || parent->cls == token[TOKEN_ALIAS]))
-        //{
-        //    // Parse Particle Behaviour
-        //    translator = &mBehaviourTranslator;
-        //}
-        //else if(obj->cls == token[TOKEN_OBSERVER] && parent && (parent->cls == token[TOKEN_TECHNIQUE] || parent->cls == token[TOKEN_ALIAS]))
-        //{
-        //    // Parse Particle Observer
-        //    translator = &mObserverTranslator;
-        //}
-        //else if(obj->cls == token[TOKEN_HANDLER] && parent && (parent->cls == token[TOKEN_OBSERVER] || parent->cls == token[TOKEN_ALIAS]))
-        //{
-        //    // Parse Particle Event Handler
-        //    translator = &mParticleEventHandlerTranslator;
-        //}
+        else if(obj->cls == token[TOKEN_BEHAVIOUR] && parent && (parent->cls == token[TOKEN_TECHNIQUE] || parent->cls == token[TOKEN_ALIAS]))
+        {
+            // Parse Particle Behaviour
+            translator = &_behaviourTranslator;
+        }
+        else if(obj->cls == token[TOKEN_OBSERVER] && parent && (parent->cls == token[TOKEN_TECHNIQUE] || parent->cls == token[TOKEN_ALIAS]))
+        {
+            // Parse Particle Observer
+            translator = &_observerTranslator;
+        }
+        else if(obj->cls == token[TOKEN_HANDLER] && parent && (parent->cls == token[TOKEN_OBSERVER] || parent->cls == token[TOKEN_ALIAS]))
+        {
+            // Parse Particle Event Handler
+            translator = &_eventHandlerTranslator;
+        }
         //else if(obj->cls == token[TOKEN_EXTERN] && parent && (parent->cls == token[TOKEN_TECHNIQUE] || parent->cls == token[TOKEN_ALIAS]))
         //{
         //    // Parse Extern

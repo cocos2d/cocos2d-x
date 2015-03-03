@@ -235,6 +235,9 @@ public:
     */
     virtual void initParticleDirection(PUParticle3D* particle) override;
 
+    virtual PUParticle3DMeshSurfaceEmitter* clone();
+    virtual void copyAttributesTo (PUParticle3DEmitter* emitter);
+
 CC_CONSTRUCTOR_ACCESS:
     PUParticle3DMeshSurfaceEmitter(void);
     virtual ~PUParticle3DMeshSurfaceEmitter(void);

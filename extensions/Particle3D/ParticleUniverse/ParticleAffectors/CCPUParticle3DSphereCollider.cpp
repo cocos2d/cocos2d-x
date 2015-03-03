@@ -199,4 +199,14 @@ PUParticle3DSphereCollider* PUParticle3DSphereCollider::create()
     return psc;
 }
 
+void PUParticle3DSphereCollider::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DAffector::copyAttributesTo(affector);
+
+    PUParticle3DSphereCollider* sphereCollider = static_cast<PUParticle3DSphereCollider*>(affector);
+    sphereCollider->_radius = _radius;
+    sphereCollider->_sphere = _sphere;
+    sphereCollider->_innerCollision = _innerCollision;
+}
+
 NS_CC_END

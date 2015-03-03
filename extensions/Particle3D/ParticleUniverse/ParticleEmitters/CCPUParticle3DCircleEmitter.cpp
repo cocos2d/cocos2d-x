@@ -247,4 +247,25 @@ cocos2d::Quaternion PUParticle3DCircleEmitter::getRotationTo( const Vec3 &src, c
     return q;
 }
 
+void PUParticle3DCircleEmitter::copyAttributesTo( PUParticle3DEmitter* emitter )
+{
+    PUParticle3DEmitter::copyAttributesTo(emitter);
+
+    PUParticle3DCircleEmitter* circleEmitter = static_cast<PUParticle3DCircleEmitter*>(emitter);
+    circleEmitter->_radius = _radius;
+    circleEmitter->_circleAngle = _circleAngle;
+    circleEmitter->_originalCircleAngle = _originalCircleAngle;
+    circleEmitter->_step = _step;
+    circleEmitter->_random = _random;
+    circleEmitter->_normal = _normal;
+    circleEmitter->_orientation = _orientation; 
+}
+
+PUParticle3DCircleEmitter* PUParticle3DCircleEmitter::clone()
+{
+    auto be = PUParticle3DCircleEmitter::create();
+    copyAttributesTo(be);
+    return be;
+}
+
 NS_CC_END

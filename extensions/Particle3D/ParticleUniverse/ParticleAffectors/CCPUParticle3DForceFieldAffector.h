@@ -126,6 +126,8 @@ public:
     */
     void suppressGeneration(bool suppress);
 
+    virtual void copyAttributesTo (PUParticle3DAffector* affector);
+
 CC_CONSTRUCTOR_ACCESS:
     PUParticle3DForceFieldAffector();
     ~PUParticle3DForceFieldAffector();

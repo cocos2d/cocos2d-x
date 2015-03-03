@@ -40,6 +40,8 @@ public:
     virtual void preUpdateAffector(float deltaTime) override;
     virtual void updatePUAffector(PUParticle3D *particle, float deltaTime) override;
 
+    virtual void copyAttributesTo (PUParticle3DAffector* affector);
+
 CC_CONSTRUCTOR_ACCESS:
     PUParticle3DFlockCenteringAffector();
     virtual ~PUParticle3DFlockCenteringAffector();

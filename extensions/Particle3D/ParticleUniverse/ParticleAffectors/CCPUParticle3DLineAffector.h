@@ -70,6 +70,8 @@ public:
     float getDrift(void) const;
     void setDrift(float drift);
 
+    virtual void copyAttributesTo (PUParticle3DAffector* affector);
+
 CC_CONSTRUCTOR_ACCESS:          
     PUParticle3DLineAffector(void);
     virtual ~PUParticle3DLineAffector(void);

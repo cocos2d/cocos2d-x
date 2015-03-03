@@ -56,6 +56,8 @@ public:
     */
     const Vec3& getPoint(unsigned short index) const {return _spline.getPoint(index);};
 
+    virtual void copyAttributesTo (PUParticle3DAffector* affector);
+
 CC_CONSTRUCTOR_ACCESS:
     PUParticle3DPathFollower(void);
     virtual ~PUParticle3DPathFollower(void);

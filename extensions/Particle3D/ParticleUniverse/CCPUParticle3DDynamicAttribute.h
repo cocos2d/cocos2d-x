@@ -94,6 +94,9 @@ class CC_DLL PUDynamicAttribute : public Ref
         */
         bool isValueChangedExternally(void) const;
 
+        virtual void copyAttributesTo(PUDynamicAttribute* dynamicAttribute) = 0;
+        virtual PUDynamicAttribute* clone() = 0;
+
     protected:
         DynamicAttributeType _type;
         bool _valueChangedExternally;
@@ -128,6 +131,9 @@ class CC_DLL PUDynamicAttributeFixed : public PUDynamicAttribute
         */
         virtual void setValue (float value);
 
+        virtual PUDynamicAttributeFixed* clone() override;
+        virtual void copyAttributesTo(PUDynamicAttribute* dynamicAttribute);
+
     protected:
         float _value;
 };
@@ -160,6 +166,9 @@ class CC_DLL PUDynamicAttributeRandom : public PUDynamicAttribute
         void setMax (float max);
         float getMax (void) const;
         void setMinMax (float min, float max);
+
+        virtual PUDynamicAttributeRandom* clone() override;
+        virtual void copyAttributesTo(PUDynamicAttribute* dynamicAttribute);
 
 protected:
         float _min, _max;
@@ -217,6 +226,9 @@ class CC_DLL PUDynamicAttributeCurved : public PUDynamicAttribute
         /** Todo
         */
         void removeAllControlPoints(void);
+
+        virtual PUDynamicAttributeCurved* clone() override;
+        virtual void copyAttributesTo(PUDynamicAttribute* dynamicAttribute);
 
     protected:
 
@@ -297,6 +309,9 @@ class CC_DLL PUDynamicAttributeOscillate : public PUDynamicAttribute
         */
         float getAmplitude (void) const;
         void setAmplitude (float amplitude);
+
+        virtual PUDynamicAttributeOscillate* clone() override;
+        virtual void copyAttributesTo(PUDynamicAttribute* dynamicAttribute);
 
     protected:
         OscillationType _oscillationType;

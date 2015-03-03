@@ -48,6 +48,8 @@ public:
     float getGravity(void) const;
     void setGravity(float gravity);
 
+    virtual void copyAttributesTo (PUParticle3DAffector* affector);
+
 CC_CONSTRUCTOR_ACCESS:
     PUParticle3DGravityAffector(void);
     virtual ~PUParticle3DGravityAffector(void);

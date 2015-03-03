@@ -104,4 +104,13 @@ PUParticle3DParticleFollower* PUParticle3DParticleFollower::create()
     return ppf;
 }
 
+void PUParticle3DParticleFollower::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DAffector::copyAttributesTo(affector);
+
+    PUParticle3DParticleFollower* particleFollower = static_cast<PUParticle3DParticleFollower*>(affector);
+    particleFollower->_maxDistance = _maxDistance;
+    particleFollower->_minDistance = _minDistance;
+}
+
 NS_CC_END

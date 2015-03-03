@@ -265,4 +265,20 @@ PUParticle3DScaleAffector* PUParticle3DScaleAffector::create()
     return psa;
 }
 
+void PUParticle3DScaleAffector::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DAffector::copyAttributesTo(affector);
+
+    PUParticle3DScaleAffector* scaleAffector = static_cast<PUParticle3DScaleAffector*>(affector);
+    scaleAffector->setDynScaleX(getDynScaleX()->clone());
+    scaleAffector->setDynScaleY(getDynScaleY()->clone());
+    scaleAffector->setDynScaleZ(getDynScaleZ()->clone());
+    scaleAffector->setDynScaleXYZ(getDynScaleXYZ()->clone());
+    scaleAffector->_dynScaleXSet = _dynScaleXSet;
+    scaleAffector->_dynScaleYSet = _dynScaleYSet;
+    scaleAffector->_dynScaleZSet = _dynScaleZSet;
+    scaleAffector->_dynScaleXYZSet = _dynScaleXYZSet;
+    scaleAffector->_sinceStartSystem = _sinceStartSystem;
+}
+
 NS_CC_END

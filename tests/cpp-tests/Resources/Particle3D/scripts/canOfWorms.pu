@@ -1,0 +1,39 @@
+system canOfWorms
+{
+    category                                    LightFX
+    technique 
+    {
+        visual_particle_quota                   2000
+        emitted_emitter_quota                   20
+        material                                PUMediaPack/Flare_04
+        default_particle_width                  1.2
+        default_particle_height                 1.2
+        renderer                                Billboard
+        {
+        }
+        emitter                                 Point Core
+        {
+            emission_rate                       3
+            angle                               360
+            time_to_live                        4
+            velocity                            9
+            emits                               emitter_particle Worms
+        }
+        emitter                                 Point Worms
+        {
+            emission_rate                       60
+            angle                               360
+            time_to_live                        2
+            velocity                            0.45
+            direction                           0 -1 0
+            colour                              1 0.6 0.6 1
+        }
+        affector                                SineForce 
+        {
+            exclude_emitter                     Worms 
+            force_vector                        15 15 15
+            min_frequency                       5
+            max_frequency                       5
+        }
+    }
+}

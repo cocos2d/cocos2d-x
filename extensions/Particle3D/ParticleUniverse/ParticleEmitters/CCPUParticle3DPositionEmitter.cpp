@@ -126,4 +126,19 @@ PUParticle3DPositionEmitter* PUParticle3DPositionEmitter::create()
     return pe;
 }
 
+void PUParticle3DPositionEmitter::copyAttributesTo( PUParticle3DEmitter* emitter )
+{
+    PUParticle3DEmitter::copyAttributesTo(emitter);
+    PUParticle3DPositionEmitter* positionEmitter = static_cast<PUParticle3DPositionEmitter*>(emitter);
+    positionEmitter->_randomized = _randomized;
+    positionEmitter->_positionList = _positionList;
+}
+
+PUParticle3DPositionEmitter* PUParticle3DPositionEmitter::clone()
+{
+    auto be = PUParticle3DPositionEmitter::create();
+    copyAttributesTo(be);
+    return be;
+}
+
 NS_CC_END

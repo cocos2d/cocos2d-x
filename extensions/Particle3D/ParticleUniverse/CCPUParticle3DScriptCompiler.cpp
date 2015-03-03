@@ -236,12 +236,12 @@ const PUAbstractNodeList* PUScriptCompiler::compile(const std::string &file, boo
     parser.parse(creteNodeList, tokenList);
     bool state = compile(creteNodeList, file);
 
-    for (auto iter1 : creteNodeList){
-        delete iter1;
+    for (auto iter : creteNodeList){
+        delete iter;
     }
 
-    for (auto iter2 : tokenList){
-        delete iter2;
+    for (auto iter : tokenList){
+        delete iter;
     }
 
     isFirstCompile = true;
@@ -311,7 +311,7 @@ void PUScriptCompiler::visit(PUConcreteNode *node)
                 return;
             }
             
-            PUObjectAbstractNode *impl = new  (std::nothrow) PUObjectAbstractNode(_current);
+            PUObjectAbstractNode *impl = new (std::nothrow)  PUObjectAbstractNode(_current);
             impl->line = node->line;
             impl->file = node->file;
             impl->abstract = false;

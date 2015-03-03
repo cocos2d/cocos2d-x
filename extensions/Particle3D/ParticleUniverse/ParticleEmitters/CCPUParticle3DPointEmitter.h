@@ -36,6 +36,9 @@ class  CC_DLL PUParticle3DPointEmitter : public PUParticle3DEmitter
 public:
      static PUParticle3DPointEmitter* create();
 
+     virtual PUParticle3DPointEmitter* clone();
+     virtual void copyAttributesTo (PUParticle3DEmitter* emitter);
+
 CC_CONSTRUCTOR_ACCESS:
     PUParticle3DPointEmitter(void);
     virtual ~PUParticle3DPointEmitter(void);

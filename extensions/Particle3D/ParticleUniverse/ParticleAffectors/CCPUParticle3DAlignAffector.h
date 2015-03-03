@@ -51,6 +51,8 @@ public:
     */
     void setResize(bool resize);
 
+    virtual void copyAttributesTo (PUParticle3DAffector* affector);
+
 CC_CONSTRUCTOR_ACCESS:
     PUParticle3DAlignAffector();
     virtual ~PUParticle3DAlignAffector();

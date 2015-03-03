@@ -113,4 +113,15 @@ PUParticle3DSineForceAffector* PUParticle3DSineForceAffector::create()
     return psfa;
 }
 
+void PUParticle3DSineForceAffector::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DAffector::copyAttributesTo(affector);
+
+    PUParticle3DSineForceAffector* sineForceAffector = static_cast<PUParticle3DSineForceAffector*>(affector);
+    sineForceAffector->_frequencyMin = _frequencyMin;
+    sineForceAffector->_frequencyMax = _frequencyMax;
+    sineForceAffector->_frequency = _frequency;
+    sineForceAffector->_angle = _angle;
+}
+
 NS_CC_END

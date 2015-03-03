@@ -170,6 +170,17 @@ PUParticle3DGeometryRotator* PUParticle3DGeometryRotator::create()
     return pgr;
 }
 
+void PUParticle3DGeometryRotator::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DAffector::copyAttributesTo(affector);
+
+    PUParticle3DGeometryRotator* geometryRotator = static_cast<PUParticle3DGeometryRotator*>(affector);
+    geometryRotator->setRotationSpeed(getRotationSpeed()->clone());
+    geometryRotator->_useOwnRotationSpeed = _useOwnRotationSpeed;
+    geometryRotator->_rotationAxis = _rotationAxis;
+    geometryRotator->_rotationAxisSet = _rotationAxisSet;
+}
+
 //-----------------------------------------------------------------------
 
 NS_CC_END

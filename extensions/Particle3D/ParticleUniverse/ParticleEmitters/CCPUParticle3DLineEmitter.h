@@ -87,6 +87,9 @@ public:
     */
     virtual void initParticleDirection(PUParticle3D* particle);
 
+    virtual PUParticle3DLineEmitter* clone();
+    virtual void copyAttributesTo (PUParticle3DEmitter* emitter);
+
 CC_CONSTRUCTOR_ACCESS:
     PUParticle3DLineEmitter(void);
     virtual ~PUParticle3DLineEmitter(void) {};

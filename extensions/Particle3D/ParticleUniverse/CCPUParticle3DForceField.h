@@ -127,6 +127,99 @@ public:
 //-------------------------------------------------------------------------
 //-------------------------------------------------------------------------
 
+///** Factory class to calculate forces based on a precalculated force field
+//*/
+//class MatrixForceFieldCalculationFactory : 
+//	public ForceFieldCalculationFactory, 
+//	public Ogre::WorkQueue::RequestHandler, 
+//	public Ogre::WorkQueue::ResponseHandler
+//{
+//public:
+//	static const uint16 WORKQUEUE_GENERATE_REQUEST;
+//	struct MatrixPosition
+//	{
+//		float x;
+//		float y;
+//		float z;
+//	};
+//
+//	MatrixForceFieldCalculationFactory(void);
+//	virtual ~MatrixForceFieldCalculationFactory(void);
+//
+//	/** Override from ForceFieldCalculationFactory
+//	*/
+//	virtual void generate(unsigned int forceFieldSize, 
+//		unsigned short octaves, 
+//		double frequency, 
+//		double amplitude, 
+//		double persistence, 
+//		const Vec3& worldSize);
+//
+//	/** Delete the internally build matrix
+//	*/
+//	void deleteMatrix(void);
+//
+//	/** Override from ForceFieldCalculationFactory
+//	*/
+//	virtual void determineForce(const Vec3& position, Vec3& force, float delta);
+//
+//	/** WorkQueue::RequestHandler override
+//	*/
+//	bool canHandleRequest(const Ogre::WorkQueue::Request* req, const Ogre::WorkQueue* srcQ);
+//
+//	/** WorkQueue::RequestHandler override
+//	*/
+//	Ogre::WorkQueue::Response* handleRequest(const Ogre::WorkQueue::Request* req, const Ogre::WorkQueue* srcQ);
+//
+//	/** WorkQueue::ResponseHandler override
+//	*/
+//	bool canHandleResponse(const Ogre::WorkQueue::Response* res, const Ogre::WorkQueue* srcQ);
+//
+//	/** WorkQueue::ResponseHandler override
+//	*/
+//	void handleResponse(const Ogre::WorkQueue::Response* res, const Ogre::WorkQueue* srcQ);
+//
+//	/** Get/Set Forcefield size.
+//	@remarks
+//		These get/set functions override default ones.
+//	*/
+//	virtual unsigned int getForceFieldSize(void) const;
+//	virtual void setForceFieldSize(unsigned int forceFieldSize);
+//
+//protected:
+//	MatrixPosition*** mMatrixPositions;
+//	unsigned int mForceFieldSize;
+//	unsigned int mX;
+//	unsigned int mY;
+//	unsigned int mZ;
+//	uint16 mWorkQueueChannel;
+//	bool mInitialising;
+//
+//	// Request / response structures
+//	struct MatrixRequest
+//	{
+//		unsigned int forceFieldSize;
+//		unsigned short octaves;
+//		double frequency;
+//		double amplitude;
+//		double persistence;
+//		Vec3 worldSize;
+//		MatrixForceFieldCalculationFactory* src;
+//		friend std::ostream& operator<<(std::ostream& o, const MatrixRequest& r)
+//			{return o;}
+//		MatrixRequest(MatrixForceFieldCalculationFactory* f): src(f) {};
+//	};
+//			
+//	struct MatrixResponse
+//	{
+//		friend std::ostream& operator<<(std::ostream& o, const MatrixResponse& r)
+//			{return o;}		
+//	};
+//};
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
 
 /** Force Field Affector Class:
     This class defines a force field to affect the particle direction. The force field is based on 3D noise. The force can be calculated in

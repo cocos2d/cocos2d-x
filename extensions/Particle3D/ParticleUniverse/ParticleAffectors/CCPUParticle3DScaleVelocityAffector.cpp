@@ -111,4 +111,14 @@ PUParticle3DScaleVelocityAffector* PUParticle3DScaleVelocityAffector::create()
     return psva;
 }
 
+void PUParticle3DScaleVelocityAffector::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DAffector::copyAttributesTo(affector);
+
+    PUParticle3DScaleVelocityAffector* scaleVelocityAffector = static_cast<PUParticle3DScaleVelocityAffector*>(affector);
+    scaleVelocityAffector->setDynScaleVelocity(getDynScaleVelocity()->clone());
+    scaleVelocityAffector->_sinceStartSystem = _sinceStartSystem;
+    scaleVelocityAffector->_stopAtFlip = _stopAtFlip;
+}
+
 NS_CC_END

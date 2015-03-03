@@ -112,4 +112,24 @@ PUParticle3DBoxEmitter* PUParticle3DBoxEmitter::create()
     return pe;
 }
 
+void PUParticle3DBoxEmitter::copyAttributesTo( PUParticle3DEmitter* emitter )
+{
+    PUParticle3DEmitter::copyAttributesTo(emitter);
+
+    PUParticle3DBoxEmitter* boxEmitter = static_cast<PUParticle3DBoxEmitter*>(emitter);
+    boxEmitter->_height = _height;
+    boxEmitter->_width = _width;
+    boxEmitter->_depth = _depth;
+    boxEmitter->_xRange = _xRange;
+    boxEmitter->_yRange = _yRange;
+    boxEmitter->_zRange = _zRange;
+}
+
+PUParticle3DBoxEmitter* PUParticle3DBoxEmitter::clone()
+{
+    auto be = PUParticle3DBoxEmitter::create();
+    copyAttributesTo(be);
+    return be;
+}
+
 NS_CC_END

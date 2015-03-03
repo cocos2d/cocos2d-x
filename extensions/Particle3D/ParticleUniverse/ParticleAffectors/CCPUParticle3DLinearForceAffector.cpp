@@ -62,4 +62,9 @@ PUParticle3DLinearForceAffector* PUParticle3DLinearForceAffector::create()
     return plfa;
 }
 
+void PUParticle3DLinearForceAffector::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DBaseForceAffector::copyAttributesTo(affector);
+}
+
 NS_CC_END

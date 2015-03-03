@@ -69,6 +69,7 @@ void PUParticle3DEmitterTranslator::translate(PUScriptCompiler* compiler, PUAbst
     //}
     _emitter = PUParticle3DEmitterManager::Instance()->createEmitter(type);
     if (!_emitter) return;
+	_emitter->setEmitterType(type);
 
     if (parent && parent->context)
     {
@@ -379,41 +380,41 @@ void PUParticle3DEmitterTranslator::translate(PUScriptCompiler* compiler, PUAbst
             }
             else if (prop->name == token[TOKEN_EMITTER_EMITS])
             {
-                //// Property: emits
-                //if (passValidatePropertyNumberOfValues(compiler, prop, token[TOKEN_EMITTER_EMITS], 2))
-                //{
-                //	String particleType;
-                //	String name;
-                //	AbstractNodeList::const_iterator i = prop->values.begin();
-                //	if (getString(*i, &particleType))
-                //	{
-                //		if (particleType == token[TOKEN_VISUAL_PARTICLE])
-                //		{
-                //			mEmitter->setEmitsType(Particle::PT_VISUAL);
-                //		}
-                //		else if (particleType == token[TOKEN_EMITTER_PARTICLE])
-                //		{
-                //			mEmitter->setEmitsType(Particle::PT_EMITTER);
-                //		}
-                //		else if (particleType == token[TOKEN_AFFECTOR_PARTICLE])
-                //		{
-                //			mEmitter->setEmitsType(Particle::PT_AFFECTOR);
-                //		}
-                //		else if (particleType == token[TOKEN_TECHNIQUE_PARTICLE])
-                //		{
-                //			mEmitter->setEmitsType(Particle::PT_TECHNIQUE);
-                //		}
-                //		else if (particleType == token[TOKEN_SYSTEM_PARTICLE])
-                //		{
-                //			mEmitter->setEmitsType(Particle::PT_SYSTEM);
-                //		}
-                //		++i;
-                //		if (getString(*i, &name))
-                //		{
-                //			mEmitter->setEmitsName(name);
-                //		}
-                //	}
-                //}
+                // Property: emits
+                if (passValidatePropertyNumberOfValues(compiler, prop, token[TOKEN_EMITTER_EMITS], 2))
+                {
+                    std::string particleType;
+                    std::string name;
+                    PUAbstractNodeList::const_iterator i = prop->values.begin();
+                    if (getString(**i, &particleType))
+                    {
+                        if (particleType == token[TOKEN_VISUAL_PARTICLE])
+                        {
+                            _emitter->setEmitsType(PUParticle3D::PT_VISUAL);
+                        }
+                        else if (particleType == token[TOKEN_EMITTER_PARTICLE])
+                        {
+                            _emitter->setEmitsType(PUParticle3D::PT_EMITTER);
+                        }
+                        else if (particleType == token[TOKEN_AFFECTOR_PARTICLE])
+                        {
+                            _emitter->setEmitsType(PUParticle3D::PT_AFFECTOR);
+                        }
+                        else if (particleType == token[TOKEN_TECHNIQUE_PARTICLE])
+                        {
+                            _emitter->setEmitsType(PUParticle3D::PT_TECHNIQUE);
+                        }
+                        else if (particleType == token[TOKEN_SYSTEM_PARTICLE])
+                        {
+                            _emitter->setEmitsType(PUParticle3D::PT_SYSTEM);
+                        }
+                        ++i;
+                        if (getString(**i, &name))
+                        {
+                            _emitter->setEmitsName(name);
+                        }
+                    }
+                }
             }
             else if (prop->name == token[TOKEN_ANGLE])
             {

@@ -65,4 +65,13 @@ void PUParticle3DBaseForceAffector::setForceApplication( ForceApplication forceA
     _forceApplication = forceApplication;
 }
 
+void PUParticle3DBaseForceAffector::copyAttributesTo( PUParticle3DAffector* affector )
+{
+    PUParticle3DAffector::copyAttributesTo(affector);
+
+    PUParticle3DBaseForceAffector* baseForceAffector = static_cast<PUParticle3DBaseForceAffector*>(affector);
+    baseForceAffector->_forceVector = _forceVector;
+    baseForceAffector->_forceApplication = _forceApplication;
+}
+
 NS_CC_END

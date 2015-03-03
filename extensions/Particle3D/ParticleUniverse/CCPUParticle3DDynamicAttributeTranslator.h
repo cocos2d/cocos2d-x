@@ -22,7 +22,6 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
 #ifndef __CC_PU_PARTICLE_3D_DYNAMIC_ATTRIBUTE_TRANSLATOR_H__
 #define __CC_PU_PARTICLE_3D_DYNAMIC_ATTRIBUTE_TRANSLATOR_H__
 

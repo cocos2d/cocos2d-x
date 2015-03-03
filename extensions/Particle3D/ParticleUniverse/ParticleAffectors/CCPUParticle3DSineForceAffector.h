@@ -54,6 +54,8 @@ public:
     const float getFrequencyMax(void) const;
     void setFrequencyMax(const float frequencyMax);
 
+    virtual void copyAttributesTo (PUParticle3DAffector* affector);
+
 CC_CONSTRUCTOR_ACCESS:	
     PUParticle3DSineForceAffector(void);
     virtual ~PUParticle3DSineForceAffector(void);

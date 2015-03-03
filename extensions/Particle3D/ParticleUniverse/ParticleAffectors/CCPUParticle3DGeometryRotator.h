@@ -76,6 +76,8 @@ public:
     */
     void resetRotationAxis(void);
 
+    virtual void copyAttributesTo (PUParticle3DAffector* affector);
+
 CC_CONSTRUCTOR_ACCESS:
     PUParticle3DGeometryRotator();
     virtual ~PUParticle3DGeometryRotator();

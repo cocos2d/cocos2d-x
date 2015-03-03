@@ -60,15 +60,12 @@ Particle3DQuadRender* Particle3DQuadRender::create(const std::string& texFile)
     if (ret && ret->initQuadRender(texFile))
     {
         ret->autorelease();
-        return ret;
     }
     else
     {
-        delete ret;
-        ret = nullptr;
+        CC_SAFE_DELETE(ret);
     }
-    CC_SAFE_DELETE(ret);
-    
+
     return ret;
 }
 
@@ -99,7 +96,7 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
         }
         _indexBuffer->retain();
     }
-    ParticlePool::PoolList activeParticleList = particlePool.getActiveParticleList();
+    ParticlePool::PoolList activeParticleList = particlePool.getActiveDataList();
     if (_posuvcolors.size() < activeParticleList.size() * 4)
     {
         _posuvcolors.resize(activeParticleList.size() * 4);
@@ -192,13 +189,12 @@ bool Particle3DQuadRender::initQuadRender( const std::string& texFile )
     //ret->_indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, 6 * 10000);
     //ret->_indexBuffer->retain();
 
-    _meshCommand = new (std::nothrow)MeshCommand();
+    _meshCommand = new (std::nothrow) MeshCommand();
     _meshCommand->setTransparent(true);
     _meshCommand->setDepthTestEnabled(_depthTest);
     _meshCommand->setDepthWriteEnabled(_depthWrite);
     _meshCommand->setCullFace(GL_BACK);
     _meshCommand->setCullFaceEnabled(true);
-    
     return true;
 }
 
@@ -244,6 +240,11 @@ void Particle3DModelRender::render(Renderer* renderer, const Mat4 &transform, Pa
     if (_spriteList.empty()){
         for (unsigned int i = 0; i < particleSystem->getParticleQuota(); ++i){
             Sprite3D *sprite = Sprite3D::create(_modelFile);
+            if (sprite == nullptr)
+            {
+                CCLOG("failed to load file %s", _modelFile.c_str());
+                continue;
+            }
             sprite->setTexture(_texFile);
             sprite->retain();
             _spriteList.push_back(sprite);
@@ -258,15 +259,16 @@ void Particle3DModelRender::render(Renderer* renderer, const Mat4 &transform, Pa
 
 
     const ParticlePool& particlePool = particleSystem->getParticlePool();
-    ParticlePool::PoolList activeParticleList = particlePool.getActiveParticleList();
+    ParticlePool::PoolList activeParticleList = particlePool.getActiveDataList();
     Mat4 mat;
     Mat4 rotMat;
     Mat4 sclMat;
     Quaternion q;
     transform.decompose(nullptr, &q, nullptr);
-    for (unsigned int i = 0; i < activeParticleList.size(); ++i)
+    unsigned int index = 0;
+    for (auto iter : activeParticleList)
     {
-        auto particle = activeParticleList[i];
+        auto particle = iter;
         q *= particle->orientation;
         Mat4::createRotation(q, &rotMat);
         sclMat.m[0] = particle->width / _spriteSize.x;
@@ -276,17 +278,17 @@ void Particle3DModelRender::render(Renderer* renderer, const Mat4 &transform, Pa
         mat.m[12] = particle->position.x;
         mat.m[13] = particle->position.y;
         mat.m[14] = particle->position.z;
-        _spriteList[i]->draw(renderer, mat, 0);
+        _spriteList[index++]->draw(renderer, mat, 0);
     }
 }
 
 
-void Particle3DRender::notifyStart( void )
+void Particle3DRender::notifyStart()
 {
     setVisible(true);
 }
 
-void Particle3DRender::notifyStop( void )
+void Particle3DRender::notifyStop()
 {
     setVisible(false);
 }

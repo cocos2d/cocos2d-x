@@ -22,7 +22,6 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
 #include "CCPUParticle3DScriptTranslator.h"
 #include "extensions/Particle3D/ParticleUniverse/CCPUParticle3DTranslateManager.h"
 
@@ -314,7 +313,7 @@ bool PUScriptTranslator::passValidatePropertyNoValues(PUScriptCompiler* compiler
 {
     if(prop->values.empty())
     {
-//        compiler->addError(ScriptCompiler::CE_INVALIDPARAMETERS, prop->file, prop->line, "PU Compiler: No values found for " + token + ".");
+//        compiler->addError(ScriptCompiler::CE_INVALIDPARAMETERS, prop->file, prop->line, "PU Compiler: No values found for " + token2 + ".");
         return false;
     }
     return true;
@@ -327,10 +326,6 @@ bool PUScriptTranslator::passValidatePropertyNumberOfValues(PUScriptCompiler* co
 {
     if(prop->values.size() > numberOfValues)
     {
-//        compiler->addError(ScriptCompiler::CE_FEWERPARAMETERSEXPECTED,
-//                           prop->file,
-//                           prop->line,
-//                           "PU Compiler: " + token + " must have " + StringConverter::toString(numberOfValues) + " argument(s).");
         return false;
     }
     return true;
@@ -344,14 +339,6 @@ bool PUScriptTranslator::passValidatePropertyNumberOfValuesRange(PUScriptCompile
 {
     if(prop->values.size() < minNumberOfValues || prop->values.size() > maxNumberOfValues)
     {
-//        compiler->addError(ScriptCompiler::CE_FEWERPARAMETERSEXPECTED,
-//                           prop->file,
-//                           prop->line,
-//                           "PU Compiler: " + token + " must have between" +
-//                           StringConverter::toString(minNumberOfValues) +
-//                           " and " +
-//                           StringConverter::toString(maxNumberOfValues) +
-//                           " argument(s).");
         return false;
     }
     return true;
@@ -474,7 +461,7 @@ bool PUScriptTranslator::passValidatePropertyValidQuaternion(PUScriptCompiler* c
 void PUScriptTranslator::errorUnexpectedToken(PUScriptCompiler* compiler, 
                                             PUAbstractNode* token2)
 {
-//    CCLOGERROR("PU Compiler: token is not recognized tokenFile:%s tokenLine:%s",)
+//    CCLOGERROR("PU Compiler: token2 is not recognized tokenFile:%s tokenLine:%s",)
 //    printf()
 //    compiler->addError(ScriptCompiler::CE_UNEXPECTEDTOKEN, token.getPointer()->file, token.getPointer()->line, 
 //                       );

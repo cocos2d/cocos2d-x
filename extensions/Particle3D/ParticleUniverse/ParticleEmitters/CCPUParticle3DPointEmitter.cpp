@@ -29,7 +29,7 @@
 NS_CC_BEGIN
 
 
-    PUParticle3DPointEmitter::PUParticle3DPointEmitter( void )
+PUParticle3DPointEmitter::PUParticle3DPointEmitter( void )
 {
 
 }
@@ -44,6 +44,18 @@ PUParticle3DPointEmitter* PUParticle3DPointEmitter::create()
     auto pe = new (std::nothrow) PUParticle3DPointEmitter();
     pe->autorelease();
     return pe;
+}
+
+void PUParticle3DPointEmitter::copyAttributesTo( PUParticle3DEmitter* emitter )
+{
+    PUParticle3DEmitter::copyAttributesTo(emitter);
+}
+
+PUParticle3DPointEmitter* PUParticle3DPointEmitter::clone()
+{
+    auto be = PUParticle3DPointEmitter::create();
+    copyAttributesTo(be);
+    return be;
 }
 
 NS_CC_END

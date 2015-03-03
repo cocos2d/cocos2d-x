@@ -1,0 +1,32 @@
+system ribbonTrailTest
+{
+    category                                    Examples_21_30
+    technique 
+    {
+        visual_particle_quota                   40
+        material                                ParticleUniverse/RibbonTrail
+        renderer                                RibbonTrail
+        {
+            max_elements                        60
+            ribbontrail_length                  18
+            ribbontrail_width                   0.3
+            colour_change                       0.8 0.8 0.8 0.8
+        }
+        emitter                                 Point 
+        {
+            angle                               360
+            time_to_live                        40
+            velocity                            45
+        }
+        affector                                Gravity 
+        {
+            position                            0 -6 -3
+            gravity                             700
+        }
+        affector                                Gravity 
+        {
+            position                            0 6 3
+            gravity                             700
+        }
+    }
+}
