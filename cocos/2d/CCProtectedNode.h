@@ -163,6 +163,7 @@ public:
     virtual void updateDisplayedColor(const Color3B& parentColor) override;
     virtual void disableCascadeColor() override;
     virtual void disableCascadeOpacity()override;
+    virtual void setCameraMask(unsigned short mask, bool applyChildren = true) override;
 CC_CONSTRUCTOR_ACCESS:
     ProtectedNode();
     virtual ~ProtectedNode();

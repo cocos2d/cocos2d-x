@@ -33,4 +33,10 @@
 -- @param self
 -- @return mat4_table#mat4_table ret (return value: mat4_table)
         
+--------------------------------
+-- 
+-- @function [parent=#AttachNode] getNodeToParentTransform 
+-- @param self
+-- @return mat4_table#mat4_table ret (return value: mat4_table)
+        
 return nil

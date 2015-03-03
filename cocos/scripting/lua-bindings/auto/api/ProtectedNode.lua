@@ -98,6 +98,14 @@
 -- @return ProtectedNode#ProtectedNode ret (return value: cc.ProtectedNode)
         
 --------------------------------
+-- 
+-- @function [parent=#ProtectedNode] setCameraMask 
+-- @param self
+-- @param #unsigned short mask
+-- @param #bool applyChildren
+-- @return ProtectedNode#ProtectedNode self (return value: cc.ProtectedNode)
+        
+--------------------------------
 -- / @} end of Children and Parent
 -- @function [parent=#ProtectedNode] visit 
 -- @param self

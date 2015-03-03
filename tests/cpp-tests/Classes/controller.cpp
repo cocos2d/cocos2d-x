@@ -54,6 +54,7 @@ Controller g_aTestNames[] = {
 	{ "Console", []() { return new ConsoleTestScene(); } },
 	{ "Curl", []() { return new CurlTestScene(); } },
 	{ "Current Language", []() { return new CurrentLanguageTestScene(); } },
+    { "CocosStudio3D Test", []() { return new CS3DTestScene(); } },
     { "EventDispatcher", []() { return new EventDispatcherTestScene(); } },
 	{ "Effects - Advanced", []() { return new EffectAdvanceScene(); } },
 	{ "Effects - Basic", [](){return new EffectTestScene();} },
@@ -104,7 +105,7 @@ Controller g_aTestNames[] = {
     { "Unit Test", []() { return new UnitTestScene(); }},
     { "URL Open Test", []() { return new OpenURLTestScene(); } },
 	{ "UserDefault", []() { return new UserDefaultTestScene(); } },
-	{ "Zwoptex", []() { return new ZwoptexTestScene(); } },
+	{ "Zwoptex", []() { return new ZwoptexTestScene(); } }
 };
 
 static int g_testCount = sizeof(g_aTestNames) / sizeof(g_aTestNames[0]);

@@ -7266,6 +7266,20 @@ int lua_cocos2dx_Camera_unproject(lua_State* tolua_S)
 #endif
     
     argc = lua_gettop(tolua_S)-1;
+    if (argc == 1)
+    {
+        cocos2d::Vec3 arg0;
+        
+        ok &= luaval_to_vec3(tolua_S, 2, &arg0, "cc.Camera:project");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Camera_project'", nullptr);
+            return 0;
+        }
+        auto ret = cobj->unproject(arg0);
+        vec3_to_luaval(tolua_S, ret);
+        return 1;
+    }
     if (argc == 3)
     {
         cocos2d::Size arg0;

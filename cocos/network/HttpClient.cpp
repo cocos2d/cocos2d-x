@@ -160,10 +160,8 @@ void HttpClient::networkThread()
 }
 
 // Worker thread
-void HttpClient::networkThreadAlone(HttpRequest* request)
+void HttpClient::networkThreadAlone(HttpRequest* request, HttpResponse* response)
 {
-    // Create a HttpResponse object, the default setting is http access failed
-    HttpResponse *response = new (std::nothrow) HttpResponse(request);
     char errorBuffer[CURL_ERROR_SIZE] = { 0 };
     processResponse(response, errorBuffer);
 
@@ -405,7 +403,7 @@ static void processResponse(HttpResponse* response, char* errorBuffer)
         break;
 
     default:
-        CCASSERT(true, "CCHttpClient: unkown request type, only GET and POSt are supported");
+        CCASSERT(true, "CCHttpClient: unknown request type, only GET and POSt are supported");
         break;
     }
 
@@ -521,7 +519,10 @@ void HttpClient::sendImmediate(HttpRequest* request)
     }
 
     request->retain();
-    auto t = std::thread(&HttpClient::networkThreadAlone, this, request);
+    // Create a HttpResponse object, the default setting is http access failed
+    HttpResponse *response = new (std::nothrow) HttpResponse(request);
+
+    auto t = std::thread(&HttpClient::networkThreadAlone, this, request, response);
     t.detach();
 }
 
