@@ -1,5 +1,7 @@
+cocos2d-x-4.0alpha1 Mar.20 2015
+    [FIX]           Label: shadow color is wrong
 
-cocos2d-x-4.0alph0 Feb.27 2015
+cocos2d-x-4.0alph0 Feb.28 2015
     [NEW]           C++: merge JSB
     [NEW]           C++: merge draw call migration to VertexData
     [NEW]           C++: add Romanian language support
@@ -16,6 +18,7 @@ cocos2d-x-4.0alph0 Feb.27 2015
     [FIX]           Label: stroke color of system font is incorrect on iOS
     [FIX]           MenuItem: crash if `MenuItem::onExit` is called multiple times
     [FIX]           Physics: position of physics body is wrong when the position of parent node changes
+    [FIX]           Physics: physical body will jump even there is not any force applied to it
     
 cocos2d-x-3.4 Jan.30 2015
     [FIX]           Animate3D: `setSpeed` has not effect if `Animate3D` is used in Sequence

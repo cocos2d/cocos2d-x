@@ -443,7 +443,7 @@ void PhysicsDemoLogoSmash::onEnter()
     PhysicsDemo::onEnter();
     
     _scene->getPhysicsWorld()->setGravity(Vec2(0, 0));
-    _scene->getPhysicsWorld()->setUpdateRate(5.0f);
+    _scene->getPhysicsWorld()->setTimeStep(0.1f);
     
     _ball = SpriteBatchNode::create("Images/ball.png", sizeof(logo_image)/sizeof(logo_image[0]));
     addChild(_ball);

@@ -214,7 +214,7 @@ void MeshCommand::applyRenderState()
         _depthTestEnabled ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
     }
     
-    if (_depthWriteEnabled != _renderStateDepthWrite)
+    if ((GLboolean)_depthWriteEnabled != _renderStateDepthWrite)
     {
         glDepthMask(_depthWriteEnabled);
     }
@@ -237,7 +237,7 @@ void MeshCommand::restoreRenderState()
         _renderStateDepthTest ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
     }
     
-    if (_depthWriteEnabled != _renderStateDepthWrite)
+    if ((GLboolean)_depthWriteEnabled != _renderStateDepthWrite)
     {
         glDepthMask(_renderStateDepthWrite);
     }

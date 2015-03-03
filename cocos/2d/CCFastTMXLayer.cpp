@@ -260,15 +260,15 @@ void TMXLayer::updateVertexBuffer()
     {
         _vertexBuffer = VertexBuffer::create(sizeof(V3F_C4B_T2F), (int)_totalQuads.size() * 4);
         _vData = VertexData::create();
-        _vData->setStream(_vertexBuffer, VertexAttribute(0, GLProgram::VERTEX_ATTRIB_POSITION, DataType::Float, 3));
-        _vData->setStream(_vertexBuffer, VertexAttribute(offsetof(V3F_C4B_T2F, colors), GLProgram::VERTEX_ATTRIB_COLOR, DataType::UByte, 4, true));
-        _vData->setStream(_vertexBuffer, VertexAttribute(offsetof(V3F_C4B_T2F, texCoords), GLProgram::VERTEX_ATTRIB_TEX_COORD, DataType::Float, 2));
+        _vData->addStream(_vertexBuffer, VertexAttribute(0, GLProgram::VERTEX_ATTRIB_POSITION, DataType::Float, 3));
+        _vData->addStream(_vertexBuffer, VertexAttribute(offsetof(V3F_C4B_T2F, colors), GLProgram::VERTEX_ATTRIB_COLOR, DataType::UByte, 4, true));
+        _vData->addStream(_vertexBuffer, VertexAttribute(offsetof(V3F_C4B_T2F, texCoords), GLProgram::VERTEX_ATTRIB_TEX_COORD, DataType::Float, 2));
         CC_SAFE_RETAIN(_vData);
         CC_SAFE_RETAIN(_vertexBuffer);
     }
     if(_vertexBuffer)
     {
-        _vertexBuffer->updateVertices((void*)&_totalQuads[0], (int)_totalQuads.size() * 4, 0);
+        _vertexBuffer->updateElements((void*)&_totalQuads[0], (int)_totalQuads.size() * 4, 0);
     }
     
 }
@@ -281,7 +281,7 @@ void TMXLayer::updateIndexBuffer()
         _vData->setIndexBuffer(_indexBuffer);
         CC_SAFE_RETAIN(_indexBuffer);
     }
-    _indexBuffer->updateIndices(&_indices[0], (int)_indices.size(), 0);
+    _indexBuffer->updateElements(&_indices[0], (int)_indices.size(), 0);
     
 }
 
