@@ -511,6 +511,8 @@ void PUParticleSystem3D::prepared()
 
         _prepared = true;
         _timeElapsedSinceStart = 0.0f;
+        if (_parentParticleSystem)
+            _particleSystemScaleVelocity = _parentParticleSystem->getParticleSystemScaleVelocity();
     }
 
     notifyRescaled(getDerivedScale());

@@ -54,6 +54,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(Particle3DCanOfWormsDemo),
     CL(Particle3DRibbonTrailDemo),
     CL(Particle3DWeaponTrailDemo),
+    CL(Particle3DWithSprite3DDemo),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -357,22 +358,6 @@ bool Particle3DLineStreakDemo::init()
     if (!Particle3DTestDemo::init()) 
         return false;
 
-
-    std::string c3bfileName = "Sprite3DTest/orc.c3b";
-    auto sprite = Sprite3D::create(c3bfileName);
-    this->addChild(sprite);
-    //sprite->setPosition3D(Vec3(0, -20, -25));
-    //sprite->setScale(5, 5);
-    sprite->setRotation3D(Vec3(0, 180, 0));
-    sprite->setCameraMask((unsigned short)CameraFlag::USER1);
-    //sprite->setOpacity(100);
-    auto animation = Animation3D::create(c3bfileName);
-    if (animation)
-    {
-        auto animate = Animate3D::create(animation);
-        sprite->runAction(RepeatForever::create(animate));
-    }
-
     auto rootps = PUParticleSystem3D::create("lineStreak.pu", "pu_mediapack_01.material");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
     rootps->setScale(5.0f);
@@ -540,6 +525,45 @@ bool Particle3DWeaponTrailDemo::init()
         return false;
 
     auto rootps = PUParticleSystem3D::create("weaponTrail.pu");
+    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+    rootps->startParticleSystem();
+    this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
+
+    return true;
+}
+
+std::string Particle3DWithSprite3DDemo::subtitle() const 
+{
+    return "Particle3DWithSprite3D";
+}
+
+bool Particle3DWithSprite3DDemo::init()
+{
+    if (!Particle3DTestDemo::init()) 
+        return false;
+
+    std::string c3bfileName = "Sprite3DTest/orc.c3b";
+    auto sprite = Sprite3D::create(c3bfileName);
+    this->addChild(sprite);
+    sprite->setPosition3D(Vec3(-20.0f, 0.0f, 0.0f));
+    sprite->setRotation3D(Vec3(0, 180, 0));
+    sprite->setCameraMask((unsigned short)CameraFlag::USER1);
+    //sprite->setOpacity(100);
+    auto animation = Animation3D::create(c3bfileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        sprite->runAction(RepeatForever::create(animate));
+    }
+
+    auto billboard = BillBoard::create("Images/Icon.png");
+    billboard->setPosition3D(Vec3(20.0f, 0.0f, 0.0f));
+    billboard->setScale(0.2f);
+    billboard->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(billboard);
+
+
+    auto rootps = PUParticleSystem3D::create("star.pu");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
     rootps->startParticleSystem();
     this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
