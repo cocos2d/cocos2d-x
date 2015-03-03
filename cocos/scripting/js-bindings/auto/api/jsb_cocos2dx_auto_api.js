@@ -19041,6 +19041,34 @@ bool
 },
 
 /**
+ * @method isVibrateSupported
+ * @return {bool}
+ */
+isVibrateSupported : function (
+)
+{
+	return false;
+},
+
+/**
+ * @method startVibrate
+ * @param {int} arg0
+ */
+startVibrate : function (
+float
+)
+{
+},
+
+/**
+ * @method stopVibrate
+ */
+stopVibrate : function (
+)
+{
+},
+
+/**
  * @method setAccelerometerInterval
  * @param {float} arg0
  */

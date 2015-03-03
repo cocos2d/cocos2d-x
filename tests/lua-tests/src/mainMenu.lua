@@ -54,6 +54,7 @@ require "CaptureScreenTest/CaptureScreenTest"
 require "VideoPlayerTest/VideoPlayerTest"
 require "FastTiledMapTest/FastTiledMapTest"
 require "NewAudioEngineTest/NewAudioEngineTest"
+require "VibrateTest/VibrateTest"
 
 local LINE_SPACE = 40
 
@@ -127,6 +128,7 @@ local _allTests = {
     { isSupported = true,  name = "UserDefaultTest"        , create_func=           UserDefaultTestMain  },
     { isSupported = true,  name = "VideoPlayerTest"        , create_func=           VideoPlayerTestMain  },
     { isSupported = true,  name = "XMLHttpRequestTest"     , create_func   =        XMLHttpRequestTestMain  },
+    { isSupported = true,  name = "VibrateTest"            , create_func   =               VibrateTestMain  },
     { isSupported = true,  name = "ZwoptexTest"            , create_func   =               ZwoptexTestMain  }
 }
 

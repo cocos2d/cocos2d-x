@@ -61,33 +61,33 @@ void Device::setAccelerometerEnabled(bool isEnabled)
         sEnabled = false;
     }
 
-	if (isEnabled)
-	{
+    if (isEnabled)
+    {
         sAccelerometer = Accelerometer::GetDefault();
 
         if(sAccelerometer == nullptr)
         {
-	        MessageBox("This device does not have an accelerometer.","Alert");
+            MessageBox("This device does not have an accelerometer.","Alert");
             return;
         }
 
-		setAccelerometerInterval(0.0f);
+        setAccelerometerInterval(0.0f);
         sEnabled = true;
 
         sToken = sAccelerometer->ReadingChanged += ref new TypedEventHandler
-			<Accelerometer^,AccelerometerReadingChangedEventArgs^>
-			([](Accelerometer^ a, AccelerometerReadingChangedEventArgs^ e)
-		{
+            <Accelerometer^,AccelerometerReadingChangedEventArgs^>
+            ([](Accelerometer^ a, AccelerometerReadingChangedEventArgs^ e)
+        {
             if (!sEnabled)
             {
                 return;
             }
 
-			AccelerometerReading^ reading = e->Reading;
+            AccelerometerReading^ reading = e->Reading;
             cocos2d::Acceleration acc;
-			acc.x = reading->AccelerationX;
-			acc.y = reading->AccelerationY;
-			acc.z = reading->AccelerationZ;
+            acc.x = reading->AccelerationX;
+            acc.y = reading->AccelerationY;
+            acc.z = reading->AccelerationZ;
             acc.timestamp = 0;
 
             auto orientation = GLViewImpl::sharedOpenGLView()->getDeviceOrientation();
@@ -120,10 +120,10 @@ void Device::setAccelerometerEnabled(bool isEnabled)
                 acc.y = -reading->AccelerationX;
                 break;
             }
-	        std::shared_ptr<cocos2d::InputEvent> event(new AccelerometerEvent(acc));
+            std::shared_ptr<cocos2d::InputEvent> event(new AccelerometerEvent(acc));
             cocos2d::GLViewImpl::sharedOpenGLView()->QueueEvent(event);
-		});
-	}
+        });
+    }
 }
 
 void Device::setAccelerometerInterval(float interval)
@@ -165,6 +165,21 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
 }
 
 void Device::setKeepScreenOn(bool value)
+{
+}
+
+bool Device::isVibrateSupported()
+{
+    // See https://msdn.microsoft.com/en-us/library/windows/apps/windows.phone.devices.notification.vibrationdevice.aspx
+    return false;
+}
+
+void Device::startVibrate(float duration)
+{
+    CC_UNUSED_PARAM(duration);
+}
+
+void Device::stopVibrate()
 {
 }
 
