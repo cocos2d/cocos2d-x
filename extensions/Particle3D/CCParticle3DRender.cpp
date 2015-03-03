@@ -240,6 +240,11 @@ void Particle3DModelRender::render(Renderer* renderer, const Mat4 &transform, Pa
     if (_spriteList.empty()){
         for (unsigned int i = 0; i < particleSystem->getParticleQuota(); ++i){
             Sprite3D *sprite = Sprite3D::create(_modelFile);
+            if (sprite == nullptr)
+            {
+                CCLOG("failed to load file %s", _modelFile.c_str());
+                continue;
+            }
             sprite->setTexture(_texFile);
             sprite->retain();
             _spriteList.push_back(sprite);

@@ -377,7 +377,7 @@ void PUParticle3DQuadRender::determineUVCoords( PUParticle3D *particle )
     particle->rt_uv = particle->lb_uv + Vec2(_textureCoordsColStep, _textureCoordsRowStep);
 }
 
-void PUParticle3DQuadRender::fillVertex( unsigned short index, const cocos2d::Vec3 &pos, const cocos2d::Vec4 &color, const cocos2d::Vec2 &uv )
+void PUParticle3DQuadRender::fillVertex( unsigned short index, const Vec3 &pos, const Vec4 &color, const Vec2 &uv )
 {
     _vertices[index].position = pos;
     _vertices[index].color = color;
@@ -439,6 +439,11 @@ void PUParticle3DModelRender::render( Renderer* renderer, const Mat4 &transform,
     if (_spriteList.empty()){
         for (unsigned int i = 0; i < particleSystem->getParticleQuota(); ++i){
             Sprite3D *sprite = Sprite3D::create(_modelFile);
+            if (sprite == nullptr)
+            {
+                CCLOG("failed to load file %s", _modelFile.c_str());
+                continue;
+            }
             sprite->setTexture(_texFile);
             sprite->retain();
             _spriteList.push_back(sprite);
