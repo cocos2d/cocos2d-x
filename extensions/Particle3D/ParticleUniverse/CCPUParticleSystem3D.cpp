@@ -526,21 +526,21 @@ void PUParticleSystem3D::unPrepared()
     if (_prepared){
         if (_render)
             static_cast<PUParticle3DRender *>(_render)->unPrepare();
-
+        
         for (auto it : _behaviourTemplates) {
             it->unPrepare();
         }
-
+        
         for (auto it : _emitters) {
             if (it->isEnabled())
                 (static_cast<PUParticle3DEmitter*>(it))->unPrepare();
         }
-
+        
         for (auto it : _affectors) {
             if (it->isEnabled())
                 (static_cast<PUParticle3DAffector*>(it))->unPrepare();
         }
-
+        
         _particlePool.lockAllDatas();
         for (auto &iter : _emittedEmitterParticlePool){
             PUParticle3D *particle = static_cast<PUParticle3D *>(iter.second.getFirst());
@@ -551,7 +551,7 @@ void PUParticleSystem3D::unPrepared()
             }
             iter.second.lockAllDatas();
         }
-
+        
         for (auto &iter : _emittedSystemParticlePool){
             PUParticle3D *particle = static_cast<PUParticle3D *>(iter.second.getFirst());
             while (particle)

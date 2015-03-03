@@ -128,7 +128,6 @@ public:
 //-------------------------------------------------------------------------
 
 
-
 /** Force Field Affector Class:
     This class defines a force field to affect the particle direction. The force field is based on 3D noise. The force can be calculated in
     realtime or based on a precreated 3D force field matrix, which essentially involves one lookup. To speed things up, the 3d matrix can be
