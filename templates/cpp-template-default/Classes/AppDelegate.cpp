@@ -37,7 +37,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
         glview = GLViewImpl::create("My Game");
         director->setOpenGLView(glview);
     }
-
+    // if param true automatic global scale
+    // for size of display device
+    director->autoScaleFactor(true);
     // turn on display FPS
     director->setDisplayStats(true);
 

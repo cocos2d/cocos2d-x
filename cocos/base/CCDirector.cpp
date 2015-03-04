@@ -71,7 +71,7 @@ THE SOFTWARE.
 
 /**
  Position of the FPS
- 
+
  Default: 0,0 (bottom-left corner)
  */
 #ifndef CC_DIRECTOR_STATS_POSITION
@@ -1295,6 +1295,27 @@ void Director::setEventDispatcher(EventDispatcher* dispatcher)
         CC_SAFE_RETAIN(dispatcher);
         CC_SAFE_RELEASE(_eventDispatcher);
         _eventDispatcher = dispatcher;
+    }
+}
+
+void Director::autoScaleFactor(bool autoscale)
+{
+    if (autoscale)
+    {
+        // fix value ref for autoscale
+        Size sizeref=Size(1280,800);
+        // Get screen size
+        Size screen=this->getWinSize();
+        //calculate ratio relative real screen size
+        float wrif=sizeref.width;
+        float hrif=sizeref.height;
+        float wvideo=screen.width;
+        float hvideo=screen.height;
+        float wratio=wrif/wvideo;
+        float hratio=hrif/hvideo;
+        float scale=(wratio+hratio)/2;
+        //add global scale factor for all object
+        this->setContentScaleFactor(scale);
     }
 }
 

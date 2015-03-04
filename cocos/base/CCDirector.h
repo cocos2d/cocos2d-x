@@ -357,28 +357,35 @@ public:
      @since v2.0
      */
     ActionManager* getActionManager() const { return _actionManager; }
-    
+
     /** Sets the ActionManager associated with this director
      @since v2.0
      */
     void setActionManager(ActionManager* actionManager);
-    
-    /** Gets the EventDispatcher associated with this director 
+
+    /** Gets the EventDispatcher associated with this director
      @since v3.0
      */
     EventDispatcher* getEventDispatcher() const { return _eventDispatcher; }
-    
-    /** Sets the EventDispatcher associated with this director 
+
+    /** Sets the EventDispatcher associated with this director
      @since v3.0
      */
     void setEventDispatcher(EventDispatcher* dispatcher);
 
     /** Returns the Renderer
+
      @since v3.0
      */
     Renderer* getRenderer() const { return _renderer; }
 
-    /** Returns the Console 
+    /**
+     * Automatic scale factor from size of display device
+     @since v3.0
+     */
+    void autoScaleFactor(bool autoscale);
+
+    /** Returns the Console
      @since v3.0
      */
     Console* getConsole() const { return _console; }
