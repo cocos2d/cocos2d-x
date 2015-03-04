@@ -12,7 +12,7 @@ system advancedLodSystem
         default_particle_depth                  1.05
         renderer                                Entity
         {
-            mesh_name                           ../../Sprite3DTest/sphere.c3b
+            mesh_name                           Sprite3DTest/sphere.c3b
         }
         emitter                                 Box 
         {
