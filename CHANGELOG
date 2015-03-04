@@ -1,7 +1,17 @@
-cocos2d-x-3.5 ??
+cocos2d-x-3.5rc0 ??
+    [FIX]           MotionStreak: can not work with MoveTo and MoveBy
+
+cocos2d-x-3.5beta0  Feb.27 2015
+    [NEW]           Added Particle3D
+    [NEW]           C++: add Romanian languange support
+
     [FIX]           Audio: audio can not resume if it is interrupt, and back from background
+    [FIX]           Cocos Studio UI: setCameraMask does not work for the Cocos Studio UI
     [FIX]           C++: compiling error when using CC_USE_CULLING
     [FIX]           Label: texture size of string has unexpected padding on iOS 7 and upper version
+    [FIX]           HttpClient: if the request data is started by a null character, it does not fill http body
+    [FIX]           HttpClient: memory leak on iOS
+    [FIX]           Sprite3D: `getAttachNode()` will fail when there is no bone with name
     
 cocos2d-x-3.4 Jan.30 2015
     [FIX]           Animate3D: `setSpeed` has not effect if `Animate3D` is used in Sequence

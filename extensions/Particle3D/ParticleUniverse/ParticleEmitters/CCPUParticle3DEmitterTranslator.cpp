@@ -384,9 +384,8 @@ void PUParticle3DEmitterTranslator::translate(PUScriptCompiler* compiler, PUAbst
                 if (passValidatePropertyNumberOfValues(compiler, prop, token[TOKEN_EMITTER_EMITS], 2))
                 {
                     std::string particleType;
-                    std::string name;
-                    PUAbstractNodeList::const_iterator i = prop->values.begin();
-                    if (getString(**i, &particleType))
+                    PUAbstractNodeList::const_iterator it = prop->values.begin();
+                    if (getString(**it, &particleType))
                     {
                         if (particleType == token[TOKEN_VISUAL_PARTICLE])
                         {
@@ -408,8 +407,8 @@ void PUParticle3DEmitterTranslator::translate(PUScriptCompiler* compiler, PUAbst
                         {
                             _emitter->setEmitsType(PUParticle3D::PT_SYSTEM);
                         }
-                        ++i;
-                        if (getString(**i, &name))
+                        ++it;
+                        if (getString(**it, &name))
                         {
                             _emitter->setEmitsName(name);
                         }

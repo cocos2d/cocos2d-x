@@ -21,6 +21,7 @@ else()
 endif()
 
 set(TESTS_SRC
+  Classes/CocosStudio3DTest/CocosStudio3DTest.cpp
   Classes/ActionManagerTest/ActionManagerTest.cpp
   Classes/ActionsEaseTest/ActionsEaseTest.cpp
   Classes/ActionsProgressTest/ActionsProgressTest.cpp
@@ -150,6 +151,7 @@ set(TESTS_SRC
   Classes/ParallaxTest/ParallaxTest.cpp
   Classes/ParticleTest/ParticleTest.cpp
   Classes/Particle3DTest/Particle3DTest.cpp
+  Classes/CocosStudio3DTest/CocosStudio3DTest.cpp  
   Classes/PerformanceTest/PerformanceAllocTest.cpp
   Classes/PerformanceTest/PerformanceNodeChildrenTest.cpp
   Classes/PerformanceTest/PerformanceParticleTest.cpp

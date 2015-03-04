@@ -222,15 +222,15 @@ void PUParticle3DMaterialPassTranslator::translate( PUScriptCompiler* compiler, 
             }
             else if (prop->name == matToken[TOKEN_MAT_SPECULAR])
             {
-                PUAbstractNodeList::const_iterator i = prop->values.begin();
+                PUAbstractNodeList::const_iterator it = prop->values.begin();
                 PUAbstractNodeList::const_iterator end = prop->values.end();
                 unsigned int n = 0;
                 Vec4 color;
                 float shininess;
-                while(i != end)
+                while(it != end)
                 {
                     float v = 0;
-                    if(getFloat(**i, &v))
+                    if(getFloat(**it, &v))
                     {
                         switch(n)
                         {
@@ -252,7 +252,7 @@ void PUParticle3DMaterialPassTranslator::translate( PUScriptCompiler* compiler, 
                         }
                     }
                     ++n;
-                    ++i;
+                    ++it;
                 }
 
                 material->specularColor = color;

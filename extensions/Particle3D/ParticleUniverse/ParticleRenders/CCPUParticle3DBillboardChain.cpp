@@ -43,16 +43,16 @@ PUBillboardChain::Element::Element()
 {
 }
 //-----------------------------------------------------------------------
-PUBillboardChain::Element::Element(const Vec3 &position,
-                                   float width,
-                                   float texCoord,
-                                   const Vec4 &colour,
-                                   const Quaternion &orientation) :
-position(position),
-width(width),
-texCoord(texCoord),
-color(colour),
-orientation(orientation)
+PUBillboardChain::Element::Element(const Vec3 &pos,
+                                   float w,
+                                   float tex,
+                                   const Vec4 &col,
+                                   const Quaternion &ori) :
+position(pos),
+width(w),
+texCoord(tex),
+color(col),
+orientation(ori)
 {
 }
 //-----------------------------------------------------------------------
@@ -155,13 +155,13 @@ void PUBillboardChain::setupBuffers(void)
         CC_SAFE_RELEASE(_indexBuffer);
 
         GLsizei stride = sizeof(VertexInfo);
-        _vertexBuffer = VertexBuffer::create(stride, _chainElementList.size() * 2);
+        _vertexBuffer = VertexBuffer::create(stride, (int)_chainElementList.size() * 2);
         _vertexBuffer->retain();
         VertexInfo vi = {Vec3(0.0f, 0.0f, 0.0f), Vec2(0.0f, 0.0f), Vec4::ONE};
         _vertices.resize(_chainElementList.size() * 2, vi);
 
 
-        _indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, _chainCount * _maxElementsPerChain * 6);
+        _indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, (int)(_chainCount * _maxElementsPerChain * 6));
         _indexBuffer->retain();
         _indices.resize(_chainCount * _maxElementsPerChain * 6, 0);
 
@@ -567,7 +567,7 @@ void PUBillboardChain::updateVertexBuffer(const Mat4 &camMat)
     } // each segment
 
 
-    _vertexBuffer->updateVertices(&_vertices[0], _vertices.size(), 0);;
+    _vertexBuffer->updateVertices(&_vertices[0], (int)_vertices.size(), 0);;
     //pBuffer->unlock();
     //_vertexCameraUsed = cam;
     _vertexContentDirty = false;
@@ -634,7 +634,7 @@ void PUBillboardChain::updateIndexBuffer(void)
 
         }
 
-        _indexBuffer->updateIndices(&_indices[0], _indices.size(), 0);
+        _indexBuffer->updateIndices(&_indices[0], (int)_indices.size(), 0);
         //_indexData->indexBuffer->unlock();
         _indexContentDirty = false;
     }
@@ -676,15 +676,14 @@ void PUBillboardChain::render( Renderer* renderer, const Mat4 &transform, Partic
 {
     auto camera = Camera::getVisitingCamera();
     auto cameraMat = camera->getNodeToWorldTransform();
-    const Mat4 &viewMat = cameraMat.getInversed();
 
     if (!_chainSegmentList.empty()){
         updateVertexBuffer(cameraMat);
         updateIndexBuffer();
         if (!_vertices.empty() && !_indices.empty()){
-            float depthZ = -(viewMat.m[2] * transform.m[12] + viewMat.m[6] * transform.m[13] + viewMat.m[10] * transform.m[14] + viewMat.m[14]);
             GLuint texId = (_texture ? _texture->getName() : 0);
-            _meshCommand->init(depthZ, texId, _glProgramState, particleSystem->getBlendFunc(), _vertexBuffer->getVBO(), _indexBuffer->getVBO(), GL_TRIANGLES, GL_UNSIGNED_SHORT, _indices.size(), transform, 0);
+            _meshCommand->init(0, texId, _glProgramState, particleSystem->getBlendFunc(), _vertexBuffer->getVBO(), _indexBuffer->getVBO(), GL_TRIANGLES, GL_UNSIGNED_SHORT, _indices.size(), transform, Node::FLAGS_RENDER_AS_3D);
+            _meshCommand->setTransparent(true);
             renderer->addCommand(_meshCommand);
         }
     }

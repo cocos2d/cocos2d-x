@@ -48,7 +48,6 @@ static std::function<Layer*()> createFunctions[] =
     CL(Particle3DUVAnimDemo),
     CL(Particle3DFirePlaceDemo),
     CL(Particle3DElectricBeamSystemDemo),
-    CL(Particle3DExplosionBlueDemo),
     CL(Particle3DFlareShieldDemo),
     CL(Particle3DLightningBoltDemo),
     CL(Particle3DCanOfWormsDemo),
@@ -395,28 +394,6 @@ bool Particle3DElectricBeamSystemDemo::init()
 
     return true;
 }
-
-std::string Particle3DExplosionBlueDemo::subtitle() const 
-{
-    return "ExplosionBlue";
-}
-
-bool Particle3DExplosionBlueDemo::init()
-{
-    if (!Particle3DTestDemo::init()) 
-        return false;
-
-
-    auto rootps = PUParticleSystem3D::create("mp_explosion_04_blue.pu");
-    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
-    rootps->setScale(0.25f);
-    rootps->setParticleSystemScaleVelocity(0.25f);
-    rootps->startParticleSystem();
-    this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
-
-    return true;
-}
-
 
 std::string Particle3DFlareShieldDemo::subtitle() const 
 {

@@ -111,6 +111,8 @@ void MeshCommand::init(float globalZOrder,
 {
     CCASSERT(glProgramState, "GLProgramState cannot be nill");
     
+    RenderCommand::init(globalZOrder, mv, flags);
+    
     _globalOrder = globalZOrder;
     _textureID = textureID;
     _blendType = blendType;

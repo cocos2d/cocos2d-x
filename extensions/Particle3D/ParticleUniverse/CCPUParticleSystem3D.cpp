@@ -202,8 +202,8 @@ PUParticleSystem3D::~PUParticleSystem3D()
     for (auto iter : _emittedEmitterParticlePool){
         auto pool = iter.second;
         auto lockedList = pool.getUnActiveDataList();
-        for (auto iter : lockedList){
-            static_cast<PUParticle3D *>(iter)->particleEntityPtr->release();
+        for (auto iter2 : lockedList){
+            static_cast<PUParticle3D *>(iter2)->particleEntityPtr->release();
         }
         iter.second.removeAllDatas();
     }
@@ -211,8 +211,8 @@ PUParticleSystem3D::~PUParticleSystem3D()
     for (auto iter : _emittedSystemParticlePool){
         auto pool = iter.second;
         auto lockedList = pool.getUnActiveDataList();
-        for (auto iter : lockedList){
-            static_cast<PUParticle3D *>(iter)->particleEntityPtr->release();
+        for (auto iter2 : lockedList){
+            static_cast<PUParticle3D *>(iter2)->particleEntityPtr->release();
         }
         iter.second.removeAllDatas();
     }
@@ -529,21 +529,21 @@ void PUParticleSystem3D::unPrepared()
     if (_prepared){
         if (_render)
             static_cast<PUParticle3DRender *>(_render)->unPrepare();
-
+        
         for (auto it : _behaviourTemplates) {
             it->unPrepare();
         }
-
+        
         for (auto it : _emitters) {
             if (it->isEnabled())
                 (static_cast<PUParticle3DEmitter*>(it))->unPrepare();
         }
-
+        
         for (auto it : _affectors) {
             if (it->isEnabled())
                 (static_cast<PUParticle3DAffector*>(it))->unPrepare();
         }
-
+        
         _particlePool.lockAllDatas();
         for (auto &iter : _emittedEmitterParticlePool){
             PUParticle3D *particle = static_cast<PUParticle3D *>(iter.second.getFirst());
@@ -554,7 +554,7 @@ void PUParticleSystem3D::unPrepared()
             }
             iter.second.lockAllDatas();
         }
-
+        
         for (auto &iter : _emittedSystemParticlePool){
             PUParticle3D *particle = static_cast<PUParticle3D *>(iter.second.getFirst());
             while (particle)
@@ -874,7 +874,6 @@ void PUParticleSystem3D::emitParticles( ParticlePool &pool, PUParticle3DEmitter*
     Mat4::createRotation(getDerivedOrientation(), &rotMat);
     float timePoint = 0.0f;
     float timeInc = elapsedTime / requested;
-    Ref *emittedPtr = nullptr;
     for (unsigned short i = 0; i < requested; ++i)
     {
         PUParticle3D *particle = static_cast<PUParticle3D *>(pool.createData());

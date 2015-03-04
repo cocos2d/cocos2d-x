@@ -105,7 +105,6 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
 
     auto camera = Camera::getVisitingCamera();
     auto cameraMat = camera->getNodeToWorldTransform();
-    const Mat4 &viewMat = cameraMat.getInversed();
     
 
     //for (auto iter : activeParticleList){
@@ -244,8 +243,8 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
         _indexBuffer->updateIndices(&_indices[0], index/* * sizeof(unsigned short)*/, 0);
 
         GLuint texId = (_texture ? _texture->getName() : 0);
-        float depthZ = -(viewMat.m[2] * transform.m[12] + viewMat.m[6] * transform.m[13] + viewMat.m[10] * transform.m[14] + viewMat.m[14]);
-        _meshCommand->init(depthZ, texId, _glProgramState, particleSystem->getBlendFunc(), _vertexBuffer->getVBO(), _indexBuffer->getVBO(), GL_TRIANGLES, GL_UNSIGNED_SHORT, index, transform, 0);
+        _meshCommand->init(0, texId, _glProgramState, particleSystem->getBlendFunc(), _vertexBuffer->getVBO(), _indexBuffer->getVBO(), GL_TRIANGLES, GL_UNSIGNED_SHORT, index, transform, Node::FLAGS_RENDER_AS_3D);
+        _meshCommand->setTransparent(true);
         renderer->addCommand(_meshCommand);
     }
 }
@@ -613,7 +612,6 @@ void PUParticle3DBoxRender::render( Renderer* renderer, const Mat4 &transform, P
 
     auto camera = Camera::getVisitingCamera();
     auto cameraMat = camera->getNodeToWorldTransform();
-    const Mat4 &viewMat = cameraMat.getInversed();
     Vec3 backward(cameraMat.m[8], cameraMat.m[9], cameraMat.m[10]);
 
     if (_vertexBuffer == nullptr && _indexBuffer == nullptr){
@@ -690,10 +688,10 @@ void PUParticle3DBoxRender::render( Renderer* renderer, const Mat4 &transform, P
     if (!_vertices.empty() && !_indices.empty()){
         _vertexBuffer->updateVertices(&_vertices[0], vertexindex/* * sizeof(_posuvcolors[0])*/, 0);
         _indexBuffer->updateIndices(&_indices[0], index/* * sizeof(unsigned short)*/, 0);
-        float depthZ = -(viewMat.m[2] * transform.m[12] + viewMat.m[6] * transform.m[13] + viewMat.m[10] * transform.m[14] + viewMat.m[14]);
 
         GLuint texId = (_texture ? _texture->getName() : 0);
-        _meshCommand->init(depthZ, texId, _glProgramState, particleSystem->getBlendFunc(), _vertexBuffer->getVBO(), _indexBuffer->getVBO(), GL_TRIANGLES, GL_UNSIGNED_SHORT, index, transform, 0);
+        _meshCommand->init(0, texId, _glProgramState, particleSystem->getBlendFunc(), _vertexBuffer->getVBO(), _indexBuffer->getVBO(), GL_TRIANGLES, GL_UNSIGNED_SHORT, index, transform, Node::FLAGS_RENDER_AS_3D);
+        _meshCommand->setTransparent(true);
         renderer->addCommand(_meshCommand);
     }
 }
@@ -780,7 +778,6 @@ void PUParticle3DSphereRender::render( Renderer* renderer, const Mat4 &transform
 
     auto camera = Camera::getVisitingCamera();
     auto cameraMat = camera->getNodeToWorldTransform();
-    const Mat4 &viewMat = cameraMat.getInversed();
     Vec3 backward(cameraMat.m[8], cameraMat.m[9], cameraMat.m[10]);
 
     unsigned int vertexCount = (_numberOfRings + 1) * (_numberOfSegments + 1);
@@ -841,10 +838,10 @@ void PUParticle3DSphereRender::render( Renderer* renderer, const Mat4 &transform
     if (!_vertices.empty() && !_indices.empty()){
         _vertexBuffer->updateVertices(&_vertices[0], vertexindex/* * sizeof(_posuvcolors[0])*/, 0);
         _indexBuffer->updateIndices(&_indices[0], index/* * sizeof(unsigned short)*/, 0);
-        float depthZ = -(viewMat.m[2] * transform.m[12] + viewMat.m[6] * transform.m[13] + viewMat.m[10] * transform.m[14] + viewMat.m[14]);
 
         GLuint texId = (_texture ? _texture->getName() : 0);
-        _meshCommand->init(depthZ, texId, _glProgramState, particleSystem->getBlendFunc(), _vertexBuffer->getVBO(), _indexBuffer->getVBO(), GL_TRIANGLES, GL_UNSIGNED_SHORT, index, transform, 0);
+        _meshCommand->init(0, texId, _glProgramState, particleSystem->getBlendFunc(), _vertexBuffer->getVBO(), _indexBuffer->getVBO(), GL_TRIANGLES, GL_UNSIGNED_SHORT, index, transform, Node::FLAGS_RENDER_AS_3D);
+        _meshCommand->setTransparent(true);
         renderer->addCommand(_meshCommand);
     }
 }

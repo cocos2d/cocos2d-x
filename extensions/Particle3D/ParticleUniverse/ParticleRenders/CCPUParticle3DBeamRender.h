@@ -39,10 +39,10 @@ NS_CC_BEGIN
 class PUParticle3DBeamVisualData : public Ref
 {
     public:
-        PUParticle3DBeamVisualData (size_t index, PUBillboardChain* billboardChain) : 
+        PUParticle3DBeamVisualData (size_t index, PUBillboardChain* bbChain) :
             chainIndex(index),
             timeSinceLastUpdate(0.0f),
-            billboardChain(billboardChain){};
+            billboardChain(bbChain){};
 
         // Set the chain visible or invisible (PU 1.4)
         void setVisible(bool visible){/* No implementation */};
@@ -62,7 +62,6 @@ class PUParticle3DBeamVisualData : public Ref
             PUBillboardChain::Element element;
             for (size_t j = 0; j < max; j++)
             {
-                PUBillboardChain::Element element;
                 element = billboardChain->getChainElement(chainIndex, j);
                 element.width = width;
                 billboardChain->updateChainElement(chainIndex, j, element);
