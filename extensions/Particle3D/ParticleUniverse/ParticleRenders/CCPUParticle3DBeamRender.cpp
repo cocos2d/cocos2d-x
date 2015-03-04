@@ -64,7 +64,6 @@ void PUParticle3DBeamRender::render( Renderer* renderer, const Mat4 &transform, 
     if (!_isVisible || particlePool.empty() || !_billboardChain)
         return;
 
-    PUParticle3DBeamVisualData* visualData = nullptr;
     Vec3 basePosition = static_cast<PUParticleSystem3D *>(_particleSystem)->getDerivedPosition();
     for (auto iter : particlePool.getActiveDataList())
     {
