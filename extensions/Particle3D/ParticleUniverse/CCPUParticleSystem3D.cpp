@@ -511,8 +511,9 @@ void PUParticleSystem3D::prepared()
 
         _prepared = true;
         _timeElapsedSinceStart = 0.0f;
-        if (_parentParticleSystem)
+        if (_parentParticleSystem){
             _particleSystemScaleVelocity = _parentParticleSystem->getParticleSystemScaleVelocity();
+        }
     }
 
     notifyRescaled(getDerivedScale());
@@ -883,20 +884,21 @@ void PUParticleSystem3D::emitParticles( ParticlePool &pool, PUParticle3DEmitter*
         particle->initForEmission();
         emitter->initParticleForEmission(particle);
 
-        particle->direction = (rotMat * Vec3(particle->direction.x * scale.x, particle->direction.y * scale.y, particle->direction.z * scale.z));
-        particle->originalDirection = (rotMat * Vec3(particle->originalDirection.x * scale.x, particle->originalDirection.y * scale.y, particle->originalDirection.z * scale.z));
+        particle->direction = (rotMat * Vec3(particle->direction.x, particle->direction.y, particle->direction.z));
+        particle->originalDirection = (rotMat * Vec3(particle->originalDirection.x, particle->originalDirection.y, particle->originalDirection.z));
 
         for (auto& it : _affectors) {
             if (it->isEnabled())
             {
-                (static_cast<PUParticle3DAffector*>(it))->notifyRescaled(scale);
                 (static_cast<PUParticle3DAffector*>(it))->initParticleForEmission(particle);
             }
         }
 
         initParticleForEmission(particle);
 
-        particle->position += (particle->direction * _particleSystemScaleVelocity * timePoint);
+        particle->position += Vec3(particle->direction.x * scale.x * _particleSystemScaleVelocity * timePoint
+                                 , particle->direction.y * scale.y * _particleSystemScaleVelocity * timePoint
+                                 , particle->direction.z * scale.z * _particleSystemScaleVelocity * timePoint);
         // Increment time fragment
         timePoint += timeInc;
     }
@@ -1309,8 +1311,11 @@ void PUParticleSystem3D::processMotion( PUParticle3D* particle, float timeElapse
         particle->direction *= (_maxVelocity / particle->direction.length());
     }
 
+    Vec3 scale = getDerivedScale();
     // Update the position with the direction.
-    particle->position += (particle->direction * _particleSystemScaleVelocity * timeElapsed);
+    particle->position += Vec3(particle->direction.x * scale.x * _particleSystemScaleVelocity * timeElapsed
+                             , particle->direction.y * scale.y * _particleSystemScaleVelocity * timeElapsed
+                             , particle->direction.z * scale.z * _particleSystemScaleVelocity * timeElapsed);
 }
 
 void PUParticleSystem3D::calulateRotationOffset( void )
