@@ -131,17 +131,26 @@ void Animate3D::startWithTarget(Node *target)
         auto action = (*runningAction).second;
         if (action != this)
         {
-            s_fadeOutAnimates[sprite] = action;
-            action->_state = Animate3D::Animate3DState::FadeOut;
-            action->_accTransTime = 0.0f;
-            action->_weight = 1.0f;
-            action->_lastTime = 0.f;
-            
-            s_fadeInAnimates[sprite] = this;
-            _accTransTime = 0.0f;
-            _state = Animate3D::Animate3DState::FadeIn;
-            _weight = 0.f;
-            _lastTime = 0.f;
+            if (_transTime < 0.001f)
+            {
+                s_runningAnimates[sprite] = this;
+                _state = Animate3D::Animate3DState::Running;
+                _weight = 1.0f;
+            }
+            else
+            {
+                s_fadeOutAnimates[sprite] = action;
+                action->_state = Animate3D::Animate3DState::FadeOut;
+                action->_accTransTime = 0.0f;
+                action->_weight = 1.0f;
+                action->_lastTime = 0.f;
+                
+                s_fadeInAnimates[sprite] = this;
+                _accTransTime = 0.0f;
+                _state = Animate3D::Animate3DState::FadeIn;
+                _weight = 0.f;
+                _lastTime = 0.f;
+            }
         }
     }
     else

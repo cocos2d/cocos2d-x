@@ -106,7 +106,7 @@ function Particle3DLineStreakDemo:subtitle()
 end
 
 function Particle3DLineStreakDemo:onEnter()
-    local rootps = cc.PUParticleSystem3D:create("lineStreak.pu", "pu_mediapack_01.material")
+    local rootps = cc.PUParticleSystem3D:create("lineStreak.pu", "pu_example.material")
     rootps:setCameraMask(cc.CameraFlag.USER1)
     rootps:setScale(5.0)
     rootps:startParticleSystem()
@@ -143,7 +143,7 @@ function Particle3DBlackHoleDemo:subtitle()
 end
 
 function Particle3DBlackHoleDemo:onEnter()
-    local rootps = cc.PUParticleSystem3D:create("blackHole.pu", "pu_mediapack_01.material")
+    local rootps = cc.PUParticleSystem3D:create("blackHole.pu", "pu_example.material")
     rootps:setCameraMask(cc.CameraFlag.USER1)
     rootps:setPosition(-25.0, 0.0)
     local moveby = cc.MoveBy:create(2.0, cc.p(50.0, 0.0))
@@ -182,7 +182,7 @@ function Particle3DHypnoDemo:subtitle()
 end
 
 function Particle3DHypnoDemo:onEnter()
-    local rootps = cc.PUParticleSystem3D:create("hypno.pu", "pu_mediapack_01.material")
+    local rootps = cc.PUParticleSystem3D:create("hypno.pu", "pu_example.material")
     rootps:setCameraMask(cc.CameraFlag.USER1)
     rootps:startParticleSystem()
     self:addChild(rootps, 0, PARTICLE_SYSTEM_TAG)
@@ -258,7 +258,7 @@ function Particle3DTimeShiftDemo:subtitle()
 end
 
 function Particle3DTimeShiftDemo:onEnter()
-    local rootps = cc.PUParticleSystem3D:create("timeShift.pu", "pu_mediapack_01.material")
+    local rootps = cc.PUParticleSystem3D:create("timeShift.pu", "pu_example.material")
     rootps:setScale(2.0)
     rootps:setCameraMask(cc.CameraFlag.USER1)
     rootps:startParticleSystem()
@@ -295,7 +295,7 @@ function Particle3DUVAnimDemo:subtitle()
 end
 
 function Particle3DUVAnimDemo:onEnter()
-    local rootps = cc.PUParticleSystem3D:create("UVAnimation.pu", "pu_mediapack_01.material")
+    local rootps = cc.PUParticleSystem3D:create("UVAnimation.pu", "pu_example.material")
     rootps:setCameraMask(cc.CameraFlag.USER1)
     rootps:startParticleSystem()
     self:addChild(rootps, 0, PARTICLE_SYSTEM_TAG)
@@ -330,7 +330,7 @@ function Particle3DFirePlaceDemo:subtitle()
 end
 
 function Particle3DFirePlaceDemo:onEnter()
-    local rootps = cc.PUParticleSystem3D:create("mp_torch.pu", "pu_mediapack_01.material")
+    local rootps = cc.PUParticleSystem3D:create("mp_torch.pu", "pu_example.material")
     rootps:setCameraMask(cc.CameraFlag.USER1)
     rootps:setScale(5.0)
     rootps:startParticleSystem()
@@ -376,43 +376,6 @@ function Particle3DElectricBeamSystemDemo:onExit()
     self:unscheduleUpdate()
 end
 
-
--- Particle3DExplosionBlueDemo
-local Particle3DExplosionBlueDemo = class("Particle3DExplosionBlueDemo", function ()
-    local layer = cc.Layer:create()
-    Helper.initWithLayer(layer)
-    return layer
-end)
-
-function Particle3DExplosionBlueDemo:ctor()
-    -- body
-    self:init()
-end
-
-function Particle3DExplosionBlueDemo:init()
-    baseInit(self)
-end
-
-function Particle3DExplosionBlueDemo:title()
-    return "Particle3D Test"
-end
-
-function Particle3DExplosionBlueDemo:subtitle()
-    return "ExplosionBlue"
-end
-
-function Particle3DExplosionBlueDemo:onEnter()
-    local rootps = cc.PUParticleSystem3D:create("mp_explosion_04_blue.pu")
-    rootps:setCameraMask(cc.CameraFlag.USER1)
-    rootps:setScale(0.25)
-    rootps:startParticleSystem()
-    self:addChild(rootps, 0, PARTICLE_SYSTEM_TAG)
-end
-
-function Particle3DExplosionBlueDemo:onExit()
-    self:unscheduleUpdate()
-end
-
 function Particle3DTest()
     local scene = cc.Scene:create()
 
@@ -425,8 +388,7 @@ function Particle3DTest()
         Particle3DTimeShiftDemo.create,
         Particle3DUVAnimDemo.create,
         Particle3DFirePlaceDemo.create,
-        Particle3DElectricBeamSystemDemo.create,
-        Particle3DExplosionBlueDemo.create,
+        Particle3DElectricBeamSystemDemo.create
     }
 
     scene:addChild(Particle3DLineStreakDemo.create())
