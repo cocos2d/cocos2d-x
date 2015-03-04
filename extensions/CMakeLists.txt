@@ -129,5 +129,56 @@ set(COCOS_EXTENSIONS_SRC
   ../extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DSphereSurfaceEmitterTranslator.cpp
   ../extensions/Particle3D/ParticleUniverse/ParticleEmitters/CCPUParticle3DVertexEmitter.cpp
   ../extensions/Particle3D/ParticleUniverse/ParticleRenders/CCPUParticle3DRender.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleRenders/CCPUParticle3DBeamRender.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleRenders/CCPUParticle3DBillboardChain.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleRenders/CCPUParticle3DRibbonTrail.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleRenders/CCPUParticle3DRibbonTrailRender.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoAffectorEventHandler.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoAffectorEventHandlerTranslator.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoEnableComponentEventHandler.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoEnableComponentEventHandlerTranslator.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoExpireEventHandler.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoExpireEventHandlerTranslator.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoFreezeEventHandler.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoFreezeEventHandlerTranslator.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoPlacementParticleEventHandler.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoPlacementParticleEventHandlerTranslator.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoScaleEventHandler.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoScaleEventHandlerTranslator.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoStopSystemEventHandler.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DDoStopSystemEventHandlerTranslator.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DEventHandler.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DEventHandlerManager.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleEventHandlers/CCPUParticle3DEventHandlerTranslator.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DObserver.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DObserverManager.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DObserverTranslator.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnClearObserver.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnClearObserverTranslator.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnCollisionObserver.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnCollisionObserverTranslator.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnCountObserver.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnCountObserverTranslator.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnEmissionObserver.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnEmissionObserverTranslator.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnEventFlagObserver.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnEventFlagObserverTranslator.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnExpireObserver.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnExpireObserverTranslator.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnPositionObserver.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnPositionObserverTranslator.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnQuotaObserver.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnQuotaObserverTranslator.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnRandomObserver.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnRandomObserverTranslator.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnTimeObserver.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnTimeObserverTranslator.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnVelocityObserver.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleObservers/CCPUParticle3DOnVelocityObserverTranslator.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleBehaviours/CCPUParticle3DBehaviour.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleBehaviours/CCPUParticle3DBehaviourManager.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleBehaviours/CCPUParticle3DBehaviourTranslator.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleBehaviours/CCPUParticle3DSlaveBehaviour.cpp
+  ../extensions/Particle3D/ParticleUniverse/ParticleBehaviours/CCPUParticle3DSlaveBehaviourTranslator.cpp
   ${PLATFORM_EXTENSIONS_SRC}
 )
