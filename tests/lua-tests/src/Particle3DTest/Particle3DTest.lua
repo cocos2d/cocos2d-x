@@ -376,6 +376,41 @@ function Particle3DElectricBeamSystemDemo:onExit()
     self:unscheduleUpdate()
 end
 
+-- Particle3DFlareShield
+local Particle3DFlareShieldDemo = class("Particle3DFlareShield", function ()
+    local layer = cc.Layer:create()
+    Helper.initWithLayer(layer)
+    return layer
+end)
+
+function Particle3DFlareShieldDemo:ctor()
+    -- body
+    self:init()
+end
+
+function Particle3DFlareShieldDemo:init()
+    baseInit(self)
+end
+
+function Particle3DFlareShieldDemo:title()
+    return "Particle3D Test"
+end
+
+function Particle3DFlareShieldDemo:subtitle()
+    return "FlareShield"
+end
+
+function Particle3DFlareShieldDemo:onEnter()
+    local rootps = cc.PUParticleSystem3D:create("flareShield.pu")
+    rootps:setCameraMask(cc.CameraFlag.USER1)
+    rootps:startParticleSystem()
+    self:addChild(rootps, 0, PARTICLE_SYSTEM_TAG)
+end
+
+function Particle3DFlareShieldDemo:onExit()
+    self:unscheduleUpdate()
+end
+
 function Particle3DTest()
     local scene = cc.Scene:create()
 
@@ -388,7 +423,8 @@ function Particle3DTest()
         Particle3DTimeShiftDemo.create,
         Particle3DUVAnimDemo.create,
         Particle3DFirePlaceDemo.create,
-        Particle3DElectricBeamSystemDemo.create
+        Particle3DElectricBeamSystemDemo.create,
+        Particle3DFlareShieldDemo.create
     }
 
     scene:addChild(Particle3DLineStreakDemo.create())
