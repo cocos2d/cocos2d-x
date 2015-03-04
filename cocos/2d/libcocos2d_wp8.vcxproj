@@ -72,18 +72,18 @@
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
-    <TargetName>libcocos2d_v3.4_WindowsPhone_8.0</TargetName>
+    <TargetName>libcocos2d_v3.5_WindowsPhone_8.0</TargetName>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
-    <TargetName>libcocos2d_v3.4_WindowsPhone_8.0</TargetName>
+    <TargetName>libcocos2d_v3.5_WindowsPhone_8.0</TargetName>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <TargetName>libcocos2d_v3.4_WindowsPhone_8.0</TargetName>
+    <TargetName>libcocos2d_v3.5_WindowsPhone_8.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <TargetName>libcocos2d_v3.4_WindowsPhone_8.0</TargetName>
+    <TargetName>libcocos2d_v3.5_WindowsPhone_8.0</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -95,6 +95,8 @@
       <AdditionalIncludeDirectories>$(EngineRoot)external\jpeg\include\$(COCOS2D_PLATFORM);$(EngineRoot)external\tiff\include\$(COCOS2D_PLATFORM);$(EngineRoot)external\png\include\$(COCOS2D_PLATFORM);$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
+      <SDLCheck>false</SDLCheck>
+      <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -116,6 +118,9 @@
       <AdditionalIncludeDirectories>$(EngineRoot)external\jpeg\include\$(COCOS2D_PLATFORM);$(EngineRoot)external\tiff\include\$(COCOS2D_PLATFORM);$(EngineRoot)external\png\include\$(COCOS2D_PLATFORM);$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
+      <SDLCheck>false</SDLCheck>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -125,6 +130,7 @@
       <IgnoreSpecificDefaultLibraries>ole32.lib</IgnoreSpecificDefaultLibraries>
       <AdditionalLibraryDirectories>$(EngineRoot)external\wp8-specific\zlib\prebuilt\$(Platform);$(EngineRoot)external\png\prebuilt\wp8\$(Platform);$(EngineRoot)external\jpeg\prebuilt\wp8\$(Platform);$(EngineRoot)external\tiff\prebuilt\wp8\$(Platform);$(EngineRoot)external\chipmunk\prebuilt\wp8\$(Platform);$(EngineRoot)external\freetype2\prebuilt\wp8\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>cocos2d.def</ModuleDefinitionFile>
+      <LinkTimeCodeGeneration />
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
@@ -137,6 +143,8 @@
       <AdditionalIncludeDirectories>$(EngineRoot)external\jpeg\include\$(COCOS2D_PLATFORM);$(EngineRoot)external\tiff\include\$(COCOS2D_PLATFORM);$(EngineRoot)external\png\include\$(COCOS2D_PLATFORM);$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
+      <SDLCheck>false</SDLCheck>
+      <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -158,6 +166,9 @@
       <AdditionalIncludeDirectories>$(EngineRoot)external\jpeg\include\$(COCOS2D_PLATFORM);$(EngineRoot)external\tiff\include\$(COCOS2D_PLATFORM);$(EngineRoot)external\png\include\$(COCOS2D_PLATFORM);$(EngineRoot)external\protobuf-lite\src;$(EngineRoot)external\protobuf-lite\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zm384 /bigobj %(AdditionalOptions)</AdditionalOptions>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
+      <SDLCheck>false</SDLCheck>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -167,6 +178,7 @@
       <IgnoreSpecificDefaultLibraries>ole32.lib</IgnoreSpecificDefaultLibraries>
       <AdditionalLibraryDirectories>$(EngineRoot)external\wp8-specific\zlib\prebuilt\$(Platform);$(EngineRoot)external\png\prebuilt\wp8\$(Platform);$(EngineRoot)external\jpeg\prebuilt\wp8\$(Platform);$(EngineRoot)external\tiff\prebuilt\wp8\$(Platform);$(EngineRoot)external\chipmunk\prebuilt\wp8\$(Platform);$(EngineRoot)external\freetype2\prebuilt\wp8\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>cocos2d.def</ModuleDefinitionFile>
+      <LinkTimeCodeGeneration />
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -299,16 +311,6 @@
     <ClInclude Include="..\..\external\flatbuffers\flatbuffers.h" />
     <ClInclude Include="..\..\external\flatbuffers\idl.h" />
     <ClInclude Include="..\..\external\flatbuffers\util.h" />
-    <ClInclude Include="..\..\external\json\document.h" />
-    <ClInclude Include="..\..\external\json\filestream.h" />
-    <ClInclude Include="..\..\external\json\internal\pow10.h" />
-    <ClInclude Include="..\..\external\json\internal\stack.h" />
-    <ClInclude Include="..\..\external\json\internal\strfunc.h" />
-    <ClInclude Include="..\..\external\json\prettywriter.h" />
-    <ClInclude Include="..\..\external\json\rapidjson.h" />
-    <ClInclude Include="..\..\external\json\reader.h" />
-    <ClInclude Include="..\..\external\json\stringbuffer.h" />
-    <ClInclude Include="..\..\external\json\writer.h" />
     <ClInclude Include="..\..\external\tinyxml2\tinyxml2.h" />
     <ClInclude Include="..\..\external\unzip\ioapi.h" />
     <ClInclude Include="..\..\external\unzip\ioapi_mem.h" />
@@ -481,9 +483,8 @@
     <ClInclude Include="..\editor-support\cocostudio\CCTween.h" />
     <ClInclude Include="..\editor-support\cocostudio\CCUtilMath.h" />
     <ClInclude Include="..\editor-support\cocostudio\CocoLoader.h" />
-    <ClInclude Include="..\editor-support\cocostudio\CSParseBinary.pb.h" />
     <ClInclude Include="..\editor-support\cocostudio\CSParseBinary_generated.h" />
-    <ClInclude Include="..\editor-support\cocostudio\CSParse3DBinary_generated.h" />    
+    <ClInclude Include="..\editor-support\cocostudio\CSParse3DBinary_generated.h" />
     <ClInclude Include="..\editor-support\cocostudio\DictionaryHelper.h" />
     <ClInclude Include="..\editor-support\cocostudio\FlatBuffersSerialize.h" />
     <ClInclude Include="..\editor-support\cocostudio\TriggerBase.h" />
@@ -514,10 +515,10 @@
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\TextBMFontReader\TextBMFontReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\TextFieldReader\TextFieldReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\TextReader\TextReader.h" />
-    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Node3DReader\Node3DReader.h" />    
-    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.h" />        
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Node3DReader\Node3DReader.h" />
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\UserCameraReader\UserCameraReader.h" />
-    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.h" />        
+    <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\WidgetReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\WidgetReaderProtocol.h" />
     <ClInclude Include="..\math\CCAffineTransform.h" />
@@ -1097,10 +1098,10 @@
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\TextBMFontReader\TextBMFontReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\TextFieldReader\TextFieldReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\TextReader\TextReader.cpp" />
-    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\Node3DReader\Node3DReader.cpp" />  
-    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.cpp" />        
+    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\Node3DReader\Node3DReader.cpp" />
+    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\UserCameraReader\UserCameraReader.cpp" />
-    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.cpp" />        
+    <ClCompile Include="..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\WidgetReader.cpp" />
     <ClCompile Include="..\math\CCAffineTransform.cpp" />
     <ClCompile Include="..\math\CCGeometry.cpp" />
