@@ -1,6 +1,4 @@
 #/****************************************************************************
-# Copyright (c) 2013 cocos2d-x.org
-# Copyright (c) 2014 martell malone
 #
 # http://www.cocos2d-x.org
 #
