@@ -301,6 +301,7 @@ bool Particle3DTimeShiftDemo::init()
 
     auto rootps = PUParticleSystem3D::create("timeShift.pu", "pu_mediapack_01.material");
     rootps->setScale(2.0f);
+    rootps->setParticleSystemScaleVelocity(2.0f);
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
     rootps->startParticleSystem();
 
@@ -341,6 +342,7 @@ bool Particle3DFirePlaceDemo::init()
     auto rootps = PUParticleSystem3D::create("mp_torch.pu", "pu_mediapack_01.material");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
     rootps->setScale(5.0f);
+    rootps->setParticleSystemScaleVelocity(5.0f);
     rootps->startParticleSystem();
 
     this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
@@ -361,6 +363,7 @@ bool Particle3DLineStreakDemo::init()
     auto rootps = PUParticleSystem3D::create("lineStreak.pu", "pu_mediapack_01.material");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
     rootps->setScale(5.0f);
+    rootps->setParticleSystemScaleVelocity(5.0f);
     //rootps->runAction(RepeatForever::create(Sequence::create(rotate, nullptr)));
     rootps->startParticleSystem();
     this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
@@ -407,6 +410,7 @@ bool Particle3DExplosionBlueDemo::init()
     auto rootps = PUParticleSystem3D::create("mp_explosion_04_blue.pu");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
     rootps->setScale(0.25f);
+    rootps->setParticleSystemScaleVelocity(0.25f);
     rootps->startParticleSystem();
     this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
 

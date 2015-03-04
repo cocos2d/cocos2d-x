@@ -453,6 +453,9 @@ void PUParticle3DModelRender::render( Renderer* renderer, const Mat4 &transform,
             Vec3 corners[8];
             aabb.getCorners(corners);
             _spriteSize = corners[3] - corners[6];
+        }else{
+            _isVisible = false;
+            return;
         }
     }
 

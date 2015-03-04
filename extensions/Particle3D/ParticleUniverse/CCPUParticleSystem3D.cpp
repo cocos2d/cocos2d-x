@@ -511,8 +511,9 @@ void PUParticleSystem3D::prepared()
 
         _prepared = true;
         _timeElapsedSinceStart = 0.0f;
-        if (_parentParticleSystem)
+        if (_parentParticleSystem){
             _particleSystemScaleVelocity = _parentParticleSystem->getParticleSystemScaleVelocity();
+        }
     }
 
     notifyRescaled(getDerivedScale());
@@ -869,7 +870,6 @@ void PUParticleSystem3D::executeEmitParticles( PUParticle3DEmitter* emitter, uns
 
 void PUParticleSystem3D::emitParticles( ParticlePool &pool, PUParticle3DEmitter* emitter, unsigned requested, float elapsedTime )
 {
-    Vec3 scale = getDerivedScale();
     Mat4 rotMat;
     Mat4::createRotation(getDerivedOrientation(), &rotMat);
     float timePoint = 0.0f;
@@ -884,13 +884,12 @@ void PUParticleSystem3D::emitParticles( ParticlePool &pool, PUParticle3DEmitter*
         particle->initForEmission();
         emitter->initParticleForEmission(particle);
 
-        particle->direction = (rotMat * Vec3(particle->direction.x * scale.x, particle->direction.y * scale.y, particle->direction.z * scale.z));
-        particle->originalDirection = (rotMat * Vec3(particle->originalDirection.x * scale.x, particle->originalDirection.y * scale.y, particle->originalDirection.z * scale.z));
+        particle->direction = (rotMat * Vec3(particle->direction.x, particle->direction.y, particle->direction.z));
+        particle->originalDirection = (rotMat * Vec3(particle->originalDirection.x, particle->originalDirection.y, particle->originalDirection.z));
 
         for (auto& it : _affectors) {
             if (it->isEnabled())
             {
-                (static_cast<PUParticle3DAffector*>(it))->notifyRescaled(scale);
                 (static_cast<PUParticle3DAffector*>(it))->initParticleForEmission(particle);
             }
         }
