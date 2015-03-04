@@ -74,6 +74,8 @@ typedef struct _ttfConfig
     }
 }TTFConfig;
 
+class SystemFontSprite;
+
 class CC_DLL Label : public SpriteBatchNode, public LabelProtocol
 {
 public:
@@ -348,7 +350,7 @@ protected:
     TTFConfig _fontConfig;
 
     //compatibility with older LabelTTF
-    Sprite* _textSprite;
+    SystemFontSprite* _textSprite;
     FontDefinition _fontDefinition;
     bool  _compatibleMode;
 
@@ -392,7 +394,7 @@ protected:
     int     _shadowBlurRadius;
     Mat4  _shadowTransform;
     Color4F _shadowColor;
-    Sprite*   _shadowNode;
+    SystemFontSprite* _shadowNode;
 
     int     _outlineSize;
 
@@ -407,6 +409,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(Label);
 
     friend class LabelTextFormatter;
+    friend class SystemFontSprite;
 };
 
 

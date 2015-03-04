@@ -37,7 +37,44 @@
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventCustom.h"
 
+
 NS_CC_BEGIN
+
+class SystemFontSprite : public Sprite
+{
+public:
+    static SystemFontSprite* createWithTexture(Texture2D *texture, Label* handler)
+    {
+        auto sprite = new (std::nothrow) SystemFontSprite();
+        if (sprite && sprite->initWithTexture(texture))
+        {
+            sprite->_handler = handler;
+            sprite->autorelease();
+            return sprite;
+        }
+        CC_SAFE_DELETE(sprite);
+        return nullptr;
+    }
+    
+    virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags)
+    {
+        uint32_t flags = processParentFlags(parentTransform, parentFlags);
+        
+        // IMPORTANT:
+        // To ease the migration to v3.0, we still support the Mat4 stack,
+        // but it is deprecated and your code should not rely on it
+        _director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+        _director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
+        
+        _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, _modelViewTransform, flags);
+        renderer->addCommand(&_quadCommand);
+        
+        _director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    }
+    
+private:
+    Label* _handler;
+};
 
 const int Label::DistanceFieldFontSize = 50;
 
@@ -951,7 +988,7 @@ void Label::createSpriteForSystemFont()
     auto texture = new (std::nothrow) Texture2D;
     texture->initWithString(_originalUTF8String.c_str(),_fontDefinition);
 
-    _textSprite = Sprite::createWithTexture(texture);
+    _textSprite = SystemFontSprite::createWithTexture(texture, this);
     _textSprite->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
     this->setContentSize(_textSprite->getContentSize());
     texture->release();
@@ -971,7 +1008,7 @@ void Label::createShadowSpriteForSystemFont()
     if (!_fontDefinition._stroke._strokeEnabled && _fontDefinition._fontFillColor == _shadowColor
         && (_fontDefinition._fontAlpha == _shadowColor.a * 255))
     {
-        _shadowNode = Sprite::createWithTexture(_textSprite->getTexture());
+        _shadowNode = SystemFontSprite::createWithTexture(_textSprite->getTexture(), this);
     }
     else
     {
@@ -986,7 +1023,7 @@ void Label::createShadowSpriteForSystemFont()
 
         auto texture = new (std::nothrow) Texture2D;
         texture->initWithString(_originalUTF8String.c_str(), shadowFontDefinition);
-        _shadowNode = Sprite::createWithTexture(texture);
+        _shadowNode = SystemFontSprite::createWithTexture(texture, this);
         texture->release();
     }
 
