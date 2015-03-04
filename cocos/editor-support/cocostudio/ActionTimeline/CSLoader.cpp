@@ -778,7 +778,23 @@ Node* CSLoader::createNodeWithFlatBuffersFile(const std::string &filename)
 {
     Node* node = nodeWithFlatBuffersFile(filename);
     
-    _rootNode = nullptr;
+    /* To reconstruct nest node as WidgetCallBackHandlerProtocol. */
+    auto callbackHandler = dynamic_cast<WidgetCallBackHandlerProtocol *>(node);
+    if (callbackHandler)
+    {
+        _callbackHandlers.popBack();
+        if (_callbackHandlers.empty())
+        {
+            _rootNode = nullptr;
+            CCLOG("Call back handler container has been clear.");
+        }
+        else
+        {
+            _rootNode = _callbackHandlers.back();
+            CCLOG("after pop back _rootNode name = %s", _rootNode->getName().c_str());
+        }
+    }
+    /**/
     
     return node;
 }
@@ -891,10 +907,15 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree)
             bindCallback(callbackName, callbackType, widget, _rootNode);
         }
         
-        if (_rootNode == nullptr)
+        /* To reconstruct nest node as WidgetCallBackHandlerProtocol. */
+        auto callbackHandler = dynamic_cast<WidgetCallBackHandlerProtocol *>(node);
+        if (callbackHandler)
         {
-            _rootNode = node;
+            _callbackHandlers.pushBack(node);
+            _rootNode = _callbackHandlers.back();
+            CCLOG("after push back _rootNode name = %s", _rootNode->getName().c_str());
         }
+        /**/
 //        _loadingNodeParentHierarchy.push_back(node);
     }
     
