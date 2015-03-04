@@ -295,7 +295,7 @@ namespace CocosDenshion {
             cocos2d::JniMethodInfo methodInfo;
             std::string fullPath = CocosDenshion::android::getFullPathWithoutAssetsPrefix(pszFilePath);
         
-            if (! getJNIStaticMethodInfo(methodInfo, loadEffectName, "(Ljava/lang/String;)V")) {
+            if (! cocos2d::JniHelper::getStaticMethodInfo(methodInfo, loadEffectName, "(Ljava/lang/String;)V")) {
                 return ;
             }
         
