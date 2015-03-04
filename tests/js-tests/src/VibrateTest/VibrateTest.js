@@ -25,6 +25,7 @@
 
 var VibrateTest = BaseTestLayer.extend({
     _duration:0.1,
+    _durationLabel:null,
     ctor:function () {
         this._super();
         var s = cc.director.getWinSize();
@@ -35,28 +36,23 @@ var VibrateTest = BaseTestLayer.extend({
 
         this._duration = 0.1;
 
-        var isSupported = cc.Device.isVibrateSupported() ? "YES" : "NO";
-        var supportedLabel = new cc.LabelTTF("suported: "+isSupported, "Arial", 20);
-        supportedLabel.x = s.width * 0.5;
-        supportedLabel.y = s.height * 0.7;
-        this.addChild(supportedLabel);
-
         cc.MenuItemFont.setFontName("Arial");
         cc.MenuItemFont.setFontSize(24);
 
         var vibrateItem = new cc.MenuItemFont("Vibrate", this.startVibrate, this);
-        vibrateItem.x = s.width * 0.3;
-        vibrateItem.y = s.height * 0.55;
-        var stopItem = new cc.MenuItemFont("Stop", this.stopVibrate, this);
-        stopItem.x = s.width * 0.7;
-        stopItem.y = s.height * 0.55;
+        vibrateItem.x = s.width * 0.5;
+        vibrateItem.y = s.height * 0.7;
 
         var menu = new cc.Menu();
         menu.addChild(vibrateItem);
-        menu.addChild(stopItem);
         menu.x = 0;
         menu.y = 0;
         this.addChild(menu);
+
+        this._durationLabel = new cc.LabelTTF("duration: "+this._duration.toFixed(3)+"s", "Arial", 20);
+        this._durationLabel.x = s.width * 0.5;
+        this._durationLabel.y = s.height * 0.5;
+        this.addChild(this._durationLabel);
 
         // Create the slider
         var durationSlider = new ccui.Slider();
@@ -69,31 +65,24 @@ var VibrateTest = BaseTestLayer.extend({
         durationSlider.y = s.height * 0.35;
         durationSlider.addEventListener(this.durationSliderEvent, this);
         this.addChild(durationSlider);
-
-        var durationSliderSize = durationSlider.getContentSize();
-        var supportedLabel = new cc.LabelTTF("duration:  ", "Arial", 20);
-        supportedLabel.setAnchorPoint(1,0.5);
-        supportedLabel.x = (s.width - durationSliderSize.width)/2;
-        supportedLabel.y = s.height * 0.35;
-        this.addChild(supportedLabel);
     },
     startVibrate:function (sender) {
-        cc.Device.startVibrate(this._duration);
-    },
-    stopVibrate:function (sender) {
-        cc.Device.stopVibrate();
+        cc.Device.vibrate(this._duration);
     },
     durationSliderEvent:function (sender, type) {
         switch (type) {
             case ccui.Slider.EVENT_PERCENT_CHANGED:
                 var slider = sender;
                 var percent = slider.getPercent();
-                // from 0.1ms to 1s
-                this._duration = (percent / 100.0) * 0.9 + 0.1;
+                this._duration = (percent / 100.0) * 1.9 + 0.1; // from 0.1ms to 2s
+                this._durationLabel.setString("duration: "+this._duration.toFixed(3)+"s");
                 break;
             default:
                 break;
         }
+    },
+    onExit:function () {
+        this._super();
     }
 });
 

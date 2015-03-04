@@ -168,19 +168,10 @@ void Device::setKeepScreenOn(bool value)
 {
 }
 
-bool Device::isVibrateSupported()
+void Device::vibrate(float duration)
 {
     // See https://msdn.microsoft.com/en-us/library/windows/apps/windows.phone.devices.notification.vibrationdevice.aspx
-    return false;
-}
-
-void Device::startVibrate(float duration)
-{
     CC_UNUSED_PARAM(duration);
-}
-
-void Device::stopVibrate()
-{
 }
 
 NS_CC_END

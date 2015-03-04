@@ -29,7 +29,6 @@ import java.util.Locale;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.lang.Runnable;
-import java.lang.reflect.Method;
 
 import com.chukong.cocosplay.client.CocosPlayClient;
 
@@ -186,25 +185,8 @@ public class Cocos2dxHelper {
         ((Cocos2dxActivity)sActivity).setKeepScreenOn(value);
     }
     
-    public static boolean isVibrateSupported() {
-        boolean ret = true; // Default true
-        try {
-            // Using reflection because Vibrator.hasVibrator() was added in API 11
-            Method hasVibratorMethod = sVibrateService.getClass().getMethod("hasVibrator", (Class<?>[])null);
-            Object result = hasVibratorMethod.invoke(sVibrateService);
-            ret = (Boolean)result;
-        } catch (Exception e) {
-        	ret = false;
-        }
-        return ret;
-    }
-    
-    public static void startVibrate(float duration) {
-        sVibrateService.vibrate(duration * 1000);
-    }
-    
-    public static void stopVibrate() {
-        sVibrateService.cancel();
+    public static void vibrate(float duration) {
+        sVibrateService.vibrate((long)(duration * 1000));
     }
     
     public static boolean openURL(String url) { 

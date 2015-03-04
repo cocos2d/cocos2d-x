@@ -63,7 +63,7 @@ public:
 private:
     float _duration;
     
-    void* _vibrateItem;
+    void* _durationLabel;
     void* _durationSlider;
     bool _updateTimeSlider;
 };

@@ -40,9 +40,7 @@ extern void enableAccelerometerJni();
 extern void disableAccelerometerJni();
 extern void setAccelerometerIntervalJni(float interval);
 extern void setKeepScreenOnJni(bool value);
-extern bool isVibrateSupportedJni();
-extern void startVibrateJni(float duration);
-extern void stopVibrateJni();
+extern void vibrateJni(float duration);
 extern bool openURLJNI(const char* url);
 // functions for UserDefault
 extern bool getBoolForKeyJNI(const char* key, bool defaultValue);

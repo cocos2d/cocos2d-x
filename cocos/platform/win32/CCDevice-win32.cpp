@@ -498,21 +498,9 @@ void Device::setKeepScreenOn(bool value)
     CC_UNUSED_PARAM(value);
 }
 
-bool Device::isVibrateSupported()
+void Device::vibrate(float duration)
 {
-    log("Device::isVibrateSupported"); // REMOVE ME
-    return false;
-}
-
-void Device::startVibrate(float duration)
-{
-    log("Device::startVibrate(%f)", duration); // REMOVE ME
     CC_UNUSED_PARAM(duration);
-}
-
-void Device::stopVibrate()
-{
-    log("Device::stopVibrate");  // REMOVE ME
 }
 
 NS_CC_END

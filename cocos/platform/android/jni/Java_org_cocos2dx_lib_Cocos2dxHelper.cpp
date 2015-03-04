@@ -218,33 +218,11 @@ void setKeepScreenOnJni(bool value) {
     }
 }
 
-extern bool isVibrateSupportedJni() {
+void vibrateJni(float duration) {
     JniMethodInfo t;
     
-    bool ret = false;
-    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "isVibrateSupported", "()Z")) {
-        ret = t.env->CallStaticBooleanMethod(t.classID, t.methodID);
-        
-        t.env->DeleteLocalRef(t.classID);
-    }
-    return ret;
-}
-
-void startVibrateJni(float duration) {
-    JniMethodInfo t;
-    
-    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "startVibrate", "(F)V")) {
+    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "vibrate", "(F)V")) {
         t.env->CallStaticVoidMethod(t.classID, t.methodID, duration);
-        
-        t.env->DeleteLocalRef(t.classID);
-    }
-}
-
-void stopVibrateJni() {
-    JniMethodInfo t;
-    
-    if (JniHelper::getStaticMethodInfo(t, CLASS_NAME, "stopVibrate", "()V")) {
-        t.env->CallStaticVoidMethod(t.classID, t.methodID);
         
         t.env->DeleteLocalRef(t.classID);
     }

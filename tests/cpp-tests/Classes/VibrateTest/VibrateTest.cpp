@@ -29,7 +29,6 @@
 
 using namespace cocos2d;
 using namespace cocos2d::ui;
-using namespace cocos2d::experimental;
 
 namespace {
     
@@ -182,9 +181,9 @@ Layer* restartAction()
             if (ret && ret->init())
             {
                 ret->_callback = nullptr;
-                ret->loadBarTexture("extensions/sliderTrack.png");
-                ret->loadSlidBallTextures("extensions/sliderThumb.png", "extensions/sliderThumb.png", "");
-                ret->loadProgressBarTexture("extensions/sliderProgress.png");
+                ret->loadBarTexture("ccs-res/cocosui/sliderTrack.png");
+                ret->loadSlidBallTextures("ccs-res/cocosui/sliderThumb.png", "ccs-res/cocosui/sliderThumb.png", "");
+                ret->loadProgressBarTexture("ccs-res/cocosui/sliderProgress.png");
                 
                 ret->autorelease();
                 
@@ -296,7 +295,6 @@ void VibrateTestScene::runThisTest()
 
 void VibrateTestDemo::onExit()
 {
-    Device::stopVibrate();
     BaseTest::onExit();
 }
 
@@ -345,42 +343,31 @@ bool VibrateControlTest::init()
     
     auto& layerSize = this->getContentSize();
 
-    std::string isSupported = Device::isVibrateSupported() ? "YES" : "NO";
-    auto supportedLabel = Label::createWithTTF(std::string("supported: ") + isSupported, fontFilePath, 20);
-    supportedLabel->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-    supportedLabel->setPosition(layerSize.width * 0.5f, layerSize.height * 0.7f);
-    addChild(supportedLabel);
-
     auto vibrateItem = TextButton::create("vibrate", [&](TextButton* button){
-        Device::startVibrate(_duration);
+        Device::vibrate(_duration);
     });
-    _vibrateItem = vibrateItem;
-    vibrateItem->setPosition(layerSize.width * 0.3f, layerSize.height * 0.55f);
+    vibrateItem->setPosition(layerSize.width * 0.5f, layerSize.height * 0.7f);
     addChild(vibrateItem);
     
-    auto stopItem = TextButton::create("stop", [&](TextButton* button){
-        Device::stopVibrate();
-    });
-    stopItem->setPosition(layerSize.width * 0.7f,layerSize.height * 0.55f);
-    addChild(stopItem);    
-    
+    auto durationLabelValue = CCString::createWithFormat("duration: %.3fs", _duration);
+
+    auto durationLabel = Label::createWithTTF(durationLabelValue->getCString(), fontFilePath, 20);
+    durationLabel->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    durationLabel->setPosition(layerSize.width * 0.5f, layerSize.height * 0.5f);
+    addChild(durationLabel);
+    _durationLabel = durationLabel;
+
     auto durationSlider = SliderEx::create();
     durationSlider->setPercent(0);
     durationSlider->setCallBack([&](SliderEx* sender, float ratio, SliderEx::TouchEvent event){
-        // From 0.1s to 1s
-        _duration = ratio * 0.9f + 0.1f;
+        _duration = ratio * 1.9f + 0.1f; // From 0.1s to 2s
+        auto durationLabelValue = CCString::createWithFormat("duration: %.3fs", _duration);
+        (static_cast<Label*>(_durationLabel))->setString(durationLabelValue->getCString());
     });
     durationSlider->setPosition(Vec2(layerSize.width * 0.5f, layerSize.height * 0.35f));
     addChild(durationSlider);
     _durationSlider = durationSlider;
-    
-    auto& durationSliderPos = durationSlider->getPosition();
-    auto& durationSliderSize = durationSlider->getContentSize();
-    auto durationLabel = Label::createWithTTF("duration:  ", fontFilePath, 20);
-    durationLabel->setAnchorPoint(Vec2::ANCHOR_MIDDLE_RIGHT);
-    durationLabel->setPosition(durationSliderPos.x - durationSliderSize.width / 2, durationSliderPos.y);
-    addChild(durationLabel);
-    
+        
     return ret;
 }
 

@@ -19041,29 +19041,11 @@ bool
 },
 
 /**
- * @method isVibrateSupported
- * @return {bool}
+ * @method vibrate
+ * @param {float} arg0
  */
-isVibrateSupported : function (
-)
-{
-	return false;
-},
-
-/**
- * @method startVibrate
- * @param {int} arg0
- */
-startVibrate : function (
+vibrate : function (
 float
-)
-{
-},
-
-/**
- * @method stopVibrate
- */
-stopVibrate : function (
 )
 {
 },

@@ -496,19 +496,10 @@ void Device::setKeepScreenOn(bool value)
     [[UIApplication sharedApplication] setIdleTimerDisabled:(BOOL)value];
 }
 
-bool Device::isVibrateSupported()
+void Device::vibrate(float duration)
 {
     // See https://developer.apple.com/library/ios/documentation/AudioToolbox/Reference/SystemSoundServicesReference/index.html#//apple_ref/c/econst/kSystemSoundID_Vibrate
-    return false;
-}
-
-void Device::startVibrate(float duration)
-{
     CC_UNUSED_PARAM(duration);
-}
-
-void Device::stopVibrate()
-{
 }
 
 NS_CC_END

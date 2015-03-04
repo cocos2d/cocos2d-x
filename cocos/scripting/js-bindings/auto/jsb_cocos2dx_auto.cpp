@@ -57332,45 +57332,19 @@ bool js_cocos2dx_Device_setKeepScreenOn(JSContext *cx, uint32_t argc, jsval *vp)
     return false;
 }
 
-bool js_cocos2dx_Device_isVibrateSupported(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    jsval *argv = JS_ARGV(cx, vp);
-    bool ok = true;
-    if (argc == 0) {
-        bool ret = cocos2d::Device::isVibrateSupported();
-        JS_SET_RVAL(cx, vp, ret ? JSVAL_TRUE : JSVAL_FALSE);
-        return true;
-    }
-    JS_ReportError(cx, "js_cocos2dx_Device_isVibrateSupported : wrong number of arguments");
-    return false;
-}
-
-bool js_cocos2dx_Device_startVibrate(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_Device_vibrate(JSContext *cx, uint32_t argc, jsval *vp)
 {
     jsval *argv = JS_ARGV(cx, vp);
     bool ok = true;
     if (argc == 1) {
         double arg0;
         ok &= JS::ToNumber(cx, JS::RootedValue(cx, argv[0]), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Device_startVibrate : Error processing arguments");
-        cocos2d::Device::startVibrate(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Device_vibrate : Error processing arguments");
+        cocos2d::Device::vibrate(arg0);
         JS_SET_RVAL(cx, vp, JSVAL_VOID);
         return true;
     }
-    JS_ReportError(cx, "js_cocos2dx_Device_startVibrate : wrong number of arguments");
-    return false;
-}
-
-bool js_cocos2dx_Device_stopVibrate(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    jsval *argv = JS_ARGV(cx, vp);
-    bool ok = true;
-    if (argc == 0) {
-        cocos2d::Device::stopVibrate();
-        JS_SET_RVAL(cx, vp, JSVAL_VOID);
-        return true;
-    }
-    JS_ReportError(cx, "js_cocos2dx_Device_stopVibrate : wrong number of arguments");
+    JS_ReportError(cx, "js_cocos2dx_Device_vibrate : wrong number of arguments");
     return false;
 }
 
@@ -57434,9 +57408,7 @@ void js_register_cocos2dx_Device(JSContext *cx, JSObject *global) {
     static JSFunctionSpec st_funcs[] = {
         JS_FN("setAccelerometerEnabled", js_cocos2dx_Device_setAccelerometerEnabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setKeepScreenOn", js_cocos2dx_Device_setKeepScreenOn, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isVibrateSupported", js_cocos2dx_Device_isVibrateSupported, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("startVibrate", js_cocos2dx_Device_startVibrate, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("stopVibrate", js_cocos2dx_Device_stopVibrate, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("vibrate", js_cocos2dx_Device_vibrate, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAccelerometerInterval", js_cocos2dx_Device_setAccelerometerInterval, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getDPI", js_cocos2dx_Device_getDPI, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END

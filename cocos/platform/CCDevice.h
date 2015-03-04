@@ -69,23 +69,11 @@ public:
     static void setKeepScreenOn(bool value);
     
     /**
-     *  Checks whether vibrate is supported on the current platform and device
-     *  @return Returns true if vibrate is supported, otherwise returns false
-     */
-    static bool isVibrateSupported();
-    
-    /**
      *  Vibrate for the specified amount of time.
      *  If vibrate is not supported, then invoking this method has no effect.
      *  @param duration The duration in seconds.
      */
-    static void startVibrate(float duration);
-
-    /**
-     *  Stop any vibrate currently in progress.
-     *  If vibrate is not supported, then invoking this method has no effect.
-     */
-	static void stopVibrate();
+    static void vibrate(float duration);
 
 private:
     CC_DISALLOW_IMPLICIT_CONSTRUCTORS(Device);

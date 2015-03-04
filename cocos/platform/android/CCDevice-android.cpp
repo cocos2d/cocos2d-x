@@ -171,19 +171,9 @@ void Device::setKeepScreenOn(bool value)
     setKeepScreenOnJni(value);
 }
 
-bool Device::isVibrateSupported()
+void Device::vibrate(float duration)
 {
-    return isVibrateSupportedJni();
-}
-
-void Device::startVibrate(float duration)
-{
-    startVibrateJni(duration);
-}
-
-void Device::stopVibrate()
-{
-    stopVibrateJni();
+    vibrateJni(duration);
 }
 
 NS_CC_END

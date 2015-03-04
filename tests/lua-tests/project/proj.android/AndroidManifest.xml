@@ -10,11 +10,11 @@
 
     <application android:label="@string/app_name"
                  android:icon="@drawable/icon">
-					 
+
         <!-- Tell Cocos2dxActivity the name of our .so -->
         <meta-data android:name="android.app.lib_name"
                   android:value="lua_tests" />
-					  
+
         <activity android:name=".AppActivity"
                   android:label="@string/app_name"
                   android:screenOrientation="landscape"
@@ -32,4 +32,5 @@
                       android:largeScreens="true"
                       android:xlargeScreens="true"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
 </manifest> 
