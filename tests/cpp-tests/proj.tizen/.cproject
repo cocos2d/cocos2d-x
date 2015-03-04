@@ -15,7 +15,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactName="cpp-tests" buildArtefactType="org.tizen.nativecore.buildArtefactType.app" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.tizen.nativecore.buildArtefactType.app" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;" id="org.tizen.nativecore.config.sbi.gcc45.app.debug.1947941572" name="Debug" parent="org.tizen.nativecore.config.sbi.gcc45.app.debug">
+				<configuration artifactName="cpp-tests" buildArtefactType="org.tizen.nativecore.buildArtefactType.app" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug,org.eclipse.cdt.build.core.buildArtefactType=org.tizen.nativecore.buildArtefactType.app" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;" id="org.tizen.nativecore.config.sbi.gcc45.app.debug.1947941572" name="Debug" parent="org.tizen.nativecore.config.sbi.gcc45.app.debug" prebuildStep="../copy_resource.sh">
 					<folderInfo id="org.tizen.nativecore.config.sbi.gcc45.app.debug.1947941572." name="/" resourcePath="">
 						<toolChain id="org.tizen.nativecore.toolchain.sbi.gcc45.app.debug.558719969" name="Tizen Native Toolchain" superClass="org.tizen.nativecore.toolchain.sbi.gcc45.app.debug">
 							<targetPlatform binaryParser="org.eclipse.cdt.core.ELF" id="org.tizen.nativeide.target.sbi.gnu.platform.base.178078395" osList="linux,win32" superClass="org.tizen.nativeide.target.sbi.gnu.platform.base"/>
@@ -29,7 +29,7 @@
 								</option>
 								<option id="sbi.gnu.cpp.compiler.option.frameworks_inc.core.680968450" name="Tizen-Frameworks-Include-Path" superClass="sbi.gnu.cpp.compiler.option.frameworks_inc.core" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/libxml2&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SDK_INSTALL_PATH}/library&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK_PATH}/library&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/AL&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/appcore-agent&quot;"/>
@@ -90,8 +90,8 @@
 									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/wifi-direct&quot;"/>
 								</option>
 								<option id="sbi.gnu.cpp.compiler.option.frameworks_cflags.core.320492120" name="Tizen-Frameworks-Other-Cflags" superClass="sbi.gnu.cpp.compiler.option.frameworks_cflags.core" useByScannerDiscovery="false" valueType="stringList">
-									<listOptionValue builtIn="false" value=""/>
-									<listOptionValue builtIn="false" value=""/>
+									<listOptionValue builtIn="false" value="${TC_COMPILER_MISC}"/>
+									<listOptionValue builtIn="false" value="${RS_COMPILER_MISC}"/>
 									<listOptionValue builtIn="false" value=" -fPIE"/>
 									<listOptionValue builtIn="false" value="--sysroot=&quot;${SBI_SYSROOT}&quot;"/>
 									<listOptionValue builtIn="false" value="-mthumb"/>
@@ -123,7 +123,7 @@
 								</option>
 								<option id="sbi.gnu.c.compiler.option.frameworks_inc.core.2000361837" name="Tizen-Frameworks-Include-Path" superClass="sbi.gnu.c.compiler.option.frameworks_inc.core" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/libxml2&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SDK_INSTALL_PATH}/library&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK_PATH}/library&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/AL&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/appcore-agent&quot;"/>
@@ -184,8 +184,8 @@
 									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/wifi-direct&quot;"/>
 								</option>
 								<option id="sbi.gnu.c.compiler.option.frameworks_cflags.core.1384616235" name="Tizen-Frameworks-Other-Cflags" superClass="sbi.gnu.c.compiler.option.frameworks_cflags.core" useByScannerDiscovery="false" valueType="stringList">
-									<listOptionValue builtIn="false" value=""/>
-									<listOptionValue builtIn="false" value=""/>
+									<listOptionValue builtIn="false" value="${TC_COMPILER_MISC}"/>
+									<listOptionValue builtIn="false" value="${RS_COMPILER_MISC}"/>
 									<listOptionValue builtIn="false" value=" -fPIE"/>
 									<listOptionValue builtIn="false" value="--sysroot=&quot;${SBI_SYSROOT}&quot;"/>
 									<listOptionValue builtIn="false" value="-mthumb"/>
@@ -206,12 +206,12 @@
 							<tool id="org.tizen.nativeide.tool.sbi.gnu.c.linker.base.1452491171" name="C Linker" superClass="org.tizen.nativeide.tool.sbi.gnu.c.linker.base"/>
 							<tool command="arm-linux-gnueabi-g++" id="org.tizen.nativecore.tool.sbi.gnu.cpp.linker.188405910" name="C++ Linker" superClass="org.tizen.nativecore.tool.sbi.gnu.cpp.linker">
 								<option id="sbi.gnu.cpp.linker.option.frameworks_lflags.core.1997210697" name="Tizen-Frameworks-Other-Lflags" superClass="sbi.gnu.cpp.linker.option.frameworks_lflags.core" valueType="stringList">
-									<listOptionValue builtIn="false" value="-Xlinker --as-needed"/>
-									<listOptionValue builtIn="false" value=""/>
+									<listOptionValue builtIn="false" value="${TC_LINKER_MISC}"/>
+									<listOptionValue builtIn="false" value="${RS_LINKER_MISC}"/>
 									<listOptionValue builtIn="false" value="-pie -lpthread "/>
 									<listOptionValue builtIn="false" value="-Xlinker -rpath=&quot;/home/developer/sdk_tools/lib&quot;"/>
 									<listOptionValue builtIn="false" value="--sysroot=&quot;${SBI_SYSROOT}&quot;"/>
-									<listOptionValue builtIn="false" value="-Xlinker --version-script=${ProjDirPath}/.exportMap"/>
+									<listOptionValue builtIn="false" value="-Xlinker --version-script=${PROJ_PATH}/.exportMap"/>
 									<listOptionValue builtIn="false" value="-L&quot;${SBI_SYSROOT}/usr/lib&quot;"/>
 									<listOptionValue builtIn="false" value="$(RS_LIBRARIES)"/>
 								</option>
@@ -289,7 +289,7 @@
 								</option>
 								<option id="sbi.gnu.cpp.compiler.option.frameworks_inc.core.2145565482" name="Tizen-Frameworks-Include-Path" superClass="sbi.gnu.cpp.compiler.option.frameworks_inc.core" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/libxml2&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SDK_INSTALL_PATH}/library&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK_PATH}/library&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/AL&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/appcore-agent&quot;"/>
@@ -350,8 +350,8 @@
 									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/wifi-direct&quot;"/>
 								</option>
 								<option id="sbi.gnu.cpp.compiler.option.frameworks_cflags.core.237869386" name="Tizen-Frameworks-Other-Cflags" superClass="sbi.gnu.cpp.compiler.option.frameworks_cflags.core" valueType="stringList">
-									<listOptionValue builtIn="false" value="-target i386-tizen-linux-gnueabi -gcc-toolchain ${SDK_INSTALL_PATH}/tools/smart-build-interface/../i386-linux-gnueabi-gcc-4.6/ -ccc-gcc-name i386-linux-gnueabi-g++ -march=i386 -Wno-gnu"/>
-									<listOptionValue builtIn="false" value=""/>
+									<listOptionValue builtIn="false" value="${TC_COMPILER_MISC}"/>
+									<listOptionValue builtIn="false" value="${RS_COMPILER_MISC}"/>
 									<listOptionValue builtIn="false" value=" -fPIE"/>
 									<listOptionValue builtIn="false" value="--sysroot=&quot;${SBI_SYSROOT}&quot;"/>
 								</option>
@@ -371,7 +371,7 @@
 								</option>
 								<option id="sbi.gnu.c.compiler.option.frameworks_inc.core.764159439" name="Tizen-Frameworks-Include-Path" superClass="sbi.gnu.c.compiler.option.frameworks_inc.core" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/libxml2&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${SDK_INSTALL_PATH}/library&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDK_PATH}/library&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/AL&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/appcore-agent&quot;"/>
@@ -432,8 +432,8 @@
 									<listOptionValue builtIn="false" value="&quot;${SBI_SYSROOT}/usr/include/wifi-direct&quot;"/>
 								</option>
 								<option id="sbi.gnu.c.compiler.option.frameworks_cflags.core.32016409" name="Tizen-Frameworks-Other-Cflags" superClass="sbi.gnu.c.compiler.option.frameworks_cflags.core" valueType="stringList">
-									<listOptionValue builtIn="false" value="-target i386-tizen-linux-gnueabi -gcc-toolchain ${SDK_INSTALL_PATH}/tools/smart-build-interface/../i386-linux-gnueabi-gcc-4.6/ -ccc-gcc-name i386-linux-gnueabi-g++ -march=i386 -Wno-gnu"/>
-									<listOptionValue builtIn="false" value=""/>
+									<listOptionValue builtIn="false" value="${TC_COMPILER_MISC}"/>
+									<listOptionValue builtIn="false" value="${RS_COMPILER_MISC}"/>
 									<listOptionValue builtIn="false" value=" -fPIE"/>
 									<listOptionValue builtIn="false" value="--sysroot=&quot;${SBI_SYSROOT}&quot;"/>
 								</option>
@@ -448,12 +448,12 @@
 							<tool id="org.tizen.nativeide.tool.sbi.gnu.c.linker.base.20345587" name="C Linker" superClass="org.tizen.nativeide.tool.sbi.gnu.c.linker.base"/>
 							<tool command="clang++" id="org.tizen.nativecore.tool.sbi.gnu.cpp.linker.1363350666" name="C++ Linker" superClass="org.tizen.nativecore.tool.sbi.gnu.cpp.linker">
 								<option id="sbi.gnu.cpp.linker.option.frameworks_lflags.core.521073342" name="Tizen-Frameworks-Other-Lflags" superClass="sbi.gnu.cpp.linker.option.frameworks_lflags.core" valueType="stringList">
-									<listOptionValue builtIn="false" value="-target i386-tizen-linux-gnueabi -gcc-toolchain ${SDK_INSTALL_PATH}/tools/smart-build-interface/../i386-linux-gnueabi-gcc-4.6/ -ccc-gcc-name i386-linux-gnueabi-g++ -march=i386 -Xlinker --as-needed"/>
-									<listOptionValue builtIn="false" value=""/>
+									<listOptionValue builtIn="false" value="${TC_LINKER_MISC}"/>
+									<listOptionValue builtIn="false" value="${RS_LINKER_MISC}"/>
 									<listOptionValue builtIn="false" value="-pie -lpthread "/>
 									<listOptionValue builtIn="false" value="-Xlinker -rpath=&quot;/home/developer/sdk_tools/lib&quot;"/>
 									<listOptionValue builtIn="false" value="--sysroot=&quot;${SBI_SYSROOT}&quot;"/>
-									<listOptionValue builtIn="false" value="-Xlinker --version-script=${ProjDirPath}/.exportMap"/>
+									<listOptionValue builtIn="false" value="-Xlinker --version-script=${PROJ_PATH}/.exportMap"/>
 									<listOptionValue builtIn="false" value="-L&quot;${SBI_SYSROOT}/usr/lib&quot;"/>
 									<listOptionValue builtIn="false" value="$(RS_LIBRARIES)"/>
 								</option>
