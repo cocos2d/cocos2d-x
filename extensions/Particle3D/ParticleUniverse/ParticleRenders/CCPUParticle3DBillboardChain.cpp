@@ -43,16 +43,16 @@ PUBillboardChain::Element::Element()
 {
 }
 //-----------------------------------------------------------------------
-PUBillboardChain::Element::Element(const Vec3 &position,
-                                   float width,
-                                   float texCoord,
-                                   const Vec4 &colour,
-                                   const Quaternion &orientation) :
-position(position),
-width(width),
-texCoord(texCoord),
-color(colour),
-orientation(orientation)
+PUBillboardChain::Element::Element(const Vec3 &pos,
+                                   float w,
+                                   float tex,
+                                   const Vec4 &col,
+                                   const Quaternion &ori) :
+position(pos),
+width(w),
+texCoord(tex),
+color(col),
+orientation(ori)
 {
 }
 //-----------------------------------------------------------------------
@@ -155,13 +155,13 @@ void PUBillboardChain::setupBuffers(void)
         CC_SAFE_RELEASE(_indexBuffer);
 
         GLsizei stride = sizeof(VertexInfo);
-        _vertexBuffer = VertexBuffer::create(stride, _chainElementList.size() * 2);
+        _vertexBuffer = VertexBuffer::create(stride, (int)_chainElementList.size() * 2);
         _vertexBuffer->retain();
         VertexInfo vi = {Vec3(0.0f, 0.0f, 0.0f), Vec2(0.0f, 0.0f), Vec4::ONE};
         _vertices.resize(_chainElementList.size() * 2, vi);
 
 
-        _indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, _chainCount * _maxElementsPerChain * 6);
+        _indexBuffer = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, (int)(_chainCount * _maxElementsPerChain * 6));
         _indexBuffer->retain();
         _indices.resize(_chainCount * _maxElementsPerChain * 6, 0);
 

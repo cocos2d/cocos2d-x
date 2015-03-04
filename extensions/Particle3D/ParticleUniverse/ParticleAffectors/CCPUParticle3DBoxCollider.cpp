@@ -245,7 +245,6 @@ void PUParticle3DBoxCollider::updatePUAffector( PUParticle3D *particle, float de
                 }
                 else
                 {
-                    AABB box;
                     populateAlignedBox(box,
                         _predictedPosition, 
                         particle->width, 

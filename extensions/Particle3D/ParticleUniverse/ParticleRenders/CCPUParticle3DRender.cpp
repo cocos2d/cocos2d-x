@@ -105,7 +105,6 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
 
     auto camera = Camera::getVisitingCamera();
     auto cameraMat = camera->getNodeToWorldTransform();
-    const Mat4 &viewMat = cameraMat.getInversed();
     
 
     //for (auto iter : activeParticleList){

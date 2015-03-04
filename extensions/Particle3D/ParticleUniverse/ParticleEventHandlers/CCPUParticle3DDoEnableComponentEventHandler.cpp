@@ -138,7 +138,7 @@ void PUParticle3DDoEnableComponentEventHandler::handle (PUParticleSystem3D* part
             if (system){
                 auto children = system->getChildren();
                 for (auto iter : children){
-                    PUParticleSystem3D *child = static_cast<PUParticleSystem3D *>(system);
+                    PUParticleSystem3D *child = static_cast<PUParticleSystem3D *>(iter);
                     if (child->getName() == _componentName){
                         child->setEnabled(_componentEnabled);
                         break;
