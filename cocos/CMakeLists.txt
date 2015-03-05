@@ -129,7 +129,11 @@ foreach(pkg ZLIB MINIZIP JPEG PNG TIFF TinyXML2 FREETYPE WEBSOCKETS CURL FLATBUF
   cocos_use_pkg(cocos2d ${pkg})
 endforeach()
 
-target_link_libraries(cocos2d ${PLATFORM_SPECIFIC_LIBS})
+if(LINUX)
+  set(glfw_other_linker_flags X11)
+if(LINUX)
+
+target_link_libraries(cocos2d ${PLATFORM_SPECIFIC_LIBS} ${glfw_other_linker_flags})
 
 if(USE_WEBP)
   add_definitions(-DCC_USE_WEBP=1)
