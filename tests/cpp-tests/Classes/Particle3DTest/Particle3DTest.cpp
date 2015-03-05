@@ -133,6 +133,7 @@ bool Particle3DTestDemo::init()
 
     FileUtils::getInstance()->addSearchPath("Particle3D/materials");
     FileUtils::getInstance()->addSearchPath("Particle3D/scripts");
+    FileUtils::getInstance()->addSearchPath("Sprite3DTest");
     //FileUtils::getInstance()->addSearchPath("Particle3D/textures");
 
     Size size = Director::getInstance()->getWinSize();
