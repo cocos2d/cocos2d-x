@@ -200,16 +200,16 @@ protected:
      @return  true if loaded correctly.
      */
     bool initWithImageFileThreadSafe(const std::string& fullpath);
-    
-    Format detectFormat(const unsigned char * data, ssize_t dataLen);
-    bool isPng(const unsigned char * data, ssize_t dataLen);
-    bool isJpg(const unsigned char * data, ssize_t dataLen);
-    bool isTiff(const unsigned char * data, ssize_t dataLen);
-    bool isWebp(const unsigned char * data, ssize_t dataLen);
-    bool isPvr(const unsigned char * data, ssize_t dataLen);
-    bool isEtc(const unsigned char * data, ssize_t dataLen);
-    bool isS3TC(const unsigned char * data,ssize_t dataLen);
-    bool isATITC(const unsigned char *data, ssize_t dataLen);
+public:
+    static Format detectFormat(const unsigned char * data, ssize_t dataLen);
+    static bool isPng(const unsigned char * data, ssize_t dataLen);
+    static bool isJpg(const unsigned char * data, ssize_t dataLen);
+    static bool isTiff(const unsigned char * data, ssize_t dataLen);
+    static bool isWebp(const unsigned char * data, ssize_t dataLen);
+    static bool isPvr(const unsigned char * data, ssize_t dataLen);
+    static bool isEtc(const unsigned char * data, ssize_t dataLen);
+    static bool isS3TC(const unsigned char * data,ssize_t dataLen);
+    static bool isATITC(const unsigned char *data, ssize_t dataLen);
 };
 
 // end of platform group
