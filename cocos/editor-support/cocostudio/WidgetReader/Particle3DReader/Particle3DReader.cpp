@@ -32,7 +32,7 @@
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
 
-#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/PU/CCPUParticleSystem3D.h"
 
 USING_NS_CC;
 using namespace flatbuffers;

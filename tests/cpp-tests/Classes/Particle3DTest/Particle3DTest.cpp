@@ -25,7 +25,7 @@
 
 #include "Particle3DTest.h"
 #include "Particle3D/CCParticleSystem3D.h"
-#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/PU/CCPUParticleSystem3D.h"
 
 enum
 {
