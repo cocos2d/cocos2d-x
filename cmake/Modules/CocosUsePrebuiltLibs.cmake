@@ -1,230 +1,416 @@
 # CocosUsePrebuiltLibs - sets external libs variables to link with
 
-# START CONFIG
-set(_box2d_inc Box2D.h)
-set(_box2d_inc_paths box2d)
-set(_box2d_libs box2d libbox2d)
+if(_COCOS_USE_PREBUILT_LIBS_CMAKE)
+    return()
+endif()
+set(_COCOS_USE_PREBUILT_LIBS_CMAKE TRUE)
 
-set(_tinyxml2_inc tinyxml2.h)
-set(_tinyxml2_inc_paths tinyxml2)
-set(_tinyxml2_libs tinyxml2 libtinyxml2)
-
-set(_minizip_inc unzip.h)
-set(_minizip_inc_paths minizip)
-set(_minizip_libs minizip libminizip)
-
-set(_edtaa3func_inc edtaa3func.h)
-set(_edtaa3func_inc_paths edtaa3func)
-set(_edtaa3func_libs edtaa3func libedtaa3func)
-
-set(_convertutf_inc ConvertUTF.h)
-set(_convertutf_inc_paths convertutf)
-set(_convertutf_libs convertutf libconvertutf)
-
-set(_xxhash_inc xxhash.h)
-set(_xxhash_inc_paths xxhash)
-set(_xxhash_libs xxhash libxxhash)
-
-set(_xxtea_inc xxtea.h)
-set(_xxtea_inc_paths xxtea)
-set(_xxtea_libs xxtea libxxtea)
-
-set(_flatbuffers_inc flatbuffers.h)
-set(_flatbuffers_inc_paths flatbuffers)
-set(_flatbuffers_libs flatbuffer libflatbuffer)
-
-set(_chipmunk_inc chipmunk.h)
-set(_chipmunk_inc_paths chipmunk)
-set(_chipmunk_libs chipmunk libchipmunk)
-
-set(_zlib_inc zlib.h)
-set(_zlib_inc_paths zlib)
-set(_zlib_libs z libz)
-
-set(_curl_inc curl/curl.h)
-set(_curl_inc_paths curl)
-set(_curl_libs crypto ssl libeay32 ssleay32 curl libcurl_imp libcurl)
-
-set(_freetype2_prefix FREETYPE)
-set(_freetype2_inc ft2build.h freetype.h)
-set(_freetype2_inc_paths freetype)
-set(_freetype2_libs freetype freetype250)
-
-set(_jpeg_inc jpeglib.h)
-set(_jpeg_inc_paths jpeg)
-set(_jpeg_libs jpeg libjpeg)
-
-set(_png_inc png.h)
-set(_png_inc_paths png)
-set(_png_libs png libpng)
-
-set(_tiff_inc tiff.h)
-set(_tiff_inc_paths tiff)
-set(_tiff_libs tiff libtiff)
-
-set(_webp_inc decode.h)
-set(_webp_inc_paths webp)
-set(_webp_libs webp libwebp)
-
-set(_websockets_inc libwebsockets.h)
-set(_websockets_inc_paths websockets)
-set(_websockets_libs websockets libwebsockets)
-
-set(_glfw3_inc glfw3.h)
-set(_glfw3_inc_paths glfw)
-set(_glfw3_libs glfw libglfw)
-
-set(_sqlite3_inc sqlite3.h)
-set(_sqlite3_inc_paths sqlite3)
-set(_sqlite3_libs sqlite3)
-
-set(_gles_prefix GLEW)
-set(_gles_inc GL/glew.h)
-set(_gles_libs glew32)
-
-set(_icon_prefix ICONV)
-set(_icon_inc iconv.h)
-set(_icon_inc_paths iconv)
-set(_icon_libs libiconv)
-
-set(_MP3Decoder_prefix MPG123)
-set(_MP3Decoder_inc mpg123.h)
-set(_MP3Decoder_inc_paths Mp3Decoder)
-set(_MP3Decoder_libs libmpg123)
-
-set(_OggDecoder_prefix VORBIS)
-set(_OggDecoder_inc ogg/ogg.h)
-set(_OggDecoder_libs libogg libvorbis libvorbisfile)
-
-set(_OpenalSoft_prefix OPENAL)
-set(_OpenalSoft_inc al.h)
-set(_OpenalSoft_inc_paths AL)
-set(_OpenalSoft_libs OpenAL32)
-
-set(_fmod_prefix FMODEX)
-set(_fmod_inc fmod.h)
-set(_fmod_inc_paths fmod)
-set(_fmod_libs fmodex fmodex64 fmodexL fmodexL64)
-
-#for lua
-set(_cjson_inc lua_cjson.h)
-set(_cjson_inc_paths cjson)
-set(_cjson_libs cjson libcjson)
-
-set(_luajit_inc lua.h)
-set(_luajit_inc_paths luajit)
-set(_luajit_libs luajit libluajit)
-
-set(_luasocket_inc luasocket.h)
-set(_luasocket_inc_paths luasocket)
-set(_luasocket_libs luasocket libluasocket)
-
-set(all_prebuilt_libs
-  chipmunk
-  curl
-  freetype2
-  jpeg
-  png
-  tiff
-  webp
-  websockets
-  box2d
-  tinyxml2
-  minizip
-  xxhash
-  xxtea
-  flatbuffers
-  convertutf
-  edtaa3func
-  cjson
-  luasocket
-  luajit
-  zlib
-)
-
-
-if(MACOSX)
-  list(APPEND all_prebuilt_libs glfw3)
+# This file use some macros defined in Cocosbuildhelpers.cmake.
+if(NOT _COCOS_BUILD_HELPERS_CMAKE)
+    include(CocosBuildHelpers)
 endif()
 
-# We use MSVC instead of WINDOWS because it can be mingw that can't use our prebuilt libs
-if(MSVC)
-  list(APPEND all_prebuilt_libs glfw3 sqlite3 gles icon MP3Decoder OggDecoder OpenalSoft zlib)
-endif()
-
-if(LINUX)
-  list(APPEND all_prebuilt_libs fmod glfw3)
-endif()
-
-# END CONFIG
-
-foreach(_lib ${all_prebuilt_libs})
-  if(_${_lib}_prefix)
-    set(_prefix ${_${_lib}_prefix})
-  else()
-    # auto-prefix is uppercased name
-    string(TOUPPER ${_lib} _prefix)
-  endif()
-
-  set(roots ${COCOS_EXTERNAL_DIR}/${PLATFORM_FOLDER})
-  set(include_dir_candidates
-    ${roots}/include  #for ios & mac only
-    ${roots}/${ARCH_DIR}/include)
-
-  set(include_dirs)
-  foreach(_dir ${include_dir_candidates})
-    if(EXISTS ${_dir})
-      # find all include paths
-      if(_${_lib}_inc_paths)
-        set(_suffixes ${_${_lib}_inc_paths})
-      else()
-        set(_suffixes include)
-      endif()
-      foreach(_inc_name ${_${_lib}_inc})
-        unset(_inc_tmp CACHE)
-        find_path(_inc_tmp ${_inc_name} PATH_SUFFIXES ${_suffixes} PATHS ${_dir} NO_DEFAULT_PATH)
-        if(_inc_tmp)
-          list(APPEND include_dirs ${_inc_tmp})
-        endif()
-      endforeach()
-    endif(EXISTS ${_dir})
-  endforeach()
-
-  if(include_dirs)
-    set(${_prefix}_INCLUDE_DIRS ${include_dirs} CACHE PATH "Path to includes for ${_prefix}" FORCE)
-    # message(STATUS "${_lib} include path found")
-  endif()
-  # message(STATUS "${_lib} ${_prefix}_INCLUDE_DIRS: ${${_prefix}_INCLUDE_DIRS}")
-
-  set(lib_dir_candidates
-    ${roots}/${ARCH_DIR}/libs
-    ${roots}/${ARCH_DIR}/libs/Debug
-    ${roots}/${ARCH_DIR}/libs/Release
-    ${roots}/libs #for ios&mac only
+#===============================================================================
+# Helper variable, indicated the <cocos>/external directory.
+get_filename_component(external_dir 
+    "${CMAKE_CURRENT_LIST_DIR}/../../external" ABSOLUTE
     )
-  set(libs)
-  foreach(_dir ${lib_dir_candidates})
-    if(EXISTS ${_dir})
-      # find all libs
-      foreach(_lib_name ${_${_lib}_libs})
-        unset(_lib_tmp CACHE)
-        # message(STATUS "Found ${_lib_name} ${_dir}")
-        find_library(_lib_tmp ${_lib_name} PATH ${_dir} NO_DEFAULT_PATH)
-        if(_lib_tmp)
-          list(APPEND libs ${_lib_tmp})
-        endif()
-      endforeach()
-    endif(EXISTS ${_dir})
-  endforeach()
-  if(libs)
-    set(${_prefix}_LIBRARIES ${libs} CACHE STRING "Libraries to link for ${_prefix}" FORCE)
-    # message(STATUS "${_lib} library path found")
-  endif()
-  # message(STATUS "${_lib} ${_prefix}_LIBRARIES: ${${_prefix}_LIBRARIES}")
 
-  if(${_prefix}_LIBRARIES AND ${_prefix}_INCLUDE_DIRS)
-    # message(STATUS "${_prefix} found")
-    set(${_prefix}_FOUND YES)
-  endif()
-      
-endforeach()
+if(COCOS_ARCH_FOLDER_SUFFIX)
+    set(_suffix "/${COCOS_ARCH_FOLDER_SUFFIX}")
+endif()
+if(COCOS_TARGET_SYSTEM_MACOSX)
+    set(prebuilt_dir "${external_dir}/mac${_suffix}")
+elseif(COCOS_TARGET_SYSTEM_WINDOWS)
+    set(prebuilt_dir "${external_dir}/win32${_suffix}")
+elseif(COCOS_TARGET_SYSTEM_LINUX)
+    set(prebuilt_dir "${external_dir}/linux${_suffix}")
+elseif(COCOS_TARGET_SYSTEM_IOS)
+    set(prebuilt_dir "${external_dir}/ios${_suffix}")
+elseif(COCOS_TARGET_SYSTEM_ANDROID)
+    set(prebuilt_dir "${external_dir}/android${_suffix}")
+endif()
+
+include(CMakeParseArguments)
+
+# Define a helper function for load a prebuilt package as target.
+#
+# Every package should keep the folder structure like cocos external dir.
+# If function success, each prebuilt package will define:
+# Target Name   : <UPPER_NAME>::<UPPER_NAME>
+# Header Path   : <UPPER_NAME>_INCLUDE_DIR
+# Lib Path      : <UPPER_NAME>_LIBRARY
+# DLL Path      : <UPPER_NAME>_RUNTIME:  If is a dll library, has this variable.
+# Usage:
+#   cocos_load_prebuilt_package(
+#       <pkg>               # the package name
+#       <dir>               # the dir contain two subdirs: include and libs
+#       [INCLUDE_PATH path] # the key header file to identifiy the include dir
+#       [LIB_NAMES n1 ...]  # the posiable lib name of the package
+#       [DLL_NAME name]     # the fullname of dll, only win32 support
+#       )
+function(cocos_load_prebuilt_package pkg)
+    set(multiValueArgs  LIB_NAMES)
+    set(oneValueArgs    INCLUDE_PATH INSTALL_DIR DLL_NAME)
+    cmake_parse_arguments(_opt "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+    if(_opt_INSTALL_DIR)
+        set(_dir ${_opt_INSTALL_DIR})
+    else()
+        set(_dir ${prebuilt_dir})
+    endif()
+
+    if(NOT _opt_LIB_NAMES)
+        set(_opt_LIB_NAMES "${pkg}" "lib${pkg}")
+    endif()
+
+    string(TOUPPER ${pkg} _up_pkg)
+    set(_target ${_up_pkg}::${_up_pkg})
+
+    if(TARGET ${_target} OR ${_target}_FOUND})
+        message(AUTHOR_WARNING "Already has a target named '${_target}'")
+        return()
+    endif()
+
+    if(COCOS_TARGET_SYSTEM_WINDOWS)
+        # Windows prebuilt package has two configrations,
+        # process sepratly.
+
+        # if package has special include directory, check it exists or not.
+        if(_opt_INCLUDE_PATH)
+            find_file(${_up_pkg}_INCLUDE_DIR ${_opt_INCLUDE_PATH}
+                HINTS ${_dir}
+                PATH_SUFFIXES "include"
+                NO_DEFAULT_PATH
+                )
+            if(NOT ${_up_pkg}_INCLUDE_DIR)
+                message(AUTHOR_WARNING
+                    "Load prebuilt package error: can't find include path "
+                    "'${_opt_INCLUDE_PATH}' in '${_dir}/include'."
+                    )
+                return()
+            endif()
+        endif()
+
+        # Find library.
+        find_library(${_up_pkg}_LIBRARY_RELEASE NAMES ${_opt_LIB_NAMES}
+            HINTS ${_dir}
+            PATH_SUFFIXES "libs/Release" 
+            NO_DEFAULT_PATH
+            )
+        find_library(${_up_pkg}_LIBRARY_DEBUG NAMES ${_opt_LIB_NAMES}
+            HINTS ${_dir}
+            PATH_SUFFIXES "libs/Debug"
+            NO_DEFAULT_PATH
+            )
+        if(NOT ${_up_pkg}_LIBRARY_RELEASE AND NOT ${_up_pkg}_LIBRARY_DEBUG})
+            message(AUTHOR_WARNING
+                "Load prebuilt package error: can't find lib "
+                "named'${_opt_LIB_NAMES}' in '${_dir}/libs'."
+                )
+            return()
+        endif()
+
+        if(_opt_DLL_NAME)
+            # Find DLL.
+            find_file(${_up_pkg}_RUNTIME_RELEASE ${_opt_DLL_NAME}
+                HINTS ${_dir}
+                PATH_SUFFIXES "libs/Release"
+                NO_DEFAULT_PATH
+                )
+            find_file(${_up_pkg}_RUNTIME_DEBUG ${_opt_DLL_NAME}
+                HINTS ${_dir}
+                PATH_SUFFIXES "libs/Debug"
+                NO_DEFAULT_PATH
+                )
+            if(NOT ${_up_pkg}_RUNTIME_RELEASE AND NOT ${_up_pkg}_RUNTIME_DEBUG)
+                message(AUTHOR_WARNING
+                    "Load prebuilt package error: can't find dll "
+                    "named'${_opt_DLL_NAME}' in '${_dir}/libs'."
+                    )
+                return()
+            endif()
+
+            add_library(${_target} SHARED IMPORTED)
+            if(${_up_pkg}_LIBRARY_RELEASE AND ${_up_pkg}_LIBRARY_DEBUG)
+                set_target_properties(${_target} PROPERTIES
+                    IMPORTED_IMPLIB_RELEASE ${${_up_pkg}_LIBRARY_RELEASE}
+                    IMPORTED_IMPLIB_DEBUG ${${_up_pkg}_LIBRARY_DEBUG}
+                    )
+            elseif(${_up_pkg}_LIBRARY_RELEASE)
+                set_target_properties(${_target} PROPERTIES
+                    IMPORTED_IMPLIB ${${_up_pkg}_LIBRARY_RELEASE}
+                    )
+            else()
+                set_target_properties(${_target} PROPERTIES
+                    IMPORTED_IMPLIB ${${_up_pkg}_LIBRARY_DEBUG}
+                    )
+            endif()
+
+            if(${_up_pkg}_RUNTIME_RELEASE AND ${_up_pkg}_RUNTIME_DEBUG)
+                set_target_properties(${_target} PROPERTIES
+                    IMPORTED_LOCATION_RELEASE ${${_up_pkg}_RUNTIME_RELEASE}
+                    IMPORTED_LOCATION_DEBUG ${${_up_pkg}_RUNTIME_DEBUG}
+                    )
+            elseif(${_up_pkg}_RUNTIME_RELEASE)
+                set_target_properties(${_target} PROPERTIES
+                    IMPORTED_LOCATION ${${_up_pkg}_RUNTIME_RELEASE}
+                    )
+            else()
+                set_target_properties(${_target} PROPERTIES
+                    IMPORTED_LOCATION ${${_up_pkg}_RUNTIME_DEBUG}
+                    )
+            endif()
+
+            mark_as_advanced(
+                ${_up_pkg}_LIBRARY_RELEASE
+                ${_up_pkg}_LIBRARY_DEBUG
+                ${_up_pkg}_RUNTIME_RELEASE
+                ${_up_pkg}_RUNTIME_DEBUG
+                )
+        else()
+            add_library(${_target} STATIC IMPORTED)
+
+            if(${_up_pkg}_LIBRARY_RELEASE AND ${_up_pkg}_LIBRARY_DEBUG)
+                set_target_properties(${_target} PROPERTIES
+                    IMPORTED_LOCATION_RELEASE ${${_up_pkg}_LIBRARY_RELEASE}
+                    IMPORTED_LOCATION_DEBUG ${${_up_pkg}_LIBRARY_DEBUG}
+                    )
+            elseif(${_up_pkg}_LIBRARY_RELEASE)
+                set_target_properties(${_target} PROPERTIES
+                    IMPORTED_LOCATION ${${_up_pkg}_LIBRARY_RELEASE}
+                    )
+            else()
+                set_target_properties(${_target} PROPERTIES
+                    IMPORTED_LOCATION ${${_up_pkg}_LIBRARY_DEBUG}
+                    )
+            endif()
+            mark_as_advanced(
+                ${_up_pkg}_LIBRARY_RELEASE
+                ${_up_pkg}_LIBRARY_DEBUG
+                )
+        endif()
+
+        if(_opt_INCLUDE_PATH)
+            set_target_properties(${_target} PROPERTIES
+                INTERFACE_INCLUDE_DIRECTORIES ${${_up_pkg}_INCLUDE_DIR}
+                )
+            mark_as_advanced(${_up_pkg}_INCLUDE_DIR)
+        endif()
+    else()
+        # Android and iOS toolchain disabled these option, need open them.
+        set(_old_mode_include ${CMAKE_FIND_ROOT_PATH_MODE_INCLUDE})
+        set(_old_mode_library ${CMAKE_FIND_ROOT_PATH_MODE_LIBRARY})
+        set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY NEVER)
+        set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE NEVER)
+
+        # Find include directory and library directory.
+        if(_opt_INCLUDE_PATH)
+            find_file(${_up_pkg}_INCLUDE_DIR ${_opt_INCLUDE_PATH}
+                HINTS ${_dir}
+                PATH_SUFFIXES "include"
+                NO_DEFAULT_PATH
+                )
+        endif()
+        find_library(${_up_pkg}_LIBRARY NAMES ${_opt_LIB_NAMES}
+            HINTS ${_dir}
+            PATH_SUFFIXES "libs"
+            NO_DEFAULT_PATH
+            )
+
+        set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ${_old_mode_library})
+        set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ${_old_mode_include})
+
+        # set include or lib directory not exists, return
+        if(_opt_INCLUDE_PATH AND NOT ${_up_pkg}_INCLUDE_DIR)
+            message(AUTHOR_WARNING
+                "Load prebuilt package error: can't find include path "
+                "'${_opt_INCLUDE_PATH}' in '${_dir}/include'."
+                )
+            return()
+        endif()
+        if(NOT ${_up_pkg}_LIBRARY)
+            message(AUTHOR_WARNING
+                "Load prebuilt package error: can't find lib "
+                "named'${_opt_LIB_NAMES}' in '${_dir}/libs'."
+                )
+            return()
+        endif()
+
+        add_library(${_target} UNKNOWN IMPORTED)
+        if(_opt_INCLUDE_PATH)
+            set_target_properties(${_target} PROPERTIES
+                INTERFACE_INCLUDE_DIRECTORIES ${${_up_pkg}_INCLUDE_DIR}
+                )
+            mark_as_advanced(${_up_pkg}_INCLUDE_DIR)
+        endif()
+        set_target_properties(${_target} PROPERTIES
+            IMPORTED_LOCATION ${${_up_pkg}_LIBRARY}
+        )
+        mark_as_advanced(${_up_pkg}_LIBRARY)
+    endif()
+
+    set(${_up_pkg}_FOUND TRUE CACHE INTERNAL "")
+    message(STATUS "Found prebuilt package:'${pkg}', target '${_target}'.")
+endfunction()
+
+#===============================================================================
+# Add prebuilt header path to include directory.
+include_directories("${prebuilt_dir}/include")
+
+#===============================================================================
+cocos_load_prebuilt_package(box2d)
+cocos_load_prebuilt_package(chipmunk)
+cocos_load_prebuilt_package(cjson)
+cocos_load_prebuilt_package(convertutf)
+
+if(NOT COCOS_TARGET_SYSTEM_LINUX)
+    cocos_load_prebuilt_package(curl
+        LIB_NAMES "curl" "libcurl_imp"
+        DLL_NAME "libcurl.dll"
+        )
+    cocos_load_prebuilt_package(openssl
+        LIB_NAMES "ssl" "libcurl_imp"
+        DLL_NAME "ssleay32.dll"
+        )
+    cocos_load_prebuilt_package(crypto
+        LIB_NAMES "crypto" "libcurl_imp"
+        DLL_NAME "libeay32.dll"
+        )
+    message(STATUS "Prebuilt package 'CURL' depends: CRYPTO, OPENSSL.")
+endif()
+
+cocos_load_prebuilt_package(edtaa3func)
+cocos_load_prebuilt_package(flatbufffers
+    LIB_NAMES "flatbuffer" "flatbuffers" "libflatbuffers"
+    )
+
+if(COCOS_TARGET_SYSTEM_LINUX)
+    cocos_load_prebuilt_package(fmodex
+        INCLUDE_PATH "fmod"
+        LIB_NAMES "fmodex64"
+        )
+    cocos_load_prebuilt_package(fmodexl
+        INCLUDE_PATH "fmod"
+        LIB_NAMES "fmodexL64"
+        )
+endif()
+
+cocos_load_prebuilt_package(freetype
+    INCLUDE_PATH "freetype"
+    LIB_NAMES "freetype" "freetype250"
+    )
+
+if(COCOS_TARGET_SYSTEM_WINDOWS)
+    cocos_load_prebuilt_package(glew
+        LIB_NAMES "glew32"
+        DLL_NAME "glew32.dll"
+        )
+endif()
+
+if(COCOS_TARGET_SYSTEM_MACOSX OR
+        COCOS_TARGET_SYSTEM_WINDOWS OR
+        COCOS_TARGET_SYSTEM_LINUX
+        )
+    cocos_load_prebuilt_package(glfw3
+        LIB_NAMES "glfw" "glfw3"
+        )
+    if(COCOS_TARGET_SYSTEM_MACOSX)
+        set_target_properties(GLFW3::GLFW3 PROPERTIES
+            INTERFACE_LINK_LIBRARIES "-framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo"
+            )
+    elseif(COCOS_TARGET_SYSTEM_WINDOWS)
+        find_package(OpenGL REQUIRED)
+        set_target_properties(GLFW3::GLFW3 PROPERTIES
+            INTERFACE_LINK_LIBRARIES "${OPENGL_gl_LIBRARY}"
+            )
+    endif()
+endif()
+
+cocos_load_prebuilt_package(jpeg)
+#cocos_load_prebuilt_package(json) #This package is all herder file.
+
+if(COCOS_TARGET_SYSTEM_IOS)
+    cocos_load_prebuilt_package(lua
+        INCLUDE_PATH "lua"
+        )
+endif()
+
+cocos_load_prebuilt_package(luajit
+    INCLUDE_PATH "luajit"
+    LIB_NAMES "luajit" "lua51"
+    DLL_NAME "lua51.dll"
+    )
+if(COCOS_TARGET_SYSTEM_MACOSX)
+    set_target_properties(LUAJIT::LUAJIT PROPERTIES
+        IMPORTED_LINK_INTERFACE_LIBRARIES "-pagezero_size 10000 -image_base 100000000"
+        )
+else(COCOS_TARGET_SYSTEM_LINUX)
+    set_target_properties(LUAJIT::LUAJIT PROPERTIES
+        IMPORTED_LINK_INTERFACE_LIBRARIES "dl"
+        )
+endif()
+
+cocos_load_prebuilt_package(luasocket)
+cocos_load_prebuilt_package(minizip)
+
+if(COCOS_TARGET_SYSTEM_WINDOWS)
+    cocos_load_prebuilt_package(mpg123
+        LIB_NAMES "libmpg123"
+        DLL_NAME "libmpg123.dll"
+        )
+    cocos_load_prebuilt_package(ogg
+        LIB_NAMES "libogg"
+        DLL_NAME "libogg.dll"
+        )
+    cocos_load_prebuilt_package(vorbis
+        LIB_NAMES "libvorbis"
+        DLL_NAME "libvorbis.dll"
+        )
+    cocos_load_prebuilt_package(vorbisfile
+        LIB_NAMES "libvorbisfile"
+        DLL_NAME "libvorbisfile.dll"
+        )
+    cocos_load_prebuilt_package(OpenAL
+        LIB_NAMES "OpenAL32"
+        DLL_NAME "OpenAL32.dll"
+        )
+endif()
+
+cocos_load_prebuilt_package(png)
+message(STATUS "Target '${_target}' depends: ZLIB.")
+
+cocos_load_prebuilt_package(spidermonkey
+    INCLUDE_PATH "spidermonkey"
+    LIB_NAMES "js_static" "mozjs-28"
+    DLL_NAME "mozjs-28.dll"
+    )
+
+if(COCOS_TARGET_SYSTEM_WINDOWS)
+    cocos_load_prebuilt_package(sqlite3
+        LIB_NAMES "sqlite3"
+        DLL_NAME "sqlite3.dll"
+        )
+endif()
+
+cocos_load_prebuilt_package(tiff
+    DLL_NAME "libtiff.dll"
+    )
+cocos_load_prebuilt_package(tinyxml2)
+
+cocos_load_prebuilt_package(webp)
+if(COCOS_TARGET_SYSTEM_ANDROID)
+    message(STATUS "Target '${_target}' depends: cpufeatures.")
+endif()
+
+cocos_load_prebuilt_package(websockets
+    DLL_NAME "websockets.dll"
+    )
+cocos_load_prebuilt_package(xxhash)
+cocos_load_prebuilt_package(xxtea)
+
+cocos_load_prebuilt_package(zlib
+    INCLUDE_PATH "zlib"
+    LIB_NAMES "z" "libzlib"
+    DLL_NAME "zlib1.dll"
+    )
+

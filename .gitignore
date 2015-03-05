@@ -119,9 +119,11 @@ tests/*/publish/
 project.properties
 
 # Ignore prebuilt libraries folder
+/external/.*
 /external/xxhash/
 /external/curl/
 /external/edtaa3func/
+/external/fbx-conv/
 /external/freetype2/
 /external/glfw3/
 /external/jpeg/
