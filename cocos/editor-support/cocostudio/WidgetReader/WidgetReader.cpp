@@ -67,10 +67,10 @@ namespace cocostudio
     const char* P_ResourceType = "resourceType";
     const char* P_Path = "path";
 
-    const char* P_Layout_PositionPercentXEnabled = "PositionPercentXEnable";
-    const char* P_Layout_PositionPercentYEnabled = "PositionPercentYEnable";
-    const char* P_Layout_PercentWidthEnable = "PercentWidthEnable";
-    const char* P_Layout_PercentHeightEnable = "PercentHeightEnable";
+    const char* P_Layout_PositionPercentXEnabled = "PositionPercentXEnabled";
+    const char* P_Layout_PositionPercentYEnabled = "PositionPercentYEnabled";
+    const char* P_Layout_PercentWidthEnable = "PercentWidthEnabled";
+    const char* P_Layout_PercentHeightEnable = "PercentHeightEnabled";
     const char* P_Layout_StretchWidthEnable = "StretchWidthEnable";
     const char* P_Layout_StretchHeightEnable = "StretchHeightEnable";
     const char* P_Layout_HorizontalEdge = "HorizontalEdge";
