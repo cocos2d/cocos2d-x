@@ -24,10 +24,4 @@
   <ItemGroup>
     <None Include="cpp-tests.Windows_TemporaryKey.pfx" />
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="App.xaml.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="App.xaml.h" />
-  </ItemGroup>
 </Project>

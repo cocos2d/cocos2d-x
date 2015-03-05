@@ -157,10 +157,6 @@ def main():
             command = '%s %s %s -s %s -t %s -o %s -n %s' % (python_bin, generator_py, cfg, args[0], target, output_dir, args[1])
             _run_cmd(command)
 
-        if platform == 'win32':
-            with _pushd(output_dir):
-                _run_cmd('dos2unix *')
-
         print '---------------------------------'
         print 'Generating lua bindings succeeds.'
         print '---------------------------------'
