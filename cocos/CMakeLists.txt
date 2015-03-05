@@ -169,19 +169,3 @@ if(COCOS_TARGET_SYSTEM_WINDOWS)
 
 endif()
 
-# Show cocos2d includes and libraries information.
-get_target_property(COCOS_INTERFACE_INCLUDES ${COCOS2D_TARGET}
-    INTERFACE_INCLUDE_DIRECTORIES
-    )
-message(STATUS
-    "Target '${COCOS2D_TARGET}' public header dir: ${COCOS_INTERFACE_INCLUDES}"
-    )
-get_target_property(COCOS_INCLUDES ${COCOS2D_TARGET} INCLUDE_DIRECTORIES)
-message(STATUS "Target '${COCOS2D_TARGET}' include dirs: ${COCOS_INCLUDES}")
-get_target_property(_INTERFACE_LINK_LIBRARIES ${COCOS2D_TARGET}
-    INTERFACE_LINK_LIBRARIES
-    )
-message(STATUS
-    "Target '${COCOS2D_TARGET}' dependent libs: ${_INTERFACE_LINK_LIBRARIES}"
-    )
-
