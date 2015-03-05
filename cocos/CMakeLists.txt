@@ -131,7 +131,7 @@ endforeach()
 
 if(LINUX)
   set(glfw_other_linker_flags X11)
-if(LINUX)
+endif(LINUX)
 
 target_link_libraries(cocos2d ${PLATFORM_SPECIFIC_LIBS} ${glfw_other_linker_flags})
 
