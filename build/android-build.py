@@ -69,9 +69,9 @@ For More information:
         num_of_cpu = 1
         
     if ndk_build_param == None:
-        BUILD_CONSTANT.NDK_BUILD_COMMAND = '%s -j%d V=1 NDK_DEBUG=%d %s NDK_TOOLCHAIN_VERSION=%s' % (ndk_build_path, num_of_cpu, build_mode=='debug', ndk_module_path, toolchainVersion)
+        BUILD_CONSTANT.NDK_BUILD_COMMAND = '%s -j%d NDK_DEBUG=%d %s NDK_TOOLCHAIN_VERSION=%s' % (ndk_build_path, num_of_cpu, build_mode=='debug', ndk_module_path, toolchainVersion)
     else:
-        BUILD_CONSTANT.NDK_BUILD_COMMAND = '%s -j%d V=1 NDK_DEBUG=%d %s %s NDK_TOOLCHAIN_VERSION=%s' % (ndk_build_path, num_of_cpu, build_mode=='debug', ndk_build_param, ndk_module_path, toolchainVersion)
+        BUILD_CONSTANT.NDK_BUILD_COMMAND = '%s -j%d NDK_DEBUG=%d %s %s NDK_TOOLCHAIN_VERSION=%s' % (ndk_build_path, num_of_cpu, build_mode=='debug', ndk_build_param, ndk_module_path, toolchainVersion)
     
 def check_environment_variables_sdk():
     ''' Checking the environment ANDROID_SDK_ROOT, which will be used for building

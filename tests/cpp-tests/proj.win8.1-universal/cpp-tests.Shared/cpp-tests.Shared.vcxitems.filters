@@ -273,105 +273,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\ExtensionsTest.h">
       <Filter>Classes\ExtensionsTest</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocosBuilderTest\CocosBuilderTest.h">
-      <Filter>Classes\ExtensionsTest\CocosBuilderTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsLayerLoader.h">
-      <Filter>Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.h">
-      <Filter>Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocosBuilderTest\ButtonTest\ButtonTestLayer.h">
-      <Filter>Classes\ExtensionsTest\CocosBuilderTest\ButtonTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocosBuilderTest\ButtonTest\ButtonTestLayerLoader.h">
-      <Filter>Classes\ExtensionsTest\CocosBuilderTest\ButtonTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder\HelloCocosBuilderLayer.h">
-      <Filter>Classes\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder\HelloCocosBuilderLayerLoader.h">
-      <Filter>Classes\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocosBuilderTest\LabelTest\LabelTestLayer.h">
-      <Filter>Classes\ExtensionsTest\CocosBuilderTest\LabelTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocosBuilderTest\LabelTest\LabelTestLayerLoader.h">
-      <Filter>Classes\ExtensionsTest\CocosBuilderTest\LabelTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocosBuilderTest\MenuTest\MenuTestLayer.h">
-      <Filter>Classes\ExtensionsTest\CocosBuilderTest\MenuTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocosBuilderTest\MenuTest\MenuTestLayerLoader.h">
-      <Filter>Classes\ExtensionsTest\CocosBuilderTest\MenuTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackLayerLoader.h">
-      <Filter>Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackTestLayer.h">
-      <Filter>Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocosBuilderTest\TestHeader\TestHeaderLayer.h">
-      <Filter>Classes\ExtensionsTest\CocosBuilderTest\TestHeader</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocosBuilderTest\TestHeader\TestHeaderLayerLoader.h">
-      <Filter>Classes\ExtensionsTest\CocosBuilderTest\TestHeader</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocosBuilderTest\SpriteTest\SpriteTestLayer.h">
-      <Filter>Classes\ExtensionsTest\CocosBuilderTest\SpriteTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocosBuilderTest\SpriteTest\SpriteTestLayerLoader.h">
-      <Filter>Classes\ExtensionsTest\CocosBuilderTest\SpriteTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocosBuilderTest\ParticleSystemTest\ParticleSystemTestLayer.h">
-      <Filter>Classes\ExtensionsTest\CocosBuilderTest\ParticleSystemTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocosBuilderTest\ParticleSystemTest\ParticleSystemTestLayerLoader.h">
-      <Filter>Classes\ExtensionsTest\CocosBuilderTest\ParticleSystemTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocosBuilderTest\ScrollViewTest\ScrollViewTestLayer.h">
-      <Filter>Classes\ExtensionsTest\CocosBuilderTest\ScrollViewTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocosBuilderTest\ScrollViewTest\ScrollViewTestLayerLoader.h">
-      <Filter>Classes\ExtensionsTest\CocosBuilderTest\ScrollViewTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocoStudioActionTimelineTest\ActionTimelineTestScene.h">
-      <Filter>Classes\ExtensionsTest\CocoStudioActionTimelineTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocoStudioArmatureTest\ArmatureScene.h">
-      <Filter>Classes\ExtensionsTest\CocoStudioArmatureTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocoStudioComponentsTest\ComponentsTestScene.h">
-      <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocoStudioComponentsTest\EnemyController.h">
-      <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocoStudioComponentsTest\GameOverScene.h">
-      <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocoStudioComponentsTest\PlayerController.h">
-      <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocoStudioComponentsTest\ProjectileController.h">
-      <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocoStudioComponentsTest\SceneController.h">
-      <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocoStudioSceneTest\SceneEditorTest.h">
-      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\acts.h">
-      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\cons.h">
-      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\EventDef.h">
-      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlScene.h">
       <Filter>Classes\ExtensionsTest\ControlExtensionTest</Filter>
     </ClInclude>
@@ -531,9 +432,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ShaderTest\ShaderTest2.h">
       <Filter>Classes\ShaderTest</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\SpineTest\SpineTest.h">
-      <Filter>Classes\SpineTest</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\Sprite3DTest\DrawNode3D.h">
       <Filter>Classes\Sprite3DTest</Filter>
     </ClInclude>
@@ -574,37 +472,22 @@
       <Filter>Classes\TransitionsTest</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CocosGUIScene.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CocoStudioGUITest.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CocostudioParserTest.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomGUIScene.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\GUIEditorTest.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIScale9SpriteTest.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIScene.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIScene_Editor.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UISceneManager.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UISceneManager_Editor.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UnitTest\RefPtrTest.h">
       <Filter>Classes\UnitTest</Filter>
@@ -621,119 +504,53 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\UITest.h">
       <Filter>Classes\UITest</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomImageTest\CustomImageTest.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomImageTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest\CustomParticleWidgetTest.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomParticleWidgetTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomImageView.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomImageViewReader.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomParticleWidget.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomParticleWidgetReader.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomReader.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIButtonTest\UIButtonTest.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIButtonTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIButtonTest\UIButtonTest_Editor.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIButtonTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UIButtonTest</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UICheckBoxTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest_Editor.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UICheckBoxTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UICheckBoxTest</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIFocusTest\UIFocusTest.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIFocusTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UIFocusTest</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIImageViewTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest_Editor.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIImageViewTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UIImageViewTest</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UILayoutTest\UILayoutTest.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UILayoutTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UILayoutTest\UILayoutTest_Editor.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UILayoutTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UILayoutTest</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIListViewTest\UIListViewTest.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIListViewTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIListViewTest\UIListViewTest_Editor.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIListViewTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UIListViewTest</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UILoadingBarTest\UILoadingBarTest.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UILoadingBarTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UILoadingBarTest\UILoadingBarTest_Editor.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UILoadingBarTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UILoadingBarTest</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIPageViewTest\UIPageViewTest.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIPageViewTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIPageViewTest\UIPageViewTest_Editor.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIPageViewTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UIPageViewTest</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIRichTextTest\UIRichTextTest.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIRichTextTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UIRichTextTest</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIScrollViewTest\UIScrollViewTest.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIScrollViewTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIScrollViewTest\UIScrollViewTest_Editor.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIScrollViewTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UIScrollViewTest</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UISliderTest\UISliderTest.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UISliderTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UISliderTest\UISliderTest_Editor.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UISliderTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UISliderTest</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITextAtlasTest\UITextAtlasTest.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UITextAtlasTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITextAtlasTest\UITextAtlasTest_Editor.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UITextAtlasTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UITextAtlasTest</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITextBMFontTest\UITextBMFontTest.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UITextBMFontTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITextBMFontTest\UITextBMFontTest_Editor.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UITextBMFontTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UITextBMFontTest</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UITextFieldTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest_Editor.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UITextFieldTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UITextFieldTest</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITextTest\UITextTest.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UITextTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITextTest\UITextTest_Editor.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UITextTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UITextTest</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIWidgetAddNodeTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest_Editor.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIWidgetAddNodeTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CocostudioParserTest\CocostudioParserJsonTest.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CocostudioParserTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UIWidgetAddNodeTest</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\AssetsManagerExTest\AssetsManagerExTest.h">
       <Filter>Classes\ExtensionsTest\AssetsManagerExTest</Filter>
@@ -742,20 +559,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\Cocos2dRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\OpenGLES.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\pch.h" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest_Editor.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UITextFieldTest</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceMathTest.cpp">
       <Filter>Classes\PerformanceTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNode.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNodeReader.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomWidgetCallbackBindTest.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\AllocatorTest\AllocatorTest.cpp">
       <Filter>Classes\AllocatorTest</Filter>
@@ -881,60 +686,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\ExtensionsTest.cpp">
       <Filter>Classes\ExtensionsTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocosBuilderTest\CocosBuilderTest.cpp">
-      <Filter>Classes\ExtensionsTest\CocosBuilderTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest\AnimationsTestLayer.cpp">
-      <Filter>Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocosBuilderTest\ButtonTest\ButtonTestLayer.cpp">
-      <Filter>Classes\ExtensionsTest\CocosBuilderTest\ButtonTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder\HelloCocosBuilderLayer.cpp">
-      <Filter>Classes\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocosBuilderTest\MenuTest\MenuTestLayer.cpp">
-      <Filter>Classes\ExtensionsTest\CocosBuilderTest\MenuTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest\TimelineCallbackTestLayer.cpp">
-      <Filter>Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocosBuilderTest\TestHeader\TestHeaderLayer.cpp">
-      <Filter>Classes\ExtensionsTest\CocosBuilderTest\TestHeader</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocoStudioActionTimelineTest\ActionTimelineTestScene.cpp">
-      <Filter>Classes\ExtensionsTest\CocoStudioActionTimelineTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocoStudioArmatureTest\ArmatureScene.cpp">
-      <Filter>Classes\ExtensionsTest\CocoStudioArmatureTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocoStudioComponentsTest\ComponentsTestScene.cpp">
-      <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocoStudioComponentsTest\EnemyController.cpp">
-      <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocoStudioComponentsTest\GameOverScene.cpp">
-      <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocoStudioComponentsTest\PlayerController.cpp">
-      <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocoStudioComponentsTest\ProjectileController.cpp">
-      <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocoStudioComponentsTest\SceneController.cpp">
-      <Filter>Classes\ExtensionsTest\CocoStudioComponentsTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocoStudioSceneTest\SceneEditorTest.cpp">
-      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\acts.cpp">
-      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode\cons.cpp">
-      <Filter>Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\ControlExtensionTest\CCControlScene.cpp">
       <Filter>Classes\ExtensionsTest\ControlExtensionTest</Filter>
@@ -1089,9 +840,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ShaderTest\ShaderTest2.cpp">
       <Filter>Classes\ShaderTest</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\SpineTest\SpineTest.cpp">
-      <Filter>Classes\SpineTest</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\Sprite3DTest\DrawNode3D.cpp">
       <Filter>Classes\Sprite3DTest</Filter>
     </ClCompile>
@@ -1132,37 +880,22 @@
       <Filter>Classes\TransitionsTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CocosGUIScene.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CocoStudioGUITest.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CocostudioParserTest.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomGUIScene.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\GUIEditorTest.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIEditBoxTest.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIScale9SpriteTest.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIScene.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIScene_Editor.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UISceneManager.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UISceneManager_Editor.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UnitTest\RefPtrTest.cpp">
       <Filter>Classes\UnitTest</Filter>
@@ -1179,116 +912,53 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\UITest.cpp">
       <Filter>Classes\UITest</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomImageTest\CustomImageTest.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomImageTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomParticleWidgetTest\CustomParticleWidgetTest.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomParticleWidgetTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomImageView.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomImageViewReader.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomParticleWidget.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomParticleWidgetReader.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomWidget\CustomReader.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomWidget</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIButtonTest\UIButtonTest.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIButtonTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIButtonTest\UIButtonTest_Editor.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIButtonTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UIButtonTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UICheckBoxTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UICheckBoxTest\UICheckBoxTest_Editor.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UICheckBoxTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UICheckBoxTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIFocusTest\UIFocusTest.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIFocusTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UIFocusTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIImageViewTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIImageViewTest\UIImageViewTest_Editor.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIImageViewTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UIImageViewTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UILayoutTest\UILayoutTest.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UILayoutTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UILayoutTest\UILayoutTest_Editor.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UILayoutTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UILayoutTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIListViewTest\UIListViewTest.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIListViewTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIListViewTest\UIListViewTest_Editor.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIListViewTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UIListViewTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UILoadingBarTest\UILoadingBarTest.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UILoadingBarTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UILoadingBarTest\UILoadingBarTest_Editor.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UILoadingBarTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UILoadingBarTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIPageViewTest\UIPageViewTest.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIPageViewTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIPageViewTest\UIPageViewTest_Editor.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIPageViewTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UIPageViewTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIRichTextTest\UIRichTextTest.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIRichTextTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UIRichTextTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIScrollViewTest\UIScrollViewTest.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIScrollViewTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIScrollViewTest\UIScrollViewTest_Editor.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIScrollViewTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UIScrollViewTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UISliderTest\UISliderTest.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UISliderTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UISliderTest\UISliderTest_Editor.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UISliderTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UISliderTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITextAtlasTest\UITextAtlasTest.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UITextAtlasTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITextAtlasTest\UITextAtlasTest_Editor.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UITextAtlasTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UITextAtlasTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITextBMFontTest\UITextBMFontTest.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UITextBMFontTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITextBMFontTest\UITextBMFontTest_Editor.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UITextBMFontTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UITextBMFontTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITextFieldTest\UITextFieldTest.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UITextFieldTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UITextFieldTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITextTest\UITextTest.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UITextTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UITextTest\UITextTest_Editor.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UITextTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UITextTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIWidgetAddNodeTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\UIWidgetAddNodeTest\UIWidgetAddNodeTest_Editor.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\UIWidgetAddNodeTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CocostudioParserTest\CocostudioParserJsonTest.cpp">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CocostudioParserTest</Filter>
+      <Filter>Classes\UITest\CocosStudioGUISceneTest\UIWidgetAddNodeTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\AssetsManagerExTest\AssetsManagerExTest.cpp">
       <Filter>Classes\ExtensionsTest\AssetsManagerExTest</Filter>
@@ -1374,21 +1044,6 @@
     <Filter Include="Classes\ExtensionsTest">
       <UniqueIdentifier>{82b3b01f-888e-4240-8e25-814674de5fe7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\ExtensionsTest\CocosBuilderTest">
-      <UniqueIdentifier>{fa9c060e-9543-478f-bcb8-ab8398ce816d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\ExtensionsTest\CocoStudioActionTimelineTest">
-      <UniqueIdentifier>{8a717ab0-bedc-49b7-b8e2-59b8af5f9619}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\ExtensionsTest\CocoStudioArmatureTest">
-      <UniqueIdentifier>{afafc668-64ed-4e5e-9c8e-67c6bd9d78cf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\ExtensionsTest\CocoStudioComponentsTest">
-      <UniqueIdentifier>{661a29a4-770b-45d5-a958-b2e6cac37196}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\ExtensionsTest\CocoStudioSceneTest">
-      <UniqueIdentifier>{125637c8-3613-4d92-ba03-3b09d35ba748}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\ExtensionsTest\ControlExtensionTest">
       <UniqueIdentifier>{1e03c44a-f6bc-4668-9ed3-6e597a94a94b}</UniqueIdentifier>
     </Filter>
@@ -1397,39 +1052,6 @@
     </Filter>
     <Filter Include="Classes\ExtensionsTest\TableViewTest">
       <UniqueIdentifier>{0cdc1974-166f-45c8-807f-11240d3bc9eb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\ExtensionsTest\CocosBuilderTest\AnimationsTest">
-      <UniqueIdentifier>{b8791078-58dd-4e66-bfd5-424bd21bb990}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\ExtensionsTest\CocosBuilderTest\ButtonTest">
-      <UniqueIdentifier>{d03098a9-23cb-4416-a708-dfe38e646f5d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\ExtensionsTest\CocosBuilderTest\HelloCocosBuilder">
-      <UniqueIdentifier>{c324aaa0-a652-41e4-867a-623f11b1bf1c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\ExtensionsTest\CocosBuilderTest\LabelTest">
-      <UniqueIdentifier>{cf646b59-29c8-4591-a204-fc9f18e841a7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\ExtensionsTest\CocosBuilderTest\MenuTest">
-      <UniqueIdentifier>{d6c3a1f7-8636-4d93-86e1-cb91089d991b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\ExtensionsTest\CocosBuilderTest\ParticleSystemTest">
-      <UniqueIdentifier>{2bbe5860-9ad5-4853-b5e6-7464f24fd07a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\ExtensionsTest\CocosBuilderTest\ScrollViewTest">
-      <UniqueIdentifier>{823b55fb-d90a-410f-bccb-87d05c8f48d3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\ExtensionsTest\CocosBuilderTest\SpriteTest">
-      <UniqueIdentifier>{bb57df61-7f39-494b-a061-6e5d18d914ac}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\ExtensionsTest\CocosBuilderTest\TestHeader">
-      <UniqueIdentifier>{792c879a-1aad-4952-913f-3541b0b988ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\ExtensionsTest\CocosBuilderTest\TimelineCallbackTest">
-      <UniqueIdentifier>{f21347d1-eee3-41d8-93b8-f078be49cbba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\ExtensionsTest\CocoStudioSceneTest\TriggerCode">
-      <UniqueIdentifier>{00f84260-18d5-4666-b444-e83cb00108fa}</UniqueIdentifier>
     </Filter>
     <Filter Include="Classes\ExtensionsTest\ControlExtensionTest\CCControlButtonTest">
       <UniqueIdentifier>{1b3d89b1-5eb3-4634-affb-39bf18b4601c}</UniqueIdentifier>
@@ -1524,9 +1146,6 @@
     <Filter Include="Classes\ShaderTest">
       <UniqueIdentifier>{f12b586c-8ad5-4a75-a643-5c4c1b89bfa0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\SpineTest">
-      <UniqueIdentifier>{4e6fd0ff-c790-4ae5-8bff-888f40ee9659}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\Sprite3DTest">
       <UniqueIdentifier>{f1d5116f-a7fe-49fb-b3bd-6de0f2dabc9b}</UniqueIdentifier>
     </Filter>
@@ -1557,12 +1176,6 @@
     <Filter Include="Classes\UITest">
       <UniqueIdentifier>{19bdeacf-7740-4c9c-822f-f8d3ea98d452}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\UITest\CocostudioGUISceneTest">
-      <UniqueIdentifier>{cf276f2c-502f-4752-9f0a-49910b3a5af3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\UITest\CocostudioGUISceneTest\CustomTest">
-      <UniqueIdentifier>{054ab72c-845e-43ab-8a02-4f73569f7e02}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\UnitTest">
       <UniqueIdentifier>{6af0635b-c984-43a1-9263-0074e904b50c}</UniqueIdentifier>
     </Filter>
@@ -1572,77 +1185,65 @@
     <Filter Include="Classes\ZwoptexTest">
       <UniqueIdentifier>{3fd77e97-6478-4076-bcce-78366417556f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomImageTest">
-      <UniqueIdentifier>{5cfc03ef-b92a-4907-aee5-7907fc6a2ec8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomParticleWidgetTest">
-      <UniqueIdentifier>{53b3883b-75fd-449a-bff0-049666bcb37f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\UITest\CocostudioGUISceneTest\CustomWidget">
-      <UniqueIdentifier>{acae99cc-d880-4639-8ca6-ea86280f8717}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\UITest\CocostudioGUISceneTest\UIButtonTest">
-      <UniqueIdentifier>{4d2df976-e166-4594-9623-f08b80cc89da}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\UITest\CocostudioGUISceneTest\UICheckBoxTest">
-      <UniqueIdentifier>{18235e83-827b-4f2b-b4e5-0a9101d1744f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\UITest\CocostudioGUISceneTest\UIFocusTest">
-      <UniqueIdentifier>{81149ad7-cd77-4550-81d5-f92d2a24262d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\UITest\CocostudioGUISceneTest\UIImageViewTest">
-      <UniqueIdentifier>{2cfcecc0-e911-44d4-99b1-713334cad8fd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\UITest\CocostudioGUISceneTest\UILayoutTest">
-      <UniqueIdentifier>{0dd6d6bc-8038-497b-9277-32bec637ea75}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\UITest\CocostudioGUISceneTest\UIListViewTest">
-      <UniqueIdentifier>{012f7c6c-1148-41d7-9a9e-3b7e354b5144}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\UITest\CocostudioGUISceneTest\UILoadingBarTest">
-      <UniqueIdentifier>{449f58a7-f925-420d-9298-a97299623782}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\UITest\CocostudioGUISceneTest\UIPageViewTest">
-      <UniqueIdentifier>{c6942f2c-e4d7-408a-8dca-a4ab2560e90a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\UITest\CocostudioGUISceneTest\UIRichTextTest">
-      <UniqueIdentifier>{ca823c33-3ef6-4ba4-b84b-549ee38fbf25}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\UITest\CocostudioGUISceneTest\UIScrollViewTest">
-      <UniqueIdentifier>{acd7dd63-eaa6-49dd-b472-dcdfe4915a2d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\UITest\CocostudioGUISceneTest\UISliderTest">
-      <UniqueIdentifier>{021f3545-db93-472e-b645-fd7190182c03}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\UITest\CocostudioGUISceneTest\UITextAtlasTest">
-      <UniqueIdentifier>{bed2df6d-74db-41fe-9987-4159cdf9a30d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\UITest\CocostudioGUISceneTest\UITextBMFontTest">
-      <UniqueIdentifier>{0378f118-a952-4990-83cc-1e50f51a9fde}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\UITest\CocostudioGUISceneTest\UITextFieldTest">
-      <UniqueIdentifier>{6012744a-4a9e-4977-9009-811a9c38f754}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\UITest\CocostudioGUISceneTest\UITextTest">
-      <UniqueIdentifier>{bf02fcde-560c-4a44-a393-488318956014}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\UITest\CocostudioGUISceneTest\UIWebViewTest">
-      <UniqueIdentifier>{8e194c48-76d0-4dae-bc91-b8b8292ea824}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\UITest\CocostudioGUISceneTest\UIWidgetAddNodeTest">
-      <UniqueIdentifier>{9ce60738-6f45-4d73-9774-2a80062b3944}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\UITest\CocostudioGUISceneTest\CocostudioParserTest">
-      <UniqueIdentifier>{4f4b4f24-d906-4845-a6fa-52a27d3ec99c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\ExtensionsTest\AssetsManagerExTest">
       <UniqueIdentifier>{2c5dd382-6534-4369-b33c-6b18995e6576}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest">
-      <UniqueIdentifier>{f93dc8a9-3901-446e-bb08-5e51a31a470c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\AllocatorTest">
       <UniqueIdentifier>{2840e615-0b65-4bd3-87b5-b1b36b5e4a3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UITest\CocosStudioGUISceneTest">
+      <UniqueIdentifier>{cf276f2c-502f-4752-9f0a-49910b3a5af3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UITest\CocosStudioGUISceneTest\UIButtonTest">
+      <UniqueIdentifier>{4d2df976-e166-4594-9623-f08b80cc89da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UITest\CocosStudioGUISceneTest\UICheckBoxTest">
+      <UniqueIdentifier>{18235e83-827b-4f2b-b4e5-0a9101d1744f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UITest\CocosStudioGUISceneTest\UIFocusTest">
+      <UniqueIdentifier>{81149ad7-cd77-4550-81d5-f92d2a24262d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UITest\CocosStudioGUISceneTest\UIImageViewTest">
+      <UniqueIdentifier>{2cfcecc0-e911-44d4-99b1-713334cad8fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UITest\CocosStudioGUISceneTest\UILayoutTest">
+      <UniqueIdentifier>{0dd6d6bc-8038-497b-9277-32bec637ea75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UITest\CocosStudioGUISceneTest\UIListViewTest">
+      <UniqueIdentifier>{012f7c6c-1148-41d7-9a9e-3b7e354b5144}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UITest\CocosStudioGUISceneTest\UILoadingBarTest">
+      <UniqueIdentifier>{449f58a7-f925-420d-9298-a97299623782}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UITest\CocosStudioGUISceneTest\UIPageViewTest">
+      <UniqueIdentifier>{c6942f2c-e4d7-408a-8dca-a4ab2560e90a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UITest\CocosStudioGUISceneTest\UIRichTextTest">
+      <UniqueIdentifier>{ca823c33-3ef6-4ba4-b84b-549ee38fbf25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UITest\CocosStudioGUISceneTest\UIScrollViewTest">
+      <UniqueIdentifier>{acd7dd63-eaa6-49dd-b472-dcdfe4915a2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UITest\CocosStudioGUISceneTest\UISliderTest">
+      <UniqueIdentifier>{021f3545-db93-472e-b645-fd7190182c03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UITest\CocosStudioGUISceneTest\UITextAtlasTest">
+      <UniqueIdentifier>{bed2df6d-74db-41fe-9987-4159cdf9a30d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UITest\CocosStudioGUISceneTest\UITextBMFontTest">
+      <UniqueIdentifier>{0378f118-a952-4990-83cc-1e50f51a9fde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UITest\CocosStudioGUISceneTest\UITextFieldTest">
+      <UniqueIdentifier>{6012744a-4a9e-4977-9009-811a9c38f754}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UITest\CocosStudioGUISceneTest\UITextTest">
+      <UniqueIdentifier>{bf02fcde-560c-4a44-a393-488318956014}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UITest\CocosStudioGUISceneTest\UIWebViewTest">
+      <UniqueIdentifier>{8e194c48-76d0-4dae-bc91-b8b8292ea824}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\UITest\CocosStudioGUISceneTest\UIWidgetAddNodeTest">
+      <UniqueIdentifier>{9ce60738-6f45-4d73-9774-2a80062b3944}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1652,15 +1253,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\testBasic.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceMathTest.h">
       <Filter>Classes\PerformanceTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNode.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomRootNodeReader.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\UITest\CocoStudioGUITest\CustomTest\CustomWidgetCallbackBindTest\CustomWidgetCallbackBindTest.h">
-      <Filter>Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\AllocatorTest\AllocatorTest.h">
       <Filter>Classes\AllocatorTest</Filter>

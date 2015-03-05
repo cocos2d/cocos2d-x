@@ -12,12 +12,6 @@
     <Filter Include="manual\chipmunk">
       <UniqueIdentifier>{05fe556b-0330-48c1-bfe1-0e7119db20a1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="manual\cocosbuilder">
-      <UniqueIdentifier>{1a494d10-c2d0-498c-8b80-2f45fee36640}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="manual\cocostudio">
-      <UniqueIdentifier>{af265b68-4f27-4561-b7ab-299f21212e08}</UniqueIdentifier>
-    </Filter>
     <Filter Include="manual\extension">
       <UniqueIdentifier>{f4329991-ce95-4f10-9442-92d63bd6aea1}</UniqueIdentifier>
     </Filter>
@@ -26,9 +20,6 @@
     </Filter>
     <Filter Include="manual\network">
       <UniqueIdentifier>{7b278f66-4153-44d8-ba60-d7b7feed8a17}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="manual\spine">
-      <UniqueIdentifier>{59756149-2598-457f-ae42-ad675d5f3783}</UniqueIdentifier>
     </Filter>
     <Filter Include="manual\ui">
       <UniqueIdentifier>{db4d6533-8c6a-4a18-bdd6-c9b98b897458}</UniqueIdentifier>
@@ -65,16 +56,7 @@
     <ClCompile Include="..\manual\jsb_event_dispatcher_manual.cpp">
       <Filter>manual</Filter>
     </ClCompile>
-    <ClCompile Include="..\auto\jsb_cocos2dx_builder_auto.cpp">
-      <Filter>auto</Filter>
-    </ClCompile>
     <ClCompile Include="..\auto\jsb_cocos2dx_extension_auto.cpp">
-      <Filter>auto</Filter>
-    </ClCompile>
-    <ClCompile Include="..\auto\jsb_cocos2dx_spine_auto.cpp">
-      <Filter>auto</Filter>
-    </ClCompile>
-    <ClCompile Include="..\auto\jsb_cocos2dx_studio_auto.cpp">
       <Filter>auto</Filter>
     </ClCompile>
     <ClCompile Include="..\auto\jsb_cocos2dx_ui_auto.cpp">
@@ -91,12 +73,6 @@
     </ClCompile>
     <ClCompile Include="..\manual\chipmunk\js_bindings_chipmunk_registration.cpp">
       <Filter>manual\chipmunk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\manual\cocosbuilder\js_bindings_ccbreader.cpp">
-      <Filter>manual\cocosbuilder</Filter>
-    </ClCompile>
-    <ClCompile Include="..\manual\cocostudio\jsb_cocos2dx_studio_manual.cpp">
-      <Filter>manual\cocostudio</Filter>
     </ClCompile>
     <ClCompile Include="..\manual\extension\jsb_cocos2dx_extension_manual.cpp">
       <Filter>manual\extension</Filter>
@@ -116,14 +92,8 @@
     <ClCompile Include="..\manual\network\XMLHTTPRequest.cpp">
       <Filter>manual\network</Filter>
     </ClCompile>
-    <ClCompile Include="..\manual\spine\jsb_cocos2dx_spine_manual.cpp">
-      <Filter>manual\spine</Filter>
-    </ClCompile>
     <ClCompile Include="..\manual\ui\jsb_cocos2dx_ui_manual.cpp">
       <Filter>manual\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\manual\cocostudio\jsb_cocos2dx_studio_conversions.cpp">
-      <Filter>manual\cocostudio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -166,16 +136,7 @@
     <ClInclude Include="..\manual\jsb_event_dispatcher_manual.h">
       <Filter>manual</Filter>
     </ClInclude>
-    <ClInclude Include="..\auto\jsb_cocos2dx_builder_auto.hpp">
-      <Filter>auto</Filter>
-    </ClInclude>
     <ClInclude Include="..\auto\jsb_cocos2dx_extension_auto.hpp">
-      <Filter>auto</Filter>
-    </ClInclude>
-    <ClInclude Include="..\auto\jsb_cocos2dx_spine_auto.hpp">
-      <Filter>auto</Filter>
-    </ClInclude>
-    <ClInclude Include="..\auto\jsb_cocos2dx_studio_auto.hpp">
       <Filter>auto</Filter>
     </ClInclude>
     <ClInclude Include="..\auto\jsb_cocos2dx_ui_auto.hpp">
@@ -199,15 +160,6 @@
     <ClInclude Include="..\manual\chipmunk\js_bindings_chipmunk_registration.h">
       <Filter>manual\chipmunk</Filter>
     </ClInclude>
-    <ClInclude Include="..\manual\cocosbuilder\cocosbuilder_specifics.hpp">
-      <Filter>manual\cocosbuilder</Filter>
-    </ClInclude>
-    <ClInclude Include="..\manual\cocosbuilder\js_bindings_ccbreader.h">
-      <Filter>manual\cocosbuilder</Filter>
-    </ClInclude>
-    <ClInclude Include="..\manual\cocostudio\jsb_cocos2dx_studio_manual.h">
-      <Filter>manual\cocostudio</Filter>
-    </ClInclude>
     <ClInclude Include="..\manual\extension\jsb_cocos2dx_extension_manual.h">
       <Filter>manual\extension</Filter>
     </ClInclude>
@@ -229,14 +181,8 @@
     <ClInclude Include="..\manual\network\XMLHTTPRequest.h">
       <Filter>manual\network</Filter>
     </ClInclude>
-    <ClInclude Include="..\manual\spine\jsb_cocos2dx_spine_manual.h">
-      <Filter>manual\spine</Filter>
-    </ClInclude>
     <ClInclude Include="..\manual\ui\jsb_cocos2dx_ui_manual.h">
       <Filter>manual\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\manual\cocostudio\jsb_cocos2dx_studio_conversions.h">
-      <Filter>manual\cocostudio</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

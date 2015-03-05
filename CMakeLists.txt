@@ -37,8 +37,6 @@ include(CocosBuildHelpers)
 #===============================================================================
 # CMake settings for entire project.
 
-# Export compile command to 'compile_commands.json' for track compile args.
-set(CMAKE_EXPORT_COMPILE_COMMAND TRUE)
 #set(CMAKE_USE_RELATIVE_PATHS TRUE)
 set_property(GLOBAL PROPERTY USE_FOLDERS TRUE)
 

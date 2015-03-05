@@ -18,11 +18,6 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\editor-support\spine\proj.win8.1-universal\libSpine.WindowsPhone\libSpine.WindowsPhone.vcxproj">
-      <Project>{cc1da216-a80d-4be4-b309-acb6af313aff}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{22f3b9df-1209-4574-8331-003966f562bf}</ProjectGuid>
     <RootNamespace>libcocos2d_8_1</RootNamespace>

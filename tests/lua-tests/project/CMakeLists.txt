@@ -94,7 +94,7 @@ file(GLOB_RECURSE cpp_res "${CPP_TESTS_SOURCE_DIR}/Resources/*")
 
 #===============================================================================
 # Link dependent libraries.
-target_link_libraries(${app_name} ${LUACOCOS2D_TARGET} ${SPINE_TARGET})
+target_link_libraries(${app_name} ${LUACOCOS2D_TARGET})
 
 #===============================================================================
 # Specific settings.

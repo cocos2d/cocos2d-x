@@ -26,11 +26,6 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\editor-support\spine\proj.win8.1-universal\libSpine.Windows\libSpine.Windows.vcxproj">
-      <Project>{f3550fe0-c795-44f6-8feb-093eb68143ae}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9335005f-678e-4e8e-9b84-50037216aec8}</ProjectGuid>
     <DefaultLanguage>en-US</DefaultLanguage>

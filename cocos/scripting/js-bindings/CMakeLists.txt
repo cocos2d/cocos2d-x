@@ -44,22 +44,12 @@ target_include_directories(${JSCOCOS2D_TARGET} PRIVATE
     "${COCOS2D_SOURCE_DIR}/2d"
     # "${COCOS2D_SOURCE_DIR}/3d"
     "${COCOS2D_SOURCE_DIR}/base"
-    "${COCOS2D_SOURCE_DIR}/editor-support/cocosbuilder"
-    "${COCOS2D_SOURCE_DIR}/editor-support/cocostudio"
-    # "${COCOS2D_SOURCE_DIR}/editor-support/cocostudio/ActionTimeline"
-    "${COCOS2D_SOURCE_DIR}/editor-support/spine"
     "${COCOS2D_SOURCE_DIR}/storage"
     "${COCOS2D_SOURCE_DIR}/ui"
     "manual/cocos2d"
-    "manual/cocostudio"
     "manual/extension"
     "manual/ui"
     )
-
-#include_directories(
-#  ${cocos_root}/cocos/network
-#  ${cocos_root}/cocos/editor-support
-#)
 
 #===============================================================================
 # Add sources.
@@ -77,16 +67,12 @@ cocos_target_sources(${JSCOCOS2D_TARGET} GROUP "manual-binding" FILES
     "manual/chipmunk/js_bindings_chipmunk_functions.cpp"
     "manual/chipmunk/js_bindings_chipmunk_auto_classes.cpp"
     "manual/chipmunk/js_bindings_chipmunk_registration.cpp"
-    "manual/cocosbuilder/js_bindings_ccbreader.cpp"
-    "manual/cocostudio/jsb_cocos2dx_studio_conversions.cpp"
-    "manual/cocostudio/jsb_cocos2dx_studio_manual.cpp"
     "manual/extension/jsb_cocos2dx_extension_manual.cpp"
     "manual/localstorage/js_bindings_system_functions.cpp"
     "manual/localstorage/js_bindings_system_registration.cpp"
     "manual/network/XMLHTTPRequest.cpp"
     "manual/network/jsb_websocket.cpp"
     "manual/network/jsb_socketio.cpp"
-    "manual/spine/jsb_cocos2dx_spine_manual.cpp"
     "manual/ui/jsb_cocos2dx_ui_manual.cpp"
     )
 
@@ -110,10 +96,7 @@ endif()
 
 cocos_target_sources(${JSCOCOS2D_TARGET} GROUP "auto-binding" FILES
     "auto/jsb_cocos2dx_auto.cpp"
-    "auto/jsb_cocos2dx_builder_auto.cpp"
     "auto/jsb_cocos2dx_extension_auto.cpp"
-    "auto/jsb_cocos2dx_spine_auto.cpp"
-    "auto/jsb_cocos2dx_studio_auto.cpp"
     "auto/jsb_cocos2dx_ui_auto.cpp"
     )
 

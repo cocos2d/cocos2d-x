@@ -97,7 +97,7 @@ file(GLOB_RECURSE cpp_res "${CPP_TESTS_SOURCE_DIR}/Resources/*")
 
 #===============================================================================
 # Link dependent libraries.
-target_link_libraries(${app_name} ${JSCOCOS2D_TARGET} ${SPINE_TARGET})
+target_link_libraries(${app_name} ${JSCOCOS2D_TARGET})
 
 if(COCOS_TARGET_SYSTEM_IOS)
     set(facebook_sdk_dir "plugin/plugins/facebook/proj.ios/sdk")

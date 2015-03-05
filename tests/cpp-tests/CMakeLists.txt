@@ -55,13 +55,6 @@ cocos_target_sources(${app_name} GROUP "Classes" FILES
     "Classes/EffectsAdvancedTest/EffectsAdvancedTest.cpp"
     "Classes/EffectsTest/EffectsTest.cpp"
     "Classes/ExtensionsTest/AssetsManagerExTest/AssetsManagerExTest.cpp"
-    "Classes/ExtensionsTest/CocosBuilderTest/ButtonTest/ButtonTestLayer.cpp"
-    "Classes/ExtensionsTest/CocosBuilderTest/CocosBuilderTest.cpp"
-    "Classes/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder/HelloCocosBuilderLayer.cpp"
-    "Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest/AnimationsTestLayer.cpp"
-    "Classes/ExtensionsTest/CocosBuilderTest/MenuTest/MenuTestLayer.cpp"
-    "Classes/ExtensionsTest/CocosBuilderTest/TestHeader/TestHeaderLayer.cpp"
-    "Classes/ExtensionsTest/CocosBuilderTest/TimelineCallbackTest/TimelineCallbackTestLayer.cpp"
     "Classes/ExtensionsTest/ControlExtensionTest/CCControlButtonTest/CCControlButtonTest.cpp"
     "Classes/ExtensionsTest/ControlExtensionTest/CCControlColourPicker/CCControlColourPickerTest.cpp"
     "Classes/ExtensionsTest/ControlExtensionTest/CCControlScene.cpp"
@@ -191,113 +184,44 @@ if(BUILD_EXTENSIONS_CCPHYSICSSPRITE_SUPPORT_BOX2D)
         )
 endif()
 
-if(BUILD_SUPPORT_COCOSBUILDER)
+cocos_target_sources(${app_name} GROUP "Classes" FILES
+    "Classes/UITest/CocoStudioGUITest/CocoStudioGUITest.cpp"
+    "Classes/UITest/CocoStudioGUITest/CocosGUIScene.cpp"
+    "Classes/UITest/CocoStudioGUITest/UIScene.cpp"
+    "Classes/UITest/CocoStudioGUITest/UIScale9SpriteTest.cpp"
+    "Classes/UITest/CocoStudioGUITest/UISceneManager.cpp"
+    "Classes/UITest/CocoStudioGUITest/UIButtonTest/UIButtonTest.cpp"
+    "Classes/UITest/CocoStudioGUITest/UIFocusTest/UIFocusTest.cpp"
+    "Classes/UITest/CocoStudioGUITest/UICheckBoxTest/UICheckBoxTest.cpp"
+    "Classes/UITest/CocoStudioGUITest/UIImageViewTest/UIImageViewTest.cpp"
+    "Classes/UITest/CocoStudioGUITest/UILayoutTest/UILayoutTest.cpp"
+    "Classes/UITest/CocoStudioGUITest/UIListViewTest/UIListViewTest.cpp"
+    "Classes/UITest/CocoStudioGUITest/UILoadingBarTest/UILoadingBarTest.cpp"
+    "Classes/UITest/CocoStudioGUITest/UIPageViewTest/UIPageViewTest.cpp"
+    "Classes/UITest/CocoStudioGUITest/UIScrollViewTest/UIScrollViewTest.cpp"
+    "Classes/UITest/CocoStudioGUITest/UISliderTest/UISliderTest.cpp"
+    "Classes/UITest/CocoStudioGUITest/UITextTest/UITextTest.cpp"
+    "Classes/UITest/CocoStudioGUITest/UITextAtlasTest/UITextAtlasTest.cpp"
+    "Classes/UITest/CocoStudioGUITest/UITextBMFontTest/UITextBMFontTest.cpp"
+    "Classes/UITest/CocoStudioGUITest/UITextFieldTest/UITextFieldTest.cpp"
+    "Classes/UITest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest.cpp"
+    "Classes/UITest/CocoStudioGUITest/UIRichTextTest/UIRichTextTest.cpp"
+    )
+if(NOT COCOS_TARGET_SYSTEM_LINUX)
     cocos_target_sources(${app_name} GROUP "Classes" FILES
-        "Classes/ExtensionsTest/CocosBuilderTest/ButtonTest/ButtonTestLayer.cpp"
-        "Classes/ExtensionsTest/CocosBuilderTest/CocosBuilderTest.cpp"
-        "Classes/ExtensionsTest/CocosBuilderTest/HelloCocosBuilder/HelloCocosBuilderLayer.cpp"
-        "Classes/ExtensionsTest/CocosBuilderTest/AnimationsTest/AnimationsTestLayer.cpp"
-        "Classes/ExtensionsTest/CocosBuilderTest/MenuTest/MenuTestLayer.cpp"
-        "Classes/ExtensionsTest/CocosBuilderTest/TestHeader/TestHeaderLayer.cpp"
-        "Classes/ExtensionsTest/CocosBuilderTest/TimelineCallbackTest/TimelineCallbackTestLayer.cpp"
-        )
-endif()
-
-if(BUILD_SUPPORT_COCOSTUDIO)
-    cocos_target_sources(${app_name} GROUP "Classes" FILES
-        "Classes/ExtensionsTest/CocoStudioArmatureTest/ArmatureScene.cpp"
-        "Classes/ExtensionsTest/CocoStudioActionTimelineTest/ActionTimelineTestScene.cpp"
-        "Classes/ExtensionsTest/CocoStudioComponentsTest/ComponentsTestScene.cpp"
-        "Classes/ExtensionsTest/CocoStudioComponentsTest/EnemyController.cpp"
-        "Classes/ExtensionsTest/CocoStudioComponentsTest/GameOverScene.cpp"
-        "Classes/ExtensionsTest/CocoStudioComponentsTest/PlayerController.cpp"
-        "Classes/ExtensionsTest/CocoStudioComponentsTest/ProjectileController.cpp"
-        "Classes/ExtensionsTest/CocoStudioComponentsTest/SceneController.cpp"
-        "Classes/ExtensionsTest/CocoStudioSceneTest/SceneEditorTest.cpp"
-        "Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/acts.cpp"
-        "Classes/ExtensionsTest/CocoStudioSceneTest/TriggerCode/cons.cpp"
-
         "Classes/UITest/CocoStudioGUITest/CocoStudioGUITest.cpp"
         "Classes/UITest/CocoStudioGUITest/CocosGUIScene.cpp"
-        "Classes/UITest/CocoStudioGUITest/GUIEditorTest.cpp"
-        "Classes/UITest/CocoStudioGUITest/CustomGUIScene.cpp"
-        "Classes/UITest/CocoStudioGUITest/UIScene.cpp"
+        "Classes/UITest/CocoStudioGUITest/UIEditBoxTest.cpp"
         "Classes/UITest/CocoStudioGUITest/UIScale9SpriteTest.cpp"
+        "Classes/UITest/CocoStudioGUITest/UIScene.cpp"
         "Classes/UITest/CocoStudioGUITest/UISceneManager.cpp"
-        "Classes/UITest/CocoStudioGUITest/CocostudioParserTest/CocostudioParserJsonTest.cpp"
-        "Classes/UITest/CocoStudioGUITest/CocostudioParserTest.cpp" 
-        "Classes/UITest/CocoStudioGUITest/UIButtonTest/UIButtonTest.cpp"
-        "Classes/UITest/CocoStudioGUITest/UIFocusTest/UIFocusTest.cpp"
-        "Classes/UITest/CocoStudioGUITest/UICheckBoxTest/UICheckBoxTest.cpp"
-        "Classes/UITest/CocoStudioGUITest/UIImageViewTest/UIImageViewTest.cpp"
-        "Classes/UITest/CocoStudioGUITest/UILayoutTest/UILayoutTest.cpp"
-        "Classes/UITest/CocoStudioGUITest/UIListViewTest/UIListViewTest.cpp"
-        "Classes/UITest/CocoStudioGUITest/UILoadingBarTest/UILoadingBarTest.cpp"
-        "Classes/UITest/CocoStudioGUITest/UIPageViewTest/UIPageViewTest.cpp"
-        "Classes/UITest/CocoStudioGUITest/UIScrollViewTest/UIScrollViewTest.cpp"
-        "Classes/UITest/CocoStudioGUITest/UISliderTest/UISliderTest.cpp"
-        "Classes/UITest/CocoStudioGUITest/UITextTest/UITextTest.cpp"
-        "Classes/UITest/CocoStudioGUITest/UITextAtlasTest/UITextAtlasTest.cpp"
-        "Classes/UITest/CocoStudioGUITest/UITextBMFontTest/UITextBMFontTest.cpp"
-        "Classes/UITest/CocoStudioGUITest/UITextFieldTest/UITextFieldTest.cpp"
-        "Classes/UITest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest.cpp"
-        "Classes/UITest/CocoStudioGUITest/UIRichTextTest/UIRichTextTest.cpp"
-        "Classes/UITest/CocoStudioGUITest/UIScene_Editor.cpp"
-        "Classes/UITest/CocoStudioGUITest/UISceneManager_Editor.cpp"
-        "Classes/UITest/CocoStudioGUITest/UIButtonTest/UIButtonTest_Editor.cpp"
-        "Classes/UITest/CocoStudioGUITest/UICheckBoxTest/UICheckBoxTest_Editor.cpp"
-        "Classes/UITest/CocoStudioGUITest/UIImageViewTest/UIImageViewTest_Editor.cpp"
-        "Classes/UITest/CocoStudioGUITest/UILayoutTest/UILayoutTest_Editor.cpp"
-        "Classes/UITest/CocoStudioGUITest/UIListViewTest/UIListViewTest_Editor.cpp"
-        "Classes/UITest/CocoStudioGUITest/UILoadingBarTest/UILoadingBarTest_Editor.cpp"
-        "Classes/UITest/CocoStudioGUITest/UIPageViewTest/UIPageViewTest_Editor.cpp"
-        "Classes/UITest/CocoStudioGUITest/UIScrollViewTest/UIScrollViewTest_Editor.cpp"
-        "Classes/UITest/CocoStudioGUITest/UISliderTest/UISliderTest_Editor.cpp"
-        "Classes/UITest/CocoStudioGUITest/UITextTest/UITextTest_Editor.cpp"
-        "Classes/UITest/CocoStudioGUITest/UITextAtlasTest/UITextAtlasTest_Editor.cpp"
-        "Classes/UITest/CocoStudioGUITest/UITextBMFontTest/UITextBMFontTest_Editor.cpp"
-        "Classes/UITest/CocoStudioGUITest/UITextFieldTest/UITextFieldTest_Editor.cpp"
-        "Classes/UITest/CocoStudioGUITest/UIWidgetAddNodeTest/UIWidgetAddNodeTest_Editor.cpp"
-        "Classes/UITest/CocoStudioGUITest/CustomWidget/CustomImageView.cpp"
-        "Classes/UITest/CocoStudioGUITest/CustomWidget/CustomImageViewReader.cpp"
-        "Classes/UITest/CocoStudioGUITest/CustomWidget/CustomParticleWidget.cpp"
-        "Classes/UITest/CocoStudioGUITest/CustomWidget/CustomParticleWidgetReader.cpp"
-        "Classes/UITest/CocoStudioGUITest/CustomWidget/CustomReader.cpp"
-        "Classes/UITest/CocoStudioGUITest/CustomTest/CustomImageTest/CustomImageTest.cpp"
-        "Classes/UITest/CocoStudioGUITest/CustomTest/CustomParticleWidgetTest/CustomParticleWidgetTest.cpp"
-        "Classes/UITest/CocoStudioGUITest/CustomTest/CustomWidgetCallbackBindTest/CustomRootNode.cpp"
-        "Classes/UITest/CocoStudioGUITest/CustomTest/CustomWidgetCallbackBindTest/CustomRootNodeReader.cpp"
-        "Classes/UITest/CocoStudioGUITest/CustomTest/CustomWidgetCallbackBindTest/CustomWidgetCallbackBindTest.cpp"
         )
-    if(NOT COCOS_TARGET_SYSTEM_LINUX)
-        cocos_target_sources(${app_name} GROUP "Classes" FILES
-            "Classes/UITest/CocoStudioGUITest/CocoStudioGUITest.cpp"
-            "Classes/UITest/CocoStudioGUITest/CocosGUIScene.cpp"
-            "Classes/UITest/CocoStudioGUITest/CocostudioParserTest.cpp"
-            "Classes/UITest/CocoStudioGUITest/CustomGUIScene.cpp"
-            "Classes/UITest/CocoStudioGUITest/GUIEditorTest.cpp"
-            "Classes/UITest/CocoStudioGUITest/UIEditBoxTest.cpp"
-            "Classes/UITest/CocoStudioGUITest/UIScale9SpriteTest.cpp"
-            "Classes/UITest/CocoStudioGUITest/UIScene.cpp"
-            "Classes/UITest/CocoStudioGUITest/UISceneManager.cpp"
-            "Classes/UITest/CocoStudioGUITest/UISceneManager_Editor.cpp"
-            "Classes/UITest/CocoStudioGUITest/UIScene_Editor.cpp"
-            )
-    endif()
-    if(COCOS_TARGET_SYSTEM_IOS OR COCOS_TARGET_SYSTEM_ANDROID)
-        cocos_target_sources(${app_name} GROUP "Classes" FILES
-            "Classes/UITest/CocoStudioGUITest/UIWebViewTest/UIWebViewTest.cpp"
-            "Classes/UITest/CocoStudioGUITest/UIVideoPlayerTest/UIVideoPlayerTest.cpp"
-            )
-    endif()
 endif()
-
-if(BUILD_SUPPORT_SPINE)
+if(COCOS_TARGET_SYSTEM_IOS OR COCOS_TARGET_SYSTEM_ANDROID)
     cocos_target_sources(${app_name} GROUP "Classes" FILES
-        "Classes/SpineTest/SpineTest.cpp"
-        "Classes/SpineTest/SpineTest.h"
+        "Classes/UITest/CocoStudioGUITest/UIWebViewTest/UIWebViewTest.cpp"
+        "Classes/UITest/CocoStudioGUITest/UIVideoPlayerTest/UIVideoPlayerTest.cpp"
         )
-    target_link_libraries(${app_name} ${SPINE_TARGET})
 endif()
 
 #===============================================================================

@@ -15,7 +15,7 @@ require "ByteCodeEncryptTest/ByteCodeEncryptTest"
 require "Camera3DTest/Camera3DTest"
 require "ClickAndMoveTest/ClickAndMoveTest"
 require "CocosDenshionTest/CocosDenshionTest"
-require "CocoStudioTest/CocoStudioTest"
+require "CocosUITest/CocosUITest"
 require "CurrentLanguageTest/CurrentLanguageTest"
 require "DrawPrimitivesTest/DrawPrimitivesTest"
 require "EffectsTest/EffectsTest"
@@ -41,7 +41,6 @@ require "RotateWorldTest/RotateWorldTest"
 require "Sprite3DTest/Sprite3DTest"
 require "SpriteTest/SpriteTest"
 require "SceneTest/SceneTest"
-require "SpineTest/SpineTest"
 require "Texture2dTest/Texture2dTest"
 require "TileMapTest/TileMapTest"
 require "TouchesTest/TouchesTest"
@@ -86,7 +85,7 @@ local _allTests = {
     { isSupported = false,  name = "ChipmunkAccelTouchTest" , create_func=    ChipmunkAccelTouchTestMain  },
     { isSupported = true,  name = "ClickAndMoveTest"       , create_func   =          ClickAndMoveTest      },
     { isSupported = true,  name = "CocosDenshionTest"      , create_func   =         CocosDenshionTestMain  },
-    { isSupported = true,  name = "CocoStudioTest"         , create_func   =         CocoStudioTestMain  },  
+    { isSupported = true,  name = "CocosUITest"         , create_func   =         runCocosGUITestScene  },  
     { isSupported = false,  name = "CurlTest"               , create_func=                  CurlTestMain  },
     { isSupported = true,  name = "CurrentLanguageTest"    , create_func=   CurrentLanguageTestMain      },
     { isSupported = true,  name = "DrawPrimitivesTest"     , create_func=        DrawPrimitivesTest      },
@@ -115,7 +114,6 @@ local _allTests = {
     { isSupported = true,  name = "RenderTextureTest"      , create_func   =         RenderTextureTestMain  },
     { isSupported = true,  name = "RotateWorldTest"        , create_func   =           RotateWorldTest      },
     { isSupported = true,  name = "SceneTest"              , create_func   =                 SceneTestMain  },
-    { isSupported = true,  name = "SpineTest"              , create_func   =                 SpineTestMain  },
     { isSupported = false,  name = "SchdulerTest"           , create_func=              SchdulerTestMain  },
     { isSupported = false,  name = "ShaderTest"             , create_func=            ShaderTestMain      },
     { isSupported = true,  name = "Sprite3DTest"           , create_func   =                Sprite3DTest    },
