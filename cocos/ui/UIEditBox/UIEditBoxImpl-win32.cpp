@@ -527,7 +527,7 @@ bool EditBoxImplWin::initWithSize(const Size& size)
 	// align the text vertically center
     _label->setAnchorPoint(Vec2(0, 0.5f));
     _label->setPosition(Vec2(CC_EDIT_BOX_PADDING, size.height / 2.0f));
-    _label->setColor(_colText);
+    _label->setTextColor(_colText);
     _editBox->addChild(_label);
 
     _labelPlaceHolder = Label::create();
@@ -536,7 +536,7 @@ bool EditBoxImplWin::initWithSize(const Size& size)
     _labelPlaceHolder->setAnchorPoint(Vec2(0, 0.5f));
     _labelPlaceHolder->setPosition(CC_EDIT_BOX_PADDING, size.height / 2.0f);
     _labelPlaceHolder->setVisible(false);
-    _labelPlaceHolder->setColor(_colPlaceHolder);
+    _labelPlaceHolder->setTextColor(_colPlaceHolder);
     _editBox->addChild(_labelPlaceHolder);
     
     _editSize = size;
