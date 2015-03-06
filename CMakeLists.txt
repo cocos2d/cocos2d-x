@@ -66,6 +66,9 @@ option(BUILD_TESTS_CPP "Build Cocos2D cpp tests." ON)
 if(BUILD_TESTS_CPP)
     add_subdirectory("tests/cpp-empty-test")
     add_subdirectory("tests/cpp-tests")
+    if(COCOS_TARGET_SYSTEM_IOS)
+        add_subdirectory("tests/game-controller-test")
+    endif()
 endif()
 
 #===============================================================================
@@ -77,13 +80,16 @@ endif()
 # Include lua tests.
 include(CMakeDependentOption)
 CMAKE_DEPENDENT_OPTION(BUILD_TESTS_LUA
-    "Build Cocos2D LUA binging tests."
-    ON "BUILD_LUA_COCOS2D"
+    "Build Cocos2D LUA binging tests, depends BUILD_TESTS_CPP."
+    ON "BUILD_LUA_COCOS2D AND BUILD_TESTS_CPP"
     OFF
     )
 if(BUILD_TESTS_LUA)
     add_subdirectory("tests/lua-empty-test/project")
     add_subdirectory("tests/lua-tests/project")
+    if(COCOS_TARGET_SYSTEM_IOS)
+        add_subdirectory("tests/lua-game-controller-test/project")
+    endif()
 endif()
 
 #===============================================================================
