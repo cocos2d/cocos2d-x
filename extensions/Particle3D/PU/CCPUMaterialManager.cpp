@@ -29,7 +29,7 @@
 #include "platform/CCFileUtils.h"
 #include "platform/CCPlatformMacros.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #include <io.h>
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "android/CCFileUtils-android.h"
@@ -127,7 +127,7 @@ int iterPath(const char *fpath, const struct stat *sb, int typeflag)
 bool PUMaterialCache::loadMaterialsFromSearchPaths( const std::string &fileFolder )
 {
     bool state = false;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
         std::string seg("/");
         std::string fullPath = fileFolder + seg + std::string("*.material");
         _finddata_t data;
