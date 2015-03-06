@@ -986,6 +986,8 @@
         "cocos/platform/win32/CCStdC-win32.cpp", 
         "cocos/platform/win32/CCStdC-win32.h", 
         "cocos/platform/win32/compat/stdint.h", 
+        "cocos/platform/win32/inet_pton_mingw.cpp", 
+        "cocos/platform/win32/inet_pton_mingw.h", 
         "cocos/platform/win8.1-universal/Cocos2dRenderer.cpp", 
         "cocos/platform/win8.1-universal/Cocos2dRenderer.h", 
         "cocos/platform/win8.1-universal/OpenGLES.cpp", 
