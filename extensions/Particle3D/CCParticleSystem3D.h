@@ -156,12 +156,24 @@ public:
         PAUSE,
     };
     
+    /**
+     * override function
+     */
     virtual void update(float delta) override;
     
+    /**
+     * override function
+     */
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     
+    /**
+     * override function
+     */
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
     
+    /**
+     * override function
+     */
     virtual const BlendFunc &getBlendFunc() const override;
     
     /**
@@ -207,9 +219,13 @@ public:
      */
     void removeAllAffector();
 
-        /** 
-    */
+    /** 
+     * get particle quota
+     */
     unsigned int getParticleQuota() const;
+    /**
+     * set particle quota
+     */
     void setParticleQuota(unsigned int quota);
     
     /**
@@ -217,25 +233,38 @@ public:
      */
     Particle3DAffector* getAffector(int index);
     
+    /**
+     * get particle pool
+     */
     const ParticlePool& getParticlePool()
     {
         return  _particlePool;
     }
     
+    /**
+     * get alive particles count
+     */
     virtual int getAliveParticleCount() const
     {
         return 0;
     }
     
+    /**
+     * get particle playing state
+     */
     State getState() const { return _state; }
 
     bool isKeepLocal(void) const { return _keepLocal; }
     void setKeepLocal(bool keepLocal);
 
-     /** Enables or disables the system.
-     */
+     /** 
+      *Enables or disables the system.
+      */
     void setEnabled (bool enabled);
     
+    /**
+     * is enabled
+     */
     bool isEnabled(void) const { return _isEnabled; }
 
 CC_CONSTRUCTOR_ACCESS:
@@ -250,9 +279,9 @@ protected:
     Particle3DRender*                _render;
     
     //particles
-    ParticlePool                _particlePool;
+    ParticlePool                     _particlePool;
     int                              _aliveParticlesCnt;
-    unsigned int            _particleQuota;
+    unsigned int                     _particleQuota;
     
     BlendFunc                        _blend;
 
