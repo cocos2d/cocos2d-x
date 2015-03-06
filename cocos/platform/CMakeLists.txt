@@ -79,6 +79,7 @@ elseif(COCOS_TARGET_SYSTEM_ANDROID)
         "platform/android/CCGLViewImpl-android.cpp"
         "platform/android/CCFileUtils-android.cpp"
         "platform/android/javaactivity-android.cpp"
+        "platform/android/jni/CocosPlayClient.cpp"
         "platform/android/jni/DPIJni.cpp"
         "platform/android/jni/IMEJni.cpp"
         "platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxAccelerometer.cpp"
