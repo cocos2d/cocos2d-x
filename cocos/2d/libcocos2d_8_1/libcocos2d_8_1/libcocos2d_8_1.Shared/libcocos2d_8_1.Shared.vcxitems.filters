@@ -300,36 +300,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\CCInputDelegate.h">
       <Filter>cocostudio\components</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\internal\pow10.h">
-      <Filter>cocostudio\json\rapidjson\internal</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\internal\stack.h">
-      <Filter>cocostudio\json\rapidjson\internal</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\internal\strfunc.h">
-      <Filter>cocostudio\json\rapidjson\internal</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\document.h">
-      <Filter>cocostudio\json\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\filestream.h">
-      <Filter>cocostudio\json\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\prettywriter.h">
-      <Filter>cocostudio\json\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\rapidjson.h">
-      <Filter>cocostudio\json\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\reader.h">
-      <Filter>cocostudio\json\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\stringbuffer.h">
-      <Filter>cocostudio\json\rapidjson</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\writer.h">
-      <Filter>cocostudio\json\rapidjson</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\ButtonReader\ButtonReader.h">
       <Filter>cocostudio\reader\WidgetReader\ButtonReader</Filter>
     </ClInclude>
@@ -377,6 +347,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\UserCameraReader\UserCameraReader.h">
       <Filter>cocostudio\reader\WidgetReader\UserCameraReader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.h">
+      <Filter>cocostudio\reader\WidgetReader\Particle3DReader</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\WidgetReader.h">
       <Filter>cocostudio\reader\WidgetReader</Filter>
@@ -2074,6 +2047,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\UserCameraReader\UserCameraReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\UserCameraReader</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.cpp">
+      <Filter>cocostudio\reader\WidgetReader\UserCameraReader</Filter>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\WidgetReader.cpp">
       <Filter>cocostudio\reader\WidgetReader</Filter>
     </ClCompile>
@@ -3418,12 +3394,6 @@
     <Filter Include="cocostudio\armature\utils">
       <UniqueIdentifier>{7dfddab5-351a-48e7-9cd4-1df5268badfd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="cocostudio\json\rapidjson">
-      <UniqueIdentifier>{7225fe7b-80b7-40a8-a674-435183a8c45a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="cocostudio\json\rapidjson\internal">
-      <UniqueIdentifier>{cc361288-af78-4806-939c-538c560996f0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="cocostudio\reader\WidgetReader">
       <UniqueIdentifier>{c88afb13-dccb-4ff6-be05-fd91f19d9202}</UniqueIdentifier>
     </Filter>
@@ -3474,6 +3444,9 @@
     </Filter>
     <Filter Include="cocostudio\reader\WidgetReader\UserCameraReader">
       <UniqueIdentifier>{c0310482-ce10-4301-bdd6-110fff3c014e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cocostudio\reader\WidgetReader\Particle3DReader">
+      <UniqueIdentifier>{c0310485-ce10-420b-bdd6-1104ff3c014e}</UniqueIdentifier>
     </Filter>
     <Filter Include="ui\BaseClasses">
       <UniqueIdentifier>{48ae1ce9-b81f-479f-b59c-b10e344699d8}</UniqueIdentifier>

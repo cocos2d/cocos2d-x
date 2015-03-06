@@ -196,16 +196,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\flatbuffers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\idl.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\util.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\document.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\filestream.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\internal\pow10.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\internal\stack.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\internal\strfunc.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\prettywriter.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\rapidjson.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\reader.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\stringbuffer.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\json\writer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\tinyxml2\tinyxml2.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\unzip\ioapi.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\unzip\ioapi_mem.h" />
@@ -422,6 +412,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Node3DReader\Node3DReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\UserCameraReader\UserCameraReader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\WidgetReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\WidgetReaderProtocol.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\math\CCAffineTransform.h" />
@@ -984,6 +975,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Node3DReader\Node3DReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\UserCameraReader\UserCameraReader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\WidgetReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\math\CCAffineTransform.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\math\CCGeometry.cpp" />

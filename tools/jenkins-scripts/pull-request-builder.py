@@ -267,10 +267,7 @@ def main():
                     
                 close_db(db)
         elif(node_name == 'win32' or node_name == 'win32_win7' or node_name == 'win32_bak'):
-            build_vs_project_name = 'cocos2d-win32.vc2013.sln'
-            if(branch == 'v3'):
-                build_vs_project_name = 'cocos2d-win32.vc2012.sln'
-            ret = subprocess.call('"%VS120COMNTOOLS%..\IDE\devenv.com" "build\"' + build_vs_project_name + ' /Build "Debug|Win32"', shell=True)
+            ret = subprocess.call('"%VS120COMNTOOLS%..\IDE\devenv.com" "build\cocos2d-win32.vc2012.sln" /Build "Debug|Win32"', shell=True)
         elif(node_name == 'windows-universal' or node_name == 'windows-universal_bak'):
             ret = subprocess.call('"%VS120COMNTOOLS%..\IDE\devenv.com" "build\cocos2d-win8.1-universal.sln" /Build "Debug|Win32"', shell=True)
         elif(node_name == 'ios_mac' or node_name == 'ios' or node_name == 'ios_bak'):
