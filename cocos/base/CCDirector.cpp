@@ -107,7 +107,7 @@ Director* Director::getInstance()
 }
 
 Director::Director()
-: _recreateStatsLabel(true)
+: _isStatusLabelUpdated(true)
 {
 }
 
@@ -389,7 +389,7 @@ void Director::setOpenGLView(GLView *openGLView)
         // set size
         _winSizeInPoints = _openGLView->getDesignResolutionSize();
 
-        _recreateStatsLabel = true;
+        _isStatusLabelUpdated = true;
 
         if (_openGLView)
         {
@@ -1077,10 +1077,10 @@ void Director::resume()
 // updates the FPS every frame
 void Director::showStats()
 {
-    if (_recreateStatsLabel)
+    if (_isStatusLabelUpdated)
     {
         createStatsLabel();
-        _recreateStatsLabel = false;
+        _isStatusLabelUpdated = false;
     }
     static unsigned long prevCalls = 0;
     static unsigned long prevVerts = 0;
@@ -1227,7 +1227,7 @@ void Director::setContentScaleFactor(float scaleFactor)
     if (scaleFactor != _contentScaleFactor)
     {
         _contentScaleFactor = scaleFactor;
-        _recreateStatsLabel = true;
+        _isStatusLabelUpdated = true;
     }
 }
 
