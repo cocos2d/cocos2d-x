@@ -25,8 +25,19 @@ def initBuildConstant(ndk_build_param, build_mode):
     except Exception:
         print "NDK_ROOT not defined. Please define NDK_ROOT in your environment"
         sys.exit(1)
-    
-    toolchainVersion = '4.8'
+ 
+    try:
+        toolchainVersion = os.environ['NDK_TOOLCHAIN_VERSION']
+    except KeyError, e:
+        # No toolchain, using 4.9 then
+        toolchainVersion = '4.9'
+
+    print '*** Using NDK_TOOLCHAIN_VERSION = %s ***' % toolchainVersion
+    if toolchainVersion == '4.8':
+        print 'Warning: Your application may crash on Android when use c++ 11 with 4.8\n'
+    elif toolchainVersion == '4.9':
+        print 'Warning: Your application may not run on Android + MIPS when using 4.9. Use 4.8 instead\n'
+
     try:
         versionFile = open(os.path.join(ndk_root, "RELEASE.TXT"))
         firstLine = versionFile.readline()
@@ -35,18 +46,14 @@ def initBuildConstant(ndk_build_param, build_mode):
             ndkVersionValue = int(filter(str.isdigit,ndkVersion))
             if ndkVersionValue < 10 or cmp(ndkVersion,'r10c') < 0 :
                 print '''Please use NDK r10c above.
-If you do not,your application may crash or freeze on Android L(5.0) when use BMFont and HttpClient.
+If you do not, your application may crash or freeze on Android L(5.0) when use BMFont and HttpClient.
 For More information:
     https://github.com/cocos2d/cocos2d-x/issues/9114
     https://github.com/cocos2d/cocos2d-x/issues/9138\n'''
-            else:
-                toolchainVersion = '4.9'
         versionFile.close()
     except Exception:
         print "Can not be determined your NDK version"
         
-    if toolchainVersion == '4.8':
-        print 'NDK_TOOLCHAIN_VERSION is 4.8,your application may crash on Androud when use c++ 11 regular\n'
         
     current_dir = os.path.dirname(os.path.realpath(__file__))
     cocos_root = os.path.join(current_dir, "..")
@@ -67,7 +74,7 @@ For More information:
     except Exception:
         print "Can't know cpuinfo, use default 1 cpu"
         num_of_cpu = 1
-        
+
     if ndk_build_param == None:
         BUILD_CONSTANT.NDK_BUILD_COMMAND = '%s -j%d NDK_DEBUG=%d %s NDK_TOOLCHAIN_VERSION=%s' % (ndk_build_path, num_of_cpu, build_mode=='debug', ndk_module_path, toolchainVersion)
     else:
