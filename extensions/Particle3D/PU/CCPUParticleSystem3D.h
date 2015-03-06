@@ -256,31 +256,35 @@ public:
 
     virtual int getAliveParticleCount() const override;
 
-    /** Returns the velocity scale, defined in the particle system, but passed to the technique for convenience.
-    */
+    /** 
+     * Returns the velocity scale, defined in the particle system, but passed to the technique for convenience.
+     */
     float getParticleSystemScaleVelocity() const;
 
     void setParticleSystemScaleVelocity(float scaleVelocity) { _particleSystemScaleVelocity = scaleVelocity; }
 
-    /** If the orientation of the particle system has been changed since the last update, the passed vector
-        is rotated accordingly.
-    */
+    /** 
+     * If the orientation of the particle system has been changed since the last update, the passed vector is rotated accordingly.
+     */
     void rotationOffset(Vec3& pos);
 
     inline float getTimeElapsedSinceStart(void) const {return _timeElapsedSinceStart;};
 
-    /** 
-    */
+    /**
+     * default particle width
+     */
     const float getDefaultWidth(void) const;
     void setDefaultWidth(const float width);
 
     /** 
-    */
+     * default particle height
+     */
     const float getDefaultHeight(void) const;
     void setDefaultHeight(const float height);
 
     /** 
-    */
+     * default particle depth
+     */
     const float getDefaultDepth(void) const;
     void setDefaultDepth(const float depth);
 
@@ -288,25 +292,25 @@ public:
     Quaternion getDerivedOrientation();
     Vec3 getDerivedScale();
 
-    /** Return the maximum velocity a particle can have, even if the velocity of the particle has been set higher (either by 
-        initialisation of the particle or by means of an affector).
-    */
+    /** 
+     * Return the maximum velocity a particle can have, even if the velocity of the particle has been set higher (either by initialisation of the particle or by means of an affector).
+     */
     float getMaxVelocity() const;
 
-    /** Set the maximum velocity a particle can have.
-    */
+    /** 
+     * Set the maximum velocity a particle can have.
+     */
     void setMaxVelocity(float maxVelocity);
 
     void setMaterialName(const std::string &name) { _matName = name; };
     const std::string getMaterialName() const { return _matName; };
 
     /** Forces emission of particles.
-    @remarks
-        The number of requested particles are the exact number that are emitted. No down-scalling is applied.
-    */
+     * @remarks The number of requested particles are the exact number that are emitted. No down-scalling is applied.
+     */
     void forceEmission(PUEmitter* emitter, unsigned requested);
 
-        /**
+    /**
      * add particle affector
      */
     void addEmitter(PUEmitter* emitter);
@@ -377,62 +381,48 @@ protected:
 
 protected:
 
-    std::vector<PUEmitter*> _emitters;
-    std::vector<PUObserver *> _observers;
+    std::vector<PUEmitter*>      _emitters;
+    std::vector<PUObserver *>    _observers;
 
-    ParticlePoolMap _emittedEmitterParticlePool;
-    ParticlePoolMap _emittedSystemParticlePool;
-    //EmitterPoolMap _emittedEmitters;
-    //SystemPoolMap  _emittedSystems;
-    unsigned int _emittedEmitterQuota;
-    unsigned int _emittedSystemQuota;
+    ParticlePoolMap              _emittedEmitterParticlePool;
+    ParticlePoolMap              _emittedSystemParticlePool;
+
+    unsigned int                 _emittedEmitterQuota;
+    unsigned int                 _emittedSystemQuota;
 
     //internal
     PUParticle3D::ParticleBehaviourList _behaviourTemplates;
-    std::vector<PUListener *> _listeners;
+    std::vector<PUListener *>           _listeners;
 
-    bool _prepared;
-    bool _poolPrepared;
+    bool                                _prepared;
+    bool                                _poolPrepared;
 
-    float _particleSystemScaleVelocity;
-    float _timeElapsedSinceStart;
-    /** Rotation offset between 2 updates.
-    */
-    Quaternion _rotationOffset;
+    float                               _particleSystemScaleVelocity;
+    float                               _timeElapsedSinceStart;
 
-    /** The rotation centre.
-    */
-    Vec3 _rotationCentre;
+    Quaternion                          _rotationOffset; //Rotation offset between 2 updates.
+
+    Vec3                                _rotationCentre; //The rotation centre.
+
+    float                               _defaultWidth; //Default width of each visual particle.
+
+    float                               _defaultHeight; //Default height of each visual particle.
+
+    float                               _defaultDepth; //Default depth of each visual particle.
     
+    float                               _maxVelocity; //Attributes that limit the velocity of the particles in this technique.
+    bool                                _maxVelocitySet;
 
-    /** Default width of each visual particle.
-    */
-    float _defaultWidth;
+    std::string                         _matName;//material name
 
-    /** Default height of each visual particle.
-    */
-    float _defaultHeight;
+    bool                                _isMarkedForEmission;
 
-    /** Default depth of each visual particle.
-    */
-    float _defaultDepth;
-    
-        /** Attributes that limit the velocity of the particles in this technique.
-    */
-    float _maxVelocity;
-    bool _maxVelocitySet;
+    Vec3                                _latestPositionDiff;
+    Vec3                                _latestPosition;// Keep latest position
 
-    std::string _matName;
+    Quaternion                          _latestOrientation;
 
-    bool _isMarkedForEmission;
-
-    // Keep latest position
-    Vec3 _latestPositionDiff;
-    Vec3 _latestPosition;
-
-    Quaternion _latestOrientation;
-
-    PUParticleSystem3D *_parentParticleSystem;
+    PUParticleSystem3D *                _parentParticleSystem;
 };
 
 NS_CC_END
