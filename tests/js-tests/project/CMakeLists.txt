@@ -101,7 +101,7 @@ target_link_libraries(${app_name} ${JSCOCOS2D_TARGET})
 
 if(COCOS_TARGET_SYSTEM_IOS)
     set(facebook_sdk_dir "plugin/plugins/facebook/proj.ios/sdk")
-    target_include_directories(${app_name} PRIVATE 
+    target_include_directories(${app_name} PRIVATE
         "${COCOS2D-X_SOURCE_DIR}/plugin/jsbindings/auto"
         "${COCOS2D-X_SOURCE_DIR}/plugin/jsbindings/manual"
         "${COCOS2D-X_SOURCE_DIR}/${facebook_sdk_dir}/FacebookSDK.framework"
@@ -109,6 +109,13 @@ if(COCOS_TARGET_SYSTEM_IOS)
     target_link_libraries(${app_name}
         "-F ${COCOS2D-X_SOURCE_DIR}/${facebook_sdk_dir}"
         "-framework FacebookSDK"
+        )
+elseif(COCOS_TARGET_SYSTEM_ANDROID)
+    set(plugin_protocols_dir "plugin/protocols")
+    target_include_directories(${app_name} PRIVATE
+        "${COCOS2D-X_SOURCE_DIR}/plugin/jsbindings/auto"
+        "${COCOS2D-X_SOURCE_DIR}/plugin/jsbindings/manual"
+        "${COCOS2D-X_SOURCE_DIR}/plugin/protocols/platform"
         )
 endif()
 

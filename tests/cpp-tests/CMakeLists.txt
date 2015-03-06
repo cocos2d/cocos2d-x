@@ -258,7 +258,7 @@ elseif(COCOS_TARGET_SYSTEM_WINDOWS)
     #   C3130: failed to write injected code block to PDB.
     target_compile_options(${app_name} PRIVATE "/Z7")
 
-    set_target_properties(${app_name} PROPERTIES 
+    set_target_properties(${app_name} PROPERTIES
         LINK_FLAGS "/SUBSYSTEM:WINDOWS"
         )
 elseif(COCOS_TARGET_SYSTEM_LINUX)
@@ -323,7 +323,7 @@ elseif(COCOS_TARGET_SYSTEM_ANDROID)
     # TODO
 else()
     add_custom_command(TARGET ${app_name} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory 
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
         "${CMAKE_CURRENT_SOURCE_DIR}/Resources"
         "$<TARGET_FILE_DIR:${app_name}>/Resources"
         )

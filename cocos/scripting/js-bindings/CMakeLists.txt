@@ -109,3 +109,10 @@ target_link_libraries(${JSCOCOS2D_TARGET}
     ${COCOS2D_TARGET}
     )
 
+#===============================================================================
+# Specific settings.
+
+if(COCOS_TARGET_SYSTEM_ANDROID)
+    # spidermonkey/js/HashTable.h use limits macros
+    target_compile_definitions(${JSCOCOS2D_TARGET} PUBLIC "__STDINT_LIMITS")
+endif()
