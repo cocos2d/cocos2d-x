@@ -185,6 +185,8 @@ bool PUMaterialCache::loadMaterialsFromSearchPaths( const std::string &fileFolde
         }
     }
     closedir(d);
+#else
+    CCASSERT(0, "no implement for this platform");
 #endif
 
     return state;
