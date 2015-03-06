@@ -464,6 +464,7 @@ protected:
     float _accumDt;
     float _frameRate;
     
+    bool _isStatusLabelUpdated;
     LabelAtlas *_FPSLabel;
     LabelAtlas *_drawnBatchesLabel;
     LabelAtlas *_drawnVerticesLabel;
