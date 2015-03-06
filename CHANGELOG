@@ -1,5 +1,6 @@
 cocos2d-x-4.0alpha1 Mar.20 2015
     [FIX]           Label: shadow color is wrong
+    [FIX]           Label: position is wrong if it is visited by a new camera
 
 cocos2d-x-4.0alph0 Feb.28 2015
     [NEW]           C++: merge JSB
