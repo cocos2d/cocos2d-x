@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="physics">
@@ -159,16 +159,16 @@
     </Filter>
     <Filter Include="cocostudio\reader\WidgetReader\Node3DReader">
       <UniqueIdentifier>{9421ece2-69f8-4cee-8e59-51043ba06f15}</UniqueIdentifier>
-    </Filter>    
+    </Filter>
     <Filter Include="cocostudio\reader\WidgetReader\UserCameraReader">
       <UniqueIdentifier>{9421e104-69f8-4cee-8e59-51043ba06f15}</UniqueIdentifier>
-    </Filter>    
+    </Filter>
     <Filter Include="cocostudio\reader\WidgetReader\Particle3DReader">
       <UniqueIdentifier>{9421e104-1028-4cee-8e59-51043ba06f15}</UniqueIdentifier>
-    </Filter>    
+    </Filter>
     <Filter Include="cocostudio\reader\WidgetReader\Sprite3DReader">
       <UniqueIdentifier>{94210432-69f8-4cee-8e59-51043ba06f15}</UniqueIdentifier>
-    </Filter>       
+    </Filter>
     <Filter Include="cocostudio\json">
       <UniqueIdentifier>{a9901b6a-0c7b-4adb-8e17-105c872d744d}</UniqueIdentifier>
     </Filter>
@@ -996,10 +996,10 @@
     </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\UserCameraReader\UserCameraReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\UserCameraReader</Filter>
-    </ClCompile>    
+    </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.cpp">
       <Filter>cocostudio\reader\WidgetReader\Particle3DReader</Filter>
-    </ClCompile>    
+    </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\CocoLoader.cpp">
       <Filter>cocostudio\json</Filter>
     </ClCompile>
@@ -1638,6 +1638,18 @@
     <ClCompile Include="..\3d\CCPlane.cpp" />
     <ClCompile Include="..\3d\CCAABB.cpp">
       <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\desktop\CCController-desktop.cpp">
+      <Filter>platform\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCController.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCEventListenerController.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCEventController.cpp">
+      <Filter>base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2466,10 +2478,10 @@
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\UserCameraReader\UserCameraReader.h">
       <Filter>cocostudio\reader\WidgetReader\UserCameraReader</Filter>
-    </ClInclude>    
+    </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.h">
       <Filter>cocostudio\reader\WidgetReader\Particle3DReader</Filter>
-    </ClInclude>    
+    </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\WidgetReader\Sprite3DReader\Sprite3DReader.h">
       <Filter>cocostudio\reader\WidgetReader\Sprite3DReader</Filter>
     </ClInclude>
@@ -3192,6 +3204,18 @@
     </ClInclude>
     <ClInclude Include="..\platform\CCPlatformMacros.h">
       <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\desktop\CCController-desktop.h">
+      <Filter>platform\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCController.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCEventListenerController.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCEventController.h">
+      <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
