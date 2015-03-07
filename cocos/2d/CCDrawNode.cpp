@@ -336,11 +336,11 @@ void DrawNode::onDraw(const Mat4 &transform, uint32_t flags)
         
         _dirty = false;
     }
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        GL::bindVAO(_vao);
-    }
-    else
+//    if (Configuration::getInstance()->supportsShareableVAO())
+//    {
+//        GL::bindVAO(_vao);
+//    }
+//    else
     {
         GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
 
