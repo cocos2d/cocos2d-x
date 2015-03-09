@@ -606,8 +606,10 @@ void SIOClientImpl::onClose(WebSocket* ws)
         {
             iter->second->receivedDisconnect();
         }
+        _clients.clear();
     }
-
+    _connected = false;
+    
     this->release();
 }
 
