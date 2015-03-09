@@ -45,11 +45,9 @@
 		15427B79198B879900DC375D /* libluacocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15EFA665198B33EE000C57D3 /* libluacocos2d iOS.a */; };
 		15427B7A198B87AA00DC375D /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2d iOS.a */; };
 		15427B7D198B880100DC375D /* lua_cocos2dx_controller_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15427B7B198B880100DC375D /* lua_cocos2dx_controller_manual.cpp */; };
-		156EAE071977D0BD00F53709 /* ActionTimeline in Resources */ = {isa = PBXBuildFile; fileRef = 38FA2E75194AECF800FF2BE4 /* ActionTimeline */; };
 		15AECE0B195C0F8A00907DB0 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA0FB65191B933000B170C8 /* MediaPlayer.framework */; };
 		15AECE0F195C1FDD00907DB0 /* cocosvideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */; };
 		15AECE25195D467D00907DB0 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA0FB65191B933000B170C8 /* MediaPlayer.framework */; };
-		15B0870D195AD52000D6F62B /* ActionTimeline in Resources */ = {isa = PBXBuildFile; fileRef = 38FA2E75194AECF800FF2BE4 /* ActionTimeline */; };
 		15B13E5219F0FD4D008A1ADC /* Manifests in Resources */ = {isa = PBXBuildFile; fileRef = 15B3709219EE5D1000ABE682 /* Manifests */; };
 		15B3709319EE5D1000ABE682 /* Manifests in Resources */ = {isa = PBXBuildFile; fileRef = 15B3709219EE5D1000ABE682 /* Manifests */; };
 		15B3709419EE5D1000ABE682 /* Manifests in Resources */ = {isa = PBXBuildFile; fileRef = 15B3709219EE5D1000ABE682 /* Manifests */; };
@@ -421,14 +419,6 @@
 		1AC35CD118CED84500F37B72 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAC18CED84500F37B72 /* background.mp3 */; };
 		1AC35CD218CED84500F37B72 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAD18CED84500F37B72 /* background.ogg */; };
 		1AC35CD318CED84500F37B72 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAD18CED84500F37B72 /* background.ogg */; };
-		1AC35CD418CED84500F37B72 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAE18CED84500F37B72 /* ccb */; };
-		1AC35CD518CED84500F37B72 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAE18CED84500F37B72 /* ccb */; };
-		1AC35CD618CED84500F37B72 /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAF18CED84500F37B72 /* CocosBuilderExample.ccbproj */; };
-		1AC35CD718CED84500F37B72 /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAF18CED84500F37B72 /* CocosBuilderExample.ccbproj */; };
-		1AC35CD818CED84500F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB018CED84500F37B72 /* CocosBuilderExample.ccbresourcelog */; };
-		1AC35CD918CED84500F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB018CED84500F37B72 /* CocosBuilderExample.ccbresourcelog */; };
-		1AC35CDE18CED84500F37B72 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB318CED84500F37B72 /* components */; };
-		1AC35CDF18CED84500F37B72 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB318CED84500F37B72 /* components */; };
 		1AC35CE018CED84500F37B72 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB418CED84500F37B72 /* configs */; };
 		1AC35CE118CED84500F37B72 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB418CED84500F37B72 /* configs */; };
 		1AC35CE218CED84500F37B72 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB518CED84500F37B72 /* effect1.raw */; };
@@ -459,8 +449,6 @@
 		1AC35D0118CED84500F37B72 /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC418CED84500F37B72 /* pew-pew-lei.wav */; };
 		1AC35D0418CED84500F37B72 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC618CED84500F37B72 /* Shaders */; };
 		1AC35D0518CED84500F37B72 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC618CED84500F37B72 /* Shaders */; };
-		1AC35D0618CED84500F37B72 /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC718CED84500F37B72 /* spine */; };
-		1AC35D0718CED84500F37B72 /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC718CED84500F37B72 /* spine */; };
 		1AC35D0818CED84500F37B72 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC818CED84500F37B72 /* TileMaps */; };
 		1AC35D0918CED84500F37B72 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC818CED84500F37B72 /* TileMaps */; };
 		1AC35D0A18CED84500F37B72 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC918CED84500F37B72 /* zwoptex */; };
@@ -490,8 +478,6 @@
 		1AC35D6018CEDE9E00F37B72 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D5B18CEDE9E00F37B72 /* main.cpp */; };
 		1AC35D7518CEE58500F37B72 /* src in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D7418CEE58500F37B72 /* src */; };
 		1AC35D7618CEE58500F37B72 /* src in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D7418CEE58500F37B72 /* src */; };
-		1AC35D7918CEE59900F37B72 /* cocosbuilderRes in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D7818CEE59900F37B72 /* cocosbuilderRes */; };
-		1AC35D7A18CEE59900F37B72 /* cocosbuilderRes in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D7818CEE59900F37B72 /* cocosbuilderRes */; };
 		1AC35D8118CEE5B100F37B72 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7D18CEE5B100F37B72 /* AppDelegate.cpp */; };
 		1AC35D8218CEE5B100F37B72 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7D18CEE5B100F37B72 /* AppDelegate.cpp */; };
 		1AC35D8318CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35D7F18CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp */; };
@@ -516,8 +502,6 @@
 		1AC35DB518CEE5DA00F37B72 /* LuaObjectCBridgeTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35DAF18CEE5DA00F37B72 /* LuaObjectCBridgeTest.mm */; };
 		1AC35DB618CEE5DA00F37B72 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AC35DB018CEE5DA00F37B72 /* main.cpp */; };
 		1AC35DB718CEE65100F37B72 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CA918CED84500F37B72 /* animations */; };
-		1AC35DB918CEE65100F37B72 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAE18CED84500F37B72 /* ccb */; };
-		1AC35DBB18CEE65100F37B72 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB318CED84500F37B72 /* components */; };
 		1AC35DBC18CEE65100F37B72 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB418CED84500F37B72 /* configs */; };
 		1AC35DBD18CEE65100F37B72 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB818CED84500F37B72 /* extensions */; };
 		1AC35DBE18CEE65100F37B72 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CBA18CED84500F37B72 /* fonts */; };
@@ -526,12 +510,9 @@
 		1AC35DC318CEE65100F37B72 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC118CED84500F37B72 /* Misc */; };
 		1AC35DC418CEE65100F37B72 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC318CED84500F37B72 /* Particles */; };
 		1AC35DC618CEE65100F37B72 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC618CED84500F37B72 /* Shaders */; };
-		1AC35DC718CEE65100F37B72 /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC718CED84500F37B72 /* spine */; };
 		1AC35DC818CEE65100F37B72 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC818CED84500F37B72 /* TileMaps */; };
 		1AC35DC918CEE65100F37B72 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC918CED84500F37B72 /* zwoptex */; };
 		1AC35DCA18CEE65200F37B72 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CA918CED84500F37B72 /* animations */; };
-		1AC35DCC18CEE65200F37B72 /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAE18CED84500F37B72 /* ccb */; };
-		1AC35DCE18CEE65200F37B72 /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB318CED84500F37B72 /* components */; };
 		1AC35DCF18CEE65200F37B72 /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB418CED84500F37B72 /* configs */; };
 		1AC35DD018CEE65200F37B72 /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB818CED84500F37B72 /* extensions */; };
 		1AC35DD118CEE65200F37B72 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CBA18CED84500F37B72 /* fonts */; };
@@ -540,11 +521,8 @@
 		1AC35DD618CEE65200F37B72 /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC118CED84500F37B72 /* Misc */; };
 		1AC35DD718CEE65200F37B72 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC318CED84500F37B72 /* Particles */; };
 		1AC35DD918CEE65200F37B72 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC618CED84500F37B72 /* Shaders */; };
-		1AC35DDA18CEE65200F37B72 /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC718CED84500F37B72 /* spine */; };
 		1AC35DDB18CEE65200F37B72 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC818CED84500F37B72 /* TileMaps */; };
 		1AC35DDC18CEE65200F37B72 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC918CED84500F37B72 /* zwoptex */; };
-		1AC35DDD18CEE65900F37B72 /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAF18CED84500F37B72 /* CocosBuilderExample.ccbproj */; };
-		1AC35DDE18CEE65900F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB018CED84500F37B72 /* CocosBuilderExample.ccbresourcelog */; };
 		1AC35DDF18CEE65900F37B72 /* music.mid in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC218CED84500F37B72 /* music.mid */; };
 		1AC35DE018CEE65900F37B72 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAC18CED84500F37B72 /* background.mp3 */; };
 		1AC35DE118CEE65900F37B72 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAD18CED84500F37B72 /* background.ogg */; };
@@ -554,8 +532,6 @@
 		1AC35DE618CEE65900F37B72 /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB518CED84500F37B72 /* effect1.raw */; };
 		1AC35DE918CEE65900F37B72 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB618CED84500F37B72 /* effect1.wav */; };
 		1AC35DEA18CEE65900F37B72 /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC418CED84500F37B72 /* pew-pew-lei.wav */; };
-		1AC35DEB18CEE65B00F37B72 /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAF18CED84500F37B72 /* CocosBuilderExample.ccbproj */; };
-		1AC35DEC18CEE65B00F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB018CED84500F37B72 /* CocosBuilderExample.ccbresourcelog */; };
 		1AC35DED18CEE65B00F37B72 /* music.mid in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC218CED84500F37B72 /* music.mid */; };
 		1AC35DEE18CEE65B00F37B72 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAC18CED84500F37B72 /* background.mp3 */; };
 		1AC35DEF18CEE65B00F37B72 /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAD18CED84500F37B72 /* background.ogg */; };
@@ -631,8 +607,6 @@
 		29AC14FE1A8C77B1002DEB6D /* libxxtea.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AC14FD1A8C77B0002DEB6D /* libxxtea.a */; };
 		29AC15011A8C7CF5002DEB6D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AC1C8B5E1A7F6F58006DCCB1 /* libz.dylib */; };
 		29AFEF6719ACCAA000F6B10A /* Test.html in Resources */ = {isa = PBXBuildFile; fileRef = 29AFEF6619ACCAA000F6B10A /* Test.html */; };
-		38FA2E76194AECF800FF2BE4 /* ActionTimeline in Resources */ = {isa = PBXBuildFile; fileRef = 38FA2E75194AECF800FF2BE4 /* ActionTimeline */; };
-		38FA2E77194AECF800FF2BE4 /* ActionTimeline in Resources */ = {isa = PBXBuildFile; fileRef = 38FA2E75194AECF800FF2BE4 /* ActionTimeline */; };
 		3E2BDAD019BEA3410055CDCD /* NewAudioEngineTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E2BDACE19BEA3410055CDCD /* NewAudioEngineTest.cpp */; };
 		3E2BDAD219BEA3E20055CDCD /* audio in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BDAD119BEA3E20055CDCD /* audio */; };
 		3E2BDAFF19C5E5B40055CDCD /* audio in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BDAD119BEA3E20055CDCD /* audio */; };
@@ -1430,10 +1404,6 @@
 		1AC35CA918CED84500F37B72 /* animations */ = {isa = PBXFileReference; lastKnownFileType = folder; name = animations; path = "../tests/cpp-tests/Resources/animations"; sourceTree = "<group>"; };
 		1AC35CAC18CED84500F37B72 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = background.mp3; path = "../tests/cpp-tests/Resources/background.mp3"; sourceTree = "<group>"; };
 		1AC35CAD18CED84500F37B72 /* background.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; name = background.ogg; path = "../tests/cpp-tests/Resources/background.ogg"; sourceTree = "<group>"; };
-		1AC35CAE18CED84500F37B72 /* ccb */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ccb; path = "../tests/cpp-tests/Resources/ccb"; sourceTree = "<group>"; };
-		1AC35CAF18CED84500F37B72 /* CocosBuilderExample.ccbproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = CocosBuilderExample.ccbproj; path = "../tests/cpp-tests/Resources/CocosBuilderExample.ccbproj"; sourceTree = "<group>"; };
-		1AC35CB018CED84500F37B72 /* CocosBuilderExample.ccbresourcelog */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CocosBuilderExample.ccbresourcelog; path = "../tests/cpp-tests/Resources/CocosBuilderExample.ccbresourcelog"; sourceTree = "<group>"; };
-		1AC35CB318CED84500F37B72 /* components */ = {isa = PBXFileReference; lastKnownFileType = folder; name = components; path = "../tests/cpp-tests/Resources/components"; sourceTree = "<group>"; };
 		1AC35CB418CED84500F37B72 /* configs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = configs; path = "../tests/cpp-tests/Resources/configs"; sourceTree = "<group>"; };
 		1AC35CB518CED84500F37B72 /* effect1.raw */ = {isa = PBXFileReference; lastKnownFileType = file; name = effect1.raw; path = "../tests/cpp-tests/Resources/effect1.raw"; sourceTree = "<group>"; };
 		1AC35CB618CED84500F37B72 /* effect1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = effect1.wav; path = "../tests/cpp-tests/Resources/effect1.wav"; sourceTree = "<group>"; };
@@ -1449,7 +1419,6 @@
 		1AC35CC318CED84500F37B72 /* Particles */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Particles; path = "../tests/cpp-tests/Resources/Particles"; sourceTree = "<group>"; };
 		1AC35CC418CED84500F37B72 /* pew-pew-lei.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "pew-pew-lei.wav"; path = "../tests/cpp-tests/Resources/pew-pew-lei.wav"; sourceTree = "<group>"; };
 		1AC35CC618CED84500F37B72 /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders; path = "../tests/cpp-tests/Resources/Shaders"; sourceTree = "<group>"; };
-		1AC35CC718CED84500F37B72 /* spine */ = {isa = PBXFileReference; lastKnownFileType = folder; name = spine; path = "../tests/cpp-tests/Resources/spine"; sourceTree = "<group>"; };
 		1AC35CC818CED84500F37B72 /* TileMaps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TileMaps; path = "../tests/cpp-tests/Resources/TileMaps"; sourceTree = "<group>"; };
 		1AC35CC918CED84500F37B72 /* zwoptex */ = {isa = PBXFileReference; lastKnownFileType = folder; name = zwoptex; path = "../tests/cpp-tests/Resources/zwoptex"; sourceTree = "<group>"; };
 		1AC35D0C18CED89100F37B72 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1482,7 +1451,6 @@
 		1AC35D5A18CEDE9E00F37B72 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1AC35D5B18CEDE9E00F37B72 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		1AC35D7418CEE58500F37B72 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = "../tests/lua-tests/src"; sourceTree = "<group>"; };
-		1AC35D7818CEE59900F37B72 /* cocosbuilderRes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = cocosbuilderRes; path = "../tests/lua-tests/res/cocosbuilderRes"; sourceTree = "<group>"; };
 		1AC35D7D18CEE5B100F37B72 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		1AC35D7E18CEE5B100F37B72 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1AC35D7F18CEE5B100F37B72 /* lua_assetsmanager_test_sample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_assetsmanager_test_sample.cpp; sourceTree = "<group>"; };
@@ -1572,7 +1540,6 @@
 		29AC14FD1A8C77B0002DEB6D /* libxxtea.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libxxtea.a; path = ../external/ios/libs/libxxtea.a; sourceTree = "<group>"; };
 		29AC14FF1A8C7C7D002DEB6D /* libjs_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjs_static.a; path = ../external/ios/libs/libjs_static.a; sourceTree = "<group>"; };
 		29AFEF6619ACCAA000F6B10A /* Test.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = Test.html; path = "../tests/cpp-tests/Resources/Test.html"; sourceTree = "<group>"; };
-		38FA2E75194AECF800FF2BE4 /* ActionTimeline */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ActionTimeline; path = "../tests/cpp-tests/Resources/ActionTimeline"; sourceTree = "<group>"; };
 		3E2BDACE19BEA3410055CDCD /* NewAudioEngineTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NewAudioEngineTest.cpp; sourceTree = "<group>"; };
 		3E2BDACF19BEA3410055CDCD /* NewAudioEngineTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewAudioEngineTest.h; sourceTree = "<group>"; };
 		3E2BDAD119BEA3E20055CDCD /* audio */ = {isa = PBXFileReference; lastKnownFileType = folder; name = audio; path = "../tests/cpp-tests/Resources/audio"; sourceTree = "<group>"; };
@@ -3002,14 +2969,11 @@
 				15B3709219EE5D1000ABE682 /* Manifests */,
 				3E2BDB0019C5E5D40055CDCD /* background.wav */,
 				3E2BDAD119BEA3E20055CDCD /* audio */,
-				38FA2E75194AECF800FF2BE4 /* ActionTimeline */,
 				B2507B6A192589AF00FA4972 /* Shaders3D */,
 				3E92EA841921A7720094CD21 /* Sprite3DTest */,
 				3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */,
 				1AC35CA918CED84500F37B72 /* animations */,
-				1AC35CAE18CED84500F37B72 /* ccb */,
 				1A221C9B191771E300FD2BE4 /* ccs-res */,
-				1AC35CB318CED84500F37B72 /* components */,
 				1AC35CB418CED84500F37B72 /* configs */,
 				1AC35CB818CED84500F37B72 /* extensions */,
 				1AC35CBA18CED84500F37B72 /* fonts */,
@@ -3018,12 +2982,9 @@
 				1AC35CC118CED84500F37B72 /* Misc */,
 				1AC35CC318CED84500F37B72 /* Particles */,
 				1AC35CC618CED84500F37B72 /* Shaders */,
-				1AC35CC718CED84500F37B72 /* spine */,
 				1AC35CC818CED84500F37B72 /* TileMaps */,
 				1AC35CC918CED84500F37B72 /* zwoptex */,
 				C08689C018D370C90093E810 /* background.caf */,
-				1AC35CAF18CED84500F37B72 /* CocosBuilderExample.ccbproj */,
-				1AC35CB018CED84500F37B72 /* CocosBuilderExample.ccbresourcelog */,
 				1AC35CC218CED84500F37B72 /* music.mid */,
 				1AC35CAC18CED84500F37B72 /* background.mp3 */,
 				1AC35CAD18CED84500F37B72 /* background.ogg */,
@@ -3123,7 +3084,6 @@
 		1AC35D7718CEE58D00F37B72 /* res */ = {
 			isa = PBXGroup;
 			children = (
-				1AC35D7818CEE59900F37B72 /* cocosbuilderRes */,
 			);
 			name = res;
 			sourceTree = "<group>";
@@ -4178,20 +4138,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				15B13E5219F0FD4D008A1ADC /* Manifests in Resources */,
-				156EAE071977D0BD00F53709 /* ActionTimeline in Resources */,
 				15E66FD6192DC8C700C20A52 /* Sprite3DTest in Resources */,
 				3E2F27BC19D00D7200E7C490 /* audio in Resources */,
 				1AC35DC318CEE65100F37B72 /* Misc in Resources */,
 				1AC35DC618CEE65100F37B72 /* Shaders in Resources */,
-				1AC35DBB18CEE65100F37B72 /* components in Resources */,
 				1AC35DE218CEE65900F37B72 /* effect2.ogg in Resources */,
 				1AC35DB118CEE5DA00F37B72 /* InfoPlist.strings in Resources */,
-				1AC35DDD18CEE65900F37B72 /* CocosBuilderExample.ccbproj in Resources */,
 				1AC35DB218CEE5DA00F37B72 /* MainMenu.xib in Resources */,
 				1AC35DBF18CEE65100F37B72 /* hd in Resources */,
 				1AC35DC818CEE65100F37B72 /* TileMaps in Resources */,
 				1AC35DBE18CEE65100F37B72 /* fonts in Resources */,
-				1AC35DDE18CEE65900F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */,
 				1AC35DBC18CEE65100F37B72 /* configs in Resources */,
 				1AC35DE118CEE65900F37B72 /* background.ogg in Resources */,
 				1AC35DDF18CEE65900F37B72 /* music.mid in Resources */,
@@ -4204,15 +4160,12 @@
 				1AC35DE518CEE65900F37B72 /* Hello.png in Resources */,
 				1AC35DEA18CEE65900F37B72 /* pew-pew-lei.wav in Resources */,
 				1AC35DC418CEE65100F37B72 /* Particles in Resources */,
-				1AC35DB918CEE65100F37B72 /* ccb in Resources */,
 				1AC35DB318CEE5DA00F37B72 /* Icon.icns in Resources */,
 				1AC35DE318CEE65900F37B72 /* fileLookup.plist in Resources */,
 				1AC35DE618CEE65900F37B72 /* effect1.raw in Resources */,
 				1AC35DC018CEE65100F37B72 /* Images in Resources */,
-				1AC35D7918CEE59900F37B72 /* cocosbuilderRes in Resources */,
 				1AC35DC918CEE65100F37B72 /* zwoptex in Resources */,
 				1AC35DBD18CEE65100F37B72 /* extensions in Resources */,
-				1AC35DC718CEE65100F37B72 /* spine in Resources */,
 				1AC35DB718CEE65100F37B72 /* animations in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4223,13 +4176,11 @@
 			files = (
 				15B3709A19EE5EED00ABE682 /* Manifests in Resources */,
 				15AECE0F195C1FDD00907DB0 /* cocosvideo.mp4 in Resources */,
-				15B0870D195AD52000D6F62B /* ActionTimeline in Resources */,
 				15E66FC8192D957100C20A52 /* Sprite3DTest in Resources */,
 				1AC35DD618CEE65200F37B72 /* Misc in Resources */,
 				1AC35DF718CEE65B00F37B72 /* effect1.wav in Resources */,
 				C08689C418D370C90093E810 /* background.caf in Resources */,
 				1AC35DD118CEE65200F37B72 /* fonts in Resources */,
-				1AC35DCC18CEE65200F37B72 /* ccb in Resources */,
 				1AC35DD218CEE65200F37B72 /* hd in Resources */,
 				1AC35DD718CEE65200F37B72 /* Particles in Resources */,
 				3E2BDB0219C5E5D40055CDCD /* background.wav in Resources */,
@@ -4242,17 +4193,14 @@
 				1AC35D9918CEE5D100F37B72 /* Default-568h@2x.png in Resources */,
 				527B1F4419EFAE13000A1F82 /* Default-667h@2x.png in Resources */,
 				1AC35D9B18CEE5D100F37B72 /* Default@2x.png in Resources */,
-				1AC35DCE18CEE65200F37B72 /* components in Resources */,
 				1AC35D7618CEE58500F37B72 /* src in Resources */,
 				1AC35DDC18CEE65200F37B72 /* zwoptex in Resources */,
-				1AC35DEC18CEE65B00F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */,
 				1AC35DED18CEE65B00F37B72 /* music.mid in Resources */,
 				527B1F4519EFAE13000A1F82 /* Default-736h@3x.png in Resources */,
 				1AC35DD018CEE65200F37B72 /* extensions in Resources */,
 				1AC35DD318CEE65200F37B72 /* Images in Resources */,
 				1AC35DF018CEE65B00F37B72 /* effect2.ogg in Resources */,
 				3E2BDAFF19C5E5B40055CDCD /* audio in Resources */,
-				1AC35DEB18CEE65B00F37B72 /* CocosBuilderExample.ccbproj in Resources */,
 				1AC35DCA18CEE65200F37B72 /* animations in Resources */,
 				1A1645A9191B6283008C7C7F /* ccs-res in Resources */,
 				1AC35DA118CEE5D100F37B72 /* Icon-72.png in Resources */,
@@ -4260,10 +4208,8 @@
 				1AC35DF418CEE65B00F37B72 /* effect1.raw in Resources */,
 				1AC35DD918CEE65200F37B72 /* Shaders in Resources */,
 				1AC35DCF18CEE65200F37B72 /* configs in Resources */,
-				1AC35DDA18CEE65200F37B72 /* spine in Resources */,
 				1AC35DDB18CEE65200F37B72 /* TileMaps in Resources */,
 				1AC35DF318CEE65B00F37B72 /* Hello.png in Resources */,
-				1AC35D7A18CEE59900F37B72 /* cocosbuilderRes in Resources */,
 				1AC35D9C18CEE5D100F37B72 /* Icon-114.png in Resources */,
 				1AC35D9F18CEE5D100F37B72 /* Icon-152.png in Resources */,
 				1AC35DEE18CEE65B00F37B72 /* background.mp3 in Resources */,
@@ -4280,17 +4226,13 @@
 				1AC35CE018CED84500F37B72 /* configs in Resources */,
 				1AC35CE618CED84500F37B72 /* effect2.ogg in Resources */,
 				1AC35CFA18CED84500F37B72 /* Misc in Resources */,
-				38FA2E76194AECF800FF2BE4 /* ActionTimeline in Resources */,
 				1AC35D0418CED84500F37B72 /* Shaders in Resources */,
 				15B3709319EE5D1000ABE682 /* Manifests in Resources */,
 				3E2F27BA19CFF52300E7C490 /* audio in Resources */,
 				AC1C89121A7F532A006DCCB1 /* script in Resources */,
-				1AC35CD818CED84500F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */,
 				B2507B6B192589AF00FA4972 /* Shaders3D in Resources */,
-				1AC35D0618CED84500F37B72 /* spine in Resources */,
 				3E2F27BB19CFF52A00E7C490 /* background.wav in Resources */,
 				1AC35CE818CED84500F37B72 /* extensions in Resources */,
-				1AC35CDE18CED84500F37B72 /* components in Resources */,
 				1AC35D0818CED84500F37B72 /* TileMaps in Resources */,
 				1AC35CE218CED84500F37B72 /* effect1.raw in Resources */,
 				1AC35CF218CED84500F37B72 /* Hello.png in Resources */,
@@ -4305,11 +4247,9 @@
 				1AC35CD218CED84500F37B72 /* background.ogg in Resources */,
 				1AC35D0018CED84500F37B72 /* pew-pew-lei.wav in Resources */,
 				1AC35CD018CED84500F37B72 /* background.mp3 in Resources */,
-				1AC35CD618CED84500F37B72 /* CocosBuilderExample.ccbproj in Resources */,
 				3E92EA851921A7720094CD21 /* Sprite3DTest in Resources */,
 				1AC35CA318CECF1E00F37B72 /* InfoPlist.strings in Resources */,
 				1AC35CA418CECF1E00F37B72 /* MainMenu.xib in Resources */,
-				1AC35CD418CED84500F37B72 /* ccb in Resources */,
 				C08689C118D370C90093E810 /* background.caf in Resources */,
 				1AC35CE418CED84500F37B72 /* effect1.wav in Resources */,
 			);
@@ -4346,7 +4286,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1AC35CDF18CED84500F37B72 /* components in Resources */,
 				1AC35C8E18CECF1400F37B72 /* Icon-144.png in Resources */,
 				1AC35C9218CECF1400F37B72 /* Icon-50.png in Resources */,
 				1AC35CE518CED84500F37B72 /* effect1.wav in Resources */,
@@ -4359,7 +4298,6 @@
 				1AC35CFF18CED84500F37B72 /* Particles in Resources */,
 				1AC35C8818CECF1400F37B72 /* Default-568h@2x.png in Resources */,
 				29AFEF6719ACCAA000F6B10A /* Test.html in Resources */,
-				1AC35CD518CED84500F37B72 /* ccb in Resources */,
 				1AC35CE118CED84500F37B72 /* configs in Resources */,
 				1AC35CE918CED84500F37B72 /* extensions in Resources */,
 				3E2BDAD219BEA3E20055CDCD /* audio in Resources */,
@@ -4384,20 +4322,16 @@
 				1AC35CF318CED84500F37B72 /* Hello.png in Resources */,
 				1AC35C8F18CECF1400F37B72 /* Icon-152.png in Resources */,
 				1AC35CE718CED84500F37B72 /* effect2.ogg in Resources */,
-				38FA2E77194AECF800FF2BE4 /* ActionTimeline in Resources */,
 				1AC35C9718CECF1400F37B72 /* Icon-80.png in Resources */,
 				1AC35CEB18CED84500F37B72 /* fileLookup.plist in Resources */,
 				527B1F3519EF9CF8000A1F82 /* Default-736h@3x.png in Resources */,
 				527B1F3419EF9CF8000A1F82 /* Default-667h@2x.png in Resources */,
 				1AC35CFD18CED84500F37B72 /* music.mid in Resources */,
-				1AC35D0718CED84500F37B72 /* spine in Resources */,
 				1AC35C8D18CECF1400F37B72 /* Icon-120.png in Resources */,
 				1AC35C9418CECF1400F37B72 /* Icon-58.png in Resources */,
 				1AC35CD118CED84500F37B72 /* background.mp3 in Resources */,
-				1AC35CD918CED84500F37B72 /* CocosBuilderExample.ccbresourcelog in Resources */,
 				B2507B6C192589AF00FA4972 /* Shaders3D in Resources */,
 				1AC35CED18CED84500F37B72 /* fonts in Resources */,
-				1AC35CD718CED84500F37B72 /* CocosBuilderExample.ccbproj in Resources */,
 				1AC35C8918CECF1400F37B72 /* Default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
