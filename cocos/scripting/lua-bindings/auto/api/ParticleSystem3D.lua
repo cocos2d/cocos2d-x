@@ -12,19 +12,19 @@
 -- @return ParticleSystem3D#ParticleSystem3D self (return value: cc.ParticleSystem3D)
         
 --------------------------------
--- 
+-- get particle quota
 -- @function [parent=#ParticleSystem3D] getParticleQuota 
 -- @param self
 -- @return unsigned int#unsigned int ret (return value: unsigned int)
         
 --------------------------------
--- 
+-- override function
 -- @function [parent=#ParticleSystem3D] getBlendFunc 
 -- @param self
 -- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
         
 --------------------------------
--- 
+-- set particle quota
 -- @function [parent=#ParticleSystem3D] setParticleQuota 
 -- @param self
 -- @param #unsigned int quota
@@ -37,7 +37,7 @@
 -- @return ParticleSystem3D#ParticleSystem3D self (return value: cc.ParticleSystem3D)
         
 --------------------------------
--- 
+-- override function
 -- @function [parent=#ParticleSystem3D] setBlendFunc 
 -- @param self
 -- @param #cc.BlendFunc blendFunc
@@ -51,7 +51,7 @@
 -- @return ParticleSystem3D#ParticleSystem3D self (return value: cc.ParticleSystem3D)
         
 --------------------------------
--- 
+-- is enabled
 -- @function [parent=#ParticleSystem3D] isEnabled 
 -- @param self
 -- @return bool#bool ret (return value: bool)
@@ -63,7 +63,7 @@
 -- @return ParticleSystem3D#ParticleSystem3D self (return value: cc.ParticleSystem3D)
         
 --------------------------------
---  Enables or disables the system.
+-- Enables or disables the system.
 -- @function [parent=#ParticleSystem3D] setEnabled 
 -- @param self
 -- @param #bool enabled
@@ -96,7 +96,7 @@
 -- @return ParticleSystem3D#ParticleSystem3D self (return value: cc.ParticleSystem3D)
         
 --------------------------------
--- 
+-- get particle playing state
 -- @function [parent=#ParticleSystem3D] getState 
 -- @param self
 -- @return int#int ret (return value: int)
@@ -121,13 +121,13 @@
 -- @return ParticleSystem3D#ParticleSystem3D self (return value: cc.ParticleSystem3D)
         
 --------------------------------
--- 
+-- get alive particles count
 -- @function [parent=#ParticleSystem3D] getAliveParticleCount 
 -- @param self
 -- @return int#int ret (return value: int)
         
 --------------------------------
--- 
+-- override function
 -- @function [parent=#ParticleSystem3D] draw 
 -- @param self
 -- @param #cc.Renderer renderer
@@ -136,7 +136,7 @@
 -- @return ParticleSystem3D#ParticleSystem3D self (return value: cc.ParticleSystem3D)
         
 --------------------------------
--- 
+-- override function
 -- @function [parent=#ParticleSystem3D] update 
 -- @param self
 -- @param #float delta
