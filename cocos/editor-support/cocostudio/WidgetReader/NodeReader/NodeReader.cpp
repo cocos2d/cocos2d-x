@@ -36,10 +36,10 @@ using namespace flatbuffers;
 
 namespace cocostudio
 {
-    const char* Layout_PositionPercentXEnabled = "PositionPercentXEnable";
-    const char* Layout_PositionPercentYEnabled = "PositionPercentYEnable";
-    const char* Layout_PercentWidthEnable = "PercentWidthEnable";
-    const char* Layout_PercentHeightEnable = "PercentHeightEnable";
+    const char* Layout_PositionPercentXEnabled = "PositionPercentXEnabled";
+    const char* Layout_PositionPercentYEnabled = "PositionPercentYEnabled";
+    const char* Layout_PercentWidthEnable = "PercentWidthEnabled";
+    const char* Layout_PercentHeightEnable = "PercentHeightEnabled";
     const char* Layout_StretchWidthEnable = "StretchWidthEnable";
     const char* Layout_StretchHeightEnable = "StretchHeightEnable";
     const char* Layout_HorizontalEdge = "HorizontalEdge";
