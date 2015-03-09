@@ -356,6 +356,10 @@ CC_CONSTRUCTOR_ACCESS:
      * @lua NA
      */
     bool initWithFunction(const std::function<void()>& func);
+    
+protected:
+    // actual implementation of initWithTarget(), add it to fix compiling warning
+    bool __initWithTarget(Ref* target);
 
 protected:
     /** Target that will be called */
@@ -412,6 +416,10 @@ CC_CONSTRUCTOR_ACCESS:
      @deprecated Use the std::function API instead.
      */
     CC_DEPRECATED(v3) bool initWithTarget(Ref* target, SEL_CallFuncN selector);
+    
+private:
+    // actual implementation of initWithTarget(), add it to fix compiling warning
+    bool __initWithTarget(Ref* target, SEL_CallFuncN selector);
 
 protected:
     /** function that will be called with the "sender" as the 1st argument */
