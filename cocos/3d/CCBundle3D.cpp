@@ -173,6 +173,9 @@ void Bundle3D::clear()
 
 bool Bundle3D::load(const std::string& path)
 {
+    if (path.empty())
+        return false;
+    
     if (_path == path)
         return true;
 
