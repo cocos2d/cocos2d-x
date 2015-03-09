@@ -117,7 +117,6 @@ private:
     CCPoint         m_obAnchorPoint;
     EditBoxImplIOS* m_systemControl;
     int             m_nMaxTextLength;
-    bool            m_bInRetinaMode;
 };
 
 

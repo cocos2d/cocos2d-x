@@ -40,7 +40,7 @@ namespace PhoneDirect3DXamlAppComponent
 {
 
 Direct3DInterop::Direct3DInterop() 
-    : mCurrentOrientation(DisplayOrientations::Portrait), m_delegate(nullptr)
+    : mCurrentOrientation(DisplayOrientations::None), m_delegate(nullptr)
 {
     m_renderer = ref new Cocos2dRenderer();
 }
@@ -164,13 +164,12 @@ HRESULT Direct3DInterop::PrepareResources(_In_ const LARGE_INTEGER* presentTarge
 HRESULT Direct3DInterop::Draw(_In_ ID3D11Device1* device, _In_ ID3D11DeviceContext1* context, _In_ ID3D11RenderTargetView* renderTargetView)
 {
     m_renderer->UpdateDevice(device, context, renderTargetView);
-#if 0
+
     if(mCurrentOrientation != WindowOrientation)
     {
         mCurrentOrientation = WindowOrientation;
         m_renderer->OnOrientationChanged(mCurrentOrientation);
     }  
-#endif // 0
 
     ProcessEvents();
     m_renderer->Render();

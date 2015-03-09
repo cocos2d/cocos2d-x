@@ -166,6 +166,7 @@
 		15C1569E1683138E00D239F2 /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = 15C156971683138E00D239F2 /* Icon-144.png */; };
 		15C5C70018716EE100670379 /* json.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15C5C6FF18716EE100670379 /* json.lua */; };
 		15CA8CE918695D34000032AB /* lua_cocos2dx_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15CA8CE718695D34000032AB /* lua_cocos2dx_manual.cpp */; };
+		15D8B77C1A2DA5300068B5F8 /* xxtea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15D8B77A1A2DA5300068B5F8 /* xxtea.cpp */; };
 		15F4C831187539F70082884F /* extern.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15F4C830187539F70082884F /* extern.lua */; };
 		15F4C84018754B150082884F /* Cocos2d.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15F4C83E18754B150082884F /* Cocos2d.lua */; };
 		15F4C84D187552E00082884F /* CocoStudio.lua in Resources */ = {isa = PBXBuildFile; fileRef = 15F4C84C187552E00082884F /* CocoStudio.lua */; };
@@ -615,6 +616,8 @@
 		15C5C6FF18716EE100670379 /* json.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json.lua; sourceTree = "<group>"; };
 		15CA8CE718695D34000032AB /* lua_cocos2dx_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_manual.cpp; sourceTree = "<group>"; };
 		15CA8CE818695D34000032AB /* lua_cocos2dx_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lua_cocos2dx_manual.h; sourceTree = "<group>"; };
+		15D8B77A1A2DA5300068B5F8 /* xxtea.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xxtea.cpp; path = ../../../../scripting/lua/xxtea/xxtea.cpp; sourceTree = "<group>"; };
+		15D8B77B1A2DA5300068B5F8 /* xxtea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xxtea.h; path = ../../../../scripting/lua/xxtea/xxtea.h; sourceTree = "<group>"; };
 		15DB6512184C251E002905B6 /* document.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
 		15DB6513184C251E002905B6 /* filestream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filestream.h; sourceTree = "<group>"; };
 		15DB6515184C251E002905B6 /* pow10.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pow10.h; sourceTree = "<group>"; };
@@ -875,6 +878,16 @@
 				151AC18C194F48BC00B65DF8 /* CCTimelineMacro.h */,
 			);
 			path = ActionTimeline;
+			sourceTree = "<group>";
+		};
+		156ED1EA1A2D67B70039630B /* xxtea */ = {
+			isa = PBXGroup;
+			children = (
+				15D8B77A1A2DA5300068B5F8 /* xxtea.cpp */,
+				15D8B77B1A2DA5300068B5F8 /* xxtea.h */,
+			);
+			name = xxtea;
+			path = ../../samples/Lua/TestLua/proj.ios;
 			sourceTree = "<group>";
 		};
 		159B8976175B9AB30005B47D /* script */ = {
@@ -1397,6 +1410,7 @@
 		15C155FF168311CB00D239F2 /* lua */ = {
 			isa = PBXGroup;
 			children = (
+				156ED1EA1A2D67B70039630B /* xxtea */,
 				159B8976175B9AB30005B47D /* script */,
 				46C1007916BF786A00F74D54 /* cocos2dx_support */,
 				1AA88A50171D04FC0023E7B2 /* luajit */,
@@ -2298,6 +2312,7 @@
 				15C1552A1683118600D239F2 /* b2PolygonShape.cpp in Sources */,
 				15C1552B1683118600D239F2 /* b2BlockAllocator.cpp in Sources */,
 				15C1552C1683118600D239F2 /* b2Draw.cpp in Sources */,
+				15D8B77C1A2DA5300068B5F8 /* xxtea.cpp in Sources */,
 				375BD4B7186840C10024609E /* TriggerObj.cpp in Sources */,
 				15C1552D1683118600D239F2 /* b2Math.cpp in Sources */,
 				15C1552E1683118600D239F2 /* b2Settings.cpp in Sources */,
@@ -2483,6 +2498,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -2517,14 +2533,18 @@
 					"\"$(SRCROOT)/../../../../external/libwebsockets/ios/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries",
 					"\"$(SRCROOT)/../../../../scripting/lua/luajit/ios\"",
+					"\"$(SRCROOT)/../../../../scripting/lua/lua/ios\"",
 					"\"$(SRCROOT)/../../../../external/libwebsockets/ios/lib\"",
 				);
-				OTHER_LDFLAGS = "-lz";
+				OTHER_LDFLAGS = (
+					"-lz",
+					"-llua",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -2537,6 +2557,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
@@ -2569,14 +2590,18 @@
 					"\"$(SRCROOT)/../../../../external/libwebsockets/ios/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries",
 					"\"$(SRCROOT)/../../../../scripting/lua/luajit/ios\"",
+					"\"$(SRCROOT)/../../../../scripting/lua/lua/ios\"",
 					"\"$(SRCROOT)/../../../../external/libwebsockets/ios/lib\"",
 				);
-				OTHER_LDFLAGS = "-lz";
+				OTHER_LDFLAGS = (
+					"-lz",
+					"-llua",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";

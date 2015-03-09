@@ -546,7 +546,7 @@ bool CCTexturePVR::createGLTexture()
         glPixelStorei(GL_UNPACK_ALIGNMENT,1);
         
         glGenTextures(1, &m_uName);
-        glBindTexture(GL_TEXTURE_2D, m_uName);
+        ccGLBindTexture2D(m_uName);
         
         // Default: Anti alias.
 		if (m_uNumberOfMipmaps == 1)

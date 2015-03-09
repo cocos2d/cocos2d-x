@@ -1,4 +1,4 @@
-INCLUDES = -I.. -I../lua -I../../../extensions -I../../../external/chipmunk/include/chipmunk
+INCLUDES = -I.. -I../lua -I../xxtea -I../../../extensions -I../../../external/chipmunk/include/chipmunk
 
 SOURCES = ../lua/lapi.c \
           ../lua/lauxlib.c \
@@ -34,7 +34,8 @@ SOURCES = ../lua/lapi.c \
           ../tolua/tolua_is.c \
           ../tolua/tolua_map.c \
           ../tolua/tolua_push.c \
-          ../tolua/tolua_to.c 
+          ../tolua/tolua_to.c \
+          ../xxtea/xxtea.cpp 
 
 COCOS_ROOT = ../../..
 

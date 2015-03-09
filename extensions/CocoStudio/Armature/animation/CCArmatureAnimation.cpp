@@ -158,7 +158,7 @@ void CCArmatureAnimation::setSpeedScale(float speedScale)
         bone->getTween()->setProcessScale(m_fProcessScale);
         if (bone->getChildArmature())
         {
-            bone->getChildArmature()->getAnimation()->setProcessScale(m_fProcessScale);
+            bone->getChildArmature()->getAnimation()->setSpeedScale(m_fProcessScale);
         }
     }
 }
@@ -236,7 +236,7 @@ void CCArmatureAnimation::play(const char *animationName, int durationTo, int du
 
             if (bone->getChildArmature())
             {
-                bone->getChildArmature()->getAnimation()->setProcessScale(m_fProcessScale);
+                bone->getChildArmature()->getAnimation()->setSpeedScale(m_fProcessScale);
             }
         }
         else

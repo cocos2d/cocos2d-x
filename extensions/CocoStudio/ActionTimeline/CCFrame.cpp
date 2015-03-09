@@ -520,10 +520,6 @@ void ColorFrame::onEnter(Frame *nextFrame)
         _betweenGreen = color.g - _color.g;
         _betweenBlue  = color.b - _color.b;
     }
-
-    rgbaProtocaol->setCascadeColorEnabled(true);
-    rgbaProtocaol->setCascadeOpacityEnabled(true);
-
 }
 
 void ColorFrame::apply(float percent)

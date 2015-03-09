@@ -14,6 +14,7 @@
 		1583F16818D09FF900F3D630 /* UIPageView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1583F16018D09FF900F3D630 /* UIPageView.cpp */; };
 		1583F16918D09FF900F3D630 /* UIScrollView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1583F16318D09FF900F3D630 /* UIScrollView.cpp */; };
 		1583F16A18D09FF900F3D630 /* UIRichText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1583F16518D09FF900F3D630 /* UIRichText.cpp */; };
+		159413471A358C3E000589A8 /* xxtea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 159413451A358C3E000589A8 /* xxtea.cpp */; };
 		15C153F71683112E00D239F2 /* CCBAnimationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C1537C1683112E00D239F2 /* CCBAnimationManager.cpp */; };
 		15C153F81683112E00D239F2 /* CCBFileLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C1537E1683112E00D239F2 /* CCBFileLoader.cpp */; };
 		15C153F91683112E00D239F2 /* CCBKeyframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15C153801683112E00D239F2 /* CCBKeyframe.cpp */; };
@@ -323,6 +324,8 @@
 		1583F16418D09FF900F3D630 /* UIScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScrollView.h; sourceTree = "<group>"; };
 		1583F16518D09FF900F3D630 /* UIRichText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIRichText.cpp; sourceTree = "<group>"; };
 		1583F16618D09FF900F3D630 /* UIRichText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIRichText.h; sourceTree = "<group>"; };
+		159413451A358C3E000589A8 /* xxtea.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = xxtea.cpp; path = ../../../scripting/lua/xxtea/xxtea.cpp; sourceTree = "<group>"; };
+		159413461A358C3E000589A8 /* xxtea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = xxtea.h; path = ../../../scripting/lua/xxtea/xxtea.h; sourceTree = "<group>"; };
 		15C1533E168310C700D239F2 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../../cocos2dx/proj.ios/cocos2dx.xcodeproj; sourceTree = "<group>"; };
 		15C1537C1683112E00D239F2 /* CCBAnimationManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCBAnimationManager.cpp; sourceTree = "<group>"; };
 		15C1537D1683112E00D239F2 /* CCBAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBAnimationManager.h; sourceTree = "<group>"; };
@@ -913,6 +916,16 @@
 			path = ScrollWidget;
 			sourceTree = "<group>";
 		};
+		159413441A358C10000589A8 /* xxtea */ = {
+			isa = PBXGroup;
+			children = (
+				159413451A358C3E000589A8 /* xxtea.cpp */,
+				159413461A358C3E000589A8 /* xxtea.h */,
+			);
+			name = xxtea;
+			path = "../../template/multi-platform-lua/proj.ios";
+			sourceTree = "<group>";
+		};
 		15C1533F168310C700D239F2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1388,6 +1401,7 @@
 		15C155FF168311CB00D239F2 /* lua */ = {
 			isa = PBXGroup;
 			children = (
+				159413441A358C10000589A8 /* xxtea */,
 				46C59AD017641FF300F43DC3 /* script */,
 				46C1007916BF786A00F74D54 /* cocos2dx_support */,
 				1A9D7E5B171E38A2000B3B9A /* luajit */,
@@ -2343,6 +2357,7 @@
 				ED35C0DA18323498002A0750 /* CCComAttribute.cpp in Sources */,
 				298B2A3118D0671400C1920F /* LabelAtlasReader.cpp in Sources */,
 				ED35C0DE18323498002A0750 /* CCInputDelegate.cpp in Sources */,
+				159413471A358C3E000589A8 /* xxtea.cpp in Sources */,
 				15C155241683118600D239F2 /* b2Distance.cpp in Sources */,
 				298B2A3318D0671400C1920F /* LabelReader.cpp in Sources */,
 				298B2A3A18D0671400C1920F /* TextFieldReader.cpp in Sources */,
@@ -2552,6 +2567,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2587,11 +2603,13 @@
 					"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries",
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../scripting/lua/luajit/ios\"",
+					"\"$(SRCROOT)/../../../scripting/lua/lua/ios\"",
 					"\"$(SRCROOT)/../../../external/libwebsockets/ios/lib\"",
 				);
 				OTHER_LDFLAGS = (
 					"-lxml2",
 					"-lz",
+					"-llua",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2603,6 +2621,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
@@ -2636,11 +2655,13 @@
 					"$(SRCROOT)/../../../cocos2dx/platform/third_party/ios/libraries",
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../scripting/lua/luajit/ios\"",
+					"\"$(SRCROOT)/../../../scripting/lua/lua/ios\"",
 					"\"$(SRCROOT)/../../../external/libwebsockets/ios/lib\"",
 				);
 				OTHER_LDFLAGS = (
 					"-lxml2",
 					"-lz",
+					"-llua",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
