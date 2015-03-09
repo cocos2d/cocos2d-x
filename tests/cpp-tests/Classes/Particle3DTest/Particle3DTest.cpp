@@ -25,7 +25,7 @@
 
 #include "Particle3DTest.h"
 #include "Particle3D/CCParticleSystem3D.h"
-#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/PU/CCPUParticleSystem3D.h"
 
 enum
 {
@@ -39,6 +39,7 @@ static int sceneIdx = -1;
 
 static std::function<Layer*()> createFunctions[] =
 {
+    CL(Particle3DExplosionSystemDemo),
     CL(Particle3DLineStreakDemo),
     CL(Particle3DBlackHoleDemo),
     CL(Particle3DHypnoDemo),
@@ -47,6 +48,12 @@ static std::function<Layer*()> createFunctions[] =
     CL(Particle3DUVAnimDemo),
     CL(Particle3DFirePlaceDemo),
     CL(Particle3DElectricBeamSystemDemo),
+    CL(Particle3DFlareShieldDemo),
+    CL(Particle3DLightningBoltDemo),
+    CL(Particle3DCanOfWormsDemo),
+    CL(Particle3DRibbonTrailDemo),
+    CL(Particle3DWeaponTrailDemo),
+    CL(Particle3DWithSprite3DDemo),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -126,6 +133,7 @@ bool Particle3DTestDemo::init()
 
     FileUtils::getInstance()->addSearchPath("Particle3D/materials");
     FileUtils::getInstance()->addSearchPath("Particle3D/scripts");
+    FileUtils::getInstance()->addSearchPath("Sprite3DTest");
     //FileUtils::getInstance()->addSearchPath("Particle3D/textures");
 
     Size size = Director::getInstance()->getWinSize();
@@ -191,7 +199,7 @@ void Particle3DTestDemo::update( float delta )
         for (auto iter : children){
             ParticleSystem3D *child = dynamic_cast<ParticleSystem3D *>(iter);
             if (child){
-                count += child->getParticlePool().getActiveParticleList().size();
+                count += child->getAliveParticleCount();
             }
         }
 
@@ -241,7 +249,7 @@ bool Particle3DBlackHoleDemo::init()
     if (!Particle3DTestDemo::init()) 
         return false;
 
-    auto rootps = PUParticleSystem3D::create("blackHole.pu", "pu_example.material");
+    auto rootps = PUParticleSystem3D::create("blackHole.pu", "pu_mediapack_01.material");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
     rootps->setPosition(-25.0f, 0.0f);
     auto moveby = MoveBy::create(2.0f, Vec2(50.0f, 0.0f));
@@ -268,7 +276,7 @@ bool Particle3DHypnoDemo::init()
     if (!Particle3DTestDemo::init()) 
         return false;
 
-    auto rootps = PUParticleSystem3D::create("hypno.pu", "pu_example.material");
+    auto rootps = PUParticleSystem3D::create("hypno.pu", "pu_mediapack_01.material");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
 //    auto scale = ScaleBy::create(1.0f, 2.0f, 2.0f, 2.0f);
 //    auto rotate = RotateBy::create(1.0f, Vec3(0.0, 100.0f, 0.0f));
@@ -291,7 +299,7 @@ bool Particle3DTimeShiftDemo::init()
     if (!Particle3DTestDemo::init()) 
         return false;
 
-    auto rootps = PUParticleSystem3D::create("timeShift.pu", "pu_example.material");
+    auto rootps = PUParticleSystem3D::create("timeShift.pu", "pu_mediapack_01.material");
     rootps->setScale(2.0f);
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
     rootps->startParticleSystem();
@@ -311,7 +319,7 @@ bool Particle3DUVAnimDemo::init()
     if (!Particle3DTestDemo::init()) 
         return false;
 
-    auto rootps = PUParticleSystem3D::create("UVAnimation.pu", "pu_example.material");
+    auto rootps = PUParticleSystem3D::create("UVAnimation.pu", "pu_mediapack_01.material");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
     rootps->startParticleSystem();
 
@@ -330,7 +338,7 @@ bool Particle3DFirePlaceDemo::init()
     if (!Particle3DTestDemo::init()) 
         return false;
 
-    auto rootps = PUParticleSystem3D::create("mp_torch.pu", "pu_example.material");
+    auto rootps = PUParticleSystem3D::create("mp_torch.pu", "pu_mediapack_01.material");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
     rootps->setScale(5.0f);
     rootps->startParticleSystem();
@@ -350,13 +358,13 @@ bool Particle3DLineStreakDemo::init()
     if (!Particle3DTestDemo::init()) 
         return false;
 
-
-    auto rootps = PUParticleSystem3D::create("lineStreak.pu", "pu_example.material");
+    auto rootps = PUParticleSystem3D::create("lineStreak.pu", "pu_mediapack_01.material");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
     rootps->setScale(5.0f);
     //rootps->runAction(RepeatForever::create(Sequence::create(rotate, nullptr)));
     rootps->startParticleSystem();
     this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
+
 
     //auto sprite = Sprite::create("pump_streak_04.png");
     //sprite->setCameraMask((unsigned short)CameraFlag::USER1);
@@ -378,6 +386,163 @@ bool Particle3DElectricBeamSystemDemo::init()
 
 
     auto rootps = PUParticleSystem3D::create("electricBeamSystem.pu");
+    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+    rootps->startParticleSystem();
+    this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
+
+    return true;
+}
+
+std::string Particle3DFlareShieldDemo::subtitle() const 
+{
+    return "flareShield";
+}
+
+bool Particle3DFlareShieldDemo::init()
+{
+    if (!Particle3DTestDemo::init()) 
+        return false;
+
+
+    auto rootps = PUParticleSystem3D::create("flareShield.pu");
+    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+    //rootps->setScale(0.25f);
+    rootps->startParticleSystem();
+    this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
+
+    return true;
+}
+
+std::string Particle3DLightningBoltDemo::subtitle() const 
+{
+    return "LightningBolt";
+}
+
+bool Particle3DLightningBoltDemo::init()
+{
+    if (!Particle3DTestDemo::init()) 
+        return false;
+
+
+    auto rootps = PUParticleSystem3D::create("lightningBolt.pu");
+    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+    //rootps->setScale(0.25f);
+    rootps->startParticleSystem();
+    this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
+
+    return true;
+}
+
+std::string Particle3DExplosionSystemDemo::subtitle() const 
+{
+    return "ExplosionSystem";
+}
+
+bool Particle3DExplosionSystemDemo::init()
+{
+    if (!Particle3DTestDemo::init()) 
+        return false;
+
+
+    auto rootps = PUParticleSystem3D::create("explosionSystem.pu");
+    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+    //rootps->setScale(5.0f);
+    //rootps->setPosition(-25.0f, 0.0f);
+    //auto moveby = MoveBy::create(2.0f, Vec2(50.0f, 0.0f));
+    //auto moveby1 = MoveBy::create(2.0f, Vec2(-50.0f, 0.0f));
+    //rootps->runAction(RepeatForever::create(Sequence::create(moveby, moveby1, nullptr)));
+    rootps->startParticleSystem();
+    this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
+
+    return true;
+}
+
+std::string Particle3DCanOfWormsDemo::subtitle() const 
+{
+    return "CanOfWorms";
+}
+
+bool Particle3DCanOfWormsDemo::init()
+{
+    if (!Particle3DTestDemo::init()) 
+        return false;
+
+    auto rootps = PUParticleSystem3D::create("canOfWorms.pu");
+    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+    rootps->startParticleSystem();
+    this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
+
+    return true;
+}
+
+std::string Particle3DRibbonTrailDemo::subtitle() const 
+{
+    return "RibbonTrailTest";
+}
+
+bool Particle3DRibbonTrailDemo::init()
+{
+    if (!Particle3DTestDemo::init()) 
+        return false;
+
+    auto rootps = PUParticleSystem3D::create("ribbonTrailTest.pu");
+    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+    rootps->startParticleSystem();
+    this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
+
+    return true;
+}
+
+std::string Particle3DWeaponTrailDemo::subtitle() const 
+{
+    return "WeaponTrail";
+}
+
+bool Particle3DWeaponTrailDemo::init()
+{
+    if (!Particle3DTestDemo::init()) 
+        return false;
+
+    auto rootps = PUParticleSystem3D::create("weaponTrail.pu");
+    rootps->setCameraMask((unsigned short)CameraFlag::USER1);
+    rootps->startParticleSystem();
+    this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);
+
+    return true;
+}
+
+std::string Particle3DWithSprite3DDemo::subtitle() const 
+{
+    return "Particle3DWithSprite3D";
+}
+
+bool Particle3DWithSprite3DDemo::init()
+{
+    if (!Particle3DTestDemo::init()) 
+        return false;
+
+    std::string c3bfileName = "Sprite3DTest/orc.c3b";
+    auto sprite = Sprite3D::create(c3bfileName);
+    this->addChild(sprite);
+    sprite->setPosition3D(Vec3(-20.0f, 0.0f, 0.0f));
+    sprite->setRotation3D(Vec3(0, 180, 0));
+    sprite->setCameraMask((unsigned short)CameraFlag::USER1);
+    //sprite->setOpacity(100);
+    auto animation = Animation3D::create(c3bfileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        sprite->runAction(RepeatForever::create(animate));
+    }
+
+    auto billboard = BillBoard::create("Images/Icon.png");
+    billboard->setPosition3D(Vec3(20.0f, 0.0f, 0.0f));
+    billboard->setScale(0.2f);
+    billboard->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(billboard);
+
+
+    auto rootps = PUParticleSystem3D::create("lineStreak.pu");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
     rootps->startParticleSystem();
     this->addChild(rootps, 0, PARTICLE_SYSTEM_TAG);

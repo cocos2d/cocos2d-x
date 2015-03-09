@@ -21,6 +21,6 @@
 
 // Particle System, include Particle Universe Particle System
 #include "Particle3D/CCParticleSystem3D.h"
-#include "Particle3D/ParticleUniverse/CCPUParticleSystem3D.h"
+#include "Particle3D/PU/CCPUParticleSystem3D.h"
 
 #endif /* __COCOS2D_EXT_H__ */
