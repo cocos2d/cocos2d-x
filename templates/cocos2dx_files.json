@@ -5403,7 +5403,6 @@
         "cocos/scripting/lua-bindings/auto/api/ParticleFlower.lua", 
         "cocos/scripting/lua-bindings/auto/api/ParticleGalaxy.lua", 
         "cocos/scripting/lua-bindings/auto/api/ParticleMeteor.lua", 
-        "cocos/scripting/lua-bindings/auto/api/ParticlePool.lua", 
         "cocos/scripting/lua-bindings/auto/api/ParticleRain.lua", 
         "cocos/scripting/lua-bindings/auto/api/ParticleSmoke.lua", 
         "cocos/scripting/lua-bindings/auto/api/ParticleSnow.lua", 
