@@ -25,6 +25,10 @@
 #ifndef __COCOS2D__UI__WEBVIEWIMPL_TIZEN_H_
 #define __COCOS2D__UI__WEBVIEWIMPL_TIZEN_H_
 
+#include "platform/CCPlatformConfig.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
+
 #include <iosfwd>
 #include "Evas.h"
 
@@ -89,5 +93,7 @@ namespace cocos2d {
         } // namespace ui
     } // namespace experimental
 } //cocos2d
+
+#endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
 
 #endif /* __COCOS2D__UI__WEBVIEWIMPL_TIZEN_H_ */
