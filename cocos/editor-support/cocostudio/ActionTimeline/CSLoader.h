@@ -152,6 +152,8 @@ protected:
     std::string _monoCocos2dxVersion;
     
     Node* _rootNode;
+    cocos2d::Vector<cocos2d::Node*> _callbackHandlers;
+    
     std::string _csBuildID;
 };
 
