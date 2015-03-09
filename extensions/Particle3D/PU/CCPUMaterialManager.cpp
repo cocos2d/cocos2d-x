@@ -177,7 +177,7 @@ bool PUMaterialCache::loadMaterialsFromSearchPaths( const std::string &fileFolde
         }
 
         std::string fullpath = fileFolder + "/" + file->d_name;
-        if (strlen(file->d_name) > 9 && strcmp(".material", file->d_name + strlen(file->d_name) - 9))
+        if (strlen(file->d_name) > 9 && (strcmp(".material", file->d_name + strlen(file->d_name) - 9) == 0))
         {
             CCLOG("%s", fullpath.c_str());
             loadMaterials(fullpath);
