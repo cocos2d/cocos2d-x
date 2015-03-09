@@ -280,7 +280,21 @@ Vec3 Camera::unproject(const Vec3& src) const
 void Camera::unproject(const Size& viewport, const Vec3* src, Vec3* dst) const
 {
     CCASSERT(src && dst, "vec3 can not be null");
-    *dst = unproject(*src);
+    
+    Vec4 screen(src->x / viewport.width, ((viewport.height - src->y)) / viewport.height, src->z, 1.0f);
+    screen.x = screen.x * 2.0f - 1.0f;
+    screen.y = screen.y * 2.0f - 1.0f;
+    screen.z = screen.z * 2.0f - 1.0f;
+    
+    getViewProjectionMatrix().getInversed().transformVector(screen, &screen);
+    if (screen.w != 0.0f)
+    {
+        screen.x /= screen.w;
+        screen.y /= screen.w;
+        screen.z /= screen.w;
+    }
+    
+    dst->set(screen.x, screen.y, screen.z);
 }
 
 bool Camera::isVisibleInFrustum(const AABB* aabb) const
