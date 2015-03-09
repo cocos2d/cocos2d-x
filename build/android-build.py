@@ -187,11 +187,6 @@ def copy_resources(target, app_android_root):
 
         # lua-tests shared resources with cpp-tests
         if target == "lua-tests":
-            resources_cocosbuilder_res_dir = os.path.join(resources_dir, "cocosbuilderRes")
-            assets_cocosbuilder_res_dir = os.path.join(assets_res_dir, "cocosbuilderRes")
-            os.mkdir(assets_cocosbuilder_res_dir)
-            copy_files(resources_cocosbuilder_res_dir, assets_cocosbuilder_res_dir)
-
             resources_dir = os.path.join(app_android_root, "../../../cpp-tests/Resources")
             copy_files(resources_dir, assets_res_dir)
         if target == "lua-game-controller-test":
