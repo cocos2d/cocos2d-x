@@ -644,7 +644,7 @@ static BOOL configured = FALSE;
     _resigned = YES;
     
     //Set the audio sesssion to one that allows sharing so that other audio won't be clobbered on resume
-    [self audioSessionSetCategory:AVAudioSessionCategoryAmbient];
+    [self audioSessionSetCategory:AVAudioSessionCategoryAmbient withOptions:0];
     
     switch (_resignBehavior) {
             
