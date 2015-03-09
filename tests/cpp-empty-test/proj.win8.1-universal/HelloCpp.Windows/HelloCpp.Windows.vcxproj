@@ -114,6 +114,7 @@
     <PackageCertificateKeyFile>HelloCpp.Windows_TemporaryKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundlePlatforms>x86</AppxBundlePlatforms>
+    <PackageCertificateThumbprint>4527A01C0E59CE79420511D7528FA7648E753229</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <LibraryPath>$(LibraryPath)</LibraryPath>

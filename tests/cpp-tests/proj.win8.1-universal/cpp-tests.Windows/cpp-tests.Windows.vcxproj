@@ -91,6 +91,7 @@
     <PackageCertificateKeyFile>cpp-tests.Windows_TemporaryKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundlePlatforms>x86</AppxBundlePlatforms>
+    <PackageCertificateThumbprint>51F98CA9501144C9E46AE34989A8F9B9D83DF329</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <LibraryPath>$(LibraryPath)</LibraryPath>
