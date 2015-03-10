@@ -131,6 +131,7 @@ def syntronize_remote_pr():
     os.system("cd " + workspace)
     #pull latest code
     os.system("git fetch origin " + branch)
+    os.system("git --version")
     os.system("git checkout " + branch)
     os.system("git merge origin/" + branch)
     os.system("git branch -D pull" + str(pr_num))
