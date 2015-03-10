@@ -59,7 +59,7 @@ class TextureCache;
 class Renderer;
 class Camera;
 class Console;
-class GraphicsAPIManager;
+class PALManager;
 class GraphicsInterface;
 
 /**
@@ -451,7 +451,7 @@ protected:
     /** Graphics API Manager
      @since v4.0
      */
-    GraphicsAPIManager* _graphicsAPIManager;
+    PALManager* _PALManager;
     
     /** Selected Graphics Interface
      @since v4.0

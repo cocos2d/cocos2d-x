@@ -60,8 +60,8 @@ THE SOFTWARE.
 #include "base/CCAsyncTaskPool.h"
 #include "platform/CCApplication.h"
 //#include "platform/CCGLViewImpl.h"
-#include "renderer/abstraction/CCGraphicsAPIManager.h"
-#include "renderer/abstraction/interface/CCGraphicsInterface.h"
+#include "PAL/CCPALManager.h"
+#include "PAL/interfaces/CCGraphicsInterface.h"
 
 #if CC_ENABLE_SCRIPT_BINDING
 #include "CCScriptSupport.h"
@@ -168,10 +168,9 @@ bool Director::init(void)
     _eventProjectionChanged = new (std::nothrow) EventCustom(EVENT_PROJECTION_CHANGED);
     _eventProjectionChanged->setUserData(this);
 
-    _graphicsAPIManager = GraphicsAPIManager::create();
-    _graphicsAPIManager->retain();
-    const char* apis[] = {"opengles2.0", nullptr};
-    _graphicsAPIManager->createAPI(apis, "");
+    _PALManager = new PALManager;
+//    const char* apis[] = {"opengles2.0", nullptr};
+//    _graphicsAPIManager->createAPI(apis, "");
     
     //init TextureCache
     initTextureCache();
@@ -206,7 +205,7 @@ Director::~Director(void)
 
 
     CC_SAFE_RELEASE(_eventDispatcher);
-    CC_SAFE_RELEASE(_graphicsAPIManager);
+    CC_SAFE_RELEASE(_PALManager);
     
     // delete _lastUpdate
     CC_SAFE_DELETE(_lastUpdate);
@@ -457,7 +456,7 @@ GraphicsInterface* Director::getGraphicsInterface() const
 void Director::selectGraphicsAPI(const char* apis[], const char* title)
 {
     // weak pointer to current graphics interface.
-    _graphicsInterface = _graphicsAPIManager->createAPI(apis, title);
+    _graphicsInterface = _PALManager->createObject<GraphicsInterface>(apis);
 }
 
 //

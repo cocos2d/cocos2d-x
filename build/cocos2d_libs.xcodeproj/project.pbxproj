@@ -1224,6 +1224,20 @@
 		B63990CD1A490AFE00B07923 /* CCAsyncTaskPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B63990CA1A490AFE00B07923 /* CCAsyncTaskPool.cpp */; };
 		B63990CE1A490AFE00B07923 /* CCAsyncTaskPool.h in Headers */ = {isa = PBXBuildFile; fileRef = B63990CB1A490AFE00B07923 /* CCAsyncTaskPool.h */; };
 		B63990CF1A490AFE00B07923 /* CCAsyncTaskPool.h in Headers */ = {isa = PBXBuildFile; fileRef = B63990CB1A490AFE00B07923 /* CCAsyncTaskPool.h */; };
+		D07525EC1AAF576600830CD1 /* CCPALManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D07525E11AAF576600830CD1 /* CCPALManager.cpp */; };
+		D07525ED1AAF576600830CD1 /* CCPALManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D07525E11AAF576600830CD1 /* CCPALManager.cpp */; };
+		D07525EE1AAF576600830CD1 /* CCPALManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D07525E21AAF576600830CD1 /* CCPALManager.h */; };
+		D07525EF1AAF576600830CD1 /* CCPALManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D07525E21AAF576600830CD1 /* CCPALManager.h */; };
+		D07525F01AAF576600830CD1 /* CCGraphicsMetal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D07525E51AAF576600830CD1 /* CCGraphicsMetal.cpp */; };
+		D07525F11AAF576600830CD1 /* CCGraphicsMetal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D07525E51AAF576600830CD1 /* CCGraphicsMetal.cpp */; };
+		D07525F21AAF576600830CD1 /* CCGraphicsMetal.h in Headers */ = {isa = PBXBuildFile; fileRef = D07525E61AAF576600830CD1 /* CCGraphicsMetal.h */; };
+		D07525F31AAF576600830CD1 /* CCGraphicsMetal.h in Headers */ = {isa = PBXBuildFile; fileRef = D07525E61AAF576600830CD1 /* CCGraphicsMetal.h */; };
+		D07525F41AAF576600830CD1 /* CCGraphicsOpenGLES2.0.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D07525E81AAF576600830CD1 /* CCGraphicsOpenGLES2.0.cpp */; };
+		D07525F51AAF576600830CD1 /* CCGraphicsOpenGLES2.0.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D07525E81AAF576600830CD1 /* CCGraphicsOpenGLES2.0.cpp */; };
+		D07525F61AAF576600830CD1 /* CCGraphicsOpenGLES2.0.h in Headers */ = {isa = PBXBuildFile; fileRef = D07525E91AAF576600830CD1 /* CCGraphicsOpenGLES2.0.h */; };
+		D07525F71AAF576600830CD1 /* CCGraphicsOpenGLES2.0.h in Headers */ = {isa = PBXBuildFile; fileRef = D07525E91AAF576600830CD1 /* CCGraphicsOpenGLES2.0.h */; };
+		D07525F81AAF576600830CD1 /* CCGraphicsInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = D07525EB1AAF576600830CD1 /* CCGraphicsInterface.h */; };
+		D07525F91AAF576600830CD1 /* CCGraphicsInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = D07525EB1AAF576600830CD1 /* CCGraphicsInterface.h */; };
 		D0FD03491A3B51AA00825BB5 /* CCAllocatorBase.h in Headers */ = {isa = PBXBuildFile; fileRef = D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */; };
 		D0FD034A1A3B51AA00825BB5 /* CCAllocatorBase.h in Headers */ = {isa = PBXBuildFile; fileRef = D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */; };
 		D0FD034B1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FD033C1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp */; };
@@ -1961,6 +1975,13 @@
 		B67C624319D4186F00F11FC6 /* ccShader_3D_ColorNormal.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_ColorNormal.frag; sourceTree = "<group>"; };
 		B67C624419D4186F00F11FC6 /* ccShader_3D_ColorNormalTex.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_ColorNormalTex.frag; sourceTree = "<group>"; };
 		B67C624519D4186F00F11FC6 /* ccShader_3D_PositionNormalTex.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_PositionNormalTex.vert; sourceTree = "<group>"; };
+		D07525E11AAF576600830CD1 /* CCPALManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPALManager.cpp; sourceTree = "<group>"; };
+		D07525E21AAF576600830CD1 /* CCPALManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPALManager.h; sourceTree = "<group>"; };
+		D07525E51AAF576600830CD1 /* CCGraphicsMetal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGraphicsMetal.cpp; sourceTree = "<group>"; };
+		D07525E61AAF576600830CD1 /* CCGraphicsMetal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGraphicsMetal.h; sourceTree = "<group>"; };
+		D07525E81AAF576600830CD1 /* CCGraphicsOpenGLES2.0.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGraphicsOpenGLES2.0.cpp; sourceTree = "<group>"; };
+		D07525E91AAF576600830CD1 /* CCGraphicsOpenGLES2.0.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGraphicsOpenGLES2.0.h; sourceTree = "<group>"; };
+		D07525EB1AAF576600830CD1 /* CCGraphicsInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGraphicsInterface.h; sourceTree = "<group>"; };
 		D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAllocatorBase.h; sourceTree = "<group>"; };
 		D0FD033C1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAllocatorDiagnostics.cpp; sourceTree = "<group>"; };
 		D0FD033D1A3B51AA00825BB5 /* CCAllocatorDiagnostics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAllocatorDiagnostics.h; sourceTree = "<group>"; };
@@ -2072,6 +2093,7 @@
 				500DC89819105D41007B91BF /* renderer */,
 				1AAF5849180E40B8000584C8 /* storage */,
 				2905F9E618CF08D000240AA3 /* ui */,
+				D07525DF1AAF568900830CD1 /* PAL */,
 			);
 			sourceTree = "<group>";
 		};
@@ -3165,6 +3187,53 @@
 			path = ../cocos/3d;
 			sourceTree = "<group>";
 		};
+		D07525DF1AAF568900830CD1 /* PAL */ = {
+			isa = PBXGroup;
+			children = (
+				D07525EA1AAF576600830CD1 /* interfaces */,
+				D07525E31AAF576600830CD1 /* graphics */,
+				D07525E11AAF576600830CD1 /* CCPALManager.cpp */,
+				D07525E21AAF576600830CD1 /* CCPALManager.h */,
+			);
+			name = PAL;
+			path = ../cocos/PAL;
+			sourceTree = "<group>";
+		};
+		D07525E31AAF576600830CD1 /* graphics */ = {
+			isa = PBXGroup;
+			children = (
+				D07525E41AAF576600830CD1 /* metal */,
+				D07525E71AAF576600830CD1 /* opengles2.0 */,
+			);
+			path = graphics;
+			sourceTree = "<group>";
+		};
+		D07525E41AAF576600830CD1 /* metal */ = {
+			isa = PBXGroup;
+			children = (
+				D07525E51AAF576600830CD1 /* CCGraphicsMetal.cpp */,
+				D07525E61AAF576600830CD1 /* CCGraphicsMetal.h */,
+			);
+			path = metal;
+			sourceTree = "<group>";
+		};
+		D07525E71AAF576600830CD1 /* opengles2.0 */ = {
+			isa = PBXGroup;
+			children = (
+				D07525E81AAF576600830CD1 /* CCGraphicsOpenGLES2.0.cpp */,
+				D07525E91AAF576600830CD1 /* CCGraphicsOpenGLES2.0.h */,
+			);
+			path = opengles2.0;
+			sourceTree = "<group>";
+		};
+		D07525EA1AAF576600830CD1 /* interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				D07525EB1AAF576600830CD1 /* CCGraphicsInterface.h */,
+			);
+			path = interfaces;
+			sourceTree = "<group>";
+		};
 		D0FD03391A3B51AA00825BB5 /* allocator */ = {
 			isa = PBXGroup;
 			children = (
@@ -3265,6 +3334,7 @@
 				1A57008F180BC5A10088DEC7 /* CCActionTiledGrid.h in Headers */,
 				15AE1BB619AADFEF00C27E9E /* SocketIO.h in Headers */,
 				1A570093180BC5A10088DEC7 /* CCActionTween.h in Headers */,
+				D07525F81AAF576600830CD1 /* CCGraphicsInterface.h in Headers */,
 				50ABBD4A1925AB0000A911A9 /* Mat4.h in Headers */,
 				29394CF419B01DBA00D2DE1A /* UIWebViewImpl-ios.h in Headers */,
 				1A57009A180BC5C10088DEC7 /* CCAtlasNode.h in Headers */,
@@ -3289,6 +3359,8 @@
 				15AE180E19AAD2F700C27E9E /* CCAnimate3D.h in Headers */,
 				1A5701B3180BCB590088DEC7 /* CCFontFNT.h in Headers */,
 				15AE1BD919AAE01E00C27E9E /* CCControlStepper.h in Headers */,
+				D07525F61AAF576600830CD1 /* CCGraphicsOpenGLES2.0.h in Headers */,
+				D07525EE1AAF576600830CD1 /* CCPALManager.h in Headers */,
 				5034CA47191D591100CE6051 /* ccShader_Label_normal.frag in Headers */,
 				15AE182219AAD2F700C27E9E /* CCBundleReader.h in Headers */,
 				5E9F61281A3FFE3D0038DE01 /* CCFrustum.h in Headers */,
@@ -3368,6 +3440,7 @@
 				1A570288180BCC900088DEC7 /* CCSpriteFrame.h in Headers */,
 				1A57028C180BCC900088DEC7 /* CCSpriteFrameCache.h in Headers */,
 				5027253A190BF1B900AAF4ED /* cocos2d.h in Headers */,
+				D07525F21AAF576600830CD1 /* CCGraphicsMetal.h in Headers */,
 				15AE1B5A19AADA9900C27E9E /* UIText.h in Headers */,
 				15AE184A19AAD30500C27E9E /* Export.h in Headers */,
 				15AE1BA019AADFDF00C27E9E /* UILayout.h in Headers */,
@@ -3612,6 +3685,7 @@
 				15AE1B7719AADA9A00C27E9E /* UIPageView.h in Headers */,
 				50ABBD8A1925AB4100A911A9 /* CCCustomCommand.h in Headers */,
 				299754F7193EC95400A54AC3 /* ObjectFactory.h in Headers */,
+				D07525F71AAF576600830CD1 /* CCGraphicsOpenGLES2.0.h in Headers */,
 				50ABBE881925AB6F00A911A9 /* ccMacros.h in Headers */,
 				50ABC0101926664800A911A9 /* CCFileUtils.h in Headers */,
 				15AE1B7B19AADA9A00C27E9E /* UIScrollView.h in Headers */,
@@ -3703,6 +3777,7 @@
 				503DD8F61926B0DB00CD74DD /* CCIMEDelegate.h in Headers */,
 				1A570228180BCC1A0088DEC7 /* CCParticleExamples.h in Headers */,
 				1A57022C180BCC1A0088DEC7 /* CCParticleSystem.h in Headers */,
+				D07525EF1AAF576600830CD1 /* CCPALManager.h in Headers */,
 				15AE1BAC19AADFDF00C27E9E /* UILayout.h in Headers */,
 				1A570230180BCC1A0088DEC7 /* CCParticleSystemQuad.h in Headers */,
 				29394CF119B01DBA00D2DE1A /* UIWebView.h in Headers */,
@@ -3797,6 +3872,7 @@
 				50ABC0081926664800A911A9 /* CCApplicationProtocol.h in Headers */,
 				1ABA68B11888D700007D1BB4 /* CCFontCharMap.h in Headers */,
 				D0FD03601A3B51AA00825BB5 /* CCAllocatorStrategyPool.h in Headers */,
+				D07525F91AAF576600830CD1 /* CCGraphicsInterface.h in Headers */,
 				38B8E2E419E671D2002D7CE7 /* UILayoutComponent.h in Headers */,
 				50ABBD4F1925AB0000A911A9 /* MathUtil.h in Headers */,
 				1A01C69718F57BE800EFE3A6 /* CCInteger.h in Headers */,
@@ -3818,6 +3894,7 @@
 				50CB247619D9C5A100687767 /* AudioCache.h in Headers */,
 				D0FD035A1A3B51AA00825BB5 /* CCAllocatorStrategyDefault.h in Headers */,
 				50ABBD471925AB0000A911A9 /* CCVertex.h in Headers */,
+				D07525F31AAF576600830CD1 /* CCGraphicsMetal.h in Headers */,
 				1A9DCA2A180E6955007A3AD4 /* CCGLBufferedNode.h in Headers */,
 				1A01C69F18F57BE800EFE3A6 /* CCString.h in Headers */,
 				464AD6E8197EBB1400E502D8 /* pvr.h in Headers */,
@@ -3973,6 +4050,7 @@
 				50ABBEC51925AB6F00A911A9 /* etc1.cpp in Sources */,
 				50643BDE19BFCCA400EF68ED /* LocalStorage-android.cpp in Sources */,
 				15AE1B5B19AADA9900C27E9E /* UITextAtlas.cpp in Sources */,
+				D07525EC1AAF576600830CD1 /* CCPALManager.cpp in Sources */,
 				1A570065180BC5A10088DEC7 /* CCActionCamera.cpp in Sources */,
 				50ABBEAB1925AB6F00A911A9 /* ccTypes.cpp in Sources */,
 				1A570069180BC5A10088DEC7 /* CCActionCatmullRom.cpp in Sources */,
@@ -4041,6 +4119,7 @@
 				50ABBE711925AB6F00A911A9 /* CCEventListenerMouse.cpp in Sources */,
 				1A5701DE180BCB8C0088DEC7 /* CCLayer.cpp in Sources */,
 				15AE1B5919AADA9900C27E9E /* UIText.cpp in Sources */,
+				D07525F01AAF576600830CD1 /* CCGraphicsMetal.cpp in Sources */,
 				15B3707C19EE414C00ABE682 /* CCEventAssetsManagerEx.cpp in Sources */,
 				3EACC9A419F5014D00EB3C5E /* CCLight.cpp in Sources */,
 				1A5701E2180BCB8C0088DEC7 /* CCScene.cpp in Sources */,
@@ -4130,6 +4209,7 @@
 				15AE186819AAD31D00C27E9E /* CDXMacOSXSupport.mm in Sources */,
 				50ABBD8B1925AB4100A911A9 /* CCGLProgram.cpp in Sources */,
 				464AD6E5197EBB1400E502D8 /* pvr.cpp in Sources */,
+				D07525F41AAF576600830CD1 /* CCGraphicsOpenGLES2.0.cpp in Sources */,
 				50ABBDA31925AB4100A911A9 /* CCQuadCommand.cpp in Sources */,
 				50ABC01D1926664800A911A9 /* CCThread.cpp in Sources */,
 				15AE180C19AAD2F700C27E9E /* CCAnimate3D.cpp in Sources */,
@@ -4319,6 +4399,7 @@
 				292DB16019B461CA00A80320 /* ExtensionDeprecated.cpp in Sources */,
 				50ABBEAC1925AB6F00A911A9 /* ccTypes.cpp in Sources */,
 				1A5701BA180BCB5A0088DEC7 /* CCLabel.cpp in Sources */,
+				D07525F11AAF576600830CD1 /* CCGraphicsMetal.cpp in Sources */,
 				15AE1B7219AADA9A00C27E9E /* UIListView.cpp in Sources */,
 				1A5701BE180BCB5A0088DEC7 /* CCLabelAtlas.cpp in Sources */,
 				1A5701C2180BCB5A0088DEC7 /* CCLabelBMFont.cpp in Sources */,
@@ -4348,6 +4429,7 @@
 				15AE1B8619AADA9A00C27E9E /* UIButton.cpp in Sources */,
 				1A570209180BCBDF0088DEC7 /* CCMotionStreak.cpp in Sources */,
 				1A570211180BCBF40088DEC7 /* CCProgressTimer.cpp in Sources */,
+				D07525F51AAF576600830CD1 /* CCGraphicsOpenGLES2.0.cpp in Sources */,
 				503DD8ED1926736A00CD74DD /* CCGLViewImpl-ios.mm in Sources */,
 				1A570215180BCBF40088DEC7 /* CCRenderTexture.cpp in Sources */,
 				1A570222180BCC1A0088DEC7 /* CCParticleBatchNode.cpp in Sources */,
@@ -4381,6 +4463,7 @@
 				1A5702EB180BCE750088DEC7 /* CCTileMapAtlas.cpp in Sources */,
 				1A5702EF180BCE750088DEC7 /* CCTMXLayer.cpp in Sources */,
 				15AE1BA519AADFDF00C27E9E /* UIHBox.cpp in Sources */,
+				D07525ED1AAF576600830CD1 /* CCPALManager.cpp in Sources */,
 				1A5702F3180BCE750088DEC7 /* CCTMXObjectGroup.cpp in Sources */,
 				15AE1BAF19AADFDF00C27E9E /* UILayoutManager.cpp in Sources */,
 				15AE182119AAD2F700C27E9E /* CCBundleReader.cpp in Sources */,
