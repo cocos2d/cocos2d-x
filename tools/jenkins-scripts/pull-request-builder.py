@@ -146,12 +146,14 @@ def syntronize_remote_pr():
     git_checkout = "git checkout -b " + "pull" + str(pr_num)
     os.system(git_checkout)
     #merge pull reqeust head
-    p = os.popen('git merge --no-edit FETCH_HEAD')
-    r = p.read()
-    #check if merge fail
-    if r.find('CONFLICT') > 0:
-        print r
-        raise Exception('There are conflicts in your PR!')
+    os.system("git merge --no-edit FETCH_HEAD")
+    # The follow method is not working for Azure server
+    # p = os.popen('git merge --no-edit FETCH_HEAD')
+    # r = p.read()
+    # #check if merge fail
+    # if r.find('CONFLICT') > 0:
+    #     print r
+    #     raise Exception('There are conflicts in your PR!')
 
     # After checkout a new branch, clean workspace again
     print "After checkout: git clean -xdf -f"
