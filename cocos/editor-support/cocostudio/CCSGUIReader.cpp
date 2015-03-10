@@ -1412,7 +1412,7 @@ Widget* WidgetPropertiesReader0300::widgetFromBinary(CocoLoader* cocoLoader,  st
                             }
                             else
                             {
-                                if (!dynamic_cast<Layout*>(widget))
+                                if (dynamic_cast<Layout*>(widget))
                                 {
                                     if (child->getPositionType() == ui::Widget::PositionType::PERCENT)
                                     {
@@ -1504,7 +1504,7 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
                 }
                 else
                 {
-                    if (!dynamic_cast<Layout*>(widget))
+                    if (dynamic_cast<Layout*>(widget))
                     {
                         if (child->getPositionType() == ui::Widget::PositionType::PERCENT)
                         {
