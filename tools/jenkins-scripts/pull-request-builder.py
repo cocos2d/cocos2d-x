@@ -14,9 +14,18 @@ import codecs
 from shutil import copy
 
 #set Jenkins build description using submitDescription to mock browser behavior
-#TODO: need to set parent build description
+http_proxy = ''
+if('HTTP_PROXY' in os.environ):
+    http_proxy = os.environ['HTTP_PROXY']
+proxyDict = {'http': http_proxy, 'https': http_proxy}
 
-def set_description(desc, url):
+branch = "v3"
+pr_num = 0
+workspace = "."
+node_name = "mac"
+remote_build = False
+
+def set_jenkins_job_description(desc, url):
     req_data = urllib.urlencode({'description': desc})
     req = urllib2.Request(url + 'submitDescription', req_data)
     #print(os.environ['BUILD_URL'])
@@ -71,27 +80,36 @@ def patch_cpp_empty_test():
     data = re.sub('<uses-feature android:glEsVersion="0x00020000" />', '<uses-feature android:glEsVersion="0x00020000" /> <uses-permission android:name="android.permission.INTERNET"/>', data)
     codecs.open(modify_file, 'wb', encoding='UTF-8').write(data)
 
-def add_symbol_link_for_project(projects):
+def add_symbol_link_for_android_project(projects):
+    global workspace
+
+    print "current dir is: " + workspace
+    os.system("cd " + workspace)
+    android_build_objs_dir = "android_build_objs"
+    os.mkdir(android_build_objs_dir)
+
     print platform.system()
     if(platform.system() == 'Darwin'):
         for item in projects:
-            cmd = "ln -s " + os.environ['WORKSPACE'] + "/android_build_objs/ " + os.environ['WORKSPACE'] + "/tests/" + item + "/proj.android/obj"
+            cmd = "ln -s " + workspace + android_build_objs_dir + workspace + "/tests/" + item + "/proj.android/obj"
             os.system(cmd)
     elif(platform.system() == 'Windows'):
         for item in projects:
             p = item.replace("/", os.sep)
-            cmd = "mklink /J " + os.environ['WORKSPACE'] + os.sep + "tests" + os.sep + p + os.sep + "proj.android" + os.sep + "obj " + os.environ['WORKSPACE'] + os.sep + "android_build_objs"
+            cmd = "mklink /J " + workspace + os.sep + "tests" + os.sep + p + os.sep + "proj.android" + os.sep + "obj " + workspace + os.sep + android_build_objs_dir
             print cmd
             os.system(cmd)
 
 
-http_proxy = ''
-if('HTTP_PROXY' in os.environ):
-    http_proxy = os.environ['HTTP_PROXY']
-proxyDict = {'http': http_proxy, 'https': http_proxy}
 
-def main():
-    #get payload from os env
+def send_notifies_to_github():
+    global branch
+    global pr_num
+    global workspace
+    global node_name
+    global remote_build
+    
+    # get payload from os env
     payload_str = os.environ['payload']
     payload_str = payload_str.decode('utf-8', 'ignore')
     #parse to json obj
@@ -116,6 +134,8 @@ def main():
 
     #get pr target branch
     branch = payload['branch']
+    workspace = os.environ['WORKSPACE']
+    node_name = os.environ['NODE_NAME']
 
     #set commit status to pending
     #target_url = os.environ['BUILD_URL']
@@ -124,7 +144,7 @@ def main():
     build_number = os.environ['BUILD_NUMBER']
     target_url = jenkins_url + 'job/' + job_name + '/' + build_number + '/'
 
-    set_description(pr_desc, target_url)
+    set_jenkins_job_description(pr_desc, target_url)
 
     data = {"state": "pending", "target_url": target_url, "context": "Jenkins CI", "description": "Build started..."}
     access_token = os.environ['GITHUB_ACCESS_TOKEN']
@@ -135,6 +155,7 @@ def main():
     except:
         traceback.print_exc()
 
+def syntronize_remote_pr():
     #reset path to workspace root
     os.system("cd " + os.environ['WORKSPACE'])
     #pull latest code
@@ -171,33 +192,25 @@ def main():
     if(ret != 0):
         return(2)
 
-    #copy check_current_3rd_libs
-    check_current_3rd_libs(branch)
-
+def gen_scripting_bindings():
+    global branch
     # Generate binding glue codes
     if(branch == 'v3' or branch == 'v4-develop'):
         ret = os.system("python tools/jenkins-scripts/slave-scripts/gen_jsb.py")
-
     if(ret != 0):
         return(1)
 
-    #make temp dir
-    print "current dir is: " + os.environ['WORKSPACE']
-    os.system("cd " + os.environ['WORKSPACE'])
-    os.mkdir("android_build_objs")
 
-    #add symbol link
-    PROJECTS = ["cpp-empty-test", "cpp-tests"]
-    add_symbol_link_for_project(PROJECTS)
+def do_build_slaves():
+    global branch
+    global node_name
 
-    #start build jobs on each slave
-    node_name = os.environ['NODE_NAME']
-    jenkins_script_path = "tools" + os.sep + "jenkins-scripts" + os.sep + "slave-scripts"
+    jenkins_script_path = "tools" + os.sep + "jenkins-scripts" + os.sep + "slave-scripts" + os.sep
 
     if(branch == 'v3' or branch == 'v4-develop'):
         slave_build_scripts = ""
         if(node_name == 'android') or (node_name == 'android_bak'):
-            patch_cpp_empty_test()
+            # patch_cpp_empty_test()
             slave_build_scripts = jenkins_script_path + "android-build.sh"
         elif(node_name == 'win32' or node_name == 'win32_win7' or node_name == 'win32_bak'):
             if branch == 'v3':
@@ -220,6 +233,35 @@ def main():
 
     #get build result
     print "build finished and return " + str(ret)
+    return ret
+            
+def main():
+    global pr_num
+    global workspace
+    global branch
+    global node_name
+    global remote_build
+    #for local debugging purpose, you could uncomment this line
+    # remote_build = os.environ['REMOTE_BUILD']
+
+    if remote_build is True:
+        send_notifies_to_github()
+
+        #syntronize local git repository with remote and merge the PR
+        syntronize_remote_pr()
+
+        #copy check_current_3rd_libs
+        check_current_3rd_libs(branch)
+
+        #generate jsb and luabindings
+        gen_scripting_bindings()
+
+    #add symbol link
+    add_symbol_link_projects = ["cpp-empty-test", "cpp-tests"]
+    add_symbol_link_for_android_project(add_symbol_link_projects)
+
+    #start build jobs on each slave
+    ret = do_build_slaves()
 
     exit_code = 1
     if ret == 0:
@@ -228,11 +270,14 @@ def main():
         exit_code = 1
 
     #clean workspace
-    os.system("cd " + os.environ['WORKSPACE'])
-    os.system("git reset --hard")
-    os.system("git clean -xdf -f")
-    os.system("git checkout " + branch)
-    os.system("git branch -D pull" + str(pr_num))
+    if remote_build is True:
+        os.system("cd " + workspace)
+        os.system("git reset --hard")
+        os.system("git clean -xdf -f")
+        os.system("git checkout " + branch)
+        os.system("git branch -D pull" + str(pr_num))
+    else:
+        print "local build, no need to cleanup"
 
     return(exit_code)
 
