@@ -452,7 +452,7 @@ void PUMeshSurfaceEmitter::initParticlePosition(PUParticle3D* particle)
     pAndN.normal = Vec3::ZERO;
     _directionSet = false;
 
-    if (_meshInfo)
+    if (_meshInfo && _meshInfo->getTriangleCount())
     {
         getDerivedPosition();
         _triangleIndex = _meshInfo->getRandomTriangleIndex (); // Get a random triangle index
