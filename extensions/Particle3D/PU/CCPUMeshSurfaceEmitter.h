@@ -146,8 +146,11 @@ public:
     /** Get a triangle based on the index. */
     const PUTriangle& getTriangle (size_t triangleIndex);
 
-        /** Get a random triangle (index) from the mesh. */
+    /** Get a random triangle (index) from the mesh. */
     const size_t getRandomTriangleIndex (void);
+    
+    /** Get triangle number */
+    size_t getTriangleCount() const { return _triangles.size(); }
 
     /** Returns both a random point on a given triangle and its normal vector.
         How the random point and the normal are determined depends on the distribution type.

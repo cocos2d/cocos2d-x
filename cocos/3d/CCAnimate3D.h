@@ -106,7 +106,13 @@ CC_CONSTRUCTOR_ACCESS:
     
     void removeFromMap();
     
+    /** init method */
+    bool init(Animation3D* animation);
+    bool init(Animation3D* animation, float fromTime, float duration);
+    bool initWithFrames(Animation3D* animation, int startFrame, int endFrame, float frameRate);
+    
 protected:
+    
     enum class Animate3DState
     {
         FadeIn,
