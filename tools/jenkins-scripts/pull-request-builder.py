@@ -25,19 +25,25 @@ workspace = "."
 node_name = "mac"
 remote_build = False
 
+
 def set_jenkins_job_description(desc, url):
     req_data = urllib.urlencode({'description': desc})
-    req = urllib2.Request(url + 'submitDescription', req_data)
+    request = urllib2.Request(url + 'submitDescription', req_data)
     #print(os.environ['BUILD_URL'])
-    req.add_header('Content-Type', 'application/x-www-form-urlencoded')
-    base64string = base64.encodestring(os.environ['JENKINS_ADMIN'] + ":" + os.environ['JENKINS_ADMIN_PW']).replace('\n', '')
-    req.add_header("Authorization", "Basic " + base64string)
+    request.add_header('Content-Type', 'application/x-www-form-urlencoded')
+    user_name = os.environ['JENKINS_ADMIN']
+    password = os.environ['JENKINS_ADMIN_PW']
+    base64string = base64.encodestring(user_name + ":" + password).replace('\n', '')
+    request.add_header("Authorization", "Basic " + base64string)
     try:
-        urllib2.urlopen(req)
+        urllib2.urlopen(request)
     except:
         traceback.print_exc()
 
+
 def check_current_3rd_libs(branch):
+    global node_name
+    
     print("start backup old 3rd libs...")
     #get current_libs config
     backup_files = range(2)
@@ -53,7 +59,6 @@ def check_current_3rd_libs(branch):
 
         current_3rd_libs_version = data["version"]
         filename = current_3rd_libs_version + '.zip'
-        node_name = os.environ['NODE_NAME']
         backup_file = '../../../cocos-2dx-external/node/' + node_name + '/' + filename
         backup_files[i] = backup_file
         current_file = filename
@@ -68,6 +73,7 @@ def check_current_3rd_libs(branch):
         current_file = current_files[i]
         copy(current_file, backup_file)
 
+
 def patch_cpp_empty_test():
     modify_file = 'tests/cpp-empty-test/Classes/AppDelegate.cpp'
     data = codecs.open(modify_file, encoding='UTF-8').read()
@@ -79,6 +85,7 @@ def patch_cpp_empty_test():
     data = codecs.open(modify_file, encoding='UTF-8').read()
     data = re.sub('<uses-feature android:glEsVersion="0x00020000" />', '<uses-feature android:glEsVersion="0x00020000" /> <uses-permission android:name="android.permission.INTERNET"/>', data)
     codecs.open(modify_file, 'wb', encoding='UTF-8').write(data)
+
 
 def add_symbol_link_for_android_project(projects):
     global workspace
@@ -101,14 +108,11 @@ def add_symbol_link_for_android_project(projects):
             os.system(cmd)
 
 
-
 def send_notifies_to_github():
     global branch
     global pr_num
     global workspace
     global node_name
-    global remote_build
-    
     # get payload from os env
     payload_str = os.environ['payload']
     payload_str = payload_str.decode('utf-8', 'ignore')
@@ -138,7 +142,7 @@ def send_notifies_to_github():
     node_name = os.environ['NODE_NAME']
 
     #set commit status to pending
-    #target_url = os.environ['BUILD_URL']
+    # target_url = os.environ['BUILD_URL']
     jenkins_url = os.environ['JENKINS_URL']
     job_name = os.environ['JOB_NAME'].split('/')[0]
     build_number = os.environ['BUILD_NUMBER']
@@ -156,11 +160,15 @@ def send_notifies_to_github():
         traceback.print_exc()
 
 def syntronize_remote_pr():
+    global workspace
+    global branch
+    global pr_num
     #reset path to workspace root
-    os.system("cd " + os.environ['WORKSPACE'])
+    os.system("cd " + workspace)
     #pull latest code
-    os.system("git pull origin " + branch)
+    os.system("git fetch origin " + branch)
     os.system("git checkout " + branch)
+    os.system("git merge origin/" + branch)
     os.system("git branch -D pull" + str(pr_num))
     #clean workspace
     print "Before checkout: git clean -xdf -f"
@@ -169,7 +177,7 @@ def syntronize_remote_pr():
     git_fetch_pr = "git fetch origin pull/" + str(pr_num) + "/head"
     ret = os.system(git_fetch_pr)
     if(ret != 0):
-        return(2)
+        raise Exception('Failed to fetch remote PR')
 
     #checkout a new branch from v3 or v4-develop
     git_checkout = "git checkout -b " + "pull" + str(pr_num)
@@ -180,7 +188,7 @@ def syntronize_remote_pr():
     #check if merge fail
     if r.find('CONFLICT') > 0:
         print r
-        return(3)
+        raise Exception('There are conflicts in your PR!')
 
     # After checkout a new branch, clean workspace again
     print "After checkout: git clean -xdf -f"
@@ -190,7 +198,8 @@ def syntronize_remote_pr():
     git_update_submodule = "git submodule update --init --force"
     ret = os.system(git_update_submodule)
     if(ret != 0):
-        return(2)
+        raise Exception('update submodule failed!')
+
 
 def gen_scripting_bindings():
     global branch
@@ -198,7 +207,7 @@ def gen_scripting_bindings():
     if(branch == 'v3' or branch == 'v4-develop'):
         ret = os.system("python tools/jenkins-scripts/slave-scripts/gen_jsb.py")
     if(ret != 0):
-        return(1)
+        raise Exception('gen scripting bindings failed!')
 
 
 def do_build_slaves():
@@ -234,7 +243,8 @@ def do_build_slaves():
     #get build result
     print "build finished and return " + str(ret)
     return ret
-            
+
+
 def main():
     global pr_num
     global workspace
@@ -242,17 +252,15 @@ def main():
     global node_name
     global remote_build
     #for local debugging purpose, you could uncomment this line
-    # remote_build = os.environ['REMOTE_BUILD']
+    if 'REMOTE_BUILD' in os.environ:
+        remote_build = os.environ['REMOTE_BUILD']
 
     if remote_build is True:
         send_notifies_to_github()
-
         #syntronize local git repository with remote and merge the PR
         syntronize_remote_pr()
-
         #copy check_current_3rd_libs
         check_current_3rd_libs(branch)
-
         #generate jsb and luabindings
         gen_scripting_bindings()
 
