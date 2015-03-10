@@ -67,34 +67,17 @@
  * Therefore, it is important to reset the data on each call.  Do not assume that it is the first call
  * of this method.
  **/
-- (void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-//    NSLog(@"Received response from request to url %@", srcURL);
-    
+- (void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-    //NSLog(@"All headers = %@", [httpResponse allHeaderFields]);
     responseHeader = [[httpResponse allHeaderFields] copy];
     downloadSize = [response expectedContentLength];
     
     responseCode = httpResponse.statusCode;
     statusString = [[NSHTTPURLResponse localizedStringForStatusCode:responseCode] copy];
     if(responseCode == 200)
+    {
         statusString = @"OK";
- 
-    /*The individual values of the numeric status codes defined for HTTP/1.1
-    | “200”  ; OK
-    | “201”  ; Created
-    | “202”  ; Accepted
-    | “203”  ; Non-Authoritative Information
-    | “204”  ; No Content
-    | “205”  ; Reset Content
-    | “206”  ; Partial Content
-    */
-    if (responseCode < 200 || responseCode >= 300)
-    {// something went wrong, abort the whole thing
-        
-        [connection cancel];
-        finish = true;
-        return;
     }
     
     [responseData setLength:0];
