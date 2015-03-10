@@ -20,7 +20,8 @@ branch = "v3"
 pr_num = 0
 workspace = "."
 node_name = "ios"
-remote_build = 0
+# for local debugging purpose, you could change the value to 0
+remote_build = 1
 
 
 def set_jenkins_job_description(desc, url):
@@ -213,10 +214,6 @@ def main():
     global branch
     global node_name
     global remote_build
-    #for local debugging purpose, you could uncomment this line
-    if 'REMOTE_BUILD' in os.environ:
-        remote_build = os.environ['REMOTE_BUILD']
-        print "start remote building..."
 
     if remote_build == 1:
         send_notifies_to_github()
