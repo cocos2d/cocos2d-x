@@ -10,16 +10,14 @@ import requests
 import sys
 import traceback
 import platform
-import subprocess
 import codecs
 from shutil import copy
-import MySQLdb
 
 #set Jenkins build description using submitDescription to mock browser behavior
 #TODO: need to set parent build description
 
 def set_description(desc, url):
-    req_data = urllib.urlencode({https://raw.githubusercontent.com/cocos2d/cocos2d-x/v3/download-deps.py'description': desc})
+    req_data = urllib.urlencode({'description': desc})
     req = urllib2.Request(url + 'submitDescription', req_data)
     #print(os.environ['BUILD_URL'])
     req.add_header('Content-Type', 'application/x-www-form-urlencoded')
@@ -61,50 +59,33 @@ def check_current_3rd_libs(branch):
         current_file = current_files[i]
         copy(current_file, backup_file)
 
-def connect_db():
-    db_host = os.environ['db_host']
-    db_user = os.environ['db_user']
-    db_pw = os.environ['db_pw']
-    db_name = os.environ['db_name']
-    try:
-        db = MySQLdb.connect(db_host, db_user, db_pw, db_name)
-    except:
-        traceback.print_exc()
-    return db
+def patch_cpp_empty_test():
+    modify_file = 'tests/cpp-empty-test/Classes/AppDelegate.cpp'
+    data = codecs.open(modify_file, encoding='UTF-8').read()
+    data = re.sub("director->setDisplayStats\(true\);", "director->setDisplayStats(true); director->getConsole()->listenOnTCP(5678);", data)
+    codecs.open(modify_file, 'wb', encoding='UTF-8').write(data)
 
-def close_db(db):
-    try:
-        db.close()
-    except:
-        traceback.print_exc()
+    #modify tests/cpp-empty-test/proj.android/AndroidManifest.xml to support Console
+    modify_file = 'tests/cpp-empty-test/proj.android/AndroidManifest.xml'
+    data = codecs.open(modify_file, encoding='UTF-8').read()
+    data = re.sub('<uses-feature android:glEsVersion="0x00020000" />', '<uses-feature android:glEsVersion="0x00020000" /> <uses-permission android:name="android.permission.INTERNET"/>', data)
+    codecs.open(modify_file, 'wb', encoding='UTF-8').write(data)
 
-def save_build_stats(db, pr, filename, size):
-    try:
-        cursor = db.cursor()
-        sql = "INSERT INTO `%s` (number, size, createdTime) VALUES(%d, %d, now())" % (filename, pr, size)
-        print sql
-        cursor.execute(sql)
-        db.commit()
-    except:
-        traceback.print_exc()
+def add_symbol_link_for_project(projects):
+    print platform.system()
+    if(platform.system() == 'Darwin'):
+        for item in projects:
+            cmd = "ln -s " + os.environ['WORKSPACE'] + "/android_build_objs/ " + os.environ['WORKSPACE'] + "/tests/" + item + "/proj.android/obj"
+            os.system(cmd)
+    elif(platform.system() == 'Windows'):
+        for item in projects:
+            p = item.replace("/", os.sep)
+            cmd = "mklink /J " + os.environ['WORKSPACE'] + os.sep + "tests" + os.sep + p + os.sep + "proj.android" + os.sep + "obj " + os.environ['WORKSPACE'] + os.sep + "android_build_objs"
+            print cmd
+            os.system(cmd)
 
-def scan_all_libs(db, pr_num):
-    stats = {}
-    lib_path = './tests/cpp-tests/proj.android/obj/local/armeabi'
-    for root, dirs, files in os.walk(lib_path):
-        for _file in files:
-            if not _file.endswith(".a"):
-                continue
-            print _file
-            libfile = lib_path + '/' + _file
-            _filename = _file.split('.')[0]
-            filesize = os.path.getsize(libfile) / 1024
-            stats[_filename] = filesize
-            save_build_stats(db, pr_num, _filename, filesize)
-    return stats
 
 http_proxy = ''
-
 if('HTTP_PROXY' in os.environ):
     http_proxy = os.environ['HTTP_PROXY']
 proxyDict = {'http': http_proxy, 'https': http_proxy}
@@ -204,81 +185,38 @@ def main():
     print "current dir is: " + os.environ['WORKSPACE']
     os.system("cd " + os.environ['WORKSPACE'])
     os.mkdir("android_build_objs")
+
     #add symbol link
     PROJECTS = ["cpp-empty-test", "cpp-tests"]
-
-    print platform.system()
-    if(platform.system() == 'Darwin'):
-        for item in PROJECTS:
-            cmd = "ln -s " + os.environ['WORKSPACE'] + "/android_build_objs/ " + os.environ['WORKSPACE'] + "/tests/" + item + "/proj.android/obj"
-            os.system(cmd)
-    elif(platform.system() == 'Windows'):
-        for item in PROJECTS:
-            p = item.replace("/", os.sep)
-            cmd = "mklink /J " + os.environ['WORKSPACE'] + os.sep + "tests" + os.sep + p + os.sep + "proj.android" + os.sep + "obj " + os.environ['WORKSPACE'] + os.sep + "android_build_objs"
-            print cmd
-            os.system(cmd)
+    add_symbol_link_for_project(PROJECTS)
 
     #start build jobs on each slave
     node_name = os.environ['NODE_NAME']
-    jenkins_script_path = 'tools/jenkins-scripts/slave-scripts'
-    windows_slave_list = ['win32', 'windows-universal', 'win32_bak', 'win32_win7', 'windows-universal_bak']
-
-    if(node_name in windows_slave_list):
-        jenkins_script_path = 'tools\jenkins\slave-scripts'
+    jenkins_script_path = "tools" + os.sep + "jenkins-scripts" + os.sep + "slave-scripts"
 
     if(branch == 'v3' or branch == 'v4-develop'):
+        slave_build_scripts = ""
         if(node_name == 'android') or (node_name == 'android_bak'):
-            #modify tests/cpp-empty-test/Classes/AppDelegate.cpp to support Console
-            # FIXME: We should use patch instead
-            modify_file = 'tests/cpp-empty-test/Classes/AppDelegate.cpp'
-            data = codecs.open(modify_file, encoding='UTF-8').read()
-            data = re.sub("director->setDisplayStats\(true\);", "director->setDisplayStats(true); director->getConsole()->listenOnTCP(5678);", data)
-            codecs.open(modify_file, 'wb', encoding='UTF-8').write(data)
-
-            #modify tests/cpp-empty-test/proj.android/AndroidManifest.xml to support Console
-            modify_file = 'tests/cpp-empty-test/proj.android/AndroidManifest.xml'
-            data = codecs.open(modify_file, encoding='UTF-8').read()
-            data = re.sub('<uses-feature android:glEsVersion="0x00020000" />', '<uses-feature android:glEsVersion="0x00020000" /> <uses-permission android:name="android.permission.INTERNET"/>', data)
-            codecs.open(modify_file, 'wb', encoding='UTF-8').write(data)
-            print "Start build android..."
-            ret = os.system("python build/android-build.py -p 10 all")
-
-            # create and save apk
-            if(ret == 0):
-                sample_dir = 'tests/cpp-tests/proj.android/'
-                local_apk = sample_dir + 'bin/CppTests-debug.apk'
-                backup_apk = os.environ['BACKUP_PATH'] + 'CppTests_' + str(pr_num) + '.apk'
-                os.system('cp ' + local_apk + ' ' + backup_apk)
-                db = connect_db()
-                scan_all_libs(db, pr_num)
-                ret = os.system("python build/android-build.py -p 10 -b release cpp-empty-test")
-                if(ret == 0):
-                    _path = 'tests/cpp-empty-test/proj.android/libs/armeabi/libcpp_empty_test.so'
-                    filesize = os.path.getsize(_path)
-                    pr_desc = pr_desc + '<h3>size of libcpp_empty_test.so is:' + str(filesize / 1024) + 'kb</h3>'
-                    set_description(pr_desc, target_url)
-                    save_build_stats(db, pr_num, 'libcpp_empty_test', filesize / 1024)
-                    
-                ret = os.system("python build/android-build.py -p 10 -b release lua-empty-test")
-                if(ret == 0):
-                    _path = 'tests/lua-empty-test/project/proj.android/libs/armeabi/liblua_empty_test.so'
-                    filesize = os.path.getsize(_path)
-                    pr_desc = pr_desc + '<h3>size of liblua_empty_test.so is:' + str(filesize / 1024) + 'kb</h3>'
-                    set_description(pr_desc, target_url)
-                    save_build_stats(db, pr_num, 'liblua_empty_test', filesize / 1024)
-                    
-                close_db(db)
+            patch_cpp_empty_test()
+            slave_build_scripts = jenkins_script_path + "android-build.sh"
         elif(node_name == 'win32' or node_name == 'win32_win7' or node_name == 'win32_bak'):
-            ret = subprocess.call('"%VS120COMNTOOLS%..\IDE\devenv.com" "build\cocos2d-win32.vc2012.sln" /Build "Debug|Win32"', shell=True)
+            if branch == 'v3':
+                slave_build_scripts = jenkins_script_path + "win32-vs2012-build.bat"
+            else:
+                slave_build_scripts = jenkins_script_path + "win32-vs2013-build.bat"
         elif(node_name == 'windows-universal' or node_name == 'windows-universal_bak'):
-            ret = subprocess.call('"%VS120COMNTOOLS%..\IDE\devenv.com" "build\cocos2d-win8.1-universal.sln" /Build "Debug|Win32"', shell=True)
+            if branch == 'v3':
+                slave_build_scripts = jenkins_script_path + "windows-universal-v3.bat"
+            else:
+                slave_build_scripts = jenkins_script_path + "windows-universal.bat"
         elif(node_name == 'ios_mac' or node_name == 'ios' or node_name == 'ios_bak'):
-            ret = os.system(jenkins_script_path + "ios-build.sh")
+            slave_build_scripts = jenkins_script_path + "ios-build.sh"
         elif(node_name == 'mac' or node_name == 'mac_bak'):
-            ret = os.system(jenkins_script_path + "mac-build.sh")
+            slave_build_scripts = jenkins_script_path + "mac-build.sh"
         elif(node_name == 'linux_centos' or node_name == 'linux' or node_name == 'linux_bak'):
-            ret = os.system(jenkins_script_path + "linux-build.sh")
+            slave_build_scripts = jenkins_script_path + "linux-build.sh"
+
+        ret = os.system(slave_build_scripts)
 
     #get build result
     print "build finished and return " + str(ret)
