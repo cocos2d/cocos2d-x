@@ -147,7 +147,7 @@ def syntronize_remote_pr():
     git_checkout = "git checkout -b " + "pull" + str(pr_num)
     os.system(git_checkout)
     #merge pull reqeust head
-    output = subprocess.check_output(["git merge --no-edit FETCH"])
+    output = subprocess.check_output(["git", "merge", "--no-edit", "FETCH"], shell=True)
 
     # The follow method is not working for Azure server
     # p = os.popen('git merge --no-edit FETCH_HEAD')
