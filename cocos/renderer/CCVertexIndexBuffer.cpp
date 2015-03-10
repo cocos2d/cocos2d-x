@@ -58,10 +58,10 @@ GLArrayBuffer::~GLArrayBuffer()
     CC_SAFE_FREE(_elements);
 }
 
-bool GLArrayBuffer::init(size_t elementSize, size_t maxElements, ArrayType arrayType, ArrayMode arrayMode, bool zero)
+bool GLArrayBuffer::init(ssize_t elementSize, ssize_t maxElements, ArrayType arrayType, ArrayMode arrayMode, bool zero)
 {
-    CCASSERT(0 != elementSize, "Vertex size cannot be 0");
-    
+    CCASSERT(elementSize > 0 && elementSize < 512, "0 < maxElements size < 512");
+
     _arrayType = arrayType;
     _arrayMode = arrayMode;
     _target = nativeBindTarget();
@@ -90,14 +90,17 @@ bool GLArrayBuffer::init(size_t elementSize, size_t maxElements, ArrayType array
     return true;
 }
 
-void GLArrayBuffer::setElements(const void* elements, size_t count, bool defer)
+void GLArrayBuffer::setElements(const void* elements, ssize_t count, bool defer)
 {
     setElementCount(count);
     updateElements(elements, count, 0, defer);
 }
 
-void GLArrayBuffer::updateElements(const void* elements, size_t count, size_t begin, bool defer)
+void GLArrayBuffer::updateElements(const void* elements, ssize_t count, ssize_t begin, bool defer)
 {
+    CCASSERT(begin >= 0, "Invalid being value");
+    CCASSERT(count >= 0, "Invalid count value");
+
     CCASSERT(hasClient() || hasNative(), "Can only update elements if there is an attached buffer");
     
     if (0 == count)
@@ -129,7 +132,7 @@ void GLArrayBuffer::updateElements(const void* elements, size_t count, size_t be
         bindAndCommit(elements, count, begin);
 }
 
-void GLArrayBuffer::insertElements(const void* elements, size_t count, size_t begin, bool defer)
+void GLArrayBuffer::insertElements(const void* elements, ssize_t count, ssize_t begin, bool defer)
 {
     CCASSERT(hasClient(), "can only insert into a client buffer");
     // first see if we need to move any elements
@@ -141,13 +144,13 @@ void GLArrayBuffer::insertElements(const void* elements, size_t count, size_t be
     updateElements(elements, count, begin, defer);
 }
 
-void GLArrayBuffer::appendElements(const void* elements, size_t count, bool defer)
+void GLArrayBuffer::appendElements(const void* elements, ssize_t count, bool defer)
 {
     CCASSERT(hasClient(), "can only append into a client buffer");
     updateElements(elements, count, _elementCount, defer);
 }
 
-void GLArrayBuffer::removeElements(size_t count, size_t begin, bool defer)
+void GLArrayBuffer::removeElements(ssize_t count, ssize_t begin, bool defer)
 {
     const auto ec = getElementCount();
     CCASSERT(hasClient(),         "can only remove from a client buffer");
@@ -158,12 +161,12 @@ void GLArrayBuffer::removeElements(size_t count, size_t begin, bool defer)
     updateElements((void*)src, _elementCount - begin, begin, defer);
 }
 
-void GLArrayBuffer::addCapacity(size_t count, bool zero)
+void GLArrayBuffer::addCapacity(ssize_t count, bool zero)
 {
     setCapacity(count + getCapacity(), zero);
 }
 
-void GLArrayBuffer::swapElements(size_t source, size_t dest, size_t count)
+void GLArrayBuffer::swapElements(ssize_t source, ssize_t dest, ssize_t count)
 {
     const auto ec = getElementCount();
     CCASSERT(hasClient(),          "can only swap elements in a client buffer");
@@ -186,14 +189,14 @@ void GLArrayBuffer::swapElements(size_t source, size_t dest, size_t count)
     memmove(srcptr, tmpptr, count2);
 }
 
-void GLArrayBuffer::moveElements(size_t source, size_t dest, size_t count)
+void GLArrayBuffer::moveElements(ssize_t source, ssize_t dest, ssize_t count)
 {
     const auto es = getElementSize();
     const auto srcptr = (void*)((intptr_t)_elements + source * es);
     updateElements(srcptr, count, dest);
 }
 
-void GLArrayBuffer::bindAndCommit(const void* elements, size_t count, size_t begin)
+void GLArrayBuffer::bindAndCommit(const void* elements, ssize_t count, ssize_t begin)
 {
     CCASSERT(true == hasNative(), "GLArrayBuffer::bindAndCommit : array has no native buffer");
 
@@ -269,7 +272,7 @@ void GLArrayBuffer::recreate() const
     }
 }
 
-void GLArrayBuffer::setCapacity(size_t capacity, bool zero)
+void GLArrayBuffer::setCapacity(ssize_t capacity, bool zero)
 {
     if (capacity > _capacity)
     {

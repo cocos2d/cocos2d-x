@@ -104,8 +104,6 @@ protected:
     GLProgramState* _glProgramState;
     BlendFunc _blendType;
 
-    GLuint _textrueID;
-    
     Vec4 _displayColor; // in order to support tint and fade in fade out
     
     // used for skin

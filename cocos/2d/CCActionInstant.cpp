@@ -367,7 +367,7 @@ CallFunc::~CallFunc()
 }
 
 CallFunc * CallFunc::clone() const
-    {
+{
     // no copy constructor
     auto a = new (std::nothrow) CallFunc();
     if( _selectorTarget) {
