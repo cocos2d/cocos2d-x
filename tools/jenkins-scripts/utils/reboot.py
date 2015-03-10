@@ -1,11 +1,11 @@
 #!/usr/bin/python
-import sys,os,string
+import sys
+import os
 import paramiko
-import socket
 
-remote_machines=os.environ['REMOTE_MACHINES']
-remote_machines=remote_machines.split(', ')
-print 'remote_machines',remote_machines
+remote_machines = os.environ['REMOTE_MACHINES']
+remote_machines = remote_machines.split(', ')
+print 'remote_machines', remote_machines
 
 remote_dir=os.environ['REMOTE_DIR']
 remote_dir=remote_dir.split(', ')

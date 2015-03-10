@@ -19,7 +19,7 @@ import MySQLdb
 #TODO: need to set parent build description
 
 def set_description(desc, url):
-    req_data = urllib.urlencode({'description': desc})
+    req_data = urllib.urlencode({https://raw.githubusercontent.com/cocos2d/cocos2d-x/v3/download-deps.py'description': desc})
     req = urllib2.Request(url + 'submitDescription', req_data)
     #print(os.environ['BUILD_URL'])
     req.add_header('Content-Type', 'application/x-www-form-urlencoded')
@@ -195,7 +195,7 @@ def main():
 
     # Generate binding glue codes
     if(branch == 'v3' or branch == 'v4-develop'):
-        ret = os.system("python tools/jenkins-scripts/gen_jsb.py")
+        ret = os.system("python tools/jenkins-scripts/slave-scripts/gen_jsb.py")
 
     if(ret != 0):
         return(1)
@@ -219,11 +219,14 @@ def main():
             print cmd
             os.system(cmd)
 
-    #build
-    # TODO: add wp8.1 universal build
-    #TODO: add mac build
+    #start build jobs on each slave
     node_name = os.environ['NODE_NAME']
-    jenkins_script_path = 'tools/jenkins-scripts/'
+    jenkins_script_path = 'tools/jenkins-scripts/slave-scripts'
+    windows_slave_list = ['win32', 'windows-universal', 'win32_bak', 'win32_win7', 'windows-universal_bak']
+
+    if(node_name in windows_slave_list):
+        jenkins_script_path = 'tools\jenkins\slave-scripts'
+
     if(branch == 'v3' or branch == 'v4-develop'):
         if(node_name == 'android') or (node_name == 'android_bak'):
             #modify tests/cpp-empty-test/Classes/AppDelegate.cpp to support Console
