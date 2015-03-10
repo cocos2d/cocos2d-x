@@ -810,7 +810,7 @@
         "cocos/network/HttpAsynConnection.h", 
         "cocos/network/HttpAsynConnection.m", 
         "cocos/network/HttpClient-android.cpp", 
-        "cocos/network/HttpClient-ios.mm", 
+        "cocos/network/HttpClient-apple.mm", 
         "cocos/network/HttpClient.cpp", 
         "cocos/network/HttpClient.h", 
         "cocos/network/HttpCookie.cpp", 
