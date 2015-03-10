@@ -38,6 +38,7 @@ set(COCOS_PLATFORM_SPECIFIC_SRC
   platform/linux/CCApplication-linux.cpp
   platform/linux/CCDevice-linux.cpp
   platform/desktop/CCGLViewImpl-desktop.cpp
+  platform/desktop/CCController-desktop.cpp
 )
 
 elseif(ANDROID)

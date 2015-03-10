@@ -1,0 +1,69 @@
+system electricBeamSystem
+{
+    technique 
+    {
+        position                                -15 -3 0
+        material                                ParticleUniverse/Lightning
+        default_particle_width                  1.05
+        default_particle_height                 0
+        renderer                                Billboard
+        {
+            billboard_type                      oriented_shape
+            billboard_origin                    bottom_center
+        }
+        emitter                                 Line 
+        {
+            emission_rate                       40
+            time_to_live                        100
+            direction                           0 0 0
+            end                                 45 9 0
+            min_increment                       1.5
+            max_increment                       4.5
+            max_deviation                       0.3
+        }
+        affector                                Line 
+        {
+            max_deviation                       4
+            time_step                           0.03
+            end                                 45 9 0
+            drift                               0.3
+        }
+        affector                                Align 
+        {
+            resize                              true
+        }
+    }
+    technique 
+    {
+        position                                -15 -3 0
+        material                                ParticleUniverse/Lightning
+        default_particle_width                  0.45
+        default_particle_height                 0
+        renderer                                Billboard
+        {
+            billboard_type                      oriented_shape
+            billboard_origin                    bottom_center
+        }
+        emitter                                 Line 
+        {
+            emission_rate                       150
+            time_to_live                        100
+            direction                           0 0 0
+            end                                 45 9 0
+            min_increment                       1.5
+            max_increment                       1.8
+            max_deviation                       0.9
+        }
+        affector                                Line 
+        {
+            max_deviation                       4.2
+            time_step                           0.01
+            end                                 45 9 0
+            drift                               0.1
+        }
+        affector                                Align 
+        {
+            resize                              true
+        }
+    }
+}

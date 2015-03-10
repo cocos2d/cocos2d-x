@@ -1786,6 +1786,18 @@
     <ClCompile Include="..\..\extensions\Particle3D\CCParticleSystem3D.cpp">
       <Filter>extension\Particle3D</Filter>
     </ClCompile>
+    <ClCompile Include="..\platform\desktop\CCController-desktop.cpp">
+      <Filter>platform\desktop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCController.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCEventListenerController.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\base\CCEventController.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -3495,6 +3507,18 @@
     </ClInclude>
     <ClInclude Include="..\..\extensions\Particle3D\CCParticleSystem3D.h">
       <Filter>extension\Particle3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\desktop\CCController-desktop.h">
+      <Filter>platform\desktop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCController.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCEventListenerController.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\base\CCEventController.h">
+      <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

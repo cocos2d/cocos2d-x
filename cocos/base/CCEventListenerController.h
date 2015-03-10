@@ -34,7 +34,7 @@ NS_CC_BEGIN
 class Event;
 class Controller;
 
-class EventListenerController : public EventListener
+class CC_DLL EventListenerController : public EventListener
 {
 public:
     static const std::string LISTENER_ID;
