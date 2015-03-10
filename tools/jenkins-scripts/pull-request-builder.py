@@ -142,7 +142,7 @@ def syntronize_remote_pr():
     git_fetch_pr = "git fetch origin pull/" + str(pr_num) + "/head"
     ret = os.system(git_fetch_pr)
     if(ret != 0):
-        raise Exception('Failed to fetch remote PR')
+        sys.exit(ret)
 
     #checkout a new branch from v3 or v4-develop
     git_checkout = "git checkout -b " + "pull" + str(pr_num)
@@ -166,7 +166,7 @@ def syntronize_remote_pr():
     git_update_submodule = "git submodule update --init --force"
     ret = os.system(git_update_submodule)
     if(ret != 0):
-        raise Exception('update submodule failed!')
+        sys.exit(ret)
 
 
 def gen_scripting_bindings():
@@ -175,7 +175,7 @@ def gen_scripting_bindings():
     if(branch == 'v3' or branch == 'v4-develop'):
         ret = os.system("python tools/jenkins-scripts/slave-scripts/gen_jsb.py")
     if(ret != 0):
-        raise Exception('gen scripting bindings failed!')
+        sys.exit(ret)
 
 
 def do_build_slaves():
