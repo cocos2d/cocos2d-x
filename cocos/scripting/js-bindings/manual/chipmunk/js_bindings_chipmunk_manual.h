@@ -31,7 +31,7 @@
 #include "ScriptingCore.h"
 #ifdef JSB_INCLUDE_CHIPMUNK
 
-#include "chipmunk_private.h"
+#include "chipmunk/chipmunk_private.h"
 #include "js_bindings_chipmunk_auto_classes.h"
 
 // Free Functions

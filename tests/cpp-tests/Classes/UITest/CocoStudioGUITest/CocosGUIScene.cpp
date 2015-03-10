@@ -1,7 +1,6 @@
 #include "CocosGUIScene.h"
 #include "CocoStudioGUITest.h"
 #include "UISceneManager.h"
-#include "cocostudio/CocoStudio.h"
 
 enum
 {

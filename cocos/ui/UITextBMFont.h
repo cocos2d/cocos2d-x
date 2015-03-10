@@ -65,11 +65,11 @@ public:
     void setFntFile(const std::string& fileName);
     
     /** set string value for labelbmfont*/
-    CC_DEPRECATED_ATTRIBUTE void setText(const std::string& value){this->setString(value);}
+    CC_DEPRECATED(v3) void setText(const std::string& value){this->setString(value);}
     void setString(const std::string& value);
     
     /** get string value for labelbmfont*/
-    CC_DEPRECATED_ATTRIBUTE const std::string& getStringValue()const{return this->getString();}
+    CC_DEPRECATED(v3) const std::string& getStringValue()const{return this->getString();}
     const std::string& getString()const;
     
     /**

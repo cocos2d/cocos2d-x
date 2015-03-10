@@ -390,11 +390,12 @@ void ParticleSystemQuad::setTotalParticles(int tp)
         if (amount > 0)
         {
             auto begin = _ibParticles->getCapacity() / 6;     // determine first quad to update
-            _ibParticles->addCapacityOfType<uint16_t>(6 * amount); // add capacity 6 indices per quad
+            _ibParticles->addCapacityOfType<uint16_t>(6 * amount, true); // add capacity 6 indices per quad
             setupIndices(amount, begin);                  // update new indices for quads
-            _vbParticles->addCapacityOfType<V3F_C4B_T2F_Quad>(amount);
+            _vbParticles->addCapacityOfType<V3F_C4B_T2F_Quad>(amount, true);
         }
     
+        _particles = (tParticle*)realloc(_particles, tp * sizeof(tParticle));
         _allocatedParticles = tp;
         _totalParticles = tp;
 

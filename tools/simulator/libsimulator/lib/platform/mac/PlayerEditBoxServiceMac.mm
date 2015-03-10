@@ -5,7 +5,7 @@
 #if (CC_LUA_ENGINE_ENABLED > 0)
 #include "CCLuaEngine.h"
 #endif
-#include "glfw3native.h"
+#include "glfw/glfw3native.h"
 
 // internal
 

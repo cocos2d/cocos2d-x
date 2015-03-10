@@ -121,7 +121,7 @@ public:
      * Polls input events. Subclass must implement methods if platform
      * does not provide event callbacks.
      */
-    CC_DEPRECATED_ATTRIBUTE virtual void pollInputEvents();
+    CC_DEPRECATED(v3) virtual void pollInputEvents();
 
     virtual void pollEvents();
 

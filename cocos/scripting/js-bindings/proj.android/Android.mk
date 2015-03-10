@@ -16,11 +16,9 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../.. \
                     $(LOCAL_PATH)/../manual \
                     $(LOCAL_PATH)/../manual/platform/android \
                     $(LOCAL_PATH)/../../../base \
-                    $(LOCAL_PATH)/../../../../external/chipmunk/include/chipmunk
 
 LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
-                       -lz \
                        -landroid
 
 LOCAL_STATIC_LIBRARIES := spidermonkey_static
@@ -82,12 +80,12 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../manual \
                     $(LOCAL_PATH)/../../../../extensions \
                     $(LOCAL_PATH)/../../../editor-support/spine \
                     $(LOCAL_PATH)/../../../editor-support/cocosbuilder \
-                    $(LOCAL_PATH)/../../../editor-support/cocostudio
+                    $(LOCAL_PATH)/../../../editor-support/cocostudio \
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../manual \
                            $(LOCAL_PATH)/../auto \
-                           $(LOCAL_PATH)/../../../audio/include 
+                           $(LOCAL_PATH)/../../../audio/include \
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_js_android_static
 
@@ -97,5 +95,4 @@ LOCAL_STATIC_LIBRARIES += cocos_localstorage_static
 include $(BUILD_STATIC_LIBRARY)
 
 $(call import-module,.)
-$(call import-module,external/spidermonkey/prebuilt/android)
 $(call import-module,storage/local-storage)

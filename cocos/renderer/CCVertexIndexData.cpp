@@ -31,7 +31,7 @@
 // TODO
 // - use buffers instead of streams for clearing to avoid duplication
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #include "base/CCEventType.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
@@ -150,8 +150,11 @@ VertexAttribute* VertexData::getStreamAttribute(int semantic)
     else return &iter->second._stream;
 }
 
-size_t VertexData::draw(size_t start, size_t count)
-{    
+ssize_t VertexData::draw(ssize_t start, ssize_t count)
+{
+    CCASSERT(start >= 0, "Invalid start value");
+    CCASSERT(count >= 0, "Invalid count value");
+    
     if (0 == count)
     {
         // if we are drawing indexed, then use the count of indices to draw
@@ -255,9 +258,9 @@ void VertexData::setDirty(bool dirty)
         b->setDirty(dirty);
 }
 
-size_t VertexData::getCount() const
+ssize_t VertexData::getCount() const
 {
-    size_t count = 0;
+    ssize_t count = 0;
     for (auto b : _buffers)
     {
         auto c = b->getElementCount();
@@ -267,9 +270,9 @@ size_t VertexData::getCount() const
     return count;
 }
 
-size_t VertexData::getCapacity() const
+ssize_t VertexData::getCapacity() const
 {
-    size_t capacity = 0;
+    ssize_t capacity = 0;
     for (auto b : _buffers)
     {
         auto c = b->getCapacity();
@@ -285,7 +288,7 @@ bool VertexData::determineInterleave() const
     return _buffers.size() == 1;
 }
 
-void VertexData::append(GLArrayBuffer* buffer, void* source, size_t count)
+void VertexData::append(GLArrayBuffer* buffer, void* source, ssize_t count)
 {
     _dirty = true;
     buffer->appendElements(source, count);

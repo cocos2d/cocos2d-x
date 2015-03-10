@@ -43,7 +43,7 @@ class LuaEngine : public ScriptEngineProtocol
 {
 public:
     static LuaEngine* getInstance(void);
-    CC_DEPRECATED_ATTRIBUTE static LuaEngine* defaultEngine(void) { return LuaEngine::getInstance(); }
+    CC_DEPRECATED(v3) static LuaEngine* defaultEngine(void) { return LuaEngine::getInstance(); }
     virtual ~LuaEngine(void);
     
     virtual ccScriptType getScriptType() {

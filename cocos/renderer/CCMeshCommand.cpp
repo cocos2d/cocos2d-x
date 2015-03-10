@@ -38,7 +38,7 @@
 #include "renderer/CCTextureAtlas.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/ccGLStateCache.h"
-#include "xxhash.h"
+#include "xxhash/xxhash.h"
 
 NS_CC_BEGIN
 
@@ -214,7 +214,7 @@ void MeshCommand::applyRenderState()
         _depthTestEnabled ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
     }
     
-    if (_depthWriteEnabled != _renderStateDepthWrite)
+    if ((GLboolean)_depthWriteEnabled != _renderStateDepthWrite)
     {
         glDepthMask(_depthWriteEnabled);
     }
@@ -237,7 +237,7 @@ void MeshCommand::restoreRenderState()
         _renderStateDepthTest ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
     }
     
-    if (_depthWriteEnabled != _renderStateDepthWrite)
+    if ((GLboolean)_depthWriteEnabled != _renderStateDepthWrite)
     {
         glDepthMask(_renderStateDepthWrite);
     }
@@ -550,6 +550,9 @@ void MeshCommand::resetLightUniformValues()
 void MeshCommand::listenRendererRecreated(EventCustom* event)
 {
     _vao = 0;
+
+    // FIXME XXX BUG
+    CCASSERT(false, "Not implemented. Must recreate the previous state");
 }
 
 #endif

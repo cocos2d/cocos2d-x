@@ -336,7 +336,7 @@ public:
     /**
      * @js NA
      */
-    CC_DEPRECATED_ATTRIBUTE ssize_t indexOfObject(Ref* object) const { return getIndexOfObject(object); }
+    CC_DEPRECATED(v3) ssize_t indexOfObject(Ref* object) const { return getIndexOfObject(object); }
 
     /** Returns an element with a certain index 
      * @js NA
@@ -351,7 +351,7 @@ public:
         return data->arr[index];
 #endif
     }
-    CC_DEPRECATED_ATTRIBUTE Ref* objectAtIndex(ssize_t index) { return getObjectAtIndex(index); }
+    CC_DEPRECATED(v3) Ref* objectAtIndex(ssize_t index) { return getObjectAtIndex(index); }
     /** Returns the last element of the array 
      * @js NA
      */
@@ -369,7 +369,7 @@ public:
     /**
      * @js NA
      */
-    CC_DEPRECATED_ATTRIBUTE Ref* lastObject() { return getLastObject(); }
+    CC_DEPRECATED(v3) Ref* lastObject() { return getLastObject(); }
     /** Returns a random element 
      * @js NA
      * @lua NA
@@ -378,7 +378,7 @@ public:
     /**
      * @js NA
      */
-    CC_DEPRECATED_ATTRIBUTE Ref* randomObject() { return getRandomObject(); }
+    CC_DEPRECATED(v3) Ref* randomObject() { return getRandomObject(); }
     /** Returns a Boolean value that indicates whether object is present in array. 
      * @js NA
      */

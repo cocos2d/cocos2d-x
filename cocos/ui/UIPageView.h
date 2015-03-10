@@ -134,7 +134,7 @@ public:
     Layout* getPage(ssize_t index);
     
     // event
-    CC_DEPRECATED_ATTRIBUTE void addEventListenerPageView(Ref *target, SEL_PageViewEvent selector);
+    CC_DEPRECATED(v3) void addEventListenerPageView(Ref *target, SEL_PageViewEvent selector);
     void addEventListener(const ccPageViewCallback& callback);
     
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;

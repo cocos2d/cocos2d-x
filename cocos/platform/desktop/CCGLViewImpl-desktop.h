@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include "base/CCRef.h"
 #include "platform/CCCommon.h"
 #include "platform/CCGLView.h"
-#include "glfw3.h"
+#include "glfw/glfw3.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #ifndef GLFW_EXPOSE_NATIVE_WIN32
@@ -38,7 +38,7 @@ THE SOFTWARE.
 #ifndef GLFW_EXPOSE_NATIVE_WGL
 #define GLFW_EXPOSE_NATIVE_WGL
 #endif
-#include "glfw3native.h"
+#include "glfw/glfw3native.h"
 #endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) */
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
@@ -48,7 +48,7 @@ THE SOFTWARE.
 #ifndef GLFW_EXPOSE_NATIVE_COCOA
 #define GLFW_EXPOSE_NATIVE_COCOA
 #endif
-#include "glfw3native.h"
+#include "glfw/glfw3native.h"
 #endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
 
 NS_CC_BEGIN

@@ -70,10 +70,10 @@ public:
     static void destroyInstance();
 
     /** @deprecated Use getInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static AnimationCache* sharedAnimationCache() { return AnimationCache::getInstance(); }
+    CC_DEPRECATED(v3) static AnimationCache* sharedAnimationCache() { return AnimationCache::getInstance(); }
 
     /** @deprecated Use destroyInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static void purgeSharedAnimationCache() { return AnimationCache::destroyInstance(); }
+    CC_DEPRECATED(v3) static void purgeSharedAnimationCache() { return AnimationCache::destroyInstance(); }
 
     bool init(void);
 
@@ -89,7 +89,7 @@ public:
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE void removeAnimationByName(const std::string& name){ removeAnimation(name);}
+    CC_DEPRECATED(v3) void removeAnimationByName(const std::string& name){ removeAnimation(name);}
 
     /** Returns a Animation that was previously added.
     If the name is not found it will return nil.
@@ -101,7 +101,7 @@ public:
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE Animation* animationByName(const std::string& name){ return getAnimation(name); }
+    CC_DEPRECATED(v3) Animation* animationByName(const std::string& name){ return getAnimation(name); }
 
     /** Adds an animation from an NSDictionary
      Make sure that the frames were previously loaded in the SpriteFrameCache.

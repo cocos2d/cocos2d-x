@@ -109,6 +109,7 @@ Director* Director::getInstance()
 }
 
 Director::Director()
+: _isStatusLabelUpdated(true)
 {
 }
 
@@ -309,12 +310,6 @@ void Director::drawScene()
         _runningScene->render(_renderer);
         
         _eventDispatcher->dispatchEvent(_eventAfterVisit);
-#if CC_USE_PHYSICS
-        if(physicsWorld)
-        {
-            physicsWorld->_updateBodyTransform = false;
-        }
-#endif
     }
 
     // draw the notifications node
@@ -403,7 +398,7 @@ void Director::setOpenGLView(GLView *openGLView)
         // set size
         _winSizeInPoints = _openGLView->getDesignResolutionSize();
 
-        createStatsLabel();
+        _isStatusLabelUpdated = true;
 
         if (_openGLView)
         {
@@ -1103,6 +1098,11 @@ void Director::resume()
 // updates the FPS every frame
 void Director::showStats()
 {
+    if (_isStatusLabelUpdated)
+    {
+        createStatsLabel();
+        _isStatusLabelUpdated = false;
+    }
     static unsigned long prevCalls = 0;
     static unsigned long prevVerts = 0;
     static float prevDeltaTime  = 0.016f; // 60FPS
@@ -1248,7 +1248,7 @@ void Director::setContentScaleFactor(float scaleFactor)
     if (scaleFactor != _contentScaleFactor)
     {
         _contentScaleFactor = scaleFactor;
-        createStatsLabel();
+        _isStatusLabelUpdated = true;
     }
 }
 

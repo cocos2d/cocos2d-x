@@ -306,7 +306,7 @@ public:
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE static CallFunc * create(Ref* target, SEL_CallFunc selector);
+    CC_DEPRECATED(v3) static CallFunc * create(Ref* target, SEL_CallFunc selector);
 
 public:
     /** executes the callback */
@@ -349,7 +349,7 @@ CC_CONSTRUCTOR_ACCESS:
      typedef void (Ref::*SEL_CallFunc)();
      @deprecated Use the std::function API instead.
      */
-    CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Ref* target);
+    CC_DEPRECATED(v3) bool initWithTarget(Ref* target);
     
     /** initializes the action with the std::function<void()>
      * @js NA
@@ -391,7 +391,7 @@ public:
     typedef void (Ref::*SEL_CallFuncN)(Node*);
      @deprecated Use the std::function API instead.
     */
-    CC_DEPRECATED_ATTRIBUTE static CallFuncN * create(Ref* target, SEL_CallFuncN selector);
+    CC_DEPRECATED(v3) static CallFuncN * create(Ref* target, SEL_CallFuncN selector);
 
     //
     // Overrides
@@ -411,7 +411,7 @@ CC_CONSTRUCTOR_ACCESS:
      typedef void (Ref::*SEL_CallFuncN)(Node*);
      @deprecated Use the std::function API instead.
      */
-    CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Ref* target, SEL_CallFuncN selector);
+    CC_DEPRECATED(v3) bool initWithTarget(Ref* target, SEL_CallFuncN selector);
 
 protected:
     /** function that will be called with the "sender" as the 1st argument */
@@ -431,7 +431,7 @@ class CC_DLL  __CCCallFuncND : public CallFunc
 {
 public:
     /** creates the action with the callback and the data to pass as an argument */
-    CC_DEPRECATED_ATTRIBUTE static __CCCallFuncND * create(Ref* target, SEL_CallFuncND selector, void* d);
+    CC_DEPRECATED(v3) static __CCCallFuncND * create(Ref* target, SEL_CallFuncND selector, void* d);
     
     //
     // Overrides
@@ -469,7 +469,7 @@ public:
      
      typedef void (Ref::*SEL_CallFuncO)(Ref*);
      */
-    CC_DEPRECATED_ATTRIBUTE static __CCCallFuncO * create(Ref* target, SEL_CallFuncO selector, Ref* object);
+    CC_DEPRECATED(v3) static __CCCallFuncO * create(Ref* target, SEL_CallFuncO selector, Ref* object);
     //
     // Overrides
     //

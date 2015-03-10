@@ -28,7 +28,7 @@
     #define NS_CC_MATH_END                       }
     #define USING_NS_CC_MATH                     using namespace cocos2d
 #else
-    #define NS_CC_MATH_BEGIN 
+    #define NS_CC_MATH_BEGIN
     #define NS_CC_MATH_END 
     #define USING_NS_CC_MATH 
 #endif

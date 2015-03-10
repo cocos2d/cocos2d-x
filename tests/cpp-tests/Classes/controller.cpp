@@ -1,4 +1,6 @@
 
+#include "controller.h"
+#include "tests.h"
 // C++ includes
 #include <map>
 #include <functional>
@@ -8,9 +10,8 @@
 // test inclues
 #include "AppDelegate.h"
 #include "BaseTest.h"
-#include "controller.h"
 #include "testResource.h"
-#include "tests.h"
+#include "UITest/UITest.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #include <unistd.h>
@@ -21,8 +22,6 @@
 #include <io.h>
 #include <WS2tcpip.h>
 #endif
-#include "cocostudio/CocoStudio.h"
-#include "UITest/UITest.h"
 
 typedef struct _Controller{
 	const char *test_name;
@@ -74,11 +73,9 @@ Controller g_aTestNames[] = {
 	{ "Node: Node", [](){return new CocosNodeTestScene();} },
 	{ "Node: Parallax", [](){return new ParallaxTestScene(); } },
 	{ "Node: Particles", [](){return new ParticleTestScene(); } },
-	{ "Node: Particle3D (PU)", [](){  return new Particle3DTestScene(); }},
 	{ "Node: Physics", []() { return new PhysicsTestScene(); } },
 	{ "Node: RenderTexture", [](){return new RenderTextureScene(); } },
 	{ "Node: Scene", [](){return new SceneTestScene();} },
-	{ "Node: Spine", []() { return new SpineTestScene(); } },
 	{ "Node: Sprite", [](){return new SpriteTestScene(); } },
     { "Node: Sprite3D", [](){  return new Sprite3DTestScene(); }},
 	{ "Node: TileMap", [](){return new TileMapTestScene(); } },
@@ -367,7 +364,6 @@ void TestController::addConsoleAutoTest()
                     scene->addChild(layer);
                     layer->release();
                     Director::getInstance()->replaceScene(scene);
-                    cocostudio::ArmatureDataManager::destroyInstance();
                 } );
                 return;
             }

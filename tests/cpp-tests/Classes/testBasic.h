@@ -1,7 +1,7 @@
 #ifndef _TEST_BASIC_H_
 #define _TEST_BASIC_H_
 
-#include "cocos2d.h"
+#include "2d/CCScene.h"
 #include "audio/include/SimpleAudioEngine.h"
 #include "VisibleRect.h"
 

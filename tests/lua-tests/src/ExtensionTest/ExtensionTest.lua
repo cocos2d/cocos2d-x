@@ -1,4 +1,3 @@
-require "ExtensionTest/CocosBuilderTest"
 require "ExtensionTest/WebProxyTest"
 
 local LINE_SPACE = 40
@@ -8,19 +7,17 @@ local ExtensionTestEnum =
 {
     TEST_NOTIFICATIONCENTER = 0,
     TEST_CCCONTROLBUTTON    = 1,
-    TEST_COCOSBUILDER       = 2,
-    TEST_WEBSOCKET          = 3,
-    TEST_EDITBOX            = 4,
-    TEST_TABLEVIEW          = 5,
-    TEST_SCROLLVIEW         = 6,
-    TEST_MAX_COUNT          = 7,
+    TEST_WEBSOCKET          = 2,
+    TEST_EDITBOX            = 3,
+    TEST_TABLEVIEW          = 4,
+    TEST_SCROLLVIEW         = 5,
+    TEST_MAX_COUNT          = 6,
 }
 
 local testsName =
 {
     "NotificationCenterTest",
     "CCControlButtonTest",
-    "CocosBuilderTest",
     "WebSocketTest",
     "EditBoxTest",
     "TableViewTest",
@@ -1182,7 +1179,6 @@ local CreateExtensionsTestTable =
 {
     runNotificationCenterTest,
     runCCControlTest,
-    runCocosBuilder,
     runWebSocketTest,
     runEditBoxTest,
     runTableViewTest,

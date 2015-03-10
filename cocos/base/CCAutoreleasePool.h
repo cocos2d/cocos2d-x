@@ -129,14 +129,14 @@ public:
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE static PoolManager* sharedPoolManager() { return getInstance(); }
+    CC_DEPRECATED(v3) static PoolManager* sharedPoolManager() { return getInstance(); }
     static PoolManager* getInstance();
     
     /**
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE static void purgePoolManager() { destroyInstance(); }
+    CC_DEPRECATED(v3) static void purgePoolManager() { destroyInstance(); }
     static void destroyInstance();
     
     /**

@@ -96,7 +96,7 @@ public:
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE inline Vec3 vertex(const Vec2& position) { return getVertex(position); }
+    CC_DEPRECATED(v3) inline Vec3 vertex(const Vec2& position) { return getVertex(position); }
 
     /** returns the non-transformed vertex than belongs to certain position in the grid 
      * @js NA
@@ -108,7 +108,7 @@ public:
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE inline Vec3 originalVertex(const Vec2& position) { return getOriginalVertex(position); }
+    CC_DEPRECATED(v3) inline Vec3 originalVertex(const Vec2& position) { return getOriginalVertex(position); }
 
     /** sets a new vertex to a certain position of the grid 
      * @js NA
@@ -144,7 +144,7 @@ public:
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE Quad3 tile(const Vec2& position) { return getTile(position); }
+    CC_DEPRECATED(v3) Quad3 tile(const Vec2& position) { return getTile(position); }
 
     /** returns the non-transformed tile that belongs to a certain position of the grid 
      * @js NA
@@ -156,7 +156,7 @@ public:
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE Quad3 originalTile(const Vec2& position) { return getOriginalTile(position); }
+    CC_DEPRECATED(v3) Quad3 originalTile(const Vec2& position) { return getOriginalTile(position); }
 
     /** sets a new tile to a certain position of the grid 
      * @js NA

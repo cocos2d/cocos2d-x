@@ -141,8 +141,6 @@ public:
     static const char* SHADER_3D_POSITION_NORMAL;
     static const char* SHADER_3D_POSITION_NORMAL_TEXTURE;
     static const char* SHADER_3D_SKINPOSITION_NORMAL_TEXTURE;
-    static const char* SHADER_3D_PARTICLE_TEXTURE;
-    static const char* SHADER_3D_PARTICLE_COLOR;
     
     // uniform names
     static const char* UNIFORM_NAME_AMBIENT_COLOR;
@@ -315,11 +313,11 @@ public:
     inline const GLuint getProgram() const { return _program; }
 
     // DEPRECATED
-    CC_DEPRECATED_ATTRIBUTE bool initWithVertexShaderByteArray(const GLchar* vertexByteArray, const GLchar* fragByteArray)
+    CC_DEPRECATED(v3) bool initWithVertexShaderByteArray(const GLchar* vertexByteArray, const GLchar* fragByteArray)
     { return initWithByteArrays(vertexByteArray, fragByteArray); }
-    CC_DEPRECATED_ATTRIBUTE bool initWithVertexShaderFilename(const std::string &vertexFilename, const std::string& fragFilename)
+    CC_DEPRECATED(v3) bool initWithVertexShaderFilename(const std::string &vertexFilename, const std::string& fragFilename)
     { return initWithFilenames(vertexFilename, fragFilename); }
-    CC_DEPRECATED_ATTRIBUTE void addAttribute(const std::string &attributeName, GLuint index) const { return bindAttribLocation(attributeName, index); }
+    CC_DEPRECATED(v3) void addAttribute(const std::string &attributeName, GLuint index) const { return bindAttribLocation(attributeName, index); }
 
 
 protected:

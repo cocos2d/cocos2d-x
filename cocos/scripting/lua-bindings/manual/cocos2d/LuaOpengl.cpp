@@ -4414,7 +4414,7 @@ tolua_lerror:
 
 /* function: DrawPoint in the DrawPrimitives namespace */
 #ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_ccDrawPoint00
-CC_DEPRECATED_ATTRIBUTE static int tolua_cocos2d_DrawPrimitives_drawPoint00(lua_State* tolua_S)
+CC_DEPRECATED(v3) static int tolua_cocos2d_DrawPrimitives_drawPoint00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -4442,7 +4442,7 @@ tolua_lerror:
 
 /* function: drawPoints in the DrawPrimitives namespace*/
 #ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_DrawPoints00
-CC_DEPRECATED_ATTRIBUTE static int tolua_cocos2d_DrawPrimitives_drawPoints00(lua_State* tolua_S)
+CC_DEPRECATED(v3) static int tolua_cocos2d_DrawPrimitives_drawPoints00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -4496,7 +4496,7 @@ tolua_lerror:
 
 /* function: drawLine in the DrawPrimitives namespace*/
 #ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_drawLine00
-CC_DEPRECATED_ATTRIBUTE static int tolua_cocos2d_DrawPrimitives_drawLine00(lua_State* tolua_S)
+CC_DEPRECATED(v3) static int tolua_cocos2d_DrawPrimitives_drawLine00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -4529,7 +4529,7 @@ tolua_lerror:
 
 /* function: drawRect in the DrawPrimitives namespace*/
 #ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_drawRect00
-CC_DEPRECATED_ATTRIBUTE static int tolua_cocos2d_DrawPrimitives_drawRect00(lua_State* tolua_S)
+CC_DEPRECATED(v3) static int tolua_cocos2d_DrawPrimitives_drawRect00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -4562,7 +4562,7 @@ tolua_lerror:
 
 /* function: drawSolidRect in the DrawPrimitives namespace*/
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_DrawPrimitives_drawSolidRect00
-CC_DEPRECATED_ATTRIBUTE static int tolua_cocos2d_DrawPrimitives_drawSolidRect00(lua_State* tolua_S)
+CC_DEPRECATED(v3) static int tolua_cocos2d_DrawPrimitives_drawSolidRect00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -4602,7 +4602,7 @@ tolua_lerror:
 
 /* function: drawPoly in the DrawPrimitives namespace*/
 #ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_drawPoly00
-CC_DEPRECATED_ATTRIBUTE static int tolua_cocos2d_DrawPrimitives_drawPoly00(lua_State* tolua_S)
+CC_DEPRECATED(v3) static int tolua_cocos2d_DrawPrimitives_drawPoly00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -4658,7 +4658,7 @@ tolua_lerror:
 
 /* function: drawSolidPoly in the DrawPrimitives namespace*/
 #ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_drawSolidPoly00
-CC_DEPRECATED_ATTRIBUTE static int tolua_cocos2d_DrawPrimitives_drawSolidPoly00(lua_State* tolua_S)
+CC_DEPRECATED(v3) static int tolua_cocos2d_DrawPrimitives_drawSolidPoly00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -4720,7 +4720,7 @@ tolua_lerror:
 
 /* function: drawCircle in the DrawPrimitives namespace*/
 #ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_drawCircle00
-CC_DEPRECATED_ATTRIBUTE static int tolua_cocos2d_DrawPrimitives_drawCircle00(lua_State* tolua_S)
+CC_DEPRECATED(v3) static int tolua_cocos2d_DrawPrimitives_drawCircle00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -4762,7 +4762,7 @@ tolua_lerror:
 
 /* function: drawSolidCircle in the DrawPrimitives namespace*/
 #ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_drawSolidCircle00
-CC_DEPRECATED_ATTRIBUTE static int tolua_cocos2d_DrawPrimitives_drawSolidCircle00(lua_State* tolua_S)
+CC_DEPRECATED(v3) static int tolua_cocos2d_DrawPrimitives_drawSolidCircle00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -4801,7 +4801,7 @@ tolua_lerror:
 
 /* function: drawQuadBezier in the DrawPrimitives namespace*/
 #ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_drawQuadBezier00
-CC_DEPRECATED_ATTRIBUTE static int tolua_cocos2d_DrawPrimitives_drawQuadBezier00(lua_State* tolua_S)
+CC_DEPRECATED(v3) static int tolua_cocos2d_DrawPrimitives_drawQuadBezier00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -4842,7 +4842,7 @@ tolua_lerror:
 
 /* function: drawCubicBezier in the DrawPrimitives namespace*/
 #ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_drawCubicBezier00
-CC_DEPRECATED_ATTRIBUTE static int tolua_cocos2d_DrawPrimitives_drawCubicBezier00(lua_State* tolua_S)
+CC_DEPRECATED(v3) static int tolua_cocos2d_DrawPrimitives_drawCubicBezier00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -4889,7 +4889,7 @@ tolua_lerror:
 
 /* function: drawCatmullRom in the DrawPrimitives namespace*/
 #ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_drawCatmullRom00
-CC_DEPRECATED_ATTRIBUTE int tolua_cocos2d_DrawPrimitives_drawCatmullRom00(lua_State* tolua_S)
+CC_DEPRECATED(v3) int tolua_cocos2d_DrawPrimitives_drawCatmullRom00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -4935,7 +4935,7 @@ tolua_lerror:
 
 /* function: drawCardinalSpline in the DrawPrimitives namespace*/
 #ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_drawCardinalSpline00
-CC_DEPRECATED_ATTRIBUTE int tolua_cocos2d_DrawPrimitives_drawCardinalSpline00(lua_State* tolua_S)
+CC_DEPRECATED(v3) int tolua_cocos2d_DrawPrimitives_drawCardinalSpline00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -4981,7 +4981,7 @@ tolua_lerror:
 
 /* function: drawColor4B in the DrawPrimitives namespace*/
 #ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_drawColor4B00
-CC_DEPRECATED_ATTRIBUTE static int tolua_cocos2d_DrawPrimitives_drawColor4B00(lua_State* tolua_S)
+CC_DEPRECATED(v3) static int tolua_cocos2d_DrawPrimitives_drawColor4B00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -5013,7 +5013,7 @@ tolua_lerror:
 
 /* function: drawColor4F in the DrawPrimitives namespace*/
 #ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_drawColor4F00
-CC_DEPRECATED_ATTRIBUTE static int tolua_cocos2d_DrawPrimitives_drawColor4F00(lua_State* tolua_S)
+CC_DEPRECATED(v3) static int tolua_cocos2d_DrawPrimitives_drawColor4F00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;
@@ -5045,7 +5045,7 @@ tolua_lerror:
 
 /* function: setPointSize in the DrawPrimitives namespace*/
 #ifndef TOLUA_DISABLE_tolua_cocos2d_DrawPrimitives_setPointSize00
-CC_DEPRECATED_ATTRIBUTE static int tolua_cocos2d_DrawPrimitives_setPointSize00(lua_State* tolua_S)
+CC_DEPRECATED(v3) static int tolua_cocos2d_DrawPrimitives_setPointSize00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
     tolua_Error tolua_err;

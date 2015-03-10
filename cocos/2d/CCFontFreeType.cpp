@@ -28,7 +28,7 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "base/ccUTF8.h"
 #include "platform/CCFileUtils.h"
-#include "edtaa3func.h"
+#include "edtaa3func/edtaa3func.h"
 #include FT_BBOX_H
 
 NS_CC_BEGIN

@@ -25,7 +25,7 @@
 #import "AppController.h"
 #import "cocos2d.h"
 #import "AppDelegate.h"
-#import "CCEAGLView-ios.h"
+#import "ios/CCEAGLView-ios.h"
 #import "RootViewController.h"
 
 @implementation AppController

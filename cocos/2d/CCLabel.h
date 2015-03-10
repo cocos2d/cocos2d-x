@@ -266,14 +266,14 @@ public:
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
-    CC_DEPRECATED_ATTRIBUTE static Label* create(const std::string& text, const std::string& font, float fontSize,
+    CC_DEPRECATED(v3) static Label* create(const std::string& text, const std::string& font, float fontSize,
         const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT,
         TextVAlignment vAlignment = TextVAlignment::TOP);
 
-    CC_DEPRECATED_ATTRIBUTE virtual void setFontDefinition(const FontDefinition& textDefinition);
-    CC_DEPRECATED_ATTRIBUTE const FontDefinition& getFontDefinition() const { return _fontDefinition; }
+    CC_DEPRECATED(v3) virtual void setFontDefinition(const FontDefinition& textDefinition);
+    CC_DEPRECATED(v3) const FontDefinition& getFontDefinition() const { return _fontDefinition; }
 
-    CC_DEPRECATED_ATTRIBUTE int getCommonLineHeight() const { return (int)getLineHeight();}
+    CC_DEPRECATED(v3) int getCommonLineHeight() const { return (int)getLineHeight();}
 
 CC_CONSTRUCTOR_ACCESS:
     /**
@@ -325,13 +325,10 @@ protected:
 
     virtual void updateShaderProgram();
 
-    void drawShadowWithoutBlur();
+    void createSpriteForSystemFont();
 
-    void drawTextSprite(Renderer *renderer, uint32_t parentFlags);
+    void createShadowSpriteForSystemFont();
 
-    void createSpriteWithFontDefinition();
-
-    void updateFont();
     void reset();
 
     std::string _bmFontPath;
@@ -394,8 +391,7 @@ protected:
     Size    _shadowOffset;
     int     _shadowBlurRadius;
     Mat4  _shadowTransform;
-    Color3B _shadowColor;
-    float   _shadowOpacity;
+    Color4F _shadowColor;
     Sprite*   _shadowNode;
 
     int     _outlineSize;

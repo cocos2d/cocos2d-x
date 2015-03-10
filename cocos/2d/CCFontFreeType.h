@@ -29,7 +29,7 @@
 #include "CCFont.h"
 
 #include <string>
-#include <ft2build.h>
+#include "freetype/ft2build.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #define generic GenericFromFreeTypeLibrary

@@ -125,7 +125,7 @@ public:
     inline int               getNumberOfMipmaps()    { return _numberOfMipmaps; }
     inline MipmapInfo*       getMipmaps()            { return _mipmaps; }
     inline bool              hasPremultipliedAlpha() { return _hasPremultipliedAlpha; }
-    CC_DEPRECATED_ATTRIBUTE inline bool isPremultipliedAlpha()  { return _hasPremultipliedAlpha;   }
+    CC_DEPRECATED(v3) inline bool isPremultipliedAlpha()  { return _hasPremultipliedAlpha;   }
 
     int                      getBitPerPixel();
     bool                     hasAlpha();

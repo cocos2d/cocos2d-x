@@ -5,7 +5,8 @@
 //
 
 #include "ChipmunkTest.h"
-
+//FIXME: try to remove CP_USE_CGPOINTS=0 in preprocess macro
+#include "chipmunk/chipmunk.h"
 
 enum {
     kTagParentNode = 1,
@@ -255,4 +256,5 @@ void ChipmunkAccelTouchTestScene::runThisTest()
 
     Director::getInstance()->replaceScene(this);
 }
+
 

@@ -45,12 +45,10 @@ win32-msvc-vs201*-x86
 *.ilk
 *.log
 [Bb]in
-[Dd]ebug/
 [Dd]ebug.win32/
 *.sbr
 *.sdf
 obj/
-[Rr]elease/
 [Rr]elease.win32/
 _ReSharper*/
 [Tt]est[Rr]esult*
@@ -58,7 +56,7 @@ ipch/
 *.opensdf
 
 # Ignore files build by ndk and eclipse
-libs/
+proj.android/libs/
 bin/
 obj/
 gen/
@@ -116,6 +114,7 @@ tags
 # Permit plugins to ship third-party libraries.
 !/plugin/plugins/*/proj.android/libs/*.jar
 !/plugin/plugins/*/proj.android/libs
+!/tools/bindings-generator/tools/win32/*
 
 v*-deps-*.zip
 v*-lua-runtime-*.zip

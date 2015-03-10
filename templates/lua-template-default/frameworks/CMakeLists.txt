@@ -45,6 +45,7 @@ endif(DEBUG_MODE)
 # libcocos2d
 set(BUILD_CPP_TESTS OFF CACHE BOOL "turn off build cpp-tests")
 set(BUILD_LUA_TESTS OFF CACHE BOOL "turn off build lua-tests")
+set(BUILD_CPP_EMPTY_TESTS OFF CACHE BOOL "turn off build lua-tests")
 add_subdirectory(${COCOS2D_ROOT})
 
 
@@ -93,18 +94,23 @@ set(GAME_SRC
   runtime-src/Classes/AppDelegate.cpp
 )
 
+# architecture
+if ( CMAKE_SIZEOF_VOID_P EQUAL 8 )
+  set(ARCH_DIR "x86-64")
+elseif ( CMAKE_SIZEOF_VOID_P EQUAL 4 )
+  set(ARCH_DIR "i386")
+else()
+  message( FATAL_ERROR "Unsupported architecture, CMake will exit" )
+endif()
 
 include_directories(
-  /usr/include
-  /usr/include/GLFW
-  /usr/local/include/GLFW
   runtime-src/Classes
   ${COCOS2D_ROOT}/cocos
   ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/manual
   ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/manual/tolua
-  ${COCOS2D_ROOT}/external/lua/lua
-  ${COCOS2D_ROOT}/external/
   ${COCOS2D_ROOT}/cocos/audio/include
+  ${COCOS2D_ROOT}/external/${PLATFORM_FOLDER}/${ARCH_DIR}/include
+  ${COCOS2D_ROOT}/external/${PLATFORM_FOLDER}/${ARCH_DIR}/include/luajit
 )
 
 # add the executable

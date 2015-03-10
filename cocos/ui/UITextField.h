@@ -147,8 +147,8 @@ public:
     
     virtual void didNotSelectSelf();
     
-    CC_DEPRECATED_ATTRIBUTE void setText(const std::string& text){this->setString(text);}
-    CC_DEPRECATED_ATTRIBUTE const std::string& getStringValue()const{return this->getString();}
+    CC_DEPRECATED(v3) void setText(const std::string& text){this->setString(text);}
+    CC_DEPRECATED(v3) const std::string& getStringValue()const{return this->getString();}
     
     void setString(const std::string& text);
     const std::string& getString()const;
@@ -179,7 +179,7 @@ public:
     bool getDeleteBackward()const;
     void setDeleteBackward(bool deleteBackward);
     
-    CC_DEPRECATED_ATTRIBUTE void addEventListenerTextField(Ref* target, SEL_TextFieldEvent selecor);
+    CC_DEPRECATED(v3) void addEventListenerTextField(Ref* target, SEL_TextFieldEvent selecor);
     void addEventListener(const ccTextFieldCallback& callback);
     
     /**
