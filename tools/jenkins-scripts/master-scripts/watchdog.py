@@ -78,7 +78,8 @@ def build_time(_job,_threshold):
 def main():
     username = os.environ['JENKINS_ADMIN']
     password = os.environ['JENKINS_ADMIN_PW']
-    J = Jenkins('http://115.28.134.83:8000',username,password)
+    jenkins_url = os.environ['JENKINS_URL']
+    J = Jenkins(jenkins_url,username,password)
     #get all jenkins jobs
     for key,job in J.iteritems():
         threshold = 0

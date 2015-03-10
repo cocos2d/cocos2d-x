@@ -19,7 +19,8 @@ proxyDict = {'http':http_proxy,'https':http_proxy}
 def check_queue_build(action, pr_num, statuses_url):
     username = os.environ['JENKINS_ADMIN']
     password = os.environ['JENKINS_ADMIN_PW']
-    J = Jenkins('http://115.28.134.83:8000',username,password)
+    jenkins_url = os.environ['JENKINS_URL']
+    J = Jenkins(jenkins_url,username,password)
     queues = J.get_queue()
     for key,queue in queues.iteritems():
       q_payload_str = queue.get_parameters()['payload'].decode('utf-8','ignore')
@@ -73,7 +74,7 @@ def main():
     except:
         print 'Can not find build in queue'
     
-    if(action == 'closed'):
+    if(action == 'closed' or action == 'labeled' or action == 'assigned' or action == 'unlabeled'):
         print 'pull request #' + str(pr_num) + ' is '+action+', no build triggered'
         return(0)
   
