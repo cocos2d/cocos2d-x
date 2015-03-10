@@ -2600,7 +2600,7 @@ int lua_cocos2dx_3d_Mesh_getVertexSizeInBytes(lua_State* tolua_S)
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Mesh_getVertexSizeInBytes'", nullptr);
             return 0;
         }
-        int ret = cobj->getVertexSizeInBytes();
+        ssize_t ret = cobj->getVertexSizeInBytes();
         tolua_pushnumber(tolua_S,(lua_Number)ret);
         return 1;
     }

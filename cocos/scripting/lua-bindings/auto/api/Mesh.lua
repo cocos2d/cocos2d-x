@@ -28,7 +28,7 @@
 -- get per vertex size in bytes
 -- @function [parent=#Mesh] getVertexSizeInBytes 
 -- @param self
--- @return int#int ret (return value: int)
+-- @return long#long ret (return value: long)
         
 --------------------------------
 -- name getter 
