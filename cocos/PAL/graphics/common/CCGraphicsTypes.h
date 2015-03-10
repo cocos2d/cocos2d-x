@@ -1,5 +1,4 @@
 
-
 /****************************************************************************
  Copyright (c) 2013-2015 Chukong Technologies Inc.
  
@@ -24,8 +23,51 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCGraphicsGeometryState.h"
+#ifndef _CC_GRAPHICS_TYPES_H_
+#define _CC_GRAPHICS_TYPES_H_
+
+#include "PAL/CCPALMacros.h"
 
 NS_PAL_BEGIN
 
+enum class DataType
+{
+    Invalid = -1,
+    Byte,
+    UByte,
+    Short,
+    UShort,
+    Int,
+    UInt,
+    Float,
+    Fixed
+};
+
+struct CC_DLL VertexAttribute
+{
+    VertexAttribute()
+    : _normalize(false)
+    , _offset(0)
+    , _semantic(0)
+    , _type(DataType::Invalid)
+    , _size(0)
+    {}
+    
+    VertexAttribute(int offset, int semantic, DataType type, int size, bool normalize = false)
+    : _normalize(normalize)
+    , _offset(offset)
+    , _semantic(semantic)
+    , _type(type)
+    , _size(size)
+    {}
+    
+    bool _normalize;
+    int  _offset;
+    int  _semantic;
+    DataType _type;
+    int  _size;
+};
+
 NS_PAL_END
+
+#endif//_CC_GRAPHICS_TYPES_H_
