@@ -131,7 +131,7 @@ public:
 
     inline Type getType() const { return _type; };
 
-    std::string getDescription();
+    std::string getDescription() const;
 
 private:
     void clear();
