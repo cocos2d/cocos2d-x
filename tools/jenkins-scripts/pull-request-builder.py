@@ -20,7 +20,7 @@ branch = "v3"
 pr_num = 0
 workspace = "."
 node_name = "ios"
-remote_build = False
+remote_build = 0
 
 
 def set_jenkins_job_description(desc, url):
@@ -218,7 +218,7 @@ def main():
         remote_build = os.environ['REMOTE_BUILD']
         print "start remote building..."
 
-    if remote_build is True:
+    if remote_build == 1:
         send_notifies_to_github()
         #syntronize local git repository with remote and merge the PR
         syntronize_remote_pr()
@@ -237,7 +237,7 @@ def main():
         exit_code = 1
 
     #clean workspace
-    if remote_build is True:
+    if remote_build == 1:
         os.system("cd " + workspace)
         os.system("git reset --hard")
         os.system("git clean -xdf -f")
