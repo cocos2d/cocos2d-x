@@ -1171,6 +1171,12 @@ void MoveTo::startWithTarget(Node *target)
     _positionDelta = _endPosition - target->getPosition3D();
 }
 
+MoveTo* MoveTo::reverse() const
+{
+    CCASSERT(false, "reverse() not supported in MoveTo");
+    return nullptr;
+}
+
 
 //
 // SkewTo
