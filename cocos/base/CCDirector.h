@@ -38,6 +38,12 @@ THE SOFTWARE.
 #include "platform/CCGL.h"
 #include "platform/CCGLView.h"
 
+namespace PAL
+{
+    class PALManager;
+    class GraphicsInterface;
+}
+
 NS_CC_BEGIN
 
 /**
@@ -59,8 +65,6 @@ class TextureCache;
 class Renderer;
 class Camera;
 class Console;
-class PALManager;
-class GraphicsInterface;
 
 /**
 @brief Class that creates and handles the main Window and manages how
@@ -400,7 +404,7 @@ public:
     const Mat4& getMatrix(MATRIX_STACK_TYPE type);
     void resetMatrixStack();
 
-    GraphicsInterface* getGraphicsInterface() const;
+    PAL::GraphicsInterface* getGraphicsInterface() const;
     void selectGraphicsAPI(const char* apis[], const char* title);
     
 protected:
@@ -451,12 +455,12 @@ protected:
     /** Graphics API Manager
      @since v4.0
      */
-    PALManager* _PALManager;
+    PAL::PALManager* _PALManager;
     
     /** Selected Graphics Interface
      @since v4.0
      */
-    GraphicsInterface* _graphicsInterface;
+    PAL::GraphicsInterface* _graphicsInterface;
     
     /* delta time since last tick to main loop */
 	float _deltaTime;

@@ -60,8 +60,7 @@ THE SOFTWARE.
 #include "base/CCAsyncTaskPool.h"
 #include "platform/CCApplication.h"
 //#include "platform/CCGLViewImpl.h"
-#include "PAL/CCPALManager.h"
-#include "PAL/interfaces/CCGraphicsInterface.h"
+#include "PAL/CCPAL.h"
 
 #if CC_ENABLE_SCRIPT_BINDING
 #include "CCScriptSupport.h"
@@ -81,6 +80,7 @@ THE SOFTWARE.
 #endif // CC_DIRECTOR_STATS_POSITION
 
 using namespace std;
+using namespace PAL;
 
 NS_CC_BEGIN
 // FIXME: it should be a Director ivar. Move it there once support for multiple directors is added
@@ -453,7 +453,7 @@ void Director::setNextDeltaTimeZero(bool nextDeltaTimeZero)
 }
 
 // MARK: graphics API
-GraphicsInterface* Director::getGraphicsInterface() const
+PAL::GraphicsInterface* Director::getGraphicsInterface() const
 {
     CCASSERT(_graphicsInterface != nullptr, "Graphics API has not been selected");
     return _graphicsInterface;

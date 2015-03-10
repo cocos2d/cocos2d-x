@@ -1228,6 +1228,10 @@
 		D00FBB5A1AAF969200196C41 /* CCGraphicsGeometryState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D00FBB571AAF969200196C41 /* CCGraphicsGeometryState.cpp */; };
 		D00FBB5B1AAF969200196C41 /* CCGraphicsGeometryState.h in Headers */ = {isa = PBXBuildFile; fileRef = D00FBB581AAF969200196C41 /* CCGraphicsGeometryState.h */; };
 		D00FBB5C1AAF969200196C41 /* CCGraphicsGeometryState.h in Headers */ = {isa = PBXBuildFile; fileRef = D00FBB581AAF969200196C41 /* CCGraphicsGeometryState.h */; };
+		D00FBB6A1AAFB1FC00196C41 /* CCGraphicsTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = D00FBB691AAFB1FC00196C41 /* CCGraphicsTypes.h */; };
+		D00FBB6B1AAFB1FC00196C41 /* CCGraphicsTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = D00FBB691AAFB1FC00196C41 /* CCGraphicsTypes.h */; };
+		D00FBB6D1AAFB2A900196C41 /* CCPALMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = D00FBB6C1AAFB2A900196C41 /* CCPALMacros.h */; };
+		D00FBB6E1AAFB2A900196C41 /* CCPALMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = D00FBB6C1AAFB2A900196C41 /* CCPALMacros.h */; };
 		D07525EC1AAF576600830CD1 /* CCPALManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D07525E11AAF576600830CD1 /* CCPALManager.cpp */; };
 		D07525ED1AAF576600830CD1 /* CCPALManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D07525E11AAF576600830CD1 /* CCPALManager.cpp */; };
 		D07525EE1AAF576600830CD1 /* CCPALManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D07525E21AAF576600830CD1 /* CCPALManager.h */; };
@@ -1981,6 +1985,9 @@
 		B67C624519D4186F00F11FC6 /* ccShader_3D_PositionNormalTex.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_PositionNormalTex.vert; sourceTree = "<group>"; };
 		D00FBB571AAF969200196C41 /* CCGraphicsGeometryState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGraphicsGeometryState.cpp; sourceTree = "<group>"; };
 		D00FBB581AAF969200196C41 /* CCGraphicsGeometryState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGraphicsGeometryState.h; sourceTree = "<group>"; };
+		D00FBB641AAFB0C300196C41 /* CCPAL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPAL.h; sourceTree = "<group>"; };
+		D00FBB691AAFB1FC00196C41 /* CCGraphicsTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGraphicsTypes.h; sourceTree = "<group>"; };
+		D00FBB6C1AAFB2A900196C41 /* CCPALMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPALMacros.h; sourceTree = "<group>"; };
 		D07525E11AAF576600830CD1 /* CCPALManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPALManager.cpp; sourceTree = "<group>"; };
 		D07525E21AAF576600830CD1 /* CCPALManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPALManager.h; sourceTree = "<group>"; };
 		D07525E51AAF576600830CD1 /* CCGraphicsMetal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGraphicsMetal.cpp; sourceTree = "<group>"; };
@@ -3196,6 +3203,7 @@
 		D00FBB561AAF966C00196C41 /* common */ = {
 			isa = PBXGroup;
 			children = (
+				D00FBB691AAFB1FC00196C41 /* CCGraphicsTypes.h */,
 				D00FBB571AAF969200196C41 /* CCGraphicsGeometryState.cpp */,
 				D00FBB581AAF969200196C41 /* CCGraphicsGeometryState.h */,
 			);
@@ -3205,10 +3213,12 @@
 		D07525DF1AAF568900830CD1 /* PAL */ = {
 			isa = PBXGroup;
 			children = (
-				D07525EA1AAF576600830CD1 /* interfaces */,
-				D07525E31AAF576600830CD1 /* graphics */,
+				D00FBB641AAFB0C300196C41 /* CCPAL.h */,
+				D00FBB6C1AAFB2A900196C41 /* CCPALMacros.h */,
 				D07525E11AAF576600830CD1 /* CCPALManager.cpp */,
 				D07525E21AAF576600830CD1 /* CCPALManager.h */,
+				D07525EA1AAF576600830CD1 /* interfaces */,
+				D07525E31AAF576600830CD1 /* graphics */,
 			);
 			name = PAL;
 			path = ../cocos/PAL;
@@ -3551,6 +3561,7 @@
 				50ABBD5A1925AB0000A911A9 /* Vec2.h in Headers */,
 				15AE1BDB19AAE01E00C27E9E /* CCControlSwitch.h in Headers */,
 				B24AA987195A675C007B4522 /* CCFastTMXLayer.h in Headers */,
+				D00FBB6D1AAFB2A900196C41 /* CCPALMacros.h in Headers */,
 				50ABBEBD1925AB6F00A911A9 /* ccUtils.h in Headers */,
 				50ABC0231926664800A911A9 /* CCGLViewImpl-desktop.h in Headers */,
 				296F160E1A9DDD12000C7D83 /* CCVertexAttribute.h in Headers */,
@@ -3584,6 +3595,7 @@
 				50ABBE371925AB6F00A911A9 /* CCConsole.h in Headers */,
 				50ABC00B1926664800A911A9 /* CCDevice.h in Headers */,
 				50ABC0131926664800A911A9 /* CCGLView.h in Headers */,
+				D00FBB6A1AAFB1FC00196C41 /* CCGraphicsTypes.h in Headers */,
 				50ABBDB31925AB4100A911A9 /* ccShaders.h in Headers */,
 				50ABBDAB1925AB4100A911A9 /* CCRenderCommandPool.h in Headers */,
 				5034CA45191D591100CE6051 /* ccShader_Label_outline.frag in Headers */,
@@ -3627,6 +3639,7 @@
 				296F160F1A9DDD12000C7D83 /* CCVertexAttribute.h in Headers */,
 				292DB14019B4574100A80320 /* UIEditBox.h in Headers */,
 				50ABBD3B1925AB0000A911A9 /* CCAffineTransform.h in Headers */,
+				D00FBB6B1AAFB1FC00196C41 /* CCGraphicsTypes.h in Headers */,
 				5034CA38191D591100CE6051 /* ccShader_PositionColorLengthTexture.vert in Headers */,
 				15AE1B8119AADA9A00C27E9E /* UITextAtlas.h in Headers */,
 				15B3708319EE414C00ABE682 /* CCEventListenerAssetsManagerEx.h in Headers */,
@@ -3681,6 +3694,7 @@
 				50CB247E19D9C5A100687767 /* AudioPlayer.h in Headers */,
 				1A57007C180BC5A10088DEC7 /* CCActionInstant.h in Headers */,
 				3E6176751960F89B00DE83F5 /* CCEventController.h in Headers */,
+				D00FBB6E1AAFB2A900196C41 /* CCPALMacros.h in Headers */,
 				50ABBE781925AB6F00A911A9 /* CCEventListenerTouch.h in Headers */,
 				15AE1BC019AADFF000C27E9E /* WebSocket.h in Headers */,
 				1A570080180BC5A10088DEC7 /* CCActionInterval.h in Headers */,

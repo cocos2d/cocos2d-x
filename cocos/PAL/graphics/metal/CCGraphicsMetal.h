@@ -27,9 +27,10 @@
 #define _CC_GRAPHICS_METAL_H_
 
 #include "cocos2d.h"
+#include "PAL/CCPALMacros.h"
 #include "PAL/interfaces/CCGraphicsInterface.h"
 
-NS_CC_BEGIN
+NS_PAL_BEGIN
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #    import "TargetConditionals.h"
@@ -58,8 +59,8 @@ public:
     void shutdown();
 };
 
-#endif // CC_METAL_AVAILABLE
+#endif//CC_METAL_AVAILABLE
 
-NS_CC_END
+NS_PAL_END
 
 #endif//_CC_GRAPHICS_METAL_H_

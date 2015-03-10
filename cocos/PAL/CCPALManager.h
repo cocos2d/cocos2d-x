@@ -26,17 +26,15 @@
 #ifndef _CC_PAL_MANAGER_H_
 #define _CC_PAL_MANAGER_H_
 
-#include <memory>
-#include <string>
-#include "platform/CCPlatformMacros.h"
+#include "PAL/CCPALMacros.h"
 #include "base/CCRef.h"
 
-NS_CC_BEGIN
+NS_PAL_BEGIN
 
 class GraphicsInterface;
 
 class PALManager
-    : public Ref
+    : public NS_CC::Ref
 {
 public:
     
@@ -100,7 +98,6 @@ protected:
     {
         auto fact = tFactoryType{constructor, impl};
         _factories.insert(tRegisteredFactories::value_type(typeHash<T>(), fact));
-        CCLOG("Registered factory for %s implementation %s", typeName<T>(), impl);
     }
     
     void registerFactories();
@@ -119,6 +116,6 @@ protected:
     tRegisteredFactories _factories;
 };
 
-NS_CC_END
+NS_PAL_END
 
-#endif // _CC_PAL_MANAGER_H_
+#endif//_CC_PAL_MANAGER_H_

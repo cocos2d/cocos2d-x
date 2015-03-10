@@ -26,14 +26,17 @@
 #ifndef _CC_GRAPHICS_OPEN_GL_ES_20_H_
 #define _CC_GRAPHICS_OPEN_GL_ES_20_H_
 
-#include "platform/CCPlatformMacros.h"
 #include "base/CCRef.h"
+#include "PAL/CCPALMacros.h"
 #include "PAL/interfaces/CCGraphicsInterface.h"
 
 NS_CC_BEGIN
-
-class ViewInterface;
 class GLView;
+NS_CC_END
+
+NS_PAL_BEGIN
+
+class GraphicsGeometryState;
 
 class GraphicsOpenGLES20
     : public GraphicsInterface
@@ -62,9 +65,9 @@ public:
     
 protected:
     
-    GLView* _view;
+    NS_CC::GLView* _view;
 };
 
-NS_CC_END
+NS_PAL_END
 
 #endif // _CC_GRAPHICS_OPEN_GL_ES_20_H_

@@ -26,13 +26,13 @@
 #ifndef _CC_GRAPHICS_INTERFACE_H_
 #define _CC_GRAPHICS_INTERFACE_H_
 
-#include "platform/CCPlatformMacros.h"
+#include "PAL/CCPALMacros.h"
 #include "base/CCRef.h"
 
-NS_CC_BEGIN
+NS_PAL_BEGIN
 
 class GraphicsInterface
-    : public Ref
+    : public NS_CC::Ref
 {
 public:
     
@@ -61,6 +61,6 @@ public:
     virtual bool bindGeometryState(handle object) = 0;
 };
 
-NS_CC_END
+NS_PAL_END
 
-#endif // _CC_GRAPHICS_INTERFACE_H_
+#endif//_CC_GRAPHICS_INTERFACE_H_

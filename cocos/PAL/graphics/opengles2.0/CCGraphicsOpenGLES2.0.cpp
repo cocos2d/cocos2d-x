@@ -23,10 +23,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "PAL/graphics/opengles2.0/CCGraphicsOpenGLES2.0.h"
+#include "CCGraphicsOpenGLES2.0.h"
+#include "PAL/CCPALMacros.h"
 #include "cocos2d.h"
 
-NS_CC_BEGIN
+USING_NS_CC;
+NS_PAL_BEGIN
 
 GraphicsInterface* GraphicsOpenGLES20::create()
 {
@@ -42,7 +44,7 @@ GraphicsInterface* GraphicsOpenGLES20::create()
 
 void GraphicsOpenGLES20::shutdown()
 {
-    CC_SAFE_RELEASE_NULL(_view);
+    PAL_SAFE_RELEASE_NULL(_view);
 }
 
 bool GraphicsOpenGLES20::init()
@@ -89,4 +91,4 @@ bool GraphicsOpenGLES20::bindGeometryState(handle object)
     return glGetError() ? false : true;
 }
 
-NS_CC_END
+NS_PAL_END

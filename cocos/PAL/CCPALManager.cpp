@@ -23,27 +23,26 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-//#include <memory>
-#include "base/ccMacros.h"
 #include "PAL/CCPALManager.h"
+#include "PAL/CCPALMacros.h"
 #include "PAL/graphics/opengles2.0/CCGraphicsOpenGLES2.0.h"
 #include "PAL/graphics/metal/CCGraphicsMetal.h"
 
-NS_CC_BEGIN
+NS_PAL_BEGIN
 
 // we only allow a single PAL manager instance
 int PALManager::_instances = 0;
 
 PALManager::PALManager()
 {
-    CCASSERT(++_instances == 1, "Only a single PAL manager instance is allowed");
+    PAL_ASSERT(++_instances == 1, "Only a single PAL manager instance is allowed");
     registerFactories();
 }
 
 PALManager::~PALManager()
 {
     --_instances;
-    CCASSERT(++_instances == 0, "Only a single PAL manager instance is allowed");
+    PAL_ASSERT(++_instances == 0, "Only a single PAL manager instance is allowed");
 }
 
 //
@@ -68,4 +67,4 @@ void PALManager::registerFactories()
     #undef REGISTER_FACTORY
 }
 
-NS_CC_END
+NS_PAL_END
