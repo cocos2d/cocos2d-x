@@ -1,9 +1,11 @@
 cocos2d-x-3.5rc0 ??
     [NEW]           Particle3D: more PU feature support, observers and event handlers
+    
     [FIX]           Billboard: fix bug on transparent Billboard because of transparent queue
     [FIX]           Bundle: bug that create bundle with empty path
+    [FIX]           C++: use console in `build/build_native.sh`
     [FIX]           MotionStreak: can not work with MoveTo and MoveBy
-    [FIX]           Particle3D: to make path shorter, rename Particle Universe folder to PU, and files CCPUParticle3DXXX to CCPUXXX. 
+    [FIX]           Particle3D: to make path shorter, rename Particle Universe folder to PU, and files CCPUParticle3DXXX to CCPUXXX to fix compiling error on WP8
     [FIX]           Particle3D: `loadMaterialsFromSearchPaths` bug on linux platform
     [FIX]           Sprite3D: fix bug on transparent 3D Sprite because of transparent queue
 
