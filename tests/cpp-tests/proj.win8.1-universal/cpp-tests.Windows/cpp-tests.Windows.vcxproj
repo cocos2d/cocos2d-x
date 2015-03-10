@@ -89,6 +89,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <PackageCertificateKeyFile>cpp-tests.Windows_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>35C2132BDB64C0DFA54722663D9148FF118E341B</PackageCertificateThumbprint>
   </PropertyGroup>
   <Import Project="..\cpp-tests.Shared\cpp-tests.Shared.vcxitems" Label="Shared" />
   <ItemDefinitionGroup Condition="'$(Platform)'=='ARM'">

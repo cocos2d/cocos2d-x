@@ -1732,6 +1732,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUVortexAffectorTranslator.h">
       <Filter>extension\Particle3D\PU</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos2d.cpp" />
@@ -3290,6 +3292,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\PU\CCPUVortexAffectorTranslator.cpp">
       <Filter>extension\Particle3D\PU</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\WidgetReader\Particle3DReader\Particle3DReader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="2d">
