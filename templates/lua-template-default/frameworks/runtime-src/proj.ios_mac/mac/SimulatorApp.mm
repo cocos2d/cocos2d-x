@@ -32,7 +32,7 @@
 #include "AppDelegate.h"
 #include "glfw3.h"
 #include "glfw3native.h"
-#include "runtime/Runtime.h"
+
 #include "runtime/ConfigParser.h"
 
 #include "cocos2d.h"
@@ -336,7 +336,6 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
     [self setupUI];
     [self adjustEditMenuIndex];
     
-    RuntimeEngine::getInstance()->setProjectConfig(_project);
     Application::getInstance()->run();
     // After run, application needs to be terminated immediately.
     [NSApp terminate: self];
@@ -511,7 +510,6 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
                 project.setScriptFile(ConfigParser::getInstance()->getEntryFile());
                 project.setWritablePath(dirPath);
 
-                RuntimeEngine::getInstance()->setProjectConfig(project);
 //                app->setProjectConfig(project);
 //                app->reopenProject();
             }
