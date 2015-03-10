@@ -2,15 +2,12 @@
 
 import json
 import os
-import re
 import urllib2
 import urllib
 import base64
 import requests
 import sys
 import traceback
-import platform
-import codecs
 from shutil import copy
 
 #set Jenkins build description using submitDescription to mock browser behavior
@@ -22,7 +19,7 @@ proxyDict = {'http': http_proxy, 'https': http_proxy}
 branch = "v3"
 pr_num = 0
 workspace = "."
-node_name = "mac"
+node_name = "ios"
 remote_build = False
 
 
@@ -43,7 +40,6 @@ def set_jenkins_job_description(desc, url):
 
 def check_current_3rd_libs(branch):
     global node_name
-    
     print("start backup old 3rd libs...")
     #get current_libs config
     backup_files = range(2)
@@ -72,40 +68,6 @@ def check_current_3rd_libs(branch):
     for i, backup_file in enumerate(backup_files):
         current_file = current_files[i]
         copy(current_file, backup_file)
-
-
-def patch_cpp_empty_test():
-    modify_file = 'tests/cpp-empty-test/Classes/AppDelegate.cpp'
-    data = codecs.open(modify_file, encoding='UTF-8').read()
-    data = re.sub("director->setDisplayStats\(true\);", "director->setDisplayStats(true); director->getConsole()->listenOnTCP(5678);", data)
-    codecs.open(modify_file, 'wb', encoding='UTF-8').write(data)
-
-    #modify tests/cpp-empty-test/proj.android/AndroidManifest.xml to support Console
-    modify_file = 'tests/cpp-empty-test/proj.android/AndroidManifest.xml'
-    data = codecs.open(modify_file, encoding='UTF-8').read()
-    data = re.sub('<uses-feature android:glEsVersion="0x00020000" />', '<uses-feature android:glEsVersion="0x00020000" /> <uses-permission android:name="android.permission.INTERNET"/>', data)
-    codecs.open(modify_file, 'wb', encoding='UTF-8').write(data)
-
-
-def add_symbol_link_for_android_project(projects):
-    global workspace
-
-    print "current dir is: " + workspace
-    os.system("cd " + workspace)
-    android_build_objs_dir = "android_build_objs"
-    os.mkdir(android_build_objs_dir)
-
-    print platform.system()
-    if(platform.system() == 'Darwin'):
-        for item in projects:
-            cmd = "ln -s " + workspace + android_build_objs_dir + workspace + "/tests/" + item + "/proj.android/obj"
-            os.system(cmd)
-    elif(platform.system() == 'Windows'):
-        for item in projects:
-            p = item.replace("/", os.sep)
-            cmd = "mklink /J " + workspace + os.sep + "tests" + os.sep + p + os.sep + "proj.android" + os.sep + "obj " + workspace + os.sep + android_build_objs_dir
-            print cmd
-            os.system(cmd)
 
 
 def send_notifies_to_github():
@@ -254,6 +216,7 @@ def main():
     #for local debugging purpose, you could uncomment this line
     if 'REMOTE_BUILD' in os.environ:
         remote_build = os.environ['REMOTE_BUILD']
+        print "start remote building..."
 
     if remote_build is True:
         send_notifies_to_github()
@@ -263,10 +226,6 @@ def main():
         check_current_3rd_libs(branch)
         #generate jsb and luabindings
         gen_scripting_bindings()
-
-    #add symbol link
-    add_symbol_link_projects = ["cpp-empty-test", "cpp-tests"]
-    add_symbol_link_for_android_project(add_symbol_link_projects)
 
     #start build jobs on each slave
     ret = do_build_slaves()
