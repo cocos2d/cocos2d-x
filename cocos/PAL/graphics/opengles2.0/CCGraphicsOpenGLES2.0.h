@@ -36,21 +36,17 @@ class ViewInterface;
 class GLView;
 
 class GraphicsOpenGLES20
-    : public Ref
-    , public GraphicsInterface
+    : public GraphicsInterface
 {
 public:
     
     static GraphicsInterface* create();
     
     // @brief initialize the API
-    bool init(const char* name);
+    bool init();
 
     // @brief shuts down this interface.
     void shutdown();
-
-    // @brief get the view
-    ViewInterface* getView() const;
     
 protected:
     

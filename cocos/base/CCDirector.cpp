@@ -206,6 +206,7 @@ Director::~Director(void)
 
     CC_SAFE_RELEASE(_eventDispatcher);
     CC_SAFE_RELEASE(_PALManager);
+    CC_SAFE_RELEASE(_graphicsInterface);
     
     // delete _lastUpdate
     CC_SAFE_DELETE(_lastUpdate);

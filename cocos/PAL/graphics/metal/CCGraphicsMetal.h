@@ -46,21 +46,17 @@ class ViewInterface;
 class GLView;
 
 class GraphicsMetal
-    : public Ref
-    , public GraphicsInterface
+    : public GraphicsInterface
 {
 public:
     
     static GraphicsInterface* create();
     
     // @brief initialize the API
-    bool init(const char* name);
+    bool init();
 
     // @brief shuts down this interface.
     void shutdown();
-    
-    // @brief get the view
-    ViewInterface* getView() const;
 };
 
 #endif // CC_METAL_AVAILABLE

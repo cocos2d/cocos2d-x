@@ -57,10 +57,7 @@ void PALManager::registerFactories()
         auto constructor = tConstructor{[]() -> void* { \
             return cls::create(); \
         }}; \
-        auto destructor = tDestructor{[](void* instance) -> void { \
-            static_cast<cls*>(instance)->release(); \
-        }}; \
-        registerFactory<T>(impl, constructor, destructor); \
+        registerFactory<T>(impl, constructor); \
     }
 
     REGISTER_FACTORY(GraphicsInterface, "opengles2.0", GraphicsOpenGLES20);
@@ -70,34 +67,5 @@ void PALManager::registerFactories()
 
     #undef REGISTER_FACTORY
 }
-
-//GraphicsInterface* GraphicsAPIManager::createAPI(const char* apis[], const char* title)
-//{
-//    GraphicsInterface* api = nullptr;
-//    
-//    while (apis && *apis)
-//    {
-//        auto name = *apis++;
-//        
-//        auto hash = std::hash<std::string>{};
-//        auto hval = size_t{hash(name)};
-//        
-//        auto fi = _factories.find(hval);
-//        if (fi == _factories.end())
-//            return nullptr;
-//        
-//        _currentAPIFactory = (*fi).second;
-//        api = _currentAPIFactory._constructor(title);
-//    }
-//    
-//    return api;
-//}
-//
-//void GraphicsAPIManager::destroyAPI(GraphicsInterface* api)
-//{
-//    if (_currentAPIFactory._destructor)
-//        _currentAPIFactory._destructor(api);
-//    _currentAPIFactory = tFactoryType();
-//}
 
 NS_CC_END

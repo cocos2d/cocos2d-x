@@ -26,8 +26,8 @@
 #ifndef _CC_GRAPHICS_INTERFACE_H_
 #define _CC_GRAPHICS_INTERFACE_H_
 
-#include <memory>
 #include "platform/CCPlatformMacros.h"
+#include "base/CCRef.h"
 
 NS_CC_BEGIN
 
@@ -36,6 +36,7 @@ class ViewInterface;
 using handle = void*;
 
 class GraphicsInterface
+    : public Ref
 {
 public:
     
@@ -48,10 +49,6 @@ public:
     // @brief shuts down this interface, releasing all resources.
     // All weak references and cached interfaces are invalidated.
     virtual void shutdown() = 0;
-    
-    // @brief returns the implementation name
-    // All PALManager factory objects must implement this method.
-    virtual const char* implName() = 0;
 };
 
 NS_CC_END

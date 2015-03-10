@@ -53,7 +53,7 @@ public:
             auto imp = *impls;
             do
             {
-                if (factory._name == imp)
+                if (factory._impl == imp)
                 {
                     auto instance = static_cast<T*>(factory._constructor());
                     return instance;
@@ -63,23 +63,6 @@ public:
             while (imp);
         }
         return nullptr;
-    }
-    
-    template <class T>
-    bool destroyObject(T* instance)
-    {
-        auto range = _factories.equal_range(typeHash<T>());
-        for (auto it = range.first; it != range.second; ++it)
-        {
-            auto& factory = it->second;
-            
-            if (factory._name == instance->implName())
-            {
-                factory._destructor(instance);
-                return true;
-            }
-        }
-        return false;
     }
     
 protected:
@@ -98,12 +81,11 @@ protected:
     }
     
     using tConstructor = std::function<void* ()>;
-    using tDestructor  = std::function<void (void*)>;
 
     template <class T>
-    void registerFactory(const char* impl, tConstructor constructor, tDestructor destructor)
+    void registerFactory(const char* impl, tConstructor constructor)
     {
-        auto fact = tFactoryType{constructor, destructor, impl};
+        auto fact = tFactoryType{constructor, impl};
         _factories.insert(tRegisteredFactories::value_type(typeHash<T>(), fact));
         CCLOG("Registered factory for %s implementation %s", typeName<T>(), impl);
     }
@@ -117,8 +99,7 @@ protected:
     struct tFactoryType
     {
         tConstructor _constructor;
-        tDestructor  _destructor;
-        std::string  _name;
+        std::string  _impl;
     };
     
     using tRegisteredFactories = std::unordered_multimap<size_t, tFactoryType>;
