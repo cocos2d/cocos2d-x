@@ -798,6 +798,7 @@
 		59620E901921E5CF002021B6 /* Bug-Child.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59620E8D1921E5CF002021B6 /* Bug-Child.cpp */; };
 		5EBEECB01995247000429821 /* DrawNode3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EBEECAE1995247000429821 /* DrawNode3D.cpp */; };
 		5EBEECB11995247000429821 /* DrawNode3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EBEECAE1995247000429821 /* DrawNode3D.cpp */; };
+		826294431AAF071500CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826294421AAF071500CB7CF7 /* Security.framework */; };
 		A05FCACA177C124500BE600E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
 		A07A521E1783A1D20073F6A7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
 		A07A521F1783A1D20073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
@@ -1738,6 +1739,7 @@
 		5EBEECAF1995247000429821 /* DrawNode3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DrawNode3D.h; path = Sprite3DTest/DrawNode3D.h; sourceTree = "<group>"; };
 		70A7F72D191D3E4900F0F206 /* shaderTest.psh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = shaderTest.psh.h; sourceTree = "<group>"; };
 		70A7F730191D421B00F0F206 /* ShaderTest.vsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTest.vsh.h; sourceTree = "<group>"; };
+		826294421AAF071500CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		A035A71117822E9E00987F6C /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		A07A52291783A1D20073F6A7 /* cpp-tests iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cpp-tests iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A07A52B71783AE6D0073F6A7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -1902,6 +1904,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1AAF534D180E2F4E000584C8 /* libcocos2d Mac.a in Frameworks */,
+				826294431AAF071500CB7CF7 /* Security.framework in Frameworks */,
 				EDCC747F17C455FD007B692C /* IOKit.framework in Frameworks */,
 				15C6482F165F399D007D4F18 /* libz.dylib in Frameworks */,
 				15C64833165F3AFD007D4F18 /* Foundation.framework in Frameworks */,
@@ -3694,6 +3697,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				826294421AAF071500CB7CF7 /* Security.framework */,
 				52B47A331A534B2B004E4C60 /* Security.framework */,
 				15EE465A19A7200300AF29F1 /* libcurl.a */,
 				15CBA9DC196EEAA6005877BB /* libz.dylib */,
