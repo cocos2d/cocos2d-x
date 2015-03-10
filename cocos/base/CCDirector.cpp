@@ -110,6 +110,7 @@ Director* Director::getInstance()
 
 Director::Director()
 : _isStatusLabelUpdated(true)
+, _graphicsInterface(nullptr)
 {
 }
 
@@ -168,9 +169,12 @@ bool Director::init(void)
     _eventProjectionChanged = new (std::nothrow) EventCustom(EVENT_PROJECTION_CHANGED);
     _eventProjectionChanged->setUserData(this);
 
-    _PALManager = new PALManager;
-//    const char* apis[] = {"opengles2.0", nullptr};
-//    _graphicsAPIManager->createAPI(apis, "");
+    _PALManager = PALManager::create();
+    _PALManager->retain();
+    
+    const char* apis[] = {"opengles2.0", nullptr};
+    _graphicsInterface = _PALManager->createObject<GraphicsInterface>(apis);
+    _graphicsInterface->retain();
     
     //init TextureCache
     initTextureCache();
@@ -451,13 +455,15 @@ void Director::setNextDeltaTimeZero(bool nextDeltaTimeZero)
 // MARK: graphics API
 GraphicsInterface* Director::getGraphicsInterface() const
 {
+    CCASSERT(_graphicsInterface != nullptr, "Graphics API has not been selected");
     return _graphicsInterface;
 }
 
 void Director::selectGraphicsAPI(const char* apis[], const char* title)
 {
-    // weak pointer to current graphics interface.
+    CC_SAFE_RELEASE_NULL(_graphicsInterface);
     _graphicsInterface = _PALManager->createObject<GraphicsInterface>(apis);
+    CC_SAFE_RETAIN(_graphicsInterface);
 }
 
 //

@@ -45,13 +45,7 @@ void GraphicsOpenGLES20::shutdown()
     CC_SAFE_RELEASE_NULL(_view);
 }
 
-// @brief create a uninitialized view.
-ViewInterface* GraphicsOpenGLES20::getView() const
-{
-    return nullptr;//_view;
-}
-
-bool GraphicsOpenGLES20::init(const char* name)
+bool GraphicsOpenGLES20::init()
 {
     bool result = true;
     
@@ -63,6 +57,36 @@ bool GraphicsOpenGLES20::init(const char* name)
     result = _view ? result : false;
     
     return result;
+}
+
+bool GraphicsOpenGLES20::supportsGeometryState()
+{
+    return Configuration::getInstance()->supportsShareableVAO();
+}
+
+GraphicsInterface::handle GraphicsOpenGLES20::createGeometryState()
+{
+    GLuint vao;
+    glGenVertexArrays(1, &vao);
+    return (handle)vao;
+}
+
+bool GraphicsOpenGLES20::deleteGeometryState(handle object)
+{
+    auto vao = (GLuint)(intptr_t)object;
+    if (!glIsBuffer(vao))
+        return false;
+    glDeleteVertexArrays(1, (GLuint*)&vao);
+    GL::bindVAO(0);
+    return true;
+}
+
+bool GraphicsOpenGLES20::bindGeometryState(handle object)
+{
+    auto vao = (GLuint)(intptr_t)object;
+    GL::bindVAO(vao);
+    CHECK_GL_ERROR_DEBUG();
+    return glGetError() ? false : true;
 }
 
 NS_CC_END

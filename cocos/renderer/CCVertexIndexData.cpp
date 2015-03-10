@@ -27,6 +27,7 @@
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCVertexIndexBuffer.h"
 #include "base/CCConfiguration.h"
+#include "base/CCDirector.h"
 
 // TODO
 // - use buffers instead of streams for clearing to avoid duplication
@@ -35,7 +36,6 @@
 #include "base/CCEventType.h"
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
-#include "base/CCDirector.h"
 #define SUPPORT_EVENT_RENDERER_RECREATED
 #endif
 
@@ -60,12 +60,8 @@ VertexData::~VertexData()
     _vertexStreams.clear();
     CC_SAFE_RELEASE(_indices);
     
-    if (glIsBuffer(_vao))
-    {
-        glDeleteVertexArrays(1, (GLuint*)&_vao);
-        GL::bindVAO(0);
-        _vao = 0;
-    }
+    Director::getInstance()->getGraphicsInterface()->deleteGeometryState(_vao);
+    _vao = 0;
     
 #ifdef SUPPORT_EVENT_RENDERER_RECREATED
     Director::getInstance()->getEventDispatcher()->removeEventListener(_recreateEventListener);
@@ -155,6 +151,8 @@ ssize_t VertexData::draw(ssize_t start, ssize_t count)
     CCASSERT(start >= 0, "Invalid start value");
     CCASSERT(count >= 0, "Invalid count value");
     
+    auto const gi = Director::getInstance()->getGraphicsInterface();
+    
     if (0 == count)
     {
         // if we are drawing indexed, then use the count of indices to draw
@@ -163,16 +161,15 @@ ssize_t VertexData::draw(ssize_t start, ssize_t count)
     
     if (_vao)
     {
-        GL::bindVAO(_vao);
-        CHECK_GL_ERROR_DEBUG();
+        gi->bindGeometryState(_vao);
     }
-    
+
     if (0 == _vao || isDirty())
     {
-        if (0 == _vao && Configuration::getInstance()->supportsShareableVAO())
+        if (0 == _vao && gi->supportsGeometryState())
         {
-            glGenVertexArrays(1, (GLuint*)&_vao);
-            GL::bindVAO(_vao);
+            _vao = gi->createGeometryState();
+            gi->bindGeometryState(_vao);
         }
 
         CHECK_GL_ERROR_DEBUG();

@@ -43,6 +43,19 @@ public:
     PALManager();
     virtual ~PALManager();
     
+    template <class T = PALManager>
+    static T* create()
+    {
+        auto result = new (std::nothrow) T;
+        if (result)
+        {
+            result->autorelease();
+            return result;
+        }
+        delete result;
+        return nullptr;
+    }
+    
     template <class T>
     T* createObject(const char* impls[])
     {

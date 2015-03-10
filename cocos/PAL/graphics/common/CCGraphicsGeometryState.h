@@ -1,6 +1,6 @@
 
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -23,48 +23,22 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef _CC_GRAPHICS_OPEN_GL_ES_20_H_
-#define _CC_GRAPHICS_OPEN_GL_ES_20_H_
+#ifndef _CC_GRAPHICS_GEOMETRY_STATE_H_
+#define _CC_GRAPHICS_GEOMETRY_STATE_H_
 
 #include "platform/CCPlatformMacros.h"
 #include "base/CCRef.h"
-#include "PAL/interfaces/CCGraphicsInterface.h"
 
 NS_CC_BEGIN
 
-class ViewInterface;
-class GLView;
-
-class GraphicsOpenGLES20
-    : public GraphicsInterface
+class GraphicsGeometryState
+    : public Ref
 {
 public:
     
-    static GraphicsInterface* create();
     
-    // @brief initialize the API
-    bool init();
-
-    // @brief shuts down this interface.
-    void shutdown();
-    
-    // @brief returns true or false depending on whether or not geometry state objects are supported.
-    bool supportsGeometryState();
-    
-    // @brief creates a geometry state object
-    handle createGeometryState();
-    
-    // @brief delete a geometry state object.
-    bool deleteGeometryState(handle object);
-    
-    // @brief binds a geometry state object.
-    bool bindGeometryState(handle object);
-    
-protected:
-    
-    GLView* _view;
 };
 
 NS_CC_END
 
-#endif // _CC_GRAPHICS_OPEN_GL_ES_20_H_
+#endif//_CC_GRAPHICS_GEOMETRY_STATE_H_

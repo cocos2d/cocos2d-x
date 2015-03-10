@@ -28,6 +28,28 @@
 NS_CC_BEGIN
 
 #ifdef CC_METAL_AVAILABLE
+
+GraphicsInterface* GraphicsMetal::create()
+{
+    auto obj = new GraphicsMetal;
+    if (obj)
+    {
+        obj->autorelease();
+        return obj;
+    }
+    CC_SAFE_DELETE(obj);
+    return nullptr;
+}
+
+void GraphicsMetal::shutdown()
+{
+}
+
+bool GraphicsMetal::init()
+{
+    return true;
+}
+
 #endif // CC_METAL_AVAILABLE
 
 NS_CC_END

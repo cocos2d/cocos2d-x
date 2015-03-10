@@ -31,14 +31,12 @@
 
 NS_CC_BEGIN
 
-class ViewInterface;
-
-using handle = void*;
-
 class GraphicsInterface
     : public Ref
 {
 public:
+    
+    typedef intptr_t handle;
     
     virtual ~GraphicsInterface() {}
     
@@ -49,6 +47,18 @@ public:
     // @brief shuts down this interface, releasing all resources.
     // All weak references and cached interfaces are invalidated.
     virtual void shutdown() = 0;
+    
+    // @brief returns true or false depending on whether or not geometry state objects are supported.
+    virtual bool supportsGeometryState() = 0;
+    
+    // @brief creates a geometry state object.
+    virtual handle createGeometryState() = 0;
+    
+    // @brief delete a geometry state object.
+    virtual bool deleteGeometryState(handle object) = 0;
+    
+    // @brief binds a geometry state object.
+    virtual bool bindGeometryState(handle object) = 0;
 };
 
 NS_CC_END
