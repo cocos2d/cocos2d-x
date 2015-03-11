@@ -50,7 +50,7 @@ def main():
     payload_forword['html_url'] = url
 
     #get pull request info
-    req = 'https://api.github.com/repos/cocos2d/cocos2d-x/pulls/' + str(pr_num)
+    req = os.environ['GITHUB_REMOTE'] + str(pr_num)
     pr_payload = ''
     try:
         pr_payload = urllib2.urlopen(req).read()
