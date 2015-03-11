@@ -1,7 +1,6 @@
 #!/usr/bin/python
 import os
 import sys
-import subprocess
 import socket
 import time
 

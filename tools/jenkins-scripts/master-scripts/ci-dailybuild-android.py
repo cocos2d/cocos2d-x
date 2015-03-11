@@ -1,5 +1,4 @@
 import os
-import platform
 import json
 from shutil import copy
 import sys
