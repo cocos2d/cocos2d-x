@@ -124,12 +124,12 @@ TMXMapInfo * TMXMapInfo::createWithXML(const std::string& tmxString, const std::
 
 void TMXMapInfo::internalInit(const std::string& tmxFileName, const std::string& resourcePath)
 {
-    if (tmxFileName.size() > 0)
+    if (!tmxFileName.empty())
     {
         _TMXFileName = FileUtils::getInstance()->fullPathForFilename(tmxFileName);
     }
     
-    if (resourcePath.size() > 0)
+    if (!resourcePath.empty())
     {
         _resources = resourcePath;
     }
@@ -441,11 +441,10 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
         // Create an instance of TMXObjectInfo to store the object and its properties
         ValueMap dict;
         // Parse everything automatically
-        const char* array[] = {"name", "type", "width", "height", "gid"};
+        const char* keys[] = {"name", "type", "width", "height", "gid"};
         
-        for (size_t i = 0; i < sizeof(array)/sizeof(array[0]); ++i)
+        for (const auto& key : keys)
         {
-            const char* key = array[i];
             Value value = attributeDict[key];
             dict[key] = value;
         }
@@ -620,8 +619,6 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
     TMXMapInfo *tmxMapInfo = this;
     std::string elementName = name;
 
-    int len = 0;
-
     if (elementName == "data")
     {
         if (tmxMapInfo->getLayerAttribs() & TMXLayerAttribBase64)
@@ -632,7 +629,7 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
             
             std::string currentString = tmxMapInfo->getCurrentString();
             unsigned char *buffer;
-            len = base64Decode((unsigned char*)currentString.c_str(), (unsigned int)currentString.length(), &buffer);
+            auto len = base64Decode((unsigned char*)currentString.c_str(), (unsigned int)currentString.length(), &buffer);
             if (!buffer)
             {
                 CCLOG("cocos2d: TiledMap: decode data error");
