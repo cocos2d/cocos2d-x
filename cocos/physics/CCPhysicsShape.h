@@ -213,9 +213,9 @@ protected:
 class CC_DLL PhysicsShapePolygon : public PhysicsShape
 {
 public:
-    static PhysicsShapePolygon* create(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
+    static PhysicsShapePolygon* create(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO, float radius = 0.0f);
     static float calculateArea(const Vec2* points, int count);
-    static float calculateMoment(float mass, const Vec2* points, int count, const Vec2& offset = Vec2::ZERO);
+    static float calculateMoment(float mass, const Vec2* points, int count, const Vec2& offset = Vec2::ZERO, float radius = 0.0f);
     
     float calculateDefaultMoment() override;
     
@@ -224,7 +224,7 @@ public:
     int getPointsCount() const;
     virtual Vec2 getCenter() override;
 protected:
-    bool init(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
+    bool init(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO, float radius = 0.0f);
     float calculateArea() override;
     virtual void updateScale() override;
     
@@ -237,13 +237,13 @@ protected:
 class CC_DLL PhysicsShapeBox : public PhysicsShapePolygon
 {
 public:
-    static PhysicsShapeBox* create(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
+    static PhysicsShapeBox* create(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO, float radius = 0.0f);
     
     Size getSize() const;
     virtual Vec2 getOffset() override { return getCenter(); }
     
 protected:
-    bool init(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
+    bool init(const Size& size, const PhysicsMaterial& material = PHYSICSSHAPE_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO, float radius = 0.0f);
     
 protected:
     PhysicsShapeBox();

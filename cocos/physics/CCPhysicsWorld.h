@@ -185,8 +185,8 @@ protected:
     
     virtual void debugDraw();
     
-    virtual int collisionBeginCallback(PhysicsContact& contact);
-    virtual int collisionPreSolveCallback(PhysicsContact& contact);
+    virtual bool collisionBeginCallback(PhysicsContact& contact);
+    virtual bool collisionPreSolveCallback(PhysicsContact& contact);
     virtual void collisionPostSolveCallback(PhysicsContact& contact);
     virtual void collisionSeparateCallback(PhysicsContact& contact);
     
@@ -213,7 +213,7 @@ protected:
     PhysicsNode* _physicsNode;
     
     bool _autoStep;
-    PhysicsDebugDraw* _debugDraw;
+    DrawNode* _debugDraw;
     int _debugDrawMask;
     
     static std::set<PhysicsWorld*> _worlds;
@@ -238,27 +238,6 @@ protected:
     friend class PhysicsDebugDraw;
 };
 
-
-class CC_DLL PhysicsDebugDraw
-{
-protected:
-    virtual bool begin();
-    virtual void end();
-    virtual void drawShape(PhysicsShape& shape);
-    virtual void drawJoint(PhysicsJoint& joint);
-    virtual void drawContact();
-    
-protected:
-    PhysicsDebugDraw(PhysicsWorld& world);
-    virtual ~PhysicsDebugDraw();
-    
-protected:
-    DrawNode* _drawNode;
-    PhysicsWorld& _world;
-    
-    friend class PhysicsWorld;
-    friend class PhysicsNode;
-};
 extern const float CC_DLL PHYSICS_INFINITY;
 
 NS_CC_END

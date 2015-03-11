@@ -264,7 +264,7 @@ const Vec2& PhysicsSprite::getPosFromPhysics() const
     static Vec2 s_physicPosion;
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 
-    cpVect cpPos = cpBodyGetPos(_CPBody);
+    cpVect cpPos = cpBodyGetPosition(_CPBody);
     s_physicPosion = Vec2(cpPos.x, cpPos.y);
 
 #elif CC_ENABLE_BOX2D_INTEGRATION
@@ -282,7 +282,7 @@ void PhysicsSprite::setPosition(const Vec2 &pos)
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 
     cpVect cpPos = cpv(pos.x, pos.y);
-    cpBodySetPos(_CPBody, cpPos);
+    cpBodySetPosition(_CPBody, cpPos);
 
 #elif CC_ENABLE_BOX2D_INTEGRATION
 
@@ -340,9 +340,9 @@ void PhysicsSprite::syncPhysicsTransform() const
     
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
     
-	cpVect rot = (_ignoreBodyRotation ? cpvforangle(-CC_DEGREES_TO_RADIANS(_rotationX)) : _CPBody->rot);
-	float x = _CPBody->p.x + rot.x * -_anchorPointInPoints.x * _scaleX - rot.y * -_anchorPointInPoints.y * _scaleY;
-	float y = _CPBody->p.y + rot.y * -_anchorPointInPoints.x * _scaleX + rot.x * -_anchorPointInPoints.y * _scaleY;
+	cpVect rot = (_ignoreBodyRotation ? cpvforangle(-CC_DEGREES_TO_RADIANS(_rotationX)) : cpBodyGetRotation(_CPBody));
+	float x = cpBodyGetPosition(_CPBody).x + rot.x * -_anchorPointInPoints.x * _scaleX - rot.y * -_anchorPointInPoints.y * _scaleY;
+	float y = cpBodyGetPosition(_CPBody).y + rot.y * -_anchorPointInPoints.x * _scaleX + rot.x * -_anchorPointInPoints.y * _scaleY;
     
 	if (_ignoreAnchorPointForPosition)
     {

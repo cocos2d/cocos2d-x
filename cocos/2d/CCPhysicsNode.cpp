@@ -158,7 +158,7 @@ void PhysicsNode::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_
 
     // draw _debugDraw  
     if(_physicsWorld && _physicsWorld->_debugDraw)
-        reinterpret_cast<Node*>(_physicsWorld->_debugDraw->_drawNode)->visit(renderer, _modelViewTransform, flags);
+        reinterpret_cast<Node*>(_physicsWorld->_debugDraw)->visit(renderer, _modelViewTransform, flags);
     
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 }
