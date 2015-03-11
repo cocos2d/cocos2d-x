@@ -65,7 +65,9 @@ int Application::run()
     // Main message loop:
     LARGE_INTEGER nLast;
     LARGE_INTEGER nNow;
-
+    LARGE_INTEGER nFreq;
+    
+    QueryPerformanceFrequency(&nFreq);
     QueryPerformanceCounter(&nLast);
 
     initGLContextAttrs();
