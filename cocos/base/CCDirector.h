@@ -88,6 +88,26 @@ enum class MATRIX_STACK_TYPE
     MATRIX_STACK_TEXTURE
 };
 
+class MatrixStack
+{
+public:
+    MatrixStack();
+    ~MatrixStack();
+    void pushMatrix(MATRIX_STACK_TYPE type);
+    void popMatrix(MATRIX_STACK_TYPE type);
+    void loadIdentityMatrix(MATRIX_STACK_TYPE type);
+    void loadMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
+    void multiplyMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
+    const Mat4& getMatrix(MATRIX_STACK_TYPE type);
+    void resetMatrixStack();
+protected:
+    void initMatrixStack();
+protected:
+    std::stack<Mat4> _modelViewMatrixStack;
+    std::stack<Mat4> _projectionMatrixStack;
+    std::stack<Mat4> _textureMatrixStack;
+};
+
 class CC_DLL Director : public Ref
 {
 public:
