@@ -1,5 +1,3 @@
-#Github pull reqest builder for Jenkins 
-
 import json
 import re
 import os
@@ -18,6 +16,8 @@ def main():
     payload_str = os.environ['payload']
     #parse to json obj
     payload = json.loads(payload_str)
+
+    print payload
 
     issue = payload['issue']
     #get pull number
@@ -50,7 +50,7 @@ def main():
     payload_forword['html_url'] = url
 
     #get pull request info
-    req = 'https://api.github.com/repos/cocos2d/cocos2d-x/pulls/' + str(pr_num)
+    req = os.environ['GITHUB_REMOTE'] + str(pr_num)
     pr_payload = ''
     try:
         pr_payload = urllib2.urlopen(req).read()
@@ -75,7 +75,7 @@ def main():
     #set commit status to pending
     target_url = os.environ['JOB_PULL_REQUEST_BUILD_URL']
     
-    if(action == 'closed'):
+    if(action == 'closed' or action == 'assigned'):
         print 'pull request #' + str(pr_num) + ' is '+action+', no build triggered'
         return(0)
     
