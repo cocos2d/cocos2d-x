@@ -46,7 +46,7 @@ def check_current_3rd_libs(branch):
     #get current_libs config
     backup_files = range(2)
     current_files = range(2)
-    config_file_paths = ['external/config.json', 'templates/lua-template-runtime/runtime/config.json']
+    config_file_paths = ['external/config.json']
 
     for i, config_file_path in enumerate(config_file_paths):
         if not os.path.isfile(config_file_path):
