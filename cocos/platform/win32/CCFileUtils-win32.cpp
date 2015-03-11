@@ -120,9 +120,9 @@ bool FileUtilsWin32::isFileExistInternal(const std::string& strFilePath) const
 
 bool FileUtilsWin32::isAbsolutePath(const std::string& strPath) const
 {
-    if (   strPath.length() > 2 
+    if (   (strPath.length() > 2 
         && ( (strPath[0] >= 'a' && strPath[0] <= 'z') || (strPath[0] >= 'A' && strPath[0] <= 'Z') )
-        && strPath[1] == ':')
+        && strPath[1] == ':') || (strPath[0] == '/' && strPath[1] == '/'))
     {
         return true;
     }
