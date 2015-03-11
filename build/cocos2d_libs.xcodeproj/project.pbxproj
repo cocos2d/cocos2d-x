@@ -1232,6 +1232,8 @@
 		D00FBB6B1AAFB1FC00196C41 /* CCGraphicsTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = D00FBB691AAFB1FC00196C41 /* CCGraphicsTypes.h */; };
 		D00FBB6D1AAFB2A900196C41 /* CCPALMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = D00FBB6C1AAFB2A900196C41 /* CCPALMacros.h */; };
 		D00FBB6E1AAFB2A900196C41 /* CCPALMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = D00FBB6C1AAFB2A900196C41 /* CCPALMacros.h */; };
+		D00FBB701AAFC17700196C41 /* CCPALTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = D00FBB6F1AAFC17700196C41 /* CCPALTypes.h */; };
+		D00FBB711AAFC17700196C41 /* CCPALTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = D00FBB6F1AAFC17700196C41 /* CCPALTypes.h */; };
 		D07525EC1AAF576600830CD1 /* CCPALManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D07525E11AAF576600830CD1 /* CCPALManager.cpp */; };
 		D07525ED1AAF576600830CD1 /* CCPALManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D07525E11AAF576600830CD1 /* CCPALManager.cpp */; };
 		D07525EE1AAF576600830CD1 /* CCPALManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D07525E21AAF576600830CD1 /* CCPALManager.h */; };
@@ -1988,6 +1990,7 @@
 		D00FBB641AAFB0C300196C41 /* CCPAL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPAL.h; sourceTree = "<group>"; };
 		D00FBB691AAFB1FC00196C41 /* CCGraphicsTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGraphicsTypes.h; sourceTree = "<group>"; };
 		D00FBB6C1AAFB2A900196C41 /* CCPALMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPALMacros.h; sourceTree = "<group>"; };
+		D00FBB6F1AAFC17700196C41 /* CCPALTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPALTypes.h; sourceTree = "<group>"; };
 		D07525E11AAF576600830CD1 /* CCPALManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPALManager.cpp; sourceTree = "<group>"; };
 		D07525E21AAF576600830CD1 /* CCPALManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPALManager.h; sourceTree = "<group>"; };
 		D07525E51AAF576600830CD1 /* CCGraphicsMetal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCGraphicsMetal.cpp; sourceTree = "<group>"; };
@@ -3215,6 +3218,7 @@
 			children = (
 				D00FBB641AAFB0C300196C41 /* CCPAL.h */,
 				D00FBB6C1AAFB2A900196C41 /* CCPALMacros.h */,
+				D00FBB6F1AAFC17700196C41 /* CCPALTypes.h */,
 				D07525E11AAF576600830CD1 /* CCPALManager.cpp */,
 				D07525E21AAF576600830CD1 /* CCPALManager.h */,
 				D07525EA1AAF576600830CD1 /* interfaces */,
@@ -3433,6 +3437,7 @@
 				1A01C69618F57BE800EFE3A6 /* CCInteger.h in Headers */,
 				15AE1B6919AADA9900C27E9E /* UIDeprecated.h in Headers */,
 				1A570223180BCC1A0088DEC7 /* CCParticleBatchNode.h in Headers */,
+				D00FBB701AAFC17700196C41 /* CCPALTypes.h in Headers */,
 				15AE1BD519AAE01E00C27E9E /* CCControlSaturationBrightnessPicker.h in Headers */,
 				15AE186919AAD31D00C27E9E /* CocosDenshion.h in Headers */,
 				50ABBD891925AB4100A911A9 /* CCCustomCommand.h in Headers */,
@@ -3690,6 +3695,7 @@
 				1A570078180BC5A10088DEC7 /* CCActionGrid3D.h in Headers */,
 				50ABBD631925AB0000A911A9 /* Vec4.h in Headers */,
 				1A01C68918F57BE800EFE3A6 /* CCBool.h in Headers */,
+				D00FBB711AAFC17700196C41 /* CCPALTypes.h in Headers */,
 				15AE184319AAD2F700C27E9E /* CCSprite3D.h in Headers */,
 				50CB247E19D9C5A100687767 /* AudioPlayer.h in Headers */,
 				1A57007C180BC5A10088DEC7 /* CCActionInstant.h in Headers */,

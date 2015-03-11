@@ -28,7 +28,7 @@
 #include "PAL/graphics/opengles2.0/CCGraphicsOpenGLES2.0.h"
 #include "PAL/graphics/metal/CCGraphicsMetal.h"
 
-NS_PAL_BEGIN
+NS_PRIVATE_BEGIN
 
 // we only allow a single PAL manager instance
 int PALManager::_instances = 0;
@@ -67,4 +67,4 @@ void PALManager::registerFactories()
     #undef REGISTER_FACTORY
 }
 
-NS_PAL_END
+NS_PRIVATE_END

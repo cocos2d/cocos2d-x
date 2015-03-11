@@ -26,6 +26,6 @@
 
 #include "CCGraphicsGeometryState.h"
 
-NS_PAL_BEGIN
+NS_PRIVATE_BEGIN
 
-NS_PAL_END
+NS_PRIVATE_END

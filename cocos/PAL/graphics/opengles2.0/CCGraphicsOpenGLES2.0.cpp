@@ -28,7 +28,7 @@
 #include "cocos2d.h"
 
 USING_NS_CC;
-NS_PAL_BEGIN
+NS_PRIVATE_BEGIN
 
 GraphicsInterface* GraphicsOpenGLES20::create()
 {
@@ -66,7 +66,7 @@ bool GraphicsOpenGLES20::supportsGeometryState()
     return Configuration::getInstance()->supportsShareableVAO();
 }
 
-GraphicsInterface::handle GraphicsOpenGLES20::createGeometryState()
+handle GraphicsOpenGLES20::createGeometryState()
 {
     GLuint vao;
     glGenVertexArrays(1, &vao);
@@ -91,4 +91,4 @@ bool GraphicsOpenGLES20::bindGeometryState(handle object)
     return glGetError() ? false : true;
 }
 
-NS_PAL_END
+NS_PRIVATE_END

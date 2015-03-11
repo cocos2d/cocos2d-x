@@ -30,7 +30,7 @@
 #include "PAL/CCPALMacros.h"
 #include "PAL/interfaces/CCGraphicsInterface.h"
 
-NS_PAL_BEGIN
+NS_PRIVATE_BEGIN
 
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
 #    import "TargetConditionals.h"
@@ -61,6 +61,6 @@ public:
 
 #endif//CC_METAL_AVAILABLE
 
-NS_PAL_END
+NS_PRIVATE_END
 
 #endif//_CC_GRAPHICS_METAL_H_

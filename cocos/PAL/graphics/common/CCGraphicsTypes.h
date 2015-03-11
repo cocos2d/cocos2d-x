@@ -28,7 +28,7 @@
 
 #include "PAL/CCPALMacros.h"
 
-NS_PAL_BEGIN
+NS_PRIVATE_BEGIN
 
 enum class DataType
 {
@@ -68,6 +68,6 @@ struct CC_DLL VertexAttribute
     int  _size;
 };
 
-NS_PAL_END
+NS_PRIVATE_END
 
 #endif//_CC_GRAPHICS_TYPES_H_

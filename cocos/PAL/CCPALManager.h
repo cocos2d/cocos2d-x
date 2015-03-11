@@ -29,12 +29,12 @@
 #include "PAL/CCPALMacros.h"
 #include "base/CCRef.h"
 
-NS_PAL_BEGIN
+NS_PRIVATE_BEGIN
 
 class GraphicsInterface;
 
 class PALManager
-    : public NS_CC::Ref
+    : public Ref
 {
 public:
     
@@ -116,6 +116,6 @@ protected:
     tRegisteredFactories _factories;
 };
 
-NS_PAL_END
+NS_PRIVATE_END
 
 #endif//_CC_PAL_MANAGER_H_

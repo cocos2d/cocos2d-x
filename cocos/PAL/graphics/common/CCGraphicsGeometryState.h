@@ -29,16 +29,16 @@
 #include "PAL/CCPALMacros.h"
 #include "base/CCRef.h"
 
-NS_PAL_BEGIN
+NS_PRIVATE_BEGIN
 
 class GraphicsGeometryState
-    : public NS_CC::Ref
+    : public Ref
 {
 public:
     
     
 };
 
-NS_PAL_END
+NS_PRIVATE_END
 
 #endif//_CC_GRAPHICS_GEOMETRY_STATE_H_

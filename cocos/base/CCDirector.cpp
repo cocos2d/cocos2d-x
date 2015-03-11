@@ -80,7 +80,7 @@ THE SOFTWARE.
 #endif // CC_DIRECTOR_STATS_POSITION
 
 using namespace std;
-using namespace PAL;
+USING_NS_PRIVATE;
 
 NS_CC_BEGIN
 // FIXME: it should be a Director ivar. Move it there once support for multiple directors is added
@@ -453,7 +453,7 @@ void Director::setNextDeltaTimeZero(bool nextDeltaTimeZero)
 }
 
 // MARK: graphics API
-PAL::GraphicsInterface* Director::getGraphicsInterface() const
+NS_PRIVATE::GraphicsInterface* Director::getGraphicsInterface() const
 {
     CCASSERT(_graphicsInterface != nullptr, "Graphics API has not been selected");
     return _graphicsInterface;

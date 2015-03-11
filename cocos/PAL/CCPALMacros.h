@@ -28,17 +28,17 @@
 
 #include "assert.h"
 
-// namespace PAL {}
+// namespace _private {}
 #ifdef __cplusplus
-    #define NS_PAL_BEGIN  namespace PAL {
-    #define NS_PAL_END    }
-    #define USING_NS_PAL  using namespace PAL
-    #define NS_PAL        ::PAL
+    #define NS_PRIVATE_BEGIN  namespace cocos2d { namespace _private {
+    #define NS_PRIVATE_END    }}
+    #define USING_NS_PRIVATE  using namespace cocos2d::_private
+    #define NS_PRIVATE        ::cocos2d::_private
 #else
-    #define NS_CC_BEGIN
-    #define NS_CC_END
-    #define USING_NS_CC
-    #define NS_CC
+    #define NS_PRIVATE_BEGIN
+    #define NS_PRIVATE_END
+    #define USING_NS_PRIVATE
+    #define NS_PRIVATE
 #endif
 
 #define PAL_SAFE_RELEASE_NULL(x) { if (x) { x->release(); x = nullptr; } } 

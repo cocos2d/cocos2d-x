@@ -1,6 +1,6 @@
 
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -23,43 +23,15 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef _CC_GRAPHICS_INTERFACE_H_
-#define _CC_GRAPHICS_INTERFACE_H_
-
 #include "PAL/CCPALMacros.h"
-#include "PAL/CCPALTypes.h"
-#include "base/CCRef.h"
+
+#ifndef _CC_PAL_TYPES_H_
+#define _CC_PAL_TYPES_H_
 
 NS_PRIVATE_BEGIN
 
-class GraphicsInterface
-    : public Ref
-{
-public:
-        
-    virtual ~GraphicsInterface() {}
-    
-    // @brief initializes the graphics API
-    // Some methods can be called before this to set specific features.
-    virtual bool init() = 0;
-    
-    // @brief shuts down this interface, releasing all resources.
-    // All weak references and cached interfaces are invalidated.
-    virtual void shutdown() = 0;
-    
-    // @brief returns true or false depending on whether or not geometry state objects are supported.
-    virtual bool supportsGeometryState() = 0;
-    
-    // @brief creates a geometry state object.
-    virtual handle createGeometryState() = 0;
-    
-    // @brief delete a geometry state object.
-    virtual bool deleteGeometryState(handle object) = 0;
-    
-    // @brief binds a geometry state object.
-    virtual bool bindGeometryState(handle object) = 0;
-};
+typedef intptr_t handle;
 
 NS_PRIVATE_END
 
-#endif//_CC_GRAPHICS_INTERFACE_H_
+#endif//_CC_PAL_TYPES_H_

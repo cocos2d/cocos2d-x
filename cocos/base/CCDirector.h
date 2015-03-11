@@ -37,12 +37,12 @@ THE SOFTWARE.
 #include "math/CCMath.h"
 #include "platform/CCGL.h"
 #include "platform/CCGLView.h"
+#include "PAL/CCPALMacros.h"
 
-namespace PAL
-{
-    class PALManager;
-    class GraphicsInterface;
-}
+NS_PRIVATE_BEGIN
+class PALManager;
+class GraphicsInterface;
+NS_PRIVATE_END
 
 NS_CC_BEGIN
 
@@ -404,7 +404,7 @@ public:
     const Mat4& getMatrix(MATRIX_STACK_TYPE type);
     void resetMatrixStack();
 
-    PAL::GraphicsInterface* getGraphicsInterface() const;
+    NS_PRIVATE::GraphicsInterface* getGraphicsInterface() const;
     void selectGraphicsAPI(const char* apis[], const char* title);
     
 protected:
@@ -455,12 +455,12 @@ protected:
     /** Graphics API Manager
      @since v4.0
      */
-    PAL::PALManager* _PALManager;
+    NS_PRIVATE::PALManager* _PALManager;
     
     /** Selected Graphics Interface
      @since v4.0
      */
-    PAL::GraphicsInterface* _graphicsInterface;
+    NS_PRIVATE::GraphicsInterface* _graphicsInterface;
     
     /* delta time since last tick to main loop */
 	float _deltaTime;

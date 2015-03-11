@@ -34,7 +34,7 @@ NS_CC_BEGIN
 class GLView;
 NS_CC_END
 
-NS_PAL_BEGIN
+NS_PRIVATE_BEGIN
 
 class GraphicsGeometryState;
 
@@ -68,6 +68,6 @@ protected:
     NS_CC::GLView* _view;
 };
 
-NS_PAL_END
+NS_PRIVATE_END
 
 #endif // _CC_GRAPHICS_OPEN_GL_ES_20_H_

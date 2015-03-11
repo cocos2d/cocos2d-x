@@ -156,7 +156,7 @@ protected:
 
     bool _interleaved;
     bool _dirty;
-    PAL::GraphicsInterface::handle _vao;
+    NS_PRIVATE::handle _vao;
     
     Primitive _drawingPrimitive;
 

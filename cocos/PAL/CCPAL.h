@@ -27,6 +27,7 @@
 #define _CC_PAL_H_
 
 #include "PAL/CCPALMacros.h"
+#include "PAL/CCPALTypes.h"
 #include "PAL/CCPALManager.h"
 #include "PAL/graphics/common/CCGraphicsTypes.h"
 #include "PAL/interfaces/CCGraphicsInterface.h"
