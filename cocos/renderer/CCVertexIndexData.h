@@ -30,6 +30,7 @@
 #include <set>
 #include "base/CCRef.h"
 #include "renderer/CCVertexAttribute.h"
+#include "platform/CCStdC.h"
 
 NS_CC_BEGIN
 
