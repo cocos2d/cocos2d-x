@@ -94,7 +94,7 @@ int Application::run()
         }
         else
         {
-            Sleep((DWORD)((double)_animationInterval.QuadPart/(double)nFreq.QuadPart)*1000);
+            Sleep((DWORD)(((double)_animationInterval.QuadPart/(double)nFreq.QuadPart)*1000));
         }
     }
 
