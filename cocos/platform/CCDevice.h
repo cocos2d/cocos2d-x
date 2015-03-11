@@ -71,6 +71,8 @@ public:
     /**
      *  Vibrate for the specified amount of time.
      *  If vibrate is not supported, then invoking this method has no effect.
+	 *  Some platforms limit to a maximum duration of 5 seconds.
+	 *  Duration is ignored on iOS due to API limitations.
      *  @param duration The duration in seconds.
      */
     static void vibrate(float duration);
