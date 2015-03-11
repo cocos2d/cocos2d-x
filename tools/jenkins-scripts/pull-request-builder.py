@@ -8,7 +8,6 @@ import base64
 import requests
 import sys
 import traceback
-from shutil import copy
 import subprocess
 
 #set Jenkins build description using submitDescription to mock browser behavior
@@ -21,7 +20,8 @@ branch = "v3"
 pr_num = 0
 workspace = "."
 node_name = "ios"
-# for local debugging purpose, you could change the value to 0
+# for local debugging purpose, you could change the value to 0 and run
+# this scripts in your local machine
 remote_build = 1
 
 
@@ -41,35 +41,9 @@ def set_jenkins_job_description(desc, url):
 
 
 def check_current_3rd_libs(branch):
-    global node_name
-    print("start backup old 3rd libs...")
-    #get current_libs config
-    backup_files = range(2)
-    current_files = range(2)
-    config_file_paths = ['external/config.json']
-
-    for i, config_file_path in enumerate(config_file_paths):
-        if not os.path.isfile(config_file_path):
-            raise Exception("Could not find 'external/config.json'")
-
-        with open(config_file_path) as data_file:
-            data = json.load(data_file)
-
-        current_3rd_libs_version = data["version"]
-        filename = current_3rd_libs_version + '.zip'
-        backup_file = '../../../cocos-2dx-external/node/' + node_name + '/' + filename
-        backup_files[i] = backup_file
-        current_file = filename
-        current_files[i] = current_file
-        if os.path.isfile(backup_file):
-            copy(backup_file, current_file)
     #run download-deps.py
     print("prepare to downloading ...")
     os.system('python download-deps.py -r no')
-    #backup file
-    for i, backup_file in enumerate(backup_files):
-        current_file = current_files[i]
-        copy(current_file, backup_file)
 
 
 def send_notifies_to_github():
