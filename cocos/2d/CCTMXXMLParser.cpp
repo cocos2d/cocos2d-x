@@ -208,14 +208,14 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
 {    
     CC_UNUSED_PARAM(ctx);
     TMXMapInfo *tmxMapInfo = this;
-    std::string elementName = (char*)name;
+    std::string elementName = name;
     ValueMap attributeDict;
     if (atts && atts[0])
     {
         for(int i = 0; atts[i]; i += 2) 
         {
-            std::string key = (char*)atts[i];
-            std::string value = (char*)atts[i+1];
+            std::string key = atts[i];
+            std::string value = atts[i+1];
             attributeDict.insert(std::make_pair(key, Value(value)));
         }
     }
@@ -616,7 +616,7 @@ void TMXMapInfo::endElement(void *ctx, const char *name)
 {
     CC_UNUSED_PARAM(ctx);
     TMXMapInfo *tmxMapInfo = this;
-    std::string elementName = (char*)name;
+    std::string elementName = name;
 
     int len = 0;
 
@@ -701,7 +701,7 @@ void TMXMapInfo::textHandler(void *ctx, const char *ch, int len)
 {
     CC_UNUSED_PARAM(ctx);
     TMXMapInfo *tmxMapInfo = this;
-    std::string text((char*)ch,0,len);
+    std::string text(ch, 0, len);
 
     if (tmxMapInfo->isStoringCharacters())
     {
