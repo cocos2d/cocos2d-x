@@ -959,6 +959,7 @@ bool Image::initWithJpgData(const unsigned char * data, ssize_t dataLen)
 
     return ret;
 #else
+    CCLOG("jpeg is not enabled, please enable it in ccConfig.h");
     return false;
 #endif // CC_USE_JPEG
 }
@@ -1114,7 +1115,10 @@ bool Image::initWithPngData(const unsigned char * data, ssize_t dataLen)
         png_destroy_read_struct(&png_ptr, (info_ptr) ? &info_ptr : 0, 0);
     }
     return ret;
-#endif // CC_USE_PNG
+#else
+    CCLOG("png is not enabled, please enable it in ccConfig.h");
+    return false;
+#endif //CC_USE_PNG
 }
 
 #if CC_USE_TIFF
@@ -1292,9 +1296,9 @@ bool Image::initWithTiffData(const unsigned char * data, ssize_t dataLen)
     } while (0);
     return ret;
 #else
-    CCLOG("tiff is not enabled, please enalbe it in ccConfig.h");
+    CCLOG("tiff is not enabled, please enable it in ccConfig.h");
     return false;
-#endif
+#endif //CC_USE_TIFF
 }
 
 namespace
