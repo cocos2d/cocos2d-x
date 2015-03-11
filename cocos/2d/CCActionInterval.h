@@ -549,6 +549,7 @@ public:
     // Overrides
     //
     virtual MoveTo* clone() const override;
+    virtual MoveTo* reverse() const  override;
     virtual void startWithTarget(Node *target) override;
     
 CC_CONSTRUCTOR_ACCESS:
