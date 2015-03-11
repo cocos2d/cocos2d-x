@@ -26,7 +26,6 @@
 #include "AppEvent.h"
 #include "AppLang.h"
 #include "runtime/ConfigParser.h"
-#include "runtime/Runtime.h"
 
 #include "platform/win32/PlayerWin.h"
 #include "platform/win32/PlayerMenuServiceWin.h"
@@ -241,7 +240,6 @@ int SimulatorWin::run()
 
     // create the application instance
     _app = new AppDelegate();
-    RuntimeEngine::getInstance()->setProjectConfig(_project);
 
     // create console window
     if (_project.isShowConsole())
@@ -551,8 +549,6 @@ void SimulatorWin::setupUI()
                 project.setProjectDir(dirPath);
                 project.setScriptFile(ConfigParser::getInstance()->getEntryFile());
                 project.setWritablePath(dirPath);
-
-                RuntimeEngine::getInstance()->setProjectConfig(project);
             }
         }
     });
