@@ -210,8 +210,7 @@ HRESULT WICImageLoader::convertFormatIfRequired(IWICBitmapFrameDecode* pFrame, I
 	if(	(memcmp(&_format, &GUID_WICPixelFormat8bppGray, sizeof(WICPixelFormatGUID)) == 0) ||
 		(memcmp(&_format, &GUID_WICPixelFormat8bppAlpha, sizeof(WICPixelFormatGUID)) == 0) ||
 		(memcmp(&_format, &GUID_WICPixelFormat24bppRGB, sizeof(WICPixelFormatGUID)) == 0) ||
-		(memcmp(&_format, &GUID_WICPixelFormat32bppRGBA, sizeof(WICPixelFormatGUID)) == 0) ||
-		(memcmp(&_format, &GUID_WICPixelFormat32bppBGRA, sizeof(WICPixelFormatGUID)) == 0))
+		(memcmp(&_format, &GUID_WICPixelFormat32bppRGBA, sizeof(WICPixelFormatGUID)) == 0))
 	{
 		return S_OK;
 	}
