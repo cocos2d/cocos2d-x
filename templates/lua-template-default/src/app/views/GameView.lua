@@ -174,13 +174,14 @@ function GameView:onCreate()
 end
 
 function GameView:onTouch(event)
-    if event.name ~= "began" then return end
+    if event.name ~= "began" then return false end
     local x, y = event.x, event.y
     for _, bug in pairs(self.bugs_) do
         if bug:getModel():checkTouch(x, y) then
             self:bugDead(bug)
         end
     end
+    return true
 end
 
 function GameView:onCleanup()
