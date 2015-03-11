@@ -24,8 +24,8 @@
 #endif
 
 typedef struct _Controller{
-	const char *test_name;
-	std::function<TestScene*()> callback;
+    const char *test_name;
+    std::function<TestScene*()> callback;
 } Controller;
 Controller g_aTestNames[] = {
 
@@ -33,73 +33,74 @@ Controller g_aTestNames[] = {
     // TESTS MUST BE ORDERED ALPHABETICALLY
     //     violators will be prosecuted
     //
-	{ "ActionManager", [](){return new ActionManagerTestScene(); } },
-	{ "Actions - Basic", [](){ return new ActionsTestScene(); } },
-	{ "Actions - Ease", [](){return new ActionsEaseTestScene();} },
-	{ "Actions - Progress", [](){return new ProgressActionsTestScene(); } },
+    { "ActionManager", [](){return new ActionManagerTestScene(); } },
+    { "Actions - Basic", [](){ return new ActionsTestScene(); } },
+    { "Actions - Ease", [](){return new ActionsEaseTestScene();} },
+    { "Actions - Progress", [](){return new ProgressActionsTestScene(); } },
     { "Allocator - Basic", [](){return new AllocatorTestNS::AllocatorTestScene(); } },
     { "Audio - CocosDenshion", []() { return new CocosDenshionTestScene(); } },
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     { "Audio - NewAudioEngine", []() { return new AudioEngineTestScene(); } },
 #endif
 #if CC_ENABLE_BOX2D_INTEGRATION
-	{ "Box2d - Basic", []() { return new Box2DTestScene(); } },
-	{ "Box2d - TestBed", []() { return new Box2dTestBedScene(); } },
+    { "Box2d - Basic", []() { return new Box2DTestScene(); } },
+    { "Box2d - TestBed", []() { return new Box2dTestBedScene(); } },
 #endif
-	{ "Bugs", []() { return new BugsTestScene(); } },
-	{ "Chipmunk", []() { return new ChipmunkAccelTouchTestScene(); } },
-	{ "Click and Move", [](){return new ClickAndMoveTestScene(); } },
-	{ "Configuration", []() { return new ConfigurationTestScene(); } },
-	{ "Console", []() { return new ConsoleTestScene(); } },
-	{ "Curl", []() { return new CurlTestScene(); } },
-	{ "Current Language", []() { return new CurrentLanguageTestScene(); } },
+    { "Bugs", []() { return new BugsTestScene(); } },
+    { "Chipmunk", []() { return new ChipmunkAccelTouchTestScene(); } },
+    { "Click and Move", [](){return new ClickAndMoveTestScene(); } },
+    { "Configuration", []() { return new ConfigurationTestScene(); } },
+    { "Console", []() { return new ConsoleTestScene(); } },
+    { "Curl", []() { return new CurlTestScene(); } },
+    { "Current Language", []() { return new CurrentLanguageTestScene(); } },
     { "EventDispatcher", []() { return new EventDispatcherTestScene(); } },
-	{ "Effects - Advanced", []() { return new EffectAdvanceScene(); } },
-	{ "Effects - Basic", [](){return new EffectTestScene();} },
-	{ "Extensions", []() { return new ExtensionsTestScene(); } },
-	{ "FileUtils", []() { return new FileUtilsTestScene(); } },
-	{ "Fonts", []() { return new FontTestScene(); } },
-	{ "Interval", [](){return new IntervalTestScene(); } },
+    { "Effects - Advanced", []() { return new EffectAdvanceScene(); } },
+    { "Effects - Basic", [](){return new EffectTestScene();} },
+    { "Extensions", []() { return new ExtensionsTestScene(); } },
+    { "FileUtils", []() { return new FileUtilsTestScene(); } },
+    { "Fonts", []() { return new FontTestScene(); } },
+    { "Interval", [](){return new IntervalTestScene(); } },
     { "Node: BillBoard Test", [](){  return new BillBoardTestScene(); }},
     { "Node: Camera 3D Test", [](){  return new Camera3DTestScene(); }},
-	{ "Node: Clipping", []() { return new ClippingNodeTestScene(); } },
-	{ "Node: Draw", [](){return new DrawPrimitivesTestScene();} },
+    { "Node: Clipping", []() { return new ClippingNodeTestScene(); } },
+    { "Node: Draw", [](){return new DrawPrimitivesTestScene();} },
     { "Node: Label - New API", [](){return new AtlasTestSceneNew(); } },
-	{ "Node: Label - Old API", [](){return new AtlasTestScene(); } },
-	{ "Node: Layer", [](){return new LayerTestScene();} },
+    { "Node: Label - Old API", [](){return new AtlasTestScene(); } },
+    { "Node: Layer", [](){return new LayerTestScene();} },
     { "Node: Light", [](){return new LightTestScene();} },
-	{ "Node: Menu", [](){return new MenuTestScene();} },
-	{ "Node: MotionStreak", [](){return new MotionStreakTestScene();} },
-	{ "Node: Node", [](){return new CocosNodeTestScene();} },
-	{ "Node: Parallax", [](){return new ParallaxTestScene(); } },
-	{ "Node: Particles", [](){return new ParticleTestScene(); } },
-	{ "Node: Physics", []() { return new PhysicsTestScene(); } },
-	{ "Node: RenderTexture", [](){return new RenderTextureScene(); } },
-	{ "Node: Scene", [](){return new SceneTestScene();} },
-	{ "Node: Sprite", [](){return new SpriteTestScene(); } },
+    { "Node: Menu", [](){return new MenuTestScene();} },
+    { "Node: MotionStreak", [](){return new MotionStreakTestScene();} },
+    { "Node: Node", [](){return new CocosNodeTestScene();} },
+    { "Node: Parallax", [](){return new ParallaxTestScene(); } },
+    { "Node: Particles", [](){return new ParticleTestScene(); } },
+    { "Node: Physics", []() { return new PhysicsTestScene(); } },
+    { "Node: RenderTexture", [](){return new RenderTextureScene(); } },
+    { "Node: Scene", [](){return new SceneTestScene();} },
+    { "Node: Sprite", [](){return new SpriteTestScene(); } },
     { "Node: Sprite3D", [](){  return new Sprite3DTestScene(); }},
-	{ "Node: TileMap", [](){return new TileMapTestScene(); } },
-	{ "Node: FastTileMap", [](){return new TileMapTestSceneNew(); } },
-	{ "Node: Text Input", [](){return new TextInputTestScene(); } },
+    { "Node: TileMap", [](){return new TileMapTestScene(); } },
+    { "Node: FastTileMap", [](){return new TileMapTestSceneNew(); } },
+    { "Node: Text Input", [](){return new TextInputTestScene(); } },
     { "Node: UI", [](){  return new UITestScene(); }},
     { "Mouse", []() { return new MouseTestScene(); } },
-	{ "MultiTouch", []() { return new MutiTouchTestScene(); } },
-	{ "Performance tests", []() { return new PerformanceTestScene(); } },
+    { "MultiTouch", []() { return new MutiTouchTestScene(); } },
+    { "Performance tests", []() { return new PerformanceTestScene(); } },
     { "Renderer", []() { return new NewRendererTestScene(); } },
     { "ReleasePool", [](){ return new ReleasePoolTestScene(); } },
-	{ "Rotate World", [](){return new RotateWorldTestScene(); } },
-	{ "Scheduler", [](){return new SchedulerTestScene(); } },
-	{ "Shader - Basic", []() { return new ShaderTestScene(); } },
+    { "Rotate World", [](){return new RotateWorldTestScene(); } },
+    { "Scheduler", [](){return new SchedulerTestScene(); } },
+    { "Shader - Basic", []() { return new ShaderTestScene(); } },
     { "Shader - Sprite", []() { return new ShaderTestScene2(); } },
-	{ "Texture2D", [](){return new TextureTestScene(); } },
-	{ "TextureCache", []() { return new TextureCacheTestScene(); } },
-	{ "TexturePacker Encryption", []() { return new TextureAtlasEncryptionTestScene(); } },
-	{ "Touches", [](){return new PongScene();} },
-	{ "Transitions", [](){return new TransitionsTestScene();} },
+    { "Texture2D", [](){return new TextureTestScene(); } },
+    { "TextureCache", []() { return new TextureCacheTestScene(); } },
+    { "TexturePacker Encryption", []() { return new TextureAtlasEncryptionTestScene(); } },
+    { "Touches", [](){return new PongScene();} },
+    { "Transitions", [](){return new TransitionsTestScene();} },
     { "Unit Test", []() { return new UnitTestScene(); }},
     { "URL Open Test", []() { return new OpenURLTestScene(); } },
-	{ "UserDefault", []() { return new UserDefaultTestScene(); } },
-	{ "Zwoptex", []() { return new ZwoptexTestScene(); } },
+    { "UserDefault", []() { return new UserDefaultTestScene(); } },
+    { "Vibrate", []() { return new VibrateTestScene(); } },
+    { "Zwoptex", []() { return new ZwoptexTestScene(); } },
 };
 
 static int g_testCount = sizeof(g_aTestNames) / sizeof(g_aTestNames[0]);
@@ -164,7 +165,7 @@ TestController::~TestController()
 
 void TestController::menuCallback(Ref * sender)
 {
-	Director::getInstance()->purgeCachedData();
+    Director::getInstance()->purgeCachedData();
 
     // get the userdata, it's the index of the menu item clicked
     auto menuItem = static_cast<MenuItem *>(sender);
@@ -183,7 +184,7 @@ void TestController::menuCallback(Ref * sender)
 void TestController::closeCallback(Ref * sender)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-	MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
+    MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
     return;
 #endif
 
@@ -580,5 +581,3 @@ void TestController::autorun()
 #endif
     return;
 }
-
-

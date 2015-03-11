@@ -38,6 +38,9 @@
 #import<CoreMotion/CoreMotion.h>
 #import<CoreFoundation/CoreFoundation.h>
 
+// Vibrate
+#import <AudioToolbox/AudioToolbox.h>
+
 #define SENSOR_DELAY_GAME 0.02
 
 @interface CCAccelerometerDispatcher : NSObject<UIAccelerometerDelegate>
@@ -484,8 +487,8 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         }
         height = (short)info.height;
         width = (short)info.width;
-		ret.fastSet(info.data,width * height * 4);
-		hasPremultipliedAlpha = true;
+        ret.fastSet(info.data,width * height * 4);
+        hasPremultipliedAlpha = true;
     } while (0);
     
     return ret;
@@ -494,6 +497,19 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
 void Device::setKeepScreenOn(bool value)
 {
     [[UIApplication sharedApplication] setIdleTimerDisabled:(BOOL)value];
+}
+
+/*!
+ @brief Only works on iOS devices that support vibration (such as iPhone). Shoud only be used for important alerts.  Use risks rejection in iTunes Store.
+ @param duration ignored for iOS
+ */
+void Device::vibrate(float duration)
+{
+    // See https://developer.apple.com/library/ios/documentation/AudioToolbox/Reference/SystemSoundServicesReference/index.html#//apple_ref/c/econst/kSystemSoundID_Vibrate
+    CC_UNUSED_PARAM(duration);
+    
+    // automatically vibrates for approximately 0.4 seconds
+    AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
 }
 
 NS_CC_END

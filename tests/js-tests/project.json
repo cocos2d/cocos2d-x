@@ -124,6 +124,8 @@
         "src/ChipmunkTest/ChipmunkTest.js",
 
         "src/Presentation/Presentation.js",
-        "src/ReflectionTest/ReflectionTest.js"
+        "src/ReflectionTest/ReflectionTest.js",
+
+        "src/VibrateTest/VibrateTest.js"
     ]
 }

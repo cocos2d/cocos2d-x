@@ -78,5 +78,6 @@
 
 #include "OpenURLTest/OpenURLTest.h"
 #include "AllocatorTest/AllocatorTest.h"
+#include "VibrateTest/VibrateTest.h"
 
 #endif

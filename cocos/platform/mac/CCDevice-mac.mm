@@ -252,6 +252,11 @@ void Device::setKeepScreenOn(bool value)
 {
 }
 
+void Device::vibrate(float duration)
+{
+    CC_UNUSED_PARAM(duration);
+}
+
 NS_CC_END
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_MAC
