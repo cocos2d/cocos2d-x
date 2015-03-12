@@ -38,6 +38,7 @@ struct cpBody;
 NS_CC_BEGIN
 
 class Node;
+class PhysicsNode;
 class Sprite;
 class PhysicsWorld;
 class PhysicsJoint;
@@ -333,6 +334,8 @@ protected:
     float _area;
     float _density;
     float _moment;
+    float _velocityLimit;
+    float _angularVelocityLimit;
     bool _isDamping;
     float _linearDamping;
     float _angularDamping;
@@ -350,7 +353,7 @@ protected:
     friend class PhysicsShape;
     friend class PhysicsJoint;
     friend class Node;
-    friend class Layer;
+    friend class PhysicsNode;
     friend class ProtectedNode;
 };
 

@@ -54,6 +54,7 @@ class GLProgram;
 class GLProgramState;
 #if CC_USE_PHYSICS
 class PhysicsBody;
+class PhysicsNode;
 #endif
 
 /**
@@ -1529,7 +1530,7 @@ public:
      *   set the PhysicsBody that let the sprite effect with physics
      * @note This method will set anchor point to Vec2::ANCHOR_MIDDLE if body not null, and you cann't change anchor point if node has a physics body.
      */
-    void setPhysicsBody(PhysicsBody* body);
+    void setPhysicsBody(PhysicsBody* body, bool ignoreScale = false);
 
     /**
      *   get the PhysicsBody the sprite have
@@ -1541,9 +1542,35 @@ public:
      */
     void removeFromPhysicsWorld();
     
+    /**
+     *   get the PhysicsNode the sprite have
+     */
+    virtual PhysicsNode* getPhysicsNode() const;
+    
+    /**
+     * Converts a Vec2 to physics space coordinates. The result is in Points.
+     */
+    Vec2 convertToPhysicsSpace(const Vec2& nodePoint) const;
+    
+    /**
+     * Converts a Vec2 to node (local) space coordinates. The result is in Points.
+     */
+    Vec2 convertFromPhysicsSpace(const Vec2& physicsPoint) const;
+    
+    /**
+     * Returns the physics transform matrix. The matrix is in Pixels.
+     */
+    Mat4 getNodeToPhysicsTransform() const;
+    
+    /**
+     * Returns the inverse physics transform matrix. The matrix is in Pixels.
+     */
+    Mat4 getPhysicsToNodeTransform() const;
+    
     void updateTransformFromPhysics(const Mat4& parentTransform, uint32_t parentFlags);
 
     virtual void updatePhysicsBodyTransform(const Mat4& parentTransform, uint32_t parentFlags, float parentScaleX, float parentScaleY);
+    
 #endif
     
     // overrides
@@ -1734,7 +1761,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(Node);
     
 #if CC_USE_PHYSICS
-    friend class Layer;
+    friend class PhysicsNode;
 #endif //CC_USTPS
 };
 

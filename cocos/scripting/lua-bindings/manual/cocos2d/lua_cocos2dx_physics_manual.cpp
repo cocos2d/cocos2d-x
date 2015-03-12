@@ -74,7 +74,7 @@ tolua_lerror:
     return 0;
 }
 
-int lua_cocos2dx_physics_PhysicsWorld_getScene(lua_State* tolua_S)
+int lua_cocos2dx_physics_PhysicsWorld_getPhysicsNode(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::PhysicsWorld* cobj = nullptr;
@@ -93,7 +93,7 @@ int lua_cocos2dx_physics_PhysicsWorld_getScene(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj)
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_getScene'", NULL);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsWorld_getPhysicsNode'", NULL);
         return 0;
     }
 #endif
@@ -103,7 +103,7 @@ int lua_cocos2dx_physics_PhysicsWorld_getScene(lua_State* tolua_S)
     {
         if(!ok)
             return 0;
-        cocos2d::Scene& ret = cobj->getScene();
+        cocos2d::PhysicsNode& ret = cobj->getPhysicsNode();
         do {
             
             std::string hashName = typeid(ret).name();
@@ -127,7 +127,7 @@ int lua_cocos2dx_physics_PhysicsWorld_getScene(lua_State* tolua_S)
     
 #if COCOS2D_DEBUG >= 1
 tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsWorld_getScene'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsWorld_getPhysicsNode'.",&tolua_err);
 #endif
     
     return 0;
@@ -1577,7 +1577,10 @@ int register_all_cocos2dx_physics_manual(lua_State* tolua_S)
     if (lua_istable(tolua_S,-1))
     {
         lua_pushstring(tolua_S,"getScene");
-        lua_pushcfunction(tolua_S, lua_cocos2dx_physics_PhysicsWorld_getScene );
+        lua_pushcfunction(tolua_S, lua_cocos2dx_physics_PhysicsWorld_getPhysicsNode );
+        lua_rawset(tolua_S,-3);
+        lua_pushstring(tolua_S,"getPhysicsNode");
+        lua_pushcfunction(tolua_S, lua_cocos2dx_physics_PhysicsWorld_getPhysicsNode );
         lua_rawset(tolua_S,-3);
         lua_pushstring(tolua_S,"queryPoint");
         lua_pushcfunction(tolua_S, lua_cocos2dx_physics_PhysicsWorld_queryPoint );

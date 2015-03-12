@@ -287,10 +287,13 @@ void Director::drawScene()
     if (_runningScene)
     {
 #if CC_USE_PHYSICS
-        auto physicsWorld = _runningScene->getPhysicsWorld();
-        if (physicsWorld && physicsWorld->isAutoStep())
+        const std::set<PhysicsWorld*>& worlds = PhysicsWorld::getAllWorlds();
+        for(PhysicsWorld* physicsWorld : worlds)
         {
-            physicsWorld->update(_deltaTime, false);
+            if(physicsWorld->isAutoStep() && (&physicsWorld->getPhysicsNode() == _runningScene || physicsWorld->getPhysicsNode().getScene() == _runningScene))
+            {
+                physicsWorld->update(_deltaTime, false);
+            }
         }
 #endif
         //clear draw stats

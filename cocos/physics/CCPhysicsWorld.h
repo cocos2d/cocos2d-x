@@ -33,6 +33,7 @@
 #include "math/CCGeometry.h"
 #include "physics/CCPhysicsBody.h"
 #include <list>
+#include <set>
 
 struct cpSpace;
 
@@ -48,7 +49,7 @@ typedef Vec2 Vect;
 class Director;
 class Node;
 class Sprite;
-class Scene;
+class PhysicsNode;
 class DrawNode;
 class PhysicsDebugDraw;
 
@@ -122,7 +123,7 @@ public:
     PhysicsBody* getBody(int tag) const;
     
     /** Get scene contain this physics world */
-    inline Scene& getScene() const { return *_scene; }
+    inline PhysicsNode& getPhysicsNode() const { return *_physicsNode; }
     /** get the gravity value */
     inline Vect getGravity() const { return _gravity; }
     /** set the gravity value */
@@ -171,9 +172,11 @@ public:
      */
     void step(float delta);
     
+    static const std::set<PhysicsWorld*>& getAllWorlds();
+    
 protected:
-    static PhysicsWorld* construct(Scene& scene);
-    bool init(Scene& scene);
+    static PhysicsWorld* construct(PhysicsNode& physicsNode);
+    bool init(PhysicsNode& scene);
     
     virtual void addBody(PhysicsBody* body);
     virtual void addShape(PhysicsShape* shape);
@@ -182,8 +185,8 @@ protected:
     
     virtual void debugDraw();
     
-    virtual int collisionBeginCallback(PhysicsContact& contact);
-    virtual int collisionPreSolveCallback(PhysicsContact& contact);
+    virtual bool collisionBeginCallback(PhysicsContact& contact);
+    virtual bool collisionPreSolveCallback(PhysicsContact& contact);
     virtual void collisionPostSolveCallback(PhysicsContact& contact);
     virtual void collisionSeparateCallback(PhysicsContact& contact);
     
@@ -207,12 +210,13 @@ protected:
     bool _updateBodyTransform;
     Vector<PhysicsBody*> _bodies;
     std::list<PhysicsJoint*> _joints;
-    Scene* _scene;
+    PhysicsNode* _physicsNode;
     
     bool _autoStep;
-    PhysicsDebugDraw* _debugDraw;
+    DrawNode* _debugDraw;
     int _debugDrawMask;
     
+    static std::set<PhysicsWorld*> _worlds;
     
     Vector<PhysicsBody*> _delayAddBodies;
     Vector<PhysicsBody*> _delayRemoveBodies;
@@ -225,7 +229,7 @@ protected:
     
     friend class Node;
     friend class Sprite;
-    friend class Scene;
+    friend class PhysicsNode;
     friend class Director;
     friend class PhysicsBody;
     friend class PhysicsShape;
@@ -234,26 +238,6 @@ protected:
     friend class PhysicsDebugDraw;
 };
 
-
-class CC_DLL PhysicsDebugDraw
-{
-protected:
-    virtual bool begin();
-    virtual void end();
-    virtual void drawShape(PhysicsShape& shape);
-    virtual void drawJoint(PhysicsJoint& joint);
-    virtual void drawContact();
-    
-protected:
-    PhysicsDebugDraw(PhysicsWorld& world);
-    virtual ~PhysicsDebugDraw();
-    
-protected:
-    DrawNode* _drawNode;
-    PhysicsWorld& _world;
-    
-    friend class PhysicsWorld;
-};
 extern const float CC_DLL PHYSICS_INFINITY;
 
 NS_CC_END

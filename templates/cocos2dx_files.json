@@ -177,6 +177,7 @@
         "cocos/2d/CCParticleSystem.h", 
         "cocos/2d/CCParticleSystemQuad.cpp", 
         "cocos/2d/CCParticleSystemQuad.h", 
+        "cocos/2d/CCPhysicsNode.cpp",
         "cocos/2d/CCProgressTimer.cpp", 
         "cocos/2d/CCProgressTimer.h", 
         "cocos/2d/CCProtectedNode.cpp", 
