@@ -1266,6 +1266,10 @@
 		382384451A25915C002C4610 /* SpriteReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 382384421A25915C002C4610 /* SpriteReader.cpp */; };
 		382384461A25915C002C4610 /* SpriteReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 382384431A25915C002C4610 /* SpriteReader.h */; };
 		382384471A25915C002C4610 /* SpriteReader.h in Headers */ = {isa = PBXBuildFile; fileRef = 382384431A25915C002C4610 /* SpriteReader.h */; };
+		382F7ADC1AB1292A002EBECF /* CCObjectExtensionData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 382F7ADA1AB1292A002EBECF /* CCObjectExtensionData.cpp */; };
+		382F7ADD1AB1292A002EBECF /* CCObjectExtensionData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 382F7ADA1AB1292A002EBECF /* CCObjectExtensionData.cpp */; };
+		382F7ADE1AB1292A002EBECF /* CCObjectExtensionData.h in Headers */ = {isa = PBXBuildFile; fileRef = 382F7ADB1AB1292A002EBECF /* CCObjectExtensionData.h */; };
+		382F7ADF1AB1292A002EBECF /* CCObjectExtensionData.h in Headers */ = {isa = PBXBuildFile; fileRef = 382F7ADB1AB1292A002EBECF /* CCObjectExtensionData.h */; };
 		38ACD1FC1A27111900C3093D /* WidgetCallBackHandlerProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38ACD1FA1A27111900C3093D /* WidgetCallBackHandlerProtocol.cpp */; };
 		38ACD1FD1A27111900C3093D /* WidgetCallBackHandlerProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38ACD1FA1A27111900C3093D /* WidgetCallBackHandlerProtocol.cpp */; };
 		38ACD1FE1A27111900C3093D /* WidgetCallBackHandlerProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 38ACD1FB1A27111900C3093D /* WidgetCallBackHandlerProtocol.h */; };
@@ -3089,6 +3093,8 @@
 		3823843C1A259140002C4610 /* SingleNodeReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleNodeReader.h; sourceTree = "<group>"; };
 		382384421A25915C002C4610 /* SpriteReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteReader.cpp; sourceTree = "<group>"; };
 		382384431A25915C002C4610 /* SpriteReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpriteReader.h; sourceTree = "<group>"; };
+		382F7ADA1AB1292A002EBECF /* CCObjectExtensionData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCObjectExtensionData.cpp; sourceTree = "<group>"; };
+		382F7ADB1AB1292A002EBECF /* CCObjectExtensionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCObjectExtensionData.h; sourceTree = "<group>"; };
 		38ACD1FA1A27111900C3093D /* WidgetCallBackHandlerProtocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WidgetCallBackHandlerProtocol.cpp; sourceTree = "<group>"; };
 		38ACD1FB1A27111900C3093D /* WidgetCallBackHandlerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetCallBackHandlerProtocol.h; sourceTree = "<group>"; };
 		38B8E2D319E66581002D7CE7 /* CSLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CSLoader.cpp; sourceTree = "<group>"; };
@@ -4772,6 +4778,8 @@
 				382384061A25900F002C4610 /* FlatBuffersSerialize.h */,
 				38ACD1FA1A27111900C3093D /* WidgetCallBackHandlerProtocol.cpp */,
 				38ACD1FB1A27111900C3093D /* WidgetCallBackHandlerProtocol.h */,
+				382F7ADA1AB1292A002EBECF /* CCObjectExtensionData.cpp */,
+				382F7ADB1AB1292A002EBECF /* CCObjectExtensionData.h */,
 				29E99D1C1957BA7000046604 /* CocoLoader.cpp */,
 				29E99D1D1957BA7000046604 /* CocoLoader.h */,
 				0634A4C4194B19E400E608AF /* ActionTimeline */,
@@ -7014,6 +7022,7 @@
 				15AE1BA219AADFDF00C27E9E /* UILayoutParameter.h in Headers */,
 				50ABBE331925AB6F00A911A9 /* CCConfiguration.h in Headers */,
 				B665E2101AA80A6500DDB1C5 /* CCPUBaseForceAffector.h in Headers */,
+				382F7ADE1AB1292A002EBECF /* CCObjectExtensionData.h in Headers */,
 				15AE199519AAD39600C27E9E /* LayoutReader.h in Headers */,
 				15AE183219AAD2F700C27E9E /* CCOBB.h in Headers */,
 				15AE1BE319AAE01E00C27E9E /* CCScrollView.h in Headers */,
@@ -7667,6 +7676,7 @@
 				B665E3751AA80A6500DDB1C5 /* CCPUParticleFollower.h in Headers */,
 				15AE185D19AAD31200C27E9E /* CocosDenshion.h in Headers */,
 				15AE194319AAD35100C27E9E /* CCColliderDetector.h in Headers */,
+				382F7ADF1AB1292A002EBECF /* CCObjectExtensionData.h in Headers */,
 				D0FD035C1A3B51AA00825BB5 /* CCAllocatorStrategyFixedBlock.h in Headers */,
 				15AE1BC419AADFFB00C27E9E /* ExtensionMacros.h in Headers */,
 				15AE185A19AAD31200C27E9E /* CDConfig.h in Headers */,
@@ -8180,6 +8190,7 @@
 				15AE182C19AAD2F700C27E9E /* CCMeshVertexIndexData.cpp in Sources */,
 				15AE1A8C19AAD40300C27E9E /* b2RevoluteJoint.cpp in Sources */,
 				50ABBD4C1925AB0000A911A9 /* MathUtil.cpp in Sources */,
+				382F7ADC1AB1292A002EBECF /* CCObjectExtensionData.cpp in Sources */,
 				15AE191719AAD35000C27E9E /* CCSpriteFrameCacheHelper.cpp in Sources */,
 				B665E2E21AA80A6500DDB1C5 /* CCPULineAffectorTranslator.cpp in Sources */,
 				1A087AE81860400400196EF5 /* edtaa3func.cpp in Sources */,
@@ -8607,6 +8618,7 @@
 				1A01C68F18F57BE800EFE3A6 /* CCDictionary.cpp in Sources */,
 				B276EF621988D1D500CD400F /* CCVertexIndexData.cpp in Sources */,
 				50ABBE561925AB6F00A911A9 /* CCEventFocus.cpp in Sources */,
+				382F7ADD1AB1292A002EBECF /* CCObjectExtensionData.cpp in Sources */,
 				15AE183D19AAD2F700C27E9E /* CCSkeleton3D.cpp in Sources */,
 				503DD8E11926736A00CD74DD /* CCApplication-ios.mm in Sources */,
 				15AE1AAC19AAD40300C27E9E /* b2WorldCallbacks.cpp in Sources */,

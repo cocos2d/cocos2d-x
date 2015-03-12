@@ -1786,6 +1786,9 @@
     <ClCompile Include="..\..\extensions\Particle3D\CCParticleSystem3D.cpp">
       <Filter>extension\Particle3D</Filter>
     </ClCompile>
+    <ClCompile Include="..\editor-support\cocostudio\CCObjectExtensionData.cpp">
+      <Filter>cocostudio\json</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -3495,6 +3498,9 @@
     </ClInclude>
     <ClInclude Include="..\..\extensions\Particle3D\CCParticleSystem3D.h">
       <Filter>extension\Particle3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\CCObjectExtensionData.h">
+      <Filter>cocostudio\json</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

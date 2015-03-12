@@ -526,6 +526,7 @@
     <ClInclude Include="..\editor-support\cocostudio\CCDisplayFactory.h" />
     <ClInclude Include="..\editor-support\cocostudio\CCDisplayManager.h" />
     <ClInclude Include="..\editor-support\cocostudio\CCInputDelegate.h" />
+    <ClInclude Include="..\editor-support\cocostudio\CCObjectExtensionData.h" />
     <ClInclude Include="..\editor-support\cocostudio\CCProcessBase.h" />
     <ClInclude Include="..\editor-support\cocostudio\CCSGUIReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\CCSkin.h" />
@@ -1164,6 +1165,7 @@
     <ClCompile Include="..\editor-support\cocostudio\CCDisplayFactory.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\CCDisplayManager.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\CCInputDelegate.cpp" />
+    <ClCompile Include="..\editor-support\cocostudio\CCObjectExtensionData.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\CCProcessBase.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\CCSGUIReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\CCSkin.cpp" />

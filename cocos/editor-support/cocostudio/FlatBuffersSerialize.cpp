@@ -324,7 +324,10 @@ Offset<NodeTree> FlatBuffersSerialize::createNodeTree(const tinyxml2::XMLElement
         readername.append("Reader");
         
         NodeReaderProtocol* reader = dynamic_cast<NodeReaderProtocol*>(ObjectFactory::getInstance()->createObject(readername));
-        options = CreateOptions(*_builder, reader->createOptionsWithFlatBuffers(objectData, _builder));
+        if (reader != nullptr)
+        {
+            options = CreateOptions(*_builder, reader->createOptionsWithFlatBuffers(objectData, _builder));
+        }
     }
     
     
@@ -1265,7 +1268,10 @@ Offset<NodeTree> FlatBuffersSerialize::createNodeTreeForSimulator(const tinyxml2
         readername.append("Reader");
         
         NodeReaderProtocol* reader = dynamic_cast<NodeReaderProtocol*>(ObjectFactory::getInstance()->createObject(readername));
-        options = CreateOptions(*_builder, reader->createOptionsWithFlatBuffers(objectData, _builder));
+        if (reader != nullptr)
+        {
+            options = CreateOptions(*_builder, reader->createOptionsWithFlatBuffers(objectData, _builder));
+        }
     }
     
     
