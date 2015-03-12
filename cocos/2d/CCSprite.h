@@ -182,7 +182,7 @@ public:
 
     /// @} end of BatchNode methods
 
-
+    void setTextureFit(Texture2D *texture ,Rect & rect);
     /// @{
     /// @name Texture / Frame methods
 

@@ -123,6 +123,8 @@ public:
      * @js NA
      */
     Rect();
+    
+    Rect(const Size& s);
     /**
      * @js NA
      */

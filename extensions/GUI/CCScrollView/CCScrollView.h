@@ -369,6 +369,7 @@ protected:
     Rect _parentScissorRect;
     bool _scissorRestored;
     
+    float _SCROLL_DEACCEL_DIST,_SCROLL_DEACCEL_RATE;
     /** Touch listener */
     EventListenerTouchOneByOne* _touchListener;
     

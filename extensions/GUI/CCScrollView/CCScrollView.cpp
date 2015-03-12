@@ -27,13 +27,14 @@
 #include "platform/CCDevice.h"
 #include "2d/CCActionInstant.h"
 #include "2d/CCActionInterval.h"
+#include "2d/CCActionEase.h"
 #include "2d/CCActionTween.h"
 #include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"
 #include "renderer/CCRenderer.h"
 
 #include <algorithm>
-
+#include <cmath>
 NS_CC_EXT_BEGIN
 
 #define SCROLL_DEACCEL_RATE  0.95f
@@ -208,7 +209,8 @@ void ScrollView::setContentOffset(Vec2 offset, bool animated/* = false*/)
 {
     if (animated)
     { //animate scrolling
-        this->setContentOffsetInDuration(offset, BOUNCE_DURATION);
+     
+        this->setContentOffsetInDuration(offset, 0.7f);
     } 
     else
     { //set the container position directly
@@ -220,7 +222,7 @@ void ScrollView::setContentOffset(Vec2 offset, bool animated/* = false*/)
             offset.x = MAX(minOffset.x, MIN(maxOffset.x, offset.x));
             offset.y = MAX(minOffset.y, MIN(maxOffset.y, offset.y));
         }
-
+        log("offset is %f,%f\n",offset.x,offset.y);
         _container->setPosition(offset);
 
         if (_delegate != nullptr)
@@ -233,8 +235,8 @@ void ScrollView::setContentOffset(Vec2 offset, bool animated/* = false*/)
 void ScrollView::setContentOffsetInDuration(Vec2 offset, float dt)
 {
     FiniteTimeAction *scroll, *expire;
-    
-    scroll = MoveTo::create(dt, offset);
+  
+    scroll = EaseExponentialOut::create( MoveTo::create(dt, offset));
     expire = CallFuncN::create(CC_CALLBACK_1(ScrollView::stoppedAnimatedScroll,this));
     _container->runAction(Sequence::create(scroll, expire, nullptr));
     this->schedule(CC_SCHEDULE_SELECTOR(ScrollView::performedAnimatedScroll));

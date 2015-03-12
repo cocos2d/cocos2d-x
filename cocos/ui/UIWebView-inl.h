@@ -118,9 +118,9 @@ namespace experimental{
             _impl->goForward();
         }
         
-        void WebView::evaluateJS(const std::string &js)
+        void WebView::evaluateJS(const std::string &js, std::string &result)
         {
-            _impl->evaluateJS(js);
+            _impl->evaluateJS(js,result);
         }
         
         void WebView::setScalesPageToFit(bool const scalesPageToFit)

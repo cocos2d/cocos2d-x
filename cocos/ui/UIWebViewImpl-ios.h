@@ -71,7 +71,7 @@ public:
 
     void goForward();
 
-    void evaluateJS(const std::string &js);
+    void evaluateJS(const std::string &js, std::string & result);
 
     void setScalesPageToFit(const bool scalesPageToFit);
 
