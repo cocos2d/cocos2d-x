@@ -43,6 +43,9 @@ Layer *CreateAnimationLayer(int index)
     case TEST_PROJECTNODEFORSIMALATOR:
         pLayer = new (std::nothrow) TestProjectNodeForSimulator;
         break;
+    case TEST_NODELOADEDCALLBACK:
+        pLayer = new (std::nothrow)TestTimelineNodeLoadedCallback;
+        break;
     default:
         CCLOG("NONE OF THIS TEST LAYER");
         break;
@@ -404,4 +407,37 @@ void TestProjectNodeForSimulator::onEnter()
 std::string TestProjectNodeForSimulator::title() const
 {
     return "Test ProjectNode for Simalator";
+}
+
+//TestTimelineNodeLoadedCallback
+void TestTimelineNodeLoadedCallback::onEnter()
+{
+    ActionTimelineTestLayer::onEnter();
+    
+    Node* node = CSLoader::createNode("ActionTimeline/DemoPlayer.csb", CC_CALLBACK_1(TestTimelineNodeLoadedCallback::nodeLoadedCallback,
+                                                                                     this));
+    ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/DemoPlayer.csb");
+    node->runAction(action);
+    action->gotoFrameAndPlay(0);
+    //    ActionTimelineNode* node = CSLoader::createActionTimelineNode("ActionTimeline/DemoPlayer.csb", 0, 40, true);
+    
+    node->setScale(0.2f);
+    node->setPosition(VisibleRect::center());
+    
+    addChild(node);
+}
+
+std::string TestTimelineNodeLoadedCallback::title() const
+{
+    return "Test node loaded call back";
+}
+
+void TestTimelineNodeLoadedCallback::nodeLoadedCallback(cocos2d::Ref *sender)
+{
+    Node* node = static_cast<Node*>(sender);
+    if (node)
+    {
+        CCLOG("node name = %s", node->getName().c_str());
+        CCLOG("node parent name = %s", node->getParent()->getName().c_str());
+    }
 }
