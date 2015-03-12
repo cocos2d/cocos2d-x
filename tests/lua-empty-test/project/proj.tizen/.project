@@ -7,6 +7,7 @@
 	<buildSpec>
 		<buildCommand>
 			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>
+			<triggers>clean,full,incremental,</triggers>
 			<arguments>
 			</arguments>
 		</buildCommand>
@@ -35,15 +36,10 @@
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/Classes</locationURI>
 		</link>
-		<link>
-			<name>Classes/AppDelegate.cpp</name>
-			<type>1</type>
-			<locationURI>PARENT-9-PROJECT_LOC/git/cocos2d-x-3.4/tests/lua-empty-test/project/Classes/AppDelegate.cpp</locationURI>
-		</link>
 	</linkedResources>
 	<filteredResources>
 		<filter>
-			<id>1420696205212</id>
+			<id>1426053993877</id>
 			<name></name>
 			<type>26</type>
 			<matcher>
