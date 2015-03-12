@@ -80,6 +80,9 @@ public:
     /** render the scene */
     void render(Renderer* renderer);
     
+    /** override function */
+    virtual void removeAllChildren() override;
+    
 CC_CONSTRUCTOR_ACCESS:
     Scene();
     virtual ~Scene();
