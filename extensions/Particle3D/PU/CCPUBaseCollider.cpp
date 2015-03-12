@@ -36,8 +36,8 @@ const PUBaseCollider::CollisionType PUBaseCollider::DEFAULT_COLLISION_TYPE = PUB
 //-----------------------------------------------------------------------
 PUBaseCollider::PUBaseCollider() 
     : PUAffector()
-    , _bouncyness(DEFAULT_BOUNCYNESS)
     , _friction(DEFAULT_FRICTION)
+    , _bouncyness(DEFAULT_BOUNCYNESS)
     , _intersectionType(DEFAULT_INTERSECTION_TYPE)
     , _collisionType(DEFAULT_COLLISION_TYPE)
     , _velocityScale(1.0f)

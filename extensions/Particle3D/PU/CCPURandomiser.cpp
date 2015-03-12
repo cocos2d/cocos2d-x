@@ -41,8 +41,8 @@ PURandomiser::PURandomiser(void) :
     _maxDeviationZ(DEFAULT_MAX_DEVIATION.z),
     _timeSinceLastUpdate(0.0f),
     _timeStep(DEFAULT_TIME_STEP),
-    _update(true),
-    _randomDirection(DEFAULT_RANDOM_DIRECTION)
+    _randomDirection(DEFAULT_RANDOM_DIRECTION),
+    _update(true)
 {
 }
 PURandomiser::~PURandomiser( void )

@@ -38,13 +38,13 @@ const bool PUTextureAnimator::DEFAULT_START_RANDOM = true;
 PUTextureAnimator::PUTextureAnimator(void) : 
     PUAffector(),
     _animationTimeStep(DEFAULT_TIME_STEP),
+    _animationTimeStepCount(0.0f),
+    _startRandom(DEFAULT_START_RANDOM),
     _animationTimeStepSet(false),
     _nextIndex(false),
     _textureAnimationType(DEFAULT_ANIMATION_TYPE),
     _textureCoordsStart(DEFAULT_TEXCOORDS_START),
-    _textureCoordsEnd(DEFAULT_TEXCOORDS_END),
-    _startRandom(DEFAULT_START_RANDOM),
-    _animationTimeStepCount(0.0f)
+    _textureCoordsEnd(DEFAULT_TEXCOORDS_END)
 {
 }
 //-----------------------------------------------------------------------

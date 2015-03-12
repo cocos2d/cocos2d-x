@@ -1025,8 +1025,8 @@ bool Effect3DOutline::init()
 }
 
 Effect3DOutline::Effect3DOutline()
-: _outlineWidth(1.0f)
-, _outlineColor(1, 1, 1)
+: _outlineColor(1, 1, 1)
+, _outlineWidth(1.0f)
 , _sprite(nullptr)
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
@@ -1460,11 +1460,11 @@ void Sprite3DWithSkinOutlineTest::onTouchesEnded(const std::vector<Touch*>& touc
 }
 
 Animate3DTest::Animate3DTest()
-: _hurt(nullptr)
+: _sprite(nullptr)
 , _swim(nullptr)
-, _sprite(nullptr)
-, _moveAction(nullptr)
+, _hurt(nullptr)
 , _elapseTransTime(0.f)
+, _moveAction(nullptr)
 {
     addSprite3D();
     
