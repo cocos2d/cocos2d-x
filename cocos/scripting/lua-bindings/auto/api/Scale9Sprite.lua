@@ -314,6 +314,14 @@
         
 --------------------------------
 -- 
+-- @function [parent=#Scale9Sprite] setCameraMask 
+-- @param self
+-- @param #unsigned short mask
+-- @param #bool applyChildren
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
+        
+--------------------------------
+-- 
 -- @function [parent=#Scale9Sprite] cleanup 
 -- @param self
 -- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)

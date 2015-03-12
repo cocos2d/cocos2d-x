@@ -54,7 +54,7 @@
 -- @return Animate3D#Animate3D ret (return value: cc.Animate3D)
 
 --------------------------------
---  animate transition time 
+--  get animate transition time between 3d animations 
 -- @function [parent=#Animate3D] getTransitionTime 
 -- @param self
 -- @return float#float ret (return value: float)
@@ -73,6 +73,13 @@
 -- @param #int endFrame
 -- @param #float frameRate
 -- @return Animate3D#Animate3D ret (return value: cc.Animate3D)
+        
+--------------------------------
+--  set animate transition time between 3d animations 
+-- @function [parent=#Animate3D] setTransitionTime 
+-- @param self
+-- @param #float transTime
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
         
 --------------------------------
 -- 

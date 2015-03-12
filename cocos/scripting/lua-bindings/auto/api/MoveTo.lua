@@ -26,4 +26,10 @@
 -- @param self
 -- @return MoveTo#MoveTo ret (return value: cc.MoveTo)
         
+--------------------------------
+-- 
+-- @function [parent=#MoveTo] reverse 
+-- @param self
+-- @return MoveTo#MoveTo ret (return value: cc.MoveTo)
+        
 return nil

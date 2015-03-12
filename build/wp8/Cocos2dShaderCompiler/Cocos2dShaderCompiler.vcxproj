@@ -114,6 +114,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <PackageCertificateKeyFile>Cocos2dShaderCompiler_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>2371BAA26A4995D58B8E87430D9BE585C3507553</PackageCertificateThumbprint>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <Link>

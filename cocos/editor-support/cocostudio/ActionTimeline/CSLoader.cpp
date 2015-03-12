@@ -59,6 +59,10 @@
 #include "cocostudio/WidgetReader/PageViewReader/PageViewReader.h"
 #include "cocostudio/WidgetReader/ListViewReader/ListViewReader.h"
 #include "cocostudio/WidgetReader/ArmatureNodeReader/ArmatureNodeReader.h"
+#include "cocostudio/WidgetReader/Node3DReader/Node3DReader.h"
+#include "cocostudio/WidgetReader/Sprite3DReader/Sprite3DReader.h"
+#include "cocostudio/WidgetReader/UserCameraReader/UserCameraReader.h"
+#include "cocostudio/WidgetReader/Particle3DReader/Particle3DReader.h"
 
 #include "flatbuffers/flatbuffers.h"
 #include "flatbuffers/util.h"
@@ -204,7 +208,10 @@ CSLoader::CSLoader()
     CREATE_CLASS_NODE_READER_INFO(ListViewReader);
     
     CREATE_CLASS_NODE_READER_INFO(ArmatureNodeReader);
-    
+    CREATE_CLASS_NODE_READER_INFO(Node3DReader);
+    CREATE_CLASS_NODE_READER_INFO(Sprite3DReader);
+    CREATE_CLASS_NODE_READER_INFO(UserCameraReader);
+    CREATE_CLASS_NODE_READER_INFO(Particle3DReader);
 }
 
 void CSLoader::purge()
@@ -771,7 +778,23 @@ Node* CSLoader::createNodeWithFlatBuffersFile(const std::string &filename)
 {
     Node* node = nodeWithFlatBuffersFile(filename);
     
-    _rootNode = nullptr;
+    /* To reconstruct nest node as WidgetCallBackHandlerProtocol. */
+    auto callbackHandler = dynamic_cast<WidgetCallBackHandlerProtocol *>(node);
+    if (callbackHandler)
+    {
+        _callbackHandlers.popBack();
+        if (_callbackHandlers.empty())
+        {
+            _rootNode = nullptr;
+            CCLOG("Call back handler container has been clear.");
+        }
+        else
+        {
+            _rootNode = _callbackHandlers.back();
+            CCLOG("after pop back _rootNode name = %s", _rootNode->getName().c_str());
+        }
+    }
+    /**/
     
     return node;
 }
@@ -847,6 +870,7 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree)
         reader->setPropsWithFlatBuffers(node, options->data());
         if (action)
         {
+            action->setTimeSpeed(projectNodeOptions->innerActionSpeed());
             node->runAction(action);
             action->gotoFrameAndPause(0);
         }
@@ -884,10 +908,15 @@ Node* CSLoader::nodeWithFlatBuffers(const flatbuffers::NodeTree *nodetree)
             bindCallback(callbackName, callbackType, widget, _rootNode);
         }
         
-        if (_rootNode == nullptr)
+        /* To reconstruct nest node as WidgetCallBackHandlerProtocol. */
+        auto callbackHandler = dynamic_cast<WidgetCallBackHandlerProtocol *>(node);
+        if (callbackHandler)
         {
-            _rootNode = node;
+            _callbackHandlers.pushBack(node);
+            _rootNode = _callbackHandlers.back();
+            CCLOG("after push back _rootNode name = %s", _rootNode->getName().c_str());
         }
+        /**/
 //        _loadingNodeParentHierarchy.push_back(node);
     }
     
@@ -1180,6 +1209,7 @@ Node* CSLoader::nodeWithFlatBuffersForSimulator(const flatbuffers::NodeTree *nod
         reader->setPropsWithFlatBuffers(node, options->data());
         if (action)
         {
+            action->setTimeSpeed(projectNodeOptions->innerActionSpeed());
             node->runAction(action);
             action->gotoFrameAndPause(0);
         }

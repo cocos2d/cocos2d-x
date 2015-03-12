@@ -896,8 +896,8 @@ void Label::drawShadowWithoutBlur()
 void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     // Don't do calculate the culling if the transform was not updated
-#if CC_USE_CULLING
     bool transformUpdated = flags & FLAGS_TRANSFORM_DIRTY;
+#if CC_USE_CULLING
     _insideBounds = transformUpdated ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
 
     if(_insideBounds)
@@ -1075,7 +1075,7 @@ void Label::drawTextSprite(Renderer *renderer, uint32_t parentFlags)
 
 void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
-    if (! _visible || _originalUTF8String.empty() || !isVisitableByVisitingCamera())
+    if (! _visible || _originalUTF8String.empty())
     {
         return;
     }
@@ -1103,6 +1103,11 @@ void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t pare
         _transformDirty = _inverseDirty = true;
 
         _shadowDirty = false;
+    }
+
+    if (!isVisitableByVisitingCamera())
+    {
+        return;
     }
 
     // IMPORTANT:

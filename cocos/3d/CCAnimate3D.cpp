@@ -38,40 +38,61 @@ float      Animate3D::_transTime = 0.1f;
 Animate3D* Animate3D::create(Animation3D* animation)
 {
     auto animate = new (std::nothrow) Animate3D();
-    animate->_animation = animation;
-    animation->retain();
-    
+    animate->init(animation);
     animate->autorelease();
-    animate->setDuration(animation->getDuration());
-    animate->setOriginInterval(animation->getDuration());
     
     return animate;
 }
 
 Animate3D* Animate3D::create(Animation3D* animation, float fromTime, float duration)
 {
-    auto animate = Animate3D::create(animation);
-    
-    float fullDuration = animation->getDuration();
-    if (duration > fullDuration - fromTime)
-        duration = fullDuration - fromTime;
-    
-    animate->_start = fromTime / fullDuration;
-    animate->_last = duration / fullDuration;
-    animate->setDuration(duration);
-    animate->setOriginInterval(duration);
+    auto animate = new (std::nothrow) Animate3D();
+    animate->init(animation, fromTime, duration);
+    animate->autorelease();
     
     return  animate;
 }
 
 Animate3D* Animate3D::createWithFrames(Animation3D* animation, int startFrame, int endFrame, float frameRate)
 {
+    auto animate = new (std::nothrow) Animate3D();
+    animate->initWithFrames(animation, startFrame, endFrame, frameRate);
+    animate->autorelease();
+    
+    return  animate;
+}
+
+bool Animate3D::init(Animation3D* animation)
+{
+    _animation = animation;
+    animation->retain();
+    setDuration(animation->getDuration());
+    setOriginInterval(animation->getDuration());
+    return true;
+}
+
+bool Animate3D::init(Animation3D* animation, float fromTime, float duration)
+{
+    float fullDuration = animation->getDuration();
+    if (duration > fullDuration - fromTime)
+        duration = fullDuration - fromTime;
+    
+    _start = fromTime / fullDuration;
+    _last = duration / fullDuration;
+    setDuration(duration);
+    setOriginInterval(duration);
+    _animation = animation;
+    animation->retain();
+    return true;
+}
+
+bool Animate3D::initWithFrames(Animation3D* animation, int startFrame, int endFrame, float frameRate)
+{
     float perFrameTime = 1.f / frameRate;
     float fromTime = startFrame * perFrameTime;
     float duration = (endFrame - startFrame) * perFrameTime;
-    
-    auto animate = create(animation, fromTime, duration);
-    return  animate;
+    init(animation, fromTime, duration);
+    return true;
 }
 
 /** returns a clone of action */
@@ -110,8 +131,8 @@ void Animate3D::startWithTarget(Node *target)
     _boneCurves.clear();
     auto skin = sprite->getSkeleton();
     bool hasCurve = false;
-    for (unsigned int  i = 0; i < skin->getBoneCount(); i++) {
-        auto bone = skin->getBoneByIndex(i);
+    for (int  i = 0; i < skin->getBoneCount(); i++) {
+        auto bone = skin->getBoneByIndex(static_cast<unsigned int>(i));
         auto curve = _animation->getBoneCurveByName(bone->getName());
         if (curve)
         {
@@ -131,17 +152,26 @@ void Animate3D::startWithTarget(Node *target)
         auto action = (*runningAction).second;
         if (action != this)
         {
-            s_fadeOutAnimates[sprite] = action;
-            action->_state = Animate3D::Animate3DState::FadeOut;
-            action->_accTransTime = 0.0f;
-            action->_weight = 1.0f;
-            action->_lastTime = 0.f;
-            
-            s_fadeInAnimates[sprite] = this;
-            _accTransTime = 0.0f;
-            _state = Animate3D::Animate3DState::FadeIn;
-            _weight = 0.f;
-            _lastTime = 0.f;
+            if (_transTime < 0.001f)
+            {
+                s_runningAnimates[sprite] = this;
+                _state = Animate3D::Animate3DState::Running;
+                _weight = 1.0f;
+            }
+            else
+            {
+                s_fadeOutAnimates[sprite] = action;
+                action->_state = Animate3D::Animate3DState::FadeOut;
+                action->_accTransTime = 0.0f;
+                action->_weight = 1.0f;
+                action->_lastTime = 0.f;
+                
+                s_fadeInAnimates[sprite] = this;
+                _accTransTime = 0.0f;
+                _state = Animate3D::Animate3DState::FadeIn;
+                _weight = 0.f;
+                _lastTime = 0.f;
+            }
         }
     }
     else

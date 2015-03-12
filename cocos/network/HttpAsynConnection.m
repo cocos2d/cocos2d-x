@@ -24,6 +24,12 @@
 
 #import "HttpAsynConnection.h"
 
+@interface HttpAsynConnection ()
+
+@property (readwrite) NSString *statusString;
+
+@end
+
 @implementation HttpAsynConnection
 
 @synthesize srcURL;
@@ -39,20 +45,35 @@
 @synthesize finish;
 @synthesize runLoop;
 
+- (void)dealloc
+{
+    [srcURL release];
+    [sslFile release];
+    [responseHeader release];
+    [responseData release];
+    [statusString release];
+    [responseError release];
+    [conn release];
+    [runLoop release];
+    
+    [super dealloc];
+}
+
 - (void) startRequest:(NSURLRequest *)request
 {
     NSLog(@"Starting to load %@", srcURL);
     finish = false;
 
-    responseData = [NSMutableData new];
+    self.responseData = [NSMutableData data];
     getDataTime = 0;
-    responseError = nil;
-    connError = nil;
+
+    self.responseError = nil;
+    self.connError = nil;
     
     // create the connection with the target request and this class as the delegate
-    self.conn = [[NSURLConnection alloc] initWithRequest:request
-                                                delegate:self
-                                        startImmediately:NO];
+    self.conn = [[[NSURLConnection alloc] initWithRequest:request
+                                                 delegate:self
+                                         startImmediately:NO] autorelease];
     
     [self.conn scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     
@@ -73,12 +94,12 @@
     
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
     //NSLog(@"All headers = %@", [httpResponse allHeaderFields]);
-    responseHeader = [[httpResponse allHeaderFields] copy];
+    self.responseHeader = [httpResponse allHeaderFields];
 
     responseCode = httpResponse.statusCode;
-    statusString = [[NSHTTPURLResponse localizedStringForStatusCode:responseCode] copy];
+    self.statusString = [NSHTTPURLResponse localizedStringForStatusCode:responseCode];
     if(responseCode == 200)
-        statusString = @"OK";
+        self.statusString = @"OK";
  
     /*The individual values of the numeric status codes defined for HTTP/1.1
     | “200”  ; OK
@@ -119,7 +140,7 @@
   didFailWithError:(NSError *)error
 {
     //NSLog(@"Load failed with error %@", [error localizedDescription]);
-    connError = [error copy];
+    self.connError = error;
     
     finish = true;
 }

@@ -198,6 +198,8 @@ Node::~Node()
 
 #endif
     
+    stopAllActions();
+    unscheduleAllCallbacks();
     CC_SAFE_RELEASE_NULL(_actionManager);
     CC_SAFE_RELEASE_NULL(_scheduler);
     

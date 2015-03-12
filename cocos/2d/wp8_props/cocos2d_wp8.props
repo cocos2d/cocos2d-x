@@ -18,7 +18,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
-      <DisableSpecificWarnings>4056;4996;4244;4251;</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4056;4244;4251;4756;4453;28204;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libGLESv2_phone.lib;libEGL_phone.lib;ws2_32.lib;libwebsockets.lib;libcurl.lib;libchipmunk.lib;zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype.lib;sqlite3.lib;d3d11.lib;dxgi.lib;dxguid.lib;xaudio2.lib;mfplat.lib;%(AdditionalDependencies)</AdditionalDependencies>

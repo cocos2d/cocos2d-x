@@ -35,6 +35,7 @@ require "NodeTest/NodeTest"
 require "OpenGLTest/OpenGLTest"
 require "ParallaxTest/ParallaxTest"
 require "ParticleTest/ParticleTest"
+require "Particle3DTest/Particle3DTest"
 require "PerformanceTest/PerformanceTest"
 require "RenderTextureTest/RenderTextureTest"
 require "RotateWorldTest/RotateWorldTest"
@@ -55,6 +56,7 @@ require "CaptureScreenTest/CaptureScreenTest"
 require "VideoPlayerTest/VideoPlayerTest"
 require "FastTiledMapTest/FastTiledMapTest"
 require "NewAudioEngineTest/NewAudioEngineTest"
+require "CocosStudio3DTest/CocosStudio3DTest"
 
 local LINE_SPACE = 40
 
@@ -86,6 +88,7 @@ local _allTests = {
     { isSupported = false,  name = "ChipmunkAccelTouchTest" , create_func=    ChipmunkAccelTouchTestMain  },
     { isSupported = true,  name = "ClickAndMoveTest"       , create_func   =          ClickAndMoveTest      },
     { isSupported = true,  name = "CocosDenshionTest"      , create_func   =         CocosDenshionTestMain  },
+    { isSupported = true,  name = "CocosStudio3DTest"      , create_func   =               CocosStudio3DTest},
     { isSupported = true,  name = "CocoStudioTest"         , create_func   =         CocoStudioTestMain  },  
     { isSupported = false,  name = "CurlTest"               , create_func=                  CurlTestMain  },
     { isSupported = true,  name = "CurrentLanguageTest"    , create_func=   CurrentLanguageTestMain      },
@@ -110,8 +113,9 @@ local _allTests = {
     { isSupported = true,   name = "OpenGLTest"             , create_func=          OpenGLTestMain     },
     { isSupported = true,  name = "ParallaxTest"           , create_func   =              ParallaxTestMain  },
     { isSupported = true,  name = "ParticleTest"           , create_func   =              ParticleTest      }, 
+    { isSupported = true,  name = "Particle3D (PU)"        , create_func   =              Particle3DTest  },
     { isSupported = true,  name = "PerformanceTest"        , create_func=           PerformanceTestMain  },
-	{ isSupported = true,  name = "PhysicsTest"            , create_func =          PhysicsTest  },
+    { isSupported = true,  name = "PhysicsTest"            , create_func =          PhysicsTest  },
     { isSupported = true,  name = "RenderTextureTest"      , create_func   =         RenderTextureTestMain  },
     { isSupported = true,  name = "RotateWorldTest"        , create_func   =           RotateWorldTest      },
     { isSupported = true,  name = "SceneTest"              , create_func   =                 SceneTestMain  },

@@ -291,11 +291,11 @@ namespace CocosDenshion {
             methodInfo.env->DeleteLocalRef(methodInfo.classID);
         }
 
-        void AndroidJavaEngine::preloadEffect(const char* pszFilePath) {
+        static void loadEffect(const char* pszFilePath, char* loadEffectName) {
             cocos2d::JniMethodInfo methodInfo;
             std::string fullPath = CocosDenshion::android::getFullPathWithoutAssetsPrefix(pszFilePath);
         
-            if (! getJNIStaticMethodInfo(methodInfo, "preloadEffect", "(Ljava/lang/String;)V")) {
+            if (! cocos2d::JniHelper::getStaticMethodInfo(methodInfo, CLASS_NAME, loadEffectName, "(Ljava/lang/String;)V")) {
                 return ;
             }
         
@@ -305,18 +305,13 @@ namespace CocosDenshion {
             methodInfo.env->DeleteLocalRef(methodInfo.classID);
         }
 
+
+        void AndroidJavaEngine::preloadEffect(const char* pszFilePath) {
+            loadEffect(pszFilePath, "preloadEffect");
+        }
+
         void AndroidJavaEngine::unloadEffect(const char* pszFilePath) {
-            cocos2d::JniMethodInfo methodInfo;
-            std::string fullPath = CocosDenshion::android::getFullPathWithoutAssetsPrefix(pszFilePath);
-        
-            if (! getJNIStaticMethodInfo(methodInfo, "unloadEffect", "(Ljava/lang/String;)V")) {
-                return ;
-            }
-        
-            jstring stringArg = methodInfo.env->NewStringUTF(fullPath.c_str());
-            methodInfo.env->CallStaticVoidMethod(methodInfo.classID, methodInfo.methodID, stringArg);
-            methodInfo.env->DeleteLocalRef(stringArg);
-            methodInfo.env->DeleteLocalRef(methodInfo.classID);
+            loadEffect(pszFilePath, "unloadEffect");       
         }
     }
 }
