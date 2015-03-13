@@ -284,6 +284,15 @@ public:
     * @return An integer number.
     */
     inline int getSubsteps() const { return _substeps; }
+    
+    /**
+     * set the number of update of the physics world in a second.
+     * 0 - disable fixed step system
+     * default value is 0
+     */
+    void setFixedUpdateRate(int updatesPerSecond) { if(updatesPerSecond > 0) { _fixedRate = updatesPerSecond; } }
+    /** get the number of substeps */
+    inline int getFixedUpdateRate() const { return _fixedRate; }
 
     /**
     * Set the debug draw mask of this physics world.
@@ -358,6 +367,7 @@ protected:
     int _updateRateCount;
     float _updateTime;
     int _substeps;
+    int _fixedRate;
     cpSpace* _cpSpace;
     
     bool _updateBodyTransform;
