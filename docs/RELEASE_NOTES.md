@@ -108,6 +108,10 @@ Run
 
 Please refer to this document: [ReadMe](../README.md)
 
+# v3.5rc0
+## Highlights of v3.5rc0
+## Features in detail
+
 # v3.5beta0
 
 ## Highlights of v3.5beta0
