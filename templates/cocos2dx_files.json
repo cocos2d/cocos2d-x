@@ -606,6 +606,8 @@
         "cocos/editor-support/cocostudio/CCDisplayManager.h", 
         "cocos/editor-support/cocostudio/CCInputDelegate.cpp", 
         "cocos/editor-support/cocostudio/CCInputDelegate.h", 
+        "cocos/editor-support/cocostudio/CCObjectExtensionData.cpp", 
+        "cocos/editor-support/cocostudio/CCObjectExtensionData.h", 
         "cocos/editor-support/cocostudio/CCProcessBase.cpp", 
         "cocos/editor-support/cocostudio/CCProcessBase.h", 
         "cocos/editor-support/cocostudio/CCSGUIReader.cpp", 
