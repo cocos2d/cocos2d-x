@@ -115,6 +115,24 @@ Please refer to this document: [ReadMe](../README.md)
 
 ### 3D Particles
 
+#### Supported PU features
+
+Render: Billboard Renderer, Box Renderer, Sphere Renderer, Entity Renderer, Ribbon Trail Renderer.
+
+Emitter: Point Emitter, Box Emitter, Sphere Surface Emitter, Line Emitter, Circle Emitter, Position Emitter, Slave Emitter.
+
+Affector: Gravity Affector, Linear Force Affector, Scale Affector, Sine Force Affector, Color Affector, Randomiser, Line Affector, Align Affector, Jet Affector, Vortex Affector, Geometry Rotator, Texture Rotator, Texture Animator, Particle Follower, Sphere Collider, Plane Collider, box Collider, Path Follower, Flock Centering Affector, Velocity Matching Affector.
+
+Observer(since 3.5 rc0): On Count Observer, On Emission Observer, On Expire Observer, On Position observer, On Clear Observer, On Time Observer, On Quota Observer, On Velocity Observer, On Collision Observer, On Event Flag Observer, On Random Observer.
+
+Event Handler(since 3.5 rc0): Do Enable Component Event Handler, Do Expire Event Handler, Do Placement Particle Event Handler, Do Stop System Event Handler, Do Affector Event Handler, Do Freeze Event Handler, Do Scale Event Handler.
+
+Behavior(since 3.5 rc0): Slave Behavior
+
+Features relative to mesh are not supported now.
+
+#### Particle usage
+
 It allows to import particles from Particle Universe (http://www.fxpression.com). The usage of particles is as follow,
 
 Option 1, create 3D particle with particle (.pu) file and material file
