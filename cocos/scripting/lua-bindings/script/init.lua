@@ -26,6 +26,12 @@ require "cocos.cocos2d.Cocos2d"
 require "cocos.cocos2d.Cocos2dConstants"
 require "cocos.cocos2d.functions"
 
+__G__TRACKBACK__ = function(msg)
+    local msg = debug.traceback(msg, 3)
+    print(msg)
+    return msg
+end
+
 if CC_USE_FRAMEWORK then
     require "cocos.framework.init"
 else
