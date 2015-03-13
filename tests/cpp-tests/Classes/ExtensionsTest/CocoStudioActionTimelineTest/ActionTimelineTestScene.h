@@ -28,6 +28,7 @@ enum {
     TEST_TIMELINEACTION_ANIMATIONLIST,
     TEST_TIMELINEPROJECTNODE,
     TEST_PROJECTNODEFORSIMALATOR,
+    TEST_NODELOADEDCALLBACK,
     
     TEST_ANIMATION_LAYER_COUNT
 };
@@ -107,6 +108,16 @@ class TestProjectNodeForSimulator : public ActionTimelineTestLayer
 public:
     virtual void onEnter();
     virtual std::string title() const override;
+};
+
+class TestTimelineNodeLoadedCallback : public ActionTimelineTestLayer
+{
+public:
+    virtual void onEnter();
+    virtual std::string title() const override;
+    
+    void nodeLoadedCallback(cocos2d::Ref* sender);
+
 };
 
 #endif  // __ANIMATION_SCENE_H__
