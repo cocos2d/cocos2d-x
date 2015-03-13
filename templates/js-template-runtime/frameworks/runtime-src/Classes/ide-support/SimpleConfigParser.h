@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include "cocos2d.h"
-#include "json/document.h"
+#include "rapidjson/document.h"
 using namespace std;
 USING_NS_CC;
 
