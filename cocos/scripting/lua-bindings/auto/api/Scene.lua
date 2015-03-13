@@ -46,4 +46,10 @@
 -- @param self
 -- @return string#string ret (return value: string)
         
+--------------------------------
+--  override function 
+-- @function [parent=#Scene] removeAllChildren 
+-- @param self
+-- @return Scene#Scene self (return value: cc.Scene)
+        
 return nil
