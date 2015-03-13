@@ -84,7 +84,7 @@ public:
     void afterDraw(Node *target);
     virtual void beforeBlit() {}
     virtual void afterBlit() {}
-    virtual void blit(void);
+    virtual void blit(const Mat4& matrixMV, const Mat4& matrixP);
     virtual void reuse(void);
     virtual void calculateVertexPoints(void);
 
@@ -152,7 +152,7 @@ public:
     virtual void beforeBlit() override;
     virtual void afterBlit() override;
     // Overrides
-    virtual void blit() override;
+    virtual void blit(const Mat4& matrixMV, const Mat4& matrixP) override;
     virtual void reuse() override;
     virtual void calculateVertexPoints() override;
     
@@ -217,7 +217,7 @@ public:
     void setTile(const Vec2& pos, const Quad3& coords);
 
     // Overrides
-    virtual void blit() override;
+    virtual void blit(const Mat4& matrixMV, const Mat4& matrixP) override;
     virtual void reuse() override;
     virtual void calculateVertexPoints() override;
 

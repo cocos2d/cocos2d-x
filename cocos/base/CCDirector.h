@@ -194,6 +194,7 @@ public:
     inline Projection getProjection() { return _projection; }
     void setProjection(Projection projection);
     
+    Mat4 getMatrixByProjection(MATRIX_STACK_TYPE type, Projection projection) const;
     /** Sets the glViewport*/
     void setViewport();
 
@@ -444,9 +445,7 @@ protected:
 
     void initMatrixStack();
 
-    std::stack<Mat4> _modelViewMatrixStack;
-    std::stack<Mat4> _projectionMatrixStack;
-    std::stack<Mat4> _textureMatrixStack;
+    MatrixStack _matrixStack;
 
     /** Scheduler associated with this director
      @since v2.0

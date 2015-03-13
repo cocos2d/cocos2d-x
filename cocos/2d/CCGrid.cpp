@@ -233,11 +233,12 @@ void GridBase::afterDraw(cocos2d::Node *target)
     //TODO:         Director::getInstance()->setProjection(Director::getInstance()->getProjection());
     //TODO:         Director::getInstance()->applyOrientation();
     beforeBlit();
-    blit();
+    blit(director->getMatrixByProjection(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _directorProjection),
+         director->getMatrixByProjection(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, _directorProjection));
     afterBlit();
 }
 
-void GridBase::blit(void)
+void GridBase::blit(const Mat4& matrixMV, const Mat4& matrixP)
 {
     CCASSERT(0, "");
 }
@@ -340,13 +341,13 @@ void Grid3D::afterBlit()
     }
 }
 
-void Grid3D::blit(void)
+void Grid3D::blit(const Mat4& matrixMV, const Mat4& matrixP)
 {
     int n = _gridSize.width * _gridSize.height;
 
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORD );
     _shaderProgram->use();
-    _shaderProgram->setUniformsForBuiltins();;
+    _shaderProgram->setUniformsForBuiltins(matrixMV, matrixP);
 
     //
     // Attributes
@@ -539,13 +540,13 @@ TiledGrid3D* TiledGrid3D::create(const Size& gridSize)
     return ret;
 }
 
-void TiledGrid3D::blit(void)
+void TiledGrid3D::blit(const Mat4& matrixMV, const Mat4& matrixP)
 {
     int n = _gridSize.width * _gridSize.height;
 
     
     _shaderProgram->use();
-    _shaderProgram->setUniformsForBuiltins();
+    _shaderProgram->setUniformsForBuiltins(matrixMV, matrixP);
 
     //
     // Attributes
