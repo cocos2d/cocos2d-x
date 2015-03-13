@@ -1,4 +1,5 @@
-cocos2d-x-3.5rc0 ??
+cocos2d-x-3.5rc0 Mar.13 2015
+    [NEW]           CocosStudio: add callback when loading a CSB file
     [NEW]           Particle3D: more PU feature support, observers and event handlers
     
     [FIX]           Billboard: fix bug on transparent Billboard because of transparent queue
