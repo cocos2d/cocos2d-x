@@ -161,6 +161,20 @@ void Scene::render(Renderer* renderer)
     Camera::_visitingCamera = nullptr;
 }
 
+void Scene::removeAllChildren()
+{
+    if (_defaultCamera)
+        _defaultCamera->retain();
+    
+    Node::removeAllChildren();
+    
+    if (_defaultCamera)
+    {
+        addChild(_defaultCamera);
+        _defaultCamera->release();
+    }
+}
+
 #if CC_USE_PHYSICS
 void Scene::addChild(Node* child, int zOrder, int tag)
 {
