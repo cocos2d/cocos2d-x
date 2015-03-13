@@ -307,12 +307,13 @@ void SIOClientImpl::disconnect()
 
         _ws->close();
     }
+    else {
+        Director::getInstance()->getScheduler()->unscheduleAllForTarget(this);
 
-    Director::getInstance()->getScheduler()->unscheduleAllForTarget(this);
+        _connected = false;
 
-    _connected = false;
-
-    SocketIO::getInstance()->removeSocket(_uri);
+        SocketIO::getInstance()->removeSocket(_uri);
+    }
 }
 
 SIOClientImpl* SIOClientImpl::create(const std::string& host, int port)
@@ -412,7 +413,12 @@ void SIOClientImpl::emit(std::string endpoint, std::string eventname, std::strin
     {
         pre << callbackNumber;
     }
-    pre << "[\"" << eventname << "\"," << args << "]";
+    if (args.length() == 0) {
+        pre << "[\"" << eventname << "\"]";
+    }
+    else {
+        pre << "[\"" << eventname << "\"," << args << "]";
+    }
 
     std::string msg = pre.str();
 
@@ -611,6 +617,9 @@ void SIOClientImpl::onClose(WebSocket* ws)
     }
     _connected = false;
     
+    Director::getInstance()->getScheduler()->unscheduleAllForTarget(this);
+
+    SocketIO::getInstance()->removeSocket(_uri);
     this->release();
 }
 
