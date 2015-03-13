@@ -13,16 +13,22 @@
     - [Windows](#windows)
     - [Linux](#linux)
   - [How to start a new game](#how-to-start-a-new-game)
+- [v3.5rc0](#v35rc0)
+  - [Highlights of v3.5rc0](#highlights-of-v35rc0)
+  - [Features in detail](#features-in-detail)
+    - [More 3D particle features of (PU) supported](#more-3d-particle-features-of-pu-supported)
 - [v3.5beta0](#v35beta0)
   - [Highlights of v3.5beta0](#highlights-of-v35beta0)
-  - [Features in detail](#features-in-detail)
+  - [Features in detail](#features-in-detail-1)
     - [3D Particles](#3d-particles)
+      - [Supported PU features](#supported-pu-features)
+      - [Particle usage](#particle-usage)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 # Misc Information
 
-* [Full Changelog](https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.4/CHANGELOG)
+* [Full Changelog](https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG)
 * v3.0 Release Notes can be found here: [v3.0 Release Notes](https://github.com/cocos2d/cocos2d-x/blob/cocos2d-x-3.0/docs/RELEASE_NOTES.md)
 
 # Requirements
@@ -110,7 +116,20 @@ Please refer to this document: [ReadMe](../README.md)
 
 # v3.5rc0
 ## Highlights of v3.5rc0
+* More features of Particle(PU) is supported
+* Disable reverse of MoveTo
+* CsLoader: add callback when loading a CSB file
+* Fix transparent Billboard and Sprite3D rendering error
+* Fix Motionstreak does not work with MoveTo and MoveBy
+* More bugs fixed
+
 ## Features in detail
+###More 3D particle features of (PU) supported
+* Observer: On Count Observer, On Emission Observer, On Expire Observer, On Position observer, On Clear Observer, On Time Observer, On Quota Observer, On Velocity Observer, On Collision Observer, On Event Flag Observer, On Random Observer.
+
+* Event Handler: Do Enable Component Event Handler, Do Expire Event Handler, Do Placement Particle Event Handler, Do Stop System Event Handler, Do Affector Event Handler, Do Freeze Event Handler, Do Scale Event Handler.
+
+* Behavior: Slave Behavior
 
 # v3.5beta0
 
@@ -121,19 +140,11 @@ Please refer to this document: [ReadMe](../README.md)
 
 #### Supported PU features
 
-Render: Billboard Renderer, Box Renderer, Sphere Renderer, Entity Renderer, Ribbon Trail Renderer.
+* Render: Billboard Renderer, Box Renderer, Sphere Renderer, Entity Renderer, Ribbon Trail Renderer.
 
-Emitter: Point Emitter, Box Emitter, Sphere Surface Emitter, Line Emitter, Circle Emitter, Position Emitter, Slave Emitter.
+* Emitter: Point Emitter, Box Emitter, Sphere Surface Emitter, Line Emitter, Circle Emitter, Position Emitter, Slave Emitter.
 
-Affector: Gravity Affector, Linear Force Affector, Scale Affector, Sine Force Affector, Color Affector, Randomiser, Line Affector, Align Affector, Jet Affector, Vortex Affector, Geometry Rotator, Texture Rotator, Texture Animator, Particle Follower, Sphere Collider, Plane Collider, box Collider, Path Follower, Flock Centering Affector, Velocity Matching Affector.
-
-Observer(since 3.5 rc0): On Count Observer, On Emission Observer, On Expire Observer, On Position observer, On Clear Observer, On Time Observer, On Quota Observer, On Velocity Observer, On Collision Observer, On Event Flag Observer, On Random Observer.
-
-Event Handler(since 3.5 rc0): Do Enable Component Event Handler, Do Expire Event Handler, Do Placement Particle Event Handler, Do Stop System Event Handler, Do Affector Event Handler, Do Freeze Event Handler, Do Scale Event Handler.
-
-Behavior(since 3.5 rc0): Slave Behavior
-
-Features relative to mesh are not supported now.
+* Affector: Gravity Affector, Linear Force Affector, Scale Affector, Sine Force Affector, Color Affector, Randomiser, Line Affector, Align Affector, Jet Affector, Vortex Affector, Geometry Rotator, Texture Rotator, Texture Animator, Particle Follower, Sphere Collider, Plane Collider, box Collider, Path Follower, Flock Centering Affector, Velocity Matching Affector.
 
 #### Particle usage
 
