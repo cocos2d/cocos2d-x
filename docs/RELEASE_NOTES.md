@@ -131,7 +131,7 @@ Please refer to this document: [ReadMe](../README.md)
 
 * Behavior: Slave Behavior
 
-* Observer and Event Handler allow you listen to the particle system and trigger some events. The Event handler can do something when the event happens. For example, there is a observer on the particle system, and it listens to the particle number when the number is greater than 100 then it tirggers an event to stop the particle system. This allow you to create more complex particles. For more details, please refer to the Particle Universe User's Guide.
+* Observer and Event Handler allow you to listen to the particle system and trigger some events. The Event handler can do something when the event happens. For example, there is a observer on the particle system, and it listens to the particle number when the number is greater than 100, it tirggers an event to stop the particle system. This allows you to create more complex particles. For more details, please refer to the Particle Universe User's Guide.
 
 # v3.5beta0
 
