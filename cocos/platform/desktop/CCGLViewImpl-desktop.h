@@ -89,7 +89,10 @@ public:
      * Set zoom factor for frame. This method is for debugging big resolution (e.g.new ipad) app on desktop.
      */
     void setFrameZoomFactor(float zoomFactor);
-
+    /**
+     * Hide or Show the mouse cursor if there is one.
+     */
+    virtual void setCursorVisible(bool isVisible) override;
     /** Retina support is disabled by default
      *  @note This method is only available on Mac.
      */

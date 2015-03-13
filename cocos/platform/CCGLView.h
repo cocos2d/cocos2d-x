@@ -140,7 +140,11 @@ public:
      debugging big resolution (e.g.new ipad) app on desktop.*/
     virtual void setFrameZoomFactor(float zoomFactor) {}
     virtual float getFrameZoomFactor() const { return 1.0; }
-    
+    /**
+     * Hide or Show the mouse cursor if there is one.
+     */
+    virtual void setCursorVisible(bool isVisible) {}
+
     /** Get retina factor */
     virtual int getRetinaFactor() const { return 1; }
 
