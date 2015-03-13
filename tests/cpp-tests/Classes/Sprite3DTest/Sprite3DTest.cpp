@@ -1546,8 +1546,9 @@ void Animate3DTest::addSprite3D()
 
 void Animate3DTest::reachEndCallBack()
 {
+    auto s = Director::getInstance()->getWinSize();
     _sprite->stopActionByTag(100);
-    auto inverse = (MoveTo*)_moveAction->reverse();
+    auto inverse = MoveTo::create(4.f, Vec2(s.width - _sprite->getPositionX(), s.height / 2.f));
     inverse->retain();
     _moveAction->release();
     _moveAction = inverse;
@@ -1943,8 +1944,9 @@ void Sprite3DWithOBBPerformanceTest::addNewSpriteWithCoords(Vec2 p)
 
 void Sprite3DWithOBBPerformanceTest::reachEndCallBack()
 {
+    auto s = Director::getInstance()->getWinSize();
     _sprite->stopActionByTag(100);
-    auto inverse = (MoveTo*)_moveAction->reverse();
+    auto inverse = MoveTo::create(4.f, Vec2(s.width - _sprite->getPositionX(), s.height / 2.f));
     inverse->retain();
     _moveAction->release();
     _moveAction = inverse;
