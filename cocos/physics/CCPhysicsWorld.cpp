@@ -918,19 +918,36 @@ void PhysicsWorld::update(float delta, bool userCall/* = false*/)
     else
     {
         _updateTime += delta;
-        if (++_updateRateCount >= _updateRate)
+        if(_fixedRate)
         {
-            const float dt = _updateTime * _speed / _substeps;
-            for (int i = 0; i < _substeps; ++i)
+            const float step = 1.0f / _fixedRate;
+            const float dt = step * _speed;
+            while(_updateTime>step)
             {
+                _updateTime-=step;
                 cpSpaceStep(_cpSpace, dt);
                 for (auto& body : _bodies)
                 {
                     body->update(dt);
                 }
             }
-            _updateRateCount = 0;
-            _updateTime = 0.0f;
+        }
+        else
+        {
+            if (++_updateRateCount >= _updateRate)
+            {
+                const float dt = _updateTime * _speed / _substeps;
+                for (int i = 0; i < _substeps; ++i)
+                {
+                    cpSpaceStep(_cpSpace, dt);
+                    for (auto& body : _bodies)
+                    {
+                        body->update(dt);
+                    }
+                }
+                _updateRateCount = 0;
+                _updateTime = 0.0f;
+            }
         }
     }
     
@@ -947,6 +964,7 @@ PhysicsWorld::PhysicsWorld()
 , _updateRateCount(0)
 , _updateTime(0.0f)
 , _substeps(1)
+, _fixedRate(0)
 , _cpSpace(nullptr)
 , _physicsNode(nullptr)
 , _autoStep(true)

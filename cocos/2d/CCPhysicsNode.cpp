@@ -41,6 +41,7 @@ NS_CC_BEGIN
 PhysicsNode::PhysicsNode()
 #if CC_USE_PHYSICS
 : _physicsWorld(nullptr)
+, _invertModelTransformDirty(true)
 #endif
 {
 }
@@ -116,6 +117,10 @@ void PhysicsNode::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_
     }
     
     uint32_t flags = processParentFlags(parentTransform, parentFlags);
+    if(flags & FLAGS_DIRTY_MASK)
+    {
+        _invertModelTransformDirty = true;
+    }
     
     if(flags & FLAGS_DIRTY_MASK)
     {
@@ -211,7 +216,14 @@ PhysicsNode* PhysicsNode::getPhysicsNode() const
 
 const Mat4& PhysicsNode::getInverseModelViewTransform() const
 {
-    return _inverseModelViewTransform;
+    if(_invertModelTransformDirty)
+    {
+        _invertModelTransformDirty = false;
+        _worldToNodeTransform = getNodeToWorldTransform();
+        if(!_worldToNodeTransform.isIdentity())
+            _worldToNodeTransform.inverse();
+    }
+    return _worldToNodeTransform;
 }
 
 #endif

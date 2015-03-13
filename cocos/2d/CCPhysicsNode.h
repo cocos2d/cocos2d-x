@@ -72,7 +72,8 @@ protected:
     void addChildToPhysicsWorld(Node* child);
 
     PhysicsWorld* _physicsWorld;
-    Mat4 _inverseModelViewTransform;
+    mutable Mat4 _worldToNodeTransform;
+    mutable bool _invertModelTransformDirty;
 #endif // CC_USE_PHYSICS
 };
 
