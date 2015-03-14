@@ -534,7 +534,7 @@ bool Texture2D::hasPremultipliedAlpha() const
     return _hasPremultipliedAlpha;
 }
 
-bool Texture2D::initWithData(const void *data, ssize_t dataLen, Texture2D::PixelFormat pixelFormat, int pixelsWide, int pixelsHigh, const Size& contentSize)
+bool Texture2D::initWithData(const void *data, ssize_t dataLen, Texture2D::PixelFormat pixelFormat, int pixelsWide, int pixelsHigh, const Size& contentSize, bool hasPremultipliedAlpha/* =false */)
 {
     CCASSERT(dataLen>0 && pixelsWide>0 && pixelsHigh>0, "Invalid size");
 
@@ -542,10 +542,10 @@ bool Texture2D::initWithData(const void *data, ssize_t dataLen, Texture2D::Pixel
     MipmapInfo mipmap;
     mipmap.address = (unsigned char*)data;
     mipmap.len = static_cast<int>(dataLen);
-    return initWithMipmaps(&mipmap, 1, pixelFormat, pixelsWide, pixelsHigh);
+    return initWithMipmaps(&mipmap, 1, pixelFormat, pixelsWide, pixelsHigh, hasPremultipliedAlpha);
 }
 
-bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat pixelFormat, int pixelsWide, int pixelsHigh)
+bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat pixelFormat, int pixelsWide, int pixelsHigh, bool hasPremultipliedAlpha/* =false */)
 {
 
 
@@ -680,7 +680,7 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     _maxS = 1;
     _maxT = 1;
 
-    _hasPremultipliedAlpha = false;
+    _hasPremultipliedAlpha = hasPremultipliedAlpha;
     _hasMipmaps = mipmapsNum > 1;
 
     // shader
@@ -746,7 +746,7 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
             CCLOG("cocos2d: WARNING: This image has more than 1 mipmaps and we will not convert the data format");
         }
 
-        initWithMipmaps(image->getMipmaps(), image->getNumberOfMipmaps(), image->getRenderFormat(), imageWidth, imageHeight);
+        initWithMipmaps(image->getMipmaps(), image->getNumberOfMipmaps(), image->getRenderFormat(), imageWidth, imageHeight, image->hasPremultipliedAlpha());
         
         return true;
     }
@@ -757,7 +757,7 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
             CCLOG("cocos2d: WARNING: This image is compressed and we cann't convert it for now");
         }
 
-        initWithData(tempData, tempDataLen, image->getRenderFormat(), imageWidth, imageHeight, imageSize);
+        initWithData(tempData, tempDataLen, image->getRenderFormat(), imageWidth, imageHeight, imageSize, image->hasPremultipliedAlpha());
         return true;
     }
     else
@@ -767,7 +767,7 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
 
         pixelFormat = convertDataToFormat(tempData, tempDataLen, renderFormat, pixelFormat, &outTempData, &outTempDataLen);
 
-        initWithData(outTempData, outTempDataLen, pixelFormat, imageWidth, imageHeight, imageSize);
+        initWithData(outTempData, outTempDataLen, pixelFormat, imageWidth, imageHeight, imageSize, image->hasPremultipliedAlpha());
 
 
         if (outTempData != nullptr && outTempData != tempData)
@@ -775,9 +775,6 @@ bool Texture2D::initWithImage(Image *image, PixelFormat format)
 
             free(outTempData);
         }
-
-        // set the premultiplied tag
-        _hasPremultipliedAlpha = image->hasPremultipliedAlpha();
         
         return true;
     }
@@ -1118,13 +1115,12 @@ bool Texture2D::initWithString(const char *text, const FontDefinition& textDefin
     Size  imageSize = Size((float)imageWidth, (float)imageHeight);
     pixelFormat = convertDataToFormat(outData.getBytes(), imageWidth*imageHeight*4, PixelFormat::RGBA8888, pixelFormat, &outTempData, &outTempDataLen);
 
-    ret = initWithData(outTempData, outTempDataLen, pixelFormat, imageWidth, imageHeight, imageSize);
+    ret = initWithData(outTempData, outTempDataLen, pixelFormat, imageWidth, imageHeight, imageSize, hasPremultipliedAlpha);
 
     if (outTempData != nullptr && outTempData != outData.getBytes())
     {
         free(outTempData);
     }
-    _hasPremultipliedAlpha = hasPremultipliedAlpha;
 
     return ret;
 }
