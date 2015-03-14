@@ -78,7 +78,7 @@ public:
 
     static ControlSaturationBrightnessPicker* create(Node* target, Vec2 pos);
 
-    virtual void setEnabled(bool enabled);
+    virtual void setEnabled(bool enabled) override;
     /**
      * @js NA
      * @lua NA

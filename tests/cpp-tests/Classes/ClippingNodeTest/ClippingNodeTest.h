@@ -62,7 +62,7 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual ClippingNode* clipper();
+    virtual ClippingNode* clipper() override;
 };
 
 class SpriteTest : public BasicTest
@@ -105,7 +105,7 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void setup();
+    virtual void setup() override;
 };
 
 class HoleDemo : public BaseClippingNodeTest
@@ -114,7 +114,7 @@ public:
     CREATE_FUNC(HoleDemo);
 
     ~HoleDemo();
-    virtual void setup();
+    virtual void setup() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     void pokeHoleAtPoint(Vec2 point);
@@ -152,7 +152,7 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void setup();
+    virtual void setup() override;
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
 	virtual void setupStencilForClippingOnPlane(GLint plane);
@@ -175,8 +175,8 @@ public:
     CREATE_FUNC(RawStencilBufferTest2);
 
     virtual std::string subtitle() const override;
-    virtual void setupStencilForClippingOnPlane(GLint plane);
-    virtual void setupStencilForDrawingOnPlane(GLint plane);
+    virtual void setupStencilForClippingOnPlane(GLint plane) override;
+    virtual void setupStencilForDrawingOnPlane(GLint plane) override;
 };
 
 class RawStencilBufferTest3 : public RawStencilBufferTest
@@ -185,8 +185,8 @@ public:
     CREATE_FUNC(RawStencilBufferTest3);
 
     virtual std::string subtitle() const override;
-    virtual void setupStencilForClippingOnPlane(GLint plane);
-    virtual void setupStencilForDrawingOnPlane(GLint plane);
+    virtual void setupStencilForClippingOnPlane(GLint plane) override;
+    virtual void setupStencilForDrawingOnPlane(GLint plane) override;
 };
 
 class RawStencilBufferTestAlphaTest : public RawStencilBufferTest
@@ -201,8 +201,8 @@ public:
     CREATE_FUNC(RawStencilBufferTest4);
 
     virtual std::string subtitle() const override;
-    virtual void setupStencilForClippingOnPlane(GLint plane);
-    virtual void setupStencilForDrawingOnPlane(GLint plane);
+    virtual void setupStencilForClippingOnPlane(GLint plane) override;
+    virtual void setupStencilForDrawingOnPlane(GLint plane) override;
 };
 
 class RawStencilBufferTest5 : public RawStencilBufferTestAlphaTest
@@ -211,8 +211,8 @@ public:
     CREATE_FUNC(RawStencilBufferTest5);
 
     virtual std::string subtitle() const override;
-    virtual void setupStencilForClippingOnPlane(GLint plane);
-    virtual void setupStencilForDrawingOnPlane(GLint plane);
+    virtual void setupStencilForClippingOnPlane(GLint plane) override;
+    virtual void setupStencilForDrawingOnPlane(GLint plane) override;
 };
 
 class RawStencilBufferTest6 : public RawStencilBufferTestAlphaTest
@@ -220,8 +220,8 @@ class RawStencilBufferTest6 : public RawStencilBufferTestAlphaTest
 public:
     CREATE_FUNC(RawStencilBufferTest6);
 
-    virtual void setupStencilForClippingOnPlane(GLint plane);
-    virtual void setupStencilForDrawingOnPlane(GLint plane);
+    virtual void setupStencilForClippingOnPlane(GLint plane) override;
+    virtual void setupStencilForDrawingOnPlane(GLint plane) override;
 
     // override
     virtual void setup() override;
@@ -251,7 +251,7 @@ public:
     
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void setup();
+    virtual void setup() override;
 };
 
 

@@ -275,7 +275,7 @@ public:
     void onEnter() override;
     virtual std::string title() const override;
     
-    bool onTouchBegan(Touch* touch, Event* event);
+    bool onTouchBegan(Touch* touch, Event* event) override;
     
 };
 

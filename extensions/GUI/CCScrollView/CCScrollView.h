@@ -102,7 +102,7 @@ public:
      */
     virtual ~ScrollView();
 
-    bool init();
+    bool init() override;
     /**
      * Returns a scroll view object
      *

@@ -74,7 +74,7 @@ public:
     
     static LuaCallFunc* create(const std::function<void(void* self,Node*)>& func);
     bool initWithFunction(const std::function<void(void* self,Node*)>& func);
-    virtual LuaCallFunc* clone() const;
+    virtual LuaCallFunc* clone() const override;
     virtual void execute() override;
 protected:
     /**

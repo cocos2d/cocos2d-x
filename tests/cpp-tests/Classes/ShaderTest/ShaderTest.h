@@ -108,7 +108,7 @@ public:
     ShaderRetroEffect();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    bool init();
+    bool init() override;
     void update(float dt) override;
 protected:
     Label* _label;
@@ -121,7 +121,7 @@ public:
     static ShaderNode* shaderNodeWithVertex(const std::string &vert, const std::string &frag);
 
     virtual void update(float dt) override;
-    virtual void setPosition(const Vec2 &newPosition);
+    virtual void setPosition(const Vec2 &newPosition) override;
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
 protected:

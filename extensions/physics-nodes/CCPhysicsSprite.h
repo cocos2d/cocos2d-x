@@ -85,7 +85,7 @@ public:
 
     PhysicsSprite();
 
-    virtual bool isDirty() const;
+    virtual bool isDirty() const override;
 
     /** Keep the sprite's rotation separate from the body. */
     bool isIgnoreBodyRotation() const;
