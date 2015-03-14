@@ -15,11 +15,11 @@ public:
     ~AssetsManagerExTestLayer(void);
     
     virtual std::string title() const;
-    void onEnter();
+    void onEnter() override;
     
-    virtual void restartCallback(Ref* sender);
-    virtual void nextCallback(Ref* sender);
-    virtual void backCallback(Ref* sender);
+    virtual void restartCallback(Ref* sender) override;
+    virtual void nextCallback(Ref* sender) override;
+    virtual void backCallback(Ref* sender) override;
     
 private:
     Sprite *_background;

@@ -7,7 +7,7 @@ class Bug624Layer : public BugsTestBaseLayer
 {
 public:
     virtual ~Bug624Layer();
-    virtual bool init();
+    virtual bool init() override;
     void switchLayer(float dt);
     virtual void onAcceleration(Acceleration* acc, Event* event);
 
@@ -18,7 +18,7 @@ class Bug624Layer2 : public BugsTestBaseLayer
 {
 public:
     virtual ~Bug624Layer2();
-    virtual bool init();
+    virtual bool init() override;
     void switchLayer(float dt);
     virtual void onAcceleration(Acceleration* acc, Event* event);
 

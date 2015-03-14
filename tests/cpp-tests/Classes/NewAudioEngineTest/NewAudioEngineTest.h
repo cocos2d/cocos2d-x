@@ -48,9 +48,9 @@ public:
     virtual std::string title() const override;
     virtual void onExit() override;
 
-    void backCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void restartCallback(Ref* sender);
+    void backCallback(Ref* sender) override;
+    void nextCallback(Ref* sender) override;
+    void restartCallback(Ref* sender) override;
     
 };
 
@@ -61,9 +61,9 @@ public:
     
     virtual ~AudioControlTest();
     
-    virtual bool init();
+    virtual bool init() override;
     
-    virtual void update(float dt);
+    virtual void update(float dt) override;
     
     virtual std::string title() const override;
     
@@ -86,7 +86,7 @@ public:
     
     virtual ~PlaySimultaneouslyTest();
     
-    virtual bool init();
+    virtual bool init() override;
     
     virtual std::string title() const override;
 private:
@@ -104,12 +104,12 @@ public:
     
     virtual ~AudioProfileTest();
     
-    virtual bool init();
+    virtual bool init() override;
     
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
-    virtual void update(float dt);
+    virtual void update(float dt) override;
     
 private:
     static const int FILE_COUNT = 2;
@@ -130,7 +130,7 @@ public:
     
     virtual ~InvalidAudioFileTest();
     
-    virtual bool init();
+    virtual bool init() override;
     
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -146,7 +146,7 @@ public:
     
     virtual ~LargeAudioFileTest();
     
-    virtual bool init();
+    virtual bool init() override;
     
     virtual std::string title() const override;
     

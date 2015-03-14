@@ -52,7 +52,7 @@ public:
 
     virtual void updateQuantityOfNodes();
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
-    virtual void update(float dt);
+    virtual void update(float dt) override;
     virtual const char* testName();
 
     virtual std::string title() const override;
@@ -66,7 +66,7 @@ public:
 
     virtual void updateQuantityOfNodes();
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
-    virtual void update(float dt);
+    virtual void update(float dt) override;
     virtual const char* testName();
 
     virtual std::string title() const override;
@@ -80,7 +80,7 @@ public:
 
     virtual void updateQuantityOfNodes();
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
-    virtual void update(float dt);
+    virtual void update(float dt) override;
     virtual const char* testName();
 
     virtual std::string title() const override;
@@ -94,7 +94,7 @@ public:
 
     virtual void updateQuantityOfNodes();
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
-    virtual void update(float dt);
+    virtual void update(float dt) override;
     virtual const char* testName();
 
     virtual std::string title() const override;
@@ -108,7 +108,7 @@ public:
 
     virtual void updateQuantityOfNodes();
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
-    virtual void update(float dt);
+    virtual void update(float dt) override;
     virtual const char* testName();
 
     virtual std::string title() const override;

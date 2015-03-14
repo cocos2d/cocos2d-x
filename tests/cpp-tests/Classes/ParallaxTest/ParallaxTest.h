@@ -16,9 +16,9 @@ public:
     virtual std::string title() const override;
     virtual void onEnter() override;
 
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
+    void restartCallback(Ref* sender) override;
+    void nextCallback(Ref* sender) override;
+    void backCallback(Ref* sender) override;
 };
 
 class Parallax1 : public ParallaxDemo
@@ -43,7 +43,7 @@ protected:
 public:
     Parallax2();
     
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event) override;
 
     virtual std::string title() const override;
 };
