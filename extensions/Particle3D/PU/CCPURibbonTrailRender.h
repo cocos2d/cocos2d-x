@@ -89,7 +89,7 @@ public:
 
     static PURibbonTrailRender* create(const std::string &texFile = "");
 
-    virtual void notifyRescaled(const Vec3& scale);
+    virtual void notifyRescaled(const Vec3& scale) override;
     virtual void prepare() override;
     virtual void unPrepare() override;
     virtual void updateRender(PUParticle3D *particle, float deltaTime, bool firstParticle) override;

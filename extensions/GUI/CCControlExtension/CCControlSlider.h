@@ -107,11 +107,11 @@ public:
     virtual bool initWithSprites(Sprite * backgroundSprite, Sprite* progressSprite, Sprite* thumbSprite,
             Sprite* selectedThumbSprite);
 
-    virtual void needsLayout();
+    virtual void needsLayout() override;
 
     virtual void setMaximumValue(float val);
-    virtual void setEnabled(bool enabled);
-    virtual bool isTouchInside(Touch * touch);
+    virtual void setEnabled(bool enabled) override;
+    virtual bool isTouchInside(Touch * touch) override;
     Vec2 locationFromTouch(Touch* touch);
     virtual void setValue(float val);
     virtual void setMinimumValue(float val);

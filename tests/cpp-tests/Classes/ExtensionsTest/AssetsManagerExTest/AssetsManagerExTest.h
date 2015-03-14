@@ -14,7 +14,7 @@ public:
     AssetsManagerExTestLayer(const std::string& spritePath);
     ~AssetsManagerExTestLayer(void);
     
-    virtual std::string title() const;
+    virtual std::string title() const override;
     void onEnter() override;
     
     virtual void restartCallback(Ref* sender) override;

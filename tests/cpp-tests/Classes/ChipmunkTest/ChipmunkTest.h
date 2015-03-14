@@ -25,7 +25,7 @@ public:
     void update(float dt) override;
     void toggleDebugCallback(Ref* sender);
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
-    virtual void onAcceleration(Acceleration* acc, Event* event);
+    virtual void onAcceleration(Acceleration* acc, Event* event) override;
 
 private:
     Texture2D* _spriteTexture; // weak ref

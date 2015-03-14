@@ -77,15 +77,15 @@ public:
 
     /** 
     */
-    virtual void notifyRescaled(const Vec3& scale);
+    virtual void notifyRescaled(const Vec3& scale) override;
 
     /** 
     */
-    virtual void initParticlePosition(PUParticle3D* particle);
+    virtual void initParticlePosition(PUParticle3D* particle) override;
 
     /** 
     */
-    virtual void initParticleDirection(PUParticle3D* particle);
+    virtual void initParticleDirection(PUParticle3D* particle) override;
 
     virtual PULineEmitter* clone() override;
     virtual void copyAttributesTo (PUEmitter* emitter) override;

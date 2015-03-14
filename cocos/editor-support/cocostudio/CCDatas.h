@@ -531,7 +531,7 @@ public:
      */
     ~TextureData(void);
 
-	virtual bool init();
+    virtual bool init();
 
     void addContourData(ContourData *contourData);
     ContourData *getContourData(int index);

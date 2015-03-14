@@ -63,8 +63,8 @@ class CC_DLL PUParticle3DEntityRender : public PURender
 {
 public:
 
-    virtual void setDepthTest(bool isDepthTest);
-    virtual void setDepthWrite(bool isDepthWrite);
+    virtual void setDepthTest(bool isDepthTest) override;
+    virtual void setDepthWrite(bool isDepthWrite) override;
 
     virtual void copyAttributesTo (PURender *render) override;
 

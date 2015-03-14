@@ -157,15 +157,15 @@ public:
     /**
      * Pause the Process
      */
-    virtual void pause();
+    virtual void pause() override;
     /**
      * Resume the Process
      */
-    virtual void resume();
+    virtual void resume() override;
     /**
      * Stop the Process
      */
-    virtual void stop();
+    virtual void stop() override;
 
 
     /**
@@ -242,7 +242,7 @@ protected:
      * @js NA
      * @lua NA
      */
-    void updateHandler();
+    void updateHandler() override;
 
     /**
      * Update current key frame, and process auto stop, pause

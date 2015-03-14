@@ -64,8 +64,8 @@ public:
 
     virtual bool init() override;
 
-    virtual void setColor(const Color3B& colorValue);
-    virtual void setEnabled(bool bEnabled);
+    virtual void setColor(const Color3B& colorValue) override;
+    virtual void setEnabled(bool bEnabled) override;
 
     //virtual ~ControlColourPicker();
     void hueSliderValueChanged(Ref * sender, Control::EventType controlEvent);

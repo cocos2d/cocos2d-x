@@ -9,7 +9,7 @@ public:
     virtual ~Bug624Layer();
     virtual bool init() override;
     void switchLayer(float dt);
-    virtual void onAcceleration(Acceleration* acc, Event* event);
+    virtual void onAcceleration(Acceleration* acc, Event* event) override;
 
     CREATE_FUNC(Bug624Layer);
 };
@@ -20,7 +20,7 @@ public:
     virtual ~Bug624Layer2();
     virtual bool init() override;
     void switchLayer(float dt);
-    virtual void onAcceleration(Acceleration* acc, Event* event);
+    virtual void onAcceleration(Acceleration* acc, Event* event) override;
 
     CREATE_FUNC(Bug624Layer2);
 };

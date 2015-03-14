@@ -430,7 +430,7 @@ public:
     CREATE_FUNC(ActionMoveStacked);
 
     virtual std::string title() const override;
-    virtual void runActionsInSprite(Sprite* sprite);
+    virtual void runActionsInSprite(Sprite* sprite) override;
 };
 
 class ActionMoveJumpStacked : public ActionStacked
@@ -439,7 +439,7 @@ public:
     CREATE_FUNC(ActionMoveJumpStacked);
 
     virtual std::string title() const override;
-    virtual void runActionsInSprite(Sprite* sprite);
+    virtual void runActionsInSprite(Sprite* sprite) override;
 };
 
 class ActionMoveBezierStacked : public ActionStacked
@@ -448,7 +448,7 @@ public:
     CREATE_FUNC(ActionMoveBezierStacked);
 
     virtual std::string title() const override;
-    virtual void runActionsInSprite(Sprite* sprite);
+    virtual void runActionsInSprite(Sprite* sprite) override;
 };
 
 class ActionCatmullRomStacked : public ActionsDemo

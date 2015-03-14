@@ -9,7 +9,7 @@ public:
     virtual void onEnter() override;
 
     void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event) override;
-    void onTouchesMoved(const std::vector<Touch*>&touches, Event  *event);
+    void onTouchesMoved(const std::vector<Touch*>&touches, Event  *event) override;
 
 protected:
     Vec2 _beginPos;

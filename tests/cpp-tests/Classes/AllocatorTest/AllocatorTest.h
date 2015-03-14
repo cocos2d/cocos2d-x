@@ -76,8 +76,8 @@ namespace AllocatorTestNS
         AllocatorTest();
         virtual ~AllocatorTest();
         
-        virtual std::string title() const;
-        virtual std::string subtitle() const;
+        virtual std::string title() const override;
+        virtual std::string subtitle() const override;
         
         virtual void restartCallback(Ref* sender) override;
         virtual void nextCallback(Ref* sender) override;
@@ -86,7 +86,7 @@ namespace AllocatorTestNS
         virtual void onEnter() override;
         virtual void onExit() override;
         
-        virtual void update(float delta);
+        virtual void update(float delta) override;
     };
     
     class AllocatorTestScene : public TestScene

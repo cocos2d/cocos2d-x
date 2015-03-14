@@ -165,7 +165,7 @@ CC_CONSTRUCTOR_ACCESS:
     Sprite3D();
     virtual ~Sprite3D();
     
-    bool init();
+    bool init() override;
     
     bool initWithFile(const std::string &path);
     
