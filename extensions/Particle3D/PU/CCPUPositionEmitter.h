@@ -70,8 +70,8 @@ public:
     */
     virtual void initParticlePosition(PUParticle3D* particle) override;
 
-    virtual PUPositionEmitter* clone();
-    virtual void copyAttributesTo (PUEmitter* emitter);
+    virtual PUPositionEmitter* clone() override;
+    virtual void copyAttributesTo (PUEmitter* emitter) override;
 
 CC_CONSTRUCTOR_ACCESS:
     PUPositionEmitter(void);

@@ -101,7 +101,7 @@ public:
      */
     virtual ~ScrollView();
 
-    bool init();
+    bool init() override;
     /**
      * Returns a scroll view object
      *
@@ -234,10 +234,10 @@ public:
     bool isClippingToBounds() { return _clippingToBounds; }
     void setClippingToBounds(bool bClippingToBounds) { _clippingToBounds = bClippingToBounds; }
 
-    virtual bool onTouchBegan(Touch *touch, Event *event);
-    virtual void onTouchMoved(Touch *touch, Event *event);
-    virtual void onTouchEnded(Touch *touch, Event *event);
-    virtual void onTouchCancelled(Touch *touch, Event *event);
+    virtual bool onTouchBegan(Touch *touch, Event *event) override;
+    virtual void onTouchMoved(Touch *touch, Event *event) override;
+    virtual void onTouchEnded(Touch *touch, Event *event) override;
+    virtual void onTouchCancelled(Touch *touch, Event *event) override;
     
     // Overrides
     virtual void setContentSize(const Size & size) override;
@@ -255,7 +255,7 @@ public:
     /**
      * CCActionTweenDelegate
      */
-    void updateTweenAction(float value, const std::string& key);
+    void updateTweenAction(float value, const std::string& key) override;
 
     bool hasVisibleParents() const;
 protected:

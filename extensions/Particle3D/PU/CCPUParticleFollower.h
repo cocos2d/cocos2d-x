@@ -54,7 +54,7 @@ public:
     float getMinDistance(void) const;
     void setMinDistance(float minDistance);
 
-    virtual void copyAttributesTo (PUAffector* affector);
+    virtual void copyAttributesTo (PUAffector* affector) override;
 
 CC_CONSTRUCTOR_ACCESS:
     PUParticleFollower(void);

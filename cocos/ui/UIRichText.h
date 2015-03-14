@@ -105,19 +105,19 @@ public:
     void removeElement(RichElement* element);
 
     void setVerticalSpace(float space);
-    virtual void setAnchorPoint(const Vec2 &pt);
+    virtual void setAnchorPoint(const Vec2 &pt) override;
     virtual Size getVirtualRendererSize() const override;
     void formatText();
-    virtual void ignoreContentAdaptWithSize(bool ignore);
+    virtual void ignoreContentAdaptWithSize(bool ignore) override;
     virtual std::string getDescription() const override;
     
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
     
 protected:
-    virtual void adaptRenderers();
+    virtual void adaptRenderers() override;
 
-    virtual void initRenderer();
+    virtual void initRenderer() override;
     void pushToContainer(Node* renderer);
     void handleTextRenderer(const std::string& text, const std::string& fontName, float fontSize, const Color3B& color, GLubyte opacity);
     void handleImageRenderer(const std::string& fileParh, const Color3B& color, GLubyte opacity);

@@ -111,8 +111,8 @@ public:
     virtual void setLineBreakWithoutSpace(bool breakWithoutSpace);
     
     // RGBAProtocol 
-    virtual bool isOpacityModifyRGB() const;
-    virtual void setOpacityModifyRGB(bool isOpacityModifyRGB);
+    virtual bool isOpacityModifyRGB() const override;
+    virtual void setOpacityModifyRGB(bool isOpacityModifyRGB) override;
 
     void setFntFile(const std::string& fntFile, const Vec2& imageOffset = Vec2::ZERO);
     const std::string& getFntFile() const;

@@ -8,10 +8,10 @@
 class GUIEditorMainLayer : public Layer
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     void menuCallback(Ref* pSender);
-    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event) override;
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event) override;
 private:
     Vec2 _beginPos;
     Menu* _itemMenu;
@@ -22,7 +22,7 @@ private:
 class GUIEditorTestScene : public TestScene
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual void runThisTest();
     void BackCallback(Ref* pSender);
 };

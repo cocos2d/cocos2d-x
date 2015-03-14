@@ -37,10 +37,10 @@ using namespace cocos2d::ui;
 class CocosGUITestMainLayer : public Layer
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     
-	void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
+	void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event) override;
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event) override;
     
 	Vec2 _beginPos;
     Menu* _itemMenu;
@@ -51,7 +51,7 @@ public:
 class CocosGUITestScene : public TestScene
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual void runThisTest();
     void BackCallback(Ref* pSender);
 };

@@ -70,7 +70,7 @@ public:
     float getDrift(void) const;
     void setDrift(float drift);
 
-    virtual void copyAttributesTo (PUAffector* affector);
+    virtual void copyAttributesTo (PUAffector* affector) override;
 
 CC_CONSTRUCTOR_ACCESS:          
     PULineAffector(void);

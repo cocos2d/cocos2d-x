@@ -15,11 +15,11 @@ class TextInputTest : public BaseTest
 public:
     TextInputTest();
 
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
+    void restartCallback(Ref* sender) override;
+    void nextCallback(Ref* sender) override;
+    void backCallback(Ref* sender) override;
 
-    virtual std::string title() const;
+    virtual std::string title() const override;
     void addKeyboardNotificationLayer(KeyboardNotificationLayer * layer);
     
     virtual void onEnter() override;
@@ -57,7 +57,7 @@ class TextFieldTTFDefaultTest : public KeyboardNotificationLayer
 public:
     // KeyboardNotificationLayer
     virtual std::string subtitle() const override;
-    virtual void onClickTrackNode(bool bClicked);
+    virtual void onClickTrackNode(bool bClicked) override;
 
     // Layer
     virtual void onEnter() override;
@@ -79,15 +79,15 @@ public:
 
     // KeyboardNotificationLayer
     virtual std::string subtitle() const override;
-    virtual void onClickTrackNode(bool bClicked);
+    virtual void onClickTrackNode(bool bClicked) override;
 
     // Layer
     virtual void onEnter() override;
     virtual void onExit() override;
 
     // TextFieldDelegate
-    virtual bool onTextFieldAttachWithIME(TextFieldTTF * sender);
-    virtual bool onTextFieldDetachWithIME(TextFieldTTF * sender);
+    virtual bool onTextFieldAttachWithIME(TextFieldTTF * sender) override;
+    virtual bool onTextFieldDetachWithIME(TextFieldTTF * sender) override;
     virtual bool onTextFieldInsertText(TextFieldTTF * sender, const char * text, size_t nLen) override;
     virtual bool onTextFieldDeleteBackward(TextFieldTTF * sender, const char * delText, size_t nLen) override;
     virtual bool onDraw(TextFieldTTF * sender);

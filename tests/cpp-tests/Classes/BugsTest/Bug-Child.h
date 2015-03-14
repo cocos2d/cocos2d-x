@@ -15,7 +15,7 @@ class BugChild : public BugsTestBaseLayer
 {
 public:
     static Scene* scene();
-    virtual bool init();
+    virtual bool init() override;
     
     void switchChild(Ref* sender);
     

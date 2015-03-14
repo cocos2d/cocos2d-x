@@ -79,9 +79,9 @@ public:
     float calculateRotationSpeed (PUParticle3D* particle);
 
     /** @copydoc ParticleAffector::_initParticleForEmission */
-    virtual void initParticleForEmission(PUParticle3D* particle);
+    virtual void initParticleForEmission(PUParticle3D* particle) override;
 
-    virtual void copyAttributesTo (PUAffector* affector);
+    virtual void copyAttributesTo (PUAffector* affector) override;
 
 CC_CONSTRUCTOR_ACCESS:	
     PUTextureRotator(void);

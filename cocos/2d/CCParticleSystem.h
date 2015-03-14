@@ -231,10 +231,10 @@ public:
     virtual float getRotatePerSecondVar() const;
     virtual void setRotatePerSecondVar(float degrees);
 
-    virtual void setScale(float s);
-    virtual void setRotation(float newRotation);
-    virtual void setScaleX(float newScaleX);
-    virtual void setScaleY(float newScaleY);
+    virtual void setScale(float s) override;
+    virtual void setRotation(float newRotation) override;
+    virtual void setScaleX(float newScaleX) override;
+    virtual void setScaleY(float newScaleY) override;
 
     virtual bool isActive() const;
     virtual bool isBlendAdditive() const;
@@ -342,8 +342,8 @@ public:
     virtual void setTotalParticles(int totalParticles);
 
     /** does the alpha value modify color */
-    inline void setOpacityModifyRGB(bool opacityModifyRGB) { _opacityModifyRGB = opacityModifyRGB; };
-    inline bool isOpacityModifyRGB() const { return _opacityModifyRGB; };
+    inline void setOpacityModifyRGB(bool opacityModifyRGB) override { _opacityModifyRGB = opacityModifyRGB; };
+    inline bool isOpacityModifyRGB() const override { return _opacityModifyRGB; };
     CC_DEPRECATED_ATTRIBUTE inline bool getOpacityModifyRGB() const { return isOpacityModifyRGB(); }
     
     /** particles movement type: Free or Grouped
@@ -384,7 +384,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~ParticleSystem();
 
     /** initializes a ParticleSystem*/
-    bool init();
+    bool init() override;
     /** initializes a ParticleSystem from a plist file.
      This plist files can be created manually or with Particle Designer:
      http://particledesigner.71squared.com/

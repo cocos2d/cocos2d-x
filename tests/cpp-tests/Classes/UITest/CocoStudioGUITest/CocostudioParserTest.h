@@ -37,8 +37,8 @@ using namespace cocos2d::ui;
 class CocostudioParserTestMainLayer : public Layer
 {
 public:
-    virtual void onEnter();
-    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
+    virtual void onEnter() override;
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event) override;
     
     void touchEvent(Ref* pSender, Widget::TouchEventType type);
     
@@ -50,7 +50,7 @@ private:
 class CocostudioParserTestScene : public TestScene
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual void runThisTest();
     void BackCallback(Ref* pSender);
 };

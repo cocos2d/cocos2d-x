@@ -134,7 +134,7 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     DrawNode();
     virtual ~DrawNode();
-    virtual bool init();
+    virtual bool init() override;
 
 protected:
     void ensureCapacity(int count);

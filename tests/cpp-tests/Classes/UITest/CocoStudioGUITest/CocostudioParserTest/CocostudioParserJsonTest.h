@@ -33,7 +33,7 @@ class CocostudioParserJsonLayer : public cocos2d::Layer
 public:
     CocostudioParserJsonLayer(std::string jsonFile);
     ~CocostudioParserJsonLayer(){}
-    virtual void onEnter();
+    virtual void onEnter() override;
 private:
     std::string _jsonFile;
 };
@@ -43,7 +43,7 @@ class CocostudioParserJsonScene : public TestScene
 public:
     CocostudioParserJsonScene(std::string jsonFile);
     ~CocostudioParserJsonScene(){}
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual void runThisTest();
     void BackCallback(cocos2d::Ref* pSender);
 private:
