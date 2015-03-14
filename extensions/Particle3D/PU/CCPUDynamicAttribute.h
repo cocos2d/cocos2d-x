@@ -125,14 +125,14 @@ class CC_DLL PUDynamicAttributeFixed : public PUDynamicAttribute
 
         /** Todo
         */
-        virtual float getValue (float x = 0);
+        virtual float getValue (float x = 0) override;
 
         /** Todo
         */
         virtual void setValue (float value);
 
         virtual PUDynamicAttributeFixed* clone() override;
-        virtual void copyAttributesTo(PUDynamicAttribute* dynamicAttribute);
+        virtual void copyAttributesTo(PUDynamicAttribute* dynamicAttribute) override;
 
     protected:
         float _value;
@@ -157,7 +157,7 @@ class CC_DLL PUDynamicAttributeRandom : public PUDynamicAttribute
 
         /** Todo
         */
-        virtual float getValue (float x = 0);
+        virtual float getValue (float x = 0) override;
 
         /** Todo
         */
@@ -168,7 +168,7 @@ class CC_DLL PUDynamicAttributeRandom : public PUDynamicAttribute
         void setMinMax (float min, float max);
 
         virtual PUDynamicAttributeRandom* clone() override;
-        virtual void copyAttributesTo(PUDynamicAttribute* dynamicAttribute);
+        virtual void copyAttributesTo(PUDynamicAttribute* dynamicAttribute) override;
 
 protected:
         float _min, _max;
@@ -205,7 +205,7 @@ class CC_DLL PUDynamicAttributeCurved : public PUDynamicAttribute
 
         /** Todo
         */
-        virtual float getValue (float x = 0);
+        virtual float getValue (float x = 0) override;
 
         /** Todo
         */
@@ -228,7 +228,7 @@ class CC_DLL PUDynamicAttributeCurved : public PUDynamicAttribute
         void removeAllControlPoints(void);
 
         virtual PUDynamicAttributeCurved* clone() override;
-        virtual void copyAttributesTo(PUDynamicAttribute* dynamicAttribute);
+        virtual void copyAttributesTo(PUDynamicAttribute* dynamicAttribute) override;
 
     protected:
 
@@ -283,7 +283,7 @@ class CC_DLL PUDynamicAttributeOscillate : public PUDynamicAttribute
 
         /** Todo
         */
-        virtual float getValue (float x = 0);
+        virtual float getValue (float x = 0) override;
 
         /** Get and set the OscillationType
         */
@@ -311,7 +311,7 @@ class CC_DLL PUDynamicAttributeOscillate : public PUDynamicAttribute
         void setAmplitude (float amplitude);
 
         virtual PUDynamicAttributeOscillate* clone() override;
-        virtual void copyAttributesTo(PUDynamicAttribute* dynamicAttribute);
+        virtual void copyAttributesTo(PUDynamicAttribute* dynamicAttribute) override;
 
     protected:
         OscillationType _oscillationType;

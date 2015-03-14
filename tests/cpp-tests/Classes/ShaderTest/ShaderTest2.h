@@ -11,9 +11,9 @@ class ShaderTestDemo2 : public BaseTest
 public:
     ShaderTestDemo2(void);
     virtual std::string title() const { return "Effects on Sprites";}
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
+    void restartCallback(Ref* sender) override;
+    void nextCallback(Ref* sender) override;
+    void backCallback(Ref* sender) override;
 };
 
 class ShaderTestScene2 : public TestScene

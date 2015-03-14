@@ -30,7 +30,7 @@ public:
     virtual std::string title() const override;
     virtual void performTests();
 
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event) override;
 
     static Scene* scene();
 

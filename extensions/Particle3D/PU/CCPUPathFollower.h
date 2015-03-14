@@ -56,7 +56,7 @@ public:
     */
     const Vec3& getPoint(unsigned short index) const {return _spline.getPoint(index);};
 
-    virtual void copyAttributesTo (PUAffector* affector);
+    virtual void copyAttributesTo (PUAffector* affector) override;
 
 CC_CONSTRUCTOR_ACCESS:
     PUPathFollower(void);

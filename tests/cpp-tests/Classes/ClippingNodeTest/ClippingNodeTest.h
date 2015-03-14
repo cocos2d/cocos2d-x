@@ -12,15 +12,15 @@ public:
     CREATE_FUNC(BaseClippingNodeTest);
 
     ~BaseClippingNodeTest();
-    virtual bool init();
+    virtual bool init() override;
 
 	virtual std::string title() const override;
 	virtual std::string subtitle() const override;
     virtual void setup();
 
-	void backCallback(Ref* sender);
-	void nextCallback(Ref* sender);
-	void restartCallback(Ref* sender);
+	void backCallback(Ref* sender) override;
+	void nextCallback(Ref* sender) override;
+	void restartCallback(Ref* sender) override;
 };
 
 class BasicTest : public BaseClippingNodeTest
@@ -51,8 +51,8 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
-    virtual Node* stencil();
-    virtual Node* content();
+    virtual Node* stencil() override;
+    virtual Node* content() override;
 };
 
 class ShapeInvertedTest : public ShapeTest
@@ -73,9 +73,9 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
-    virtual Node* stencil();
-    virtual ClippingNode* clipper();
-    virtual Node* content();
+    virtual Node* stencil() override;
+    virtual ClippingNode* clipper() override;
+    virtual Node* content() override;
 };
 
 class SpriteNoAlphaTest : public SpriteTest
@@ -85,7 +85,7 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual ClippingNode* clipper();
+    virtual ClippingNode* clipper() override;
 };
 
 class SpriteInvertedTest : public SpriteTest
@@ -95,7 +95,7 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual ClippingNode* clipper();
+    virtual ClippingNode* clipper() override;
 };
 
 class NestedTest : public BaseClippingNodeTest
@@ -118,7 +118,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     void pokeHoleAtPoint(Vec2 point);
-    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event) override;
 private:
 	ClippingNode* _outerClipper;
     Node* _holes;
@@ -132,10 +132,10 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void setup();
-	void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event);
+    virtual void setup() override;
+	void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event) override;
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event) override;
 private:
 	bool _scrolling;
     Vec2 _lastPoint;

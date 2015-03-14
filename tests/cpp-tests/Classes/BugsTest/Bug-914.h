@@ -7,7 +7,7 @@ class Bug914Layer : public BugsTestBaseLayer
 {
 public:
     static Scene* scene();
-    virtual bool init();
+    virtual bool init() override;
 
     void onTouchesMoved(const std::vector<Touch*>& touches, Event * event);
     void onTouchesBegan(const std::vector<Touch*>& touches, Event * event);

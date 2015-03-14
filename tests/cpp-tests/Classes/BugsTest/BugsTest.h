@@ -8,7 +8,7 @@ class BugsTestMainLayer : public Layer
 public:
     virtual void onEnter() override;
 
-    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event) override;
     void onTouchesMoved(const std::vector<Touch*>&touches, Event  *event);
 
 protected:

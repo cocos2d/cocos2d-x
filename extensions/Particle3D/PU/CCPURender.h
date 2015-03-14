@@ -66,7 +66,7 @@ public:
     virtual void setDepthTest(bool isDepthTest);
     virtual void setDepthWrite(bool isDepthWrite);
 
-    virtual void copyAttributesTo (PURender *render);
+    virtual void copyAttributesTo (PURender *render) override;
 
 CC_CONSTRUCTOR_ACCESS:
     PUParticle3DEntityRender();
@@ -150,8 +150,8 @@ public:
 
     virtual void render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem) override;
 
-    virtual PUParticle3DQuadRender* clone();
-    virtual void copyAttributesTo (PURender *render);
+    virtual PUParticle3DQuadRender* clone() override;
+    virtual void copyAttributesTo (PURender *render) override;
     
 CC_CONSTRUCTOR_ACCESS:
     PUParticle3DQuadRender();
@@ -186,8 +186,8 @@ public:
 
     virtual void render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem) override;
 
-    virtual PUParticle3DModelRender* clone();
-    virtual void copyAttributesTo (PURender *render);
+    virtual PUParticle3DModelRender* clone() override;
+    virtual void copyAttributesTo (PURender *render) override;
 
 CC_CONSTRUCTOR_ACCESS:
     PUParticle3DModelRender();
@@ -209,7 +209,7 @@ public:
 
     virtual void render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem) override;
 
-    virtual PUParticle3DBoxRender* clone();
+    virtual PUParticle3DBoxRender* clone() override;
 
 CC_CONSTRUCTOR_ACCESS:
     PUParticle3DBoxRender();
@@ -228,8 +228,8 @@ public:
 
     virtual void render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem) override;
 
-    virtual PUSphereRender* clone();
-    virtual void copyAttributesTo (PURender *render);
+    virtual PUSphereRender* clone() override;
+    virtual void copyAttributesTo (PURender *render) override;
 
 CC_CONSTRUCTOR_ACCESS:
     PUSphereRender();
