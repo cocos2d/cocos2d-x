@@ -156,15 +156,15 @@ PUDynamicAttributeRandom* PUDynamicAttributeRandom::clone()
 
 //-----------------------------------------------------------------------
 PUDynamicAttributeCurved::PUDynamicAttributeCurved (void) : 
-    _interpolationType(IT_LINEAR), 
-    _range(0)
+	_range(0),
+	_interpolationType(IT_LINEAR)
 {
     _type = PUDynamicAttribute::DAT_CURVED;
 }
 //-----------------------------------------------------------------------
 PUDynamicAttributeCurved::PUDynamicAttributeCurved (PUInterpolationType interpolationType) : 
-    _interpolationType(interpolationType), 
-    _range(0)
+    _range(0),
+    _interpolationType(interpolationType) 
 {
     _type = PUDynamicAttribute::DAT_CURVED;
 }

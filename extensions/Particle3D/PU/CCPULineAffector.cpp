@@ -42,10 +42,10 @@ PULineAffector::PULineAffector(void) :
     _end(DEFAULT_END),
     _timeSinceLastUpdate(0.0f),
     _timeStep(DEFAULT_TIME_STEP),
-    _update(true),
-    _first(true),
     _drift(DEFAULT_DRIFT),
-    _oneMinusDrift(1.0f)
+    _oneMinusDrift(1.0f),
+    _update(true),
+    _first(true)
 {
 }
 

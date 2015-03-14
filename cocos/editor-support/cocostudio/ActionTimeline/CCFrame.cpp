@@ -472,8 +472,8 @@ InnerActionFrame::InnerActionFrame()
 , _startFrameIndex(0)
 , _endFrameIndex(0)
 , _singleFrameIndex(0)
-, _enterWithName(false)
 , _animationName("")
+, _enterWithName(false)
 {
 
 }

@@ -450,8 +450,8 @@ public:
     FontStroke()
 	    : _strokeEnabled(false)
         , _strokeColor(Color3B::BLACK)
-        , _strokeSize(0)
         , _strokeAlpha(255)
+        , _strokeSize(0)
     {}
     
     // true if stroke enabled
