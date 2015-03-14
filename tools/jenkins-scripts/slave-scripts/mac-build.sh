@@ -5,4 +5,4 @@ cd ${COCOS2DX_ROOT}
 mkdir mac-build
 cd mac-build
 cmake ..
-make -j4 | grep -A 5 error
+make -j4
