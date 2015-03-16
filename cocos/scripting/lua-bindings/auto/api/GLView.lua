@@ -61,6 +61,13 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- Hide or Show the mouse cursor if there is one.
+-- @function [parent=#GLView] setCursorVisible 
+-- @param self
+-- @param #bool isVisible
+-- @return GLView#GLView self (return value: cc.GLView)
+        
+--------------------------------
 --  Force destroying EGL view, subclass must implement this method. 
 -- @function [parent=#GLView] end 
 -- @param self
