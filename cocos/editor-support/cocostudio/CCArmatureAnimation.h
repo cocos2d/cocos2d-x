@@ -173,7 +173,7 @@ public:
      */
     ssize_t getMovementCount() const;
 
-    void update(float dt) override;
+    virtual void update(float dt) override;
 
     /**
      * Get current movementID
