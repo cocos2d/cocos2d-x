@@ -259,7 +259,7 @@ void ScrollView::setZoomScale(float s)
         }
         else
         {
-            center = _touchPoint;
+            center = this->convertToWorldSpace(_touchPoint);
         }
         
         oldCenter = _container->convertToNodeSpace(center);
@@ -271,7 +271,7 @@ void ScrollView::setZoomScale(float s)
         {
             _delegate->scrollViewDidZoom(this);
         }
-        this->setContentOffset(_container->getPosition() + offset);
+        this->setContentOffset(_container->getPosition() + this->convertToNodeSpace(offset));
     }
 }
 
