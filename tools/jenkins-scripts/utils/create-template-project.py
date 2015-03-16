@@ -1,6 +1,6 @@
 import os
 
-languages = ['cpp','lua','javascript']
+languages = ['cpp', 'lua', 'javascript']
 base_path = 'tools/project-creator/'
 create_project = base_path + 'create_project.py'
 template_root = base_path + 'templateTest'

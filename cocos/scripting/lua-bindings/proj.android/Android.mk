@@ -19,7 +19,12 @@ LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
                        -landroid
 
+# don't use JIT on mips since it is not supported
+ifneq ($(TARGET_ARCH_ABI),mips)
 LOCAL_STATIC_LIBRARIES := cocos_luajit_static
+else
+LOCAL_STATIC_LIBRARIES := cocos_lua_static
+endif
 
 include $(BUILD_STATIC_LIBRARY)
 
