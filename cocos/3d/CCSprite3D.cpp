@@ -687,15 +687,19 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     color.a = getDisplayedOpacity() / 255.0f;
     
     //check light and determine the shader used
-    const auto& lights = Director::getInstance()->getRunningScene()->getLights();
-    bool usingLight = false;
-    for (const auto light : lights) {
-        usingLight = ((unsigned int)light->getLightFlag() & _lightMask) > 0;
-        if (usingLight)
-            break;
+    const auto& scene = Director::getInstance()->getRunningScene();
+    if (scene)
+    {
+        const auto& lights = scene->getLights();
+        bool usingLight = false;
+        for (const auto light : lights) {
+            usingLight = ((unsigned int)light->getLightFlag() & _lightMask) > 0;
+            if (usingLight)
+                break;
+        }
+        if (usingLight != _shaderUsingLight)
+            genGLProgramState(usingLight);
     }
-    if (usingLight != _shaderUsingLight)
-        genGLProgramState(usingLight);
     
     int i = 0;
     for (auto& mesh : _meshes) {
