@@ -118,20 +118,21 @@
 -- @return EditBox#EditBox self (return value: ccui.EditBox)
         
 --------------------------------
--- Set the font color of the placeholder text when the edit box is empty.<br>
--- Not supported on IOS.
--- @function [parent=#EditBox] setPlaceholderFontColor 
+-- @overload self, color4b_table         
+-- @overload self, color3b_table         
+-- @function [parent=#EditBox] setPlaceholderFontColor
 -- @param self
 -- @param #color3b_table color
 -- @return EditBox#EditBox self (return value: ccui.EditBox)
-        
+
 --------------------------------
--- Set the font color of the widget's text.
--- @function [parent=#EditBox] setFontColor 
+-- @overload self, color4b_table         
+-- @overload self, color3b_table         
+-- @function [parent=#EditBox] setFontColor
 -- @param self
 -- @param #color3b_table color
 -- @return EditBox#EditBox self (return value: ccui.EditBox)
-        
+
 --------------------------------
 -- js NA<br>
 -- lua NA
