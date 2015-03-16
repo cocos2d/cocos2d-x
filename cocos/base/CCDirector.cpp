@@ -1002,6 +1002,8 @@ void Director::reset()
     
     GL::invalidateStateCache();
     
+    resetMatrixStack();
+    
     destroyTextureCache();
 }
 

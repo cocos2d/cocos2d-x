@@ -61,7 +61,6 @@ namespace GL {
 
 void invalidateStateCache( void )
 {
-    Director::getInstance()->resetMatrixStack();
     s_currentProjectionMatrix = -1;
     s_attributeFlags = 0;
 
