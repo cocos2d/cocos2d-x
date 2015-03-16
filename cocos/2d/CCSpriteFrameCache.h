@@ -90,7 +90,17 @@ public:
      * @js addSpriteFrames
      * @lua addSpriteFrames
      */
-    void addSpriteFramesWithFile(const std::string& plist, const std::string& textureFileName);
+	void addSpriteFramesWithFile(const std::string& plist, const std::string& textureFileName);
+
+	/** Adds multiple Sprite Frames from a plist file asynchronously. The texture will be associated with the created sprite frames.
+	* Otherwise it will load the plist file in a new thread, and when the plist and texture is loaded, the callback will be called with the userdefined parameter.
+	* The callback will be called from the main thread, so it is safe to create any cocos2d object from the callback.
+	* @param plist file to be loaded
+	* @param textureFileName texture file to be loaded
+	* @param callback callback after loading
+	* @param callbackparam user defined parameter for the callback
+	*/
+	void addSpriteFramesWithFileAsync(const std::string& plist, const std::string& textureFileName, const std::function<void(void*, bool)>& callback, void* callbackparam);
 
     /** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames. 
      * @js addSpriteFrames
@@ -154,7 +164,7 @@ public:
     SpriteFrame* getSpriteFrameByName(const std::string& name);
 
     /** @deprecated use getSpriteFrameByName() instead */
-    CC_DEPRECATED_ATTRIBUTE SpriteFrame* spriteFrameByName(const std::string&name) { return getSpriteFrameByName(name); }
+	CC_DEPRECATED_ATTRIBUTE SpriteFrame* spriteFrameByName(const std::string&name) { return getSpriteFrameByName(name); }
 
 protected:
     // MARMALADE: Made this protected not private, as deriving from this class is pretty useful
@@ -169,10 +179,25 @@ protected:
     */
     void removeSpriteFramesFromDictionary(ValueMap& dictionary);
 
+	void afterAsyncLoad(void* param);
 
     Map<std::string, SpriteFrame*> _spriteFrames;
     ValueMap _spriteFramesAliases;
     std::set<std::string>*  _loadedFileNames;
+
+	struct AsyncLoadParam
+	{
+		std::function<void(void*, bool)> afterLoadCallback; // callback after load
+		void*                           callbackParam;
+		bool                            resultTexture; // texture load result
+		bool                            resultPList; // plist load result
+		std::string                     plist;
+		std::string                     textureFileName;
+
+		cocos2d::ValueMap               dictionary;
+		cocos2d::Texture2D*             texture;
+		Image*                          image;
+	};
 };
 
 // end of sprite_nodes group
