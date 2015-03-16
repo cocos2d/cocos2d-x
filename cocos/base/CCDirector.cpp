@@ -764,22 +764,9 @@ void Director::setClearColor(const Color4F& clearColor)
     _renderer->setClearColor(clearColor);
 }
 
-static void GLToClipTransform(Mat4 *transformOut)
-{
-    if(nullptr == transformOut) return;
-    
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-
-    auto projection = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    auto modelview = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    *transformOut = projection * modelview;
-}
-
 Vec2 Director::convertToGL(const Vec2& uiPoint)
 {
-    Mat4 transform;
-    GLToClipTransform(&transform);
+    Mat4 transform = getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION) * getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
     Mat4 transformInv = transform.getInversed();
 
@@ -798,8 +785,7 @@ Vec2 Director::convertToGL(const Vec2& uiPoint)
 
 Vec2 Director::convertToUI(const Vec2& glPoint)
 {
-    Mat4 transform;
-    GLToClipTransform(&transform);
+    Mat4 transform = getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION) * getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
     Vec4 clipCoord;
     // Need to calculate the zero depth from the transform.
