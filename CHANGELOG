@@ -1,4 +1,6 @@
 cocos2d-x-4.0alpha1 Mar.20 2015
+    [NEW]           Image: added windows image component support for Windows 8.1 Universal Apps
+    
     [FIX]           Label: shadow color is wrong
     [FIX]           Label: position is wrong if it is visited by a new camera
     [FIX]           MoveTo: disable `reverse()` because it is meaningless
