@@ -1,4 +1,6 @@
 cocos2d-x-3.5 Mar.20 2015
+    [NEW]           EditBox: support Color4B
+
     [FIX]           AutoRelasePool: memory leak if adding an element into pool when releasing auto release pool
 
 cocos2d-x-3.5rc0 Mar.13 2015
