@@ -373,11 +373,9 @@ Sprite3D* Sprite3D::createSprite3DNode(NodeData* nodedata,ModelData* modeldata,c
 
         // set locale transform
         Vec3 pos;
-        nodedata->transform.getTranslation(&pos);
         Quaternion qua;
-        nodedata->transform.getRotation(&qua);
         Vec3 scale;
-        nodedata->transform.getScale(&scale);
+        nodedata->transform.decompose(&scale, &qua, &pos);
         sprite->setPosition3D(pos);
         sprite->setRotationQuat(qua);
         sprite->setScaleX(scale.x);
@@ -543,11 +541,9 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
             
             // set locale transform
             Vec3 pos;
-            nodedata->transform.getTranslation(&pos);
             Quaternion qua;
-            nodedata->transform.getRotation(&qua);
             Vec3 scale;
-            nodedata->transform.getScale(&scale);
+            nodedata->transform.decompose(&scale, &qua, &pos);
             node->setPosition3D(pos);
             node->setRotationQuat(qua);
             node->setScaleX(scale.x);
