@@ -235,13 +235,6 @@
         
 --------------------------------
 -- 
--- @function [parent=#TextField] hitTest 
--- @param self
--- @param #vec2_table pt
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- 
 -- @function [parent=#TextField] setMaxLength 
 -- @param self
 -- @param #int length
@@ -294,6 +287,13 @@
 -- @param self
 -- @param #float dt
 -- @return TextField#TextField self (return value: ccui.TextField)
+        
+--------------------------------
+-- 
+-- @function [parent=#TextField] hitTest 
+-- @param self
+-- @param #vec2_table pt
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 
