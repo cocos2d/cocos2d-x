@@ -112,7 +112,7 @@ void StencilCommand::drawFullScreenQuadClearStencil()
     Color4F color(1, 1, 1, 1);
     
     glProgram->use();
-    glProgram->setUniformsForBuiltins();
+    glProgram->setUniformsForBuiltins(Mat4::IDENTITY);
     glProgram->setUniformLocationWith4fv(colorLocation, (GLfloat*) &color.r, 1);
     
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );

@@ -166,7 +166,7 @@ void RenderTextureSave::onTouchesMoved(const std::vector<Touch*>& touches, Event
 
     // begin drawing to the render texture
     _target->begin();
-    auto matrixMV = Director::getInstance()->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    auto matrixMV = _modelViewTransform;
     // for extra points, we'll draw this smoothly from the last position and vary the sprite's
     // scale/rotation/offset
     float distance = start.getDistance(end);
