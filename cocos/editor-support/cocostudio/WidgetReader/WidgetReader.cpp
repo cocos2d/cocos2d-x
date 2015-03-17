@@ -799,8 +799,6 @@ namespace cocostudio
         extensionData->setActionTag(actionTag);
         node->setUserObject(extensionData);
         
-        widget->setUserObject(timeline::ActionTimelineData::create(actionTag));
-        
         bool touchEnabled = options->touchEnabled() != 0;
         widget->setTouchEnabled(touchEnabled);
         
