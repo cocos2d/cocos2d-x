@@ -1,6 +1,8 @@
 cocos2d-x-4.0alpha1 Mar.20 2015
     [NEW]           Image: added windows image component support for Windows 8.1 Universal Apps
     
+    [FIX]           AutoRelasePool: memory leak if adding an element into pool when releasing auto release pool
+    [FIX]           FileUtils: getWritablePath() will not return corrent setted writable path on Mac & Windows
     [FIX]           HttpResponse: reference count error that will cause assert error
     [FIX]           Label: shadow color is wrong
     [FIX]           Label: position is wrong if it is visited by a new camera
