@@ -6,9 +6,10 @@
 
 --------------------------------
 -- 
--- @function [parent=#ControlColourPicker] setEnabled 
+-- @function [parent=#ControlColourPicker] hueSliderValueChanged 
 -- @param self
--- @param #bool bEnabled
+-- @param #cc.Ref sender
+-- @param #int controlEvent
 -- @return ControlColourPicker#ControlColourPicker self (return value: cc.ControlColourPicker)
         
 --------------------------------
@@ -16,21 +17,6 @@
 -- @function [parent=#ControlColourPicker] getHuePicker 
 -- @param self
 -- @return ControlHuePicker#ControlHuePicker ret (return value: cc.ControlHuePicker)
-        
---------------------------------
--- 
--- @function [parent=#ControlColourPicker] setColor 
--- @param self
--- @param #color3b_table colorValue
--- @return ControlColourPicker#ControlColourPicker self (return value: cc.ControlColourPicker)
-        
---------------------------------
--- 
--- @function [parent=#ControlColourPicker] hueSliderValueChanged 
--- @param self
--- @param #cc.Ref sender
--- @param #int controlEvent
--- @return ControlColourPicker#ControlColourPicker self (return value: cc.ControlColourPicker)
         
 --------------------------------
 -- 
@@ -84,6 +70,20 @@
 -- @function [parent=#ControlColourPicker] create 
 -- @param self
 -- @return ControlColourPicker#ControlColourPicker ret (return value: cc.ControlColourPicker)
+        
+--------------------------------
+-- 
+-- @function [parent=#ControlColourPicker] setEnabled 
+-- @param self
+-- @param #bool bEnabled
+-- @return ControlColourPicker#ControlColourPicker self (return value: cc.ControlColourPicker)
+        
+--------------------------------
+-- 
+-- @function [parent=#ControlColourPicker] setColor 
+-- @param self
+-- @param #color3b_table colorValue
+-- @return ControlColourPicker#ControlColourPicker self (return value: cc.ControlColourPicker)
         
 --------------------------------
 -- js ctor
