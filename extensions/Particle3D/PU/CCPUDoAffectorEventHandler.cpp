@@ -51,11 +51,13 @@ void PUDoAffectorEventHandler::handle (PUParticleSystem3D* particleSystem, PUPar
         auto children = system->getChildren();
         for(auto iter : children)
         {
-            technique = static_cast<PUParticleSystem3D *>(iter);
-            affector = technique->getAffector(_affectorName);
-            if (affector)
-            {
-                break;
+            technique = dynamic_cast<PUParticleSystem3D *>(iter);
+            if (technique){
+                affector = technique->getAffector(_affectorName);
+                if (affector)
+                {
+                    break;
+                }
             }
         }
     }
