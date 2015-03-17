@@ -41,8 +41,7 @@ class __Dictionary;
 class __Set;
 
 /**
- * @addtogroup data_structures
- * @{
+ * @cond
  */
 
 /**
@@ -106,8 +105,9 @@ private:
     std::string _result;
 };
 
-// end of data_structure group
-/// @}
+/**
+ * @endcond
+ */
 
 NS_CC_END
 
