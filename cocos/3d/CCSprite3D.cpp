@@ -370,7 +370,18 @@ Sprite3D* Sprite3D::createSprite3DNode(NodeData* nodedata,ModelData* modeldata,c
                 }
             }
         }
-        sprite->setAdditionalTransform(&nodedata->transform);
+
+        // set locale transform
+        Vec3 pos;
+        Quaternion qua;
+        Vec3 scale;
+        nodedata->transform.decompose(&scale, &qua, &pos);
+        sprite->setPosition3D(pos);
+        sprite->setRotationQuat(qua);
+        sprite->setScaleX(scale.x);
+        sprite->setScaleY(scale.y);
+        sprite->setScaleZ(scale.z);
+        
         sprite->addMesh(mesh);
         sprite->autorelease();
         sprite->genGLProgramState(); 
@@ -527,7 +538,18 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
         if(node)
         {
             node->setName(nodedata->id);
-            node->setAdditionalTransform(&nodedata->transform);
+            
+            // set locale transform
+            Vec3 pos;
+            Quaternion qua;
+            Vec3 scale;
+            nodedata->transform.decompose(&scale, &qua, &pos);
+            node->setPosition3D(pos);
+            node->setRotationQuat(qua);
+            node->setScaleX(scale.x);
+            node->setScaleY(scale.y);
+            node->setScaleZ(scale.z);
+            
             if(root)
             {
                 root->addChild(node);
@@ -687,15 +709,19 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     color.a = getDisplayedOpacity() / 255.0f;
     
     //check light and determine the shader used
-    const auto& lights = Director::getInstance()->getRunningScene()->getLights();
-    bool usingLight = false;
-    for (const auto light : lights) {
-        usingLight = ((unsigned int)light->getLightFlag() & _lightMask) > 0;
-        if (usingLight)
-            break;
+    const auto& scene = Director::getInstance()->getRunningScene();
+    if (scene)
+    {
+        const auto& lights = scene->getLights();
+        bool usingLight = false;
+        for (const auto light : lights) {
+            usingLight = ((unsigned int)light->getLightFlag() & _lightMask) > 0;
+            if (usingLight)
+                break;
+        }
+        if (usingLight != _shaderUsingLight)
+            genGLProgramState(usingLight);
     }
-    if (usingLight != _shaderUsingLight)
-        genGLProgramState(usingLight);
     
     int i = 0;
     for (auto& mesh : _meshes) {

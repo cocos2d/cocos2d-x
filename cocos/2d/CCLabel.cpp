@@ -910,6 +910,20 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     }
 }
 
+void Label::setCameraMask(unsigned short mask, bool applyChildren)
+{
+    SpriteBatchNode::setCameraMask(mask, applyChildren);
+    
+    if (_textSprite)
+    {
+        _textSprite->setCameraMask(mask, applyChildren);
+    }
+    if (_shadowNode)
+    {
+        _shadowNode->setCameraMask(mask, applyChildren);
+    }
+}
+
 void Label::createSpriteWithFontDefinition()
 {
     _currentLabelType = LabelType::STRING_TEXTURE;
