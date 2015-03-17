@@ -232,7 +232,7 @@ void Layout::stencilClippingVisit(Renderer *renderer, const Mat4& parentTransfor
     // but it is deprecated and your code should not rely on it
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    CC_PUSH_MATRIX_MV
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
     //Add group command
 
@@ -298,7 +298,7 @@ void Layout::stencilClippingVisit(Renderer *renderer, const Mat4& parentTransfor
     
     renderer->popGroup();
     
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    CC_POP_MATRIX_MV
 }
     
 void Layout::scissorClippingVisit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags)

@@ -150,7 +150,7 @@ void Box2DTestLayer::draw(Renderer *renderer, const Mat4 &transform, uint32_t fl
     GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    CC_PUSH_MATRIX_MV
     
     _modelViewMV = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 
@@ -158,7 +158,7 @@ void Box2DTestLayer::draw(Renderer *renderer, const Mat4 &transform, uint32_t fl
     _customCommand.func = CC_CALLBACK_0(Box2DTestLayer::onDraw, this);
     renderer->addCommand(&_customCommand);
 
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    CC_POP_MATRIX_MV
 #endif
 }
 

@@ -161,7 +161,7 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
     // but it is deprecated and your code should not rely on it
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    CC_PUSH_MATRIX_MV
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
     
     _groupCommand.init(_globalZOrder);
@@ -210,7 +210,7 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
 
     renderer->popGroup();
     
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    CC_POP_MATRIX_MV
 }
 
 Node* ClippingNode::getStencil() const

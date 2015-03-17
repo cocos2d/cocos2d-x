@@ -91,7 +91,7 @@ void StencilCommand::drawFullScreenQuadClearStencil()
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    CC_PUSH_MATRIX_MV
     director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
@@ -122,7 +122,7 @@ void StencilCommand::drawFullScreenQuadClearStencil()
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
     
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    CC_POP_MATRIX_MV
 }
 
 

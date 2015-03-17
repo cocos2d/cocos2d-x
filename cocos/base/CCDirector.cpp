@@ -283,8 +283,8 @@ void Director::drawScene()
         setNextScene();
     }
 
-    pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    
+    CC_PUSH_MATRIX_MV
+    loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     if (_runningScene)
     {
 #if CC_USE_PHYSICS
@@ -317,8 +317,8 @@ void Director::drawScene()
 
     _eventDispatcher->dispatchEvent(_eventAfterDraw);
 
-    popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-
+    CC_POP_MATRIX_MV
+    loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     _totalFrames++;
 
     // swap buffers
@@ -477,26 +477,6 @@ void MatrixStack::resetMatrixStack()
     initMatrixStack();
 }
 
-void MatrixStack::popMatrix(MATRIX_STACK_TYPE type)
-{
-    if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
-    {
-        _modelViewMatrixStack.pop();
-    }
-    else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
-    {
-        _projectionMatrixStack.pop();
-    }
-    else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
-    {
-        _textureMatrixStack.pop();
-    }
-    else
-    {
-        CCASSERT(false, "unknow matrix stack type");
-    }
-}
-
 void MatrixStack::loadIdentityMatrix(MATRIX_STACK_TYPE type)
 {
     if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
@@ -570,6 +550,26 @@ void MatrixStack::pushMatrix(MATRIX_STACK_TYPE type)
     else if(type == MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE)
     {
         _textureMatrixStack.push(_textureMatrixStack.top());
+    }
+    else
+    {
+        CCASSERT(false, "unknow matrix stack type");
+    }
+}
+
+void MatrixStack::popMatrix(MATRIX_STACK_TYPE type)
+{
+    if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
+    {
+        _modelViewMatrixStack.pop();
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
+    {
+        _projectionMatrixStack.pop();
+    }
+    else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
+    {
+        _textureMatrixStack.pop();
     }
     else
     {
@@ -766,7 +766,7 @@ void Director::setClearColor(const Color4F& clearColor)
 
 Vec2 Director::convertToGL(const Vec2& uiPoint)
 {
-    Mat4 transform = getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION) * getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    Mat4 transform = getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
     Mat4 transformInv = transform.getInversed();
 
@@ -785,7 +785,7 @@ Vec2 Director::convertToGL(const Vec2& uiPoint)
 
 Vec2 Director::convertToUI(const Vec2& glPoint)
 {
-    Mat4 transform = getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION) * getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    Mat4 transform = getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
     Vec4 clipCoord;
     // Need to calculate the zero depth from the transform.
