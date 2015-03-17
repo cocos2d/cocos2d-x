@@ -81,30 +81,9 @@
         
 --------------------------------
 -- 
--- @function [parent=#ParticleSystem] setRotation 
--- @param self
--- @param #float newRotation
--- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
-        
---------------------------------
--- 
 -- @function [parent=#ParticleSystem] setTangentialAccel 
 -- @param self
 -- @param #float t
--- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
-        
---------------------------------
--- 
--- @function [parent=#ParticleSystem] setScaleY 
--- @param self
--- @param #float newScaleY
--- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
-        
---------------------------------
--- 
--- @function [parent=#ParticleSystem] setScaleX 
--- @param self
--- @param #float newScaleX
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
         
 --------------------------------
@@ -308,12 +287,6 @@
 -- @function [parent=#ParticleSystem] getEndRadius 
 -- @param self
 -- @return float#float ret (return value: float)
-        
---------------------------------
--- 
--- @function [parent=#ParticleSystem] isOpacityModifyRGB 
--- @param self
--- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 
@@ -528,13 +501,6 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
--- @function [parent=#ParticleSystem] setScale 
--- @param self
--- @param #float s
--- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
-        
---------------------------------
 --  emission rate of the particles 
 -- @function [parent=#ParticleSystem] getEmissionRate 
 -- @param self
@@ -557,13 +523,6 @@
 -- @function [parent=#ParticleSystem] setStartSizeVar 
 -- @param self
 -- @param #float sizeVar
--- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
-        
---------------------------------
---  does the alpha value modify color 
--- @function [parent=#ParticleSystem] setOpacityModifyRGB 
--- @param self
--- @param #bool opacityModifyRGB
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
         
 --------------------------------
@@ -679,9 +638,50 @@
         
 --------------------------------
 -- 
+-- @function [parent=#ParticleSystem] setScaleY 
+-- @param self
+-- @param #float newScaleY
+-- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
+        
+--------------------------------
+-- 
+-- @function [parent=#ParticleSystem] setScaleX 
+-- @param self
+-- @param #float newScaleX
+-- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
+        
+--------------------------------
+-- 
+-- @function [parent=#ParticleSystem] isOpacityModifyRGB 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+--  does the alpha value modify color 
+-- @function [parent=#ParticleSystem] setOpacityModifyRGB 
+-- @param self
+-- @param #bool opacityModifyRGB
+-- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
+        
+--------------------------------
+-- 
+-- @function [parent=#ParticleSystem] setScale 
+-- @param self
+-- @param #float s
+-- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
+        
+--------------------------------
+-- 
 -- @function [parent=#ParticleSystem] update 
 -- @param self
 -- @param #float dt
+-- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
+        
+--------------------------------
+-- 
+-- @function [parent=#ParticleSystem] setRotation 
+-- @param self
+-- @param #float newRotation
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
         
 return nil
