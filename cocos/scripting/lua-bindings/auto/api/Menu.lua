@@ -59,15 +59,17 @@
 
 --------------------------------
 -- 
--- @function [parent=#Menu] isOpacityModifyRGB 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- 
 -- @function [parent=#Menu] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
+        
+--------------------------------
+-- 
+-- @function [parent=#Menu] removeChild 
+-- @param self
+-- @param #cc.Node child
+-- @param #bool cleanup
+-- @return Menu#Menu self (return value: cc.Menu)
         
 --------------------------------
 -- 
@@ -78,10 +80,8 @@
         
 --------------------------------
 -- 
--- @function [parent=#Menu] removeChild 
+-- @function [parent=#Menu] isOpacityModifyRGB 
 -- @param self
--- @param #cc.Node child
--- @param #bool cleanup
--- @return Menu#Menu self (return value: cc.Menu)
+-- @return bool#bool ret (return value: bool)
         
 return nil
