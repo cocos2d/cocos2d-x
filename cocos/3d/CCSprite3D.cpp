@@ -370,7 +370,18 @@ Sprite3D* Sprite3D::createSprite3DNode(NodeData* nodedata,ModelData* modeldata,c
                 }
             }
         }
-        sprite->setAdditionalTransform(&nodedata->transform);
+
+        // set locale transform
+        Vec3 pos;
+        Quaternion qua;
+        Vec3 scale;
+        nodedata->transform.decompose(&scale, &qua, &pos);
+        sprite->setPosition3D(pos);
+        sprite->setRotationQuat(qua);
+        sprite->setScaleX(scale.x);
+        sprite->setScaleY(scale.y);
+        sprite->setScaleZ(scale.z);
+        
         sprite->addMesh(mesh);
         sprite->autorelease();
         sprite->genGLProgramState(); 
@@ -527,7 +538,18 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
         if(node)
         {
             node->setName(nodedata->id);
-            node->setAdditionalTransform(&nodedata->transform);
+            
+            // set locale transform
+            Vec3 pos;
+            Quaternion qua;
+            Vec3 scale;
+            nodedata->transform.decompose(&scale, &qua, &pos);
+            node->setPosition3D(pos);
+            node->setRotationQuat(qua);
+            node->setScaleX(scale.x);
+            node->setScaleY(scale.y);
+            node->setScaleZ(scale.z);
+            
             if(root)
             {
                 root->addChild(node);
