@@ -64,12 +64,6 @@
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
--- Updates the quad according the rotation, position, scale values.
--- @function [parent=#Sprite] updateTransform 
--- @param self
--- @return Sprite#Sprite self (return value: cc.Sprite)
-        
---------------------------------
 -- @overload self, rect_table, bool, size_table         
 -- @overload self, rect_table         
 -- @function [parent=#Sprite] setTextureRect
@@ -261,15 +255,6 @@
 -- @return Sprite#Sprite ret (return value: cc.Sprite)
         
 --------------------------------
--- 
--- @function [parent=#Sprite] draw 
--- @param self
--- @param #cc.Renderer renderer
--- @param #mat4_table transform
--- @param #unsigned int flags
--- @return Sprite#Sprite self (return value: cc.Sprite)
-        
---------------------------------
 -- @overload self, cc.Node, int, string         
 -- @overload self, cc.Node, int, int         
 -- @function [parent=#Sprite] addChild
@@ -279,33 +264,6 @@
 -- @param #int tag
 -- @return Sprite#Sprite self (return value: cc.Sprite)
 
---------------------------------
--- 
--- @function [parent=#Sprite] setScaleY 
--- @param self
--- @param #float scaleY
--- @return Sprite#Sprite self (return value: cc.Sprite)
-        
---------------------------------
--- / @{/ @name Functions inherited from Node
--- @function [parent=#Sprite] setScaleX 
--- @param self
--- @param #float scaleX
--- @return Sprite#Sprite self (return value: cc.Sprite)
-        
---------------------------------
--- 
--- @function [parent=#Sprite] isOpacityModifyRGB 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- 
--- @function [parent=#Sprite] setPositionZ 
--- @param self
--- @param #float positionZ
--- @return Sprite#Sprite self (return value: cc.Sprite)
-        
 --------------------------------
 -- 
 -- @function [parent=#Sprite] setAnchorPoint 
@@ -321,16 +279,10 @@
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
--- / @}
--- @function [parent=#Sprite] getDescription 
--- @param self
--- @return string#string ret (return value: string)
-        
---------------------------------
 -- 
--- @function [parent=#Sprite] setRotationSkewY 
+-- @function [parent=#Sprite] setScaleY 
 -- @param self
--- @param #float rotationY
+-- @param #float scaleY
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
@@ -344,25 +296,9 @@
 
 --------------------------------
 -- 
--- @function [parent=#Sprite] reorderChild 
+-- @function [parent=#Sprite] isOpacityModifyRGB 
 -- @param self
--- @param #cc.Node child
--- @param #int zOrder
--- @return Sprite#Sprite self (return value: cc.Sprite)
-        
---------------------------------
--- 
--- @function [parent=#Sprite] removeChild 
--- @param self
--- @param #cc.Node child
--- @param #bool cleanup
--- @return Sprite#Sprite self (return value: cc.Sprite)
-        
---------------------------------
--- 
--- @function [parent=#Sprite] sortAllChildren 
--- @param self
--- @return Sprite#Sprite self (return value: cc.Sprite)
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 
@@ -380,16 +316,73 @@
         
 --------------------------------
 -- 
--- @function [parent=#Sprite] setSkewY 
+-- @function [parent=#Sprite] draw 
 -- @param self
--- @param #float sy
+-- @param #cc.Renderer renderer
+-- @param #mat4_table transform
+-- @param #unsigned int flags
+-- @return Sprite#Sprite self (return value: cc.Sprite)
+        
+--------------------------------
+-- / @{/ @name Functions inherited from Node
+-- @function [parent=#Sprite] setScaleX 
+-- @param self
+-- @param #float scaleX
+-- @return Sprite#Sprite self (return value: cc.Sprite)
+        
+--------------------------------
+-- / @}
+-- @function [parent=#Sprite] getDescription 
+-- @param self
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- 
+-- @function [parent=#Sprite] setRotationSkewY 
+-- @param self
+-- @param #float rotationY
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
 -- 
--- @function [parent=#Sprite] setVisible 
+-- @function [parent=#Sprite] sortAllChildren 
 -- @param self
--- @param #bool bVisible
+-- @return Sprite#Sprite self (return value: cc.Sprite)
+        
+--------------------------------
+-- 
+-- @function [parent=#Sprite] reorderChild 
+-- @param self
+-- @param #cc.Node child
+-- @param #int zOrder
+-- @return Sprite#Sprite self (return value: cc.Sprite)
+        
+--------------------------------
+-- 
+-- @function [parent=#Sprite] ignoreAnchorPointForPosition 
+-- @param self
+-- @param #bool value
+-- @return Sprite#Sprite self (return value: cc.Sprite)
+        
+--------------------------------
+-- 
+-- @function [parent=#Sprite] setPositionZ 
+-- @param self
+-- @param #float positionZ
+-- @return Sprite#Sprite self (return value: cc.Sprite)
+        
+--------------------------------
+-- 
+-- @function [parent=#Sprite] removeChild 
+-- @param self
+-- @param #cc.Node child
+-- @param #bool cleanup
+-- @return Sprite#Sprite self (return value: cc.Sprite)
+        
+--------------------------------
+-- Updates the quad according the rotation, position, scale values.
+-- @function [parent=#Sprite] updateTransform 
+-- @param self
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
@@ -401,9 +394,16 @@
         
 --------------------------------
 -- 
--- @function [parent=#Sprite] ignoreAnchorPointForPosition 
+-- @function [parent=#Sprite] setSkewY 
 -- @param self
--- @param #bool value
+-- @param #float sy
+-- @return Sprite#Sprite self (return value: cc.Sprite)
+        
+--------------------------------
+-- 
+-- @function [parent=#Sprite] setVisible 
+-- @param self
+-- @param #bool bVisible
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 return nil
