@@ -3,6 +3,10 @@
 #try to grab the doxygen version modified by me
 #TODO: if the doxygen is not correct, we should install it manually
 
+CONFIG_NAME=doxygen
+if [ ! -z $1 ]; then
+    CONFIG_NAME=$1
+fi
 
 sed -i .bak '/CC_DEPRECATED_ATTRIBUTE CC_DLL/,/NS_CC_END/d' ../../cocos/base/ccUTF8.h
 # git diff > doc-patch.patch
@@ -19,7 +23,7 @@ sed -i .bak "s/3\.0/${version}/g" doxygen.config
 
 rm doxygen.config.bak 
 
-doxygen doxygen.config 
+doxygen ${CONFIG_NAME}.config
 
 git checkout . ../cocos/base/ccUTF8.h 
 

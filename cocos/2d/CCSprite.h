@@ -52,14 +52,13 @@ struct transformValues_;
  */
 
 /**
- * Sprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) )
+ * Sprite is a 2d image ( http://en.wikipedia.org/wiki/Sprite_(computer_graphics) ).
  *
  * Sprite can be created with an image, or with a sub-rectangle of an image.
  *
  * To optimize the Sprite rendering, please follow the following best practices:
- *
- *  - Put all your sprites in the same spritesheet (http://www.codeandweb.com/what-is-a-sprite-sheet)
- *  - Use the same blending function for all your sprites
+ *  - Put all your sprites in the same spritesheet (http://www.codeandweb.com/what-is-a-sprite-sheet).
+ *  - Use the same blending function for all your sprites.
  *  - ...and the Renderer will automatically "batch" your sprites (will draw all of them in one OpenGL call).
  *
  *  To gain an additional 5% ~ 10% more in the rendering, you can parent your sprites into a `SpriteBatchNode`.
@@ -75,15 +74,16 @@ struct transformValues_;
 class CC_DLL Sprite : public Node, public TextureProtocol
 {
 public:
+     /** Sprite invalid index on the SpriteBatchNode. */
+    static const int INDEX_NOT_INITIALIZED = -1;
 
-    static const int INDEX_NOT_INITIALIZED = -1; /// Sprite invalid index on the SpriteBatchNode
-
-    /// @{
     /// @name Creators
+    /// @{
 
     /**
      * Creates an empty sprite without texture. You can call setTexture method subsequently.
      *
+     * @memberof Sprite
      * @return An autoreleased sprite object.
      */
     static Sprite* create();
@@ -123,19 +123,19 @@ public:
      *
      * After creation, the offset will be (0,0).
      *
-     * @param   texture    A pointer to an existing Texture2D object.
+     * @param   texture     A pointer to an existing Texture2D object.
      *                      You can use a Texture2D object for many sprites.
      * @param   rect        Only the contents inside the rect of this texture will be applied for this sprite.
-     * @param   rotated     Whether or not the rect is rotated
-     * @return  An autoreleased sprite object
+     * @param   rotated     Whether or not the rect is rotated.
+     * @return  An autoreleased sprite object.
      */
     static Sprite* createWithTexture(Texture2D *texture, const Rect& rect, bool rotated=false);
 
     /**
      * Creates a sprite with an sprite frame.
      *
-     * @param   spriteFrame    A sprite frame which involves a texture and a rect
-     * @return  An autoreleased sprite object
+     * @param   spriteFrame    A sprite frame which involves a texture and a rect.
+     * @return  An autoreleased sprite object.
      */
     static Sprite* createWithSpriteFrame(SpriteFrame *spriteFrame);
 
@@ -146,11 +146,12 @@ public:
      * If the SpriteFrame doesn't exist it will raise an exception.
      *
      * @param   spriteFrameName A null terminated string which indicates the sprite frame name.
-     * @return  An autoreleased sprite object
+     * @return  An autoreleased sprite object.
      */
     static Sprite* createWithSpriteFrameName(const std::string& spriteFrameName);
 
-    /// @}  end of creators group
+    //  end of creators group
+    /// @}
 
 
     /// @{
@@ -162,7 +163,7 @@ public:
     virtual void updateTransform() override;
 
     /**
-     * Returns the batch node object if this sprite is rendered by SpriteBatchNode
+     * Returns the batch node object if this sprite is rendered by SpriteBatchNode.
      *
      * @return The SpriteBatchNode object if this sprite is rendered by SpriteBatchNode,
      *         nullptr if the sprite isn't used batch node.
@@ -187,50 +188,55 @@ public:
     /// @name Texture / Frame methods
 
     /** Sets a new texture (from a filename) to the sprite.
-     It will call `setTextureRect()` with the texture's content size.
-     TODO: The whole Sprite API needs to be reviewed.
+     *
+     *  @memberof Sprite
+     *  It will call `setTextureRect()` with the texture's content size.
      */
     virtual void setTexture(const std::string &filename );
 
-    /** Sets a new texture to the sprite.
-     The Texture's rect is not changed.
+    /** @overload
+     *
+     *  The Texture's rect is not changed.
      */
     virtual void setTexture(Texture2D *texture) override;
 
-    /** returns the Texture2D object used by the sprite */
+    /** Returns the Texture2D object used by the sprite. */
     virtual Texture2D* getTexture() const override;
 
     /**
      * Updates the texture rect of the Sprite in points.
+     *
      * It will call setTextureRect(const Rect& rect, bool rotated, const Size& untrimmedSize) with \p rotated = false, and \p utrimmedSize = rect.size.
      */
     virtual void setTextureRect(const Rect& rect);
 
-    /**
-     * Sets the texture rect, rectRotated and untrimmed size of the Sprite in points.
+    /** @overload
+     *
      * It will update the texture coordinates and the vertex rectangle.
      */
     virtual void setTextureRect(const Rect& rect, bool rotated, const Size& untrimmedSize);
 
     /**
      * Sets the vertex rect.
+     *
      * It will be called internally by setTextureRect.
      * Useful if you want to create 2x images from SD images in Retina Display.
      * Do not call it manually. Use setTextureRect instead.
      */
     virtual void setVertexRect(const Rect& rect);
 
-    /**
+    /** @{
      * Sets a new SpriteFrame to the Sprite.
      */
     virtual void setSpriteFrame(const std::string &spriteFrameName);
     virtual void setSpriteFrame(SpriteFrame* newFrame);
+    /** @} */
 
     /** @deprecated Use `setSpriteFrame()` instead. */
     CC_DEPRECATED_ATTRIBUTE virtual void setDisplayFrame(SpriteFrame *newFrame) { setSpriteFrame(newFrame); }
 
     /**
-     * Returns whether or not a SpriteFrame is being displayed
+     * Returns whether or not a SpriteFrame is being displayed.
      */
     virtual bool isFrameDisplayed(SpriteFrame *frame) const;
 
@@ -238,9 +244,9 @@ public:
      * Returns the current displayed frame.
      */
     virtual SpriteFrame* getSpriteFrame() const;
-    /** @deprecated Use `getSpriteFrame()` instead */
+    /** @deprecated Use `getSpriteFrame()` instead. */
     CC_DEPRECATED_ATTRIBUTE virtual SpriteFrame* getDisplayFrame() const { return getSpriteFrame(); }
-    /** @deprecated Use `getSpriteFrame()` instead */
+    /** @deprecated Use `getSpriteFrame()` instead. */
     CC_DEPRECATED_ATTRIBUTE virtual SpriteFrame* displayFrame() const { return getSpriteFrame(); };
 
     /// @} End of frames methods
@@ -250,14 +256,14 @@ public:
     /// @name Animation methods
     /**
      * Changes the display frame with animation name and index.
-     * The animation name will be get from the AnimationCache
+     * The animation name will be get from the AnimationCache.
      */
     virtual void setDisplayFrameWithAnimationName(const std::string& animationName, ssize_t frameIndex);
     /// @}
 
 
     /// @{
-    /// @name Sprite Properties' setter/getters
+    /// @name Sprite Properties' setter/getters.
 
     /**
      * Whether or not the Sprite needs to be updated in the Atlas.
@@ -290,22 +296,23 @@ public:
 
     /**
      * Sets the index used on the TextureAtlas.
-     * @warning Don't modify this value unless you know what you are doing
+     *
+     * @warning Don't modify this value unless you know what you are doing.
      */
     inline void setAtlasIndex(ssize_t atlasIndex) { _atlasIndex = atlasIndex; }
 
     /**
-     * Returns the rect of the Sprite in points
+     * Returns the rect of the Sprite in points.
      */
     inline const Rect& getTextureRect() const { return _rect; }
 
     /**
-     * Gets the weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode
+     * Gets the weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode.
      */
     inline TextureAtlas* getTextureAtlas() const { return _textureAtlas; }
 
     /**
-     * Sets the weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode
+     * Sets the weak reference of the TextureAtlas when the sprite is rendered using via SpriteBatchNode.
      */
     inline void setTextureAtlas(TextureAtlas *textureAtlas) { _textureAtlas = textureAtlas; }
 
@@ -333,7 +340,7 @@ public:
      */
     void setFlippedX(bool flippedX);
 
-    /** @deprecated Use isFlippedX() instead
+    /** @deprecated Use isFlippedX() instead.
     * @js NA
     * @lua NA
     */
@@ -373,7 +380,7 @@ public:
     /// @name Functions inherited from TextureProtocol
     /**
     *@code
-    *When this function bound into js or lua,the parameter will be changed
+    *When this function bound into js or lua,the parameter will be changed.
     *In js: var setBlendFunc(var src, var dst)
     *In lua: local setBlendFunc(local src, local dst)
     *@endcode
@@ -389,7 +396,7 @@ public:
     virtual std::string getDescription() const override;
 
     /// @{
-    /// @name Functions inherited from Node
+    /// @name Functions inherited from Node.
     virtual void setScaleX(float scaleX) override;
     virtual void setScaleY(float scaleY) override;
     virtual void setScale(float scaleX, float scaleY) override;
@@ -466,9 +473,9 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool initWithTexture(Texture2D *texture, const Rect& rect, bool rotated);
 
     /**
-     * Initializes a sprite with an SpriteFrame. The texture and rect in SpriteFrame will be applied on this sprite
+     * Initializes a sprite with an SpriteFrame. The texture and rect in SpriteFrame will be applied on this sprite.
      *
-     * @param   pSpriteFrame  A SpriteFrame object. It should includes a valid texture and a rect
+     * @param   pSpriteFrame  A SpriteFrame object. It should includes a valid texture and a rect.
      * @return  true if the sprite is initialized properly, false otherwise.
      */
     virtual bool initWithSpriteFrame(SpriteFrame *spriteFrame);
@@ -479,7 +486,7 @@ CC_CONSTRUCTOR_ACCESS:
      * A SpriteFrame will be fetched from the SpriteFrameCache by name.
      * If the SpriteFrame doesn't exist it will raise an exception.
      *
-     * @param   spriteFrameName  A key string that can fected a volid SpriteFrame from SpriteFrameCache
+     * @param   spriteFrameName  A key string that can fected a volid SpriteFrame from SpriteFrameCache.
      * @return  true if the sprite is initialized properly, false otherwise.
      */
     virtual bool initWithSpriteFrameName(const std::string& spriteFrameName);
@@ -491,7 +498,7 @@ CC_CONSTRUCTOR_ACCESS:
      * then use Texture2D to create a sprite.
      * After initialization, the rect used will be the size of the image. The offset will be (0,0).
      *
-     * @param   filename The path to an image file in local file system
+     * @param   filename The path to an image file in local file system.
      * @return  true if the sprite is initialized properly, false otherwise.
      * @js      init
      * @lua     init
