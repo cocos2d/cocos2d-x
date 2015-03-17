@@ -1,0 +1,12 @@
+{ 
+    "ios_cfg": {
+        "project_path": "../../build",
+        "project_file": "cocos2d_tests.xcodeproj",
+        "target_name": "game-controller-test IOS"
+    }, 
+    "project_type": "cpp",
+    "android_cfg": {
+        "project_path": "proj.android"
+    },
+    "engine_dir": "../../"
+}
