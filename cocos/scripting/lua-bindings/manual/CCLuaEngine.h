@@ -46,7 +46,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE static LuaEngine* defaultEngine(void) { return LuaEngine::getInstance(); }
     virtual ~LuaEngine(void);
     
-    virtual ccScriptType getScriptType() {
+    virtual ccScriptType getScriptType() override {
         return kScriptTypeLua;
     };
 
@@ -77,17 +77,17 @@ public:
      @brief Remove Object from lua state
      @param object to remove
      */
-    virtual void removeScriptObjectByObject(Ref* object);
+    virtual void removeScriptObjectByObject(Ref* object) override;
     
     /**
      @brief Remove Lua function reference
      */
-    virtual void removeScriptHandler(int nHandler);
+    virtual void removeScriptHandler(int nHandler) override;
     
     /**
      @brief Reallocate Lua function reference
      */
-    virtual int reallocateScriptHandler(int nHandler);
+    virtual int reallocateScriptHandler(int nHandler) override;
     
     /**
      @brief Execute script code contained in the given string.
@@ -95,13 +95,13 @@ public:
      @return 0 if the string is excuted correctly.
      @return other if the string is excuted wrongly.
      */
-    virtual int executeString(const char* codes);
+    virtual int executeString(const char* codes) override;
     
     /**
      @brief Execute a script file.
      @param filename String object holding the filename of the script file that is to be executed
      */
-    virtual int executeScriptFile(const char* filename);
+    virtual int executeScriptFile(const char* filename) override;
     
     /**
      @brief Execute a scripted global function.
@@ -109,7 +109,7 @@ public:
      @param functionName String object holding the name of the function, in the global script environment, that is to be executed.
      @return The integer value returned from the script function.
      */
-    virtual int executeGlobalFunction(const char* functionName);
+    virtual int executeGlobalFunction(const char* functionName) override;
 
     virtual int executeNodeEvent(Node* pNode, int nAction);
     virtual int executeMenuItemEvent(MenuItem* pMenuItem);
@@ -123,7 +123,7 @@ public:
     virtual int executeAccelerometerEvent(Layer* pLayer, Acceleration* pAccelerationValue);
     virtual int executeEvent(int nHandler, const char* pEventName, Ref* pEventSource = NULL, const char* pEventSourceClassName = NULL);
 
-    virtual bool handleAssert(const char *msg);
+    virtual bool handleAssert(const char *msg) override;
     
     virtual bool parseConfig(ConfigType type, const std::string& str) override;
     virtual int sendEvent(ScriptEvent* message) override;

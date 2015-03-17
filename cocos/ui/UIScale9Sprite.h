@@ -237,7 +237,7 @@ namespace ui {
          */
         virtual bool initWithSpriteFrameName(const std::string& spriteFrameName);
         
-        virtual bool init();
+        virtual bool init() override;
         virtual bool init(Sprite* sprite, const Rect& rect, bool rotated, const Rect& capInsets);
         virtual bool init(Sprite* sprite, const Rect& rect, const Rect& capInsets);
         virtual bool init(Sprite* sprite, const Rect& rect, bool rotated, const Vec2 &offset, const Size &originalSize, const Rect& capInsets);

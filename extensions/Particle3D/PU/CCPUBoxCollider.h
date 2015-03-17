@@ -83,7 +83,7 @@ public:
     */
     void calculateDirectionAfterCollision(PUParticle3D* particle);
 
-    virtual void copyAttributesTo (PUAffector* affector);
+    virtual void copyAttributesTo (PUAffector* affector) override;
 
 CC_CONSTRUCTOR_ACCESS:
     PUBoxCollider();

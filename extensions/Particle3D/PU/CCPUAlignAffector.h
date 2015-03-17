@@ -51,7 +51,7 @@ public:
     */
     void setResize(bool resize);
 
-    virtual void copyAttributesTo (PUAffector* affector);
+    virtual void copyAttributesTo (PUAffector* affector) override;
 
 CC_CONSTRUCTOR_ACCESS:
     PUAlignAffector();

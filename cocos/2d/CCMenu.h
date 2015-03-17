@@ -120,10 +120,10 @@ public:
     virtual bool isEnabled() const { return _enabled; }
     virtual void setEnabled(bool value) { _enabled = value; };
 
-    virtual bool onTouchBegan(Touch* touch, Event* event);
-    virtual void onTouchEnded(Touch* touch, Event* event);
-    virtual void onTouchCancelled(Touch* touch, Event* event);
-    virtual void onTouchMoved(Touch* touch, Event* event);
+    virtual bool onTouchBegan(Touch* touch, Event* event) override;
+    virtual void onTouchEnded(Touch* touch, Event* event) override;
+    virtual void onTouchCancelled(Touch* touch, Event* event) override;
+    virtual void onTouchMoved(Touch* touch, Event* event) override;
     
     // overrides
     virtual void removeChild(Node* child, bool cleanup) override;
@@ -148,7 +148,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Menu();
 
     /** initializes an empty Menu */
-    bool init();
+    bool init() override;
 
     /** initializes a Menu with a NSArray of MenuItem objects */
     bool initWithArray(const Vector<MenuItem*>& arrayOfItems);

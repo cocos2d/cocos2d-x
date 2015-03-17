@@ -78,7 +78,7 @@ public:
     bool initWithString(const std::string& string, Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
     
     // super methods
-    virtual void updateAtlasValues();
+    virtual void updateAtlasValues() override;
 
     virtual void setString(const std::string &label) override;
     virtual const std::string& getString(void) const override;

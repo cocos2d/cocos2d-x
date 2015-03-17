@@ -20,8 +20,8 @@ public:
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
     void addNewSpriteAtPosition(Vec2 p);
-    void update(float dt);
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    void update(float dt) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
 
 #if CC_ENABLE_BOX2D_INTEGRATION
 protected:

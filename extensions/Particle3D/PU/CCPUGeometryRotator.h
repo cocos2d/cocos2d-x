@@ -76,7 +76,7 @@ public:
     */
     void resetRotationAxis(void);
 
-    virtual void copyAttributesTo (PUAffector* affector);
+    virtual void copyAttributesTo (PUAffector* affector) override;
 
 CC_CONSTRUCTOR_ACCESS:
     PUGeometryRotator();

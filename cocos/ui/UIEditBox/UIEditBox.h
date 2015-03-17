@@ -444,7 +444,7 @@ namespace ui {
             void touchDownAction(Ref *sender, TouchEventType controlEvent);
             
         protected:
-            virtual void adaptRenderers();
+            virtual void adaptRenderers() override;
 
             void updatePosition(float dt);
             EditBoxImpl*      _editBoxImpl;
