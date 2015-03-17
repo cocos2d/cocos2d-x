@@ -203,7 +203,11 @@ ccLanguageType CCApplication::getCurrentLanguage()
         else if (wcscmp(primary, L"ar") == 0)
         {
             ret = kLanguageArabic;
-        } 
+        }
+        else if (wcscmp(primary, L"bg") == 0)
+        {
+            ret = kLanguageBulgarian;
+        }
     }
 
     return ret;
