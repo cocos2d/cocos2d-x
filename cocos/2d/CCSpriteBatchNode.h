@@ -178,7 +178,7 @@ CC_CONSTRUCTOR_ACCESS:
      * @lua init
      */
     bool initWithFile(const std::string& fileImage, ssize_t capacity = DEFAULT_CAPACITY);
-    bool init();
+    bool init() override;
     
 protected:
     /** Updates a quad at a certain index into the texture atlas. The Sprite won't be added into the children array.

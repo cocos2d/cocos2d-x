@@ -103,7 +103,7 @@ public:
 
     TextureFrame();
 
-    virtual void setNode(cocos2d::Node* node);
+    virtual void setNode(cocos2d::Node* node) override;
 
     virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
     virtual Frame* clone() override;
@@ -341,7 +341,7 @@ public:
 
     EventFrame();
 
-    virtual void setNode(cocos2d::Node* node);
+    virtual void setNode(cocos2d::Node* node) override;
     
     virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
     virtual Frame* clone() override;

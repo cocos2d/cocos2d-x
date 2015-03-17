@@ -62,7 +62,7 @@ public:
     CREATE_FUNC(IterateSpriteSheetForLoop);
 
     IterateSpriteSheetForLoop() {}
-    virtual void update(float dt);
+    virtual void update(float dt) override;
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -75,7 +75,7 @@ public:
     CREATE_FUNC(IterateSpriteSheetIterator);
 
     IterateSpriteSheetIterator() {}
-    virtual void update(float dt);
+    virtual void update(float dt) override;
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -87,7 +87,7 @@ class IterateSpriteSheetForEach : public IterateSpriteSheet
 public:
     CREATE_FUNC(IterateSpriteSheetForEach);
 
-    virtual void update(float dt);
+    virtual void update(float dt) override;
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -119,7 +119,7 @@ class CallFuncsSpriteSheetForEach : public IterateSpriteSheet
 public:
     CREATE_FUNC(CallFuncsSpriteSheetForEach);
 
-    virtual void update(float dt);
+    virtual void update(float dt) override;
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -133,7 +133,7 @@ class AddSprite : public AddRemoveSpriteSheet
 public:
     CREATE_FUNC(AddSprite);
 
-    virtual void update(float dt);
+    virtual void update(float dt) override;
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -145,7 +145,7 @@ class AddSpriteSheet : public AddRemoveSpriteSheet
 public:
     CREATE_FUNC(AddSpriteSheet);
 
-    virtual void update(float dt);
+    virtual void update(float dt) override;
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -157,7 +157,7 @@ class GetSpriteSheet : public AddRemoveSpriteSheet
 public:
     CREATE_FUNC(GetSpriteSheet);
 
-    virtual void update(float dt);
+    virtual void update(float dt) override;
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -169,7 +169,7 @@ class RemoveSprite : public AddRemoveSpriteSheet
 public:
     CREATE_FUNC(RemoveSprite);
 
-    virtual void update(float dt);
+    virtual void update(float dt) override;
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -181,7 +181,7 @@ class RemoveSpriteSheet : public AddRemoveSpriteSheet
 public:
     CREATE_FUNC(RemoveSpriteSheet);
 
-    virtual void update(float dt);
+    virtual void update(float dt) override;
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -193,7 +193,7 @@ class ReorderSpriteSheet : public AddRemoveSpriteSheet
 public:
     CREATE_FUNC(ReorderSpriteSheet);
 
-    virtual void update(float dt);
+    virtual void update(float dt) override;
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -205,7 +205,7 @@ class SortAllChildrenSpriteSheet : public AddRemoveSpriteSheet
 public:
     CREATE_FUNC(SortAllChildrenSpriteSheet);
 
-    virtual void update(float dt);
+    virtual void update(float dt) override;
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;

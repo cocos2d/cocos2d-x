@@ -12,7 +12,7 @@ public:
      TimeElapsed(void);
      virtual ~TimeElapsed(void);
 
-     virtual bool init();
+     virtual bool init() override;
      virtual bool detect();
 	 virtual void serialize(const rapidjson::Value &val);
 	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
@@ -33,7 +33,7 @@ public:
      ArmatureActionState(void);
      virtual ~ArmatureActionState(void);
 
-     virtual bool init();
+     virtual bool init() override;
      virtual bool detect();
 	 virtual void serialize(const rapidjson::Value &val);
 	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
@@ -55,7 +55,7 @@ public:
      NodeInRect(void);
      virtual ~NodeInRect(void);
 
-     virtual bool init();
+     virtual bool init() override;
      virtual bool detect();
 	 virtual void serialize(const rapidjson::Value &val);
 	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);
@@ -73,7 +73,7 @@ public:
      NodeVisible(void);
      virtual ~NodeVisible(void);
 
-     virtual bool init();
+     virtual bool init() override;
      virtual bool detect();
 	 virtual void serialize(const rapidjson::Value &val);
 	 virtual void serialize(cocostudio::CocoLoader *pCocoLoader, cocostudio::stExpCocoNode *pCocoNode);

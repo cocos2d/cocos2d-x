@@ -44,9 +44,9 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
+    void restartCallback(Ref* sender) override;
+    void nextCallback(Ref* sender) override;
+    void backCallback(Ref* sender) override;
     void toggleDebugCallback(Ref* sender);
     
     Sprite* addGrossiniAtPosition(Vec2 p, float scale = 1.0);
@@ -54,9 +54,9 @@ public:
     Sprite* makeBox(Vec2 point, Size size, int color = 0, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
     Sprite* makeTriangle(Vec2 point, Size size, int color = 0, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
     
-    bool onTouchBegan(Touch* touch, Event* event);
-    void onTouchMoved(Touch* touch, Event* event);
-    void onTouchEnded(Touch* touch, Event* event);
+    bool onTouchBegan(Touch* touch, Event* event) override;
+    void onTouchMoved(Touch* touch, Event* event) override;
+    void onTouchEnded(Touch* touch, Event* event) override;
     
 protected:
     PhysicsTestScene* _scene;
@@ -74,8 +74,8 @@ public:
     void onEnter() override;
     virtual std::string subtitle() const override;
     
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
-    void onAcceleration(Acceleration* acc, Event* event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+    void onAcceleration(Acceleration* acc, Event* event) override;
 };
 
 class PhysicsDemoLogoSmash : public PhysicsDemo
@@ -107,7 +107,7 @@ public:
     void onEnter() override;
     virtual std::string title() const override;
     void update(float delta) override;
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
     
     void changeModeCallback(Ref* sender);
     
@@ -147,9 +147,9 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
-    bool onTouchBegan(Touch* touch, Event* event);
-    void onTouchMoved(Touch* touch, Event* event);
-    void onTouchEnded(Touch* touch, Event* event);
+    bool onTouchBegan(Touch* touch, Event* event) override;
+    void onTouchMoved(Touch* touch, Event* event) override;
+    void onTouchEnded(Touch* touch, Event* event) override;
     
 private:
     float _distance;
@@ -179,7 +179,7 @@ public:
     bool slice(PhysicsWorld& world, const PhysicsRayCastInfo& info, void* data);
     void clipPoly(PhysicsShapePolygon* shape, Vec2 normal, float distance);
     
-    void onTouchEnded(Touch *touch, Event *event);
+    void onTouchEnded(Touch *touch, Event *event) override;
     
 private:
     int _sliceTag;
@@ -275,7 +275,7 @@ public:
     void onEnter() override;
     virtual std::string title() const override;
     
-    bool onTouchBegan(Touch* touch, Event* event);
+    bool onTouchBegan(Touch* touch, Event* event) override;
     
 };
 

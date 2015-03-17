@@ -85,7 +85,7 @@ public:
     /** Todo */
     void setStartRandom(bool startRandom);
 
-    virtual void copyAttributesTo (PUAffector* affector);
+    virtual void copyAttributesTo (PUAffector* affector) override;
 
 CC_CONSTRUCTOR_ACCESS:	
     PUTextureAnimator(void);

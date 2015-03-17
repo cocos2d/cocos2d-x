@@ -82,8 +82,8 @@ public:
     */
     void setMasterEmitterName(const std::string& masterEmitterName);
 
-    virtual PUSlaveEmitter* clone();
-    virtual void copyAttributesTo (PUEmitter* emitter);
+    virtual PUSlaveEmitter* clone() override;
+    virtual void copyAttributesTo (PUEmitter* emitter) override;
 
 CC_CONSTRUCTOR_ACCESS:
     PUSlaveEmitter(void);

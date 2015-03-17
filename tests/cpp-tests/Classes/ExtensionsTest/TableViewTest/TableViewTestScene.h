@@ -9,7 +9,7 @@ void runTableViewTest();
 class TableViewTestLayer : public cocos2d::Layer, public cocos2d::extension::TableViewDataSource, public cocos2d::extension::TableViewDelegate
 {
 public:
-    virtual bool init();  
+    virtual bool init() override;  
    
 	void toExtensionsMainLayer(cocos2d::Ref *sender);
 
