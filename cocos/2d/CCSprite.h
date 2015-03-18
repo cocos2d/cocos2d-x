@@ -159,7 +159,7 @@ public:
     /**
      * Updates the quad according the rotation, position, scale values.
      */
-    virtual void updateTransform();
+    virtual void updateTransform() override;
 
     /**
      * Returns the batch node object if this sprite is rendered by SpriteBatchNode
@@ -427,7 +427,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Sprite();
 
     /* Initializes an empty sprite with nothing init. */
-    virtual bool init();
+    virtual bool init() override;
 
     /**
      * Initializes a sprite with a texture.
@@ -515,7 +515,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
 
-    void updateColor();
+    void updateColor() override;
     virtual void setTextureCoords(Rect rect);
     virtual void updateBlendFunc();
     virtual void setReorderChildDirtyRecursively();

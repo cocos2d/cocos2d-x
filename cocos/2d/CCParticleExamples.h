@@ -54,7 +54,7 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual ~ParticleFire(){}
 
-    bool init(){ return initWithTotalParticles(250); }
+    bool init() override { return initWithTotalParticles(250); }
     virtual bool initWithTotalParticles(int numberOfParticles) override;
 
 private:

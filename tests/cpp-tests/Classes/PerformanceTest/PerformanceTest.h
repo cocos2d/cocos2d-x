@@ -8,8 +8,8 @@ class PerformanceMainLayer : public Layer
 public:
     virtual void onEnter() override;
     
-    bool onTouchBegan(Touch* touches, Event  *event);
-    void onTouchMoved(Touch* touches, Event  *event);
+    bool onTouchBegan(Touch* touches, Event  *event) override;
+    void onTouchMoved(Touch* touches, Event  *event) override;
     
     void onMouseScroll(Event *event);
 protected:
