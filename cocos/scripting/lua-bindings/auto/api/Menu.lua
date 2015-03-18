@@ -31,12 +31,6 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
---  initializes an empty Menu 
--- @function [parent=#Menu] init 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
 --  align items horizontally with padding<br>
 -- since v0.7.2
 -- @function [parent=#Menu] alignItemsHorizontallyWithPadding 
@@ -72,15 +66,23 @@
 
 --------------------------------
 -- 
--- @function [parent=#Menu] isOpacityModifyRGB 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- 
 -- @function [parent=#Menu] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
+        
+--------------------------------
+-- 
+-- @function [parent=#Menu] removeChild 
+-- @param self
+-- @param #cc.Node child
+-- @param #bool cleanup
+-- @return Menu#Menu self (return value: cc.Menu)
+        
+--------------------------------
+--  initializes an empty Menu 
+-- @function [parent=#Menu] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 
@@ -91,11 +93,9 @@
         
 --------------------------------
 -- 
--- @function [parent=#Menu] removeChild 
+-- @function [parent=#Menu] isOpacityModifyRGB 
 -- @param self
--- @param #cc.Node child
--- @param #bool cleanup
--- @return Menu#Menu self (return value: cc.Menu)
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- js ctor

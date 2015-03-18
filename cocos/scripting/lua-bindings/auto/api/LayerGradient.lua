@@ -59,12 +59,6 @@
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
--- 
--- @function [parent=#LayerGradient] init 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
 --  Sets the end color of the gradient 
 -- @function [parent=#LayerGradient] setEndColor 
 -- @param self
@@ -111,6 +105,12 @@
 -- @param #vec2_table v
 -- @return LayerGradient#LayerGradient ret (return value: cc.LayerGradient)
 
+--------------------------------
+-- 
+-- @function [parent=#LayerGradient] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
 --------------------------------
 -- 
 -- @function [parent=#LayerGradient] getDescription 

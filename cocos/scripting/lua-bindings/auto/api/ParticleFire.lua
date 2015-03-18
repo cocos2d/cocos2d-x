@@ -6,12 +6,6 @@
 
 --------------------------------
 -- 
--- @function [parent=#ParticleFire] init 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- 
 -- @function [parent=#ParticleFire] create 
 -- @param self
 -- @return ParticleFire#ParticleFire ret (return value: cc.ParticleFire)
@@ -22,6 +16,12 @@
 -- @param self
 -- @param #int numberOfParticles
 -- @return ParticleFire#ParticleFire ret (return value: cc.ParticleFire)
+        
+--------------------------------
+-- 
+-- @function [parent=#ParticleFire] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 

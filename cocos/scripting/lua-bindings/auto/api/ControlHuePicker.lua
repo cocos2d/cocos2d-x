@@ -6,13 +6,6 @@
 
 --------------------------------
 -- 
--- @function [parent=#ControlHuePicker] setEnabled 
--- @param self
--- @param #bool enabled
--- @return ControlHuePicker#ControlHuePicker self (return value: cc.ControlHuePicker)
-        
---------------------------------
--- 
 -- @function [parent=#ControlHuePicker] initWithTargetAndPos 
 -- @param self
 -- @param #cc.Node target
@@ -84,6 +77,13 @@
 -- @param #cc.Node target
 -- @param #vec2_table pos
 -- @return ControlHuePicker#ControlHuePicker ret (return value: cc.ControlHuePicker)
+        
+--------------------------------
+-- 
+-- @function [parent=#ControlHuePicker] setEnabled 
+-- @param self
+-- @param #bool enabled
+-- @return ControlHuePicker#ControlHuePicker self (return value: cc.ControlHuePicker)
         
 --------------------------------
 -- 

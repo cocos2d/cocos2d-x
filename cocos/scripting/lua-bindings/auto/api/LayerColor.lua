@@ -40,12 +40,6 @@
 -- @return LayerColor#LayerColor self (return value: cc.LayerColor)
         
 --------------------------------
--- 
--- @function [parent=#LayerColor] init 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
 -- @overload self, color4b_table         
 -- @overload self, color4b_table, float, float         
 -- @function [parent=#LayerColor] initWithColor
@@ -81,6 +75,12 @@
 -- @param #mat4_table transform
 -- @param #unsigned int flags
 -- @return LayerColor#LayerColor self (return value: cc.LayerColor)
+        
+--------------------------------
+-- 
+-- @function [parent=#LayerColor] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 
