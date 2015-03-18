@@ -40,7 +40,9 @@ NS_CC_BEGIN
 
 class Ref;
 
-/** Interface that defines how to clone an Ref */
+/** Interface that defines how to clone an Ref 
+@js NA
+*/
 class CC_DLL Clonable
 {
 public:
@@ -63,6 +65,9 @@ public:
     }
 };
 
+/**
+@js NA
+*/
 class CC_DLL Ref
 {
 public:

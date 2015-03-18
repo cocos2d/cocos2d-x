@@ -99,7 +99,7 @@ public:
      * @brief Get the vertex that belongs to certain position in the grid.
      * @param position The position of the grid.
      * @return Return a pointer of vertex.
-     * @js NA
+     * @js vertex
      * @lua NA
      */
     Vec3 getVertex(const Vec2& position) const;
@@ -114,7 +114,7 @@ public:
      * @brief Get the non-transformed vertex that belongs to certain position in the grid.
      * @param position The position of the grid.
      * @return Return a pointer of vertex.
-     * @js NA
+     * @js originalVertex
      * @lua NA
      */
     Vec3 getOriginalVertex(const Vec2& position) const;
@@ -129,7 +129,7 @@ public:
      * @brief Set a new vertex to a certain position of the grid.
      * @param position The position of the grid.
      * @param vertex The vertex will be used on the certain position of grid.
-     * @js NA
+     * @js setVertex
      * @lua NA
      */
     void setVertex(const Vec2& position, const Vec3& vertex);
@@ -153,7 +153,6 @@ public:
      * @param duration The duration of the action. It's a value in seconds.
      * @param gridSize Specify the grid size of the action.
      * @return A pointer of TiledGrid3DAction. If creation failed, return nil.
-     * @js NA
      * @lua NA
      */
     static TiledGrid3DAction* create(float duration, const Size& gridSize);
@@ -162,7 +161,7 @@ public:
      * @brief Get the tile that belongs to a certain position of the grid.
      * @param position The position of the tile want to get.
      * @return A quadrilateral of the tile. 
-     * @js NA
+     * @js tile
      * @lua NA
      */
     Quad3 getTile(const Vec2& position) const;
@@ -177,7 +176,7 @@ public:
      * @brief Get the non-transformed tile that belongs to a certain position of the grid.
      * @param position The position of the tile want to get.
      * @return A quadrilateral of the tile. 
-     * @js NA
+     * @js originalTile
      * @lua NA
      */
     Quad3 getOriginalTile(const Vec2& position) const;
@@ -192,7 +191,6 @@ public:
      * @brief Set a new tile to a certain position of the grid.
      * @param position The position of the tile.
      * @param coords The quadrilateral of the new tile.
-     * @js NA
      * @lua NA
      */
     void setTile(const Vec2& position, const Quad3& coords);
@@ -210,6 +208,7 @@ public:
 
 /**
 @brief AccelDeccelAmplitude action.
+@js NA
 */
 class CC_DLL AccelDeccelAmplitude : public ActionInterval
 {
@@ -261,6 +260,7 @@ private:
 
 /**
 @brief AccelAmplitude action.
+@js NA
 */
 class CC_DLL AccelAmplitude : public ActionInterval
 {
@@ -306,6 +306,7 @@ private:
 
 /**
 @brief DeccelAmplitude action
+@js NA
 */
 class CC_DLL DeccelAmplitude : public ActionInterval
 {
