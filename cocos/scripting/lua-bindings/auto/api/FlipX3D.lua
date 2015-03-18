@@ -5,7 +5,9 @@
 -- @parent_module cc
 
 --------------------------------
---  creates the action with duration 
+-- brief Create the action with duration.<br>
+-- param duration Specify the duration of the FilpX3D action. It's a value in seconds.<br>
+-- return If the creation sucess, return a pointer of FilpX3D action; otherwise, return nil.
 -- @function [parent=#FlipX3D] create 
 -- @param self
 -- @param #float duration
@@ -18,7 +20,7 @@
 -- @return FlipX3D#FlipX3D ret (return value: cc.FlipX3D)
         
 --------------------------------
--- param time in seconds
+-- 
 -- @function [parent=#FlipX3D] update 
 -- @param self
 -- @param #float time
