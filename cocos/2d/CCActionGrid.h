@@ -143,7 +143,7 @@ public:
 };
 
 /**
-@brief Base class for TiledGrid3D actions
+@brief Base class for TiledGrid3D actions.
 */
 class CC_DLL TiledGrid3DAction : public GridAction
 {
@@ -305,7 +305,7 @@ private:
 };
 
 /**
-@brief DeccelAmplitude action
+@brief DeccelAmplitude action.
 */
 class CC_DLL DeccelAmplitude : public ActionInterval
 {
