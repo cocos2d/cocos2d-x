@@ -440,7 +440,7 @@ void Sprite3D::genGLProgramState(bool useLight)
                                                  meshattribute.size,
                                                  meshattribute.type,
                                                  GL_FALSE,
-                                                 mesh->getVertexBuffer()->getElementSize(),
+                                                 static_cast<GLsizei>(mesh->getVertexBuffer()->getElementSize()),
                                                  (GLvoid*)offset);
             offset += meshattribute.attribSizeBytes;
         }

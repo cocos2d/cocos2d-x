@@ -405,7 +405,7 @@ bool JSPROXY_CCPhysicsSprite_spriteWithFile_rect__static(JSContext *cx, uint32_t
 // Ret value: PhysicsSprite* (o)
 bool JSPROXY_CCPhysicsSprite_spriteWithSpriteFrame__static(JSContext *cx, uint32_t argc, jsval *vp) {
     jsval *argv = JS_ARGV(cx, vp);
-    cocos2d::SpriteFrame* arg0;
+    cocos2d::SpriteFrame* arg0 = nullptr;
     if (argc >= 1) {
         do {
             js_proxy_t *proxy;
