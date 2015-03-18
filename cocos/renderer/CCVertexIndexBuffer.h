@@ -35,68 +35,93 @@ class EventListenerCustom;
 
 /**
 VertexBuffer is an abstraction of low level openGL Vertex Buffer Object.
-It used to save an array of vertices
+It is used to save an array of vertices.
 */
 class CC_DLL VertexBuffer : public Ref
 {
 public:
     /**
-    Create an instance of VertexBuffer
-    @param sizePerVertex Size in bytes of one vertex
-    @param vertexNumber The number of vertex
-    @param usage A hint to indicate whether the vertexBuffer are updated frequently or not to let GL optimise it
+    Create an instance of VertexBuffer.
+    @param sizePerVertex Size in bytes of one vertex.
+    @param vertexNumber The number of vertex.
+    @param usage A hint to indicate whether the vertexBuffer are updated frequently or not to let GL optimise it.
     */
     static VertexBuffer* create(int sizePerVertex, int vertexNumber, GLenum usage = GL_STATIC_DRAW);
-    /*Get the size in bytes of one vertex*/
+    /**Get the size in bytes of one vertex.*/
     int getSizePerVertex() const;
-    /*Get the number of vertices*/
+    /**Get the number of vertices.*/
     int getVertexNumber() const;
     /**
-    Update all or part of vertice data, if the range specified exceeds the vertex buffer, it will be clipped
-    @param verts The pointer of the vertex data
-    @param count The number of vertices to update
-    @param begin The first vertex to update
+    Update all or part of vertice data, if the range specified exceeds the vertex buffer, it will be clipped.
+    @param verts The pointer of the vertex data.
+    @param count The number of vertices to update.
+    @param begin The first vertex to update.
     */
     bool updateVertices(const void* verts, int count, int begin);
 
-    /*Get the size of the vertex array in bytes, equals getSizePerVertex() * getVertexNumber()*/
+    /**
+    Get the size of the vertex array in bytes, equals getSizePerVertex() * getVertexNumber().
+    */
     int getSize() const;
-    /*Get the internal openGL handle*/
+    /**
+    Get the internal openGL handle.
+    */
     GLuint getVBO() const;
     
 protected:
-    /*Constructor*/
+    /**
+    Constructor.
+    */
     VertexBuffer();
-    /*Destructor*/
+    /**
+    Destructor.
+    */
     virtual ~VertexBuffer();
     /**
-    Init the storage of vertex buffer
-    @param sizePerVertex Size in bytes of one vertex
-    @param vertexNumber The number of vertex
-    @param usage A hint to indicate whether the vertexBuffer are updated frequently or not to let GL optimise it
+    Init the storage of vertex buffer.
+    @param sizePerVertex Size in bytes of one vertex.
+    @param vertexNumber The number of vertex.
+    @param usage A hint to indicate whether the vertexBuffer are updated frequently or not to let GL optimise it.
     */
     bool init(int sizePerVertex, int vertexNumber, GLenum usage = GL_STATIC_DRAW);
 protected:
-    //event listener for foreground
+    /**
+    Event handler for foreground.
+    */
     void recreateVBO() const;
+    /**
+    Event listener for foreground.
+    */
     EventListenerCustom* _recreateVBOEventListener;
 protected:
-    /*internal handle for openGL*/
+    /**
+    Internal handle for openGL.
+    */
     mutable GLuint _vbo;
-    //size in bytes for one vertex
+    /**
+    Size in bytes for one vertex.
+    */
     int _sizePerVertex;
-    //number of vertices
+    /**
+    Number of vertices.
+    */
     int _vertexNumber;
-    //buffer used for shadow copy
+    /**
+    Buffer used for shadow copy.
+    */
     std::vector<unsigned char> _shadowCopy;
-    //Hint for optimisation in GL
+    /**
+    Hint for optimisation in GL.
+    */
     GLenum _usage;
 protected:
-    //static member to indicate that use _shadowCopy or not
+    /**
+    Static member to indicate that use _shadowCopy or not. 
+    */
     static bool _enableShadowCopy;
 public:
     /**
-    Static getter/setter for shadowCopy
+    Static getter/setter for shadowCopy.
     */
     static bool isShadowCopyEnabled() { return _enableShadowCopy; }
     static void enableShadowCopy(bool enabled) { _enableShadowCopy = enabled; }
@@ -104,13 +129,13 @@ public:
 
 /**
 IndexBuffer is an abstraction of low level openGL Buffer Object.
-It used to save an array of indices
+It used to save an array of indices.
 */
 class CC_DLL IndexBuffer : public Ref
 {
 public:
     /**
-    Enum for the type of index, short indices and int indices could be used
+    Enum for the type of index, short indices and int indices could be used.
     */
     enum class IndexType
     {
@@ -120,65 +145,96 @@ public:
     
 public:
     /**
-    Create an instance of IndexBuffer
-    @param type type of index
-    @param number The number of indices
-    @param usage A hint to indicate whether the vertexBuffer are updated frequently or not to let GL optimise it
+    Create an instance of IndexBuffer.
+    @param type type of index.
+    @param number The number of indices.
+    @param usage A hint to indicate whether the vertexBuffer are updated frequently or not to let GL optimise it.
     */
     static IndexBuffer* create(IndexType type, int number, GLenum usage = GL_STATIC_DRAW);
-    //Getter for type of indices
+    /**
+    Getter for type of indices.
+    */
     IndexType getType() const;
-    //Get the size in bytes for one index, will be 2 for INDEX_TYPE_SHORT_16 and 4 for INDEX_TYPE_UINT_32
+    /**
+    Get the size in bytes for one index, will be 2 for INDEX_TYPE_SHORT_16 and 4 for INDEX_TYPE_UINT_32.
+    */
     int getSizePerIndex() const;
-    //Get the number of indices
+    /**
+    Get the number of indices.
+    */
     int getIndexNumber() const;
     /**
-    Update all or part of indices data, if the range specified exceeds the vertex buffer, it will be clipped
-    @param indices The pointer of the index data
-    @param count The number of indices to update
-    @param begin The start index to update
+    Update all or part of indices data, if the range specified exceeds the vertex buffer, it will be clipped.
+    @param indices The pointer of the index data.
+    @param count The number of indices to update.
+    @param begin The start index to update.
     */
     bool updateIndices(const void* indices, int count, int begin);
-    //Get the size in bytes of the array of indices
+    /**
+    Get the size in bytes of the array of indices.
+    */
     int getSize() const;
-    //Get the openGL handle for index buffer
+    /**
+    Get the openGL handle for index buffer.
+    */
     GLuint getVBO() const;
 
 protected:
-    //Constructor
+    /**
+    Constructor.
+    */
     IndexBuffer();
-    //Destructor
+    /**
+    Destructor.
+    */
     virtual ~IndexBuffer();
     /**
-    Init the storageof IndexBuffer
-    @param type type of index
-    @param number The number of indices
-    @param usage A hint to indicate whether the vertexBuffer are updated frequently or not to let GL optimise it
+    Init the storageof IndexBuffer.
+    @param type type of index.
+    @param number The number of indices.
+    @param usage A hint to indicate whether the vertexBuffer are updated frequently or not to let GL optimise it.
     */
     bool init(IndexType type, int number, GLenum usage = GL_STATIC_DRAW);
     
 protected:
-    //handle for openGL
+    /**
+    Handle for openGL.
+    */
     mutable GLuint _vbo;
-    //type for index
+    /**
+    Type for index.
+    */
     IndexType _type;
-    //number of indices
+    /**
+    Number of indices.
+    */
     int _indexNumber;
     
 protected:
-    //event listener for foreground
+    /**
+    Event handler for foreground.
+    */
     void recreateVBO() const;
+    /**
+    Event listener for foreground.
+    */
     EventListenerCustom* _recreateVBOEventListener;
-    //buffer used for shadow copy
+    /**
+    Buffer used for shadow copy.
+    */
     std::vector<unsigned char> _shadowCopy;
-    //Hint for optimisation in GL
+    /**
+    Hint for optimisation in GL.
+    */
     GLenum _usage;
 protected:
-    //static member to indicate that use _shadowCopy or not
+    /**
+    Static member to indicate that use _shadowCopy or not.
+    */
     static bool _enableShadowCopy;
 public:
     /**
-    Static getter/setter for shadowCopy
+    Static getter/setter for shadowCopy.
     */
     static bool isShadowCopyEnabled() { return _enableShadowCopy; }
     static void enableShadowCopy(bool enabled) { _enableShadowCopy = enabled; }
