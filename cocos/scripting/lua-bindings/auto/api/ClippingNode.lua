@@ -77,6 +77,14 @@
 
 --------------------------------
 -- 
+-- @function [parent=#ClippingNode] setCameraMask 
+-- @param self
+-- @param #unsigned short mask
+-- @param #bool applyChildren
+-- @return ClippingNode#ClippingNode self (return value: cc.ClippingNode)
+        
+--------------------------------
+-- 
 -- @function [parent=#ClippingNode] visit 
 -- @param self
 -- @param #cc.Renderer renderer
