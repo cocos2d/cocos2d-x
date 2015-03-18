@@ -278,9 +278,6 @@ cocos_load_prebuilt_package(crypto
 message(STATUS "Prebuilt package 'CURL' depends: CRYPTO, OPENSSL.")
 
 cocos_load_prebuilt_package(edtaa3func)
-cocos_load_prebuilt_package(flatbufffers
-    LIB_NAMES "flatbuffer" "flatbuffers" "libflatbuffers"
-    )
 
 if(COCOS_TARGET_SYSTEM_LINUX)
     cocos_load_prebuilt_package(fmodex
