@@ -932,6 +932,7 @@ void Label::createSpriteWithFontDefinition()
     texture->initWithString(_originalUTF8String.c_str(),_fontDefinition);
 
     _textSprite = Sprite::createWithTexture(texture);
+    _textSprite->setCameraMask(getCameraMask());
     _textSprite->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
     this->setContentSize(_textSprite->getContentSize());
     texture->release();
@@ -1073,6 +1074,7 @@ void Label::drawTextSprite(Renderer *renderer, uint32_t parentFlags)
             {
                 _shadowNode->setBlendFunc(_blendFunc);
             }
+            _shadowNode->setCameraMask(getCameraMask());
             _shadowNode->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
             _shadowNode->setColor(_shadowColor);
             _shadowNode->setOpacity(_shadowOpacity * _displayedOpacity);
