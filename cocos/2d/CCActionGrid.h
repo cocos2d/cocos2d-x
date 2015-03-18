@@ -60,8 +60,8 @@ CC_CONSTRUCTOR_ACCESS:
     GridAction() {}
     virtual ~GridAction() {}
     /** 
-     * initializes the action with size and duration
-     * @param duration in seconds
+     * initializes the action with size and duration.
+     * @param duration in seconds.
      */
     bool initWithDuration(float duration, const Size& gridSize);
 
@@ -86,7 +86,7 @@ public:
 
     /** returns the grid */
     virtual GridBase* getGrid() override;
-    /** returns the vertex than belongs to certain position in the grid 
+    /** returns the vertex than belongs to certain position in the grid.
      * @js NA
      * @lua NA
      */
