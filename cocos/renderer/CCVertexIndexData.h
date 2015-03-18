@@ -45,25 +45,55 @@ glVertexAttribPointer(GLuint indx, GLint size, GLenum type, GLboolean normalized
 */
 struct CC_DLL VertexStreamAttribute
 {
+    /**
+     Constructor.
+     */
     VertexStreamAttribute()
     : _normalize(false),_offset(0),_semantic(0),_type(0),_size(0)
     {
     }
-
+    /**
+     Constructor
+     @param offset The offset of the attribute.
+     @param semantic The semantic (Position, Texcoord, Color etc) of attribute.
+     @param type The type of attribute, could be GL_FLOAT, GL_UNSIGNED_BYTE etc.
+     @param size Describe how many elements of type in the attribute.
+     */
     VertexStreamAttribute(int offset, int semantic, int type, int size)
     : _normalize(false),_offset(offset),_semantic(semantic),_type(type),_size(size)
     {
     }
-    
+    /**
+     Constructor
+     @param offset The offset of the attribute.
+     @param semantic The semantic (Position, Texcoord, Color etc) of attribute.
+     @param type The type of attribute, could be GL_FLOAT, GL_UNSIGNED_BYTE etc.
+     @param size Describe how many elements of type in the attribute.
+     @param normalize If true, the data will be normalized by deviding 255.
+     */
     VertexStreamAttribute(int offset, int semantic, int type, int size, bool normalize)
     : _normalize(normalize),_offset(offset),_semantic(semantic),_type(type),_size(size)
     {
     }
-    
+    /**
+     Whether the attribute should be normalized or not.
+     */
     bool _normalize;
+    /**
+     The offset of the attribute in the buffer.
+     */
     int _offset;
+    /**
+     Describe that the attribute usage, could be Position, Color etc.
+     */
     int _semantic;
+    /**
+     Describe the type of attribute, could be GL_FLOAT, GL_UNSIGNED_BYTE etc.
+     */
     int _type;
+    /**
+     Describe how many elements of type in the attribute.
+     */
     int _size;
 };
 
