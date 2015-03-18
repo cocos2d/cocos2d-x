@@ -5,8 +5,11 @@
 -- @parent_module cc
 
 --------------------------------
--- Creates and initializes the action with a duration, a "from" percentage and a "to" percentage <br>
--- param duration in seconds
+-- brief Create and initializes the action with a duration, a "from" percentage and a "to" percentage.<br>
+-- param duration Specify the duration of the ProgressFromTo action. It's a value in seconds.<br>
+-- param fromPercentage Specify the source percentage.<br>
+-- param toPercentage Specify the destination percentage.<br>
+-- return If the creation sucess, return a pointer of ProgressFromTo action; otherwise, return nil.
 -- @function [parent=#ProgressFromTo] create 
 -- @param self
 -- @param #float duration
@@ -34,7 +37,7 @@
 -- @return ProgressFromTo#ProgressFromTo ret (return value: cc.ProgressFromTo)
         
 --------------------------------
--- param time in seconds
+-- 
 -- @function [parent=#ProgressFromTo] update 
 -- @param self
 -- @param #float time

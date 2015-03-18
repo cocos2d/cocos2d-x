@@ -2733,62 +2733,6 @@ int lua_cocos2dx_3d_BillBoard_getMode(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_3d_BillBoard_visit(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::BillBoard* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.BillBoard",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::BillBoard*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_BillBoard_visit'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 3) 
-    {
-        cocos2d::Renderer* arg0;
-        cocos2d::Mat4 arg1;
-        unsigned int arg2;
-
-        ok &= luaval_to_object<cocos2d::Renderer>(tolua_S, 2, "cc.Renderer",&arg0);
-
-        ok &= luaval_to_mat4(tolua_S, 3, &arg1, "cc.BillBoard:visit");
-
-        ok &= luaval_to_uint32(tolua_S, 4,&arg2, "cc.BillBoard:visit");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_BillBoard_visit'", nullptr);
-            return 0;
-        }
-        cobj->visit(arg0, arg1, arg2);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.BillBoard:visit",argc, 3);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_BillBoard_visit'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_3d_BillBoard_setMode(lua_State* tolua_S)
 {
     int argc = 0;
@@ -3012,7 +2956,6 @@ int lua_register_cocos2dx_3d_BillBoard(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"BillBoard");
         tolua_function(tolua_S,"getMode",lua_cocos2dx_3d_BillBoard_getMode);
-        tolua_function(tolua_S,"visit",lua_cocos2dx_3d_BillBoard_visit);
         tolua_function(tolua_S,"setMode",lua_cocos2dx_3d_BillBoard_setMode);
         tolua_function(tolua_S,"create", lua_cocos2dx_3d_BillBoard_create);
         tolua_function(tolua_S,"createWithTexture", lua_cocos2dx_3d_BillBoard_createWithTexture);
