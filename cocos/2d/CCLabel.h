@@ -77,6 +77,10 @@ typedef struct _ttfConfig
 class CC_DLL Label : public SpriteBatchNode, public LabelProtocol
 {
 public:
+    // Add this friend class to fix warnings. Because LabelTTF is deprecated, but __LabelTTF::getFontDefinition()
+    // will invoke Label::getFontDefinition() which is a deprecated function.
+    friend class __LabelTTF;
+    
     static const int DistanceFieldFontSize;
 
     static Label* create();
@@ -265,6 +269,8 @@ public:
 
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+
+    virtual void setCameraMask(unsigned short mask, bool applyChildren = true) override;
 
     CC_DEPRECATED(v3) static Label* create(const std::string& text, const std::string& font, float fontSize,
         const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT,

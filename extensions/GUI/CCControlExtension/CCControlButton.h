@@ -59,11 +59,11 @@ public:
     static ControlButton* create(Node* label, cocos2d::ui::Scale9Sprite* backgroundSprite);
     static ControlButton* create(const std::string& title, const std::string& fontName, float fontSize);
 
-    virtual void needsLayout(void);
+    virtual void needsLayout(void) override;
 
-    virtual void setEnabled(bool enabled);
-    virtual void setSelected(bool enabled);
-    virtual void setHighlighted(bool enabled);
+    virtual void setEnabled(bool enabled) override;
+    virtual void setSelected(bool enabled) override;
+    virtual void setHighlighted(bool enabled) override;
 
     bool isPushed() const { return _isPushed; }
 

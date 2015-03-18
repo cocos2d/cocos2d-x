@@ -62,7 +62,7 @@ public:
     void addNewBillBoradWithCoords(Vec3 p);
     void addNewAniBillBoradWithCoords(Vec3 p);
     void rotateCameraCallback(Ref* sender,float value);
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event* event) override;
     
     void menuCallback_orientedPoint(Ref* sender);
     void menuCallback_orientedPlane(Ref* sender);

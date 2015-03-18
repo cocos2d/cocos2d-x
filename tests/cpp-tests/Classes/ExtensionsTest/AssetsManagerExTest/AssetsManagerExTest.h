@@ -14,12 +14,12 @@ public:
     AssetsManagerExTestLayer(const std::string& spritePath);
     ~AssetsManagerExTestLayer(void);
     
-    virtual std::string title() const;
-    void onEnter();
+    virtual std::string title() const override;
+    void onEnter() override;
     
-    virtual void restartCallback(Ref* sender);
-    virtual void nextCallback(Ref* sender);
-    virtual void backCallback(Ref* sender);
+    virtual void restartCallback(Ref* sender) override;
+    virtual void nextCallback(Ref* sender) override;
+    virtual void backCallback(Ref* sender) override;
     
 private:
     Sprite *_background;

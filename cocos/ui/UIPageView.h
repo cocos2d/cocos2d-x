@@ -205,7 +205,7 @@ protected:
 
     virtual void handleMoveLogic(Touch *touch) ;
     virtual void handleReleaseLogic(Touch *touch) ;
-    virtual void interceptTouchEvent(TouchEventType event, Widget* sender,Touch *touch) ;
+    virtual void interceptTouchEvent(TouchEventType event, Widget* sender,Touch *touch) override;
     
     
     virtual void onSizeChanged() override;

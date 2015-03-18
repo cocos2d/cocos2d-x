@@ -54,8 +54,8 @@ public:
     virtual bool onTextFieldInsertText(TextFieldTTF * pSender, const char * text, size_t nLen) override;
     virtual bool onTextFieldDeleteBackward(TextFieldTTF * pSender, const char * delText, size_t nLen) override;
     
-    void insertText(const char* text, size_t len);
-    void deleteBackward();
+    void insertText(const char* text, size_t len) override;
+    void deleteBackward() override;
     
     void openIME();
     void closeIME();
@@ -131,7 +131,7 @@ public:
     void setTouchSize(const Size &size);
     Size getTouchSize()const;
     void setTouchAreaEnabled(bool enable);
-    virtual bool hitTest(const Vec2 &pt);
+    virtual bool hitTest(const Vec2 &pt) override;
     
     void setPlaceHolder(const std::string& value);
     const std::string& getPlaceHolder()const;

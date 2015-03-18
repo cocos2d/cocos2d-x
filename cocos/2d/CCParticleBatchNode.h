@@ -79,7 +79,7 @@ public:
     void insertChild(ParticleSystem* system, int index);
 
     void removeChildAtIndex(int index, bool doCleanup);
-    void removeAllChildrenWithCleanup(bool doCleanup);
+    void removeAllChildrenWithCleanup(bool doCleanup) override;
 
     /** disables a particle by inserting a 0'd quad into the texture atlas */
     void disableParticle(int particleIndex);
