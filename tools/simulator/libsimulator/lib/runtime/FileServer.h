@@ -26,10 +26,10 @@ THE SOFTWARE.
 #define  _FILE_SERVER__H_
 
 #include "cocos2d.h"
-#include "json/document.h"
-#include "json/filestream.h"
-#include "json/stringbuffer.h"
-#include "json/writer.h"
+#include "rapidjson/document.h"
+#include "rapidjson/filestream.h"
+#include "rapidjson/stringbuffer.h"
+#include "rapidjson/writer.h"
 #include "Protos.pb.h"
 #include <string>
 

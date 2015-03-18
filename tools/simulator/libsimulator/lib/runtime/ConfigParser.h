@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include "cocos2d.h"
-#include "json/document.h"
+#include "rapidjson/document.h"
 #include "ProjectConfig/SimulatorConfig.h"
 #include "ProjectConfig/ProjectConfig.h"
 using namespace std;

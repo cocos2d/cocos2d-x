@@ -8,7 +8,7 @@
 #define __Simulator__RuntimeProtocol__
 
 #include <string>
-#include "json/document.h"
+#include "rapidjson/document.h"
 
 class RuntimeProtocol
 {

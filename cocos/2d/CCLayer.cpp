@@ -311,12 +311,6 @@ void Layer::setKeypadEnabled(bool enabled)
 
 bool Layer::onTouchBegan(Touch *touch, Event *event)
 {
-#if CC_ENABLE_SCRIPT_BINDING
-    if (kScriptTypeLua == _scriptType)
-    {
-        return executeScriptTouchHandler(EventTouch::EventCode::BEGAN, touch, event) == 0 ? false : true;
-    }
-#endif
     CC_UNUSED_PARAM(event);
     CCASSERT(false, "Layer#ccTouchBegan override me");
     return true;
@@ -324,89 +318,36 @@ bool Layer::onTouchBegan(Touch *touch, Event *event)
 
 void Layer::onTouchMoved(Touch *touch, Event *event)
 {
-#if CC_ENABLE_SCRIPT_BINDING
-    if (kScriptTypeLua == _scriptType)
-    {
-        executeScriptTouchHandler(EventTouch::EventCode::MOVED, touch, event);
-        return;
-    }
-#endif
-    
     CC_UNUSED_PARAM(event);
 }
 
 void Layer::onTouchEnded(Touch *touch, Event *event)
 {
-#if CC_ENABLE_SCRIPT_BINDING
-    if (kScriptTypeLua == _scriptType)
-    {
-        executeScriptTouchHandler(EventTouch::EventCode::ENDED, touch, event);
-        return;
-    }
-#endif
-    
     CC_UNUSED_PARAM(event);
 }
 
 void Layer::onTouchCancelled(Touch *touch, Event *event)
 {
-#if CC_ENABLE_SCRIPT_BINDING
-    if (kScriptTypeLua == _scriptType)
-    {
-        executeScriptTouchHandler(EventTouch::EventCode::CANCELLED, touch, event);
-        return;
-    }
-#endif
-    
     CC_UNUSED_PARAM(event);
 }    
 
 void Layer::onTouchesBegan(const std::vector<Touch*>& touches, Event *event)
 {
-#if CC_ENABLE_SCRIPT_BINDING
-    if (kScriptTypeLua == _scriptType)
-    {
-        executeScriptTouchesHandler(EventTouch::EventCode::BEGAN, touches, event);
-        return;
-    }
-#endif
     CC_UNUSED_PARAM(event);
 }
 
 void Layer::onTouchesMoved(const std::vector<Touch*>& touches, Event *event)
 {
-#if CC_ENABLE_SCRIPT_BINDING
-    if (kScriptTypeLua == _scriptType)
-    {
-        executeScriptTouchesHandler(EventTouch::EventCode::MOVED, touches, event);
-        return;
-    }
-#endif
-    
     CC_UNUSED_PARAM(event);
 }
 
 void Layer::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
 {
-#if CC_ENABLE_SCRIPT_BINDING
-    if (kScriptTypeLua == _scriptType)
-    {
-        executeScriptTouchesHandler(EventTouch::EventCode::ENDED, touches, event);
-        return;
-    }
-#endif
     CC_UNUSED_PARAM(event);
 }
 
 void Layer::onTouchesCancelled(const std::vector<Touch*>& touches, Event *event)
 {
-#if CC_ENABLE_SCRIPT_BINDING
-    if (kScriptTypeLua == _scriptType)
-    {
-        executeScriptTouchesHandler(EventTouch::EventCode::CANCELLED, touches, event);
-        return;
-    }
-#endif
     CC_UNUSED_PARAM(event);
 }
 

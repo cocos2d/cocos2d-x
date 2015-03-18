@@ -77,6 +77,10 @@ typedef struct _ttfConfig
 class CC_DLL Label : public SpriteBatchNode, public LabelProtocol
 {
 public:
+    // Add this friend class to fix warnings. Because LabelTTF is deprecated, but __LabelTTF::getFontDefinition()
+    // will invoke Label::getFontDefinition() which is a deprecated function.
+    friend class __LabelTTF;
+    
     static const int DistanceFieldFontSize;
 
     static Label* create();
