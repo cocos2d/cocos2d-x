@@ -72,12 +72,6 @@
         
 --------------------------------
 -- 
--- @function [parent=#SpriteBatchNode] init 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- 
 -- @function [parent=#SpriteBatchNode] lowestAtlasIndexInChild 
 -- @param self
 -- @param #cc.Sprite sprite
@@ -233,6 +227,12 @@
 -- @param #cc.Node child
 -- @param #bool cleanup
 -- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
+        
+--------------------------------
+-- 
+-- @function [parent=#SpriteBatchNode] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 
