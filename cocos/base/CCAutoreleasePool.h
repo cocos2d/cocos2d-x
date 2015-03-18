@@ -33,6 +33,7 @@ NS_CC_BEGIN
 
 /**
  * @addtogroup base_nodes
+ * @js NA
  * @{
  */
 
@@ -122,6 +123,9 @@ private:
 #endif
 };
 
+/*
+ * @js NA 
+ */
 class CC_DLL PoolManager
 {
 public:

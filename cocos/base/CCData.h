@@ -33,6 +33,9 @@
 
 NS_CC_BEGIN
 
+/*
+ * @js NA
+ */
 class CC_DLL Data
 {
 public:
