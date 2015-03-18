@@ -85,12 +85,6 @@
 -- @return Sprite3D#Sprite3D ret (return value: cc.Sprite3D)
         
 --------------------------------
--- 
--- @function [parent=#Sprite3D] init 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
 --  get mesh count 
 -- @function [parent=#Sprite3D] getMeshCount 
 -- @param self
@@ -254,6 +248,12 @@
 -- @param self
 -- @param #cc.Action action
 -- @return Action#Action ret (return value: cc.Action)
+        
+--------------------------------
+-- 
+-- @function [parent=#Sprite3D] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 --  just rember bind attributes 

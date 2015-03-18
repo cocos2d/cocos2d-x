@@ -74,12 +74,6 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
---  initializes a ParticleSystem
--- @function [parent=#ParticleSystem] init 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
 --  end size variance in pixels of each particle 
 -- @function [parent=#ParticleSystem] getEndSizeVar 
 -- @param self
@@ -300,12 +294,6 @@
 -- @function [parent=#ParticleSystem] getEndRadius 
 -- @param self
 -- @return float#float ret (return value: float)
-        
---------------------------------
--- 
--- @function [parent=#ParticleSystem] isOpacityModifyRGB 
--- @param self
--- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 
@@ -555,13 +543,6 @@
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
         
 --------------------------------
---  does the alpha value modify color 
--- @function [parent=#ParticleSystem] setOpacityModifyRGB 
--- @param self
--- @param #bool opacityModifyRGB
--- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
-        
---------------------------------
 --  Add a particle to the emitter
 -- @function [parent=#ParticleSystem] addParticle 
 -- @param self
@@ -670,6 +651,25 @@
 -- @param self
 -- @param #float dt
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
+        
+--------------------------------
+--  does the alpha value modify color 
+-- @function [parent=#ParticleSystem] setOpacityModifyRGB 
+-- @param self
+-- @param #bool opacityModifyRGB
+-- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
+        
+--------------------------------
+--  initializes a ParticleSystem
+-- @function [parent=#ParticleSystem] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#ParticleSystem] isOpacityModifyRGB 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- js ctor
