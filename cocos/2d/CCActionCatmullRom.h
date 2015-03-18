@@ -50,15 +50,16 @@ class Node;
  */
 
 /** An Array that contain control points.
- Used by CardinalSplineTo and (By) and CatmullRomTo (and By) actions.
-@ingroup Actions
+ * Used by CardinalSplineTo and (By) and CatmullRomTo (and By) actions.
+ * @ingroup Actions
  */
 class CC_DLL PointArray : public Ref, public Clonable
 {
 public:
 
-    /** creates and initializes a Points array with capacity
+    /** creates and initializes a Points array with capacity.
      * @js NA
+     * @param capacity The size of the array.
      */
     static PointArray* create(ssize_t capacity);
 
@@ -73,47 +74,67 @@ public:
      */
     PointArray();
 
-    /** initializes a Catmull Rom config with a capacity hint
+    /** initializes a Catmull Rom config with a capacity hint.
+     *
      * @js NA
+     * @param capacity The size of the array.
+     * @return True.
      */
     bool initWithCapacity(ssize_t capacity);
 
-    /** appends a control point
+    /** appends a control point.
+     *
      * @js NA
+     * @param controlPoint a control point.
      */
     void addControlPoint(Vec2 controlPoint);
 
-    /** inserts a controlPoint at index
+    /** inserts a controlPoint at index.
+     *
      * @js NA
+     * @param controlPoint a control point.
+     * @param index Insert the point to array in index.
      */
     void insertControlPoint(Vec2 &controlPoint, ssize_t index);
 
-    /** replaces an existing controlPoint at index
+    /** replaces an existing controlPoint at index.
+     *
      * @js NA
+     * @param controlPoint a control point.
+     * @param index replace the point to array in index.
      */
     void replaceControlPoint(Vec2 &controlPoint, ssize_t index);
 
-    /** get the value of a controlPoint at a given index
+    /** get the value of a controlPoint at a given index.
+     *
      * @js NA
+     * @param index Get the point in index.
+     * @return A PointArray.
      */
     Vec2 getControlPointAtIndex(ssize_t index);
 
     /** deletes a control point at a given index
+     *
      * @js NA
+     * @param index Remove the point in index.
      */
     void removeControlPointAtIndex(ssize_t index);
 
-    /** returns the number of objects of the control point array
+    /** returns the number of objects of the control point array.
+     *
      * @js NA
+     * @return The number of objects of the control point array.
      */
     ssize_t count() const;
 
-    /** returns a new copy of the array reversed. User is responsible for releasing this copy
+    /** returns a new copy of the array reversed. User is responsible for releasing this copy.
+     *
      * @js NA
+     * @return A new copy of the array reversed.
      */
     PointArray* reverse() const;
 
-    /** reverse the current control point array inline, without generating a new one
+    /** reverse the current control point array inline, without generating a new one.
      * @js NA
      */
     void reverseInline();
@@ -131,7 +152,7 @@ public:
      */
     void setControlPoints(std::vector<Vec2*> *controlPoints);
 private:
-    /** Array that contains the control points */
+    /** Array that contains the control points. */
     std::vector<Vec2*> *_controlPoints;
 };
 
@@ -143,10 +164,12 @@ class CC_DLL CardinalSplineTo : public ActionInterval
 {
 public:
 
-    /** creates an action with a Cardinal Spline array of points and tension
-     * @param duration in seconds
+    /** creates an action with a Cardinal Spline array of points and tension.
+     * @param duration in seconds.
+     * @param point An PointArray.
+     * @param tension Goodness of fit.
      * @code
-     * when this function bound to js or lua,the input params are changed
+     * when this function bound to js or lua,the input params are changed.
      * in js: var create(var t,var table)
      * in lua: lcaol create(local t, local table)
      * @endcode
@@ -164,13 +187,22 @@ public:
     CardinalSplineTo();
 
     /** 
-     * initializes the action with a duration and an array of points
-     * @param duration in seconds
+     * initializes the action with a duration and an array of points.
+     *
+     * @param duration in seconds.
+     * @param point An PointArray.
+     * @param tension Goodness of fit.
      */
     bool initWithDuration(float duration, PointArray* points, float tension);
-
+    /** It will update the target position and change the _previousPosition to newPos
+     *
+     * @param newPos The new position.
+     */
     virtual void updatePosition(Vec2 &newPos);
-
+    /** Return a PointArray.
+     *
+     * @return A PointArray.
+     */
     inline PointArray* getPoints() { return _points; }
     /**
      * @js NA
@@ -210,11 +242,14 @@ class CC_DLL CardinalSplineBy : public CardinalSplineTo
 {
 public:
 
-    /** creates an action with a Cardinal Spline array of points and tension
+    /** creates an action with a Cardinal Spline array of points and tension.
      * @code
-     * when this function bound to js or lua,the input params are changed
-     * in js: var create(var t,var table)
-     * in lua: lcaol create(local t, local table)
+     * when this function bound to js or lua,the input params are changed.
+     * in js: var create(var t,var table).
+     * in lua: lcaol create(local t, local table).
+     * @param duration in seconds.
+     * @param point An PointArray.
+     * @param tension Goodness of fit.
      * @endcode
      */
     static CardinalSplineBy* create(float duration, PointArray* points, float tension);
@@ -240,19 +275,22 @@ class CC_DLL CatmullRomTo : public CardinalSplineTo
 {
 public:
 
-    /** creates an action with a Cardinal Spline array of points and tension
-     * @param dt in seconds
+    /** creates an action with a Cardinal Spline array of points and tension.
+     * @param dt in seconds.
+     * @param points An PointArray.
      * @code
-     * when this function bound to js or lua,the input params are changed
-     * in js: var create(var dt,var table)
-     * in lua: lcaol create(local dt, local table)
+     * when this function bound to js or lua,the input params are changed.
+     * in js: var create(var dt,var table).
+     * in lua: lcaol create(local dt, local table).
      * @endcode
      */
     static CatmullRomTo* create(float dt, PointArray* points);
 
     /** 
-     * initializes the action with a duration and an array of points
-     * @param dt in seconds
+     * initializes the action with a duration and an array of points.
+     *
+     * @param dt in seconds.
+     * @param points An PointArray.
      */
     bool initWithDuration(float dt, PointArray* points);
 
@@ -269,17 +307,22 @@ public:
 class CC_DLL CatmullRomBy : public CardinalSplineBy
 {
 public:
-    /** creates an action with a Cardinal Spline array of points and tension
-     * @param dt in seconds
+    /** creates an action with a Cardinal Spline array of points and tension.
+     * @param dt in seconds.
+     * @param points An PointArray.
      * @code
-     * when this function bound to js or lua,the input params are changed
-     * in js: var create(var dt,var table)
-     * in lua: lcaol create(local dt, local table)
+     * when this function bound to js or lua,the input params are changed.
+     * in js: var create(var dt,var table).
+     * in lua: lcaol create(local dt, local table).
      * @endcode
      */
     static CatmullRomBy* create(float dt, PointArray* points);
 
-    /** initializes the action with a duration and an array of points */
+    /** initializes the action with a duration and an array of points. 
+     *
+     * @param dt in seconds.
+     * @param points An PointArray.
+     */
     bool initWithDuration(float dt, PointArray* points);
 
     // Override
