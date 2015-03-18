@@ -33,7 +33,7 @@
 #include "renderer/CCRenderCommand.h"
 #include "renderer/CCGLProgram.h"
 #include "platform/CCGL.h"
-
+#include "base/CCDirector.h"
 NS_CC_BEGIN
 
 class EventListenerCustom;
@@ -88,6 +88,26 @@ struct RenderStackElement
 {
     int renderQueueID;
     ssize_t currentIndex;
+};
+
+class MatrixStack
+{
+public:
+    MatrixStack();
+    ~MatrixStack();
+    void pushMatrix(MATRIX_STACK_TYPE type);
+    void popMatrix(MATRIX_STACK_TYPE type);
+    void loadIdentityMatrix(MATRIX_STACK_TYPE type);
+    void loadMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
+    void multiplyMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
+    const Mat4& getMatrix(MATRIX_STACK_TYPE type);
+    void resetMatrixStack();
+protected:
+    void initMatrixStack();
+protected:
+    std::stack<Mat4> _modelViewMatrixStack;
+    std::stack<Mat4> _projectionMatrixStack;
+    std::stack<Mat4> _textureMatrixStack;
 };
 
 class GroupCommandManager;
@@ -159,7 +179,9 @@ public:
 
     /** returns whether or not a rectangle is visible or not */
     bool checkVisibility(const Mat4& transform, const Size& size);
-
+    
+    MatrixStack* getMatrixstack() { return &_matrixStack; }
+    
 protected:
 
     //Setup VBO or VAO based on OpenGL extensions
@@ -230,6 +252,7 @@ protected:
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     EventListenerCustom* _cacheTextureListener;
 #endif
+    MatrixStack _matrixStack;
 };
 
 NS_CC_END
