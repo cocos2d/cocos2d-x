@@ -121,9 +121,12 @@ protected:
     static bool _enableShadowCopy;
 public:
     /**
-    Static getter/setter for shadowCopy.
+    Static getter for shadowCopy.
     */
     static bool isShadowCopyEnabled() { return _enableShadowCopy; }
+    /**
+     Static setter for shadowCopy.
+     */
     static void enableShadowCopy(bool enabled) { _enableShadowCopy = enabled; }
 };
 
@@ -139,7 +142,9 @@ public:
     */
     enum class IndexType
     {
+        /**Short index will be used.*/
         INDEX_TYPE_SHORT_16,
+        /**Int index will be used.*/
         INDEX_TYPE_UINT_32
     };
     
@@ -234,9 +239,12 @@ protected:
     static bool _enableShadowCopy;
 public:
     /**
-    Static getter/setter for shadowCopy.
+    Static getter for shadowCopy.
     */
     static bool isShadowCopyEnabled() { return _enableShadowCopy; }
+    /**
+     Static setter for shadowCopy.
+     */
     static void enableShadowCopy(bool enabled) { _enableShadowCopy = enabled; }
 };
 
