@@ -478,4 +478,12 @@
 -- @param #color3b_table parentColor
 -- @return Label#Label self (return value: cc.Label)
         
+--------------------------------
+-- 
+-- @function [parent=#Label] setCameraMask 
+-- @param self
+-- @param #unsigned short mask
+-- @param #bool applyChildren
+-- @return Label#Label self (return value: cc.Label)
+        
 return nil
