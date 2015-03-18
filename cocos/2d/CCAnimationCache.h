@@ -112,7 +112,7 @@ public:
 
     /** Adds an animation from an NSDictionary.
      * Make sure that the frames were previously loaded in the SpriteFrameCache.
-     * @param an NSDictionary.
+     * @param dictionary An NSDictionary.
      * @param plist The path of the relative file,it use to find the plist path for load SpriteFrames.
      * @since v1.1
      */
@@ -123,7 +123,7 @@ public:
      * @since v1.1
      * @js addAnimations
      * @lua addAnimations
-     * @param An animation from a plist file.
+     * @param plist An animation from a plist file.
      */
     void addAnimationsWithFile(const std::string& plist);
 

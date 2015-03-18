@@ -113,7 +113,7 @@ public:
     ValueMap& getUserInfo() { return _userInfo; };
     
     /** Sets user infomation.
-     * @param A dictionary as UserInfo.
+     * @param userInfo A dictionary as UserInfo.
      */
     void setUserInfo(const ValueMap& userInfo)
     {
