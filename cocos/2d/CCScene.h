@@ -46,7 +46,8 @@ class PhysicsWorld;
  * @{
  */
 
-/** @brief Scene is a subclass of Node that is used only as an abstract concept.
+/** @class Scene
+* @brief Scene is a subclass of Node that is used only as an abstract concept.
 
 Scene and Node are almost identical with the difference that Scene has its
 anchor point (by default) at the center of the screen.
@@ -61,23 +62,44 @@ Scene will create a default camera for you.
 class CC_DLL Scene : public Node
 {
 public:
-    /** creates a new Scene object */
+    /** Creates a new Scene object. 
+     *
+     * @return An autoreleased Scene object.
+     */
     static Scene *create();
 
-    /** creates a new Scene object with a predefined Size */
+    /** Creates a new Scene object with a predefined Size. 
+     *
+     * @param size The predefined size of scene.
+     * @return An autoreleased Scene object.
+     */
     static Scene *createWithSize(const Size& size);
 
     using Node::addChild;
     virtual std::string getDescription() const override;
     
-    /** get all cameras */
+    /** Get all cameras.
+     * 
+     * @return The vector of all cameras.
+     */
     const std::vector<Camera*>& getCameras() const { return _cameras; }
 
+    /** Get the default camera.
+     *
+     * @return The default camera of scene.
+     */
     Camera* getDefaultCamera() const { return _defaultCamera; }
 
+    /** Get lights.
+     *
+     * @return The vector of lights.
+     */
     const std::vector<BaseLight*>& getLights() const { return _lights; }
     
-    /** render the scene */
+    /** Render the scene.
+     *
+     * @param renderer The renderer use to render the scene.
+     */
     void render(Renderer* renderer);
     
     /** override function */
@@ -116,7 +138,16 @@ private:
 public:
     virtual void addChild(Node* child, int zOrder, int tag) override;
     virtual void addChild(Node* child, int zOrder, const std::string &name) override;
+    /** Get the physics world of the scene.
+     *
+     * @return The physics world of the scene.
+     */
     inline PhysicsWorld* getPhysicsWorld() { return _physicsWorld; }
+    
+    /** Create a scene with physics.
+     *
+     * @return An autoreleased Scene object with physics.
+     */
     static Scene *createWithPhysics();
     
 CC_CONSTRUCTOR_ACCESS:
