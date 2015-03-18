@@ -7,7 +7,9 @@
 --------------------------------
 --  Adds multiple Sprite Frames from a plist file content. The texture will be associated with the created sprite frames. <br>
 -- js addSpriteFrames<br>
--- lua addSpriteFrames
+-- lua addSpriteFrames<br>
+-- param plist_content Plist file content string.<br>
+-- param texture Texture pointer.
 -- @function [parent=#SpriteFrameCache] addSpriteFramesWithFileContent 
 -- @param self
 -- @param #string plist_content
@@ -26,7 +28,9 @@
 
 --------------------------------
 --  Adds an sprite frame with a given name.<br>
--- If the name already exists, then the contents of the old name will be replaced with the new one.
+-- If the name already exists, then the contents of the old name will be replaced with the new one.<br>
+-- param frame A certain sprite frame.<br>
+-- param frameName The name of the sprite frame.
 -- @function [parent=#SpriteFrameCache] addSpriteFrame 
 -- @param self
 -- @param #cc.SpriteFrame frame
@@ -46,7 +50,9 @@
 -- If the name is not found it will return nil.<br>
 -- You should retain the returned copy if you are going to use it.<br>
 -- js getSpriteFrame<br>
--- lua getSpriteFrame
+-- lua getSpriteFrame<br>
+-- param name A certain sprite frame name.<br>
+-- return The sprite frame.
 -- @function [parent=#SpriteFrameCache] getSpriteFrameByName 
 -- @param self
 -- @param #string name
@@ -56,14 +62,16 @@
 --  Removes multiple Sprite Frames from a plist file.<br>
 -- Sprite Frames stored in this file will be removed.<br>
 -- It is convenient to call this method when a specific texture needs to be removed.<br>
--- since v0.99.5
+-- since v0.99.5<br>
+-- param plist The name of the plist that needs to removed.
 -- @function [parent=#SpriteFrameCache] removeSpriteFramesFromFile 
 -- @param self
 -- @param #string plist
 -- @return SpriteFrameCache#SpriteFrameCache self (return value: cc.SpriteFrameCache)
         
 --------------------------------
--- 
+--  Initialize method.<br>
+-- return if success return true.
 -- @function [parent=#SpriteFrameCache] init 
 -- @param self
 -- @return bool#bool ret (return value: bool)
@@ -81,7 +89,8 @@
 --------------------------------
 --  Removes all Sprite Frames associated with the specified textures.<br>
 -- It is convenient to call this method when a specific texture needs to be removed.<br>
--- since v0.995.
+-- since v0.995.<br>
+-- param texture The texture that needs to removed.
 -- @function [parent=#SpriteFrameCache] removeSpriteFramesFromTexture 
 -- @param self
 -- @param #cc.Texture2D texture
@@ -90,27 +99,30 @@
 --------------------------------
 --  Removes multiple Sprite Frames from a plist file content.<br>
 -- Sprite Frames stored in this file will be removed.<br>
--- It is convenient to call this method when a specific texture needs to be removed.
+-- It is convenient to call this method when a specific texture needs to be removed.<br>
+-- param plist_content The string of the plist content that needs to removed.
 -- @function [parent=#SpriteFrameCache] removeSpriteFramesFromFileContent 
 -- @param self
 -- @param #string plist_content
 -- @return SpriteFrameCache#SpriteFrameCache self (return value: cc.SpriteFrameCache)
         
 --------------------------------
---  Deletes an sprite frame from the sprite frame cache. 
+--  Deletes an sprite frame from the sprite frame cache. <br>
+-- param name The name of the sprite frame that needs to removed.
 -- @function [parent=#SpriteFrameCache] removeSpriteFrameByName 
 -- @param self
 -- @param #string name
 -- @return SpriteFrameCache#SpriteFrameCache self (return value: cc.SpriteFrameCache)
         
 --------------------------------
---  Destroys the cache. It releases all the Sprite Frames and the retained instance. 
+--  Destroys the cache. It releases all the Sprite Frames and the retained instance.
 -- @function [parent=#SpriteFrameCache] destroyInstance 
 -- @param self
 -- @return SpriteFrameCache#SpriteFrameCache self (return value: cc.SpriteFrameCache)
         
 --------------------------------
---  Returns the shared instance of the Sprite Frame cache 
+--  Returns the shared instance of the Sprite Frame cache.<br>
+-- return The instance of the Sprite Frame Cache.
 -- @function [parent=#SpriteFrameCache] getInstance 
 -- @param self
 -- @return SpriteFrameCache#SpriteFrameCache ret (return value: cc.SpriteFrameCache)
