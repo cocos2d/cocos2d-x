@@ -30,9 +30,9 @@
 
 NS_CC_BEGIN
 /** 
-Command used to render one or more Triangles, which is similar to QuadCommand.
-Every TrianglesCommand will have generate material ID by give textureID, glProgramState, Blend function
-if the material id is the same, these TrianglesCommands could be batched to save draw call.
+ Command used to render one or more Triangles, which is similar to QuadCommand.
+ Every TrianglesCommand will have generate material ID by give textureID, glProgramState, Blend function
+ if the material id is the same, these TrianglesCommands could be batched to save draw call.
 */
 class CC_DLL TrianglesCommand : public RenderCommand
 {
