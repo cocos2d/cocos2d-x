@@ -50,9 +50,15 @@ namespace cocostudio
     {
     }
     
+    ObjectExtensionData::~ObjectExtensionData()
+    {
+        CC_SAFE_RELEASE(_timelineData);
+    }
+    
     bool ObjectExtensionData::init()
     {
         _timelineData = cocostudio::timeline::ActionTimelineData::create(0);
+        CC_SAFE_RETAIN(_timelineData);
         
         return true;
     }
