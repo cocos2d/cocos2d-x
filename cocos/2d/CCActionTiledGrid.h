@@ -37,7 +37,7 @@ NS_CC_BEGIN
 
 /**
 @brief ShakyTiles3D action.
-@detail This action is make the target node shake with many tiles.
+@details This action is make the target node shake with many tiles.
         You can create the action by these parameters:
         duration, grid size, range, whether shake on the z axis.
  */
@@ -82,7 +82,7 @@ private:
 
 /**
 @brief ShatteredTiles3D action.
-@detail This action make the target node shattered with many tiles.
+@details This action make the target node shattered with many tiles.
         You can create the action by these parameters:
         duration, grid size, range, whether shatter on the z axis.
 */
@@ -129,7 +129,7 @@ private:
 struct Tile;
 /**
 @brief ShuffleTiles action.
-@detail This action make the target node shuffle with many tiles in random order.
+@details This action make the target node shuffle with many tiles in random order.
         You can create the action by these parameters:
         duration, grid size, the random seed.
 */
@@ -179,7 +179,7 @@ private:
 
 /**
 @brief FadeOutTRTiles action.
-@detail Fades out the target node with many tiles from Bottom-Left to Top-Right.
+@details Fades out the target node with many tiles from Bottom-Left to Top-Right.
  */
 class CC_DLL FadeOutTRTiles : public TiledGrid3DAction
 {
@@ -233,7 +233,7 @@ private:
 
 /**
 @brief FadeOutBLTiles action.
-@detail Fades out the target node with many tiles from Top-Right to Bottom-Left.
+@details Fades out the target node with many tiles from Top-Right to Bottom-Left.
  */
 class CC_DLL FadeOutBLTiles : public FadeOutTRTiles
 {
@@ -260,7 +260,7 @@ private:
 
 /**
 @brief FadeOutUpTiles action.
-@detail Fades out the target node with many tiles from bottom to top.
+@details Fades out the target node with many tiles from bottom to top.
  */
 class CC_DLL FadeOutUpTiles : public FadeOutTRTiles
 {
@@ -289,7 +289,7 @@ private:
 
 /**
 @brief FadeOutDownTiles action.
-@detail Fades out the target node with many tiles from top to bottom.
+@details Fades out the target node with many tiles from top to bottom.
  */
 class CC_DLL FadeOutDownTiles : public FadeOutUpTiles
 {
@@ -316,7 +316,7 @@ private:
 
 /**
 @brief TurnOffTiles action.
-@detail Turn off the target node with many tiles in random order.
+@details Turn off the target node with many tiles in random order.
  */
 class CC_DLL TurnOffTiles : public TiledGrid3DAction
 {
@@ -385,7 +385,7 @@ private:
 
 /**
 @brief WavesTiles3D action.
-@detail This action wave the target node with many tiles.
+@details This action wave the target node with many tiles.
 */
 class CC_DLL WavesTiles3D : public TiledGrid3DAction
 {
@@ -451,7 +451,7 @@ private:
 
 /**
 @brief JumpTiles3D action.
-@detail Move the tiles of a target node across the Z axis.
+@details Move the tiles of a target node across the Z axis.
 */
 class CC_DLL JumpTiles3D : public TiledGrid3DAction
 {
@@ -517,7 +517,7 @@ private:
 
 /**
 @brief SplitRows action.
-@detail Split the target node in many rows.
+@details Split the target node in many rows.
         Then move out some rows from left, move out the other rows from right.
 */
 class CC_DLL SplitRows : public TiledGrid3DAction
@@ -558,7 +558,7 @@ private:
 
 /**
 @brief SplitCols action.
-@detail Split the target node in many columns.
+@details Split the target node in many columns.
         Then move out some columns from top, move out the other columns from bottom.
 */
 class CC_DLL SplitCols : public TiledGrid3DAction
