@@ -40,6 +40,47 @@ NS_CC_BEGIN
 namespace network {
 
 //class declarations
+    
+    /*
+    https://github.com/Automattic/engine.io-protocol
+    ENGINE.IO packets:
+    0 open
+    1 close
+    2 ping
+    3 pong
+    4 message
+    5 upgrade
+    6 noop
+    
+    https://github.com/automattic/socket.io-protocol
+    SOCKET.IO packets:
+    Packet#CONNECT (0)
+    Packet#DISCONNECT (1)
+    Packet#EVENT (2)
+    Packet#ACK (3) (callback)
+    Packet#ERROR (4)
+    Packet#BINARY_EVENT (5)
+    Packet#BINARY_ACK (6)
+     */
+    
+enum class EngineIOPacket {
+    EIO_OPEN,
+    EIO_CLOSE,
+    EIO_PING,
+    EIO_PONG,
+    EIO_MESSAGE,
+    EIO_UPGRADE,
+    EIO_NOOP
+};
+enum class SocketIOPacket {
+    SIO_CONNECT,
+    SIO_DISCONNECT,
+    SIO_EVENT,
+    SIO_ACK,
+    SIO_ERROR,
+    SIO_BINARY_EVENT,
+    SIO_BINARY_ACK
+};
 
 /**
  *  @brief The implementation of the socket.io connection
@@ -69,6 +110,12 @@ public:
     virtual void onClose(WebSocket* ws);
     virtual void onError(WebSocket* ws, const WebSocket::ErrorCode& error);
 
+    void handleSocketIOPacket(SocketIOPacket packet, std::string& payload);
+    SIOClient* getClientFromPayload(std::string& payload);
+    std::string getEventNameFromPayload(std::string& payload);
+    int getCallbackNumberFromPayload(std::string& payload);
+
+    void upgrade();
     void connect();
     void disconnect();
     bool init();
@@ -84,9 +131,14 @@ public:
     void disconnectFromEndpoint(const std::string& endpoint);
 
     void send(std::string endpoint, std::string s);
-    void emit(std::string endpoint, std::string eventname, std::string args);
+    void emit(std::string endpoint, std::string eventname, std::string args, int callbackNumber = -1);
 
-
+    std::string getUri();
+    std::string getSid();
+    
+    inline bool isConnected() {
+        return _connected;
+    }
 };
 
 
@@ -118,13 +170,14 @@ void SIOClientImpl::handshake()
     log("SIOClientImpl::handshake() called");
 
     std::stringstream pre;
-    pre << "http://" << _uri << "/socket.io/1";
+    pre << "http://" << _uri << "/socket.io/?EIO=3&transport=polling&b64=0";
 
     HttpRequest* request = new (std::nothrow) HttpRequest();
     request->setUrl(pre.str().c_str());
     request->setRequestType(HttpRequest::Type::GET);
-
-    request->setResponseCallback(CC_CALLBACK_2(SIOClientImpl::handshakeResponse, this));
+    request->setResponseCallback([&](HttpClient* client, HttpResponse* response) {
+        handshakeResponse(client, response);
+    });
     request->setTag("handshake");
 
     log("SIOClientImpl::handshake() waiting");
@@ -180,41 +233,46 @@ void SIOClientImpl::handshakeResponse(HttpClient *sender, HttpResponse *response
     size_t pos = 0;
     int heartbeat = 0, timeout = 0;
 
-    pos = res.find(":");
+    pos = res.find("\"sid\":\"");
     if(pos != std::string::npos)
     {
+        res.erase(0, pos+7);
+        pos = res.find("\"");
         sid = res.substr(0, pos);
-        res.erase(0, pos+1);
     }
 
-    pos = res.find(":");
+    pos = res.find("\"pingInterval\":");
     if(pos != std::string::npos)
     {
-        heartbeat = atoi(res.substr(pos+1, res.size()).c_str());
+        res.erase(0, pos+15);
+        pos = res.find(",");
+        heartbeat = atoi(res.substr(0, pos).c_str());
     }
 
-    pos = res.find(":");
+    pos = res.find("\"pingTimeout\":");
     if(pos != std::string::npos)
     {
-        timeout = atoi(res.substr(pos+1, res.size()).c_str());
+        res.erase(0, pos+14);
+        pos = res.find("}");
+        timeout = atoi(res.substr(0, pos).c_str());
     }
 
     _sid = sid;
-    _heartbeat = heartbeat;
-    _timeout = timeout;
+    _heartbeat = heartbeat * 0.001;
+    _timeout = timeout * 0.001;
+
 
     openSocket();
 
     return;
 
 }
-
 void SIOClientImpl::openSocket()
 {
     log("SIOClientImpl::openSocket() called");
 
     std::stringstream s;
-    s << _uri << "/socket.io/1/websocket/" << _sid;
+    s << _uri << "/socket.io/?EIO=3&transport=websocket&b64=0&sid=" << _sid;
 
     _ws = new (std::nothrow) WebSocket();
     if (!_ws->init(*this, s.str()))
@@ -240,20 +298,22 @@ void SIOClientImpl::disconnect()
 {
     if(_ws->getReadyState() == WebSocket::State::OPEN)
     {
-        std::string s = "0::";
+        std::stringstream s;
+        s << (int)EngineIOPacket::EIO_CLOSE;
 
-        _ws->send(s);
+        _ws->send(s.str());
 
         log("Disconnect sent");
 
         _ws->close();
     }
+    else {
+        Director::getInstance()->getScheduler()->unscheduleAllForTarget(this);
 
-    Director::getInstance()->getScheduler()->unscheduleAllForTarget(this);
+        _connected = false;
 
-    _connected = false;
-
-    SocketIO::getInstance()->removeSocket(_uri);
+        SocketIO::getInstance()->removeSocket(_uri);
+    }
 }
 
 SIOClientImpl* SIOClientImpl::create(const std::string& host, int port)
@@ -280,11 +340,15 @@ void SIOClientImpl::addClient(const std::string& endpoint, SIOClient* client)
 
 void SIOClientImpl::connectToEndpoint(const std::string& endpoint)
 {
-    std::string path = endpoint == "/" ? "" : endpoint;
+    if (endpoint == "/" || !_connected)
+    {
+        return;
+    }
 
-    std::string s = "1::" + path;
+    std::stringstream s;
+    s << (int)EngineIOPacket::EIO_MESSAGE << (int)SocketIOPacket::SIO_CONNECT << endpoint;
 
-    _ws->send(s);
+    _ws->send(s.str());
 }
 
 void SIOClientImpl::disconnectFromEndpoint(const std::string& endpoint)
@@ -302,15 +366,16 @@ void SIOClientImpl::disconnectFromEndpoint(const std::string& endpoint)
     {
         std::string path = endpoint == "/" ? "" : endpoint;
 
-        std::string s = "0::" + path;
+        std::stringstream s;
+        s << (int)EngineIOPacket::EIO_MESSAGE << (int)SocketIOPacket::SIO_DISCONNECT << path;
 
-        _ws->send(s);
+        _ws->send(s.str());
     }
 }
 
 void SIOClientImpl::heartbeat(float dt)
 {
-    std::string s = "2::";
+    std::string s = "2";
 
     _ws->send(s);
 
@@ -324,7 +389,7 @@ void SIOClientImpl::send(std::string endpoint, std::string s)
 
     std::string path = endpoint == "/" ? "" : endpoint;
 
-    pre << "3::" << path << ":" << s;
+    pre << "42" << path << (path == "" ? "" : ",") << "[\"message\",\"" << s << "]";
 
     std::string msg = pre.str();
 
@@ -333,13 +398,27 @@ void SIOClientImpl::send(std::string endpoint, std::string s)
     _ws->send(msg);
 }
 
-void SIOClientImpl::emit(std::string endpoint, std::string eventname, std::string args)
+void SIOClientImpl::emit(std::string endpoint, std::string eventname, std::string args, int callbackNumber)
 {
     std::stringstream pre;
 
     std::string path = endpoint == "/" ? "" : endpoint;
 
-    pre << "5::" << path << ":{\"name\":\"" << eventname << "\",\"args\":" << args << "}";
+    pre << "42" << path;
+    if (path != "")
+    {
+        pre << ",";
+    }
+    if (callbackNumber != -1)
+    {
+        pre << callbackNumber;
+    }
+    if (args.length() == 0) {
+        pre << "[\"" << eventname << "\"]";
+    }
+    else {
+        pre << "[\"" << eventname << "\"," << args << "]";
+    }
 
     std::string msg = pre.str();
 
@@ -352,112 +431,177 @@ void SIOClientImpl::onOpen(WebSocket* ws)
 {
     _connected = true;
 
-    SocketIO::getInstance()->addSocket(_uri, this);
-
-    for (auto iter = _clients.begin(); iter != _clients.end(); ++iter)
-    {
-        iter->second->onOpen();
-    }
+    std::stringstream s;
+    s << (int)EngineIOPacket::EIO_PING << "probe";
+    _ws->send(s.str());
 
     Director::getInstance()->getScheduler()->schedule(CC_SCHEDULE_SELECTOR(SIOClientImpl::heartbeat), this, (_heartbeat * .9f), false);
 
     log("SIOClientImpl::onOpen socket connected!");
 }
 
+
+
 void SIOClientImpl::onMessage(WebSocket* ws, const WebSocket::Data& data)
 {
     log("SIOClientImpl::onMessage received: %s", data.bytes);
 
-    int control = atoi(&data.bytes[0]);
-
-    std::string payload, msgid, endpoint, s_data, eventname;
+    std::string payload;
     payload = data.bytes;
-
-    size_t pos, pos2;
-
-    pos = payload.find(":");
-    if(pos != std::string::npos ) {
-        payload.erase(0, pos+1);
-    }
-
-    pos = payload.find(":");
-    if(pos != std::string::npos ) {
-        msgid = atoi(payload.substr(0, pos+1).c_str());
-    }
-    payload.erase(0, pos+1);
-
-    pos = payload.find(":");
-    if(pos != std::string::npos)
+    
+    EngineIOPacket engineIOPacket = (EngineIOPacket) atoi(payload.substr(0, 1).c_str());
+    switch (engineIOPacket)
     {
-        endpoint = payload.substr(0, pos);
-        payload.erase(0, pos+1);
-    }
-    else
-    {
-        endpoint = payload;
-    }
-
-    if (endpoint == "") endpoint = "/";
-
-
-    s_data = payload;
-    SIOClient *c = nullptr;
-    c = getClient(endpoint);
-    if (c == nullptr) log("SIOClientImpl::onMessage client lookup returned nullptr");
-
-    switch(control)
-    {
-        case 0:
-            log("Received Disconnect Signal for Endpoint: %s\n", endpoint.c_str());
-            if(c) c->receivedDisconnect();
-            disconnectFromEndpoint(endpoint);
-            break;
-        case 1:
-            log("Connected to endpoint: %s \n",endpoint.c_str());
-            if(c) c->onConnect();
-            break;
-        case 2:
-            log("Heartbeat received\n");
-            break;
-        case 3:
-            log("Message received: %s \n", s_data.c_str());
-            if(c) c->getDelegate()->onMessage(c, s_data);
-            break;
-        case 4:
-            log("JSON Message Received: %s \n", s_data.c_str());
-            if(c) c->getDelegate()->onMessage(c, s_data);
-            break;
-        case 5:
-            log("Event Received with data: %s \n", s_data.c_str());
-
-            if(c)
+        case EngineIOPacket::EIO_PONG:
+            //if the string contains "probe", it should send the upgrade packet
+            if (payload.substr(1,5) == "probe")
             {
-                eventname = "";
-                pos = s_data.find(":");
-                pos2 = s_data.find(",");
-                if(pos2 > pos)
-                {
-                    s_data = s_data.substr(pos+1, pos2-pos-1);
-                    std::remove_copy(s_data.begin(), s_data.end(),
-                         std::back_inserter(eventname), '"');
-                }
+                //send upgrade packages
+                upgrade();
+            }
+            break;
+        case EngineIOPacket::EIO_MESSAGE:
+            //a message, parse socketio packet
+            SocketIOPacket socketIOPacket = (SocketIOPacket) atoi(payload.substr(1, 1).c_str());
+            payload.erase(0,2);
+            handleSocketIOPacket(socketIOPacket, payload);
+            break;
+    }
+}
+    
+void SIOClientImpl::upgrade() {
+    std::stringstream s;
+    s << (int)EngineIOPacket::EIO_UPGRADE;
+    _ws->send(s.str());
+}
 
-                c->fireEvent(eventname, payload);
+SIOClient* SIOClientImpl::getClientFromPayload(std::string& payload)
+{
+    std::string endpoint;
+    size_t pos;
+
+    if (payload.find("/") == 0)
+    {
+        pos = payload.find(",");
+        if (pos != std::string::npos)
+        {
+            endpoint = payload.substr(0, pos);
+            payload.erase(0, pos + 1);
+        }
+        else
+        {
+            endpoint = payload.c_str();
+        }
+    }
+    else 
+    {
+        endpoint = "/";
+    }
+
+    return getClient(endpoint);
+}
+
+std::string SIOClientImpl::getEventNameFromPayload(std::string& payload) {
+    std::string eventName = "";
+    size_t pos;
+
+    pos = payload.find("\"");
+    if (pos != std::string::npos)
+    {
+        payload.erase(0, pos + 1);
+        pos = payload.find("\"");
+        if (pos != std::string::npos)
+        {
+            eventName = payload.substr(0, pos);
+            payload.erase(0, pos + 2);
+            if (payload.size() > 0)
+            {
+                payload.erase(payload.size() - 1, 1);
+            }
+        }
+    }
+    return eventName;
+}
+
+int SIOClientImpl::getCallbackNumberFromPayload(std::string& payload)
+{
+    int callbackNumber = -1;
+    size_t pos;
+
+    pos = payload.find("[");
+    if (pos != std::string::npos)
+    {
+        callbackNumber = atoi(payload.substr(0, pos).c_str());
+        payload.erase(0, pos + 1);
+        if (payload.size() > 0) 
+        {
+            payload.erase(payload.size() - 1, 1);
+        }
+    }
+    return callbackNumber;
+}
+
+void SIOClientImpl::handleSocketIOPacket(SocketIOPacket socketIOPacket, std::string& payload)
+{
+    std::string eventName;
+    int callbackNumber;
+    SIOClient* c  = nullptr;
+
+    switch (socketIOPacket) {
+        case SocketIOPacket::SIO_CONNECT:
+            if (payload == "")
+            {
+                //loop through all clients (so that other endpoints also have the same connection with the same _sid) and notify them the connection has been made
+                for (const auto& client : _clients) {
+                    client.second->onOpen();
+                }
+            }
+            c = getClientFromPayload(payload);
+            if (c == nullptr)
+            {
+                log("SIOClientImpl no client found for endpoint: %s", payload.c_str());
+            }
+            else
+            {
+                log("SIOClientImpl connected to endpoint: %s", payload.c_str());
+                c->onConnect();
             }
 
             break;
-        case 6:
-            log("Message Ack\n");
+        case SocketIOPacket::SIO_DISCONNECT:
+            log("SIOClientImpl disconnect received for: %s", payload.c_str());
             break;
-        case 7:
-            log("Error\n");
-            if(c) c->getDelegate()->onError(c, s_data);
+        case SocketIOPacket::SIO_EVENT:
+            log("SIOClientImpl event received with data %s", payload.c_str());
+
+            c = getClientFromPayload(payload);
+            if (c) {
+                eventName = getEventNameFromPayload(payload);
+                if (eventName == "") {
+                    c->getDelegate()->onMessage(c, payload);
+                }
+                else
+                {
+                    c->fireEvent(eventName, payload);
+                }
+            }
+
             break;
-        case 8:
-            log("Noop\n");
+        case SocketIOPacket::SIO_ACK:
+            log("SIOClientImpl event with callback received %s", payload.c_str());
+            c = getClientFromPayload(payload);
+            if (c)
+            {
+                callbackNumber = getCallbackNumberFromPayload(payload);
+                if (callbackNumber != -1)
+                {
+                    c->fireCallback(callbackNumber, payload);
+                }
+            }
+
             break;
     }
-
+    
     return;
 }
 
@@ -469,8 +613,13 @@ void SIOClientImpl::onClose(WebSocket* ws)
         {
             iter->second->receivedDisconnect();
         }
+        _clients.clear();
     }
+    _connected = false;
+    
+    Director::getInstance()->getScheduler()->unscheduleAllForTarget(this);
 
+    SocketIO::getInstance()->removeSocket(_uri);
     this->release();
 }
 
@@ -478,9 +627,20 @@ void SIOClientImpl::onError(WebSocket* ws, const WebSocket::ErrorCode& error)
 {
 }
 
+std::string SIOClientImpl::getUri()
+{
+    return _uri;
+}
+
+std::string SIOClientImpl::getSid()
+{
+    return _sid;
+}
+
 //begin SIOClient methods
 SIOClient::SIOClient(const std::string& host, int port, const std::string& path, SIOClientImpl* impl, SocketIO::SIODelegate& delegate)
     : _port(port)
+    , _callbackNumber(0)
     , _host(host)
     , _path(path)
     , _connected(false)
@@ -514,15 +674,14 @@ void SIOClient::onConnect()
 
 void SIOClient::send(std::string s)
 {
-    if (_connected)
+    if (_connected) 
     {
         _socket->send(_path, s);
     }
-    else
+    else 
     {
         _delegate->onError(this, "Client not yet connected");
     }
-
 }
 
 void SIOClient::emit(std::string eventname, std::string args)
@@ -531,11 +690,25 @@ void SIOClient::emit(std::string eventname, std::string args)
     {
         _socket->emit(_path, eventname, args);
     }
+    else 
+    {
+        _delegate->onError(this, "Client not yet connected");
+    }
+}
+
+void SIOClient::emit(std::string eventname, std::string args, SIOEvent callback)
+{
+    if (_connected)
+    {
+        _callbackRegistry[_callbackNumber] = callback;
+        _socket->emit(_path, eventname, args, _callbackNumber);
+
+        _callbackNumber++;
+    }
     else
     {
         _delegate->onError(this, "Client not yet connected");
     }
-
 }
 
 void SIOClient::disconnect()
@@ -579,6 +752,24 @@ void SIOClient::fireEvent(const std::string& eventName, const std::string& data)
     }
 
     log("SIOClient::fireEvent no native event with name %s found", eventName.c_str());
+}
+
+void SIOClient::fireCallback(const int callbackNumber, const std::string& data)
+{
+    log("SIOClient::fireCallback called with callbackNumber: %d and data: %s", callbackNumber, data.c_str());
+
+    if (_callbackRegistry[callbackNumber])
+    {
+        SIOEvent e = _callbackRegistry[callbackNumber];
+
+        e(this, data);
+
+        _callbackRegistry.erase(callbackNumber);
+
+        return;
+    }
+
+    log("SIOClient::fireCallback no callback with callbackNumber: %d found", callbackNumber);
 }
 
 //begin SocketIO methods
@@ -650,6 +841,8 @@ SIOClient* SocketIO::connect(const std::string& uri, SocketIO::SIODelegate& dele
     std::stringstream s;
     s << host << ":" << port;
 
+    log("Connect to host: %s\n", s.str().c_str());
+
     SIOClientImpl* socket = nullptr;
     SIOClient *c = nullptr;
 
@@ -659,6 +852,9 @@ SIOClient* SocketIO::connect(const std::string& uri, SocketIO::SIODelegate& dele
     {
         //create a new socket, new client, connect
         socket = SIOClientImpl::create(host, port);
+
+        //register socket
+        SocketIO::getInstance()->addSocket(socket->getUri(), socket);
 
         c = new (std::nothrow) SIOClient(host, port, path, socket, delegate);
 
@@ -678,6 +874,10 @@ SIOClient* SocketIO::connect(const std::string& uri, SocketIO::SIODelegate& dele
             socket->addClient(path, c);
 
             socket->connectToEndpoint(path);
+        }
+        
+        if (!socket->isConnected()) {
+            socket->connect();
         }
     }
 
