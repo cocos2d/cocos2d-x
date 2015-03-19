@@ -1,8 +1,9 @@
-cocos2d-x-3.5 Mar.20 2015
+cocos2d-x-3.5 Mar.23 2015
     [NEW]           EditBox: support Color4B
 
     [FIX]           AutoRelasePool: memory leak if adding an element into pool when releasing auto release pool
     [FIX]           FileUtils: getWritablePath() will not return corrent setted writable path on Mac & Windows
+    [FIX]           HttpAsynConnection: can not get error content if responseCode < 200 or responseCode >= 300
 
 cocos2d-x-3.5rc0 Mar.13 2015
     [NEW]           CocosStudio: add callback when loading a CSB file
