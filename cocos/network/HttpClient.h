@@ -41,7 +41,6 @@ namespace network {
 
 
 /** Singleton that handles asynchrounous http requests.
- * 
  *
  * Once the request completed, a callback will issued in main thread when it provided during make request.
  *
@@ -52,6 +51,7 @@ class CC_DLL HttpClient
 public:
     /**
      * Get instance of HttpClient.
+     *
      * @return the instance of HttpClient.
      */
     static HttpClient *getInstance();
@@ -63,18 +63,21 @@ public:
 
     /** 
      * Enable cookie support.
+     *
      * @param cookieFile the filepath of cookie file.
      */
     void enableCookies(const char* cookieFile);
     
     /**
      * Set root certificate path for SSL verification.
+     *
      * @param caFile a full path of root certificate.if it is empty, SSL verification is disabled.
      */
     void setSSLVerification(const std::string& caFile);
         
     /**
      * Add a get request to task queue
+     *
      * @param request a HttpRequest object, which includes url, response callback etc.
                       please make sure request->_requestData is clear before calling "send" here.
      */
@@ -82,6 +85,7 @@ public:
 
     /**
      * Immediate send a request
+     *
      * @param request a HttpRequest object, which includes url, response callback etc.
                       please make sure request->_requestData is clear before calling "sendImmediate" here.
      */
@@ -90,12 +94,14 @@ public:
     
     /**
      * Set the timeout value for connecting.
+     *
      * @param value the timeout value for connecting.
      */
     inline void setTimeoutForConnect(int value) {_timeoutForConnect = value;};
     
     /**
      * Get the timeout value for connecting.
+     *
      * @return int the timeout value for connecting.
      */
     inline int getTimeoutForConnect() {return _timeoutForConnect;}
@@ -103,6 +109,7 @@ public:
     
     /**
      * Set the timeout value for reading.
+     *
      * @param value the timeout value for reading.
      */
     inline void setTimeoutForRead(int value) {_timeoutForRead = value;};
@@ -110,6 +117,7 @@ public:
 
     /**
      * Get the timeout value for reading.
+     *
      * @return int the timeout value for reading.
      */
     inline int getTimeoutForRead() {return _timeoutForRead;};
