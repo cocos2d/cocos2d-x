@@ -43,7 +43,6 @@
 -- @return TextureAtlas#TextureAtlas ret (return value: cc.TextureAtlas)
         
 --------------------------------
--- js NA<br>
 -- lua NA
 -- @function [parent=#AtlasNode] getBlendFunc 
 -- @param self
