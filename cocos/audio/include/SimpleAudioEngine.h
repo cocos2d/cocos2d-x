@@ -50,6 +50,7 @@ namespace CocosDenshion {
  * @brief Offers a very simple interface to play background music & sound effects.
  *
  * @note Make sure to call SimpleAudioEngine::end() when the sound engine is not needed anymore to release allocated resources.
+ * @js cc.audioEngine
  */
 
 class EXPORT_DLL SimpleAudioEngine

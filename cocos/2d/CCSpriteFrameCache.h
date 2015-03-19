@@ -55,6 +55,7 @@ class Texture2D;
  * @brief Singleton that handles the loading of the sprite frames.
  It saves in a cache the sprite frames.
  @since v0.9
+ @js cc.spriteFrameCache
  */
 class CC_DLL SpriteFrameCache : public Ref
 {
@@ -62,17 +63,23 @@ public:
     /** Returns the shared instance of the Sprite Frame cache.
      *
      * @return The instance of the Sprite Frame Cache.
+     * @js NA
      */
     static SpriteFrameCache* getInstance();
 
-    /** @deprecated Use getInstance() instead */
+    /** @deprecated Use getInstance() instead 
+     @js NA 
+	*/
     CC_DEPRECATED_ATTRIBUTE static SpriteFrameCache* sharedSpriteFrameCache() { return SpriteFrameCache::getInstance(); }
 
     /** Destroys the cache. It releases all the Sprite Frames and the retained instance.
+	 * @js NA
      */
     static void destroyInstance();
 
-    /** @deprecated Use destroyInstance() instead  */
+    /** @deprecated Use destroyInstance() instead 
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE static void purgeSharedSpriteFrameCache() { return SpriteFrameCache::destroyInstance(); }
 
     /** Destructor.
@@ -117,7 +124,7 @@ public:
     void addSpriteFramesWithFile(const std::string&plist, Texture2D *texture);
 
     /** Adds multiple Sprite Frames from a plist file content. The texture will be associated with the created sprite frames. 
-     * @js addSpriteFrames
+     * @js NA
      * @lua addSpriteFrames
      *
      * @param plist_content Plist file content string.
@@ -144,6 +151,7 @@ public:
     /** Removes unused sprite frames.
      * Sprite Frames that have a retain count of 1 will be deleted.
      * It is convenient to call this method after when starting a new Scene.
+	 * @js NA
      */
     void removeUnusedSpriteFrames();
 
@@ -167,6 +175,7 @@ public:
     * It is convenient to call this method when a specific texture needs to be removed.
     *
     * @param plist_content The string of the plist content that needs to removed.
+    * @js NA
     */
     void removeSpriteFramesFromFileContent(const std::string& plist_content);
 

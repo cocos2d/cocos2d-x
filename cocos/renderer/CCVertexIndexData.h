@@ -42,6 +42,7 @@ glVertexAttribPointer(GLuint indx, GLint size, GLenum type, GLboolean normalized
  _offset is used to compute the start offset in a interleaved array, take a V3F_C4B_T2F array,
  offset of vertex will be 0, offset of color would be 0 + sizeof(float) * 3 = 12, 
  offset of texture coord would be 12 + sizeof(char) * 4 = 16.
+ @js NA
 */
 struct CC_DLL VertexStreamAttribute
 {
@@ -101,6 +102,7 @@ struct CC_DLL VertexStreamAttribute
 VertexData is a class used for specify input streams for GPU rendering pipeline,
 a VertexData will be composed by several streams, every stream will contain a VertexStreamAttribute
 and the binding VertexBuffer. Streams will be identified by semantic.
+@js NA
 */
 
 class CC_DLL VertexData : public Ref
