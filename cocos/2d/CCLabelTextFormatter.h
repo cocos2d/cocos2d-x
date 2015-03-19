@@ -32,6 +32,7 @@ NS_CC_BEGIN
 
 class Label;
 
+/// @cond
 class CC_DLL LabelTextFormatter
 {
 public:
@@ -41,6 +42,8 @@ public:
     static bool createStringSprites(Label *theLabel);
 
 };
+
+/// @endcond
 
 NS_CC_END
 

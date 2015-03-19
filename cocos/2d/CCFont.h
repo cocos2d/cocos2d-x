@@ -33,9 +33,7 @@ NS_CC_BEGIN
 
 class FontAtlas;
 
-// fwd
-class FontAtlas;
-
+/// @cond
 
 class CC_DLL Font : public Ref
 {
@@ -67,7 +65,8 @@ protected:
 
 };
 
-NS_CC_END
+/// @endcond
 
+NS_CC_END
 
 #endif

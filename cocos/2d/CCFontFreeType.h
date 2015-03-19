@@ -44,8 +44,9 @@
 #undef internal
 #endif
 
-
 NS_CC_BEGIN
+
+/// @cond 
 
 class CC_DLL FontFreeType : public Font
 {
@@ -90,6 +91,8 @@ private:
     bool              _distanceFieldEnabled;
     float             _outlineSize;
 };
+
+/// @endcond
 
 NS_CC_END
 
