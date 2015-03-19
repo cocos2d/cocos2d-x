@@ -26,7 +26,9 @@
 
 #import <Foundation/Foundation.h>
 #import <Security/Security.h>
-
+/**
+ * @lua NA.
+ */
 @interface HttpAsynConnection : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 {
 }

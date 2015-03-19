@@ -29,7 +29,6 @@
 
 #include "network/HttpRequest.h"
 #include "network/HttpResponse.h"
-#include "network/HttpClient.h"
 
 NS_CC_BEGIN
 
@@ -41,25 +40,36 @@ namespace network {
  */
 
 
-/** @brief Singleton that handles asynchrounous http requests
- * Once the request completed, a callback will issued in main thread when it provided during make request
+/** Singleton that handles asynchrounous http requests.
+ * 
+ *
+ * Once the request completed, a callback will issued in main thread when it provided during make request.
+ *
+ * @lua NA
  */
 class CC_DLL HttpClient
 {
 public:
-    /** Return the shared instance **/
+    /**
+     * Get instance of HttpClient.
+     * @return the instance of HttpClient.
+     */
     static HttpClient *getInstance();
     
-    /** Relase the shared instance **/
+    /** 
+     * Relase the instance of HttpClient. 
+     */
     static void destroyInstance();
 
-    /** Enable cookie support. **/
+    /** 
+     * Enable cookie support.
+     * @param cookieFile the filepath of cookie file.
+     */
     void enableCookies(const char* cookieFile);
     
     /**
      * Set root certificate path for SSL verification.
-     * @param caFile a full path of root certificate.
-     *               if it is empty, SSL verification is disabled.
+     * @param caFile a full path of root certificate.if it is empty, SSL verification is disabled.
      */
     void setSSLVerification(const std::string& caFile);
         
@@ -79,28 +89,28 @@ public:
   
     
     /**
-     * Change the connect timeout
-     * @param value The desired timeout.
+     * Set the timeout value for connecting.
+     * @param value the timeout value for connecting.
      */
     inline void setTimeoutForConnect(int value) {_timeoutForConnect = value;};
     
     /**
-     * Get connect timeout
-     * @return int
+     * Get the timeout value for connecting.
+     * @return int the timeout value for connecting.
      */
     inline int getTimeoutForConnect() {return _timeoutForConnect;}
     
     
     /**
-     * Change the download timeout
-     * @param value
+     * Set the timeout value for reading.
+     * @param value the timeout value for reading.
      */
     inline void setTimeoutForRead(int value) {_timeoutForRead = value;};
     
 
     /**
-     * Get download timeout
-     * @return int
+     * Get the timeout value for reading.
+     * @return int the timeout value for reading.
      */
     inline int getTimeoutForRead() {return _timeoutForRead;};
         
