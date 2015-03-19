@@ -39,13 +39,14 @@ NS_CC_BEGIN
 ccNextPOT function is licensed under the same license that is used in Texture2D.m.
 */
 
-/** returns the Next Power of Two value.
+/** Returns the Next Power of Two value.
 
 Examples:
 - If "value" is 15, it will return 16.
 - If "value" is 16, it will return 16.
 - If "value" is 17, it will return 32.
-
+@param value The value to get next power of two.
+@return Returns the next power of two value.
 @since v0.99.5
 */
 
@@ -53,12 +54,12 @@ int ccNextPOT(int value);
 
 namespace utils
 {
-    /** Capture the entire screen
+    /** Capture the entire screen.
      * To ensure the snapshot is applied after everything is updated and rendered in the current frame,
      * we need to wrap the operation with a custom command which is then inserted into the tail of the render queue.
-     * @param afterCaptured, specify the callback function which will be invoked after the snapshot is done.
-     * @param filename, specify a filename where the snapshot is stored. This parameter can be either an absolute path or a simple
-     * base filename ("hello.png" etc.), don't use a relative path containing directory names.("mydir/hello.png" etc.)
+     * @param afterCaptured specify the callback function which will be invoked after the snapshot is done.
+     * @param filename specify a filename where the snapshot is stored. This parameter can be either an absolute path or a simple
+     * base filename ("hello.png" etc.), don't use a relative path containing directory names.("mydir/hello.png" etc.).
      * @since v3.2
      */
     void CC_DLL captureScreen(const std::function<void(bool, const std::string&)>& afterCaptured, const std::string& filename);
@@ -75,16 +76,21 @@ namespace utils
     std::vector<Node*> CC_DLL findChildren(const Node &node, const std::string &name);
     
     /** Same to ::atof, but strip the string, remain 7 numbers after '.' before call atof.
-     * Why we need this? Because in android c++_static, atof ( and std::atof ) is unsupported for numbers have long decimal part and contain several numbers can approximate to 1 ( like 90.099998474121094 ), it will return inf. this function is used to fix this bug.
+     * Why we need this? Because in android c++_static, atof ( and std::atof ) is unsupported for numbers have long decimal part and contain
+     * several numbers can approximate to 1 ( like 90.099998474121094 ), it will return inf. This function is used to fix this bug.
+     * @param str The string be to converted to double.
+     * @return Returns converted value of a string.
      */
     double CC_DLL atof(const char* str);
 
     /** Get current exact time, accurate to nanoseconds.
-    */
+     * @return Returns the time in seconds since the Epoch.
+     */
     double CC_DLL gettime();
 
     /**
-     * calculate all children's boundingBox
+     * Calculate unionof bounding box of a node and its children.
+     * @return Returns unionof bounding box of a node and its children.
      */
     Rect CC_DLL getCascadeBoundingBox(Node *node);
 }
