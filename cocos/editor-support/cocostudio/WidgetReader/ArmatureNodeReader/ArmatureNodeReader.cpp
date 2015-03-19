@@ -116,24 +116,46 @@ void ArmatureNodeReader::setPropsWithFlatBuffers(cocos2d::Node *node,
 {
 
 	auto* custom = static_cast<Armature*>(node);
-	auto options = (flatbuffers::CSArmatureNodeOption*)nodeOptions;	
+	auto options = (flatbuffers::CSArmatureNodeOption*)nodeOptions;
+    
+    bool fileExist = false;
+    std::string errorFilePath = "";
 
-	std::string filepath(options->fileData()->path()->c_str());
-    std::string fullpath = FileUtils::getInstance()->fullPathForFilename(filepath);
+	std::string filepath(options->fileData()->path()->c_str());    
     
-    std::string dirpath = fullpath.substr(0, fullpath.find_last_of("/"));
-    FileUtils::getInstance()->addSearchPath(dirpath);
-    
-	ArmatureDataManager::getInstance()->addArmatureFileInfo(fullpath);
-	custom->init(getArmatureName(filepath));
-    std::string currentname = options->currentAnimationName()->c_str();
-	if (options->isAutoPlay())
-		custom->getAnimation()->play(currentname, -1, options->isLoop());
-	else
+    if (FileUtils::getInstance()->isFileExist(filepath))
     {
-        custom->getAnimation()->play(currentname);
-        custom->getAnimation()->gotoAndPause(0);
+        fileExist = true;
+        
+        std::string fullpath = FileUtils::getInstance()->fullPathForFilename(filepath);
+        
+        std::string dirpath = fullpath.substr(0, fullpath.find_last_of("/"));
+        FileUtils::getInstance()->addSearchPath(dirpath);
+        
+        ArmatureDataManager::getInstance()->addArmatureFileInfo(fullpath);
+        custom->init(getArmatureName(filepath));
+        std::string currentname = options->currentAnimationName()->c_str();
+        if (options->isAutoPlay())
+            custom->getAnimation()->play(currentname, -1, options->isLoop());
+        else
+        {
+            custom->getAnimation()->play(currentname);
+            custom->getAnimation()->gotoAndPause(0);
+        }
     }
+    else
+    {
+        errorFilePath = filepath;
+        fileExist = false;
+    }
+    
+    if (!fileExist)
+    {
+        auto label = Label::create();
+        label->setString(__String::createWithFormat("%s missed", filepath.c_str())->getCString());
+        custom->addChild(label);
+    }
+    
 }
 
 cocos2d::Node*  ArmatureNodeReader::createNodeWithFlatBuffers(const flatbuffers::Table *nodeOptions)
