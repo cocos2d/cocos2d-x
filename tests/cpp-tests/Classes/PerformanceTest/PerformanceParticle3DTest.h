@@ -6,7 +6,7 @@
 class Particle3DMenuLayer : public PerformBasicLayer
 {
 public:
-    Particle3DMenuLayer(bool bControlMenuVisible, int nMaxCases = 0, int nCurCase = 0);
+    Particle3DMenuLayer(bool isControlMenuVisible, int maxCases = 0, int curCase = 0);
     virtual void showCurrentTest();
 };
 
@@ -20,14 +20,15 @@ public:
     void createParticleSystem(int idx);
     void testNCallback(Ref* sender);
     void updateQuantityLabel();
-    int getSubTestNum() { return subtestNumber; }
-    int getParticlesNum() { return quantityParticles; }
+    int getSubTestNum() { return _subtestNumber; }
+    int getParticlesNum() { return _quantityParticles; }
     virtual void doTest() = 0;
 
 protected:
-    int            lastRenderedCount;
-    int            quantityParticles;
-    int            subtestNumber;
+    int             _lastRenderedCount;
+    int             _quantityParticles;
+    int             _subtestNumber;
+    cocos2d::Label *_particleLab;
 };
 
 class Particle3DPerformTest : public Particle3DMainScene
