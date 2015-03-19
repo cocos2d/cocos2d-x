@@ -103,7 +103,8 @@
         
 --------------------------------
 --  Returns a new action that performs the exactly the reverse action. <br>
--- return A new action that performs the exactly the reverse action.
+-- return A new action that performs the exactly the reverse action.<br>
+-- js NA
 -- @function [parent=#Action] reverse 
 -- @param self
 -- @return Action#Action ret (return value: cc.Action)

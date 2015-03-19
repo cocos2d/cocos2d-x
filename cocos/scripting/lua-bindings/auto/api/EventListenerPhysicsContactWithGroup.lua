@@ -13,7 +13,7 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
+--  Create the listener. 
 -- @function [parent=#EventListenerPhysicsContactWithGroup] create 
 -- @param self
 -- @param #int group
