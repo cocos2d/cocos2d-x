@@ -24,6 +24,8 @@
 
 #ifndef HTTP_COOKIE_H
 #define HTTP_COOKIE_H
+#include <string>
+#include <vector>
 
 struct CookiesInfo
 {

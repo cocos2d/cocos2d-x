@@ -24,6 +24,10 @@
 #ifndef COCOS_SCRIPTING_LUA_BINDINGS_LUA_COCOS2DX_CONTROLLER_MANUAL_H
 #define COCOS_SCRIPTING_LUA_BINDINGS_LUA_COCOS2DX_CONTROLLER_MANUAL_H
 
+#include "platform/CCPlatformConfig.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -31,8 +35,6 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
 TOLUA_API int register_all_cocos2dx_controller_manual(lua_State* L);
 
