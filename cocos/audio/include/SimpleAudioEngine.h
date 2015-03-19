@@ -57,6 +57,7 @@ class EXPORT_DLL SimpleAudioEngine
 public:
     /**
      * Returns a shared instance of the SimpleAudioEngine.
+     * @js NA
      */
     static SimpleAudioEngine* getInstance();
 
@@ -78,7 +79,7 @@ public:
      * Preload background music.
      *
      * @param filePath The path of the background music file.
-     * @js preloadMusic
+     * @js NA
      * @lua preloadMusic
      */
     virtual void preloadBackgroundMusic(const char* filePath);
@@ -235,6 +236,7 @@ public:
      * The compressed audio will be decoded to wave, then written into an internal buffer in SimpleAudioEngine.
      *
      * @param filePath The path of the effect file.
+     * @js NA
      */
     virtual void preloadEffect(const char* filePath);
 

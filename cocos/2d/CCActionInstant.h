@@ -391,7 +391,6 @@ CC_CONSTRUCTOR_ACCESS:
     CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Ref* target);
     
     /** initializes the action with the std::function<void()>
-     * @js NA
      * @lua NA
      */
     bool initWithFunction(const std::function<void()>& func);
@@ -415,6 +414,7 @@ private:
 
 /** @class CallFuncN
 * @brief Calls a 'callback' with the node as the first argument. N means Node.
+* @js NA
 */
 class CC_DLL CallFuncN : public CallFunc
 {
@@ -466,6 +466,7 @@ private:
  * @deprecated Please use CallFuncN instead.
  * @brief Calls a 'callback' with the node as the first argument and the 2nd argument is data.
  * ND means: Node and Data. Data is void *, so it could be anything.
+ * @js NA
  */
 class CC_DLL  __CCCallFuncND : public CallFunc
 {
@@ -505,6 +506,7 @@ private:
  @deprecated Please use CallFuncN instead.
  @brief Calls a 'callback' with an object as the first argument. O means Object.
  @since v0.99.5
+ @js NA
  */
 
 class CC_DLL __CCCallFuncO : public CallFunc

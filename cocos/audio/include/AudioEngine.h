@@ -52,6 +52,7 @@ NS_CC_BEGIN
  * @class AudioProfile
  *
  * @brief
+ * @js NA
  */
 class EXPORT_DLL AudioProfile
 {
@@ -80,6 +81,7 @@ class AudioEngineImpl;
  * @brief Offers a interface to play audio.
  *
  * @note Make sure to call AudioEngine::end() when the audio engine is not needed anymore to release resources.
+ * @js NA
  */
 
 class EXPORT_DLL AudioEngine
