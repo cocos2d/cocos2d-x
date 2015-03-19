@@ -17,12 +17,14 @@
 -- @return Scheduler#Scheduler self (return value: cc.Scheduler)
         
 --------------------------------
--- 
+-- Gets the time scale of schedule callbacks.<br>
+-- see Scheduler::setTimeScale()
 -- @function [parent=#Scheduler] getTimeScale 
 -- @param self
 -- @return float#float ret (return value: float)
         
 --------------------------------
+-- Constructor<br>
 -- js ctor
 -- @function [parent=#Scheduler] Scheduler 
 -- @param self
