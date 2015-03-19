@@ -56,7 +56,7 @@ Skybox::~Skybox()
 bool Skybox::init()
 {
     // create and set our custom shader
-    auto shader = GLProgram::createWithFilenames("Sprite3DTest/skybox.vert", "Sprite3DTest/skybox.frag");
+    auto shader = GLProgram::createWithFilenames("Shaders3D/Skybox.vert", "Shaders3D/Skybox.frag");
     auto state = GLProgramState::create(shader);
     state->setVertexAttribPointer(GLProgram::ATTRIBUTE_NAME_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(Vec3), nullptr);
     setGLProgramState(state);
