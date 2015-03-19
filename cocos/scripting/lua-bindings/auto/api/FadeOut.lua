@@ -12,8 +12,8 @@
 -- @return FadeOut#FadeOut self (return value: cc.FadeOut)
         
 --------------------------------
--- creates the action <br>
--- param d in seconds
+-- Creates the action.<br>
+-- param d Duration time, in seconds.
 -- @function [parent=#FadeOut] create 
 -- @param self
 -- @param #float d

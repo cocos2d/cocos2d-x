@@ -33,6 +33,13 @@ NS_CC_BEGIN
 namespace experimental{
     namespace ui{
 
+        /**
+         * @class VideoPlayer
+         * @brief Displays a video file.
+         * 
+         * @note VideoPlayer displays a video file base on system widget.
+         * It's mean VideoPlayer displays a video file above all graphical elements of cocos2d-x.
+         */
         class VideoPlayer : public cocos2d::ui::Widget
         {
         public:

@@ -5,7 +5,9 @@
 -- @parent_module cc
 
 --------------------------------
---  creates the action 
+-- brief Create the action with the inner action.<br>
+-- param action The pointer of the inner action.<br>
+-- return A pointer of EaseSineIn action. If creation failed, return nil.
 -- @function [parent=#EaseSineIn] create 
 -- @param self
 -- @param #cc.ActionInterval action
@@ -18,7 +20,7 @@
 -- @return EaseSineIn#EaseSineIn ret (return value: cc.EaseSineIn)
         
 --------------------------------
--- param time in seconds
+-- 
 -- @function [parent=#EaseSineIn] update 
 -- @param self
 -- @param #float time

@@ -55,6 +55,7 @@ namespace cocostudio
         
     CC_CONSTRUCTOR_ACCESS:
         ObjectExtensionData();
+        ~ObjectExtensionData();
         virtual bool init();
         
     protected:

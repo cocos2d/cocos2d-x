@@ -30,6 +30,8 @@
 
 NS_CC_BEGIN
 
+/// @cond
+
 class FontCharMap : public Font
 {  
 public:
@@ -60,6 +62,8 @@ private:
     int _itemHeight;
 
 };
+
+/// @endcond
 
 NS_CC_END
 

@@ -40,6 +40,8 @@ class Texture2D;
 class EventCustom;
 class EventListenerCustom;
 
+/// @cond
+
 struct FontLetterDefinition
 {
     unsigned short  letteCharUTF16;
@@ -128,6 +130,7 @@ protected:
     bool _antialiasEnabled;
 };
 
+/// @endcond
 
 NS_CC_END
 
