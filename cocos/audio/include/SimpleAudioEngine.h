@@ -58,7 +58,7 @@ class EXPORT_DLL SimpleAudioEngine
 public:
     /**
      * Returns a shared instance of the SimpleAudioEngine.
-	 * @js NA
+     * @js NA
      */
     static SimpleAudioEngine* getInstance();
 
@@ -237,7 +237,7 @@ public:
      * The compressed audio will be decoded to wave, then written into an internal buffer in SimpleAudioEngine.
      *
      * @param filePath The path of the effect file.
-	 * @js NA
+     * @js NA
      */
     virtual void preloadEffect(const char* filePath);
 
