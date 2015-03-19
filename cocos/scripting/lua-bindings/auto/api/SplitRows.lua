@@ -5,8 +5,10 @@
 -- @parent_module cc
 
 --------------------------------
--- creates the action with the number of rows to split and the duration <br>
--- param duration in seconds
+-- brief Create the action with the number of rows and the duration.<br>
+-- param duration Specify the duration of the SplitRows action. It's a value in seconds.<br>
+-- param rows Specify the rows count should be splited.<br>
+-- return If the creation success, return a pointer of SplitRows action; otherwise, return nil.
 -- @function [parent=#SplitRows] create 
 -- @param self
 -- @param #float duration
