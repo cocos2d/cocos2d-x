@@ -5,7 +5,8 @@
 -- @parent_module cc
 
 --------------------------------
---  returns the grid 
+-- brief Get the pointer of GridBase.<br>
+-- return The pointer of GridBase.
 -- @function [parent=#GridAction] getGrid 
 -- @param self
 -- @return GridBase#GridBase ret (return value: cc.GridBase)
