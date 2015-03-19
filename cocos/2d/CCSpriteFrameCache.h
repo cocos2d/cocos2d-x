@@ -63,12 +63,12 @@ public:
     /** Returns the shared instance of the Sprite Frame cache.
      *
      * @return The instance of the Sprite Frame Cache.
-	 * @js NA
+     * @js NA
      */
     static SpriteFrameCache* getInstance();
 
     /** @deprecated Use getInstance() instead 
-		@js NA 
+     @js NA 
 	*/
     CC_DEPRECATED_ATTRIBUTE static SpriteFrameCache* sharedSpriteFrameCache() { return SpriteFrameCache::getInstance(); }
 

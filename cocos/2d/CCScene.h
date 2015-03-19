@@ -72,7 +72,7 @@ public:
      *
      * @param size The predefined size of scene.
      * @return An autoreleased Scene object.
-	 * @js NA
+     * @js NA
      */
     static Scene *createWithSize(const Size& size);
 
@@ -82,7 +82,7 @@ public:
     /** Get all cameras.
      * 
      * @return The vector of all cameras.
-	 * @js NA
+     * @js NA
      */
     const std::vector<Camera*>& getCameras() const { return _cameras; }
 
@@ -93,14 +93,14 @@ public:
     Camera* getDefaultCamera() const { return _defaultCamera; }
 
     /** Get lights.
-	 * @js NA
      * @return The vector of lights.
+     * @js NA
      */
     const std::vector<BaseLight*>& getLights() const { return _lights; }
     
     /** Render the scene.
-	 * @js NA
      * @param renderer The renderer use to render the scene.
+     * @js NA
      */
     void render(Renderer* renderer);
     
@@ -141,14 +141,14 @@ public:
     virtual void addChild(Node* child, int zOrder, int tag) override;
     virtual void addChild(Node* child, int zOrder, const std::string &name) override;
     /** Get the physics world of the scene.
-	 * @js NA
      * @return The physics world of the scene.
+     * @js NA
      */
     inline PhysicsWorld* getPhysicsWorld() { return _physicsWorld; }
     
     /** Create a scene with physics.
-	 * @js NA
      * @return An autoreleased Scene object with physics.
+     * @js NA
      */
     static Scene *createWithPhysics();
     
