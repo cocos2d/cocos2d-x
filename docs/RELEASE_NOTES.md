@@ -13,6 +13,7 @@
     - [Windows](#windows)
     - [Linux](#linux)
   - [How to start a new game](#how-to-start-a-new-game)
+- [v3.5](#v35)
 - [v3.5rc0](#v35rc0)
   - [Highlights of v3.5rc0](#highlights-of-v35rc0)
   - [Features in detail](#features-in-detail)
@@ -113,6 +114,12 @@ Run
 ## How to start a new game
 
 Please refer to this document: [ReadMe](../README.md)
+# v3.5
+There are only some minor changes and bug fixes in this verison.
+
+* EditBox: Color4B font color is supported
+* Fix memory leak in AutoReleasePool
+* Fix FileUtils:getWritablePath() return wrong path on Mac&Windows
 
 # v3.5rc0
 ## Highlights of v3.5rc0
