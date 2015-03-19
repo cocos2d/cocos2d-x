@@ -247,6 +247,7 @@
     <ClCompile Include="..\..\Classes\PerformanceTest\PerformanceEventDispatcherTest.cpp" />
     <ClCompile Include="..\..\Classes\PerformanceTest\PerformanceLabelTest.cpp" />
     <ClCompile Include="..\..\Classes\PerformanceTest\PerformanceMathTest.cpp" />
+    <ClCompile Include="..\..\Classes\PerformanceTest\PerformanceParticle3DTest.cpp" />
     <ClCompile Include="..\..\Classes\PerformanceTest\PerformanceRendererTest.cpp" />
     <ClCompile Include="..\..\Classes\PerformanceTest\PerformanceScenarioTest.cpp" />
     <ClCompile Include="..\..\Classes\PhysicsTest\PhysicsTest.cpp" />
@@ -451,6 +452,7 @@
     <ClInclude Include="..\..\Classes\PerformanceTest\PerformanceEventDispatcherTest.h" />
     <ClInclude Include="..\..\Classes\PerformanceTest\PerformanceLabelTest.h" />
     <ClInclude Include="..\..\Classes\PerformanceTest\PerformanceMathTest.h" />
+    <ClInclude Include="..\..\Classes\PerformanceTest\PerformanceParticle3DTest.h" />
     <ClInclude Include="..\..\Classes\PerformanceTest\PerformanceRendererTest.h" />
     <ClInclude Include="..\..\Classes\PerformanceTest\PerformanceScenarioTest.h" />
     <ClInclude Include="..\..\Classes\PhysicsTest\PhysicsTest.h" />
