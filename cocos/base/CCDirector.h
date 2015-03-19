@@ -118,10 +118,16 @@ public:
         DEFAULT = _3D,
     };
     
-    /** Returns a shared instance of the director. */
+    /** 
+     * Returns a shared instance of the director. 
+     * @js _getInstance
+     */
     static Director* getInstance();
 
-    /** @deprecated Use getInstance() instead. */
+    /**
+     * @deprecated Use getInstance() instead.
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE static Director* sharedDirector() { return Director::getInstance(); }
     
     /**
@@ -156,20 +162,19 @@ public:
 
     /** 
      * Get the GLView.
-     
-     * @js NA
      * @lua NA
      */
     inline GLView* getOpenGLView() { return _openGLView; }
     /** 
      * Sets the GLView. 
-     *
      * @lua NA
-     * @js NA
      */
     void setOpenGLView(GLView *openGLView);
 
-    /** Gets singleton of TextureCache. */
+    /*
+     * Gets singleton of TextureCache.
+     * @js NA
+     */
     TextureCache* getTextureCache() const;
 
     /** Whether or not `_nextDeltaTimeZero` is set to 0. */
@@ -188,8 +193,7 @@ public:
     inline unsigned int getTotalFrames() { return _totalFrames; }
     
     /** Gets an OpenGL projection.
-     @since v0.8.2
-     * @js NA
+     * @since v0.8.2
      * @lua NA
      */
     inline Projection getProjection() { return _projection; }
@@ -264,6 +268,7 @@ public:
      * Don't call it if there is already a running scene.
      *
      * It will call pushScene: and then it will call startAnimation
+     * @js NA
      */
     void runWithScene(Scene *scene);
 
@@ -299,6 +304,7 @@ public:
 
     /** Replaces the running scene with a new one. The running scene is terminated.
      * ONLY call it if there is a running scene.
+     * @js NA
      */
     void replaceScene(Scene *scene);
 
@@ -319,7 +325,10 @@ public:
      */
     void resume();
     
-    /** Restart the director. */
+    /*
+     * Restart the director. 
+     * @js NA
+     */
     void restart();
 
     /** Stops the animation. Nothing will be drawn. The main loop won't be triggered anymore.
@@ -352,14 +361,18 @@ public:
     // OpenGL Helper
 
     /** Sets the OpenGL default values.
-      * It will enable alpha blending, disable depth test.
+     * It will enable alpha blending, disable depth test.
+     * @js NA
      */
     void setGLDefaultValues();
 
     /** Enables/disables OpenGL alpha blending. */
     void setAlphaBlending(bool on);
     
-    /** Sets clear values for the color buffers, value range of each element is [0.0, 1.0]. */
+    /** Sets clear values for the color buffers,
+     * value range of each element is [0.0, 1.0].
+     * @js NA
+     */
     void setClearColor(const Color4F& clearColor);
 
     /** Enables/disables OpenGL depth test. */
@@ -371,7 +384,7 @@ public:
      * High-res devices might have a higher surface size than the screen size.
      * Only available when compiled using SDK >= 4.0.
      * @since v0.99.4
-    */
+     */
     void setContentScaleFactor(float scaleFactor);
     /**
      * Gets content scale factor.
@@ -401,11 +414,13 @@ public:
     
     /** Gets the EventDispatcher associated with this director.
      * @since v3.0
+     * @js NA
      */
     EventDispatcher* getEventDispatcher() const { return _eventDispatcher; }
     
     /** Sets the EventDispatcher associated with this director.
      * @since v3.0
+     * @js NA
      */
     void setEventDispatcher(EventDispatcher* dispatcher);
 
@@ -416,6 +431,7 @@ public:
 
     /** Returns the Console associated with this director.
      * @since v3.0
+     * @js NA
      */
     Console* getConsole() const { return _console; }
 
@@ -424,20 +440,29 @@ public:
     
     /**
      *  Gets Frame Rate.
+     * @js NA
      */
     float getFrameRate() const { return _frameRate; }
 
-    /** Clones a specified type matrix and put it to the top of specified type of matrix stack. */
+    /** 
+     * Clones a specified type matrix and put it to the top of specified type of matrix stack.
+     * @js NA
+     */
     void pushMatrix(MATRIX_STACK_TYPE type);
-    /** Pops the top matrix of the specified type of matrix stack. */
+    /** Pops the top matrix of the specified type of matrix stack.
+     * @js NA
+     */
     void popMatrix(MATRIX_STACK_TYPE type);
-    /** Adds an identity matrix to the top of specified type of matrxi stack. */
+    /** Adds an identity matrix to the top of specified type of matrxi stack.
+     * @js NA
+     */
     void loadIdentityMatrix(MATRIX_STACK_TYPE type);
     /**
      * Adds a matrix to the top of specified type of matrix stack.
      * 
      * @param type Matrix type.
      * @param mat The matrix that to be added.
+     * @js NA
      */
     void loadMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
     /**
@@ -445,11 +470,18 @@ public:
      *
      * @param type Matrix type.
      * @param mat The matrix that to be multipied.
+     * @js NA
      */
     void multiplyMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
-    /** Gets the top matrix of specified type of matrix stack. */
+    /**
+     * Gets the top matrix of specified type of matrix stack.
+     * @js NA
+     */
     const Mat4& getMatrix(MATRIX_STACK_TYPE type);
-    /** Cleras all types of matrix stack, and add indentity matrix to these matrix stacks. */
+    /**
+     * Cleras all types of matrix stack, and add indentity matrix to these matrix stacks.
+     * @js NA
+     */
     void resetMatrixStack();
 
 protected:

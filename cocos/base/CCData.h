@@ -34,6 +34,7 @@
 NS_CC_BEGIN
 
 /**
+ * @js NA
  * @lua NA
  */
 class CC_DLL Data
