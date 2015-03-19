@@ -389,7 +389,10 @@ protected:
     friend class PhysicsDebugDraw;
 };
 
-
+/** A physics helper class. Draw physics shape, joint in debug mode. 
+ 
+ *  You do not create PhysicsDebugDraw objects directly; Instead, you can activate it by PhysicsWorld::setDebugDrawMask.
+ */
 class CC_DLL PhysicsDebugDraw
 {
 protected:
