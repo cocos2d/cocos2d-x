@@ -5,10 +5,15 @@
 -- @parent_module cc
 
 --------------------------------
---  creates the action with a range, shake Z vertices, a grid and duration 
+-- brief Create the action with a range, shake Z vertices, a grid and duration.<br>
+-- param duration Specify the duration of the Shaky3D action. It's a value in seconds.<br>
+-- param gridSize Specify the size of the grid.<br>
+-- param range Specify the range of the shaky effect.<br>
+-- param shakeZ Specify whether shake on the z axis.<br>
+-- return If the creation sucess, return a pointer of Shaky3D action; otherwise, return nil.
 -- @function [parent=#Shaky3D] create 
 -- @param self
--- @param #float duration
+-- @param #float initWithDuration
 -- @param #size_table gridSize
 -- @param #int range
 -- @param #bool shakeZ
