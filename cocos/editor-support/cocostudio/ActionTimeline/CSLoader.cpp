@@ -1336,7 +1336,6 @@ Node* CSLoader::nodeWithFlatBuffersForSimulator(const flatbuffers::NodeTree *nod
                 node->addChild(child);
             }
         }
-        Helper::doLayout(node);
     }
     
 //    _loadingNodeParentHierarchy.pop_back();

@@ -31,6 +31,7 @@
 
 NS_CC_BEGIN
 
+/// @cond EventController
 class Controller;
 class EventListenerController;
 
@@ -64,7 +65,7 @@ protected:
 
     friend class EventListenerController;
 };
-
+/// @endcond EventController
 NS_CC_END
 
 #endif /* defined(__cocos2d_libs__EventController__) */

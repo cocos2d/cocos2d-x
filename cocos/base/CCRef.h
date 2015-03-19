@@ -40,20 +40,25 @@ NS_CC_BEGIN
 
 class Ref;
 
-/** Interface that defines how to clone an Ref */
+/** 
+  * Interface that defines how to clone an Ref.
+  * @lua NA
+  * @js NA
+  */
 class CC_DLL Clonable
 {
 public:
-    /** returns a copy of the Ref */
+    /** Returns a copy of the Ref. */
     virtual Clonable* clone() const = 0;
+    
     /**
      * @js NA
      * @lua NA
      */
     virtual ~Clonable() {};
 
-    /** returns a copy of the Ref.
-     * @deprecated Use clone() instead
+    /** Returns a copy of the Ref.
+     * @deprecated Use clone() instead.
      */
     CC_DEPRECATED_ATTRIBUTE Ref* copy() const
     {
@@ -63,6 +68,11 @@ public:
     }
 };
 
+/**
+ * Ref is used for reference count manangement. If a class inherits from Ref,
+ * then it is easy to be shared in different places.
+ * @js NA
+ */
 class CC_DLL Ref
 {
 public:
@@ -125,6 +135,8 @@ protected:
 
 public:
     /**
+     * Destructor
+     *
      * @js NA
      * @lua NA
      */

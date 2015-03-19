@@ -5,20 +5,25 @@
 -- @parent_module cc
 
 --------------------------------
--- 
+--  Sets the inner action.<br>
+-- param action The inner action.
 -- @function [parent=#Repeat] setInnerAction 
 -- @param self
 -- @param #cc.FiniteTimeAction action
 -- @return Repeat#Repeat self (return value: cc.Repeat)
         
 --------------------------------
--- 
+--  Gets the inner action.<br>
+-- return The inner action.
 -- @function [parent=#Repeat] getInnerAction 
 -- @param self
 -- @return FiniteTimeAction#FiniteTimeAction ret (return value: cc.FiniteTimeAction)
         
 --------------------------------
---  creates a Repeat action. Times is an unsigned integer between 1 and pow(2,30) 
+--  Creates a Repeat action. Times is an unsigned integer between 1 and pow(2,30).<br>
+-- param action The action needs to repeat.<br>
+-- param times The repeat times.<br>
+-- return An autoreleased Repeat object.
 -- @function [parent=#Repeat] create 
 -- @param self
 -- @param #cc.FiniteTimeAction action
@@ -51,7 +56,7 @@
 -- @return Repeat#Repeat self (return value: cc.Repeat)
         
 --------------------------------
--- param dt in seconds
+-- param dt In seconds.
 -- @function [parent=#Repeat] update 
 -- @param self
 -- @param #float dt

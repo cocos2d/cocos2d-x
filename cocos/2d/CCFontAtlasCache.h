@@ -34,6 +34,8 @@ NS_CC_BEGIN
 
 class FontAtlas;
 
+/// @cond
+
 class CC_DLL FontAtlasCache
 {  
 public:
@@ -55,6 +57,8 @@ private:
     static std::string generateFontName(const std::string& fontFileName, int size, GlyphCollection theGlyphs, bool useDistanceField);
     static std::unordered_map<std::string, FontAtlas *> _atlasMap;
 };
+
+/// @endcond
 
 NS_CC_END
 

@@ -39,7 +39,7 @@ NS_CC_BEGIN
 /** 
  @class ActionEase
  @brief Base class for Easing actions.
- @detail Ease actions are created from other interval actions.
+ @details Ease actions are created from other interval actions.
          The ease action will change the timeline of the inner action.
  @ingroup Actions
  */
@@ -91,7 +91,7 @@ private:
 /** 
  @class EaseRateAction
  @brief Base class for Easing actions with rate parameters.
- @detail Ease the inner action with specified rate.
+ @details Ease the inner action with specified rate.
  @ingroup Actions
  */
 class CC_DLL EaseRateAction : public ActionEase
@@ -143,8 +143,8 @@ private:
 /** 
  @class EaseIn
  @brief EaseIn action with a rate.
- @detail The timeline of inner action will be changed by:
-         \f$time^rate\f$
+ @details The timeline of inner action will be changed by:
+         \f${ time }^{ rate }\f$.
  @ingroup Actions
  */
 class CC_DLL EaseIn : public EaseRateAction
@@ -174,8 +174,8 @@ private:
 /** 
  @class EaseOut
  @brief EaseOut action with a rate.
- @detail The timeline of inner action will be changed by:
-         \f$time^(1/rate)\f$
+ @details The timeline of inner action will be changed by:
+         \f${ time }^ { (1/rate) }\f$.
  @ingroup Actions
  */
 class CC_DLL EaseOut : public EaseRateAction
@@ -205,10 +205,10 @@ private:
 /** 
  @class EaseInOut
  @brief EaseInOut action with a rate
- @detail If time * 2 < 1, the timeline of inner action will be changed by:
-         \f$0.5*{ time }^{ rate }\f$
+ @details If time * 2 < 1, the timeline of inner action will be changed by:
+         \f$0.5*{ time }^{ rate }\f$.
          Else, the timeline of inner action will be changed by:
-         \f$1.0-0.5*{ 2-time }^{ rate }\f$
+         \f$1.0-0.5*{ 2-time }^{ rate }\f$.
  @ingroup Actions
  */
 class CC_DLL EaseInOut : public EaseRateAction
@@ -238,8 +238,8 @@ private:
 /** 
  @class EaseExponentialIn
  @brief Ease Exponential In action.
- @detail The timeline of inner action will be changed by:
-         \f${ 2 }^{ 10*(time-1) }-1*0.001\f$
+ @details The timeline of inner action will be changed by:
+         \f${ 2 }^{ 10*(time-1) }-1*0.001\f$.
  @ingroup Actions
  */
 class CC_DLL EaseExponentialIn : public ActionEase
@@ -268,8 +268,8 @@ private:
 /** 
  @class EaseExponentialOut
  @brief Ease Exponential Out
- @detail The timeline of inner action will be changed by:
-         \f$1-{ 2 }^{ -10*(time-1) }\f$
+ @details The timeline of inner action will be changed by:
+         \f$1-{ 2 }^{ -10*(time-1) }\f$.
  @ingroup Actions
  */
 class CC_DLL EaseExponentialOut : public ActionEase
@@ -298,10 +298,10 @@ private:
 /** 
  @class EaseExponentialInOut
  @brief Ease Exponential InOut
- @detail If time * 2 < 1, the timeline of inner action will be changed by:
-         \f$0.5*{ 2 }^{ 10*(time-1) }\f$
+ @details If time * 2 < 1, the timeline of inner action will be changed by:
+         \f$0.5*{ 2 }^{ 10*(time-1) }\f$.
          else, the timeline of inner action will be changed by:
-         \f$0.5*(2-{ 2 }^{ -10*(time-1) })\f$
+         \f$0.5*(2-{ 2 }^{ -10*(time-1) })\f$.
  @ingroup Actions
  */
 class CC_DLL EaseExponentialInOut : public ActionEase
@@ -330,8 +330,8 @@ private:
 /** 
  @class EaseSineIn
  @brief Ease Sine In
- @detail The timeline of inner action will be changed by:
-         \f$1-cos(time*\frac { \pi  }{ 2 } )\f$
+ @details The timeline of inner action will be changed by:
+         \f$1-cos(time*\frac { \pi  }{ 2 } )\f$.
  @ingroup Actions
  */
 class CC_DLL EaseSineIn : public ActionEase
@@ -360,8 +360,8 @@ private:
 /** 
  @class EaseSineOut
  @brief Ease Sine Out
- @detail The timeline of inner action will be changed by:
-         \f$sin(time*\frac { \pi  }{ 2 } )\f$
+ @details The timeline of inner action will be changed by:
+         \f$sin(time*\frac { \pi  }{ 2 } )\f$.
  @ingroup Actions
  */
 class CC_DLL EaseSineOut : public ActionEase
@@ -390,8 +390,8 @@ private:
 /** 
  @class EaseSineInOut
  @brief Ease Sine InOut
- @detail The timeline of inner action will be changed by:
-         \f$-0.5*(cos(\pi *time)-1)\f$
+ @details The timeline of inner action will be changed by:
+         \f$-0.5*(cos(\pi *time)-1)\f$.
  @ingroup Actions
  */
 class CC_DLL EaseSineInOut : public ActionEase
@@ -475,9 +475,9 @@ private:
 /** 
  @class EaseElasticIn
  @brief Ease Elastic In action.
- @detail If time == 0 or time == 1, the timeline of inner action will not be changed.
+ @details If time == 0 or time == 1, the timeline of inner action will not be changed.
          Else, the timeline of inner action will be changed by:
-         \f$-{ 2 }^{ 10*(time-1) }*sin((time-1-\frac { period }{ 4 } )*\pi *2/period)\f$
+         \f$-{ 2 }^{ 10*(time-1) }*sin((time-1-\frac { period }{ 4 } )*\pi *2/period)\f$.
 
  @warning This action doesn't use a bijective function.
           Actions like Sequence might have an unexpected result when used with this action.
@@ -518,9 +518,9 @@ private:
 /** 
  @class EaseElasticOut
  @brief Ease Elastic Out action.
- @detail If time == 0 or time == 1, the timeline of inner action will not be changed.
+ @details If time == 0 or time == 1, the timeline of inner action will not be changed.
          Else, the timeline of inner action will be changed by:
-         \f${ 2 }^{ -10*time }*sin((time-\frac { period }{ 4 } )*\pi *2/period)+1\f$
+         \f${ 2 }^{ -10*time }*sin((time-\frac { period }{ 4 } )*\pi *2/period)+1\f$.
  @warning This action doesn't use a bijective function.
           Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2

@@ -37,6 +37,8 @@ NS_CC_BEGIN
 #pragma warning (disable: 4996)
 #endif
 
+/// @cond
+
 class Label;
 
 /**
@@ -173,6 +175,9 @@ protected:
 #elif _MSC_VER >= 1400 //vs 2005 or higher
 #pragma warning (pop)
 #endif
+
+/// @endcond
+
 NS_CC_END
 
 #endif //__CCLABEL_H__

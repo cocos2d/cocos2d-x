@@ -30,7 +30,7 @@
 -- @return Sequence#Sequence ret (return value: cc.Sequence)
         
 --------------------------------
--- param t in seconds
+-- param t In seconds.
 -- @function [parent=#Sequence] update 
 -- @param self
 -- @param #float t

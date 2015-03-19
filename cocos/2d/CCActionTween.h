@@ -37,7 +37,7 @@ NS_CC_BEGIN
 
 /**
 @brief The delegate class for ActionTween.
-@detail If you want to use ActionTween on a node.
+@details If you want to use ActionTween on a node.
         You should implement the node follow these steps:
         1. The node should be inherit from ActionTweenDelegate.
         2. Override the virtual method updateTweenAction in the node.

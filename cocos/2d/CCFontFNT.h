@@ -32,6 +32,8 @@ NS_CC_BEGIN
 
 class BMFontConfiguration;
 
+/// @cond FontFNT
+
 class CC_DLL FontFNT : public Font
 {
     
@@ -62,6 +64,8 @@ private:
     Vec2                   _imageOffset;
     
 };
+
+/// @endcond
 
 NS_CC_END
 

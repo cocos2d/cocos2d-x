@@ -12,14 +12,17 @@
 -- @return Animation#Animation ret (return value: cc.Animation)
 
 --------------------------------
---  sets the Animation object to be animated 
+--  Sets the Animation object to be animated <br>
+-- param A certain animation.
 -- @function [parent=#Animate] setAnimation 
 -- @param self
 -- @param #cc.Animation animation
 -- @return Animate#Animate self (return value: cc.Animate)
         
 --------------------------------
---  creates the action with an Animation and will restore the original frame when the animation is over 
+--  Creates the action with an Animation and will restore the original frame when the animation is over.<br>
+-- param animation A certain animation.<br>
+-- return An autoreleased Animate object.
 -- @function [parent=#Animate] create 
 -- @param self
 -- @param #cc.Animation animation
@@ -51,7 +54,7 @@
 -- @return Animate#Animate ret (return value: cc.Animate)
         
 --------------------------------
--- param t in seconds
+-- param t In seconds.
 -- @function [parent=#Animate] update 
 -- @param self
 -- @param #float t
