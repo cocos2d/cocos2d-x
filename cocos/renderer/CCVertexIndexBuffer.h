@@ -36,6 +36,7 @@ class EventListenerCustom;
 /**
 VertexBuffer is an abstraction of low level openGL Vertex Buffer Object.
 It is used to save an array of vertices.
+*@js NA
 */
 class CC_DLL VertexBuffer : public Ref
 {
@@ -133,6 +134,7 @@ public:
 /**
 IndexBuffer is an abstraction of low level openGL Buffer Object.
 It used to save an array of indices.
+@js NA
 */
 class CC_DLL IndexBuffer : public Ref
 {
