@@ -78,8 +78,8 @@ public:
     static void destroyInstance();
 
     /** @deprecated Use destroyInstance() instead 
-	* @js NA
-	*/
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE static void purgeSharedSpriteFrameCache() { return SpriteFrameCache::destroyInstance(); }
 
     /** Destructor.
