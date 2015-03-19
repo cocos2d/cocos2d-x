@@ -5,7 +5,7 @@
 -- @parent_module cc
 
 --------------------------------
--- 
+-- js NA
 -- @function [parent=#FadeIn] setReverseAction 
 -- @param self
 -- @param #cc.FadeTo ac

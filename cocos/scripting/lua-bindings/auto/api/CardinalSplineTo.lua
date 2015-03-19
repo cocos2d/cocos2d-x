@@ -58,7 +58,7 @@
 -- @return CardinalSplineTo#CardinalSplineTo self (return value: cc.CardinalSplineTo)
         
 --------------------------------
--- js NA<br>
+-- js ctor<br>
 -- lua NA
 -- @function [parent=#CardinalSplineTo] CardinalSplineTo 
 -- @param self
