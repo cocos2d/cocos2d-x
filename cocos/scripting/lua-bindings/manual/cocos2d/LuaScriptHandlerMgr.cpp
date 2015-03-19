@@ -195,9 +195,10 @@ void ScriptHandlerMgr::removeObjectHandler(void* object,ScriptHandlerMgr::Handle
     }
 
 }
-int  ScriptHandlerMgr::getObjectHandler(void* object,ScriptHandlerMgr::HandlerType handlerType)
+
+int ScriptHandlerMgr::getObjectHandler(void* object,ScriptHandlerMgr::HandlerType handlerType)
 {
-    if (NULL == object ||   _mapObjectHandlers.empty() )
+    if (NULL == object || _mapObjectHandlers.empty() )
         return 0;
     
     auto iter = _mapObjectHandlers.find(object);
@@ -216,6 +217,27 @@ int  ScriptHandlerMgr::getObjectHandler(void* object,ScriptHandlerMgr::HandlerTy
     
     return 0;
 }
+
+std::vector<int> ScriptHandlerMgr::getObjectHandlers(void* object, ScriptHandlerMgr::HandlerType handlerType)
+{
+    std::vector<int> out;
+    auto iter = _mapObjectHandlers.find(object);
+    
+    if (_mapObjectHandlers.end() != iter)
+    {
+        auto iterVec = (iter->second).begin();
+        for (; iterVec != (iter->second).end(); iterVec++)
+        {
+            if (iterVec->first == handlerType)
+            {
+                out.push_back(iterVec->second);
+            }
+        }
+    }
+    
+    return out;
+}
+
 void ScriptHandlerMgr::removeObjectAllHandlers(void* object)
 {
     if (NULL == object || _mapObjectHandlers.empty())

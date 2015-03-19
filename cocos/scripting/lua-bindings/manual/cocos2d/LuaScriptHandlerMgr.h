@@ -192,6 +192,7 @@ public:
     void addObjectHandler(void* object,int handler,ScriptHandlerMgr::HandlerType handlerType);
     void removeObjectHandler(void* object,ScriptHandlerMgr::HandlerType handlerType);
     int  getObjectHandler(void* object,ScriptHandlerMgr::HandlerType handlerType);
+    std::vector<int> getObjectHandlers(void* object,ScriptHandlerMgr::HandlerType handlerType);
     void removeObjectAllHandlers(void* object);
     ScriptHandlerMgr::HandlerType addCustomHandler(void* object, int handler);
     
