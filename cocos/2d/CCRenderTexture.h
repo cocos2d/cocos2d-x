@@ -107,6 +107,9 @@ public:
 
     /** saves the texture into a file. The format could be JPG or PNG. The file will be saved in the Documents folder.
         Returns true if the operation is successful.
+     Notes: since v3.x, saveToFile will generate a custum command, which will be called in the following render->render().
+     So if this function is called in a event handler, the actual save file will be called in the next frame. If we switch to a different scene, the game will crash.
+     To solve this, add Director::getInstance()->getRenderer()->render(); after this function.
      */
     bool saveToFile(const std::string& filename, Image::Format format, bool isRGBA = true, std::function<void (RenderTexture*, const std::string&)> callback = nullptr);
     

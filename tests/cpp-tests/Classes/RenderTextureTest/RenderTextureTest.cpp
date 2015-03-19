@@ -146,7 +146,8 @@ void RenderTextureSave::saveImage(cocos2d::Ref *sender)
     };
     
     _target->saveToFile(png, Image::Format::PNG, true, callback);
-
+    //Add this function to avoid crash if we switch to a new scene.
+    Director::getInstance()->getRenderer()->render();
     CCLOG("Image saved %s", png);
 
     counter++;
