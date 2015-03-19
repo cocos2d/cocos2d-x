@@ -76,7 +76,8 @@
 -- - If you are running 1 Sequence of 7 actions, it will return 1.<br>
 -- - If you are running 7 Sequences of 2 actions, it will return 7.<br>
 -- param target    A certain target.<br>
--- return  The numbers of actions that are running in a certain target.
+-- return  The numbers of actions that are running in a certain target.<br>
+-- js NA
 -- @function [parent=#ActionManager] getNumberOfRunningActionsInTarget 
 -- @param self
 -- @param #cc.Node target
@@ -110,7 +111,8 @@
 --------------------------------
 --  Removes all actions given its tag and the target.<br>
 -- param tag       The actions' tag.<br>
--- param target    A certain target.
+-- param target    A certain target.<br>
+-- js NA
 -- @function [parent=#ActionManager] removeAllActionsByTag 
 -- @param self
 -- @param #int tag
