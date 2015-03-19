@@ -1836,7 +1836,7 @@ void TextureDrawAtPoint::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    CC_PUSH_MATRIX_MV
+    CC_PUSH_MATRIX_MV(director->getRenderer()->getMatrixStack())
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
 
     auto s = Director::getInstance()->getWinSize();
@@ -1844,7 +1844,7 @@ void TextureDrawAtPoint::onDraw(const Mat4 &transform, uint32_t flags)
     _tex1->drawAtPoint(Vec2(s.width/2-50, s.height/2 - 50));
     _Tex2F->drawAtPoint(Vec2(s.width/2+50, s.height/2 - 50));
     
-    CC_POP_MATRIX_MV
+    CC_POP_MATRIX_MV(director->getRenderer()->getMatrixStack())
 }
 
 // TextureDrawInRect
@@ -1878,7 +1878,7 @@ void TextureDrawInRect::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    CC_PUSH_MATRIX_MV
+    CC_PUSH_MATRIX_MV(director->getRenderer()->getMatrixStack())
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
     
     auto s = Director::getInstance()->getWinSize();
@@ -1889,7 +1889,7 @@ void TextureDrawInRect::onDraw(const Mat4 &transform, uint32_t flags)
     _tex1->drawInRect(rect1);
     _Tex2F->drawInRect(rect2);
     
-    CC_POP_MATRIX_MV
+    CC_POP_MATRIX_MV(director->getRenderer()->getMatrixStack())
 }
 
 std::string TextureDrawInRect::title() const

@@ -282,7 +282,7 @@ void Director::drawScene()
         setNextScene();
     }
 
-    CC_PUSH_MATRIX_MV
+    CC_PUSH_MATRIX_MV(_renderer->getMatrixStack())
     loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     if (_runningScene)
     {
@@ -316,7 +316,7 @@ void Director::drawScene()
 
     _eventDispatcher->dispatchEvent(_eventAfterDraw);
 
-    CC_POP_MATRIX_MV
+    CC_POP_MATRIX_MV(_renderer->getMatrixStack())
     loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     _totalFrames++;
 
@@ -446,42 +446,42 @@ void Director::setNextDeltaTimeZero(bool nextDeltaTimeZero)
 //
 void Director::initMatrixStack()
 {
-    _renderer->getMatrixstack()->resetMatrixStack();
+    _renderer->getMatrixStack()->resetMatrixStack();
 }
 
 void Director::resetMatrixStack()
 {
-    _renderer->getMatrixstack()->resetMatrixStack();
+    _renderer->getMatrixStack()->resetMatrixStack();
 }
 
 void Director::popMatrix(MATRIX_STACK_TYPE type)
 {
-    _renderer->getMatrixstack()->popMatrix(type);
+    _renderer->getMatrixStack()->popMatrix(type);
 }
 
 void Director::loadIdentityMatrix(MATRIX_STACK_TYPE type)
 {
-    _renderer->getMatrixstack()->loadIdentityMatrix(type);
+    _renderer->getMatrixStack()->loadIdentityMatrix(type);
 }
 
 void Director::loadMatrix(MATRIX_STACK_TYPE type, const Mat4& mat)
 {
-    _renderer->getMatrixstack()->loadMatrix(type, mat);
+    _renderer->getMatrixStack()->loadMatrix(type, mat);
 }
 
 void Director::multiplyMatrix(MATRIX_STACK_TYPE type, const Mat4& mat)
 {
-    _renderer->getMatrixstack()->multiplyMatrix(type, mat);
+    _renderer->getMatrixStack()->multiplyMatrix(type, mat);
 }
 
 void Director::pushMatrix(MATRIX_STACK_TYPE type)
 {
-    _renderer->getMatrixstack()->pushMatrix(type);
+    _renderer->getMatrixStack()->pushMatrix(type);
 }
 
 const Mat4& Director::getMatrix(MATRIX_STACK_TYPE type)
 {
-    return _renderer->getMatrixstack()->getMatrix(type);
+    return _renderer->getMatrixStack()->getMatrix(type);
 }
 
 Mat4 Director::getMatrixByProjection(MATRIX_STACK_TYPE type, Projection projection) const

@@ -131,12 +131,12 @@ void ParticleBatchNode::visit(Renderer *renderer, const Mat4 &parentTransform, u
     // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
     Director* director = Director::getInstance();
-    CC_PUSH_MATRIX_MV
+    CC_PUSH_MATRIX_MV(renderer->getMatrixStack())
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
 
     draw(renderer, _modelViewTransform, flags);
 
-    CC_POP_MATRIX_MV
+    CC_POP_MATRIX_MV(renderer->getMatrixStack())
 }
 
 // override addChild:

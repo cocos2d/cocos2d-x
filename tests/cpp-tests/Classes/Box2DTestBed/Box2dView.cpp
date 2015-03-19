@@ -215,7 +215,7 @@ void Box2DView::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    CC_PUSH_MATRIX_MV
+    CC_PUSH_MATRIX_MV(director->getRenderer()->getMatrixStack())
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
 
     GL::enableVertexAttribs( cocos2d::GL::VERTEX_ATTRIB_FLAG_POSITION );
@@ -223,7 +223,7 @@ void Box2DView::onDraw(const Mat4 &transform, uint32_t flags)
     m_test->m_world->DrawDebugData();
     CHECK_GL_ERROR_DEBUG();
     
-    CC_POP_MATRIX_MV
+    CC_POP_MATRIX_MV(director->getRenderer()->getMatrixStack())
 }
 
 Box2DView::~Box2DView()

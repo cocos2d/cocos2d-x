@@ -279,17 +279,17 @@ It should work same as apples CFSwapInt32LittleToHost(..)
 #define CC_CALLBACK_2(__selector__,__target__, ...) std::bind(&__selector__,__target__, std::placeholders::_1, std::placeholders::_2, ##__VA_ARGS__)
 #define CC_CALLBACK_3(__selector__,__target__, ...) std::bind(&__selector__,__target__, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, ##__VA_ARGS__)
 
-/** @def CC_PUSH_AND_CACHE_MATRIX_MV, CC_POP_MATRIX_MV
-Macro is used to cache modelview matrix if CC_ENABLE_MATRIX_STACK_MV is true
+/** @def CC_PUSH_MATRIX_MV, CC_POP_MATRIX_MV
+Macro is used to push/pop modelview matrix if CC_ENABLE_MATRIX_STACK_MV is true
  */
 #if CC_ENABLE_MATRIX_STACK_MV
-    #define CC_PUSH_MATRIX_MV\
-    Director::getInstance()->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    #define CC_POP_MATRIX_MV \
-    Director::getInstance()->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    #define CC_PUSH_MATRIX_MV(matrixStack)\
+    matrixStack->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    #define CC_POP_MATRIX_MV(matrixStack) \
+    matrixStack->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
 #else
-    #define CC_PUSH_MATRIX_MV
-    #define CC_POP_MATRIX_MV
+    #define CC_PUSH_MATRIX_MV(matrixStack)
+    #define CC_POP_MATRIX_MV(matrixStack)
 #endif
 
 #endif // __BASE_CCMACROS_H__

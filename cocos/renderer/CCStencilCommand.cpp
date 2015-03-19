@@ -30,6 +30,7 @@
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
+#include "renderer/CCRenderer.h"
 
 NS_CC_BEGIN
 
@@ -91,7 +92,7 @@ void StencilCommand::drawFullScreenQuadClearStencil()
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
     
-    CC_PUSH_MATRIX_MV
+    CC_PUSH_MATRIX_MV(director->getRenderer()->getMatrixStack())
     director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
@@ -122,7 +123,7 @@ void StencilCommand::drawFullScreenQuadClearStencil()
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 4);
     
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    CC_POP_MATRIX_MV
+    CC_POP_MATRIX_MV(director->getRenderer()->getMatrixStack())
 }
 
 

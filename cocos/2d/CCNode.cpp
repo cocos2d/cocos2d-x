@@ -43,10 +43,10 @@ THE SOFTWARE.
 #include "2d/CCScene.h"
 #include "2d/CCComponent.h"
 #include "2d/CCComponentContainer.h"
+#include "renderer/CCRenderer.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
 #include "math/TransformUtils.h"
-
 #if CC_USE_PHYSICS
 #include "physics/CCPhysicsBody.h"
 #include "physics/CCPhysicsWorld.h"
@@ -1337,7 +1337,7 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t paren
     // IMPORTANT:
     // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
-    CC_PUSH_MATRIX_MV
+    CC_PUSH_MATRIX_MV(renderer->getMatrixStack())
     _director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
     
     bool visibleByCamera = isVisitableByVisitingCamera();
@@ -1369,7 +1369,7 @@ void Node::visit(Renderer* renderer, const Mat4 &parentTransform, uint32_t paren
         this->draw(renderer, _modelViewTransform, flags);
     }
 
-    CC_POP_MATRIX_MV
+    CC_POP_MATRIX_MV(renderer->getMatrixStack())
     
     // FIX ME: Why need to set _orderOfArrival to 0??
     // Please refer to https://github.com/cocos2d/cocos2d-x/pull/6920

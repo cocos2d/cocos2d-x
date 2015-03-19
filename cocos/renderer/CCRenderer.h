@@ -180,7 +180,7 @@ public:
     /** returns whether or not a rectangle is visible or not */
     bool checkVisibility(const Mat4& transform, const Size& size);
     
-    MatrixStack* getMatrixstack() { return &_matrixStack; }
+    MatrixStack* getMatrixStack() { return &_matrixStack; }
     
 protected:
 

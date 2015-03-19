@@ -635,7 +635,7 @@ void Sprite3D::visit(cocos2d::Renderer *renderer, const cocos2d::Mat4 &parentTra
     
     //
     Director* director = Director::getInstance();
-    CC_PUSH_MATRIX_MV
+    CC_PUSH_MATRIX_MV(renderer->getMatrixStack())
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
     
     bool visibleByCamera = isVisitableByVisitingCamera();
@@ -667,7 +667,7 @@ void Sprite3D::visit(cocos2d::Renderer *renderer, const cocos2d::Mat4 &parentTra
         this->draw(renderer, _modelViewTransform, flags);
     }
     
-    CC_POP_MATRIX_MV
+    CC_POP_MATRIX_MV(renderer->getMatrixStack())
 }
 
 void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)

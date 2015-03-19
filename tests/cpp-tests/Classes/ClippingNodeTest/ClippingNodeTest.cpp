@@ -640,21 +640,21 @@ void RawStencilBufferTest::draw(Renderer *renderer, const Mat4 &transform, uint3
         
         Director* director = Director::getInstance();
         CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-        CC_PUSH_MATRIX_MV
+        CC_PUSH_MATRIX_MV(renderer->getMatrixStack())
         
         _modelViewTransform = this->transform(transform);
         _spritesStencil.at(i)->visit(renderer, _modelViewTransform, flags);
-        CC_POP_MATRIX_MV
+        CC_POP_MATRIX_MV(renderer->getMatrixStack())
                 
         iter->init(_globalZOrder);
         iter->func = CC_CALLBACK_0(RawStencilBufferTest::onBeforeDrawSprite, this, i, winPoint);
         renderer->addCommand(&(*iter));
         ++iter;
         
-        CC_PUSH_MATRIX_MV
+        CC_PUSH_MATRIX_MV(renderer->getMatrixStack())
         _modelViewTransform = this->transform(transform);
         _sprites.at(i)->visit(renderer, _modelViewTransform, flags);
-        CC_POP_MATRIX_MV
+        CC_POP_MATRIX_MV(renderer->getMatrixStack())
     }
     
     iter->init(_globalZOrder);
