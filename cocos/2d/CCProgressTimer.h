@@ -131,7 +131,10 @@ public:
      */
     void setMidpoint(const Vec2& point);
     
-    /** Returns the Midpoint. */
+    /** Returns the Midpoint. 
+     *
+     * @return A Vec2.
+     */
     Vec2 getMidpoint() const;
 
     /**
