@@ -30,7 +30,7 @@
 -- @return Spawn#Spawn ret (return value: cc.Spawn)
         
 --------------------------------
--- param dt in seconds
+-- param dt In seconds.
 -- @function [parent=#Spawn] update 
 -- @param self
 -- @param #float time
