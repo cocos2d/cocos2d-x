@@ -150,6 +150,11 @@ void DrawNode::drawLine(const Vec2& origin, const Vec2& destination, const Color
     _vdLines->append<V2F_C4B_T2F>({destination, Color4B(color), Tex2F()});
 }
 
+void DrawNode::drawRect(const Rect &rect, const Color4F &color)
+{
+    drawRect(rect.origin, Vec2(rect.origin.x + rect.size.width, rect.origin.y + rect.size.height), color);
+}
+
 void DrawNode::drawRect(const Vec2& origin, const Vec2& destination, const Color4F &color)
 {
     drawLine(Vec2(origin.x, origin.y),           Vec2(destination.x, origin.y), color);

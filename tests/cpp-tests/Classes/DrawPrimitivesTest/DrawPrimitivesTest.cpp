@@ -269,6 +269,8 @@ DrawNodeTest::DrawNodeTest()
     draw->drawLine(Vec2(0,0), Vec2(s.width, s.height), Color4F(1.0, 0.0, 0.0, 0.5));
     
     // draw a rectangle
+    draw->drawRect(Rect(30,30,40,45), Color4F::BLUE);
+    
     draw->drawRect(Vec2(23,23), Vec2(7,7), Color4F(1,1,0,1));
     
     draw->drawRect(Vec2(15,30), Vec2(30,15), Vec2(15,0), Vec2(0,15), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
