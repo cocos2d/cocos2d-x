@@ -5,7 +5,9 @@
 -- @parent_module cc
 
 --------------------------------
---  creates the action 
+-- brief Create the action with the inner action.<br>
+-- param action The pointer of the inner action.<br>
+-- return A pointer of EaseQuinticActionInOut action. If creation failed, return nil.
 -- @function [parent=#EaseQuinticActionInOut] create 
 -- @param self
 -- @param #cc.ActionInterval action
@@ -18,7 +20,7 @@
 -- @return EaseQuinticActionInOut#EaseQuinticActionInOut ret (return value: cc.EaseQuinticActionInOut)
         
 --------------------------------
--- param time in seconds
+-- 
 -- @function [parent=#EaseQuinticActionInOut] update 
 -- @param self
 -- @param #float time

@@ -5,8 +5,10 @@
 -- @parent_module cc
 
 --------------------------------
--- creates the action with the number of columns to split and the duration <br>
--- param duration in seconds
+-- brief Create the action with the number of columns and the duration.<br>
+-- param duration Specify the duration of the SplitCols action. It's a value in seconds.<br>
+-- param cols Specify the columns count should be splited.<br>
+-- return If the creation success, return a pointer of SplitCols action; otherwise, return nil.
 -- @function [parent=#SplitCols] create 
 -- @param self
 -- @param #float duration
