@@ -4,7 +4,7 @@
 #TODO: if the doxygen is not correct, we should install it manually
 
 
-sed -i .bak '/CC_DEPRECATED_ATTRIBUTE CC_DLL/,/NS_CC_END/d' ../../cocos/base/ccUTF8.h
+sed -i .bak '/CC_DEPRECATED(v3) CC_DLL/,/NS_CC_END/d' ../../cocos/base/ccUTF8.h
 # git diff > doc-patch.patch
 # mv doc-patch.patch docs
 #we need to generate the patch automatically and remove it after applying

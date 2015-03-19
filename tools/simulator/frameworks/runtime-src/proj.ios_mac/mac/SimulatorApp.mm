@@ -30,8 +30,8 @@
 
 #import "SimulatorApp.h"
 #include "AppDelegate.h"
-#include "glfw3.h"
-#include "glfw3native.h"
+#include "glfw/glfw3.h"
+#include "glfw/glfw3native.h"
 #include "runtime/Runtime.h"
 #include "runtime/ConfigParser.h"
 
@@ -523,10 +523,8 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
                         {
                             string tmp = data.erase(0, strlen("VIEW_SCALE_MENU_"));
                             float scale = atof(tmp.c_str()) / 100.0f;
-                            project.setFrameScale(scale);
-                            [window setTitle:[NSString stringWithFormat:@"Cocos Simulator (%d%%)", (int)(project.getFrameScale() * 100)]];
-                            auto glview = static_cast<GLViewImpl*>(Director::getInstance()->getOpenGLView());
-                            glview->setFrameZoomFactor(scale);
+                            [SIMULATOR setZoom:scale];
+                            
                             // update scale menu state
                             for (auto &it : scaleMenuVector)
                             {
@@ -642,14 +640,15 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
     if(_fileHandle!=nil){
         [_fileHandle writeData:[str dataUsingEncoding:NSUTF8StringEncoding]];
     }
-    
 }
 
 - (void) setZoom:(float)scale
 {
     Director::getInstance()->getOpenGLView()->setFrameZoomFactor(scale);
     _project.setFrameScale(scale);
-    [_window setTitle:[NSString stringWithFormat:@"Cocos Simulator (%d%%)", (int)(_project.getFrameScale() * 100)]];
+    std::stringstream title;
+    title << "Cocos " << tr("Simulator") << " (" << _project.getFrameScale() * 100 << "%)";
+    [_window setTitle:[NSString stringWithUTF8String:title.str().c_str()]];
 }
 
 - (BOOL) applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag

@@ -1,4 +1,6 @@
 
+#include "controller.h"
+#include "tests.h"
 // C++ includes
 #include <map>
 #include <functional>
@@ -8,11 +10,10 @@
 // test inclues
 #include "AppDelegate.h"
 #include "BaseTest.h"
-#include "controller.h"
 #include "testResource.h"
-#include "tests.h"
+#include "UITest/UITest.h"
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -21,8 +22,6 @@
 #include <io.h>
 #include <WS2tcpip.h>
 #endif
-#include "cocostudio/CocoStudio.h"
-#include "UITest/UITest.h"
 
 typedef struct _Controller{
 	const char *test_name;
@@ -77,7 +76,6 @@ Controller g_aTestNames[] = {
 	{ "Node: Physics", []() { return new PhysicsTestScene(); } },
 	{ "Node: RenderTexture", [](){return new RenderTextureScene(); } },
 	{ "Node: Scene", [](){return new SceneTestScene();} },
-	{ "Node: Spine", []() { return new SpineTestScene(); } },
 	{ "Node: Sprite", [](){return new SpriteTestScene(); } },
     { "Node: Sprite3D", [](){  return new Sprite3DTestScene(); }},
 	{ "Node: TileMap", [](){return new TileMapTestScene(); } },
@@ -91,10 +89,8 @@ Controller g_aTestNames[] = {
     { "ReleasePool", [](){ return new ReleasePoolTestScene(); } },
 	{ "Rotate World", [](){return new RotateWorldTestScene(); } },
 	{ "Scheduler", [](){return new SchedulerTestScene(); } },
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
 	{ "Shader - Basic", []() { return new ShaderTestScene(); } },
     { "Shader - Sprite", []() { return new ShaderTestScene2(); } },
-#endif
 	{ "Texture2D", [](){return new TextureTestScene(); } },
 	{ "TextureCache", []() { return new TextureCacheTestScene(); } },
 	{ "TexturePacker Encryption", []() { return new TextureAtlasEncryptionTestScene(); } },
@@ -186,7 +182,7 @@ void TestController::menuCallback(Ref * sender)
 
 void TestController::closeCallback(Ref * sender)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 	MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
     return;
 #endif
@@ -368,7 +364,6 @@ void TestController::addConsoleAutoTest()
                     scene->addChild(layer);
                     layer->release();
                     Director::getInstance()->replaceScene(scene);
-                    cocostudio::ArmatureDataManager::destroyInstance();
                 } );
                 return;
             }
@@ -515,7 +510,7 @@ void TestController::autorun()
     hints.ai_flags = 0;
     hints.ai_protocol = 0;          /* Any protocol */
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     WSADATA wsaData;
     WSAStartup(MAKEWORD(2, 2),&wsaData);
 #endif
@@ -541,7 +536,7 @@ void TestController::autorun()
         if (connect(sfd, rp->ai_addr, rp->ai_addrlen) != -1)
             break;                  /* Success */
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
         closesocket(sfd);
 #else
         close(sfd);
@@ -577,7 +572,7 @@ void TestController::autorun()
     strcpy(cmd, tmp.c_str());
     send(sfd,cmd,strlen(cmd),0);
     wait(1);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
         closesocket(sfd);
         WSACleanup();
 #else

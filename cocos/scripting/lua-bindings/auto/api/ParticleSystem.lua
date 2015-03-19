@@ -81,30 +81,9 @@
         
 --------------------------------
 -- 
--- @function [parent=#ParticleSystem] setRotation 
--- @param self
--- @param #float newRotation
--- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
-        
---------------------------------
--- 
 -- @function [parent=#ParticleSystem] setTangentialAccel 
 -- @param self
 -- @param #float t
--- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
-        
---------------------------------
--- 
--- @function [parent=#ParticleSystem] setScaleY 
--- @param self
--- @param #float newScaleY
--- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
-        
---------------------------------
--- 
--- @function [parent=#ParticleSystem] setScaleX 
--- @param self
--- @param #float newScaleX
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
         
 --------------------------------
@@ -185,6 +164,13 @@
 -- @param self
 -- @param #float duration
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
+        
+--------------------------------
+--  Initializes a system with a fixed number of particles
+-- @function [parent=#ParticleSystem] initWithTotalParticles 
+-- @param self
+-- @param #int numberOfParticles
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 
@@ -308,12 +294,6 @@
 -- @function [parent=#ParticleSystem] getEndRadius 
 -- @param self
 -- @return float#float ret (return value: float)
-        
---------------------------------
--- 
--- @function [parent=#ParticleSystem] isOpacityModifyRGB 
--- @param self
--- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 
@@ -451,6 +431,16 @@
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
         
 --------------------------------
+--  initializes a ParticleSystem from a plist file.<br>
+-- This plist files can be created manually or with Particle Designer:<br>
+-- http:particledesigner.71squared.com/<br>
+-- since v0.99.3
+-- @function [parent=#ParticleSystem] initWithFile 
+-- @param self
+-- @param #string plistFile
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  angle variance of each particle 
 -- @function [parent=#ParticleSystem] getAngleVar 
 -- @param self
@@ -528,13 +518,6 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
--- @function [parent=#ParticleSystem] setScale 
--- @param self
--- @param #float s
--- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
-        
---------------------------------
 --  emission rate of the particles 
 -- @function [parent=#ParticleSystem] getEmissionRate 
 -- @param self
@@ -557,13 +540,6 @@
 -- @function [parent=#ParticleSystem] setStartSizeVar 
 -- @param self
 -- @param #float sizeVar
--- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
-        
---------------------------------
---  does the alpha value modify color 
--- @function [parent=#ParticleSystem] setOpacityModifyRGB 
--- @param self
--- @param #bool opacityModifyRGB
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
         
 --------------------------------
@@ -619,6 +595,15 @@
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
         
 --------------------------------
+-- @overload self, map_table, string         
+-- @overload self, map_table         
+-- @function [parent=#ParticleSystem] initWithDictionary
+-- @param self
+-- @param #map_table dictionary
+-- @param #string dirname
+-- @return bool#bool ret (return value: bool)
+
+--------------------------------
 -- 
 -- @function [parent=#ParticleSystem] isAutoRemoveOnFinish 
 -- @param self
@@ -661,27 +646,35 @@
 -- @return color4f_table#color4f_table ret (return value: color4f_table)
         
 --------------------------------
---  creates an initializes a ParticleSystem from a plist file.<br>
--- This plist files can be created manually or with Particle Designer:<br>
--- http:particledesigner.71squared.com/<br>
--- since v2.0
--- @function [parent=#ParticleSystem] create 
--- @param self
--- @param #string plistFile
--- @return ParticleSystem#ParticleSystem ret (return value: cc.ParticleSystem)
-        
---------------------------------
---  create a system with a fixed number of particles
--- @function [parent=#ParticleSystem] createWithTotalParticles 
--- @param self
--- @param #int numberOfParticles
--- @return ParticleSystem#ParticleSystem ret (return value: cc.ParticleSystem)
-        
---------------------------------
 -- 
 -- @function [parent=#ParticleSystem] update 
 -- @param self
 -- @param #float dt
+-- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
+        
+--------------------------------
+--  does the alpha value modify color 
+-- @function [parent=#ParticleSystem] setOpacityModifyRGB 
+-- @param self
+-- @param #bool opacityModifyRGB
+-- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
+        
+--------------------------------
+--  initializes a ParticleSystem
+-- @function [parent=#ParticleSystem] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#ParticleSystem] isOpacityModifyRGB 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- js ctor
+-- @function [parent=#ParticleSystem] ParticleSystem 
+-- @param self
 -- @return ParticleSystem#ParticleSystem self (return value: cc.ParticleSystem)
         
 return nil

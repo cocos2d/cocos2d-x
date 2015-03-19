@@ -12,7 +12,7 @@
 #include "runtime/ConfigParser.h"
 using namespace std;
 
-string getIPAddress(int runtimeType)
+string getIPAddress()
 {
     WSADATA wsaData;  
     char name[155]={0};

@@ -115,6 +115,12 @@
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
+-- 
+-- @function [parent=#Node] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  get & set camera mask, the node is visible by the camera whose camera flag & node's camera mask is true 
 -- @function [parent=#Node] getCameraMask 
 -- @param self
@@ -1091,5 +1097,11 @@
 -- @function [parent=#Node] create 
 -- @param self
 -- @return Node#Node ret (return value: cc.Node)
+        
+--------------------------------
+-- 
+-- @function [parent=#Node] Node 
+-- @param self
+-- @return Node#Node self (return value: cc.Node)
         
 return nil

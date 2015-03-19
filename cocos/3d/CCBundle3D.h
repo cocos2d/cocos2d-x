@@ -27,7 +27,7 @@
 
 #include "3d/CCBundle3DData.h"
 #include "3d/CCBundleReader.h"
-#include "json/document.h"
+#include "rapidjson/document.h"
 
 NS_CC_BEGIN
 class Animation3D;

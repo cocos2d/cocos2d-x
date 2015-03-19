@@ -125,7 +125,7 @@ emitter.startSpin = 0;
 
 */
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #ifdef RELATIVE
 #undef RELATIVE
 #endif
@@ -170,14 +170,12 @@ public:
     };
     
     /** creates an initializes a ParticleSystem from a plist file.
-    This plist files can be created manually or with Particle Designer:
-    http://particledesigner.71squared.com/
-    @since v2.0
-    */
-    static ParticleSystem * create(const std::string& plistFile);
-
-    //! create a system with a fixed number of particles
-    static ParticleSystem* createWithTotalParticles(int numberOfParticles);
+     This plist files can be created manually or with Particle Designer:
+     http://particledesigner.71squared.com/
+     @since v2.0
+     */
+    CC_DEPRECATED(v3) static ParticleSystem* create(const std::string& plistFile) {CCASSERT(false, "deprecated method"); return nullptr;}
+    CC_DEPRECATED(v3) static ParticleSystem* createWithTotalParticles(int numberOfParticles) {CCASSERT(false, "deprecated method");return nullptr;}
 
     //! Add a particle to the emitter
     bool addParticle();
@@ -191,9 +189,9 @@ public:
     bool isFull();
 
     //! should be overridden by subclasses
-    virtual void updateQuadWithParticle(tParticle* particle, const Vec2& newPosition);
+    virtual void updateQuadWithParticle(tParticle* particle, const Vec2& newPosition) {CCASSERT(false, "override me");}
     //! should be overridden by subclasses
-    virtual void postStep();
+    virtual void postStep() {CCASSERT(false, "override me");}
 
     virtual void updateWithNoTime(void);
 
@@ -230,11 +228,6 @@ public:
     virtual void setRotatePerSecond(float degrees);
     virtual float getRotatePerSecondVar() const;
     virtual void setRotatePerSecondVar(float degrees);
-
-    virtual void setScale(float s);
-    virtual void setRotation(float newRotation);
-    virtual void setScaleX(float newScaleX);
-    virtual void setScaleY(float newScaleY);
 
     virtual bool isActive() const;
     virtual bool isBlendAdditive() const;
@@ -342,9 +335,9 @@ public:
     virtual void setTotalParticles(int totalParticles);
 
     /** does the alpha value modify color */
-    inline void setOpacityModifyRGB(bool opacityModifyRGB) { _opacityModifyRGB = opacityModifyRGB; };
-    inline bool isOpacityModifyRGB() const { return _opacityModifyRGB; };
-    CC_DEPRECATED_ATTRIBUTE inline bool getOpacityModifyRGB() const { return isOpacityModifyRGB(); }
+    inline void setOpacityModifyRGB(bool opacityModifyRGB) override { _opacityModifyRGB = opacityModifyRGB; };
+    inline bool isOpacityModifyRGB() const override { return _opacityModifyRGB; };
+    CC_DEPRECATED(v3) inline bool getOpacityModifyRGB() const { return isOpacityModifyRGB(); }
     
     /** particles movement type: Free or Grouped
      @since v0.8
@@ -384,7 +377,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~ParticleSystem();
 
     /** initializes a ParticleSystem*/
-    bool init();
+    bool init() override;
     /** initializes a ParticleSystem from a plist file.
      This plist files can be created manually or with Particle Designer:
      http://particledesigner.71squared.com/

@@ -11,7 +11,7 @@ public:
     {
     }
 
-    virtual void showCurrentTest();
+    virtual void showCurrentTest() override;
 
     virtual void onEnter() override;
     virtual std::string title() const;
@@ -28,9 +28,9 @@ public:
     }
 
     virtual std::string title() const override;
-    virtual void performTests();
+    virtual void performTests() override;
 
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event) override;
 
     static Scene* scene();
 

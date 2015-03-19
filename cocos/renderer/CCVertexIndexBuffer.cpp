@@ -1,5 +1,6 @@
+
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -23,286 +24,287 @@
  ****************************************************************************/
 
 #include "renderer/CCVertexIndexBuffer.h"
-#include "base/CCEventType.h"
-#include "base/CCEventListenerCustom.h"
-#include "base/CCEventDispatcher.h"
+#include "renderer/ccGLStateCache.h"
 #include "base/CCDirector.h"
+#include "base/CCConfiguration.h"
+#include "platform/CCGL.h"
+#include "base/allocator/CCAllocatorMacros.h"
 
 NS_CC_BEGIN
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-bool VertexBuffer::_enableShadowCopy = true;
-#else
-bool VertexBuffer::_enableShadowCopy = false;
-#endif
+GLArrayBuffer::GLArrayBuffer()
+    : _vbo(0)
+    , _vboSize(0)
+    , _target(0)
+    , _elementCount(0)
+    , _elements(nullptr)
+    , _elementSize(0)
+    , _capacity(0)
+    , _arrayType(ArrayType::Invalid)
+    , _arrayMode(ArrayMode::Invalid)
+    , _usage(0)
+    , _dirty(true)
+{}
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-bool IndexBuffer::_enableShadowCopy = true;
-#else
-bool IndexBuffer::_enableShadowCopy = false;
-#endif
-
-VertexBuffer* VertexBuffer::create(int sizePerVertex, int vertexNumber, GLenum usage/* = GL_STATIC_DRAW*/)
+GLArrayBuffer::~GLArrayBuffer()
 {
-    auto result = new (std::nothrow) VertexBuffer();
-    if(result && result->init(sizePerVertex, vertexNumber, usage))
-    {
-        result->autorelease();
-        return result;
-    }
-    CC_SAFE_DELETE(result);
-    return nullptr;
-    
-}
-
-VertexBuffer::VertexBuffer()
-: _recreateVBOEventListener(nullptr)
-, _vbo(0)
-, _sizePerVertex(0)
-, _vertexNumber(0)
-{
-    
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    auto callBack = [this](EventCustom* event)
-    {
-        this->recreateVBO();
-    };
-
-    _recreateVBOEventListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(EVENT_RENDERER_RECREATED, callBack);
-
-#endif
-}
-
-VertexBuffer::~VertexBuffer()
-{
-    if(glIsBuffer(_vbo))
+    if (glIsBuffer(_vbo))
     {
         glDeleteBuffers(1, &_vbo);
+        GL::bindVBO(_target, 0);
         _vbo = 0;
     }
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_recreateVBOEventListener);
-#endif
+    
+    CC_SAFE_FREE(_elements);
 }
 
-bool VertexBuffer::init(int sizePerVertex, int vertexNumber, GLenum usage/* = GL_STATIC_DRAW*/)
+bool GLArrayBuffer::init(ssize_t elementSize, ssize_t maxElements, ArrayType arrayType, ArrayMode arrayMode, bool zero)
 {
-    if(0 == sizePerVertex || 0 == vertexNumber)
+    CCASSERT(elementSize > 0 && elementSize < 512, "0 < maxElements size < 512");
+
+    _arrayType = arrayType;
+    _arrayMode = arrayMode;
+    _target = nativeBindTarget();
+    
+    switch (_arrayMode)
+    {
+    case ArrayMode::Immutable:
+        _usage = GL_STATIC_DRAW;
+        break;
+    case ArrayMode::LongLived:
+        _usage = GL_DYNAMIC_DRAW;
+        break;
+    case ArrayMode::Dynamic:
+        _usage = GL_STREAM_DRAW;
+        break;
+    default:
+        CCASSERT(false, "invalid ArrayMode");
         return false;
-    _sizePerVertex = sizePerVertex;
-    _vertexNumber = vertexNumber;
-    _usage = usage;
-    
-    if(isShadowCopyEnabled())
-    {
-        _shadowCopy.resize(sizePerVertex * _vertexNumber);
     }
     
-    glGenBuffers(1, &_vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-    glBufferData(GL_ARRAY_BUFFER, getSize(), nullptr, _usage);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    return true;
-}
-
-int VertexBuffer::getSizePerVertex() const
-{
-    return _sizePerVertex;
-}
-
-int VertexBuffer::getVertexNumber() const
-{
-    return _vertexNumber;
-}
-
-bool VertexBuffer::updateVertices(const void* verts, int count, int begin)
-{
-    if(count <= 0 || nullptr == verts) return false;
+    _elementSize  = elementSize;
+    _elementCount = 0;
     
-    if(begin < 0)
-    {
-        CCLOGERROR("Update vertices with begin = %d, will set begin to 0", begin);
-        begin = 0;
-    }
-    
-    if(count + begin > _vertexNumber)
-    {
-        CCLOGERROR("updated vertices exceed the max size of vertex buffer, will set count to _vertexNumber-begin");
-        count = _vertexNumber - begin;
-    }
-    
-    if(isShadowCopyEnabled())
-    {
-        memcpy(&_shadowCopy[begin * _sizePerVertex], verts, count * _sizePerVertex);
-    }
-    
-    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-    glBufferSubData(GL_ARRAY_BUFFER, begin * _sizePerVertex, count * _sizePerVertex, verts);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    setCapacity(maxElements, zero);
     
     return true;
 }
 
-GLuint VertexBuffer::getVBO() const
+void GLArrayBuffer::setElements(const void* elements, ssize_t count, bool defer)
 {
-    return _vbo;
+    setElementCount(count);
+    updateElements(elements, count, 0, defer);
 }
 
-void VertexBuffer::recreateVBO() const
+void GLArrayBuffer::updateElements(const void* elements, ssize_t count, ssize_t begin, bool defer)
 {
-    CCLOG("come to foreground of VertexBuffer");
-    glGenBuffers(1, &_vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-    const void* buffer = nullptr;
-    if(isShadowCopyEnabled())
+    CCASSERT(begin >= 0, "Invalid being value");
+    CCASSERT(count >= 0, "Invalid count value");
+
+    CCASSERT(hasClient() || hasNative(), "Can only update elements if there is an attached buffer");
+    
+    if (0 == count)
+        return;
+    
+    setDirty(true);
+
+    // if we have no client buffer, then commit to native immediately.
+    if (false == hasClient())
+        defer = false;
+
+    auto needed = count + begin;
+    setCapacity(needed, false);
+    
+    if (hasClient())
     {
-        buffer = &_shadowCopy[0];
+        intptr_t p = (intptr_t)_elements + begin * _elementSize;
+        if (elements)
+            memmove((void*)p, elements, count * _elementSize);
+        else
+            memset((void*)p, 0, count * _elementSize);
     }
-    CCLOG("recreate IndexBuffer with size %d %d", getSizePerVertex(), _vertexNumber);
-    glBufferData(GL_ARRAY_BUFFER, _sizePerVertex * _vertexNumber, buffer, _usage);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    if(!glIsBuffer(_vbo))
+
+    // empty elements do not count towards element count, only capacity
+    if (elements)
+        _elementCount = begin + count > _elementCount ? begin + count : _elementCount;
+    
+    if (false == defer && elements && hasNative())
+        bindAndCommit(elements, count, begin);
+}
+
+void GLArrayBuffer::insertElements(const void* elements, ssize_t count, ssize_t begin, bool defer)
+{
+    CCASSERT(hasClient(), "can only insert into a client buffer");
+    // first see if we need to move any elements
+    if (begin < getElementCount())
     {
-        CCLOGERROR("recreate VertexBuffer Error");
+        intptr_t dst = (intptr_t)_elements + begin + count;
+        updateElements((void*)dst, count, begin, defer);
     }
+    updateElements(elements, count, begin, defer);
 }
 
-int VertexBuffer::getSize() const
+void GLArrayBuffer::appendElements(const void* elements, ssize_t count, bool defer)
 {
-    return _sizePerVertex * _vertexNumber;
+    CCASSERT(hasClient(), "can only append into a client buffer");
+    updateElements(elements, count, _elementCount, defer);
 }
 
-IndexBuffer* IndexBuffer::create(IndexType type, int number, GLenum usage/* = GL_STATIC_DRAW*/)
+void GLArrayBuffer::removeElements(ssize_t count, ssize_t begin, bool defer)
 {
-    auto result = new (std::nothrow) IndexBuffer();
-    if(result && result->init(type, number, usage))
+    const auto ec = getElementCount();
+    CCASSERT(hasClient(),         "can only remove from a client buffer");
+    CCASSERT(begin < ec,          "removeElements begin must be within range");
+    CCASSERT(begin + count <= ec, "removeElements count must be within range");
+    _elementCount -= count;
+    const intptr_t src = (intptr_t)_elements + (begin + count) * getElementSize();
+    updateElements((void*)src, _elementCount - begin, begin, defer);
+}
+
+void GLArrayBuffer::addCapacity(ssize_t count, bool zero)
+{
+    setCapacity(count + getCapacity(), zero);
+}
+
+void GLArrayBuffer::swapElements(ssize_t source, ssize_t dest, ssize_t count)
+{
+    const auto ec = getElementCount();
+    CCASSERT(hasClient(),          "can only swap elements in a client buffer");
+    CCASSERT(source < ec,          "swapElements source must be within range");
+    CCASSERT(source + count <= ec, "swapElements source + count must be within range");
+    CCASSERT(dest < ec,            "swapElements dest must be within range");
+    CCASSERT(dest + count <= ec,   "swapElements dest + count must be within range");
+    const ssize_t s1 = source;
+    const ssize_t s2 = s1 + count;
+    const ssize_t d1 = dest;
+    const ssize_t d2 = d1 + count;
+    const ssize_t overlap = s1 < d1 ? s2 - d1 : d2 - s1;
+    const ssize_t count2 = overlap > 0 ? count - overlap : count;
+    const auto es = getElementSize();
+    const auto tmpptr = CC_ALLOCA(count2 * es);
+    const auto srcptr = (void*)((intptr_t)_elements + s1 * es);
+    const auto dstptr = (void*)((intptr_t)_elements + d1 * es);
+    memcpy (tmpptr, dstptr, count2 * es);
+    memmove(dstptr, srcptr, count );
+    memmove(srcptr, tmpptr, count2);
+}
+
+void GLArrayBuffer::moveElements(ssize_t source, ssize_t dest, ssize_t count)
+{
+    const auto es = getElementSize();
+    const auto srcptr = (void*)((intptr_t)_elements + source * es);
+    updateElements(srcptr, count, dest);
+}
+
+void GLArrayBuffer::bindAndCommit(const void* elements, ssize_t count, ssize_t begin)
+{
+    CCASSERT(true == hasNative(), "GLArrayBuffer::bindAndCommit : array has no native buffer");
+
+    if (_vbo)
+        GL::bindVBO(_target, _vbo);
+
+    if (false == isDirty())
+        return;
+    
+    // default to all elements
+    if (nullptr == elements)
+        elements = _elements;
+    
+    // default to all elements
+    if (0 == count)
+        count = _elementCount;
+
+    if (0 == _vbo)
     {
-        result->autorelease();
-        return result;
+        glGenBuffers(1, &_vbo);
+        _vboSize = getCapacityInBytes();
+        CCASSERT(_vboSize, "_vboSize should not be 0");
+        GL::bindVBO(_target, _vbo);
+        glBufferData(_target, _vboSize, nullptr, _usage);
+        glBufferData(_target, count * getElementSize(), elements, _usage);
+        CHECK_GL_ERROR_DEBUG();
     }
-    CC_SAFE_DELETE(result);
-    return nullptr;
-}
-
-IndexBuffer::IndexBuffer()
-: _vbo(0)
-, _type(IndexType::INDEX_TYPE_SHORT_16)
-, _indexNumber(0)
-, _recreateVBOEventListener(nullptr)
-{
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    auto callBack = [this](EventCustom* event)
+    else
     {
-        this->recreateVBO();
-    };
-
-    _recreateVBOEventListener = Director::getInstance()->getEventDispatcher()->addCustomEventListener(EVENT_RENDERER_RECREATED, callBack);
-#endif
+        GL::bindVBO(_target, _vbo);
+        const auto size = getCapacityInBytes();
+        CCASSERT(size, "size should not be 0");
+        if (size >= _vboSize)
+        {
+            _vboSize = size;
+            glBufferData(_target, size, elements, _usage);
+            CHECK_GL_ERROR_DEBUG();
+       }
+        else
+        {
+            intptr_t p = (intptr_t)elements + begin * _elementSize;
+            glBufferSubData(_target, begin * _elementSize, count * _elementSize, (void*)p);
+            CHECK_GL_ERROR_DEBUG();
+        }
+    }
+    
+    setDirty(false);
 }
 
-IndexBuffer::~IndexBuffer()
+void GLArrayBuffer::clear()
 {
-    if(glIsBuffer(_vbo))
+    _elementCount = 0;
+    _dirty = true;
+}
+
+void GLArrayBuffer::recreate() const
+{
+    if (glIsBuffer(_vbo))
     {
         glDeleteBuffers(1, &_vbo);
-        _vbo = 0;
+        GL::bindVBO(_target, 0);
     }
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_recreateVBOEventListener);
-#endif
-}
-
-bool IndexBuffer::init(IndexBuffer::IndexType type, int number, GLenum usage/* = GL_STATIC_DRAW*/)
-{
-    if(number <=0 ) return false;
-    
-    _type = type;
-    _indexNumber = number;
-    _usage = usage;
-    
-    glGenBuffers(1, &_vbo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _vbo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, getSize(), nullptr, _usage);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    
-    if(isShadowCopyEnabled())
+    glGenBuffers(1, (GLuint*)&_vbo);
+    GL::bindVBO(_target, _vbo);
+    if (_elements)
     {
-        _shadowCopy.resize(getSize());
+        glBufferData(_target, _elementSize * _elementCount, _elements, GL_STATIC_DRAW);
+        GL::bindVBO(_target, _vbo);
+        if(!glIsBuffer(_vbo))
+        {
+            CCLOGERROR("Renderer::recreate() : recreate VertexBuffer Error");
+        }
     }
-    
-    return true;
 }
 
-IndexBuffer::IndexType IndexBuffer::getType() const
+void GLArrayBuffer::setCapacity(ssize_t capacity, bool zero)
 {
-    return _type;
-}
-
-int IndexBuffer::getSizePerIndex() const
-{
-    return IndexType::INDEX_TYPE_SHORT_16 == _type ? 2 : 4;
-}
-
-int IndexBuffer::getIndexNumber() const
-{
-    return _indexNumber;
-}
-
-bool IndexBuffer::updateIndices(const void* indices, int count, int begin)
-{
-    if(count <= 0 || nullptr == indices) return false;
-    
-    if(begin < 0)
+    if (capacity > _capacity)
     {
-        CCLOGERROR("Update indices with begin = %d, will set begin to 0", begin);
-        begin = 0;
+        if (hasClient())
+        {
+            auto capacityInBytes = capacity * _elementSize;
+            _elements = realloc(_elements, capacityInBytes);
+            
+            if (zero)
+            {
+                intptr_t start = (intptr_t)_elements + _capacity * _elementSize;
+                size_t count = _elementSize * (capacity - _capacity);
+                memset((void*)start, 0, count);
+            }
+            _dirty = true;
+        }
+        _capacity = capacity;
     }
-    
-    if(count + begin > _indexNumber)
-    {
-        CCLOGERROR("updated indices exceed the max size of vertex buffer, will set count to _indexNumber-begin");
-        count = _indexNumber - begin;
-    }
-    
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _vbo);
-    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, begin * getSizePerIndex(), count * getSizePerIndex(), indices);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    
-    if(isShadowCopyEnabled())
-    {
-        memcpy(&_shadowCopy[begin * getSizePerIndex()], indices, count * getSizePerIndex());
-    }
-    
-    return true;
 }
 
-int IndexBuffer::getSize() const
+//
+// Specializations for buffer OpenGL types
+//
+
+int VertexBuffer::nativeBindTarget() const
 {
-    return getSizePerIndex() * _indexNumber;
+    return GL_ARRAY_BUFFER;
 }
 
-GLuint IndexBuffer::getVBO() const
+int IndexBuffer::nativeBindTarget() const
 {
-    return _vbo;
-}
-
-void IndexBuffer::recreateVBO() const
-{
-    CCLOG("come to foreground of IndexBuffer");
-    glGenBuffers(1, &_vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-    const void* buffer = nullptr;
-    if(isShadowCopyEnabled())
-    {
-        buffer = &_shadowCopy[0];
-    }
-    CCLOG("recreate IndexBuffer with size %d %d ", getSizePerIndex(), _indexNumber);
-    glBufferData(GL_ARRAY_BUFFER, getSize(), buffer, _usage);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    if(!glIsBuffer(_vbo))
-    {
-        CCLOGERROR("recreate IndexBuffer Error");
-    }
+    return GL_ELEMENT_ARRAY_BUFFER;
 }
 
 NS_CC_END

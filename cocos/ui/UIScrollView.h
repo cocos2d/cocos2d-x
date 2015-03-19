@@ -251,7 +251,7 @@ public:
     /**
      * Add call back function called scrollview event triggered
      */
-    CC_DEPRECATED_ATTRIBUTE void addEventListenerScrollView(Ref* target, SEL_ScrollViewEvent selector);
+    CC_DEPRECATED(v3) void addEventListenerScrollView(Ref* target, SEL_ScrollViewEvent selector);
     virtual void addEventListener(const ccScrollViewCallback& callback);
     
     //all of these functions are related to innerContainer.
@@ -421,18 +421,7 @@ protected:
     bool _inertiaScrollEnabled;
     
     Ref* _scrollViewEventListener;
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (push)
-#pragma warning (disable: 4996)
-#endif
     SEL_ScrollViewEvent _scrollViewEventSelector;
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic warning "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (pop)
-#endif
     ccScrollViewCallback _eventCallback;
 };
 

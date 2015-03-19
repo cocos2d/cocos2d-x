@@ -1,6 +1,10 @@
 #ifndef _TESTS_H_
 #define _TESTS_H_
 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
+#include "ChipmunkTest/ChipmunkTest.h"
+#include "ClippingNodeTest/ClippingNodeTest.h"
+#endif
 #include "UnitTest/UnitTest.h"
 #include "NewRendererTest/NewRendererTest.h"
 #include "ConsoleTest/ConsoleTest.h"
@@ -61,12 +65,7 @@
 #include "ShaderTest/ShaderTest2.h"
 #include "ExtensionsTest/ExtensionsTest.h"
 #include "MutiTouchTest/MutiTouchTest.h"
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_MARMALADE)
-#include "ClippingNodeTest/ClippingNodeTest.h"
-#include "ChipmunkTest/ChipmunkTest.h"
-#endif
 #include "FileUtilsTest/FileUtilsTest.h"
-#include "SpineTest/SpineTest.h"
 #include "TexturePackerEncryptionTest/TextureAtlasEncryptionTest.h"
 #include "ConfigurationTest/ConfigurationTest.h"
 #include "PhysicsTest/PhysicsTest.h"

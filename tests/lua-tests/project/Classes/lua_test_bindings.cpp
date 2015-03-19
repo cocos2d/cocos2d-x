@@ -59,7 +59,7 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     DrawNode3D();
     virtual ~DrawNode3D();
-    virtual bool init();
+    virtual bool init() override;
     
 protected:
     struct V3F_C4B
@@ -429,7 +429,7 @@ tolua_lerror:
     return 0;
 }
 
-CC_DEPRECATED_ATTRIBUTE int lua_cocos2dx_DrawNode3D_setBlendFunc01(lua_State* L)
+CC_DEPRECATED(v3) int lua_cocos2dx_DrawNode3D_setBlendFunc01(lua_State* L)
 {
     int argc = 0;
     cocos2d::DrawNode3D* cobj = nullptr;

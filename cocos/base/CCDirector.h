@@ -118,7 +118,7 @@ public:
     static Director* getInstance();
 
     /** @deprecated Use getInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static Director* sharedDirector() { return Director::getInstance(); }
+    CC_DEPRECATED(v3) static Director* sharedDirector() { return Director::getInstance(); }
     /**
      * @js ctor
      */
@@ -464,6 +464,7 @@ protected:
     float _accumDt;
     float _frameRate;
     
+    bool _isStatusLabelUpdated;
     LabelAtlas *_FPSLabel;
     LabelAtlas *_drawnBatchesLabel;
     LabelAtlas *_drawnVerticesLabel;

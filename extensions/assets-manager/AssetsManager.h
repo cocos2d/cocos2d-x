@@ -231,8 +231,8 @@ public:
 };
 
 // Deprecated declaration
-CC_DEPRECATED_ATTRIBUTE typedef AssetsManager CCAssetsManager;
-CC_DEPRECATED_ATTRIBUTE typedef AssetsManagerDelegateProtocol CCAssetsManagerDelegateProtocol;
+CC_DEPRECATED(v3) typedef AssetsManager CCAssetsManager;
+CC_DEPRECATED(v3) typedef AssetsManagerDelegateProtocol CCAssetsManagerDelegateProtocol;
 
 NS_CC_EXT_END;
 

@@ -5,6 +5,13 @@
 -- @parent_module cc
 
 --------------------------------
+--  initializes the action 
+-- @function [parent=#ActionEase] initWithAction 
+-- @param self
+-- @param #cc.ActionInterval action
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- 
 -- @function [parent=#ActionEase] getInnerAction 
 -- @param self

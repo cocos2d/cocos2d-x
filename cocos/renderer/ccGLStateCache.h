@@ -132,7 +132,7 @@ void CC_DLL deleteTexture(GLuint textureId);
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glDeleteTextures() directly.
  @since v2.1.0
  */
-CC_DEPRECATED_ATTRIBUTE void CC_DLL deleteTextureN(GLuint textureUnit, GLuint textureId);
+CC_DEPRECATED(v3) void CC_DLL deleteTextureN(GLuint textureUnit, GLuint textureId);
 
 /** Select active texture unit.
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glActiveTexture() directly.
@@ -145,6 +145,12 @@ void CC_DLL activeTexture(GLenum texture);
  @since v2.0.0
  */
 void CC_DLL bindVAO(GLuint vaoId);
+
+/** If the vertex buffer is not already bound, it binds it.
+ If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glBindBuffer directly.
+ @since v2.0.0
+ */
+void CC_DLL bindVBO(GLenum target, GLuint vaoId);
 
 // end of shaders group
 /// @}

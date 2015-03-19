@@ -5,6 +5,13 @@
 -- @parent_module cc
 
 --------------------------------
+--  initializes a Menu with a NSArray of MenuItem objects 
+-- @function [parent=#Menu] initWithArray 
+-- @param self
+-- @param #array_table arrayOfItems
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- 
 -- @function [parent=#Menu] setEnabled 
 -- @param self
@@ -59,15 +66,23 @@
 
 --------------------------------
 -- 
--- @function [parent=#Menu] isOpacityModifyRGB 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- 
 -- @function [parent=#Menu] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
+        
+--------------------------------
+-- 
+-- @function [parent=#Menu] removeChild 
+-- @param self
+-- @param #cc.Node child
+-- @param #bool cleanup
+-- @return Menu#Menu self (return value: cc.Menu)
+        
+--------------------------------
+--  initializes an empty Menu 
+-- @function [parent=#Menu] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 
@@ -78,10 +93,14 @@
         
 --------------------------------
 -- 
--- @function [parent=#Menu] removeChild 
+-- @function [parent=#Menu] isOpacityModifyRGB 
 -- @param self
--- @param #cc.Node child
--- @param #bool cleanup
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- js ctor
+-- @function [parent=#Menu] Menu 
+-- @param self
 -- @return Menu#Menu self (return value: cc.Menu)
         
 return nil

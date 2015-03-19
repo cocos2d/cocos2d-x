@@ -5,6 +5,29 @@
 -- @parent_module cc
 
 --------------------------------
+--  sets the ampliture rate 
+-- @function [parent=#Waves3D] setAmplitudeRate 
+-- @param self
+-- @param #float amplitudeRate
+-- @return Waves3D#Waves3D self (return value: cc.Waves3D)
+        
+--------------------------------
+--  initializes an action with duration, grid size, waves and amplitude 
+-- @function [parent=#Waves3D] initWithDuration 
+-- @param self
+-- @param #float duration
+-- @param #size_table gridSize
+-- @param #unsigned int waves
+-- @param #float amplitude
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+--  returns the amplitude of the effect 
+-- @function [parent=#Waves3D] getAmplitude 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
 --  returns the amplitude rate 
 -- @function [parent=#Waves3D] getAmplitudeRate 
 -- @param self
@@ -16,19 +39,6 @@
 -- @param self
 -- @param #float amplitude
 -- @return Waves3D#Waves3D self (return value: cc.Waves3D)
-        
---------------------------------
---  sets the ampliture rate 
--- @function [parent=#Waves3D] setAmplitudeRate 
--- @param self
--- @param #float amplitudeRate
--- @return Waves3D#Waves3D self (return value: cc.Waves3D)
-        
---------------------------------
---  returns the amplitude of the effect 
--- @function [parent=#Waves3D] getAmplitude 
--- @param self
--- @return float#float ret (return value: float)
         
 --------------------------------
 --  creates an action with duration, grid size, waves and amplitude 
@@ -51,6 +61,12 @@
 -- @function [parent=#Waves3D] update 
 -- @param self
 -- @param #float time
+-- @return Waves3D#Waves3D self (return value: cc.Waves3D)
+        
+--------------------------------
+-- 
+-- @function [parent=#Waves3D] Waves3D 
+-- @param self
 -- @return Waves3D#Waves3D self (return value: cc.Waves3D)
         
 return nil

@@ -1,40 +1,54 @@
 
-CMake Build Instructions
+# CMake Build Instructions
 
 NB. Depending on your host system your Generator flag -G may be different
 
 Typical -G options
 For using gcc and clang from a makefile
 
-msys2 = "MSYS Makefiles"
-windows = "MinGW Makefiles"
-nix and mac = "Unix Makefiles"
+## Tips
+- Build Cocos2d-X v4 need CMake 3.1 or above.
+- Using CMake-GUI or ccmake in console instead cmake to generate project file can config build options before generation.
+- Set build directory out of Cocos2D-x source direcotry is a good idea.
+- $BUILD_ROOT means Cocos2D-X build directory
+- $SOURCE_ROOT means Cocos2D-X source directory
 
-For using and editor such as Visual Studio or xcode or sublime text there are different flags
+## Windows
+```
+cd $BUILD_ROOT
+cmake -G"Visual Studio 12 2013" $SOURCE_ROOT
+cmake --build . --config <Debug|Release>
+```
 
-To like all available flags for your system run
+## MacOSX
+```
+cd $BUILD_ROOT
+cmake -G"Xcode" $SOURCE_ROOT
+cmake --build . --config <Debug|Release>
+```
 
-cmake --help
+## Linux
+```
+cd $BUILD_ROOT
+cmake $SOURCE_ROOT
+cmake --build . --config <Debug|Release>
+```
 
+## iOS
+- CMake generate seperate Xcode project for simulator and devices, control with option:IOS_PLATFORM=[SIMULATOR|OS], simulator is default.
+```
+cd $BUILD_ROOT
+cmake -GXoce -DCMAKE_TOOLCHAIN_FILE="$SOURCE_ROOT/cmake/ios.toolchain.cmake" $SOURCE_ROOT
+cmake --build . --config <Debug|Release>
+```
 
-More Examples
+## Android(Experimental)
+- CMake generate seperate Makefile project for different ABI.
+- NDK path can set by ANDROID_NDK.
+- More option details in android.toolchain.cmake.
+```
+cd $BUILD_ROOT
+cmake -G"Unix Makefiles" -DCMAKE_TOOLCHAIN_FILE="$SOURCE_ROOT/cmake/android.toolchain.cmake" $SOURCE_ROOT
+cmake --build . --config <Debug|Release>
+```
 
-mac build Instructions
-
-cd cocos2d-x
-mkdir macbuild && cd macbuild
-cmake -G "Unix Makefiles" -DBUILD_CPP_TESTS=OFF -DBUILD_LUA_LIBS=OFF ..
-
-Android Build Instructions
-
-cd cocos2d-x
-mkdir androidbuild && cd androidbuild
-cmake -G"MSYS Makefiles" -DANDROID_NDK=/path/to/android-ndk-r9d -DANDROID_NATIVE_API_LEVEL=android-9 -DCMAKE_TOOLCHAIN_FILE=../cmake/android.toolchain.cmake ..
-
-mingw64 with msys2 build Instructions
-
-cd cocos2d-x
-mkdir mingwbuild && cd mingwbuild
-cmake -G "MSYS Makefiles" -DBUILD_CPP_TESTS=OFF -DBUILD_LUA_LIBS=OFF ..
-
-todo: structure this document in markdown with better examples and more details

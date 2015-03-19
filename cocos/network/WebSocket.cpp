@@ -38,7 +38,7 @@
 #include <signal.h>
 #include <errno.h>
 
-#include "libwebsockets.h"
+#include "websockets/libwebsockets.h"
 
 #define WS_WRITE_BUFFER_SIZE 2048
 

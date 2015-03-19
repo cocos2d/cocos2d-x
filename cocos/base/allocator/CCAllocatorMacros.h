@@ -110,20 +110,20 @@
 
 // @ brief Quick and dirty macro to dump an area of memory
 // useful for debugging blocks of memory from allocators.
-#define DUMP(a, l, C) \
+#define DUMP(address, length, columns) \
 { \
-    LOG("> %p len %zu\n", a, l); \
-    uint8_t* p = (uint8_t*)a; \
-    uint8_t* e = p + l; \
+    LOG("> %p len %zu\n", address, length); \
+    uint8_t* p = (uint8_t*)address; \
+    uint8_t* e = p + length; \
     while (p < e) \
     { \
         LOG("%p ", p); \
-        for (int i = 0; i < C && &p[i] < e; ++i) \
+        for (int i = 0; i < columns && &p[i] < e; ++i) \
             LOG("%02x ", p[i]); \
-        for (int i = 0; i < C && &p[i] < e; ++i) \
+        for (int i = 0; i < columns && &p[i] < e; ++i) \
             LOG("%c ", isalnum(p[i]) ? p[i] : '.'); \
         LOG("\n"); \
-        p = p + C > e ? e : p + C; \
+        p = p + columns > e ? e : p + columns; \
     } \
 }
 

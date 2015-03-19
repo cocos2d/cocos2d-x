@@ -65,6 +65,18 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- @overload self, float, float, float, color3b_table, cc.Texture2D         
+-- @overload self, float, float, float, color3b_table, string         
+-- @function [parent=#MotionStreak] initWithFade
+-- @param self
+-- @param #float fade
+-- @param #float minSeg
+-- @param #float stroke
+-- @param #color3b_table color
+-- @param #string path
+-- @return bool#bool ret (return value: bool)
+
+--------------------------------
 -- 
 -- @function [parent=#MotionStreak] setFastMode 
 -- @param self
@@ -88,6 +100,13 @@
 -- @function [parent=#MotionStreak] isOpacityModifyRGB 
 -- @param self
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#MotionStreak] setOpacity 
+-- @param self
+-- @param #unsigned char opacity
+-- @return MotionStreak#MotionStreak self (return value: cc.MotionStreak)
         
 --------------------------------
 -- 
@@ -117,10 +136,9 @@
         
 --------------------------------
 -- 
--- @function [parent=#MotionStreak] setOpacity 
+-- @function [parent=#MotionStreak] getPosition3D 
 -- @param self
--- @param #unsigned char opacity
--- @return MotionStreak#MotionStreak self (return value: cc.MotionStreak)
+-- @return vec3_table#vec3_table ret (return value: vec3_table)
         
 --------------------------------
 -- 
@@ -153,4 +171,10 @@
 -- @param #float y
 -- @return MotionStreak#MotionStreak self (return value: cc.MotionStreak)
 
+--------------------------------
+-- 
+-- @function [parent=#MotionStreak] MotionStreak 
+-- @param self
+-- @return MotionStreak#MotionStreak self (return value: cc.MotionStreak)
+        
 return nil

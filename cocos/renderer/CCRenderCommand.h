@@ -49,8 +49,12 @@ public:
         BATCH_COMMAND,
         GROUP_COMMAND,
         MESH_COMMAND,
-        PRIMITIVE_COMMAND,
-        TRIANGLES_COMMAND
+        TRIANGLES_COMMAND,
+        BEGIN_SCISSOR_COMMAND,
+        END_SCISSOR_COMMAND,
+        BEGIN_STENCIL_COMMAND,
+        AFTER_STENCIL_COMMAND,
+        END_STENCIL_COMMAND
     };
 
     /**
@@ -69,6 +73,13 @@ public:
     
     /** set transparent flag */
     inline void setTransparent(bool isTransparent) { _isTransparent = isTransparent; }
+
+    /** templated execute method to avoid vtable lookup and make code more readable */
+    template <class T>
+    inline void execute()
+    {
+        static_cast<T*>(this)->execute();
+    }
 
     inline bool isSkipBatching() const { return _skipBatching; }
 

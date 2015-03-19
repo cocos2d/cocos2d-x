@@ -205,6 +205,12 @@
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
+-- 
+-- @function [parent=#ListView] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- Default constructor
 -- @function [parent=#ListView] ListView 
 -- @param self

@@ -25,15 +25,6 @@
 -- @return ParticleSystemQuad#ParticleSystemQuad self (return value: cc.ParticleSystemQuad)
         
 --------------------------------
---  listen the event that renderer was recreated on Android/WP8<br>
--- js NA<br>
--- lua NA
--- @function [parent=#ParticleSystemQuad] listenRendererRecreated 
--- @param self
--- @param #cc.EventCustom event
--- @return ParticleSystemQuad#ParticleSystemQuad self (return value: cc.ParticleSystemQuad)
-        
---------------------------------
 -- @overload self, string         
 -- @overload self         
 -- @overload self, map_table         
@@ -54,5 +45,11 @@
 -- @function [parent=#ParticleSystemQuad] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
+        
+--------------------------------
+-- js ctor
+-- @function [parent=#ParticleSystemQuad] ParticleSystemQuad 
+-- @param self
+-- @return ParticleSystemQuad#ParticleSystemQuad self (return value: cc.ParticleSystemQuad)
         
 return nil

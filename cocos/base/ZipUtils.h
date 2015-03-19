@@ -32,16 +32,18 @@ THE SOFTWARE.
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/CCFileUtils-android.h"
-#elif(CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#elif(CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 // for import ssize_t on win32 platform
 #include "platform/CCStdC.h"
 #endif
 
-namespace cocos2d
-{
 #ifndef _unz64_H
 typedef struct unz_file_info_s unz_file_info;
 #endif
+
+namespace cocos2d
+{
+
     /* XXX: pragma pack ??? */
     /** @struct CCZHeader
     */
@@ -72,7 +74,7 @@ typedef struct unz_file_info_s unz_file_info;
         *
         @since v0.8.1
         */
-        CC_DEPRECATED_ATTRIBUTE static ssize_t ccInflateMemory(unsigned char *in, ssize_t inLength, unsigned char **out) { return inflateMemory(in, inLength, out); }
+        CC_DEPRECATED(v3) static ssize_t ccInflateMemory(unsigned char *in, ssize_t inLength, unsigned char **out) { return inflateMemory(in, inLength, out); }
         static ssize_t inflateMemory(unsigned char *in, ssize_t inLength, unsigned char **out);
 
         /** 
@@ -85,7 +87,7 @@ typedef struct unz_file_info_s unz_file_info;
         *
         @since v1.0.0
         */
-        CC_DEPRECATED_ATTRIBUTE static ssize_t ccInflateMemoryWithHint(unsigned char *in, ssize_t inLength, unsigned char **out, ssize_t outLengthHint) { return inflateMemoryWithHint(in, inLength, out, outLengthHint); }
+        CC_DEPRECATED(v3) static ssize_t ccInflateMemoryWithHint(unsigned char *in, ssize_t inLength, unsigned char **out, ssize_t outLengthHint) { return inflateMemoryWithHint(in, inLength, out, outLengthHint); }
         static ssize_t inflateMemoryWithHint(unsigned char *in, ssize_t inLength, unsigned char **out, ssize_t outLengthHint);
 
         /** inflates a GZip file into memory
@@ -94,7 +96,7 @@ typedef struct unz_file_info_s unz_file_info;
         *
         * @since v0.99.5
         */
-        CC_DEPRECATED_ATTRIBUTE static int ccInflateGZipFile(const char *filename, unsigned char **out) { return inflateGZipFile(filename, out); }
+        CC_DEPRECATED(v3) static int ccInflateGZipFile(const char *filename, unsigned char **out) { return inflateGZipFile(filename, out); }
         static int inflateGZipFile(const char *filename, unsigned char **out);
         
         /** test a file is a GZip format file or not
@@ -103,7 +105,7 @@ typedef struct unz_file_info_s unz_file_info;
         *
         * @since v3.0
         */
-        CC_DEPRECATED_ATTRIBUTE static bool ccIsGZipFile(const char *filename) { return isGZipFile(filename); }
+        CC_DEPRECATED(v3) static bool ccIsGZipFile(const char *filename) { return isGZipFile(filename); }
         static bool isGZipFile(const char *filename);
 
         /** test the buffer is GZip format or not
@@ -112,7 +114,7 @@ typedef struct unz_file_info_s unz_file_info;
         *
         * @since v3.0
         */
-        CC_DEPRECATED_ATTRIBUTE static bool ccIsGZipBuffer(const unsigned char *buffer, ssize_t len) { return isGZipBuffer(buffer, len); }
+        CC_DEPRECATED(v3) static bool ccIsGZipBuffer(const unsigned char *buffer, ssize_t len) { return isGZipBuffer(buffer, len); }
         static bool isGZipBuffer(const unsigned char *buffer, ssize_t len);
 
         /** inflates a CCZ file into memory
@@ -121,7 +123,7 @@ typedef struct unz_file_info_s unz_file_info;
         *
         * @since v0.99.5
         */
-        CC_DEPRECATED_ATTRIBUTE static int ccInflateCCZFile(const char *filename, unsigned char **out) { return inflateCCZFile(filename, out); }
+        CC_DEPRECATED(v3) static int ccInflateCCZFile(const char *filename, unsigned char **out) { return inflateCCZFile(filename, out); }
         static int inflateCCZFile(const char *filename, unsigned char **out);
 
         /** inflates a buffer with CCZ format into memory
@@ -130,7 +132,7 @@ typedef struct unz_file_info_s unz_file_info;
         *
         * @since v3.0
         */
-        CC_DEPRECATED_ATTRIBUTE static int ccInflateCCZBuffer(const unsigned char *buffer, ssize_t len, unsigned char **out) { return inflateCCZBuffer(buffer, len, out); }
+        CC_DEPRECATED(v3) static int ccInflateCCZBuffer(const unsigned char *buffer, ssize_t len, unsigned char **out) { return inflateCCZBuffer(buffer, len, out); }
         static int inflateCCZBuffer(const unsigned char *buffer, ssize_t len, unsigned char **out);
         
         /** test a file is a CCZ format file or not
@@ -139,7 +141,7 @@ typedef struct unz_file_info_s unz_file_info;
         *
         * @since v3.0
         */
-        CC_DEPRECATED_ATTRIBUTE static bool ccIsCCZFile(const char *filename) { return isCCZFile(filename); }
+        CC_DEPRECATED(v3) static bool ccIsCCZFile(const char *filename) { return isCCZFile(filename); }
         static bool isCCZFile(const char *filename);
 
         /** test the buffer is CCZ format or not
@@ -148,7 +150,7 @@ typedef struct unz_file_info_s unz_file_info;
         *
         * @since v3.0
         */
-        CC_DEPRECATED_ATTRIBUTE static bool ccIsCCZBuffer(const unsigned char *buffer, ssize_t len) { return isCCZBuffer(buffer, len); }
+        CC_DEPRECATED(v3) static bool ccIsCCZBuffer(const unsigned char *buffer, ssize_t len) { return isCCZBuffer(buffer, len); }
         static bool isCCZBuffer(const unsigned char *buffer, ssize_t len);
 
         /** Sets the pvr.ccz encryption key parts separately for added
@@ -177,7 +179,7 @@ typedef struct unz_file_info_s unz_file_info;
         * @param index part of the key [0..3]
         * @param value value of the key part
         */
-        CC_DEPRECATED_ATTRIBUTE static void ccSetPvrEncryptionKeyPart(int index, unsigned int value) { setPvrEncryptionKeyPart(index, value); }
+        CC_DEPRECATED(v3) static void ccSetPvrEncryptionKeyPart(int index, unsigned int value) { setPvrEncryptionKeyPart(index, value); }
         static void setPvrEncryptionKeyPart(int index, unsigned int value);
         
         /** Sets the pvr.ccz encryption key.
@@ -202,7 +204,7 @@ typedef struct unz_file_info_s unz_file_info;
         * @param keyPart3 the key value part 3.
         * @param keyPart4 the key value part 4.
         */
-        CC_DEPRECATED_ATTRIBUTE static void ccSetPvrEncryptionKey(unsigned int keyPart1, unsigned int keyPart2, unsigned int keyPart3, unsigned int keyPart4) { setPvrEncryptionKey(keyPart1, keyPart2, keyPart3, keyPart4); }
+        CC_DEPRECATED(v3) static void ccSetPvrEncryptionKey(unsigned int keyPart1, unsigned int keyPart2, unsigned int keyPart3, unsigned int keyPart4) { setPvrEncryptionKey(keyPart1, keyPart2, keyPart3, keyPart4); }
         static void setPvrEncryptionKey(unsigned int keyPart1, unsigned int keyPart2, unsigned int keyPart3, unsigned int keyPart4);
 
     private:

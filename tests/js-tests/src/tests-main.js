@@ -286,15 +286,6 @@ var testNames = [
         }
     },
     {
-        title:"CocoStudio Test",
-        resource:g_cocoStudio,
-        platforms: PLATFORM_ALL,
-        linksrc:"",
-        testScene:function () {
-            return new CocoStudioTestScene();
-        }
-    },
-    {
         title:"CurrentLanguage Test",
         platforms: PLATFORM_ALL,
         linksrc:"src/CurrentLanguageTest/CurrentLanguageTest.js",
@@ -361,14 +352,14 @@ var testNames = [
             return new EffectAdvanceScene();
         }
     },
-    {
-        title:"Facebook SDK Test",
-        platforms: PLATFROM_ANDROID | PLATFROM_IOS | PLATFORM_HTML5,
-        linksrc:"src/FacebookTest/FacebookTestsManager.js",
-        testScene:function () {
-            return new FacebookTestScene();
-        }
-    },
+//    {
+//        title:"Facebook SDK Test",
+//        platforms: PLATFROM_ANDROID | PLATFROM_IOS | PLATFORM_HTML5,
+//        linksrc:"src/FacebookTest/FacebookTestsManager.js",
+//        testScene:function () {
+//            return new FacebookTestScene();
+//        }
+//    },
     {
         title:"Font Test",
         resource:g_fonts,
@@ -536,15 +527,6 @@ var testNames = [
         linksrc:"src/SchedulerTest/SchedulerTest.js",
         testScene:function () {
             return new SchedulerTestScene();
-        }
-    },
-    {
-        title:"Spine Test",
-        resource: g_spine,
-        platforms: PLATFORM_ALL,
-        linksrc:"src/SpineTest/SpineTest.js",
-        testScene:function () {
-            return new SpineTestScene();
         }
     },
     {

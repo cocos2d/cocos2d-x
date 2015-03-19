@@ -28,14 +28,7 @@ THE SOFTWARE.
 #define _SIMPLE_AUDIO_ENGINE_H_
 
 #include "Export.h"
-
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#define CC_DEPRECATED_ATTRIBUTE __attribute__((deprecated))
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#define CC_DEPRECATED_ATTRIBUTE __declspec(deprecated)
-#else
-#define CC_DEPRECATED_ATTRIBUTE
-#endif
+#include "platform/CCPlatformMacros.h"
 
 namespace CocosDenshion {
 
@@ -57,7 +50,7 @@ public:
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE static SimpleAudioEngine* sharedEngine() { return SimpleAudioEngine::getInstance(); }
+    CC_DEPRECATED(v3) static SimpleAudioEngine* sharedEngine() { return SimpleAudioEngine::getInstance(); }
 
     /**
      @brief Release the shared Engine object

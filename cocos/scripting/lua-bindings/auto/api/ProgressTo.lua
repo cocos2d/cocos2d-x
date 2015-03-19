@@ -5,6 +5,15 @@
 -- @parent_module cc
 
 --------------------------------
+-- Initializes with a duration and a percent <br>
+-- param duration in seconds
+-- @function [parent=#ProgressTo] initWithDuration 
+-- @param self
+-- @param #float duration
+-- @param #float percent
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- Creates and initializes with a duration and a percent <br>
 -- param duration in seconds
 -- @function [parent=#ProgressTo] create 
@@ -37,6 +46,12 @@
 -- @function [parent=#ProgressTo] update 
 -- @param self
 -- @param #float time
+-- @return ProgressTo#ProgressTo self (return value: cc.ProgressTo)
+        
+--------------------------------
+-- 
+-- @function [parent=#ProgressTo] ProgressTo 
+-- @param self
 -- @return ProgressTo#ProgressTo self (return value: cc.ProgressTo)
         
 return nil

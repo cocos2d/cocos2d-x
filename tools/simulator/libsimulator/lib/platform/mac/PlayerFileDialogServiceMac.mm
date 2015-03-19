@@ -1,8 +1,8 @@
 
 #include "PlayerFileDialogServiceMac.h"
 
-#include "glfw3.h"
-#include "glfw3native.h"
+#include "glfw/glfw3.h"
+#include "glfw/glfw3native.h"
 
 #define VALIDATE_FRAMEBUFFER { \
 NSOpenGLContext *__context = glfwGetNSGLContext(glfwGetCurrentContext()); \

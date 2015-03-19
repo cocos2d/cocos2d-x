@@ -5,6 +5,14 @@
 -- @parent_module cc
 
 --------------------------------
+-- 
+-- @function [parent=#TransitionSlideInB] create 
+-- @param self
+-- @param #float t
+-- @param #cc.Scene scene
+-- @return TransitionSlideInB#TransitionSlideInB ret (return value: cc.TransitionSlideInB)
+        
+--------------------------------
 --  returns the action that will be performed by the incoming and outgoing scene 
 -- @function [parent=#TransitionSlideInB] action 
 -- @param self
@@ -12,10 +20,8 @@
         
 --------------------------------
 -- 
--- @function [parent=#TransitionSlideInB] create 
+-- @function [parent=#TransitionSlideInB] TransitionSlideInB 
 -- @param self
--- @param #float t
--- @param #cc.Scene scene
--- @return TransitionSlideInB#TransitionSlideInB ret (return value: cc.TransitionSlideInB)
+-- @return TransitionSlideInB#TransitionSlideInB self (return value: cc.TransitionSlideInB)
         
 return nil

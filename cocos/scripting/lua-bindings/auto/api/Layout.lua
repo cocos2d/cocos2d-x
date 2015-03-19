@@ -299,6 +299,12 @@
 -- @return Layout#Layout self (return value: ccui.Layout)
         
 --------------------------------
+-- 
+-- @function [parent=#Layout] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- Default constructor
 -- @function [parent=#Layout] Layout 
 -- @param self

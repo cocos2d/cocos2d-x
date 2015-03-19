@@ -173,20 +173,20 @@ public:
      *
      * @param selected    true that checkbox is selected, false otherwise.
      */
-    CC_DEPRECATED_ATTRIBUTE void setSelectedState(bool selected){this->setSelected(selected);}
+    CC_DEPRECATED(v3) void setSelectedState(bool selected){this->setSelected(selected);}
 
     /**
      * Gets selcted state of checkbox.
      *
      * @return selected    true that checkbox is selected, false otherwise.
      */
-    CC_DEPRECATED_ATTRIBUTE bool getSelectedState()const{return this->isSelected();}
+    CC_DEPRECATED(v3) bool getSelectedState()const{return this->isSelected();}
     
     bool isSelected()const;
     void setSelected(bool selected);
 
     //add a call back function would called when checkbox is selected or unselected.
-    CC_DEPRECATED_ATTRIBUTE void addEventListenerCheckBox(Ref* target,SEL_SelectedStateEvent selector);
+    CC_DEPRECATED(v3) void addEventListenerCheckBox(Ref* target,SEL_SelectedStateEvent selector);
     void addEventListener(const ccCheckBoxCallback& callback);
 
 
@@ -230,7 +230,7 @@ protected:
     void selectedEvent();
     void unSelectedEvent();
     
-    virtual void releaseUpEvent();
+    virtual void releaseUpEvent() override;
     
     virtual void onSizeChanged() override;
     
@@ -253,18 +253,7 @@ protected:
     //if you use the old event callback, it will retain the _checkBoxEventListener
     Ref*       _checkBoxEventListener;
     
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (push)
-#pragma warning (disable: 4996)
-#endif
     SEL_SelectedStateEvent    _checkBoxEventSelector;
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic warning "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (pop)
-#endif
     
     ccCheckBoxCallback _checkBoxEventCallback;
 

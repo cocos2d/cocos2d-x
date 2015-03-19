@@ -82,7 +82,7 @@ void OpenGLES::Initialize()
         // These attributes can be used to request D3D11 WARP.
         // They are used if eglInitialize fails with both the default display attributes and the 9_3 display attributes.
         EGL_PLATFORM_ANGLE_TYPE_ANGLE, EGL_PLATFORM_ANGLE_TYPE_D3D11_ANGLE,
-        EGL_PLATFORM_ANGLE_USE_WARP_ANGLE, EGL_TRUE,
+        EGL_PLATFORM_ANGLE_DEVICE_TYPE_ANGLE, EGL_PLATFORM_ANGLE_DEVICE_TYPE_WARP_ANGLE,
         EGL_ANGLE_DISPLAY_ALLOW_RENDER_TO_BACK_BUFFER, EGL_TRUE, 
         EGL_NONE,
     };

@@ -60,7 +60,7 @@ public:
     /** creates an empty Menu */
     static Menu* create();
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     // WP8 in VS2012 does not support nullptr in variable args lists and variadic templates are also not supported
     typedef MenuItem* M;
     static Menu* create(M m1, std::nullptr_t listEnd) { return variadicCreate(m1, NULL); }
@@ -120,10 +120,10 @@ public:
     virtual bool isEnabled() const { return _enabled; }
     virtual void setEnabled(bool value) { _enabled = value; };
 
-    virtual bool onTouchBegan(Touch* touch, Event* event);
-    virtual void onTouchEnded(Touch* touch, Event* event);
-    virtual void onTouchCancelled(Touch* touch, Event* event);
-    virtual void onTouchMoved(Touch* touch, Event* event);
+    virtual bool onTouchBegan(Touch* touch, Event* event) override;
+    virtual void onTouchEnded(Touch* touch, Event* event) override;
+    virtual void onTouchCancelled(Touch* touch, Event* event) override;
+    virtual void onTouchMoved(Touch* touch, Event* event) override;
     
     // overrides
     virtual void removeChild(Node* child, bool cleanup) override;
@@ -148,7 +148,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Menu();
 
     /** initializes an empty Menu */
-    bool init();
+    bool init() override;
 
     /** initializes a Menu with a NSArray of MenuItem objects */
     bool initWithArray(const Vector<MenuItem*>& arrayOfItems);

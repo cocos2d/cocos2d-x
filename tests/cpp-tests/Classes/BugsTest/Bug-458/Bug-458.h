@@ -6,7 +6,7 @@
 class Bug458Layer : public BugsTestBaseLayer
 {
 public:
-    virtual bool init();
+    virtual bool init() override;
     void selectAnswer(Ref* sender);
 };
 

@@ -134,7 +134,7 @@ public:
     Layout* getPage(ssize_t index);
     
     // event
-    CC_DEPRECATED_ATTRIBUTE void addEventListenerPageView(Ref *target, SEL_PageViewEvent selector);
+    CC_DEPRECATED(v3) void addEventListenerPageView(Ref *target, SEL_PageViewEvent selector);
     void addEventListener(const ccPageViewCallback& callback);
     
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;
@@ -205,7 +205,7 @@ protected:
 
     virtual void handleMoveLogic(Touch *touch) ;
     virtual void handleReleaseLogic(Touch *touch) ;
-    virtual void interceptTouchEvent(TouchEventType event, Widget* sender,Touch *touch) ;
+    virtual void interceptTouchEvent(TouchEventType event, Widget* sender,Touch *touch) override;
     
     
     virtual void onSizeChanged() override;
@@ -242,18 +242,7 @@ protected:
     float _childFocusCancelOffset;
 
     Ref* _pageViewEventListener;
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (push)
-#pragma warning (disable: 4996)
-#endif
     SEL_PageViewEvent _pageViewEventSelector;
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic warning "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (pop)
-#endif
     ccPageViewCallback _eventCallback;
 };
 

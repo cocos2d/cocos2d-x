@@ -71,6 +71,15 @@
 -- @return Text#Text self (return value: ccui.Text)
         
 --------------------------------
+-- 
+-- @function [parent=#Text] init 
+-- @param self
+-- @param #string textContent
+-- @param #string fontName
+-- @param #int fontSize
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- Gets the touch scale enabled of label.<br>
 -- return  touch scale enabled of label.
 -- @function [parent=#Text] isTouchScaleChangeEnabled 
@@ -191,6 +200,12 @@
 -- @function [parent=#Text] getVirtualRenderer 
 -- @param self
 -- @return Node#Node ret (return value: cc.Node)
+        
+--------------------------------
+-- 
+-- @function [parent=#Text] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- Returns the "class name" of widget.

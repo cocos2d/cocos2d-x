@@ -78,9 +78,7 @@ ConnectWaitLayer::ConnectWaitLayer()
     shineSprite->runAction(RepeatForever::create(Sequence::create(arrayOfActions)));
     addChild(shineSprite, 9998);
 
-    std::string strip;
-    int runtimeType = RuntimeEngine::getInstance()->getRunTimeType();
-	strip = getIPAddress(runtimeType);
+    std::string strip = getIPAddress();
 	if (strip.empty())
 	{
 		strip = "0.0.0.0";

@@ -30,7 +30,9 @@
 NS_CC_BEGIN
 
 class TextureAtlas;
+class Texture2D;
 class GLProgram;
+class VertexData;
 
 class CC_DLL BatchCommand : public RenderCommand
 {
@@ -39,22 +41,32 @@ public:
     BatchCommand();
     ~BatchCommand();
 
-    void init(float globalZOrder, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform, uint32_t flags);
-    CC_DEPRECATED_ATTRIBUTE void init(float depth, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform);
+    void init(float depth, GLProgram* shader, BlendFunc blendType, TextureAtlas *textureAtlas, const Mat4& modelViewTransform, uint32_t flags = 0);
+    void init(float depth, GLProgram* shader, BlendFunc blendType, Texture2D* texture, VertexData* batch, const Mat4& modelViewTransform, uint32_t flags = 0);
 
     void execute();
 
+    unsigned getStart() const;
+    unsigned getCount() const;
+    void setStart(unsigned start);
+    void setCount(unsigned count);
+    
 protected:
+    
     //Material
-    int32_t _materialID;
-    GLuint _textureID;
+    int32_t    _materialID;
+    GLuint     _textureID;
     GLProgram* _shader;
-    BlendFunc _blendType;
+    BlendFunc  _blendType;
 
-    TextureAtlas *_textureAtlas;
+    TextureAtlas* _textureAtlas;
+    VertexData* _batch;
 
     // ModelView transform
     Mat4 _mv;
+    
+    unsigned _start;
+    unsigned _count;
 };
 NS_CC_END
 

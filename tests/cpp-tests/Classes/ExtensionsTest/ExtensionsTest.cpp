@@ -2,18 +2,10 @@
 #include "../testResource.h"
 #include "AssetsManagerExTest/AssetsManagerExTest.h"
 #include "ControlExtensionTest/CCControlSceneManager.h"
-#include "CocosBuilderTest/CocosBuilderTest.h"
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN) && (CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
-#include "NetworkTest/HttpClientTest.h"
-#endif
 #include "TableViewTest/TableViewTestScene.h"
+#include "NetworkTest/HttpClientTest.h"
 
-#include "CocoStudioArmatureTest/ArmatureScene.h"
-#include "CocoStudioActionTimelineTest/ActionTimelineTestScene.h"
-#include "CocoStudioComponentsTest/ComponentsTestScene.h"
-#include "CocoStudioSceneTest/SceneEditorTest.h"
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #include "NetworkTest/WebSocketTest.h"
 #include "NetworkTest/SocketIOTest.h"
 #endif
@@ -38,19 +30,9 @@ static struct {
 		auto scene = pManager->currentControlScene();
 		Director::getInstance()->replaceScene(scene);
 	}},
-	{ "CocosBuilderTest", [](Ref *sender) {
-		auto scene = new (std::nothrow) CocosBuilderTestScene();
-		if (scene)
-		{
-			scene->runThisTest();
-			scene->release();
-		}
-	}},
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_EMSCRIPTEN) && (CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
-	{ "HttpClientTest", [](Ref *sender){ runHttpClientTest();}
-	},
-#endif
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    { "HttpClientTest", [](Ref *sender){ runHttpClientTest();}
+    },
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 	{ "WebSocketTest", [](Ref *sender){ runWebSocketTest();}
 	},
 	{ "SocketIOTest", [](Ref *sender){ runSocketIOTest();}
@@ -58,23 +40,6 @@ static struct {
 #endif
 
 	{ "TableViewTest", [](Ref *sender){ runTableViewTest();}
-	},
-	{ "CocoStudioArmatureTest", [](Ref *sender) { ArmatureTestScene *scene = new (std::nothrow) ArmatureTestScene();
-	                                       scene->runThisTest();
-	                                       scene->release();
-	}
-	},
-    { "CocoStudioActionTimelineTest", [](Ref *sender) { ActionTimelineTestScene *scene = new (std::nothrow) ActionTimelineTestScene();
-    scene->runThisTest();
-    scene->release();
-    }
-    },
-    { "CocoStudioComponentsTest", [](Ref *sender) { runComponentsTestLayerTest(); }
-    },
-	{ "CocoStudioSceneTest", [](Ref *sender) { SceneEditorTestScene *scene = new (std::nothrow) SceneEditorTestScene();
-	                                       scene->runThisTest();
-	                                       scene->release();
- }
 	},
 };
 

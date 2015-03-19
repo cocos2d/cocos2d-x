@@ -1076,6 +1076,15 @@ Developers:
         
     tmr111116
         fix random int overflow
+        
+    flamefox
+        fix the bug that Sprite3D::getAttachNode() should failed when there is no bone with name
+
+    Justin Graham (mannewalis)
+        Refactor TextureAtlas, Label, Tilemaps, DrawNode, DrawingPrimitives, ParticleSystem,
+            to use Vertex(Index)Buffer/VertexData/BatchCommand instead of custom GL calls.
+        Refactor scissor and stencil to use renderer commands instead of CustomCommand
+        Added CC_DEPRECATE(...)
 
 Retired Core Developers:
     WenSheng Yang

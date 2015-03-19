@@ -20,8 +20,8 @@
 
 #include "SimulatorWin.h"
 
-#include "glfw3.h"
-#include "glfw3native.h"
+#include "glfw/glfw3.h"
+#include "glfw/glfw3native.h"
 
 #include "AppEvent.h"
 #include "AppLang.h"
@@ -103,6 +103,15 @@ std::string getCurAppPath(void)
     char fuldir[MAX_PATH] = {0};
     _fullpath(fuldir, strPath.c_str(), MAX_PATH);
     return fuldir;
+}
+
+static bool stringEndWith(const std::string str, const std::string needle)
+{
+    if (str.length() >= needle.length())
+    {
+        return (0 == str.compare(str.length() - needle.length(), needle.length(), needle));
+    }
+    return false;
 }
 
 static void initGLContextAttrs()
@@ -188,15 +197,15 @@ void SimulatorWin::openNewPlayerWithProjectConfig(const ProjectConfig &config)
     MultiByteToWideChar(CP_UTF8, 0, commandLine.c_str(), -1, command, MAX_COMMAND);
 
     BOOL success = CreateProcess(NULL,
-                                 command,   // command line 
-                                 NULL,      // process security attributes 
-                                 NULL,      // primary thread security attributes 
-                                 FALSE,     // handles are inherited 
-                                 0,         // creation flags 
-                                 NULL,      // use parent's environment 
-                                 NULL,      // use parent's current directory 
-                                 &si,       // STARTUPINFO pointer 
-                                 &pi);      // receives PROCESS_INFORMATION 
+                                 command,   // command line
+                                 NULL,      // process security attributes
+                                 NULL,      // primary thread security attributes
+                                 FALSE,     // handles are inherited
+                                 0,         // creation flags
+                                 NULL,      // use parent's environment
+                                 NULL,      // use parent's current directory
+                                 &si,       // STARTUPINFO pointer
+                                 &pi);      // receives PROCESS_INFORMATION
 
     if (!success)
     {
@@ -369,7 +378,7 @@ int SimulatorWin::run()
     ConfigParser::getInstance()->setInitViewSize(frameSize);
     const bool isResize = _project.isResizeWindow();
     std::stringstream title;
-    title << "Cocos Simulator (" << _project.getFrameScale() * 100 << "%)";
+    title << "Cocos Simulator - " << ConfigParser::getInstance()->getInitViewName();
     initGLContextAttrs();
     auto glview = GLViewImpl::createWithRect(title.str(), frameRect, frameScale);
     _hwnd = glview->getWin32Window();
@@ -378,6 +387,9 @@ int SimulatorWin::run()
     //SendMessage(_hwnd, WM_SETICON, ICON_BIG, (LPARAM)icon);
     //SendMessage(_hwnd, WM_SETICON, ICON_SMALL, (LPARAM)icon);
     //FreeResource(icon);
+
+    // path for looking Lang file, Studio Default images
+    FileUtils::getInstance()->addSearchPath(getApplicationPath().c_str());
 
     auto director = Director::getInstance();
     director->setOpenGLView(glview);
@@ -397,9 +409,6 @@ int SimulatorWin::run()
         MoveWindow(_hwnd, pos.x, pos.y, rect.right - rect.left, rect.bottom - rect.top, FALSE);
     }
 
-    // path for looking Lang file, Studio Default images
-    FileUtils::getInstance()->addSearchPath(getApplicationPath().c_str());
-
     // init player services
     setupUI();
     DrawMenuBar(_hwnd);
@@ -416,6 +425,9 @@ int SimulatorWin::run()
     GetWindowRect(_hwnd, &rect);
     MoveWindow(_hwnd, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top + GetSystemMetrics(SM_CYMENU), FALSE);
 
+    // update window title
+    updateWindowTitle();
+
     // startup message loop
     return app->run();
 }
@@ -428,6 +440,9 @@ void SimulatorWin::setupUI()
 
     // FILE
     menuBar->addItem("FILE_MENU", tr("File"));
+    menuBar->addItem("OPEN_FILE_MENU", tr("Open File") + "...", "FILE_MENU");
+    menuBar->addItem("OPEN_PROJECT_MENU", tr("Open Project") + "...", "FILE_MENU");
+    menuBar->addItem("FILE_MENU_SEP1", "-", "FILE_MENU");
     menuBar->addItem("EXIT_MENU", tr("Exit"), "FILE_MENU");
 
     // VIEW
@@ -553,8 +568,7 @@ void SimulatorWin::setupUI()
                             float scale = atof(tmp.c_str()) / 100.0f;
                             project.setFrameScale(scale);
 
-                            auto glview = static_cast<GLViewImpl*>(Director::getInstance()->getOpenGLView());
-                            glview->setFrameZoomFactor(scale);
+                            _instance->setZoom(scale);
 
                             // update scale menu state
                             for (auto &it : scaleMenuVector)
@@ -564,16 +578,14 @@ void SimulatorWin::setupUI()
                             menuItem->setChecked(true);
 
                             // update window title
-                            std::stringstream title;
-                            title << "Cocos Simulator (" << project.getFrameScale() * 100 << "%)";
-                            SetWindowTextA(hwnd, title.str().c_str());
+                            _instance->updateWindowTitle();
 
                             // update window size
                             RECT rect;
                             GetWindowRect(hwnd, &rect);
                             MoveWindow(hwnd, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top + GetSystemMetrics(SM_CYMENU), FALSE);
 
-                            // fix: can not update window on some windows system 
+                            // fix: can not update window on some windows system
                             ::SendMessage(hwnd, WM_MOVE, NULL, NULL);
                         }
                         else if (data.find("VIEWSIZE_ITEM_MENU_") == 0) // begin with VIEWSIZE_ITEM_MENU_
@@ -600,6 +612,25 @@ void SimulatorWin::setupUI()
                         {
                             project.changeFrameOrientationToLandscape();
                             _instance->openProjectWithProjectConfig(project);
+                        }
+                        else if (data == "OPEN_FILE_MENU")
+                        {
+                            auto fileDialog = player::PlayerProtocol::getInstance()->getFileDialogService();
+                            stringstream extensions;
+                            extensions << "All Support File|config.json,*.csd,*csd;"
+                                << "Project Config File|config.json;"
+                                << "Cocos Studio File|*.csd;"
+                                << "Cocos Studio Binary File|*.csb";
+                            auto entry = fileDialog->openFile(tr("Choose File"), "", extensions.str());
+
+                            _instance->onOpenFile(entry);
+                        }
+                        else if (data == "OPEN_PROJECT_MENU")
+                        {
+                            auto fileDialog = player::PlayerProtocol::getInstance()->getFileDialogService();
+                            auto path = fileDialog->openDirectory(tr("Choose Folder"), "");
+
+                            _instance->onOpenProjectFolder(path);
                         }
                     }
                 }
@@ -637,6 +668,15 @@ void SimulatorWin::setZoom(float frameScale)
 {
     _project.setFrameScale(frameScale);
     cocos2d::Director::getInstance()->getOpenGLView()->setFrameZoomFactor(frameScale);
+}
+
+void SimulatorWin::updateWindowTitle()
+{
+    std::stringstream title;
+    title << "Cocos " << tr("Simulator") << " (" << _project.getFrameScale() * 100 << "%)";
+    std::u16string u16title;
+    cocos2d::StringUtils::UTF8ToUTF16(title.str(), u16title);
+    SetWindowText(_hwnd, (LPCTSTR)u16title.c_str());
 }
 
 // debug log
@@ -871,11 +911,7 @@ LRESULT CALLBACK SimulatorWin::windowProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
             CC_SAFE_FREE(utf8);
             DragFinish(hDrop);
 
-            // broadcast drop event
-            AppEvent forwardEvent("APP.EVENT.DROP", APP_EVENT_DROP);
-            forwardEvent.setDataString(firstFile);
-
-            Director::getInstance()->getEventDispatcher()->dispatchEvent(&forwardEvent);
+            _instance->onDrop(firstFile);
         }
     }   // WM_DROPFILES
 
@@ -883,3 +919,131 @@ LRESULT CALLBACK SimulatorWin::windowProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
     return g_oldWindowProc(hWnd, uMsg, wParam, lParam);
 }
 
+void SimulatorWin::onOpenFile(const std::string &filePath)
+{
+    string entry = filePath;
+    if (entry.empty()) return;
+
+    if (stringEndWith(entry, "config.json") || stringEndWith(entry, ".csb") || stringEndWith(entry, ".csd"))
+    {
+        replaceAll(entry, "\\", "/");
+        size_t p = entry.find_last_of("/");
+        if (p != entry.npos)
+        {
+            string workdir = entry.substr(0, p);
+            _project.setProjectDir(workdir);
+        }
+
+        _project.setScriptFile(entry);
+        if (stringEndWith(entry, CONFIG_FILE))
+        {
+            ConfigParser::getInstance()->readConfig(entry);
+            _project.setScriptFile(ConfigParser::getInstance()->getEntryFile());
+        }
+        openProjectWithProjectConfig(_project);
+    }
+    else
+    {
+        auto title = tr("Open File") + tr("Error");
+        auto msg = tr("Only support") + " config.json;*.csb;*.csd";
+        auto msgBox = player::PlayerProtocol::getInstance()->getMessageBoxService();
+        msgBox->showMessageBox(title, msg);
+    }
+}
+
+/*
+1. find @folderPath/config.json
+2. get project name from file: @folderPath/folderName.ccs
+3. find @folderPath/cocosstudio/MainScene.csd
+4. find @folderPath/cocosstudio/MainScene.csb
+*/
+void SimulatorWin::onOpenProjectFolder(const std::string &folderPath)
+{
+    string path = folderPath;
+    if (!path.empty())
+    {
+        replaceAll(path, "\\", "/");
+
+        auto fileUtils = FileUtils::getInstance();
+        bool foundProjectFile = false;
+        // 1. check config.json
+        auto configPath = path + "/" + CONFIG_FILE;
+        if (fileUtils->isFileExist(configPath))
+        {
+            ConfigParser::getInstance()->readConfig(configPath);
+            _project.setScriptFile(ConfigParser::getInstance()->getEntryFile());
+            foundProjectFile = true;
+        }
+        // check ccs project
+        else
+        {
+            // 2.
+            if (path.at(path.size() - 1) == '/') path.erase(path.size() - 1);
+            ssize_t pos = path.find_last_of('/');
+            if (pos != std::string::npos)
+            {
+                auto folderName = path.substr(path.find_last_of('/'), path.size());
+                auto ccsFilePath = path + folderName + ".ccs";
+                if (fileUtils->isFileExist(ccsFilePath))
+                {
+                    auto fileContent = fileUtils->getStringFromFile(ccsFilePath);
+
+                    string matchString("<Project Name=\"");
+                    pos = fileContent.find(matchString);
+                    // get project file name
+                    if (pos != std::string::npos)
+                    {
+                        fileContent = fileContent.substr(pos + matchString.size(), fileContent.size());
+                        ssize_t posEnd = fileContent.find_first_of('"');
+                        auto projectFileName = path + "/cocosstudio/" + fileContent.substr(0, posEnd);
+                        _project.setScriptFile(projectFileName);
+                        foundProjectFile = true;
+                    }
+                }
+            }
+
+            if (!foundProjectFile)
+            {
+                auto csdFilePath = path + "/cocosstudio/MainScene.csd";
+                auto csbFilePath = path + "/cocosstudio/MainScene.csb";
+                // 3.
+                if (fileUtils->isFileExist(csdFilePath))
+                {
+                    _project.setScriptFile(csdFilePath);
+                    foundProjectFile = true;
+                }
+                // 4.
+                else if (fileUtils->isFileExist(csbFilePath))
+                {
+                    _project.setScriptFile(csbFilePath);
+                    foundProjectFile = true;
+                }
+            }
+        }
+
+        if (foundProjectFile)
+        {
+            _project.setProjectDir(path);
+            openProjectWithProjectConfig(_project);
+        }
+        else
+        {
+            auto title = tr("Open Project") + tr("Error");
+            auto msgBox = player::PlayerProtocol::getInstance()->getMessageBoxService();
+            msgBox->showMessageBox(title, tr("Can not find project"));
+        }
+    }
+}
+
+void SimulatorWin::onDrop(const std::string &path)
+{
+    auto fileUtils = FileUtils::getInstance();
+    if (fileUtils->isDirectoryExist(path))
+    {
+        onOpenProjectFolder(path);
+    }
+    else if (fileUtils->isFileExist(path))
+    {
+        onOpenFile(path);
+    }
+}

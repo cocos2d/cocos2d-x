@@ -1,7 +1,6 @@
 #include "testBasic.h"
 #include "controller.h"
 #include "extensions/cocos-ext.h"
-#include "cocostudio/CocoStudio.h"
 
 TestScene::TestScene(bool bPortrait, bool physics/* = false*/)
 {
@@ -28,8 +27,6 @@ void testScene_callback(Ref *sender )
     layer->release();
 
     Director::getInstance()->replaceScene(scene);
-
-    cocostudio::ArmatureDataManager::destroyInstance();
 }
 
 void TestScene::onEnter()

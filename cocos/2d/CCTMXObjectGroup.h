@@ -55,20 +55,20 @@ public:
      */
     virtual ~TMXObjectGroup();
 
-    inline const std::string& getGroupName(){ return _groupName; }
+    inline const std::string& getGroupName() const { return _groupName; }
     inline void setGroupName(const std::string& groupName){ _groupName = groupName; }
 
     /** return the value for the specific property name */
     Value getProperty(const std::string& propertyName) const;
     
-    CC_DEPRECATED_ATTRIBUTE Value propertyNamed(const std::string& propertyName) const { return getProperty(propertyName); };
+    CC_DEPRECATED(v3) Value propertyNamed(const std::string& propertyName) const { return getProperty(propertyName); };
 
     /** return the dictionary for the specific object name.
     It will return the 1st object found on the array for the given name.
     */
     ValueMap getObject(const std::string& objectName) const;
     
-    CC_DEPRECATED_ATTRIBUTE ValueMap objectNamed(const std::string& objectName) const { return getObject(objectName); };
+    CC_DEPRECATED(v3) ValueMap objectNamed(const std::string& objectName) const { return getObject(objectName); };
     
     /** Gets the offset position of child objects */
     inline const Vec2& getPositionOffset() const { return _positionOffset; };

@@ -66,6 +66,16 @@
 -- @return LayerGradient#LayerGradient self (return value: cc.LayerGradient)
         
 --------------------------------
+-- @overload self, color4b_table, color4b_table, vec2_table         
+-- @overload self, color4b_table, color4b_table         
+-- @function [parent=#LayerGradient] initWithColor
+-- @param self
+-- @param #color4b_table start
+-- @param #color4b_table end
+-- @param #vec2_table v
+-- @return bool#bool ret (return value: bool)
+
+--------------------------------
 --  Returns the end color of the gradient 
 -- @function [parent=#LayerGradient] getEndColor 
 -- @param self
@@ -97,8 +107,20 @@
 
 --------------------------------
 -- 
+-- @function [parent=#LayerGradient] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#LayerGradient] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
+        
+--------------------------------
+-- 
+-- @function [parent=#LayerGradient] LayerGradient 
+-- @param self
+-- @return LayerGradient#LayerGradient self (return value: cc.LayerGradient)
         
 return nil

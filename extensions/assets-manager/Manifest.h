@@ -33,7 +33,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include "json/document.h"
+#include "rapidjson/document.h"
 
 NS_CC_EXT_BEGIN
 

@@ -112,7 +112,7 @@ class UILoadingBarReloadTexture : public UIScene
 public:
     UILoadingBarReloadTexture();
     ~UILoadingBarReloadTexture();
-    void update(float dt);
+    void update(float dt) override;
     bool init();
     
 protected:

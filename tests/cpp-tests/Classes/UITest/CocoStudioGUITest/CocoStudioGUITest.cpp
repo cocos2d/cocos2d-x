@@ -3,11 +3,7 @@
 #include "CocoStudioGUITest.h"
 #include "../../ExtensionsTest/ExtensionsTest.h"
 #include "CocosGUIScene.h"
-#include "GUIEditorTest.h"
-#include "CustomGUIScene.h"
 #include "controller.h"
-#include "cocostudio/CocoStudio.h"
-#include "CocostudioParserTest.h"
 
 enum
 {
@@ -29,33 +25,6 @@ g_guisTests[] =
             CocosGUITestScene *scene = new (std::nothrow) CocosGUITestScene();
 			scene->runThisTest();
 			scene->release();
-        }
-	},
-    {
-        "GUI Editor Test",
-        [](Ref* sender)
-        {
-            GUIEditorTestScene* scene = new (std::nothrow) GUIEditorTestScene();
-            scene->runThisTest();
-            scene->release();
-        }
-	},
-    {
-        "Custom GUI Test",
-        [](Ref* sender)
-        {
-            CustomGUITestScene* scene = new (std::nothrow) CustomGUITestScene();
-            scene->runThisTest();
-            scene->release();
-        }
-	},
-    {
-        "Cocostudio Parser Test",
-        [](Ref* sender)
-        {
-            CocostudioParserTestScene* scene = new (std::nothrow) CocostudioParserTestScene();
-            scene->runThisTest();
-            scene->release();
         }
 	},
 };
@@ -145,6 +114,4 @@ void CocoStudioGUITestScene::BackCallback(Ref* pSender)
     layer->release();
     
     Director::getInstance()->replaceScene(scene);
-    
-    cocostudio::ArmatureDataManager::destroyInstance();
 }

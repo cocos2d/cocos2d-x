@@ -1,10 +1,33 @@
-cocos2d-x-4.0alph0 ??
+cocos2d-x-4.0alpha1 Mar.20 2015
+    [NEW]           Image: added windows image component support for Windows 8.1 Universal Apps
+    
+    [FIX]           AutoRelasePool: memory leak if adding an element into pool when releasing auto release pool
+    [FIX]           FileUtils: getWritablePath() will not return corrent setted writable path on Mac & Windows
+    [FIX]           HttpResponse: reference count error that will cause assert error
+    [FIX]           Label: shadow color is wrong
+    [FIX]           Label: position is wrong if it is visited by a new camera
+    [FIX]           MoveTo: disable `reverse()` because it is meaningless
+    [FIX]           MotionStreak: can not work with MoveTo/MoveBy
 
+cocos2d-x-4.0alph0 Feb.28 2015
+    [NEW]           C++: merge JSB
+    [NEW]           C++: merge draw call migration to VertexData
+    [NEW]           C++: add Romanian language support
+
+    [FIX]           Audio: audio can not resume if it is interrupt, and back from background
     [FIX]           C++: remove deprecated functions that are deprecated in v2.x
+    [FIX]           C++: compiling error when using CC_USE_CULLING
+    [FIX]           C++: remove WP8 support
+    [FIX]           C++: remove VS2012 support
+    [FIX]           C++: add deprecated version
+    [FIX]           HttpClient: memory leak on iOS
+    [FIX]           HttpClient: if the request data is started by a null character, it does not fill http body
     [FIX]           Label: texture size of string has unexpected padding on iOS 7 and upper version
     [FIX]           Label: stroke color of system font is incorrect on iOS
     [FIX]           MenuItem: crash if `MenuItem::onExit` is called multiple times
-
+    [FIX]           Physics: position of physics body is wrong when the position of parent node changes
+    [FIX]           Physics: physical body will jump even there is not any force applied to it
+    
 cocos2d-x-3.4 Jan.30 2015
     [FIX]           Animate3D: `setSpeed` has not effect if `Animate3D` is used in Sequence
     [FIX]           C++: will crash if built with armeabi-v7a enabled on Android devices that with armeabi-v7a architecture but doesn't support NEON instructions

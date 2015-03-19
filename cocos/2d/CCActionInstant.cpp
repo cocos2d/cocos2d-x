@@ -29,12 +29,6 @@
 #include "2d/CCNode.h"
 #include "2d/CCSprite.h"
 
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (push)
-#pragma warning (disable: 4996)
-#endif
 
 NS_CC_BEGIN
 //
@@ -353,16 +347,21 @@ bool CallFunc::initWithFunction(const std::function<void()> &func)
 }
 
 bool CallFunc::initWithTarget(Ref* target) {
+    return __initWithTarget(target);
+}
+
+bool CallFunc::__initWithTarget(Ref* target)
+{
     if (target)
     {
         target->retain();
     }
-
+    
     if (_selectorTarget)
     {
         _selectorTarget->release();
     }
-
+    
     _selectorTarget = target;
     return true;
 }
@@ -373,11 +372,11 @@ CallFunc::~CallFunc()
 }
 
 CallFunc * CallFunc::clone() const
-    {
+{
     // no copy constructor
     auto a = new (std::nothrow) CallFunc();
     if( _selectorTarget) {
-        a->initWithTarget(_selectorTarget);
+        a->__initWithTarget(_selectorTarget);
         a->_callFunc = _callFunc;
     }
     else if( _function ){
@@ -456,11 +455,16 @@ bool CallFuncN::initWithFunction(const std::function<void (Node *)> &func)
 
 bool CallFuncN::initWithTarget(Ref* selectorTarget, SEL_CallFuncN selector)
 {
-    if (CallFunc::initWithTarget(selectorTarget)) {
+    return __initWithTarget(selectorTarget, selector);
+}
+
+bool CallFuncN::__initWithTarget(Ref* selectorTarget, SEL_CallFuncN selector)
+{
+    if (CallFunc::__initWithTarget(selectorTarget)) {
         _callFuncN = selector;
         return true;
     }
-
+    
     return false;
 }
 
@@ -470,7 +474,7 @@ CallFuncN * CallFuncN::clone() const
     auto a = new (std::nothrow) CallFuncN();
 
     if( _selectorTarget) {
-        a->initWithTarget(_selectorTarget, _callFuncN);
+        a->__initWithTarget(_selectorTarget, _callFuncN);
     }
     else if( _functionN ){
         a->initWithFunction(_functionN);
@@ -499,7 +503,7 @@ __CCCallFuncND * __CCCallFuncND::create(Ref* selectorTarget, SEL_CallFuncND sele
 
 bool __CCCallFuncND::initWithTarget(Ref* selectorTarget, SEL_CallFuncND selector, void* d)
 {
-    if (CallFunc::initWithTarget(selectorTarget))
+    if (CallFunc::__initWithTarget(selectorTarget))
     {
         _data = d;
         _callFuncND = selector;
@@ -566,7 +570,7 @@ __CCCallFuncO * __CCCallFuncO::create(Ref* selectorTarget, SEL_CallFuncO selecto
 
 bool __CCCallFuncO::initWithTarget(Ref* selectorTarget, SEL_CallFuncO selector, Ref* object)
 {
-    if (CallFunc::initWithTarget(selectorTarget))
+    if (CallFunc::__initWithTarget(selectorTarget))
     {
         _object = object;
         CC_SAFE_RETAIN(_object);
@@ -608,9 +612,3 @@ void __CCCallFuncO::setObject(Ref* obj)
 }
 
 NS_CC_END
-
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic warning "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (pop)
-#endif

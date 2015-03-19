@@ -2,10 +2,10 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="APP_DLLS">
-    <AngleBinPath Condition=" '$(AngleBinPath)' == '' ">$(EngineRoot)external\$(COCOS2D_PLATFORM)-specific\angle\prebuilt\$(Platform)\</AngleBinPath>
-    <CurlBinPath Condition=" '$(CurlBinPath)' == '' ">$(EngineRoot)external\curl\prebuilt\$(COCOS2D_PLATFORM)\$(Platform)\</CurlBinPath>
-    <WebsocketsBinPath Condition=" '$(WebsocketsBinPath)' == '' ">$(EngineRoot)external\websockets\prebuilt\$(COCOS2D_PLATFORM)\$(Platform)\</WebsocketsBinPath>
-    <SQLiteBinPath Condition=" '$(SQLiteBinPath)' == '' ">$(EngineRoot)external\sqlite3\libraries\$(COCOS2D_PLATFORM)\$(Platform)\</SQLiteBinPath>
+    <AngleBinPath Condition=" '$(AngleBinPath)' == '' ">$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(PLATFORM)\libs\Release\</AngleBinPath>
+    <CurlBinPath Condition=" '$(CurlBinPath)' == '' ">$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(PLATFORM)\libs\Release\</CurlBinPath>
+    <WebsocketsBinPath Condition=" '$(WebsocketsBinPath)' == '' ">$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(PLATFORM)\libs\Release\</WebsocketsBinPath>
+    <SQLiteBinPath Condition=" '$(SQLiteBinPath)' == '' ">$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(PLATFORM)\libs\Release\</SQLiteBinPath>
   </PropertyGroup>
   <ItemGroup Label="ANGLE">
     <None Include="$(AngleBinPath)libEGL.dll">

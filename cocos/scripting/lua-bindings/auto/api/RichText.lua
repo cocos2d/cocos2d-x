@@ -14,23 +14,9 @@
         
 --------------------------------
 -- 
--- @function [parent=#RichText] setAnchorPoint 
--- @param self
--- @param #vec2_table pt
--- @return RichText#RichText self (return value: ccui.RichText)
-        
---------------------------------
--- 
 -- @function [parent=#RichText] pushBackElement 
 -- @param self
 -- @param #ccui.RichElement element
--- @return RichText#RichText self (return value: ccui.RichText)
-        
---------------------------------
--- 
--- @function [parent=#RichText] ignoreContentAdaptWithSize 
--- @param self
--- @param #bool ignore
 -- @return RichText#RichText self (return value: ccui.RichText)
         
 --------------------------------
@@ -62,6 +48,19 @@
         
 --------------------------------
 -- 
+-- @function [parent=#RichText] setAnchorPoint 
+-- @param self
+-- @param #vec2_table pt
+-- @return RichText#RichText self (return value: ccui.RichText)
+        
+--------------------------------
+-- 
+-- @function [parent=#RichText] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#RichText] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
@@ -71,6 +70,13 @@
 -- @function [parent=#RichText] getVirtualRendererSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
+        
+--------------------------------
+-- 
+-- @function [parent=#RichText] ignoreContentAdaptWithSize 
+-- @param self
+-- @param #bool ignore
+-- @return RichText#RichText self (return value: ccui.RichText)
         
 --------------------------------
 -- 

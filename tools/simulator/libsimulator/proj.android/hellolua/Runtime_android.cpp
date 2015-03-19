@@ -6,28 +6,19 @@
 using namespace std;
 using namespace cocos2d;
 
-string getIPAddress(int runtimeType)
+static std::string ACTIVITY_PATH("org/cocos2dx/lua/AppActivity");
+
+void setActivityPathForAndroid(const std::string& path)
+{
+    ACTIVITY_PATH = path;
+}
+
+string getIPAddress()
 {
 	JniMethodInfo t;
     string IPAddress("");
 
-    char* activityPath = nullptr;
-    switch(runtimeType) {
-    	case 1: {
-    		activityPath = "org/cocos2dx/lua/AppActivity";
-    		break;
-    	}
-    	case 2: {
-    		activityPath = "org/cocos2dx/javascript/AppActivity";
-    		break;
-    	}
-        default: {
-            activityPath = "org/cocos2dx/lua/AppActivity";
-            break;
-        }
-    }
-
-    if (JniHelper::getStaticMethodInfo(t, activityPath, "getLocalIpAddress", "()Ljava/lang/String;")) {
+    if (JniHelper::getStaticMethodInfo(t, ACTIVITY_PATH.c_str(), "getLocalIpAddress", "()Ljava/lang/String;")) {
         jstring str = (jstring)t.env->CallStaticObjectMethod(t.classID, t.methodID);
         t.env->DeleteLocalRef(t.classID);
         IPAddress = JniHelper::jstring2string(str);

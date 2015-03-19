@@ -38,7 +38,7 @@
 #include "renderer/CCTextureAtlas.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/ccGLStateCache.h"
-#include "xxhash.h"
+#include "xxhash/xxhash.h"
 
 NS_CC_BEGIN
 
@@ -90,8 +90,8 @@ MeshCommand::MeshCommand()
 , _lightMask(-1)
 {
     _type = RenderCommand::Type::MESH_COMMAND;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    // listen the event that renderer was recreated on Android/WP8
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    // listen the event that renderer was recreated on Android/WinRT
     _rendererRecreatedListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, CC_CALLBACK_1(MeshCommand::listenRendererRecreated, this));
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_rendererRecreatedListener, -1);
 #endif
@@ -185,15 +185,15 @@ void MeshCommand::setTransparent(bool value)
 MeshCommand::~MeshCommand()
 {
     releaseVAO();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_rendererRecreatedListener);
 #endif
 }
 
 void MeshCommand::applyRenderState()
 {
-    _renderStateCullFaceEnabled = glIsEnabled(GL_CULL_FACE);
-    _renderStateDepthTest = glIsEnabled(GL_DEPTH_TEST);
+    _renderStateCullFaceEnabled = glIsEnabled(GL_CULL_FACE) != GL_FALSE;
+    _renderStateDepthTest = glIsEnabled(GL_DEPTH_TEST) != GL_FALSE;
     glGetBooleanv(GL_DEPTH_WRITEMASK, &_renderStateDepthWrite);
     GLint cullface;
     glGetIntegerv(GL_CULL_FACE_MODE, &cullface);
@@ -214,7 +214,7 @@ void MeshCommand::applyRenderState()
         _depthTestEnabled ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
     }
     
-    if (_depthWriteEnabled != _renderStateDepthWrite)
+    if ((GLboolean)_depthWriteEnabled != _renderStateDepthWrite)
     {
         glDepthMask(_depthWriteEnabled);
     }
@@ -237,7 +237,7 @@ void MeshCommand::restoreRenderState()
         _renderStateDepthTest ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
     }
     
-    if (_depthWriteEnabled != _renderStateDepthWrite)
+    if ((GLboolean)_depthWriteEnabled != _renderStateDepthWrite)
     {
         glDepthMask(_renderStateDepthWrite);
     }
@@ -295,7 +295,8 @@ void MeshCommand::batchDraw()
     _glProgramState->applyGLProgram(_mv);
     _glProgramState->applyUniforms();
 
-    if (Director::getInstance()->getRunningScene()->getLights().size() > 0)
+    const auto& scene = Director::getInstance()->getRunningScene();
+    if (scene && scene->getLights().size() > 0)
         setLightUniforms();
     
     // Draw
@@ -337,7 +338,8 @@ void MeshCommand::execute()
     
     _glProgramState->apply(_mv);   
 
-    if (Director::getInstance()->getRunningScene()->getLights().size() > 0)
+    const auto& scene = Director::getInstance()->getRunningScene();
+    if (scene && scene->getLights().size() > 0)
         setLightUniforms();
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
@@ -546,10 +548,13 @@ void MeshCommand::resetLightUniformValues()
     s_spotLightUniformRangeInverseValues.assign(maxSpotLight, 0.0f);
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 void MeshCommand::listenRendererRecreated(EventCustom* event)
 {
     _vao = 0;
+
+    // FIXME XXX BUG
+    CCASSERT(false, "Not implemented. Must recreate the previous state");
 }
 
 #endif

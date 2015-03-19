@@ -50,6 +50,13 @@ bool AppDelegate::applicationDidFinishLaunching()
     director->setAnimationInterval(1.0 / 60);
 
 #if (COCOS2D_DEBUG > 0) && (CC_CODE_IDE_DEBUG_SUPPORT > 0)
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    // for getIPAddress
+    extern void setActivityPathForAndroid(const std::string &path);
+    setActivityPathForAndroid("org/cocos2dx/javascript/AppActivity");
+#endif
+
     auto runtimeEngine = RuntimeEngine::getInstance();
     auto jsRuntime = RuntimeJsImpl::create();
     runtimeEngine->addRuntime(jsRuntime, kRuntimeEngineJs);

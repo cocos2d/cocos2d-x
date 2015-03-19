@@ -10,10 +10,6 @@
             "to": "src"
         },
         {
-            "from": "../../res/cocosbuilderRes",
-            "to": "res/cocosbuilderRes"
-        },
-        {
             "from": "../../../cpp-tests/Resources",
             "to": "res",
             "exclude": [

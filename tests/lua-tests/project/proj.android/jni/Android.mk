@@ -18,4 +18,5 @@ LOCAL_STATIC_LIBRARIES := cocos2d_lua_static
 
 include $(BUILD_SHARED_LIBRARY)
 
+$(call import-module,.)
 $(call import-module,scripting/lua-bindings/proj.android)

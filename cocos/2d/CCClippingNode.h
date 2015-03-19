@@ -31,7 +31,7 @@
 #include "2d/CCNode.h"
 #include "platform/CCGL.h"
 #include "renderer/CCGroupCommand.h"
-#include "renderer/CCCustomCommand.h"
+#include "renderer/CCStencilCommand.h"
 
 NS_CC_BEGIN
 
@@ -104,6 +104,8 @@ public:
     virtual void onExit() override;
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
     
+    virtual void setCameraMask(unsigned short mask, bool applyChildren = true) override;
+    
 CC_CONSTRUCTOR_ACCESS:
     ClippingNode();
     
@@ -115,7 +117,7 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** Initializes a clipping node without a stencil.
      */
-    virtual bool init();
+    virtual bool init() override;
     
     /** Initializes a clipping node with an other node as its stencil.
      The stencil node will be retained, and its parent will be set to this clipping node.
@@ -123,39 +125,15 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init(Node *stencil);
 
 protected:
-    /**draw fullscreen quad to clear stencil bits
-    */
-    void drawFullScreenQuadClearStencil();
 
     Node* _stencil;
     GLfloat _alphaThreshold;
     bool    _inverted;
 
-    //renderData and callback
-    void onBeforeVisit();
-    void onAfterDrawStencil();
-    void onAfterVisit();
-
-    GLboolean _currentStencilEnabled;
-    GLuint _currentStencilWriteMask;
-    GLenum _currentStencilFunc;
-    GLint _currentStencilRef;
-    GLuint _currentStencilValueMask;
-    GLenum _currentStencilFail;
-    GLenum _currentStencilPassDepthFail;
-    GLenum _currentStencilPassDepthPass;
-    GLboolean _currentDepthWriteMask;
-
-    GLboolean _currentAlphaTestEnabled;
-    GLenum _currentAlphaTestFunc;
-    GLclampf _currentAlphaTestRef;
-
-    GLint _mask_layer_le;
-    
     GroupCommand _groupCommand;
-    CustomCommand _beforeVisitCmd;
-    CustomCommand _afterDrawStencilCmd;
-    CustomCommand _afterVisitCmd;
+    BeginStencilCommand _beginStencilCommand;
+    AfterStencilCommand _afterStencilCommand;
+    EndStencilCommand   _endStencilCommand;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ClippingNode);

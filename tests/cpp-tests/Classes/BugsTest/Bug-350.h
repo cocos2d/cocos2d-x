@@ -6,7 +6,7 @@
 class Bug350Layer : public BugsTestBaseLayer
 {
 public:
-    virtual bool init();
+    virtual bool init() override;
 };
 
 #endif // __BUG_350_H__

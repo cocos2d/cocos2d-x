@@ -646,7 +646,7 @@ static void processResponse(HttpResponse* response, std::string& responseMessage
         HttpRequest::Type::PUT != requestType &&
         HttpRequest::Type::DELETE != requestType)
     {
-        CCASSERT(true, "CCHttpClient: unkown request type, only GET、POST、PUT、DELETE are supported");
+        CCASSERT(true, "CCHttpClient: unknown request type, only GET、POST、PUT、DELETE are supported");
         return;
     }
 
@@ -795,10 +795,8 @@ void HttpClient::networkThread()
 }
 
 // Worker thread
-void HttpClient::networkThreadAlone(HttpRequest* request)
+void HttpClient::networkThreadAlone(HttpRequest* request, HttpResponse* response)
 {
-    // Create a HttpResponse object, the default setting is http access failed
-    HttpResponse *response = new (std::nothrow) HttpResponse(request);
     std::string responseMessage = "";
     processResponse(response, responseMessage);
 
@@ -920,7 +918,10 @@ void HttpClient::sendImmediate(HttpRequest* request)
     }
 
     request->retain();
-    auto t = std::thread(&HttpClient::networkThreadAlone, this, request);
+    // Create a HttpResponse object, the default setting is http access failed
+    HttpResponse *response = new (std::nothrow) HttpResponse(request);
+
+    auto t = std::thread(&HttpClient::networkThreadAlone, this, request, response);
     t.detach();
 }
 

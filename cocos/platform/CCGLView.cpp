@@ -156,7 +156,7 @@ void GLView::updateDesignResolutionSize()
         // reset director's member variables to fit visible rect
         auto director = Director::getInstance();
         director->_winSizeInPoints = getDesignResolutionSize();
-        director->createStatsLabel();
+        director->_isStatusLabelUpdated = true;
         director->setGLDefaultValues();
     }
 }

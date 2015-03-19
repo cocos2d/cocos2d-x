@@ -27,8 +27,9 @@ THE SOFTWARE.
 
 #include "ui/UIWidget.h"
 #include "ui/GUIExport.h"
-#include "renderer/CCCustomCommand.h"
 #include "renderer/CCGroupCommand.h"
+#include "renderer/CCScissorCommand.h"
+#include "renderer/CCStencilCommand.h"
 
 NS_CC_BEGIN
 
@@ -58,7 +59,7 @@ public:
  *  @js NA
  *  @lua NA
  */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #ifdef RELATIVE
 #undef RELATIVE
 #endif
@@ -492,31 +493,13 @@ protected:
     Rect _clippingRect;
     Layout* _clippingParent;
     bool _clippingRectDirty;
-    
-    //clipping
 
-    GLboolean _currentStencilEnabled;
-    GLuint _currentStencilWriteMask;
-    GLenum _currentStencilFunc;
-    GLint _currentStencilRef;
-    GLuint _currentStencilValueMask;
-    GLenum _currentStencilFail;
-    GLenum _currentStencilPassDepthFail;
-    GLenum _currentStencilPassDepthPass;
-    GLboolean _currentDepthWriteMask;
-    
-    GLboolean _currentAlphaTestEnabled;
-    GLenum _currentAlphaTestFunc;
-    GLclampf _currentAlphaTestRef;
- 
-    
-    GLint _mask_layer_le;
     GroupCommand _groupCommand;
-    CustomCommand _beforeVisitCmdStencil;
-    CustomCommand _afterDrawStencilCmd;
-    CustomCommand _afterVisitCmdStencil;
-    CustomCommand _beforeVisitCmdScissor;
-    CustomCommand _afterVisitCmdScissor;
+    BeginStencilCommand _beginStencilCommand;
+    AfterStencilCommand _afterStencilCommand;
+    EndStencilCommand   _endStencilCommand;
+    BeginScissorCommand _beginScissorCommand;
+    EndScissorCommand   _endScissorCommand;
     
     bool _doLayoutDirty;
     bool _isInterceptTouch;

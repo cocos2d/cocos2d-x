@@ -33,15 +33,18 @@ THE SOFTWARE.
 #include "platform/CCSAXParser.h"
 #include "base/ccUtils.h"
 
-#include "tinyxml2.h"
+#include "tinyxml2/tinyxml2.h"
+extern "C"{
 #ifdef MINIZIP_FROM_SYSTEM
 #include <minizip/unzip.h>
 #else // from our embedded sources
-#include "unzip.h"
+#include "minizip/unzip.h"
 #endif
+}
+
 #include <sys/stat.h>
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #include <regex>
 #endif
 
@@ -49,7 +52,7 @@ THE SOFTWARE.
 #include <ftw.h>
 #endif
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #include <sys/types.h>
 #include <errno.h>
 #include <dirent.h>
@@ -663,12 +666,7 @@ unsigned char* FileUtils::getFileDataFromZip(const std::string& zipFilePath, con
         file = unzOpen(zipFilePath.c_str());
         CC_BREAK_IF(!file);
 
-        // FIXME: Other platforms should use upstream minizip like mingw-w64  
-        #ifdef MINIZIP_FROM_SYSTEM
         int ret = unzLocateFile(file, filename.c_str(), NULL);
-        #else
-        int ret = unzLocateFile(file, filename.c_str(), 1);
-        #endif
         CC_BREAK_IF(UNZ_OK != ret);
 
         char filePathA[260];
@@ -982,7 +980,7 @@ bool FileUtils::isAbsolutePath(const std::string& path) const
 
 bool FileUtils::isDirectoryExistInternal(const std::string& dirPath) const
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) ||  (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     WIN32_FILE_ATTRIBUTE_DATA wfad;
     std::wstring wdirPath(dirPath.begin(), dirPath.end());
     if (GetFileAttributesEx(wdirPath.c_str(), GetFileExInfoStandard, &wfad))
@@ -1078,7 +1076,7 @@ bool FileUtils::createDirectory(const std::string& path)
     }
 
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 	WIN32_FILE_ATTRIBUTE_DATA wfad;
     std::wstring wpath(path.begin(), path.end());
     if (!(GetFileAttributesEx(wpath.c_str(), GetFileExInfoStandard, &wfad)))
@@ -1172,7 +1170,7 @@ bool FileUtils::removeDirectory(const std::string& path)
     
     // Remove downloaded files
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     std::wstring wpath = std::wstring(path.begin(), path.end());
     std::wstring files = wpath +  L"*.*";
 	WIN32_FIND_DATA wfd;
@@ -1236,7 +1234,7 @@ bool FileUtils::removeFile(const std::string &path)
 {
     // Remove downloaded file
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     std::wstring wpath(path.begin(), path.end());
     if (DeleteFile(wpath.c_str()))
 	{
@@ -1276,7 +1274,7 @@ bool FileUtils::renameFile(const std::string &path, const std::string &oldname, 
     std::string newPath = path + name;
  
     // Rename a file
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     std::regex pat("\\/");
     std::string _old = std::regex_replace(oldPath, pat, "\\");
     std::string _new = std::regex_replace(newPath, pat, "\\");

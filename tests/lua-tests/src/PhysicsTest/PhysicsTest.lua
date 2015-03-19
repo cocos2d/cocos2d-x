@@ -245,7 +245,7 @@ local function PhysicsDemoLogoSmash()
        end
 
        cc.Director:getInstance():getRunningScene():getPhysicsWorld():setGravity(cc.p(0, 0));
-       cc.Director:getInstance():getRunningScene():getPhysicsWorld():setUpdateRate(5.0);
+       cc.Director:getInstance():getRunningScene():getPhysicsWorld():setTimeStep(0.1);
        
        layer.ball = cc.SpriteBatchNode:create("Images/ball.png", #logo_image);
        layer:addChild(layer.ball);

@@ -28,7 +28,7 @@
 #include <algorithm>
 #include <cmath>
 
-#include "chipmunk.h"
+#include "chipmunk/chipmunk.h"
 
 #include "2d/CCScene.h"
 #include "CCPhysicsShape.h"

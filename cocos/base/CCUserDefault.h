@@ -165,11 +165,11 @@ public:
      * @js NA
      * @lua NA
      */
-    CC_DEPRECATED_ATTRIBUTE static UserDefault* sharedUserDefault();
+    CC_DEPRECATED(v3) static UserDefault* sharedUserDefault();
     /**
      * @js NA
      */
-    CC_DEPRECATED_ATTRIBUTE static void purgeSharedUserDefault();
+    CC_DEPRECATED(v3) static void purgeSharedUserDefault();
     /**
      * @js NA
      */

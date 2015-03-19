@@ -111,9 +111,8 @@
 -- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
--- @overload self, cc.Sprite, rect_table, bool, rect_table         
--- @overload self         
 -- @overload self, cc.Sprite, rect_table, rect_table         
+-- @overload self, cc.Sprite, rect_table, bool, rect_table         
 -- @overload self, cc.Sprite, rect_table, bool, vec2_table, size_table, rect_table         
 -- @function [parent=#Scale9Sprite] init
 -- @param self
@@ -311,6 +310,12 @@
 -- @param self
 -- @param #unsigned char parentOpacity
 -- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
+        
+--------------------------------
+-- 
+-- @function [parent=#Scale9Sprite] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 

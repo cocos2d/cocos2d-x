@@ -54,10 +54,10 @@ public:
     static void destroyInstance();
 
     /** @deprecated Use getInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static Configuration *sharedConfiguration();
+    CC_DEPRECATED(v3) static Configuration *sharedConfiguration();
 
     /** @deprecated Use destroyInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static void purgeConfiguration();
+    CC_DEPRECATED(v3) static void purgeConfiguration();
 
 public:
     /**

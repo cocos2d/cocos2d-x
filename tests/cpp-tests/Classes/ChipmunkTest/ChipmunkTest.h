@@ -3,11 +3,11 @@
 //
 #ifndef __CHIPMUNKTEST_H__
 #define __CHIPMUNKTEST_H__
+//FIXME:  chipmunk/chipmunk.h must comes before 2d/CCLayer.h
 
-#include "cocos2d.h"
-#include "chipmunk.h"
 #include "../testBasic.h"
 #include "extensions/cocos-ext.h"
+#include "2d/CCLayer.h"
 
 USING_NS_CC_EXT;
 
@@ -16,16 +16,16 @@ class ChipmunkTestLayer : public Layer
 public:
     ChipmunkTestLayer();
     ~ChipmunkTestLayer();
-    void onEnter();
+    void onEnter() override;
     void initPhysics();
     void createResetButton();
     void reset(Ref* sender);
 
     void addNewSpriteAtPosition(cocos2d::Vec2 p);
-    void update(float dt);
+    void update(float dt) override;
     void toggleDebugCallback(Ref* sender);
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
-    virtual void onAcceleration(Acceleration* acc, Event* event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+    virtual void onAcceleration(Acceleration* acc, Event* event) override;
 
 private:
     Texture2D* _spriteTexture; // weak ref

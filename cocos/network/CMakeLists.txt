@@ -1,28 +1,15 @@
 
-if(WINDOWS)
-  set(PLATFORM_LINK websockets)
-elseif(LINUX)
-  set(PLATFORM_LINK websockets ssl crypto)
-else()
-  set(PLATFORM_LINK websockets)
-endif()
+cocos_target_sources(${COCOS2D_TARGET} GROUP "network" FILES
+    ${CMAKE_CURRENT_LIST_FILE}
+    "network/HttpClient.cpp"
+    "network/SocketIO.cpp"
+    "network/WebSocket.cpp"
+    )
 
-set(COCOS_NETWORK_SRC
+cocos_use_package(${COCOS2D_TARGET} WEBSOCKETS REQUIRED)
+cocos_use_package(${COCOS2D_TARGET} CURL REQUIRED)
+# CURL depends CRYPTO and SSL.
+# SSL Must BEFORE CRYPTO.
+cocos_use_package(${COCOS2D_TARGET} OpenSSL REQUIRED)
+cocos_use_package(${COCOS2D_TARGET} CRYPTO REQUIRED)
 
-    network/HttpClient.cpp
-    network/SocketIO.cpp
-    network/WebSocket.cpp
-
-)
-
-if(MSVC)
-  set(COCOS_NETWORK_LINK 
-    libcurl_imp 
-    ${PLATFORM_LINK}
-  )
-else()
-  set(COCOS_NETWORK_LINK 
-    curl
-    ${PLATFORM_LINK} 
-  )
-endif()

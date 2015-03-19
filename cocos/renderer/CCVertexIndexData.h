@@ -1,5 +1,6 @@
+
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -25,62 +26,141 @@
 #ifndef __CC_VERTEX_INDEX_DATA_H__
 #define __CC_VERTEX_INDEX_DATA_H__
 
-#include "base/CCRef.h"
 #include <map>
+#include <set>
+#include "base/CCRef.h"
+#include "renderer/CCVertexAttribute.h"
+#include "platform/CCStdC.h"
 
 NS_CC_BEGIN
 
-class VertexBuffer;
+class GLArrayBuffer;
+class IndexBuffer;
+class EventListenerCustom;
 
-struct CC_DLL VertexStreamAttribute
-{
-    VertexStreamAttribute()
-    : _normalize(false),_offset(0),_semantic(0),_type(0),_size(0)
-    {
-    }
-
-    VertexStreamAttribute(int offset, int semantic, int type, int size)
-    : _normalize(false),_offset(offset),_semantic(semantic),_type(type),_size(size)
-    {
-    }
-    
-    VertexStreamAttribute(int offset, int semantic, int type, int size, bool normalize)
-    : _normalize(normalize),_offset(offset),_semantic(semantic),_type(type),_size(size)
-    {
-    }
-    
-    bool _normalize;
-    int _offset;
-    int _semantic;
-    int _type;
-    int _size;
-};
-
-class CC_DLL VertexData : public Ref
+class CC_DLL VertexData
+    : public Ref
 {
 public:
-    static VertexData* create();
     
-    size_t getVertexStreamCount() const;
-    bool setStream(VertexBuffer* buffer, const VertexStreamAttribute& stream);
-    void removeStream(int semantic);
-    const VertexStreamAttribute* getStreamAttribute(int semantic) const;
-    VertexStreamAttribute* getStreamAttribute(int semantic);
-    
-    VertexBuffer* getStreamBuffer(int semantic) const;
-    
-    void use();
-protected:
-    VertexData();
-    virtual ~VertexData();
-protected:
-    struct BufferAttribute
+    enum Primitive
     {
-        VertexBuffer* _buffer;
-        VertexStreamAttribute _stream;
+        Points,
+        Lines,
+        LineLoop,
+        LineStrip,
+        Triangles,
+        TriangleStrip,
+        TriangleFan
     };
     
+    template <typename T = VertexData>
+    static T* create(Primitive primitive = Triangles)
+    {
+        auto result = new (std::nothrow) T(primitive);
+        if (result)
+        {
+            result->autorelease();
+            return result;
+        }
+        return nullptr;
+    }
+
+    virtual ~VertexData();
+    
+    // @brief Return the number of vertex streams
+    ssize_t getVertexStreamCount() const;
+    
+    // @brief add vertex stream descriptors to a buffer 
+    CC_DEPRECATED(v3) bool setStream(GLArrayBuffer* buffer, const VertexAttribute& stream) { return addStream(buffer, stream); }
+    bool addStream(GLArrayBuffer* vertices, const VertexAttribute& stream);
+    void removeStream(int semantic);
+    
+    // @brief specify indexed drawing for vertex data
+    void setIndexBuffer(IndexBuffer* indices);
+    void removeIndexBuffer();
+    
+    const VertexAttribute* getStreamAttribute(int semantic) const;
+    VertexAttribute* getStreamAttribute(int semantic);
+        
+    // @brief update and draw the buffer.
+    ssize_t draw(ssize_t start = 0, ssize_t count = 0);
+    
+    // @brief true/false if all vertex buffers are empty
+    bool empty() const;
+    
+    // @brief clears the vertex buffers associated with this vertex data
+    void clear();
+    
+    // @brief returns the count of vertices added
+    ssize_t getCount() const;
+    
+    // @brief returns the capacity of the buffer in bytes
+    ssize_t getCapacity() const;
+
+    // @brief returns the dirty status of the data or vertex streams
+    bool isDirty() const;
+    
+    // @brief sets the dirty state of all vertex data
+    void setDirty(bool dirty);
+    
+    template <typename T>
+    void append(const T& vertex)
+    {
+        if (_interleaved)
+        {
+            for (auto& e : _vertexStreams)
+            {
+                auto const verts = e.second._buffer;
+                append(verts, (void*)&vertex, 1);
+                return;
+            }
+        }
+        else
+        {
+            for (auto& e : _vertexStreams)
+            {
+                auto const verts = e.second._buffer;
+                intptr_t p = (intptr_t)&vertex + e.second._stream._offset;
+                append(verts, (void*)p, 1);
+            }
+        }
+    }
+
+    void recreate() const;
+
+protected:
+
+    VertexData(Primitive primitive);
+    
+    bool determineInterleave() const;
+    void append(GLArrayBuffer* buffer, void* source, ssize_t count = 1);
+    int DataTypeToGL(DataType type);
+
+protected:
+    
+    struct BufferAttribute
+    {
+        GLArrayBuffer* _buffer;
+        VertexAttribute _stream;
+    };
     std::map<int, BufferAttribute> _vertexStreams;
+
+    // unique set of buffers. For interleaved data there should be only one
+    // in theory you may be able to have two sets of interleaved data but I
+    // think in that case, using two separate VertexData instances is best.
+    typedef std::set<GLArrayBuffer*> tBuffers;
+    tBuffers _buffers;
+    
+    IndexBuffer* _indices;
+
+    bool _interleaved;
+    bool _dirty;
+    int _vao;
+    
+    Primitive _drawingPrimitive;
+
+    EventListenerCustom* _recreateEventListener;
 };
 
 NS_CC_END

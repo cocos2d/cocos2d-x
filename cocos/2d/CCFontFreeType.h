@@ -29,9 +29,9 @@
 #include "CCFont.h"
 
 #include <string>
-#include <ft2build.h>
+#include "freetype/ft2build.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #define generic GenericFromFreeTypeLibrary
 #define internal InternalFromFreeTypeLibrary
 #endif
@@ -39,7 +39,7 @@
 #include FT_FREETYPE_H
 #include FT_STROKER_H
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #undef generic
 #undef internal
 #endif

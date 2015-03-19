@@ -21,9 +21,9 @@ public:
     virtual std::string subtitle() const override;
     virtual void onEnter() override;
 
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
+    void restartCallback(Ref* sender) override;
+    void nextCallback(Ref* sender) override;
+    void backCallback(Ref* sender) override;
 };
 
 class LabelTTFAlignmentNew : public AtlasDemoNew
@@ -189,9 +189,9 @@ public:
     virtual std::string subtitle() const override;
     void stringChanged(Ref *sender);
     void alignmentChanged(Ref *sender);
-    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event);
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event) override;
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event) override;
 
 public:
     Label *_labelShouldRetain;
@@ -450,7 +450,7 @@ private:
     void  setAlignmentTop(Ref* sender);
     void  setAlignmentMiddle(Ref* sender);
     void  setAlignmentBottom(Ref* sender);
-    const char* getCurrentAlignment();
+    std::string getCurrentAlignment();
 
     Label* _label;
     TextHAlignment _horizAlign;

@@ -65,24 +65,24 @@ class CC_DLL TextureCache : public Ref
 {
 public:
     /** Returns the shared instance of the cache */
-    CC_DEPRECATED_ATTRIBUTE static TextureCache * getInstance();
+    CC_DEPRECATED(v3) static TextureCache * getInstance();
 
     /** @deprecated Use getInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static TextureCache * sharedTextureCache();
+    CC_DEPRECATED(v3) static TextureCache * sharedTextureCache();
 
     /** purges the cache. It releases the retained instance.
      @since v0.99.0
      */
-    CC_DEPRECATED_ATTRIBUTE static void destroyInstance();
+    CC_DEPRECATED(v3) static void destroyInstance();
 
     /** @deprecated Use destroyInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE static void purgeSharedTextureCache();
+    CC_DEPRECATED(v3) static void purgeSharedTextureCache();
 
     /** Reload all textures
     should not call it, called by frame work
     now the function do nothing, use VolatileTextureMgr::reloadAllTextures
      */
-    CC_DEPRECATED_ATTRIBUTE static void reloadAllTextures();
+    CC_DEPRECATED(v3) static void reloadAllTextures();
 
 public:
     /**
@@ -138,13 +138,13 @@ public:
     * If "key" is nil, then a new texture will be created each time.
     */
     Texture2D* addImage(Image *image, const std::string &key);
-    CC_DEPRECATED_ATTRIBUTE Texture2D* addUIImage(Image *image, const std::string& key) { return addImage(image,key); }
+    CC_DEPRECATED(v3) Texture2D* addUIImage(Image *image, const std::string& key) { return addImage(image,key); }
 
     /** Returns an already created texture. Returns nil if the texture doesn't exist.
     @since v0.99.5
     */
     Texture2D* getTextureForKey(const std::string& key) const;
-    CC_DEPRECATED_ATTRIBUTE Texture2D* textureForKey(const std::string& key) const { return getTextureForKey(key); }
+    CC_DEPRECATED(v3) Texture2D* textureForKey(const std::string& key) const { return getTextureForKey(key); }
 
     /** Reload texture from the image file
     * If the file image hasn't loaded before, load it.

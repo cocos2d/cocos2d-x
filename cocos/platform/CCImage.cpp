@@ -54,16 +54,19 @@ extern "C"
     }
 #endif
 #endif
-#include "png.h"
-    
+
+#if CC_USE_PNG
+#include "png/png.h"
+#endif //CC_USE_PNG
+
 #if CC_USE_TIFF
-#include "tiffio.h"
+#include "tiff/tiffio.h"
 #endif //CC_USE_TIFF
 
 #include "base/etc1.h"
     
 #if CC_USE_JPEG
-#include "jpeglib.h"
+#include "jpeg/jpeglib.h"
 #endif // CC_USE_JPEG
 }
 #include "base/s3tc.h"
@@ -72,7 +75,7 @@ extern "C"
 #include "base/TGAlib.h"
 
 #if CC_USE_WEBP
-#include "decode.h"
+#include "webp/decode.h"
 #endif // CC_USE_WEBP
 
 #include "base/ccMacros.h"
@@ -409,7 +412,8 @@ namespace
         ssize_t size;
         int offset;
     }tImageSource;
-    
+ 
+#ifdef CC_USE_PNG
     static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t length)
     {
         tImageSource* isource = (tImageSource*)png_get_io_ptr(png_ptr);
@@ -424,6 +428,7 @@ namespace
             png_error(png_ptr, "pngReaderCallback failed");
         }
     }
+#endif //CC_USE_PNG
 }
 
 Texture2D::PixelFormat getDevicePixelFormat(Texture2D::PixelFormat format)
@@ -457,7 +462,7 @@ Image::Image()
 , _width(0)
 , _height(0)
 , _unpack(false)
-, _fileType(Format::UNKOWN)
+, _fileType(Format::UNKNOWN)
 , _renderFormat(Texture2D::PixelFormat::NONE)
 , _numberOfMipmaps(0)
 , _hasPremultipliedAlpha(true)
@@ -481,33 +486,12 @@ bool Image::initWithImageFile(const std::string& path)
     bool ret = false;
     _filePath = FileUtils::getInstance()->fullPathForFilename(path);
 
-#ifdef EMSCRIPTEN
-    // Emscripten includes a re-implementation of SDL that uses HTML5 canvas
-    // operations underneath. Consequently, loading images via IMG_Load (an SDL
-    // API) will be a lot faster than running libpng et al as compiled with
-    // Emscripten.
-    SDL_Surface *iSurf = IMG_Load(fullPath.c_str());
-
-    int size = 4 * (iSurf->w * iSurf->h);
-    ret = initWithRawData((const unsigned char*)iSurf->pixels, size, iSurf->w, iSurf->h, 8, true);
-
-    unsigned int *tmp = (unsigned int *)_data;
-    int nrPixels = iSurf->w * iSurf->h;
-    for(int i = 0; i < nrPixels; i++)
-    {
-        unsigned char *p = _data + i * 4;
-        tmp[i] = CC_RGB_PREMULTIPLY_ALPHA( p[0], p[1], p[2], p[3] );
-    }
-
-    SDL_FreeSurface(iSurf);
-#else
     Data data = FileUtils::getInstance()->getDataFromFile(_filePath);
 
     if (!data.isNull())
     {
         ret = initWithImageData(data.getBytes(), data.getSize());
     }
-#endif // EMSCRIPTEN
 
     return ret;
 }
@@ -742,7 +726,7 @@ Image::Format Image::detectFormat(const unsigned char * data, ssize_t dataLen)
     }
     else
     {
-        return Format::UNKOWN;
+        return Format::UNKNOWN;
     }
 }
 
@@ -820,9 +804,75 @@ namespace
 #endif // CC_USE_JPEG
 }
 
+#ifdef CC_USE_WIC
+bool Image::decodeWithWIC(const unsigned char *data, ssize_t dataLen)
+{
+    bool bRet = false;
+    WICImageLoader img;
+
+    if (img.decodeImageData(data, dataLen))
+    {
+        _width = img.getWidth();
+        _height = img.getHeight();
+        _hasPremultipliedAlpha = false;
+
+        WICPixelFormatGUID format = img.getPixelFormat();
+
+        if (memcmp(&format, &GUID_WICPixelFormat8bppGray, sizeof(WICPixelFormatGUID)) == 0)
+        {
+            _renderFormat = Texture2D::PixelFormat::I8;
+        }
+
+        if (memcmp(&format, &GUID_WICPixelFormat8bppAlpha, sizeof(WICPixelFormatGUID)) == 0)
+        {
+            _renderFormat = Texture2D::PixelFormat::AI88;
+        }
+
+        if (memcmp(&format, &GUID_WICPixelFormat24bppRGB, sizeof(WICPixelFormatGUID)) == 0)
+        {
+            _renderFormat = Texture2D::PixelFormat::RGB888;
+        }
+
+        if (memcmp(&format, &GUID_WICPixelFormat32bppRGBA, sizeof(WICPixelFormatGUID)) == 0)
+        {
+            _renderFormat = Texture2D::PixelFormat::RGBA8888;
+        }
+
+        if (memcmp(&format, &GUID_WICPixelFormat32bppBGRA, sizeof(WICPixelFormatGUID)) == 0)
+        {
+            _renderFormat = Texture2D::PixelFormat::BGRA8888;
+        }
+
+        _dataLen = img.getImageDataSize();
+
+        CCAssert(_dataLen > 0, "Image: Decompressed data length is invalid");
+
+        _data = new (std::nothrow) unsigned char[_dataLen];
+        bRet = (img.getImageData(_data, _dataLen) > 0);
+
+        if (_renderFormat == Texture2D::PixelFormat::RGBA8888) {
+            premultipliedAlpha();
+        }
+    }
+
+    return bRet;
+}
+
+bool Image::encodeWithWIC(const std::string& filePath, bool isToRGB, GUID containerFormat)
+{
+    WICPixelFormatGUID format = isToRGB ? GUID_WICPixelFormat24bppRGB : GUID_WICPixelFormat32bppRGBA;
+
+    WICImageLoader img;
+    return img.encodeImageData(filePath, _data, _dataLen, format, _width, _height, containerFormat);
+}
+
+#endif //CC_USE_WIC
+
 bool Image::initWithJpgData(const unsigned char * data, ssize_t dataLen)
 {
-#if CC_USE_JPEG
+#if defined(CC_USE_WIC)
+    return decodeWithWIC(data, dataLen);
+#elif defined(CC_USE_JPEG)
     /* these are standard libjpeg structures for reading(decompression) */
     struct jpeg_decompress_struct cinfo;
     /* We use our private extension JPEG error handler.
@@ -909,12 +959,16 @@ bool Image::initWithJpgData(const unsigned char * data, ssize_t dataLen)
 
     return ret;
 #else
+    CCLOG("jpeg is not enabled, please enable it in ccConfig.h");
     return false;
 #endif // CC_USE_JPEG
 }
 
 bool Image::initWithPngData(const unsigned char * data, ssize_t dataLen)
 {
+#if defined(CC_USE_WIC)
+    return decodeWithWIC(data, dataLen);
+#elif defined(CC_USE_PNG)
     // length of bytes to check if it is a valid png file
 #define PNGSIGSIZE  8
     bool ret = false;
@@ -1061,6 +1115,10 @@ bool Image::initWithPngData(const unsigned char * data, ssize_t dataLen)
         png_destroy_read_struct(&png_ptr, (info_ptr) ? &info_ptr : 0, 0);
     }
     return ret;
+#else
+    CCLOG("png is not enabled, please enable it in ccConfig.h");
+    return false;
+#endif //CC_USE_PNG
 }
 
 #if CC_USE_TIFF
@@ -1177,7 +1235,9 @@ namespace
 
 bool Image::initWithTiffData(const unsigned char * data, ssize_t dataLen)
 {
-#if CC_USE_TIFF
+#if defined(CC_USE_WIC)
+    return decodeWithWIC(data, dataLen);
+#elif defined(CC_USE_TIFF)
     bool ret = false;
     do 
     {
@@ -1236,9 +1296,9 @@ bool Image::initWithTiffData(const unsigned char * data, ssize_t dataLen)
     } while (0);
     return ret;
 #else
-    CCLOG("tiff is not enabled, please enalbe it in ccConfig.h");
+    CCLOG("tiff is not enabled, please enable it in ccConfig.h");
     return false;
-#endif
+#endif //CC_USE_TIFF
 }
 
 namespace
@@ -2025,7 +2085,7 @@ bool Image::initWithWebpData(const unsigned char * data, ssize_t dataLen)
 #if CC_USE_WEBP
 	bool ret = false;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     CCLOG("WEBP image format not supported on WinRT or WP8");
 #else
 	do
@@ -2060,7 +2120,7 @@ bool Image::initWithWebpData(const unsigned char * data, ssize_t dataLen)
         
         ret = true;
 	} while (0);
-#endif // (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#endif //(CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 	return ret;
 #else 
     CCLOG("webp is not enabled, please enable it in ccConfig.h");
@@ -2140,8 +2200,11 @@ bool Image::saveToFile(const std::string& filename, bool isToRGB)
 
 bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
 {
+#if defined(CC_USE_WIC)
+    return encodeWithWIC(filePath, isToRGB, GUID_ContainerFormatPng);
+#elif defined(CC_USE_PNG)
     bool ret = false;
-    do 
+    do
     {
         FILE *fp;
         png_structp png_ptr;
@@ -2281,10 +2344,17 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
         ret = true;
     } while (0);
     return ret;
+#else
+    CCLOG("png is not enabled, please enable it in ccConfig.h");
+    return false;
+#endif // CC_USE_PNG
 }
+
 bool Image::saveImageToJPG(const std::string& filePath)
 {
-#if CC_USE_JPEG
+#if defined(CC_USE_WIC)
+    return encodeWithWIC(filePath, false, GUID_ContainerFormatJpeg);
+#elif defined(CC_USE_JPEG)
     bool ret = false;
     do 
     {

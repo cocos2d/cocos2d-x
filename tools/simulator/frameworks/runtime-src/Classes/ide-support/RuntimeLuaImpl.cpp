@@ -251,7 +251,6 @@ static void luaScriptLoader(std::string strDebugArg)
 RuntimeLuaImpl *RuntimeLuaImpl::create()
 {
     auto instance = new RuntimeLuaImpl();
-    instance->init();
     return instance;
 }
 
@@ -290,9 +289,9 @@ void RuntimeLuaImpl::onReload(const rapidjson::Document &dArgParse, rapidjson::D
 
 void RuntimeLuaImpl::startScript(const std::string& strDebugArg)
 {
+    init();
     auto engine = LuaEngine::getInstance();
     auto stack = engine->getLuaStack();
-    lua_module_register(stack->getLuaState());
     
     const ProjectConfig &project = RuntimeEngine::getInstance()->getProjectConfig();
     

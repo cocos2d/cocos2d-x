@@ -47,6 +47,7 @@ Camera* Camera::getDefaultCamera()
     Camera* camera = new (std::nothrow) Camera();
     camera->initDefault();
     camera->autorelease();
+    camera->setDepth(0.f);
     
     return camera;
 }
@@ -82,6 +83,7 @@ Camera::Camera()
 , _viewProjectionDirty(true)
 , _cameraFlag(1)
 , _frustumDirty(true)
+, _depth(-1)
 {
     _frustum.setClipZ(true);
 }
@@ -203,14 +205,6 @@ bool Camera::initPerspective(float fieldOfView, float aspectRatio, float nearPla
     _nearPlane = nearPlane;
     _farPlane = farPlane;
     Mat4::createPerspective(_fieldOfView, _aspectRatio, _nearPlane, _farPlane, &_projection);
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-    //if needed, we need to add a rotation for Landscape orientations on Windows Phone 8 since it is always in Portrait Mode
-    GLView* view = Director::getInstance()->getOpenGLView();
-    if(view != nullptr)
-    {
-        setAdditionalProjection(view->getOrientationMatrix());
-    }
-#endif
     _viewProjectionDirty = true;
     _frustumDirty = true;
     
@@ -224,14 +218,6 @@ bool Camera::initOrthographic(float zoomX, float zoomY, float nearPlane, float f
     _nearPlane = nearPlane;
     _farPlane = farPlane;
     Mat4::createOrthographicOffCenter(0, _zoom[0], 0, _zoom[1], _nearPlane, _farPlane, &_projection);
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-    //if needed, we need to add a rotation for Landscape orientations on Windows Phone 8 since it is always in Portrait Mode
-    GLView* view = Director::getInstance()->getOpenGLView();
-    if(view != nullptr)
-    {
-        setAdditionalProjection(view->getOrientationMatrix());
-    }
-#endif
     _viewProjectionDirty = true;
     _frustumDirty = true;
     
@@ -275,13 +261,28 @@ float Camera::getDepthInView(const Mat4& transform) const
     return depth;
 }
 
+void Camera::setDepth(int depth)
+{
+    if (_depth != depth)
+    {
+        _depth = depth;
+        if (_scene)
+        {
+            //notify scene that the camera order is dirty
+            _scene->setCameraOrderDirty();
+        }
+    }
+}
+
 void Camera::onEnter()
 {
     if (_scene == nullptr)
     {
         auto scene = getScene();
         if (scene)
+        {
             setScene(scene);
+        }
     }
     Node::onEnter();
 }
@@ -313,7 +314,11 @@ void Camera::setScene(Scene* scene)
             auto& cameras = _scene->_cameras;
             auto it = std::find(cameras.begin(), cameras.end(), this);
             if (it == cameras.end())
+            {
                 _scene->_cameras.push_back(this);
+                //notify scene that the camera order is dirty
+                _scene->setCameraOrderDirty();
+            }
         }
     }
 }

@@ -29,12 +29,15 @@ THE SOFTWARE.
 #define __CC_PARTICLE_SYSTEM_QUAD_H__
 
 #include "2d/CCParticleSystem.h"
-#include "renderer/CCQuadCommand.h"
+#include "renderer/CCBatchCommand.h"
 
 NS_CC_BEGIN
 
 class SpriteFrame;
 class EventCustom;
+class VertexData;
+class VertexBuffer;
+class IndexBuffer;
 
 /**
  * @addtogroup particle_nodes
@@ -85,7 +88,8 @@ public:
      * @js NA
      * @lua NA
      */
-    void listenRendererRecreated(EventCustom* event);
+    // needed for Lua bindings to compile
+    CC_DEPRECATED(v3) void listenRendererRecreated(cocos2d::EventCustom*) {CCASSERT(false, "deprecated method");}
 
     /**
      * @js NA
@@ -141,7 +145,8 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     /** initializes the indices for the vertices*/
-    void initIndices();
+    void setupIndices(size_t count, size_t begin = 0);
+    void setupVertices(size_t count);
     
     /** initializes the texture with a rectangle measured Points */
     void initTexCoordsWithRect(const Rect& rect);
@@ -149,16 +154,11 @@ protected:
     /** Updates texture coords */
     void updateTexCoords();
 
-    void setupVBOandVAO();
-    void setupVBO();
-    bool allocMemory();
-
-    V3F_C4B_T2F_Quad    *_quads;        // quads to be rendered
-    GLushort            *_indices;      // indices
-    GLuint              _VAOname;
-    GLuint              _buffersVBO[2]; //0: vertex  1: indices
-
-    QuadCommand _quadCommand;           // quad command
+    VertexData*   _vdParticles;
+    VertexBuffer* _vbParticles;
+    IndexBuffer*  _ibParticles;
+    
+    BatchCommand _batchCommand;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleSystemQuad);

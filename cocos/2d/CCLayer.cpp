@@ -117,13 +117,6 @@ int Layer::executeScriptTouchesHandler(EventTouch::EventCode eventType, const st
     return 0;
 }
 
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (push)
-#pragma warning (disable: 4996)
-#endif
-
 /// isTouchEnabled getter
 bool Layer::isTouchEnabled() const
 {
@@ -318,12 +311,6 @@ void Layer::setKeypadEnabled(bool enabled)
 
 bool Layer::onTouchBegan(Touch *touch, Event *event)
 {
-#if CC_ENABLE_SCRIPT_BINDING
-    if (kScriptTypeLua == _scriptType)
-    {
-        return executeScriptTouchHandler(EventTouch::EventCode::BEGAN, touch, event) == 0 ? false : true;
-    }
-#endif
     CC_UNUSED_PARAM(event);
     CCASSERT(false, "Layer#ccTouchBegan override me");
     return true;
@@ -331,89 +318,36 @@ bool Layer::onTouchBegan(Touch *touch, Event *event)
 
 void Layer::onTouchMoved(Touch *touch, Event *event)
 {
-#if CC_ENABLE_SCRIPT_BINDING
-    if (kScriptTypeLua == _scriptType)
-    {
-        executeScriptTouchHandler(EventTouch::EventCode::MOVED, touch, event);
-        return;
-    }
-#endif
-    
     CC_UNUSED_PARAM(event);
 }
 
 void Layer::onTouchEnded(Touch *touch, Event *event)
 {
-#if CC_ENABLE_SCRIPT_BINDING
-    if (kScriptTypeLua == _scriptType)
-    {
-        executeScriptTouchHandler(EventTouch::EventCode::ENDED, touch, event);
-        return;
-    }
-#endif
-    
     CC_UNUSED_PARAM(event);
 }
 
 void Layer::onTouchCancelled(Touch *touch, Event *event)
 {
-#if CC_ENABLE_SCRIPT_BINDING
-    if (kScriptTypeLua == _scriptType)
-    {
-        executeScriptTouchHandler(EventTouch::EventCode::CANCELLED, touch, event);
-        return;
-    }
-#endif
-    
     CC_UNUSED_PARAM(event);
 }    
 
 void Layer::onTouchesBegan(const std::vector<Touch*>& touches, Event *event)
 {
-#if CC_ENABLE_SCRIPT_BINDING
-    if (kScriptTypeLua == _scriptType)
-    {
-        executeScriptTouchesHandler(EventTouch::EventCode::BEGAN, touches, event);
-        return;
-    }
-#endif
     CC_UNUSED_PARAM(event);
 }
 
 void Layer::onTouchesMoved(const std::vector<Touch*>& touches, Event *event)
 {
-#if CC_ENABLE_SCRIPT_BINDING
-    if (kScriptTypeLua == _scriptType)
-    {
-        executeScriptTouchesHandler(EventTouch::EventCode::MOVED, touches, event);
-        return;
-    }
-#endif
-    
     CC_UNUSED_PARAM(event);
 }
 
 void Layer::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
 {
-#if CC_ENABLE_SCRIPT_BINDING
-    if (kScriptTypeLua == _scriptType)
-    {
-        executeScriptTouchesHandler(EventTouch::EventCode::ENDED, touches, event);
-        return;
-    }
-#endif
     CC_UNUSED_PARAM(event);
 }
 
 void Layer::onTouchesCancelled(const std::vector<Touch*>& touches, Event *event)
 {
-#if CC_ENABLE_SCRIPT_BINDING
-    if (kScriptTypeLua == _scriptType)
-    {
-        executeScriptTouchesHandler(EventTouch::EventCode::CANCELLED, touches, event);
-        return;
-    }
-#endif
     CC_UNUSED_PARAM(event);
 }
 
@@ -428,11 +362,6 @@ __LayerRGBA::__LayerRGBA()
 }
 
 
-#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
-#pragma GCC diagnostic warning "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
-#pragma warning (pop)
-#endif
 /// LayerColor
 
 LayerColor::LayerColor()
@@ -598,17 +527,9 @@ void LayerColor::onDraw(const Mat4& transform, uint32_t flags)
     //
     // Attributes
     //
-#ifdef EMSCRIPTEN
-    setGLBufferData(_noMVPVertices, 4 * sizeof(Vec3), 0);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-    setGLBufferData(_squareColors, 4 * sizeof(Color4F), 1);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, 0);
-#else
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _noMVPVertices);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
-#endif // EMSCRIPTEN
     
     GL::blendFunc( _blendFunc.src, _blendFunc.dst );
 
@@ -843,7 +764,7 @@ LayerMultiplex::~LayerMultiplex()
     }
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 LayerMultiplex * LayerMultiplex::createVariadic(Layer * layer, ...)
 {
     va_list args;
