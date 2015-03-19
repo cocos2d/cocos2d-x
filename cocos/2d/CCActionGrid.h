@@ -42,7 +42,7 @@ class NodeGrid;
 /** 
 @class GridAction
 @brief Base class for Grid actions.
-@detail Grid actions are the actions take effect on GridBase.
+@details Grid actions are the actions take effect on GridBase.
 */
 class CC_DLL GridAction : public ActionInterval
 {
@@ -87,7 +87,7 @@ private:
 
 /** 
  @brief Base class for Grid3D actions.
- @detail Grid3D actions can modify a non-tiled grid.
+ @details Grid3D actions can modify a non-tiled grid.
  */
 class CC_DLL Grid3DAction : public GridAction
 {

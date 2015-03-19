@@ -36,7 +36,7 @@ NS_CC_BEGIN
 
 /**
 @brief Clipping Rectangle Node.
-@detail A node that clipped with specified rectangle.
+@details A node that clipped with specified rectangle.
 */
 class CC_DLL ClippingRectangleNode : public Node
 {    
