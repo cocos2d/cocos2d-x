@@ -9,7 +9,7 @@
 #include "cocos2d.h"
 #include <map>
 
-#include "json/document.h"
+#include "rapidjson/document.h"
 #include "DeviceEx.h"
 
 class AppLang

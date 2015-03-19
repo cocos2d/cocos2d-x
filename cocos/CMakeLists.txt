@@ -127,7 +127,7 @@ elseif(COCOS_TARGET_SYSTEM_LINUX)
     # target_link_libraries(${COCOS2D_TARGET} Threads::Threads)
     #GLFW3 dependent libs
     target_link_libraries(${COCOS2D_TARGET}
-        rt m Xxf86vm X11 Xrandr Xi Xinerama Xcursor
+        rt m Xxf86vm X11 Xrandr Xi Xinerama Xcursor dl jbig
         )
 
 elseif(COCOS_TARGET_SYSTEM_IOS)

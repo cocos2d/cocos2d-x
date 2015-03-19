@@ -23,9 +23,9 @@
  ****************************************************************************/
 
 #include "Manifest.h"
-#include "json/filestream.h"
-#include "json/prettywriter.h"
-#include "json/stringbuffer.h"
+#include "rapidjson/filestream.h"
+#include "rapidjson/prettywriter.h"
+#include "rapidjson/stringbuffer.h"
 
 #include <fstream>
 
@@ -324,7 +324,7 @@ void Manifest::setAssetDownloadState(const std::string &key, const Manifest::Dow
                 rapidjson::Value &assets = _json[KEY_ASSETS];
                 if (assets.IsObject())
                 {
-                    for (rapidjson::Value::MemberIterator itr = assets.MemberonBegin(); itr != assets.MemberonEnd(); ++itr)
+                    for (rapidjson::Value::MemberIterator itr = assets.MemberBegin(); itr != assets.MemberEnd(); ++itr)
                     {
                         std::string jkey = itr->name.GetString();
                         if (jkey == key) {
@@ -426,7 +426,7 @@ void Manifest::loadVersion(const rapidjson::Document &json)
         const rapidjson::Value& groupVers = json[KEY_GROUP_VERSIONS];
         if (groupVers.IsObject())
         {
-            for (rapidjson::Value::ConstMemberIterator itr = groupVers.MemberonBegin(); itr != groupVers.MemberonEnd(); ++itr)
+            for (rapidjson::Value::ConstMemberIterator itr = groupVers.MemberBegin(); itr != groupVers.MemberEnd(); ++itr)
             {
                 std::string group = itr->name.GetString();
                 std::string version = "0";
@@ -470,7 +470,7 @@ void Manifest::loadManifest(const rapidjson::Document &json)
         const rapidjson::Value& assets = json[KEY_ASSETS];
         if (assets.IsObject())
         {
-            for (rapidjson::Value::ConstMemberIterator itr = assets.MemberonBegin(); itr != assets.MemberonEnd(); ++itr)
+            for (rapidjson::Value::ConstMemberIterator itr = assets.MemberBegin(); itr != assets.MemberEnd(); ++itr)
             {
                 std::string key = itr->name.GetString();
                 Asset asset = parseAsset(key, itr->value);
