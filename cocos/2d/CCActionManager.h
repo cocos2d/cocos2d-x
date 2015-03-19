@@ -110,6 +110,7 @@ public:
      *
      * @param tag       The actions' tag.
      * @param target    A certain target.
+     * @js NA
      */
     void removeAllActionsByTag(int tag, Node *target);
 
@@ -128,6 +129,7 @@ public:
      *
      * @param target    A certain target.
      * @return  The numbers of actions that are running in a certain target.
+     * @js NA
      */
     ssize_t getNumberOfRunningActionsInTarget(const Node *target) const;
 

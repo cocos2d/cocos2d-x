@@ -66,6 +66,7 @@ public:
     /** Returns a new action that performs the exactly the reverse action. 
      *
      * @return A new action that performs the exactly the reverse action.
+     * @js NA
      */
     virtual Action* reverse() const
     {
@@ -319,6 +320,7 @@ public:
     virtual Follow* reverse() const override;
     /**
      * @param dt in seconds.
+     * @js NA
      */
     virtual void step(float dt) override;
     virtual bool isDone() const override;

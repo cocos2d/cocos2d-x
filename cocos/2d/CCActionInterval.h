@@ -160,12 +160,14 @@ public:
      * @param action1 The first sequenceable action.
      * @param args The va_list variable.
      * @return An autoreleased Sequence object.
+     * @js NA
      */
     static Sequence* createWithVariableList(FiniteTimeAction *action1, va_list args);
     /** Creates the action.
      * @param actionOne The first sequenceable action.
      * @param actionTwo The second sequenceable action.
      * @return An autoreleased Sequence object.
+     * @js NA
      */
     static Sequence* createWithTwoActions(FiniteTimeAction *actionOne, FiniteTimeAction *actionTwo);
 
@@ -374,6 +376,7 @@ public:
      * @param action1   The first sequenceable action.
      * @param args  The va_list variable.
      * @return  An autoreleased Spawn object.
+     * @js NA
      */
     static Spawn* createWithVariableList(FiniteTimeAction *action1, va_list args);
 
@@ -389,6 +392,7 @@ public:
      * @param action1   The first spawned action.
      * @param action2   THe second spawned action.
      * @return An autoreleased Spawn object.
+     * @js NA
      */
     static Spawn* createWithTwoActions(FiniteTimeAction *action1, FiniteTimeAction *action2);
 
@@ -1187,7 +1191,10 @@ public:
     virtual void startWithTarget(Node *target) override;
     virtual FadeIn* clone() const override;
     virtual FadeTo* reverse(void) const override;
-    
+
+    /**
+     * @js NA
+     */
     void setReverseAction(FadeTo* ac);
 
 CC_CONSTRUCTOR_ACCESS:
@@ -1218,7 +1225,10 @@ public:
     virtual void startWithTarget(Node *target) override;
     virtual FadeOut* clone() const  override;
     virtual FadeTo* reverse(void) const override;
-    
+
+    /**
+     * @js NA
+     */
     void setReverseAction(FadeTo* ac);
 
 CC_CONSTRUCTOR_ACCESS:

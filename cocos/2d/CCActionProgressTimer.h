@@ -37,7 +37,7 @@ NS_CC_BEGIN
 
 /**
 @brief Progress to percentage.
-@detail This action show the target node from current percentage to the specified percentage.
+@details This action show the target node from current percentage to the specified percentage.
         You should specify the destination percentage when creating the action.
 @since v0.99.1
 */

@@ -37,7 +37,7 @@ NS_CC_BEGIN
 
 /** 
 @brief Waves3D action.
-@detail This action is used for take effect on the target node as 3D waves.
+@details This action is used for take effect on the target node as 3D waves.
         You can control the effect by these parameters:
         duration, grid size, waves count, amplitude.
 */
@@ -105,7 +105,7 @@ private:
 
 /**
 @brief FlipX3D action.
-@detail This action is used for flipping the target node on the x axis.
+@details This action is used for flipping the target node on the x axis.
 */
 class CC_DLL FlipX3D : public Grid3DAction
 {
@@ -146,7 +146,7 @@ private:
 
 /**
 @brief FlipY3D action.
-@detail This action is used for flipping the target node on the y axis.
+@details This action is used for flipping the target node on the y axis.
 */
 class CC_DLL FlipY3D : public FlipX3D
 {
@@ -171,7 +171,7 @@ private:
 
 /**
 @brief Lens3D action.
-@detail This action is used for take effect on the target node as lens.
+@details This action is used for take effect on the target node as lens.
         You can create the action by these parameters:
         duration, grid size, center position of lens, radius of lens.
         Also you can change the lens effect value & whether effect is concave by the setter methods.
@@ -254,7 +254,7 @@ private:
 
 /**
 @brief Ripple3D action.
-@detail This action is used for take effect on the target node as ripple.
+@details This action is used for take effect on the target node as ripple.
         You can create the action by these parameters:
         duration, grid size, center position of ripple,
         radius of ripple, waves count, amplitude.
@@ -341,7 +341,7 @@ private:
 
 /**
 @brief Shaky3D action.
-@detail This action is used for take effect on the target node as shaky.
+@details This action is used for take effect on the target node as shaky.
         You can create the action by these parameters:
         duration, grid size, range, whether shake on the z axis.
 */
@@ -386,7 +386,7 @@ private:
 
 /**
 @brief Liquid action.
-@detail This action is used for take effect on the target node as liquid.
+@details This action is used for take effect on the target node as liquid.
         You can create the action by these parameters:
         duration, grid size, waves count, amplitude of the liquid effect.
 */
@@ -454,7 +454,7 @@ private:
 
 /**
 @brief Waves action.
-@detail This action is used for take effect on the target node as waves.
+@details This action is used for take effect on the target node as waves.
         You can control the effect by these parameters:
         duration, grid size, waves count, amplitude,
         whether waves on horizontal and whether waves on vertical.
@@ -529,7 +529,7 @@ private:
 
 /**
 @brief Twirl action.
-@detail This action is used for take effect on the target node as twirl.
+@details This action is used for take effect on the target node as twirl.
         You can control the effect by these parameters:
         duration, grid size, center position, twirls count, amplitude.
 */
