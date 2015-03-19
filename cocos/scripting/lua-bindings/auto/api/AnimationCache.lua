@@ -35,7 +35,8 @@
 -- Make sure that the frames were previously loaded in the SpriteFrameCache.<br>
 -- param dictionary An NSDictionary.<br>
 -- param plist The path of the relative file,it use to find the plist path for load SpriteFrames.<br>
--- since v1.1
+-- since v1.1<br>
+-- js NA
 -- @function [parent=#AnimationCache] addAnimationsWithDictionary 
 -- @param self
 -- @param #map_table dictionary
@@ -63,14 +64,15 @@
 -- @return AnimationCache#AnimationCache self (return value: cc.AnimationCache)
         
 --------------------------------
---  Purges the cache. It releases all the Animation objects and the shared instance. 
+--  Purges the cache. It releases all the Animation objects and the shared instance.<br>
+-- js NA
 -- @function [parent=#AnimationCache] destroyInstance 
 -- @param self
 -- @return AnimationCache#AnimationCache self (return value: cc.AnimationCache)
         
 --------------------------------
---  Returns the shared instance of the Animation cache. <br>
--- return The shared instance of the Animation cache.
+--  Returns the shared instance of the Animation cache <br>
+-- js NA
 -- @function [parent=#AnimationCache] getInstance 
 -- @param self
 -- @return AnimationCache#AnimationCache ret (return value: cc.AnimationCache)

@@ -22,7 +22,7 @@
 -- @return PageTurn3D#PageTurn3D ret (return value: cc.PageTurn3D)
         
 --------------------------------
--- 
+-- js NA 
 -- @function [parent=#PageTurn3D] getGrid 
 -- @param self
 -- @return GridBase#GridBase ret (return value: cc.GridBase)
