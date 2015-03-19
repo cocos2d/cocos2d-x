@@ -881,11 +881,10 @@ void CameraCullingDemo::update(float dt)
 
 void CameraCullingDemo::reachEndCallBack()
 {
-    auto s = Director::getInstance()->getWinSize();
     _cameraFirst->stopActionByTag(100);
     auto inverse = MoveTo::create(4.f, Vec2(-_cameraFirst->getPositionX(), 0));
     inverse->retain();
-
+    
     _moveAction->release();
     _moveAction = inverse;
     auto rot = RotateBy::create(1.f, Vec3(0.f, 180.f, 0.f));
