@@ -182,7 +182,6 @@ public:
 
     /* Creates an animation with an array of AnimationFrame, the delay per units in seconds and and how many times it should be executed.
      * @since v2.0
-     * @js NA
      * @param arrayOfAnimationFrameNames An animation with an array of AnimationFrame.
      * @param delayPerUnit The delay per units in seconds and and how many times it should be executed.
      * @param loops The times the animation is going to loop.
@@ -203,6 +202,7 @@ public:
     void addSpriteFrameWithFile(const std::string& filename);
     /**
      * @deprecated. Use addSpriteFrameWithFile() instead.
+	 @js NA
      */
     CC_DEPRECATED_ATTRIBUTE void addSpriteFrameWithFileName(const std::string& filename){ addSpriteFrameWithFile(filename);}
 

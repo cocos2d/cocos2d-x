@@ -45,10 +45,13 @@ class Animation;
  */
 
 /** Singleton that manages the Animations.
- * It saves in a cache the animations. You should use this class if you want to save your animations in a cache.
- * Before v0.99.5, the recommend way was to save them on the Sprite. Since v0.99.5, you should use this class instead.
- * @since v0.99.5
- */
+It saves in a cache the animations. You should use this class if you want to save your animations in a cache.
+
+Before v0.99.5, the recommend way was to save them on the Sprite. Since v0.99.5, you should use this class instead.
+
+@since v0.99.5
+@js cc.animationCache
+*/
 class CC_DLL AnimationCache : public Ref
 {
 public:
@@ -61,13 +64,14 @@ public:
      * @lua NA
      */
     ~AnimationCache();
-    /** Returns the shared instance of the Animation cache. 
-     *
-     * @return The shared instance of the Animation cache.
-     */
+    /** Returns the shared instance of the Animation cache 
+	 @js NA
+	*/
     static AnimationCache* getInstance();
 
-    /** Purges the cache. It releases all the Animation objects and the shared instance. */
+    /** Purges the cache. It releases all the Animation objects and the shared instance.
+		@js NA
+     */
     static void destroyInstance();
 
     /** @deprecated Use getInstance() instead. */
@@ -115,6 +119,7 @@ public:
      * @param dictionary An NSDictionary.
      * @param plist The path of the relative file,it use to find the plist path for load SpriteFrames.
      * @since v1.1
+	 @js NA
      */
     void addAnimationsWithDictionary(const ValueMap& dictionary,const std::string& plist);
 

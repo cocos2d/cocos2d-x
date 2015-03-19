@@ -96,7 +96,6 @@ public:
     */
     virtual void setBlendFunc(const BlendFunc& blendFunc) override;
     /**
-    * @js NA
     * @lua NA
     */
     virtual const BlendFunc& getBlendFunc() const override;

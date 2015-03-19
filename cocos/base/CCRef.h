@@ -71,6 +71,7 @@ public:
 /**
  * Ref is used for reference count manangement. If a class inherits from Ref,
  * then it is easy to be shared in different places.
+ * @js NA
  */
 class CC_DLL Ref
 {
