@@ -1,20 +1,13 @@
 #include "PerformanceParticle3DTest.h"
 #include "Particle3D/PU/CCPUParticleSystem3D.h"
 
+static int kTagInfoLayer = 1;
+static int kTagMenuLayer = 1000;
+static int kTagParticleSystem = 1001;
+static int test_Count = 2;
 
-enum {
-    kTagInfoLayer = 1,
-    kTagMainLayer = 2,
-    kTagLabelAtlas = 3,
-    kTagMenuLayer = 1000,
-    kTagParticleSystem = 1001,
-    TEST_COUNT = 2,
-};
-
-enum {
-    kMaxParticles = 14000,
-    kNodesIncrease = 1,
-};
+static int kMaxParticles = 14000;
+static int kNodesIncrease = 1;
 
 static int s_parCurIdx = 0;
 
@@ -100,7 +93,7 @@ void Particle3DMainScene::initWithSubTest(int asubtest, int particles)
     addChild(infoLabel, 1, kTagInfoLayer);
 
     // Next Prev Test
-    auto menuLayer = new (std::nothrow) Particle3DMenuLayer(true, TEST_COUNT, s_parCurIdx);
+    auto menuLayer = new (std::nothrow) Particle3DMenuLayer(true, test_Count, s_parCurIdx);
     addChild(menuLayer, 1, kTagMenuLayer);
     menuLayer->release();
 
