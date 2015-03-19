@@ -33,7 +33,7 @@
 
 NS_CC_BEGIN
 
-/*
+/**
  * @js NA
  * @lua NA
  */

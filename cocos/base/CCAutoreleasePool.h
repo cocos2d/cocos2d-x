@@ -140,7 +140,7 @@ private:
 #endif
 };
 
-/*
+/**
  * @js NA 
  * @cond
  */
