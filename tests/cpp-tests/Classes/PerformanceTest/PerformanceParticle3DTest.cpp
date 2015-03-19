@@ -16,15 +16,15 @@ enum {
     kNodesIncrease = 1,
 };
 
-static int s_nParCurIdx = 0;
+static int s_parCurIdx = 0;
 
 ////////////////////////////////////////////////////////
 //
 // ParticleMenuLayer
 //
 ////////////////////////////////////////////////////////
-Particle3DMenuLayer::Particle3DMenuLayer(bool bControlMenuVisible, int nMaxCases, int nCurCase)
-: PerformBasicLayer(bControlMenuVisible, nMaxCases, nCurCase)
+Particle3DMenuLayer::Particle3DMenuLayer(bool isControlMenuVisible, int maxCases, int curCase)
+: PerformBasicLayer(isControlMenuVisible, maxCases, curCase)
 {
 
 }
@@ -44,7 +44,7 @@ void Particle3DMenuLayer::showCurrentTest()
         break;
     }
 
-    s_nParCurIdx = _curCase;
+    s_parCurIdx = _curCase;
     if (pNewScene)
     {
         pNewScene->initWithSubTest(subTest, parNum);
@@ -63,29 +63,29 @@ void Particle3DMainScene::initWithSubTest(int asubtest, int particles)
 {
     //srandom(0);
 
-    subtestNumber = asubtest;
+    _subtestNumber = asubtest;
     auto s = Director::getInstance()->getWinSize();
 
-    lastRenderedCount = 0;
-    quantityParticles = 0;
+    _lastRenderedCount = 0;
+    _quantityParticles = 0;
 
     MenuItemFont::setFontSize(65);
     auto decrease = MenuItemFont::create(" - ", [=](Ref *sender) {
-        quantityParticles -= kNodesIncrease;
-        if( quantityParticles < 0 )
-            quantityParticles = 0;
+        _quantityParticles -= kNodesIncrease;
+        if( _quantityParticles < 0 )
+            _quantityParticles = 0;
 
         updateQuantityLabel();
-        removeChildByTag(kTagParticleSystem + quantityParticles, true);
+        removeChildByTag(kTagParticleSystem + _quantityParticles, true);
     });
     decrease->setColor(Color3B(0,200,20));
     auto increase = MenuItemFont::create(" + ", [=](Ref *sender) {
-        quantityParticles += kNodesIncrease;
-        if( quantityParticles > kMaxParticles )
-            quantityParticles = kMaxParticles;
+        _quantityParticles += kNodesIncrease;
+        if( _quantityParticles > kMaxParticles )
+            _quantityParticles = kMaxParticles;
 
         updateQuantityLabel();
-        createParticleSystem(quantityParticles - 1);
+        createParticleSystem(_quantityParticles - 1);
     });
     increase->setColor(Color3B(0,200,20));
 
@@ -99,39 +99,10 @@ void Particle3DMainScene::initWithSubTest(int asubtest, int particles)
     infoLabel->setPosition(Vec2(s.width/2, s.height - 90));
     addChild(infoLabel, 1, kTagInfoLayer);
 
-    //// particles on stage
-    //auto labelAtlas = LabelAtlas::create("0000", "fps_images.png", 12, 32, '.');
-    //addChild(labelAtlas, 0, kTagLabelAtlas);
-    //labelAtlas->setPosition(Vec2(s.width-66,50));
-
     // Next Prev Test
-    auto menuLayer = new (std::nothrow) Particle3DMenuLayer(true, TEST_COUNT, s_nParCurIdx);
+    auto menuLayer = new (std::nothrow) Particle3DMenuLayer(true, TEST_COUNT, s_parCurIdx);
     addChild(menuLayer, 1, kTagMenuLayer);
     menuLayer->release();
-
-    //// Sub Tests
-    //MenuItemFont::setFontSize(40);
-    //auto pSubMenu = Menu::create();
-    //for (int i = 1; i <= 6; ++i)
-    //{
-    //    char str[10] = {0};
-    //    sprintf(str, "%d ", i);
-    //    auto itemFont = MenuItemFont::create(str, CC_CALLBACK_1(Particle3DMainScene::testNCallback, this));
-    //    itemFont->setTag(i);
-    //    pSubMenu->addChild(itemFont, 10);
-
-    //    if (i <= 3)
-    //    {
-    //        itemFont->setColor(Color3B(200,20,20));
-    //    }
-    //    else
-    //    {
-    //        itemFont->setColor(Color3B(0,200,20));
-    //    }
-    //}
-    //pSubMenu->alignItemsHorizontally();
-    //pSubMenu->setPosition(Vec2(s.width/2, 80));
-    //addChild(pSubMenu, 2);
 
     auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 32);
     addChild(label, 1);
@@ -143,6 +114,15 @@ void Particle3DMainScene::initWithSubTest(int asubtest, int particles)
     camera->setCameraFlag(CameraFlag::USER1);
     this->addChild(camera);
 
+    TTFConfig config("fonts/tahoma.ttf",10);
+    _particleLab = Label::createWithTTF(config,"Particle Count: 0",TextHAlignment::LEFT);
+    _particleLab->setPosition(Vec2(0.0f, s.height / 6.0f));
+    _particleLab->setAnchorPoint(Vec2(0.0f, 0.0f));
+    this->addChild(_particleLab);
+    _quantityParticles = 1;
+    updateQuantityLabel();
+    createParticleSystem(_quantityParticles - 1);
+    
     schedule(CC_SCHEDULE_SELECTOR(Particle3DMainScene::step));
 }
 
@@ -153,26 +133,38 @@ std::string Particle3DMainScene::title() const
 
 void Particle3DMainScene::step(float dt)
 {
-    auto atlas = (LabelAtlas*) getChildByTag(kTagLabelAtlas);
+    unsigned int count = 0;
+    for (int i = 0; i < _quantityParticles; i++)
+    {
+         ParticleSystem3D *ps = static_cast<ParticleSystem3D *>(this->getChildByTag(kTagParticleSystem + i));
+         if (ps){
+            auto children = ps->getChildren();
+            for (auto iter : children){
+                ParticleSystem3D *child = dynamic_cast<ParticleSystem3D *>(iter);
+                if (child){
+                    count += child->getAliveParticleCount();
+                }
+            }
+            
+            char str[128];
+            sprintf(str, "Particle Count: %d", count);
+            _particleLab->setString(str);
+        }
+    }
 }
 
 void Particle3DMainScene::createParticleSystem(int idx)
 {
-   // removeChildByTag(kTagParticleSystem, true);
-
-    auto ps = PUParticleSystem3D::create("Particle3D/scripts/lineStreak.pu", "Particle3D/materials/pu_mediapack_01.material");
+    auto ps = PUParticleSystem3D::create("Particle3D/scripts/example_004.pu", "Particle3D/materials/pu_example.material");
     ps->setCameraMask((unsigned short)CameraFlag::USER1);
     ps->setPosition(CCRANDOM_MINUS1_1() * 50.0f, CCRANDOM_MINUS1_1() * 20.0f);
     ps->startParticleSystem();
     addChild(ps, 0, kTagParticleSystem + idx);
-
-
-    //doTest();
 }
 
 void Particle3DMainScene::testNCallback(Ref* sender)
 {
-    subtestNumber = static_cast<Node*>(sender)->getTag();
+    _subtestNumber = static_cast<Node*>(sender)->getTag();
 
     auto menu = static_cast<Particle3DMenuLayer*>( getChildByTag(kTagMenuLayer) );
     menu->restartCallback(sender);
@@ -180,14 +172,14 @@ void Particle3DMainScene::testNCallback(Ref* sender)
 
 void Particle3DMainScene::updateQuantityLabel()
 {
-    if( quantityParticles != lastRenderedCount )
+    if( _quantityParticles != _lastRenderedCount )
     {
         auto infoLabel = (Label *) getChildByTag(kTagInfoLayer);
         char str[20] = {0};
-        sprintf(str, "%u Particle Systems", quantityParticles);
+        sprintf(str, "%u Particle Systems", _quantityParticles);
         infoLabel->setString(str);
 
-        lastRenderedCount = quantityParticles;
+        _lastRenderedCount = _quantityParticles;
     }
 }
 
