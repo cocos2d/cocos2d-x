@@ -6,7 +6,7 @@
 --------------------------------
 -- Preload background music.<br>
 -- param filePath The path of the background music file.<br>
--- js preloadMusic<br>
+-- js NA<br>
 -- lua preloadMusic
 -- @function [parent=#SimpleAudioEngine] preloadBackgroundMusic 
 -- @param self
@@ -57,7 +57,8 @@
 --------------------------------
 -- Preload a compressed audio file.<br>
 -- The compressed audio will be decoded to wave, then written into an internal buffer in SimpleAudioEngine.<br>
--- param filePath The path of the effect file.
+-- param filePath The path of the effect file.<br>
+-- js NA
 -- @function [parent=#SimpleAudioEngine] preloadEffect 
 -- @param self
 -- @param #char filePath
@@ -195,7 +196,8 @@
 -- @return SimpleAudioEngine#SimpleAudioEngine self (return value: cc.SimpleAudioEngine)
         
 --------------------------------
--- Returns a shared instance of the SimpleAudioEngine.
+-- Returns a shared instance of the SimpleAudioEngine.<br>
+-- js NA
 -- @function [parent=#SimpleAudioEngine] getInstance 
 -- @param self
 -- @return SimpleAudioEngine#SimpleAudioEngine ret (return value: cc.SimpleAudioEngine)
