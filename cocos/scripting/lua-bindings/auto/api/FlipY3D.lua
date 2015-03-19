@@ -5,7 +5,9 @@
 -- @parent_module cc
 
 --------------------------------
---  creates the action with duration 
+-- brief Create the action with duration.<br>
+-- param duration Specify the duration of the FlipY3D action. It's a value in seconds.<br>
+-- return If the creation sucess, return a pointer of FlipY3D action; otherwise, return nil.
 -- @function [parent=#FlipY3D] create 
 -- @param self
 -- @param #float duration
@@ -18,7 +20,7 @@
 -- @return FlipY3D#FlipY3D ret (return value: cc.FlipY3D)
         
 --------------------------------
--- param time in seconds
+-- 
 -- @function [parent=#FlipY3D] update 
 -- @param self
 -- @param #float time
