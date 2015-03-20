@@ -177,6 +177,7 @@ endif()
 # desktop platforms
 if(LINUX OR MACOSX OR WINDOWS)
   cocos_find_package(OpenGL OPENGL REQUIRED)
+  cocos_find_package(X11 X11 REQUIRED)
 
   if(LINUX OR WINDOWS)
     cocos_find_package(GLEW GLEW REQUIRED)
