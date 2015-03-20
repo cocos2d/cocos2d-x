@@ -5,7 +5,9 @@
 -- @parent_module cc
 
 --------------------------------
---  change width and height in Points<br>
+--  Change width and height in Points.<br>
+-- param w The width of layer.<br>
+-- param h The Height of layer.<br>
 -- since v0.8
 -- @function [parent=#LayerColor] changeWidthAndHeight 
 -- @param self
@@ -22,7 +24,8 @@
 -- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
         
 --------------------------------
---  change height in Points
+--  Change height in Points.<br>
+-- param h The height of layer.
 -- @function [parent=#LayerColor] changeHeight 
 -- @param self
 -- @param #float h
@@ -40,7 +43,8 @@
 -- @return LayerColor#LayerColor self (return value: cc.LayerColor)
         
 --------------------------------
---  change width in Points
+--  Change width in Points.<br>
+-- param w The width of layer.
 -- @function [parent=#LayerColor] changeWidth 
 -- @param self
 -- @param #float w
