@@ -748,6 +748,10 @@ bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
                     meshData->subMeshAABB.push_back(calculateAABB(meshData->vertex, meshData->getPerVertexSize(), indexArray));
                 }
             }
+            else
+            {
+                meshData->subMeshAABB.push_back(calculateAABB(meshData->vertex, meshData->getPerVertexSize(), indexArray));
+            }
          
         }
         meshdatas.meshDatas.push_back(meshData);

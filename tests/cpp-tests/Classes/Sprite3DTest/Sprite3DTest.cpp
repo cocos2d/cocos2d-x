@@ -1549,7 +1549,7 @@ void Animate3DTest::reachEndCallBack()
     _moveAction->retain();
 
     auto rot = RotateBy::create(1.f, Vec3(0.f, 180.f, 0.f));
-    auto seq = Sequence::create(rot, inverse, CallFunc::create(CC_CALLBACK_0(Animate3DTest::reachEndCallBack, this)), nullptr);
+    auto seq = Sequence::create(rot, _moveAction, CallFunc::create(CC_CALLBACK_0(Animate3DTest::reachEndCallBack, this)), nullptr);
     seq->setTag(100);
     _sprite->runAction(seq);
 }
