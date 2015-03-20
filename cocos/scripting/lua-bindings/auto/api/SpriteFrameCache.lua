@@ -6,7 +6,7 @@
 
 --------------------------------
 --  Adds multiple Sprite Frames from a plist file content. The texture will be associated with the created sprite frames. <br>
--- js addSpriteFrames<br>
+-- js NA<br>
 -- lua addSpriteFrames<br>
 -- param plist_content Plist file content string.<br>
 -- param texture Texture pointer.
@@ -40,7 +40,8 @@
 --------------------------------
 --  Removes unused sprite frames.<br>
 -- Sprite Frames that have a retain count of 1 will be deleted.<br>
--- It is convenient to call this method after when starting a new Scene.
+-- It is convenient to call this method after when starting a new Scene.<br>
+-- js NA
 -- @function [parent=#SpriteFrameCache] removeUnusedSpriteFrames 
 -- @param self
 -- @return SpriteFrameCache#SpriteFrameCache self (return value: cc.SpriteFrameCache)
@@ -100,7 +101,8 @@
 --  Removes multiple Sprite Frames from a plist file content.<br>
 -- Sprite Frames stored in this file will be removed.<br>
 -- It is convenient to call this method when a specific texture needs to be removed.<br>
--- param plist_content The string of the plist content that needs to removed.
+-- param plist_content The string of the plist content that needs to removed.<br>
+-- js NA
 -- @function [parent=#SpriteFrameCache] removeSpriteFramesFromFileContent 
 -- @param self
 -- @param #string plist_content
@@ -115,14 +117,16 @@
 -- @return SpriteFrameCache#SpriteFrameCache self (return value: cc.SpriteFrameCache)
         
 --------------------------------
---  Destroys the cache. It releases all the Sprite Frames and the retained instance.
+--  Destroys the cache. It releases all the Sprite Frames and the retained instance.<br>
+-- js NA
 -- @function [parent=#SpriteFrameCache] destroyInstance 
 -- @param self
 -- @return SpriteFrameCache#SpriteFrameCache self (return value: cc.SpriteFrameCache)
         
 --------------------------------
 --  Returns the shared instance of the Sprite Frame cache.<br>
--- return The instance of the Sprite Frame Cache.
+-- return The instance of the Sprite Frame Cache.<br>
+-- js NA
 -- @function [parent=#SpriteFrameCache] getInstance 
 -- @param self
 -- @return SpriteFrameCache#SpriteFrameCache ret (return value: cc.SpriteFrameCache)

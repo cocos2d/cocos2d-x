@@ -6,7 +6,8 @@
 
 --------------------------------
 --  Render the scene.<br>
--- param renderer The renderer use to render the scene.
+-- param renderer The renderer use to render the scene.<br>
+-- js NA
 -- @function [parent=#Scene] render 
 -- @param self
 -- @param #cc.Renderer renderer
@@ -14,6 +15,7 @@
         
 --------------------------------
 --  Get the default camera.<br>
+-- js NA<br>
 -- return The default camera of scene.
 -- @function [parent=#Scene] getDefaultCamera 
 -- @param self
@@ -22,7 +24,8 @@
 --------------------------------
 --  Creates a new Scene object with a predefined Size. <br>
 -- param size The predefined size of scene.<br>
--- return An autoreleased Scene object.
+-- return An autoreleased Scene object.<br>
+-- js NA
 -- @function [parent=#Scene] createWithSize 
 -- @param self
 -- @param #size_table size
