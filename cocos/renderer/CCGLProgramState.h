@@ -42,20 +42,37 @@ struct VertexAttrib;
 class EventListenerCustom;
 class EventCustom;
 
-//
-//
-// UniformValue
-//
-//
+/**
+ Uniform Value, which is used to store to value send to openGL pipe line by glUniformXXX.
+ */
 class CC_DLL UniformValue
 {
     friend class GLProgram;
     friend class GLProgramState;
 public:
+    /**@{
+     Construtor. If contruct the UniformValue with no param, the Uniform and Glprogram will be nullptr.
+     @param uniform Uniform to apply the value.
+     @param glprogram Specify the owner GLProgram of this uniform and uniform value.
+     */
     UniformValue();
     UniformValue(Uniform *uniform, GLProgram* glprogram);
+    /**
+     @}
+     */
+    /**Destructor.*/
     ~UniformValue();
-
+    /**@{
+     Set data to Uniform value. Generally, there are many type of data could be supported,
+     including float, int, Vec2/3/4, Mat4 and texture. Besides of this, there are also custom call
+     back functions for sending data when you want to send struct or array data.
+     If we want to send texture to uniform, there are two value to send, first one is texture handle ID,
+     the second one the texture unit.
+     @param value Value to be sent, support float, int, Vec2/3/4, Mat4.
+     @param textureID The texture handle.
+     @param textureUnit The binding texture unit to be used in shader.
+     @param callback Callback function to send data to OpenGL pipeline.
+     */
     void setFloat(float value);
     void setInt(int value);
     void setVec2(const Vec2& value);
@@ -63,15 +80,25 @@ public:
     void setVec4(const Vec4& value);
     void setMat4(const Mat4& value);
     void setCallback(const std::function<void(GLProgram*, Uniform*)> &callback);
-    void setTexture(GLuint textureId, GLuint activeTexture);
-
+    void setTexture(GLuint textureId, GLuint textureUnit);
+    /**
+     @}
+     */
+    
+    /**Apply the uniform value to openGL pipeline.*/
     void apply();
 
 protected:
-	Uniform* _uniform;  // weak ref
-    GLProgram* _glprogram; // weak ref
+    /**Weak reference to Uniform.*/
+	Uniform* _uniform;
+    /**Weak reference to GLprogram.*/
+    GLProgram* _glprogram;
+    /**Whether or not callback is used.*/
     bool _useCallback;
-
+    /**
+     @name Uniform Value Uniform
+     @{
+     */
     union U{
         float floatValue;
         int intValue;
@@ -92,6 +119,9 @@ protected:
             return *this;
         }
     } _value;
+    /**
+     @}
+     */
 };
 
 //
