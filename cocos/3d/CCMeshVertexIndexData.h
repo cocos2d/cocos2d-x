@@ -43,6 +43,10 @@ NS_CC_BEGIN
 
 class MeshVertexData;
 
+/**
+ * the MeshIndexData class.
+ * @brief the MeshIndexData contain all of the indices data which mesh need.
+ */
 class MeshIndexData : public Ref
 {
 public:
@@ -84,6 +88,10 @@ protected:
     friend class Sprite3D;
 };
 
+/**
+ * the MeshVertexData class.
+ * @brief the MeshIndexData contain all of the vertices data which mesh need.
+ */
 class MeshVertexData : public Ref
 {
     friend class Sprite3D;

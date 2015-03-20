@@ -233,6 +233,10 @@ protected:
 };
 
 ///////////////////////////////////////////////////////
+/**
+ * Sprite3DCache
+ * @brief the cache data of Sprite3D, use to speed up Sprite3D::create
+ */
 class CC_DLL Sprite3DCache
 {
 public:
@@ -256,13 +260,17 @@ public:
     /**get & destroy*/
     static Sprite3DCache* getInstance();
     static void destroyInstance();
-    
+
+    /**get the SpriteData struct*/
     Sprite3DData* getSpriteData(const std::string& key) const;
     
+    /**add the SpriteData into Sprite3D by given the specified key*/
     bool addSprite3DData(const std::string& key, Sprite3DData* spritedata);
     
+    /**remove the SpriteData from Sprite3D by given the specified key*/
     void removeSprite3DData(const std::string& key);
     
+    /**remove all the SpriteData from Sprite3D*/
     void removeAllSprite3DData();
     
     CC_CONSTRUCTOR_ACCESS:

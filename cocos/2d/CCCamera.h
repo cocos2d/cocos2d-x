@@ -174,14 +174,24 @@ public:
     //override
     virtual void onEnter() override;
     virtual void onExit() override;
-    
+
+    /**
+     * Get the visiting camera , the visiting camera shall be set on Scene::render
+     */
     static const Camera* getVisitingCamera() { return _visitingCamera; }
+
+    /**
+     * Get the default camera of the current running scene.
+     */
     static Camera* getDefaultCamera();
 
 CC_CONSTRUCTOR_ACCESS:
     Camera();
     ~Camera();
     
+    /**
+     * Set the scene,this method shall not be invoke manually
+     */
     void setScene(Scene* scene);
     
     /**set additional matrix for the projection matrix, it multiplys mat to projection matrix when called, used by WP8*/
