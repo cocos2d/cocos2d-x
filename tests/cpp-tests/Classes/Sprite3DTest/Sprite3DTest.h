@@ -346,7 +346,7 @@ protected:
     
     State   _state;
     
-    MoveTo* _moveAction;
+    MoveBy* _moveAction;
 };
 
 class AttachmentTest : public Sprite3DTestDemo
@@ -418,7 +418,7 @@ protected:
     std::vector<OBB>          _obb;
     DrawNode3D*               _drawOBB;
     Label*                    _labelCubeCount;
-    MoveTo*                   _moveAction;
+    MoveBy*                   _moveAction;
     OBB                       _obbt;
     DrawNode3D*               _drawDebug;
     bool                      _hasCollider;
