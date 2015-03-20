@@ -8,6 +8,7 @@
         "project_replace_project_name": {
             "src_project_name": "HelloLua",
             "files": [
+                "frameworks/CMakeLists.txt",
                 "config.json",
                 ".project"
             ]
