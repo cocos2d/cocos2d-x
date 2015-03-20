@@ -10,7 +10,7 @@
       <AdditionalIncludeDirectories>$(EngineRoot)cocos\platform\winrt;$(EngineRoot)cocos\platform;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos;$(EngineRoot)extensions;$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(PLATFORM)\include\zlib;$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(PLATFORM)\include\angle;$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(PLATFORM)\include\freetype;$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(PLATFORM)\include;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile>
-      <PreprocessorDefinitions>WINRT;_VARIADIC_MAX=10;NOMINMAX;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WINRT;_VARIADIC_MAX=10;NOMINMAX;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_UNICODE;UNICODE;_LITTLE_ENDIAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CompileAsWinRT>true</CompileAsWinRT>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
