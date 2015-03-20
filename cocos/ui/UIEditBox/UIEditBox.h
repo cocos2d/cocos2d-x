@@ -445,6 +445,7 @@ namespace ui {
         protected:
             virtual void adaptRenderers();
 
+            void updateEditBoxScale();
             void updatePosition(float dt);
             EditBoxImpl*      _editBoxImpl;
             EditBoxDelegate*  _delegate;
@@ -463,6 +464,8 @@ namespace ui {
             int _fontSize;
             int _placeholderFontSize;
             
+            cocos2d::Size _contentSize;
+
             Color3B _colText;
             Color3B _colPlaceHolder;
             

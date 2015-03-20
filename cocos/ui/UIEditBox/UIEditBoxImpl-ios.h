@@ -119,6 +119,11 @@ public:
     virtual void closeKeyboard();
 	
 	virtual void onEndEditing();
+    
+    //TODO: Remove this patch when Cocos is updated with a fix for
+    //iOS system edit boxes not being scaled properly
+    void scaleContent(const Size& size, int fontSize)override;
+    
 private:
 	void			initInactiveLabels(const Size& size);
 	void			setInactiveText(const char* pText);

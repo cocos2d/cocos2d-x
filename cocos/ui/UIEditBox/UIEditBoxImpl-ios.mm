@@ -312,7 +312,6 @@ bool EditBoxImplIOS::initWithSize(const Size& size)
         
 		initInactiveLabels(size);
         setContentSize(size);
-		
         return true;
     }while (0);
     
@@ -589,12 +588,29 @@ void EditBoxImplIOS::setContentSize(const Size& size)
     placeInactiveLabels();
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
     CGSize controlSize = CGSizeMake(size.width * glview->getScaleX(),size.height * glview->getScaleY());
-    
+
     CCEAGLView *eaglview = static_cast<CCEAGLView *>(glview->getEAGLView());
     float factor = eaglview.contentScaleFactor;
     controlSize.width /= factor;
     controlSize.height /= factor;
-    
+
+    [_systemControl setContentSize:controlSize];
+}
+
+//TODO: Remove this patch when Cocos is updated with a fix for
+//iOS system edit boxes not being scaled properly
+void EditBoxImplIOS::scaleContent(const cocos2d::Size &size, int fontSize)
+{
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    CCEAGLView *eaglview = static_cast<CCEAGLView *>(glview->getEAGLView());
+    float factor = eaglview.contentScaleFactor;
+
+    _systemControl.textField.font = [UIFont systemFontOfSize:fontSize*glview->getScaleX()/factor];
+
+    CGSize controlSize = CGSizeMake(size.width * glview->getScaleX(),size.height * glview->getScaleY());
+    controlSize.width /= factor;
+    controlSize.height /= factor;
+
     [_systemControl setContentSize:controlSize];
 }
 
@@ -643,6 +659,7 @@ void EditBoxImplIOS::openKeyboard()
 	_labelPlaceHolder->setVisible(false);
 
 	_systemControl.textField.hidden = NO;
+    
     [_systemControl openKeyboard];
 }
 
