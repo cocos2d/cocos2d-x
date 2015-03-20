@@ -145,7 +145,7 @@ protected:
     MenuItem*      _decRot;
     unsigned int   _curState;
     Camera*      _camera;
-    MoveTo* _moveAction;
+    MoveBy* _moveAction;
     bool _bZoomOut;
     bool _bZoomIn;
     bool _bRotateLeft;
