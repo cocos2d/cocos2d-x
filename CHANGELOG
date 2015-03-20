@@ -1,5 +1,10 @@
 cocos2d-x-4.0alpha1 Mar.20 2015
     [NEW]           Image: added windows image component support for Windows 8.1 Universal Apps
+    [NEW]           3rd: update libcurl to v7.40
+    [NEW]           3rd: update chipmunk to v6.2.2
+    [NEW]           3rd: update openssl to 1.0.1l
+    [NEW]           3rd: update png to 1.6.16
+    [NEW]           3rd: update freetype to 2.5.5
     
     [FIX]           AutoRelasePool: memory leak if adding an element into pool when releasing auto release pool
     [FIX]           FileUtils: getWritablePath() will not return corrent setted writable path on Mac & Windows
