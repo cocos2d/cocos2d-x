@@ -68,7 +68,7 @@ public:
 #if CC_ENABLE_SCRIPT_BINDING
         ScriptEngineManager::destroyInstance();
 #endif
-        /** clean auto release pool. /
+        /** clean auto release pool. */
         PoolManager::destroyInstance();
     }
 
