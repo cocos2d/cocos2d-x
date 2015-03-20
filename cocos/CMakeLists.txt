@@ -86,7 +86,7 @@ add_library(cocos2d ${COCOS_SRC})
 
 set(PLATFORM_SPECIFIC_LIBS)
 if(WINDOWS)
-  foreach(_pkg OPENGL X11 GLEW GLFW3 VORBIS MPG123 OPENAL)
+  foreach(_pkg OPENGL GLEW GLFW3 VORBIS MPG123 OPENAL)
     cocos_use_pkg(cocos2d ${_pkg})
   endforeach()
   list(APPEND PLATFORM_SPECIFIC_LIBS ws2_32 winmm)
