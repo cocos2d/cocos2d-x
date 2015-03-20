@@ -710,6 +710,7 @@ Developers:
         Updates spine runtime.
         Fixed a potential bug in Data's copy constructor. 
         Fixed the bug that MotionStreak can not work with MoveTo and MoveBy
+        Fixed a bug that  HttpAsynConnection can not get error content if response code less than 200 or response code greater or equal than 300
         
     luocker
         Fix a bug that string itself is also modified in `String::componentsSeparatedByString`.
