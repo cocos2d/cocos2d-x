@@ -71,7 +71,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(QuaternionTest),
     CL(Sprite3DEmptyTest),
     CL(UseCaseSprite3D),
-    CL(Sprite3DForceDepthTest)
+    CL(Sprite3DForceDepthTest),
+    CL(Sprite3DTestMeshLight)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -2324,4 +2325,36 @@ void UseCaseSprite3D::update(float delta)
         circle->setPositionX(x);
         circle->setPositionZ(z);
     }
+}
+
+Sprite3DTestMeshLight::Sprite3DTestMeshLight()
+{
+    auto s = Director::getInstance()->getWinSize();
+
+    auto _sprite = Sprite3D::create("Sprite3DTest/mesh_model.c3b");
+    _sprite->setPosition(Vec2(0, 0));
+    _sprite->setScale(0.05f);
+    _sprite->setCameraMask(2);
+
+    PointLight * light = PointLight::create(Vec3(0, 0, 400), Color3B(255, 255, 255), 1000.0f);
+
+    //setup camera
+    auto camera = Camera::createPerspective(40, s.width / s.height, 0.01f, 1000.f);
+    camera->setCameraFlag(CameraFlag::USER1);
+    camera->setPosition3D(Vec3(0.f, 30.f, 100.f));
+    camera->lookAt(Vec3(0.f, 0.f, 0.f));
+    addChild(camera);
+
+    addChild(_sprite);
+    addChild(light);
+}
+
+std::string Sprite3DTestMeshLight::title() const
+{
+    return "3D mesh with light without texture";
+}
+
+std::string Sprite3DTestMeshLight::subtitle() const
+{
+    return "";
 }

@@ -439,7 +439,14 @@ void Sprite3D::genGLProgramState(bool useLight)
         }
         else
         {
-            shader = GLProgram::SHADER_3D_POSITION;
+            if (hasNormal)
+            {
+                shader = GLProgram::SHADER_3D_POSITION_NORMAL;
+            }
+            else
+            {
+                shader = GLProgram::SHADER_3D_POSITION;
+            }            
         }
         if (shader)
             glProgram = GLProgramCache::getInstance()->getGLProgram(shader);
