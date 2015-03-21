@@ -24,7 +24,9 @@
 
 cmake_minimum_required(VERSION 3.1)
 
-set(app_name HelloCpp)
+# cocos run depends variable 'APP_NAME' for Get target name.
+set(APP_NAME HelloCpp)
+set(app_name ${APP_NAME})
 project(${app_name} VERSION 1.0.0)
 
 set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/cocos2d)
