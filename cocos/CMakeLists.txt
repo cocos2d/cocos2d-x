@@ -35,7 +35,6 @@ endif()
 # Define library target 'cocos2d'.
 set(COCOS2D_TARGET cocos2d CACHE INTERNAL "")
 add_library(${COCOS2D_TARGET} ${CMAKE_CURRENT_LIST_FILE})
-cocos_tweak_target_output_directory(${COCOS2D_TARGET})
 
 #===============================================================================
 # Set cocos public include directories.

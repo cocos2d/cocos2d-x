@@ -70,7 +70,6 @@ if(COCOS_TARGET_SYSTEM_ANDROID)
 else()
     add_executable(${app_name} ${CMAKE_CURRENT_LIST_FILE})
 endif()
-cocos_tweak_target_output_directory(${app_name})
 
 #===============================================================================
 # Add include directories.

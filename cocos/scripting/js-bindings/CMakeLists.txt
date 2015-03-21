@@ -30,7 +30,6 @@ set(cocos_root ${COCOS2D-X_SOURCE_DIR})
 # Define library target 'jscocos2d'.
 set(JSCOCOS2D_TARGET "jscocos2d" CACHE INTERNAL "")
 add_library(${JSCOCOS2D_TARGET} ${CMAKE_CURRENT_LIST_FILE})
-cocos_tweak_target_output_directory(${JSCOCOS2D_TARGET})
 
 #===============================================================================
 # Set include directories.
