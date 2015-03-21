@@ -245,13 +245,6 @@ void GLProgramCache::loadDefaultGLPrograms()
     p = new GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DParticleTex);
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_PARTICLE_TEXTURE, p));
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || defined(WP8_SHADER_COMPILER)
-    p = new GLProgram();
-    loadDefaultGLProgram(p, kShaderType_PositionColor_noMVP_GrayScale);
-    _programs.insert(std::make_pair(GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP_GRAYSCALE, p));
-#endif
-
 }
 
 void GLProgramCache::reloadDefaultGLPrograms()
