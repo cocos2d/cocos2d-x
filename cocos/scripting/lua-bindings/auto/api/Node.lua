@@ -40,7 +40,8 @@
 -- 0 is the default rotation angle.<br>
 -- Positive values rotate node clockwise, and negative values for anti-clockwise.<br>
 -- param rotationY    The Y rotation in degrees.<br>
--- warning The physics body doesn't support this.
+-- warning The physics body doesn't support this.<br>
+-- js setRotationY
 -- @function [parent=#Node] setRotationSkewY 
 -- @param self
 -- @param #float rotationY
@@ -169,7 +170,8 @@
 -- 0 is the default rotation angle.<br>
 -- Positive values rotate node clockwise, and negative values for anti-clockwise.<br>
 -- param rotationX    The X rotation in degrees which performs a horizontal rotational skew.<br>
--- warning The physics body doesn't support this.
+-- warning The physics body doesn't support this.<br>
+-- js setRotationX
 -- @function [parent=#Node] setRotationSkewX 
 -- @param self
 -- @param #float rotationX
@@ -227,7 +229,8 @@
         
 --------------------------------
 -- Returns the position (X,Y,Z) in its parent's coordinate system.<br>
--- return The position (X, Y, and Z) in its parent's coordinate system.
+-- return The position (X, Y, and Z) in its parent's coordinate system.<br>
+-- js NA
 -- @function [parent=#Node] getPosition3D 
 -- @param self
 -- @return vec3_table#vec3_table ret (return value: vec3_table)
@@ -372,7 +375,8 @@
         
 --------------------------------
 -- Returns the rotation (X,Y,Z) in degrees.<br>
--- return The rotation of the node in 3d.
+-- return The rotation of the node in 3d.<br>
+-- js NA
 -- @function [parent=#Node] getRotation3D 
 -- @param self
 -- @return vec3_table#vec3_table ret (return value: vec3_table)
@@ -461,7 +465,8 @@
 -- In order to use this property correctly.<br>
 -- `setPositionZ()` also sets the `setGlobalZValue()` with the positionZ as value.<br>
 -- see `setGlobalZValue()`<br>
--- param positionZ  OpenGL Z vertex of this node.
+-- param positionZ  OpenGL Z vertex of this node.<br>
+-- js setVertexZ
 -- @function [parent=#Node] setPositionZ 
 -- @param self
 -- @param #float positionZ
@@ -471,7 +476,8 @@
 -- Sets the rotation (X,Y,Z) in degrees.<br>
 -- Useful for 3d rotations.<br>
 -- warning The physics body doesn't support this.<br>
--- param rotation The rotation of the node in 3d.
+-- param rotation The rotation of the node in 3d.<br>
+-- js NA
 -- @function [parent=#Node] setRotation3D 
 -- @param self
 -- @param #vec3_table rotation
@@ -741,7 +747,8 @@
 --------------------------------
 -- Gets position Z coordinate of this node.<br>
 -- see setPositionZ(float)<br>
--- return The position Z coordinate of this node.
+-- return The position Z coordinate of this node.<br>
+-- js getVertexZ
 -- @function [parent=#Node] getPositionZ 
 -- @param self
 -- @return float#float ret (return value: float)
@@ -1020,7 +1027,8 @@
 
 --------------------------------
 -- Sets the position (X, Y, and Z) in its parent's coordinate system.<br>
--- param position The position (X, Y, and Z) in its parent's coordinate system.
+-- param position The position (X, Y, and Z) in its parent's coordinate system.<br>
+-- js NA
 -- @function [parent=#Node] setPosition3D 
 -- @param self
 -- @param #vec3_table position
@@ -1081,7 +1089,8 @@
 --------------------------------
 -- Gets the X rotation (angle) of the node in degrees which performs a horizontal rotation skew.<br>
 -- see `setRotationSkewX(float)`<br>
--- return The X rotation in degrees.
+-- return The X rotation in degrees.<br>
+-- js getRotationX 
 -- @function [parent=#Node] getRotationSkewX 
 -- @param self
 -- @return float#float ret (return value: float)
@@ -1089,7 +1098,8 @@
 --------------------------------
 -- Gets the Y rotation (angle) of the node in degrees which performs a vertical rotational skew.<br>
 -- see `setRotationSkewY(float)`<br>
--- return The Y rotation in degrees.
+-- return The Y rotation in degrees.<br>
+-- js getRotationY
 -- @function [parent=#Node] getRotationSkewY 
 -- @param self
 -- @return float#float ret (return value: float)
