@@ -87,24 +87,28 @@ public:
      * @param touch Touch infomation.
      * @param unused_event Event information.
      * @return if return false, onTouchMoved, onTouchEnded, onTouchCancelled will never called.
+     * @js NA
      */
     virtual bool onTouchBegan(Touch *touch, Event *unused_event);
     /** Callback function for touch moved.
     *
     * @param touch Touch infomation.
     * @param unused_event Event information.
+    * @js NA
     */
     virtual void onTouchMoved(Touch *touch, Event *unused_event);
     /** Callback function for touch ended.
     *
     * @param touch Touch infomation.
     * @param unused_event Event information.
+    * @js NA
     */
     virtual void onTouchEnded(Touch *touch, Event *unused_event);
     /** Callback function for touch cancelled.
     *
     * @param touch Touch infomation.
     * @param unused_event Event information.
+    * @js NA
     */
     virtual void onTouchCancelled(Touch *touch, Event *unused_event);
 
@@ -112,27 +116,34 @@ public:
     *
     * @param touches Touches information.
     * @param unused_event Event information.
+    * @js NA
     */
     virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event *unused_event);
     /** Callback function for multiple touches moved.
     *
     * @param touches Touches information.
     * @param unused_event Event information.
+    * @js NA
     */
     virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event *unused_event);
     /** Callback function for multiple touches ended.
     *
     * @param touches Touches information.
     * @param unused_event Event information.
+    * @js NA
     */
     virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event *unused_event);
     /** Callback function for multiple touches cancelled.
     *
     * @param touches Touches information.
     * @param unused_event Event information.
+    * @js NA
     */
     virtual void onTouchesCancelled(const std::vector<Touch*>&touches, Event *unused_event);
-    /** @deprecated Please override onAcceleration */
+    /** 
+      @deprecated Please override onAcceleration 
+      @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE virtual void didAccelerate(Acceleration* accelerationValue) final {};
 
 	/* Callback function should not be deprecated, it will generate lots of warnings.
@@ -141,6 +152,7 @@ public:
     /** Callback funtion for acceleration.
      * @param acc Acceleration information.
      * @param unused_event Event information.
+     * @js NA
      */
     virtual void onAcceleration(Acceleration* acc, Event* unused_event);
 
@@ -153,6 +165,7 @@ public:
     TouchDispatcher::sharedDispatcher()->addTargetedDelegate(this,INT_MIN+1,true);
     }
     @since v0.8.0
+    @js NA
     */
     CC_DEPRECATED_ATTRIBUTE virtual void registerWithTouchDispatcher() final {};
 
@@ -160,6 +173,7 @@ public:
     You can enable / disable touch events with this property.
     Only the touches of this node will be affected. This "method" is not propagated to it's children.
     @since v0.8.1
+    @js NA
     */
     CC_DEPRECATED_ATTRIBUTE bool isTouchEnabled() const;
     CC_DEPRECATED_ATTRIBUTE void setTouchEnabled(bool value);
@@ -167,13 +181,17 @@ public:
     CC_DEPRECATED_ATTRIBUTE virtual void setTouchMode(Touch::DispatchMode mode);
     CC_DEPRECATED_ATTRIBUTE virtual Touch::DispatchMode getTouchMode() const;
 
-    /** swallowsTouches of the touch events. Default is true */
+    /** 
+      swallowsTouches of the touch events. Default is true 
+      @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE virtual void setSwallowsTouches(bool swallowsTouches);
     CC_DEPRECATED_ATTRIBUTE virtual bool isSwallowsTouches() const;
 
     /** whether or not it will receive Accelerometer events
     You can enable / disable accelerometer events with this property.
     @since v0.8.1
+    @js NA
     */
     CC_DEPRECATED_ATTRIBUTE virtual bool isAccelerometerEnabled() const;
     CC_DEPRECATED_ATTRIBUTE virtual void setAccelerometerEnabled(bool value);
@@ -182,15 +200,22 @@ public:
     /** whether or not it will receive keyboard or keypad events
     You can enable / disable accelerometer events with this property.
     it's new in cocos2d-x
+    @js NA
     */
 
     CC_DEPRECATED_ATTRIBUTE virtual bool isKeyboardEnabled() const;
     CC_DEPRECATED_ATTRIBUTE virtual void setKeyboardEnabled(bool value);
 
-    /** Please use onKeyPressed instead. */
+    /** 
+      Please use onKeyPressed instead. 
+      @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE virtual void keyPressed(int keyCode) final {};
     
-    /** Please use onKeyReleased instead. */
+    /** 
+      Please use onKeyReleased instead. 
+      @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE virtual void keyReleased(int keyCode) final {};
 
 	/* Callback function should not be deprecated, it will generate lots of warnings.
@@ -199,18 +224,23 @@ public:
     /** Callback function for key pressed.
      * @param keyCode KeyCode information.
      * @param event Event information.
+     * @js NA
      */
     virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
     /** Callback function for key released.
     * @param keyCode KeyCode information.
     * @param event Event information.
+    * @js NA
     */
     virtual void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
 
     CC_DEPRECATED_ATTRIBUTE virtual bool isKeypadEnabled() const final { return _keyboardEnabled; }
     CC_DEPRECATED_ATTRIBUTE virtual void setKeypadEnabled(bool value);
 
-    /** @deprecated Please override onKeyReleased and check the keycode of KeyboardEvent::KeyCode::Menu(KEY_BACKSPACE) instead. */
+    /** 
+      @deprecated Please override onKeyReleased and check the keycode of KeyboardEvent::KeyCode::Menu(KEY_BACKSPACE) instead. 
+      @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE virtual void keyBackClicked() final {};
     CC_DEPRECATED_ATTRIBUTE virtual void keyMenuClicked() final {};
 
@@ -254,6 +284,7 @@ private:
  - opacity
  - RGB colors
  @since 2.1
+ @js NA
  */
 class CC_DLL __LayerRGBA : public Layer, public __RGBAProtocol
 {
