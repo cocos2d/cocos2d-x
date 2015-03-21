@@ -40,7 +40,7 @@ NS_CC_BEGIN
 class Animation;
 
 /**
- * @addtogroup sprite_nodes
+ * @addtogroup _2d
  * @{
  */
 

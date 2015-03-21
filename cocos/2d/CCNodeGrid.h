@@ -32,6 +32,10 @@
 NS_CC_BEGIN
 
 class GridBase;
+/**
+ *  @addtogroup _2d
+ *  @{
+ */
 
 /**
  * @brief Base class for Grid Node.
@@ -89,6 +93,7 @@ protected:
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(NodeGrid);
 };
+/** @} */
 NS_CC_END
 
 #endif

@@ -41,7 +41,7 @@ class Texture2D;
 class SpriteFrame;
 
 /**
- * @addtogroup sprite_nodes
+ * @addtogroup _2d
  * @{
  */
 
