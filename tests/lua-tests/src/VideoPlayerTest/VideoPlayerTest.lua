@@ -3,14 +3,31 @@ local centerPos   = cc.p(visibleRect.x + visibleRect.width / 2,visibleRect.y + v
 
 local function VideoPlayerTest()
     local layer = cc.Layer:create() --createTestLayer("VideoPlayerTest", "")
-    titleLabel = cc.Label:createWithTTF("VideoPlayerTest", s_arialPath, 28)
-    titleLabel:setAnchorPoint(cc.p(0.5, 0.5))
-    layer:addChild(titleLabel, 1)
     
     cc.MenuItemFont:setFontSize(16)
 
-    widget = ccs.GUIReader:getInstance():widgetFromJsonFile("cocosui/UITest/UITest.json")
+    local widget = ccui.Layout:create()
+    widget:setAnchorPoint(cc.p(0.0, 0.0))
+    widget:setPosition(cc.p(0.0, 0.0))
+    widget:setName("root_Panel")
+    widget:setTag(81)
+    widget:setContentSize(cc.size(480,320))
+    widget:setBackGroundImage("cocosui/UITest/background.png")
     layer:addChild(widget)
+
+    local backgroundPanel = ccui.Layout:create()
+    backgroundPanel:setName("background_Panel")
+    backgroundPanel:setTag(83)
+    backgroundPanel:setBackGroundImage("cocosui/UITest/buttonBackground.png")
+    backgroundPanel:setBackGroundImageScale9Enabled(true)
+    backgroundPanel:setContentSize(cc.size(300,170))
+    backgroundPanel:setAnchorPoint(cc.p(0.0, 0.0))
+    backgroundPanel:setPosition(cc.p(90, 75))
+    widget:addChild(backgroundPanel)
+
+    local titleLabel = cc.Label:createWithTTF("VideoPlayerTest", s_arialPath, 28)
+    titleLabel:setPosition(cc.p(240, 307))
+    widget:addChild(titleLabel, 1)
 
     local videoStateLabel = cc.Label:createWithSystemFont("IDLE","Arial",16)
     videoStateLabel:setAnchorPoint(cc.p(1, 0.5))
