@@ -17,7 +17,6 @@
         
 --------------------------------
 --  BlendFunction. Conforms to BlendProtocol protocol <br>
--- js NA<br>
 -- lua NA
 -- @function [parent=#LayerColor] getBlendFunc 
 -- @param self
