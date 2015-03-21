@@ -39,8 +39,8 @@ class NodeGrid;
  * @{
  */
 
-/**
-@brief A transition which peels back the bottom right hand corner of a scene
+/** @class TransitionPageTurn
+* @brief A transition which peels back the bottom right hand corner of a scene
 to transition to the scene beneath it simulating a page turn.
 
 This uses a 3DAction so it's strongly recommended that depth buffering
@@ -57,6 +57,11 @@ public:
      * Creates a base transition with duration and incoming scene.
      * If back is true then the effect is reversed to appear as if the incoming
      * scene is being turned from left over the outgoing scene.
+     *
+     * @param t Duration time, in seconds.
+     * @param scene A given scene.
+     * @param backwards If back is true then the effect is reversed to appear as if the incoming scene is being turned from left over the outgoing scene.
+     * @return An autoreleased TransitionPageTurn object.
      */
     static TransitionPageTurn* create(float t,Scene* scene,bool backwards);
     
@@ -66,12 +71,22 @@ public:
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
     /**
-    * Creates a base transition with duration and incoming scene.
-    * If back is true then the effect is reversed to appear as if the incoming 
-    * scene is being turned from left over the outgoing scene.
-    */
+     * Creates a base transition with duration and incoming scene.
+     * If back is true then the effect is reversed to appear as if the incoming
+     * scene is being turned from left over the outgoing scene.
+     *
+     * @param t Duration time, in seconds.
+     * @param scene A given scene.
+     * @param backwards If back is true then the effect is reversed to appear as if the incoming scene is being turned from left over the outgoing scene.
+     * @return True if initialize success.
+     */
     bool initWithDuration(float t,Scene* scene,bool backwards);
 
+    /** Returns the action that will be performed with size.
+     *
+     * @param size A given size.
+     * @return The action that will be performed.
+     */
     ActionInterval* actionWithSize(const Size& vector);
 
     //
