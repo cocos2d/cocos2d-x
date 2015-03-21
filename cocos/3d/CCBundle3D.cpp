@@ -733,18 +733,26 @@ bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
             meshData->subMeshIndices.push_back(indexArray);
             meshData->numIndex = (int)meshData->subMeshIndices.size();
 
-            //meshData->subMeshAABB.push_back(calculateAABB(meshData->vertex, meshData->getPerVertexSize(), indexArray));
-            const rapidjson::Value& mesh_part_aabb = mesh_part[AABBS];
-            if (mesh_part.HasMember(AABBS) && mesh_part_aabb.Size() == 6)
+            if (mesh_part.HasMember(AABBS))
             {
-                Vec3 min = Vec3(mesh_part_aabb[(rapidjson::SizeType)0].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)1].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)2].GetDouble());
-                Vec3 max = Vec3(mesh_part_aabb[(rapidjson::SizeType)3].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)4].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)5].GetDouble());
-                meshData->subMeshAABB.push_back(AABB(min, max));
+                const rapidjson::Value& mesh_part_aabb = mesh_part[AABBS];
+                
+                if (mesh_part_aabb.Size() == 6)
+                {
+                    Vec3 min = Vec3(mesh_part_aabb[(rapidjson::SizeType)0].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)1].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)2].GetDouble());
+                    Vec3 max = Vec3(mesh_part_aabb[(rapidjson::SizeType)3].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)4].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)5].GetDouble());
+                    meshData->subMeshAABB.push_back(AABB(min, max));
+                }
+                else
+                {
+                    meshData->subMeshAABB.push_back(calculateAABB(meshData->vertex, meshData->getPerVertexSize(), indexArray));
+                }
             }
             else
             {
                 meshData->subMeshAABB.push_back(calculateAABB(meshData->vertex, meshData->getPerVertexSize(), indexArray));
             }
+         
         }
         meshdatas.meshDatas.push_back(meshData);
     }

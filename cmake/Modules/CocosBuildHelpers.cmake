@@ -167,6 +167,12 @@ elseif(COCOS_TARGET_SYSTEM_LINUX)
 
     add_definitions("-DLINUX")
 
+    # set binaries's default output directory to bin,
+    # can be override by command lines's same option.
+    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "lib" CACHE PATH "")
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "lib" CACHE PATH "")
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "bin" CACHE PATH "")
+
 elseif(COCOS_TARGET_SYSTEM_IOS)
     # cocos source code ouse macro 'CC_TARGET_OS_IPHONE' to determine is iOS or not.
     add_definitions(-DCC_TARGET_OS_IPHONE)
@@ -313,29 +319,16 @@ endfunction()
 #===============================================================================
 # Define a helper function for tweak the target output directory.
 function(cocos_tweak_target_output_directory _target)
-
 # Set output directory to build folder, for match the xcode target position.
 # The xcode target default build location is: 
 #   $(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 # But the cmake created xcodeproj's default product path is:
 #   $(PROJ_DIR)/build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
-# camke issue:http://public.kitware.com/Bug/bug_relationship_graph.php?bug_id=14853&graph=dependency
+# cmake issue:http://public.kitware.com/Bug/bug_relationship_graph.php?bug_id=14853&graph=dependency
 # It seems there is no way to change the product path, so redirect all target
 #   build location to the default product path.
     if(XCODE_VERSION)
         set(_default_dir "${CMAKE_BINARY_DIR}/build/${CMAKE_CFG_INTDIR}")
-        set_target_properties(${_target} PROPERTIES
-            ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${_default_dir}"
-            LIBRARY_OUTPUT_DIRECTORY_DEBUG "${_default_dir}"
-            RUNTIME_OUTPUT_DIRECTORY_DEBUG "${_default_dir}"
-            ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${_default_dir}"
-            LIBRARY_OUTPUT_DIRECTORY_RELEASE "${_default_dir}"
-            RUNTIME_OUTPUT_DIRECTORY_RELEASE "${_default_dir}"
-            )
-    endif()
-
-    if(CMAKE_GENERATOR MATCHES "Makefiles")
-        set(_default_dir "${CMAKE_BINARY_DIR}/build/${CMAKE_BUILD_TYPE}")
         set_target_properties(${_target} PROPERTIES
             ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${_default_dir}"
             LIBRARY_OUTPUT_DIRECTORY_DEBUG "${_default_dir}"

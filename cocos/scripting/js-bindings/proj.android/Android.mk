@@ -34,10 +34,7 @@ LOCAL_MODULE := cocos2d_js_static
 LOCAL_MODULE_FILENAME := libjscocos2d
 
 LOCAL_SRC_FILES := ../auto/jsb_cocos2dx_auto.cpp \
-                   ../auto/jsb_cocos2dx_builder_auto.cpp \
                    ../auto/jsb_cocos2dx_extension_auto.cpp \
-                   ../auto/jsb_cocos2dx_spine_auto.cpp \
-                   ../auto/jsb_cocos2dx_studio_auto.cpp \
                    ../auto/jsb_cocos2dx_ui_auto.cpp \
                    ../manual/ScriptingCore.cpp \
                    ../manual/cocos2d_specifics.cpp \
@@ -52,17 +49,13 @@ LOCAL_SRC_FILES := ../auto/jsb_cocos2dx_auto.cpp \
                    ../manual/chipmunk/js_bindings_chipmunk_functions.cpp \
                    ../manual/chipmunk/js_bindings_chipmunk_manual.cpp \
                    ../manual/chipmunk/js_bindings_chipmunk_registration.cpp \
-                   ../manual/cocosbuilder/js_bindings_ccbreader.cpp \
-                   ../manual/cocostudio/jsb_cocos2dx_studio_manual.cpp \
                    ../manual/extension/jsb_cocos2dx_extension_manual.cpp \
                    ../manual/localstorage/js_bindings_system_functions.cpp \
                    ../manual/localstorage/js_bindings_system_registration.cpp \
                    ../manual/network/jsb_socketio.cpp \
                    ../manual/network/jsb_websocket.cpp \
                    ../manual/network/XMLHTTPRequest.cpp \
-                   ../manual/spine/jsb_cocos2dx_spine_manual.cpp \
                    ../manual/ui/jsb_cocos2dx_ui_manual.cpp \
-                   ../manual/cocostudio/jsb_cocos2dx_studio_conversions.cpp
                    
 
 LOCAL_CFLAGS := -DCOCOS2D_JAVASCRIPT
@@ -78,9 +71,6 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../manual \
                     $(LOCAL_PATH)/../../../audio/include \
                     $(LOCAL_PATH)/../../../storage \
                     $(LOCAL_PATH)/../../../../extensions \
-                    $(LOCAL_PATH)/../../../editor-support/spine \
-                    $(LOCAL_PATH)/../../../editor-support/cocosbuilder \
-                    $(LOCAL_PATH)/../../../editor-support/cocostudio \
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../manual \
