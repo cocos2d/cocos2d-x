@@ -379,7 +379,6 @@ public:
     virtual void setContentSize(const Size & var) override;
     /** BlendFunction. Conforms to BlendProtocol protocol */
     /**
-    * @js NA
     * @lua NA
     */
     virtual const BlendFunc& getBlendFunc() const override;
@@ -575,7 +574,6 @@ class CC_DLL LayerMultiplex : public Layer
 {
 public:
     /** Creates and initializes a LayerMultiplex object.
-     * @js NA
      * @lua NA
      * 
      * @return An autoreleased LayerMultiplex object.
