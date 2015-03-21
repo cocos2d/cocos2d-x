@@ -13,14 +13,14 @@
     - [Windows](#windows)
     - [Linux](#linux)
   - [How to start a new game](#how-to-start-a-new-game)
-- [Notes](#notes)
 - [v4.0alpha1](#v40alpha1)
-  - [Notes](#notes-1)
+  - [Notes](#notes)
   - [Highlights](#highlights)
   - [Details](#details)
     - [Windows image components(WIC)](#windows-image-componentswic)
     - [Remove extension in cocos2d-x repo](#remove-extension-in-cocos2d-x-repo)
 - [v4.0alpha0](#v40alpha0)
+  - [Notes](#notes-1)
   - [Highlights](#highlights-1)
   - [Details](#details-1)
     - [Rendering: Draw call migrated to VertexData](#rendering-draw-call-migrated-to-vertexdata)
@@ -116,10 +116,6 @@ Run
 ## How to start a new game
 
 Please refer to this document: [ReadMe](../README.md)
-#Notes
-* Visual studio 2012 has been removed, Visual studio 2013 solution file is used instead, it provide better c++11 features.
-* Windows Phone 8.0 support has been removed.
-* Functions and classes which is deprecated in v2.x has been removed.
 
 #v4.0alpha1
 ##Notes
@@ -148,6 +144,11 @@ We have start the first step, removing the extensions source code. The next step
 * add extensions: `cocos framework add gaf`
 
 # v4.0alpha0
+##Notes
+* Visual studio 2012 has been removed, Visual studio 2013 solution file is used instead, it provide better c++11 features.
+* Windows Phone 8.0 support has been removed.
+* Functions and classes which is deprecated in v2.x has been removed.
+
 ##Highlights
 * Merge JSB
 * Rendering: Draw call migrated to VertexData
