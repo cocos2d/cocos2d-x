@@ -428,6 +428,15 @@ void UserDefault::destroyInstance()
     CC_SAFE_DELETE(_userDefault);
 }
 
+void UserDefault::setDelegate(UserDefault *delegate)
+{
+    if (_userDefault)
+        delete _userDefault;
+
+    _userDefault = delegate;
+}
+
+
 // FIXME:: deprecated
 UserDefault* UserDefault::sharedUserDefault()
 {
@@ -502,7 +511,6 @@ const string& UserDefault::getXMLFilePath()
 void UserDefault::flush()
 {
 }
-
 NS_CC_END
 
 #endif // (CC_TARGET_PLATFORM != CC_PLATFORM_IOS && CC_PLATFORM != CC_PLATFORM_ANDROID)
