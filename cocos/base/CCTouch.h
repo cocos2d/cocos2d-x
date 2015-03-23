@@ -43,13 +43,17 @@ NS_CC_BEGIN
 class CC_DLL Touch : public Ref
 {
 public:
-    /** Dispatch mode, how the touches are dispathced. */
+    /** 
+     * Dispatch mode, how the touches are dispathced.
+     * @js NA
+     */
     enum class DispatchMode {
         ALL_AT_ONCE, /** All at once. */
         ONE_BY_ONE,  /** One by one. */
     };
 
     /** Constructor.
+     * @js ctor
      */
     Touch() 
         : _id(0),
