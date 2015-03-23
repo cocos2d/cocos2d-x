@@ -30,6 +30,9 @@
 
 NS_CC_BEGIN
 
+/**
+ * Axis Aligned Bounding Box (AABB), usually caculate some rough but fast collision detection.
+ */
 class CC_DLL AABB
 {
 
@@ -90,10 +93,13 @@ public:
     void set(const Vec3& min, const Vec3& max);
     
     /**
-     * reset min and max value.
+     * Reset min and max value.If you invoke this method, isEmpty() shall return true.
      */
     void reset();
     
+    /**
+     * check the AABB object is empty(reset).
+     */
     bool isEmpty() const;
 
     /**

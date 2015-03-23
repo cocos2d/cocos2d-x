@@ -64,7 +64,10 @@ class CC_DLL BaseLight : public Node
 {
 public:
     
-    //get light type
+    /**
+     * Get the light type,light type MUST be one of LightType::DIRECTIONAL ,
+     * LightType::POINT, LightType::SPOT, LightType::AMBIENT.
+     */
     virtual LightType getLightType() const = 0;
     
     /** intensity getter and setter */

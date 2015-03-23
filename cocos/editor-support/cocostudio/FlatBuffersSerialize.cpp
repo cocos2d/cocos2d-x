@@ -1404,7 +1404,8 @@ Offset<ProjectNodeOptions> FlatBuffersSerialize::createProjectNodeOptionsForSimu
     
     return CreateProjectNodeOptions(*_builder,
                                     nodeOptions,
-                                    _builder->CreateString(filename));
+                                    _builder->CreateString(filename),
+                                    innerspeed);
 }
     
 }
