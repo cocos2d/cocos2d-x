@@ -124,13 +124,13 @@
 -- @return Camera#Camera ret (return value: cc.Camera)
         
 --------------------------------
--- 
+-- Get the default camera of the current running scene.
 -- @function [parent=#Camera] getDefaultCamera 
 -- @param self
 -- @return Camera#Camera ret (return value: cc.Camera)
         
 --------------------------------
--- 
+-- Get the visiting camera , the visiting camera shall be set on Scene::render
 -- @function [parent=#Camera] getVisitingCamera 
 -- @param self
 -- @return Camera#Camera ret (return value: cc.Camera)
