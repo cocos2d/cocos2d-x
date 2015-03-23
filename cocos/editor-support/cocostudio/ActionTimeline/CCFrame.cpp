@@ -595,20 +595,16 @@ ColorFrame* ColorFrame::create()
 }
 
 ColorFrame::ColorFrame()
-    : _alpha(255)
-    , _color(Color3B(255, 255, 255))
+: _color(Color3B(255, 255, 255))
 {
 }
 
 void ColorFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
-    _node->setOpacity(_alpha);
     _node->setColor(_color);
 
     if(_tween)
     {
-        _betweenAlpha = static_cast<ColorFrame*>(nextFrame)->_alpha - _alpha;
-
         const Color3B& color = static_cast<ColorFrame*>(nextFrame)->_color;
         _betweenRed   = color.r - _color.r;
         _betweenGreen = color.g - _color.g;
@@ -618,16 +614,13 @@ void ColorFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 
 void ColorFrame::apply(float percent)
 {
-    if (_tween && (_betweenAlpha !=0 || _betweenRed != 0 || _betweenGreen != 0 || _betweenBlue != 0))
+    if (_tween && (_betweenRed != 0 || _betweenGreen != 0 || _betweenBlue != 0))
     {
-        GLubyte alpha = _alpha + _betweenAlpha * percent;
-
         Color3B color;
         color.r = _color.r+ _betweenRed   * percent;
         color.g = _color.g+ _betweenGreen * percent;
         color.b = _color.b+ _betweenBlue  * percent;
 
-        _node->setOpacity(alpha);
         _node->setColor(color);
     }
 }
@@ -635,7 +628,6 @@ void ColorFrame::apply(float percent)
 Frame* ColorFrame::clone()
 {
     ColorFrame* frame = ColorFrame::create();
-    frame->setAlpha(_alpha);
     frame->setColor(_color);
 
     frame->cloneProperty(this);
