@@ -325,9 +325,7 @@ cocos_load_prebuilt_package(jpeg)
 #cocos_load_prebuilt_package(json) #This package is all herder file.
 
 if(COCOS_TARGET_SYSTEM_IOS)
-    cocos_load_prebuilt_package(lua
-        INCLUDE_PATH "lua"
-        )
+    cocos_load_prebuilt_package(lua)
 endif()
 
 cocos_load_prebuilt_package(luajit

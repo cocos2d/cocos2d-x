@@ -30,7 +30,6 @@ set(cocos_root ${COCOS2D-X_SOURCE_DIR})
 # Define library target 'luacocos2d'.
 set(LUACOCOS2D_TARGET "luacocos2d" CACHE INTERNAL "")
 add_library(${LUACOCOS2D_TARGET} ${CMAKE_CURRENT_LIST_FILE})
-cocos_tweak_target_output_directory(${LUACOCOS2D_TARGET})
 
 #===============================================================================
 # Set include directories.
