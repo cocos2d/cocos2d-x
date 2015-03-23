@@ -299,10 +299,15 @@ public:
     virtual void apply(float percent) override;
     virtual Frame* clone() override;
 
+    /** @deprecated Use method setAlpha() and getAlpha() of AlphaFrame instead */
+    CC_DEPRECATED_ATTRIBUTE inline void    setAlpha(GLubyte alpha) { _alpha = alpha; }
+    CC_DEPRECATED_ATTRIBUTE inline GLubyte getAlpha() const { return _alpha; }
+
     inline void    setColor(const cocos2d::Color3B& color) { _color = color; }
     inline cocos2d::Color3B getColor() const { return _color; }
 
 protected:
+    GLubyte _alpha;
     cocos2d::Color3B _color;
 
     int _betweenRed;
