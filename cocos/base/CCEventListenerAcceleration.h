@@ -30,12 +30,23 @@
 
 NS_CC_BEGIN
 
+/** @class EventListenerAcceleration
+ * @brief Acceleration event listener.
+ */
 class CC_DLL EventListenerAcceleration : public EventListener
 {
 public:
     static const std::string LISTENER_ID;
     
+    /** Create a acceleration EventListener.
+     *
+     * @param callback The acceleration callback method.
+     * @return An autoreleased EventListenerAcceleration object.
+     */
     static EventListenerAcceleration* create(const std::function<void(Acceleration*, Event*)>& callback);
+    
+    /** Destructor.
+     */
     virtual ~EventListenerAcceleration();
     
     /// Overrides
