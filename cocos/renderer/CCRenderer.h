@@ -48,42 +48,63 @@ class MeshCommand;
 */
 class RenderQueue {
 public:
+    /**
+    RenderCommand will be divided into Queue Groups.
+    */
     enum QUEUE_GROUP
     {
+        /**Objects with globalZ smaller than 0.*/
         GLOBALZ_NEG = 0,
+        /**Opaque 3D objects with 0 globalZ.*/
         OPAQUE_3D = 1,
+        /**Transparent 3D objects with 0 globalZ.*/
         TRANSPARENT_3D = 2,
+        /**2D objects with 0 globalZ.*/
         GLOBALZ_ZERO = 3,
+        /**Objects with globalZ bigger than 0.*/
         GLOBALZ_POS = 4,
         QUEUE_COUNT = 5,
     };
 
 public:
+    /**Constructor.*/
     RenderQueue()
     {
         clear();
     }
+    /**Push a renderCommand into current renderqueue.*/
     void push_back(RenderCommand* command);
+    /**Return the number of render commands.*/
     ssize_t size() const;
+    /**Sort the render commands.*/
     void sort();
+    /**Treat sorted commands as an array, access them one by one.*/
     RenderCommand* operator[](ssize_t index) const;
+    /**Clear all rendered commands.*/
     void clear();
+    /**Get a sub group of the render queue.*/
     inline std::vector<RenderCommand*>& getSubQueue(QUEUE_GROUP group) { return _commands[group]; }
+    /**Get the number of render commands contained in a subqueue.*/
     inline ssize_t getSubQueueSize(QUEUE_GROUP group) const { return _commands[group].size();}
 
+    /**Save the current DepthState, CullState, DepthWriteState render state.*/
     void saveRenderState();
+    /**Restore the saved DepthState, CullState, DepthWriteState render state.*/
     void restoreRenderState();
     
 protected:
-    
+    /**The commands in the render queue.*/
     std::vector<std::vector<RenderCommand*>> _commands;
     
-    //Render State related
+    /**Cull state.*/
     bool _isCullEnabled;
+    /**Depth test enable state.*/
     bool _isDepthEnabled;
+    /**Depth buffer write state.*/
     GLboolean _isDepthWrite;
 };
 
+//the struct is not used outside.
 struct RenderStackElement
 {
     int renderQueueID;
@@ -99,13 +120,17 @@ Whenever possible prefer to use `QuadCommand` objects since the renderer will au
 class CC_DLL Renderer
 {
 public:
+    /**The max number of vertices in a vertex buffer object.*/
     static const int VBO_SIZE = 65536;
+    /**The max numer of indices in a index buffer.*/
     static const int INDEX_VBO_SIZE = VBO_SIZE * 6 / 4;
-    
+    /**The rendercommands which can be batched will be saved into a list, this is the reversed size of this list.*/
     static const int BATCH_QUADCOMMAND_RESEVER_SIZE = 64;
+    /**Reserved for material id, which means that the command could not be batched.*/
     static const int MATERIAL_ID_DO_NOT_BATCH = 0;
-    
+    /**Constructor.*/
     Renderer();
+    /**Destructor.*/
     ~Renderer();
 
     //TODO: manage GLView inside Render itself
@@ -155,6 +180,7 @@ public:
      */
     void setDepthTest(bool enable);
     
+    //This will not be used outside.
     inline GroupCommandManager* getGroupCommandManager() const { return _groupCommandManager; };
 
     /** returns whether or not a rectangle is visible or not */

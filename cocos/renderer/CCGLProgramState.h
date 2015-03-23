@@ -124,23 +124,36 @@ protected:
      */
 };
 
-//
-//
-// VertexAttribValue
-//
-//
+/**Vertex Attribute Value, which is an abstraction of VertexAttribute and data pointer.*/
 class CC_DLL VertexAttribValue
 {
     friend class GLProgram;
     friend class GLProgramState;
 
 public:
+    /**
+    @{ 
+     Constuctor and Destructor.
+     @paran vertexAttrib VertexAttrib from shader.
+    */
     VertexAttribValue(VertexAttrib *vertexAttrib);
     VertexAttribValue();
     ~VertexAttribValue();
-
+    
+    /**@}*/
+    
+    /**
+     Set the data pointer, which is similar as glVertexAttribPointer.
+     @param size The number of type in the vertex attribute.
+     @param type The type of data in vertex attribute.
+     @param normalized If true, 0-255 data will be mapped to 0.0-1.0.
+     @param stride The number of bytes if an interleaved vertex array is used. 0 means array is not interleaved.
+     @param pointer The pointer to the vertex data.
+     */
 	void setPointer(GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLvoid *pointer);
+    /**Set a user call back for set VertexAttrib array.*/
     void setCallback(const std::function<void(VertexAttrib*)> &callback);
+    /**Apply the vertex attribute to the openGL pipeline.*/
     void apply();
 
 protected:
@@ -187,28 +200,47 @@ public:
     /** gets-or-creates an instance of GLProgramState for a given GLProgramName */
     static GLProgramState* getOrCreateWithGLProgramName(const std::string &glProgramName );
 
-    // apply GLProgram, attributes and uniforms
-    void apply(const Mat4& modelView);
-    
-    void applyGLProgram(const Mat4& modelView);
-    /**
-     * apply vertex attributes
-     * @param applyAttribFlags Call GL::enableVertexAttribs(_vertexAttribsFlags) or not
+    /** @{
+     Apply GLProgram, attributes and uniforms.
+     `apply` function will apply all the states, include GLProgram, attributes and uniforms.
+     `applyGLProgram` function will apply GLProgram and built in uniform.
+     `applyAttributes` will apply the vertex attributes.
+     `applyUniforms` will apply user defined uniforms.
+     
+     @param The applied modelView matrix to shader.
+     @param applyAttribFlags Call GL::enableVertexAttribs(_vertexAttribsFlags) or not.
      */
+    void apply(const Mat4& modelView);
+    void applyGLProgram(const Mat4& modelView);
     void applyAttributes(bool applyAttribFlags = true);
     void applyUniforms();
-
+    /**@}*/
+    
+    /**@{ 
+     Setter and Getter of the owner GLProgram binded in this program state.
+     */
     void setGLProgram(GLProgram* glprogram);
     GLProgram* getGLProgram() const { return _glprogram; }
-
-    // vertex attribs
+    
+    /**@}*/
+    
+    /** Get the flag of vertex attribs used by OR operation.*/
     uint32_t getVertexAttribsFlags() const { return _vertexAttribsFlags; }
+    /**Get the number of vertex attributes.*/
     ssize_t getVertexAttribCount() const { return _attributes.size(); }
+    /**@{
+     Set the vertex attribute value.
+     */
     void setVertexAttribCallback(const std::string &name, const std::function<void(VertexAttrib*)> &callback);
     void setVertexAttribPointer(const std::string &name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLvoid *pointer);
-
-    // user defined uniforms
+    /**@}*/
+    
+    /**Get the number of user defined uniform count.*/
     ssize_t getUniformCount() const { return _uniforms.size(); }
+    
+    /** @{
+     Setting user defined uniforms by uniform string name in the shader.
+     */
     void setUniformInt(const std::string &uniformName, int value);
     void setUniformFloat(const std::string &uniformName, float value);
     void setUniformVec2(const std::string &uniformName, const Vec2& value);
@@ -218,7 +250,11 @@ public:
     void setUniformCallback(const std::string &uniformName, const std::function<void(GLProgram*, Uniform*)> &callback);
     void setUniformTexture(const std::string &uniformName, Texture2D *texture);
     void setUniformTexture(const std::string &uniformName, GLuint textureId);
-
+    /**@}*/
+    
+    /** @{
+     Setting user defined uniforms by uniform location in the shader.
+     */
     void setUniformInt(GLint uniformLocation, int value);
     void setUniformFloat(GLint uniformLocation, float value);
     void setUniformVec2(GLint uniformLocation, const Vec2& value);
@@ -228,7 +264,8 @@ public:
     void setUniformCallback(GLint uniformLocation, const std::function<void(GLProgram*, Uniform*)> &callback);
     void setUniformTexture(GLint uniformLocation, Texture2D *texture);
     void setUniformTexture(GLint uniformLocation, GLuint textureId);
-
+    /**@}*/
+    
 protected:
     GLProgramState();
     ~GLProgramState();
