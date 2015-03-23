@@ -48,6 +48,7 @@ class NodeGrid;
 /** @class TransitionEaseScene
  * @brief TransitionEaseScene can ease the actions of the scene protocol.
 @since v0.8.2
+@js NA
 */
 class CC_DLL TransitionEaseScene// : public Ref
 {
@@ -491,7 +492,6 @@ public:
     // Overrides
     //
     /**
-     * @js NA
      * @lua NA
      */
     virtual void onEnter() override;
@@ -533,7 +533,6 @@ public:
     // Overrides
     //
     /**
-     * @js NA
      * @lua NA
      */
     virtual void onEnter() override;
@@ -574,7 +573,6 @@ public:
     // Overrides
     //
     /**
-     * @js NA
      * @lua NA
      */
     virtual void onEnter() override;
@@ -615,7 +613,6 @@ public:
     // Overrides
     //
     /**
-     * @js NA
      * @lua NA
      */
     virtual void onEnter() override;
@@ -656,7 +653,6 @@ public:
     // Overrides
     //
     /**
-     * @js NA
      * @lua NA
      */
     virtual void onEnter() override;
@@ -697,7 +693,6 @@ public:
     // Overrides
     //
     /**
-     * @js NA
      * @lua NA
      */
     virtual void onEnter() override;
@@ -738,7 +733,6 @@ public:
     // Overrides
     //
     /**
-     * @js NA
      * @lua NA
      */
     virtual void onEnter() override;
@@ -776,12 +770,10 @@ public:
     static TransitionFade* create(float duration, Scene* scene);
 
     /**
-     * @js NA
      * @lua NA
      */
     virtual void onEnter() override;
     /**
-     * @js NA
      * @lua NA
      */
     virtual void onExit() override;
@@ -822,17 +814,14 @@ public :
     // Overrides
     //
     /**
-     * @js NA
      * @lua NA
      */
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     /**
-     * @js NA
      * @lua NA
      */
     virtual void onEnter() override;
     /**
-     * @js NA
      * @lua NA
      */
     virtual void onExit() override;
@@ -864,12 +853,17 @@ public :
     // Overrides
     //
     /**
-     * @js NA
      * @lua NA
      */
     virtual void onEnter() override;
+    /**
+     * @js NA
+     */
     virtual void onExit() override;
-    virtual ActionInterval * easeActionWithAction(ActionInterval * action) override;
+	virtual ActionInterval * easeActionWithAction(ActionInterval * action) override;
+	/**
+	* @js NA
+	*/
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
 CC_CONSTRUCTOR_ACCESS:
@@ -909,7 +903,6 @@ public:
     // Overrides
     //
     /**
-     * @js NA
      * @lua NA
      */
     virtual void onEnter() override;
