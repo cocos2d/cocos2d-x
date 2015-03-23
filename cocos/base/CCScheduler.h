@@ -209,7 +209,6 @@ public:
 
     /** 'update' the scheduler.
      * You should NEVER call this method, unless you know what you are doing.
-     * @js NA
      * @lua NA
      */
     void update(float dt);
@@ -330,7 +329,6 @@ public:
      This also includes the "update" selector.
      @param target The target to be unscheduled.
      @since v0.99.3
-     @js  unscheduleCallbackForTarget
      @lua NA
      */
     void unscheduleAllForTarget(void *target);
@@ -400,7 +398,6 @@ public:
      * @param target The target to be checked.
      * @return True if the target is paused, false if not.
      * @since v1.0.0
-     * @js isTargetPaused(var jsObject)
      * @lua NA
      */
     bool isTargetPaused(void *target);
@@ -430,6 +427,7 @@ public:
      This function is thread safe.
      @param function The function to be run in cocos2d thread.
      @since v3.0
+     @js NA
      */
     void performFunctionInCocosThread( const std::function<void()> &function);
     
@@ -445,6 +443,7 @@ public:
      delay is the amount of time the action will wait before it'll start
      @deprecated Please use `Scheduler::schedule` instead.
      @since v0.99.3, repeat and delay added in v1.1
+     @js NA
      */
     CC_DEPRECATED_ATTRIBUTE void scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, unsigned int repeat, float delay, bool paused)
     {
@@ -453,6 +452,7 @@ public:
     
     /** Calls scheduleSelector with CC_REPEAT_FOREVER and a 0 delay.
      *  @deprecated Please use `Scheduler::schedule` instead.
+     *  @js NA
      */
     CC_DEPRECATED_ATTRIBUTE void scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, bool paused)
     {
@@ -472,12 +472,14 @@ public:
      If you want to unschedule the "update", use unscheudleUpdateForTarget.
      @deprecated Please use 'Scheduler::unschedule' instead.
      @since v0.99.3
+     @js NA
      */
     CC_DEPRECATED_ATTRIBUTE void unscheduleSelector(SEL_SCHEDULE selector, Ref *target) { unschedule(selector, target); };
     
     /** Checks whether a selector for a given taget is scheduled.
      @deprecated Please use 'Scheduler::isScheduled' instead.
      @since v0.99.3
+     @js NA
      */
     CC_DEPRECATED_ATTRIBUTE bool isScheduledForTarget(Ref *target, SEL_SCHEDULE selector) { return isScheduled(selector, target); };
     
@@ -494,6 +496,7 @@ protected:
      The lower the priority, the earlier it is called.
      @note This method is only for internal use.
      @since v3.0
+     @js _schedulePerFrame
      */
     void schedulePerFrame(const ccSchedulerFunc& callback, void *target, int priority, bool paused);
     

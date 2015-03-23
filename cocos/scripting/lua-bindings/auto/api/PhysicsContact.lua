@@ -5,31 +5,31 @@
 -- @parent_module cc
 
 --------------------------------
---  get contact data 
+--  Get contact data. 
 -- @function [parent=#PhysicsContact] getContactData 
 -- @param self
 -- @return PhysicsContactData#PhysicsContactData ret (return value: cc.PhysicsContactData)
         
 --------------------------------
---  get the event code 
+--  Get the event code 
 -- @function [parent=#PhysicsContact] getEventCode 
 -- @param self
 -- @return int#int ret (return value: int)
         
 --------------------------------
---  get previous contact data 
+--  Get previous contact data 
 -- @function [parent=#PhysicsContact] getPreContactData 
 -- @param self
 -- @return PhysicsContactData#PhysicsContactData ret (return value: cc.PhysicsContactData)
         
 --------------------------------
---  get contact shape A. 
+--  Get contact shape A. 
 -- @function [parent=#PhysicsContact] getShapeA 
 -- @param self
 -- @return PhysicsShape#PhysicsShape ret (return value: cc.PhysicsShape)
         
 --------------------------------
---  get contact shape B. 
+--  Get contact shape B. 
 -- @function [parent=#PhysicsContact] getShapeB 
 -- @param self
 -- @return PhysicsShape#PhysicsShape ret (return value: cc.PhysicsShape)

@@ -26,7 +26,7 @@
 
 #import <Foundation/Foundation.h>
 #import <Security/Security.h>
-
+/// @cond
 @interface HttpAsynConnection : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 {
 }
@@ -46,6 +46,7 @@
 @property (readonly) NSString *statusString;
 
 @property (strong) NSError *responseError;
+@property (strong) NSError *connError;
 
 @property (strong) NSURLConnection *conn;
 
@@ -57,5 +58,5 @@
 -(void) startRequest:(NSURLRequest*)request;
 
 @end
-
+/// @endcond
 #endif //__HTTPASYNCONNECTION_H__

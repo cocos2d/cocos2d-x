@@ -52,6 +52,7 @@ class Node;
 /** An Array that contain control points.
  * Used by CardinalSplineTo and (By) and CatmullRomTo (and By) actions.
  * @ingroup Actions
+ * @js NA
  */
 class CC_DLL PointArray : public Ref, public Clonable
 {
@@ -182,7 +183,7 @@ public:
      */
     virtual ~CardinalSplineTo();
     /**
-     * @js NA
+     * @js ctor
      * @lua NA
      */
     CardinalSplineTo();

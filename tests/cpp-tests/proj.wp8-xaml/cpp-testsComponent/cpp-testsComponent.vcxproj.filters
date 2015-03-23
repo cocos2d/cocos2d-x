@@ -348,7 +348,7 @@
     </Filter>
     <Filter Include="Classes\CocosStudio3DTest">
       <UniqueIdentifier>{65f104c8-5b02-4c44-ab8b-a8e7289e5c7a}</UniqueIdentifier>
-    </Filter>    
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Classes\AppDelegate.cpp">
@@ -917,6 +917,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Classes\CocosStudio3DTest\CocosStudio3DTest.cpp">
       <Filter>Classes\CocosStudio3DTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\PerformanceTest\PerformanceParticle3DTest.cpp">
+      <Filter>Classes\PerformanceTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1685,7 +1688,10 @@
     </ClInclude>
     <ClInclude Include="..\..\Classes\CocosStudio3DTest\CocosStudio3DTest.h">
       <Filter>Classes\CocosStudio3DTest</Filter>
-    </ClInclude>    
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\PerformanceTest\PerformanceParticle3DTest.h">
+      <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(AngleBinPath)libEGL_phone.dll" />

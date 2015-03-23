@@ -36,7 +36,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * @addtogroup base_nodes
+ * @addtogroup _2d
  * @{
  */
 

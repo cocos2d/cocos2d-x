@@ -3812,7 +3812,7 @@ static int tolua_cocos2dx_GLProgram_setUniformLocationF32(lua_State* tolua_S)
 #endif
             
             f4 = (float)  tolua_tonumber(tolua_S,6,0);
-            if (4 == argc)
+            if (5 == argc)
             {
                 self->setUniformLocationWith4f(location, f1, f2, f3, f4);
                 return 0;

@@ -13,7 +13,8 @@
         
 --------------------------------
 --  Sets the EventDispatcher associated with this director.<br>
--- since v3.0
+-- since v3.0<br>
+-- js NA
 -- @function [parent=#Director] setEventDispatcher 
 -- @param self
 -- @param #cc.EventDispatcher dispatcher
@@ -50,7 +51,8 @@
         
 --------------------------------
 --  Sets the OpenGL default values.<br>
--- It will enable alpha blending, disable depth test.
+-- It will enable alpha blending, disable depth test.<br>
+-- js NA
 -- @function [parent=#Director] setGLDefaultValues 
 -- @param self
 -- @return Director#Director self (return value: cc.Director)
@@ -81,7 +83,8 @@
 --------------------------------
 -- Adds a matrix to the top of specified type of matrix stack.<br>
 -- param type Matrix type.<br>
--- param mat The matrix that to be added.
+-- param mat The matrix that to be added.<br>
+-- js NA
 -- @function [parent=#Director] loadMatrix 
 -- @param self
 -- @param #int type
@@ -104,7 +107,7 @@
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
---  Gets singleton of TextureCache. 
+-- 
 -- @function [parent=#Director] getTextureCache 
 -- @param self
 -- @return TextureCache#TextureCache ret (return value: cc.TextureCache)
@@ -138,7 +141,8 @@
 -- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
--- Gets Frame Rate.
+-- Gets Frame Rate.<br>
+-- js NA
 -- @function [parent=#Director] getFrameRate 
 -- @param self
 -- @return float#float ret (return value: float)
@@ -150,7 +154,8 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
---  Cleras all types of matrix stack, and add indentity matrix to these matrix stacks. 
+-- Cleras all types of matrix stack, and add indentity matrix to these matrix stacks.<br>
+-- js NA
 -- @function [parent=#Director] resetMatrixStack 
 -- @param self
 -- @return Director#Director self (return value: cc.Director)
@@ -164,7 +169,8 @@
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
---  Clones a specified type matrix and put it to the top of specified type of matrix stack. 
+-- Clones a specified type matrix and put it to the top of specified type of matrix stack.<br>
+-- js NA
 -- @function [parent=#Director] pushMatrix 
 -- @param self
 -- @param #int type
@@ -191,7 +197,8 @@
 -- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
---  Gets the top matrix of specified type of matrix stack. 
+-- Gets the top matrix of specified type of matrix stack.<br>
+-- js NA
 -- @function [parent=#Director] getMatrix 
 -- @param self
 -- @param #int type
@@ -207,7 +214,6 @@
         
 --------------------------------
 -- Get the GLView.<br>
--- js NA<br>
 -- lua NA
 -- @function [parent=#Director] getOpenGLView 
 -- @param self
@@ -257,7 +263,9 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
---  Sets clear values for the color buffers, value range of each element is [0.0, 1.0]. 
+--  Sets clear values for the color buffers,<br>
+-- value range of each element is [0.0, 1.0].<br>
+-- js NA
 -- @function [parent=#Director] setClearColor 
 -- @param self
 -- @param #color4f_table clearColor
@@ -272,8 +280,7 @@
         
 --------------------------------
 -- Sets the GLView. <br>
--- lua NA<br>
--- js NA
+-- lua NA
 -- @function [parent=#Director] setOpenGLView 
 -- @param self
 -- @param #cc.GLView openGLView
@@ -305,7 +312,8 @@
 -- Enters the Director's main loop with the given Scene.<br>
 -- Call it to run only your FIRST scene.<br>
 -- Don't call it if there is already a running scene.<br>
--- It will call pushScene: and then it will call startAnimation
+-- It will call pushScene: and then it will call startAnimation<br>
+-- js NA
 -- @function [parent=#Director] runWithScene 
 -- @param self
 -- @param #cc.Scene scene
@@ -327,7 +335,7 @@
 -- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
---  Restart the director. 
+-- 
 -- @function [parent=#Director] restart 
 -- @param self
 -- @return Director#Director self (return value: cc.Director)
@@ -342,7 +350,8 @@
 -- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
---  Adds an identity matrix to the top of specified type of matrxi stack. 
+--  Adds an identity matrix to the top of specified type of matrxi stack.<br>
+-- js NA
 -- @function [parent=#Director] loadIdentityMatrix 
 -- @param self
 -- @param #int type
@@ -363,7 +372,8 @@
         
 --------------------------------
 --  Returns the Console associated with this director.<br>
--- since v3.0
+-- since v3.0<br>
+-- js NA
 -- @function [parent=#Director] getConsole 
 -- @param self
 -- @return Console#Console ret (return value: cc.Console)
@@ -371,7 +381,8 @@
 --------------------------------
 -- Multipies a matrix to the top of specified type of matrix stack.<br>
 -- param type Matrix type.<br>
--- param mat The matrix that to be multipied.
+-- param mat The matrix that to be multipied.<br>
+-- js NA
 -- @function [parent=#Director] multiplyMatrix 
 -- @param self
 -- @param #int type
@@ -395,7 +406,8 @@
 -- @return Director#Director self (return value: cc.Director)
         
 --------------------------------
---  Pops the top matrix of the specified type of matrix stack. 
+--  Pops the top matrix of the specified type of matrix stack.<br>
+-- js NA
 -- @function [parent=#Director] popMatrix 
 -- @param self
 -- @param #int type
@@ -446,14 +458,16 @@
         
 --------------------------------
 --  Gets the EventDispatcher associated with this director.<br>
--- since v3.0
+-- since v3.0<br>
+-- js NA
 -- @function [parent=#Director] getEventDispatcher 
 -- @param self
 -- @return EventDispatcher#EventDispatcher ret (return value: cc.EventDispatcher)
         
 --------------------------------
 --  Replaces the running scene with a new one. The running scene is terminated.<br>
--- ONLY call it if there is a running scene.
+-- ONLY call it if there is a running scene.<br>
+-- js NA
 -- @function [parent=#Director] replaceScene 
 -- @param self
 -- @param #cc.Scene scene
@@ -474,7 +488,8 @@
 -- @return ActionManager#ActionManager ret (return value: cc.ActionManager)
         
 --------------------------------
---  Returns a shared instance of the director. 
+-- Returns a shared instance of the director. <br>
+-- js _getInstance
 -- @function [parent=#Director] getInstance 
 -- @param self
 -- @return Director#Director ret (return value: cc.Director)

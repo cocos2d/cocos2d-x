@@ -68,13 +68,14 @@
 -- @return GLProgram#GLProgram self (return value: cc.GLProgram)
         
 --------------------------------
--- 
+--  Reload all shaders, this function is designed for android<br>
+-- when opengl context lost, so don't call it.
 -- @function [parent=#GLProgram] reset 
 -- @param self
 -- @return GLProgram#GLProgram self (return value: cc.GLProgram)
         
 --------------------------------
---   It will add a new attribute to the shader by calling glBindAttribLocation 
+--   It will add a new attribute to the shader by calling glBindAttribLocation. 
 -- @function [parent=#GLProgram] bindAttribLocation 
 -- @param self
 -- @param #string attributeName
@@ -82,7 +83,7 @@
 -- @return GLProgram#GLProgram self (return value: cc.GLProgram)
         
 --------------------------------
---  calls glGetAttribLocation 
+--  Calls glGetAttribLocation. 
 -- @function [parent=#GLProgram] getAttribLocation 
 -- @param self
 -- @param #string attributeName
@@ -95,9 +96,10 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
---  Initializes the GLProgram with a vertex and fragment with bytes array <br>
--- js initWithString<br>
--- lua initWithString
+--  @{<br>
+-- Create or Initializes the GLProgram with a vertex and fragment with bytes array.<br>
+-- js initWithString.<br>
+-- lua initWithString.
 -- @function [parent=#GLProgram] createWithByteArrays 
 -- @param self
 -- @param #char vShaderByteArray
@@ -105,7 +107,9 @@
 -- @return GLProgram#GLProgram ret (return value: cc.GLProgram)
         
 --------------------------------
---  Initializes the GLProgram with a vertex and fragment with contents of filenames <br>
+-- }<br>
+-- {<br>
+-- Create or Initializes the GLProgram with a vertex and fragment with contents of filenames.<br>
 -- js init<br>
 -- lua init
 -- @function [parent=#GLProgram] createWithFilenames 
@@ -115,7 +119,7 @@
 -- @return GLProgram#GLProgram ret (return value: cc.GLProgram)
         
 --------------------------------
--- 
+-- Constructor.
 -- @function [parent=#GLProgram] GLProgram 
 -- @param self
 -- @return GLProgram#GLProgram self (return value: cc.GLProgram)

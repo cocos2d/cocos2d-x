@@ -155,6 +155,7 @@ set(TESTS_SRC
   Classes/PerformanceTest/PerformanceAllocTest.cpp
   Classes/PerformanceTest/PerformanceNodeChildrenTest.cpp
   Classes/PerformanceTest/PerformanceParticleTest.cpp
+  Classes/PerformanceTest/PerformanceParticle3DTest.cpp
   Classes/PerformanceTest/PerformanceSpriteTest.cpp
   Classes/PerformanceTest/PerformanceTest.cpp
   Classes/PerformanceTest/PerformanceTextureTest.cpp
