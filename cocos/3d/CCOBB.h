@@ -29,6 +29,10 @@
 
 NS_CC_BEGIN
 
+/**
+ * Oritened Bounding Box(OBB)
+ * @brief the OBB is similar to the AABB but the bounding box has the same direction as Sprite3D. so it's collistion detection more precise than AABB
+ */
 class CC_DLL OBB
 {
 public:
