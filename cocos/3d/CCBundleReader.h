@@ -109,6 +109,11 @@ public:
      * first read length, then read string text
      */
     std::string readString();
+
+    /**
+     * Read the matrix.
+     * @note the matrix type must be the 4*4 float matrix
+     */
     bool readMatrix(float* m);
 
 private:

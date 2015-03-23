@@ -24,7 +24,8 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
+-- Get the light type,light type MUST be one of LightType::DIRECTIONAL ,<br>
+-- LightType::POINT, LightType::SPOT, LightType::AMBIENT.
 -- @function [parent=#BaseLight] getLightType 
 -- @param self
 -- @return int#int ret (return value: int)

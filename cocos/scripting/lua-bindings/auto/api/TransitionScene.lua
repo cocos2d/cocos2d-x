@@ -5,19 +5,22 @@
 -- @parent_module cc
 
 --------------------------------
---  called after the transition finishes 
+--  Called after the transition finishes.
 -- @function [parent=#TransitionScene] finish 
 -- @param self
 -- @return TransitionScene#TransitionScene self (return value: cc.TransitionScene)
         
 --------------------------------
---  used by some transitions to hide the outer scene 
+--  Used by some transitions to hide the outer scene.
 -- @function [parent=#TransitionScene] hideOutShowIn 
 -- @param self
 -- @return TransitionScene#TransitionScene self (return value: cc.TransitionScene)
         
 --------------------------------
---  creates a base transition with duration and incoming scene 
+--  Creates a base transition with duration and incoming scene.<br>
+-- param t Duration time, in seconds.<br>
+-- param scene A given scene.<br>
+-- return A autoreleased TransitionScene object.
 -- @function [parent=#TransitionScene] create 
 -- @param self
 -- @param #float t

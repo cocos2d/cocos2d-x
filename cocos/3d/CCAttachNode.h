@@ -48,6 +48,7 @@ public:
      */
     static AttachNode* create(Bone3D* attachBone);
     
+    //override
     virtual Mat4 getWorldToNodeTransform() const override;
     virtual Mat4 getNodeToWorldTransform() const override;
     virtual const Mat4& getNodeToParentTransform() const override;
