@@ -47,7 +47,7 @@ class Texture2D;
 struct transformValues_;
 
 /**
- * @addtogroup sprite_nodes
+ * @addtogroup _2d
  * @{
  */
 
@@ -94,7 +94,7 @@ public:
      * After creation, the rect of sprite will be the size of the image,
      * and the offset will be (0,0).
      *
-     * @param   filename A path to image file, e.g., "scene1/monster.png"
+     * @param   filename A path to image file, e.g., "scene1/monster.png".
      * @return  An autoreleased sprite object.
      */
     static Sprite* create(const std::string& filename);
@@ -102,9 +102,9 @@ public:
     /**
      * Creates a sprite with an image filename and a rect.
      *
-     * @param   filename A path to image file, e.g., "scene1/monster.png"
-     * @param   rect     A subrect of the image file
-     * @return  An autoreleased sprite object
+     * @param   filename A path to image file, e.g., "scene1/monster.png".
+     * @param   rect     A subrect of the image file.
+     * @return  An autoreleased sprite object.
      */
     static Sprite* create(const std::string& filename, const Rect& rect);
 
@@ -114,7 +114,7 @@ public:
      * After creation, the rect will be the size of the texture, and the offset will be (0,0).
      *
      * @param   texture    A pointer to a Texture2D object.
-     * @return  An autoreleased sprite object
+     * @return  An autoreleased sprite object.
      */
     static Sprite* createWithTexture(Texture2D *texture);
 
@@ -170,7 +170,7 @@ public:
      */
     virtual SpriteBatchNode* getBatchNode() const;
     /**
-     * Sets the batch node to sprite
+     * Sets the batch node to sprite.
      * @warning This method is not recommended for game developers. Sample code for using batch node
      * @code
      * SpriteBatchNode *batch = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 15);
@@ -268,7 +268,7 @@ public:
     /**
      * Whether or not the Sprite needs to be updated in the Atlas.
      *
-     * @return true if the sprite needs to be updated in the Atlas, false otherwise.
+     * @return True if the sprite needs to be updated in the Atlas, false otherwise.
      */
     virtual bool isDirty() const { return _dirty; }
 
@@ -368,21 +368,21 @@ public:
 
     /// @} End of Sprite properties getter/setters
 
-    /** @deprecated Use isFlippedY() instead */
+    /** @deprecated Use isFlippedY() instead. */
     CC_DEPRECATED_ATTRIBUTE bool isFlipY() { return isFlippedY(); };
-    /** @deprecated Use setFlippedY() instead */
+    /** @deprecated Use setFlippedY() instead. */
     CC_DEPRECATED_ATTRIBUTE void setFlipY(bool flippedY) { setFlippedY(flippedY); };
 
     //
     // Overrides
     //
     /// @{
-    /// @name Functions inherited from TextureProtocol
+    /// @name Functions inherited from TextureProtocol.
     /**
     *@code
     *When this function bound into js or lua,the parameter will be changed.
-    *In js: var setBlendFunc(var src, var dst)
-    *In lua: local setBlendFunc(local src, local dst)
+    *In js: var setBlendFunc(var src, var dst).
+    *In lua: local setBlendFunc(local src, local dst).
     *@endcode
     */
     inline void setBlendFunc(const BlendFunc &blendFunc) override { _blendFunc = blendFunc; }
