@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies
+Copyright (c) 2013-2015 Chukong Technologies
 
 http://www.cocos2d-x.org
 
@@ -25,6 +25,7 @@ THE SOFTWARE.
 
 #ifndef __CC_SET_H__
 #define __CC_SET_H__
+/// @cond DO_NOT_SHOW
 
 #include <set>
 #include "base/CCRef.h"
@@ -117,5 +118,5 @@ private:
 
 NS_CC_END
 
+/// @endcond
 #endif // __CC_SET_H__
-

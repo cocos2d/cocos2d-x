@@ -26,6 +26,8 @@
 #ifndef _CCFontAtlasCache_h_
 #define _CCFontAtlasCache_h_
 
+/// @cond DO_NOT_SHOW
+
 #include <unordered_map>
 
 #include "2d/CCLabel.h"
@@ -33,8 +35,6 @@
 NS_CC_BEGIN
 
 class FontAtlas;
-
-/// @cond
 
 class CC_DLL FontAtlasCache
 {  
@@ -58,8 +58,7 @@ private:
     static std::unordered_map<std::string, FontAtlas *> _atlasMap;
 };
 
-/// @endcond
-
 NS_CC_END
 
+/// @endcond
 #endif

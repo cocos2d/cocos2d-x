@@ -1,6 +1,6 @@
 /****************************************************************************
- Copyright (c) 2014     PlayFirst Inc.
- Copyright (c) 2014     Chukong Technologies Inc.
+ Copyright (c) 2014      PlayFirst Inc.
+ Copyright (c) 2014-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -25,6 +25,7 @@
 
 #ifndef __CC_REF_PTR_H__
 #define __CC_REF_PTR_H__
+/// @cond DO_NOT_SHOW
 
 #include "base/CCRef.h"
 #include "base/ccMacros.h"
@@ -33,8 +34,6 @@
 NS_CC_BEGIN
 
 /**
- * @cond DO_NOT_SHOW
- *
  * Utility/support macros. Defined to enable RefPtr<T> to contain types like 'const T' because we do not
  * regard retain()/release() as affecting mutability of state.
  */
@@ -307,8 +306,7 @@ template<class T, class U> RefPtr<T> dynamic_pointer_cast(const RefPtr<U> & r)
 #undef CC_REF_PTR_SAFE_RELEASE
 #undef CC_REF_PTR_SAFE_RELEASE_NULL
 
-/** @} */
-
 NS_CC_END
 
+/// @endcond
 #endif  // __CC_REF_PTR_H__
