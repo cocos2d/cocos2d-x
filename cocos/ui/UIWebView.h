@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -33,6 +33,11 @@
 #include "ui/UIWidget.h"
 #include "ui/GUIExport.h"
 #include "base/CCData.h"
+
+/**
+ * @addtogroup ui
+ * @{
+ */
 
 NS_CC_BEGIN
 namespace experimental{
@@ -213,5 +218,6 @@ private:
 }//namespace cocos2d
 
 #endif
-
+// end group
+/// @}
 #endif //__COCOS2D_UI_WEBVIEW_H

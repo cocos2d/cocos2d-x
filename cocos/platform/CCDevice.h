@@ -35,6 +35,11 @@ NS_CC_BEGIN
 struct FontDefinition;
 
 /**
+ * @addtogroup support
+ * @{
+ */
+
+/**
  * @class Device
  * @brief 
  */
@@ -87,6 +92,8 @@ private:
     CC_DISALLOW_IMPLICIT_CONSTRUCTORS(Device);
 };
 
+// end group
+/// @}
 
 NS_CC_END
 

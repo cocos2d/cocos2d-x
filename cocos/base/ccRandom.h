@@ -34,6 +34,11 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
+* @addtogroup base
+* @{
+*/
+
+/**
  * @class RandomHelper
  * @brief A helper class for creating random number.
  */
@@ -113,6 +118,9 @@ inline float rand_0_1() {
 
 //    return cocos2d::random(0.f, 1.f);
 };
+
+// end group
+/// @}
 
 NS_CC_END
 #endif //__ccRandom_H_

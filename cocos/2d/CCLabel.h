@@ -33,11 +33,9 @@
 NS_CC_BEGIN
 
 /**
-* @addtogroup GUI
-* @{
-* @addtogroup Label
-* @{
-*/
+ * @addtogroup _2d
+ * @{
+ */
 
 /**
  * @brief Possible GlyphCollection used by Label.
@@ -615,7 +613,6 @@ private:
 };
 
 // end group
-/// @}
 /// @}
 
 NS_CC_END

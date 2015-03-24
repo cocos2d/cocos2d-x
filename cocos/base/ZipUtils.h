@@ -37,6 +37,11 @@ THE SOFTWARE.
 #include "platform/CCStdC.h"
 #endif
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 namespace cocos2d
 {
 #ifndef _unz64_H
@@ -285,5 +290,9 @@ typedef struct unz_file_info_s unz_file_info;
         ZipFilePrivate *_data;
     };
 } // end of namespace cocos2d
+
+// end group
+/// @}
+
 #endif // __SUPPORT_ZIPUTILS_H__
 

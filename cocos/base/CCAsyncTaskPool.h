@@ -1,5 +1,4 @@
 /****************************************************************************
-Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2013-2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -41,6 +40,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 /////////////////////////////////////////////////////////////////////////////
+
+/**
+* @addtogroup base
+* @{
+*/
 
 /**
  * @class AsyncTaskPool
@@ -208,6 +212,9 @@ inline void AsyncTaskPool::enqueue(AsyncTaskPool::TaskType type, const TaskCallB
     
     threadTask.enqueue(callback, callbackParam, f);
 }
+
+// end group
+/// @}
 
 NS_CC_END
 #endif //__CCSYNC_TASK_POOL_H_

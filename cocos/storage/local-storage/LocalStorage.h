@@ -29,6 +29,11 @@ THE SOFTWARE.
 #include <string>
 #include "CCPlatformMacros.h"
 
+/**
+ * @addtogroup core
+ * @{
+ */
+
 /** Local Storage support for the JS Bindings.*/
 
 /** Initializes the database. If path is null, it will create an in-memory DB. */
@@ -45,5 +50,8 @@ std::string CC_DLL localStorageGetItem( const std::string& key );
 
 /** Removes an item from the JS. */
 void CC_DLL localStorageRemoveItem( const std::string& key );
+
+// end group
+/// @}
 
 #endif // __JSB_LOCALSTORAGE_H
