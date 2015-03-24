@@ -14,7 +14,8 @@
 --------------------------------
 --  Create a smoke particle system withe a fixed number of particles.<br>
 -- param numberOfParticles A given number of particles.<br>
--- return An autoreleased ParticleSmoke object.
+-- return An autoreleased ParticleSmoke object.<br>
+-- js NA
 -- @function [parent=#ParticleSmoke] createWithTotalParticles 
 -- @param self
 -- @param #int numberOfParticles

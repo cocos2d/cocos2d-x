@@ -23,7 +23,7 @@
 -- @return TransitionTurnOffTiles#TransitionTurnOffTiles ret (return value: cc.TransitionTurnOffTiles)
         
 --------------------------------
--- 
+-- js NA
 -- @function [parent=#TransitionTurnOffTiles] draw 
 -- @param self
 -- @param #cc.Renderer renderer
