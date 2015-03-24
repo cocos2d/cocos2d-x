@@ -16,7 +16,6 @@
 -- @return TransitionCrossFade#TransitionCrossFade ret (return value: cc.TransitionCrossFade)
         
 --------------------------------
--- js NA<br>
 -- lua NA
 -- @function [parent=#TransitionCrossFade] draw 
 -- @param self

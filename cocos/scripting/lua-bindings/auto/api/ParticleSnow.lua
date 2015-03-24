@@ -14,7 +14,8 @@
 --------------------------------
 --  Create a snow particle system withe a fixed number of particles.<br>
 -- param numberOfParticles A given number of particles.<br>
--- return An autoreleased ParticleSnow object.
+-- return An autoreleased ParticleSnow object.<br>
+-- js NA
 -- @function [parent=#ParticleSnow] createWithTotalParticles 
 -- @param self
 -- @param #int numberOfParticles

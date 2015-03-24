@@ -100,7 +100,8 @@
 --  Create the particle system with Texture2D, a capacity of particles, which particle system to use.<br>
 -- param tex A given texture.<br>
 -- param capacity A capacity of particles.<br>
--- return An autoreleased ParticleBatchNode object.
+-- return An autoreleased ParticleBatchNode object.<br>
+-- js NA
 -- @function [parent=#ParticleBatchNode] createWithTexture 
 -- @param self
 -- @param #cc.Texture2D tex
