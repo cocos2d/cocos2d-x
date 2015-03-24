@@ -5,7 +5,9 @@
 -- @parent_module cc
 
 --------------------------------
--- 
+--  Constructor.<br>
+-- param widgetLoseFocus The widget which lose focus.<br>
+-- param widgetGetFocus The widget which get focus.
 -- @function [parent=#EventFocus] EventFocus 
 -- @param self
 -- @param #ccui.Widget widgetLoseFocus
