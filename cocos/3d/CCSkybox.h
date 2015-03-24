@@ -43,6 +43,8 @@ public:
     // Overrides
     virtual void draw(Renderer* renderer, const Mat4& transform, uint32_t flags) override;
 
+    void reload();
+
 CC_CONSTRUCTOR_ACCESS:
     Skybox();
     virtual ~Skybox();

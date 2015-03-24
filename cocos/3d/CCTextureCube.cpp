@@ -146,6 +146,7 @@ Image* createImage(const std::string& path)
 
 TextureCube::TextureCube()
 {
+    _imgPath.resize(6);
 }
 
 TextureCube::~TextureCube()
@@ -170,6 +171,13 @@ bool TextureCube::init(const std::string& positive_x, const std::string& negativ
                        const std::string& positive_y, const std::string& negative_y,
                        const std::string& positive_z, const std::string& negative_z)
 {
+    _imgPath[0] = positive_x;
+    _imgPath[1] = negative_x;
+    _imgPath[2] = positive_y;
+    _imgPath[3] = negative_y;
+    _imgPath[4] = positive_z;
+    _imgPath[5] = negative_z;
+
     std::vector<Image*> images(6);
 
     images[0] = createImage(positive_x);
@@ -245,6 +253,11 @@ void TextureCube::setTexParameters(const TexParams& texParams)
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, texParams.wrapT);
 
     glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+}
+
+bool TextureCube::reloadTexture()
+{
+    return init(_imgPath[0], _imgPath[1], _imgPath[2], _imgPath[3], _imgPath[4], _imgPath[5]);
 }
 
 NS_CC_END
