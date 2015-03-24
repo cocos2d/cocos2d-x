@@ -14,7 +14,8 @@
 --------------------------------
 --  Create a fireworks particle system withe a fixed number of particles.<br>
 -- param numberOfParticles A given number of particles.<br>
--- return An autoreleased ParticleFireworks object.
+-- return An autoreleased ParticleFireworks object.<br>
+-- js NA
 -- @function [parent=#ParticleFireworks] createWithTotalParticles 
 -- @param self
 -- @param #int numberOfParticles
