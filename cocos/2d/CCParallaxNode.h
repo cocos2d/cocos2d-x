@@ -35,7 +35,7 @@ NS_CC_BEGIN
 struct _ccArray;
 
 /**
- * @addtogroup tilemap_parallax_nodes
+ * @addtogroup _2d
  * @{
  */
 
@@ -110,7 +110,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParallaxNode);
 };
 
-// end of tilemap_parallax_nodes group
+// end of _2d group
 /// @}
 
 NS_CC_END

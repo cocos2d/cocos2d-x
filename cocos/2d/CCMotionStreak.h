@@ -35,7 +35,7 @@ NS_CC_BEGIN
 class Texture2D;
 
 /**
- * @addtogroup misc_nodes
+ * @addtogroup _2d
  * @{
  */
 
@@ -182,7 +182,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(MotionStreak);
 };
 
-// end of misc_nodes group
+// end of _2d group
 /// @}
 
 NS_CC_END

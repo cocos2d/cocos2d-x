@@ -47,7 +47,7 @@ class Sprite;
 class Texture2D;
 
 /**
- * @addtogroup sprite_nodes
+ * @addtogroup _2d
  * @{
  */
 
@@ -220,7 +220,7 @@ protected:
     std::set<std::string>*  _loadedFileNames;
 };
 
-// end of sprite_nodes group
+// end of _2d group
 /// @}
 
 NS_CC_END

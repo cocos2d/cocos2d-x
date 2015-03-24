@@ -37,7 +37,7 @@ NS_CC_BEGIN
 class Texture2D;
 
 /**
- * @addtogroup sprite_nodes
+ * @addtogroup _2d
  * @{
  */
 
@@ -233,7 +233,7 @@ protected:
     std::string  _textureFilename;
 };
 
-// end of sprite_nodes group
+// end of _2d group
 /// @}
 
 NS_CC_END
