@@ -8,6 +8,7 @@ static std::function<Layer*()> createFunctions[] = {
     CL(TestFileFuncs),
     CL(TestDirectoryFuncs),
     CL(TextWritePlist),
+    CL(TestNormalizePath),
 };
 
 static int sceneIdx=-1;
@@ -559,4 +560,44 @@ std::string TextWritePlist::subtitle() const
 {
     std::string writablePath = FileUtils::getInstance()->getWritablePath().c_str();
     return ("See plist file at your writablePath");
+}
+
+
+// TestNormalizePath
+
+void TestNormalizePath::onEnter()
+{
+    FileUtilsDemo::onEnter();
+    
+    log("normalize path:");
+    std::string path;
+    //A//B, A/B/, A/./B and A/foo/../B all become A/B.
+    auto fileutils = FileUtils::getInstance();
+    path = "A//B";
+    log("%s ==> %s", path.c_str(), fileutils->getNormalizePath(path).c_str());
+    path = "A/B/";
+    log("%s ==> %s", path.c_str(), fileutils->getNormalizePath(path).c_str());
+    path = "A/./B";
+    log("%s ==> %s", path.c_str(), fileutils->getNormalizePath(path).c_str());
+    path = "A/foo/../B";
+    log("%s ==> %s", path.c_str(), fileutils->getNormalizePath(path).c_str());
+    path = "../A/B/";
+    log("%s ==> %s", path.c_str(), fileutils->getNormalizePath(path).c_str());
+    path = "../.A/B/.";
+    log("%s ==> %s", path.c_str(), fileutils->getNormalizePath(path).c_str());
+}
+
+void TestNormalizePath::onExit()
+{
+    FileUtilsDemo::onExit();
+}
+
+std::string TestNormalizePath::title() const
+{
+    return "FileUtils:getNormalizePath";
+}
+
+std::string TestNormalizePath::subtitle() const
+{
+    return ("See the console");
 }

@@ -710,7 +710,7 @@ std::string FileUtils::getNewFilename(const std::string &filename) const
     {
         newFileName = iter->second.asString();
     }
-    return newFileName;
+    return getNormalizePath(newFileName);
 }
 
 std::string FileUtils::getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath)
@@ -1342,6 +1342,87 @@ long FileUtils::getFileSize(const std::string &filepath)
         return (long)(info.st_size);
     }
 }
+
+std::string FileUtils::getNormalizePath(const std::string& path) const
+{
+    if (path.empty()) return path;
+    auto pos = path.find("./");
+    if (pos == std::string::npos)
+    {
+        pos = path.find("//");
+        if (pos == std::string::npos)
+        {
+            char c = path.at(path.size() - 1);
+            if (c != '/' && c != '.')
+                return path;
+        }
+    }
+
+    bool change = false;
+    bool absolute = false;
+    // pos len pos len pos len ...
+    std::vector<size_t> v(10);
+    v.resize(0);
+    size_t l = path.size(), i = 0;
+    while (true)
+    {
+        pos = path.find('/', i);
+        if (pos != std::string::npos)
+        {
+            if (pos - i != 0)
+            {
+                v.push_back(i);
+                v.push_back(pos - i);
+            } else if (i != 0)
+            {
+                change = true;
+            }
+            i = pos + 1;
+        }else
+        {
+            if (path.size() - i != 0)
+            {
+                v.push_back(i);
+                v.push_back(path.size() - i);
+            } else
+            {
+                change = true;
+            }
+            break;
+        }
+    }
+    for (i = 0; i < v.size(); i += 2)
+    {
+        auto l = v[i+1];
+        auto c = path[v[i]];
+        if (l == 1 && c == '.')
+        {
+            v.erase(v.begin() + i, v.begin() + i + 2);
+            i -= 2;
+            change = true;
+        } else if (l == 2 && c == '.' && path[v[i]+1] == '.')
+        {
+            if (i > 0 && (v[i-1] != 2 || (path[v[i-2]] != '.' && path[v[i-2]+1] != '.')))
+            {
+                v.erase(v.begin() + i - 2, v.begin() + i + 2);
+                i -= 4;
+                change = true;
+            }
+        }
+    }
+    if (!change) return path;
+
+    std::string newpath = absolute ? "/" : "";
+    l = v.size();
+    for (i = 0; i < l; i += 2)
+    {
+        newpath.append(path, v[i], v[i+1]);
+        if (i != l - 2)
+            newpath.append(1, '/');
+    }
+    return newpath;
+}
+
 
 //////////////////////////////////////////////////////////////////////////
 // Notification support when getFileData from invalid file path.
