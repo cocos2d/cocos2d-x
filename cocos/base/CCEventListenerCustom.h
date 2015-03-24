@@ -31,8 +31,9 @@ NS_CC_BEGIN
 
 class EventCustom;
 
-/**
- *  Usage:
+/** @class EventListenerCustom
+ * @brief Custom event listener.
+ * @code Usage:
  *        auto dispatcher = Director::getInstance()->getEventDispatcher();
  *     Adds a listener:
  *
@@ -53,8 +54,9 @@ class CC_DLL EventListenerCustom : public EventListener
 {
 public:
     /** Creates an event listener with type and callback.
-     *  @param eventType The type of the event.
-     *  @param callback The callback function when the specified event was emitted.
+     * @param eventType The type of the event.
+     * @param callback The callback function when the specified event was emitted.
+     * @return An autoreleased EventListenerCustom object.
      */
     static EventListenerCustom* create(const std::string& eventName, const std::function<void(EventCustom*)>& callback);
     

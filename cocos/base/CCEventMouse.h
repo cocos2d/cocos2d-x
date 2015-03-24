@@ -40,11 +40,14 @@
 
 NS_CC_BEGIN
 
+/** @class EventMouse
+ * @brief The mouse event.
+ */
 class CC_DLL EventMouse : public Event
 {
 public:
     /**
-    * Different types of MouseEvent
+    * MouseEventType Different types of MouseEvent.
     */
     enum class MouseEventType
     {
@@ -55,13 +58,34 @@ public:
         MOUSE_SCROLL,
     };
 
+    /** Constructor.
+     *
+     * @param mouseEventCode A given mouse event type.
+     */
     EventMouse(MouseEventType mouseEventCode);
 
-    /** Set mouse scroll data */
+    /** Set mouse scroll data.
+     * 
+     * @param scrollX The scroll data of x axis.
+     * @param scrollY The scroll data of y axis.
+     */
     inline void setScrollData(float scrollX, float scrollY) { _scrollX = scrollX; _scrollY = scrollY; };
+    /** Get mouse scroll data of x axis.
+     * 
+     * @return The scroll data of x axis.
+     */
     inline float getScrollX() { return _scrollX; };
+    /** Get mouse scroll data of y axis.
+     *
+     * @return The scroll data of y axis.
+     */
     inline float getScrollY() { return _scrollY; };
 
+    /** Set the cursor position.
+     *
+     * @param x The x coordinate of cursor position.
+     * @param y The y coordinate of cursor position.
+     */
     inline void setCursorPosition(float x, float y) { 
         _x = x;
         _y = y;
@@ -75,24 +99,61 @@ public:
         }
     }
 
+    /** Set mouse button.
+     * 
+     * @param button a given mouse button.
+     */
     inline void setMouseButton(int button) { _mouseButton = button; };
+    /** Get mouse button.
+     *
+     * @return The mouse button.
+     */
     inline int getMouseButton() { return _mouseButton; };
+    /** Get the cursor position of x axis.
+     *
+     * @return The x coordinate of cursor position.
+     */
     inline float getCursorX() { return _x; };
+    /** Get the cursor position of y axis.
+     *
+     * @return The y coordinate of cursor position.
+     */
     inline float getCursorY() { return _y; };
 
-    /** returns the current touch location in OpenGL coordinates */
+    /** Returns the current touch location in OpenGL coordinates.
+     *
+     * @return The current touch location in OpenGL coordinates.
+     */
     Vec2 getLocation() const;
-    /** returns the previous touch location in OpenGL coordinates */
+    /** Returns the previous touch location in OpenGL coordinates.
+     *
+     * @return The previous touch location in OpenGL coordinates.
+     */
     Vec2 getPreviousLocation() const;
-    /** returns the start touch location in OpenGL coordinates */
+    /** Returns the start touch location in OpenGL coordinates.
+     *
+     * @return The start touch location in OpenGL coordinates.
+     */
     Vec2 getStartLocation() const;
-    /** returns the delta of 2 current touches locations in screen coordinates */
+    /** Returns the delta of 2 current touches locations in screen coordinates.
+     *
+     * @return The delta of 2 current touches locations in screen coordinates.
+     */
     Vec2 getDelta() const;
-    /** returns the current touch location in screen coordinates */
+    /** Returns the current touch location in screen coordinates.
+     *
+     * @return The current touch location in screen coordinates.
+     */
     Vec2 getLocationInView() const;
-    /** returns the previous touch location in screen coordinates */
+    /** Returns the previous touch location in screen coordinates.
+     *
+     * @return The previous touch location in screen coordinates.
+     */
     Vec2 getPreviousLocationInView() const;
-    /** returns the start touch location in screen coordinates */
+    /** Returns the start touch location in screen coordinates.
+     *
+     * @return The start touch location in screen coordinates.
+     */
     Vec2 getStartLocationInView() const;
 
 
