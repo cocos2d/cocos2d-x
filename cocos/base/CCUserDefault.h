@@ -32,7 +32,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * @addtogroup data_storage
+ * @addtogroup base
  * @{
  */
 
@@ -243,8 +243,8 @@ private:
     static bool _isFilePathInitialized;
 };
 
-// end of data_storage group
-/// @}
+// end of base group
+/** @} */
 
 NS_CC_END
 

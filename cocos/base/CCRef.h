@@ -34,7 +34,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * @addtogroup base_nodes
+ * @addtogroup base
  * @{
  */
 
@@ -190,8 +190,8 @@ typedef void (Ref::*SEL_SCHEDULE)(float);
 #define schedule_selector(_SELECTOR) CC_SCHEDULE_SELECTOR(_SELECTOR)
 
 
-// end of base_nodes group
-/// @}
+// end of base group
+/** @} */
 
 NS_CC_END
 

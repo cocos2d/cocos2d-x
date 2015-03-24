@@ -32,7 +32,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * @addtogroup base_nodes
+ * @addtogroup base
  * @js NA
  * @{
  */
@@ -140,6 +140,9 @@ private:
 #endif
 };
 
+// end of base group
+/** @} */
+
 /**
  * @js NA 
  * @cond
@@ -179,9 +182,6 @@ private:
 /**
  * @endcond
  */
-
-// end of base_nodes group
-/// @}
 
 NS_CC_END
 

@@ -44,6 +44,7 @@ CC_DLL extern const ValueMap ValueMapNull;
 CC_DLL extern const ValueMapIntKey ValueMapIntKeyNull;
 
 /**
+ * @addtogroup base
  * This class is provide as a wrapper of basic types, such as int and bool.
  */
 class CC_DLL Value
@@ -228,6 +229,8 @@ private:
 
     Type _type;
 };
+
+/** @} */
 
 NS_CC_END
 

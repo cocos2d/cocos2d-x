@@ -41,7 +41,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * @addtogroup base_nodes
+ * @addtogroup base
  * @{
  */
 
@@ -601,6 +601,9 @@ protected:
     friend class GLView;
 };
 
+// end of base group
+/** @} */
+
 /** 
  @brief DisplayLinkDirector is a Director that synchronizes timers with the refresh rate of the display.
  
@@ -629,9 +632,6 @@ public:
 protected:
     bool _invalid;
 };
-
-// end of base_node group
-/// @}
 
 NS_CC_END
 
