@@ -75,7 +75,8 @@
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
---  Constructor.
+--  Constructor.<br>
+-- js ctor
 -- @function [parent=#Touch] Touch 
 -- @param self
 -- @return Touch#Touch self (return value: cc.Touch)
