@@ -14,7 +14,8 @@
 --------------------------------
 --  Create a explosion particle system withe a fixed number of particles.<br>
 -- param numberOfParticles A given number of particles.<br>
--- return An autoreleased ParticleExplosion object.
+-- return An autoreleased ParticleExplosion object.<br>
+-- js NA
 -- @function [parent=#ParticleExplosion] createWithTotalParticles 
 -- @param self
 -- @param #int numberOfParticles

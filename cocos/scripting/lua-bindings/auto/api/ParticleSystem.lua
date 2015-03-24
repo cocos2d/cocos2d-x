@@ -603,7 +603,8 @@
         
 --------------------------------
 --  Add a particle to the emitter.<br>
--- return True if add success.
+-- return True if add success.<br>
+-- js ctor
 -- @function [parent=#ParticleSystem] addParticle 
 -- @param self
 -- @return bool#bool ret (return value: bool)
@@ -722,7 +723,8 @@
 --------------------------------
 --  Create a system with a fixed number of particles.<br>
 -- param numberOfParticles A given number of particles.<br>
--- return An autoreleased ParticleSystemQuad object.
+-- return An autoreleased ParticleSystemQuad object.<br>
+-- js NA
 -- @function [parent=#ParticleSystem] createWithTotalParticles 
 -- @param self
 -- @param #int numberOfParticles
