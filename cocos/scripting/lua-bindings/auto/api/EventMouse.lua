@@ -6,7 +6,8 @@
 
 --------------------------------
 --  Returns the previous touch location in screen coordinates.<br>
--- return The previous touch location in screen coordinates.
+-- return The previous touch location in screen coordinates.<br>
+-- js NA
 -- @function [parent=#EventMouse] getPreviousLocationInView 
 -- @param self
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
@@ -20,14 +21,16 @@
         
 --------------------------------
 --  Get mouse button.<br>
--- return The mouse button.
+-- return The mouse button.<br>
+-- js getButton
 -- @function [parent=#EventMouse] getMouseButton 
 -- @param self
 -- @return int#int ret (return value: int)
         
 --------------------------------
 --  Returns the previous touch location in OpenGL coordinates.<br>
--- return The previous touch location in OpenGL coordinates.
+-- return The previous touch location in OpenGL coordinates.<br>
+-- js NA
 -- @function [parent=#EventMouse] getPreviousLocation 
 -- @param self
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
@@ -51,21 +54,24 @@
         
 --------------------------------
 --  Returns the start touch location in screen coordinates.<br>
--- return The start touch location in screen coordinates.
+-- return The start touch location in screen coordinates.<br>
+-- js NA
 -- @function [parent=#EventMouse] getStartLocationInView 
 -- @param self
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 --  Returns the start touch location in OpenGL coordinates.<br>
--- return The start touch location in OpenGL coordinates.
+-- return The start touch location in OpenGL coordinates.<br>
+-- js NA
 -- @function [parent=#EventMouse] getStartLocation 
 -- @param self
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 --  Set mouse button.<br>
--- param button a given mouse button.
+-- param button a given mouse button.<br>
+-- js setButton
 -- @function [parent=#EventMouse] setMouseButton 
 -- @param self
 -- @param #int button
@@ -94,14 +100,16 @@
         
 --------------------------------
 --  Get the cursor position of x axis.<br>
--- return The x coordinate of cursor position.
+-- return The x coordinate of cursor position.<br>
+-- js getLocationX
 -- @function [parent=#EventMouse] getCursorX 
 -- @param self
 -- @return float#float ret (return value: float)
         
 --------------------------------
 --  Get the cursor position of y axis.<br>
--- return The y coordinate of cursor position.
+-- return The y coordinate of cursor position.<br>
+-- js getLocationY
 -- @function [parent=#EventMouse] getCursorY 
 -- @param self
 -- @return float#float ret (return value: float)
@@ -109,7 +117,8 @@
 --------------------------------
 --  Set the cursor position.<br>
 -- param x The x coordinate of cursor position.<br>
--- param y The y coordinate of cursor position.
+-- param y The y coordinate of cursor position.<br>
+-- js setLocation
 -- @function [parent=#EventMouse] setCursorPosition 
 -- @param self
 -- @param #float x
@@ -118,7 +127,8 @@
         
 --------------------------------
 --  Constructor.<br>
--- param mouseEventCode A given mouse event type.
+-- param mouseEventCode A given mouse event type.<br>
+-- js ctor
 -- @function [parent=#EventMouse] EventMouse 
 -- @param self
 -- @param #int mouseEventCode
