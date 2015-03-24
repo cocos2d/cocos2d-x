@@ -27,6 +27,11 @@
 
 #include "base/CCEventListener.h"
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class EventCustom;
@@ -78,5 +83,8 @@ protected:
 };
 
 NS_CC_END
+
+// end of base group
+/// @}
 
 #endif /* defined(__cocos2d_libs__CCCustomEventListener__) */

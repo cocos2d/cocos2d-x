@@ -29,6 +29,11 @@
 #include "base/CCRef.h"
 #include "platform/CCPlatformMacros.h"
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class Node;
@@ -96,5 +101,7 @@ protected:
 
 NS_CC_END
 
+// end of base group
+/// @}
 
 #endif // __CCEVENT_H__

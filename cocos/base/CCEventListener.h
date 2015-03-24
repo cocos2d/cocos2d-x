@@ -32,6 +32,11 @@
 #include "platform/CCPlatformMacros.h"
 #include "base/CCRef.h"
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class Event;
@@ -165,5 +170,8 @@ protected:
 };
 
 NS_CC_END
+
+// end of base group
+/// @}
 
 #endif // __CCEVENTLISTENER_H__
