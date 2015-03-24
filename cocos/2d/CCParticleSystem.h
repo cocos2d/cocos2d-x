@@ -34,7 +34,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * @addtogroup particle_nodes
+ * @addtogroup _2d
  * @{
  */
 
@@ -908,7 +908,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleSystem);
 };
 
-// end of particle_nodes group
+// end of _2d group
 /// @}
 
 NS_CC_END

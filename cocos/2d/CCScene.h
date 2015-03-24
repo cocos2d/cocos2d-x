@@ -42,7 +42,7 @@ class EventCustom;
 class PhysicsWorld;
 #endif
 /**
- * @addtogroup scene
+ * @addtogroup _2d
  * @{
  */
 
@@ -160,7 +160,7 @@ protected:
 #endif // CC_USE_PHYSICS
 };
 
-// end of scene group
+// end of _2d group
 /// @}
 
 NS_CC_END

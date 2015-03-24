@@ -35,7 +35,7 @@ NS_CC_BEGIN
 class NodeGrid;
 
 /**
- * @addtogroup transition
+ * @addtogroup _2d
  * @{
  */
 
@@ -115,7 +115,7 @@ protected:
     bool    _back;
 };
 
-// end of transition group
+// end of _2d group
 /// @}
 
 NS_CC_END

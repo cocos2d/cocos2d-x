@@ -33,7 +33,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * @addtogroup transition
+ * @addtogroup _2d
  * @{
  */
 
@@ -1088,7 +1088,7 @@ private:
 
 };
 
-// end of transition group
+// end of _2d group
 /// @}
 
 NS_CC_END

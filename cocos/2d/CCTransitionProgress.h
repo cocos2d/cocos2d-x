@@ -36,7 +36,7 @@ class ProgressTimer;
 class RenderTexture;
 
 /**
- * @addtogroup transition
+ * @addtogroup _2d
  * @{
  */
 /** @class TransitionProgress
@@ -254,7 +254,7 @@ protected:
 
 };
 
-// end of transition group
+// end of _2d group
 /// @}
 
 NS_CC_END

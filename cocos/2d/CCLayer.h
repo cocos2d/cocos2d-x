@@ -36,7 +36,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * @addtogroup layer
+ * @addtogroup _2d
  * @{
  */
 
@@ -652,7 +652,7 @@ private:
 };
 
 
-// end of layer group
+// end of _2d group
 /// @}
 
 NS_CC_END
