@@ -49,7 +49,7 @@ public:
     // Iterators
     // ------------------------------------------
     
-    /** Iterator, can be uesed to loop the Vector. */
+    /** Iterator, can be used to loop the Vector. */
     typedef typename std::vector<T>::iterator iterator;
     /** Const iterator, can be used to loop the Vector. */
     typedef typename std::vector<T>::const_iterator const_iterator;
