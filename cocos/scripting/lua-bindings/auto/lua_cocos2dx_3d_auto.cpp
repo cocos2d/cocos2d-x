@@ -1293,14 +1293,14 @@ int lua_cocos2dx_3d_Sprite3D_createAsync(lua_State* tolua_S)
             if (!ok) { break; }
             std::function<void (cocos2d::Sprite3D *, void *)> arg2;
             do {
-            // Lambda binding for lua is not supported.
-            assert(false);
-        } while(0)
-        ;
+			// Lambda binding for lua is not supported.
+			assert(false);
+		} while(0)
+		;
             if (!ok) { break; }
             void* arg3;
             #pragma warning NO CONVERSION TO NATIVE FOR void*
-        ok = false;
+		ok = false;
             if (!ok) { break; }
             cocos2d::Sprite3D::createAsync(arg0, arg1, arg2, arg3);
             lua_settop(tolua_S, 1);
@@ -1317,14 +1317,14 @@ int lua_cocos2dx_3d_Sprite3D_createAsync(lua_State* tolua_S)
             if (!ok) { break; }
             std::function<void (cocos2d::Sprite3D *, void *)> arg1;
             do {
-            // Lambda binding for lua is not supported.
-            assert(false);
-        } while(0)
-        ;
+			// Lambda binding for lua is not supported.
+			assert(false);
+		} while(0)
+		;
             if (!ok) { break; }
             void* arg2;
             #pragma warning NO CONVERSION TO NATIVE FOR void*
-        ok = false;
+		ok = false;
             if (!ok) { break; }
             cocos2d::Sprite3D::createAsync(arg0, arg1, arg2);
             lua_settop(tolua_S, 1);
@@ -2871,192 +2871,22 @@ int lua_register_cocos2dx_3d_BillBoard(lua_State* tolua_S)
     g_typeCast["BillBoard"] = "cc.BillBoard";
     return 1;
 }
-
-int lua_cocos2dx_3d_TextureCube_create(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S, 1, "cc.TextureCube", 0, &tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    do
-    {
-        if (argc == 6)
-        {
-            std::string positive_x;
-            ok &= luaval_to_std_string(tolua_S, 2, &positive_x, "cc.TextureCube:create");
-            if (!ok) { break; }
-
-            std::string negative_x;
-            ok &= luaval_to_std_string(tolua_S, 3, &negative_x, "cc.TextureCube:create");
-            if (!ok){ break; }
-
-            std::string positive_y;
-            ok &= luaval_to_std_string(tolua_S, 4, &positive_y, "cc.TextureCube:create");
-            if (!ok) { break; }
-
-            std::string negative_y;
-            ok &= luaval_to_std_string(tolua_S, 5, &negative_y, "cc.TextureCube:create");
-            if (!ok){ break; }
-
-            std::string positive_z;
-            ok &= luaval_to_std_string(tolua_S, 6, &positive_z, "cc.TextureCube:create");
-            if (!ok) { break; }
-
-            std::string negative_z;
-            ok &= luaval_to_std_string(tolua_S, 7, &negative_z, "cc.TextureCube:create");
-            if (!ok){ break; }
-
-            cocos2d::TextureCube* ret = cocos2d::TextureCube::create(positive_x, negative_x,
-                                                                   positive_y, negative_y,
-                                                                   positive_z, negative_z);
-            object_to_luaval<cocos2d::TextureCube>(tolua_S, "cc.TextureCube", (cocos2d::TextureCube*)ret);
-            return 1;
-        }
-    } while (0);
-
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d", "cc.TextureCube:create", argc, 6);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-tolua_lerror:
-    tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_3d_TextureCube_create'.", &tolua_err);
-#endif
-    return 0;
-}
-
-int lua_register_cocos2dx_3d_TextureCube(lua_State* tolua_S)
-{
-    tolua_usertype(tolua_S, "cc.TextureCube");
-    tolua_cclass(tolua_S, "TextureCube", "cc.TextureCube", "cc.Texture2D", nullptr);
-
-    tolua_beginmodule(tolua_S, "TextureCube");
-    tolua_function(tolua_S, "create", lua_cocos2dx_3d_TextureCube_create);
-    tolua_endmodule(tolua_S);
-    std::string typeName = typeid(cocos2d::TextureCube).name();
-    g_luaType[typeName] = "cc.TextureCube";
-    g_typeCast["TextureCube"] = "cc.TextureCube";
-    return 1;
-}
-
-int lua_cocos2dx_3d_Skybox_create(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S, 1, "cc.Skybox", 0, &tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S) - 1;
-
-    do
-    {
-        if (argc == 0)
-        {
-            cocos2d::Skybox* ret = cocos2d::Skybox::create();
-            object_to_luaval<cocos2d::Skybox>(tolua_S, "cc.Skybox", (cocos2d::Skybox*)ret);
-            return 1;
-        }
-    } while (0);
-
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d", "cc.Skybox:create", argc, 0);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-tolua_lerror:
-    tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_3d_Skybox_create'.", &tolua_err);
-#endif
-    return 0;
-}
-
-int lua_cocos2dx_3d_Skybox_setTexture(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::Skybox* cobj = nullptr;
-    bool ok = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S, 1, "cc.Skybox", 0, &tolua_err)) goto tolua_lerror;
-#endif
-    cobj = (cocos2d::Skybox*)tolua_tousertype(tolua_S, 1, 0);
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(tolua_S, "invalid 'cobj' in function 'lua_cocos2dx_3d_Skybox_setTexture'", nullptr);
-        return 0;
-    }
-#endif
-    argc = lua_gettop(tolua_S) - 1;
-    do{
-        if (argc == 1)
-        {
-            cocos2d::TextureCube* arg0;
-            ok &= luaval_to_object<cocos2d::TextureCube>(tolua_S, 2, "cc.TextureCube", &arg0);
-
-            if (!ok) { break; }
-            cobj->setTexture(arg0);
-            lua_settop(tolua_S, 1);
-            return 1;
-        }
-    } while (0);
-
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Skybox:setTexture", argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-tolua_lerror:
-    tolua_error(tolua_S, "#ferror in function 'lua_cocos2dx_3d_Skybox_setTexture'.", &tolua_err);
-#endif
-
-    return 0;
-}
-
-int lua_register_cocos2dx_3d_Skybox(lua_State* tolua_S)
-{
-    tolua_usertype(tolua_S, "cc.Skybox");
-    tolua_cclass(tolua_S, "Skybox", "cc.Skybox", "cc.Node", nullptr);
-
-    tolua_beginmodule(tolua_S, "Skybox");
-    tolua_function(tolua_S, "create", lua_cocos2dx_3d_Skybox_create);
-    tolua_function(tolua_S, "setTexture", lua_cocos2dx_3d_Skybox_setTexture);
-    tolua_endmodule(tolua_S);
-
-    std::string typeName = typeid(cocos2d::Skybox).name();
-    g_luaType[typeName] = "cc.Skybox";
-    g_typeCast["Skybox"] = "cc.Skybox";
-    return 1;
-}
-
 TOLUA_API int register_all_cocos2dx_3d(lua_State* tolua_S)
 {
-    tolua_open(tolua_S);
-    
-    tolua_module(tolua_S,"cc",0);
-    tolua_beginmodule(tolua_S,"cc");
+	tolua_open(tolua_S);
+	
+	tolua_module(tolua_S,"cc",0);
+	tolua_beginmodule(tolua_S,"cc");
 
-    lua_register_cocos2dx_3d_Animate3D(tolua_S);
-    lua_register_cocos2dx_3d_Sprite3D(tolua_S);
-    lua_register_cocos2dx_3d_AttachNode(tolua_S);
-    lua_register_cocos2dx_3d_BillBoard(tolua_S);
-    lua_register_cocos2dx_3d_Animation3D(tolua_S);
-    lua_register_cocos2dx_3d_Skeleton3D(tolua_S);
-    lua_register_cocos2dx_3d_Mesh(tolua_S);
-    lua_register_cocos2dx_3d_TextureCube(tolua_S);
-    lua_register_cocos2dx_3d_Skybox(tolua_S);
+	lua_register_cocos2dx_3d_Animate3D(tolua_S);
+	lua_register_cocos2dx_3d_Sprite3D(tolua_S);
+	lua_register_cocos2dx_3d_AttachNode(tolua_S);
+	lua_register_cocos2dx_3d_BillBoard(tolua_S);
+	lua_register_cocos2dx_3d_Animation3D(tolua_S);
+	lua_register_cocos2dx_3d_Skeleton3D(tolua_S);
+	lua_register_cocos2dx_3d_Mesh(tolua_S);
 
-    tolua_endmodule(tolua_S);
-    return 1;
+	tolua_endmodule(tolua_S);
+	return 1;
 }
 
