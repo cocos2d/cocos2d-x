@@ -1,9 +1,5 @@
-
-#ifndef CC_ALLOCATOR_MACROS_H
-#define CC_ALLOCATOR_MACROS_H
-
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2015 Chukong Technologies Inc.
  Author: Justin Graham (https://github.com/mannewalis)
  
  http://www.cocos2d-x.org
@@ -26,6 +22,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
+#ifndef CC_ALLOCATOR_MACROS_H
+#define CC_ALLOCATOR_MACROS_H
+/// @cond
 
 #include "base/ccConfig.h"
 #include "platform/CCPlatformMacros.h"
@@ -126,5 +126,7 @@
         p = p + C > e ? e : p + C; \
     } \
 }
+
+/// @endcond
 
 #endif//CC_ALLOCATOR_MACROS_H
