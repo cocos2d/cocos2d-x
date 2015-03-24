@@ -51,7 +51,10 @@ public:
         CANCELLED
     };
 
-    /** Constructor.*/
+    /** 
+     * Constructor.
+     * @js NA
+     */
     EventTouch();
 
     /** Get event code.

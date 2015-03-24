@@ -32,6 +32,7 @@ NS_CC_BEGIN
 
 /** @class EventListenerAcceleration
  * @brief Acceleration event listener.
+ * @js NA
  */
 class CC_DLL EventListenerAcceleration : public EventListener
 {

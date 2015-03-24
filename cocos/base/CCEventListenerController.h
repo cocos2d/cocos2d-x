@@ -36,6 +36,7 @@ class Controller;
 
 /** @class EventListenerController
  * @param Controller event listener.
+ * @js NA
  */
 class EventListenerController : public EventListener
 {
