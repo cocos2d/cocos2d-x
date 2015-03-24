@@ -375,16 +375,17 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
         CCLOG("warning: Failed to read meshdata: attribCount '%s'.", _path.c_str());
         return false;
     }
+    MeshData*   meshData = nullptr;
     for(unsigned int i = 0; i < meshSize ; i++ )
     {
-        MeshData*   meshData = new (std::nothrow) MeshData();
          unsigned int attribSize=0;
         // read mesh data
         if (_binaryReader.read(&attribSize, 4, 1) != 1 || attribSize < 1)
         {
             CCLOG("warning: Failed to read meshdata: attribCount '%s'.", _path.c_str());
-            return false;
+            goto FAILED;
         }
+        meshData = new (std::nothrow) MeshData();
         meshData->attribCount = attribSize;
         meshData->attribs.resize(meshData->attribCount);
         for (ssize_t j = 0; j < meshData->attribCount; j++)
@@ -394,7 +395,7 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
             if (_binaryReader.read(&vSize, 4, 1) != 1)
             {
                 CCLOG("warning: Failed to read meshdata: usage or size '%s'.", _path.c_str());
-                return false;
+                goto FAILED;
             }
             std::string type = _binaryReader.readString();
             attribute=_binaryReader.readString();
@@ -408,14 +409,14 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
         if (_binaryReader.read(&vertexSizeInFloat, 4, 1) != 1 || vertexSizeInFloat == 0)
         {
             CCLOG("warning: Failed to read meshdata: vertexSizeInFloat '%s'.", _path.c_str());
-            return false;
+            goto FAILED;
         }
 
         meshData->vertex.resize(vertexSizeInFloat);
         if (_binaryReader.read(&meshData->vertex[0], 4, vertexSizeInFloat) != vertexSizeInFloat)
         {
             CCLOG("warning: Failed to read meshdata: vertex element '%s'.", _path.c_str());
-            return false;
+            goto FAILED;
         }
 
         // Read index data
@@ -431,13 +432,13 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
             if (_binaryReader.read(&nIndexCount, 4, 1) != 1)
             {
                 CCLOG("warning: Failed to read meshdata: nIndexCount '%s'.", _path.c_str());
-                return false;
+                goto FAILED;
             }
             indexArray.resize(nIndexCount);
             if (_binaryReader.read(&indexArray[0], 2, nIndexCount) != nIndexCount)
             {
                 CCLOG("warning: Failed to read meshdata: indices '%s'.", _path.c_str());
-                return false;
+                goto FAILED;
             }
             meshData->subMeshIndices.push_back(indexArray);
             meshData->numIndex = (int)meshData->subMeshIndices.size();
@@ -449,7 +450,7 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
                 if (_binaryReader.read(aabb, 4, 6) != 6)
                 {
                     CCLOG("warning: Failed to read meshdata: aabb '%s'.", _path.c_str());
-                    return false;
+                    goto FAILED;
                 }
                 meshData->subMeshAABB.push_back(AABB(Vec3(aabb[0], aabb[1], aabb[2]), Vec3(aabb[3], aabb[4], aabb[5])));
             }
@@ -461,6 +462,16 @@ bool  Bundle3D::loadMeshDatasBinary(MeshDatas& meshdatas)
         meshdatas.meshDatas.push_back(meshData);
     }
     return true;
+    
+FAILED:
+    {
+        CC_SAFE_DELETE(meshData);
+        for (auto& meshdata : meshdatas.meshDatas) {
+            delete meshdata;
+        }
+        meshdatas.meshDatas.clear();
+        return false;
+    }
 }
 bool Bundle3D::loadMeshDatasBinary_0_1(MeshDatas& meshdatas)
 {

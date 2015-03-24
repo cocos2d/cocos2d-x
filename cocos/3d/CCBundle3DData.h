@@ -49,7 +49,25 @@ struct MeshVertexAttrib
 };
 
 
-struct ModelData;
+/** model node data, since 3.3 */
+struct ModelData
+{
+    std::string subMeshId;
+    std::string matrialId;
+    std::vector<std::string> bones;
+    std::vector<Mat4>        invBindPose;
+    
+    virtual ~ModelData()
+    {
+        resetData();
+    }
+    virtual void resetData()
+    {
+        bones.clear();
+        invBindPose.clear();
+    }
+};
+
 /** Node data, since 3.3 */
 struct NodeData
 {
@@ -71,27 +89,14 @@ struct NodeData
             delete it;
         }
         children.clear();
+        
+        for(auto& modeldata : modelNodeDatas)
+        {
+            delete modeldata;
+        }
+        modelNodeDatas.clear();
     }
 
-};
-
-/** model node data, since 3.3 */
-struct ModelData
-{
-    std::string subMeshId;
-    std::string matrialId;
-    std::vector<std::string> bones;
-    std::vector<Mat4>        invBindPose;
-    
-    virtual ~ModelData()
-    {
-        resetData();
-    }
-    virtual void resetData()
-    {
-        bones.clear();
-        invBindPose.clear();
-    }
 };
 
 /** node datas, since 3.3 */
