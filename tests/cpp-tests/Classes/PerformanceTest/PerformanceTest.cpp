@@ -2,6 +2,7 @@
 #include "../testResource.h"
 #include "PerformanceNodeChildrenTest.h"
 #include "PerformanceParticleTest.h"
+#include "PerformanceParticle3DTest.h"
 #include "PerformanceSpriteTest.h"
 #include "PerformanceTextureTest.h"
 #include "PerformanceTouchesTest.h"
@@ -28,6 +29,7 @@ struct {
     { "Alloc Test", [](Ref*sender){runAllocPerformanceTest(); } },
     { "NodeChildren Test", [](Ref*sender){runNodeChildrenTest();} },
 	{ "Particle Test",[](Ref*sender){runParticleTest();} },
+	{ "Particle3D Perf Test",[](Ref*sender){runParticle3DTest();} },
 	{ "Sprite Perf Test",[](Ref*sender){runSpriteTest();} },
 	{ "Texture Perf Test",[](Ref*sender){runTextureTest();} },
 	{ "Touches Perf Test",[](Ref*sender){runTouchesTest();} },

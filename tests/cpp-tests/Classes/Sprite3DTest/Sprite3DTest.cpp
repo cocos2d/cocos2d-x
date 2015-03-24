@@ -368,6 +368,17 @@ Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
                                                                 glProgram->initWithFilenames("Sprite3DTest/cylinder.vert", "Sprite3DTest/cylinder.frag");
                                                                 glProgram->link();
                                                                 glProgram->updateUniforms();
+                                                                auto shining_texture = Director::getInstance()->getTextureCache()->addImage("Sprite3DTest/caustics.png");
+                                                                Texture2D::TexParams tRepeatParams;//set texture parameters
+                                                                tRepeatParams.magFilter = GL_NEAREST;
+                                                                tRepeatParams.minFilter = GL_NEAREST;
+                                                                tRepeatParams.wrapS = GL_REPEAT;
+                                                                tRepeatParams.wrapT = GL_REPEAT;
+                                                                shining_texture->setTexParameters(tRepeatParams); 
+                                                                //pass the texture sampler to our custom shader
+                                                                _state->setUniformTexture("caustics",shining_texture);
+                                                                _state->setUniformFloat("offset",_cylinder_texture_offset);
+                                                                _state->setUniformFloat("duration",_shining_duraion);
                                                             }
                                                             );
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);

@@ -816,6 +816,8 @@
 		B2507B6C192589AF00FA4972 /* Shaders3D in Resources */ = {isa = PBXBuildFile; fileRef = B2507B6A192589AF00FA4972 /* Shaders3D */; };
 		B609E67319C18DAD003D0074 /* BillBoardTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B609E67119C18DAD003D0074 /* BillBoardTest.cpp */; };
 		B609E67419C18DAD003D0074 /* BillBoardTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B609E67119C18DAD003D0074 /* BillBoardTest.cpp */; };
+		B6337DF71ABA9B44005AEF24 /* PerformanceParticle3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6337DF51ABA9B44005AEF24 /* PerformanceParticle3DTest.cpp */; };
+		B6337DF81ABA9B44005AEF24 /* PerformanceParticle3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6337DF51ABA9B44005AEF24 /* PerformanceParticle3DTest.cpp */; };
 		B639932E1A490EC700B07923 /* Particle3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B639932C1A490EC700B07923 /* Particle3DTest.cpp */; };
 		B639932F1A490EC700B07923 /* Particle3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B639932C1A490EC700B07923 /* Particle3DTest.cpp */; };
 		B63993311A49359F00B07923 /* Particle3D in Resources */ = {isa = PBXBuildFile; fileRef = B63993301A49359F00B07923 /* Particle3D */; };
@@ -1752,6 +1754,8 @@
 		B2507B6A192589AF00FA4972 /* Shaders3D */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders3D; path = "../tests/cpp-tests/Resources/Shaders3D"; sourceTree = "<group>"; };
 		B609E67119C18DAD003D0074 /* BillBoardTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BillBoardTest.cpp; path = BillBoardTest/BillBoardTest.cpp; sourceTree = "<group>"; };
 		B609E67219C18DAD003D0074 /* BillBoardTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BillBoardTest.h; path = BillBoardTest/BillBoardTest.h; sourceTree = "<group>"; };
+		B6337DF51ABA9B44005AEF24 /* PerformanceParticle3DTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceParticle3DTest.cpp; sourceTree = "<group>"; };
+		B6337DF61ABA9B44005AEF24 /* PerformanceParticle3DTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceParticle3DTest.h; sourceTree = "<group>"; };
 		B639932C1A490EC700B07923 /* Particle3DTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Particle3DTest.cpp; path = Particle3DTest/Particle3DTest.cpp; sourceTree = "<group>"; };
 		B639932D1A490EC700B07923 /* Particle3DTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Particle3DTest.h; path = Particle3DTest/Particle3DTest.h; sourceTree = "<group>"; };
 		B63993301A49359F00B07923 /* Particle3D */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Particle3D; path = "../tests/cpp-tests/Resources/Particle3D"; sourceTree = "<group>"; };
@@ -2939,6 +2943,8 @@
 		1AC35AC118CECF0C00F37B72 /* PerformanceTest */ = {
 			isa = PBXGroup;
 			children = (
+				B6337DF51ABA9B44005AEF24 /* PerformanceParticle3DTest.cpp */,
+				B6337DF61ABA9B44005AEF24 /* PerformanceParticle3DTest.h */,
 				1AC35AC218CECF0C00F37B72 /* PerformanceAllocTest.cpp */,
 				1AC35AC318CECF0C00F37B72 /* PerformanceAllocTest.h */,
 				1AF152D718FD252A00A52F3D /* PerformanceCallbackTest.cpp */,
@@ -4866,6 +4872,7 @@
 				182C5CBA1A95B2FD00C30D34 /* CocosStudio3DTest.cpp in Sources */,
 				1AC35C5D18CECF0C00F37B72 /* Ball.cpp in Sources */,
 				1AC35B7B18CECF0C00F37B72 /* GameOverScene.cpp in Sources */,
+				B6337DF71ABA9B44005AEF24 /* PerformanceParticle3DTest.cpp in Sources */,
 				1AC35BF318CECF0C00F37B72 /* ExtensionsTest.cpp in Sources */,
 				1AC35B3518CECF0C00F37B72 /* TestEntries.cpp in Sources */,
 				1AC35B2D18CECF0C00F37B72 /* Box2dTest.cpp in Sources */,
@@ -5118,6 +5125,7 @@
 				1AC35C3E18CECF0C00F37B72 /* PhysicsTest.cpp in Sources */,
 				3825CC4A1A2C982A00C92EA8 /* CustomRootNode.cpp in Sources */,
 				29080DC6191B595E0066F8DF /* UIScene_Editor.cpp in Sources */,
+				B6337DF81ABA9B44005AEF24 /* PerformanceParticle3DTest.cpp in Sources */,
 				29080DB2191B595E0066F8DF /* UILayoutTest.cpp in Sources */,
 				1AC35B6A18CECF0C00F37B72 /* ButtonTestLayer.cpp in Sources */,
 				29080DB6191B595E0066F8DF /* UIListViewTest.cpp in Sources */,
