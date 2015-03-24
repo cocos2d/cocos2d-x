@@ -210,10 +210,6 @@ protected:
     bool _isDepthTestFor2D;
     
     GroupCommandManager* _groupCommandManager;
-    
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    EventListenerCustom* _cacheTextureListener;
-#endif
 };
 
 NS_CC_END

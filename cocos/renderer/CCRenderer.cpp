@@ -182,9 +182,6 @@ Renderer::Renderer()
     ,_glViewAssigned(false)
     ,_isRendering(false)
     ,_isDepthTestFor2D(false)
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    ,_cacheTextureListener(nullptr)
-#endif
 {
     _groupCommandManager = new (std::nothrow) GroupCommandManager();
     
@@ -206,10 +203,6 @@ Renderer::~Renderer()
     CC_SAFE_RELEASE(_vao);
     CC_SAFE_RELEASE(_vbo);
     CC_SAFE_RELEASE(_ibo);
-    
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_cacheTextureListener);
-#endif
 }
 
 void Renderer::initGLView()
@@ -219,15 +212,6 @@ void Renderer::initGLView()
 
 void Renderer::initBuffers()
 {
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    _cacheTextureListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
-        /** listen the event that renderer was recreated on Android/WP8 */
-        this->setupBuffer();
-    });
-    
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_cacheTextureListener, -1);
-#endif
-    
     _vao = VertexData::create(VertexData::Primitive::Triangles);
     _vbo = VertexBuffer::create(sizeof(V3F_C4B_T2F), VBO_SIZE, VertexBuffer::ArrayType::All, VertexBuffer::ArrayMode::Dynamic);
     _ibo = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, INDEX_VBO_SIZE, IndexBuffer::ArrayType::All);
