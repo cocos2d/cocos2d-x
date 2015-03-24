@@ -105,7 +105,7 @@ public:
     static const int VBO_SIZE = 65536;
     static const int INDEX_VBO_SIZE = VBO_SIZE * 6 / 4;
     
-    static const int BATCH_QUADCOMMAND_RESEVER_SIZE = 64;
+    static const int BATCH_QUADCOMMAND_RESERVE_SIZE = 64;
     static const int MATERIAL_ID_DO_NOT_BATCH = 0;
     
     Renderer();
