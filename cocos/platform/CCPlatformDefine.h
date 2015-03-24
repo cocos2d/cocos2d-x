@@ -43,5 +43,5 @@ THE SOFTWARE.
 #include "platform/linux/CCPlatformDefine-linux.h"
 #endif
 
-/// @cond DO_NOT_SHOW
+/// @endcond
 #endif /* __PLATFORM_CCPLATFORMDEFINE_H__*/

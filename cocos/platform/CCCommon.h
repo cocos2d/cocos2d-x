@@ -77,5 +77,5 @@ enum class LanguageType
 
 NS_CC_END
 
-/// @cond DO_NOT_SHOW
+/// @endcond
 #endif    // __CC_COMMON_H__
