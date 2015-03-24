@@ -30,11 +30,14 @@
 
 NS_CC_BEGIN
 
+/** @class EventKeyboard
+ * @brief Keyboard event.
+ */
 class CC_DLL EventKeyboard : public Event
 {
 public:
     /**
-     * The key (code).
+     * KeyCode The key (code).
      */
     enum class KeyCode
     {
@@ -210,6 +213,11 @@ public:
         KEY_PLAY
     };
     
+    /** Constructor.
+     *
+     * @param keyCode A given keycode.
+     * @param isPressed True if the key is pressed.
+     */
     EventKeyboard(KeyCode keyCode, bool isPressed);
     
 private:

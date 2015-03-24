@@ -75,6 +75,7 @@ public:
      * @param tex A given texture.
      * @param capacity A capacity of particles.
      * @return An autoreleased ParticleBatchNode object.
+     * @js NA
      */
     static ParticleBatchNode* createWithTexture(Texture2D *tex, int capacity = kParticleDefaultCapacity);
 

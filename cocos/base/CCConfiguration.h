@@ -42,6 +42,7 @@ NS_CC_BEGIN
 /** @class Configuration
  * @brief Configuration contains some openGL variables
  * @since v0.99.0
+ * @js NA
  */
 class CC_DLL Configuration : public Ref
 {

@@ -30,9 +30,16 @@
 
 NS_CC_BEGIN
 
+/** @class EventAcceleration
+ * @brief Accelerometer event.
+ */
 class CC_DLL EventAcceleration : public Event
 {
 public:
+    /** Constructor.
+     *
+     * @param acc A given Acceleration.
+     */
     EventAcceleration(const Acceleration& acc);
     
 private:

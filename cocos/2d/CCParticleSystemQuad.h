@@ -53,6 +53,7 @@ Special features and Limitations:
 - It supports subrects.
 - It supports batched rendering since 1.1.
 @since v0.8
+@js NA
 */
 class CC_DLL ParticleSystemQuad : public ParticleSystem
 {

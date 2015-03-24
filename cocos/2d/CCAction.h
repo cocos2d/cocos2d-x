@@ -285,17 +285,15 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(Speed);
 };
 
-/** 
-@brief Follow is an action that "follows" a node.
-
-Eg:
-@code
-layer->runAction(Follow::actionWithTarget(hero));
-@endcode
-
-Instead of using Camera as a "follower", use this action instead.
-@since v0.99.2
-*/
+/** @class Follow
+ * @brief Follow is an action that "follows" a node.
+ * Eg:
+ * @code
+ * layer->runAction(Follow::actionWithTarget(hero));
+ * @endcode
+ * Instead of using Camera as a "follower", use this action instead.
+ * @since v0.99.2
+ */
 class CC_DLL Follow : public Action
 {
 public:
@@ -307,10 +305,21 @@ public:
      *              with no boundary.
      */
     static Follow* create(Node *followedNode, const Rect& rect = Rect::ZERO);
-    /** Return boundarySet.*/
+    /** Return boundarySet.
+     *
+     * @return Return boundarySet.
+     */
     inline bool isBoundarySet() const { return _boundarySet; }
-    /** Alter behavior - turn on/off boundary. */
+    /** Alter behavior - turn on/off boundary. 
+     *
+     * @param value Turn on/off boundary.
+     */
     inline void setBoundarySet(bool value) { _boundarySet = value; }
+    
+    /** @deprecated Alter behavior - turn on/off boundary. 
+     *
+     * @param value Turn on/off boundary.
+     */
     CC_DEPRECATED_ATTRIBUTE inline void setBoudarySet(bool value) { setBoundarySet(value); }
 
     //

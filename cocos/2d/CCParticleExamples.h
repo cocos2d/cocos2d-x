@@ -51,6 +51,7 @@ public:
      *
      * @param numberOfParticles A given number of particles.
      * @return An autoreleased ParticleFire object.
+     * @js NA
      */
     static ParticleFire* createWithTotalParticles(int numberOfParticles);
     
@@ -87,6 +88,7 @@ public:
      *
      * @param numberOfParticles A given number of particles.
      * @return An autoreleased ParticleFireworks object.
+     * @js NA
      */
     static ParticleFireworks* createWithTotalParticles(int numberOfParticles);
     
@@ -124,6 +126,7 @@ public:
      *
      * @param numberOfParticles A given number of particles.
      * @return An autoreleased ParticleSun object.
+     * @js NA
      */
     static ParticleSun* createWithTotalParticles(int numberOfParticles);
     
@@ -161,6 +164,7 @@ public:
      *
      * @param numberOfParticles A given number of particles.
      * @return An autoreleased ParticleGalaxy object.
+     * @js NA
      */
     static ParticleGalaxy* createWithTotalParticles(int numberOfParticles);
     
@@ -198,6 +202,7 @@ public:
      *
      * @param numberOfParticles A given number of particles.
      * @return An autoreleased ParticleFlower object.
+     * @js NA
      */
     static ParticleFlower* createWithTotalParticles(int numberOfParticles);
     
@@ -234,6 +239,7 @@ public:
      *
      * @param numberOfParticles A given number of particles.
      * @return An autoreleased ParticleMeteor object.
+     * @js NA
      */
     static ParticleMeteor* createWithTotalParticles(int numberOfParticles);
     
@@ -270,6 +276,7 @@ public:
      *
      * @param numberOfParticles A given number of particles.
      * @return An autoreleased ParticleSpiral object.
+     * @js NA
      */
     static ParticleSpiral* createWithTotalParticles(int numberOfParticles);
     
@@ -307,6 +314,7 @@ public:
      *
      * @param numberOfParticles A given number of particles.
      * @return An autoreleased ParticleExplosion object.
+     * @js NA
      */
     static ParticleExplosion* createWithTotalParticles(int numberOfParticles);
     
@@ -343,6 +351,7 @@ public:
      *
      * @param numberOfParticles A given number of particles.
      * @return An autoreleased ParticleSmoke object.
+     * @js NA
      */
     static ParticleSmoke* createWithTotalParticles(int numberOfParticles);
     
@@ -379,6 +388,7 @@ public:
      *
      * @param numberOfParticles A given number of particles.
      * @return An autoreleased ParticleSnow object.
+     * @js NA
      */
     static ParticleSnow* createWithTotalParticles(int numberOfParticles);
     
@@ -415,6 +425,7 @@ public:
      *
      * @param numberOfParticles A given number of particles.
      * @return An autoreleased ParticleRain object.
+     * @js NA
      */
     static ParticleRain* createWithTotalParticles(int numberOfParticles);
     

@@ -34,11 +34,18 @@ NS_CC_BEGIN
 class Event;
 class Controller;
 
+/** @class EventListenerController
+ * @param Controller event listener.
+ */
 class EventListenerController : public EventListener
 {
 public:
     static const std::string LISTENER_ID;
     
+    /** Create a controller event listener.
+     *
+     * @return An autoreleased EventListenerController object.
+     */
 	static EventListenerController* create();
     
     /// Overrides

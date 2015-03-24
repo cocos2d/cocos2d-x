@@ -87,7 +87,7 @@
 -- @return long#long ret (return value: long)
         
 --------------------------------
--- Sets the batch node to sprite<br>
+-- Sets the batch node to sprite.<br>
 -- warning This method is not recommended for game developers. Sample code for using batch node<br>
 -- code<br>
 -- SpriteBatchNode *batch = SpriteBatchNode::create("Images/grossini_dance_atlas.png", 15);<br>
@@ -132,7 +132,7 @@
         
 --------------------------------
 -- Whether or not the Sprite needs to be updated in the Atlas.<br>
--- return true if the sprite needs to be updated in the Atlas, false otherwise.
+-- return True if the sprite needs to be updated in the Atlas, false otherwise.
 -- @function [parent=#Sprite] isDirty 
 -- @param self
 -- @return bool#bool ret (return value: bool)
@@ -165,11 +165,11 @@
 -- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
--- / @{/ @name Functions inherited from TextureProtocol<br>
+-- / @{/ @name Functions inherited from TextureProtocol.<br>
 -- code<br>
 -- When this function bound into js or lua,the parameter will be changed.<br>
--- In js: var setBlendFunc(var src, var dst)<br>
--- In lua: local setBlendFunc(local src, local dst)<br>
+-- In js: var setBlendFunc(var src, var dst).<br>
+-- In lua: local setBlendFunc(local src, local dst).<br>
 -- endcode
 -- @function [parent=#Sprite] setBlendFunc 
 -- @param self

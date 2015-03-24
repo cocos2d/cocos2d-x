@@ -117,7 +117,6 @@ public:
     */
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     /**
-    * @js NA
     * @lua NA
     */
     virtual void update(float delta) override;

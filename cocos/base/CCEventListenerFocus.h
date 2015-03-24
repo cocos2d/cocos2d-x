@@ -35,12 +35,22 @@ namespace ui {
     class Widget;
 }
 
+/** @class EventListenerFocus
+ * @brief Focus event listener.
+ */
 class CC_DLL EventListenerFocus : public EventListener
 {
 public:
     static const std::string LISTENER_ID;
+    
+    /** Create a focus event listener.
+     *
+     * @return An autoreleased EventListenerFocus object.
+     */
     static EventListenerFocus* create();
     
+    /** Destructor.
+     */
     virtual ~EventListenerFocus();
     
     /// Overrides

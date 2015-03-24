@@ -33,11 +33,18 @@ NS_CC_BEGIN
 
 class Event;
 
+/** @class EventListenerKeyboard
+ * @brief Keyboard event listener.
+ */
 class CC_DLL EventListenerKeyboard : public EventListener
 {
 public:
     static const std::string LISTENER_ID;
     
+    /** Create a keyboard event listener.
+     * 
+     * @return An autoreleased EventListenerKeyboard object.
+     */
     static EventListenerKeyboard* create();
     
     /// Overrides

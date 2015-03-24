@@ -30,19 +30,34 @@
 
 NS_CC_BEGIN
 
+/** @class EventCustom
+ * @brief Custom event.
+ */
 class CC_DLL EventCustom : public Event
 {
 public:
-    /** Constructor */
+    /** Constructor.
+     *
+     * @param eventName A given name of the custom event.
+     */
     EventCustom(const std::string& eventName);
     
-    /** Sets user data */
+    /** Sets user data.
+     *
+     * @param data The user data pointer, it's a void*.
+     */
     inline void setUserData(void* data) { _userData = data; };
     
-    /** Gets user data */
+    /** Gets user data.
+     *
+     * @return The user data pointer, it's a void*.
+     */
     inline void* getUserData() const { return _userData; };
     
-    /** Gets event name */
+    /** Gets event name.
+     *
+     * @return The name of the event.
+     */
     inline const std::string& getEventName() const { return _eventName; };
 protected:
     void* _userData;       ///< User data

@@ -35,6 +35,11 @@ NS_CC_BEGIN
 class __Array;
 class ScriptHandlerMgr;
 
+/**
+ * @cond DO_NOT_SHOW
+ * @{
+ */
+
 class CC_DLL __NotificationCenter : public Ref
 {
     friend class ScriptHandlerMgr;
@@ -196,6 +201,10 @@ private:
     Ref* _sender;
     int _handler;
 };
+
+/**
+ * @}
+ */
 
 NS_CC_END
 

@@ -34,6 +34,7 @@
 NS_CC_BEGIN
 
 /**
+ * @addtogroup base
  * @js NA
  * @lua NA
  */
@@ -124,6 +125,8 @@ private:
     unsigned char* _bytes;
     ssize_t _size;
 };
+
+/** @} */
 
 NS_CC_END
 
