@@ -307,7 +307,7 @@ void Renderer::processRenderCommand(RenderCommand* command)
         {
             CCASSERT(cmd->getQuadCount()>= 0 && cmd->getQuadCount() * 4 < VBO_SIZE, "VBO for vertex is not big enough, please break the data down or use customized render command");
             //Draw batched quads if VBO is full
-            drawBatchedGeometry();
+            drawBatchedQuads();
         }
         
         //Batch Quads
@@ -317,7 +317,7 @@ void Renderer::processRenderCommand(RenderCommand* command)
         
         if(cmd->isSkipBatching())
         {
-            drawBatchedGeometry();
+            drawBatchedQuads();
         }
     }
     else if (RenderCommand::Type::MESH_COMMAND == commandType)
@@ -574,7 +574,7 @@ void Renderer::insertQuads(const QuadCommand* cmd)
     }
 }
 
-void Renderer::drawBatchedGeometry()
+void Renderer::drawBatchedQuads()
 {
     int indexToDraw = 0;
     int startIndex = 0;
@@ -626,7 +626,7 @@ void Renderer::flush2D()
 {
     if (!_vao->empty())
     {
-        drawBatchedGeometry();
+        drawBatchedQuads();
         _lastMaterialID = 0;
     }
 }
