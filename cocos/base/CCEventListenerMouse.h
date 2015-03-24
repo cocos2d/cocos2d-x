@@ -35,6 +35,7 @@ class Event;
 
 /** @class EventListenerMouse
  * @brief Mouse event listener.
+ * @js cc._EventListenerMouse
  */
 class CC_DLL EventListenerMouse : public EventListener
 {

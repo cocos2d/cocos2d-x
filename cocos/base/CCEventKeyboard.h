@@ -38,6 +38,7 @@ class CC_DLL EventKeyboard : public Event
 public:
     /**
      * KeyCode The key (code).
+     * @js NA
      */
     enum class KeyCode
     {
@@ -217,6 +218,7 @@ public:
      *
      * @param keyCode A given keycode.
      * @param isPressed True if the key is pressed.
+     * @js ctor
      */
     EventKeyboard(KeyCode keyCode, bool isPressed);
     

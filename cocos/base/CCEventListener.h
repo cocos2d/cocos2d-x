@@ -62,13 +62,20 @@ public:
     typedef std::string ListenerID;
 
 CC_CONSTRUCTOR_ACCESS:
-    /** Constructor */
+    /**
+     * Constructor
+     * @js ctor
+     */
     EventListener();
 
-    /** Initializes event with type and callback function */
+    /** 
+     * Initializes event with type and callback function
+     * @js NA
+     */
     bool init(Type t, const ListenerID& listenerID, const std::function<void(Event*)>& callback);
 public:
     /** Destructor.
+     * @js NA 
      */
     virtual ~EventListener();
 
