@@ -14,7 +14,8 @@
 --------------------------------
 --  Create a sun particle system withe a fixed number of particles.<br>
 -- param numberOfParticles A given number of particles.<br>
--- return An autoreleased ParticleSun object.
+-- return An autoreleased ParticleSun object.<br>
+-- js NA
 -- @function [parent=#ParticleSun] createWithTotalParticles 
 -- @param self
 -- @param #int numberOfParticles

@@ -14,7 +14,8 @@
 --------------------------------
 --  Create a meteor particle system withe a fixed number of particles.<br>
 -- param numberOfParticles A given number of particles.<br>
--- return An autoreleased ParticleMeteor object.
+-- return An autoreleased ParticleMeteor object.<br>
+-- js NA
 -- @function [parent=#ParticleMeteor] createWithTotalParticles 
 -- @param self
 -- @param #int numberOfParticles
