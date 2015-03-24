@@ -26,13 +26,13 @@
 #ifndef _CCFontFNT_h_
 #define _CCFontFNT_h_
 
+/// @cond DO_NOT_SHOW
+
 #include "CCFont.h"
 
 NS_CC_BEGIN
 
 class BMFontConfiguration;
-
-/// @cond FontFNT
 
 class CC_DLL FontFNT : public Font
 {

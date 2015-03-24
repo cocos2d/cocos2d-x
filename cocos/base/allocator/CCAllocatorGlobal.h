@@ -25,7 +25,7 @@
 
 #ifndef CC_ALLOCATOR_GLOBAL_H
 #define CC_ALLOCATOR_GLOBAL_H
-/// @cond
+/// @cond DO_NOT_SHOW
 
 #include "base/allocator/CCAllocatorMacros.h"
 #include "base/allocator/CCAllocatorStrategyDefault.h"
@@ -40,5 +40,4 @@ NS_CC_ALLOCATOR_END
 NS_CC_END
 
 /// @endcond
-
 #endif//CC_ALLOCATOR_GLOBAL_H

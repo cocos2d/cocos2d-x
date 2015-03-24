@@ -25,7 +25,7 @@
 
 #ifndef CC_ALLOCATOR_MACROS_H
 #define CC_ALLOCATOR_MACROS_H
-/// @cond
+/// @cond DO_NOT_SHOW
 
 #include "base/ccConfig.h"
 #include "platform/CCPlatformMacros.h"
@@ -128,5 +128,4 @@
 }
 
 /// @endcond
-
 #endif//CC_ALLOCATOR_MACROS_H

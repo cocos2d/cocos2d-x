@@ -25,7 +25,7 @@
 
 #ifndef CC_ALLOCATOR_MUTEX_H
 #define CC_ALLOCATOR_MUTEX_H
-/// @cond
+/// @cond DO_NOT_SHOW
 
 #include "platform/CCPlatformMacros.h"
 
@@ -122,5 +122,4 @@ NS_CC_ALLOCATOR_END
 NS_CC_END
 
 /// @endcond
-
 #endif//CC_ALLOCATOR_MUTEX_H

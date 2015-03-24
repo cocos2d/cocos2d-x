@@ -26,6 +26,8 @@
 #ifndef _FontFreetype_h_
 #define _FontFreetype_h_
 
+/// @cond DO_NOT_SHOW
+
 #include "CCFont.h"
 
 #include <string>
@@ -45,8 +47,6 @@
 #endif
 
 NS_CC_BEGIN
-
-/// @cond 
 
 class CC_DLL FontFreeType : public Font
 {

@@ -26,14 +26,14 @@
 #ifndef _CCFont_h_
 #define _CCFont_h_
 
+/// @cond DO_NOT_SHOW
+
 #include <string>
 #include "2d/CCLabel.h"
 
 NS_CC_BEGIN
 
 class FontAtlas;
-
-/// @cond
 
 class CC_DLL Font : public Ref
 {
@@ -65,8 +65,7 @@ protected:
 
 };
 
-/// @endcond
-
 NS_CC_END
 
+/// @endcond
 #endif

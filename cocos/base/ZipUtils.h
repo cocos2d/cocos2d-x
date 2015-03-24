@@ -22,8 +22,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
 #ifndef __SUPPORT_ZIPUTILS_H__
 #define __SUPPORT_ZIPUTILS_H__
+/// @cond DO_NOT_SHOW
 
 #include <string>
 #include "platform/CCPlatformConfig.h"
@@ -294,5 +296,5 @@ typedef struct unz_file_info_s unz_file_info;
 // end group
 /// @}
 
+/// @endcond
 #endif // __SUPPORT_ZIPUTILS_H__
-

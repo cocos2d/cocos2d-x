@@ -25,7 +25,7 @@
 
 #ifndef CC_ALLOCATOR_DIAGNOSTICS_H
 #define CC_ALLOCATOR_DIAGNOSTICS_H
-/// @cond
+/// @cond DO_NOT_SHOW
 
 #include <unordered_set>
 
@@ -59,5 +59,4 @@ NS_CC_ALLOCATOR_END
 NS_CC_END
 
 /// @endcond
-
 #endif//CC_ALLOCATOR_DIAGNOSTICS_H
