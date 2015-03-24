@@ -178,6 +178,9 @@ def do_build_slaves():
             slave_build_scripts = jenkins_script_path + "mac-build.sh"
         elif(node_name == 'linux_centos' or node_name == 'linux' or node_name == 'linux_bak'):
             slave_build_scripts = jenkins_script_path + "linux-build.sh"
+        elif(node_name == 'wp8'):
+            if(branch == 'v3'):
+                slave_build_scripts = jenkins_script_path + "wp8-v3.bat"
 
         ret = os.system(slave_build_scripts)
 
