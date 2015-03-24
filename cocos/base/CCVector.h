@@ -35,6 +35,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
+ * @addtogroup base
  * Similar to std::vector, but it will manage reference count automatically internally.
  * Which means it will invoke Ref::retain() when adding an element, and invoke Ref::release() when removing an element.
  * @warn The element should be `Ref` or its sub-class.
@@ -499,7 +500,7 @@ protected:
 };
 
 // end of data_structure group
-/// @}
+/** @} */
 
 NS_CC_END
 

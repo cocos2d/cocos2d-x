@@ -33,6 +33,8 @@
 NS_CC_BEGIN
 
 /**
+ * @cond DO_NOT_SHOW
+ *
  * Utility/support macros. Defined to enable RefPtr<T> to contain types like 'const T' because we do not
  * regard retain()/release() as affecting mutability of state.
  */
@@ -304,6 +306,8 @@ template<class T, class U> RefPtr<T> dynamic_pointer_cast(const RefPtr<U> & r)
 #undef CC_REF_PTR_SAFE_RETAIN
 #undef CC_REF_PTR_SAFE_RELEASE
 #undef CC_REF_PTR_SAFE_RELEASE_NULL
+
+/** @} */
 
 NS_CC_END
 

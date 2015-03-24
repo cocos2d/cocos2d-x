@@ -37,7 +37,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * @addtogroup platform
+ * @addtogroup support
  * @{
  */
 
@@ -528,8 +528,8 @@ protected:
     
 };
 
-// end of platform group
-/// @}
+// end of support group
+/** @} */
 
 NS_CC_END
 
