@@ -40,6 +40,35 @@
 
 #define SENSOR_DELAY_GAME 0.02
 
+static void adjustAccelerationForDeviceOrientation(cocos2d::Acceleration & acceleration)
+{
+    double tmp = acceleration.x;
+    
+    switch ([[UIApplication sharedApplication] statusBarOrientation])
+    {
+        case UIInterfaceOrientationLandscapeRight:
+            acceleration.x = -acceleration.y;
+            acceleration.y = tmp;
+            break;
+            
+        case UIInterfaceOrientationLandscapeLeft:
+            acceleration.x = acceleration.y;
+            acceleration.y = -tmp;
+            break;
+            
+        case UIInterfaceOrientationPortraitUpsideDown:
+            acceleration.x = -acceleration.y;
+            acceleration.y = -tmp;
+            break;
+            
+        case UIInterfaceOrientationPortrait:
+            break;
+            
+        default:
+            CCASSERT(false, "Unknown device orientation!");
+    }
+}
+
 @interface CCAccelerometerDispatcher : NSObject<UIAccelerometerDelegate>
 {
     cocos2d::Acceleration *_acceleration;
@@ -110,34 +139,24 @@ static CCAccelerometerDispatcher* s_pAccelerometerDispatcher;
     _acceleration->z = accelerometerData.acceleration.z;
     _acceleration->timestamp = accelerometerData.timestamp;
     
-    double tmp = _acceleration->x;
-    
-    switch ([[UIApplication sharedApplication] statusBarOrientation])
-    {
-        case UIInterfaceOrientationLandscapeRight:
-            _acceleration->x = -_acceleration->y;
-            _acceleration->y = tmp;
-            break;
-            
-        case UIInterfaceOrientationLandscapeLeft:
-            _acceleration->x = _acceleration->y;
-            _acceleration->y = -tmp;
-            break;
-            
-        case UIInterfaceOrientationPortraitUpsideDown:
-            _acceleration->x = -_acceleration->y;
-            _acceleration->y = -tmp;
-            break;
-            
-        case UIInterfaceOrientationPortrait:
-            break;
-        default:
-            NSAssert(false, @"unknow orientation");
-    }
+    adjustAccelerationForDeviceOrientation(*_acceleration);
 
     cocos2d::EventAcceleration event(*_acceleration);
     auto dispatcher = cocos2d::Director::getInstance()->getEventDispatcher();
     dispatcher->dispatchEvent(&event);
+}
+
+-(cocos2d::Acceleration*) pollAccelerometerData
+{
+    cocos2d::Acceleration * acceleration = new cocos2d::Acceleration();
+    acceleration->autorelease();
+    
+    acceleration->x = _motionManager.accelerometerData.acceleration.x;
+    acceleration->y = _motionManager.accelerometerData.acceleration.y;
+    acceleration->z = _motionManager.accelerometerData.acceleration.z;
+    adjustAccelerationForDeviceOrientation(*acceleration);
+    
+    return acceleration;
 }
 
 @end
@@ -180,6 +199,12 @@ void Device::setAccelerometerEnabled(bool isEnabled)
 void Device::setAccelerometerInterval(float interval)
 {
     [[CCAccelerometerDispatcher sharedAccelerometerDispather] setAccelerometerInterval:interval];
+}
+
+Acceleration * Device::pollAccelerometer()
+{
+    CCAccelerometerDispatcher * dispatcher = [CCAccelerometerDispatcher sharedAccelerometerDispather];
+    return [dispatcher pollAccelerometerData];
 }
 
 typedef struct

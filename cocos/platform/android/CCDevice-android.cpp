@@ -65,6 +65,12 @@ void Device::setAccelerometerInterval(float interval)
 	setAccelerometerIntervalJni(interval);
 }
 
+Acceleration * Device::pollAccelerometer()
+{
+    // TODO: implement me for Android
+    return nullptr;
+}
+
 class BitmapDC
 {
 public:
