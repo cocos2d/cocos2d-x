@@ -14,10 +14,10 @@ if('WORKSPACE' in os.environ):
 else:
     workspace = "."
 
-if('NODE_NAME' in os.environ):    
+if('NODE_NAME' in os.environ):
     node_name = os.environ['NODE_NAME']
 else:
-    node_name = 'ios'    
+    node_name = 'ios'
 # for local debugging purpose, you could change the value to 0 and run
 # this scripts in your local machine
 remote_build = 1
@@ -40,7 +40,7 @@ def sync_remote_repo():
     os.system("git merge origin/" + branch)
     #clean workspace
     print "Before checkout: git clean -xdf -f"
-    # os.system("git clean -xdf -f")
+    os.system("git clean -xdf -f")
 
     #update submodule
     git_update_submodule = "git submodule update --init --force"
@@ -120,7 +120,7 @@ def main():
     if remote_build == 1:
         os.system("cd " + workspace)
         os.system("git reset --hard")
-        # os.system("git clean -xdf -f")
+        os.system("git clean -xdf -f")
     else:
         print "local build, no need to cleanup"
 
