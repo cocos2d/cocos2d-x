@@ -518,6 +518,8 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                             }
                         }
                     }
+                    
+                    setAdditionalTransform(&nodedata->transform);
                 }
             }
             else
