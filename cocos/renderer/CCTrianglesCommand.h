@@ -29,7 +29,7 @@
 #include "renderer/CCGLProgramState.h"
 
 NS_CC_BEGIN
-class CC_DLL TrianglesCommand : public RenderCommand
+CC_DEPRECATED(v4) class CC_DLL TrianglesCommand : public RenderCommand
 {
 public:
     struct Triangles
