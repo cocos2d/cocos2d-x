@@ -26,13 +26,14 @@
 #ifndef _CCLabelTextFormatter_h_
 #define _CCLabelTextFormatter_h_
 
+/// @cond DO_NOT_SHOW
+
 #include "platform/CCPlatformMacros.h"
 
 NS_CC_BEGIN
 
 class Label;
 
-/// @cond
 class CC_DLL LabelTextFormatter
 {
 public:
@@ -43,8 +44,7 @@ public:
 
 };
 
-/// @endcond
-
 NS_CC_END
 
+/// @endcond
 #endif

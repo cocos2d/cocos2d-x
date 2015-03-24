@@ -23,8 +23,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
 #ifndef __CCLABELTTF_H__
 #define __CCLABELTTF_H__
+
+/// @cond DO_NOT_SHOW
 
 #include "2d/CCNode.h"
 
@@ -171,9 +174,8 @@ protected:
 #pragma warning (pop)
 #endif
 
-/// @endcond
-
 NS_CC_END
 
+/// @endcond
 #endif //__CCLABEL_H__
 

@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies
+Copyright (c) 2013-2015 Chukong Technologies
  
  http://www.cocos2d-x.org
  
@@ -22,8 +22,10 @@ Copyright (c) 2013-2014 Chukong Technologies
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
 #ifndef __CC_PLATFORM_MACROS_H__
 #define __CC_PLATFORM_MACROS_H__
+/// @cond DO_NOT_SHOW
 
 /**
  * define some platform specific macros
@@ -318,4 +320,5 @@ public: virtual void set##funName(varType var)   \
     #endif
 #endif
 
+/// @endcond
 #endif // __CC_PLATFORM_MACROS_H__
