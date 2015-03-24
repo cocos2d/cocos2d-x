@@ -14,7 +14,8 @@
 --------------------------------
 --  Create a rain particle system withe a fixed number of particles.<br>
 -- param numberOfParticles A given number of particles.<br>
--- return An autoreleased ParticleRain object.
+-- return An autoreleased ParticleRain object.<br>
+-- js NA
 -- @function [parent=#ParticleRain] createWithTotalParticles 
 -- @param self
 -- @param #int numberOfParticles
