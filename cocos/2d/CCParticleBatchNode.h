@@ -41,7 +41,7 @@ class TextureAtlas;
 class ParticleSystem;
 
 /**
- * @addtogroup particle_nodes
+ * @addtogroup _2d
  * @{
  */
 
@@ -179,7 +179,7 @@ private:
     BatchCommand _batchCommand;
 };
 
-// end of particle_nodes group
+// end of _2d group
 /// @}
 
 NS_CC_END

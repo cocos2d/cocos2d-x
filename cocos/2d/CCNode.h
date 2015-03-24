@@ -57,7 +57,7 @@ class PhysicsBody;
 #endif
 
 /**
- * @addtogroup base_nodes
+ * @addtogroup _2d
  * @{
  */
 
@@ -1908,7 +1908,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(__NodeRGBA);
 };
 
-// end of base_node group
+// end of _2d group
 /// @}
 
 NS_CC_END
