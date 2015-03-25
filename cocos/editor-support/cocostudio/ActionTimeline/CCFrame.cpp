@@ -83,7 +83,10 @@ VisibleFrame::VisibleFrame()
 
 void VisibleFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
-    _node->setVisible(_visible);
+    if (_node)
+    {
+        _node->setVisible(_visible);
+    }
 }
 
 
@@ -170,6 +173,11 @@ RotationFrame::RotationFrame()
 
 void RotationFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    if (_node == nullptr)
+    {
+        return;
+    }
+	
     _node->setRotation(_rotation);
 
     if(_tween)
@@ -180,7 +188,7 @@ void RotationFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 
 void RotationFrame::apply(float percent)
 {
-    if (_tween && _betwennRotation != 0)
+    if (_node && _tween && _betwennRotation != 0)
     {
         float rotation = _rotation + percent * _betwennRotation;
         _node->setRotation(rotation);
@@ -220,6 +228,11 @@ SkewFrame::SkewFrame()
 
 void SkewFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    if (_node == nullptr)
+    {
+	    return;
+    }
+
     _node->setSkewX(_skewX);
     _node->setSkewY(_skewY);
 
@@ -232,7 +245,7 @@ void SkewFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 
 void SkewFrame::apply(float percent)
 {
-    if (_tween && (_betweenSkewX != 0 || _betweenSkewY != 0))
+    if (_node && _tween && (_betweenSkewX != 0 || _betweenSkewY != 0))
     {
         float skewx = _skewX + percent * _betweenSkewX;
         float skewy = _skewY + percent * _betweenSkewY;
@@ -275,6 +288,11 @@ RotationSkewFrame::RotationSkewFrame()
 
 void RotationSkewFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    if (_node == nullptr)
+    {
+	    return;
+    }
+
     _node->setRotationSkewX(_skewX);
     _node->setRotationSkewY(_skewY);
 
@@ -287,7 +305,7 @@ void RotationSkewFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 
 void RotationSkewFrame::apply(float percent)
 {
-    if (_tween && (_betweenSkewX != 0 || _betweenSkewY != 0))
+    if (_node && _tween && (_betweenSkewX != 0 || _betweenSkewY != 0))
     {
         float skewx = _skewX + percent * _betweenSkewX;
         float skewy = _skewY + percent * _betweenSkewY;
@@ -329,6 +347,11 @@ PositionFrame::PositionFrame()
 
 void PositionFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    if (_node == nullptr)
+    {
+	    return;
+    }
+
     _node->setPosition(_position);
 
     if(_tween)
@@ -340,7 +363,7 @@ void PositionFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 
 void PositionFrame::apply(float percent)
 {
-    if (_tween && (_betweenX != 0 || _betweenY != 0))
+    if (_node && _tween && (_betweenX != 0 || _betweenY != 0))
     {
         Point p;
         p.x = _position.x + _betweenX * percent;
@@ -382,6 +405,11 @@ ScaleFrame::ScaleFrame()
 
 void ScaleFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    if (_node == nullptr)
+    {
+	    return;
+    }
+	
     _node->setScaleX(_scaleX);
     _node->setScaleY(_scaleY);
 
@@ -394,7 +422,7 @@ void ScaleFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 
 void ScaleFrame::apply(float percent)
 {
-    if (_tween && (_betweenScaleX != 0 || _betweenScaleY != 0))
+    if (_node && _tween && (_betweenScaleX != 0 || _betweenScaleY != 0))
     {
         float scaleX = _scaleX + _betweenScaleX * percent;
         float scaleY = _scaleY + _betweenScaleY * percent;
@@ -436,6 +464,11 @@ AnchorPointFrame::AnchorPointFrame()
 
 void AnchorPointFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    if (_node == nullptr)
+    {
+	    return;
+    }
+
     _node->setAnchorPoint(_anchorPoint);
 }
 
@@ -480,6 +513,11 @@ InnerActionFrame::InnerActionFrame()
 
 void InnerActionFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    if (_node == nullptr)
+    {
+	    return;
+    }
+
     auto innerActiontimeline = static_cast<ActionTimeline*>(_node->getActionByTag(_node->getTag()));
     if( nullptr == innerActiontimeline)
         return;
@@ -601,6 +639,10 @@ ColorFrame::ColorFrame()
 
 void ColorFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    if (_node == nullptr)
+    {
+	    return;
+    }
     _node->setColor(_color);
 
     if(_tween)
@@ -614,7 +656,7 @@ void ColorFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 
 void ColorFrame::apply(float percent)
 {
-    if (_tween && (_betweenRed != 0 || _betweenGreen != 0 || _betweenBlue != 0))
+    if (_node && _tween && (_betweenRed != 0 || _betweenGreen != 0 || _betweenBlue != 0))
     {
         Color3B color;
         color.r = _color.r+ _betweenRed   * percent;
@@ -655,6 +697,11 @@ AlphaFrame::AlphaFrame()
 
 void AlphaFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    if (_node == nullptr)
+    {
+	    return;
+    }
+
     _node->setOpacity(_alpha);
 
     if (_tween)
@@ -665,7 +712,7 @@ void AlphaFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 
 void AlphaFrame::apply(float percent)
 {
-    if (_tween)
+    if (_node && _tween)
     {
         GLubyte alpha = _alpha + _betweenAlpha * percent;
         _node->setOpacity(alpha);
