@@ -5,7 +5,7 @@
 -- @parent_module cc
 
 --------------------------------
--- param dt in seconds
+-- param dt In seconds.
 -- @function [parent=#ActionInstant] step 
 -- @param self
 -- @param #float dt
@@ -30,7 +30,7 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- param time in seconds
+-- param time In seconds.
 -- @function [parent=#ActionInstant] update 
 -- @param self
 -- @param #float time
