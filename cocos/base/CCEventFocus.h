@@ -28,6 +28,10 @@
 
 #include "base/CCEvent.h"
 
+/**
+ * @addtogroup base
+ * @{
+ */
 
 NS_CC_BEGIN
 
@@ -58,5 +62,8 @@ private:
 
 
 NS_CC_END
+
+// end of base group
+/// @}
 
 #endif /* defined(__cocos2d_libs__CCEventFocus__) */

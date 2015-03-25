@@ -38,6 +38,11 @@
 #define MOUSE_BUTTON_7          6
 #define MOUSE_BUTTON_8          7
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 NS_CC_BEGIN
 
 /** @class EventMouse
@@ -185,5 +190,8 @@ private:
 };
 
 NS_CC_END
+
+// end of base group
+/// @}
 
 #endif /* defined(__cocos2d_libs__CCMouseEvent__) */

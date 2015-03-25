@@ -28,6 +28,10 @@
 
 #include "base/CCEventListener.h"
 
+/**
+ * @addtogroup base
+ * @{
+ */
 
 NS_CC_BEGIN
 
@@ -69,8 +73,9 @@ CC_CONSTRUCTOR_ACCESS:
     friend class EventDispatcher;
 };
 
-
-
 NS_CC_END
+
+// end of base group
+/// @}
 
 #endif /* defined(__cocos2d_libs__CCEventListenerFocus__) */

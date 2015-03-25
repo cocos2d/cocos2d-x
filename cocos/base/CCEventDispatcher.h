@@ -36,6 +36,11 @@
 #include "base/CCEvent.h"
 #include "platform/CCStdC.h"
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class Event;
@@ -321,5 +326,7 @@ protected:
 
 NS_CC_END
 
+// end of base group
+/// @}
 
 #endif // __CC_EVENT_DISPATCHER_H__

@@ -27,8 +27,12 @@
 #define __cocos2d_libs__CCTouchEventListener__
 
 #include "base/CCEventListener.h"
-
 #include <vector>
+
+/**
+ * @addtogroup base
+ * @{
+ */
 
 NS_CC_BEGIN
 
@@ -130,5 +134,8 @@ private:
 };
 
 NS_CC_END
+
+// end of base group
+/// @}
 
 #endif /* defined(__cocos2d_libs__CCTouchEventListener__) */
