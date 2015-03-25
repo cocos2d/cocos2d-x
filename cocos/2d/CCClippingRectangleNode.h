@@ -35,6 +35,11 @@
 NS_CC_BEGIN
 
 /**
+ * @addtogroup _2d
+ * @{
+ */
+
+/**
 @brief Clipping Rectangle Node.
 @details A node that clipped with specified rectangle.
 */
@@ -100,6 +105,9 @@ protected:
     CustomCommand _beforeVisitCmdScissor;
     CustomCommand _afterVisitCmdScissor;
 };
+
+// end of _2d group
+/// @}
 
 NS_CC_END
 
