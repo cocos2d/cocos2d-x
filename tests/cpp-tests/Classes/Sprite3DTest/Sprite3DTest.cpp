@@ -1,27 +1,26 @@
 /****************************************************************************
- Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
+Copyright (c) 2014 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
 
 #include "Sprite3DTest.h"
 #include "base/CCAsyncTaskPool.h"
@@ -1630,11 +1629,11 @@ Sprite3DReskinTest::Sprite3DReskinTest()
     auto label1 = Label::createWithTTF(ttfConfig,"Hair");
     auto item1 = MenuItemLabel::create(label1,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_reSkin,this) );
     auto label2 = Label::createWithTTF(ttfConfig,"Glasses");
-    auto item2 = MenuItemLabel::create(label2,	CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_reSkin,this) );
+    auto item2 = MenuItemLabel::create(label2,  CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_reSkin,this) );
     auto label3 = Label::createWithTTF(ttfConfig,"Coat");
     auto item3 = MenuItemLabel::create(label3,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_reSkin,this) );
     auto label4 = Label::createWithTTF(ttfConfig,"Pants");
-    auto item4 = MenuItemLabel::create(label4,	CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_reSkin,this) );
+    auto item4 = MenuItemLabel::create(label4,  CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_reSkin,this) );
     auto label5 = Label::createWithTTF(ttfConfig,"Shoes");
     auto item5 = MenuItemLabel::create(label5,CC_CALLBACK_1(Sprite3DReskinTest::menuCallback_reSkin,this) );
     item1->setPosition( Vec2(VisibleRect::left().x+50, VisibleRect::bottom().y+item1->getContentSize().height*4 ) );
@@ -2234,7 +2233,7 @@ void UseCaseSprite3D::switchCase()
         auto label1 = Label::createWithTTF(ttfConfig,"Message");
         auto item1 = MenuItemLabel::create(label1,CC_CALLBACK_1(UseCaseSprite3D::menuCallback_Message,this) );
         auto label2 = Label::createWithTTF(ttfConfig,"Message");
-        auto item2 = MenuItemLabel::create(label2,	CC_CALLBACK_1(UseCaseSprite3D::menuCallback_Message,this) );
+        auto item2 = MenuItemLabel::create(label2,  CC_CALLBACK_1(UseCaseSprite3D::menuCallback_Message,this) );
         
         item1->setPosition( Vec2(s.width * 0.5f - item1->getContentSize().width * 0.5f, s.height * 0.5f - item1->getContentSize().height ) );
         item2->setPosition( Vec2(s.width * 0.5f - item1->getContentSize().width * 0.5f, s.height * 0.5f - item1->getContentSize().height * 2.f ) );
@@ -2336,8 +2335,8 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
 
     // create the second texture for cylinder
     _textureCube = TextureCube::create("Sprite3DTest/skybox/left.jpg", "Sprite3DTest/skybox/right.jpg",
-                                       "Sprite3DTest/skybox/top.jpg", "Sprite3DTest/skybox/bottom.jpg",
-                                       "Sprite3DTest/skybox/front.jpg", "Sprite3DTest/skybox/back.jpg");
+        "Sprite3DTest/skybox/top.jpg", "Sprite3DTest/skybox/bottom.jpg",
+        "Sprite3DTest/skybox/front.jpg", "Sprite3DTest/skybox/back.jpg");
 
     _textureCube->retain();
 
@@ -2366,11 +2365,12 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
     {
         auto meshattribute = _teapot->getMesh()->getMeshVertexAttribute(i);
         state->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
-                                      meshattribute.size,
-                                      meshattribute.type,
-                                      GL_FALSE,
-                                      _teapot->getMesh()->getVertexSizeInBytes(),
-                                      (GLvoid*)offset);
+            meshattribute.size,
+            meshattribute.type,
+            GL_FALSE,
+            _teapot->getMesh()->getVertexSizeInBytes(),
+            (GLvoid*)offset);
+
         offset += meshattribute.attribSizeBytes;
     }
     addChild(_teapot);
