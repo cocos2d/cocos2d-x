@@ -339,5 +339,4 @@ public: virtual void set##funName(varType var)   \
     #endif
 #endif
 
-/// @endcond
 #endif // __CC_PLATFORM_MACROS_H__
