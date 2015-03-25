@@ -20,7 +20,8 @@
 -- @return EventTouch#EventTouch self (return value: cc.EventTouch)
         
 --------------------------------
---  Constructor.
+-- Constructor.<br>
+-- js NA
 -- @function [parent=#EventTouch] EventTouch 
 -- @param self
 -- @return EventTouch#EventTouch self (return value: cc.EventTouch)

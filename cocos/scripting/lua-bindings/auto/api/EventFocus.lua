@@ -7,7 +7,8 @@
 --------------------------------
 --  Constructor.<br>
 -- param widgetLoseFocus The widget which lose focus.<br>
--- param widgetGetFocus The widget which get focus.
+-- param widgetGetFocus The widget which get focus.<br>
+-- js ctor
 -- @function [parent=#EventFocus] EventFocus 
 -- @param self
 -- @param #ccui.Widget widgetLoseFocus
