@@ -26,11 +26,11 @@
 #ifndef _CCFontCharMap_h_
 #define _CCFontCharMap_h_
 
+/// @cond DO_NOT_SHOW
+
 #include "2d/CCFont.h"
 
 NS_CC_BEGIN
-
-/// @cond
 
 class FontCharMap : public Font
 {  

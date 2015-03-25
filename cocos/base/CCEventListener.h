@@ -32,6 +32,11 @@
 #include "platform/CCPlatformMacros.h"
 #include "base/CCRef.h"
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class Event;
@@ -62,13 +67,20 @@ public:
     typedef std::string ListenerID;
 
 CC_CONSTRUCTOR_ACCESS:
-    /** Constructor */
+    /**
+     * Constructor
+     * @js ctor
+     */
     EventListener();
 
-    /** Initializes event with type and callback function */
+    /** 
+     * Initializes event with type and callback function
+     * @js NA
+     */
     bool init(Type t, const ListenerID& listenerID, const std::function<void(Event*)>& callback);
 public:
     /** Destructor.
+     * @js NA 
      */
     virtual ~EventListener();
 
@@ -165,5 +177,8 @@ protected:
 };
 
 NS_CC_END
+
+// end of base group
+/// @}
 
 #endif // __CCEVENTLISTENER_H__

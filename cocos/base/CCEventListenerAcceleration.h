@@ -28,10 +28,16 @@
 #include "base/CCEventListener.h"
 #include "base/ccTypes.h"
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 NS_CC_BEGIN
 
 /** @class EventListenerAcceleration
  * @brief Acceleration event listener.
+ * @js NA
  */
 class CC_DLL EventListenerAcceleration : public EventListener
 {
@@ -65,5 +71,8 @@ private:
 };
 
 NS_CC_END
+
+// end of base group
+/// @}
 
 #endif /* defined(__cocos2d_libs__CCAccelerometerListener__) */

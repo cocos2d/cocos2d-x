@@ -36,7 +36,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * @addtogroup global
+ * @addtogroup base
  * @{
  */
 /** @class Configuration
@@ -234,7 +234,7 @@ protected:
 	ValueMap        _valueDict;
 };
 
-// end of global group
+// end of base group
 /// @}
 
 NS_CC_END

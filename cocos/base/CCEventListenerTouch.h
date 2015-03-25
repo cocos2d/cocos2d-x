@@ -27,8 +27,12 @@
 #define __cocos2d_libs__CCTouchEventListener__
 
 #include "base/CCEventListener.h"
-
 #include <vector>
+
+/**
+ * @addtogroup base
+ * @{
+ */
 
 NS_CC_BEGIN
 
@@ -36,6 +40,7 @@ class Touch;
 
 /** @class EventListenerTouchOneByOne
  * @brief Single touch event listener.
+ * @js cc._EventListenerTouchOneByOne
  */
 class CC_DLL EventListenerTouchOneByOne : public EventListener
 {
@@ -46,7 +51,10 @@ public:
      */
     static EventListenerTouchOneByOne* create();
     
-    /** Destructor. */
+    /**
+     * Destructor.
+     * @js NA
+     */
     virtual ~EventListenerTouchOneByOne();
     
     /** Whether or not to swall touches.
@@ -100,6 +108,7 @@ public:
      */
     static EventListenerTouchAllAtOnce* create();
     /** Destructor.
+     * @js NA
      */
     virtual ~EventListenerTouchAllAtOnce();
     
@@ -125,5 +134,8 @@ private:
 };
 
 NS_CC_END
+
+// end of base group
+/// @}
 
 #endif /* defined(__cocos2d_libs__CCTouchEventListener__) */

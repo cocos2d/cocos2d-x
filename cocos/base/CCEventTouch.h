@@ -28,6 +28,11 @@
 #include "base/CCEvent.h"
 #include <vector>
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class Touch;
@@ -51,7 +56,10 @@ public:
         CANCELLED
     };
 
-    /** Constructor.*/
+    /** 
+     * Constructor.
+     * @js NA
+     */
     EventTouch();
 
     /** Get event code.
@@ -88,5 +96,8 @@ private:
 
 
 NS_CC_END
+
+// end of base group
+/// @}
 
 #endif /* defined(__cocos2d_libs__TouchEvent__) */

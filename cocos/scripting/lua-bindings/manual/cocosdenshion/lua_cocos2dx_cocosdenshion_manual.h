@@ -32,6 +32,17 @@ extern "C" {
 }
 #endif
 
+/**
+ * Call this function can import the lua bindings for the cocosdenshion module.
+ * After registering, we could call the related cocosdenshion code conveniently in the lua.eg,.cc.SimpleAudioEngine:getInstance():stopAllEffects().
+ * In current mechanism, most bindings function of SimpleAudioEngine are wrapped in the Lua script file named AudioEngine.lua by more friednly modes.
+ * If you don't want to use the cocosdenshion module in the lua, you only don't call this registering function.
+ * If you don't register the cocosdenshion module, the package size would become smaller .
+ * The current mechanism,this registering function is called in the lua_module_register.h
+ *
+ * @lua NA
+ * @js NA
+ */
 TOLUA_API int  register_cocosdenshion_module(lua_State* L);
 
 

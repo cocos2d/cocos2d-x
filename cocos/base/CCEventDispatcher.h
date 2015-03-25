@@ -36,6 +36,11 @@
 #include "base/CCEvent.h"
 #include "platform/CCStdC.h"
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class Event;
@@ -52,6 +57,7 @@ The EventListener list is managed in such a way that
 event listeners can be added and removed even
 from within an EventListener, while events are being
 dispatched.
+@js NA
 */
 class CC_DLL EventDispatcher : public Ref
 {
@@ -320,5 +326,7 @@ protected:
 
 NS_CC_END
 
+// end of base group
+/// @}
 
 #endif // __CC_EVENT_DISPATCHER_H__

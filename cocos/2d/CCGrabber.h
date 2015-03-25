@@ -43,17 +43,21 @@ class Grabber : public Ref
 {
 public:
     /**
+    Constructor.
      * @js ctor
      */
     Grabber(void);
     /**
+    Destructor.
      * @js NA
      * @lua NA
      */
     ~Grabber(void);
-
+    /**Init the grab structure, will set the texture as the FBO color attachment.*/
     void grab(Texture2D *texture);
+    /**Begin capture the screen, which will save the old FBO, clear color, and set the new FBO, clear the background.*/
     void beforeRender(Texture2D *texture);
+    /**After capture, will reset the old FBO and clear color.*/
     void afterRender(Texture2D *texture);
 
 protected:

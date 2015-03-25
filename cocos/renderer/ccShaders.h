@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2011      Zynga Inc.
 Copyright (c) 2012 		cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -23,8 +23,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
+
 #ifndef __CCSHADER_H__
 #define __CCSHADER_H__
+/// @cond DO_NOT_SHOW
 
 #include "platform/CCGL.h"
 #include "platform/CCPlatformMacros.h"
@@ -87,4 +89,5 @@ extern CC_DLL const GLchar * cc3D_Particle_color_frag;
 
 NS_CC_END
 
+/// @endcond
 #endif /* __CCSHADER_H__ */

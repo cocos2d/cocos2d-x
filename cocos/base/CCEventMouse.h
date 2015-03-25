@@ -38,6 +38,11 @@
 #define MOUSE_BUTTON_7          6
 #define MOUSE_BUTTON_8          7
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 NS_CC_BEGIN
 
 /** @class EventMouse
@@ -48,6 +53,7 @@ class CC_DLL EventMouse : public Event
 public:
     /**
     * MouseEventType Different types of MouseEvent.
+    * @js NA
     */
     enum class MouseEventType
     {
@@ -61,6 +67,7 @@ public:
     /** Constructor.
      *
      * @param mouseEventCode A given mouse event type.
+     * @js ctor
      */
     EventMouse(MouseEventType mouseEventCode);
 
@@ -85,6 +92,7 @@ public:
      *
      * @param x The x coordinate of cursor position.
      * @param y The y coordinate of cursor position.
+     * @js setLocation
      */
     inline void setCursorPosition(float x, float y) { 
         _x = x;
@@ -102,21 +110,25 @@ public:
     /** Set mouse button.
      * 
      * @param button a given mouse button.
+     * @js setButton
      */
     inline void setMouseButton(int button) { _mouseButton = button; };
     /** Get mouse button.
      *
      * @return The mouse button.
+     * @js getButton
      */
     inline int getMouseButton() { return _mouseButton; };
     /** Get the cursor position of x axis.
      *
      * @return The x coordinate of cursor position.
+     * @js getLocationX
      */
     inline float getCursorX() { return _x; };
     /** Get the cursor position of y axis.
      *
      * @return The y coordinate of cursor position.
+     * @js getLocationY
      */
     inline float getCursorY() { return _y; };
 
@@ -128,11 +140,13 @@ public:
     /** Returns the previous touch location in OpenGL coordinates.
      *
      * @return The previous touch location in OpenGL coordinates.
+     * @js NA
      */
     Vec2 getPreviousLocation() const;
     /** Returns the start touch location in OpenGL coordinates.
      *
      * @return The start touch location in OpenGL coordinates.
+     * @js NA
      */
     Vec2 getStartLocation() const;
     /** Returns the delta of 2 current touches locations in screen coordinates.
@@ -148,11 +162,13 @@ public:
     /** Returns the previous touch location in screen coordinates.
      *
      * @return The previous touch location in screen coordinates.
+     * @js NA
      */
     Vec2 getPreviousLocationInView() const;
     /** Returns the start touch location in screen coordinates.
      *
      * @return The start touch location in screen coordinates.
+     * @js NA
      */
     Vec2 getStartLocationInView() const;
 
@@ -174,5 +190,8 @@ private:
 };
 
 NS_CC_END
+
+// end of base group
+/// @}
 
 #endif /* defined(__cocos2d_libs__CCMouseEvent__) */

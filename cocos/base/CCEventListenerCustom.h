@@ -27,6 +27,11 @@
 
 #include "base/CCEventListener.h"
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class EventCustom;
@@ -49,6 +54,7 @@ class EventCustom;
  *     Removes a listener
  *
  *        dispatcher->removeEventListener(listener);
+ * @js cc._EventListenerCustom
  */
 class CC_DLL EventListenerCustom : public EventListener
 {
@@ -78,5 +84,8 @@ protected:
 };
 
 NS_CC_END
+
+// end of base group
+/// @}
 
 #endif /* defined(__cocos2d_libs__CCCustomEventListener__) */
