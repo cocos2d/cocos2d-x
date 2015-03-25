@@ -229,11 +229,17 @@ public:
     void altertime(float dt);
 };
 
+class FadeEaseBackTest : public EaseSpriteDemo
+{
+public:
+	void onEnter();
+	virtual std::string subtitle() const override;
+};
+
 class ActionsEaseTestScene : public TestScene
 {
 public:
     virtual void runThisTest();
 };
-
 
 #endif

@@ -971,6 +971,38 @@ std::string SpeedTest::subtitle() const
 
 //------------------------------------------------------------------
 //
+// FadeEaseBackTest
+//
+//------------------------------------------------------------------
+
+void FadeEaseBackTest::onEnter()
+{
+	EaseSpriteDemo::onEnter();
+	
+	auto fade = FadeTo::create(1.0f, 0.0f);
+	auto fade_ease_in = EaseBackIn::create(fade->clone());
+	auto fade_ease_out = EaseBackOut::create(fade->clone());
+	
+	auto fade_back = FadeTo::create(1.0f, 255.0f);
+	auto fade_ease_in_back = EaseBackIn::create(fade_back->clone());
+	auto fade_ease_out_back = EaseBackOut::create(fade_back->clone());
+	
+	auto seq1 = RepeatForever::create(Sequence::create(fade, fade_back, nullptr));
+	auto seq2 = RepeatForever::create(Sequence::create(fade_ease_in, fade_ease_in_back, nullptr));
+	auto seq3 = RepeatForever::create(Sequence::create(fade_ease_out, fade_ease_out_back, nullptr));
+	
+	_grossini->runAction( RepeatForever::create(seq1));
+	_tamara->runAction( RepeatForever::create(seq2));
+	_kathia->runAction( RepeatForever::create(seq3));
+}
+
+std::string FadeEaseBackTest::subtitle() const
+{
+	return "FadeEaseBack action";
+}
+
+//------------------------------------------------------------------
+//
 // EaseSpriteDemo
 //
 //------------------------------------------------------------------
@@ -984,7 +1016,7 @@ enum
 
 static int sceneIdx = -1; 
 
-#define MAX_LAYER    24
+#define MAX_LAYER    25
 
 Layer* createEaseLayer(int nIndex)
 {
@@ -1013,7 +1045,8 @@ Layer* createEaseLayer(int nIndex)
         case 20: return new SpriteEaseCircleInOut();
         case 21: return new SpriteEaseCubic();
         case 22: return new SpriteEaseCubicInOut();
-        case MAX_LAYER-1: return new SpeedTest();
+		case 23: return new SpeedTest();
+        case MAX_LAYER-1: return new FadeEaseBackTest();
     }
 
 
