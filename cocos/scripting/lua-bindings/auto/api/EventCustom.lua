@@ -13,7 +13,8 @@
         
 --------------------------------
 --  Constructor.<br>
--- param eventName A given name of the custom event.
+-- param eventName A given name of the custom event.<br>
+-- js ctor
 -- @function [parent=#EventCustom] EventCustom 
 -- @param self
 -- @param #string eventName
