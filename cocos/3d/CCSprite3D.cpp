@@ -519,7 +519,16 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                         }
                     }
                     
-                    setAdditionalTransform(&nodedata->transform);
+                    Vec3 pos;
+                    Quaternion qua;
+                    Vec3 scale;
+                    nodedata->transform.decompose(&scale, &qua, &pos);
+                    setPosition3D(pos);
+                    setRotationQuat(qua);
+                    setScaleX(scale.x);
+                    setScaleY(scale.y);
+                    setScaleZ(scale.z);
+                    
                 }
             }
             else
