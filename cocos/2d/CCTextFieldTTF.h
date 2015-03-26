@@ -29,14 +29,14 @@ THE SOFTWARE.
 #include "2d/CCLabel.h"
 #include "base/CCIMEDelegate.h"
 
-NS_CC_BEGIN
-
-class TextFieldTTF;
-
 /**
  * @addtogroup ui
  * @{
  */
+NS_CC_BEGIN
+
+class TextFieldTTF;
+
 
 /**
  * A input protocol for TextField.
@@ -165,7 +165,7 @@ public:
 
     /**
      *@brief Change input placeholder color.
-     *@param color A color value in @see `Color3B`.
+     *@param color A color value in `Color3B`.
      */
     virtual void setColorSpaceHolder(const Color3B& color);
 
@@ -248,9 +248,8 @@ private:
     LengthStack * _lens;
 };
 
+NS_CC_END
 // end of ui group
 /// @}
-
-NS_CC_END
 
 #endif    // __CC_TEXT_FIELD_H__

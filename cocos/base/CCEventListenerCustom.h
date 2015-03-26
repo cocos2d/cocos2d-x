@@ -54,6 +54,7 @@ class EventCustom;
  *     Removes a listener
  *
  *        dispatcher->removeEventListener(listener);
+ * \endcode
  * @js cc._EventListenerCustom
  */
 class CC_DLL EventListenerCustom : public EventListener

@@ -28,18 +28,19 @@ THE SOFTWARE.
 #include "ui/UIWidget.h"
 #include "ui/GUIExport.h"
 
-NS_CC_BEGIN
-
 /**
  * @addtogroup ui
  * @{
  */
+NS_CC_BEGIN
+
 namespace ui {
     class Scale9Sprite;
 /**
-*   @js NA
-*   @lua NA
-*/
+ * @brief A widget to display images.
+ * @js NA
+ * @lua NA
+ */
 class CC_GUI_DLL ImageView : public Widget
 {
     
@@ -146,8 +147,8 @@ protected:
 
 }
 
+NS_CC_END
 // end of ui group
 /// @}
-NS_CC_END
 
 #endif /* defined(__CocoGUI__ImageView__) */
