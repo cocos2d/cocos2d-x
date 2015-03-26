@@ -28,17 +28,32 @@
 #include "base/CCEvent.h"
 #include "base/ccTypes.h"
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 NS_CC_BEGIN
 
+/** @class EventAcceleration
+ * @brief Accelerometer event.
+ */
 class CC_DLL EventAcceleration : public Event
 {
 public:
+    /** Constructor.
+     *
+     * @param acc A given Acceleration.
+     */
     EventAcceleration(const Acceleration& acc);
     
 private:
     Acceleration _acc;
     friend class EventListenerAcceleration;
 };
+
+// end of base group
+/// @}
 
 NS_CC_END
 

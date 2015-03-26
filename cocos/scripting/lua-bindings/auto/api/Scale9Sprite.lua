@@ -1,7 +1,7 @@
 
 --------------------------------
 -- @module Scale9Sprite
--- @extend Node
+-- @extend Node,BlendProtocol
 -- @parent_module ccui
 
 --------------------------------
@@ -141,6 +141,15 @@
 -- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
+-- Returns the blending function that is currently being used.<br>
+-- return A BlendFunc structure with source and destination factor which specified pixel arithmetic.<br>
+-- js NA<br>
+-- lua NA
+-- @function [parent=#Scale9Sprite] getBlendFunc 
+-- @param self
+-- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
+        
+--------------------------------
 -- 
 -- @function [parent=#Scale9Sprite] getInsetBottom 
 -- @param self
@@ -182,6 +191,17 @@
 -- @param #rect_table capInsets
 -- @return bool#bool ret (return value: bool)
 
+--------------------------------
+-- Sets the source blending function.<br>
+-- param blendFunc A structure with source and destination factor to specify pixel arithmetic,<br>
+-- e.g. {GL_ONE, GL_ONE}, {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}.<br>
+-- js NA<br>
+-- lua NA
+-- @function [parent=#Scale9Sprite] setBlendFunc 
+-- @param self
+-- @param #cc.BlendFunc blendFunc
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
+        
 --------------------------------
 -- 
 -- @function [parent=#Scale9Sprite] getInsetTop 
@@ -310,6 +330,14 @@
 -- @function [parent=#Scale9Sprite] updateDisplayedOpacity 
 -- @param self
 -- @param #unsigned char parentOpacity
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
+        
+--------------------------------
+-- 
+-- @function [parent=#Scale9Sprite] setCameraMask 
+-- @param self
+-- @param #unsigned short mask
+-- @param #bool applyChildren
 -- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------

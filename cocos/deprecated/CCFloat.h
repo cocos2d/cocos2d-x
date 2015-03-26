@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies
+ Copyright (c) 2013-2015 Chukong Technologies
  
  http://www.cocos2d-x.org
  
@@ -24,6 +24,7 @@
 
 #ifndef __CCFLOAT_H__
 #define __CCFLOAT_H__
+/// @cond DO_NOT_SHOW
 
 #include "base/CCRef.h"
 #include "base/CCDataVisitor.h"
@@ -69,4 +70,5 @@ private:
 
 NS_CC_END
 
+/// @endcond
 #endif /* __CCFLOAT_H__ */

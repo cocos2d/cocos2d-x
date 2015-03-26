@@ -20,14 +20,14 @@ public:
     virtual ~Paddle(void);
 
     Rect getRect();
-    bool initWithTexture(Texture2D* aTexture);
+    bool initWithTexture(Texture2D* aTexture) override;
     virtual void onEnter() override;
     virtual void onExit() override;
     bool containsTouchLocation(Touch* touch);
     bool onTouchBegan(Touch* touch, Event* event);
     void onTouchMoved(Touch* touch, Event* event);
     void onTouchEnded(Touch* touch, Event* event);
-    virtual Paddle* clone() const;
+    virtual Paddle* clone() const override;
 
     static Paddle* createWithTexture(Texture2D* aTexture);
 };

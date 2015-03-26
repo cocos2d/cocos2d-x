@@ -86,6 +86,15 @@ std::string getCurAppPath(void)
     return fuldir;
 }
 
+static void initGLContextAttrs()
+{
+    //set OpenGL context attributions,now can only set six attributions:
+    //red,green,blue,alpha,depth,stencil
+    GLContextAttrs glContextAttrs = {8, 8, 8, 8, 24, 8};
+
+    GLView::setGLContextAttrs(glContextAttrs);
+}
+
 SimulatorWin *SimulatorWin::_instance = nullptr;
 
 SimulatorWin *SimulatorWin::getInstance()
@@ -313,6 +322,7 @@ int SimulatorWin::run()
     const bool isResize = _project.isResizeWindow();
     std::stringstream title;
     title << "Cocos Simulator - " << ConfigParser::getInstance()->getInitViewName();
+    initGLContextAttrs();
     auto glview = GLViewImpl::createWithRect(title.str(), frameRect, frameScale);
     _hwnd = glview->getWin32Window();
     DragAcceptFiles(_hwnd, TRUE);

@@ -340,6 +340,12 @@
     <Filter Include="Classes\OpenURLTest">
       <UniqueIdentifier>{fc47533b-f876-4254-b0f8-4af8f5e2837f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\Particle3DTest">
+      <UniqueIdentifier>{e45d4916-24d0-49b8-a864-d273ea13a248}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\CocosStudio3DTest">
+      <UniqueIdentifier>{e4104916-24d0-49b8-a864-d273ea13a248}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Classes\UITest\CocostudioGUISceneTest\CustomTest\CustomWidgetCallbackBindTest">
       <UniqueIdentifier>{65be3b70-58d6-47f4-bc67-fac9ee134c42}</UniqueIdentifier>
     </Filter>
@@ -894,6 +900,12 @@
     <ClCompile Include="..\Classes\OpenURLTest\OpenURLTest.cpp">
       <Filter>Classes\OpenURLTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Particle3DTest\Particle3DTest.cpp">
+      <Filter>Classes\Particle3DTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\CocosStudio3DTest\CocosStudio3DTest.cpp">
+      <Filter>Classes\CocosStudio3DTest</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceMathTest.cpp">
       <Filter>Classes\PerformanceTest</Filter>
     </ClCompile>
@@ -908,6 +920,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\AllocatorTest\AllocatorTest.cpp">
       <Filter>Classes\AllocatorTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PerformanceTest\PerformanceParticle3DTest.cpp">
+      <Filter>Classes\PerformanceTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1655,6 +1670,12 @@
     <ClInclude Include="..\Classes\OpenURLTest\OpenURLTest.h">
       <Filter>Classes\OpenURLTest</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\Particle3DTest\Particle3DTest.h">
+      <Filter>Classes\Particle3DTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\CocosStudio3DTest\CocosStudio3DTest.h">
+      <Filter>Classes\CocosStudio3DTest</Filter>
+    </ClInclude>
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceMathTest.h">
       <Filter>Classes\PerformanceTest</Filter>
     </ClInclude>
@@ -1669,6 +1690,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\AllocatorTest\AllocatorTest.h">
       <Filter>Classes\AllocatorTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PerformanceTest\PerformanceParticle3DTest.h">
+      <Filter>Classes\PerformanceTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

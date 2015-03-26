@@ -175,6 +175,8 @@ std::string FlatBuffersSerialize::serializeFlatBuffersWithXMLFile(const std::str
                 attribute = attribute->Next();
             if (attribute)
                 _csdVersion = attribute->Value();
+            
+            _csdVersion = "2.1.0.0";
         }
 
         if (strcmp("Content", element->Name()) == 0)
@@ -324,7 +326,10 @@ Offset<NodeTree> FlatBuffersSerialize::createNodeTree(const tinyxml2::XMLElement
         readername.append("Reader");
         
         NodeReaderProtocol* reader = dynamic_cast<NodeReaderProtocol*>(ObjectFactory::getInstance()->createObject(readername));
-        options = CreateOptions(*_builder, reader->createOptionsWithFlatBuffers(objectData, _builder));
+        if (reader != nullptr)
+        {
+            options = CreateOptions(*_builder, reader->createOptionsWithFlatBuffers(objectData, _builder));
+        }
     }
     
     
@@ -1265,7 +1270,10 @@ Offset<NodeTree> FlatBuffersSerialize::createNodeTreeForSimulator(const tinyxml2
         readername.append("Reader");
         
         NodeReaderProtocol* reader = dynamic_cast<NodeReaderProtocol*>(ObjectFactory::getInstance()->createObject(readername));
-        options = CreateOptions(*_builder, reader->createOptionsWithFlatBuffers(objectData, _builder));
+        if (reader != nullptr)
+        {
+            options = CreateOptions(*_builder, reader->createOptionsWithFlatBuffers(objectData, _builder));
+        }
     }
     
     
@@ -1351,7 +1359,22 @@ Offset<ProjectNodeOptions> FlatBuffersSerialize::createProjectNodeOptionsForSimu
     auto nodeOptions = *(Offset<WidgetOptions>*)(&temp);
 
     std::string filename = "";
-
+    float innerspeed = 1.0f;
+    
+    const tinyxml2::XMLAttribute* objattri = objectData->FirstAttribute();
+    // inneraction speed
+    while (objattri)
+    {
+        std::string name = objattri->Name();
+        std::string value = objattri->Value();
+        if (name == "InnerActionSpeed")
+        {
+            innerspeed = atof(objattri->Value());
+            break;
+        }
+        objattri = objattri->Next();
+    }
+    
     // FileData
     const tinyxml2::XMLElement* child = objectData->FirstChildElement();
     while (child)
@@ -1381,7 +1404,8 @@ Offset<ProjectNodeOptions> FlatBuffersSerialize::createProjectNodeOptionsForSimu
     
     return CreateProjectNodeOptions(*_builder,
                                     nodeOptions,
-                                    _builder->CreateString(filename));
+                                    _builder->CreateString(filename),
+                                    innerspeed);
 }
     
 }

@@ -145,6 +145,8 @@ bool Director::init(void)
 
     _contentScaleFactor = 1.0f;
 
+    _console = new (std::nothrow) Console;
+
     // scheduler
     _scheduler = new (std::nothrow) Scheduler();
     // action manager
@@ -167,8 +169,6 @@ bool Director::init(void)
     initMatrixStack();
 
     _renderer = new (std::nothrow) Renderer;
-
-    _console = new (std::nothrow) Console;
 
     return true;
 }
@@ -248,8 +248,6 @@ void Director::setGLDefaultValues()
     CCASSERT(_openGLView, "opengl view should not be null");
 
     setAlphaBlending(true);
-    // FIXME: Fix me, should enable/disable depth test according the depth format as cocos2d-iphone did
-    // [self setDepthTest: view_.depthFormat];
     setDepthTest(false);
     setProjection(_projection);
 }
@@ -300,12 +298,6 @@ void Director::drawScene()
         _runningScene->render(_renderer);
         
         _eventDispatcher->dispatchEvent(_eventAfterVisit);
-#if CC_USE_PHYSICS
-        if(physicsWorld)
-        {
-            physicsWorld->_updateBodyTransform = false;
-        }
-#endif
     }
 
     // draw the notifications node

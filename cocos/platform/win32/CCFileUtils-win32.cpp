@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "CCFileUtils-win32.h"
 #include "platform/CCCommon.h"
 #include <Shlobj.h>
+#include <cstdlib>
 
 using namespace std;
 
@@ -59,14 +60,16 @@ static void _checkPath()
 {
     if (0 == s_resourcePath.length())
     {
-        WCHAR utf16Path[CC_MAX_PATH] = {0};
-        GetCurrentDirectoryW(sizeof(utf16Path)-1, utf16Path);
-        
-        char utf8Path[CC_MAX_PATH] = {0};
-        int nNum = WideCharToMultiByte(CP_UTF8, 0, utf16Path, -1, utf8Path, sizeof(utf8Path), nullptr, nullptr);
+        WCHAR *pUtf16ExePath = nullptr;
+        _get_wpgmptr(&pUtf16ExePath);
 
-        s_resourcePath = convertPathFormatToUnixStyle(utf8Path);
-        s_resourcePath.append("/");
+        // We need only directory part without exe
+        WCHAR *pUtf16DirEnd = wcsrchr(pUtf16ExePath, L'\\');
+
+        char utf8ExeDir[CC_MAX_PATH] = { 0 };
+        int nNum = WideCharToMultiByte(CP_UTF8, 0, pUtf16ExePath, pUtf16DirEnd-pUtf16ExePath+1, utf8ExeDir, sizeof(utf8ExeDir), nullptr, nullptr);
+
+        s_resourcePath = convertPathFormatToUnixStyle(utf8ExeDir);
     }
 }
 
@@ -120,9 +123,9 @@ bool FileUtilsWin32::isFileExistInternal(const std::string& strFilePath) const
 
 bool FileUtilsWin32::isAbsolutePath(const std::string& strPath) const
 {
-    if (   strPath.length() > 2 
+    if (   (strPath.length() > 2 
         && ( (strPath[0] >= 'a' && strPath[0] <= 'z') || (strPath[0] >= 'A' && strPath[0] <= 'Z') )
-        && strPath[1] == ':')
+        && strPath[1] == ':') || (strPath[0] == '/' && strPath[1] == '/'))
     {
         return true;
     }
@@ -280,6 +283,11 @@ std::string FileUtilsWin32::getFullPathForDirectoryAndFilename(const std::string
 
 string FileUtilsWin32::getWritablePath() const
 {
+    if (_writablePath.length())
+    {
+        return _writablePath;
+    }
+
     // Get full path of executable, e.g. c:\Program Files (x86)\My Game Folder\MyGame.exe
     char full_path[CC_MAX_PATH + 1];
     ::GetModuleFileNameA(nullptr, full_path, CC_MAX_PATH + 1);

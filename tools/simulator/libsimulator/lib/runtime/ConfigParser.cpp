@@ -4,7 +4,6 @@
 #include "json/stringbuffer.h"
 #include "json/writer.h"
 #include "ConfigParser.h"
-#include "FileServer.h"
 
 // ConfigParser
 ConfigParser *ConfigParser::s_sharedConfigParserInstance = NULL;
@@ -27,13 +26,6 @@ void ConfigParser::readConfig(const string &filepath)
 {
     string fullPathFile = filepath;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    // add writable path to search path temporarily for reading config file
-    vector<std::string> searchPathArray = FileUtils::getInstance()->getSearchPaths();
-    searchPathArray.insert(searchPathArray.begin(), FileServer::getShareInstance()->getWritePath());
-    FileUtils::getInstance()->setSearchPaths(searchPathArray);
-#endif
-    
     // read config file
     if (fullPathFile.empty())
     {
@@ -41,12 +33,6 @@ void ConfigParser::readConfig(const string &filepath)
     }
     string fileContent = FileUtils::getInstance()->getStringFromFile(fullPathFile);
   
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-    // revert search path
-    searchPathArray.erase(searchPathArray.end() - 1);
-    FileUtils::getInstance()->setSearchPaths(searchPathArray);
-#endif
-
     if(fileContent.empty())
         return;
     

@@ -12,7 +12,8 @@
 -- @return ParticleBatchNode#ParticleBatchNode self (return value: cc.ParticleBatchNode)
         
 --------------------------------
---  disables a particle by inserting a 0'd quad into the texture atlas 
+--  Disables a particle by inserting a 0'd quad into the texture atlas.<br>
+-- param particleIndex The index of the particle.
 -- @function [parent=#ParticleBatchNode] disableParticle 
 -- @param self
 -- @param #int particleIndex
@@ -25,7 +26,8 @@
 -- @return Texture2D#Texture2D ret (return value: cc.Texture2D)
         
 --------------------------------
---  Sets the texture atlas used for drawing the quads 
+--  Sets the texture atlas used for drawing the quads.<br>
+-- param atlas The texture atlas used for drawing the quads.
 -- @function [parent=#ParticleBatchNode] setTextureAtlas 
 -- @param self
 -- @param #cc.TextureAtlas atlas
@@ -50,7 +52,8 @@
 -- @return ParticleBatchNode#ParticleBatchNode self (return value: cc.ParticleBatchNode)
         
 --------------------------------
---  Gets the texture atlas used for drawing the quads 
+--  Gets the texture atlas used for drawing the quads.<br>
+-- return The texture atlas used for drawing the quads.
 -- @function [parent=#ParticleBatchNode] getTextureAtlas 
 -- @param self
 -- @return TextureAtlas#TextureAtlas ret (return value: cc.TextureAtlas)
@@ -63,7 +66,9 @@
 -- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
         
 --------------------------------
---  Inserts a child into the ParticleBatchNode 
+--  Inserts a child into the ParticleBatchNode.<br>
+-- param system A given particle system.<br>
+-- param index The insert index.
 -- @function [parent=#ParticleBatchNode] insertChild 
 -- @param self
 -- @param #cc.ParticleSystem system
@@ -71,7 +76,9 @@
 -- @return ParticleBatchNode#ParticleBatchNode self (return value: cc.ParticleBatchNode)
         
 --------------------------------
--- 
+--  Remove a child of the ParticleBatchNode.<br>
+-- param index The index of the child.<br>
+-- param doCleanup True if all actions and callbacks on this node should be removed, false otherwise.
 -- @function [parent=#ParticleBatchNode] removeChildAtIndex 
 -- @param self
 -- @param #int index
@@ -79,7 +86,10 @@
 -- @return ParticleBatchNode#ParticleBatchNode self (return value: cc.ParticleBatchNode)
         
 --------------------------------
---  initializes the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles 
+--  Create the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles.<br>
+-- param fileImage A given file name.<br>
+-- param capacity A capacity of particles.<br>
+-- return An autoreleased ParticleBatchNode object.
 -- @function [parent=#ParticleBatchNode] create 
 -- @param self
 -- @param #string fileImage
@@ -87,7 +97,11 @@
 -- @return ParticleBatchNode#ParticleBatchNode ret (return value: cc.ParticleBatchNode)
         
 --------------------------------
---  initializes the particle system with Texture2D, a capacity of particles, which particle system to use 
+--  Create the particle system with Texture2D, a capacity of particles, which particle system to use.<br>
+-- param tex A given texture.<br>
+-- param capacity A capacity of particles.<br>
+-- return An autoreleased ParticleBatchNode object.<br>
+-- js NA
 -- @function [parent=#ParticleBatchNode] createWithTexture 
 -- @param self
 -- @param #cc.Texture2D tex

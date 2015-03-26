@@ -1,6 +1,6 @@
 /****************************************************************************
-Copyright (c) 2010      cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2013-2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -33,6 +33,15 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+* @addtogroup base
+* @{
+*/
+
+/**
+ * @class RandomHelper
+ * @brief A helper class for creating random number.
+ */
 class CC_DLL RandomHelper {
 public:
     template<typename T>
@@ -53,8 +62,8 @@ private:
 };
 
 /**
-* returns a random value between `min` and `max`
-*/
+ * Returns a random value between `min` and `max`.
+ */
 template<typename T>
 inline T random(T min, T max) {
     return RandomHelper::random_int<T>(min, max);
@@ -76,7 +85,7 @@ inline double random(double min, double max) {
 }
 
 /**
- * Returns a random int between 0 and RAND_MAX
+ * Returns a random int between 0 and RAND_MAX.
  */
 inline int random() {
     return cocos2d::random(0, RAND_MAX);
@@ -109,6 +118,9 @@ inline float rand_0_1() {
 
 //    return cocos2d::random(0.f, 1.f);
 };
+
+// end group
+/// @}
 
 NS_CC_END
 #endif //__ccRandom_H_

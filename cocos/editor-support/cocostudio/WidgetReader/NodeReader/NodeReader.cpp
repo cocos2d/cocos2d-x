@@ -26,6 +26,7 @@
 
 #include "cocostudio/CSParseBinary_generated.h"
 #include "cocostudio/ActionTimeline/CCActionTimeline.h"
+#include "cocostudio/CCObjectExtensionData.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
@@ -36,10 +37,10 @@ using namespace flatbuffers;
 
 namespace cocostudio
 {
-    const char* Layout_PositionPercentXEnabled = "PositionPercentXEnable";
-    const char* Layout_PositionPercentYEnabled = "PositionPercentYEnable";
-    const char* Layout_PercentWidthEnable = "PercentWidthEnable";
-    const char* Layout_PercentHeightEnable = "PercentHeightEnable";
+    const char* Layout_PositionPercentXEnabled = "PositionPercentXEnabled";
+    const char* Layout_PositionPercentYEnabled = "PositionPercentYEnabled";
+    const char* Layout_PercentWidthEnable = "PercentWidthEnabled";
+    const char* Layout_PercentHeightEnable = "PercentHeightEnabled";
     const char* Layout_StretchWidthEnable = "StretchWidthEnable";
     const char* Layout_StretchHeightEnable = "StretchHeightEnable";
     const char* Layout_HorizontalEdge = "HorizontalEdge";
@@ -181,6 +182,10 @@ namespace cocostudio
             else if (attriname == "TouchEnable")
             {
                 touchEnabled = (value == "True") ? true : false;
+            }
+            else if (attriname == "UserData")
+            {
+                customProperty = value;
             }
             else if (attriname == "FrameEvent")
             {
@@ -477,6 +482,7 @@ namespace cocostudio
         float h             = options->size()->height();
         int alpha           = options->alpha();
         Color3B color(options->color()->r(), options->color()->g(), options->color()->b());
+        std::string customProperty = options->customProperty()->c_str();
         
         node->setName(name);
         
@@ -506,7 +512,12 @@ namespace cocostudio
         node->setColor(color);
         
         node->setTag(tag);
-        node->setUserObject(timeline::ActionTimelineData::create(actionTag));
+        
+        ObjectExtensionData* extensionData = ObjectExtensionData::create();
+        extensionData->setCustomProperty(customProperty);
+        extensionData->setActionTag(actionTag);
+        node->setUserObject(extensionData);
+        
         
         node->setCascadeColorEnabled(true);
         node->setCascadeOpacityEnabled(true);

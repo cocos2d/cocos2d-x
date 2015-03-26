@@ -38,6 +38,13 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
+-- 
+-- @function [parent=#Camera] project 
+-- @param self
+-- @param #vec3_table src
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
+        
+--------------------------------
 -- Get object depth towards camera
 -- @function [parent=#Camera] getDepthInView 
 -- @param self
@@ -69,7 +76,20 @@
 -- @return Camera#Camera self (return value: cc.Camera)
         
 --------------------------------
---  create default camera, the camera type depends on Director::getProjection 
+-- get depth, camera with larger depth is drawn on top of camera with smaller depth, the depth of camera with CameraFlag::DEFAULT is 0, user defined camera is -1 by default
+-- @function [parent=#Camera] getDepth 
+-- @param self
+-- @return int#int ret (return value: int)
+        
+--------------------------------
+-- set depth, camera with larger depth is drawn on top of camera with smaller depth, the depth of camera with CameraFlag::DEFAULT is 0, user defined camera is -1 by default
+-- @function [parent=#Camera] setDepth 
+-- @param self
+-- @param #int depth
+-- @return Camera#Camera self (return value: cc.Camera)
+        
+--------------------------------
+--  create default camera, the camera type depends on Director::getProjection, the depth of the default camera is 0 
 -- @function [parent=#Camera] create 
 -- @param self
 -- @return Camera#Camera ret (return value: cc.Camera)
@@ -104,13 +124,13 @@
 -- @return Camera#Camera ret (return value: cc.Camera)
         
 --------------------------------
--- 
+-- Get the default camera of the current running scene.
 -- @function [parent=#Camera] getDefaultCamera 
 -- @param self
 -- @return Camera#Camera ret (return value: cc.Camera)
         
 --------------------------------
--- 
+-- Get the visiting camera , the visiting camera shall be set on Scene::render
 -- @function [parent=#Camera] getVisitingCamera 
 -- @param self
 -- @return Camera#Camera ret (return value: cc.Camera)

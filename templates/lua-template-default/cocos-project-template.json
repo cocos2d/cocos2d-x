@@ -135,68 +135,6 @@
                     "proj.win32/Debug",
                     "proj.win32/Release"
                 ]
-            },
-            {
-                "from": "tools/simulator/frameworks/runtime-src/Classes/lang",
-                "to": "frameworks/runtime-src/Classes/ide-support",
-                "exclude": []
-            },
-            {
-                "from": "tools/simulator/frameworks/runtime-src/proj.ios_mac/ios",
-                "to": "frameworks/runtime-src/proj.ios_mac/ios",
-                "exclude": [
-                    "RootViewController.*",
-                    "Info.plist"
-                ]
-            },
-            {
-                "from": "tools/simulator/frameworks/runtime-src/proj.ios_mac/mac",
-                "to": "frameworks/runtime-src/proj.ios_mac/mac",
-                "exclude": [
-                    "Info.plist",
-                    "Icon.icns",
-                    "build-cfg.json"
-                ]
-            },
-            {
-                "from": "tools/simulator/frameworks/runtime-src/proj.win32/build-cfg.json",
-                "to": "frameworks/runtime-src/proj.win32/",
-                "exclude": []
-            },
-            {
-                "from": "tools/simulator/frameworks/runtime-src/proj.win32/game.rc",
-                "to": "frameworks/runtime-src/proj.win32/",
-                "exclude": []
-            },
-            {
-                "from": "tools/simulator/frameworks/runtime-src/proj.win32/main.cpp",
-                "to": "frameworks/runtime-src/proj.win32/",
-                "exclude": []
-            },
-            {
-                "from": "tools/simulator/frameworks/runtime-src/proj.win32/main.h",
-                "to": "frameworks/runtime-src/proj.win32/",
-                "exclude": []
-            },
-            {
-                "from": "tools/simulator/frameworks/runtime-src/proj.win32/res",
-                "to": "frameworks/runtime-src/proj.win32/res",
-                "exclude": []
-            },
-            {
-                "from": "tools/simulator/frameworks/runtime-src/proj.win32/resource.h",
-                "to": "frameworks/runtime-src/proj.win32/",
-                "exclude": []
-            },
-            {
-                "from": "tools/simulator/frameworks/runtime-src/proj.win32/SimulatorWin.cpp",
-                "to": "frameworks/runtime-src/proj.win32/",
-                "exclude": []
-            },
-            {
-                "from": "tools/simulator/frameworks/runtime-src/proj.win32/SimulatorWin.h",
-                "to": "frameworks/runtime-src/proj.win32/",
-                "exclude": []
             }
         ],
         "project_rename": {
@@ -248,11 +186,6 @@
             ]
         },
         "modify_files":[
-            {
-                "file_path": "frameworks/runtime-src/Classes/ide-support/CodeIDESupport.h",
-                "pattern": "#define CC_CODE_IDE_DEBUG_SUPPORT 1",
-                "replace_string": "#define CC_CODE_IDE_DEBUG_SUPPORT 0"
-            }
          ]
     }
 }

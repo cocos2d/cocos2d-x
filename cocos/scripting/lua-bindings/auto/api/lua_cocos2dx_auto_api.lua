@@ -1246,4 +1246,9 @@
 -- @field [parent=#cc] Component#Component Component preloaded module
 
 
+--------------------------------------------------------
+-- the cc AsyncTaskPool
+-- @field [parent=#cc] AsyncTaskPool#AsyncTaskPool AsyncTaskPool preloaded module
+
+
 return nil

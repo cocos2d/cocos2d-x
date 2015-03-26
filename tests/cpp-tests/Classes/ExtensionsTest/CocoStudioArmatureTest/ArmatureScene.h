@@ -180,7 +180,7 @@ class TestUseMutiplePicture : public ArmatureTestLayer
 	virtual void onExit() override;
 	virtual std::string title() const override;
 	virtual std::string subtitle() const override;
-	void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+	void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
 
 	int displayIndex;
 	cocostudio::Armature *armature;
@@ -192,7 +192,7 @@ class TestParticleDisplay : public ArmatureTestLayer
 	virtual void onExit() override;
 	virtual std::string title() const override;
 	virtual std::string subtitle() const override;
-	void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+	void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
 
 	int animationID;
 	cocostudio::Armature *armature;
@@ -316,7 +316,7 @@ public:
 	virtual void onEnter() override;
 	virtual void onExit() override;
 	virtual std::string title() const override;
-	void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+	void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
 
 	cocostudio::Armature *armature;
 	int weaponIndex;
@@ -342,7 +342,7 @@ public:
     virtual void onExit() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
 
     void changeMountCallback(Ref* pSender);
     virtual cocostudio::Armature *createMount(const char *name, Vec2 position);
@@ -374,7 +374,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
     void updateSubTitle();
 
     int animationID;
@@ -389,7 +389,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
 };
 
 
@@ -397,11 +397,11 @@ public:
 class TestLoadFromBinary : public ArmatureTestLayer
 {
 public:
-	virtual void onEnter();
+	virtual void onEnter() override;
     virtual std::string title() const override;
 	virtual std::string subtitle() const override;
     
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
     
     
 	void dataLoaded(float percent);
@@ -416,7 +416,7 @@ private:
 class TestArmatureNode : public ArmatureTestLayer
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -34,126 +34,141 @@
 #include "ui/GUIExport.h"
 #include "base/CCData.h"
 
+/**
+ * @addtogroup ui
+ * @{
+ */
+
 NS_CC_BEGIN
 namespace experimental{
     namespace ui{
         
 class WebViewImpl;
 
+/**
+ * @class WebView
+ * @brief A View that displays web pages. 
+ *
+ * @note WebView displays web pages base on system widget.
+ * It's mean WebView displays web pages above all graphical elements of cocos2d-x.
+ */
 class CC_GUI_DLL WebView : public cocos2d::ui::Widget {
 public:
     /**
-    * Allocates and initializes a WebView.
-    */
+     * Allocates and initializes a WebView.
+     */
     static WebView *create();
 
     /**
-    * Set javascript interface scheme.
-    * @see #onJsCallback
-    */
+     * Set javascript interface scheme.
+     *
+     * @see #onJsCallback
+     */
     void setJavascriptInterfaceScheme(const std::string &scheme);
 
-
     /**
-    * Sets the main page contents, MIME type, content encoding, and base URL.
-    * @param data The content for the main page.
-    * @param MIMEType The MIME type of the data.
-    * @param encoding the encoding of the data.
-    * @param baseURL The base URL for the content.
-    */
+     * Sets the main page contents, MIME type, content encoding, and base URL.
+     *
+     * @param data The content for the main page.
+     * @param MIMEType The MIME type of the data.
+     * @param encoding The encoding of the data.
+     * @param baseURL The base URL for the content.
+     */
     void loadData(const cocos2d::Data &data,
                   const std::string &MIMEType,
                   const std::string &encoding,
                   const std::string &baseURL);
     
-
     /**
-    * Sets the main page content and base URL.
-    * @param string The content for the main page.
-    * @param baseURL The base URL for the content.
-    */
+     * Sets the main page content and base URL.
+     *
+     * @param string The content for the main page.
+     * @param baseURL The base URL for the content.
+     */
     void loadHTMLString(const std::string &string, const std::string &baseURL = "");
 
     /**
-    * Loads the given URL.
-    * @param url content URL
-    */
+     * Loads the given URL.
+     *
+     * @param url Content URL.
+     */
     void loadURL(const std::string &url);
 
     /**
-    * Loads the given fileName.
-    * @param fileName content fileName
-    */
+     * Loads the given fileName.
+     *
+     * @param fileName Content fileName.
+     */
     void loadFile(const std::string &fileName);
 
     /**
-    * Stops the current load.
-    */
+     * Stops the current load.
+     */
     void stopLoading();
 
     /**
-    * Reloads the current URL.
-    */
+     * Reloads the current URL.
+     */
     void reload();
 
     /**
-    * Gets whether this WebView has a back history item.
-    * @return web view has a back history item.
-    */
+     * Gets whether this WebView has a back history item.
+     *
+     * @return WebView has a back history item.
+     */
     bool canGoBack();
 
     /**
-    * Gets whether this WebView has a forward history item.
-    * @return web view has a forward history item.
-    */
+     * Gets whether this WebView has a forward history item.
+     *
+     * @return WebView has a forward history item.
+     */
     bool canGoForward();
 
     /**
-    * Goes back in the history.
-    */
+     * Goes back in the history.
+     */
     void goBack();
 
     /**
-    * Goes forward in the history.
-    */
+     * Goes forward in the history.
+     */
     void goForward();
 
     /**
-    * evaluates JavaScript in the context of the currently displayed page
-    */
+     * Evaluates JavaScript in the context of the currently displayed page.
+     */
     void evaluateJS(const std::string &js);
 
     /**
-    * Set WebView should support zooming. The default value is false.
-    */
+     * Set WebView should support zooming. The default value is false.
+     */
     void setScalesPageToFit(const bool scalesPageToFit);
-
-    virtual void draw(cocos2d::Renderer *renderer, cocos2d::Mat4 const &transform, uint32_t flags) override;
-
-    virtual void setVisible(bool visible) override;
-    
-    typedef std::function<void(WebView *sender, const std::string &url)> ccWebViewCallback;
-    
     
     /**
      * Call before a web view begins loading.
+     *
      * @param sender The web view that is about to load new content.
-     * @param url content URL.
+     * @param url Content URL.
      * @return YES if the web view should begin loading content; otherwise, NO .
      */
     void setOnShouldStartLoading(const std::function<bool(WebView *sender, const std::string &url)>& callback);
     
+    typedef std::function<void(WebView *sender, const std::string &url)> ccWebViewCallback;
+
     /**
      * Call after a web view finishes loading.
+     *
      * @param sender The web view that has finished loading.
-     * @param url content URL.
+     * @param url Content URL.
      */
     void setOnDidFinishLoading(const ccWebViewCallback& callback);
     
     /**
      * Call if a web view failed to load content.
+     *
      * @param sender The web view that has failed loading.
-     * @param url content URL.
+     * @param url Content URL.
      */
     void setOnDidFailLoading(const ccWebViewCallback& callback);
     
@@ -166,6 +181,10 @@ public:
     ccWebViewCallback getOnDidFinishLoading()const;
     ccWebViewCallback getOnDidFailLoading()const;
     ccWebViewCallback getOnJSCallback()const;
+
+    virtual void draw(cocos2d::Renderer *renderer, cocos2d::Mat4 const &transform, uint32_t flags) override;
+
+    virtual void setVisible(bool visible) override;
     
 protected:
     virtual cocos2d::ui::Widget* createCloneInstance() override;
@@ -180,12 +199,12 @@ protected:
     ccWebViewCallback _onJSCallback;
 
     /**
-     * Default constructor
+     * Default constructor.
      */
     WebView();
     
     /**
-     * Default destructor
+     * Default destructor.
      */
     virtual ~WebView();
 
@@ -199,5 +218,6 @@ private:
 }//namespace cocos2d
 
 #endif
-
+// end group
+/// @}
 #endif //__COCOS2D_UI_WEBVIEW_H

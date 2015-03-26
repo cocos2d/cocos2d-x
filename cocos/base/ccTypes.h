@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -37,11 +37,17 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 struct Color4B;
 struct Color4F;
 
-/** RGB color composed of bytes 3 bytes
-@since v3.0
+/** 
+ * RGB color composed of bytes 3 bytes.
+ * @since v3.0
  */
 struct CC_DLL Color3B
 {
@@ -77,9 +83,10 @@ struct CC_DLL Color3B
     static const Color3B GRAY;
 };
 
-/** RGBA color composed of 4 bytes
-@since v3.0
-*/
+/** 
+ * RGBA color composed of 4 bytes.
+ * @since v3.0
+ */
 struct CC_DLL Color4B
 {
     Color4B();
@@ -111,9 +118,10 @@ struct CC_DLL Color4B
 };
 
 
-/** RGBA color composed of 4 floats
-@since v3.0
-*/
+/** 
+ * RGBA color composed of 4 floats.
+ * @since v3.0
+ */
 struct CC_DLL Color4F
 {
     Color4F();
@@ -181,8 +189,9 @@ struct CC_DLL Color4F
 //     GLfloat z;
 // };
         
-/** A texcoord composed of 2 floats: u, y
- @since v3.0
+/** @struct Tex2F
+ * A TEXCOORD composed of 2 floats: u, y
+ * @since v3.0
  */
 struct CC_DLL Tex2F {
     Tex2F(float _u, float _v): u(_u), v(_v) {}
@@ -193,8 +202,9 @@ struct CC_DLL Tex2F {
     GLfloat v;
 };
 
- 
-//! Vec2 Sprite component
+/** @struct PointSprite
+ * Vec2 Sprite component.
+ */
 struct CC_DLL PointSprite
 {
     Vec2   pos;        // 8 bytes
@@ -202,7 +212,9 @@ struct CC_DLL PointSprite
     GLfloat    size;       // 4 bytes
 };
 
-//!    A 2D Quad. 4 * 2 floats
+/** @struct Quad2
+ * A 2D Quad. 4 * 2 floats.
+ */
 struct CC_DLL Quad2
 {
     Vec2        tl;
@@ -210,9 +222,10 @@ struct CC_DLL Quad2
     Vec2        bl;
     Vec2        br;
 };
-
-
-//!    A 3D Quad. 4 * 3 floats
+   
+/** @struct Quad3
+ * A 3D Quad. 4 * 3 floats.
+ */
 struct CC_DLL Quad3 {
     Vec3        bl;
     Vec3        br;
@@ -220,7 +233,9 @@ struct CC_DLL Quad3 {
     Vec3        tr;
 };
 
-//! a Vec2 with a vertex point, a tex coord point and a color 4B
+/** @struct V2F_C4B_T2F
+ * A Vec2 with a vertex point, a tex coord point and a color 4B.
+ */
 struct V2F_C4B_T2F
 {
     //! vertices (2F)
@@ -231,7 +246,9 @@ struct V2F_C4B_T2F
     Tex2F          texCoords;
 };
 
-
+/** @struct V2F_C4B_PF
+ *
+ */
 struct V2F_C4B_PF
 {
     //! vertices (2F)
@@ -242,7 +259,9 @@ struct V2F_C4B_PF
     float      pointSize;
 };
 
-//! a Vec2 with a vertex point, a tex coord point and a color 4F
+/** @struct V2F_C4F_T2F
+ * A Vec2 with a vertex point, a tex coord point and a color 4F.
+ */
 struct CC_DLL V2F_C4F_T2F
 {
     //! vertices (2F)
@@ -253,7 +272,9 @@ struct CC_DLL V2F_C4F_T2F
     Tex2F          texCoords;
 };
 
-//! a Vec2 with a vertex point, a tex coord point and a color 4B
+/** @struct V3F_C4B_T2F
+ * A Vec2 with a vertex point, a tex coord point and a color 4B.
+ */
 struct CC_DLL V3F_C4B_T2F
 {
     //! vertices (3F)
@@ -266,7 +287,9 @@ struct CC_DLL V3F_C4B_T2F
     Tex2F        texCoords;           // 8 bytes
 };
 
-//! a Vec2 with a vertex point, a tex coord point
+/** @struct V3F_T2F
+ * A Vec2 with a vertex point, a tex coord point.
+ */
 struct CC_DLL V3F_T2F
 {
     //! vertices (2F)
@@ -275,7 +298,9 @@ struct CC_DLL V3F_T2F
     Tex2F          texCoords;
 };
 
-//! A Triangle of V2F_C4B_T2F
+/** @struct V2F_C4B_T2F_Triangle
+ * A Triangle of V2F_C4B_T2F.
+ */
 struct CC_DLL V2F_C4B_T2F_Triangle
 {
 	//! Vec2 A
@@ -285,8 +310,10 @@ struct CC_DLL V2F_C4B_T2F_Triangle
 	//! Vec2 B
 	V2F_C4B_T2F c;
 };
-
-//! A Quad of V2F_C4B_T2F
+ 
+/** @struct V2F_C4B_T2F_Quad
+ * A Quad of V2F_C4B_T2F.
+ */
 struct CC_DLL V2F_C4B_T2F_Quad
 {
     //! bottom left
@@ -299,7 +326,9 @@ struct CC_DLL V2F_C4B_T2F_Quad
     V2F_C4B_T2F    tr;
 };
 
-//! 4 Vertex3FTex2FColor4B
+/** @struct V3F_C4B_T2F_Quad
+ * 4 Vertex3FTex2FColor4B.
+ */
 struct CC_DLL V3F_C4B_T2F_Quad
 {
     //! top left
@@ -312,7 +341,9 @@ struct CC_DLL V3F_C4B_T2F_Quad
     V3F_C4B_T2F    br;
 };
 
-//! 4 Vertex2FTex2FColor4F Quad
+/** @struct V2F_C4F_T2F_Quad
+ * 4 Vertex2FTex2FColor4F Quad.
+ */
 struct CC_DLL V2F_C4F_T2F_Quad
 {
     //! bottom left
@@ -325,6 +356,9 @@ struct CC_DLL V2F_C4F_T2F_Quad
     V2F_C4F_T2F    tr;
 };
 
+/** @struct V3F_T2F_Quad
+ * 
+ */
 struct CC_DLL V3F_T2F_Quad
 {
     //! bottom left
@@ -337,7 +371,9 @@ struct CC_DLL V3F_T2F_Quad
     V3F_T2F    tr;
 };
 
-//! Blend Function used for textures
+/** @struct BlendFunc
+ * Blend Function used for textures.
+ */
 struct CC_DLL BlendFunc
 {
     //! source blend function
@@ -370,11 +406,11 @@ struct CC_DLL BlendFunc
     }
 };
 
-// Label::VAlignment
-// Label::HAlignment
-
-// FIXME:: If any of these enums are edited and/or reordered, update Texture2D.m
-//! Vertical text alignment type
+/** @struct TextVAlignment
+ * Vertical text alignment type.
+ *
+ * @note If any of these enums are edited and/or reordered, update Texture2D.m.
+ */
 enum class CC_DLL TextVAlignment
 {
     TOP,
@@ -382,8 +418,11 @@ enum class CC_DLL TextVAlignment
     BOTTOM
 };
 
-// FIXME:: If any of these enums are edited and/or reordered, update Texture2D.m
-//! Horizontal text alignment type
+/** @struct TextHAlignment
+ * Horizontal text alignment type.
+ *
+ * @note If any of these enums are edited and/or reordered, update Texture2D.m.
+ */
 enum class CC_DLL TextHAlignment
 {
     LEFT,
@@ -391,9 +430,11 @@ enum class CC_DLL TextHAlignment
     RIGHT
 };
 
-// types for animation in particle systems
+// Types for animation in particle systems
 
-// texture coordinates for a quad
+/** @struct T2F_Quad
+ * Texture coordinates for a quad.
+ */
 struct CC_DLL T2F_Quad
 {
     //! bottom left
@@ -406,7 +447,9 @@ struct CC_DLL T2F_Quad
     Tex2F    tr;
 };
 
-// struct that holds the size in pixels, texture coordinates and delays for animated ParticleSystemQuad
+/** @struct AnimationFrameData
+ * Struct that holds the size in pixels, texture coordinates and delays for animated ParticleSystemQuad.
+ */
 struct CC_DLL AnimationFrameData
 {
     T2F_Quad texCoords;
@@ -418,8 +461,9 @@ struct CC_DLL AnimationFrameData
  types used for defining fonts properties (i.e. font name, size, stroke or shadow)
  */
 
-
-// shadow attributes
+/** @struct FontShadow
+ * Shadow attributes.
+ */
 struct CC_DLL FontShadow
 {
 public:
@@ -441,7 +485,9 @@ public:
 	float  _shadowOpacity;
 };
 
-// stroke attributes
+/** @struct FontStroke
+ * Stroke attributes.
+ */
 struct CC_DLL FontStroke
 {
 public:
@@ -450,8 +496,8 @@ public:
     FontStroke()
 	    : _strokeEnabled(false)
         , _strokeColor(Color3B::BLACK)
-        , _strokeSize(0)
         , _strokeAlpha(255)
+        , _strokeSize(0)
     {}
     
     // true if stroke enabled
@@ -465,7 +511,9 @@ public:
     
 };
 
-// font attributes
+/** @struct FontDefinition
+ * Font attributes.
+ */
 struct CC_DLL FontDefinition
 {
 public:
@@ -503,8 +551,8 @@ public:
     
 };
 
-/**
- @brief The device accelerometer reports values for each axis in units of g-force
+/** @struct Acceleration
+ * The device accelerometer reports values for each axis in units of g-force.
  */
 class CC_DLL Acceleration
     : public Ref
@@ -523,5 +571,6 @@ extern const std::string CC_DLL STD_STRING_EMPTY;
 extern const ssize_t CC_DLL CC_INVALID_INDEX;
 
 NS_CC_END
-
+// end group
+/// @}
 #endif //__BASE_CCTYPES_H__

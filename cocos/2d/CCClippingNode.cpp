@@ -218,7 +218,8 @@ void ClippingNode::drawFullScreenQuadClearStencil()
     glProgram->use();
     glProgram->setUniformsForBuiltins();
     glProgram->setUniformLocationWith4fv(colorLocation, (GLfloat*) &color.r, 1);
-    
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION );
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
@@ -313,6 +314,14 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
     renderer->popGroup();
     
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+}
+
+void ClippingNode::setCameraMask(unsigned short mask, bool applyChildren)
+{
+    Node::setCameraMask(mask, applyChildren);
+    
+    if (_stencil)
+        _stencil->setCameraMask(mask, applyChildren);
 }
 
 Node* ClippingNode::getStencil() const

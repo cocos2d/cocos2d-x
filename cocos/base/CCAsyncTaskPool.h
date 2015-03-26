@@ -1,6 +1,5 @@
 /****************************************************************************
-Copyright (c) 2010      cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -42,6 +41,15 @@ THE SOFTWARE.
 NS_CC_BEGIN
 /////////////////////////////////////////////////////////////////////////////
 
+/**
+* @addtogroup base
+* @{
+*/
+
+/**
+ * @class AsyncTaskPool
+ * @brief This class allows to perform background operations without having to manipulate threads.
+ */
 class CC_DLL AsyncTaskPool
 {
 public:
@@ -54,28 +62,32 @@ public:
         TASK_OTHER,
         TASK_MAX_TYPE,
     };
+
     /**
-     * get instance
+     * Returns the shared instance of the async task pool.
      */
     static AsyncTaskPool* getInstance();
+
     /**
-     * destroy instance
+     * Destroys the async task pool.
      */
     static void destoryInstance();
     
     /**
-     * stop tasks
-     * @param type task type you want to stop
+     * Stop tasks.
+     *
+     * @param type Task type you want to stop.
      */
     void stopTasks(TaskType type);
     
     /**
-     * enqueue a asynchronous task
+     * Enqueue a asynchronous task.
+     *
      * @param type task type is io task, network task or others, each type of task has a thread to deal with it.
-     * @param callback callback when the task is finished. The callback is called in the main thread instead of task thread
-     * @param callbackParam parameter used by the callback
-     * @param f task can be lambda function
-     * @param args task parameters
+     * @param callback callback when the task is finished. The callback is called in the main thread instead of task thread.
+     * @param callbackParam parameter used by the callback.
+     * @param f task can be lambda function.
+     * @param args task parameters.
      */
     template<class F>
     inline void enqueue(TaskType type, const TaskCallBack& callback, void* callbackParam, F&& f);
@@ -200,6 +212,9 @@ inline void AsyncTaskPool::enqueue(AsyncTaskPool::TaskType type, const TaskCallB
     
     threadTask.enqueue(callback, callbackParam, f);
 }
+
+// end group
+/// @}
 
 NS_CC_END
 #endif //__CCSYNC_TASK_POOL_H_

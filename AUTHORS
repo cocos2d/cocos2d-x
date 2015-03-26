@@ -709,6 +709,8 @@ Developers:
     seobyeongky
         Updates spine runtime.
         Fixed a potential bug in Data's copy constructor. 
+        Fixed the bug that MotionStreak can not work with MoveTo and MoveBy
+        Fixed a bug that  HttpAsynConnection can not get error content if response code less than 200 or response code greater or equal than 300
         
     luocker
         Fix a bug that string itself is also modified in `String::componentsSeparatedByString`.
@@ -850,6 +852,7 @@ Developers:
         EditBox: mac secure input
         Fix a bug that can not get/set text in password mode on Mac OS X
         Make sure TableView parents are visible before handling touch
+        Fixed memory leak in HttpRequest
         
     iSevenDays
         Fixed a bug that the result of 'malloc' is incompatible with type 'unsigned char *' in Image::saveImageToPNG
@@ -1077,6 +1080,15 @@ Developers:
         
     tmr111116
         fix random int overflow
+        
+    flamefox
+        fix the bug that Sprite3D::getAttachNode() should failed when there is no bone with name
+        
+    ryule
+        Fixed HttpClient-ios request to work when the data is started by 0x00
+        
+    loadrunner
+        Added romanian languange support
 
 Retired Core Developers:
     WenSheng Yang

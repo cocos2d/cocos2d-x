@@ -6,7 +6,7 @@
 
 --------------------------------
 --  updates the Atlas (indexed vertex array).<br>
--- Shall be overridden in subclasses
+-- Shall be overridden in subclasses.
 -- @function [parent=#AtlasNode] updateAtlasValues 
 -- @param self
 -- @return AtlasNode#AtlasNode self (return value: cc.AtlasNode)
@@ -18,7 +18,7 @@
 -- @return Texture2D#Texture2D ret (return value: cc.Texture2D)
         
 --------------------------------
--- 
+--  Set an buffer manager of the texture vertex. 
 -- @function [parent=#AtlasNode] setTextureAtlas 
 -- @param self
 -- @param #cc.TextureAtlas textureAtlas
@@ -36,13 +36,13 @@
 -- @return AtlasNode#AtlasNode self (return value: cc.AtlasNode)
         
 --------------------------------
--- 
+--  Return the buffer manager of the texture vertex. <br>
+-- return Return A TextureAtlas.
 -- @function [parent=#AtlasNode] getTextureAtlas 
 -- @param self
 -- @return TextureAtlas#TextureAtlas ret (return value: cc.TextureAtlas)
         
 --------------------------------
--- js NA<br>
 -- lua NA
 -- @function [parent=#AtlasNode] getBlendFunc 
 -- @param self
@@ -69,7 +69,11 @@
 -- @return AtlasNode#AtlasNode self (return value: cc.AtlasNode)
         
 --------------------------------
---  creates a AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render
+--  creates a AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render.<br>
+-- param filename The path of Atlas file.<br>
+-- param tileWidth The width of the item.<br>
+-- param tileHeight The height of the item.<br>
+-- param itemsToRender The quantity of items to render.
 -- @function [parent=#AtlasNode] create 
 -- @param self
 -- @param #string filename

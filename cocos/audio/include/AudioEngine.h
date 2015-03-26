@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2015 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -40,18 +40,29 @@
 #undef ERROR
 #endif // ERROR
 
+/**
+ * @addtogroup core
+ * @{
+ */
+
 NS_CC_BEGIN
     namespace experimental{
 
+/**
+ * @class AudioProfile
+ *
+ * @brief
+ * @js NA
+ */
 class EXPORT_DLL AudioProfile
 {
 public:
-    //name can't be empty
+    //Profile name can't be empty.
     std::string name;
-    
+    //The maximum number of simultaneous audio instance.
     unsigned int maxInstances;
     
-    /* minimum delay in between sounds */
+    /* Minimum delay in between sounds */
     double minDelay;
  
     AudioProfile()
@@ -65,14 +76,18 @@ public:
 class AudioEngineImpl;
 
 /**
-  @class          AudioEngine
-  @brief          
-  @note           
+ * @class AudioEngine
+ *
+ * @brief Offers a interface to play audio.
+ *
+ * @note Make sure to call AudioEngine::end() when the audio engine is not needed anymore to release resources.
+ * @js NA
  */
 
 class EXPORT_DLL AudioEngine
 {
 public:
+    /** AudioState enum,all possible states of an audio instance.*/
     enum class AudioState
     {
         ERROR  = -1,
@@ -86,132 +101,179 @@ public:
     static const float TIME_UNKNOWN;
 
     static bool lazyInit();
+
     /**
-     * Release related objects
-     @warning It must be called before the application exit
+     * Release objects relating to AudioEngine.
+     *
+     * @warning It must be called before the application exit.
      */
     static void end();
     
-    /**  Gets the default profile of audio instances
-     * @return the default profile of audio instances
+    /**  
+     * Gets the default profile of audio instances.
+     *
+     * @return The default profile of audio instances.
      */
     static AudioProfile* getDefaultProfile();
     
-    /** Play 2d sound
-     * @param filePath The path of an audio file
-     * @param loop Whether audio instance loop or not
-     * @param volume volume value (range from 0.0 to 1.0)
-     * @param profile a profile for audio instance
-     * @return an audio ID. It allows you to dynamically change the behavior of an audio instance on the fly.
+    /** 
+     * Play 2d sound.
+     *
+     * @param filePath The path of an audio file.
+     * @param loop Whether audio instance loop or not.
+     * @param volume Volume value (range from 0.0 to 1.0).
+     * @param profile A profile for audio instance. When profile is not specified, default profile will be used.
+     * @return An audio ID. It allows you to dynamically change the behavior of an audio instance on the fly.
+     *
+     * @see `AudioProfile`
      */
     static int play2d(const std::string& filePath, bool loop = false, float volume = 1.0f, const AudioProfile *profile = nullptr);
     
-    /** Sets whether an audio instance loop or not. 
-     @param audioID an audioID returned by the play2d function
-     @param loop Whether audio instance loop or not
+    /** 
+     * Sets whether an audio instance loop or not.
+     *
+     * @param audioID An audioID returned by the play2d function.
+     * @param loop Whether audio instance loop or not.
      */
     static void setLoop(int audioID, bool loop);
 
-    /** Checks whether an audio instance is loop.
-     * @param audioID an audioID returned by the play2d function
+    /** 
+     * Checks whether an audio instance is loop.
+     *
+     * @param audioID An audioID returned by the play2d function.
      * @return Whether or not an audio instance is loop.
      */
     static bool isLoop(int audioID);
 
-    /** Sets volume for an audio instance.
-     * @param audioID an audioID returned by the play2d function
-     * @param volume volume value (range from 0.0 to 1.0)
+    /** 
+     * Sets volume for an audio instance.
+     *
+     * @param audioID An audioID returned by the play2d function.
+     * @param volume Volume value (range from 0.0 to 1.0).
      */
     static void setVolume(int audioID, float volume);
 
-    /** Gets the volume value of an audio instance.
-     * @param audioID an audioID returned by the play2d function
-     * @return volume value (range from 0.0 to 1.0)
+    /** 
+     * Gets the volume value of an audio instance.
+     *
+     * @param audioID An audioID returned by the play2d function.
+     * @return Volume value (range from 0.0 to 1.0).
      */
     static float getVolume(int audioID);
 
-    /** Pause an audio instance.
-     * @param audioID an audioID returned by the play2d function
+    /** 
+     * Pause an audio instance.
+     *
+     * @param audioID An audioID returned by the play2d function.
      */
     static void pause(int audioID);
 
-    /** Pause all playing audio instances */
+    /** Pause all playing audio instances. */
     static void pauseAll();
 
-    /** Resume an audio instance.
-     * @param audioID an audioID returned by the play2d function
+    /** 
+     * Resume an audio instance.
+     *
+     * @param audioID An audioID returned by the play2d function.
      */
     static void resume(int audioID);
 
-    /** Resume all suspended audio instances */
+    /** Resume all suspended audio instances. */
     static void resumeAll();
 
-    /** Stop an audio instance.
-     * @param audioID an audioID returned by the play2d function
+    /** 
+     * Stop an audio instance.
+     *
+     * @param audioID An audioID returned by the play2d function.
      */
     static void stop(int audioID);
 
-    /** Stop all audio instances */
+    /** Stop all audio instances. */
     static void stopAll();
 
-    /** Sets the current playback position of an audio instance.
-     * @param audioID an audioID returned by the play2d function
+    /**
+     * Sets the current playback position of an audio instance.
+     *
+     * @param audioID An audioID returned by the play2d function.
      * @return 
      */
     static bool setCurrentTime(int audioID, float time);
 
-    /** Gets the current playback position of an audio instance.
-     * @param audioID an audioID returned by the play2d function
-     * @return the current playback position of an audio instance
+    /** 
+     * Gets the current playback position of an audio instance.
+     *
+     * @param audioID An audioID returned by the play2d function.
+     * @return The current playback position of an audio instance.
      */
     static float getCurrentTime(int audioID);
 
-    /** Gets the duration of an audio instance.
-     * @param audioID an audioID returned by the play2d function
-     * @return the duration of an audio instance
+    /** 
+     * Gets the duration of an audio instance.
+     *
+     * @param audioID An audioID returned by the play2d function.
+     * @return The duration of an audio instance.
      */
     static float getDuration(int audioID);
 
-    /** Returns the state of an audio instance.
-     * @param audioID an audioID returned by the play2d function
-     * @return the status of an audio instance
+    /** 
+     * Returns the state of an audio instance.
+     *
+     * @param audioID An audioID returned by the play2d function.
+     * @return The status of an audio instance.
      */
     static AudioState getState(int audioID);
 
-    /** Register a callback to be invoked when an audio instance has completed playing.
-     * @param audioID an audioID returned by the play2d function
-     * @param callback 
+    /** 
+     * Register a callback to be invoked when an audio instance has completed playing.
+     *
+     * @param audioID An audioID returned by the play2d function.
+     * @param callback
      */
     static void setFinishCallback(int audioID, const std::function<void(int,const std::string&)>& callback);
     
+    /**
+     * Gets the maximum number of simultaneous audio instance of AudioEngine.
+     */
     static int getMaxAudioInstance() {return _maxInstances;}
     
+    /**
+     * Sets the maximum number of simultaneous audio instance for AudioEngine.
+     *
+     * @param maxInstances The maximum number of simultaneous audio instance.
+     */
     static bool setMaxAudioInstance(int maxInstances);
     
-    /** Uncache the audio data from internal buffer.
-     * AudioEngine cache audio data on ios platform
+    /** 
+     * Uncache the audio data from internal buffer.
+     * AudioEngine cache audio data on ios,mac, and win32 platform.
+     *
      * @warning This can lead to stop related audio first.
-     * @param filePath The path of an audio file
+     * @param filePath Audio file path.
      */
     static void uncache(const std::string& filePath);
     
-    /** Uncache all audio data from internal buffer.
+    /** 
+     * Uncache all audio data from internal buffer.
+     *
      * @warning All audio will be stopped first.
-     * @param
      */
     static void uncacheAll();
     
-    /**  Gets the audio profile by id of audio instance.
-     * @param audioID an audioID returned by the play2d function
-     * @return the audio profile
+    /**  
+     * Gets the audio profile by id of audio instance.
+     *
+     * @param audioID An audioID returned by the play2d function.
+     * @return The audio profile.
      */
     static AudioProfile* getProfile(int audioID);
 
-    /**  Gets the audio profile by name.
-     * @param name name of audio profile
-     * @return the audio profile
+    /**  
+     * Gets an audio profile by name.
+     *
+     * @param profileName A name of audio profile.
+     * @return The audio profile.
      */
-    static AudioProfile* getProfile(const std::string &name);
+    static AudioProfile* getProfile(const std::string &profileName);
 
 protected:
     
@@ -273,6 +335,9 @@ protected:
 
 }
 NS_CC_END
+
+// end group
+/// @}
 
 #endif // __AUDIO_ENGINE_H_
 #endif

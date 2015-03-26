@@ -93,9 +93,9 @@ namespace ui {
         
         virtual bool initWithSize(const Size& size);
         virtual void setFont(const char* pFontName, int fontSize);
-        virtual void setFontColor(const Color3B& color);
+        virtual void setFontColor(const Color4B& color);
         virtual void setPlaceholderFont(const char* pFontName, int fontSize);
-        virtual void setPlaceholderFontColor(const Color3B& color);
+        virtual void setPlaceholderFontColor(const Color4B& color);
         virtual void setInputMode(EditBox::InputMode inputMode);
         virtual void setInputFlag(EditBox::InputFlag inputFlag);
         virtual void setMaxLength(int maxLength);
@@ -131,8 +131,8 @@ namespace ui {
          std::string m_strText;
          std::string m_strPlaceHolder;
          
-         Color3B m_colText;
-         Color3B m_colPlaceHolder;
+         Color4B m_colText;
+         Color4B m_colPlaceHolder;
          
          int   m_nMaxLength;
          Size m_EditSize;

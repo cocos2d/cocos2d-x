@@ -36,7 +36,7 @@ public:
     void stopParticle();
     
 protected:
-    virtual bool init();
+    virtual bool init() override;
     virtual void initRenderer();
     
     virtual void removeAllChildren();

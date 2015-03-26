@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2011      Erawppa
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 #ifndef __CCNOTIFICATIONCENTER_H__
 #define __CCNOTIFICATIONCENTER_H__
+/// @cond DO_NOT_SHOW
 
 #include "base/CCRef.h"
 #include "base/ccTypes.h"
@@ -34,6 +35,11 @@ NS_CC_BEGIN
 
 class __Array;
 class ScriptHandlerMgr;
+
+/**
+ * @cond DO_NOT_SHOW
+ * @{
+ */
 
 class CC_DLL __NotificationCenter : public Ref
 {
@@ -197,6 +203,11 @@ private:
     int _handler;
 };
 
+/**
+ * @}
+ */
+
 NS_CC_END
 
+/// @endcond
 #endif//__CCNOTIFICATIONCENTER_H__

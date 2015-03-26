@@ -246,6 +246,7 @@ public:
     {
         int nRet = 0;
         wchar_t * pwszBuffer = 0;
+        wchar_t* fixedText = nullptr;
         do 
         {
             CC_BREAK_IF(! pszText);
@@ -276,7 +277,37 @@ public:
             memset(pwszBuffer, 0, sizeof(wchar_t)*nBufLen);
             nLen = MultiByteToWideChar(CP_UTF8, 0, pszText, nLen, pwszBuffer, nBufLen);
 
-            SIZE newSize = sizeWithText(pwszBuffer, nLen, dwFmt, tSize.cx);
+            if (strchr(pszText, '&'))
+            {
+                fixedText = new wchar_t[nLen * 2 + 1];
+                int fixedIndex = 0;
+                for (int index = 0; index < nLen; ++index)
+                {
+                    if (pwszBuffer[index] == '&')
+                    {
+                        fixedText[fixedIndex] = '&';
+                        fixedText[fixedIndex + 1] = '&';
+                        fixedIndex += 2;
+                    }
+                    else
+                    {
+                        fixedText[fixedIndex] = pwszBuffer[index];
+                        fixedIndex += 1;
+                    }
+                }
+                fixedText[fixedIndex] = '\0';
+                nLen = fixedIndex;
+            }
+            
+            SIZE newSize;
+            if (fixedText)
+            {
+                newSize = sizeWithText(fixedText, nLen, dwFmt, tSize.cx);
+            } 
+            else
+            {
+                newSize = sizeWithText(pwszBuffer, nLen, dwFmt, tSize.cx);
+            }
 
             RECT rcText = {0};
             // if content width is 0, use text size as content size
@@ -343,13 +374,23 @@ public:
             SetTextColor(_DC, RGB(255, 255, 255)); // white color
 
             // draw text
-            nRet = DrawTextW(_DC, pwszBuffer, nLen, &rcText, dwFmt);
+            if (fixedText)
+            {
+                nRet = DrawTextW(_DC, fixedText, nLen, &rcText, dwFmt);
+            } 
+            else
+            {
+                nRet = DrawTextW(_DC, pwszBuffer, nLen, &rcText, dwFmt);
+            }
+            
             //DrawTextA(_DC, pszText, nLen, &rcText, dwFmt);
 
             SelectObject(_DC, hOldBmp);
             SelectObject(_DC, hOldFont);
         } while (0);
         CC_SAFE_DELETE_ARRAY(pwszBuffer);
+        delete[] fixedText;
+
         return nRet;
     }
 

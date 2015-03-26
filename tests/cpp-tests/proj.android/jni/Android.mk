@@ -153,9 +153,12 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/NodeTest/NodeTest.cpp \
 ../../Classes/ParallaxTest/ParallaxTest.cpp \
 ../../Classes/ParticleTest/ParticleTest.cpp \
+../../Classes/Particle3DTest/Particle3DTest.cpp \
+../../Classes/CocosStudio3DTest/CocosStudio3DTest.cpp \
 ../../Classes/PerformanceTest/PerformanceAllocTest.cpp \
 ../../Classes/PerformanceTest/PerformanceNodeChildrenTest.cpp \
 ../../Classes/PerformanceTest/PerformanceParticleTest.cpp \
+../../Classes/PerformanceTest/PerformanceParticle3DTest.cpp \
 ../../Classes/PerformanceTest/PerformanceSpriteTest.cpp \
 ../../Classes/PerformanceTest/PerformanceTest.cpp \
 ../../Classes/PerformanceTest/PerformanceTextureTest.cpp \

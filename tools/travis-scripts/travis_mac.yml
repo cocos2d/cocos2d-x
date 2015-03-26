@@ -10,10 +10,8 @@ env:
 #  - PLATFORM=mac-ios SDK=iphonesimulator7.1 ARCH=x86_64 SCHEME="build all tests iOS"
   - PLATFORM=mac-ios SDK=macosx10.9 ARCH=x86_64 SCHEME="build all tests Mac"
 
-#notifications:
-#  email:
-#    - xiaoming.zhang@cocos2d-x.org
-#    - jianhua.chen@cocos2d-x.org
+notifications:
+  email: false
 
 # whitelist
 branches:

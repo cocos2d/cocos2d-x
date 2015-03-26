@@ -51,10 +51,10 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration).win32\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration).win32\cpp-tests\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration).win32\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration).win32\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration).win32\cpp-tests\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration).win32\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
@@ -86,7 +86,7 @@
     </ClCompile>
     <Link>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)$(Configuration).win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -100,6 +100,13 @@
       <Command>
       </Command>
     </PreLinkEvent>
+    <PreBuildEvent>
+      <Command>xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
+xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Copy files</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -118,7 +125,7 @@
     <Link>
       <AdditionalDependencies>libcurl_imp.lib;websockets.lib;opengl32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
-      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)$(Configuration).win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -134,6 +141,13 @@
       <Command>
       </Command>
     </PreLinkEvent>
+    <PreBuildEvent>
+      <Command>xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
+xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Copy files</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AllocatorTest\AllocatorTest.cpp" />
@@ -174,11 +188,14 @@
     <ClCompile Include="..\Classes\NewAudioEngineTest\NewAudioEngineTest.cpp" />
     <ClCompile Include="..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.cpp" />
     <ClCompile Include="..\Classes\NewRendererTest\NewRendererTest.cpp" />
+    <ClCompile Include="..\Classes\Particle3DTest\Particle3DTest.cpp" />
+    <ClCompile Include="..\Classes\CocosStudio3DTest\CocosStudio3DTest.cpp" />
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceAllocTest.cpp" />
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceContainerTest.cpp" />
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceEventDispatcherTest.cpp" />
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceLabelTest.cpp" />
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceMathTest.cpp" />
+    <ClCompile Include="..\Classes\PerformanceTest\PerformanceParticle3DTest.cpp" />
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceRendererTest.cpp" />
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceScenarioTest.cpp" />
     <ClCompile Include="..\Classes\PhysicsTest\PhysicsTest.cpp" />
@@ -371,11 +388,14 @@
     <ClInclude Include="..\Classes\NewAudioEngineTest\NewAudioEngineTest.h" />
     <ClInclude Include="..\Classes\NewEventDispatcherTest\NewEventDispatcherTest.h" />
     <ClInclude Include="..\Classes\NewRendererTest\NewRendererTest.h" />
+    <ClInclude Include="..\Classes\Particle3DTest\Particle3DTest.h" />
+    <ClInclude Include="..\Classes\CocosStudio3DTest\CocosStudio3DTest.h" />
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceAllocTest.h" />
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceContainerTest.h" />
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceEventDispatcherTest.h" />
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceLabelTest.h" />
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceMathTest.h" />
+    <ClInclude Include="..\Classes\PerformanceTest\PerformanceParticle3DTest.h" />
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceRendererTest.h" />
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceScenarioTest.h" />
     <ClInclude Include="..\Classes\PhysicsTest\PhysicsTest.h" />

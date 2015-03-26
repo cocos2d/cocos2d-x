@@ -40,10 +40,10 @@ class Camera;
  * @{
  */
 
-/** 
-@brief Base class for Camera actions
-@ingroup Actions
-*/
+/**
+ *@brief Base class for Camera actions.
+ *@ingroup Actions
+ */
 class CC_DLL ActionCamera : public ActionInterval //<NSCopying> 
 {
 public:
@@ -62,18 +62,42 @@ public:
     virtual ActionCamera * reverse() const override;
 	virtual ActionCamera *clone() const override;
 
-    /* sets the Eye value of the Camera */
+    /* Sets the Eye value of the Camera. 
+     * 
+     * @param eye The Eye value of the Camera.
+     * @js NA
+     */
     void setEye(const Vec3 &eye);
     void setEye(float x, float y, float z);
-    /* returns the Eye value of the Camera */
+    /* Returns the Eye value of the Camera. 
+     *
+     * @return The Eye value of the Camera.
+     * @js NA
+     */
     const Vec3& getEye() const { return _eye; }
-    /* sets the Center value of the Camera */
+    /* Sets the Center value of the Camera. 
+     *
+     * @param center The Center value of the Camera.
+     * @js NA
+     */
     void setCenter(const Vec3 &center);
-    /* returns the Center value of the Camera */
+    /* Returns the Center value of the Camera. 
+     *
+     * @return The Center value of the Camera.
+     * @js NA
+     */
     const Vec3& getCenter() const { return _center; }
-    /* sets the Up value of the Camera */
+    /* Sets the Up value of the Camera. 
+     *
+     * @param up The Up value of the Camera.
+     * @js NA
+     */
     void setUp(const Vec3 &up);
-    /* Returns the Up value of the Camera */
+    /* Returns the Up value of the Camera. 
+     *
+     * @return The Up value of the Camera.
+     * @js NA
+     */
     const Vec3& getUp() const { return _up; }
 
 protected:
@@ -86,18 +110,34 @@ protected:
     Vec3 _up;
 };
 
-/** 
-@brief OrbitCamera action
-Orbits the camera around the center of the screen using spherical coordinates
-@ingroup Actions
-*/
+/** @class OrbitCamera
+ *
+ * @brief OrbitCamera action.
+ * Orbits the camera around the center of the screen using spherical coordinates.
+ * @ingroup Actions
+ */
 class CC_DLL OrbitCamera : public ActionCamera //<NSCopying> 
 {
 public:
-    /** creates a OrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
+    /** Creates a OrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX. 
+     *
+     * @param t Duration in seconds.
+     * @param radius The start radius.
+     * @param deltaRadius The delta radius.
+     * @param angelZ The start Angel in Z.
+     * @param deltaAngleZ The delta angle in Z.
+     * @param angelX The start Angel in X.
+     * @param deltaAngleX The delta angle in X.
+     * @return An OrbitCamera.
+     */
     static OrbitCamera* create(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);
     
-    /** positions the camera according to spherical coordinates */
+    /** Positions the camera according to spherical coordinates. 
+     *
+     * @param r The spherical radius.
+     * @param zenith The spherical zenith.
+     * @param azimuth The spherical azimuth.
+     */
     void sphericalRadius(float *r, float *zenith, float *azimuth);
 
     // Overrides
@@ -116,7 +156,7 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual ~OrbitCamera();
     
-    /** initializes a OrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX */
+    /** Initializes a OrbitCamera action with radius, delta-radius,  z, deltaZ, x, deltaX. */
     bool initWithDuration(float t, float radius, float deltaRadius, float angleZ, float deltaAngleZ, float angleX, float deltaAngleX);
 
 protected:

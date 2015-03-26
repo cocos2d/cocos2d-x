@@ -291,7 +291,6 @@ int PhysicsWorld::collisionPreSolveCallback(PhysicsContact& contact)
 {
     if (!contact.isNotificationEnabled())
     {
-        cpArbiterIgnore(static_cast<cpArbiter*>(contact._contactInfo));
         return true;
     }
     
@@ -883,8 +882,8 @@ PhysicsWorld::PhysicsWorld()
 , _scene(nullptr)
 , _autoStep(true)
 , _debugDraw(nullptr)
-, _debugDrawMask(DEBUGDRAW_NONE)
 , _updateBodyTransform(false)
+, _debugDrawMask(DEBUGDRAW_NONE)
 {
     
 }

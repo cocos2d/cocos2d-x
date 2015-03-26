@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -26,6 +26,8 @@
 #ifndef _FontFreetype_h_
 #define _FontFreetype_h_
 
+/// @cond DO_NOT_SHOW
+
 #include "CCFont.h"
 
 #include <string>
@@ -43,7 +45,6 @@
 #undef generic
 #undef internal
 #endif
-
 
 NS_CC_BEGIN
 
@@ -90,6 +91,8 @@ private:
     bool              _distanceFieldEnabled;
     float             _outlineSize;
 };
+
+/// @endcond
 
 NS_CC_END
 
