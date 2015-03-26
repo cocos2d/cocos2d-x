@@ -31,11 +31,11 @@ THE SOFTWARE.
 #include "ui/GUIExport.h"
 #include "base/CCMap.h"
 
-NS_CC_BEGIN
 /**
  * @addtogroup ui
  * @{
  */
+NS_CC_BEGIN
 
 class EventListenerTouchOneByOne;
 
@@ -63,11 +63,6 @@ typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
 #define toucheventselector(_SELECTOR) (SEL_TouchEvent)(&_SELECTOR)
 
 
-/**
-*   @js NA
-*   @lua NA
-*/
-
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #ifdef ABSOLUTE
 #undef ABSOLUTE
@@ -76,8 +71,10 @@ typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
 
 /**
  *@brief Base class for all ui widgets.
- * This class inherent from @see `ProtectedNode` and @see `LayoutParameterProtocol`.
+ * This class inherent from `ProtectedNode` and `LayoutParameterProtocol`.
  * If you want to implements your own ui widget, you should subclass it.
+ * @js NA
+ * @lua NA
  */
 class CC_GUI_DLL Widget : public ProtectedNode, public LayoutParameterProtocol
 {
@@ -176,7 +173,7 @@ public:
      * 
      * true if the widget is enabled, widget may be touched , false if the widget is disabled, widget cannot be touched.
      *
-     * Note: If you want to change the widget's appearance  to disabled state, you should also call @see `setBright(false)`.
+     * Note: If you want to change the widget's appearance  to disabled state, you should also call  `setBright(false)`.
      *
      * The default value is true, a widget is default to enable touch.
      *
@@ -607,7 +604,7 @@ public:
     /**
      * Toggle whether ignore user defined content size for widget.
      * Set true will ignore user defined content size which means 
-     * the widget size is always equal to the return value of  @see `getVirtualRendererSize`.
+     * the widget size is always equal to the return value of `getVirtualRendererSize`.
      *
      * @param ignore, set member variabl _ignoreSize to ignore
      */
@@ -995,8 +992,8 @@ private:
 };
 }
 
+NS_CC_END
 // end of ui group
 /// @}
-NS_CC_END
 
 #endif /* defined(__Widget__) */

@@ -31,15 +31,15 @@
 #include "platform/CCPlatformMacros.h"
 #include "ui/GUIExport.h"
 
-NS_CC_BEGIN
 /**
  * @addtogroup ui
  * @{
  */
+NS_CC_BEGIN
 namespace ui {
     
     /**
-     * A 9-slice sprite for cocos2d-x.
+     *@brief A 9-slice sprite for cocos2d-x.
      *
      * 9-slice scaling allows you to specify how scaling is applied
      * to specific areas of a sprite. With 9-slice scaling (3x3 grid),
@@ -167,8 +167,7 @@ namespace ui {
         static Scale9Sprite* createWithSpriteFrameName(const std::string& spriteFrameName);
         
         /**
-         * Creates a 9-slice sprite with an sprite frame name and the centre of its
-         * zone.
+         * Creates a 9-slice sprite with an sprite frame name and the centre of its zone.
          * Once the sprite is created, you can then call its "setContentSize:" method
          * to resize the sprite will all it's 9-slice goodness intract.
          * It respects the anchorPoint too.
@@ -369,8 +368,7 @@ namespace ui {
         /**
          * Sets the source blending function.
          *
-         * @param blendFunc A structure with source and destination factor to specify pixel arithmetic,
-         *                  e.g. {GL_ONE, GL_ONE}, {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}.
+         * @param blendFunc A structure with source and destination factor to specify pixel arithmetic. e.g. {GL_ONE, GL_ONE}, {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}.
          * @js NA
          * @lua NA
          */
