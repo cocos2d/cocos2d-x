@@ -30,12 +30,12 @@
 #include <string>
 
 namespace cocos2d {
-class Animate3D;
-class Sprite3D;
-class Delay;
-class Ray;
-class DrawNode3D;
-class GLProgramState;
+    class Animate3D;
+    class Sprite3D;
+    class Delay;
+    class Ray;
+    class DrawNode3D;
+    class GLProgramState;
 }
 
 class Sprite3DTestDemo : public BaseTest

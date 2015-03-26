@@ -2362,7 +2362,7 @@ Sprite3DCubeMapTest::~Sprite3DCubeMapTest()
 
 std::string Sprite3DCubeMapTest::title() const
 {
-    return "CubeMap && Skybox Test";
+    return "CubeMap & Skybox Test";
 }
 
 std::string Sprite3DCubeMapTest::subtitle() const
