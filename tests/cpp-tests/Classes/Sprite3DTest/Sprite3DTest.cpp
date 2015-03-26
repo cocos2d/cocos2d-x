@@ -72,7 +72,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(Sprite3DEmptyTest),
     CL(UseCaseSprite3D),
     CL(Sprite3DForceDepthTest),
-    CL(NodeFrameAnimationTest)
+    CL(NodeAnimationTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -2340,7 +2340,7 @@ void UseCaseSprite3D::update(float delta)
 
 /////////////////////////////////////////////
 // Node Frame Animation
-NodeFrameAnimationTest::NodeFrameAnimationTest()
+NodeAnimationTest::NodeAnimationTest()
 :_vectorIndex(0)
 {
     auto s = Director::getInstance()->getWinSize();
@@ -2380,16 +2380,16 @@ NodeFrameAnimationTest::NodeFrameAnimationTest()
     
     addNewSpriteWithCoords(Vec2(s.width / 2.f, s.height / 2.f));
 }
-std::string NodeFrameAnimationTest::title() const
+std::string NodeAnimationTest::title() const
 {
-    return "Node Frame Animation Test";
+    return "Node Animation Test";
 }
-std::string NodeFrameAnimationTest::subtitle() const
+std::string NodeAnimationTest::subtitle() const
 {
     return "Jumping animation";
 }
 
-void NodeFrameAnimationTest::addNewSpriteWithCoords(Vec2 p)
+void NodeAnimationTest::addNewSpriteWithCoords(Vec2 p)
 {
     auto s = Director::getInstance()->getWinSize();
     

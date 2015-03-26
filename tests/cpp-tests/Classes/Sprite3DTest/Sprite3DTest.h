@@ -491,12 +491,12 @@ protected:
     std::string          _useCaseTitles[(int)USECASE::MAX_CASE_NUM];
 };
 
-// node fame animation test
-class NodeFrameAnimationTest : public Sprite3DTestDemo
+// node animation test, cocos2d-x supports both skeletal animation and node animation
+class NodeAnimationTest : public Sprite3DTestDemo
 {
 public:
-    CREATE_FUNC(NodeFrameAnimationTest);
-    NodeFrameAnimationTest();
+    CREATE_FUNC(NodeAnimationTest);
+    NodeAnimationTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
