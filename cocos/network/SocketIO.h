@@ -64,6 +64,11 @@ in the onClose method the pointer should be set to NULL or used to connect to a 
 
 #include <string>
 
+/**
+ * @addtogroup core
+ * @{
+ */
+
 NS_CC_BEGIN
 
 namespace network {
@@ -275,5 +280,8 @@ public:
 }
 
 NS_CC_END
+
+// end group
+/// @}
 
 #endif /* defined(__CC_JSB_SOCKETIO_H__) */

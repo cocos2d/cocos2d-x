@@ -30,15 +30,14 @@
 #include "network/HttpRequest.h"
 #include "network/HttpResponse.h"
 
-NS_CC_BEGIN
-
-namespace network {
-
 /**
- * @addtogroup Network
+ * @addtogroup core
  * @{
  */
 
+NS_CC_BEGIN
+
+namespace network {
 
 /** Singleton that handles asynchrounous http requests.
  *
@@ -142,11 +141,11 @@ private:
     int _timeoutForRead;
 };
 
-// end of Network group
-/// @}
-
 }
 
 NS_CC_END
+
+// end group
+/// @}
 
 #endif //__CCHTTPREQUEST_H__

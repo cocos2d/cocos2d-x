@@ -40,6 +40,11 @@ struct libwebsocket;
 struct libwebsocket_context;
 struct libwebsocket_protocols;
 
+/**
+ * @addtogroup core
+ * @{
+ */
+
 NS_CC_BEGIN
 
 namespace network {
@@ -217,5 +222,8 @@ private:
 }
 
 NS_CC_END
+
+// end group
+/// @}
 
 #endif /* defined(__CC_JSB_WEBSOCKET_H__) */

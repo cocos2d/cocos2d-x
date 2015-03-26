@@ -34,6 +34,10 @@ extern "C" {
 }
 
 using namespace std;
+/**
+ * @addtogroup lua
+ * @{
+ */
 
 NS_CC_BEGIN
 /** LuaBridge Error enum, with inline docs. */
@@ -53,14 +57,16 @@ typedef enum {
 /**
  * Build bridge between ObjC and Lua.
  * It makes Lua and ObjC can call each other conveniently.
- * @lua NA
  */
 class LuaBridge
 {
 public:
     /**
      * Get the LuaStack of LuaEngine.
+     *
      * @return the LuaStack object.
+     * @lua NA
+     * @js NA
      */
     static LuaStack *getStack(void);
     /**
@@ -68,6 +74,8 @@ public:
      * If it don't find the function pointer corresponding to functionId, it will reset stack top index to the index before searching.
      *
      * @param functionId the value used to search the `lua_bridge_function_id` table.
+     * @lua NA
+     * @js NA
      */
     static int pushLuaFunctionById(int functionId);
     
@@ -78,6 +86,8 @@ public:
      *
      * @param functionId the value used to search the `lua_bridge_function_id_retain` table.
      * @return the retain count or 0.
+     * @lua NA
+     * @js NA
      */
     static int retainLuaFunctionById(int functionId);
     
@@ -88,7 +98,9 @@ public:
      * If the vaule of retain count is 0 after reducing, it would update the `lua_bridge_function_id_retain` table and `lua_bridge_function_id_retain` table to remove the  reference corresponding to this functionId
      *
      * @param functionId the value used to search the `lua_bridge_function_id` table and `lua_bridge_function_id` table.
-     * @return the retain count or 0
+     * @return the retain count or 0.
+     * @lua NA
+     * @js NA
      */
     static int releaseLuaFunctionById(int functionId);
     
@@ -100,5 +112,8 @@ protected:
 };
 
 NS_CC_END
+
+// end group
+/// @}
 
 #endif // __LUA_BRIDGE_H_

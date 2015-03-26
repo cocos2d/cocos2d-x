@@ -46,6 +46,11 @@ cocos2d::log(__VA_ARGS__);                                                  \
 }                                                                           \
 
 /**
+ * @addtogroup lua
+ * @{
+ */
+
+/**
  * If the typename of userdata at the given accepteable index of stack is equal to type it return true,otherwise return false .
  * If def != 0, lo could greater than the top index of stack, return value is true.
  * If the value of the given index is nil, retrun value also is true.
@@ -1350,4 +1355,7 @@ void ccvector_ushort_to_luaval(lua_State* L, const std::vector<unsigned short>& 
  * @js NA
  */
 void quaternion_to_luaval(lua_State* L,const cocos2d::Quaternion& inValue);
+
+// end group
+/// @}
 #endif //__COCOS2DX_SCRIPTING_LUA_COCOS2DXSUPPORT_LUABAISCCONVERSIONS_H__

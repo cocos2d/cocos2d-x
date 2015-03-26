@@ -33,6 +33,11 @@ extern "C" {
 #endif
 
 /**
+ * @addtogroup lua
+ * @{
+ */
+
+/**
  * Call this function can import the lua bindings for the cocosdenshion module.
  * After registering, we could call the related cocosdenshion code conveniently in the lua.eg,.cc.SimpleAudioEngine:getInstance():stopAllEffects().
  * In current mechanism, most bindings function of SimpleAudioEngine are wrapped in the Lua script file named AudioEngine.lua by more friednly modes.
@@ -45,5 +50,7 @@ extern "C" {
  */
 TOLUA_API int  register_cocosdenshion_module(lua_State* L);
 
+// end group
+/// @}
 
 #endif // #ifndef COCOS_SCRIPTING_LUA_BINDINGS_MANUAL_COCOSDENSHION_LUA_COCOS2DX_COCOSDENSHION_MANUAL_H__

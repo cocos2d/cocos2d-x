@@ -36,6 +36,11 @@ extern "C" {
 #include "renderer/CCCustomCommand.h"
 
 /**
+ * @addtogroup lua
+ * @{
+ */
+
+/**
  * The GLNode is wrapped to call the callback function about draw in the Lua.
  */
 class GLNode:public cocos2d::Node
@@ -45,10 +50,13 @@ public:
      * Destrutor.
      *
      * @lua NA
+     * @js NA
      */
     virtual ~GLNode(){}
     
+    // @cond
     virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4& transform, uint32_t flags) override;
+    // @endcond
 protected:
     cocos2d::CustomCommand _renderCmd;
     void onDraw(const cocos2d::Mat4 &transform, uint32_t flags);
@@ -59,4 +67,6 @@ TOLUA_API int tolua_opengl_open(lua_State* tolua_S);
 TOLUA_API int register_glnode_manual(lua_State* tolua_S);
 /// @endcond
 
+// end group
+/// @}
 #endif //__LUA_OPENGL_H__
