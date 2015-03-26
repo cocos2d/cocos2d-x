@@ -35,12 +35,12 @@ THE SOFTWARE.
 #include "base/CCRef.h"
 #include "platform/CCGL.h"
 
-NS_CC_BEGIN
-
 /**
  * @addtogroup base
  * @{
  */
+
+NS_CC_BEGIN
 
 struct Color4B;
 struct Color4F;
@@ -238,11 +238,11 @@ struct CC_DLL Quad3 {
  */
 struct V2F_C4B_T2F
 {
-    //! vertices (2F)
+    /// vertices (2F)
     Vec2       vertices;
-    //! colors (4B)
+    /// colors (4B)
     Color4B        colors;
-    //! tex coords (2F)
+    /// tex coords (2F)
     Tex2F          texCoords;
 };
 
@@ -251,11 +251,11 @@ struct V2F_C4B_T2F
  */
 struct V2F_C4B_PF
 {
-    //! vertices (2F)
+    /// vertices (2F)
     Vec2       vertices;
-    //! colors (4B)
+    /// colors (4B)
     Color4B        colors;
-    //! pointsize
+    /// pointsize
     float      pointSize;
 };
 
@@ -264,11 +264,11 @@ struct V2F_C4B_PF
  */
 struct CC_DLL V2F_C4F_T2F
 {
-    //! vertices (2F)
+    /// vertices (2F)
     Vec2       vertices;
-    //! colors (4F)
+    /// colors (4F)
     Color4F        colors;
-    //! tex coords (2F)
+    /// tex coords (2F)
     Tex2F          texCoords;
 };
 
@@ -277,10 +277,10 @@ struct CC_DLL V2F_C4F_T2F
  */
 struct CC_DLL V3F_C4B_T2F
 {
-    //! vertices (3F)
+    /// vertices (3F)
     Vec3     vertices;            // 12 bytes
 
-    //! colors (4B)
+    /// colors (4B)
     Color4B      colors;              // 4 bytes
 
     // tex coords (2F)
@@ -292,9 +292,9 @@ struct CC_DLL V3F_C4B_T2F
  */
 struct CC_DLL V3F_T2F
 {
-    //! vertices (2F)
+    /// vertices (2F)
     Vec3       vertices;
-    //! tex coords (2F)
+    /// tex coords (2F)
     Tex2F          texCoords;
 };
 
@@ -303,11 +303,8 @@ struct CC_DLL V3F_T2F
  */
 struct CC_DLL V2F_C4B_T2F_Triangle
 {
-	//! Vec2 A
 	V2F_C4B_T2F a;
-	//! Vec2 B
 	V2F_C4B_T2F b;
-	//! Vec2 B
 	V2F_C4B_T2F c;
 };
  
@@ -316,13 +313,13 @@ struct CC_DLL V2F_C4B_T2F_Triangle
  */
 struct CC_DLL V2F_C4B_T2F_Quad
 {
-    //! bottom left
+    /// bottom left
     V2F_C4B_T2F    bl;
-    //! bottom right
+    /// bottom right
     V2F_C4B_T2F    br;
-    //! top left
+    /// top left
     V2F_C4B_T2F    tl;
-    //! top right
+    /// top right
     V2F_C4B_T2F    tr;
 };
 
@@ -331,13 +328,13 @@ struct CC_DLL V2F_C4B_T2F_Quad
  */
 struct CC_DLL V3F_C4B_T2F_Quad
 {
-    //! top left
+    /// top left
     V3F_C4B_T2F    tl;
-    //! bottom left
+    /// bottom left
     V3F_C4B_T2F    bl;
-    //! top right
+    /// top right
     V3F_C4B_T2F    tr;
-    //! bottom right
+    /// bottom right
     V3F_C4B_T2F    br;
 };
 
@@ -346,13 +343,13 @@ struct CC_DLL V3F_C4B_T2F_Quad
  */
 struct CC_DLL V2F_C4F_T2F_Quad
 {
-    //! bottom left
+    /// bottom left
     V2F_C4F_T2F    bl;
-    //! bottom right
+    /// bottom right
     V2F_C4F_T2F    br;
-    //! top left
+    /// top left
     V2F_C4F_T2F    tl;
-    //! top right
+    /// top right
     V2F_C4F_T2F    tr;
 };
 
@@ -361,13 +358,13 @@ struct CC_DLL V2F_C4F_T2F_Quad
  */
 struct CC_DLL V3F_T2F_Quad
 {
-    //! bottom left
+    /// bottom left
     V3F_T2F    bl;
-    //! bottom right
+    /// bottom right
     V3F_T2F    br;
-    //! top left
+    /// top left
     V3F_T2F    tl;
-    //! top right
+    /// top right
     V3F_T2F    tr;
 };
 
@@ -376,18 +373,18 @@ struct CC_DLL V3F_T2F_Quad
  */
 struct CC_DLL BlendFunc
 {
-    //! source blend function
+    /** source blend function */
     GLenum src;
-    //! destination blend function
+    /** destination blend function */
     GLenum dst;
 
-    //! Blending disabled. Uses {GL_ONE, GL_ZERO}
+    /** Blending disabled. Uses {GL_ONE, GL_ZERO} */
     static const BlendFunc DISABLE;
-    //! Blending enabled for textures with Alpha premultiplied. Uses {GL_ONE, GL_ONE_MINUS_SRC_ALPHA}
+    /** Blending enabled for textures with Alpha premultiplied. Uses {GL_ONE, GL_ONE_MINUS_SRC_ALPHA} */
     static const BlendFunc ALPHA_PREMULTIPLIED;
-    //! Blending enabled for textures with Alpha NON premultiplied. Uses {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}
+    /** Blending enabled for textures with Alpha NON premultiplied. Uses {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA} */
     static const BlendFunc ALPHA_NON_PREMULTIPLIED;
-    //! Enables Additive blending. Uses {GL_SRC_ALPHA, GL_ONE}
+    /** Enables Additive blending. Uses {GL_SRC_ALPHA, GL_ONE} */
     static const BlendFunc ADDITIVE;
 
     bool operator==(const BlendFunc &a) const
@@ -437,13 +434,13 @@ enum class CC_DLL TextHAlignment
  */
 struct CC_DLL T2F_Quad
 {
-    //! bottom left
+    /// bottom left
     Tex2F    bl;
-    //! bottom right
+    /// bottom right
     Tex2F    br;
-    //! top left
+    /// top left
     Tex2F    tl;
-    //! top right
+    /// top right
     Tex2F    tr;
 };
 
@@ -475,13 +472,13 @@ public:
         , _shadowOpacity(0)
     {}
 
-    // true if shadow enabled
+    /// true if shadow enabled
     bool   _shadowEnabled;
-    // shadow x and y offset
+    /// shadow x and y offset
 	Size   _shadowOffset;
-    // shadow blurrines
+    /// shadow blurrines
 	float  _shadowBlur;
-    // shadow opacity
+    /// shadow opacity
 	float  _shadowOpacity;
 };
 
@@ -500,13 +497,13 @@ public:
         , _strokeSize(0)
     {}
     
-    // true if stroke enabled
+    /// true if stroke enabled
     bool      _strokeEnabled;
-    // stroke color
+    /// stroke color
 	Color3B   _strokeColor;
-    // stroke alpha
+    /// stroke alpha
     GLubyte   _strokeAlpha;
-    // stroke size
+    /// stroke size
     float     _strokeSize;
     
 };
@@ -530,23 +527,23 @@ public:
         , _fontAlpha(255)
     {}
     
-    // font name
+    /// font name
     std::string           _fontName;
-    // font size
+    /// font size
     int                   _fontSize;
-    // horizontal alignment
+    /// horizontal alignment
     TextHAlignment        _alignment;
-    // vertical alignment
+    /// vertical alignment
     TextVAlignment _vertAlignment;
-    // renering box
+    /// renering box
     Size                  _dimensions;
-    // font color
+    /// font color
     Color3B               _fontFillColor;
-    //font alpha
+    /// font alpha
     GLubyte               _fontAlpha;
-    // font shadow
+    /// font shadow
     FontShadow            _shadow;
-    // font stroke
+    /// font stroke
     FontStroke            _stroke;
     
 };
