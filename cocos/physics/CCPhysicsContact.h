@@ -55,7 +55,7 @@ typedef struct CC_DLL PhysicsContactData
 }PhysicsContactData;
 
 /**
- * @addtogroup physics
+ * @addtogroup core
  * @{
  */
 

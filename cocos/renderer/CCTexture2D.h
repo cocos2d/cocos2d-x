@@ -43,7 +43,7 @@ class Image;
 typedef struct _MipmapInfo MipmapInfo;
 
 /**
- * @addtogroup textures
+ * @addtogroup _2d
  * @{
  */
 

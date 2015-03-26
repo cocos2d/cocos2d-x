@@ -41,7 +41,7 @@ class EventCustom;
 class EventListenerCustom;
 
 /**
- * @addtogroup textures
+ * @addtogroup _2d
  * @{
  */
 
