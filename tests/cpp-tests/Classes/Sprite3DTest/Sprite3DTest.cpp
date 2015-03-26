@@ -2399,6 +2399,13 @@ void NodeFrameAnimationTest::addNewSpriteWithCoords(Vec2 p)
     sprite->setRotation3D(Vec3(0, 180, 0));
     sprite->setScale(3);
     sprite->setPosition(Vec2(s.width / 2.f, s.height / 3.f));
+    sprite->setTexture("Sprite3DTest/teapot.png");
+    
+    auto light1 = PointLight::create(Vec3(s.width * 0.2f, s.height * 0.8f, 100.0f), Color3B(200, 200, 200), 10000.0f);
+    addChild(light1);
+    auto light2 = AmbientLight::create(Color3B(100, 100, 100));
+    addChild(light2);
+    
     auto animation = Animation3D::create(fileName);
     if (animation)
     {
