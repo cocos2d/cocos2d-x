@@ -173,7 +173,7 @@
 -- @function [parent=#EditBox] initWithSizeAndBackgroundSprite
 -- @param self
 -- @param #size_table size
--- @param #string pNormal9SpriteBg
+-- @param #string normal9SpriteBg
 -- @param #int texType
 -- @return bool#bool ret (return value: bool)
 
