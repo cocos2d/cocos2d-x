@@ -13,7 +13,7 @@
 -- @return RelativeBox#RelativeBox ret (return value: ccui.RelativeBox)
 
 --------------------------------
--- Default constructor
+-- Default constructor.
 -- @function [parent=#RelativeBox] RelativeBox 
 -- @param self
 -- @return RelativeBox#RelativeBox self (return value: ccui.RelativeBox)

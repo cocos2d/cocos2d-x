@@ -5,70 +5,75 @@
 -- @parent_module ccui
 
 --------------------------------
--- Returns the index of item.<br>
--- param item  the item which need to be checked.<br>
--- return the index of item.
+-- Return the index of specified widget.<br>
+-- param item  A widget pointer.<br>
+-- return The index of a given widget in ListView.
 -- @function [parent=#ListView] getIndex 
 -- @param self
 -- @param #ccui.Widget item
 -- @return long#long ret (return value: long)
         
 --------------------------------
--- 
+-- brief Remove all items in current ListView.
 -- @function [parent=#ListView] removeAllItems 
 -- @param self
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
--- Changes the gravity of listview.<br>
--- see ListViewGravity
+-- Set the gravity of ListView.<br>
+-- see `ListViewGravity`
 -- @function [parent=#ListView] setGravity 
 -- @param self
 -- @param #int gravity
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
--- Push back custom item into listview.
+-- Insert a  custom item into the end of ListView.<br>
+-- param item A item in `Widget*`.
 -- @function [parent=#ListView] pushBackCustomItem 
 -- @param self
 -- @param #ccui.Widget item
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
--- Returns the item container.
+-- Return all items in a ListView.<br>
+-- returns A vector of widget pointers.
 -- @function [parent=#ListView] getItems 
 -- @param self
 -- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
--- Removes a item whose index is same as the parameter.<br>
--- param index of item.
+-- Remove a item at given index.<br>
+-- param index A given index in ssize_t.
 -- @function [parent=#ListView] removeItem 
 -- @param self
 -- @param #long index
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
--- 
+-- brief Query current selected widget's idnex.<br>
+-- return A index of a selected item.
 -- @function [parent=#ListView] getCurSelectedIndex 
 -- @param self
 -- @return long#long ret (return value: long)
         
 --------------------------------
--- Insert a default item(create by a cloned model) into listview.
+-- Insert a default item(create by cloning model) into listview at a give index.<br>
+-- param index  A index in ssize_t.
 -- @function [parent=#ListView] insertDefaultItem 
 -- @param self
 -- @param #long index
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
--- 
+-- brief Refresh view and layout of ListView manually.<br>
+-- This method will mark ListView content as dirty and the content view will be refershed in the next frame.
 -- @function [parent=#ListView] requestRefreshView 
 -- @param self
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
--- Changes the margin between each item.<br>
+-- Set the margin between each item in ListView.<br>
 -- param margin
 -- @function [parent=#ListView] setItemsMargin 
 -- @param self
@@ -76,43 +81,45 @@
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
--- 
+-- brief Refresh content view of ListView.
 -- @function [parent=#ListView] refreshView 
 -- @param self
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
--- Removes the last item of listview.
+-- Removes the last item of ListView.
 -- @function [parent=#ListView] removeLastItem 
 -- @param self
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
--- 
+-- brief Query margin between each item in ListView.<br>
+-- return A margin in float.
 -- @function [parent=#ListView] getItemsMargin 
 -- @param self
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- 
+-- Add a event click callback to ListView, then one item of Listview is clicked, the callback will be called.<br>
+-- param callback A callback function with type of `ccListViewCallback`.
 -- @function [parent=#ListView] addEventListener 
 -- @param self
 -- @param #function callback
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
--- Returns a item whose index is same as the parameter.<br>
--- param index of item.<br>
--- return the item widget.
+-- Return a item at a given index.<br>
+-- param index A given index in ssize_t.<br>
+-- return A widget instance.
 -- @function [parent=#ListView] getItem 
 -- @param self
 -- @param #long index
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
--- Sets a item model for listview<br>
--- A model will be cloned for adding default item.<br>
--- param model  item model for listview
+-- Set a item model for listview.<br>
+-- When calling @see `pushBackDefaultItem`, the model will be used as a blueprint and new model copy will be inserted into ListView.<br>
+-- param model  Model in `Widget*`.
 -- @function [parent=#ListView] setItemModel 
 -- @param self
 -- @param #ccui.Widget model
@@ -125,13 +132,15 @@
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
--- Push back a default item(create by a cloned model) into listview.
+-- Insert a  a default item(create by a cloned model) at the end of the listview.
 -- @function [parent=#ListView] pushBackDefaultItem 
 -- @param self
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
--- Insert custom item into listview.
+-- brief Insert a custom widget into ListView at a given index.<br>
+-- param item A widget pointer to be inserted.<br>
+-- param index A given index in ssize_t.
 -- @function [parent=#ListView] insertCustomItem 
 -- @param self
 -- @param #ccui.Widget item
@@ -139,7 +148,8 @@
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
--- Allocates and initializes.
+-- Create an empty ListView.<br>
+-- return A ListView instance.
 -- @function [parent=#ListView] create 
 -- @param self
 -- @return ListView#ListView ret (return value: ccui.ListView)
