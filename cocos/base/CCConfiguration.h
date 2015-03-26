@@ -126,6 +126,9 @@ public:
      */
     int getMaxSupportSpotLightInShader() const;
 
+    /** get 3d animate quality*/
+    int getAnimate3DQuality() const;
+    
     /** returns whether or not an OpenGL is supported */
     bool checkForGLExtension(const std::string &searchName) const;
 
@@ -168,6 +171,7 @@ protected:
     int             _maxDirLightInShader; //max support directional light in shader
     int             _maxPointLightInShader; // max support point light in shader
     int             _maxSpotLightInShader; // max support spot light in shader
+    int             _animate3DQuality;      // 3d animation quality
 	
 	ValueMap        _valueDict;
 };
