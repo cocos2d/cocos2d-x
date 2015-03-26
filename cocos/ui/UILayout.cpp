@@ -212,6 +212,9 @@ void Layout::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t par
         return;
     }
     
+    bool transChanged = parentFlags & FLAGS_TRANSFORM_DIRTY;
+    _clippingRectDirty = _clippingRectDirty || transChanged;
+    
     adaptRenderers();
     doLayout();
     
@@ -583,8 +586,8 @@ const Rect& Layout::getClippingRect()
         }
         else
         {
-            _clippingRect.origin.x = worldPos.x - (scissorWidth * _anchorPoint.x);
-            _clippingRect.origin.y = worldPos.y - (scissorHeight * _anchorPoint.y);
+            _clippingRect.origin.x = worldPos.x;// + (scissorWidth * _anchorPoint.x);
+            _clippingRect.origin.y = worldPos.y;// + (scissorHeight * _anchorPoint.y);
             _clippingRect.size.width = scissorWidth;
             _clippingRect.size.height = scissorHeight;
         }
