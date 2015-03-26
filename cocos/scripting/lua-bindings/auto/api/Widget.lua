@@ -174,7 +174,7 @@
 --------------------------------
 -- Toggle whether ignore user defined content size for widget.<br>
 -- Set true will ignore user defined content size which means <br>
--- the widget size is always equal to the return value of  @see `getVirtualRendererSize`.<br>
+-- the widget size is always equal to the return value of `getVirtualRendererSize`.<br>
 -- param ignore, set member variabl _ignoreSize to ignore
 -- @function [parent=#Widget] ignoreContentAdaptWithSize 
 -- @param self
@@ -286,7 +286,7 @@
 --------------------------------
 -- Sets whether the widget is enabled<br>
 -- true if the widget is enabled, widget may be touched , false if the widget is disabled, widget cannot be touched.<br>
--- Note: If you want to change the widget's appearance  to disabled state, you should also call @see `setBright(false)`.<br>
+-- Note: If you want to change the widget's appearance  to disabled state, you should also call  `setBright(false)`.<br>
 -- The default value is true, a widget is default to enable touch.<br>
 -- param enabled Set to true to enable touch, false otherwise.
 -- @function [parent=#Widget] setEnabled 
