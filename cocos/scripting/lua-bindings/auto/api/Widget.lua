@@ -5,6 +5,7 @@
 -- @parent_module ccui
 
 --------------------------------
+-- Toggle layout component enable.<br>
 -- param enable Layout Component of a widget<br>
 -- return void
 -- @function [parent=#Widget] setLayoutComponentEnabled 
@@ -21,13 +22,15 @@
 -- @return Widget#Widget self (return value: ccui.Widget)
         
 --------------------------------
--- 
+-- Get the user defined widget size.<br>
+-- return User defined size.
 -- @function [parent=#Widget] getCustomSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
--- 
+-- Gets the left boundary position of this widget in parent's coordination system.<br>
+-- return The left boundary position of this widget.
 -- @function [parent=#Widget] getLeftBoundary 
 -- @param self
 -- @return float#float ret (return value: float)
@@ -41,14 +44,15 @@
 -- @return Widget#Widget self (return value: ccui.Widget)
         
 --------------------------------
--- callbackName getter and setter.
+-- Set callback name.<br>
+-- param callbackName A string representation of callback name.
 -- @function [parent=#Widget] setCallbackName 
 -- @param self
 -- @param #string callbackName
 -- @return Widget#Widget self (return value: ccui.Widget)
         
 --------------------------------
--- Gets the Virtual Renderer of widget.<br>
+-- Gets the inner Renderer node of widget.<br>
 -- For example, a button's Virtual Renderer is it's texture renderer.<br>
 -- return Node pointer.
 -- @function [parent=#Widget] getVirtualRenderer 
@@ -57,6 +61,7 @@
         
 --------------------------------
 -- brief Allow widget touch events to propagate to its parents. Set false will disable propagation<br>
+-- param isPropagate  True to allow propagation, false otherwise.<br>
 -- since v3.3
 -- @function [parent=#Widget] setPropagateTouchEvents 
 -- @param self
@@ -64,14 +69,15 @@
 -- @return Widget#Widget self (return value: ccui.Widget)
         
 --------------------------------
+-- Query whether unify size enable state. <br>
 -- return true represent the widget use Unify Size, false represent the widget couldn't use Unify Size
 -- @function [parent=#Widget] isUnifySizeEnabled 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- Returns size percent of widget<br>
--- return size percent
+-- Get size percent of widget.<br>
+-- return Percent size.
 -- @function [parent=#Widget] getSizePercent 
 -- @param self
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
@@ -85,7 +91,9 @@
 -- @return Widget#Widget self (return value: ccui.Widget)
         
 --------------------------------
+-- Toggle widget swallow touch option.<br>
 -- brief Specify widget to swallow touches or not<br>
+-- param swallow True to swallow touch, false otherwise.<br>
 -- since v3.3
 -- @function [parent=#Widget] setSwallowTouches 
 -- @param self
@@ -93,7 +101,9 @@
 -- @return Widget#Widget self (return value: ccui.Widget)
         
 --------------------------------
--- 
+-- Get the content size of widget.<br>
+-- warning This API exists mainly for keeping back compatibility.<br>
+-- return 
 -- @function [parent=#Widget] getLayoutSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
@@ -109,7 +119,7 @@
         
 --------------------------------
 -- Changes the position type of the widget<br>
--- see PositionType<br>
+-- see `PositionType`<br>
 -- param type  the position type of widget
 -- @function [parent=#Widget] setPositionType 
 -- @param self
@@ -118,13 +128,14 @@
         
 --------------------------------
 -- Query whether the widget ignores user deinfed content size or not<br>
--- return bool
+-- return True means ignore user defined content size, false otherwise.
 -- @function [parent=#Widget] isIgnoreContentAdaptWithSize 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
+-- Get the virtual renderer's size<br>
+-- return Widget virtual renderer size.
 -- @function [parent=#Widget] getVirtualRendererSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
@@ -147,21 +158,23 @@
         
 --------------------------------
 -- Gets the position type of the widget<br>
--- see PositionType<br>
+-- see `PositionType`<br>
 -- return type  the position type of widget
 -- @function [parent=#Widget] getPositionType 
 -- @param self
 -- @return int#int ret (return value: int)
         
 --------------------------------
--- 
+-- Gets the top boundary position of this widget in parent's coordination system.<br>
+-- return The top boundary position of this widget.
 -- @function [parent=#Widget] getTopBoundary 
 -- @param self
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- Note: when you set _ignoreSize to true, no matther you call setContentSize or not, <br>
--- the widget size is always equal to the return value of the member function getVirtualRendererSize.<br>
+-- Toggle whether ignore user defined content size for widget.<br>
+-- Set true will ignore user defined content size which means <br>
+-- the widget size is always equal to the return value of  @see `getVirtualRendererSize`.<br>
 -- param ignore, set member variabl _ignoreSize to ignore
 -- @function [parent=#Widget] ignoreContentAdaptWithSize 
 -- @param self
@@ -181,20 +194,22 @@
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
--- Determines if the widget is enabled<br>
+-- Determines if the widget is enabled or not.<br>
 -- return true if the widget is enabled, false if the widget is disabled.
 -- @function [parent=#Widget] isEnabled 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- Query whether widget is focused or not.<br>
 -- return  whether the widget is focused or not
 -- @function [parent=#Widget] isFocused 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
+-- Gets the touch began point of widget when widget is selected.<br>
+-- return the touch began point.
 -- @function [parent=#Widget] getTouchBeganPosition 
 -- @param self
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
@@ -207,31 +222,35 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
+-- Query callback name.<br>
+-- return The callback name.
 -- @function [parent=#Widget] getCallbackName 
 -- @param self
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- 
+-- Get the action tag.<br>
+-- return Action tag.
 -- @function [parent=#Widget] getActionTag 
 -- @param self
 -- @return int#int ret (return value: int)
         
 --------------------------------
--- Gets world position of widget.<br>
--- return world position of widget.
+-- Gets position of widget in world space.<br>
+-- return Position of widget in world space.
 -- @function [parent=#Widget] getWorldPosition 
 -- @param self
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
+-- Query widget's focus enable state.<br>
 -- return true represent the widget could accept focus, false represent the widget couldn't accept focus
 -- @function [parent=#Widget] isFocusEnabled 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- Toggle widget focus status.<br>
 -- param focus  pass true to let the widget get focus or pass false to let the widget lose focus<br>
 -- return void
 -- @function [parent=#Widget] setFocused 
@@ -240,7 +259,8 @@
 -- @return Widget#Widget self (return value: ccui.Widget)
         
 --------------------------------
--- 
+-- Set the tag of action.<br>
+-- param tag  A integer tag value.
 -- @function [parent=#Widget] setActionTag 
 -- @param self
 -- @param #int tag
@@ -266,15 +286,17 @@
 --------------------------------
 -- Sets whether the widget is enabled<br>
 -- true if the widget is enabled, widget may be touched , false if the widget is disabled, widget cannot be touched.<br>
--- The default value is true, a widget is default to enabled<br>
--- param enabled
+-- Note: If you want to change the widget's appearance  to disabled state, you should also call @see `setBright(false)`.<br>
+-- The default value is true, a widget is default to enable touch.<br>
+-- param enabled Set to true to enable touch, false otherwise.
 -- @function [parent=#Widget] setEnabled 
 -- @param self
 -- @param #bool enabled
 -- @return Widget#Widget self (return value: ccui.Widget)
         
 --------------------------------
--- 
+-- Gets the right boundary position of this widget in parent's coordination system.<br>
+-- return The right boundary position of this widget.
 -- @function [parent=#Widget] getRightBoundary 
 -- @param self
 -- @return float#float ret (return value: float)
@@ -299,12 +321,14 @@
 -- @return Widget#Widget self (return value: ccui.Widget)
         
 --------------------------------
--- 
+-- Create a new widget copy of the original one.<br>
+-- return A cloned widget copy of original.
 -- @function [parent=#Widget] clone 
 -- @param self
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
+-- Allow widget to accept focus.<br>
 -- param enable pass true/false to enable/disable the focus ability of a widget<br>
 -- return void
 -- @function [parent=#Widget] setFocusEnabled 
@@ -313,7 +337,8 @@
 -- @return Widget#Widget self (return value: ccui.Widget)
         
 --------------------------------
--- 
+-- Gets the bottom boundary position of this widget in parent's coordination system.<br>
+-- return The bottom boundary position of this widget.
 -- @function [parent=#Widget] getBottomBoundary 
 -- @param self
 -- @return float#float ret (return value: float)
@@ -326,7 +351,8 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- param enable Unify Size of a widget<br>
+-- Toggle use unify size.<br>
+-- param enable True to use unify size, false otherwise.<br>
 -- return void
 -- @function [parent=#Widget] setUnifySizeEnabled 
 -- @param self
@@ -335,27 +361,31 @@
         
 --------------------------------
 -- Return whether the widget is propagate touch events to its parents or not<br>
+-- return whether touch event propagation is allowed or not.<br>
 -- since v3.3
 -- @function [parent=#Widget] isPropagateTouchEvents 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
+-- Return a current focused widget in your UI scene.<br>
+-- No matter what widget object you call this method on , it will return you the exact one focused widget.
 -- @function [parent=#Widget] getCurrentFocusedWidget 
 -- @param self
 -- @return Widget#Widget ret (return value: ccui.Widget)
         
 --------------------------------
--- Checks a point if is in widget's space<br>
--- param point<br>
--- return true if the point is in widget's space, flase otherwise.
+-- Checks a point is in widget's content space.<br>
+-- This function is used for determining touch area of widget.<br>
+-- param pt The point in `Vec2`.<br>
+-- return true if the point is in widget's content space, flase otherwise.
 -- @function [parent=#Widget] hitTest 
 -- @param self
 -- @param #vec2_table pt
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- Query whether layout component is enabled or not. <br>
 -- return true represent the widget use Layout Component, false represent the widget couldn't use Layout Component.
 -- @function [parent=#Widget] isLayoutComponentEnabled 
 -- @param self
@@ -383,14 +413,15 @@
         
 --------------------------------
 -- Gets the size type of widget.<br>
--- see SizeType<br>
+-- see `SizeType`<br>
 -- param type that is widget's size type
 -- @function [parent=#Widget] getSizeType 
 -- @param self
 -- @return int#int ret (return value: int)
         
 --------------------------------
--- 
+-- Query callback type.<br>
+-- return Callback type string.
 -- @function [parent=#Widget] getCallbackType 
 -- @param self
 -- @return string#string ret (return value: string)
@@ -411,10 +442,9 @@
         
 --------------------------------
 -- Returns the flag which indicates whether the widget is flipped horizontally or not.<br>
--- It only flips the texture of the widget, and not the texture of the widget's children.<br>
--- Also, flipping the texture doesn't alter the anchorPoint.<br>
--- If you want to flip the anchorPoint too, and/or to flip the children too use:<br>
--- widget->setScaleX(sprite->getScaleX() * -1);<br>
+-- It not only flips the texture of the widget, but also the texture of the widget's children.<br>
+-- Also, flipping relies on widget's anchor point.<br>
+-- Internally, it just use setScaleX(-1) to flip the widget.<br>
 -- return true if the widget is flipped horizaontally, false otherwise.
 -- @function [parent=#Widget] isFlippedX 
 -- @param self
@@ -422,17 +452,18 @@
         
 --------------------------------
 -- Return the flag which indicates whether the widget is flipped vertically or not.<br>
--- It only flips the texture of the widget, and not the texture of the widget's children.<br>
--- Also, flipping the texture doesn't alter the anchorPoint.<br>
--- If you want to flip the anchorPoint too, and/or to flip the children too use:<br>
--- widget->setScaleY(widget->getScaleY() * -1);<br>
+-- It not only flips the texture of the widget, but also the texture of the widget's children.<br>
+-- Also, flipping relies on widget's anchor point.<br>
+-- Internally, it just use setScaleY(-1) to flip the widget.<br>
 -- return true if the widget is flipped vertically, flase otherwise.
 -- @function [parent=#Widget] isFlippedY 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
+-- Checks a point if in parent's area.<br>
+-- param point A point in `Vec2`.<br>
+-- return true if the point is in parent's area, flase otherwise.
 -- @function [parent=#Widget] isClippingParentContainsPoint 
 -- @param self
 -- @param #vec2_table pt
@@ -440,7 +471,7 @@
         
 --------------------------------
 -- Changes the size type of widget.<br>
--- see SizeType<br>
+-- see `SizeType`<br>
 -- param type that is widget's size type
 -- @function [parent=#Widget] setSizeType 
 -- @param self
@@ -457,7 +488,8 @@
 -- @return Widget#Widget self (return value: ccui.Widget)
         
 --------------------------------
--- callbackType getter and setter.
+-- Set callback type.<br>
+-- param callbackType A string representation of callback type.
 -- @function [parent=#Widget] setCallbackType 
 -- @param self
 -- @param #string callbackType
@@ -465,6 +497,7 @@
         
 --------------------------------
 -- Return whether the widget is swallowing touch or not<br>
+-- return Whether touch is swallowed.<br>
 -- since v3.3
 -- @function [parent=#Widget] isSwallowTouches 
 -- @param self
@@ -478,7 +511,7 @@
 -- @return Widget#Widget self (return value: ccui.Widget)
         
 --------------------------------
--- Allocates and initializes a widget.
+-- Create and return a empty Widget instance pointer.
 -- @function [parent=#Widget] create 
 -- @param self
 -- @return Widget#Widget ret (return value: ccui.Widget)
@@ -510,7 +543,8 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- Returns the "class name" of widget.
+-- Returns the string representation of widget class name<br>
+-- return get the class description.
 -- @function [parent=#Widget] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
@@ -526,7 +560,7 @@
 
 --------------------------------
 -- Changes the position (x,y) of the widget in OpenGL coordinates<br>
--- Usually we use p(x,y) to compose Vec2 object.<br>
+-- Usually we use p(x,y) to compose a Vec2 object.<br>
 -- The original point (0,0) is at the left-bottom corner of screen.<br>
 -- param position  The position (x,y) of the widget in OpenGL coordinates
 -- @function [parent=#Widget] setPosition 
@@ -535,7 +569,8 @@
 -- @return Widget#Widget self (return value: ccui.Widget)
         
 --------------------------------
--- 
+-- Changes the size that is widget's size<br>
+-- param contentSize A content size in `Size`.
 -- @function [parent=#Widget] setContentSize 
 -- @param self
 -- @param #size_table contentSize
