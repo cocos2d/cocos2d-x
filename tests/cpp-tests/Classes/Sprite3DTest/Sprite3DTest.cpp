@@ -71,7 +71,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(QuaternionTest),
     CL(Sprite3DEmptyTest),
     CL(UseCaseSprite3D),
-    CL(Sprite3DForceDepthTest)
+    CL(Sprite3DForceDepthTest),
+    CL(NodeFrameAnimationTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -2338,7 +2339,7 @@ void UseCaseSprite3D::update(float delta)
 }
 
 /////////////////////////////////////////////
-// KeyFrameAnimate
+// Node Frame Animation
 NodeFrameAnimationTest::NodeFrameAnimationTest()
 :_vectorIndex(0)
 {

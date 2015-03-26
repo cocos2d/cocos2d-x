@@ -491,6 +491,7 @@ protected:
     std::string          _useCaseTitles[(int)USECASE::MAX_CASE_NUM];
 };
 
+// node fame animation test
 class NodeFrameAnimationTest : public Sprite3DTestDemo
 {
 public:

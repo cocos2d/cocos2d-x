@@ -139,26 +139,14 @@ Node* findChildByNameRecursively(Node* node, const std::string &childName)
 //! called before the action start. It will also set the target.
 void Animate3D::startWithTarget(Node *target)
 {
-//    Sprite3D* sprite = dynamic_cast<Sprite3D*>(target);
-//    CCASSERT(sprite && sprite->getSkeleton() && _animation, "Animate3D apply to Sprite3D only");
-    
     ActionInterval::startWithTarget(target);
     
     _boneCurves.clear();
     _nodeCurves.clear();
     
-//    auto skin = sprite->getSkeleton();
     bool hasCurve = false;
-//    for (int  i = 0; i < skin->getBoneCount(); i++) {
-//        auto bone = skin->getBoneByIndex(static_cast<unsigned int>(i));
-//        auto curve = _animation->getBoneCurveByName(bone->getName());
-//        if (curve)
-//        {
-//            _boneCurves[bone] = curve;
-//            hasCurve = true;
-//        }
-//    }
     Sprite3D* sprite = dynamic_cast<Sprite3D*>(target);
+    
     if(sprite)
     {
         if (_animation)

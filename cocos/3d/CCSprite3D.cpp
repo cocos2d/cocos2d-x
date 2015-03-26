@@ -478,6 +478,7 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
         {
             if(it->bones.size() > 0 || singleSprite)
             {
+                this->setName(nodedata->id);
                 auto mesh = Mesh::create(nodedata->id, getMeshIndexData(it->subMeshId));
                 if(mesh)
                 {
