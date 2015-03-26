@@ -35,7 +35,7 @@
 NS_CC_BEGIN
 
 /**
- * @addtogroup physics
+ * @addtogroup core
  * @{
  */
 
