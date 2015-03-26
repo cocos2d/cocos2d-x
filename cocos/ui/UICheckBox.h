@@ -28,12 +28,11 @@ THE SOFTWARE.
 #include "ui/UIWidget.h"
 #include "ui/GUIExport.h"
 
-NS_CC_BEGIN
-
 /**
  * @addtogroup ui
  * @{
  */
+NS_CC_BEGIN
 class Sprite;
 
 namespace ui {
@@ -58,9 +57,10 @@ typedef void (Ref::*SEL_SelectedStateEvent)(Ref*,CheckBoxEventType);
 #define checkboxselectedeventselector(_SELECTOR) (SEL_SelectedStateEvent)(&_SELECTOR)
 
 /**
-*   @js NA
-*   @lua NA
-*/
+ *  Checkbox is a specific type of two-states button that can be either checked or unchecked.
+ *   @js NA
+ *   @lua NA
+ */
 class CC_GUI_DLL CheckBox : public Widget
 {
     
@@ -324,8 +324,8 @@ protected:
 
 }
 
+NS_CC_END
 // end of ui group
 /// @}
-NS_CC_END
 
 #endif /* defined(__CocoGUI__CheckBox__) */

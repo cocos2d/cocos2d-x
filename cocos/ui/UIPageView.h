@@ -28,17 +28,17 @@ THE SOFTWARE.
 #include "ui/UILayout.h"
 #include "ui/GUIExport.h"
 
-NS_CC_BEGIN
 /**
  * @addtogroup ui
  * @{
  */
+NS_CC_BEGIN
 
 namespace ui {
 
 /**
  *PageView page turn event type.
- *@deprecated Use @see `PageView::EventType` instead.
+ *@deprecated Use `PageView::EventType` instead.
  */
 typedef enum
 {
@@ -47,7 +47,7 @@ typedef enum
 
 /**
  *A callback which would be called when a PageView turning event is happening.
- *@deprecated Use @see `PageView::ccPageViewCallback` instead.
+ *@deprecated Use `PageView::ccPageViewCallback` instead.
  */
 typedef void (Ref::*SEL_PageViewEvent)(Ref*, PageViewEventType);
 #define pagevieweventselector(_SELECTOR)(SEL_PageViewEvent)(&_SELECTOR)
@@ -175,7 +175,7 @@ public:
     
     /**
      * Add a page turn callback to PageView, then when one page is turning, the callback will be called.
-     *@deprecated Use @see `PageView::addEventListener` instead.
+     *@deprecated Use `PageView::addEventListener` instead.
      *@param target A pointer of `Ref*` type.
      *@param selector A member function pointer with signature of `SEL_PageViewEvent`.
      */
@@ -297,8 +297,8 @@ protected:
 };
 
 }
+NS_CC_END
 // end of ui group
 /// @}
-NS_CC_END
 
 #endif /* defined(__PageView__) */

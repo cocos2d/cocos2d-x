@@ -32,12 +32,12 @@
 #include "extensions/ExtensionMacros.h"
 #include "extensions/ExtensionExport.h"
 
-NS_CC_EXT_BEGIN
-
 /**
- * @addtogroup GUI
+ * @addtogroup ui
  * @{
  */
+NS_CC_EXT_BEGIN
+
 
 class ScrollView;
 
@@ -376,9 +376,9 @@ protected:
     CustomCommand _afterDrawCommand;
 };
 
-// end of GUI group
-/// @}
 
 NS_CC_EXT_END
+// end of ui group
+/// @}
 
 #endif /* __CCSCROLLVIEW_H__ */

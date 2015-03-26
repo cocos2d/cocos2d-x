@@ -28,21 +28,22 @@ THE SOFTWARE.
 #include "ui/UIWidget.h"
 #include "ui/GUIExport.h"
 
-NS_CC_BEGIN
-
 /**
  * @addtogroup ui
  * @{
  */
+NS_CC_BEGIN
+
 class Label;
 
 namespace ui{
     
     class Scale9Sprite;
 /**
-*   @js NA
-*   @lua NA
-*/
+ * Represents a push-button widget. Push-buttons can be pressed, or clicked, by the user to perform an action.
+ *   @js NA
+ *   @lua NA
+ */
 class CC_GUI_DLL Button : public Widget
 {
     
@@ -332,8 +333,8 @@ private:
 
 }
 
+NS_CC_END
 // end of ui group
 /// @}
-NS_CC_END
 
 #endif /* defined(__CocoGUI__Button__) */
