@@ -7,7 +7,7 @@
 --------------------------------
 -- Load texture for imageview.<br>
 -- param fileName   file name of texture.<br>
--- param texType    @see TextureResType
+-- param texType    @see `Widget::TextureResType`
 -- @function [parent=#ImageView] loadTexture 
 -- @param self
 -- @param #string fileName
@@ -15,8 +15,8 @@
 -- @return ImageView#ImageView self (return value: ccui.ImageView)
         
 --------------------------------
--- Sets if imageview is using scale9 renderer.<br>
--- param able true that using scale9 renderer, false otherwise.
+-- Enable scale9 renderer.<br>
+-- param enable Set to true will use scale9 renderer, false otherwise.
 -- @function [parent=#ImageView] setScale9Enabled 
 -- @param self
 -- @param #bool able
@@ -31,7 +31,8 @@
 -- @return ImageView#ImageView self (return value: ccui.ImageView)
         
 --------------------------------
--- Sets capinsets for imageview, if imageview is using scale9 renderer.<br>
+-- Sets capInsets for imageview.<br>
+-- The capInsets affects the ImageView's renderer only if `setScale9Enabled(true)` is called.<br>
 -- param capInsets    capinsets for imageview
 -- @function [parent=#ImageView] setCapInsets 
 -- @param self
@@ -39,13 +40,16 @@
 -- @return ImageView#ImageView self (return value: ccui.ImageView)
         
 --------------------------------
--- 
+-- Get ImageView's capInsets size.<br>
+-- return Query capInsets size in Rect<br>
+-- see `setCapInsets(const Rect&)`
 -- @function [parent=#ImageView] getCapInsets 
 -- @param self
 -- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
--- 
+-- Query whether button is using scale9 renderer or not.<br>
+-- return whether button use scale9 renderer or not.
 -- @function [parent=#ImageView] isScale9Enabled 
 -- @param self
 -- @return bool#bool ret (return value: bool)
@@ -72,7 +76,7 @@
 -- @return Node#Node ret (return value: cc.Node)
         
 --------------------------------
--- Returns the "class name" of widget.
+-- 
 -- @function [parent=#ImageView] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)

@@ -5,13 +5,13 @@
 -- @parent_module cc
 
 --------------------------------
---  Gets the color that will be used to disable the item 
+--  Gets the color that will be used to disable the item. 
 -- @function [parent=#MenuItemLabel] getDisabledColor 
 -- @param self
 -- @return color3b_table#color3b_table ret (return value: color3b_table)
         
 --------------------------------
---  sets a new string to the inner label 
+--  Sets a new string to the inner label. 
 -- @function [parent=#MenuItemLabel] setString 
 -- @param self
 -- @param #string label
@@ -25,7 +25,7 @@
 -- @return MenuItemLabel#MenuItemLabel self (return value: cc.MenuItemLabel)
         
 --------------------------------
---  Sets the color that will be used to disable the item 
+--  Sets the color that will be used to disable the item. 
 -- @function [parent=#MenuItemLabel] setDisabledColor 
 -- @param self
 -- @param #color3b_table color
