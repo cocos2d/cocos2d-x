@@ -36,6 +36,11 @@ extern "C" {
 #include <vector>
 #include <map>
 
+/**
+ * @addtogroup lua
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class ScheduleHandlerDelegate;
@@ -67,20 +72,24 @@ private:
 
 /**
  * The LuaCallFunc is wrapped to call the callback function in the Lua Conveniently and don't insert useless code to processing the lua in the CallFuncN.
- *
- * @js NA.
  */
 class LuaCallFunc:public cocos2d::CallFuncN
 {
 public:
     /**
      * Default construtor.
+     *
+     * @lua NA
+     * @js NA
      */
     LuaCallFunc():_functionLua(nullptr)
     {}
     
     /**
      *  Destrutor.
+     *
+     * @lua NA
+     * @js NA
      */
     virtual ~LuaCallFunc()
     {}
@@ -89,6 +98,8 @@ public:
      * Create a LuaCallFunc object by a function pointer for callback.
      *
      * @param func a function pointer for callback.
+     * @lua NA
+     * @js NA
      */
     static LuaCallFunc* create(const std::function<void(void* self,Node*)>& func);
     
@@ -97,6 +108,7 @@ public:
      *
      * @param func a function pointer for callback.
      * @lua NA
+     * @js NA
      */
     bool initWithFunction(const std::function<void(void* self,Node*)>& func);
     virtual LuaCallFunc* clone() const override;
@@ -112,8 +124,6 @@ protected:
  * In order to reduce the coupling of lua script engine and native c++ engine.
  * In the current mechanism, for the class derived frome the Ref, we constuct a mapping relationship among c++ Ref object ,HandlerType and the refrence index corresponding to the pointer of Lua function.Then, using the ScriptHandlerMgr to manager uniformly.
  * By this mechanism,when native c++ Ref object wants to call the Lua function, we didn't insert the processing code in the native c++ class.
- *
- * @js NA.
  */
 class ScriptHandlerMgr
 {
@@ -122,6 +132,8 @@ public:
     /**
      * HandlerType enum.
      * This enum class represent the processing type for c++ call the Lua function.
+     *
+     * @js NA
      */
     enum class HandlerType: int
     {
@@ -225,8 +237,9 @@ public:
     
     /**
      * Default constructor.
-     * 
+     *
      * @lua NA
+     * @js NA
      */
     ScriptHandlerMgr(void);
     
@@ -234,6 +247,7 @@ public:
      * Destructor.
      *
      * @lua NA
+     * @js NA
      */
     virtual ~ScriptHandlerMgr(void);
     
@@ -241,11 +255,15 @@ public:
      * Get the instance of the ScriptHandlerMgr.
      *
      * @return the instance of the ScriptHandlerMgr.
+     * @js NA
      */
     static ScriptHandlerMgr* getInstance(void);
     
     /**
      * Destroy the instance of the ScriptHandlerMgr.
+     *
+     * @lua NA
+     * @js NA
      */
     static void destroyInstance(void);
     
@@ -255,6 +273,8 @@ public:
      * @param object a Ref object.
      * @param handler a refrence index corresponding to the pointer of Lua function.
      * @param handlerType ScriptHandlerMgr::HandlerType.
+     * @lua registerScriptHandler
+     * @js NA
      */
     void addObjectHandler(void* object,int handler,ScriptHandlerMgr::HandlerType handlerType);
     
@@ -264,6 +284,8 @@ public:
      * 
      * @param object a Ref object.
      * @param handlerType ScriptHandlerMgr::HandlerType.
+     * @lua unregisterScriptHandler
+     * @js NA
      */
     void removeObjectHandler(void* object,ScriptHandlerMgr::HandlerType handlerType);
     
@@ -273,6 +295,8 @@ public:
      * @param object a Ref object.
      * @param handlerType ScriptHandlerMgr::HandlerType.
      * @return index corresponding to the pointer of Lua function,otherwise 0.
+     * @lua NA
+     * @js NA
      */
     int  getObjectHandler(void* object,ScriptHandlerMgr::HandlerType handlerType);
     
@@ -281,6 +305,7 @@ public:
      * Meanwhile, remove the refrence of Lua function corresponding to the indexs the object has in the 'toluafix_refid_function_mapping' table.
      *
      * @param object the Ref object.
+     * @js NA
      */
     void removeObjectAllHandlers(void* object);
     
@@ -293,6 +318,8 @@ public:
      * @param object the Ref object.
      * @param handler a refrence index corresponding to the pointer of Lua function.
      * @return ScriptHandlerMgr::HandlerType the value of current ScriptHandlerMgr::HandlerType after adding.
+     * @lua NA
+     * @js NA
      */
     ScriptHandlerMgr::HandlerType addCustomHandler(void* object, int handler);
     
@@ -304,6 +331,11 @@ private:
 
 NS_CC_END
 
+// end group
+/// @}
+
+/// @cond
 TOLUA_API int tolua_script_handler_mgr_open(lua_State* tolua_S);
+/// @endcond
 
 #endif //__LUA_SCRIPT_HANDLER_MGR_H__
