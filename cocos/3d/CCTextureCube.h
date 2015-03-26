@@ -51,6 +51,8 @@ public:
                                const std::string& positive_z, const std::string& negative_z);
 
     void setTexParameters(const TexParams&);
+
+    bool reloadTexture();
 CC_CONSTRUCTOR_ACCESS:
     TextureCube();
     TextureCube(const TextureCube&);
@@ -60,6 +62,8 @@ protected:
     bool init(const std::string& positive_x, const std::string& negative_x,
               const std::string& positive_y, const std::string& negative_y,
               const std::string& positive_z, const std::string& negative_z);
+private:
+    std::vector<std::string> _imgPath;
 };
 
 NS_CC_END
