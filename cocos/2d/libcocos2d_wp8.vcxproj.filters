@@ -1809,6 +1809,12 @@
     <ClCompile Include="..\editor-support\cocostudio\CCObjectExtensionData.cpp">
       <Filter>cocostudio\json</Filter>
     </ClCompile>
+    <ClCompile Include="..\3d\CCSkybox.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3d\CCTextureCube.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCAction.h">
@@ -3515,6 +3521,12 @@
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\CCObjectExtensionData.h">
       <Filter>cocostudio\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCSkybox.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3d\CCTextureCube.h">
+      <Filter>3d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

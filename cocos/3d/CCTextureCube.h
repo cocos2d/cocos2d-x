@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -34,28 +34,41 @@
 NS_CC_BEGIN
 
 /**
-    texture cube map.
-    It wraps the cocos2d::Texture2D
+ TextureCube is a collection of six separate square textures that are put 
+ onto the faces of an imaginary cube.
 */
 class CC_DLL TextureCube: public Texture2D
 {
 public:
-    /**
-        create cube texture from 6 textures.
-
-        @param path The image resource path.
-        @create cube texture from 6 textures.
+    /** create cube texture from 6 textures.
+       @param positive_x texture for the right side of the texture cube face.
+       @param negative_x texture for the up side of the texture cube face.
+       @param positive_y texture for the top side of the texture cube face
+       @param negative_y texture for the bottom side of the texture cube face
+       @param positive_z texture for the forward side of the texture cube face.
+       @param negative_z texture for the rear side of the texture cube face.
+       @return  A new texture cube inited with given parameters.
     */
     static TextureCube* create(const std::string& positive_x, const std::string& negative_x,
                                const std::string& positive_y, const std::string& negative_y,
                                const std::string& positive_z, const std::string& negative_z);
 
+    /** Sets the min filter, mag filter, wrap s and wrap t texture parameters.
+    If the texture size is NPOT (non power of 2), then in can only use GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}.
+    */
     void setTexParameters(const TexParams&);
 
+    /** reload texture cube after GLESContext reconstructed.*/
     bool reloadTexture();
 CC_CONSTRUCTOR_ACCESS:
+    /**
+    * Constructor.
+    */
     TextureCube();
-    TextureCube(const TextureCube&);
+
+    /**
+    * Destructor.
+    */
     virtual ~TextureCube();
 protected:
 

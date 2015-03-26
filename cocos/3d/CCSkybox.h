@@ -31,28 +31,47 @@ NS_CC_BEGIN
 
 class TextureCube;
 
+/**
+* Sky box technology usually used to simulate infinity sky, mountains and other phenomena.
+*/
 class CC_DLL Skybox : public Node
 {
 public:
     CREATE_FUNC(Skybox);
 
+    /**texture getter and setter*/
     void setTexture(TextureCube*);
 
-    void onDraw(const Mat4& transform, uint32_t flags);
-
-    // Overrides
+    /** draw Skybox object */
     virtual void draw(Renderer* renderer, const Mat4& transform, uint32_t flags) override;
 
+    /** reload sky box after GLESContext reconstructed.*/
     void reload();
 
 CC_CONSTRUCTOR_ACCESS:
+    /**
+    * Constructor.
+    */
     Skybox();
+
+    /**
+    * Destructor.
+    */
     virtual ~Skybox();
+
+    /**
+    * init Skybox.
+    */
     virtual bool init();
 
 protected:
 
+    /**
+    * init internal buffers for Skybox.
+    */
     void initBuffers();
+
+    void onDraw(const Mat4& transform, uint32_t flags);
 
     GLuint      _vao;
     GLuint      _vertexBuffer;
