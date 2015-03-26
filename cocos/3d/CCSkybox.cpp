@@ -61,21 +61,7 @@ bool Skybox::init()
     state->setVertexAttribPointer(GLProgram::ATTRIBUTE_NAME_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(Vec3), nullptr);
     setGLProgramState(state);
 
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        glGenVertexArrays(1, &_vao);
-        GL::bindVAO(_vao);
-    }
-
     initBuffers();
-
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-        state->applyAttributes(false);
-
-        GL::bindVAO(0);
-    }
 
     CHECK_GL_ERROR_DEBUG();
 
@@ -84,6 +70,12 @@ bool Skybox::init()
 
 void Skybox::initBuffers()
 {
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
+        glGenVertexArrays(1, &_vao);
+        GL::bindVAO(_vao);
+    }
+
     // init vertex buffer object
     Vec3 vexBuf[] =
     {
@@ -96,7 +88,7 @@ void Skybox::initBuffers()
     glBufferData(GL_ARRAY_BUFFER, sizeof(vexBuf), vexBuf, GL_STATIC_DRAW);
 
     // init index buffer object
-    unsigned char idxBuf[] = {  2, 1, 0, 3, 2, 0, // font
+    const unsigned char idxBuf[] = {  2, 1, 0, 3, 2, 0, // font
         1, 5, 4, 1, 4, 0, // right
         4, 5, 6, 4, 6, 7, // back
         7, 6, 2, 7, 2, 3, // left
@@ -107,6 +99,14 @@ void Skybox::initBuffers()
     glGenBuffers(1, &_indexBuffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(idxBuf), idxBuf, GL_STATIC_DRAW);
+
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
+        glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+        getGLProgramState()->applyAttributes(false);
+
+        GL::bindVAO(0);
+    }
 }
 
 void Skybox::draw(Renderer* renderer, const Mat4& transform, uint32_t flags)
@@ -122,7 +122,7 @@ void Skybox::onDraw(const Mat4& transform, uint32_t flags)
     state->apply(transform);
 
     GLboolean   depthFlag = glIsEnabled(GL_DEPTH_TEST);
-    GLint		depthFunc;
+    GLint       depthFunc;
     glGetIntegerv(GL_DEPTH_FUNC, &depthFunc);
 
     glEnable(GL_DEPTH_TEST);
@@ -167,11 +167,25 @@ void Skybox::setTexture(TextureCube* texture)
 {
     CCASSERT(texture != nullptr, __FUNCTION__);
 
-    _texture = texture;
-    _texture->retain();
+    texture->retain();
 
-    auto state = getGLProgramState();
-    state->setUniformTexture("u_Env", _texture);
+    if (_texture)
+        _texture->release();
+
+    _texture = texture;
+
+    getGLProgramState()->setUniformTexture("u_Env", _texture);
+}
+
+void Skybox::reload()
+{
+    auto glProgram = getGLProgramState()->getGLProgram();
+    glProgram->reset();
+    glProgram->initWithFilenames("Shaders3D/Skybox.vert", "Shaders3D/Skybox.frag");
+    glProgram->link();
+    glProgram->updateUniforms();
+
+    initBuffers();
 }
 
 NS_CC_END

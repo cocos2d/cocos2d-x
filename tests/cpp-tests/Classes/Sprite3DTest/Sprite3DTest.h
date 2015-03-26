@@ -30,12 +30,12 @@
 #include <string>
 
 namespace cocos2d {
-    class Animate3D;
-    class Sprite3D;
-    class Delay;
-    class Ray;
-    class DrawNode3D;
-    class GLProgramState;
+class Animate3D;
+class Sprite3D;
+class Delay;
+class Ray;
+class DrawNode3D;
+class GLProgramState;
 }
 
 class Sprite3DTestDemo : public BaseTest
@@ -500,7 +500,8 @@ public:
 
 namespace cocos2d
 {
-    class TextureCube;
+class TextureCube;
+class Skybox;
 }
 class Sprite3DCubeMapTest : public Sprite3DTestDemo
 {
@@ -514,8 +515,13 @@ public:
     void addNewSpriteWithCoords(Vec2);
 
 protected:
-    cocos2d::Sprite3D*      _sprite;
     cocos2d::TextureCube*   _textureCube;
+    Skybox*                 _skyBox;
+    Sprite3D*               _teapot;
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    EventListenerCustom* _backToForegroundListener;
+#endif
 };
 
 #endif
