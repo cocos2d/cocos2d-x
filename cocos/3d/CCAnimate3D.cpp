@@ -69,9 +69,7 @@ bool Animate3D::init(Animation3D* animation)
     animation->retain();
     setDuration(animation->getDuration());
     setOriginInterval(animation->getDuration());
-    const auto& conf = Configuration::getInstance();
-    int animateQuality = conf->getAnimate3DQuality();
-    setAnimateQuality(animateQuality);
+    setAnimateQuality(Configuration::getInstance()->getAnimate3DQuality());
     return true;
 }
 
@@ -87,9 +85,7 @@ bool Animate3D::init(Animation3D* animation, float fromTime, float duration)
     setOriginInterval(duration);
     _animation = animation;
     animation->retain();
-    const auto& conf = Configuration::getInstance();
-    int animateQuality = conf->getAnimate3DQuality();
-    setAnimateQuality(animateQuality);
+    setAnimateQuality(Configuration::getInstance()->getAnimate3DQuality());
     return true;
 }
 
