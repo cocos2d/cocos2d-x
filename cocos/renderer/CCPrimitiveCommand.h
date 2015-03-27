@@ -39,7 +39,7 @@ class CC_DLL PrimitiveCommand : public RenderCommand
 {
 public:
     /**@{
-     @Constructor and Destructor.
+     Constructor and Destructor.
      */
     PrimitiveCommand();
     ~PrimitiveCommand();
