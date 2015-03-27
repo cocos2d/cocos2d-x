@@ -22,7 +22,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPhysics3DShape.h"
+#include "CCPhysics3D.h"
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
