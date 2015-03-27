@@ -126,7 +126,7 @@ public:
     inline const Rect& getRect() const { return _rect; }
     /** Set rect of the frame.
      *
-     * @param The rect of the sprite.
+     * @param rect The rect of the sprite.
      */
     void setRect(const Rect& rect);
 
