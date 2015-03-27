@@ -27,6 +27,11 @@
 #include <math.h>
 #include "math/CCMathBase.h"
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 NS_CC_MATH_BEGIN
 
 /** Clamp a value between from and to.
@@ -750,6 +755,11 @@ inline const Vec2 operator*(float x, const Vec2& v);
 typedef Vec2 Point;
 
 NS_CC_MATH_END
+
+/**
+ end of base group
+ @}
+ */
 
 #include "Vec2.inl"
 

@@ -26,6 +26,11 @@
 #include "math/Mat4.h"
 //#include "Plane.h"
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 NS_CC_MATH_BEGIN
 
 class Mat4;
@@ -406,7 +411,10 @@ private:
 };
 
 NS_CC_MATH_END
-
+/**
+ end of base group
+ @}
+ */
 #include "Quaternion.inl"
 
 #endif

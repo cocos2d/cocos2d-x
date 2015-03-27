@@ -24,6 +24,11 @@
 
 #include "math/CCMathBase.h"
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 NS_CC_MATH_BEGIN
 
 class Mat4;
@@ -476,7 +481,10 @@ inline const Vec3 operator*(float x, const Vec3& v);
 //typedef Vec3 Point3;
 
 NS_CC_MATH_END
-
+/**
+ end of base group
+ @}
+ */
 #include "Vec3.inl"
 
 #endif // MATH_VEC3_H

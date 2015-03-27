@@ -4,6 +4,11 @@
 #include <memory>
 #include <string.h>
 #include "platform/CCPlatformMacros.h"
+/**
+ * @addtogroup base
+ * @{
+ */
+
 /**Util macro for conversion from degrees to radians.*/
 #define MATH_DEG_TO_RAD(x)          ((x) * 0.0174532925f)
 /**Util macro for conversion from radians to degrees.*/
@@ -39,5 +44,9 @@
     #define USING_NS_CC_MATH 
 #endif
 
+/**
+ * end of base group
+ * @}
+ */
 
 #endif // __CCMATHBASE_H__
