@@ -35,12 +35,7 @@
  
 NS_CC_BEGIN
 
-/**
- * @addtogroup _3d
- * @{
- */
-
-/** @brief mesh vertex attribute*/
+/**mesh vertex attribute*/
 struct MeshVertexAttrib
 {
     //attribute size
@@ -53,14 +48,15 @@ struct MeshVertexAttrib
     int attribSizeBytes;
 };
 
-/** @brief model node data, since 3.3 */
+
+/** model node data, since 3.3 */
 struct ModelData
 {
     std::string subMeshId;
     std::string matrialId;
     std::vector<std::string> bones;
     std::vector<Mat4>        invBindPose;
-
+    
     virtual ~ModelData()
     {
         resetData();
@@ -72,7 +68,7 @@ struct ModelData
     }
 };
 
-/** @brief Node data, since 3.3 */
+/** Node data, since 3.3 */
 struct NodeData
 {
     std::string id;
@@ -93,12 +89,17 @@ struct NodeData
             delete it;
         }
         children.clear();
+        
+        for(auto& modeldata : modelNodeDatas)
+        {
+            delete modeldata;
+        }
+        modelNodeDatas.clear();
     }
 
 };
 
-
-/** @brief node datas, since 3.3 */
+/** node datas, since 3.3 */
 struct NodeDatas
 {
     std::vector<NodeData*> skeleton; //skeleton
@@ -119,7 +120,7 @@ struct NodeDatas
     }
 };
 
-/** @brief mesh data*/
+/**mesh data*/
 struct MeshData
 {
     typedef std::vector<unsigned short> IndexArray;
@@ -172,7 +173,7 @@ public:
     }
 };
 
-/** @brief mesh datas */
+/** mesh datas */
 struct MeshDatas
 {
     std::vector<MeshData*> meshDatas;
@@ -191,7 +192,7 @@ struct MeshDatas
     }
 };
 
-/** @brief skin data*/
+/**skin data*/
 struct SkinData
 {
     std::vector<std::string> skinBoneNames; //skin bones affect skin
@@ -260,7 +261,7 @@ struct SkinData
 
 };
 
-/** @brief material data, */
+/**material data, */
 struct MaterialData
 {
     std::map<int, std::string> texturePaths; //submesh id, texture path
@@ -271,7 +272,7 @@ struct MaterialData
 };
 
 
-/** @brief new material, since 3.3 */
+/**new material, since 3.3 */
 struct NTextureData
 {
     enum class Usage {
@@ -307,7 +308,7 @@ struct NMaterialData
         return nullptr;
     }
 };
-/** @brief material datas, since 3.3 */
+/** material datas, since 3.3 */
 struct MaterialDatas
 {
     std::vector<NMaterialData> materials;
@@ -325,7 +326,7 @@ struct MaterialDatas
         return nullptr;
     }
 };
-/** @brief animation data*/
+/**animation data*/
 struct Animation3DData
 {
 public:
@@ -395,7 +396,7 @@ public:
     }
 };
 
-/** @brief reference data*/
+/**reference data*/
 struct Reference
 {
 public:
@@ -407,9 +408,6 @@ public:
 
     ~Reference(){}
 };
-
-// end of actions group
-/// @}
 
 NS_CC_END
 
