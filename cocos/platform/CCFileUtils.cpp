@@ -846,6 +846,7 @@ void FileUtils::setWritablePath(const std::string& writablePath)
 void FileUtils::setDefaultResourceRootPath(const std::string& path)
 {
     _defaultResRootPath = path;
+    setSearchPaths(_searchPathArray);
 }
 
 void FileUtils::setSearchPaths(const std::vector<std::string>& searchPaths)
