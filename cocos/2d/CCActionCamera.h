@@ -124,9 +124,9 @@ public:
      * @param t Duration in seconds.
      * @param radius The start radius.
      * @param deltaRadius The delta radius.
-     * @param angelZ The start Angel in Z.
+     * @param angleZ The start Angel in Z.
      * @param deltaAngleZ The delta angle in Z.
-     * @param angelX The start Angel in X.
+     * @param angleX The start Angel in X.
      * @param deltaAngleX The delta angle in X.
      * @return An OrbitCamera.
      */

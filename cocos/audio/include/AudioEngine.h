@@ -194,10 +194,11 @@ public:
     /**
      * Sets the current playback position of an audio instance.
      *
-     * @param audioID An audioID returned by the play2d function.
+     * @param audioID   An audioID returned by the play2d function.
+     * @param sec       The offset in seconds from the start to seek to.
      * @return 
      */
-    static bool setCurrentTime(int audioID, float time);
+    static bool setCurrentTime(int audioID, float sec);
 
     /** 
      * Gets the current playback position of an audio instance.
