@@ -124,7 +124,7 @@ namespace ui {
          * broken down into a 3×3 grid of equal blocks.
          *
          * @see initWithFile(const char *file)
-         * @param file. A texture file name.
+         * @param file A texture file name.
          * @return A Scale9Sprite instance.
          */
         static Scale9Sprite* create(const std::string& file);

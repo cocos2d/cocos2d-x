@@ -44,7 +44,7 @@ class CC_DLL AutoreleasePool
 {
 public:
     /**
-     * @warn Don't create an autorelease pool in heap, create it in stack.
+     * @warning Don't create an autorelease pool in heap, create it in stack.
      * @js NA
      * @lua NA
      */
@@ -52,7 +52,7 @@ public:
     
     /**
      * Create an autorelease pool with specific name. This name is useful for debugging.
-     * @warn Don't create an autorelease pool in heap, create it in stack.
+     * @warning Don't create an autorelease pool in heap, create it in stack.
      * @js NA
      * @lua NA
      *

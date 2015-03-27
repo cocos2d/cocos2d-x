@@ -61,7 +61,7 @@ public:
     /**
      * Set javascript interface scheme.
      *
-     * @see #onJsCallback
+     * @see WebView::setOnJSCallback()
      */
     void setJavascriptInterfaceScheme(const std::string &scheme);
 
@@ -147,8 +147,7 @@ public:
     /**
      * Call before a web view begins loading.
      *
-     * @param sender The web view that is about to load new content.
-     * @param url Content URL.
+     * @param callback The web view that is about to load new content.
      * @return YES if the web view should begin loading content; otherwise, NO .
      */
     void setOnShouldStartLoading(const std::function<bool(WebView *sender, const std::string &url)>& callback);
@@ -158,16 +157,14 @@ public:
     /**
      * Call after a web view finishes loading.
      *
-     * @param sender The web view that has finished loading.
-     * @param url Content URL.
+     * @param callback The web view that has finished loading.
      */
     void setOnDidFinishLoading(const ccWebViewCallback& callback);
     
     /**
      * Call if a web view failed to load content.
      *
-     * @param sender The web view that has failed loading.
-     * @param url Content URL.
+     * @param callback The web view that has failed loading.
      */
     void setOnDidFailLoading(const ccWebViewCallback& callback);
     
