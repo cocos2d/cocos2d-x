@@ -25,13 +25,14 @@
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
 
 --------------------------------
--- 
+-- Apply user defined uniforms.
 -- @function [parent=#GLProgramState] applyUniforms 
 -- @param self
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
         
 --------------------------------
--- 
+-- Apply GLProgram, and built in uniforms.<br>
+-- param modelView The applied modelView matrix to shader.
 -- @function [parent=#GLProgramState] applyGLProgram 
 -- @param self
 -- @param #mat4_table modelView
@@ -44,7 +45,8 @@
 -- @return long#long ret (return value: long)
         
 --------------------------------
--- 
+-- Apply attributes.<br>
+-- param applyAttribFlags Call GL::enableVertexAttribs(_vertexAttribsFlags) or not.
 -- @function [parent=#GLProgramState] applyAttributes 
 -- @param self
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
@@ -115,14 +117,8 @@
 -- @return unsigned int#unsigned int ret (return value: unsigned int)
         
 --------------------------------
---  @{<br>
 -- Apply GLProgram, attributes and uniforms.<br>
--- `apply` function will apply all the states, include GLProgram, attributes and uniforms.<br>
--- `applyGLProgram` function will apply GLProgram and built in uniform.<br>
--- `applyAttributes` will apply the vertex attributes.<br>
--- `applyUniforms` will apply user defined uniforms.<br>
--- param The applied modelView matrix to shader.<br>
--- param applyAttribFlags Call GL::enableVertexAttribs(_vertexAttribsFlags) or not.
+-- param modelView The applied modelView matrix to shader.
 -- @function [parent=#GLProgramState] apply 
 -- @param self
 -- @param #mat4_table modelView
