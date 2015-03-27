@@ -336,8 +336,8 @@ public:
      * @param localZOrder    Z order for drawing priority. Please refer to setLocalZOrder(int)
      * @param tag       A interger to identify the node easily. Please refer to setTag(int)
      */
-    virtual void addChild(Node* child, int zOrder, int tag) override;
-    virtual void addChild(Node* child, int zOrder, const std::string &name) override;
+    virtual void addChild(Node* child, int localZOrder, int tag) override;
+    virtual void addChild(Node* child, int localZOrder, const std::string &name) override;
     
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 

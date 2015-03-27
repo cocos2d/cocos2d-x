@@ -274,13 +274,13 @@ public:
     
     /**
      * Move inner container to horizontal percent position of scrollview.
-     * @param A value between 0 and 100.
+     * @param percent   A value between 0 and 100.
      */
     void jumpToPercentHorizontal(float percent);
     
     /**
      * Move inner container to both direction percent position of scrollview.
-     * @param A value between 0 and 100.
+     * @param percent   A value between 0 and 100.
      */
     void jumpToPercentBothDirection(const Vec2& percent);
     
@@ -319,8 +319,8 @@ public:
     //override functions
     virtual void addChild(Node* child)override;
     virtual void addChild(Node * child, int localZOrder)override;
-    virtual void addChild(Node* child, int zOrder, int tag) override;
-    virtual void addChild(Node* child, int zOrder, const std::string &name) override;
+    virtual void addChild(Node* child, int localZOrder, int tag) override;
+    virtual void addChild(Node* child, int localZOrder, const std::string &name) override;
     virtual void removeAllChildren() override;
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     virtual void removeChild(Node* child, bool cleaup = true) override;
