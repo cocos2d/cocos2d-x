@@ -29,12 +29,12 @@ THE SOFTWARE.
 #include <string>
 #include "base/CCData.h"
 
-NS_CC_BEGIN
-
 /**
  * @addtogroup base
  * @{
  */
+NS_CC_BEGIN
+
 
 /**
  * UserDefault acts as a tiny database. You can save and get base type values by it.
@@ -243,9 +243,9 @@ private:
     static bool _isFilePathInitialized;
 };
 
-// end of base group
-/** @} */
 
 NS_CC_END
+// end of base group
+/** @} */
 
 #endif // __SUPPORT_CCUSERDEFAULT_H__

@@ -41,9 +41,9 @@ namespace ui {
     class Widget;
 
 /**
-*   @js NA
-*   @lua NA
-*/
+ * Helper class for traversing children in widget tree.
+ * It also provides some helper functions for layout.
+ */
 class CC_GUI_DLL Helper
 {
 public:

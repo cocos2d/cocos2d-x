@@ -731,7 +731,7 @@ public:
      * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      *
      * @param child     A child node.
-     * @param zOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`.
+     * @param localZOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`.
      */
     virtual void addChild(Node * child, int localZOrder);
     /**
@@ -739,9 +739,9 @@ public:
      *
      * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      *
-     * @param child     A child node.
-     * @param zOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`.
-     * @param tag       An integer to identify the node easily. Please refer to `setTag(int)`.
+     * @param child         A child node.
+     * @param localZOrder   Z order for drawing priority. Please refer to `setLocalZOrder(int)`.
+     * @param tag           An integer to identify the node easily. Please refer to `setTag(int)`.
      * 
      * Please use `addChild(Node* child, int localZOrder, const std::string &name)` instead.
      */
@@ -752,7 +752,7 @@ public:
      * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      *
      * @param child     A child node.
-     * @param zOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`.
+     * @param localZOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`.
      * @param name      A string to identify the node easily. Please refer to `setName(int)`.
      *
      */
@@ -1195,7 +1195,7 @@ public:
      * This node becomes the action's target. Refer to Action::getTarget().
      * @warning Actions don't retain their target.
      *
-     * @param An Action pointer
+     * @param action An Action pointer.
      */
     virtual Action* runAction(Action* action);
 
@@ -1631,7 +1631,7 @@ public:
     /** 
      * Removes a component by its pointer.
      *
-     * @param name A given component.
+     * @param component A given component.
      * @return True if removed success.
      */
     virtual bool removeComponent(Component *component);

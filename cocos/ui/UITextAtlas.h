@@ -39,10 +39,8 @@ class Label;
 
 namespace ui {
     
-/** @class TextAtlas
+/**
  * @brief UI TextAtlas widget.
- * @js NA
- * @lua NA
  */
 class CC_GUI_DLL TextAtlas : public Widget
 {

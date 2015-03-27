@@ -58,8 +58,6 @@ typedef void (Ref::*SEL_SelectedStateEvent)(Ref*,CheckBoxEventType);
 
 /**
  *  Checkbox is a specific type of two-states button that can be either checked or unchecked.
- *   @js NA
- *   @lua NA
  */
 class CC_GUI_DLL CheckBox : public Widget
 {

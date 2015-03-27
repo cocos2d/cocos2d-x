@@ -57,7 +57,7 @@
 -- @return Action#Action self (return value: cc.Action)
         
 --------------------------------
---  Return certain target..<br>
+--  Return certain target.<br>
 -- return A certain target.
 -- @function [parent=#Action] getTarget 
 -- @param self

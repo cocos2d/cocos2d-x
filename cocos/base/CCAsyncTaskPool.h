@@ -38,13 +38,12 @@ THE SOFTWARE.
 #include <functional>
 #include <stdexcept>
 
-NS_CC_BEGIN
-/////////////////////////////////////////////////////////////////////////////
-
 /**
 * @addtogroup base
 * @{
 */
+NS_CC_BEGIN
+
 
 /**
  * @class AsyncTaskPool
@@ -213,8 +212,8 @@ inline void AsyncTaskPool::enqueue(AsyncTaskPool::TaskType type, const TaskCallB
     threadTask.enqueue(callback, callbackParam, f);
 }
 
-// end group
-/// @}
 
 NS_CC_END
+// end group
+/// @}
 #endif //__CCSYNC_TASK_POOL_H_

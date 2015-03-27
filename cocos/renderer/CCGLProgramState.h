@@ -33,6 +33,11 @@ THE SOFTWARE.
 #include "math/Vec3.h"
 #include "math/Vec4.h"
 
+/**
+ * @addtogroup support
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class GLProgram;
@@ -50,28 +55,23 @@ class CC_DLL UniformValue
     friend class GLProgram;
     friend class GLProgramState;
 public:
-    /**@{
-     Construtor. If contruct the UniformValue with no param, the Uniform and Glprogram will be nullptr.
+    /**
+     Construtor. The Uniform and Glprogram will be nullptr.
+     */
+    UniformValue();
+    /**
+     Construtor with uniform and glprogram.
      @param uniform Uniform to apply the value.
      @param glprogram Specify the owner GLProgram of this uniform and uniform value.
      */
-    UniformValue();
     UniformValue(Uniform *uniform, GLProgram* glprogram);
-    /**
-     @}
-     */
+
     /**Destructor.*/
     ~UniformValue();
     /**@{
      Set data to Uniform value. Generally, there are many type of data could be supported,
-     including float, int, Vec2/3/4, Mat4 and texture. Besides of this, there are also custom call
-     back functions for sending data when you want to send struct or array data.
-     If we want to send texture to uniform, there are two value to send, first one is texture handle ID,
-     the second one the texture unit.
+     including float, int, Vec2/3/4, Mat4.
      @param value Value to be sent, support float, int, Vec2/3/4, Mat4.
-     @param textureID The texture handle.
-     @param textureUnit The binding texture unit to be used in shader.
-     @param callback Callback function to send data to OpenGL pipeline.
      */
     void setFloat(float value);
     void setInt(int value);
@@ -79,11 +79,21 @@ public:
     void setVec3(const Vec3& value);
     void setVec4(const Vec4& value);
     void setMat4(const Mat4& value);
-    void setCallback(const std::function<void(GLProgram*, Uniform*)> &callback);
-    void setTexture(GLuint textureId, GLuint textureUnit);
     /**
      @}
      */
+    
+    /**
+     Set call back to uniform value, which could be used for array and struct.
+     @param callback Callback function to send data to OpenGL pipeline.
+     */
+    void setCallback(const std::function<void(GLProgram*, Uniform*)> &callback);
+    /**
+     Set texture to uniform value.
+     @param textureId The texture handle.
+     @param textureUnit The binding texture unit to be used in shader.
+    */
+    void setTexture(GLuint textureId, GLuint textureUnit);
     
     /**Apply the uniform value to openGL pipeline.*/
     void apply();
@@ -132,15 +142,18 @@ class CC_DLL VertexAttribValue
 
 public:
     /**
-    @{ 
-     Constuctor and Destructor.
-     @paran vertexAttrib VertexAttrib from shader.
+     Constructor.
+     @param vertexAttrib VertexAttrib from shader.
     */
     VertexAttribValue(VertexAttrib *vertexAttrib);
+    /**
+     Constructor.
+     */
     VertexAttribValue();
+    /**
+     Destructor.
+     */
     ~VertexAttribValue();
-    
-    /**@}*/
     
     /**
      Set the data pointer, which is similar as glVertexAttribPointer.
@@ -200,21 +213,25 @@ public:
     /** gets-or-creates an instance of GLProgramState for a given GLProgramName */
     static GLProgramState* getOrCreateWithGLProgramName(const std::string &glProgramName );
 
-    /** @{
+    /**
      Apply GLProgram, attributes and uniforms.
-     `apply` function will apply all the states, include GLProgram, attributes and uniforms.
-     `applyGLProgram` function will apply GLProgram and built in uniform.
-     `applyAttributes` will apply the vertex attributes.
-     `applyUniforms` will apply user defined uniforms.
-     
-     @param The applied modelView matrix to shader.
-     @param applyAttribFlags Call GL::enableVertexAttribs(_vertexAttribsFlags) or not.
+     @param modelView The applied modelView matrix to shader.
      */
     void apply(const Mat4& modelView);
+    /**
+     Apply GLProgram, and built in uniforms.
+     @param modelView The applied modelView matrix to shader.
+     */
     void applyGLProgram(const Mat4& modelView);
+    /**
+     Apply attributes.
+     @param applyAttribFlags Call GL::enableVertexAttribs(_vertexAttribsFlags) or not.
+     */
     void applyAttributes(bool applyAttribFlags = true);
+    /**
+     Apply user defined uniforms.
+     */
     void applyUniforms();
-    /**@}*/
     
     /**@{ 
      Setter and Getter of the owner GLProgram binded in this program state.
@@ -293,4 +310,8 @@ protected:
 
 NS_CC_END
 
+/**
+ end of support group
+ @}
+ */
 #endif /* __CCGLPROGRAMSTATE_H__ */

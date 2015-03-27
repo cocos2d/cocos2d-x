@@ -41,8 +41,6 @@ namespace ui{
     class Scale9Sprite;
 /**
  * Represents a push-button widget. Push-buttons can be pressed, or clicked, by the user to perform an action.
- *   @js NA
- *   @lua NA
  */
 class CC_GUI_DLL Button : public Widget
 {

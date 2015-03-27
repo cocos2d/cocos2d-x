@@ -29,11 +29,11 @@ THE SOFTWARE.
 #include <string>
 #include "math/CCGeometry.h"
 
-NS_CC_BEGIN
 /**
  * @addtogroup base
  * @{
  */
+NS_CC_BEGIN
 
 /**
  * A static global empty std::string install.
@@ -158,9 +158,9 @@ protected:
     IMEDelegate();
 };
 
-// end of base group
-/// @}
 
 NS_CC_END
+// end of base group
+/// @}
 
 #endif    // __CC_IME_DELEGATE_H__

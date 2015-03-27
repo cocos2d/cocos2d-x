@@ -28,12 +28,12 @@ THE SOFTWARE.
 
 #include "base/CCIMEDelegate.h"
 
-NS_CC_BEGIN
-
 /**
  * @addtogroup base
  * @{
  */
+NS_CC_BEGIN
+
 
 /**
 @brief    Input Method Edit Message Dispatcher.
@@ -137,9 +137,9 @@ private:
     Impl * _impl;
 };
 
-// end of base group
-/// @}
 
 NS_CC_END
+// end of base group
+/// @}
 
 #endif    // __CC_IME_DISPATCHER_H__

@@ -34,6 +34,11 @@
 #include "renderer/CCGLProgram.h"
 #include "platform/CCGL.h"
 
+/**
+ * @addtogroup support
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class EventListenerCustom;
@@ -260,4 +265,8 @@ protected:
 
 NS_CC_END
 
+/**
+ end of support group
+ @}
+ */
 #endif //__CC_RENDERER_H_

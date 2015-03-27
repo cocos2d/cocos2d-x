@@ -31,6 +31,11 @@
 #include <xmmintrin.h>
 #endif
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 NS_CC_MATH_BEGIN
 
 //class Plane;
@@ -275,12 +280,9 @@ public:
                                 const Vec3& cameraUpVector, const Vec3& cameraForwardVector,
                                 Mat4* dst);
 
-    /**
-     * Fills in an existing Mat4 so that it reflects the coordinate system about a specified Plane.
-     *
-     * @param plane The Plane about which to create a reflection.
-     * @param dst A matrix to store the result in.
-     */
+    //Fills in an existing Mat4 so that it reflects the coordinate system about a specified Plane.
+    //plane The Plane about which to create a reflection.
+    //dst A matrix to store the result in.
     //static void createReflection(const Plane& plane, Mat4* dst);
 
     /**
@@ -485,11 +487,7 @@ public:
     bool inverse();
 
     /**
-     * Stores the inverse of this matrix in the specified matrix.
-     *
-     * @param dst A matrix to store the invert of this matrix in.
-     * 
-     * @return true if the the matrix can be inverted, false otherwise.
+     * Get the inversed matrix.
      */
     Mat4 getInversed() const;
 
@@ -546,9 +544,7 @@ public:
     void negate();
 
     /**
-     * Negates this matrix and stores the result in dst.
-     *
-     * @param dst A matrix to store the result in.
+     Get the Negated matrix.
      */
     Mat4 getNegated() const;
 
@@ -867,9 +863,7 @@ public:
     void transpose();
 
     /**
-     * Transposes this matrix and stores the result in dst.
-     *
-     * @param dst A matrix to store the result in.
+     * Get the Transposed matrix.
      */
     Mat4 getTransposed() const;
 
@@ -993,7 +987,10 @@ inline Vec4& operator*=(Vec4& v, const Mat4& m);
 inline const Vec4 operator*(const Mat4& m, const Vec4& v);
 
 NS_CC_MATH_END
-
+/**
+ end of base group
+ @}
+ */
 #include "math/Mat4.inl"
 
 #endif // MATH_MAT4_H

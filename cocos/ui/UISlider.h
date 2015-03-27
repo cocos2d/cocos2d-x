@@ -48,10 +48,8 @@ typedef enum
 typedef void (Ref::*SEL_SlidPercentChangedEvent)(Ref*,SliderEventType);
 #define sliderpercentchangedselector(_SELECTOR) (SEL_SlidPercentChangedEvent)(&_SELECTOR)
 
-/** @class Slider
+/** 
  * @brief UI Slider widget.
- *   @js NA
- *   @lua NA
  */
 class CC_GUI_DLL Slider : public Widget
 {
@@ -201,12 +199,12 @@ public:
      */
     int getPercent()const;
     
+    CC_DEPRECATED_ATTRIBUTE void addEventListenerSlider(Ref* target,SEL_SlidPercentChangedEvent selector);
     /**
      * Add call back function called when slider's percent has changed to slider.
      *
      * @param callback An given call back function called when slider's percent has changed to slider.
      */
-    CC_DEPRECATED_ATTRIBUTE void addEventListenerSlider(Ref* target,SEL_SlidPercentChangedEvent selector);
     void addEventListener(const ccSliderCallback& callback);
     
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;

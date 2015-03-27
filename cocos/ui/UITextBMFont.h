@@ -40,8 +40,6 @@ namespace ui {
     
 /**
  * A widget for displaying BMFont label.
- *   @js NA
- *   @lua NA
  */    
 class CC_GUI_DLL TextBMFont : public Widget
 {
