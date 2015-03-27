@@ -30,7 +30,10 @@
 #include "extensions/ExtensionMacros.h"
 #include "extensions/ExtensionExport.h"
 
-#if 1//(CC_ENABLE_BULLET_INTEGRATION)
+
+#if (CC_ENABLE_BULLET_INTEGRATION)
+
+class btCollisionShape;
 
 NS_CC_EXT_BEGIN
 
@@ -80,6 +83,10 @@ public:
      */
     static Physics3DShape* createCapsule(float radius, float height);
     
+#if CC_ENABLE_BULLET_INTEGRATION
+    btCollisionShape* getbtShape() const { return _btShape; }
+#endif
+    
 protected:
     Physics3DShape();
     ~Physics3DShape();
@@ -91,6 +98,10 @@ protected:
     
     
     ShapeType _shapeType; //shape type
+    
+#if (CC_ENABLE_BULLET_INTEGRATION)
+    btCollisionShape*  _btShape;
+#endif
 };
 
 NS_CC_EXT_END

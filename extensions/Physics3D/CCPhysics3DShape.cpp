@@ -24,7 +24,7 @@
 
 #include "CCPhysics3DShape.h"
 
-#if 1//(CC_ENABLE_BULLET_INTEGRATION)
+#if (CC_ENABLE_BULLET_INTEGRATION)
 
 
 NS_CC_EXT_BEGIN
@@ -37,11 +37,15 @@ Physics3DShape::ShapeType Physics3DShape::getShapeType() const
 Physics3DShape::Physics3DShape()
 : _shapeType(ShapeType::UNKNOWN)
 {
-    
+#if (CC_ENABLE_BULLET_INTEGRATION)
+    _btShape = nullptr;
+#endif
 }
 Physics3DShape::~Physics3DShape()
 {
-    
+#if (CC_ENABLE_BULLET_INTEGRATION)
+    CC_SAFE_DELETE(_btShape);
+#endif
 }
 
 Physics3DShape* Physics3DShape::createBox(const cocos2d::Vec3& extent)
