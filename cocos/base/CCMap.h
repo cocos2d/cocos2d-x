@@ -37,12 +37,12 @@
 #include <map>
 #endif
 
-NS_CC_BEGIN
 
 /**
  * @addtogroup base
  * @{
  */
+NS_CC_BEGIN
 
  /**
  * Similar to std::unordered_map, but it will manage reference count automatically internally.
@@ -416,9 +416,9 @@ protected:
     RefMap _data;
 };
 
-// end group
-/// @}
 
 NS_CC_END
+// end group
+/// @}
 
 #endif /* __CCMAP_H__ */

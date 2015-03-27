@@ -29,14 +29,17 @@ THE SOFTWARE.
 #include <string>
 #include "base/CCRef.h"
 
-NS_CC_BEGIN
-
 /**
  * @addtogroup base
- * @js NA
  * @{
  */
+NS_CC_BEGIN
 
+
+/**
+ * A pool for managing autorlease objects.
+ * @js NA
+ */
 class CC_DLL AutoreleasePool
 {
 public:
@@ -144,7 +147,6 @@ private:
 /** @} */
 
 /**
- * @js NA 
  * @cond
  */
 class CC_DLL PoolManager

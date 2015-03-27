@@ -46,7 +46,6 @@ namespace experimental{
 class WebViewImpl;
 
 /**
- * @class WebView
  * @brief A View that displays web pages. 
  *
  * @note WebView displays web pages base on system widget.

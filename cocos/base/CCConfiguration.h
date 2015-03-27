@@ -33,12 +33,12 @@ THE SOFTWARE.
 #include "base/CCValue.h"
 #include "platform/CCGL.h"
 
-NS_CC_BEGIN
-
 /**
  * @addtogroup base
  * @{
  */
+NS_CC_BEGIN
+
 /** @class Configuration
  * @brief Configuration contains some openGL variables
  * @since v0.99.0
@@ -234,9 +234,9 @@ protected:
 	ValueMap        _valueDict;
 };
 
-// end of base group
-/// @}
 
 NS_CC_END
+// end of base group
+/// @}
 
 #endif // __CCCONFIGURATION_H__

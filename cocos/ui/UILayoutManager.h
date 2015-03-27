@@ -44,8 +44,6 @@ class RelativeLayoutParameter;
 /**
  *@brief Base class for managing layout.
  * All the concret layout manager should inherit from this class.
- * @lua NA
- * @js NA
  */
 class CC_GUI_DLL LayoutManager : public Ref
 {

@@ -40,8 +40,6 @@ namespace ui {
 /**
  *@brief Visual indicator of progress in some operation.
  * Displays a bar to the user representing how far the operation has progressed.
- *@js NA
- *@lua NA
  *
  */
 class CC_GUI_DLL LoadingBar : public Widget
