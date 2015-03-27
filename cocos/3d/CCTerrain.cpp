@@ -193,7 +193,7 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
         _oldTerrrainModelMatrix = terrainWorldTransform;
     }
 
-    quad->updateAABB(_oldTerrrainModelMatrix);
+    _quadRoot->updateAABB(_oldTerrrainModelMatrix);
 
     if(_isCameraViewChanged || _isTerrainModelMatrixChanged)
     {
@@ -205,11 +205,11 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
     
     if(_isCameraViewChanged || _isTerrainModelMatrixChanged)
     {
-        quad->resetNeedDraw(true);//reset it 
+        _quadRoot->resetNeedDraw(true);//reset it 
         //camera frustum culling
-        quad->cullByCamera(camera,_oldTerrrainModelMatrix);
+        _quadRoot->cullByCamera(camera,_oldTerrrainModelMatrix);
     }
-    quad->draw();
+    _quadRoot->draw();
     if(_isCameraViewChanged)
     {
         _isCameraViewChanged = false;
@@ -267,7 +267,7 @@ void Terrain::initHeightMap(const char * heightMap)
             if(m+1<chunk_amount_y) _chunkesArray[m][n]->front = _chunkesArray[m+1][n];
         }
     }
-    quad = new QuadTree(0,0,imageWidth,imageHeight,this);
+    _quadRoot = new QuadTree(0,0,imageWidth,imageHeight,this);
 }
 
 Terrain::Terrain()
@@ -559,7 +559,7 @@ void Terrain::resetHeightMap(const char * heightMap)
             }
         }
     }
-    delete quad;
+    delete _quadRoot;
     initHeightMap(heightMap);
 }
 
@@ -575,7 +575,12 @@ float Terrain::getMaxHeight()
 
 cocos2d::AABB Terrain::getAABB()
 {
-    return quad->_worldSpaceAABB;
+    return _quadRoot->_worldSpaceAABB;
+}
+
+Terrain::QuadTree * Terrain::getQuadTree()
+{
+    return _quadRoot;
 }
 
 void Terrain::Chunk::finish()

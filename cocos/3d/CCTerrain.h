@@ -263,8 +263,11 @@ public:
     // get the terrain's maximum height.
     float getMaxHeight();
 
-//get terrain's AABB
+    //get terrain's AABB
     AABB getAABB();
+
+    //get the terrain's quad tree which is also the root node
+    QuadTree * getQuadTree();
 protected:
     
     Terrain();
@@ -287,7 +290,7 @@ protected:
     Texture2D * _alphaMap;
     CustomCommand _customCommand;
     GLuint vbo[2];
-    QuadTree * quad;
+    QuadTree * _quadRoot;
     int detailSize[4];
     Chunk * _chunkesArray[MAX_CHUNKES][MAX_CHUNKES];
     std::vector<TerrainVertexData> vertices;
