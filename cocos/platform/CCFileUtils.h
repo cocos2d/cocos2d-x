@@ -65,7 +65,7 @@ public:
      * If you don't want to system default implementation after setting delegate, you can just pass nullptr
      * to this function.
      *
-     * @warm It will delete previous delegate
+     * @warning It will delete previous delegate
      * @lua NA
      */
     static void setDelegate(FileUtils *delegate);
@@ -103,8 +103,8 @@ public:
      *  Gets resource file data
      *
      *  @param[in]  filename The resource file name which contains the path.
-     *  @param[in]  pszMode The read mode of the file.
-     *  @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
+     *  @param[in]  mode The read mode of the file.
+     *  @param[out] size If the file read operation succeeds, it will be the data size, otherwise 0.
      *  @return Upon success, a pointer to the data is returned, otherwise NULL.
      *  @warning Recall: you are responsible for calling free() on any Non-NULL pointer returned.
      */

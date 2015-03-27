@@ -107,7 +107,7 @@ public:
      * @return A CheckBox instance pointer.
      */
     static CheckBox* create(const std::string& backGround,
-                            const std::string& backGroundSeleted,
+                            const std::string& backGroundSelected,
                             const std::string& cross,
                             const std::string& backGroundDisabled,
                             const std::string& frontCrossDisabled,
@@ -145,7 +145,7 @@ public:
      * Load background texture for checkbox.
      *
      * @param backGround   The background image name.
-     * @param texType    @see `Widget::TextureResType`
+     * @param type    @see `Widget::TextureResType`
      */
     void loadTextureBackGround(const std::string& backGround,TextureResType type = TextureResType::LOCAL);
 
@@ -160,10 +160,10 @@ public:
     /**
      * Load cross texture for checkbox.
      *
-     * @param cross    The cross texture name.
+     * @param crossTextureName    The cross texture name.
      * @param texType    @see `Widget::TextureResType`
      */
-    void loadTextureFrontCross(const std::string&,TextureResType texType = TextureResType::LOCAL);
+    void loadTextureFrontCross(const std::string& crossTextureName,TextureResType texType = TextureResType::LOCAL);
 
     /**
      * Load background disabled state texture for checkbox.
