@@ -31,12 +31,12 @@ THE SOFTWARE.
 #include "platform/CCGL.h"
 #include "platform/CCPlatformMacros.h"
 
-NS_CC_BEGIN
-
 /**
- * @addtogroup shaders
+ * @addtogroup support
  * @{
  */
+
+NS_CC_BEGIN
 
 extern CC_DLL const GLchar * ccPosition_uColor_frag;
 extern CC_DLL const GLchar * ccPosition_uColor_vert;
@@ -86,10 +86,12 @@ extern CC_DLL const GLchar * cc3D_Particle_tex_frag;
 extern CC_DLL const GLchar * cc3D_Particle_color_frag;
 extern CC_DLL const GLchar * cc3D_Skybox_vert;
 extern CC_DLL const GLchar * cc3D_Skybox_frag;
-// end of shaders group
-/// @}
+
 
 NS_CC_END
-
+/**
+ end of support group
+ @}
+ */
 /// @endcond
 #endif /* __CCSHADER_H__ */

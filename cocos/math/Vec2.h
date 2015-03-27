@@ -27,6 +27,11 @@
 #include <math.h>
 #include "math/CCMathBase.h"
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 NS_CC_MATH_BEGIN
 
 /** Clamp a value between from and to.
@@ -245,13 +250,7 @@ public:
     void normalize();
 
     /**
-     * Normalizes this vector and stores the result in dst.
-     *
-     * If the vector already has unit length or if the length
-     * of the vector is zero, this method simply copies the
-     * current vector into dst.
-     *
-     * @param dst The destination vector.
+     Get the normalized vector.
      */
     Vec2 getNormalized() const;
 
@@ -756,6 +755,11 @@ inline const Vec2 operator*(float x, const Vec2& v);
 typedef Vec2 Point;
 
 NS_CC_MATH_END
+
+/**
+ end of base group
+ @}
+ */
 
 #include "Vec2.inl"
 

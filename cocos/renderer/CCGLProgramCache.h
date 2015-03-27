@@ -33,14 +33,14 @@ THE SOFTWARE.
 
 #include "base/CCRef.h"
 
+/**
+ * @addtogroup support
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class GLProgram;
-
-/**
- * @addtogroup shaders
- * @{
- */
 
 /** GLProgramCache
  Singleton that stores manages GLProgram objects (shaders)
@@ -109,9 +109,8 @@ private:
     std::unordered_map<std::string, GLProgram*> _programs;
 };
 
+NS_CC_END
 // end of shaders group
 /// @}
-
-NS_CC_END
 
 #endif /* __CCGLPROGRAMCACHE_H__ */

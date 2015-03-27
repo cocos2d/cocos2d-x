@@ -38,6 +38,11 @@ THE SOFTWARE.
 #include "platform/CCGL.h"
 #include "math/CCMath.h"
 
+/**
+ * @addtogroup support
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class GLProgram;
@@ -514,5 +519,8 @@ protected:
 };
 
 NS_CC_END
-
+/**
+ end of support group
+ @}
+ */
 #endif /* __CCGLPROGRAM_H__ */

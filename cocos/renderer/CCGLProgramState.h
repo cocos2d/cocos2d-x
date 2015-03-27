@@ -33,6 +33,11 @@ THE SOFTWARE.
 #include "math/Vec3.h"
 #include "math/Vec4.h"
 
+/**
+ * @addtogroup support
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class GLProgram;
@@ -305,4 +310,8 @@ protected:
 
 NS_CC_END
 
+/**
+ end of support group
+ @}
+ */
 #endif /* __CCGLPROGRAMSTATE_H__ */

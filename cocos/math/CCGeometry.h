@@ -32,12 +32,12 @@ THE SOFTWARE.
 #include "base/ccMacros.h"
 #include "math/CCMath.h"
 
-NS_CC_BEGIN
-
 /**
- * @addtogroup data_structures
+ * @addtogroup base
  * @{
  */
+
+NS_CC_BEGIN
 
 class CC_DLL Size
 {
@@ -207,9 +207,9 @@ public:
     static const Rect ZERO;
 };
 
-// end of data_structure group
-/// @}
-
 NS_CC_END
+
+// end of base group
+/// @}
 
 #endif // __MATH_CCGEOMETRY_H__
