@@ -1,4 +1,4 @@
-cocos2d-x-3.6beta Apr.14 2015
+cocos2d-x-3.6beta0 Apr.14 2015
     [NEW]           3D: added texturecub supported
 
     [FIX]           Sprite3D: memory leak
