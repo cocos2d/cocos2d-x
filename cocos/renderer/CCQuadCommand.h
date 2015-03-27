@@ -30,6 +30,8 @@
 
 NS_CC_BEGIN
 
+class Material;
+
 /** 
  Command used to render one or more Quads, similar to TrianglesCommand.
  Every QuadCommand will have generate material ID by give textureID, glProgramState, Blend function
@@ -55,6 +57,9 @@ public:
      */
     void init(float globalOrder, GLuint textureID, GLProgramState* shader, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
               const Mat4& mv, uint32_t flags);
+
+    void init(float globalOrder, Material* material, V3F_C4B_T2F_Quad* quads, ssize_t quadCount, const Mat4& mv, uint32_t flags);
+
     /**Deprecated function, the params is similar as the upper init function, with flags equals 0.*/
     CC_DEPRECATED_ATTRIBUTE void init(float globalOrder, GLuint textureID, GLProgramState* shader, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
               const Mat4& mv);
@@ -74,6 +79,8 @@ public:
     inline BlendFunc getBlendType() const { return _blendType; }
     /**Get the model view matrix.*/
     inline const Mat4& getModelView() const { return _mv; }
+
+    Material* getMaterial() const { return _material; }
     
 protected:
     /**Generate the material ID by textureID, glProgramState, and blend function.*/
@@ -93,6 +100,8 @@ protected:
     ssize_t _quadsCount;
     /**Model view matrix when rendering the triangles.*/
     Mat4 _mv;
+
+    Material* _material;
 };
 
 NS_CC_END

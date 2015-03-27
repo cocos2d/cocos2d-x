@@ -875,7 +875,7 @@ void Renderer::drawBatchedQuads()
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _quadbuffersVBO[1]);
     }
     
-    //Start drawing verties in batch
+    //Start drawing vertices in batch
     for(const auto& cmd : _batchQuadCommands)
     {
         auto newMaterialID = cmd->getMaterialID();
