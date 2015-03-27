@@ -443,7 +443,7 @@ CC_CONSTRUCTOR_ACCESS:
      *
      * @param   texture    A pointer to an existing Texture2D object.
      *                      You can use a Texture2D object for many sprites.
-     * @return  true if the sprite is initialized properly, false otherwise.
+     * @return  True if the sprite is initialized properly, false otherwise.
      */
     virtual bool initWithTexture(Texture2D *texture);
 
@@ -455,7 +455,7 @@ CC_CONSTRUCTOR_ACCESS:
      * @param   texture    A pointer to an exisiting Texture2D object.
      *                      You can use a Texture2D object for many sprites.
      * @param   rect        Only the contents inside rect of this texture will be applied for this sprite.
-     * @return  true if the sprite is initialized properly, false otherwise.
+     * @return  True if the sprite is initialized properly, false otherwise.
      */
     virtual bool initWithTexture(Texture2D *texture, const Rect& rect);
 
@@ -468,15 +468,15 @@ CC_CONSTRUCTOR_ACCESS:
      * @param   texture    A Texture2D object whose texture will be applied to this sprite.
      * @param   rect        A rectangle assigned the contents of texture.
      * @param   rotated     Whether or not the texture rectangle is rotated.
-     * @return  true if the sprite is initialized properly, false otherwise.
+     * @return  True if the sprite is initialized properly, false otherwise.
      */
     virtual bool initWithTexture(Texture2D *texture, const Rect& rect, bool rotated);
 
     /**
      * Initializes a sprite with an SpriteFrame. The texture and rect in SpriteFrame will be applied on this sprite.
      *
-     * @param   pSpriteFrame  A SpriteFrame object. It should includes a valid texture and a rect.
-     * @return  true if the sprite is initialized properly, false otherwise.
+     * @param   spriteFrame  A SpriteFrame object. It should includes a valid texture and a rect.
+     * @return  True if the sprite is initialized properly, false otherwise.
      */
     virtual bool initWithSpriteFrame(SpriteFrame *spriteFrame);
 
@@ -487,7 +487,7 @@ CC_CONSTRUCTOR_ACCESS:
      * If the SpriteFrame doesn't exist it will raise an exception.
      *
      * @param   spriteFrameName  A key string that can fected a volid SpriteFrame from SpriteFrameCache.
-     * @return  true if the sprite is initialized properly, false otherwise.
+     * @return  True if the sprite is initialized properly, false otherwise.
      */
     virtual bool initWithSpriteFrameName(const std::string& spriteFrameName);
 
@@ -499,7 +499,7 @@ CC_CONSTRUCTOR_ACCESS:
      * After initialization, the rect used will be the size of the image. The offset will be (0,0).
      *
      * @param   filename The path to an image file in local file system.
-     * @return  true if the sprite is initialized properly, false otherwise.
+     * @return  True if the sprite is initialized properly, false otherwise.
      * @js      init
      * @lua     init
      */
@@ -514,7 +514,7 @@ CC_CONSTRUCTOR_ACCESS:
      *
      * @param   filename The path to an image file in local file system.
      * @param   rect        The rectangle assigned the content area from texture.
-     * @return  true if the sprite is initialized properly, false otherwise.
+     * @return  True if the sprite is initialized properly, false otherwise.
      * @js      init
      * @lua     init
      */

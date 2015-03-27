@@ -45,10 +45,10 @@ class SpriteFrame;
  * @{
  */
 
-/** AnimationFrame
+/** @class AnimationFrame
  *
  * A frame of the animation. It contains information like:
- *  - sprite frame name.
+ * - sprite frame name.
  * - # of delay units.
  * - offset
  
@@ -222,7 +222,7 @@ public:
     
     /** Sets the delay in seconds of the "delay unit".
      *
-     * @param setDelayPerUnit The delay in seconds of the "delay unit".
+     * @param delayPerUnit The delay in seconds of the "delay unit".
      */
     void setDelayPerUnit(float delayPerUnit) { _delayPerUnit = delayPerUnit; };
     

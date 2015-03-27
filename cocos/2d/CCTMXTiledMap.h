@@ -201,7 +201,7 @@ public:
     
     /** Set the tiles's size property measured in pixels. 
      *
-     * @param The tiles's size property measured in pixels.
+     * @param tileSize The tiles's size property measured in pixels.
      */
     inline void setTileSize(const Size& tileSize) { _tileSize = tileSize; };
 
