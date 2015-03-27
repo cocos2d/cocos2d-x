@@ -53,8 +53,25 @@ struct MeshVertexAttrib
     int attribSizeBytes;
 };
 
+/** @brief model node data, since 3.3 */
+struct ModelData
+{
+    std::string subMeshId;
+    std::string matrialId;
+    std::vector<std::string> bones;
+    std::vector<Mat4>        invBindPose;
 
-struct ModelData;
+    virtual ~ModelData()
+    {
+        resetData();
+    }
+    virtual void resetData()
+    {
+        bones.clear();
+        invBindPose.clear();
+    }
+};
+
 /** @brief Node data, since 3.3 */
 struct NodeData
 {
@@ -80,24 +97,6 @@ struct NodeData
 
 };
 
-/** @brief model node data, since 3.3 */
-struct ModelData
-{
-    std::string subMeshId;
-    std::string matrialId;
-    std::vector<std::string> bones;
-    std::vector<Mat4>        invBindPose;
-    
-    virtual ~ModelData()
-    {
-        resetData();
-    }
-    virtual void resetData()
-    {
-        bones.clear();
-        invBindPose.clear();
-    }
-};
 
 /** @brief node datas, since 3.3 */
 struct NodeDatas
