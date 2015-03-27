@@ -36,9 +36,9 @@ public:
     Particle3DTestDemo(void);
     virtual ~Particle3DTestDemo(void);
     
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
+    void restartCallback(Ref* sender) override;
+    void nextCallback(Ref* sender) override;
+    void backCallback(Ref* sender) override;
     
     // overrides
     virtual bool init() override;
@@ -46,9 +46,9 @@ public:
     virtual std::string subtitle() const override;
     virtual void update(float delta) override;
     
-    void onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event  *event);
-    void onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event);
-    void onTouchesEnded(const std::vector<Touch*>& touches, cocos2d::Event  *event);
+    void onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event  *event) override;
+    void onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, cocos2d::Event  *event) override;
 
 protected:
     std::string    _title;

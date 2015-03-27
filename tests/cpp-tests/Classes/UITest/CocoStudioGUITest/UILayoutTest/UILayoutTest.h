@@ -129,7 +129,7 @@ protected:
 class UILayoutComponentTest : public UIScene
 {
 public:
-    virtual bool init();
+    virtual bool init() override;
     void touchEvent(Ref *pSender, Widget::TouchEventType type);
 protected:
     LayerColor* _baseLayer;

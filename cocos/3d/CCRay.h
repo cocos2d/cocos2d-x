@@ -32,6 +32,9 @@
 
 NS_CC_BEGIN
 
+/**
+ * Ray is a line with one end. usually use it to check intersects with some object,such as Plane, OBB, AABB
+ **/
 class CC_DLL Ray
 {
 public:

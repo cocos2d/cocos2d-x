@@ -134,6 +134,10 @@ struct MeshData
     int attribCount;
 
 public:
+    /**
+     * Get per vertex size
+     * @return return the sum of each vertex's all attribute size.
+     */
     int getPerVertexSize() const
     {
         int vertexsize = 0;
@@ -143,6 +147,10 @@ public:
         }
         return vertexsize;
     }
+
+    /**
+     * Reset the data
+     */
     void resetData()
     {
         vertex.clear();

@@ -30,6 +30,8 @@
 #include "3d/CCAttachNode.h"
 #include "3d/CCRay.h"
 #include "3d/CCSprite3D.h"
+#include "3d/CCTextureCube.h"
+#include "3d/CCSkybox.h"
 #include "renderer/CCVertexIndexBuffer.h"
 #include "DrawNode3D.h"
 
@@ -72,6 +74,7 @@ static std::function<Layer*()> createFunctions[] =
     CL(Sprite3DEmptyTest),
     CL(UseCaseSprite3D),
     CL(Sprite3DForceDepthTest),
+    CL(Sprite3DCubeMapTest),
     CL(NodeAnimationTest)
 };
 
@@ -2434,4 +2437,129 @@ void NodeAnimationTest::addNewSpriteWithCoords(Vec2 p)
     }
     addChild(sprite);
     _sprites.push_back(sprite);
+}
+
+Sprite3DCubeMapTest::Sprite3DCubeMapTest() :
+    _textureCube(nullptr),
+    _skyBox(nullptr),
+    _teapot(nullptr)
+{
+    auto s = Director::getInstance()->getWinSize();
+    addNewSpriteWithCoords(Vec2(s.width / 2, s.height / 2));
+}
+
+Sprite3DCubeMapTest::~Sprite3DCubeMapTest()
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
+
+    _teapot->release();
+    _skyBox->release();
+    _textureCube->release();
+}
+
+std::string Sprite3DCubeMapTest::title() const
+{
+    return "CubeMap & Skybox Test";
+}
+
+std::string Sprite3DCubeMapTest::subtitle() const
+{
+    return "";
+}
+
+void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
+{
+    Size visibleSize = Director::getInstance()->getVisibleSize();
+    auto _camera = Camera::createPerspective(60, visibleSize.width / visibleSize.height, 0.1, 200);
+    _camera->setCameraFlag(CameraFlag::USER1);
+
+    // create a teapot
+    _teapot = Sprite3D::create("Sprite3DTest/teapot.c3b");
+    _teapot->retain();
+
+    //create and set our custom shader
+    auto shader = GLProgram::createWithFilenames("Sprite3DTest/cube_map.vert", "Sprite3DTest/cube_map.frag");
+    auto state = GLProgramState::create(shader);
+
+    // create the second texture for cylinder
+    _textureCube = TextureCube::create("Sprite3DTest/skybox/left.jpg", "Sprite3DTest/skybox/right.jpg",
+        "Sprite3DTest/skybox/top.jpg", "Sprite3DTest/skybox/bottom.jpg",
+        "Sprite3DTest/skybox/front.jpg", "Sprite3DTest/skybox/back.jpg");
+
+    _textureCube->retain();
+
+    //set texture parameters
+    Texture2D::TexParams tRepeatParams;
+    tRepeatParams.magFilter = GL_NEAREST;
+    tRepeatParams.minFilter = GL_NEAREST;
+    tRepeatParams.wrapS = GL_MIRRORED_REPEAT;
+    tRepeatParams.wrapT = GL_MIRRORED_REPEAT;
+    _textureCube->setTexParameters(tRepeatParams);
+
+    // pass the texture sampler to our custom shader
+    state->setUniformTexture("u_cubeTex", _textureCube);
+
+    _teapot->setGLProgramState(state);
+    _teapot->setPosition3D(Vec3(0, -5, -20));
+    _teapot->setRotation3D(Vec3(-90, 180, 0));
+
+    auto rotate_action = RotateBy::create(1.5, Vec3(0, 30, 0));
+    _teapot->runAction(RepeatForever::create(rotate_action));
+
+    //pass mesh's attribute to shader
+    long offset = 0;
+    auto attributeCount = _teapot->getMesh()->getMeshVertexAttribCount();
+    for (auto i = 0; i < attributeCount; i++)
+    {
+        auto meshattribute = _teapot->getMesh()->getMeshVertexAttribute(i);
+        state->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
+            meshattribute.size,
+            meshattribute.type,
+            GL_FALSE,
+            _teapot->getMesh()->getVertexSizeInBytes(),
+            (GLvoid*)offset);
+
+        offset += meshattribute.attribSizeBytes;
+    }
+    addChild(_teapot);
+    addChild(_camera);
+    setCameraMask(2);
+
+    {
+        // config skybox
+        _skyBox = Skybox::create();
+        _skyBox->retain();
+
+        _skyBox->setTexture(_textureCube);
+        addChild(_skyBox);
+    }
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
+                                [this](EventCustom*)
+    {
+        auto state = _teapot->getGLProgramState();
+        auto glProgram = state->getGLProgram();
+        glProgram->reset();
+        glProgram->initWithFilenames("Sprite3DTest/cube_map.vert", "Sprite3DTest/cube_map.frag");
+        glProgram->link();
+        glProgram->updateUniforms();
+
+        _textureCube->reloadTexture();
+
+        Texture2D::TexParams tRepeatParams;
+        tRepeatParams.magFilter = GL_NEAREST;
+        tRepeatParams.minFilter = GL_NEAREST;
+        tRepeatParams.wrapS = GL_MIRRORED_REPEAT;
+        tRepeatParams.wrapT = GL_MIRRORED_REPEAT;
+        _textureCube->setTexParameters(tRepeatParams);
+        state->setUniformTexture("u_cubeTex", _textureCube);
+
+        _skyBox->reload();
+        _skyBox->setTexture(_textureCube);
+    });
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+#endif
 }

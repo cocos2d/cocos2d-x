@@ -6,7 +6,7 @@
 class Bug422Layer : public BugsTestBaseLayer
 {
 public:
-    virtual bool init();
+    virtual bool init() override;
 
     void reset();
     void check(Node* target);

@@ -45,7 +45,7 @@ public:
 
 public:
 
-    virtual void translate(PUScriptCompiler* compiler, PUAbstractNode *node);
+    virtual void translate(PUScriptCompiler* compiler, PUAbstractNode *node) override;
 
 protected:
 

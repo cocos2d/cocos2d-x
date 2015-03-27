@@ -90,7 +90,7 @@ public:
     //override
     
     /** update billboard's transform and turn it towards camera */
-    virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags);
+    virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags) override;
     
     /** draw BillBoard object */
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
@@ -102,6 +102,9 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
 
+    /**
+     * calculate a model matrix which keep orignal translate & scaling but always face to the camera
+     */
     bool calculateBillbaordTransform();
     
     Mat4 _camWorldMat;

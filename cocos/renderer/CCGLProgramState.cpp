@@ -80,6 +80,11 @@ void UniformValue::apply()
                 GL::bindTexture2DN(_value.tex.textureUnit, _value.tex.textureId);
                 break;
 
+            case GL_SAMPLER_CUBE:
+                _glprogram->setUniformLocationWith1i(_uniform->location, _value.tex.textureUnit);
+                GL::bindTextureN(_value.tex.textureUnit, _value.tex.textureId, GL_TEXTURE_CUBE_MAP);
+                break;
+
             case GL_INT:
                 _glprogram->setUniformLocationWith1i(_uniform->location, _value.intValue);
                 break;
@@ -135,7 +140,7 @@ void UniformValue::setFloat(float value)
 
 void UniformValue::setTexture(GLuint textureId, GLuint textureUnit)
 {
-    CCASSERT(_uniform->type == GL_SAMPLER_2D, "Wrong type. expecting GL_SAMPLER_2D");
+    //CCASSERT(_uniform->type == GL_SAMPLER_2D, "Wrong type. expecting GL_SAMPLER_2D");
     _value.tex.textureId = textureId;
     _value.tex.textureUnit = textureUnit;
     _useCallback = false;

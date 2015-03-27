@@ -1,9 +1,5 @@
-
-#ifndef CC_ALLOCATOR_STRATEGY_POOL_H
-#define CC_ALLOCATOR_STRATEGY_POOL_H
-
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2015 Chukong Technologies Inc.
  Author: Justin Graham (https://github.com/mannewalis)
  
  http://www.cocos2d-x.org
@@ -26,6 +22,11 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
+#ifndef CC_ALLOCATOR_STRATEGY_POOL_H
+#define CC_ALLOCATOR_STRATEGY_POOL_H
+/// @cond DO_NOT_SHOW
+
 #include <vector>
 #include <typeinfo>
 #include <sstream>
@@ -39,12 +40,16 @@
 NS_CC_BEGIN
 NS_CC_ALLOCATOR_BEGIN
 
-// @brief ObjectTraits describes an allocatable object
-// Templated class that represents a default allocatable object.
-// Provide custom implementations to change the constructor/destructor behavior,
-// or to change the default alignment of the object in memory.
-// @param T Type of object
-// @param _alignment Alignment of object T
+/**
+ * ObjectTraits describes an allocatable object.
+ *
+ * Template class that represents a default allocatable object.
+ * Provide custom implementations to change the constructor/destructor behavior,
+ * or to change the default alignment of the object in memory.
+ *
+ * @param T Type of object.
+ * @param _alignment Alignment of object T.
+ */
 template <typename T, size_t _alignment = sizeof(uint32_t)>
 class ObjectTraits
 {
@@ -57,36 +62,36 @@ public:
     virtual ~ObjectTraits()
     {}
     
-    // @brief constructor implementation for type T
+    /** Constructor implementation for type T.*/
     void construct(T* address)
     {
         ::new(address) T();
     }
     
-    // @brief destructor implementation for type T
+    /** Destructor implementation for type T.*/
     void destroy(T* address)
     {
         address->~T();
     }
     
-    // @brief returns the name of this object type T
+    /** Returns the name of this object type T.*/
     const char* name() const
     {
         return typeid(T).name();
     }
 };
 
-
-// @brief
-// Fixed sized pool allocator strategy for objects of type T
-// Optionally takes a page size which determines how many objects
-// are added when the allocator needs more storage.
-// ObjectTraits allows you to control the alignment, construction
-// and destruction of an object in the pool.
-// @param T Type of object.
-// @param _page_size Number of objects of T in each page.
-// @param O ObjectTraits for type T
-// @see CC_USE_ALLOCATOR_POOL
+/**
+ * Fixed sized pool allocator strategy for objects of type T.
+ *
+ * Optionally takes a page size which determines how many objects are added when the allocator needs more storage.
+ * ObjectTraits allows you to control the alignment, construction and destruction of an object in the pool.
+ *
+ * @param T Type of object.
+ * @param _page_size Number of objects of T in each page.
+ * @param O ObjectTraits for type T
+ * @see CC_USE_ALLOCATOR_POOL
+ */
 template <typename T, typename O = ObjectTraits<T>, typename locking_traits = lockless_semantics>
 class AllocatorStrategyPool
     : public AllocatorStrategyFixedBlock<sizeof(T), O::alignment, locking_traits>
@@ -97,7 +102,7 @@ public:
     typedef T value_type;
     typedef value_type* pointer;
     
-    // ugh wish I knew a way that I could declare this just once
+    /** Ugh wish I knew a way that I could declare this just once.*/
     typedef AllocatorStrategyFixedBlock<sizeof(T), O::alignment, locking_traits> tParentStrategy;
     
     AllocatorStrategyPool(const char* tag = nullptr, size_t poolSize = 100)
@@ -107,9 +112,12 @@ public:
         tParentStrategy::_pageSize = poolSize;
     }
     
-    // @brief Allocate block of size T
-    // if size does not match sizeof(T) then the global allocator is called instead.
-    // @see CC_USE_ALLOCATOR_POOL
+    /**
+     * Allocate block of size T.
+     *
+     * If size does not match sizeof(T) then the global allocator is called instead.
+     * @see CC_USE_ALLOCATOR_POOL
+     */
     CC_ALLOCATOR_INLINE void* allocate(size_t size)
     {
         T* object;
@@ -125,9 +133,12 @@ public:
         return object;
     }
     
-    // @brief Deallocate block of size T
-    // if size does not match sizeof(T) then the global allocator is called instead.
-    // @see CC_USE_ALLOCATOR_POOL
+    /**
+     * Deallocate block of size T.
+     *
+     * If size does not match sizeof(T) then the global allocator is called instead.
+     * @see CC_USE_ALLOCATOR_POOL
+     */
     CC_ALLOCATOR_INLINE void deallocate(void* address, size_t size = 0)
     {
         if (address)
@@ -157,4 +168,5 @@ public:
 NS_CC_ALLOCATOR_END
 NS_CC_END
 
+/// @endcond
 #endif//CC_ALLOCATOR_STRATEGY_POOL_H

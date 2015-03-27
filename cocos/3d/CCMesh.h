@@ -110,11 +110,20 @@ CC_CONSTRUCTOR_ACCESS:
     
     Mesh();
     virtual ~Mesh();
-    
+
+    /** 
+     * Get the default GL program.
+     */
     GLProgram* getDefaultGLProgram(bool textured);
     
+    /** 
+     * Set the default GL program.
+     */
     void setGLProgramState(GLProgramState* glProgramState);
     
+    /** 
+     * Get the MeshCommand.
+     */
     MeshCommand& getMeshCommand() { return _meshCommand; }
 
     /**skin setter*/
@@ -124,8 +133,15 @@ CC_CONSTRUCTOR_ACCESS:
     /**name setter*/
     void setName(const std::string& name) { _name = name; }
  
-    void calcuateAABB();
+    /** 
+     * calculate the AABB of the mesh
+     * @note the AABB is in the local space, not the world space
+     */
+    void calculateAABB();
     
+    /** 
+     * Bind to the MeshCommand
+     */
     void bindMeshCommand();
 protected:
     Texture2D* _texture;  //texture that submesh is using

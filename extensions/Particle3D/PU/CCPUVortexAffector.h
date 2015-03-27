@@ -60,7 +60,7 @@ public:
     */
     void setRotationSpeed(PUDynamicAttribute* dynRotationSpeed);
 
-    virtual void copyAttributesTo (PUAffector* affector);
+    virtual void copyAttributesTo (PUAffector* affector) override;
 
 CC_CONSTRUCTOR_ACCESS:	      
     PUVortexAffector(void);

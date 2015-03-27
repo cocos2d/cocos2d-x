@@ -375,7 +375,7 @@ bool UIEditBoxImplWinrt::initWithSize( const Size& size )
     // align the text vertically center
     m_pLabel->setAnchorPoint(Vec2(0.0f, 0.5f));
     m_pLabel->setPosition(Vec2(5.0, size.height / 2.0f));
-    m_pLabel->setColor(m_colText);
+    m_pLabel->setTextColor(m_colText);
     _editBox->addChild(m_pLabel);
 
     m_pLabelPlaceHolder = Label::createWithSystemFont("", "", size.height-12);
@@ -383,7 +383,7 @@ bool UIEditBoxImplWinrt::initWithSize( const Size& size )
     m_pLabelPlaceHolder->setAnchorPoint(Vec2(0.0f, 0.5f));
     m_pLabelPlaceHolder->setPosition(Vec2(5.0f, size.height / 2.0f));
     m_pLabelPlaceHolder->setVisible(false);
-    m_pLabelPlaceHolder->setColor(m_colPlaceHolder);
+    m_pLabelPlaceHolder->setTextColor(m_colPlaceHolder);
     _editBox->addChild(m_pLabelPlaceHolder);
 
     m_EditSize = size;
@@ -403,10 +403,10 @@ void UIEditBoxImplWinrt::setFont( const char* pFontName, int fontSize )
     }
 }
 
-void UIEditBoxImplWinrt::setFontColor( const Color3B& color )
+void UIEditBoxImplWinrt::setFontColor( const Color4B& color )
 {
     m_colText = color;
-    m_pLabel->setColor(color);
+    m_pLabel->setTextColor(color);
 }
 
 void UIEditBoxImplWinrt::setPlaceholderFont( const char* pFontName, int fontSize )
@@ -417,10 +417,10 @@ void UIEditBoxImplWinrt::setPlaceholderFont( const char* pFontName, int fontSize
     }
 }
 
-void UIEditBoxImplWinrt::setPlaceholderFontColor( const Color3B& color )
+void UIEditBoxImplWinrt::setPlaceholderFontColor( const Color4B& color )
 {
     m_colPlaceHolder = color;
-    m_pLabelPlaceHolder->setColor(color);
+    m_pLabelPlaceHolder->setTextColor(color);
 }
 
 void UIEditBoxImplWinrt::setInputMode( EditBox::InputMode inputMode )
@@ -467,7 +467,7 @@ void UIEditBoxImplWinrt::setText( const char* pText )
 
             if (EditBox::InputFlag::PASSWORD == m_eEditBoxInputFlag)
             {
-                long length = cc_utf8_strlen(m_strText.c_str(), -1);
+                long length = StringUtils::getCharacterCountInUTF8String(m_strText);
                 for (long i = 0; i < length; i++)
                 {
                     strToShow.append("*");

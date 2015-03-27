@@ -48,7 +48,7 @@ public:
     float getGravity(void) const;
     void setGravity(float gravity);
 
-    virtual void copyAttributesTo (PUAffector* affector);
+    virtual void copyAttributesTo (PUAffector* affector) override;
 
 CC_CONSTRUCTOR_ACCESS:
     PUGravityAffector(void);

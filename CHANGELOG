@@ -1,6 +1,21 @@
+cocos2d-x-3.6beta0 Apr.14 2015
+    [NEW]           3D: added texturecub supported
+
+    [FIX]           Sprite3D: memory leak
+
+cocos2d-x-3.5 Mar.23 2015
+    [NEW]           EditBox: support Color4B
+
+    [FIX]           AutoRelasePool: memory leak if adding an element into pool when releasing auto release pool
+    [FIX]           EditBox: have a 100 bytes input limit on windows
+    [FIX]           FileUtils: getWritablePath() does not return correct writable path on Mac & Windows
+    [FIX]           HttpAsynConnection: can not get error content if response code less than 200 or response code greater or equal than 300
+    [FIX]           HttpResponse: reference count error causes assert error
+    [FIX]           Label: stroke color of system font is incorrect on iOS
+
 cocos2d-x-3.5rc0 Mar.13 2015
     [NEW]           CocosStudio: add callback when loading a CSB file
-    [NEW]           Particle3D: more PU feature support, observers and event handlers
+    [NEW]           Particle3D: more Particle Universe features are supported, add observers and event handlers
     
     [FIX]           Billboard: fix bug on transparent Billboard because of transparent queue
     [FIX]           Bundle: bug that create bundle with empty path
@@ -15,9 +30,9 @@ cocos2d-x-3.5rc0 Mar.13 2015
 
 cocos2d-x-3.5beta0  Feb.27 2015
     [NEW]           Added Particle3D
-    [NEW]           C++: add Romanian languange support
+    [NEW]           C++: add Romanian language support
 
-    [FIX]           Audio: audio can not resume if it is interrupt, and back from background
+    [FIX]           Audio: audio can not resume if it is interrupted, and back from background
     [FIX]           Cocos Studio UI: setCameraMask does not work for the Cocos Studio UI
     [FIX]           C++: compiling error when using CC_USE_CULLING
     [FIX]           Label: texture size of string has unexpected padding on iOS 7 and upper version

@@ -39,9 +39,9 @@ public:
     CocosStudio3DTestDemo(void);
     virtual ~CocosStudio3DTestDemo(void);
     
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
+    void restartCallback(Ref* sender) override;
+    void nextCallback(Ref* sender) override;
+    void backCallback(Ref* sender) override;
     
     // overrides
     virtual std::string title() const override;

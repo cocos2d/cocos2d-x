@@ -149,16 +149,32 @@ void bindTexture2D(GLuint textureId)
 void bindTexture2DN(GLuint textureUnit, GLuint textureId)
 {
 #if CC_ENABLE_GL_STATE_CACHE
+	CCASSERT(textureUnit < MAX_ACTIVE_TEXTURE, "textureUnit is too big");
+	if (s_currentBoundTexture[textureUnit] != textureId)
+	{
+		s_currentBoundTexture[textureUnit] = textureId;
+		activeTexture(GL_TEXTURE0 + textureUnit);
+		glBindTexture(GL_TEXTURE_2D, textureId);
+	}
+#else
+	glActiveTexture(GL_TEXTURE0 + textureUnit);
+	glBindTexture(GL_TEXTURE_2D, textureId);
+#endif
+}
+
+void bindTextureN(GLuint textureUnit, GLuint textureId, GLuint textureType/* = GL_TEXTURE_2D*/)
+{
+#if CC_ENABLE_GL_STATE_CACHE
     CCASSERT(textureUnit < MAX_ACTIVE_TEXTURE, "textureUnit is too big");
     if (s_currentBoundTexture[textureUnit] != textureId)
     {
         s_currentBoundTexture[textureUnit] = textureId;
         activeTexture(GL_TEXTURE0 + textureUnit);
-        glBindTexture(GL_TEXTURE_2D, textureId);
+        glBindTexture(textureType, textureId);
     }
 #else
     glActiveTexture(GL_TEXTURE0 + textureUnit);
-    glBindTexture(GL_TEXTURE_2D, textureId);
+    glBindTexture(textureType, textureId);
 #endif
 }
 

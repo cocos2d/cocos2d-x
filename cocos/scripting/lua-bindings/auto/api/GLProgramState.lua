@@ -25,27 +25,28 @@
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
 
 --------------------------------
--- 
+-- Apply user defined uniforms.
 -- @function [parent=#GLProgramState] applyUniforms 
 -- @param self
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
         
 --------------------------------
--- 
+-- Apply GLProgram, and built in uniforms.<br>
+-- param modelView The applied modelView matrix to shader.
 -- @function [parent=#GLProgramState] applyGLProgram 
 -- @param self
 -- @param #mat4_table modelView
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
         
 --------------------------------
--- 
+-- Get the number of user defined uniform count.
 -- @function [parent=#GLProgramState] getUniformCount 
 -- @param self
 -- @return long#long ret (return value: long)
         
 --------------------------------
--- apply vertex attributes<br>
--- param applyAttribFlags Call GL::enableVertexAttribs(_vertexAttribsFlags) or not
+-- Apply attributes.<br>
+-- param applyAttribFlags Call GL::enableVertexAttribs(_vertexAttribsFlags) or not.
 -- @function [parent=#GLProgramState] applyAttributes 
 -- @param self
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
@@ -78,7 +79,7 @@
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
 
 --------------------------------
--- 
+-- Get the number of vertex attributes.
 -- @function [parent=#GLProgramState] getVertexAttribCount 
 -- @param self
 -- @return long#long ret (return value: long)
@@ -93,7 +94,8 @@
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
 
 --------------------------------
--- 
+-- @{ <br>
+-- Setter and Getter of the owner GLProgram binded in this program state.
 -- @function [parent=#GLProgramState] setGLProgram 
 -- @param self
 -- @param #cc.GLProgram glprogram
@@ -109,13 +111,14 @@
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
 
 --------------------------------
--- 
+--  Get the flag of vertex attribs used by OR operation.
 -- @function [parent=#GLProgramState] getVertexAttribsFlags 
 -- @param self
 -- @return unsigned int#unsigned int ret (return value: unsigned int)
         
 --------------------------------
--- 
+-- Apply GLProgram, attributes and uniforms.<br>
+-- param modelView The applied modelView matrix to shader.
 -- @function [parent=#GLProgramState] apply 
 -- @param self
 -- @param #mat4_table modelView

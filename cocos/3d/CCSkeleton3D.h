@@ -118,7 +118,10 @@ public:
     
     
 protected:
-    
+    /**
+     * the BoneBlendState struct
+     * @brief store the transformation and weight for bone blending
+     */
     struct BoneBlendState
     {
         Vec3          localTranslate;

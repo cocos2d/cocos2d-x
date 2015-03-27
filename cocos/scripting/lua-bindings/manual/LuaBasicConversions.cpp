@@ -1925,7 +1925,7 @@ bool luaval_to_mesh_vertex_attrib(lua_State* L, int lo, cocos2d::MeshVertexAttri
         ret->type  = (GLenum)lua_tonumber(L, -1);
         lua_pop(L,1);
         
-        lua_pushstring(L, "vertexAttrib");          /* L: paramStack key */
+        lua_pushstring(L, "attribSizeBytes");       /* L: paramStack key */
         lua_gettable(L,lo);                         /* L: paramStack paramStack[lo][key] */
         ret->type  = (GLenum)lua_tonumber(L, -1);
         lua_pop(L,1);
@@ -2304,10 +2304,10 @@ void affinetransform_to_luaval(lua_State* L,const AffineTransform& inValue)
     lua_pushnumber(L, (lua_Number) inValue.d);               /* L: table key value*/
     lua_rawset(L, -3);                                  /* table[key] = value, L: table */
     lua_pushstring(L, "tx");                             /* L: table key */
-    lua_pushnumber(L, (lua_Number) inValue.d);               /* L: table key value*/
+    lua_pushnumber(L, (lua_Number) inValue.tx);               /* L: table key value*/
     lua_rawset(L, -3);                                  /* table[key] = value, L: table */
     lua_pushstring(L, "ty");                             /* L: table key */
-    lua_pushnumber(L, (lua_Number) inValue.d);               /* L: table key value*/
+    lua_pushnumber(L, (lua_Number) inValue.ty);               /* L: table key value*/
     lua_rawset(L, -3);                                  /* table[key] = value, L: table */
 }
 

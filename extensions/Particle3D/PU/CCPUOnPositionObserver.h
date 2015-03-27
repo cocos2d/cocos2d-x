@@ -84,7 +84,7 @@ public:
     const PUComparisionOperator getComparePositionY(void) const {return _comparePositionY;};
     const PUComparisionOperator getComparePositionZ(void) const {return _comparePositionZ;};
 
-    virtual void copyAttributesTo (PUObserver* observer);
+    virtual void copyAttributesTo (PUObserver* observer) override;
 
 CC_CONSTRUCTOR_ACCESS:
     PUOnPositionObserver(void);

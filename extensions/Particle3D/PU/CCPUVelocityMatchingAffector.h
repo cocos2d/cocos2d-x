@@ -49,7 +49,7 @@ public:
     */
     void setRadius(float radius);
 
-    virtual void copyAttributesTo (PUAffector* affector);
+    virtual void copyAttributesTo (PUAffector* affector) override;
 
     /** @copydoc ParticleAffector::_prepare */
     //virtual void _prepare(ParticleTechnique* particleTechnique);

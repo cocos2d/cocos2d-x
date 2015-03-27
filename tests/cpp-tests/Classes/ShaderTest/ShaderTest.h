@@ -17,9 +17,9 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
+    void restartCallback(Ref* sender) override;
+    void nextCallback(Ref* sender) override;
+    void backCallback(Ref* sender) override;
 
     CREATE_FUNC(ShaderTestDemo);
 };
@@ -31,7 +31,7 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual bool init();
+    virtual bool init() override;
 };
 
 class ShaderMandelbrot : public ShaderTestDemo
@@ -41,7 +41,7 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual bool init();
+    virtual bool init() override;
 };
 
 class ShaderJulia : public ShaderTestDemo
@@ -51,7 +51,7 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual bool init();
+    virtual bool init() override;
 };
 
 class ShaderHeart : public ShaderTestDemo
@@ -61,7 +61,7 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual bool init();
+    virtual bool init() override;
 };
 
 class ShaderFlower : public ShaderTestDemo
@@ -71,7 +71,7 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual bool init();
+    virtual bool init() override;
 };
 
 class ShaderPlasma : public ShaderTestDemo
@@ -81,7 +81,7 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual bool init();
+    virtual bool init() override;
 };
 
 class SpriteBlur;
@@ -91,7 +91,7 @@ public:
     ShaderBlur();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual bool init();
+    virtual bool init() override;
     void createSliderCtls();
     void onRadiusChanged(Ref* sender, Control::EventType controlEvent);
     void onSampleNumChanged(Ref* sender, Control::EventType controlEvent);
@@ -108,8 +108,8 @@ public:
     ShaderRetroEffect();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    bool init();
-    void update(float dt);
+    bool init() override;
+    void update(float dt) override;
 protected:
     Label* _label;
     float           _accum;
@@ -120,8 +120,8 @@ class ShaderNode : public Node
 public:
     static ShaderNode* shaderNodeWithVertex(const std::string &vert, const std::string &frag);
 
-    virtual void update(float dt);
-    virtual void setPosition(const Vec2 &newPosition);
+    virtual void update(float dt) override;
+    virtual void setPosition(const Vec2 &newPosition) override;
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
 protected:
@@ -154,7 +154,7 @@ public:
     
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual bool init();
+    virtual bool init() override;
 };
 
 class ShaderGlow : public ShaderTestDemo
@@ -164,7 +164,7 @@ public:
     
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual bool init();
+    virtual bool init() override;
 };
 
 class ShaderMultiTexture : public ShaderTestDemo
@@ -179,7 +179,7 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual bool init();
+    virtual bool init() override;
 };
 
 #endif

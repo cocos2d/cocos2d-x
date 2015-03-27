@@ -149,7 +149,7 @@ class UILayoutComponentTest_Editor : public UIScene_Editor
 public:
     UILayoutComponentTest_Editor();
     ~UILayoutComponentTest_Editor();
-    virtual bool init();
+    virtual bool init() override;
     void configureGUIScene();
 protected:
     UI_SCENE_EDITOR_CREATE_FUNC(UILayoutComponentTest_Editor)

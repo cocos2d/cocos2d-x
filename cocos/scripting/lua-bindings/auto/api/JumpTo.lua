@@ -5,8 +5,12 @@
 -- @parent_module cc
 
 --------------------------------
--- creates the action<br>
--- param duration in seconds
+-- Creates the action.<br>
+-- param duration Duration time, in seconds.<br>
+-- param position The jumping destination position.<br>
+-- param height The jumping height.<br>
+-- param jumps The jumping times.<br>
+-- return An autoreleased JumpTo object.
 -- @function [parent=#JumpTo] create 
 -- @param self
 -- @param #float duration

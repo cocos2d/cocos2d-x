@@ -44,6 +44,7 @@
 -- @return GLProgramCache#GLProgramCache ret (return value: cc.GLProgramCache)
         
 --------------------------------
+-- Constructor.<br>
 -- js ctor
 -- @function [parent=#GLProgramCache] GLProgramCache 
 -- @param self

@@ -42,11 +42,12 @@ class EventCustom;
 class PhysicsWorld;
 #endif
 /**
- * @addtogroup scene
+ * @addtogroup _2d
  * @{
  */
 
-/** @brief Scene is a subclass of Node that is used only as an abstract concept.
+/** @class Scene
+* @brief Scene is a subclass of Node that is used only as an abstract concept.
 
 Scene and Node are almost identical with the difference that Scene has its
 anchor point (by default) at the center of the screen.
@@ -61,23 +62,46 @@ Scene will create a default camera for you.
 class CC_DLL Scene : public Node
 {
 public:
-    /** creates a new Scene object */
+    /** Creates a new Scene object. 
+     *
+     * @return An autoreleased Scene object.
+     */
     static Scene *create();
 
-    /** creates a new Scene object with a predefined Size */
+    /** Creates a new Scene object with a predefined Size. 
+     *
+     * @param size The predefined size of scene.
+     * @return An autoreleased Scene object.
+     * @js NA
+     */
     static Scene *createWithSize(const Size& size);
 
     using Node::addChild;
     virtual std::string getDescription() const override;
     
-    /** get all cameras */
+    /** Get all cameras.
+     * 
+     * @return The vector of all cameras.
+     * @js NA
+     */
     const std::vector<Camera*>& getCameras() const { return _cameras; }
 
+    /** Get the default camera.
+	 * @js NA
+     * @return The default camera of scene.
+     */
     Camera* getDefaultCamera() const { return _defaultCamera; }
 
+    /** Get lights.
+     * @return The vector of lights.
+     * @js NA
+     */
     const std::vector<BaseLight*>& getLights() const { return _lights; }
     
-    /** render the scene */
+    /** Render the scene.
+     * @param renderer The renderer use to render the scene.
+     * @js NA
+     */
     void render(Renderer* renderer);
     
     /** override function */
@@ -87,7 +111,7 @@ CC_CONSTRUCTOR_ACCESS:
     Scene();
     virtual ~Scene();
     
-    bool init();
+    bool init() override;
     bool initWithSize(const Size& size);
     
     void setCameraOrderDirty() { _cameraOrderDirty = true; }
@@ -116,7 +140,16 @@ private:
 public:
     virtual void addChild(Node* child, int zOrder, int tag) override;
     virtual void addChild(Node* child, int zOrder, const std::string &name) override;
+    /** Get the physics world of the scene.
+     * @return The physics world of the scene.
+     * @js NA
+     */
     inline PhysicsWorld* getPhysicsWorld() { return _physicsWorld; }
+    
+    /** Create a scene with physics.
+     * @return An autoreleased Scene object with physics.
+     * @js NA
+     */
     static Scene *createWithPhysics();
     
 CC_CONSTRUCTOR_ACCESS:
@@ -129,7 +162,7 @@ protected:
 #endif // CC_USE_PHYSICS
 };
 
-// end of scene group
+// end of _2d group
 /// @}
 
 NS_CC_END

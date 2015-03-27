@@ -5,8 +5,12 @@
 -- @parent_module cc
 
 --------------------------------
--- creates an initializes the action with the property name (key), and the from and to parameters. <br>
--- param duration in seconds
+-- brief Create and initializes the action with the property name (key), and the from and to parameters.<br>
+-- param duration The duration of the ActionTween. It's a value in seconds.<br>
+-- param key The key of property which should be updated.<br>
+-- param from The value of the specified property when the action begin.<br>
+-- param to The value of the specified property when the action end.<br>
+-- return If the creation success, return a pointer of ActionTween; otherwise, return nil.
 -- @function [parent=#ActionTween] create 
 -- @param self
 -- @param #float duration
@@ -29,7 +33,7 @@
 -- @return ActionTween#ActionTween ret (return value: cc.ActionTween)
         
 --------------------------------
--- param dt in seconds
+-- 
 -- @function [parent=#ActionTween] update 
 -- @param self
 -- @param #float dt

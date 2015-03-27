@@ -5,7 +5,8 @@
 -- @parent_module cc
 
 --------------------------------
---  creates a fullscreen black layer 
+--  Creates a fullscreen black layer.<br>
+-- return An autoreleased Layer object.
 -- @function [parent=#Layer] create 
 -- @param self
 -- @return Layer#Layer ret (return value: cc.Layer)

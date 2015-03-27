@@ -29,12 +29,18 @@
 #include "ui/GUIExport.h"
 
 NS_CC_BEGIN
+/**
+ * @addtogroup ui
+ * @{
+ */
 
 namespace ui {
     
+/**
+ * VBox is just a convenient wrapper class for vertical layout type.
+ * VBox lays out its children in a single vertical column.
+ */
 class CC_GUI_DLL VBox : public Layout{
-    
-    
 public:
     
     /**
@@ -48,10 +54,16 @@ public:
     virtual ~VBox();
     
     /**
-     * Allocates and initializes a VBox.
+     * Create a empty VBox instance.
+     * @return A VBox instance pointer.
      */
     static VBox* create();
     
+    /**
+     * Create a VBox with a certain size.
+     *@param size The content size of the layout.
+     *@return A VBox instance pointer.
+     */
     static VBox* create(const Size& size);
     
 CC_CONSTRUCTOR_ACCESS:
@@ -62,6 +74,8 @@ CC_CONSTRUCTOR_ACCESS:
     
 }
 
+// end of ui group
+/// @}
 NS_CC_END
 
 #endif /* defined(__UIVBox__) */
