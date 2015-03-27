@@ -271,13 +271,7 @@ public:
     void normalize();
 
     /**
-     * Normalizes this vector and stores the result in dst.
-     *
-     * If the vector already has unit length or if the length
-     * of the vector is zero, this method simply copies the
-     * current vector into dst.
-     *
-     * @param dst The destination vector.
+     * Get the normalized vector.
      */
     Vec3 getNormalized() const;
 

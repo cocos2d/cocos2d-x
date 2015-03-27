@@ -184,9 +184,8 @@ public:
     void conjugate();
 
     /**
-     * Gets the conjugate of this quaternion in dst.
+     * Gets the conjugate of this quaternion.
      *
-     * @param dst A quaternion to store the conjugate in.
      */
     Quaternion getConjugated() const;
 
@@ -203,16 +202,12 @@ public:
     bool inverse();
 
     /**
-     * Gets the inverse of this quaternion in dst.
+     * Gets the inverse of this quaternion.
      *
      * Note that the inverse of a quaternion is equal to its conjugate
      * when the quaternion is unit-length. For this reason, it is more
      * efficient to use the conjugate method directly when you know your
      * quaternion is already unit-length.
-     *
-     * @param dst A quaternion to store the inverse in.
-     * 
-     * @return true if the inverse can be computed, false otherwise.
      */
     Quaternion getInversed() const;
 
@@ -241,13 +236,11 @@ public:
     void normalize();
 
     /**
-     * Normalizes this quaternion and stores the result in dst.
+     * Get the normalized quaternion.
      *
      * If the quaternion already has unit length or if the length
      * of the quaternion is zero, this method simply copies
-     * this vector into dst.
-     *
-     * @param dst A quaternion to store the result in.
+     * this vector.
      */
     Quaternion getNormalized() const;
 
