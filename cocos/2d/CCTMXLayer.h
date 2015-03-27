@@ -226,7 +226,7 @@ public:
     
     /** Set tileset information for the layer.
      *
-     * @param The tileset information for the layer.
+     * @param info The tileset information for the layer.
      */
     inline void setTileSet(TMXTilesetInfo* info) {
         CC_SAFE_RETAIN(info);

@@ -70,7 +70,10 @@ enum class ResolutionPolicy
     UNKNOWN,
 };
 
-/** @struct GLContextAttrs Have six opengl Context Attrs. */
+/** @struct GLContextAttrs 
+ *
+ * There are six opengl Context Attrs. 
+ */
 struct GLContextAttrs
 {
     int redBits;
