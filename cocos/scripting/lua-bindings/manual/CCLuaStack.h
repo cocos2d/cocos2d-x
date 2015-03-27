@@ -321,7 +321,7 @@ public:
      * By calling this function, the number of return value is numResults(may be > 1).
      * All the return values are stored in the resultArray.
      *
-     * @param nHandler the index count corresponding to the lua function.
+     * @param handler the index count corresponding to the lua function.
      * @param numArgs the number of variables.
      * @param numResults the number of return value.
      * @param resultArray a array used to store the return value.
@@ -381,7 +381,7 @@ public:
      *
      * @param L the current lua_State.
      * @param chunk the buffer pointer.
-     * @param chunSize the size of buffer.
+     * @param chunkSize the size of buffer.
      * @param chunkName the name of chunk pointer.
      * @return 0, LUA_ERRSYNTAX or LUA_ERRMEM:.
      * @lua NA
@@ -402,7 +402,7 @@ public:
     /**
      * Load the Lua chunks from current lua_State.
      *
-     * @param l the current lua_State.
+     * @param L the current lua_State.
      * @return 1 if load sucessfully otherwise 0.
      * @lua NA
      * @js NA

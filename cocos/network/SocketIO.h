@@ -252,7 +252,7 @@ public:
     /**
      * Used to register a socket.io event callback.
      * Event argument should be passed using CC_CALLBACK2(&Base::function, this).
-     * @param eventName.
+     * @param eventName the name of event.
      * @param e the callback function.
      */
     void on(const std::string& eventName, SIOEvent e);
