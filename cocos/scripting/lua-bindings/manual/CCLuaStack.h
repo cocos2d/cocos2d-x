@@ -33,14 +33,16 @@ extern "C" {
 #include "cocos2d.h"
 #include "CCLuaValue.h"
 
+/**
+ * @addtogroup lua
+ * @{
+ */
+
 NS_CC_BEGIN
 
 /**
  * LuaStack is used to manager the operation on the lua_State,eg., push data onto the lua_State, execute the function depended on the lua_State.
  * In the current mechanism, there is only one lua_State in one LuaStack object.
- *
- * @lua NA
- * @js NA
  */
 class LuaStack : public Ref
 {
@@ -48,10 +50,15 @@ public:
     /**
      * Create a LuaStack object, it will new a lua_State.
      *
+     * @lua NA
+     * @js NA
      */
     static LuaStack *create(void);
     /**
-     * Create a LuaStack object with the existed lua_State
+     * Create a LuaStack object with the existed lua_State.
+     *
+     * @lua NA
+     * @js NA
      */
     static LuaStack *attach(lua_State *L);
     
@@ -60,7 +67,10 @@ public:
     
     /**
      * Method used to get a pointer to the lua_State that the script module is attached to.
+     *
      * @return A pointer to the lua_State that the script module is attached to.
+     * @lua NA
+     * @js NA
      */
     lua_State* getLuaState(void) {
         return _state;
@@ -68,7 +78,10 @@ public:
     
     /**
      * Add a path to find lua files in.
+     *
      * @param path to be added to the Lua search path.
+     * @lua NA
+     * @js NA
      */
     virtual void addSearchPath(const char* path);
     
@@ -76,6 +89,8 @@ public:
      * Add lua loader.
      * 
      * @param func a function pointer point to the loader function.
+     * @lua NA
+     * @js NA
      */
     virtual void addLuaLoader(lua_CFunction func);
     
@@ -85,6 +100,8 @@ public:
      *
      * @param moduleFileName String object holding the filename of the script file that is to be executed.
      * @return 0 if the string is excuted correctly or other if the string is excuted wrongly.
+     * @lua NA
+     * @js NA
      */
     virtual int reload(const char* moduleFileName);
     
@@ -96,6 +113,8 @@ public:
      * In current mechanism, this function is called in the destructor of Ref object, developer don't call this functions.
      *
      * @param object the key object to remove script object.
+     * @lua NA
+     * @js NA
      */
     virtual void removeScriptObjectByObject(Ref* object);
     
@@ -103,6 +122,8 @@ public:
      * Remove Lua function reference by nHandler by setting toluafix_refid_function_mapping[nHandle] nil.
      *
      * @param nHandler the function refrence index to find the correspoinding Lua function pointer.
+     * @lua NA
+     * @js NA
      */
     virtual void removeScriptHandler(int nHandler);
     
@@ -110,6 +131,8 @@ public:
      * Reallocate Lua function reference index to the Lua function pointer to add refrence.
      *
      * @param nHandler the function refrence index to find the correspoinding Lua function pointer.
+     * @lua NA
+     * @js NA
      */
     virtual int reallocateScriptHandler(int nHandler);
     
@@ -117,7 +140,9 @@ public:
      * Execute script code contained in the given string.
      *
      * @param codes holding the valid script code that should be executed.
-     * @return 0 if the string is excuted correctly,other if the string is excuted wrongly
+     * @return 0 if the string is excuted correctly,other if the string is excuted wrongly.
+     * @lua NA
+     * @js NA
      */
     virtual int executeString(const char* codes);
     
@@ -126,6 +151,8 @@ public:
      *
      * @param filename String object holding the filename of the script file that is to be executed.
      * @return the return values by calling executeFunction.
+     * @lua NA
+     * @js NA
      */
     virtual int executeScriptFile(const char* filename);
 
@@ -135,11 +162,16 @@ public:
      *
      * @param functionName String object holding the name of the function, in the global script environment, that is to be executed.
      * @return The integer value returned from the script function.
+     * @lua NA
+     * @js NA
      */
     virtual int executeGlobalFunction(const char* functionName);
     
     /**
      * Set the stack top index 0.
+     *
+     * @lua NA
+     * @js NA
      */
     virtual void clean(void);
     
@@ -147,6 +179,8 @@ public:
      * Pushes a integer number with value intVaule onto the stack.
      * 
      * @param intValue a integer number.
+     * @lua NA
+     * @js NA
      */
     virtual void pushInt(int intValue);
     
@@ -154,6 +188,8 @@ public:
      * Pushes a float number with value floatValue onto the stack.
      *
      * @param floatValue a float number.
+     * @lua NA
+     * @js NA
      */
     virtual void pushFloat(float floatValue);
     
@@ -161,6 +197,8 @@ public:
      * Pushes a long number with value longValue onto the stack.
      * 
      * @param longValue a long number.
+     * @lua NA
+     * @js NA
      */
     virtual void pushLong(long longValue);
     
@@ -168,6 +206,8 @@ public:
      * Pushes a bool value with boolValue onto the stack.
      * 
      * @param boolValue a bool value.
+     * @lua NA
+     * @js NA
      */
     virtual void pushBoolean(bool boolValue);
     
@@ -175,6 +215,8 @@ public:
      * Pushes the zero-terminated string pointed to by stringValue onto the stack.
      *
      * @param stringValue a pointer point to a zero-terminated string stringValue.
+     * @lua NA
+     * @js NA
      */
     virtual void pushString(const char* stringValue);
     
@@ -183,11 +225,16 @@ public:
      *
      * @param stringValue a pointer point to the string stringValue.
      * @param length the size.
+     * @lua NA
+     * @js NA
      */
     virtual void pushString(const char* stringValue, int length);
     
     /**
      * Pushes a nil value onto the stack.
+     *
+     * @lua NA
+     * @js NA
      */
     virtual void pushNil(void);
     
@@ -195,6 +242,8 @@ public:
      * Pushes a Ref object onto the stack.
      *
      * @see toluafix_pushusertype_ccobject.
+     * @lua NA
+     * @js NA
      */
     virtual void pushObject(Ref* objectValue, const char* typeName);
     
@@ -210,6 +259,8 @@ public:
      * LuaValueTypeObject                pushObject
      * 
      * @param value a LuaValue object.
+     * @lua NA
+     * @js NA
      */
     virtual void pushLuaValue(const LuaValue& value);
     
@@ -218,7 +269,9 @@ public:
      * The key of table is the key of LuaValueDict which is std::map.
      * The value of table is according to the the type of LuaValue of LuaValueDict by calling pushLuaValue,@see pushLuaValue.
      *
-     * @param dict a LuaValueDict object
+     * @param dict a LuaValueDict object.
+     * @lua NA
+     * @js NA
      */
     virtual void pushLuaValueDict(const LuaValueDict& dict);
     
@@ -226,14 +279,19 @@ public:
      * Pushes a lua array table onto the stack.
      * The index of array table is begin at 1.
      * The value of array table is according to the the type of LuaValue of LuaValueDict by calling pushLuaValue,@see pushLuaValue.
+     *
+     * @lua NA
+     * @js NA
      */
     virtual void pushLuaValueArray(const LuaValueArray& array);
     
     /**
      * Get the lua function pointer from toluafix_refid_function_mapping table by giving nHanlder.
-     * If the lua function pointer corresponding to the nHanlder isn't found, it would push nil on the top index of stack, then it would output the error log in the debug model
+     * If the lua function pointer corresponding to the nHanlder isn't found, it would push nil on the top index of stack, then it would output the error log in the debug model.
      *
      * @return true if get the no-null function pointer otherwise false.
+     * @lua NA
+     * @js NA
      */
     virtual bool pushFunctionByHandler(int nHandler);
     
@@ -242,6 +300,8 @@ public:
      *
      * @param numArgs the number of variables.
      * @return 0 if it happen the error or it hasn't return value, otherwise it return the value by calling the lua function.
+     * @lua NA
+     * @js NA
      */
     virtual int executeFunction(int numArgs);
     
@@ -250,7 +310,9 @@ public:
      *
      * @param nHandler the index count corresponding to the lua function.
      * @param numArgs the number of variables.
-     * @return the return value is the same as executeFunction,please @see executeFunction
+     * @return the return value is the same as executeFunction,please @see executeFunction.
+     * @lua NA
+     * @js NA
      */
     virtual int executeFunctionByHandler(int nHandler, int numArgs);
     
@@ -264,6 +326,8 @@ public:
      * @param numResults the number of return value.
      * @param resultArray a array used to store the return value.
      * @return 0 if it happen error or it hasn't return value, otherwise return 1.
+     * @lua NA
+     * @js NA
      */
     virtual int executeFunctionReturnArray(int handler,int numArgs,int numResults,__Array& resultArray);
     
@@ -277,6 +341,8 @@ public:
      * @param numResults the number of return value.
      * @param func callback function which is called if the numResults > 0.
      * @return 0 if it happen error or it hasn't return value, otherwise return 1.
+     * @lua NA
+     * @js NA
      */
     virtual int executeFunction(int handler, int numArgs, int numResults, const std::function<void(lua_State*,int)>& func);
     
@@ -284,6 +350,8 @@ public:
      * Handle the assert message.
      *
      * @return return true if current _callFromLua of LuaStack is not equal to 0 otherwise return false.
+     * @lua NA
+     * @js NA
      */
     virtual bool handleAssert(const char *msg);
     
@@ -294,11 +362,16 @@ public:
      * @param keyLen the length of key
      * @param sign a string sign
      * @param signLen the length of sign
+     * @lua NA
+     * @js NA
      */
     virtual void setXXTEAKeyAndSign(const char *key, int keyLen, const char *sign, int signLen);
     
     /**
      * free the key and sign for xxtea encryption algorithm.
+     *
+     * @lua NA
+     * @js NA
      */
     virtual void cleanupXXTEAKeyAndSign();
     
@@ -311,6 +384,8 @@ public:
      * @param chunSize the size of buffer.
      * @param chunkName the name of chunk pointer.
      * @return 0, LUA_ERRSYNTAX or LUA_ERRMEM:.
+     * @lua NA
+     * @js NA
      */
     int luaLoadBuffer(lua_State *L, const char *chunk, int chunkSize, const char *chunkName);
     
@@ -319,6 +394,8 @@ public:
      * 
      * @param zipFilePath file path to zip file.
      * @return 1 if load sucessfully otherwise 0.
+     * @lua NA
+     * @js NA
      */
     int loadChunksFromZIP(const char *zipFilePath);
     
@@ -327,6 +404,8 @@ public:
      *
      * @param l the current lua_State.
      * @return 1 if load sucessfully otherwise 0.
+     * @lua NA
+     * @js NA
      */
     int luaLoadChunksFromZIP(lua_State *L);
     
@@ -356,4 +435,6 @@ protected:
 
 NS_CC_END
 
+// end group
+/// @}
 #endif // __CC_LUA_STACK_H_

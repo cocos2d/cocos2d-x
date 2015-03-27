@@ -4,13 +4,16 @@
 
 #include "CCLuaBridge.h"
 
+/**
+ * @addtogroup lua
+ * @{
+ */
+
 NS_CC_BEGIN
 
 /**
  * Build a bridge between ObjectC and Lua script.
  * This mechanism make Lua and ObjectC call each other easily.
- * 
- * @js NA
  */
 class LuaObjcBridge : public LuaBridge
 {
@@ -21,6 +24,7 @@ public:
      * Meanwhile the callObjcStaticMethod of LuaObjcBridge binding function is wrapped in the luaoc.lua
      *
      * @param L the current lua_State
+     * @js NA
      * @lua NA
      */
     static void luaopen_luaoc(lua_State *L);
@@ -32,4 +36,6 @@ protected:
 };
 NS_CC_END
 
+// end group
+/// @}
 #endif // __LUA_OBJC_BRIDGE_H_
