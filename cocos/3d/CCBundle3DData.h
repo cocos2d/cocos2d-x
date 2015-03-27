@@ -35,7 +35,12 @@
  
 NS_CC_BEGIN
 
-/**mesh vertex attribute*/
+/**
+ * @addtogroup _3d
+ * @{
+ */
+
+/** @brief mesh vertex attribute*/
 struct MeshVertexAttrib
 {
     //attribute size
@@ -50,7 +55,7 @@ struct MeshVertexAttrib
 
 
 struct ModelData;
-/** Node data, since 3.3 */
+/** @brief Node data, since 3.3 */
 struct NodeData
 {
     std::string id;
@@ -75,7 +80,7 @@ struct NodeData
 
 };
 
-/** model node data, since 3.3 */
+/** @brief model node data, since 3.3 */
 struct ModelData
 {
     std::string subMeshId;
@@ -94,7 +99,7 @@ struct ModelData
     }
 };
 
-/** node datas, since 3.3 */
+/** @brief node datas, since 3.3 */
 struct NodeDatas
 {
     std::vector<NodeData*> skeleton; //skeleton
@@ -115,7 +120,7 @@ struct NodeDatas
     }
 };
 
-/**mesh data*/
+/** @brief mesh data*/
 struct MeshData
 {
     typedef std::vector<unsigned short> IndexArray;
@@ -168,7 +173,7 @@ public:
     }
 };
 
-/** mesh datas */
+/** @brief mesh datas */
 struct MeshDatas
 {
     std::vector<MeshData*> meshDatas;
@@ -187,7 +192,7 @@ struct MeshDatas
     }
 };
 
-/**skin data*/
+/** @brief skin data*/
 struct SkinData
 {
     std::vector<std::string> skinBoneNames; //skin bones affect skin
@@ -256,7 +261,7 @@ struct SkinData
 
 };
 
-/**material data, */
+/** @brief material data, */
 struct MaterialData
 {
     std::map<int, std::string> texturePaths; //submesh id, texture path
@@ -267,7 +272,7 @@ struct MaterialData
 };
 
 
-/**new material, since 3.3 */
+/** @brief new material, since 3.3 */
 struct NTextureData
 {
     enum class Usage {
@@ -303,7 +308,7 @@ struct NMaterialData
         return nullptr;
     }
 };
-/** material datas, since 3.3 */
+/** @brief material datas, since 3.3 */
 struct MaterialDatas
 {
     std::vector<NMaterialData> materials;
@@ -321,7 +326,7 @@ struct MaterialDatas
         return nullptr;
     }
 };
-/**animation data*/
+/** @brief animation data*/
 struct Animation3DData
 {
 public:
@@ -391,7 +396,7 @@ public:
     }
 };
 
-/**reference data*/
+/** @brief reference data*/
 struct Reference
 {
 public:
@@ -403,6 +408,9 @@ public:
 
     ~Reference(){}
 };
+
+// end of actions group
+/// @}
 
 NS_CC_END
 

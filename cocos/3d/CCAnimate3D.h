@@ -37,8 +37,14 @@ NS_CC_BEGIN
 
 class Bone3D;
 class Sprite3D;
+
 /**
- * Animate3D, Animates a Sprite3D given with an Animation3D
+ * @addtogroup _3d
+ * @{
+ */
+
+/**
+ * @brief Animate3D, Animates a Sprite3D given with an Animation3D
  */
 class CC_DLL Animate3D: public ActionInterval
 {
@@ -138,6 +144,9 @@ protected:
     static std::unordered_map<Sprite3D*, Animate3D*> s_fadeOutAnimates;
     static std::unordered_map<Sprite3D*, Animate3D*> s_runningAnimates;
 };
+
+// end of actions group
+/// @}
 
 NS_CC_END
 

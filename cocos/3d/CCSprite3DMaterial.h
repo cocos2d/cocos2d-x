@@ -31,10 +31,15 @@
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup _3d
+ * @{
+ */
+
 class Texture2D;
 
 /**
- * the sprite3D material is only texture for now
+ * @brief the sprite3D material is only texture for now
  */
 class Sprite3DMaterialCache
 {
@@ -64,6 +69,9 @@ protected:
     std::unordered_map<std::string, Texture2D*> _materials; //cached material
     
 };
+
+// end of actions group
+/// @}
 
 NS_CC_END
 

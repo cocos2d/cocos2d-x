@@ -41,6 +41,11 @@
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup _3d
+ * @{
+ */
+
 class MeshVertexData;
 
 /**
@@ -131,6 +136,9 @@ protected:
     
     int                  _vertexCount; //vertex count
 };
+
+// end of actions group
+/// @}
 
 NS_CC_END
 
