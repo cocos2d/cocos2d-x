@@ -73,8 +73,6 @@ typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
  *@brief Base class for all ui widgets.
  * This class inherent from `ProtectedNode` and `LayoutParameterProtocol`.
  * If you want to implements your own ui widget, you should subclass it.
- * @js NA
- * @lua NA
  */
 class CC_GUI_DLL Widget : public ProtectedNode, public LayoutParameterProtocol
 {

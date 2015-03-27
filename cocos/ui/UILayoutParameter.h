@@ -39,8 +39,6 @@ namespace ui {
 
 /**
  *@brief Margin of widget's in point. Margin value should be positive.
- *@lua NA
- *@js NA
  */
 class CC_GUI_DLL Margin
 {
@@ -119,8 +117,6 @@ public:
 
 /**
  *@brief Base class for various LayoutParameter.
- *@js NA
- *@lua NA
  */
 class CC_GUI_DLL LayoutParameter : public Ref
 {
@@ -205,8 +201,6 @@ protected:
 /**
  * Protocol for getting a LayoutParameter.
  * Every element want to have layout parameter should inherit from this class.
- *@js NA
- *@lua NA
  */
 class CC_GUI_DLL LayoutParameterProtocol
 {
@@ -227,8 +221,6 @@ public:
 /**
  * @brief Linear layout parameter.
  * It is used by linear layout manager for arranging elements linearly.
- * @js NA
- * @lua NA
  */
 class CC_GUI_DLL LinearLayoutParameter : public LayoutParameter
 {
@@ -296,8 +288,6 @@ protected:
 /**
  * @brief Relative layout parameter.
  * It is mainly used by  `RelativeLayoutManager`.
- * @lua NA
- * @js NA
  */
 class CC_GUI_DLL RelativeLayoutParameter : public LayoutParameter
 {

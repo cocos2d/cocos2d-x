@@ -48,10 +48,8 @@ typedef enum
 typedef void (Ref::*SEL_SlidPercentChangedEvent)(Ref*,SliderEventType);
 #define sliderpercentchangedselector(_SELECTOR) (SEL_SlidPercentChangedEvent)(&_SELECTOR)
 
-/** @class Slider
+/** 
  * @brief UI Slider widget.
- *   @js NA
- *   @lua NA
  */
 class CC_GUI_DLL Slider : public Widget
 {

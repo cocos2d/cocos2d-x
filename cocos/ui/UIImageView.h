@@ -38,8 +38,6 @@ namespace ui {
     class Scale9Sprite;
 /**
  * @brief A widget to display images.
- * @js NA
- * @lua NA
  */
 class CC_GUI_DLL ImageView : public Widget
 {
