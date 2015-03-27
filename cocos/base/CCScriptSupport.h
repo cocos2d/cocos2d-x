@@ -35,14 +35,14 @@
 #include <string>
 #include <list>
 
-#if CC_ENABLE_SCRIPT_BINDING
-
-typedef struct lua_State lua_State;
-
 /**
  * @addtogroup base
  * @{
  */
+
+#if CC_ENABLE_SCRIPT_BINDING
+
+typedef struct lua_State lua_State;
 
 NS_CC_BEGIN
 
@@ -807,9 +807,11 @@ private:
 
 NS_CC_END
 
-// end group
-/// @}
+
 
 #endif // #if CC_ENABLE_SCRIPT_BINDING
+
+// end group
+/// @}
 
 #endif // __SCRIPT_SUPPORT_H__

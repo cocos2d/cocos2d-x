@@ -45,6 +45,9 @@ NS_CC_BEGIN
 
 /**
  * The Lua engine integrated into the cocos2d-x to process the interactive operation between lua and c++.
+ *
+ * @lua NA
+ * @js NA
  */
 class LuaEngine : public ScriptEngineProtocol
 {
@@ -53,23 +56,17 @@ public:
      * Get instance of LuaEngine.
      *
      * @return the instance of LuaEngine.
-     * @lua NA
-     * @js NA
      */
     static LuaEngine* getInstance(void);
     /**
      * Get defaultEngine of LuaEngine, it was deprecated.
      *
      * @return the instance of LuaEngine.
-     * @lua NA
-     * @js NA
      */
     CC_DEPRECATED_ATTRIBUTE static LuaEngine* defaultEngine(void) { return LuaEngine::getInstance(); }
     
     /** 
      * Destrutor of LuaEngine.
-     * @lua NA
-     * @js NA
      */
     virtual ~LuaEngine(void);
     
@@ -77,8 +74,6 @@ public:
      * Get ccScriptType of LuaEngine used, it is always kScriptTypeLua.
      *
      * @return kScriptTypeLua.
-     * @lua NA
-     * @js NA
      */
     virtual ccScriptType getScriptType() override {
         return kScriptTypeLua;
@@ -89,8 +84,6 @@ public:
      * All the interactive operation are all base on the LuaStack.
      *
      * @return LuaStack object.
-     * @lua NA
-     * @js NA
      */
     LuaStack *getLuaStack(void) {
         return _stack;
@@ -100,8 +93,6 @@ public:
      * Add a path to find lua files in.
      *
      * @param path to be added to the Lua path.
-     * @lua NA
-     * @js NA
      */
     virtual void addSearchPath(const char* path);
     
@@ -109,8 +100,6 @@ public:
      * Add lua loader.
      *
      * @param func a function pointer point to the loader function.
-     * @lua NA
-     * @js NA
      */
     virtual void addLuaLoader(lua_CFunction func);
     
@@ -120,8 +109,6 @@ public:
      *
      * @param moduleFileName String object holding the filename of the script file that is to be executed.
      * @return 0 if the string is excuted correctly or other if the string is excuted wrongly.
-     * @lua NA
-     * @js NA
      */
     virtual int reload(const char* moduleFileName);
     
@@ -133,8 +120,6 @@ public:
      * In current mechanism, this function is called in the destructor of Ref object, developer don't call this functions.
      *
      * @param object the key object to remove script object.
-     * @lua NA
-     * @js NA
      */
     virtual void removeScriptObjectByObject(Ref* object) override;
     
@@ -142,8 +127,6 @@ public:
      * Remove Lua function reference by nHandler by setting toluafix_refid_function_mapping[nHandle] nil.
      *
      * @param nHandler the function refrence index to find the correspoinding Lua function pointer.
-     * @lua NA
-     * @js NA
      */
     virtual void removeScriptHandler(int nHandler) override;
     
@@ -151,8 +134,6 @@ public:
      * Reallocate Lua function reference index to the Lua function pointer to add refrence.
      *
      * @param nHandler the function refrence index to find the correspoinding Lua function pointer.
-     * @lua NA
-     * @js NA
      */
     virtual int reallocateScriptHandler(int nHandler) override;
     
@@ -161,8 +142,6 @@ public:
      *
      * @param codes holding the valid script code that should be executed.
      * @return 0 if the string is excuted correctly,other if the string is excuted wrongly.
-     * @lua NA
-     * @js NA
      */
     virtual int executeString(const char* codes) override;
     
@@ -171,8 +150,6 @@ public:
      *
      * @param filename String object holding the filename of the script file that is to be executed.
      * @return the return values by calling executeFunction.
-     * @lua NA
-     * @js NA
      */
     virtual int executeScriptFile(const char* filename) override;
     
@@ -182,8 +159,6 @@ public:
      *
      * @param functionName String object holding the name of the function, in the global script environment, that is to be executed.
      * @return The integer value returned from the script function.
-     * @lua NA
-     * @js NA
      */
     virtual int executeGlobalFunction(const char* functionName) override;
     virtual int executeNodeEvent(Node* pNode, int nAction);
@@ -200,8 +175,6 @@ public:
      * Handle the assert message.
      *
      * @return return true if current _callFromLua of LuaStack is not equal to 0 otherwise return false.
-     * @lua NA
-     * @js NA
      */
     virtual bool handleAssert(const char *msg) override;
     
@@ -211,8 +184,6 @@ public:
      * @param type in current mechanism,it always ConfigType::COCOSTUDIO.
      * @param str  the information data.
      * @return if __onParseConfig function exist in the Lua, it return the value that _stack->executeFunction returns otherwise return false.
-     * @lua NA
-     * @js NA
      */
     virtual bool parseConfig(ConfigType type, const std::string& str) override;
     
@@ -221,8 +192,6 @@ public:
      *
      * @param message the ScriptEvent object that has ScriptEventType and the pointer to information data.
      * @return default return 0 otherwise return values the same as handleNodeEvent, handleMenuClickedEvent or handleCallFuncActionEvent,etc.
-     * @lua NA
-     * @js NA
      */
     virtual int sendEvent(ScriptEvent* message) override;
     
@@ -232,8 +201,6 @@ public:
      * @param type Different ScriptHandlerMgr::HandlerType means different processing for the data.
      * @param data The pointer point to the information which should be pass on to lua, it would be parsed in the function to convert to the specific data according to the ScriptHandlerMgr::HandlerType,then pass to lua as function parameters.
      * @return default return 0 otherwise return values according different ScriptHandlerMgr::HandlerType.
-     * @lua NA
-     * @js NA
      */
     virtual int handleEvent(ScriptHandlerMgr::HandlerType type,void* data);
     /**
@@ -244,8 +211,6 @@ public:
      * @param numResults The number of the return values.
      * @param func The callback would be called when numResults is > 0.
      * @return default return 0 otherwise return values according different ScriptHandlerMgr::HandlerType.
-     * @lua NA
-     * @js NA
      */
     virtual int handleEvent(ScriptHandlerMgr::HandlerType type, void* data, int numResults, const std::function<void(lua_State*,int)>& func);
 private:
