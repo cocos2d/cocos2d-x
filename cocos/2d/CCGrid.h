@@ -38,7 +38,7 @@ class GLProgram;
 class Node;
 
 /**
- * @addtogroup effects
+ * @addtogroup _2d
  * @{
  */
 
