@@ -52,6 +52,9 @@ namespace network {
 class WsThreadHelper;
 class WsMessage;
 
+/**
+ * WebSocket is wrapper of the libwebsockets-protocol, let the develop could call the websocket easily.
+ */
 class CC_DLL WebSocket
 {
 public:
