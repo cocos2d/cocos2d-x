@@ -18,7 +18,7 @@
         
 --------------------------------
 --  Clears the texture with a specified stencil value.<br>
--- param A specified stencil value.
+-- param stencilValue A specified stencil value.
 -- @function [parent=#RenderTexture] clearStencil 
 -- @param self
 -- @param #int stencilValue
@@ -54,7 +54,7 @@
         
 --------------------------------
 --  Sets the Sprite being used. <br>
--- param A Sprite.
+-- param sprite A Sprite.
 -- @function [parent=#RenderTexture] setSprite 
 -- @param self
 -- @param #cc.Sprite sprite
@@ -146,7 +146,7 @@
 
 --------------------------------
 --  Clears the texture with a specified depth value. <br>
--- param A specified depth value.
+-- param depthValue A specified depth value.
 -- @function [parent=#RenderTexture] clearDepth 
 -- @param self
 -- @param #float depthValue

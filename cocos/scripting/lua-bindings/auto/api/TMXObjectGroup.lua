@@ -46,7 +46,7 @@
 
 --------------------------------
 --  Set the group name. <br>
--- param groupname A string,it is used to set the group name.
+-- param groupName A string,it is used to set the group name.
 -- @function [parent=#TMXObjectGroup] setGroupName 
 -- @param self
 -- @param #string groupName

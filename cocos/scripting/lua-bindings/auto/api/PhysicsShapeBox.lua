@@ -6,7 +6,7 @@
 
 --------------------------------
 -- Get this box's width and height.<br>
--- preturn An Size object.
+-- return An Size object.
 -- @function [parent=#PhysicsShapeBox] getSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
