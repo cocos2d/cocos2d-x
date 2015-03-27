@@ -31,12 +31,12 @@ THE SOFTWARE.
 
 #include "platform/CCPlatformMacros.h"
 
-NS_CC_BEGIN
-
 /**
 * @addtogroup base
 * @{
 */
+NS_CC_BEGIN
+
 
 /**
  * @class RandomHelper
@@ -119,8 +119,8 @@ inline float rand_0_1() {
 //    return cocos2d::random(0.f, 1.f);
 };
 
-// end group
-/// @}
 
 NS_CC_END
+// end group
+/// @}
 #endif //__ccRandom_H_

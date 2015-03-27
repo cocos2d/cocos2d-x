@@ -31,12 +31,12 @@ THE SOFTWARE.
 
 #define CC_REF_LEAK_DETECTION 0
 
-NS_CC_BEGIN
-
 /**
  * @addtogroup base
  * @{
  */
+NS_CC_BEGIN
+
 
 class Ref;
 
@@ -190,9 +190,9 @@ typedef void (Ref::*SEL_SCHEDULE)(float);
 #define schedule_selector(_SELECTOR) CC_SCHEDULE_SELECTOR(_SELECTOR)
 
 
-// end of base group
-/** @} */
 
 NS_CC_END
+// end of base group
+/** @} */
 
 #endif // __BASE_CCREF_H__

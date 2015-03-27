@@ -31,6 +31,11 @@
 #include <vector>
 #include <unordered_map>
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class Value;
@@ -43,8 +48,7 @@ CC_DLL extern const ValueVector ValueVectorNull;
 CC_DLL extern const ValueMap ValueMapNull;
 CC_DLL extern const ValueMapIntKey ValueMapIntKeyNull;
 
-/**
- * @addtogroup base
+/*
  * This class is provide as a wrapper of basic types, such as int and bool.
  */
 class CC_DLL Value
