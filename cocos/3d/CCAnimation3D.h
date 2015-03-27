@@ -34,9 +34,13 @@
 #include "3d/CCBundle3DData.h"
 
 NS_CC_BEGIN
+/**
+ * @addtogroup _3d
+ * @{
+ */
 
 /**
- * static animation data, shared
+ * @brief static animation data, shared
  */
 class CC_DLL Animation3D: public Ref
 {
@@ -114,6 +118,8 @@ protected:
     std::unordered_map<std::string, Animation3D*> _animations; //cached animations
 };
 
+// end of actions group
+/// @}
 NS_CC_END
 
 #endif // __CCANIMATION3D_H__

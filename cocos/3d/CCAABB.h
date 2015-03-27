@@ -31,6 +31,11 @@
 NS_CC_BEGIN
 
 /**
+ * @addtogroup _3d
+ * @{
+ */
+
+/**
  * Axis Aligned Bounding Box (AABB), usually caculate some rough but fast collision detection.
  */
 class CC_DLL AABB
@@ -116,6 +121,9 @@ public:
     Vec3 _min;
     Vec3 _max;
 };
+
+// end of actions group
+/// @}
 
 NS_CC_END
 
