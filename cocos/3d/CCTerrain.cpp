@@ -373,16 +373,23 @@ float Terrain::getImageHeight(int pixel_x,int pixel_y)
 
 void Terrain::loadVertices()
 {
+    m_maxHeight = -999;
+    m_minHeight = 999;
     for(int i =0;i<imageHeight;i++)
     {
         for(int j =0;j<imageWidth;j++)
         {
+            float height = getImageHeight(j,i);
             TerrainVertexData v;
             v.position = Vec3(j*_terrainData.mapScale- imageWidth/2*_terrainData.mapScale, //x
-                getImageHeight(j,i), //y
+                height, //y
                 i*_terrainData.mapScale - imageHeight/2*_terrainData.mapScale);//z
             v.texcoord = Tex2F(j*1.0/imageWidth,i*1.0/imageHeight);
             vertices.push_back (v);
+
+            //update the min & max height;
+            if(height>m_maxHeight) m_maxHeight = height;
+            if(height<m_minHeight) m_minHeight = height;
         }
     }
 }
@@ -554,6 +561,21 @@ void Terrain::resetHeightMap(const char * heightMap)
     }
     delete quad;
     initHeightMap(heightMap);
+}
+
+float Terrain::getMinHeight()
+{
+    return m_minHeight;
+}
+
+float Terrain::getMaxHeight()
+{
+    return m_maxHeight;
+}
+
+cocos2d::AABB Terrain::getAABB()
+{
+    return quad->_worldSpaceAABB;
 }
 
 void Terrain::Chunk::finish()
