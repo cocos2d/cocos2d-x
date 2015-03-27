@@ -48,6 +48,9 @@ namespace experimental{
         class VideoPlayer : public cocos2d::ui::Widget
         {
         public:
+            /**
+             * Videoplayer play event type.
+             */
             enum class EventType
             {
                 PLAYING = 0,
@@ -55,15 +58,27 @@ namespace experimental{
                 STOPPED,
                 COMPLETED
             };
+
+            /**
+             * A callback which will be called after specific VideoPlayer event happens.
+             */
             typedef std::function<void(Ref*,VideoPlayer::EventType)> ccVideoPlayerCallback;
 
+            /**
+             *Static create method for instancing a VideoPlayer.
+             */
             CREATE_FUNC(VideoPlayer);
 
             /**
              * Sets a file path as a video source for VideoPlayer.
              */
             virtual void setFileName(const std::string& videoPath);
-
+            
+            /**
+             * @brief Get the local video filie name.
+             *
+             * @return The video file name.
+             */
             virtual const std::string& getFileName() const { return _videoURL;}
 
             /**
@@ -71,6 +86,12 @@ namespace experimental{
              */
             virtual void setURL(const std::string& _videoURL);
 
+            
+            /**
+             * @brief Get the URL of remoting video source.
+             *
+             * @return A remoting URL address.
+             */
             virtual const std::string& getURL() const { return _videoURL;}
 
             /**
@@ -140,7 +161,13 @@ namespace experimental{
              * @param callback  The callback that will be run.
              */
             virtual void addEventListener(const VideoPlayer::ccVideoPlayerCallback& callback);
-
+            
+            /**
+             * @brief A function which will be called when video is playing.
+             *
+             * @param event @see VideoPlayer::EventType.
+             
+             */
             virtual void onPlayEvent(int event);
             virtual void setVisible(bool visible) override;
             virtual void draw(Renderer *renderer, const Mat4& transform, uint32_t flags) override;
