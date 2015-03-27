@@ -326,8 +326,9 @@ function Animate3DTest:addSprite3D()
     self._moveAction:retain()
 
     local function reachEndCallBack()
+        local winSize = cc.Director:getInstance():getWinSize()
         self._sprite:stopActionByTag(100)
-        local inverse = self._moveAction:reverse()
+        local inverse = cc.MoveTo:create(4.0, cc.p(winSize.width - self._sprite:getPositionX(), winSize.height / 2.0))
         inverse:retain()
         self._moveAction:release()
         self._moveAction = inverse
@@ -840,8 +841,9 @@ function Sprite3DWithOBBPerfromanceTest:addNewSpriteWithCoords(vec2)
     self._moveAction = cc.MoveTo:create(4.0, cc.p(s.width / 5.0, s.height / 2.0))
     self._moveAction:retain()
     local function reachEndCallBack()
+    local s = cc.Director:getInstance():getWinSize()
         self._sprite:stopActionByTag(100)
-        local inverse = self._moveAction:reverse()
+        local inverse = cc.MoveTo:create(4.0, cc.p(s.width - self._sprite:getPositionX(), s.height / 2.0))
         inverse:retain()
         self._moveAction:release()
         self._moveAction = inverse
@@ -1024,12 +1026,75 @@ end
 
 function AsyncLoadSprite3DTest:onExit()
 
+----------------------------------------
+----Sprite3DCubeTexture
+----------------------------------------
+local Sprite3DCubeMap = {}
+Sprite3DCubeMap.__index = Sprite3DCubeMap
+
+function Sprite3DCubeMap.create()
+local layer = cc.Layer:create()
+Helper.initWithLayer(layer)
+Helper.titleLabel:setString("Sprite3D CubeMap/Skybox Test")
+
+local visSize = cc.Director:getInstance():getVisibleSize()
+local camera  = cc.Camera:createPerspective(68, visSize.width / visSize.height, 0.1, 200)
+camera:setCameraFlag(2)
+layer:addChild(camera)
+
+local fileName = "Sprite3DTest/teapot.c3b"
+local teapot = cc.Sprite3D:create(fileName)
+teapot:setPosition3D({x = 0, y = -5, z = -20})
+teapot:setRotation3D({x = -90, y = 180, z = 0})
+
+local texCube = cc.TextureCube:create("Sprite3DTest/skybox/left.jpg",  "Sprite3DTest/skybox/right.jpg",
+                                      "Sprite3DTest/skybox/top.jpg",   "Sprite3DTest/skybox/bottom.jpg",
+                                      "Sprite3DTest/skybox/front.jpg", "Sprite3DTest/skybox/back.jpg");
+
+local program = cc.GLProgram:createWithFilenames("Sprite3DTest/cube_map.vert", "Sprite3DTest/cube_map.frag")
+local state = cc.GLProgramState:create(program)
+
+attriNames = {
+                "a_position", "a_color", 
+                "a_texCoord", "a_texCoord1", "a_texCoord2", "a_texCoord3", 
+                "a_normal", "a_blendWeight", "a_blendIndex"
+            }
+
+--pass mesh's attribute to shader
+local offset = 0
+local attributeCount = teapot:getMesh():getMeshVertexAttribCount()
+for i = 0, attributeCount-1 do
+    local meshattribute = teapot:getMesh():getMeshVertexAttribute(i)
+    state:setVertexAttribPointer(attriNames[meshattribute.vertexAttrib+1],
+        meshattribute.size,
+        meshattribute.type,
+        false,
+        teapot:getMesh():getVertexSizeInBytes(),
+        offset);
+    offset = offset + meshattribute.attribSizeBytes
+end
+
+state:setUniformTexture("u_cubeTex", texCube:getName())
+
+teapot:setGLProgramState(state)
+teapot:setCameraMask(2)
+
+local rotate_action = cc.RotateBy:create(1.5, { x = 0.0, y = 30.0, z = 0.0})
+teapot:runAction(cc.RepeatForever:create(rotate_action));
+layer:addChild(teapot)
+
+local skybox = cc.Skybox:create()
+skybox:setTexture(texCube)
+layer:addChild(skybox)
+
+return layer
+>>>>>>> 4ea27173daf6b04cf0b917faa7911dde448cbdca
 end
 
 function Sprite3DTest()
     local scene = cc.Scene:create()
 
-    Helper.createFunctionTable = 
+    Helper.createFunctionTable =
     {
         Sprite3DBasicTest.create,
         Sprite3DHitTest.create,
@@ -1039,7 +1104,8 @@ function Sprite3DTest()
         Sprite3DReskinTest.create,
         Sprite3DWithOBBPerfromanceTest.create,
         Sprite3DMirrorTest.create,
-        AsyncLoadSprite3DTest.create
+        AsyncLoadSprite3DTest.create,
+        Sprite3DCubeMap.create,
     }
 
     scene:addChild(Sprite3DBasicTest.create())

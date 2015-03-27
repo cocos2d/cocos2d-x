@@ -33,7 +33,12 @@
 NS_CC_BEGIN
 
 /**
- * Defines a basic hierachial structure of transformation spaces.
+ * @addtogroup _3d
+ * @{
+ */
+
+/**
+ * @brief Defines a basic hierachial structure of transformation spaces.
  */
 class CC_DLL Bone3D : public Ref
 {
@@ -118,7 +123,10 @@ public:
     
     
 protected:
-    
+    /**
+     * the BoneBlendState struct
+     * @brief store the transformation and weight for bone blending
+     */
     struct BoneBlendState
     {
         Vec3          localTranslate;
@@ -222,6 +230,9 @@ protected:
 
     Vector<Bone3D*> _rootBones;
 };
+
+// end of actions group
+/// @}
 
 NS_CC_END
 

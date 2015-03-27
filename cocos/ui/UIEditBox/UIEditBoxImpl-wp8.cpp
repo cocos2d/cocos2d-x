@@ -105,7 +105,7 @@ bool UIEditBoxImplWp8::initWithSize( const Size& size )
 	// align the text vertically center
 	m_pLabel->setAnchorPoint(Vec2(0.0f, 0.5f));
 	m_pLabel->setPosition(Vec2(5.0, size.height / 2.0f));
-	m_pLabel->setColor(m_colText);
+	m_pLabel->setTextColor(m_colText);
 	_editBox->addChild(m_pLabel);
 
 	m_pLabelPlaceHolder = Label::createWithSystemFont("", "", size.height-12);
@@ -113,7 +113,7 @@ bool UIEditBoxImplWp8::initWithSize( const Size& size )
 	m_pLabelPlaceHolder->setAnchorPoint(Vec2(0.0f, 0.5f));
 	m_pLabelPlaceHolder->setPosition(Vec2(5.0f, size.height / 2.0f));
 	m_pLabelPlaceHolder->setVisible(false);
-	m_pLabelPlaceHolder->setColor(m_colPlaceHolder);
+	m_pLabelPlaceHolder->setTextColor(m_colPlaceHolder);
 	_editBox->addChild(m_pLabelPlaceHolder);
 
 	m_EditSize = size;
@@ -133,10 +133,10 @@ void UIEditBoxImplWp8::setFont( const char* pFontName, int fontSize )
 	}
 }
 
-void UIEditBoxImplWp8::setFontColor( const Color3B& color )
+void UIEditBoxImplWp8::setFontColor( const Color4B& color )
 {
 	m_colText = color;
-	m_pLabel->setColor(color);
+	m_pLabel->setTextColor(color);
 }
 
 void UIEditBoxImplWp8::setPlaceholderFont( const char* pFontName, int fontSize )
@@ -147,10 +147,10 @@ void UIEditBoxImplWp8::setPlaceholderFont( const char* pFontName, int fontSize )
 	}
 }
 
-void UIEditBoxImplWp8::setPlaceholderFontColor( const Color3B& color )
+void UIEditBoxImplWp8::setPlaceholderFontColor( const Color4B& color )
 {
 	m_colPlaceHolder = color;
-	m_pLabelPlaceHolder->setColor(color);
+	m_pLabelPlaceHolder->setTextColor(color);
 }
 
 void UIEditBoxImplWp8::setInputMode( EditBox::InputMode inputMode )

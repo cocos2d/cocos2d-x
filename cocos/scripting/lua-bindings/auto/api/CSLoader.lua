@@ -93,12 +93,14 @@
 -- @return CSLoader#CSLoader self (return value: cc.CSLoader)
         
 --------------------------------
--- 
--- @function [parent=#CSLoader] createNode 
+-- @overload self, string, function         
+-- @overload self, string         
+-- @function [parent=#CSLoader] createNode
 -- @param self
 -- @param #string filename
+-- @param #function callback
 -- @return Node#Node ret (return value: cc.Node)
-        
+
 --------------------------------
 -- 
 -- @function [parent=#CSLoader] getInstance 

@@ -640,7 +640,6 @@ int lua_cocos2dx_csloader_CSLoader_createNode(lua_State* tolua_S)
 {
     int argc = 0;
     bool ok  = true;
-
 #if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
 #endif
@@ -649,22 +648,42 @@ int lua_cocos2dx_csloader_CSLoader_createNode(lua_State* tolua_S)
     if (!tolua_isusertable(tolua_S,1,"cc.CSLoader",0,&tolua_err)) goto tolua_lerror;
 #endif
 
-    argc = lua_gettop(tolua_S) - 1;
+    argc = lua_gettop(tolua_S)-1;
 
-    if (argc == 1)
+    do 
     {
-        std::string arg0;
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.CSLoader:createNode");
-        if(!ok)
+        if (argc == 2)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_csloader_CSLoader_createNode'", nullptr);
-            return 0;
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.CSLoader:createNode");
+            if (!ok) { break; }
+            std::function<void (cocos2d::Ref *)> arg1;
+            do {
+			// Lambda binding for lua is not supported.
+			assert(false);
+		} while(0)
+		;
+            if (!ok) { break; }
+            cocos2d::Node* ret = cocos2d::CSLoader::createNode(arg0, arg1);
+            object_to_luaval<cocos2d::Node>(tolua_S, "cc.Node",(cocos2d::Node*)ret);
+            return 1;
         }
-        cocos2d::Node* ret = cocos2d::CSLoader::createNode(arg0);
-        object_to_luaval<cocos2d::Node>(tolua_S, "cc.Node",(cocos2d::Node*)ret);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.CSLoader:createNode",argc, 1);
+    } while (0);
+    ok  = true;
+    do 
+    {
+        if (argc == 1)
+        {
+            std::string arg0;
+            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.CSLoader:createNode");
+            if (!ok) { break; }
+            cocos2d::Node* ret = cocos2d::CSLoader::createNode(arg0);
+            object_to_luaval<cocos2d::Node>(tolua_S, "cc.Node",(cocos2d::Node*)ret);
+            return 1;
+        }
+    } while (0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d", "cc.CSLoader:createNode",argc, 1);
     return 0;
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:

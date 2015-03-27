@@ -5,7 +5,7 @@
 -- @parent_module cc
 
 --------------------------------
---  Remove all living segments of the ribbon 
+--  Remove all living segments of the ribbon.
 -- @function [parent=#MotionStreak] reset 
 -- @param self
 -- @return MotionStreak#MotionStreak self (return value: cc.MotionStreak)
@@ -24,7 +24,8 @@
 -- @return Texture2D#Texture2D ret (return value: cc.Texture2D)
         
 --------------------------------
---  color used for the tint 
+--  Color used for the tint.<br>
+-- param colors The color used for the tint.
 -- @function [parent=#MotionStreak] tintWithColor 
 -- @param self
 -- @param #color3b_table colors
@@ -39,7 +40,8 @@
 -- @return MotionStreak#MotionStreak self (return value: cc.MotionStreak)
         
 --------------------------------
--- 
+--  Sets the starting position initialized or not.<br>
+-- param bStartingPositionInitialized True if initialized the starting position.
 -- @function [parent=#MotionStreak] setStartingPositionInitialized 
 -- @param self
 -- @param #bool bStartingPositionInitialized
@@ -53,19 +55,22 @@
 -- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
         
 --------------------------------
--- 
+--  Is the starting position initialized or not.<br>
+-- return True if the starting position is initialized.
 -- @function [parent=#MotionStreak] isStartingPositionInitialized 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
---  When fast mode is enabled, new points are added faster but with lower precision 
+--  When fast mode is enabled, new points are added faster but with lower precision. <br>
+-- return True if fast mode is enabled.
 -- @function [parent=#MotionStreak] isFastMode 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
+--  Sets fast mode or not.<br>
+-- param bFastMode True if enabled fast mode.
 -- @function [parent=#MotionStreak] setFastMode 
 -- @param self
 -- @param #bool bFastMode
@@ -88,6 +93,13 @@
 -- @function [parent=#MotionStreak] isOpacityModifyRGB 
 -- @param self
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#MotionStreak] setOpacity 
+-- @param self
+-- @param #unsigned char opacity
+-- @return MotionStreak#MotionStreak self (return value: cc.MotionStreak)
         
 --------------------------------
 -- 
@@ -117,10 +129,9 @@
         
 --------------------------------
 -- 
--- @function [parent=#MotionStreak] setOpacity 
+-- @function [parent=#MotionStreak] getPosition3D 
 -- @param self
--- @param #unsigned char opacity
--- @return MotionStreak#MotionStreak self (return value: cc.MotionStreak)
+-- @return vec3_table#vec3_table ret (return value: vec3_table)
         
 --------------------------------
 -- 

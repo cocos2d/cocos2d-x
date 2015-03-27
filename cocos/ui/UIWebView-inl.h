@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -22,13 +22,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+/// @cond DO_NOT_SHOW
 
 #include "UIWebView.h"
 #include "platform/CCGLView.h"
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
-
-
 
 NS_CC_BEGIN
 namespace experimental{
@@ -202,3 +201,4 @@ namespace experimental{
 } // namespace experimental
 } //namespace cocos2d
 
+/// @endcond

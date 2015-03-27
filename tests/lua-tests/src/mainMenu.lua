@@ -113,7 +113,7 @@ local _allTests = {
     { isSupported = true,   name = "OpenGLTest"             , create_func=          OpenGLTestMain     },
     { isSupported = true,  name = "ParallaxTest"           , create_func   =              ParallaxTestMain  },
     { isSupported = true,  name = "ParticleTest"           , create_func   =              ParticleTest      }, 
-    { isSupported = true,  name = "Particle3DTest"           , create_func   =              Particle3DTest  },
+    { isSupported = true,  name = "Particle3D (PU)"        , create_func   =              Particle3DTest  },
     { isSupported = true,  name = "PerformanceTest"        , create_func=           PerformanceTestMain  },
     { isSupported = true,  name = "PhysicsTest"            , create_func =          PhysicsTest  },
     { isSupported = true,  name = "RenderTextureTest"      , create_func   =         RenderTextureTestMain  },

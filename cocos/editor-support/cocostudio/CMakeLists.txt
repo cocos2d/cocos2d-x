@@ -43,6 +43,7 @@ set(COCOS_CS_SRC
   editor-support/cocostudio/TriggerMng.cpp
   editor-support/cocostudio/TriggerObj.cpp
   editor-support/cocostudio/FlatBuffersSerialize.cpp
+  editor-support/cocostudio/CCObjectExtensionData.cpp
   editor-support/cocostudio/WidgetReader/NodeReader/NodeReader.cpp
   editor-support/cocostudio/WidgetReader/SingleNodeReader/SingleNodeReader.cpp
   editor-support/cocostudio/WidgetReader/SpriteReader/SpriteReader.cpp 

@@ -74,7 +74,8 @@ ActionTimeline/CCActionTimelineNode.cpp \
 ActionTimeline/CSLoader.cpp \
 FlatBuffersSerialize.cpp \
 WidgetCallBackHandlerProtocol.cpp \
-WidgetReader/ArmatureNodeReader/ArmatureNodeReader.cpp
+WidgetReader/ArmatureNodeReader/ArmatureNodeReader.cpp \
+CCObjectExtensionData.cpp
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..

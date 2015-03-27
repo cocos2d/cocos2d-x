@@ -29,15 +29,28 @@
 #ifndef __cocos2d_libs__CCMouseEventListener__
 #define __cocos2d_libs__CCMouseEventListener__
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class Event;
 
+/** @class EventListenerMouse
+ * @brief Mouse event listener.
+ * @js cc._EventListenerMouse
+ */
 class CC_DLL EventListenerMouse : public EventListener
 {
 public:
     static const std::string LISTENER_ID;
     
+    /** Create a mouse event listener.
+     *
+     * @return An autoreleased EventListenerMouse object.
+     */
     static EventListenerMouse* create();
 
     /// Overrides
@@ -55,5 +68,8 @@ CC_CONSTRUCTOR_ACCESS:
 };
 
 NS_CC_END
+
+// end of base group
+/// @}
 
 #endif /* defined(__cocos2d_libs__CCMouseEventListener__) */

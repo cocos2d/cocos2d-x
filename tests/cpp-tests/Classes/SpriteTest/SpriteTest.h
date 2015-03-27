@@ -39,9 +39,9 @@ public:
     SpriteTestDemo(void);
     virtual ~SpriteTestDemo(void);
 
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
+    void restartCallback(Ref* sender) override;
+    void nextCallback(Ref* sender) override;
+    void backCallback(Ref* sender) override;
 
     // overrides
     virtual std::string title() const override;
@@ -58,7 +58,7 @@ public:
     virtual std::string subtitle() const override;
 
     void addNewSpriteWithCoords(Vec2 p);
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
 };
 
 class SpriteBatchNode1: public SpriteTestDemo
@@ -67,7 +67,7 @@ public:
     CREATE_FUNC(SpriteBatchNode1);
     SpriteBatchNode1();
     void addNewSpriteWithCoords(Vec2 p);
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -282,7 +282,7 @@ public:
     SpriteNewTexture();
     virtual ~SpriteNewTexture();
     void addNewSprite();
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
@@ -299,7 +299,7 @@ public:
     SpriteBatchNodeNewTexture();
     virtual ~SpriteBatchNodeNewTexture();
     void addNewSprite();
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 

@@ -41,7 +41,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * @addtogroup base_nodes
+ * @addtogroup base
  * @{
  */
 
@@ -62,67 +62,79 @@ class Camera;
 class Console;
 
 /**
-@brief Class that creates and handles the main Window and manages how
-and when to execute the Scenes.
- 
- The Director is also responsible for:
-  - initializing the OpenGL context
-  - setting the OpenGL pixel format (default on is RGB565)
-  - setting the OpenGL buffer depth (default one is 0-bit)
-  - setting the projection (default one is 3D)
-  - setting the orientation (default one is Portrait)
- 
- Since the Director is a singleton, the standard way to use it is by calling:
-  _ Director::getInstance()->methodName();
- 
- The Director also sets the default OpenGL context:
-  - GL_TEXTURE_2D is enabled
-  - GL_VERTEX_ARRAY is enabled
-  - GL_COLOR_ARRAY is enabled
-  - GL_TEXTURE_COORD_ARRAY is enabled
-*/
+ * @brief Matrix stack type.
+ */
 enum class MATRIX_STACK_TYPE
 {
+    /// Model view matrix stack
     MATRIX_STACK_MODELVIEW,
+    
+    /// projection matrix stack
     MATRIX_STACK_PROJECTION,
+    
+    /// texture matrix stack
     MATRIX_STACK_TEXTURE
 };
 
+/**
+ @brief Class that creates and handles the main Window and manages how
+ and when to execute the Scenes.
+ 
+ The Director is also responsible for:
+ - initializing the OpenGL context
+ - setting the OpenGL buffer depth (default one is 0-bit)
+ - setting the projection (default one is 3D)
+ 
+ Since the Director is a singleton, the standard way to use it is by calling:
+ _ Director::getInstance()->methodName();
+ */
 class CC_DLL Director : public Ref
 {
 public:
+    /** Director will trigger an event when projection type is changed. */
     static const char *EVENT_PROJECTION_CHANGED;
+    /** Director will trigger an event after Schedule::update() is invoked. */
     static const char* EVENT_AFTER_UPDATE;
+    /** Director will trigger an event after Scene::render() is invoked. */
     static const char* EVENT_AFTER_VISIT;
+    /** Director will trigger an event after a scene is drawn, the data is sent to GPU. */
     static const char* EVENT_AFTER_DRAW;
 
-    /** @typedef ccDirectorProjection
-     Possible OpenGL projections used by director
+    /**
+     * @brief Possible OpenGL projections used by director
      */
     enum class Projection
     {
-        /// sets a 2D projection (orthogonal projection)
+        /// Sets a 2D projection (orthogonal projection).
         _2D,
         
-        /// sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500.
+        /// Sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500.
         _3D,
         
-        /// it calls "updateProjection" on the projection delegate.
+        /// It calls "updateProjection" on the projection delegate.
         CUSTOM,
         
-        /// Default projection is 3D projection
+        /// Default projection is 3D projection.
         DEFAULT = _3D,
     };
     
-    /** returns a shared instance of the director */
+    /** 
+     * Returns a shared instance of the director. 
+     * @js _getInstance
+     */
     static Director* getInstance();
 
-    /** @deprecated Use getInstance() instead */
+    /**
+     * @deprecated Use getInstance() instead.
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE static Director* sharedDirector() { return Director::getInstance(); }
+    
     /**
      * @js ctor
      */
-    Director(void);
+    Director();
+    
     /**
      * @js NA
      * @lua NA
@@ -132,129 +144,154 @@ public:
 
     // attribute
 
-    /** Get current running Scene. Director can only run one Scene at a time */
+    /** Gets current running Scene. Director can only run one Scene at a time. */
     inline Scene* getRunningScene() { return _runningScene; }
 
-    /** Get the FPS value */
+    /** Gets the FPS value. */
     inline double getAnimationInterval() { return _animationInterval; }
-    /** Set the FPS value. */
+    /** Sets the FPS value. FPS = 1/internal. */
     virtual void setAnimationInterval(double interval) = 0;
 
-    /** Whether or not to display the FPS on the bottom-left corner */
+    /** Whether or not to display the FPS on the bottom-left corner. */
     inline bool isDisplayStats() { return _displayStats; }
-    /** Display the FPS on the bottom-left corner */
+    /** Display the FPS on the bottom-left corner. */
     inline void setDisplayStats(bool displayStats) { _displayStats = displayStats; }
     
-    /** seconds per frame */
+    /** Get seconds per frame. */
     inline float getSecondsPerFrame() { return _secondsPerFrame; }
 
-    /** Get the GLView, where everything is rendered
-    * @js NA
-    * @lua NA
-    */
+    /** 
+     * Get the GLView.
+     * @lua NA
+     */
     inline GLView* getOpenGLView() { return _openGLView; }
+    /** 
+     * Sets the GLView. 
+     * @lua NA
+     */
     void setOpenGLView(GLView *openGLView);
 
+    /*
+     * Gets singleton of TextureCache.
+     * @js NA
+     */
     TextureCache* getTextureCache() const;
 
+    /** Whether or not `_nextDeltaTimeZero` is set to 0. */
     inline bool isNextDeltaTimeZero() { return _nextDeltaTimeZero; }
+    /** 
+     * Sets the detal time between current frame and next frame is 0.
+     * This value will be used in Schedule, and will affect all functions that are using frame detal time, such as Actions.
+     * This value will take effect only one time.
+     */
     void setNextDeltaTimeZero(bool nextDeltaTimeZero);
 
-    /** Whether or not the Director is paused */
+    /** Whether or not the Director is paused. */
     inline bool isPaused() { return _paused; }
 
     /** How many frames were called since the director started */
     inline unsigned int getTotalFrames() { return _totalFrames; }
     
-    /** Sets an OpenGL projection
-     @since v0.8.2
-     * @js NA
+    /** Gets an OpenGL projection.
+     * @since v0.8.2
      * @lua NA
      */
     inline Projection getProjection() { return _projection; }
+    /** Sets OpenGL projection. */
     void setProjection(Projection projection);
     
-    /** Sets the glViewport*/
+    /** Sets the glViewport.*/
     void setViewport();
 
     /** How many frames were called since the director started */
     
     
     /** Whether or not the replaced scene will receive the cleanup message.
-     If the new scene is pushed, then the old scene won't receive the "cleanup" message.
-     If the new scene replaces the old one, the it will receive the "cleanup" message.
-     @since v0.99.0
+     * If the new scene is pushed, then the old scene won't receive the "cleanup" message.
+     * If the new scene replaces the old one, the it will receive the "cleanup" message.
+     * @since v0.99.0
      */
     inline bool isSendCleanupToScene() { return _sendCleanupToScene; }
 
     /** This object will be visited after the main scene is visited.
-     This object MUST implement the "visit" selector.
-     Useful to hook a notification object, like Notifications (http://github.com/manucorporat/CCNotifications)
-     @since v0.99.5
+     * This object MUST implement the "visit" function.
+     * Useful to hook a notification object, like Notifications (http://github.com/manucorporat/CCNotifications)
+     * @since v0.99.5
      */
     Node* getNotificationNode() const { return _notificationNode; }
+    /** 
+     * Sets the notification node.
+     * @see Director::getNotificationNode()
+     */
     void setNotificationNode(Node *node);
     
     // window size
 
-    /** returns the size of the OpenGL view in points.
-    */
+    /** Returns the size of the OpenGL view in points. */
     const Size& getWinSize() const;
 
-    /** returns the size of the OpenGL view in pixels.
-    */
+    /** Returns the size of the OpenGL view in pixels. */
     Size getWinSizeInPixels() const;
     
-    /** returns visible size of the OpenGL view in points.
-     *  the value is equal to getWinSize if don't invoke
-     *  GLView::setDesignResolutionSize()
+    /** 
+     * Returns visible size of the OpenGL view in points.
+     * The value is equal to `Director::getWinSize()` if don't invoke `GLView::setDesignResolutionSize()`.
      */
     Size getVisibleSize() const;
     
-    /** returns visible origin of the OpenGL view in points.
-     */
+    /** Returns visible origin coordinate of the OpenGL view in points. */
     Vec2 getVisibleOrigin() const;
 
-    /** converts a UIKit coordinate to an OpenGL coordinate
-     Useful to convert (multi) touch coordinates to the current layout (portrait or landscape)
+    /** 
+     * Converts a screen coordinate to an OpenGL coordinate.
+     * Useful to convert (multi) touch coordinates to the current layout (portrait or landscape).
      */
     Vec2 convertToGL(const Vec2& point);
 
-    /** converts an OpenGL coordinate to a UIKit coordinate
-     Useful to convert node points to window points for calls such as glScissor
+    /** 
+     * Converts an OpenGL coordinate to a screen coordinate.
+     * Useful to convert node points to window points for calls such as glScissor.
      */
     Vec2 convertToUI(const Vec2& point);
 
-    /// FIXME: missing description 
+    /** 
+     * Gets the distance between camera and near clipping frane.
+     * It is correct for default camera that near clipping frane is the same as screen.
+     */
     float getZEye() const;
 
     // Scene Management
 
-    /** Enters the Director's main loop with the given Scene.
+    /** 
+     * Enters the Director's main loop with the given Scene.
      * Call it to run only your FIRST scene.
      * Don't call it if there is already a running scene.
      *
      * It will call pushScene: and then it will call startAnimation
+     * @js NA
      */
     void runWithScene(Scene *scene);
 
-    /** Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
+    /** 
+     * Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
      * The new scene will be executed.
      * Try to avoid big stacks of pushed scenes to reduce memory allocation. 
      * ONLY call it if there is a running scene.
      */
     void pushScene(Scene *scene);
 
-    /** Pops out a scene from the stack.
+    /** 
+     * Pops out a scene from the stack.
      * This scene will replace the running one.
      * The running scene will be deleted. If there are no more scenes in the stack the execution is terminated.
      * ONLY call it if there is a running scene.
      */
     void popScene();
 
-    /** Pops out all scenes from the stack until the root scene in the queue.
+    /** 
+     * Pops out all scenes from the stack until the root scene in the queue.
      * This scene will replace the running one.
-     * Internally it will call `popToSceneStackLevel(1)`
+     * Internally it will call `popToSceneStackLevel(1)`.
      */
     void popToRootScene();
 
@@ -267,136 +304,184 @@ public:
 
     /** Replaces the running scene with a new one. The running scene is terminated.
      * ONLY call it if there is a running scene.
+     * @js NA
      */
     void replaceScene(Scene *scene);
 
     /** Ends the execution, releases the running scene.
-     It doesn't remove the OpenGL view from its parent. You have to do it manually.
      * @lua endToLua
      */
     void end();
 
     /** Pauses the running scene.
-     The running scene will be _drawed_ but all scheduled timers will be paused
-     While paused, the draw rate will be 4 FPS to reduce CPU consumption
+     * The running scene will be _drawed_ but all scheduled timers will be paused.
+     * While paused, the draw rate will be 4 FPS to reduce CPU consumption.
      */
     void pause();
 
-    /** Resumes the paused scene
-     The scheduled timers will be activated again.
-     The "delta time" will be 0 (as if the game wasn't paused)
+    /** Resumes the paused scene.
+     * The scheduled timers will be activated again.
+     * The "delta time" will be 0 (as if the game wasn't paused).
      */
     void resume();
     
-    /** Restart the director
+    /*
+     * Restart the director. 
+     * @js NA
      */
     void restart();
 
     /** Stops the animation. Nothing will be drawn. The main loop won't be triggered anymore.
-     If you don't want to pause your animation call [pause] instead.
+     * If you don't want to pause your animation call [pause] instead.
      */
     virtual void stopAnimation() = 0;
 
     /** The main loop is triggered again.
-     Call this function only if [stopAnimation] was called earlier
-     @warning Don't call this function to start the main loop. To run the main loop call runWithScene
+     * Call this function only if [stopAnimation] was called earlier.
+     * @warning Don't call this function to start the main loop. To run the main loop call runWithScene.
      */
     virtual void startAnimation() = 0;
 
     /** Draw the scene.
-    This method is called every frame. Don't call it manually.
-    */
+     * This method is called every frame. Don't call it manually.
+     */
     void drawScene();
 
     // Memory Helper
 
     /** Removes all cocos2d cached data.
-     It will purge the TextureCache, SpriteFrameCache, LabelBMFont cache
-     @since v0.99.3
+     * It will purge the TextureCache, SpriteFrameCache, LabelBMFont cache
+     * @since v0.99.3
      */
     void purgeCachedData();
 
-	/** sets the default values based on the Configuration info */
+	/** Sets the default values based on the Configuration info. */
     void setDefaultValues();
 
     // OpenGL Helper
 
-    /** sets the OpenGL default values */
+    /** Sets the OpenGL default values.
+     * It will enable alpha blending, disable depth test.
+     * @js NA
+     */
     void setGLDefaultValues();
 
-    /** enables/disables OpenGL alpha blending */
+    /** Enables/disables OpenGL alpha blending. */
     void setAlphaBlending(bool on);
     
-    /** set clear values for the color buffers, value range of each element is [0.0, 1.0] */
+    /** Sets clear values for the color buffers,
+     * value range of each element is [0.0, 1.0].
+     * @js NA
+     */
     void setClearColor(const Color4F& clearColor);
 
-    /** enables/disables OpenGL depth test */
+    /** Enables/disables OpenGL depth test. */
     void setDepthTest(bool on);
 
     virtual void mainLoop() = 0;
 
     /** The size in pixels of the surface. It could be different than the screen size.
-    High-res devices might have a higher surface size than the screen size.
-    Only available when compiled using SDK >= 4.0.
-    @since v0.99.4
-    */
+     * High-res devices might have a higher surface size than the screen size.
+     * Only available when compiled using SDK >= 4.0.
+     * @since v0.99.4
+     */
     void setContentScaleFactor(float scaleFactor);
+    /**
+     * Gets content scale factor.
+     * @see Director::setContentScaleFactor()
+     */
     float getContentScaleFactor() const { return _contentScaleFactor; }
 
-    /** Gets the Scheduler associated with this director
-     @since v2.0
+    /** Gets the Scheduler associated with this director.
+     * @since v2.0
      */
     Scheduler* getScheduler() const { return _scheduler; }
     
-    /** Sets the Scheduler associated with this director
-     @since v2.0
+    /** Sets the Scheduler associated with this director.
+     * @since v2.0
      */
     void setScheduler(Scheduler* scheduler);
 
-    /** Gets the ActionManager associated with this director
-     @since v2.0
+    /** Gets the ActionManager associated with this director.
+     * @since v2.0
      */
     ActionManager* getActionManager() const { return _actionManager; }
     
-    /** Sets the ActionManager associated with this director
-     @since v2.0
+    /** Sets the ActionManager associated with this director.
+     * @since v2.0
      */
     void setActionManager(ActionManager* actionManager);
     
-    /** Gets the EventDispatcher associated with this director 
-     @since v3.0
+    /** Gets the EventDispatcher associated with this director.
+     * @since v3.0
+     * @js NA
      */
     EventDispatcher* getEventDispatcher() const { return _eventDispatcher; }
     
-    /** Sets the EventDispatcher associated with this director 
-     @since v3.0
+    /** Sets the EventDispatcher associated with this director.
+     * @since v3.0
+     * @js NA
      */
     void setEventDispatcher(EventDispatcher* dispatcher);
 
-    /** Returns the Renderer
-     @since v3.0
+    /** Returns the Renderer associated with this director.
+     * @since v3.0
      */
     Renderer* getRenderer() const { return _renderer; }
 
-    /** Returns the Console 
-     @since v3.0
+    /** Returns the Console associated with this director.
+     * @since v3.0
+     * @js NA
      */
     Console* getConsole() const { return _console; }
 
-    /* Gets delta time since last tick to main loop */
+    /* Gets delta time since last tick to main loop. */
 	float getDeltaTime() const;
     
     /**
-     *  get Frame Rate
+     *  Gets Frame Rate.
+     * @js NA
      */
     float getFrameRate() const { return _frameRate; }
 
+    /** 
+     * Clones a specified type matrix and put it to the top of specified type of matrix stack.
+     * @js NA
+     */
     void pushMatrix(MATRIX_STACK_TYPE type);
+    /** Pops the top matrix of the specified type of matrix stack.
+     * @js NA
+     */
     void popMatrix(MATRIX_STACK_TYPE type);
+    /** Adds an identity matrix to the top of specified type of matrxi stack.
+     * @js NA
+     */
     void loadIdentityMatrix(MATRIX_STACK_TYPE type);
+    /**
+     * Adds a matrix to the top of specified type of matrix stack.
+     * 
+     * @param type Matrix type.
+     * @param mat The matrix that to be added.
+     * @js NA
+     */
     void loadMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
+    /**
+     * Multipies a matrix to the top of specified type of matrix stack.
+     *
+     * @param type Matrix type.
+     * @param mat The matrix that to be multipied.
+     * @js NA
+     */
     void multiplyMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
+    /**
+     * Gets the top matrix of specified type of matrix stack.
+     * @js NA
+     */
     const Mat4& getMatrix(MATRIX_STACK_TYPE type);
+    /**
+     * Cleras all types of matrix stack, and add indentity matrix to these matrix stacks.
+     * @js NA
+     */
     void resetMatrixStack();
 
 protected:
@@ -516,6 +601,9 @@ protected:
     friend class GLView;
 };
 
+// end of base group
+/** @} */
+
 /** 
  @brief DisplayLinkDirector is a Director that synchronizes timers with the refresh rate of the display.
  
@@ -544,9 +632,6 @@ public:
 protected:
     bool _invalid;
 };
-
-// end of base_node group
-/// @}
 
 NS_CC_END
 

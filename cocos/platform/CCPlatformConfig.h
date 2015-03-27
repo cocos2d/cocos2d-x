@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies
+Copyright (c) 2013-2015 Chukong Technologies
 
 http://www.cocos2d-x.org
 
@@ -25,6 +25,7 @@ THE SOFTWARE.
 
 #ifndef __BASE_CC_PLATFORM_CONFIG_H__
 #define __BASE_CC_PLATFORM_CONFIG_H__
+/// @cond DO_NOT_SHOW
 
 /**
   Config of cocos2d-x project, per target platform.
@@ -156,5 +157,5 @@ THE SOFTWARE.
 #endif 
 #endif  // CC_PLATFORM_WIN32
 
+/// @endcond
 #endif  // __BASE_CC_PLATFORM_CONFIG_H__
-

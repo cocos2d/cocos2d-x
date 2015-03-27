@@ -4,8 +4,12 @@
 cocos2d-x
 =========
 
-[![Build Status](https://travis-ci.org/cocos2d/cocos2d-x.png?branch=v3)](https://travis-ci.org/cocos2d/cocos2d-x)
-[![Build Status](https://travis-ci.org/cocos-travis-mac/cocos2d-x.png?branch=v3)](https://travis-ci.org/cocos-travis-mac/cocos2d-x)
+|  |iOS|Mac|Linux|Win32|Android|WP8|Win8.1-Universal|
+| ----|----|----- | ---|----|---|---- |---|
+|v3|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=ios)](http://45.56.80.45:8080/job/daily-build-v3/node=ios)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=mac)](http://45.56.80.45:8080/job/daily-build-v3/node=mac)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=linux)](http://45.56.80.45:8080/job/daily-build-v3/node=linux)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=win32)](http://45.56.80.45:8080/job/daily-build-v3/node=win32)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=android)](http://45.56.80.45:8080/job/daily-build-v3/node=android)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=wp8)](http://45.56.80.45:8080/job/daily-build-v3/node=wp8)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=windows-universal)](http://45.56.80.45:8080/job/daily-build-v3/node=windows-universal)|
+|v4|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v4/node=ios)](http://45.56.80.45:8080/job/daily-build-v4/node=ios)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v4/node=mac)](http://45.56.80.45:8080/job/daily-build-v4/node=mac)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v4/node=linux)](http://45.56.80.45:8080/job/daily-build-v4/node=linux)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v4/node=win32)](http://45.56.80.45:8080/job/daily-build-v4/node=win32)|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v4/node=android)](http://45.56.80.45:8080/job/daily-build-v4/node=android)|NA|[![Build Status](http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v4/node=windows-universal)](http://45.56.80.45:8080/job/daily-build-v4/node=windows-universal)|
+
+
 
 [cocos2d-x][1] is a multi-platform framework for building 2d games, interactive books, demos and other graphical applications.
 It is based on [cocos2d-iphone][2], but instead of using Objective-C, it uses C++.

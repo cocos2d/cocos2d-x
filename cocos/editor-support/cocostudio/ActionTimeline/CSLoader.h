@@ -63,6 +63,8 @@ namespace cocostudio
 
 NS_CC_BEGIN
 
+typedef std::function<void(Ref*)> ccNodeLoadCallback;
+
 class CC_STUDIO_DLL CSLoader
 {
 public:
@@ -75,6 +77,7 @@ public:
     void init();
     
     static cocos2d::Node* createNode(const std::string& filename);
+    static cocos2d::Node* createNode(const std::string& filename, const ccNodeLoadCallback& callback);
     static cocostudio::timeline::ActionTimeline* createTimeline(const std::string& filename);
 
     /*
@@ -108,6 +111,10 @@ public:
     cocos2d::Node* nodeWithFlatBuffersForSimulator(const flatbuffers::NodeTree* nodetree);
 
 protected:
+
+    cocos2d::Node* createNodeWithFlatBuffersFile(const std::string& filename, const ccNodeLoadCallback& callback);
+    cocos2d::Node* nodeWithFlatBuffersFile(const std::string& fileName, const ccNodeLoadCallback& callback);
+    cocos2d::Node* nodeWithFlatBuffers(const flatbuffers::NodeTree* nodetree, const ccNodeLoadCallback& callback);
     
     cocos2d::Node* loadNode(const rapidjson::Value& json);
     
@@ -127,7 +134,7 @@ protected:
     
     // load component
     cocos2d::Component* loadComponent(const rapidjson::Value& json);
-    cocos2d::Component* loadComAudio(const rapidjson::Value& json);    
+    cocos2d::Component* loadComAudio(const rapidjson::Value& json);
     
     bool isWidget(const std::string& type);
     bool isCustomWidget(const std::string& type);
@@ -152,7 +159,10 @@ protected:
     std::string _monoCocos2dxVersion;
     
     Node* _rootNode;
+    cocos2d::Vector<cocos2d::Node*> _callbackHandlers;
+    
     std::string _csBuildID;
+    
 };
 
 NS_CC_END

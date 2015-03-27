@@ -38,6 +38,13 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
+-- 
+-- @function [parent=#Camera] project 
+-- @param self
+-- @param #vec3_table src
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
+        
+--------------------------------
 -- Get object depth towards camera
 -- @function [parent=#Camera] getDepthInView 
 -- @param self
@@ -117,13 +124,13 @@
 -- @return Camera#Camera ret (return value: cc.Camera)
         
 --------------------------------
--- 
+-- Get the default camera of the current running scene.
 -- @function [parent=#Camera] getDefaultCamera 
 -- @param self
 -- @return Camera#Camera ret (return value: cc.Camera)
         
 --------------------------------
--- 
+-- Get the visiting camera , the visiting camera shall be set on Scene::render
 -- @function [parent=#Camera] getVisitingCamera 
 -- @param self
 -- @return Camera#Camera ret (return value: cc.Camera)

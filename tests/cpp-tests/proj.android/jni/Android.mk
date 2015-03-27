@@ -7,7 +7,6 @@ LOCAL_MODULE := cpp_tests_shared
 LOCAL_MODULE_FILENAME := libcpp_tests
 
 LOCAL_SRC_FILES := main.cpp \
-../../Classes/CocosStudio3DTest/CocosStudio3DTest.cpp \
 ../../Classes/AppDelegate.cpp \
 ../../Classes/BaseTest.cpp \
 ../../Classes/controller.cpp \
@@ -159,6 +158,7 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/PerformanceTest/PerformanceAllocTest.cpp \
 ../../Classes/PerformanceTest/PerformanceNodeChildrenTest.cpp \
 ../../Classes/PerformanceTest/PerformanceParticleTest.cpp \
+../../Classes/PerformanceTest/PerformanceParticle3DTest.cpp \
 ../../Classes/PerformanceTest/PerformanceSpriteTest.cpp \
 ../../Classes/PerformanceTest/PerformanceTest.cpp \
 ../../Classes/PerformanceTest/PerformanceTextureTest.cpp \

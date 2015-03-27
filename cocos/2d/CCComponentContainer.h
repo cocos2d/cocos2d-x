@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -24,6 +24,8 @@ THE SOFTWARE.
 
 #ifndef __CC_FRAMEWORK_COMCONTAINER_H__
 #define __CC_FRAMEWORK_COMCONTAINER_H__
+
+/// @cond DO_NOT_SHOW
 
 #include "base/CCMap.h"
 #include <string>
@@ -68,4 +70,5 @@ private:
 
 NS_CC_END
 
+/// @endcond
 #endif  // __FUNDATION__CCCOMPONENT_H__

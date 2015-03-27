@@ -1299,4 +1299,25 @@ material mp_explosion_water
         }
     }
 }
+//-----------------------------------------------------------------------------------------------------------------------
+material weaponTrail
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            scene_blend add
+            depth_write off
+            cull_hardware none
+            cull_software none
+      
+            texture_unit
+            {
+                texture weaponTrail.png
+                tex_address_mode clamp
+            }
+        }
+    }
+}
 

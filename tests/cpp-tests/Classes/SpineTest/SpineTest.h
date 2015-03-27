@@ -52,9 +52,9 @@ public:
     SpineTestLayer(void);
     virtual ~SpineTestLayer(void);
     
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
+    void restartCallback(Ref* sender) override;
+    void nextCallback(Ref* sender) override;
+    void backCallback(Ref* sender) override;
     
     // overrides
     virtual std::string title() const override;
@@ -75,8 +75,8 @@ public:
     {
         return "Normal Spine";
     }
-	virtual bool init ();
-	virtual void update (float deltaTime);
+	virtual bool init () override;
+	virtual void update (float deltaTime) override;
     //    void animationStateEvent (spine::SkeletonAnimation* node, int trackIndex, spEventType type, spEvent* event, int loopCount);
     
 	CREATE_FUNC (SpineTestLayerNormal);
@@ -95,8 +95,8 @@ public:
     {
         return "FFD Spine";
     }
-	virtual bool init ();
-	virtual void update (float deltaTime);
+	virtual bool init () override;
+	virtual void update (float deltaTime) override;
     //    void animationStateEvent (spine::SkeletonAnimation* node, int trackIndex, spEventType type, spEvent* event, int loopCount);
     
 	CREATE_FUNC (SpineTestLayerFFD);
@@ -113,8 +113,8 @@ public:
     {
         return "Performance Test for Spine";
     }
-	virtual bool init ();
-	virtual void update (float deltaTime);
+	virtual bool init () override;
+	virtual void update (float deltaTime) override;
     //    void animationStateEvent (spine::SkeletonAnimation* node, int trackIndex, spEventType type, spEvent* event, int loopCount);
     
 	CREATE_FUNC (SpineTestPerformanceLayer);

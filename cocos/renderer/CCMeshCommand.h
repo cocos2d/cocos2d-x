@@ -70,7 +70,7 @@ public:
     
     void execute();
     
-    //used for bath
+    //used for batch
     void preBatchDraw();
     void batchDraw();
     void postBatchDraw();

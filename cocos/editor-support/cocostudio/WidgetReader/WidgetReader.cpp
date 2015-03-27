@@ -5,6 +5,7 @@
 #include "cocostudio/CocoLoader.h"
 #include "ui/UIButton.h"
 #include "../ActionTimeline/CCActionTimeline.h"
+#include "cocostudio/CCObjectExtensionData.h"
 #include "cocostudio/CSParseBinary_generated.h"
 
 #include "tinyxml2.h"
@@ -67,10 +68,10 @@ namespace cocostudio
     const char* P_ResourceType = "resourceType";
     const char* P_Path = "path";
 
-    const char* P_Layout_PositionPercentXEnabled = "PositionPercentXEnable";
-    const char* P_Layout_PositionPercentYEnabled = "PositionPercentYEnable";
-    const char* P_Layout_PercentWidthEnable = "PercentWidthEnable";
-    const char* P_Layout_PercentHeightEnable = "PercentHeightEnable";
+    const char* P_Layout_PositionPercentXEnabled = "PositionPercentXEnabled";
+    const char* P_Layout_PositionPercentYEnabled = "PositionPercentYEnabled";
+    const char* P_Layout_PercentWidthEnable = "PercentWidthEnabled";
+    const char* P_Layout_PercentHeightEnable = "PercentHeightEnabled";
     const char* P_Layout_StretchWidthEnable = "StretchWidthEnable";
     const char* P_Layout_StretchHeightEnable = "StretchHeightEnable";
     const char* P_Layout_HorizontalEdge = "HorizontalEdge";
@@ -480,6 +481,10 @@ namespace cocostudio
             {
                 touchEnabled = (value == "True") ? true : false;
             }
+            else if (attriname == "UserData")
+            {
+                customProperty = value;
+            }
             else if (attriname == "FrameEvent")
             {
                 frameEvent = value;
@@ -786,7 +791,13 @@ namespace cocostudio
         
         int actionTag = options->actionTag();
         widget->setActionTag(actionTag);
-        widget->setUserObject(timeline::ActionTimelineData::create(actionTag));
+        
+        std::string customProperty = options->customProperty()->c_str();
+        
+        ObjectExtensionData* extensionData = ObjectExtensionData::create();
+        extensionData->setCustomProperty(customProperty);
+        extensionData->setActionTag(actionTag);
+        node->setUserObject(extensionData);
         
         bool touchEnabled = options->touchEnabled() != 0;
         widget->setTouchEnabled(touchEnabled);

@@ -80,6 +80,12 @@ typedef std::function<bool(PhysicsWorld&, PhysicsShape&, void*)> PhysicsQueryRec
 typedef PhysicsQueryRectCallbackFunc PhysicsQueryPointCallbackFunc;
 
 /**
+ * @addtogroup core
+ * @{
+ */
+
+/**
+ * @class PhysicsWorld CCPhysicsWorld.h
  * @brief An PhysicsWorld object simulates collisions and other physical properties. You do not create PhysicsWorld objects directly; instead, you can get it from an Scene object.
  */
 class CC_DLL PhysicsWorld
@@ -92,82 +98,231 @@ public:
     static const int DEBUGDRAW_ALL;         ///< draw all
     
 public:
-    /** Adds a joint to the physics world.*/
+    /**
+    * Adds a joint to this physics world.
+    *
+    * This joint will be added to this physics world at next frame.
+    * @attention If this joint is already added to another physics world, it will be removed from that world first and then add to this world.
+    * @param   joint   A pointer to an existing PhysicsJoint object.
+    */
     virtual void addJoint(PhysicsJoint* joint);
-    /** Remove a joint from physics world.*/
+
+    /**
+    * Remove a joint from this physics world.
+    *
+    * If this world is not locked, the joint is removed immediately, otherwise at next frame. 
+    * If this joint is connected with a body, it will be removed from the body also.
+    * @param   joint   A pointer to an existing PhysicsJoint object.
+    * @param   destroy   true this joint will be destroyed after remove from this world, false otherwise.
+    */
     virtual void removeJoint(PhysicsJoint* joint, bool destroy = true);
-    /** Remove all joints from physics world.*/
+
+    /**
+    * Remove all joints from this physics world.
+    * 
+    * @attention This function is invoked in the destructor of this physics world, you do not use this api in common.
+    * @param   destroy   true all joints will be destroyed after remove from this world, false otherwise.
+    */
     virtual void removeAllJoints(bool destroy = true);
     
-    /** Remove a body from physics world. */
+    /**
+    * Remove a body from this physics world. 
+    * 
+    * If this world is not locked, the body is removed immediately, otherwise at next frame.
+    * @attention If this body has joints, those joints will be removed also.
+    * @param   body   A pointer to an existing PhysicsBody object.
+    */
     virtual void removeBody(PhysicsBody* body);
-    /** Remove body by tag. */
+    
+    /**
+    * Remove body by tag. 
+    * 
+    * If this world is not locked, the object is removed immediately, otherwise at next frame.
+    * @attention If this body has joints, those joints will be removed also.    
+    * @param   tag   An interger number that identifies a PhysicsBody object.
+    */
     virtual void removeBody(int tag);
-    /** Remove all bodies from physics world. */
+
+    /**
+    * Remove all bodies from physics world. 
+    * 
+    * If this world is not locked, those body are removed immediately, otherwise at next frame.
+    */
     virtual void removeAllBodies();
     
-    /** Searches for physics shapes that intersects the ray. */
+    /**
+    * Searches for physics shapes that intersects the ray. 
+    *
+    * Query this physics world along the line segment from start to end.
+    * @param   func   Func is called for each shape found.
+    * @param   start   A Vec2 object contains the begin position of the ray.
+    * @param   end   A Vec2 object contains the end position of the ray.
+    * @param   data   User defined data, it is passed to func. 
+    */
     void rayCast(PhysicsRayCastCallbackFunc func, const Vec2& start, const Vec2& end, void* data);
-    /** Searches for physics shapes that contains in the rect. */
+    
+    /**
+    * Searches for physics shapes that contains in the rect. 
+    *
+    * Query this physics world to find all shapes overlap rect.
+    * @param   func   Func is called for each shape whose bounding box overlaps rect. 
+    * @param   rect   A Rect object contains a rectangle's x, y, width and height.
+    * @param   data   User defined data, it is passed to func. 
+    */
     void queryRect(PhysicsQueryRectCallbackFunc func, const Rect& rect, void* data);
-    /** Searches for physics shapes that contains the point. */
+    
+    /**
+    * Searches for physics shapes that contains the point. 
+    *
+    * @attention The point must lie inside a shape.
+    * @param   func   Func is called for each shape contains the point.
+    * @param   point   A Vec2 object contains the position of the point.
+    * @param   data   User defined data, it is passed to func. 
+    */
     void queryPoint(PhysicsQueryPointCallbackFunc func, const Vec2& point, void* data);
-    /** Get phsyics shapes that contains the point. */
+    
+    /**
+    * Get phsyics shapes that contains the point. 
+    * 
+    * All shapes contains the point will be pushed in a Vector<PhysicsShape*> object.
+    * @attention The point must lie inside a shape.
+    * @param   point   A Vec2 object contains the position of the point.
+    * @return A Vector<PhysicsShape*> object contains all found PhysicsShape pointer.
+    */
     Vector<PhysicsShape*> getShapes(const Vec2& point) const;
-    /** return physics shape that contains the point. */
+    
+    /**
+    * Get the nearest phsyics shape that contains the point. 
+    * 
+    * Query this physics world at point and return the closest shape.
+    * @param   point   A Vec2 object contains the position of the point.
+    * @return A PhysicsShape object pointer or nullptr if no shapes were found
+    */
     PhysicsShape* getShape(const Vec2& point) const;
-    /** Get all the bodys that in the physics world. */
+
+    /**
+    * Get all the bodys that in this physics world.
+    *
+    * @return A Vector<PhysicsBody*>& object contains all bodies in this physics world. 
+    */
     const Vector<PhysicsBody*>& getAllBodies() const;
-    /** Get body by tag */
+
+    /**
+    * Get a body by tag. 
+    * 
+    * @param   tag   An interger number that identifies a PhysicsBody object. 
+    * @return A PhysicsBody object pointer or nullptr if no shapes were found.
+    */
     PhysicsBody* getBody(int tag) const;
     
-    /** Get scene contain this physics world */
-    inline Scene& getScene() const { return *_scene; }
-    /** get the gravity value */
-    inline Vect getGravity() const { return _gravity; }
-    /** set the gravity value */
-    void setGravity(const Vect& gravity);
     /**
-     * Set the speed of physics world, speed is the rate at which the simulation executes. default value is 1.0
-     * Note: if you setAutoStep(false), this won't work.
+    * Get a scene contain this physics world.
+    * 
+    * @attention This value is initialized in constructor
+    * @return A Scene object reference.
+    */
+    inline Scene& getScene() const { return *_scene; }
+    
+    /**
+    * Get the gravity value of this physics world.
+    *
+    * @return A Vect object.
+    */
+    inline Vect getGravity() const { return _gravity; }
+    
+    /**
+    * set the gravity value of this physics world.
+    *
+    * @param gravity A gravity value of this physics world.
+    */
+    void setGravity(const Vect& gravity);
+    
+    /**
+     * Set the speed of this physics world.
+     *
+     * @attention if you setAutoStep(false), this won't work.
+     * @param speed  A float number. Speed is the rate at which the simulation executes. default value is 1.0.
      */
     inline void setSpeed(float speed) { if(speed >= 0.0f) { _speed = speed; } }
-    /** get the speed of physics world */
-    inline float getSpeed() { return _speed; }
+    
     /**
-     * set the update rate of physics world, update rate is the value of EngineUpdateTimes/PhysicsWorldUpdateTimes.
-     * set it higher can improve performance, set it lower can improve accuracy of physics world simulation.
-     * default value is 1.0
-     * Note: if you setAutoStep(false), this won't work.
+    * Get the speed of this physics world.
+    *
+    * @return A float number.
+    */
+    inline float getSpeed() { return _speed; }
+    
+    /**
+     * Set the update rate of this physics world
+     * 
+     * Update rate is the value of EngineUpdateTimes/PhysicsWorldUpdateTimes.
+     * Set it higher can improve performance, set it lower can improve accuracy of physics world simulation.
+     * @attention if you setAutoStep(false), this won't work.
+     * @param rate An interger number, default value is 1.0.
      */
     inline void setUpdateRate(int rate) { if(rate > 0) { _updateRate = rate; } }
-    /** get the update rate */
+
+
+    /**
+    * Get the update rate of this physics world.
+    *
+    * @return An interger number.
+    */
     inline int getUpdateRate() { return _updateRate; }
+
     /**
      * set the number of substeps in an update of the physics world.
+     * 
      * One physics update will be divided into several substeps to increase its accuracy.
-     * default value is 1
+     * @param steps An interger number, default value is 1.
      */
     void setSubsteps(int steps);
-    /** get the number of substeps */
+
+    /**
+    * Get the number of substeps of this physics world.
+    *
+    * @return An interger number.
+    */
     inline int getSubsteps() const { return _substeps; }
 
-    /** set the debug draw mask */
+    /**
+    * Set the debug draw mask of this physics world.
+    * 
+    * This physics world will draw shapes and joints by DrawNode acoording to mask.
+    * @param mask Mask has four value:DEBUGDRAW_NONE, DEBUGDRAW_SHAPE, DEBUGDRAW_JOINT, DEBUGDRAW_CONTACT and DEBUGDRAW_ALL, default is DEBUGDRAW_NONE
+    */
     void setDebugDrawMask(int mask);
-    /** get the bebug draw mask */
+
+    /**
+    * Get the bebug draw mask.
+    *
+    * @return An interger number.
+    */
     inline int getDebugDrawMask() { return _debugDrawMask; }
     
     /**
-     * To control the step of physics, if you want control it by yourself( fixed-timestep for example ), you can set this to false and call step by yourself.
-     * Defaut value is true.
-     * Note: if you set auto step to false, setSpeed setSubsteps and setUpdateRate won't work, you need to control the time step by yourself.
+     * To control the step of physics.
+     *
+     * If you want control it by yourself( fixed-timestep for example ), you can set this to false and call step by yourself.
+     * @attention If you set auto step to false, setSpeed setSubsteps and setUpdateRate won't work, you need to control the time step by yourself.
+     * @param autoStep A bool object, defaut value is true.
      */
     void setAutoStep(bool autoStep){ _autoStep = autoStep; }
-    /** Get the auto step */
-    bool isAutoStep() { return _autoStep; }
+
+
     /**
-     * The step for physics world, The times passing for simulate the physics.
-     * Note: you need to setAutoStep(false) first before it can work.
+    * Get the auto step of this physics world.
+    *
+    * @return A bool object.
+    */
+    bool isAutoStep() { return _autoStep; }
+
+    /**
+     * The step for physics world.
+     *
+     * The times passing for simulate the physics.
+     * @attention You need to setAutoStep(false) first before it can work.
+     * @param   delta   A float number.
      */
     void step(float delta);
     
@@ -234,7 +389,10 @@ protected:
     friend class PhysicsDebugDraw;
 };
 
-
+/** A physics helper class. Draw physics shape, joint in debug mode. 
+ 
+ *  You do not create PhysicsDebugDraw objects directly; Instead, you can activate it by PhysicsWorld::setDebugDrawMask.
+ */
 class CC_DLL PhysicsDebugDraw
 {
 protected:
@@ -256,6 +414,7 @@ protected:
 };
 extern const float CC_DLL PHYSICS_INFINITY;
 
+/** @} */
 NS_CC_END
 
 #endif // CC_USE_PHYSICS

@@ -5,7 +5,9 @@
 -- @parent_module cc
 
 --------------------------------
---  create the action 
+--  Create the action.<br>
+-- param x Flips the sprite horizontally if true.<br>
+-- return  An autoreleased FlipX object.
 -- @function [parent=#FlipX] create 
 -- @param self
 -- @param #bool x
@@ -18,7 +20,7 @@
 -- @return FlipX#FlipX ret (return value: cc.FlipX)
         
 --------------------------------
--- param time in seconds
+-- param time In seconds.
 -- @function [parent=#FlipX] update 
 -- @param self
 -- @param #float time

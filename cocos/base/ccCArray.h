@@ -1,7 +1,7 @@
 /****************************************************************************
 Copyright (c) 2007      Scott Lembcke
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -42,6 +42,7 @@ THE SOFTWARE.
 
 #ifndef CC_ARRAY_H
 #define CC_ARRAY_H
+/// @cond DO_NOT_SHOW
 
 #include "base/ccMacros.h"
 #include "base/CCRef.h"
@@ -203,4 +204,5 @@ void ccCArrayFullRemoveArray(ccCArray *arr, ccCArray *minusArr);
 
 NS_CC_END
 	
+/// @endcond
 #endif // CC_ARRAY_H

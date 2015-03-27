@@ -32,6 +32,14 @@
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup _3d
+ * @{
+ */
+
+/**
+ * @brief Ray is a line with one end. usually use it to check intersects with some object,such as Plane, OBB, AABB
+ **/
 class CC_DLL Ray
 {
 public:
@@ -89,6 +97,9 @@ public:
     Vec3 _origin;        // The ray origin position.
     Vec3 _direction;     // The ray direction vector.
 };
+
+// end of actions group
+/// @}
 
 NS_CC_END
 

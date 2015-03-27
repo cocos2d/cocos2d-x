@@ -169,6 +169,11 @@ float MotionStreak::getPositionX() const
     return _positionR.x;
 }
 
+Vec3 MotionStreak::getPosition3D() const
+{
+    return Vec3(_positionR.x, _positionR.y, getPositionZ());
+}
+
 void MotionStreak::setPositionX(float x)
 {
     if (!_startingPositionInitialized) {
