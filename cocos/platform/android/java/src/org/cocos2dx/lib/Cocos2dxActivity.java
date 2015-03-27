@@ -363,6 +363,7 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
 
 
     protected ResizeLayout mFrameLayout = null;
+    private FrameLayout mFrameLayout2 = null;
     // ===========================================================
     // Methods
     // ===========================================================
@@ -376,6 +377,9 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         mFrameLayout = new ResizeLayout(this);
 
         mFrameLayout.setLayoutParams(framelayout_params);
+        mFrameLayout2 = new FrameLayout(this);
+        mFrameLayout2.setLayoutParams(framelayout_params);
+        mFrameLayout.addView(mFrameLayout2);
 
         // Cocos2dxEditText layout
         ViewGroup.LayoutParams edittext_layout_params =
@@ -385,13 +389,14 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
         edittext.setLayoutParams(edittext_layout_params);
 
 
-        mFrameLayout.addView(edittext);
+        mFrameLayout2.addView(edittext);
 
         // Cocos2dxGLSurfaceView
         this.mGLSurfaceView = this.onCreateView();
 
         // ...add to FrameLayout
-        mFrameLayout.addView(this.mGLSurfaceView);
+        mFrameLayout2.addView(this.mGLSurfaceView);
+        mFrameLayout2.setVisibility(View.INVISIBLE);
 
         // Switch to supported OpenGL (ARGB888) mode on emulator
         if (isAndroidEmulator())
@@ -455,6 +460,10 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
       Log.d(TAG, "isEmulator=" + isEmulator);
       return isEmulator;
    }
+   
+    public void onNativeInit() {
+        mFrameLayout2.setVisibility(View.VISIBLE);
+    }
 
     // ===========================================================
     // Inner and Anonymous Classes

@@ -72,6 +72,13 @@ public class Cocos2dxRenderer implements GLSurfaceView.Renderer {
         Cocos2dxRenderer.nativeInit(this.mScreenWidth, this.mScreenHeight);
         this.mLastTickInNanoSeconds = System.nanoTime();
         mNativeInitCompleted = true;
+        Cocos2dxHelper.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run()
+            {
+            	((Cocos2dxActivity) Cocos2dxHelper.getActivity()).onNativeInit();
+            }
+        });
     }
 
     @Override
