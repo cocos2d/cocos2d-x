@@ -85,7 +85,7 @@ public:
     void setCallback(const std::function<void(GLProgram*, Uniform*)> &callback);
     /**
      Set texture to uniform value.
-     @param textureID The texture handle.
+     @param textureId The texture handle.
      @param textureUnit The binding texture unit to be used in shader.
     */
     void setTexture(GLuint textureId, GLuint textureUnit);
