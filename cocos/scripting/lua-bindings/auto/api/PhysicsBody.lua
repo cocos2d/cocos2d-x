@@ -306,7 +306,7 @@
 
 --------------------------------
 -- brief Set the body mass.<br>
--- attension If you need add/subtract mass to body, don't use setMass(getMass() +/- mass), because the mass of body may be equal to PHYSICS_INFINITY, it will cause some unexpected result, please use addMass() instead.
+-- attention If you need add/subtract mass to body, don't use setMass(getMass() +/- mass), because the mass of body may be equal to PHYSICS_INFINITY, it will cause some unexpected result, please use addMass() instead.
 -- @function [parent=#PhysicsBody] setMass 
 -- @param self
 -- @param #float mass
