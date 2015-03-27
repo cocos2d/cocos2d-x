@@ -1960,6 +1960,10 @@
 		B63990CD1A490AFE00B07923 /* CCAsyncTaskPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B63990CA1A490AFE00B07923 /* CCAsyncTaskPool.cpp */; };
 		B63990CE1A490AFE00B07923 /* CCAsyncTaskPool.h in Headers */ = {isa = PBXBuildFile; fileRef = B63990CB1A490AFE00B07923 /* CCAsyncTaskPool.h */; };
 		B63990CF1A490AFE00B07923 /* CCAsyncTaskPool.h in Headers */ = {isa = PBXBuildFile; fileRef = B63990CB1A490AFE00B07923 /* CCAsyncTaskPool.h */; };
+		B65A2D071AC5581200128347 /* CCPhysics3DConstraint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B65A2D051AC5581000128347 /* CCPhysics3DConstraint.cpp */; };
+		B65A2D081AC5581700128347 /* CCPhysics3DConstraint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B65A2D051AC5581000128347 /* CCPhysics3DConstraint.cpp */; };
+		B65A2D091AC5581700128347 /* CCPhysics3DConstraint.h in Headers */ = {isa = PBXBuildFile; fileRef = B65A2D061AC5581100128347 /* CCPhysics3DConstraint.h */; };
+		B65A2D0A1AC5581700128347 /* CCPhysics3DConstraint.h in Headers */ = {isa = PBXBuildFile; fileRef = B65A2D061AC5581100128347 /* CCPhysics3DConstraint.h */; };
 		B665E1F21AA80A6500DDB1C5 /* CCPUAffector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E0CC1AA80A6500DDB1C5 /* CCPUAffector.cpp */; };
 		B665E1F31AA80A6500DDB1C5 /* CCPUAffector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E0CC1AA80A6500DDB1C5 /* CCPUAffector.cpp */; };
 		B665E1F41AA80A6500DDB1C5 /* CCPUAffector.h in Headers */ = {isa = PBXBuildFile; fileRef = B665E0CD1AA80A6500DDB1C5 /* CCPUAffector.h */; };
@@ -3696,6 +3700,8 @@
 		B60C5BD319AC68B10056FBDE /* CCBillBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBillBoard.h; sourceTree = "<group>"; };
 		B63990CA1A490AFE00B07923 /* CCAsyncTaskPool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCAsyncTaskPool.cpp; path = ../base/CCAsyncTaskPool.cpp; sourceTree = "<group>"; };
 		B63990CB1A490AFE00B07923 /* CCAsyncTaskPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCAsyncTaskPool.h; path = ../base/CCAsyncTaskPool.h; sourceTree = "<group>"; };
+		B65A2D051AC5581000128347 /* CCPhysics3DConstraint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPhysics3DConstraint.cpp; path = Physics3D/CCPhysics3DConstraint.cpp; sourceTree = "<group>"; };
+		B65A2D061AC5581100128347 /* CCPhysics3DConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysics3DConstraint.h; path = Physics3D/CCPhysics3DConstraint.h; sourceTree = "<group>"; };
 		B665E0CC1AA80A6500DDB1C5 /* CCPUAffector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPUAffector.cpp; path = Particle3D/PU/CCPUAffector.cpp; sourceTree = "<group>"; };
 		B665E0CD1AA80A6500DDB1C5 /* CCPUAffector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPUAffector.h; path = Particle3D/PU/CCPUAffector.h; sourceTree = "<group>"; };
 		B665E0CE1AA80A6500DDB1C5 /* CCPUAffectorManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPUAffectorManager.cpp; path = Particle3D/PU/CCPUAffectorManager.cpp; sourceTree = "<group>"; };
@@ -6244,6 +6250,8 @@
 		B6B8BF161AC3E599006E692F /* Physics3D */ = {
 			isa = PBXGroup;
 			children = (
+				B65A2D051AC5581000128347 /* CCPhysics3DConstraint.cpp */,
+				B65A2D061AC5581100128347 /* CCPhysics3DConstraint.h */,
 				B6CE79231AC531E10007BF8D /* CCPhysics3DComponent.cpp */,
 				B6CE79241AC531E20007BF8D /* CCPhysics3DComponent.h */,
 				B6CE79251AC531E20007BF8D /* CCPhysics3DObject.cpp */,
@@ -6999,6 +7007,7 @@
 				15AE190019AAD35000C27E9E /* CCComAudio.h in Headers */,
 				B665E3481AA80A6500DDB1C5 /* CCPUOnExpireObserverTranslator.h in Headers */,
 				15AE190419AAD35000C27E9E /* CCComRender.h in Headers */,
+				B65A2D091AC5581700128347 /* CCPhysics3DConstraint.h in Headers */,
 				B29A7E1919EE1B7700872B35 /* Event.h in Headers */,
 				15AE18AA19AAD33D00C27E9E /* CocosBuilder.h in Headers */,
 				50ABC0071926664800A911A9 /* CCApplicationProtocol.h in Headers */,
@@ -7309,6 +7318,7 @@
 				46A171041807CECB005B8026 /* CCPhysicsShape.h in Headers */,
 				15AE183319AAD2F700C27E9E /* CCOBB.h in Headers */,
 				B665E33D1AA80A6500DDB1C5 /* CCPUOnEventFlagObserver.h in Headers */,
+				B65A2D0A1AC5581700128347 /* CCPhysics3DConstraint.h in Headers */,
 				15AE18B119AAD33D00C27E9E /* CCBMemberVariableAssigner.h in Headers */,
 				B665E3791AA80A6500DDB1C5 /* CCPUParticleFollowerTranslator.h in Headers */,
 				292DB14019B4574100A80320 /* UIEditBox.h in Headers */,
@@ -8454,6 +8464,7 @@
 				B29A7E3D19EE1B7700872B35 /* AnimationState.c in Sources */,
 				B665E2E61AA80A6500DDB1C5 /* CCPULinearForceAffector.cpp in Sources */,
 				15AE192219AAD35000C27E9E /* DictionaryHelper.cpp in Sources */,
+				B65A2D071AC5581200128347 /* CCPhysics3DConstraint.cpp in Sources */,
 				15AE196C19AAD35700C27E9E /* CCActionTimeline.cpp in Sources */,
 				B29A7E0719EE1B7700872B35 /* SkinnedMeshAttachment.c in Sources */,
 				1A570310180BCF190088DEC7 /* CCComponentContainer.cpp in Sources */,
@@ -9191,6 +9202,7 @@
 				3E6176761960F89B00DE83F5 /* CCEventListenerController.cpp in Sources */,
 				15AE1AC219AAD40300C27E9E /* b2DistanceJoint.cpp in Sources */,
 				503DD8E71926736A00CD74DD /* CCEAGLView-ios.mm in Sources */,
+				B65A2D081AC5581700128347 /* CCPhysics3DConstraint.cpp in Sources */,
 				3E2BDAEC19C0436F0055CDCD /* AudioEngine.cpp in Sources */,
 				382383F11A258FA7002C4610 /* flatc.cpp in Sources */,
 				52B47A311A5349A3004E4C60 /* HttpCookie.cpp in Sources */,

@@ -22,33 +22,16 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __PHYSICS_3D_H__
-#define __PHYSICS_3D_H__
-
-#include "math/CCMath.h"
-#include "extensions/ExtensionMacros.h"
-#include "extensions/ExtensionExport.h"
-
-#include "CCPhysics3DShape.h"
-#include "CCPhysicsSprite3D.h"
-#include "CCPhysics3DWorld.h"
-#include "CCPhysics3DViewer.h"
-#include "CCPhysics3DObject.h"
-#include "CCPhysics3DComponent.h"
-#include "CCPhysics3DConstraint.h"
-
-NS_CC_EXT_BEGIN
-
-CC_EX_DLL const char* physics3dVersion();
-
-NS_CC_EXT_END
+#include "CCPhysics3D.h"
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
-//include bullet header files
 
-//convert between cocos and bullet
+
+NS_CC_EXT_BEGIN
+
+
+
+NS_CC_EXT_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION
-
-#endif // __PHYSICS_3D_H__
