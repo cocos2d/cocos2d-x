@@ -25,14 +25,13 @@ THE SOFTWARE.
 
 #ifndef __PLATFOMR_CCNS_H__
 #define __PLATFOMR_CCNS_H__
-/// @cond DO_NOT_SHOW
 
 #include "math/CCGeometry.h"
 
 NS_CC_BEGIN
 
 /**
- * @addtogroup data_structures
+ * @addtogroup base
  * @{
  */
 
@@ -77,7 +76,6 @@ Size CC_DLL SizeFromString(const std::string& str);
 
 NS_CC_END
 
-/// @endcond
 #endif // __PLATFOMR_CCNS_H__
 
 
