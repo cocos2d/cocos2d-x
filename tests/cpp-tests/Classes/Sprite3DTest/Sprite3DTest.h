@@ -498,4 +498,30 @@ public:
     virtual void runThisTest();
 };
 
+namespace cocos2d
+{
+class TextureCube;
+class Skybox;
+}
+class Sprite3DCubeMapTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DCubeMapTest);
+    Sprite3DCubeMapTest();
+    ~Sprite3DCubeMapTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    void addNewSpriteWithCoords(Vec2);
+
+protected:
+    cocos2d::TextureCube*   _textureCube;
+    Skybox*                 _skyBox;
+    Sprite3D*               _teapot;
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    EventListenerCustom* _backToForegroundListener;
+#endif
+};
+
 #endif

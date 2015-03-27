@@ -58,7 +58,7 @@ cocos2d::log(__VA_ARGS__);                                                  \
  * @param L the current lua_State.
  * @param lo the given accpetable index of stack.
  * @param type the typename used to judge.
- * @int def whether has default value.
+ * @param def whether has default value.
  * @return Return true if the typename of userdata at the given accepteable index of stack is equal to type, otherwise return false.
  * @lua NA
  * @js NA
@@ -849,9 +849,9 @@ extern bool luaval_to_std_vector_ushort(lua_State* L, int lo, std::vector<unsign
  * If the table has the `x`, `y`, `z` and `w` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue.Otherwise, the value of members of outValue would be 0.
  * @param L the current lua_State.
  * @param lo the given accpetable index of stack.
- * @param ret the pointer to a cocos2d::Quaternion object which stores the values from the Lua table.
+ * @param outValue the pointer to a cocos2d::Quaternion object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ * @return true if the value at the given accpetable index of stack is a table, otherwise return false.
  * @lua NA
  * @js NA
  */
@@ -895,7 +895,7 @@ extern void vec3_to_luaval(lua_State* L,const cocos2d::Vec3& vec3);
  * The format of table as follows: {x=numberValue1, y=numberValue2, z=numberValue3, w=numberValue4}
  *
  * @param L the current lua_State.
- * @param vec3  a cocos2d::Vec4 object.
+ * @param vec4  a cocos2d::Vec4 object.
  * @lua NA
  * @js NA
  */
@@ -908,7 +908,7 @@ extern void vec4_to_luaval(lua_State* L,const cocos2d::Vec4& vec4);
  *
  * @param L the current lua_State.
  * @param points a pointer points to a cocos2d::Vec2 array.
- * @int count the number of cocos2d::Vec2 object should be converted to a Lua table and push into the Lua stack.
+ * @param count the number of cocos2d::Vec2 object should be converted to a Lua table and push into the Lua stack.
  * @lua NA
  * @js NA
  */
@@ -930,7 +930,7 @@ extern void size_to_luaval(lua_State* L,const Size& sz);
  * The format of table as follows: {x=numberValue1, y=numberValue2, width=numberValue3, height=numberValue4}
  *
  * @param L the current lua_State.
- * @param sz  a cocos2d::Rect object.
+ * @param rt  a cocos2d::Rect object.
  * @lua NA
  * @js NA
  */
@@ -1104,7 +1104,7 @@ CC_DEPRECATED_ATTRIBUTE static inline void points_to_luaval(lua_State* L,const c
  * The object in the cocos2d::Vector which would be pushed into the table should be Ref type.
  *
  * @param L the current lua_State.
- * @param verAttrib a cocos2d::Vector object.
+ * @param inValue a cocos2d::Vector object.
  * @lua NA
  * @js NA
  */
@@ -1146,7 +1146,7 @@ void ccvector_to_luaval(lua_State* L,const cocos2d::Vector<T>& inValue)
  * The object in the cocos2d::Map which would be pushed into the table should be Ref type.
  *
  * @param L the current lua_State.
- * @param verAttrib a cocos2d::Map object.
+ * @param v a cocos2d::Map object.
  * @lua NA
  * @js NA
  */
@@ -1190,7 +1190,7 @@ void ccmap_string_key_to_luaval(lua_State* L, const cocos2d::Map<std::string, T>
  * Value::Type::INT_KEY_MAP -> push a hash table into the Lua stack.
  *
  * @param L the current lua_State.
- * @param verAttrib a cocos2d::Value object.
+ * @param inValue a cocos2d::Value object.
  * @lua NA
  * @js NA
  */
@@ -1201,7 +1201,7 @@ void ccvalue_to_luaval(lua_State* L,const cocos2d::Value& inValue);
  * The type of value of the key/value pair would be boolean,number, integer, string, array table, hash table.
  *
  * @param L the current lua_State.
- * @param verAttrib a cocos2d::ValueMap object.
+ * @param inValue a cocos2d::ValueMap object.
  * @lua NA
  * @js NA
  */
@@ -1212,7 +1212,7 @@ void ccvaluemap_to_luaval(lua_State* L,const cocos2d::ValueMap& inValue);
  * The type of value of the key/value pair would be boolean,number, integer, string, array table, hash table.
  *
  * @param L the current lua_State.
- * @param verAttrib a cocos2d::Map object.
+ * @param inValue a cocos2d::ValueMapIntKey object.
  * @lua NA
  * @js NA
  */
@@ -1223,7 +1223,7 @@ void ccvaluemapintkey_to_luaval(lua_State* L, const cocos2d::ValueMapIntKey& inV
  * The type of value of the key/value pair would be boolean,number, integer, string, array table, hash table.
  *
  * @param L the current lua_State.
- * @param verAttrib a cocos2d::ValueVector object.
+ * @param inValue a cocos2d::ValueVector object.
  * @lua NA
  * @js NA
  */
@@ -1235,7 +1235,7 @@ void ccvaluevector_to_luaval(lua_State* L, const cocos2d::ValueVector& inValue);
  * Get the real typename for the specified typename.
  * Because all override functions wouldn't be bound,so we must use `typeid` to get the real class name.
  *
- * @param T the pointer points to a object.
+ * @param ret the pointer points to a type T object.
  * @param type the string pointer points to specified typename.
  * @return return the pointer points to the real typename, or nullptr.
  */

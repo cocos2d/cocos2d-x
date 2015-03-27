@@ -219,6 +219,11 @@ public:
     static const char* SHADER_3D_PARTICLE_COLOR;
     
     /**
+     Built in shader for skybox
+     */
+    static const char* SHADER_3D_SKYBOX;
+    
+    /**
     end of built shader types.
     @}
     */

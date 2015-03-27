@@ -84,6 +84,8 @@ extern CC_DLL const GLchar * cc3D_ColorNormal_frag;
 extern CC_DLL const GLchar * cc3D_Particle_vert;
 extern CC_DLL const GLchar * cc3D_Particle_tex_frag;
 extern CC_DLL const GLchar * cc3D_Particle_color_frag;
+extern CC_DLL const GLchar * cc3D_Skybox_vert;
+extern CC_DLL const GLchar * cc3D_Skybox_frag;
 
 
 NS_CC_END

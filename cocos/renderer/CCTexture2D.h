@@ -282,6 +282,7 @@ public:
      
      @param text A null terminated string.
      @param fontName The font name.
+     @param fontSize The font size.
      @param dimensions The font dimension.
      @param hAlignment The font horizontal text alignment type.
      @param vAlignment The font vertical text alignment type.

@@ -47,7 +47,7 @@ NS_CC_BEGIN
  /**
  * Similar to std::unordered_map, but it will manage reference count automatically internally.
  * Which means it will invoke Ref::retain() when adding an element, and invoke Ref::release() when removing an element.
- * @warn The element should be `Ref` or its sub-class.
+ * @warning The element should be `Ref` or its sub-class.
  * @lua NA
  */
 template <class K, class V>

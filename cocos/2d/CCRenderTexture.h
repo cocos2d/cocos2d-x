@@ -97,6 +97,7 @@ public:
      * @param g Green.
      * @param b Blue.
      * @param a Alpha.
+     * @param depthValue The depth Value.
      */
     virtual void beginWithClear(float r, float g, float b, float a, float depthValue);
 
@@ -129,13 +130,13 @@ public:
 
     /** Clears the texture with a specified depth value. 
      *
-     * @param A specified depth value.
+     * @param depthValue A specified depth value.
      */
     virtual void clearDepth(float depthValue);
 
     /** Clears the texture with a specified stencil value.
      *
-     * @param A specified stencil value.
+     * @param stencilValue A specified stencil value.
      */
     virtual void clearStencil(int stencilValue);
     
@@ -256,7 +257,7 @@ public:
     
     /** Sets the Sprite being used. 
      *
-     * @param A Sprite.
+     * @param sprite A Sprite.
      */
     inline void setSprite(Sprite* sprite) {
         CC_SAFE_RETAIN(sprite);
