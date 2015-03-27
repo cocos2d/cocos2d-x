@@ -22,21 +22,25 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPhysics3D.h"
+#ifndef __PHYSICS_3D_OBJECT_H__
+#define __PHYSICS_3D_OBJECT_H__
+
+#include "math/CCMath.h"
+#include "base/CCRef.h"
+#include "extensions/ExtensionMacros.h"
+#include "extensions/ExtensionExport.h"
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
-
-
 NS_CC_EXT_BEGIN
 
-CC_EX_DLL const char* physics3dVersion()
+CC_EX_DLL class Physics3DObject : public Ref
 {
-#if CC_ENABLE_BULLET_INTEGRATION
-    return "bullet2.82";
-#endif
-}
+    
+};
 
 NS_CC_EXT_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION
+
+#endif // __PHYSICS_3D_OBJECT_H__

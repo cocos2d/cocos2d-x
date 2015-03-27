@@ -22,21 +22,31 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPhysics3D.h"
+#ifndef __PHYSICS_3D_WORLD_H__
+#define __PHYSICS_3D_WORLD_H__
+
+#include "math/CCMath.h"
+#include "base/CCRef.h"
+#include "extensions/ExtensionMacros.h"
+#include "extensions/ExtensionExport.h"
+
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
-
+class btDynamicsWorld;
 
 NS_CC_EXT_BEGIN
 
-CC_EX_DLL const char* physics3dVersion()
+CC_EX_DLL class Physics3DWorld : Ref
 {
-#if CC_ENABLE_BULLET_INTEGRATION
-    return "bullet2.82";
-#endif
-}
+protected:
+#if (CC_ENABLE_BULLET_INTEGRATION)
+    btDynamicsWorld* _phyiscsWorld;
+#endif // CC_ENABLE_BULLET_INTEGRATION
+};
 
 NS_CC_EXT_END
 
-#endif // CC_ENABLE_BULLET_INTEGRATION
+#endif
+
+#endif // __PHYSICS_3D_WORLD_H__

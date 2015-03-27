@@ -31,6 +31,10 @@
 
 #include "CCPhysics3DShape.h"
 #include "CCPhysicsSprite3D.h"
+#include "CCPhysics3DWorld.h"
+#include "CCPhysics3DViewer.h"
+#include "CCPhysics3DObject.h"
+#include "CCPhysics3DComponent.h"
 
 NS_CC_EXT_BEGIN
 
