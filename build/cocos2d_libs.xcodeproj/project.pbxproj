@@ -2572,10 +2572,10 @@
 		B6B8BF201AC3E5DA006E692F /* CCPhysicsSprite3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6B8BF191AC3E5DA006E692F /* CCPhysicsSprite3D.cpp */; };
 		B6B8BF211AC3E5DA006E692F /* CCPhysicsSprite3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B6B8BF1A1AC3E5DA006E692F /* CCPhysicsSprite3D.h */; };
 		B6B8BF221AC3E5DA006E692F /* CCPhysicsSprite3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B6B8BF1A1AC3E5DA006E692F /* CCPhysicsSprite3D.h */; };
-		B6CE791C1AC4F5140007BF8D /* CCPhysics3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CE791A1AC4F5130007BF8D /* CCPhysics3D.cpp */; };
-		B6CE791D1AC4F5140007BF8D /* CCPhysics3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CE791A1AC4F5130007BF8D /* CCPhysics3D.cpp */; };
 		B6CE791E1AC4F5140007BF8D /* CCPhysics3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CE791B1AC4F5130007BF8D /* CCPhysics3D.h */; };
 		B6CE791F1AC4F5140007BF8D /* CCPhysics3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CE791B1AC4F5130007BF8D /* CCPhysics3D.h */; };
+		B6CE79211AC4F77C0007BF8D /* CCPhysics3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CE79201AC4F77B0007BF8D /* CCPhysics3D.cpp */; };
+		B6CE79221AC4F77D0007BF8D /* CCPhysics3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CE79201AC4F77B0007BF8D /* CCPhysics3D.cpp */; };
 		D0FD03491A3B51AA00825BB5 /* CCAllocatorBase.h in Headers */ = {isa = PBXBuildFile; fileRef = D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */; };
 		D0FD034A1A3B51AA00825BB5 /* CCAllocatorBase.h in Headers */ = {isa = PBXBuildFile; fileRef = D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */; };
 		D0FD034B1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FD033C1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp */; };
@@ -3989,8 +3989,8 @@
 		B6B8BF181AC3E5DA006E692F /* CCPhysics3DShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysics3DShape.h; path = Physics3D/CCPhysics3DShape.h; sourceTree = "<group>"; };
 		B6B8BF191AC3E5DA006E692F /* CCPhysicsSprite3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPhysicsSprite3D.cpp; path = Physics3D/CCPhysicsSprite3D.cpp; sourceTree = "<group>"; };
 		B6B8BF1A1AC3E5DA006E692F /* CCPhysicsSprite3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysicsSprite3D.h; path = Physics3D/CCPhysicsSprite3D.h; sourceTree = "<group>"; };
-		B6CE791A1AC4F5130007BF8D /* CCPhysics3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPhysics3D.cpp; path = Physics3D/CCPhysics3D.cpp; sourceTree = "<group>"; };
 		B6CE791B1AC4F5130007BF8D /* CCPhysics3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysics3D.h; path = Physics3D/CCPhysics3D.h; sourceTree = "<group>"; };
+		B6CE79201AC4F77B0007BF8D /* CCPhysics3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPhysics3D.cpp; path = Physics3D/CCPhysics3D.cpp; sourceTree = "<group>"; };
 		D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAllocatorBase.h; sourceTree = "<group>"; };
 		D0FD033C1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAllocatorDiagnostics.cpp; sourceTree = "<group>"; };
 		D0FD033D1A3B51AA00825BB5 /* CCAllocatorDiagnostics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAllocatorDiagnostics.h; sourceTree = "<group>"; };
@@ -6220,7 +6220,7 @@
 		B6B8BF161AC3E599006E692F /* Physics3D */ = {
 			isa = PBXGroup;
 			children = (
-				B6CE791A1AC4F5130007BF8D /* CCPhysics3D.cpp */,
+				B6CE79201AC4F77B0007BF8D /* CCPhysics3D.cpp */,
 				B6CE791B1AC4F5130007BF8D /* CCPhysics3D.h */,
 				B6B8BF171AC3E5D9006E692F /* CCPhysics3DShape.cpp */,
 				B6B8BF181AC3E5DA006E692F /* CCPhysics3DShape.h */,
@@ -8393,7 +8393,7 @@
 				1A5702FA180BCE750088DEC7 /* CCTMXXMLParser.cpp in Sources */,
 				B665E3621AA80A6500DDB1C5 /* CCPUOnTimeObserver.cpp in Sources */,
 				15AE18DF19AAD35000C27E9E /* TriggerBase.cpp in Sources */,
-				B6CE791C1AC4F5140007BF8D /* CCPhysics3D.cpp in Sources */,
+				B6CE79211AC4F77C0007BF8D /* CCPhysics3D.cpp in Sources */,
 				15AE1A7219AAD40300C27E9E /* b2ContactSolver.cpp in Sources */,
 				B665E2BE1AA80A6500DDB1C5 /* CCPUGeometryRotator.cpp in Sources */,
 				3823841A1A2590D2002C4610 /* ComAudioReader.cpp in Sources */,
@@ -8758,7 +8758,7 @@
 				15AE181719AAD2F700C27E9E /* CCAttachNode.cpp in Sources */,
 				B68779051A8CA82E00643ABF /* CCParticleSystem3D.cpp in Sources */,
 				15AE18B719AAD33D00C27E9E /* CCBSequenceProperty.cpp in Sources */,
-				B6CE791D1AC4F5140007BF8D /* CCPhysics3D.cpp in Sources */,
+				B6CE79221AC4F77D0007BF8D /* CCPhysics3D.cpp in Sources */,
 				B29A7E3819EE1B7700872B35 /* AnimationStateData.c in Sources */,
 				15AE18B919AAD33D00C27E9E /* CCControlButtonLoader.cpp in Sources */,
 				50ABBE761925AB6F00A911A9 /* CCEventListenerTouch.cpp in Sources */,

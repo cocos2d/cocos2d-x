@@ -32,6 +32,12 @@
 #include "CCPhysics3DShape.h"
 #include "CCPhysicsSprite3D.h"
 
+NS_CC_EXT_BEGIN
+
+CC_EX_DLL const char* physics3dVersion();
+
+NS_CC_EXT_END
+
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
 //include bullet header files
