@@ -28,6 +28,11 @@
 
 #include "renderer/CCRenderCommand.h"
 
+/**
+ * @addtogroup support
+ * @{
+ */
+
 NS_CC_BEGIN
 /**
 Custom command is used for call custom openGL command which can not be done by other commands,
@@ -68,5 +73,8 @@ protected:
 };
 
 NS_CC_END
-
+/**
+ end of support group
+ @}
+ */
 #endif //_CC_CUSTOMCOMMAND_H_

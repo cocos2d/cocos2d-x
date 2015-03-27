@@ -28,6 +28,11 @@
 #include "renderer/CCRenderCommand.h"
 #include "renderer/CCGLProgramState.h"
 
+/**
+ * @addtogroup support
+ * @{
+ */
+
 NS_CC_BEGIN
 
 /** 
@@ -97,4 +102,8 @@ protected:
 
 NS_CC_END
 
+/**
+ end of support group
+ @}
+ */
 #endif //_CC_QUADCOMMAND_H_

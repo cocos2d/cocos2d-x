@@ -27,6 +27,11 @@
 
 #include "renderer/CCRenderCommand.h"
 
+/**
+ * @addtogroup support
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class TextureAtlas;
@@ -73,4 +78,8 @@ protected:
 };
 NS_CC_END
 
+/**
+ end of support group
+ @}
+ */
 #endif //_CC_BATCHCOMMAND_H_
