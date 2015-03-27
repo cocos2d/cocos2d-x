@@ -250,6 +250,11 @@ public:
     //Ray-Terrain intersection.
     Vec3 getIntersectionPoint(const Ray & ray);
     void setMaxDetailMapAmount(int max_value);
+
+    //conver to Terrain space.
+    Vec2 convertToTerrainSpace(Vec2 worldSpace);
+
+    void resetHeightMap(const char * heightMap);
 protected:
     
     Terrain();

@@ -244,20 +244,19 @@ void Terrain::initHeightMap(const char * heightMap)
     loadVertices();
     calculateNormal();
     memset(_chunkesArray, 0, sizeof(_chunkesArray));
+
     for(int m =0;m<chunk_amount_y;m++)
     {
         for(int n =0; n<chunk_amount_x;n++)
         {
             _chunkesArray[m][n] = new Chunk();
             _chunkesArray[m][n]->_terrain = this;
-            if(n-1>=0) _chunkesArray[m][n]->left = _chunkesArray[m][n-1];
-            if(n+1<chunk_amount_x) _chunkesArray[m][n]->right = _chunkesArray[m][n+1];
-            if(m-1>=0) _chunkesArray[m][n]->back = _chunkesArray[m-1][n];
-            if(m+1<chunk_amount_y) _chunkesArray[m][n]->front = _chunkesArray[m+1][n];
             _chunkesArray[m][n]->_size = _chunkSize;
             _chunkesArray[m][n]->generate(imageWidth,imageHeight,m,n,_data);
         }
     }
+
+    //calculate the neighbor
     for(int m =0;m<chunk_amount_y;m++)
     {
         for(int n =0; n<chunk_amount_x;n++)
@@ -266,8 +265,6 @@ void Terrain::initHeightMap(const char * heightMap)
             if(n+1<chunk_amount_x) _chunkesArray[m][n]->right = _chunkesArray[m][n+1];
             if(m-1>=0) _chunkesArray[m][n]->back = _chunkesArray[m-1][n];
             if(m+1<chunk_amount_y) _chunkesArray[m][n]->front = _chunkesArray[m+1][n];
-            _chunkesArray[m][n]->_size = _chunkSize;
-            _chunkesArray[m][n]->generate(imageWidth,imageHeight,m,n,_data);
         }
     }
     quad = new QuadTree(0,0,imageWidth,imageHeight,this);
@@ -514,6 +511,49 @@ cocos2d::Vec3 Terrain::getIntersectionPoint(const Ray & ray)
 void Terrain::setMaxDetailMapAmount(int max_value)
 {
     _maxDetailMapValue = max_value;
+}
+
+cocos2d::Vec2 Terrain::convertToTerrainSpace(Vec2 worldSpaceXZ)
+{
+    Vec2 pos = Vec2(worldSpaceXZ.x,worldSpaceXZ.y);
+
+    //top-left
+    Vec2 tl = Vec2(-1*_terrainData.mapScale*imageWidth/2,-1*_terrainData.mapScale*imageHeight/2);
+    auto result  = getNodeToWorldTransform()*Vec4(tl.x,0.0f,tl.y,1.0f);
+    tl = Vec2(result.x,result.z);
+
+    Vec2 to_tl = pos - tl;
+
+    //real size
+    Vec2 size = Vec2(imageWidth*_terrainData.mapScale,imageHeight*_terrainData.mapScale);
+    result = getNodeToWorldTransform()*Vec4(size.x,0.0f,size.y,0.0f);
+    size = Vec2(result.x,result.z);
+
+    float width_ratio = to_tl.x/size.x;
+    float height_ratio = to_tl.y/size.y;
+
+    float image_x = width_ratio * imageWidth;
+    float image_y = height_ratio * imageHeight;
+    return Vec2(image_x,image_y);
+}
+
+void Terrain::resetHeightMap(const char * heightMap)
+{
+    _heightMapImage->release();
+    vertices.clear();
+    free(_data);
+    for(int i = 0;i<MAX_CHUNKES;i++)
+    {
+        for(int j = 0;j<MAX_CHUNKES;j++)
+        {
+            if(_chunkesArray[i][j])
+            {
+                delete _chunkesArray[i][j];
+            }
+        }
+    }
+    delete quad;
+    initHeightMap(heightMap);
 }
 
 void Terrain::Chunk::finish()
