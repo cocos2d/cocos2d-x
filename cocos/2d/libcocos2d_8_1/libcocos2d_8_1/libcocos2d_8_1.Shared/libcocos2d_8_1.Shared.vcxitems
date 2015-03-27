@@ -219,8 +219,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCPlane.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCRay.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCSkeleton3D.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCSkybox.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCSprite3D.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCSprite3DMaterial.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCTextureCube.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\cocos3d.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\include\AudioEngine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\include\Export.h" />
@@ -802,8 +804,10 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCPlane.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCRay.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCSkeleton3D.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCSkybox.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCSprite3D.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCSprite3DMaterial.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCTextureCube.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\winrt\Audio.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <ForcedIncludeFiles>
