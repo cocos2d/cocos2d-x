@@ -11,12 +11,13 @@
         
 --------------------------------
 -- Sets the current playback position of an audio instance.<br>
--- param audioID An audioID returned by the play2d function.<br>
+-- param audioID   An audioID returned by the play2d function.<br>
+-- param sec       The offset in seconds from the start to seek to.<br>
 -- return 
 -- @function [parent=#AudioEngine] setCurrentTime 
 -- @param self
 -- @param #int audioID
--- @param #float time
+-- @param #float sec
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
