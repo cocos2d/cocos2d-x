@@ -424,7 +424,16 @@ void Layout::onBeforeVisitScissor()
 
 void Layout::onAfterVisitScissor()
 {
-    glDisable(GL_SCISSOR_TEST);
+    if(_clippingParent)
+    {
+        Rect clippingRect = _clippingParent->getClippingRect();
+        auto glview = Director::getInstance()->getOpenGLView();
+        glview->setScissorInPoints(clippingRect.origin.x, clippingRect.origin.y, clippingRect.size.width, clippingRect.size.height);
+    }
+    else
+    {
+        glDisable(GL_SCISSOR_TEST);
+    }
 }
     
 void Layout::scissorClippingVisit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags)
@@ -527,6 +536,7 @@ const Rect& Layout::getClippingRect()
         float scissorHeight = _contentSize.height*t.d;
         Rect parentClippingRect;
         Layout* parent = this;
+        _clippingParent = NULL;
 
         while (parent)
         {
