@@ -2056,6 +2056,47 @@ bool luaval_to_quaternion(lua_State* L,int lo,cocos2d::Quaternion* outValue, con
     return ok;
 }
 
+bool luaval_to_texparams(lua_State* L,int lo,cocos2d::Texture2D::TexParams* outValue, const char* funcName)
+{
+    if (nullptr == L || nullptr == outValue)
+        return false;
+    
+    bool ok = true;
+    
+    tolua_Error tolua_err;
+    if (!tolua_istable(L, lo, 0, &tolua_err) )
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err,funcName);
+#endif
+        ok = false;
+    }
+    
+    if (ok)
+    {
+        lua_pushstring(L, "minFilter");
+        lua_gettable(L, lo);
+        outValue->minFilter = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "magFilter");
+        lua_gettable(L, lo);
+        outValue->magFilter = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "wrapS");
+        lua_gettable(L, lo);
+        outValue->wrapS = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+        
+        lua_pushstring(L, "wrapT");
+        lua_gettable(L, lo);
+        outValue->wrapT = lua_isnil(L, -1) ? 0 : lua_tonumber(L, -1);
+        lua_pop(L, 1);
+    }
+    return ok;
+}
+
 void vec2_array_to_luaval(lua_State* L,const cocos2d::Vec2* points, int count)
 {
     if (NULL  == L)
@@ -3018,5 +3059,26 @@ void quaternion_to_luaval(lua_State* L,const cocos2d::Quaternion& inValue)
     lua_rawset(L, -3);
     lua_pushstring(L, "w");                             /* L: table key */
     lua_pushnumber(L, (lua_Number) inValue.w);             /* L: table key value*/
+    lua_rawset(L, -3);
+}
+
+void texParams_to_luaval(lua_State* L, const cocos2d::Texture2D::TexParams& inValue)
+{
+    if (nullptr  == L)
+        return;
+    
+    lua_newtable(L);                                     /* L: table */
+    
+    lua_pushstring(L, "minFilter");                      /* L: table key */
+    lua_pushnumber(L, (lua_Number) inValue.minFilter);   /* L: table key value*/
+    lua_rawset(L, -3);                                   /* table[key] = value, L: table */
+    lua_pushstring(L, "magFilter");                      /* L: table key */
+    lua_pushnumber(L, (lua_Number) inValue.magFilter);   /* L: table key value*/
+    lua_rawset(L, -3);
+    lua_pushstring(L, "wrapS");                          /* L: table key */
+    lua_pushnumber(L, (lua_Number) inValue.wrapS);       /* L: table key value*/
+    lua_rawset(L, -3);
+    lua_pushstring(L, "wrapT");                          /* L: table key */
+    lua_pushnumber(L, (lua_Number) inValue.wrapT);       /* L: table key value*/
     lua_rawset(L, -3);
 }
