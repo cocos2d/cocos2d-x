@@ -720,20 +720,9 @@ end
 
 function UILoadingBarLeftTest:initExtend()
 
-    self._uiLayer = cc.Layer:create()
-    self:addChild(self._uiLayer)
+    self:init()
 
-    self._widget = ccs.GUIReader:getInstance():widgetFromJsonFile("cocosui/UITest/UITest.json")
-    self._uiLayer:addChild(self._widget)
-
-    local root = self._uiLayer:getChildByTag(81)
-    self._sceneTitle = root:getChildByName("UItest")
-
-    local back_label = root:getChildByName("back")
-    back_label:setVisible(false)
-
-    local widgetSize = self._widget:getContentSize()
-        
+    local widgetSize = self._widget:getContentSize()       
     local alert = ccui.Text:create()
     alert:setString("LoadingBar")
     alert:setFontName(font_TextName)
@@ -771,56 +760,7 @@ function UILoadingBarLeftTest:initExtend()
         end
     end
 
-    self:registerScriptHandler(onNodeEvent)
-
-    local function previousCallback(sender, eventType)
-        if eventType == ccui.TouchEventType.ended then
-            self:unscheduleUpdate()
-            cc.Director:getInstance():replaceScene(guiSceneManager.previousUIScene())
-        end
-    end
-
-    local left_button = root:getChildByName("left_Button")
-    left_button:addTouchEventListener(previousCallback)
-
-    local function restartCallback(sender, eventType)
-         if eventType == ccui.TouchEventType.ended then
-             self:unscheduleUpdate()
-             cc.Director:getInstance():replaceScene(guiSceneManager.currentUIScene())
-         end
-    end
-
-    local middle_button = root:getChildByName("middle_Button")
-    middle_button:addTouchEventListener(restartCallback)
-
-    local function nextCallback(sender, eventType)
-        if eventType == ccui.TouchEventType.ended then
-            self:unscheduleUpdate()
-            cc.Director:getInstance():replaceScene(guiSceneManager.nextUIScene())
-        end
-    end
-
-    local right_button = root:getChildByName("right_Button")
-    right_button:addTouchEventListener(nextCallback)
-
-    local function menuCloseCallback( sender,eventType)
-        if eventType == ccui.TouchEventType.ended then
-            self:unscheduleUpdate()
-            local scene = CocoStudioTestMain()
-            if scene ~= nil then
-                cc.Director:getInstance():replaceScene(scene)
-            end
-        end
-    end
-
-    local mainMenuLabel = ccui.Text:create()
-    mainMenuLabel:setString("Back")
-    mainMenuLabel:setFontSize(20)
-    mainMenuLabel:setTouchScaleChangeEnabled(true)
-    mainMenuLabel:setPosition(cc.p(430,30))
-    mainMenuLabel:setTouchEnabled(true)
-    mainMenuLabel:addTouchEventListener(menuCloseCallback)
-    self._uiLayer:addChild(mainMenuLabel)  
+    self:registerScriptHandler(onNodeEvent) 
 end
 
 function UILoadingBarLeftTest.create()
@@ -846,17 +786,7 @@ end
 
 function UILoadingBarRightTest:initExtend()
 
-    self._uiLayer = cc.Layer:create()
-    self:addChild(self._uiLayer)
-
-    self._widget = ccs.GUIReader:getInstance():widgetFromJsonFile("cocosui/UITest/UITest.json")
-    self._uiLayer:addChild(self._widget)
-
-    local root = self._uiLayer:getChildByTag(81)
-    self._sceneTitle = root:getChildByName("UItest")
-
-    local back_label = root:getChildByName("back")
-    back_label:setVisible(false)
+    self:init()
 
     local widgetSize = self._widget:getContentSize()
         
@@ -899,55 +829,6 @@ function UILoadingBarRightTest:initExtend()
     end
 
     self:registerScriptHandler(onNodeEvent)
-
-    local function previousCallback(sender, eventType)
-        if eventType == ccui.TouchEventType.ended then
-            self:unscheduleUpdate()
-            cc.Director:getInstance():replaceScene(guiSceneManager.previousUIScene())
-        end
-    end
-
-    local left_button = root:getChildByName("left_Button")
-    left_button:addTouchEventListener(previousCallback)
-
-    local function restartCallback(sender, eventType)
-         if eventType == ccui.TouchEventType.ended then
-             self:unscheduleUpdate()
-             cc.Director:getInstance():replaceScene(guiSceneManager.currentUIScene())
-         end
-    end
-
-    local middle_button = root:getChildByName("middle_Button")
-    middle_button:addTouchEventListener(restartCallback)
-
-    local function nextCallback(sender, eventType)
-        if eventType == ccui.TouchEventType.ended then
-            self:unscheduleUpdate()
-            cc.Director:getInstance():replaceScene(guiSceneManager.nextUIScene())
-        end
-    end
-
-    local right_button = root:getChildByName("right_Button")
-    right_button:addTouchEventListener(nextCallback)
-
-    local function menuCloseCallback( sender,eventType)
-        if eventType == ccui.TouchEventType.ended then
-            self:unscheduleUpdate()
-            local scene = CocoStudioTestMain()
-            if scene ~= nil then
-                cc.Director:getInstance():replaceScene(scene)
-            end
-        end
-    end
-
-    local mainMenuLabel = ccui.Text:create()
-    mainMenuLabel:setString("Back")
-    mainMenuLabel:setFontSize(20)
-    mainMenuLabel:setTouchScaleChangeEnabled(true)
-    mainMenuLabel:setPosition(cc.p(430,30))
-    mainMenuLabel:setTouchEnabled(true)
-    mainMenuLabel:addTouchEventListener(menuCloseCallback)
-    self._uiLayer:addChild(mainMenuLabel)  
 end
 
 function UILoadingBarRightTest.create()
@@ -973,17 +854,7 @@ end
 
 function UILoadingBarLeftScale9Test:initExtend()
 
-    self._uiLayer = cc.Layer:create()
-    self:addChild(self._uiLayer)
-
-    self._widget = ccs.GUIReader:getInstance():widgetFromJsonFile("cocosui/UITest/UITest.json")
-    self._uiLayer:addChild(self._widget)
-
-    local root = self._uiLayer:getChildByTag(81)
-    self._sceneTitle = root:getChildByName("UItest")
-
-    local back_label = root:getChildByName("back")
-    back_label:setVisible(false)
+    self:init()
 
     local widgetSize = self._widget:getContentSize()
         
@@ -1028,55 +899,6 @@ function UILoadingBarLeftScale9Test:initExtend()
     end
 
     self:registerScriptHandler(onNodeEvent)
-
-    local function previousCallback(sender, eventType)
-        if eventType == ccui.TouchEventType.ended then
-            self:unscheduleUpdate()
-            cc.Director:getInstance():replaceScene(guiSceneManager.previousUIScene())
-        end
-    end
-
-    local left_button = root:getChildByName("left_Button")
-    left_button:addTouchEventListener(previousCallback)
-
-    local function restartCallback(sender, eventType)
-         if eventType == ccui.TouchEventType.ended then
-             self:unscheduleUpdate()
-             cc.Director:getInstance():replaceScene(guiSceneManager.currentUIScene())
-         end
-    end
-
-    local middle_button = root:getChildByName("middle_Button")
-    middle_button:addTouchEventListener(restartCallback)
-
-    local function nextCallback(sender, eventType)
-        if eventType == ccui.TouchEventType.ended then
-            self:unscheduleUpdate()
-            cc.Director:getInstance():replaceScene(guiSceneManager.nextUIScene())
-        end
-    end
-
-    local right_button = root:getChildByName("right_Button")
-    right_button:addTouchEventListener(nextCallback)
-
-    local function menuCloseCallback( sender,eventType)
-        if eventType == ccui.TouchEventType.ended then
-            self:unscheduleUpdate()
-            local scene = CocoStudioTestMain()
-            if scene ~= nil then
-                cc.Director:getInstance():replaceScene(scene)
-            end
-        end
-    end
-
-    local mainMenuLabel = ccui.Text:create()
-    mainMenuLabel:setString("Back")
-    mainMenuLabel:setFontSize(20)
-    mainMenuLabel:setTouchScaleChangeEnabled(true)
-    mainMenuLabel:setPosition(cc.p(430,30))
-    mainMenuLabel:setTouchEnabled(true)
-    mainMenuLabel:addTouchEventListener(menuCloseCallback)
-    self._uiLayer:addChild(mainMenuLabel)  
 end
 
 function UILoadingBarLeftScale9Test.create()
@@ -1102,17 +924,7 @@ end
 
 function UILoadingBarRightScale9Test:initExtend()
 
-    self._uiLayer = cc.Layer:create()
-    self:addChild(self._uiLayer)
-
-    self._widget = ccs.GUIReader:getInstance():widgetFromJsonFile("cocosui/UITest/UITest.json")
-    self._uiLayer:addChild(self._widget)
-
-    local root = self._uiLayer:getChildByTag(81)
-    self._sceneTitle = root:getChildByName("UItest")
-
-    local back_label = root:getChildByName("back")
-    back_label:setVisible(false)
+    self:init()
 
     local widgetSize = self._widget:getContentSize()
         
@@ -1157,56 +969,7 @@ function UILoadingBarRightScale9Test:initExtend()
         end
     end
 
-    self:registerScriptHandler(onNodeEvent)
-
-    local function previousCallback(sender, eventType)
-        if eventType == ccui.TouchEventType.ended then
-            self:unscheduleUpdate()
-            cc.Director:getInstance():replaceScene(guiSceneManager.previousUIScene())
-        end
-    end
-
-    local left_button = root:getChildByName("left_Button")
-    left_button:addTouchEventListener(previousCallback)
-
-    local function restartCallback(sender, eventType)
-         if eventType == ccui.TouchEventType.ended then
-             self:unscheduleUpdate()
-             cc.Director:getInstance():replaceScene(guiSceneManager.currentUIScene())
-         end
-    end
-
-    local middle_button = root:getChildByName("middle_Button")
-    middle_button:addTouchEventListener(restartCallback)
-
-    local function nextCallback(sender, eventType)
-        if eventType == ccui.TouchEventType.ended then
-            self:unscheduleUpdate()
-            cc.Director:getInstance():replaceScene(guiSceneManager.nextUIScene())
-        end
-    end
-
-    local right_button = root:getChildByName("right_Button")
-    right_button:addTouchEventListener(nextCallback)
-
-    local function menuCloseCallback( sender,eventType)
-        if eventType == ccui.TouchEventType.ended then
-            self:unscheduleUpdate()
-            local scene = CocoStudioTestMain()
-            if scene ~= nil then
-                cc.Director:getInstance():replaceScene(scene)
-            end
-        end
-    end
-
-    local mainMenuLabel = ccui.Text:create()
-    mainMenuLabel:setString("Back")
-    mainMenuLabel:setFontSize(20)
-    mainMenuLabel:setTouchScaleChangeEnabled(true)
-    mainMenuLabel:setPosition(cc.p(430,30))
-    mainMenuLabel:setTouchEnabled(true)
-    mainMenuLabel:addTouchEventListener(menuCloseCallback)
-    self._uiLayer:addChild(mainMenuLabel)  
+    self:registerScriptHandler(onNodeEvent) 
 end
 
 function UILoadingBarRightScale9Test.create()
@@ -3166,11 +2929,6 @@ function UIRichTextTest:initExtend()
 
     local reimg = ccui.RichElementImage:create(6, cc.c3b(255, 255, 255), 255, "cocosui/sliderballnormal.png")
 
-    ccs.ArmatureDataManager:getInstance():addArmatureFileInfo("cocosui/100/100.ExportJson")
-    local arr = ccs.Armature:create("100")
-    arr:getAnimation():play("Animation1")
-
-    local recustom = ccui.RichElementCustomNode:create(1, cc.c3b(255, 255, 255), 255, arr)
     local re6 = ccui.RichElementText:create(7, cc.c3b(255, 127,   0), 255, "Have fun!! ", "Helvetica", 10)
     self._richText:pushBackElement(re1)
     self._richText:insertElement(re2, 1)
@@ -3178,7 +2936,6 @@ function UIRichTextTest:initExtend()
     self._richText:pushBackElement(re4)
     self._richText:pushBackElement(re5)
     self._richText:insertElement(reimg, 2)
-    self._richText:pushBackElement(recustom)
     self._richText:pushBackElement(re6)
     
     self._richText:setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2))

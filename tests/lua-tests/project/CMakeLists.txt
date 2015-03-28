@@ -33,7 +33,6 @@ if(COCOS_TARGET_SYSTEM_ANDROID)
 else()
     add_executable(${app_name} ${CMAKE_CURRENT_LIST_FILE})
 endif()
-cocos_tweak_target_output_directory(${app_name})
 set_target_properties(${app_name} PROPERTIES
     FOLDER "tests"
     )
