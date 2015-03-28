@@ -23,6 +23,7 @@ NS_CC_BEGIN
 
 /**
  * @brief .obj file Loader
+ * @js NA
  **/
 class ObjLoader
 {

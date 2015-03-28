@@ -41,6 +41,7 @@ NS_CC_BEGIN
 
 /**
  * @brief BundleReader is an interface for reading sequence of bytes.
+ * @js NA
  */
 class BundleReader: public cocos2d::Ref
 {

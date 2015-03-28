@@ -39,6 +39,7 @@ NS_CC_BEGIN
 
 /**
  * @brief Ray is a line with one end. usually use it to check intersects with some object,such as Plane, OBB, AABB
+ * @js NA
  **/
 class CC_DLL Ray
 {

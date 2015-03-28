@@ -44,6 +44,7 @@ class Data;
  * There are two types of bundle files, c3t and c3b.
  * c3t text file
  * c3b binary file
+ * @js NA
  */
 class CC_DLL Bundle3D
 {

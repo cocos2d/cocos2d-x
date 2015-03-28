@@ -60,6 +60,7 @@ enum ccScriptType {
 
 /**
  * This classes is wrapped to store the handler corresponding to the Lua function pointer and assign the handler a unique id
+ * @js NA
  */
 class ScriptHandlerEntry : public Ref
 {
@@ -120,6 +121,7 @@ protected:
 /**
  * The SchedulerScriptHandlerEntry is used to store the handler corresponding to the Lua function pointer and assign the handler a unique id like ScriptHandlerEntry.
  * Meanwhile,create a timer that named TimerScriptHandler to execute the Lua function corresponding to the handler in the interval time if the SchedulerScriptHandlerEntry object isn't paused.
+ * @js NA
  */
 class SchedulerScriptHandlerEntry : public ScriptHandlerEntry
 {
@@ -201,6 +203,7 @@ private:
 
 /**
  * @cond
+ * @js NA
  */
 class TouchScriptHandlerEntry : public ScriptHandlerEntry
 {
@@ -239,6 +242,7 @@ private:
 
 /**
  * @endcond
+ * @js NA
  */
 
 /** ScriptEventType enum*/
@@ -260,6 +264,7 @@ enum ScriptEventType
 
 /**
  * For Lua, Wrapper the script data that should be used to find the handler corresponding to the Lua function by the nativeobject pointer and store the value pointer which would be converted concretely by the different events,then the converted data would be passed into the Lua stack.
+ * @js NA
  */
 struct BasicScriptData
 {
@@ -293,6 +298,7 @@ struct BasicScriptData
 
 /**
  * For Lua, the SchedulerScriptData is used to find the Lua function pointer by the handler, then call the Lua function by push the elapse into the Lua stack as a parameter when scheduler update event is triggered.
+ * @js NA
  */
 struct SchedulerScriptData
 {
@@ -329,6 +335,7 @@ struct SchedulerScriptData
 
 /**
  * For Lua, the TouchesScriptData is used to find the Lua function pointer by the nativeObject, then call the Lua function by push touches data and actionType into the Lua stack as the parameters when the touches event is triggered.
+ * @js NA
  */
 struct TouchesScriptData
 {
@@ -378,6 +385,7 @@ struct TouchesScriptData
 
 /**
  * For Lua, the TouchScriptData is used to find the Lua function pointer by the nativeObject, then call the Lua function by push touch data and actionType convered to string type into the Lua stack as the parameters when the touch event is triggered.
+ * @js NA
  */
 struct TouchScriptData
 {
@@ -428,6 +436,7 @@ struct TouchScriptData
 
 /**
  * For Lua, the KeypadScriptData is used to find the Lua function pointer by the nativeObject, then call the Lua function by push the actionType convered to string type into the Lua stack as the parameters when the Keypad event is triggered.
+ * @js NA
  */
 struct KeypadScriptData
 {
@@ -461,6 +470,7 @@ struct KeypadScriptData
 
 /**
  * For Lua, the CommonScriptData is used to find the Lua function pointer by the handler, then call the Lua function by push the eventName, eventSource(if it not nullptr), eventSourceClassName(if it is nullptr or "", and the eventSource is not nullptr,would give the default string "cc.Ref") into the Lua stack as the parameter when the common event such as is triggered.
+ * @js NA
  */
 struct CommonScriptData
 {
@@ -519,6 +529,7 @@ struct CommonScriptData
 /**
  * The ScriptEvent wrapper the different script data corresponding to the ScriptEventType in to the unified struct.
  * when the corresponding event is triggered, we could call the `sendEvent` of ScriptEngineProtocol to handle the event.
+ * @js NA
  */
 struct ScriptEvent
 {
@@ -554,6 +565,7 @@ struct ScriptEvent
  * Don't make ScriptEngineProtocol inherits from Object since setScriptEngine is invoked only once in AppDelegate.cpp,
  * It will affect the lifecycle of ScriptEngine instance, the autorelease pool will be destroyed before destructing ScriptEngine.
  * So a crash will appear on Win32 if you click the close button.
+ * @js NA
  */
 class CC_DLL ScriptEngineProtocol
 {
@@ -701,6 +713,7 @@ class Node;
  * ScriptEngineManager is a singleton which manager an object instance of ScriptEngineProtocl, such as LuaEngine.
  *
  * @since v0.99.5-x-0.8.5
+ * @js NA
  */
 class CC_DLL ScriptEngineManager
 {
