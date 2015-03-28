@@ -403,6 +403,7 @@ namespace ui {
          * @param rotated Whether the sprite is rotated or not.
          * @param capInsets The Values to use for the cap insets.
          * @return True if update success, false otherwise.
+         * @js NA
          */
         virtual bool updateWithSprite(Sprite* sprite,
                                       const Rect& rect,
@@ -419,6 +420,7 @@ namespace ui {
          * @param originalSize The origial size of the sprite.
          * @param capInsets The Values to use for the cap insets.
          * @return True if update success, false otherwise.
+         * @js NA
          */
         virtual bool updateWithSprite(Sprite* sprite,
                                       const Rect& rect,
@@ -559,6 +561,7 @@ namespace ui {
          * @brief Toggle 9-slice feature.
          * If Scale9Sprite is 9-slice disabled, the Scale9Sprite will rendered as a normal sprite.
          * @param enabled True to enable 9-slice, false otherwise.
+         * @js NA
          */
         void setScale9Enabled(bool enabled);
         
@@ -566,6 +569,7 @@ namespace ui {
          * @brief Query whether the Scale9Sprite is enable 9-slice or not.
          *
          * @return True if 9-slice is enabled, false otherwise.
+         * @js NA
          */
         bool isScale9Enabled()const;
         
