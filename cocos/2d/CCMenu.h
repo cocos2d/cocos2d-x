@@ -84,17 +84,23 @@ public:
     static Menu* create(MenuItem* item, ...) CC_REQUIRES_NULL_TERMINATION;
 #endif
 
-    /** Creates a Menu with a Array of MenuItem objects. */
+    /** 
+     * Creates a Menu with a Array of MenuItem objects.
+     * @js NA
+     */
     static Menu* createWithArray(const Vector<MenuItem*>& arrayOfItems);
 
     /**
      * Creates a Menu with it's item, then use addChild() to add 
      * other items. It is used for script, it can't init with undetermined
      * number of variables.
+     * @js NA
      */
     static Menu* createWithItem(MenuItem* item);
     
-    /** Creates a Menu with MenuItem objects. */
+    /** Creates a Menu with MenuItem objects.
+     * @js NA
+     */
     static Menu* createWithItems(MenuItem *firstItem, va_list args);
 
     /** Align items vertically. */
@@ -119,7 +125,9 @@ public:
     /** Align items in rows of columns. */
     void alignItemsInColumns(int columns, va_list args);
     
-    /** Align items in array of columns. */
+    /** Align items in array of columns.
+     * @js NA
+     */
     void alignItemsInColumnsWithArray(const ValueVector& rows);
 
     /** Align items in columns of rows. */
@@ -128,7 +136,9 @@ public:
     /** Align items in columns of rows. */
     void alignItemsInRows(int rows, va_list args);
     
-    /** Align items in array of rows. */
+    /** Align items in array of rows.
+     * @js NA
+     */
     void alignItemsInRowsWithArray(const ValueVector& columns);
 
     /**
