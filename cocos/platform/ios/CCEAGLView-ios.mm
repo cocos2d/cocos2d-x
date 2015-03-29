@@ -715,6 +715,13 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #pragma mark - UIKeyboard notification
 
+bool requiresOrientationCompatibilityFix()
+{
+    NSString *reqSysVer = @"8.0";
+    NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
+    return ([currSysVer compare:reqSysVer options:NSNumericSearch] == NSOrderedAscending);
+}
+
 - (void)onUIKeyboardNotification:(NSNotification *)notif;
 {
     NSString * type = notif.name;
@@ -730,7 +737,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     
     CGSize viewSize = self.frame.size;
     
-    switch (getFixedOrientation([[UIApplication sharedApplication] statusBarOrientation]))
+    CGFloat tmp;
+    switch ([[UIApplication sharedApplication] statusBarOrientation])
     {
         case UIInterfaceOrientationPortrait:
             begin.origin.y = viewSize.height - begin.origin.y - begin.size.height;
@@ -743,13 +751,45 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
             break;
             
         case UIInterfaceOrientationLandscapeLeft:
-            begin.origin.y = viewSize.height - begin.origin.y - begin.size.height;
-            end.origin.y = viewSize.height - end.origin.y - end.size.height;
+            if (requiresOrientationCompatibilityFix())
+            {
+                std::swap(begin.size.width, begin.size.height);
+                std::swap(end.size.width, end.size.height);
+                std::swap(viewSize.width, viewSize.height);
+                
+                tmp = begin.origin.x;
+                begin.origin.x = begin.origin.y;
+                begin.origin.y = viewSize.height - tmp - begin.size.height;
+                tmp = end.origin.x;
+                end.origin.x = end.origin.y;
+                end.origin.y = viewSize.height - tmp - end.size.height;
+            }
+            else
+            {
+                begin.origin.y = viewSize.height - begin.origin.y - begin.size.height;
+                end.origin.y = viewSize.height - end.origin.y - end.size.height;
+            }
             break;
             
         case UIInterfaceOrientationLandscapeRight:
-            begin.origin.y = viewSize.height - (begin.origin.y + begin.size.height);
-            end.origin.y = viewSize.height - (end.origin.y + end.size.height);
+            if (requiresOrientationCompatibilityFix())
+            {
+                std::swap(begin.size.width, begin.size.height);
+                std::swap(end.size.width, end.size.height);
+                std::swap(viewSize.width, viewSize.height);
+                
+                tmp = begin.origin.x;
+                begin.origin.x = begin.origin.y;
+                begin.origin.y = tmp;
+                tmp = end.origin.x;
+                end.origin.x = end.origin.y;
+                end.origin.y = tmp;
+            }
+            else
+            {
+                begin.origin.y = viewSize.height - (begin.origin.y + begin.size.height);
+                end.origin.y = viewSize.height - (end.origin.y + end.size.height);
+            }
             break;
             
         default:
@@ -815,15 +855,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     }
 }
 
-UIInterfaceOrientation getFixedOrientation(UIInterfaceOrientation statusBarOrientation)
-{
-//    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
-//    {
-//        statusBarOrientation = UIInterfaceOrientationPortrait;
-//    }
-    return statusBarOrientation;
-}
-
 -(void) doAnimationWhenKeyboardMoveWithDuration:(float)duration distance:(float)dis
 {
     [UIView beginAnimations:nil context:nullptr];
@@ -840,7 +871,7 @@ UIInterfaceOrientation getFixedOrientation(UIInterfaceOrientation statusBarOrien
     
     dis /= self.contentScaleFactor;
     
-    switch (getFixedOrientation([[UIApplication sharedApplication] statusBarOrientation]))
+    switch ([[UIApplication sharedApplication] statusBarOrientation])
     {
         case UIInterfaceOrientationPortrait:
             self.frame = CGRectMake(originalRect_.origin.x, originalRect_.origin.y - dis, originalRect_.size.width, originalRect_.size.height);
@@ -851,11 +882,25 @@ UIInterfaceOrientation getFixedOrientation(UIInterfaceOrientation statusBarOrien
             break;
             
         case UIInterfaceOrientationLandscapeLeft:
-            self.frame = CGRectMake(originalRect_.origin.x, originalRect_.origin.y - dis, originalRect_.size.width, originalRect_.size.height);
+            if (requiresOrientationCompatibilityFix())
+            {
+                self.frame = CGRectMake(originalRect_.origin.x - dis, originalRect_.origin.y, originalRect_.size.width, originalRect_.size.height);
+            }
+            else
+            {
+                self.frame = CGRectMake(originalRect_.origin.x, originalRect_.origin.y - dis, originalRect_.size.width, originalRect_.size.height);
+            }
             break;
             
         case UIInterfaceOrientationLandscapeRight:
-            self.frame = CGRectMake(originalRect_.origin.x, originalRect_.origin.y - dis, originalRect_.size.width, originalRect_.size.height);
+            if (requiresOrientationCompatibilityFix())
+            {
+                self.frame = CGRectMake(originalRect_.origin.x + dis, originalRect_.origin.y, originalRect_.size.width, originalRect_.size.height);
+            }
+            else
+            {
+                self.frame = CGRectMake(originalRect_.origin.x, originalRect_.origin.y - dis, originalRect_.size.width, originalRect_.size.height);
+            }
             break;
             
         default:
