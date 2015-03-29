@@ -418,6 +418,7 @@ void EditBoxImplIOS::setInputMode(EditBox::InputMode inputMode)
     {
         case EditBox::InputMode::EMAIL_ADDRESS:
             _systemControl.textField.keyboardType = UIKeyboardTypeEmailAddress;
+            _systemControl.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
             break;
         case EditBox::InputMode::NUMERIC:
             _systemControl.textField.keyboardType = UIKeyboardTypeDecimalPad;
