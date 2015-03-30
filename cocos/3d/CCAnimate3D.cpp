@@ -69,7 +69,7 @@ bool Animate3D::init(Animation3D* animation)
     animation->retain();
     setDuration(animation->getDuration());
     setOriginInterval(animation->getDuration());
-    setAnimateQuality(Configuration::getInstance()->getAnimate3DQuality());
+    setHighAnimateQuality(Configuration::getInstance()->getHighAnimate3DQuality());
     return true;
 }
 
@@ -85,7 +85,7 @@ bool Animate3D::init(Animation3D* animation, float fromTime, float duration)
     setOriginInterval(duration);
     _animation = animation;
     animation->retain();
-    setAnimateQuality(Configuration::getInstance()->getAnimate3DQuality());
+    setHighAnimateQuality(Configuration::getInstance()->getHighAnimate3DQuality());
     return true;
 }
 
@@ -384,26 +384,26 @@ void Animate3D::setOriginInterval(float interval)
     _originInterval = interval;
 }
 
-void Animate3D::setAnimateQuality(int qualityLevel)
+void Animate3D::setHighAnimateQuality(bool useHighAnimateQuality)
 {
-    if (qualityLevel == 0)
-    {
-        _translateEvaluate = EvaluateType::INT_NEAR;
-        _roteEvaluate = EvaluateType::INT_NEAR;
-        _scaleEvaluate = EvaluateType::INT_NEAR;
-    }
-    else
+    if (useHighAnimateQuality)
     {
         _translateEvaluate = EvaluateType::INT_LINEAR;
         _roteEvaluate = EvaluateType::INT_QUAT_SLERP;
         _scaleEvaluate = EvaluateType::INT_LINEAR;
     }
-    _animateQuality = qualityLevel;
+    else
+    {
+        _translateEvaluate = EvaluateType::INT_NEAR;
+        _roteEvaluate = EvaluateType::INT_NEAR;
+        _scaleEvaluate = EvaluateType::INT_NEAR;
+    }
+    _useHighAnimateQuality = useHighAnimateQuality;
 }
 
-int Animate3D::getAnimateQuality() const
+bool Animate3D::getHighAnimateQuality() const
 {
-    return _animateQuality;
+    return _useHighAnimateQuality;
 }
 
 Animate3D::Animate3D()
@@ -417,12 +417,8 @@ Animate3D::Animate3D()
 , _accTransTime(0.0f)
 , _lastTime(0.0f)
 , _originInterval(0.0f)
-, _translateEvaluate(EvaluateType::INT_LINEAR)
-, _roteEvaluate(EvaluateType::INT_QUAT_SLERP)
-, _scaleEvaluate(EvaluateType::INT_LINEAR)
-, _animateQuality(1)
 {
-    
+    setHighAnimateQuality(true);
 }
 Animate3D::~Animate3D()
 {

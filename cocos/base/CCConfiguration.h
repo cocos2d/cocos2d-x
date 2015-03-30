@@ -165,9 +165,9 @@ public:
     int getMaxSupportSpotLightInShader() const;
 
     /** get 3d animate quality
-     *  @return 0: is low quality 1: is hight quality
+     *  @return true: is high quality, false: is low quality
      */
-    int getAnimate3DQuality() const;
+    bool getHighAnimate3DQuality() const;
     
     /** Returns whether or not an OpenGL is supported. 
      *
@@ -235,7 +235,7 @@ protected:
     int             _maxDirLightInShader; //max support directional light in shader
     int             _maxPointLightInShader; // max support point light in shader
     int             _maxSpotLightInShader; // max support spot light in shader
-    int             _animate3DQuality;      // 3d animation quality; 0: is low quality 1: is hight quality
+    bool            _highAnimate3DQuality; // animation 3d quality, true: is high quality, false: is low quality
 	
 	ValueMap        _valueDict;
 };
