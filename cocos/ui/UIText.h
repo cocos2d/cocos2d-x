@@ -57,11 +57,15 @@ public:
     };
     /**
      * Default constructor.
+     *
+     * @lua new
      */
     Text();
 
     /**
      * Default destructor.
+     *
+     * @lua NA
      */
     virtual ~Text();
 

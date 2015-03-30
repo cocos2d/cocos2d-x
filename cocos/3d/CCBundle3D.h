@@ -45,6 +45,7 @@ class Data;
  * c3t text file
  * c3b binary file
  * @js NA
+ * @lua NA
  */
 class CC_DLL Bundle3D
 {

@@ -52,6 +52,7 @@ class MeshVertexData;
  * the MeshIndexData class.
  * @brief the MeshIndexData contain all of the indices data which mesh need.
  * @js NA
+ * @lua NA
  */
 class MeshIndexData : public Ref
 {

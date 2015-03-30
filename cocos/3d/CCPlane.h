@@ -40,6 +40,7 @@ enum class PointSide
 /**
  * Defines plane
  * @js NA
+ * @lua NA
  **/
 class CC_DLL Plane
 {

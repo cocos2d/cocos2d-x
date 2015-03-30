@@ -49,11 +49,15 @@ class CC_GUI_DLL TextBMFont : public Widget
 public:
     /**
      * Default constructor
+     *
+     * @lua new
      */
     TextBMFont();
     
     /**
      * Default destructor
+     *
+     * @lua NA
      */
     virtual ~TextBMFont();
     

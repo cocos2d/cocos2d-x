@@ -45,11 +45,15 @@ public:
     
     /**
      * Default constructor
+     *
+     * @lua new
      */
     HBox();
     
     /**
      * Default destructor
+     *
+     * @lua NA
      */
     virtual ~HBox();
     

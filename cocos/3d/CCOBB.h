@@ -46,11 +46,15 @@ public:
 
     /*
      * Construct obb from oriented bounding box
+     *
+     * @lua NA
      */
     OBB(const AABB& aabb);
     
     /*
      * Construct obb from points
+     *
+     * @lua NA
      */
     OBB(const Vec3* verts, int num);
     

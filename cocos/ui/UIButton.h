@@ -56,6 +56,8 @@ public:
 
     /**
      * Default destructor.
+     *
+     * @lua NA
      */
     virtual ~Button();
 

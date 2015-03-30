@@ -48,7 +48,9 @@ class EventListenerCustom;
 class EventCustom;
 
 /**
- Uniform Value, which is used to store to value send to openGL pipe line by glUniformXXX.
+ * Uniform Value, which is used to store to value send to openGL pipe line by glUniformXXX.
+ *
+ * @lua NA
  */
 class CC_DLL UniformValue
 {
@@ -134,7 +136,11 @@ protected:
      */
 };
 
-/**Vertex Attribute Value, which is an abstraction of VertexAttribute and data pointer.*/
+/**
+ * Vertex Attribute Value, which is an abstraction of VertexAttribute and data pointer.
+ *
+ * @lua NA
+ */
 class CC_DLL VertexAttribValue
 {
     friend class GLProgram;

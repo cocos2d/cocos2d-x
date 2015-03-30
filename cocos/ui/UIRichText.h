@@ -56,12 +56,14 @@ public:
     /**
      * @brief Default constructor.
      * @js ctor
+     * @lua new
      */
     RichElement(){};
     
     /**
      * @brief Default destructor.
      * @js NA
+     * @lua NA
      */
     virtual ~RichElement(){};
 
@@ -93,6 +95,7 @@ public:
     /**
      *@brief Default constructor.
      * @js ctor
+     * @lua new
      */
     RichElementText(){_type = Type::TEXT;};
 
@@ -100,6 +103,7 @@ public:
     /**
      *@brief Default destructor.
      * @js NA
+     * @lua NA
      */
     virtual ~RichElementText(){};
     
@@ -147,6 +151,7 @@ public:
     /**
      * @brief Default constructor.
      * @js ctor
+     * @lua new
      *
      */
     RichElementImage(){_type = Type::IMAGE;};
@@ -155,6 +160,7 @@ public:
     /**
      * @brief Default destructor.
      * @js NA
+     * @lua NA
      */
     virtual ~RichElementImage(){};
 
@@ -198,6 +204,7 @@ public:
     /**
      * @brief Default constructor.
      * @js ctor
+     * @lua new
      */
     RichElementCustomNode(){_type = Type::CUSTOM;};
 
@@ -205,6 +212,7 @@ public:
     /**
      * @brief Default destructor.
      * @js NA
+     * @lua NA
      */
     virtual ~RichElementCustomNode(){CC_SAFE_RELEASE(_customNode);};
 
@@ -246,12 +254,14 @@ public:
     /**
      * @brief Default constructor.
      * @js ctor
+     * @lua new
      */
     RichText();
     
     /**
      * @brief Default destructor.
      * @js NA
+     * @lua NA
      */
     virtual ~RichText();
     
