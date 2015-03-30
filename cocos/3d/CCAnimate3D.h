@@ -139,7 +139,7 @@ protected:
     EvaluateType _translateEvaluate;
     EvaluateType _roteEvaluate;
     EvaluateType _scaleEvaluate;
-    int _animateQuality;
+    int _animateQuality;        //  0: is low quality 1: is hight quality
     
     std::unordered_map<Bone3D*, Animation3D::Curve*> _boneCurves; //weak ref
     std::unordered_map<Node*, Animation3D::Curve*> _nodeCurves;
