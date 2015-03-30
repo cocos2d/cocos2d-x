@@ -18,6 +18,7 @@
 -- @function [parent=#MoveBy] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return MoveBy#MoveBy self (return value: cc.MoveBy)
         
 --------------------------------
 -- 
@@ -32,9 +33,10 @@
 -- @return MoveBy#MoveBy ret (return value: cc.MoveBy)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#MoveBy] update 
 -- @param self
 -- @param #float time
+-- @return MoveBy#MoveBy self (return value: cc.MoveBy)
         
 return nil

@@ -5,13 +5,16 @@
 -- @parent_module cc
 
 --------------------------------
---  set period of the wave in radians. 
+-- brief Set period of the wave in radians.<br>
+-- param fPeriod The value will be set.
 -- @function [parent=#EaseElastic] setPeriod 
 -- @param self
 -- @param #float fPeriod
+-- @return EaseElastic#EaseElastic self (return value: cc.EaseElastic)
         
 --------------------------------
---  get period of the wave in radians. default is 0.3 
+-- brief Get period of the wave in radians. Default value is 0.3.<br>
+-- return Return the period of the wave in radians.
 -- @function [parent=#EaseElastic] getPeriod 
 -- @param self
 -- @return float#float ret (return value: float)

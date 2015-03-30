@@ -343,6 +343,12 @@
     <Filter Include="Classes\AllocatorTest">
       <UniqueIdentifier>{573248d9-7443-49ad-aa92-dd9defa29a76}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\Particle3DTest">
+      <UniqueIdentifier>{65f864c8-5b02-4c44-ab8b-a8e7289e5c7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\CocosStudio3DTest">
+      <UniqueIdentifier>{65f104c8-5b02-4c44-ab8b-a8e7289e5c7a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Classes\AppDelegate.cpp">
@@ -905,6 +911,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Classes\AllocatorTest\AllocatorTest.cpp">
       <Filter>Classes\AllocatorTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\Particle3DTest\Particle3DTest.cpp">
+      <Filter>Classes\Particle3DTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\CocosStudio3DTest\CocosStudio3DTest.cpp">
+      <Filter>Classes\CocosStudio3DTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\PerformanceTest\PerformanceParticle3DTest.cpp">
+      <Filter>Classes\PerformanceTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1667,6 +1682,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Classes\AllocatorTest\AllocatorTest.h">
       <Filter>Classes\AllocatorTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\Particle3DTest\Particle3DTest.h">
+      <Filter>Classes\Particle3DTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\CocosStudio3DTest\CocosStudio3DTest.h">
+      <Filter>Classes\CocosStudio3DTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\PerformanceTest\PerformanceParticle3DTest.h">
+      <Filter>Classes\PerformanceTest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

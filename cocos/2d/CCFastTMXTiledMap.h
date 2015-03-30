@@ -39,100 +39,165 @@ class TMXMapInfo;
 namespace experimental {
     
 class TMXLayer;
-
+/**
+ * @addtogroup _2d
+ * @{
+ */
+    
 /** @brief FastTMXTiledMap knows how to parse and render a TMX map.
 
-It adds support for the TMX tiled map format used by http://www.mapeditor.org
-It supports isometric, hexagonal and orthogonal tiles.
-It also supports object groups, objects, and properties.
+ * It adds support for the TMX tiled map format used by http://www.mapeditor.org.
+ * It supports isometric, hexagonal and orthogonal tiles.
+ * It also supports object groups, objects, and properties.
 
-Features:
-- Each tile will be treated as an Sprite
-- The sprites are created on demand. They will be created only when you call "layer->tileAt(position)"
-- Each tile can be rotated / moved / scaled / tinted / "opaqued", since each tile is a Sprite
-- Tiles can be added/removed in runtime
-- The z-order of the tiles can be modified in runtime
-- Each tile has an anchorPoint of (0,0)
-- The anchorPoint of the TMXTileMap is (0,0)
-- The TMX layers will be added as a child
-- The TMX layers will be aliased by default
-- The tileset image will be loaded using the TextureCache
-- Each tile will have a unique tag
-- Each tile will have a unique z value. top-left: z=1, bottom-right: z=max z
-- Each object group will be treated as an MutableArray
-- Object class which will contain all the properties in a dictionary
-- Properties can be assigned to the Map, Layer, Object Group, and Object
+ * Features:
+ * - Each tile will be treated as an Sprite.
+ * - The sprites are created on demand. They will be created only when you call "layer->tileAt(position)".
+ * - Each tile can be rotated / moved / scaled / tinted / "opaqued", since each tile is a Sprite.
+ * - Tiles can be added/removed in runtime.
+ * - The z-order of the tiles can be modified in runtime.
+ * - Each tile has an anchorPoint of (0,0).
+ * - The anchorPoint of the TMXTileMap is (0,0).
+ * - The TMX layers will be added as a child.
+ * - The TMX layers will be aliased by default.
+ * - The tileset image will be loaded using the TextureCache.
+ * - Each tile will have a unique tag.
+ * - Each tile will have a unique z value. top-left: z=1, bottom-right: z=max z.
+ * - Each object group will be treated as an MutableArray.
+ * - Object class which will contain all the properties in a dictionary.
+ * - Properties can be assigned to the Map, Layer, Object Group, and Object.
 
-Limitations:
-- It only supports one tileset per layer.
-- Embedded images are not supported
-- It only supports the XML format (the JSON format is not supported)
+ * Limitations:
+ * - It only supports one tileset per layer.
+ * - Embedded images are not supported.
+ * - It only supports the XML format (the JSON format is not supported).
 
-Technical description:
-Each layer is created using an FastTMXLayer (subclass of SpriteBatchNode). If you have 5 layers, then 5 FastTMXLayer will be created,
-unless the layer visibility is off. In that case, the layer won't be created at all.
-You can obtain the layers (FastTMXLayer objects) at runtime by:
-- map->getChildByTag(tag_number);  // 0=1st layer, 1=2nd layer, 2=3rd layer, etc...
-- map->getLayer(name_of_the_layer);
+ * Technical description:
+ * Each layer is created using an FastTMXLayer (subclass of SpriteBatchNode). If you have 5 layers, then 5 FastTMXLayer will be created,
+ * unless the layer visibility is off. In that case, the layer won't be created at all.
+ * You can obtain the layers (FastTMXLayer objects) at runtime by:
+ * - map->getChildByTag(tag_number);  // 0=1st layer, 1=2nd layer, 2=3rd layer, etc...
+ * - map->getLayer(name_of_the_layer);
 
-Each object group is created using a TMXObjectGroup which is a subclass of MutableArray.
-You can obtain the object groups at runtime by:
-- map->getObjectGroup(name_of_the_object_group);
+ * Each object group is created using a TMXObjectGroup which is a subclass of MutableArray.
+ * You can obtain the object groups at runtime by:
+ * - map->getObjectGroup(name_of_the_object_group);
 
-Each object is a TMXObject.
+ * Each object is a TMXObject.
 
-Each property is stored as a key-value pair in an MutableDictionary.
-You can obtain the properties at runtime by:
+ * Each property is stored as a key-value pair in an MutableDictionary.
+ * You can obtain the properties at runtime by:
 
-map->getProperty(name_of_the_property);
-layer->getProperty(name_of_the_property);
-objectGroup->getProperty(name_of_the_property);
-object->getProperty(name_of_the_property);
+ * map->getProperty(name_of_the_property);
+ * layer->getProperty(name_of_the_property);
+ * objectGroup->getProperty(name_of_the_property);
+ * object->getProperty(name_of_the_property);
 
-@since v3.2
-*/
+ * @since v3.2
+ * @js NA
+ */
 class CC_DLL TMXTiledMap : public Node
 {
 public:
-    /** creates a TMX Tiled Map with a TMX file.*/
+    /** Creates a TMX Tiled Map with a TMX file.
+     *
+     * @return An autorelease object.
+     */
     static TMXTiledMap* create(const std::string& tmxFile);
 
-    /** initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources */
+    /** Initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources. 
+     *
+     * @param tmxString A TMX formatted XML string.
+     * @param resourcePath A path to TMX resources.
+     * @return An autorelease object.
+     */
     static TMXTiledMap* createWithXML(const std::string& tmxString, const std::string& resourcePath);
 
-    /** return the FastTMXLayer for the specific layer */
+    /** Return the FastTMXLayer for the specific layer. 
+     * 
+     * @return Return the FastTMXLayer for the specific layer.
+     */
     TMXLayer* getLayer(const std::string& layerName) const;
 
-    /** return the TMXObjectGroup for the specific group */
+    /** Return the TMXObjectGroup for the specific group. 
+     * 
+     * @return Return the TMXObjectGroup for the specific group.
+     */
     TMXObjectGroup* getObjectGroup(const std::string& groupName) const;
 
-    /** return the value for the specific property name */
+    /** Return the value for the specific property name.
+     *
+     * @return Return the value for the specific property name.
+     */
     Value getProperty(const std::string& propertyName) const;
 
-    /** return properties dictionary for tile GID */
+    /** Return properties dictionary for tile GID.
+     *
+     * @return Return properties dictionary for tile GID.
+     */
     Value getPropertiesForGID(int GID) const;
 
-    /** the map's size property measured in tiles */
+    /** The map's size property measured in tiles. 
+     *
+     * @return The map's size property measured in tiles.
+     */
     inline const Size& getMapSize() const { return _mapSize; };
+    
+    /** Set the map's size property measured in tiles.
+     *
+     * @param mapSize The map's size property measured in tiles.
+     */
     inline void setMapSize(const Size& mapSize) { _mapSize = mapSize; };
 
-    /** the tiles's size property measured in pixels */
+    /** The tiles's size property measured in pixels.
+     *
+     * @return The tiles's size property measured in pixels.
+     */
     inline const Size& getTileSize() const { return _tileSize; };
+    
+    /** Set the tiles's size property measured in pixels. 
+     *
+     * @param tileSize The tiles's size property measured in pixels.
+     */
     inline void setTileSize(const Size& tileSize) { _tileSize = tileSize; };
 
-    /** map orientation */
+    /** Get map orientation. 
+     *
+     * @return The map orientation.
+     */
     inline int getMapOrientation() const { return _mapOrientation; };
+    
+    /** Set map orientation. 
+     *
+     * @param mapOrientation The map orientation.
+     */
     inline void setMapOrientation(int mapOrientation) { _mapOrientation = mapOrientation; };
 
-    /** object groups */
+    /** Get object groups. 
+     *
+     * @return Object groups.
+     */
     inline const Vector<TMXObjectGroup*>& getObjectGroups() const { return _objectGroups; };
     inline Vector<TMXObjectGroup*>& getObjectGroups() { return _objectGroups; };
+    
+    /** Set object groups. 
+     *
+     * @param groups An object groups.
+     */
     inline void setObjectGroups(const Vector<TMXObjectGroup*>& groups) {
         _objectGroups = groups;
     };
     
-    /** properties */
+    /** Get properties.
+     *
+     * @return Properties.
+     */
     inline const ValueMap& getProperties() const { return _properties; };
+    
+    /** Set properties. 
+     *
+     * @param properties An ValueMap Properties.
+     */
     inline void setProperties(const ValueMap& properties) {
         _properties = properties;
     };
@@ -180,7 +245,7 @@ private:
 };
 
 // end of tilemap_parallax_nodes group
-/// @}
+/** @} */
     
 } //end of namespace experimental
 

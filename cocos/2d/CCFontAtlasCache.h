@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -25,6 +25,8 @@
 
 #ifndef _CCFontAtlasCache_h_
 #define _CCFontAtlasCache_h_
+
+/// @cond DO_NOT_SHOW
 
 #include <unordered_map>
 
@@ -58,4 +60,5 @@ private:
 
 NS_CC_END
 
+/// @endcond
 #endif

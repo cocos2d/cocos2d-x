@@ -251,7 +251,7 @@ bool SpineTestPerformanceLayer::init () {
         skeletonNode->setAnimation(0, "walk", true);
         skeletonNode->setSkin("goblin");
         
-        skeletonNode->setScale(0.2);
+        skeletonNode->setScale(0.2f);
         skeletonNode->setPosition(pos);
         addChild(skeletonNode);
         return true;

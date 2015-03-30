@@ -36,13 +36,18 @@
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup _3d
+ * @{
+ */
+
 class Texture2D;
 class MeshSkin;
 class MeshIndexData;
 class GLProgramState;
 class GLProgram;
 /** 
- * Mesh: contains ref to index buffer, GLProgramState, texture, skin, blend function, aabb and so on
+ * @brief Mesh: contains ref to index buffer, GLProgramState, texture, skin, blend function, aabb and so on
  */
 class CC_DLL Mesh : public Ref
 {
@@ -110,11 +115,20 @@ CC_CONSTRUCTOR_ACCESS:
     
     Mesh();
     virtual ~Mesh();
-    
+
+    /** 
+     * Get the default GL program.
+     */
     GLProgram* getDefaultGLProgram(bool textured);
     
+    /** 
+     * Set the default GL program.
+     */
     void setGLProgramState(GLProgramState* glProgramState);
     
+    /** 
+     * Get the MeshCommand.
+     */
     MeshCommand& getMeshCommand() { return _meshCommand; }
 
     /**skin setter*/
@@ -124,8 +138,15 @@ CC_CONSTRUCTOR_ACCESS:
     /**name setter*/
     void setName(const std::string& name) { _name = name; }
  
-    void calcuateAABB();
+    /** 
+     * calculate the AABB of the mesh
+     * @note the AABB is in the local space, not the world space
+     */
+    void calculateAABB();
     
+    /** 
+     * Bind to the MeshCommand
+     */
     void bindMeshCommand();
 protected:
     Texture2D* _texture;  //texture that submesh is using
@@ -141,6 +162,10 @@ protected:
     AABB         _aabb;
     std::function<void()> _visibleChanged;
 };
+
+// end of actions group
+/// @}
+
 
 NS_CC_END
 

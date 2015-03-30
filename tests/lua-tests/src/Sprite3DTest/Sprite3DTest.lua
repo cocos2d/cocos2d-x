@@ -326,8 +326,9 @@ function Animate3DTest:addSprite3D()
     self._moveAction:retain()
 
     local function reachEndCallBack()
+        local winSize = cc.Director:getInstance():getWinSize()
         self._sprite:stopActionByTag(100)
-        local inverse = self._moveAction:reverse()
+        local inverse = cc.MoveTo:create(4.0, cc.p(winSize.width - self._sprite:getPositionX(), winSize.height / 2.0))
         inverse:retain()
         self._moveAction:release()
         self._moveAction = inverse
@@ -840,8 +841,9 @@ function Sprite3DWithOBBPerfromanceTest:addNewSpriteWithCoords(vec2)
     self._moveAction = cc.MoveTo:create(4.0, cc.p(s.width / 5.0, s.height / 2.0))
     self._moveAction:retain()
     local function reachEndCallBack()
+    local s = cc.Director:getInstance():getWinSize()
         self._sprite:stopActionByTag(100)
-        local inverse = self._moveAction:reverse()
+        local inverse = cc.MoveTo:create(4.0, cc.p(s.width - self._sprite:getPositionX(), s.height / 2.0))
         inverse:retain()
         self._moveAction:release()
         self._moveAction = inverse
@@ -919,10 +921,180 @@ function Sprite3DMirrorTest.create()
     return layer
 end
 
+
+----------------------------------------
+----AsyncLoadSprite3DTest
+----------------------------------------
+local AsyncLoadSprite3DTest = class("AsyncLoadSprite3DTest", function ()
+    local layer = cc.Layer:create()
+    Helper.initWithLayer(layer)
+    return layer
+end)
+
+function AsyncLoadSprite3DTest:ctor()
+    -- body
+    self:init()
+end
+
+function AsyncLoadSprite3DTest:init()
+    Helper.titleLabel:setString(self:title())
+    Helper.subtitleLabel:setString(self:subtitle())
+
+    self:registerScriptHandler(function (event)
+        if event == "enter" then
+            self:onEnter()
+        elseif event == "exit" then
+            self:onExit()
+        end
+    end)
+end
+
+function AsyncLoadSprite3DTest:title()
+    return "Testing Sprite3D:createAsync"
+end
+
+function AsyncLoadSprite3DTest:subtitle()
+    return ""
+end
+
+function AsyncLoadSprite3DTest:onEnter()
+
+    local ttfConfig = {}
+    ttfConfig.fontFilePath = "fonts/arial.ttf"
+    ttfConfig.fontSize = 15
+
+    local paths = {"Sprite3DTest/boss.obj", "Sprite3DTest/girl.c3b", "Sprite3DTest/orc.c3b", "Sprite3DTest/ReskinGirl.c3b", "Sprite3DTest/axe.c3b"}
+
+    local label1 = cc.Label:createWithTTF(ttfConfig,"AsyncLoad Sprite3D")
+    local item1 = cc.MenuItemLabel:create(label1)
+
+    function menuCallback_asyncLoadSprite(tag, sender)
+        --Note that you must stop the tasks before leaving the scene.
+        cc.AsyncTaskPool:getInstance():stopTasks(cc.AsyncTaskPool.TaskType.TASK_IO)
+    
+        local node = self:getChildByTag(101)
+        --remove all loaded sprite
+        node:removeAllChildren()
+    
+        --remove cache data
+        cc.Sprite3DCache:getInstance():removeAllSprite3DData()
+
+        local function callback(sprite, index)
+            local node = self:getChildByTag(101)
+            local s = cc.Director:getInstance():getWinSize()
+            local width = s.width / (#paths)
+            local point = cc.p(width * (0.5 + index), s.height / 2.0)
+            sprite:setPosition(point)
+            node:addChild(sprite)
+        end
+
+        cc.Sprite3D:createAsync(paths[1], function(sprite)
+            callback(sprite, 0)
+        end)
+
+        cc.Sprite3D:createAsync(paths[2], function(sprite)
+            callback(sprite, 1)
+        end)
+
+        cc.Sprite3D:createAsync(paths[3], function(sprite)
+            callback(sprite, 2)
+        end)
+
+        cc.Sprite3D:createAsync(paths[4], function(sprite)
+            callback(sprite, 3)
+        end)
+
+        cc.Sprite3D:createAsync(paths[5], function(sprite)
+            callback(sprite, 4)
+        end)
+    end
+    item1:registerScriptTapHandler(menuCallback_asyncLoadSprite)
+    
+    local s = cc.Director:getInstance():getWinSize()
+    item1:setPosition( s.width * 0.5, s.height * 0.8)
+    
+    local menu = cc.Menu:create(item1)
+    menu:setPosition(cc.p(0,0))
+    self:addChild(menu, 10)
+    
+    local node = cc.Node:create()
+    node:setTag(101)
+    self:addChild(node)
+    
+    menuCallback_asyncLoadSprite()
+end
+
+function AsyncLoadSprite3DTest:onExit()
+
+----------------------------------------
+----Sprite3DCubeTexture
+----------------------------------------
+local Sprite3DCubeMap = {}
+Sprite3DCubeMap.__index = Sprite3DCubeMap
+
+function Sprite3DCubeMap.create()
+local layer = cc.Layer:create()
+Helper.initWithLayer(layer)
+Helper.titleLabel:setString("Sprite3D CubeMap/Skybox Test")
+
+local visSize = cc.Director:getInstance():getVisibleSize()
+local camera  = cc.Camera:createPerspective(68, visSize.width / visSize.height, 0.1, 200)
+camera:setCameraFlag(2)
+layer:addChild(camera)
+
+local fileName = "Sprite3DTest/teapot.c3b"
+local teapot = cc.Sprite3D:create(fileName)
+teapot:setPosition3D({x = 0, y = -5, z = -20})
+teapot:setRotation3D({x = -90, y = 180, z = 0})
+
+local texCube = cc.TextureCube:create("Sprite3DTest/skybox/left.jpg",  "Sprite3DTest/skybox/right.jpg",
+                                      "Sprite3DTest/skybox/top.jpg",   "Sprite3DTest/skybox/bottom.jpg",
+                                      "Sprite3DTest/skybox/front.jpg", "Sprite3DTest/skybox/back.jpg");
+
+local program = cc.GLProgram:createWithFilenames("Sprite3DTest/cube_map.vert", "Sprite3DTest/cube_map.frag")
+local state = cc.GLProgramState:create(program)
+
+attriNames = {
+                "a_position", "a_color", 
+                "a_texCoord", "a_texCoord1", "a_texCoord2", "a_texCoord3", 
+                "a_normal", "a_blendWeight", "a_blendIndex"
+            }
+
+--pass mesh's attribute to shader
+local offset = 0
+local attributeCount = teapot:getMesh():getMeshVertexAttribCount()
+for i = 0, attributeCount-1 do
+    local meshattribute = teapot:getMesh():getMeshVertexAttribute(i)
+    state:setVertexAttribPointer(attriNames[meshattribute.vertexAttrib+1],
+        meshattribute.size,
+        meshattribute.type,
+        false,
+        teapot:getMesh():getVertexSizeInBytes(),
+        offset);
+    offset = offset + meshattribute.attribSizeBytes
+end
+
+state:setUniformTexture("u_cubeTex", texCube:getName())
+
+teapot:setGLProgramState(state)
+teapot:setCameraMask(2)
+
+local rotate_action = cc.RotateBy:create(1.5, { x = 0.0, y = 30.0, z = 0.0})
+teapot:runAction(cc.RepeatForever:create(rotate_action));
+layer:addChild(teapot)
+
+local skybox = cc.Skybox:create()
+skybox:setTexture(texCube)
+layer:addChild(skybox)
+
+return layer
+>>>>>>> 4ea27173daf6b04cf0b917faa7911dde448cbdca
+end
+
 function Sprite3DTest()
     local scene = cc.Scene:create()
 
-    Helper.createFunctionTable = 
+    Helper.createFunctionTable =
     {
         Sprite3DBasicTest.create,
         Sprite3DHitTest.create,
@@ -932,6 +1104,8 @@ function Sprite3DTest()
         Sprite3DReskinTest.create,
         Sprite3DWithOBBPerfromanceTest.create,
         Sprite3DMirrorTest.create,
+        AsyncLoadSprite3DTest.create,
+        Sprite3DCubeMap.create,
     }
 
     scene:addChild(Sprite3DBasicTest.create())

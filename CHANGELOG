@@ -1,12 +1,83 @@
+cocos2d-x-3.6beta0 Apr.14 2015
+    [NEW]           3D: added texturecub supported
+
+    [FIX]           Sprite3D: memory leak
+
+cocos2d-x-3.5 Mar.23 2015
+    [NEW]           EditBox: support Color4B
+
+    [FIX]           AutoRelasePool: memory leak if adding an element into pool when releasing auto release pool
+    [FIX]           EditBox: have a 100 bytes input limit on windows
+    [FIX]           FileUtils: getWritablePath() does not return correct writable path on Mac & Windows
+    [FIX]           HttpAsynConnection: can not get error content if response code less than 200 or response code greater or equal than 300
+    [FIX]           HttpResponse: reference count error causes assert error
+    [FIX]           Label: stroke color of system font is incorrect on iOS
+
+cocos2d-x-3.5rc0 Mar.13 2015
+    [NEW]           CocosStudio: add callback when loading a CSB file
+    [NEW]           Particle3D: more Particle Universe features are supported, add observers and event handlers
+    
+    [FIX]           Billboard: fix bug on transparent Billboard because of transparent queue
+    [FIX]           Bundle: bug that create bundle with empty path
+    [FIX]           Camera: camera is detroyed unexpectedly when call removeAllChildren
+    [FIX]           C++: use console in `build/build_native.sh`
+    [FIX]           Label: position is wrong if it is visited by a new camera
+    [FIX]           MotionStreak: can not work with MoveTo and MoveBy
+    [FIX]           MoveTo: disable reverse() because it is meaningless
+    [FIX]           Particle3D: to make path shorter, rename Particle Universe folder to PU, and files CCPUParticle3DXXX to CCPUXXX to fix compiling error on WP8
+    [FIX]           Particle3D: `loadMaterialsFromSearchPaths` bug on linux platform
+    [FIX]           Sprite3D: fix bug on transparent 3D Sprite because of transparent queue
+
+cocos2d-x-3.5beta0  Feb.27 2015
+    [NEW]           Added Particle3D
+    [NEW]           C++: add Romanian language support
+
+    [FIX]           Audio: audio can not resume if it is interrupted, and back from background
+    [FIX]           Cocos Studio UI: setCameraMask does not work for the Cocos Studio UI
+    [FIX]           C++: compiling error when using CC_USE_CULLING
+    [FIX]           Label: texture size of string has unexpected padding on iOS 7 and upper version
+    [FIX]           HttpClient: if the request data is started by a null character, it does not fill http body
+    [FIX]           HttpClient: memory leak on iOS
+    [FIX]           Sprite3D: `getAttachNode()` will fail when there is no bone with name
+    
+cocos2d-x-3.4 Jan.30 2015
+    [FIX]           Animate3D: `setSpeed` has not effect if `Animate3D` is used in Sequence
+    [FIX]           C++: will crash if built with armeabi-v7a enabled on Android devices that with armeabi-v7a architecture but doesn't support NEON instructions
+    [FIX]           C++: may crash if VAO is not supported
+    [FIX]           EditBox: content is not clipped correctly on windows
+    [FIX]           GLProgram: will cause crash on some devices that don't support more than 8 atrributes
+    [FIX]           HttpClient: not set response code when connecting failed on Android
+    [FIX]           Label: alpha channel of text color of system font has not effect
+    [FIX]           Label: use int for dimensions that will lose the precision
+    [FIX]           Label: labels will become white block after resume from background on some Android devices, such as xiaomi3
+    [FIX]           Label: improved parsing performance of bitmap font
+    [FIX]           Label: can not display `&` if using system font on windows
+    [FIX]           Lua-binding:studio-support: AnimationInfo is not binded 
+    [FIX]           New audio: not close file descriptor leads to that may causes game freeze if playing two many times(may be more than 1000) on Android
+    [FIX]           Node: anchor point has not effect to rotation, it always rotate along (0, 0)
+    [FIX]           Physics integration: Scale9Sprite can't run `Move` action and `Scale` action if used physical scene
+    [FIX]           SpriteFrameCache: `addSpriteFramesWithFil`e may crash if plist file doesn't exist
+    [FIX]           Sprite3D: material files (.mtl) are not loaded for any object when creating from an .obj file
+    [FIX]           UI::ImageView: rendered content size is wrong if `ignoreSize` is true and `Scale9` is not enabled
+    [FIX]           UI::Slider: when scale9 is enabled, the progress bar's rendering height is wrong
+    [FIX]           UI:Scale9Sprite: some position information will be lost when toggling `Scale9` state
+    [FIX]           UI::TextField: will get wrong event message if clicking `TextField` twice
+    [FIX]           UI::TextField: result of `getContentSize` is wrong if it is invoked in insert or delete event callback
+    [FIX]           UI::WebView: base URL can not work
+
 cocos2d-x-3.4rc1 Jan.15 2015
     [NEW]           C++: added CC_USE_CULLING macro to control if enable auto culling or not 
     [NEW]           FileUtils::fullPathForFilename will return empty string when file can not be found
     [NEW]           VertexBuffer&IndexBuffer: allow setting usage(GL_STATIC_DRAW or GL_DYNAMIC_DRAW) in create method
+    [NEW]           Renderer: 3D rendering support for 2d objects
     
+    [FIX]           DrawNode: fix random crash because of init opengl buffer wrongly 
     [FIX]           DrawNode: drawPoints() can not set ponit size
     [FIX]           EventDispatcher: crash if adding/removing event listeners and dispatching event in event callback function
     [FIX]           GLProgramState: may cause GL_INVALID_VALUE error at start up on Android
+    [FIX]           LUA: 0x80000000 can not be converted by lua_tonumber correctly on some devices
     [FIX]           PhysicsBody: can't get correct position in the same frame of adding PhysicsBody to PhysicsWorld
+    [FIX]           UI: fix crash when navigation controller is null
 
 cocos2d-x-3.4rc0  Jan.9 2015
     [NEW]           3rd: update libcurl to v7.39

@@ -5,7 +5,9 @@
 -- @parent_module cc
 
 --------------------------------
---  creates the action 
+-- brief Create the action with the inner action.<br>
+-- param action The pointer of the inner action.<br>
+-- return A pointer of EaseBounceInOut action. If creation failed, return nil.
 -- @function [parent=#EaseBounceInOut] create 
 -- @param self
 -- @param #cc.ActionInterval action
@@ -22,6 +24,7 @@
 -- @function [parent=#EaseBounceInOut] update 
 -- @param self
 -- @param #float time
+-- @return EaseBounceInOut#EaseBounceInOut self (return value: cc.EaseBounceInOut)
         
 --------------------------------
 -- 

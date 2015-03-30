@@ -26,6 +26,7 @@
 
 #include "cocostudio/CSParseBinary_generated.h"
 #include "cocostudio/ActionTimeline/CCActionTimeline.h"
+#include "cocostudio/CCObjectExtensionData.h"
 
 #include "tinyxml2.h"
 #include "flatbuffers/flatbuffers.h"
@@ -36,10 +37,10 @@ using namespace flatbuffers;
 
 namespace cocostudio
 {
-    const char* Layout_PositionPercentXEnabled = "PositionPercentXEnable";
-    const char* Layout_PositionPercentYEnabled = "PositionPercentYEnable";
-    const char* Layout_PercentWidthEnable = "PercentWidthEnable";
-    const char* Layout_PercentHeightEnable = "PercentHeightEnable";
+    const char* Layout_PositionPercentXEnabled = "PositionPercentXEnabled";
+    const char* Layout_PositionPercentYEnabled = "PositionPercentYEnabled";
+    const char* Layout_PercentWidthEnable = "PercentWidthEnabled";
+    const char* Layout_PercentHeightEnable = "PercentHeightEnabled";
     const char* Layout_StretchWidthEnable = "StretchWidthEnable";
     const char* Layout_StretchHeightEnable = "StretchHeightEnable";
     const char* Layout_HorizontalEdge = "HorizontalEdge";
@@ -181,6 +182,10 @@ namespace cocostudio
             else if (attriname == "TouchEnable")
             {
                 touchEnabled = (value == "True") ? true : false;
+            }
+            else if (attriname == "UserData")
+            {
+                customProperty = value;
             }
             else if (attriname == "FrameEvent")
             {
@@ -472,11 +477,12 @@ namespace cocostudio
         int zorder		    = options->zOrder();
         int tag             = options->tag();
         int actionTag       = options->actionTag();
-        bool visible        = options->visible();
+        bool visible        = options->visible() != 0;
         float w             = options->size()->width();
         float h             = options->size()->height();
         int alpha           = options->alpha();
         Color3B color(options->color()->r(), options->color()->g(), options->color()->b());
+        std::string customProperty = options->customProperty()->c_str();
         
         node->setName(name);
         
@@ -506,7 +512,12 @@ namespace cocostudio
         node->setColor(color);
         
         node->setTag(tag);
-        node->setUserObject(timeline::ActionTimelineData::create(actionTag));
+        
+        ObjectExtensionData* extensionData = ObjectExtensionData::create();
+        extensionData->setCustomProperty(customProperty);
+        extensionData->setActionTag(actionTag);
+        node->setUserObject(extensionData);
+        
         
         node->setCascadeColorEnabled(true);
         node->setCascadeOpacityEnabled(true);
@@ -521,16 +532,16 @@ namespace cocostudio
 
         auto layoutComponent = ui::LayoutComponent::bindLayoutComponent(node);
 
-        bool positionXPercentEnabled = layoutComponentTable->positionXPercentEnabled();
-        bool positionYPercentEnabled = layoutComponentTable->positionYPercentEnabled();
+        bool positionXPercentEnabled = layoutComponentTable->positionXPercentEnabled() != 0;
+        bool positionYPercentEnabled = layoutComponentTable->positionYPercentEnabled() != 0;
         float positionXPercent = layoutComponentTable->positionXPercent();
         float positionYPercent = layoutComponentTable->positionYPercent();
-        bool sizeXPercentEnable = layoutComponentTable->sizeXPercentEnable();
-        bool sizeYPercentEnable = layoutComponentTable->sizeYPercentEnable();
+        bool sizeXPercentEnable = layoutComponentTable->sizeXPercentEnable() != 0;
+        bool sizeYPercentEnable = layoutComponentTable->sizeYPercentEnable() != 0;
         float sizeXPercent = layoutComponentTable->sizeXPercent();
         float sizeYPercent = layoutComponentTable->sizeYPercent();
-        bool stretchHorizontalEnabled = layoutComponentTable->stretchHorizontalEnabled();
-        bool stretchVerticalEnabled = layoutComponentTable->stretchVerticalEnabled();
+        bool stretchHorizontalEnabled = layoutComponentTable->stretchHorizontalEnabled() != 0;
+        bool stretchVerticalEnabled = layoutComponentTable->stretchVerticalEnabled() != 0;
         std::string horizontalEdge = layoutComponentTable->horizontalEdge()->c_str();
         std::string verticalEdge = layoutComponentTable->verticalEdge()->c_str();
         float leftMargin = layoutComponentTable->leftMargin();

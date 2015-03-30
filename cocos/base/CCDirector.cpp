@@ -145,6 +145,8 @@ bool Director::init(void)
 
     _contentScaleFactor = 1.0f;
 
+    _console = new (std::nothrow) Console;
+
     // scheduler
     _scheduler = new (std::nothrow) Scheduler();
     // action manager
@@ -167,8 +169,6 @@ bool Director::init(void)
     initMatrixStack();
 
     _renderer = new (std::nothrow) Renderer;
-
-    _console = new (std::nothrow) Console;
 
     return true;
 }
@@ -248,8 +248,6 @@ void Director::setGLDefaultValues()
     CCASSERT(_openGLView, "opengl view should not be null");
 
     setAlphaBlending(true);
-    // FIXME: Fix me, should enable/disable depth test according the depth format as cocos2d-iphone did
-    // [self setDepthTest: view_.depthFormat];
     setDepthTest(false);
     setProjection(_projection);
 }
@@ -701,18 +699,7 @@ void Director::setAlphaBlending(bool on)
 
 void Director::setDepthTest(bool on)
 {
-    if (on)
-    {
-        glClearDepth(1.0f);
-        glEnable(GL_DEPTH_TEST);
-        glDepthFunc(GL_LEQUAL);
-//        glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-    }
-    else
-    {
-        glDisable(GL_DEPTH_TEST);
-    }
-    CHECK_GL_ERROR_DEBUG();
+    _renderer->setDepthTest(on);
 }
 
 void Director::setClearColor(const Color4F& clearColor)
@@ -1125,8 +1112,8 @@ void Director::showStats()
 {
     static unsigned long prevCalls = 0;
     static unsigned long prevVerts = 0;
-    static float prevDeltaTime  = 0.016; // 60FPS
-    static const float FPS_FILTER = 0.10;
+    static float prevDeltaTime  = 0.016f; // 60FPS
+    static const float FPS_FILTER = 0.10f;
 
     _accumDt += _deltaTime;
     
@@ -1172,7 +1159,7 @@ void Director::showStats()
 void Director::calculateMPF()
 {
     static float prevSecondsPerFrame = 0;
-    static const float MPF_FILTER = 0.10;
+    static const float MPF_FILTER = 0.10f;
 
     struct timeval now;
     gettimeofday(&now, nullptr);

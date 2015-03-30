@@ -1,6 +1,5 @@
 /****************************************************************************
- Copyright (c) 2014 cocos2d-x.org
- Copyright (c) 2014 Chukong Technologies Inc.
+ Copyright (c) 2014-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -25,9 +24,11 @@
 
 #ifndef __cocos2d_libs__CCGameController__
 #define __cocos2d_libs__CCGameController__
+/// @cond DO_NOT_SHOW
 
 #include "base/CCController.h"
 #include "base/CCEventController.h"
 #include "base/CCEventListenerController.h"
 
+/// @endcond
 #endif /* defined(__cocos2d_libs__CCGameController__) */

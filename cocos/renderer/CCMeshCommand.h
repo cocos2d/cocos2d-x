@@ -45,8 +45,10 @@ public:
 
     MeshCommand();
     ~MeshCommand();
-
-    void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, GLuint vertexBuffer, GLuint indexBuffer, GLenum primitive, GLenum indexType, ssize_t indexCount, const Mat4 &mv);
+    
+    void init(float globalZOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, GLuint vertexBuffer, GLuint indexBuffer, GLenum primitive, GLenum indexFormat, ssize_t indexCount, const Mat4 &mv, uint32_t flags);
+    
+    CC_DEPRECATED_ATTRIBUTE void init(float globalZOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, GLuint vertexBuffer, GLuint indexBuffer, GLenum primitive, GLenum indexType, ssize_t indexCount, const Mat4 &mv);
     
     void setCullFaceEnabled(bool enable);
     
@@ -68,7 +70,7 @@ public:
     
     void execute();
     
-    //used for bath
+    //used for batch
     void preBatchDraw();
     void batchDraw();
     void postBatchDraw();
@@ -125,6 +127,12 @@ protected:
     GLenum _cullFace;
     bool _depthTestEnabled;
     bool _depthWriteEnabled;
+    bool _forceDepthWrite;
+    
+    bool _renderStateCullFaceEnabled;
+    bool _renderStateDepthTest;
+    GLboolean _renderStateDepthWrite;
+    GLenum    _renderStateCullFace;
 
     // ModelView transform
     Mat4 _mv;

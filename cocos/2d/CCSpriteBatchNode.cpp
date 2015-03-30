@@ -26,7 +26,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "2d/CCCamera.h"
 #include "2d/CCSpriteBatchNode.h"
 #include "2d/CCSprite.h"
 #include "base/CCDirector.h"
@@ -68,7 +67,7 @@ SpriteBatchNode* SpriteBatchNode::create(const std::string& fileImage, ssize_t c
 /*
 * init with Texture2D
 */
-bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity)
+bool SpriteBatchNode::initWithTexture(Texture2D *tex, ssize_t capacity/* = DEFAULT_CAPACITY*/)
 {
     CCASSERT(capacity>=0, "Capacity must be >= 0");
     
@@ -106,7 +105,7 @@ bool SpriteBatchNode::init()
 /*
 * init with FileImage
 */
-bool SpriteBatchNode::initWithFile(const std::string& fileImage, ssize_t capacity)
+bool SpriteBatchNode::initWithFile(const std::string& fileImage, ssize_t capacity/* = DEFAULT_CAPACITY*/)
 {
     Texture2D *texture2D = Director::getInstance()->getTextureCache()->addImage(fileImage);
     return initWithTexture(texture2D, capacity);
@@ -379,26 +378,7 @@ void SpriteBatchNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t f
         child->updateTransform();
     }
 
-    //Render as 3D object
-    if (flags & FLAGS_RENDER_AS_3D)
-    {
-        float depth = Camera::getVisitingCamera()->getDepthInView(transform);
-        _batchCommand.init(
-                           depth,
-                           getGLProgram(),
-                           _blendFunc,
-                           _textureAtlas,
-                           transform);
-    }
-    else
-    {
-        _batchCommand.init(
-                       _globalZOrder,
-                       getGLProgram(),
-                       _blendFunc,
-                       _textureAtlas,
-                       transform);
-    }
+    _batchCommand.init(_globalZOrder, getGLProgram(), _blendFunc, _textureAtlas, transform, flags);
     renderer->addCommand(&_batchCommand);
 }
 

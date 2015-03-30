@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -21,12 +21,14 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
 #ifndef __HTTPASYNCONNECTION_H__
 #define __HTTPASYNCONNECTION_H__
+/// @cond DO_NOT_SHOW
 
 #import <Foundation/Foundation.h>
 #import <Security/Security.h>
-
+/// @cond
 @interface HttpAsynConnection : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 {
 }
@@ -36,7 +38,7 @@
 
 @property (strong) NSString *sslFile;
 
-@property (strong) NSDictionary *responseHeader;
+@property (copy) NSDictionary *responseHeader;
 
 @property (strong) NSMutableData *responseData;
 
@@ -46,6 +48,7 @@
 @property (readonly) NSString *statusString;
 
 @property (strong) NSError *responseError;
+@property (strong) NSError *connError;
 
 @property (strong) NSURLConnection *conn;
 
@@ -58,4 +61,5 @@
 
 @end
 
+/// @endcond
 #endif //__HTTPASYNCONNECTION_H__

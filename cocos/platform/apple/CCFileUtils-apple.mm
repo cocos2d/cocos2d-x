@@ -337,6 +337,11 @@ FileUtils* FileUtils::getInstance()
 
 std::string FileUtilsApple::getWritablePath() const
 {
+    if (_writablePath.length())
+    {
+        return _writablePath;
+    }
+
     // save to document folder
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];

@@ -36,7 +36,7 @@ set(_sqlite3_inc sqlite3.h)
 set(_sqlite3_libs sqlite3)
 
 set(_gles_prefix GLEW)
-set(_gles_inc glew.h)
+set(_gles_inc GL/glew.h)
 set(_gles_inc_paths OGLES)
 set(_gles_libs glew32)
 

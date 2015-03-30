@@ -21,9 +21,9 @@ public:
     virtual std::string subtitle() const override;
     virtual void onEnter() override;
 
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
+    void restartCallback(Ref* sender) override;
+    void nextCallback(Ref* sender) override;
+    void backCallback(Ref* sender) override;
 };
 
 class LabelTTFAlignmentNew : public AtlasDemoNew
@@ -189,9 +189,9 @@ public:
     virtual std::string subtitle() const override;
     void stringChanged(Ref *sender);
     void alignmentChanged(Ref *sender);
-    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event);
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event) override;
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event) override;
 
 public:
     Label *_labelShouldRetain;
@@ -555,5 +555,26 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class LabelIssue10089Test : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelIssue10089Test);
+
+    LabelIssue10089Test();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class LabelSystemFontColor : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelSystemFontColor);
+
+    LabelSystemFontColor();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
 
 #endif

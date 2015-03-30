@@ -34,7 +34,21 @@ namespace cocos2d {
     class Camera;
 }
 
-
+class BillBoardRotationTest : public BaseTest
+{
+public:
+    CREATE_FUNC(BillBoardRotationTest);
+    BillBoardRotationTest();
+    virtual ~BillBoardRotationTest(void);
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    virtual void restartCallback(Ref* sender) override;
+    virtual void nextCallback(Ref* sender) override;
+    virtual void backCallback(Ref* sender) override;
+    
+protected:
+};
 
 class BillBoardTest : public BaseTest
 {
@@ -48,11 +62,15 @@ public:
     void addNewBillBoradWithCoords(Vec3 p);
     void addNewAniBillBoradWithCoords(Vec3 p);
     void rotateCameraCallback(Ref* sender,float value);
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event* event) override;
     
     void menuCallback_orientedPoint(Ref* sender);
     void menuCallback_orientedPlane(Ref* sender);
 
+    virtual void restartCallback(Ref* sender) override;
+    virtual void nextCallback(Ref* sender) override;
+    virtual void backCallback(Ref* sender) override;
+    
 protected:
     Camera*           _camera;
     Layer*            _layerBillBorad;

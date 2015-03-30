@@ -39,6 +39,9 @@
 #include <io.h>
 #include <WS2tcpip.h>
 #include <Winsock2.h>
+#if defined(__MINGW32__)
+#include "platform/win32/inet_pton_mingw.h"
+#endif
 #define bzero(a, b) memset(a, 0, b);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #include "inet_ntop_winrt.h"
@@ -202,10 +205,10 @@ static const char* inet_ntop(int af, const void* src, char* dst, int cnt)
 }
 #endif
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 static const int CCLOG_STRING_TAG = 1;
 void SendLogToWindow(const char *log)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     // Send data as a message
     COPYDATASTRUCT myCDS;
     myCDS.dwData = CCLOG_STRING_TAG;
@@ -219,8 +222,12 @@ void SendLogToWindow(const char *log)
             (WPARAM)(HWND)hwnd,
             (LPARAM)(LPVOID)&myCDS);
     }
-#endif
 }
+#else
+void SendLogToWindow(const char *log)
+{
+}
+#endif
 
 //
 // Free functions to log

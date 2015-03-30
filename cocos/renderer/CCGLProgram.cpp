@@ -50,8 +50,9 @@ const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP = "ShaderPositi
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST = "ShaderPositionTextureColorAlphaTest";
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV = "ShaderPositionTextureColorAlphaTest_NoMV";
 const char* GLProgram::SHADER_NAME_POSITION_COLOR = "ShaderPositionColor";
-const char* GLProgram::SHADER_NAME_POSITION_COLOR_POINTSIZE = "ShaderPositionColorPointsize";
+const char* GLProgram::SHADER_NAME_POSITION_COLOR_TEXASPOINTSIZE = "ShaderPositionColorTexAsPointsize";
 const char* GLProgram::SHADER_NAME_POSITION_COLOR_NO_MVP = "ShaderPositionColor_noMVP";
+
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE = "ShaderPositionTexture";
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_U_COLOR = "ShaderPositionTexture_uColor";
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_A8_COLOR = "ShaderPositionTextureA8Color";
@@ -69,6 +70,9 @@ const char* GLProgram::SHADER_3D_SKINPOSITION_TEXTURE = "Shader3DSkinPositionTex
 const char* GLProgram::SHADER_3D_POSITION_NORMAL = "Shader3DPositionNormal";
 const char* GLProgram::SHADER_3D_POSITION_NORMAL_TEXTURE = "Shader3DPositionNormalTexture";
 const char* GLProgram::SHADER_3D_SKINPOSITION_NORMAL_TEXTURE = "Shader3DSkinPositionNormalTexture";
+const char* GLProgram::SHADER_3D_PARTICLE_COLOR = "Shader3DParticleColor";
+const char* GLProgram::SHADER_3D_PARTICLE_TEXTURE = "Shader3DParticleTexture";
+const char* GLProgram::SHADER_3D_SKYBOX = "Shader3DSkybox";
 
 
 // uniform names
@@ -90,7 +94,6 @@ const char* GLProgram::UNIFORM_NAME_ALPHA_TEST_VALUE = "CC_alpha_value";
 // Attribute names
 const char* GLProgram::ATTRIBUTE_NAME_COLOR = "a_color";
 const char* GLProgram::ATTRIBUTE_NAME_POSITION = "a_position";
-const char* GLProgram::ATTRIBUTE_NAME_POINTSIZE = "a_pointSize";
 const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD = "a_texCoord";
 const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD1 = "a_texCoord1";
 const char* GLProgram::ATTRIBUTE_NAME_TEX_COORD2 = "a_texCoord2";
@@ -161,7 +164,7 @@ GLProgram::~GLProgram()
 
     for (auto e : _hashForUniforms)
     {
-        free(e.second);
+        free(e.second.first);
     }
     _hashForUniforms.clear();
 }
@@ -278,7 +281,6 @@ void GLProgram::bindPredefinedVertexAttribs()
     } attribute_locations[] =
     {
         {GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::VERTEX_ATTRIB_POSITION},
-        {GLProgram::ATTRIBUTE_NAME_POINTSIZE, GLProgram::VERTEX_ATTRIB_POINTSIZE},
         {GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::VERTEX_ATTRIB_COLOR},
         {GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::VERTEX_ATTRIB_TEX_COORD},
         {GLProgram::ATTRIBUTE_NAME_TEX_COORD1, GLProgram::VERTEX_ATTRIB_TEX_COORD1},
@@ -665,17 +667,24 @@ bool GLProgram::updateUniformLocation(GLint location, const GLvoid* data, unsign
     {
         GLvoid* value = malloc(bytes);
         memcpy(value, data, bytes );
-        _hashForUniforms.insert(std::make_pair(location, value));
+        _hashForUniforms.insert(std::make_pair(location, std::make_pair(value, bytes)));
     }
     else
     {
-        if (memcmp(element->second, data, bytes) == 0)
+        if (memcmp(element->second.first, data, bytes) == 0)
         {
             updated = false;
         }
         else
         {
-            memcpy(element->second, data, bytes);
+            if (element->second.second < bytes)
+            {
+                GLvoid* value = realloc(element->second.first, bytes);
+                memcpy(value, data, bytes );
+                _hashForUniforms[location] = std::make_pair(value, bytes);
+            }
+            else
+                memcpy(element->second.first, data, bytes);
         }
     }
 
@@ -936,7 +945,7 @@ void GLProgram::reset()
 
     for (auto e: _hashForUniforms)
     {
-        free(e.second);
+        free(e.second.first);
     }
     
     _hashForUniforms.clear();

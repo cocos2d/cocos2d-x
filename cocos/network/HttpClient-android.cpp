@@ -577,7 +577,7 @@ private:
         if(nullptr == instnace)
             return false;
 
-        setReadAndConnectTimeout(instnace->getTimeoutForRead(), instnace->getTimeoutForConnect());
+        setReadAndConnectTimeout(instnace->getTimeoutForRead() * 1000, instnace->getTimeoutForConnect() * 1000);
 
         setVerifySSL();
 
@@ -646,7 +646,7 @@ static void processResponse(HttpResponse* response, std::string& responseMessage
         HttpRequest::Type::PUT != requestType &&
         HttpRequest::Type::DELETE != requestType)
     {
-        CCASSERT(true, "CCHttpClient: unkown request type, only GET、POST、PUT、DELETE are supported");
+        CCASSERT(true, "CCHttpClient: unknown request type, only GET、POST、PUT、DELETE are supported");
         return;
     }
 
@@ -687,6 +687,7 @@ static void processResponse(HttpResponse* response, std::string& responseMessage
     {
         response->setSucceed(false);
         response->setErrorBuffer("connect failed");
+        response->setResponseCode(responseCode);
         return;
     }
 
@@ -794,10 +795,8 @@ void HttpClient::networkThread()
 }
 
 // Worker thread
-void HttpClient::networkThreadAlone(HttpRequest* request)
+void HttpClient::networkThreadAlone(HttpRequest* request, HttpResponse* response)
 {
-    // Create a HttpResponse object, the default setting is http access failed
-    HttpResponse *response = new (std::nothrow) HttpResponse(request);
     std::string responseMessage = "";
     processResponse(response, responseMessage);
 
@@ -851,8 +850,8 @@ void HttpClient::setSSLVerification(const std::string& caFile)
 }
 
 HttpClient::HttpClient()
-: _timeoutForConnect(30*1000)
-, _timeoutForRead(60*1000)
+: _timeoutForConnect(30)
+, _timeoutForRead(60)
 {
 }
 
@@ -919,7 +918,10 @@ void HttpClient::sendImmediate(HttpRequest* request)
     }
 
     request->retain();
-    auto t = std::thread(&HttpClient::networkThreadAlone, this, request);
+    // Create a HttpResponse object, the default setting is http access failed
+    HttpResponse *response = new (std::nothrow) HttpResponse(request);
+
+    auto t = std::thread(&HttpClient::networkThreadAlone, this, request, response);
     t.detach();
 }
 

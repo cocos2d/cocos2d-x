@@ -5,7 +5,10 @@
 -- @parent_module cc
 
 --------------------------------
---  creates the action with the grid size and the duration 
+-- brief Create the action with the grid size and the duration.<br>
+-- param duration Specify the duration of the FadeOutDownTiles action. It's a value in seconds.<br>
+-- param gridSize Specify the size of the grid.<br>
+-- return If the creation success, return a pointer of FadeOutDownTiles action; otherwise, return nil.
 -- @function [parent=#FadeOutDownTiles] create 
 -- @param self
 -- @param #float duration

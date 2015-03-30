@@ -149,16 +149,32 @@ void bindTexture2D(GLuint textureId)
 void bindTexture2DN(GLuint textureUnit, GLuint textureId)
 {
 #if CC_ENABLE_GL_STATE_CACHE
+	CCASSERT(textureUnit < MAX_ACTIVE_TEXTURE, "textureUnit is too big");
+	if (s_currentBoundTexture[textureUnit] != textureId)
+	{
+		s_currentBoundTexture[textureUnit] = textureId;
+		activeTexture(GL_TEXTURE0 + textureUnit);
+		glBindTexture(GL_TEXTURE_2D, textureId);
+	}
+#else
+	glActiveTexture(GL_TEXTURE0 + textureUnit);
+	glBindTexture(GL_TEXTURE_2D, textureId);
+#endif
+}
+
+void bindTextureN(GLuint textureUnit, GLuint textureId, GLuint textureType/* = GL_TEXTURE_2D*/)
+{
+#if CC_ENABLE_GL_STATE_CACHE
     CCASSERT(textureUnit < MAX_ACTIVE_TEXTURE, "textureUnit is too big");
     if (s_currentBoundTexture[textureUnit] != textureId)
     {
         s_currentBoundTexture[textureUnit] = textureId;
         activeTexture(GL_TEXTURE0 + textureUnit);
-        glBindTexture(GL_TEXTURE_2D, textureId);
+        glBindTexture(textureType, textureId);
     }
 #else
     glActiveTexture(GL_TEXTURE0 + textureUnit);
-    glBindTexture(GL_TEXTURE_2D, textureId);
+    glBindTexture(textureType, textureId);
 #endif
 }
 
@@ -222,9 +238,11 @@ void enableVertexAttribs(uint32_t flags)
     // hardcoded!
     for(int i=0; i < MAX_ATTRIBUTES; i++) {
         unsigned int bit = 1 << i;
-        bool enabled = flags & bit;
-        bool enabledBefore = s_attributeFlags & bit;
-        if(enabled != enabledBefore) {
+        //FIXME:Cache is disabled, try to enable cache as before
+        bool enabled = (flags & bit) != 0;
+        bool enabledBefore = (s_attributeFlags & bit) != 0;
+        if(enabled != enabledBefore) 
+        {
             if( enabled )
                 glEnableVertexAttribArray(i);
             else

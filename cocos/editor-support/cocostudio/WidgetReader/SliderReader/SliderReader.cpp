@@ -787,7 +787,7 @@ namespace cocostudio
             slider->addChild(label);
         }
         
-        bool displaystate = options->displaystate();
+        bool displaystate = options->displaystate() != 0;
         slider->setBright(displaystate);
         slider->setEnabled(displaystate);
         

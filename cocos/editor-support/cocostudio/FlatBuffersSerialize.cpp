@@ -76,6 +76,7 @@ static const char* Property_CColor          = "CColor";
 static const char* Property_FileData        = "FileData";
 static const char* Property_FrameEvent      = "FrameEvent";
 static const char* Property_Alpha           = "Alpha";
+static const char* Property_AnchorPoint     = "AnchorPoint";
 static const char* Property_ZOrder          = "ZOrder";
 static const char* Property_ActionValue     = "ActionValue";
 
@@ -150,8 +151,7 @@ std::string FlatBuffersSerialize::serializeFlatBuffersWithXMLFile(const std::str
         return ".csd file doesn not exists ";
     }
     
-    ssize_t size;
-    std::string content =(char*)FileUtils::getInstance()->getFileData(inFullpath, "r", &size);
+    std::string content = FileUtils::getInstance()->getStringFromFile(inFullpath);
     
     // xml parse
     tinyxml2::XMLDocument* document = new tinyxml2::XMLDocument();
@@ -175,6 +175,8 @@ std::string FlatBuffersSerialize::serializeFlatBuffersWithXMLFile(const std::str
                 attribute = attribute->Next();
             if (attribute)
                 _csdVersion = attribute->Value();
+            
+            _csdVersion = "2.1.0.0";
         }
 
         if (strcmp("Content", element->Name()) == 0)
@@ -266,12 +268,12 @@ std::string FlatBuffersSerialize::serializeFlatBuffersWithXMLFile(const std::str
 
         
         auto csparsebinary = CreateCSParseBinary(*_builder,
+                                                 _builder->CreateString(_csdVersion),
                                                  _builder->CreateVector(_textures),
                                                  _builder->CreateVector(_texturePngs),
                                                  nodeTree,
                                                  aciton,
-                                                 _builder->CreateVector(animationInfos),
-                                                 _builder->CreateString(_csdVersion));
+                                                 _builder->CreateVector(animationInfos));
         _builder->Finish(csparsebinary);
         
         _textures.clear();
@@ -324,7 +326,10 @@ Offset<NodeTree> FlatBuffersSerialize::createNodeTree(const tinyxml2::XMLElement
         readername.append("Reader");
         
         NodeReaderProtocol* reader = dynamic_cast<NodeReaderProtocol*>(ObjectFactory::getInstance()->createObject(readername));
-        options = CreateOptions(*_builder, reader->createOptionsWithFlatBuffers(objectData, _builder));
+        if (reader != nullptr)
+        {
+            options = CreateOptions(*_builder, reader->createOptionsWithFlatBuffers(objectData, _builder));
+        }
     }
     
     
@@ -703,6 +708,13 @@ Offset<TimeLine> FlatBuffersSerialize::createTimeLine(const tinyxml2::XMLElement
                                 0, // TextureFrame
                                 0, // EventFrame
                                 intFrame);
+        }
+        else if (property == Property_AnchorPoint)
+        {
+            auto scaleFrame = createScaleFrame(frameElement);
+            frame = CreateFrame(*_builder,
+                                0, // PointFrame
+                                scaleFrame);
         }
         else if (property == Property_ZOrder)
         {
@@ -1124,8 +1136,7 @@ FlatBufferBuilder* FlatBuffersSerialize::createFlatBuffersWithXMLFileForSimulato
 //        CCLOG(".csd file doesn not exists ");
     }
     
-    ssize_t size;
-    std::string content =(char*)FileUtils::getInstance()->getFileData(inFullpath, "r", &size);
+    std::string content = FileUtils::getInstance()->getStringFromFile(inFullpath);
     
     // xml parse
     tinyxml2::XMLDocument* document = new tinyxml2::XMLDocument();
@@ -1218,12 +1229,12 @@ FlatBufferBuilder* FlatBuffersSerialize::createFlatBuffersWithXMLFileForSimulato
         }
         
 		auto csparsebinary = CreateCSParseBinary(*_builder,
+                                                 _builder->CreateString(_csdVersion),
                                                  _builder->CreateVector(_textures),
                                                  _builder->CreateVector(_texturePngs),
                                                  nodeTree,
                                                  aciton,
-                                                 _builder->CreateVector(animationInfos),
-                                                 _builder->CreateString(_csdVersion));
+                                                 _builder->CreateVector(animationInfos));
         _builder->Finish(csparsebinary);
         
         _textures.clear();
@@ -1259,7 +1270,10 @@ Offset<NodeTree> FlatBuffersSerialize::createNodeTreeForSimulator(const tinyxml2
         readername.append("Reader");
         
         NodeReaderProtocol* reader = dynamic_cast<NodeReaderProtocol*>(ObjectFactory::getInstance()->createObject(readername));
-        options = CreateOptions(*_builder, reader->createOptionsWithFlatBuffers(objectData, _builder));
+        if (reader != nullptr)
+        {
+            options = CreateOptions(*_builder, reader->createOptionsWithFlatBuffers(objectData, _builder));
+        }
     }
     
     
@@ -1345,7 +1359,22 @@ Offset<ProjectNodeOptions> FlatBuffersSerialize::createProjectNodeOptionsForSimu
     auto nodeOptions = *(Offset<WidgetOptions>*)(&temp);
 
     std::string filename = "";
-
+    float innerspeed = 1.0f;
+    
+    const tinyxml2::XMLAttribute* objattri = objectData->FirstAttribute();
+    // inneraction speed
+    while (objattri)
+    {
+        std::string name = objattri->Name();
+        std::string value = objattri->Value();
+        if (name == "InnerActionSpeed")
+        {
+            innerspeed = atof(objattri->Value());
+            break;
+        }
+        objattri = objattri->Next();
+    }
+    
     // FileData
     const tinyxml2::XMLElement* child = objectData->FirstChildElement();
     while (child)
@@ -1375,7 +1404,8 @@ Offset<ProjectNodeOptions> FlatBuffersSerialize::createProjectNodeOptionsForSimu
     
     return CreateProjectNodeOptions(*_builder,
                                     nodeOptions,
-                                    _builder->CreateString(filename));
+                                    _builder->CreateString(filename),
+                                    innerspeed);
 }
     
 }

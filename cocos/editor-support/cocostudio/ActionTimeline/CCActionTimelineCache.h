@@ -112,6 +112,7 @@ protected:
     Frame* loadTextureFrameWithFlatBuffers      (const flatbuffers::TextureFrame* flatbuffers);
     Frame* loadEventFrameWithFlatBuffers        (const flatbuffers::EventFrame* flatbuffers);
     Frame* loadAlphaFrameWithFlatBuffers        (const flatbuffers::IntFrame* flatbuffers);
+    Frame* loadAnchorPointFrameWithFlatBuffers  (const flatbuffers::ScaleFrame* flatbuffers);
     Frame* loadZOrderFrameWithFlatBuffers       (const flatbuffers::IntFrame* flatbuffers);
     Frame* loadInnerActionFrameWithFlatBuffers  (const flatbuffers::InnerActionFrame* flatbuffers);
 

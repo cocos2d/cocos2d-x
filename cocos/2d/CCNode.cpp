@@ -126,6 +126,7 @@ Node::Node(void)
 , _physicsScaleStartY(1.0f)
 , _physicsRotation(0.0f)
 , _physicsTransformDirty(true)
+, _updateTransformFromPhysics(true)
 #endif
 , _displayedOpacity(255)
 , _realOpacity(255)
@@ -197,6 +198,8 @@ Node::~Node()
 
 #endif
     
+    stopAllActions();
+    unscheduleAllCallbacks();
     CC_SAFE_RELEASE_NULL(_actionManager);
     CC_SAFE_RELEASE_NULL(_scheduler);
     
@@ -330,6 +333,11 @@ void Node::setRotation(float rotation)
     
     _rotationZ_X = _rotationZ_Y = rotation;
     _transformUpdated = _transformDirty = _inverseDirty = true;
+#if CC_USE_PHYSICS
+    if (_physicsBody && _physicsBody->getWorld()) {
+        _physicsBody->getWorld()->_updateBodyTransform = true;
+    }
+#endif
     
     updateRotationQuat();
 }
@@ -466,6 +474,11 @@ void Node::setScale(float scale)
     
     _scaleX = _scaleY = _scaleZ = scale;
     _transformUpdated = _transformDirty = _inverseDirty = true;
+#if CC_USE_PHYSICS
+    if (_physicsBody && _physicsBody->getWorld()) {
+        _physicsBody->getWorld()->_updateBodyTransform = true;
+    }
+#endif
 }
 
 /// scaleX getter
@@ -483,6 +496,11 @@ void Node::setScale(float scaleX,float scaleY)
     _scaleX = scaleX;
     _scaleY = scaleY;
     _transformUpdated = _transformDirty = _inverseDirty = true;
+#if CC_USE_PHYSICS
+    if (_physicsBody && _physicsBody->getWorld()) {
+        _physicsBody->getWorld()->_updateBodyTransform = true;
+    }
+#endif
 }
 
 /// scaleX setter
@@ -493,6 +511,11 @@ void Node::setScaleX(float scaleX)
     
     _scaleX = scaleX;
     _transformUpdated = _transformDirty = _inverseDirty = true;
+#if CC_USE_PHYSICS
+    if (_physicsBody && _physicsBody->getWorld()) {
+        _physicsBody->getWorld()->_updateBodyTransform = true;
+    }
+#endif
 }
 
 /// scaleY getter
@@ -532,6 +555,11 @@ void Node::setScaleY(float scaleY)
     
     _scaleY = scaleY;
     _transformUpdated = _transformDirty = _inverseDirty = true;
+#if CC_USE_PHYSICS
+    if (_physicsBody && _physicsBody->getWorld()) {
+        _physicsBody->getWorld()->_updateBodyTransform = true;
+    }
+#endif
 }
 
 
@@ -563,6 +591,11 @@ void Node::setPosition(float x, float y)
     
     _transformUpdated = _transformDirty = _inverseDirty = true;
     _usingNormalizedPosition = false;
+#if CC_USE_PHYSICS
+    if (_physicsBody && _physicsBody->getWorld()) {
+        _physicsBody->getWorld()->_updateBodyTransform = true;
+    }
+#endif
 }
 
 void Node::setPosition3D(const Vec3& position)
@@ -609,10 +642,6 @@ void Node::setPositionZ(float positionZ)
     _transformUpdated = _transformDirty = _inverseDirty = true;
 
     _positionZ = positionZ;
-
-    // FIXME: BUG
-    // Global Z Order should based on the modelViewTransform
-    setGlobalZOrder(positionZ);
 }
 
 /// position getter
@@ -631,6 +660,11 @@ void Node::setNormalizedPosition(const Vec2& position)
     _usingNormalizedPosition = true;
     _normalizedPositionDirty = true;
     _transformUpdated = _transformDirty = _inverseDirty = true;
+#if CC_USE_PHYSICS
+    if (_physicsBody && _physicsBody->getWorld()) {
+        _physicsBody->getWorld()->_updateBodyTransform = true;
+    }
+#endif
 }
 
 ssize_t Node::getChildrenCount() const
@@ -1270,9 +1304,16 @@ uint32_t Node::processParentFlags(const Mat4& parentTransform, uint32_t parentFl
 
     if(flags & FLAGS_DIRTY_MASK)
         _modelViewTransform = this->transform(parentTransform);
-
+    
+#if CC_USE_PHYSICS
+    if (_updateTransformFromPhysics) {
+        _transformUpdated = false;
+        _contentSizeDirty = false;
+    }
+#else
     _transformUpdated = false;
     _contentSizeDirty = false;
+#endif
 
     return flags;
 }
@@ -1280,7 +1321,7 @@ uint32_t Node::processParentFlags(const Mat4& parentTransform, uint32_t parentFl
 bool Node::isVisitableByVisitingCamera() const
 {
     auto camera = Camera::getVisitingCamera();
-    bool visibleByCamera = camera ? (unsigned short)camera->getCameraFlag() & _cameraMask : true;
+    bool visibleByCamera = camera ? ((unsigned short)camera->getCameraFlag() & _cameraMask) != 0 : true;
     return visibleByCamera;
 }
 
@@ -1695,48 +1736,53 @@ const Mat4& Node::getNodeToParentTransform() const
         float x = _position.x;
         float y = _position.y;
         float z = _positionZ;
-
+        
         if (_ignoreAnchorPointForPosition)
         {
             x += _anchorPointInPoints.x;
             y += _anchorPointInPoints.y;
         }
-
+        
         bool needsSkewMatrix = ( _skewX || _skewY );
-        // Rotation values
-        // Change rotation code to handle X and Y
-        // If we skew with the exact same value for both x and y then we're simply just rotating
-        float cx = 1, sx = 0, cy = 1, sy = 0;
-        if (_rotationZ_X != _rotationZ_Y || (! needsSkewMatrix && !_anchorPointInPoints.equals(Vec2::ZERO)))
-        {
-            float radiansX = -CC_DEGREES_TO_RADIANS(_rotationZ_X);
-            float radiansY = -CC_DEGREES_TO_RADIANS(_rotationZ_Y);
-            cx = cosf(radiansX);
-            sx = sinf(radiansX);
-            cy = cosf(radiansY);
-            sy = sinf(radiansY);
-        }
-
+        
+        
         Vec2 anchorPoint(_anchorPointInPoints.x * _scaleX, _anchorPointInPoints.y * _scaleY);
-
-        // optimization:
-        // inline anchor point calculation if skew is not needed
-        // Adjusted transform calculation for rotational skew
+        
+        // caculate real position
         if (! needsSkewMatrix && !_anchorPointInPoints.equals(Vec2::ZERO))
         {
-            x += cy * -anchorPoint.x + -sx * -anchorPoint.y;
-            y += sy * -anchorPoint.x +  cx * -anchorPoint.y;
+            x += -anchorPoint.x;
+            y += -anchorPoint.y;
         }
-
-        // Build Transform Matrix
-        // Adjusted transform calculation for rotational skew
+        
+        // Build Transform Matrix = translation * rotation * scale
+        Mat4 translation;
+        //move to anchor point first, then rotate
+        Mat4::createTranslation(x + anchorPoint.x, y + anchorPoint.y, z, &translation);
+        
         Mat4::createRotation(_rotationQuat, &_transform);
+        
         if (_rotationZ_X != _rotationZ_Y)
         {
+            // Rotation values
+            // Change rotation code to handle X and Y
+            // If we skew with the exact same value for both x and y then we're simply just rotating
+            float radiansX = -CC_DEGREES_TO_RADIANS(_rotationZ_X);
+            float radiansY = -CC_DEGREES_TO_RADIANS(_rotationZ_Y);
+            float cx = cosf(radiansX);
+            float sx = sinf(radiansX);
+            float cy = cosf(radiansY);
+            float sy = sinf(radiansY);
+            
             float m0 = _transform.m[0], m1 = _transform.m[1], m4 = _transform.m[4], m5 = _transform.m[5], m8 = _transform.m[8], m9 = _transform.m[9];
             _transform.m[0] = cy * m0 - sx * m1, _transform.m[4] = cy * m4 - sx * m5, _transform.m[8] = cy * m8 - sx * m9;
             _transform.m[1] = sy * m0 + cx * m1, _transform.m[5] = sy * m4 + cx * m5, _transform.m[9] = sy * m8 + cx * m9;
         }
+        _transform = translation * _transform;
+        //move by (-anchorPoint.x, -anchorPoint.y, 0) after rotation
+        _transform.translate(-anchorPoint.x, -anchorPoint.y, 0);
+        
+        
         if (_scaleX != 1.f)
         {
             _transform.m[0] *= _scaleX, _transform.m[1] *= _scaleX, _transform.m[2] *= _scaleX;
@@ -1749,7 +1795,6 @@ const Mat4& Node::getNodeToParentTransform() const
         {
             _transform.m[8] *= _scaleZ, _transform.m[9] *= _scaleZ, _transform.m[10] *= _scaleZ;
         }
-        _transform.m[12] = x, _transform.m[13] = y, _transform.m[14] = z;
         
         // FIXME:: Try to inline skew
         // If skew is needed, apply skew and then anchor point
@@ -1763,9 +1808,9 @@ const Mat4& Node::getNodeToParentTransform() const
                 0,  0,  0, 1
             };
             Mat4 skewMatrix(skewMatArray);
-
+            
             _transform = _transform * skewMatrix;
-
+            
             // adjust anchor point
             if (!_anchorPointInPoints.equals(Vec2::ZERO))
             {
@@ -1775,15 +1820,15 @@ const Mat4& Node::getNodeToParentTransform() const
                 _transform.m[13] += _transform.m[1] * -_anchorPointInPoints.x + _transform.m[5] * -_anchorPointInPoints.y;
             }
         }
-
+        
         if (_useAdditionalTransform)
         {
             _transform = _transform * _additionalTransform;
         }
-
+        
         _transformDirty = false;
     }
-
+    
     return _transform;
 }
 
@@ -2017,7 +2062,7 @@ void Node::setPhysicsBody(PhysicsBody* body)
     }
 }
 
-void Node::updatePhysicsBodyTransform(Scene* scene, const Mat4& parentTransform, uint32_t parentFlags, float parentScaleX, float parentScaleY)
+void Node::updatePhysicsBodyTransform(const Mat4& parentTransform, uint32_t parentFlags, float parentScaleX, float parentScaleY)
 {
     _updateTransformFromPhysics = false;
     auto flags = processParentFlags(parentTransform, parentFlags);
@@ -2042,7 +2087,7 @@ void Node::updatePhysicsBodyTransform(Scene* scene, const Mat4& parentTransform,
 
     for (auto node : _children)
     {
-        node->updatePhysicsBodyTransform(scene, _modelViewTransform, flags, scaleX, scaleY);
+        node->updatePhysicsBodyTransform(_modelViewTransform, flags, scaleX, scaleY);
     }
 }
 

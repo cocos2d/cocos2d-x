@@ -57,7 +57,7 @@ local function checkResolution(r)
 end
 
 local function setDesignResolution(r, framesize)
-   if r.autoscale == "FILL_ALL" then
+    if r.autoscale == "FILL_ALL" then
         view:setDesignResolutionSize(framesize.width, framesize.height, cc.ResolutionPolicy.FILL_ALL)
     else
         local scaleX, scaleY = framesize.width / r.width, framesize.height / r.height
@@ -65,13 +65,20 @@ local function setDesignResolution(r, framesize)
         if r.autoscale == "FIXED_WIDTH" then
             width = framesize.width / scaleX
             height = framesize.height / scaleX
+            view:setDesignResolutionSize(width, height, cc.ResolutionPolicy.NO_BORDER)
         elseif r.autoscale == "FIXED_HEIGHT" then
             width = framesize.width / scaleY
             height = framesize.height / scaleY
+            view:setDesignResolutionSize(width, height, cc.ResolutionPolicy.NO_BORDER)
+        elseif r.autoscale == "EXACT_FIT" then
+            view:setDesignResolutionSize(r.width, r.height, cc.ResolutionPolicy.EXACT_FIT)
+        elseif r.autoscale == "NO_BORDER" then
+            view:setDesignResolutionSize(r.width, r.height, cc.ResolutionPolicy.NO_BORDER)
+        elseif r.autoscale == "SHOW_ALL" then
+            view:setDesignResolutionSize(r.width, r.height, cc.ResolutionPolicy.SHOW_ALL)
         else
             printError(string.format("display - invalid r.autoscale \"%s\"", r.autoscale))
         end
-        view:setDesignResolutionSize(width, height, cc.ResolutionPolicy.NO_BORDER)
     end
 end
 
@@ -405,12 +412,12 @@ end
 function display.newSpriteFrame(source, ...)
     local frame
     if type(source) == "string" then
-        if string.byte(souce) == 35 then -- first char is #
-            souce = string.sub(souce, 2)
+        if string.byte(source) == 35 then -- first char is #
+            source = string.sub(source, 2)
         end
-        frame = spriteFrameCache:getSpriteFrame(souce)
+        frame = spriteFrameCache:getSpriteFrame(source)
         if not frame then
-            error(string.format("display.newSpriteFrame() - invalid frame name \"%s\"", tostring(souce)), 0)
+            error(string.format("display.newSpriteFrame() - invalid frame name \"%s\"", tostring(source)), 0)
         end
     elseif tolua.type(source) == "cc.Texture2D" then
         frame = cc.SpriteFrame:createWithTexture(source, ...)

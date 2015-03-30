@@ -5,19 +5,24 @@
 -- @parent_module cc
 
 --------------------------------
--- 
+--  Sets the inner action.<br>
+-- param action The inner action.
 -- @function [parent=#RepeatForever] setInnerAction 
 -- @param self
 -- @param #cc.ActionInterval action
+-- @return RepeatForever#RepeatForever self (return value: cc.RepeatForever)
         
 --------------------------------
--- 
+--  Gets the inner action.<br>
+-- return The inner action.
 -- @function [parent=#RepeatForever] getInnerAction 
 -- @param self
 -- @return ActionInterval#ActionInterval ret (return value: cc.ActionInterval)
         
 --------------------------------
---  creates the action 
+--  Creates the action.<br>
+-- param action The action need to repeat forever.<br>
+-- return An autoreleased RepeatForever object.
 -- @function [parent=#RepeatForever] create 
 -- @param self
 -- @param #cc.ActionInterval action
@@ -28,6 +33,7 @@
 -- @function [parent=#RepeatForever] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return RepeatForever#RepeatForever self (return value: cc.RepeatForever)
         
 --------------------------------
 -- 
@@ -48,9 +54,10 @@
 -- @return RepeatForever#RepeatForever ret (return value: cc.RepeatForever)
         
 --------------------------------
--- 
+-- param dt In seconds.
 -- @function [parent=#RepeatForever] step 
 -- @param self
 -- @param #float dt
+-- @return RepeatForever#RepeatForever self (return value: cc.RepeatForever)
         
 return nil

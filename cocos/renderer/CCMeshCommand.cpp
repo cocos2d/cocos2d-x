@@ -42,12 +42,6 @@
 
 NS_CC_BEGIN
 
-//render state
-static bool   s_cullFaceEnabled = false;
-static GLenum s_cullFace = 0;
-static bool   s_depthTestEnabled = false;
-static bool   s_depthWriteEnabled = false;
-
 static const char          *s_dirLightUniformColorName = "u_DirLightSourceColor";
 static std::vector<Vec3> s_dirLightUniformColorValues;
 static const char          *s_dirLightUniformDirName = "u_DirLightSourceDirection";
@@ -89,6 +83,10 @@ MeshCommand::MeshCommand()
 , _cullFace(GL_BACK)
 , _depthTestEnabled(false)
 , _depthWriteEnabled(false)
+, _forceDepthWrite(false)
+, _renderStateCullFaceEnabled(false)
+, _renderStateDepthTest(false)
+, _renderStateDepthWrite(GL_FALSE)
 , _lightMask(-1)
 {
     _type = RenderCommand::Type::MESH_COMMAND;
@@ -97,6 +95,37 @@ MeshCommand::MeshCommand()
     _rendererRecreatedListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, CC_CALLBACK_1(MeshCommand::listenRendererRecreated, this));
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_rendererRecreatedListener, -1);
 #endif
+}
+
+void MeshCommand::init(float globalZOrder,
+                       GLuint textureID,
+                       cocos2d::GLProgramState *glProgramState,
+                       cocos2d::BlendFunc blendType,
+                       GLuint vertexBuffer,
+                       GLuint indexBuffer,
+                       GLenum primitive,
+                       GLenum indexFormat,
+                       ssize_t indexCount,
+                       const cocos2d::Mat4 &mv,
+                       uint32_t flags)
+{
+    CCASSERT(glProgramState, "GLProgramState cannot be nill");
+    
+    RenderCommand::init(globalZOrder, mv, flags);
+    
+    _globalOrder = globalZOrder;
+    _textureID = textureID;
+    _blendType = blendType;
+    _glProgramState = glProgramState;
+    
+    _vertexBuffer = vertexBuffer;
+    _indexBuffer = indexBuffer;
+    _primitive = primitive;
+    _indexFormat = indexFormat;
+    _indexCount = indexCount;
+    _mv.set(mv);
+    
+    _is3D = true;
 }
 
 void MeshCommand::init(float globalOrder,
@@ -110,20 +139,7 @@ void MeshCommand::init(float globalOrder,
                        ssize_t indexCount,
                        const Mat4 &mv)
 {
-    CCASSERT(glProgramState, "GLProgramState cannot be nill");
-    
-    _globalOrder = globalOrder;
-    _textureID = textureID;
-    _blendType = blendType;
-    _glProgramState = glProgramState;
-
-    _vertexBuffer = vertexBuffer;
-    _indexBuffer = indexBuffer;
-    _primitive = primitive;
-    _indexFormat = indexFormat;
-    _indexCount = indexCount;
-    _mv.set(mv);
-    _is3D = true;
+    init(globalOrder, textureID, glProgramState, blendType, vertexBuffer, indexBuffer, primitive, indexFormat, indexCount, mv, 0);
 }
 
 void MeshCommand::setCullFaceEnabled(bool enable)
@@ -143,6 +159,7 @@ void MeshCommand::setDepthTestEnabled(bool enable)
 
 void MeshCommand::setDepthWriteEnabled(bool enable)
 {
+    _forceDepthWrite = enable;
     _depthWriteEnabled = enable;
 }
 
@@ -156,7 +173,15 @@ void MeshCommand::setTransparent(bool value)
     _isTransparent = value;
     //Skip batching for transparent mesh
     _skipBatching = value;
-    setDepthWriteEnabled(!_isTransparent);
+    
+    if (_isTransparent && !_forceDepthWrite)
+    {
+        _depthWriteEnabled = false;
+    }
+    else
+    {
+        _depthWriteEnabled = true;
+    }
 }
 
 MeshCommand::~MeshCommand()
@@ -169,46 +194,55 @@ MeshCommand::~MeshCommand()
 
 void MeshCommand::applyRenderState()
 {
-    if (_cullFaceEnabled && !s_cullFaceEnabled)
+    _renderStateCullFaceEnabled = glIsEnabled(GL_CULL_FACE) != GL_FALSE;
+    _renderStateDepthTest = glIsEnabled(GL_DEPTH_TEST) != GL_FALSE;
+    glGetBooleanv(GL_DEPTH_WRITEMASK, &_renderStateDepthWrite);
+    GLint cullface;
+    glGetIntegerv(GL_CULL_FACE_MODE, &cullface);
+    _renderStateCullFace = (GLenum)cullface;
+    
+    if (_cullFaceEnabled != _renderStateCullFaceEnabled)
     {
-        glEnable(GL_CULL_FACE);
-        s_cullFaceEnabled = true;
+        _cullFaceEnabled ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
     }
-    if (s_cullFace != _cullFace)
+    
+    if (_cullFace != _renderStateCullFace)
     {
         glCullFace(_cullFace);
-        s_cullFace = _cullFace;
     }
-    if (_depthTestEnabled && !s_depthTestEnabled)
+    
+    if (_depthTestEnabled != _renderStateDepthTest)
     {
-        glEnable(GL_DEPTH_TEST);
-        s_depthTestEnabled = true;
+        _depthTestEnabled ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
     }
-    if (_depthWriteEnabled && !s_depthWriteEnabled)
+    
+    if (_depthWriteEnabled != _renderStateDepthWrite)
     {
-        glDepthMask(GL_TRUE);
-        s_depthWriteEnabled = true;
+        glDepthMask(_depthWriteEnabled);
     }
 }
 
 void MeshCommand::restoreRenderState()
 {
-    if (s_cullFaceEnabled)
+    if (_cullFaceEnabled != _renderStateCullFaceEnabled)
     {
-        glDisable(GL_CULL_FACE);
-        s_cullFaceEnabled = false;
+        _renderStateCullFaceEnabled ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
     }
-    if (s_depthTestEnabled)
+    
+    if (_cullFace != _renderStateCullFace)
     {
-        glDisable(GL_DEPTH_TEST);
-        s_depthTestEnabled = false;
+        glCullFace(_renderStateCullFace);
     }
-    if (s_depthWriteEnabled)
+    
+    if (_depthTestEnabled != _renderStateDepthTest)
     {
-        glDepthMask(GL_FALSE);
-        s_depthWriteEnabled = false;
+        _renderStateDepthTest ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
     }
-    s_cullFace = 0;
+    
+    if (_depthWriteEnabled != _renderStateDepthWrite)
+    {
+        glDepthMask(_renderStateDepthWrite);
+    }
 }
 
 void MeshCommand::genMaterialID(GLuint texID, void* glProgramState, GLuint vertexBuffer, GLuint indexBuffer, const BlendFunc& blend)
@@ -263,7 +297,8 @@ void MeshCommand::batchDraw()
     _glProgramState->applyGLProgram(_mv);
     _glProgramState->applyUniforms();
 
-    if (Director::getInstance()->getRunningScene()->getLights().size() > 0)
+    const auto& scene = Director::getInstance()->getRunningScene();
+    if (scene && scene->getLights().size() > 0)
         setLightUniforms();
     
     // Draw
@@ -305,7 +340,8 @@ void MeshCommand::execute()
     
     _glProgramState->apply(_mv);   
 
-    if (Director::getInstance()->getRunningScene()->getLights().size() > 0)
+    const auto& scene = Director::getInstance()->getRunningScene();
+    if (scene && scene->getLights().size() > 0)
         setLightUniforms();
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);

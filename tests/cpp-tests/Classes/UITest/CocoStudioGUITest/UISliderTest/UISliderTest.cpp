@@ -116,6 +116,73 @@ void UISliderTest_Scale9::sliderEvent(Ref *pSender, Slider::EventType type)
     }
 }
 
+// UISliderTest_Scale9_State_Change
+
+UISliderTest_Scale9_State_Change::UISliderTest_Scale9_State_Change()
+    : _displayValueLabel(nullptr)
+{
+
+}
+
+UISliderTest_Scale9_State_Change::~UISliderTest_Scale9_State_Change()
+{
+}
+
+bool UISliderTest_Scale9_State_Change::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+
+        // Add a label in which the slider alert will be displayed
+        _displayValueLabel = Text::create("Click the slider thumb", "fonts/Marker Felt.ttf", 32);
+        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1));
+        _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
+        _uiLayer->addChild(_displayValueLabel);
+
+        // Add the alert
+        Text *alert = Text::create("Slider scale9 render", "fonts/Marker Felt.ttf", 30);
+        alert->setColor(Color3B(159, 168, 176));
+        alert->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f - alert->getContentSize().height * 1.75f));
+        _uiLayer->addChild(alert);
+
+        // Create the slider
+        Slider* slider = Slider::create();
+        slider->loadBarTexture("cocosui/sliderballnormal.png");
+        slider->loadSlidBallTextures("cocosui/sliderThumb.png", "cocosui/sliderThumb.png", "");
+        slider->loadProgressBarTexture("cocosui/slider_bar_active_9patch.png");
+        slider->ignoreContentAdaptWithSize(false);
+        slider->setScale9Enabled(true);
+        slider->setCapInsets(Rect(0, 0, 0, 0));
+        slider->setContentSize(Size(200.0f, 60));
+        slider->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f/* + slider->getSize().height * 3.0f*/));
+        slider->addTouchEventListener([=](Ref* sender, Widget::TouchEventType type){
+            if (type == Widget::TouchEventType::ENDED) {
+                if (slider->isScale9Enabled())
+                {
+                    slider->setScale9Enabled(false);
+                }
+                else
+                    slider->setScale9Enabled(true);
+            }
+        });
+        _uiLayer->addChild(slider);
+
+
+        return true;
+    }
+    return false;
+}
+
+void UISliderTest_Scale9_State_Change::sliderEvent(Ref *pSender, Slider::EventType type)
+{
+    if (type == Slider::EventType::ON_PERCENTAGE_CHANGED)
+    {
+        Slider* slider = dynamic_cast<Slider*>(pSender);
+        int percent = slider->getPercent();
+        _displayValueLabel->setString(String::createWithFormat("Percent %d", percent)->getCString());
+    }
+}
 
 // UISliderNormalDefaultTest
 

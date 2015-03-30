@@ -5,7 +5,8 @@
 -- @parent_module cc
 
 --------------------------------
---  Allocates and initializes the action 
+--  Allocates and initializes the action.<br>
+-- return An autoreleased Hide object.
 -- @function [parent=#Hide] create 
 -- @param self
 -- @return Hide#Hide ret (return value: cc.Hide)
@@ -17,10 +18,11 @@
 -- @return Hide#Hide ret (return value: cc.Hide)
         
 --------------------------------
--- 
+-- param time In seconds.
 -- @function [parent=#Hide] update 
 -- @param self
 -- @param #float time
+-- @return Hide#Hide self (return value: cc.Hide)
         
 --------------------------------
 -- 

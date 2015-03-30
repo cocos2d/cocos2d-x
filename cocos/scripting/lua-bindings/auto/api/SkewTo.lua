@@ -5,7 +5,11 @@
 -- @parent_module cc
 
 --------------------------------
---  creates the action 
+-- Creates the action.<br>
+-- param t Duration time, in seconds.<br>
+-- param sx Skew x angle.<br>
+-- param sy Skew y angle.<br>
+-- return An autoreleased SkewTo object.
 -- @function [parent=#SkewTo] create 
 -- @param self
 -- @param #float t
@@ -18,6 +22,7 @@
 -- @function [parent=#SkewTo] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return SkewTo#SkewTo self (return value: cc.SkewTo)
         
 --------------------------------
 -- 
@@ -32,9 +37,10 @@
 -- @return SkewTo#SkewTo ret (return value: cc.SkewTo)
         
 --------------------------------
--- 
+-- param time In seconds.
 -- @function [parent=#SkewTo] update 
 -- @param self
 -- @param #float time
+-- @return SkewTo#SkewTo self (return value: cc.SkewTo)
         
 return nil

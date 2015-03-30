@@ -9,6 +9,7 @@
 -- @function [parent=#RotationFrame] setRotation 
 -- @param self
 -- @param #float rotation
+-- @return RotationFrame#RotationFrame self (return value: ccs.RotationFrame)
         
 --------------------------------
 -- 
@@ -27,6 +28,7 @@
 -- @function [parent=#RotationFrame] apply 
 -- @param self
 -- @param #float percent
+-- @return RotationFrame#RotationFrame self (return value: ccs.RotationFrame)
         
 --------------------------------
 -- 
@@ -38,5 +40,6 @@
 -- 
 -- @function [parent=#RotationFrame] RotationFrame 
 -- @param self
+-- @return RotationFrame#RotationFrame self (return value: ccs.RotationFrame)
         
 return nil

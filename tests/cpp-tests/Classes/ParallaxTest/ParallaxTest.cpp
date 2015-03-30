@@ -154,10 +154,10 @@ std::string Parallax2::title() const
 //
 //------------------------------------------------------------------
 Issue2572::Issue2572()
-: _preListSize(0)
-, _moveTimer(0.0f)
-, _printCount(0)
+: _moveTimer(0.0f)
 , _addTimer(0.0f)
+, _preListSize(0)
+, _printCount(0)
 {
     _addChildStep = 1.0f;
     _wholeMoveTime = 3.0f;

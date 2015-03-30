@@ -18,10 +18,17 @@
 -- @function [parent=#MoveTo] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return MoveTo#MoveTo self (return value: cc.MoveTo)
         
 --------------------------------
 -- 
 -- @function [parent=#MoveTo] clone 
+-- @param self
+-- @return MoveTo#MoveTo ret (return value: cc.MoveTo)
+        
+--------------------------------
+-- 
+-- @function [parent=#MoveTo] reverse 
 -- @param self
 -- @return MoveTo#MoveTo ret (return value: cc.MoveTo)
         

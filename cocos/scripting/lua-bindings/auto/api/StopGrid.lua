@@ -5,7 +5,8 @@
 -- @parent_module cc
 
 --------------------------------
---  Allocates and initializes the action 
+-- brief Create a StopGrid Action.<br>
+-- return Return a pointer of StopGrid. When the creation failed, return nil.
 -- @function [parent=#StopGrid] create 
 -- @param self
 -- @return StopGrid#StopGrid ret (return value: cc.StopGrid)
@@ -15,6 +16,7 @@
 -- @function [parent=#StopGrid] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return StopGrid#StopGrid self (return value: cc.StopGrid)
         
 --------------------------------
 -- 

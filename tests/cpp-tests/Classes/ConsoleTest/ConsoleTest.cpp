@@ -241,7 +241,7 @@ void ConsoleUploadFile::uploadFile()
     hints.ai_flags = 0;
     hints.ai_protocol = 0;          /* Any protocol */
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     WSADATA wsaData;
     WSAStartup(MAKEWORD(2, 2),&wsaData);
 #endif
@@ -267,7 +267,7 @@ void ConsoleUploadFile::uploadFile()
         if (connect(sfd, rp->ai_addr, rp->ai_addrlen) != -1)
             break;                  /* Success */
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
         closesocket(sfd);
 #else
         close(sfd);

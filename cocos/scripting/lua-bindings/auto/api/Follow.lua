@@ -5,13 +5,16 @@
 -- @parent_module cc
 
 --------------------------------
---  alter behavior - turn on/off boundary 
+--  Alter behavior - turn on/off boundary. <br>
+-- param value Turn on/off boundary.
 -- @function [parent=#Follow] setBoundarySet 
 -- @param self
 -- @param #bool value
+-- @return Follow#Follow self (return value: cc.Follow)
         
 --------------------------------
--- 
+--  Return boundarySet.<br>
+-- return Return boundarySet.
 -- @function [parent=#Follow] isBoundarySet 
 -- @param self
 -- @return bool#bool ret (return value: bool)
@@ -28,10 +31,12 @@
 -- @return Follow#Follow ret (return value: cc.Follow)
         
 --------------------------------
--- 
+-- param dt in seconds.<br>
+-- js NA
 -- @function [parent=#Follow] step 
 -- @param self
 -- @param #float dt
+-- @return Follow#Follow self (return value: cc.Follow)
         
 --------------------------------
 -- 
@@ -43,6 +48,7 @@
 -- 
 -- @function [parent=#Follow] stop 
 -- @param self
+-- @return Follow#Follow self (return value: cc.Follow)
         
 --------------------------------
 -- 

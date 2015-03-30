@@ -57,9 +57,9 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
+    void restartCallback(Ref* sender) override;
+    void nextCallback(Ref* sender) override;
+    void backCallback(Ref* sender) override;
 };
 
 class ActionManual : public ActionsDemo
@@ -421,7 +421,7 @@ public:
     virtual std::string subtitle() const override;
     virtual void addNewSpriteWithCoords(Vec2 p);
     virtual void runActionsInSprite(Sprite* sprite);
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
 };
 
 class ActionMoveStacked : public ActionStacked
@@ -430,7 +430,7 @@ public:
     CREATE_FUNC(ActionMoveStacked);
 
     virtual std::string title() const override;
-    virtual void runActionsInSprite(Sprite* sprite);
+    virtual void runActionsInSprite(Sprite* sprite) override;
 };
 
 class ActionMoveJumpStacked : public ActionStacked
@@ -439,7 +439,7 @@ public:
     CREATE_FUNC(ActionMoveJumpStacked);
 
     virtual std::string title() const override;
-    virtual void runActionsInSprite(Sprite* sprite);
+    virtual void runActionsInSprite(Sprite* sprite) override;
 };
 
 class ActionMoveBezierStacked : public ActionStacked
@@ -448,7 +448,7 @@ public:
     CREATE_FUNC(ActionMoveBezierStacked);
 
     virtual std::string title() const override;
-    virtual void runActionsInSprite(Sprite* sprite);
+    virtual void runActionsInSprite(Sprite* sprite) override;
 };
 
 class ActionCatmullRomStacked : public ActionsDemo

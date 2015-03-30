@@ -201,16 +201,8 @@ bool Follow::initWithTarget(Node *followedNode, const Rect& rect/* = Rect::ZERO*
  
     followedNode->retain();
     _followedNode = followedNode;
-	_worldRect = rect;
-    if (rect.equals(Rect::ZERO))
-    {
-        _boundarySet = false;
-    }
-    else
-    {
-        _boundarySet = true;
-    }
-    
+    _worldRect = rect;
+    _boundarySet = !rect.equals(Rect::ZERO);
     _boundaryFullyCovered = false;
 
     Size winSize = Director::getInstance()->getWinSize();
@@ -254,7 +246,9 @@ void Follow::step(float dt)
     {
         // whole map fits inside a single screen, no need to modify the position - unless map boundaries are increased
         if(_boundaryFullyCovered)
+        {
             return;
+        }
 
         Vec2 tempPos = _halfScreenSize - _followedNode->getPosition();
 

@@ -291,7 +291,6 @@ int PhysicsWorld::collisionPreSolveCallback(PhysicsContact& contact)
 {
     if (!contact.isNotificationEnabled())
     {
-        cpArbiterIgnore(static_cast<cpArbiter*>(contact._contactInfo));
         return true;
     }
     
@@ -332,6 +331,11 @@ void PhysicsWorld::rayCast(PhysicsRayCastCallbackFunc func, const Vec2& point1, 
     
     if (func != nullptr)
     {
+        if (!_delayAddBodies.empty() || !_delayRemoveBodies.empty())
+        {
+            _scene->updatePhysicsBodyTransform(_scene->getNodeToParentTransform(), 0, 1.0f, 1.0f);
+            updateBodies();
+        }
         RayCastCallbackInfo info = { this, func, point1, point2, data };
         
         PhysicsWorldCallback::continues = true;
@@ -351,6 +355,11 @@ void PhysicsWorld::queryRect(PhysicsQueryRectCallbackFunc func, const Rect& rect
     
     if (func != nullptr)
     {
+        if (!_delayAddBodies.empty() || !_delayRemoveBodies.empty())
+        {
+            _scene->updatePhysicsBodyTransform(_scene->getNodeToParentTransform(), 0, 1.0f, 1.0f);
+            updateBodies();
+        }
         RectQueryCallbackInfo info = {this, func, data};
         
         PhysicsWorldCallback::continues = true;
@@ -369,6 +378,11 @@ void PhysicsWorld::queryPoint(PhysicsQueryPointCallbackFunc func, const Vec2& po
     
     if (func != nullptr)
     {
+        if (!_delayAddBodies.empty() || !_delayRemoveBodies.empty())
+        {
+            _scene->updatePhysicsBodyTransform(_scene->getNodeToParentTransform(), 0, 1.0f, 1.0f);
+            updateBodies();
+        }
         PointQueryCallbackInfo info = {this, func, data};
         
         PhysicsWorldCallback::continues = true;
@@ -493,7 +507,6 @@ void PhysicsWorld::addBodyOrDelay(PhysicsBody* body)
     if (_delayAddBodies.find(body) == _delayAddBodies.end())
     {
         _delayAddBodies.pushBack(body);
-        _delayDirty = true;
     }
 }
 
@@ -567,7 +580,6 @@ void PhysicsWorld::removeBodyOrDelay(PhysicsBody* body)
         if (_delayRemoveBodies.getIndex(body) == CC_INVALID_INDEX)
         {
             _delayRemoveBodies.pushBack(body);
-            _delayDirty = true;
         }
     }else
     {
@@ -598,7 +610,6 @@ void PhysicsWorld::removeJoint(PhysicsJoint* joint, bool destroy)
             if (std::find(_delayRemoveJoints.rbegin(), _delayRemoveJoints.rend(), joint) == _delayRemoveJoints.rend())
             {
                 _delayRemoveJoints.push_back(joint);
-                _delayDirty = true;
             }
         }
         else
@@ -669,7 +680,6 @@ void PhysicsWorld::addJoint(PhysicsJoint* joint)
         if (std::find(_delayAddJoints.begin(), _delayAddJoints.end(), joint) == _delayAddJoints.end())
         {
             _delayAddJoints.push_back(joint);
-            _delayDirty = true;
         }
     }
 }
@@ -812,14 +822,20 @@ void PhysicsWorld::update(float delta, bool userCall/* = false*/)
         return;
     }
 
-    _scene->updatePhysicsBodyTransform(_scene, _scene->getNodeToParentTransform(), 0, 1.0f, 1.0f);
-
-    while (_delayDirty)
+    if(_updateBodyTransform || !_delayAddBodies.empty())
+    {
+        _scene->updatePhysicsBodyTransform(_scene->getNodeToParentTransform(), 0, 1.0f, 1.0f);
+        updateBodies();
+        _updateBodyTransform = false;
+    }
+    else if (!_delayRemoveBodies.empty())
     {
         updateBodies();
+    }
+
+    if (!_delayAddJoints.empty() || !_delayRemoveJoints.empty())
+    {
         updateJoints();
-        
-        _delayDirty = !(_delayAddBodies.size() == 0 && _delayRemoveBodies.size() == 0 && _delayAddJoints.size() == 0 && _delayRemoveJoints.size() == 0);
     }
     
     if (userCall)
@@ -864,9 +880,9 @@ PhysicsWorld::PhysicsWorld()
 , _substeps(1)
 , _cpSpace(nullptr)
 , _scene(nullptr)
-, _delayDirty(false)
 , _autoStep(true)
 , _debugDraw(nullptr)
+, _updateBodyTransform(false)
 , _debugDrawMask(DEBUGDRAW_NONE)
 {
     

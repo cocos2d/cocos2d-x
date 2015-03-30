@@ -39,8 +39,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(CameraRotationTest),
     CL(Camera3DTestDemo),
     CL(CameraCullingDemo),
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
-    // 3DEffect use custom shader which is not supported on WP8/WinRT yet. 
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
+    // 3DEffect use custom shader which is not supported on WP8 yet. 
     CL(FogTestDemo),
 #endif
     CL(CameraArcBallDemo)
@@ -128,14 +128,22 @@ CameraRotationTest::CameraRotationTest()
     _camNode->setPositionZ(Camera::getDefaultCamera()->getPosition3D().z);
     _camControlNode->addChild(_camNode);
 
+    auto sp3d = Sprite3D::create();
+    sp3d->setPosition(s.width/2, s.height/2);
+    addChild(sp3d);
+    
+    auto lship = Label::create();
+    lship->setString("Ship");
+    lship->setPosition(0, 20);
+    sp3d->addChild(lship);
     
     //Billboards
     //Yellow is at the back
     bill1 = BillBoard::create("Images/Icon.png");
-    bill1->setPosition3D(Vec3(s.width/2 + 50, s.height/2 + 10, -10));
+    bill1->setPosition3D(Vec3(50, 10, -10));
     bill1->setColor(Color3B::YELLOW);
-    bill1->setScale(0.6);
-    addChild(bill1);
+    bill1->setScale(0.6f);
+    sp3d->addChild(bill1);
     
     l1 = Label::create();
     l1->setPosition(Vec2(0,-10));
@@ -144,10 +152,14 @@ CameraRotationTest::CameraRotationTest()
     l1->setScale(3);
     bill1->addChild(l1);
 
+    auto p1 = CCParticleSystemQuad::create("Particles/SmallSun.plist");
+    p1->setPosition(30,80);
+    bill1->addChild(p1);
+    
     bill2 = BillBoard::create("Images/Icon.png");
-    bill2->setPosition3D(Vec3(s.width/2 - 50, s.height/2 - 10, 10));
-    bill2->setScale(0.6);
-    addChild(bill2);
+    bill2->setPosition3D(Vec3(-50, -10, 10));
+    bill2->setScale(0.6f);
+    sp3d->addChild(bill2);
     
     l2 = Label::create();
     l2->setString("Billboard2");
@@ -155,6 +167,10 @@ CameraRotationTest::CameraRotationTest()
     l2->setColor(Color3B::WHITE);
     l2->setScale(3);
     bill2->addChild(l2);
+    
+    auto p2 = CCParticleSystemQuad::create("Particles/SmallSun.plist");
+    p2->setPosition(30,80);
+    bill2->addChild(p2);
 
     //3D models
     auto model = Sprite3D::create("Sprite3DTest/boss1.obj");
@@ -223,8 +239,8 @@ void CameraRotationTest::update(float dt)
 //------------------------------------------------------------------
 Camera3DTestDemo::Camera3DTestDemo(void)
 : _incRot(nullptr)
-, _camera(nullptr)
 , _decRot(nullptr)
+, _camera(nullptr)
 , _bZoomOut(false)
 , _bZoomIn(false)
 , _bRotateLeft(false)
@@ -547,8 +563,8 @@ void Camera3DTestDemo::onTouchesEnded(const std::vector<Touch*>& touches, cocos2
                 Vec3 nearP(location.x, location.y, -1.0f), farP(location.x, location.y, 1.0f);
                 
                 auto size = Director::getInstance()->getWinSize();
-                _camera->unproject(size, &nearP, &nearP);
-                _camera->unproject(size, &farP, &farP);
+                nearP = _camera->unproject(nearP);
+                farP = _camera->unproject(farP);
                 Vec3 dir(farP - nearP);
                 float dist=0.0f;
                 float ndd = Vec3::dot(Vec3(0,1,0),dir);
@@ -693,11 +709,7 @@ void Camera3DTestDemo::updateCamera(float fDelta)
         }
     }
 }
-bool Camera3DTestDemo::isState(unsigned int state,unsigned int bit) const
-{
-    return (state & bit) == bit;
-}
-bool Camera3DTestDemo::onTouchesZoomOut(Touch* touch, Event* event)
+bool Camera3DTestDemo::onTouchesCommon(Touch* touch, Event* event, bool* touchProperty)
 {
     auto target = static_cast<Label*>(event->getCurrentTarget());
     
@@ -707,10 +719,18 @@ bool Camera3DTestDemo::onTouchesZoomOut(Touch* touch, Event* event)
     
     if (rect.containsPoint(locationInNode))
     {
-        _bZoomOut = true;
+        *touchProperty = true;
         return true;
     }
     return false;
+}
+bool Camera3DTestDemo::isState(unsigned int state,unsigned int bit) const
+{
+    return (state & bit) == bit;
+}
+bool Camera3DTestDemo::onTouchesZoomOut(Touch* touch, Event* event)
+{
+    return Camera3DTestDemo::onTouchesCommon(touch, event, &_bZoomOut);
 }
 void Camera3DTestDemo::onTouchesZoomOutEnd(Touch* touch, Event* event)
 {
@@ -718,18 +738,7 @@ void Camera3DTestDemo::onTouchesZoomOutEnd(Touch* touch, Event* event)
 }
 bool Camera3DTestDemo::onTouchesZoomIn(Touch* touch, Event* event)
 {
-    auto target = static_cast<Label*>(event->getCurrentTarget());
-    
-    Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
-    Size s = target->getContentSize();
-    Rect rect = Rect(0, 0, s.width, s.height);
-    
-    if (rect.containsPoint(locationInNode))
-    {
-        _bZoomIn = true;
-        return true;
-    }
-    return false;
+    return Camera3DTestDemo::onTouchesCommon(touch, event, &_bZoomIn);
 }
 void Camera3DTestDemo::onTouchesZoomInEnd(Touch* touch, Event* event)
 {
@@ -737,18 +746,7 @@ void Camera3DTestDemo::onTouchesZoomInEnd(Touch* touch, Event* event)
 }
 bool Camera3DTestDemo::onTouchesRotateLeft(Touch* touch, Event* event)
 {
-    auto target = static_cast<Label*>(event->getCurrentTarget());
-    
-    Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
-    Size s = target->getContentSize();
-    Rect rect = Rect(0, 0, s.width, s.height);
-    
-    if (rect.containsPoint(locationInNode))
-    {
-        _bRotateLeft = true;
-        return true;
-    }
-    return false;
+    return Camera3DTestDemo::onTouchesCommon(touch, event, &_bRotateLeft);
 }
 void Camera3DTestDemo::onTouchesRotateLeftEnd(Touch* touch, Event* event)
 {
@@ -756,18 +754,7 @@ void Camera3DTestDemo::onTouchesRotateLeftEnd(Touch* touch, Event* event)
 }
 bool Camera3DTestDemo::onTouchesRotateRight(Touch* touch, Event* event)
 {
-    auto target = static_cast<Label*>(event->getCurrentTarget());
-    
-    Vec2 locationInNode = target->convertToNodeSpace(touch->getLocation());
-    Size s = target->getContentSize();
-    Rect rect = Rect(0, 0, s.width, s.height);
-    
-    if (rect.containsPoint(locationInNode))
-    {
-        _bRotateRight = true;
-        return true;
-    }
-    return false;
+    return Camera3DTestDemo::onTouchesCommon(touch, event, &_bRotateRight);
 }
 void Camera3DTestDemo::onTouchesRotateRightEnd(Touch* touch, Event* event)
 {
@@ -895,8 +882,9 @@ void CameraCullingDemo::update(float dt)
 void CameraCullingDemo::reachEndCallBack()
 {
     _cameraFirst->stopActionByTag(100);
-    auto inverse = (MoveTo*)_moveAction->reverse();
+    auto inverse = MoveTo::create(4.f, Vec2(-_cameraFirst->getPositionX(), 0));
     inverse->retain();
+    
     _moveAction->release();
     _moveAction = inverse;
     auto rot = RotateBy::create(1.f, Vec3(0.f, 180.f, 0.f));
@@ -915,7 +903,7 @@ void CameraCullingDemo::switchViewCallback(Ref* sender)
         _cameraFirst->setCameraFlag(CameraFlag::USER8);
         _cameraFirst->setPosition3D(Vec3(-100,0,0));
         _cameraFirst->lookAt(Vec3(1000,0,0));
-        _moveAction = MoveTo::create(4.f, Vec2(100, 0));
+        _moveAction = MoveTo::create(4.f, Vec2(-_cameraFirst->getPositionX(), 0));
         _moveAction->retain();
         auto seq = Sequence::create(_moveAction, CallFunc::create(CC_CALLBACK_0(CameraCullingDemo::reachEndCallBack, this)), nullptr);
         seq->setTag(100);
@@ -1013,30 +1001,30 @@ void CameraCullingDemo::drawCameraFrustum()
     // top-left
     Vec3 tl_0,tl_1;
     Vec3 src(0,0,0);
-    _cameraFirst->unproject(size, &src, &tl_0);
+    tl_0 = _cameraFirst->unproject(src);
     src = Vec3(0,0,1);
-    _cameraFirst->unproject(size, &src, &tl_1);
+    tl_1 = _cameraFirst->unproject(src);
     
     // top-right
     Vec3 tr_0,tr_1;
     src = Vec3(size.width,0,0);
-    _cameraFirst->unproject(size, &src, &tr_0);
+    tr_0 = _cameraFirst->unproject(src);
     src = Vec3(size.width,0,1);
-    _cameraFirst->unproject(size, &src, &tr_1);
+    tr_1 = _cameraFirst->unproject(src);
     
     // bottom-left
     Vec3 bl_0,bl_1;
     src = Vec3(0,size.height,0);
-    _cameraFirst->unproject(size, &src, &bl_0);
+    bl_0 = _cameraFirst->unproject(src);
     src = Vec3(0,size.height,1);
-    _cameraFirst->unproject(size, &src, &bl_1);
+    bl_1 = _cameraFirst->unproject(src);
     
     // bottom-right
     Vec3 br_0,br_1;
     src = Vec3(size.width,size.height,0);
-    _cameraFirst->unproject(size, &src, &br_0);
+    br_0 = _cameraFirst->unproject(src);
     src = Vec3(size.width,size.height,1);
-    _cameraFirst->unproject(size, &src, &br_1);
+    br_1 = _cameraFirst->unproject(src);
     
     _drawFrustum->drawLine(tl_0, tl_1, color);
     _drawFrustum->drawLine(tr_0, tr_1, color);
@@ -1061,14 +1049,14 @@ CameraArcBallDemo::CameraArcBallDemo(void)
 , _layer3D(nullptr)
 , _cameraType(CameraType::Free)
 , _camera(nullptr)
-,_drawGrid(nullptr)
-,_sprite3D1(nullptr)
-,_sprite3D2(nullptr)
-,_radius(1.0f)
-,_distanceZ(50.0f)
-,_operate(OperateCamType::RotateCamera)
-,_center(Vec3(0,0,0))
-,_target(0)
+, _drawGrid(nullptr)
+, _radius(1.0f)
+, _distanceZ(50.0f)
+, _operate(OperateCamType::RotateCamera)
+, _center(Vec3(0,0,0))
+, _target(0)
+, _sprite3D1(nullptr)
+, _sprite3D2(nullptr)
 {
 }
 CameraArcBallDemo::~CameraArcBallDemo(void)
@@ -1112,7 +1100,7 @@ void CameraArcBallDemo::onEnter()
     {
         _camera=Camera::createPerspective(60, (GLfloat)s.width/s.height, 1, 1000);
         _camera->setCameraFlag(CameraFlag::USER1);
-        _camera->setPosition3D(Vec3(0, 100, 50));
+        _camera->setPosition3D(Vec3(0, 10, 50));
         _camera->lookAt(Vec3(0, 0, 0), Vec3(0, 1, 0));
         _camera->retain();
         _layer3D->addChild(_camera);
@@ -1125,7 +1113,7 @@ void CameraArcBallDemo::onEnter()
     _layer3D->addChild(_sprite3D1);
 
     _sprite3D2 = Sprite3D::create("Sprite3DTest/boss.c3b");
-    _sprite3D2->setScale(0.6);
+    _sprite3D2->setScale(0.6f);
     _sprite3D2->setRotation3D(Vec3(-90,0,0));
     _sprite3D2->setPosition3D(Vec3(20,0,0));
     _layer3D->addChild(_sprite3D2);
@@ -1236,7 +1224,7 @@ float CameraArcBallDemo::projectToSphere( float r, float x, float y )
 void CameraArcBallDemo::updateCameraTransform()
 {
     Mat4 trans, rot, center;
-    Mat4::createTranslation(Vec3(0.0f, 0.0f, _distanceZ), &trans);
+    Mat4::createTranslation(Vec3(0.0f, 10.0f, _distanceZ), &trans);
     Mat4::createRotation(_rotationQuat, &rot);
     Mat4::createTranslation(_center, &center);
     Mat4 result = center * rot * trans;
@@ -1430,7 +1418,7 @@ void FogTestDemo::switchTypeCallback(Ref* sender,int type)
     else if(type == 1)
     {
         _state->setUniformVec4("u_fogColor", Vec4(0.5,0.5,0.5,1.0));
-        _state->setUniformFloat("u_fogDensity",0.03);
+        _state->setUniformFloat("u_fogDensity",0.03f);
         _state->setUniformInt("u_fogEquation" ,1);
 
         _sprite3D1->setGLProgramState(_state);
@@ -1439,7 +1427,7 @@ void FogTestDemo::switchTypeCallback(Ref* sender,int type)
     else if(type == 2)
     {
         _state->setUniformVec4("u_fogColor", Vec4(0.5,0.5,0.5,1.0));
-        _state->setUniformFloat("u_fogDensity",0.03);
+        _state->setUniformFloat("u_fogDensity",0.03f);
         _state->setUniformInt("u_fogEquation" ,2);
 
         _sprite3D1->setGLProgramState(_state);

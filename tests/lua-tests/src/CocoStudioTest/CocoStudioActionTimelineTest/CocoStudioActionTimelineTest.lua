@@ -187,7 +187,10 @@ end
 
 function TestActionTimeline:onEnter()
 
-    local node = cc.CSLoader:createActionTimelineNode("ActionTimeline/DemoPlayer.csb", 0, 40, true)
+    local node = cc.CSLoader:createNode("ActionTimeline/DemoPlayer.csb")
+    local action = cc.CSLoader:createTimeline("ActionTimeline/DemoPlayer.csb")
+    node:runAction(action)
+    action:gotoFrameAndPlay(0)
 
     node:setScale(0.2)
     node:setPosition(VisibleRect:center())
@@ -235,11 +238,24 @@ end
 
 function TestChangePlaySection:onEnter()
 
-    local node = cc.CSLoader:createActionTimelineNode("ActionTimeline/DemoPlayer.csb", 41, 81, true);
-    local action = node:getActionTimeline()
+    local node = cc.CSLoader:createNode("ActionTimeline/DemoPlayer.csb")
+    local action = cc.CSLoader:createTimeline("ActionTimeline/DemoPlayer.csb")
+    node:runAction(action)
+    action:gotoFrameAndPlay(41)
+
 
     node:setScale(0.2)
     node:setPosition(VisibleRect:center())
+
+    action:addAnimationInfo(ccs.AnimationInfo("stand", 0 , 40))
+    action:addAnimationInfo(ccs.AnimationInfo("walk", 41 , 81))
+    action:addAnimationInfo(ccs.AnimationInfo("killall", 174, 249))
+
+    assert(action:IsAnimationInfoExists("stand") == true, "stand animation didn't exist")
+    action:play("stand", true)
+    assert(action:getAnimationInfo("stand").endIndex == 40, "endIndex of animationInfo is not 40")
+    action:removeAnimationInfo("stand")
+    assert(action:IsAnimationInfoExists("stand") == false, "stand animation has already existed")
 
     local function onTouchesEnded(touches, event)
         if action:getStartFrame() == 0 then
@@ -298,8 +314,10 @@ end
 
 function TestTimelineFrameEvent:onEnter()
 
-    local node = cc.CSLoader:createActionTimelineNode("ActionTimeline/DemoPlayer.csb", 0, 40, true);
-    local action = node:getActionTimeline()
+    local node = cc.CSLoader:createNode("ActionTimeline/DemoPlayer.csb")
+    local action = cc.CSLoader:createTimeline("ActionTimeline/DemoPlayer.csb")
+    node:runAction(action)
+    action:gotoFrameAndPlay(0)
 
     node:setScale(0.2)
     node:setPosition(VisibleRect:center())
@@ -363,7 +381,10 @@ end
 function TestTimelinePerformance:onEnter()
 
     for i = 1,100 do
-        local node = cc.CSLoader:createActionTimelineNode("ActionTimeline/DemoPlayer.csb", 41, 81, true);
+        local node = cc.CSLoader:createNode("ActionTimeline/DemoPlayer.csb")
+        local action = cc.CSLoader:createTimeline("ActionTimeline/DemoPlayer.csb")
+        node:runAction(action)
+        action:gotoFrameAndPlay(41)
 
         node:setScale(0.1)
         node:setPosition((i - 1) * 2, 100)

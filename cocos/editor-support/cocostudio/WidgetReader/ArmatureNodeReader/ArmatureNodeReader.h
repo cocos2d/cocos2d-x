@@ -53,8 +53,8 @@ public:
 	static void purge();
 
 	flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
-		flatbuffers::FlatBufferBuilder* builder);
-	void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* textBMFontOptions);
+		flatbuffers::FlatBufferBuilder* builder) override;
+	void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* textBMFontOptions) override;
 
 	//CSArmatureNode
 	cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* nodeOptions) override;

@@ -25,7 +25,11 @@ enum {
     TEST_CHANGE_PLAY_SECTION,
 //    TEST_TIMELINE_FRAME_EVENT,
     TEST_TIMELINE_PERFORMACE,
-
+    TEST_TIMELINEACTION_ANIMATIONLIST,
+    TEST_TIMELINEPROJECTNODE,
+    TEST_PROJECTNODEFORSIMALATOR,
+    TEST_NODELOADEDCALLBACK,
+    
     TEST_ANIMATION_LAYER_COUNT
 };
 
@@ -53,17 +57,17 @@ protected:
 class TestActionTimeline : public ActionTimelineTestLayer
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 };
 
 class TestChangePlaySection : public ActionTimelineTestLayer
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 
-	void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+	void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
 
 protected:
     ActionTimeline* action;
@@ -72,7 +76,7 @@ protected:
 class TestTimelineFrameEvent : public ActionTimelineTestLayer
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
 
     void onFrameEvent(Frame* frame);
@@ -81,8 +85,39 @@ public:
 class TestTimelinePerformance : public ActionTimelineTestLayer
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual std::string title() const override;
+};
+
+class TestTimelineAnimationList : public ActionTimelineTestLayer
+{
+public:
+    virtual void onEnter() override;
+    virtual std::string title() const override;
+};
+
+class TestTimelineProjectNode : public ActionTimelineTestLayer
+{
+public:
+    virtual void onEnter() override;
+    virtual std::string title() const override;
+};
+
+class TestProjectNodeForSimulator : public ActionTimelineTestLayer
+{
+public:
+    virtual void onEnter() override;
+    virtual std::string title() const override;
+};
+
+class TestTimelineNodeLoadedCallback : public ActionTimelineTestLayer
+{
+public:
+    virtual void onEnter() override;
+    virtual std::string title() const override;
+    
+    void nodeLoadedCallback(cocos2d::Ref* sender);
+
 };
 
 #endif  // __ANIMATION_SCENE_H__

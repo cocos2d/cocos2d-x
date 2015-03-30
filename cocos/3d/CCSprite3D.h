@@ -41,12 +41,17 @@
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup _3d
+ * @{
+ */
+
 class Mesh;
 class Texture2D;
 class MeshSkin;
 class AttachNode;
 struct NodeData;
-/** Sprite3D: A sprite can be loaded from 3D model files, .obj, .c3t, .c3b, then can be drawed as sprite */
+/** @brief Sprite3D: A sprite can be loaded from 3D model files, .obj, .c3t, .c3b, then can be drawed as sprite */
 class CC_DLL Sprite3D : public Node, public BlendProtocol
 {
 public:
@@ -127,6 +132,22 @@ public:
     const AABB& getAABB() const;
     
     /**
+     * Executes an action, and returns the action that is executed. For Sprite3D special logic are needed to take care of Fading.
+     *
+     * This node becomes the action's target. Refer to Action::getTarget()
+     * @warning Actions don't retain their target.
+     *
+     * @return An Action pointer
+     */
+    virtual Action* runAction(Action* action) override;
+    
+    /**
+     * Force to write to depth buffer, this is useful if you want to achieve effects like fading.
+     */
+    void setForceDepthWrite(bool value) { _forceDepthWrite = value; }
+    bool isForceDepthWrite() const { return _forceDepthWrite;};
+    
+    /**
      * Returns 2d bounding-box
      * Note: the bouding-box is just get from the AABB which as Z=0, so that is not very accurate.
      */
@@ -140,13 +161,16 @@ public:
     /** light mask getter & setter, light works only when _lightmask & light's flag is true, default value of _lightmask is 0xffff */
     void setLightMask(unsigned int mask) { _lightMask = mask; }
     unsigned int getLightMask() const { return _lightMask; }
+    
+    /**draw*/
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
 CC_CONSTRUCTOR_ACCESS:
     
     Sprite3D();
     virtual ~Sprite3D();
     
-    bool init();
+    virtual bool init() override;
     
     bool initWithFile(const std::string &path);
     
@@ -163,9 +187,6 @@ CC_CONSTRUCTOR_ACCESS:
      * Note: all its children will rendered as 3D objects
      */
     virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags) override;
-    
-    /**draw*/
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     
     /**generate default GLProgramState*/
     void genGLProgramState(bool useLight = false);
@@ -200,6 +221,7 @@ protected:
     bool                         _aabbDirty;
     unsigned int                 _lightMask;
     bool                         _shaderUsingLight; // is current shader using light ?
+    bool                         _forceDepthWrite; // Always write to depth buffer
     
     struct AsyncLoadParam
     {
@@ -216,6 +238,10 @@ protected:
 };
 
 ///////////////////////////////////////////////////////
+/**
+ * Sprite3DCache
+ * @brief the cache data of Sprite3D, use to speed up Sprite3D::create
+ */
 class CC_DLL Sprite3DCache
 {
 public:
@@ -239,13 +265,17 @@ public:
     /**get & destroy*/
     static Sprite3DCache* getInstance();
     static void destroyInstance();
-    
+
+    /**get the SpriteData struct*/
     Sprite3DData* getSpriteData(const std::string& key) const;
     
+    /**add the SpriteData into Sprite3D by given the specified key*/
     bool addSprite3DData(const std::string& key, Sprite3DData* spritedata);
     
+    /**remove the SpriteData from Sprite3D by given the specified key*/
     void removeSprite3DData(const std::string& key);
     
+    /**remove all the SpriteData from Sprite3D*/
     void removeAllSprite3DData();
     
     CC_CONSTRUCTOR_ACCESS:
@@ -260,6 +290,9 @@ protected:
 };
 
 extern std::string CC_DLL s_attributeNames[];//attribute names array
+
+// end of actions group
+/// @}
 
 NS_CC_END
 #endif // __SPRITE3D_H_

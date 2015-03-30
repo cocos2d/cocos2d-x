@@ -5,7 +5,11 @@
 -- @parent_module cc
 
 --------------------------------
---  creates the action 
+-- Creates the action.<br>
+-- param t Duration time, in seconds.<br>
+-- param deltaSkewX Skew x delta angle.<br>
+-- param deltaSkewY Skew y delta angle.<br>
+-- return An autoreleased SkewBy object.
 -- @function [parent=#SkewBy] create 
 -- @param self
 -- @param #float t
@@ -18,6 +22,7 @@
 -- @function [parent=#SkewBy] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return SkewBy#SkewBy self (return value: cc.SkewBy)
         
 --------------------------------
 -- 

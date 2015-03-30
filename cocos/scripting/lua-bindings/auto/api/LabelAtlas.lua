@@ -9,6 +9,7 @@
 -- @function [parent=#LabelAtlas] setString 
 -- @param self
 -- @param #string label
+-- @return LabelAtlas#LabelAtlas self (return value: cc.LabelAtlas)
         
 --------------------------------
 -- @overload self, string, string         
@@ -23,11 +24,6 @@
 -- @param #int startCharMap
 -- @return bool#bool ret (return value: bool)
 
---------------------------------
--- 
--- @function [parent=#LabelAtlas] updateAtlasValues 
--- @param self
-        
 --------------------------------
 -- 
 -- @function [parent=#LabelAtlas] getString 
@@ -47,6 +43,12 @@
 -- @param #int startCharMap
 -- @return LabelAtlas#LabelAtlas ret (return value: cc.LabelAtlas)
 
+--------------------------------
+-- 
+-- @function [parent=#LabelAtlas] updateAtlasValues 
+-- @param self
+-- @return LabelAtlas#LabelAtlas self (return value: cc.LabelAtlas)
+        
 --------------------------------
 -- 
 -- @function [parent=#LabelAtlas] getDescription 

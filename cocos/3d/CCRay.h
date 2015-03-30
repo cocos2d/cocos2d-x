@@ -32,6 +32,15 @@
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup _3d
+ * @{
+ */
+
+/**
+ * @brief Ray is a line with one end. usually use it to check intersects with some object,such as Plane, OBB, AABB
+ * @js NA
+ **/
 class CC_DLL Ray
 {
 public:
@@ -59,14 +68,14 @@ public:
     ~Ray();
 
     /**
-     * Check whether this ray intersects the specified bounding box.
+     * Check whether this ray intersects with the specified AABB.
      */
-    bool intersects(const AABB& aabb) const;
-
+    bool intersects(const AABB& aabb, float* distance = nullptr) const;
+    
     /**
-     * Check whether this ray intersects the specified obb.
+     * Check whether this ray intersects with the specified OBB.
      */
-    bool intersects(const OBB& obb) const;
+    bool intersects(const OBB& obb, float* distance = nullptr) const;
 
     float dist(const Plane& plane) const;
     Vec3 intersects(const Plane& plane) const;
@@ -89,6 +98,9 @@ public:
     Vec3 _origin;        // The ray origin position.
     Vec3 _direction;     // The ray direction vector.
 };
+
+// end of actions group
+/// @}
 
 NS_CC_END
 

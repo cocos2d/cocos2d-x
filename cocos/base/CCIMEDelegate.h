@@ -29,14 +29,21 @@ THE SOFTWARE.
 #include <string>
 #include "math/CCGeometry.h"
 
-NS_CC_BEGIN
-extern const std::string CC_DLL STD_STRING_EMPTY;
-
 /**
- * @addtogroup input
+ * @addtogroup base
  * @{
  */
+NS_CC_BEGIN
 
+/**
+ * A static global empty std::string install.
+ */
+extern const std::string CC_DLL STD_STRING_EMPTY;
+
+
+/**
+ * Keyboard notification event type.
+ */
 typedef struct
 {
     Rect  begin;              // the soft keyboard rectangle when animation begins
@@ -45,8 +52,8 @@ typedef struct
 } IMEKeyboardNotificationInfo;
 
 /**
-@brief    Input method editor delegate.
-*/
+ *@brief    Input method editor delegate.
+ */
 class CC_DLL IMEDelegate
 {
 public:
@@ -56,12 +63,10 @@ public:
      */
     virtual ~IMEDelegate();
     /**
-     * @js NA
      * @lua NA
      */
     virtual bool attachWithIME();
     /**
-     * @js NA
      * @lua NA
      */
     virtual bool detachWithIME();
@@ -151,9 +156,9 @@ protected:
     IMEDelegate();
 };
 
-// end of input group
-/// @}
 
 NS_CC_END
+// end of base group
+/// @}
 
 #endif    // __CC_IME_DELEGATE_H__

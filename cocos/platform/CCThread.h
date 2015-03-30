@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,6 +25,7 @@ THE SOFTWARE.
 
 #ifndef __CC_PLATFORM_THREAD_H__
 #define __CC_PLATFORM_THREAD_H__
+/// @cond DO_NOT_SHOW
 
 #include "platform/CCPlatformMacros.h"
 
@@ -61,4 +62,5 @@ public:
 
 NS_CC_END
 
+/// @endcond
 #endif    // __CC_PLATFORM_THREAD_H__

@@ -36,7 +36,7 @@
   <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
     <PlatformToolset>v120_wp81</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -77,16 +77,18 @@
     </Link>
     <ClCompile>
       <AdditionalIncludeDirectories>../../Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/Zm200 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">/Zm200 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch.h</ForcedIncludeFiles>
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pch.h</ForcedIncludeFiles>
-      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4056;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4056;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SDLCheck>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='ARM'">
@@ -97,16 +99,18 @@
     </Link>
     <ClCompile>
       <AdditionalIncludeDirectories>../../Classes;$(EngineRoot)cocos\platform\win8.1-universal;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">/Zm200 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">/Zm200 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">/bigobj /Zm200 %(AdditionalOptions)</AdditionalOptions>
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">pch.h</ForcedIncludeFiles>
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">pch.h</ForcedIncludeFiles>
-      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">4056;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">4056;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">CC_ENABLE_CHIPMUNK_INTEGRATION=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">CC_ENABLE_CHIPMUNK_INTEGRATION=1;COCOS2D_DEBUG=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">Use</PrecompiledHeader>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</SDLCheck>
+      <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</SDLCheck>
     </ClCompile>
   </ItemDefinitionGroup>
   <PropertyGroup Label="UserMacros">
