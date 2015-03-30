@@ -58,15 +58,22 @@ class CC_DLL IMEDelegate
 {
 public:
     /**
+     * Default constructor.
      * @js NA
      * @lua NA
      */
     virtual ~IMEDelegate();
+    
     /**
+     * Default destructor.
+     * @js NA
      * @lua NA
      */
     virtual bool attachWithIME();
+    
     /**
+     * Determine whether the IME is detached or not.
+     * @js NA
      * @lua NA
      */
     virtual bool detachWithIME();
