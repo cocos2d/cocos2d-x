@@ -373,8 +373,8 @@ float Terrain::getImageHeight(int pixel_x,int pixel_y)
 
 void Terrain::loadVertices()
 {
-    m_maxHeight = -999;
-    m_minHeight = 999;
+    m_maxHeight = -99999;
+    m_minHeight = 99999;
     for(int i =0;i<imageHeight;i++)
     {
         for(int j =0;j<imageWidth;j++)
