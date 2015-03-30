@@ -250,6 +250,21 @@ public:
     //Ray-Terrain intersection.
     Vec3 getIntersectionPoint(const Ray & ray);
     void setMaxDetailMapAmount(int max_value);
+
+    //conver to Terrain space.
+    Vec2 convertToTerrainSpace(Vec2 worldSpace);
+
+    //reset the heightmap data
+    void resetHeightMap(const char * heightMap);
+
+    // get the terrain's mininal height.
+    float getMinHeight();
+
+    // get the terrain's maximum height.
+    float getMaxHeight();
+
+//get terrain's AABB
+    AABB getAABB();
 protected:
     
     Terrain();
@@ -287,6 +302,8 @@ protected:
     Mat4 _oldTerrrainModelMatrix;
     bool _isTerrainModelMatrixChanged;
     GLuint _normalLocation;
+    float m_maxHeight;
+    float m_minHeight;
 };
 NS_CC_END
 #endif

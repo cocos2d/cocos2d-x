@@ -59,31 +59,6 @@ TerrainSimple::TerrainSimple()
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesMoved = CC_CALLBACK_2(TerrainSimple::onTouchesMoved, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-
-
-    TTFConfig ttfConfig("fonts/arial.ttf", 8);
-    auto label1 = Label::createWithTTF(ttfConfig,"129*129 1 DETAIL MAP 32*32 chunk Size");
-    auto menuItem1 = MenuItemLabel::create(label1, CC_CALLBACK_1(TerrainSimple::on127x127_1DetailMap32x32Callback,this));
-    auto label2 = Label::createWithTTF(ttfConfig,"257*257 1 DETAIL MAP 32*32 chunk Size");
-    auto menuItem2 = MenuItemLabel::create(label2, CC_CALLBACK_1(TerrainSimple::on257x257_1DetailMap32x32Callback,this));
-
-    auto label3 = Label::createWithTTF(ttfConfig,"Enable LOD");
-    auto menuItem3 = MenuItemLabel::create(label3, CC_CALLBACK_1(TerrainSimple::onEnableLODCallback,this));
-
-    auto label4 = Label::createWithTTF(ttfConfig,"disable LOD");
-    auto menuItem4 = MenuItemLabel::create(label4, CC_CALLBACK_1(TerrainSimple::onDisableLODCallback,this));
-
-    auto menu = Menu::create(menuItem1, menuItem2,menuItem3,menuItem4, nullptr);
-    menu->setPosition(Vec2::ZERO);
-    menuItem1->setPosition( Vec2(0, VisibleRect::top().y-160) );
-    menuItem1->setAnchorPoint(Vec2(0,0));
-    menuItem2->setPosition( Vec2(0, VisibleRect::top().y-190) );
-    menuItem2->setAnchorPoint(Vec2(0,0));
-    menuItem3->setPosition( Vec2(0, VisibleRect::top().y-210) );
-    menuItem3->setAnchorPoint(Vec2(0,0));
-    menuItem4->setPosition( Vec2(0, VisibleRect::top().y-240) );
-    menuItem4->setAnchorPoint(Vec2(0,0));
-    addChild(menu, 0);
 }
 
 std::string TerrainSimple::title() const 
@@ -117,39 +92,6 @@ void TerrainSimple::onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, 
     cameraPos+=cameraRightDir*newPos.x*0.5*delta;
     _camera->setPosition3D(cameraPos);   
 }
-
-void TerrainSimple::on127x127_1DetailMap32x32Callback(Ref* sender)
-{
-    _terrain->removeFromParent();
-    Terrain::TerrainData data("TerrainTest/heightMap129.jpg","TerrainTest/sand.jpg");
-    _terrain = Terrain::create(data);
-    _terrain->setMaxDetailMapAmount(4);
-    addChild(_terrain);
-    _terrain->setCameraMask(2);
-    _terrain->setDrawWire(true);
-}
-
-void TerrainSimple::on257x257_1DetailMap32x32Callback(Ref* sender)
-{
-    _terrain->removeFromParent();
-    Terrain::TerrainData data("TerrainTest/heightmap16.jpg","TerrainTest/sand.jpg");
-    _terrain = Terrain::create(data);
-    _terrain->setMaxDetailMapAmount(4);
-    addChild(_terrain);
-    _terrain->setCameraMask(2);
-    _terrain->setDrawWire(true);
-}
-
-void TerrainSimple::onEnableLODCallback(Ref* sender)
-{
-    _terrain->setScale(20);
-}
-
-void TerrainSimple::onDisableLODCallback(Ref* sender)
-{
-    _terrain->setScale(1);
-}
-
 
 
 void TerrainTestScene::runThisTest()
@@ -236,10 +178,12 @@ TerrainWalkThru::TerrainWalkThru()
     _camera->setCameraFlag(CameraFlag::USER1);
     addChild(_camera);
 
-    Terrain::TerrainData a("TerrainTest/heightmap16.jpg","TerrainTest/sand.jpg",Size(32,32),3);
-    _terrain = Terrain::create(a);
-    _terrain->setScale(20);
+    Terrain::DetailMap r("TerrainTest/dirt.dds"),g("TerrainTest/Grass2.dds",10),b("TerrainTest/road.dds"),a("TerrainTest/Grass1.dds",20);
 
+    Terrain::TerrainData data("TerrainTest/heightmap16.jpg","TerrainTest/alphamap.png",r,g,b,a);
+    _terrain = Terrain::create(data);
+    _terrain->setScale(20);
+    _terrain->setMaxDetailMapAmount(4);
     _terrain->setCameraMask(2);
     _terrain->setDrawWire(false);
 
