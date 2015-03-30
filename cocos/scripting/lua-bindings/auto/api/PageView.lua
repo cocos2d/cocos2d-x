@@ -166,7 +166,8 @@
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
--- Default constructor
+-- Default constructor<br>
+-- js ctor
 -- @function [parent=#PageView] PageView 
 -- @param self
 -- @return PageView#PageView self (return value: ccui.PageView)

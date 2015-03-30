@@ -35,7 +35,8 @@
 -- @return RichElementCustomNode#RichElementCustomNode ret (return value: ccui.RichElementCustomNode)
         
 --------------------------------
--- brief Default constructor.
+-- brief Default constructor.<br>
+-- js ctor
 -- @function [parent=#RichElementCustomNode] RichElementCustomNode 
 -- @param self
 -- @return RichElementCustomNode#RichElementCustomNode self (return value: ccui.RichElementCustomNode)
