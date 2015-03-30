@@ -51,7 +51,7 @@ protected:
 class Player : public Sprite3D
 {
 public:
-    static Player * create(const char * file,Camera * cam,Terrain * terrain);
+    static Player * create(const char * file, Camera * cam, Terrain * terrain);
     virtual bool isDone() const;
     virtual void update(float dt);
 
