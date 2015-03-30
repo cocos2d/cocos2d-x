@@ -15,7 +15,8 @@
 --------------------------------
 --  Return the value for the specific property name. <br>
 -- param propertyName The specific property name.<br>
--- return Return the value for the specific property name.
+-- return Return the value for the specific property name.<br>
+-- js NA
 -- @function [parent=#TMXObjectGroup] getProperty 
 -- @param self
 -- @param #string propertyName
