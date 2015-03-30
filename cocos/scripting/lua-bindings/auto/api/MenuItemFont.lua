@@ -6,14 +6,16 @@
 
 --------------------------------
 --  get font size .<br>
--- js getFontSize
+-- js getFontSize<br>
+-- js NA
 -- @function [parent=#MenuItemFont] getFontSizeObj 
 -- @param self
 -- @return int#int ret (return value: int)
         
 --------------------------------
 --  Returns the name of the Font.<br>
--- js getFontNameObj
+-- js getFontNameObj<br>
+-- js NA
 -- @function [parent=#MenuItemFont] getFontNameObj 
 -- @param self
 -- @return string#string ret (return value: string)
@@ -22,7 +24,8 @@
 --  Set font size.<br>
 -- c++ can not overload static and non-static member functions with the same parameter types.<br>
 -- so change the name to setFontSizeObj.<br>
--- js setFontSize
+-- js setFontSize<br>
+-- js NA
 -- @function [parent=#MenuItemFont] setFontSizeObj 
 -- @param self
 -- @param #int size
@@ -32,7 +35,8 @@
 -- Set the font name .<br>
 -- c++ can not overload static and non-static member functions with the same parameter types.<br>
 -- so change the name to setFontNameObj.<br>
--- js setFontName
+-- js setFontName<br>
+-- js NA
 -- @function [parent=#MenuItemFont] setFontNameObj 
 -- @param self
 -- @param #string name

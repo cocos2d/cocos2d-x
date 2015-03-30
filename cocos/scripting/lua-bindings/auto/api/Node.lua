@@ -567,7 +567,7 @@
 -- Executes an action, and returns the action that is executed.<br>
 -- This node becomes the action's target. Refer to Action::getTarget().<br>
 -- warning Actions don't retain their target.<br>
--- param An Action pointer
+-- param action An Action pointer.
 -- @function [parent=#Node] runAction 
 -- @param self
 -- @param #cc.Action action
