@@ -101,6 +101,7 @@ public:
      * @param backGround    backGround texture.
      * @param backGroundSelected    backGround selected state texture.
      * @param cross    cross texture.
+     * @param backGroundDisabled    backGround disabled state texture.
      * @param frontCrossDisabled    cross dark state texture.
      * @param texType    @see `Widget::TextureResType`
      *
@@ -128,16 +129,17 @@ public:
     /**
      * Load all textures for initializing a checkbox.
      *
-     * @param backGround    The background image name.
-     * @param backGroundSelected    The background selected image name.
+     * @param background    The background image name.
+     * @param backgroundSelected    The background selected image name.
      * @param cross    The cross image name.
+     * @param backgroundDisabled    The background disabled state texture.
      * @param frontCrossDisabled    The front cross disabled state image name.
      * @param texType    @see `Widget::TextureResType`
      */
-    void loadTextures(const std::string& backGround,
-                      const std::string& backGroundSelected,
+    void loadTextures(const std::string& background,
+                      const std::string& backgroundSelected,
                       const std::string& cross,
-                      const std::string& backGroundDisabled,
+                      const std::string& backgroundDisabled,
                       const std::string& frontCrossDisabled,
                       TextureResType texType = TextureResType::LOCAL);
 

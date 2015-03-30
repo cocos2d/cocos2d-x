@@ -46,10 +46,10 @@ NS_CC_MATH_BEGIN
  * Vectors are treated as columns, resulting in a matrix that is represented as follows,
  * where x, y and z are the translation components of the matrix:
  *
- * 1  0  0  x
- * 0  1  0  y
- * 0  0  1  z
- * 0  0  0  1
+ *     1  0  0  x
+ *     0  1  0  y
+ *     0  0  1  z
+ *     0  0  0  1
  *
  * This matrix class is directly compatible with OpenGL since its elements are
  * laid out in memory exactly as they are expected by OpenGL.
@@ -98,13 +98,14 @@ public:
     float m[16];
 #endif
 
-    /**
+    /** 
+     * Default constructor.
      * Constructs a matrix initialized to the identity matrix:
      *
-     * 1  0  0  0
-     * 0  1  0  0
-     * 0  0  1  0
-     * 0  0  0  1
+     *     1  0  0  0
+     *     0  1  0  0
+     *     0  0  1  0
+     *     0  0  0  1
      */
     Mat4();
 
