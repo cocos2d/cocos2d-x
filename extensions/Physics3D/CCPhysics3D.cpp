@@ -39,4 +39,39 @@ CC_EX_DLL const char* physics3dVersion()
 
 NS_CC_EXT_END
 
+
+cocos2d::Vec3 convertbtVector3ToVec3( const btVector3 &btVec3 )
+{
+    return cocos2d::Vec3(btVec3.x(), btVec3.y(), btVec3.z());
+}
+
+btVector3 convertVec3TobtVector3( const cocos2d::Vec3 &vec3 )
+{
+    return btVector3(vec3.x, vec3.y, vec3.z);
+}
+
+cocos2d::Mat4 convertbtTransformToMat4( const btTransform &btTrans )
+{
+    cocos2d::Mat4 mat;
+    btTrans.getOpenGLMatrix(mat.m);
+    return mat;
+}
+
+btTransform convertMat4TobtTransform( const cocos2d::Mat4 &mat4 )
+{
+    btTransform btTrans;
+    btTrans.setFromOpenGLMatrix(mat4.m);
+    return btTrans;
+}
+
+cocos2d::Quaternion convertbtQuatToQuat( const btQuaternion &btQuat )
+{
+    return cocos2d::Quaternion(btQuat.x(), btQuat.y(), btQuat.z(), btQuat.w());
+}
+
+btQuaternion convertQuatTobtQuat( const cocos2d::Quaternion &quat )
+{
+    return btQuaternion(quat.x, quat.y, quat.z, quat.w);
+}
+
 #endif // CC_ENABLE_BULLET_INTEGRATION
