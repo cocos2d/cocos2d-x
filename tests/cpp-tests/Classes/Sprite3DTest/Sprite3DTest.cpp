@@ -74,7 +74,8 @@ static std::function<Layer*()> createFunctions[] =
     CL(Sprite3DEmptyTest),
     CL(UseCaseSprite3D),
     CL(Sprite3DForceDepthTest),
-    CL(Sprite3DCubeMapTest)
+    CL(Sprite3DCubeMapTest),
+    CL(NodeAnimationTest)
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -2338,6 +2339,104 @@ void UseCaseSprite3D::update(float delta)
         circle->setPositionX(x);
         circle->setPositionZ(z);
     }
+}
+
+/////////////////////////////////////////////
+// Node Frame Animation
+NodeAnimationTest::NodeAnimationTest()
+:_vectorIndex(0)
+{
+    auto s = Director::getInstance()->getWinSize();
+    
+    auto itemPrev = MenuItemImage::create("Images/b1.png", "Images/b2.png",
+                                          [&](Ref *sender) {
+                                              _sprites[_vectorIndex]->setVisible(false);
+                                              
+                                              int tIndex = _vectorIndex - 1;
+                                              if(tIndex < 0)
+                                                  _vectorIndex = _sprites.size()-1;
+                                              else
+                                                  _vectorIndex--;
+                                              
+                                              _sprites[_vectorIndex]->setVisible(true);
+                                          });
+    
+    auto itemNext = MenuItemImage::create("Images/f1.png", "Images/f2.png",
+                                          [&](Ref *sender) {
+                                              _sprites[_vectorIndex]->setVisible(false);
+                                              
+                                              int tIndex = _vectorIndex + 1;
+                                              if(tIndex >= _sprites.size())
+                                                  _vectorIndex = 0;
+                                              else
+                                                  _vectorIndex++;
+                                              
+                                              _sprites[_vectorIndex]->setVisible(true);
+                                          });
+    
+    auto menu = Menu::create(itemPrev, itemNext, nullptr);
+    menu->alignItemsHorizontally();
+    menu->setScale(0.5);
+    menu->setAnchorPoint(Vec2(0,0));
+    menu->setPosition(Vec2(s.width/2,70));
+    addChild(menu);
+    
+    addNewSpriteWithCoords(Vec2(s.width / 2.f, s.height / 2.f));
+}
+std::string NodeAnimationTest::title() const
+{
+    return "Node Animation Test";
+}
+std::string NodeAnimationTest::subtitle() const
+{
+    return "Jumping animation";
+}
+
+void NodeAnimationTest::addNewSpriteWithCoords(Vec2 p)
+{
+    auto s = Director::getInstance()->getWinSize();
+    
+    // add jumping ball
+    std::string fileName = "Sprite3DTest/ball.c3b";
+    auto sprite = Sprite3D::create(fileName);
+    sprite->setRotation3D(Vec3(0, 180, 0));
+    sprite->setScale(3);
+    sprite->setPosition(Vec2(s.width / 2.f, s.height / 3.f));
+    sprite->setTexture("Sprite3DTest/teapot.png");
+    
+    auto light1 = PointLight::create(Vec3(s.width * 0.2f, s.height * 0.8f, 100.0f), Color3B(200, 200, 200), 10000.0f);
+    addChild(light1);
+    auto light2 = AmbientLight::create(Color3B(100, 100, 100));
+    addChild(light2);
+    
+    auto animation = Animation3D::create(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        auto act = RepeatForever::create(animate);
+        act->setTag(0);
+        sprite->runAction(act);
+    }
+    addChild(sprite);
+    _sprites.push_back(sprite);
+    
+    // add jumping orc
+    fileName = "Sprite3DTest/orc_jump.c3t";
+    sprite = Sprite3D::create(fileName);
+    sprite->setRotation3D(Vec3(0, 180, 0));
+    sprite->setScale(3);
+    sprite->setPosition(Vec2(s.width / 2.f, s.height / 3.f));
+    sprite->setVisible(false);
+    animation = Animation3D::create(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        auto act = RepeatForever::create(animate);
+        act->setTag(0);
+        sprite->runAction(act);
+    }
+    addChild(sprite);
+    _sprites.push_back(sprite);
 }
 
 Sprite3DCubeMapTest::Sprite3DCubeMapTest() :
