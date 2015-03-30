@@ -235,7 +235,7 @@ protected:
     int             _maxDirLightInShader; //max support directional light in shader
     int             _maxPointLightInShader; // max support point light in shader
     int             _maxSpotLightInShader; // max support spot light in shader
-    bool            _highAnimate3DQuality; // animation 3d quality, true: is high quality, false: is low quality
+    bool            _isAnimate3DHighQuality; // animation 3d quality, true: is high quality, false: is low quality
 	
 	ValueMap        _valueDict;
 };

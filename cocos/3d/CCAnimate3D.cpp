@@ -69,7 +69,7 @@ bool Animate3D::init(Animation3D* animation)
     animation->retain();
     setDuration(animation->getDuration());
     setOriginInterval(animation->getDuration());
-    setHighAnimateQuality(Configuration::getInstance()->getHighAnimate3DQuality());
+    setHighQuality(Configuration::getInstance()->getHighAnimate3DQuality());
     return true;
 }
 
@@ -85,7 +85,7 @@ bool Animate3D::init(Animation3D* animation, float fromTime, float duration)
     setOriginInterval(duration);
     _animation = animation;
     animation->retain();
-    setHighAnimateQuality(Configuration::getInstance()->getHighAnimate3DQuality());
+    setHighQuality(Configuration::getInstance()->getHighAnimate3DQuality());
     return true;
 }
 
@@ -384,9 +384,9 @@ void Animate3D::setOriginInterval(float interval)
     _originInterval = interval;
 }
 
-void Animate3D::setHighAnimateQuality(bool useHighAnimateQuality)
+void Animate3D::setHighQuality(bool isHighQuality)
 {
-    if (useHighAnimateQuality)
+    if (isHighQuality)
     {
         _translateEvaluate = EvaluateType::INT_LINEAR;
         _roteEvaluate = EvaluateType::INT_QUAT_SLERP;
@@ -398,12 +398,12 @@ void Animate3D::setHighAnimateQuality(bool useHighAnimateQuality)
         _roteEvaluate = EvaluateType::INT_NEAR;
         _scaleEvaluate = EvaluateType::INT_NEAR;
     }
-    _useHighAnimateQuality = useHighAnimateQuality;
+    _isHighQuality = isHighQuality;
 }
 
-bool Animate3D::getHighAnimateQuality() const
+bool Animate3D::getHighQuality() const
 {
-    return _useHighAnimateQuality;
+    return _isHighQuality;
 }
 
 Animate3D::Animate3D()
@@ -418,7 +418,7 @@ Animate3D::Animate3D()
 , _lastTime(0.0f)
 , _originInterval(0.0f)
 {
-    setHighAnimateQuality(true);
+    setHighQuality(true);
 }
 Animate3D::~Animate3D()
 {

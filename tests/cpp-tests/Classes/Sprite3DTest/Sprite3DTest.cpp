@@ -1401,7 +1401,7 @@ void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
         }
         animate->setSpeed(inverse ? -speed : speed);
         animate->setTag(110);
-        animate->setHighAnimateQuality(_highQuality);
+        animate->setHighQuality(_highQuality);
         auto repeate = RepeatForever::create(animate);
         repeate->setTag(110);
         sprite->runAction(repeate);
@@ -1421,7 +1421,7 @@ void Sprite3DWithSkinTest::switchAnimationQualityCallback(Ref* sender)
     {
         RepeatForever* repAction = dynamic_cast<RepeatForever*>(iter->getActionByTag(110));
         Animate3D* animate3D = dynamic_cast<Animate3D*>(repAction->getInnerAction());
-        animate3D->setHighAnimateQuality(_highQuality);
+        animate3D->setHighQuality(_highQuality);
     }
 }
 
