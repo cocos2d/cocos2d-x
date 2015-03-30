@@ -46,7 +46,7 @@ namespace cocostudio
         virtual ~WidgetReader();
         
         static WidgetReader* getInstance();
-        static void purge();
+        static void destroyInstance();
         
         virtual void setPropsFromJsonDictionary(cocos2d::ui::Widget* widget,
                                                 const rapidjson::Value& options);

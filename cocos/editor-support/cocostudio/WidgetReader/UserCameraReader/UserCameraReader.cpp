@@ -61,7 +61,7 @@ namespace cocostudio
         return _instanceUserCameraReader;
     }
     
-    void UserCameraReader::purge()
+    void UserCameraReader::destroyInstance()
     {
         CC_SAFE_DELETE(_instanceUserCameraReader);
     }

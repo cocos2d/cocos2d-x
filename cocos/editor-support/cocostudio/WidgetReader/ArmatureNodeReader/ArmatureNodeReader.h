@@ -50,7 +50,7 @@ public:
 	~ArmatureNodeReader();
 
 	static ArmatureNodeReader* getInstance();
-	static void purge();
+	static void destroyInstance();
 
 	flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
 		flatbuffers::FlatBufferBuilder* builder) override;

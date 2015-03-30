@@ -42,6 +42,11 @@ namespace cocostudio
         return instanceListViewReader;
     }
     
+    void ListViewReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instanceListViewReader);
+    }
+    
     void ListViewReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode* cocoNode)
     {
         ScrollViewReader::setPropsFromBinary(widget, cocoLoader, cocoNode);

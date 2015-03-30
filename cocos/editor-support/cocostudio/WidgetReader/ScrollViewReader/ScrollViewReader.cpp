@@ -44,6 +44,11 @@ namespace cocostudio
         return instanceScrollViewReader;
     }
     
+    void ScrollViewReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instanceScrollViewReader);
+    }
+    
     void ScrollViewReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode* cocoNode)
     {
         //TODO: need to refactor...
