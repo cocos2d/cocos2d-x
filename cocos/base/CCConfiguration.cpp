@@ -357,9 +357,9 @@ void Configuration::loadConfigFile(const std::string& filename)
     else
         _valueDict[name] = Value(_maxSpotLightInShader);
     
-    name = "cocos2d.x.3d.animate_3d_quality";
+    name = "cocos2d.x.3d.animate_high_quality";
     if (_valueDict.find(name) != _valueDict.end())
-        _isAnimate3DHighQuality = _valueDict[name].asInt();
+        _isAnimate3DHighQuality = _valueDict[name].asBool();
     else
         _valueDict[name] = Value(_isAnimate3DHighQuality);
 }
