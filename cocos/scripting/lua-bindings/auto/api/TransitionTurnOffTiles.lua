@@ -12,7 +12,10 @@
 -- @return ActionInterval#ActionInterval ret (return value: cc.ActionInterval)
         
 --------------------------------
--- 
+--  Creates a transition with duration and incoming scene.<br>
+-- param t Duration time, in seconds.<br>
+-- param scene A given scene.<br>
+-- return A autoreleased TransitionTurnOffTiles object.
 -- @function [parent=#TransitionTurnOffTiles] create 
 -- @param self
 -- @param #float t
@@ -20,7 +23,7 @@
 -- @return TransitionTurnOffTiles#TransitionTurnOffTiles ret (return value: cc.TransitionTurnOffTiles)
         
 --------------------------------
--- 
+-- js NA
 -- @function [parent=#TransitionTurnOffTiles] draw 
 -- @param self
 -- @param #cc.Renderer renderer

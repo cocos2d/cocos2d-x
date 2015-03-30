@@ -40,6 +40,7 @@
 @synthesize responseCode;
 @synthesize statusString;
 @synthesize responseError;
+@synthesize connError;
 @synthesize conn;
 @synthesize finish;
 @synthesize runLoop;
@@ -65,7 +66,9 @@
 
     self.responseData = [NSMutableData data];
     getDataTime = 0;
+
     self.responseError = nil;
+    self.connError = nil;
     
     // create the connection with the target request and this class as the delegate
     self.conn = [[[NSURLConnection alloc] initWithRequest:request
@@ -99,20 +102,19 @@
         self.statusString = @"OK";
  
     /*The individual values of the numeric status codes defined for HTTP/1.1
-    | “200”  ; OK
-    | “201”  ; Created
-    | “202”  ; Accepted
-    | “203”  ; Non-Authoritative Information
-    | “204”  ; No Content
-    | “205”  ; Reset Content
-    | “206”  ; Partial Content
+    | "200"  ; OK
+    | "201"  ; Created
+    | "202"  ; Accepted
+    | "203"  ; Non-Authoritative Information
+    | "204"  ; No Content
+    | "205"  ; Reset Content
+    | "206"  ; Partial Content
     */
     if (responseCode < 200 || responseCode >= 300)
     {// something went wrong, abort the whole thing
-        
-        [connection cancel];
-        finish = true;
-        return;
+        self.responseError = [NSError errorWithDomain:@"CCBackendDomain"
+                                            code:responseCode
+                                        userInfo:@{NSLocalizedDescriptionKey: @"Bad HTTP Response Code"}];        
     }
     
     [responseData setLength:0];
@@ -138,7 +140,7 @@
   didFailWithError:(NSError *)error
 {
     //NSLog(@"Load failed with error %@", [error localizedDescription]);
-    self.responseError = error;
+    self.connError = error;
     
     finish = true;
 }

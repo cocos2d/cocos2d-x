@@ -13,25 +13,9 @@
         
 --------------------------------
 -- 
--- @function [parent=#Control] onTouchMoved 
--- @param self
--- @param #cc.Touch touch
--- @param #cc.Event event
--- @return Control#Control self (return value: cc.Control)
-        
---------------------------------
--- 
 -- @function [parent=#Control] getState 
 -- @param self
 -- @return int#int ret (return value: int)
-        
---------------------------------
--- 
--- @function [parent=#Control] onTouchEnded 
--- @param self
--- @param #cc.Touch touch
--- @param #cc.Event event
--- @return Control#Control self (return value: cc.Control)
         
 --------------------------------
 -- Sends action messages for the given control events.<br>
@@ -56,26 +40,10 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
--- @function [parent=#Control] onTouchCancelled 
--- @param self
--- @param #cc.Touch touch
--- @param #cc.Event event
--- @return Control#Control self (return value: cc.Control)
-        
---------------------------------
 -- Updates the control layout using its current internal state.
 -- @function [parent=#Control] needsLayout 
 -- @param self
 -- @return Control#Control self (return value: cc.Control)
-        
---------------------------------
--- 
--- @function [parent=#Control] onTouchBegan 
--- @param self
--- @param #cc.Touch touch
--- @param #cc.Event event
--- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 
@@ -129,6 +97,14 @@
         
 --------------------------------
 -- 
+-- @function [parent=#Control] onTouchMoved 
+-- @param self
+-- @param #cc.Touch touch
+-- @param #cc.Event event
+-- @return Control#Control self (return value: cc.Control)
+        
+--------------------------------
+-- 
 -- @function [parent=#Control] isOpacityModifyRGB 
 -- @param self
 -- @return bool#bool ret (return value: bool)
@@ -139,5 +115,29 @@
 -- @param self
 -- @param #bool bOpacityModifyRGB
 -- @return Control#Control self (return value: cc.Control)
+        
+--------------------------------
+-- 
+-- @function [parent=#Control] onTouchCancelled 
+-- @param self
+-- @param #cc.Touch touch
+-- @param #cc.Event event
+-- @return Control#Control self (return value: cc.Control)
+        
+--------------------------------
+-- 
+-- @function [parent=#Control] onTouchEnded 
+-- @param self
+-- @param #cc.Touch touch
+-- @param #cc.Event event
+-- @return Control#Control self (return value: cc.Control)
+        
+--------------------------------
+-- 
+-- @function [parent=#Control] onTouchBegan 
+-- @param self
+-- @param #cc.Touch touch
+-- @param #cc.Event event
+-- @return bool#bool ret (return value: bool)
         
 return nil

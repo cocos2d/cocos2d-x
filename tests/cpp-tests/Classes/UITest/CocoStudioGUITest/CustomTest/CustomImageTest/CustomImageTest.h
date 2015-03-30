@@ -10,13 +10,13 @@
 class CustomImageLayer : public cocos2d::Layer
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
 };
 
 class CustomImageScene : public TestScene
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual void runThisTest();
     void BackCallback(cocos2d::Ref* pSender);
 };

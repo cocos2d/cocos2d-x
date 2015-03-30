@@ -49,7 +49,7 @@ public:
     */
     void setRadius(float radius);
 
-    virtual void copyAttributesTo (PUAffector* affector);
+    virtual void copyAttributesTo (PUAffector* affector) override;
 
 CC_CONSTRUCTOR_ACCESS:
     PUCollisionAvoidanceAffector();

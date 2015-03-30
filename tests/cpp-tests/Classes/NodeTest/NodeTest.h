@@ -38,9 +38,9 @@ public:
     virtual std::string subtitle() const override;
     virtual void onEnter() override;
 
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
+    void restartCallback(Ref* sender) override;
+    void nextCallback(Ref* sender) override;
+    void backCallback(Ref* sender) override;
 
 protected:
     TestCocosNodeDemo();
@@ -177,7 +177,7 @@ class CameraZoomTest : public TestCocosNodeDemo
 {
 public:
     CREATE_FUNC(CameraZoomTest);
-    void update(float dt);
+    void update(float dt) override;
 
     virtual void onEnter() override;
     virtual void onExit() override;
@@ -195,8 +195,8 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
-    virtual void onEnter();
-    virtual void onExit();
+    virtual void onEnter() override;
+    virtual void onExit() override;
 
 protected:
     CameraCenterTest();
@@ -303,7 +303,7 @@ public:
 protected:
     NodeNormalizedPositionTest2();
 
-    void update(float dt);
+    void update(float dt) override;
     Size _copyContentSize;
     float _accum;
 };
@@ -318,7 +318,7 @@ public:
 protected:
     NodeNormalizedPositionBugTest();
     
-    void update(float dt);
+    void update(float dt) override;
     float _accum;
     Sprite *sprite;
 };

@@ -1276,7 +1276,10 @@ Node* CSLoader::nodeWithFlatBuffersForSimulator(const flatbuffers::NodeTree *nod
         readername.append("Reader");
         
         NodeReaderProtocol* reader = dynamic_cast<NodeReaderProtocol*>(ObjectFactory::getInstance()->createObject(readername));
-        node = reader->createNodeWithFlatBuffers(options->data());
+        if (reader)
+        {
+            node = reader->createNodeWithFlatBuffers(options->data());
+        }
         
         Widget* widget = dynamic_cast<Widget*>(node);
         if (widget)
@@ -1333,7 +1336,6 @@ Node* CSLoader::nodeWithFlatBuffersForSimulator(const flatbuffers::NodeTree *nod
                 node->addChild(child);
             }
         }
-        Helper::doLayout(node);
     }
     
 //    _loadingNodeParentHierarchy.pop_back();

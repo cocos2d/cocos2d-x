@@ -5,8 +5,10 @@
 -- @parent_module cc
 
 --------------------------------
--- creates an action with duration and opacity <br>
--- param duration in seconds
+-- Creates an action with duration and opacity.<br>
+-- param duration Duration time, in seconds.<br>
+-- param opacity A certain opacity, the range is from 0 to 255.<br>
+-- return An autoreleased FadeTo object.
 -- @function [parent=#FadeTo] create 
 -- @param self
 -- @param #float duration
@@ -33,7 +35,7 @@
 -- @return FadeTo#FadeTo ret (return value: cc.FadeTo)
         
 --------------------------------
--- param time in seconds
+-- param time In seconds.
 -- @function [parent=#FadeTo] update 
 -- @param self
 -- @param #float time

@@ -512,7 +512,6 @@ namespace cocostudio
         node->setColor(color);
         
         node->setTag(tag);
-        node->setUserObject(timeline::ActionTimelineData::create(actionTag));
         
         ObjectExtensionData* extensionData = ObjectExtensionData::create();
         extensionData->setCustomProperty(customProperty);

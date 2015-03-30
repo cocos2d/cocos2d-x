@@ -70,7 +70,7 @@ public:
     */
     void setColorOperation (const ColorOperation& colorOperation);
 
-    virtual void copyAttributesTo (PUAffector* affector);
+    virtual void copyAttributesTo (PUAffector* affector) override;
 
 CC_CONSTRUCTOR_ACCESS:
     PUColorAffector();

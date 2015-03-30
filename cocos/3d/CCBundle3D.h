@@ -42,7 +42,9 @@ class Data;
 class CC_DLL Bundle3D
 {
 public:
-    // create a new bundle, destroy it when finish using it
+    /**
+     * create a new bundle, destroy it when finish using it
+     */
     static Bundle3D* createBundle();
     
     static void destroyBundle(Bundle3D* bundle);
