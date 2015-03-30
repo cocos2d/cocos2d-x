@@ -52,12 +52,42 @@ class Scale9Sprite;
 class CC_GUI_DLL LayoutProtocol
 {
 public:
+    /**
+     *@brief Default constructor.
+     */
     LayoutProtocol(){}
+    /**
+     *@brief Default destructor.
+     */
     virtual ~LayoutProtocol(){}
+
     
+    /**
+     * @brief Create a custom layout manager.
+     *
+     * @return A LayoutManager descendants instance.
+     */
     virtual LayoutManager* createLayoutManager() = 0;
+    
+    /**
+     * @brief Return the content size of layout.
+     *
+     * @return A content size in Size.
+     */
     virtual Size getLayoutContentSize()const = 0;
+    
+    /**
+     * @brief Get all elements of the layout.
+     *
+     * @return A vector of Node pointers.
+     */
     virtual const Vector<Node*>& getLayoutElements()const = 0;
+    
+    /**
+     * @brief The main function to do the layout job.
+     *  Different layout manager should implement its own layout algorithm.
+     *
+     */
     virtual void doLayout() = 0;
 };
 

@@ -108,10 +108,13 @@ class CC_DLL TextFieldTTF : public Label, public IMEDelegate
 {
 public:
     /**
+     * Default constructor.
      * @js ctor
      */
     TextFieldTTF();
+    
     /**
+     * Default destructor.
      * @js NA
      * @lua NA
      */

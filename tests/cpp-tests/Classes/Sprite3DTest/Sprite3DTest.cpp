@@ -2560,6 +2560,6 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
         _skyBox->reload();
         _skyBox->setTexture(_textureCube);
     });
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
 #endif
 }
