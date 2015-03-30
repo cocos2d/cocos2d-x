@@ -25,7 +25,10 @@
 #include "CCPhysics3D.h"
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
-
+#include "bullet/BulletCollision/CollisionShapes/btBoxShape.h"
+#include "bullet/BulletCollision/CollisionShapes/btSphereShape.h"
+#include "bullet/BulletCollision/CollisionShapes/btCylinderShape.h"
+#include "bullet/BulletCollision/CollisionShapes/btCapsuleShape.h"
 
 NS_CC_EXT_BEGIN
 
@@ -83,21 +86,25 @@ Physics3DShape* Physics3DShape::createCapsule(float radius, float height)
 bool Physics3DShape::initBox(const cocos2d::Vec3& ext)
 {
     _shapeType = ShapeType::BOX;
+    _btShape = new btBoxShape(convertVec3TobtVector3(ext * 0.5f));
     return true;
 }
 bool Physics3DShape::initSphere(float radius)
 {
     _shapeType = ShapeType::SPHERE;
+    _btShape = new btSphereShape(radius);
     return true;
 }
 bool Physics3DShape::initCylinder(float radius, float height)
 {
     _shapeType = ShapeType::CYLINDER;
+    _btShape = new btCylinderShape(convertVec3TobtVector3(cocos2d::Vec3(radius, height, radius) * 0.5f));
     return true;
 }
 bool Physics3DShape::initCapsule(float radius, float height)
 {
     _shapeType = ShapeType::CAPSULE;
+    _btShape = new btCapsuleShape(radius, height);
     return true;
 }
 

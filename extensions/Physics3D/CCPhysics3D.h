@@ -46,8 +46,18 @@ NS_CC_EXT_END
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
 //include bullet header files
+#include "bullet/LinearMath/btTransform.h"
+#include "bullet/LinearMath/btVector3.h"
+#include "bullet/LinearMath/btQuaternion.h"
+
 
 //convert between cocos and bullet
+cocos2d::Vec3 convertbtVector3ToVec3(const btVector3 &btVec3);
+btVector3 convertVec3TobtVector3(const cocos2d::Vec3 &vec3);
+cocos2d::Mat4 convertbtTransformToMat4(const btTransform &btTrans);
+btTransform convertMat4TobtTransform(const cocos2d::Mat4 &mat4);
+cocos2d::Quaternion convertbtQuatToQuat(const btQuaternion &btQuat);
+btQuaternion convertQuatTobtQuat(const cocos2d::Quaternion &quat);
 
 #endif // CC_ENABLE_BULLET_INTEGRATION
 
