@@ -41,12 +41,17 @@
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup _3d
+ * @{
+ */
+
 class Mesh;
 class Texture2D;
 class MeshSkin;
 class AttachNode;
 struct NodeData;
-/** Sprite3D: A sprite can be loaded from 3D model files, .obj, .c3t, .c3b, then can be drawed as sprite */
+/** @brief Sprite3D: A sprite can be loaded from 3D model files, .obj, .c3t, .c3b, then can be drawed as sprite */
 class CC_DLL Sprite3D : public Node, public BlendProtocol
 {
 public:
@@ -285,6 +290,9 @@ protected:
 };
 
 extern std::string CC_DLL s_attributeNames[];//attribute names array
+
+// end of actions group
+/// @}
 
 NS_CC_END
 #endif // __SPRITE3D_H_

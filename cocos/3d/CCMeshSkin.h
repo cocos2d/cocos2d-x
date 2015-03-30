@@ -33,12 +33,18 @@
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup _3d
+ * @{
+ */
+
 class Bone3D;
 class Skeleton3D;
 
 /**
- * MeshSkin, A class maintain a collection of bones that affect Mesh vertex.
+ * @brief MeshSkin, A class maintain a collection of bones that affect Mesh vertex.
  * And it is responsible for computing matrix palletes that used by skin mesh rendering.
+ * @js NA
  */
 class CC_DLL MeshSkin: public Ref
 {
@@ -98,6 +104,9 @@ protected:
     // The number of Vec4's is (_skinBones.size() * 3).
     Vec4* _matrixPalette;
 };
+
+// end of actions group
+/// @}
 
 NS_CC_END
 

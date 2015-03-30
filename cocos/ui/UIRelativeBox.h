@@ -47,11 +47,13 @@ public:
     
     /**
      * Default constructor.
+     * @js ctor
      */
     RelativeBox();
     
     /**
      * Default destructor.
+     * @js NA
      */
     virtual ~RelativeBox();
     

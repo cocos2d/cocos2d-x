@@ -59,11 +59,13 @@ public:
 
     /**
      * Default constructor.
+     * @js ctor
      */
     LoadingBar();
     
     /**
      * Default destructor.
+     * @js NA
      */
     virtual ~LoadingBar();
     

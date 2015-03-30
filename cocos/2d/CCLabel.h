@@ -106,6 +106,7 @@ typedef struct _ttfConfig
  * - http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
  * - http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
  * - http://www.angelcode.com/products/bmfont/ (Free, Windows only)
+ * @js NA
  */
 class CC_DLL Label : public SpriteBatchNode, public LabelProtocol
 {

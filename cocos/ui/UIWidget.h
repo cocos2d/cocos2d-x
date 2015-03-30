@@ -191,7 +191,7 @@ public:
      *
      * The default value is true, a widget is default to bright
      *
-     * @param visible   true if the widget is bright, false if the widget is dark.
+     * @param bright   true if the widget is bright, false if the widget is dark.
      */
     void setBright(bool bright);
 
@@ -203,11 +203,11 @@ public:
     bool isBright() const;
 
     /**
-     * Sets whether the widget is touch enabled
+     * Sets whether the widget is touch enabled.
      *
-     * The default value is false, a widget is default to touch disabled
+     * The default value is false, a widget is default to touch disabled.
      *
-     * @param visible   true if the widget is touch enabled, false if the widget is touch disabled.
+     * @param enabled   True if the widget is touch enabled, false if the widget is touch disabled.
      */
     virtual void setTouchEnabled(bool enabled);
 
@@ -322,7 +322,7 @@ public:
      * Usually we use p(x,y) to compose a Vec2 object.
      * The original point (0,0) is at the left-bottom corner of screen.
      *
-     * @param position  The position (x,y) of the widget in OpenGL coordinates
+     * @param pos  The position (x,y) of the widget in OpenGL coordinates
      */
     virtual void setPosition(const Vec2 &pos) override;
 
@@ -363,7 +363,7 @@ public:
     /**
      * Sets whether the widget should be flipped horizontally or not.
      *
-     * @param bFlippedX true if the widget should be flipped horizaontally, false otherwise.
+     * @param flippedX true if the widget should be flipped horizaontally, false otherwise.
      */
     virtual void setFlippedX(bool flippedX);
 
@@ -381,7 +381,7 @@ public:
     /**
      * Sets whether the widget should be flipped vertically or not.
      *
-     * @param bFlippedY true if the widget should be flipped vertically, flase otherwise.
+     * @param flippedY true if the widget should be flipped vertically, flase otherwise.
      */
     virtual void setFlippedY(bool flippedY);
 
@@ -419,7 +419,7 @@ public:
     /**
      * Checks a point if in parent's area.
      *
-     * @param point A point in `Vec2`.
+     * @param pt A point in `Vec2`.
      * @deprecated  use `isClippingParentContainsPoint` instead.
      * @return true if the point is in parent's area, flase otherwise.
      */
@@ -428,7 +428,7 @@ public:
     /**
      * Checks a point if in parent's area.
      *
-     * @param point A point in `Vec2`.
+     * @param pt A point in `Vec2`.
      * @return true if the point is in parent's area, flase otherwise.
      */
     bool isClippingParentContainsPoint(const Vec2& pt);
@@ -501,8 +501,6 @@ public:
      * Gets the size type of widget.
      *
      * @see `SizeType`
-     *
-     * @param type that is widget's size type
      */
     SizeType getSizeType() const;
 
@@ -575,8 +573,7 @@ public:
      * Sets a LayoutParameter to widget.
      *
      * @see LayoutParameter
-     * @param LayoutParameter pointer
-     * @param type  Relative or Linear
+     * @param parameter LayoutParameter pointer
      */
     void setLayoutParameter(LayoutParameter* parameter);
 
@@ -584,7 +581,6 @@ public:
      * Gets LayoutParameter of widget.
      *
      * @see LayoutParameter
-     * @param type  Relative or Linear
      * @return LayoutParameter
      */
     LayoutParameter* getLayoutParameter()const override;
@@ -604,7 +600,7 @@ public:
      * Set true will ignore user defined content size which means 
      * the widget size is always equal to the return value of `getVirtualRendererSize`.
      *
-     * @param ignore, set member variabl _ignoreSize to ignore
+     * @param ignore set member variabl _ignoreSize to ignore
      */
     virtual void ignoreContentAdaptWithSize(bool ignore);
 
@@ -736,7 +732,7 @@ public:
     /**
      *  When a widget is in a layout, you could call this method to get the next focused widget within a specified direction. 
      *  If the widget is not in a layout, it will return itself
-     *@param dir the direction to look for the next focused widget in a layout
+     *@param direction the direction to look for the next focused widget in a layout
      *@param current  the current focused widget
      *@return the next focused widget in a layout
      */

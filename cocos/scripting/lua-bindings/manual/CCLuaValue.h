@@ -87,6 +87,9 @@ typedef union {
 /**
  * Wrap different general types of data into a same specific type named LuaValue.
  * The general types supported as follows:int,float,bool,std::string,const char*,LuaValueDict,LuaValueArray,Ref.
+ *
+ * @lua NA
+ * @js NA
  */
 class LuaValue
 {
@@ -97,8 +100,6 @@ public:
      *
      * @param intValue a int value.
      * @return a LuaValue object.
-     * @lua NA
-     * @js NA
      */
     static const LuaValue intValue(const int intValue);
     
@@ -107,8 +108,6 @@ public:
      *
      * @param floatValue a float value.
      * @return a LuaValue object.
-     * @lua NA
-     * @js NA
      */
     static const LuaValue floatValue(const float floatValue);
     
@@ -117,8 +116,6 @@ public:
      *
      * @param booleanValue a bool value.
      * @return a LuaValue object.
-     * @lua NA
-     * @js NA
      */
     static const LuaValue booleanValue(const bool booleanValue);
     
@@ -127,8 +124,6 @@ public:
      *
      * @param stringValue a string pointer.
      * @return a LuaValue object.
-     * @lua NA
-     * @js NA
      */
     static const LuaValue stringValue(const char* stringValue);
     
@@ -137,8 +132,6 @@ public:
      *
      * @param stringValue a std::string object.
      * @return a LuaValue object.
-     * @lua NA
-     * @js NA
      */
     static const LuaValue stringValue(const std::string& stringValue);
     
@@ -147,8 +140,6 @@ public:
      *
      * @param dictValue a LuaValueDict object.
      * @return a LuaValue object.
-     * @lua NA
-     * @js NA
      */
     static const LuaValue dictValue(const LuaValueDict& dictValue);
     
@@ -157,8 +148,6 @@ public:
      *
      * @param arrayValue a LuaValueArray object.
      * @return a LuaValue object.
-     * @lua NA
-     * @js NA
      */
     static const LuaValue arrayValue(const LuaValueArray& arrayValue);
     
@@ -168,8 +157,6 @@ public:
      * @param ccobjectValue a Ref object.
      * @param objectTypename a string pointer point to the typename of object.
      * @return a LuaValue object.
-     * @lua NA
-     * @js NA
      */
     static const LuaValue ccobjectValue(Ref* ccobjectValue, const char* objectTypename);
     
@@ -179,8 +166,6 @@ public:
      * @param ccobjectValue a Ref object.
      * @param objectTypename a std::string object represent the typename of object.
      * @return a LuaValue object.
-     * @lua NA
-     * @js NA
      */
     static const LuaValue ccobjectValue(Ref* ccobjectValue, const std::string& objectTypename);
     
@@ -188,9 +173,6 @@ public:
     /**
      * Default constuctor of LuaValue.
      * Set the default value for _type(LuaValueTypeInt) and _ccobjectType(nullptr),and init the _field.
-     *
-     * @lua NA
-     * @js NA
      */
     LuaValue(void)
     : _type(LuaValueTypeInt)
@@ -201,25 +183,16 @@ public:
     
     /**
      * Copy constructor of Data.
-     *
-     * @lua NA
-     * @js NA
      */
     LuaValue(const LuaValue& rhs);
     
     /**
      * Override of operator= .
-     *
-     * @lua NA
-     * @js NA
      */
     LuaValue& operator=(const LuaValue& rhs);
     
     /**
      * Destructor.
-     *
-     * @lua NA
-     * @js NA
      */
     ~LuaValue(void);
     
@@ -227,8 +200,6 @@ public:
      * Get the type of LuaValue object.
      * 
      * @return the type of LuaValue object.
-     * @lua NA
-     * @js NA
      */
     const LuaValueType getType(void) const {
         return _type;
@@ -238,8 +209,6 @@ public:
      * Get the typename of the Ref object.
      *
      * @return the refrence of _ccobjectType.
-     * @lua NA
-     * @js NA
      */
     const std::string& getObjectTypename(void) const {
         return *_ccobjectType;
@@ -249,8 +218,6 @@ public:
      * Get the int value of LuaValue object.
      *
      * @return the int value.
-     * @lua NA
-     * @js NA
      */
     int intValue(void) const {
         return _field.intValue;
@@ -260,8 +227,6 @@ public:
      * Get the float value of LuaValue object.
      *
      * @return the float value.
-     * @lua NA
-     * @js NA
      */
     float floatValue(void) const {
         return _field.floatValue;
@@ -271,8 +236,6 @@ public:
      * Get the boolean value of LuaValue object.
      *
      * @return the boolean value.
-     * @lua NA
-     * @js NA
      */
     bool booleanValue(void) const {
         return _field.booleanValue;
@@ -282,8 +245,6 @@ public:
      * Get the boolean value of LuaValue object.
      *
      * @return the refrence about string value.
-     * @lua NA
-     * @js NA
      */
     const std::string& stringValue(void) const {
         return *_field.stringValue;
@@ -293,8 +254,6 @@ public:
      * Get the LuaValueDict value of LuaValue object.
      *
      * @return the LuaValueDict value.
-     * @lua NA
-     * @js NA
      */
     const LuaValueDict& dictValue(void) const {
         return *_field.dictValue;
@@ -304,8 +263,6 @@ public:
      * Get the LuaValueArray value of LuaValue object.
      *
      * @return the LuaValueArray value.
-     * @lua NA
-     * @js NA
      */
     const LuaValueArray& arrayValue(void) const {
         return *_field.arrayValue;
@@ -315,8 +272,6 @@ public:
      * Get the Ref object of LuaValue object.
      *
      * @return the pointer point to a Ref object.
-     * @lua NA
-     * @js NA
      */
     Ref* ccobjectValue(void) const {
         return _field.ccobjectValue;

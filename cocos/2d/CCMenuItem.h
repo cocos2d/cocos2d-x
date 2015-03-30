@@ -79,6 +79,9 @@ public:
     /** Returns whether or not the item is selected. */
     virtual bool isSelected() const;
 
+    /**
+     * @js NA
+     */
     virtual void onExit() override;
 
     /** Set the callback to the menu item.
@@ -90,12 +93,13 @@ public:
     void setCallback(const ccMenuCallback& callback);
     
     /** Set the target/selector of the menu item.
-    * @js NA
     * @lua NA
     */
     CC_DEPRECATED_ATTRIBUTE void setTarget(Ref *rec, SEL_MenuHandler selector);
 
-
+    /**
+     * @js NA
+     */
     virtual std::string getDescription() const override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -115,7 +119,6 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~MenuItem();
     
     /** Initializes a MenuItem with a target/selector.
-     * @js NA
      * @lua NA
      */
     bool initWithCallback(const ccMenuCallback& callback);
@@ -275,11 +278,13 @@ public:
      * c++ can not overload static and non-static member functions with the same parameter types.
      * so change the name to setFontSizeObj.
      * @js setFontSize
+     * @js NA
      */
     void setFontSizeObj(int size);
     
     /** get font size .
      * @js getFontSize
+     * @js NA
      */
     int getFontSizeObj() const;
     CC_DEPRECATED_ATTRIBUTE int fontSizeObj() const { return getFontSizeObj(); };
@@ -289,15 +294,19 @@ public:
      * c++ can not overload static and non-static member functions with the same parameter types.
      * so change the name to setFontNameObj.
      * @js setFontName
+     * @js NA
      */
     void setFontNameObj(const std::string& name);
 
     /** Returns the name of the Font.
      * @js getFontNameObj
+     * @js NA
      */
     const std::string& getFontNameObj() const;
 
-    /** Deprecated Use getFontNameObj() instead. */
+    /** Deprecated Use getFontNameObj() instead.
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE const std::string& fontNameObj() const { return getFontNameObj(); }
     
 CC_CONSTRUCTOR_ACCESS:

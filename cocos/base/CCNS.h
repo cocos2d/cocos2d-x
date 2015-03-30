@@ -31,7 +31,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * @addtogroup data_structures
+ * @addtogroup base
  * @{
  */
 

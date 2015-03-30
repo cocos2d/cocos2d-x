@@ -43,9 +43,6 @@ extern "C" {
  * If you don't want to use the network module in the lua, you only don't call this registering function.
  * If you don't register the network module, the package size would become smaller .
  * The current mechanism,this registering function is called in the lua_module_register.h
- *
- * @lua NA
- * @js NA
  */
 TOLUA_API int register_network_module(lua_State* L);
 

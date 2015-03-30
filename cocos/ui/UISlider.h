@@ -66,11 +66,13 @@ public:
     typedef std::function<void(Ref*,EventType)> ccSliderCallback;
     /**
      * Default constructor.
+     * @js ctor
      */
     Slider();
     
     /**
      * Default destructor.
+     * @js NA
      */
     virtual ~Slider();
     
@@ -132,12 +134,14 @@ public:
     /**
      * Sets capinsets for progress bar slider, if slider is using scale9 renderer.
      * @param capInsets Capinsets for progress bar slider.
+     * @js NA
      */
     void setCapInsetProgressBarRebderer(const Rect &capInsets);
     
     /**
      * Gets capinsets for progress bar slider, if slider is using scale9 renderer.
      * @return Capinsets for progress bar slider.
+     * @js NA
      */
     const Rect& getCapInsetsProgressBarRebderer()const;
     
@@ -199,12 +203,12 @@ public:
      */
     int getPercent()const;
     
+    CC_DEPRECATED_ATTRIBUTE void addEventListenerSlider(Ref* target,SEL_SlidPercentChangedEvent selector);
     /**
      * Add call back function called when slider's percent has changed to slider.
      *
      * @param callback An given call back function called when slider's percent has changed to slider.
      */
-    CC_DEPRECATED_ATTRIBUTE void addEventListenerSlider(Ref* target,SEL_SlidPercentChangedEvent selector);
     void addEventListener(const ccSliderCallback& callback);
     
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;

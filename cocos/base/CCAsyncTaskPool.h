@@ -48,6 +48,7 @@ NS_CC_BEGIN
 /**
  * @class AsyncTaskPool
  * @brief This class allows to perform background operations without having to manipulate threads.
+ * @js NA
  */
 class CC_DLL AsyncTaskPool
 {
@@ -86,7 +87,6 @@ public:
      * @param callback callback when the task is finished. The callback is called in the main thread instead of task thread.
      * @param callbackParam parameter used by the callback.
      * @param f task can be lambda function.
-     * @param args task parameters.
      */
     template<class F>
     inline void enqueue(TaskType type, const TaskCallBack& callback, void* callbackParam, F&& f);

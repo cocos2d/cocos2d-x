@@ -37,8 +37,14 @@ NS_CC_BEGIN
 
 class Bone3D;
 class Sprite3D;
+
 /**
- * Animate3D, Animates a Sprite3D given with an Animation3D
+ * @addtogroup _3d
+ * @{
+ */
+
+/**
+ * @brief Animate3D, Animates a Sprite3D given with an Animation3D
  */
 class CC_DLL Animate3D: public ActionInterval
 {
@@ -132,12 +138,16 @@ protected:
     float      _lastTime;     // last t (0 - 1)
     float      _originInterval;// save origin interval time
     std::unordered_map<Bone3D*, Animation3D::Curve*> _boneCurves; //weak ref
+    std::unordered_map<Node*, Animation3D::Curve*> _nodeCurves;
 
     //sprite animates
-    static std::unordered_map<Sprite3D*, Animate3D*> s_fadeInAnimates;
-    static std::unordered_map<Sprite3D*, Animate3D*> s_fadeOutAnimates;
-    static std::unordered_map<Sprite3D*, Animate3D*> s_runningAnimates;
+    static std::unordered_map<Node*, Animate3D*> s_fadeInAnimates;
+    static std::unordered_map<Node*, Animate3D*> s_fadeOutAnimates;
+    static std::unordered_map<Node*, Animate3D*> s_runningAnimates;
 };
+
+// end of actions group
+/// @}
 
 NS_CC_END
 

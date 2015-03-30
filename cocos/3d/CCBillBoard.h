@@ -28,9 +28,13 @@
 #include "2d/CCSprite.h"
 
 NS_CC_BEGIN
+/**
+ * @addtogroup _3d
+ * @{
+ */
 
 /**
- * Inherit from Sprite, achieve BillBoard.
+ * @brief Inherit from Sprite, achieve BillBoard.
  */
 class CC_DLL BillBoard : public Sprite
 {
@@ -118,7 +122,8 @@ private:
 
 };
 
-
+// end of actions group
+/// @}
 
 NS_CC_END
 

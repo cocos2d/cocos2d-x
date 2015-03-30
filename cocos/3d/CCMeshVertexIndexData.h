@@ -41,11 +41,17 @@
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup _3d
+ * @{
+ */
+
 class MeshVertexData;
 
 /**
  * the MeshIndexData class.
  * @brief the MeshIndexData contain all of the indices data which mesh need.
+ * @js NA
  */
 class MeshIndexData : public Ref
 {
@@ -131,6 +137,9 @@ protected:
     
     int                  _vertexCount; //vertex count
 };
+
+// end of actions group
+/// @}
 
 NS_CC_END
 

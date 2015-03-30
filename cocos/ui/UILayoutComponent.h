@@ -91,7 +91,7 @@ namespace ui {
 
         /**
          * Percent content size is used to adapt node's content size based on parent's content size.
-         * If set to true then node's content size will be changed based on the value setted by @setPercentContentSize
+         * If set to true then node's content size will be changed based on the value setted by @see setPercentContentSize
          *@param isUsed True to enable percent content size, false otherwise.
          */
         void setUsingPercentContentSize(bool isUsed);
@@ -257,7 +257,7 @@ namespace ui {
 
         /**
          * Change the bottom margin of owner relative to its parent.
-         *@param Margin in float.
+         *@param margin in float.
          */
         void setBottomMargin(float margin);
 

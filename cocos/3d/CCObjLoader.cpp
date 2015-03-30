@@ -613,6 +613,8 @@ std::string ObjLoader::LoadObj(shapes_t& shapes, const char* filename, const cha
         // use mtl
         if ((0 == strncmp(token, "usemtl", 6)) && isSpace((token[6])))
         {
+            exportFaceGroupToShape(vertexCache, shapes, v, vn, vt, faceGroup, material, name);
+            faceGroup.clear();
             
             char namebuf[4096];
             token += 7;

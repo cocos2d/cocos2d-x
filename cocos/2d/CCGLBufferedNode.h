@@ -27,6 +27,9 @@ THE SOFTWARE.
 
 #include "platform/CCGL.h"
 
+/**
+* @js NA
+*/
 class GLBufferedNode
 {
 public:

@@ -36,7 +36,23 @@ extern "C" {
 #include <string>
 
 TOLUA_API int  register_all_cocos2dx_coco_studio_manual(lua_State* L);
+
+/**
+ * @addtogroup lua
+ * @{
+ */
+
+/**
+ * Call this function can import the lua bindings for the coco studio module.
+ * After registering, we could call the related coco studio code conveniently in the lua.
+ * If you don't want to use the coco studio module in the lua, you only don't call this registering function.
+ * If you don't register the coco studio module, the package size would become smaller .
+ * The current mechanism,this registering function is called in the lua_module_register.h
+ */
 TOLUA_API int  register_cocostudio_module(lua_State* L);
+
+// end group
+/// @}
 
 struct LuaArmatureWrapperEventData
 {
