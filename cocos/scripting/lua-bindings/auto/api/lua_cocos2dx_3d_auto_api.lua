@@ -41,4 +41,14 @@
 -- @field [parent=#cc] BillBoard#BillBoard BillBoard preloaded module
 
 
+--------------------------------------------------------
+-- the cc TextureCube
+-- @field [parent=#cc] TextureCube#TextureCube TextureCube preloaded module
+
+
+--------------------------------------------------------
+-- the cc Skybox
+-- @field [parent=#cc] Skybox#Skybox Skybox preloaded module
+
+
 return nil
