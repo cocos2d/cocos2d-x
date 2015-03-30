@@ -18,7 +18,9 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- brief Default constructor.
+-- brief Default constructor.<br>
+-- js ctor<br>
+-- lua new
 -- @function [parent=#RichElement] RichElement 
 -- @param self
 -- @return RichElement#RichElement self (return value: ccui.RichElement)

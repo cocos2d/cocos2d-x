@@ -85,7 +85,8 @@
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
--- Default constructor.
+-- Default constructor.<br>
+-- lua new
 -- @function [parent=#TextAtlas] TextAtlas 
 -- @param self
 -- @return TextAtlas#TextAtlas self (return value: ccui.TextAtlas)

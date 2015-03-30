@@ -43,11 +43,11 @@
         
 --------------------------------
 -- Load cross texture for checkbox.<br>
--- param cross    The cross texture name.<br>
+-- param crossTextureName    The cross texture name.<br>
 -- param texType    @see `Widget::TextureResType`
 -- @function [parent=#CheckBox] loadTextureFrontCross 
 -- @param self
--- @param #string 
+-- @param #string crossTextureName
 -- @param #int texType
 -- @return CheckBox#CheckBox self (return value: ccui.CheckBox)
         
@@ -60,17 +60,18 @@
         
 --------------------------------
 -- Load all textures for initializing a checkbox.<br>
--- param backGround    The background image name.<br>
--- param backGroundSelected    The background selected image name.<br>
+-- param background    The background image name.<br>
+-- param backgroundSelected    The background selected image name.<br>
 -- param cross    The cross image name.<br>
+-- param backgroundDisabled    The background disabled state texture.<br>
 -- param frontCrossDisabled    The front cross disabled state image name.<br>
 -- param texType    @see `Widget::TextureResType`
 -- @function [parent=#CheckBox] loadTextures 
 -- @param self
--- @param #string backGround
--- @param #string backGroundSelected
+-- @param #string background
+-- @param #string backgroundSelected
 -- @param #string cross
--- @param #string backGroundDisabled
+-- @param #string backgroundDisabled
 -- @param #string frontCrossDisabled
 -- @param #int texType
 -- @return CheckBox#CheckBox self (return value: ccui.CheckBox)
@@ -86,7 +87,7 @@
 --------------------------------
 -- Load background texture for checkbox.<br>
 -- param backGround   The background image name.<br>
--- param texType    @see `Widget::TextureResType`
+-- param type    @see `Widget::TextureResType`
 -- @function [parent=#CheckBox] loadTextureBackGround 
 -- @param self
 -- @param #string backGround
@@ -119,7 +120,7 @@
 -- @function [parent=#CheckBox] create
 -- @param self
 -- @param #string backGround
--- @param #string backGroundSeleted
+-- @param #string backGroundSelected
 -- @param #string cross
 -- @param #string backGroundDisabled
 -- @param #string frontCrossDisabled
@@ -151,7 +152,8 @@
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
--- Default constructor.
+-- Default constructor.<br>
+-- lua new
 -- @function [parent=#CheckBox] CheckBox 
 -- @param self
 -- @return CheckBox#CheckBox self (return value: ccui.CheckBox)
