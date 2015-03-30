@@ -3,62 +3,14 @@
 USING_NS_CC;
 
 #include "renderer/CCGLProgram.h"
+#include "renderer/CCGLProgramCache.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGLProgramStateCache.h"
 #include "renderer/ccGLStateCache.h"
 #include "2d/CCCamera.h"
 #include <stdlib.h>
-static const char * vertex_shader = "\
-                                    attribute vec4 a_position;\
-                                    attribute vec2 a_texCoord;\
-                                    attribute vec3 a_normal;\
-                                    \n#ifdef GL_ES\n\
-                                    varying mediump vec2 v_texCoord;\
-                                    varying mediump vec3 v_normal;\
-                                    \n#else\n\
-                                    varying vec2 v_texCoord;\
-                                    varying vec3 v_normal;\
-                                    \n#endif\n\
-                                    void main()\
-                                    {\
-                                    gl_Position = CC_MVPMatrix * a_position;\
-                                    v_texCoord = a_texCoord;\
-                                    v_normal = a_normal;\
-                                    }\
-                                    ";
 
-static const char * fragment_shader_RGB_4_DETAIL ="\n#ifdef GL_ES\n\
-                                                  precision lowp float;\
-                                                  \n#endif\n\
-                                                  uniform vec3 u_color;\
-                                                  varying vec2 v_texCoord;\
-                                                  varying vec3 v_normal;\
-                                                  uniform int u_has_alpha;\
-                                                  uniform sampler2D u_alphaMap;\
-                                                  uniform sampler2D u_texture0;\
-                                                  uniform sampler2D u_texture1;\
-                                                  uniform sampler2D u_texture2;\
-                                                  uniform sampler2D u_texture3;\
-                                                  uniform float u_detailSize[4];\
-                                                  void main()\
-                                                  {\
-                                                  vec3 light_direction = vec3(-1,-1,0);\
-                                                  float lightFactor = dot(-light_direction,v_normal);\
-                                                  if(u_has_alpha<=0)\
-                                                  {\
-                                                  gl_FragColor =  texture2D(u_texture0, v_texCoord)*lightFactor;\
-                                                  }else\
-                                                  {\
-                                                  vec4 blendFactor =texture2D(u_alphaMap,v_texCoord);\
-                                                  vec4 color = vec4(0,0,0,0);\
-                                                  color = texture2D(u_texture0, v_texCoord*u_detailSize[0])*blendFactor.r +\
-                                                  texture2D(u_texture1, v_texCoord*u_detailSize[1])*blendFactor.g + texture2D(u_texture2, v_texCoord*u_detailSize[2])*blendFactor.b;\n\
-                                                  float grayFactor =dot(blendFactor.rgb, vec3(1, 1, 1));\
-                                                  color +=texture2D(u_texture3, v_texCoord*u_detailSize[3])*(1.0-grayFactor);\
-                                                  gl_FragColor = color*lightFactor;\
-                                                  }\
-                                                  }";
 NS_CC_BEGIN
 Terrain * Terrain::create(TerrainData &parameter)
 {
@@ -105,7 +57,7 @@ bool Terrain::init()
     _lodDistance[0]=64;
     _lodDistance[1]=128;
     _lodDistance[2]=196;
-    auto shader = GLProgram::createWithByteArrays(vertex_shader,fragment_shader_RGB_4_DETAIL);
+    auto shader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_TERRAIN);
     auto state = GLProgramState::create(shader);
     
     setGLProgramState(state);

@@ -64,6 +64,7 @@ enum {
     kShaderType_3DParticleTex,
     kShaderType_3DParticleColor,
     kShaderType_3DSkyBox,
+    kShaderType_3DTerrain,
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || defined(WP8_SHADER_COMPILER)
     kShaderType_PositionColor_noMVP_GrayScale,
 #endif
@@ -250,6 +251,10 @@ void GLProgramCache::loadDefaultGLPrograms()
     p = new GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DSkyBox);
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_SKYBOX, p));
+    
+    p = new GLProgram();
+    loadDefaultGLProgram(p, kShaderType_3DTerrain);
+    _programs.insert(std::make_pair(GLProgram::SHADER_3D_TERRAIN, p));
 }
 
 void GLProgramCache::reloadDefaultGLPrograms()
@@ -381,6 +386,10 @@ void GLProgramCache::reloadDefaultGLPrograms()
     p = getGLProgram(GLProgram::SHADER_3D_SKYBOX);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_3DSkyBox);
+    
+    p = getGLProgram(GLProgram::SHADER_3D_TERRAIN);
+    p->reset();
+    loadDefaultGLProgram(p, kShaderType_3DTerrain);
 }
 
 void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
@@ -474,6 +483,9 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
             break;
         case kShaderType_3DSkyBox:
             p->initWithByteArrays(cc3D_Skybox_vert, cc3D_Skybox_frag);
+            break;
+        case kShaderType_3DTerrain:
+            p->initWithByteArrays(cc3D_Terrain_vert, cc3D_Terrain_frag);
             break;
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || defined(WP8_SHADER_COMPILER)
         case kShaderType_PositionColor_noMVP_GrayScale:
