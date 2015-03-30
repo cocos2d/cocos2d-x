@@ -44,6 +44,7 @@ namespace experimental{
          * 
          * @note VideoPlayer displays a video file base on system widget.
          * It's mean VideoPlayer displays a video file above all graphical elements of cocos2d-x.
+         * @js NA
          */
         class VideoPlayer : public cocos2d::ui::Widget
         {

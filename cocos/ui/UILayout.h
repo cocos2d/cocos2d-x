@@ -48,6 +48,7 @@ class Scale9Sprite;
 
 /**
  *@brief Layout interface for creating LayoutManger and do actual layout.
+ * @js NA
  */
 class CC_GUI_DLL LayoutProtocol
 {
@@ -147,14 +148,14 @@ public:
     
     /**
      * Default constructor
-     *
+     * @js ctor
      * @lua new
      */
     Layout();
     
     /**
      * Default destructor
-     * 
+     * @js NA
      * @lua NA
      */
     virtual ~Layout();

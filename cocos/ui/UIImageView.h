@@ -47,14 +47,14 @@ class CC_GUI_DLL ImageView : public Widget
 public:
     /**
      * Default constructor
-     *
+     * @js ctor
      * @lua new
      */
     ImageView();
 
     /**
      * Default destructor
-     *
+     * @js NA
      * @lua NA
      */
     virtual ~ImageView();
