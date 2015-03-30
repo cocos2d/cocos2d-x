@@ -874,9 +874,11 @@ bool Bundle3D::loadMaterialsBinary(MaterialDatas& materialdatas)
     {
         NMaterialData materialData;
         materialData.id = _binaryReader.readString();
+        
+        // skip: diffuse(3), ambient(3), emissive(3), opacity(1), specular(3), shininess(1)
         float  data[14];
         _binaryReader.read(&data,sizeof(float), 14);
-
+        
         unsigned int textruenum = 1;
         _binaryReader.read(&textruenum, 4, 1);
         for(unsigned int j = 0; j < textruenum ; j++ )
