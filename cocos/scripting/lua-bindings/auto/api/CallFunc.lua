@@ -19,7 +19,7 @@
         
 --------------------------------
 --  Set the selector target.<br>
--- param The selector target.
+-- param sel The selector target.
 -- @function [parent=#CallFunc] setTargetCallback 
 -- @param self
 -- @param #cc.Ref sel
