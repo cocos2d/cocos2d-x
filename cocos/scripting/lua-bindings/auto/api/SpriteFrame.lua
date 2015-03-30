@@ -110,7 +110,7 @@
         
 --------------------------------
 --  Set rect of the frame.<br>
--- param The rect of the sprite.
+-- param rect The rect of the sprite.
 -- @function [parent=#SpriteFrame] setRect 
 -- @param self
 -- @param #rect_table rect
