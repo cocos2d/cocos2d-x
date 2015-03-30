@@ -154,11 +154,15 @@ public:
     typedef std::function<void(Ref*, int)> ccWidgetEventCallback;
     /**
      * Default constructor
+     *
+     * @lua new
      */
     Widget(void);
     
     /**
      * Default destructor
+     *
+     * @lua NA
      */
     virtual ~Widget();
     /**
@@ -312,6 +316,7 @@ public:
     /**
      * Set a event handler to the widget in order to use cocostudio editor and framework
      * @param callback The callback in `ccWidgetEventCallback`.
+     * @lua NA
      */
     virtual void addCCSEventListener(const ccWidgetEventCallback& callback);
     /**/
@@ -646,8 +651,14 @@ public:
      * @return A cloned widget copy of original.
      */
     Widget* clone();
-
+    /**
+     * @lua NA
+     */
     virtual void onEnter() override;
+    
+    /**
+     * @lua NA
+     */
     virtual void onExit() override;
 
     /**

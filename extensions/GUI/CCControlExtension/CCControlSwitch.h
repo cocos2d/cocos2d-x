@@ -55,6 +55,7 @@ public:
     static ControlSwitch* create(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite);
     /**
      * @js ctor
+     * @lua new
      */
     ControlSwitch();
     /**

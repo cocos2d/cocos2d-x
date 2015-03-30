@@ -49,6 +49,7 @@ class CC_DLL ActionCamera : public ActionInterval //<NSCopying>
 public:
     /**
      * @js ctor
+     * @lua new
      */
     ActionCamera();
     /**

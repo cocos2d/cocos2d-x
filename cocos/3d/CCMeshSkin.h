@@ -45,6 +45,7 @@ class Skeleton3D;
  * @brief MeshSkin, A class maintain a collection of bones that affect Mesh vertex.
  * And it is responsible for computing matrix palletes that used by skin mesh rendering.
  * @js NA
+ * @lua NA
  */
 class CC_DLL MeshSkin: public Ref
 {

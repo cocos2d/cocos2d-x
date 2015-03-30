@@ -45,11 +45,15 @@ public:
     
     /**
      * Default constructor
+     *
+     * @lua new
      */
     VBox();
     
     /**
      * Default destructor
+     *
+     * @lua NA
      */
     virtual ~VBox();
     

@@ -39,6 +39,7 @@ namespace ui {
 
 /**
  *@brief Margin of widget's in point. Margin value should be positive.
+ *@lua NA
  */
 class CC_GUI_DLL Margin
 {
@@ -135,6 +136,8 @@ public:
     };
     /**
      * Default constructor.
+     *
+     * @lua new
      */
     LayoutParameter() : _margin(Margin())
     {
@@ -143,6 +146,7 @@ public:
     
     /**
      * Default destructor.
+     * @lua NA
      */
     virtual ~LayoutParameter(){};
     
@@ -241,6 +245,8 @@ public:
 
     /**
      * Default constructor.
+     *
+     * @lua new
      */
     LinearLayoutParameter()
     : _linearGravity(LinearGravity::NONE)
@@ -250,6 +256,8 @@ public:
     
     /**
      * Default destructor.
+     *
+     * @lua NA
      */
     virtual ~LinearLayoutParameter(){};
     
@@ -326,6 +334,8 @@ public:
 
     /**
      * Default constructor
+     *
+     * @lua new
      */
     RelativeLayoutParameter()
     : _relativeAlign(RelativeAlign::NONE),
@@ -338,6 +348,8 @@ public:
     
     /**
      * Default destructor
+     *
+     * @lua NA
      */
     virtual ~RelativeLayoutParameter(){};
     

@@ -54,6 +54,7 @@ public:
     static ControlColourPicker* create();
     /**
      * @js ctor
+     * @lua new
      */
     ControlColourPicker();
     /**

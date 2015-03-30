@@ -117,11 +117,15 @@ public:
     
     /**
      * Default constructor
+     *
+     * @lua new
      */
     Layout();
     
     /**
      * Default destructor
+     * 
+     * @lua NA
      */
     virtual ~Layout();
     
@@ -368,7 +372,14 @@ public:
      */
     void requestDoLayout();
     
+    /**
+     * @lua NA
+     */
     virtual void onEnter() override;
+    
+    /**
+     * @lua NA
+     */
     virtual void onExit() override;
     
     /**

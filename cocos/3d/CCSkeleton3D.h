@@ -39,6 +39,7 @@ NS_CC_BEGIN
 
 /**
  * @brief Defines a basic hierachial structure of transformation spaces.
+ * @lua NA
  */
 class CC_DLL Bone3D : public Ref
 {
@@ -189,7 +190,9 @@ protected:
 class CC_DLL Skeleton3D: public Ref
 {
 public:
-    
+    /**
+     * @lua NA
+     */
     static Skeleton3D* create(const std::vector<NodeData*>& skeletondata);
     
     /**get total bone count*/
