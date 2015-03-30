@@ -63,6 +63,7 @@ public:
      * @param point A Vec2 used to point.
      * @param pointSize The point size.
      * @param color The point color.
+     * @js NA
      */
     void drawPoint(const Vec2& point, const float pointSize, const Color4F &color);
     
@@ -71,6 +72,7 @@ public:
      * @param position A Vec2 pointer.
      * @param numberOfPoints The number of points.
      * @param color The point color.
+     * @js NA
      */
     void drawPoints(const Vec2 *position, unsigned int numberOfPoints, const Color4F &color);
     
@@ -80,6 +82,7 @@ public:
      * @param numberOfPoints The number of points.
      * @param pointSize The point size.
      * @param color The point color.
+     * @js NA
      */
     void drawPoints(const Vec2 *position, unsigned int numberOfPoints, const float pointSize, const Color4F &color);
     
@@ -88,6 +91,7 @@ public:
      * @param origin The line origin.
      * @param destination The line destination.
      * @param color The line color.
+     * @js NA
      */
     void drawLine(const Vec2 &origin, const Vec2 &destination, const Color4F &color);
     
@@ -196,6 +200,7 @@ public:
      * @param origin The rectangle origin.
      * @param destination The rectangle destination.
      * @param color The rectangle color.
+     * @js NA
      */
     void drawSolidRect(const Vec2 &origin, const Vec2 &destination, const Color4F &color);
     
@@ -204,6 +209,7 @@ public:
      * @param poli A solid polygon given a pointer to CGPoint coordinates.
      * @param numberOfPoints The number of vertices measured in points.
      * @param color The solid polygon color.
+     * @js NA
      */
     void drawSolidPoly(const Vec2 *poli, unsigned int numberOfPoints, const Color4F &color);
     
@@ -215,6 +221,7 @@ public:
      * @param scaleX The scale value in x.
      * @param scaleY The scale value in y.
      * @param color The solid circle color.
+     * @js NA
      */
     void drawSolidCircle(const Vec2& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY, const Color4F &color);
     
@@ -224,6 +231,7 @@ public:
      * @param angle  The circle angel.
      * @param segments The number of segments.
      * @param color The solid circle color.
+     * @js NA
      */
     void drawSolidCircle(const Vec2& center, float radius, float angle, unsigned int segments, const Color4F& color);
     
@@ -247,6 +255,7 @@ public:
     * @param fillColor The color will fill in polygon.
     * @param borderWidth The border of line width.
     * @param borderColor The border of line color.
+    * @js NA
     */
     void drawPolygon(const Vec2 *verts, int count, const Color4F &fillColor, float borderWidth, const Color4F &borderColor);
 	
@@ -256,6 +265,7 @@ public:
      * @param p2 The triangle vertex point.
      * @param p3 The triangle vertex point.
      * @param color The triangle color.
+     * @js NA
      */
     void drawTriangle(const Vec2 &p1, const Vec2 &p2, const Vec2 &p3, const Color4F &color);
 
@@ -266,13 +276,13 @@ public:
      * @param to The destination of the bezier path.
      * @param segments The The number of segments.
      * @param color The quadratic bezier color.
+     * @js NA
      */
     CC_DEPRECATED_ATTRIBUTE void drawQuadraticBezier(const Vec2& from, const Vec2& control, const Vec2& to, unsigned int segments, const Color4F &color);
     
     /** Clear the geometry in the node's buffer. */
     void clear();
     /** Get the color mixed mode.
-    * @js NA
     * @lua NA
     */
     const BlendFunc& getBlendFunc() const;
@@ -285,8 +295,17 @@ public:
     */
     void setBlendFunc(const BlendFunc &blendFunc);
 
-    void onDraw(const Mat4 &transform, uint32_t flags);
-    void onDrawGLLine(const Mat4 &transform, uint32_t flags);
+    /**
+     * @js NA
+     */
+	void onDraw(const Mat4 &transform, uint32_t flags);
+    /**
+     * @js NA
+     */
+	void onDrawGLLine(const Mat4 &transform, uint32_t flags);
+    /**
+     * @js NA
+     */
     void onDrawGLPoint(const Mat4 &transform, uint32_t flags);
     
     // Overrides

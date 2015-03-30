@@ -63,12 +63,10 @@ public:
      */
     virtual ~IMEDelegate();
     /**
-     * @js NA
      * @lua NA
      */
     virtual bool attachWithIME();
     /**
-     * @js NA
      * @lua NA
      */
     virtual bool detachWithIME();

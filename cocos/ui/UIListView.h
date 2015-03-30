@@ -93,11 +93,13 @@ public:
     
     /**
      * Default constructor
+     * @js ctor
      */
     ListView();
     
     /**
      * Default destructor
+     * @js NA
      */
     virtual ~ListView();
     

@@ -106,11 +106,13 @@ public:
    
     /**
      * Default constructor
+     * @js ctor
      */
     ScrollView();
     
     /**
      * Default destructor
+     * @js NA
      */
     virtual ~ScrollView();
 

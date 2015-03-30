@@ -73,6 +73,7 @@ namespace experimental{
  * http://www.cocos2d-iphone.org/wiki/doku.php/prog_guide:tiled_maps
  
  * @since v3.2
+ * @js NA
  */
 
 class CC_DLL TMXLayer : public Node

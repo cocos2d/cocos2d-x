@@ -40,6 +40,7 @@ class Texture2D;
 
 /**
  * @brief the sprite3D material is only texture for now
+ * @js NA
  */
 class Sprite3DMaterialCache
 {

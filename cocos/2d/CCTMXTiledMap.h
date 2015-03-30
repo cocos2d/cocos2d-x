@@ -125,6 +125,7 @@ public:
      * @param tmxString A TMX formatted XML string.
      * @param resourcePath The path to TMX resources.
      * @return An autorelease object.
+     * @js NA
      */
     static TMXTiledMap* createWithXML(const std::string& tmxString, const std::string& resourcePath);
 
@@ -246,7 +247,9 @@ public:
         _properties = properties;
     };
     
-    /** Get the description. */
+    /** Get the description.
+     * @js NA
+     */
     virtual std::string getDescription() const override;
     
 CC_CONSTRUCTOR_ACCESS:

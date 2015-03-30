@@ -86,11 +86,13 @@ public:
 
     /**
      * Default constructor
+     * @js ctor
      */
     PageView();
     
     /**
      * Default destructor
+     * @js NA
      */
     virtual ~PageView();
     

@@ -48,6 +48,7 @@ NS_CC_BEGIN
 /**
  * @class AsyncTaskPool
  * @brief This class allows to perform background operations without having to manipulate threads.
+ * @js NA
  */
 class CC_DLL AsyncTaskPool
 {

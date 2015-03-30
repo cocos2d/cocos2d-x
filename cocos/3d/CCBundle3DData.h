@@ -35,7 +35,9 @@
  
 NS_CC_BEGIN
 
-/**mesh vertex attribute*/
+/**mesh vertex attribute
+* @js NA
+*/
 struct MeshVertexAttrib
 {
     //attribute size
@@ -49,7 +51,9 @@ struct MeshVertexAttrib
 };
 
 
-/** model node data, since 3.3 */
+/** model node data, since 3.3
+* @js NA
+*/
 struct ModelData
 {
     std::string subMeshId;
@@ -68,7 +72,9 @@ struct ModelData
     }
 };
 
-/** Node data, since 3.3 */
+/** Node data, since 3.3 
+* @js NA
+*/
 struct NodeData
 {
     std::string id;
@@ -99,7 +105,9 @@ struct NodeData
 
 };
 
-/** node datas, since 3.3 */
+/** node datas, since 3.3 
+* @js NA
+*/
 struct NodeDatas
 {
     std::vector<NodeData*> skeleton; //skeleton
@@ -120,7 +128,9 @@ struct NodeDatas
     }
 };
 
-/**mesh data*/
+/**mesh data
+* @js NA
+*/
 struct MeshData
 {
     typedef std::vector<unsigned short> IndexArray;
@@ -173,7 +183,9 @@ public:
     }
 };
 
-/** mesh datas */
+/** mesh datas 
+* @js NA
+*/
 struct MeshDatas
 {
     std::vector<MeshData*> meshDatas;
@@ -192,7 +204,9 @@ struct MeshDatas
     }
 };
 
-/**skin data*/
+/**skin data
+* @js NA
+*/
 struct SkinData
 {
     std::vector<std::string> skinBoneNames; //skin bones affect skin
@@ -261,7 +275,9 @@ struct SkinData
 
 };
 
-/**material data, */
+/**material data, 
+* @js NA
+*/
 struct MaterialData
 {
     std::map<int, std::string> texturePaths; //submesh id, texture path
@@ -272,7 +288,9 @@ struct MaterialData
 };
 
 
-/**new material, since 3.3 */
+/**new material, since 3.3 
+* @js NA
+*/
 struct NTextureData
 {
     enum class Usage {
@@ -308,7 +326,9 @@ struct NMaterialData
         return nullptr;
     }
 };
-/** material datas, since 3.3 */
+/** material datas, since 3.3 
+* @js NA
+*/
 struct MaterialDatas
 {
     std::vector<NMaterialData> materials;
@@ -326,7 +346,9 @@ struct MaterialDatas
         return nullptr;
     }
 };
-/**animation data*/
+/**animation data
+* @js NA
+*/
 struct Animation3DData
 {
 public:
@@ -396,7 +418,9 @@ public:
     }
 };
 
-/**reference data*/
+/**reference data
+* @js NA
+*/
 struct Reference
 {
 public:
