@@ -1348,6 +1348,19 @@ Sprite3DWithSkinTest::Sprite3DWithSkinTest()
     listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DWithSkinTest::onTouchesEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
+    // swich camera
+    MenuItemFont::setFontName("fonts/arial.ttf");
+    MenuItemFont::setFontSize(15);
+    _menuItem = MenuItemFont::create("High Quality", CC_CALLBACK_1(Sprite3DWithSkinTest::switchAnimationQualityCallback,this));
+    _menuItem->setColor(Color3B(0,200,20));
+    auto menu = Menu::create(_menuItem,NULL);
+    menu->setPosition(Vec2::ZERO);
+    _menuItem->setPosition(VisibleRect::left().x + 50, VisibleRect::top().y -70);
+    addChild(menu, 1);
+    
+    _highQuality = true;
+    _sprits.clear();
+    
     auto s = Director::getInstance()->getWinSize();
     addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
 }
@@ -1366,9 +1379,10 @@ void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
     auto sprite = EffectSprite3D::create(fileName);
     sprite->setScale(3);
     sprite->setRotation3D(Vec3(0,180,0));
-    addChild(sprite);
     sprite->setPosition( Vec2( p.x, p.y) );
-
+    addChild(sprite);
+    _sprits.push_back(sprite);
+    
     auto animation = Animation3D::create(fileName);
     if (animation)
     {
@@ -1386,8 +1400,28 @@ void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
             speed = animate->getSpeed() - 0.5 * CCRANDOM_0_1();
         }
         animate->setSpeed(inverse ? -speed : speed);
+        animate->setTag(110);
+        animate->setHighQuality(_highQuality);
+        auto repeate = RepeatForever::create(animate);
+        repeate->setTag(110);
+        sprite->runAction(repeate);
+    }
+}
 
-        sprite->runAction(RepeatForever::create(animate));
+void Sprite3DWithSkinTest::switchAnimationQualityCallback(Ref* sender)
+{
+    _highQuality = !_highQuality;
+    
+    if (_highQuality)
+        _menuItem->setString("High Quality");
+    else
+        _menuItem->setString("Low Quality");
+    
+    for (auto iter: _sprits)
+    {
+        RepeatForever* repAction = dynamic_cast<RepeatForever*>(iter->getActionByTag(110));
+        Animate3D* animate3D = dynamic_cast<Animate3D*>(repAction->getInnerAction());
+        animate3D->setHighQuality(_highQuality);
     }
 }
 
@@ -2354,7 +2388,7 @@ NodeAnimationTest::NodeAnimationTest()
                                               
                                               int tIndex = _vectorIndex - 1;
                                               if(tIndex < 0)
-                                                  _vectorIndex = _sprites.size()-1;
+                                                  _vectorIndex = (int)_sprites.size()-1;
                                               else
                                                   _vectorIndex--;
                                               

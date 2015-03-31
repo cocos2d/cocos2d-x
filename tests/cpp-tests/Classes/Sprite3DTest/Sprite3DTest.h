@@ -293,7 +293,12 @@ public:
     
     void addNewSpriteWithCoords(Vec2 p);
     
+    void switchAnimationQualityCallback(Ref* sender);
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+private:
+    std::vector<Sprite3D*> _sprits;
+    bool _highQuality;
+    MenuItemFont* _menuItem;
 };
 
 class Sprite3DWithSkinOutlineTest : public Sprite3DTestDemo

@@ -105,6 +105,12 @@ public:
     CC_DEPRECATED_ATTRIBUTE bool getPlayBack() const { return _playReverse; }
     CC_DEPRECATED_ATTRIBUTE void setPlayBack(bool reverse) { _playReverse = reverse; }
     
+    /**get & set high quality
+     * @param true: is high quality, false: is low quality
+     */
+    void setHighQuality(bool isHighQuality);
+    bool getHighQuality() const;
+    
 CC_CONSTRUCTOR_ACCESS:
     
     Animate3D();
@@ -137,6 +143,13 @@ protected:
     float      _accTransTime; // acculate transition time
     float      _lastTime;     // last t (0 - 1)
     float      _originInterval;// save origin interval time
+    
+    // animation quality
+    EvaluateType _translateEvaluate;
+    EvaluateType _roteEvaluate;
+    EvaluateType _scaleEvaluate;
+    bool _isHighQuality;        //  true: is high quality, false: is low quality
+    
     std::unordered_map<Bone3D*, Animation3D::Curve*> _boneCurves; //weak ref
     std::unordered_map<Node*, Animation3D::Curve*> _nodeCurves;
 
