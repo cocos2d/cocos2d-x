@@ -37,9 +37,37 @@ class btDynamicsWorld;
 
 NS_CC_EXT_BEGIN
 
+class Physics3DObject;
+class Physics3DConstraint;
+
+CC_EX_DLL struct Physics3DWorldDes
+{
+    
+};
+
 CC_EX_DLL class Physics3DWorld : Ref
 {
+public:
+    Physics3DWorld* create(const Physics3DWorldDes* info);
+    
+    void addPhysics3DObject(Physics3DObject* physicsObj);
+    
+    void removePhysics3DObject(Physics3DObject* physicsObj);
+    
+    void removeAllPhysics3DObjects();
+    
+    void addPhysics3DConstraint(Physics3DConstraint* constraint);
+    
+    void removePhysics3DConstraint(Physics3DConstraint* constraint);
+    
+    void removeAllPhysics3DConstraints();
+    
+    void stepSimulate(float dt);
+    
 protected:
+    Physics3DWorld();
+    virtual ~Physics3DWorld();
+    
 #if (CC_ENABLE_BULLET_INTEGRATION)
     btDynamicsWorld* _phyiscsWorld;
 #endif // CC_ENABLE_BULLET_INTEGRATION
