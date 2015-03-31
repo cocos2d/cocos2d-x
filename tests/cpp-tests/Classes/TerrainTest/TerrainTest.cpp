@@ -2,7 +2,7 @@
 
 
 
-Vec3 camera_offset(0,45,60);
+Vec3 camera_offset(0, 45, 60);
 #define PLAYER_HEIGHT 0
 static std::function<Layer*()> createFunctions[] =
 {
@@ -48,10 +48,12 @@ TerrainSimple::TerrainSimple()
     _camera->setCameraFlag(CameraFlag::USER1);
     addChild(_camera);
 
-    Terrain::DetailMap r("TerrainTest/dirt.dds"),g("TerrainTest/Grass2.dds"),b("TerrainTest/road.dds"),a("TerrainTest/Grass1.dds");
+    Terrain::DetailMap r("TerrainTest/dirt.dds"),g("TerrainTest/Grass2.dds"),b("TerrainTest/road.dds"),a("TerrainTest/GreenSkin.jpg");
 
     Terrain::TerrainData data("TerrainTest/heightmap16.jpg","TerrainTest/alphamap.png",r,g,b,a);
-    _terrain = Terrain::create(data);
+
+    _terrain = Terrain::create(data,Terrain::CrackFixedType::SKIRT);
+    _terrain->setLODDistance(1000.2,6.4,9.6);
     _terrain->setMaxDetailMapAmount(4);
     addChild(_terrain);
     _terrain->setCameraMask(2);
@@ -63,7 +65,7 @@ TerrainSimple::TerrainSimple()
 
 std::string TerrainSimple::title() const 
 {
-    return "Simple Terrain";
+    return "Terrain with skirt";
 }
 
 std::string TerrainSimple::subtitle() const 
@@ -178,16 +180,15 @@ TerrainWalkThru::TerrainWalkThru()
     _camera->setCameraFlag(CameraFlag::USER1);
     addChild(_camera);
 
-    Terrain::DetailMap r("TerrainTest/dirt.dds"),g("TerrainTest/Grass2.dds",10),b("TerrainTest/road.dds"),a("TerrainTest/Grass1.dds",20);
+    Terrain::DetailMap r("TerrainTest/dirt.dds"),g("TerrainTest/Grass2.dds",10),b("TerrainTest/road.dds"),a("TerrainTest/GreenSkin.jpg",20);
 
-    Terrain::TerrainData data("TerrainTest/heightmap16.jpg","TerrainTest/alphamap.png",r,g,b,a);
+    Terrain::TerrainData data("TerrainTest/heightmap16.jpg","TerrainTest/alphamap.png",r,g,b,a,Size(32,32),40.0f,2);
     _terrain = Terrain::create(data);
-    _terrain->setScale(20);
     _terrain->setMaxDetailMapAmount(4);
     _terrain->setCameraMask(2);
     _terrain->setDrawWire(false);
 
-    _terrain->setLODDistance(150,220,300);
+    _terrain->setLODDistance(64,128,192);
     _player = Player::create("Sprite3DTest/girl.c3b",_camera,_terrain);
     _player->setCameraMask(2);
     _player->setScale(0.08);
