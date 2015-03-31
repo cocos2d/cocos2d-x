@@ -15,6 +15,7 @@ INCLUDES = -I$(COCOS_ROOT)/external \
 	-I../CocoStudio/GUI \
 	-I../CocoStudio/Json \
 	-I../CocoStudio/Reader \
+	-I../CocoStudio \
 
 DEFINES += -DCC_ENABLE_CHIPMUNK_INTEGRATION=1
 DEFINES += -D__CC_PLATFORM_IMAGE_CPP__
@@ -155,6 +156,7 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CocoStudio/Trigger/TriggerBase.cpp \
 ../CocoStudio/Trigger/TriggerMng.cpp \
 ../CocoStudio/Trigger/TriggerObj.cpp \
+../CocoStudio/CocoStudio.cpp \
 
 include $(COCOS_ROOT)/cocos2dx/proj.emscripten/cocos2dx.mk
 
