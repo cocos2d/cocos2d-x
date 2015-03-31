@@ -46,6 +46,8 @@ namespace cocostudio
         ~UserCameraReader();
         
         static UserCameraReader* getInstance();
+        /** @deprecated Use method destroyInstance() instead */
+        CC_DEPRECATED_ATTRIBUTE static void purge();
         static void destroyInstance();
         
         flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,

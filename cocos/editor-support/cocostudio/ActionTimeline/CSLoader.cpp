@@ -214,10 +214,6 @@ CSLoader::CSLoader()
     CREATE_CLASS_NODE_READER_INFO(Particle3DReader);
 }
 
-void CSLoader::purge()
-{
-}
-
 void CSLoader::destroyCocosStudio()
 {
     NodeReader::destroyInstance();

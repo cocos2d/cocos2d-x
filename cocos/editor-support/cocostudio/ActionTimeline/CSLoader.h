@@ -72,7 +72,8 @@ public:
     static void destroyInstance();
     
     CSLoader();
-    void purge();
+    /** @deprecated Use method destroyInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE void purge();
     
     static void destroyCocosStudio();
     
