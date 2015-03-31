@@ -2174,6 +2174,56 @@ int lua_cocos2dx_3d_Animate3D_getSpeed(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_3d_Animate3D_setHighQuality(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Animate3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Animate3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Animate3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_Animate3D_setHighQuality'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        bool arg0;
+
+        ok &= luaval_to_boolean(tolua_S, 2,&arg0, "cc.Animate3D:setHighQuality");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Animate3D_setHighQuality'", nullptr);
+            return 0;
+        }
+        cobj->setHighQuality(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Animate3D:setHighQuality",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Animate3D_setHighQuality'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_3d_Animate3D_setWeight(lua_State* tolua_S)
 {
     int argc = 0;
@@ -2418,6 +2468,53 @@ int lua_cocos2dx_3d_Animate3D_getWeight(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_3d_Animate3D_getHighQuality(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Animate3D* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Animate3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Animate3D*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_3d_Animate3D_getHighQuality'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Animate3D_getHighQuality'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->getHighQuality();
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Animate3D:getHighQuality",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_3d_Animate3D_getHighQuality'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_3d_Animate3D_create(lua_State* tolua_S)
 {
     int argc = 0;
@@ -2614,11 +2711,13 @@ int lua_register_cocos2dx_3d_Animate3D(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"Animate3D");
         tolua_function(tolua_S,"getSpeed",lua_cocos2dx_3d_Animate3D_getSpeed);
+        tolua_function(tolua_S,"setHighQuality",lua_cocos2dx_3d_Animate3D_setHighQuality);
         tolua_function(tolua_S,"setWeight",lua_cocos2dx_3d_Animate3D_setWeight);
         tolua_function(tolua_S,"getOriginInterval",lua_cocos2dx_3d_Animate3D_getOriginInterval);
         tolua_function(tolua_S,"setSpeed",lua_cocos2dx_3d_Animate3D_setSpeed);
         tolua_function(tolua_S,"setOriginInterval",lua_cocos2dx_3d_Animate3D_setOriginInterval);
         tolua_function(tolua_S,"getWeight",lua_cocos2dx_3d_Animate3D_getWeight);
+        tolua_function(tolua_S,"getHighQuality",lua_cocos2dx_3d_Animate3D_getHighQuality);
         tolua_function(tolua_S,"create", lua_cocos2dx_3d_Animate3D_create);
         tolua_function(tolua_S,"getTransitionTime", lua_cocos2dx_3d_Animate3D_getTransitionTime);
         tolua_function(tolua_S,"createWithFrames", lua_cocos2dx_3d_Animate3D_createWithFrames);
