@@ -224,6 +224,7 @@
     <ClCompile Include="..\CocoStudio\Armature\utils\CCTransformHelp.cpp" />
     <ClCompile Include="..\CocoStudio\Armature\utils\CCTweenFunction.cpp" />
     <ClCompile Include="..\CocoStudio\Armature\utils\CCUtilMath.cpp" />
+    <ClCompile Include="..\CocoStudio\CocoStudio.cpp" />
     <ClCompile Include="..\CocoStudio\Components\CCComAttribute.cpp" />
     <ClCompile Include="..\CocoStudio\Components\CCComAudio.cpp" />
     <ClCompile Include="..\CocoStudio\Components\CCComController.cpp" />
@@ -386,6 +387,7 @@
     <ClInclude Include="..\CocoStudio\Armature\utils\CCTransformHelp.h" />
     <ClInclude Include="..\CocoStudio\Armature\utils\CCTweenFunction.h" />
     <ClInclude Include="..\CocoStudio\Armature\utils\CCUtilMath.h" />
+    <ClInclude Include="..\CocoStudio\CocoStudio.h" />
     <ClInclude Include="..\CocoStudio\Components\CCComAttribute.h" />
     <ClInclude Include="..\CocoStudio\Components\CCComAudio.h" />
     <ClInclude Include="..\CocoStudio\Components\CCComBase.h" />
