@@ -102,6 +102,13 @@ void CocosStudio3DTestDemo::onEnter()
     BaseTest::onEnter();
 }
 
+void CocosStudio3DTestDemo::onExit()
+{
+    CSLoader::destroyCocosStudio();
+    
+    BaseTest::onExit();
+}
+
 void CocosStudio3DTestDemo::restartCallback(Ref* sender)
 {
     auto s = new (std::nothrow) CS3DTestScene();

@@ -47,6 +47,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     virtual void onEnter() override;
+    virtual void onExit() override;
 };
 
 class CSNode3DTest : public CocosStudio3DTestDemo

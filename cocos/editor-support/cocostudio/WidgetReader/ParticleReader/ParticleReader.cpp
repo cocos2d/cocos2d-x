@@ -59,7 +59,7 @@ namespace cocostudio
         return _instanceParticleReader;
     }
     
-    void ParticleReader::purge()
+    void ParticleReader::destroyInstance()
     {
         CC_SAFE_DELETE(_instanceParticleReader);
     }

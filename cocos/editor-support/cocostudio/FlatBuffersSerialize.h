@@ -91,7 +91,7 @@ class CC_STUDIO_DLL FlatBuffersSerialize
     
 public:
     static FlatBuffersSerialize* getInstance();
-    static void purge();
+    static void destroyInstance();
     
     FlatBuffersSerialize();
     ~FlatBuffersSerialize();

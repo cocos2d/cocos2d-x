@@ -48,6 +48,11 @@ namespace cocostudio
         return instanceSliderReader;
     }
     
+    void SliderReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instanceSliderReader);
+    }
+    
     void SliderReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode* cocoNode)
     {
         this->beginSetBasicProperties(widget);

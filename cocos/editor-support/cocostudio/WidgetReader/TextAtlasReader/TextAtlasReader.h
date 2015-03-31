@@ -39,6 +39,7 @@ namespace cocostudio
         virtual ~TextAtlasReader();
         
         static TextAtlasReader* getInstance();
+        static void destroyInstance();
         
         virtual void setPropsFromJsonDictionary(cocos2d::ui::Widget* widget, const rapidjson::Value& options);
         virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader,  stExpCocoNode*	pCocoNode) ;

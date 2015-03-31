@@ -218,6 +218,40 @@ void CSLoader::purge()
 {
 }
 
+void CSLoader::destroyCocosStudio()
+{
+    NodeReader::destroyInstance();
+    SingleNodeReader::destroyInstance();
+    SpriteReader::destroyInstance();
+    ParticleReader::destroyInstance();
+    GameMapReader::destroyInstance();
+    ProjectNodeReader::destroyInstance();
+    ComAudioReader::destroyInstance();
+    
+    WidgetReader::destroyInstance();
+    ButtonReader::destroyInstance();
+    CheckBoxReader::destroyInstance();
+    ImageViewReader::destroyInstance();
+    TextBMFontReader::destroyInstance();
+    TextReader::destroyInstance();
+    TextFieldReader::destroyInstance();
+    TextAtlasReader::destroyInstance();
+    LoadingBarReader::destroyInstance();
+    SliderReader::destroyInstance();
+    LayoutReader::destroyInstance();
+    ScrollViewReader::destroyInstance();
+    PageViewReader::destroyInstance();
+    ListViewReader::destroyInstance();
+    
+    ArmatureNodeReader::destroyInstance();
+    Node3DReader::destroyInstance();
+    Sprite3DReader::destroyInstance();
+    UserCameraReader::destroyInstance();
+    Particle3DReader::destroyInstance();
+    
+    destroyInstance();
+}
+
 void CSLoader::init()
 {
     using namespace std::placeholders;

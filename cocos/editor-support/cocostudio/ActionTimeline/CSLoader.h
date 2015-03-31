@@ -74,6 +74,8 @@ public:
     CSLoader();
     void purge();
     
+    static void destroyCocosStudio();
+    
     void init();
     
     static cocos2d::Node* createNode(const std::string& filename);

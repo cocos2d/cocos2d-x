@@ -46,7 +46,7 @@ namespace cocostudio
         ~Node3DReader();
         
         static Node3DReader* getInstance();
-        static void purge();
+        static void destroyInstance();
         
         flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
                                                                              flatbuffers::FlatBufferBuilder* builder);
