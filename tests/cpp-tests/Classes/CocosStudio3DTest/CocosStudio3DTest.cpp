@@ -104,7 +104,7 @@ void CocosStudio3DTestDemo::onEnter()
 
 void CocosStudio3DTestDemo::onExit()
 {
-    CSLoader::destroyCocosStudio();
+    cocostudio::destroyCocosStudio();
     
     BaseTest::onExit();
 }

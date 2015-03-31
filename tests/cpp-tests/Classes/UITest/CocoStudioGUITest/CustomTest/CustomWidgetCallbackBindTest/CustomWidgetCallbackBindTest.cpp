@@ -4,6 +4,7 @@
 
 #include "../../CustomGUIScene.h"
 #include "cocostudio/ActionTimeline/CSLoader.h"
+#include "cocostudio/CocoStudio.h"
 
 #include "base/ObjectFactory.h"
 
@@ -33,7 +34,7 @@ void CustomWidgetCallbackBindScene::onEnter()
 
 void CustomWidgetCallbackBindScene::onExit()
 {
-    CSLoader::destroyCocosStudio();
+    cocostudio::destroyCocosStudio();
     
     Scene::onExit();
 }

@@ -21,7 +21,7 @@ UIScene_Editor::~UIScene_Editor()
 
 void UIScene_Editor::onExit()
 {
-    CSLoader::destroyCocosStudio();
+    cocostudio::destroyCocosStudio();
     
     Layer::onExit();
 }
