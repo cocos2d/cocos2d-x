@@ -13,7 +13,7 @@
 
 --------------------------------
 --  Sets the Animation object to be animated <br>
--- param A certain animation.
+-- param animation certain animation.
 -- @function [parent=#Animate] setAnimation 
 -- @param self
 -- @param #cc.Animation animation

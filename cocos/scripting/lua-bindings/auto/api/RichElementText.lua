@@ -43,7 +43,9 @@
 -- @return RichElementText#RichElementText ret (return value: ccui.RichElementText)
         
 --------------------------------
--- brief Default constructor.
+-- brief Default constructor.<br>
+-- js ctor<br>
+-- lua new
 -- @function [parent=#RichElementText] RichElementText 
 -- @param self
 -- @return RichElementText#RichElementText self (return value: ccui.RichElementText)

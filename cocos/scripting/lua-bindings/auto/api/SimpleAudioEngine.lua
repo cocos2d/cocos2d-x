@@ -190,7 +190,8 @@
         
 --------------------------------
 -- Release the shared Engine object.<br>
--- warning It must be called before the application exit, or it will lead to memory leaks.
+-- warning It must be called before the application exit, or it will lead to memory leaks.<br>
+-- lua destroyInstance
 -- @function [parent=#SimpleAudioEngine] end 
 -- @param self
 -- @return SimpleAudioEngine#SimpleAudioEngine self (return value: cc.SimpleAudioEngine)

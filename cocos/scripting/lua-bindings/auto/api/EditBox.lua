@@ -284,7 +284,8 @@
         
 --------------------------------
 -- Constructor.<br>
--- js ctor
+-- js ctor<br>
+-- lua new
 -- @function [parent=#EditBox] EditBox 
 -- @param self
 -- @return EditBox#EditBox self (return value: ccui.EditBox)
