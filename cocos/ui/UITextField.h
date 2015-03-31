@@ -40,7 +40,7 @@ namespace ui {
 /**
  * @brief A helper class which inherit from @see `TextFieldTTF` and implements the @see `TextFieldDelegate` protocol.
  * It is mainly be used internally by @see `UITextField` class.
- *
+ * @js NA
  * @lua NA
  */
 class CC_GUI_DLL UICCTextField: public TextFieldTTF, public TextFieldDelegate

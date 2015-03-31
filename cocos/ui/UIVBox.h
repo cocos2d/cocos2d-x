@@ -45,14 +45,14 @@ public:
     
     /**
      * Default constructor
-     *
+     * @js ctor
      * @lua new
      */
     VBox();
     
     /**
      * Default destructor
-     *
+     * @js NA
      * @lua NA
      */
     virtual ~VBox();

@@ -154,14 +154,14 @@ public:
     typedef std::function<void(Ref*, int)> ccWidgetEventCallback;
     /**
      * Default constructor
-     *
+     * @js ctor
      * @lua new
      */
     Widget(void);
     
     /**
      * Default destructor
-     *
+     * @js NA
      * @lua NA
      */
     virtual ~Widget();
@@ -296,6 +296,9 @@ public:
      */
     float getTopBoundary() const;
 
+    /**
+     * @js NA
+     */
     virtual void visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 
     /**
