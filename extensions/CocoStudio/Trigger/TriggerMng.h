@@ -57,7 +57,7 @@ public:
 public:
     static TriggerMng* getInstance();
     static const char* triggerMngVersion();
-    void destroyInstance();
+    void static destroyInstance();
     
 public:
 	void parse(const rapidjson::Value &root);

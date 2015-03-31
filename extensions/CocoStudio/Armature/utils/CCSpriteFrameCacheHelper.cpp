@@ -41,8 +41,13 @@ CCSpriteFrameCacheHelper *CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper
 
 void CCSpriteFrameCacheHelper::purge()
 {
-    delete s_SpriteFrameCacheHelper;
-    s_SpriteFrameCacheHelper = NULL;
+	CCSpriteFrameCacheHelper::destroyInstance();
+}
+
+void CCSpriteFrameCacheHelper::destroyInstance()
+{
+	delete s_SpriteFrameCacheHelper;
+	s_SpriteFrameCacheHelper = NULL;
 }
 
 void CCSpriteFrameCacheHelper::addSpriteFrameFromFile(const char *plistPath, const char *imagePath)

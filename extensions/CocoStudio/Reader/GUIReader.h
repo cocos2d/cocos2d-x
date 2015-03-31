@@ -65,6 +65,7 @@ public:
      *  @js pure
      */
 	static void purge();
+	static void destroyInstance();
     
     cocos2d::ui::Widget* widgetFromJsonFile(const char* fileName);
     cocos2d::ui::Widget* widgetFromBinaryFile(const char* fileName);

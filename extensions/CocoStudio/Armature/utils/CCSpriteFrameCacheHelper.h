@@ -40,6 +40,7 @@ public:
     static CCSpriteFrameCacheHelper *sharedSpriteFrameCacheHelper();
 
     static void purge();
+	static void destroyInstance();
 public:
 
     /**

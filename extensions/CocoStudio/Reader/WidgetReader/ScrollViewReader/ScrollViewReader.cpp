@@ -28,7 +28,15 @@ ScrollViewReader* ScrollViewReader::getInstance()
     return instanceScrollViewReader;
 }
 
+void ScrollViewReader::purge()
+{
+	ScrollViewReader::destroyInstance();
+}
 
+void ScrollViewReader::destroyInstance()
+{
+	CC_SAFE_DELETE(instanceScrollViewReader);
+}
 
 void ScrollViewReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)
 {

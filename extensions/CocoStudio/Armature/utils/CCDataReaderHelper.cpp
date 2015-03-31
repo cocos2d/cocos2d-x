@@ -330,10 +330,14 @@ float CCDataReaderHelper::getPositionReadScale()
 
 void CCDataReaderHelper::purge()
 {
-    s_arrConfigFileList.clear();
-    CC_SAFE_RELEASE_NULL(s_DataReaderHelper);
+	CCDataReaderHelper::destroyInstance();
 }
 
+void CCDataReaderHelper::destroyInstance()
+{
+	s_arrConfigFileList.clear();
+	CC_SAFE_RELEASE_NULL(s_DataReaderHelper);
+}
 
 CCDataReaderHelper::~CCDataReaderHelper()
 {

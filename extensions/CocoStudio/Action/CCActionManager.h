@@ -62,6 +62,7 @@ public:
 	* Purges ActionManager point.
 	*/
 	static void purge();
+	static void destroyInstance();
 
 	/**
 	* Gets an ActionObject with a name.

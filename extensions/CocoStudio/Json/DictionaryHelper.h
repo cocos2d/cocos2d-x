@@ -43,7 +43,9 @@ public:
     ~DictionaryHelper();
     static DictionaryHelper* shareHelper();
 	static void purgeDictionaryHelper();
-    cocos2d::CCDictionary* getSubDictionary(cocos2d::CCDictionary* root,const char* key);
+	static void destroyInstance();
+
+	cocos2d::CCDictionary* getSubDictionary(cocos2d::CCDictionary* root,const char* key);
     int   getIntValue(cocos2d::CCDictionary* root,const char* key);
     float getFloatValue(cocos2d::CCDictionary* root,const char* key);
     const char* getStringValue(cocos2d::CCDictionary* root,const char* key);

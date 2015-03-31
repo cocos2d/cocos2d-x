@@ -64,6 +64,8 @@ class CC_EX_DLL SceneReader
 public:
 	static SceneReader* sharedSceneReader();
 	static void purge();
+	static void destroyInstance();
+	static void destroyCocosStudio();
 	static const char* sceneReaderVersion();
 	cocos2d::CCNode* createNodeWithSceneFile(const char *pszFileName, AttachComponentType eAttachComponent = ATTACH_EMPTY_NODE);
 

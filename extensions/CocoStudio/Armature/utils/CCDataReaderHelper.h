@@ -58,6 +58,7 @@ public:
     static float getPositionReadScale();
 
     static void purge();
+	static void destroyInstance();
     
 public:
     ~CCDataReaderHelper();

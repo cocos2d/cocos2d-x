@@ -48,9 +48,14 @@ CCArmatureDataManager *CCArmatureDataManager::sharedArmatureDataManager()
 
 void CCArmatureDataManager::purge()
 {
-    CCSpriteFrameCacheHelper::purge();
-    CCDataReaderHelper::purge();
-    CC_SAFE_RELEASE_NULL(s_sharedArmatureDataManager);
+	CCArmatureDataManager::destroyInstance();
+}
+
+void CCArmatureDataManager::destroyInstance()
+{
+	CCSpriteFrameCacheHelper::destroyInstance();
+	CCDataReaderHelper::destroyInstance();
+	CC_SAFE_RELEASE_NULL(s_sharedArmatureDataManager);
 }
 
 CCArmatureDataManager::CCArmatureDataManager(void)

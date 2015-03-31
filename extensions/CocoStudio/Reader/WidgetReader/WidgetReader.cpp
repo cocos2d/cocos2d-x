@@ -36,6 +36,16 @@ WidgetReader* WidgetReader::getInstance()
     return instanceWidgetReader;
 }
 
+void WidgetReader::purge()
+{
+	WidgetReader::destroyInstance();
+}
+
+void WidgetReader::destroyInstance()
+{
+	CC_SAFE_DELETE(instanceWidgetReader);
+}
+
 int WidgetReader::valueToInt(std::string& value)
 {
     return atoi(value.c_str());
@@ -52,11 +62,6 @@ bool WidgetReader::valueToBool(std::string& value)
 float WidgetReader::valueToFloat(std::string& value)
 {
     return atof(value.c_str());
-}
-
-void WidgetReader::purge()
-{
-    CC_SAFE_DELETE(instanceWidgetReader);
 }
 
 void WidgetReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)

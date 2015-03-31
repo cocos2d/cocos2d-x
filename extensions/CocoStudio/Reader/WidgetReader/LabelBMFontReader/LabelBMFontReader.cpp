@@ -28,6 +28,16 @@ LabelBMFontReader* LabelBMFontReader::getInstance()
     return instanceLabelBMFontReader;
 }
 
+void LabelBMFontReader::purge()
+{
+	LabelBMFontReader::destroyInstance();
+}
+
+void LabelBMFontReader::destroyInstance()
+{
+	CC_SAFE_DELETE(instanceLabelBMFontReader);
+}
+
 void LabelBMFontReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)
 {
     WidgetReader::setPropsFromJsonDictionary(widget, options);

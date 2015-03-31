@@ -39,6 +39,7 @@ public:
     
     static LayoutReader* getInstance();
     static void purge();
+	static void destroyInstance();
     
     virtual void setPropsFromJsonDictionary(ui::Widget* widget, const rapidjson::Value& options);
     virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* pCocoLoader,  stExpCocoNode*	pCocoNode) ;

@@ -39,7 +39,9 @@ public:
     
     static LabelReader* getInstance();
     static void purge();
-    virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* pCocoLoader,  stExpCocoNode*	pCocoNode);
+	static void destroyInstance();
+
+	virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* pCocoLoader,  stExpCocoNode*	pCocoNode);
 
     virtual void setPropsFromJsonDictionary(ui::Widget* widget, const rapidjson::Value& options);
 };

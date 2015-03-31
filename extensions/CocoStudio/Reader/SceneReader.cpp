@@ -538,13 +538,30 @@ SceneReader* SceneReader::sharedSceneReader()
 }
 
 void SceneReader::purge()
-{		
-    cocos2d::extension::DictionaryHelper::shareHelper()->purgeDictionaryHelper();
-    TriggerMng::getInstance()->destroyInstance();
-    _pfnSelector = NULL;
-    _pListener = NULL;
-    CocosDenshion::SimpleAudioEngine::sharedEngine()->end();
-    CC_SAFE_DELETE(_sharedReader);
+{
+	SceneReader::destroyInstance();
+}
+
+void SceneReader::destroyInstance()
+{
+	cocos2d::extension::DictionaryHelper::destroyInstance();
+	TriggerMng::getInstance()->destroyInstance();
+	_pfnSelector = NULL;
+	_pListener = NULL;
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->end();
+	CC_SAFE_DELETE(_sharedReader);
+}
+
+void SceneReader::destroyCocosStudio()
+{
+	SceneReader::destroyInstance();
+
+	ActionManager::destroyInstance();
+	cocostudio::timeline::ActionTimelineCache::destroyInstance();
+	cocostudio::timeline::NodeReader::destroyInstance();
+	CCArmatureDataManager::destroyInstance();
+	GUIReader::destroyInstance();
+	TriggerMng::destroyInstance();
 }
 
 NS_CC_EXT_END

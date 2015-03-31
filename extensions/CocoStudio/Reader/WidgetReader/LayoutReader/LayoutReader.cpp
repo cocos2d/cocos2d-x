@@ -28,6 +28,16 @@ LayoutReader* LayoutReader::getInstance()
     return instanceLayoutReader;
 }
 
+void LayoutReader::purge()
+{
+	LayoutReader::destroyInstance();
+}
+
+void LayoutReader::destroyInstance()
+{
+	CC_SAFE_DELETE(instanceLayoutReader);
+}
+
 void LayoutReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)
 {
     WidgetReader::setPropsFromJsonDictionary(widget, options);

@@ -40,6 +40,11 @@ ActionManager* ActionManager::shareManager()
 
 void ActionManager::purge()
 {
+	ActionManager::destroyInstance();
+}
+
+void ActionManager::destroyInstance()
+{
 	CC_SAFE_DELETE(sharedActionManager);
 }
 

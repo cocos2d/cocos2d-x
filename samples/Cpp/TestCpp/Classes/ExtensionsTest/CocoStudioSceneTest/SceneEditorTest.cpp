@@ -263,10 +263,11 @@ void LoadSceneEdtiorFileTest::onEnter()
 
 void LoadSceneEdtiorFileTest::onExit()
 {
-	 CCArmatureDataManager::purge();
-	 SceneReader::purge();
-	 ActionManager::purge();
-	 GUIReader::purge();
+	SceneReader::destroyCocosStudio();
+//	CCArmatureDataManager::purge();
+//	 SceneReader::purge();
+//	 ActionManager::purge();
+//	 GUIReader::purge();
 	 SceneEditorTestLayer::onExit();
 }
 

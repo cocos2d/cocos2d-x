@@ -102,7 +102,26 @@ GUIReader* GUIReader::shareReader()
 
 void GUIReader::purge()
 {
+	GUIReader::destroyInstance();
+}
+
+void GUIReader::destroyInstance()
+{
 	CC_SAFE_DELETE(sharedReader);
+	ButtonReader::destroyInstance();
+	CheckBoxReader::destroyInstance();
+	ImageViewReader::destroyInstance();
+	LabelAtlasReader::destroyInstance();
+	LabelBMFontReader::destroyInstance();
+	LabelReader::destroyInstance();
+	LayoutReader::destroyInstance();
+	ListViewReader::destroyInstance();
+	LoadingBarReader::destroyInstance();
+	PageViewReader::destroyInstance();
+	ScrollViewReader::destroyInstance();
+	SliderReader::destroyInstance();
+	TextFieldReader::destroyInstance();
+	WidgetReader::destroyInstance();
 }
 
 int GUIReader::getVersionInteger(const char *str)

@@ -52,6 +52,7 @@ public:
     static CCArmatureDataManager *sharedArmatureDataManager();
 
     static void purge();
+	static void destroyInstance();
 private:
     CCArmatureDataManager(void);
     ~CCArmatureDataManager(void);
