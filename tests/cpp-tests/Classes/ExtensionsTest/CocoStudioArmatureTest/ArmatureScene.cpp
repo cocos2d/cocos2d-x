@@ -200,7 +200,7 @@ void ArmatureTestLayer::onExit()
 
     backItem = restartItem = nextItem = nullptr;
     
-    CSLoader::destroyCocosStudio();
+    cocostudio::destroyCocosStudio();
 
     Layer::onExit();
 }

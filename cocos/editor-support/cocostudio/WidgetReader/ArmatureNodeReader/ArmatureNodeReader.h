@@ -26,7 +26,6 @@ THE SOFTWARE.
 #define __ARMATURENODEREADER_H_
 
 #include "cocos2d.h"
-#include "cocostudio/FlatBuffersSerialize.h"
 #include "cocostudio/WidgetReader/NodeReaderProtocol.h"
 #include "cocostudio/WidgetReader/NodeReaderDefine.h"
 

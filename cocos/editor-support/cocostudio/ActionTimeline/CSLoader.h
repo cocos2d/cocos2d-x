@@ -73,9 +73,7 @@ public:
     
     CSLoader();
     /** @deprecated Use method destroyInstance() instead */
-    CC_DEPRECATED_ATTRIBUTE void purge();
-    
-    static void destroyCocosStudio();
+    CC_DEPRECATED_ATTRIBUTE void purge();    
     
     void init();
     
