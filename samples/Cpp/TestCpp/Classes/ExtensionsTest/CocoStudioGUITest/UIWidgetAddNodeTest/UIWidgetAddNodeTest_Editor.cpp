@@ -22,7 +22,7 @@ void UIWidgetAddNodeTest_Editor::switchLoadMethod(cocos2d::CCObject *pSender)
         _layout->removeAllChildrenWithCleanup(true);
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UIWidgetAddNode_Editor/ui_widget_add_node_editor.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIWidgetAddNode_Editor/ui_widget_add_node_editor.json"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -30,7 +30,7 @@ void UIWidgetAddNodeTest_Editor::switchLoadMethod(cocos2d::CCObject *pSender)
         _layout->removeAllChildrenWithCleanup(true);
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromBinaryFile("cocosui/UIEditorTest/UIWidgetAddNode_Editor/ui_widget_add_node_editor.csb"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIWidgetAddNode_Editor/ui_widget_add_node_editor.csb"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -67,7 +67,7 @@ bool UIWidgetAddNodeTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UIWidgetAddNode_Editor/ui_widget_add_node_editor.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIWidgetAddNode_Editor/ui_widget_add_node_editor.json"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();

@@ -62,8 +62,9 @@ class CC_EX_DLL SceneReader
 {
 
 public:
-	static SceneReader* sharedSceneReader();
-	static void purge();
+	CC_DEPRECATED_ATTRIBUTE static SceneReader* sharedSceneReader();
+	static SceneReader* getInstance();
+	CC_DEPRECATED_ATTRIBUTE static void purge();
 	static void destroyInstance();
 	static void destroyCocosStudio();
 	static const char* sceneReaderVersion();

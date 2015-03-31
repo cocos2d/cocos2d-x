@@ -32,10 +32,15 @@ static ActionManager* sharedActionManager = NULL;
 
 ActionManager* ActionManager::shareManager()
 {
-    if (!sharedActionManager) {
-        sharedActionManager = new ActionManager();
-    }
-    return sharedActionManager;
+	return ActionManager::getInstance();
+}
+
+ActionManager* ActionManager::getInstance()
+{
+	if (!sharedActionManager) {
+		sharedActionManager = new ActionManager();
+	}
+	return sharedActionManager;
 }
 
 void ActionManager::purge()

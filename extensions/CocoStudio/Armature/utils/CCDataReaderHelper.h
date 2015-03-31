@@ -48,7 +48,8 @@ typedef struct _DataInfo DataInfo;
 class  CC_EX_DLL CCDataReaderHelper : CCObject
 {
 public:
-    static CCDataReaderHelper *sharedDataReaderHelper();
+	CC_DEPRECATED_ATTRIBUTE static CCDataReaderHelper *sharedDataReaderHelper();
+	static CCDataReaderHelper *getInstance();
 
     /**
      * Scale the position data, used for multiresolution adapter
@@ -57,7 +58,7 @@ public:
     static void setPositionReadScale(float scale);
     static float getPositionReadScale();
 
-    static void purge();
+	CC_DEPRECATED_ATTRIBUTE static void purge();
 	static void destroyInstance();
     
 public:

@@ -38,7 +38,7 @@ void CustomParticleWidgetReader::setProperties(const std::string& classType,
                                           Widget *widget,
                                           const rapidjson::Value &customOptions)
 {    
-    GUIReader* guiReader = GUIReader::shareReader();
+    GUIReader* guiReader = GUIReader::getInstance();
     
     CustomParticleWidget* custom = static_cast<CustomParticleWidget*>(widget);
     

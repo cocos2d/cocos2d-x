@@ -31,12 +31,17 @@ CCSpriteFrameCacheHelper *CCSpriteFrameCacheHelper::s_SpriteFrameCacheHelper = N
 
 CCSpriteFrameCacheHelper *CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()
 {
-    if(!s_SpriteFrameCacheHelper)
-    {
-        s_SpriteFrameCacheHelper = new CCSpriteFrameCacheHelper();
-    }
+	return CCSpriteFrameCacheHelper::getInstance();
+}
 
-    return s_SpriteFrameCacheHelper;
+CCSpriteFrameCacheHelper *CCSpriteFrameCacheHelper::getInstance()
+{
+	if (!s_SpriteFrameCacheHelper)
+	{
+		s_SpriteFrameCacheHelper = new CCSpriteFrameCacheHelper();
+	}
+
+	return s_SpriteFrameCacheHelper;
 }
 
 void CCSpriteFrameCacheHelper::purge()

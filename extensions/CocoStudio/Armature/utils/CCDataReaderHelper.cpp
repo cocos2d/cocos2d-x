@@ -309,12 +309,17 @@ static void *loadData(void *)
 
 CCDataReaderHelper *CCDataReaderHelper::sharedDataReaderHelper()
 {
-    if(!s_DataReaderHelper)
-    {
-        s_DataReaderHelper = new CCDataReaderHelper();
-    }
+	return CCDataReaderHelper::getInstance();
+}
 
-    return s_DataReaderHelper;
+CCDataReaderHelper *CCDataReaderHelper::getInstance()
+{
+	if (!s_DataReaderHelper)
+	{
+		s_DataReaderHelper = new CCDataReaderHelper();
+	}
+
+	return s_DataReaderHelper;
 }
 
 void CCDataReaderHelper::setPositionReadScale(float scale)

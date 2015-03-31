@@ -292,7 +292,7 @@ bool CCComRender::serialize(void* r)
 				if (file_extension == ".JSON" || file_extension == ".EXPORTJSON")
 				{
 					cocos2d::ui::TouchGroup* tg = cocos2d::ui::TouchGroup::create();
-					cocos2d::ui::Widget* widget = cocos2d::extension::GUIReader::shareReader()->widgetFromJsonFile(strFilePath.c_str());
+					cocos2d::ui::Widget* widget = cocos2d::extension::GUIReader::getInstance()->widgetFromJsonFile(strFilePath.c_str());
 					tg->addWidget(widget);
 					m_pRender = tg;
 					m_pRender->retain();
@@ -302,7 +302,7 @@ bool CCComRender::serialize(void* r)
 				else if (file_extension == ".CSB")
 				{
                     cocos2d::ui::TouchGroup* tg = cocos2d::ui::TouchGroup::create();
-                    cocos2d::ui::Widget* widget = cocos2d::extension::GUIReader::shareReader()->widgetFromBinaryFile(strFilePath.c_str());
+                    cocos2d::ui::Widget* widget = cocos2d::extension::GUIReader::getInstance()->widgetFromBinaryFile(strFilePath.c_str());
                     tg->addWidget(widget);
                     m_pRender = tg;
                     m_pRender->retain();

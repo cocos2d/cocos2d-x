@@ -43,7 +43,7 @@ void LayoutReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
     WidgetReader::setPropsFromJsonDictionary(widget, options);
     
     
-    std::string jsonPath = GUIReader::shareReader()->getFilePath();
+    std::string jsonPath = GUIReader::getInstance()->getFilePath();
     
     ui::Layout* panel = (ui::Layout*)widget;
     

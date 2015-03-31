@@ -530,6 +530,11 @@ void SceneReader::setPropertyFromJsonDict(CocoLoader *pCocoLoader, stExpCocoNode
 
 SceneReader* SceneReader::sharedSceneReader()
 {
+	return SceneReader::getInstance();
+}
+
+SceneReader* SceneReader::getInstance()
+{
 	if (_sharedReader == NULL)
 	{
 		_sharedReader = new SceneReader();

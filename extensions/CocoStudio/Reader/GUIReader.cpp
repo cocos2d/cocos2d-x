@@ -93,11 +93,16 @@ GUIReader::~GUIReader()
 
 GUIReader* GUIReader::shareReader()
 {
-    if (!sharedReader)
-    {
-        sharedReader = new GUIReader();
-    }
-    return sharedReader;
+	return GUIReader::getInstance();
+}
+
+GUIReader* GUIReader::getInstance()
+{
+	if (!sharedReader)
+	{
+		sharedReader = new GUIReader();
+	}
+	return sharedReader;
 }
 
 void GUIReader::purge()
@@ -462,11 +467,11 @@ cocos2d::ui::Widget* WidgetPropertiesReader0250::createWidget(const rapidjson::V
     if (fileDesignWidth <= 0 || fileDesignHeight <= 0) {
         printf("Read design size error!\n");
         CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-        GUIReader::shareReader()->storeFileDesignSize(fileName, winSize);
+        GUIReader::getInstance()->storeFileDesignSize(fileName, winSize);
     }
     else
     {
-        GUIReader::shareReader()->storeFileDesignSize(fileName, CCSizeMake(fileDesignWidth, fileDesignHeight));
+        GUIReader::getInstance()->storeFileDesignSize(fileName, CCSizeMake(fileDesignWidth, fileDesignHeight));
     }
     const rapidjson::Value& widgetTree = DICTOOL->getSubDictionary_json(data, "widgetTree");
     cocos2d::ui::Widget* widget = widgetFromJsonDictionary(widgetTree);
@@ -485,7 +490,7 @@ cocos2d::ui::Widget* WidgetPropertiesReader0250::createWidget(const rapidjson::V
     /* ********************** */
     // CCLOG("file name == [%s]",fileName);
 	CCObject* rootWidget = (CCObject*) widget;
-    ActionManager::shareManager()->initWithDictionary(fileName,actions,rootWidget);
+    ActionManager::getInstance()->initWithDictionary(fileName,actions,rootWidget);
     return widget;
 }
 
@@ -1171,11 +1176,11 @@ cocos2d::ui::Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::V
     if (fileDesignWidth <= 0 || fileDesignHeight <= 0) {
         printf("Read design size error!\n");
         CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-        GUIReader::shareReader()->storeFileDesignSize(fileName, winSize);
+        GUIReader::getInstance()->storeFileDesignSize(fileName, winSize);
     }
     else
     {
-        GUIReader::shareReader()->storeFileDesignSize(fileName, CCSizeMake(fileDesignWidth, fileDesignHeight));
+        GUIReader::getInstance()->storeFileDesignSize(fileName, CCSizeMake(fileDesignWidth, fileDesignHeight));
     }
     const rapidjson::Value& widgetTree = DICTOOL->getSubDictionary_json(data, "widgetTree");
     cocos2d::ui::Widget* widget = widgetFromJsonDictionary(widgetTree);
@@ -1194,7 +1199,7 @@ cocos2d::ui::Widget* WidgetPropertiesReader0300::createWidget(const rapidjson::V
     /* ********************** */
     CCLOG("file name == [%s]",fileName);
 	CCObject* rootWidget = (CCObject*) widget;
-    ActionManager::shareManager()->initWithDictionary(fileName,actions,rootWidget);
+    ActionManager::getInstance()->initWithDictionary(fileName,actions,rootWidget);
     return widget;
 }
 
@@ -2173,9 +2178,9 @@ void WidgetPropertiesReader0300::setPropsForAllCustomWidgetFromJsonDictionary(co
                                                                               cocos2d::ui::Widget *widget,
                                                                               const rapidjson::Value &customOptions)
 {
-    GUIReader* guiReader = GUIReader::shareReader();
+    GUIReader* guiReader = GUIReader::getInstance();
     
-    std::map<std::string, CCObject*> object_map = GUIReader::shareReader()->getParseObjectMap();
+    std::map<std::string, CCObject*> object_map = GUIReader::getInstance()->getParseObjectMap();
     CCObject* object = object_map[classType];
     
     std::map<std::string, SEL_ParseEvent> selector_map = guiReader->getParseCallBackMap();
@@ -2227,11 +2232,11 @@ Widget* WidgetPropertiesReader0300::createWidgetFromBinary(cocos2d::extension::C
             if (fileDesignWidth <= 0 || fileDesignHeight <= 0) {
                 CCLOGERROR("Read design size error!\n");
                 CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-                GUIReader::shareReader()->storeFileDesignSize(fileName, winSize);
+                GUIReader::getInstance()->storeFileDesignSize(fileName, winSize);
             }
             else
             {
-                GUIReader::shareReader()->storeFileDesignSize(fileName, CCSize(fileDesignWidth, fileDesignHeight));
+                GUIReader::getInstance()->storeFileDesignSize(fileName, CCSize(fileDesignWidth, fileDesignHeight));
             }
             
             
@@ -2257,7 +2262,7 @@ Widget* WidgetPropertiesReader0300::createWidgetFromBinary(cocos2d::extension::C
         std::string key = optionChildNode[k].GetName(pCocoLoader);
         if (key == "animation") {
             CCObject* rootWidget = (CCObject*) widget;
-            ActionManager::shareManager()->initWithBinary(fileName,rootWidget,pCocoLoader, &optionChildNode[k]);
+            ActionManager::getInstance()->initWithBinary(fileName,rootWidget,pCocoLoader, &optionChildNode[k]);
             break;
         }
     }

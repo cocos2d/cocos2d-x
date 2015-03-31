@@ -43,7 +43,7 @@ void LoadingBarReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapi
     WidgetReader::setPropsFromJsonDictionary(widget, options);
     
     
-    std::string jsonPath = GUIReader::shareReader()->getFilePath();
+    std::string jsonPath = GUIReader::getInstance()->getFilePath();
     {
         ui::LoadingBar* loadingBar = (ui::LoadingBar*)widget;
         

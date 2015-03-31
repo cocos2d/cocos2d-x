@@ -41,7 +41,7 @@ public:
     virtual ~WidgetReader();
     
     static WidgetReader* getInstance();
-    static void purge();
+	CC_DEPRECATED_ATTRIBUTE static void purge();
 	static void destroyInstance();
     
     virtual void setPropsFromJsonDictionary(ui::Widget* widget, const rapidjson::Value& options);

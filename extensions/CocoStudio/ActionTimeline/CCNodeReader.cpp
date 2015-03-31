@@ -231,13 +231,13 @@ cocos2d::CCNode* NodeReader::createNode(const std::string& filename)
     if(_recordJsonPath)
     {
         std::string jsonPath = filename.substr(0, filename.find_last_of('/') + 1);
-        GUIReader::shareReader()->setFilePath(jsonPath);
+        GUIReader::getInstance()->setFilePath(jsonPath);
 
         _jsonPath = jsonPath;
     }
     else
     {
-        GUIReader::shareReader()->setFilePath("");
+        GUIReader::getInstance()->setFilePath("");
         _jsonPath = "";
     }
 

@@ -43,7 +43,7 @@ void CheckBoxReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidj
     WidgetReader::setPropsFromJsonDictionary(widget, options);
     
 
-    std::string jsonPath = GUIReader::shareReader()->getFilePath();
+    std::string jsonPath = GUIReader::getInstance()->getFilePath();
     
     ui::CheckBox* checkBox = (ui::CheckBox*)widget;
     

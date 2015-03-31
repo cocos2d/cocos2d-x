@@ -24,7 +24,7 @@ void UIPageViewTest_Editor::switchLoadMethod(cocos2d::CCObject *pSender)
         _layout->removeAllChildrenWithCleanup(true);
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UIPageView_Editor/ui_pageview_editor_1.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIPageView_Editor/ui_pageview_editor_1.json"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -32,7 +32,7 @@ void UIPageViewTest_Editor::switchLoadMethod(cocos2d::CCObject *pSender)
         _layout->removeAllChildrenWithCleanup(true);
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromBinaryFile("cocosui/UIEditorTest/UIPageView_Editor/ui_pageview_editor_1.csb"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIPageView_Editor/ui_pageview_editor_1.csb"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -77,7 +77,7 @@ bool UIPageViewTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UIPageView_Editor/ui_pageview_editor_1.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIPageView_Editor/ui_pageview_editor_1.json"));
         _touchGroup->addWidget(_layout);
        
         this->configureGUIScene();

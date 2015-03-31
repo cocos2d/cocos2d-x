@@ -219,7 +219,7 @@ std::string WidgetReader::getResourcePath(CocoLoader *pCocoLoader,
         return "";
     }
     
-    std::string binaryPath = GUIReader::shareReader()->getFilePath();
+    std::string binaryPath = GUIReader::getInstance()->getFilePath();
     
     std::string imageFileName_tp;
     if (!backgroundValue.empty())

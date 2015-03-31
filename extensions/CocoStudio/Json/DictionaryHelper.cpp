@@ -40,10 +40,15 @@ DictionaryHelper::~DictionaryHelper()
 
 DictionaryHelper* DictionaryHelper::shareHelper()
 {
-    if (!sharedHelper) {
-        sharedHelper = new DictionaryHelper();
-    }
-    return sharedHelper;
+	return DictionaryHelper::getInstance();
+}
+
+DictionaryHelper* DictionaryHelper::getInstance()
+{
+	if (!sharedHelper) {
+		sharedHelper = new DictionaryHelper();
+	}
+	return sharedHelper;
 }
 
 void DictionaryHelper::purgeDictionaryHelper()

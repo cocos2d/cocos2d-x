@@ -56,12 +56,13 @@ public:
 	/**
 	* Gets the static instance of ActionManager.
 	*/
-	static ActionManager* shareManager();
+	CC_DEPRECATED_ATTRIBUTE static ActionManager* shareManager();
+	static ActionManager* getInstance();
 
 	/**
 	* Purges ActionManager point.
 	*/
-	static void purge();
+	CC_DEPRECATED_ATTRIBUTE static void purge();
 	static void destroyInstance();
 
 	/**

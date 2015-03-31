@@ -38,7 +38,7 @@ public:
     virtual ~ButtonReader();
     
     static ButtonReader* getInstance();
-    static void purge();
+	CC_DEPRECATED_ATTRIBUTE static void purge();
 	static void destroyInstance();
 
     virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* pCocoLoader,  stExpCocoNode*	pCocoNode);

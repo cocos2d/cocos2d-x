@@ -43,7 +43,7 @@ void ImageViewReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapid
     WidgetReader::setPropsFromJsonDictionary(widget, options);
     
     
-    std::string jsonPath = GUIReader::shareReader()->getFilePath();
+    std::string jsonPath = GUIReader::getInstance()->getFilePath();
     
     ui::ImageView* imageView = (ui::ImageView*)widget;
     

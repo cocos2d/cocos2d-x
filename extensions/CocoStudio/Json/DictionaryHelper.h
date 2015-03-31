@@ -29,7 +29,7 @@
 #include "ExtensionMacros.h"
 #include "rapidjson/document.h"
 
-#define DICTOOL DictionaryHelper::shareHelper()
+#define DICTOOL DictionaryHelper::getInstance()
 
 NS_CC_EXT_BEGIN
 /**
@@ -41,8 +41,9 @@ class CC_EX_DLL DictionaryHelper
 public:
     DictionaryHelper();
     ~DictionaryHelper();
-    static DictionaryHelper* shareHelper();
-	static void purgeDictionaryHelper();
+	CC_DEPRECATED_ATTRIBUTE static DictionaryHelper* shareHelper();
+	static DictionaryHelper* getInstance();
+	CC_DEPRECATED_ATTRIBUTE static void purgeDictionaryHelper();
 	static void destroyInstance();
 
 	cocos2d::CCDictionary* getSubDictionary(cocos2d::CCDictionary* root,const char* key);

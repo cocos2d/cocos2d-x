@@ -23,7 +23,7 @@ void UISliderTest_Editor::switchLoadMethod(cocos2d::CCObject *pSender)
         _layout->removeAllChildrenWithCleanup(true);
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UISlider_Editor/ui_slider_editor_1.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UISlider_Editor/ui_slider_editor_1.json"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -31,7 +31,7 @@ void UISliderTest_Editor::switchLoadMethod(cocos2d::CCObject *pSender)
         _layout->removeAllChildrenWithCleanup(true);
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromBinaryFile("cocosui/UIEditorTest/UISlider_Editor/ui_slider_editor_1.csb"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UISlider_Editor/ui_slider_editor_1.csb"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -66,7 +66,7 @@ bool UISliderTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UISlider_Editor/ui_slider_editor_1.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UISlider_Editor/ui_slider_editor_1.json"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();

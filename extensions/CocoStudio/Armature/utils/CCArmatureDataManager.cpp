@@ -35,15 +35,20 @@ static CCArmatureDataManager *s_sharedArmatureDataManager = NULL;
 
 CCArmatureDataManager *CCArmatureDataManager::sharedArmatureDataManager()
 {
-    if (s_sharedArmatureDataManager == NULL)
-    {
-        s_sharedArmatureDataManager = new CCArmatureDataManager();
-        if (!s_sharedArmatureDataManager || !s_sharedArmatureDataManager->init())
-        {
-            CC_SAFE_DELETE(s_sharedArmatureDataManager);
-        }
-    }
-    return s_sharedArmatureDataManager;
+	return CCArmatureDataManager::getInstance();
+}
+
+CCArmatureDataManager *CCArmatureDataManager::getInstance()
+{
+	if (s_sharedArmatureDataManager == NULL)
+	{
+		s_sharedArmatureDataManager = new CCArmatureDataManager();
+		if (!s_sharedArmatureDataManager || !s_sharedArmatureDataManager->init())
+		{
+			CC_SAFE_DELETE(s_sharedArmatureDataManager);
+		}
+	}
+	return s_sharedArmatureDataManager;
 }
 
 void CCArmatureDataManager::purge()

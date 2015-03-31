@@ -43,7 +43,7 @@ void SliderReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjso
     WidgetReader::setPropsFromJsonDictionary(widget, options);
     
     
-    std::string jsonPath = GUIReader::shareReader()->getFilePath();
+    std::string jsonPath = GUIReader::getInstance()->getFilePath();
 
     ui::Slider* slider = (ui::Slider*)widget;
     

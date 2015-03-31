@@ -60,11 +60,12 @@ public:
 	/**
      *  @js getInstance
      */
-    static GUIReader* shareReader();
+	CC_DEPRECATED_ATTRIBUTE static GUIReader* shareReader();
+	static GUIReader* getInstance();
     /**
      *  @js pure
      */
-	static void purge();
+	CC_DEPRECATED_ATTRIBUTE static void purge();
 	static void destroyInstance();
     
     cocos2d::ui::Widget* widgetFromJsonFile(const char* fileName);

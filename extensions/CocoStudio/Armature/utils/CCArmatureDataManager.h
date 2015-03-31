@@ -49,9 +49,10 @@ public:
     /**
      *  @js getInstance
      */
-    static CCArmatureDataManager *sharedArmatureDataManager();
+	CC_DEPRECATED_ATTRIBUTE static CCArmatureDataManager *sharedArmatureDataManager();
+	static CCArmatureDataManager *getInstance();
 
-    static void purge();
+	CC_DEPRECATED_ATTRIBUTE static void purge();
 	static void destroyInstance();
 private:
     CCArmatureDataManager(void);
