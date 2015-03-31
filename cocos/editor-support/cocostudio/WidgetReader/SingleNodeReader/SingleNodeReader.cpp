@@ -62,6 +62,11 @@ namespace cocostudio
         return _instanceSingleNodeReader;
     }
     
+    void SingleNodeReader::purge()
+    {
+        CC_SAFE_DELETE(_instanceSingleNodeReader);
+    }
+    
     void SingleNodeReader::destroyInstance()
     {
         CC_SAFE_DELETE(_instanceSingleNodeReader);
