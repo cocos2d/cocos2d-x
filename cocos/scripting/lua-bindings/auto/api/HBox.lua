@@ -13,7 +13,8 @@
 -- @return HBox#HBox ret (return value: ccui.HBox)
 
 --------------------------------
--- Default constructor
+-- Default constructor<br>
+-- lua new
 -- @function [parent=#HBox] HBox 
 -- @param self
 -- @return HBox#HBox self (return value: ccui.HBox)
