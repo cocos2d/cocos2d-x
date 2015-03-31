@@ -120,7 +120,9 @@
 -- @return LoadingBar#LoadingBar self (return value: ccui.LoadingBar)
         
 --------------------------------
--- Default constructor.
+-- Default constructor.<br>
+-- js ctor<br>
+-- lua new
 -- @function [parent=#LoadingBar] LoadingBar 
 -- @param self
 -- @return LoadingBar#LoadingBar self (return value: ccui.LoadingBar)

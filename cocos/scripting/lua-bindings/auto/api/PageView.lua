@@ -166,7 +166,9 @@
 -- @return PageView#PageView self (return value: ccui.PageView)
         
 --------------------------------
--- Default constructor
+-- Default constructor<br>
+-- js ctor<br>
+-- lua new
 -- @function [parent=#PageView] PageView 
 -- @param self
 -- @return PageView#PageView self (return value: ccui.PageView)

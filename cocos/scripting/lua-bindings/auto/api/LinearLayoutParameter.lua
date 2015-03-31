@@ -42,7 +42,8 @@
 -- @return LinearLayoutParameter#LinearLayoutParameter self (return value: ccui.LinearLayoutParameter)
         
 --------------------------------
--- Default constructor.
+-- Default constructor.<br>
+-- lua new
 -- @function [parent=#LinearLayoutParameter] LinearLayoutParameter 
 -- @param self
 -- @return LinearLayoutParameter#LinearLayoutParameter self (return value: ccui.LinearLayoutParameter)

@@ -106,7 +106,8 @@
 
 --------------------------------
 -- @{<br>
--- Interface for custom action when before or after draw.
+-- Interface for custom action when before or after draw.<br>
+-- js NA
 -- @function [parent=#GridBase] beforeBlit 
 -- @param self
 -- @return GridBase#GridBase self (return value: cc.GridBase)
