@@ -224,7 +224,11 @@ void CSLoader::destroyCocosStudio()
     SingleNodeReader::destroyInstance();
     SpriteReader::destroyInstance();
     ParticleReader::destroyInstance();
+    GameMapReader::destroyInstance();
+    ProjectNodeReader::destroyInstance();
+    ComAudioReader::destroyInstance();
     
+    WidgetReader::destroyInstance();
     ButtonReader::destroyInstance();
     CheckBoxReader::destroyInstance();
     ImageViewReader::destroyInstance();

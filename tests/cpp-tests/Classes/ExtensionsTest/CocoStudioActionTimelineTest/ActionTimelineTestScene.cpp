@@ -164,9 +164,8 @@ void ActionTimelineTestLayer::onExit()
     removeAllChildren();
 
     backItem = restartItem = nextItem = nullptr;
-
-    ActionTimelineCache::getInstance()->purge();
-    CSLoader::getInstance()->purge();
+    
+    CSLoader::destroyCocosStudio();
 
     Layer::onExit();
 }

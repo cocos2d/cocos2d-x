@@ -19,6 +19,13 @@ UIScene_Editor::~UIScene_Editor()
     
 }
 
+void UIScene_Editor::onExit()
+{
+    CSLoader::destroyCocosStudio();
+    
+    Layer::onExit();
+}
+
 bool UIScene_Editor::init()
 {
     if (CCLayer::init())

@@ -31,6 +31,13 @@ void CustomWidgetCallbackBindScene::onEnter()
     addChild(pMenu, 1);
 }
 
+void CustomWidgetCallbackBindScene::onExit()
+{
+    CSLoader::destroyCocosStudio();
+    
+    Scene::onExit();
+}
+
 void CustomWidgetCallbackBindScene::runThisTest()
 {
     CSLoader* instance = CSLoader::getInstance();

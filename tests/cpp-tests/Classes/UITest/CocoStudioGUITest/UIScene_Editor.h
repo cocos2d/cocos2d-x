@@ -59,6 +59,8 @@ public:
     UIScene_Editor();
     ~UIScene_Editor();
     
+    virtual void onExit() override;
+    
     bool init();
     virtual void previousCallback(Ref* sender, Widget::TouchEventType event);
     virtual void nextCallback(Ref* sender, Widget::TouchEventType event);
