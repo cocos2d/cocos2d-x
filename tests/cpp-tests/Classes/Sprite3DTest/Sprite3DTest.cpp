@@ -2388,7 +2388,7 @@ NodeAnimationTest::NodeAnimationTest()
                                               
                                               int tIndex = _vectorIndex - 1;
                                               if(tIndex < 0)
-                                                  _vectorIndex = _sprites.size()-1;
+                                                  _vectorIndex = (int)_sprites.size() - 1;
                                               else
                                                   _vectorIndex--;
                                               
