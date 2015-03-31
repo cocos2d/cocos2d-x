@@ -41,6 +41,8 @@ namespace cocostudio
         virtual ~ImageViewReader();
         
         static ImageViewReader* getInstance();
+        /** @deprecated Use method destroyInstance() instead */
+        CC_DEPRECATED_ATTRIBUTE static void purge();
         static void destroyInstance();
         
         virtual void setPropsFromJsonDictionary(cocos2d::ui::Widget* widget, const rapidjson::Value& options);

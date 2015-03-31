@@ -60,6 +60,11 @@ namespace cocostudio
         return _instanceSpriteReader;
     }
     
+    void SpriteReader::purge()
+    {
+        CC_SAFE_DELETE(_instanceSpriteReader);
+    }
+    
     void SpriteReader::destroyInstance()
     {
         CC_SAFE_DELETE(_instanceSpriteReader);
