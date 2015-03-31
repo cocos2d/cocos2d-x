@@ -26,11 +26,53 @@
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
-
-
 NS_CC_EXT_BEGIN
 
+Physics3DRigidBody::Physics3DRigidBody()
+: _btRigidBody(nullptr)
+{
+    
+}
 
+Physics3DRigidBody::~Physics3DRigidBody()
+{
+    CC_SAFE_DELETE(_btRigidBody);
+}
+
+Physics3DRigidBody* Physics3DRigidBody::create(Physics3DRigidBodyDes* info)
+{
+    auto ret = new (std::nothrow) Physics3DRigidBody();
+    if (ret->init(info))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    
+    CC_SAFE_DELETE(ret);
+    return ret;
+}
+
+bool Physics3DRigidBody::init(Physics3DRigidBodyDes* info)
+{
+    if (info->shape == nullptr)
+        return false;
+    
+    btScalar mass = info->mass;
+    auto shape = info->shape->getbtShape();
+    auto localInertia = convertVec3TobtVector3(info->localInertia);
+    if (mass != 0.f)
+    {
+        shape->calculateLocalInertia(mass,localInertia);
+    }
+    
+    auto transform = convertMat4TobtTransform(info->originalTransform);
+    btDefaultMotionState* myMotionState = new btDefaultMotionState(transform);
+    btRigidBody::btRigidBodyConstructionInfo rbInfo(mass,myMotionState,shape,localInertia);
+    _btRigidBody = new btRigidBody(rbInfo);
+    _type = Physics3DObject::PhysicsObjType::RIGID_BODY;
+    
+    return true;
+}
 
 NS_CC_EXT_END
 

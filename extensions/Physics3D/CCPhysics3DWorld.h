@@ -34,6 +34,10 @@
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
 class btDynamicsWorld;
+class btDefaultCollisionConfiguration;
+class btCollisionDispatcher;
+class btDbvtBroadphase;
+class btSequentialImpulseConstraintSolver;
 
 NS_CC_EXT_BEGIN
 
@@ -42,13 +46,19 @@ class Physics3DConstraint;
 
 CC_EX_DLL struct Physics3DWorldDes
 {
-    
+    bool           isDebugDrawEnabled; //using physics debug draw?, false by default
+    cocos2d::Vec3  gravity;//gravity, (0, -9.8, 0)
+    Physics3DWorldDes()
+    {
+        isDebugDrawEnabled = false;
+        gravity = cocos2d::Vec3(0.f, -9.8f, 0.f);
+    }
 };
 
 CC_EX_DLL class Physics3DWorld : Ref
 {
 public:
-    Physics3DWorld* create(const Physics3DWorldDes* info);
+    static Physics3DWorld* create(Physics3DWorldDes* info);
     
     void addPhysics3DObject(Physics3DObject* physicsObj);
     
@@ -64,12 +74,23 @@ public:
     
     void stepSimulate(float dt);
     
-protected:
+CC_CONSTRUCTOR_ACCESS:
+    
     Physics3DWorld();
     virtual ~Physics3DWorld();
     
+    bool init(Physics3DWorldDes* info);
+    
+protected:
+    std::vector<Physics3DObject*>      _objects;
+    std::vector<Physics3DConstraint*>  _constraints;
+    
 #if (CC_ENABLE_BULLET_INTEGRATION)
-    btDynamicsWorld* _phyiscsWorld;
+    btDynamicsWorld* _btPhyiscsWorld;
+    btDefaultCollisionConfiguration* _collisionConfiguration;
+    btCollisionDispatcher* _dispatcher;
+    btDbvtBroadphase* _broadphase;
+    btSequentialImpulseConstraintSolver* _solver;
 #endif // CC_ENABLE_BULLET_INTEGRATION
 };
 

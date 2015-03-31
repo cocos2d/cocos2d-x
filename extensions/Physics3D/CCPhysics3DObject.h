@@ -32,11 +32,72 @@
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
+class btCollisionShape;
+class btRigidBody;
+
 NS_CC_EXT_BEGIN
+
+class Physics3DShape;
 
 CC_EX_DLL class Physics3DObject : public Ref
 {
+public:
+    enum class PhysicsObjType
+    {
+        UNKNOWN = 0,
+        RIGID_BODY,
+    };
     
+    virtual PhysicsObjType getObjType() const { return _type; }
+    
+    void setUserData(void* userData)  { _userData = userData; }
+    
+    void* getUserData() const { return _userData; }
+    
+CC_CONSTRUCTOR_ACCESS:
+    Physics3DObject()
+    : _type(PhysicsObjType::UNKNOWN)
+    {
+        
+    }
+    virtual ~Physics3DObject(){}
+    
+protected:
+    PhysicsObjType _type;
+    void* _userData;
+};
+
+CC_EX_DLL struct Physics3DRigidBodyDes
+{
+    float mass; //Note: mass equals zero means static, default 0
+    cocos2d::Vec3 localInertia; //default (0, 0, 0)
+    Physics3DShape* shape;
+    cocos2d::Mat4 originalTransform;
+    
+    Physics3DRigidBodyDes()
+    : mass(0.f)
+    , localInertia(0.f, 0.f, 0.f)
+    , shape(nullptr)
+    {
+        
+    }
+};
+CC_EX_DLL class Physics3DRigidBody : public Physics3DObject
+{
+public:
+    
+    static Physics3DRigidBody* create(Physics3DRigidBodyDes* info);
+    
+    btRigidBody* getRigidBody() const { return _btRigidBody; }
+    
+CC_CONSTRUCTOR_ACCESS:
+    Physics3DRigidBody();
+    virtual ~Physics3DRigidBody();
+    
+    bool init(Physics3DRigidBodyDes* info);
+    
+protected:
+    btRigidBody* _btRigidBody;
 };
 
 NS_CC_EXT_END

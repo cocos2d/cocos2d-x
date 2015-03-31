@@ -25,10 +25,7 @@
 #include "CCPhysics3D.h"
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
-#include "bullet/BulletCollision/CollisionShapes/btBoxShape.h"
-#include "bullet/BulletCollision/CollisionShapes/btSphereShape.h"
-#include "bullet/BulletCollision/CollisionShapes/btCylinderShape.h"
-#include "bullet/BulletCollision/CollisionShapes/btCapsuleShape.h"
+
 
 NS_CC_EXT_BEGIN
 

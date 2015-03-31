@@ -50,6 +50,8 @@ NS_CC_EXT_END
 #include "bullet/LinearMath/btVector3.h"
 #include "bullet/LinearMath/btQuaternion.h"
 
+#include "bullet/btBulletCollisionCommon.h"
+#include "bullet/btBulletDynamicsCommon.h"
 
 //convert between cocos and bullet
 cocos2d::Vec3 convertbtVector3ToVec3(const btVector3 &btVec3);

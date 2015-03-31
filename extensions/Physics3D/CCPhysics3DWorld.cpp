@@ -26,9 +26,122 @@
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
-
-
 NS_CC_EXT_BEGIN
+
+Physics3DWorld::Physics3DWorld()
+: _btPhyiscsWorld(nullptr)
+, _collisionConfiguration(nullptr)
+, _dispatcher(nullptr)
+, _broadphase(nullptr)
+, _solver(nullptr)
+{
+    
+}
+Physics3DWorld::~Physics3DWorld()
+{
+    removeAllPhysics3DObjects();
+    removeAllPhysics3DConstraints();
+    CC_SAFE_DELETE(_collisionConfiguration);
+    CC_SAFE_DELETE(_dispatcher);
+    CC_SAFE_DELETE(_broadphase);
+    CC_SAFE_DELETE(_solver);
+    CC_SAFE_DELETE(_btPhyiscsWorld);
+}
+
+Physics3DWorld* Physics3DWorld::create(Physics3DWorldDes* info)
+{
+    auto world = new (std::nothrow) Physics3DWorld();
+    world->init(info);
+    world->autorelease();
+    return world;
+}
+
+bool Physics3DWorld::init(Physics3DWorldDes* info)
+{
+    ///collision configuration contains default setup for memory, collision setup
+	_collisionConfiguration = new btDefaultCollisionConfiguration();
+	//_collisionConfiguration->setConvexConvexMultipointIterations();
+    
+	///use the default collision dispatcher. For parallel processing you can use a diffent dispatcher (see Extras/BulletMultiThreaded)
+	_dispatcher = new	btCollisionDispatcher(_collisionConfiguration);
+    
+	_broadphase = new btDbvtBroadphase();
+    
+	///the default constraint solver. For parallel processing you can use a different solver (see Extras/BulletMultiThreaded)
+	btSequentialImpulseConstraintSolver* sol = new btSequentialImpulseConstraintSolver;
+	_solver = sol;
+    
+    _btPhyiscsWorld->setGravity(convertVec3TobtVector3(info->gravity));
+    if (info->isDebugDrawEnabled)
+    {
+        //TODO
+    }
+    
+    return true;
+}
+
+void Physics3DWorld::addPhysics3DObject(Physics3DObject* physicsObj)
+{
+    auto it = std::find(_objects.begin(), _objects.end(), physicsObj);
+    if (it == _objects.end())
+    {
+        _objects.push_back(physicsObj);
+        physicsObj->retain();
+        if (physicsObj->getObjType() == Physics3DObject::PhysicsObjType::RIGID_BODY)
+        {
+            _btPhyiscsWorld->addRigidBody(static_cast<Physics3DRigidBody*>(physicsObj)->getRigidBody());
+        }
+    }
+}
+
+void Physics3DWorld::removePhysics3DObject(Physics3DObject* physicsObj)
+{
+    auto it = std::find(_objects.begin(), _objects.end(), physicsObj);
+    if (it != _objects.end())
+    {
+        if (physicsObj->getObjType() == Physics3DObject::PhysicsObjType::RIGID_BODY)
+        {
+            _btPhyiscsWorld->removeRigidBody(static_cast<Physics3DRigidBody*>(physicsObj)->getRigidBody());
+        }
+        physicsObj->release();
+        _objects.erase(it);
+    }
+}
+
+void Physics3DWorld::removeAllPhysics3DObjects()
+{
+    for (auto it : _objects) {
+        if (it->getObjType() == Physics3DObject::PhysicsObjType::RIGID_BODY)
+        {
+            _btPhyiscsWorld->removeRigidBody(static_cast<Physics3DRigidBody*>(it)->getRigidBody());
+        }
+        it->release();
+    }
+    _objects.clear();
+}
+
+void Physics3DWorld::addPhysics3DConstraint(Physics3DConstraint* constraint)
+{
+    
+}
+
+void Physics3DWorld::removePhysics3DConstraint(Physics3DConstraint* constraint)
+{
+    
+}
+
+void Physics3DWorld::removeAllPhysics3DConstraints()
+{
+    
+}
+
+void Physics3DWorld::stepSimulate(float dt)
+{
+    if (_btPhyiscsWorld)
+    {
+        _btPhyiscsWorld->stepSimulation(dt);
+    }
+}
 
 
 
