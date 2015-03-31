@@ -187,7 +187,7 @@ bool CCComRender::serialize(void* r)
 					}
 					const rapidjson::Value &subData = DICTOOL->getDictionaryFromArray_json(doc, "armature_data", 0);
 					const char *name = DICTOOL->getStringValue_json(subData, "name");
-					CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(strFilePath.c_str());
+					CCArmatureDataManager::getInstance()->addArmatureFileInfo(strFilePath.c_str());
 					CCArmature *pAr = CCArmature::create(name);
 					m_pRender = pAr;
 					m_pRender->retain();
@@ -245,7 +245,7 @@ bool CCComRender::serialize(void* r)
                                         {
                                             if (str != NULL)
                                             {
-                                                CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(strFilePath.c_str());
+                                                CCArmatureDataManager::getInstance()->addArmatureFileInfo(strFilePath.c_str());
                                                 CCArmature *pAr = CCArmature::create(str);
                                                 m_pRender = pAr;
                                                 m_pRender->retain();

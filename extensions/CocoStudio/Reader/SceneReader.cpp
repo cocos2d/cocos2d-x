@@ -557,16 +557,4 @@ void SceneReader::destroyInstance()
 	CC_SAFE_DELETE(_sharedReader);
 }
 
-void SceneReader::destroyCocosStudio()
-{
-	SceneReader::destroyInstance();
-
-	ActionManager::destroyInstance();
-	cocostudio::timeline::ActionTimelineCache::destroyInstance();
-	cocostudio::timeline::NodeReader::destroyInstance();
-	CCArmatureDataManager::destroyInstance();
-	GUIReader::destroyInstance();
-	TriggerMng::destroyInstance();
-}
-
 NS_CC_EXT_END

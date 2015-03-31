@@ -97,7 +97,7 @@ void TimelineTestScene::MainMenuCallback(CCObject *pSender)
     TestScene::MainMenuCallback(pSender);
 
     removeAllChildren();
-    CCArmatureDataManager::purge();
+    CCArmatureDataManager::destroyInstance();
 }
 
 

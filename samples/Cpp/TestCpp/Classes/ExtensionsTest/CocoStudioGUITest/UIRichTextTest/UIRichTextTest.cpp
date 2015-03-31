@@ -50,7 +50,7 @@ bool UIRichTextTest::init()
         
         RichElementImage* reimg = RichElementImage::create(6, ccWHITE, 255, "cocosui/sliderballnormal.png");
         
-        CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("cocosui/100/100.ExportJson");
+        CCArmatureDataManager::getInstance()->addArmatureFileInfo("cocosui/100/100.ExportJson");
         CCArmature *pAr = CCArmature::create("100");
         pAr->getAnimation()->play("Animation1");
         
