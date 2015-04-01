@@ -93,6 +93,7 @@ public:
     static ScrollView* create();
     /**
      * @js ctor
+     * @lua new
      */
     ScrollView();
     /**

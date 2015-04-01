@@ -44,11 +44,13 @@ class CC_DLL AABB
 public:
     /**
      * Constructor.
+     * @lua new
      */
     AABB();
     
     /**
      * Constructor.
+     * @lua new
      */
     AABB(const Vec3& min, const Vec3& max);
     

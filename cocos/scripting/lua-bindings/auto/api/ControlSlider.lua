@@ -173,7 +173,8 @@
 -- @return ControlSlider#ControlSlider self (return value: cc.ControlSlider)
         
 --------------------------------
--- js ctor
+-- js ctor<br>
+-- lua new
 -- @function [parent=#ControlSlider] ControlSlider 
 -- @param self
 -- @return ControlSlider#ControlSlider self (return value: cc.ControlSlider)

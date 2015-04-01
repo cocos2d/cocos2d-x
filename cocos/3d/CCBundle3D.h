@@ -44,6 +44,8 @@ class Data;
  * There are two types of bundle files, c3t and c3b.
  * c3t text file
  * c3b binary file
+ * @js NA
+ * @lua NA
  */
 class CC_DLL Bundle3D
 {
@@ -120,13 +122,13 @@ protected:
      * load nodes of json
      */
     bool loadNodesJson(NodeDatas& nodedatas);
-    NodeData* parseNodesRecursivelyJson(const rapidjson::Value& jvalue);
+    NodeData* parseNodesRecursivelyJson(const rapidjson::Value& jvalue, bool singleSprite);
 
     /**
      * load nodes of binary
      */
     bool loadNodesBinary(NodeDatas& nodedatas);
-    NodeData* parseNodesRecursivelyBinary(bool& skeleton);
+    NodeData* parseNodesRecursivelyBinary(bool& skeleton, bool singleSprite);
 
     /**
      * get define data type

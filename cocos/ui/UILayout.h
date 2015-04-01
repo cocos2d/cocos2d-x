@@ -48,16 +48,47 @@ class Scale9Sprite;
 
 /**
  *@brief Layout interface for creating LayoutManger and do actual layout.
+ * @js NA
  */
 class CC_GUI_DLL LayoutProtocol
 {
 public:
+    /**
+     *@brief Default constructor.
+     */
     LayoutProtocol(){}
+    /**
+     *@brief Default destructor.
+     */
     virtual ~LayoutProtocol(){}
+
     
+    /**
+     * @brief Create a custom layout manager.
+     *
+     * @return A LayoutManager descendants instance.
+     */
     virtual LayoutManager* createLayoutManager() = 0;
+    
+    /**
+     * @brief Return the content size of layout.
+     *
+     * @return A content size in Size.
+     */
     virtual Size getLayoutContentSize()const = 0;
+    
+    /**
+     * @brief Get all elements of the layout.
+     *
+     * @return A vector of Node pointers.
+     */
     virtual const Vector<Node*>& getLayoutElements()const = 0;
+    
+    /**
+     * @brief The main function to do the layout job.
+     *  Different layout manager should implement its own layout algorithm.
+     *
+     */
     virtual void doLayout() = 0;
 };
 
@@ -117,11 +148,15 @@ public:
     
     /**
      * Default constructor
+     * @js ctor
+     * @lua new
      */
     Layout();
     
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~Layout();
     
@@ -336,8 +371,8 @@ public:
      * @param localZOrder    Z order for drawing priority. Please refer to setLocalZOrder(int)
      * @param tag       A interger to identify the node easily. Please refer to setTag(int)
      */
-    virtual void addChild(Node* child, int zOrder, int tag) override;
-    virtual void addChild(Node* child, int zOrder, const std::string &name) override;
+    virtual void addChild(Node* child, int localZOrder, int tag) override;
+    virtual void addChild(Node* child, int localZOrder, const std::string &name) override;
     
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 
@@ -368,7 +403,14 @@ public:
      */
     void requestDoLayout();
     
+    /**
+     * @lua NA
+     */
     virtual void onEnter() override;
+    
+    /**
+     * @lua NA
+     */
     virtual void onExit() override;
     
     /**

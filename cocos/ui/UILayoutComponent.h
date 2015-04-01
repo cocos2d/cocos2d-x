@@ -43,11 +43,15 @@ namespace ui {
     public:
         /**
          * Default constructor
+         *
+         * @lua new
          */
         LayoutComponent();
 
         /**
          * Default destructor
+         *
+         * @lua NA
          */
         ~LayoutComponent();
 

@@ -154,11 +154,15 @@ public:
     typedef std::function<void(Ref*, int)> ccWidgetEventCallback;
     /**
      * Default constructor
+     * @js ctor
+     * @lua new
      */
     Widget(void);
     
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~Widget();
     /**
@@ -203,11 +207,11 @@ public:
     bool isBright() const;
 
     /**
-     * Sets whether the widget is touch enabled
+     * Sets whether the widget is touch enabled.
      *
-     * The default value is false, a widget is default to touch disabled
+     * The default value is false, a widget is default to touch disabled.
      *
-     * @param visible   true if the widget is touch enabled, false if the widget is touch disabled.
+     * @param enabled   True if the widget is touch enabled, false if the widget is touch disabled.
      */
     virtual void setTouchEnabled(bool enabled);
 
@@ -292,6 +296,9 @@ public:
      */
     float getTopBoundary() const;
 
+    /**
+     * @js NA
+     */
     virtual void visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 
     /**
@@ -312,6 +319,7 @@ public:
     /**
      * Set a event handler to the widget in order to use cocostudio editor and framework
      * @param callback The callback in `ccWidgetEventCallback`.
+     * @lua NA
      */
     virtual void addCCSEventListener(const ccWidgetEventCallback& callback);
     /**/
@@ -646,8 +654,14 @@ public:
      * @return A cloned widget copy of original.
      */
     Widget* clone();
-
+    /**
+     * @lua NA
+     */
     virtual void onEnter() override;
+    
+    /**
+     * @lua NA
+     */
     virtual void onExit() override;
 
     /**

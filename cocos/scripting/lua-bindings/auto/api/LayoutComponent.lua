@@ -270,7 +270,7 @@
         
 --------------------------------
 -- Percent content size is used to adapt node's content size based on parent's content size.<br>
--- If set to true then node's content size will be changed based on the value setted by @setPercentContentSize<br>
+-- If set to true then node's content size will be changed based on the value setted by @see setPercentContentSize<br>
 -- param isUsed True to enable percent content size, false otherwise.
 -- @function [parent=#LayoutComponent] setUsingPercentContentSize 
 -- @param self
@@ -361,7 +361,7 @@
         
 --------------------------------
 -- Change the bottom margin of owner relative to its parent.<br>
--- param Margin in float.
+-- param margin in float.
 -- @function [parent=#LayoutComponent] setBottomMargin 
 -- @param self
 -- @param #float margin
@@ -399,7 +399,8 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- Default constructor
+-- Default constructor<br>
+-- lua new
 -- @function [parent=#LayoutComponent] LayoutComponent 
 -- @param self
 -- @return LayoutComponent#LayoutComponent self (return value: ccui.LayoutComponent)

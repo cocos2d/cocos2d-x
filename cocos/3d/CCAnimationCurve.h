@@ -54,6 +54,8 @@ enum class EvaluateType
 
 /**
  * @brief curve of bone's position, rotation or scale
+ *
+ * @lua NA
  */
 template <int componentSize>
 class AnimationCurve: public Ref

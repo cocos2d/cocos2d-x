@@ -120,6 +120,9 @@ void Skybox::onDraw(const Mat4& transform, uint32_t flags)
 {
     auto state = getGLProgramState();
     state->apply(transform);
+    
+    Vec4 color(_displayedColor.r / 255.f, _displayedColor.g / 255.f, _displayedColor.b / 255.f, 1.f);
+    state->setUniformVec4("u_color", color);
 
     GLboolean   depthFlag = glIsEnabled(GL_DEPTH_TEST);
     GLint       depthFunc;
@@ -179,12 +182,6 @@ void Skybox::setTexture(TextureCube* texture)
 
 void Skybox::reload()
 {
-    auto glProgram = getGLProgramState()->getGLProgram();
-    glProgram->reset();
-    glProgram->initWithFilenames("Shaders3D/Skybox.vert", "Shaders3D/Skybox.frag");
-    glProgram->link();
-    glProgram->updateUniforms();
-
     initBuffers();
 }
 

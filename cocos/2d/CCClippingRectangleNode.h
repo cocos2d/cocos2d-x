@@ -42,6 +42,7 @@ NS_CC_BEGIN
 /**
 @brief Clipping Rectangle Node.
 @details A node that clipped with specified rectangle.
+@js NA
 */
 class CC_DLL ClippingRectangleNode : public Node
 {    

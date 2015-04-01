@@ -80,6 +80,7 @@ public:
      * @return If you have custom stencil-based node with stencil drawing mechanics other then children-based,
      *         then this method should return true every time you wish stencil to be visited.
      *         By default returns true if has any children attached.
+     * @js NA
      */
     virtual bool hasContent() const;
 
@@ -114,22 +115,18 @@ public:
 
     // Overrides
     /**
-     * @js NA
      * @lua NA
      */
     virtual void onEnter() override;
     /**
-     * @js NA
      * @lua NA
      */
     virtual void onEnterTransitionDidFinish() override;
     /**
-     * @js NA
      * @lua NA
      */
     virtual void onExitTransitionDidStart() override;
     /**
-     * @js NA
      * @lua NA
      */
     virtual void onExit() override;

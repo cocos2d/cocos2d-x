@@ -70,8 +70,14 @@ public:
     /**get duration*/
     float getDuration() const { return _duration; }
     
-    /**get bone curve*/
+    /**
+     * get bone curve
+     * 
+     * @lua NA
+     */
     Curve* getBoneCurveByName(const std::string& name) const;
+    
+    const std::unordered_map<std::string, Curve*>& getBoneCurves() const {return _boneCurves;}
     
 CC_CONSTRUCTOR_ACCESS:
     Animation3D();

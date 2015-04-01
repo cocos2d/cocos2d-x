@@ -244,7 +244,9 @@ public:
      * Returns the current displayed frame.
      */
     virtual SpriteFrame* getSpriteFrame() const;
-    /** @deprecated Use `getSpriteFrame()` instead. */
+    /** @deprecated Use `getSpriteFrame()` instead.
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE virtual SpriteFrame* getDisplayFrame() const { return getSpriteFrame(); }
     /** @deprecated Use `getSpriteFrame()` instead. */
     CC_DEPRECATED_ATTRIBUTE virtual SpriteFrame* displayFrame() const { return getSpriteFrame(); };
@@ -345,7 +347,9 @@ public:
     * @lua NA
     */
     CC_DEPRECATED_ATTRIBUTE bool isFlipX() { return isFlippedX(); };
-    /** @deprecated Use setFlippedX() instead */
+    /** @deprecated Use setFlippedX() instead
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE void setFlipX(bool flippedX) { setFlippedX(flippedX); };
 
     /**
@@ -368,9 +372,13 @@ public:
 
     /// @} End of Sprite properties getter/setters
 
-    /** @deprecated Use isFlippedY() instead. */
+    /** @deprecated Use isFlippedY() instead.
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE bool isFlipY() { return isFlippedY(); };
-    /** @deprecated Use setFlippedY() instead. */
+    /** @deprecated Use setFlippedY() instead.
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE void setFlipY(bool flippedY) { setFlippedY(flippedY); };
 
     //
@@ -393,6 +401,9 @@ public:
     inline const BlendFunc& getBlendFunc() const override { return _blendFunc; }
     /// @}
 
+    /**
+     * @js NA
+     */
     virtual std::string getDescription() const override;
 
     /// @{
@@ -429,7 +440,9 @@ public:
     /// @}
 
 CC_CONSTRUCTOR_ACCESS:
-
+	/**
+     * @js ctor
+     */
     Sprite();
     virtual ~Sprite();
 
@@ -500,7 +513,6 @@ CC_CONSTRUCTOR_ACCESS:
      *
      * @param   filename The path to an image file in local file system.
      * @return  True if the sprite is initialized properly, false otherwise.
-     * @js      init
      * @lua     init
      */
     virtual bool initWithFile(const std::string& filename);
@@ -515,7 +527,6 @@ CC_CONSTRUCTOR_ACCESS:
      * @param   filename The path to an image file in local file system.
      * @param   rect        The rectangle assigned the content area from texture.
      * @return  True if the sprite is initialized properly, false otherwise.
-     * @js      init
      * @lua     init
      */
     virtual bool initWithFile(const std::string& filename, const Rect& rect);
