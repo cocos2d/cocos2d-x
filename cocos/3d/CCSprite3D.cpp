@@ -241,7 +241,7 @@ bool Sprite3D::loadFromFile(const std::string& path, NodeDatas* nodedatas, MeshD
 Sprite3D::Sprite3D()
 : _skeleton(nullptr)
 , _blend(BlendFunc::ALPHA_NON_PREMULTIPLIED)
-, _aabbDirty(true)
+, _aabbDirty(false)
 , _lightMask(-1)
 , _shaderUsingLight(false)
 {
@@ -839,6 +839,7 @@ const AABB& Sprite3D::getAABB() const
         
         _aabb.transform(transform);
         _nodeToWorldTransform = nodeToWorldTransform;
+        _aabbDirty = false;
     }
     
     return _aabb;
