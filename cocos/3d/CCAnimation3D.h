@@ -131,7 +131,7 @@ protected:
     std::unordered_map<std::string, Animation3D*> _animations; //cached animations
 };
 
-// end of actions group
+// end of 3d group
 /// @}
 NS_CC_END
 

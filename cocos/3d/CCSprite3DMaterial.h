@@ -74,7 +74,7 @@ protected:
     
 };
 
-// end of actions group
+// end of 3d group
 /// @}
 
 NS_CC_END

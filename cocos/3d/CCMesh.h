@@ -205,7 +205,7 @@ protected:
     std::function<void()> _visibleChanged;
 };
 
-// end of actions group
+// end of 3d group
 /// @}
 
 

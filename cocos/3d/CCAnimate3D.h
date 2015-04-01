@@ -159,7 +159,7 @@ protected:
     static std::unordered_map<Node*, Animate3D*> s_runningAnimates;
 };
 
-// end of actions group
+// end of 3d group
 /// @}
 
 NS_CC_END

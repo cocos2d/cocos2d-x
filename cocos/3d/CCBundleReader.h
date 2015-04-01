@@ -129,6 +129,8 @@ private:
     char* _buffer;
 };
 
+/// @cond 
+
 /**
 * template read routines
 */
@@ -208,7 +210,9 @@ inline bool BundleReader::readArray<std::string>(unsigned int *length, std::vect
     return true;
 }
 
-// end of actions group
+/// @endcond
+
+// end of 3d group
 /// @}
 
 NS_CC_END

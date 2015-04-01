@@ -89,7 +89,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(Skybox);
 };
 
-// end of actions group
+// end of 3d group
 /// @}
 
 NS_CC_END
