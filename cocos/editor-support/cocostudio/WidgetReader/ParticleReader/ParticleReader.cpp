@@ -64,6 +64,11 @@ namespace cocostudio
         CC_SAFE_DELETE(_instanceParticleReader);
     }
     
+    void ParticleReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(_instanceParticleReader);
+    }
+    
     Offset<Table> ParticleReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
                                                                flatbuffers::FlatBufferBuilder *builder)
     {

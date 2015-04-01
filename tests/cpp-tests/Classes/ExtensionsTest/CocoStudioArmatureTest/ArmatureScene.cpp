@@ -199,6 +199,8 @@ void ArmatureTestLayer::onExit()
     removeAllChildren();
 
     backItem = restartItem = nextItem = nullptr;
+    
+    cocostudio::destroyCocosStudio();
 
     Layer::onExit();
 }

@@ -75,7 +75,8 @@ ActionTimeline/CSLoader.cpp \
 FlatBuffersSerialize.cpp \
 WidgetCallBackHandlerProtocol.cpp \
 WidgetReader/ArmatureNodeReader/ArmatureNodeReader.cpp \
-CCObjectExtensionData.cpp
+CCObjectExtensionData.cpp \
+CocoStudio.cpp
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/..
