@@ -962,9 +962,6 @@
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCFrame.cpp">
       <Filter>cocostudio\TimelineAction</Filter>
     </ClCompile>
-    <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCNodeReader.cpp">
-      <Filter>cocostudio\TimelineAction</Filter>
-    </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCTimeLine.cpp">
       <Filter>cocostudio\TimelineAction</Filter>
     </ClCompile>
@@ -2628,9 +2625,6 @@
       <Filter>cocostudio\TimelineAction</Filter>
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCFrame.h">
-      <Filter>cocostudio\TimelineAction</Filter>
-    </ClInclude>
-    <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCNodeReader.h">
       <Filter>cocostudio\TimelineAction</Filter>
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCTimeLine.h">
