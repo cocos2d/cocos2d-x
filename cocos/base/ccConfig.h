@@ -148,7 +148,7 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
  To enable set it to 1. Enabled by default.
  */
 #ifndef CC_NODE_RENDER_SUBPIXEL
-#define CC_NODE_RENDER_SUBPIXEL 1
+#define CC_NODE_RENDER_SUBPIXEL 0
 #endif
 
 /** @def CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
@@ -158,7 +158,7 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
  To enable set it to 1. Enabled by default.
  */
 #ifndef CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
-#define CC_SPRITEBATCHNODE_RENDER_SUBPIXEL    1
+#define CC_SPRITEBATCHNODE_RENDER_SUBPIXEL    0
 #endif
 
 /** @def CC_TEXTURE_ATLAS_USE_VAO
@@ -191,7 +191,7 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
  @since v0.99.5
  */
 #ifndef CC_USE_LA88_LABELS
-#define CC_USE_LA88_LABELS 1
+#define CC_USE_LA88_LABELS 0
 #endif
 
 /** @def CC_SPRITE_DEBUG_DRAW
