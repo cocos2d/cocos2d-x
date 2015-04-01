@@ -221,9 +221,7 @@ void NodeReader::init()
     _funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_Panel);
     _funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_Label);
     _funcs->setObject(NodeCreateCallFunc::create(this, NodeCreateCallback_selector(NodeReader::loadWidget)),   ClassName_TextField);
-    
 
-    _guiReader = new WidgetPropertiesReader0300();
 }
 
 cocos2d::CCNode* NodeReader::createNode(const std::string& filename)
