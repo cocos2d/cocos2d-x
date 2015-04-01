@@ -30,12 +30,12 @@ LoadingBarReader* LoadingBarReader::getInstance()
 
 void LoadingBarReader::purge()
 {
-	LoadingBarReader::destroyInstance();
+    LoadingBarReader::destroyInstance();
 }
 
 void LoadingBarReader::destroyInstance()
 {
-	CC_SAFE_DELETE(instanceLoadingBar);
+    CC_SAFE_DELETE(instanceLoadingBar);
 }
 
 void LoadingBarReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)

@@ -35,32 +35,32 @@ static CCArmatureDataManager *s_sharedArmatureDataManager = NULL;
 
 CCArmatureDataManager *CCArmatureDataManager::sharedArmatureDataManager()
 {
-	return CCArmatureDataManager::getInstance();
+    return CCArmatureDataManager::getInstance();
 }
 
 CCArmatureDataManager *CCArmatureDataManager::getInstance()
 {
-	if (s_sharedArmatureDataManager == NULL)
-	{
-		s_sharedArmatureDataManager = new CCArmatureDataManager();
-		if (!s_sharedArmatureDataManager || !s_sharedArmatureDataManager->init())
-		{
-			CC_SAFE_DELETE(s_sharedArmatureDataManager);
-		}
-	}
-	return s_sharedArmatureDataManager;
+    if (s_sharedArmatureDataManager == NULL)
+    {
+        s_sharedArmatureDataManager = new CCArmatureDataManager();
+        if (!s_sharedArmatureDataManager || !s_sharedArmatureDataManager->init())
+        {
+            CC_SAFE_DELETE(s_sharedArmatureDataManager);
+        }
+    }
+    return s_sharedArmatureDataManager;
 }
 
 void CCArmatureDataManager::purge()
 {
-	CCArmatureDataManager::destroyInstance();
+    CCArmatureDataManager::destroyInstance();
 }
 
 void CCArmatureDataManager::destroyInstance()
 {
-	CCSpriteFrameCacheHelper::destroyInstance();
-	CCDataReaderHelper::destroyInstance();
-	CC_SAFE_RELEASE_NULL(s_sharedArmatureDataManager);
+    CCSpriteFrameCacheHelper::destroyInstance();
+    CCDataReaderHelper::destroyInstance();
+    CC_SAFE_RELEASE_NULL(s_sharedArmatureDataManager);
 }
 
 CCArmatureDataManager::CCArmatureDataManager(void)

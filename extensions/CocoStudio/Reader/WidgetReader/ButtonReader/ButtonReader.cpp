@@ -30,12 +30,12 @@ ButtonReader* ButtonReader::getInstance()
 
 void ButtonReader::purge()
 {
-	ButtonReader::destroyInstance();
+    ButtonReader::destroyInstance();
 }
 
 void ButtonReader::destroyInstance()
 {
-	CC_SAFE_DELETE(instanceButtonReader);
+    CC_SAFE_DELETE(instanceButtonReader);
 }
 
 void ButtonReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)

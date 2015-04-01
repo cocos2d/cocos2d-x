@@ -30,12 +30,12 @@ ImageViewReader* ImageViewReader::getInstance()
 
 void ImageViewReader::destroyInstance()
 {
-	CC_SAFE_DELETE(instanceImageViewReader);
+    CC_SAFE_DELETE(instanceImageViewReader);
 }
 
 void ImageViewReader::purge()
 {
-	ImageViewReader::destroyInstance();
+    ImageViewReader::destroyInstance();
 }
 
 void ImageViewReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)

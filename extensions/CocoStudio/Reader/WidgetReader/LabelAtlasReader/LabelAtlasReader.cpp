@@ -30,7 +30,7 @@ LabelAtlasReader* LabelAtlasReader::getInstance()
 
 void LabelAtlasReader::destroyInstance()
 {
-	CC_SAFE_DELETE(instanceLabelAtalsReader);
+    CC_SAFE_DELETE(instanceLabelAtalsReader);
 }
 
 void LabelAtlasReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)

@@ -34,12 +34,12 @@ LabelReader* LabelReader::getInstance()
 
 void LabelReader::purge()
 {
-	LabelReader::destroyInstance();
+    LabelReader::destroyInstance();
 }
 
 void LabelReader::destroyInstance()
 {
-	CC_SAFE_DELETE(instanceLabelReader);
+    CC_SAFE_DELETE(instanceLabelReader);
 }
 
 void LabelReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)

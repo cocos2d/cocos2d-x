@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2015 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -31,11 +31,11 @@ USING_NS_CC_EXT;
 
 void destroyCocosStudio()
 {
-	SceneReader::destroyInstance();
-	ActionManager::destroyInstance();
-	cocostudio::timeline::ActionTimelineCache::destroyInstance();
-	cocostudio::timeline::NodeReader::destroyInstance();
-	CCArmatureDataManager::destroyInstance();
-	GUIReader::destroyInstance();
-	TriggerMng::destroyInstance();
+    SceneReader::destroyInstance();
+    ActionManager::destroyInstance();
+    cocostudio::timeline::ActionTimelineCache::destroyInstance();
+    cocostudio::timeline::NodeReader::destroyInstance();
+    CCArmatureDataManager::destroyInstance();
+    GUIReader::destroyInstance();
+    TriggerMng::destroyInstance();
 }

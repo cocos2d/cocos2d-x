@@ -30,12 +30,12 @@ PageViewReader* PageViewReader::getInstance()
 
 void PageViewReader::purge()
 {
-	PageViewReader::destroyInstance();
+    PageViewReader::destroyInstance();
 }
 
 void PageViewReader::destroyInstance()
 {
-	CC_SAFE_DELETE(instancePageViewReader);
+    CC_SAFE_DELETE(instancePageViewReader);
 }
 
 void PageViewReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)

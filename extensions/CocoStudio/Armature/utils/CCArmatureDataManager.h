@@ -49,11 +49,11 @@ public:
     /**
      *  @js getInstance
      */
-	CC_DEPRECATED_ATTRIBUTE static CCArmatureDataManager *sharedArmatureDataManager();
-	static CCArmatureDataManager *getInstance();
+    CC_DEPRECATED_ATTRIBUTE static CCArmatureDataManager *sharedArmatureDataManager();
+    static CCArmatureDataManager *getInstance();
 
-	CC_DEPRECATED_ATTRIBUTE static void purge();
-	static void destroyInstance();
+    CC_DEPRECATED_ATTRIBUTE static void purge();
+    static void destroyInstance();
 private:
     CCArmatureDataManager(void);
     ~CCArmatureDataManager(void);
@@ -181,7 +181,7 @@ private:
     CCDictionary *m_pArmarureDatas;
 
     /**
-     *	@brief	save animation datas
+     *  @brief  save animation datas
      *  @key	std::string
      *  @value	CCAnimationData *
      */

@@ -38,12 +38,12 @@ WidgetReader* WidgetReader::getInstance()
 
 void WidgetReader::purge()
 {
-	WidgetReader::destroyInstance();
+    WidgetReader::destroyInstance();
 }
 
 void WidgetReader::destroyInstance()
 {
-	CC_SAFE_DELETE(instanceWidgetReader);
+    CC_SAFE_DELETE(instanceWidgetReader);
 }
 
 int WidgetReader::valueToInt(std::string& value)

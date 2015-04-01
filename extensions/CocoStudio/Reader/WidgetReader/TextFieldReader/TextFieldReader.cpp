@@ -30,12 +30,12 @@ TextFieldReader* TextFieldReader::getInstance()
 
 void TextFieldReader::purge()
 {
-	TextFieldReader::destroyInstance();
+    TextFieldReader::destroyInstance();
 }
 
 void TextFieldReader::destroyInstance()
 {
-	CC_SAFE_DELETE(instanceTextFieldReader);
+    CC_SAFE_DELETE(instanceTextFieldReader);
 }
 
 void TextFieldReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)

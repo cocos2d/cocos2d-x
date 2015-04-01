@@ -31,28 +31,28 @@ CCSpriteFrameCacheHelper *CCSpriteFrameCacheHelper::s_SpriteFrameCacheHelper = N
 
 CCSpriteFrameCacheHelper *CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()
 {
-	return CCSpriteFrameCacheHelper::getInstance();
+    return CCSpriteFrameCacheHelper::getInstance();
 }
 
 CCSpriteFrameCacheHelper *CCSpriteFrameCacheHelper::getInstance()
 {
-	if (!s_SpriteFrameCacheHelper)
-	{
-		s_SpriteFrameCacheHelper = new CCSpriteFrameCacheHelper();
-	}
+    if (!s_SpriteFrameCacheHelper)
+    {
+        s_SpriteFrameCacheHelper = new CCSpriteFrameCacheHelper();
+    }
 
-	return s_SpriteFrameCacheHelper;
+    return s_SpriteFrameCacheHelper;
 }
 
 void CCSpriteFrameCacheHelper::purge()
 {
-	CCSpriteFrameCacheHelper::destroyInstance();
+    CCSpriteFrameCacheHelper::destroyInstance();
 }
 
 void CCSpriteFrameCacheHelper::destroyInstance()
 {
-	delete s_SpriteFrameCacheHelper;
-	s_SpriteFrameCacheHelper = NULL;
+    delete s_SpriteFrameCacheHelper;
+    s_SpriteFrameCacheHelper = NULL;
 }
 
 void CCSpriteFrameCacheHelper::addSpriteFrameFromFile(const char *plistPath, const char *imagePath)

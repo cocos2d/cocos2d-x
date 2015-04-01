@@ -38,8 +38,8 @@ public:
     virtual ~LayoutReader();
     
     static LayoutReader* getInstance();
-	CC_DEPRECATED_ATTRIBUTE static void purge();
-	static void destroyInstance();
+    CC_DEPRECATED_ATTRIBUTE static void purge();
+    static void destroyInstance();
     
     virtual void setPropsFromJsonDictionary(ui::Widget* widget, const rapidjson::Value& options);
     virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* pCocoLoader,  stExpCocoNode*	pCocoNode) ;

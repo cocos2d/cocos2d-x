@@ -30,12 +30,12 @@ CheckBoxReader* CheckBoxReader::getInstance()
 
 void CheckBoxReader::purge()
 {
-	CheckBoxReader::destroyInstance();
+    CheckBoxReader::destroyInstance();
 }
 
 void CheckBoxReader::destroyInstance()
 {
-	CC_SAFE_DELETE(instanceCheckBoxReader);
+    CC_SAFE_DELETE(instanceCheckBoxReader);
 }
 
 void CheckBoxReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)
