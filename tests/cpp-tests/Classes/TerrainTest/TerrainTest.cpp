@@ -57,7 +57,7 @@ TerrainSimple::TerrainSimple()
     _terrain->setMaxDetailMapAmount(4);
     addChild(_terrain);
     _terrain->setCameraMask(2);
-    _terrain->setDrawWire(true);
+    _terrain->setDrawWire(false);
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesMoved = CC_CALLBACK_2(TerrainSimple::onTouchesMoved, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
@@ -183,11 +183,12 @@ TerrainWalkThru::TerrainWalkThru()
     Terrain::DetailMap r("TerrainTest/dirt.dds"),g("TerrainTest/Grass2.dds",10),b("TerrainTest/road.dds"),a("TerrainTest/GreenSkin.jpg",20);
 
     Terrain::TerrainData data("TerrainTest/heightmap16.jpg","TerrainTest/alphamap.png",r,g,b,a,Size(32,32),40.0f,2);
-    _terrain = Terrain::create(data);
+    _terrain = Terrain::create(data,Terrain::CrackFixedType::SKIRT);
     _terrain->setMaxDetailMapAmount(4);
     _terrain->setCameraMask(2);
     _terrain->setDrawWire(false);
 
+    _terrain->setSkirtHeightRatio(3);
     _terrain->setLODDistance(64,128,192);
     _player = Player::create("Sprite3DTest/girl.c3b",_camera,_terrain);
     _player->setCameraMask(2);

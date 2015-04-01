@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "2d/CCCamera.h"
 #include "3d/CCRay.h"
 #include <vector>
+#include "vld.h"
 NS_CC_BEGIN
 
 /**
@@ -238,10 +239,11 @@ private:
     struct QuadTree
     {
         QuadTree(int x, int y, int width, int height, Terrain * terrain);
+        ~QuadTree();
         void draw();
         void resetNeedDraw(bool value);
         void cullByCamera(const Camera * camera, const Mat4 & worldTransform);
-        void updateAABB(const Mat4 & worldTransform);
+        void preCalculateAABB(const Mat4 & worldTransform);
         QuadTree * tl;
         QuadTree * tr;
         QuadTree * bl;
@@ -315,6 +317,8 @@ public:
 
     ChunkIndices insertIndicesLODSkirt(int selfLod, GLushort * indices, int size);
 
+    void setSkirtHeightRatio(float ratio);
+
 protected:
     
     Terrain();
@@ -326,6 +330,10 @@ protected:
     void loadVertices();
     //calculate Normal Line for each Vertex
     void calculateNormal();
+    //override
+    virtual void onEnter() override;
+
+    void cacheUniformLocation();
 protected:
     std::vector <ChunkLODIndices> _chunkLodIndicesSet;
     std::vector<ChunkLODIndicesSkirt> _chunkLodIndicesSkirtSet;
@@ -350,12 +358,17 @@ protected:
     int _maxDetailMapValue;
     cocos2d::Image * _heightMapImage;
     Mat4 _oldCameraModelMatrix;
-    Mat4 _oldTerrrainModelMatrix;
-    bool _isTerrainModelMatrixChanged;
+    Mat4 _terrainModelMatrix;
     GLuint _normalLocation;
     float m_maxHeight;
     float m_minHeight;
     CrackFixedType _crackFixedType;
+    float _skirtRatio;
+    int _skirtVerticesOffset[4];
+    GLint _detailMapLocation[4];
+    GLint _alphaMapLocation;
+    GLint _alphaIsHasAlphaMapLocation;
+    GLint _detailMapSizeLocation[4];
 };
 
 // end of actions group
