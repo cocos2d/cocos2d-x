@@ -334,7 +334,8 @@ void WebViewImpl::goForward() {
     [_uiWebViewWrapper goForward];
 }
 
-void WebViewImpl::evaluateJS(const std::string &js,std::string &result) {
+void WebViewImpl::evaluateJS(const std::string &js ) {
+    std::string result;
     [_uiWebViewWrapper evaluateJS:js result:result];
 }
 
