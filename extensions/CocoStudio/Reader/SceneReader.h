@@ -62,13 +62,15 @@ class CC_EX_DLL SceneReader
 {
 
 public:
-	static SceneReader* sharedSceneReader();
-	static void purge();
-	static const char* sceneReaderVersion();
-	cocos2d::CCNode* createNodeWithSceneFile(const char *pszFileName, AttachComponentType eAttachComponent = ATTACH_EMPTY_NODE);
+    CC_DEPRECATED_ATTRIBUTE static SceneReader* sharedSceneReader();
+    static SceneReader* getInstance();
+    CC_DEPRECATED_ATTRIBUTE static void purge();
+    static void destroyInstance();
+    static const char* sceneReaderVersion();
+    cocos2d::CCNode* createNodeWithSceneFile(const char *pszFileName, AttachComponentType eAttachComponent = ATTACH_EMPTY_NODE);
 
-	static void setTarget(CCObject *rec, SEL_CallFuncOD selector);
-	cocos2d::CCNode* getNodeByTag(int nTag);
+    static void setTarget(CCObject *rec, SEL_CallFuncOD selector);
+    cocos2d::CCNode* getNodeByTag(int nTag);
     inline AttachComponentType getAttachComponentType(){return _eAttachComponent;}
 
 public:
@@ -80,16 +82,16 @@ private:
     void setPropertyFromJsonDict(const rapidjson::Value &root, cocos2d::CCNode *node);
     bool readJson(const char *pszFileName, rapidjson::Document &doc);
 
-	cocos2d::CCNode* createObject(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, cocos2d::CCNode* parent, AttachComponentType eAttachComponent);
-	void setPropertyFromJsonDict(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, cocos2d::CCNode *node);
+    cocos2d::CCNode* createObject(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, cocos2d::CCNode* parent, AttachComponentType eAttachComponent);
+    void setPropertyFromJsonDict(CocoLoader *pCocoLoader, stExpCocoNode *pCocoNode, cocos2d::CCNode *node);
 
-	cocos2d::CCNode* nodeByTag(cocos2d::CCNode *pParent, int nTag);
+    cocos2d::CCNode* nodeByTag(cocos2d::CCNode *pParent, int nTag);
 private:
-	static SceneReader* _sharedReader;
-	static CCObject*       _pListener;
-	static SEL_CallFuncOD  _pfnSelector;
-	cocos2d::CCNode *_pNode;
-	AttachComponentType _eAttachComponent;
+    static SceneReader* _sharedReader;
+    static CCObject*       _pListener;
+    static SEL_CallFuncOD  _pfnSelector;
+    cocos2d::CCNode *_pNode;
+    AttachComponentType _eAttachComponent;
 };
 
 

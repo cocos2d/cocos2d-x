@@ -212,7 +212,7 @@ void SceneEditorTestLayer::changeLoadTypeCallback( CCObject *pSender)
 	if(m_rootNode != NULL)
 	{
 		this->removeChild(m_rootNode);
-		m_rootNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile(m_filePathName.c_str());
+		m_rootNode = SceneReader::getInstance()->createNodeWithSceneFile(m_filePathName.c_str());
 		if (m_rootNode == NULL)
 		{
 			return ;
@@ -263,10 +263,11 @@ void LoadSceneEdtiorFileTest::onEnter()
 
 void LoadSceneEdtiorFileTest::onExit()
 {
-	 CCArmatureDataManager::purge();
-	 SceneReader::purge();
-	 ActionManager::purge();
-	 GUIReader::purge();
+	destroyCocosStudio();
+//	CCArmatureDataManager::purge();
+//	 SceneReader::purge();
+//	 ActionManager::purge();
+//	 GUIReader::purge();
 	 SceneEditorTestLayer::onExit();
 }
 
@@ -274,7 +275,7 @@ void LoadSceneEdtiorFileTest::onExit()
 cocos2d::CCNode* LoadSceneEdtiorFileTest::createGameScene()
 {
     m_filePathName = "scenetest/LoadSceneEdtiorFileTest/FishJoy2.json";  //default is json
-    m_rootNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile(m_filePathName.c_str());
+    m_rootNode = SceneReader::getInstance()->createNodeWithSceneFile(m_filePathName.c_str());
 	if (m_rootNode == NULL)
 	{
 		return NULL;
@@ -286,7 +287,7 @@ cocos2d::CCNode* LoadSceneEdtiorFileTest::createGameScene()
 
 void LoadSceneEdtiorFileTest::defaultPlay()
 {
-	cocos2d::extension::ActionManager::shareManager()->playActionByName("startMenu_1.json","Animation1");
+	cocos2d::extension::ActionManager::getInstance()->playActionByName("startMenu_1.json","Animation1");
 }
 
 SpriteComponentTest::SpriteComponentTest()
@@ -317,17 +318,17 @@ void SpriteComponentTest::onEnter()
 
 void SpriteComponentTest::onExit()
 {
-	CCArmatureDataManager::purge();
-	SceneReader::purge();
-	ActionManager::purge();
-	GUIReader::purge();
+	CCArmatureDataManager::destroyInstance();
+	SceneReader::destroyInstance();
+	ActionManager::destroyInstance();
+	GUIReader::destroyInstance();
     SceneEditorTestLayer::onExit();
 }
 
 cocos2d::CCNode* SpriteComponentTest::createGameScene()
 {
 	m_filePathName = "scenetest/SpriteComponentTest/SpriteComponentTest.json";
-    m_rootNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile(m_filePathName.c_str());
+    m_rootNode = SceneReader::getInstance()->createNodeWithSceneFile(m_filePathName.c_str());
 	if (m_rootNode == NULL)
 	{
 		return NULL;
@@ -379,17 +380,17 @@ void ArmatureComponentTest::onEnter()
 
 void ArmatureComponentTest::onExit()
 {
-	CCArmatureDataManager::purge();
-	SceneReader::purge();
-	ActionManager::purge();
-	GUIReader::purge();
+	CCArmatureDataManager::destroyInstance();
+	SceneReader::destroyInstance();
+	ActionManager::destroyInstance();
+	GUIReader::destroyInstance();
     SceneEditorTestLayer::onExit();
 }
 
 cocos2d::CCNode* ArmatureComponentTest::createGameScene()
 {
 	m_filePathName = "scenetest/ArmatureComponentTest/ArmatureComponentTest.json";
-    m_rootNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile(m_filePathName.c_str());
+    m_rootNode = SceneReader::getInstance()->createNodeWithSceneFile(m_filePathName.c_str());
 	if (m_rootNode == NULL)
 	{
 		return NULL;
@@ -435,17 +436,17 @@ void UIComponentTest::onEnter()
 
 void UIComponentTest::onExit()
 {
-	CCArmatureDataManager::purge();
-	SceneReader::purge();
-	ActionManager::purge();
-	GUIReader::purge();
+	CCArmatureDataManager::destroyInstance();
+	SceneReader::destroyInstance();
+	ActionManager::destroyInstance();
+	GUIReader::destroyInstance();
     SceneEditorTestLayer::onExit();
 }
 
 cocos2d::CCNode* UIComponentTest::createGameScene()
 {
 	m_filePathName = "scenetest/UIComponentTest/UIComponentTest.json";
-    m_rootNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile(m_filePathName.c_str());
+    m_rootNode = SceneReader::getInstance()->createNodeWithSceneFile(m_filePathName.c_str());
 	if (m_rootNode == NULL)
 	{
 		return NULL;
@@ -513,17 +514,17 @@ void TmxMapComponentTest::onEnter()
 
 void TmxMapComponentTest::onExit()
 {
-	CCArmatureDataManager::purge();
-	SceneReader::purge();
-	ActionManager::purge();
-	GUIReader::purge();
+	CCArmatureDataManager::destroyInstance();
+	SceneReader::destroyInstance();
+	ActionManager::destroyInstance();
+	GUIReader::destroyInstance();
     SceneEditorTestLayer::onExit();
 }
 
 cocos2d::CCNode* TmxMapComponentTest::createGameScene()
 {
 	m_filePathName = "scenetest/TmxMapComponentTest/TmxMapComponentTest.json";
-    m_rootNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile(m_filePathName.c_str());
+    m_rootNode = SceneReader::getInstance()->createNodeWithSceneFile(m_filePathName.c_str());
 	if (m_rootNode == NULL)
 	{
 		return NULL;
@@ -575,17 +576,17 @@ void ParticleComponentTest::onEnter()
 
 void ParticleComponentTest::onExit()
 {
-	CCArmatureDataManager::purge();
-	SceneReader::purge();
-	ActionManager::purge();
-	GUIReader::purge();
+	CCArmatureDataManager::destroyInstance();
+	SceneReader::destroyInstance();
+	ActionManager::destroyInstance();
+	GUIReader::destroyInstance();
     SceneEditorTestLayer::onExit();
 }
 
 cocos2d::CCNode* ParticleComponentTest::createGameScene()
 {
 	m_filePathName = "scenetest/ParticleComponentTest/ParticleComponentTest.json";
-    m_rootNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile(m_filePathName.c_str());
+    m_rootNode = SceneReader::getInstance()->createNodeWithSceneFile(m_filePathName.c_str());
 	if (m_rootNode == NULL)
 	{
 		return NULL;
@@ -630,17 +631,17 @@ void EffectComponentTest::onEnter()
 
 void EffectComponentTest::onExit()
 {
-	CCArmatureDataManager::purge();
-	SceneReader::purge();
-	ActionManager::purge();
-	GUIReader::purge();
+	CCArmatureDataManager::destroyInstance();
+	SceneReader::destroyInstance();
+	ActionManager::destroyInstance();
+	GUIReader::destroyInstance();
     SceneEditorTestLayer::onExit();
 }
 
 cocos2d::CCNode* EffectComponentTest::createGameScene()
 {
 	m_filePathName = "scenetest/EffectComponentTest/EffectComponentTest.json";
-    m_rootNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile(m_filePathName.c_str());
+    m_rootNode = SceneReader::getInstance()->createNodeWithSceneFile(m_filePathName.c_str());
 	if (m_rootNode == NULL)
 	{
 		return NULL;
@@ -697,17 +698,17 @@ void BackgroundComponentTest::onEnter()
 
 void BackgroundComponentTest::onExit()
 {
-	CCArmatureDataManager::purge();
-	SceneReader::purge();
-	ActionManager::purge();
-	GUIReader::purge();
+	CCArmatureDataManager::destroyInstance();
+	SceneReader::destroyInstance();
+	ActionManager::destroyInstance();
+	GUIReader::destroyInstance();
     SceneEditorTestLayer::onExit();
 }
 
 cocos2d::CCNode* BackgroundComponentTest::createGameScene()
 {
 	m_filePathName = "scenetest/BackgroundComponentTest/BackgroundComponentTest.json";
-    m_rootNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile(m_filePathName.c_str());
+    m_rootNode = SceneReader::getInstance()->createNodeWithSceneFile(m_filePathName.c_str());
 	if (m_rootNode == NULL)
 	{
 		return NULL;
@@ -718,7 +719,7 @@ cocos2d::CCNode* BackgroundComponentTest::createGameScene()
 
 void BackgroundComponentTest::defaultPlay()
 {
-	cocos2d::extension::ActionManager::shareManager()->playActionByName("startMenu_1.json","Animation1");
+	cocos2d::extension::ActionManager::getInstance()->playActionByName("startMenu_1.json","Animation1");
 
 	CCComAudio *Audio = static_cast<CCComAudio*>(m_rootNode->getComponent("CCBackgroundAudio"));
 	Audio->playBackgroundMusic();
@@ -753,10 +754,10 @@ void AttributeComponentTest::onEnter()
 
 void AttributeComponentTest::onExit()
 {
-	CCArmatureDataManager::purge();
-	SceneReader::purge();
-	ActionManager::purge();
-	GUIReader::purge();
+	CCArmatureDataManager::destroyInstance();
+	SceneReader::destroyInstance();
+	ActionManager::destroyInstance();
+	GUIReader::destroyInstance();
     SceneEditorTestLayer::onExit();
 }
 
@@ -775,7 +776,7 @@ bool AttributeComponentTest::initData()
 cocos2d::CCNode* AttributeComponentTest::createGameScene()
 {
 	m_filePathName = "scenetest/AttributeComponentTest/AttributeComponentTest.json";
-    m_rootNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile(m_filePathName.c_str());
+    m_rootNode = SceneReader::getInstance()->createNodeWithSceneFile(m_filePathName.c_str());
 	if (m_rootNode == NULL)
 	{
 		return NULL;
@@ -822,10 +823,10 @@ void TriggerTest::onExit()
 	sendEvent(TRIGGEREVENT_LEAVESCENE);
     this->unschedule(schedule_selector(TriggerTest::gameLogic));
 	this->setTouchEnabled(false);
-	CCArmatureDataManager::purge();
-	SceneReader::purge();
-	ActionManager::purge();
-	GUIReader::purge();
+	CCArmatureDataManager::destroyInstance();
+	SceneReader::destroyInstance();
+	ActionManager::destroyInstance();
+	GUIReader::destroyInstance();
 	SceneEditorTestLayer::onExit();
 }
 
@@ -860,7 +861,7 @@ static ActionObject* actionObject = NULL;
 cocos2d::CCNode* TriggerTest::createGameScene()
 {
 	m_filePathName = "scenetest/TriggerTest/TriggerTest.json";
-    m_rootNode = SceneReader::sharedSceneReader()->createNodeWithSceneFile(m_filePathName.c_str());
+    m_rootNode = SceneReader::getInstance()->createNodeWithSceneFile(m_filePathName.c_str());
 	if (m_rootNode == NULL)
 	{
 		return NULL;
@@ -873,7 +874,7 @@ cocos2d::CCNode* TriggerTest::createGameScene()
 void TriggerTest::defaultPlay()
 {
 	//ui action
-	actionObject = cocos2d::extension::ActionManager::shareManager()->playActionByName("startMenu_1.json","Animation1");
+	actionObject = cocos2d::extension::ActionManager::getInstance()->playActionByName("startMenu_1.json","Animation1");
 	
 	this->schedule(schedule_selector(TriggerTest::gameLogic));
 	this->setTouchEnabled(true);

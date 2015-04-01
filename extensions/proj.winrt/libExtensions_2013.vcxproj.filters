@@ -572,6 +572,9 @@
     <ClCompile Include="..\CocoStudio\ActionTimeline\CCTimeLine.cpp">
       <Filter>CocoStudio\ActionTimeline</Filter>
     </ClCompile>
+    <ClCompile Include="..\CocoStudio\CocoStudio.cpp">
+      <Filter>CocoStudio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\AssetsManager\AssetsManager.h">
@@ -1072,6 +1075,9 @@
     </ClInclude>
     <ClInclude Include="..\CocoStudio\ActionTimeline\CCTimelineMacro.h">
       <Filter>CocoStudio\ActionTimeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\CocoStudio\CocoStudio.h">
+      <Filter>CocoStudio</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

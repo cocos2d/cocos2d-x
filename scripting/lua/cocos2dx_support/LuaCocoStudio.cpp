@@ -24232,7 +24232,7 @@ static int tolua_CocoStudio_GUIReader_shareReader00(lua_State* tolua_S)
 #endif
  {
   {
-   GUIReader* tolua_ret = (GUIReader*)  GUIReader::shareReader();
+   GUIReader* tolua_ret = (GUIReader*)  GUIReader::getInstance();
     int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
     int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
     toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"GUIReader");

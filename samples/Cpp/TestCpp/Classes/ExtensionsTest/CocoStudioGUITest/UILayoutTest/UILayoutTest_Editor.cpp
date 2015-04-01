@@ -21,14 +21,14 @@ void UILayoutTest_Editor::switchLoadMethod(cocos2d::CCObject *pSender)
     if (item->getSelectedIndex() == 0){
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/ui_layout_editor_1.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/ui_layout_editor_1.json"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
     }else{
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/ui_layout_editor_1.csb"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/ui_layout_editor_1.csb"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -73,7 +73,7 @@ bool UILayoutTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/ui_layout_editor_1.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Editor/ui_layout_editor_1.json"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -102,14 +102,14 @@ void UILayoutTest_Color_Editor::switchLoadMethod(cocos2d::CCObject *pSender)
     if (item->getSelectedIndex() == 0){
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/ui_layout_color_editor_1.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/ui_layout_color_editor_1.json"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
     }else{
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/ui_layout_color_editor_1.csb"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/ui_layout_color_editor_1.csb"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -154,7 +154,7 @@ bool UILayoutTest_Color_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/ui_layout_color_editor_1.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Color_Editor/ui_layout_color_editor_1.json"));
         _touchGroup->addWidget(_layout);
        
         this->configureGUIScene();
@@ -184,14 +184,14 @@ void UILayoutTest_Gradient_Editor::switchLoadMethod(cocos2d::CCObject *pSender)
     if (item->getSelectedIndex() == 0){
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/ui_layout_gradient_color_editor_1_0.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/ui_layout_gradient_color_editor_1_0.json"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
     }else{
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/ui_layout_gradient_color_editor_1_0.csb"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/ui_layout_gradient_color_editor_1_0.csb"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -236,7 +236,7 @@ bool UILayoutTest_Gradient_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/ui_layout_gradient_color_editor_1_0.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Gradient_Color_Editor/ui_layout_gradient_color_editor_1_0.json"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -266,14 +266,14 @@ void UILayoutTest_BackGroundImage_Editor::switchLoadMethod(cocos2d::CCObject *pS
     if (item->getSelectedIndex() == 0){
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/ui_layout_backgroundimage_editor_1_0_0.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/ui_layout_backgroundimage_editor_1_0_0.json"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
     }else{
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/ui_layout_backgroundimage_editor_1_0_0.csb"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/ui_layout_backgroundimage_editor_1_0_0.csb"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -317,7 +317,7 @@ bool UILayoutTest_BackGroundImage_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/ui_layout_backgroundimage_editor_1_0_0.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_BackgroundImage_Editor/ui_layout_backgroundimage_editor_1_0_0.json"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -347,14 +347,14 @@ void UILayoutTest_BackGroundImage_Scale9_Editor::switchLoadMethod(cocos2d::CCObj
     if (item->getSelectedIndex() == 0){
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/ui_layout_scale9_backgroundimage_editor.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/ui_layout_scale9_backgroundimage_editor.json"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
     }else{
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/ui_layout_scale9_backgroundimage_editor.csb"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/ui_layout_scale9_backgroundimage_editor.csb"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -399,7 +399,7 @@ bool UILayoutTest_BackGroundImage_Scale9_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/ui_layout_scale9_backgroundimage_editor.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Scale9_BackgroundImage_Editor/ui_layout_scale9_backgroundimage_editor.json"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -429,14 +429,14 @@ void UILayoutTest_Layout_Linear_Vertical_Editor::switchLoadMethod(cocos2d::CCObj
     if (item->getSelectedIndex() == 0){
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/ui_layout_linear_vertical_layout_editor.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/ui_layout_linear_vertical_layout_editor.json"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
     }else{
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/ui_layout_linear_vertical_layout_editor.csb"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/ui_layout_linear_vertical_layout_editor.csb"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -480,7 +480,7 @@ bool UILayoutTest_Layout_Linear_Vertical_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/ui_layout_linear_vertical_layout_editor.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Vertical_Layout_Editor/ui_layout_linear_vertical_layout_editor.json"));
         _touchGroup->addWidget(_layout);
         this->configureGUIScene();
         
@@ -509,14 +509,14 @@ void UILayoutTest_Layout_Linear_Horizontal_Editor::switchLoadMethod(cocos2d::CCO
     if (item->getSelectedIndex() == 0){
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/ui_layout_linear_horizontal_layout_editor.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/ui_layout_linear_horizontal_layout_editor.json"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
     }else{
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/ui_layout_linear_horizontal_layout_editor.csb"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/ui_layout_linear_horizontal_layout_editor.csb"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -560,7 +560,7 @@ bool UILayoutTest_Layout_Linear_Horizontal_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/ui_layout_linear_horizontal_layout_editor.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Linear_Horizontal_Layout_Editor/ui_layout_linear_horizontal_layout_editor.json"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -590,14 +590,14 @@ void UILayoutTest_Layout_Relative_Align_Parent_Editor::switchLoadMethod(cocos2d:
     if (item->getSelectedIndex() == 0){
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/ui_layout_relative_align_parent_editor.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/ui_layout_relative_align_parent_editor.json"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
     }else{
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/ui_layout_relative_align_parent_editor.csb"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/ui_layout_relative_align_parent_editor.csb"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -641,7 +641,7 @@ bool UILayoutTest_Layout_Relative_Align_Parent_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/ui_layout_relative_align_parent_editor.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Parent_Editor/ui_layout_relative_align_parent_editor.json"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -671,14 +671,14 @@ void UILayoutTest_Layout_Relative_Location_Editor::switchLoadMethod(cocos2d::CCO
     if (item->getSelectedIndex() == 0){
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/ui_layout_relative_align_location_editor.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/ui_layout_relative_align_location_editor.json"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
     }else{
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/ui_layout_relative_align_location_editor.csb"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/ui_layout_relative_align_location_editor.csb"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -722,7 +722,7 @@ bool UILayoutTest_Layout_Relative_Location_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/ui_layout_relative_align_location_editor.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout_Editor/UILayout_Relative_Align_Location_Editor/ui_layout_relative_align_location_editor.json"));
         _touchGroup->addWidget(_layout);
         this->configureGUIScene();
         

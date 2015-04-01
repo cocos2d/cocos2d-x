@@ -22,7 +22,7 @@ void UIScrollViewTest_Vertical_Editor::switchLoadMethod(cocos2d::CCObject *pSend
         _layout->removeAllChildrenWithCleanup(true);
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/ui_scrollview_editor_1.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/ui_scrollview_editor_1.json"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -30,7 +30,7 @@ void UIScrollViewTest_Vertical_Editor::switchLoadMethod(cocos2d::CCObject *pSend
         _layout->removeAllChildrenWithCleanup(true);
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromBinaryFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/ui_scrollview_editor_1.csb"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/ui_scrollview_editor_1.csb"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -74,7 +74,7 @@ bool UIScrollViewTest_Vertical_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/ui_scrollview_editor_1.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Vertical_Editor/ui_scrollview_editor_1.json"));
         _touchGroup->addWidget(_layout);
        
         this->configureGUIScene();
@@ -104,7 +104,7 @@ void UIScrollViewTest_Horizontal_Editor::switchLoadMethod(cocos2d::CCObject *pSe
         _layout->removeAllChildrenWithCleanup(true);
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/ui_scrollview_horizontal_editor_1.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/ui_scrollview_horizontal_editor_1.json"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -112,7 +112,7 @@ void UIScrollViewTest_Horizontal_Editor::switchLoadMethod(cocos2d::CCObject *pSe
         _layout->removeAllChildrenWithCleanup(true);
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromBinaryFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/ui_scrollview_horizontal_editor_1.csb"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/ui_scrollview_horizontal_editor_1.csb"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -156,7 +156,7 @@ bool UIScrollViewTest_Horizontal_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/ui_scrollview_horizontal_editor_1.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Horizontal_Editor/ui_scrollview_horizontal_editor_1.json"));
         _touchGroup->addWidget(_layout);
        
         this->configureGUIScene();
@@ -187,7 +187,7 @@ void UIScrollViewTest_Both_Editor::switchLoadMethod(cocos2d::CCObject *pSender)
         _layout->removeAllChildrenWithCleanup(true);
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/ui_scrollview_both_editor_1.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/ui_scrollview_both_editor_1.json"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -195,7 +195,7 @@ void UIScrollViewTest_Both_Editor::switchLoadMethod(cocos2d::CCObject *pSender)
         _layout->removeAllChildrenWithCleanup(true);
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromBinaryFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/ui_scrollview_both_editor_1.csb"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/ui_scrollview_both_editor_1.csb"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -240,7 +240,7 @@ bool UIScrollViewTest_Both_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/ui_scrollview_both_editor_1.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UIScrollView_Editor/UIScrollView_Both_Editor/ui_scrollview_both_editor_1.json"));
         _touchGroup->addWidget(_layout);
        
         this->configureGUIScene();
@@ -268,7 +268,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UITest/UITest.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UITest/UITest.json"));
         _touchGroup->addWidget(_layout);
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
         CCSize rootSize = _layout->getSize();
@@ -314,7 +314,7 @@ bool UIScrollViewTest_ScrollToPercentBothDirection_Bounce_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UITest/UITest.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UITest/UITest.json"));
         _touchGroup->addWidget(_layout);
         CCSize screenSize = CCDirector::sharedDirector()->getWinSize();
         CCSize rootSize = _layout->getSize();

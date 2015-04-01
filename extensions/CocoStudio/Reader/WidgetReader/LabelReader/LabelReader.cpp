@@ -32,12 +32,22 @@ LabelReader* LabelReader::getInstance()
     return instanceLabelReader;
 }
 
+void LabelReader::purge()
+{
+    LabelReader::destroyInstance();
+}
+
+void LabelReader::destroyInstance()
+{
+    CC_SAFE_DELETE(instanceLabelReader);
+}
+
 void LabelReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)
 {
     WidgetReader::setPropsFromJsonDictionary(widget, options);
     
     
-    std::string jsonPath = GUIReader::shareReader()->getFilePath();
+    std::string jsonPath = GUIReader::getInstance()->getFilePath();
     
     ui::Label* label = (ui::Label*)widget;
     bool touchScaleChangeAble = DICTOOL->getBooleanValue_json(options, "touchScaleEnable");
@@ -223,7 +233,7 @@ void LabelReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *pC
         }else if(key == "fontSize"){
             label->setFontSize(valueToInt(value));
         }else if(key == "fontName"){
-            std::string jsonPath = GUIReader::shareReader()->getFilePath();
+            std::string jsonPath = GUIReader::getInstance()->getFilePath();
             std::string fontFilePath = jsonPath.append(value);
             label->setFontName(fontFilePath);
         }else if(key == "areaWidth"){

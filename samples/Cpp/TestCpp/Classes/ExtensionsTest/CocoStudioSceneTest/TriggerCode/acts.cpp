@@ -24,7 +24,7 @@ void PlayMusic::done()
 {
 	do 
 	{
-		CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+		CCNode *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
 		CC_BREAK_IF(pNode == NULL);
 		CCComAudio *audio = (CCComAudio*)(pNode->getComponent(_comName.c_str()));
 		CC_BREAK_IF(audio == NULL);
@@ -127,7 +127,7 @@ void TMoveTo::done()
 {
 	do 
 	{
-		CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+		CCNode *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
 		CC_BREAK_IF(pNode == NULL);
 		CCActionInterval*  actionTo = CCMoveTo::create(_fDuration, _pos);
 		CC_BREAK_IF(actionTo == NULL);
@@ -212,7 +212,7 @@ void TMoveTo::serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::ex
 
 void TMoveTo::removeAll()
 {
-	CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+	CCNode *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
 	pNode->getActionManager()->removeAllActions();
 }
 
@@ -237,7 +237,7 @@ void TMoveBy::done()
 {
 	do 
 	{
-		CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+		CCNode *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
 		CC_BREAK_IF(pNode == NULL);
 		CCActionInterval*  actionBy = CCMoveBy::create(_fDuration, _pos);
 		CC_BREAK_IF(actionBy == NULL);
@@ -342,7 +342,7 @@ void TMoveBy::serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::ex
 
 void TMoveBy::removeAll()
 {
-	CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+	CCNode *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
 	pNode->getActionManager()->removeAllActions();
 }
 
@@ -369,7 +369,7 @@ void TRotateTo::done()
 {
 	do 
 	{
-		CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+		CCNode *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
 		CC_BREAK_IF(pNode == NULL);
 		CCActionInterval*  actionTo = CCRotateTo::create(_fDuration, _fDeltaAngle);
 		CC_BREAK_IF(actionTo == NULL);
@@ -442,7 +442,7 @@ void TRotateTo::serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::
 
 void TRotateTo::removeAll()
 {
-	CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+	CCNode *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
 	pNode->getActionManager()->removeAllActions();
 }
 
@@ -470,7 +470,7 @@ void TRotateBy::done()
 {
 	do 
 	{
-		CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+		CCNode *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
 		CC_BREAK_IF(pNode == NULL);
 		CCActionInterval*  actionBy = CCRotateBy::create(_fDuration, _fDeltaAngle);
 		CC_BREAK_IF(actionBy == NULL);
@@ -563,7 +563,7 @@ void TRotateBy::serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::
 
 void TRotateBy::removeAll()
 {
-	CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+	CCNode *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
 	pNode->getActionManager()->removeAllActions();
 }
 
@@ -590,7 +590,7 @@ void TScaleTo::done()
 {
 	do 
 	{
-		CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+		CCNode *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
 		CC_BREAK_IF(pNode == NULL);
 		CCActionInterval*  actionTo = CCScaleTo::create(_fDuration, _scale.x, _scale.y);
 		CC_BREAK_IF(actionTo == NULL);
@@ -675,7 +675,7 @@ void TScaleTo::serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::e
 
 void TScaleTo::removeAll()
 {
-	CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+	CCNode *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
 	pNode->getActionManager()->removeAllActions();
 }
 
@@ -702,7 +702,7 @@ void TScaleBy::done()
 {
 	do 
 	{
-		CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+		CCNode *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
 		CC_BREAK_IF(pNode == NULL);
 		CCActionInterval*  actionBy = CCScaleBy::create(_fDuration, _scale.x, _scale.y);
 		CC_BREAK_IF(actionBy == NULL);
@@ -808,7 +808,7 @@ void TScaleBy::serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::e
 
 void TScaleBy::removeAll()
 {
-	CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+	CCNode *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
 	pNode->getActionManager()->removeAllActions();
 }
 
@@ -834,7 +834,7 @@ void TSkewTo::done()
 {
 	do 
 	{
-		CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+		CCNode *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
 		CC_BREAK_IF(pNode == NULL);
 		CCActionInterval*  actionTo = CCSkewTo::create(_fDuration, _skew.x, _skew.y);
 		CC_BREAK_IF(actionTo == NULL);
@@ -919,7 +919,7 @@ void TSkewTo::serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::ex
 
 void TSkewTo::removeAll()
 {
-	CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+	CCNode *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
 	pNode->getActionManager()->removeAllActions();
 }
 
@@ -946,7 +946,7 @@ void TSkewBy::done()
 {
 	do 
 	{
-		CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+		CCNode *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
 		CC_BREAK_IF(pNode == NULL);
 		CCActionInterval*  actionBy = CCSkewBy::create(_fDuration, _skew.x, _skew.y);
 		CC_BREAK_IF(actionBy == NULL);
@@ -1047,7 +1047,7 @@ void TSkewBy::serialize(cocos2d::extension::CocoLoader *pCocoLoader, cocos2d::ex
 
 void TSkewBy::removeAll()
 {
-	CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+	CCNode *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
 	pNode->getActionManager()->removeAllActions();
 }
 
@@ -1164,7 +1164,7 @@ void ArmaturePlayAction::done()
 {
 	do 
 	{
-		CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+		CCNode *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
 		CC_BREAK_IF(pNode == NULL);
 		CCComRender *pRender = (CCComRender*)(pNode->getComponent(_comName.c_str()));
 		CC_BREAK_IF(pRender == NULL);

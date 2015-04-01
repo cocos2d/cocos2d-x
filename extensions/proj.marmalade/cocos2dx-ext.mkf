@@ -219,4 +219,9 @@ files
     ("../CocoStudio/Trigger")
     "*.h"
     "*.cpp"
+
+    ["CocoStudio"]
+    ("../CocoStudio")
+    "*.h"
+    "*.cpp"
 }

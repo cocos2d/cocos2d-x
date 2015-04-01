@@ -28,12 +28,17 @@ LabelAtlasReader* LabelAtlasReader::getInstance()
     return instanceLabelAtalsReader;
 }
 
+void LabelAtlasReader::destroyInstance()
+{
+    CC_SAFE_DELETE(instanceLabelAtalsReader);
+}
+
 void LabelAtlasReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)
 {
     WidgetReader::setPropsFromJsonDictionary(widget, options);
     
     
-    std::string jsonPath = GUIReader::shareReader()->getFilePath();
+    std::string jsonPath = GUIReader::getInstance()->getFilePath();
 
     ui::LabelAtlas* labelAtlas = (ui::LabelAtlas*)widget;
    

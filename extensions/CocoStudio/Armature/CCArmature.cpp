@@ -141,7 +141,7 @@ bool CCArmature::init(const char *name)
 
         m_strName = name == NULL ? "" : name;
 
-        CCArmatureDataManager *armatureDataManager = CCArmatureDataManager::sharedArmatureDataManager();
+        CCArmatureDataManager *armatureDataManager = CCArmatureDataManager::getInstance();
 
         if(m_strName.length() != 0)
         {
