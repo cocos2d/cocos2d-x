@@ -91,10 +91,12 @@ bool Skybox::init(const std::string& positive_x, const std::string& negative_x,
           const std::string& positive_y, const std::string& negative_y,
           const std::string& positive_z, const std::string& negative_z)
 {
-    init();
     auto texture = TextureCube::create(positive_x, negative_x, positive_y, negative_y, positive_z, negative_z);
-    setTexture(texture);
+    if (texture == nullptr)
+        return false;
     
+    init();
+    setTexture(texture);
     return true;
 }
 
