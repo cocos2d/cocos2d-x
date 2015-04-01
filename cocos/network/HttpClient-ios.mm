@@ -185,7 +185,7 @@ static int processTask(HttpRequest *request, NSString* requestType, void *stream
     }
     
     //if request type is post or put,set header and data
-    if([requestType isEqual: @"POST"] || [requestType isEqual: @"PUT"])
+    if([requestType isEqual: @"POST"] || [requestType isEqual: @"PUT"] || [requestType isEqual: @"PATCH"])
     {
         char* requestDataBuffer = request->getRequestData();
         if (nullptr != requestDataBuffer && 0 != strlen(requestDataBuffer))
@@ -338,6 +338,10 @@ static void processResponse(HttpResponse* response, char* errorBuffer)
 
     case HttpRequest::Type::DELETE:
         requestType = @"DELETE";
+        break;
+            
+    case HttpRequest::Type::PATCH: // HTTP PATCH
+        requestType = @"PATCH";
         break;
 
     default:

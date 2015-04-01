@@ -787,6 +787,10 @@ static int lua_cocos2dx_XMLHttpRequest_open(lua_State* L)
             {
                 self->getHttpRequest()->setRequestType(network::HttpRequest::Type::DELETE);
             }
+            else if(method.compare("patch") == 0 || method.compare("PATCH") == 0)
+            {
+                self->getHttpRequest()->setRequestType(network::HttpRequest::Type::PATCH);
+            }
             else
             {
                 self->getHttpRequest()->setRequestType(network::HttpRequest::Type::UNKNOWN);
@@ -852,7 +856,8 @@ static int lua_cocos2dx_XMLHttpRequest_send(lua_State* L)
     
     if (size > 0 &&
         (self->getMethod().compare("post") == 0 || self->getMethod().compare("POST") == 0
-         || self->getMethod().compare("put") == 0 || self->getMethod().compare("PUT") == 0 )&&
+         || self->getMethod().compare("put") == 0 || self->getMethod().compare("PUT") == 0
+         || self->getMethod().compare("PATCH") == 0 || self->getMethod().compare("PATCH") == 0) &&
         nullptr != self->getHttpRequest())
     {
         self->getHttpRequest()->setRequestData(data,size);

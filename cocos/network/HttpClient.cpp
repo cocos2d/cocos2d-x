@@ -353,6 +353,17 @@ static int processDeleteTask(HttpRequest *request, write_callback callback, void
     return ok ? 0 : 1;
 }
 
+//Process PUT Request
+static int processPutTask(HttpRequest *request, write_callback callback, void *stream, long *responseCode, write_callback headerCallback, void *headerStream, char *errorBuffer)
+{
+    CURLRaii curl;
+    bool ok = curl.init(request, callback, stream, headerCallback, headerStream, errorBuffer)
+    && curl.setOption(CURLOPT_CUSTOMREQUEST, "PATCH")
+    && curl.setOption(CURLOPT_POSTFIELDS, request->getRequestData())
+    && curl.setOption(CURLOPT_POSTFIELDSIZE, request->getRequestDataSize())
+    && curl.perform(responseCode);
+    return ok ? 0 : 1;
+}
 
 // Process Response
 static void processResponse(HttpResponse* response, char* errorBuffer)
@@ -404,6 +415,16 @@ static void processResponse(HttpResponse* response, char* errorBuffer)
             errorBuffer);
         break;
 
+    case HttpRequest::Type::PATCH:
+        retValue = processPatchTask(request,
+            writeData,
+            response->getResponseData(),
+            &responseCode,
+            writeHeaderData,
+            response->getResponseHeader(),
+            errorBuffer);
+        break;
+            
     default:
         CCASSERT(true, "CCHttpClient: unkown request type, only GET and POSt are supported");
         break;
