@@ -63,5 +63,11 @@ namespace cocostudio
         Particle3DReader::destroyInstance();
         
         cocos2d::CSLoader::destroyInstance();
+        
+        
+        ArmatureDataManager::destroyInstance();
+        SceneReader::destroyInstance();
+        ActionManagerEx::destroyInstance();
+        GUIReader::destroyInstance();
     }
 }
