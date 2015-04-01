@@ -109,8 +109,6 @@ protected:
 
     cocos2d::CCDictionary* _funcs;  // <std::string, NodeCreateCallFunc*>
 
-    cocos2d::extension::WidgetPropertiesReader0300* _guiReader;
-
     bool _recordJsonPath;
     std::string _jsonPath;
 };
