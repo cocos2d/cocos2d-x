@@ -633,6 +633,7 @@
         "cocos/editor-support/cocostudio/CSParseBinary_generated.h", 
         "cocos/editor-support/cocostudio/CocoLoader.cpp", 
         "cocos/editor-support/cocostudio/CocoLoader.h", 
+        "cocos/editor-support/cocostudio/CocoStudio.cpp", 
         "cocos/editor-support/cocostudio/CocoStudio.h", 
         "cocos/editor-support/cocostudio/CocosStudioExport.h", 
         "cocos/editor-support/cocostudio/DictionaryHelper.cpp", 
