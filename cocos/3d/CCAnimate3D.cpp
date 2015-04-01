@@ -69,7 +69,7 @@ bool Animate3D::init(Animation3D* animation)
     animation->retain();
     setDuration(animation->getDuration());
     setOriginInterval(animation->getDuration());
-    setHighQuality(Configuration::getInstance()->getHighAnimate3DQuality());
+    setHighQuality(Configuration::getInstance()->isHighAnimate3DQuality());
     return true;
 }
 
@@ -85,7 +85,7 @@ bool Animate3D::init(Animation3D* animation, float fromTime, float duration)
     setOriginInterval(duration);
     _animation = animation;
     animation->retain();
-    setHighQuality(Configuration::getInstance()->getHighAnimate3DQuality());
+    setHighQuality(Configuration::getInstance()->isHighAnimate3DQuality());
     return true;
 }
 
@@ -401,7 +401,7 @@ void Animate3D::setHighQuality(bool isHighQuality)
     _isHighQuality = isHighQuality;
 }
 
-bool Animate3D::getHighQuality() const
+bool Animate3D::isHighQuality() const
 {
     return _isHighQuality;
 }
