@@ -48,6 +48,8 @@ class Sprite3DMaterialCache
 public:
     /**get & destroy cache*/
     static Sprite3DMaterialCache* getInstance();
+
+    /**destroy the instance*/
     static void destroyInstance();
     
     /**add to cache*/

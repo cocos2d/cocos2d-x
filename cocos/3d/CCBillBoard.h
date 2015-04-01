@@ -45,7 +45,7 @@ public:
         VIEW_POINT_ORIENTED, // orient to the camera
         VIEW_PLANE_ORIENTED // orient to the XOY plane of camera
     };
-    /// @{
+
     /// @name Creators
 
     /**
