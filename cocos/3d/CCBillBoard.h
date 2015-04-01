@@ -45,7 +45,7 @@ public:
         VIEW_POINT_ORIENTED, // orient to the camera
         VIEW_PLANE_ORIENTED // orient to the XOY plane of camera
     };
-    /// @{
+
     /// @name Creators
 
     /**
@@ -126,7 +126,7 @@ private:
 
 };
 
-// end of actions group
+// end of 3d group
 /// @}
 
 NS_CC_END

@@ -139,7 +139,7 @@ public:
     Vec3 _extents;  // obb length along each axis
 };
 
-// end of actions group
+// end of 3d group
 /// @}
 
 NS_CC_END

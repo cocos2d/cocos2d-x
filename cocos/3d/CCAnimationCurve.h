@@ -102,7 +102,7 @@ protected:
     std::function<void(float time, float* dst)> _evaluateFun; //user defined function
 };
 
-// end of actions group
+// end of 3d group
 /// @}
 
 NS_CC_END

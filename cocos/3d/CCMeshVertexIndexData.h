@@ -139,7 +139,7 @@ protected:
     int                  _vertexCount; //vertex count
 };
 
-// end of actions group
+// end of 3d group
 /// @}
 
 NS_CC_END
