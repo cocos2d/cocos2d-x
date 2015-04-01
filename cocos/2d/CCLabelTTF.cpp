@@ -201,8 +201,6 @@ void LabelTTF::enableShadow(const Size &shadowOffset, float shadowOpacity, float
 }
 
 void LabelTTF::disableShadow(bool updateTexture)
-
-
 {
     _renderLabel->disableEffect();
     _contentDirty = true;
