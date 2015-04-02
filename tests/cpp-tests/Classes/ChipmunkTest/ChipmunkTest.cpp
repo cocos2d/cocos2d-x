@@ -3,10 +3,12 @@
 // a cocos2d example
 // http://www.cocos2d-x.org
 //
+//this line must be in the first line, otherwise it will face type define collision
+#include "chipmunk/chipmunk.h"
 
 #include "ChipmunkTest.h"
-//FIXME: try to remove CP_USE_CGPOINTS=0 in preprocess macro
-#include "chipmunk/chipmunk.h"
+
+
 
 enum {
     kTagParentNode = 1,
