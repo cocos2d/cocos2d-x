@@ -287,6 +287,7 @@ THE SOFTWARE.
 #include "3d/CCPlane.h"
 #include "3d/CCTextureCube.h"
 #include "3d/CCSkybox.h"
+#include "3d/CCTerrain.h"
 
 // Deprecated include
 #include "deprecated/CCDictionary.h"
