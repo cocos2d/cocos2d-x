@@ -35,7 +35,7 @@ Terrain * Terrain::create(TerrainData &parameter, CrackFixedType fixedType)
         texture->generateMipmap();
         terrain->_detailMapTextures[0] = texture;
         texParam.minFilter = GL_LINEAR_MIPMAP_LINEAR;
-        texParam.magFilter = GL_LINEAR_MIPMAP_LINEAR;
+        texParam.magFilter = GL_LINEAR;
         texture->setTexParameters(texParam);
         delete textImage;
     }else
@@ -47,7 +47,7 @@ Terrain * Terrain::create(TerrainData &parameter, CrackFixedType fixedType)
         terrain->_alphaMap->initWithImage(image);
         texParam.wrapS = GL_CLAMP_TO_EDGE;
         texParam.wrapT = GL_CLAMP_TO_EDGE;
-        texParam.minFilter = GL_LINEAR;
+        texParam.minFilter = GL_LINEAR_MIPMAP_LINEAR;
         texParam.magFilter = GL_LINEAR;
         terrain->_alphaMap->setTexParameters(texParam);
         delete image;
@@ -65,7 +65,7 @@ Terrain * Terrain::create(TerrainData &parameter, CrackFixedType fixedType)
             texParam.wrapS = GL_REPEAT;
             texParam.wrapT = GL_REPEAT;
             texParam.minFilter = GL_LINEAR_MIPMAP_LINEAR;
-            texParam.magFilter = GL_LINEAR_MIPMAP_LINEAR;
+            texParam.magFilter = GL_LINEAR;
             texture->setTexParameters(texParam);
         }
     }
