@@ -390,7 +390,8 @@ void GLViewImpl::UpdateWindowSize()
 		view->setFrameSize(width, height);
  		view->setDesignResolutionSize(resSize.width, resSize.height, resPolicy);
 		Director::getInstance()->setViewport();
-        Director::sharedDirector()->setProjection(Director::sharedDirector()->getProjection());
+		Director::sharedDirector()->setProjection(Director::sharedDirector()->getProjection());
+		Application::getInstance()->applicationScreenSizeChanged((int)width, (int)height);
 	}
 }
 
