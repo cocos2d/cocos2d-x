@@ -70,6 +70,8 @@ void Cocos2dRenderer::Resume()
     else
     {
         Application::getInstance()->applicationWillEnterForeground();
+        cocos2d::EventCustom foregroundEvent(EVENT_COME_TO_FOREGROUND);
+        cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&foregroundEvent);
     }
 }
 
@@ -77,8 +79,8 @@ void Cocos2dRenderer::Pause()
 {
     if (Director::getInstance()->getOpenGLView()) {
         Application::getInstance()->applicationDidEnterBackground();
-        //cocos2d::EventCustom backgroundEvent(EVENT_COME_TO_BACKGROUND);
-        //cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&backgroundEvent);
+        cocos2d::EventCustom backgroundEvent(EVENT_COME_TO_BACKGROUND);
+        cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&backgroundEvent);
     }
 }
 
