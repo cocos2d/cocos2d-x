@@ -263,7 +263,7 @@ int Configuration::getMaxSupportSpotLightInShader() const
     return _maxSpotLightInShader;
 }
 
-bool Configuration::getHighAnimate3DQuality() const
+bool Configuration::isHighAnimate3DQuality() const
 {
     return _isAnimate3DHighQuality;
 }
