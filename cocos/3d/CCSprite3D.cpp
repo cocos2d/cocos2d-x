@@ -839,6 +839,7 @@ const AABB& Sprite3D::getAABB() const
         
         _aabb.transform(transform);
         _nodeToWorldTransform = nodeToWorldTransform;
+        _aabbDirty = false;
     }
     
     return _aabb;
