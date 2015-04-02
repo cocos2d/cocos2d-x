@@ -285,6 +285,8 @@ THE SOFTWARE.
 #include "3d/CCBillBoard.h"
 #include "3d/CCFrustum.h"
 #include "3d/CCPlane.h"
+#include "3d/CCTextureCube.h"
+#include "3d/CCSkybox.h"
 
 // Deprecated include
 #include "deprecated/CCDictionary.h"

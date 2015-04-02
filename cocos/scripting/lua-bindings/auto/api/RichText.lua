@@ -79,7 +79,9 @@
 -- @return RichText#RichText self (return value: ccui.RichText)
         
 --------------------------------
--- brief Default constructor.
+-- brief Default constructor.<br>
+-- js ctor<br>
+-- lua new
 -- @function [parent=#RichText] RichText 
 -- @param self
 -- @return RichText#RichText self (return value: ccui.RichText)

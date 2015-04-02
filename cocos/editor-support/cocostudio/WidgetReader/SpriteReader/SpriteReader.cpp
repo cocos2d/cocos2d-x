@@ -65,6 +65,11 @@ namespace cocostudio
         CC_SAFE_DELETE(_instanceSpriteReader);
     }
     
+    void SpriteReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(_instanceSpriteReader);
+    }
+    
     Offset<Table> SpriteReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
                                                              flatbuffers::FlatBufferBuilder *builder)
     {

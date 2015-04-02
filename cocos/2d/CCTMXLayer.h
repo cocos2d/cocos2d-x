@@ -109,6 +109,9 @@ public:
      * @return Returns the tile (Sprite) at a given a tile coordinate.
      */
     Sprite* getTileAt(const Vec2& tileCoordinate);
+    /**
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE Sprite* tileAt(const Vec2& tileCoordinate) { return getTileAt(tileCoordinate); };
     
     /** Returns the tile gid at a given tile coordinate. It also returns the tile flags.
@@ -118,7 +121,10 @@ public:
      * @param flags Tile flags.
      * @return Returns the tile gid at a given tile coordinate. It also returns the tile flags.
      */
-    uint32_t getTileGIDAt(const Vec2& tileCoordinate, TMXTileFlags* flags = nullptr);
+	uint32_t getTileGIDAt(const Vec2& tileCoordinate, TMXTileFlags* flags = nullptr);
+    /**
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE uint32_t tileGIDAt(const Vec2& tileCoordinate, TMXTileFlags* flags = nullptr){
         return getTileGIDAt(tileCoordinate, flags);
     };
@@ -155,7 +161,10 @@ public:
      * @param tileCoordinate The tile coordinate.
      * @return The position in points of a given tile coordinate.
      */
-    Vec2 getPositionAt(const Vec2& tileCoordinate);
+	Vec2 getPositionAt(const Vec2& tileCoordinate);
+    /**
+    * @js NA
+    */
     CC_DEPRECATED_ATTRIBUTE Vec2 positionAt(const Vec2& tileCoordinate) { return getPositionAt(tileCoordinate); };
 
     /** Return the value for the specific property name.
@@ -163,7 +172,10 @@ public:
      * @param propertyName The specific property name.
      * @return Return the value for the specific property name.
      */
-    Value getProperty(const std::string& propertyName) const;
+	Value getProperty(const std::string& propertyName) const;
+    /**
+    * @js NA
+    */
     CC_DEPRECATED_ATTRIBUTE Value propertyNamed(const std::string& propertyName) const { return getProperty(propertyName); };
 
     /** Creates the tiles. */
@@ -226,7 +238,8 @@ public:
     
     /** Set tileset information for the layer.
      *
-     * @param The tileset information for the layer.
+     * @param info The tileset information for the layer.
+     * @js NA
      */
     inline void setTileSet(TMXTilesetInfo* info) {
         CC_SAFE_RETAIN(info);
@@ -275,6 +288,9 @@ public:
     virtual void addChild(Node * child, int zOrder, int tag) override;
     // super method
     void removeChild(Node* child, bool cleanup) override;
+    /**
+    * @js NA
+    */
     virtual std::string getDescription() const override;
 
 protected:

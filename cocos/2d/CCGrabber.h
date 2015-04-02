@@ -34,7 +34,7 @@ NS_CC_BEGIN
 class Texture2D;
 
 /**
- * @addtogroup effects
+ * @addtogroup _2d
  * @{
  */
 

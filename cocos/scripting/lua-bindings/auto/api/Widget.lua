@@ -37,7 +37,7 @@
         
 --------------------------------
 -- Sets whether the widget should be flipped horizontally or not.<br>
--- param bFlippedX true if the widget should be flipped horizaontally, false otherwise.
+-- param flippedX true if the widget should be flipped horizaontally, false otherwise.
 -- @function [parent=#Widget] setFlippedX 
 -- @param self
 -- @param #bool flippedX
@@ -150,7 +150,6 @@
 --------------------------------
 -- Gets LayoutParameter of widget.<br>
 -- see LayoutParameter<br>
--- param type  Relative or Linear<br>
 -- return LayoutParameter
 -- @function [parent=#Widget] getLayoutParameter 
 -- @param self
@@ -174,8 +173,8 @@
 --------------------------------
 -- Toggle whether ignore user defined content size for widget.<br>
 -- Set true will ignore user defined content size which means <br>
--- the widget size is always equal to the return value of  @see `getVirtualRendererSize`.<br>
--- param ignore, set member variabl _ignoreSize to ignore
+-- the widget size is always equal to the return value of `getVirtualRendererSize`.<br>
+-- param ignore set member variabl _ignoreSize to ignore
 -- @function [parent=#Widget] ignoreContentAdaptWithSize 
 -- @param self
 -- @param #bool ignore
@@ -184,7 +183,7 @@
 --------------------------------
 -- When a widget is in a layout, you could call this method to get the next focused widget within a specified direction. <br>
 -- If the widget is not in a layout, it will return itself<br>
--- param dir the direction to look for the next focused widget in a layout<br>
+-- param direction the direction to look for the next focused widget in a layout<br>
 -- param current  the current focused widget<br>
 -- return the next focused widget in a layout
 -- @function [parent=#Widget] findNextFocusedWidget 
@@ -267,9 +266,9 @@
 -- @return Widget#Widget self (return value: ccui.Widget)
         
 --------------------------------
--- Sets whether the widget is touch enabled<br>
--- The default value is false, a widget is default to touch disabled<br>
--- param visible   true if the widget is touch enabled, false if the widget is touch disabled.
+-- Sets whether the widget is touch enabled.<br>
+-- The default value is false, a widget is default to touch disabled.<br>
+-- param enabled   True if the widget is touch enabled, false if the widget is touch disabled.
 -- @function [parent=#Widget] setTouchEnabled 
 -- @param self
 -- @param #bool enabled
@@ -277,7 +276,7 @@
         
 --------------------------------
 -- Sets whether the widget should be flipped vertically or not.<br>
--- param bFlippedY true if the widget should be flipped vertically, flase otherwise.
+-- param flippedY true if the widget should be flipped vertically, flase otherwise.
 -- @function [parent=#Widget] setFlippedY 
 -- @param self
 -- @param #bool flippedY
@@ -286,7 +285,7 @@
 --------------------------------
 -- Sets whether the widget is enabled<br>
 -- true if the widget is enabled, widget may be touched , false if the widget is disabled, widget cannot be touched.<br>
--- Note: If you want to change the widget's appearance  to disabled state, you should also call @see `setBright(false)`.<br>
+-- Note: If you want to change the widget's appearance  to disabled state, you should also call  `setBright(false)`.<br>
 -- The default value is true, a widget is default to enable touch.<br>
 -- param enabled Set to true to enable touch, false otherwise.
 -- @function [parent=#Widget] setEnabled 
@@ -313,8 +312,7 @@
 --------------------------------
 -- Sets a LayoutParameter to widget.<br>
 -- see LayoutParameter<br>
--- param LayoutParameter pointer<br>
--- param type  Relative or Linear
+-- param parameter LayoutParameter pointer
 -- @function [parent=#Widget] setLayoutParameter 
 -- @param self
 -- @param #ccui.LayoutParameter parameter
@@ -413,8 +411,7 @@
         
 --------------------------------
 -- Gets the size type of widget.<br>
--- see `SizeType`<br>
--- param type that is widget's size type
+-- see `SizeType`
 -- @function [parent=#Widget] getSizeType 
 -- @param self
 -- @return int#int ret (return value: int)
@@ -462,7 +459,7 @@
         
 --------------------------------
 -- Checks a point if in parent's area.<br>
--- param point A point in `Vec2`.<br>
+-- param pt A point in `Vec2`.<br>
 -- return true if the point is in parent's area, flase otherwise.
 -- @function [parent=#Widget] isClippingParentContainsPoint 
 -- @param self
@@ -481,7 +478,7 @@
 --------------------------------
 -- Sets whether the widget is bright<br>
 -- The default value is true, a widget is default to bright<br>
--- param visible   true if the widget is bright, false if the widget is dark.
+-- param bright   true if the widget is bright, false if the widget is dark.
 -- @function [parent=#Widget] setBright 
 -- @param self
 -- @param #bool bright
@@ -562,7 +559,7 @@
 -- Changes the position (x,y) of the widget in OpenGL coordinates<br>
 -- Usually we use p(x,y) to compose a Vec2 object.<br>
 -- The original point (0,0) is at the left-bottom corner of screen.<br>
--- param position  The position (x,y) of the widget in OpenGL coordinates
+-- param pos  The position (x,y) of the widget in OpenGL coordinates
 -- @function [parent=#Widget] setPosition 
 -- @param self
 -- @param #vec2_table pos
@@ -583,7 +580,9 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- Default constructor
+-- Default constructor<br>
+-- js ctor<br>
+-- lua new
 -- @function [parent=#Widget] Widget 
 -- @param self
 -- @return Widget#Widget self (return value: ccui.Widget)

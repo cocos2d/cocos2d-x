@@ -72,24 +72,21 @@ private:
 
 /**
  * The LuaCallFunc is wrapped to call the callback function in the Lua Conveniently and don't insert useless code to processing the lua in the CallFuncN.
+ *
+ * @lua NA
+ * @js NA
  */
 class LuaCallFunc:public cocos2d::CallFuncN
 {
 public:
     /**
      * Default construtor.
-     *
-     * @lua NA
-     * @js NA
      */
     LuaCallFunc():_functionLua(nullptr)
     {}
     
     /**
      *  Destrutor.
-     *
-     * @lua NA
-     * @js NA
      */
     virtual ~LuaCallFunc()
     {}
@@ -98,8 +95,6 @@ public:
      * Create a LuaCallFunc object by a function pointer for callback.
      *
      * @param func a function pointer for callback.
-     * @lua NA
-     * @js NA
      */
     static LuaCallFunc* create(const std::function<void(void* self,Node*)>& func);
     
@@ -107,15 +102,11 @@ public:
      * Init a LuaCallFunc object by a function pointer for callback.
      *
      * @param func a function pointer for callback.
-     * @lua NA
-     * @js NA
      */
     bool initWithFunction(const std::function<void(void* self,Node*)>& func);
     virtual LuaCallFunc* clone() const override;
     virtual void execute() override;
 protected:
-    /**
-     */
     std::function<void(void* self,Node*)> _functionLua;
     
 };

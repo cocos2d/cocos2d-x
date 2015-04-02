@@ -12,7 +12,8 @@
         
 --------------------------------
 -- @{<br>
--- Getter and Setter for depth test state when blit.
+-- Getter and Setter for depth test state when blit.<br>
+-- js NA
 -- @function [parent=#Grid3D] setNeedDepthTestForBlit 
 -- @param self
 -- @param #bool neededDepthTest

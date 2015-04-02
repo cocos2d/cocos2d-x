@@ -28,6 +28,11 @@
 #include "renderer/CCRenderCommand.h"
 #include "renderer/CCGLProgramState.h"
 
+/**
+ * @addtogroup support
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class Material;
@@ -48,7 +53,7 @@ public:
     /** Initializes the command.
      @param globalOrder GlobalZOrder of the command.
      @param textureID The openGL handle of the used texture.
-     @param glProgramState The specified glProgram and its uniform.
+     @param shader The specified glProgram and its uniform.
      @param blendType Blend function for the command.
      @param quads Rendered quads for the command.
      @param quadCount The number of quads when rendering.
@@ -106,4 +111,8 @@ protected:
 
 NS_CC_END
 
+/**
+ end of support group
+ @}
+ */
 #endif //_CC_QUADCOMMAND_H_

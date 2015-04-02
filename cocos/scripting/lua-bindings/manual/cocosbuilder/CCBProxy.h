@@ -73,7 +73,7 @@ public:
      * Get the true type name of pNode.
      * By using the dynamic_cast function, we coulde get the true type name of pNode.
      *
-     * @Node pNode the Node object used to query.
+     * @param pNode the Node object used to query.
      * @return a string pointer point to the true type name otherwise return "No Support".
      * @js NA
      */

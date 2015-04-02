@@ -40,7 +40,6 @@ namespace ui {
 /**
  *@brief Margin of widget's in point. Margin value should be positive.
  *@lua NA
- *@js NA
  */
 class CC_GUI_DLL Margin
 {
@@ -119,8 +118,6 @@ public:
 
 /**
  *@brief Base class for various LayoutParameter.
- *@js NA
- *@lua NA
  */
 class CC_GUI_DLL LayoutParameter : public Ref
 {
@@ -139,6 +136,8 @@ public:
     };
     /**
      * Default constructor.
+     *
+     * @lua new
      */
     LayoutParameter() : _margin(Margin())
     {
@@ -147,6 +146,7 @@ public:
     
     /**
      * Default destructor.
+     * @lua NA
      */
     virtual ~LayoutParameter(){};
     
@@ -205,8 +205,6 @@ protected:
 /**
  * Protocol for getting a LayoutParameter.
  * Every element want to have layout parameter should inherit from this class.
- *@js NA
- *@lua NA
  */
 class CC_GUI_DLL LayoutParameterProtocol
 {
@@ -227,8 +225,6 @@ public:
 /**
  * @brief Linear layout parameter.
  * It is used by linear layout manager for arranging elements linearly.
- * @js NA
- * @lua NA
  */
 class CC_GUI_DLL LinearLayoutParameter : public LayoutParameter
 {
@@ -249,6 +245,8 @@ public:
 
     /**
      * Default constructor.
+     *
+     * @lua new
      */
     LinearLayoutParameter()
     : _linearGravity(LinearGravity::NONE)
@@ -258,6 +256,8 @@ public:
     
     /**
      * Default destructor.
+     *
+     * @lua NA
      */
     virtual ~LinearLayoutParameter(){};
     
@@ -296,8 +296,6 @@ protected:
 /**
  * @brief Relative layout parameter.
  * It is mainly used by  `RelativeLayoutManager`.
- * @lua NA
- * @js NA
  */
 class CC_GUI_DLL RelativeLayoutParameter : public LayoutParameter
 {
@@ -336,6 +334,8 @@ public:
 
     /**
      * Default constructor
+     *
+     * @lua new
      */
     RelativeLayoutParameter()
     : _relativeAlign(RelativeAlign::NONE),
@@ -348,6 +348,8 @@ public:
     
     /**
      * Default destructor
+     *
+     * @lua NA
      */
     virtual ~RelativeLayoutParameter(){};
     

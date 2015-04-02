@@ -45,11 +45,15 @@ public:
     
     /**
      * Default constructor
+     * @js ctor
+     * @lua new
      */
     HBox();
     
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~HBox();
     

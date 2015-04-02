@@ -32,7 +32,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * @addtogroup input
+ * @addtogroup base
  * @{
  */
 
@@ -134,7 +134,7 @@ private:
     Vec2 _prevPoint;
 };
 
-// end of input group
+// end of base group
 /// @}
 
 NS_CC_END

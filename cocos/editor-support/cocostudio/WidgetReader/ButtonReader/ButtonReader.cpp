@@ -64,6 +64,11 @@ namespace cocostudio
         CC_SAFE_DELETE(instanceButtonReader);
     }
     
+    void ButtonReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instanceButtonReader);
+    }
+    
     void ButtonReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
     {
         WidgetReader::setPropsFromBinary(widget, cocoLoader, cocoNode);

@@ -7,7 +7,7 @@
 --------------------------------
 -- Sets RelativeAlign parameter for LayoutParameter.<br>
 -- see RelativeAlign<br>
--- param RelativeAlign Relative align in @see `RelativeAlign`.
+-- param align Relative align in  `RelativeAlign`.
 -- @function [parent=#RelativeLayoutParameter] setAlign 
 -- @param self
 -- @param #int align
@@ -46,7 +46,7 @@
 --------------------------------
 -- Get RelativeAlign parameter for LayoutParameter.<br>
 -- see RelativeAlign<br>
--- return RelativeAlign A RelativeAlign variable.
+-- return  A RelativeAlign variable.
 -- @function [parent=#RelativeLayoutParameter] getAlign 
 -- @param self
 -- @return int#int ret (return value: int)
@@ -72,7 +72,8 @@
 -- @return RelativeLayoutParameter#RelativeLayoutParameter self (return value: ccui.RelativeLayoutParameter)
         
 --------------------------------
--- Default constructor
+-- Default constructor<br>
+-- lua new
 -- @function [parent=#RelativeLayoutParameter] RelativeLayoutParameter 
 -- @param self
 -- @return RelativeLayoutParameter#RelativeLayoutParameter self (return value: ccui.RelativeLayoutParameter)

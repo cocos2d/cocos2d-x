@@ -28,6 +28,11 @@
 #include "renderer/CCRenderCommand.h"
 #include "renderer/CCGLProgramState.h"
 
+/**
+ * @addtogroup support
+ * @{
+ */
+
 NS_CC_BEGIN
 /** 
  Command used to render one or more Triangles, which is similar to QuadCommand.
@@ -108,5 +113,8 @@ protected:
 };
 
 NS_CC_END
-
+/**
+ end of support group
+ @}
+ */
 #endif // defined(__CC_TRIANGLES_COMMAND__)

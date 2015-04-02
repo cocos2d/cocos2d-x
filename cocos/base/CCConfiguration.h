@@ -33,12 +33,12 @@ THE SOFTWARE.
 #include "base/CCValue.h"
 #include "platform/CCGL.h"
 
-NS_CC_BEGIN
-
 /**
  * @addtogroup base
  * @{
  */
+NS_CC_BEGIN
+
 /** @class Configuration
  * @brief Configuration contains some openGL variables
  * @since v0.99.0
@@ -164,6 +164,11 @@ public:
      */
     int getMaxSupportSpotLightInShader() const;
 
+    /** get 3d animate quality
+     *  @return true: is high quality, false: is low quality
+     */
+    bool getHighAnimate3DQuality() const;
+    
     /** Returns whether or not an OpenGL is supported. 
      *
      * @param searchName A given search name.
@@ -230,13 +235,14 @@ protected:
     int             _maxDirLightInShader; //max support directional light in shader
     int             _maxPointLightInShader; // max support point light in shader
     int             _maxSpotLightInShader; // max support spot light in shader
+    bool            _isAnimate3DHighQuality; // animation 3d quality, true: is high quality, false: is low quality
 	
 	ValueMap        _valueDict;
 };
 
-// end of base group
-/// @}
 
 NS_CC_END
+// end of base group
+/// @}
 
 #endif // __CCCONFIGURATION_H__

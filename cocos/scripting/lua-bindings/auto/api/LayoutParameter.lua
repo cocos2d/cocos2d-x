@@ -28,7 +28,7 @@
         
 --------------------------------
 -- Copy all the member field from argument LayoutParameter to self.<br>
--- parameter model A LayoutParameter instance.
+-- param model A LayoutParameter instance.
 -- @function [parent=#LayoutParameter] copyProperties 
 -- @param self
 -- @param #ccui.LayoutParameter model
@@ -42,7 +42,8 @@
 -- @return LayoutParameter#LayoutParameter ret (return value: ccui.LayoutParameter)
         
 --------------------------------
--- Default constructor.
+-- Default constructor.<br>
+-- lua new
 -- @function [parent=#LayoutParameter] LayoutParameter 
 -- @param self
 -- @return LayoutParameter#LayoutParameter self (return value: ccui.LayoutParameter)

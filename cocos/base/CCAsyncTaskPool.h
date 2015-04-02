@@ -38,17 +38,17 @@ THE SOFTWARE.
 #include <functional>
 #include <stdexcept>
 
-NS_CC_BEGIN
-/////////////////////////////////////////////////////////////////////////////
-
 /**
 * @addtogroup base
 * @{
 */
+NS_CC_BEGIN
+
 
 /**
  * @class AsyncTaskPool
  * @brief This class allows to perform background operations without having to manipulate threads.
+ * @js NA
  */
 class CC_DLL AsyncTaskPool
 {
@@ -87,7 +87,7 @@ public:
      * @param callback callback when the task is finished. The callback is called in the main thread instead of task thread.
      * @param callbackParam parameter used by the callback.
      * @param f task can be lambda function.
-     * @param args task parameters.
+     * @lua NA
      */
     template<class F>
     inline void enqueue(TaskType type, const TaskCallBack& callback, void* callbackParam, F&& f);
@@ -213,8 +213,8 @@ inline void AsyncTaskPool::enqueue(AsyncTaskPool::TaskType type, const TaskCallB
     threadTask.enqueue(callback, callbackParam, f);
 }
 
-// end group
-/// @}
 
 NS_CC_END
+// end group
+/// @}
 #endif //__CCSYNC_TASK_POOL_H_

@@ -41,8 +41,6 @@ namespace ui {
 
 /**
  *  For creating a system font or a TTF font Text
- *@js 
- *@lua NA
  */
 class CC_GUI_DLL Text : public Widget
 {
@@ -59,11 +57,15 @@ public:
     };
     /**
      * Default constructor.
+     * @js ctor
+     * @lua new
      */
     Text();
 
     /**
      * Default destructor.
+     * @js NA
+     * @lua NA
      */
     virtual ~Text();
 

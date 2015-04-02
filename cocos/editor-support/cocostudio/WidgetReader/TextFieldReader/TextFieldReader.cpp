@@ -49,6 +49,11 @@ namespace cocostudio
         return instanceTextFieldReader;
     }
     
+    void TextFieldReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instanceTextFieldReader);
+    }
+    
     void TextFieldReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode* cocoNode)
     {
         this->beginSetBasicProperties(widget);

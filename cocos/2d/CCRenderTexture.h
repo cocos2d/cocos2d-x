@@ -97,6 +97,7 @@ public:
      * @param g Green.
      * @param b Blue.
      * @param a Alpha.
+     * @param depthValue The depth Value.
      */
     virtual void beginWithClear(float r, float g, float b, float a, float depthValue);
 
@@ -112,7 +113,9 @@ public:
      */
     virtual void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue);
 
-    /** End is key word of lua, use other name to export to lua. */
+    /** End is key word of lua, use other name to export to lua.
+     * @js NA
+     */
     inline void endToLua(){ end();};
 
     /** Ends grabbing. */
@@ -129,13 +132,13 @@ public:
 
     /** Clears the texture with a specified depth value. 
      *
-     * @param A specified depth value.
+     * @param depthValue A specified depth value.
      */
     virtual void clearDepth(float depthValue);
 
     /** Clears the texture with a specified stencil value.
      *
-     * @param A specified stencil value.
+     * @param stencilValue A specified stencil value.
      */
     virtual void clearStencil(int stencilValue);
     
@@ -144,6 +147,7 @@ public:
      *
      * @param flipImage Whether or not to flip image.
      * @return An image.
+     * @js NA
      */
     Image* newImage(bool flipImage = true);
     
@@ -256,7 +260,7 @@ public:
     
     /** Sets the Sprite being used. 
      *
-     * @param A Sprite.
+     * @param sprite A Sprite.
      */
     inline void setSprite(Sprite* sprite) {
         CC_SAFE_RETAIN(sprite);
@@ -271,6 +275,7 @@ public:
     /** Flag: Use stack matrix computed from scene hierarchy or generate new modelView and projection matrix.
      *
      * @param keepMatrix Wether or not use stack matrix computed from scene hierarchy or generate new modelView and projection matrix.
+     * @js NA
      */
     void setKeepMatrix(bool keepMatrix);
     /**Used for grab part of screen to a texture. 
@@ -284,8 +289,14 @@ public:
     /** FIXME: should be procted.
      * but due to a bug in PowerVR + Android,
      * the constructor is public again.
+     * @js ctor
      */
     RenderTexture();
+
+    /**
+     * @js NA
+	 * @lua NA
+     */
     virtual ~RenderTexture();
     /** Initializes a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid.
      *

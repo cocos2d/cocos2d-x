@@ -65,7 +65,7 @@
         
 --------------------------------
 --  Sets the delay in seconds of the "delay unit".<br>
--- param setDelayPerUnit The delay in seconds of the "delay unit".
+-- param delayPerUnit The delay in seconds of the "delay unit".
 -- @function [parent=#Animation] setDelayPerUnit 
 -- @param self
 -- @param #float delayPerUnit

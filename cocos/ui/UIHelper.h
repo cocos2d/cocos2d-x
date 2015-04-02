@@ -41,9 +41,9 @@ namespace ui {
     class Widget;
 
 /**
-*   @js NA
-*   @lua NA
-*/
+ * Helper class for traversing children in widget tree.
+ * It also provides some helper functions for layout.
+ */
 class CC_GUI_DLL Helper
 {
 public:
@@ -78,9 +78,12 @@ public:
     /**
      * @brief Get a UTF8 substring from a std::string with a given start position and length
      *  Sample:  std::string str = "中国中国中国";  substr = getSubStringOfUTF8String(str,0,2) will = "中国"
+     *
+     * @param str The source string.
      * @param start The start position of the substring.
      * @param length The length of the substring in UTF8 count
      * @return a UTF8 substring
+     * @js NA
      */
     static std::string getSubStringOfUTF8String(const std::string& str,
                                    std::string::size_type start,

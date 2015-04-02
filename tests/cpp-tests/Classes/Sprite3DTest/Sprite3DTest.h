@@ -293,7 +293,12 @@ public:
     
     void addNewSpriteWithCoords(Vec2 p);
     
+    void switchAnimationQualityCallback(Ref* sender);
     void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+private:
+    std::vector<Sprite3D*> _sprits;
+    bool _highQuality;
+    MenuItemFont* _menuItem;
 };
 
 class Sprite3DWithSkinOutlineTest : public Sprite3DTestDemo
@@ -491,11 +496,52 @@ protected:
     std::string          _useCaseTitles[(int)USECASE::MAX_CASE_NUM];
 };
 
+// node animation test, cocos2d-x supports both skeletal animation and node animation
+class NodeAnimationTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(NodeAnimationTest);
+    NodeAnimationTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void addNewSpriteWithCoords(Vec2 p);
+protected:
+    std::vector<Sprite3D*> _sprites;
+    int _vectorIndex;
+};
+
 class Sprite3DTestScene : public TestScene
 {
 public:
     Sprite3DTestScene();
     virtual void runThisTest();
+};
+
+namespace cocos2d
+{
+class TextureCube;
+class Skybox;
+}
+class Sprite3DCubeMapTest : public Sprite3DTestDemo
+{
+public:
+    CREATE_FUNC(Sprite3DCubeMapTest);
+    Sprite3DCubeMapTest();
+    ~Sprite3DCubeMapTest();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    void addNewSpriteWithCoords(Vec2);
+
+protected:
+    cocos2d::TextureCube*   _textureCube;
+    Skybox*                 _skyBox;
+    Sprite3D*               _teapot;
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    EventListenerCustom* _backToForegroundListener;
+#endif
 };
 
 #endif

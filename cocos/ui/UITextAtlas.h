@@ -39,10 +39,8 @@ class Label;
 
 namespace ui {
     
-/** @class TextAtlas
+/**
  * @brief UI TextAtlas widget.
- * @js NA
- * @lua NA
  */
 class CC_GUI_DLL TextAtlas : public Widget
 {
@@ -52,11 +50,15 @@ class CC_GUI_DLL TextAtlas : public Widget
 public:
     /**
      * Default constructor.
+     *
+     * @lua new
      */
     TextAtlas();
     
     /**
      * Default destructor.
+     *
+     * @lua NA
      */
     virtual ~TextAtlas();
     
@@ -132,6 +134,9 @@ public:
      */
     virtual std::string getDescription() const override;
     
+    /**
+     * @js NA
+     */
     virtual void adaptRenderers() override;
 protected:
     virtual void initRenderer() override;

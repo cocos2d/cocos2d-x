@@ -41,8 +41,6 @@ namespace ui{
     class Scale9Sprite;
 /**
  * Represents a push-button widget. Push-buttons can be pressed, or clicked, by the user to perform an action.
- *   @js NA
- *   @lua NA
  */
 class CC_GUI_DLL Button : public Widget
 {
@@ -58,6 +56,8 @@ public:
 
     /**
      * Default destructor.
+     *
+     * @lua NA
      */
     virtual ~Button();
 
@@ -69,9 +69,9 @@ public:
     
     /**
      * Create a button with custom textures.
-     * @normalImage normal state texture name.
-     * @selectedImage  selected state texture name.
-     * @disableImage disabled state texture name.
+     * @param normalImage normal state texture name.
+     * @param selectedImage  selected state texture name.
+     * @param disableImage disabled state texture name.
      * @param texType    @see `TextureResType`
      * @return a Button instance.
      */

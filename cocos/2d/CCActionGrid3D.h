@@ -215,7 +215,7 @@ public:
 
     /**
     @brief Set the center position of lens effect.
-    @param The center position will be set.
+    @param position The center position will be set.
     */
     void setPosition(const Vec2& position);
 
@@ -350,7 +350,7 @@ class CC_DLL Shaky3D : public Grid3DAction
 public:
     /** 
     @brief Create the action with a range, shake Z vertices, a grid and duration.
-    @param duration Specify the duration of the Shaky3D action. It's a value in seconds.
+    @param initWithDuration Specify the duration of the Shaky3D action. It's a value in seconds.
     @param gridSize Specify the size of the grid.
     @param range Specify the range of the shaky effect.
     @param shakeZ Specify whether shake on the z axis.

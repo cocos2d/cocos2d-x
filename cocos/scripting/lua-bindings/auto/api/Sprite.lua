@@ -331,7 +331,7 @@
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
--- / @}
+-- js NA
 -- @function [parent=#Sprite] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)

@@ -386,8 +386,10 @@
     <ClInclude Include="..\3d\CCPlane.h" />
     <ClInclude Include="..\3d\CCRay.h" />
     <ClInclude Include="..\3d\CCSkeleton3D.h" />
+    <ClInclude Include="..\3d\CCSkybox.h" />
     <ClInclude Include="..\3d\CCSprite3D.h" />
     <ClInclude Include="..\3d\CCSprite3DMaterial.h" />
+    <ClInclude Include="..\3d\CCTextureCube.h" />
     <ClInclude Include="..\3d\cocos3d.h" />
     <ClInclude Include="..\audio\include\Export.h" />
     <ClInclude Include="..\audio\include\SimpleAudioEngine.h" />
@@ -536,6 +538,7 @@
     <ClInclude Include="..\editor-support\cocostudio\CCTween.h" />
     <ClInclude Include="..\editor-support\cocostudio\CCUtilMath.h" />
     <ClInclude Include="..\editor-support\cocostudio\CocoLoader.h" />
+    <ClInclude Include="..\editor-support\cocostudio\CocoStudio.h" />
     <ClInclude Include="..\editor-support\cocostudio\CSParseBinary_generated.h" />
     <ClInclude Include="..\editor-support\cocostudio\CSParse3DBinary_generated.h" />
     <ClInclude Include="..\editor-support\cocostudio\DictionaryHelper.h" />
@@ -990,8 +993,10 @@
     <ClCompile Include="..\3d\CCPlane.cpp" />
     <ClCompile Include="..\3d\CCRay.cpp" />
     <ClCompile Include="..\3d\CCSkeleton3D.cpp" />
+    <ClCompile Include="..\3d\CCSkybox.cpp" />
     <ClCompile Include="..\3d\CCSprite3D.cpp" />
     <ClCompile Include="..\3d\CCSprite3DMaterial.cpp" />
+    <ClCompile Include="..\3d\CCTextureCube.cpp" />
     <ClCompile Include="..\audio\wp8\Audio.cpp">
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </ForcedIncludeFiles>
@@ -1175,6 +1180,7 @@
     <ClCompile Include="..\editor-support\cocostudio\CCTween.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\CCUtilMath.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\CocoLoader.cpp" />
+    <ClCompile Include="..\editor-support\cocostudio\CocoStudio.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\DictionaryHelper.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\FlatBuffersSerialize.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\TriggerBase.cpp" />

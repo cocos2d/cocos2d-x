@@ -37,7 +37,8 @@
 --------------------------------
 -- brief Toggle 9-slice feature.<br>
 -- If Scale9Sprite is 9-slice disabled, the Scale9Sprite will rendered as a normal sprite.<br>
--- param enabled True to enable 9-slice, false otherwise.
+-- param enabled True to enable 9-slice, false otherwise.<br>
+-- js NA
 -- @function [parent=#Scale9Sprite] setScale9Enabled 
 -- @param self
 -- @param #bool enabled
@@ -177,7 +178,8 @@
         
 --------------------------------
 -- brief Query whether the Scale9Sprite is enable 9-slice or not.<br>
--- return True if 9-slice is enabled, false otherwise.
+-- return True if 9-slice is enabled, false otherwise.<br>
+-- js NA
 -- @function [parent=#Scale9Sprite] isScale9Enabled 
 -- @param self
 -- @return bool#bool ret (return value: bool)
@@ -210,8 +212,7 @@
 
 --------------------------------
 -- Sets the source blending function.<br>
--- param blendFunc A structure with source and destination factor to specify pixel arithmetic,<br>
--- e.g. {GL_ONE, GL_ONE}, {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}.<br>
+-- param blendFunc A structure with source and destination factor to specify pixel arithmetic. e.g. {GL_ONE, GL_ONE}, {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}.<br>
 -- js NA<br>
 -- lua NA
 -- @function [parent=#Scale9Sprite] setBlendFunc 
@@ -400,7 +401,8 @@
         
 --------------------------------
 -- Default constructor.<br>
--- js ctor
+-- js ctor<br>
+-- lua new
 -- @function [parent=#Scale9Sprite] Scale9Sprite 
 -- @param self
 -- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)

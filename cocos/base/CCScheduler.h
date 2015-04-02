@@ -348,7 +348,7 @@ public:
     
 #if CC_ENABLE_SCRIPT_BINDING
     /** Unschedule a script entry. 
-     * @warn Don't invoke this function unless you know what you are doing.
+     * @warning Don't invoke this function unless you know what you are doing.
      * @js NA
      * @lua NA
      */
