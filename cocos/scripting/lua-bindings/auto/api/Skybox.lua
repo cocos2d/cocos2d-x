@@ -18,11 +18,18 @@
 -- @return Skybox#Skybox self (return value: cc.Skybox)
         
 --------------------------------
--- 
--- @function [parent=#Skybox] create 
+-- @overload self, string, string, string, string, string, string         
+-- @overload self         
+-- @function [parent=#Skybox] create
 -- @param self
+-- @param #string positive_x
+-- @param #string negative_x
+-- @param #string positive_y
+-- @param #string negative_y
+-- @param #string positive_z
+-- @param #string negative_z
 -- @return Skybox#Skybox ret (return value: cc.Skybox)
-        
+
 --------------------------------
 --  draw Skybox object 
 -- @function [parent=#Skybox] draw 
