@@ -56,4 +56,9 @@ Pass::~Pass()
     CC_SAFE_RELEASE(_glProgramState);
 }
 
+GLProgramState* Pass::getGLProgramState() const
+{
+    return _glProgramState;
+}
+
 NS_CC_END

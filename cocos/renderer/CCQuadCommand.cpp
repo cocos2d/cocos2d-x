@@ -44,6 +44,7 @@ QuadCommand::QuadCommand()
 ,_blendType(BlendFunc::DISABLE)
 ,_quads(nullptr)
 ,_quadsCount(0)
+,_material(nullptr)
 {
     _type = RenderCommand::Type::QUAD_COMMAND;
 }
@@ -71,8 +72,7 @@ void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* shad
     }
 }
 
-void QuadCommand::init(float globalOrder, Material* material, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
-                       const Mat4& mv, uint32_t flags)
+void QuadCommand::init(float globalOrder, Material* material, V3F_C4B_T2F_Quad* quads, ssize_t quadCount, const Mat4& mv, uint32_t flags)
 {
     CCASSERT(material, "Invalid Material");
 
@@ -84,9 +84,9 @@ void QuadCommand::init(float globalOrder, Material* material, V3F_C4B_T2F_Quad* 
     _mv = mv;
 
     if (_material != material) {
-        CC_SAFE_RELEASE(_material);
         _material = material;
-        CC_SAFE_RETAIN(_material);
+
+        generateMaterialID();
     }
 }
 
@@ -110,7 +110,6 @@ void QuadCommand::generateMaterialID()
         if (count == 1 && technique->getPassByIndex(0)->getGLProgramState()->getUniformCount() == 0)
         {
             _materialID = technique->getPassByIndex(0)->getHash();
-
         }
         else
         {

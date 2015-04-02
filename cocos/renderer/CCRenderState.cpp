@@ -69,4 +69,20 @@ uint32_t RenderState::getHash() const
     return _hash;
 }
 
+//
+void RenderState::setBlendFunc(const BlendFunc& blendFunc)
+{
+    if (_blendFunc != blendFunc) {
+        _hashDirty = true;
+
+        _blendFunc = blendFunc;
+    }
+}
+
+BlendFunc RenderState::getBlendFunc() const
+{
+    return _blendFunc;
+}
+
+
 NS_CC_END

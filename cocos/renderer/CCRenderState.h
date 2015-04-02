@@ -36,6 +36,7 @@
 
 #include "platform/CCPlatformMacros.h"
 #include "base/CCRef.h"
+#include "base/ccTypes.h"
 
 NS_CC_BEGIN
 
@@ -46,6 +47,9 @@ public:
 
     uint32_t getHash() const;
     std::string getName() const;
+
+    void setBlendFunc(const BlendFunc& blendFunc);
+    BlendFunc getBlendFunc() const;
 
 protected:
     RenderState();
@@ -58,8 +62,11 @@ protected:
     // name, for filtering
     std::string _name;
 
+
     uint32_t _hash;
     bool _hashDirty;
+
+    BlendFunc _blendFunc;
 };
 
 NS_CC_END
