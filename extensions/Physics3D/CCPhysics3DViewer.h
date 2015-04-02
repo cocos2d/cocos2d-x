@@ -32,12 +32,66 @@
 
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
+#include "renderer/CCCustomCommand.h"
+#include "bullet/LinearMath/btIDebugDraw.h"
 
 NS_CC_EXT_BEGIN
 
-CC_EX_DLL class Physics3DViewer : public Ref
+class Physics3DDebugDrawer : public btIDebugDraw
 {
-    
+public:
+
+    Physics3DDebugDrawer();
+    virtual ~Physics3DDebugDrawer();
+
+    void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags);
+
+    virtual void	drawLine(const btVector3& from,const btVector3& to,const btVector3& color) override;
+    virtual void	drawContactPoint(const btVector3& PointOnB,const btVector3& normalOnB,btScalar distance,int lifeTime,const btVector3& color) override;
+    virtual void	reportErrorWarning(const char* warningString) override;
+    virtual void	draw3dText(const btVector3& location,const char* textString) override;
+    virtual void	setDebugMode(int debugMode) override;
+    virtual int		getDebugMode() const override;
+
+private:
+
+    void init();
+    void ensureCapacity(int count);
+    void drawImplementation(const Mat4 &transform, uint32_t flags);
+
+private:
+
+    struct V3F_V4F
+    {
+        Vec3 vertex;
+        Vec4 color;
+    };
+
+    GLuint      _vao;
+    GLuint      _vbo;
+
+    int         _bufferCapacity;
+    GLsizei     _bufferCount;
+    V3F_V4F*    _buffer;
+
+    BlendFunc   _blendFunc;
+    CustomCommand _customCommand;
+    GLProgram *_program;
+
+    bool        _dirty;
+};
+
+class CC_EX_DLL Physics3DViewer : public Ref
+{
+public:
+
+    Physics3DViewer();
+
+    void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags);
+
+protected:
+
+    Physics3DDebugDrawer _debugDrawer;
 };
 
 NS_CC_EXT_END

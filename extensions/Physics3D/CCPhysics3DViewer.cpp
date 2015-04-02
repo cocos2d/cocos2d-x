@@ -25,10 +25,162 @@
 #include "CCPhysics3D.h"
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
+#include "cocos2d.h"
 
+USING_NS_CC;
 NS_CC_EXT_BEGIN
 
+void Physics3DDebugDrawer::drawLine( const btVector3& from,const btVector3& to,const btVector3& color )
+{
+    int count = 2;
+    ensureCapacity(count);
 
+    Vec3 col = convertbtVector3ToVec3(color);
+    V3F_V4F a = {convertbtVector3ToVec3(from), Vec4(col.x, col.y, col.z, 1.0f)};
+    V3F_V4F b = {convertbtVector3ToVec3(to), Vec4(col.x, col.y, col.z, 1.0f)};
+
+    V3F_V4F *lines = (V3F_V4F *)(_buffer + _bufferCount);
+    lines[0] = a;
+    lines[1] = b;
+
+    _bufferCount += count;
+    _dirty = true;
+}
+
+void Physics3DDebugDrawer::drawContactPoint( const btVector3& PointOnB,const btVector3& normalOnB,btScalar distance,int lifeTime,const btVector3& color )
+{
+
+}
+
+void Physics3DDebugDrawer::reportErrorWarning( const char* warningString )
+{
+    CCLOG("%s", warningString);
+}
+
+void Physics3DDebugDrawer::draw3dText( const btVector3& location,const char* textString )
+{
+
+}
+
+void Physics3DDebugDrawer::setDebugMode( int debugMode )
+{
+
+}
+
+int Physics3DDebugDrawer::getDebugMode() const 
+{
+    return DBG_DrawWireframe;
+}
+
+void Physics3DDebugDrawer::draw( Renderer *renderer, const Mat4 &transform, uint32_t flags )
+{
+    _customCommand.init(0, transform, flags);
+    _customCommand.func = CC_CALLBACK_0(Physics3DDebugDrawer::drawImplementation, this, transform, flags);
+    renderer->addCommand(&_customCommand);
+}
+
+Physics3DDebugDrawer::Physics3DDebugDrawer()
+    : _vao(0)
+    , _vbo(0)
+    , _bufferCapacity(0)
+    , _bufferCount(0)
+    , _buffer(nullptr)
+    , _blendFunc(BlendFunc::DISABLE)
+    , _dirty(true)
+{
+    init();
+}
+
+Physics3DDebugDrawer::~Physics3DDebugDrawer()
+{
+    free(_buffer);
+}
+
+void Physics3DDebugDrawer::ensureCapacity( int count )
+{
+    CCASSERT(count>=0, "capacity must be >= 0");
+
+    if(_bufferCount + count > _bufferCapacity)
+    {
+        _bufferCapacity += MAX(_bufferCapacity, count);
+        _buffer = (V3F_V4F*)realloc(_buffer, _bufferCapacity*sizeof(V3F_V4F));
+    }
+}
+
+void Physics3DDebugDrawer::drawImplementation( const Mat4 &transform, uint32_t flags )
+{
+    _program->use();
+    _program->setUniformsForBuiltins(transform);
+    glEnable(GL_DEPTH_TEST);
+    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+
+    if (_dirty)
+    {
+        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(V3F_V4F) * _bufferCapacity, _buffer, GL_STREAM_DRAW);
+        _dirty = false;
+    }
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
+        GL::bindVAO(_vao);
+    }
+    else
+    {
+        GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR);
+
+        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+        // vertex
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_V4F), (GLvoid *)offsetof(V3F_V4F, vertex));
+        // color
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, sizeof(V3F_V4F), (GLvoid *)offsetof(V3F_V4F, color));
+    }
+
+    glDrawArrays(GL_LINES, 0, _bufferCount);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1,_bufferCount);
+    glDisable(GL_DEPTH_TEST);
+}
+
+void Physics3DDebugDrawer::init()
+{
+    _program = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_COLOR);
+
+    ensureCapacity(512);
+
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
+        glGenVertexArrays(1, &_vao);
+        GL::bindVAO(_vao);
+    }
+
+    glGenBuffers(1, &_vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(V3F_V4F)* _bufferCapacity, _buffer, GL_STREAM_DRAW);
+
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_V4F), (GLvoid *)offsetof(V3F_V4F, vertex));
+
+    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, sizeof(V3F_V4F), (GLvoid *)offsetof(V3F_V4F, color));
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    if (Configuration::getInstance()->supportsShareableVAO())
+    {
+        GL::bindVAO(0);
+    }
+}
+
+
+void Physics3DViewer::draw( Renderer *renderer, const Mat4 &transform, uint32_t flags )
+{
+    _debugDrawer.draw(renderer, transform, flags);
+}
+
+Physics3DViewer::Physics3DViewer()
+{
+}
 
 NS_CC_EXT_END
 
