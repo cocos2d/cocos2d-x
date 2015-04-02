@@ -23,9 +23,15 @@
  ****************************************************************************/
 
 #include "CCPhysics3D.h"
+#include "base/CCConfiguration.h"
+#include "base/ccMacros.h"
+#include "base/CCDirector.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/ccGLStateCache.h"
+#include "renderer/CCGLProgramCache.h"
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
-#include "cocos2d.h"
 
 USING_NS_CC;
 NS_CC_EXT_BEGIN

@@ -27,9 +27,15 @@
 
 #include "math/CCMath.h"
 #include "base/CCRef.h"
+#include "base/ccTypes.h"
 #include "extensions/ExtensionMacros.h"
 #include "extensions/ExtensionExport.h"
+#include "renderer/CCCustomCommand.h"
 
+namespace cocos2d {
+    class GLProgram;
+    class Renderer;
+}
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
 #include "renderer/CCCustomCommand.h"
@@ -44,7 +50,7 @@ public:
     Physics3DDebugDrawer();
     virtual ~Physics3DDebugDrawer();
 
-    void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags);
+    void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags);
 
     virtual void	drawLine(const btVector3& from,const btVector3& to,const btVector3& color) override;
     virtual void	drawContactPoint(const btVector3& PointOnB,const btVector3& normalOnB,btScalar distance,int lifeTime,const btVector3& color) override;
@@ -57,14 +63,14 @@ private:
 
     void init();
     void ensureCapacity(int count);
-    void drawImplementation(const Mat4 &transform, uint32_t flags);
+    void drawImplementation(const cocos2d::Mat4 &transform, uint32_t flags);
 
 private:
 
     struct V3F_V4F
     {
-        Vec3 vertex;
-        Vec4 color;
+        cocos2d::Vec3 vertex;
+        cocos2d::Vec4 color;
     };
 
     GLuint      _vao;
@@ -74,9 +80,9 @@ private:
     GLsizei     _bufferCount;
     V3F_V4F*    _buffer;
 
-    BlendFunc   _blendFunc;
-    CustomCommand _customCommand;
-    GLProgram *_program;
+    cocos2d::BlendFunc   _blendFunc;
+    cocos2d::CustomCommand _customCommand;
+    cocos2d::GLProgram *_program;
 
     bool        _dirty;
 };
@@ -87,7 +93,7 @@ public:
 
     Physics3DViewer();
 
-    void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags);
+    void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags);
 
 protected:
 
