@@ -25,13 +25,13 @@ THE SOFTWARE.
 #define CC_TERRAIN_H
 
 #include "2d/CCNode.h"
+#include "2d/CCCamera.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCCustomCommand.h"
 #include "3d/CCAABB.h"
-#include "2d/CCCamera.h"
 #include "3d/CCRay.h"
 #include <vector>
-#include "vld.h"
+
 NS_CC_BEGIN
 
 /**
@@ -346,13 +346,12 @@ protected:
     Texture2D * _detailMapTextures[4];
     Texture2D * _alphaMap;
     CustomCommand _customCommand;
-    GLuint vbo[2];
     QuadTree * _quadRoot;
     Chunk * _chunkesArray[MAX_CHUNKES][MAX_CHUNKES];
-    std::vector<TerrainVertexData> vertices;
-    std::vector<GLushort> indices;
-    int imageWidth;
-    int imageHeight;
+    std::vector<TerrainVertexData> _vertices;
+    std::vector<GLushort> _indices;
+    int _imageWidth;
+    int _imageHeight;
     Size _chunkSize;
     bool _isEnableFrustumCull;
     int _maxDetailMapValue;
@@ -360,8 +359,8 @@ protected:
     Mat4 _oldCameraModelMatrix;
     Mat4 _terrainModelMatrix;
     GLuint _normalLocation;
-    float m_maxHeight;
-    float m_minHeight;
+    float _maxHeight;
+    float _minHeight;
     CrackFixedType _crackFixedType;
     float _skirtRatio;
     int _skirtVerticesOffset[4];
