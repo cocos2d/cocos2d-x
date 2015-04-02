@@ -4,6 +4,8 @@
 // http://www.cocos2d-x.org
 //
 
+#include "chipmunk.h"
+
 #include "ChipmunkTest.h"
 
 
