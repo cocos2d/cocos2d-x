@@ -137,9 +137,4 @@ void Cocos2dRenderer::QueuePointerEvent(cocos2d::PointerEventType type, Windows:
     GLViewImpl::sharedOpenGLView()->QueuePointerEvent(type, args);
 }
 
-void Cocos2dRenderer::QueueKeyBoardEvent(cocos2d::Cocos2dKeyEvent type, Windows::UI::Core::KeyEventArgs^ e)
-{
-    //GLViewImpl::sharedOpenGLView()->QueuePointerEvent(type, e);
-}
-
 
