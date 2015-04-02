@@ -24,7 +24,11 @@ extern "C"
 
 	bool Java_org_cocos2dx_lua_AppActivity_nativeIsDebug(JNIEnv *env, jobject thisz)
 	{
-        return false;    
+#if COCOS2D_DEBUG > 0
+        return true;
+#else
+        return false;
+#endif
 	}
 }
 
