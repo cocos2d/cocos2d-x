@@ -11,8 +11,9 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- get & set high quality<br>
--- param true: is high quality, false: is low quality
+-- set high quality<br>
+-- The default value is based on Configuration::isHighAnimate3DQuality(). You can configure it in the config.plist. However, you can modify it using the following function<br>
+-- param true: is high quality, false: is low quality.
 -- @function [parent=#Animate3D] setHighQuality 
 -- @param self
 -- @param #bool isHighQuality
@@ -39,6 +40,13 @@
 -- @return Animate3D#Animate3D self (return value: cc.Animate3D)
         
 --------------------------------
+-- get high quality<br>
+-- is it high quality
+-- @function [parent=#Animate3D] isHighQuality 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- get & set origin interval
 -- @function [parent=#Animate3D] setOriginInterval 
 -- @param self
@@ -50,12 +58,6 @@
 -- @function [parent=#Animate3D] getWeight 
 -- @param self
 -- @return float#float ret (return value: float)
-        
---------------------------------
--- 
--- @function [parent=#Animate3D] getHighQuality 
--- @param self
--- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- @overload self, cc.Animation3D, float, float         
