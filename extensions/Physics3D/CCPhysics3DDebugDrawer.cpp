@@ -78,10 +78,10 @@ int Physics3DDebugDrawer::getDebugMode() const
     return DBG_DrawWireframe;
 }
 
-void Physics3DDebugDrawer::draw( Renderer *renderer, const Mat4 &transform, uint32_t flags )
+void Physics3DDebugDrawer::draw( Renderer *renderer)
 {
-    _customCommand.init(0, transform, flags);
-    _customCommand.func = CC_CALLBACK_0(Physics3DDebugDrawer::drawImplementation, this, transform, flags);
+    _customCommand.init(0, Mat4::IDENTITY, 0);
+    _customCommand.func = CC_CALLBACK_0(Physics3DDebugDrawer::drawImplementation, this, Mat4::IDENTITY, 0);
     renderer->addCommand(&_customCommand);
 }
 
