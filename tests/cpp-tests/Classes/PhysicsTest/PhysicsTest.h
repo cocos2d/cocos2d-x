@@ -2,28 +2,14 @@
 #define _PHYSICS_TEST_H_
 
 #include "cocos2d.h"
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
 #include <map>
 
-
-class PhysicsTestScene : public TestScene
-{
-public:
-    PhysicsTestScene();
-    
-public:
-    virtual void runThisTest();
-    
-    void toggleDebug();
-    
-private:
-    bool _debugDraw;
-};
+DEFINE_TEST_SUITE(PhysicsTests);
 
 #if CC_USE_PHYSICS == 0
-class PhysicsDemoDisabled : public BaseTest
+class PhysicsDemoDisabled : public TestCase
 {
 public:
     CREATE_FUNC(PhysicsDemoDisabled);
@@ -32,21 +18,16 @@ public:
 };
 #else
 
-class PhysicsDemo : public BaseTest
+class PhysicsDemo : public TestCase
 {
 public:
-    CREATE_FUNC(PhysicsDemo);
-
     PhysicsDemo();
     virtual ~PhysicsDemo();
     
+    virtual bool init() override;
     virtual void onEnter() override;
     virtual std::string title() const override;
-    virtual std::string subtitle() const override;
     
-    void restartCallback(Ref* sender) override;
-    void nextCallback(Ref* sender) override;
-    void backCallback(Ref* sender) override;
     void toggleDebugCallback(Ref* sender);
     
     Sprite* addGrossiniAtPosition(Vec2 p, float scale = 1.0);
@@ -54,15 +35,16 @@ public:
     Sprite* makeBox(Vec2 point, Size size, int color = 0, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
     Sprite* makeTriangle(Vec2 point, Size size, int color = 0, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
     
-    bool onTouchBegan(Touch* touch, Event* event) override;
-    void onTouchMoved(Touch* touch, Event* event) override;
-    void onTouchEnded(Touch* touch, Event* event) override;
-    
+    bool onTouchBegan(Touch* touch, Event* event);
+    void onTouchMoved(Touch* touch, Event* event);
+    void onTouchEnded(Touch* touch, Event* event);
+
+    void toggleDebug();
 protected:
-    PhysicsTestScene* _scene;
-    Texture2D* _spriteTexture;    // weak ref
+    Texture2D* _spriteTexture;
     SpriteBatchNode* _ball;
     std::unordered_map<int, Node*> _mouses;
+    bool _debugDraw;
 };
 
 class PhysicsDemoClickAdd : public PhysicsDemo
@@ -74,8 +56,8 @@ public:
     void onEnter() override;
     virtual std::string subtitle() const override;
     
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
-    void onAcceleration(Acceleration* acc, Event* event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    void onAcceleration(Acceleration* acc, Event* event);
 };
 
 class PhysicsDemoLogoSmash : public PhysicsDemo
@@ -107,7 +89,7 @@ public:
     void onEnter() override;
     virtual std::string title() const override;
     void update(float delta) override;
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
     
     void changeModeCallback(Ref* sender);
     
@@ -147,9 +129,9 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
-    bool onTouchBegan(Touch* touch, Event* event) override;
-    void onTouchMoved(Touch* touch, Event* event) override;
-    void onTouchEnded(Touch* touch, Event* event) override;
+    bool onTouchBegan(Touch* touch, Event* event);
+    void onTouchMoved(Touch* touch, Event* event);
+    void onTouchEnded(Touch* touch, Event* event);
     
 private:
     float _distance;
@@ -179,7 +161,7 @@ public:
     bool slice(PhysicsWorld& world, const PhysicsRayCastInfo& info, void* data);
     void clipPoly(PhysicsShapePolygon* shape, Vec2 normal, float distance);
     
-    void onTouchEnded(Touch *touch, Event *event) override;
+    void onTouchEnded(Touch *touch, Event *event);
     
 private:
     int _sliceTag;
@@ -275,7 +257,7 @@ public:
     void onEnter() override;
     virtual std::string title() const override;
     
-    bool onTouchBegan(Touch* touch, Event* event) override;
+    bool onTouchBegan(Touch* touch, Event* event);
     
 };
 

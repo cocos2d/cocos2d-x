@@ -1,18 +1,16 @@
 #ifndef _CLICK_AND_MOVE_TEST_H_
 #define _CLICK_AND_MOVE_TEST_H_
 
-#include "../testBasic.h"
+#include "../BaseTest.h"
 
-class ClickAndMoveTestScene : public TestScene
+DEFINE_TEST_SUITE(ClickAndMoveTest);
+
+class ClickAndMoveTestCase : public TestCase
 {
 public:
-    virtual void runThisTest();
-};
+    CREATE_FUNC(ClickAndMoveTestCase);
 
-class MainLayer : public Layer
-{
-public:
-    MainLayer();
+    ClickAndMoveTestCase();
     bool onTouchBegan(Touch* touch, Event  *event);
     void onTouchEnded(Touch* touch, Event  *event);
 };

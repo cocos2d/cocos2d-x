@@ -2,19 +2,12 @@
 #define _RENDERTEXTURE_TEST_H_
 
 #include "cocos2d.h"
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
-class RenderTextureTest : public BaseTest
-{
-public:
-    virtual void onEnter() override;
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
+DEFINE_TEST_SUITE(RenderTextureTests);
 
-    void restartCallback(Ref* sender) override;
-    void nextCallback(Ref* sender) override;
-    void backCallback(Ref* sender) override;
+class RenderTextureTest : public TestCase
+{
 };
 
 class RenderTextureSave : public RenderTextureTest
@@ -25,7 +18,7 @@ public:
     ~RenderTextureSave();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event* event) override;
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event* event);
     void clearImage(Ref *pSender);
     void saveImage(Ref *pSender);
 
@@ -43,21 +36,15 @@ public:
     virtual std::string subtitle() const override;
 };
 
-class RenderTextureScene : public TestScene
-{
-public:
-    virtual void runThisTest();
-};
-
 class RenderTextureZbuffer : public RenderTextureTest
 {
 public:
     CREATE_FUNC(RenderTextureZbuffer);
     RenderTextureZbuffer();
 
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event* event) override;
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event* event);
     void onTouchesBegan(const std::vector<Touch*>& touches, Event* event);
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
@@ -148,7 +135,7 @@ public:
     CREATE_FUNC(SpriteRenderTextureBug);
     SpriteRenderTextureBug();
     
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     

@@ -6,16 +6,18 @@
 
 #include "cocos2d.h"
 #include "chipmunk.h"
-#include "../testBasic.h"
+#include "../BaseTest.h"
 #include "extensions/cocos-ext.h"
 
 USING_NS_CC_EXT;
 
-class ChipmunkTestLayer : public Layer
+class ChipmunkTest : public TestCase
 {
 public:
-    ChipmunkTestLayer();
-    ~ChipmunkTestLayer();
+    CREATE_FUNC(ChipmunkTest);
+
+    ChipmunkTest();
+    ~ChipmunkTest();
     void onEnter() override;
     void initPhysics();
     void createResetButton();
@@ -24,8 +26,8 @@ public:
     void addNewSpriteAtPosition(cocos2d::Vec2 p);
     void update(float dt) override;
     void toggleDebugCallback(Ref* sender);
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
-    virtual void onAcceleration(Acceleration* acc, Event* event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    virtual void onAcceleration(Acceleration* acc, Event* event);
 
 private:
     Texture2D* _spriteTexture; // weak ref
@@ -36,10 +38,6 @@ private:
     cpShape* _walls[4];
 };
 
-class ChipmunkAccelTouchTestScene : public TestScene
-{
-public:
-    virtual void runThisTest();
-};
+DEFINE_TEST_SUITE(ChipmunkTests);
 
 #endif /* __CHIPMUNKACCELTOUCHTEST_H__ */

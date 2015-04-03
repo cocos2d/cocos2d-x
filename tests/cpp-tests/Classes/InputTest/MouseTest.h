@@ -2,29 +2,14 @@
 #define __MOUSE_TEST_H_
 
 #include "cocos2d.h"
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
-class BaseMouseTest : public BaseTest
-{
-public:
-    BaseMouseTest(void);
-    virtual ~BaseMouseTest(void);
-    
-    void restartCallback(Ref* sender) override;
-    void nextCallback(Ref* sender) override;
-    void backCallback(Ref* sender) override;
-    
-    // overrides
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-    virtual void onEnter() override;
-};
+DEFINE_TEST_SUITE(MouseTests);
 
-class MouseTestScene : public TestScene
+class BaseMouseTest : public TestCase
 {
 public:
-    virtual void runThisTest();
+    
 };
 
 class MouseEventTest : public BaseMouseTest

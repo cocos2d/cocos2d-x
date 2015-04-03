@@ -7,7 +7,7 @@
 
 bool Bug422Layer::init()
 {
-    if (BugsTestBaseLayer::init())
+    if (BugsTestBase::init())
     {
         reset();
         return true;

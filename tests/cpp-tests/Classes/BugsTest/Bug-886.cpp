@@ -7,7 +7,7 @@
 
 bool Bug886Layer::init()
 {
-    if(BugsTestBaseLayer::init())
+    if(BugsTestBase::init())
     {
         // ask director the the window size
         //        auto size = [[Director sharedDirector] winSize];

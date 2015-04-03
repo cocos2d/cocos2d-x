@@ -33,19 +33,23 @@ USING_NS_CC_EXT;
 class ControlButtonTest_HelloVariableSize : public ControlScene
 {
 public:
-    bool init();
+    CREATE_FUNC(ControlButtonTest_HelloVariableSize);
+
+    virtual bool init() override;
     /** Creates and return a button with a default background and title color. */
     ControlButton *standardButtonWithTitle(const char * title);
-
-    CONTROL_SCENE_CREATE_FUNC(ControlButtonTest_HelloVariableSize)
 };
 
 class ControlButtonTest_Event : public ControlScene
 {
 public:
+    CREATE_FUNC(ControlButtonTest_Event);
+
     ControlButtonTest_Event();
     ~ControlButtonTest_Event();
-    bool init();
+
+    virtual bool init() override;
+
     void touchDownAction(Ref *sender, Control::EventType controlEvent);
     void touchDragInsideAction(Ref *sender, Control::EventType controlEvent);
     void touchDragOutsideAction(Ref *sender, Control::EventType controlEvent);
@@ -58,16 +62,15 @@ public:
 protected:
     CC_SYNTHESIZE_RETAIN(Label *, _displayValueLabel, DisplayValueLabel)
     CC_SYNTHESIZE_RETAIN(Label *, _displayBitmaskLabel, DisplayBitmaskLabel)
-    CONTROL_SCENE_CREATE_FUNC(ControlButtonTest_Event)
+    
 };
-
 
 class ControlButtonTest_Styling : public ControlScene
 {
 public:
-    bool init();
+    virtual bool init() override;
     ControlButton *standardButtonWithTitle(const char *title);
-    CONTROL_SCENE_CREATE_FUNC(ControlButtonTest_Styling)
+    CREATE_FUNC(ControlButtonTest_Styling);
 };
 
 

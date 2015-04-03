@@ -10,24 +10,14 @@
 #define __samples__NewEventDispatcherTest__
 
 #include "cocos2d.h"
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
-class EventDispatcherTestScene : public TestScene
-{
-public:
-    virtual void runThisTest();
-};
+DEFINE_TEST_SUITE(EventDispatcherTests);
 
-class EventDispatcherTestDemo : public BaseTest
+class EventDispatcherTestDemo : public TestCase
 {
 public:
-    virtual void onEnter() override;
     virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-    void backCallback(Ref* sender) override;
-    void nextCallback(Ref* sender) override;
-    void restartCallback(Ref* sender) override;
 };
 
 

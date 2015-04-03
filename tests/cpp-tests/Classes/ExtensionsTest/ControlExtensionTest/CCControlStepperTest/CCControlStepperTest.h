@@ -31,9 +31,10 @@
 class ControlStepperTest : public ControlScene
 {
 public:
+    CREATE_FUNC(ControlStepperTest);
     ControlStepperTest();
     virtual ~ControlStepperTest();
-    bool init();
+    virtual bool init() override;
     /** Creates and returns a new ControlStepper. */
     ControlStepper* makeControlStepper();
 
@@ -41,7 +42,7 @@ public:
     void valueChanged(Ref *sender, Control::EventType controlEvent);
 protected:
     CC_SYNTHESIZE_RETAIN(Label*, _displayValueLabel, DisplayValueLabel)
-    CONTROL_SCENE_CREATE_FUNC(ControlStepperTest)
+        
 };
 
 #endif /* __CCCONTROLSTEPPERTEST_H__ */

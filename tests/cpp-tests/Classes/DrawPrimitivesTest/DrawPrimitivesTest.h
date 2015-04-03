@@ -2,27 +2,22 @@
 #define _DRAW_PRIMITIVES_TEST_H_
 
 #include "cocos2d.h"
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
 #include <string>
 
-class BaseLayer : public BaseTest
+DEFINE_TEST_SUITE(DrawPrimitivesTests);
+
+class DrawPrimitivesBaseTest : public TestCase
 {
 public:
-    BaseLayer();
-    
-    void restartCallback(Ref* sender) override;
-    void nextCallback(Ref* sender) override;
-    void backCallback(Ref* sender) override;
     virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-    virtual void onEnter() override;
 };
 
-class DrawPrimitivesTest : public BaseLayer
+class DrawPrimitivesTest : public DrawPrimitivesBaseTest
 {
 public:
+    CREATE_FUNC(DrawPrimitivesTest);
     DrawPrimitivesTest();
     
     virtual std::string title() const override;
@@ -34,19 +29,15 @@ protected:
     CustomCommand _customCommand;
 };
 
-class DrawNodeTest : public BaseLayer
+class DrawNodeTest : public DrawPrimitivesBaseTest
 {
 public:
+    CREATE_FUNC(DrawNodeTest);
+
     DrawNodeTest();
     
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-};
-
-class DrawPrimitivesTestScene : public TestScene
-{
-public:
-    virtual void runThisTest();
 };
 
 #endif

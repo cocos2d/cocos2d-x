@@ -2,22 +2,19 @@
 #define _USERDEFAULT_TEST_H_
 
 #include "cocos2d.h"
-#include "../testBasic.h"
+#include "../BaseTest.h"
 
-class UserDefaultTest : public Layer
+DEFINE_TEST_SUITE(UserDefaultTests);
+
+class UserDefaultTest : public TestCase
 {
 public:
+    CREATE_FUNC(UserDefaultTest);
     UserDefaultTest();
     ~UserDefaultTest();
 
 private:
     void doTest();
-};
-
-class UserDefaultTestScene : public TestScene
-{
-public:
-    virtual void runThisTest();
 };
 
 #endif // _USERDEFAULT_TEST_H_

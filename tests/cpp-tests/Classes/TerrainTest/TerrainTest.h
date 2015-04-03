@@ -6,28 +6,14 @@
 #include "3d/CCTerrain.h"
 #include "2d/CCCamera.h"
 #include "2d/CCAction.h"
-class TerrainTestScene : public TestScene
+
+DEFINE_TEST_SUITE(TerrainTests);
+
+class TerrainTestDemo : public TestCase
 {
-public:
-    virtual void runThisTest();
+protected:
+    std::string    _title;
 };
-
-class TerrainTestDemo : public BaseTest
-{
-public:
-    TerrainTestDemo(void);
-    virtual ~TerrainTestDemo(void);
-
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
-
-    // overrides
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-    virtual void onEnter() override;
-};
-
 
 class TerrainSimple : public TerrainTestDemo
 {
