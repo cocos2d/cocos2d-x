@@ -252,6 +252,11 @@ THE SOFTWARE.
 #define CC_USE_PHYSICS 1
 #endif
 
+/** Use 3d physics integration API. */
+#ifndef CC_USE_3D_PHYSICS
+#define CC_USE_3D_PHYSICS 1
+#endif
+
 /** Use culling or not. */
 #ifndef CC_USE_CULLING
 #define CC_USE_CULLING 1

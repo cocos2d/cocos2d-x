@@ -37,6 +37,11 @@ THE SOFTWARE.
 #include "physics/CCPhysicsWorld.h"
 #endif
 
+#if CC_USE_3D_PHYSICS
+#include "Physics3D/CCPhysics3DWorld.h"
+#include "Physics3D/CCPhysics3DComponent.h"
+#endif
+
 NS_CC_BEGIN
 
 Scene::Scene()
@@ -44,6 +49,9 @@ Scene::Scene()
 : _physicsWorld(nullptr)
 #endif
 {
+#if CC_USE_3D_PHYSICS
+    _physics3DWorld = nullptr;
+#endif
     _ignoreAnchorPointForPosition = true;
     setAnchorPoint(Vec2(0.5f, 0.5f));
     
@@ -61,6 +69,9 @@ Scene::~Scene()
 {
 #if CC_USE_PHYSICS
     CC_SAFE_DELETE(_physicsWorld);
+#endif
+#if CC_USE_3D_PHYSICS
+    CC_SAFE_RELEASE(_physics3DWorld);
 #endif
     Director::getInstance()->getEventDispatcher()->removeEventListener(_event);
     CC_SAFE_RELEASE(_event);
@@ -175,7 +186,7 @@ void Scene::removeAllChildren()
     }
 }
 
-#if CC_USE_PHYSICS
+#if (CC_USE_PHYSICS || CC_USE_3D_PHYSICS)
 void Scene::addChild(Node* child, int zOrder, int tag)
 {
     Node::addChild(child, zOrder, tag);
@@ -212,7 +223,15 @@ bool Scene::initWithPhysics()
         CC_BREAK_IF( ! (director = Director::getInstance()) );
         
         this->setContentSize(director->getWinSize());
+#if CC_USE_PHYSICS
         CC_BREAK_IF(! (_physicsWorld = PhysicsWorld::construct(*this)));
+#endif
+        
+#if CC_USE_3D_PHYSICS
+        extension::Physics3DWorldDes info;
+        info.isDebugDrawEnabled = true;
+        CC_BREAK_IF(! (_physics3DWorld = extension::Physics3DWorld::create(&info)));
+#endif
         
         // success
         ret = true;
@@ -222,6 +241,7 @@ bool Scene::initWithPhysics()
 
 void Scene::addChildToPhysicsWorld(Node* child)
 {
+#if CC_USE_PHYSICS
     if (_physicsWorld)
     {
         std::function<void(Node*)> addToPhysicsWorldFunc = nullptr;
@@ -240,6 +260,30 @@ void Scene::addChildToPhysicsWorld(Node* child)
         
         addToPhysicsWorldFunc(child);
     }
+#endif
+    
+#if CC_USE_3D_PHYSICS
+    if (_physics3DWorld)
+    {
+        std::function<void(Node*)> addToPhysicsWorldFunc = nullptr;
+        addToPhysicsWorldFunc = [this, &addToPhysicsWorldFunc](Node* node) -> void
+        {
+            static std::string comName = extension::Physics3DComponent::getPhysics3DComponentName();
+            auto com = static_cast<extension::Physics3DComponent*>(node->getComponent(comName));
+            if (com)
+            {
+                _physics3DWorld->addPhysics3DObject(com->getPhysics3DObject());
+            }
+            
+            auto& children = node->getChildren();
+            for( const auto &n : children) {
+                addToPhysicsWorldFunc(n);
+            }
+        };
+        
+        addToPhysicsWorldFunc(child);
+    }
+#endif
 }
 
 #endif

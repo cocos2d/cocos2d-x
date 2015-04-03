@@ -30,7 +30,54 @@
 
 NS_CC_EXT_BEGIN
 
+Physics3DComponent::~Physics3DComponent()
+{
+    
+}
 
+std::string& Physics3DComponent::getPhysics3DComponentName()
+{
+    static std::string comName = "___Physics3DComponent___";
+    return comName;
+}
+
+bool Physics3DComponent::init()
+{
+    setName(getPhysics3DComponentName());
+    return Component::init();
+}
+
+Physics3DComponent* Physics3DComponent::create(Physics3DObject* physicsObj)
+{
+    auto ret = new (std::nothrow) Physics3DComponent();
+    if (ret && ret->init())
+    {
+        ret->setPhysics3DObject(physicsObj);
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return nullptr;
+}
+
+//virtual void update(float delta);
+bool Physics3DComponent::serialize(void* r)
+{
+    //TODO: FIXME
+    return Component::serialize(r);
+}
+
+void Physics3DComponent::setPhysics3DObject(Physics3DObject* physicsObj)
+{
+    CC_SAFE_RETAIN(physicsObj);
+    CC_SAFE_RELEASE(_physics3DObj);
+    _physics3DObj = physicsObj;
+}
+
+Physics3DComponent::Physics3DComponent()
+: _physics3DObj(nullptr)
+{
+    
+}
 
 NS_CC_EXT_END
 

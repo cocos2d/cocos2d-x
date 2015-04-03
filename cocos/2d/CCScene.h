@@ -41,6 +41,12 @@ class EventCustom;
 #if CC_USE_PHYSICS
 class PhysicsWorld;
 #endif
+#if CC_USE_3D_PHYSICS
+namespace extension
+{
+    class Physics3DWorld;
+}
+#endif
 /**
  * @addtogroup _2d
  * @{
@@ -136,15 +142,26 @@ protected:
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Scene);
     
-#if CC_USE_PHYSICS
+#if (CC_USE_PHYSICS || CC_USE_3D_PHYSICS)
 public:
     virtual void addChild(Node* child, int zOrder, int tag) override;
     virtual void addChild(Node* child, int zOrder, const std::string &name) override;
+    
+#if CC_USE_PHYSICS
     /** Get the physics world of the scene.
      * @return The physics world of the scene.
      * @js NA
      */
     inline PhysicsWorld* getPhysicsWorld() { return _physicsWorld; }
+#endif
+    
+#if CC_USE_3D_PHYSICS
+    /** Get the 3d physics world of the scene.
+     * @return The 3d physics world of the scene.
+     * @js NA
+     */
+    inline extension::Physics3DWorld* getPhysics3DWorld() { return _physics3DWorld; }
+#endif
     
     /** Create a scene with physics.
      * @return An autoreleased Scene object with physics.
@@ -158,8 +175,14 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     void addChildToPhysicsWorld(Node* child);
 
+#if CC_USE_PHYSICS
     PhysicsWorld* _physicsWorld;
-#endif // CC_USE_PHYSICS
+#endif
+    
+#if CC_USE_3D_PHYSICS
+    extension::Physics3DWorld* _physics3DWorld;
+#endif
+#endif // (CC_USE_PHYSICS || CC_USE_3D_PHYSICS)
 };
 
 // end of _2d group

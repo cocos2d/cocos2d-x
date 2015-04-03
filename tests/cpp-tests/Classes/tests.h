@@ -83,4 +83,8 @@
 #include "AllocatorTest/AllocatorTest.h"
 #include "CocosStudio3DTest/CocosStudio3DTest.h"
 
+#if (CC_ENABLE_BULLET_INTEGRATION)
+#include "Physics3DTest/Physics3DTest.h"
+#endif
+
 #endif

@@ -32,7 +32,7 @@
 #include "CCPhysics3DShape.h"
 #include "CCPhysicsSprite3D.h"
 #include "CCPhysics3DWorld.h"
-#include "CCPhysics3DViewer.h"
+#include "CCPhysics3DDebugDrawer.h"
 #include "CCPhysics3DObject.h"
 #include "CCPhysics3DComponent.h"
 #include "CCPhysics3DConstraint.h"
