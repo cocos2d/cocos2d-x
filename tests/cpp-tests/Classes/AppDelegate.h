@@ -27,7 +27,8 @@
 #define  _APP_DELEGATE_H_
 
 #include "cocos2d.h"
-#include "BaseTest.h"
+
+class TestController;
 /**
 @brief    The cocos2d Application.
 
@@ -60,10 +61,8 @@ public:
     */
     virtual void applicationWillEnterForeground();
 
-    BaseTest* getCurrentTest();
-    void setCurrentTest(BaseTest* curTest);
 private:
-    BaseTest* _curTest;
+    TestController* _testController;
 };
 
 #endif // _APP_DELEGATE_H_
