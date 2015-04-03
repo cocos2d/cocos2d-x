@@ -3,6 +3,7 @@ cocos2d-x-3.6beta0 Apr.14 2015
     [NEW]           Animate3D: added `Animate3D::setHighQuality()` to set animation quality
 
     [FIX]           Audio: memory leak
+    [FIX]           Particle3D: particles' rotation affect particle system's rotation
     [FIX]           Sprite3D: memory leak
 
 cocos2d-x-3.5 Mar.23 2015
