@@ -34,6 +34,7 @@ Physics3DWorld::Physics3DWorld()
 , _dispatcher(nullptr)
 , _broadphase(nullptr)
 , _solver(nullptr)
+, _debugDrawer(nullptr)
 {
     
 }
@@ -46,6 +47,7 @@ Physics3DWorld::~Physics3DWorld()
     CC_SAFE_DELETE(_broadphase);
     CC_SAFE_DELETE(_solver);
     CC_SAFE_DELETE(_btPhyiscsWorld);
+    CC_SAFE_DELETE(_debugDrawer);
 }
 
 Physics3DWorld* Physics3DWorld::create(Physics3DWorldDes* info)
@@ -59,25 +61,41 @@ Physics3DWorld* Physics3DWorld::create(Physics3DWorldDes* info)
 bool Physics3DWorld::init(Physics3DWorldDes* info)
 {
     ///collision configuration contains default setup for memory, collision setup
-	_collisionConfiguration = new btDefaultCollisionConfiguration();
+	_collisionConfiguration = new (std::nothrow) btDefaultCollisionConfiguration();
 	//_collisionConfiguration->setConvexConvexMultipointIterations();
     
 	///use the default collision dispatcher. For parallel processing you can use a diffent dispatcher (see Extras/BulletMultiThreaded)
-	_dispatcher = new	btCollisionDispatcher(_collisionConfiguration);
+	_dispatcher = new (std::nothrow) btCollisionDispatcher(_collisionConfiguration);
     
-	_broadphase = new btDbvtBroadphase();
+	_broadphase = new (std::nothrow) btDbvtBroadphase();
     
 	///the default constraint solver. For parallel processing you can use a different solver (see Extras/BulletMultiThreaded)
-	btSequentialImpulseConstraintSolver* sol = new btSequentialImpulseConstraintSolver;
+	btSequentialImpulseConstraintSolver* sol = new btSequentialImpulseConstraintSolver();
 	_solver = sol;
     
+    _btPhyiscsWorld = new btDiscreteDynamicsWorld(_dispatcher,_broadphase,_solver,_collisionConfiguration);
     _btPhyiscsWorld->setGravity(convertVec3TobtVector3(info->gravity));
     if (info->isDebugDrawEnabled)
     {
-        //TODO
+        _debugDrawer = new (std::nothrow) Physics3DDebugDrawer();
+        _btPhyiscsWorld->setDebugDrawer(_debugDrawer);
     }
     
     return true;
+}
+
+void Physics3DWorld::setDebugDrawEnable(bool enableDebugDraw)
+{
+    if (enableDebugDraw && _btPhyiscsWorld->getDebugDrawer() == nullptr)
+    {
+        _debugDrawer = new (std::nothrow) Physics3DDebugDrawer();
+    }
+    enableDebugDraw ? _btPhyiscsWorld->setDebugDrawer(_debugDrawer) : _btPhyiscsWorld->setDebugDrawer(nullptr);
+}
+
+bool Physics3DWorld::isDebugDrawEnabled() const
+{
+    return _btPhyiscsWorld->getDebugDrawer() != nullptr;
 }
 
 void Physics3DWorld::addPhysics3DObject(Physics3DObject* physicsObj)

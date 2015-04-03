@@ -2588,10 +2588,10 @@
 		B6CE79301AC531E80007BF8D /* CCPhysics3DObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CE79251AC531E20007BF8D /* CCPhysics3DObject.cpp */; };
 		B6CE79311AC531E80007BF8D /* CCPhysics3DObject.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CE79261AC531E20007BF8D /* CCPhysics3DObject.h */; };
 		B6CE79321AC531E80007BF8D /* CCPhysics3DObject.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CE79261AC531E20007BF8D /* CCPhysics3DObject.h */; };
-		B6CE79331AC531E80007BF8D /* CCPhysics3DViewer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CE79271AC531E20007BF8D /* CCPhysics3DViewer.cpp */; };
-		B6CE79341AC531E80007BF8D /* CCPhysics3DViewer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CE79271AC531E20007BF8D /* CCPhysics3DViewer.cpp */; };
-		B6CE79351AC531E80007BF8D /* CCPhysics3DViewer.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CE79281AC531E20007BF8D /* CCPhysics3DViewer.h */; };
-		B6CE79361AC531E80007BF8D /* CCPhysics3DViewer.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CE79281AC531E20007BF8D /* CCPhysics3DViewer.h */; };
+		B6CE79331AC531E80007BF8D /* CCPhysics3DDebugDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CE79271AC531E20007BF8D /* CCPhysics3DDebugDrawer.cpp */; };
+		B6CE79341AC531E80007BF8D /* CCPhysics3DDebugDrawer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CE79271AC531E20007BF8D /* CCPhysics3DDebugDrawer.cpp */; };
+		B6CE79351AC531E80007BF8D /* CCPhysics3DDebugDrawer.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CE79281AC531E20007BF8D /* CCPhysics3DDebugDrawer.h */; };
+		B6CE79361AC531E80007BF8D /* CCPhysics3DDebugDrawer.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CE79281AC531E20007BF8D /* CCPhysics3DDebugDrawer.h */; };
 		B6CE79371AC531E80007BF8D /* CCPhysics3DWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CE79291AC531E20007BF8D /* CCPhysics3DWorld.cpp */; };
 		B6CE79381AC531E80007BF8D /* CCPhysics3DWorld.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CE79291AC531E20007BF8D /* CCPhysics3DWorld.cpp */; };
 		B6CE79391AC531E80007BF8D /* CCPhysics3DWorld.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CE792A1AC531E20007BF8D /* CCPhysics3DWorld.h */; };
@@ -4811,8 +4811,8 @@
 		B6CE79241AC531E20007BF8D /* CCPhysics3DComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysics3DComponent.h; path = Physics3D/CCPhysics3DComponent.h; sourceTree = "<group>"; };
 		B6CE79251AC531E20007BF8D /* CCPhysics3DObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPhysics3DObject.cpp; path = Physics3D/CCPhysics3DObject.cpp; sourceTree = "<group>"; };
 		B6CE79261AC531E20007BF8D /* CCPhysics3DObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysics3DObject.h; path = Physics3D/CCPhysics3DObject.h; sourceTree = "<group>"; };
-		B6CE79271AC531E20007BF8D /* CCPhysics3DViewer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPhysics3DViewer.cpp; path = Physics3D/CCPhysics3DViewer.cpp; sourceTree = "<group>"; };
-		B6CE79281AC531E20007BF8D /* CCPhysics3DViewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysics3DViewer.h; path = Physics3D/CCPhysics3DViewer.h; sourceTree = "<group>"; };
+		B6CE79271AC531E20007BF8D /* CCPhysics3DDebugDrawer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPhysics3DDebugDrawer.cpp; path = Physics3D/CCPhysics3DDebugDrawer.cpp; sourceTree = "<group>"; };
+		B6CE79281AC531E20007BF8D /* CCPhysics3DDebugDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysics3DDebugDrawer.h; path = Physics3D/CCPhysics3DDebugDrawer.h; sourceTree = "<group>"; };
 		B6CE79291AC531E20007BF8D /* CCPhysics3DWorld.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPhysics3DWorld.cpp; path = Physics3D/CCPhysics3DWorld.cpp; sourceTree = "<group>"; };
 		B6CE792A1AC531E20007BF8D /* CCPhysics3DWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPhysics3DWorld.h; path = Physics3D/CCPhysics3DWorld.h; sourceTree = "<group>"; };
 		BCE3B5131AC90C94005AB74A /* Android.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Android.mk; sourceTree = "<group>"; };
@@ -7450,8 +7450,8 @@
 				B6CE79241AC531E20007BF8D /* CCPhysics3DComponent.h */,
 				B6CE79251AC531E20007BF8D /* CCPhysics3DObject.cpp */,
 				B6CE79261AC531E20007BF8D /* CCPhysics3DObject.h */,
-				B6CE79271AC531E20007BF8D /* CCPhysics3DViewer.cpp */,
-				B6CE79281AC531E20007BF8D /* CCPhysics3DViewer.h */,
+				B6CE79271AC531E20007BF8D /* CCPhysics3DDebugDrawer.cpp */,
+				B6CE79281AC531E20007BF8D /* CCPhysics3DDebugDrawer.h */,
 				B6CE79291AC531E20007BF8D /* CCPhysics3DWorld.cpp */,
 				B6CE792A1AC531E20007BF8D /* CCPhysics3DWorld.h */,
 				B6CE79201AC4F77B0007BF8D /* CCPhysics3D.cpp */,
@@ -8733,7 +8733,7 @@
 				1A087AEA1860400400196EF5 /* edtaa3func.h in Headers */,
 				15AE181C19AAD2F700C27E9E /* CCBundle3D.h in Headers */,
 				15AE189919AAD33D00C27E9E /* CCMenuItemLoader.h in Headers */,
-				B6CE79351AC531E80007BF8D /* CCPhysics3DViewer.h in Headers */,
+				B6CE79351AC531E80007BF8D /* CCPhysics3DDebugDrawer.h in Headers */,
 				15AE1B5E19AADA9900C27E9E /* UITextBMFont.h in Headers */,
 				B665E3601AA80A6500DDB1C5 /* CCPUOnRandomObserverTranslator.h in Headers */,
 				15AE18E719AAD35000C27E9E /* CCActionFrameEasing.h in Headers */,
@@ -9732,7 +9732,7 @@
 				1A5701ED180BCB8C0088DEC7 /* CCTransitionPageTurn.h in Headers */,
 				BCE3BB4A1AC90C95005AB74A /* btMinMax.h in Headers */,
 				1A5701F1180BCB8C0088DEC7 /* CCTransitionProgress.h in Headers */,
-				B6CE79361AC531E80007BF8D /* CCPhysics3DViewer.h in Headers */,
+				B6CE79361AC531E80007BF8D /* CCPhysics3DDebugDrawer.h in Headers */,
 				B29A7DCE19EE1B7700872B35 /* Slot.h in Headers */,
 				15AE1A9C19AAD40300C27E9E /* b2Settings.h in Headers */,
 				BCE3B8021AC90C95005AB74A /* btDbvt.h in Headers */,
@@ -10407,7 +10407,7 @@
 				B665E3AE1AA80A6500DDB1C5 /* CCPURender.cpp in Sources */,
 				15AE18A219AAD33D00C27E9E /* CCParticleSystemQuadLoader.cpp in Sources */,
 				15AE188C19AAD33D00C27E9E /* CCLabelBMFontLoader.cpp in Sources */,
-				B6CE79331AC531E80007BF8D /* CCPhysics3DViewer.cpp in Sources */,
+				B6CE79331AC531E80007BF8D /* CCPhysics3DDebugDrawer.cpp in Sources */,
 				DA8C62A219E52C6400000516 /* ioapi_mem.cpp in Sources */,
 				B68779001A8CA82E00643ABF /* CCParticle3DRender.cpp in Sources */,
 				1A570069180BC5A10088DEC7 /* CCActionCatmullRom.cpp in Sources */,
@@ -11180,7 +11180,7 @@
 				B665E2131AA80A6500DDB1C5 /* CCPUBaseForceAffectorTranslator.cpp in Sources */,
 				BCE3B8C61AC90C95005AB74A /* btCylinderShape.cpp in Sources */,
 				382384081A25900F002C4610 /* FlatBuffersSerialize.cpp in Sources */,
-				B6CE79341AC531E80007BF8D /* CCPhysics3DViewer.cpp in Sources */,
+				B6CE79341AC531E80007BF8D /* CCPhysics3DDebugDrawer.cpp in Sources */,
 				BCE3B9001AC90C95005AB74A /* btTriangleBuffer.cpp in Sources */,
 				B68779011A8CA82E00643ABF /* CCParticle3DRender.cpp in Sources */,
 				DABC9FAA19E7DFA900FA252C /* CCClippingRectangleNode.cpp in Sources */,

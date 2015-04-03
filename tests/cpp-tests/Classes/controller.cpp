@@ -78,6 +78,9 @@ Controller g_aTestNames[] = {
 	{ "Node: Particles", [](){return new ParticleTestScene(); } },
 	{ "Node: Particle3D (PU)", [](){  return new Particle3DTestScene(); }},
 	{ "Node: Physics", []() { return new PhysicsTestScene(); } },
+#if (CC_ENABLE_BULLET_INTEGRATION)
+    { "Node: Physics3D", []() { return new Physics3DTestScene(); } },
+#endif
 	{ "Node: RenderTexture", [](){return new RenderTextureScene(); } },
 	{ "Node: Scene", [](){return new SceneTestScene();} },
 	{ "Node: Spine", []() { return new SpineTestScene(); } },

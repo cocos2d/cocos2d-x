@@ -100,6 +100,17 @@ Physics3DDebugDrawer::Physics3DDebugDrawer()
 Physics3DDebugDrawer::~Physics3DDebugDrawer()
 {
     free(_buffer);
+    
+    if (_vao)
+    {
+        glDeleteVertexArrays(1, &_vao);
+        _vao = 0;
+    }
+    if (_vbo)
+    {
+        glDeleteBuffers(1, &_vbo);
+        _vbo = 0;
+    }
 }
 
 void Physics3DDebugDrawer::ensureCapacity( int count )
@@ -176,16 +187,6 @@ void Physics3DDebugDrawer::init()
     {
         GL::bindVAO(0);
     }
-}
-
-
-void Physics3DViewer::draw( Renderer *renderer, const Mat4 &transform, uint32_t flags )
-{
-    _debugDrawer.draw(renderer, transform, flags);
-}
-
-Physics3DViewer::Physics3DViewer()
-{
 }
 
 NS_CC_EXT_END

@@ -87,19 +87,6 @@ private:
     bool        _dirty;
 };
 
-class CC_EX_DLL Physics3DViewer : public Ref
-{
-public:
-
-    Physics3DViewer();
-
-    void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags);
-
-protected:
-
-    Physics3DDebugDrawer _debugDrawer;
-};
-
 NS_CC_EXT_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION

@@ -43,6 +43,7 @@ NS_CC_EXT_BEGIN
 
 class Physics3DObject;
 class Physics3DConstraint;
+class Physics3DDebugDrawer;
 
 struct CC_EX_DLL Physics3DWorldDes
 {
@@ -55,7 +56,7 @@ struct CC_EX_DLL Physics3DWorldDes
     }
 };
 
-class CC_EX_DLL Physics3DWorld : Ref
+class CC_EX_DLL Physics3DWorld : public Ref
 {
 public:
     static Physics3DWorld* create(Physics3DWorldDes* info);
@@ -74,6 +75,10 @@ public:
     
     void stepSimulate(float dt);
     
+    void setDebugDrawEnable(bool enableDebugDraw);
+    
+    bool isDebugDrawEnabled() const;
+    
 CC_CONSTRUCTOR_ACCESS:
     
     Physics3DWorld();
@@ -91,6 +96,7 @@ protected:
     btCollisionDispatcher* _dispatcher;
     btDbvtBroadphase* _broadphase;
     btSequentialImpulseConstraintSolver* _solver;
+    Physics3DDebugDrawer*                _debugDrawer;
 #endif // CC_ENABLE_BULLET_INTEGRATION
 };
 

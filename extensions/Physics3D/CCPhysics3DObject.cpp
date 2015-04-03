@@ -25,7 +25,10 @@
 #include "CCPhysics3D.h"
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
+
 #include "bullet/btBulletCollisionCommon.h"
+#include "bullet/btBulletDynamicsCommon.h"
+
 NS_CC_EXT_BEGIN
 
 Physics3DRigidBody::Physics3DRigidBody()
@@ -265,6 +268,7 @@ void Physics3DRigidBody::addConstraint( Physics3DConstraint *constraint )
     if (iter == _constraintList.end()){
         _constraintList.push_back(constraint);
         //_btRigidBody->addConstraintRef(constraint->get);
+        //TODO: FIXME
     }
 }
 
@@ -272,7 +276,9 @@ void Physics3DRigidBody::removeConstraint( Physics3DConstraint *constraint )
 {
     auto iter = std::find(_constraintList.begin(), _constraintList.end(), constraint);
     if (iter != _constraintList.end()){
-        removeConstraint(iter - _constraintList.begin());
+        //removeConstraint(iter - _constraintList.begin());
+        _constraintList.erase(iter);
+        //TODO: FIXME
     }
 }
 
@@ -281,6 +287,7 @@ void Physics3DRigidBody::removeConstraint( unsigned int idx )
     CCASSERT(idx < _constraintList.size(), "idx < _constraintList.size()");
     //_btRigidBody->removeConstraintRef(_constraintList[idx]->get);
     _constraintList.erase(_constraintList.begin() + idx);
+    //TODO: FIXME
 }
 
 Physics3DConstraint* Physics3DRigidBody::getConstraint( unsigned int idx ) const
@@ -291,7 +298,7 @@ Physics3DConstraint* Physics3DRigidBody::getConstraint( unsigned int idx ) const
 
 unsigned int Physics3DRigidBody::getConstraintCount() const
 {
-    return _constraintList.size();
+    return (unsigned int)_constraintList.size();
 }
 
 NS_CC_EXT_END

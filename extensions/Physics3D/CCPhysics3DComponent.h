@@ -28,10 +28,37 @@
 #include "math/CCMath.h"
 #include "extensions/ExtensionMacros.h"
 #include "extensions/ExtensionExport.h"
+#include "2d/CCComponent.h"
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
 NS_CC_EXT_BEGIN
+
+class Physics3DObject;
+
+class CC_EX_DLL Physics3DComponent : public cocos2d::Component
+{
+public:
+    CREATE_FUNC(Physics3DComponent);
+    virtual ~Physics3DComponent();
+    virtual bool init() override;
+    
+    //virtual void update(float delta);
+    virtual bool serialize(void* r) override;
+    static Physics3DComponent* create(Physics3DObject* physicsObj);
+    
+    void setPhysics3DObject(Physics3DObject* physicsObj);
+    
+    Physics3DObject* getPhysics3DObject() const { return _physics3DObj; }
+    
+    static std::string& getPhysics3DComponentName();
+    
+CC_CONSTRUCTOR_ACCESS:
+    Physics3DComponent();
+    
+protected:
+    Physics3DObject* _physics3DObj;
+};
 
 NS_CC_EXT_END
 
