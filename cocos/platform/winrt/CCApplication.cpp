@@ -264,6 +264,11 @@ void Application::setStartupScriptFilename(const std::string& startupScriptFile)
     std::replace(m_startupScriptFilename.begin(), m_startupScriptFilename.end(), '\\', '/');
 }
 
+void Application::applicationScreenSizeChanged(int newWidth, int newHeight)
+{
+
+}
+
 NS_CC_END
 
 
