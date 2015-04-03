@@ -40,12 +40,13 @@
 
 NS_CC_BEGIN
 
+class Texture2D;
+
 class CC_DLL RenderState : public Ref
 {
 public:
     static RenderState* create(RenderState* parent);
 
-    uint32_t getHash() const;
     std::string getName() const;
 
     void setBlendFunc(const BlendFunc& blendFunc);
@@ -63,10 +64,11 @@ protected:
     std::string _name;
 
 
-    uint32_t _hash;
-    bool _hashDirty;
+    mutable uint32_t _hash;
+    mutable bool _hashDirty;
 
     BlendFunc _blendFunc;
+    Texture2D* _textureID;
 };
 
 NS_CC_END

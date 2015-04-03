@@ -59,6 +59,8 @@ public:
      */
     void unbind();
 
+    uint32_t getHash() const;
+
 protected:
     Pass();
     Pass(GLProgramState *glProgramState);

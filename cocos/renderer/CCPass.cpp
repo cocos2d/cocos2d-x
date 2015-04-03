@@ -29,7 +29,11 @@
 
 #include "CCPass.h"
 #include "renderer/CCGLProgramState.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/CCTexture2D.h"
+#include "base/ccTypes.h"
 
+#include <xxhash.h>
 
 NS_CC_BEGIN
 
@@ -59,6 +63,19 @@ Pass::~Pass()
 GLProgramState* Pass::getGLProgramState() const
 {
     return _glProgramState;
+}
+
+uint32_t Pass::getHash() const
+{
+    if (_hashDirty) {
+        int glProgram = (int)_glProgramState->getGLProgram()->getProgram();
+        int intArray[4] = { glProgram, (int)_textureID->getName(), (int)_blendFunc.src, (int)_blendFunc.dst};
+
+        _hash = XXH32((const void*)intArray, sizeof(intArray), 0);
+        _hashDirty = false;
+    }
+
+    return _hash;
 }
 
 NS_CC_END

@@ -28,6 +28,7 @@
  ****************************************************************************/
 
 #include "CCRenderState.h"
+#include "renderer/CCTexture2D.h"
 
 NS_CC_BEGIN
 
@@ -57,16 +58,6 @@ RenderState::~RenderState()
 std::string RenderState::getName() const
 {
     return _name;
-}
-
-uint32_t RenderState::getHash() const
-{
-    if (_hashDirty)
-    {
-        // calculate _hash
-    }
-
-    return _hash;
 }
 
 //
