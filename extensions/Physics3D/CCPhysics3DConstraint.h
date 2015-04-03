@@ -34,7 +34,7 @@
 
 NS_CC_EXT_BEGIN
 
-CC_EX_DLL class Physics3DConstraint : public Ref
+class CC_EX_DLL Physics3DConstraint : public Ref
 {
     
 };

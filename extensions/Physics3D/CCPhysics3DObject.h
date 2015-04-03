@@ -29,6 +29,7 @@
 #include "base/CCRef.h"
 #include "extensions/ExtensionMacros.h"
 #include "extensions/ExtensionExport.h"
+#include <vector>
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
@@ -39,7 +40,7 @@ NS_CC_EXT_BEGIN
 
 class Physics3DShape;
 
-CC_EX_DLL class Physics3DObject : public Ref
+class CC_EX_DLL Physics3DObject : public Ref
 {
 public:
     enum class PhysicsObjType
@@ -67,7 +68,7 @@ protected:
     void* _userData;
 };
 
-CC_EX_DLL struct Physics3DRigidBodyDes
+struct CC_EX_DLL Physics3DRigidBodyDes
 {
     float mass; //Note: mass equals zero means static, default 0
     cocos2d::Vec3 localInertia; //default (0, 0, 0)
@@ -82,7 +83,7 @@ CC_EX_DLL struct Physics3DRigidBodyDes
         
     }
 };
-CC_EX_DLL class Physics3DRigidBody : public Physics3DObject
+class CC_EX_DLL Physics3DRigidBody : public Physics3DObject
 {
 public:
     
@@ -90,6 +91,53 @@ public:
     
     btRigidBody* getRigidBody() const { return _btRigidBody; }
     
+    void applyForce(const cocos2d::Vec3& force, const cocos2d::Vec3& rel_pos);
+    void applyCentralForce(const cocos2d::Vec3& force);
+    void applyCentralImpulse(const cocos2d::Vec3& impulse);
+    void applyTorque(const cocos2d::Vec3& torque);
+    void applyTorqueImpulse(const cocos2d::Vec3& torque);
+    void applyImpulse(const cocos2d::Vec3& impulse, const cocos2d::Vec3& rel_pos);
+    void applyDamping(float timeStep);
+
+    void setLinearVelocity(const cocos2d::Vec3& lin_vel);
+    cocos2d::Vec3 getLinearVelocity() const;
+    void setLinearFactor(const cocos2d::Vec3& linearFactor);
+    cocos2d::Vec3 getLinearFactor() const;
+    void setAngularFactor(const cocos2d::Vec3& angFac);
+    void setAngularFactor(float angFac);
+    cocos2d::Vec3 getAngularFactor() const;
+    void setAngularVelocity(const cocos2d::Vec3& ang_vel);
+    cocos2d::Vec3 getAngularVelocity() const;
+    void setCenterOfMassTransform(const cocos2d::Mat4& xform);
+    cocos2d::Mat4 getCenterOfMassTransform() const;
+    void setDamping(float lin_damping, float ang_damping);
+    float getLinearDamping() const;
+    float getAngularDamping() const;
+    void setGravity(const cocos2d::Vec3& acceleration); 
+    cocos2d::Vec3 getGravity() const;
+    void setInvInertiaDiagLocal(const cocos2d::Vec3& diagInvInertia);
+    cocos2d::Vec3 getInvInertiaDiagLocal() const;
+    void setMassProps(float mass, const cocos2d::Vec3& inertia);
+    float getInvMass() const;
+    cocos2d::Vec3 getTotalForce() const;
+    cocos2d::Vec3 getTotalTorque() const;
+
+
+    void setRestitution(float rest);
+    float getRestitution() const;
+    void setFriction(float frict);
+    float getFriction() const;
+    void setRollingFriction(float frict);
+    float getRollingFriction() const;
+    void setHitFraction(float hitFraction);
+    float getHitFraction() const;
+
+    void addConstraint(Physics3DConstraint *constraint);
+    void removeConstraint(Physics3DConstraint *constraint);
+    void removeConstraint(unsigned int idx);
+    Physics3DConstraint* getConstraint(unsigned int idx) const;
+    unsigned int getConstraintCount() const;
+
 CC_CONSTRUCTOR_ACCESS:
     Physics3DRigidBody();
     virtual ~Physics3DRigidBody();
@@ -98,6 +146,7 @@ CC_CONSTRUCTOR_ACCESS:
     
 protected:
     btRigidBody* _btRigidBody;
+    std::vector<Physics3DConstraint *> _constraintList;
 };
 
 NS_CC_EXT_END
