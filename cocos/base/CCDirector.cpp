@@ -957,6 +957,15 @@ void Director::reset()
     _runningScene = nullptr;
     _nextScene = nullptr;
     
+    if(_notificationNode)
+    {
+        _notificationNode->onExit();
+        _notificationNode->cleanup();
+        _notificationNode->release();
+    }
+    
+    _notificationNode = nullptr;
+    
     // remove all objects, but don't release it.
     // runWithScene might be executed after 'end'.
     _scenesStack.clear();
