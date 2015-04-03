@@ -5,18 +5,21 @@
 
 #include "../UIScene_Editor.h"
 
+DEFINE_TEST_SUITE(UISliderEditorTests);
+
 class UISliderTest_Editor : public UIScene_Editor
 {
 public:
+    CREATE_FUNC(UISliderTest_Editor);
+
     UISliderTest_Editor();
     ~UISliderTest_Editor();
-    bool init();
+
+    virtual bool init() override;
     void sliderEvent(Ref* pSender, Slider::EventType type);
-    virtual void switchLoadMethod(Ref* pSender);
-    void configureGUIScene();
+    virtual void configureGUIScene() override;
 
 protected:
-    UI_SCENE_EDITOR_CREATE_FUNC(UISliderTest_Editor)
     Text* _displayValueLabel;
 };
 

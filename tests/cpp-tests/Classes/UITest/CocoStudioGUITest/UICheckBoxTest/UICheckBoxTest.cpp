@@ -1,7 +1,10 @@
-
-
 #include "UICheckBoxTest.h"
 
+UICheckBoxTests::UICheckBoxTests()
+{
+    ADD_TEST_CASE(UICheckBoxTest);
+    ADD_TEST_CASE(UICheckBoxDefaultBehaviorTest);
+}
 
 // UICheckBoxTest
 UICheckBoxTest::UICheckBoxTest()

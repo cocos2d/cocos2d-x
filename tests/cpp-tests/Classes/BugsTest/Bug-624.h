@@ -3,24 +3,24 @@
 
 #include "BugsTest.h"
 
-class Bug624Layer : public BugsTestBaseLayer
+class Bug624Layer : public BugsTestBase
 {
 public:
     virtual ~Bug624Layer();
     virtual bool init() override;
     void switchLayer(float dt);
-    virtual void onAcceleration(Acceleration* acc, Event* event) override;
+    virtual void onAcceleration(Acceleration* acc, Event* event);
 
     CREATE_FUNC(Bug624Layer);
 };
 
-class Bug624Layer2 : public BugsTestBaseLayer
+class Bug624Layer2 : public BugsTestBase
 {
 public:
     virtual ~Bug624Layer2();
     virtual bool init() override;
     void switchLayer(float dt);
-    virtual void onAcceleration(Acceleration* acc, Event* event) override;
+    virtual void onAcceleration(Acceleration* acc, Event* event);
 
     CREATE_FUNC(Bug624Layer2);
 };

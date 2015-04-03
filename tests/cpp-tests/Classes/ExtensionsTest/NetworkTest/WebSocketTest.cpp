@@ -1,18 +1,15 @@
-//
-//  WebSocketTest.cpp
-//  TestCpp
-//
-//  Created by James Chen on 5/31/13.
-//
-//
-
 #include "WebSocketTest.h"
 #include "../ExtensionsTest.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
 
-WebSocketTestLayer::WebSocketTestLayer()
+WebSocketTests::WebSocketTests()
+{
+    ADD_TEST_CASE(WebSocketTest);
+}
+
+WebSocketTest::WebSocketTest()
 : _wsiSendText(nullptr)
 , _wsiSendBinary(nullptr)
 , _wsiError(nullptr)
@@ -27,74 +24,50 @@ WebSocketTestLayer::WebSocketTestLayer()
     const int MARGIN = 40;
     const int SPACE = 35;
     
-    auto label = Label::createWithTTF("WebSocket Test", "fonts/arial.ttf", 28);
-    label->setPosition(Vec2(winSize.width / 2, winSize.height - MARGIN));
-    addChild(label, 0);
-    
     auto menuRequest = Menu::create();
     menuRequest->setPosition(Vec2::ZERO);
     addChild(menuRequest);
     
     // Send Text
-    auto labelSendText = Label::createWithTTF("Send Text", "fonts/arial.ttf", 22);
-    auto itemSendText = MenuItemLabel::create(labelSendText, CC_CALLBACK_1(WebSocketTestLayer::onMenuSendTextClicked, this));
+    auto labelSendText = Label::createWithTTF("Send Text", "fonts/arial.ttf", 20);
+    auto itemSendText = MenuItemLabel::create(labelSendText, CC_CALLBACK_1(WebSocketTest::onMenuSendTextClicked, this));
     itemSendText->setPosition(Vec2(winSize.width / 2, winSize.height - MARGIN - SPACE));
     menuRequest->addChild(itemSendText);
     
     // Send Binary
-    auto labelSendBinary = Label::createWithTTF("Send Binary", "fonts/arial.ttf", 22);
-    auto itemSendBinary = MenuItemLabel::create(labelSendBinary, CC_CALLBACK_1(WebSocketTestLayer::onMenuSendBinaryClicked, this));
+    auto labelSendBinary = Label::createWithTTF("Send Binary", "fonts/arial.ttf", 20);
+    auto itemSendBinary = MenuItemLabel::create(labelSendBinary, CC_CALLBACK_1(WebSocketTest::onMenuSendBinaryClicked, this));
     itemSendBinary->setPosition(Vec2(winSize.width / 2, winSize.height - MARGIN - 2 * SPACE));
     menuRequest->addChild(itemSendBinary);
     
 
     // Send Text Status Label
-    _sendTextStatus = Label::createWithTTF("Send Text WS is waiting...", "fonts/arial.ttf", 14, Size(160, 100), TextHAlignment::CENTER, TextVAlignment::TOP);
+    _sendTextStatus = Label::createWithTTF("Send Text WS is waiting...", "fonts/arial.ttf", 16, Size(160, 100), TextHAlignment::CENTER, TextVAlignment::TOP);
     _sendTextStatus->setAnchorPoint(Vec2(0, 0));
     _sendTextStatus->setPosition(Vec2(VisibleRect::left().x, VisibleRect::rightBottom().y + 25));
     this->addChild(_sendTextStatus);
     
     // Send Binary Status Label
-    _sendBinaryStatus = Label::createWithTTF("Send Binary WS is waiting...", "fonts/arial.ttf", 14, Size(160, 100), TextHAlignment::CENTER, TextVAlignment::TOP);
+    _sendBinaryStatus = Label::createWithTTF("Send Binary WS is waiting...", "fonts/arial.ttf", 16, Size(160, 100), TextHAlignment::CENTER, TextVAlignment::TOP);
     _sendBinaryStatus->setAnchorPoint(Vec2(0, 0));
     _sendBinaryStatus->setPosition(Vec2(VisibleRect::left().x + 160, VisibleRect::rightBottom().y + 25));
     this->addChild(_sendBinaryStatus);
     
     // Error Label
-    _errorStatus = Label::createWithTTF("Error WS is waiting...", "fonts/arial.ttf", 14, Size(160, 100), TextHAlignment::CENTER, TextVAlignment::TOP);
+    _errorStatus = Label::createWithTTF("Error WS is waiting...", "fonts/arial.ttf", 16, Size(160, 100), TextHAlignment::CENTER, TextVAlignment::TOP);
     _errorStatus->setAnchorPoint(Vec2(0, 0));
     _errorStatus->setPosition(Vec2(VisibleRect::left().x + 320, VisibleRect::rightBottom().y + 25));
     this->addChild(_errorStatus);
     
-    // Back Menu
-    auto itemBack = MenuItemFont::create("Back", CC_CALLBACK_1(WebSocketTestLayer::toExtensionsMainLayer, this));
-    itemBack->setPosition(Vec2(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-    auto menuBack = Menu::create(itemBack, nullptr);
-    menuBack->setPosition(Vec2::ZERO);
-    addChild(menuBack);
-    
-    _wsiSendText = new network::WebSocket();
-    _wsiSendBinary = new network::WebSocket();
-    _wsiError = new network::WebSocket();
-    
-    if (!_wsiSendText->init(*this, "ws://echo.websocket.org"))
-    {
-        CC_SAFE_DELETE(_wsiSendText);
-    }
-    
-    if (!_wsiSendBinary->init(*this, "ws://echo.websocket.org"))
-    {
-        CC_SAFE_DELETE(_wsiSendBinary);
-    }
-    
-    if (!_wsiError->init(*this, "ws://invalid.url.com"))
-    {
-        CC_SAFE_DELETE(_wsiError);
-    }
+    auto startTestLabel = Label::createWithTTF("Start Test WebSocket", "fonts/arial.ttf", 16);
+    auto startTestItem = MenuItemLabel::create(startTestLabel, CC_CALLBACK_1(WebSocketTest::startTestCallback, this));
+    startTestItem->setPosition(Vec2(VisibleRect::center().x, VisibleRect::bottom().y + 150));
+    _startTestMenu = Menu::create(startTestItem, nullptr);
+    _startTestMenu->setPosition(Vec2::ZERO);
+    this->addChild(_startTestMenu, 1);
 }
 
-
-WebSocketTestLayer::~WebSocketTestLayer()
+WebSocketTest::~WebSocketTest()
 {
     if (_wsiSendText)
         _wsiSendText->close();
@@ -106,8 +79,33 @@ WebSocketTestLayer::~WebSocketTestLayer()
         _wsiError->close();
 }
 
+void WebSocketTest::startTestCallback(Ref* sender)
+{
+    removeChild(_startTestMenu);
+    _startTestMenu = nullptr;
+
+    _wsiSendText = new network::WebSocket();
+    _wsiSendBinary = new network::WebSocket();
+    _wsiError = new network::WebSocket();
+
+    if (!_wsiSendText->init(*this, "ws://echo.websocket.org"))
+    {
+        CC_SAFE_DELETE(_wsiSendText);
+    }
+
+    if (!_wsiSendBinary->init(*this, "ws://echo.websocket.org"))
+    {
+        CC_SAFE_DELETE(_wsiSendBinary);
+    }
+
+    if (!_wsiError->init(*this, "ws://invalid.url.com"))
+    {
+        CC_SAFE_DELETE(_wsiError);
+    }
+}
+
 // Delegate methods
-void WebSocketTestLayer::onOpen(network::WebSocket* ws)
+void WebSocketTest::onOpen(network::WebSocket* ws)
 {
     log("Websocket (%p) opened", ws);
     if (ws == _wsiSendText)
@@ -124,7 +122,7 @@ void WebSocketTestLayer::onOpen(network::WebSocket* ws)
     }
 }
 
-void WebSocketTestLayer::onMessage(network::WebSocket* ws, const network::WebSocket::Data& data)
+void WebSocketTest::onMessage(network::WebSocket* ws, const network::WebSocket::Data& data)
 {
     if (!data.isBinary)
     {
@@ -161,7 +159,7 @@ void WebSocketTestLayer::onMessage(network::WebSocket* ws, const network::WebSoc
     }
 }
 
-void WebSocketTestLayer::onClose(network::WebSocket* ws)
+void WebSocketTest::onClose(network::WebSocket* ws)
 {
     log("websocket instance (%p) closed.", ws);
     if (ws == _wsiSendText)
@@ -180,7 +178,7 @@ void WebSocketTestLayer::onClose(network::WebSocket* ws)
     CC_SAFE_DELETE(ws);
 }
 
-void WebSocketTestLayer::onError(network::WebSocket* ws, const network::WebSocket::ErrorCode& error)
+void WebSocketTest::onError(network::WebSocket* ws, const network::WebSocket::ErrorCode& error)
 {
     log("Error was fired, error code: %d", error);
     if (ws == _wsiError)
@@ -191,15 +189,8 @@ void WebSocketTestLayer::onError(network::WebSocket* ws, const network::WebSocke
     }
 }
 
-void WebSocketTestLayer::toExtensionsMainLayer(cocos2d::Ref *sender)
-{
-    auto scene = new (std::nothrow) ExtensionsTestScene();
-    scene->runThisTest();
-    scene->release();
-}
-
 // Menu Callbacks
-void WebSocketTestLayer::onMenuSendTextClicked(cocos2d::Ref *sender)
+void WebSocketTest::onMenuSendTextClicked(cocos2d::Ref *sender)
 {
     if (! _wsiSendText)
     {
@@ -219,7 +210,7 @@ void WebSocketTestLayer::onMenuSendTextClicked(cocos2d::Ref *sender)
     }
 }
 
-void WebSocketTestLayer::onMenuSendBinaryClicked(cocos2d::Ref *sender)
+void WebSocketTest::onMenuSendBinaryClicked(cocos2d::Ref *sender)
 {
     if (! _wsiSendBinary) {
         return;
@@ -237,14 +228,4 @@ void WebSocketTestLayer::onMenuSendBinaryClicked(cocos2d::Ref *sender)
         log("%s", warningStr.c_str());
         _sendBinaryStatus->setString(warningStr.c_str());
     }
-}
-
-void runWebSocketTest()
-{
-    auto scene = Scene::create();
-    auto layer = new (std::nothrow) WebSocketTestLayer();
-    scene->addChild(layer);
-    
-    Director::getInstance()->replaceScene(scene);
-    layer->release();
 }

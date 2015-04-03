@@ -32,12 +32,12 @@ class ControlPotentiometerTest : public ControlScene
 public:
     ControlPotentiometerTest();
     virtual ~ControlPotentiometerTest();
-    bool init();
+    virtual bool init() override;
     CC_SYNTHESIZE_RETAIN(Label*, _displayValueLabel, DisplayValueLabel)
 
     void valueChanged(Ref *sender, Control::EventType controlEvent);
 
-    CONTROL_SCENE_CREATE_FUNC(ControlPotentiometerTest)
+    CREATE_FUNC(ControlPotentiometerTest)
 };
 
 

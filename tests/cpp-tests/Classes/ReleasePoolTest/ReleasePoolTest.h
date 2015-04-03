@@ -4,13 +4,15 @@
 #ifndef __RELEASE_POOL_TEST_H__
 #define __RELEASE_POOL_TEST_H__
 
-#include "../testBasic.h"
+#include "../BaseTest.h"
 
-class ReleasePoolTestScene : public TestScene
+DEFINE_TEST_SUITE(ReleasePoolTests);
+class ReleasePoolTest : public TestCase
 {
 public:
-    virtual void runThisTest();
-    
+    CREATE_FUNC(ReleasePoolTest);
+
+    virtual bool init() override;
 private:
     
 };

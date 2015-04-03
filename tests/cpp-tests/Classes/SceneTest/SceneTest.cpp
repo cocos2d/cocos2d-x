@@ -1,6 +1,11 @@
 #include "SceneTest.h"
 #include "../testResource.h"
 
+SceneTests::SceneTests()
+{
+    ADD_TEST_CASE(SceneTestScene);
+}
+
 //------------------------------------------------------------------
 //
 // SceneTestLayer1
@@ -221,11 +226,13 @@ void SceneTestLayer3::item3Clicked(Ref* sender)
     Director::getInstance()->popToSceneStackLevel(2);
 }
 
-void SceneTestScene::runThisTest()
+bool SceneTestScene::init()
 {
-    auto layer = new (std::nothrow) SceneTestLayer1();
-    addChild(layer);
-    layer->release();
+    if (TestCase::init())
+    {
+        addChild(SceneTestLayer1::create());
+        return true;
+    }
 
-    Director::getInstance()->replaceScene(this);
+    return false;
 }

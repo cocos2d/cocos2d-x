@@ -28,17 +28,22 @@
 #include "../UIScene.h"
 #include "ui/UIScrollView.h"
 
+DEFINE_TEST_SUITE(UIListViewTests);
+
 class UIListViewTest_Vertical : public UIScene
 {
 public:
+    CREATE_FUNC(UIListViewTest_Vertical);
+
     UIListViewTest_Vertical();
     ~UIListViewTest_Vertical();
-    bool init();
+
+    virtual bool init() override;
     void selectedItemEvent(Ref* pSender, ListView::EventType type);
     void selectedItemEventScrollView(Ref* pSender, ui::ScrollView::EventType type);
 
 protected:
-    UI_SCENE_CREATE_FUNC(UIListViewTest_Vertical)
+    
     Text* _displayValueLabel;
     
     std::vector<std::string> _array;
@@ -47,14 +52,17 @@ protected:
 class UIListViewTest_Horizontal : public UIScene
 {
 public:
+    CREATE_FUNC(UIListViewTest_Horizontal);
+
     UIListViewTest_Horizontal();
     ~UIListViewTest_Horizontal();
-    bool init();
+
+    virtual bool init() override;
     void selectedItemEvent(Ref* pSender, ListView::EventType type);
 
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIListViewTest_Horizontal)
+    
     Text* _displayValueLabel;
     
     std::vector<std::string> _array;

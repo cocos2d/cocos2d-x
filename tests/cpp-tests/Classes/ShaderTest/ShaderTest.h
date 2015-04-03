@@ -9,24 +9,17 @@
 
 USING_NS_CC_EXT;
 
-class ShaderTestDemo : public BaseTest
+DEFINE_TEST_SUITE(ShaderTests);
+
+class ShaderTestDemo : public TestCase
 {
 public:
-    ShaderTestDemo(void);
-
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-
-    void restartCallback(Ref* sender) override;
-    void nextCallback(Ref* sender) override;
-    void backCallback(Ref* sender) override;
-
-    CREATE_FUNC(ShaderTestDemo);
 };
 
 class ShaderMonjori : public ShaderTestDemo
 {
 public:
+    CREATE_FUNC(ShaderMonjori);
     ShaderMonjori();
 
     virtual std::string title() const override;
@@ -37,6 +30,7 @@ public:
 class ShaderMandelbrot : public ShaderTestDemo
 {
 public:
+    CREATE_FUNC(ShaderMandelbrot);
     ShaderMandelbrot();
 
     virtual std::string title() const override;
@@ -47,6 +41,7 @@ public:
 class ShaderJulia : public ShaderTestDemo
 {
 public:
+    CREATE_FUNC(ShaderJulia);
     ShaderJulia();
 
     virtual std::string title() const override;
@@ -57,6 +52,7 @@ public:
 class ShaderHeart : public ShaderTestDemo
 {
 public:
+    CREATE_FUNC(ShaderHeart);
     ShaderHeart();
 
     virtual std::string title() const override;
@@ -67,6 +63,7 @@ public:
 class ShaderFlower : public ShaderTestDemo
 {
 public:
+    CREATE_FUNC(ShaderFlower);
     ShaderFlower();
 
     virtual std::string title() const override;
@@ -77,6 +74,7 @@ public:
 class ShaderPlasma : public ShaderTestDemo
 {
 public:
+    CREATE_FUNC(ShaderPlasma);
     ShaderPlasma();
 
     virtual std::string title() const override;
@@ -88,6 +86,7 @@ class SpriteBlur;
 class ShaderBlur : public ShaderTestDemo
 {
 public:
+    CREATE_FUNC(ShaderBlur);
     ShaderBlur();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -105,6 +104,7 @@ protected:
 class ShaderRetroEffect : public ShaderTestDemo
 {
 public:
+    CREATE_FUNC(ShaderRetroEffect);
     ShaderRetroEffect();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -118,6 +118,7 @@ protected:
 class ShaderNode : public Node
 {
 public:
+    CREATE_FUNC(ShaderNode);
     static ShaderNode* shaderNodeWithVertex(const std::string &vert, const std::string &frag);
 
     virtual void update(float dt) override;
@@ -141,15 +142,10 @@ protected:
     CustomCommand _customCommand;
 };
 
-class ShaderTestScene : public TestScene
-{
-public:
-    virtual void runThisTest();
-};
-
 class ShaderLensFlare : public ShaderTestDemo
 {
 public:
+    CREATE_FUNC(ShaderLensFlare);
     ShaderLensFlare();
     
     virtual std::string title() const override;
@@ -160,6 +156,7 @@ public:
 class ShaderGlow : public ShaderTestDemo
 {
 public:
+    CREATE_FUNC(ShaderGlow);
     ShaderGlow();
     
     virtual std::string title() const override;
@@ -171,6 +168,7 @@ class ShaderMultiTexture : public ShaderTestDemo
 {
     static const int rightSpriteTag = 2014;
 public:
+    CREATE_FUNC(ShaderMultiTexture);
     ShaderMultiTexture();
     ui::Slider* createSliderCtl();
     void changeTexture(Ref*);

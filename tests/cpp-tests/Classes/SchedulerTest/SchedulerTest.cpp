@@ -5,111 +5,28 @@ enum {
     kTagAnimationDance = 1,
 };
 
-static int sceneIdx = -1;
-
-Layer* nextSchedulerTest();
-Layer* backSchedulerTest();
-Layer* restartSchedulerTest();
-
-static std::function<Layer*()> createFunctions[] = {
-    CL(SchedulerTimeScale),
-    CL(TwoSchedulers),
-    CL(SchedulerAutoremove),
-    CL(SchedulerPauseResume),
-    CL(SchedulerPauseResumeAll),
-    CL(SchedulerPauseResumeAllUser),
-    CL(SchedulerUnscheduleAll),
-    CL(SchedulerUnscheduleAllHard),
-    CL(SchedulerUnscheduleAllUserLevel),
-    CL(SchedulerSchedulesAndRemove),
-    CL(SchedulerUpdate),
-    CL(SchedulerUpdateAndCustom),
-    CL(SchedulerUpdateFromCustom),
-    CL(RescheduleSelector),
-    CL(SchedulerDelayAndRepeat),
-    CL(SchedulerIssue2268),
-    CL(ScheduleCallbackTest),
-    CL(ScheduleUpdatePriority),
-    CL(SchedulerIssue10232)
+SchedulerTests::SchedulerTests()
+{
+    ADD_TEST_CASE(SchedulerTimeScale);
+    ADD_TEST_CASE(TwoSchedulers);
+    ADD_TEST_CASE(SchedulerAutoremove);
+    ADD_TEST_CASE(SchedulerPauseResume);
+    ADD_TEST_CASE(SchedulerPauseResumeAll);
+    ADD_TEST_CASE(SchedulerPauseResumeAllUser);
+    ADD_TEST_CASE(SchedulerUnscheduleAll);
+    ADD_TEST_CASE(SchedulerUnscheduleAllHard);
+    ADD_TEST_CASE(SchedulerUnscheduleAllUserLevel);
+    ADD_TEST_CASE(SchedulerSchedulesAndRemove);
+    ADD_TEST_CASE(SchedulerUpdate);
+    ADD_TEST_CASE(SchedulerUpdateAndCustom);
+    ADD_TEST_CASE(SchedulerUpdateFromCustom);
+    ADD_TEST_CASE(RescheduleSelector);
+    ADD_TEST_CASE(SchedulerDelayAndRepeat);
+    ADD_TEST_CASE(SchedulerIssue2268);
+    ADD_TEST_CASE(ScheduleCallbackTest);
+    ADD_TEST_CASE(ScheduleUpdatePriority);
+    ADD_TEST_CASE(SchedulerIssue10232);
 };
-
-#define MAX_LAYER (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-Layer* nextSchedulerTest()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-Layer* backSchedulerTest()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;    
-
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-Layer* restartSchedulerTest()
-{
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-//------------------------------------------------------------------
-//
-// SchedulerTestLayer
-//
-//------------------------------------------------------------------
-void SchedulerTestLayer::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-void SchedulerTestLayer::backCallback(Ref* sender)
-{
-    auto scene = new (std::nothrow) SchedulerTestScene();
-    auto layer = backSchedulerTest();
-
-    scene->addChild(layer);
-    Director::getInstance()->replaceScene(scene);
-    scene->release();
-}
-
-void SchedulerTestLayer::nextCallback(Ref* sender)
-{
-    auto scene = new (std::nothrow) SchedulerTestScene();
-    auto layer = nextSchedulerTest();
-
-    scene->addChild(layer);
-    Director::getInstance()->replaceScene(scene);
-    scene->release();
-}
-
-void SchedulerTestLayer::restartCallback(Ref* sender)
-{
-    auto scene = new (std::nothrow) SchedulerTestScene();
-    auto layer = restartSchedulerTest();
-
-    scene->addChild(layer);
-    Director::getInstance()->replaceScene(scene);
-    scene->release();
-}
-
-std::string SchedulerTestLayer::title() const
-{
-    return "No title";
-}
-
-std::string SchedulerTestLayer::subtitle() const
-{
-    return "";
-}
 
 //------------------------------------------------------------------
 //
@@ -712,6 +629,7 @@ void SchedulerUpdateAndCustom::tick(float dt)
 
 void SchedulerUpdateAndCustom::stopSelectors(float dt)
 {
+    log("SchedulerUpdateAndCustom::stopSelectors");
     unscheduleAllCallbacks();
 }
 
@@ -1199,19 +1117,6 @@ void ScheduleUpdatePriority::onExit()
 
 void ScheduleUpdatePriority::update(float dt)
 {
-}
-
-//------------------------------------------------------------------
-//
-// SchedulerTestScene
-//
-//------------------------------------------------------------------
-void SchedulerTestScene::runThisTest()
-{
-    auto layer = nextSchedulerTest();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
 }
 
 void SchedulerIssue10232::onEnter()
