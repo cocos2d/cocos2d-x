@@ -1,5 +1,7 @@
-require "Cocos2d"
-require "Cocos2dConstants"
+cc.FileUtils:getInstance():addSearchPath("src")
+cc.FileUtils:getInstance():addSearchPath("res")
+-- CC_USE_DEPRECATED_API = true
+require "cocos.init"
 
 -- cclog
 cclog = function(...)
@@ -40,15 +42,7 @@ local function main()
 
     initGLView()
 
-    --support debug,when used on ios7.1 64bit,these codes should be commented
-    local targetPlatform = cc.Application:getInstance():getTargetPlatform()
-    if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) or 
-       (cc.PLATFORM_OS_ANDROID == targetPlatform) or (cc.PLATFORM_OS_WINDOWS == targetPlatform) or
-       (cc.PLATFORM_OS_MAC == targetPlatform) then
-        local host = 'localhost' -- please change localhost to your PC's IP for on-device debugging
-        require('src/mobdebug').start(host)
-    end
-    require "src/hello2"
+    require "hello2"
     cclog("result is " .. myadd(1, 1))
 
     ---------------
@@ -62,7 +56,7 @@ local function main()
         local frameHeight = 95
 
         -- create dog animate
-        local textureDog = cc.Director:getInstance():getTextureCache():addImage("res/dog.png")
+        local textureDog = cc.Director:getInstance():getTextureCache():addImage("dog.png")
         local rect = cc.rect(0, 0, frameWidth, frameHeight)
         local frame0 = cc.SpriteFrame:createWithTexture(textureDog, rect)
         rect = cc.rect(frameWidth, 0, frameWidth, frameHeight)
@@ -105,21 +99,21 @@ local function main()
         local layerFarm = cc.Layer:create()
 
         -- add in farm background
-        local bg = cc.Sprite:create("res/farm.jpg")
+        local bg = cc.Sprite:create("farm.jpg")
         bg:setPosition(origin.x + visibleSize.width / 2 + 80, origin.y + visibleSize.height / 2)
         layerFarm:addChild(bg)
 
         -- add land sprite
         for i = 0, 3 do
             for j = 0, 1 do
-                local spriteLand = cc.Sprite:create("res/land.png")
+                local spriteLand = cc.Sprite:create("land.png")
                 spriteLand:setPosition(200 + j * 180 - i % 2 * 90, 10 + i * 95 / 2)
                 layerFarm:addChild(spriteLand)
             end
         end
 
         -- add crop
-        local frameCrop = cc.SpriteFrame:create("res/crop.png", cc.rect(0, 0, 105, 95))
+        local frameCrop = cc.SpriteFrame:create("crop.png", cc.rect(0, 0, 105, 95))
         for i = 0, 3 do
             for j = 0, 1 do
                 local spriteCrop = cc.Sprite:createWithSpriteFrame(frameCrop)
@@ -186,13 +180,13 @@ local function main()
 
         local function menuCallbackOpenPopup()
             -- loop test sound effect
-            local effectPath = cc.FileUtils:getInstance():fullPathForFilename("res/effect1.wav")
+            local effectPath = cc.FileUtils:getInstance():fullPathForFilename("effect1.wav")
             effectID = cc.SimpleAudioEngine:getInstance():playEffect(effectPath)
             menuPopup:setVisible(true)
         end
 
         -- add a popup menu
-        local menuPopupItem = cc.MenuItemImage:create("res/menu2.png", "res/menu2.png")
+        local menuPopupItem = cc.MenuItemImage:create("menu2.png", "menu2.png")
         menuPopupItem:setPosition(0, 0)
         menuPopupItem:registerScriptTapHandler(menuCallbackClosePopup)
         menuPopup = cc.Menu:create(menuPopupItem)
@@ -201,7 +195,7 @@ local function main()
         layerMenu:addChild(menuPopup)
         
         -- add the left-bottom "tools" menu to invoke menuPopup
-        local menuToolsItem = cc.MenuItemImage:create("res/menu1.png", "res/menu1.png")
+        local menuToolsItem = cc.MenuItemImage:create("menu1.png", "menu1.png")
         menuToolsItem:setPosition(0, 0)
         menuToolsItem:registerScriptTapHandler(menuCallbackOpenPopup)
         menuTools = cc.Menu:create(menuToolsItem)
@@ -214,9 +208,9 @@ local function main()
     end
 
     -- play background music, preload effect
-    local bgMusicPath = cc.FileUtils:getInstance():fullPathForFilename("res/background.mp3") 
+    local bgMusicPath = cc.FileUtils:getInstance():fullPathForFilename("background.mp3") 
     cc.SimpleAudioEngine:getInstance():playMusic(bgMusicPath, true)
-    local effectPath = cc.FileUtils:getInstance():fullPathForFilename("res/effect1.wav")
+    local effectPath = cc.FileUtils:getInstance():fullPathForFilename("effect1.wav")
     cc.SimpleAudioEngine:getInstance():preloadEffect(effectPath)
 
     -- run

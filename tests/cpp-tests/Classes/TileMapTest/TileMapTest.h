@@ -13,13 +13,13 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     virtual void onEnter() override;
-    virtual void onExit()override;
+    virtual void onExit() override;
 
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
+    void restartCallback(Ref* sender) override;
+    void nextCallback(Ref* sender) override;
+    void backCallback(Ref* sender) override;
 
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event) override;
 };
 
 class TileMapTest : public TileDemo
@@ -44,6 +44,16 @@ public:
     TMXOrthoTest(void);
     virtual std::string title() const override;
 
+    virtual void onEnter() override;
+    virtual void onExit() override;
+};
+
+class TMXStaggeredTest : public TileDemo
+{
+public:
+    TMXStaggeredTest(void);
+    virtual std::string title() const override;
+    
     virtual void onEnter() override;
     virtual void onExit() override;
 };
@@ -134,11 +144,7 @@ public:
     TMXOrthoObjectsTest(void);
     virtual std::string title() const override;
 
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual std::string subtitle() const override;
-protected:
-    CustomCommand _renderCmd;
-    void onDraw(const Mat4 &transform, uint32_t flags);
 };
 
 class TMXIsoObjectsTest : public TileDemo
@@ -147,11 +153,7 @@ public:
     TMXIsoObjectsTest(void);
     virtual std::string title() const override;
 
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual std::string subtitle() const override;
-protected:
-    CustomCommand _renderCmd;
-    void onDraw(const Mat4 &transform, uint32_t flags);
 };
 
 class TMXResizeTest : public TileDemo
@@ -291,13 +293,7 @@ class TMXGIDObjectsTest : public TileDemo
 public:
     TMXGIDObjectsTest();
     virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
-
-protected:
-    CustomCommand _renderCmd;
-    void onDraw(const Mat4 &transform, uint32_t flags);
-    
+    virtual std::string subtitle() const override;    
 };
 
 class TileMapTestScene : public TestScene

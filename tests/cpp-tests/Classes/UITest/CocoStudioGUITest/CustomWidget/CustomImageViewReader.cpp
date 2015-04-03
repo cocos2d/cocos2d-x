@@ -24,7 +24,7 @@ CustomImageViewReader* CustomImageViewReader::getInstance()
 {
     if (!_instanceCustomImageViewReader)
     {
-        _instanceCustomImageViewReader = new CustomImageViewReader();
+        _instanceCustomImageViewReader = new (std::nothrow) CustomImageViewReader();
     }
     return _instanceCustomImageViewReader;
 }

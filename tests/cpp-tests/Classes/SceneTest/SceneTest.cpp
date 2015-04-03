@@ -35,7 +35,7 @@ SceneTestLayer1::SceneTestLayer1()
     auto repeat = RepeatForever::create(rotate);
     sprite->runAction(repeat);
 
-    schedule( schedule_selector(SceneTestLayer1::testDealloc) );
+    schedule( CC_SCHEDULE_SELECTOR(SceneTestLayer1::testDealloc) );
 }
 
 void SceneTestLayer1::testDealloc(float dt)
@@ -62,8 +62,8 @@ SceneTestLayer1::~SceneTestLayer1()
 
 void SceneTestLayer1::onPushScene(Ref* sender)
 {
-    auto scene = new SceneTestScene();
-    auto layer = new SceneTestLayer2();
+    auto scene = new (std::nothrow) SceneTestScene();
+    auto layer = new (std::nothrow) SceneTestLayer2();
     scene->addChild( layer, 0 );
     Director::getInstance()->pushScene( scene );
     scene->release();
@@ -72,8 +72,8 @@ void SceneTestLayer1::onPushScene(Ref* sender)
 
 void SceneTestLayer1::onPushSceneTran(Ref* sender)
 {
-    auto scene = new SceneTestScene();
-    auto layer = new SceneTestLayer2();
+    auto scene = new (std::nothrow) SceneTestScene();
+    auto layer = new (std::nothrow) SceneTestLayer2();
     scene->addChild( layer, 0 );
 
     Director::getInstance()->pushScene( TransitionSlideInT::create(1, scene) );
@@ -120,7 +120,7 @@ SceneTestLayer2::SceneTestLayer2()
     auto repeat = RepeatForever::create(rotate);
     sprite->runAction(repeat);
 
-    schedule( schedule_selector(SceneTestLayer2::testDealloc) );
+    schedule( CC_SCHEDULE_SELECTOR(SceneTestLayer2::testDealloc) );
 }
 
 void SceneTestLayer2::testDealloc(float dt)
@@ -137,7 +137,7 @@ void SceneTestLayer2::onGoBack(Ref* sender)
 
 void SceneTestLayer2::onReplaceScene(Ref* sender)
 {
-    auto scene = new SceneTestScene();
+    auto scene = new (std::nothrow) SceneTestScene();
     auto layer = SceneTestLayer3::create();
     scene->addChild( layer, 0 );
     Director::getInstance()->replaceScene( scene );
@@ -147,7 +147,7 @@ void SceneTestLayer2::onReplaceScene(Ref* sender)
 
 void SceneTestLayer2::onReplaceSceneTran(Ref* sender)
 {
-    auto scene = new SceneTestScene();
+    auto scene = new (std::nothrow) SceneTestScene();
     auto layer = SceneTestLayer3::create();
     scene->addChild( layer, 0 );
     Director::getInstance()->replaceScene( TransitionFlipX::create(2, scene) );
@@ -180,7 +180,7 @@ bool SceneTestLayer3::init()
         this->addChild(menu);
         menu->alignItemsVertically();
 
-        this->schedule(schedule_selector(SceneTestLayer3::testDealloc));
+        this->schedule(CC_SCHEDULE_SELECTOR(SceneTestLayer3::testDealloc));
 
         auto sprite = Sprite::create(s_pathGrossini);
         addChild(sprite);
@@ -223,7 +223,7 @@ void SceneTestLayer3::item3Clicked(Ref* sender)
 
 void SceneTestScene::runThisTest()
 {
-    auto layer = new SceneTestLayer1();
+    auto layer = new (std::nothrow) SceneTestLayer1();
     addChild(layer);
     layer->release();
 

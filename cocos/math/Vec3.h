@@ -1,5 +1,6 @@
 /**
  Copyright 2013 BlackBerry Inc.
+ Copyright (c) 2014-2015 Chukong Technologies
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -22,6 +23,11 @@
 #define MATH_VEC3_H
 
 #include "math/CCMathBase.h"
+
+/**
+ * @addtogroup base
+ * @{
+ */
 
 NS_CC_MATH_BEGIN
 
@@ -270,13 +276,7 @@ public:
     void normalize();
 
     /**
-     * Normalizes this vector and stores the result in dst.
-     *
-     * If the vector already has unit length or if the length
-     * of the vector is zero, this method simply copies the
-     * current vector into dst.
-     *
-     * @param dst The destination vector.
+     * Get the normalized vector.
      */
     Vec3 getNormalized() const;
 
@@ -419,14 +419,25 @@ public:
      */
     inline const Vec3 operator/(float s) const;
 
-    /**
-     * Determines if this vector is less than the given vector.
-     * 
-     * @param v The vector to compare against.
-     * 
-     * @return True if this vector is less than the given vector, false otherwise.
+    /** Returns true if the vector's scalar components are all greater
+     that the ones of the vector it is compared against.
      */
-    inline bool operator<(const Vec3& v) const;
+    inline bool operator < (const Vec3& rhs) const
+    {
+        if (x < rhs.x && y < rhs.y && z < rhs.z)
+            return true;
+        return false;
+    }
+
+    /** Returns true if the vector's scalar components are all smaller
+     that the ones of the vector it is compared against.
+     */
+    inline bool operator >(const Vec3& rhs) const
+    {
+        if (x > rhs.x && y > rhs.y && z > rhs.z)
+            return true;
+        return false;
+    }
 
     /**
      * Determines if this vector is equal to the given vector.
@@ -470,7 +481,10 @@ inline const Vec3 operator*(float x, const Vec3& v);
 //typedef Vec3 Point3;
 
 NS_CC_MATH_END
-
+/**
+ end of base group
+ @}
+ */
 #include "Vec3.inl"
 
 #endif // MATH_VEC3_H

@@ -1,0 +1,2 @@
+# For compatibility only, please use include(CocosBuildHelpers) in future projects
+include(CocosBuildHelpers)

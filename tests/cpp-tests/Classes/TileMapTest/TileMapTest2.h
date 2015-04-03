@@ -13,13 +13,13 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     virtual void onEnter() override;
-    virtual void onExit()override;
+    virtual void onExit() override;
 
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
+    void restartCallback(Ref* sender) override;
+    void nextCallback(Ref* sender) override;
+    void backCallback(Ref* sender) override;
 
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event) override;
 };
 
 class TileMapTestNew : public TileDemoNew
@@ -134,11 +134,7 @@ public:
     TMXOrthoObjectsTestNew(void);
     virtual std::string title() const override;
 
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual std::string subtitle() const override;
-protected:
-    CustomCommand _renderCmd;
-    void onDraw(const Mat4 &transform, uint32_t flags);
 };
 
 class TMXIsoObjectsTestNew : public TileDemoNew
@@ -147,11 +143,7 @@ public:
     TMXIsoObjectsTestNew(void);
     virtual std::string title() const override;
 
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual std::string subtitle() const override;
-protected:
-    CustomCommand _renderCmd;
-    void onDraw(const Mat4 &transform, uint32_t flags);
 };
 
 class TMXResizeTestNew : public TileDemoNew
@@ -291,13 +283,7 @@ class TMXGIDObjectsTestNew : public TileDemoNew
 public:
     TMXGIDObjectsTestNew();
     virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
-
-protected:
-    CustomCommand _renderCmd;
-    void onDraw(const Mat4 &transform, uint32_t flags);
-    
+    virtual std::string subtitle() const override;   
 };
 
 class TileMapTestSceneNew : public TestScene

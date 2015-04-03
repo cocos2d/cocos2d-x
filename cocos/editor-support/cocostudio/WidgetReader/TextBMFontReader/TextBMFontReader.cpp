@@ -1,11 +1,18 @@
 
 
 #include "TextBMFontReader.h"
+
+#include "2d/CCFontAtlasCache.h"
 #include "ui/UITextBMFont.h"
 #include "cocostudio/CocoLoader.h"
+#include "cocostudio/CSParseBinary_generated.h"
+
+#include "tinyxml2.h"
+#include "flatbuffers/flatbuffers.h"
 
 USING_NS_CC;
 using namespace ui;
+using namespace flatbuffers;
 
 namespace cocostudio
 {
@@ -14,7 +21,7 @@ namespace cocostudio
     
     static TextBMFontReader* instanceTextBMFontReader = nullptr;
     
-    IMPLEMENT_CLASS_WIDGET_READER_INFO(TextBMFontReader)
+    IMPLEMENT_CLASS_NODE_READER_INFO(TextBMFontReader)
     
     TextBMFontReader::TextBMFontReader()
     {
@@ -30,9 +37,14 @@ namespace cocostudio
     {
         if (!instanceTextBMFontReader)
         {
-            instanceTextBMFontReader = new TextBMFontReader();
+            instanceTextBMFontReader = new (std::nothrow) TextBMFontReader();
         }
         return instanceTextBMFontReader;
+    }
+    
+    void TextBMFontReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instanceTextBMFontReader);
     }
     
     void TextBMFontReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
@@ -103,5 +115,148 @@ namespace cocostudio
         
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);
+    }        
+    
+    Offset<Table> TextBMFontReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
+                                                                 flatbuffers::FlatBufferBuilder *builder)
+    {
+        auto temp = WidgetReader::getInstance()->createOptionsWithFlatBuffers(objectData, builder);
+        auto widgetOptions = *(Offset<WidgetOptions>*)(&temp);
+        
+        std::string text = "Fnt Text Label";
+        
+        std::string path = "";
+        std::string plistFlie = "";
+        int resourceType = 0;
+        
+        // attributes
+        const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
+        while (attribute)
+        {
+            std::string name = attribute->Name();
+            std::string value = attribute->Value();
+            
+            if (name == "LabelText")
+            {
+                text = value;
+            }
+            
+            attribute = attribute->Next();
+        }
+        
+        // child elements
+        const tinyxml2::XMLElement* child = objectData->FirstChildElement();
+        while (child)
+        {
+            std::string name = child->Name();
+            
+            if (name == "LabelBMFontFile_CNB")
+            {
+                attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Path")
+                    {
+                        path = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        resourceType = 0;
+                    }
+                    else if (name == "Plist")
+                    {
+                        plistFlie = value;
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
+            
+            child = child->NextSiblingElement();
+        }
+        
+        auto options = CreateTextBMFontOptions(*builder,
+                                               widgetOptions,
+                                               CreateResourceData(*builder,
+                                                                  builder->CreateString(path),
+                                                                  builder->CreateString(plistFlie),
+                                                                  resourceType),
+                                               builder->CreateString(text));
+        
+        return *(Offset<Table>*)(&options);
     }
+    
+    void TextBMFontReader::setPropsWithFlatBuffers(cocos2d::Node *node, const flatbuffers::Table *textBMFontOptions)
+    {
+        TextBMFont* labelBMFont = static_cast<TextBMFont*>(node);
+        auto options = (TextBMFontOptions*)textBMFontOptions;
+        
+        auto cmftDic = options->fileNameData();
+        bool fileExist = false;
+        std::string errorFilePath = "";
+        std::string errorContent = "";
+        std::string path = cmftDic->path()->c_str();
+        int cmfType = cmftDic->resourceType();
+        switch (cmfType)
+        {
+            case 0:
+            {
+                if (FileUtils::getInstance()->isFileExist(path))
+                {
+                    FontAtlas* newAtlas = FontAtlasCache::getFontAtlasFNT(path);
+                    if (newAtlas)
+                    {
+                        fileExist = true;
+                    }
+                    else
+                    {
+                        errorContent = "has problem";
+                        fileExist = false;
+                    }
+                }
+                else
+                {
+                    errorContent = "missed";
+                    fileExist = false;
+                }
+                break;
+            }
+                
+            default:
+                break;
+        }
+        if (fileExist)
+        {
+            labelBMFont->setFntFile(path);
+        }
+        else
+        {
+            errorFilePath = path;
+            auto label = Label::create();
+            label->setString(__String::createWithFormat("%s %s", errorFilePath.c_str(), errorContent.c_str())->getCString());
+            labelBMFont->addChild(label);
+        }
+        
+        std::string text = options->text()->c_str();
+        labelBMFont->setString(text);
+        
+        auto widgetReader = WidgetReader::getInstance();
+        widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
+        
+        labelBMFont->ignoreContentAdaptWithSize(true);
+    }
+    
+    Node* TextBMFontReader::createNodeWithFlatBuffers(const flatbuffers::Table *textBMFontOptions)
+    {
+        TextBMFont* textBMFont = TextBMFont::create();
+        
+        setPropsWithFlatBuffers(textBMFont, (Table*)textBMFontOptions);
+        
+        return textBMFont;
+    }
+    
 }

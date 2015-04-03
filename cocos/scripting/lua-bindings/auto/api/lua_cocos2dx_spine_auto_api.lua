@@ -2,8 +2,8 @@
 -- @module sp
 
 --------------------------------------------------------
--- the sp Skeleton
--- @field [parent=#sp] Skeleton#Skeleton Skeleton preloaded module
+-- the sp SkeletonRenderer
+-- @field [parent=#sp] SkeletonRenderer#SkeletonRenderer SkeletonRenderer preloaded module
 
 
 --------------------------------------------------------

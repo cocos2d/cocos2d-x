@@ -21,7 +21,13 @@
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "UIVideoPlayerTest/UIVideoPlayerTest.h"
 #endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#include "UIWebViewTest/UIWebViewTest.h"
+#endif
 #include "UIScale9SpriteTest.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#include "UIEditBoxTest.h"
+#endif
 
 
 USING_NS_CC;
@@ -30,35 +36,58 @@ static const char* s_testArray[] =
 {
     "UIButtonTest",
     "UIButtonTest_Scale9",
+    "UIButtonTest_Scale9_State_Change",
     "UIButtonTest_PressedAction",
     "UIButtonTest_Title",
     "UIButtonTest_RemoveSelf",
     "UIButtonTestSwitchScale9",
+    "UIButtonTestZoomScale",
+    "UIButtonTextOnly",
+    "UIButtonIgnoreContentSizeTest",
+    "UIButtonTitleEffectTest",
+    "UIButtonFlipTest",
+    "UIButtonNormalDefaultTest",
+    "UIButtonDisableDefaultTest",
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    "UIEditBoxTest",
+#endif
     "UICheckBoxTest",
+    "UICheckBoxDefaultBehaviorTest",
     "UISliderTest",
     "UISliderTest_Scale9",
+    "UISliderTest_Scale9_Stata_Change",
+    "UISliderNormalDefaultTest",
+    "UISliderDisabledDefaultTest",
   
     "UIImageViewTest",
     "UIImageViewTest_Scale9",
+    "UIImageViewTest_Scale9_State_Change",
     "UIImageViewTest_ContentSize",
+    "UIImageViewFlipTest",
+    
     "UILoadingBarTest_Left",
     "UILoadingBarTest_Right",
+    "UILoadingBarTest_Scale9_State_Change",
     "UILoadingBarTest_Left_Scale9",
     "UILoadingBarTest_Right_Scale9",
+    "UILoadingBarReloadTexture",
   
     "UITextAtlasTest",
     "UITextTest",
     "UITextTest_LineWrap",
-    
     "UILabelTest_Effect",
-    
     "UITextTest_TTF",
+    "UITextTest_IgnoreConentSize",
     "UITextBMFontTest",
+    
     "UITextFieldTest",
     "UITextFieldTest_MaxLength",
     "UITextFieldTest_Password",
     "UITextFieldTest_LineWrap",
     "UITextFieldTest_TrueTypeFont",
+    "UITextFieldTest_PlaceHolderColor",
+    
     "UILayoutTest",
     "UILayoutTest_Color",
     "UILayoutTest_Gradient",
@@ -68,19 +97,30 @@ static const char* s_testArray[] =
     "UILayoutTest_Layout_Linear_Horizontal",
     "UILayoutTest_Layout_Relative_Align_Parent",
     "UILayoutTest_Layout_Relative_Location",
+    "UILayoutComponent_Berth_Test",
+    "UILayoutComponent_Berth_Stretch_Test",
    
     "UIScrollViewTest_Vertical",
     "UIScrollViewTest_Horizontal",
     "UIScrollViewTest_Both",
     "UIScrollViewTest_ScrollToPercentBothDirection",
-    "UIScrollViewTest_ScrollToPercentBothDirection_Bounce",    
+    "UIScrollViewTest_ScrollToPercentBothDirection_Bounce",
+    "UIScrollViewNestTest",
+    "UIScrollViewRotated",
+    
     "UIPageViewTest",
     "UIPageViewButtonTest",
+    "UIPageViewCustomScrollThreshold",
+    "UIPageViewTouchPropagationTest",
+    "UIPageViewDynamicAddAndRemoveTest",
+    
     "UIListViewTest_Vertical",
     "UIListViewTest_Horizontal",
    
     "UIWidgetAddNodeTest",
+    
     "UIRichTextTest",
+    
     "UIFocusTest-HBox",
     "UIFocusTest-VBox",
     "UIFocusTest-NestedLayout1",
@@ -90,12 +130,17 @@ static const char* s_testArray[] =
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     "UIVideoPlayerTest",
 #endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    "UIWebViewTest",
+#endif
     "UIScale9SpriteTest",
     "UIScale9SpriteHierarchialTest",
     "UIScale9SpriteTouchTest",
     "UIS9BatchNodeBasic",
     "UIS9FrameNameSpriteSheet",
     "UIS9FrameNameSpriteSheetRotated",
+    "UIS9FrameNameSpriteSheetCropped",
+    "UIS9FrameNameSpriteSheetCroppedRotated",
     "UIS9BatchNodeScaledNoInsets",
     "UIS9FrameNameSpriteSheetScaledNoInsets",
     "UIS9FrameNameSpriteSheetRotatedScaledNoInsets",
@@ -109,6 +154,7 @@ static const char* s_testArray[] =
     "UIS9CascadeOpacityAndColor",
     "UIS9ZOrder",
     "UIS9Flip",
+    "UIS9ChangeAnchorPoint",
 };
 
 static UISceneManager *sharedInstance = nullptr;
@@ -128,7 +174,7 @@ UISceneManager * UISceneManager::sharedUISceneManager()
 {
     if (sharedInstance == nullptr)
     {
-        sharedInstance = new UISceneManager();
+        sharedInstance = new (std::nothrow) UISceneManager();
     }
     return sharedInstance;
 }
@@ -169,6 +215,8 @@ Scene *UISceneManager::currentUIScene()
             
         case kUIButtonTest_Scale9:
             return UIButtonTest_Scale9::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIButtonTest_Scale9_State_Change:
+            return UIButtonTest_Scale9_State_Change::sceneWithTitle(s_testArray[_currentUISceneId]);
             
         case kUIButtonTest_PressedAction:
             return UIButtonTest_PressedAction::sceneWithTitle(s_testArray[_currentUISceneId]);
@@ -179,33 +227,66 @@ Scene *UISceneManager::currentUIScene()
             return UIButtonTestRemoveSelf::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIButtonTestSwitchScale9:
             return UIButtonTestSwitchScale9::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIButtonTestZoomScale:
+            return UIButtonTestZoomScale::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIButtonTextOnly:
+            return UIButtonTextOnly::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIButtonIgnoreContentSizeTest:
+            return UIButtonIgnoreContentSizeTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIButtonTitleEffectTest:
+            return UIButtonTitleEffectTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIButtonFlipTest:
+            return UIButtonFlipTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIButtonNormalDefaultTest:
+            return UIButtonNormalDefaultTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIButtonDisableDefaultTest:
+            return UIButtonDisableDefaultTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+            
         case kUICheckBoxTest:
             return UICheckBoxTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUICheckBoxDefaultBehaviorTest:
+            return UICheckBoxDefaultBehaviorTest::sceneWithTitle(s_testArray[_currentUISceneId]);
             
         case kUISliderTest:
             return UISliderTest::sceneWithTitle(s_testArray[_currentUISceneId]);
             
         case kUISliderTest_Scale9:
             return UISliderTest_Scale9::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUISliderTest_Scale9_State_Change:
+            return UISliderTest_Scale9_State_Change::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUISliderNormalDefaultTest:
+            return UISliderNormalDefaultTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUISliderDisabledDefaultTest:
+            return UISliderDisabledDefaultTest::sceneWithTitle(s_testArray[_currentUISceneId]);
             
         case kUIImageViewTest:
             return UIImageViewTest::sceneWithTitle(s_testArray[_currentUISceneId]);
             
         case kUIImageViewTest_Scale9:
             return UIImageViewTest_Scale9::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIImageViewTest_Scale9_State_Change:
+            return UIImageViewTest_Scale9_State_Change::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIImageViewTest_ContentSize:
             return UIImageViewTest_ContentSize::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIImageViewFlipTest:
+            return UIImageViewFlipTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+            
         case kUILoadingBarTest_Left:
             return UILoadingBarTest_Left::sceneWithTitle(s_testArray[_currentUISceneId]);
             
         case kUILoadingBarTest_Right:
             return UILoadingBarTest_Right::sceneWithTitle(s_testArray[_currentUISceneId]);
             
+        case kUILoadingBarTest_Scale9_State_Change:
+            return UILoadingBarTest_Scale9_State_Change::sceneWithTitle(s_testArray[_currentUISceneId]);
+
         case kUILoadingBarTest_Left_Scale9:
             return UILoadingBarTest_Left_Scale9::sceneWithTitle(s_testArray[_currentUISceneId]);
             
         case kUILoadingBarTest_Right_Scale9:
             return UILoadingBarTest_Right_Scale9::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUILoadingBarReloadTexture:
+            return UILoadingBarReloadTexture::sceneWithTitle(s_testArray[_currentUISceneId]);
             
         case kUITextAtlasTest:
             return UITextAtlasTest::sceneWithTitle(s_testArray[_currentUISceneId]);
@@ -226,7 +307,8 @@ Scene *UISceneManager::currentUIScene()
             
         case kUITextTest_TTF:
             return UITextTest_TTF::sceneWithTitle(s_testArray[_currentUISceneId]);
-            
+        case kUITextTest_IgnoreConentSize:
+            return UITextTest_IgnoreConentSize::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUITextFieldTest:
             return UITextFieldTest::sceneWithTitle(s_testArray[_currentUISceneId]);
             
@@ -240,7 +322,8 @@ Scene *UISceneManager::currentUIScene()
             return UITextFieldTest_LineWrap::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUITextFieldTest_TrueTypeFont:
             return UITextFieldTest_TrueTypeFont::sceneWithTitle(s_testArray[_currentUISceneId]);
-        
+        case kUITextFieldTest_PlaceHolderColor:
+            return UITextFieldTest_PlaceHolderColor::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUILayoutTest:
             return UILayoutTest::sceneWithTitle(s_testArray[_currentUISceneId]);
             
@@ -268,6 +351,12 @@ Scene *UISceneManager::currentUIScene()
         case kUILayoutTest_Layout_Relative_Location:
             return UILayoutTest_Layout_Relative_Location::sceneWithTitle(s_testArray[_currentUISceneId]);
             
+        case kUILayoutComponent_Berth_Test:
+            return UILayoutComponent_Berth_Test::sceneWithTitle(s_testArray[_currentUISceneId]);
+
+        case kUILayoutComponent_Berth_Stretch_Test:
+            return UILayoutComponent_Berth_Stretch_Test::sceneWithTitle(s_testArray[_currentUISceneId]);
+
         case kUIScrollViewTest_Vertical:
             return UIScrollViewTest_Vertical::sceneWithTitle(s_testArray[_currentUISceneId]);
             
@@ -282,11 +371,21 @@ Scene *UISceneManager::currentUIScene()
             
         case kUIScrollViewTest_ScrollToPercentBothDirection_Bounce:
             return UIScrollViewTest_ScrollToPercentBothDirection_Bounce::sceneWithTitle(s_testArray[_currentUISceneId]);                    
+        case kUIScrollViewNestTest:
+            return UIScrollViewNestTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIScrollViewRotated:
+            return UIScrollViewRotated::sceneWithTitle(s_testArray[_currentUISceneId]);
             
         case kUIPageViewTest:
             return UIPageViewTest::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIPageViewButtonTest:
             return UIPageViewButtonTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIPageViewCustomScrollThreshold:
+            return UIPageViewCustomScrollThreshold::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIPageViewTouchPropagationTest:
+            return UIPageViewTouchPropagationTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIPageViewDynamicAddAndRemoveTest:
+            return UIPageViewDynamicAddAndRemoveTest::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIListViewTest_Vertical:
             return UIListViewTest_Vertical::sceneWithTitle(s_testArray[_currentUISceneId]);
             
@@ -314,6 +413,10 @@ Scene *UISceneManager::currentUIScene()
         case kUIVideoPlayerTest:
             return VideoPlayerTest::sceneWithTitle(s_testArray[_currentUISceneId]);
 #endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        case KWebViewTest:
+            return WebViewTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+#endif
         case kUIScale9SpriteTest:
             return UIScale9SpriteTest::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIScale9SpriteHierarchialTest:
@@ -326,6 +429,10 @@ Scene *UISceneManager::currentUIScene()
             return UIS9FrameNameSpriteSheet::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIS9FrameNameSpriteSheetRotated:
             return UIS9FrameNameSpriteSheetRotated::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIS9FrameNameSpriteSheetCropped:
+            return UIS9FrameNameSpriteSheetCropped::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIS9FrameNameSpriteSheetCroppedRotated:
+            return UIS9FrameNameSpriteSheetCroppedRotated::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIS9BatchNodeScaledNoInsets:
             return UIS9BatchNodeScaledNoInsets::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIS9FrameNameSpriteSheetScaledNoInsets:
@@ -352,6 +459,13 @@ Scene *UISceneManager::currentUIScene()
             return UIS9ZOrder::sceneWithTitle(s_testArray[_currentUISceneId]);
         case kUIS9Flip:
             return UIS9Flip::sceneWithTitle(s_testArray[_currentUISceneId]);
+        case kUIS9ChangeAnchorPoint:
+            return UIS9ChangeAnchorPoint::sceneWithTitle(s_testArray[_currentUISceneId]);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+        case kUIEditBoxTest:
+            return UIEditBoxTest::sceneWithTitle(s_testArray[_currentUISceneId]);
+#endif
+       
     }
     return nullptr;
 }

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -50,7 +50,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)$(Configuration).win32\</OutDir>
+    <OutDir>$(SolutionDir)$(Configuration).win32\lua-tests\</OutDir>
     <IntDir>$(Configuration).win32\</IntDir>
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(IncludePath)</IncludePath>
@@ -58,7 +58,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)$(Configuration).win32\</OutDir>
+    <OutDir>$(SolutionDir)$(Configuration).win32\lua-tests\</OutDir>
     <IntDir>$(Configuration).win32\</IntDir>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
@@ -70,7 +70,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\lua\luajit\include;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\lua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\lua\luajit\include;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\lua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -87,7 +87,7 @@
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)$(Configuration).win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libcurl_imp.lib;lua51.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ResourceCompile>
@@ -108,19 +108,22 @@
       </DllDataFileName>
     </Midl>
     <PreBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script" "$(ProjectDir)..\.." /e /Y
-xcopy "$(ProjectDir)..\..\..\..\external\lua\luasocket\*.lua" "$(ProjectDir)..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\..\cpp-tests\Resources" "$(ProjectDir)..\..\res" /e /Y</Command>
+      <Command>xcopy "$(ProjectDir)..\..\res" "$(OutDir)res" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\..\src" "$(OutDir)src" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\..\..\..\tests\cpp-tests\Resources" "$(OutDir)res" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script" "$(OutDir)src\cocos" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\..\..\..\external\lua\luasocket\script" "$(OutDir)script" /D /E /I /F /Y
+xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
       <Message>copy files</Message>
     </PreBuildEvent>
     <PreLinkEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</Command>
+      <Command>
+      </Command>
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external\lua\luajit\include;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\lua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Classes;$(EngineRoot)cocos\scripting\lua-bindings\auto;$(EngineRoot)cocos\scripting\lua-bindings\manual;$(EngineRoot)cocos\audio\include;$(EngineRoot)external;$(EngineRoot)external\lua\luajit\include;$(EngineRoot)external\lua\tolua;$(EngineRoot)external\lua;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
@@ -135,7 +138,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <Link>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
-      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(OutDir);$(SolutionDir)$(Configuration).win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libcurl_imp.lib;lua51.lib;websockets.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
@@ -157,56 +160,35 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
       </DllDataFileName>
     </Midl>
     <PreBuildEvent>
-      <Command>xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script" "$(ProjectDir)..\.." /e /Y
-xcopy "$(ProjectDir)..\..\..\..\external\lua\luasocket\*.lua" "$(ProjectDir)..\..\" /e /Y
-xcopy "$(ProjectDir)..\..\..\cpp-tests\Resources" "$(ProjectDir)..\..\res" /e /Y</Command>
+      <Command>xcopy "$(ProjectDir)..\..\res" "$(OutDir)res" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\..\src" "$(OutDir)src" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\..\..\..\tests\cpp-tests\Resources" "$(OutDir)res" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\lua-bindings\script" "$(OutDir)src\cocos" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\..\..\..\external\lua\luasocket\script" "$(OutDir)script" /D /E /I /F /Y
+xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
       <Message>copy files</Message>
     </PreBuildEvent>
     <PreLinkEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</Command>
+      <Command>
+      </Command>
     </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\lua_assetsmanager_test_sample.h" />
+    <ClInclude Include="..\Classes\lua_test_bindings.h" />
+    <ClInclude Include="..\Classes\lua_module_register.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\lua_assetsmanager_test_sample.cpp" />
+    <ClCompile Include="..\Classes\lua_test_bindings.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\cocos\2d\libcocos2d.vcxproj">
-      <Project>{98a51ba8-fc3a-415b-ac8f-8c7bd464e93e}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\cocos\audio\proj.win32\libcocosdenshion.vcxproj">
-      <Project>{f8edd7fa-9a51-4e80-baeb-860825d2eac6}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\cocos\editor-support\cocosbuilder\proj.win32\libcocosbuilder.vcxproj">
-      <Project>{811c0dab-7b96-4bd3-a154-b7572b58e4ab}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\cocos\editor-support\cocostudio\proj.win32\libcocostudio.vcxproj">
-      <Project>{b57cf53f-2e49-4031-9822-047cc0e6bde2}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\cocos\editor-support\spine\proj.win32\libspine.vcxproj">
-      <Project>{b7c2a162-dec9-4418-972e-240ab3cbfcae}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\cocos\scripting\lua-bindings\proj.win32\liblua.vcxproj">
-      <Project>{ddc3e27f-004d-4dd4-9dd3-931a013d2159}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\cocos\network\proj.win32\libNetwork.vcxproj">
-      <Project>{df2638c0-8128-4847-867c-6eafe3dee7b5}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\cocos\ui\proj.win32\libui.vcxproj">
-      <Project>{7e06e92c-537a-442b-9e4a-4761c84f8a1a}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\extensions\proj.win32\libextension.vcxproj">
-      <Project>{21b2c324-891f-48ea-ad1a-5ae13de12e28}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\external\chipmunk\proj.win32\chipmunk.vcxproj">
-      <Project>{207bc7a9-ccf1-4f2f-a04d-45f72242ae25}</Project>
+    <ProjectReference Include="..\..\..\..\cocos\scripting\lua-bindings\proj.win32\libluacocos2d.vcxproj">
+      <Project>{9f2d6ce6-c893-4400-b50c-6db70cc2562f}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

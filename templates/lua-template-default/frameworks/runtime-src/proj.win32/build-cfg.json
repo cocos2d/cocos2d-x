@@ -9,8 +9,10 @@
             "to": "res"
         },
         {
-            "from": "../../cocos2d-x/cocos/scripting/lua-bindings/script",
+            "from": "../../../config.json",
             "to": ""
         }
+    ],
+    "must_copy_resources": [
     ]
 }

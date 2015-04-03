@@ -25,7 +25,7 @@ enum
 //------------------------------------------------------------------
 PongScene::PongScene()
 {
-    auto pongLayer = new PongLayer();//PongLayer::create();
+    auto pongLayer = new (std::nothrow) PongLayer();//PongLayer::create();
     addChild(pongLayer);
     pongLayer->release();
 }
@@ -71,7 +71,7 @@ PongLayer::PongLayer()
         addChild(paddle);
     }
 
-    schedule( schedule_selector(PongLayer::doStep) );
+    schedule( CC_SCHEDULE_SELECTOR(PongLayer::doStep) );
 }
 
 PongLayer::~PongLayer()

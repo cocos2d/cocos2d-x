@@ -17,9 +17,9 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
+    void restartCallback(Ref* sender) override;
+    void nextCallback(Ref* sender) override;
+    void backCallback(Ref* sender) override;
 };
 
 class CrashTest : public ActionManagerTest
@@ -52,6 +52,14 @@ public:
     virtual std::string subtitle() const override;
     virtual void onEnter() override;
     void stopAction();
+};
+
+class StopAllActionsTest : public ActionManagerTest
+{
+public:
+    virtual std::string subtitle() const override;
+    virtual void onEnter() override;
+    void stopAction(float time);
 };
 
 class ResumeTest : public ActionManagerTest

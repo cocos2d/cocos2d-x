@@ -5,27 +5,22 @@
 
 class IntervalLayer : public Layer
 {
+public:
+    IntervalLayer(void);
+    virtual ~IntervalLayer();
+
+    virtual void update(float dt) override;
+
+    //CREATE_NODE(IntervalLayer);
+
 protected:
     Label*    _label0;
     Label*    _label1;
     Label*    _label2;
     Label*    _label3;
     Label*    _label4;
-    
+
     float        _time0, _time1, _time2, _time3, _time4;
-
-public:
-    IntervalLayer(void);
-    virtual ~IntervalLayer();
-public:
-
-    void step1(float dt);
-    void step2(float dt);
-    void step3(float dt);
-    void step4(float dt);
-    void update(float dt);
-
-    //CREATE_NODE(IntervalLayer);
 };
 
 class IntervalTestScene : public TestScene

@@ -184,6 +184,7 @@ public:
     virtual void updateOffsetPoint();
     virtual void setAnchorPoint(const cocos2d::Vec2& point) override;
     virtual const cocos2d::Vec2& getAnchorPointInPoints() const override;
+    virtual const cocos2d::Vec2& getOffsetPoints() const;
 
     virtual void setAnimation(ArmatureAnimation *animation);
     virtual ArmatureAnimation *getAnimation() const;
@@ -194,7 +195,7 @@ public:
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     virtual void setColliderFilter(ColliderFilter *filter);
 #elif ENABLE_PHYSICS_SAVE_CALCULATED_VERTEX
-    virtual void drawContour();
+    CC_DEPRECATED_ATTRIBUTE virtual void drawContour();
 #endif
 
 

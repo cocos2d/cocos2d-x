@@ -26,25 +26,23 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCGL.h"
+
 #include "2d/CCParticleSystemQuad.h"
+
+#include <algorithm>
+
 #include "2d/CCSpriteFrame.h"
 #include "2d/CCParticleBatchNode.h"
 #include "renderer/CCTextureAtlas.h"
+#include "renderer/ccGLStateCache.h"
+#include "renderer/CCRenderer.h"
 #include "base/CCDirector.h"
 #include "base/CCEventType.h"
 #include "base/CCConfiguration.h"
-#include "math/TransformUtils.h"
-#include "renderer/CCGLProgramState.h"
-#include "renderer/ccGLStateCache.h"
-#include "renderer/CCGLProgram.h"
-#include "renderer/CCRenderer.h"
-#include "renderer/CCQuadCommand.h"
-#include "renderer/CCCustomCommand.h"
-
-// extern
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
+
+#include "deprecated/CCString.h"
 
 NS_CC_BEGIN
 
@@ -75,7 +73,7 @@ ParticleSystemQuad::~ParticleSystemQuad()
 
 ParticleSystemQuad * ParticleSystemQuad::create(const std::string& filename)
 {
-    ParticleSystemQuad *ret = new ParticleSystemQuad();
+    ParticleSystemQuad *ret = new (std::nothrow) ParticleSystemQuad();
     if (ret && ret->initWithFile(filename))
     {
         ret->autorelease();
@@ -86,7 +84,7 @@ ParticleSystemQuad * ParticleSystemQuad::create(const std::string& filename)
 }
 
 ParticleSystemQuad * ParticleSystemQuad::createWithTotalParticles(int numberOfParticles) {
-    ParticleSystemQuad *ret = new ParticleSystemQuad();
+    ParticleSystemQuad *ret = new (std::nothrow) ParticleSystemQuad();
     if (ret && ret->initWithTotalParticles(numberOfParticles))
     {
         ret->autorelease();
@@ -177,7 +175,7 @@ void ParticleSystemQuad::initTexCoordsWithRect(const Rect& pointRect)
 #endif // ! CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 
     // Important. Texture in cocos2d are inverted, so the Y component should be inverted
-    CC_SWAP( top, bottom, float);
+    std::swap(top, bottom);
 
     V3F_C4B_T2F_Quad *quads = nullptr;
     unsigned int start = 0, end = 0;
@@ -374,7 +372,7 @@ void ParticleSystemQuad::draw(Renderer *renderer, const Mat4 &transform, uint32_
     //quad command
     if(_particleIdx > 0)
     {
-        _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _quads, _particleIdx, transform);
+        _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _quads, _particleIdx, transform, flags);
         renderer->addCommand(&_quadCommand);
     }
 }
@@ -515,8 +513,12 @@ void ParticleSystemQuad::setupVBO()
 
 void ParticleSystemQuad::listenRendererRecreated(EventCustom* event)
 {
+    //when comes to foreground in android, _buffersVBO and _VAOname is a wild handle
+    //before recreating, we need to reset them to 0
+    memset(_buffersVBO, 0, sizeof(_buffersVBO));
     if (Configuration::getInstance()->supportsShareableVAO())
     {
+        _VAOname = 0;
         setupVBOandVAO();
     }
     else
@@ -597,7 +599,7 @@ void ParticleSystemQuad::setBatchNode(ParticleBatchNode * batchNode)
 }
 
 ParticleSystemQuad * ParticleSystemQuad::create() {
-    ParticleSystemQuad *particleSystemQuad = new ParticleSystemQuad();
+    ParticleSystemQuad *particleSystemQuad = new (std::nothrow) ParticleSystemQuad();
     if (particleSystemQuad && particleSystemQuad->init())
     {
         particleSystemQuad->autorelease();

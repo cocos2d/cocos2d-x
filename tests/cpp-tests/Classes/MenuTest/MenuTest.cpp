@@ -171,7 +171,7 @@ void MenuLayerMainMenu::menuCallbackConfig(Ref* sender)
 void MenuLayerMainMenu::allowTouches(float dt)
 {
     _eventDispatcher->setPriority(_touchListener, 1);
-    unscheduleAllSelectors();
+    unscheduleAllCallbacks();
     log("TOUCHES ALLOWED AGAIN");
 }
 
@@ -179,7 +179,7 @@ void MenuLayerMainMenu::menuCallbackDisabled(Ref* sender)
 {
     // hijack all touch events for 5 seconds
     _eventDispatcher->setPriority(_touchListener, -1);
-    schedule(schedule_selector(MenuLayerMainMenu::allowTouches), 5.0f);
+    schedule(CC_SCHEDULE_SELECTOR(MenuLayerMainMenu::allowTouches), 5.0f);
     log("TOUCHES DISABLED FOR 5 SECONDS");
 }
 
@@ -565,12 +565,12 @@ void MenuTestScene::runThisTest()
 {
     MenuItemFont::setFontSize(20);
     
-    auto layer1 = new MenuLayerMainMenu();
-    auto layer2 = new MenuLayer2();
-    auto layer3 = new MenuLayer3();
-    auto layer4 = new MenuLayer4();
-    auto layer5 = new BugsTest();
-    auto layer6 = new RemoveMenuItemWhenMove();
+    auto layer1 = new (std::nothrow) MenuLayerMainMenu();
+    auto layer2 = new (std::nothrow) MenuLayer2();
+    auto layer3 = new (std::nothrow) MenuLayer3();
+    auto layer4 = new (std::nothrow) MenuLayer4();
+    auto layer5 = new (std::nothrow) BugsTest();
+    auto layer6 = new (std::nothrow) RemoveMenuItemWhenMove();
 
     auto layer = LayerMultiplex::create(layer1, layer2, layer3, layer4, layer5, layer6, nullptr);
     addChild(layer, 0); 

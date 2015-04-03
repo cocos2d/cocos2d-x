@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "cocostudio/DictionaryHelper.h"
 
 namespace cocostudio {
@@ -42,7 +42,7 @@ DictionaryHelper::~DictionaryHelper()
 DictionaryHelper* DictionaryHelper::getInstance()
 {
     if (!sharedHelper) {
-        sharedHelper = new DictionaryHelper();
+        sharedHelper = new (std::nothrow) DictionaryHelper();
     }
     return sharedHelper;
 }

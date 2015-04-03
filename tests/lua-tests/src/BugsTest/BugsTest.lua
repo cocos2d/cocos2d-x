@@ -13,7 +13,8 @@ local testNames = {
     "Bug-899",
     "Bug-914",
     "Bug-1159",
-    "Bug-1174"
+    "Bug-1174",
+    "Bug-value-type-judge-in-table"
 }
 
 local function CreateBugsTestBackMenuItem(pLayer)
@@ -355,8 +356,6 @@ end
 --BugTest1159
 local function BugTest1159()
     local pLayer = cc.Layer:create()
-    
-    cc.Director:getInstance():setDepthTest(true)
 
     local background = cc.LayerColor:create(cc.c4b(255, 0, 255, 255))
     pLayer:addChild(background)
@@ -397,7 +396,6 @@ local function BugTest1159()
                 scheduler:unscheduleScriptEntry(schedulerEntry)
             end
             ]]--
-            cc.Director:getInstance():setDepthTest(false)
         end
     end
 
@@ -554,6 +552,24 @@ local function BugTest1174()
     return pLayer
 end
 
+--BugTestValueTypeJudgeInTable
+local function BugTestValueTypeJudgeInTable()
+    local layer = cc.Layer:create()
+    local label = cc.Label:createWithTTF("Value Type Judge Error in the table:number -> string", "fonts/arial.ttf", 24)
+    label:setAnchorPoint(cc.p(0.5, 0.5))
+    label:setPosition(cc.p(VisibleRect:center().x, VisibleRect:top().y - 40))
+    layer:addChild(label)
+    local outLable = cc.Label:createWithTTF("You should see the following output in the console: \n     The type of index 0 is number \n     The type of index 1 is number \n     The type of index 2 is number", "fonts/arial.ttf", 18)
+    outLable:setAnchorPoint(cc.p(0.5, 0.5))
+    outLable:setPosition(cc.p(VisibleRect:center().x, VisibleRect:top().y - 160))
+    layer:addChild(outLable)
+
+    local valueTypeJudge = cc.ValueTypeJudgeInTable:create({index1 = 111, index2 = 112, index3 = 113})
+    layer:addChild(valueTypeJudge)
+
+    return layer
+end
+
 local CreateBugsTestTable = {
    BugTest350,
    BugTest422,
@@ -564,6 +580,7 @@ local CreateBugsTestTable = {
    BugTest914,
    BugTest1159,
    BugTest1174,
+   BugTestValueTypeJudgeInTable,
 }
 
 local function CreateBugsTestScene(nBugNo)

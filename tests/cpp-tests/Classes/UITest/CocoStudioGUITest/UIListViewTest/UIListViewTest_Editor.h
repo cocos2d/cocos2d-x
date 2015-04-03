@@ -30,6 +30,7 @@
 class UIListViewTest_Vertical_Editor : public UIScene_Editor
 {
 public:
+    static void setupListView(ListView* listView);
     UIListViewTest_Vertical_Editor();
     ~UIListViewTest_Vertical_Editor();
     bool init();

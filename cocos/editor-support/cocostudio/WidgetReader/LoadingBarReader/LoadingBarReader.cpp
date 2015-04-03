@@ -1,12 +1,18 @@
 
 
 #include "LoadingBarReader.h"
+
 #include "ui/UILoadingBar.h"
 #include "cocostudio/CocoLoader.h"
+#include "cocostudio/CSParseBinary_generated.h"
+#include "cocostudio/FlatBuffersSerialize.h"
+
+#include "tinyxml2.h"
+#include "flatbuffers/flatbuffers.h"
 
 USING_NS_CC;
 using namespace ui;
-using namespace cocostudio;
+using namespace flatbuffers;
 
 namespace cocostudio
 {
@@ -21,7 +27,7 @@ namespace cocostudio
     
     static LoadingBarReader* instanceLoadingBar = nullptr;
     
-    IMPLEMENT_CLASS_WIDGET_READER_INFO(LoadingBarReader)
+    IMPLEMENT_CLASS_NODE_READER_INFO(LoadingBarReader)
     
     LoadingBarReader::LoadingBarReader()
     {
@@ -37,9 +43,14 @@ namespace cocostudio
     {
         if (!instanceLoadingBar)
         {
-            instanceLoadingBar = new LoadingBarReader();
+            instanceLoadingBar = new (std::nothrow) LoadingBarReader();
         }
         return instanceLoadingBar;
+    }
+    
+    void LoadingBarReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instanceLoadingBar);
     }
     
     void LoadingBarReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
@@ -139,5 +150,201 @@ namespace cocostudio
         
         
         WidgetReader::setColorPropsFromJsonDictionary(widget, options);
+    }        
+    
+    Offset<Table> LoadingBarReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
+                                                                 flatbuffers::FlatBufferBuilder *builder)
+    {
+        auto temp = WidgetReader::getInstance()->createOptionsWithFlatBuffers(objectData, builder);
+        auto widgetOptions = *(Offset<WidgetOptions>*)(&temp);
+        
+        std::string path = "";
+        std::string plistFile = "";
+        int resourceType = 0;
+        
+        int percent = 80;
+        int direction = 0;
+        
+        // attributes
+        const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
+        while (attribute)
+        {
+            std::string name = attribute->Name();
+            std::string value = attribute->Value();
+            
+            if (name == "ProgressType")
+            {
+                direction = (value == "Left_To_Right") ? 0 : 1;
+            }
+            else if (name == "ProgressInfo")
+            {
+                percent = atoi(value.c_str());
+            }
+            
+            attribute = attribute->Next();
+        }
+        
+        // child elements
+        const tinyxml2::XMLElement* child = objectData->FirstChildElement();
+        while (child)
+        {
+            std::string name = child->Name();
+            
+            if (name == "ImageFileData")
+            {
+                std::string texture = "";
+                std::string texturePng = "";
+                
+                attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Path")
+                    {
+                        path = value;
+                    }
+                    else if (name == "Type")
+                    {
+                        resourceType = getResourceType(value);
+                    }
+                    else if (name == "Plist")
+                    {
+                        plistFile = value;
+                        texture = value;
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+                
+                if (resourceType == 1)
+                {
+                    FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+                    fbs->_textures.push_back(builder->CreateString(texture));                    
+                }
+            }
+            
+            child = child->NextSiblingElement();
+        }
+        
+        auto options = CreateLoadingBarOptions(*builder,
+                                               widgetOptions,
+                                               CreateResourceData(*builder,
+                                                                  builder->CreateString(path),
+                                                                  builder->CreateString(plistFile),
+                                                                  resourceType),
+                                               percent,
+                                               direction);
+        
+        return *(Offset<Table>*)(&options);
     }
+    
+    void LoadingBarReader::setPropsWithFlatBuffers(cocos2d::Node *node, const flatbuffers::Table *loadingBarOptions)
+    {
+        LoadingBar* loadingBar = static_cast<LoadingBar*>(node);
+        auto options = (LoadingBarOptions*)loadingBarOptions;
+        
+        bool fileExist = false;
+        std::string errorFilePath = "";
+        auto imageFileNameDic = options->textureData();
+        int imageFileNameType = imageFileNameDic->resourceType();
+        std::string imageFileName = imageFileNameDic->path()->c_str();
+        switch (imageFileNameType)
+        {
+            case 0:
+            {
+                if (FileUtils::getInstance()->isFileExist(imageFileName))
+                {
+                    fileExist = true;
+                }
+                else
+                {
+                    errorFilePath = imageFileName;
+                    fileExist = false;
+                }
+                break;
+            }
+                
+            case 1:
+            {
+                std::string plist = imageFileNameDic->plistFile()->c_str();
+                SpriteFrame* spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(imageFileName);
+                if (spriteFrame)
+                {
+                    fileExist = true;
+                }
+                else
+                {
+                    if (FileUtils::getInstance()->isFileExist(plist))
+                    {
+                        ValueMap value = FileUtils::getInstance()->getValueMapFromFile(plist);
+                        ValueMap metadata = value["metadata"].asValueMap();
+                        std::string textureFileName = metadata["textureFileName"].asString();
+                        if (!FileUtils::getInstance()->isFileExist(textureFileName))
+                        {
+                            errorFilePath = textureFileName;
+                        }
+                    }
+                    else
+                    {
+                        errorFilePath = plist;
+                    }
+                    fileExist = false;
+                }
+                break;
+            }
+                
+            default:
+                break;
+        }
+        if (fileExist)
+        {
+            loadingBar->loadTexture(imageFileName, (Widget::TextureResType)imageFileNameType);
+        }
+        else
+        {
+            auto label = Label::create();
+            label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+            loadingBar->addChild(label);
+        }
+        
+        int direction = options->direction();
+        loadingBar->setDirection(LoadingBar::Direction(direction));
+        
+        int percent = options->percent();
+        loadingBar->setPercent(percent);
+        
+        auto widgetReader = WidgetReader::getInstance();
+        widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
+    }
+    
+    Node* LoadingBarReader::createNodeWithFlatBuffers(const flatbuffers::Table *loadingBarOptions)
+    {
+        LoadingBar* loadingBar = LoadingBar::create();
+        
+        setPropsWithFlatBuffers(loadingBar, (Table*)loadingBarOptions);
+        
+        return loadingBar;
+    }
+    
+    int LoadingBarReader::getResourceType(std::string key)
+    {
+        if(key == "Normal" || key == "Default")
+        {
+            return 	0;
+        }
+        
+        FlatBuffersSerialize* fbs = FlatBuffersSerialize::getInstance();
+        if(fbs->_isSimulator)
+        {
+            if(key == "MarkedSubImage")
+            {
+                return 0;
+            }
+        }
+        return 1;
+    }
+    
 }

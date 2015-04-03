@@ -5,13 +5,24 @@
 ////
 //// Copyright (c) Microsoft Corporation. All rights reserved
 
+// For licensing information relating to this distribution please see Third Party Notices file.
+
 #pragma once
 
-#include "pch.h"
+#include <wrl.h>
+#include <d3d11_1.h>
+#include <agile.h>
+#include <DirectXMath.h>
+#include <memory>
+
+#define XAUDIO2_HELPER_FUNCTIONS 1
+#include <xaudio2.h>
 #include <map>
 
 static const int STREAMING_BUFFER_SIZE = 65536;
 static const int MAX_BUFFER_COUNT = 3;
+
+#define UNUSED_PARAM(unusedparam) (void)unusedparam
 
 struct SoundEffectData
 {
@@ -85,10 +96,11 @@ private:
     StreamingVoiceContext       m_voiceContext;
 
     typedef std::map<unsigned int, SoundEffectData> EffectList;
-	EffectList				    m_soundEffects;
+    typedef std::pair<unsigned int, SoundEffectData> Effect;
+	EffectList				    m_soundEffects;         
 
-    unsigned int                m_backgroundID;
-    std::string                 m_backgroundFile;
+    unsigned int                m_backgroundID;       
+    std::string                 m_backgroundFile;       
     bool                        m_backgroundLoop;
 
     float                       m_soundEffctVolume;
@@ -144,9 +156,12 @@ public:
 
     void PauseAllSoundEffects();
     void ResumeAllSoundEffects();
-    void StopAllSoundEffects();
+    void StopAllSoundEffects(bool bReleaseData);
 
     void PreloadSoundEffect(const char* pszFilePath, bool isMusic = false);
     void UnloadSoundEffect(const char* pszFilePath);
     void UnloadSoundEffect(unsigned int sound);
+
+private:
+    void RemoveFromList(unsigned int sound);
 };

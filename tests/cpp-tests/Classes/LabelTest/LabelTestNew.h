@@ -21,9 +21,9 @@ public:
     virtual std::string subtitle() const override;
     virtual void onEnter() override;
 
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
+    void restartCallback(Ref* sender) override;
+    void nextCallback(Ref* sender) override;
+    void backCallback(Ref* sender) override;
 };
 
 class LabelTTFAlignmentNew : public AtlasDemoNew
@@ -58,14 +58,9 @@ public:
 
     LabelFNTSpriteActions();
     virtual void step(float dt);
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-
-protected:
-    CustomCommand _renderCmd;
-    void onDraw(const Mat4 &transform, uint32_t flags);
 };
 
 class LabelFNTPadding : public AtlasDemoNew
@@ -194,9 +189,9 @@ public:
     virtual std::string subtitle() const override;
     void stringChanged(Ref *sender);
     void alignmentChanged(Ref *sender);
-    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event);
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event) override;
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event) override;
 
 public:
     Label *_labelShouldRetain;
@@ -224,14 +219,8 @@ public:
 
     LabelFNTBounds();
     
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-
-protected:
-    CustomCommand _renderCmd;
-    void onDraw(const Mat4 &transform, uint32_t flags);
-    Label *label1;
 };
 
 class LabelTTFLongLineWrapping : public AtlasDemoNew
@@ -430,14 +419,8 @@ public:
 
     LabelTTFOldNew();
 
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
-
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-
-protected:
-    CustomCommand _renderCmd;
-    void onDraw(const Mat4 &transform, uint32_t flags);
 };
 
 class LabelFontNameTest : public AtlasDemoNew
@@ -526,6 +509,72 @@ private:
     Label* label;
 };
 
+class LabelIssue8492Test : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelIssue8492Test);
+
+    LabelIssue8492Test();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class LabelMultilineWithOutline : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelMultilineWithOutline);
+
+    LabelMultilineWithOutline();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 // we don't support linebreak mode
+
+class LabelIssue9255Test : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelIssue9255Test);
+
+    LabelIssue9255Test();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class LabelSmallDimensionsTest : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelSmallDimensionsTest);
+
+    LabelSmallDimensionsTest();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class LabelIssue10089Test : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelIssue10089Test);
+
+    LabelIssue10089Test();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class LabelSystemFontColor : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelSystemFontColor);
+
+    LabelSystemFontColor();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
 
 #endif

@@ -31,6 +31,7 @@
  */
 #include "base/ccMacros.h"
 #include "2d/CCActionCatmullRom.h"
+#include "2d/CCNode.h"
 
 using namespace std;
 
@@ -42,7 +43,7 @@ NS_CC_BEGIN;
 
 PointArray* PointArray::create(ssize_t capacity)
 {
-    PointArray* pointArray = new PointArray();
+    PointArray* pointArray = new (std::nothrow) PointArray();
     if (pointArray)
     {
         if (pointArray->initWithCapacity(capacity))
@@ -76,7 +77,7 @@ PointArray* PointArray::clone() const
         newArray->push_back(new Vec2((*iter)->x, (*iter)->y));
     }
     
-    PointArray *points = new PointArray();
+    PointArray *points = new (std::nothrow) PointArray();
     points->initWithCapacity(10);
     points->setControlPoints(newArray);
 
@@ -125,7 +126,7 @@ void PointArray::addControlPoint(Vec2 controlPoint)
 
 void PointArray::insertControlPoint(Vec2 &controlPoint, ssize_t index)
 {
-    Vec2 *temp = new Vec2(controlPoint.x, controlPoint.y);
+    Vec2 *temp = new (std::nothrow) Vec2(controlPoint.x, controlPoint.y);
     _controlPoints->insert(_controlPoints->begin() + index, temp);
 }
 
@@ -137,7 +138,6 @@ Vec2 PointArray::getControlPointAtIndex(ssize_t index)
 
 void PointArray::replaceControlPoint(cocos2d::Vec2 &controlPoint, ssize_t index)
 {
-
     Vec2 *temp = _controlPoints->at(index);
     temp->x = controlPoint.x;
     temp->y = controlPoint.y;
@@ -200,9 +200,9 @@ Vec2 ccCardinalSplineAt(Vec2 &p0, Vec2 &p1, Vec2 &p2, Vec2 &p3, float tension, f
     float t2 = t * t;
     float t3 = t2 * t;
     
-	/*
-	 * Formula: s(-ttt + 2tt - t)P1 + s(-ttt + tt)P2 + (2ttt - 3tt + 1)P2 + s(ttt - 2tt + t)P3 + (-2ttt + 3tt)P3 + s(ttt - tt)P4
-	 */
+    /*
+     * Formula: s(-ttt + 2tt - t)P1 + s(-ttt + tt)P2 + (2ttt - 3tt + 1)P2 + s(ttt - 2tt + t)P3 + (-2ttt + 3tt)P3 + s(ttt - tt)P4
+     */
     float s = (1 - tension) / 2;
 	
     float b1 = s * ((-t3 + (2 * t2)) - t);                      // s(-t3 + 2 t2 - t)P1
@@ -221,7 +221,7 @@ Vec2 ccCardinalSplineAt(Vec2 &p0, Vec2 &p1, Vec2 &p2, Vec2 &p3, float tension, f
 
 CardinalSplineTo* CardinalSplineTo::create(float duration, cocos2d::PointArray *points, float tension)
 {
-    CardinalSplineTo *ret = new CardinalSplineTo();
+    CardinalSplineTo *ret = new (std::nothrow) CardinalSplineTo();
     if (ret)
     {
         if (ret->initWithDuration(duration, points, tension))
@@ -279,11 +279,11 @@ void CardinalSplineTo::startWithTarget(cocos2d::Node *target)
 
 CardinalSplineTo* CardinalSplineTo::clone() const
 {
-	// no copy constructor
-	auto a = new CardinalSplineTo();
-	a->initWithDuration(this->_duration, this->_points->clone(), this->_tension);
-	a->autorelease();
-	return a;
+    // no copy constructor
+    auto a = new (std::nothrow) CardinalSplineTo();
+    a->initWithDuration(this->_duration, this->_points->clone(), this->_tension);
+    a->autorelease();
+    return a;
 }
 
 void CardinalSplineTo::update(float time)
@@ -291,10 +291,10 @@ void CardinalSplineTo::update(float time)
     ssize_t p;
     float lt;
 	
-	// eg.
-	// p..p..p..p..p..p..p
-	// 1..2..3..4..5..6..7
-	// want p to be 1, 2, 3, 4, 5, 6
+    // eg.
+    // p..p..p..p..p..p..p
+    // 1..2..3..4..5..6..7
+    // want p to be 1, 2, 3, 4, 5, 6
     if (time == 1)
     {
         p = _points->count() - 1;
@@ -306,7 +306,7 @@ void CardinalSplineTo::update(float time)
         lt = (time - _deltaT * (float)p) / _deltaT;
     }
     
-	// Interpolate    
+    // Interpolate
     Vec2 pp0 = _points->getControlPointAtIndex(p-1);
     Vec2 pp1 = _points->getControlPointAtIndex(p+0);
     Vec2 pp2 = _points->getControlPointAtIndex(p+1);
@@ -345,7 +345,7 @@ CardinalSplineTo* CardinalSplineTo::reverse() const
 
 CardinalSplineBy* CardinalSplineBy::create(float duration, cocos2d::PointArray *points, float tension)
 {
-    CardinalSplineBy *ret = new CardinalSplineBy();
+    CardinalSplineBy *ret = new (std::nothrow) CardinalSplineBy();
     if (ret)
     {
         if (ret->initWithDuration(duration, points, tension))
@@ -376,9 +376,9 @@ CardinalSplineBy* CardinalSplineBy::reverse() const
 {
     PointArray *copyConfig = _points->clone();
 	
-	//
-	// convert "absolutes" to "diffs"
-	//
+    //
+    // convert "absolutes" to "diffs"
+    //
     Vec2 p = copyConfig->getControlPointAtIndex(0);
     for (ssize_t i = 1; i < copyConfig->count(); ++i)
     {
@@ -389,12 +389,11 @@ CardinalSplineBy* CardinalSplineBy::reverse() const
         p = current;
     }
 	
-	
-	// convert to "diffs" to "reverse absolute"
+    // convert to "diffs" to "reverse absolute"
 	
     PointArray *pReverse = copyConfig->reverse();
 	
-	// 1st element (which should be 0,0) should be here too
+    // 1st element (which should be 0,0) should be here too
     
     p = pReverse->getControlPointAtIndex(pReverse->count()-1);
     pReverse->removeControlPointAtIndex(pReverse->count()-1);
@@ -423,11 +422,11 @@ void CardinalSplineBy::startWithTarget(cocos2d::Node *target)
 
 CardinalSplineBy* CardinalSplineBy::clone() const
 {
-	// no copy constructor
-	auto a = new CardinalSplineBy();
-	a->initWithDuration(this->_duration, this->_points->clone(), this->_tension);
-	a->autorelease();
-	return a;
+    // no copy constructor
+    auto a = new (std::nothrow) CardinalSplineBy();
+    a->initWithDuration(this->_duration, this->_points->clone(), this->_tension);
+    a->autorelease();
+    return a;
 }
 
 /* CatmullRomTo
@@ -435,7 +434,7 @@ CardinalSplineBy* CardinalSplineBy::clone() const
 
 CatmullRomTo* CatmullRomTo::create(float dt, cocos2d::PointArray *points)
 {
-    CatmullRomTo *ret = new CatmullRomTo();
+    CatmullRomTo *ret = new (std::nothrow) CatmullRomTo();
     if (ret)
     {
         if (ret->initWithDuration(dt, points))
@@ -463,11 +462,11 @@ bool CatmullRomTo::initWithDuration(float dt, cocos2d::PointArray *points)
 
 CatmullRomTo* CatmullRomTo::clone() const
 {
-	// no copy constructor
-	auto a = new CatmullRomTo();
-	a->initWithDuration(this->_duration, this->_points->clone());
-	a->autorelease();
-	return a;
+    // no copy constructor
+    auto a = new (std::nothrow) CatmullRomTo();
+    a->initWithDuration(this->_duration, this->_points->clone());
+    a->autorelease();
+    return a;
 }
 
 CatmullRomTo* CatmullRomTo::reverse() const
@@ -482,7 +481,7 @@ CatmullRomTo* CatmullRomTo::reverse() const
 
 CatmullRomBy* CatmullRomBy::create(float dt, cocos2d::PointArray *points)
 {
-    CatmullRomBy *ret = new CatmullRomBy();
+    CatmullRomBy *ret = new (std::nothrow) CatmullRomBy();
     if (ret)
     {
         if (ret->initWithDuration(dt, points))
@@ -510,20 +509,20 @@ bool CatmullRomBy::initWithDuration(float dt, cocos2d::PointArray *points)
 
 CatmullRomBy* CatmullRomBy::clone() const
 {
-	// no copy constructor	
-	auto a = new CatmullRomBy();
-	a->initWithDuration(this->_duration, this->_points->clone());
-	a->autorelease();
-	return a;
+    // no copy constructor	
+    auto a = new (std::nothrow) CatmullRomBy();
+    a->initWithDuration(this->_duration, this->_points->clone());
+    a->autorelease();
+    return a;
 }
 
 CatmullRomBy* CatmullRomBy::reverse() const
 {
     PointArray *copyConfig = _points->clone();
 
-	//
-	// convert "absolutes" to "diffs"
-	//
+    //
+    // convert "absolutes" to "diffs"
+    //
     Vec2 p = copyConfig->getControlPointAtIndex(0);
     for (ssize_t i = 1; i < copyConfig->count(); ++i)
     {
@@ -533,7 +532,6 @@ CatmullRomBy* CatmullRomBy::reverse() const
 
         p = current;
     }
-
 
 	// convert to "diffs" to "reverse absolute"
 
@@ -561,4 +559,3 @@ CatmullRomBy* CatmullRomBy::reverse() const
 }
 
 NS_CC_END;
-

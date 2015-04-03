@@ -26,7 +26,7 @@ THE SOFTWARE.
 #ifndef __CCWINRT_UTILS_H__
 #define __CCWINRT_UTILS_H__
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 
 #include <wrl/client.h>
 #include <ppl.h>
@@ -40,11 +40,20 @@ NS_CC_BEGIN
 
 std::wstring CC_DLL CCUtf8ToUnicode(const char * pszUtf8Str, unsigned len = -1);
 std::string CC_DLL CCUnicodeToUtf8(const wchar_t* pwszStr);
-std::string PlatformStringToString(Platform::String^ s);
+#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
+Platform::Object^ findXamlElement(Platform::Object^ parent, Platform::String^ name);
+bool removeXamlElement(Platform::Object^ parent, Platform::Object^ element);
+bool replaceXamlElement(Platform::Object^ parent, Platform::Object^ add, Platform::Object^ remove);
+#endif
 
+std::string PlatformStringToString(Platform::String^ s);
+Platform::String^ PlatformStringFromString(const std::string& s);
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
 // Method to convert a length in device-independent pixels (DIPs) to a length in physical pixels.
 float ConvertDipsToPixels(float dips);
 float getScaledDPIValue(float v);
+#endif
 
 Concurrency::task<Platform::Array<byte>^> ReadDataAsync(Platform::String^ path);
 

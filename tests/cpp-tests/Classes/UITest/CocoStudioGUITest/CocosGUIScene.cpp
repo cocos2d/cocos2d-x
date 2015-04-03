@@ -30,6 +30,34 @@ g_guisTests[] =
         }
     },
 #endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    {
+        "WebViewTest",
+        [](Ref* sender)
+        {
+            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
+            sceneManager->setCurrentUISceneId(KWebViewTest);
+            sceneManager->setMinUISceneId(KWebViewTest);
+            sceneManager->setMaxUISceneId(KWebViewTest);
+            Scene* scene = sceneManager->currentUIScene();
+            Director::getInstance()->replaceScene(scene);
+        }
+    },
+#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    {
+        "EditBox Test",
+        [](Ref* sender)
+        {
+            UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
+            sceneManager->setCurrentUISceneId(kUIEditBoxTest);
+            sceneManager->setMinUISceneId(kUIEditBoxTest);
+            sceneManager->setMaxUISceneId(kUIEditBoxTest);
+            Scene* scene = sceneManager->currentUIScene();
+            Director::getInstance()->replaceScene(scene);
+        }
+    },
+    #endif
     {
         "focus test",
         [](Ref* sender)
@@ -37,7 +65,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(KUIFocusTest_HBox);
             sceneManager->setMinUISceneId(KUIFocusTest_HBox);
-            //TODO: improve ListView focus
+            // TODO: improve ListView focus
             sceneManager->setMaxUISceneId(KUIFocusTest_NestedLayout3);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
@@ -50,7 +78,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUIScale9SpriteTest);
             sceneManager->setMinUISceneId(kUIScale9SpriteTest);
-            sceneManager->setMaxUISceneId(kUIS9Flip);
+            sceneManager->setMaxUISceneId(kUIS9ChangeAnchorPoint);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
@@ -63,7 +91,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUIButtonTest);
             sceneManager->setMinUISceneId(kUIButtonTest);
-            sceneManager->setMaxUISceneId(kUIButtonTestSwitchScale9);
+            sceneManager->setMaxUISceneId(kUIButtonDisableDefaultTest);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
@@ -75,7 +103,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUICheckBoxTest);
             sceneManager->setMinUISceneId(kUICheckBoxTest);
-            sceneManager->setMaxUISceneId(kUICheckBoxTest);
+            sceneManager->setMaxUISceneId(kUICheckBoxDefaultBehaviorTest);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
@@ -87,7 +115,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUISliderTest);
             sceneManager->setMinUISceneId(kUISliderTest);
-            sceneManager->setMaxUISceneId(kUISliderTest_Scale9);
+            sceneManager->setMaxUISceneId(kUISliderDisabledDefaultTest);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
@@ -99,7 +127,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUIImageViewTest);
             sceneManager->setMinUISceneId(kUIImageViewTest);
-            sceneManager->setMaxUISceneId(kUIImageViewTest_ContentSize);
+            sceneManager->setMaxUISceneId(kUIImageViewFlipTest);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
@@ -111,13 +139,13 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUILoadingBarTest_Left);
             sceneManager->setMinUISceneId(kUILoadingBarTest_Left);
-            sceneManager->setMaxUISceneId(kUILoadingBarTest_Right_Scale9);
+            sceneManager->setMaxUISceneId(kUILoadingBarReloadTexture);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
 	},
     {
-        "TextAtalsTest",
+        "TextAtlasTest",
         [](Ref* sender)
         {
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
@@ -135,7 +163,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUITextTest);
             sceneManager->setMinUISceneId(kUITextTest);
-            sceneManager->setMaxUISceneId(kUITextTest_TTF);
+            sceneManager->setMaxUISceneId(kUITextTest_IgnoreConentSize);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
@@ -159,7 +187,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUITextFieldTest);
             sceneManager->setMinUISceneId(kUITextFieldTest);
-            sceneManager->setMaxUISceneId(kUITextFieldTest_TrueTypeFont);
+            sceneManager->setMaxUISceneId(kUITextFieldTest_PlaceHolderColor);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
@@ -171,7 +199,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUILayoutTest);
             sceneManager->setMinUISceneId(kUILayoutTest);
-            sceneManager->setMaxUISceneId(kUILayoutTest_Layout_Relative_Location);
+            sceneManager->setMaxUISceneId(kUILayoutComponent_Berth_Stretch_Test);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
@@ -183,7 +211,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUIScrollViewTest_Vertical);
             sceneManager->setMinUISceneId(kUIScrollViewTest_Vertical);
-            sceneManager->setMaxUISceneId(kUIScrollViewTest_ScrollToPercentBothDirection_Bounce);
+            sceneManager->setMaxUISceneId(kUIScrollViewRotated);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
@@ -195,7 +223,7 @@ g_guisTests[] =
             UISceneManager* sceneManager = UISceneManager::sharedUISceneManager();
             sceneManager->setCurrentUISceneId(kUIPageViewTest);
             sceneManager->setMinUISceneId(kUIPageViewTest);
-            sceneManager->setMaxUISceneId(kUIPageViewButtonTest);
+            sceneManager->setMaxUISceneId(kUIPageViewDynamicAddAndRemoveTest);
             Scene* scene = sceneManager->currentUIScene();
             Director::getInstance()->replaceScene(scene);
         }
@@ -261,7 +289,7 @@ void CocosGUITestMainLayer::onEnter()
     for (int i = 0; i < g_maxTests; ++i)
     {
         auto pItem = MenuItemFont::create(g_guisTests[i].name, g_guisTests[i].callback);
-        pItem->setPosition(Vec2(s.width / 2, s.height - (i + 1) * LINE_SPACE));
+        pItem->setPosition(s.width / 2, s.height - (i + 1) * LINE_SPACE);
         _itemMenu->addChild(pItem, kItemTagBasic + i);
     }
     
@@ -299,7 +327,7 @@ void CocosGUITestMainLayer::onTouchesMoved(const std::vector<Touch*>& touches, E
     
     if (nextPos.y > ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
     {
-        _itemMenu->setPosition(Vec2(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height)));
+        _itemMenu->setPosition(0, ((g_maxTests + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height));
         return;
     }
     
@@ -325,14 +353,14 @@ void CocosGUITestScene::onEnter()
     Menu* pMenu =Menu::create(pMenuItem, nullptr);
     
     pMenu->setPosition( Vec2::ZERO );
-    pMenuItem->setPosition( Vec2( VisibleRect::right().x - 50, VisibleRect::bottom().y + 25) );
+    pMenuItem->setPosition(VisibleRect::right().x - 50, VisibleRect::bottom().y + 25);
     
     addChild(pMenu, 1);
 }
 
 void CocosGUITestScene::runThisTest()
 {
-    auto layer = new CocosGUITestMainLayer();
+    auto layer = new (std::nothrow) CocosGUITestMainLayer();
     addChild(layer);
     layer->release();
     
@@ -341,7 +369,7 @@ void CocosGUITestScene::runThisTest()
 
 void CocosGUITestScene::BackCallback(Ref* pSender)
 {
-    CocoStudioGUITestScene* pScene = new CocoStudioGUITestScene();
+    CocoStudioGUITestScene* pScene = new (std::nothrow) CocoStudioGUITestScene();
     pScene->runThisTest();
     pScene->release();
 }

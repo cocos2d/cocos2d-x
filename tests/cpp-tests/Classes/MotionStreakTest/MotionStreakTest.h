@@ -17,9 +17,9 @@ public:
     virtual std::string subtitle() const override;
     virtual void onEnter() override;
 
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
+    void restartCallback(Ref* sender) override;
+    void nextCallback(Ref* sender) override;
+    void backCallback(Ref* sender) override;
     void modeCallback(Ref* sender);
 protected:
     MotionStreak *streak;
@@ -47,7 +47,7 @@ protected:
 public:
     CREATE_FUNC(MotionStreakTest2);
     virtual void onEnter() override;
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event* event) override;
     virtual std::string title() const override;
 };
 
@@ -59,7 +59,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     virtual void onEnter() override;
-    virtual void update(float dt);
+    virtual void update(float dt) override;
 private:
     Vec2 _center;
     float _radius;

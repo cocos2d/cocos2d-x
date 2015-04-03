@@ -1,5 +1,5 @@
-require "src/ExtensionTest/CocosBuilderTest"
-require "src/ExtensionTest/WebProxyTest"
+require "ExtensionTest/CocosBuilderTest"
+require "ExtensionTest/WebProxyTest"
 
 local LINE_SPACE = 40
 local kItemTagBasic = 1000
@@ -1215,7 +1215,7 @@ local function ExtensionsMainLayer()
     cc.MenuItemFont:setFontSize(24)
     local targetPlatform = cc.Application:getInstance():getTargetPlatform()
     local bSupportWebSocket = false
-    if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) or (cc.PLATFORM_OS_ANDROID == targetPlatform) or (cc.PLATFORM_OS_WINDOWS == targetPlatform) then
+    if (cc.PLATFORM_OS_IPHONE == targetPlatform) or (cc.PLATFORM_OS_IPAD == targetPlatform) or (cc.PLATFORM_OS_ANDROID == targetPlatform) or (cc.PLATFORM_OS_WINDOWS == targetPlatform) or (cc.PLATFORM_OS_MAC == targetPlatform) then
         bSupportWebSocket = true
     end
     local bSupportEdit = false

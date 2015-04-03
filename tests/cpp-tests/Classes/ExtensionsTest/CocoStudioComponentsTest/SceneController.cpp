@@ -29,7 +29,7 @@ void SceneController::onEnter()
     ComController::onEnter();
     _fAddTargetTime = 1.0f;
    
-    static_cast<ComAudio*>(_owner->getComponent("Audio"))->playBackgroundMusic("background-music-aac.wav", true);
+    static_cast<ComAudio*>(_owner->getComponent("Audio"))->playBackgroundMusic("background.wav", true);
     static_cast<ComAttribute*>(_owner->getComponent("CCComAttribute"))->setInt("KillCount", 0);
 }
 
@@ -49,7 +49,7 @@ void SceneController::update(float delta)
 
 SceneController* SceneController::create(void)
 {
-    SceneController * pRet = new SceneController();
+    SceneController * pRet = new (std::nothrow) SceneController();
     if (pRet && pRet->init())
     {
         pRet->autorelease();

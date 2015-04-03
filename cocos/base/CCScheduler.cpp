@@ -89,7 +89,7 @@ void Timer::setupTimerWithInterval(float seconds, unsigned int repeat, float del
 	_delay = delay;
 	_useDelay = (_delay > 0.0f) ? true : false;
 	_repeat = repeat;
-	_runForever = (_repeat == kRepeatForever) ? true : false;
+	_runForever = (_repeat == CC_REPEAT_FOREVER) ? true : false;
 }
 
 void Timer::update(float dt)
@@ -277,7 +277,7 @@ void Scheduler::removeHashElement(_hashSelectorEntry *element)
 
 void Scheduler::schedule(const ccSchedulerFunc& callback, void *target, float interval, bool paused, const std::string& key)
 {
-    this->schedule(callback, target, interval, kRepeatForever, 0.0f, paused, key);
+    this->schedule(callback, target, interval, CC_REPEAT_FOREVER, 0.0f, paused, key);
 }
 
 void Scheduler::schedule(const ccSchedulerFunc& callback, void *target, float interval, unsigned int repeat, float delay, bool paused, const std::string& key)
@@ -311,9 +311,9 @@ void Scheduler::schedule(const ccSchedulerFunc& callback, void *target, float in
     {
         for (int i = 0; i < element->timers->num; ++i)
         {
-            TimerTargetCallback *timer = static_cast<TimerTargetCallback*>(element->timers->arr[i]);
+            TimerTargetCallback *timer = dynamic_cast<TimerTargetCallback*>(element->timers->arr[i]);
 
-            if (key == timer->getKey())
+            if (timer && key == timer->getKey())
             {
                 CCLOG("CCScheduler#scheduleSelector. Selector already scheduled. Updating interval from: %.4f to %.4f", timer->getInterval(), interval);
                 timer->setInterval(interval);
@@ -323,7 +323,7 @@ void Scheduler::schedule(const ccSchedulerFunc& callback, void *target, float in
         ccArrayEnsureExtraCapacity(element->timers, 1);
     }
 
-    TimerTargetCallback *timer = new TimerTargetCallback();
+    TimerTargetCallback *timer = new (std::nothrow) TimerTargetCallback();
     timer->initWithCallback(this, callback, target, key, interval, repeat, delay);
     ccArrayAppendObject(element->timers, timer);
     timer->release();
@@ -447,6 +447,7 @@ void Scheduler::appendIn(_listEntry **list, const ccSchedulerFunc& callback, voi
     listElement->callback = callback;
     listElement->target = target;
     listElement->paused = paused;
+    listElement->priority = 0;
     listElement->markedForDeletion = false;
 
     DL_APPEND(*list, listElement);
@@ -1011,9 +1012,9 @@ void Scheduler::schedule(SEL_SCHEDULE selector, Ref *target, float interval, uns
     {
         for (int i = 0; i < element->timers->num; ++i)
         {
-            TimerTargetSelector *timer = static_cast<TimerTargetSelector*>(element->timers->arr[i]);
+            TimerTargetSelector *timer = dynamic_cast<TimerTargetSelector*>(element->timers->arr[i]);
             
-            if (selector == timer->getSelector())
+            if (timer && selector == timer->getSelector())
             {
                 CCLOG("CCScheduler#scheduleSelector. Selector already scheduled. Updating interval from: %.4f to %.4f", timer->getInterval(), interval);
                 timer->setInterval(interval);
@@ -1023,7 +1024,7 @@ void Scheduler::schedule(SEL_SCHEDULE selector, Ref *target, float interval, uns
         ccArrayEnsureExtraCapacity(element->timers, 1);
     }
     
-    TimerTargetSelector *timer = new TimerTargetSelector();
+    TimerTargetSelector *timer = new (std::nothrow) TimerTargetSelector();
     timer->initWithSelector(this, selector, target, interval, repeat, delay);
     ccArrayAppendObject(element->timers, timer);
     timer->release();
@@ -1031,7 +1032,7 @@ void Scheduler::schedule(SEL_SCHEDULE selector, Ref *target, float interval, uns
 
 void Scheduler::schedule(SEL_SCHEDULE selector, Ref *target, float interval, bool paused)
 {
-    this->schedule(selector, target, interval, kRepeatForever, 0.0f, paused);
+    this->schedule(selector, target, interval, CC_REPEAT_FOREVER, 0.0f, paused);
 }
 
 bool Scheduler::isScheduled(SEL_SCHEDULE selector, Ref *target)

@@ -24,7 +24,6 @@ THE SOFTWARE.
 #ifndef __TRIGGERMNG_H__
 #define __TRIGGERMNG_H__
 
-#include "cocos2d.h"
 #include "CocoStudio.h"
 
 namespace cocos2d {

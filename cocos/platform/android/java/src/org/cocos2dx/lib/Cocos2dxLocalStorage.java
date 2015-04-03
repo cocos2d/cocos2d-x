@@ -37,7 +37,7 @@ public class Cocos2dxLocalStorage {
     private static String DATABASE_NAME = "jsb.sqlite";
     private static String TABLE_NAME = "data";
     private static final int DATABASE_VERSION = 1;
-	
+    
     private static DBOpenHelper mDatabaseOpenHelper = null;
     private static SQLiteDatabase mDatabase = null;
     /**
@@ -46,59 +46,59 @@ public class Cocos2dxLocalStorage {
      * @return 
      */
     public static boolean init(String dbName, String tableName) {
-    	if (Cocos2dxActivity.getContext() != null) {
-    		DATABASE_NAME = dbName;
-    		TABLE_NAME = tableName;
-    		mDatabaseOpenHelper = new DBOpenHelper(Cocos2dxActivity.getContext());
-    		mDatabase = mDatabaseOpenHelper.getWritableDatabase();
-    		return true;
-    	}
+        if (Cocos2dxActivity.getContext() != null) {
+            DATABASE_NAME = dbName;
+            TABLE_NAME = tableName;
+            mDatabaseOpenHelper = new DBOpenHelper(Cocos2dxActivity.getContext());
+            mDatabase = mDatabaseOpenHelper.getWritableDatabase();
+            return true;
+        }
         return false;
     }
     
     public static void destory() {
-    	if (mDatabase != null) {
-    		mDatabase.close();
-    	}
+        if (mDatabase != null) {
+            mDatabase.close();
+        }
     }
     
     public static void setItem(String key, String value) {
-    	try {
-    		String sql = "replace into "+TABLE_NAME+"(key,value)values(?,?)";
-    		mDatabase.execSQL(sql, new Object[] { key, value });
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
+        try {
+            String sql = "replace into "+TABLE_NAME+"(key,value)values(?,?)";
+            mDatabase.execSQL(sql, new Object[] { key, value });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
     public static String getItem(String key) {
-    	String ret = null;
-    	try {
-    	String sql = "select value from "+TABLE_NAME+" where key=?";
-    	Cursor c = mDatabase.rawQuery(sql, new String[]{key});  
+        String ret = null;
+        try {
+        String sql = "select value from "+TABLE_NAME+" where key=?";
+        Cursor c = mDatabase.rawQuery(sql, new String[]{key});  
         while (c.moveToNext()) {
-        	// only return the first value
-        	if (ret != null) 
-        	{
-        		Log.e(TAG, "The key contains more than one value.");
-        		break;
-        	}
+            // only return the first value
+            if (ret != null) 
+            {
+                Log.e(TAG, "The key contains more than one value.");
+                break;
+            }
             ret = c.getString(c.getColumnIndex("value"));  
         }  
         c.close();
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
-    	return ret == null ? "" : ret;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ret == null ? "" : ret;
     }
     
     public static void removeItem(String key) {
-    	try {
-    		String sql = "delete from "+TABLE_NAME+" where key=?";
-    		mDatabase.execSQL(sql, new Object[] {key});
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
+        try {
+            String sql = "delete from "+TABLE_NAME+" where key=?";
+            mDatabase.execSQL(sql, new Object[] {key});
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
 

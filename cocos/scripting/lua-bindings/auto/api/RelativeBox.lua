@@ -10,10 +10,14 @@
 -- @function [parent=#RelativeBox] create
 -- @param self
 -- @param #size_table size
--- @return RelativeBox#RelativeBox ret (retunr value: ccui.RelativeBox)
+-- @return RelativeBox#RelativeBox ret (return value: ccui.RelativeBox)
 
 --------------------------------
+-- Default constructor.<br>
+-- js ctor<br>
+-- lua new
 -- @function [parent=#RelativeBox] RelativeBox 
 -- @param self
+-- @return RelativeBox#RelativeBox self (return value: ccui.RelativeBox)
         
 return nil

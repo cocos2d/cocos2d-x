@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2012      cocos2d-x.org
- opyright (c) 2013-2014 Chukong Technologies Inc.
+ opyright (c) 2013-2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -25,6 +25,7 @@ THE SOFTWARE.
 
 #ifndef __CCDICTIONARY_H__
 #define __CCDICTIONARY_H__
+/// @cond DO_NOT_SHOW
 
 #include "base/uthash.h"
 #include "base/CCRef.h"
@@ -456,4 +457,5 @@ private:
 
 NS_CC_END
 
+/// @endcond
 #endif /* __CCDICTIONARY_H__ */

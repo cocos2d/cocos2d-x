@@ -51,7 +51,7 @@ TextAtlas::~TextAtlas()
 
 TextAtlas* TextAtlas::create()
 {
-    TextAtlas* widget = new TextAtlas();
+    TextAtlas* widget = new (std::nothrow) TextAtlas();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -74,7 +74,7 @@ TextAtlas* TextAtlas::create(const std::string &stringValue,
                              int itemHeight,
                              const std::string &startCharMap)
 {
-    TextAtlas* widget = new TextAtlas();
+    TextAtlas* widget = new (std::nothrow) TextAtlas();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -103,6 +103,10 @@ void TextAtlas::setProperty(const std::string& stringValue, const std::string& c
 
 void TextAtlas::setString(const std::string& value)
 {
+    if (value == _labelAtlasRenderer->getString())
+    {
+        return;
+    }
     _stringValue = value;
     _labelAtlasRenderer->setString(value);
     updateContentSizeWithTextureSize(_labelAtlasRenderer->getContentSize());
@@ -135,7 +139,7 @@ void TextAtlas::adaptRenderers()
     }
 }
 
-const Size& TextAtlas::getVirtualRendererSize() const
+Size TextAtlas::getVirtualRendererSize() const
 {
     return _labelAtlasRenderer->getContentSize();
 }

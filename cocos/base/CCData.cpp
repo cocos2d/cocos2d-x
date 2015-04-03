@@ -24,10 +24,6 @@
  ****************************************************************************/
 
 #include "base/CCData.h"
-#include "platform/CCCommon.h"
-#include "base/ccMacros.h"
-
-#include <string>
 
 NS_CC_BEGIN
 

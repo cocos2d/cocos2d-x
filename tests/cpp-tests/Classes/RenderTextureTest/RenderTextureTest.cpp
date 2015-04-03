@@ -51,7 +51,7 @@ void RenderTextureTest::onEnter()
 
 void RenderTextureTest::restartCallback(Ref* sender)
 {
-    auto s = new RenderTextureScene();
+    auto s = new (std::nothrow) RenderTextureScene();
     s->addChild(restartTestCase()); 
 
     Director::getInstance()->replaceScene(s);
@@ -60,7 +60,7 @@ void RenderTextureTest::restartCallback(Ref* sender)
 
 void RenderTextureTest::nextCallback(Ref* sender)
 {
-    auto s = new RenderTextureScene();
+    auto s = new (std::nothrow) RenderTextureScene();
     s->addChild( nextTestCase() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -68,7 +68,7 @@ void RenderTextureTest::nextCallback(Ref* sender)
 
 void RenderTextureTest::backCallback(Ref* sender)
 {
-    auto s = new RenderTextureScene();
+    auto s = new (std::nothrow) RenderTextureScene();
     s->addChild( backTestCase() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -135,25 +135,20 @@ void RenderTextureSave::saveImage(cocos2d::Ref *sender)
 
     char png[20];
     sprintf(png, "image-%d.png", counter);
-    char jpg[20];
-    sprintf(jpg, "image-%d.jpg", counter);
-
-    _target->saveToFile(png, Image::Format::PNG);
-    _target->saveToFile(jpg, Image::Format::JPG);
     
-    std::string fileName = FileUtils::getInstance()->getWritablePath() + jpg;
-    auto action1 = DelayTime::create(1);
-    auto func = [&,fileName]()
+    auto callback = [&](RenderTexture* rt, const std::string& path)
     {
-        auto sprite = Sprite::create(fileName);
+        auto sprite = Sprite::create(path);
         addChild(sprite);
         sprite->setScale(0.3f);
         sprite->setPosition(Vec2(40, 40));
         sprite->setRotation(counter * 3);
     };
-    runAction(Sequence::create(action1, CallFunc::create(func), nullptr));
-
-    CCLOG("Image saved %s and %s", png, jpg);
+    
+    _target->saveToFile(png, Image::Format::PNG, true, callback);
+    //Add this function to avoid crash if we switch to a new scene.
+    Director::getInstance()->getRenderer()->render();
+    CCLOG("Image saved %s", png);
 
     counter++;
 }
@@ -517,19 +512,19 @@ RenderTextureTestDepthStencil::~RenderTextureTestDepthStencil()
 
 void RenderTextureTestDepthStencil::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    _renderCmds[0].init(_globalZOrder);
+    _renderCmds[0].init(_globalZOrder, transform, flags);
     _renderCmds[0].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforeClear, this);
     renderer->addCommand(&_renderCmds[0]);
 
     _rend->beginWithClear(0, 0, 0, 0, 0, 0);
     
-    _renderCmds[1].init(_globalZOrder);
+    _renderCmds[1].init(_globalZOrder, transform, flags);
     _renderCmds[1].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforeStencil, this);
     renderer->addCommand(&_renderCmds[1]);
 
     _spriteDS->visit();
     
-    _renderCmds[2].init(_globalZOrder);
+    _renderCmds[2].init(_globalZOrder, transform, flags);
     _renderCmds[2].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onBeforDraw, this);
     renderer->addCommand(&_renderCmds[2]);
 
@@ -537,7 +532,7 @@ void RenderTextureTestDepthStencil::draw(Renderer *renderer, const Mat4 &transfo
     
     _rend->end();
     
-    _renderCmds[3].init(_globalZOrder);
+    _renderCmds[3].init(_globalZOrder, transform, flags);
     _renderCmds[3].func = CC_CALLBACK_0(RenderTextureTestDepthStencil::onAfterDraw, this);
     renderer->addCommand(&_renderCmds[3]);
 }
@@ -672,7 +667,7 @@ SpriteRenderTextureBug::SimpleSprite::~SimpleSprite()
 
 SpriteRenderTextureBug::SimpleSprite* SpriteRenderTextureBug::SimpleSprite::create(const char* filename, const Rect &rect)
 {
-    auto sprite = new SimpleSprite();
+    auto sprite = new (std::nothrow) SimpleSprite();
     if (sprite && sprite->initWithFile(filename, rect))
     {
         sprite->autorelease();

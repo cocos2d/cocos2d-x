@@ -43,7 +43,7 @@ bool ControlScene::init()
     if (Layer::init())
     {    
         auto pBackItem = MenuItemFont::create("Back", CC_CALLBACK_1(ControlScene::toExtensionsMainLayer, this));
-        pBackItem->setPosition(Vec2(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
+        pBackItem->setPosition(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25);
         auto pBackMenu = Menu::create(pBackItem, nullptr);
         pBackMenu->setPosition( Vec2::ZERO );
         addChild(pBackMenu, 10);
@@ -56,12 +56,12 @@ bool ControlScene::init()
         // Add the ribbon
         auto ribbon = Scale9Sprite::create("extensions/ribbon.png", Rect(1, 1, 48, 55));
         ribbon->setContentSize(Size(VisibleRect::getVisibleRect().size.width, 57));
-        ribbon->setPosition(Vec2(VisibleRect::center().x, VisibleRect::top().y - ribbon->getContentSize().height / 2.0f));
+        ribbon->setPosition(VisibleRect::center().x, VisibleRect::top().y - ribbon->getContentSize().height / 2.0f);
         addChild(ribbon);
         
         // Add the title
         setSceneTitleLabel(Label::createWithTTF("Title", "fonts/arial.ttf", 12));
-        _sceneTitleLabel->setPosition(Vec2 (VisibleRect::center().x, VisibleRect::top().y - _sceneTitleLabel->getContentSize().height / 2 - 5));
+        _sceneTitleLabel->setPosition(VisibleRect::center().x, VisibleRect::top().y - _sceneTitleLabel->getContentSize().height / 2 - 5);
         addChild(_sceneTitleLabel, 1);
         
         // Add the menu
@@ -71,9 +71,9 @@ bool ControlScene::init()
         
         auto menu = Menu::create(item1, item3, item2, nullptr);
         menu->setPosition(Vec2::ZERO);
-        item1->setPosition(Vec2(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-        item2->setPosition(Vec2(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-        item3->setPosition(Vec2(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
+        item1->setPosition(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2);
+        item2->setPosition(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2);
+        item3->setPosition(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2);
         
         addChild(menu ,1);
 
@@ -84,7 +84,7 @@ bool ControlScene::init()
 
 void ControlScene::toExtensionsMainLayer(Ref* sender)
 {
-    auto scene = new ExtensionsTestScene();
+    auto scene = new (std::nothrow) ExtensionsTestScene();
     scene->runThisTest();
     scene->release();
 }

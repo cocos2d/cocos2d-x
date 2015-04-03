@@ -24,6 +24,7 @@ THE SOFTWARE.
 
 #include "ui/UIImageView.h"
 #include "ui/UIScale9Sprite.h"
+#include "ui/UIHelper.h"
 #include "2d/CCSprite.h"
 
 NS_CC_BEGIN
@@ -54,8 +55,9 @@ ImageView::~ImageView()
     
 ImageView* ImageView::create(const std::string &imageFileName, TextureResType texType)
 {
-    ImageView *widget = new ImageView;
-    if (widget && widget->init(imageFileName, texType)) {
+    ImageView *widget = new (std::nothrow) ImageView;
+    if (widget && widget->init(imageFileName, texType))
+    {
         widget->autorelease();
         return widget;
     }
@@ -65,7 +67,7 @@ ImageView* ImageView::create(const std::string &imageFileName, TextureResType te
 
 ImageView* ImageView::create()
 {
-    ImageView* widget = new ImageView();
+    ImageView* widget = new (std::nothrow) ImageView();
     if (widget && widget->init())
     {
         widget->autorelease();
@@ -78,8 +80,10 @@ ImageView* ImageView::create()
 bool ImageView::init()
 {
     bool ret = true;
-    do {
-        if (!Widget::init()) {
+    do
+    {
+        if (!Widget::init())
+        {
             ret = false;
             break;
         }
@@ -91,8 +95,10 @@ bool ImageView::init()
 bool ImageView::init(const std::string &imageFileName, TextureResType texType)
 {
     bool bRet = true;
-    do {
-        if (!Widget::init()) {
+    do
+    {
+        if (!Widget::init())
+        {
             bRet = false;
             break;
         }
@@ -112,7 +118,7 @@ void ImageView::initRenderer()
 
 void ImageView::loadTexture(const std::string& fileName, TextureResType texType)
 {
-    if (fileName.empty())
+    if (fileName.empty() || (_textureFile == fileName && _imageTexType == texType))
     {
         return;
     }
@@ -131,9 +137,9 @@ void ImageView::loadTexture(const std::string& fileName, TextureResType texType)
     }
     
     _imageTextureSize = _imageRenderer->getContentSize();
-    updateFlippedX();
-    updateFlippedY();
-    
+  
+    this->updateChildrenDisplayedRGBA();
+
     updateContentSizeWithTextureSize(_imageTextureSize);
     _imageRendererAdaptDirty = true;
 }
@@ -158,17 +164,6 @@ void ImageView::setTextureRect(const Rect &rect)
     }
 }
     
-void ImageView::updateFlippedX()
-{
-    _imageRenderer->setFlippedX(_flippedX);
-}
-    
-void ImageView::updateFlippedY()
-{
-    _imageRenderer->setFlippedY(_flippedY);
-
-}
-
 void ImageView::setScale9Enabled(bool able)
 {
     if (_scale9Enabled == able)
@@ -191,6 +186,7 @@ void ImageView::setScale9Enabled(bool able)
         ignoreContentAdaptWithSize(_prevIgnoreSize);
     }
     setCapInsets(_capInsets);
+    _imageRendererAdaptDirty = true;
 }
     
 bool ImageView::isScale9Enabled()const
@@ -209,12 +205,12 @@ void ImageView::ignoreContentAdaptWithSize(bool ignore)
 
 void ImageView::setCapInsets(const Rect &capInsets)
 {
-    _capInsets = capInsets;
+    _capInsets = ui::Helper::restrictCapInsetRect(capInsets, _imageTextureSize);
     if (!_scale9Enabled)
     {
         return;
     }
-    _imageRenderer->setCapInsets(capInsets);
+    _imageRenderer->setCapInsets(_capInsets);
 }
 
 const Rect& ImageView::getCapInsets()const
@@ -237,7 +233,7 @@ void ImageView::adaptRenderers()
     }
 }
 
-const Size& ImageView::getVirtualRendererSize() const
+Size ImageView::getVirtualRendererSize() const
 {
     return _imageTextureSize;
 }
@@ -261,10 +257,11 @@ void ImageView::imageTextureScaleChangedWithSize()
         if (_scale9Enabled)
         {
             _imageRenderer->setPreferredSize(_contentSize);
+            _imageRenderer->setScale(1.0f);
         }
         else
         {
-            Size textureSize = _imageRenderer->getContentSize();
+            Size textureSize = _imageTextureSize;
             if (textureSize.width <= 0.0f || textureSize.height <= 0.0f)
             {
                 _imageRenderer->setScale(1.0f);

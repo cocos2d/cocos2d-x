@@ -26,7 +26,6 @@ THE SOFTWARE.
 #include "cocostudio/CCBone.h"
 #include "cocostudio/CCArmature.h"
 #include "cocostudio/CCSkin.h"
-#include "cocostudio/CCSpriteFrameCacheHelper.h"
 #include "cocostudio/CCArmatureDataManager.h"
 #include "cocostudio/CCTransformHelp.h"
 

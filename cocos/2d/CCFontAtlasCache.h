@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -26,12 +26,15 @@
 #ifndef _CCFontAtlasCache_h_
 #define _CCFontAtlasCache_h_
 
+/// @cond DO_NOT_SHOW
+
 #include <unordered_map>
 
-#include "2d/CCFontAtlas.h"
 #include "2d/CCLabel.h"
 
 NS_CC_BEGIN
+
+class FontAtlas;
 
 class CC_DLL FontAtlasCache
 {  
@@ -57,4 +60,5 @@ private:
 
 NS_CC_END
 
+/// @endcond
 #endif

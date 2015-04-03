@@ -31,14 +31,15 @@ THE SOFTWARE.
 
 #include <vector>
 
-#include "2d/CCSpriteFrame.h"
+
 #include "2d/CCSprite.h"
 #include "platform/CCFileUtils.h"
 #include "base/CCNS.h"
 #include "base/ccMacros.h"
 #include "base/CCDirector.h"
+#include "renderer/CCTexture2D.h"
 #include "renderer/CCTextureCache.h"
-#include "math/TransformUtils.h"
+
 
 #include "deprecated/CCString.h"
 
@@ -53,7 +54,7 @@ SpriteFrameCache* SpriteFrameCache::getInstance()
 {
     if (! _sharedSpriteFrameCache)
     {
-        _sharedSpriteFrameCache = new SpriteFrameCache();
+        _sharedSpriteFrameCache = new (std::nothrow) SpriteFrameCache();
         _sharedSpriteFrameCache->init();
     }
 
@@ -210,6 +211,12 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, Texture
     _loadedFileNames->insert(plist);
 }
 
+void SpriteFrameCache::addSpriteFramesWithFileContent(const std::string& plist_content, Texture2D *texture)
+{
+    ValueMap dict = FileUtils::getInstance()->getValueMapFromData(plist_content.c_str(), static_cast<int>(plist_content.size()));
+    addSpriteFramesWithDictionary(dict, texture);
+}
+
 void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, const std::string& textureFileName)
 {
     CCASSERT(textureFileName.size()>0, "texture name should not be null");
@@ -228,10 +235,18 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist, const s
 void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist)
 {
     CCASSERT(plist.size()>0, "plist filename should not be nullptr");
+    
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(plist);
+    if (fullPath.size() == 0)
+    {
+        // return if plist file doesn't exist
+        CCLOG("cocos2d: SpriteFrameCache: can not find %s", plist.c_str());
+        return;
+    }
 
     if (_loadedFileNames->find(plist) == _loadedFileNames->end())
     {
-        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(plist);
+        
         ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(fullPath);
 
         string texturePath("");
@@ -307,7 +322,7 @@ void SpriteFrameCache::removeUnusedSpriteFrames()
 
     _spriteFrames.erase(toRemoveFrames);
     
-    // XXX. Since we don't know the .plist file that originated the frame, we must remove all .plist from the cache
+    // FIXME:. Since we don't know the .plist file that originated the frame, we must remove all .plist from the cache
     if( removed )
     {
         _loadedFileNames->clear();
@@ -334,7 +349,7 @@ void SpriteFrameCache::removeSpriteFrameByName(const std::string& name)
         _spriteFrames.erase(name);
     }
 
-    // XXX. Since we don't know the .plist file that originated the frame, we must remove all .plist from the cache
+    // FIXME:. Since we don't know the .plist file that originated the frame, we must remove all .plist from the cache
     _loadedFileNames->clear();
 }
 
@@ -355,6 +370,17 @@ void SpriteFrameCache::removeSpriteFramesFromFile(const std::string& plist)
     {
         _loadedFileNames->erase(ret);
     }
+}
+
+void SpriteFrameCache::removeSpriteFramesFromFileContent(const std::string& plist_content)
+{
+    ValueMap dict = FileUtils::getInstance()->getValueMapFromData(plist_content.data(), static_cast<int>(plist_content.size()));
+    if (dict.empty())
+    {
+        CCLOG("cocos2d:SpriteFrameCache:removeSpriteFramesFromFileContent: create dict by fail.");
+        return;
+    }
+    removeSpriteFramesFromDictionary(dict);
 }
 
 void SpriteFrameCache::removeSpriteFramesFromDictionary(ValueMap& dictionary)
@@ -410,4 +436,3 @@ SpriteFrame* SpriteFrameCache::getSpriteFrameByName(const std::string& name)
 }
 
 NS_CC_END
-

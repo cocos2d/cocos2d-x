@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="network">
+      <UniqueIdentifier>{2c74ba1d-1959-47a0-a821-7442ff714dbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="service">
+      <UniqueIdentifier>{4f295ca0-5110-4f3a-9c39-d5299950cdb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ProjectConfig">
+      <UniqueIdentifier>{b2915876-d3ac-4a5b-8b5d-51b974f58a61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="platform">
+      <UniqueIdentifier>{d2596198-3717-4acf-bdd8-0a97447a2ab9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="platform\win32">
+      <UniqueIdentifier>{83fb01cd-6985-4d45-a797-da585ec17316}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="runtime">
+      <UniqueIdentifier>{0fbe614e-803e-4c08-a31d-c58069f24fe7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="runtime\protobuf-lite">
+      <UniqueIdentifier>{c3d9c4ad-c92c-4c72-8582-bacc0ef1defc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="runtime\protobuf-lite\io">
+      <UniqueIdentifier>{e89dbb53-1c53-43d4-800b-50836ca04168}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="runtime\protobuf-lite\stubs">
+      <UniqueIdentifier>{a3f5b7b6-4464-441c-9fed-1381ae411fb2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\lib\network\CCHTTPRequest.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\network\CCHTTPRequestDelegate.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\ProjectConfig\ProjectConfig.h">
+      <Filter>ProjectConfig</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\ProjectConfig\SimulatorConfig.h">
+      <Filter>ProjectConfig</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\AppEvent.h">
+      <Filter>service</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\AppLang.h">
+      <Filter>service</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\DeviceEx.h">
+      <Filter>service</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\PlayerEditBoxServiceProtocol.h">
+      <Filter>service</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\PlayerFileDialogServiceProtocol.h">
+      <Filter>service</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\PlayerMacros.h">
+      <Filter>service</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\PlayerMenuServiceProtocol.h">
+      <Filter>service</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\PlayerMessageBoxServiceProtocol.h">
+      <Filter>service</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\PlayerProtocol.h">
+      <Filter>service</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\PlayerServiceProtocol.h">
+      <Filter>service</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\PlayerSettings.h">
+      <Filter>service</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\PlayerTaskServiceProtocol.h">
+      <Filter>service</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\PlayerUtils.h">
+      <Filter>service</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\platform\win32\PlayerEditBoxServiceWin.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\platform\win32\PlayerFileDialogServiceWin.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\platform\win32\PlayerMenuServiceWin.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\platform\win32\PlayerMessageBoxServiceWin.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\platform\win32\PlayerTaskServiceWin.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\platform\win32\PlayerWin.h">
+      <Filter>platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\lib\cocos2dx_extra.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="..\lib\runtime\ConfigParser.h">
+      <Filter>runtime</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\lib\network\CCHTTPRequest.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\ProjectConfig\ProjectConfig.cpp">
+      <Filter>ProjectConfig</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\ProjectConfig\SimulatorConfig.cpp">
+      <Filter>ProjectConfig</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\AppEvent.cpp">
+      <Filter>service</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\AppLang.cpp">
+      <Filter>service</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\PlayerMenuServiceProtocol.cpp">
+      <Filter>service</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\PlayerProtocol.cpp">
+      <Filter>service</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\PlayerServiceProtocol.cpp">
+      <Filter>service</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\PlayerSettings.cpp">
+      <Filter>service</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\PlayerTaskServiceProtocol.cpp">
+      <Filter>service</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\PlayerUtils.cpp">
+      <Filter>service</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\platform\win32\DeviceEx-win32.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\platform\win32\PlayerEditBoxServiceWin.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\platform\win32\PlayerFileDialogServiceWin.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\platform\win32\PlayerMenuServiceWin.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\platform\win32\PlayerMessageBoxServiceWin.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\platform\win32\PlayerTaskServiceWin.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\platform\win32\PlayerWin.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="..\lib\runtime\ConfigParser.cpp">
+      <Filter>runtime</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

@@ -275,7 +275,6 @@ class PageTurn3DDemo : public PageTurn3D
 public:
     static ActionInterval* create(float t)
     {
-        Director::getInstance()->setDepthTest(true);
         return PageTurn3D::create(t, Size(15,10)); 
     }
 };
@@ -354,25 +353,25 @@ TextLayer::TextLayer(void)
 
     auto grossini = Sprite::create(s_pathSister2);
     _gridNodeTarget->addChild(grossini, 1);
-    grossini->setPosition( Vec2(VisibleRect::left().x+VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y) );
+    grossini->setPosition(VisibleRect::left().x+VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y);
     auto sc = ScaleBy::create(2, 5);
     auto sc_back = sc->reverse();
     grossini->runAction( RepeatForever::create(Sequence::create(sc, sc_back, nullptr) ) );
 
     auto tamara = Sprite::create(s_pathSister1);
     _gridNodeTarget->addChild(tamara, 1);
-    tamara->setPosition( Vec2(VisibleRect::left().x+2*VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y) );
+    tamara->setPosition(VisibleRect::left().x+2*VisibleRect::getVisibleRect().size.width/3,VisibleRect::center().y);
     auto sc2 = ScaleBy::create(2, 5);
     auto sc2_back = sc2->reverse();
     tamara->runAction( RepeatForever::create(Sequence::create(sc2, sc2_back, nullptr)) );
     
     auto label = Label::createWithTTF((effectsList[actionIdx]).c_str(), "fonts/Marker Felt.ttf", 32);
     
-    label->setPosition( Vec2(VisibleRect::center().x,VisibleRect::top().y-80) );
+    label->setPosition(VisibleRect::center().x,VisibleRect::top().y-80);
     addChild(label);
     label->setTag( kTagLabel );
     
-    schedule( schedule_selector(TextLayer::checkAnim) );
+    schedule( CC_SCHEDULE_SELECTOR(TextLayer::checkAnim) );
 }
 
 void TextLayer::checkAnim(float dt)
@@ -394,7 +393,7 @@ TextLayer::~TextLayer(void)
 
 TextLayer* TextLayer::create()
 {
-    auto layer = new TextLayer();
+    auto layer = new (std::nothrow) TextLayer();
     layer->autorelease();
     
     return layer;
@@ -407,7 +406,7 @@ void TextLayer::onEnter()
 
 void TextLayer::newScene()
 {
-    auto s = new EffectTestScene();
+    auto s = new (std::nothrow) EffectTestScene();
     auto child = TextLayer::create();
     s->addChild(child);
     Director::getInstance()->replaceScene(s);

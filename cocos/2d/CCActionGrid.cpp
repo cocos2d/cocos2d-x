@@ -87,7 +87,7 @@ void GridAction::cacheTargetAsGridNode()
 GridAction* GridAction::reverse() const
 {
     // FIXME: This conversion isn't safe.
-	return (GridAction*)ReverseTime::create( this->clone() );
+    return (GridAction*)ReverseTime::create( this->clone() );
 }
 
 GridBase* GridAction::getGrid()
@@ -152,7 +152,7 @@ void TiledGrid3DAction::setTile(const Vec2& pos, const Quad3& coords)
 
 AccelDeccelAmplitude* AccelDeccelAmplitude::create(Action *action, float duration)
 {
-    AccelDeccelAmplitude *ret = new AccelDeccelAmplitude();
+    AccelDeccelAmplitude *ret = new (std::nothrow) AccelDeccelAmplitude();
     if (ret)
     {
         if (ret->initWithAction(action, duration))
@@ -184,11 +184,11 @@ bool AccelDeccelAmplitude::initWithAction(Action *action, float duration)
 
 AccelDeccelAmplitude* AccelDeccelAmplitude::clone() const
 {
-	// no copy constructor
-	auto a = new AccelDeccelAmplitude();
-	a->initWithAction(_other->clone(), _rate);
-	a->autorelease();
-	return a;
+    // no copy constructor
+    auto a = new (std::nothrow) AccelDeccelAmplitude();
+    a->initWithAction(_other->clone(), _rate);
+    a->autorelease();
+    return a;
 }
 
 AccelDeccelAmplitude::~AccelDeccelAmplitude()
@@ -224,7 +224,7 @@ AccelDeccelAmplitude* AccelDeccelAmplitude::reverse() const
 
 AccelAmplitude* AccelAmplitude::create(Action *action, float duration)
 {
-    AccelAmplitude *ret = new AccelAmplitude();
+    AccelAmplitude *ret = new (std::nothrow) AccelAmplitude();
     if (ret)
     {
         if (ret->initWithAction(action, duration))
@@ -256,11 +256,11 @@ bool AccelAmplitude::initWithAction(Action *action, float duration)
 
 AccelAmplitude* AccelAmplitude::clone() const
 {
-	// no copy constructor
-	auto a = new AccelAmplitude();
-	a->initWithAction(_other->clone(), _duration);
-	a->autorelease();
-	return a;
+    // no copy constructor
+    auto a = new (std::nothrow) AccelAmplitude();
+    a->initWithAction(_other->clone(), _duration);
+    a->autorelease();
+    return a;
 }
 
 AccelAmplitude::~AccelAmplitude()
@@ -289,7 +289,7 @@ AccelAmplitude* AccelAmplitude::reverse() const
 
 DeccelAmplitude* DeccelAmplitude::create(Action *action, float duration)
 {
-    DeccelAmplitude *ret = new DeccelAmplitude();
+    DeccelAmplitude *ret = new (std::nothrow) DeccelAmplitude();
     if (ret)
     {
         if (ret->initWithAction(action, duration))
@@ -338,11 +338,11 @@ void DeccelAmplitude::update(float time)
 
 DeccelAmplitude* DeccelAmplitude::clone() const
 {
-	// no copy constructor	
-	auto a = new DeccelAmplitude();
-	a->initWithAction(_other->clone(), _duration);
-	a->autorelease();
-	return a;
+    // no copy constructor    
+    auto a = new (std::nothrow) DeccelAmplitude();
+    a->initWithAction(_other->clone(), _duration);
+    a->autorelease();
+    return a;
 }
 
 DeccelAmplitude* DeccelAmplitude::reverse() const
@@ -371,7 +371,7 @@ void StopGrid::cacheTargetAsGridNode()
 
 StopGrid* StopGrid::create()
 {
-    StopGrid* pAction = new StopGrid();
+    StopGrid* pAction = new (std::nothrow) StopGrid();
     pAction->autorelease();
 
     return pAction;
@@ -379,20 +379,20 @@ StopGrid* StopGrid::create()
 
 StopGrid* StopGrid::clone() const
 {
-	return StopGrid::create();
+    return StopGrid::create();
 }
 
 StopGrid* StopGrid::reverse() const
 {
-	// no reverse, just clone it
-	return this->clone();
+    // no reverse, just clone it
+    return this->clone();
 }
 
 // implementation of ReuseGrid
 
 ReuseGrid* ReuseGrid::create(int times)
 {
-    ReuseGrid *action = new ReuseGrid();
+    ReuseGrid *action = new (std::nothrow) ReuseGrid();
     if (action)
     {
         if (action->initWithTimes(times))
@@ -434,13 +434,13 @@ void ReuseGrid::cacheTargetAsGridNode()
 
 ReuseGrid* ReuseGrid::clone() const
 {
-	return ReuseGrid::create(_times);
+    return ReuseGrid::create(_times);
 }
 
 ReuseGrid* ReuseGrid::reverse() const
 {
-	// no reverse, just clone it
-	return this->clone();
+    // no reverse, just clone it
+    return this->clone();
 }
 
 NS_CC_END

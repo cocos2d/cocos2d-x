@@ -3,6 +3,6 @@
 
 void UITestScene::runThisTest()
 {
-    CocoStudioGUITestScene* pScene = new CocoStudioGUITestScene();
+    CocoStudioGUITestScene* pScene = new (std::nothrow) CocoStudioGUITestScene();
     pScene->runThisTest();
 }

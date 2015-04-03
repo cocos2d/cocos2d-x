@@ -111,12 +111,12 @@ void FontTest::showFont(const char *pFont)
     right->setAnchorPoint(Vec2(0,0.5));
     rightColor->setAnchorPoint(Vec2(0,0.5));
 
-    top->setPosition(Vec2(s.width/2,s.height-20));
-    left->setPosition(Vec2(0,s.height/2));
+    top->setPosition(s.width/2,s.height-20);
+    left->setPosition(0,s.height/2);
     leftColor->setPosition(left->getPosition());
-    center->setPosition(Vec2(blockSize.width, s.height/2));
+    center->setPosition(blockSize.width, s.height/2);
     centerColor->setPosition(center->getPosition());
-    right->setPosition(Vec2(blockSize.width*2, s.height/2));
+    right->setPosition(blockSize.width*2, s.height/2);
     rightColor->setPosition(right->getPosition());
 
     this->addChild(leftColor, -1, kTagColor1);

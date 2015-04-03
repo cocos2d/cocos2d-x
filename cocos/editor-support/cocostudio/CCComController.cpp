@@ -70,7 +70,7 @@ void ComController::setEnabled(bool b)
 
 ComController* ComController::create(void)
 {
-    ComController * pRet = new ComController();
+    ComController * pRet = new (std::nothrow) ComController();
     if (pRet && pRet->init())
     {
         pRet->autorelease();

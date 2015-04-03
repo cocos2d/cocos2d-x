@@ -23,9 +23,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCEventListenerController.h"
-#include "CCEventController.h"
-#include "ccMacros.h"
+#include "base/CCEventListenerController.h"
+#include "base/CCEventController.h"
+#include "base/ccMacros.h"
 #include "base/CCController.h"
 
 NS_CC_BEGIN
@@ -34,7 +34,7 @@ const std::string EventListenerController::LISTENER_ID = "__cc_controller";
 
 EventListenerController* EventListenerController::create()
 {
-    auto ret = new EventListenerController();
+    auto ret = new (std::nothrow) EventListenerController();
     if (ret && ret->init())
     {
         ret->autorelease();

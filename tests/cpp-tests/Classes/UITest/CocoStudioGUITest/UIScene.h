@@ -31,14 +31,14 @@
 
 USING_NS_CC;
 USING_NS_CC_EXT;
-using namespace ui;
+using namespace cocos2d::ui;
 
 #define UI_SCENE_CREATE_FUNC(UIScene) \
 public: \
 static Scene* sceneWithTitle(const char * title) \
 { \
     Scene* pScene = Scene::create(); \
-    UIScene* uiLayer = new UIScene(); \
+    UIScene* uiLayer = new (std::nothrow) UIScene(); \
     if (uiLayer && uiLayer->init()) \
     { \
         uiLayer->autorelease(); \

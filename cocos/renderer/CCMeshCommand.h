@@ -26,10 +26,9 @@
 #define _CC_MESHCOMMAND_H_
 
 #include <unordered_map>
-#include "CCRenderCommand.h"
+#include "renderer/CCRenderCommand.h"
 #include "renderer/CCGLProgram.h"
 #include "math/CCMath.h"
-#include "CCRenderCommandPool.h"
 
 NS_CC_BEGIN
 
@@ -46,8 +45,10 @@ public:
 
     MeshCommand();
     ~MeshCommand();
-
-    void init(float globalOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, GLuint vertexBuffer, GLuint indexBuffer, GLenum primitive, GLenum indexType, ssize_t indexCount, const Mat4 &mv);
+    
+    void init(float globalZOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, GLuint vertexBuffer, GLuint indexBuffer, GLenum primitive, GLenum indexFormat, ssize_t indexCount, const Mat4 &mv, uint32_t flags);
+    
+    CC_DEPRECATED_ATTRIBUTE void init(float globalZOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, GLuint vertexBuffer, GLuint indexBuffer, GLenum primitive, GLenum indexType, ssize_t indexCount, const Mat4 &mv);
     
     void setCullFaceEnabled(bool enable);
     
@@ -62,19 +63,23 @@ public:
     void setMatrixPalette(const Vec4* matrixPalette) { _matrixPalette = matrixPalette; }
     
     void setMatrixPaletteSize(int size) { _matrixPaletteSize = size; }
+
+    void setLightMask(unsigned int lightmask) { _lightMask = lightmask; }
+    
+    void setTransparent(bool value);
     
     void execute();
     
-    //used for bath
+    //used for batch
     void preBatchDraw();
     void batchDraw();
     void postBatchDraw();
     
-    void genMaterialID(GLuint texID, void* glProgramState, void* mesh, const BlendFunc& blend);
+    void genMaterialID(GLuint texID, void* glProgramState, GLuint vertexBuffer, GLuint indexBuffer, const BlendFunc& blend);
     
     uint32_t getMaterialID() const { return _materialID; }
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     void listenRendererRecreated(EventCustom* event);
 #endif
 
@@ -85,11 +90,15 @@ protected:
     
     // apply renderstate
     void applyRenderState();
+
+    void setLightUniforms();
     
     //restore to all false
     void restoreRenderState();
     
     void MatrixPalleteCallBack( GLProgram* glProgram, Uniform* uniform);
+
+    void resetLightUniformValues();
 
     GLuint _textureID;
     GLProgramState* _glProgramState;
@@ -118,11 +127,19 @@ protected:
     GLenum _cullFace;
     bool _depthTestEnabled;
     bool _depthWriteEnabled;
+    bool _forceDepthWrite;
+    
+    bool _renderStateCullFaceEnabled;
+    bool _renderStateDepthTest;
+    GLboolean _renderStateDepthWrite;
+    GLenum    _renderStateCullFace;
 
     // ModelView transform
     Mat4 _mv;
-    
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+
+    unsigned int _lightMask;
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     EventListenerCustom* _rendererRecreatedListener;
 #endif
 };

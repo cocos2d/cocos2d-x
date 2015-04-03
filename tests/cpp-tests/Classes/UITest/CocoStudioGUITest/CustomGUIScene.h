@@ -15,9 +15,9 @@ using namespace cocos2d::ui;
 class CustomGUITestMainLayer : public Layer
 {
 public:
-    virtual void onEnter();
-    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
-//    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);    
+    virtual void onEnter() override;
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event) override;
+//    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event) override;    
     
     void touchEvent(Ref* pSender, Widget::TouchEventType type);
     
@@ -29,7 +29,7 @@ private:
 class CustomGUITestScene : public TestScene
 {
 public:
-    virtual void onEnter();
+    virtual void onEnter() override;
     virtual void runThisTest();
     void BackCallback(Ref* pSender);
 };

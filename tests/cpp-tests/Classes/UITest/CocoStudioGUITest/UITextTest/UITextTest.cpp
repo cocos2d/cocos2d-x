@@ -145,3 +145,50 @@ bool UITextTest_TTF::init()
     }
     return false;
 }
+
+// UITextTest_IgnoreConentSize
+
+bool UITextTest_IgnoreConentSize::init()
+{
+    if (UIScene::init())
+    {
+        Size widgetSize = _widget->getContentSize();
+        
+        Text* leftText = Text::create("ignore conent",
+                                   "fonts/Marker Felt.ttf",10);
+        leftText->setPosition(Vec2(widgetSize.width / 2.0f - 50,
+                                widgetSize.height / 2.0f));
+        leftText->ignoreContentAdaptWithSize(false);
+        leftText->setTextAreaSize(Size(60,60));
+        leftText->setString("Text line with break\nText line with break\nText line with break\nText line with break\n");
+        leftText->setTouchScaleChangeEnabled(true);
+        leftText->setTouchEnabled(true);
+        _uiLayer->addChild(leftText);
+        
+        
+        Text* rightText = Text::create("ignore conent",
+                                      "fonts/Marker Felt.ttf",10);
+        rightText->setPosition(Vec2(widgetSize.width / 2.0f + 50,
+                                   widgetSize.height / 2.0f));
+        rightText->setString("Text line with break\nText line with break\nText line with break\nText line with break\n");
+        //note: setTextAreaSize must be used with ignoreContentAdaptWithSize(false)
+        rightText->setTextAreaSize(Size(100,30));
+        rightText->ignoreContentAdaptWithSize(false);
+        _uiLayer->addChild(rightText);
+        
+        
+        auto halighButton = Button::create();
+        halighButton->setTitleText("Alignment Right");
+        halighButton->addClickEventListener([=](Ref*){
+            leftText->setTextHorizontalAlignment(TextHAlignment::RIGHT);
+            rightText->setTextHorizontalAlignment(TextHAlignment::RIGHT);
+        });
+        halighButton->setPosition(Vec2(widgetSize.width/2 - 50,
+                                       widgetSize.height/2 - 50));
+        _uiLayer->addChild(halighButton);
+        
+        
+        return true;
+    }
+    return false;
+}

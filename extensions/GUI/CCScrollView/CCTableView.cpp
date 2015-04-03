@@ -40,7 +40,7 @@ TableView* TableView::create(TableViewDataSource* dataSource, Size size)
 
 TableView* TableView::create(TableViewDataSource* dataSource, Size size, Node *container)
 {
-    TableView *table = new TableView();
+    TableView *table = new (std::nothrow) TableView();
     table->initWithViewSize(size, container);
     table->autorelease();
     table->setDataSource(dataSource);

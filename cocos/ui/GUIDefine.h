@@ -28,6 +28,7 @@
 #include <string>
 #include "base/ObjectFactory.h"
 
+///@cond DO_NOT_SHOW
 //
 //// Widget macro
 //
@@ -67,5 +68,9 @@
 #define CREATE_CLASS_WIDGET_READER_INFO(className) \
     cocos2d::ObjectFactory::TInfo(#className, &className::createInstance) \
 
+#define CC_VIDEOPLAYER_DEBUG_DRAW  0
+
+#define __LAYOUT_COMPONENT_NAME "__ui_layout"
+///@endcond
 
 #endif /* defined(__TestCpp__GUIDefine__) */

@@ -25,6 +25,7 @@
 #include "base/CCEventListenerTouch.h"
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventTouch.h"
+#include "base/CCTouch.h"
 
 #include <algorithm>
 
@@ -68,7 +69,7 @@ bool EventListenerTouchOneByOne::isSwallowTouches()
 
 EventListenerTouchOneByOne* EventListenerTouchOneByOne::create()
 {
-    auto ret = new EventListenerTouchOneByOne();
+    auto ret = new (std::nothrow) EventListenerTouchOneByOne();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -95,7 +96,7 @@ bool EventListenerTouchOneByOne::checkAvailable()
 
 EventListenerTouchOneByOne* EventListenerTouchOneByOne::clone()
 {
-    auto ret = new EventListenerTouchOneByOne();
+    auto ret = new (std::nothrow) EventListenerTouchOneByOne();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -144,7 +145,7 @@ bool EventListenerTouchAllAtOnce::init()
 
 EventListenerTouchAllAtOnce* EventListenerTouchAllAtOnce::create()
 {
-    auto ret = new EventListenerTouchAllAtOnce();
+    auto ret = new (std::nothrow) EventListenerTouchAllAtOnce();
     if (ret && ret->init())
     {
         ret->autorelease();
@@ -170,7 +171,7 @@ bool EventListenerTouchAllAtOnce::checkAvailable()
 
 EventListenerTouchAllAtOnce* EventListenerTouchAllAtOnce::clone()
 {
-    auto ret = new EventListenerTouchAllAtOnce();
+    auto ret = new (std::nothrow) EventListenerTouchAllAtOnce();
     if (ret && ret->init())
     {
         ret->autorelease();

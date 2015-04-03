@@ -7,8 +7,6 @@
 
 #define IDC_PAUSE    200
 
-
-
 IntervalLayer::IntervalLayer()
 {
     _time0 = _time1 = _time2 = _time3 = _time4 = 0.0f;
@@ -17,7 +15,7 @@ IntervalLayer::IntervalLayer()
     // sun
     auto sun = ParticleSun::create();
     sun->setTexture(Director::getInstance()->getTextureCache()->addImage("Images/fire.png"));
-    sun->setPosition( Vec2(VisibleRect::rightTop().x-32,VisibleRect::rightTop().y-32) );
+    sun->setPosition(VisibleRect::rightTop().x-32,VisibleRect::rightTop().y-32);
 
     sun->setTotalParticles(130);
     sun->setLife(0.6f);
@@ -31,16 +29,43 @@ IntervalLayer::IntervalLayer()
     _label4 = Label::createWithBMFont("fonts/bitmapFontTest4.fnt", "0");
 
     scheduleUpdate();
-    schedule(schedule_selector(IntervalLayer::step1));
-    schedule(schedule_selector(IntervalLayer::step2), 0);
-    schedule(schedule_selector(IntervalLayer::step3), 1.0f);
-    schedule(schedule_selector(IntervalLayer::step4), 2.0f);
+    schedule([&](float dt){
+        _time1 +=dt;
 
-    _label0->setPosition(Vec2(s.width*1/6, s.height/2));
-    _label1->setPosition(Vec2(s.width*2/6, s.height/2));
-    _label2->setPosition(Vec2(s.width*3/6, s.height/2));
-    _label3->setPosition(Vec2(s.width*4/6, s.height/2));
-    _label4->setPosition(Vec2(s.width*5/6, s.height/2));
+        char str[10] = {0};
+        sprintf(str, "%2.1f", _time1);
+        _label1->setString( str );
+    }, "step_1");
+
+    schedule([&](float dt){
+        _time2 +=dt;
+
+        char str[10] = {0};
+        sprintf(str, "%2.1f", _time2);
+        _label2->setString( str );
+    }, 0.5, "step_2");
+
+    schedule([&](float dt){
+        _time3 +=dt;
+
+        char str[10] = {0};
+        sprintf(str, "%2.1f", _time3);
+        _label3->setString( str );
+    }, 1, "step_3");
+
+    schedule([&](float dt){
+        _time4 +=dt;
+
+        char str[10] = {0};
+        sprintf(str, "%2.1f", _time4);
+        _label4->setString( str );
+    }, 2, "step_4");
+
+    _label0->setPosition(s.width*1/6, s.height/2);
+    _label1->setPosition(s.width*2/6, s.height/2);
+    _label2->setPosition(s.width*3/6, s.height/2);
+    _label3->setPosition(s.width*4/6, s.height/2);
+    _label4->setPosition(s.width*5/6, s.height/2);
 
     addChild(_label0);
     addChild(_label1);
@@ -50,7 +75,7 @@ IntervalLayer::IntervalLayer()
 
     // Sprite
     auto sprite = Sprite::create(s_pathGrossini);
-    sprite->setPosition( Vec2(VisibleRect::left().x + 40, VisibleRect::bottom().y + 50) );
+    sprite->setPosition(VisibleRect::left().x + 40, VisibleRect::bottom().y + 50);
     
     auto jump = JumpBy::create(3, Vec2(s.width-80,0), 50, 4);
     
@@ -64,7 +89,7 @@ IntervalLayer::IntervalLayer()
 			Director::getInstance()->pause();
 	});
     auto menu = Menu::create(item1, nullptr);
-    menu->setPosition( Vec2(s.width/2, s.height-50) );
+    menu->setPosition(s.width/2, s.height-50);
 
     addChild( menu );
 }
@@ -85,45 +110,9 @@ void IntervalLayer::update(float dt)
     _label0->setString(time);
 }
 
-void IntervalLayer::step1(float dt)
-{
-    _time1 +=dt;
-
-    char str[10] = {0};
-    sprintf(str, "%2.1f", _time1);
-    _label1->setString( str );
-}
-
-void IntervalLayer::step2(float dt)
-{
-    _time2 +=dt;
-
-    char str[10] = {0};
-    sprintf(str, "%2.1f", _time2);
-    _label2->setString( str ); 
-}
-
-void IntervalLayer::step3(float dt)
-{
-    _time3 +=dt;
-
-    char str[10] = {0};
-    sprintf(str, "%2.1f", _time3);
-    _label3->setString( str ); 
-}
-
-void IntervalLayer::step4(float dt)
-{
-    _time4 +=dt;
-
-    char str[10] = {0};
-    sprintf(str, "%2.1f", _time4);
-    _label4->setString( str ); 
-}
-
 void IntervalTestScene::runThisTest()
 {
-    auto layer = new IntervalLayer();
+    auto layer = new (std::nothrow) IntervalLayer();
     addChild(layer);
     layer->release();
 

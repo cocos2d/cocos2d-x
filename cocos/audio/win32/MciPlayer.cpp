@@ -1,4 +1,5 @@
 #include "MciPlayer.h"
+#include <tchar.h>
 
 #define WIN_CLASS_NAME        "CocosDenshionCallbackWnd"
 #define BREAK_IF(cond)      if (cond) break;
@@ -34,7 +35,7 @@ MciPlayer::MciPlayer()
         wc.hCursor        = LoadCursor( NULL, IDC_ARROW );    // Load The Arrow Pointer
         wc.hbrBackground  = NULL;                           // No Background Required For GL
         wc.lpszMenuName   = NULL;                           // We Don't Want A Menu
-        wc.lpszClassName  = WIN_CLASS_NAME;                 // Set The Class Name
+        wc.lpszClassName  = _T(WIN_CLASS_NAME);                 // Set The Class Name
 
         if (! RegisterClass(&wc)
             && 1410 != GetLastError())
@@ -45,7 +46,7 @@ MciPlayer::MciPlayer()
 
     _wnd = CreateWindowEx(
         WS_EX_APPWINDOW,                                    // Extended Style For The Window
-        WIN_CLASS_NAME,                                        // Class Name
+        _T(WIN_CLASS_NAME),                                        // Class Name
         NULL,                                        // Window Title
         WS_POPUPWINDOW,/*WS_OVERLAPPEDWINDOW*/               // Defined Window Style
         0, 0,                                                // Window Position
@@ -88,9 +89,13 @@ void MciPlayer::Open(const char* pFileName, UINT uId)
         MCI_OPEN_PARMS mciOpen = {0};
         MCIERROR mciError;
         mciOpen.lpstrDeviceType = (LPCTSTR)MCI_ALL_DEVICE_ID;
-        mciOpen.lpstrElementName = pFileName;
+		WCHAR* fileNameWideChar = new WCHAR[nLen + 1];
+		BREAK_IF(! fileNameWideChar);
+		MultiByteToWideChar(CP_ACP, 0, pFileName, nLen + 1, fileNameWideChar, nLen + 1);
+        mciOpen.lpstrElementName = fileNameWideChar;
 
         mciError = mciSendCommand(0,MCI_OPEN, MCI_OPEN_ELEMENT, reinterpret_cast<DWORD_PTR>(&mciOpen));
+		CC_SAFE_DELETE_ARRAY(mciOpen.lpstrElementName);
         BREAK_IF(mciError);
 
         _dev = mciOpen.wDeviceID;
@@ -156,6 +161,7 @@ void MciPlayer::Stop()
 {
     _SendGenericCommand(MCI_STOP);
     _playing = false;
+    _times = 0;
 }
 
 void MciPlayer::Rewind()

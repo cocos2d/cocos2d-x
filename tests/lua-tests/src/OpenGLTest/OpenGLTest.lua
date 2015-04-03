@@ -1,7 +1,3 @@
-require "OpenglConstants"
-require "Cocos2dConstants"
-require "Opengl"
-
 local vertDefaultSource = "\n".."\n" ..
                   "attribute vec4 a_position;\n" ..
                   "attribute vec2 a_texCoord;\n" ..

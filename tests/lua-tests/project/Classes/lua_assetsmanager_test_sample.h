@@ -10,7 +10,7 @@ extern "C" {
 #endif
 
 /**
- * The apis which are bound in this file are temporary for the assetsmanager test sample.After the completion of some systems like fileutils,these apis will be deprecated 
+ * The apis which are bound in this file are temporary for the assetsmanager test sample.After the completion of some systems like fileutils,these apis will be deprecated
  */
 TOLUA_API int register_assetsmanager_test_sample(lua_State* tolua_S);
 

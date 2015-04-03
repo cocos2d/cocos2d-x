@@ -16,7 +16,7 @@ void main()
     //float dist = color.b+color.g/256.0; \n
     // the texture use single channel 8-bit output for distance_map \n
     float dist = color.a; 
-    //todo:Implementation 'fwidth' for glsl 1.0 \n
+    //TODO: Implementation 'fwidth' for glsl 1.0 \n
     //float width = fwidth(dist); \n
     //assign width for constant will lead to a little bit fuzzy,it's temporary measure.\n
     float width = 0.04; 

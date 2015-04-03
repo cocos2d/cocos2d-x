@@ -16,9 +16,9 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
-    void backCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void restartCallback(Ref* sender);
+    void backCallback(Ref* sender) override;
+    void nextCallback(Ref* sender) override;
+    void restartCallback(Ref* sender) override;
 };
 
 class SchedulerAutoremove : public SchedulerTestLayer
@@ -47,6 +47,7 @@ public:
 
     void tick1(float dt);
     void tick2(float dt);
+    using SchedulerTestLayer::pause;
     void pause(float dt);
 };
 
@@ -59,13 +60,15 @@ public:
     virtual ~SchedulerPauseResumeAll();
     virtual void onEnter() override;
     virtual void onExit() override;
-    virtual void update(float delta);
+    virtual void update(float delta) override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
     void tick1(float dt);
     void tick2(float dt);
+    using SchedulerTestLayer::pause;
     void pause(float dt);
+    using SchedulerTestLayer::resume;
     void resume(float dt);
 private:
     std::set<void*> _pausedTargets;
@@ -85,7 +88,9 @@ public:
 
     void tick1(float dt);
     void tick2(float dt);
+    using SchedulerTestLayer::pause;
     void pause(float dt);
+    using SchedulerTestLayer::resume;
     void resume(float dt);
 private:
     std::set<void*> _pausedTargets;
@@ -179,7 +184,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
-    void update(float dt);
+    void update(float dt) override;
     void tick(float dt);
     void stopSelectors(float dt);
 };
@@ -193,7 +198,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
-    void update(float dt);
+    void update(float dt) override;
     void schedUpdate(float dt);
     void stopUpdate(float dt);
 };
@@ -206,7 +211,7 @@ public:
     ~TestNode();
 
     void initWithString(const std::string& str, int priority);
-    virtual void update(float dt);
+    virtual void update(float dt) override;
 private:
     std::string _string;
 };
@@ -234,7 +239,7 @@ public:
     virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    void update(float dt);
+    void update(float dt) override;
 };
 
 class SchedulerTimeScale : public SchedulerTestLayer
@@ -242,8 +247,8 @@ class SchedulerTimeScale : public SchedulerTestLayer
 public:
     CREATE_FUNC(SchedulerTimeScale);
 
-    void onEnter();
-    void onExit();
+    void onEnter() override;
+    void onExit() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     ControlSlider* sliderCtl();
@@ -260,7 +265,7 @@ public:
     virtual ~TwoSchedulers();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    void onEnter();
+    void onEnter() override;
     ControlSlider* sliderCtl();
     void sliderAction(Ref* sender, Control::EventType controlEvent);
     Scheduler *sched1;
@@ -280,8 +285,8 @@ public:
     ~SchedulerIssue2268();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    void onEnter();
-    void update(float dt);
+    void onEnter() override;
+    void update(float dt) override;
 
 private:
     Node *testNode;
@@ -295,7 +300,7 @@ public:
     ~ScheduleCallbackTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    void onEnter();
+    void onEnter() override;
     
     void callback(float dt);
     
@@ -309,12 +314,12 @@ public:
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    void onEnter();
-    void onExit();
+    void onEnter() override;
+    void onExit() override;
     
-    virtual void update(float dt);
+    virtual void update(float dt) override;
     
-    bool onTouchBegan(Touch* touch, Event* event);
+    bool onTouchBegan(Touch* touch, Event* event) override;
 };
 
 class SchedulerTestScene : public TestScene
@@ -323,6 +328,18 @@ public:
     CREATE_FUNC(SchedulerTestScene);
 
     virtual void runThisTest();
+};
+
+class SchedulerIssue10232 : public SchedulerTestLayer
+{
+public:
+    CREATE_FUNC(SchedulerIssue10232);
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+    void onEnter() override;
+    void update(float dt) override;
 };
 
 #endif

@@ -50,7 +50,7 @@ bool TableViewTestLayer::init()
 
 void TableViewTestLayer::toExtensionsMainLayer(cocos2d::Ref *sender)
 {
-	ExtensionsTestScene *scene = new ExtensionsTestScene();
+	ExtensionsTestScene *scene = new (std::nothrow) ExtensionsTestScene();
 	scene->runThisTest();
 	scene->release();
 }
@@ -73,7 +73,7 @@ TableViewCell* TableViewTestLayer::tableCellAtIndex(TableView *table, ssize_t id
     auto string = String::createWithFormat("%ld", idx);
     TableViewCell *cell = table->dequeueCell();
     if (!cell) {
-        cell = new CustomTableViewCell();
+        cell = new (std::nothrow) CustomTableViewCell();
         cell->autorelease();
         auto sprite = Sprite::create("Images/Icon.png");
         sprite->setAnchorPoint(Vec2::ZERO);

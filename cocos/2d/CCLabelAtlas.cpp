@@ -24,17 +24,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCLabelAtlas.h"
+#include "2d/CCLabelAtlas.h"
 #include "renderer/CCTextureAtlas.h"
-#include "2d/CCDrawingPrimitives.h"
 #include "platform/CCFileUtils.h"
-#include "base/ccConfig.h"
 #include "base/CCDirector.h"
 #include "renderer/CCTextureCache.h"
-#include "renderer/CCGLProgramCache.h"
-#include "renderer/CCGLProgram.h"
-#include "renderer/ccGLStateCache.h"
-#include "math/TransformUtils.h"
 
 #include "deprecated/CCString.h"
 
@@ -49,7 +43,7 @@ NS_CC_BEGIN
 
 LabelAtlas* LabelAtlas::create()
 {
-    LabelAtlas* ret = new LabelAtlas();
+    LabelAtlas* ret = new (std::nothrow) LabelAtlas();
     if (ret)
     {
         ret->autorelease();
@@ -64,7 +58,7 @@ LabelAtlas* LabelAtlas::create()
 
 LabelAtlas* LabelAtlas::create(const std::string& string, const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)
 {
-    LabelAtlas* ret = new LabelAtlas();
+    LabelAtlas* ret = new (std::nothrow) LabelAtlas();
     if(ret && ret->initWithString(string, charMapFile, itemWidth, itemHeight, startCharMap))
     {
         ret->autorelease();
@@ -77,7 +71,7 @@ LabelAtlas* LabelAtlas::create(const std::string& string, const std::string& cha
 bool LabelAtlas::initWithString(const std::string& string, const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap)
 {
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(charMapFile);
-	return initWithString(string, texture, itemWidth, itemHeight, startCharMap);
+    return initWithString(string, texture, itemWidth, itemHeight, startCharMap);
 }
 
 bool LabelAtlas::initWithString(const std::string& string, Texture2D* texture, int itemWidth, int itemHeight, int startCharMap)
@@ -93,7 +87,7 @@ bool LabelAtlas::initWithString(const std::string& string, Texture2D* texture, i
 
 LabelAtlas* LabelAtlas::create(const std::string& string, const std::string& fntFile)
 {    
-    LabelAtlas *ret = new LabelAtlas();
+    LabelAtlas *ret = new (std::nothrow) LabelAtlas();
     if (ret)
     {
         if (ret->initWithString(string, fntFile))
@@ -239,6 +233,12 @@ void LabelAtlas::updateColor()
     if (_textureAtlas)
     {
         Color4B color4( _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity );
+        if (_isOpacityModifyRGB)
+        {
+            color4.r *= _displayedOpacity/255.0f;
+            color4.g *= _displayedOpacity/255.0f;
+            color4.b *= _displayedOpacity/255.0f;
+        }
         auto quads = _textureAtlas->getQuads();
         ssize_t length = _string.length();
         for (int index = 0; index < length; index++)
@@ -256,21 +256,10 @@ void LabelAtlas::updateColor()
 #if CC_LABELATLAS_DEBUG_DRAW
 void LabelAtlas::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
-    AtlasNode::draw(renderer, transform, transformUpdated);
+    AtlasNode::draw(renderer, transform, _transformUpdated);
 
-    _customDebugDrawCommand.init(_globalZOrder);
-    _customDebugDrawCommand.func = CC_CALLBACK_0(LabelAtlas::drawDebugData, this,transform,transformUpdated);
-    renderer->addCommand(&_customDebugDrawCommand);
-}
-
-void LabelAtlas::drawDebugData(const Mat4& transform, bool transformUpdated)
-{
-    Director* director = Director::getInstance();
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
-
+    _debugDrawNode->clear();
     auto size = getContentSize();
-
     Vec2 vertices[4]=
     {
         Vec2::ZERO,
@@ -278,10 +267,7 @@ void LabelAtlas::drawDebugData(const Mat4& transform, bool transformUpdated)
         Vec2(size.width, size.height),
         Vec2(0, size.height)
     };
-
-    DrawPrimitives::drawPoly(vertices, 4, true);
-
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    _debugDrawNode->drawPoly(vertices, 4, true, Color4F(1.0, 1.0, 1.0, 1.0));
 }
 #endif
 

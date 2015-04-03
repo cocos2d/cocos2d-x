@@ -29,7 +29,7 @@ THE SOFTWARE.
 #include <agile.h>
 
 
-namespace PhoneDirect3DXamlAppComponent
+namespace cocos2d
 {
 	class EditBoxEvent : public cocos2d::InputEvent
 	{

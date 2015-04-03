@@ -24,10 +24,13 @@ THE SOFTWARE.
 
 #include "ui/UIHelper.h"
 #include "ui/UIWidget.h"
+#include "ui/UILayoutComponent.h"
 
 NS_CC_BEGIN
 
 namespace ui {
+
+static bool _activeLayout = true;
 
 Widget* Helper::seekWidgetByTag(Widget* root, int tag)
 {
@@ -146,6 +149,48 @@ std::string Helper::getSubStringOfUTF8String(const std::string& str, std::string
     return str.substr(min,max);
 }
 
+void Helper::changeLayoutSystemActiveState(bool bActive)
+{
+    _activeLayout = bActive;
+}
+void Helper::doLayout(cocos2d::Node *rootNode)
+{
+    if(!_activeLayout)
+    {
+        return;
+    }
+
+    for(auto& node : rootNode->getChildren())
+    {
+        auto com = node->getComponent(__LAYOUT_COMPONENT_NAME);
+        Node *parent = node->getParent();
+        if (nullptr != com && nullptr != parent) {
+            LayoutComponent* layoutComponent = (LayoutComponent*)com;
+
+            layoutComponent->refreshLayout();
+        }
+    }
+}
+    
+Rect Helper::restrictCapInsetRect(const cocos2d::Rect &capInsets, const Size& textureSize )
+{
+    float x = capInsets.origin.x;
+    float y = capInsets.origin.y;
+    float width = capInsets.size.width;
+    float height = capInsets.size.height;
+    
+    if (textureSize.width < width)
+    {
+        x = 0.0f;
+        width = 0.0f;
+    }
+    if (textureSize.height < height)
+    {
+        y = 0.0f;
+        height = 0.0f;
+    }
+    return Rect(x, y, width, height);
+}
 }
 
 NS_CC_END

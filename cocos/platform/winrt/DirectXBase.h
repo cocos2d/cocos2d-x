@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------------------------
 #pragma once
 
-#include "base/CCPlatformConfig.h"
+#include "platform/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 
 #include <wrl/client.h>

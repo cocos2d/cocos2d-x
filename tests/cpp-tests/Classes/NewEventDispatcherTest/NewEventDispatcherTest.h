@@ -25,9 +25,9 @@ public:
     virtual void onEnter() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    void backCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void restartCallback(Ref* sender);
+    void backCallback(Ref* sender) override;
+    void nextCallback(Ref* sender) override;
+    void restartCallback(Ref* sender) override;
 };
 
 
@@ -225,6 +225,19 @@ public:
     
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
+};
+
+class Issue9898 : public EventDispatcherTestDemo
+{
+public:
+    CREATE_FUNC(Issue9898);
+    Issue9898();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+private:
+    EventListenerCustom* _listener;
 };
 
 #endif /* defined(__samples__NewEventDispatcherTest__) */

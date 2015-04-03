@@ -154,10 +154,10 @@ std::string Parallax2::title() const
 //
 //------------------------------------------------------------------
 Issue2572::Issue2572()
-: _preListSize(0)
-, _printCount(0)
-, _moveTimer(0.0f)
+: _moveTimer(0.0f)
 , _addTimer(0.0f)
+, _preListSize(0)
+, _printCount(0)
 {
     _addChildStep = 1.0f;
     _wholeMoveTime = 3.0f;
@@ -303,7 +303,7 @@ void ParallaxDemo::onEnter()
 
 void ParallaxDemo::restartCallback(Ref* sender)
 {
-    auto s = new ParallaxTestScene();
+    auto s = new (std::nothrow) ParallaxTestScene();
     s->addChild(restartParallaxAction()); 
 
     Director::getInstance()->replaceScene(s);
@@ -312,7 +312,7 @@ void ParallaxDemo::restartCallback(Ref* sender)
 
 void ParallaxDemo::nextCallback(Ref* sender)
 {
-    auto s = new ParallaxTestScene();
+    auto s = new (std::nothrow) ParallaxTestScene();
     s->addChild( nextParallaxAction() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -320,7 +320,7 @@ void ParallaxDemo::nextCallback(Ref* sender)
 
 void ParallaxDemo::backCallback(Ref* sender)
 {
-    auto s = new ParallaxTestScene();
+    auto s = new (std::nothrow) ParallaxTestScene();
     s->addChild( backParallaxAction() );
     Director::getInstance()->replaceScene(s);
     s->release();

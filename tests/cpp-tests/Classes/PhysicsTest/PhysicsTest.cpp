@@ -1,6 +1,7 @@
 #include "PhysicsTest.h"
 #include <cmath>
 #include "../testResource.h"
+#include "ui/CocosGUI.h"
 USING_NS_CC;
 
 namespace
@@ -21,7 +22,9 @@ namespace
         CL(PhysicsPositionRotationTest),
         CL(PhysicsSetGravityEnableTest),
         CL(Bug5482),
+        CL(PhysicsFixedUpdate),
         CL(PhysicsTransformTest),
+        CL(PhysicsIssue9959)
 #else
         CL(PhysicsDemoDisabled),
 #endif
@@ -122,7 +125,7 @@ std::string PhysicsDemo::subtitle() const
 
 void PhysicsDemo::restartCallback(Ref* sender)
 {
-    auto s = new PhysicsTestScene();
+    auto s = new (std::nothrow) PhysicsTestScene();
     s->addChild( restart() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -130,7 +133,7 @@ void PhysicsDemo::restartCallback(Ref* sender)
 
 void PhysicsDemo::nextCallback(Ref* sender)
 {
-    auto s = new PhysicsTestScene();
+    auto s = new (std::nothrow) PhysicsTestScene();
     s->addChild( next() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -138,7 +141,7 @@ void PhysicsDemo::nextCallback(Ref* sender)
 
 void PhysicsDemo::backCallback(Ref* sender)
 {
-    auto s = new PhysicsTestScene();
+    auto s = new (std::nothrow) PhysicsTestScene();
     s->addChild( back() );
     Director::getInstance()->replaceScene(s);
     s->release();
@@ -433,7 +436,6 @@ void PhysicsDemo::onTouchEnded(Touch* touch, Event* event)
         this->removeChild(it->second);
         _mouses.erase(it);
     }
-    
 }
 
 void PhysicsDemoLogoSmash::onEnter()
@@ -512,7 +514,7 @@ void PhysicsDemoPyramidStack::onEnter()
     ball->setPosition(VisibleRect::bottom() + Vec2(0, 60));
     this->addChild(ball);
     
-    scheduleOnce(schedule_selector(PhysicsDemoPyramidStack::updateOnce), 3.0);
+    scheduleOnce(CC_SCHEDULE_SELECTOR(PhysicsDemoPyramidStack::updateOnce), 3.0);
 
     for(int i=0; i<14; i++)
     {
@@ -715,8 +717,6 @@ void PhysicsDemoJoints::onEnter()
     listener->onTouchEnded = CC_CALLBACK_2(PhysicsDemoJoints::onTouchEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
-    //_scene->getPhysicsWorld()->setGravity(Point::ZERO);
-    
     float width = (VisibleRect::getVisibleRect().size.width - 10) / 4;
     float height = (VisibleRect::getVisibleRect().size.height - 50) / 4;
     
@@ -733,7 +733,7 @@ void PhysicsDemoJoints::onEnter()
         {
             Vec2 offset(VisibleRect::leftBottom().x + 5 + j * width + width/2, VisibleRect::leftBottom().y + 50 + i * height + height/2);
             box->addShape(PhysicsShapeEdgeBox::create(Size(width, height), PHYSICSSHAPE_MATERIAL_DEFAULT, 1, offset));
-            
+
             switch (i*4 + j)
             {
                 case 0:
@@ -767,7 +767,6 @@ void PhysicsDemoJoints::onEnter()
                 }
                 case 2:
                 {
-                    
                     auto sp1 = makeBall(offset - Vec2(30, 0), 10);
                     sp1->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
                     auto sp2 = makeBox(offset + Vec2(30, 0), Size(30, 10));
@@ -941,7 +940,6 @@ void PhysicsDemoActions::onEnter()
     sp3->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
     sp4->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
     
-    
     auto actionTo = JumpTo::create(2, Vec2(100,100), 50, 4);
     auto actionBy = JumpBy::create(2, Vec2(300,0), 50, 4);
     auto actionUp = JumpBy::create(2, Vec2(0,50), 80, 4);
@@ -988,6 +986,9 @@ void PhysicsDemoPump::onEnter()
     body->addShape(PhysicsShapeEdgeSegment::create(VisibleRect::leftTop() + Vec2(150, -80), VisibleRect::rightTop() + Vec2(-100, -150), staticMaterial, 2.0f));
     
     body->setCategoryBitmask(0x01);
+    node->setPhysicsBody(body);
+    node->setPosition(Vec2::ZERO);
+    this->addChild(node);
     
     // balls
     for (int i = 0; i < 6; ++i)
@@ -997,9 +998,8 @@ void PhysicsDemoPump::onEnter()
         addChild(ball);
     }
     
-    node->setPhysicsBody(body);
-    this->addChild(node);
-    
+    auto _world = _scene->getPhysicsWorld();
+
     Vec2 vec[4] =
     {
         VisibleRect::leftTop() + Vec2(102, -148),
@@ -1007,30 +1007,6 @@ void PhysicsDemoPump::onEnter()
         VisibleRect::leftBottom() + Vec2(148, 20),
         VisibleRect::leftBottom() + Vec2(102, 20)
     };
-    
-    auto _world = _scene->getPhysicsWorld();
-    
-    // small gear
-    auto sgear = Node::create();
-    auto sgearB = PhysicsBody::createCircle(44);
-    sgear->setPhysicsBody(sgearB);
-    sgear->setPosition(VisibleRect::leftBottom() + Vec2(125, 0));
-    this->addChild(sgear);
-    sgearB->setCategoryBitmask(0x04);
-    sgearB->setCollisionBitmask(0x04);
-    sgearB->setTag(1);
-    _world->addJoint(PhysicsJointPin::construct(body, sgearB, sgearB->getPosition()));
-    
-    
-    // big gear
-    auto bgear = Node::create();
-    auto bgearB = PhysicsBody::createCircle(100);
-    bgear->setPhysicsBody(bgearB);
-    bgear->setPosition(VisibleRect::leftBottom() + Vec2(275, 0));
-    this->addChild(bgear);
-    bgearB->setCategoryBitmask(0x04);
-    _world->addJoint(PhysicsJointPin::construct(body, bgearB, bgearB->getPosition()));
-    
     
     // pump
     auto pump = Node::create();
@@ -1041,8 +1017,31 @@ void PhysicsDemoPump::onEnter()
     this->addChild(pump);
     pumpB->setCategoryBitmask(0x02);
     pumpB->setGravityEnable(false);
+    
+    // small gear
+    auto sgear = Node::create();
+    auto sgearB = PhysicsBody::createCircle(44);
+    sgear->setPhysicsBody(sgearB);
+    sgear->setPosition(VisibleRect::leftBottom() + Vec2(125, 0));
+    this->addChild(sgear);
+    sgearB->setCategoryBitmask(0x04);
+    sgearB->setCollisionBitmask(0x04);
+    sgearB->setTag(1);
+
+    _world->addJoint(PhysicsJointPin::construct(body, sgearB, sgear->getPosition()));
     _world->addJoint(PhysicsJointDistance::construct(pumpB, sgearB, Vec2(0, 0), Vec2(0, -44)));
     
+    // big gear
+    auto bgear = Node::create();
+    auto bgearB = PhysicsBody::createCircle(100);
+    bgear->setPhysicsBody(bgearB);
+    bgear->setPosition(VisibleRect::leftBottom() + Vec2(275, 0));
+    this->addChild(bgear);
+    bgearB->setCategoryBitmask(0x04);
+
+    _world->addJoint(PhysicsJointPin::construct(bgearB, body, bgear->getPosition()));
+    _world->addJoint(PhysicsJointGear::construct(sgearB, bgearB, -M_PI_2, -2.0f));
+
     // plugger
     Vec2 seg[] = {VisibleRect::leftTop() + Vec2(75, -120), VisibleRect::leftBottom() + Vec2(75, -100)};
     Vec2 segCenter = (seg[1] + seg[0])/2;
@@ -1059,7 +1058,7 @@ void PhysicsDemoPump::onEnter()
     pluggerB->setCategoryBitmask(0x02);
     sgearB->setCollisionBitmask(0x04 | 0x01);
     _world->addJoint(PhysicsJointPin::construct(body, pluggerB, VisibleRect::leftBottom() + Vec2(75, -90)));
-    _world->addJoint(PhysicsJointDistance::construct(pluggerB, sgearB, pluggerB->world2Local(VisibleRect::leftBottom() + Vec2(75, 0)), Vec2(44, 0)));
+    _world->addJoint(PhysicsJointDistance::construct(pluggerB, sgearB, Vec2::ZERO, Vec2(44, 0)));
 }
 
 void PhysicsDemoPump::update(float delta)
@@ -1215,7 +1214,7 @@ void PhysicsDemoSlice::clipPoly(PhysicsShapePolygon* shape, Vec2 normal, float d
     PhysicsBody* body = shape->getBody();
     int count = shape->getPointsCount();
     int pointsCount = 0;
-    Vec2* points = new Vec2[count + 1];
+    Vec2* points = new (std::nothrow) Vec2[count + 1];
     
     for (int i=0, j=count-1; i<count; j=i, ++i)
     {
@@ -1649,7 +1648,7 @@ void PhysicsSetGravityEnableTest::onEnter()
     ball->getPhysicsBody()->setGravityEnable(false);
     addChild(ball);
     ball->getPhysicsBody()->setMass(50);
-    scheduleOnce(schedule_selector(PhysicsSetGravityEnableTest::onScheduleOnce), 1.0);
+    scheduleOnce(CC_SCHEDULE_SELECTOR(PhysicsSetGravityEnableTest::onScheduleOnce), 1.0);
 }
 
 void PhysicsSetGravityEnableTest::onScheduleOnce(float delta)
@@ -1735,6 +1734,62 @@ std::string Bug5482::subtitle() const
     return "change physics body to the other.";
 }
 
+void PhysicsFixedUpdate::onEnter()
+{
+    PhysicsDemo::onEnter();
+    
+    _scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+    _scene->getPhysicsWorld()->setGravity(Point::ZERO);
+    
+    // wall
+    auto wall = Node::create();
+    wall->setPhysicsBody(PhysicsBody::createEdgeBox(VisibleRect::getVisibleRect().size, PhysicsMaterial(0.1f, 1, 0.0f)));
+    wall->setPosition(VisibleRect::center());
+    this->addChild(wall);
+    
+    addBall();
+    
+    scheduleOnce(CC_SCHEDULE_SELECTOR(PhysicsFixedUpdate::updateStart), 2);
+}
+
+void PhysicsFixedUpdate::addBall()
+{
+    auto ball = Sprite::create("Images/ball.png");
+    ball->setPosition(100, 100);
+    ball->setPhysicsBody(PhysicsBody::createCircle(ball->getContentSize().width/2, PhysicsMaterial(0.1f, 1, 0.0f)));
+    ball->getPhysicsBody()->setTag(DRAG_BODYS_TAG);
+    ball->getPhysicsBody()->setVelocity(Point(1000, 20));
+    this->addChild(ball);
+}
+
+void PhysicsFixedUpdate::updateStart(float delta)
+{
+    addBall();
+    
+    _scene->getPhysicsWorld()->setAutoStep(false);
+    scheduleUpdate();
+}
+
+void PhysicsFixedUpdate::update(float delta)
+{
+    
+    // use fixed time and calculate 3 times per frame makes physics simulate more precisely.
+    for (int i = 0; i < 3; ++i)
+    {
+        _scene->getPhysicsWorld()->step(1/180.0f);
+    }
+}
+
+std::string PhysicsFixedUpdate::title() const
+{
+    return "Fixed Update Test";
+}
+
+std::string PhysicsFixedUpdate::subtitle() const
+{
+    return "The secend ball should not run across the wall";
+}
+
 bool PhysicsTransformTest::onTouchBegan(Touch *touch, Event *event)
 {
     Node* child = this->getChildByTag(1);
@@ -1810,6 +1865,39 @@ void PhysicsTransformTest::onEnter()
 std::string PhysicsTransformTest::title() const
 {
     return "Physics transform test";
+}
+
+void PhysicsIssue9959::onEnter()
+{
+    PhysicsDemo::onEnter();
+    
+    auto origin = Director::getInstance()->getVisibleOrigin();
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+    
+    auto scale9Sprite1 = ui::Scale9Sprite::create("Images/ball.png");
+    scale9Sprite1->setPosition(origin + visibleSize/2);
+    addChild(scale9Sprite1);
+    scale9Sprite1->runAction(RepeatForever::create(Sequence::create(MoveBy::create(2.0f, Vec2(100.0f,0.0f)), MoveBy::create(2.0f, Vec2(-100.0f, 0.0f)), NULL)));
+    
+    auto scale9Sprite2 = ui::Scale9Sprite::create("Images/ball.png");
+    scale9Sprite2->setPosition(origin + visibleSize/2 + Vec2(0.0f, 50.0f));
+    addChild(scale9Sprite2);
+    scale9Sprite2->runAction(RepeatForever::create(Sequence::create(ScaleTo::create(2.0f, 1.5f), ScaleTo::create(2.0f, 1.0f), NULL)));
+    
+    auto scale9Sprite3 = ui::Scale9Sprite::create("Images/ball.png");
+    scale9Sprite3->setPosition(origin + visibleSize/2 + Vec2(0.0f, -50.0f));
+    addChild(scale9Sprite3);
+    scale9Sprite3->runAction(RepeatForever::create(RotateBy::create(2.0f, 360.0f)));
+}
+
+std::string PhysicsIssue9959::title() const
+{
+    return "Reorder issue #9959";
+}
+
+std::string PhysicsIssue9959::subtitle() const
+{
+    return "Test Scale9Sprite run scale/move/rotation action in physics scene";
 }
 
 #endif // ifndef CC_USE_PHYSICS

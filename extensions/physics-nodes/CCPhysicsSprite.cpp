@@ -22,6 +22,8 @@
 
 #include "CCPhysicsSprite.h"
 
+#if (CC_ENABLE_CHIPMUNK_INTEGRATION || CC_ENABLE_BOX2D_INTEGRATION)
+
 #if (CC_ENABLE_CHIPMUNK_INTEGRATION && CC_ENABLE_BOX2D_INTEGRATION)
 #error "Either Chipmunk or Box2d should be enabled, but not both at the same time"
 #endif
@@ -43,7 +45,7 @@ PhysicsSprite::PhysicsSprite()
 
 PhysicsSprite* PhysicsSprite::create()
 {
-    PhysicsSprite* pRet = new PhysicsSprite();
+    PhysicsSprite* pRet = new (std::nothrow) PhysicsSprite();
     if (pRet && pRet->init())
     {
         pRet->autorelease();
@@ -58,7 +60,7 @@ PhysicsSprite* PhysicsSprite::create()
 
 PhysicsSprite* PhysicsSprite::createWithTexture(Texture2D *pTexture)
 {
-    PhysicsSprite* pRet = new PhysicsSprite();
+    PhysicsSprite* pRet = new (std::nothrow) PhysicsSprite();
     if (pRet && pRet->initWithTexture(pTexture))
     {
         pRet->autorelease();
@@ -73,7 +75,7 @@ PhysicsSprite* PhysicsSprite::createWithTexture(Texture2D *pTexture)
 
 PhysicsSprite* PhysicsSprite::createWithTexture(Texture2D *pTexture, const Rect& rect)
 {
-    PhysicsSprite* pRet = new PhysicsSprite();
+    PhysicsSprite* pRet = new (std::nothrow) PhysicsSprite();
     if (pRet && pRet->initWithTexture(pTexture, rect))
     {
         pRet->autorelease();
@@ -88,7 +90,7 @@ PhysicsSprite* PhysicsSprite::createWithTexture(Texture2D *pTexture, const Rect&
 
 PhysicsSprite* PhysicsSprite::createWithSpriteFrame(SpriteFrame *pSpriteFrame)
 {
-    PhysicsSprite* pRet = new PhysicsSprite();
+    PhysicsSprite* pRet = new (std::nothrow) PhysicsSprite();
     if (pRet && pRet->initWithSpriteFrame(pSpriteFrame))
     {
         pRet->autorelease();
@@ -103,7 +105,7 @@ PhysicsSprite* PhysicsSprite::createWithSpriteFrame(SpriteFrame *pSpriteFrame)
 
 PhysicsSprite* PhysicsSprite::createWithSpriteFrameName(const char *pszSpriteFrameName)
 {
-    PhysicsSprite* pRet = new PhysicsSprite();
+    PhysicsSprite* pRet = new (std::nothrow) PhysicsSprite();
     if (pRet && pRet->initWithSpriteFrameName(pszSpriteFrameName))
     {
         pRet->autorelease();
@@ -118,7 +120,7 @@ PhysicsSprite* PhysicsSprite::createWithSpriteFrameName(const char *pszSpriteFra
 
 PhysicsSprite* PhysicsSprite::create(const char *pszFileName)
 {
-    PhysicsSprite* pRet = new PhysicsSprite();
+    PhysicsSprite* pRet = new (std::nothrow) PhysicsSprite();
     if (pRet && pRet->initWithFile(pszFileName))
     {
         pRet->autorelease();
@@ -133,7 +135,7 @@ PhysicsSprite* PhysicsSprite::create(const char *pszFileName)
 
 PhysicsSprite* PhysicsSprite::create(const char *pszFileName, const Rect& rect)
 {
-    PhysicsSprite* pRet = new PhysicsSprite();
+    PhysicsSprite* pRet = new (std::nothrow) PhysicsSprite();
     if (pRet && pRet->initWithFile(pszFileName, rect))
     {
         pRet->autorelease();
@@ -300,6 +302,8 @@ float PhysicsSprite::getRotation() const
     
     return (_ignoreBodyRotation ? Sprite::getRotation() :
             CC_RADIANS_TO_DEGREES(_pB2Body->GetAngle()));
+#else
+    return 0.0f;
 #endif
 
 }
@@ -408,3 +412,5 @@ void PhysicsSprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t fla
 }
 
 NS_CC_EXT_END
+
+#endif // CC_ENABLE_CHIPMUNK_INTEGRATION || CC_ENABLE_BOX2D_INTEGRATION

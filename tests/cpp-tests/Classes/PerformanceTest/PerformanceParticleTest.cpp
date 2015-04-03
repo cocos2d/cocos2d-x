@@ -40,16 +40,16 @@ void ParticleMenuLayer::showCurrentTest()
     switch (_curCase)
     {
     case 0:
-        pNewScene = new ParticlePerformTest1;
+        pNewScene = new (std::nothrow) ParticlePerformTest1;
         break;
     case 1:
-        pNewScene = new ParticlePerformTest2;
+        pNewScene = new (std::nothrow) ParticlePerformTest2;
         break;
     case 2:
-        pNewScene = new ParticlePerformTest3;
+        pNewScene = new (std::nothrow) ParticlePerformTest3;
         break;
     case 3:
-        pNewScene = new ParticlePerformTest4;
+        pNewScene = new (std::nothrow) ParticlePerformTest4;
         break;
     }
 
@@ -114,7 +114,7 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     labelAtlas->setPosition(Vec2(s.width-66,50));
 
     // Next Prev Test
-    auto menuLayer = new ParticleMenuLayer(true, TEST_COUNT, s_nParCurIdx);
+    auto menuLayer = new (std::nothrow) ParticleMenuLayer(true, TEST_COUNT, s_nParCurIdx);
     addChild(menuLayer, 1, kTagMenuLayer);
     menuLayer->release();
 
@@ -149,7 +149,7 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     updateQuantityLabel();
     createParticleSystem();
 
-    schedule(schedule_selector(ParticleMainScene::step));
+    schedule(CC_SCHEDULE_SELECTOR(ParticleMainScene::step));
 }
 
 std::string ParticleMainScene::title() const
@@ -191,7 +191,7 @@ void ParticleMainScene::createParticleSystem()
 
 //TODO:     if (subtestNumber <= 3)
 //     {
-//         particleSystem = new ParticleSystemPoint();
+//         particleSystem = new (std::nothrow) ParticleSystemPoint();
 //     }
 //     else
     {
@@ -550,7 +550,7 @@ void ParticlePerformTest4::doTest()
 
 void runParticleTest()
 {
-    auto scene = new ParticlePerformTest1;
+    auto scene = new (std::nothrow) ParticlePerformTest1;
     scene->initWithSubTest(1, kNodesIncrease);
 
     Director::getInstance()->replaceScene(scene);

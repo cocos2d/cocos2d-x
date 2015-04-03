@@ -24,14 +24,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-#include "CCTileMapAtlas.h"
+#include "2d/CCTileMapAtlas.h"
 #include "platform/CCFileUtils.h"
 #include "renderer/CCTextureAtlas.h"
 #include "base/TGAlib.h"
-#include "base/ccConfig.h"
 #include "base/CCDirector.h"
 #include "deprecated/CCString.h"
-#include <sstream>
+
 
 NS_CC_BEGIN
 
@@ -39,7 +38,7 @@ NS_CC_BEGIN
 
 TileMapAtlas * TileMapAtlas::create(const std::string& tile, const std::string& mapFile, int tileWidth, int tileHeight)
 {
-    TileMapAtlas *ret = new TileMapAtlas();
+    TileMapAtlas *ret = new (std::nothrow) TileMapAtlas();
     if (ret->initWithTileFile(tile, mapFile, tileWidth, tileHeight))
     {
         ret->autorelease();
@@ -142,8 +141,8 @@ void TileMapAtlas::setTile(const Color3B& tile, const Vec2& position)
     {
         ptr[(unsigned int)(position.x + position.y * _TGAInfo->width)] = tile;
 
-        // XXX: this method consumes a lot of memory
-        // XXX: a tree of something like that shall be implemented
+        // FIXME:: this method consumes a lot of memory
+        // FIXME:: a tree of something like that shall be implemented
         std::string key = StringUtils::toString(position.x) + "," + StringUtils::toString(position.y);
         int num = _posToAtlasIndex[key].asInt();
 

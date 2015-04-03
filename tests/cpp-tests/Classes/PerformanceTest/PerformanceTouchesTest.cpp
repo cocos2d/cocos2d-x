@@ -45,13 +45,13 @@ void TouchesMainScene::showCurrentTest()
     switch (_curCase)
     {
     case 0:
-        layer = new TouchesPerformTest1(true, TEST_COUNT, _curCase);
+        layer = new (std::nothrow) TouchesPerformTest1(true, TEST_COUNT, _curCase);
         break;
     case 1:
-        layer = new TouchesPerformTest2(true, TEST_COUNT, _curCase);
+        layer = new (std::nothrow) TouchesPerformTest2(true, TEST_COUNT, _curCase);
         break;
     case 2:
-        layer = new TouchesPerformTest3(true, TEST_COUNT, _curCase);
+        layer = new (std::nothrow) TouchesPerformTest3(true, TEST_COUNT, _curCase);
         break;
     }
     s_nTouchCurCase = _curCase;
@@ -235,7 +235,7 @@ void TouchesPerformTest3::onEnter()
     for (int i = 0; i < TOUCHABLE_NODE_NUM; ++i)
     {
         int zorder = rand() % TOUCHABLE_NODE_NUM;
-        auto layer = new TouchableLayer();
+        auto layer = new (std::nothrow) TouchableLayer();
         
         auto listener = EventListenerTouchOneByOne::create();
         listener->onTouchBegan = CC_CALLBACK_2(TouchableLayer::onTouchBegan, layer);
@@ -256,7 +256,7 @@ void TouchesPerformTest3::onEnter()
         std::vector<Touch*> touches;
         for (int i = 0; i < EventTouch::MAX_TOUCHES; ++i)
         {
-            Touch* touch = new Touch();
+            Touch* touch = new (std::nothrow) Touch();
             touch->setTouchInfo(i, 10, (i+1) * 10);
             touches.push_back(touch);
         }
@@ -298,13 +298,13 @@ void TouchesPerformTest3::showCurrentTest()
     switch (_curCase)
     {
         case 0:
-            layer = new TouchesPerformTest1(true, TEST_COUNT, _curCase);
+            layer = new (std::nothrow) TouchesPerformTest1(true, TEST_COUNT, _curCase);
             break;
         case 1:
-            layer = new TouchesPerformTest2(true, TEST_COUNT, _curCase);
+            layer = new (std::nothrow) TouchesPerformTest2(true, TEST_COUNT, _curCase);
             break;
         case 2:
-            layer = new TouchesPerformTest3(true, TEST_COUNT, _curCase);
+            layer = new (std::nothrow) TouchesPerformTest3(true, TEST_COUNT, _curCase);
             break;
     }
     s_nTouchCurCase = _curCase;
@@ -323,7 +323,7 @@ void runTouchesTest()
 {
     s_nTouchCurCase = 0;
     auto scene = Scene::create();
-    auto layer = new TouchesPerformTest1(true, TEST_COUNT, s_nTouchCurCase);
+    auto layer = new (std::nothrow) TouchesPerformTest1(true, TEST_COUNT, s_nTouchCurCase);
 
     scene->addChild(layer);
     layer->release();

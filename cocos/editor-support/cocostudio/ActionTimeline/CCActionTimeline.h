@@ -26,10 +26,24 @@ THE SOFTWARE.
 #define __CCTIMELINE_ACTION_H__
 
 #include "CCTimeLine.h"
-#include "renderer/CCRenderer.h"
 #include "cocostudio/CocosStudioExport.h"
+#include "2d/CCAction.h"
 
 NS_TIMELINE_BEGIN
+
+struct AnimationInfo
+{
+    AnimationInfo():startIndex(0),endIndex(0){}
+    AnimationInfo(const std::string& otherName, int otherStartIndex, int otherEndIndex)
+    :name(otherName),
+    startIndex(otherStartIndex),
+    endIndex(otherEndIndex)
+    {
+    }
+    std::string name;
+    int startIndex;
+    int endIndex;
+};
 
 class CC_STUDIO_DLL ActionTimelineData : public cocos2d::Ref
 {
@@ -38,10 +52,10 @@ public:
 
     virtual void setActionTag(int actionTag) { _actionTag = actionTag; }
     virtual int getActionTag() const { return _actionTag; }
-protected:
+CC_CONSTRUCTOR_ACCESS:
     ActionTimelineData();
     virtual bool init(int actionTag);
-
+protected:
     int _actionTag;
 };
 
@@ -55,6 +69,8 @@ public:
 
     ActionTimeline();
     virtual ~ActionTimeline();
+
+    virtual void play(std::string animationName, bool loop);
 
     virtual bool init();
 
@@ -124,10 +140,20 @@ public:
     virtual void removeTimeline(Timeline* timeline);
 
     virtual const cocos2d::Vector<Timeline*>& getTimelines() const { return _timelineList; }
+    
+    /** AnimationInfo*/
+    virtual void addAnimationInfo(const AnimationInfo& animationInfo);
+    virtual void removeAnimationInfo(std::string animationName);
+    virtual bool IsAnimationInfoExists(const std::string& animationName);
+    virtual AnimationInfo getAnimationInfo(const std::string& animationName);
 
     /** Set ActionTimeline's frame event callback function */
     void setFrameEventCallFunc(std::function<void(Frame *)> listener);
     void clearFrameEventCallFunc();
+
+    /** Last frame callback will call when arriving last frame */
+    void setLastFrameCallFunc(std::function<void()> listener);
+    void clearLastFrameCallFunc();
 
     /** Inherit from Action. */
 
@@ -163,6 +189,8 @@ protected:
     bool    _loop;
 
     std::function<void(Frame*)> _frameEventListener;
+    std::function<void()> _lastFrameListener;
+    std::map<std::string, AnimationInfo> _animationInfos;
 };
 
 NS_TIMELINE_END

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -24,8 +24,9 @@
 
 #ifndef cocos2d_libs_UIDeprecated_h
 #define cocos2d_libs_UIDeprecated_h
+/// @cond DO_NOT_SHOW
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "ui/UIWidget.h"
 #include "ui/UILayout.h"
 #include "ui/UIListView.h"
@@ -161,4 +162,5 @@ CC_DEPRECATED_ATTRIBUTE extern const Margin MarginZero;
 
 NS_CC_END
 
+/// @endcond
 #endif

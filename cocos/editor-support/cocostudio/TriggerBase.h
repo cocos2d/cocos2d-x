@@ -25,7 +25,6 @@ THE SOFTWARE.
 #ifndef __TRIGGEREVENT_H__
 #define __TRIGGEREVENT_H__
 
-#include "cocos2d.h"
 #include "cocostudio/CocoStudio.h"
 #include "base/ObjectFactory.h"
 #include "TriggerObj.h"

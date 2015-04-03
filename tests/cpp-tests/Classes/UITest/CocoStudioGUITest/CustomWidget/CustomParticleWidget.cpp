@@ -32,7 +32,7 @@ Ref* CustomParticleWidget::createInstance()
 
 CustomParticleWidget* CustomParticleWidget::create()
 {
-    CustomParticleWidget* custom = new CustomParticleWidget();
+    CustomParticleWidget* custom = new (std::nothrow) CustomParticleWidget();
     
     if (custom && custom->init())
     {

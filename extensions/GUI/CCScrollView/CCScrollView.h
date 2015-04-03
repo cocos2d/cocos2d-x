@@ -32,12 +32,12 @@
 #include "extensions/ExtensionMacros.h"
 #include "extensions/ExtensionExport.h"
 
-NS_CC_EXT_BEGIN
-
 /**
- * @addtogroup GUI
+ * @addtogroup ui
  * @{
  */
+NS_CC_EXT_BEGIN
+
 
 class ScrollView;
 
@@ -93,6 +93,7 @@ public:
     static ScrollView* create();
     /**
      * @js ctor
+     * @lua new
      */
     ScrollView();
     /**
@@ -101,7 +102,7 @@ public:
      */
     virtual ~ScrollView();
 
-    bool init();
+    bool init() override;
     /**
      * Returns a scroll view object
      *
@@ -146,6 +147,24 @@ public:
      * @param dt    The animation duration
      */
     void setZoomScaleInDuration(float s, float dt);
+
+    /**
+     * Set min scale
+     *
+     * @param minScale min scale
+     */
+    void setMinScale(float minScale) {
+        _minScale = minScale;
+    }
+    /**
+     * Set max scale
+     *
+     * @param maxScale max scale
+     */
+    void setMaxScale(float maxScale) {
+        _maxScale = maxScale;
+    }
+
     /**
      * Returns the current container's minimum offset. You may want this while you animate scrolling by yourself
      */
@@ -163,10 +182,12 @@ public:
     /**
      * Provided to make scroll view compatible with SWLayer's pause method
      */
+    using Layer::pause;  // fix warning
     void pause(Ref* sender);
     /**
      * Provided to make scroll view compatible with SWLayer's resume method
      */
+    using Layer::resume; // fix warning
     void resume(Ref* sender);
 
     void setTouchEnabled(bool enabled);
@@ -214,10 +235,10 @@ public:
     bool isClippingToBounds() { return _clippingToBounds; }
     void setClippingToBounds(bool bClippingToBounds) { _clippingToBounds = bClippingToBounds; }
 
-    virtual bool onTouchBegan(Touch *touch, Event *event);
-    virtual void onTouchMoved(Touch *touch, Event *event);
-    virtual void onTouchEnded(Touch *touch, Event *event);
-    virtual void onTouchCancelled(Touch *touch, Event *event);
+    virtual bool onTouchBegan(Touch *touch, Event *event) override;
+    virtual void onTouchMoved(Touch *touch, Event *event) override;
+    virtual void onTouchEnded(Touch *touch, Event *event) override;
+    virtual void onTouchCancelled(Touch *touch, Event *event) override;
     
     // Overrides
     virtual void setContentSize(const Size & size) override;
@@ -235,7 +256,9 @@ public:
     /**
      * CCActionTweenDelegate
      */
-    void updateTweenAction(float value, const std::string& key);
+    void updateTweenAction(float value, const std::string& key) override;
+
+    bool hasVisibleParents() const;
 protected:
     /**
      * Relocates the container at the proper offset, in bounds of max/min offsets.
@@ -275,19 +298,7 @@ protected:
     void handleZoom();
 
     Rect getViewRect();
-    
-    /**
-     * current zoom scale
-     */
-    float _zoomScale;
-    /**
-     * min zoom scale
-     */
-    float _minZoomScale;
-    /**
-     * max zoom scale
-     */
-    float _maxZoomScale;
+
     /**
      * scroll view delegate
      */
@@ -366,9 +377,9 @@ protected:
     CustomCommand _afterDrawCommand;
 };
 
-// end of GUI group
-/// @}
 
 NS_CC_EXT_END
+// end of ui group
+/// @}
 
 #endif /* __CCSCROLLVIEW_H__ */

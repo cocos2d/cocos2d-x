@@ -47,7 +47,7 @@ ControlPotentiometer::~ControlPotentiometer()
 
 ControlPotentiometer* ControlPotentiometer::create(const char* backgroundFile, const char* progressFile, const char* thumbFile)
 {
-    ControlPotentiometer* pRet = new ControlPotentiometer();
+    ControlPotentiometer* pRet = new (std::nothrow) ControlPotentiometer();
     if (pRet != nullptr)
     {
         // Prepare track for potentiometer

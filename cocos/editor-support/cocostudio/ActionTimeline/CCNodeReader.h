@@ -25,9 +25,10 @@ THE SOFTWARE.
 #ifndef __CC_NODE_CACHE_H__
 #define __CC_NODE_CACHE_H__
 
+#include <unordered_map>
 #include "cocostudio/DictionaryHelper.h"
 #include "cocostudio/CocosStudioExport.h"
-#include "cocos2d.h"
+#include "2d/CCNode.h"
 
 namespace cocostudio {
 

@@ -16,9 +16,23 @@
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup _3d
+ * @{
+ */
+
+/**
+ * @brief .obj file Loader
+ * @js NA
+ * @lua NA
+ **/
 class ObjLoader
 {
 public:
+
+    /**
+     * model's material struct
+     **/
     typedef struct
     {
         std::string name;
@@ -41,11 +55,17 @@ public:
         std::map<std::string, std::string> unknown_parameter;
     } material_t;
     
+    /**
+     * model's indices struct
+     **/
     typedef struct
     {
         std::vector<unsigned short>   indices;
     } mesh_t;
     
+    /**
+     * model's shape struct
+     **/
     typedef struct
     {
         std::string  name;
@@ -53,6 +73,9 @@ public:
         mesh_t       mesh;
     } shape_t;
     
+    /**
+     * model's shapes struct
+     **/
     typedef struct
     {
         std::vector<float>          positions;
@@ -70,17 +93,22 @@ public:
         }
     }shapes_t;
     
-    /// Loads .obj from a file.
-    /// 'shapes' will be filled with parsed shape data
-    /// The function returns error string.
-    /// Returns empty string when loading .obj success.
-    /// 'mtl_basepath' is optional, and used for base path for .mtl file.
+    /**
+     * Loads .obj from a file.
+     * @param shapes will be filled with parsed shape data
+     * @param filename the .obj file path .
+     * @param mtl_basepath It's optional, and used for base path for .mtl file
+     * @return The function returns error string, return empty string when loading .obj success.
+    */
     static std::string LoadObj(
                         shapes_t& shapes,   // [output]
                         const char* filename,
                         const char* mtl_basepath = NULL);
 
 };
+
+// end of 3d group
+/// @}
 
 NS_CC_END
 

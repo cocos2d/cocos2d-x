@@ -28,7 +28,7 @@
  */
 
 #include "LocalStorage.h"
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
 

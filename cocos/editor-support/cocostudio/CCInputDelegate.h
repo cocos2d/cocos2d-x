@@ -25,7 +25,7 @@ THE SOFTWARE.
 #ifndef __CC_EXTENTIONS_CCINPUTDELEGATE_H__
 #define __CC_EXTENTIONS_CCINPUTDELEGATE_H__
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 #include "base/CCTouch.h"
 #include "base/CCEvent.h"
 #include "base/ccTypes.h"
@@ -44,7 +44,7 @@ namespace cocostudio {
  */
 class CC_STUDIO_DLL InputDelegate
 {
-protected:
+CC_CONSTRUCTOR_ACCESS:
     /**
      * @js ctor
      */

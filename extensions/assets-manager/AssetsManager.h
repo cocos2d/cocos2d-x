@@ -29,7 +29,7 @@
 
 #include <mutex>
 
-#include "cocos2d.h"
+#include "2d/CCNode.h"
 #include "extensions/ExtensionMacros.h"
 #include "extensions/ExtensionExport.h"
 
@@ -74,6 +74,7 @@ public:
      * @param versionFileUrl URL of version file. It should contain version code of new package.
      * @param storagePath The path to store downloaded resources.
      * @js NA
+     * @lua new
      */
     AssetsManager(const char* packageUrl = NULL, const char* versionFileUrl = NULL, const char* storagePath = NULL);
     /**

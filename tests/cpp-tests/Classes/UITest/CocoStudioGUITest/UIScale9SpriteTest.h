@@ -96,6 +96,30 @@ protected:
     UI_SCENE_CREATE_FUNC(UIS9FrameNameSpriteSheetRotated)
 };
 
+// S9FrameNameSpriteSheetCropped
+
+class UIS9FrameNameSpriteSheetCropped : public UIScene
+{
+public:
+    CREATE_FUNC(UIS9FrameNameSpriteSheetCropped);
+    
+    bool init();
+protected:
+    UI_SCENE_CREATE_FUNC(UIS9FrameNameSpriteSheetCropped)
+};
+
+// S9FrameNameSpriteSheetCroppedRotated
+
+class UIS9FrameNameSpriteSheetCroppedRotated : public UIScene
+{
+public:
+    CREATE_FUNC(UIS9FrameNameSpriteSheetCroppedRotated);
+    
+    bool init();
+protected:
+    UI_SCENE_CREATE_FUNC(UIS9FrameNameSpriteSheetCroppedRotated)
+};
+
 // S9BatchNodeScaledNoInsets
 
 class UIS9BatchNodeScaledNoInsets : public UIScene
@@ -255,5 +279,14 @@ protected:
     UI_SCENE_CREATE_FUNC(UIS9Flip)
 };
 
+class UIS9ChangeAnchorPoint : public UIScene
+{
+public:
+    CREATE_FUNC(UIS9ChangeAnchorPoint);
+    
+    bool init();
+protected:
+    UI_SCENE_CREATE_FUNC(UIS9ChangeAnchorPoint)
+};
 
 #endif /* defined(__cocos2d_tests__UIScale9SpriteTest__) */

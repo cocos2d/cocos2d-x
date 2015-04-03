@@ -81,7 +81,7 @@ SocketIOTestLayer::SocketIOTestLayer(void)
     itemTestEndpointDisconnect->setPosition(Vec2(VisibleRect::right().x - labelTestEndpointDisconnect->getContentSize().width / 2 - 5, winSize.height - MARGIN - 4 * SPACE));
     menuRequest->addChild(itemTestEndpointDisconnect);
     
-	// Sahred Status Label
+	// Shared Status Label
     _sioClientStatus = Label::createWithTTF("Not connected...", "fonts/arial.ttf", 14, Size(320, 100), TextHAlignment::LEFT);
     _sioClientStatus->setAnchorPoint(Vec2(0, 0));
     _sioClientStatus->setPosition(Vec2(VisibleRect::left().x, VisibleRect::rightBottom().y));
@@ -126,7 +126,7 @@ void SocketIOTestLayer::echotest(SIOClient *client, const std::string& data) {
 
 void SocketIOTestLayer::toExtensionsMainLayer(cocos2d::Ref *sender)
 {
-	ExtensionsTestScene *scene = new ExtensionsTestScene();
+	ExtensionsTestScene *scene = new (std::nothrow) ExtensionsTestScene();
     scene->runThisTest();
     scene->release();
 
@@ -261,7 +261,7 @@ void SocketIOTestLayer::onError(network::SIOClient* client, const std::string& d
 void runSocketIOTest()
 {
     auto scene = Scene::create();
-    auto layer = new SocketIOTestLayer();
+    auto layer = new (std::nothrow) SocketIOTestLayer();
     scene->addChild(layer);
     
     Director::getInstance()->replaceScene(scene);

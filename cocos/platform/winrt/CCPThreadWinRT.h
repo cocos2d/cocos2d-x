@@ -27,10 +27,10 @@ THE SOFTWARE.
 #define __CCPTHREADWINRT_H__
 
 
-#include "base/CCPlatformConfig.h"
+#include "platform/CCPlatformConfig.h"
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 
-#include "base/CCPlatformMacros.h"
+#include "platform/CCPlatformMacros.h"
 
 #include <Windows.h>
 

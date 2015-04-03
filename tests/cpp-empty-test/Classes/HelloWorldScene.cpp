@@ -45,7 +45,7 @@ bool HelloWorld::init()
     closeItem->setPosition(origin + Vec2(visibleSize) - Vec2(closeItem->getContentSize() / 2));
 
     // create menu, it's an autorelease object
-    auto menu = Menu::create(closeItem, NULL);
+    auto menu = Menu::create(closeItem, nullptr);
     menu->setPosition(Vec2::ZERO);
     this->addChild(menu, 1);
     
@@ -58,8 +58,8 @@ bool HelloWorld::init()
     auto label = LabelTTF::create("Hello World", "Arial", TITLE_FONT_SIZE);
     
     // position the label on the center of the screen
-    label->setPosition(Vec2(origin.x + visibleSize.width/2,
-                            origin.y + visibleSize.height - label->getContentSize().height));
+    label->setPosition(origin.x + visibleSize.width/2,
+                            origin.y + visibleSize.height - label->getContentSize().height);
 
     // add the label as a child to this layer
     this->addChild(label, 1);
