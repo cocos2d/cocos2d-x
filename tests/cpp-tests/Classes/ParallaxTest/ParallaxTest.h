@@ -1,24 +1,14 @@
 #ifndef _PARALLAX_TEST_H_
 #define _PARALLAX_TEST_H_
 
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
-class ParallaxDemo : public BaseTest
+DEFINE_TEST_SUITE(ParallaxTests);
+
+class ParallaxDemo : public TestCase
 {
 protected:
     TextureAtlas* _atlas;
-
-public:
-    ParallaxDemo(void);
-    ~ParallaxDemo(void);
-
-    virtual std::string title() const override;
-    virtual void onEnter() override;
-
-    void restartCallback(Ref* sender) override;
-    void nextCallback(Ref* sender) override;
-    void backCallback(Ref* sender) override;
 };
 
 class Parallax1 : public ParallaxDemo
@@ -29,6 +19,7 @@ protected:
     MotionStreak*        _streak;
 
 public:
+    CREATE_FUNC(Parallax1);
     Parallax1();
     virtual std::string title() const override;
 };
@@ -41,9 +32,10 @@ protected:
     MotionStreak*        _streak;
 
 public:
+    CREATE_FUNC(Parallax2);
     Parallax2();
     
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event) override;
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
 
     virtual std::string title() const override;
 };
@@ -65,16 +57,11 @@ protected:
     virtual void update(float dt) override;
     
 public:
+    CREATE_FUNC(Issue2572);
     Issue2572();
     
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-};
-
-class ParallaxTestScene : public TestScene
-{
-public:
-    virtual void runThisTest();
 };
 
 #endif

@@ -1,43 +1,13 @@
 #include "TerrainTest.h"
 
-
+TerrainTests::TerrainTests()
+{
+    ADD_TEST_CASE(TerrainSimple);
+    ADD_TEST_CASE(TerrainWalkThru);
+}
 
 Vec3 camera_offset(0, 45, 60);
 #define PLAYER_HEIGHT 0
-static std::function<Layer*()> createFunctions[] =
-{
-    CL(TerrainSimple),
-    CL(TerrainWalkThru),
-};
-
-static int sceneIdx = -1;
-#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-static Layer* nextTerrainTestAction()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-static Layer* backTerrainTestAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;
-
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-static Layer* restartTerrainTestAction()
-{
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
 
 TerrainSimple::TerrainSimple()
 {
@@ -95,65 +65,6 @@ void TerrainSimple::onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, 
     _camera->setPosition3D(cameraPos);   
 }
 
-
-void TerrainTestScene::runThisTest()
-{
-    auto layer = nextTerrainTestAction();
-    addChild(layer);
-    Director::getInstance()->replaceScene(this);
-}
-
-
-void TerrainTestDemo::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) TerrainTestScene();
-    s->addChild(restartTerrainTestAction());
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void TerrainTestDemo::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) TerrainTestScene();
-    s->addChild( nextTerrainTestAction());
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void TerrainTestDemo::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) TerrainTestScene();
-    s->addChild( backTerrainTestAction());
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-std::string TerrainTestDemo::title() const 
-{
-    return "No title";
-}
-
-std::string TerrainTestDemo::subtitle() const 
-{
-    return "";
-}
-
-void TerrainTestDemo::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-TerrainTestDemo::TerrainTestDemo(void)
-    :BaseTest()
-{
-
-}
-
-TerrainTestDemo::~TerrainTestDemo(void)
-{
-
-}
 
 std::string TerrainWalkThru::title() const 
 {

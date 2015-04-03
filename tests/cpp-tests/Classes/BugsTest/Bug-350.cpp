@@ -7,7 +7,7 @@
 
 bool Bug350Layer::init()
 {
-    if (BugsTestBaseLayer::init())
+    if (BugsTestBase::init())
     {
         auto size = Director::getInstance()->getWinSize();
         auto background = Sprite::create("Hello.png");

@@ -1,4 +1,3 @@
-
 #include "extensions/cocos-ext.h"
 #include "../ExtensionsTest.h"
 #include "SceneEditorTest.h"
@@ -11,202 +10,47 @@ using namespace cocos2d;
 using namespace cocostudio;
 using namespace ui;
 
-Layer *Next();
-Layer *Back();
-Layer *Restart();
-
-static int s_nIdx = -1;
-
-Layer *createTests(int index)
+CocoStudioSceneEditTests::CocoStudioSceneEditTests()
 {
-    Layer *layer = nullptr;
-    switch(index)
+    ADD_TEST_CASE(LoadSceneEdtiorFileTest);
+    ADD_TEST_CASE(SpriteComponentTest);
+    ADD_TEST_CASE(ArmatureComponentTest);
+    ADD_TEST_CASE(UIComponentTest);
+    ADD_TEST_CASE(TmxMapComponentTest);
+    ADD_TEST_CASE(ParticleComponentTest);
+    ADD_TEST_CASE(EffectComponentTest);
+    ADD_TEST_CASE(BackgroundComponentTest);
+    ADD_TEST_CASE(AttributeComponentTest);
+    ADD_TEST_CASE(TriggerTest);
+}
+
+const char* SceneEditorTestBase::_loadtypeStr[2] = {"change to load \nwith binary file","change to load \nwith json file"};
+bool SceneEditorTestBase::init()
+{
+    if (TestCase::init())
     {
-    case TEST_LOADSCENEEDITORFILE:
-        layer = new (std::nothrow) LoadSceneEdtiorFileTest();
-        break;
-    case TEST_SPIRTECOMPONENT:
-        layer = new (std::nothrow) SpriteComponentTest();
-        break;
-    case TEST_ARMATURECOMPONENT:
-        layer = new (std::nothrow) ArmatureComponentTest();
-        break;
-    case TEST_UICOMPONENT:
-        layer = new (std::nothrow) UIComponentTest();
-        break;
-    case TEST_TMXMAPCOMPONENT:
-        layer = new (std::nothrow) TmxMapComponentTest();
-        break;
-    case TEST_PARTICLECOMPONENT:
-        layer = new (std::nothrow) ParticleComponentTest();
-        break;
-    case TEST_EFEECTCOMPONENT:
-        layer = new (std::nothrow) EffectComponentTest();
-        break;
-    case TEST_BACKGROUNDCOMPONENT:
-        layer = new (std::nothrow) BackgroundComponentTest();
-        break;
-    case TEST_ATTRIBUTECOMPONENT:
-        layer = new (std::nothrow) AttributeComponentTest();
-        break;
-    case TEST_TRIGGER:
-        layer = new (std::nothrow) TriggerTest();
-        break;
-    default:
-        break;
+        _isCsbLoad = false;
+        _loadtypelb = cocos2d::Label::createWithSystemFont(_loadtypeStr[0], "Arial", 12);
+        // #endif        
+        MenuItemLabel* itemlb = CCMenuItemLabel::create(_loadtypelb, CC_CALLBACK_1(SceneEditorTestBase::changeLoadTypeCallback, this));
+        Menu* loadtypemenu = CCMenu::create(itemlb, nullptr);
+        loadtypemenu->setPosition(Point(VisibleRect::rightTop().x - 50, VisibleRect::rightTop().y - 20));
+        addChild(loadtypemenu, 100);
+
+        setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+
+        return true;
     }
-    return layer;
+	
+    return false;
 }
 
-Layer *Next()
-{
-    ++s_nIdx;
-    s_nIdx = s_nIdx % TEST_SCENEEDITOR_COUNT;
-
-    Layer *layer = createTests(s_nIdx);
-    layer->autorelease();
-
-    return layer;
-}
-
-Layer *Back()
-{
-    --s_nIdx;
-    if( s_nIdx < 0 )
-        s_nIdx += TEST_SCENEEDITOR_COUNT;
-
-    Layer *layer = createTests(s_nIdx);
-    layer->autorelease();
-
-    return layer;
-}
-
-Layer *Restart()
-{
-    Layer *layer = createTests(s_nIdx);
-    layer->autorelease();
-
-    return layer;
-}
-
-SceneEditorTestScene::SceneEditorTestScene(bool bPortrait)
-{
-    TestScene::init();
-}
-
-void SceneEditorTestScene::runThisTest()
-{
-    s_nIdx = -1;
-    addChild(Next());
-    CCDirector::getInstance()->replaceScene(this);
-}
-
-void SceneEditorTestScene::MainMenuCallback(Ref *pSender)
-{
-    removeAllChildren();
-}
-
-const char* SceneEditorTestLayer::_loadtypeStr[2] = {"change to load \nwith binary file","change to load \nwith json file"};
-void SceneEditorTestLayer::onEnter()
-{
-    CCLayer::onEnter();
-
-    // add title and subtitle
-    std::string str = title();
-    const char *pTitle = str.c_str();
-    auto label = Label::createWithTTF(pTitle, "fonts/arial.ttf", 18);
-    label->setTextColor(Color4B::WHITE);
-    addChild(label, 1, 10000);
-    label->setPosition( Vec2(VisibleRect::center().x, VisibleRect::top().y - 30) );
-
-    std::string strSubtitle = subtitle();
-    if( ! strSubtitle.empty() )
-    {
-        auto l = Label::createWithTTF(strSubtitle.c_str(), "fonts/arial.ttf", 18);
-        l->setTextColor(Color4B::BLACK);
-        addChild(l, 1, 10001);
-        l->setPosition(Vec2(VisibleRect::center().x, VisibleRect::top().y - 60) );
-    }
-	_isCsbLoad = false;
-	_loadtypelb = cocos2d::Label::createWithSystemFont(_loadtypeStr[0], "Arial", 12);
-	// #endif        
-	MenuItemLabel* itemlb = CCMenuItemLabel::create(_loadtypelb, CC_CALLBACK_1(SceneEditorTestLayer::changeLoadTypeCallback, this));
-	Menu* loadtypemenu = CCMenu::create(itemlb, nullptr);
-	loadtypemenu->setPosition(Point(VisibleRect::rightTop().x -50,VisibleRect::rightTop().y -20));
-	addChild(loadtypemenu,100);
-
-    // add menu
-    backItem = MenuItemImage::create(s_pathB1, s_pathB2, CC_CALLBACK_1(SceneEditorTestLayer::backCallback, this) );
-    restartItem = MenuItemImage::create(s_pathR1, s_pathR2, CC_CALLBACK_1(SceneEditorTestLayer::restartCallback, this) );
-    nextItem = MenuItemImage::create(s_pathF1, s_pathF2, CC_CALLBACK_1(SceneEditorTestLayer::nextCallback, this) );
-
-    
-    Menu *menu = Menu::create(backItem, restartItem, nextItem, nullptr);
-    
-    float fScale = 0.5f;
-    
-    menu->setPosition(Vec2(0, 0));
-    backItem->setPosition(Vec2(VisibleRect::center().x - restartItem->getContentSize().width * 2 * fScale, VisibleRect::bottom().y + restartItem->getContentSize().height / 2));
-    backItem->setScale(fScale);
-    
-    restartItem->setPosition(Vec2(VisibleRect::center().x, VisibleRect::bottom().y + restartItem->getContentSize().height / 2));
-    restartItem->setScale(fScale);
-    
-    nextItem->setPosition(Vec2(VisibleRect::center().x + restartItem->getContentSize().width * 2 * fScale, VisibleRect::bottom().y + restartItem->getContentSize().height / 2));
-    nextItem->setScale(fScale);
-    
-    addChild(menu, 100);
-    
-    setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
-}
-
-void SceneEditorTestLayer::onExit()
-{
-    removeAllChildren();
-    backItem = restartItem = nextItem = nullptr;
-    Layer::onExit();
-}
-
-std::string SceneEditorTestLayer::title()
+std::string SceneEditorTestBase::title() const
 {
     return "SceneReader Test LoadSceneEditorFile";
 }
 
-std::string SceneEditorTestLayer::subtitle()
-{
-    return "";
-}
-
-void SceneEditorTestLayer::restartCallback(Ref *pSender)
-{
-    Scene *s = new (std::nothrow) SceneEditorTestScene();
-    s->addChild(Restart());
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void SceneEditorTestLayer::nextCallback(Ref *pSender)
-{
-    Scene *s = new (std::nothrow) SceneEditorTestScene();
-    s->addChild(Next());
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void SceneEditorTestLayer::backCallback(Ref *pSender)
-{
-    Scene *s = new (std::nothrow) SceneEditorTestScene();
-    s->addChild(Back());
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void SceneEditorTestLayer::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-    Layer::draw(renderer, transform, flags);
-}
-
-void SceneEditorTestLayer::changeLoadTypeCallback(cocos2d::Ref *pSender)
+void SceneEditorTestBase::changeLoadTypeCallback(cocos2d::Ref *pSender)
 {
 	_isCsbLoad = !_isCsbLoad;
 	_loadtypelb->setString(_loadtypeStr[(int)_isCsbLoad]);
@@ -226,7 +70,7 @@ void SceneEditorTestLayer::changeLoadTypeCallback(cocos2d::Ref *pSender)
 	}
 }
 
-void SceneEditorTestLayer::loadFileChangeHelper(std::string& filePathName)
+void SceneEditorTestBase::loadFileChangeHelper(std::string& filePathName)
 {
     std::string::size_type n = filePathName.find_last_of(".");
 	if(n == std::string::npos)
@@ -248,14 +92,14 @@ LoadSceneEdtiorFileTest::~LoadSceneEdtiorFileTest()
 
 }
 
-std::string LoadSceneEdtiorFileTest::title()
+std::string LoadSceneEdtiorFileTest::title() const
 {
     return "loadSceneEdtiorFile Test";
 }
 
 void LoadSceneEdtiorFileTest::onEnter()
 {
-    SceneEditorTestLayer::onEnter();
+    SceneEditorTestBase::onEnter();
 	do 
 	{
         Node *root = createGameScene();
@@ -270,7 +114,7 @@ void LoadSceneEdtiorFileTest::onExit()
 	 SceneReader::destroyInstance();
 	 ActionManagerEx::destroyInstance();
 	 GUIReader::destroyInstance();
-	 SceneEditorTestLayer::onExit();
+	 SceneEditorTestBase::onExit();
 }
 
 
@@ -302,14 +146,14 @@ SpriteComponentTest::~SpriteComponentTest()
 
 }
 
-std::string SpriteComponentTest::title()
+std::string SpriteComponentTest::title() const
 {
     return "Sprite Component Test";
 }
 
 void SpriteComponentTest::onEnter()
 {
-    SceneEditorTestLayer::onEnter();
+    SceneEditorTestBase::onEnter();
 	do 
 	{
         Node *root = createGameScene();
@@ -324,7 +168,7 @@ void SpriteComponentTest::onExit()
 	 SceneReader::destroyInstance();
 	 ActionManagerEx::destroyInstance();
 	 GUIReader::destroyInstance();
-	 SceneEditorTestLayer::onExit();
+	 SceneEditorTestBase::onExit();
 }
 
 cocos2d::Node* SpriteComponentTest::createGameScene()
@@ -364,14 +208,14 @@ ArmatureComponentTest::~ArmatureComponentTest()
 	
 }
 
-std::string ArmatureComponentTest::title()
+std::string ArmatureComponentTest::title() const
 {
     return "Armature Component Test";
 }
 
 void ArmatureComponentTest::onEnter()
 {
-    SceneEditorTestLayer::onEnter();
+    SceneEditorTestBase::onEnter();
 	do 
 	{
         Node *root = createGameScene();
@@ -386,7 +230,7 @@ void ArmatureComponentTest::onExit()
 	 SceneReader::destroyInstance();
 	 ActionManagerEx::destroyInstance();
 	 GUIReader::destroyInstance();
-	 SceneEditorTestLayer::onExit();
+	 SceneEditorTestBase::onExit();
 }
 
 cocos2d::Node* ArmatureComponentTest::createGameScene()
@@ -420,14 +264,14 @@ UIComponentTest::~UIComponentTest()
 {
 }
 
-std::string UIComponentTest::title()
+std::string UIComponentTest::title() const
 {
     return "UI Component Test";
 }
 
 void UIComponentTest::onEnter()
 {
-    SceneEditorTestLayer::onEnter();
+    SceneEditorTestBase::onEnter();
 	do 
 	{
         Node *root = createGameScene();
@@ -442,7 +286,7 @@ void UIComponentTest::onExit()
 	 SceneReader::destroyInstance();
 	 ActionManagerEx::destroyInstance();
 	 GUIReader::destroyInstance();
-	 SceneEditorTestLayer::onExit();
+	 SceneEditorTestBase::onExit();
 }
 
 cocos2d::Node* UIComponentTest::createGameScene()
@@ -495,14 +339,14 @@ TmxMapComponentTest::~TmxMapComponentTest()
 
 }
 
-std::string TmxMapComponentTest::title()
+std::string TmxMapComponentTest::title() const
 {
     return "TmxMap Component Test";
 }
 
 void TmxMapComponentTest::onEnter()
 {
-    SceneEditorTestLayer::onEnter();
+    SceneEditorTestBase::onEnter();
 	do 
 	{
         Node *root = createGameScene();
@@ -517,7 +361,7 @@ void TmxMapComponentTest::onExit()
     SceneReader::destroyInstance();
     ActionManagerEx::destroyInstance();
     GUIReader::destroyInstance();
-    SceneEditorTestLayer::onExit();
+    SceneEditorTestBase::onExit();
 }
 
 cocos2d::Node* TmxMapComponentTest::createGameScene()
@@ -557,14 +401,14 @@ ParticleComponentTest::~ParticleComponentTest()
 {
 }
 
-std::string ParticleComponentTest::title()
+std::string ParticleComponentTest::title() const
 {
     return "Particle Component Test";
 }
 
 void ParticleComponentTest::onEnter()
 {
-    SceneEditorTestLayer::onEnter();
+    SceneEditorTestBase::onEnter();
 	do 
 	{
         Node *root = createGameScene();
@@ -579,7 +423,7 @@ void ParticleComponentTest::onExit()
     SceneReader::destroyInstance();
     ActionManagerEx::destroyInstance();
     GUIReader::destroyInstance();
-    SceneEditorTestLayer::onExit();
+    SceneEditorTestBase::onExit();
 }
 
 cocos2d::Node* ParticleComponentTest::createGameScene()
@@ -612,14 +456,14 @@ EffectComponentTest::~EffectComponentTest()
 {
 }
 
-std::string EffectComponentTest::title()
+std::string EffectComponentTest::title() const
 {
     return "Effect Component Test";
 }
 
 void EffectComponentTest::onEnter()
 {
-    SceneEditorTestLayer::onEnter();
+    SceneEditorTestBase::onEnter();
 	do 
 	{
         Node *root = createGameScene();
@@ -634,7 +478,7 @@ void EffectComponentTest::onExit()
     SceneReader::destroyInstance();
     ActionManagerEx::destroyInstance();
     GUIReader::destroyInstance();
-    SceneEditorTestLayer::onExit();
+    SceneEditorTestBase::onExit();
 }
 
 cocos2d::Node* EffectComponentTest::createGameScene()
@@ -679,14 +523,14 @@ BackgroundComponentTest::~BackgroundComponentTest()
 {
 }
 
-std::string BackgroundComponentTest::title()
+std::string BackgroundComponentTest::title() const
 {
     return "Background Component Test";
 }
 
 void BackgroundComponentTest::onEnter()
 {
-    SceneEditorTestLayer::onEnter();
+    SceneEditorTestBase::onEnter();
 	do 
 	{
         Node *root = createGameScene();
@@ -701,7 +545,7 @@ void BackgroundComponentTest::onExit()
     SceneReader::destroyInstance();
     ActionManagerEx::destroyInstance();
     GUIReader::destroyInstance();
-    SceneEditorTestLayer::onExit();
+    SceneEditorTestBase::onExit();
 }
 
 cocos2d::Node* BackgroundComponentTest::createGameScene()
@@ -732,14 +576,14 @@ AttributeComponentTest::~AttributeComponentTest()
 {
 }
 
-std::string AttributeComponentTest::title()
+std::string AttributeComponentTest::title() const
 {
     return "Attribute Component Test";
 }
 
 void AttributeComponentTest::onEnter()
 {
-    SceneEditorTestLayer::onEnter();
+    SceneEditorTestBase::onEnter();
 	do 
 	{
         Node *root = createGameScene();
@@ -755,7 +599,7 @@ void AttributeComponentTest::onExit()
     SceneReader::destroyInstance();
     ActionManagerEx::destroyInstance();
     GUIReader::destroyInstance();
-    SceneEditorTestLayer::onExit();
+    SceneEditorTestBase::onExit();
 }
 
 bool AttributeComponentTest::initData()
@@ -799,7 +643,7 @@ TriggerTest::~TriggerTest()
 {
 }
 
-std::string TriggerTest::title()
+std::string TriggerTest::title() const
 {
     return "Trigger Test";
 }
@@ -808,17 +652,17 @@ std::string TriggerTest::title()
 // on "init" you need to initialize your instance
 void TriggerTest::onEnter()
 {
-	SceneEditorTestLayer::onEnter();
+	SceneEditorTestBase::onEnter();
     Node *root = createGameScene();
     this->addChild(root, 0, 1);
     this->schedule(CC_SCHEDULE_SELECTOR(TriggerTest::gameLogic));
     auto dispatcher = Director::getInstance()->getEventDispatcher();
     auto listener = EventListenerTouchOneByOne::create();
     listener->setSwallowTouches(true);
-    listener->onTouchBegan = CC_CALLBACK_2(SceneEditorTestLayer::onTouchBegan, this);
-    listener->onTouchMoved = CC_CALLBACK_2(SceneEditorTestLayer::onTouchMoved, this);
-    listener->onTouchEnded = CC_CALLBACK_2(SceneEditorTestLayer::onTouchEnded, this);
-    listener->onTouchCancelled = CC_CALLBACK_2(SceneEditorTestLayer::onTouchCancelled, this);
+    listener->onTouchBegan = CC_CALLBACK_2(TriggerTest::onTouchBegan, this);
+    listener->onTouchMoved = CC_CALLBACK_2(TriggerTest::onTouchMoved, this);
+    listener->onTouchEnded = CC_CALLBACK_2(TriggerTest::onTouchEnded, this);
+    listener->onTouchCancelled = CC_CALLBACK_2(TriggerTest::onTouchCancelled, this);
     dispatcher->addEventListenerWithFixedPriority(listener, 1);
     _touchListener = listener;
 }
@@ -835,7 +679,7 @@ void TriggerTest::onExit()
     SceneReader::destroyInstance();
     ActionManagerEx::destroyInstance();
     GUIReader::destroyInstance();
-    SceneEditorTestLayer::onExit();
+    SceneEditorTestBase::onExit();
 }
 
 bool TriggerTest::onTouchBegan(Touch *touch, Event *unused_event)

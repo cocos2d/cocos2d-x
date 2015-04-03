@@ -8,6 +8,16 @@
 
 #include "UIFocusTest.h"
 
+UIFocusTests::UIFocusTests()
+{
+    ADD_TEST_CASE(UIFocusTestHorizontal);
+    ADD_TEST_CASE(UIFocusTestVertical);
+    ADD_TEST_CASE(UIFocusTestNestedLayout1);
+    ADD_TEST_CASE(UIFocusTestNestedLayout2);
+    ADD_TEST_CASE(UIFocusTestNestedLayout3);
+    ADD_TEST_CASE(UIFocusTestListView);
+}
+
 UIFocusTestBase::UIFocusTestBase()
 {
     

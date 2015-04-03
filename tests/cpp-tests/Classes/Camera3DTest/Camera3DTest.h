@@ -25,7 +25,6 @@ THE SOFTWARE.
 #ifndef _CAMERA3D_TEST_H_
 #define _CAMERA3D_TEST_H_
 
-#include "../testBasic.h"
 #include "../BaseTest.h"
 #include "../Sprite3DTest/DrawNode3D.h"
 #include <string>
@@ -59,18 +58,11 @@ enum class OperateCamType
     RotateCamera=1,
 };
 
-class Camera3DTestScene : public TestScene
-{
-public:
-    virtual void runThisTest();
-};
+DEFINE_TEST_SUITE(Camera3DTests);
 
-class CameraBaseTest : public BaseTest
+class CameraBaseTest : public TestCase
 {
 public:
-    void restartCallback(Ref* sender) override;
-    void nextCallback(Ref* sender) override;
-    void backCallback(Ref* sender) override;
     
 protected:
     BillBoard* bill1;
@@ -114,9 +106,11 @@ public:
     // overrides
     virtual std::string title() const override;
     void addNewSpriteWithCoords(Vec3 p,std::string fileName,bool playAnimation=false,float scale=1.0f,bool bindCamera=false);
-    void onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event  *event) override;
-    void onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event) override;
-    void onTouchesEnded(const std::vector<Touch*>& touches, cocos2d::Event  *event) override;
+
+    void onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event  *event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, cocos2d::Event  *event);
+
     void scaleCameraCallback(Ref* sender,float value);
     void rotateCameraCallback(Ref* sender,float value);
     void SwitchViewCallback(Ref* sender,CameraType cameraType);
@@ -243,7 +237,7 @@ public:
     // overrides
     virtual std::string title() const override;
 
-    void onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event) override;
+    void onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event);
 
     void switchTypeCallback(Ref* sender,int type);
     

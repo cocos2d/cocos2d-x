@@ -26,27 +26,17 @@
 #define _SPRITE_TEST_H_
 
 #include "cocos2d.h"
-#include "../testBasic.h"
 #include "../BaseTest.h"
 #include <string>
 
-class SpriteTestDemo : public BaseTest
+DEFINE_TEST_SUITE(SpriteTests);
+
+class SpriteTestDemo : public TestCase
 {
 protected:
     std::string    _title;
 
 public:
-    SpriteTestDemo(void);
-    virtual ~SpriteTestDemo(void);
-
-    void restartCallback(Ref* sender) override;
-    void nextCallback(Ref* sender) override;
-    void backCallback(Ref* sender) override;
-
-    // overrides
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-    virtual void onEnter() override;
 };
 
 class Sprite1 : public SpriteTestDemo
@@ -58,7 +48,7 @@ public:
     virtual std::string subtitle() const override;
 
     void addNewSpriteWithCoords(Vec2 p);
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 };
 
 class SpriteBatchNode1: public SpriteTestDemo
@@ -67,7 +57,7 @@ public:
     CREATE_FUNC(SpriteBatchNode1);
     SpriteBatchNode1();
     void addNewSpriteWithCoords(Vec2 p);
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
@@ -282,7 +272,7 @@ public:
     SpriteNewTexture();
     virtual ~SpriteNewTexture();
     void addNewSprite();
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
@@ -299,7 +289,7 @@ public:
     SpriteBatchNodeNewTexture();
     virtual ~SpriteBatchNodeNewTexture();
     void addNewSprite();
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
@@ -773,12 +763,6 @@ protected:
     Sprite* sprite2;
     
     Vec3 rotation;
-};
-
-class SpriteTestScene : public TestScene
-{
-public:
-    virtual void runThisTest();
 };
 
 #endif

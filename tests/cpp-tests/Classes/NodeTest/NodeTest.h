@@ -27,71 +27,65 @@
 #define _NODE_TEST_H_
 
 ////----#include "cocos2d.h"
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
-class TestCocosNodeDemo : public BaseTest
+DEFINE_TEST_SUITE(CocosNodeTests);
+
+class TestCocosNodeDemo : public TestCase
 {
 public:
-
     virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-    virtual void onEnter() override;
-
-    void restartCallback(Ref* sender) override;
-    void nextCallback(Ref* sender) override;
-    void backCallback(Ref* sender) override;
 
 protected:
     TestCocosNodeDemo();
     virtual ~TestCocosNodeDemo();
-    
-protected:
+
     Director::Projection _preProjection;
 };
 
-class Test2 : public TestCocosNodeDemo
+class NodeTest2 : public TestCocosNodeDemo
 {
 public:
-    CREATE_FUNC(Test2);
+    CREATE_FUNC(NodeTest2);
+
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
-class Test4 : public TestCocosNodeDemo
+class NodeTest4 : public TestCocosNodeDemo
 {
 public:
-    CREATE_FUNC(Test4);
+    CREATE_FUNC(NodeTest4);
     void delay2(float dt);
     void delay4(float dt);
 
     virtual std::string subtitle() const override;
 
 protected:
-    Test4();
+    NodeTest4();
 };
 
-class Test5 : public TestCocosNodeDemo
+class NodeTest5 : public TestCocosNodeDemo
 {
 public:
-    CREATE_FUNC(Test5);
+    CREATE_FUNC(NodeTest5);
 
     void addAndRemove(float dt);
     virtual std::string subtitle() const override;
 
 protected:
-    Test5();
+    NodeTest5();
 };
 
-class Test6 : public TestCocosNodeDemo
+class NodeTest6 : public TestCocosNodeDemo
 {
 public:
-    CREATE_FUNC(Test6);
+    CREATE_FUNC(NodeTest6);
     void addAndRemove(float dt);
     virtual std::string subtitle() const override;
 
 protected:
-    Test6();
+    NodeTest6();
 };
 
 class StressTest1 : public TestCocosNodeDemo
@@ -334,15 +328,5 @@ public:
 
     void test(float dt);
 };
-
-
-// main
-class CocosNodeTestScene : public TestScene
-{
-public:
-    virtual void runThisTest();
-};
-
-//CCLayer* nextAction();
 
 #endif

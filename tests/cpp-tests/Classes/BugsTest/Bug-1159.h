@@ -3,7 +3,7 @@
 
 #include "BugsTest.h"
 
-class Bug1159Layer : public BugsTestBaseLayer
+class Bug1159Layer : public BugsTestBase
 {
 public:
     virtual bool init() override;

@@ -1,26 +1,14 @@
 #ifndef _LAYER_TEST_H_
 #define _LAYER_TEST_H_
 
-////----#include "cocos2d.h"
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
-class LayerTest : public BaseTest
+DEFINE_TEST_SUITE(LayerTests);
+
+class LayerTest : public TestCase
 {
 protected:
     std::string    _title;
-
-public:
-    LayerTest(void);
-    ~LayerTest(void);
-
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-    virtual void onEnter() override;
-
-    void restartCallback(Ref* sender) override;
-    void nextCallback(Ref* sender) override;
-    void backCallback(Ref* sender) override;
 };
 
 class LayerTestCascadingOpacityA : public LayerTest
@@ -82,9 +70,9 @@ public:
 
     void updateSize(Vec2 &touchLocation);
 
-    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event) override;
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event) override;
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event) override;
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event);
 };
 
 class LayerTest2 : public LayerTest
@@ -213,12 +201,6 @@ public:
     
 private:
     LayerColor* _layer;
-};
-
-class LayerTestScene : public TestScene
-{
-public:
-    virtual void runThisTest();
 };
 
 #endif

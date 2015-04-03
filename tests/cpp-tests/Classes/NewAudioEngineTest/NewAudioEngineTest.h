@@ -29,28 +29,19 @@
 #define __NEWAUDIOENGINE_TEST_H_
 
 #include "cocos2d.h"
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
 #include "audio/include/AudioEngine.h"
 
+DEFINE_TEST_SUITE(AudioEngineTests);
+
 using namespace cocos2d;
 
-class AudioEngineTestScene : public TestScene
-{
-public:
-    virtual void runThisTest();
-};
-
-class AudioEngineTestDemo : public BaseTest
+class AudioEngineTestDemo : public TestCase
 {
 public:
     virtual std::string title() const override;
     virtual void onExit() override;
-
-    void backCallback(Ref* sender) override;
-    void nextCallback(Ref* sender) override;
-    void restartCallback(Ref* sender) override;
     
 };
 

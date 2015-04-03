@@ -29,12 +29,12 @@
 
 USING_NS_CC;
 
+DEFINE_TEST_SUITE(WebViewTests);
+
 class WebViewTest : public UIScene
 {
 public:
-    WebViewTest();
-    virtual ~WebViewTest();
-    UI_SCENE_CREATE_FUNC(WebViewTest);
+    CREATE_FUNC(WebViewTest);
     
     virtual bool init() override;
     bool onWebViewShouldStartLoading(experimental::ui::WebView *sender, const std::string &url);

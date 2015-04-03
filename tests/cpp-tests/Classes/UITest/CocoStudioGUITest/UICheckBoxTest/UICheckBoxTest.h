@@ -27,28 +27,34 @@
 
 #include "../UIScene.h"
 
+DEFINE_TEST_SUITE(UICheckBoxTests);
+
 class UICheckBoxTest : public UIScene
 {
 public:
+    CREATE_FUNC(UICheckBoxTest);
+
     UICheckBoxTest();
     ~UICheckBoxTest();
-    bool init();
+
+    virtual bool init() override;
     void selectedEvent(Ref* pSender,CheckBox::EventType type);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UICheckBoxTest)
     Text* _displayValueLabel;
 };
 
 class UICheckBoxDefaultBehaviorTest : public UIScene
 {
 public:
+    CREATE_FUNC(UICheckBoxDefaultBehaviorTest);
+
     UICheckBoxDefaultBehaviorTest();
     ~UICheckBoxDefaultBehaviorTest();
-    bool init();
+
+    virtual bool init() override;
     
 protected:
-    UI_SCENE_CREATE_FUNC(UICheckBoxDefaultBehaviorTest)
     Text* _displayValueLabel;
 };
 

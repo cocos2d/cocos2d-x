@@ -38,73 +38,36 @@
 #include <algorithm>
 #include "../testResource.h"
 
-enum
+
+Sprite3DTests::Sprite3DTests()
 {
-    IDC_NEXT = 100,
-    IDC_BACK,
-    IDC_RESTART
-};
-
-static int sceneIdx = -1;
-
-
-static std::function<Layer*()> createFunctions[] =
-{
-    CL(Sprite3DBasicTest),
-    CL(Sprite3DHitTest),
-    CL(AsyncLoadSprite3DTest),
+    ADD_TEST_CASE(Sprite3DBasicTest);
+    ADD_TEST_CASE(Sprite3DHitTest);
+    ADD_TEST_CASE(AsyncLoadSprite3DTest);
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     // 3DEffect use custom shader which is not supported on WP8/WinRT yet. 
-    CL(Sprite3DEffectTest),
-    CL(Sprite3DUVAnimationTest),
-    CL(Sprite3DFakeShadowTest),
-    CL(Sprite3DBasicToonShaderTest),
-    CL(Sprite3DLightMapTest),
+    ADD_TEST_CASE(Sprite3DEffectTest);
+    ADD_TEST_CASE(Sprite3DUVAnimationTest);
+    ADD_TEST_CASE(Sprite3DFakeShadowTest);
+    ADD_TEST_CASE(Sprite3DBasicToonShaderTest);
+    ADD_TEST_CASE(Sprite3DLightMapTest);
 #endif
-    CL(Sprite3DWithSkinTest),
+    ADD_TEST_CASE(Sprite3DWithSkinTest);
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
-    CL(Sprite3DWithSkinOutlineTest),
+    ADD_TEST_CASE(Sprite3DWithSkinOutlineTest);
 #endif
-    CL(Animate3DTest),
-    CL(AttachmentTest),
-    CL(Sprite3DReskinTest),
-    CL(Sprite3DWithOBBPerformanceTest),
-    CL(Sprite3DMirrorTest),
-    CL(QuaternionTest),
-    CL(Sprite3DEmptyTest),
-    CL(UseCaseSprite3D),
-    CL(Sprite3DForceDepthTest),
-    CL(Sprite3DCubeMapTest),
-    CL(NodeAnimationTest)
+    ADD_TEST_CASE(Animate3DTest);
+    ADD_TEST_CASE(AttachmentTest);
+    ADD_TEST_CASE(Sprite3DReskinTest);
+    ADD_TEST_CASE(Sprite3DWithOBBPerformanceTest);
+    ADD_TEST_CASE(Sprite3DMirrorTest);
+    ADD_TEST_CASE(QuaternionTest);
+    ADD_TEST_CASE(Sprite3DEmptyTest);
+    ADD_TEST_CASE(UseCaseSprite3D);
+    ADD_TEST_CASE(Sprite3DForceDepthTest);
+    ADD_TEST_CASE(Sprite3DCubeMapTest);
+    ADD_TEST_CASE(NodeAnimationTest);
 };
-
-#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-static Layer* nextSpriteTestAction()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-    
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-static Layer* backSpriteTestAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;
-    
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-static Layer* restartSpriteTestAction()
-{
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
 
 //------------------------------------------------------------------
 //
@@ -112,53 +75,9 @@ static Layer* restartSpriteTestAction()
 //
 //------------------------------------------------------------------
 
-Sprite3DTestDemo::Sprite3DTestDemo(void)
-: BaseTest()
-{
-}
-
-Sprite3DTestDemo::~Sprite3DTestDemo(void)
-{
-}
-
 std::string Sprite3DTestDemo::title() const
 {
     return "No title";
-}
-
-std::string Sprite3DTestDemo::subtitle() const
-{
-    return "";
-}
-
-void Sprite3DTestDemo::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-void Sprite3DTestDemo::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) Sprite3DTestScene();
-    s->addChild(restartSpriteTestAction());
-    
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void Sprite3DTestDemo::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) Sprite3DTestScene();
-    s->addChild( nextSpriteTestAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void Sprite3DTestDemo::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) Sprite3DTestScene();
-    s->addChild( backSpriteTestAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
 }
 
 //------------------------------------------------------------------
@@ -170,7 +89,7 @@ Sprite3DForceDepthTest::Sprite3DForceDepthTest()
 {
     auto orc = Sprite3D::create("Sprite3DTest/orc.c3b");
     orc->setScale(5);
-    orc->setNormalizedPosition(Vec2(.5,.3));
+    orc->setNormalizedPosition(Vec2(.5f,.3f));
     orc->setPositionZ(40);
     orc->setRotation3D(Vec3(0,180,0));
     orc->setGlobalZOrder(-1);
@@ -903,19 +822,6 @@ std::string Sprite3DHitTest::title() const
 std::string Sprite3DHitTest::subtitle() const
 {
     return "Tap Sprite3D and Drag";
-}
-
-void Sprite3DTestScene::runThisTest()
-{
-    auto layer = nextSpriteTestAction();
-    addChild(layer);
-    
-    Director::getInstance()->replaceScene(this);
-}
-
-Sprite3DTestScene::Sprite3DTestScene()
-{
-    
 }
 
 static int tuple_sort( const std::tuple<ssize_t,Effect3D*,CustomCommand> &tuple1, const std::tuple<ssize_t,Effect3D*,CustomCommand> &tuple2 )
@@ -2506,7 +2412,7 @@ std::string Sprite3DCubeMapTest::subtitle() const
 void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
 {
     Size visibleSize = Director::getInstance()->getVisibleSize();
-    auto _camera = Camera::createPerspective(60, visibleSize.width / visibleSize.height, 0.1, 200);
+    auto _camera = Camera::createPerspective(60, visibleSize.width / visibleSize.height, 0.1f, 200);
     _camera->setCameraFlag(CameraFlag::USER1);
 
     // create a teapot

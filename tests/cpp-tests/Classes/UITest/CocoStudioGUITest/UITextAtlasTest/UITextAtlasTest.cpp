@@ -1,8 +1,9 @@
-
-
 #include "UITextAtlasTest.h"
 
-
+UITextAtlasTests::UITextAtlasTests()
+{
+    ADD_TEST_CASE(UITextAtlasTest);
+}
 // UITextAtlasTest
 
 bool UITextAtlasTest::init()
