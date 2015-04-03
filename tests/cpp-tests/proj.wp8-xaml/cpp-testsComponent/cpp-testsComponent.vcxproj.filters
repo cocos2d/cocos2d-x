@@ -349,6 +349,9 @@
     <Filter Include="Classes\CocosStudio3DTest">
       <UniqueIdentifier>{65f104c8-5b02-4c44-ab8b-a8e7289e5c7a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\TerrainTest">
+      <UniqueIdentifier>{57e5558c-86f8-4b8d-a8a4-c78f30b28479}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Classes\AppDelegate.cpp">
@@ -920,6 +923,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Classes\PerformanceTest\PerformanceParticle3DTest.cpp">
       <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\TerrainTest\TerrainTest.cpp">
+      <Filter>Classes\TerrainTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1691,6 +1697,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Classes\PerformanceTest\PerformanceParticle3DTest.h">
       <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\TerrainTest\TerrainTest.h">
+      <Filter>Classes\TerrainTest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
