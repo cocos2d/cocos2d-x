@@ -102,6 +102,8 @@ public:
      */
     void hideOutShowIn(void);
 
+    Scene* getInScene() const{ return _inScene; }
+    float getDuration() const { return _duration; }
     //
     // Overrides
     //
