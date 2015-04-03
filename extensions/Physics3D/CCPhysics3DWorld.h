@@ -44,7 +44,7 @@ NS_CC_EXT_BEGIN
 class Physics3DObject;
 class Physics3DConstraint;
 
-CC_EX_DLL struct Physics3DWorldDes
+struct CC_EX_DLL Physics3DWorldDes
 {
     bool           isDebugDrawEnabled; //using physics debug draw?, false by default
     cocos2d::Vec3  gravity;//gravity, (0, -9.8, 0)
@@ -55,7 +55,7 @@ CC_EX_DLL struct Physics3DWorldDes
     }
 };
 
-CC_EX_DLL class Physics3DWorld : Ref
+class CC_EX_DLL Physics3DWorld : Ref
 {
 public:
     static Physics3DWorld* create(Physics3DWorldDes* info);
