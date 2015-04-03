@@ -69,7 +69,7 @@ bool Animate3D::init(Animation3D* animation)
     animation->retain();
     setDuration(animation->getDuration());
     setOriginInterval(animation->getDuration());
-    setHighQuality(Configuration::getInstance()->getHighAnimate3DQuality());
+    setHighQuality(Configuration::getInstance()->isHighAnimate3DQuality());
     return true;
 }
 
@@ -85,7 +85,7 @@ bool Animate3D::init(Animation3D* animation, float fromTime, float duration)
     setOriginInterval(duration);
     _animation = animation;
     animation->retain();
-    setHighQuality(Configuration::getInstance()->getHighAnimate3DQuality());
+    setHighQuality(Configuration::getInstance()->isHighAnimate3DQuality());
     return true;
 }
 
@@ -401,7 +401,7 @@ void Animate3D::setHighQuality(bool isHighQuality)
     _isHighQuality = isHighQuality;
 }
 
-bool Animate3D::getHighQuality() const
+bool Animate3D::isHighQuality() const
 {
     return _isHighQuality;
 }
@@ -433,12 +433,9 @@ void Animate3D::removeFromMap()
     if (_target)
     {
         Sprite3D* sprite = static_cast<Sprite3D*>(_target);
-        if (_state == Animate3D::Animate3DState::FadeIn)
-            s_fadeInAnimates.erase(sprite);
-        else if (_state == Animate3D::Animate3DState::FadeOut)
-            s_fadeOutAnimates.erase(sprite);
-        else
-            s_runningAnimates.erase(sprite);
+        s_fadeInAnimates.erase(sprite);
+        s_fadeOutAnimates.erase(sprite);
+        s_runningAnimates.erase(sprite);
     }
 }
 

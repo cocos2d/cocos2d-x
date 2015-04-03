@@ -25,7 +25,10 @@
 #ifndef __SKYBOX_H__
 #define __SKYBOX_H__
 
-#include "cocos2d.h"
+#include "base/ccTypes.h"
+#include "platform/CCPlatformMacros.h"
+#include "renderer/CCCustomCommand.h"
+#include "2d/CCNode.h"
 
 NS_CC_BEGIN
 
@@ -43,6 +46,19 @@ class CC_DLL Skybox : public Node
 {
 public:
     CREATE_FUNC(Skybox);
+    
+    /** create skybox from 6 textures.
+     @param positive_x texture for the right side of the texture cube face.
+     @param negative_x texture for the up side of the texture cube face.
+     @param positive_y texture for the top side of the texture cube face
+     @param negative_y texture for the bottom side of the texture cube face
+     @param positive_z texture for the forward side of the texture cube face.
+     @param negative_z texture for the rear side of the texture cube face.
+     @return  A new skybox inited with given parameters.
+     */
+    static Skybox* create(const std::string& positive_x, const std::string& negative_x,
+                               const std::string& positive_y, const std::string& negative_y,
+                               const std::string& positive_z, const std::string& negative_z);
 
     /**texture getter and setter*/
     void setTexture(TextureCube*);
@@ -68,6 +84,13 @@ CC_CONSTRUCTOR_ACCESS:
     * init Skybox.
     */
     virtual bool init();
+    
+    /**
+     * initialize with texture path
+     */
+    bool init(const std::string& positive_x, const std::string& negative_x,
+              const std::string& positive_y, const std::string& negative_y,
+              const std::string& positive_z, const std::string& negative_z);
 
 protected:
 
