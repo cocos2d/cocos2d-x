@@ -75,7 +75,9 @@ void Device::setAccelerometerEnabled(bool isEnabled)
 
         if(sAccelerometer == nullptr)
         {
-	        MessageBox("This device does not have an accelerometer.","Alert");
+            // It's not a friendly experience and may cause crash.
+            //MessageBox("This device does not have an accelerometer.","Alert");
+            log("This device does not have an accelerometer.");
             return;
         }
 
