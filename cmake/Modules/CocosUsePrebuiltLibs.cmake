@@ -86,7 +86,7 @@ if(MSVC)
 endif()
 
 if(LINUX)
-  list(APPEND all_prebuilt_libs fmod zlib)
+  list(APPEND all_prebuilt_libs fmod)
 endif()
 
 # END CONFIG
