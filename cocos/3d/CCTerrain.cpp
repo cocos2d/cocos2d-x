@@ -1,6 +1,32 @@
+/****************************************************************************
+Copyright (c) 2015 Chukong Technologies Inc.
+
+http://www.cocos2d-x.org
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+****************************************************************************/
+
 #include "CCTerrain.h"
-#include <CCImage.h>
+
 USING_NS_CC;
+#include <stdlib.h>
+#include <CCImage.h>
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/CCGLProgramState.h"
@@ -9,77 +35,45 @@ USING_NS_CC;
 #include "renderer/ccGLStateCache.h"
 #include "base/CCDirector.h"
 #include "2d/CCCamera.h"
-#include <stdlib.h>
+
 
 NS_CC_BEGIN
+
+// check a number is power of two.
+static bool isPOT(int number)
+{
+    bool flag = false;  
+    if((number>0)&&(number&(number-1))==0)  
+        flag = true;  
+    return flag;  
+}
+
 Terrain * Terrain::create(TerrainData &parameter, CrackFixedType fixedType)
 {
     Terrain * terrain = new (std::nothrow)Terrain();
-    terrain->setSkirtHeightRatio(1.0f);
+    terrain->setSkirtHeightRatio(parameter.skirtHeightRatio);
     terrain->_terrainData = parameter;
     terrain->_crackFixedType = fixedType;
     terrain->_isCameraViewChanged = true;
     //chunksize
     terrain->_chunkSize = parameter.chunkSize;
-    //heightmap
-    terrain->initHeightMap(parameter.heightMapSrc.c_str());
-    Texture2D::TexParams texParam;
-    texParam.wrapS = GL_REPEAT;
-    texParam.wrapT = GL_REPEAT;
-    if(!parameter.alphaMapSrc)
-    {
-        auto textImage = new (std::nothrow)Image();
-        textImage->initWithImageFile(parameter.detailMaps[0].detailMapSrc);
-        auto texture = new (std::nothrow)Texture2D();
-        texture->initWithImage(textImage);
-        texture->generateMipmap();
-        terrain->_detailMapTextures[0] = texture;
-        texParam.minFilter = GL_LINEAR_MIPMAP_LINEAR;
-        texParam.magFilter = GL_LINEAR;
-        texture->setTexParameters(texParam);
-        delete textImage;
-    }else
-    {
-        //alpha map
-        auto image = new (std::nothrow)Image(); 
-        image->initWithImageFile(parameter.alphaMapSrc);
-        terrain->_alphaMap = new (std::nothrow)Texture2D();
-        terrain->_alphaMap->initWithImage(image);
-        texParam.wrapS = GL_CLAMP_TO_EDGE;
-        texParam.wrapT = GL_CLAMP_TO_EDGE;
-        texParam.minFilter = GL_LINEAR;
-        texParam.magFilter = GL_LINEAR;
-        terrain->_alphaMap->setTexParameters(texParam);
-        delete image;
+    bool initResult =true;
 
-        for(int i =0;i<4;i++)
-        {
-            auto textImage = new (std::nothrow)Image();
-            textImage->initWithImageFile(parameter.detailMaps[i].detailMapSrc);
-            auto texture = new (std::nothrow)Texture2D();
-            texture->initWithImage(textImage);
-            delete textImage;
-            texture->generateMipmap();
-            terrain->_detailMapTextures[i] = texture;
-            
-            texParam.wrapS = GL_REPEAT;
-            texParam.wrapT = GL_REPEAT;
-            texParam.minFilter = GL_LINEAR_MIPMAP_LINEAR;
-            texParam.magFilter = GL_LINEAR;
-            texture->setTexParameters(texParam);
-        }
-    }
-    terrain->init();
-    terrain->setAnchorPoint(Vec2(0,0));
+    //init heightmap
+    initResult &= terrain->initHeightMap(parameter.heightMapSrc.c_str());
+    //init textures alpha map,detail Maps
+    initResult &= terrain->initTextures();
+    initResult &= terrain->initProperties();
     terrain->autorelease();
+    if(!initResult)
+    {
+        CC_SAFE_DELETE(terrain);
+    }    
     return terrain;
 }
 
-bool Terrain::init()
+bool Terrain::initProperties()
 {
-    _lodDistance[0]=64;
-    _lodDistance[1]=128;
-    _lodDistance[2]=196;
     auto shader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_TERRAIN);
     auto state = GLProgramState::create(shader);
     
@@ -87,13 +81,7 @@ bool Terrain::init()
     _normalLocation = glGetAttribLocation(this->getGLProgram()->getProgram(),"a_normal");
     setDrawWire(false);
     setIsEnableFrustumCull(true);
-    
-    _alphaMapLocation = -1;
-    for(int i =0;i<4;i++)
-    {
-        _detailMapLocation[i] = -1;
-        _detailMapSizeLocation[i] = -1;
-    }    
+    setAnchorPoint(Vec2(0,0));
     return true;
 }
 
@@ -186,42 +174,53 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
     }
 }
 
-void Terrain::initHeightMap(const char * heightMap)
+bool Terrain::initHeightMap(const char * heightMap)
 {
     _heightMapImage = new Image();
     _heightMapImage->initWithImageFile(heightMap);
     _data = _heightMapImage->getData();
     _imageWidth =_heightMapImage->getWidth();
     _imageHeight =_heightMapImage->getHeight();
-    int chunk_amount_y = _imageHeight/_chunkSize.height;
-    int chunk_amount_x = _imageWidth/_chunkSize.width;
-    loadVertices();
-    calculateNormal();
-    memset(_chunkesArray, 0, sizeof(_chunkesArray));
 
-    for(int m =0;m<chunk_amount_y;m++)
+    //only the image size  is the Powers Of Two(POT) or POT+1
+    if((isPOT(_imageWidth) &&isPOT(_imageHeight)) || (isPOT(_imageWidth-1) &&isPOT(_imageHeight -1)))
     {
-        for(int n =0; n<chunk_amount_x;n++)
-        {
-            _chunkesArray[m][n] = new Chunk();
-            _chunkesArray[m][n]->_terrain = this;
-            _chunkesArray[m][n]->_size = _chunkSize;
-            _chunkesArray[m][n]->generate(_imageWidth,_imageHeight,m,n,_data);
-        }
-    }
+        int chunk_amount_y = _imageHeight/_chunkSize.height;
+        int chunk_amount_x = _imageWidth/_chunkSize.width;
+        loadVertices();
+        calculateNormal();
+        memset(_chunkesArray, 0, sizeof(_chunkesArray));
 
-    //calculate the neighbor
-    for(int m =0;m<chunk_amount_y;m++)
-    {
-        for(int n =0; n<chunk_amount_x;n++)
+        for(int m =0;m<chunk_amount_y;m++)
         {
-            if(n-1>=0) _chunkesArray[m][n]->left = _chunkesArray[m][n-1];
-            if(n+1<chunk_amount_x) _chunkesArray[m][n]->right = _chunkesArray[m][n+1];
-            if(m-1>=0) _chunkesArray[m][n]->back = _chunkesArray[m-1][n];
-            if(m+1<chunk_amount_y) _chunkesArray[m][n]->front = _chunkesArray[m+1][n];
+            for(int n =0; n<chunk_amount_x;n++)
+            {
+                _chunkesArray[m][n] = new Chunk();
+                _chunkesArray[m][n]->_terrain = this;
+                _chunkesArray[m][n]->_size = _chunkSize;
+                _chunkesArray[m][n]->generate(_imageWidth,_imageHeight,m,n,_data);
+            }
         }
+
+        //calculate the neighbor
+        for(int m =0;m<chunk_amount_y;m++)
+        {
+            for(int n =0; n<chunk_amount_x;n++)
+            {
+                if(n-1>=0) _chunkesArray[m][n]->_left = _chunkesArray[m][n-1];
+                if(n+1<chunk_amount_x) _chunkesArray[m][n]->_right = _chunkesArray[m][n+1];
+                if(m-1>=0) _chunkesArray[m][n]->_back = _chunkesArray[m-1][n];
+                if(m+1<chunk_amount_y) _chunkesArray[m][n]->_front = _chunkesArray[m+1][n];
+            }
+        }
+        _quadRoot = new QuadTree(0,0,_imageWidth,_imageHeight,this);
+        setLODDistance(_chunkSize.width,2*_chunkSize.width,3*_chunkSize.width);
+        return true;
+    }else
+    {
+        CCLOG("warning: the height map size is not POT or POT + 1");
+        return false;
     }
-    _quadRoot = new QuadTree(0,0,_imageWidth,_imageHeight,this);
 }
 
 Terrain::Terrain()
@@ -672,6 +671,12 @@ void Terrain::onEnter()
 
 void Terrain::cacheUniformLocation()
 {
+    _alphaMapLocation = -1;
+    for(int i =0;i<4;i++)
+    {
+        _detailMapLocation[i] = -1;
+        _detailMapSizeLocation[i] = -1;
+    }
     auto glProgram = getGLProgram();
     _alphaIsHasAlphaMapLocation = glGetUniformLocation(glProgram->getProgram(),"u_has_alpha");
     if(!_alphaMap)
@@ -691,6 +696,58 @@ void Terrain::cacheUniformLocation()
         }
         _alphaMapLocation = glGetUniformLocation(glProgram->getProgram(),"u_alphaMap");
     }
+}
+
+bool Terrain::initTextures()
+{
+    Texture2D::TexParams texParam;
+    texParam.wrapS = GL_REPEAT;
+    texParam.wrapT = GL_REPEAT;
+    if(!_terrainData.alphaMapSrc)
+    {
+        auto textImage = new (std::nothrow)Image();
+        textImage->initWithImageFile(_terrainData.detailMaps[0].detailMapSrc);
+        auto texture = new (std::nothrow)Texture2D();
+        texture->initWithImage(textImage);
+        texture->generateMipmap();
+        _detailMapTextures[0] = texture;
+        texParam.minFilter = GL_LINEAR_MIPMAP_LINEAR;
+        texParam.magFilter = GL_LINEAR;
+        texture->setTexParameters(texParam);
+        delete textImage;
+    }else
+    {
+        //alpha map
+        auto image = new (std::nothrow)Image(); 
+        image->initWithImageFile(_terrainData.alphaMapSrc);
+        _alphaMap = new (std::nothrow)Texture2D();
+        _alphaMap->initWithImage(image);
+        texParam.wrapS = GL_CLAMP_TO_EDGE;
+        texParam.wrapT = GL_CLAMP_TO_EDGE;
+        texParam.minFilter = GL_LINEAR;
+        texParam.magFilter = GL_LINEAR;
+        _alphaMap->setTexParameters(texParam);
+        delete image;
+
+        for(int i =0;i<_terrainData._detailMapAmount;i++)
+        {
+            auto textImage = new (std::nothrow)Image();
+            textImage->initWithImageFile(_terrainData.detailMaps[i].detailMapSrc);
+            auto texture = new (std::nothrow)Texture2D();
+            texture->initWithImage(textImage);
+            delete textImage;
+            texture->generateMipmap();
+            _detailMapTextures[i] = texture;
+
+            texParam.wrapS = GL_REPEAT;
+            texParam.wrapT = GL_REPEAT;
+            texParam.minFilter = GL_LINEAR_MIPMAP_LINEAR;
+            texParam.magFilter = GL_LINEAR;
+            texture->setTexParameters(texParam);
+        }
+    }
+    setMaxDetailMapAmount(_terrainData._detailMapAmount);
+    return true;
 }
 
 void Terrain::Chunk::finish()
@@ -846,10 +903,10 @@ void Terrain::Chunk::generate(int imgWidth, int imageHei, int m, int n, const un
 Terrain::Chunk::Chunk()
 {
     _currentLod = 0;
-    left = nullptr;
-    right = nullptr;
-    back = nullptr;
-    front = nullptr;
+    _left = nullptr;
+    _right = nullptr;
+    _back = nullptr;
+    _front = nullptr;
     _oldLod = -1;
     for(int i =0;i<4;i++)
     {
@@ -860,21 +917,21 @@ Terrain::Chunk::Chunk()
 void Terrain::Chunk::updateIndicesLOD()
 {
     int currentNeighborLOD[4];
-    if(left)
+    if(_left)
     {
-        currentNeighborLOD[0] = left->_currentLod;
+        currentNeighborLOD[0] = _left->_currentLod;
     }else{currentNeighborLOD[0] = -1;}
-    if(right)
+    if(_right)
     {
-        currentNeighborLOD[1] = right->_currentLod;
+        currentNeighborLOD[1] = _right->_currentLod;
     }else{currentNeighborLOD[1] = -1;}
-    if(back)
+    if(_back)
     {
-        currentNeighborLOD[2] = back->_currentLod;
+        currentNeighborLOD[2] = _back->_currentLod;
     }else{currentNeighborLOD[2] = -1;}
-    if(front)
+    if(_front)
     {
-        currentNeighborLOD[3] = front->_currentLod;
+        currentNeighborLOD[3] = _front->_currentLod;
     }else{currentNeighborLOD[3] = -1;}
 
     if(_oldLod == _currentLod &&(memcmp(currentNeighborLOD,_neighborOldLOD,sizeof(currentNeighborLOD))==0) )
@@ -893,8 +950,8 @@ void Terrain::Chunk::updateIndicesLOD()
     int gridX = _size.width;
 
     int step = int(powf(2.0f, float(_currentLod)));
-    if((left&&left->_currentLod > _currentLod) ||(right&&right->_currentLod > _currentLod)
-        ||(back&&back->_currentLod > _currentLod) || (front && front->_currentLod > _currentLod))
+    if((_left&&_left->_currentLod > _currentLod) ||(_right&&_right->_currentLod > _currentLod)
+        ||(_back&&_back->_currentLod > _currentLod) || (_front && _front->_currentLod > _currentLod))
         //need update indices.
     {
         //t-junction inner 
@@ -915,7 +972,7 @@ void Terrain::Chunk::updateIndicesLOD()
         }
         //fix T-crack
         int next_step = int(powf(2.0f, float(_currentLod+1)));
-        if(left&&left->_currentLod > _currentLod)//left
+        if(_left&&_left->_currentLod > _currentLod)//left
         {
             for(int i =0;i<gridY;i+=next_step)
             {
@@ -934,8 +991,8 @@ void Terrain::Chunk::updateIndicesLOD()
         }else{
             int start=0;
             int end =gridY;
-            if(front&&front->_currentLod > _currentLod) end -=step;
-            if(back&&back->_currentLod > _currentLod) start +=step;
+            if(_front&&_front->_currentLod > _currentLod) end -=step;
+            if(_back&&_back->_currentLod > _currentLod) start +=step;
             for(int i =start;i<end;i+=step)
             {
                 _lod[_currentLod].indices.push_back(i*(gridX+1)+step);
@@ -948,7 +1005,7 @@ void Terrain::Chunk::updateIndicesLOD()
             }
         }
 
-        if(right&&right->_currentLod > _currentLod)//LEFT
+        if(_right&&_right->_currentLod > _currentLod)//LEFT
         {
             for(int i =0;i<gridY;i+=next_step)
             {
@@ -967,8 +1024,8 @@ void Terrain::Chunk::updateIndicesLOD()
         }else{
             int start=0;
             int end =gridY;
-            if(front&&front->_currentLod > _currentLod) end -=step;
-            if(back&&back->_currentLod > _currentLod) start +=step;
+            if(_front&&_front->_currentLod > _currentLod) end -=step;
+            if(_back&&_back->_currentLod > _currentLod) start +=step;
             for(int i =start;i<end;i+=step)
             {
                 _lod[_currentLod].indices.push_back(i*(gridX+1)+gridX);
@@ -980,7 +1037,7 @@ void Terrain::Chunk::updateIndicesLOD()
                 _lod[_currentLod].indices.push_back((i+step)*(gridX+1)+gridX);
             }
         }
-        if(front&&front->_currentLod > _currentLod)//front
+        if(_front&&_front->_currentLod > _currentLod)//front
         {
             for(int i =0;i<gridX;i+=next_step)
             {
@@ -1009,7 +1066,7 @@ void Terrain::Chunk::updateIndicesLOD()
                 _lod[_currentLod].indices.push_back(gridY*(gridX+1)+i+step);
             }
         }
-        if(back&&back->_currentLod > _currentLod)//back
+        if(_back&&_back->_currentLod > _currentLod)//back
         {
             for(int i =0;i<gridX;i+=next_step)
             {
@@ -1093,7 +1150,7 @@ void Terrain::Chunk::calculateSlope()
     auto a = Vec2(lowest.x,lowest.z);
     auto b = Vec2(highest.x,highest.z);
     float dist = a.distance(b);
-    slope = (highest.y - lowest.y)/dist;
+    _slope = (highest.y - lowest.y)/dist;
 }
 
 void Terrain::Chunk::updateVerticesForLOD()
@@ -1103,7 +1160,7 @@ void Terrain::Chunk::updateVerticesForLOD()
     int gridY = _size.height;
     int gridX = _size.width;
 
-    if(_currentLod>=2 && abs(slope)>1.2)
+    if(_currentLod>=2 && abs(_slope)>1.2)
     {
         int step = int(powf(2.0f, float(_currentLod)));
         for(int i =step;i<gridY-step;i+=step)
@@ -1222,35 +1279,35 @@ Terrain::QuadTree::QuadTree(int x, int y, int w, int h, Terrain * terrain)
 {
     _terrain = terrain;
     _needDraw = true;
-    parent = nullptr;
-    tl =nullptr;
-    tr =nullptr;
-    bl =nullptr;
-    br =nullptr;
-    pos_x = x;
-    pos_y = y;
-    this->height = h;
-    this->width = w;
-    if(width> terrain->_chunkSize.width &&height >terrain->_chunkSize.height) //subdivision
+    _parent = nullptr;
+    _tl =nullptr;
+    _tr =nullptr;
+    _bl =nullptr;
+    _br =nullptr;
+    _posX = x;
+    _posY = y;
+    this->_height = h;
+    this->_width = w;
+    if(_width> terrain->_chunkSize.width &&_height >terrain->_chunkSize.height) //subdivision
     {
         _isTerminal = false;
-        this->tl = new QuadTree(x,y,width/2,height/2,terrain);
-        this->tl->parent = this;
-        this->tr = new QuadTree(x+width/2,y,width/2,height/2,terrain);
-        this->tr->parent = this;
-        this->bl = new QuadTree(x,y+height/2,width/2,height/2,terrain);
-        this->bl->parent = this;
-        this->br = new QuadTree(x+width/2,y+height/2,width/2,height/2,terrain);
-        this->br->parent = this;
+        this->_tl = new QuadTree(x,y,_width/2,_height/2,terrain);
+        this->_tl->_parent = this;
+        this->_tr = new QuadTree(x+_width/2,y,_width/2,_height/2,terrain);
+        this->_tr->_parent = this;
+        this->_bl = new QuadTree(x,y+_height/2,_width/2,_height/2,terrain);
+        this->_bl->_parent = this;
+        this->_br = new QuadTree(x+_width/2,y+_height/2,_width/2,_height/2,terrain);
+        this->_br->_parent = this;
 
-        _aabb.merge(tl->_aabb);
-        _aabb.merge(tr->_aabb);
-        _aabb.merge(bl->_aabb);
-        _aabb.merge(br->_aabb);
+        _aabb.merge(_tl->_aabb);
+        _aabb.merge(_tr->_aabb);
+        _aabb.merge(_bl->_aabb);
+        _aabb.merge(_br->_aabb);
     }else // is terminal Node
     {
-        int m = pos_y/terrain->_chunkSize.height;
-        int n = pos_x/terrain->_chunkSize.width;
+        int m = _posY/terrain->_chunkSize.height;
+        int n = _posX/terrain->_chunkSize.width;
         _chunk = terrain->_chunkesArray[m][n];
         _isTerminal = true;
         _aabb = _chunk->_aabb;
@@ -1267,10 +1324,10 @@ void Terrain::QuadTree::draw()
         this->_chunk->bindAndDraw();
     }else
     {
-        this->tl->draw();
-        this->tr->draw();
-        this->br->draw();
-        this->bl->draw();
+        this->_tl->draw();
+        this->_tr->draw();
+        this->_br->draw();
+        this->_bl->draw();
     }
 }
 
@@ -1279,10 +1336,10 @@ void Terrain::QuadTree::resetNeedDraw(bool value)
     this->_needDraw = value;
     if(!_isTerminal)
     {
-        tl->resetNeedDraw(value);
-        tr->resetNeedDraw(value);
-        bl->resetNeedDraw(value);
-        br->resetNeedDraw(value);
+        _tl->resetNeedDraw(value);
+        _tr->resetNeedDraw(value);
+        _bl->resetNeedDraw(value);
+        _br->resetNeedDraw(value);
     }
 }
 
@@ -1294,10 +1351,10 @@ void Terrain::QuadTree::cullByCamera(const Camera * camera, const Mat4 & worldTr
     }else
     {
         if(!_isTerminal){
-            tl->cullByCamera(camera,worldTransform);
-            tr->cullByCamera(camera,worldTransform);
-            bl->cullByCamera(camera,worldTransform);
-            br->cullByCamera(camera,worldTransform);
+            _tl->cullByCamera(camera,worldTransform);
+            _tr->cullByCamera(camera,worldTransform);
+            _bl->cullByCamera(camera,worldTransform);
+            _br->cullByCamera(camera,worldTransform);
         }
     }
 }
@@ -1305,22 +1362,22 @@ void Terrain::QuadTree::cullByCamera(const Camera * camera, const Mat4 & worldTr
 void Terrain::QuadTree::preCalculateAABB(const Mat4 & worldTransform)
 {
 
-        _worldSpaceAABB = _aabb;
-        _worldSpaceAABB.transform(worldTransform);
+    _worldSpaceAABB = _aabb;
+    _worldSpaceAABB.transform(worldTransform);
     if(!_isTerminal){
-        tl->preCalculateAABB(worldTransform);
-        tr->preCalculateAABB(worldTransform);
-        bl->preCalculateAABB(worldTransform);
-        br->preCalculateAABB(worldTransform);
+        _tl->preCalculateAABB(worldTransform);
+        _tr->preCalculateAABB(worldTransform);
+        _bl->preCalculateAABB(worldTransform);
+        _br->preCalculateAABB(worldTransform);
     }
 }
 
 Terrain::QuadTree::~QuadTree()
 {
-    if(tl) delete tl;
-    if(tr) delete tr;
-    if(bl) delete bl;
-    if(br) delete br;
+    if(_tl) delete _tl;
+    if(_tr) delete _tr;
+    if(_bl) delete _bl;
+    if(_br) delete _br;
 }
 
 Terrain::TerrainData::TerrainData(const char * heightMapsrc , const char * textureSrc, const Size & chunksize, float height, float scale)
@@ -1331,6 +1388,7 @@ Terrain::TerrainData::TerrainData(const char * heightMapsrc , const char * textu
     this->chunkSize = chunksize;
     this->mapHeight = height;
     this->mapScale = scale; 
+    skirtHeightRatio = 1;
 }
 
 Terrain::TerrainData::TerrainData(const char * heightMapsrc, const char * alphamap, const DetailMap& detail1, const DetailMap& detail2, const DetailMap& detail3, const DetailMap& detail4, const Size & chunksize, float height, float scale)
@@ -1345,6 +1403,7 @@ Terrain::TerrainData::TerrainData(const char * heightMapsrc, const char * alpham
     this->mapHeight = height;
     this->mapScale = scale;
     _detailMapAmount = 4;
+    skirtHeightRatio = 1;
 }
 
 Terrain::TerrainData::TerrainData(const char* heightMapsrc, const char * alphamap, const DetailMap& detail1, const DetailMap& detail2, const DetailMap& detail3, const Size & chunksize /*= Size(32,32)*/, float height /*= 2*/, float scale /*= 0.1*/)
@@ -1359,6 +1418,7 @@ Terrain::TerrainData::TerrainData(const char* heightMapsrc, const char * alphama
     this->mapHeight = height;
     this->mapScale = scale;
     _detailMapAmount = 3;
+    skirtHeightRatio = 1;
 }
 
 Terrain::TerrainData::TerrainData()
