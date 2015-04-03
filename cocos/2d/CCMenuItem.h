@@ -110,7 +110,6 @@ CC_CONSTRUCTOR_ACCESS:
     : _selected(false)
     , _enabled(false)
 	, _callback(nullptr)
-    , _target(nullptr)
     {}
     /**
      * @js NA
@@ -133,8 +132,6 @@ protected:
     bool            _enabled;
     // callback
     ccMenuCallback _callback;
-    // If using the old API, the _target needs to be retained / released
-    Ref		*_target;
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(MenuItem);

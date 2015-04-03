@@ -68,6 +68,11 @@ namespace cocostudio
         CC_SAFE_DELETE(_instanceParticle3DReader);
     }
     
+    void Particle3DReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(_instanceParticle3DReader);
+    }
+    
     Offset<Table> Particle3DReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
                                                              flatbuffers::FlatBufferBuilder *builder)
     {

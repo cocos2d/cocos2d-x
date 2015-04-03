@@ -56,6 +56,7 @@ namespace ui {
         /**
          * Default constructor.
          * @js ctor
+         * @lua new
          */
         Scale9Sprite();
 
@@ -577,6 +578,10 @@ namespace ui {
         
         virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
         virtual void cleanup() override;
+        
+        /**
+         * @lua NA
+         */
         virtual void onEnter() override;
         
         /** Event callback that is invoked when the Node enters in the 'stage'.

@@ -1815,6 +1815,9 @@
     <ClCompile Include="..\3d\CCTextureCube.cpp">
       <Filter>3d</Filter>
     </ClCompile>
+    <ClCompile Include="..\editor-support\cocostudio\CocoStudio.cpp">
+      <Filter>cocostudio\json</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCAction.h">
@@ -3527,6 +3530,9 @@
     </ClInclude>
     <ClInclude Include="..\3d\CCTextureCube.h">
       <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\editor-support\cocostudio\CocoStudio.h">
+      <Filter>cocostudio\json</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

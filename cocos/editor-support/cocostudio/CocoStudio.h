@@ -65,4 +65,11 @@ THE SOFTWARE.
 #include "cocostudio/CocosStudioExport.h"
 #include "cocostudio/ActionTimeline/CSLoader.h"
 
+#include "cocostudio/CocosStudioExport.h"
+
+namespace cocostudio
+{
+    void CC_STUDIO_DLL destroyCocosStudio();
+}
+
 #endif

@@ -68,7 +68,8 @@
         
 --------------------------------
 -- Sets capinsets for progress bar slider, if slider is using scale9 renderer.<br>
--- param capInsets Capinsets for progress bar slider.
+-- param capInsets Capinsets for progress bar slider.<br>
+-- js NA
 -- @function [parent=#Slider] setCapInsetProgressBarRebderer 
 -- @param self
 -- @param #rect_table capInsets
@@ -84,7 +85,8 @@
         
 --------------------------------
 -- Gets capinsets for progress bar slider, if slider is using scale9 renderer.<br>
--- return Capinsets for progress bar slider.
+-- return Capinsets for progress bar slider.<br>
+-- js NA
 -- @function [parent=#Slider] getCapInsetsProgressBarRebderer 
 -- @param self
 -- @return rect_table#rect_table ret (return value: rect_table)
@@ -122,7 +124,8 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- 
+-- Add call back function called when slider's percent has changed to slider.<br>
+-- param callback An given call back function called when slider's percent has changed to slider.
 -- @function [parent=#Slider] addEventListener 
 -- @param self
 -- @param #function callback
@@ -208,7 +211,9 @@
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
--- Default constructor.
+-- Default constructor.<br>
+-- js ctor<br>
+-- lua new
 -- @function [parent=#Slider] Slider 
 -- @param self
 -- @return Slider#Slider self (return value: ccui.Slider)

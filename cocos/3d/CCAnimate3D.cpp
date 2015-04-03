@@ -26,6 +26,7 @@
 #include "3d/CCSprite3D.h"
 #include "3d/CCSkeleton3D.h"
 #include "platform/CCFileUtils.h"
+#include "base/CCConfiguration.h"
 
 NS_CC_BEGIN
 
@@ -68,6 +69,7 @@ bool Animate3D::init(Animation3D* animation)
     animation->retain();
     setDuration(animation->getDuration());
     setOriginInterval(animation->getDuration());
+    setHighQuality(Configuration::getInstance()->isHighAnimate3DQuality());
     return true;
 }
 
@@ -83,6 +85,7 @@ bool Animate3D::init(Animation3D* animation, float fromTime, float duration)
     setOriginInterval(duration);
     _animation = animation;
     animation->retain();
+    setHighQuality(Configuration::getInstance()->isHighAnimate3DQuality());
     return true;
 }
 
@@ -310,28 +313,26 @@ void Animate3D::update(float t)
                 t = 1 - t;
             
             t = _start + t * _last;
-            for (const auto& it : _boneCurves)
-            {
-                for (const auto& it : _boneCurves) {
-                    auto bone = it.first;
-                    auto curve = it.second;
-                    if (curve->translateCurve)
-                    {
-                        curve->translateCurve->evaluate(t, transDst, EvaluateType::INT_LINEAR);
-                        trans = &transDst[0];
-                    }
-                    if (curve->rotCurve)
-                    {
-                        curve->rotCurve->evaluate(t, rotDst, EvaluateType::INT_QUAT_SLERP);
-                        rot = &rotDst[0];
-                    }
-                    if (curve->scaleCurve)
-                    {
-                        curve->scaleCurve->evaluate(t, scaleDst, EvaluateType::INT_LINEAR);
-                        scale = &scaleDst[0];
-                    }
-                    bone->setAnimationValue(trans, rot, scale, this, _weight);
+ 
+            for (const auto& it : _boneCurves) {
+                auto bone = it.first;
+                auto curve = it.second;
+                if (curve->translateCurve)
+                {
+                    curve->translateCurve->evaluate(t, transDst, _translateEvaluate);
+                    trans = &transDst[0];
                 }
+                if (curve->rotCurve)
+                {
+                    curve->rotCurve->evaluate(t, rotDst, _roteEvaluate);
+                    rot = &rotDst[0];
+                }
+                if (curve->scaleCurve)
+                {
+                    curve->scaleCurve->evaluate(t, scaleDst, _scaleEvaluate);
+                    scale = &scaleDst[0];
+                }
+                bone->setAnimationValue(trans, rot, scale, this, _weight);
             }
             
             for (const auto& it : _nodeCurves)
@@ -341,18 +342,18 @@ void Animate3D::update(float t)
                 Mat4 transform;
                 if (curve->translateCurve)
                 {
-                    curve->translateCurve->evaluate(t, transDst, EvaluateType::INT_LINEAR);
+                    curve->translateCurve->evaluate(t, transDst, _translateEvaluate);
                     transform.translate(transDst[0], transDst[1], transDst[2]);
                 }
                 if (curve->rotCurve)
                 {
-                    curve->rotCurve->evaluate(t, rotDst, EvaluateType::INT_QUAT_SLERP);
+                    curve->rotCurve->evaluate(t, rotDst, _roteEvaluate);
                     Quaternion qua(rotDst[0], rotDst[1], rotDst[2], rotDst[3]);
                     transform.rotate(qua);
                 }
                 if (curve->scaleCurve)
                 {
-                    curve->scaleCurve->evaluate(t, scaleDst, EvaluateType::INT_LINEAR);
+                    curve->scaleCurve->evaluate(t, scaleDst, _scaleEvaluate);
                     transform.scale(scaleDst[0], scaleDst[1], scaleDst[2]);
                 }
                 node->setAdditionalTransform(&transform);
@@ -383,6 +384,28 @@ void Animate3D::setOriginInterval(float interval)
     _originInterval = interval;
 }
 
+void Animate3D::setHighQuality(bool isHighQuality)
+{
+    if (isHighQuality)
+    {
+        _translateEvaluate = EvaluateType::INT_LINEAR;
+        _roteEvaluate = EvaluateType::INT_QUAT_SLERP;
+        _scaleEvaluate = EvaluateType::INT_LINEAR;
+    }
+    else
+    {
+        _translateEvaluate = EvaluateType::INT_NEAR;
+        _roteEvaluate = EvaluateType::INT_NEAR;
+        _scaleEvaluate = EvaluateType::INT_NEAR;
+    }
+    _isHighQuality = isHighQuality;
+}
+
+bool Animate3D::isHighQuality() const
+{
+    return _isHighQuality;
+}
+
 Animate3D::Animate3D()
 : _state(Animate3D::Animate3DState::Running)
 , _animation(nullptr)
@@ -395,7 +418,7 @@ Animate3D::Animate3D()
 , _lastTime(0.0f)
 , _originInterval(0.0f)
 {
-    
+    setHighQuality(true);
 }
 Animate3D::~Animate3D()
 {
@@ -410,12 +433,9 @@ void Animate3D::removeFromMap()
     if (_target)
     {
         Sprite3D* sprite = static_cast<Sprite3D*>(_target);
-        if (_state == Animate3D::Animate3DState::FadeIn)
-            s_fadeInAnimates.erase(sprite);
-        else if (_state == Animate3D::Animate3DState::FadeOut)
-            s_fadeOutAnimates.erase(sprite);
-        else
-            s_runningAnimates.erase(sprite);
+        s_fadeInAnimates.erase(sprite);
+        s_fadeOutAnimates.erase(sprite);
+        s_runningAnimates.erase(sprite);
     }
 }
 

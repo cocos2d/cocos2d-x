@@ -6,9 +6,11 @@
 --------------------------------
 -- brief Get a UTF8 substring from a std::string with a given start position and length<br>
 -- Sample:  std::string str = "中国中国中国";  substr = getSubStringOfUTF8String(str,0,2) will = "中国"<br>
+-- param str The source string.<br>
 -- param start The start position of the substring.<br>
 -- param length The length of the substring in UTF8 count<br>
--- return a UTF8 substring
+-- return a UTF8 substring<br>
+-- js NA
 -- @function [parent=#Helper] getSubStringOfUTF8String 
 -- @param self
 -- @param #string str

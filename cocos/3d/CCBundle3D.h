@@ -45,6 +45,7 @@ class Data;
  * c3t text file
  * c3b binary file
  * @js NA
+ * @lua NA
  */
 class CC_DLL Bundle3D
 {
@@ -181,7 +182,7 @@ protected:
     bool  _isBinary;
 };
 
-// end of actions group
+// end of 3d group
 /// @}
 
 NS_CC_END

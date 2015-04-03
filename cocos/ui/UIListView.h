@@ -94,12 +94,14 @@ public:
     /**
      * Default constructor
      * @js ctor
+     * @lua new
      */
     ListView();
     
     /**
      * Default destructor
      * @js NA
+     * @lua NA
      */
     virtual ~ListView();
     

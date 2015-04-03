@@ -83,6 +83,7 @@ public:
      * @param start The start position of the substring.
      * @param length The length of the substring in UTF8 count
      * @return a UTF8 substring
+     * @js NA
      */
     static std::string getSubStringOfUTF8String(const std::string& str,
                                    std::string::size_type start,

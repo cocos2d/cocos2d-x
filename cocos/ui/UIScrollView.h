@@ -107,12 +107,14 @@ public:
     /**
      * Default constructor
      * @js ctor
+     * @lua new
      */
     ScrollView();
     
     /**
      * Default destructor
      * @js NA
+     * @lua NA
      */
     virtual ~ScrollView();
 
@@ -387,6 +389,10 @@ public:
      * Return the "class name" of widget.
      */
     virtual std::string getDescription() const override;
+    
+    /**
+     * @lua NA
+     */
     virtual void onEnter() override;
     
     /**

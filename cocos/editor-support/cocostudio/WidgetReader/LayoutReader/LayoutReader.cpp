@@ -64,6 +64,11 @@ namespace cocostudio
         return instanceLayoutReader;
     }
     
+    void LayoutReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instanceLayoutReader);
+    }
+    
     void LayoutReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
     {
         WidgetReader::setPropsFromBinary(widget, cocoLoader, cocoNode);
