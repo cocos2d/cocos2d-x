@@ -444,7 +444,7 @@ bool Particle3DExplosionSystemDemo::init()
         return false;
 
 
-    auto rootps = PUParticleSystem3D::create("explosionSystem.pu");
+    auto rootps = PUParticleSystem3D::create("ParticleSystem2.pu");
     rootps->setCameraMask((unsigned short)CameraFlag::USER1);
     //rootps->setScale(5.0f);
     //rootps->setPosition(-25.0f, 0.0f);

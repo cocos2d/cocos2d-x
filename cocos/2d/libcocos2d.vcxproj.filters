@@ -1801,6 +1801,21 @@
     <ClCompile Include="..\..\extensions\Physics3D\CCPhysicsSprite3D.cpp">
       <Filter>extension\Physics3D</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\extensions\Physics3D\CCPhysics3DComponent.cpp">
+      <Filter>extension\Physics3D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\Physics3D\CCPhysics3DConstraint.cpp">
+      <Filter>extension\Physics3D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\Physics3D\CCPhysics3DObject.cpp">
+      <Filter>extension\Physics3D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\Physics3D\CCPhysics3DViewer.cpp">
+      <Filter>extension\Physics3D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\Physics3D\CCPhysics3DWorld.cpp">
+      <Filter>extension\Physics3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\physics\CCPhysicsBody.h">
@@ -3521,6 +3536,21 @@
       <Filter>extension\Physics3D</Filter>
     </ClInclude>
     <ClInclude Include="..\..\extensions\Physics3D\CCPhysicsSprite3D.h">
+      <Filter>extension\Physics3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\Physics3D\CCPhysics3DComponent.h">
+      <Filter>extension\Physics3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\Physics3D\CCPhysics3DConstraint.h">
+      <Filter>extension\Physics3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\Physics3D\CCPhysics3DObject.h">
+      <Filter>extension\Physics3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\Physics3D\CCPhysics3DViewer.h">
+      <Filter>extension\Physics3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\Physics3D\CCPhysics3DWorld.h">
       <Filter>extension\Physics3D</Filter>
     </ClInclude>
   </ItemGroup>

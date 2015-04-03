@@ -352,6 +352,9 @@
     <Filter Include="Classes\AllocatorTest">
       <UniqueIdentifier>{eed1887a-757e-4625-b21c-bbfcfaa5200f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\BulletTest">
+      <UniqueIdentifier>{b3b3bc0c-0449-40db-8613-5d0b58f9607d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -923,6 +926,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceParticle3DTest.cpp">
       <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BulletTest\BulletTest.cpp">
+      <Filter>Classes\BulletTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1693,6 +1699,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceParticle3DTest.h">
       <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BulletTest\BulletTest.h">
+      <Filter>Classes\BulletTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -47,6 +47,7 @@ Controller g_aTestNames[] = {
 	{ "Box2d - Basic", []() { return new Box2DTestScene(); } },
 	{ "Box2d - TestBed", []() { return new Box2dTestBedScene(); } },
 #endif
+	{ "Bullet", []() { return new BulletTestScene(); } },
 	{ "Bugs", []() { return new BugsTestScene(); } },
 	{ "Chipmunk", []() { return new ChipmunkAccelTouchTestScene(); } },
 	{ "Click and Move", [](){return new ClickAndMoveTestScene(); } },
