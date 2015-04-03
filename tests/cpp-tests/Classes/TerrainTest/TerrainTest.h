@@ -65,9 +65,9 @@ public:
     float _headingAngle;
     Vec3 _headingAxis;
 private:
-Terrain * _terrain;
-Camera * _cam;
-int _playerState;
+    Terrain * _terrain;
+    Camera * _cam;
+    int _playerState;
 };
 
 
