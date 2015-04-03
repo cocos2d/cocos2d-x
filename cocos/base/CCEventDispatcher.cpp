@@ -1190,7 +1190,13 @@ void EventDispatcher::sortEventListenersOfSceneGraphPriority(const EventListener
     _nodePriorityIndex = 0;
     _nodePriorityMap.clear();
 
-    visitTarget(rootNode, true);
+    Node *notificationNode = Director::getInstance()->getNotificationNode();
+    if(notificationNode) {
+        visitTarget(notificationNode, true);
+        visitTarget(rootNode, false);
+    } else {
+        visitTarget(rootNode, true);
+    }
     
     // After sort: priority < 0, > 0
     std::sort(sceneGraphListeners->begin(), sceneGraphListeners->end(), [this](const EventListener* l1, const EventListener* l2) {
