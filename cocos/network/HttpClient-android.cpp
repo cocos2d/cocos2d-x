@@ -37,11 +37,11 @@
 #include "platform/CCFileUtils.h"
 #include "platform/android/jni/JniHelper.h"
 
-static cocos2d::network::HttpClient* _httpClient = nullptr;
-
 NS_CC_BEGIN
 
 namespace network {
+
+static HttpClient* _httpClient = nullptr;
 
 typedef std::vector<std::string> HttpRequestHeaders;
 typedef HttpRequestHeaders::iterator HttpRequestHeadersIter;
@@ -966,10 +966,7 @@ void HttpClient::sendImmediate(HttpRequest* request)
 void HttpClient::dispatchResponseCallbacks()
 {
     CCLOG("HttpClient::dispatchResponseCallbacks is running");
-    //occurs when cocos thread fires but the network thread has already quited
-    //cjh if (nullptr == _responseQueue) {
-    //     return;
-    // }
+
     HttpResponse* response = nullptr;
 
     _responseQueueMutex.lock();
