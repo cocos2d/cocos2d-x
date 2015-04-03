@@ -30,10 +30,10 @@ class ControlSwitchTest : public ControlScene
 {
 public:
     virtual ~ControlSwitchTest();
-    bool init();
+    virtual bool init() override;
     /** Callback for the change value. */
     void valueChanged(Ref* sender, Control::EventType controlEvent);
     Label *_displayValueLabel;
-    CONTROL_SCENE_CREATE_FUNC(ControlSwitchTest)
+    CREATE_FUNC(ControlSwitchTest);
 };
 

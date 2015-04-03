@@ -5,16 +5,18 @@
 
 #include "../UIScene.h"
 
+DEFINE_TEST_SUITE(UIRichTextTests);
+
 class UIRichTextTest : public UIScene
 {
 public:
+    CREATE_FUNC(UIRichTextTest);
+
     UIRichTextTest();
     ~UIRichTextTest();
-    bool init();
+
+    virtual bool init() override;
     void touchEvent(Ref *pSender, Widget::TouchEventType type);
-    
-protected:
-    UI_SCENE_CREATE_FUNC(UIRichTextTest)
     
 protected:
     RichText* _richText;

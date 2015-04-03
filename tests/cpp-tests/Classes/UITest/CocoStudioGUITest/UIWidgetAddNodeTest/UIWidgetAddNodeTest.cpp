@@ -1,7 +1,9 @@
-
-
 #include "UIWidgetAddNodeTest.h"
 
+UIWidgetAddNodeTests::UIWidgetAddNodeTests()
+{
+    ADD_TEST_CASE(UIWidgetAddNodeTest);
+}
 
 // UIWidgetAddNodeTest
 

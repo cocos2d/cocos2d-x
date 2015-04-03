@@ -32,82 +32,16 @@ enum
     IDC_RESTART
 };
 
-static int sceneIdx = -1;
-
-static std::function<Layer*()> createFunctions[] =
+Camera3DTests::Camera3DTests()
 {
-    CL(CameraRotationTest),
-    CL(Camera3DTestDemo),
-    CL(CameraCullingDemo),
+    ADD_TEST_CASE(CameraRotationTest);
+    ADD_TEST_CASE(Camera3DTestDemo);
+    ADD_TEST_CASE(CameraCullingDemo);
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     // 3DEffect use custom shader which is not supported on WP8 yet. 
-    CL(FogTestDemo),
+    ADD_TEST_CASE(FogTestDemo);
 #endif
-    CL(CameraArcBallDemo)
-};
-#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-static Layer*nextTest()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-static Layer*backTest()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;
-    
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-static Layer* restartTest()
-{
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-void Camera3DTestScene::runThisTest()
-{
-    auto layer = nextTest();
-    addChild(layer);
-    Director::getInstance()->replaceScene(this);
-}
-
-//------------------------------------------------------------------
-//
-// CameraBaseTest
-//
-//------------------------------------------------------------------
-
-void CameraBaseTest::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) Camera3DTestScene();
-    s->addChild(restartTest());
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void CameraBaseTest::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) Camera3DTestScene();
-    s->addChild(nextTest());
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void CameraBaseTest::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) Camera3DTestScene();
-    s->addChild(backTest());
-    Director::getInstance()->replaceScene(s);
-    s->release();
+    ADD_TEST_CASE(CameraArcBallDemo);
 }
 
 //------------------------------------------------------------------
@@ -220,12 +154,12 @@ std::string CameraRotationTest::subtitle() const
 
 void CameraRotationTest::onEnter()
 {
-    BaseTest::onEnter();
+    CameraBaseTest::onEnter();
 }
 
 void CameraRotationTest::onExit()
 {
-    BaseTest::onExit();
+    CameraBaseTest::onExit();
 }
 
 void CameraRotationTest::update(float dt)
@@ -319,7 +253,7 @@ void Camera3DTestDemo::SwitchViewCallback(Ref* sender, CameraType cameraType)
 }
 void Camera3DTestDemo::onEnter()
 {
-    BaseTest::onEnter();
+    CameraBaseTest::onEnter();
     _sprite3D=nullptr;
     auto s = Director::getInstance()->getWinSize();
     auto listener = EventListenerTouchAllAtOnce::create();
@@ -432,7 +366,7 @@ void Camera3DTestDemo::onEnter()
 }
 void Camera3DTestDemo::onExit()
 {
-    BaseTest::onExit();
+    CameraBaseTest::onExit();
     if (_camera)
     {
         _camera = nullptr;
@@ -785,16 +719,16 @@ std::string CameraCullingDemo::title() const
 
 void CameraCullingDemo::onEnter()
 {
-    BaseTest::onEnter();
+    CameraBaseTest::onEnter();
 
     schedule(schedule_selector(CameraCullingDemo::update), 0.0f);
     
     auto s = Director::getInstance()->getWinSize();
-    auto listener = EventListenerTouchAllAtOnce::create();
-    listener->onTouchesBegan = CC_CALLBACK_2(CameraCullingDemo::onTouchesBegan, this);
-    listener->onTouchesMoved = CC_CALLBACK_2(CameraCullingDemo::onTouchesMoved, this);
-    listener->onTouchesEnded = CC_CALLBACK_2(CameraCullingDemo::onTouchesEnded, this);
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    /*auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(Camera3DTestDemo::onTouchesBegan, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(Camera3DTestDemo::onTouchesMoved, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(Camera3DTestDemo::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);*/
     auto layer3D=Layer::create();
     addChild(layer3D,0);
     _layer3D=layer3D;
@@ -847,7 +781,7 @@ void CameraCullingDemo::onEnter()
 
 void CameraCullingDemo::onExit()
 {
-    BaseTest::onExit();
+    CameraBaseTest::onExit();
     if (_cameraFirst)
     {
         _cameraFirst = nullptr;
@@ -1070,7 +1004,7 @@ std::string CameraArcBallDemo::title() const
 
 void CameraArcBallDemo::onEnter()
 {
-    BaseTest::onEnter();
+    CameraBaseTest::onEnter();
     _rotationQuat.set(0.0f, 0.0f, 0.0f, 1.0f);
     schedule(schedule_selector(CameraArcBallDemo::update), 0.0f);
     auto s = Director::getInstance()->getWinSize();
@@ -1142,7 +1076,7 @@ void CameraArcBallDemo::onEnter()
 
 void CameraArcBallDemo::onExit()
 {
-    BaseTest::onExit();
+    CameraBaseTest::onExit();
     if (_camera)
     {
         _camera = nullptr;
@@ -1287,7 +1221,7 @@ std::string FogTestDemo::title() const
 
 void FogTestDemo::onEnter()
 {
-    BaseTest::onEnter();
+    CameraBaseTest::onEnter();
     schedule(schedule_selector(FogTestDemo::update), 0.0f);
     Director::getInstance()->setClearColor(Color4F(0.5,0.5,0.5,1));
 
@@ -1437,7 +1371,7 @@ void FogTestDemo::switchTypeCallback(Ref* sender,int type)
 
 void FogTestDemo::onExit()
 {
-    BaseTest::onExit();
+    CameraBaseTest::onExit();
     Director::getInstance()->setClearColor(Color4F(0,0,0,1));
     if (_camera)
     {

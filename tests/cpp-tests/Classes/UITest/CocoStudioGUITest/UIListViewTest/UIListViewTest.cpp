@@ -1,8 +1,12 @@
-
-
 #include "UIListViewTest.h"
 
 const char* font_UIListViewTest = "fonts/Marker Felt.ttf";
+
+UIListViewTests::UIListViewTests()
+{
+    ADD_TEST_CASE(UIListViewTest_Vertical);
+    ADD_TEST_CASE(UIListViewTest_Horizontal);
+}
 
 // UIListViewTest_Vertical
 

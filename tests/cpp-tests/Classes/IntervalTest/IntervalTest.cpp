@@ -7,7 +7,12 @@
 
 #define IDC_PAUSE    200
 
-IntervalLayer::IntervalLayer()
+IntervalTests::IntervalTests()
+{
+    ADD_TEST_CASE(IntervalTest);
+}
+
+IntervalTest::IntervalTest()
 {
     _time0 = _time1 = _time2 = _time3 = _time4 = 0.0f;
 
@@ -94,7 +99,7 @@ IntervalLayer::IntervalLayer()
     addChild( menu );
 }
 
-IntervalLayer::~IntervalLayer()
+IntervalTest::~IntervalTest()
 {
     if(Director::getInstance()->isPaused())
     {
@@ -102,19 +107,10 @@ IntervalLayer::~IntervalLayer()
     }
 }
 
-void IntervalLayer::update(float dt)
+void IntervalTest::update(float dt)
 {
     _time0 +=dt;
     char time[10] = {0};
     sprintf(time, "%2.1f", _time0);
     _label0->setString(time);
-}
-
-void IntervalTestScene::runThisTest()
-{
-    auto layer = new (std::nothrow) IntervalLayer();
-    addChild(layer);
-    layer->release();
-
-    Director::getInstance()->replaceScene(this);
 }

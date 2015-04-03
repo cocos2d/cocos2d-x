@@ -28,12 +28,14 @@
 class ControlSliderTest : public ControlScene
 {
 public:
+    CREATE_FUNC(ControlSliderTest);
+
     ControlSliderTest();
     virtual ~ControlSliderTest();
-    bool init();
+    virtual bool init() override;
     void valueChanged(Ref *sender, Control::EventType controlEvent);
 protected:
     Label* _displayValueLabel;
-    CONTROL_SCENE_CREATE_FUNC(ControlSliderTest)
+    
 };
 

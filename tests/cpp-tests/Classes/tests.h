@@ -82,5 +82,6 @@
 #include "OpenURLTest/OpenURLTest.h"
 #include "AllocatorTest/AllocatorTest.h"
 #include "CocosStudio3DTest/CocosStudio3DTest.h"
+#include "UITest/UITest.h"
 
 #endif

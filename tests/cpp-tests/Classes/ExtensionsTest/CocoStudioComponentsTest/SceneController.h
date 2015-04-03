@@ -8,8 +8,8 @@
 class SceneController : public cocostudio::ComController
 {
 protected:
-    SceneController(void);
-    virtual ~SceneController(void);
+    SceneController();
+    virtual ~SceneController();
         
 public:
     virtual bool init() override;
@@ -17,7 +17,7 @@ public:
     virtual void onExit() override;
     virtual void update(float delta) override;
    
-   static SceneController* create(void);
+   static SceneController* create();
    
 public:
     cocos2d::Vector<cocos2d::Node*>& getTargets() {return _targets;};

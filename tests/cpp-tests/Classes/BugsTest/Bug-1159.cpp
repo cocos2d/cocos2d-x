@@ -20,7 +20,7 @@ Scene* Bug1159Layer::scene()
 
 bool Bug1159Layer::init()
 {
-    if (BugsTestBaseLayer::init())
+    if (BugsTestBase::init())
     {
         auto s = Director::getInstance()->getWinSize();
 
@@ -62,5 +62,5 @@ void Bug1159Layer::callBack(Ref* sender)
 
 void Bug1159Layer::onExit()
 {
-    BugsTestBaseLayer::onExit();
+    BugsTestBase::onExit();
 }

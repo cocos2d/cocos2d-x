@@ -1,7 +1,14 @@
-
-
 #include "UILoadingBarTest.h"
 
+UILoadingBarTests::UILoadingBarTests()
+{
+    ADD_TEST_CASE(UILoadingBarTest_Left);
+    ADD_TEST_CASE(UILoadingBarTest_Right);
+    ADD_TEST_CASE(UILoadingBarTest_Left_Scale9);
+    ADD_TEST_CASE(UILoadingBarTest_Right_Scale9);
+    ADD_TEST_CASE(UILoadingBarTest_Scale9_State_Change);
+    ADD_TEST_CASE(UILoadingBarReloadTexture);
+}
 
 // UILoadingBarTest_Left
 
@@ -68,33 +75,6 @@ void UILoadingBarTest_Left::update(float delta)
     loadingBar->setPercent(_count);
 }
 
-void UILoadingBarTest_Left::previousCallback(Ref* sender, Widget::TouchEventType type)
-{
-    if (type == Widget::TouchEventType::ENDED)
-    {
-        unscheduleUpdate();
-        UIScene::previousCallback(sender, type);
-    }
-}
-
-void UILoadingBarTest_Left::restartCallback(Ref* sender, Widget::TouchEventType type)
-{
-    if (type == Widget::TouchEventType::ENDED)
-    {
-        unscheduleUpdate();
-        UIScene::restartCallback(sender, type);
-    }
-}
-
-void UILoadingBarTest_Left::nextCallback(Ref* sender, Widget::TouchEventType type)
-{
-    if (type == Widget::TouchEventType::ENDED)
-    {
-        unscheduleUpdate();
-        UIScene::nextCallback(sender, type);
-    }
-}
-
 // UILoadingBarTest_Right
 
 UILoadingBarTest_Right::UILoadingBarTest_Right()
@@ -146,33 +126,6 @@ void UILoadingBarTest_Right::update(float delta)
     }
     LoadingBar* loadingBar = static_cast<LoadingBar*>(_uiLayer->getChildByTag(0));
     loadingBar->setPercent(_count);
-}
-
-void UILoadingBarTest_Right::previousCallback(Ref* sender, Widget::TouchEventType type)
-{
-    if (type == Widget::TouchEventType::ENDED)
-    {
-        unscheduleUpdate();
-        UIScene::previousCallback(sender, type);
-    }
-}
-
-void UILoadingBarTest_Right::restartCallback(Ref* sender, Widget::TouchEventType type)
-{
-    if (type == Widget::TouchEventType::ENDED)
-    {
-        unscheduleUpdate();
-        UIScene::restartCallback(sender, type);
-    }
-}
-
-void UILoadingBarTest_Right::nextCallback(Ref* sender, Widget::TouchEventType type)
-{
-    if (type == Widget::TouchEventType::ENDED)
-    {
-        unscheduleUpdate();
-        UIScene::nextCallback(sender, type);
-    }
 }
 
 // UILoadingBarTest_Left_Scale9
@@ -230,33 +183,6 @@ void UILoadingBarTest_Left_Scale9::update(float delta)
     loadingBar->setPercent(_count);
 }
 
-void UILoadingBarTest_Left_Scale9::previousCallback(Ref* sender, Widget::TouchEventType type)
-{
-    if (type == Widget::TouchEventType::ENDED)
-    {
-        unscheduleUpdate();
-        UIScene::previousCallback(sender, type);
-    }
-}
-
-void UILoadingBarTest_Left_Scale9::restartCallback(Ref* sender, Widget::TouchEventType type)
-{
-    if (type == Widget::TouchEventType::ENDED)
-    {
-        unscheduleUpdate();
-        UIScene::restartCallback(sender,  type);
-    }
-}
-
-void UILoadingBarTest_Left_Scale9::nextCallback(Ref* sender, Widget::TouchEventType type)
-{
-    if (type == Widget::TouchEventType::ENDED)
-    {
-        unscheduleUpdate();
-        UIScene::nextCallback(sender, type);
-    }
-}
-
 // UILoadingBarTest_Right_Scale9
 
 UILoadingBarTest_Right_Scale9::UILoadingBarTest_Right_Scale9()
@@ -312,34 +238,6 @@ void UILoadingBarTest_Right_Scale9::update(float delta)
     LoadingBar* loadingBar = static_cast<LoadingBar*>(_uiLayer->getChildByTag(0));
     loadingBar->setPercent(_count);
 }
-
-void UILoadingBarTest_Right_Scale9::previousCallback(Ref* sender, Widget::TouchEventType type)
-{
-    if (type == Widget::TouchEventType::ENDED)
-    {
-        unscheduleUpdate();
-        UIScene::previousCallback(sender, type);
-    }
-}
-
-void UILoadingBarTest_Right_Scale9::restartCallback(Ref* sender, Widget::TouchEventType type)
-{
-    if (type == Widget::TouchEventType::ENDED)
-    {
-        unscheduleUpdate();
-        UIScene::restartCallback(sender,  type);
-    }
-}
-
-void UILoadingBarTest_Right_Scale9::nextCallback(Ref* sender, Widget::TouchEventType type)
-{
-    if (type == Widget::TouchEventType::ENDED)
-    {
-        unscheduleUpdate();
-        UIScene::nextCallback(sender, type);
-    }
-}
-
 
 // UILoadingBarTest_Scale9_State_Change
 

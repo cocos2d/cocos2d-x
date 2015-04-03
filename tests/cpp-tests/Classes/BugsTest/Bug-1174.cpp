@@ -32,7 +32,7 @@ int check_for_error( Vec2 p1, Vec2 p2, Vec2 p3, Vec2 p4, float s, float t )
 
 bool Bug1174Layer::init()
 {
-    if (BugsTestBaseLayer::init())
+    if (BugsTestBase::init())
     {
 //         // seed
 //         srand(0);

@@ -2,100 +2,19 @@
 #include "../testResource.h"
 #include "cocos2d.h"
 
-static int sceneIdx = -1; 
-
-#define MAX_LAYER    11
-
-static Layer* createShaderLayer(int nIndex)
+ShaderTests::ShaderTests()
 {
-    switch (sceneIdx)
-    {
-        case 0: return new ShaderLensFlare();
-        case 1: return new ShaderMandelbrot();
-        case 2: return new ShaderJulia();
-        case 3: return new ShaderHeart();
-        case 4: return new ShaderFlower();
-        case 5: return new ShaderPlasma();
-        case 6: return new ShaderBlur();
-        case 7: return new ShaderRetroEffect();
-        case 8: return new ShaderMonjori();
-        case 9: return new ShaderGlow();
-        case 10: return new ShaderMultiTexture();
-    }
-    return nullptr;
-}
-
-static Layer* nextAction(void)
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = createShaderLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
-}
-
-static Layer* backAction(void)
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;    
-    
-    auto layer = createShaderLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
-}
-
-static Layer* restartAction(void)
-{
-    auto layer = createShaderLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
-}
-
-
-ShaderTestDemo::ShaderTestDemo()
-{
-
-}
-
-void ShaderTestDemo::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ShaderTestScene();
-    s->addChild( backAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void ShaderTestDemo::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ShaderTestScene();//CCScene::create();
-    s->addChild( nextAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-std::string ShaderTestDemo::title() const
-{
-    return "No title";
-}
-
-std::string ShaderTestDemo::subtitle() const
-{
-    return "";
-}
-
-void ShaderTestDemo::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ShaderTestScene();
-    s->addChild(restartAction()); 
-
-    Director::getInstance()->replaceScene(s);
-    s->release();    
+    ADD_TEST_CASE(ShaderLensFlare);
+    ADD_TEST_CASE(ShaderMandelbrot);
+    ADD_TEST_CASE(ShaderJulia);
+    ADD_TEST_CASE(ShaderHeart);
+    ADD_TEST_CASE(ShaderFlower);
+    ADD_TEST_CASE(ShaderPlasma);
+    ADD_TEST_CASE(ShaderBlur);
+    ADD_TEST_CASE(ShaderRetroEffect);
+    ADD_TEST_CASE(ShaderMonjori);
+    ADD_TEST_CASE(ShaderGlow);
+    ADD_TEST_CASE(ShaderMultiTexture);
 }
 
 ///---------------------------------------
@@ -824,18 +743,4 @@ void ShaderMultiTexture::changeTexture(Ref*)
     right->setTexture(textrue);
     auto programState = _sprite->getGLProgramState();
     programState->setUniformTexture("u_texture1", right->getTexture());
-}
-
-
-///---------------------------------------
-//
-// ShaderTestScene
-// 
-///---------------------------------------
-void ShaderTestScene::runThisTest()
-{
-    sceneIdx = -1;
-    addChild(nextAction());
-
-    Director::getInstance()->replaceScene(this);
 }
