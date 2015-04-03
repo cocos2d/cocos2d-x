@@ -5,13 +5,15 @@
 -- @parent_module ccexp
 
 --------------------------------
--- 
+-- brief Get the local video filie name.<br>
+-- return The video file name.
 -- @function [parent=#VideoPlayer] getFileName 
 -- @param self
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- 
+-- brief Get the URL of remoting video source.<br>
+-- return A remoting URL address.
 -- @function [parent=#VideoPlayer] getURL 
 -- @param self
 -- @return string#string ret (return value: string)
@@ -78,7 +80,8 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
+-- brief A function which will be called when video is playing.<br>
+-- param event @see VideoPlayer::EventType.
 -- @function [parent=#VideoPlayer] onPlayEvent 
 -- @param self
 -- @param #int event

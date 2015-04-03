@@ -87,12 +87,14 @@ public:
     /**
      * Default constructor
      * @js ctor
+     * @lua new
      */
     PageView();
     
     /**
      * Default destructor
      * @js NA
+     * @lua NA
      */
     virtual ~PageView();
     
@@ -200,6 +202,9 @@ public:
     virtual void setLayoutType(Type type) override{};
     virtual Type getLayoutType() const override{return Type::ABSOLUTE;};
     virtual std::string getDescription() const override;
+    /**
+     * @lua NA
+     */
     virtual void onEnter() override;
 
     /**   

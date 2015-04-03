@@ -111,7 +111,7 @@ FlatBuffersSerialize::FlatBuffersSerialize()
 
 FlatBuffersSerialize::~FlatBuffersSerialize()
 {
-    purge();
+    
 }
 
 FlatBuffersSerialize* FlatBuffersSerialize::getInstance()
@@ -123,8 +123,14 @@ FlatBuffersSerialize* FlatBuffersSerialize::getInstance()
     
     return _instanceFlatBuffersSerialize;
 }
-
+    
 void FlatBuffersSerialize::purge()
+{
+    CC_SAFE_DELETE(_instanceFlatBuffersSerialize);
+    
+}
+
+void FlatBuffersSerialize::destroyInstance()
 {
     CC_SAFE_DELETE(_instanceFlatBuffersSerialize);
 	

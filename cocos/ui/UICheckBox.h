@@ -82,11 +82,15 @@ public:
     
     /**
      * Default constructor.
+     * 
+     * @lua new
      */
     CheckBox();
 
     /**
      * Default destructor.
+     * 
+     * @lua NA
      */
     virtual ~CheckBox();
 

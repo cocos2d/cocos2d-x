@@ -64,7 +64,12 @@ public:
     
     /* Minimum delay in between sounds */
     double minDelay;
- 
+    
+    /**
+     * Defautl constructor
+     *
+     * @lua new
+     */
     AudioProfile()
     : maxInstances(0)
     , minDelay(0.0)

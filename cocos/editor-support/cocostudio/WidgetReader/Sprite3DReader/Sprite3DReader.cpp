@@ -67,6 +67,11 @@ namespace cocostudio
         CC_SAFE_DELETE(_instanceSprite3DReader);
     }
     
+    void Sprite3DReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(_instanceSprite3DReader);
+    }
+    
     Vec2 Sprite3DReader::getVec2Attribute(const tinyxml2::XMLAttribute* attribute) const
     {
         if(!attribute)

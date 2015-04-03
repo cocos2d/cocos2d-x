@@ -52,6 +52,7 @@ class MeshVertexData;
  * the MeshIndexData class.
  * @brief the MeshIndexData contain all of the indices data which mesh need.
  * @js NA
+ * @lua NA
  */
 class MeshIndexData : public Ref
 {
@@ -138,7 +139,7 @@ protected:
     int                  _vertexCount; //vertex count
 };
 
-// end of actions group
+// end of 3d group
 /// @}
 
 NS_CC_END

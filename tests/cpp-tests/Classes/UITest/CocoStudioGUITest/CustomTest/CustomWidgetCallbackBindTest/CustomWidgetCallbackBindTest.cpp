@@ -4,6 +4,7 @@
 
 #include "../../CustomGUIScene.h"
 #include "cocostudio/ActionTimeline/CSLoader.h"
+#include "cocostudio/CocoStudio.h"
 
 #include "base/ObjectFactory.h"
 
@@ -29,6 +30,13 @@ void CustomWidgetCallbackBindScene::onEnter()
     pMenuItem->setPosition(VisibleRect::right().x - 50, VisibleRect::bottom().y + 25);
     
     addChild(pMenu, 1);
+}
+
+void CustomWidgetCallbackBindScene::onExit()
+{
+    cocostudio::destroyCocosStudio();
+    
+    Scene::onExit();
 }
 
 void CustomWidgetCallbackBindScene::runThisTest()

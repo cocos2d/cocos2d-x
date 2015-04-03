@@ -34,6 +34,11 @@
 NS_CC_BEGIN
 
 /**
+ * @addtogroup _3d
+ * @{
+ */
+
+/**
  TextureCube is a collection of six separate square textures that are put 
  onto the faces of an imaginary cube.
 */
@@ -78,6 +83,9 @@ protected:
 private:
     std::vector<std::string> _imgPath;
 };
+
+// end of 3d group
+/// @}
 
 NS_CC_END
 

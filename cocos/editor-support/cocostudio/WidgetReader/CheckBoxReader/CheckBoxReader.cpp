@@ -45,6 +45,11 @@ namespace cocostudio
         return instanceCheckBoxReader;
     }
     
+    void CheckBoxReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instanceCheckBoxReader);
+    }
+    
     void CheckBoxReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
     {
         

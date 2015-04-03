@@ -86,7 +86,8 @@
 -- @return ControlColourPicker#ControlColourPicker self (return value: cc.ControlColourPicker)
         
 --------------------------------
--- js ctor
+-- js ctor<br>
+-- lua new
 -- @function [parent=#ControlColourPicker] ControlColourPicker 
 -- @param self
 -- @return ControlColourPicker#ControlColourPicker self (return value: cc.ControlColourPicker)

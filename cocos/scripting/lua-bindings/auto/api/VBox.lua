@@ -13,7 +13,9 @@
 -- @return VBox#VBox ret (return value: ccui.VBox)
 
 --------------------------------
--- Default constructor
+-- Default constructor<br>
+-- js ctor<br>
+-- lua new
 -- @function [parent=#VBox] VBox 
 -- @param self
 -- @return VBox#VBox self (return value: ccui.VBox)

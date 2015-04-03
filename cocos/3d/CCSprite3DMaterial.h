@@ -41,12 +41,15 @@ class Texture2D;
 /**
  * @brief the sprite3D material is only texture for now
  * @js NA
+ * @lua NA
  */
 class Sprite3DMaterialCache
 {
 public:
     /**get & destroy cache*/
     static Sprite3DMaterialCache* getInstance();
+
+    /**destroy the instance*/
     static void destroyInstance();
     
     /**add to cache*/
@@ -71,7 +74,7 @@ protected:
     
 };
 
-// end of actions group
+// end of 3d group
 /// @}
 
 NS_CC_END

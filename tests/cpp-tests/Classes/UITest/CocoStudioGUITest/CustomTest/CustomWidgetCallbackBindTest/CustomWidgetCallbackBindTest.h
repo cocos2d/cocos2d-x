@@ -10,6 +10,7 @@ class CustomWidgetCallbackBindScene : public TestScene
 {
 public:
     virtual void onEnter() override;
+    virtual void onExit() override;
     virtual void runThisTest();
     void BackCallback(cocos2d::Ref* pSender);
 };

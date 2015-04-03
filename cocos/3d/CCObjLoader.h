@@ -24,6 +24,7 @@ NS_CC_BEGIN
 /**
  * @brief .obj file Loader
  * @js NA
+ * @lua NA
  **/
 class ObjLoader
 {
@@ -106,7 +107,7 @@ public:
 
 };
 
-// end of actions group
+// end of 3d group
 /// @}
 
 NS_CC_END
