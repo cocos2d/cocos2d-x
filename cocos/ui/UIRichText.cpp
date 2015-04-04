@@ -24,30 +24,18 @@
 
 #include "UIRichText.h"
 #include "platform/CCFileUtils.h"
-#include "2d/CCLabel.h"
-#include "2d/CCSprite.h"
+#include "base/ccUTF8.h"
+#include "ui/UIHelper.h"
+#include "2d/CCDrawingPrimitives.h"
+#include "2d/CCSpriteFrameCache.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCCustomCommand.h"
+#include "CCDirector.h"
 
 NS_CC_BEGIN
 
 namespace ui {
-    
-static int _calcCharCount(const char * pszText)
-{
-    int n = 0;
-    char ch = 0;
-    while ((ch = *pszText))
-    {
-        CC_BREAK_IF(! ch);
-        
-        if (0x80 != (0xC0 & ch))
-        {
-            ++n;
-        }
-        ++pszText;
-    }
-    return n;
-}
-    
+
 bool RichElement::init(int tag, const Color3B &color, GLubyte opacity)
 {
     _tag = tag;
@@ -57,25 +45,28 @@ bool RichElement::init(int tag, const Color3B &color, GLubyte opacity)
 }
     
     
-RichElementText* RichElementText::create(int tag, const Color3B &color, GLubyte opacity, const std::string& text, const std::string& fontName, float fontSize)
+RichElementText* RichElementText::create(int tag, const Color3B &color, GLubyte opacity, const std::string& text, const std::string& fontName, float fontSize,bool isUnderLine,bool isOutLine,const Color4B& outLineColor)
 {
-    RichElementText* element = new RichElementText();
-    if (element && element->init(tag, color, opacity, text, fontName, fontSize))
+    RichElementText* element = new (std::nothrow) RichElementText();
+    if (element && element->init(tag, color, opacity, text, fontName, fontSize,isUnderLine,isOutLine,outLineColor))
     {
         element->autorelease();
         return element;
     }
     CC_SAFE_DELETE(element);
-    return NULL;
+    return nullptr;
 }
     
-bool RichElementText::init(int tag, const Color3B &color, GLubyte opacity, const std::string& text, const std::string& fontName, float fontSize)
+bool RichElementText::init(int tag, const Color3B &color, GLubyte opacity, const std::string& text, const std::string& fontName, float fontSize,bool isUnderLine,bool isOutLine,const Color4B& outLineColor)
 {
     if (RichElement::init(tag, color, opacity))
     {
         _text = text;
         _fontName = fontName;
         _fontSize = fontSize;
+		_isUnderLine = isUnderLine;
+        _isOutLine = isOutLine;
+        _outLineColor = outLineColor;
         return true;
     }
     return false;
@@ -83,14 +74,14 @@ bool RichElementText::init(int tag, const Color3B &color, GLubyte opacity, const
 
 RichElementImage* RichElementImage::create(int tag, const Color3B &color, GLubyte opacity, const std::string& filePath)
 {
-    RichElementImage* element = new RichElementImage();
+    RichElementImage* element = new (std::nothrow) RichElementImage();
     if (element && element->init(tag, color, opacity, filePath))
     {
         element->autorelease();
         return element;
     }
     CC_SAFE_DELETE(element);
-    return NULL;
+    return nullptr;
 }
     
 bool RichElementImage::init(int tag, const Color3B &color, GLubyte opacity, const std::string& filePath)
@@ -105,14 +96,14 @@ bool RichElementImage::init(int tag, const Color3B &color, GLubyte opacity, cons
 
 RichElementCustomNode* RichElementCustomNode::create(int tag, const Color3B &color, GLubyte opacity, cocos2d::Node *customNode)
 {
-    RichElementCustomNode* element = new RichElementCustomNode();
+    RichElementCustomNode* element = new (std::nothrow) RichElementCustomNode();
     if (element && element->init(tag, color, opacity, customNode))
     {
         element->autorelease();
         return element;
     }
     CC_SAFE_DELETE(element);
-    return NULL;
+    return nullptr;
 }
     
 bool RichElementCustomNode::init(int tag, const Color3B &color, GLubyte opacity, cocos2d::Node *customNode)
@@ -126,6 +117,32 @@ bool RichElementCustomNode::init(int tag, const Color3B &color, GLubyte opacity,
     return false;
 }
     
+bool RichCacheElement::init( bool isUse, Node* node )
+{
+	_isUse = isUse;
+	_node = node;
+	_node->retain();
+	return true;
+}
+
+RichCacheElement* RichCacheElement::create( bool isUse, Node* node )
+{
+	RichCacheElement* element = new (std::nothrow) RichCacheElement();
+	if (element && element->init(isUse,node))
+	{
+		element->autorelease();
+		return element;
+	}
+	CC_SAFE_DELETE(element);
+	return nullptr;
+}
+
+RichCacheElement::~RichCacheElement()
+{
+	if (_node) _node->release();
+}
+
+
 RichText::RichText():
 _formatTextDirty(true),
 _leftSpaceWidth(0.0f),
@@ -138,18 +155,21 @@ _elementRenderersContainer(nullptr)
 RichText::~RichText()
 {
     _richElements.clear();
+	_cacheLabElements.clear();
+	_cacheImgElements.clear();
+    _underLineTags.clear();
 }
     
 RichText* RichText::create()
 {
-    RichText* widget = new RichText();
+    RichText* widget = new (std::nothrow) RichText();
     if (widget && widget->init())
     {
         widget->autorelease();
         return widget;
     }
     CC_SAFE_DELETE(widget);
-    return NULL;
+    return nullptr;
 }
     
 bool RichText::init()
@@ -191,12 +211,32 @@ void RichText::removeElement(RichElement *element)
     _richElements.eraseObject(element);
     _formatTextDirty = true;
 }
-    
+
+void RichText::cleanAllElement()
+{
+	_richElements.clear();
+	auto len = _cacheImgElements.size();
+	for (int i=0;i<len;i++)
+	{
+		_cacheImgElements.at(i)->_isUse = false;
+		_cacheImgElements.at(i)->_node->removeFromParentAndCleanup(false);
+	}
+
+	len = _cacheLabElements.size();
+	for (int i=0;i<len;i++)
+	{
+		_cacheLabElements.at(i)->_isUse = false;
+		_cacheLabElements.at(i)->_node->removeFromParentAndCleanup(false);
+	}
+    _underLineTags.clear();
+	_formatTextDirty = true;
+}
+
 void RichText::formatText()
 {
     if (_formatTextDirty)
     {
-        _elementRenderersContainer->removeAllChildren();
+        _elementRenderersContainer->removeAllChildrenWithCleanup(false);
         _elementRenders.clear();
         if (_ignoreSize)
         {
@@ -204,26 +244,19 @@ void RichText::formatText()
             for (ssize_t i=0; i<_richElements.size(); i++)
             {
                 RichElement* element = _richElements.at(i);
-                Node* elementRenderer = NULL;
+                Node* elementRenderer = nullptr;
                 switch (element->_type)
                 {
                     case RichElement::Type::TEXT:
                     {
-                        RichElementText* elmtText = static_cast<RichElementText*>(element);
-                        if (FileUtils::getInstance()->isFileExist(elmtText->_fontName))
-                        {
-                            elementRenderer = Label::createWithTTF(elmtText->_text.c_str(), elmtText->_fontName, elmtText->_fontSize);
-                        }
-                        else
-                        {
-                            elementRenderer = Label::createWithSystemFont(elmtText->_text.c_str(), elmtText->_fontName, elmtText->_fontSize);
-                        }
+						RichElementText* elmtText = static_cast<RichElementText*>(element);
+						elementRenderer = makeLabel(getCacheLabel(),elmtText->_color,elmtText->_text.c_str(), elmtText->_fontName, elmtText->_fontSize,elmtText->_isUnderLine,elmtText->_tag,elmtText->_isOutLine,elmtText->_outLineColor);
                         break;
                     }
                     case RichElement::Type::IMAGE:
                     {
                         RichElementImage* elmtImage = static_cast<RichElementImage*>(element);
-                        elementRenderer = Sprite::create(elmtImage->_filePath.c_str());
+						elementRenderer = makeImage(getCacheImage(),elmtImage->_filePath,elmtImage->_tag);
                         break;
                     }
                     case RichElement::Type::CUSTOM:
@@ -235,7 +268,6 @@ void RichText::formatText()
                     default:
                         break;
                 }
-                elementRenderer->setColor(element->_color);
                 elementRenderer->setOpacity(element->_opacity);
                 pushToContainer(elementRenderer);
             }
@@ -252,19 +284,19 @@ void RichText::formatText()
                     case RichElement::Type::TEXT:
                     {
                         RichElementText* elmtText = static_cast<RichElementText*>(element);
-                        handleTextRenderer(elmtText->_text.c_str(), elmtText->_fontName.c_str(), elmtText->_fontSize, elmtText->_color, elmtText->_opacity);
+                        handleTextRenderer(elmtText->_text.c_str(), elmtText->_fontName.c_str(), elmtText->_fontSize,elmtText->_isUnderLine, elmtText->_color, elmtText->_opacity,elmtText->_tag,elmtText->_isOutLine,elmtText->_outLineColor);
                         break;
                     }
                     case RichElement::Type::IMAGE:
                     {
                         RichElementImage* elmtImage = static_cast<RichElementImage*>(element);
-                        handleImageRenderer(elmtImage->_filePath.c_str(), elmtImage->_color, elmtImage->_opacity);
+                        handleImageRenderer(elmtImage->_filePath.c_str(), elmtImage->_color, elmtImage->_opacity,elmtImage->_tag);
                         break;
                     }
                     case RichElement::Type::CUSTOM:
                     {
                         RichElementCustomNode* elmtCustom = static_cast<RichElementCustomNode*>(element);
-                        handleCustomRenderer(elmtCustom->_customNode);
+                        handleCustomRenderer(elmtCustom->_customNode,elmtCustom->_tag);
                         break;
                     }
                     default:
@@ -277,66 +309,134 @@ void RichText::formatText()
     }
 }
     
-void RichText::handleTextRenderer(const std::string& text, const std::string& fontName, float fontSize, const Color3B &color, GLubyte opacity)
-{
-    auto fileExist = FileUtils::getInstance()->isFileExist(fontName);
-    Label* textRenderer = nullptr;
-    if (fileExist)
-    {
-        textRenderer = Label::createWithTTF(text, fontName, fontSize);
-    } 
-    else
-    {
-        textRenderer = Label::createWithSystemFont(text, fontName, fontSize);
-    }
-    float textRendererWidth = textRenderer->getContentSize().width;
-    _leftSpaceWidth -= textRendererWidth;
-    if (_leftSpaceWidth < 0.0f)
-    {
-        float overstepPercent = (-_leftSpaceWidth) / textRendererWidth;
-        std::string curText = text;
-        size_t stringLength = _calcCharCount(text.c_str());
-        int leftLength = stringLength * (1.0f - overstepPercent);
-        std::string leftWords = curText.substr(0, leftLength);
-        std::string cutWords = curText.substr(leftLength, curText.length()-1);
-        if (leftLength > 0)
+void RichText::handleTextRenderer(const std::string& text, const std::string& fontName, float fontSize,bool isUnder, const Color3B& color, GLubyte opacity,int tag,bool isOutLine,const Color4B& outLineColor){
+    Node* textRenderer = nullptr;
+    float textRendererWidth = 0;
+    
+    stringVector vect = split(text,"\n");
+    if (vect.size() == 1 ){
+        textRenderer = makeLabel(getCacheLabel(),color,text, fontName, fontSize,isUnder,tag,isOutLine,outLineColor);
+        
+        textRendererWidth = textRenderer->getContentSize().width;
+        _leftSpaceWidth -= textRendererWidth;
+        
+        
+        if (_leftSpaceWidth < 0.0f)
         {
-            Label* leftRenderer = nullptr;
-            if (fileExist)
+            float overstepPercent = (-_leftSpaceWidth) / textRendererWidth;
+            std::string curText = text;
+            size_t stringLength = StringUtils::getCharacterCountInUTF8String(text);
+            int leftLength = stringLength * (1.0f - overstepPercent);
+            std::string leftWords = Helper::getSubStringOfUTF8String(curText,0,leftLength);
+            std::string cutWords = Helper::getSubStringOfUTF8String(curText, leftLength, stringLength - leftLength);
+            if (leftLength > 0)
             {
-                leftRenderer = Label::createWithTTF(leftWords.substr(0, leftLength).c_str(), fontName, fontSize);
-            } 
-            else
-            {
-                leftRenderer = Label::createWithSystemFont(leftWords.substr(0, leftLength).c_str(), fontName, fontSize);
+                Node* leftRenderer = nullptr;
+                leftRenderer = makeLabel(getCacheLabel(),color,leftWords, fontName, fontSize,isUnder,tag,isOutLine,outLineColor);
+                if (leftRenderer)
+                {
+                    leftRenderer->setOpacity(opacity);
+                    pushToContainer(leftRenderer);
+                }
             }
-            if (leftRenderer)
+            
+            addNewLine();
+            handleTextRenderer(cutWords.c_str(), fontName, fontSize,isUnder, color, opacity,tag,isOutLine,outLineColor);
+        }
+        else
+        {
+            textRenderer->setOpacity(opacity);
+            pushToContainer(textRenderer);
+        }
+        
+    }else{
+        auto len = vect.size();
+        for (int i=0;i<len;i++)
+        {
+            std::string s = vect.at(i);
+            textRenderer = makeLabel(getCacheLabel(),color,s, fontName, fontSize,isUnder,tag,isOutLine,outLineColor);
+            textRenderer->setTag(tag);
+            
+            if (s == "") {
+                ((Label*)textRenderer)->setString(" ");//hold on the new line
+                pushToContainer(textRenderer);
+                addNewLine();
+                continue;
+            }
+            
+            textRendererWidth = textRenderer->getContentSize().width;
+            _leftSpaceWidth -= textRendererWidth;
+            if (_leftSpaceWidth < 0.0f)
             {
-                leftRenderer->setColor(color);
-                leftRenderer->setOpacity(opacity);
-                pushToContainer(leftRenderer);
+                float overstepPercent = (-_leftSpaceWidth) / textRendererWidth;
+                std::string curText = s;
+                size_t stringLength = StringUtils::getCharacterCountInUTF8String(s);
+                int leftLength = stringLength * (1.0f - overstepPercent);
+                std::string leftWords = Helper::getSubStringOfUTF8String(curText,0,leftLength);
+                std::string cutWords = Helper::getSubStringOfUTF8String(curText, leftLength, stringLength - leftLength);
+                if (leftLength > 0)
+                {
+                    Node* leftRenderer = nullptr;
+                    leftRenderer = makeLabel(getCacheLabel(),color,leftWords, fontName, fontSize,isUnder,tag,isOutLine,outLineColor);
+                    if (leftRenderer)
+                    {
+                        leftRenderer->setOpacity(opacity);
+                        pushToContainer(leftRenderer);
+                    }
+                }
+                
+                addNewLine();
+                handleTextRenderer(cutWords.c_str(), fontName, fontSize,isUnder, color, opacity,tag,isOutLine,outLineColor);
+            }else{
+                textRenderer->setOpacity(opacity);
+                pushToContainer(textRenderer);
+                addNewLine();
             }
         }
+    }
 
-        addNewLine();
-        handleTextRenderer(cutWords.c_str(), fontName, fontSize, color, opacity);
-    }
-    else
+}
+
+    void RichText::draw(Renderer* renderer, const Mat4 &transform, uint32_t flags)
     {
-        textRenderer->setColor(color);
-        textRenderer->setOpacity(opacity);
-        pushToContainer(textRenderer);
+        _customCommand.init(_globalZOrder);
+        _customCommand.func = CC_CALLBACK_0(RichText::onDraw, this, transform, flags);
+        renderer->addCommand(&_customCommand);
     }
+    
+    void RichText::onDraw(const Mat4 &transform, uint32_t flags)
+    {
+        Director* director = Director::getInstance();
+        director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+        director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
+        
+        auto children = _elementRenderersContainer->getChildren();
+        auto len = children.size();
+            for (int i=0; i<len; i++) {
+                Node* pChild = children.at(i);
+                if (_underLineTags.count(pChild->getTag()) >= 1){
+                    DrawPrimitives::setDrawColor4B(pChild->getDisplayedColor().r,
+                                                   pChild->getDisplayedColor().g,
+                                                   pChild->getDisplayedColor().b,
+                                                   pChild->getDisplayedOpacity());
+                    DrawPrimitives::setPointSize(2);
+                    DrawPrimitives::drawLine(pChild->getPosition(),
+                                            Vec2(pChild->getContentSize().width+pChild->getPosition().x,pChild->getPosition().y));
+                }
+        }
+        //end draw
+        director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    }
+    
+void RichText::handleImageRenderer(const std::string& fileParh, const Color3B &color, GLubyte opacity,int tag)
+{
+	Node* imageRenderer = makeImage(getCacheImage(),fileParh,tag);
+    handleCustomRenderer(imageRenderer,tag);
 }
     
-void RichText::handleImageRenderer(const std::string& fileParh, const Color3B &color, GLubyte opacity)
+void RichText::handleCustomRenderer(cocos2d::Node *renderer,int tag)
 {
-    Sprite* imageRenderer = Sprite::create(fileParh);
-    handleCustomRenderer(imageRenderer);
-}
-    
-void RichText::handleCustomRenderer(cocos2d::Node *renderer)
-{
+	renderer->setTag(tag);
     Size imgSize = renderer->getContentSize();
     _leftSpaceWidth -= imgSize.width;
     if (_leftSpaceWidth < 0.0f)
@@ -370,8 +470,8 @@ void RichText::formarRenderers()
         {
             Node* l = row->at(j);
             l->setAnchorPoint(Vec2::ZERO);
-            l->setPosition(Vec2(nextPosX, 0.0f));
-            _elementRenderersContainer->addChild(l, 1, (int)j);
+            l->setPosition(nextPosX, 0.0f);
+            _elementRenderersContainer->addChild(l, 1);
             Size iSize = l->getContentSize();
             newContentSizeWidth += iSize.width;
             newContentSizeHeight = MAX(newContentSizeHeight, iSize.height);
@@ -409,12 +509,12 @@ void RichText::formarRenderers()
             {
                 Node* l = row->at(j);
                 l->setAnchorPoint(Vec2::ZERO);
-                l->setPosition(Vec2(nextPosX, nextPosY));
-                _elementRenderersContainer->addChild(l, 1, (int)(i*10 + j));
+                l->setPosition(nextPosX, nextPosY);
+                _elementRenderersContainer->addChild(l, 1);
                 nextPosX += l->getContentSize().width;
             }
         }
-        _elementRenderersContainer->setContentSize(_size);
+        _elementRenderersContainer->setContentSize(_contentSize);
         delete [] maxHeights;
     }
     
@@ -430,14 +530,19 @@ void RichText::formarRenderers()
     if (_ignoreSize)
     {
         Size s = getVirtualRendererSize();
-        _size = s;
+        this->setContentSize(s);
     }
     else
     {
-        _size = _customSize;
+        this->setContentSize(_customSize);
     }
-    updateContentSizeWithTextureSize(_size);
+    updateContentSizeWithTextureSize(_contentSize);
     _elementRenderersContainer->setPosition(_contentSize.width / 2.0f, _contentSize.height / 2.0f);
+}
+    
+void RichText::adaptRenderers()
+{
+    this->formatText();
 }
     
 void RichText::pushToContainer(cocos2d::Node *renderer)
@@ -447,15 +552,6 @@ void RichText::pushToContainer(cocos2d::Node *renderer)
         return;
     }
     _elementRenders[_elementRenders.size()-1]->pushBack(renderer);
-}
-
-void RichText::visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
-{
-    if (_enabled)
-    {
-        formatText();
-        Widget::visit(renderer, parentTransform, parentFlags);
-    }
 }
     
 void RichText::setVerticalSpace(float space)
@@ -469,7 +565,7 @@ void RichText::setAnchorPoint(const Vec2 &pt)
     _elementRenderersContainer->setAnchorPoint(pt);
 }
     
-const Size& RichText::getVirtualRendererSize() const
+Size RichText::getVirtualRendererSize() const
 {
     return _elementRenderersContainer->getContentSize();
 }
@@ -486,6 +582,106 @@ void RichText::ignoreContentAdaptWithSize(bool ignore)
 std::string RichText::getDescription() const
 {
     return "RichText";
+}
+
+Label* RichText::getCacheLabel()
+{
+	Label* ret = nullptr;
+	auto len = _cacheLabElements.size();
+	for (int i=0;i<len;i++)
+	{
+		RichCacheElement* pElement = _cacheLabElements.at(i);
+		if (pElement->_isUse == false)
+		{
+			pElement->_isUse = true;
+			ret = (Label*)pElement->_node;
+			break;
+		}
+	}
+	if (ret == nullptr){
+		ret = Label::create();
+		_cacheLabElements.pushBack(RichCacheElement::create(true,ret));
+	}
+	return ret;
+}
+
+Sprite* RichText::getCacheImage()
+{
+	Sprite* ret = nullptr;
+	auto len = _cacheImgElements.size();
+	for (int i=0;i<len;i++)
+	{
+		RichCacheElement* pElement = _cacheImgElements.at(i);
+		if (pElement->_isUse == false)
+		{
+			pElement->_isUse = true;
+			ret = (Sprite*)pElement->_node;
+			break;
+		}
+	}
+	if (ret == nullptr){
+		ret = Sprite::create();
+		_cacheImgElements.pushBack(RichCacheElement::create(true,ret));
+	}
+	return ret;
+}
+
+Node* RichText::makeLabel( Label* pTarget,const Color3B& color, const std::string& text, const std::string& fontName, int fontSize,bool isUnder, int tag,bool isOutLine,const Color4B& outLineColor)
+{
+    bool fileExist = FileUtils::getInstance()->isFileExist(fontName);
+    
+    if (fileExist) {
+        TTFConfig ttfConfig(fontName.c_str(),fontSize,GlyphCollection::DYNAMIC);
+        pTarget->setTTFConfig(ttfConfig);
+        if (isOutLine) {
+            pTarget->setTextColor(Color4B(color));
+            pTarget->enableOutline(outLineColor,2);
+        }else{
+            pTarget->setColor(color);
+        }
+       
+    }else{
+        pTarget->setColor(color);
+        pTarget->setSystemFontName(fontName);
+        pTarget->setSystemFontSize(fontSize);
+    }
+    if (isUnder) {
+        _underLineTags.insert(tag);
+    }
+    pTarget->setString(text);
+    pTarget->setTag(tag);
+	return pTarget;
+}
+
+Node* RichText::makeImage( Sprite* pTarget, const std::string& filePath,int tag )
+{
+    auto spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(filePath);
+    if(spriteFrame && pTarget->isFrameDisplayed(spriteFrame) == false){
+        pTarget->setSpriteFrame(spriteFrame);
+    }else{
+        pTarget->setTexture(filePath);
+    }
+    pTarget->setTag(tag);
+	return pTarget;
+}
+
+//////////////////////////////////////////////////////////////////////////
+std::vector< std::string > RichText::split(const std::string& s,const std::string& delim)
+{
+	std::vector< std::string > ret;
+	size_t last = 0;
+	size_t index=s.find_first_of(delim,last);
+	while (index!=std::string::npos)
+	{
+		ret.push_back(s.substr(last,index-last));
+		last=index+1;
+		index=s.find_first_of(delim,last);
+	}
+	if (index-last>0)
+	{
+		ret.push_back(s.substr(last,index-last));
+	}
+	return ret;
 }
 
 }
