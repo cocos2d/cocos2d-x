@@ -383,7 +383,7 @@ public:
     virtual id getCocoaWindow() = 0;
 #endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) */
     
-    virtual void makeContextCurrent();
+    virtual void makeContextCurrent() {}
     
 protected:
     void updateDesignResolutionSize();
