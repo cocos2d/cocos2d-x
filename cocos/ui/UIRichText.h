@@ -26,12 +26,16 @@
 #define __UIRICHTEXT_H__
 
 #include "ui/UIWidget.h"
+#include "ui/GUIExport.h"
+#include "2d/CCSprite.h"
+#include "2d/CCLabel.h"
+#include <set>
 
 NS_CC_BEGIN
 
 namespace ui {
     
-class RichElement : public Ref
+class CC_GUI_DLL RichElement : public Ref
 {
 public:
     enum class Type
@@ -51,22 +55,25 @@ protected:
     friend class RichText;
 };
     
-class RichElementText : public RichElement
+class CC_GUI_DLL RichElementText : public RichElement
 {
 public:
     RichElementText(){_type = Type::TEXT;};
     virtual ~RichElementText(){};
-    bool init(int tag, const Color3B& color, GLubyte opacity, const std::string& text, const std::string& fontName, float fontSize);
-    static RichElementText* create(int tag, const Color3B& color, GLubyte opacity, const std::string& text, const std::string& fontName, float fontSize);
+    bool init(int tag, const Color3B& color, GLubyte opacity, const std::string& text, const std::string& fontName, float fontSize,bool isUnderLine,bool isOutLine,const Color4B& outLineColor);
+    static RichElementText* create(int tag, const Color3B& color, GLubyte opacity, const std::string& text, const std::string& fontName, float fontSize,bool isUnderLine = false,bool isOutLine = false,const Color4B& outLineColor=Color4B::WHITE);
 protected:
     std::string _text;
     std::string _fontName;
     float _fontSize;
+	bool _isUnderLine;
+    bool _isOutLine;
+    Color4B _outLineColor;
     friend class RichText;
     
 };
     
-class RichElementImage : public RichElement
+class CC_GUI_DLL RichElementImage : public RichElement
 {
 public:
     RichElementImage(){_type = Type::IMAGE;};
@@ -80,7 +87,7 @@ protected:
     friend class RichText;
 };
     
-class RichElementCustomNode : public RichElement
+class CC_GUI_DLL RichElementCustomNode : public RichElement
 {
 public:
     RichElementCustomNode(){_type = Type::CUSTOM;};
@@ -92,7 +99,21 @@ protected:
     friend class RichText;
 };
     
-class RichText : public Widget
+class RichCacheElement : public Ref
+{
+public:
+	RichCacheElement():_isUse(false),_node(nullptr){};
+	virtual ~RichCacheElement();
+	bool init(bool isUse, Node* node);
+	static RichCacheElement* create(bool isUse, Node* node);
+protected:
+	bool _isUse;
+	Node* _node;
+	friend class RichText;
+};
+
+typedef std::vector< std::string > stringVector;
+class CC_GUI_DLL RichText : public Widget
 {
 public:
     RichText();
@@ -102,29 +123,45 @@ public:
     void pushBackElement(RichElement* element);
     void removeElement(int index);
     void removeElement(RichElement* element);
-    virtual void visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
+
     void setVerticalSpace(float space);
     virtual void setAnchorPoint(const Vec2 &pt);
-    virtual const Size& getVirtualRendererSize() const override;
+    virtual Size getVirtualRendererSize() const override;
+	void cleanAllElement();
     void formatText();
     virtual void ignoreContentAdaptWithSize(bool ignore);
     virtual std::string getDescription() const override;
+	Node* getContainer(){ return _elementRenderersContainer; };
+	stringVector split(const std::string& s,const std::string& delim);
     
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
     
 protected:
+    void onDraw(const Mat4 &transform, uint32_t flags);
+    CustomCommand _customCommand;
+    virtual void adaptRenderers();
+
     virtual void initRenderer();
     void pushToContainer(Node* renderer);
-    void handleTextRenderer(const std::string& text, const std::string& fontName, float fontSize, const Color3B& color, GLubyte opacity);
-    void handleImageRenderer(const std::string& fileParh, const Color3B& color, GLubyte opacity);
-    void handleCustomRenderer(Node* renderer);
+    void handleTextRenderer(const std::string& text, const std::string& fontName, float fontSize,bool isUnder, const Color3B& color, GLubyte opacity,int tag,bool isOutLine,const Color4B& outLineColor);
+    void handleImageRenderer(const std::string& fileParh, const Color3B& color, GLubyte opacity,int tag);
+    void handleCustomRenderer(Node* renderer,int tag);
     void formarRenderers();
     void addNewLine();
+
+	Label* getCacheLabel();
+	Sprite* getCacheImage();
+	Node* makeLabel(Label* pTarget,const Color3B& color, const std::string& text, const std::string& fontName, int fontSize,bool isUnder, int tag,bool isOutLine,const Color4B& outLineColor);
+	Node* makeImage(Sprite* pTarget, const std::string& filePath,int tag);
 protected:
     bool _formatTextDirty;
     Vector<RichElement*> _richElements;
     std::vector<Vector<Node*>*> _elementRenders;
+	Vector<RichCacheElement*> _cacheLabElements;
+	Vector<RichCacheElement*> _cacheImgElements;
+    std::set<int> _underLineTags;
     float _leftSpaceWidth;
     float _verticalSpace;
     Node* _elementRenderersContainer;
