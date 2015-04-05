@@ -339,4 +339,26 @@ public: virtual void set##funName(varType var)   \
     #endif
 #endif
 
+
+/** @def CC_MAKE_SUITABLE_F_OPEN
+* Windows fopen can't support UTF-8 filename
+* Need convert all parameters fopen and other 3rd-party libs
+* CC_PLATFORM_WP8 and CC_PLATFORM_WINRT the same needs?
+*
+* @param filename    std::string name file for convertation
+* @return const char* filename
+*/
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+/**
+*  Convert utf8 string to ansii
+*
+*  @param  filename in Utf8 ( all filePath )
+*  @return ansii string use WideCharToMultiByte(CP_ACP)
+*/
+std::string CC_DLL StringUtf8ToAnsi(const std::string& strUtf8);
+#define CC_MAKE_SUITABLE_F_OPEN(filename) StringUtf8ToAnsi(filename).c_str()
+#else
+#define CC_MAKE_SUITABLE_F_OPEN(filename) filename.c_str()
+#endif
+
 #endif // __CC_PLATFORM_MACROS_H__

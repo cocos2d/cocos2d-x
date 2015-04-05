@@ -31,6 +31,7 @@ THE SOFTWARE.
 #ifdef __MINGW32__
 #include <string.h>
 #endif
+#include <string>
 
 #if defined(CC_STATIC)
     #define CC_DLL

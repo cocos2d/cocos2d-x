@@ -132,7 +132,7 @@ static void setValueForKey(const char* pKey, const char* pValue)
     // save file and free doc
 	if (doc)
 	{
-		doc->SaveFile(UserDefault::getInstance()->getXMLFilePath().c_str());
+        doc->SaveFile(CC_MAKE_SUITABLE_F_OPEN(UserDefault::getInstance()->getXMLFilePath()));
 		delete doc;
 	}
 }
@@ -484,7 +484,7 @@ bool UserDefault::createXMLFile()
 		return false;  
 	}  
 	pDoc->LinkEndChild(pRootEle);  
-	bRet = tinyxml2::XML_SUCCESS == pDoc->SaveFile(_filePath.c_str());
+        bRet = tinyxml2::XML_SUCCESS == pDoc->SaveFile(CC_MAKE_SUITABLE_F_OPEN(_filePath));
 
 	if(pDoc)
 	{

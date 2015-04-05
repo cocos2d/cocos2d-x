@@ -355,7 +355,7 @@ bool AssetsManagerEx::decompress(const std::string &zip)
             }
             
             // Create a file to store current file.
-            FILE *out = fopen(fullPath.c_str(), "wb");
+            FILE *out = fopen(CC_MAKE_SUITABLE_F_OPEN(fullPath), "wb");
             if (!out)
             {
                 CCLOG("AssetsManagerEx : can not create decompress destination file %s\n", fullPath.c_str());

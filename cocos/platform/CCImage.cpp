@@ -2149,7 +2149,7 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
         png_colorp palette;
         png_bytep *row_pointers;
 
-        fp = fopen(filePath.c_str(), "wb");
+        fp = fopen(CC_MAKE_SUITABLE_F_OPEN(filePath), "wb");
         CC_BREAK_IF(nullptr == fp);
 
         png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
@@ -2298,7 +2298,7 @@ bool Image::saveImageToJPG(const std::string& filePath)
         /* Now we can initialize the JPEG compression object. */
         jpeg_create_compress(&cinfo);
 
-        CC_BREAK_IF((outfile = fopen(filePath.c_str(), "wb")) == nullptr);
+        CC_BREAK_IF((outfile = fopen(CC_MAKE_SUITABLE_F_OPEN(filePath), "wb")) == nullptr);
         
         jpeg_stdio_dest(&cinfo, outfile);
 

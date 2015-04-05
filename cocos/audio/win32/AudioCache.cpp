@@ -96,8 +96,9 @@ void AudioCache::readDataTask()
      case FileFormat::OGG:
          {
              vf = new OggVorbis_File;
-             if (ov_fopen(_fileFullPath.c_str(), vf)){
-                 log("Input does not appear to be an Ogg bitstream.\n");
+             int openCode;
+             if (openCode = ov_fopen(CC_MAKE_SUITABLE_F_OPEN(_fileFullPath), vf)){
+                 log("Input does not appear to be an Ogg bitstream: %s. Code: 0x%x\n", _fileFullPath.c_str(), openCode);
                  goto ExitThread;
              }
 

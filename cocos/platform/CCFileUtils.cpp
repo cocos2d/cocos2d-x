@@ -403,7 +403,7 @@ bool FileUtils::writeToFile(ValueMap& dict, const std::string &fullPath)
     }
     rootEle->LinkEndChild(innerDict);
     
-    bool ret = tinyxml2::XML_SUCCESS == doc->SaveFile(fullPath.c_str());
+    bool ret = tinyxml2::XML_SUCCESS == doc->SaveFile(CC_MAKE_SUITABLE_F_OPEN(fullPath));
     
     delete doc;
     return ret;
@@ -566,7 +566,7 @@ static Data getData(const std::string& filename, bool forString)
     {
         // Read the file from hardware
         std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
-        FILE *fp = fopen(fullPath.c_str(), mode);
+        FILE *fp = fopen(CC_MAKE_SUITABLE_F_OPEN(fullPath), mode);
         CC_BREAK_IF(!fp);
         fseek(fp,0,SEEK_END);
         size = ftell(fp);
@@ -629,7 +629,7 @@ unsigned char* FileUtils::getFileData(const std::string& filename, const char* m
     {
         // read the file from hardware
         const std::string fullPath = fullPathForFilename(filename);
-        FILE *fp = fopen(fullPath.c_str(), mode);
+        FILE *fp = fopen(CC_MAKE_SUITABLE_F_OPEN(fullPath), mode);
         CC_BREAK_IF(!fp);
         
         fseek(fp,0,SEEK_END);

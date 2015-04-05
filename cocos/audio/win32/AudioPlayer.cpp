@@ -162,8 +162,9 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
     case AudioCache::FileFormat::OGG:
         {
             vorbisFile = new OggVorbis_File;
-            if (ov_fopen(_audioCache->_fileFullPath.c_str(), vorbisFile)){
-                log("Input does not appear to be an Ogg bitstream.\n");
+            int openCode;
+            if (openCode = ov_fopen(CC_MAKE_SUITABLE_F_OPEN(_audioCache->_fileFullPath), vorbisFile)){
+                log("Input does not appear to be an Ogg bitstream: %s. Code: 0x%x\n", _audioCache->_fileFullPath.c_str(), openCode);
                 goto ExitBufferThread;
             }
             if (offsetFrame != 0) {
