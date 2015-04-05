@@ -732,9 +732,10 @@ void GLViewImpl::onGLFWframebuffersize(GLFWwindow* window, int w, int h)
 
 void GLViewImpl::onGLFWWindowSizeFunCallback(GLFWwindow *window, int width, int height)
 {
+    GLView::setFrameSize(width, height);
+    
     updateDesignResolutionSize();
     Director::getInstance()->setViewport();
-    Director::getInstance()->drawScene();
 }
 
 void GLViewImpl::onGLFWWindowIconifyCallback(GLFWwindow* window, int iconified)
