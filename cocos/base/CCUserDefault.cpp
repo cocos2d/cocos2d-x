@@ -442,16 +442,7 @@ void UserDefault::purgeSharedUserDefault()
 
 bool UserDefault::isXMLFileExist()
 {
-    FILE *fp = fopen(_filePath.c_str(), "r");
-	bool bRet = false;
-
-	if (fp)
-	{
-		bRet = true;
-		fclose(fp);
-	}
-
-	return bRet;
+    return FileUtils::getInstance()->isFileExist(_filePath);
 }
 
 void UserDefault::initXMLFilePath()
