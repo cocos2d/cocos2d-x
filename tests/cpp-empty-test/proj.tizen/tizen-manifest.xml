@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="http://tizen.org/ns/packages" api-version="2.3" package="org.tizen.cpp-empty-test" version="1.0.0">
+	<profile name="mobile" />
+	<ui-application appid="org.tizen.cpp-empty-test" exec="cpp-empty-test" type="capp" multiple="false" taskmanage="true" nodisplay="false">
+		<icon>cpp-empty-test.png</icon>
+		<label>cpp-empty-test</label>
+	</ui-application>
+	<privileges>
+		<privilege>http://tizen.org/privilege/systemsettings</privilege>
+	</privileges>
+</manifest>

@@ -24,7 +24,7 @@
 
 #include "platform/CCPlatformConfig.h"
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
 
 #include "audio/include/AudioEngine.h"
 #include "platform/CCFileUtils.h"
@@ -36,6 +36,8 @@
 #include "apple/AudioEngine-inl.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 #include "win32/AudioEngine-win32.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN
+#include "tizen/AudioEngine-tizen.h"
 #endif
 
 #define TIME_DELAY_PRECISION 0.0001
