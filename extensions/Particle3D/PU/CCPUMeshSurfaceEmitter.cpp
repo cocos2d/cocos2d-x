@@ -209,7 +209,7 @@ inline float MeshInfo::getGaussianRandom (float high, float cutoff)
     } while (w >= 1.0f);
     
     w = sqrt((-2.0f * ::log(w)) / w);
-    y1 = abs(x1 * w);
+    y1 = std::abs(x1 * w);
     y1 = y1 > cutoff ? cutoff : y1;
     y1 *= high / cutoff;
     return y1;
