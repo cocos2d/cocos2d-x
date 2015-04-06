@@ -31,6 +31,8 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCCustomCommand.h"
 #include "CCDirector.h"
+#include "2d/CCAnimation.h"
+#include "2d/CCActionInterval.h"
 
 NS_CC_BEGIN
 
@@ -72,10 +74,10 @@ bool RichElementText::init(int tag, const Color3B &color, GLubyte opacity, const
     return false;
 }
 
-RichElementImage* RichElementImage::create(int tag, const Color3B &color, GLubyte opacity, const std::string& filePath)
+RichElementImage* RichElementImage::create(int tag, const Color3B& color, GLubyte opacity, const std::string& filePath,bool isAnim,float delay,bool isLoop)
 {
     RichElementImage* element = new (std::nothrow) RichElementImage();
-    if (element && element->init(tag, color, opacity, filePath))
+    if (element && element->init(tag, color, opacity, filePath,isAnim,delay,isLoop))
     {
         element->autorelease();
         return element;
@@ -84,11 +86,14 @@ RichElementImage* RichElementImage::create(int tag, const Color3B &color, GLubyt
     return nullptr;
 }
     
-bool RichElementImage::init(int tag, const Color3B &color, GLubyte opacity, const std::string& filePath)
+bool RichElementImage::init(int tag, const Color3B& color, GLubyte opacity, const std::string& filePath,bool isAnim,float delay,bool isLoop)
 {
     if (RichElement::init(tag, color, opacity))
     {
         _filePath = filePath;
+        _isAnim = isAnim;
+        _delay = delay;
+        _isLoop = isLoop;
         return true;
     }
     return false;
@@ -256,7 +261,7 @@ void RichText::formatText()
                     case RichElement::Type::IMAGE:
                     {
                         RichElementImage* elmtImage = static_cast<RichElementImage*>(element);
-						elementRenderer = makeImage(getCacheImage(),elmtImage->_filePath,elmtImage->_tag);
+						elementRenderer = makeImage(getCacheImage(),elmtImage->_filePath,elmtImage->_tag,elmtImage->_isAnim,elmtImage->_delay,elmtImage->_isLoop);
                         break;
                     }
                     case RichElement::Type::CUSTOM:
@@ -290,7 +295,7 @@ void RichText::formatText()
                     case RichElement::Type::IMAGE:
                     {
                         RichElementImage* elmtImage = static_cast<RichElementImage*>(element);
-                        handleImageRenderer(elmtImage->_filePath.c_str(), elmtImage->_color, elmtImage->_opacity,elmtImage->_tag);
+                        handleImageRenderer(elmtImage->_filePath.c_str(), elmtImage->_color, elmtImage->_opacity,elmtImage->_tag,elmtImage->_isAnim,elmtImage->_delay,elmtImage->_isLoop);
                         break;
                     }
                     case RichElement::Type::CUSTOM:
@@ -428,9 +433,9 @@ void RichText::handleTextRenderer(const std::string& text, const std::string& fo
         director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     }
     
-void RichText::handleImageRenderer(const std::string& fileParh, const Color3B &color, GLubyte opacity,int tag)
+void RichText::handleImageRenderer(const std::string& fileParh, const Color3B &color, GLubyte opacity,int tag,bool isAnim,float delay,bool isLoop)
 {
-	Node* imageRenderer = makeImage(getCacheImage(),fileParh,tag);
+	Node* imageRenderer = makeImage(getCacheImage(),fileParh,tag,isAnim,delay,isLoop);
     handleCustomRenderer(imageRenderer,tag);
 }
     
@@ -653,7 +658,7 @@ Node* RichText::makeLabel( Label* pTarget,const Color3B& color, const std::strin
 	return pTarget;
 }
 
-Node* RichText::makeImage( Sprite* pTarget, const std::string& filePath,int tag )
+Node* RichText::makeImage( Sprite* pTarget, const std::string& filePath,int tag,bool isAnim,float delay,bool isLoop )
 {
     auto spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(filePath);
     if(spriteFrame && pTarget->isFrameDisplayed(spriteFrame) == false){
@@ -661,6 +666,34 @@ Node* RichText::makeImage( Sprite* pTarget, const std::string& filePath,int tag 
     }else{
         pTarget->setTexture(filePath);
     }
+    
+    if (isAnim) {
+        
+    SpriteFrameCache *pCache = SpriteFrameCache::getInstance();
+    Vector<SpriteFrame*> v;
+    
+    SpriteFrame *pFrame = NULL;
+    int index = 1;
+    char buf[128] = {0};
+    do
+    {
+        sprintf(buf,"%s%d.png",filePath.c_str(),index++);
+        pFrame = pCache->getSpriteFrameByName(buf);
+        if(pFrame == NULL){
+            break;
+        }
+        v.pushBack(pFrame);
+    } while (true);
+    
+    Animation *pAnim = Animation::createWithSpriteFrames(v);
+    pAnim->setLoops(isLoop?-1:0);
+    pAnim->setRestoreOriginalFrame(true);
+    pAnim->setDelayPerUnit(delay);
+    pTarget->setContentSize(v.at(0)->getOriginalSize());
+    pTarget->stopAllActions();
+    pTarget->runAction(Animate::create(pAnim));
+    }
+    
     pTarget->setTag(tag);
 	return pTarget;
 }
