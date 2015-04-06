@@ -78,12 +78,15 @@ class CC_GUI_DLL RichElementImage : public RichElement
 public:
     RichElementImage(){_type = Type::IMAGE;};
     virtual ~RichElementImage(){};
-    bool init(int tag, const Color3B& color, GLubyte opacity, const std::string& filePath);
-    static RichElementImage* create(int tag, const Color3B& color, GLubyte opacity, const std::string& filePath);
+    bool init(int tag, const Color3B& color, GLubyte opacity, const std::string& filePath,bool isAnim,float delay,bool isLoop);
+    static RichElementImage* create(int tag, const Color3B& color, GLubyte opacity, const std::string& filePath,bool isAnim=false,float delay=0.0f,bool isLoop=true);
 protected:
     std::string _filePath;
     Rect _textureRect;
     int _textureType;
+    bool _isAnim;
+    bool _isLoop;
+    float _delay;
     friend class RichText;
 };
     
@@ -146,7 +149,7 @@ protected:
     virtual void initRenderer();
     void pushToContainer(Node* renderer);
     void handleTextRenderer(const std::string& text, const std::string& fontName, float fontSize,bool isUnder, const Color3B& color, GLubyte opacity,int tag,bool isOutLine,const Color4B& outLineColor);
-    void handleImageRenderer(const std::string& fileParh, const Color3B& color, GLubyte opacity,int tag);
+    void handleImageRenderer(const std::string& fileParh, const Color3B& color, GLubyte opacity,int tag,bool isAnim,float delay,bool isLoop);
     void handleCustomRenderer(Node* renderer,int tag);
     void formarRenderers();
     void addNewLine();
@@ -154,7 +157,7 @@ protected:
 	Label* getCacheLabel();
 	Sprite* getCacheImage();
 	Node* makeLabel(Label* pTarget,const Color3B& color, const std::string& text, const std::string& fontName, int fontSize,bool isUnder, int tag,bool isOutLine,const Color4B& outLineColor);
-	Node* makeImage(Sprite* pTarget, const std::string& filePath,int tag);
+	Node* makeImage(Sprite* pTarget, const std::string& filePath,int tag,bool isAnim,float delay,bool isLoop);
 protected:
     bool _formatTextDirty;
     Vector<RichElement*> _richElements;
