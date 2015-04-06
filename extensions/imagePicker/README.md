@@ -3,6 +3,9 @@ ImagePicker
 
 ImagePicker utility for cocos2d-x 3.5 
 
+Updated by : qiankanglai
+https://github.com/qiankanglai/ImagePicker
+
 **Attention**
 - Old version cocos2d-x may have some differences in API. If you encounter problems here, feel free to contact me :D
 - iOS 8 may crash with default setting. Please check out this issue [iPhone 5S Error](https://github.com/qiankanglai/ImagePicker/issues/2) here. I haven't found an elegant way to fix this, and any pull request is welcomed!
