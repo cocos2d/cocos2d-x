@@ -268,7 +268,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos"/>
+						<entry excluding="network/HttpClient-android.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="extensions"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="external"/>
 					</sourceEntries>
@@ -534,7 +534,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos"/>
+						<entry excluding="network/HttpClient-android.cpp" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="extensions"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="external"/>
 					</sourceEntries>
