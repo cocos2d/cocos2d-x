@@ -70,6 +70,10 @@ namespace cocos2d {
             virtual void setContentSize(const Size& size) = 0;
             virtual void setAnchorPoint(const Vec2& anchorPoint) = 0;
             
+            //TODO: Remove this patch when Cocos is updated with a fix for
+            //iOS system edit boxes not being scaled properly
+            virtual void scaleContent(const Size& size, int fontSize){};
+            
             /**
              * check the editbox's position, update it when needed
              */

@@ -644,9 +644,10 @@ static void processResponse(HttpResponse* response, std::string& responseMessage
     if (HttpRequest::Type::GET != requestType && 
         HttpRequest::Type::POST != requestType && 
         HttpRequest::Type::PUT != requestType &&
+        HttpRequest::Type::PATCH != requestType &&
         HttpRequest::Type::DELETE != requestType)
     {
-        CCASSERT(true, "CCHttpClient: unknown request type, only GET、POST、PUT、DELETE are supported");
+        CCASSERT(true, "CCHttpClient: unknown request type, only GET、POST、PUT、PATCH、DELETE are supported");
         return;
     }
 
@@ -675,6 +676,10 @@ static void processResponse(HttpResponse* response, std::string& responseMessage
             urlConnection.setRequestMethod("PUT");
             break;
 
+        case HttpRequest::Type::PATCH:
+            urlConnection.setRequestMethod("PATCH");
+            break;
+
         case HttpRequest::Type::DELETE:
             urlConnection.setRequestMethod("DELETE");
             break;
@@ -692,7 +697,8 @@ static void processResponse(HttpResponse* response, std::string& responseMessage
     }
 
     if (HttpRequest::Type::POST == requestType ||
-        HttpRequest::Type::PUT == requestType)
+        HttpRequest::Type::PUT == requestType ||
+        HttpRequest::Type::PATCH == requestType)
     {
         urlConnection.sendRequest(request);
     }
@@ -802,7 +808,7 @@ void HttpClient::networkThreadAlone(HttpRequest* request, HttpResponse* response
 
     auto scheduler = Director::getInstance()->getScheduler();
     scheduler->performFunctionInCocosThread([response, request]{
-        const ccHttpRequestCallback& callback = request->getCallback();
+        const ccHttpRequestCompleteCallback& callback = request->getCompleteCallback();
         Ref* pTarget = request->getTarget();
         SEL_HttpResponse pSelector = request->getSelector();
 
@@ -948,7 +954,7 @@ void HttpClient::dispatchResponseCallbacks()
     if (response)
     {
         HttpRequest *request = response->getHttpRequest();
-        const ccHttpRequestCallback& callback = request->getCallback();
+        const ccHttpRequestCompleteCallback& callback = request->getCompleteCallback();
         Ref* pTarget = request->getTarget();
         SEL_HttpResponse pSelector = request->getSelector();
 

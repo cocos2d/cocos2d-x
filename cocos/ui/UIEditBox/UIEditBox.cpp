@@ -108,6 +108,7 @@ bool EditBox::initWithSizeAndBackgroundSprite(const cocos2d::Size &size, cocos2d
     {
         _editBoxImpl = __createSystemEditBox(this);
         _editBoxImpl->initWithSize(size);
+        _contentSize = size;
         _editBoxImpl->setInputMode(EditBox::InputMode::ANY);
         
         _backgroundSprite = pNormal9SpriteBg;
@@ -117,7 +118,7 @@ bool EditBox::initWithSizeAndBackgroundSprite(const cocos2d::Size &size, cocos2d
         
         _backgroundSprite->setPosition(Vec2(_contentSize.width/2, _contentSize.height/2));
         _backgroundSprite->setContentSize(size);
-        this->addProtectedChild(_backgroundSprite);
+        this->addProtectedChild(_backgroundSprite, -1);
         
         this->setTouchEnabled(true);
         
@@ -403,6 +404,16 @@ std::string EditBox::getDescription() const
 void EditBox::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags)
 {
     Widget::visit(renderer, parentTransform, parentFlags);
+
+    //TODO: Remove this patch when Cocos is updated with a fix for
+    //iOS system edit boxes not being scaled properly
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    if ((parentFlags & FLAGS_TRANSFORM_DIRTY) || (parentFlags & FLAGS_CONTENT_SIZE_DIRTY))
+    {
+        updateEditBoxScale();
+    }
+#endif
+    
     if (_editBoxImpl != nullptr)
     {
         _editBoxImpl->visit();
@@ -427,6 +438,18 @@ void EditBox::onEnter(void)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     this->schedule(CC_SCHEDULE_SELECTOR(EditBox::updatePosition), CHECK_EDITBOX_POSITION_INTERVAL);
 #endif
+}
+
+//TODO: Remove this patch when Cocos is updated with a fix for
+//iOS system edit boxes not being scaled properly
+void EditBox::updateEditBoxScale()
+{
+    cocos2d::Vec3 scale;
+    getNodeToWorldTransform().getScale(&scale);
+    cocos2d::Size scaledSize = _contentSize;
+    scaledSize.width *= scale.x;
+    scaledSize.height *= scale.y;
+    _editBoxImpl->scaleContent(scaledSize, _fontSize*scale.x);
 }
 
 void EditBox::updatePosition(float dt)

@@ -272,39 +272,44 @@ int LuaEngine::handleNodeEvent(void* data)
     if (NULL == basicScriptData->nativeObject || NULL == basicScriptData->value)
         return 0;
     
-    int handler = ScriptHandlerMgr::getInstance()->getObjectHandler(basicScriptData->nativeObject, ScriptHandlerMgr::HandlerType::NODE);
+    std::vector<int> handlers = ScriptHandlerMgr::getInstance()->getObjectHandlers(basicScriptData->nativeObject, ScriptHandlerMgr::HandlerType::NODE);
     
-    if (0 == handler)
-        return 0;
-    
-    int action = *((int*)(basicScriptData->value));
-    switch (action)
+    int ret = 0;
+    for (auto it = handlers.begin(); it != handlers.end(); ++it)
     {
-        case kNodeOnEnter:
-            _stack->pushString("enter");
-            break;
-            
-        case kNodeOnExit:
-            _stack->pushString("exit");
-            break;
-            
-        case kNodeOnEnterTransitionDidFinish:
-            _stack->pushString("enterTransitionFinish");
-            break;
-            
-        case kNodeOnExitTransitionDidStart:
-            _stack->pushString("exitTransitionStart");
-            break;
-            
-        case kNodeOnCleanup:
-            _stack->pushString("cleanup");
-            break;
-            
-        default:
+        int handler = *it;
+        if (0 == handler)
             return 0;
+        
+        int action = *((int*)(basicScriptData->value));
+        switch (action)
+        {
+            case kNodeOnEnter:
+                _stack->pushString("enter");
+                break;
+                
+            case kNodeOnExit:
+                _stack->pushString("exit");
+                break;
+                
+            case kNodeOnEnterTransitionDidFinish:
+                _stack->pushString("enterTransitionFinish");
+                break;
+                
+            case kNodeOnExitTransitionDidStart:
+                _stack->pushString("exitTransitionStart");
+                break;
+                
+            case kNodeOnCleanup:
+                _stack->pushString("cleanup");
+                break;
+                
+            default:
+                return 0;
+        }
+        ret = _stack->executeFunctionByHandler(handler, 1);
+        _stack->clean();
     }
-    int ret = _stack->executeFunctionByHandler(handler, 1);
-    _stack->clean();
     return ret;
 }
 

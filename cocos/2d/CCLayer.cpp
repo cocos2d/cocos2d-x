@@ -592,6 +592,8 @@ void LayerColor::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 
 void LayerColor::onDraw(const Mat4& transform, uint32_t flags)
 {
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
     

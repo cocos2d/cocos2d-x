@@ -36,9 +36,11 @@ NS_CC_BEGIN
 namespace network {
 
 class HttpClient;
+class HttpRequest;
 class HttpResponse;
 
-typedef std::function<void(HttpClient* client, HttpResponse* response)> ccHttpRequestCallback;
+typedef std::function<int(HttpRequest* request, long totalToDownload, long downloadProgress)> ccHttpRequestProgressCallback;
+typedef std::function<void(HttpClient* client, HttpResponse* response)> ccHttpRequestCompleteCallback;
 typedef void (cocos2d::Ref::*SEL_HttpResponse)(HttpClient* client, HttpResponse* response);
 #define httpresponse_selector(_SELECTOR) (cocos2d::network::SEL_HttpResponse)(&_SELECTOR)
 
@@ -68,6 +70,7 @@ public:
         POST,
         PUT,
         DELETE,
+        PATCH,
         UNKNOWN,
     };
     
@@ -86,7 +89,8 @@ public:
         _tag.clear();
         _pTarget = nullptr;
         _pSelector = nullptr;
-        _pCallback = nullptr;
+        _pProgressCallback = nullptr;
+        _pCompleteCallback = nullptr;
         _pUserData = nullptr;
     };
     
@@ -257,15 +261,27 @@ public:
             _pTarget->retain();
         }
     }
+    
     /**
-     * Set response callback function of HttpRequest object.
-     * When response come back, we would call _pCallback to process response data.
+     * Set response progress callback function of HttpRequest object.
+     * While waiting on response, we call _pProgressCallback to inform about request progress
      *
-     * @param callback the ccHttpRequestCallback function.
+     * @param callback the ccHttpRequestProgressCallback function.
      */
-    inline void setResponseCallback(const ccHttpRequestCallback& callback)
+    inline void setResponseProgressCallback(const ccHttpRequestProgressCallback& callback)
     {
-        _pCallback = callback;
+        _pProgressCallback = callback;
+    }
+    
+    /**
+     * Set response complete callback function of HttpRequest object.
+     * When response is recieved, we call _pCompleteCallback to process response data.
+     *
+     * @param callback the ccHttpRequestCompleteCallback function.
+     */
+    inline void setResponseCompleteCallback(const ccHttpRequestCompleteCallback& callback)
+    {
+        _pCompleteCallback = callback;
     }
     
     /** 
@@ -308,13 +324,23 @@ public:
     }
     
     /**
-     * Get ccHttpRequestCallback callback function.
+     * Get ccHttpRequestProgressCallback callback function.
      *
-     * @return const ccHttpRequestCallback& ccHttpRequestCallback callback function.
+     * @return const ccHttpRequestProgressCallback& ccHttpRequestProgressCallback callback function.
      */
-    inline const ccHttpRequestCallback& getCallback()
+    inline const ccHttpRequestProgressCallback& getProgressCallback()
     {
-        return _pCallback;
+        return _pProgressCallback;
+    }
+    
+    /**
+     * Get ccHttpRequestCompleteCallback callback function.
+     *
+     * @return const ccHttpRequestCompleteCallback& ccHttpRequestCompleteCallback callback function.
+     */
+    inline const ccHttpRequestCompleteCallback& getCompleteCallback()
+    {
+        return _pCompleteCallback;
     }
     
     /** 
@@ -339,15 +365,16 @@ public:
     
 protected:
     // properties
-    Type                        _requestType;    /// kHttpRequestGet, kHttpRequestPost or other enums
-    std::string                 _url;            /// target url that this request is sent to
-    std::vector<char>           _requestData;    /// used for POST
-    std::string                 _tag;            /// user defined tag, to identify different requests in response callback
-    Ref*                        _pTarget;        /// callback target of pSelector function
-    SEL_HttpResponse            _pSelector;      /// callback function, e.g. MyLayer::onHttpResponse(HttpClient *sender, HttpResponse * response)
-    ccHttpRequestCallback       _pCallback;      /// C++11 style callbacks
-    void*                       _pUserData;      /// You can add your customed data here 
-    std::vector<std::string>    _headers;		      /// custom http headers
+    Type                          _requestType;       /// kHttpRequestGet, kHttpRequestPost or other enums
+    std::string                   _url;               /// target url that this request is sent to
+    std::vector<char>             _requestData;       /// used for POST
+    std::string                   _tag;               /// user defined tag, to identify different requests in response callback
+    Ref*                          _pTarget;           /// callback target of pSelector function
+    SEL_HttpResponse              _pSelector;         /// callback function, e.g. MyLayer::onHttpResponse(HttpClient *sender, HttpResponse * response)
+    ccHttpRequestProgressCallback _pProgressCallback; /// C++11 style callbacks
+    ccHttpRequestCompleteCallback _pCompleteCallback; /// C++11 style callbacks
+    void*                         _pUserData;         /// You can add your customed data here
+    std::vector<std::string>      _headers;		      /// custom http headers
 };
 
 }

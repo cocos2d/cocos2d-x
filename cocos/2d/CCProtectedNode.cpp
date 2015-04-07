@@ -286,49 +286,61 @@ void ProtectedNode::visit(Renderer* renderer, const Mat4 &parentTransform, uint3
     director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
     
-    int i = 0;      // used by _children
-    int j = 0;      // used by _protectedChildren
-    
     sortAllChildren();
     sortAllProtectedChildren();
+    
+    auto childIt = _children.cbegin();      // used by _children
+    auto protectedChildIt = _protectedChildren.cbegin();      // used by _protectedChildren
     
     //
     // draw children and protectedChildren zOrder < 0
     //
-    for( ; i < _children.size(); i++ )
+    for( ; childIt != _children.end(); childIt++ )
     {
-        auto node = _children.at(i);
+        auto node = *childIt;
         
         if ( node && node->getLocalZOrder() < 0 )
+        {
             node->visit(renderer, _modelViewTransform, flags);
+        }
         else
+        {
             break;
+        }
     }
     
-    for( ; j < _protectedChildren.size(); j++ )
+    for( ; protectedChildIt != _protectedChildren.end(); protectedChildIt++ )
     {
-        auto node = _protectedChildren.at(j);
+        auto node = *protectedChildIt;
         
         if ( node && node->getLocalZOrder() < 0 )
+        {
             node->visit(renderer, _modelViewTransform, flags);
+        }
         else
+        {
             break;
+        }
     }
     
     //
     // draw self
     //
-    if (isVisitableByVisitingCamera())
-        this->draw(renderer, _modelViewTransform, flags);
+    this->draw(renderer, _modelViewTransform, flags);
     
     //
     // draw children and protectedChildren zOrder >= 0
     //
-    for(auto it=_protectedChildren.cbegin()+j; it != _protectedChildren.cend(); ++it)
-        (*it)->visit(renderer, _modelViewTransform, flags);
     
-    for(auto it=_children.cbegin()+i; it != _children.cend(); ++it)
-        (*it)->visit(renderer, _modelViewTransform, flags);
+    for( ; childIt != _children.end(); childIt++ )
+    {
+        (*childIt)->visit(renderer, _modelViewTransform, flags);
+    }
+    
+    for( ; protectedChildIt != _protectedChildren.end(); protectedChildIt++ )
+    {
+        (*protectedChildIt)->visit(renderer, _modelViewTransform, flags);
+    }
     
     // FIX ME: Why need to set _orderOfArrival to 0??
     // Please refer to https://github.com/cocos2d/cocos2d-x/pull/6920

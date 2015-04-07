@@ -57,7 +57,6 @@ static bool compare3DCommand(RenderCommand* a, RenderCommand* b)
 }
 
 // queue
-
 void RenderQueue::push_back(RenderCommand* command)
 {
     float z = command->getGlobalOrder();
@@ -128,10 +127,9 @@ RenderCommand* RenderQueue::operator[](ssize_t index) const
 
 void RenderQueue::clear()
 {
-    _commands.clear();
-    for(int index = 0; index < QUEUE_COUNT; ++index)
+    for(int i = 0; i < QUEUE_COUNT; ++i)
     {
-        _commands.push_back(std::vector<RenderCommand*>());
+        _commands[i].clear();
     }
 }
 

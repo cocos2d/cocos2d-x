@@ -243,6 +243,12 @@ Node* ImageView::getVirtualRenderer()
     return _imageRenderer;
 }
 
+void ImageView::setColor(const Color3B& color)
+{
+    Widget::setColor(color);
+    _imageRenderer->setColor(color);
+}
+
 void ImageView::imageTextureScaleChangedWithSize()
 {
     if (_ignoreSize)

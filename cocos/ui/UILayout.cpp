@@ -212,6 +212,9 @@ void Layout::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t par
         return;
     }
     
+    bool transChanged = parentFlags & FLAGS_TRANSFORM_DIRTY;
+    _clippingRectDirty = _clippingRectDirty || transChanged;
+    
     adaptRenderers();
     doLayout();
     
@@ -350,6 +353,8 @@ void Layout::onBeforeVisitStencil()
     
 void Layout::drawFullScreenQuadClearStencil()
 {
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
 
@@ -419,7 +424,16 @@ void Layout::onBeforeVisitScissor()
 
 void Layout::onAfterVisitScissor()
 {
-    glDisable(GL_SCISSOR_TEST);
+    if(_clippingParent)
+    {
+        Rect clippingRect = _clippingParent->getClippingRect();
+        auto glview = Director::getInstance()->getOpenGLView();
+        glview->setScissorInPoints(clippingRect.origin.x, clippingRect.origin.y, clippingRect.size.width, clippingRect.size.height);
+    }
+    else
+    {
+        glDisable(GL_SCISSOR_TEST);
+    }
 }
     
 void Layout::scissorClippingVisit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags)
@@ -522,6 +536,7 @@ const Rect& Layout::getClippingRect()
         float scissorHeight = _contentSize.height*t.d;
         Rect parentClippingRect;
         Layout* parent = this;
+        _clippingParent = NULL;
 
         while (parent)
         {
@@ -539,8 +554,8 @@ const Rect& Layout::getClippingRect()
         if (_clippingParent)
         {
             parentClippingRect = _clippingParent->getClippingRect();
-            float finalX = worldPos.x - (scissorWidth * _anchorPoint.x);
-            float finalY = worldPos.y - (scissorHeight * _anchorPoint.y);
+            float finalX = worldPos.x;// - (scissorWidth * _anchorPoint.x);
+            float finalY = worldPos.y;// - (scissorHeight * _anchorPoint.y);
             float finalWidth = scissorWidth;
             float finalHeight = scissorHeight;
             
@@ -563,7 +578,7 @@ const Rect& Layout::getClippingRect()
             float bottomOffset = worldPos.y - parentClippingRect.origin.y;
             if (bottomOffset < 0.0f)
             {
-                finalY = parentClippingRect.origin.x;
+                finalY = parentClippingRect.origin.y;
                 finalHeight += bottomOffset;
             }
             if (finalWidth < 0.0f)
@@ -581,8 +596,8 @@ const Rect& Layout::getClippingRect()
         }
         else
         {
-            _clippingRect.origin.x = worldPos.x - (scissorWidth * _anchorPoint.x);
-            _clippingRect.origin.y = worldPos.y - (scissorHeight * _anchorPoint.y);
+            _clippingRect.origin.x = worldPos.x;// + (scissorWidth * _anchorPoint.x);
+            _clippingRect.origin.y = worldPos.y;// + (scissorHeight * _anchorPoint.y);
             _clippingRect.size.width = scissorWidth;
             _clippingRect.size.height = scissorHeight;
         }

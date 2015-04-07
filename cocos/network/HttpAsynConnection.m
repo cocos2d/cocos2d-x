@@ -34,6 +34,8 @@
 
 @synthesize srcURL;
 @synthesize sslFile;
+@synthesize downloadSize;
+@synthesize downloadProgress;
 @synthesize responseHeader;
 @synthesize responseData;
 @synthesize getDataTime;
@@ -61,7 +63,7 @@
 
 - (void) startRequest:(NSURLRequest *)request
 {
-    NSLog(@"Starting to load %@", srcURL);
+//    NSLog(@"Starting to load %@", srcURL);
     finish = false;
 
     self.responseData = [NSMutableData data];
@@ -88,18 +90,18 @@
  * Therefore, it is important to reset the data on each call.  Do not assume that it is the first call
  * of this method.
  **/
-- (void) connection:(NSURLConnection *)connection 
- didReceiveResponse:(NSURLResponse *)response {
-    NSLog(@"Received response from request to url %@", srcURL);
-    
+- (void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-    //NSLog(@"All headers = %@", [httpResponse allHeaderFields]);
-    self.responseHeader = [httpResponse allHeaderFields];
-
+    
+    responseHeader = [[httpResponse allHeaderFields] copy];
+    downloadSize = [response expectedContentLength];
     responseCode = httpResponse.statusCode;
     self.statusString = [NSHTTPURLResponse localizedStringForStatusCode:responseCode];
     if(responseCode == 200)
-        self.statusString = @"OK";
+    {
+        statusString = @"OK";
+    }
  
     /*The individual values of the numeric status codes defined for HTTP/1.1
     | “200”  ; OK
@@ -114,7 +116,7 @@
     {// something went wrong, abort the whole thing
         self.responseError = [NSError errorWithDomain:@"CCBackendDomain"
                                             code:responseCode
-                                        userInfo:@{NSLocalizedDescriptionKey: @"Bad HTTP Response Code"}];        
+                                        userInfo:@{NSLocalizedDescriptionKey: @"Bad HTTP Response Code"}];
     }
     
     [responseData setLength:0];
@@ -129,6 +131,7 @@
 {
     //NSLog(@"get some data");
     [responseData appendData:data];
+    downloadProgress = [responseData length];
     getDataTime++;
 }
 
@@ -136,8 +139,7 @@
  * This delegate methodis called if the connection cannot be established to the server.  
  * The error object will have a description of the error
  **/
-- (void)connection:(NSURLConnection *)connection 
-  didFailWithError:(NSError *)error
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
     //NSLog(@"Load failed with error %@", [error localizedDescription]);
     self.connError = error;

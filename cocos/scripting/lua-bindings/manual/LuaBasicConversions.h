@@ -237,7 +237,7 @@ extern bool luaval_to_ssize(lua_State* L,int lo, ssize_t* outValue, const char* 
  * @lua NA
  * @js NA
  */
-extern bool luaval_to_size(lua_State* L,int lo,Size* outValue, const char* funcName = "");
+extern bool luaval_to_size(lua_State* L, int lo, cocos2d::Size* outValue, const char* funcName = "");
 
 /**
  * Get a Rect object value from the given accpetable index of stack.
@@ -252,7 +252,7 @@ extern bool luaval_to_size(lua_State* L,int lo,Size* outValue, const char* funcN
  * @lua NA
  * @js NA
  */
-extern bool luaval_to_rect(lua_State* L,int lo,Rect* outValue, const char* funcName = "");
+extern bool luaval_to_rect(lua_State* L, int lo, cocos2d::Rect* outValue, const char* funcName = "");
 
 /**
  * Get a Color3B object value from the given accpetable index of stack.
@@ -267,7 +267,8 @@ extern bool luaval_to_rect(lua_State* L,int lo,Rect* outValue, const char* funcN
  * @lua NA
  * @js NA
  */
-extern bool luaval_to_color3b(lua_State* L,int lo,Color3B* outValue, const char* funcName = "");
+
+extern bool luaval_to_color3b(lua_State* L, int lo, Color3B* outValue, const char* funcName = "");
 
 /**
  * Get a Color4B object value from the given accpetable index of stack.
@@ -918,7 +919,7 @@ extern void vec2_array_to_luaval(lua_State* L,const cocos2d::Vec2* points, int c
  * @lua NA
  * @js NA
  */
-extern void size_to_luaval(lua_State* L,const Size& sz);
+extern void size_to_luaval(lua_State* L,const cocos2d::Size& sz);
 
 /**
  * Push a table converted from a cocos2d::Rect object into the Lua stack.
@@ -929,7 +930,7 @@ extern void size_to_luaval(lua_State* L,const Size& sz);
  * @lua NA
  * @js NA
  */
-extern void rect_to_luaval(lua_State* L,const Rect& rt);
+extern void rect_to_luaval(lua_State* L,const cocos2d::Rect& rt);
 
 /**
  * Push a table converted from a cocos2d::Color3B object into the Lua stack.

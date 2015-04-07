@@ -67,6 +67,7 @@ public:
     };
 
 public:
+
     /**Constructor.*/
     RenderQueue()
     {
@@ -94,7 +95,7 @@ public:
     
 protected:
     /**The commands in the render queue.*/
-    std::vector<std::vector<RenderCommand*>> _commands;
+    std::vector<RenderCommand*> _commands[QUEUE_COUNT];
     
     /**Cull state.*/
     bool _isCullEnabled;

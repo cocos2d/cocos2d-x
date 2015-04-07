@@ -133,7 +133,7 @@ void HttpClient::networkThreadAlone(HttpRequest* request, HttpResponse* response
 
     auto scheduler = Director::getInstance()->getScheduler();
     scheduler->performFunctionInCocosThread([response, request]{
-        const ccHttpRequestCallback& callback = request->getCallback();
+        const ccHttpRequestCompleteCallback& callback = request->getCompleteCallback();
         Ref* pTarget = request->getTarget();
         SEL_HttpResponse pSelector = request->getSelector();
 
@@ -159,12 +159,12 @@ static int processTask(HttpRequest *request, NSString* requestType, void *stream
     NSURL *url = [NSURL URLWithString:urlstring];
 
     NSMutableURLRequest *nsrequest = [NSMutableURLRequest requestWithURL:url
-                                               cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
-                                           timeoutInterval:HttpClient::getInstance()->getTimeoutForConnect()];
+                                                             cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+                                                         timeoutInterval:HttpClient::getInstance()->getTimeoutForConnect()];
     
     //set request type
     [nsrequest setHTTPMethod:requestType];
-
+    
     /* get custom header data (if set) */
     std::vector<std::string> headers=request->getHeaders();
     if(!headers.empty())
@@ -181,15 +181,10 @@ static int processTask(HttpRequest *request, NSString* requestType, void *stream
             [nsrequest setValue:headerValue forHTTPHeaderField:headerField];
         }
     }
-
+    
     //if request type is post or put,set header and data
-    if([requestType  isEqual: @"POST"] || [requestType isEqual: @"PUT"])
+    if([requestType isEqual: @"POST"] || [requestType isEqual: @"PUT"] || [requestType isEqual: @"PATCH"])
     {
-        if ([requestType isEqual: @"PUT"])
-        {
-            [nsrequest setValue: @"application/x-www-form-urlencoded" forHTTPHeaderField: @"Content-Type"];
-        }
-        
         char* requestDataBuffer = request->getRequestData();
         if (nullptr !=  requestDataBuffer && 0 != request->getRequestDataSize())
         {
@@ -236,9 +231,19 @@ static int processTask(HttpRequest *request, NSString* requestType, void *stream
     }
     [httpAsynConn startRequest:nsrequest];
     
-    while( httpAsynConn.finish != true)
+    long long cachedDownloadProgress = 0;
+    while (httpAsynConn.finish != true)
     {
         [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+        if (httpAsynConn.downloadProgress != cachedDownloadProgress)
+        {
+            const ccHttpRequestProgressCallback& callback = request->getProgressCallback();
+            if (callback)
+            {
+                callback(request, (long)httpAsynConn.downloadSize, (long)httpAsynConn.downloadProgress);
+            }
+            cachedDownloadProgress = httpAsynConn.downloadProgress;
+        }
     }
     
     //if http connection return error
@@ -335,13 +340,17 @@ static void processResponse(HttpResponse* response, char* errorBuffer)
     case HttpRequest::Type::PUT:
         requestType = @"PUT";
         break;
+            
+    case HttpRequest::Type::PATCH:
+        requestType = @"PATCH";
+        break;
 
     case HttpRequest::Type::DELETE:
         requestType = @"DELETE";
         break;
 
     default:
-        CCASSERT(true, "CCHttpClient: unknown request type, only GET and POSt are supported");
+        CCASSERT(true, "CCHttpClient: unknown request type");
         break;
     }
     
@@ -506,7 +515,7 @@ void HttpClient::dispatchResponseCallbacks()
     if (response)
     {
         HttpRequest *request = response->getHttpRequest();
-        const ccHttpRequestCallback& callback = request->getCallback();
+        const ccHttpRequestCompleteCallback& callback = request->getCompleteCallback();
         Ref* pTarget = request->getTarget();
         SEL_HttpResponse pSelector = request->getSelector();
 

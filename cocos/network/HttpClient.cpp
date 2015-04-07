@@ -97,6 +97,7 @@ static size_t writeHeaderData(void *ptr, size_t size, size_t nmemb, void *stream
 static int processGetTask(HttpRequest *request, write_callback callback, void *stream, long *errorCode, write_callback headerCallback, void *headerStream, char *errorBuffer);
 static int processPostTask(HttpRequest *request, write_callback callback, void *stream, long *errorCode, write_callback headerCallback, void *headerStream, char *errorBuffer);
 static int processPutTask(HttpRequest *request, write_callback callback, void *stream, long *errorCode, write_callback headerCallback, void *headerStream, char *errorBuffer);
+static int processPatchTask(HttpRequest *request, write_callback callback, void *stream, long *responseCode, write_callback headerCallback, void *headerStream, char *errorBuffer);
 static int processDeleteTask(HttpRequest *request, write_callback callback, void *stream, long *errorCode, write_callback headerCallback, void *headerStream, char *errorBuffer);
 // int processDownloadTask(HttpRequest *task, write_callback callback, void *stream, int32_t *errorCode);
 static void processResponse(HttpResponse* response, char* errorBuffer);
@@ -340,6 +341,18 @@ static int processPutTask(HttpRequest *request, write_callback callback, void *s
     return ok ? 0 : 1;
 }
 
+//Process PATCH Request
+static int processPatchTask(HttpRequest *request, write_callback callback, void *stream, long *responseCode, write_callback headerCallback, void *headerStream, char *errorBuffer)
+{
+    CURLRaii curl;
+    bool ok = curl.init(request, callback, stream, headerCallback, headerStream, errorBuffer)
+    && curl.setOption(CURLOPT_CUSTOMREQUEST, "PATCH")
+    && curl.setOption(CURLOPT_POSTFIELDS, request->getRequestData())
+    && curl.setOption(CURLOPT_POSTFIELDSIZE, request->getRequestDataSize())
+    && curl.perform(responseCode);
+    return ok ? 0 : 1;
+}
+
 //Process DELETE Request
 static int processDeleteTask(HttpRequest *request, write_callback callback, void *stream, long *responseCode, write_callback headerCallback, void *headerStream, char *errorBuffer)
 {
@@ -383,6 +396,16 @@ static void processResponse(HttpResponse* response, char* errorBuffer)
         break;
 
     case HttpRequest::Type::PUT:
+        retValue = processPutTask(request,
+            writeData,
+            response->getResponseData(),
+            &responseCode,
+            writeHeaderData,
+            response->getResponseHeader(),
+            errorBuffer);
+        break;
+
+    case HttpRequest::Type::PATCH:
         retValue = processPutTask(request,
             writeData,
             response->getResponseData(),

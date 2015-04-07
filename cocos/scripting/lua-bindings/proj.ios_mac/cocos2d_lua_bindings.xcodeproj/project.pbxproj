@@ -998,7 +998,7 @@
 		1551A336158F2AB200E66CFE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "";
 			};
 			buildConfigurationList = 1551A339158F2AB200E66CFE /* Build configuration list for PBXProject "cocos2d_lua_bindings" */;
@@ -1314,6 +1314,7 @@
 					"$(SRCROOT)/../../../../external/lua/luajit/prebuilt/ios",
 					"$(SRCROOT)/../../../../external/lua/lua/prebuilt/ios",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				"OTHER_LDFLAGS[sdk=iphonesimulator7.1]" = "-llua";
 				"OTHER_LDFLAGS[sdk=iphonesimulator8.0]" = "-llua";
 				PRODUCT_NAME = "libluacocos2d iOS";

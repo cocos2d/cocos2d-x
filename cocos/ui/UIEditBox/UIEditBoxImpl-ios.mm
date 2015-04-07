@@ -312,7 +312,6 @@ bool EditBoxImplIOS::initWithSize(const Size& size)
         
 		initInactiveLabels(size);
         setContentSize(size);
-		
         return true;
     }while (0);
     
@@ -419,6 +418,7 @@ void EditBoxImplIOS::setInputMode(EditBox::InputMode inputMode)
     {
         case EditBox::InputMode::EMAIL_ADDRESS:
             _systemControl.textField.keyboardType = UIKeyboardTypeEmailAddress;
+            _systemControl.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
             break;
         case EditBox::InputMode::NUMERIC:
             _systemControl.textField.keyboardType = UIKeyboardTypeDecimalPad;
@@ -585,22 +585,39 @@ void EditBoxImplIOS::setVisible(bool visible)
 void EditBoxImplIOS::setContentSize(const Size& size)
 {
     _contentSize = size;
-    CCLOG("[Edit text] content size = (%f, %f)", size.width, size.height);
+//    CCLOG("[Edit text] content size = (%f, %f)", size.width, size.height);
     placeInactiveLabels();
     auto glview = cocos2d::Director::getInstance()->getOpenGLView();
     CGSize controlSize = CGSizeMake(size.width * glview->getScaleX(),size.height * glview->getScaleY());
-    
+
     CCEAGLView *eaglview = static_cast<CCEAGLView *>(glview->getEAGLView());
     float factor = eaglview.contentScaleFactor;
     controlSize.width /= factor;
     controlSize.height /= factor;
-    
+
+    [_systemControl setContentSize:controlSize];
+}
+
+//TODO: Remove this patch when Cocos is updated with a fix for
+//iOS system edit boxes not being scaled properly
+void EditBoxImplIOS::scaleContent(const cocos2d::Size &size, int fontSize)
+{
+    auto glview = cocos2d::Director::getInstance()->getOpenGLView();
+    CCEAGLView *eaglview = static_cast<CCEAGLView *>(glview->getEAGLView());
+    float factor = eaglview.contentScaleFactor;
+
+    _systemControl.textField.font = [UIFont systemFontOfSize:fontSize*glview->getScaleX()/factor];
+
+    CGSize controlSize = CGSizeMake(size.width * glview->getScaleX(),size.height * glview->getScaleY());
+    controlSize.width /= factor;
+    controlSize.height /= factor;
+
     [_systemControl setContentSize:controlSize];
 }
 
 void EditBoxImplIOS::setAnchorPoint(const Vec2& anchorPoint)
 {
-    CCLOG("[Edit text] anchor point = (%f, %f)", anchorPoint.x, anchorPoint.y);
+//    CCLOG("[Edit text] anchor point = (%f, %f)", anchorPoint.x, anchorPoint.y);
 	_anchorPoint = anchorPoint;
 	setPosition(_position);
 }
@@ -643,6 +660,7 @@ void EditBoxImplIOS::openKeyboard()
 	_labelPlaceHolder->setVisible(false);
 
 	_systemControl.textField.hidden = NO;
+    
     [_systemControl openKeyboard];
 }
 

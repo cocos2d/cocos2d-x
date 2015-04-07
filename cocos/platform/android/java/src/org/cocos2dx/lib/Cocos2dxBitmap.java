@@ -483,7 +483,7 @@ public class Cocos2dxBitmap {
             if (height - bounds.height() <= 2) {
                 found_desired_size = true;
             }
-            Log.d("font size", "incr size:" + incr_text_size);
+//            Log.d("font size", "incr size:" + incr_text_size);
         }
         return incr_text_size;
     }

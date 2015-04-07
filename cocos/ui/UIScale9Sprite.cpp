@@ -1389,6 +1389,24 @@ namespace ui {
         return this->getScaleX();
     }
     
+    void Scale9Sprite::setGLProgram(cocos2d::GLProgram *glProgram)
+    {
+        Node::setGLProgram(glProgram);
+        
+        if(_scale9Image)
+        {
+            _scale9Image->setGLProgram(glProgram);
+        }
+        
+        if(_scale9Enabled)
+        {
+            for(auto& child : _protectedChildren)
+            {
+                child->setGLProgram(glProgram);
+            }
+        }
+    }
+
     void Scale9Sprite::setCameraMask(unsigned short mask, bool applyChildren)
     {
         Node::setCameraMask(mask, applyChildren);

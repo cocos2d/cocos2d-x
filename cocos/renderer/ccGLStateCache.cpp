@@ -59,10 +59,13 @@ namespace
 
 namespace GL {
 
-void invalidateStateCache( void )
+void invalidateStateCache(bool resetMatrixStack)
 {
-    Director::getInstance()->resetMatrixStack();
-    s_currentProjectionMatrix = -1;
+    if (resetMatrixStack)
+    {
+        Director::getInstance()->resetMatrixStack();
+        s_currentProjectionMatrix = -1;
+    }
     s_attributeFlags = 0;
 
 #if CC_ENABLE_GL_STATE_CACHE

@@ -275,6 +275,7 @@ public:
      * @return index corresponding to the pointer of Lua function,otherwise 0.
      */
     int  getObjectHandler(void* object,ScriptHandlerMgr::HandlerType handlerType);
+    std::vector<int> getObjectHandlers(void* object,ScriptHandlerMgr::HandlerType handlerType);
     
     /**
      * Remove the all relationship among the object, HandlerType and the refrence index corresponding to the pointer of Lua function.

@@ -120,6 +120,8 @@ public:
     virtual Size getVirtualRendererSize() const override;
     virtual Node* getVirtualRenderer() override;
     
+    virtual void setColor(const Color3B& color) override;
+    
 CC_CONSTRUCTOR_ACCESS:
     //initializes state of widget.
     virtual bool init() override;

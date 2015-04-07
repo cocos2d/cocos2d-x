@@ -435,6 +435,7 @@ Texture2D::Texture2D()
 , _hasMipmaps(false)
 , _shaderProgram(nullptr)
 , _antialiasEnabled(true)
+, _deleteGLOnDestruction(true)
 {
 }
 
@@ -444,12 +445,12 @@ Texture2D::~Texture2D()
     VolatileTextureMgr::removeTexture(this);
 #endif
 
-    CCLOGINFO("deallocing Texture2D: %p - id=%u", this, _name);
     CC_SAFE_RELEASE(_shaderProgram);
 
-    if(_name)
+    if(_deleteGLOnDestruction)
     {
-        GL::deleteTexture(_name);
+        CCLOGINFO("deallocing GL texture: %p - id=%u", this, _name);
+        releaseGLTexture();
     }
 }
 

@@ -229,7 +229,7 @@ static CGSize _calculateStringSize(NSString *str, id font, CGSize *constrainSize
     CGSize dim;
     if(s_isIOS7OrHigher){
         NSDictionary *attibutes = @{NSFontAttributeName:font};
-        dim = [str boundingRectWithSize:textRect options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin) attributes:attibutes context:nil].size;
+        dim = [str boundingRectWithSize:textRect options:(NSStringDrawingOptions)(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingTruncatesLastVisibleLine) attributes:attibutes context:nil].size;
     }
     else {
         dim = [str sizeWithFont:font constrainedToSize:textRect];
@@ -424,14 +424,14 @@ static bool _initWithString(const char * text, cocos2d::Device::TextAlign align,
                 CGContextSetLineWidth(context, info->strokeSize);
                 
                 //original code that was not working in iOS 7
-                [str drawInRect: rect withFont:font lineBreakMode:NSLineBreakByWordWrapping alignment:nsAlign];
+                [str drawInRect: rect withFont:font lineBreakMode:NSLineBreakByTruncatingTail alignment:nsAlign];
             }
         }
         
         CGContextSetTextDrawingMode(context, kCGTextFill);
         
         // actually draw the text in the context
-        [str drawInRect: rect withFont:font lineBreakMode:NSLineBreakByWordWrapping alignment:nsAlign];
+        [str drawInRect: rect withFont:font lineBreakMode:NSLineBreakByTruncatingTail alignment:nsAlign];
         
         CGContextEndTransparencyLayer(context);
         

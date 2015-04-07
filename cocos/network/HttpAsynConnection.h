@@ -38,8 +38,10 @@
 
 @property (strong) NSString *sslFile;
 
-@property (copy) NSDictionary *responseHeader;
+@property (readonly) long long downloadSize;
+@property (readonly) long long downloadProgress;
 
+@property (strong) NSDictionary *responseHeader;
 @property (strong) NSMutableData *responseData;
 
 @property (readonly) NSInteger getDataTime;
