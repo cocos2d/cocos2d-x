@@ -6,6 +6,7 @@ cocos2d-x-3.6alpha0 Apr.8 2015
 
     [FIX]           Audio: memory leak
     [FIX]           C++: lag issue if `Director::setContentScaleFactor` is called frequently
+    [FIX]           Label: shadow color is incorrect
     [FIX]           MenuItem: crash if `MenuItem::onExit` is called multiple times
     [FIX]           Particle3D: particles' rotation affect particle system's rotation
     [FIX]           Sprite3D: memory leak
