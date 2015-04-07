@@ -2,12 +2,14 @@ cocos2d-x-3.6alpha0 Apr.8 2015
     [NEW]           3D: added texturecub support
     [NEW]           3D: added terrian support
     [NEW]           Animate3D: added `Animate3D::setHighQuality()` to set animation quality
+    [NEW]           Vec3: added `Vec3::add(float, float, float)` and `Vec3::setZero()`
 
     [FIX]           Audio: memory leak
     [FIX]           C++: lag issue if `Director::setContentScaleFactor` is called frequently
     [FIX]           MenuItem: crash if `MenuItem::onExit` is called multiple times
     [FIX]           Particle3D: particles' rotation affect particle system's rotation
     [FIX]           Sprite3D: memory leak
+    [FIX]           Vec3: use inline function to improve performance
 
 cocos2d-x-3.5 Mar.23 2015
     [NEW]           EditBox: support Color4B
