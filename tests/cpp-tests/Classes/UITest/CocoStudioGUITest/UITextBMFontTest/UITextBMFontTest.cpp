@@ -1,8 +1,9 @@
-
-
 #include "UITextBMFontTest.h"
 
-
+UITextBMFontTests::UITextBMFontTests()
+{
+    ADD_TEST_CASE(UITextBMFontTest);
+}
 // UITextBMFontTest
 
 bool UITextBMFontTest::init()

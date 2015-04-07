@@ -25,8 +25,7 @@
 #ifndef _SPRITE3D_TEST_H_
 #define _SPRITE3D_TEST_H_
 
-#include "../testBasic.h"
-#include "../BaseTest.h"
+#include "BaseTest.h"
 #include <string>
 
 namespace cocos2d {
@@ -38,20 +37,13 @@ namespace cocos2d {
     class GLProgramState;
 }
 
-class Sprite3DTestDemo : public BaseTest
+DEFINE_TEST_SUITE(Sprite3DTests);
+
+class Sprite3DTestDemo : public TestCase
 {
 public:
-    Sprite3DTestDemo(void);
-    virtual ~Sprite3DTestDemo(void);
-    
-    void restartCallback(Ref* sender) override;
-    void nextCallback(Ref* sender) override;
-    void backCallback(Ref* sender) override;
-    
     // overrides
     virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-    virtual void onEnter() override;
 };
 
 class Sprite3DForceDepthTest : public Sprite3DTestDemo
@@ -81,7 +73,7 @@ public:
     virtual std::string subtitle() const override;
     
     void addNewSpriteWithCoords(Vec2 p);
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 };
 
 class Sprite3DUVAnimationTest : public Sprite3DTestDemo
@@ -125,9 +117,9 @@ public:
     void move3D(float elapsedTime);
     void updateState(float elapsedTime);
     bool isState(unsigned int state,unsigned int bit) const;
-    void onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event  *event) override;
-    void onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event) override;
-    void onTouchesEnded(const std::vector<Touch*>& touches, cocos2d::Event  *event) override;
+    void onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event  *event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, cocos2d::Event  *event);
 private:
     cocos2d::Camera * _camera;
     Vec3           _targetPos;
@@ -149,7 +141,7 @@ public:
     virtual ~Sprite3DLightMapTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event) override;
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
 private:
     Camera * _camera;
 };
@@ -263,7 +255,7 @@ public:
     
     void addNewSpriteWithCoords(Vec2 p);
     
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 };
 
 class AsyncLoadSprite3DTest : public Sprite3DTestDemo
@@ -293,7 +285,12 @@ public:
     
     void addNewSpriteWithCoords(Vec2 p);
     
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+    void switchAnimationQualityCallback(Ref* sender);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+private:
+    std::vector<Sprite3D*> _sprits;
+    bool _highQuality;
+    MenuItemFont* _menuItem;
 };
 
 class Sprite3DWithSkinOutlineTest : public Sprite3DTestDemo
@@ -306,7 +303,7 @@ public:
     
     void addNewSpriteWithCoords(Vec2 p);
     
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 };
 
 class Animate3DTest : public Sprite3DTestDemo
@@ -318,7 +315,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
     
     virtual void update(float dt) override;
     
@@ -357,7 +354,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
     
     void addNewSpriteWithCoords(Vec2 p);
     
@@ -373,7 +370,7 @@ public:
     Sprite3DReskinTest();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
     void addNewSpriteWithCoords(Vec2 p);
     
     void menuCallback_reSkin(Ref* sender);
@@ -406,9 +403,9 @@ public:
     virtual void update(float dt) override;
     void addNewOBBWithCoords(Vec2 p);
     void addNewSpriteWithCoords(Vec2 p);
-    void onTouchesBegan(const std::vector<Touch*>& touches, Event* event) override;
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event* event) override;
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event* event);
     void addOBBCallback(Ref* sender);
     void delOBBCallback(Ref* sender);
     void addOBBWithCount(float value);
@@ -504,13 +501,6 @@ public:
 protected:
     std::vector<Sprite3D*> _sprites;
     int _vectorIndex;
-};
-
-class Sprite3DTestScene : public TestScene
-{
-public:
-    Sprite3DTestScene();
-    virtual void runThisTest();
 };
 
 namespace cocos2d

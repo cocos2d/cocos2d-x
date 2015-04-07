@@ -25,10 +25,11 @@
 #ifndef _LIGHT_TEST_H_
 #define _LIGHT_TEST_H_
 
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
-class LightTest : public BaseTest
+DEFINE_TEST_SUITE(LightTests);
+
+class LightTest : public TestCase
 {
 public:
     CREATE_FUNC(LightTest);
@@ -36,14 +37,6 @@ public:
     virtual ~LightTest();
 
     virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-
-    virtual void restartCallback(Ref* sender) override;
-    virtual void nextCallback(Ref* sender) override;
-    virtual void backCallback(Ref* sender) override;
-
-    virtual void onEnter() override;
-    virtual void onExit() override;
 
     virtual void update(float delta) override;
 
@@ -65,13 +58,6 @@ private:
     Label *_directionalLightLabel;
     Label *_pointLightLabel;
     Label *_spotLightLabel;
-};
-
-class LightTestScene : public TestScene
-{
-public:
-    LightTestScene();
-    virtual void runThisTest();
 };
 
 #endif

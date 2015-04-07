@@ -90,7 +90,11 @@ public:
     /**get Mesh by Name, it returns the first one if there are more than one mesh with the same name */
     Mesh* getMeshByName(const std::string& name) const;
     
-    /** get mesh array by name, returns all meshes with the given name */
+    /** 
+     * get mesh array by name, returns all meshes with the given name
+     *
+     * @lua NA
+     */
     std::vector<Mesh*> getMeshArrayByName(const std::string& name) const;
 
     /**get mesh*/
@@ -266,10 +270,18 @@ public:
     static Sprite3DCache* getInstance();
     static void destroyInstance();
 
-    /**get the SpriteData struct*/
+    /**
+     * get the SpriteData struct
+     *
+     * @lua NA
+     */
     Sprite3DData* getSpriteData(const std::string& key) const;
     
-    /**add the SpriteData into Sprite3D by given the specified key*/
+    /**
+     * add the SpriteData into Sprite3D by given the specified key
+     *
+     * @lua NA
+     */
     bool addSprite3DData(const std::string& key, Sprite3DData* spritedata);
     
     /**remove the SpriteData from Sprite3D by given the specified key*/
@@ -289,9 +301,11 @@ protected:
     std::unordered_map<std::string, Sprite3DData*> _spriteDatas; //cached sprite datas
 };
 
+/// @cond 
 extern std::string CC_DLL s_attributeNames[];//attribute names array
+/// @endcond
 
-// end of actions group
+// end of 3d group
 /// @}
 
 NS_CC_END

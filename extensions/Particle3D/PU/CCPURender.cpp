@@ -470,8 +470,7 @@ void PUParticle3DModelRender::render( Renderer* renderer, const Mat4 &transform,
     for (auto iter : activeParticleList)
     {
         auto particle = static_cast<PUParticle3D *>(iter);
-        q *= particle->orientation;
-        Mat4::createRotation(q, &rotMat);
+        Mat4::createRotation(q * particle->orientation, &rotMat);
         sclMat.m[0] = particle->width / _spriteSize.x;
         sclMat.m[5]  = particle->height / _spriteSize.y; 
         sclMat.m[10] = particle->depth / _spriteSize.z;

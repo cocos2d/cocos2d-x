@@ -188,6 +188,7 @@ public:
     static TableView* create(TableViewDataSource* dataSource, Size size, Node *container);
     /**
      * @js ctor
+     * @lua new
      */
     TableView();
     /**

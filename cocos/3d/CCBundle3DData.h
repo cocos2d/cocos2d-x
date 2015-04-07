@@ -37,6 +37,7 @@ NS_CC_BEGIN
 
 /**mesh vertex attribute
 * @js NA
+* @lua NA
 */
 struct MeshVertexAttrib
 {
@@ -53,6 +54,7 @@ struct MeshVertexAttrib
 
 /** model node data, since 3.3
 * @js NA
+* @lua NA
 */
 struct ModelData
 {
@@ -74,6 +76,7 @@ struct ModelData
 
 /** Node data, since 3.3 
 * @js NA
+* @lua NA
 */
 struct NodeData
 {
@@ -107,6 +110,7 @@ struct NodeData
 
 /** node datas, since 3.3 
 * @js NA
+* @lua NA
 */
 struct NodeDatas
 {
@@ -130,6 +134,7 @@ struct NodeDatas
 
 /**mesh data
 * @js NA
+* @lua NA
 */
 struct MeshData
 {
@@ -185,6 +190,7 @@ public:
 
 /** mesh datas 
 * @js NA
+* @lua NA
 */
 struct MeshDatas
 {
@@ -206,6 +212,7 @@ struct MeshDatas
 
 /**skin data
 * @js NA
+* @lua NA
 */
 struct SkinData
 {
@@ -277,6 +284,7 @@ struct SkinData
 
 /**material data, 
 * @js NA
+* @lua NA
 */
 struct MaterialData
 {
@@ -290,6 +298,7 @@ struct MaterialData
 
 /**new material, since 3.3 
 * @js NA
+* @lua NA
 */
 struct NTextureData
 {
@@ -328,6 +337,7 @@ struct NMaterialData
 };
 /** material datas, since 3.3 
 * @js NA
+* @lua NA
 */
 struct MaterialDatas
 {
@@ -348,6 +358,7 @@ struct MaterialDatas
 };
 /**animation data
 * @js NA
+* @lua NA
 */
 struct Animation3DData
 {
@@ -420,6 +431,7 @@ public:
 
 /**reference data
 * @js NA
+* @lua NA
 */
 struct Reference
 {

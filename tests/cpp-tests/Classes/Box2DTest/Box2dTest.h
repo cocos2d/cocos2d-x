@@ -3,17 +3,19 @@
 
 #include "cocos2d.h"
 #include "Box2D/Box2D.h"
-#include "../testBasic.h"
+#include "../BaseTest.h"
 
-class Box2DTestLayer : public Layer
+DEFINE_TEST_SUITE(Box2DTests);
+
+class Box2DTest : public TestCase
 {
     Texture2D* _spriteTexture;    // weak ref
     b2World* world;
 //    GLESDebugDraw* _debugDraw;
 
 public:
-    Box2DTestLayer();
-    ~Box2DTestLayer();
+    Box2DTest();
+    ~Box2DTest();
 
     void initPhysics();
     void createResetButton();
@@ -21,7 +23,7 @@ public:
 
     void addNewSpriteAtPosition(Vec2 p);
     void update(float dt) override;
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 
 #if CC_ENABLE_BOX2D_INTEGRATION
 protected:
@@ -30,11 +32,5 @@ protected:
     CustomCommand _customCommand;
 #endif
 } ;
-
-class Box2DTestScene : public TestScene
-{
-public:
-    virtual void runThisTest();
-};
 
 #endif

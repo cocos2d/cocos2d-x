@@ -72,7 +72,8 @@
 -- @return RelativeLayoutParameter#RelativeLayoutParameter self (return value: ccui.RelativeLayoutParameter)
         
 --------------------------------
--- Default constructor
+-- Default constructor<br>
+-- lua new
 -- @function [parent=#RelativeLayoutParameter] RelativeLayoutParameter 
 -- @param self
 -- @return RelativeLayoutParameter#RelativeLayoutParameter self (return value: ccui.RelativeLayoutParameter)

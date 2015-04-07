@@ -1,6 +1,11 @@
 #include "RotateWorldTest.h"
 #include "../testResource.h"
 
+RotateWorldTests::RotateWorldTests()
+{
+    ADD_TEST_CASE(RotateWorldTest);
+}
+
 //------------------------------------------------------------------
 //
 // TestLayer
@@ -124,13 +129,17 @@ void RotateWorldMainLayer::onEnter()
     white->runAction(rot->clone());
 }
 
-void RotateWorldTestScene::runThisTest()
+bool RotateWorldTest::init()
 {
-    auto layer = RotateWorldMainLayer::create();
+    if (TestCase::init())
+    {
+        auto layer = RotateWorldMainLayer::create();
 
-    addChild(layer);
-    runAction( RotateBy::create(4, -360) );
+        addChild(layer);
+        runAction(RotateBy::create(4, -360));
 
-    Director::getInstance()->replaceScene(this);
+        return true;
+    }
 
+    return false;
 }

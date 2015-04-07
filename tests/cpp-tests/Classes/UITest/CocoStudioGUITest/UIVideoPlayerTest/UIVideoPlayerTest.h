@@ -5,10 +5,12 @@
 
 USING_NS_CC;
 
+DEFINE_TEST_SUITE(VideoPlayerTests);
+
 class VideoPlayerTest : public UIScene
 {
 public:
-    UI_SCENE_CREATE_FUNC(VideoPlayerTest);
+    CREATE_FUNC(VideoPlayerTest);
 
     virtual bool init() override;
 

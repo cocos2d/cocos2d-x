@@ -35,7 +35,9 @@
 -- @return RichElementImage#RichElementImage ret (return value: ccui.RichElementImage)
         
 --------------------------------
--- brief Default constructor.
+-- brief Default constructor.<br>
+-- js ctor<br>
+-- lua new
 -- @function [parent=#RichElementImage] RichElementImage 
 -- @param self
 -- @return RichElementImage#RichElementImage self (return value: ccui.RichElementImage)

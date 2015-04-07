@@ -2,52 +2,37 @@
 #define __AssetsManagerEx_Test_H__
 
 #include "extensions/cocos-ext.h"
-#include "../../testBasic.h"
 #include "../../BaseTest.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
 
-class AssetsManagerExTestLayer : public BaseTest
-{
-public:
-    AssetsManagerExTestLayer(const std::string& spritePath);
-    ~AssetsManagerExTestLayer(void);
-    
-    virtual std::string title() const override;
-    void onEnter() override;
-    
-    virtual void restartCallback(Ref* sender) override;
-    virtual void nextCallback(Ref* sender) override;
-    virtual void backCallback(Ref* sender) override;
-    
-private:
-    Sprite *_background;
-    std::string _spritePath;
-};
+DEFINE_TEST_SUITE(AssetsManagerExTests);
 
-class AssetsManagerExTestScene : public TestScene
+class AssetsManagerExLoaderScene : public TestCase
 {
 public:
-    AssetsManagerExTestScene(std::string background);
-    virtual void runThisTest() override;
-};
+    static AssetsManagerExLoaderScene* create(int testIndex);
 
-class AssetsManagerExLoaderScene : public TestScene
-{
-public:
-    AssetsManagerExLoaderScene();
+    AssetsManagerExLoaderScene(int testIndex);
     
-    virtual void runThisTest() override;
-    
+    void startDownloadCallback(Ref* sender);
+
+    virtual std::string title() const;
+
+    virtual bool init() override;
     virtual void onExit() override;
     
-    static int currentScene;
-    
 private:
+    int _testIndex;
+    Layer* _loadLayer;
+    Menu* _downloadMenu;
+
     AssetsManagerEx *_am;
     Label *_progress;
     EventListenerAssetsManagerEx* _amListener;
+
+    void onLoadEnd();
 };
 
 #endif /* defined(__AssetsManagerEx_Test_H__) */

@@ -54,25 +54,36 @@ public:
     public:
         typedef AnimationCurve<3> AnimationCurveVec3;
         typedef AnimationCurve<4> AnimationCurveQuat;
-        AnimationCurveVec3* translateCurve; //translate curve
-        AnimationCurveQuat* rotCurve;//rotation curve
-        AnimationCurveVec3* scaleCurve;//scale curve
-        
+        /**translation curve*/
+        AnimationCurveVec3* translateCurve;
+        /**rotation curve*/
+        AnimationCurveQuat* rotCurve;
+        /**scaling curve*/
+        AnimationCurveVec3* scaleCurve;
+        /**constructor */
         Curve();
+        /**constructor */
         ~Curve();
     };
     
     /**read all animation or only the animation with given animationName? animationName == "" read the first.*/
     static Animation3D* create(const std::string& filename, const std::string& animationName = "");
     
+    /**the cache method to create or get an Animation3D object*/
     CC_DEPRECATED_ATTRIBUTE static Animation3D* getOrCreate(const std::string& filename, const std::string& animationName = ""){ return create(filename, animationName); }
        
     /**get duration*/
     float getDuration() const { return _duration; }
     
-    /**get bone curve*/
+    /**
+     * get bone curve
+     * 
+     * @lua NA
+     */
     Curve* getBoneCurveByName(const std::string& name) const;
     
+
+    /**get the bone Curves set*/
     const std::unordered_map<std::string, Curve*>& getBoneCurves() const {return _boneCurves;}
     
 CC_CONSTRUCTOR_ACCESS:
@@ -120,7 +131,7 @@ protected:
     std::unordered_map<std::string, Animation3D*> _animations; //cached animations
 };
 
-// end of actions group
+// end of 3d group
 /// @}
 NS_CC_END
 

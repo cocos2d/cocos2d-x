@@ -1,13 +1,13 @@
 #ifndef _MOTION_STREAK_TEST_H_
 #define _MOTION_STREAK_TEST_H_
 
-////----#include "cocos2d.h"
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
 //USING_NS_CC;
 
-class MotionStreakTest : public BaseTest
+DEFINE_TEST_SUITE(MotionStreakTests);
+
+class MotionStreakTest : public TestCase
 {
 public:
     MotionStreakTest(void);
@@ -17,9 +17,6 @@ public:
     virtual std::string subtitle() const override;
     virtual void onEnter() override;
 
-    void restartCallback(Ref* sender) override;
-    void nextCallback(Ref* sender) override;
-    void backCallback(Ref* sender) override;
     void modeCallback(Ref* sender);
 protected:
     MotionStreak *streak;
@@ -47,7 +44,7 @@ protected:
 public:
     CREATE_FUNC(MotionStreakTest2);
     virtual void onEnter() override;
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event* event) override;
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event* event);
     virtual std::string title() const override;
 };
 
@@ -65,13 +62,5 @@ private:
     float _radius;
     float _angle;
 };
-
-class MotionStreakTestScene : public TestScene
-{
-public:
-    virtual void runThisTest();
-};
-
-//CCLayer* nextAction();
 
 #endif

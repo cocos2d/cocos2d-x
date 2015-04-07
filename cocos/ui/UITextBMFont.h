@@ -49,11 +49,15 @@ class CC_GUI_DLL TextBMFont : public Widget
 public:
     /**
      * Default constructor
+     * @js ctor
+     * @lua new
      */
     TextBMFont();
     
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~TextBMFont();
     

@@ -112,7 +112,6 @@
 -- Creates an orthographic camera.<br>
 -- param zoomX The zoom factor along the X-axis of the orthographic projection (the width of the ortho projection).<br>
 -- param zoomY The zoom factor along the Y-axis of the orthographic projection (the height of the ortho projection).<br>
--- param aspectRatio The aspect ratio of the orthographic projection.<br>
 -- param nearPlane The near plane distance.<br>
 -- param farPlane The far plane distance.
 -- @function [parent=#Camera] createOrthographic 

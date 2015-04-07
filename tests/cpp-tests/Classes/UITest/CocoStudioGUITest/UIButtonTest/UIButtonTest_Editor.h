@@ -26,20 +26,24 @@
 #define __TestCpp__UIButtonTest_Editor__
 
 #include "../UIScene_Editor.h"
+#include "BaseTest.h"
+
+DEFINE_TEST_SUITE(UIButtonEditorTests);
 
 class UIButtonTest_Editor : public UIScene_Editor
 {
 public:
+    CREATE_FUNC(UIButtonTest_Editor);
+
     UIButtonTest_Editor();
     ~UIButtonTest_Editor();
     
-    bool init();
+    virtual bool init() override;
+
     void touchEvent(Ref* pSender, Widget::TouchEventType type);
-    virtual void switchLoadMethod(Ref* pSender);
-    void configureGUIScene();
+    virtual void configureGUIScene() override;
 
 protected:
-    UI_SCENE_EDITOR_CREATE_FUNC(UIButtonTest_Editor);
     Text* _displayValueLabel;
 };
 

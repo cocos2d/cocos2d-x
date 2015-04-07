@@ -164,6 +164,12 @@ public:
      */
     int getMaxSupportSpotLightInShader() const;
 
+    /** is 3d animate quality? Configure it in the config.plist, the key is cocos2d.x.3d.animate_high_quality, it is true by default. 
+     * Animation quality of created Animate3D is based on the return value. However, animation quality of Animate3D can be modified by calling setHighQuality after it is created.
+     *  @return true: is high quality, false: is low quality
+     */
+    bool isHighAnimate3DQuality() const;
+    
     /** Returns whether or not an OpenGL is supported. 
      *
      * @param searchName A given search name.
@@ -230,6 +236,7 @@ protected:
     int             _maxDirLightInShader; //max support directional light in shader
     int             _maxPointLightInShader; // max support point light in shader
     int             _maxSpotLightInShader; // max support spot light in shader
+    bool            _isAnimate3DHighQuality; // animation 3d quality, true: is high quality, false: is low quality
 	
 	ValueMap        _valueDict;
 };
