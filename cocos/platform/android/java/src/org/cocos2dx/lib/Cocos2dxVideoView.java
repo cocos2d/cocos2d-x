@@ -26,6 +26,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnErrorListener;
 import android.net.Uri;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -80,6 +81,8 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
 
     protected Cocos2dxActivity mCocos2dxActivity = null;
     
+    private DisplayMetrics mDisplayMetrics = null; 
+
     protected int mViewLeft = 0;
     protected int mViewTop = 0;
     protected int mViewWidth = 0;
@@ -99,6 +102,9 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
     public Cocos2dxVideoView(Cocos2dxActivity activity,int tag) {
         super(activity);
         
+        mDisplayMetrics = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(mDisplayMetrics);
+
         mViewTag = tag;
         mCocos2dxActivity = activity;
         initVideoView();
@@ -106,15 +112,16 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (mVideoWidth == 0 || mVideoHeight == 0) {
+        // do we know view size? video is loaded already or video rect was set
+        if (mVisibleWidth != 0 && mVisibleHeight != 0) {
             setMeasuredDimension(mViewWidth, mViewHeight);
-            Log.i(TAG, ""+mViewWidth+ ":" +mViewHeight);
-        }
-        else {
-            setMeasuredDimension(mVisibleWidth, mVisibleHeight);
-            Log.i(TAG, ""+mVisibleWidth+ ":" +mVisibleHeight);
-        }
-        
+            Log.i(TAG, "Measured: " + mViewWidth + ":" + mViewHeight);
+        } else {
+            // sometimes we're not fast enough. fallback
+            setMeasuredDimension(mDisplayMetrics.widthPixels, mDisplayMetrics.heightPixels);
+            Log.i(TAG, "Measured: " + 
+                    mDisplayMetrics.widthPixels + ":" + mDisplayMetrics.heightPixels);
+        }        
     }
     
     public void setVideoRect(int left, int top, int maxWidth, int maxHeight) {
