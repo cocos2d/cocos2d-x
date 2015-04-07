@@ -335,6 +335,13 @@ public:
      */
     virtual void disableEffect();
 
+    /**
+     * Disable effect to Label.
+     *
+     * @see `LabelEffect`
+     */
+    virtual void disableEffect(LabelEffect effect);
+
     /** Sets the Label's text horizontal alignment.*/
     void setAlignment(TextHAlignment hAlignment) { setAlignment(hAlignment,_vAlignment);}
 

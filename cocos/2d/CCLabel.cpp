@@ -752,28 +752,28 @@ void Label::enableOutline(const Color4B& outlineColor,int outlineSize /* = -1 */
 {
     CCASSERT(_currentLabelType == LabelType::STRING_TEXTURE || _currentLabelType == LabelType::TTF, "Only supported system font and TTF!");
 
-    _effectColor = outlineColor;
-    _effectColorF.r = _effectColor.r / 255.0f;
-    _effectColorF.g = _effectColor.g / 255.0f;
-    _effectColorF.b = _effectColor.b / 255.0f;
-    _effectColorF.a = _effectColor.a / 255.0f;
-
-    if (outlineSize > 0)
+    if (outlineSize > 0 || _currLabelEffect == LabelEffect::OUTLINE)
     {
-        _outlineSize = outlineSize;
         if (_currentLabelType == LabelType::TTF)
         {
-            if (_fontConfig.outlineSize != outlineSize)
-            { 
-                auto config = _fontConfig;
-                config.outlineSize = outlineSize;
-                setTTFConfig(config);
-                updateShaderProgram();
+            _effectColorF.r = outlineColor.r / 255.0f;
+            _effectColorF.g = outlineColor.g / 255.0f;
+            _effectColorF.b = outlineColor.b / 255.0f;
+            _effectColorF.a = outlineColor.a / 255.0f;
+
+            if (outlineSize > 0 && _fontConfig.outlineSize != outlineSize)
+            {
+                _fontConfig.outlineSize = outlineSize;
+                setTTFConfig(_fontConfig);
             }
         }
-
-        _currLabelEffect = LabelEffect::OUTLINE;
-        _contentDirty = true;
+        else if (_effectColor != outlineColor || _outlineSize != outlineSize)
+        {
+            _effectColor = outlineColor;
+            _outlineSize = outlineSize;
+            _currLabelEffect = LabelEffect::OUTLINE;
+            _contentDirty = true;
+        }
     }
 }
 
@@ -815,19 +815,50 @@ void Label::enableShadow(const Color4B& shadowColor /* = Color4B::BLACK */,const
 
 void Label::disableEffect()
 {
-    if (_currLabelEffect == LabelEffect::OUTLINE)
+    disableEffect(LabelEffect::GLOW);
+    disableEffect(LabelEffect::OUTLINE);
+    disableEffect(LabelEffect::SHADOW);
+}
+
+void Label::disableEffect(LabelEffect effect)
+{
+    switch (effect)
     {
-        _fontConfig.outlineSize = 0;
-        setTTFConfig(_fontConfig);
-    }
-    _currLabelEffect = LabelEffect::NORMAL;
-    updateShaderProgram();
-    _contentDirty = true;
-    _shadowEnabled = false;
-    if (_shadowNode)
-    {
-        Node::removeChild(_shadowNode,true);
-        _shadowNode = nullptr;
+    case cocos2d::LabelEffect::NORMAL:
+        break;
+    case cocos2d::LabelEffect::OUTLINE:
+        if (_currLabelEffect == LabelEffect::OUTLINE)
+        {
+            if (_currentLabelType == LabelType::TTF)
+            {
+                _fontConfig.outlineSize = 0;
+                setTTFConfig(_fontConfig);
+            }
+            
+            _currLabelEffect = LabelEffect::NORMAL;
+            _contentDirty = true;
+        }
+        break;
+    case cocos2d::LabelEffect::SHADOW:
+        if (_shadowEnabled)
+        {
+            _shadowEnabled = false;
+            if (_shadowNode)
+            {
+                Node::removeChild(_shadowNode, true);
+                _shadowNode = nullptr;
+            }
+        }
+        break;
+    case cocos2d::LabelEffect::GLOW:
+        if (_currLabelEffect == LabelEffect::GLOW)
+        {
+            _currLabelEffect = LabelEffect::NORMAL;
+            updateShaderProgram();
+        }
+        break;
+    default:
+        break;
     }
 }
 
