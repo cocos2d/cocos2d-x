@@ -56,6 +56,7 @@ namespace ui {
         /**
          * Default constructor.
          * @js ctor
+         * @lua new
          */
         Scale9Sprite();
 
@@ -124,7 +125,7 @@ namespace ui {
          * broken down into a 3×3 grid of equal blocks.
          *
          * @see initWithFile(const char *file)
-         * @param file. A texture file name.
+         * @param file A texture file name.
          * @return A Scale9Sprite instance.
          */
         static Scale9Sprite* create(const std::string& file);
@@ -403,6 +404,7 @@ namespace ui {
          * @param rotated Whether the sprite is rotated or not.
          * @param capInsets The Values to use for the cap insets.
          * @return True if update success, false otherwise.
+         * @js NA
          */
         virtual bool updateWithSprite(Sprite* sprite,
                                       const Rect& rect,
@@ -419,6 +421,7 @@ namespace ui {
          * @param originalSize The origial size of the sprite.
          * @param capInsets The Values to use for the cap insets.
          * @return True if update success, false otherwise.
+         * @js NA
          */
         virtual bool updateWithSprite(Sprite* sprite,
                                       const Rect& rect,
@@ -559,6 +562,7 @@ namespace ui {
          * @brief Toggle 9-slice feature.
          * If Scale9Sprite is 9-slice disabled, the Scale9Sprite will rendered as a normal sprite.
          * @param enabled True to enable 9-slice, false otherwise.
+         * @js NA
          */
         void setScale9Enabled(bool enabled);
         
@@ -566,6 +570,7 @@ namespace ui {
          * @brief Query whether the Scale9Sprite is enable 9-slice or not.
          *
          * @return True if 9-slice is enabled, false otherwise.
+         * @js NA
          */
         bool isScale9Enabled()const;
         
@@ -573,6 +578,10 @@ namespace ui {
         
         virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
         virtual void cleanup() override;
+        
+        /**
+         * @lua NA
+         */
         virtual void onEnter() override;
         
         /** Event callback that is invoked when the Node enters in the 'stage'.

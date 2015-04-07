@@ -222,7 +222,9 @@
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
--- Default constructor.
+-- Default constructor.<br>
+-- js ctor<br>
+-- lua new
 -- @function [parent=#Text] Text 
 -- @param self
 -- @return Text#Text self (return value: ccui.Text)

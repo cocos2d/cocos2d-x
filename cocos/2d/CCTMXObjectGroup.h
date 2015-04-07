@@ -71,6 +71,7 @@ public:
      *
      * @param propertyName The specific property name.
      * @return Return the value for the specific property name.
+     * @js NA
      */
     Value getProperty(const std::string& propertyName) const;
     

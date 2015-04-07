@@ -30,14 +30,22 @@
 #include "json/document.h"
 
 NS_CC_BEGIN
+
+/**
+ * @addtogroup _3d
+ * @{
+ */
+
 class Animation3D;
 class Data;
 
 /**
- * Defines a bundle file that contains a collection of assets. Mesh, Material, MeshSkin, Animation
+ * @brief Defines a bundle file that contains a collection of assets. Mesh, Material, MeshSkin, Animation
  * There are two types of bundle files, c3t and c3b.
  * c3t text file
  * c3b binary file
+ * @js NA
+ * @lua NA
  */
 class CC_DLL Bundle3D
 {
@@ -173,6 +181,9 @@ protected:
     Reference* _references;
     bool  _isBinary;
 };
+
+// end of 3d group
+/// @}
 
 NS_CC_END
 

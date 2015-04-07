@@ -56,6 +56,8 @@ public:
 
     /**
      * Default destructor.
+     *
+     * @lua NA
      */
     virtual ~Button();
 
@@ -67,9 +69,9 @@ public:
     
     /**
      * Create a button with custom textures.
-     * @normalImage normal state texture name.
-     * @selectedImage  selected state texture name.
-     * @disableImage disabled state texture name.
+     * @param normalImage normal state texture name.
+     * @param selectedImage  selected state texture name.
+     * @param disableImage disabled state texture name.
      * @param texType    @see `TextureResType`
      * @return a Button instance.
      */

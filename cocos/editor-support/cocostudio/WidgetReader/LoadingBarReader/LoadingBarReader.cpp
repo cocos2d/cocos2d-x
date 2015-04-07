@@ -48,6 +48,11 @@ namespace cocostudio
         return instanceLoadingBar;
     }
     
+    void LoadingBarReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instanceLoadingBar);
+    }
+    
     void LoadingBarReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
     {
         WidgetReader::setPropsFromBinary(widget, cocoLoader, cocoNode);

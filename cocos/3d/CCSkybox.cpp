@@ -22,6 +22,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
+#include "base/ccMacros.h"
+#include "base/CCConfiguration.h"
+#include "base/CCDirector.h"
+#include "renderer/ccGLStateCache.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/CCGLProgramCache.h"
+#include "renderer/CCGLProgramState.h"
+#include "renderer/CCRenderer.h"
 #include "3d/CCSkybox.h"
 #include "3d/CCTextureCube.h"
 
@@ -53,6 +61,17 @@ Skybox::~Skybox()
     _texture->release();
 }
 
+Skybox* Skybox::create(const std::string& positive_x, const std::string& negative_x,
+               const std::string& positive_y, const std::string& negative_y,
+               const std::string& positive_z, const std::string& negative_z)
+{
+    auto ret = new (std::nothrow) Skybox();
+    ret->init(positive_x, negative_x, positive_y, negative_y, positive_z, negative_z);
+    
+    ret->autorelease();
+    return ret;
+}
+
 bool Skybox::init()
 {
     // create and set our custom shader
@@ -65,6 +84,19 @@ bool Skybox::init()
 
     CHECK_GL_ERROR_DEBUG();
 
+    return true;
+}
+
+bool Skybox::init(const std::string& positive_x, const std::string& negative_x,
+          const std::string& positive_y, const std::string& negative_y,
+          const std::string& positive_z, const std::string& negative_z)
+{
+    auto texture = TextureCube::create(positive_x, negative_x, positive_y, negative_y, positive_z, negative_z);
+    if (texture == nullptr)
+        return false;
+    
+    init();
+    setTexture(texture);
     return true;
 }
 
@@ -120,6 +152,9 @@ void Skybox::onDraw(const Mat4& transform, uint32_t flags)
 {
     auto state = getGLProgramState();
     state->apply(transform);
+    
+    Vec4 color(_displayedColor.r / 255.f, _displayedColor.g / 255.f, _displayedColor.b / 255.f, 1.f);
+    state->setUniformVec4("u_color", color);
 
     GLboolean   depthFlag = glIsEnabled(GL_DEPTH_TEST);
     GLint       depthFunc;
@@ -179,12 +214,6 @@ void Skybox::setTexture(TextureCube* texture)
 
 void Skybox::reload()
 {
-    auto glProgram = getGLProgramState()->getGLProgram();
-    glProgram->reset();
-    glProgram->initWithFilenames("Shaders3D/Skybox.vert", "Shaders3D/Skybox.frag");
-    glProgram->link();
-    glProgram->updateUniforms();
-
     initBuffers();
 }
 

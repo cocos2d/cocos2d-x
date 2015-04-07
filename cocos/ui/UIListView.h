@@ -93,11 +93,15 @@ public:
     
     /**
      * Default constructor
+     * @js ctor
+     * @lua new
      */
     ListView();
     
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~ListView();
     
@@ -243,8 +247,8 @@ public:
     /**
      * Changes scroll direction of scrollview.
      *
-     *  Direction Direction::VERTICAL means vertical scroll, Direction::HORIZONTAL means horizontal scroll
-     * @param dir, set the list view's scroll direction
+     *  Direction Direction::VERTICAL means vertical scroll, Direction::HORIZONTAL means horizontal scroll.
+     * @param dir Set the list view's scroll direction.
      */
     virtual void setDirection(Direction dir) override;
     

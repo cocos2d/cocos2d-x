@@ -139,6 +139,11 @@ namespace cocostudio
         CC_SAFE_DELETE(instanceWidgetReader);
     }
     
+    void WidgetReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instanceWidgetReader);
+    }
+    
     void WidgetReader::setPropsFromJsonDictionary(Widget *widget, const rapidjson::Value &options)
     {        
    

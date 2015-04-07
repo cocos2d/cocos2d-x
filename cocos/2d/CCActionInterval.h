@@ -1429,7 +1429,7 @@ public:
 
     /** Sets the Animation object to be animated 
      * 
-     * @param A certain animation.
+     * @param animation certain animation.
      */
     void setAnimation( Animation* animation );
     /** returns the Animation object that is being animated 

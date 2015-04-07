@@ -107,7 +107,7 @@
 -- @return ProtectedNode#ProtectedNode self (return value: cc.ProtectedNode)
         
 --------------------------------
--- / @} end of Children and Parent
+-- js NA
 -- @function [parent=#ProtectedNode] visit 
 -- @param self
 -- @param #cc.Renderer renderer

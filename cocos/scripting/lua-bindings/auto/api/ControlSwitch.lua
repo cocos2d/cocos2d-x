@@ -98,7 +98,8 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- js ctor
+-- js ctor<br>
+-- lua new
 -- @function [parent=#ControlSwitch] ControlSwitch 
 -- @param self
 -- @return ControlSwitch#ControlSwitch self (return value: cc.ControlSwitch)

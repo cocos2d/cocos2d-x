@@ -1294,15 +1294,21 @@ bool FileUtils::renameFile(const std::string &path, const std::string &oldname, 
 
     if(FileUtils::getInstance()->isFileExist(_new))
     {
-        DeleteFileA(_new.c_str());
+        if (!DeleteFileA(_new.c_str()))
+        {
+            CCLOGERROR("Fail to delete file %s !Error code is 0x%x", newPath.c_str(), GetLastError());
+        }
     }
 
-    MoveFileA(_old.c_str(), _new.c_str());
-
-    if (0 == GetLastError())
+    if (MoveFileA(_old.c_str(), _new.c_str()))
+    {
         return true;
+    }
     else
+    {
+        CCLOGERROR("Fail to rename file %s to %s !Error code is 0x%x", oldPath.c_str(), newPath.c_str(), GetLastError());
         return false;
+    }
 #else
     int errorCode = rename(oldPath.c_str(), newPath.c_str());
 

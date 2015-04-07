@@ -57,6 +57,9 @@ typedef enum {
 /**
  * Build bridge between ObjC and Lua.
  * It makes Lua and ObjC can call each other conveniently.
+ *
+ * @lua NA
+ * @js NA
  */
 class LuaBridge
 {
@@ -65,8 +68,6 @@ public:
      * Get the LuaStack of LuaEngine.
      *
      * @return the LuaStack object.
-     * @lua NA
-     * @js NA
      */
     static LuaStack *getStack(void);
     /**
@@ -74,8 +75,6 @@ public:
      * If it don't find the function pointer corresponding to functionId, it will reset stack top index to the index before searching.
      *
      * @param functionId the value used to search the `lua_bridge_function_id` table.
-     * @lua NA
-     * @js NA
      */
     static int pushLuaFunctionById(int functionId);
     
@@ -86,8 +85,6 @@ public:
      *
      * @param functionId the value used to search the `lua_bridge_function_id_retain` table.
      * @return the retain count or 0.
-     * @lua NA
-     * @js NA
      */
     static int retainLuaFunctionById(int functionId);
     
@@ -99,8 +96,6 @@ public:
      *
      * @param functionId the value used to search the `lua_bridge_function_id` table and `lua_bridge_function_id` table.
      * @return the retain count or 0.
-     * @lua NA
-     * @js NA
      */
     static int releaseLuaFunctionById(int functionId);
     

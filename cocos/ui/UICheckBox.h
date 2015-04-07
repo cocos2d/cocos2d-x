@@ -82,11 +82,15 @@ public:
     
     /**
      * Default constructor.
+     * 
+     * @lua new
      */
     CheckBox();
 
     /**
      * Default destructor.
+     * 
+     * @lua NA
      */
     virtual ~CheckBox();
 
@@ -101,13 +105,14 @@ public:
      * @param backGround    backGround texture.
      * @param backGroundSelected    backGround selected state texture.
      * @param cross    cross texture.
+     * @param backGroundDisabled    backGround disabled state texture.
      * @param frontCrossDisabled    cross dark state texture.
      * @param texType    @see `Widget::TextureResType`
      *
      * @return A CheckBox instance pointer.
      */
     static CheckBox* create(const std::string& backGround,
-                            const std::string& backGroundSeleted,
+                            const std::string& backGroundSelected,
                             const std::string& cross,
                             const std::string& backGroundDisabled,
                             const std::string& frontCrossDisabled,
@@ -128,16 +133,17 @@ public:
     /**
      * Load all textures for initializing a checkbox.
      *
-     * @param backGround    The background image name.
-     * @param backGroundSelected    The background selected image name.
+     * @param background    The background image name.
+     * @param backgroundSelected    The background selected image name.
      * @param cross    The cross image name.
+     * @param backgroundDisabled    The background disabled state texture.
      * @param frontCrossDisabled    The front cross disabled state image name.
      * @param texType    @see `Widget::TextureResType`
      */
-    void loadTextures(const std::string& backGround,
-                      const std::string& backGroundSelected,
+    void loadTextures(const std::string& background,
+                      const std::string& backgroundSelected,
                       const std::string& cross,
-                      const std::string& backGroundDisabled,
+                      const std::string& backgroundDisabled,
                       const std::string& frontCrossDisabled,
                       TextureResType texType = TextureResType::LOCAL);
 
@@ -145,7 +151,7 @@ public:
      * Load background texture for checkbox.
      *
      * @param backGround   The background image name.
-     * @param texType    @see `Widget::TextureResType`
+     * @param type    @see `Widget::TextureResType`
      */
     void loadTextureBackGround(const std::string& backGround,TextureResType type = TextureResType::LOCAL);
 
@@ -160,10 +166,10 @@ public:
     /**
      * Load cross texture for checkbox.
      *
-     * @param cross    The cross texture name.
+     * @param crossTextureName    The cross texture name.
      * @param texType    @see `Widget::TextureResType`
      */
-    void loadTextureFrontCross(const std::string&,TextureResType texType = TextureResType::LOCAL);
+    void loadTextureFrontCross(const std::string& crossTextureName,TextureResType texType = TextureResType::LOCAL);
 
     /**
      * Load background disabled state texture for checkbox.
