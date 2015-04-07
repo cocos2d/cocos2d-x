@@ -7,8 +7,8 @@ require("ByteCodeEncryptTest/ByteCodeAndEncryptTest")
 end
 
 if (cc.PLATFORM_OS_IPHONE == targetPlatform or cc.PLATFORM_OS_IPAD == targetPlatform) and is64BitIOSDevice == true then
-require("ByteCodeEncryptTest/ByteCodeAndEncryptTest_arm64")
-require("ByteCodeEncryptTest/ByteCodeTest_arm64")
+require("ByteCodeEncryptTest/ByteCodeAndEncryptTest-arm64")
+require("ByteCodeEncryptTest/ByteCodeTest-arm64")
 end
 
 local LINE_SPACE = 40
