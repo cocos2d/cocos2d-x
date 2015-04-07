@@ -814,6 +814,10 @@
 		A5030C3619D059DA000E78E7 /* OpenURLTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5030C3319D059DA000E78E7 /* OpenURLTest.cpp */; };
 		B2507B6B192589AF00FA4972 /* Shaders3D in Resources */ = {isa = PBXBuildFile; fileRef = B2507B6A192589AF00FA4972 /* Shaders3D */; };
 		B2507B6C192589AF00FA4972 /* Shaders3D in Resources */ = {isa = PBXBuildFile; fileRef = B2507B6A192589AF00FA4972 /* Shaders3D */; };
+		B603F1AF1AC8EA4E00A9579C /* TerrainTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B603F1AD1AC8EA4E00A9579C /* TerrainTest.cpp */; };
+		B603F1B01AC8EA4E00A9579C /* TerrainTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B603F1AD1AC8EA4E00A9579C /* TerrainTest.cpp */; };
+		B603F1B41AC8FBFB00A9579C /* TerrainTest in Resources */ = {isa = PBXBuildFile; fileRef = B603F1B31AC8FBFB00A9579C /* TerrainTest */; };
+		B603F1B51AC8FBFB00A9579C /* TerrainTest in Resources */ = {isa = PBXBuildFile; fileRef = B603F1B31AC8FBFB00A9579C /* TerrainTest */; };
 		B609E67319C18DAD003D0074 /* BillBoardTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B609E67119C18DAD003D0074 /* BillBoardTest.cpp */; };
 		B609E67419C18DAD003D0074 /* BillBoardTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B609E67119C18DAD003D0074 /* BillBoardTest.cpp */; };
 		B6337DF71ABA9B44005AEF24 /* PerformanceParticle3DTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6337DF51ABA9B44005AEF24 /* PerformanceParticle3DTest.cpp */; };
@@ -1752,6 +1756,9 @@
 		A5030C3319D059DA000E78E7 /* OpenURLTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OpenURLTest.cpp; path = OpenURLTest/OpenURLTest.cpp; sourceTree = "<group>"; };
 		A5030C3419D059DA000E78E7 /* OpenURLTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenURLTest.h; path = OpenURLTest/OpenURLTest.h; sourceTree = "<group>"; };
 		B2507B6A192589AF00FA4972 /* Shaders3D */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Shaders3D; path = "../tests/cpp-tests/Resources/Shaders3D"; sourceTree = "<group>"; };
+		B603F1AD1AC8EA4E00A9579C /* TerrainTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TerrainTest.cpp; path = TerrainTest/TerrainTest.cpp; sourceTree = "<group>"; };
+		B603F1AE1AC8EA4E00A9579C /* TerrainTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TerrainTest.h; path = TerrainTest/TerrainTest.h; sourceTree = "<group>"; };
+		B603F1B31AC8FBFB00A9579C /* TerrainTest */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TerrainTest; path = "../tests/cpp-tests/Resources/TerrainTest"; sourceTree = "<group>"; };
 		B609E67119C18DAD003D0074 /* BillBoardTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BillBoardTest.cpp; path = BillBoardTest/BillBoardTest.cpp; sourceTree = "<group>"; };
 		B609E67219C18DAD003D0074 /* BillBoardTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BillBoardTest.h; path = BillBoardTest/BillBoardTest.h; sourceTree = "<group>"; };
 		B6337DF51ABA9B44005AEF24 /* PerformanceParticle3DTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PerformanceParticle3DTest.cpp; sourceTree = "<group>"; };
@@ -2179,6 +2186,7 @@
 		1AC3592418CECF0A00F37B72 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B603F1AC1AC8EA2E00A9579C /* TerrainTest */,
 				182C5CB71A95B28A00C30D34 /* CocosStudio3DTest */,
 				B639932B1A490E9900B07923 /* Particle3DTest */,
 				D0FD03611A3B543700825BB5 /* AllocatorTest */,
@@ -3216,6 +3224,7 @@
 		1AC35CA818CED83500F37B72 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B603F1B31AC8FBFB00A9579C /* TerrainTest */,
 				B63993301A49359F00B07923 /* Particle3D */,
 				15B3709219EE5D1000ABE682 /* Manifests */,
 				3E2BDB0019C5E5D40055CDCD /* background.wav */,
@@ -3951,6 +3960,15 @@
 			name = OpenURLTest;
 			sourceTree = "<group>";
 		};
+		B603F1AC1AC8EA2E00A9579C /* TerrainTest */ = {
+			isa = PBXGroup;
+			children = (
+				B603F1AD1AC8EA4E00A9579C /* TerrainTest.cpp */,
+				B603F1AE1AC8EA4E00A9579C /* TerrainTest.h */,
+			);
+			name = TerrainTest;
+			sourceTree = "<group>";
+		};
 		B609E67019C18D90003D0074 /* BillBoardTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -4493,6 +4511,7 @@
 				3E92EA851921A7720094CD21 /* Sprite3DTest in Resources */,
 				1AC35CA318CECF1E00F37B72 /* InfoPlist.strings in Resources */,
 				1AC35CA418CECF1E00F37B72 /* MainMenu.xib in Resources */,
+				B603F1B41AC8FBFB00A9579C /* TerrainTest in Resources */,
 				1AC35CD418CED84500F37B72 /* ccb in Resources */,
 				C08689C118D370C90093E810 /* background.caf in Resources */,
 				1AC35CE418CED84500F37B72 /* effect1.wav in Resources */,
@@ -4538,6 +4557,7 @@
 				1AC35C9618CECF1400F37B72 /* Icon-76.png in Resources */,
 				1AC35C8A18CECF1400F37B72 /* Default@2x.png in Resources */,
 				1AC35CE318CED84500F37B72 /* effect1.raw in Resources */,
+				B603F1B51AC8FBFB00A9579C /* TerrainTest in Resources */,
 				1A221C9D191771E400FD2BE4 /* ccs-res in Resources */,
 				1AC35C9018CECF1400F37B72 /* Icon-29.png in Resources */,
 				1AC35D0918CED84500F37B72 /* TileMaps in Resources */,
@@ -4817,6 +4837,7 @@
 				1AC35C2118CECF0C00F37B72 /* ParallaxTest.cpp in Sources */,
 				1AC35C6B18CECF0C00F37B72 /* ZwoptexTest.cpp in Sources */,
 				1AC35B7718CECF0C00F37B72 /* ComponentsTestScene.cpp in Sources */,
+				B603F1AF1AC8EA4E00A9579C /* TerrainTest.cpp in Sources */,
 				29080DC7191B595E0066F8DF /* UISceneManager.cpp in Sources */,
 				1AC35C2F18CECF0C00F37B72 /* PerformanceParticleTest.cpp in Sources */,
 				1AC35B4918CECF0C00F37B72 /* Bug-914.cpp in Sources */,
@@ -5174,6 +5195,7 @@
 				298D7F6F19AC31F300FF096D /* UIWebViewTest.cpp in Sources */,
 				29080DA6191B595E0066F8DF /* UIButtonTest_Editor.cpp in Sources */,
 				1AC35B5018CECF0C00F37B72 /* ClickAndMoveTest.cpp in Sources */,
+				B603F1B01AC8EA4E00A9579C /* TerrainTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

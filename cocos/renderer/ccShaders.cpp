@@ -84,5 +84,7 @@ NS_CC_BEGIN
 #include "ccShader_3D_Particle.frag"
 #include "ccShader_3D_Skybox.vert"
 #include "ccShader_3D_Skybox.frag"
+#include "ccShader_3D_Terrain.vert"
+#include "ccShader_3D_Terrain.frag"
 
 NS_CC_END

@@ -224,6 +224,11 @@ public:
     static const char* SHADER_3D_SKYBOX;
     
     /**
+     Built in shader for terrain
+     */
+    static const char* SHADER_3D_TERRAIN;
+    
+    /**
     end of built shader types.
     @}
     */

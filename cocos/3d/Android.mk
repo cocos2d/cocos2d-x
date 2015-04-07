@@ -21,7 +21,8 @@ CCMeshVertexIndexData.cpp \
 CCSprite3DMaterial.cpp \
 CCObjLoader.cpp \
 CCSkeleton3D.cpp \
-CCSprite3D.cpp	\
+CCSprite3D.cpp \
+CCTerrain.cpp \
 CCSkybox.cpp  \
 CCTextureCube.cpp
 
