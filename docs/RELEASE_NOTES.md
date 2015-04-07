@@ -1,4 +1,4 @@
-# cocos2d-x v3.5 Release Notes #
+# cocos2d-x v3.6 Release Notes #
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
@@ -13,7 +13,7 @@
     - [Windows](#windows)
     - [Linux](#linux)
   - [How to start a new game](#how-to-start-a-new-game)
-- [v3.6beta0](#v36beta0)
+- [v3.6alpha0](#v36alpha0)
   - [Highlights of v3.6beta0](#highlights-of-v36beta0)
   - [Features in detail](#features-in-detail-1)
     - [3D TextureCube](#3d-texturecube)
@@ -110,9 +110,15 @@ Run
 
 Please refer to this document: [ReadMe](../README.md)
 
-# v3.6beta0
+# v3.6alpha0
 
-## Highlights of v3.6beta0
+## Highlights of v3.6alpha0
+
+* 3D: added skybox support
+* 3D: added terrian support
+* uses luajit v2.1-20150331 on 64-bit iOS devices
+* added test automation support for cpp-tests
+
 ## Features in detail
 
 ### 3D TextureCube
@@ -191,3 +197,13 @@ if (animation)
 ```
 
 The animation quality is also configurable in config.plist, the key is cocos2d.x.3d.animate_high_quality. All the created `Animate3D` base on this key if exist. You can modify it using the above method.
+
+### luajit arm64 
+
+The version of the luajit is [v2.1-20150331](https://github.com/openresty/luajit2/releases). We have consulted the author of luajit, he said it was stability enough to be used. We will update to v2.1 when it is released.
+
+Using luajit arm64 version is that because it can improve the performance. In previous versions of cocos2d-x, it uses lua on iOS 64-bit devices. 
+
+Bytecode of luajit and luajit arm64 are not compatible, which means you can not use one version of bytecode on iOS 32-bit devices and iOS 64-bit devices.
+
+As there is not mandatory requirement of having arm64 bit bin on Android, so we don't use luajit arm64 on Android as its bytecode is not compatible with luajit arm32.
