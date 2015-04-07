@@ -16,6 +16,7 @@ TerrainSimple::TerrainSimple()
     //use custom camera
     _camera = Camera::createPerspective(60,visibleSize.width/visibleSize.height,0.1,800);
     _camera->setCameraFlag(CameraFlag::USER1);
+    _camera->setPosition3D(Vec3(-1,1.6,4));
     addChild(_camera);
 
     Terrain::DetailMap r("TerrainTest/dirt.dds"),g("TerrainTest/Grass2.dds"),b("TerrainTest/road.dds"),a("TerrainTest/GreenSkin.jpg");
@@ -23,7 +24,7 @@ TerrainSimple::TerrainSimple()
     Terrain::TerrainData data("TerrainTest/heightmap16.jpg","TerrainTest/alphamap.png",r,g,b,a);
 
     _terrain = Terrain::create(data,Terrain::CrackFixedType::SKIRT);
-    _terrain->setLODDistance(1000.2,6.4,9.6);
+    _terrain->setLODDistance(3.2,6.4,9.6);
     _terrain->setMaxDetailMapAmount(4);
     addChild(_terrain);
     _terrain->setCameraMask(2);
