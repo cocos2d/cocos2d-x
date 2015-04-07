@@ -36,6 +36,7 @@ public:
         addTest("Console", []() { return new ConsoleTests(); });
         addTest("Curl", []() { return new CurlTests(); });
         addTest("Current Language", []() { return new CurrentLanguageTests(); });
+        addTest("CocosStudio3D Test", []() { return new CocosStudio3DTests(); });
         addTest("EventDispatcher", []() { return new EventDispatcherTests(); });
         addTest("Effects - Advanced", []() { return new EffectAdvanceTests(); });
         addTest("Effects - Basic", [](){return new EffectTests(); });
@@ -56,9 +57,11 @@ public:
         addTest("Node: Node", [](){return new CocosNodeTests(); });
         addTest("Node: Parallax", [](){return new ParallaxTests(); });
         addTest("Node: Particles", [](){return new ParticleTests(); });
+        addTest("Node: Particle3D (PU)", [](){return new Particle3DTests(); });
         addTest("Node: Physics", []() { return new PhysicsTests(); });
         addTest("Node: RenderTexture", [](){return new RenderTextureTests(); });
         addTest("Node: Scene", [](){return new SceneTests(); });
+        addTest("Node: Spine", [](){return new SpineTests(); });
         addTest("Node: Sprite", [](){return new SpriteTests(); });
         addTest("Node: Sprite3D", [](){  return new Sprite3DTests(); });
         addTest("Node: Terrain", [](){  return new TerrainTests(); });
