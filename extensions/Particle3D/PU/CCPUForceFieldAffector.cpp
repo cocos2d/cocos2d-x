@@ -37,8 +37,8 @@ const double PUForceFieldAffector::DEFAULT_FREQUENCY = 1.0f;
 const double PUForceFieldAffector::DEFAULT_AMPLITUDE = 1.0f;
 const double PUForceFieldAffector::DEFAULT_PERSISTENCE = 3.0f;
 const unsigned int PUForceFieldAffector::DEFAULT_FORCEFIELDSIZE = 64;
-const Vec3 PUForceFieldAffector::DEFAULT_WORLDSIZE = Vec3(500.0f, 500.0f, 500.0f);
-const Vec3 PUForceFieldAffector::DEFAULT_MOVEMENT = Vec3(500.0f, 0.0f, 0.0f);
+const Vec3 PUForceFieldAffector::DEFAULT_WORLDSIZE(500.0f, 500.0f, 500.0f);
+const Vec3 PUForceFieldAffector::DEFAULT_MOVEMENT(500.0f, 0.0f, 0.0f);
 const float PUForceFieldAffector::DEFAULT_MOVEMENT_FREQUENCY = 5.0f;
 
 //-----------------------------------------------------------------------
