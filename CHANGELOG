@@ -4,6 +4,8 @@ cocos2d-x-3.6beta0 Apr.14 2015
     [NEW]           Animate3D: added `Animate3D::setHighQuality()` to set animation quality
 
     [FIX]           Audio: memory leak
+    [FIX]           C++: lag issue if `Director::setContentScaleFactor` is called frequently
+    [FIX]           MenuItem: crash if `MenuItem::onExit` is called multiple times
     [FIX]           Particle3D: particles' rotation affect particle system's rotation
     [FIX]           Sprite3D: memory leak
 
