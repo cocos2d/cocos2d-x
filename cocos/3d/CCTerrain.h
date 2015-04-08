@@ -418,7 +418,7 @@ protected:
     /**
      * cache all unifrom loactions in GLSL.
      **/
-    void cacheUniformLocation();
+    void cacheUniformAttribLocation();
 protected:
     std::vector <ChunkLODIndices> _chunkLodIndicesSet;
     std::vector<ChunkLODIndicesSkirt> _chunkLodIndicesSkirtSet;

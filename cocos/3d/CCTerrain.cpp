@@ -687,10 +687,10 @@ void Terrain::onEnter()
     Node::onEnter();
     _terrainModelMatrix = getNodeToWorldTransform();
     _quadRoot->preCalculateAABB(_terrainModelMatrix);
-    cacheUniformLocation();
+    cacheUniformAttribLocation();
 }
 
-void Terrain::cacheUniformLocation()
+void Terrain::cacheUniformAttribLocation()
 {
 
     _positionLocation = glGetAttribLocation(this->getGLProgram()->getProgram(),"a_position");
@@ -828,17 +828,15 @@ void Terrain::Chunk::bindAndDraw()
         }
     }
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,_chunkIndices.indices);
+    GL::enableVertexAttribs(1<<_terrain->_positionLocation | 1 << _terrain->_texcordLocation | 1<< _terrain->_normalLocation);
     unsigned long offset = 0;
-    glEnableVertexAttribArray(_terrain->_positionLocation);
     //position
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(TerrainVertexData), (GLvoid *)offset);
     offset +=sizeof(Vec3);
     //texcoord
-    glEnableVertexAttribArray(_terrain->_texcordLocation);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD,2,GL_FLOAT,GL_FALSE,sizeof(TerrainVertexData),(GLvoid *)offset);
     offset +=sizeof(Tex2F);
     //normal
-    glEnableVertexAttribArray(_terrain->_normalLocation);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_NORMAL,3,GL_FLOAT,GL_FALSE,sizeof(TerrainVertexData),(GLvoid *)offset);
     glDrawElements(GL_TRIANGLES, (GLsizei)_chunkIndices.size, GL_UNSIGNED_SHORT, 0);
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _chunkIndices.size);
