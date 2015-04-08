@@ -559,8 +559,6 @@
         "cocos/editor-support/cocostudio/ActionTimeline/CCActionTimelineNode.h", 
         "cocos/editor-support/cocostudio/ActionTimeline/CCFrame.cpp", 
         "cocos/editor-support/cocostudio/ActionTimeline/CCFrame.h", 
-        "cocos/editor-support/cocostudio/ActionTimeline/CCNodeReader.cpp", 
-        "cocos/editor-support/cocostudio/ActionTimeline/CCNodeReader.h", 
         "cocos/editor-support/cocostudio/ActionTimeline/CCTimeLine.cpp", 
         "cocos/editor-support/cocostudio/ActionTimeline/CCTimeLine.h", 
         "cocos/editor-support/cocostudio/ActionTimeline/CCTimelineMacro.h", 
