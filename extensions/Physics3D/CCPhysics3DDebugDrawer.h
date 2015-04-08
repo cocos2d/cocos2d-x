@@ -59,6 +59,8 @@ public:
     virtual void	setDebugMode(int debugMode) override;
     virtual int		getDebugMode() const override;
 
+	void clear();
+
 private:
 
     void init();

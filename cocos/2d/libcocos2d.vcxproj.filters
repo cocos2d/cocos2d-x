@@ -1810,10 +1810,10 @@
     <ClCompile Include="..\..\extensions\Physics3D\CCPhysics3DObject.cpp">
       <Filter>extension\Physics3D</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\extensions\Physics3D\CCPhysics3DViewer.cpp">
+    <ClCompile Include="..\..\extensions\Physics3D\CCPhysics3DWorld.cpp">
       <Filter>extension\Physics3D</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\extensions\Physics3D\CCPhysics3DWorld.cpp">
+    <ClCompile Include="..\..\extensions\Physics3D\CCPhysics3DDebugDrawer.cpp">
       <Filter>extension\Physics3D</Filter>
     </ClCompile>
   </ItemGroup>
@@ -3547,10 +3547,10 @@
     <ClInclude Include="..\..\extensions\Physics3D\CCPhysics3DObject.h">
       <Filter>extension\Physics3D</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\extensions\Physics3D\CCPhysics3DViewer.h">
+    <ClInclude Include="..\..\extensions\Physics3D\CCPhysics3DWorld.h">
       <Filter>extension\Physics3D</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\extensions\Physics3D\CCPhysics3DWorld.h">
+    <ClInclude Include="..\..\extensions\Physics3D\CCPhysics3DDebugDrawer.h">
       <Filter>extension\Physics3D</Filter>
     </ClInclude>
   </ItemGroup>

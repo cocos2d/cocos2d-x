@@ -360,9 +360,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\..\extensions\Physics3D\CCPhysics3D.cpp" />
     <ClCompile Include="..\..\extensions\Physics3D\CCPhysics3DComponent.cpp" />
     <ClCompile Include="..\..\extensions\Physics3D\CCPhysics3DConstraint.cpp" />
+    <ClCompile Include="..\..\extensions\Physics3D\CCPhysics3DDebugDrawer.cpp" />
     <ClCompile Include="..\..\extensions\Physics3D\CCPhysics3DObject.cpp" />
     <ClCompile Include="..\..\extensions\Physics3D\CCPhysics3DShape.cpp" />
-    <ClCompile Include="..\..\extensions\Physics3D\CCPhysics3DViewer.cpp" />
     <ClCompile Include="..\..\extensions\Physics3D\CCPhysics3DWorld.cpp" />
     <ClCompile Include="..\..\extensions\Physics3D\CCPhysicsSprite3D.cpp" />
     <ClCompile Include="..\..\external\ConvertUTF\ConvertUTF.c" />
@@ -885,9 +885,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\..\extensions\Physics3D\CCPhysics3D.h" />
     <ClInclude Include="..\..\extensions\Physics3D\CCPhysics3DComponent.h" />
     <ClInclude Include="..\..\extensions\Physics3D\CCPhysics3DConstraint.h" />
+    <ClInclude Include="..\..\extensions\Physics3D\CCPhysics3DDebugDrawer.h" />
     <ClInclude Include="..\..\extensions\Physics3D\CCPhysics3DObject.h" />
     <ClInclude Include="..\..\extensions\Physics3D\CCPhysics3DShape.h" />
-    <ClInclude Include="..\..\extensions\Physics3D\CCPhysics3DViewer.h" />
     <ClInclude Include="..\..\extensions\Physics3D\CCPhysics3DWorld.h" />
     <ClInclude Include="..\..\extensions\Physics3D\CCPhysicsSprite3D.h" />
     <ClInclude Include="..\..\external\ConvertUTF\ConvertUTF.h" />

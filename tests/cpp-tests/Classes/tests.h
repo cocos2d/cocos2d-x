@@ -78,7 +78,6 @@
 #include "BillBoardTest/BillBoardTest.h"
 #include "LightTest/LightTest.h"
 #include "Particle3DTest/Particle3DTest.h"
-#include "BulletTest/BulletTest.h"
 
 #include "OpenURLTest/OpenURLTest.h"
 #include "AllocatorTest/AllocatorTest.h"

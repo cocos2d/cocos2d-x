@@ -82,6 +82,22 @@ public:
      * @param height The height (cylinder part).
      */
     static Physics3DShape* createCapsule(float radius, float height);
+
+    /**
+     * create convex hull
+     * @param points The vertices of convex hull
+     * @param numPoints The number of vertices.
+     */
+    static Physics3DShape* createConvexHull(const cocos2d::Vec3 *points, int numPoints);
+
+    /**
+     * create convex hull
+     * @param triangles The pointer of triangle list
+     * @param numTriangles The number of triangles.
+     */
+    static Physics3DShape* createMesh(const cocos2d::Vec3 *triangles, int numTriangles);
+
+
     
 #if CC_ENABLE_BULLET_INTEGRATION
     btCollisionShape* getbtShape() const { return _btShape; }
@@ -95,6 +111,8 @@ protected:
     bool initSphere(float radius);
     bool initCylinder(float radius, float height);
     bool initCapsule(float radius, float height);
+    bool initConvexHull(const cocos2d::Vec3 *points, int numPoints);
+    bool initMesh(const cocos2d::Vec3 *triangles, int numTriangles);
     
     
     ShapeType _shapeType; //shape type
