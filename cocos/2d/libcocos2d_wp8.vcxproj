@@ -389,6 +389,7 @@
     <ClInclude Include="..\3d\CCSkybox.h" />
     <ClInclude Include="..\3d\CCSprite3D.h" />
     <ClInclude Include="..\3d\CCSprite3DMaterial.h" />
+    <ClInclude Include="..\3d\CCTerrain.h" />
     <ClInclude Include="..\3d\CCTextureCube.h" />
     <ClInclude Include="..\3d\cocos3d.h" />
     <ClInclude Include="..\audio\include\Export.h" />
@@ -501,7 +502,6 @@
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimelineCache.h" />
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimelineNode.h" />
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCFrame.h" />
-    <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCNodeReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCTimeLine.h" />
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCTimelineMacro.h" />
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CSLoader.h" />
@@ -996,6 +996,7 @@
     <ClCompile Include="..\3d\CCSkybox.cpp" />
     <ClCompile Include="..\3d\CCSprite3D.cpp" />
     <ClCompile Include="..\3d\CCSprite3DMaterial.cpp" />
+    <ClCompile Include="..\3d\CCTerrain.cpp" />
     <ClCompile Include="..\3d\CCTextureCube.cpp" />
     <ClCompile Include="..\audio\wp8\Audio.cpp">
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -1145,7 +1146,6 @@
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimelineCache.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimelineNode.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCFrame.cpp" />
-    <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCNodeReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCTimeLine.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CSLoader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\CCActionFrame.cpp" />

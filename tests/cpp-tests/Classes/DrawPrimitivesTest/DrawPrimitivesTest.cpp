@@ -11,108 +11,15 @@
 
 using namespace std;
 
-static int sceneIdx = -1;
-
-
-Layer* nextSpriteTestAction();
-Layer* backSpriteTestAction();
-Layer* restartSpriteTestAction();
-
-typedef Layer* (*NEWDRAWPRIMITIVESFUNC)();
-#define DRAWPRIMITIVES_CREATE_FUNC(className) \
-static Layer* create##className() \
-{ return new className(); }
-
-DRAWPRIMITIVES_CREATE_FUNC(DrawPrimitivesTest);
-DRAWPRIMITIVES_CREATE_FUNC(DrawNodeTest);
-
-static NEWDRAWPRIMITIVESFUNC createFunctions[] =
+DrawPrimitivesTests::DrawPrimitivesTests()
 {
-    createDrawPrimitivesTest,
-    createDrawNodeTest,
-};
-
-#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-static Layer* nextAction()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-    
-    auto layer = (createFunctions[sceneIdx])();
-    layer->autorelease();
-    
-    return layer;
+    ADD_TEST_CASE(DrawPrimitivesTest);
+    ADD_TEST_CASE(DrawNodeTest);
 }
 
-static Layer* backAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;
-    
-    auto layer = (createFunctions[sceneIdx])();
-    layer->autorelease();
-    
-    return layer;
-}
-
-static Layer* restartAction()
-{
-    auto layer = (createFunctions[sceneIdx])();
-    layer->autorelease();
-    
-    return layer;
-}
-
-// BaseLayer
-
-BaseLayer::BaseLayer()
-{
-    
-}
-
-void BaseLayer::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-void BaseLayer::restartCallback(cocos2d::Ref *pSender)
-{
-    auto s = new (std::nothrow) DrawPrimitivesTestScene();
-    s->addChild(restartAction());
-    
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void BaseLayer::nextCallback(cocos2d::Ref *pSender)
-{
-    auto s = new (std::nothrow) DrawPrimitivesTestScene();;
-    s->addChild(nextAction());
-    
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void BaseLayer::backCallback(cocos2d::Ref *pSender)
-{
-    auto s = new (std::nothrow) DrawPrimitivesTestScene();
-    s->addChild(backAction());
-    
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-string BaseLayer::title() const
+string DrawPrimitivesBaseTest::title() const
 {
     return "No title";
-}
-
-string BaseLayer::subtitle() const
-{
-    return "";
 }
 
 // DrawPrimitivesTest
@@ -391,14 +298,6 @@ string DrawNodeTest::title() const
 string DrawNodeTest::subtitle() const
 {
     return "Testing DrawNode - batched draws. Concave polygons are BROKEN";
-}
-
-void DrawPrimitivesTestScene::runThisTest()
-{
-    auto layer = nextAction();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
 }
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))

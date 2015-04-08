@@ -285,7 +285,7 @@ void PURibbonTrail::updateTrail(size_t index, const Node* node)
 
         // Vary the head elem, but bake new version if that exceeds element len
         Mat4 toWMat = node->getNodeToWorldTransform();
-        Vec3 newPos = Vec3(toWMat.m[12], toWMat.m[13], toWMat.m[14]);
+        Vec3 newPos(toWMat.m[12], toWMat.m[13], toWMat.m[14]);
         if (_parentNode)
         {
             Mat4 toLMat = _parentNode->getWorldToNodeTransform() * toWMat;
@@ -394,7 +394,7 @@ void PURibbonTrail::resetTrail(size_t index, const Node* node)
     // Create new element, v coord is always 0.0f
     // need to convert to take parent node's position into account
     Mat4 toWMat = node->getNodeToWorldTransform();
-    Vec3 position = Vec3(toWMat.m[12], toWMat.m[13], toWMat.m[14]);
+    Vec3 position(toWMat.m[12], toWMat.m[13], toWMat.m[14]);
     if (_parentNode)
     {
         Mat4 toLMat = _parentNode->getWorldToNodeTransform() * toWMat;

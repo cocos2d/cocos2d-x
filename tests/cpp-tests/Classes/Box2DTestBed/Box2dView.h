@@ -1,30 +1,25 @@
 #ifndef _BOX2D_VIEW_H_
 #define _BOX2D_VIEW_H_
 
-//#include "cocos2d.h"
-#include "../testBasic.h"
+#include "../BaseTest.h"
 #include "renderer/CCCustomCommand.h"
 
-class MenuLayer : public Layer
+DEFINE_TEST_SUITE(Box2dTestBedSuite);
+
+class Box2dTestBed : public TestCase
 {
     int        m_entryID;
     EventListenerTouchOneByOne* _touchListener;
 public:
-    MenuLayer(void);
-    virtual ~MenuLayer(void);
+    static Box2dTestBed* createWithEntryID(int entryId);
+
+    Box2dTestBed();
+    virtual ~Box2dTestBed();
 
     bool initWithEntryID(int entryId);
 
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
-
-
     bool onTouchBegan(Touch* touch, Event* event);
     void onTouchMoved(Touch* touch, Event* event);
-
-public:
-    static MenuLayer* menuWithEntryID(int entryId);
 };
 
 struct TestEntry;
@@ -58,12 +53,6 @@ protected:
     void onDraw(const Mat4 &transform, uint32_t flags);
 
     CustomCommand _customCmd;
-};
-
-class Box2dTestBedScene : public TestScene
-{
-public:
-    virtual void runThisTest();
 };
 
 #endif

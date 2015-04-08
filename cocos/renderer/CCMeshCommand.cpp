@@ -423,7 +423,7 @@ void MeshCommand::setLightUniforms()
                             Vec3 dir = dirLight->getDirectionInWorld();
                             dir.normalize();
                             const Color3B &col = dirLight->getDisplayedColor();
-                            s_dirLightUniformColorValues[enabledDirLightNum] = Vec3(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
+                            s_dirLightUniformColorValues[enabledDirLightNum].set(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
                             s_dirLightUniformDirValues[enabledDirLightNum] = dir;
                             ++enabledDirLightNum;
                         }
@@ -437,8 +437,8 @@ void MeshCommand::setLightUniforms()
                             auto pointLight = static_cast<PointLight *>(light);
                             Mat4 mat= pointLight->getNodeToWorldTransform();
                             const Color3B &col = pointLight->getDisplayedColor();
-                            s_pointLightUniformColorValues[enabledPointLightNum] = Vec3(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
-                            s_pointLightUniformPositionValues[enabledPointLightNum] = Vec3(mat.m[12], mat.m[13], mat.m[14]);
+                            s_pointLightUniformColorValues[enabledPointLightNum].set(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
+                            s_pointLightUniformPositionValues[enabledPointLightNum].set(mat.m[12], mat.m[13], mat.m[14]);
                             s_pointLightUniformRangeInverseValues[enabledPointLightNum] = 1.0f / pointLight->getRange();
                             ++enabledPointLightNum;
                         }
@@ -453,8 +453,8 @@ void MeshCommand::setLightUniforms()
                             dir.normalize();
                             Mat4 mat= light->getNodeToWorldTransform();
                             const Color3B &col = spotLight->getDisplayedColor();
-                            s_spotLightUniformColorValues[enabledSpotLightNum] = Vec3(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
-                            s_spotLightUniformPositionValues[enabledSpotLightNum] = Vec3(mat.m[12], mat.m[13], mat.m[14]);
+                            s_spotLightUniformColorValues[enabledSpotLightNum].set(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
+                            s_spotLightUniformPositionValues[enabledSpotLightNum].set(mat.m[12], mat.m[13], mat.m[14]);
                             s_spotLightUniformDirValues[enabledSpotLightNum] = dir;
                             s_spotLightUniformInnerAngleCosValues[enabledSpotLightNum] = spotLight->getCosInnerAngle();
                             s_spotLightUniformOuterAngleCosValues[enabledSpotLightNum] = spotLight->getCosOuterAngle();
@@ -467,7 +467,7 @@ void MeshCommand::setLightUniforms()
                     {
                         auto ambLight = static_cast<AmbientLight *>(light);
                         const Color3B &col = ambLight->getDisplayedColor();
-                        ambientColor += Vec3(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
+                        ambientColor.add(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
                     }
                         break;
                     default:

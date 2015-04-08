@@ -896,7 +896,7 @@ void PUParticleSystem3D::emitParticles( ParticlePool &pool, PUEmitter* emitter, 
 
         initParticleForEmission(particle);
 
-        particle->position += Vec3(particle->direction.x * scale.x * _particleSystemScaleVelocity * timePoint
+        particle->position.add(particle->direction.x * scale.x * _particleSystemScaleVelocity * timePoint
                                  , particle->direction.y * scale.y * _particleSystemScaleVelocity * timePoint
                                  , particle->direction.z * scale.z * _particleSystemScaleVelocity * timePoint);
         // Increment time fragment
@@ -1313,7 +1313,7 @@ void PUParticleSystem3D::processMotion( PUParticle3D* particle, float timeElapse
 
     Vec3 scale = getDerivedScale();
     // Update the position with the direction.
-    particle->position += Vec3(particle->direction.x * scale.x * _particleSystemScaleVelocity * timeElapsed
+    particle->position.add(particle->direction.x * scale.x * _particleSystemScaleVelocity * timeElapsed
                              , particle->direction.y * scale.y * _particleSystemScaleVelocity * timeElapsed
                              , particle->direction.z * scale.z * _particleSystemScaleVelocity * timeElapsed);
 }

@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -23,79 +23,381 @@
  ****************************************************************************/
 
 #include "BaseTest.h"
-#include "VisibleRect.h"
 #include "testResource.h"
-#include "AppDelegate.h"
+#include "controller.h"
 
 USING_NS_CC;
 
-void BaseTest::onEnter()
+TestBase::TestBase()
+: _parentTest(nullptr)
+, _isTestList(false)
 {
-	Layer::onEnter();
-    AppDelegate* app = (AppDelegate *)Application::getInstance();
-    app->setCurrentTest(this);
-	// add title and subtitle
-    std::string str = title();
-    const char * pTitle = str.c_str();
-    TTFConfig ttfConfig("fonts/arial.ttf", 32);
-    auto label = Label::createWithTTF(ttfConfig,pTitle);
-    addChild(label, 9999);
-    label->setPosition(VisibleRect::center().x, VisibleRect::top().y - 30);
 
-    std::string strSubtitle = subtitle();
-    if( ! strSubtitle.empty() )
+}
+
+TestBase::~TestBase()
+{
+
+}
+
+void TestBase::backsUpOneLevel()
+{
+    if (_parentTest)
     {
-        ttfConfig.fontFilePath = "fonts/Thonburi.ttf";
-        ttfConfig.fontSize = 16;
-        auto l = Label::createWithTTF(ttfConfig,strSubtitle.c_str());
-        addChild(l, 9999);
-        l->setPosition(VisibleRect::center().x, VisibleRect::top().y - 60);
+        _parentTest->runThisTest();
+        this->release();
+    }
+}
+
+//TestList
+TestList::TestList()
+{
+    _isTestList = true;
+}
+
+void TestList::addTest(const std::string& testName, std::function<TestBase*()> callback)
+{
+    if (!testName.empty())
+    {
+        _childTestNames.push_back(testName);
+        _testCallbacks.push_back(callback);
+    }
+}
+
+void TestList::runThisTest()
+{
+    _cellTouchEnabled = true;
+    auto director = Director::getInstance();
+    auto scene = Scene::create();
+
+    auto visibleSize = director->getVisibleSize();
+    auto origin = director->getVisibleOrigin();
+
+    TableView* tableView = TableView::create(this, Size(400,visibleSize.height));
+    tableView->setPosition(origin.x + (visibleSize.width - 400) / 2, origin.y);
+    tableView->setDirection(ScrollView::Direction::VERTICAL);
+    tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
+    tableView->setDelegate(this);
+    scene->addChild(tableView);
+    tableView->reloadData();
+
+    if (_tableOffset != Vec2::ZERO)
+    {
+        tableView->setContentOffset(_tableOffset);
     }
 
-    // add menu
-	// CC_CALLBACK_1 == std::bind( function_ptr, instance, std::placeholders::_1, ...)
-    auto item1 = MenuItemImage::create(s_pathB1, s_pathB2, CC_CALLBACK_1(BaseTest::backCallback, this) );
-    auto item2 = MenuItemImage::create(s_pathR1, s_pathR2, CC_CALLBACK_1(BaseTest::restartCallback, this) );
-    auto item3 = MenuItemImage::create(s_pathF1, s_pathF2, CC_CALLBACK_1(BaseTest::nextCallback, this) );
+    if (_parentTest)
+    {
+        //Add back button.
+        TTFConfig ttfConfig("fonts/arial.ttf", 20);
+        auto label = Label::createWithTTF(ttfConfig, "Back");
 
-    auto menu = Menu::create(item1, item2, item3, nullptr);
+        auto menuItem = MenuItemLabel::create(label, std::bind(&TestBase::backsUpOneLevel, this));
+        auto menu = Menu::create(menuItem, nullptr);
 
-    menu->setPosition(Vec2::ZERO);
-    item1->setPosition(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2);
-    item2->setPosition(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2);
-    item3->setPosition(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2);
+        menu->setPosition(Vec2::ZERO);
+        menuItem->setPosition(Vec2(VisibleRect::right().x - 50, VisibleRect::bottom().y + 25));
 
-    addChild(menu, 9999);
+        scene->addChild(menu, 1);
+    }
+    else
+    {
+        //Add close and "Start AutoTest" button.
+        auto closeItem = MenuItemImage::create(s_pathClose, s_pathClose, [](Ref* sender){
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+            MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.", "Alert");
+            return;
+#endif
+            TestController::getInstance()->stopAutoTest();
+            TestController::destroyInstance();
+            Director::getInstance()->end();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+            exit(0);
+#endif
+        });
+        closeItem->setPosition(VisibleRect::right().x - 30, VisibleRect::top().y - 30);
+
+        auto autoTestLabel = Label::createWithTTF("Start AutoTest","fonts/arial.ttf",16);
+        auto autoTestItem = MenuItemLabel::create(autoTestLabel, [&](Ref* sender){
+            TestController::getInstance()->startAutoTest();
+        });
+        autoTestItem->setPosition(Vec2(VisibleRect::right().x - 70, VisibleRect::bottom().y + 25));
+
+        auto menu = Menu::create(closeItem, autoTestItem, nullptr);
+        menu->setPosition(Vec2::ZERO);
+        scene->addChild(menu, 1);
+    }
+
+    director->replaceScene(scene);
 }
 
-void BaseTest::onExit()
+void TestList::tableCellTouched(TableView* table, TableViewCell* cell)
 {
-    AppDelegate* app = (AppDelegate *)Application::getInstance();
-    app->setCurrentTest(nullptr);
-	Layer::onExit();
+    if (_cellTouchEnabled)
+    {
+        auto index = cell->getIdx();
+        if (_testCallbacks[index])
+        {
+            auto test = _testCallbacks[index]();
+            if (test->getChildTestCount() > 0)
+            {
+                _tableOffset = table->getContentOffset();
+
+                _cellTouchEnabled = false;
+                test->setTestParent(this);
+                test->runThisTest();
+            }
+            else
+            {
+                delete test;
+            }
+        }
+    }
 }
 
-std::string BaseTest::title() const
+TableViewCell* TestList::tableCellAtIndex(TableView *table, ssize_t idx)
 {
-	return "";
+    auto cell = table->dequeueCell();
+    if (!cell)
+    {
+        cell = TableViewCell::create();
+        auto label = Label::createWithTTF(_childTestNames[idx], "fonts/arial.ttf", 20.0f);
+        label->setTag(1024);
+        label->setPosition(200, 15);
+        cell->addChild(label);
+    }
+    else
+    {
+        auto label = (Label*)cell->getChildByTag(1024);
+        label->setString(_childTestNames[idx]);
+    }
+
+    return cell;
 }
 
-std::string BaseTest::subtitle() const
+Size TestList::tableCellSizeForIndex(TableView *table, ssize_t idx)
 {
-	return "";
+    return Size(400, 30);
 }
 
-void BaseTest::restartCallback(Ref* sender)
+ssize_t TestList::numberOfCellsInTableView(TableView *table)
 {
-	log("override restart!");
+    return _childTestNames.size();
 }
 
-void BaseTest::nextCallback(Ref* sender)
+//TestSuite
+void TestSuite::addTestCase(const std::string& testName, std::function<Scene*()> callback)
 {
-	log("override next!");
+    if (!testName.empty() && callback)
+    {
+        _childTestNames.push_back(testName);
+        _testCallbacks.push_back(callback);
+    }
 }
 
-void BaseTest::backCallback(Ref* sender)
+static TestCase* getTestCase(Scene* scene)
 {
-	log("override back!");
+    auto transitionScene = dynamic_cast<TransitionScene*>(scene);
+    TestCase* testCase = nullptr;
+    if (transitionScene)
+    {
+        testCase = dynamic_cast<TestCase*>(transitionScene->getInScene());
+    }
+    else
+    {
+        testCase = dynamic_cast<TestCase*>(scene);
+    }
+
+    return testCase;
+}
+
+void TestSuite::runThisTest()
+{
+    if (!_childTestNames.empty())
+    {
+        _currTestIndex = 0;
+        auto scene = _testCallbacks[0]();
+        auto testCase = getTestCase(scene);
+        testCase->setTestSuite(this);
+        testCase->setTestCaseName(_childTestNames[_currTestIndex]);
+        Director::getInstance()->replaceScene(scene);
+
+        
+    }
+}
+
+void TestSuite::restartCurrTest()
+{
+    auto scene = _testCallbacks[_currTestIndex]();
+    auto testCase = getTestCase(scene);
+    testCase->setTestSuite(this);
+    testCase->setTestCaseName(_childTestNames[_currTestIndex]);
+
+    Director::getInstance()->replaceScene(testCase);
+}
+
+void TestSuite::enterNextTest()
+{
+    _currTestIndex = (_currTestIndex + 1) % _childTestNames.size();
+
+    auto scene = _testCallbacks[_currTestIndex]();
+    auto testCase = getTestCase(scene);
+    testCase->setTestSuite(this);
+    testCase->setTestCaseName(_childTestNames[_currTestIndex]);
+
+    Director::getInstance()->replaceScene(testCase);
+}
+
+void TestSuite::enterPreviousTest()
+{
+    if (_currTestIndex > 0)
+    {
+        _currTestIndex -= 1;
+    }
+    else
+    {
+        _currTestIndex = (int)_childTestNames.size() - 1;
+    }
+
+    auto scene = _testCallbacks[_currTestIndex]();
+    auto testCase = getTestCase(scene);
+    testCase->setTestSuite(this);
+    testCase->setTestCaseName(_childTestNames[_currTestIndex]);
+
+    Director::getInstance()->replaceScene(testCase);
+}
+
+//TestCase
+TestCase::TestCase()
+: _priorTestItem(nullptr)
+, _restartTestItem(nullptr)
+, _nextTestItem(nullptr)
+, _titleLabel(nullptr)
+, _subtitleLabel(nullptr)
+, _testSuite(nullptr)
+, _runTime(0.0f)
+{
+    Director::getInstance()->getTextureCache()->removeUnusedTextures();
+
+    this->schedule([&](float dt){
+        _runTime += dt;
+    }, "AccumulatedTimeUse");
+}
+
+TestCase::~TestCase()
+{
+    if (_testSuite)
+    {
+        _testSuite->release();
+        _testSuite = nullptr;
+    }
+}
+
+void TestCase::setTestSuite(TestSuite* testSuite)
+{
+    if (_testSuite != testSuite)
+    {
+        testSuite->retain();
+        if (_testSuite)
+        {
+            _testSuite->release();
+        }
+        _testSuite = testSuite;
+    }
+}
+
+TestCase::Type TestCase::getTestType() const
+{
+    return Type::ROBUSTNESS;
+}
+
+float TestCase::getDuration() const
+{
+    return 0.2f;
+}
+
+bool TestCase::init()
+{
+    if (Scene::init())
+    {
+        // add title and subtitle
+        TTFConfig ttfConfig("fonts/arial.ttf", 26);
+        _titleLabel = Label::createWithTTF(ttfConfig, title());
+        addChild(_titleLabel, 9999);
+        _titleLabel->setPosition(VisibleRect::center().x, VisibleRect::top().y - 30);
+        
+        ttfConfig.fontSize = 16;
+        _subtitleLabel = Label::createWithTTF(ttfConfig, subtitle());
+        addChild(_subtitleLabel, 9999);
+        _subtitleLabel->setPosition(VisibleRect::center().x, VisibleRect::top().y - 60);
+        
+        _priorTestItem = MenuItemImage::create(s_pathB1, s_pathB2, CC_CALLBACK_1(TestCase::priorTestCallback, this));
+        _restartTestItem = MenuItemImage::create(s_pathR1, s_pathR2, CC_CALLBACK_1(TestCase::restartTestCallback, this));
+        _nextTestItem = MenuItemImage::create(s_pathF1, s_pathF2, CC_CALLBACK_1(TestCase::nextTestCallback, this));
+        
+        ttfConfig.fontSize = 20;
+        auto backLabel = Label::createWithTTF(ttfConfig, "Back");
+        auto backItem = MenuItemLabel::create(backLabel, CC_CALLBACK_1(TestCase::onBackCallback, this));
+
+        auto menu = Menu::create(_priorTestItem, _restartTestItem, _nextTestItem, backItem, nullptr);
+
+        menu->setPosition(Vec2::ZERO);
+        _priorTestItem->setPosition(VisibleRect::center().x - _restartTestItem->getContentSize().width * 2, VisibleRect::bottom().y + _restartTestItem->getContentSize().height / 2);
+        _restartTestItem->setPosition(VisibleRect::center().x, VisibleRect::bottom().y + _restartTestItem->getContentSize().height / 2);
+        _nextTestItem->setPosition(VisibleRect::center().x + _restartTestItem->getContentSize().width * 2, VisibleRect::bottom().y + _restartTestItem->getContentSize().height / 2);
+        backItem->setPosition(Vec2(VisibleRect::right().x - 50, VisibleRect::bottom().y + 25));
+
+        addChild(menu, 9999);
+
+        return true;
+    }
+
+    return false;
+}
+
+void TestCase::onEnter()
+{
+    Scene::onEnter();
+
+    _titleLabel->setString(title());
+    _subtitleLabel->setString(subtitle());
+
+    if (_testSuite && _testSuite->getChildTestCount() < 2)
+    {
+        _priorTestItem->setVisible(false);
+        _nextTestItem->setVisible(false);
+        _restartTestItem->setVisible(false);
+    }
+}
+
+void TestCase::restartTestCallback(Ref* sender)
+{
+    if (_testSuite)
+    {
+        _testSuite->restartCurrTest();
+    }
+}
+
+void TestCase::nextTestCallback(Ref* sender)
+{
+    if (_testSuite)
+    {
+        _testSuite->enterNextTest();
+    }
+}
+
+void TestCase::priorTestCallback(Ref* sender)
+{
+    if (_testSuite)
+    {
+        _testSuite->enterPreviousTest();
+    }
+}
+
+void TestCase::onBackCallback(Ref* sender)
+{
+    if (_testSuite)
+    {
+        _testSuite->backsUpOneLevel();
+    }
 }

@@ -29,16 +29,16 @@ cmake_minimum_required(VERSION 2.8)
 # also from cmake's Modules dir, to not clash with per-project files.
 cmake_policy(SET CMP0017 NEW)
 
-# Use new behaviour with cmake >= 3.0:
+# Use new behaviour with cmake >= 3.1:
 # Only interpret if() arguments as variables or keywords when unquoted.
-if(CMAKE_VERSION VERSION_GREATER 3)
+if(CMAKE_VERSION VERSION_GREATER 3.1)
     cmake_policy(SET CMP0054 NEW)
 endif()
 
 project (Cocos2d-X)
 
 # The version number
-set(COCOS2D_X_VERSION 3.5)
+set(COCOS2D_X_VERSION 3.6alpha0)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake/Modules/")
 include(CocosBuildHelpers)

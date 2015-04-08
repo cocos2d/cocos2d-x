@@ -25,24 +25,19 @@
 #ifndef _CONSOLE_TEST_H_
 #define _CONSOLE_TEST_H_
 
-////----#include "cocos2d.h"
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
 USING_NS_CC;
 
-class BaseTestConsole : public BaseTest
+DEFINE_TEST_SUITE(ConsoleTests);
+
+class BaseTestConsole : public TestCase
 {
 public:
     BaseTestConsole();
     ~BaseTestConsole();
 
     virtual std::string title() const override;
-    virtual void onEnter() override;
-
-    virtual void restartCallback(Ref* sender) override;
-    virtual void nextCallback(Ref* sender) override;
-    virtual void backCallback(Ref* sender) override;
 };
 
 
@@ -83,12 +78,6 @@ protected:
     std::string _target_file_name;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ConsoleUploadFile);
-};
-
-class ConsoleTestScene : public TestScene
-{
-public:
-    virtual void runThisTest();
 };
 
 #endif // _CONSOLE_TEST_H_

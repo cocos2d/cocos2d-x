@@ -28,7 +28,7 @@ bool Bug914Layer::init()
 {
     // always call "super" init
     // Apple recommends to re-assign "self" with the "super" return value
-    if (BugsTestBaseLayer::init())
+    if (BugsTestBase::init())
     {
         auto listener = EventListenerTouchAllAtOnce::create();
         listener->onTouchesBegan = CC_CALLBACK_2(Bug914Layer::onTouchesBegan, this);

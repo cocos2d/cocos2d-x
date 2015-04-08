@@ -1,26 +1,15 @@
 #ifndef __FILEUTILSTEST_H__
 #define __FILEUTILSTEST_H__
 
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
 USING_NS_CC;
 
-class FileUtilsTestScene : public TestScene
-{
-public:
-    virtual void runThisTest();
-};
+DEFINE_TEST_SUITE(FileUtilsTests);
 
-class FileUtilsDemo : public BaseTest
+class FileUtilsDemo : public TestCase
 {
 public:
-    virtual void onEnter() override;
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-    void backCallback(Ref* sender) override;
-    void nextCallback(Ref* sender) override;
-    void restartCallback(Ref* sender) override;
 };
 
 class TestResolutionDirectories : public FileUtilsDemo

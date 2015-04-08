@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
 
  http://www.cocos2d-x.org
 
@@ -22,24 +22,212 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __TestCpp__BaseTest__
-#define __TestCpp__BaseTest__
+#ifndef _CPPTESTS_BASETEST_H__
+#define _CPPTESTS_BASETEST_H__
 
 #include "cocos2d.h"
+#include "extensions/cocos-ext.h"
+#include "VisibleRect.h"
 
-class BaseTest : public cocos2d::Layer
+USING_NS_CC;
+USING_NS_CC_EXT;
+
+class TestSuite;
+
+/**
+ * Each test case should inherit from TestCase, and add to a TestSuite object.
+ */
+class TestCase : public Scene
 {
 public:
-    virtual std::string title() const;
-    virtual std::string subtitle() const;
+    /** TestCase test type.*/
+    enum class Type
+    {
+        /** For testing whether test case not crash.*/
+        ROBUSTNESS,
+        /**
+         * For check the correctness of regular test cases. 
+         * A test case passes only if the actual output equal to the expected output.
+         */
+        UNIT,
+        /** @warning The test type is not achieved.*/
+        GRAPHICAL_STATIC,
+        /** @note It's mean the test case need test manually.*/
+        MANUAL
+    };
+    TestCase();
+    ~TestCase();
 
-	virtual void restartCallback(Ref* sender);
-	virtual void nextCallback(Ref* sender);
-	virtual void backCallback(Ref* sender);
+    virtual std::string title() const { return ""; }
+    virtual std::string subtitle() const { return ""; }
+
+    /** Returns the test type, the default type is Type::ROBUSTNESS.*/
+    virtual Type getTestType() const;
+    /** Returns the time the test case needs.*/
+    virtual float getDuration() const;
+
+
+    /** Returns the expected output.*/
+    virtual std::string getExpectedOutput() const { return ""; }
+    /** Returns the actual output.*/
+    virtual std::string getActualOutput() const { return ""; }
+
+    /** Callback functions.*/
+    virtual void restartTestCallback(Ref* sender);
+    virtual void nextTestCallback(Ref* sender);
+    virtual void priorTestCallback(Ref* sender);
+    virtual void onBackCallback(Ref* sender);
+
+    /**
+     * You should NEVER call this method, unless you know what you are doing.
+     */
+    void setTestSuite(TestSuite* testSuite);
+    TestSuite* getTestSuite() const { return _testSuite; }
+
+    /** Returns the run time of test case.*/
+    float getRunTime() const { return _runTime; }
+
+    /**
+     * You should NEVER call this method, unless you know what you are doing.
+     */
+    void setTestCaseName(const std::string& name) { _testCaseName = name; }
+    std::string getTestCaseName() const { return _testCaseName; }
 
     virtual void onEnter() override;
-    virtual void onExit() override;
+CC_CONSTRUCTOR_ACCESS:
+    virtual bool init() override;
+
+protected:
+    MenuItemImage* _priorTestItem;
+    MenuItemImage* _restartTestItem;
+    MenuItemImage* _nextTestItem;
+
+    Label* _titleLabel;
+    Label* _subtitleLabel;
+
+private:
+    TestSuite* _testSuite;
+    float _runTime;
+    std::string _testCaseName;
+};
+
+/**
+ * A TestBase object stores the following information about a test:
+ * - A pointer to the parent test(TestList or TestSuite).
+ * - Array of children test names.
+ * - A flag to indicate whether the test is a TestList object.
+ *
+ * @note You should not inherit from TestBase directly.
+ */
+class TestBase : public Ref
+{
+public:
+    virtual ~TestBase();
+
+    /** Backs up one level. */
+    void backsUpOneLevel();
+
+    virtual void runThisTest() {}
+
+    bool isTestList() { return _isTestList; }
+
+    ssize_t getChildTestCount() { return _childTestNames.size(); }
+
+    /**
+    * You should NEVER call this method.
+    */
+    void setTestParent(TestBase* parent) { _parentTest = parent; }
+    TestBase* getTestParent() { return _parentTest; }
+
+    void setTestName(const std::string& testName) { _testName = testName; }
+    std::string getTestName() const { return _testName; }
+protected:
+    TestBase();
+
+    std::string _testName;
+    TestBase* _parentTest;
+    bool _isTestList;
+    std::vector<std::string> _childTestNames;
+};
+
+class TestController;
+
+/**
+* TestSuite correspond to a group of test cases.
+* @note Each test case should add to a TestSuite object. 
+*/
+class TestSuite : public TestBase
+{
+public:
+    void addTestCase(const std::string& testName, std::function<Scene*()> callback);
+
+    virtual void restartCurrTest();
+    virtual void enterNextTest();
+    virtual void enterPreviousTest();
+
+    virtual void runThisTest() override;
+
+private:
+    std::vector<std::function<Scene*()>> _testCallbacks;
+
+    int _currTestIndex;
+    friend class TestController;
+};
+
+/**
+ * An instance of TestList is a means for displaying hierarchical lists of TestSuite.
+ */
+class TestList : public TestBase, public TableViewDataSource, public TableViewDelegate
+{
+public:
+    TestList();
+
+    void addTest(const std::string& testName, std::function<TestBase*()> callback);
+
+    virtual void runThisTest() override;
+
+
+    virtual void tableCellTouched(TableView* table, TableViewCell* cell) override;
+    virtual TableViewCell* tableCellAtIndex(TableView *table, ssize_t idx) override;
+    virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx) override;
+    virtual ssize_t numberOfCellsInTableView(TableView *table) override;
+
+    virtual void scrollViewDidScroll(cocos2d::extension::ScrollView* view) override{}
+    virtual void scrollViewDidZoom(cocos2d::extension::ScrollView* view) override{}
+
+private:
+    std::vector<std::function<TestBase*()>> _testCallbacks;
+    bool _cellTouchEnabled;
+    Vec2 _tableOffset;
+    friend class TestController;
 };
 
 
-#endif /* defined(__TestCpp__BaseTest__) */
+#define ADD_TEST(__className__) addTest( #__className__, [](){ return new (std::nothrow) __className__;} );
+
+#define ADD_TEST_CASE(__className__) addTestCase( #__className__, [](){ return __className__::create();} );
+
+#define DEFINE_TEST_LIST(__className__) class __className__  : public TestList { public: __className__();}
+
+#define DEFINE_TEST_SUITE(__className__) class __className__  : public TestSuite { public: __className__();}
+
+
+/**
+ * BaseTest is retained for compatibility with older versions.
+ * @warning It should soon be removed. 
+ */
+class BaseTest : public cocos2d::Layer
+{
+public:
+    virtual std::string title() const { return ""; }
+    virtual std::string subtitle() const{ return ""; }
+
+    virtual void restartCallback(Ref* sender) {}
+    virtual void nextCallback(Ref* sender){}
+    virtual void backCallback(Ref* sender){}
+
+    virtual void onEnter() override{}
+    virtual void onExit() override{}
+};
+
+#endif /* defined(_CPPTESTS_BASETEST_H__) */

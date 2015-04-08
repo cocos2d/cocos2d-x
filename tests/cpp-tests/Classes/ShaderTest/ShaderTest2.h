@@ -6,23 +6,13 @@
 
 USING_NS_CC_EXT;
 
-class ShaderTestDemo2 : public BaseTest
+DEFINE_TEST_SUITE(Shader2Tests);
+
+class ShaderTestDemo2 : public TestCase
 {
 public:
-    ShaderTestDemo2(void);
     virtual std::string title() const override { return "Effects on Sprites";}
-    void restartCallback(Ref* sender) override;
-    void nextCallback(Ref* sender) override;
-    void backCallback(Ref* sender) override;
 };
-
-class ShaderTestScene2 : public TestScene
-{
-public:
-    CREATE_FUNC(ShaderTestScene2);
-    virtual void runThisTest();
-};
-
 
 //
 // Effect
@@ -67,9 +57,9 @@ public:
     virtual std::string subtitle() const {return "Sprite Lamp effects";}
     //callback
 public:
-    virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event *unused_event) override;
-    virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event *unused_event) override;
-    virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event *unused_event) override;
+    virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event *unused_event);
+    virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event *unused_event);
+    virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event *unused_event);
 protected:
     EffectSprite *_sprite;
     Effect* _effect;
