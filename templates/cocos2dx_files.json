@@ -5275,6 +5275,7 @@
         "cocos/scripting/lua-bindings/auto/api/TableView.lua", 
         "cocos/scripting/lua-bindings/auto/api/TableViewCell.lua", 
         "cocos/scripting/lua-bindings/auto/api/TargetedAction.lua", 
+        "cocos/scripting/lua-bindings/auto/api/Terrain.lua", 
         "cocos/scripting/lua-bindings/auto/api/Text.lua", 
         "cocos/scripting/lua-bindings/auto/api/TextAtlas.lua", 
         "cocos/scripting/lua-bindings/auto/api/TextBMFont.lua", 
