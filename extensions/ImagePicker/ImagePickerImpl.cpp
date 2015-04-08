@@ -10,20 +10,21 @@
 using namespace cocos2d;
 
 extern "C" {
-    void Java_org_cocos2dx_cpp_Cocos2dxActivity_ImagePickerResult(JNIEnv *env, jobject thiz, jbyteArray array)
+    void Java_org_cocos2dx_lib_Cocos2dxActivity_ImagePickerResult(JNIEnv *env, jobject thiz, jbyteArray array)
     {
         jbyte* bufferPtr = env->GetByteArrayElements(array, NULL);
         jsize lengthOfArray = env->GetArrayLength(array);
         if(lengthOfArray > 1){
-            Image *imf =new Image();
-            imf->initWithImageData((unsigned char*)bufferPtr, lengthOfArray);
-            imf->autorelease();
-    
-            Texture2D* pTexture = new Texture2D();
-            pTexture->initWithImage(imf);
-            pTexture->autorelease();
+            Image *image =new Image();
+            image->initWithImageData((unsigned char*)bufferPtr, lengthOfArray);
 
-            ImagePicker::getInstance()->finishImage(pTexture);
+            cocos2d::Director::getInstance()->getScheduler()->performFunctionInCocosThread([image]{
+                // GL texture should be ensured context
+                Texture2D* texture = new Texture2D();
+                texture->initWithImage(image);
+
+                ImagePicker::getInstance()->finishImage(texture);
+            });
         }
         else{
             ImagePicker::getInstance()->finishImage(nullptr);
@@ -46,7 +47,7 @@ void ImagePickerImpl::openImage()
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     JniMethodInfo t;
-    bool result = JniHelper::getStaticMethodInfo(t, "org/cocos2dx/cpp/Cocos2dxActivity", "openImage", "()V");
+    bool result = JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxActivity", "openImage", "()V");
     if (result)
     {
         t.env->CallStaticVoidMethod(t.classID, t.methodID);
