@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "CCPhysics3D.h"
+#include "renderer/CCRenderer.h"
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
@@ -161,7 +162,13 @@ void Physics3DWorld::stepSimulate(float dt)
     }
 }
 
-
+void Physics3DWorld::debugDraw(Renderer* renderer)
+{
+    if (_debugDrawer && _btPhyiscsWorld->getDebugDrawer())
+    {
+        _debugDrawer->draw(renderer);
+    }
+}
 
 NS_CC_EXT_END
 

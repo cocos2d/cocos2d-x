@@ -30,6 +30,9 @@
 #include "extensions/ExtensionMacros.h"
 #include "extensions/ExtensionExport.h"
 
+namespace cocos2d{
+    class Renderer;
+}
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
@@ -78,6 +81,8 @@ public:
     void setDebugDrawEnable(bool enableDebugDraw);
     
     bool isDebugDrawEnabled() const;
+    
+    void debugDraw(cocos2d::Renderer* renderer);
     
 CC_CONSTRUCTOR_ACCESS:
     

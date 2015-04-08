@@ -69,6 +69,10 @@ THE SOFTWARE.
 #include "physics/CCPhysicsWorld.h"
 #endif
 
+#if CC_USE_3D_PHYSICS
+#include "Physics3D/CCPhysics3DWorld.h"
+#endif
+
 /**
  Position of the FPS
  
@@ -289,6 +293,13 @@ void Director::drawScene()
         if (physicsWorld && physicsWorld->isAutoStep())
         {
             physicsWorld->update(_deltaTime, false);
+        }
+#endif
+#if CC_USE_3D_PHYSICS
+        auto physics3DWorld = _runningScene->getPhysics3DWorld();
+        if (physics3DWorld)
+        {
+            physics3DWorld->stepSimulate(_deltaTime);
         }
 #endif
         //clear draw stats

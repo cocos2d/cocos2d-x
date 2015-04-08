@@ -164,6 +164,12 @@ void Scene::render(Renderer* renderer)
         
         //visit the scene
         visit(renderer, transform, 0);
+        
+#if CC_USE_3D_PHYSICS
+        if (_physics3DWorld)
+            _physics3DWorld->debugDraw(renderer);
+#endif
+        
         renderer->render();
         
         director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
@@ -229,7 +235,8 @@ bool Scene::initWithPhysics()
         
 #if CC_USE_3D_PHYSICS
         extension::Physics3DWorldDes info;
-        info.isDebugDrawEnabled = true;
+        //TODO: FIX ME
+        //info.isDebugDrawEnabled = true;
         CC_BREAK_IF(! (_physics3DWorld = extension::Physics3DWorld::create(&info)));
 #endif
         
