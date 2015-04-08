@@ -36,6 +36,7 @@ USING_NS_CC;
 #include "base/CCDirector.h"
 #include "2d/CCCamera.h"
 
+#include "base/CCEventType.h"
 
 NS_CC_BEGIN
 
@@ -247,6 +248,15 @@ bool Terrain::initHeightMap(const char * heightMap)
 Terrain::Terrain()
 {
     _alphaMap = nullptr;
+//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+     auto _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
+        [this](EventCustom*)
+    {
+        reload();
+    }
+    );
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
+//#endif
 }
 
 void Terrain::setChunksLOD(Vec3 cameraPos)
@@ -458,6 +468,9 @@ Terrain::~Terrain()
         glDeleteBuffers(1,&(_chunkLodIndicesSkirtSet[i]._chunkIndices._indices));
     }
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
+#endif
 }
 
 cocos2d::Vec3 Terrain::getNormal(int pixel_x, int pixel_y)
@@ -774,6 +787,14 @@ bool Terrain::initTextures()
     }
     setMaxDetailMapAmount(_terrainData._detailMapAmount);
     return true;
+}
+
+void Terrain::reload()
+{
+    CCLOG("recreate");
+    initTextures();
+    _chunkLodIndicesSet.clear();
+    _chunkLodIndicesSkirtSet.clear();
 }
 
 void Terrain::Chunk::finish()
