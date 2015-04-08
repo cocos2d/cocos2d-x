@@ -1,8 +1,11 @@
-
-
 #include "UIRichTextTest.h"
 #include "cocostudio/CCArmatureDataManager.h"
 #include "cocostudio/CCArmature.h"
+
+UIRichTextTests::UIRichTextTests()
+{
+    ADD_TEST_CASE(UIRichTextTest);
+}
 
 UIRichTextTest::UIRichTextTest()
 {

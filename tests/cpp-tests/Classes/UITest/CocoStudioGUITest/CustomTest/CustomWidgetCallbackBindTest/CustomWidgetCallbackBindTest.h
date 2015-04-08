@@ -1,18 +1,17 @@
-
-
 #ifndef __cocos2d_tests__CustomWidgetCallbackBindTest__
 #define __cocos2d_tests__CustomWidgetCallbackBindTest__
 
-#include "cocos2d.h"
-#include "../../../../testBasic.h"
+#include "../../../../BaseTest.h"
 
-class CustomWidgetCallbackBindScene : public TestScene
+class CustomWidgetCallbackBindScene : public TestCase
 {
 public:
-    virtual void onEnter() override;
+    CREATE_FUNC(CustomWidgetCallbackBindScene);
+
+    virtual bool init() override;
+    virtual std::string title() const override { return getTestCaseName(); }
+
     virtual void onExit() override;
-    virtual void runThisTest();
-    void BackCallback(cocos2d::Ref* pSender);
 };
 
 #endif /* defined(__cocos2d_tests__CustomWidgetCallbackBindTest__) */

@@ -26,7 +26,7 @@
 #define __cocos2d_tests__CocostudioParserJsonTest__
 
 #include "cocos2d.h"
-#include "../../../testBasic.h"
+#include "../../../BaseTest.h"
 
 class CocostudioParserJsonLayer : public cocos2d::Layer
 {
@@ -38,16 +38,12 @@ private:
     std::string _jsonFile;
 };
 
-class CocostudioParserJsonScene : public TestScene
+class CocostudioParserJsonScene : public TestCase
 {
 public:
-    CocostudioParserJsonScene(std::string jsonFile);
-    ~CocostudioParserJsonScene(){}
-    virtual void onEnter() override;
-    virtual void runThisTest();
-    void BackCallback(cocos2d::Ref* pSender);
-private:
-    std::string _jsonFile;
+    static CocostudioParserJsonScene* create(const std::string& jsonFile);
+
+    virtual std::string title() const override { return getTestCaseName(); }
 };
 
 #endif /* defined(__cocos2d_tests__CocostudioParserJsonTest__) */

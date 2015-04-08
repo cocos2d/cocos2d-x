@@ -1,13 +1,17 @@
 #ifndef __COCOS_DENSHION_TEST__
 #define __COCOS_DENSHION_TEST__
 
-#include "../testBasic.h"
+#include "../BaseTest.h"
 
 class AudioSlider;
 
-class CocosDenshionTest : public Layer
+DEFINE_TEST_SUITE(CocosDenshionTests);
+
+class CocosDenshionTest : public TestCase
 {
 public:
+    CREATE_FUNC(CocosDenshionTest);
+
     CocosDenshionTest(void);
     ~CocosDenshionTest(void);
 
@@ -28,12 +32,6 @@ private:
     AudioSlider *_sliderGain;
     AudioSlider *_sliderEffectsVolume;
     AudioSlider *_sliderMusicVolume;
-};
-
-class CocosDenshionTestScene : public TestScene
-{
-public:
-    virtual void runThisTest();
 };
 
 #endif //__COCOS_DENSHION_TEST__

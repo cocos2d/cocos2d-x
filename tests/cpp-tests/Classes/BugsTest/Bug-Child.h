@@ -11,15 +11,14 @@
 
 #include "BugsTest.h"
 
-class BugChild : public BugsTestBaseLayer
+class BugChild : public BugsTestBase
 {
 public:
-    static Scene* scene();
+    CREATE_FUNC(BugChild);
+
     virtual bool init() override;
     
     void switchChild(Ref* sender);
-    
-    CREATE_FUNC(BugChild);
     
 protected:
     

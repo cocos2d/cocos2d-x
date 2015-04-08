@@ -80,8 +80,8 @@ void PUVelocityMatchingAffector::updatePUAffector( PUParticle3D *particle, float
     //			return;
 
     //		unsigned int size = static_cast<unsigned int>(cell.size());
-    //		Vec3 sumDirection = Vec3::ZERO;
-    //		Vec3 diff = Vec3::ZERO;
+    //		Vec3 sumDirection;
+    //		Vec3 diff;
     //		unsigned int count = 0;
     //		for (unsigned int i = 0; i < size; ++i)
     //		{

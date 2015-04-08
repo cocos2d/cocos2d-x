@@ -25,15 +25,12 @@
 #include "UIEditBoxTest.h"
 #include "testResource.h"
 
-// UIEditBoxTest
-UIEditBoxTest::UIEditBoxTest()
+UIEditBoxTests::UIEditBoxTests()
 {
-    
+    ADD_TEST_CASE(UIEditBoxTest);
 }
 
-UIEditBoxTest::~UIEditBoxTest()
-{
-}
+// UIEditBoxTest
 
 bool UIEditBoxTest::init()
 {

@@ -25,5 +25,6 @@ set(COCOS_3D_SRC
   3d/CCBillBoard.cpp
   3d/CCSkybox.cpp
   3d/CCTextureCube.cpp
+  3d/CCTerrain.cpp
 
 )

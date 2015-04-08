@@ -27,15 +27,16 @@
 
 #include "../UIScene_Editor.h"
 
+DEFINE_TEST_SUITE(UIImageViewEditorTests);
+
 class UIImageViewTest_Editor : public UIScene_Editor
 {
 public:
-    bool init();
-    virtual void switchLoadMethod(Ref* pSender);
-    void configureGUIScene();
+    CREATE_FUNC(UIImageViewTest_Editor);
+
+    virtual bool init() override;
 
 protected:
-    UI_SCENE_EDITOR_CREATE_FUNC(UIImageViewTest_Editor)
 };
 
 #endif /* defined(__TestCpp__UIImageViewTest_Editor__) */

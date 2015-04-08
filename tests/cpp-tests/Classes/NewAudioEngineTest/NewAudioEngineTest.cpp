@@ -32,48 +32,17 @@ using namespace cocos2d;
 using namespace cocos2d::ui;
 using namespace cocos2d::experimental;
 
+AudioEngineTests::AudioEngineTests()
+{
+    ADD_TEST_CASE(AudioControlTest);
+    ADD_TEST_CASE(PlaySimultaneouslyTest);
+    ADD_TEST_CASE(AudioProfileTest);
+    ADD_TEST_CASE(InvalidAudioFileTest);
+    ADD_TEST_CASE(LargeAudioFileTest);
+}
+
 namespace {
     
-std::function<Layer*()> createFunctions[] =
-{
-    CL(AudioControlTest),
-    CL(PlaySimultaneouslyTest),
-    CL(AudioProfileTest),
-    CL(InvalidAudioFileTest),
-    CL(LargeAudioFileTest)
-};
-
-unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFunctions[0]);
-
-int s_sceneIdx = -1;
-Layer* createTest(int index)
-{
-    auto layer = (createFunctions[index])();;    
-    return layer;
-}
-
-Layer* nextAction()
-{
-    s_sceneIdx++;
-    s_sceneIdx = s_sceneIdx % TEST_CASE_COUNT;
-    
-    return createTest(s_sceneIdx);
-}
-
-Layer* backAction()
-{
-    s_sceneIdx--;
-    if( s_sceneIdx < 0 )
-        s_sceneIdx = TEST_CASE_COUNT -1;
-    
-    return createTest(s_sceneIdx);
-}
-
-Layer* restartAction()
-{
-    return createTest(s_sceneIdx);
-}
-
     class TextButton : public cocos2d::Label
     {
     public:
@@ -291,51 +260,10 @@ Layer* restartAction()
     };
 }
 
-void AudioEngineTestScene::runThisTest()
-{
-    CCASSERT(AudioEngine::lazyInit(),"Fail to initialize AudioEngine!");
-    
-    s_sceneIdx = -1;
-    auto layer = nextAction();
-    addChild(layer);
-    
-    Director::getInstance()->replaceScene(this);
-}
-
 void AudioEngineTestDemo::onExit()
 {
     AudioEngine::stopAll();
-    BaseTest::onExit();
-}
-
-void AudioEngineTestDemo::backCallback(Ref* sender)
-{
-    auto scene = new AudioEngineTestScene();
-    auto layer = backAction();
-    
-    scene->addChild(layer);
-    Director::getInstance()->replaceScene(scene);
-    scene->release();
-}
-
-void AudioEngineTestDemo::nextCallback(Ref* sender)
-{
-    auto scene = new AudioEngineTestScene();
-    auto layer = nextAction();
-    
-    scene->addChild(layer);
-    Director::getInstance()->replaceScene(scene);
-    scene->release();
-}
-
-void AudioEngineTestDemo::restartCallback(Ref* sender)
-{
-    auto scene = new AudioEngineTestScene();
-    auto layer = restartAction();
-    
-    scene->addChild(layer);
-    Director::getInstance()->replaceScene(scene);
-    scene->release();
+    TestCase::onExit();
 }
 
 std::string AudioEngineTestDemo::title() const

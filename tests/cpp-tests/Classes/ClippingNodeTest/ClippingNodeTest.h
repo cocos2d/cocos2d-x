@@ -1,12 +1,13 @@
 #ifndef __CLIPPINGNODETEST_H__
 #define __CLIPPINGNODETEST_H__
 
-#include "../testBasic.h"
 #include "../BaseTest.h"
 #include "renderer/CCCustomCommand.h"
 #include <list>
 
-class BaseClippingNodeTest : public BaseTest
+DEFINE_TEST_SUITE(ClippingNodeTests);
+
+class BaseClippingNodeTest : public TestCase
 {
 public:
     CREATE_FUNC(BaseClippingNodeTest);
@@ -15,12 +16,7 @@ public:
     virtual bool init() override;
 
 	virtual std::string title() const override;
-	virtual std::string subtitle() const override;
     virtual void setup();
-
-	void backCallback(Ref* sender) override;
-	void nextCallback(Ref* sender) override;
-	void restartCallback(Ref* sender) override;
 };
 
 class BasicTest : public BaseClippingNodeTest
@@ -118,7 +114,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     void pokeHoleAtPoint(Vec2 point);
-    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event) override;
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
 private:
 	ClippingNode* _outerClipper;
     Node* _holes;
@@ -133,9 +129,9 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     virtual void setup() override;
-	void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event) override;
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event) override;
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event) override;
+	void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event);
 private:
 	bool _scrolling;
     Vec2 _lastPoint;
@@ -252,15 +248,6 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     virtual void setup() override;
-};
-
-
-class ClippingNodeTestScene : public TestScene
-{
-public:
-    CREATE_FUNC(ClippingNodeTestScene);
-
-    virtual void runThisTest();
 };
 
 #endif //__CLIPPINGNODETEST_H__

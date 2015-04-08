@@ -5,10 +5,22 @@
 -- @parent_module cc
 
 --------------------------------
+-- 
+-- @function [parent=#TransitionScene] getInScene 
+-- @param self
+-- @return Scene#Scene ret (return value: cc.Scene)
+        
+--------------------------------
 --  Called after the transition finishes.
 -- @function [parent=#TransitionScene] finish 
 -- @param self
 -- @return TransitionScene#TransitionScene self (return value: cc.TransitionScene)
+        
+--------------------------------
+-- 
+-- @function [parent=#TransitionScene] getDuration 
+-- @param self
+-- @return float#float ret (return value: float)
         
 --------------------------------
 --  Used by some transitions to hide the outer scene.

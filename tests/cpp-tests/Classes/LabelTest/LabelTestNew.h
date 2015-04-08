@@ -1,29 +1,14 @@
 #ifndef _ATLAS_TEST_NEW_H_
 #define _ATLAS_TEST_NEW_H_
 
-#include "../testBasic.h"
 #include "../BaseTest.h"
 #include "renderer/CCCustomCommand.h"
 #include "ui/CocosGUI.h"
 
+DEFINE_TEST_SUITE(NewLabelTests);
 
-class AtlasDemoNew : public BaseTest
+class AtlasDemoNew : public TestCase
 {
-protected:
-
-public:
-    CREATE_FUNC(AtlasDemoNew);
-
-    AtlasDemoNew(void);
-    ~AtlasDemoNew(void);
-
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-    virtual void onEnter() override;
-
-    void restartCallback(Ref* sender) override;
-    void nextCallback(Ref* sender) override;
-    void backCallback(Ref* sender) override;
 };
 
 class LabelTTFAlignmentNew : public AtlasDemoNew
@@ -149,14 +134,6 @@ public:
     virtual std::string subtitle() const override;
 };
 
-class AtlasTestSceneNew : public TestScene
-{
-public:
-    CREATE_FUNC(AtlasTestSceneNew);
-
-    virtual void runThisTest();
-};
-
 class LabelTTFUnicodeChinese : public AtlasDemoNew
 {
 public:
@@ -189,9 +166,9 @@ public:
     virtual std::string subtitle() const override;
     void stringChanged(Ref *sender);
     void alignmentChanged(Ref *sender);
-    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event) override;
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event) override;
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event) override;
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
 
 public:
     Label *_labelShouldRetain;

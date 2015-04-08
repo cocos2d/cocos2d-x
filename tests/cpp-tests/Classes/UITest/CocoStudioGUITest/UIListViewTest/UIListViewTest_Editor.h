@@ -27,18 +27,20 @@
 
 #include "../UIScene_Editor.h"
 
+DEFINE_TEST_SUITE(UIListViewEditorTests);
+
 class UIListViewTest_Vertical_Editor : public UIScene_Editor
 {
 public:
+    CREATE_FUNC(UIListViewTest_Vertical_Editor);
+
     static void setupListView(ListView* listView);
     UIListViewTest_Vertical_Editor();
     ~UIListViewTest_Vertical_Editor();
-    bool init();
+
+    virtual bool init() override;
     void selectedItemEvent(Ref* pSender, ListView::EventType type);
-    virtual void switchLoadMethod(Ref* pSender);
-    void configureGUIScene();
 protected:
-    UI_SCENE_EDITOR_CREATE_FUNC(UIListViewTest_Vertical_Editor)
     Text* _displayValueLabel;
     
     __Array* _array;
@@ -48,14 +50,14 @@ protected:
 class UIListViewTest_Horizontal_Editor : public UIScene_Editor
 {
 public:
+    CREATE_FUNC(UIListViewTest_Horizontal_Editor);
+
     UIListViewTest_Horizontal_Editor();
     ~UIListViewTest_Horizontal_Editor();
-    bool init();
+
+    virtual bool init() override;
     void selectedItemEvent(Ref* pSender, ListView::EventType type);
-    virtual void switchLoadMethod(Ref* pSender);
-    void configureGUIScene();
 protected:
-    UI_SCENE_EDITOR_CREATE_FUNC(UIListViewTest_Horizontal_Editor)
     Text* _displayValueLabel;
     
     __Array* _array;

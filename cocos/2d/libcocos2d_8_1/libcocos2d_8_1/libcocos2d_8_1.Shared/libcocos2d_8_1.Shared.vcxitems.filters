@@ -703,9 +703,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCFrame.h">
       <Filter>cocostudio\TimelineAction</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCNodeReader.h">
-      <Filter>cocostudio\TimelineAction</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCTimeLine.h">
       <Filter>cocostudio\TimelineAction</Filter>
     </ClInclude>
@@ -1743,6 +1740,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCTextureCube.h">
       <Filter>3d</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCTerrain.h">
+      <Filter>3d</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos2d.cpp" />
@@ -2339,9 +2339,6 @@
       <Filter>cocostudio\TimelineAction</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCFrame.cpp">
-      <Filter>cocostudio\TimelineAction</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCNodeReader.cpp">
       <Filter>cocostudio\TimelineAction</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\ActionTimeline\CCTimeLine.cpp">
@@ -3310,6 +3307,9 @@
       <Filter>3d</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCTextureCube.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCTerrain.cpp">
       <Filter>3d</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\CocoStudio.cpp">

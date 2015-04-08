@@ -27,7 +27,17 @@
 #define _MENU_TEST_H_
 
 ////----#include "cocos2d.h"
-#include "../testBasic.h"
+#include "../BaseTest.h"
+
+DEFINE_TEST_SUITE(MenuTests);
+
+class MenuTest : public TestCase
+{
+public:
+    CREATE_FUNC(MenuTest);
+
+    virtual bool init() override;
+};
 
 class MenuLayerMainMenu : public Layer
 {
@@ -36,7 +46,7 @@ protected:
     EventListenerTouchOneByOne* _touchListener;
 
 public:
-    MenuLayerMainMenu(void);
+    MenuLayerMainMenu();
     ~MenuLayerMainMenu();
 
 public:
@@ -68,10 +78,9 @@ protected:
     void alignMenusV();
 
 public:
-    MenuLayer2(void);
+    MenuLayer2();
     ~MenuLayer2();
 
-public:
     void menuCallback(Ref* sender);
     void menuCallbackOpacity(Ref* sender);
     void menuCallbackAlign(Ref* sender);
@@ -85,23 +94,18 @@ protected:
     MenuItem*    _disabledItem;
 
 public:
-    MenuLayer3(void);
+    MenuLayer3();
     ~MenuLayer3();
-
-    //CREATE_NODE(MenuLayer3);
 };
 
 class MenuLayer4 : public Layer
 {
 public:
-    MenuLayer4(void);
+    MenuLayer4();
     ~MenuLayer4();
 
-public:
     void menuCallback(Ref* sender);
     void backCallback(Ref* sender);
-
-    //CREATE_NODE(MenuLayer4);
 };
 
 class BugsTest : public Layer
@@ -127,13 +131,6 @@ public:
 private:
     MenuItemFont *item;
     EventListenerTouchOneByOne* _touchListener;
-};
-
-
-class MenuTestScene : public TestScene
-{
-public:
-    virtual void runThisTest();
 };
 
 #endif

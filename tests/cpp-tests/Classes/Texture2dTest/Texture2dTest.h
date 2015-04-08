@@ -26,21 +26,15 @@
 #ifndef __TEXTURE2D_TEST_H__
 #define __TEXTURE2D_TEST_H__
 
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
+DEFINE_TEST_SUITE(Texture2DTests);
 
-class TextureDemo : public BaseTest
+class TextureDemo : public TestCase
 {
 public:
     virtual ~TextureDemo();
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
     virtual void onEnter() override;
-
-    void restartCallback(Ref* sender) override;
-    void nextCallback(Ref* sender) override;
-    void backCallback(Ref* sender) override;
 };
 
 class TextureTIFF : public TextureDemo
@@ -411,6 +405,8 @@ class TextureAsync : public TextureDemo
 public:
     CREATE_FUNC(TextureAsync);
     virtual ~TextureAsync();
+
+    virtual float getDuration() const override { return 5.0f; }
     void loadImages(float dt);
     void imageLoaded(cocos2d::Texture2D* texture);
     virtual std::string title() const override;
@@ -488,13 +484,6 @@ protected:
 
     CustomCommand _renderCmd;
     Texture2D* _tex1, *_Tex2F;
-};
-
-class TextureTestScene : public TestScene
-{
-public:
-    CREATE_FUNC(TextureTestScene);
-    virtual void runThisTest();
 };
 
 class TextureMemoryAlloc : public TextureDemo

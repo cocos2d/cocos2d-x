@@ -3,6 +3,11 @@
 USING_NS_CC;
 using namespace cocos2d::experimental::ui;
 
+VideoPlayerTests::VideoPlayerTests()
+{
+    ADD_TEST_CASE(VideoPlayerTest);
+}
+
 bool VideoPlayerTest::init()
 {
     if ( !UIScene::init() )

@@ -1,7 +1,13 @@
-
-
 #include "UITextTest.h"
 
+UITextTests::UITextTests()
+{
+    ADD_TEST_CASE(UITextTest);
+    ADD_TEST_CASE(UITextTest_LineWrap);
+    ADD_TEST_CASE(UILabelTest_Effect);
+    ADD_TEST_CASE(UITextTest_TTF);
+    ADD_TEST_CASE(UITextTest_IgnoreConentSize);
+}
 
 // UITextTest
 

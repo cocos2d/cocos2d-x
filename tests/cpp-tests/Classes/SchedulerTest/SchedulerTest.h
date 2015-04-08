@@ -3,22 +3,15 @@
 
 #include "cocos2d.h"
 #include "extensions/cocos-ext.h"
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
 USING_NS_CC_EXT;
 
-class SchedulerTestLayer : public BaseTest
+DEFINE_TEST_SUITE(SchedulerTests);
+
+class SchedulerTestLayer : public TestCase
 {
 public:
-    virtual void onEnter() override;
-
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-
-    void backCallback(Ref* sender) override;
-    void nextCallback(Ref* sender) override;
-    void restartCallback(Ref* sender) override;
 };
 
 class SchedulerAutoremove : public SchedulerTestLayer
@@ -319,15 +312,7 @@ public:
     
     virtual void update(float dt) override;
     
-    bool onTouchBegan(Touch* touch, Event* event) override;
-};
-
-class SchedulerTestScene : public TestScene
-{
-public:
-    CREATE_FUNC(SchedulerTestScene);
-
-    virtual void runThisTest();
+    bool onTouchBegan(Touch* touch, Event* event);
 };
 
 class SchedulerIssue10232 : public SchedulerTestLayer

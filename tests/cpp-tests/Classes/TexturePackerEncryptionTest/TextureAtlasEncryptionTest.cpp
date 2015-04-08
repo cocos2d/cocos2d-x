@@ -1,19 +1,19 @@
 #include "TextureAtlasEncryptionTest.h"
 #include "../testResource.h"
 
+TextureAtlasEncryptionTests::TextureAtlasEncryptionTests()
+{
+    ADD_TEST_CASE(TextureAtlasEncryptionDemo);
+}
+
 std::string TextureAtlasEncryptionDemo::title() const
 {
     return "Texture Atlas Encryption";
 }
 
-std::string TextureAtlasEncryptionDemo::subtitle() const
-{
-    return "";
-}
-
 void TextureAtlasEncryptionDemo::onEnter()
 {
-    Layer::onEnter();
+    TestCase::onEnter();
     
     auto s = Director::getInstance()->getWinSize();
     
@@ -68,14 +68,3 @@ void TextureAtlasEncryptionDemo::onEnter()
     encryptedSpriteLabel->setPosition(Vec2(s.width * 0.75f, encryptedSprite->getBoundingBox().getMinY() - encryptedSpriteLabel->getContentSize().height/2));
     this->addChild(encryptedSpriteLabel, 1);
 }
-
-void TextureAtlasEncryptionTestScene::runThisTest()
-{
-    auto layer = new (std::nothrow) TextureAtlasEncryptionDemo;
-    layer->autorelease();
-    
-    addChild(layer);
-    
-    Director::getInstance()->replaceScene(this);
-}
-
