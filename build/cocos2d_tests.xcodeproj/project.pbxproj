@@ -38,6 +38,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		1502702D1AD3BDBC0089CD03 /* TerrainTest in Resources */ = {isa = PBXBuildFile; fileRef = B603F1B31AC8FBFB00A9579C /* TerrainTest */; };
+		1502702E1AD3BDC90089CD03 /* TerrainTest in Resources */ = {isa = PBXBuildFile; fileRef = B603F1B31AC8FBFB00A9579C /* TerrainTest */; };
 		150F918819DA409E00B89F57 /* lua_test_bindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 150F918619DA409E00B89F57 /* lua_test_bindings.cpp */; };
 		150F918919DA409F00B89F57 /* lua_test_bindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 150F918619DA409E00B89F57 /* lua_test_bindings.cpp */; };
 		15427B79198B879900DC375D /* libluacocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15EFA665198B33EE000C57D3 /* libluacocos2d iOS.a */; };
@@ -4376,6 +4378,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1502702E1AD3BDC90089CD03 /* TerrainTest in Resources */,
 				157B08EC1A90864100B7BEA4 /* Particle3D in Resources */,
 				15B13E5219F0FD4D008A1ADC /* Manifests in Resources */,
 				156EAE071977D0BD00F53709 /* ActionTimeline in Resources */,
@@ -4421,6 +4424,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1502702D1AD3BDBC0089CD03 /* TerrainTest in Resources */,
 				157B08ED1A90865600B7BEA4 /* Particle3D in Resources */,
 				15B3709A19EE5EED00ABE682 /* Manifests in Resources */,
 				15AECE0F195C1FDD00907DB0 /* cocosvideo.mp4 in Resources */,
