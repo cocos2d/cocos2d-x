@@ -86,6 +86,11 @@ public:
      * @param bFastMode True if enabled fast mode.
      */
     inline void setFastMode(bool bFastMode) { _fastMode = bFastMode; }
+    /** Set stroke.
+     *
+     * @param float stroke.
+     */
+    inline void setStroke(float stroke) { _stroke = stroke; }
 
     /** Is the starting position initialized or not.
      *
