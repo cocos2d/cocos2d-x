@@ -139,7 +139,7 @@ void TestController::traverseTestList(TestList* testList)
     if (testList == _rootTestList)
     {
         _sleepUniqueLock = std::unique_lock<std::mutex>(_sleepMutex);
-        _sleepCondition.wait_for(_sleepUniqueLock, std::chrono::milliseconds(2500));
+        _sleepCondition.wait_for(_sleepUniqueLock, std::chrono::milliseconds(500));
         //disable touch
     }
     else
@@ -358,8 +358,16 @@ bool TestController::checkTest(TestCase* testCase)
 
 void TestController::handleCrash()
 {
-    logEx("TestController::handleCrash");
-    stopAutoTest();
+    logEx("%sCatch an crash event", LOG_TAG);
+
+    if (!_stopAutoTest)
+    {
+        stopAutoTest();
+    }
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
+    exit(1);
+#endif
 }
 
 void TestController::onEnterBackground()
@@ -399,11 +407,15 @@ void TestController::logEx(const char * format, ...)
 
 static TestController* s_testController = nullptr;
 
+static void initCrashCatch();
+
 TestController* TestController::getInstance()
 {
     if (s_testController == nullptr)
     {
         s_testController = new (std::nothrow) TestController;
+
+        initCrashCatch();
     }
 
     return s_testController;
@@ -423,3 +435,71 @@ bool TestController::blockTouchBegan(Touch* touch, Event* event)
 {
     return !_stopAutoTest;
 }
+
+//==================================================================================================
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#include <windows.h>
+
+static long __stdcall windowExceptionFilter(_EXCEPTION_POINTERS* excp)
+{
+    if (s_testController)
+    {
+        s_testController->handleCrash();
+    }
+
+    return EXCEPTION_EXECUTE_HANDLER;
+}
+
+static void initCrashCatch()
+{
+    SetUnhandledExceptionFilter(windowExceptionFilter);
+}
+
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+static int s_fatal_signals[] = {
+    SIGILL,
+    SIGABRT,
+    SIGBUS,
+    SIGFPE,
+    SIGSEGV,
+    SIGSTKFLT,
+    SIGPIPE,
+};
+#else
+static int s_fatal_signals[] = {
+    SIGABRT,
+    SIGBUS,
+    SIGFPE,
+    SIGILL,
+    SIGSEGV,
+    SIGTRAP,
+    SIGTERM,
+    SIGKILL,
+};
+#endif
+
+static void signalHandler(int sig)
+{
+    if (s_testController)
+    {
+        s_testController->handleCrash();
+    }
+}
+
+static void initCrashCatch()
+{
+    for (auto sig : s_fatal_signals) {
+        signal(sig, signalHandler);
+    }
+}
+
+#else
+
+static void initCrashCatch()
+{
+
+}
+
+#endif
