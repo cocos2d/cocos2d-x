@@ -48,11 +48,15 @@ bool VideoPlayerTest::init()
     onlineVideo->setAnchorPoint(Vec2::ANCHOR_MIDDLE_RIGHT);
     onlineVideo->setPosition(Vec2(_visibleRect.origin.x + _visibleRect.size.width - 10,_visibleRect.origin.y + 100));
 
+    auto onlineVideoMp4 = MenuItemFont::create("Play online video mp4", CC_CALLBACK_1(VideoPlayerTest::menuOnlineVideoMP4Callback, this));
+    onlineVideoMp4->setAnchorPoint(Vec2::ANCHOR_MIDDLE_RIGHT);
+    onlineVideoMp4->setPosition(Vec2(_visibleRect.origin.x + _visibleRect.size.width - 10,_visibleRect.origin.y + 125));
+	
     auto ratioSwitch = MenuItemFont::create("KeepRatioSwitch", CC_CALLBACK_1(VideoPlayerTest::menuRatioCallback, this));
     ratioSwitch->setAnchorPoint(Vec2::ANCHOR_MIDDLE_RIGHT);
     ratioSwitch->setPosition(Vec2(_visibleRect.origin.x + _visibleRect.size.width - 10,_visibleRect.origin.y + 150));
 
-    auto menu = Menu::create(resourceVideo,onlineVideo,ratioSwitch,fullSwitch,pauseItem,resumeItem,stopItem,hintItem,nullptr);
+    auto menu = Menu::create(resourceVideo,onlineVideo,onlineVideoMp4,ratioSwitch,fullSwitch,pauseItem,resumeItem,stopItem,hintItem,nullptr);
     menu->setPosition(Vec2::ZERO);
     _uiLayer->addChild(menu);
 
@@ -104,6 +108,15 @@ void VideoPlayerTest::menuOnlineVideoCallback(Ref* sender)
     if (_videoPlayer)
     {
         _videoPlayer->setURL("http://video001.smgbb.cn/gslb/program/FDN/FDN1190949/HLSVodService.m3u8?_mdCode=6065719&_cdnCode=B2B_XL_TEST&_type=0&_rCode=TerOut_18865&_userId=020341000456068&_categoryCode=SMG_HUAYU&_categoryPath=SMG_1002,SMG_HUAYU,&_adPositionId=01001000&_adCategorySource=0&_flag=.m3u8&_enCode=m3u8&taskID=ysh_ps_002-ott_1397459105893_020341000456068&_client=103&_cms=ctv&_CDNToken=76C043FD4969501754DC19E54EC8DC2C");
+        _videoPlayer->play();
+    }
+}
+
+void VideoPlayerTest::menuOnlineVideoMP4Callback(Ref* sender)
+{
+    if (_videoPlayer)
+    {
+        _videoPlayer->setURL("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4");
         _videoPlayer->play();
     }
 }

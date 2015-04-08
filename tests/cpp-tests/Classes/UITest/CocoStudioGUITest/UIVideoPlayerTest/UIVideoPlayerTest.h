@@ -19,6 +19,7 @@ public:
     void menuRatioCallback(Ref* sender);
     void menuResourceVideoCallback(Ref* sender);
     void menuOnlineVideoCallback(Ref* sender);
+    void menuOnlineVideoMP4Callback(Ref* sender);
 
     void menuFullScreenCallback(Ref* sender);
     void menuPauseCallback(Ref* sender);
