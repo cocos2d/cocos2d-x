@@ -5462,6 +5462,7 @@
         "cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj/project.pbxproj", 
         "cocos/scripting/lua-bindings/proj.win32/libluacocos2d.vcxproj", 
         "cocos/scripting/lua-bindings/proj.win32/libluacocos2d.vcxproj.filters", 
+        "cocos/scripting/lua-bindings/script/3d/3dConstants.lua", 
         "cocos/scripting/lua-bindings/script/cocos2d/Cocos2d.lua", 
         "cocos/scripting/lua-bindings/script/cocos2d/Cocos2dConstants.lua", 
         "cocos/scripting/lua-bindings/script/cocos2d/DeprecatedCocos2dClass.lua", 
