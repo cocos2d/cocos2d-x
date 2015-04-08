@@ -2,6 +2,7 @@ cocos2d-x-3.6alpha0 Apr.8 2015
     [NEW]           3D: added texturecub support
     [NEW]           3D: added terrian support
     [NEW]           Animate3D: added `Animate3D::setHighQuality()` to set animation quality
+    [NEW]           Label: added disableEffect()
     [NEW]           Lua-binding: use luajit arm64 version on iOS 64-bit devices
     [NEW]           Vec3: added `Vec3::add(float, float, float)` and `Vec3::setZero()`
 
