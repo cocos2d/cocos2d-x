@@ -316,7 +316,7 @@ void Sprite::setTexture(const std::string &filename)
 }
 
 // MARK: texture
-void Sprite::setTextureFit( Texture2D *texture ,Rect& r)
+void Sprite::setTextureFit( Texture2D *texture ,Rect& r, bool showAll)
 {
 
     setTexture(texture);
@@ -324,9 +324,21 @@ void Sprite::setTextureFit( Texture2D *texture ,Rect& r)
     Rect rect = Rect::ZERO;
     if (texture)
         rect.size = texture->getContentSize();
-    setTextureRect(rect);
-
-    setScale(MIN(r.size.width/rect.size.width,r.size.height/rect.size.height));
+    if (showAll)
+    {
+        setScale(MIN(r.size.width/rect.size.width,r.size.height/rect.size.height));
+    }
+    else
+    {
+        float scale = MAX(r.size.width/rect.size.width,r.size.height/rect.size.height);
+        setScale(scale);
+        
+        if (rect.size.width * scale > r.size.width)
+            rect.size.width = r.size.width/ scale;
+        if (rect.size.height * scale > r.size.height)
+            rect.size.height = r.size.height/scale;
+        setTextureRect(rect);
+    }
     
 }
 
