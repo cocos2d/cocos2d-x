@@ -32,15 +32,6 @@ extern "C" {
         env->ReleaseByteArrayElements(array, bufferPtr, 0);  
     }
 }
-#elif  (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-#ifndef GLFW_EXPOSE_NATIVE_WIN32
-#define GLFW_EXPOSE_NATIVE_WIN32
-#endif
-
-#ifndef GLFW_EXPOSE_NATIVE_WGL
-#define GLFW_EXPOSE_NATIVE_WGL
-#endif
-#include "glfw3native.h"
 #endif
 
 void ImagePickerImpl::openImage()
@@ -56,11 +47,7 @@ void ImagePickerImpl::openImage()
     else
         ImagePicker::getInstance()->finishImage(nullptr);
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-	GLView *glView = Director::getInstance()->getOpenGLView();
-	GLFWwindow *glfwWindow = glView->getWindow();
-    //GLFWwindow *glfwWindow = glView->getWindow();
-    //HWND hwnd = glfwGetWin32Window(glfwWindow);
-    // ccx 3.5 new API
+	auto glView = cocos2d::Director::getInstance()->getOpenGLView();
     HWND hwnd = glView->getWin32Window();
     
 	OPENFILENAME ofn;       // common dialog box structure
@@ -84,7 +71,7 @@ void ImagePickerImpl::openImage()
 		const char DefChar = ' ';
 		WideCharToMultiByte(CP_ACP,0,szFile,-1, temp,256, &DefChar, NULL);
         
-		Texture2D* texture = Director::getInstance()->getTextureCache()->addImage(std::string(temp));
+		cocos2d::Texture2D* texture = cocos2d::Director::getInstance()->getTextureCache()->addImage(std::string(temp));
 		ImagePicker::getInstance()->finishImage(texture);
 	}
 	else{

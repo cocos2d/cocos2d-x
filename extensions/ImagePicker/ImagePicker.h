@@ -8,7 +8,7 @@ public:
     virtual void didFinishPickingWithResult(cocos2d::Texture2D* result) = 0;
 };
 
-class ImagePicker{
+class CC_DLL ImagePicker{
 public:
     ImagePicker();
     static ImagePicker *getInstance();
