@@ -53,6 +53,7 @@ struct Color;
 struct ColorVector;
 struct FlatSize;
 struct CapInsets;
+struct BlendFunc;
 struct ResourceData;
 
 MANUALLY_ALIGNED_STRUCT(4) RotationSkew {
@@ -174,6 +175,20 @@ MANUALLY_ALIGNED_STRUCT(4) CapInsets {
   float height() const { return flatbuffers::EndianScalar(height_); }
 };
 STRUCT_END(CapInsets, 16);
+
+MANUALLY_ALIGNED_STRUCT(4) BlendFunc {
+ private:
+  int32_t src_;
+  int32_t dst_;
+
+ public:
+  BlendFunc(int32_t src, int32_t dst)
+    : src_(flatbuffers::EndianScalar(src)), dst_(flatbuffers::EndianScalar(dst)) { }
+
+  int32_t src() const { return flatbuffers::EndianScalar(src_); }
+  int32_t dst() const { return flatbuffers::EndianScalar(dst_); }
+};
+STRUCT_END(BlendFunc, 8);
 
 struct CSParseBinary : private flatbuffers::Table {
   const flatbuffers::String *version() const { return GetPointer<const flatbuffers::String *>(4); }
@@ -585,12 +600,14 @@ inline flatbuffers::Offset<SingleNodeOptions> CreateSingleNodeOptions(flatbuffer
 struct SpriteOptions : private flatbuffers::Table {
   const WidgetOptions *nodeOptions() const { return GetPointer<const WidgetOptions *>(4); }
   const ResourceData *fileNameData() const { return GetPointer<const ResourceData *>(6); }
+  const BlendFunc *blendFunc() const { return GetStruct<const BlendFunc *>(8); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* nodeOptions */) &&
            verifier.VerifyTable(nodeOptions()) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 6 /* fileNameData */) &&
            verifier.VerifyTable(fileNameData()) &&
+           VerifyField<BlendFunc>(verifier, 8 /* blendFunc */) &&
            verifier.EndTable();
   }
 };
@@ -600,18 +617,21 @@ struct SpriteOptionsBuilder {
   flatbuffers::uoffset_t start_;
   void add_nodeOptions(flatbuffers::Offset<WidgetOptions> nodeOptions) { fbb_.AddOffset(4, nodeOptions); }
   void add_fileNameData(flatbuffers::Offset<ResourceData> fileNameData) { fbb_.AddOffset(6, fileNameData); }
+  void add_blendFunc(const BlendFunc *blendFunc) { fbb_.AddStruct(8, blendFunc); }
   SpriteOptionsBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   SpriteOptionsBuilder &operator=(const SpriteOptionsBuilder &);
   flatbuffers::Offset<SpriteOptions> Finish() {
-    auto o = flatbuffers::Offset<SpriteOptions>(fbb_.EndTable(start_, 2));
+    auto o = flatbuffers::Offset<SpriteOptions>(fbb_.EndTable(start_, 3));
     return o;
   }
 };
 
 inline flatbuffers::Offset<SpriteOptions> CreateSpriteOptions(flatbuffers::FlatBufferBuilder &_fbb,
    flatbuffers::Offset<WidgetOptions> nodeOptions = 0,
-   flatbuffers::Offset<ResourceData> fileNameData = 0) {
+   flatbuffers::Offset<ResourceData> fileNameData = 0,
+   const BlendFunc *blendFunc = 0) {
   SpriteOptionsBuilder builder_(_fbb);
+  builder_.add_blendFunc(blendFunc);
   builder_.add_fileNameData(fileNameData);
   builder_.add_nodeOptions(nodeOptions);
   return builder_.Finish();
@@ -620,12 +640,14 @@ inline flatbuffers::Offset<SpriteOptions> CreateSpriteOptions(flatbuffers::FlatB
 struct ParticleSystemOptions : private flatbuffers::Table {
   const WidgetOptions *nodeOptions() const { return GetPointer<const WidgetOptions *>(4); }
   const ResourceData *fileNameData() const { return GetPointer<const ResourceData *>(6); }
+  const BlendFunc *blendFunc() const { return GetStruct<const BlendFunc *>(8); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* nodeOptions */) &&
            verifier.VerifyTable(nodeOptions()) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 6 /* fileNameData */) &&
            verifier.VerifyTable(fileNameData()) &&
+           VerifyField<BlendFunc>(verifier, 8 /* blendFunc */) &&
            verifier.EndTable();
   }
 };
@@ -635,18 +657,21 @@ struct ParticleSystemOptionsBuilder {
   flatbuffers::uoffset_t start_;
   void add_nodeOptions(flatbuffers::Offset<WidgetOptions> nodeOptions) { fbb_.AddOffset(4, nodeOptions); }
   void add_fileNameData(flatbuffers::Offset<ResourceData> fileNameData) { fbb_.AddOffset(6, fileNameData); }
+  void add_blendFunc(const BlendFunc *blendFunc) { fbb_.AddStruct(8, blendFunc); }
   ParticleSystemOptionsBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   ParticleSystemOptionsBuilder &operator=(const ParticleSystemOptionsBuilder &);
   flatbuffers::Offset<ParticleSystemOptions> Finish() {
-    auto o = flatbuffers::Offset<ParticleSystemOptions>(fbb_.EndTable(start_, 2));
+    auto o = flatbuffers::Offset<ParticleSystemOptions>(fbb_.EndTable(start_, 3));
     return o;
   }
 };
 
 inline flatbuffers::Offset<ParticleSystemOptions> CreateParticleSystemOptions(flatbuffers::FlatBufferBuilder &_fbb,
    flatbuffers::Offset<WidgetOptions> nodeOptions = 0,
-   flatbuffers::Offset<ResourceData> fileNameData = 0) {
+   flatbuffers::Offset<ResourceData> fileNameData = 0,
+   const BlendFunc *blendFunc = 0) {
   ParticleSystemOptionsBuilder builder_(_fbb);
+  builder_.add_blendFunc(blendFunc);
   builder_.add_fileNameData(fileNameData);
   builder_.add_nodeOptions(nodeOptions);
   return builder_.Finish();
@@ -1011,6 +1036,14 @@ struct TextOptions : private flatbuffers::Table {
   int32_t vAlignment() const { return GetField<int32_t>(20, 0); }
   uint8_t touchScaleEnable() const { return GetField<uint8_t>(22, 0); }
   uint8_t isCustomSize() const { return GetField<uint8_t>(24, 0); }
+  uint8_t outlineEnabled() const { return GetField<uint8_t>(26, 0); }
+  const Color *outlineColor() const { return GetStruct<const Color *>(28); }
+  int32_t outlineSize() const { return GetField<int32_t>(30, 1); }
+  uint8_t shadowEnabled() const { return GetField<uint8_t>(32, 0); }
+  const Color *shadowColor() const { return GetStruct<const Color *>(34); }
+  float shadowOffsetX() const { return GetField<float>(36, 2); }
+  float shadowOffsetY() const { return GetField<float>(38, -2); }
+  int32_t shadowBlurRadius() const { return GetField<int32_t>(40, 0); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* widgetOptions */) &&
@@ -1028,6 +1061,14 @@ struct TextOptions : private flatbuffers::Table {
            VerifyField<int32_t>(verifier, 20 /* vAlignment */) &&
            VerifyField<uint8_t>(verifier, 22 /* touchScaleEnable */) &&
            VerifyField<uint8_t>(verifier, 24 /* isCustomSize */) &&
+           VerifyField<uint8_t>(verifier, 26 /* outlineEnabled */) &&
+           VerifyField<Color>(verifier, 28 /* outlineColor */) &&
+           VerifyField<int32_t>(verifier, 30 /* outlineSize */) &&
+           VerifyField<uint8_t>(verifier, 32 /* shadowEnabled */) &&
+           VerifyField<Color>(verifier, 34 /* shadowColor */) &&
+           VerifyField<float>(verifier, 36 /* shadowOffsetX */) &&
+           VerifyField<float>(verifier, 38 /* shadowOffsetY */) &&
+           VerifyField<int32_t>(verifier, 40 /* shadowBlurRadius */) &&
            verifier.EndTable();
   }
 };
@@ -1046,10 +1087,18 @@ struct TextOptionsBuilder {
   void add_vAlignment(int32_t vAlignment) { fbb_.AddElement<int32_t>(20, vAlignment, 0); }
   void add_touchScaleEnable(uint8_t touchScaleEnable) { fbb_.AddElement<uint8_t>(22, touchScaleEnable, 0); }
   void add_isCustomSize(uint8_t isCustomSize) { fbb_.AddElement<uint8_t>(24, isCustomSize, 0); }
+  void add_outlineEnabled(uint8_t outlineEnabled) { fbb_.AddElement<uint8_t>(26, outlineEnabled, 0); }
+  void add_outlineColor(const Color *outlineColor) { fbb_.AddStruct(28, outlineColor); }
+  void add_outlineSize(int32_t outlineSize) { fbb_.AddElement<int32_t>(30, outlineSize, 1); }
+  void add_shadowEnabled(uint8_t shadowEnabled) { fbb_.AddElement<uint8_t>(32, shadowEnabled, 0); }
+  void add_shadowColor(const Color *shadowColor) { fbb_.AddStruct(34, shadowColor); }
+  void add_shadowOffsetX(float shadowOffsetX) { fbb_.AddElement<float>(36, shadowOffsetX, 2); }
+  void add_shadowOffsetY(float shadowOffsetY) { fbb_.AddElement<float>(38, shadowOffsetY, -2); }
+  void add_shadowBlurRadius(int32_t shadowBlurRadius) { fbb_.AddElement<int32_t>(40, shadowBlurRadius, 0); }
   TextOptionsBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   TextOptionsBuilder &operator=(const TextOptionsBuilder &);
   flatbuffers::Offset<TextOptions> Finish() {
-    auto o = flatbuffers::Offset<TextOptions>(fbb_.EndTable(start_, 11));
+    auto o = flatbuffers::Offset<TextOptions>(fbb_.EndTable(start_, 19));
     return o;
   }
 };
@@ -1065,8 +1114,22 @@ inline flatbuffers::Offset<TextOptions> CreateTextOptions(flatbuffers::FlatBuffe
    int32_t hAlignment = 0,
    int32_t vAlignment = 0,
    uint8_t touchScaleEnable = 0,
-   uint8_t isCustomSize = 0) {
+   uint8_t isCustomSize = 0,
+   uint8_t outlineEnabled = 0,
+   const Color *outlineColor = 0,
+   int32_t outlineSize = 1,
+   uint8_t shadowEnabled = 0,
+   const Color *shadowColor = 0,
+   float shadowOffsetX = 2,
+   float shadowOffsetY = -2,
+   int32_t shadowBlurRadius = 0) {
   TextOptionsBuilder builder_(_fbb);
+  builder_.add_shadowBlurRadius(shadowBlurRadius);
+  builder_.add_shadowOffsetY(shadowOffsetY);
+  builder_.add_shadowOffsetX(shadowOffsetX);
+  builder_.add_shadowColor(shadowColor);
+  builder_.add_outlineSize(outlineSize);
+  builder_.add_outlineColor(outlineColor);
   builder_.add_vAlignment(vAlignment);
   builder_.add_hAlignment(hAlignment);
   builder_.add_areaHeight(areaHeight);
@@ -1076,6 +1139,8 @@ inline flatbuffers::Offset<TextOptions> CreateTextOptions(flatbuffers::FlatBuffe
   builder_.add_fontName(fontName);
   builder_.add_fontResource(fontResource);
   builder_.add_widgetOptions(widgetOptions);
+  builder_.add_shadowEnabled(shadowEnabled);
+  builder_.add_outlineEnabled(outlineEnabled);
   builder_.add_isCustomSize(isCustomSize);
   builder_.add_touchScaleEnable(touchScaleEnable);
   return builder_.Finish();
@@ -1685,7 +1750,7 @@ inline flatbuffers::Offset<ListViewOptions> CreateListViewOptions(flatbuffers::F
 struct ProjectNodeOptions : private flatbuffers::Table {
   const WidgetOptions *nodeOptions() const { return GetPointer<const WidgetOptions *>(4); }
   const flatbuffers::String *fileName() const { return GetPointer<const flatbuffers::String *>(6); }
-  float innerActionSpeed() const { return GetField<float>(8, 0); }
+  float innerActionSpeed() const { return GetField<float>(8, 1.0); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* nodeOptions */) &&
@@ -1702,7 +1767,7 @@ struct ProjectNodeOptionsBuilder {
   flatbuffers::uoffset_t start_;
   void add_nodeOptions(flatbuffers::Offset<WidgetOptions> nodeOptions) { fbb_.AddOffset(4, nodeOptions); }
   void add_fileName(flatbuffers::Offset<flatbuffers::String> fileName) { fbb_.AddOffset(6, fileName); }
-  void add_innerActionSpeed(float innerActionSpeed) { fbb_.AddElement<float>(8, innerActionSpeed, 0); }
+  void add_innerActionSpeed(float innerActionSpeed) { fbb_.AddElement<float>(8, innerActionSpeed, 1.0); }
   ProjectNodeOptionsBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   ProjectNodeOptionsBuilder &operator=(const ProjectNodeOptionsBuilder &);
   flatbuffers::Offset<ProjectNodeOptions> Finish() {
@@ -1714,7 +1779,7 @@ struct ProjectNodeOptionsBuilder {
 inline flatbuffers::Offset<ProjectNodeOptions> CreateProjectNodeOptions(flatbuffers::FlatBufferBuilder &_fbb,
    flatbuffers::Offset<WidgetOptions> nodeOptions = 0,
    flatbuffers::Offset<flatbuffers::String> fileName = 0,
-   float innerActionSpeed = 0) {
+   float innerActionSpeed = 1.0) {
   ProjectNodeOptionsBuilder builder_(_fbb);
   builder_.add_innerActionSpeed(innerActionSpeed);
   builder_.add_fileName(fileName);
