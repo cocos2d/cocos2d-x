@@ -76,9 +76,8 @@ bool Terrain::initProperties()
 {
     auto shader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_TERRAIN);
     auto state = GLProgramState::create(shader);
-    
+
     setGLProgramState(state);
-    _normalLocation = glGetAttribLocation(this->getGLProgram()->getProgram(),"a_normal");
     setDrawWire(false);
     setIsEnableFrustumCull(true);
     setAnchorPoint(Vec2(0,0));
@@ -96,9 +95,19 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
     auto glProgram = getGLProgram();
     glProgram->use();
     glProgram->setUniformsForBuiltins(transform);
-    glDepthMask(GL_TRUE);
+    GLboolean depthMaskCheck;
+    glGetBooleanv(GL_DEPTH_WRITEMASK, &depthMaskCheck);
+    if(!depthMaskCheck)
+    {
+        glDepthMask(GL_TRUE);
+    }
+    GLboolean CullFaceCheck =glIsEnabled(GL_CULL_FACE);
+    if(!CullFaceCheck)
+    {
+        glEnable(GL_CULL_FACE);
+    }
     GLboolean depthTestCheck;
-    glGetBooleanv(GL_DEPTH_TEST,&depthTestCheck);
+    depthTestCheck = glIsEnabled(GL_DEPTH_TEST);
     if(!depthTestCheck)
     {
         glEnable(GL_DEPTH_TEST);
@@ -163,10 +172,21 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
     glActiveTexture(GL_TEXTURE0);
     if(depthTestCheck)
     {
-        glEnable(GL_DEPTH_TEST);
     }else
     {
         glDisable(GL_DEPTH_TEST);
+    }
+    if(depthMaskCheck)
+    {
+    }else
+    {
+        glDepthMask(GL_FALSE);
+    }
+    if(CullFaceCheck)
+    {
+    }else
+    {
+        glEnable(GL_CULL_FACE);
     }
     if(blendCheck)
     {
@@ -578,6 +598,7 @@ void Terrain::setDetailMap(unsigned int index, DetailMap detailMap)
     auto textImage = new (std::nothrow)Image();
     textImage->initWithImageFile(detailMap.detailMapSrc);
     _detailMapTextures[index]->initWithImage(textImage);
+    delete textImage;
 }
 
 Terrain::ChunkIndices Terrain::lookForIndicesLOD(int neighborLod[4], int selfLod, bool * result)
@@ -671,6 +692,10 @@ void Terrain::onEnter()
 
 void Terrain::cacheUniformLocation()
 {
+
+    _positionLocation = glGetAttribLocation(this->getGLProgram()->getProgram(),"a_position");
+    _texcordLocation = glGetAttribLocation(this->getGLProgram()->getProgram(),"a_texCoord");
+    _normalLocation = glGetAttribLocation(this->getGLProgram()->getProgram(),"a_normal");
     _alphaMapLocation = -1;
     for(int i =0;i<4;i++)
     {
@@ -803,16 +828,17 @@ void Terrain::Chunk::bindAndDraw()
         }
     }
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,_chunkIndices.indices);
-    GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_TEX_COORD| GL::VERTEX_ATTRIB_FLAG_NORMAL);
     unsigned long offset = 0;
+    glEnableVertexAttribArray(_terrain->_positionLocation);
     //position
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(TerrainVertexData), (GLvoid *)offset);
     offset +=sizeof(Vec3);
     //texcoord
+    glEnableVertexAttribArray(_terrain->_texcordLocation);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD,2,GL_FLOAT,GL_FALSE,sizeof(TerrainVertexData),(GLvoid *)offset);
     offset +=sizeof(Tex2F);
-    glEnableVertexAttribArray(_terrain->_normalLocation);
     //normal
+    glEnableVertexAttribArray(_terrain->_normalLocation);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_NORMAL,3,GL_FLOAT,GL_FALSE,sizeof(TerrainVertexData),(GLvoid *)offset);
     glDrawElements(GL_TRIANGLES, (GLsizei)_chunkIndices.size, GL_UNSIGNED_SHORT, 0);
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _chunkIndices.size);
