@@ -141,7 +141,7 @@ public:
      * the Sprite3D don't contain any meshes, so getAABB()
      * will return a wrong value at that time.
      */
-    const AABB& getAABBRecursively();
+    AABB getAABBRecursively();
     
     /**
      * Executes an action, and returns the action that is executed. For Sprite3D special logic are needed to take care of Fading.
