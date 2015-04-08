@@ -114,8 +114,8 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         // do we know view size? video is loaded already or video rect was set
         if (mVisibleWidth != 0 && mVisibleHeight != 0) {
-            setMeasuredDimension(mViewWidth, mViewHeight);
-            Log.i(TAG, "Measured: " + mViewWidth + ":" + mViewHeight);
+            setMeasuredDimension(mVisibleWidth, mVisibleHeight);
+            Log.d(TAG, "Measured: " + mVisibleWidth + ":" + mVisibleHeight);
         } else {
             // sometimes we're not fast enough. fallback
             setMeasuredDimension(mDisplayMetrics.widthPixels, mDisplayMetrics.heightPixels);
