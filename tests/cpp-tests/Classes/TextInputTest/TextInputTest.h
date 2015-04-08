@@ -6,40 +6,21 @@
 
 class KeyboardNotificationLayer;
 
-/**
-@brief    TextInputTest for retain prev, reset, next, main menu buttons.
-*/
-class TextInputTest : public BaseTest
-{
-    KeyboardNotificationLayer * _notificationLayer;
-public:
-    TextInputTest();
-
-    void restartCallback(Ref* sender) override;
-    void nextCallback(Ref* sender) override;
-    void backCallback(Ref* sender) override;
-
-    virtual std::string title() const override;
-    void addKeyboardNotificationLayer(KeyboardNotificationLayer * layer);
-    
-    virtual void onEnter() override;
-};
+DEFINE_TEST_SUITE(TextInputTests);
 
 //////////////////////////////////////////////////////////////////////////
 // KeyboardNotificationLayer for test IME keyboard notification.
 //////////////////////////////////////////////////////////////////////////
 
-class KeyboardNotificationLayer : public Layer, public IMEDelegate
+class KeyboardNotificationLayer : public TestCase, public IMEDelegate
 {
 public:
     KeyboardNotificationLayer();
-
-    virtual std::string subtitle() const = 0;
+    virtual std::string title() const override;
     virtual void onClickTrackNode(bool bClicked) = 0;
 
     virtual void keyboardWillShow(IMEKeyboardNotificationInfo& info);
 
-    // Layer
     bool onTouchBegan(Touch  *touch, Event  *event);
     void onTouchEnded(Touch  *touch, Event  *event);
 
@@ -55,6 +36,7 @@ protected:
 class TextFieldTTFDefaultTest : public KeyboardNotificationLayer
 {
 public:
+    CREATE_FUNC(TextFieldTTFDefaultTest);
     // KeyboardNotificationLayer
     virtual std::string subtitle() const override;
     virtual void onClickTrackNode(bool bClicked) override;
@@ -75,6 +57,7 @@ class TextFieldTTFActionTest : public KeyboardNotificationLayer, public TextFiel
     int                 _charLimit;       // the textfield max char limit
 
 public:
+    CREATE_FUNC(TextFieldTTFActionTest);
     void callbackRemoveNodeWhenDidAction(Node * node);
 
     // KeyboardNotificationLayer
@@ -91,12 +74,6 @@ public:
     virtual bool onTextFieldInsertText(TextFieldTTF * sender, const char * text, size_t nLen) override;
     virtual bool onTextFieldDeleteBackward(TextFieldTTF * sender, const char * delText, size_t nLen) override;
     virtual bool onDraw(TextFieldTTF * sender);
-};
-
-class TextInputTestScene : public TestScene
-{
-public:
-    virtual void runThisTest();
 };
 
 #endif    // __TEXT_INPUT_TEST_H__

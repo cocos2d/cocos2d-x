@@ -159,7 +159,7 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
             up.normalize();
             backward = direction;
         }else if (_type == ORIENTED_SHAPE){
-            up = Vec3(particle->orientation.x, particle->orientation.y, particle->orientation.z);
+            up.set(particle->orientation.x, particle->orientation.y, particle->orientation.z);
             up.normalize();
             Vec3::cross(up, backward, &right);
             right.normalize();
@@ -470,8 +470,7 @@ void PUParticle3DModelRender::render( Renderer* renderer, const Mat4 &transform,
     for (auto iter : activeParticleList)
     {
         auto particle = static_cast<PUParticle3D *>(iter);
-        q *= particle->orientation;
-        Mat4::createRotation(q, &rotMat);
+        Mat4::createRotation(q * particle->orientation, &rotMat);
         sclMat.m[0] = particle->width / _spriteSize.x;
         sclMat.m[5]  = particle->height / _spriteSize.y; 
         sclMat.m[10] = particle->depth / _spriteSize.z;
@@ -867,7 +866,7 @@ void PUSphereRender::buildBuffers( unsigned short count )
                 float z0 = r0 * cosf(segment * stepSegmentAngle);
 
                 // Vertex
-                vi.position = Vec3(x0, y0, z0);
+                vi.position.set(x0, y0, z0);
 
                 // Colour
                 vi.color = Vec4::ONE;

@@ -775,6 +775,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceParticle3DTest.cpp">
       <Filter>Classes\PerformanceTest</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\TerrainTest\TerrainTest.cpp">
+      <Filter>Classes\TerrainTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ActionManagerTest\ActionManagerTest.cpp">
@@ -1677,6 +1680,9 @@
     <Filter Include="Classes\CocosStudio3DTest">
       <UniqueIdentifier>{65d0104d-321a-41f7-99af-de609183f206}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\TerrainTest">
+      <UniqueIdentifier>{56386912-b41e-4559-bd2c-b256434179d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\OpenGLESPage.xaml" />
@@ -1706,6 +1712,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceParticle3DTest.h">
       <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\TerrainTest\TerrainTest.h">
+      <Filter>Classes\TerrainTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -38,11 +38,13 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- Disable all effect to Label.
--- @function [parent=#Label] disableEffect 
+-- @overload self, int         
+-- @overload self         
+-- @function [parent=#Label] disableEffect
 -- @param self
+-- @param #int effect
 -- @return Label#Label self (return value: cc.Label)
-        
+
 --------------------------------
 -- Sets a new TTF configuration to Label.<br>
 -- see `TTFConfig`

@@ -3,14 +3,14 @@
 
 #include "BugsTest.h"
 
-class Bug914Layer : public BugsTestBaseLayer
+class Bug914Layer : public BugsTestBase
 {
 public:
     static Scene* scene();
     virtual bool init() override;
 
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event * event) override;
-    void onTouchesBegan(const std::vector<Touch*>& touches, Event * event) override;
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event * event);
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event * event);
     void restart(Ref* sender);
 
     CREATE_FUNC(Bug914Layer);

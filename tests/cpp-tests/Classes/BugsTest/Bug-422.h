@@ -3,9 +3,11 @@
 
 #include "BugsTest.h"
 
-class Bug422Layer : public BugsTestBaseLayer
+class Bug422Layer : public BugsTestBase
 {
 public:
+    CREATE_FUNC(Bug422Layer);
+
     virtual bool init() override;
 
     void reset();

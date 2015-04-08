@@ -11,14 +11,15 @@
 
 #include "../UIScene.h"
 
-
+DEFINE_TEST_SUITE(UIFocusTests);
 
 class UIFocusTestBase : public UIScene
 {
 public:
     UIFocusTestBase();
     virtual ~UIFocusTestBase();
-    bool init();
+
+    virtual bool init() override;
     
     virtual void onLeftKeyPressed();
     virtual void onRightKeyPressed();
@@ -37,15 +38,16 @@ protected:
 class UIFocusTestHorizontal : public UIFocusTestBase
 {
 public:
+    CREATE_FUNC(UIFocusTestHorizontal);
+
     UIFocusTestHorizontal();
     virtual ~UIFocusTestHorizontal();
-    bool init();
-   
+
+    virtual bool init() override;
     
     void toggleFocusLoop(Ref*,Widget::TouchEventType);
     
 protected:
-    UI_SCENE_CREATE_FUNC(UIFocusTestHorizontal);
     Layout *_horizontalLayout;
     Text *_loopText;
 };
@@ -53,14 +55,15 @@ protected:
 class UIFocusTestVertical : public UIFocusTestBase
 {
 public:
+    CREATE_FUNC(UIFocusTestVertical);
+
     UIFocusTestVertical();
     virtual ~UIFocusTestVertical();
-    bool init();
-   
+
+    virtual bool init() override;
     
     void toggleFocusLoop(Ref*,Widget::TouchEventType);
 protected:
-    UI_SCENE_CREATE_FUNC(UIFocusTestVertical);
     Layout *_verticalLayout;
     Text *_loopText;
 };
@@ -68,14 +71,15 @@ protected:
 class UIFocusTestNestedLayout1 : public UIFocusTestBase
 {
 public:
+    CREATE_FUNC(UIFocusTestNestedLayout1);
+
     UIFocusTestNestedLayout1();
     virtual ~UIFocusTestNestedLayout1();
-    bool init();
-    
+
+    virtual bool init() override;
     
     void toggleFocusLoop(Ref*,Widget::TouchEventType);
 protected:
-    UI_SCENE_CREATE_FUNC(UIFocusTestNestedLayout1);
     Layout *_verticalLayout;
     Text *_loopText;
 };
@@ -83,14 +87,15 @@ protected:
 class UIFocusTestNestedLayout2 : public UIFocusTestBase
 {
 public:
+    CREATE_FUNC(UIFocusTestNestedLayout2);
+
     UIFocusTestNestedLayout2();
     virtual ~UIFocusTestNestedLayout2();
-    bool init();
-    
+
+    virtual bool init() override;
     
     void toggleFocusLoop(Ref*,Widget::TouchEventType);
 protected:
-    UI_SCENE_CREATE_FUNC(UIFocusTestNestedLayout2);
     Layout *_horizontalLayout;
     Text *_loopText;
 };
@@ -98,14 +103,15 @@ protected:
 class UIFocusTestNestedLayout3 : public UIFocusTestBase
 {
 public:
+    CREATE_FUNC(UIFocusTestNestedLayout3);
+
     UIFocusTestNestedLayout3();
     virtual ~UIFocusTestNestedLayout3();
-    bool init();
-    
+
+    virtual bool init() override;
     
     void toggleFocusLoop(Ref*,Widget::TouchEventType);
 protected:
-    UI_SCENE_CREATE_FUNC(UIFocusTestNestedLayout3);
     Layout *_verticalLayout;
     Text *_loopText;
 };
@@ -113,14 +119,15 @@ protected:
 class UIFocusTestListView : public UIFocusTestBase
 {
 public:
+    CREATE_FUNC(UIFocusTestListView);
+
     UIFocusTestListView();
     virtual ~UIFocusTestListView();
-    bool init();
-    
+
+    virtual bool init() override;
     
     void toggleFocusLoop(Ref*,Widget::TouchEventType);
 protected:
-    UI_SCENE_CREATE_FUNC(UIFocusTestListView);
     ListView *_listView;
     Text *_loopText;
 };

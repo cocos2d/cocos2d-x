@@ -1,41 +1,22 @@
-//
-// Created by NiTe Luo on 11/1/13.
-//
-
-
-
 #ifndef __NewRendererTest_H_
 #define __NewRendererTest_H_
 
 #include "cocos2d.h"
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
 #define kTagSpriteBatchNode 100
 #define kTagClipperNode     101
 #define kTagContentNode     102
 
-class NewRendererTestScene : public TestScene
-{
-public:
-    virtual void runThisTest();
-};
+DEFINE_TEST_SUITE(NewRendererTests);
 
-class MultiSceneTest : public BaseTest
+class MultiSceneTest : public TestCase
 {
 public:
-    CREATE_FUNC(MultiSceneTest);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void onEnter() override;
-
-    void restartCallback(Ref* sender) override;
-    void nextCallback(Ref* sender) override;
-    void backCallback(Ref* sender) override;
 
 protected:
-    MultiSceneTest();
-    virtual ~MultiSceneTest();
 
 };
 
@@ -49,7 +30,7 @@ public:
 
     void createSpriteTest();
     void createNewSpriteTest();
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
 
 protected:
     NewSpriteTest();
@@ -77,7 +58,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) override;
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
     void addNewSpriteWithCoords(Vec2 p);
 
 protected:
@@ -93,9 +74,9 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
-    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event) override;
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event) override;
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event) override;
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event);
 
 protected:
     NewClippingNodeTest();

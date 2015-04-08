@@ -1,12 +1,16 @@
 #ifndef _ROTATE_WORLD_TEST_H_
 #define _ROTATE_WORLD_TEST_H_
 
-#include "../testBasic.h"
+#include "../BaseTest.h"
 
-class RotateWorldTestScene : public TestScene
+DEFINE_TEST_SUITE(RotateWorldTests);
+
+class RotateWorldTest : public TestCase
 {
 public:
-    virtual void runThisTest();
+    CREATE_FUNC(RotateWorldTest);
+
+    virtual bool init() override;
 };
 
 class SpriteLayer : public Layer

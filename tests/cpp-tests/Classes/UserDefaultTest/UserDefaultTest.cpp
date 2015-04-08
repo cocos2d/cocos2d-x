@@ -5,6 +5,11 @@
 // enable log
 #define COCOS2D_DEBUG 1
 
+UserDefaultTests::UserDefaultTests()
+{
+    ADD_TEST_CASE(UserDefaultTest);
+}
+
 UserDefaultTest::UserDefaultTest()
 {
     auto s = Director::getInstance()->getWinSize();
@@ -93,13 +98,4 @@ void UserDefaultTest::doTest()
 
 UserDefaultTest::~UserDefaultTest()
 {
-}
-
-void UserDefaultTestScene::runThisTest()
-{
-    auto layer = new (std::nothrow) UserDefaultTest();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
-    layer->release();
 }

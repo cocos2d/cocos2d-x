@@ -1,7 +1,6 @@
 #ifndef _ATLAS_TEST_H_
 #define _ATLAS_TEST_H_
 
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
@@ -11,23 +10,11 @@
 #pragma warning (disable: 4996)
 #endif
 
-class AtlasDemo : public BaseTest
+DEFINE_TEST_SUITE(LabelTests);
+
+class AtlasDemo : public TestCase
 {
-protected:
-
 public:
-    CREATE_FUNC(AtlasDemo);
-
-    AtlasDemo(void);
-    ~AtlasDemo(void);
-
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-    virtual void onEnter() override;
-
-    void restartCallback(Ref* sender) override;
-    void nextCallback(Ref* sender) override;
-    void backCallback(Ref* sender) override;
 };
 
 
@@ -209,14 +196,6 @@ public:
     virtual std::string subtitle() const override;
 };
 
-class AtlasTestScene : public TestScene
-{
-public:
-    CREATE_FUNC(AtlasTestScene);
-
-    virtual void runThisTest();
-};
-
 class LabelTTFTest : public AtlasDemo
 {
 public:
@@ -281,9 +260,9 @@ public:
     virtual std::string subtitle() const override;
     void stringChanged(Ref *sender);
     void alignmentChanged(Ref *sender);
-    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event) override;
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event) override;
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event) override;
+    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
 
 public:
     LabelBMFont *_labelShouldRetain;

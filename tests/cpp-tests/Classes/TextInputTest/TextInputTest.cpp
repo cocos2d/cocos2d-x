@@ -1,61 +1,12 @@
-// #define COCOS2D_DEBUG   1
-
 #include "TextInputTest.h"
-
-//////////////////////////////////////////////////////////////////////////
-// local function
-//////////////////////////////////////////////////////////////////////////
-
-enum 
-{
-    kTextFieldTTFDefaultTest = 0,
-    kTextFieldTTFActionTest,
-    kTextInputTestsCount,
-}; 
 
 #define FONT_NAME                       "fonts/Thonburi.ttf"
 #define FONT_SIZE                       36
 
-static int testIdx = -1; 
-
-KeyboardNotificationLayer* createTextInputTest(int nIndex)
+TextInputTests::TextInputTests()
 {
-    switch(nIndex)
-    {
-    case kTextFieldTTFDefaultTest: return new TextFieldTTFDefaultTest();
-    case kTextFieldTTFActionTest: return new TextFieldTTFActionTest();
-    default: return 0;
-    }
-}
-
-Layer* restartTextInputTest()
-{
-    TextInputTest* pContainerLayer = new (std::nothrow) TextInputTest;
-    pContainerLayer->autorelease();
-
-    auto pTestLayer = createTextInputTest(testIdx);
-    pTestLayer->autorelease();
-    pContainerLayer->addKeyboardNotificationLayer(pTestLayer);
-
-    return pContainerLayer;
-}
-
-Layer* nextTextInputTest()
-{
-    testIdx++;
-    testIdx = testIdx % kTextInputTestsCount;
-
-    return restartTextInputTest();
-}
-
-Layer* backTextInputTest()
-{
-    testIdx--;
-    int total = kTextInputTestsCount;
-    if( testIdx < 0 )
-        testIdx += total;    
-
-    return restartTextInputTest();
+    ADD_TEST_CASE(TextFieldTTFDefaultTest);
+    ADD_TEST_CASE(TextFieldTTFActionTest);
 }
 
 static Rect getRect(Node * node)
@@ -68,55 +19,9 @@ static Rect getRect(Node * node)
     return rc;
 }
 
-//////////////////////////////////////////////////////////////////////////
-// implement TextInputTest
-//////////////////////////////////////////////////////////////////////////
-
-TextInputTest::TextInputTest()
-: _notificationLayer(0)
-{
-    
-}
-
-void TextInputTest::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) TextInputTestScene();
-    s->addChild(restartTextInputTest()); 
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void TextInputTest::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) TextInputTestScene();
-    s->addChild( nextTextInputTest() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void TextInputTest::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) TextInputTestScene();
-    s->addChild( backTextInputTest() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void TextInputTest::addKeyboardNotificationLayer(KeyboardNotificationLayer * layer)
-{
-    _notificationLayer = layer;
-    addChild(layer);
-}
-
-std::string TextInputTest::title() const
+std::string KeyboardNotificationLayer::title() const
 {
     return "text input test";
-}
-
-void TextInputTest::onEnter()
-{
-    BaseTest::onEnter();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -132,12 +37,6 @@ KeyboardNotificationLayer::KeyboardNotificationLayer()
     listener->onTouchEnded = CC_CALLBACK_2(KeyboardNotificationLayer::onTouchEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
-
-//void KeyboardNotificationLayer::registerWithTouchDispatcher()
-//{
-//    auto director = Director::getInstance();
-//    director->getTouchDispatcher()->addTargetedDelegate(this, 0, false);
-//}
 
 void KeyboardNotificationLayer::keyboardWillShow(IMEKeyboardNotificationInfo& info)
 {
@@ -196,8 +95,8 @@ void KeyboardNotificationLayer::onTouchEnded(Touch  *touch, Event  *event)
     auto endPos = touch->getLocation();    
 
     float delta = 5.0f;
-    if (::abs(endPos.x - _beginPos.x) > delta
-        || ::abs(endPos.y - _beginPos.y) > delta)
+    if (std::abs(endPos.x - _beginPos.x) > delta
+        || std::abs(endPos.y - _beginPos.y) > delta)
     {
         // not click
         _beginPos.x = _beginPos.y = -1;
@@ -459,16 +358,4 @@ bool TextFieldTTFActionTest::onDraw(TextFieldTTF * sender)
 void TextFieldTTFActionTest::callbackRemoveNodeWhenDidAction(Node * node)
 {
     this->removeChild(node, true);
-}
-
-//////////////////////////////////////////////////////////////////////////
-// implement TextInputTestScene
-//////////////////////////////////////////////////////////////////////////
-
-void TextInputTestScene::runThisTest()
-{
-    auto layer = nextTextInputTest();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
 }

@@ -1,7 +1,13 @@
-
-
 #include "UIImageViewTest.h"
 
+UIImageViewTests::UIImageViewTests()
+{
+    ADD_TEST_CASE(UIImageViewTest);
+    ADD_TEST_CASE(UIImageViewTest_Scale9);
+    ADD_TEST_CASE(UIImageViewTest_Scale9_State_Change);
+    ADD_TEST_CASE(UIImageViewTest_ContentSize);
+    ADD_TEST_CASE(UIImageViewFlipTest);
+}
 
 // UIImageViewTest
 
