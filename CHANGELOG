@@ -1,5 +1,6 @@
 cocos2d-x-3.6beta0 Apr.14 2015
     [NEW]           3D: added texturecub supported
+    [NEW]           3D: added node animation
     [NEW]           Animate3D: added `Animate3D::setHighQuality()` to set animation quality
 
     [FIX]           Audio: memory leak
