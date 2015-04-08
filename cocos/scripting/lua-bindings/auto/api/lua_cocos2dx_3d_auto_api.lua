@@ -51,4 +51,9 @@
 -- @field [parent=#cc] Skybox#Skybox Skybox preloaded module
 
 
+--------------------------------------------------------
+-- the cc Terrain
+-- @field [parent=#cc] Terrain#Terrain Terrain preloaded module
+
+
 return nil
