@@ -203,7 +203,6 @@
 		15C1C2EE19874CBE00A46ACC /* tolua_fix.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AACE7B418BC45C200215002 /* tolua_fix.h */; };
 		15EFA1F61989E528000C57D3 /* lua_cocos2dx_experimental_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15622967197780DE009C9067 /* lua_cocos2dx_experimental_auto.cpp */; };
 		15EFA1F71989E582000C57D3 /* lua_cocos2dx_experimental_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 15622968197780DE009C9067 /* lua_cocos2dx_experimental_auto.hpp */; };
-		15EFA5D8198B2DAA000C57D3 /* liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C0D9BAFA1974D30000EC35BB /* liblua.a */; };
 		15EFA5D9198B2DAA000C57D3 /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA1F318CD8F540087CE3A /* libluajit.a */; };
 		15EFA617198B2E2B000C57D3 /* lua_cocos2dx_experimental_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15622967197780DE009C9067 /* lua_cocos2dx_experimental_auto.cpp */; };
 		15EFA618198B2E2B000C57D3 /* lua_cocos2dx_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AACE74918BC45C200215002 /* lua_cocos2dx_auto.cpp */; };
@@ -452,7 +451,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				15EFA5D8198B2DAA000C57D3 /* liblua.a in Frameworks */,
 				15EFA5D9198B2DAA000C57D3 /* libluajit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1310,12 +1308,7 @@
 				);
 				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(SRCROOT)/../../../../external/lua/luajit/prebuilt/ios",
-					"$(SRCROOT)/../../../../external/lua/lua/prebuilt/ios",
-				);
-				"OTHER_LDFLAGS[sdk=iphonesimulator7.1]" = "-llua";
-				"OTHER_LDFLAGS[sdk=iphonesimulator8.0]" = "-llua";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../../../external/lua/luajit/prebuilt/ios";
 				PRODUCT_NAME = "libluacocos2d iOS";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1337,12 +1330,7 @@
 				);
 				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(SRCROOT)/../../../../external/lua/luajit/prebuilt/ios",
-					"$(SRCROOT)/../../../../external/lua/lua/prebuilt/ios",
-				);
-				"OTHER_LDFLAGS[sdk=iphonesimulator7.1]" = "-llua";
-				"OTHER_LDFLAGS[sdk=iphonesimulator8.0]" = "-llua";
+				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../../../../external/lua/luajit/prebuilt/ios";
 				PRODUCT_NAME = "libluacocos2d iOS";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
