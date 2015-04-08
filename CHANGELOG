@@ -7,6 +7,7 @@ cocos2d-x-3.6beta0 Apr.14 2015
     [FIX]           Audio: memory leak
     [FIX]           Particle3D: rotation bug
     [FIX]           Sprite3D: memory leak
+    [FIX]           Sprite3D: getAABB return own aabb combining childeren's
 
 cocos2d-x-3.5 Mar.23 2015
     [NEW]           EditBox: support Color4B
