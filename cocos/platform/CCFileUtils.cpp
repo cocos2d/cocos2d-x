@@ -713,7 +713,7 @@ std::string FileUtils::getNewFilename(const std::string &filename) const
     return newFileName;
 }
 
-std::string FileUtils::getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath)
+std::string FileUtils::getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath) const
 {
     std::string file = filename;
     std::string file_path = "";
@@ -735,7 +735,7 @@ std::string FileUtils::getPathForFilename(const std::string& filename, const std
     return path;
 }
 
-std::string FileUtils::fullPathForFilename(const std::string &filename)
+std::string FileUtils::fullPathForFilename(const std::string &filename) const
 {
     if (filename.empty())
     {
@@ -926,7 +926,7 @@ void FileUtils::loadFilenameLookupDictionaryFromFile(const std::string &filename
     }
 }
 
-std::string FileUtils::getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename)
+std::string FileUtils::getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename) const
 {
     // get directory+filename, safely adding '/' as necessary 
     std::string ret = directory;
@@ -948,7 +948,7 @@ std::string FileUtils::searchFullPathForFilename(const std::string& filename) co
     {
         return filename;
     }
-    std::string path = const_cast<FileUtils*>(this)->fullPathForFilename(filename);
+    std::string path = fullPathForFilename(filename);
     if (0 == path.compare(filename))
     {
         return "";
@@ -1010,7 +1010,7 @@ bool FileUtils::isDirectoryExistInternal(const std::string& dirPath) const
 
 }
 
-bool FileUtils::isDirectoryExist(const std::string& dirPath)
+bool FileUtils::isDirectoryExist(const std::string& dirPath) const
 {
     CCASSERT(!dirPath.empty(), "Invalid path");
     
@@ -1035,7 +1035,7 @@ bool FileUtils::isDirectoryExist(const std::string& dirPath)
             fullpath = searchIt + dirPath + resolutionIt;
             if (isDirectoryExistInternal(fullpath))
             {
-                const_cast<FileUtils*>(this)->_fullPathCache.insert(std::make_pair(dirPath, fullpath));
+                _fullPathCache.insert(std::make_pair(dirPath, fullpath));
                 return true;
             }
         }
@@ -1359,7 +1359,7 @@ void FileUtils::setPopupNotify(bool notify)
     s_popupNotify = notify;
 }
 
-bool FileUtils::isPopupNotify()
+bool FileUtils::isPopupNotify() const
 {
     return s_popupNotify;
 }
