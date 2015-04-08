@@ -87,6 +87,7 @@ public:
         addTest("URL Open Test", []() { return new OpenURLTests(); });
         addTest("UserDefault", []() { return new UserDefaultTests(); });
         addTest("Zwoptex", []() { return new ZwoptexTests(); });
+        addTest("ImagePicker", []() { return new ImagePickerTests(); });
     }
 };
 
