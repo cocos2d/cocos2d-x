@@ -39,6 +39,7 @@ class btRigidBody;
 NS_CC_EXT_BEGIN
 
 class Physics3DShape;
+class Physics3DWorld;
 
 class CC_EX_DLL Physics3DObject : public Ref
 {
@@ -55,17 +56,28 @@ public:
     
     void* getUserData() const { return _userData; }
     
+    void setPhysicsWorld(Physics3DWorld* world) { _physicsWorld = world; }
+    
+    Physics3DWorld* getPhysicsWorld() const { return _physicsWorld; }
+    
+    virtual cocos2d::Mat4 getWorldTransform() const = 0;
+    
 CC_CONSTRUCTOR_ACCESS:
     Physics3DObject()
     : _type(PhysicsObjType::UNKNOWN)
+    , _userData(nullptr)
+    , _isEnabled(true)
+    , _physicsWorld(nullptr)
     {
         
     }
     virtual ~Physics3DObject(){}
     
 protected:
+    bool           _isEnabled;
     PhysicsObjType _type;
-    void* _userData;
+    void*          _userData;
+    Physics3DWorld* _physicsWorld;
 };
 
 struct CC_EX_DLL Physics3DRigidBodyDes
@@ -137,6 +149,8 @@ public:
     void removeConstraint(unsigned int idx);
     Physics3DConstraint* getConstraint(unsigned int idx) const;
     unsigned int getConstraintCount() const;
+    
+    virtual cocos2d::Mat4 getWorldTransform() const override;
 
 CC_CONSTRUCTOR_ACCESS:
     Physics3DRigidBody();

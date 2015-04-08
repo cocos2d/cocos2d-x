@@ -53,6 +53,11 @@ public:
     
     static std::string& getPhysics3DComponentName();
     
+    virtual void setEnabled(bool b) override;
+    
+    virtual void onEnter() override;
+    virtual void onExit() override;
+    
 CC_CONSTRUCTOR_ACCESS:
     Physics3DComponent();
     

@@ -23,6 +23,9 @@
  ****************************************************************************/
 
 #include "CCPhysics3D.h"
+#include "base/ccUTF8.h"
+
+USING_NS_CC;
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
@@ -299,6 +302,12 @@ Physics3DConstraint* Physics3DRigidBody::getConstraint( unsigned int idx ) const
 unsigned int Physics3DRigidBody::getConstraintCount() const
 {
     return (unsigned int)_constraintList.size();
+}
+
+cocos2d::Mat4 Physics3DRigidBody::getWorldTransform() const
+{
+    const auto& transform = _btRigidBody->getWorldTransform();
+    return convertbtTransformToMat4(transform);
 }
 
 NS_CC_EXT_END

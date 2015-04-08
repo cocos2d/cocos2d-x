@@ -79,6 +79,28 @@ Physics3DComponent::Physics3DComponent()
     
 }
 
+void Physics3DComponent::setEnabled(bool b)
+{
+    bool oldBool = b;
+    Component::setEnabled(b);
+    if (_physics3DObj && oldBool != _enabled)
+    {
+        _enabled ? _physics3DObj->getPhysicsWorld()->addPhysics3DObject(_physics3DObj) : _physics3DObj->getPhysicsWorld()->removePhysics3DObject(_physics3DObj);
+    }
+}
+
+void Physics3DComponent::onEnter()
+{
+    Component::onEnter();
+    setEnabled(true);
+}
+
+void Physics3DComponent::onExit()
+{
+    Component::onExit();
+    setEnabled(false);
+}
+
 NS_CC_EXT_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION

@@ -170,6 +170,30 @@ void Physics3DWorld::debugDraw(Renderer* renderer)
     }
 }
 
+void Physics3DWorld::syncToPhysics()
+{
+    for (auto& it : _objects) {
+        if (it->getObjType() == Physics3DObject::PhysicsObjType::RIGID_BODY)
+        {
+            static btTransform transform;
+            static_cast<Physics3DRigidBody*>(it)->getRigidBody()->getMotionState()->getWorldTransform(transform);
+            it->getUserData();
+        }
+    }
+}
+
+#if (CC_ENABLE_BULLET_INTEGRATION)
+void Physics3DWorld::removebtRigidBody(btRigidBody* rigid)
+{
+    _btPhyiscsWorld->removeRigidBody(rigid);
+}
+
+void Physics3DWorld::addbtRigidBody(btRigidBody* rigid)
+{
+    _btPhyiscsWorld->addRigidBody(rigid);
+}
+#endif
+
 NS_CC_EXT_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION

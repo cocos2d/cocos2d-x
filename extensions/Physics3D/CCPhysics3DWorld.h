@@ -41,6 +41,7 @@ class btDefaultCollisionConfiguration;
 class btCollisionDispatcher;
 class btDbvtBroadphase;
 class btSequentialImpulseConstraintSolver;
+class btRigidBody;
 
 NS_CC_EXT_BEGIN
 
@@ -83,6 +84,13 @@ public:
     bool isDebugDrawEnabled() const;
     
     void debugDraw(cocos2d::Renderer* renderer);
+    
+    void syncToPhysics();
+    
+#if (CC_ENABLE_BULLET_INTEGRATION)
+    void removebtRigidBody(btRigidBody* rigid);
+    void addbtRigidBody(btRigidBody* rigid);
+#endif
     
 CC_CONSTRUCTOR_ACCESS:
     
