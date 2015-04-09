@@ -195,6 +195,7 @@ public:
 private:
     std::vector<std::function<TestBase*()>> _testCallbacks;
     bool _cellTouchEnabled;
+    bool _shouldRestoreTableOffset;
     cocos2d::Vec2 _tableOffset;
     friend class TestController;
 };
