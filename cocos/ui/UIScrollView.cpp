@@ -23,6 +23,8 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "ui/UIScrollView.h"
+#include "platform/CCDevice.h"
+#include "base/CCDirector.h"
 
 NS_CC_BEGIN
 
@@ -34,6 +36,15 @@ const Vec2 SCROLLDIR_UP = Vec2(0.0f, 1.0f);
 const Vec2 SCROLLDIR_DOWN = Vec2(0.0f, -1.0f);
 const Vec2 SCROLLDIR_LEFT = Vec2(-1.0f, 0.0f);
 const Vec2 SCROLLDIR_RIGHT = Vec2(1.0f, 0.0f);
+
+// copied from CCScrollView.cpp
+#define MOVE_INCH            7.0f/160.0f
+static float convertDistanceFromPointToInch(float pointDis)
+{
+    auto glview = Director::getInstance()->getOpenGLView();
+    float factor = ( glview->getScaleX() + glview->getScaleY() ) / 2;
+    return pointDis * factor / Device::getDPI();
+}
     
 IMPLEMENT_CLASS_GUI_INFO(ScrollView)
 
@@ -59,7 +70,7 @@ _autoScrollDestination(Vec2::ZERO),
 _bePressed(false),
 _slidTime(0.0f),
 _moveChildPoint(Vec2::ZERO),
-_childFocusCancelOffset(5.0f),
+_childFocusCancelOffsetInInch(MOVE_INCH),
 _leftBounceNeeded(false),
 _topBounceNeeded(false),
 _rightBounceNeeded(false),
@@ -1580,9 +1591,26 @@ void ScrollView::interceptTouchEvent(Widget::TouchEventType event, Widget *sende
         break;
         case TouchEventType::MOVED:
         {
-            float offset = (sender->getTouchBeganPosition() - touchPoint).getLength();
             _touchMovePosition = touch->getLocation();
-            if (offset > _childFocusCancelOffset)
+
+            // calculates move offset in points
+            float offset = 0;            
+            switch (_direction) 
+            {
+                case Direction::HORIZONTAL:
+                    offset = fabs(sender->getTouchBeganPosition().x - touchPoint.x);
+                    break;
+                case Direction::VERTICAL:
+                    offset = fabs(sender->getTouchBeganPosition().y - touchPoint.y);
+                    break;
+                case Direction::BOTH:
+                    offset = (sender->getTouchBeganPosition() - touchPoint).getLength();
+                    break;
+                default:
+                    break;
+            }
+
+            if (convertDistanceFromPointToInch(offset) > _childFocusCancelOffsetInInch)
             {
                 sender->setHighlighted(false);
                 handleMoveLogic(touch);
