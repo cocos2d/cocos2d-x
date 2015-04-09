@@ -56,6 +56,55 @@ static inline std::string convertPathFormatToUnixStyle(const std::string& path)
     return ret;
 }
 
+static std::wstring StringUtf8ToWideChar(const std::string& strUtf8)
+{
+    std::wstring ret;
+    if (!strUtf8.empty())
+    {
+        int nNum = MultiByteToWideChar(CP_UTF8, 0, strUtf8.c_str(), -1, nullptr, 0);
+        if (nNum)
+        {
+            WCHAR* wideCharString = new WCHAR[nNum + 1];
+            wideCharString[0] = 0;
+
+            nNum = MultiByteToWideChar(CP_UTF8, 0, strUtf8.c_str(), -1, wideCharString, nNum + 1);
+
+            ret = wideCharString;
+            delete[] wideCharString;
+        }
+        else
+        {
+            CCLOG("Wrong convert to WideChar code:0x%x", GetLastError());
+        }
+    }
+    return ret;
+}
+
+static std::string StringWideCharToUtf8(const std::wstring& strWideChar)
+{
+    std::string ret;
+    if (!strWideChar.empty())
+    {
+        int nNum = WideCharToMultiByte(CP_UTF8, 0, strWideChar.c_str(), -1, nullptr, 0, nullptr, FALSE);
+        if (nNum)
+        {
+            char* utf8String = new char[nNum + 1];
+            utf8String[0] = 0;
+
+            nNum = WideCharToMultiByte(CP_UTF8, 0, strWideChar.c_str(), -1, utf8String, nNum + 1, nullptr, FALSE);
+
+            ret = utf8String;
+            delete[] utf8String;
+        }
+        else
+        {
+            CCLOG("Wrong convert to Utf8 code:0x%x", GetLastError());
+        }
+    }
+
+    return ret;
+}
+
 static void _checkPath()
 {
     if (0 == s_resourcePath.length())
@@ -335,6 +384,32 @@ string FileUtilsWin32::getWritablePath() const
 }
 
 NS_CC_END
+
+std::string CC_DLL StringUtf8ToAnsi(const std::string& strUtf8)
+{
+    std::string ret;
+    if (!strUtf8.empty())
+    {
+        std::wstring strWideChar = NS_CC::StringUtf8ToWideChar(strUtf8);
+        int nNum = WideCharToMultiByte(CP_ACP, 0, strWideChar.c_str(), -1, nullptr, 0, nullptr, FALSE);
+        if (nNum)
+        {
+            char* ansiString = new char[nNum + 1];
+            ansiString[0] = 0;
+
+            nNum = WideCharToMultiByte(CP_ACP, 0, strWideChar.c_str(), -1, ansiString, nNum + 1, nullptr, FALSE);
+
+            ret = ansiString;
+            delete[] ansiString;
+        }
+        else
+        {
+            CCLOG("Wrong convert to Ansi code:0x%x", GetLastError());
+        }
+    }
+
+    return ret;
+}
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
