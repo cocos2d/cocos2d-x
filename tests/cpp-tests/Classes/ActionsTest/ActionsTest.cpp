@@ -1399,9 +1399,9 @@ void ActionStacked::onEnter()
         
     this->centerSprites(0);
     
-    /*auto listener = EventListenerTouchAllAtOnce::create();
+    auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesEnded = CC_CALLBACK_2(ActionStacked::onTouchesEnded, this);
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);*/
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     auto s = Director::getInstance()->getWinSize();
     this->addNewSpriteWithCoords(Vec2(s.width/2, s.height/2));
@@ -1427,14 +1427,13 @@ void ActionStacked::runActionsInSprite(Sprite *sprite)
     // override me
 }
 
-/*
 void ActionStacked::onTouchesEnded(const std::vector<Touch*>& touches, Event* event)
 {
     for ( auto &touch: touches ) {
         auto location = touch->getLocation();
         addNewSpriteWithCoords( location );
     }
-}*/
+}
 
 std::string ActionStacked::title() const
 {
