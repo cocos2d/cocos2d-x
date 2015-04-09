@@ -36,6 +36,7 @@ NS_CC_EXT_BEGIN
 
 Physics3DRigidBody::Physics3DRigidBody()
 : _btRigidBody(nullptr)
+, _physics3DShape(nullptr)
 {
     
 }
@@ -43,6 +44,7 @@ Physics3DRigidBody::Physics3DRigidBody()
 Physics3DRigidBody::~Physics3DRigidBody()
 {
     CC_SAFE_DELETE(_btRigidBody);
+    CC_SAFE_RELEASE(_physics3DShape);
 }
 
 Physics3DRigidBody* Physics3DRigidBody::create(Physics3DRigidBodyDes* info)
@@ -76,7 +78,8 @@ bool Physics3DRigidBody::init(Physics3DRigidBodyDes* info)
     btRigidBody::btRigidBodyConstructionInfo rbInfo(mass,myMotionState,shape,localInertia);
     _btRigidBody = new btRigidBody(rbInfo);
     _type = Physics3DObject::PhysicsObjType::RIGID_BODY;
-    
+    _physics3DShape = info->shape;
+    _physics3DShape->retain();
     return true;
 }
 

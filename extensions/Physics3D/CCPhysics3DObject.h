@@ -160,6 +160,7 @@ CC_CONSTRUCTOR_ACCESS:
     
 protected:
     btRigidBody* _btRigidBody;
+    Physics3DShape *_physics3DShape;
     std::vector<Physics3DConstraint *> _constraintList;
 };
 

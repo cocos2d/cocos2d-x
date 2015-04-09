@@ -166,6 +166,8 @@ void Physics3DWorld::debugDraw(Renderer* renderer)
 {
     if (_debugDrawer && _btPhyiscsWorld->getDebugDrawer())
     {
+        _debugDrawer->clear();
+        _btPhyiscsWorld->debugDrawWorld();
         _debugDrawer->draw(renderer);
     }
 }
