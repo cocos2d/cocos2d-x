@@ -1413,8 +1413,8 @@ void Node::onEnter()
         ScriptEngineManager::sendNodeEventToLua(this, kNodeOnEnter);
     }
 #endif
-    
-    _componentContainer->onExit();
+    if (_componentContainer)
+        _componentContainer->onEnter();
 }
 
 void Node::onEnterTransitionDidFinish()
@@ -1493,7 +1493,8 @@ void Node::onExit()
     }
 #endif
     
-    _componentContainer->onExit();
+    if (_componentContainer)
+        _componentContainer->onExit();
 }
 
 void Node::setEventDispatcher(EventDispatcher* dispatcher)
