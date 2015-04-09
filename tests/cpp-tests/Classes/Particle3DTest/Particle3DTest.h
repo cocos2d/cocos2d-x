@@ -43,9 +43,9 @@ public:
     virtual std::string title() const override;
     virtual void update(float delta) override;
     
-    void onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event  *event);
-    void onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event);
-    void onTouchesEnded(const std::vector<Touch*>& touches, cocos2d::Event  *event);
+    void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
+    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
 
 protected:
     std::string    _title;

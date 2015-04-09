@@ -1,6 +1,8 @@
 #include "PerformanceScenarioTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum
 {
     TEST_COUNT = 1,

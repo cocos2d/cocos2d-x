@@ -1,5 +1,7 @@
 #include "FileUtilsTest.h"
 
+USING_NS_CC;
+
 FileUtilsTests::FileUtilsTests()
 {
     ADD_TEST_CASE(TestResolutionDirectories);

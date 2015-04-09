@@ -1,6 +1,8 @@
 #include "TileMapTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum 
 {
     kTagTileMap = 1,

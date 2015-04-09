@@ -1,5 +1,8 @@
 #include "UIImageViewTest.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
 UIImageViewTests::UIImageViewTests()
 {
     ADD_TEST_CASE(UIImageViewTest);

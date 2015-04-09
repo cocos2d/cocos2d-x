@@ -2,6 +2,8 @@
 #include "../testResource.h"
 #include "cocos2d.h"
 
+USING_NS_CC;
+
 enum 
 {
     kTagNode,

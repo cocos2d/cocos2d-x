@@ -14,7 +14,7 @@ public:
     virtual void showCurrentTest();
 };
 
-class PerformanceCallbackScene : public Scene
+class PerformanceCallbackScene : public cocos2d::Scene
 {
 public:
     virtual void onEnter() override;
@@ -75,8 +75,8 @@ public:
     virtual void update(float dt) override { _placeHolder = 200; };
     
 private:
-    Node* _target;
-    SEL_SCHEDULE _selector;
+    cocos2d::Node* _target;
+    cocos2d::SEL_SCHEDULE _selector;
 };
 
 // InvokeStdFunctionPerfTest

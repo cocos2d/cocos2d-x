@@ -12,10 +12,10 @@ public:
 
     virtual bool init() override;
 
-    void onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event  *event);
-    void onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event);
-    void onTouchesEnded(const std::vector<Touch*>& touches, cocos2d::Event  *event);
-    void onTouchesCancelled(const std::vector<Touch*>& touches, cocos2d::Event  *event);
+    void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
+    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
+    void onTouchesCancelled(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
 };
 
 #endif /* __MUTITOUCHTEST_H__ */

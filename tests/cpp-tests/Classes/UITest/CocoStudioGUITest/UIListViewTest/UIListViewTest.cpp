@@ -1,5 +1,8 @@
 #include "UIListViewTest.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
 const char* font_UIListViewTest = "fonts/Marker Felt.ttf";
 
 UIListViewTests::UIListViewTests()

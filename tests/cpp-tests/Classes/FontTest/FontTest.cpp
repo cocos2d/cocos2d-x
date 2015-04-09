@@ -1,6 +1,8 @@
 #include "FontTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum {
     kTagLabel1,
     kTagLabel2,

@@ -1,6 +1,9 @@
 #include "RenderTextureTest.h"
 #include "../testBasic.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
 RenderTextureTests::RenderTextureTests()
 {
     ADD_TEST_CASE(RenderTextureSave);

@@ -229,29 +229,29 @@ bool luaval_to_terraindata(lua_State* L, int lo, cocos2d::Terrain::TerrainData* 
     
     if (ok)
     {
-        lua_pushstring(L, "chunkSize");
+        lua_pushstring(L, "_chunkSize");
         lua_gettable(L,lo);
         if (!lua_isnil(L, -1))
         {
-            luaval_to_size(L, -1, &(outValue->chunkSize));
+            luaval_to_size(L, -1, &(outValue->_chunkSize));
         }
         else
         {
-            outValue->chunkSize = cocos2d::Size(32, 32);
+            outValue->_chunkSize = cocos2d::Size(32, 32);
         }
         lua_pop(L, 1);
         
-        lua_pushstring(L, "heightMapSrc");
+        lua_pushstring(L, "_heightMapSrc");
         lua_gettable(L,lo);
-        outValue->heightMapSrc = tolua_tocppstring(L, -1, "");
+        outValue->_heightMapSrc = tolua_tocppstring(L, -1, "");
         lua_pop(L,1);
         
-        lua_pushstring(L, "alphaMapSrc");
+        lua_pushstring(L, "_alphaMapSrc");
         lua_gettable(L,lo);
-        outValue->alphaMapSrc = const_cast<char*>(tolua_tocppstring(L, -1, ""));
+        outValue->_alphaMapSrc = const_cast<char*>(tolua_tocppstring(L, -1, ""));
         lua_pop(L,1);
         
-        lua_pushstring(L, "detailMaps");
+        lua_pushstring(L, "_detailMaps");
         lua_gettable(L,lo);
         if (lua_istable(L, -1))
         {
@@ -262,14 +262,14 @@ bool luaval_to_terraindata(lua_State* L, int lo, cocos2d::Terrain::TerrainData* 
                 lua_gettable(L,-2);
                 if (lua_istable(L, -1))
                 {
-                    lua_pushstring(L, "detailMapSrc");
+                    lua_pushstring(L, "_detailMapSrc");
                     lua_gettable(L,-2);
-                    outValue->detailMaps[i].detailMapSrc = tolua_tocppstring(L, -1, "");
+                    outValue->_detailMaps[i]._detailMapSrc = tolua_tocppstring(L, -1, "");
                     lua_pop(L,1);
                     
-                    lua_pushstring(L, "detailMapSize");
+                    lua_pushstring(L, "_detailMapSize");
                     lua_gettable(L,-2);
-                    outValue->detailMaps[i].detailMapSize = lua_isnil(L,-1) ? 0.0f : (float)lua_tonumber(L,-1);
+                    outValue->_detailMaps[i]._detailMapSize = lua_isnil(L,-1) ? 0.0f : (float)lua_tonumber(L,-1);
                     lua_pop(L,1);
                 }
                 lua_pop(L, 1);
@@ -277,14 +277,14 @@ bool luaval_to_terraindata(lua_State* L, int lo, cocos2d::Terrain::TerrainData* 
         }
         lua_pop(L,1);
         
-        lua_pushstring(L, "mapHeight");
+        lua_pushstring(L, "_mapHeight");
         lua_gettable(L,lo);
-        outValue->mapHeight = lua_isnil(L,-1) ? 2.0f : (float)lua_tonumber(L,-1);
+        outValue->_mapHeight = lua_isnil(L,-1) ? 2.0f : (float)lua_tonumber(L,-1);
         lua_pop(L,1);
         
-        lua_pushstring(L, "mapScale");
+        lua_pushstring(L, "_mapScale");
         lua_gettable(L,lo);
-        outValue->mapScale = lua_isnil(L,-1) ? 0.1f : (float)lua_tonumber(L,-1);
+        outValue->_mapScale = lua_isnil(L,-1) ? 0.1f : (float)lua_tonumber(L,-1);
         lua_pop(L,1);
         
         lua_pushstring(L, "_detailMapAmount");
@@ -292,9 +292,9 @@ bool luaval_to_terraindata(lua_State* L, int lo, cocos2d::Terrain::TerrainData* 
         outValue->_detailMapAmount = lua_isnil(L,-1) ? 0 : (int)lua_tonumber(L,-1);
         lua_pop(L,1);
         
-        lua_pushstring(L, "skirtHeightRatio");
+        lua_pushstring(L, "_skirtHeightRatio");
         lua_gettable(L,lo);
-        outValue->skirtHeightRatio = lua_isnil(L,-1) ? 1.0f : (float)lua_tonumber(L,-1);
+        outValue->_skirtHeightRatio = lua_isnil(L,-1) ? 1.0f : (float)lua_tonumber(L,-1);
         lua_pop(L,1);
     }
     
@@ -307,25 +307,25 @@ void terraindata_to_luaval(lua_State* L,const cocos2d::Terrain::TerrainData& inV
         return;
     
     lua_newtable(L);
-    lua_pushstring(L, "chunkSize");
-    size_to_luaval(L, inValue.chunkSize);
+    lua_pushstring(L, "_chunkSize");
+    size_to_luaval(L, inValue._chunkSize);
     lua_rawset(L, -3);
     
-    if (inValue.heightMapSrc.length() > 0)
+    if (inValue._heightMapSrc.length() > 0)
     {
-        lua_pushstring(L, "heightMapSrc");
-        lua_pushstring(L, inValue.heightMapSrc.c_str());
+        lua_pushstring(L, "_heightMapSrc");
+        lua_pushstring(L, inValue._heightMapSrc.c_str());
         lua_rawset(L, -3);
     }
     
-    if (nullptr != inValue.alphaMapSrc)
+    if (nullptr != inValue._alphaMapSrc)
     {
-        lua_pushstring(L, "alphaMapSrc");
-        lua_pushstring(L, inValue.alphaMapSrc);
+        lua_pushstring(L, "_alphaMapSrc");
+        lua_pushstring(L, inValue._alphaMapSrc);
         lua_rawset(L, -3);
     }
     
-    lua_pushstring(L, "detailMaps");
+    lua_pushstring(L, "_detailMaps");
     lua_newtable(L);
     for (int i = 0; i < 4; i++)
     {
@@ -333,12 +333,12 @@ void terraindata_to_luaval(lua_State* L,const cocos2d::Terrain::TerrainData& inV
         lua_pushnumber(L, (lua_Number) i + 1);
         lua_newtable(L);
         
-        lua_pushstring(L, "detailMapSrc");
-        lua_pushstring(L, inValue.detailMaps[i].detailMapSrc.c_str());
+        lua_pushstring(L, "_detailMapSrc");
+        lua_pushstring(L, inValue._detailMaps[i]._detailMapSrc.c_str());
         lua_rawset(L, -3);
         
-        lua_pushstring(L, "detailMapSize");
-        lua_pushnumber(L, (lua_Number)inValue.detailMaps[i].detailMapSize);
+        lua_pushstring(L, "_detailMapSize");
+        lua_pushnumber(L, (lua_Number)inValue._detailMaps[i]._detailMapSize);
         lua_rawset(L, -3);
         
         lua_rawset(L, -3);
@@ -346,20 +346,20 @@ void terraindata_to_luaval(lua_State* L,const cocos2d::Terrain::TerrainData& inV
     lua_rawset(L, -3);
     
     
-    lua_pushstring(L, "mapHeight");
-    lua_pushnumber(L, (lua_Number)inValue.mapHeight);
+    lua_pushstring(L, "_mapHeight");
+    lua_pushnumber(L, (lua_Number)inValue._mapHeight);
     lua_rawset(L, -3);
     
-    lua_pushstring(L, "mapScale");
-    lua_pushnumber(L, (lua_Number)inValue.mapScale);
+    lua_pushstring(L, "_mapScale");
+    lua_pushnumber(L, (lua_Number)inValue._mapScale);
     lua_rawset(L, -3);
     
     lua_pushstring(L, "_detailMapAmount");
     lua_pushnumber(L, (lua_Number)inValue._detailMapAmount);
     lua_rawset(L, -3);
     
-    lua_pushstring(L, "skirtHeightRatio");
-    lua_pushnumber(L, (lua_Number)inValue.skirtHeightRatio);
+    lua_pushstring(L, "_skirtHeightRatio");
+    lua_pushnumber(L, (lua_Number)inValue._skirtHeightRatio);
     lua_rawset(L, -3);
 }
 

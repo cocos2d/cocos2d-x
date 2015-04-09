@@ -19,7 +19,7 @@ public:
     CREATE_FUNC(TemplateVectorTest);
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
-    void constFunc(const Vector<Node*>& vec) const;
+    void constFunc(const cocos2d::Vector<Node*>& vec) const;
 };
 
 class TemplateMapTest : public UnitTestDemo
@@ -28,7 +28,7 @@ public:
     CREATE_FUNC(TemplateMapTest);
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
-    void constFunc(const Map<std::string, Node*>& map) const;
+    void constFunc(const cocos2d::Map<std::string, cocos2d::Node*>& map) const;
 };
 
 class ValueTest : public UnitTestDemo
@@ -37,7 +37,7 @@ public:
     CREATE_FUNC(ValueTest);
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
-    void constFunc(const Value& value) const;
+    void constFunc(const cocos2d::Value& value) const;
 };
 
 class UTFConversionTest : public UnitTestDemo

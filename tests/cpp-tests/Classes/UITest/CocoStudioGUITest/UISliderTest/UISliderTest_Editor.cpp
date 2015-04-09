@@ -1,5 +1,9 @@
 #include "UISliderTest_Editor.h"
 
+USING_NS_CC;
+USING_NS_CC_EXT;
+using namespace cocos2d::ui;
+
 UISliderEditorTests::UISliderEditorTests()
 {
     ADD_TEST_CASE(UISliderTest_Editor);

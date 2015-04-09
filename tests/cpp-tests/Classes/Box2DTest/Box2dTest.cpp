@@ -4,6 +4,7 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCCustomCommand.h"
 
+USING_NS_CC;
 USING_NS_CC_EXT;
 
 #define PTM_RATIO 32

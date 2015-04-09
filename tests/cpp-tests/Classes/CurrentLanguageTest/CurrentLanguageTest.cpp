@@ -1,5 +1,7 @@
 #include "CurrentLanguageTest.h"
 
+USING_NS_CC;
+
 CurrentLanguageTests::CurrentLanguageTests()
 {
     ADD_TEST_CASE(CurrentLanguageTest);

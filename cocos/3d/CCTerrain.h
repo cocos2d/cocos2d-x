@@ -31,7 +31,8 @@ THE SOFTWARE.
 #include "3d/CCAABB.h"
 #include "3d/CCRay.h"
 #include <vector>
-
+#include "base/CCEventListenerCustom.h"
+#include "base/CCEventDispatcher.h"
 NS_CC_BEGIN
 
 /**
@@ -100,9 +101,9 @@ public:
         DetailMap();
         DetailMap(const char * detailMapSrc, float size = 35);
         /*detail Image source file path*/
-        std::string detailMapSrc;
+        std::string _detailMapSrc;
         /*detailMapSize determine how many tiles that Terrain represent*/
-        float detailMapSize;
+        float _detailMapSize;
     };
 
    /**
@@ -122,40 +123,40 @@ public:
         /**
         *deterimine the chunk size,chunk is the minimal subdivision of the Terrain
         */
-        Size chunkSize;
+        Size _chunkSize;
         /**height Map source path*/
-        std::string heightMapSrc;
+        std::string _heightMapSrc;
         /**the source path of the alpha map*/
-        char* alphaMapSrc;
+        char* _alphaMapSrc;
         /**detail maps*/
-        DetailMap detailMaps[4];
+        DetailMap _detailMaps[4];
         /**terrain Maximum height*/
-        float mapHeight;
+        float _mapHeight;
         /**terrain scale factor,you can combine setScale later.*/
-        float mapScale;
+        float _mapScale;
         /**the amount of detailmap*/
         int _detailMapAmount;
         /**the skirt height ratio, only effect when terrain use skirt to fix crack*/
-        float skirtHeightRatio;
+        float _skirtHeightRatio;
     };
 private:
 
     struct ChunkIndices
     {
-        GLuint indices;
-        unsigned short size;
+        GLuint _indices;
+        unsigned short _size;
     };
 
     struct ChunkLODIndices
     {
-        int relativeLod[5];
+        int _relativeLod[5];
         ChunkIndices _chunkIndices;
     };
 
 
     struct ChunkLODIndicesSkirt
     {
-        int selfLod;
+        int _selfLod;
         ChunkIndices _chunkIndices;
     };
     /*
@@ -167,13 +168,13 @@ private:
         TerrainVertexData(){};
         TerrainVertexData(Vec3 v1, Tex2F v2)
         {
-            position = v1;
-            texcoord = v2;
+            _position = v1;
+            _texcoord = v2;
         };
         /*the vertex's attributes*/
-        cocos2d::Vec3 position;
-        cocos2d::Tex2F texcoord;
-        cocos2d::Vec3 normal;
+        cocos2d::Vec3 _position;
+        cocos2d::Tex2F _texcoord;
+        cocos2d::Vec3 _normal;
     };
 
     struct QuadTree;
@@ -187,12 +188,12 @@ private:
         /**destructor*/
         ~Chunk();
         /*vertices*/
-        std::vector<TerrainVertexData> vertices;
+        std::vector<TerrainVertexData> _originalVertices;
         /*LOD indices*/
         struct LOD{
-            std::vector<GLushort> indices;
+            std::vector<GLushort> _indices;
         };
-        GLuint vbo[2];
+        GLuint _vbo;
         ChunkIndices _chunkIndices; 
         /**we now support four levels of detail*/
         LOD _lod[4];
@@ -230,16 +231,16 @@ private:
         QuadTree * _parent;
 
         /**the position X in terrain space*/
-        int pos_x;
+        int _posX;
         /**the position Y in terrain space*/
-        int pos_y;
+        int _posY;
         /**parent terrain*/
         Terrain * _terrain;
         /**chunk size*/
         Size _size;
         /**chunk's estimated slope*/
         float _slope;
-        std::vector<TerrainVertexData> vertices_tmp;
+        std::vector<TerrainVertexData> _currentVertices;
     };
 
    /**
@@ -272,7 +273,8 @@ private:
         int _height;
         int _width;
         QuadTree * _parent;
-        AABB _aabb;
+        /**AABB's cache (in local space)*/
+        AABB _localAABB;
         /**AABB's cache (in world space)*/
         AABB _worldSpaceAABB;
         Terrain * _terrain;
@@ -381,15 +383,7 @@ public:
      */
     QuadTree * getQuadTree();
 
-    //following methods are internal use only
-    ChunkIndices lookForIndicesLODSkrit(int selfLod, bool * result);
-
-    ChunkIndices lookForIndicesLOD(int neighborLod[4], int selfLod, bool * result);
-
-    ChunkIndices insertIndicesLOD(int neighborLod[4], int selfLod, GLushort * indices, int size);
-
-    ChunkIndices insertIndicesLODSkirt(int selfLod, GLushort * indices, int size);
-
+    void reload();
 protected:
     
     Terrain();
@@ -418,7 +412,16 @@ protected:
     /**
      * cache all unifrom loactions in GLSL.
      **/
-    void cacheUniformLocation();
+    void cacheUniformAttribLocation();
+
+    //IBO generate & cache
+    ChunkIndices lookForIndicesLODSkrit(int selfLod, bool * result);
+
+    ChunkIndices lookForIndicesLOD(int neighborLod[4], int selfLod, bool * result);
+
+    ChunkIndices insertIndicesLOD(int neighborLod[4], int selfLod, GLushort * indices, int size);
+
+    ChunkIndices insertIndicesLODSkirt(int selfLod, GLushort * indices, int size);
 protected:
     std::vector <ChunkLODIndices> _chunkLodIndicesSet;
     std::vector<ChunkLODIndicesSkirt> _chunkLodIndicesSkirtSet;
@@ -444,6 +447,8 @@ protected:
     Mat4 _oldCameraModelMatrix;
     Mat4 _terrainModelMatrix;
     GLuint _normalLocation;
+    GLuint _positionLocation;
+    GLuint _texcordLocation;
     float _maxHeight;
     float _minHeight;
     CrackFixedType _crackFixedType;
@@ -453,6 +458,9 @@ protected:
     GLint _alphaMapLocation;
     GLint _alphaIsHasAlphaMapLocation;
     GLint _detailMapSizeLocation[4];
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    EventListenerCustom* _backToForegroundListener;
+#endif
 };
 
 // end of actions group

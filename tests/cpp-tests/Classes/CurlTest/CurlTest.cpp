@@ -3,6 +3,8 @@
 #include "stdlib.h"
 #include "curl/curl.h"
 
+USING_NS_CC;
+
 CurlTests::CurlTests()
 {
     ADD_TEST_CASE(CurlTest);

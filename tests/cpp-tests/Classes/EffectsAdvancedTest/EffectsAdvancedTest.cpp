@@ -1,5 +1,7 @@
 #include "EffectsAdvancedTest.h"
 
+USING_NS_CC;
+
 enum 
 {
     kTagTextLayer = 1,

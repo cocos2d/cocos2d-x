@@ -34,16 +34,16 @@ class UIListViewTest_Vertical_Editor : public UIScene_Editor
 public:
     CREATE_FUNC(UIListViewTest_Vertical_Editor);
 
-    static void setupListView(ListView* listView);
+    static void setupListView(cocos2d::ui::ListView* listView);
     UIListViewTest_Vertical_Editor();
     ~UIListViewTest_Vertical_Editor();
 
     virtual bool init() override;
-    void selectedItemEvent(Ref* pSender, ListView::EventType type);
+    void selectedItemEvent(cocos2d::Ref* sender, cocos2d::ui::ListView::EventType type);
 protected:
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
     
-    __Array* _array;
+    cocos2d::__Array* _array;
 };
 
 
@@ -56,11 +56,11 @@ public:
     ~UIListViewTest_Horizontal_Editor();
 
     virtual bool init() override;
-    void selectedItemEvent(Ref* pSender, ListView::EventType type);
+    void selectedItemEvent(cocos2d::Ref* sender, cocos2d::ui::ListView::EventType type);
 protected:
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
     
-    __Array* _array;
+    cocos2d::__Array* _array;
 };
 
 #endif /* defined(__TestCpp__UIListViewTest_Editor__) */

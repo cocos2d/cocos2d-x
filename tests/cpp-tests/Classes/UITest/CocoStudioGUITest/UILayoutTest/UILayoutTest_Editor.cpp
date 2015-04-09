@@ -1,6 +1,9 @@
 #include "UILayoutTest_Editor.h"
 #include "VisibleRect.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
 UILayoutEditorTests::UILayoutEditorTests()
 {
     ADD_TEST_CASE(UILayoutTest_Editor);

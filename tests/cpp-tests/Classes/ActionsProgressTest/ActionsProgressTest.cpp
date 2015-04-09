@@ -26,6 +26,8 @@
 #include "ActionsProgressTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 ActionsProgressTests::ActionsProgressTests()
 {
     ADD_TEST_CASE(SpriteProgressToRadial);
