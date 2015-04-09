@@ -40,7 +40,7 @@ public:
 
     virtual void update(float delta) override;
 
-    void SwitchLight(Ref* sender, LightType lightType);
+    void SwitchLight(cocos2d::Ref* sender, cocos2d::LightType lightType);
 
 private:
 
@@ -49,15 +49,15 @@ private:
 
 private:
 
-    AmbientLight *_ambientLight;
-    DirectionLight *_directionalLight;
-    PointLight *_pointLight;
-    SpotLight *_spotLight;
+    cocos2d::AmbientLight* _ambientLight;
+    cocos2d::DirectionLight* _directionalLight;
+    cocos2d::PointLight* _pointLight;
+    cocos2d::SpotLight* _spotLight;
 
-    Label *_ambientLightLabel;
-    Label *_directionalLightLabel;
-    Label *_pointLightLabel;
-    Label *_spotLightLabel;
+    cocos2d::Label* _ambientLightLabel;
+    cocos2d::Label* _directionalLightLabel;
+    cocos2d::Label* _pointLightLabel;
+    cocos2d::Label* _spotLightLabel;
 };
 
 #endif

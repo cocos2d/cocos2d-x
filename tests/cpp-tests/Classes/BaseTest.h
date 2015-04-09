@@ -29,15 +29,12 @@
 #include "extensions/cocos-ext.h"
 #include "VisibleRect.h"
 
-USING_NS_CC;
-USING_NS_CC_EXT;
-
 class TestSuite;
 
 /**
  * Each test case should inherit from TestCase, and add to a TestSuite object.
  */
-class TestCase : public Scene
+class TestCase : public cocos2d::Scene
 {
 public:
     /** TestCase test type.*/
@@ -73,10 +70,10 @@ public:
     virtual std::string getActualOutput() const { return ""; }
 
     /** Callback functions.*/
-    virtual void restartTestCallback(Ref* sender);
-    virtual void nextTestCallback(Ref* sender);
-    virtual void priorTestCallback(Ref* sender);
-    virtual void onBackCallback(Ref* sender);
+    virtual void restartTestCallback(cocos2d::Ref* sender);
+    virtual void nextTestCallback(cocos2d::Ref* sender);
+    virtual void priorTestCallback(cocos2d::Ref* sender);
+    virtual void onBackCallback(cocos2d::Ref* sender);
 
     /**
      * You should NEVER call this method, unless you know what you are doing.
@@ -98,12 +95,12 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
 
 protected:
-    MenuItemImage* _priorTestItem;
-    MenuItemImage* _restartTestItem;
-    MenuItemImage* _nextTestItem;
+    cocos2d::MenuItemImage* _priorTestItem;
+    cocos2d::MenuItemImage* _restartTestItem;
+    cocos2d::MenuItemImage* _nextTestItem;
 
-    Label* _titleLabel;
-    Label* _subtitleLabel;
+    cocos2d::Label* _titleLabel;
+    cocos2d::Label* _subtitleLabel;
 
 private:
     TestSuite* _testSuite;
@@ -119,7 +116,7 @@ private:
  *
  * @note You should not inherit from TestBase directly.
  */
-class TestBase : public Ref
+class TestBase : public cocos2d::Ref
 {
 public:
     virtual ~TestBase();
@@ -159,7 +156,7 @@ class TestController;
 class TestSuite : public TestBase
 {
 public:
-    void addTestCase(const std::string& testName, std::function<Scene*()> callback);
+    void addTestCase(const std::string& testName, std::function<cocos2d::Scene*()> callback);
 
     virtual void restartCurrTest();
     virtual void enterNextTest();
@@ -168,7 +165,7 @@ public:
     virtual void runThisTest() override;
 
 private:
-    std::vector<std::function<Scene*()>> _testCallbacks;
+    std::vector<std::function<cocos2d::Scene*()>> _testCallbacks;
 
     int _currTestIndex;
     friend class TestController;
@@ -177,7 +174,7 @@ private:
 /**
  * An instance of TestList is a means for displaying hierarchical lists of TestSuite.
  */
-class TestList : public TestBase, public TableViewDataSource, public TableViewDelegate
+class TestList : public TestBase, public cocos2d::extension::TableViewDataSource, public cocos2d::extension::TableViewDelegate
 {
 public:
     TestList();
@@ -187,10 +184,10 @@ public:
     virtual void runThisTest() override;
 
 
-    virtual void tableCellTouched(TableView* table, TableViewCell* cell) override;
-    virtual TableViewCell* tableCellAtIndex(TableView *table, ssize_t idx) override;
-    virtual Size tableCellSizeForIndex(TableView *table, ssize_t idx) override;
-    virtual ssize_t numberOfCellsInTableView(TableView *table) override;
+    virtual void tableCellTouched(cocos2d::extension::TableView* table, cocos2d::extension::TableViewCell* cell) override;
+    virtual cocos2d::extension::TableViewCell* tableCellAtIndex(cocos2d::extension::TableView *table, ssize_t idx) override;
+    virtual cocos2d::Size tableCellSizeForIndex(cocos2d::extension::TableView *table, ssize_t idx) override;
+    virtual ssize_t numberOfCellsInTableView(cocos2d::extension::TableView *table) override;
 
     virtual void scrollViewDidScroll(cocos2d::extension::ScrollView* view) override{}
     virtual void scrollViewDidZoom(cocos2d::extension::ScrollView* view) override{}
@@ -198,7 +195,7 @@ public:
 private:
     std::vector<std::function<TestBase*()>> _testCallbacks;
     bool _cellTouchEnabled;
-    Vec2 _tableOffset;
+    cocos2d::Vec2 _tableOffset;
     friend class TestController;
 };
 
@@ -222,9 +219,9 @@ public:
     virtual std::string title() const { return ""; }
     virtual std::string subtitle() const{ return ""; }
 
-    virtual void restartCallback(Ref* sender) {}
-    virtual void nextCallback(Ref* sender){}
-    virtual void backCallback(Ref* sender){}
+    virtual void restartCallback(cocos2d::Ref* sender) {}
+    virtual void nextCallback(cocos2d::Ref* sender){}
+    virtual void backCallback(cocos2d::Ref* sender){}
 
     virtual void onEnter() override{}
     virtual void onExit() override{}

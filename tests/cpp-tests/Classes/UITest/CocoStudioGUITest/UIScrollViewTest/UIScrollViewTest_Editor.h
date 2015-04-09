@@ -39,7 +39,7 @@ public:
 
     virtual bool init() override;
 protected:
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 
@@ -53,7 +53,7 @@ public:
 
     virtual bool init() override;
 protected:
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 
@@ -67,7 +67,7 @@ public:
 
     virtual bool init() override;
 protected:
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 
@@ -82,7 +82,7 @@ public:
     virtual bool init() override;
  
 protected:
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 
@@ -97,7 +97,7 @@ public:
     virtual bool init() override;
     
 protected:
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UIScrollViewTest_Editor__) */

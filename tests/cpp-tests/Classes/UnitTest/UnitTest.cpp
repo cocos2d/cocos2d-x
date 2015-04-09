@@ -1,6 +1,8 @@
 #include "UnitTest.h"
 #include "RefPtrTest.h"
 
+USING_NS_CC;
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #if defined (__arm64__)
 #define USE_NEON64

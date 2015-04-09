@@ -30,9 +30,6 @@
 #include "ui/CocosGUI.h"
 #include "BaseTest.h"
 
-USING_NS_CC;
-USING_NS_CC_EXT;
-using namespace cocos2d::ui;
 
 class UIScene : public TestCase
 {
@@ -43,9 +40,9 @@ public:
     virtual bool init() override;
     virtual void onEnter() override;
 protected:
-    Layer* _uiLayer;
-    Layout* _widget;
-    Text* _sceneTitle;
+    cocos2d::Layer* _uiLayer;
+    cocos2d::ui::Layout* _widget;
+    cocos2d::ui::Text* _sceneTitle;
 };
 
 #endif /* defined(__TestCpp__UIScene__) */

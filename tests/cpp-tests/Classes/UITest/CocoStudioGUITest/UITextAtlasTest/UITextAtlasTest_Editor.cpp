@@ -1,5 +1,8 @@
 #include "UITextAtlasTest_Editor.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
 UITextAtlasEditorTests::UITextAtlasEditorTests()
 {
     ADD_TEST_CASE(UITextAtlasTest_Editor);

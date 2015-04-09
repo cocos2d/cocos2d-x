@@ -1,5 +1,8 @@
 #include "UITextFieldTest.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
 UITextFieldTests::UITextFieldTests()
 {
     ADD_TEST_CASE(UITextFieldTest);

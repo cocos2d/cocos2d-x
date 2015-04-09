@@ -23,9 +23,9 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
-    Terrain * _terrain;
+    cocos2d::Terrain* _terrain;
 protected:
-    Camera * _camera;
+    cocos2d::Camera* _camera;
 };
 
 #define PLAYER_STATE_LEFT 0 
@@ -34,10 +34,10 @@ protected:
 #define PLAYER_STATE_FORWARD 3
 #define PLAYER_STATE_BACKWARD 4
 
-class Player : public Sprite3D
+class Player : public cocos2d::Sprite3D
 {
 public:
-    static Player * create(const char * file, Camera * cam, Terrain * terrain);
+    static Player * create(const char * file, cocos2d::Camera*  cam, cocos2d::Terrain* terrain);
     virtual bool isDone() const;
     virtual void update(float dt);
 
@@ -49,10 +49,10 @@ public:
     cocos2d::Vec3 _targetPos;
     void updateState();
     float _headingAngle;
-    Vec3 _headingAxis;
+    cocos2d::Vec3 _headingAxis;
 private:
-    Terrain * _terrain;
-    Camera * _cam;
+    cocos2d::Terrain* _terrain;
+    cocos2d::Camera*  _cam;
     int _playerState;
 };
 
@@ -67,8 +67,8 @@ public:
     void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
     void onTouchesEnd(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
 protected:
-    Camera * _camera;
-    Terrain * _terrain;
+    cocos2d::Camera*  _camera;
+    cocos2d::Terrain* _terrain;
     Player * _player;
 };
 

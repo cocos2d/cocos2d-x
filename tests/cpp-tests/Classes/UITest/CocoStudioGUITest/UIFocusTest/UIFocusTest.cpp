@@ -8,6 +8,9 @@
 
 #include "UIFocusTest.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
 UIFocusTests::UIFocusTests()
 {
     ADD_TEST_CASE(UIFocusTestHorizontal);

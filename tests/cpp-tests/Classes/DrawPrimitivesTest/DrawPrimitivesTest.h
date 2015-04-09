@@ -22,11 +22,11 @@ public:
     
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t flags) override;
 
 protected:
-    void onDraw(const Mat4 &transform, uint32_t flags);
-    CustomCommand _customCommand;
+    void onDraw(const cocos2d::Mat4& transform, uint32_t flags);
+    cocos2d::CustomCommand _customCommand;
 };
 
 class DrawNodeTest : public DrawPrimitivesBaseTest

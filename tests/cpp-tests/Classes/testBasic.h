@@ -5,13 +5,11 @@
 #include "audio/include/SimpleAudioEngine.h"
 #include "VisibleRect.h"
 
-USING_NS_CC;
-
 /**
 * TestScene is retained for compatibility with older versions.
 * @warning It should soon be removed.
 */
-class TestScene : public Scene
+class TestScene : public cocos2d::Scene
 {
 public: 
     TestScene(bool bPortrait = false, bool physics = false){}

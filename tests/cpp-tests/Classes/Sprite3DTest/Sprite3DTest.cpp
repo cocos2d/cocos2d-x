@@ -38,6 +38,7 @@
 #include <algorithm>
 #include "../testResource.h"
 
+USING_NS_CC;
 
 Sprite3DTests::Sprite3DTests()
 {
@@ -87,7 +88,7 @@ std::string Sprite3DTestDemo::title() const
 //------------------------------------------------------------------
 Sprite3DForceDepthTest::Sprite3DForceDepthTest()
 {
-    auto orc = Sprite3D::create("Sprite3DTest/orc.c3b");
+    auto orc = cocos2d::Sprite3D::create("Sprite3DTest/orc.c3b");
     orc->setScale(5);
     orc->setNormalizedPosition(Vec2(.5f,.3f));
     orc->setPositionZ(40);

@@ -24,6 +24,8 @@
 
 #include "NewRendererTest.h"
 
+USING_NS_CC;
+
 NewRendererTests::NewRendererTests()
 {
     ADD_TEST_CASE(NewSpriteTest);

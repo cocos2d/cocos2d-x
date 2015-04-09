@@ -8,6 +8,8 @@
 
 #include "Bug-Child.h"
 
+USING_NS_CC;
+
 bool BugChild::init()
 {
     if (BugsTestBase::init())

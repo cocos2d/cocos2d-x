@@ -1,5 +1,8 @@
 #include "UILoadingBarTest_Editor.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
 UILoadingBarEditorTests::UILoadingBarEditorTests()
 {
     ADD_TEST_CASE(UILoadingBarTest_Editor);

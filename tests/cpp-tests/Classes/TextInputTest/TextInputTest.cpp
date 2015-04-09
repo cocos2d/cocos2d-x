@@ -1,5 +1,7 @@
 #include "TextInputTest.h"
 
+USING_NS_CC;
+
 #define FONT_NAME                       "fonts/Thonburi.ttf"
 #define FONT_SIZE                       36
 

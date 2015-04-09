@@ -1,5 +1,8 @@
 #include "UIWidgetAddNodeTest.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
 UIWidgetAddNodeTests::UIWidgetAddNodeTests()
 {
     ADD_TEST_CASE(UIWidgetAddNodeTest);

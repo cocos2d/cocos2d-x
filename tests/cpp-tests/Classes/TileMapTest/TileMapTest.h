@@ -15,7 +15,7 @@ public:
     virtual std::string subtitle() const override;
     virtual void onExit() override;
 
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
 };
 
 class TileMapTest : public TileDemo
@@ -180,7 +180,7 @@ public:
 
 class TMXIsoZorder : public TileDemo
 {
-    Sprite*    _tamara;
+    cocos2d::Sprite*    _tamara;
 public:
     CREATE_FUNC(TMXIsoZorder);
     TMXIsoZorder();
@@ -194,7 +194,7 @@ public:
 
 class TMXOrthoZorder : public TileDemo
 {
-    Sprite*    _tamara;
+    cocos2d::Sprite*    _tamara;
 public:
     CREATE_FUNC(TMXOrthoZorder);
     TMXOrthoZorder();
@@ -207,7 +207,7 @@ public:
 
 class TMXIsoVertexZ : public TileDemo
 {
-    Sprite*    _tamara;
+    cocos2d::Sprite*    _tamara;
 public:
     CREATE_FUNC(TMXIsoVertexZ);
     TMXIsoVertexZ();
@@ -222,7 +222,7 @@ public:
 
 class TMXOrthoVertexZ : public TileDemo
 {
-    Sprite*    _tamara;
+    cocos2d::Sprite*    _tamara;
 public:
     CREATE_FUNC(TMXOrthoVertexZ);
     TMXOrthoVertexZ();

@@ -1,6 +1,8 @@
 #include "DataVisitorTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 DataVisitorTests::DataVisitorTests()
 {
     ADD_TEST_CASE(PrettyPrinterDemo);

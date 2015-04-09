@@ -1,6 +1,8 @@
 #include "SceneTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 SceneTests::SceneTests()
 {
     ADD_TEST_CASE(SceneTestScene);
