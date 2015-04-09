@@ -10,7 +10,7 @@
 using namespace cocos2d;
 
 extern "C" {
-    void Java_org_cocos2dx_lib_Cocos2dxActivity_ImagePickerResult(JNIEnv *env, jobject thiz, jbyteArray array)
+    void Java_org_cocos2dx_lib_Cocos2dxImagePicker_ImagePickerResult(JNIEnv *env, jobject thiz, jbyteArray array)
     {
         jbyte* bufferPtr = env->GetByteArrayElements(array, NULL);
         jsize lengthOfArray = env->GetArrayLength(array);
@@ -27,7 +27,9 @@ extern "C" {
             });
         }
         else{
-            ImagePicker::getInstance()->finishImage(nullptr);
+            cocos2d::Director::getInstance()->getScheduler()->performFunctionInCocosThread([]{
+                ImagePicker::getInstance()->finishImage(nullptr);
+            });
         }
         env->ReleaseByteArrayElements(array, bufferPtr, 0);  
     }
@@ -38,7 +40,7 @@ void ImagePickerImpl::openImage()
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     JniMethodInfo t;
-    bool result = JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxActivity", "openImage", "()V");
+    bool result = JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxImagePicker", "openImage", "()V");
     if (result)
     {
         t.env->CallStaticVoidMethod(t.classID, t.methodID);

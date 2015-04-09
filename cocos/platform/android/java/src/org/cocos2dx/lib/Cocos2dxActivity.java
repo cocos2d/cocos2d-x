@@ -23,8 +23,6 @@ THE SOFTWARE.
  ****************************************************************************/
 package org.cocos2dx.lib;
 
-import java.io.ByteArrayOutputStream;
-
 import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.egl.EGLDisplay;
@@ -37,15 +35,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
-import android.net.Uri;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.preference.PreferenceManager.OnActivityResultListener;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -299,21 +294,6 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if (requestCode == IMAGE_PICKER_ACTIVITY) {
-            byte[] byteArray = {0};
-            if (resultCode == Activity.RESULT_OK) {
-                Uri imageUri = data.getData();  
-                try {
-                    Bitmap bmp = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                    byteArray = stream.toByteArray();
-                } catch (Exception e) {
-                }
-            }
-            ImagePickerResult(byteArray);
-        }
-
         for (OnActivityResultListener listener : Cocos2dxHelper.getOnActivityResultListeners()) {
             listener.onActivityResult(requestCode, resultCode, data);
         }
@@ -389,17 +369,4 @@ public abstract class Cocos2dxActivity extends Activity implements Cocos2dxHelpe
     // ===========================================================
     // Inner and Anonymous Classes
     // ===========================================================
-
-    // extension/ImagePicker   
-    private static final int IMAGE_PICKER_ACTIVITY = 31;    //Magic Number
-    
-    public static void openImage()  {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-              
-        sContext.startActivityForResult(intent, IMAGE_PICKER_ACTIVITY); 
-    }
-
-    public native void ImagePickerResult(final byte[] imagedata);
 }
