@@ -127,6 +127,7 @@ void TerrainWalkThru::onTouchesBegan(const std::vector<cocos2d::Touch*>& touches
 
 void TerrainWalkThru::onTouchesEnd(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event)
 {
+    _terrain->reload();
     auto touch = touches[0];
     auto location = touch->getLocationInView();
     if(_camera)
