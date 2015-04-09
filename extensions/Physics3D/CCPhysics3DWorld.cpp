@@ -172,13 +172,8 @@ void Physics3DWorld::debugDraw(Renderer* renderer)
 
 void Physics3DWorld::syncToPhysics()
 {
-    for (auto& it : _objects) {
-        if (it->getObjType() == Physics3DObject::PhysicsObjType::RIGID_BODY)
-        {
-            static btTransform transform;
-            static_cast<Physics3DRigidBody*>(it)->getRigidBody()->getMotionState()->getWorldTransform(transform);
-            it->getUserData();
-        }
+    for (auto& it : _physicsComponents) {
+        it->syncToPhysics();
     }
 }
 

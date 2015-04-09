@@ -58,6 +58,11 @@ public:
     virtual void onEnter() override;
     virtual void onExit() override;
     
+    /**
+     * sync node to physics
+     */
+    void syncToPhysics();
+    
 CC_CONSTRUCTOR_ACCESS:
     Physics3DComponent();
     

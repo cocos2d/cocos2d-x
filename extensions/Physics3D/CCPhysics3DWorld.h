@@ -48,6 +48,7 @@ NS_CC_EXT_BEGIN
 class Physics3DObject;
 class Physics3DConstraint;
 class Physics3DDebugDrawer;
+class Physics3DComponent;
 
 struct CC_EX_DLL Physics3DWorldDes
 {
@@ -62,6 +63,7 @@ struct CC_EX_DLL Physics3DWorldDes
 
 class CC_EX_DLL Physics3DWorld : public Ref
 {
+    friend class Physics3DComponent;
 public:
     static Physics3DWorld* create(Physics3DWorldDes* info);
     
@@ -102,6 +104,7 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     std::vector<Physics3DObject*>      _objects;
     std::vector<Physics3DConstraint*>  _constraints;
+    std::vector<Physics3DComponent*>   _physicsComponents; //physics3d components
     
 #if (CC_ENABLE_BULLET_INTEGRATION)
     btDynamicsWorld* _btPhyiscsWorld;

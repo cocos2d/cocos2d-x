@@ -101,6 +101,26 @@ void Physics3DComponent::onExit()
     setEnabled(false);
 }
 
+void Physics3DComponent::syncToPhysics()
+{
+    if (_physics3DObj && _owner)
+    {
+        if (_physics3DObj->getObjType() == Physics3DObject::PhysicsObjType::RIGID_BODY)
+        {
+            auto parentMat = _owner->getParent()->getNodeToWorldTransform();
+            auto mat = parentMat.getInversed() * _physics3DObj->getWorldTransform();
+            static Vec3 scale, translation;
+            static Quaternion quat;
+            mat.decompose(&scale, &quat, &translation);
+            _owner->setPosition3D(translation);
+            _owner->setRotationQuat(quat);
+            _owner->setScaleX(scale.x);
+            _owner->setScaleY(scale.y);
+            _owner->setScaleZ(scale.z);
+        }
+    }
+}
+
 NS_CC_EXT_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION
