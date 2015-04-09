@@ -150,6 +150,10 @@ public:
     Physics3DConstraint* getConstraint(unsigned int idx) const;
     unsigned int getConstraintCount() const;
     
+    void setKinematic(bool kinematic);
+    
+    bool isKinematic() const;
+    
     virtual cocos2d::Mat4 getWorldTransform() const override;
 
 CC_CONSTRUCTOR_ACCESS:

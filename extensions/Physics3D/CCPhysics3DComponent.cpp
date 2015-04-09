@@ -110,8 +110,8 @@ void Physics3DComponent::addToPhysicsWorld(Physics3DWorld* world)
                         components.insert(components.begin() + i, this);
                         return;
                     }
-                    parent = parent->getParent();
                 }
+                parent = parent->getParent();
             }
             
             components.insert(components.begin(), this);

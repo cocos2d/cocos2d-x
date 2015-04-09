@@ -313,6 +313,27 @@ cocos2d::Mat4 Physics3DRigidBody::getWorldTransform() const
     return convertbtTransformToMat4(transform);
 }
 
+void Physics3DRigidBody::setKinematic(bool kinematic)
+{
+    if (kinematic)
+    {
+        _btRigidBody->setCollisionFlags(_btRigidBody->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
+        _btRigidBody->setActivationState(DISABLE_DEACTIVATION);
+    }
+    else
+    {
+        _btRigidBody->setCollisionFlags(_btRigidBody->getCollisionFlags() & ~btCollisionObject::CF_KINEMATIC_OBJECT);
+        _btRigidBody->setActivationState(ACTIVE_TAG);
+    }
+}
+
+bool Physics3DRigidBody::isKinematic() const
+{
+    if (_btRigidBody)
+        return _btRigidBody->isKinematicObject();
+    return false;
+}
+
 NS_CC_EXT_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION
