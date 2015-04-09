@@ -18,6 +18,7 @@
   - [Features in detail](#features-in-detail-1)
     - [3D TextureCube](#3d-texturecube)
     - [3D Skybox](#3d-skybox)
+    - [3D Terrain](#3d-terrain)
     - [Animate3D Quality Control](#animate3d-quality-control)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -181,6 +182,30 @@ addChild(_skyBox);
 ```
 
 For more information please refer to cpp-tests/Sprite3DTest/Sprite3DCubeMapTest.
+
+### 3D Terrain
+
+Terrain is an important component in 3D game. A texture is used to stand for the height map. And up to 4 textures can be used to blend the details of the terrain, grass, road, and so on.
+
+Usage of terrain
+
+```c++
+//blended layers
+Terrain::DetailMap dirt("TerrainTest/dirt.jpg"), grass("TerrainTest/Grass2.jpg"), road("TerrainTest/road.jpg"), green("TerrainTest/GreenSkin.jpg");
+
+//height map, alpha map (blend weight), and blended layers
+Terrain::TerrainData data("TerrainTest/heightmap16.jpg", "TerrainTest/alphamap.png", dirt, grass, road, green);
+
+//create terrain here
+_terrain = Terrain::create(data,Terrain::CrackFixedType::SKIRT);
+//set lod distance
+_terrain->setLODDistance(3.2,6.4,9.6);
+//it must be less than 5
+_terrain->setMaxDetailMapAmount(4);
+addChild(_terrain);
+```
+
+For more information please refer to cpp-tests/Sprite3DTest/TerrainTest.
 
 ### Animate3D Quality Control
 
