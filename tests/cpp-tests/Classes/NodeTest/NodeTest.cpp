@@ -335,8 +335,7 @@ void StressTest1::shouldNotCrash(float dt)
 
 // remove
 void StressTest1::removeMe(Node* node)
-{    
-    getParent()->removeChild(node, true);
+{
     getTestSuite()->enterNextTest();
 }
 
