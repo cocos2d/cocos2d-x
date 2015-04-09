@@ -108,8 +108,8 @@ bool PUParticle3DInterParticleCollider::validateAndExecuteSphereCollision (PUPar
                 // The new velocity is based on the angle between original direction and new direction.
                 // Note, that this usually means that the velocity decreases.
 
-                float velocity1 = Vec3(abs(vp1->direction.x), abs(vp1->direction.y), abs(vp1->direction.z)).dot(n);
-                float velocity2 = Vec3(abs(vp2->direction.x), abs(vp2->direction.y), abs(vp2->direction.z)).dot(n);
+                float velocity1 = Vec3(std::abs(vp1->direction.x), std::abs(vp1->direction.y), std::abs(vp1->direction.z)).dot(n);
+                float velocity2 = Vec3(std::abs(vp2->direction.x), std::abs(vp2->direction.y), std::abs(vp2->direction.z)).dot(n);
                 vp1->direction = velocity1 * vp2->mass * n;
                 vp2->direction = velocity2 * vp1->mass * -n;
             }

@@ -31,7 +31,8 @@ THE SOFTWARE.
 #include "3d/CCAABB.h"
 #include "3d/CCRay.h"
 #include <vector>
-
+#include "base/CCEventListenerCustom.h"
+#include "base/CCEventDispatcher.h"
 NS_CC_BEGIN
 
 /**
@@ -382,6 +383,7 @@ public:
      */
     QuadTree * getQuadTree();
 
+    void reload();
 protected:
     
     Terrain();
@@ -456,6 +458,9 @@ protected:
     GLint _alphaMapLocation;
     GLint _alphaIsHasAlphaMapLocation;
     GLint _detailMapSizeLocation[4];
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    EventListenerCustom* _backToForegroundListener;
+#endif
 };
 
 // end of actions group

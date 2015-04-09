@@ -47,7 +47,6 @@ public:
     static TestController* getInstance();
     static void destroyInstance();
 
-    TestController();
     ~TestController();
 
     void startAutoTest();
@@ -59,10 +58,18 @@ public:
     void onEnterForeground();
 
     bool blockTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
+
 private:
-    static void logEx(const char * format, ...);
+    TestController();
+
+    void traverseTestList(TestList* testList);
+    void traverseTestSuite(TestSuite* testSuite);
+    bool checkTest(TestCase* testCase);
+
+    void logEx(const char * format, ...);
 
     bool _stopAutoTest;
+    bool _isRunInBackground;
 
     TestList* _rootTestList;
 
@@ -76,13 +83,6 @@ private:
     cocos2d::EventListenerTouchOneByOne* _touchListener;
 
     std::string _logIndentation;
-
-    bool _isRunInBackground;
-
-    void traverseTestList(TestList* testList);
-    void traverseTestSuite(TestSuite* testSuite);
-
-    bool checkTest(TestCase* testCase);
 };
 
 #endif

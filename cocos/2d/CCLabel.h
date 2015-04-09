@@ -335,6 +335,13 @@ public:
      */
     virtual void disableEffect();
 
+    /**
+     * Disable effect to Label.
+     *
+     * @see `LabelEffect`
+     */
+    virtual void disableEffect(LabelEffect effect);
+
     /** Sets the Label's text horizontal alignment.*/
     void setAlignment(TextHAlignment hAlignment) { setAlignment(hAlignment,_vAlignment);}
 
@@ -528,13 +535,10 @@ protected:
 
     virtual void updateShaderProgram();
 
-    void drawShadowWithoutBlur();
+    void createSpriteForSystemFont();
 
-    void drawTextSprite(Renderer *renderer, uint32_t parentFlags);
+    void createShadowSpriteForSystemFont();
 
-    void createSpriteWithFontDefinition();
-
-    void updateFont();
     void reset();
 
     std::string _bmFontPath;
@@ -597,8 +601,9 @@ protected:
     Size    _shadowOffset;
     int     _shadowBlurRadius;
     Mat4  _shadowTransform;
-    Color3B _shadowColor;
-    float   _shadowOpacity;
+    Color4F _shadowColor4F;
+    Color3B _shadowColor3B;
+    GLubyte _shadowOpacity;
     Sprite*   _shadowNode;
 
     int     _outlineSize;

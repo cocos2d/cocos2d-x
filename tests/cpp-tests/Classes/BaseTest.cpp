@@ -163,7 +163,7 @@ TableViewCell* TestList::tableCellAtIndex(TableView *table, ssize_t idx)
         cell = TableViewCell::create();
         auto label = Label::createWithTTF(_childTestNames[idx], "fonts/arial.ttf", 20.0f);
         label->setTag(1024);
-        label->setPosition(200, 25);
+        label->setPosition(200, 15);
         cell->addChild(label);
     }
     else
@@ -177,7 +177,7 @@ TableViewCell* TestList::tableCellAtIndex(TableView *table, ssize_t idx)
 
 Size TestList::tableCellSizeForIndex(TableView *table, ssize_t idx)
 {
-    return Size(400, 50);
+    return Size(400, 30);
 }
 
 ssize_t TestList::numberOfCellsInTableView(TableView *table)
