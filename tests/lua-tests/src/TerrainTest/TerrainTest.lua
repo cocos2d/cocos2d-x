@@ -23,16 +23,17 @@ function TerrainSimple:init()
     --use custom camera
     self._camera = cc.Camera:createPerspective(60, visibleSize.width/visibleSize.height, 0.1, 800)
     self._camera:setCameraFlag(cc.CameraFlag.USER1)
+    self._camera:setPosition3D(cc.vec3(-1, 1.6, 4))
     self:addChild(self._camera)
 
-    local detailMapR = { detailMapSrc = "TerrainTest/dirt.dds", detailMapSize = 35}
-    local detailMapG = { detailMapSrc = "TerrainTest/Grass2.dds", detailMapSize = 35}
-    local detailMapB = { detailMapSrc = "TerrainTest/road.dds", detailMapSize = 35}
-    local detailMapA = { detailMapSrc = "TerrainTest/GreenSkin.jpg", detailMapSize = 35}
-    local terrainData = { heightMapSrc = "TerrainTest/heightmap16.jpg", alphaMapSrc = "TerrainTest/alphamap.png" , detailMaps = {detailMapR, detailMapG, detailMapB, detailMapA}, _detailMapAmount = 4 }
+    local detailMapR = { _detailMapSrc = "TerrainTest/dirt.jpg", _detailMapSize = 35}
+    local detailMapG = { _detailMapSrc = "TerrainTest/Grass2.jpg", _detailMapSize = 35}
+    local detailMapB = { _detailMapSrc = "TerrainTest/road.jpg", _detailMapSize = 35}
+    local detailMapA = { _detailMapSrc = "TerrainTest/GreenSkin.jpg", _detailMapSize = 35}
+    local terrainData = { _heightMapSrc = "TerrainTest/heightmap16.jpg", _alphaMapSrc = "TerrainTest/alphamap.png" , _detailMaps = {detailMapR, detailMapG, detailMapB, detailMapA}, _detailMapAmount = 4 }
 
     self._terrain = cc.Terrain:create(terrainData,cc.Terrain.CrackFixedType.SKIRT)
-    self._terrain:setLODDistance(1000.2, 6.4, 9.6)
+    self._terrain:setLODDistance(3.2, 6.4, 9.6)
     self._terrain:setMaxDetailMapAmount(4)
     self:addChild(self._terrain)
     self._terrain:setCameraMask(2)
@@ -197,29 +198,6 @@ function TerrainWalkThru:init()
     end,cc.Handler.EVENT_TOUCHES_BEGAN)
 
     listener:registerScriptHandler(function (touches, event)
-        local delta = cc.Director:getInstance():getDeltaTime()
-        local touch = touches[1]
-        local location = touch:getLocation()
-        local previousLocation = touch:getPreviousLocation()
-        local newPos = cc.p(previousLocation.x - location.x, previousLocation.y - location.y)
-
-        local matTransform = self._camera:getNodeToWorldTransform()
-
-        local cameraDir = {x = -matTransform[9], y = -matTransform[10], z = -matTransform[11]}
-        cameraDir = cc.vec3normalize(cameraDir)
-        cameraDir.y = 0
-
-        local cameraRightDir = {x = matTransform[1], y = matTransform[2], z = matTransform[3]}
-        cameraRightDir = cc.vec3normalize(cameraRightDir)
-        cameraRightDir.y = 0
-
-        local cameraPos = self._camera:getPosition3D()
-        cameraPos = { x = cameraPos.x + cameraDir.x * newPos.y * 0.5 * delta, y = cameraPos.y + cameraDir.y * newPos.y * 0.5 * delta, z = cameraPos.z + cameraDir.z * newPos.y * 0.5 * delta }
-        cameraPos = { x = cameraPos.x + cameraRightDir.x * newPos.x * 0.5 * delta, y = cameraPos.y + cameraRightDir.y * newPos.x * 0.5 * delta, z = cameraPos.z + cameraRightDir.z * newPos.x * 0.5 * delta }
-        self._camera:setPosition3D(cameraPos)    
-    end,cc.Handler.EVENT_TOUCHES_MOVED)
-
-    listener:registerScriptHandler(function (touches, event)
 
         local touch = touches[1]
         local location = touch:getLocationInView()
@@ -284,11 +262,11 @@ function TerrainWalkThru:init()
     self._camera:setCameraFlag(cc.CameraFlag.USER1)
     self:addChild(self._camera)
 
-    local detailMapR = { detailMapSrc = "TerrainTest/dirt.dds", detailMapSize = 35}
-    local detailMapG = { detailMapSrc = "TerrainTest/Grass2.dds", detailMapSize = 10}
-    local detailMapB = { detailMapSrc = "TerrainTest/road.dds", detailMapSize = 35}
-    local detailMapA = { detailMapSrc = "TerrainTest/GreenSkin.jpg", detailMapSize = 20}
-    local terrainData = { heightMapSrc = "TerrainTest/heightmap16.jpg", alphaMapSrc = "TerrainTest/alphamap.png" , detailMaps = {detailMapR, detailMapG, detailMapB, detailMapA}, _detailMapAmount = 4, mapHeight = 40.0, mapScale = 2.0 }
+    local detailMapR = { _detailMapSrc = "TerrainTest/dirt.jpg", _detailMapSize = 35}
+    local detailMapG = { _detailMapSrc = "TerrainTest/Grass2.jpg", _detailMapSize = 10}
+    local detailMapB = { _detailMapSrc = "TerrainTest/road.jpg", _detailMapSize = 35}
+    local detailMapA = { _detailMapSrc = "TerrainTest/GreenSkin.jpg", _detailMapSize = 20}
+    local terrainData = { _heightMapSrc = "TerrainTest/heightmap16.jpg", _alphaMapSrc = "TerrainTest/alphamap.png" , _detailMaps = {detailMapR, detailMapG, detailMapB, detailMapA}, _detailMapAmount = 4, _mapHeight = 40.0, _mapScale = 2.0 }
 
     self._terrain = cc.Terrain:create(terrainData,cc.Terrain.CrackFixedType.SKIRT)
     self._terrain:setLODDistance(1000.2, 6.4, 9.6)
@@ -319,11 +297,11 @@ function TerrainWalkThru:init()
 end
 
 function TerrainWalkThru:title()
-    return "TerrainWalkThru"
+    return "Player walk around in terrain"
 end
 
 function TerrainWalkThru:subtitle()
-    return ""
+    return "touch to move"
 end
 
 function TerrainTest()
