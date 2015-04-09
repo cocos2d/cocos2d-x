@@ -405,7 +405,7 @@ public:
     virtual std::string subtitle() const override;
     virtual void addNewSpriteWithCoords(cocos2d::Vec2 p);
     virtual void runActionsInSprite(cocos2d::Sprite* sprite);
-    //void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event) override;
+    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
 };
 
 class ActionMoveStacked : public ActionStacked
