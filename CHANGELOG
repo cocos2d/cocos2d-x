@@ -1,5 +1,5 @@
 cocos2d-x-3.6alpha0 Apr.8 2015
-    [NEW]           3D: added texturecub support
+    [NEW]           3D: added texturecube support
     [NEW]           3D: added skybox support
     [NEW]           3D: added node animation support
     [NEW]           3D: added terrian support
