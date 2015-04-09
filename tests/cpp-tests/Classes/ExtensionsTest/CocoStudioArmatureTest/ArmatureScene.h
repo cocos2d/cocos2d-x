@@ -324,7 +324,7 @@ public:
     virtual void playWithIndex(int index);
 
     CC_SYNTHESIZE(cocostudio::Armature*, m_pMount, Mount);
-    CC_SYNTHESIZE(cocos2d::Scene*, _scene, cocos2d::Scene*);
+    CC_SYNTHESIZE(cocos2d::Scene*, _scene, Scene);
 };
 
 class TestArmatureNesting2 : public ArmatureBaseTest

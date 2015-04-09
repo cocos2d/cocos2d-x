@@ -39,7 +39,7 @@ public:
 
     virtual bool init() override;
 
-    void selectedStateEvent(cocos2d::Ref* sender, CheckBox::EventType type);
+    void selectedStateEvent(cocos2d::Ref* sender, cocos2d::ui::CheckBox::EventType type);
     virtual void configureGUIScene() override;
 protected:
     cocos2d::ui::Text* _displayValueLabel;

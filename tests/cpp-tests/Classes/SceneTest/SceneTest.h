@@ -6,11 +6,11 @@
 
 DEFINE_TEST_SUITE(SceneTests);
 
-class cocos2d::Scene*TestLayer1 : public cocos2d::Layer
+class SceneTestLayer1 : public cocos2d::Layer
 {
 public:
     CREATE_FUNC(SceneTestLayer1);
-    cocos2d::Scene*TestLayer1();
+    SceneTestLayer1();
     ~SceneTestLayer1();
 
     virtual void onEnter() override;
@@ -22,12 +22,12 @@ public:
     void onQuit(cocos2d::Ref* sender);
 } ;
 
-class cocos2d::Scene*TestLayer2 : public cocos2d::Layer
+class SceneTestLayer2 : public cocos2d::Layer
 {
     float    _timeCounter;
 public:
     CREATE_FUNC(SceneTestLayer2);
-    cocos2d::Scene*TestLayer2();
+    SceneTestLayer2();
 
     void testDealloc(float dt);
     void onGoBack(cocos2d::Ref* sender);
@@ -35,11 +35,11 @@ public:
     void onReplaceSceneTran(cocos2d::Ref* sender);
 } ;
 
-class cocos2d::Scene*TestLayer3 : public cocos2d::LayerColor
+class SceneTestLayer3 : public cocos2d::LayerColor
 {
 public:
     CREATE_FUNC(SceneTestLayer3);
-    cocos2d::Scene*TestLayer3();
+    SceneTestLayer3();
     bool init();
     virtual void testDealloc(float dt);
     void item0Clicked(cocos2d::Ref* sender);
@@ -48,7 +48,7 @@ public:
     void item3Clicked(cocos2d::Ref* sender);
 } ;
 
-class cocos2d::Scene*TestScene : public TestCase
+class SceneTestScene : public TestCase
 {
 public:
     CREATE_FUNC(SceneTestScene);

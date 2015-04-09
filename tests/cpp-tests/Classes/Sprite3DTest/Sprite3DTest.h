@@ -46,7 +46,7 @@ public:
     virtual std::string title() const override;
 };
 
-class Sprite3DForceDepthTest : public cocos2d::Sprite3DTestDemo
+class Sprite3DForceDepthTest : public Sprite3DTestDemo
 {
 public:
     CREATE_FUNC(Sprite3DForceDepthTest);
@@ -55,7 +55,7 @@ public:
     virtual std::string subtitle() const override;
 };
 
-class Sprite3DEmptyTest : public cocos2d::Sprite3DTestDemo
+class Sprite3DEmptyTest : public Sprite3DTestDemo
 {
 public:
     CREATE_FUNC(Sprite3DEmptyTest);
@@ -64,7 +64,7 @@ public:
     virtual std::string subtitle() const override;
 };
 
-class Sprite3DBasicTest : public cocos2d::Sprite3DTestDemo
+class Sprite3DBasicTest : public Sprite3DTestDemo
 {
 public:
     CREATE_FUNC(Sprite3DBasicTest);
@@ -76,7 +76,7 @@ public:
     void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
 };
 
-class Sprite3DUVAnimationTest : public cocos2d::Sprite3DTestDemo
+class Sprite3DUVAnimationTest : public Sprite3DTestDemo
 {
 public:
     CREATE_FUNC(Sprite3DUVAnimationTest);
@@ -97,7 +97,7 @@ protected:
 #endif
 };
 
-class Sprite3DFakeShadowTest : public cocos2d::Sprite3DTestDemo
+class Sprite3DFakeShadowTest : public Sprite3DTestDemo
 {
 public:
     enum State
@@ -133,7 +133,7 @@ private:
 #endif
 };
 
-class Sprite3DLightMapTest : public cocos2d::Sprite3DTestDemo
+class Sprite3DLightMapTest : public Sprite3DTestDemo
 {
 public:
     CREATE_FUNC(Sprite3DLightMapTest);
@@ -146,7 +146,7 @@ private:
     cocos2d::Camera * _camera;
 };
 
-class Sprite3DBasicToonShaderTest : public cocos2d::Sprite3DTestDemo
+class Sprite3DBasicToonShaderTest : public Sprite3DTestDemo
 {
 public:
     CREATE_FUNC(Sprite3DBasicToonShaderTest);
@@ -218,7 +218,7 @@ protected:
     static cocos2d::GLProgram* getOrCreateProgram(bool isSkinned = false);
 };
 
-class Sprite3DHitTest : public cocos2d::Sprite3DTestDemo
+class Sprite3DHitTest : public Sprite3DTestDemo
 {
 public:
     CREATE_FUNC(Sprite3DHitTest);
@@ -245,7 +245,7 @@ protected:
     cocos2d::CustomCommand _command;
 };
 
-class Sprite3DEffectTest : public cocos2d::Sprite3DTestDemo
+class Sprite3DEffectTest : public Sprite3DTestDemo
 {
 public:
     CREATE_FUNC(Sprite3DEffectTest);
@@ -258,7 +258,7 @@ public:
     void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
 };
 
-class AsyncLoadSprite3DTest : public cocos2d::Sprite3DTestDemo
+class AsyncLoadSprite3DTest : public Sprite3DTestDemo
 {
 public:
     CREATE_FUNC(AsyncLoadSprite3DTest);
@@ -275,7 +275,7 @@ protected:
     std::vector<std::string> _paths; //model paths to be loaded
 };
 
-class Sprite3DWithSkinTest : public cocos2d::Sprite3DTestDemo
+class Sprite3DWithSkinTest : public Sprite3DTestDemo
 {
 public:
     CREATE_FUNC(Sprite3DWithSkinTest);
@@ -293,7 +293,7 @@ private:
     cocos2d::MenuItemFont* _menuItem;
 };
 
-class Sprite3DWithSkinOutlineTest : public cocos2d::Sprite3DTestDemo
+class Sprite3DWithSkinOutlineTest : public Sprite3DTestDemo
 {
 public:
     CREATE_FUNC(Sprite3DWithSkinOutlineTest);
@@ -306,7 +306,7 @@ public:
     void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
 };
 
-class Animate3DTest : public cocos2d::Sprite3DTestDemo
+class Animate3DTest : public Sprite3DTestDemo
 {
 public:
     CREATE_FUNC(Animate3DTest);
@@ -346,7 +346,7 @@ protected:
     cocos2d::MoveTo* _moveAction;
 };
 
-class AttachmentTest : public cocos2d::Sprite3DTestDemo
+class AttachmentTest : public Sprite3DTestDemo
 {
 public:
     CREATE_FUNC(AttachmentTest);
@@ -363,7 +363,7 @@ protected:
     cocos2d::Sprite3D* _sprite;
 };
 
-class Sprite3DReskinTest : public cocos2d::Sprite3DTestDemo
+class Sprite3DReskinTest : public Sprite3DTestDemo
 {
 public:
     CREATE_FUNC(Sprite3DReskinTest);
@@ -393,7 +393,7 @@ protected:
     int                      _curSkin[(int)SkinType::MAX_TYPE]; //current skin index
     cocos2d::Sprite3D* _sprite;
 };
-class Sprite3DWithOBBPerformanceTest : public cocos2d::Sprite3DTestDemo
+class Sprite3DWithOBBPerformanceTest : public Sprite3DTestDemo
 {
 public:
     CREATE_FUNC(Sprite3DWithOBBPerformanceTest);
@@ -427,7 +427,7 @@ protected:
     void calculateRayByLocationInView(cocos2d::Ray* ray, const cocos2d::Vec2& location);
 };
 
-class Sprite3DMirrorTest : public cocos2d::Sprite3DTestDemo
+class Sprite3DMirrorTest : public Sprite3DTestDemo
 {
 public:
     CREATE_FUNC(Sprite3DMirrorTest);
@@ -443,7 +443,7 @@ protected:
     cocos2d::Sprite3D* _mirrorSprite;
 };
 
-class QuaternionTest : public cocos2d::Sprite3DTestDemo
+class QuaternionTest : public Sprite3DTestDemo
 {
 public:
     CREATE_FUNC(QuaternionTest);
@@ -462,7 +462,7 @@ protected:
 };
 
 // 3d + 2d use case
-class UseCaseSprite3D : public cocos2d::Sprite3DTestDemo
+class UseCaseSprite3D : public Sprite3DTestDemo
 {
 public:
     CREATE_FUNC(UseCaseSprite3D);
@@ -489,7 +489,7 @@ protected:
 };
 
 // node animation test, cocos2d-x supports both skeletal animation and node animation
-class NodeAnimationTest : public cocos2d::Sprite3DTestDemo
+class NodeAnimationTest : public Sprite3DTestDemo
 {
 public:
     CREATE_FUNC(NodeAnimationTest);
@@ -508,7 +508,7 @@ namespace cocos2d
 class TextureCube;
 class Skybox;
 }
-class Sprite3DCubeMapTest : public cocos2d::Sprite3DTestDemo
+class Sprite3DCubeMapTest : public Sprite3DTestDemo
 {
 public:
     CREATE_FUNC(Sprite3DCubeMapTest);

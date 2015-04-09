@@ -1,5 +1,7 @@
 #include "TerrainTest.h"
 
+USING_NS_CC;
+
 TerrainTests::TerrainTests()
 {
     ADD_TEST_CASE(TerrainSimple);

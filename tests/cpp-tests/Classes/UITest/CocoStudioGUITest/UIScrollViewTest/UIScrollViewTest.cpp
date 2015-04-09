@@ -1,5 +1,8 @@
 #include "UIScrollViewTest.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
 UIScrollViewTests::UIScrollViewTests()
 {
     ADD_TEST_CASE(UIScrollViewTest_Vertical);

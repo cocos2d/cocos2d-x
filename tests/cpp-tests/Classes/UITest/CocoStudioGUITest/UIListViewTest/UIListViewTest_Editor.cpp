@@ -1,6 +1,9 @@
 #include "UIListViewTest_Editor.h"
 #include "VisibleRect.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
 UIListViewEditorTests::UIListViewEditorTests()
 {
     ADD_TEST_CASE(UIListViewTest_Vertical_Editor);

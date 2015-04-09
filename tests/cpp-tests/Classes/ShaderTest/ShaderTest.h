@@ -96,8 +96,8 @@ public:
     
 protected:
     SpriteBlur* _blurSprite;
-    ControlSlider* _sliderRadiusCtl;
-    ControlSlider* _sliderNumCtrl;
+    cocos2d::extension::ControlSlider* _sliderRadiusCtl;
+    cocos2d::extension::ControlSlider* _sliderNumCtrl;
 };
 
 class ShaderRetroEffect : public ShaderTestDemo

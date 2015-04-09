@@ -7,7 +7,8 @@
 
 USING_NS_CC;
 USING_NS_CC_EXT;
-
+using namespace cocos2d::ui;
+using namespace cocostudio;
 
 // CustomImageLayer
 bool CustomImageLayer::init()

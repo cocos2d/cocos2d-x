@@ -1,5 +1,8 @@
 #include "UITextBMFontTest_Editor.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
 UITextBMFontEditorTest::UITextBMFontEditorTest()
 {
     ADD_TEST_CASE(UITextBMFontTest_Editor);

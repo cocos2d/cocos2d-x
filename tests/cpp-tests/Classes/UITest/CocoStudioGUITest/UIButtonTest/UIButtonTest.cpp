@@ -1,5 +1,8 @@
 #include "UIButtonTest.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
 UIButtonTests::UIButtonTests()
 {
     ADD_TEST_CASE(UIButtonTest);

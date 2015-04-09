@@ -1,5 +1,8 @@
 #include "UICheckBoxTest_Editor.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
 UICheckBoxEditorTests::UICheckBoxEditorTests()
 {
     ADD_TEST_CASE(UICheckBoxTest_Editor);

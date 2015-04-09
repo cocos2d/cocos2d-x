@@ -35,8 +35,6 @@
 
 DEFINE_TEST_SUITE(AudioEngineTests);
 
-using namespace cocos2d;
-
 class AudioEngineTestDemo : public TestCase
 {
 public:

@@ -26,6 +26,8 @@
 #include "TransitionsTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 #define TRANSITION_DURATION (1.2f)
 
 class FadeWhiteTransition : public TransitionFade 

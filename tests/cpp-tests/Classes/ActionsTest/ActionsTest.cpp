@@ -31,6 +31,8 @@
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCGroupCommand.h"
 
+USING_NS_CC;
+
 ActionsTests::ActionsTests()
 {
     ADD_TEST_CASE(ActionManual);

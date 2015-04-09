@@ -26,6 +26,8 @@
 #include "ActionsEaseTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum {
     kTagAction1 = 1,
     kTagAction2 = 2,

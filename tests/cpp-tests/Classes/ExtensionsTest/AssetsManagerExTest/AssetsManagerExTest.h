@@ -25,9 +25,9 @@ private:
     cocos2d::Layer* _loadLayer;
     cocos2d::Menu* _downloadMenu;
 
-    AssetsManagerEx *_am;
+    cocos2d::extension::AssetsManagerEx* _am;
     cocos2d::Label* _progress;
-    EventListenerAssetsManagerEx* _amListener;
+    cocos2d::extension::EventListenerAssetsManagerEx* _amListener;
 
     void onLoadEnd();
 };

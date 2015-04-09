@@ -3,6 +3,8 @@
 #include "../testResource.h"
 #include "cocos2d.h"
 
+USING_NS_CC;
+
 ConfigurationTests::ConfigurationTests()
 {
     ADD_TEST_CASE(ConfigurationLoadConfig);

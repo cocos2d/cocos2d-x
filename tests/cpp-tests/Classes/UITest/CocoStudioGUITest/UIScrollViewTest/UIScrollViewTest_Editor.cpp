@@ -1,6 +1,9 @@
 #include "UIScrollViewTest_Editor.h"
 #include "VisibleRect.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
 UIScrollViewEditorTests::UIScrollViewEditorTests()
 {
     ADD_TEST_CASE(UIScrollViewTest_Vertical_Editor);

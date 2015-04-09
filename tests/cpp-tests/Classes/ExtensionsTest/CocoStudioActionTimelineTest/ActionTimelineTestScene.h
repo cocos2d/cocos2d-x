@@ -5,8 +5,6 @@
 #include "../../BaseTest.h"
 #include "cocostudio/CocoStudio.h"
 
-using namespace cocostudio::timeline;
-
 class CocoStudioActionTimelineTests : public TestSuite
 {
 public:

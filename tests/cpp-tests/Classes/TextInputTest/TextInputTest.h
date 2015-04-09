@@ -12,14 +12,14 @@ DEFINE_TEST_SUITE(TextInputTests);
 // KeyboardNotificationLayer for test IME keyboard notification.
 //////////////////////////////////////////////////////////////////////////
 
-class KeyboardNotificationLayer : public TestCase, public IMEDelegate
+class KeyboardNotificationLayer : public TestCase, public cocos2d::IMEDelegate
 {
 public:
     KeyboardNotificationLayer();
     virtual std::string title() const override;
     virtual void onClickTrackNode(bool bClicked) = 0;
 
-    virtual void keyboardWillShow(IMEKeyboardNotificationInfo& info);
+    virtual void keyboardWillShow(cocos2d::IMEKeyboardNotificationInfo& info);
 
     bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
     void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event);
@@ -49,10 +49,10 @@ public:
 // TextFieldTTFActionTest
 //////////////////////////////////////////////////////////////////////////
 
-class TextFieldTTFActionTest : public KeyboardNotificationLayer, public TextFieldDelegate
+class TextFieldTTFActionTest : public KeyboardNotificationLayer, public cocos2d::TextFieldDelegate
 {
-    TextFieldTTF *    _textField;
-    Action *          _textFieldAction;
+    cocos2d::TextFieldTTF*    _textField;
+    cocos2d::Action*          _textFieldAction;
     bool                _action;
     int                 _charLimit;       // the textfield max char limit
 
@@ -69,11 +69,11 @@ public:
     virtual void onExit() override;
 
     // TextFieldDelegate
-    virtual bool onTextFieldAttachWithIME(TextFieldTTF * sender) override;
-    virtual bool onTextFieldDetachWithIME(TextFieldTTF * sender) override;
-    virtual bool onTextFieldInsertText(TextFieldTTF * sender, const char * text, size_t nLen) override;
-    virtual bool onTextFieldDeleteBackward(TextFieldTTF * sender, const char * delText, size_t nLen) override;
-    virtual bool onDraw(TextFieldTTF * sender);
+    virtual bool onTextFieldAttachWithIME(cocos2d::TextFieldTTF*  sender) override;
+    virtual bool onTextFieldDetachWithIME(cocos2d::TextFieldTTF*  sender) override;
+    virtual bool onTextFieldInsertText(cocos2d::TextFieldTTF*  sender, const char * text, size_t nLen) override;
+    virtual bool onTextFieldDeleteBackward(cocos2d::TextFieldTTF*  sender, const char * delText, size_t nLen) override;
+    virtual bool onDraw(cocos2d::TextFieldTTF*  sender);
 };
 
 #endif    // __TEXT_INPUT_TEST_H__

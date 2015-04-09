@@ -26,14 +26,14 @@ public:
     
     void sliderCallback(cocos2d::Ref* sender, cocos2d::ui::Slider::EventType eventType);
 
-    void videoEventCallback(cocos2d::Ref* sender, experimental::ui::VideoPlayer::EventType eventType);
+    void videoEventCallback(cocos2d::Ref* sender, cocos2d::experimental::ui::VideoPlayer::EventType eventType);
 
 private:
     void createVideo();
     void createSlider();
 
     cocos2d::MenuItemFont* _hintItem;
-    experimental::ui::VideoPlayer* _videoPlayer;
+    cocos2d::experimental::ui::VideoPlayer* _videoPlayer;
     cocos2d::Label* _videoStateLabel;
     cocos2d::Rect _visibleRect;
 

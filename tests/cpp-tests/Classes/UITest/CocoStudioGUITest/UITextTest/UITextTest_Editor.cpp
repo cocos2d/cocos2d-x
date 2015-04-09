@@ -1,12 +1,14 @@
 #include "UITextTest_Editor.h"
 #include "ui/CocosGUI.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
 UITextEditorTests::UITextEditorTests()
 {
     ADD_TEST_CASE(UITextTest_Editor);
 }
 // UITextTest_Editor
-using namespace ui;
 
 bool UITextTest_Editor::init()
 {

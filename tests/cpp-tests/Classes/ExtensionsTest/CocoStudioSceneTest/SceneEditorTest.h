@@ -8,7 +8,7 @@
 
 DEFINE_TEST_SUITE(CocoStudioSceneEditTests);
 
-class cocos2d::Scene*EditorTestBase : public TestCase
+class SceneEditorTestBase : public TestCase
 {
 public:
 	virtual bool init() override;
@@ -35,7 +35,7 @@ protected:
     std::string _filePath;
 };
 
-class LoadSceneEdtiorFileTest : public cocos2d::Scene*EditorTestBase
+class LoadSceneEdtiorFileTest : public SceneEditorTestBase
 {
 public:
     CREATE_FUNC(LoadSceneEdtiorFileTest);
@@ -52,7 +52,7 @@ private:
 };
 
 
-class SpriteComponentTest : public cocos2d::Scene*EditorTestBase
+class SpriteComponentTest : public SceneEditorTestBase
 {
 public:
     CREATE_FUNC(SpriteComponentTest);
@@ -69,7 +69,7 @@ private:
 	void defaultPlay();
 };
 
-class ArmatureComponentTest : public cocos2d::Scene*EditorTestBase
+class ArmatureComponentTest : public SceneEditorTestBase
 {
 public:
     CREATE_FUNC(ArmatureComponentTest);
@@ -86,7 +86,7 @@ private:
 	void defaultPlay();
 };
 
-class UIComponentTest : public cocos2d::Scene*EditorTestBase
+class UIComponentTest : public SceneEditorTestBase
 {
 public:
     CREATE_FUNC(UIComponentTest);
@@ -103,7 +103,7 @@ private:
 	void defaultPlay();
 };
 
-class TmxMapComponentTest : public cocos2d::Scene*EditorTestBase
+class TmxMapComponentTest : public SceneEditorTestBase
 {
 public:
     CREATE_FUNC(TmxMapComponentTest);
@@ -120,7 +120,7 @@ private:
 
 };
 
-class ParticleComponentTest : public cocos2d::Scene*EditorTestBase
+class ParticleComponentTest : public SceneEditorTestBase
 {
 public:
     CREATE_FUNC(ParticleComponentTest);
@@ -136,7 +136,7 @@ protected:
 	void defaultPlay();
 };
 
-class EffectComponentTest : public cocos2d::Scene*EditorTestBase
+class EffectComponentTest : public SceneEditorTestBase
 {
 public:
     CREATE_FUNC(EffectComponentTest);
@@ -154,7 +154,7 @@ private:
 	
 };
 
-class BackgroundComponentTest : public cocos2d::Scene*EditorTestBase
+class BackgroundComponentTest : public SceneEditorTestBase
 {
 public:
     CREATE_FUNC(BackgroundComponentTest);
@@ -170,7 +170,7 @@ private:
 	void defaultPlay();
 };
 
-class AttributeComponentTest : public cocos2d::Scene*EditorTestBase
+class AttributeComponentTest : public SceneEditorTestBase
 {
 public:
     CREATE_FUNC(AttributeComponentTest);
@@ -188,7 +188,7 @@ private:
 	void defaultPlay();
 };
 
-class TriggerTest : public cocos2d::Scene*EditorTestBase
+class TriggerTest : public SceneEditorTestBase
 {
 public:
     CREATE_FUNC(TriggerTest);
