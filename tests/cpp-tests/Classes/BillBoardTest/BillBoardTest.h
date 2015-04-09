@@ -58,7 +58,7 @@ public:
     void addNewBillBoradWithCoords(cocos2d::Vec3 p);
     void addNewAniBillBoradWithCoords(cocos2d::Vec3 p);
     void rotateCameraCallback(cocos2d::Ref* sender,float value);
-    //void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event) override;
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
     
     void menuCallback_orientedPoint(cocos2d::Ref* sender);
     void menuCallback_orientedPlane(cocos2d::Ref* sender);
