@@ -690,16 +690,13 @@ void ColorFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 
 void ColorFrame::onApply(float percent)
 {
-    if (_betweenAlpha !=0 || _betweenRed != 0 || _betweenGreen != 0 || _betweenBlue != 0)
+    if (_betweenRed != 0 || _betweenGreen != 0 || _betweenBlue != 0)
     {
-        GLubyte alpha = _alpha + _betweenAlpha * percent;
-        
         Color3B color;
         color.r = _color.r+ _betweenRed   * percent;
         color.g = _color.g+ _betweenGreen * percent;
         color.b = _color.b+ _betweenBlue  * percent;
         
-        _node->setOpacity(alpha);
         _node->setColor(color);
     }
 }
