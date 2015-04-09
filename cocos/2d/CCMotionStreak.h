@@ -90,7 +90,7 @@ public:
      *
      * @return float stroke.
      */
-    inline float getStroke() { return _stroke; }
+    inline float getStroke() const { return _stroke; }
     /** Set stroke.
      *
      * @param float stroke.
