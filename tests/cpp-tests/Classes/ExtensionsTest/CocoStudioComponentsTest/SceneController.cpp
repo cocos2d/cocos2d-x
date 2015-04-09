@@ -84,7 +84,7 @@ void SceneController::spriteMoveFinished(Node* sender)
 		auto gameOverScene = GameOverScene::create();
 		gameOverScene->getLayer()->getLabel()->setString("You Lose :[");
 
-		Director::getInstance()->replaceScene(gameOverScene);
+		director->replaceScene(gameOverScene);
 	}
 	else if (sprite->getTag() == 3) 
 	{
@@ -105,6 +105,6 @@ void SceneController::increaseKillCount()
         auto director = Director::getInstance();
         auto gameOverScene = GameOverScene::create();
         gameOverScene->getLayer()->getLabel()->setString("You Win!");
-        Director::getInstance()->replaceScene(gameOverScene);
+        director->replaceScene(gameOverScene);
     }
 }
