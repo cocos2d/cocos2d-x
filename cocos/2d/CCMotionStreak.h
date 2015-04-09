@@ -86,6 +86,11 @@ public:
      * @param bFastMode True if enabled fast mode.
      */
     inline void setFastMode(bool bFastMode) { _fastMode = bFastMode; }
+    /** Get stroke.
+     *
+     * @return float stroke.
+     */
+    inline float getStroke() { return _stroke; }
     /** Set stroke.
      *
      * @param float stroke.
