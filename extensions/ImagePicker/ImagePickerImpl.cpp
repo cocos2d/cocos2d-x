@@ -78,6 +78,7 @@ void ImagePickerImpl::openImage()
 		ImagePicker::getInstance()->finishImage(nullptr);
 	}
 #else
+    CCLOG("ImagePickerImpl: unsupported yet");
     ImagePicker::getInstance()->finishImage(nullptr);
 #endif
 }
