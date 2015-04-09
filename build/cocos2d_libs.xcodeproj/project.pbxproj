@@ -1801,8 +1801,8 @@
 		920B30DE1AD5762E009BEF8B /* ImagePickerImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 920B30D51AD5762E009BEF8B /* ImagePickerImpl.h */; };
 		920B30DF1AD5762E009BEF8B /* ImagePickerImpl.mm in Sources */ = {isa = PBXBuildFile; fileRef = 920B30D61AD5762E009BEF8B /* ImagePickerImpl.mm */; };
 		920B30E01AD5762E009BEF8B /* ImagePickerImpl.mm in Sources */ = {isa = PBXBuildFile; fileRef = 920B30D61AD5762E009BEF8B /* ImagePickerImpl.mm */; };
-		920B30E51AD57633009BEF8B /* ImagePickerIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 920B30D71AD5762E009BEF8B /* ImagePickerIOS.h */; };
-		920B30E61AD57633009BEF8B /* ImagePickerIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 920B30D81AD5762E009BEF8B /* ImagePickerIOS.mm */; };
+		920B30E51AD57633009BEF8B /* ImagePicker-ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 920B30D71AD5762E009BEF8B /* ImagePicker-ios.h */; };
+		920B30E61AD57633009BEF8B /* ImagePicker-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 920B30D81AD5762E009BEF8B /* ImagePicker-ios.mm */; };
 		A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
 		B2165EEA19921124000BE3E6 /* CCPrimitiveCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B257B45E198A353E00D9A687 /* CCPrimitiveCommand.cpp */; };
 		B217703C1977ECB4009EE11B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703B1977ECB4009EE11B /* IOKit.framework */; };
@@ -3601,8 +3601,8 @@
 		920B30D41AD5762E009BEF8B /* ImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImagePicker.h; path = ImagePicker/ImagePicker.h; sourceTree = "<group>"; };
 		920B30D51AD5762E009BEF8B /* ImagePickerImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImagePickerImpl.h; path = ImagePicker/ImagePickerImpl.h; sourceTree = "<group>"; };
 		920B30D61AD5762E009BEF8B /* ImagePickerImpl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ImagePickerImpl.mm; path = ImagePicker/ImagePickerImpl.mm; sourceTree = "<group>"; };
-		920B30D71AD5762E009BEF8B /* ImagePickerIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImagePickerIOS.h; path = ImagePicker/ImagePickerIOS.h; sourceTree = "<group>"; };
-		920B30D81AD5762E009BEF8B /* ImagePickerIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ImagePickerIOS.mm; path = ImagePicker/ImagePickerIOS.mm; sourceTree = "<group>"; };
+		920B30D71AD5762E009BEF8B /* ImagePicker-ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ImagePicker-ios.h"; path = "ImagePicker/ImagePicker-ios.h"; sourceTree = "<group>"; };
+		920B30D81AD5762E009BEF8B /* ImagePicker-ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "ImagePicker-ios.mm"; path = "ImagePicker/ImagePicker-ios.mm"; sourceTree = "<group>"; };
 		A07A4D641783777C0073F6A7 /* libcocos2d iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20564AA1A6E5744001C1B6E /* ccShader_PositionColorTextureAsPointsize.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionColorTextureAsPointsize.vert; sourceTree = "<group>"; };
 		B217703B1977ECB4009EE11B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
@@ -6210,8 +6210,8 @@
 				920B30D41AD5762E009BEF8B /* ImagePicker.h */,
 				920B30D51AD5762E009BEF8B /* ImagePickerImpl.h */,
 				920B30D61AD5762E009BEF8B /* ImagePickerImpl.mm */,
-				920B30D71AD5762E009BEF8B /* ImagePickerIOS.h */,
-				920B30D81AD5762E009BEF8B /* ImagePickerIOS.mm */,
+				920B30D71AD5762E009BEF8B /* ImagePicker-ios.h */,
+				920B30D81AD5762E009BEF8B /* ImagePicker-ios.mm */,
 			);
 			name = ImagePicker;
 			sourceTree = "<group>";
@@ -7324,7 +7324,7 @@
 				B29A7E3A19EE1B7700872B35 /* Animation.h in Headers */,
 				B665E2B51AA80A6500DDB1C5 /* CCPUForceField.h in Headers */,
 				B665E2D91AA80A6500DDB1C5 /* CCPUJetAffector.h in Headers */,
-				920B30E51AD57633009BEF8B /* ImagePickerIOS.h in Headers */,
+				920B30E51AD57633009BEF8B /* ImagePicker-ios.h in Headers */,
 				15B3708319EE414C00ABE682 /* CCEventListenerAssetsManagerEx.h in Headers */,
 				D0FD03521A3B51AA00825BB5 /* CCAllocatorGlobal.h in Headers */,
 				B665E3D11AA80A6600DDB1C5 /* CCPUScriptCompiler.h in Headers */,
@@ -8945,7 +8945,7 @@
 				B665E28B1AA80A6500DDB1C5 /* CCPUDynamicAttribute.cpp in Sources */,
 				15AE19AA19AAD39700C27E9E /* ListViewReader.cpp in Sources */,
 				1A5701C8180BCB5A0088DEC7 /* CCLabelTextFormatter.cpp in Sources */,
-				920B30E61AD57633009BEF8B /* ImagePickerIOS.mm in Sources */,
+				920B30E61AD57633009BEF8B /* ImagePicker-ios.mm in Sources */,
 				1A5701CC180BCB5A0088DEC7 /* CCLabelTTF.cpp in Sources */,
 				B665E39B1AA80A6500DDB1C5 /* CCPUPointEmitterTranslator.cpp in Sources */,
 				382384291A2590F9002C4610 /* NodeReader.cpp in Sources */,

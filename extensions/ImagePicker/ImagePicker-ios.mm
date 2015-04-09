@@ -1,10 +1,12 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "ImagePicker.h"
-#import "ImagePickerIOS.h"
+#import "ImagePicker-ios.h"
 
 @implementation ImagePickerIOS
 
+// **ATTENTION**: if you encounter any crash here, please check the device orientation
+// https://github.com/qiankanglai/ImagePicker/issues/2
 -(void) takePicture
 {
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];

@@ -4,7 +4,7 @@
 #include "ImagePickerImpl.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-#include "ImagePickerIOS.h"
+#include "ImagePicker-ios.h"
 static ImagePickerIOS *sharedPicker = [[[ImagePickerIOS alloc] init] retain];
 #endif
 
