@@ -11,20 +11,6 @@
 
 USING_NS_CC;
 
-Scene* Bug914Layer::scene()
-{
-    // 'scene' is an autorelease object.
-    auto scene = Scene::create();
-    // 'layer' is an autorelease object.
-    auto layer = Bug914Layer::create();
-
-    // add layer as a child to scene
-    scene->addChild(layer);
-
-    // return the scene
-    return scene;
-}
-
 // on "init" you need to initialize your instance
 bool Bug914Layer::init()
 {
@@ -81,5 +67,5 @@ void Bug914Layer::onTouchesBegan(const std::vector<Touch*>& touches, Event * eve
 
 void Bug914Layer::restart(Ref* sender)
 {
-    Director::getInstance()->replaceScene(Bug914Layer::scene());
+    Director::getInstance()->replaceScene(Bug914Layer::create());
 }
