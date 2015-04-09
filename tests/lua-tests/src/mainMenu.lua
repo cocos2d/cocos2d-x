@@ -43,6 +43,7 @@ require "Sprite3DTest/Sprite3DTest"
 require "SpriteTest/SpriteTest"
 require "SceneTest/SceneTest"
 require "SpineTest/SpineTest"
+require "TerrainTest/TerrainTest"
 require "Texture2dTest/Texture2dTest"
 require "TileMapTest/TileMapTest"
 require "TouchesTest/TouchesTest"
@@ -123,6 +124,7 @@ local _allTests = {
     { isSupported = false,  name = "SchdulerTest"           , create_func=              SchdulerTestMain  },
     { isSupported = false,  name = "ShaderTest"             , create_func=            ShaderTestMain      },
     { isSupported = true,  name = "Sprite3DTest"           , create_func   =                Sprite3DTest    },
+    { isSupported = true,  name = "TerrainTest"           , create_func   =                TerrainTest  },
     { isSupported = true,  name = "SpriteTest"             , create_func   =                SpriteTest      },
     { isSupported = false,  name = "TextInputTest"          , create_func=             TextInputTestMain  },
     { isSupported = true,  name = "Texture2DTest"          , create_func   =             Texture2dTestMain  },

@@ -60,9 +60,9 @@ ActionCamera * ActionCamera::reverse() const
 
 void ActionCamera::restore()
 {
-    _center = Vec3(0, 0, 0);
-    _eye = Vec3(0, 0, FLT_EPSILON);
-    _up = Vec3(0, 1, 0);
+    _center.setZero();
+    _eye.set(0.0f, 0.0f, FLT_EPSILON);
+    _up.set(0.0f, 1.0f, 0.0f);
 }
 
 void ActionCamera::setEye(const Vec3& eye)
@@ -73,7 +73,7 @@ void ActionCamera::setEye(const Vec3& eye)
 
 void ActionCamera::setEye(float x, float y, float z)
 {
-    _eye = Vec3(x, y, z);
+    _eye.set(x, y, z);
     updateTransform();
 }
 

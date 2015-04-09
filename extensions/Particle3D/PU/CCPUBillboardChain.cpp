@@ -418,7 +418,7 @@ void PUBillboardChain::updateVertexBuffer(const Mat4 &camMat)
     //Vector3 eyePos = mParentNode->_getDerivedOrientation().Inverse() *
     //	(camPos - mParentNode->_getDerivedPosition()) / mParentNode->_getDerivedScale();
 
-    Vec3 eyePos = Vec3(camMat.m[12], camMat.m[13], camMat.m[14]);
+    Vec3 eyePos(camMat.m[12], camMat.m[13], camMat.m[14]);
 
     Vec3 chainTangent;
     for (ChainSegmentList::iterator segi = _chainSegmentList.begin();

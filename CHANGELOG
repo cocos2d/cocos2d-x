@@ -1,9 +1,29 @@
-cocos2d-x-3.6beta0 Apr.14 2015
-    [NEW]           3D: added texturecub supported
+cocos2d-x-3.6alpha0 Apr.8 2015
+    [NEW]           3D: added texturecub support
+    [NEW]           3D: added skybox support
+    [NEW]           3D: added node animation support
+    [NEW]           3D: added terrian support
+    [NEW]           3rd: updated libcurl to v7.4 on all supported platforms except WP8/WP8.1 universal
+    [NEW]           3rd: updated chipmunk to v6.2.2
+    [NEW]           3rd: updated openssl to v1.0.11
+    [NEW]           3rd: updated freetype to v2.5.5
+    [NEW]           3rd: updated png to v1.6.16 on all supported platforms except WP8/WP8.1 universal because it is not needed on these two platforms
     [NEW]           Animate3D: added `Animate3D::setHighQuality()` to set animation quality
+    [NEW]           Label: added disableEffect()
+    [NEW]           Lua-binding: used luajit arm64 version on iOS 64-bit devices
+    [NEW]           Sprite3D: getAABBRecursively return own aabb combining childeren's
+    [NEW]           Vec3: added `Vec3::add(float, float, float)` and `Vec3::setZero()`
 
     [FIX]           Audio: memory leak
+    [FIX]           Audio: crashed on iOS 5.1.1
+    [FIX]           C++: lag issue if `Director::setContentScaleFactor` is called frequently
+    [FIX]           C++: CDT builder is enabled by default in cpp template on Android
+    [FIX]           Label: shadow color is incorrect
+    [FIX]           MenuItem: crash if `MenuItem::onExit` is called multiple times
+    [FIX]           Particle3D: particles' rotation affect particle system's rotation
     [FIX]           Sprite3D: memory leak
+    [FIX]           Vec3: use inline function to improve performance
+    [FIX]           WebView: loadHTMLString() can not work if it is invoked in the same frame of creating a webview on iOS
 
 cocos2d-x-3.5 Mar.23 2015
     [NEW]           EditBox: support Color4B

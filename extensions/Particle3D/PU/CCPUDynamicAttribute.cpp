@@ -423,7 +423,7 @@ float PUDynamicAttributeOscillate::getValue (float x)
     case OSCT_SQUARE:
         {
             float val = sin(_phase + _frequency * x * M_PI * 2.0f);
-            if (abs(val) < 0.00001f)
+            if (std::abs(val) < 0.00001f)
                 val = val >0? 1: -1;
             return _base + _amplitude * val;
         }

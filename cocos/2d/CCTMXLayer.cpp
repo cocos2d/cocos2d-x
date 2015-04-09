@@ -621,7 +621,7 @@ Vec2 TMXLayer::calculateLayerOffset(const Vec2& pos)
     case TMXOrientationStaggered:
         {
             float diffX = 0;
-            if ((int)abs(pos.y) % 2 == 1)
+            if ((int)std::abs(pos.y) % 2 == 1)
             {
                 diffX = _mapTileSize.width/2;
             }
