@@ -118,6 +118,11 @@ Please refer to this document: [ReadMe](../README.md)
 * 3D: added terrian support
 * uses luajit v2.1-20150331 on 64-bit iOS devices
 * added test automation support for cpp-tests
+* 3rd: updated libcurl to v7.4 on all supported platforms except WP8/WP8.1 universal
+* 3rd: updated chipmunk to v6.2.2
+* 3rd: updated openssl to v1.0.11
+* 3rd: updated freetype to v2.5.5
+* 3rd: updated png to v1.6.16 on all supported platforms except WP8/WP8.1 universal because it is not needed on these two platforms
 
 ## Features in detail
 
