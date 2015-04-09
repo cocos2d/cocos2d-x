@@ -72,18 +72,18 @@
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
-    <TargetName>libcocos2d_v3.5_WindowsPhone_8.0</TargetName>
+    <TargetName>libcocos2d_v3.6_WindowsPhone_8.0</TargetName>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
-    <TargetName>libcocos2d_v3.5_WindowsPhone_8.0</TargetName>
+    <TargetName>libcocos2d_v3.6_WindowsPhone_8.0</TargetName>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <TargetName>libcocos2d_v3.5_WindowsPhone_8.0</TargetName>
+    <TargetName>libcocos2d_v3.6_WindowsPhone_8.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <TargetName>libcocos2d_v3.5_WindowsPhone_8.0</TargetName>
+    <TargetName>libcocos2d_v3.6_WindowsPhone_8.0</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

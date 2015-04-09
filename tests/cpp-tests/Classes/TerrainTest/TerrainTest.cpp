@@ -21,7 +21,7 @@ TerrainSimple::TerrainSimple()
     _camera->setPosition3D(Vec3(-1,1.6,4));
     addChild(_camera);
 
-    Terrain::DetailMap r("TerrainTest/dirt.dds"),g("TerrainTest/Grass2.dds"),b("TerrainTest/road.dds"),a("TerrainTest/GreenSkin.jpg");
+    Terrain::DetailMap r("TerrainTest/dirt.jpg"),g("TerrainTest/Grass2.jpg"),b("TerrainTest/road.jpg"),a("TerrainTest/GreenSkin.jpg");
 
     Terrain::TerrainData data("TerrainTest/heightmap16.jpg","TerrainTest/alphamap.png",r,g,b,a);
 
@@ -71,19 +71,18 @@ void TerrainSimple::onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, 
 
 std::string TerrainWalkThru::title() const 
 {
-    return " ";
+    return "Player walk around in terrain";
 }
 
 std::string TerrainWalkThru::subtitle() const 
 {
-    return " ";
+    return "touch to move";
 }
 
 TerrainWalkThru::TerrainWalkThru()
 {
     auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesBegan = CC_CALLBACK_2(TerrainWalkThru::onTouchesBegan, this);
-    listener->onTouchesMoved = CC_CALLBACK_2(TerrainWalkThru::onTouchesMoved, this);
     listener->onTouchesEnded = CC_CALLBACK_2(TerrainWalkThru::onTouchesEnd, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
@@ -94,7 +93,7 @@ TerrainWalkThru::TerrainWalkThru()
     _camera->setCameraFlag(CameraFlag::USER1);
     addChild(_camera);
 
-    Terrain::DetailMap r("TerrainTest/dirt.dds"),g("TerrainTest/Grass2.dds",10),b("TerrainTest/road.dds"),a("TerrainTest/GreenSkin.jpg",20);
+    Terrain::DetailMap r("TerrainTest/dirt.jpg"),g("TerrainTest/Grass2.jpg",10),b("TerrainTest/road.jpg"),a("TerrainTest/GreenSkin.jpg",20);
 
     Terrain::TerrainData data("TerrainTest/heightmap16.jpg","TerrainTest/alphamap.png",r,g,b,a,Size(32,32),40.0f,2);
     _terrain = Terrain::create(data,Terrain::CrackFixedType::SKIRT);
@@ -119,46 +118,10 @@ TerrainWalkThru::TerrainWalkThru()
     _camera->setPosition3D(_player->getPosition3D()+camera_offset);
     _camera->setRotation3D(Vec3(-45,0,0));
 
-    forward = Label::createWithSystemFont("forward","arial",22);
-    forward->setPosition(0,200);
-    forward->setAnchorPoint(Vec2(0,0));
-
-    backward = Label::createWithSystemFont("backward","arial",22);
-    backward->setPosition(0,250);
-    backward->setAnchorPoint(Vec2(0,0));
-
-    left = Label::createWithSystemFont("turn Left","arial",22);
-    left->setPosition(0,100);
-    left->setAnchorPoint(Vec2(0,0));
-
-    right = Label::createWithSystemFont("turn right","arial",22);
-    right->setPosition(0,150);
-    right->setAnchorPoint(Vec2(0,0));
     addChild(_player);
     addChild(_terrain);
 }
 
-void TerrainWalkThru::onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event)
-{
-    float delta = Director::getInstance()->getDeltaTime();
-    auto touch = touches[0];
-    auto location = touch->getLocation();
-    auto PreviousLocation = touch->getPreviousLocation();
-    Point newPos = PreviousLocation - location;
-
-    Vec3 cameraDir;
-    Vec3 cameraRightDir;
-    _camera->getNodeToWorldTransform().getForwardVector(&cameraDir);
-    cameraDir.normalize();
-    cameraDir.y=0;
-    _camera->getNodeToWorldTransform().getRightVector(&cameraRightDir);
-    cameraRightDir.normalize();
-    cameraRightDir.y=0;
-    Vec3 cameraPos=  _camera->getPosition3D();
-    cameraPos+=cameraDir*newPos.y*0.5*delta;  
-    cameraPos+=cameraRightDir*newPos.x*0.5*delta;
-    _camera->setPosition3D(cameraPos);   
-}
 
 void TerrainWalkThru::onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event)
 {
@@ -276,7 +239,6 @@ void Player::update(float dt)
     player->setRotationQuat(headingQ*q2);
     auto vec_offset =Vec4(camera_offset.x,camera_offset.y,camera_offset.z,1);
     vec_offset = player->getNodeToWorldTransform()*vec_offset;
-    // _cam->setRotation3D(player->getRotation3D());
      _cam->setPosition3D(player->getPosition3D() + camera_offset);
     updateState();
 }

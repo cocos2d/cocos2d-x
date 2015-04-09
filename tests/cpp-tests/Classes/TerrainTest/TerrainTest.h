@@ -64,14 +64,9 @@ public:
     TerrainWalkThru();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
     void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
     void onTouchesEnd(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
 protected:
-    cocos2d::Label*  forward;
-    cocos2d::Label*  backward;
-    cocos2d::Label*  left;
-    cocos2d::Label*  right;
     cocos2d::Camera*  _camera;
     cocos2d::Terrain* _terrain;
     Player * _player;

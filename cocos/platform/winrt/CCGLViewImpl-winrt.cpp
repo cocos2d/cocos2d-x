@@ -389,8 +389,9 @@ void GLViewImpl::UpdateWindowSize()
 		ResolutionPolicy resPolicy=view->getResolutionPolicy();
 		view->setFrameSize(width, height);
  		view->setDesignResolutionSize(resSize.width, resSize.height, resPolicy);
-		Director::getInstance()->setViewport();
-        Director::sharedDirector()->setProjection(Director::sharedDirector()->getProjection());
+        auto director = Director::getInstance();
+        director->setViewport();
+        director->setProjection(director->getProjection());
 	}
 }
 
