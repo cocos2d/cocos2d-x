@@ -98,8 +98,8 @@ public:
         auto mouseEvent = static_cast<EventMouse*>(event);
         float moveY = mouseEvent->getScrollY() * 20;
 
-        auto& minOffset = this->minContainerOffset();
-        auto& maxOffset = this->maxContainerOffset();
+        auto minOffset = this->minContainerOffset();
+        auto maxOffset = this->maxContainerOffset();
 
         auto offset = this->getContentOffset();
         offset.y += moveY;
