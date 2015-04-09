@@ -189,6 +189,11 @@ void Physics3DDebugDrawer::init()
     }
 }
 
+void Physics3DDebugDrawer::clear()
+{
+    _bufferCount = 0;
+}
+
 NS_CC_EXT_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION

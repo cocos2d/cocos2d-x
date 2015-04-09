@@ -238,6 +238,7 @@ bool Scene::initWithPhysics()
         //TODO: FIX ME
         //info.isDebugDrawEnabled = true;
         CC_BREAK_IF(! (_physics3DWorld = extension::Physics3DWorld::create(&info)));
+        _physics3DWorld->retain();
 #endif
         
         // success

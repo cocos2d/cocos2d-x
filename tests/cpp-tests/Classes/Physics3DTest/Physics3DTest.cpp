@@ -26,6 +26,8 @@
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
 #include "Physics3DTest.h"
+#include "extensions/Physics3D/CCPhysics3D.h"
+USING_NS_CC_EXT;
 
 enum
 {
@@ -85,7 +87,7 @@ Physics3DTestScene::Physics3DTestScene()
 : TestScene()
 #endif
 {
-    
+    getPhysics3DWorld()->setDebugDrawEnable(true);
 }
 
 void Physics3DTestDemo::restartCallback( Ref* sender )
@@ -127,7 +129,20 @@ bool Physics3DTestDemo::init()
 {
     if (!BaseTest::init()) return false;
 
+    Size size = Director::getInstance()->getWinSize();
+    _camera = Camera::createPerspective(30.0f, size.width / size.height, 1.0f, 1000.0f);
+    _camera->setPosition3D(Vec3(0.0f, 0.0f, 100.0f));
+    _camera->lookAt(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
+    _camera->setCameraFlag(CameraFlag::USER1);
+    this->addChild(_camera);
+
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesBegan = CC_CALLBACK_2(Physics3DTestDemo::onTouchesBegan, this);
+    listener->onTouchesMoved = CC_CALLBACK_2(Physics3DTestDemo::onTouchesMoved, this);
+    listener->onTouchesEnded = CC_CALLBACK_2(Physics3DTestDemo::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
+    _angle = 0.0f;
     return true;
 }
 
@@ -138,15 +153,15 @@ void Physics3DTestDemo::onTouchesBegan(const std::vector<Touch*>& touches, cocos
 
 void Physics3DTestDemo::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event)
 {
-//    if (touches.size() && _camera)
-//    {
-//        auto touch = touches[0];
-//        auto delta = touch->getDelta();
-//        
-//        _angle -= CC_DEGREES_TO_RADIANS(delta.x);
-//        _camera->setPosition3D(Vec3(100.0f * sinf(_angle), 0.0f, 100.0f * cosf(_angle)));
-//        _camera->lookAt(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
-//    }
+    if (touches.size() && _camera)
+    {
+        auto touch = touches[0];
+        auto delta = touch->getDelta();
+
+        _angle -= CC_DEGREES_TO_RADIANS(delta.x);
+        _camera->setPosition3D(Vec3(100.0f * sinf(_angle), 0.0f, 100.0f * cosf(_angle)));
+        _camera->lookAt(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
+    }
 }
 
 void Physics3DTestDemo::onTouchesEnded(const std::vector<Touch*>& touches, cocos2d::Event  *event)
@@ -181,7 +196,17 @@ bool BasicPhysics3DDemo::init()
     if (!Physics3DTestDemo::init())
         return false;
 
-    
+    Physics3DRigidBodyDes rbDes;
+    rbDes.mass = 0.0f;
+    rbDes.shape = Physics3DShape::createBox(Vec3(10.0f, 10.0f, 10.0f));
+    auto rigitBody = Physics3DRigidBody::create(&rbDes);
+    auto component = Physics3DComponent::create(rigitBody);
+
+    auto node = Node::create();
+    node->addComponent(component);
+    //node->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(node);
+
 
     return true;
 }

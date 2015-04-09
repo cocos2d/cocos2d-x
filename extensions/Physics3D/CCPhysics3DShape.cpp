@@ -80,6 +80,22 @@ Physics3DShape* Physics3DShape::createCapsule(float radius, float height)
     return shape;
 }
 
+Physics3DShape* Physics3DShape::createConvexHull( const cocos2d::Vec3 *points, int numPoints )
+{
+    auto shape = new (std::nothrow) Physics3DShape();
+    shape->initConvexHull(points, numPoints);
+    shape->autorelease();
+    return shape;
+}
+
+Physics3DShape* Physics3DShape::createMesh( const cocos2d::Vec3 *triangles, int numTriangles )
+{
+    auto shape = new (std::nothrow) Physics3DShape();
+    shape->initMesh(triangles, numTriangles);
+    shape->autorelease();
+    return shape;
+}
+
 bool Physics3DShape::initBox(const cocos2d::Vec3& ext)
 {
     _shapeType = ShapeType::BOX;
@@ -105,6 +121,23 @@ bool Physics3DShape::initCapsule(float radius, float height)
     return true;
 }
 
+bool Physics3DShape::initConvexHull( const cocos2d::Vec3 *points, int numPoints )
+{
+    _shapeType = ShapeType::CONVEX;
+    _btShape = new btConvexHullShape((btScalar *)points, numPoints, sizeof(cocos2d::Vec3));
+    return true;
+}
+
+bool Physics3DShape::initMesh( const cocos2d::Vec3 *triangles, int numTriangles )
+{
+    _shapeType = ShapeType::MESH;
+    auto mesh = new btTriangleMesh(false);
+    for (int i = 0; i < numTriangles * 3; ++i){
+        mesh->addTriangle(convertVec3TobtVector3(triangles[i]), convertVec3TobtVector3(triangles[i + 1]), convertVec3TobtVector3(triangles[i + 2]));
+    }
+    _btShape = new btBvhTriangleMeshShape(mesh, true);
+    return true;
+}
 
 NS_CC_EXT_END
 
