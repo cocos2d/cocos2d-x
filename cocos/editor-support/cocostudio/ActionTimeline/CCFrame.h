@@ -30,11 +30,9 @@ THE SOFTWARE.
 #include "base/CCVector.h"
 #include "2d/CCNode.h"
 #include "2d/CCSprite.h"
-#include "2d/CCTweenFunction.h"
 #include "CCTimelineMacro.h"
 #include "cocostudio/CocosStudioExport.h"
 
-using namespace cocos2d::tweenfunc;
 
 NS_TIMELINE_BEGIN
 
@@ -57,26 +55,15 @@ public:
     virtual void setTween(bool tween) { _tween = tween; }
     virtual bool isTween() const { return _tween; }
 
-    virtual void setTweenType(const TweenType& tweenType) { _tweenType = tweenType; }
-    virtual TweenType getTweenType() const { return _tweenType; }
-
-    // !to make easing with params, need setTweenType(TweenType::CUSTOM_EASING)
-    virtual void setEasingParams(const std::vector<float>& easingParams);
-    virtual const std::vector<float>& getEasingParams() const;
-
     virtual bool isEnterWhenPassed() { return _enterWhenPassed; }
 
     virtual void onEnter(Frame* nextFrame, int currentFrameIndex) = 0;
-    virtual void apply(float percent);
+    virtual void apply(float percent) {}
 
     virtual Frame* clone() = 0;
 protected:
     Frame();
     virtual ~Frame();
-    virtual void onApply(float percent){}
-
-    //update percent depends _tweenType, and return the Calculated percent
-    virtual float tweenPercent(float percent);
 
     virtual void emitEvent();
     virtual void cloneProperty(Frame* frame);
@@ -84,14 +71,12 @@ protected:
 
     unsigned int    _frameIndex;
     bool            _tween;
-    TweenType       _tweenType;
-    std::vector<float>   _easingParam;
     bool            _enterWhenPassed;
 
     Timeline* _timeline;
     cocos2d::Node*  _node;
-
 };
+
 
 class CC_STUDIO_DLL VisibleFrame : public Frame
 {
@@ -118,7 +103,7 @@ public:
 
     TextureFrame();
 
-    virtual void setNode(cocos2d::Node* node);
+    virtual void setNode(cocos2d::Node* node) override;
 
     virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
     virtual Frame* clone() override;
@@ -139,14 +124,13 @@ public:
     RotationFrame();
 
     virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
+    virtual void apply(float percent) override;
     virtual Frame* clone() override;
 
     inline void  setRotation(float rotation) { _rotation = rotation; }
     inline float getRotation() const { return _rotation; }
 
 protected:
-    virtual void onApply(float percent) override;
-
     float _rotation;
     float _betwennRotation;
 };
@@ -159,6 +143,7 @@ public:
     SkewFrame();
 
     virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
+    virtual void apply(float percent) override;
     virtual Frame* clone() override;
 
     inline void  setSkewX(float skewx) { _skewX = skewx; }
@@ -168,8 +153,6 @@ public:
     inline float getSkewY() const { return _skewY; }
 
 protected:
-    virtual void onApply(float percent) override;
-
     float _skewX;
     float _skewY;
     float _betweenSkewX;
@@ -185,10 +168,8 @@ public:
     RotationSkewFrame();
 
     virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
+    virtual void apply(float percent) override;
     virtual Frame* clone() override;
-
-protected:
-    virtual void onApply(float percent) override;
 };
 
 
@@ -200,6 +181,7 @@ public:
     PositionFrame();
 
     virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
+    virtual void apply(float percent) override;
     virtual Frame* clone() override;
 
     inline void setPosition(const cocos2d::Point& position) { _position = position; }
@@ -211,8 +193,6 @@ public:
     inline float getX() const { return _position.x; }
     inline float getY() const { return _position.y; }
 protected:
-    virtual void onApply(float percent) override;
-
     cocos2d::Point _position;
     float _betweenX;
     float _betweenY;
@@ -227,6 +207,7 @@ public:
     ScaleFrame();
 
     virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
+    virtual void apply(float percent) override;
     virtual Frame* clone() override;
 
     inline void  setScale(float scale) { _scaleX = scale; _scaleY = scale; }
@@ -238,8 +219,6 @@ public:
     inline float getScaleY() const { return _scaleY; }
 
 protected:
-    virtual void onApply(float percent) override;
-
     float _scaleX;
     float _scaleY;
     float _betweenScaleX;
@@ -317,21 +296,20 @@ public:
     ColorFrame();
 
     virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
+    virtual void apply(float percent) override;
     virtual Frame* clone() override;
 
-    inline void    setAlpha(GLubyte alpha) { _alpha = alpha; }
-    inline GLubyte getAlpha() const { return _alpha; }
+    /** @deprecated Use method setAlpha() and getAlpha() of AlphaFrame instead */
+    CC_DEPRECATED_ATTRIBUTE inline void    setAlpha(GLubyte alpha) { _alpha = alpha; }
+    CC_DEPRECATED_ATTRIBUTE inline GLubyte getAlpha() const { return _alpha; }
 
     inline void    setColor(const cocos2d::Color3B& color) { _color = color; }
     inline cocos2d::Color3B getColor() const { return _color; }
 
 protected:
-    virtual void onApply(float percent) override;
-
     GLubyte _alpha;
     cocos2d::Color3B _color;
 
-    int _betweenAlpha;
     int _betweenRed;
     int _betweenGreen;
     int _betweenBlue;
@@ -344,14 +322,13 @@ public:
     AlphaFrame();
 
     virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
+    virtual void apply(float percent) override;
     virtual Frame* clone() override;
 
     inline void    setAlpha(GLubyte alpha) { _alpha = alpha; }
     inline GLubyte getAlpha() const { return _alpha; }
 
 protected:
-    virtual void onApply(float percent) override;
-
     GLubyte _alpha;
     int _betweenAlpha;
 };
@@ -364,7 +341,7 @@ public:
 
     EventFrame();
 
-    virtual void setNode(cocos2d::Node* node);
+    virtual void setNode(cocos2d::Node* node) override;
     
     virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
     virtual Frame* clone() override;
