@@ -61,13 +61,13 @@ public:
 
     void clear();
 
-private:
+protected:
 
     void init();
     void ensureCapacity(int count);
     void drawImplementation(const cocos2d::Mat4 &transform, uint32_t flags);
 
-private:
+protected:
 
     struct V3F_V4F
     {

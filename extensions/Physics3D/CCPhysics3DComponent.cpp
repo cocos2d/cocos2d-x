@@ -23,6 +23,7 @@
  ****************************************************************************/
 
 #include "CCPhysics3D.h"
+#include "2d/CCNode.h"
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
@@ -89,25 +90,85 @@ void Physics3DComponent::setEnabled(bool b)
     }
 }
 
+void Physics3DComponent::addToPhysicsWorld(Physics3DWorld* world)
+{
+    //add component to physics world
+    if (_physics3DObj)
+    {
+        _physics3DObj->setPhysicsWorld(world);
+        world->addPhysics3DObject(_physics3DObj);
+        auto& components = world->_physicsComponents;
+        auto it = std::find(components.begin(), components.end(), this);
+        if (it == components.end())
+        {
+            auto parent = _owner->getParent();
+            while (parent) {
+                for (int i = 0; i < components.size(); i++) {
+                    if (parent == components[i]->getOwner())
+                    {
+                        //insert it here
+                        components.insert(components.begin() + i, this);
+                        return;
+                    }
+                    parent = parent->getParent();
+                }
+            }
+            
+            components.insert(components.begin(), this);
+        }
+    }
+}
+
 void Physics3DComponent::onEnter()
 {
     Component::onEnter();
-    setEnabled(true);
 }
 
 void Physics3DComponent::onExit()
 {
     Component::onExit();
     setEnabled(false);
+    
+    //remove component from physics world
+    if (_physics3DObj)
+    {
+        auto& components = _physics3DObj->getPhysicsWorld()->_physicsComponents;
+        auto it = std::find(components.begin(), components.end(), this);
+        if (it != components.end())
+            components.erase(it);
+    }
 }
 
-void Physics3DComponent::syncToPhysics()
+void Physics3DComponent::update(float delta)
+{
+    
+}
+
+void Physics3DComponent::preSimulate()
 {
     if (_physics3DObj && _owner)
     {
         if (_physics3DObj->getObjType() == Physics3DObject::PhysicsObjType::RIGID_BODY)
         {
-            auto parentMat = _owner->getParent()->getNodeToWorldTransform();
+            auto body = static_cast<Physics3DRigidBody*>(_physics3DObj)->getRigidBody();
+            if (body->isKinematicObject())
+            {
+                auto mat = _owner->getNodeToWorldTransform();
+                body->getMotionState()->setWorldTransform(convertMat4TobtTransform(mat));
+            }
+        }
+    }
+}
+
+void Physics3DComponent::postSimulate()
+{
+    if (_physics3DObj && _owner)
+    {
+        if (!static_cast<Physics3DRigidBody*>(_physics3DObj)->getRigidBody()->isKinematicObject())
+        {
+            Mat4 parentMat;
+            if (_owner->getParent())
+                parentMat = _owner->getParent()->getNodeToWorldTransform();
             auto mat = parentMat.getInversed() * _physics3DObj->getWorldTransform();
             static Vec3 scale, translation;
             static Quaternion quat;

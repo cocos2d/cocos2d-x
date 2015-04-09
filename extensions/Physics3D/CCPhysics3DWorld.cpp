@@ -158,7 +158,17 @@ void Physics3DWorld::stepSimulate(float dt)
 {
     if (_btPhyiscsWorld)
     {
+        //should sync kinematic node before simulation
+        for (auto it : _physicsComponents)
+        {
+            it->preSimulate();
+        }
         _btPhyiscsWorld->stepSimulation(dt);
+        //sync dynamic node after simulation
+        for (auto it : _physicsComponents)
+        {
+            it->postSimulate();
+        }
     }
 }
 
@@ -169,13 +179,6 @@ void Physics3DWorld::debugDraw(Renderer* renderer)
         _debugDrawer->clear();
         _btPhyiscsWorld->debugDrawWorld();
         _debugDrawer->draw(renderer);
-    }
-}
-
-void Physics3DWorld::syncToPhysics()
-{
-    for (auto& it : _physicsComponents) {
-        it->syncToPhysics();
     }
 }
 

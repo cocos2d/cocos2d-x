@@ -87,8 +87,6 @@ public:
     
     void debugDraw(cocos2d::Renderer* renderer);
     
-    void syncToPhysics();
-    
 #if (CC_ENABLE_BULLET_INTEGRATION)
     void removebtRigidBody(btRigidBody* rigid);
     void addbtRigidBody(btRigidBody* rigid);

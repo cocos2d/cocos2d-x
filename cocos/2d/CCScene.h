@@ -161,6 +161,11 @@ public:
      * @js NA
      */
     inline extension::Physics3DWorld* getPhysics3DWorld() { return _physics3DWorld; }
+    
+    /** 
+     * Set Physics3D debug draw camera.
+     */
+    void setPhysics3DDebugCamera(Camera* camera);
 #endif
     
     /** Create a scene with physics.
@@ -181,6 +186,7 @@ protected:
     
 #if CC_USE_3D_PHYSICS
     extension::Physics3DWorld* _physics3DWorld;
+    Camera*                    _physics3dDebugCamera; //
 #endif
 #endif // (CC_USE_PHYSICS || CC_USE_3D_PHYSICS)
 };

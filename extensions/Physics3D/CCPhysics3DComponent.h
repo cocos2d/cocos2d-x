@@ -35,9 +35,11 @@
 NS_CC_EXT_BEGIN
 
 class Physics3DObject;
+class Physics3DWorld;
 
 class CC_EX_DLL Physics3DComponent : public cocos2d::Component
 {
+    //friend class cocos2d::Scene;
 public:
     CREATE_FUNC(Physics3DComponent);
     virtual ~Physics3DComponent();
@@ -55,18 +57,23 @@ public:
     
     virtual void setEnabled(bool b) override;
     
+    
     virtual void onEnter() override;
     virtual void onExit() override;
     
-    /**
-     * sync node to physics
-     */
-    void syncToPhysics();
+    void preSimulate();
+    
+    void postSimulate();
+    
+    virtual void update(float delta) override;
+    
+    void addToPhysicsWorld(Physics3DWorld* world);
     
 CC_CONSTRUCTOR_ACCESS:
     Physics3DComponent();
     
 protected:
+    
     Physics3DObject* _physics3DObj;
 };
 

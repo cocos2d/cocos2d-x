@@ -207,6 +207,7 @@ bool BasicPhysics3DDemo::init()
     //node->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(node);
 
+    getScene()->setPhysics3DDebugCamera(_camera);
 
     return true;
 }

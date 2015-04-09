@@ -51,6 +51,7 @@ Scene::Scene()
 {
 #if CC_USE_3D_PHYSICS
     _physics3DWorld = nullptr;
+    _physics3dDebugCamera = nullptr;
 #endif
     _ignoreAnchorPointForPosition = true;
     setAnchorPoint(Vec2(0.5f, 0.5f));
@@ -72,6 +73,7 @@ Scene::~Scene()
 #endif
 #if CC_USE_3D_PHYSICS
     CC_SAFE_RELEASE(_physics3DWorld);
+    CC_SAFE_RELEASE(_physics3dDebugCamera);
 #endif
     Director::getInstance()->getEventDispatcher()->removeEventListener(_event);
     CC_SAFE_RELEASE(_event);
@@ -165,15 +167,21 @@ void Scene::render(Renderer* renderer)
         //visit the scene
         visit(renderer, transform, 0);
         
-#if CC_USE_3D_PHYSICS
-        if (_physics3DWorld)
-            _physics3DWorld->debugDraw(renderer);
-#endif
-        
         renderer->render();
         
         director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     }
+    
+#if CC_USE_3D_PHYSICS
+    if (_physics3DWorld && _physics3DWorld->isDebugDrawEnabled())
+    {
+        director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, _physics3dDebugCamera != nullptr ? _physics3dDebugCamera->getViewProjectionMatrix() : defaultCamera->getViewProjectionMatrix());
+        _physics3DWorld->debugDraw(renderer);
+        renderer->render();
+        director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    }
+#endif
 
     Camera::_visitingCamera = nullptr;
 }
@@ -191,6 +199,15 @@ void Scene::removeAllChildren()
         _defaultCamera->release();
     }
 }
+
+#if CC_USE_3D_PHYSICS
+void Scene::setPhysics3DDebugCamera(Camera* camera)
+{
+    CC_SAFE_RETAIN(camera);
+    CC_SAFE_RELEASE(_physics3dDebugCamera);
+    _physics3dDebugCamera = camera;
+}
+#endif
 
 #if (CC_USE_PHYSICS || CC_USE_3D_PHYSICS)
 void Scene::addChild(Node* child, int zOrder, int tag)
@@ -280,7 +297,7 @@ void Scene::addChildToPhysicsWorld(Node* child)
             auto com = static_cast<extension::Physics3DComponent*>(node->getComponent(comName));
             if (com)
             {
-                _physics3DWorld->addPhysics3DObject(com->getPhysics3DObject());
+                com->addToPhysicsWorld(_physics3DWorld);
             }
             
             auto& children = node->getChildren();
