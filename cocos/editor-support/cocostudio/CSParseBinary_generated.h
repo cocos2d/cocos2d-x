@@ -45,6 +45,7 @@ struct EventFrame;
 struct IntFrame;
 struct BoolFrame;
 struct InnerActionFrame;
+struct EasingData;
 struct RotationSkew;
 struct Position;
 struct Scale;
@@ -2085,11 +2086,14 @@ struct PointFrame : private flatbuffers::Table {
   int32_t frameIndex() const { return GetField<int32_t>(4, 0); }
   uint8_t tween() const { return GetField<uint8_t>(6, 1); }
   const Position *postion() const { return GetStruct<const Position *>(8); }
+  const EasingData *easingData() const { return GetPointer<const EasingData *>(10); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<int32_t>(verifier, 4 /* frameIndex */) &&
            VerifyField<uint8_t>(verifier, 6 /* tween */) &&
            VerifyField<Position>(verifier, 8 /* postion */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 10 /* easingData */) &&
+           verifier.VerifyTable(easingData()) &&
            verifier.EndTable();
   }
 };
@@ -2100,10 +2104,11 @@ struct PointFrameBuilder {
   void add_frameIndex(int32_t frameIndex) { fbb_.AddElement<int32_t>(4, frameIndex, 0); }
   void add_tween(uint8_t tween) { fbb_.AddElement<uint8_t>(6, tween, 1); }
   void add_postion(const Position *postion) { fbb_.AddStruct(8, postion); }
+  void add_easingData(flatbuffers::Offset<EasingData> easingData) { fbb_.AddOffset(10, easingData); }
   PointFrameBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   PointFrameBuilder &operator=(const PointFrameBuilder &);
   flatbuffers::Offset<PointFrame> Finish() {
-    auto o = flatbuffers::Offset<PointFrame>(fbb_.EndTable(start_, 3));
+    auto o = flatbuffers::Offset<PointFrame>(fbb_.EndTable(start_, 4));
     return o;
   }
 };
@@ -2111,8 +2116,10 @@ struct PointFrameBuilder {
 inline flatbuffers::Offset<PointFrame> CreatePointFrame(flatbuffers::FlatBufferBuilder &_fbb,
    int32_t frameIndex = 0,
    uint8_t tween = 1,
-   const Position *postion = 0) {
+   const Position *postion = 0,
+   flatbuffers::Offset<EasingData> easingData = 0) {
   PointFrameBuilder builder_(_fbb);
+  builder_.add_easingData(easingData);
   builder_.add_postion(postion);
   builder_.add_frameIndex(frameIndex);
   builder_.add_tween(tween);
@@ -2123,11 +2130,14 @@ struct ScaleFrame : private flatbuffers::Table {
   int32_t frameIndex() const { return GetField<int32_t>(4, 0); }
   uint8_t tween() const { return GetField<uint8_t>(6, 1); }
   const Scale *scale() const { return GetStruct<const Scale *>(8); }
+  const EasingData *easingData() const { return GetPointer<const EasingData *>(10); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<int32_t>(verifier, 4 /* frameIndex */) &&
            VerifyField<uint8_t>(verifier, 6 /* tween */) &&
            VerifyField<Scale>(verifier, 8 /* scale */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 10 /* easingData */) &&
+           verifier.VerifyTable(easingData()) &&
            verifier.EndTable();
   }
 };
@@ -2138,10 +2148,11 @@ struct ScaleFrameBuilder {
   void add_frameIndex(int32_t frameIndex) { fbb_.AddElement<int32_t>(4, frameIndex, 0); }
   void add_tween(uint8_t tween) { fbb_.AddElement<uint8_t>(6, tween, 1); }
   void add_scale(const Scale *scale) { fbb_.AddStruct(8, scale); }
+  void add_easingData(flatbuffers::Offset<EasingData> easingData) { fbb_.AddOffset(10, easingData); }
   ScaleFrameBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   ScaleFrameBuilder &operator=(const ScaleFrameBuilder &);
   flatbuffers::Offset<ScaleFrame> Finish() {
-    auto o = flatbuffers::Offset<ScaleFrame>(fbb_.EndTable(start_, 3));
+    auto o = flatbuffers::Offset<ScaleFrame>(fbb_.EndTable(start_, 4));
     return o;
   }
 };
@@ -2149,8 +2160,10 @@ struct ScaleFrameBuilder {
 inline flatbuffers::Offset<ScaleFrame> CreateScaleFrame(flatbuffers::FlatBufferBuilder &_fbb,
    int32_t frameIndex = 0,
    uint8_t tween = 1,
-   const Scale *scale = 0) {
+   const Scale *scale = 0,
+   flatbuffers::Offset<EasingData> easingData = 0) {
   ScaleFrameBuilder builder_(_fbb);
+  builder_.add_easingData(easingData);
   builder_.add_scale(scale);
   builder_.add_frameIndex(frameIndex);
   builder_.add_tween(tween);
@@ -2161,11 +2174,14 @@ struct ColorFrame : private flatbuffers::Table {
   int32_t frameIndex() const { return GetField<int32_t>(4, 0); }
   uint8_t tween() const { return GetField<uint8_t>(6, 1); }
   const Color *color() const { return GetStruct<const Color *>(8); }
+  const EasingData *easingData() const { return GetPointer<const EasingData *>(10); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<int32_t>(verifier, 4 /* frameIndex */) &&
            VerifyField<uint8_t>(verifier, 6 /* tween */) &&
            VerifyField<Color>(verifier, 8 /* color */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 10 /* easingData */) &&
+           verifier.VerifyTable(easingData()) &&
            verifier.EndTable();
   }
 };
@@ -2176,10 +2192,11 @@ struct ColorFrameBuilder {
   void add_frameIndex(int32_t frameIndex) { fbb_.AddElement<int32_t>(4, frameIndex, 0); }
   void add_tween(uint8_t tween) { fbb_.AddElement<uint8_t>(6, tween, 1); }
   void add_color(const Color *color) { fbb_.AddStruct(8, color); }
+  void add_easingData(flatbuffers::Offset<EasingData> easingData) { fbb_.AddOffset(10, easingData); }
   ColorFrameBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   ColorFrameBuilder &operator=(const ColorFrameBuilder &);
   flatbuffers::Offset<ColorFrame> Finish() {
-    auto o = flatbuffers::Offset<ColorFrame>(fbb_.EndTable(start_, 3));
+    auto o = flatbuffers::Offset<ColorFrame>(fbb_.EndTable(start_, 4));
     return o;
   }
 };
@@ -2187,8 +2204,10 @@ struct ColorFrameBuilder {
 inline flatbuffers::Offset<ColorFrame> CreateColorFrame(flatbuffers::FlatBufferBuilder &_fbb,
    int32_t frameIndex = 0,
    uint8_t tween = 1,
-   const Color *color = 0) {
+   const Color *color = 0,
+   flatbuffers::Offset<EasingData> easingData = 0) {
   ColorFrameBuilder builder_(_fbb);
+  builder_.add_easingData(easingData);
   builder_.add_color(color);
   builder_.add_frameIndex(frameIndex);
   builder_.add_tween(tween);
@@ -2199,12 +2218,15 @@ struct TextureFrame : private flatbuffers::Table {
   int32_t frameIndex() const { return GetField<int32_t>(4, 0); }
   uint8_t tween() const { return GetField<uint8_t>(6, 1); }
   const ResourceData *textureFile() const { return GetPointer<const ResourceData *>(8); }
+  const EasingData *easingData() const { return GetPointer<const EasingData *>(10); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<int32_t>(verifier, 4 /* frameIndex */) &&
            VerifyField<uint8_t>(verifier, 6 /* tween */) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 8 /* textureFile */) &&
            verifier.VerifyTable(textureFile()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 10 /* easingData */) &&
+           verifier.VerifyTable(easingData()) &&
            verifier.EndTable();
   }
 };
@@ -2215,10 +2237,11 @@ struct TextureFrameBuilder {
   void add_frameIndex(int32_t frameIndex) { fbb_.AddElement<int32_t>(4, frameIndex, 0); }
   void add_tween(uint8_t tween) { fbb_.AddElement<uint8_t>(6, tween, 1); }
   void add_textureFile(flatbuffers::Offset<ResourceData> textureFile) { fbb_.AddOffset(8, textureFile); }
+  void add_easingData(flatbuffers::Offset<EasingData> easingData) { fbb_.AddOffset(10, easingData); }
   TextureFrameBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   TextureFrameBuilder &operator=(const TextureFrameBuilder &);
   flatbuffers::Offset<TextureFrame> Finish() {
-    auto o = flatbuffers::Offset<TextureFrame>(fbb_.EndTable(start_, 3));
+    auto o = flatbuffers::Offset<TextureFrame>(fbb_.EndTable(start_, 4));
     return o;
   }
 };
@@ -2226,8 +2249,10 @@ struct TextureFrameBuilder {
 inline flatbuffers::Offset<TextureFrame> CreateTextureFrame(flatbuffers::FlatBufferBuilder &_fbb,
    int32_t frameIndex = 0,
    uint8_t tween = 1,
-   flatbuffers::Offset<ResourceData> textureFile = 0) {
+   flatbuffers::Offset<ResourceData> textureFile = 0,
+   flatbuffers::Offset<EasingData> easingData = 0) {
   TextureFrameBuilder builder_(_fbb);
+  builder_.add_easingData(easingData);
   builder_.add_textureFile(textureFile);
   builder_.add_frameIndex(frameIndex);
   builder_.add_tween(tween);
@@ -2238,12 +2263,15 @@ struct EventFrame : private flatbuffers::Table {
   int32_t frameIndex() const { return GetField<int32_t>(4, 0); }
   uint8_t tween() const { return GetField<uint8_t>(6, 1); }
   const flatbuffers::String *value() const { return GetPointer<const flatbuffers::String *>(8); }
+  const EasingData *easingData() const { return GetPointer<const EasingData *>(10); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<int32_t>(verifier, 4 /* frameIndex */) &&
            VerifyField<uint8_t>(verifier, 6 /* tween */) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 8 /* value */) &&
            verifier.Verify(value()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 10 /* easingData */) &&
+           verifier.VerifyTable(easingData()) &&
            verifier.EndTable();
   }
 };
@@ -2254,10 +2282,11 @@ struct EventFrameBuilder {
   void add_frameIndex(int32_t frameIndex) { fbb_.AddElement<int32_t>(4, frameIndex, 0); }
   void add_tween(uint8_t tween) { fbb_.AddElement<uint8_t>(6, tween, 1); }
   void add_value(flatbuffers::Offset<flatbuffers::String> value) { fbb_.AddOffset(8, value); }
+  void add_easingData(flatbuffers::Offset<EasingData> easingData) { fbb_.AddOffset(10, easingData); }
   EventFrameBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   EventFrameBuilder &operator=(const EventFrameBuilder &);
   flatbuffers::Offset<EventFrame> Finish() {
-    auto o = flatbuffers::Offset<EventFrame>(fbb_.EndTable(start_, 3));
+    auto o = flatbuffers::Offset<EventFrame>(fbb_.EndTable(start_, 4));
     return o;
   }
 };
@@ -2265,8 +2294,10 @@ struct EventFrameBuilder {
 inline flatbuffers::Offset<EventFrame> CreateEventFrame(flatbuffers::FlatBufferBuilder &_fbb,
    int32_t frameIndex = 0,
    uint8_t tween = 1,
-   flatbuffers::Offset<flatbuffers::String> value = 0) {
+   flatbuffers::Offset<flatbuffers::String> value = 0,
+   flatbuffers::Offset<EasingData> easingData = 0) {
   EventFrameBuilder builder_(_fbb);
+  builder_.add_easingData(easingData);
   builder_.add_value(value);
   builder_.add_frameIndex(frameIndex);
   builder_.add_tween(tween);
@@ -2277,11 +2308,14 @@ struct IntFrame : private flatbuffers::Table {
   int32_t frameIndex() const { return GetField<int32_t>(4, 0); }
   uint8_t tween() const { return GetField<uint8_t>(6, 1); }
   int32_t value() const { return GetField<int32_t>(8, 0); }
+  const EasingData *easingData() const { return GetPointer<const EasingData *>(10); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<int32_t>(verifier, 4 /* frameIndex */) &&
            VerifyField<uint8_t>(verifier, 6 /* tween */) &&
            VerifyField<int32_t>(verifier, 8 /* value */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 10 /* easingData */) &&
+           verifier.VerifyTable(easingData()) &&
            verifier.EndTable();
   }
 };
@@ -2292,10 +2326,11 @@ struct IntFrameBuilder {
   void add_frameIndex(int32_t frameIndex) { fbb_.AddElement<int32_t>(4, frameIndex, 0); }
   void add_tween(uint8_t tween) { fbb_.AddElement<uint8_t>(6, tween, 1); }
   void add_value(int32_t value) { fbb_.AddElement<int32_t>(8, value, 0); }
+  void add_easingData(flatbuffers::Offset<EasingData> easingData) { fbb_.AddOffset(10, easingData); }
   IntFrameBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   IntFrameBuilder &operator=(const IntFrameBuilder &);
   flatbuffers::Offset<IntFrame> Finish() {
-    auto o = flatbuffers::Offset<IntFrame>(fbb_.EndTable(start_, 3));
+    auto o = flatbuffers::Offset<IntFrame>(fbb_.EndTable(start_, 4));
     return o;
   }
 };
@@ -2303,8 +2338,10 @@ struct IntFrameBuilder {
 inline flatbuffers::Offset<IntFrame> CreateIntFrame(flatbuffers::FlatBufferBuilder &_fbb,
    int32_t frameIndex = 0,
    uint8_t tween = 1,
-   int32_t value = 0) {
+   int32_t value = 0,
+   flatbuffers::Offset<EasingData> easingData = 0) {
   IntFrameBuilder builder_(_fbb);
+  builder_.add_easingData(easingData);
   builder_.add_value(value);
   builder_.add_frameIndex(frameIndex);
   builder_.add_tween(tween);
@@ -2315,11 +2352,14 @@ struct BoolFrame : private flatbuffers::Table {
   int32_t frameIndex() const { return GetField<int32_t>(4, 0); }
   uint8_t tween() const { return GetField<uint8_t>(6, 1); }
   uint8_t value() const { return GetField<uint8_t>(8, 1); }
+  const EasingData *easingData() const { return GetPointer<const EasingData *>(10); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<int32_t>(verifier, 4 /* frameIndex */) &&
            VerifyField<uint8_t>(verifier, 6 /* tween */) &&
            VerifyField<uint8_t>(verifier, 8 /* value */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 10 /* easingData */) &&
+           verifier.VerifyTable(easingData()) &&
            verifier.EndTable();
   }
 };
@@ -2330,10 +2370,11 @@ struct BoolFrameBuilder {
   void add_frameIndex(int32_t frameIndex) { fbb_.AddElement<int32_t>(4, frameIndex, 0); }
   void add_tween(uint8_t tween) { fbb_.AddElement<uint8_t>(6, tween, 1); }
   void add_value(uint8_t value) { fbb_.AddElement<uint8_t>(8, value, 1); }
+  void add_easingData(flatbuffers::Offset<EasingData> easingData) { fbb_.AddOffset(10, easingData); }
   BoolFrameBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   BoolFrameBuilder &operator=(const BoolFrameBuilder &);
   flatbuffers::Offset<BoolFrame> Finish() {
-    auto o = flatbuffers::Offset<BoolFrame>(fbb_.EndTable(start_, 3));
+    auto o = flatbuffers::Offset<BoolFrame>(fbb_.EndTable(start_, 4));
     return o;
   }
 };
@@ -2341,8 +2382,10 @@ struct BoolFrameBuilder {
 inline flatbuffers::Offset<BoolFrame> CreateBoolFrame(flatbuffers::FlatBufferBuilder &_fbb,
    int32_t frameIndex = 0,
    uint8_t tween = 1,
-   uint8_t value = 1) {
+   uint8_t value = 1,
+   flatbuffers::Offset<EasingData> easingData = 0) {
   BoolFrameBuilder builder_(_fbb);
+  builder_.add_easingData(easingData);
   builder_.add_frameIndex(frameIndex);
   builder_.add_value(value);
   builder_.add_tween(tween);
@@ -2355,6 +2398,7 @@ struct InnerActionFrame : private flatbuffers::Table {
   int32_t innerActionType() const { return GetField<int32_t>(8, 0); }
   const flatbuffers::String *currentAniamtionName() const { return GetPointer<const flatbuffers::String *>(10); }
   int32_t singleFrameIndex() const { return GetField<int32_t>(12, 0); }
+  const EasingData *easingData() const { return GetPointer<const EasingData *>(14); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<int32_t>(verifier, 4 /* frameIndex */) &&
@@ -2363,6 +2407,8 @@ struct InnerActionFrame : private flatbuffers::Table {
            VerifyField<flatbuffers::uoffset_t>(verifier, 10 /* currentAniamtionName */) &&
            verifier.Verify(currentAniamtionName()) &&
            VerifyField<int32_t>(verifier, 12 /* singleFrameIndex */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 14 /* easingData */) &&
+           verifier.VerifyTable(easingData()) &&
            verifier.EndTable();
   }
 };
@@ -2375,10 +2421,11 @@ struct InnerActionFrameBuilder {
   void add_innerActionType(int32_t innerActionType) { fbb_.AddElement<int32_t>(8, innerActionType, 0); }
   void add_currentAniamtionName(flatbuffers::Offset<flatbuffers::String> currentAniamtionName) { fbb_.AddOffset(10, currentAniamtionName); }
   void add_singleFrameIndex(int32_t singleFrameIndex) { fbb_.AddElement<int32_t>(12, singleFrameIndex, 0); }
+  void add_easingData(flatbuffers::Offset<EasingData> easingData) { fbb_.AddOffset(14, easingData); }
   InnerActionFrameBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   InnerActionFrameBuilder &operator=(const InnerActionFrameBuilder &);
   flatbuffers::Offset<InnerActionFrame> Finish() {
-    auto o = flatbuffers::Offset<InnerActionFrame>(fbb_.EndTable(start_, 5));
+    auto o = flatbuffers::Offset<InnerActionFrame>(fbb_.EndTable(start_, 6));
     return o;
   }
 };
@@ -2388,13 +2435,49 @@ inline flatbuffers::Offset<InnerActionFrame> CreateInnerActionFrame(flatbuffers:
    uint8_t tween = 1,
    int32_t innerActionType = 0,
    flatbuffers::Offset<flatbuffers::String> currentAniamtionName = 0,
-   int32_t singleFrameIndex = 0) {
+   int32_t singleFrameIndex = 0,
+   flatbuffers::Offset<EasingData> easingData = 0) {
   InnerActionFrameBuilder builder_(_fbb);
+  builder_.add_easingData(easingData);
   builder_.add_singleFrameIndex(singleFrameIndex);
   builder_.add_currentAniamtionName(currentAniamtionName);
   builder_.add_innerActionType(innerActionType);
   builder_.add_frameIndex(frameIndex);
   builder_.add_tween(tween);
+  return builder_.Finish();
+}
+
+struct EasingData : private flatbuffers::Table {
+  int32_t type() const { return GetField<int32_t>(4, -1); }
+  const flatbuffers::Vector<const Position *> *points() const { return GetPointer<const flatbuffers::Vector<const Position *> *>(6); }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<int32_t>(verifier, 4 /* type */) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, 6 /* points */) &&
+           verifier.Verify(points()) &&
+           verifier.EndTable();
+  }
+};
+
+struct EasingDataBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_type(int32_t type) { fbb_.AddElement<int32_t>(4, type, -1); }
+  void add_points(flatbuffers::Offset<flatbuffers::Vector<const Position *>> points) { fbb_.AddOffset(6, points); }
+  EasingDataBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+  EasingDataBuilder &operator=(const EasingDataBuilder &);
+  flatbuffers::Offset<EasingData> Finish() {
+    auto o = flatbuffers::Offset<EasingData>(fbb_.EndTable(start_, 2));
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<EasingData> CreateEasingData(flatbuffers::FlatBufferBuilder &_fbb,
+   int32_t type = -1,
+   flatbuffers::Offset<flatbuffers::Vector<const Position *>> points = 0) {
+  EasingDataBuilder builder_(_fbb);
+  builder_.add_points(points);
+  builder_.add_type(type);
   return builder_.Finish();
 }
 
