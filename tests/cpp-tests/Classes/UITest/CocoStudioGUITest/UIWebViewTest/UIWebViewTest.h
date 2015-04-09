@@ -27,8 +27,6 @@
 
 #include "../UIScene.h"
 
-USING_NS_CC;
-
 DEFINE_TEST_SUITE(WebViewTests);
 
 class WebViewTest : public UIScene

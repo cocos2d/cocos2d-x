@@ -6,49 +6,49 @@
 
 DEFINE_TEST_SUITE(SceneTests);
 
-class SceneTestLayer1 : public Layer
+class cocos2d::Scene*TestLayer1 : public cocos2d::Layer
 {
 public:
     CREATE_FUNC(SceneTestLayer1);
-    SceneTestLayer1();
+    cocos2d::Scene*TestLayer1();
     ~SceneTestLayer1();
 
     virtual void onEnter() override;
     virtual void onEnterTransitionDidFinish() override;
 
     void testDealloc(float dt);
-    void onPushScene(Ref* sender);
-    void onPushSceneTran(Ref* sender);
-    void onQuit(Ref* sender);
+    void onPushScene(cocos2d::Ref* sender);
+    void onPushSceneTran(cocos2d::Ref* sender);
+    void onQuit(cocos2d::Ref* sender);
 } ;
 
-class SceneTestLayer2 : public Layer
+class cocos2d::Scene*TestLayer2 : public cocos2d::Layer
 {
     float    _timeCounter;
 public:
     CREATE_FUNC(SceneTestLayer2);
-    SceneTestLayer2();
+    cocos2d::Scene*TestLayer2();
 
     void testDealloc(float dt);
-    void onGoBack(Ref* sender);
-    void onReplaceScene(Ref* sender);
-    void onReplaceSceneTran(Ref* sender);
+    void onGoBack(cocos2d::Ref* sender);
+    void onReplaceScene(cocos2d::Ref* sender);
+    void onReplaceSceneTran(cocos2d::Ref* sender);
 } ;
 
-class SceneTestLayer3 : public LayerColor
+class cocos2d::Scene*TestLayer3 : public cocos2d::LayerColor
 {
 public:
     CREATE_FUNC(SceneTestLayer3);
-    SceneTestLayer3();
+    cocos2d::Scene*TestLayer3();
     bool init();
     virtual void testDealloc(float dt);
-    void item0Clicked(Ref* sender);
-    void item1Clicked(Ref* sender);
-    void item2Clicked(Ref* sender);
-    void item3Clicked(Ref* sender);
+    void item0Clicked(cocos2d::Ref* sender);
+    void item1Clicked(cocos2d::Ref* sender);
+    void item2Clicked(cocos2d::Ref* sender);
+    void item3Clicked(cocos2d::Ref* sender);
 } ;
 
-class SceneTestScene : public TestCase
+class cocos2d::Scene*TestScene : public TestCase
 {
 public:
     CREATE_FUNC(SceneTestScene);

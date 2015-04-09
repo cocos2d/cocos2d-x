@@ -4,9 +4,6 @@
 #include "extensions/cocos-ext.h"
 #include "../../BaseTest.h"
 
-USING_NS_CC;
-USING_NS_CC_EXT;
-
 DEFINE_TEST_SUITE(AssetsManagerExTests);
 
 class AssetsManagerExLoaderScene : public TestCase
@@ -16,7 +13,7 @@ public:
 
     AssetsManagerExLoaderScene(int testIndex);
     
-    void startDownloadCallback(Ref* sender);
+    void startDownloadCallback(cocos2d::Ref* sender);
 
     virtual std::string title() const;
 
@@ -25,11 +22,11 @@ public:
     
 private:
     int _testIndex;
-    Layer* _loadLayer;
-    Menu* _downloadMenu;
+    cocos2d::Layer* _loadLayer;
+    cocos2d::Menu* _downloadMenu;
 
     AssetsManagerEx *_am;
-    Label *_progress;
+    cocos2d::Label* _progress;
     EventListenerAssetsManagerEx* _amListener;
 
     void onLoadEnd();

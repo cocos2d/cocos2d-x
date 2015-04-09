@@ -26,6 +26,8 @@
 #include "MenuTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum {
     kTagMenu = 1,
     kTagMenu0 = 0,                       

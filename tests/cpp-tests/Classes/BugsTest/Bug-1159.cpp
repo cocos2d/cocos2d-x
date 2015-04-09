@@ -9,6 +9,8 @@
 
 #include "Bug-1159.h"
 
+USING_NS_CC;
+
 Scene* Bug1159Layer::scene()
 {
     auto scene = Scene::create();

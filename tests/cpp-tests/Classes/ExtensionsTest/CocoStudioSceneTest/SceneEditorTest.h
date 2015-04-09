@@ -8,7 +8,7 @@
 
 DEFINE_TEST_SUITE(CocoStudioSceneEditTests);
 
-class SceneEditorTestBase : public TestCase
+class cocos2d::Scene*EditorTestBase : public TestCase
 {
 public:
 	virtual bool init() override;
@@ -16,9 +16,9 @@ public:
 	virtual std::string title() const override;
 
 protected:
-	MenuItemImage *restartItem;
-	MenuItemImage *nextItem;
-	MenuItemImage *backItem;
+    cocos2d::MenuItemImage* restartItem;
+    cocos2d::MenuItemImage* nextItem;
+    cocos2d::MenuItemImage* backItem;
     
 protected:
 	virtual void changeLoadTypeCallback(cocos2d::Ref *pSender);
@@ -35,7 +35,7 @@ protected:
     std::string _filePath;
 };
 
-class LoadSceneEdtiorFileTest : public SceneEditorTestBase
+class LoadSceneEdtiorFileTest : public cocos2d::Scene*EditorTestBase
 {
 public:
     CREATE_FUNC(LoadSceneEdtiorFileTest);
@@ -52,7 +52,7 @@ private:
 };
 
 
-class SpriteComponentTest : public SceneEditorTestBase
+class SpriteComponentTest : public cocos2d::Scene*EditorTestBase
 {
 public:
     CREATE_FUNC(SpriteComponentTest);
@@ -69,7 +69,7 @@ private:
 	void defaultPlay();
 };
 
-class ArmatureComponentTest : public SceneEditorTestBase
+class ArmatureComponentTest : public cocos2d::Scene*EditorTestBase
 {
 public:
     CREATE_FUNC(ArmatureComponentTest);
@@ -86,7 +86,7 @@ private:
 	void defaultPlay();
 };
 
-class UIComponentTest : public SceneEditorTestBase
+class UIComponentTest : public cocos2d::Scene*EditorTestBase
 {
 public:
     CREATE_FUNC(UIComponentTest);
@@ -98,12 +98,12 @@ public:
 	virtual void onEnter() override;
     virtual void onExit() override;
     cocos2d::Node* createGameScene();
-	void touchEvent(cocos2d::Ref *pSender, ui::Widget::TouchEventType type);
+	void touchEvent(cocos2d::Ref *pSender, cocos2d::ui::Widget::TouchEventType type);
 private:
 	void defaultPlay();
 };
 
-class TmxMapComponentTest : public SceneEditorTestBase
+class TmxMapComponentTest : public cocos2d::Scene*EditorTestBase
 {
 public:
     CREATE_FUNC(TmxMapComponentTest);
@@ -120,7 +120,7 @@ private:
 
 };
 
-class ParticleComponentTest : public SceneEditorTestBase
+class ParticleComponentTest : public cocos2d::Scene*EditorTestBase
 {
 public:
     CREATE_FUNC(ParticleComponentTest);
@@ -136,7 +136,7 @@ protected:
 	void defaultPlay();
 };
 
-class EffectComponentTest : public SceneEditorTestBase
+class EffectComponentTest : public cocos2d::Scene*EditorTestBase
 {
 public:
     CREATE_FUNC(EffectComponentTest);
@@ -154,7 +154,7 @@ private:
 	
 };
 
-class BackgroundComponentTest : public SceneEditorTestBase
+class BackgroundComponentTest : public cocos2d::Scene*EditorTestBase
 {
 public:
     CREATE_FUNC(BackgroundComponentTest);
@@ -170,7 +170,7 @@ private:
 	void defaultPlay();
 };
 
-class AttributeComponentTest : public SceneEditorTestBase
+class AttributeComponentTest : public cocos2d::Scene*EditorTestBase
 {
 public:
     CREATE_FUNC(AttributeComponentTest);
@@ -188,7 +188,7 @@ private:
 	void defaultPlay();
 };
 
-class TriggerTest : public SceneEditorTestBase
+class TriggerTest : public cocos2d::Scene*EditorTestBase
 {
 public:
     CREATE_FUNC(TriggerTest);
@@ -201,10 +201,10 @@ public:
     virtual void onExit() override;
     
 	// default implements are used to call script callback if exist
-	virtual bool onTouchBegan(Touch *touch, Event *unused_event); 
-    virtual void onTouchMoved(Touch *touch, Event *unused_event); 
-    virtual void onTouchEnded(Touch *touch, Event *unused_event); 
-    virtual void onTouchCancelled(Touch *touch, Event *unused_event);
+	virtual bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* unused_event); 
+    virtual void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* unused_event); 
+    virtual void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* unused_event); 
+    virtual void onTouchCancelled(cocos2d::Touch* touch, cocos2d::Event* unused_event);
 
 	// update of game
 	void gameLogic(float dt);

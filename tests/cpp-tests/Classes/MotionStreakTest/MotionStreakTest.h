@@ -3,7 +3,6 @@
 
 #include "../BaseTest.h"
 
-//USING_NS_CC;
 
 DEFINE_TEST_SUITE(MotionStreakTests);
 
@@ -17,16 +16,16 @@ public:
     virtual std::string subtitle() const override;
     virtual void onEnter() override;
 
-    void modeCallback(Ref* sender);
+    void modeCallback(cocos2d::Ref* sender);
 protected:
-    MotionStreak *streak;
+    cocos2d::MotionStreak* streak;
 };
 
 class MotionStreakTest1 : public MotionStreakTest
 {
 protected:
-    Node*        _root;
-    Node*        _target;
+    cocos2d::Node*        _root;
+    cocos2d::Node*        _target;
 
 public:
     CREATE_FUNC(MotionStreakTest1);
@@ -38,13 +37,13 @@ public:
 class MotionStreakTest2 : public MotionStreakTest
 {
 protected:
-    Node*        _root;
-    Node*        _target;
+    cocos2d::Node*        _root;
+    cocos2d::Node*        _target;
 
 public:
     CREATE_FUNC(MotionStreakTest2);
     virtual void onEnter() override;
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
     virtual std::string title() const override;
 };
 
@@ -58,7 +57,7 @@ public:
     virtual void onEnter() override;
     virtual void update(float dt) override;
 private:
-    Vec2 _center;
+    cocos2d::Vec2 _center;
     float _radius;
     float _angle;
 };

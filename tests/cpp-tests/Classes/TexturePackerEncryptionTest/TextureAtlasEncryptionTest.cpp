@@ -1,6 +1,8 @@
 #include "TextureAtlasEncryptionTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 TextureAtlasEncryptionTests::TextureAtlasEncryptionTests()
 {
     ADD_TEST_CASE(TextureAtlasEncryptionDemo);

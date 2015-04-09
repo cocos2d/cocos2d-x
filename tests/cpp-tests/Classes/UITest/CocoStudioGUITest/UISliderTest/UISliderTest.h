@@ -37,10 +37,10 @@ public:
     UISliderTest();
     ~UISliderTest();
     virtual bool init() override;
-    void sliderEvent(Ref* pSender, Slider::EventType type);
+    void sliderEvent(cocos2d::Ref* sender, cocos2d::ui::Slider::EventType type);
     
 protected:
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UISliderTest_Scale9 : public UIScene
@@ -51,10 +51,10 @@ public:
     UISliderTest_Scale9();
     ~UISliderTest_Scale9();
     virtual bool init() override;
-    void sliderEvent(Ref* pSender, Slider::EventType type);
+    void sliderEvent(cocos2d::Ref* sender, cocos2d::ui::Slider::EventType type);
     
 protected:
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UISliderTest_Scale9_State_Change : public UIScene
@@ -65,10 +65,10 @@ public:
     UISliderTest_Scale9_State_Change();
     ~UISliderTest_Scale9_State_Change();
     virtual bool init() override;
-    void sliderEvent(Ref* pSender, Slider::EventType type);
+    void sliderEvent(cocos2d::Ref* sender, cocos2d::ui::Slider::EventType type);
 
 protected:
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 
@@ -82,7 +82,7 @@ public:
     virtual bool init() override;
     
 protected:
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UISliderDisabledDefaultTest : public UIScene
@@ -95,7 +95,7 @@ public:
     virtual bool init() override;
     
 protected:
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UISliderTest__) */

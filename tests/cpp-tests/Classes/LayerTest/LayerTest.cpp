@@ -1,6 +1,8 @@
 #include "LayerTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum 
 {
     kTagLayer = 1,

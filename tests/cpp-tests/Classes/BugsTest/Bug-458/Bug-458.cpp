@@ -6,6 +6,8 @@
 #include "Bug-458.h"
 #include "QuestionContainerSprite.h"
 
+USING_NS_CC;
+
 bool Bug458Layer::init()
 {
     if(BugsTestBase::init())

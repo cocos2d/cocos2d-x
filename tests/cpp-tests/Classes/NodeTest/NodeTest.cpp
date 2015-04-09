@@ -27,6 +27,8 @@
 #include <regex>
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum 
 {
     kTagSprite1 = 1,

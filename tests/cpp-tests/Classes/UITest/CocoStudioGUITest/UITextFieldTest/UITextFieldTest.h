@@ -37,11 +37,11 @@ public:
     UITextFieldTest();
     ~UITextFieldTest();
     virtual bool init() override;
-    void textFieldEvent(Ref* pSender, ui::TextField::EventType type);
+    void textFieldEvent(cocos2d::Ref* sender, cocos2d::ui::TextField::EventType type);
     
 protected:
     
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UITextFieldTest_MaxLength : public UIScene
@@ -52,11 +52,11 @@ public:
     UITextFieldTest_MaxLength();
     ~UITextFieldTest_MaxLength();
     virtual bool init() override;
-    void textFieldEvent(Ref* pSender, TextField::EventType type);
+    void textFieldEvent(cocos2d::Ref* sender, cocos2d::ui::TextField::EventType type);
     
 protected:
     
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UITextFieldTest_Password : public UIScene
@@ -67,11 +67,11 @@ public:
     UITextFieldTest_Password();
     ~UITextFieldTest_Password();
     virtual bool init() override;
-    void textFieldEvent(Ref* pSender, TextField::EventType type);
+    void textFieldEvent(cocos2d::Ref* sender, cocos2d::ui::TextField::EventType type);
     
 protected:
     
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UITextFieldTest_LineWrap : public UIScene
@@ -82,11 +82,11 @@ public:
     UITextFieldTest_LineWrap();
     ~UITextFieldTest_LineWrap();
     virtual bool init() override;
-    void textFieldEvent(Ref* pSender, TextField::EventType type);
+    void textFieldEvent(cocos2d::Ref* sender, cocos2d::ui::TextField::EventType type);
     
 protected:
     
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UITextFieldTest_TrueTypeFont : public UIScene
@@ -97,11 +97,11 @@ public:
     UITextFieldTest_TrueTypeFont();
     ~UITextFieldTest_TrueTypeFont();
     virtual bool init() override;
-    void textFieldEvent(Ref* pSender, TextField::EventType type);
+    void textFieldEvent(cocos2d::Ref* sender, cocos2d::ui::TextField::EventType type);
     
 protected:
     
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UITextFieldTest_PlaceHolderColor : public UIScene
@@ -112,10 +112,10 @@ public:
     UITextFieldTest_PlaceHolderColor();
     ~UITextFieldTest_PlaceHolderColor();
     virtual bool init() override;
-    void textFieldEvent(Ref* pSender, TextField::EventType type);
+    void textFieldEvent(cocos2d::Ref* sender, cocos2d::ui::TextField::EventType type);
     
 protected:
     
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 #endif /* defined(__TestCpp__UITextFieldTest__) */

@@ -18,7 +18,7 @@ public:
     virtual void onEnterTransitionDidFinish() override;
 };
 
-class NodeChildrenMainScene : public Scene
+class NodeChildrenMainScene : public cocos2d::Scene
 {
 public:
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
@@ -53,7 +53,7 @@ public:
     virtual const char* testName();
 
 protected:
-    SpriteBatchNode    *batchNode;
+    cocos2d::SpriteBatchNode    *batchNode;
 };
 
 class IterateSpriteSheetForLoop : public IterateSpriteSheet
@@ -105,7 +105,7 @@ public:
     virtual const char* testName();
 
 protected:
-    SpriteBatchNode    *batchNode;
+    cocos2d::SpriteBatchNode    *batchNode;
 
 #if CC_ENABLE_PROFILERS
     ProfilingTimer* _profilingTimer;

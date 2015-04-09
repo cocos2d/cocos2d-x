@@ -28,7 +28,6 @@
 
 #include "../BaseTest.h"
 
-USING_NS_CC;
 
 DEFINE_TEST_SUITE(TransitionsTests);
 
@@ -38,7 +37,7 @@ public:
     CREATE_FUNC(TransitionsTest);
 };
 
-class TestLayer1 : public Layer
+class TestLayer1 : public cocos2d::Layer
 {
 public:
     static TestLayer1* create(const std::string& transitionName);
@@ -54,7 +53,7 @@ public:
     virtual void onExit() override;
 };
 
-class TestLayer2 : public Layer
+class TestLayer2 : public cocos2d::Layer
 {
 public:
     static TestLayer2* create(const std::string& transitionName);

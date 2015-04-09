@@ -40,11 +40,11 @@ public:
     
     virtual bool init() override;
 
-    void touchEvent(Ref* pSender, Widget::TouchEventType type);
+    void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
     virtual void configureGUIScene() override;
 
 protected:
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UIButtonTest_Editor__) */

@@ -4,7 +4,8 @@
 #include "editor-support/cocostudio/CCSGUIReader.h"
 #include "CocosGUIScene.h"
 
-using namespace ui;
+USING_NS_CC;
+using namespace cocos2d::ui;
 
 UIScene::UIScene()
 : _uiLayer(nullptr)

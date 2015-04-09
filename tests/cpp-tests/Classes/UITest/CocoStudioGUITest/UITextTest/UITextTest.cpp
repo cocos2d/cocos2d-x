@@ -1,5 +1,9 @@
 #include "UITextTest.h"
 
+USING_NS_CC;
+USING_NS_CC_EXT;
+using namespace cocos2d::ui;
+
 UITextTests::UITextTests()
 {
     ADD_TEST_CASE(UITextTest);

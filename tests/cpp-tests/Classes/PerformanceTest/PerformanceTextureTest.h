@@ -32,7 +32,7 @@ public:
     virtual std::string subtitle() const override;
     void performTestsPNG(const char* filename);
 
-    static Scene* scene();
+    static cocos2d::Scene* scene();
 };
 
 void runTextureTest();

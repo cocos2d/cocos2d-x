@@ -25,6 +25,8 @@ THE SOFTWARE.
 
 #include "Camera3DTest.h"
 
+USING_NS_CC;
+
 enum
 {
     IDC_NEXT = 100,

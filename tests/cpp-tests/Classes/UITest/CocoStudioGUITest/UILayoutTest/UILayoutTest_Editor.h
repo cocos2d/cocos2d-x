@@ -147,17 +147,17 @@ public:
     virtual void configureGUIScene() override;
 
 private:
-    void onChangeLayoutComponent(Ref* sender);
-    void onResizeContainer(Ref* sender);
+    void onChangeLayoutComponent(cocos2d::Ref* sender);
+    void onResizeContainer(cocos2d::Ref* sender);
 
-    ui::Button *_hUnchecked, *_hChecked, *_vUnchecked, *_vChecked;
-    ui::Button *_lPinUnchecked, *_lPinChecked,
+    cocos2d::ui::Button *_hUnchecked, *_hChecked, *_vUnchecked, *_vChecked;
+    cocos2d::ui::Button *_lPinUnchecked, *_lPinChecked,
         *_rPinUnchecked, *_rPinChecked,
         *_tPinUnchecked, *_tPinChecked,
         *_bPinUnchecked, *_bPinChecked;
-    ui::Text *_textPin, *_textStretch;
-    ui::Widget *_widget, *_container;
-    ui::Layout* _root;
+    cocos2d::ui::Text *_textPin, *_textStretch;
+    cocos2d::ui::Widget *_widget, *_container;
+    cocos2d::ui::Layout* _root;
 };
 
 #endif /* defined(__TestCpp__UILayoutTest_Editor__) */

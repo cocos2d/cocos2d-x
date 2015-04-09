@@ -9,6 +9,8 @@
 // Import the interfaces
 #include"Bug-914.h"
 
+USING_NS_CC;
+
 Scene* Bug914Layer::scene()
 {
     // 'scene' is an autorelease object.

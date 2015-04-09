@@ -45,7 +45,7 @@ public:
     virtual void onEnter() override;
     virtual std::string title() const override;
 
-	void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+	void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
 
 protected:
     ActionTimeline* action;

@@ -21,12 +21,12 @@ public:
 
     virtual void keyboardWillShow(IMEKeyboardNotificationInfo& info);
 
-    bool onTouchBegan(Touch  *touch, Event  *event);
-    void onTouchEnded(Touch  *touch, Event  *event);
+    bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
+    void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event);
 
 protected:
-    Node * _trackNode;
-    Vec2  _beginPos;
+    cocos2d::Node*  _trackNode;
+    cocos2d::Vec2  _beginPos;
 };
 
 //////////////////////////////////////////////////////////////////////////

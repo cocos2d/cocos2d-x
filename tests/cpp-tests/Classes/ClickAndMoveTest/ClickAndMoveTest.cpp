@@ -1,6 +1,8 @@
 #include "ClickAndMoveTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum
 {
     kTagSprite = 1,

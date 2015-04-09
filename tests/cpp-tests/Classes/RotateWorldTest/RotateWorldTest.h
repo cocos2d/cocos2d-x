@@ -13,14 +13,14 @@ public:
     virtual bool init() override;
 };
 
-class SpriteLayer : public Layer
+class SpriteLayer : public cocos2d::Layer
 {
 public:
     virtual void onEnter() override;
     CREATE_FUNC(SpriteLayer)
 };
 
-class TestLayer : public Layer
+class TestLayer : public cocos2d::Layer
 {
 public:
     virtual void onEnter() override;
@@ -28,7 +28,7 @@ public:
     CREATE_FUNC(TestLayer)
 };
 
-class RotateWorldMainLayer : public Layer
+class RotateWorldMainLayer : public cocos2d::Layer
 {
 public:
     virtual void onEnter() override;

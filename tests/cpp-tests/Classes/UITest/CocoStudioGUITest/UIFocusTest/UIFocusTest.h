@@ -25,12 +25,12 @@ public:
     virtual void onRightKeyPressed();
     virtual void onUpKeyPressed();
     virtual void onDownKeyPressed();
-    virtual void onFocusChanged(Widget* widgetLostFocus, Widget* widgetGetFocus);
+    virtual void onFocusChanged(Widget* widgetLostFocus, cocos2d::ui::Widget* widgetGetFocus);
 
-    void onImageViewClicked(Ref* ref, Widget::TouchEventType touchType);
+    void onImageViewClicked(cocos2d::Ref* ref, cocos2d::ui::Widget::TouchEventType touchType);
 
 protected:
-    Menu *_dpadMenu;
+    cocos2d::Menu* _dpadMenu;
     Widget *_firstFocusedWidget;
     EventListenerFocus *_eventListener;
 };
@@ -45,7 +45,7 @@ public:
 
     virtual bool init() override;
     
-    void toggleFocusLoop(Ref*,Widget::TouchEventType);
+    void toggleFocusLoop(cocos2d::Ref*,Widget::TouchEventType);
     
 protected:
     Layout *_horizontalLayout;
@@ -62,7 +62,7 @@ public:
 
     virtual bool init() override;
     
-    void toggleFocusLoop(Ref*,Widget::TouchEventType);
+    void toggleFocusLoop(cocos2d::Ref*,Widget::TouchEventType);
 protected:
     Layout *_verticalLayout;
     Text *_loopText;
@@ -78,7 +78,7 @@ public:
 
     virtual bool init() override;
     
-    void toggleFocusLoop(Ref*,Widget::TouchEventType);
+    void toggleFocusLoop(cocos2d::Ref*,Widget::TouchEventType);
 protected:
     Layout *_verticalLayout;
     Text *_loopText;
@@ -94,7 +94,7 @@ public:
 
     virtual bool init() override;
     
-    void toggleFocusLoop(Ref*,Widget::TouchEventType);
+    void toggleFocusLoop(cocos2d::Ref*,Widget::TouchEventType);
 protected:
     Layout *_horizontalLayout;
     Text *_loopText;
@@ -110,7 +110,7 @@ public:
 
     virtual bool init() override;
     
-    void toggleFocusLoop(Ref*,Widget::TouchEventType);
+    void toggleFocusLoop(cocos2d::Ref*,Widget::TouchEventType);
 protected:
     Layout *_verticalLayout;
     Text *_loopText;
@@ -126,7 +126,7 @@ public:
 
     virtual bool init() override;
     
-    void toggleFocusLoop(Ref*,Widget::TouchEventType);
+    void toggleFocusLoop(cocos2d::Ref*,Widget::TouchEventType);
 protected:
     ListView *_listView;
     Text *_loopText;

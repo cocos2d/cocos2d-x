@@ -108,7 +108,7 @@ private:
     cocos2d::experimental::AudioProfile _audioProfile;
     
     int _audioCount;
-    Label* _showLabel;
+    cocos2d::Label* _showLabel;
     float _time;
     float _minDelay;
     void* _timeSlider;

@@ -21,7 +21,7 @@ public:
     virtual void onEnter() override;
     virtual void showCurrentTest() override;
 public:
-    static Scene* scene();
+    static cocos2d::Scene* scene();
 };
 
 void runRendererTest();
