@@ -86,7 +86,7 @@ CC_CONSTRUCTOR_ACCESS:
     
 protected:
     IndexBuffer*    _indexBuffer; //index buffer
-    MeshVertexData* _vertexData; //vertex buffer
+    MeshVertexData* _vertexData; //vertex buffer, wreak ref
     AABB           _aabb; // original aabb of the submesh
     std::string    _id; //id
     GLenum         _primitiveType;
