@@ -290,14 +290,14 @@ void TestSuite::runThisTest()
 {
     if (!_childTestNames.empty())
     {
+        TestController::getInstance()->setCurrTestSuite(this);
+
         _currTestIndex = 0;
         auto scene = _testCallbacks[0]();
         auto testCase = getTestCase(scene);
         testCase->setTestSuite(this);
         testCase->setTestCaseName(_childTestNames[_currTestIndex]);
         Director::getInstance()->replaceScene(scene);
-
-        
     }
 }
 
@@ -436,6 +436,11 @@ void TestCase::onEnter()
 
     _titleLabel->setString(title());
     _subtitleLabel->setString(subtitle());
+
+    if (_testSuite == nullptr)
+    {
+        setTestSuite(TestController::getInstance()->getCurrTestSuite());
+    }
 
     if (_testSuite && _testSuite->getChildTestCount() < 2)
     {

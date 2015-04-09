@@ -83,8 +83,6 @@ void GameOverLayer::gameOverDone()
 {
     auto director = Director::getInstance();
     auto newScene = CocoStudioComponentsTest::create();
-    auto gameoverScene = (GameOverScene*)director->getRunningScene();
-    newScene->setTestSuite(gameoverScene->getTestSuite());
     director->replaceScene(newScene);
 }
 

@@ -8,7 +8,7 @@ class Bug1159Layer : public BugsTestBase
 public:
     virtual bool init() override;
     virtual void onExit() override;
-    static cocos2d::Scene* scene();
+
     void callBack(cocos2d::Ref* sender);
 
     CREATE_FUNC(Bug1159Layer);

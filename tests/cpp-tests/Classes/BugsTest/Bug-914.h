@@ -6,7 +6,6 @@
 class Bug914Layer : public BugsTestBase
 {
 public:
-    static cocos2d::Scene* scene();
     virtual bool init() override;
 
     void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
