@@ -260,6 +260,9 @@
     <Filter Include="extension\Particle3D\PU">
       <UniqueIdentifier>{22f6db59-7a86-43f2-80bb-0a017f0b24ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="extension\ImagePicker">
+      <UniqueIdentifier>{67a75c1f-297d-4364-8f30-7fff2313244d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCAction.cpp">
@@ -1817,6 +1820,12 @@
     </ClCompile>
     <ClCompile Include="..\3d\CCTerrain.cpp">
       <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\ImagePicker\ImagePickerImpl.cpp">
+      <Filter>extension\ImagePicker</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\ImagePicker\ImagePicker.cpp">
+      <Filter>extension\ImagePicker</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3533,6 +3542,12 @@
     </ClInclude>
     <ClInclude Include="..\3d\CCTerrain.h">
       <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\ImagePicker\ImagePickerImpl.h">
+      <Filter>extension\ImagePicker</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\ImagePicker\ImagePicker.h">
+      <Filter>extension\ImagePicker</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

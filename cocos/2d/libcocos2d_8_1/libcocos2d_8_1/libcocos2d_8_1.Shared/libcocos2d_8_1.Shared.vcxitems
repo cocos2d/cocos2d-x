@@ -38,6 +38,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\GUI\CCScrollView\CCScrollView.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\GUI\CCScrollView\CCTableView.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\GUI\CCScrollView\CCTableViewCell.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\ImagePicker\ImagePicker.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\ImagePicker\ImagePickerImpl.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\CCParticle3DAffector.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\CCParticle3DEmitter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\CCParticle3DRender.h" />
@@ -617,6 +619,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\GUI\CCScrollView\CCScrollView.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\GUI\CCScrollView\CCTableView.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\GUI\CCScrollView\CCTableViewCell.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\ImagePicker\ImagePicker.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\ImagePicker\ImagePickerImpl.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\CCParticle3DAffector.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\CCParticle3DEmitter.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\Particle3D\CCParticle3DRender.cpp" />
