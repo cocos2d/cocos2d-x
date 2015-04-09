@@ -10,6 +10,7 @@ class SceneTestLayer1 : public cocos2d::Layer
 {
 public:
     CREATE_FUNC(SceneTestLayer1);
+
     SceneTestLayer1();
     ~SceneTestLayer1();
 
@@ -27,6 +28,7 @@ class SceneTestLayer2 : public cocos2d::Layer
     float    _timeCounter;
 public:
     CREATE_FUNC(SceneTestLayer2);
+
     SceneTestLayer2();
 
     void testDealloc(float dt);
@@ -39,8 +41,10 @@ class SceneTestLayer3 : public cocos2d::LayerColor
 {
 public:
     CREATE_FUNC(SceneTestLayer3);
+
     SceneTestLayer3();
-    bool init();
+
+    virtual bool init() override;
     virtual void testDealloc(float dt);
     void item0Clicked(cocos2d::Ref* sender);
     void item1Clicked(cocos2d::Ref* sender);
@@ -51,9 +55,7 @@ public:
 class SceneTestScene : public TestCase
 {
 public:
-    CREATE_FUNC(SceneTestScene);
-
-    virtual bool init() override;
+    static SceneTestScene* create(int testIndex = 1);
 };
 
 #endif
