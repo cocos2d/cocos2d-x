@@ -110,4 +110,13 @@ public:
 
 };
 
+class TestActionTimelineEase : public ActionTimelineBaseTest
+{
+public:
+    CREATE_FUNC(TestActionTimelineEase);
+    
+    virtual void onEnter() override;
+    virtual std::string title() const override;
+};
+
 #endif  // __ANIMATION_SCENE_H__
