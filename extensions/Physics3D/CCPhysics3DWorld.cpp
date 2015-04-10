@@ -49,6 +49,9 @@ Physics3DWorld::~Physics3DWorld()
     CC_SAFE_DELETE(_solver);
     CC_SAFE_DELETE(_btPhyiscsWorld);
     CC_SAFE_DELETE(_debugDrawer);
+    for (auto it : _physicsComponents)
+        it->setPhysics3DObject(nullptr);
+    _physicsComponents.clear();
 }
 
 Physics3DWorld* Physics3DWorld::create(Physics3DWorldDes* info)

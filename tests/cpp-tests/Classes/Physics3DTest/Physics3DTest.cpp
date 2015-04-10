@@ -215,7 +215,10 @@ bool BasicPhysics3DDemo::init()
     rbDes.mass = 10.f;
     rbDes.shape = Physics3DShape::createBox(Vec3(5.0f, 5.0f, 5.0f));
     rigidBody = Physics3DRigidBody::create(&rbDes);
-    component = Physics3DComponent::create(rigidBody);
+    Mat4 offMat;
+    Mat4::createRotationY(CC_DEGREES_TO_RADIANS(180.f), &offMat);
+    offMat.m[13] = -3.f;
+    component = Physics3DComponent::create(rigidBody, offMat);
     sprite->addComponent(component);
     addChild(sprite);
     sprite->setCameraMask((unsigned short)CameraFlag::USER1);

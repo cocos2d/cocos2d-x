@@ -48,12 +48,13 @@ bool Physics3DComponent::init()
     return Component::init();
 }
 
-Physics3DComponent* Physics3DComponent::create(Physics3DObject* physicsObj)
+Physics3DComponent* Physics3DComponent::create(Physics3DObject* physicsObj, const cocos2d::Mat4& trans)
 {
     auto ret = new (std::nothrow) Physics3DComponent();
     if (ret && ret->init())
     {
         ret->setPhysics3DObject(physicsObj);
+        ret->setTransformInPhysics(trans);
         return ret;
     }
     CC_SAFE_DELETE(ret);
@@ -139,11 +140,6 @@ void Physics3DComponent::onExit()
     }
 }
 
-void Physics3DComponent::update(float delta)
-{
-    
-}
-
 void Physics3DComponent::preSimulate()
 {
     if (_physics3DObj && _owner)
@@ -153,7 +149,7 @@ void Physics3DComponent::preSimulate()
             auto body = static_cast<Physics3DRigidBody*>(_physics3DObj)->getRigidBody();
             if (body->isKinematicObject())
             {
-                auto mat = _owner->getNodeToWorldTransform();
+                auto mat = _owner->getNodeToWorldTransform() * _invTransformInPhysics;
                 body->getMotionState()->setWorldTransform(convertMat4TobtTransform(mat));
             }
         }
@@ -164,12 +160,13 @@ void Physics3DComponent::postSimulate()
 {
     if (_physics3DObj && _owner)
     {
-        if (!static_cast<Physics3DRigidBody*>(_physics3DObj)->getRigidBody()->isKinematicObject())
+        auto body = static_cast<Physics3DRigidBody*>(_physics3DObj)->getRigidBody();
+        if (!body->isStaticOrKinematicObject())
         {
-            Mat4 parentMat;
+            Mat4 parentMat = _transformInPhysics;
             if (_owner->getParent())
                 parentMat = _owner->getParent()->getNodeToWorldTransform();
-            auto mat = parentMat.getInversed() * _physics3DObj->getWorldTransform();
+            auto mat = parentMat.getInversed() * _physics3DObj->getWorldTransform() * _transformInPhysics;
             static Vec3 scale, translation;
             static Quaternion quat;
             mat.decompose(&scale, &quat, &translation);
@@ -180,6 +177,12 @@ void Physics3DComponent::postSimulate()
             _owner->setScaleZ(scale.z);
         }
     }
+}
+
+void Physics3DComponent::setTransformInPhysics(const cocos2d::Mat4& trans)
+{
+    _transformInPhysics = trans;
+    _invTransformInPhysics = trans.getInversed();
 }
 
 NS_CC_EXT_END

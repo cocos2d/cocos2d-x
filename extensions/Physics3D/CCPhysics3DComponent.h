@@ -47,7 +47,7 @@ public:
     
     //virtual void update(float delta);
     virtual bool serialize(void* r) override;
-    static Physics3DComponent* create(Physics3DObject* physicsObj);
+    static Physics3DComponent* create(Physics3DObject* physicsObj, const cocos2d::Mat4& trans = cocos2d::Mat4::IDENTITY);
     
     void setPhysics3DObject(Physics3DObject* physicsObj);
     
@@ -65,16 +65,18 @@ public:
     
     void postSimulate();
     
-    virtual void update(float delta) override;
-    
     void addToPhysicsWorld(Physics3DWorld* world);
+    
+    void setTransformInPhysics(const cocos2d::Mat4& trans);
     
 CC_CONSTRUCTOR_ACCESS:
     Physics3DComponent();
     
 protected:
+    cocos2d::Mat4             _transformInPhysics; //transform in physics space
+    cocos2d::Mat4             _invTransformInPhysics;
     
-    Physics3DObject* _physics3DObj;
+    Physics3DObject*          _physics3DObj;
 };
 
 NS_CC_EXT_END
