@@ -129,6 +129,7 @@ Node::Node(void)
 , _updateTransformFromPhysics(true)
 , _physicsWorld(nullptr)
 , _physicsBodyAssociatedWith(0)
+, _physicsRotationOffset(0.0f)
 #endif
 , _displayedOpacity(255)
 , _realOpacity(255)
@@ -2078,6 +2079,7 @@ void Node::setPhysicsBody(PhysicsBody* body)
         _physicsBody = body;
         _physicsScaleStartX = _scaleX;
         _physicsScaleStartY = _scaleY;
+        _physicsRotationOffset = _rotationZ_X;
 
         _physicsBodyAssociatedWith++;
         auto parentNode = this;
@@ -2116,7 +2118,7 @@ void Node::updatePhysicsBodyTransform(const Mat4& parentTransform, uint32_t pare
         parentTransform.transformPoint(vec3, &ret);
         _physicsBody->setPosition(Vec2(ret.x, ret.y));
         _physicsBody->setScale(scaleX / _physicsScaleStartX, scaleY / _physicsScaleStartY);
-        _physicsBody->setRotation(_physicsRotation);
+        _physicsBody->setRotation(_physicsRotation - _physicsRotationOffset);
     }
 
     for (auto node : _children)
@@ -2139,7 +2141,7 @@ void Node::updateTransformFromPhysics(const Mat4& parentTransform, uint32_t pare
         setPosition(ret.x, ret.y);
     }
     _physicsRotation = _physicsBody->getRotation();
-    setRotation(_physicsRotation - _parent->_physicsRotation);
+    setRotation(_physicsRotation - _parent->_physicsRotation + _physicsRotationOffset);
     _physicsWorld->_updateBodyTransform = updateBodyTransform;
 }
 
