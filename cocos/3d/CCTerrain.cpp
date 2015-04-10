@@ -95,6 +95,20 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
 {
     auto glProgram = getGLProgram();
     glProgram->use();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+    if(_isDrawWire)
+    {
+        glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+    }else
+    {
+        glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+    }
+#endif
+    GLboolean blendCheck = glIsEnabled(GL_BLEND);
+    if(blendCheck)
+    {
+        glDisable(GL_BLEND);
+    }
     GL::enableVertexAttribs(1<<_positionLocation | 1 << _texcordLocation | 1<<_normalLocation);
     glProgram->setUniformsForBuiltins(transform);
     GLboolean depthMaskCheck;
@@ -113,12 +127,6 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
     if(!depthTestCheck)
     {
         glEnable(GL_DEPTH_TEST);
-    }
-    GLboolean blendCheck;
-    glGetBooleanv(GL_BLEND,&blendCheck);
-    if(blendCheck)
-    {
-    glDisable(GL_BLEND);
     }
     if(!_alphaMap)
     {
@@ -248,15 +256,15 @@ bool Terrain::initHeightMap(const char * heightMap)
 Terrain::Terrain()
 {
     _alphaMap = nullptr;
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
      auto _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
         [this](EventCustom*)
     {
         reload();
     }
     );
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, -1);
-//#endif
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_backToForegroundListener, 1);
+#endif
 }
 
 void Terrain::setChunksLOD(Vec3 cameraPos)
@@ -791,6 +799,17 @@ bool Terrain::initTextures()
 
 void Terrain::reload()
 {
+    int chunk_amount_y = _imageHeight/_chunkSize.height;
+    int chunk_amount_x = _imageWidth/_chunkSize.width;
+
+    for(int m =0;m<chunk_amount_y;m++)
+    {
+        for(int n =0; n<chunk_amount_x;n++)
+        {
+            _chunkesArray[m][n]->finish();
+        }
+    }
+
     CCLOG("recreate");
     initTextures();
     _chunkLodIndicesSet.clear();
@@ -813,27 +832,19 @@ void Terrain::Chunk::finish()
 
     for(int i =0;i<4;i++)
     {
-        int step = int(powf(2.0f, float(_currentLod)));
-        int indicesAmount =(_terrain->_chunkSize.width/step+1)*(_terrain->_chunkSize.height/step+1)*6+(_terrain->_chunkSize.height/step)*3*2
-            +(_terrain->_chunkSize.width/step)*3*2;
+        int step = 1<<_currentLod;
+        //reserve the indices size, the first part is the core part of the chunk, the second part & thid part is for fix crack 
+        int indicesAmount =(_terrain->_chunkSize.width/step+1)*(_terrain->_chunkSize.height/step+1)*6+(_terrain->_chunkSize.height/step)*6
+            +(_terrain->_chunkSize.width/step)*6;
         _lod[i]._indices.reserve(indicesAmount);
     }
+    _oldLod = -1;
 }
 
 void Terrain::Chunk::bindAndDraw()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-    if(_terrain->_isDrawWire)
-    {
-        glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
-    }else
-    {
-        glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
-    }
-#endif
-
     glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-    if(_terrain->_isCameraViewChanged)
+    if(_terrain->_isCameraViewChanged || _oldLod <0)
     {
         switch (_terrain->_crackFixedType)
         {
@@ -886,7 +897,7 @@ void Terrain::Chunk::generate(int imgWidth, int imageHei, int m, int n, const un
             }
             // add four skirts
            
-            float skirtHeight =  _terrain->_skirtRatio *_terrain->_terrainData._mapScale*int(powf(2.0f, float(3)));
+            float skirtHeight =  _terrain->_skirtRatio *_terrain->_terrainData._mapScale*8;
             //#1
             _terrain->_skirtVerticesOffset[0] = (int)_originalVertices.size();
             for(int i =_size.height*m;i<=_size.height*(m+1);i++)
@@ -994,7 +1005,7 @@ void Terrain::Chunk::updateIndicesLOD()
     int gridY = _size.height;
     int gridX = _size.width;
 
-    int step = int(powf(2.0f, float(_currentLod)));
+    int step = 1<<_currentLod;
     if((_left&&_left->_currentLod > _currentLod) ||(_right&&_right->_currentLod > _currentLod)
         ||(_back&&_back->_currentLod > _currentLod) || (_front && _front->_currentLod > _currentLod))
         //need update indices.
@@ -1016,7 +1027,7 @@ void Terrain::Chunk::updateIndicesLOD()
             }
         }
         //fix T-crack
-        int next_step = int(powf(2.0f, float(_currentLod+1)));
+        int next_step = 1<<(_currentLod+1);
         if(_left&&_left->_currentLod > _currentLod)//left
         {
             for(int i =0;i<gridY;i+=next_step)
@@ -1205,9 +1216,9 @@ void Terrain::Chunk::updateVerticesForLOD()
     int gridY = _size.height;
     int gridX = _size.width;
 
-    if(_currentLod>=2 && abs(_slope)>1.2)
+    if(_currentLod>=2 && std::abs(_slope)>1.2)
     {
-        int step = int(powf(2.0f, float(_currentLod)));
+        int step = 1<<_currentLod;
         for(int i =step;i<gridY-step;i+=step)
             for(int j = step; j<gridX-step;j+=step)
             {
@@ -1218,7 +1229,7 @@ void Terrain::Chunk::updateVerticesForLOD()
                 {
                     for(int m = j-step/2;m<j+step/2;m++)
                     {
-                        float weight = (step/2 - abs(n-i))*(step/2 - abs(m-j));
+                        float weight = (step/2 - std::abs(n-i))*(step/2 - std::abs(m-j));
                         height += _originalVertices[m*(gridX+1)+n]._position.y;
                         count += weight;
                     }
@@ -1246,7 +1257,7 @@ void Terrain::Chunk::updateIndicesLODSkirt()
 
     int gridY = _size.height;
     int gridX = _size.width;
-    int step = int(powf(2.0f, float(_currentLod)));
+    int step = 1<<_currentLod;
     int k =0;
     for(int i =0;i<gridY;i+=step,k+=step)
     {
