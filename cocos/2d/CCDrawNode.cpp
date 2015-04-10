@@ -135,7 +135,7 @@ void DrawNode::drawPoint(const Vec2& position, float pointSize, const Color4F& c
 
 void DrawNode::drawPoints(const Vec2* position, unsigned int numberOfPoints, const Color4F &color, float pointSize)
 {
-    for (auto i = 0; i < numberOfPoints; ++i)
+    for (auto i = 0u; i < numberOfPoints; ++i)
         _vdPoints->append<V2F_C4B_PF>({position[i], Color4B(color), pointSize});
 }
 
@@ -160,7 +160,7 @@ void DrawNode::drawRect(const Vec2& origin, const Vec2& destination, const Color
 
 void DrawNode::drawPoly(const Vec2* poli, unsigned int numberOfPoints, bool closePolygon, const Color4F& color)
 {
-    int i = 0;
+    unsigned int i = 0;
     for(; i < numberOfPoints - 1; ++i)
     {
         _vdLines->append<V2F_C4B_T2F>({poli[i],   Color4B(color), Tex2F()});
@@ -180,7 +180,7 @@ void DrawNode::drawCircle(const Vec2& center, float radius, float angle, unsigne
     
     auto vertices = (Vec2*)CC_ALLOCA((segments + 2) * sizeof(Vec2));
     
-    for (auto i = 0; i <= segments; ++i)
+    for (auto i = 0u; i <= segments; ++i)
     {
         float rads = i*coef;
         GLfloat j = radius * cosf(rads + angle) * scaleX + center.x;
@@ -209,7 +209,7 @@ void DrawNode::drawQuadBezier(const Vec2& origin, const Vec2& control, const Vec
     auto vertices = (Vec2*)CC_ALLOCA((segments + 1) * sizeof(Vec2));
     
     float t = 0.f;
-    for (auto i = 0; i < segments; ++i)
+    for (auto i = 0u; i < segments; ++i)
     {
         vertices[i].x = powf(1 - t, 2) * origin.x + 2.f * (1 - t) * t * control.x + t * t * destination.x;
         vertices[i].y = powf(1 - t, 2) * origin.y + 2.f * (1 - t) * t * control.y + t * t * destination.y;
@@ -430,7 +430,7 @@ void DrawNode::drawSolidCircle(const Vec2& center, float radius, float angle, un
     if (!vertices)
         return;
     
-    for (auto i = 0; i < segments; ++i)
+    for (auto i = 0u; i < segments; ++i)
     {
         float rads = i*coef;
         float j = radius * cosf(rads + angle) * scaleX + center.x;
