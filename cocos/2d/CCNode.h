@@ -1442,7 +1442,7 @@ public:
     virtual AffineTransform getWorldToNodeAffineTransform() const;
 
 
-    /** @deprecated Use getWorldToNodeTransform() instead */
+    /** @deprecated Use getWorldToNodeAffineTransform() instead */
     CC_DEPRECATED(v3) inline virtual AffineTransform worldToNodeTransform() const { return getWorldToNodeAffineTransform(); }
 
     /// @} end of Transformations
