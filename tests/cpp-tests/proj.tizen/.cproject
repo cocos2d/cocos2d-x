@@ -475,6 +475,7 @@
 								</option>
 								<option id="gnu.cpp.compiler.option.include.paths.297955740" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="../../../../"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/libcocos2dx/extensions}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/libcocos2dx/external/chipmunk/include/chipmunk}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/Classes}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/libcocos2dx/cocos/editor-support}&quot;"/>

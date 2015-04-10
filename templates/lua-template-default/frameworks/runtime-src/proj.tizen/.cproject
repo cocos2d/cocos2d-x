@@ -488,6 +488,7 @@
 								<option id="gnu.cpp.link.option.libs.1533974038" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="cocos2dx"/>
 								</option>
+								<option id="gnu.cpp.link.option.flags.161166308" superClass="gnu.cpp.link.option.flags" value="-static-libstdc++" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.673891179" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -795,6 +796,7 @@
 		<configuration configurationName="Release">
 			<resource resourceType="PROJECT" workspacePath="/HelloLua"/>
 		</configuration>
+		<configuration configurationName="Emulator"/>
 		<configuration configurationName="Debug">
 			<resource resourceType="PROJECT" workspacePath="/HelloLua"/>
 		</configuration>
