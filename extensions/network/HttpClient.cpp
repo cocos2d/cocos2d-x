@@ -94,10 +94,10 @@ static size_t writeHeaderData(void *ptr, size_t size, size_t nmemb, void *stream
 }
 
 
-static int processGetTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
-static int processPostTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
-static int processPutTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
-static int processDeleteTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *errorCode, write_callback headerCallback, void *headerStream);
+static int processGetTask(CCHttpRequest *request, write_callback callback, void *stream, long *errorCode, write_callback headerCallback, void *headerStream);
+static int processPostTask(CCHttpRequest *request, write_callback callback, void *stream, long *errorCode, write_callback headerCallback, void *headerStream);
+static int processPutTask(CCHttpRequest *request, write_callback callback, void *stream, long *errorCode, write_callback headerCallback, void *headerStream);
+static int processDeleteTask(CCHttpRequest *request, write_callback callback, void *stream, long *errorCode, write_callback headerCallback, void *headerStream);
 // int processDownloadTask(HttpRequest *task, write_callback callback, void *stream, int32_t *errorCode);
 
 
@@ -141,7 +141,7 @@ static THREAD_VOID networkThread(THREAD_VOID)
         request->release();
         // ok, refcount = 1 now, only HttpResponse hold it.
         
-        int32_t responseCode = -1;
+        long responseCode = -1;
         int retValue = 0;
 
         // Process the request -> get response packet
@@ -329,7 +329,7 @@ public:
     }
 
     /// @param responseCode Null not allowed
-    bool perform(int *responseCode)
+    bool perform(long *responseCode)
     {
         if (CURLE_OK != curl_easy_perform(m_curl))
             return false;
@@ -344,7 +344,7 @@ public:
 };
 
 //Process Get Request
-static int processGetTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
+static int processGetTask(CCHttpRequest *request, write_callback callback, void *stream, long *responseCode, write_callback headerCallback, void *headerStream)
 {
     CURLRaii curl;
     bool ok = curl.init(request, callback, stream, headerCallback, headerStream)
@@ -354,7 +354,7 @@ static int processGetTask(CCHttpRequest *request, write_callback callback, void 
 }
 
 //Process POST Request
-static int processPostTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
+static int processPostTask(CCHttpRequest *request, write_callback callback, void *stream, long *responseCode, write_callback headerCallback, void *headerStream)
 {
     CURLRaii curl;
     bool ok = curl.init(request, callback, stream, headerCallback, headerStream)
@@ -366,7 +366,7 @@ static int processPostTask(CCHttpRequest *request, write_callback callback, void
 }
 
 //Process PUT Request
-static int processPutTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
+static int processPutTask(CCHttpRequest *request, write_callback callback, void *stream, long *responseCode, write_callback headerCallback, void *headerStream)
 {
     CURLRaii curl;
     bool ok = curl.init(request, callback, stream, headerCallback, headerStream)
@@ -378,7 +378,7 @@ static int processPutTask(CCHttpRequest *request, write_callback callback, void 
 }
 
 //Process DELETE Request
-static int processDeleteTask(CCHttpRequest *request, write_callback callback, void *stream, int32_t *responseCode, write_callback headerCallback, void *headerStream)
+static int processDeleteTask(CCHttpRequest *request, write_callback callback, void *stream, long *responseCode, write_callback headerCallback, void *headerStream)
 {
     CURLRaii curl;
     bool ok = curl.init(request, callback, stream, headerCallback, headerStream)
