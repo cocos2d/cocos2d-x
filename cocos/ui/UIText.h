@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 #include "ui/UIWidget.h"
 #include "ui/GUIExport.h"
+#include "base/ccTypes.h"
 
 /**
  * @addtogroup ui
@@ -44,9 +45,9 @@ namespace ui {
  */
 class CC_GUI_DLL Text : public Widget
 {
-    
+
     DECLARE_CLASS_GUI_INFO
-    
+
 public:
     /** Type Text type.
      */
@@ -75,7 +76,7 @@ public:
      * @return An autoreleased Text object.
      */
     static Text* create();
-    
+
     /**
      *  Create a Text object with textContent, fontName and fontSize.
      *  The fontName could be a system font name or a TTF file path.
@@ -146,7 +147,7 @@ public:
      * @return Font name.
      */
     const std::string& getFontName()const;
-    
+
     /** Gets the font type.
      * @return The font type.
      */
@@ -222,19 +223,19 @@ public:
      * @return Vertical text alignment type
      */
     TextVAlignment getTextVerticalAlignment()const;
-    
+
     /** Sets text color.
      *
      * @param color Text color.
      */
     void setTextColor(const Color4B color);
-    
+
     /** Gets text color.
      *
      * @return Text color.
      */
     const Color4B& getTextColor() const;
-    
+
     /**
      * Enable shadow for the label.
      *
@@ -245,26 +246,34 @@ public:
      * @param blurRadius The blur radius of shadow effect.
      */
     void enableShadow(const Color4B& shadowColor = Color4B::BLACK,const Size &offset = Size(2,-2), int blurRadius = 0);
-    
+
     /**
      * Enable outline for the label.
      * It only works on IOS and Android when you use System fonts.
      *
      * @param outlineColor The color of outline.
      * @param outlineSize The size of outline.
-     */ 
+     */
     void enableOutline(const Color4B& outlineColor,int outlineSize = 1);
-    
+
     /** Only support for TTF.
      *
      * @param glowColor The color of glow.
      */
     void enableGlow(const Color4B& glowColor);
-    
-    /** Disable shadow/outline/glow rendering.
+
+    /** Disable all text effects, including shadow, outline and glow.
      */
     void disableEffect();
-    
+
+    /**
+     * Disable specific text effect.
+     * Use LabelEffect parameter to specify which effect should be disabled.
+     *
+     * @see `LabelEffect`
+     */
+    void disableEffect(LabelEffect effect);
+
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
     virtual bool init(const std::string& textContent,
@@ -277,7 +286,7 @@ protected:
     virtual void onPressStateChangedToPressed() override;
     virtual void onPressStateChangedToDisabled() override;
     virtual void onSizeChanged() override;
-   
+
     void labelScaleChangedWithSize();
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
