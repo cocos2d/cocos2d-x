@@ -10,7 +10,7 @@
       <AdditionalIncludeDirectories>$(EngineRoot)cocos\platform\winrt;$(EngineRoot)cocos\platform;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\audio\include;$(EngineRoot)cocos;$(EngineRoot)extensions;$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(PLATFORM)\include\zlib;$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(PLATFORM)\include\angle;$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(PLATFORM)\include\freetype;$(EngineRoot)external\$(COCOS2D_PLATFORM)\$(PLATFORM)\include;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile>
-      <PreprocessorDefinitions>WINRT;_VARIADIC_MAX=10;NOMINMAX;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WINRT;_VARIADIC_MAX=10;NOMINMAX;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_UNICODE;UNICODE;_LITTLE_ENDIAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CompileAsWinRT>true</CompileAsWinRT>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
@@ -18,7 +18,7 @@
       <DisableSpecificWarnings>4056;4244;4251;4756;28204;4453;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libGLESv2.lib;libEGL.lib;ws2_32.lib;libwebsockets.lib;libcurl.lib;libchipmunk.lib;zlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;freetype250.lib;sqlite3.lib;d2d1.lib;d3d11.lib;dxgi.lib;windowscodecs.lib;dwrite.lib;dxguid.lib;xaudio2.lib;mfcore.lib;mfplat.lib;mfreadwrite.lib;mfuuid.lib;xxhash.lib;tinyxml2.lib;convertutf.lib;edtaa3.lib;minizip.lib;box2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libGLESv2.lib;libEGL.lib;ws2_32.lib;libwebsockets.lib;libcurl.lib;libchipmunk.lib;zlib.lib;freetype250.lib;sqlite3.lib;d2d1.lib;d3d11.lib;dxgi.lib;windowscodecs.lib;dwrite.lib;dxguid.lib;xaudio2.lib;mfcore.lib;mfplat.lib;mfreadwrite.lib;mfuuid.lib;xxhash.lib;tinyxml2.lib;convertutf.lib;edtaa3.lib;minizip.lib;box2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>/IGNORE:4264 %(AdditionalOptions)</AdditionalOptions>
     </Link>

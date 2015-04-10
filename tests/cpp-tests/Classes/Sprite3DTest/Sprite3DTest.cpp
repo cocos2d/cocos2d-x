@@ -1533,7 +1533,7 @@ void Animate3DTest::addSprite3D()
         _state = State::SWIMMING;
     }
     
-    _moveAction = MoveTo::create(4.f, Vec2(s.width / 5.f, s.height / 2.f));
+    _moveAction = MoveBy::create(4.f, Vec2( - s.width * 3.0f /5, 0));
     _moveAction->retain();
     auto seq = Sequence::create(_moveAction, CallFunc::create(CC_CALLBACK_0(Animate3DTest::reachEndCallBack, this)), nullptr);
     seq->setTag(100);
@@ -1543,10 +1543,11 @@ void Animate3DTest::addSprite3D()
 void Animate3DTest::reachEndCallBack()
 {
     _sprite->stopActionByTag(100);
-    auto inverse = (MoveTo*)_moveAction->reverse();
-    inverse->retain();
+    auto inverse = _moveAction->reverse();
     _moveAction->release();
     _moveAction = inverse;
+    _moveAction->retain();
+
     auto rot = RotateBy::create(1.f, Vec3(0.f, 180.f, 0.f));
     auto seq = Sequence::create(rot, _moveAction, CallFunc::create(CC_CALLBACK_0(Animate3DTest::reachEndCallBack, this)), nullptr);
     seq->setTag(100);
@@ -1924,7 +1925,7 @@ void Sprite3DWithOBBPerformanceTest::addNewSpriteWithCoords(Vec2 p)
         sprite->runAction(RepeatForever::create(animate));
     }
     
-    _moveAction = MoveTo::create(4.f, Vec2(s.width / 5.f, s.height / 2.f));
+    _moveAction = MoveBy::create(4.f, Vec2(-s.width * 3 / 5.f, 0));
     _moveAction->retain();
     auto seq = Sequence::create(_moveAction, CallFunc::create(CC_CALLBACK_0(Sprite3DWithOBBPerformanceTest::reachEndCallBack, this)), nullptr);
     seq->setTag(100);
@@ -1940,10 +1941,11 @@ void Sprite3DWithOBBPerformanceTest::addNewSpriteWithCoords(Vec2 p)
 void Sprite3DWithOBBPerformanceTest::reachEndCallBack()
 {
     _sprite->stopActionByTag(100);
-    auto inverse = (MoveTo*)_moveAction->reverse();
-    inverse->retain();
+    auto inverse = _moveAction->reverse();
     _moveAction->release();
     _moveAction = inverse;
+    _moveAction->retain();
+    
     auto rot = RotateBy::create(1.0f, Vec3(0.f, 180.f, 0.f));
     auto seq = Sequence::create(rot, _moveAction, CallFunc::create(CC_CALLBACK_0(Sprite3DWithOBBPerformanceTest::reachEndCallBack, this)), nullptr);
     seq->setTag(100);

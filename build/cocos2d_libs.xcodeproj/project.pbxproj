@@ -655,7 +655,6 @@
 		29AC14861A8BB8A5002DEB6D /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AC14711A8BB8A5002DEB6D /* libcrypto.a */; };
 		29AC14871A8BB8A5002DEB6D /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AC14721A8BB8A5002DEB6D /* libcurl.a */; };
 		29AC14881A8BB8A5002DEB6D /* libedtaa3func.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AC14731A8BB8A5002DEB6D /* libedtaa3func.a */; };
-		29AC14891A8BB8A5002DEB6D /* libflatbuffer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AC14741A8BB8A5002DEB6D /* libflatbuffer.a */; };
 		29AC148A1A8BB8A5002DEB6D /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AC14751A8BB8A5002DEB6D /* libfreetype.a */; };
 		29AC148B1A8BB8A5002DEB6D /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AC14761A8BB8A5002DEB6D /* libjpeg.a */; };
 		29AC148E1A8BB8A5002DEB6D /* libluasocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AC14791A8BB8A5002DEB6D /* libluasocket.a */; };
@@ -676,10 +675,8 @@
 		29AC14DB1A8C5E75002DEB6D /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AC14C51A8C5E75002DEB6D /* libcrypto.a */; };
 		29AC14DC1A8C5E75002DEB6D /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AC14C61A8C5E75002DEB6D /* libcurl.a */; };
 		29AC14DD1A8C5E75002DEB6D /* libedtaa3func.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AC14C71A8C5E75002DEB6D /* libedtaa3func.a */; };
-		29AC14DE1A8C5E75002DEB6D /* libflatbuffers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AC14C81A8C5E75002DEB6D /* libflatbuffers.a */; };
 		29AC14DF1A8C5E75002DEB6D /* libfreetype.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AC14C91A8C5E75002DEB6D /* libfreetype.a */; };
 		29AC14E01A8C5E75002DEB6D /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AC14CA1A8C5E75002DEB6D /* libjpeg.a */; };
-		29AC14E11A8C5E75002DEB6D /* liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AC14CB1A8C5E75002DEB6D /* liblua.a */; };
 		29AC14E21A8C5E75002DEB6D /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AC14CC1A8C5E75002DEB6D /* libluajit.a */; };
 		29AC14E31A8C5E75002DEB6D /* libluasocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AC14CD1A8C5E75002DEB6D /* libluasocket.a */; };
 		29AC14E51A8C5E75002DEB6D /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AC14CF1A8C5E75002DEB6D /* libpng.a */; };
@@ -692,6 +689,7 @@
 		29AC14EC1A8C5E76002DEB6D /* libxxtea.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AC14D61A8C5E75002DEB6D /* libxxtea.a */; };
 		29AC14ED1A8C5E76002DEB6D /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AC14D71A8C5E75002DEB6D /* libz.a */; };
 		29AC15021A8C7DEE002DEB6D /* libminizip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AC14CE1A8C5E75002DEB6D /* libminizip.a */; };
+		29B01C771AB96CD800794448 /* liblua.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29AC14CB1A8C5E75002DEB6D /* liblua.a */; };
 		38B8E2E119E671D2002D7CE7 /* UILayoutComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38B8E2DF19E671D2002D7CE7 /* UILayoutComponent.cpp */; };
 		38B8E2E219E671D2002D7CE7 /* UILayoutComponent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38B8E2DF19E671D2002D7CE7 /* UILayoutComponent.cpp */; };
 		38B8E2E319E671D2002D7CE7 /* UILayoutComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 38B8E2E019E671D2002D7CE7 /* UILayoutComponent.h */; };
@@ -1993,7 +1991,6 @@
 				29AC14851A8BB8A5002DEB6D /* libconvertutf.a in Frameworks */,
 				29AC14861A8BB8A5002DEB6D /* libcrypto.a in Frameworks */,
 				29AC14881A8BB8A5002DEB6D /* libedtaa3func.a in Frameworks */,
-				29AC14891A8BB8A5002DEB6D /* libflatbuffer.a in Frameworks */,
 				29AC148A1A8BB8A5002DEB6D /* libfreetype.a in Frameworks */,
 				29AC14991A8BB909002DEB6D /* libtinyxml2.a in Frameworks */,
 				29AC148B1A8BB8A5002DEB6D /* libjpeg.a in Frameworks */,
@@ -2023,13 +2020,12 @@
 				29AC14D81A8C5E75002DEB6D /* libchipmunk.a in Frameworks */,
 				29AC14D91A8C5E75002DEB6D /* libcjson.a in Frameworks */,
 				29AC14DA1A8C5E75002DEB6D /* libconvertutf.a in Frameworks */,
+				29B01C771AB96CD800794448 /* liblua.a in Frameworks */,
 				29AC14DB1A8C5E75002DEB6D /* libcrypto.a in Frameworks */,
 				29AC14DC1A8C5E75002DEB6D /* libcurl.a in Frameworks */,
 				29AC14DD1A8C5E75002DEB6D /* libedtaa3func.a in Frameworks */,
-				29AC14DE1A8C5E75002DEB6D /* libflatbuffers.a in Frameworks */,
 				29AC14DF1A8C5E75002DEB6D /* libfreetype.a in Frameworks */,
 				29AC14E01A8C5E75002DEB6D /* libjpeg.a in Frameworks */,
-				29AC14E11A8C5E75002DEB6D /* liblua.a in Frameworks */,
 				29AC14E21A8C5E75002DEB6D /* libluajit.a in Frameworks */,
 				29AC15021A8C7DEE002DEB6D /* libminizip.a in Frameworks */,
 				29AC14E31A8C5E75002DEB6D /* libluasocket.a in Frameworks */,

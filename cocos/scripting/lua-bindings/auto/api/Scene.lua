@@ -26,12 +26,6 @@
         
 --------------------------------
 -- 
--- @function [parent=#Scene] init 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- 
 -- @function [parent=#Scene] initWithSize 
 -- @param self
 -- @param #size_table size
@@ -66,6 +60,12 @@
 -- @param #int tag
 -- @return Scene#Scene self (return value: cc.Scene)
 
+--------------------------------
+-- 
+-- @function [parent=#Scene] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
 --------------------------------
 -- 
 -- @function [parent=#Scene] getDescription 

@@ -1,7 +1,21 @@
-cocos2d-x-4.0alpha1 Mar.20 2015
+cocos2d-x-4.0alpha1 Mar.21 2015
+    [NEW]           Image: added windows image component support for Windows 8.1 Universal Apps
+    [NEW]           3rd: update libcurl to v7.40
+    [NEW]           3rd: update chipmunk to v6.2.2
+    [NEW]           3rd: update openssl to 1.0.1l
+    [NEW]           3rd: update png to 1.6.16
+    [NEW]           3rd: update freetype to 2.5.5
+    
+    [FIX]           AutoRelasePool: memory leak if adding an element into pool when releasing auto release pool
+    [FIX]           EditBox: have a 100 bytes input limit on windows
+    [FIX]           FileUtils: getWritablePath() will not return correct writable path on Mac & Windows
+    [FIX]           HttpResponse: reference count error that will cause assert error
     [FIX]           Label: shadow color is wrong
     [FIX]           Label: position is wrong if it is visited by a new camera
     [FIX]           MoveTo: disable `reverse()` because it is meaningless
+    [FIX]           MotionStreak: can not work with MoveTo/MoveBy
+    [FIX]           Performance: Lag if Director:setContentScaleFactor is called frequently
+    [FIX]           Remove cocostudio, cocosbuilder, spine
 
 cocos2d-x-4.0alph0 Feb.28 2015
     [NEW]           C++: merge JSB

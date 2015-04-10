@@ -9,7 +9,6 @@ if(COCOS_TARGET_SYSTEM_ANDROID)
 else()
     add_executable(${app_name} ${CMAKE_CURRENT_LIST_FILE})
 endif()
-cocos_tweak_target_output_directory(${app_name})
 set_target_properties(${app_name} PROPERTIES
     FOLDER "tests"
     )
@@ -147,9 +146,11 @@ elseif(COCOS_TARGET_SYSTEM_IOS)
         )
 endif()
 
+#===============================================================================
+# Copy resources.
 if(XCODE_VERSION)
     # Nothing to do.
-elseif(MSVC_IDE)
+elseif(MSVC_IDE AND COCOS_TARGET_SYSTEM_WINDOWS)
     cocos_add_copy_depends_dll_command(${app_name})
 
     # Copy resource folders to WorkingDir(is $(ProjectDir) in VS).

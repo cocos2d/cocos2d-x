@@ -50,9 +50,9 @@ public:
     
     void centerSprites(unsigned int numberOfSprites);
     
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
+    void restartCallback(Ref* sender) override;
+    void nextCallback(Ref* sender) override;
+    void backCallback(Ref* sender) override;
 
     void positionForTwo();
 };
@@ -60,7 +60,7 @@ public:
 class SpriteEase : public EaseSpriteDemo
 {
 public:
-    void onEnter();
+    void onEnter() override;
     virtual std::string subtitle() const override;
 
     void testStopAction(float dt);
@@ -69,126 +69,126 @@ public:
 class SpriteEaseInOut : public EaseSpriteDemo
 {
 public:
-    void onEnter();
+    void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
 class SpriteEaseExponential : public EaseSpriteDemo
 {
 public:
-    void onEnter();
+    void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
 class SpriteEaseExponentialInOut : public EaseSpriteDemo
 {
 public:
-    void onEnter();
+    void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
 class SpriteEaseSine : public EaseSpriteDemo
 {
 public:
-    void onEnter();
+    void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
 class SpriteEaseSineInOut : public EaseSpriteDemo
 {
 public:
-    void onEnter();
+    void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
 class SpriteEaseElastic : public EaseSpriteDemo
 {
 public:
-    void onEnter();
+    void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
 class SpriteEaseElasticInOut : public EaseSpriteDemo
 {
 public:
-    void onEnter();
+    void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
 class SpriteEaseBounce : public EaseSpriteDemo
 {
 public:
-    void onEnter();
+    void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
 class SpriteEaseBounceInOut : public EaseSpriteDemo
 {
 public:
-    void onEnter();
+    void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
 class SpriteEaseBack : public EaseSpriteDemo
 {
 public:
-    void onEnter();
+    void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
 class SpriteEaseBackInOut : public EaseSpriteDemo
 {
 public:
-    void onEnter();
+    void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
 class SpriteEaseBezier : public EaseSpriteDemo
 {
 public:
-    void onEnter();
+    void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
 class SpriteEaseQuadratic : public EaseSpriteDemo
 {
 public:
-    void onEnter();
+    void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
 class SpriteEaseQuadraticInOut : public EaseSpriteDemo
 {
 public:
-    void onEnter();
+    void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
 class SpriteEaseQuartic : public EaseSpriteDemo
 {
 public:
-    void onEnter();
+    void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
 class SpriteEaseQuarticInOut : public EaseSpriteDemo
 {
 public:
-    void onEnter();
+    void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
 class SpriteEaseQuintic : public EaseSpriteDemo
 {
 public:
-    void onEnter();
+    void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
 class SpriteEaseQuinticInOut : public EaseSpriteDemo
 {
 public:
-    void onEnter();
+    void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
@@ -196,34 +196,34 @@ public:
 class SpriteEaseCircle : public EaseSpriteDemo
 {
 public:
-    void onEnter();
+    void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
 class SpriteEaseCircleInOut : public EaseSpriteDemo
 {
 public:
-    void onEnter();
+    void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
 class SpriteEaseCubic : public EaseSpriteDemo
 {
 public:
-    void onEnter();
+    void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
 class SpriteEaseCubicInOut : public EaseSpriteDemo
 {
 public:
-    void onEnter();
+    void onEnter() override;
     virtual std::string title() const override;
 };
 class SpeedTest : public EaseSpriteDemo
 {
 public:
-    void onEnter();
+    void onEnter() override;
     virtual std::string subtitle() const override;
 
     void altertime(float dt);

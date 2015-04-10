@@ -903,6 +903,20 @@ void Label::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     }
 }
 
+void Label::setCameraMask(unsigned short mask, bool applyChildren)
+{
+    SpriteBatchNode::setCameraMask(mask, applyChildren);
+    
+    if (_textSprite)
+    {
+        _textSprite->setCameraMask(mask, applyChildren);
+    }
+    if (_shadowNode)
+    {
+        _shadowNode->setCameraMask(mask, applyChildren);
+    }
+}
+
 void Label::createSpriteForSystemFont()
 {
     _currentLabelType = LabelType::STRING_TEXTURE;
@@ -952,6 +966,7 @@ void Label::createSpriteForSystemFont()
     texture->initWithString(_originalUTF8String.c_str(),_fontDefinition);
 
     _textSprite = Sprite::createWithTexture(texture);
+    _textSprite->setCameraMask(this->getCameraMask());
     _textSprite->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
     this->setContentSize(_textSprite->getContentSize());
     texture->release();
@@ -1000,6 +1015,7 @@ void Label::createShadowSpriteForSystemFont()
         _shadowNode->setPosition(_shadowOffset.width, _shadowOffset.height);
         Node::addChild(_shadowNode, 0, Node::INVALID_TAG);
 
+        _shadowNode->setCameraMask(getCameraMask());
         _shadowNode->updateDisplayedColor(_displayedColor);
         _shadowNode->updateDisplayedOpacity(_displayedOpacity);
     }

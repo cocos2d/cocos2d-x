@@ -32,7 +32,7 @@
 #include "Manifest.h"
 #include "extensions/ExtensionMacros.h"
 #include "extensions/ExtensionExport.h"
-#include "json/document.h"
+#include "rapidjson/document.h"
 
 #include <string>
 #include <unordered_map>

@@ -263,26 +263,21 @@ cocos_load_prebuilt_package(chipmunk)
 cocos_load_prebuilt_package(cjson)
 cocos_load_prebuilt_package(convertutf)
 
-if(NOT COCOS_TARGET_SYSTEM_LINUX)
-    cocos_load_prebuilt_package(curl
+cocos_load_prebuilt_package(curl
         LIB_NAMES "curl" "libcurl_imp"
         DLL_NAME "libcurl.dll"
         )
-    cocos_load_prebuilt_package(openssl
+cocos_load_prebuilt_package(openssl
         LIB_NAMES "ssl" "libcurl_imp"
         DLL_NAME "ssleay32.dll"
         )
-    cocos_load_prebuilt_package(crypto
+cocos_load_prebuilt_package(crypto
         LIB_NAMES "crypto" "libcurl_imp"
         DLL_NAME "libeay32.dll"
         )
-    message(STATUS "Prebuilt package 'CURL' depends: CRYPTO, OPENSSL.")
-endif()
+message(STATUS "Prebuilt package 'CURL' depends: CRYPTO, OPENSSL.")
 
 cocos_load_prebuilt_package(edtaa3func)
-cocos_load_prebuilt_package(flatbufffers
-    LIB_NAMES "flatbuffer" "flatbuffers" "libflatbuffers"
-    )
 
 if(COCOS_TARGET_SYSTEM_LINUX)
     cocos_load_prebuilt_package(fmodex
@@ -300,9 +295,9 @@ cocos_load_prebuilt_package(freetype
     LIB_NAMES "freetype" "freetype250"
     )
 
-if(COCOS_TARGET_SYSTEM_WINDOWS)
+if(COCOS_TARGET_SYSTEM_WINDOWS OR COCOS_TARGET_SYSTEM_LINUX)
     cocos_load_prebuilt_package(glew
-        LIB_NAMES "glew32"
+        LIB_NAMES "glew32" "glew"
         DLL_NAME "glew32.dll"
         )
 endif()
@@ -330,9 +325,7 @@ cocos_load_prebuilt_package(jpeg)
 #cocos_load_prebuilt_package(json) #This package is all herder file.
 
 if(COCOS_TARGET_SYSTEM_IOS)
-    cocos_load_prebuilt_package(lua
-        INCLUDE_PATH "lua"
-        )
+    cocos_load_prebuilt_package(lua)
 endif()
 
 cocos_load_prebuilt_package(luajit
@@ -385,8 +378,9 @@ cocos_load_prebuilt_package(spidermonkey
     DLL_NAME "mozjs-28.dll"
     )
 
-if(COCOS_TARGET_SYSTEM_WINDOWS)
+if(COCOS_TARGET_SYSTEM_WINDOWS OR COCOS_TARGET_SYSTEM_LINUX)
     cocos_load_prebuilt_package(sqlite3
+        INCLUDE_PATH "sqlite3"
         LIB_NAMES "sqlite3"
         DLL_NAME "sqlite3.dll"
         )

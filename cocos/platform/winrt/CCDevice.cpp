@@ -35,6 +35,9 @@ THE SOFTWARE.
 using namespace Windows::Graphics::Display;
 using namespace Windows::Devices::Sensors;
 using namespace Windows::Foundation;
+#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
+using namespace Windows::Phone::Devices::Notification;
+#endif // (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
 
 NS_CC_BEGIN
 
@@ -170,8 +173,17 @@ void Device::setKeepScreenOn(bool value)
 
 void Device::vibrate(float duration)
 {
-    // See https://msdn.microsoft.com/en-us/library/windows/apps/windows.phone.devices.notification.vibrationdevice.aspx
+#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
+	Windows::Foundation::TimeSpan timespan;
+	// A time period expressed in 100-nanosecond units, see https://msdn.microsoft.com/en-us/library/windows/apps/windows.foundation.timespan.aspx
+	// The duration is limited to a maximum of 5 seconds, see https://msdn.microsoft.com/en-us/library/windows/apps/windows.phone.devices.notification.vibrationdevice.aspx
+	timespan.Duration = std::min(static_cast<int>(duration * 10000), 50000);
+
+	VibrationDevice^ testVibrationDevice = VibrationDevice::GetDefault(); 
+	testVibrationDevice->Vibrate(timespan); 
+#else
     CC_UNUSED_PARAM(duration);
+#endif // (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
 }
 
 NS_CC_END

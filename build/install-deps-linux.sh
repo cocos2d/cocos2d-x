@@ -22,12 +22,8 @@ DEPENDS+=' libgl2ps-dev'
 DEPENDS+=' libxi-dev'
 DEPENDS+=' g++-4.9'
 DEPENDS+=' libzip-dev'
-DEPENDS+=' libpng12-dev'
-DEPENDS+=' libcurl4-gnutls-dev'
 DEPENDS+=' libfontconfig1-dev'
-DEPENDS+=' libsqlite3-dev'
-DEPENDS+=' libglew-dev'
-DEPENDS+=' libssl-dev'
+DEPENDS+=' libjbig-dev'
 
 MISSING=
 echo "Checking for missing packages ..."

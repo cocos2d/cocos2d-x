@@ -21,118 +21,236 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 # ****************************************************************************/
-cmake_policy(SET CMP0017 NEW)
 
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.1)
 
 set(APP_NAME HelloLua)
-project (${APP_NAME})
+set(app_name ${APP_NAME})
+project(${app_name} VERSION 1.0.0)
 
 set(COCOS2D_ROOT ${CMAKE_SOURCE_DIR}/cocos2d-x)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${COCOS2D_ROOT}/cmake/Modules/")
+# Specify the project cmake module path and include CocosBuildHelpers.
+list(APPEND CMAKE_MODULE_PATH "${COCOS2D_ROOT}/cmake/Modules")
 include(CocosBuildHelpers)
 
-option(DEBUG_MODE "Debug or release?" ON)
+#===============================================================================
+# CMake settings for entire project.
 
-if(DEBUG_MODE)
-  set(CMAKE_BUILD_TYPE DEBUG)
-else(DEBUG_MODE)
-  set(CMAKE_BUILD_TYPE RELEASE)
-endif(DEBUG_MODE)
+set_property(GLOBAL PROPERTY USE_FOLDERS TRUE)
 
-
-# libcocos2d
-set(BUILD_CPP_TESTS OFF CACHE BOOL "turn off build cpp-tests")
-set(BUILD_LUA_TESTS OFF CACHE BOOL "turn off build lua-tests")
-set(BUILD_CPP_EMPTY_TESTS OFF CACHE BOOL "turn off build lua-tests")
-add_subdirectory(${COCOS2D_ROOT})
-
-
-# Some macro definitions
-if(WINDOWS)
-  if(BUILD_SHARED_LIBS)
-    ADD_DEFINITIONS (-D_USRDLL -D_EXPORT_DLL_ -D_USEGUIDLL -D_USREXDLL -D_USRSTUDIODLL)
-  else()
-    ADD_DEFINITIONS (-DCC_STATIC)
-  endif()
-
-  ADD_DEFINITIONS (-DCOCOS2DXWIN32_EXPORTS -D_WINDOWS -DWIN32 -D_WIN32)
-  set(PLATFORM_FOLDER win32)
-elseif(MACOSX OR APPLE)
-  ADD_DEFINITIONS (-DCC_TARGET_OS_MAC)
-  ADD_DEFINITIONS (-DUSE_FILE32API)
-  set(PLATFORM_FOLDER mac)
-elseif(LINUX)
-  ADD_DEFINITIONS(-DLINUX)
-  set(PLATFORM_FOLDER linux)
-elseif(ANDROID)
-  ADD_DEFINITIONS (-DUSE_FILE32API)
-  set(PLATFORM_FOLDER android)
-else()
-  message( FATAL_ERROR "Unsupported platform, CMake will exit" )
+# For multi-config IDE(e.g. VS, Xcode), set debug and release as default.
+# Takes effect in xcode but not in VS, maybe is a CMake's bug.
+if(CMAKE_CONFIGURATION_TYPES)
+    set(CMAKE_CONFIGURATION_TYPES
+        "Debug;Release"
+        CACHE STRING ""
+        FORCE
+        )
 endif()
 
-
-# Compiler options
-if(MSVC)
-  ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS
-                  -wd4251 -wd4244 -wd4334 -wd4005 -wd4820 -wd4710
-                  -wd4514 -wd4056 -wd4996 -wd4099)
-else()
-  set(CMAKE_C_FLAGS_DEBUG "-g -Wall -DCOCOS2D_DEBUG=1")
-  set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-exceptions -std=c99")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-exceptions -std=c++11 -Wno-deprecated-declarations -Wno-reorder")
-  if(CLANG)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
-  endif()
-endif(MSVC)
-
-set(GAME_SRC
-  runtime-src/proj.linux/main.cpp
-  runtime-src/Classes/AppDelegate.cpp
-)
-
-# architecture
-if ( CMAKE_SIZEOF_VOID_P EQUAL 8 )
-  set(ARCH_DIR "x86-64")
-elseif ( CMAKE_SIZEOF_VOID_P EQUAL 4 )
-  set(ARCH_DIR "i386")
-else()
-  message( FATAL_ERROR "Unsupported architecture, CMake will exit" )
+if(NOT CMAKE_BUILD_TYPE)
+    # For single config generator(e.g. Makefile), set release as default.
+    if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE "Release" CACHE STRING "")
+    endif()
 endif()
 
-include_directories(
-  runtime-src/Classes
-  ${COCOS2D_ROOT}/cocos
-  ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/manual
-  ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/manual/tolua
-  ${COCOS2D_ROOT}/cocos/audio/include
-  ${COCOS2D_ROOT}/external/${PLATFORM_FOLDER}/${ARCH_DIR}/include
-  ${COCOS2D_ROOT}/external/${PLATFORM_FOLDER}/${ARCH_DIR}/include/luajit
-)
+#===============================================================================
+# Include library target 'cocos2d'.
+add_subdirectory("${COCOS2D_ROOT}/cocos" "cocos")
+add_subdirectory("${COCOS2D_ROOT}/cocos/scripting/lua-bindings"
+    "cocos/scripting/lua-bindings"
+    )
 
-# add the executable
-add_executable(${APP_NAME} ${GAME_SRC})
+#===============================================================================
+# Define game target.
+if(COCOS_TARGET_SYSTEM_ANDROID)
+    add_library(${app_name} SHARED ${CMAKE_CURRENT_LIST_FILE})
+else()
+    add_executable(${app_name} ${CMAKE_CURRENT_LIST_FILE})
+endif()
 
-target_link_libraries(${APP_NAME} cocos2d luacocos2d)
+#===============================================================================
+# Add include directories.
+target_include_directories(${app_name} PRIVATE
+    "runtime-src/Classes"
+    )
 
-set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
+#===============================================================================
+# Add sources.
+cocos_target_sources(${app_name} GROUP "Classes" FILES
+    "runtime-src/Classes/AppDelegate.cpp"
+    "runtime-src/Classes/AppDelegate.h"
+    "runtime-src/Classes/lua_module_register.h"
+    )
 
-set_target_properties(${APP_NAME} PROPERTIES
-     RUNTIME_OUTPUT_DIRECTORY  "${APP_BIN_DIR}")
+cocos_target_sources(${app_name} GROUP "Classes\\ide-support" FILES
+    "runtime-src/Classes/ide-support/CodeIDESupport.h"
+    "runtime-src/Classes/ide-support/SimpleConfigParser.cpp"
+    "runtime-src/Classes/ide-support/SimpleConfigParser.h"
+    )
 
-pre_build(${APP_NAME}
-  COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../res ${APP_BIN_DIR}/Resources/res
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../src ${APP_BIN_DIR}/Resources/src
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/cocos2d ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/cocosdenshion ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/cocosbuilder ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/cocostudio ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/extension ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/network ${APP_BIN_DIR}/Resources
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_ROOT}/cocos/scripting/lua-bindings/script/ui ${APP_BIN_DIR}/Resources
-  )
-  
+if(COCOS_TARGET_SYSTEM_MACOSX)
+    set(platform_src
+        "runtime-src/proj.ios_mac/mac/ConsoleWindowController.h"
+        "runtime-src/proj.ios_mac/mac/ConsoleWindowController.cpp"
+        "runtime-src/proj.ios_mac/mac/main.cpp"
+        "runtime-src/proj.ios_mac/mac/SimulatorApp.h"
+        "runtime-src/proj.ios_mac/mac/SimulatorApp.cpp"
+        )
+elseif(COCOS_TARGET_SYSTEM_WINDOWS)
+    set(platform_src
+        "game.rc"
+        "runtime-src/proj.win32/main.cpp"
+        "runtime-src/proj.win32/main.h"
+        "runtime-src/proj.win32/resource.h"
+        "runtime-src/proj.win32/SimulatorWin.cpp"
+        "runtime-src/proj.win32/SimulatorWin.h"
+        "runtime-src/proj.win32/stdafx.cpp"
+        "runtime-src/proj.win32/stdafx.h"
+        "runtime-src/proj.win32/targetver.h"
+        )
+elseif(COCOS_TARGET_SYSTEM_LINUX)
+    set(platform_src
+        "runtime-src/proj.linux/main.cpp"
+        )
+elseif(COCOS_TARGET_SYSTEM_IOS)
+    set(platform_src
+        "runtime-src/proj.ios_mac/ios/AppController.h"
+        "runtime-src/proj.ios_mac/ios/AppController.mm"
+        "runtime-src/proj.ios_mac/ios/main.m"
+        "runtime-src/proj.ios_mac/ios/RootViewController.h"
+        "runtime-src/proj.ios_mac/ios/RootViewController.mm"
+        )
+elseif(COCOS_TARGET_SYSTEM_ANDROID)
+    set(platform_src
+        "runtime-src/proj.android/jni/hellolua/main.cpp"
+        )
+else()
+    message(FATAL_ERROR "${CMAKE_CURRENT_LIST_FILE} build on unsupport system.")
+endif()
+
+cocos_target_sources(${app_name} GROUP "proj" FILES ${platform_src})
+
+#===============================================================================
+# Project resource files list.
+file(GLOB_RECURSE app_resources "../res/*")
+file(GLOB_RECURSE app_scripts "../src/*")
+
+#===============================================================================
+# Link dependent libraries.
+target_link_libraries(${app_name} ${LUACOCOS2D_TARGET})
+
+#===============================================================================
+# Specific settings.
+if(COCOS_TARGET_SYSTEM_MACOSX)
+    # Add resources to xcodeproj.
+    cocos_target_resource(${app_name} GROUP "Resources\\res"
+        LOCATION "Resources/res"
+        FILES ${app_resources}
+        BASEDIR "../res"
+        )
+
+    cocos_target_resource(${app_name} GROUP "Resources\\src"
+        LOCATION "Resources/src"
+        FILES ${app_scripts}
+        BASEDIR "../src"
+        )
+
+    set_target_properties(${app_name} PROPERTIES
+        MACOSX_BUNDLE_BUNDLE_NAME "${app_name}"
+        MACOSX_BUNDLE_BUNDLE_VERSION "${PROJECT_VERSION}"
+        MACOSX_BUNDLE_LONG_VERSION_STRING "${PROJECT_VERSION}"
+        MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION}"
+        MACOSX_BUNDLE_GUI_IDENTIFIER "com.company.$(PRODUCT_NAME)"
+        MACOSX_BUNDLE_ICON_FILE "${CMAKE_CURRENT_LIST_DIR}/runtime-src/proj.ios_mac/mac/Icon.icns"
+        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_LIST_DIR}/runtime-src/proj.ios_mac/mac/InfoCMake.plist"
+        )
+elseif(COCOS_TARGET_SYSTEM_WINDOWS)
+    set_target_properties(${app_name} PROPERTIES 
+        LINK_FLAGS "/SUBSYSTEM:WINDOWS"
+        )
+elseif(COCOS_TARGET_SYSTEM_IOS)
+    # Add resources to xcodeproj.
+    cocos_target_resource(${app_name} GROUP "Resources\\res"
+        LOCATION "res"
+        FILES ${app_resources}
+        BASEDIR "../res"
+        )
+
+    cocos_target_resource(${app_name} GROUP "Resources\\src"
+        LOCATION "src"
+        FILES ${app_scripts}
+        BASEDIR "../src"
+        )
+
+    set(ios_res
+        "runtime-src/proj.ios_mac/ios/Default-568h@2x.png"
+        "runtime-src/proj.ios_mac/ios/Default-667h@2x.png"
+        "runtime-src/proj.ios_mac/ios/Default-736h@3x.png"
+        "runtime-src/proj.ios_mac/ios/Default.png"
+        "runtime-src/proj.ios_mac/ios/Default@2x.png"
+        "runtime-src/proj.ios_mac/ios/Icon-100.png"
+        "runtime-src/proj.ios_mac/ios/Icon-114.png"
+        "runtime-src/proj.ios_mac/ios/Icon-120.png"
+        "runtime-src/proj.ios_mac/ios/Icon-144.png"
+        "runtime-src/proj.ios_mac/ios/Icon-152.png"
+        "runtime-src/proj.ios_mac/ios/Icon-29.png"
+        "runtime-src/proj.ios_mac/ios/Icon-40.png"
+        "runtime-src/proj.ios_mac/ios/Icon-50.png"
+        "runtime-src/proj.ios_mac/ios/Icon-57.png"
+        "runtime-src/proj.ios_mac/ios/Icon-58.png"
+        "runtime-src/proj.ios_mac/ios/Icon-72.png"
+        "runtime-src/proj.ios_mac/ios/Icon-76.png"
+        "runtime-src/proj.ios_mac/ios/Icon-80.png"
+        )
+    cocos_target_resource(${app_name} GROUP "proj"
+        LOCATION "."
+        FLAT_TO_LOCATION TRUE
+        FILES ${ios_res}
+        )
+
+    set_target_properties(${app_name} PROPERTIES
+        MACOSX_BUNDLE_BUNDLE_NAME "${app_name}"
+        MACOSX_BUNDLE_BUNDLE_VERSION "${COCOS2D_X_VERSION}"
+        MACOSX_BUNDLE_GUI_IDENTIFIER "com.company.$(PRODUCT_NAME)"
+        MACOSX_BUNDLE_ICON_FILE "Icon-57.png"
+        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_LIST_DIR}/runtime-src/proj.ios_mac/ios/InfoCMake.plist"
+        MACOSX_BUNDLE_SHORT_VERSION_STRING "${COCOS2D_X_VERSION}"
+        )
+endif()
+
+#===============================================================================
+# Copy resources.
+if(XCODE_VERSION)
+    # Nothing to do.
+elseif(MSVC_IDE AND COCOS_TARGET_SYSTEM_WINDOWS)
+    cocos_add_copy_depends_dll_command(${app_name})
+
+    # Copy resource folders to WorkingDir(is $(ProjectDir) in VS).
+    file(TO_NATIVE_PATH "${CMAKE_CURRENT_LIST_DIR}/../res" res_dir)
+    file(TO_NATIVE_PATH "${CMAKE_CURRENT_LIST_DIR}/../src" src_dir)
+
+    add_custom_command(TARGET ${app_name} POST_BUILD
+        COMMAND xcopy /Y /Q /E
+        "\"${res_dir}\""
+        "\"$(ProjectDir)res\\\""
+        COMMAND xcopy /Y /Q /E
+        "\"${src_dir}\""
+        "\"$(ProjectDir)src\\\""
+        )
+elseif(COCOS_TARGET_SYSTEM_ANDROID)
+    # TODO
+else()
+    # Copy resource to executable directory.
+    add_custom_command(TARGET ${app_name} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory 
+        "${CMAKE_CURRENT_SOURCE_DIR}/../res"
+        "$<TARGET_FILE_DIR:${app_name}>/Resources/res"
+        COMMAND ${CMAKE_COMMAND} -E copy_directory 
+        "${CMAKE_CURRENT_SOURCE_DIR}/../src"
+        "$<TARGET_FILE_DIR:${app_name}>/Resources/src"
+        )
+endif()
+

@@ -13,10 +13,16 @@
     - [Windows](#windows)
     - [Linux](#linux)
   - [How to start a new game](#how-to-start-a-new-game)
-- [Notes](#notes)
-- [v4.0alpha0](#v40alpha0)
+- [v4.0alpha1](#v40alpha1)
+  - [Notes](#notes)
   - [Highlights](#highlights)
   - [Details](#details)
+    - [Windows image components(WIC)](#windows-image-componentswic)
+    - [Remove extension in cocos2d-x repo](#remove-extension-in-cocos2d-x-repo)
+- [v4.0alpha0](#v40alpha0)
+  - [Notes](#notes-1)
+  - [Highlights](#highlights-1)
+  - [Details](#details-1)
     - [Rendering: Draw call migrated to VertexData](#rendering-draw-call-migrated-to-vertexdata)
     - [Merge JSB](#merge-jsb)
     - [Deprecated function version](#deprecated-function-version)
@@ -110,12 +116,39 @@ Run
 ## How to start a new game
 
 Please refer to this document: [ReadMe](../README.md)
-#Notes
+
+#v4.0alpha1
+##Notes
+* Extensions `Cocostudio, Cocosbuilder and Spine` have been removed from cocos2d-x repo. It will be provided as a package in `Cocos Package Manager`.
+* MoveTo::reverse() function has been disabled.
+
+##Highlights
+* Using Window image components(WIC) to replace png, jpg and tiff lib on windows universal.
+* Upgrade 3rd libs: libcurl, chipmunk, openssl, png and freetype.
+* Fix memory leak in AutoReleasePool.
+
+##Details
+###Windows image components(WIC)
+Libpng, libjpeg and libtiff has beened used in cocos2d-x for read various image files. These functions has been provided in Windows Universal by WIC. By using this functions, we can remove the dependence on libpng,libjpeg and libtiff, which make game smaller. The interface of CCImages and CCTextures is kept the same as before.
+
+###Remove extension in cocos2d-x repo
+We have Extensions such as `Cocostudio`, `Cocosbuilder` and `Spine` in cocos2d-x repo, which make the time spent for building game project much more slowly, and it is useless if we do not use it in our game.
+
+In v3.x version, we have provided `Cocos package manager`, which is a framework for extensions based on cocos2d-x. It will make game engine more modularized. We are going to add these extension by it. 
+
+We have start the first step, removing the extensions source code. The next step will be adding them as packages. The usage will be very straightforward, taken `GAF` lib as an example:
+
+* create a project: `cocos new -l cpp`
+* download and install: `cocos package install gaf`
+* enter the game directory
+* add extensions: `cocos framework add gaf`
+
+# v4.0alpha0
+##Notes
 * Visual studio 2012 has been removed, Visual studio 2013 solution file is used instead, it provide better c++11 features.
 * Windows Phone 8.0 support has been removed.
 * Functions and classes which is deprecated in v2.x has been removed.
 
-# v4.0alpha0
 ##Highlights
 * Merge JSB
 * Rendering: Draw call migrated to VertexData

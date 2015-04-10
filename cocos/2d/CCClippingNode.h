@@ -104,6 +104,8 @@ public:
     virtual void onExit() override;
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
     
+    virtual void setCameraMask(unsigned short mask, bool applyChildren = true) override;
+    
 CC_CONSTRUCTOR_ACCESS:
     ClippingNode();
     
@@ -115,7 +117,7 @@ CC_CONSTRUCTOR_ACCESS:
 
     /** Initializes a clipping node without a stencil.
      */
-    virtual bool init();
+    virtual bool init() override;
     
     /** Initializes a clipping node with an other node as its stencil.
      The stencil node will be retained, and its parent will be set to this clipping node.

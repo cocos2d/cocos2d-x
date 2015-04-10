@@ -35,7 +35,6 @@ endif()
 # Define library target 'cocos2d'.
 set(COCOS2D_TARGET cocos2d CACHE INTERNAL "")
 add_library(${COCOS2D_TARGET} ${CMAKE_CURRENT_LIST_FILE})
-cocos_tweak_target_output_directory(${COCOS2D_TARGET})
 
 #===============================================================================
 # Set cocos public include directories.
@@ -127,7 +126,7 @@ elseif(COCOS_TARGET_SYSTEM_LINUX)
     # target_link_libraries(${COCOS2D_TARGET} Threads::Threads)
     #GLFW3 dependent libs
     target_link_libraries(${COCOS2D_TARGET}
-        rt m Xxf86vm X11 Xrandr Xi Xinerama Xcursor
+        rt m Xxf86vm X11 Xrandr Xi Xinerama Xcursor dl jbig
         )
 
 elseif(COCOS_TARGET_SYSTEM_IOS)

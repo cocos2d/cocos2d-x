@@ -50,10 +50,10 @@ class NodeCreateTest : public PerformceAllocScene
 public:
     CREATE_FUNC(NodeCreateTest);
 
-    virtual void updateQuantityOfNodes();
-    virtual void initWithQuantityOfNodes(unsigned int nNodes);
-    virtual void update(float dt);
-    virtual const char* testName();
+    virtual void updateQuantityOfNodes() override;
+    virtual void initWithQuantityOfNodes(unsigned int nNodes) override;
+    virtual void update(float dt) override;
+    virtual const char* testName() override;
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -64,10 +64,10 @@ class NodeDeallocTest : public PerformceAllocScene
 public:
     CREATE_FUNC(NodeDeallocTest);
 
-    virtual void updateQuantityOfNodes();
-    virtual void initWithQuantityOfNodes(unsigned int nNodes);
-    virtual void update(float dt);
-    virtual const char* testName();
+    virtual void updateQuantityOfNodes() override;
+    virtual void initWithQuantityOfNodes(unsigned int nNodes) override;
+    virtual void update(float dt) override;
+    virtual const char* testName() override;
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -78,10 +78,10 @@ class SpriteCreateEmptyTest : public PerformceAllocScene
 public:
     CREATE_FUNC(SpriteCreateEmptyTest);
 
-    virtual void updateQuantityOfNodes();
-    virtual void initWithQuantityOfNodes(unsigned int nNodes);
-    virtual void update(float dt);
-    virtual const char* testName();
+    virtual void updateQuantityOfNodes() override;
+    virtual void initWithQuantityOfNodes(unsigned int nNodes) override;
+    virtual void update(float dt) override;
+    virtual const char* testName() override;
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -92,10 +92,10 @@ class SpriteCreateTest : public PerformceAllocScene
 public:
     CREATE_FUNC(SpriteCreateTest);
 
-    virtual void updateQuantityOfNodes();
-    virtual void initWithQuantityOfNodes(unsigned int nNodes);
-    virtual void update(float dt);
-    virtual const char* testName();
+    virtual void updateQuantityOfNodes() override;
+    virtual void initWithQuantityOfNodes(unsigned int nNodes) override;
+    virtual void update(float dt) override;
+    virtual const char* testName() override;
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
@@ -106,10 +106,10 @@ class SpriteDeallocTest : public PerformceAllocScene
 public:
     CREATE_FUNC(SpriteDeallocTest);
 
-    virtual void updateQuantityOfNodes();
-    virtual void initWithQuantityOfNodes(unsigned int nNodes);
-    virtual void update(float dt);
-    virtual const char* testName();
+    virtual void updateQuantityOfNodes() override;
+    virtual void initWithQuantityOfNodes(unsigned int nNodes) override;
+    virtual void update(float dt) override;
+    virtual const char* testName() override;
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;

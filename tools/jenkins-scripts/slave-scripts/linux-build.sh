@@ -5,4 +5,4 @@ cd ${COCOS2DX_ROOT}
 mkdir linux-build
 cd linux-build
 cmake ..
-make -j4
+make -j 8

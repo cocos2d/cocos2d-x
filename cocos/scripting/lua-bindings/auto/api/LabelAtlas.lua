@@ -26,12 +26,6 @@
 
 --------------------------------
 -- 
--- @function [parent=#LabelAtlas] updateAtlasValues 
--- @param self
--- @return LabelAtlas#LabelAtlas self (return value: cc.LabelAtlas)
-        
---------------------------------
--- 
 -- @function [parent=#LabelAtlas] getString 
 -- @param self
 -- @return string#string ret (return value: string)
@@ -49,6 +43,12 @@
 -- @param #int startCharMap
 -- @return LabelAtlas#LabelAtlas ret (return value: cc.LabelAtlas)
 
+--------------------------------
+-- 
+-- @function [parent=#LabelAtlas] updateAtlasValues 
+-- @param self
+-- @return LabelAtlas#LabelAtlas self (return value: cc.LabelAtlas)
+        
 --------------------------------
 -- 
 -- @function [parent=#LabelAtlas] getDescription 
