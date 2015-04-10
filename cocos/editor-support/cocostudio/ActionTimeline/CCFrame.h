@@ -395,6 +395,23 @@ protected:
     int _zorder;
 };
 
+
+class CC_STUDIO_DLL BlendFuncFrame : public Frame
+{
+public:
+    static BlendFuncFrame* create();
+    
+    BlendFuncFrame();
+    
+    virtual void onEnter(Frame *nextFrame, int currentFrameIndex) override;
+    virtual Frame* clone() override;
+    
+    inline BlendFunc getBlendFunc() const { return _blendFunc; }
+    inline void setBlendFunc(BlendFunc blendFunc) { _blendFunc = blendFunc; }
+    
+protected:
+    BlendFunc  _blendFunc;
+};
 NS_TIMELINE_END
 
 
