@@ -54,6 +54,7 @@ class GLProgram;
 class GLProgramState;
 #if CC_USE_PHYSICS
 class PhysicsBody;
+class PhysicsWorld;
 #endif
 
 /**
@@ -1838,6 +1839,9 @@ protected:
     float _physicsRotation;
     bool _physicsTransformDirty;
     bool _updateTransformFromPhysics;
+
+    PhysicsWorld* _physicsWorld; /** The PhysicsWorld associated with the node.*/
+    int _physicsBodyAssociatedWith;  /** The count of PhysicsBody associated with the node and children.*/
 #endif
     
     // opacity controls
@@ -1862,7 +1866,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(Node);
     
 #if CC_USE_PHYSICS
-    friend class Layer;
+    friend class Scene;
 #endif //CC_USTPS
 };
 

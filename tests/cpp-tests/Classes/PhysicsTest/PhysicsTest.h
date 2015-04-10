@@ -259,6 +259,9 @@ public:
     
     bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
     
+private:
+    cocos2d::Sprite* _parentSprite;
+    cocos2d::Layer* _rootLayer;
 };
 
 class PhysicsIssue9959 : public PhysicsDemo
