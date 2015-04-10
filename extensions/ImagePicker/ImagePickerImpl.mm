@@ -1,4 +1,6 @@
-#include "cocos2d.h"
+// Image Picker for cocos2d-x
+// @Author: Kanglai Qian
+// @url: https://github.com/qiankanglai/ImagePicker
 
 #include "ImagePicker.h"
 #include "ImagePickerImpl.h"
@@ -7,6 +9,8 @@
 #include "ImagePicker-ios.h"
 static ImagePickerIOS *sharedPicker = [[[ImagePickerIOS alloc] init] retain];
 #endif
+
+#include "cocos2d.h"
 
 using namespace cocos2d;
 

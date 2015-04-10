@@ -57,9 +57,10 @@ void App::OnActivated(Windows::ApplicationModel::Activation::IActivatedEventArgs
 			delete[] bufferPtr;
 
 			Director::getInstance()->getScheduler()->performFunctionInCocosThread([image]{
-				// GL texture should be ensured context
 				Texture2D* texture = new Texture2D();
 				texture->initWithImage(image);
+				texture->autorelease();
+				image->release();
 
 				ImagePicker::getInstance()->finishImage(texture);
 			});

@@ -1,11 +1,16 @@
 #ifndef __ImagePicker__ImagePicker__
 #define __ImagePicker__ImagePicker__
 
-#include "cocos2d.h"
+#include "platform/CCPlatformMacros.h"
+
+NS_CC_BEGIN
+
+class Texture2D;
 
 class ImagePickerDelegate {
 public:
-    virtual void didFinishPickingWithResult(cocos2d::Texture2D* result) = 0;
+    virtual void didFinishPickingWithResult(Texture2D* result) = 0;
+    virtual ~ImagePickerDelegate() {};
 };
 
 class CC_DLL ImagePicker{
@@ -14,9 +19,11 @@ public:
     static ImagePicker *getInstance();
     
     void pickImage(ImagePickerDelegate *delegate);
-    void finishImage(cocos2d::Texture2D *image);
+    void finishImage(Texture2D *image);
 private:
     ImagePickerDelegate *_delegate;
 };
 
-#endif /* defined(__ImagePicker__ImagePicker__) */
+NS_CC_END
+
+#endif
