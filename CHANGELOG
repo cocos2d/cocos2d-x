@@ -1,4 +1,6 @@
 cocos2d-x-3.6beta0 Apr.14 2015
+    [NEW]           UI:Text: add `Text::disableEffect(Effect)` to disable a specific effect
+
     [FIX]           Renderer: RenderQueue command buffer optimizing
 
 cocos2d-x-3.6alpha0 Apr.8 2015
