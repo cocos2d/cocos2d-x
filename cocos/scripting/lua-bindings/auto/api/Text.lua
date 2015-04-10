@@ -28,11 +28,13 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
---  Disable shadow/outline/glow rendering.
--- @function [parent=#Text] disableEffect 
+-- @overload self, int         
+-- @overload self         
+-- @function [parent=#Text] disableEffect
 -- @param self
+-- @param #int effect
 -- @return Text#Text self (return value: ccui.Text)
-        
+
 --------------------------------
 --  Gets text color.<br>
 -- return Text color.
