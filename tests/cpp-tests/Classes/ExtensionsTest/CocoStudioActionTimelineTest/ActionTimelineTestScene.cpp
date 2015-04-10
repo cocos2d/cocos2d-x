@@ -18,6 +18,7 @@ CocoStudioActionTimelineTests::CocoStudioActionTimelineTests()
     ADD_TEST_CASE(TestTimelineProjectNode);
     ADD_TEST_CASE(TestProjectNodeForSimulator);
     ADD_TEST_CASE(TestTimelineNodeLoadedCallback);
+    ADD_TEST_CASE(TestActionTimelineEase);
 }
 
 CocoStudioActionTimelineTests::~CocoStudioActionTimelineTests()
@@ -293,4 +294,23 @@ void TestTimelineNodeLoadedCallback::nodeLoadedCallback(cocos2d::Ref *sender)
         CCLOG("node name = %s", node->getName().c_str());
         CCLOG("node parent name = %s", node->getParent()->getName().c_str());
     }
+}
+
+
+// TestActionTimelineEase
+void TestActionTimelineEase::onEnter()
+{
+    ActionTimelineBaseTest::onEnter();
+    
+    Node* node = CSLoader::createNode("ActionTimeline/ActionTimelineEase.csb");
+    ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/ActionTimelineEase.csb");
+    node->runAction(action);
+    action->gotoFrameAndPlay(0);
+    
+    addChild(node);
+}
+
+std::string TestActionTimelineEase::title() const
+{
+    return "Test ActionTimelineEase";
 }
