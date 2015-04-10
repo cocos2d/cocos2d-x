@@ -345,6 +345,8 @@ void Text::enableShadow(const Color4B& shadowColor,const Size &offset, int blurR
 void Text::enableOutline(const Color4B& outlineColor,int outlineSize)
 {
     _labelRenderer->enableOutline(outlineColor, outlineSize);
+    updateContentSizeWithTextureSize(_labelRenderer->getContentSize());
+    _labelRendererAdaptDirty = true;
 }
 
 void Text::enableGlow(const Color4B& glowColor)
@@ -356,11 +358,19 @@ void Text::enableGlow(const Color4B& glowColor)
 void Text::disableEffect()
 {
     _labelRenderer->disableEffect();
+    updateContentSizeWithTextureSize(_labelRenderer->getContentSize());
+    _labelRendererAdaptDirty = true;
 }
 
 void Text::disableEffect(LabelEffect effect)
 {
     _labelRenderer->disableEffect(effect);
+    //only outline effect will affect the content size of label
+    if(LabelEffect::OUTLINE == effect)
+    {
+        updateContentSizeWithTextureSize(_labelRenderer->getContentSize());
+        _labelRendererAdaptDirty = true;
+    }
 }
 
 Widget* Text::createCloneInstance()

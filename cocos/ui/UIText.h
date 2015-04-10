@@ -80,8 +80,13 @@ public:
     /**
      *  Create a Text object with textContent, fontName and fontSize.
      *  The fontName could be a system font name or a TTF file path.
-     *  Usage:  Text *text = Text::create("Hello", "Arial", 20);  //create a system font UIText.
-     *          Text *text = Text::create("Hello", "xxx\xxx.ttf", 20); //create a TTF font UIText.
+     *  Usage:
+     *  @code
+     *       //create a system font UIText.
+     *       Text *text = Text::create("Hello", "Arial", 20);
+     *       //create a TTF font UIText.
+     *       Text *text = Text::create("Hello", "xxx\xxx.ttf", 20);
+     *  @endcode
      *
      * @param textContent Text content string.
      * @param fontName A given font name.
@@ -97,7 +102,10 @@ public:
      *
      * @param text  String value.
      */
-    CC_DEPRECATED_ATTRIBUTE void setText(const std::string& text){this->setString(text);}
+    CC_DEPRECATED_ATTRIBUTE void setText(const std::string& text)
+    {
+        this->setString(text);
+    }
     void setString(const std::string& text);
 
     /**
@@ -105,13 +113,17 @@ public:
      *
      * @return String value.
      */
-    CC_DEPRECATED_ATTRIBUTE const std::string& getStringValue(){ return this->getString();}
+    CC_DEPRECATED_ATTRIBUTE const std::string& getStringValue()
+    {
+        return this->getString();
+    }
     const std::string& getString()const;
 
     /**
      * Gets the string length of the label.
      * Note: This length will be larger than the raw string length,
-     * if you want to get the raw string length, you should call this->getString().size() instead.
+     * if you want to get the raw string length,
+     * you should call this->getString().size() instead.
      *
      * @return  String length.
      */
@@ -135,9 +147,15 @@ public:
      * Sets the font name of label.
      *  If you are trying to use a system font, you could just pass a font name
      * If you are trying to use a TTF, you should pass a file path to the TTF file
-     * Usage:  Text *text = Text::create("Hello", "Arial", 20);  //create a system font UIText
-     *         text->setFontName("Marfelt");  // it will change the font  to  system font no matter the previous font type is TTF or system font
-     *         text->setFontName("xxxx/xxx.ttf"); //it will change the font  to TTF font no matter the previous font type is TTF or system font
+     * Usage:
+     * @code
+     *          //create a system font UIText
+     *         Text *text = Text::create("Hello", "Arial", 20);
+     *         // it will change the font to system font no matter the previous font type is TTF or system font
+     *         text->setFontName("Marfelt");
+     *         //it will change the font to TTF font no matter the previous font type is TTF or system font
+     *         text->setFontName("xxxx/xxx.ttf");
+     * @endcode
      * @param name Font name.
      */
     void setFontName(const std::string& name);
@@ -245,7 +263,9 @@ public:
      * @param offset The offset of shadow effect.
      * @param blurRadius The blur radius of shadow effect.
      */
-    void enableShadow(const Color4B& shadowColor = Color4B::BLACK,const Size &offset = Size(2,-2), int blurRadius = 0);
+    void enableShadow(const Color4B& shadowColor = Color4B::BLACK,
+                      const Size &offset = Size(2,-2),
+                      int blurRadius = 0);
 
     /**
      * Enable outline for the label.

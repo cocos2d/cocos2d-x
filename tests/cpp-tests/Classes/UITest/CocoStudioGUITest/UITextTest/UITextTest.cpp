@@ -134,13 +134,19 @@ bool UILabelTest_Effect::init()
 
         // create the label stroke and shadow
         Text* outline_label = Text::create();
-        outline_label->enableOutline(Color4B::GREEN, 4);
         outline_label->setString("Outline");
+        CCLOG("content size without outline: %f %f",
+              outline_label->getContentSize().width,
+              outline_label->getContentSize().height);
+        outline_label->enableOutline(Color4B::GREEN, 4);
         outline_label->setPosition(Vec2(widgetSize.width / 2.0f,
                                         widgetSize.height / 2.0f
                                       - shadow_label->getContentSize().height - 50));
 
         _uiLayer->addChild(outline_label);
+        CCLOG("content size after applying outline: %f %f",
+              outline_label->getContentSize().width,
+              outline_label->getContentSize().height);
 
         //create buttons to disable effect and add
         auto disableOutlineBtn= Button::create();
@@ -151,6 +157,9 @@ bool UILabelTest_Effect::init()
         disableOutlineBtn->setPressedActionEnabled(true);
         disableOutlineBtn->addClickEventListener([=](Ref*){
             outline_label->disableEffect(LabelEffect::OUTLINE);
+            CCLOG("content size after disable outline: %f %f",
+                  outline_label->getContentSize().width,
+                  outline_label->getContentSize().height);
         });
         this->addChild(disableOutlineBtn);
 
@@ -251,8 +260,6 @@ bool UITextTest_IgnoreConentSize::init()
         halighButton->setPosition(Vec2(widgetSize.width/2 - 50,
                                        widgetSize.height/2 - 50));
         _uiLayer->addChild(halighButton);
-
-
 
         return true;
     }
