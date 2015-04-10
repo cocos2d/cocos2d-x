@@ -1,3 +1,6 @@
+cocos2d-x-3.6beta0 Apr.14 2015
+    [FIX]           Renderer: RenderQueue command buffer optimizing
+
 cocos2d-x-3.6alpha0 Apr.8 2015
     [NEW]           3D: added texturecube support
     [NEW]           3D: added skybox support
