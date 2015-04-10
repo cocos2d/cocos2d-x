@@ -162,7 +162,7 @@ Sprite3DForceDepthTest::Sprite3DForceDepthTest()
 {
     auto orc = Sprite3D::create("Sprite3DTest/orc.c3b");
     orc->setScale(5);
-    orc->setNormalizedPosition(Vec2(.5,.3));
+    orc->setNormalizedPosition(Vec2(.5f,.3f));
     orc->setPositionZ(40);
     orc->setRotation3D(Vec3(0,180,0));
     orc->setGlobalZOrder(-1);
@@ -2130,7 +2130,7 @@ void QuaternionTest::addNewSpriteWithCoords(Vec2 p)
 void QuaternionTest::update(float delta)
 {
     _accAngle += delta * _arcSpeed;
-    const float pi = M_PI;
+    const float pi = (float)M_PI;
     if (_accAngle >= 2 * pi)
         _accAngle -= 2 * pi;
     
