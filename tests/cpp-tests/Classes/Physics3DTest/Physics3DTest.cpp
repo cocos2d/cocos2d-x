@@ -38,6 +38,7 @@ enum
 
 static int sceneIdx = -1;
 #define PARTICLE_SYSTEM_TAG 0x0001
+static Scene* physicsScene = nullptr;
 
 static std::function<Layer*()> createFunctions[] =
 {
@@ -88,6 +89,7 @@ Physics3DTestScene::Physics3DTestScene()
 #endif
 {
     getPhysics3DWorld()->setDebugDrawEnable(true);
+    physicsScene = this;
 }
 
 void Physics3DTestDemo::restartCallback( Ref* sender )
@@ -207,7 +209,7 @@ bool BasicPhysics3DDemo::init()
     //node->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(node);
 
-    Director::getInstance()->getRunningScene()->setPhysics3DDebugCamera(_camera);
+    physicsScene->setPhysics3DDebugCamera(_camera);
 
     return true;
 }

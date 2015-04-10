@@ -174,7 +174,7 @@ void Physics3DWorld::stepSimulate(float dt)
 
 void Physics3DWorld::debugDraw(Renderer* renderer)
 {
-    if (_debugDrawer && _btPhyiscsWorld->getDebugDrawer())
+    if (_debugDrawer)
     {
         _debugDrawer->clear();
         _btPhyiscsWorld->debugDrawWorld();
