@@ -97,6 +97,7 @@ struct CC_EX_DLL Physics3DRigidBodyDes
 };
 class CC_EX_DLL Physics3DRigidBody : public Physics3DObject
 {
+    friend class Physics3DWorld;
 public:
     
     static Physics3DRigidBody* create(Physics3DRigidBodyDes* info);
@@ -143,24 +144,25 @@ public:
     float getRollingFriction() const;
     void setHitFraction(float hitFraction);
     float getHitFraction() const;
-
-    void addConstraint(Physics3DConstraint *constraint);
-    void removeConstraint(Physics3DConstraint *constraint);
-    void removeConstraint(unsigned int idx);
-    Physics3DConstraint* getConstraint(unsigned int idx) const;
-    unsigned int getConstraintCount() const;
     
     void setKinematic(bool kinematic);
     
     bool isKinematic() const;
     
     virtual cocos2d::Mat4 getWorldTransform() const override;
+    
+    Physics3DConstraint* getConstraint(unsigned int idx) const;
+    unsigned int getConstraintCount() const;
 
 CC_CONSTRUCTOR_ACCESS:
     Physics3DRigidBody();
     virtual ~Physics3DRigidBody();
     
     bool init(Physics3DRigidBodyDes* info);
+    
+    void addConstraint(Physics3DConstraint *constraint);
+    void removeConstraint(Physics3DConstraint *constraint);
+    void removeConstraint(unsigned int idx);
     
 protected:
     btRigidBody* _btRigidBody;

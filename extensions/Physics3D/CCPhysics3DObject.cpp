@@ -43,6 +43,14 @@ Physics3DRigidBody::Physics3DRigidBody()
 
 Physics3DRigidBody::~Physics3DRigidBody()
 {
+    if (_physicsWorld)
+    {
+        for(auto constraint : _constraintList)
+        {
+            _physicsWorld->removePhysics3DConstraint(constraint);
+        }
+        _constraintList.clear();
+    }
     CC_SAFE_DELETE(_btRigidBody);
     CC_SAFE_RELEASE(_physics3DShape);
 }
@@ -273,8 +281,7 @@ void Physics3DRigidBody::addConstraint( Physics3DConstraint *constraint )
     auto iter = std::find(_constraintList.begin(), _constraintList.end(), constraint);
     if (iter == _constraintList.end()){
         _constraintList.push_back(constraint);
-        //_btRigidBody->addConstraintRef(constraint->get);
-        //TODO: FIXME
+        constraint->retain();
     }
 }
 
@@ -282,18 +289,15 @@ void Physics3DRigidBody::removeConstraint( Physics3DConstraint *constraint )
 {
     auto iter = std::find(_constraintList.begin(), _constraintList.end(), constraint);
     if (iter != _constraintList.end()){
-        //removeConstraint(iter - _constraintList.begin());
+        constraint->release();
         _constraintList.erase(iter);
-        //TODO: FIXME
     }
 }
 
 void Physics3DRigidBody::removeConstraint( unsigned int idx )
 {
     CCASSERT(idx < _constraintList.size(), "idx < _constraintList.size()");
-    //_btRigidBody->removeConstraintRef(_constraintList[idx]->get);
-    _constraintList.erase(_constraintList.begin() + idx);
-    //TODO: FIXME
+    removeConstraint(_constraintList[idx]);
 }
 
 Physics3DConstraint* Physics3DRigidBody::getConstraint( unsigned int idx ) const

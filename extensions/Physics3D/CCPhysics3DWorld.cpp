@@ -41,8 +41,9 @@ Physics3DWorld::Physics3DWorld()
 }
 Physics3DWorld::~Physics3DWorld()
 {
-    removeAllPhysics3DObjects();
     removeAllPhysics3DConstraints();
+    removeAllPhysics3DObjects();
+
     CC_SAFE_DELETE(_collisionConfiguration);
     CC_SAFE_DELETE(_dispatcher);
     CC_SAFE_DELETE(_broadphase);
@@ -144,16 +145,40 @@ void Physics3DWorld::removeAllPhysics3DObjects()
 
 void Physics3DWorld::addPhysics3DConstraint(Physics3DConstraint* constraint)
 {
-    
+    constraint->getBodyA()->addConstraint(constraint);
+    auto body = constraint->getBodyB();
+    if (body)
+    {
+        body->addConstraint(constraint);
+    }
+    _btPhyiscsWorld->addConstraint(constraint->getbtContraint());
 }
 
 void Physics3DWorld::removePhysics3DConstraint(Physics3DConstraint* constraint)
 {
-    
+    constraint->getBodyA()->removeConstraint(constraint);
+    auto body = constraint->getBodyB();
+    if (body)
+    {
+        body->removeConstraint(constraint);
+    }
+    _btPhyiscsWorld->removeConstraint(constraint->getbtContraint());
 }
 
 void Physics3DWorld::removeAllPhysics3DConstraints()
 {
+    for(auto it : _objects)
+    {
+        auto type = it->getObjType();
+        if (type == Physics3DObject::PhysicsObjType::RIGID_BODY)
+        {
+            auto& constraints = static_cast<Physics3DRigidBody*>(it)->_constraintList;
+            for (auto constraint : constraints) {
+                _btPhyiscsWorld->removeConstraint(constraint->getbtContraint());
+            }
+            constraints.clear();
+        }
+    }
     
 }
 
@@ -184,18 +209,6 @@ void Physics3DWorld::debugDraw(Renderer* renderer)
         _debugDrawer->draw(renderer);
     }
 }
-
-#if (CC_ENABLE_BULLET_INTEGRATION)
-void Physics3DWorld::removebtRigidBody(btRigidBody* rigid)
-{
-    _btPhyiscsWorld->removeRigidBody(rigid);
-}
-
-void Physics3DWorld::addbtRigidBody(btRigidBody* rigid)
-{
-    _btPhyiscsWorld->addRigidBody(rigid);
-}
-#endif
 
 NS_CC_EXT_END
 

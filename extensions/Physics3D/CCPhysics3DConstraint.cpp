@@ -30,7 +30,116 @@
 
 NS_CC_EXT_BEGIN
 
+Physics3DConstraint::Physics3DConstraint()
+: _bodyA(nullptr)
+, _bodyB(nullptr)
+, _constraint(nullptr)
+, _type(Physics3DConstraint::ConstraintType::UNKNOWN)
+, _userData(nullptr)
+{
+    
+}
 
+Physics3DConstraint::~Physics3DConstraint()
+{
+    CC_SAFE_DELETE(_constraint);
+}
+
+float Physics3DConstraint::getBreakingImpulse() const
+{
+    return _constraint->getBreakingImpulseThreshold();
+}
+
+void Physics3DConstraint::setBreakingImpulse(float impulse)
+{
+    _constraint->setBreakingImpulseThreshold(impulse);
+}
+
+bool Physics3DConstraint::isEnabled() const
+{
+    return _constraint->isEnabled();
+}
+
+void Physics3DConstraint::setEnabled(bool enabled)
+{
+    return _constraint->setEnabled(enabled);
+}
+
+Physics3DPointToPointConstraint* Physics3DPointToPointConstraint::create(Physics3DRigidBody* rbA, const cocos2d::Vec3& pivotPointInA)
+{
+    auto ret = new (std::nothrow) Physics3DPointToPointConstraint();
+    if (ret && ret->init(rbA, pivotPointInA))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    
+    CC_SAFE_DELETE(ret);
+    return ret;
+}
+
+
+Physics3DPointToPointConstraint* Physics3DPointToPointConstraint::create(Physics3DRigidBody* rbA, Physics3DRigidBody* rbB, const cocos2d::Vec3& pivotPointInA, const cocos2d::Vec3& pivotPointInB)
+{
+    auto ret = new (std::nothrow) Physics3DPointToPointConstraint();
+    if (ret && ret->init(rbA, rbB, pivotPointInA, pivotPointInB))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    
+    CC_SAFE_DELETE(ret);
+    return ret;
+}
+
+bool Physics3DPointToPointConstraint::init(Physics3DRigidBody* rbA, const cocos2d::Vec3& pivotPointInA)
+{
+    
+    _constraint = new btPoint2PointConstraint(*rbA->getRigidBody(), convertVec3TobtVector3(pivotPointInA));
+    
+    return true;
+}
+
+bool Physics3DPointToPointConstraint::init(Physics3DRigidBody* rbA, Physics3DRigidBody* rbB, const cocos2d::Vec3& pivotPointInA, const cocos2d::Vec3& pivotPointInB)
+{
+    _constraint = new btPoint2PointConstraint(*rbA->getRigidBody(), *rbB->getRigidBody(), convertVec3TobtVector3(pivotPointInA), convertVec3TobtVector3(pivotPointInB));
+    
+    return true;
+}
+
+void	Physics3DPointToPointConstraint::setPivotPointInA(const cocos2d::Vec3& pivotA)
+{
+    auto point = convertVec3TobtVector3(pivotA);
+    static_cast<btPoint2PointConstraint*>(_constraint)->setPivotA(point);
+}
+
+void	Physics3DPointToPointConstraint::setPivotPointInB(const cocos2d::Vec3&& pivotB)
+{
+    auto point = convertVec3TobtVector3(pivotB);
+    static_cast<btPoint2PointConstraint*>(_constraint)->setPivotB(point);
+}
+
+cocos2d::Vec3 Physics3DPointToPointConstraint::getPivotPointInA() const
+{
+    const auto& point = static_cast<btPoint2PointConstraint*>(_constraint)->getPivotInA();
+    return convertbtVector3ToVec3(point);
+}
+
+cocos2d::Vec3 Physics3DPointToPointConstraint::getPivotPointInB() const
+{
+    const auto& point = static_cast<btPoint2PointConstraint*>(_constraint)->getPivotInB();
+    return convertbtVector3ToVec3(point);
+}
+
+Physics3DPointToPointConstraint::Physics3DPointToPointConstraint()
+{
+    _type = Physics3DConstraint::ConstraintType::POINT_TO_POINT;
+}
+
+Physics3DPointToPointConstraint::~Physics3DPointToPointConstraint()
+{
+    
+}
 
 NS_CC_EXT_END
 

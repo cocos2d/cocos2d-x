@@ -87,10 +87,8 @@ public:
     
     void debugDraw(cocos2d::Renderer* renderer);
     
-#if (CC_ENABLE_BULLET_INTEGRATION)
-    void removebtRigidBody(btRigidBody* rigid);
-    void addbtRigidBody(btRigidBody* rigid);
-#endif
+    const std::vector<Physics3DObject*>& getPhysicsObjects() const { return _objects; }
+    
     
 CC_CONSTRUCTOR_ACCESS:
     
@@ -101,7 +99,6 @@ CC_CONSTRUCTOR_ACCESS:
     
 protected:
     std::vector<Physics3DObject*>      _objects;
-    std::vector<Physics3DConstraint*>  _constraints;
     std::vector<Physics3DComponent*>   _physicsComponents; //physics3d components
     
 #if (CC_ENABLE_BULLET_INTEGRATION)
