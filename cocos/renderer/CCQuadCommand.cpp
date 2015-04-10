@@ -45,6 +45,7 @@ QuadCommand::QuadCommand()
 ,_quads(nullptr)
 ,_quadsCount(0)
 ,_material(nullptr)
+,_multiplePass(false)
 {
     _type = RenderCommand::Type::QUAD_COMMAND;
 }
@@ -102,6 +103,9 @@ QuadCommand::~QuadCommand()
 
 void QuadCommand::generateMaterialID()
 {
+    _skipBatching = false;
+    _multiplePass = false;
+    
     if (_material)
     {
         auto technique = _material->getTechnique();
@@ -114,6 +118,8 @@ void QuadCommand::generateMaterialID()
         else
         {
             _materialID = Renderer::MATERIAL_ID_DO_NOT_BATCH;
+            _skipBatching = true;
+            _multiplePass = true;
         }
     }
     else
@@ -128,12 +134,15 @@ void QuadCommand::generateMaterialID()
         else
         {
             _materialID = Renderer::MATERIAL_ID_DO_NOT_BATCH;
+            _skipBatching = true;
         }
     }
 }
 
 void QuadCommand::useMaterial() const
 {
+    CCASSERT(!_multiplePass, "Material with multiple passes cannot be bound");
+
     if (!_material) {
         //Set texture
         GL::bindTexture2D(_textureID);
@@ -142,6 +151,8 @@ void QuadCommand::useMaterial() const
         GL::blendFunc(_blendType.src, _blendType.dst);
         
         _glProgramState->apply(_mv);
+    } else {
+        _material->getTechnique()->getPassByIndex(0)->bind(_mv);
     }
 }
 

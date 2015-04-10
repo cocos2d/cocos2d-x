@@ -81,6 +81,7 @@ public:
     Technique* getTechnique() const;
 
 protected:
+    Material(GLProgramState *state);
     Material();
     ~Material();
 
@@ -89,6 +90,8 @@ protected:
 
     // array of techniques
     Vector<Technique*> _techniques;
+
+    // weak pointer since it is being help by _techniques
     Technique* _currentTechnique;
 };
 

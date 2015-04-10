@@ -31,6 +31,8 @@
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCTexture2D.h"
+#include "renderer/ccGLStateCache.h"
+
 #include "base/ccTypes.h"
 
 #include <xxhash.h>
@@ -76,6 +78,22 @@ uint32_t Pass::getHash() const
     }
 
     return _hash;
+}
+
+void Pass::bind(const Mat4& modelView)
+{
+    GL::bindTexture2D(_textureID->getName());
+
+    //set blend mode
+    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+
+    _glProgramState->apply(modelView);
+
+}
+
+void Pass::unbind()
+{
+
 }
 
 NS_CC_END

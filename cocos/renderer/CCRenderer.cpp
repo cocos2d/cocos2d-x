@@ -32,9 +32,13 @@
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCPrimitiveCommand.h"
-#include "renderer/CCGLProgramCache.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCMeshCommand.h"
+#include "renderer/CCGLProgramCache.h"
+#include "renderer/CCMaterial.h"
+#include "renderer/CCTechnique.h"
+#include "renderer/CCPass.h"
+#include "renderer/ccGLStateCache.h"
+
 #include "base/CCConfiguration.h"
 #include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"
@@ -834,7 +838,7 @@ void Renderer::drawBatchedQuads()
 {
     //TODO: we can improve the draw performance by insert material switching command before hand.
     
-    int indexToDraw = 0;
+    ssize_t indexToDraw = 0;
     int startIndex = 0;
     
     //Upload buffer to VBO
@@ -893,7 +897,7 @@ void Renderer::drawBatchedQuads()
         auto newMaterialID = cmd->getMaterialID();
         if(_lastMaterialID != newMaterialID || newMaterialID == MATERIAL_ID_DO_NOT_BATCH)
         {
-            //Draw quads
+            //Draw previous quads
             if(indexToDraw > 0)
             {
                 glDrawElements(GL_TRIANGLES, (GLsizei) indexToDraw, GL_UNSIGNED_SHORT, (GLvoid*) (startIndex*sizeof(_indices[0])) );
@@ -905,8 +909,26 @@ void Renderer::drawBatchedQuads()
             }
             
             //Use new material
-            cmd->useMaterial();
             _lastMaterialID = newMaterialID;
+
+            if (cmd->isMultiplePass()) {
+
+                indexToDraw = cmd->getQuadCount() * 6;
+
+                for(auto& pass : cmd->getMaterial()->getTechnique()->_passes) {
+
+                    pass->bind(cmd->getModelView());
+
+                    glDrawElements(GL_TRIANGLES, (GLsizei) indexToDraw, GL_UNSIGNED_SHORT, (GLvoid*) (startIndex*sizeof(_indices[0])) );
+                    _drawnBatches++;
+                    _drawnVertices += indexToDraw;
+
+                    pass->unbind();
+                }
+
+            } else {
+                cmd->useMaterial();
+            }
         }
         
         indexToDraw += cmd->getQuadCount() * 6;

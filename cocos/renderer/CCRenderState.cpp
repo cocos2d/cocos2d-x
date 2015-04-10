@@ -39,6 +39,8 @@ RenderState* RenderState::create(RenderState* parent)
 
 RenderState::RenderState()
 : _parent(nullptr)
+, _blendFunc(BlendFunc::DISABLE)
+, _textureID(0)
 , _hash(0)
 , _hashDirty(true)
 {

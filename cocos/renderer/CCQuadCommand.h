@@ -86,6 +86,7 @@ public:
     inline const Mat4& getModelView() const { return _mv; }
 
     Material* getMaterial() const { return _material; }
+    bool isMultiplePass() const { return _multiplePass; }
     
 protected:
     /**Generate the material ID by textureID, glProgramState, and blend function.*/
@@ -107,6 +108,7 @@ protected:
     Mat4 _mv;
 
     Material* _material;
+    bool _multiplePass;
 };
 
 NS_CC_END

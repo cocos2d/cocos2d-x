@@ -43,6 +43,8 @@ class GLProgramState;
 /// Technique
 class CC_DLL Technique : public RenderState
 {
+    friend class Renderer;
+
 public:
     /** Creates a new Technique with a GLProgramState.
      Method added to support legacy code

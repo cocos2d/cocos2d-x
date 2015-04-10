@@ -52,7 +52,7 @@ public:
     /** Binds the GLProgramState and the RenderState.
      This method must be called before call the actuall draw call.
      */
-    void bind();
+    void bind(const Mat4& modelView);
 
     /** Unbinds the Pass.
      This method must be called AFTER calling the actuall draw call

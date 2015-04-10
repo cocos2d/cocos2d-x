@@ -40,7 +40,16 @@ Material* Material::createWithFilename(const std::string& path)
 
 Material* Material::createWithGLStateProgram(GLProgramState* programState)
 {
-    return nullptr;
+    return new (std::nothrow) Material(programState);
+}
+
+Material::Material(cocos2d::GLProgramState *state)
+{
+    auto technique = Technique::createWithGLProgramState(state);
+    _techniques.pushBack(technique);
+
+    // weak pointer
+    _currentTechnique = technique;
 }
 
 std::string Material::getName() const
