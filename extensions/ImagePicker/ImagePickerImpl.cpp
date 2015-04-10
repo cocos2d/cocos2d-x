@@ -3,11 +3,11 @@
 #include "ImagePicker.h"
 #include "ImagePickerImpl.h"
 
+using namespace cocos2d;
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include <jni.h>
 #include "jni/JniHelper.h"
-
-using namespace cocos2d;
 
 extern "C" {
     void Java_org_cocos2dx_lib_Cocos2dxImagePicker_ImagePickerResult(JNIEnv *env, jobject thiz, jbyteArray array)
@@ -18,7 +18,7 @@ extern "C" {
             Image *image =new Image();
             image->initWithImageData((unsigned char*)bufferPtr, lengthOfArray);
 
-            cocos2d::Director::getInstance()->getScheduler()->performFunctionInCocosThread([image]{
+            Director::getInstance()->getScheduler()->performFunctionInCocosThread([image]{
                 // GL texture should be ensured context
                 Texture2D* texture = new Texture2D();
                 texture->initWithImage(image);
@@ -27,13 +27,24 @@ extern "C" {
             });
         }
         else{
-            cocos2d::Director::getInstance()->getScheduler()->performFunctionInCocosThread([]{
+            Director::getInstance()->getScheduler()->performFunctionInCocosThread([]{
                 ImagePicker::getInstance()->finishImage(nullptr);
             });
         }
         env->ReleaseByteArrayElements(array, bufferPtr, 0);  
     }
 }
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#include <ppltasks.h>
+
+using namespace concurrency;
+using namespace Platform;
+using namespace Windows::ApplicationModel::Core;
+using namespace Windows::Storage;
+using namespace Windows::Storage::Pickers;
+using namespace Windows::Storage::Streams;
+using namespace Windows::UI::Core;
+
 #endif
 
 void ImagePickerImpl::openImage()
@@ -49,7 +60,7 @@ void ImagePickerImpl::openImage()
     else
         ImagePicker::getInstance()->finishImage(nullptr);
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-	auto glView = cocos2d::Director::getInstance()->getOpenGLView();
+	auto glView = Director::getInstance()->getOpenGLView();
     HWND hwnd = glView->getWin32Window();
     
 	OPENFILENAME ofn;       // common dialog box structure
@@ -73,12 +84,69 @@ void ImagePickerImpl::openImage()
 		const char DefChar = ' ';
 		WideCharToMultiByte(CP_ACP,0,szFile,-1, temp,256, &DefChar, NULL);
         
-		cocos2d::Texture2D* texture = cocos2d::Director::getInstance()->getTextureCache()->addImage(std::string(temp));
+		Texture2D* texture = Director::getInstance()->getTextureCache()->addImage(std::string(temp));
 		ImagePicker::getInstance()->finishImage(texture);
 	}
 	else{
 		ImagePicker::getInstance()->finishImage(nullptr);
 	}
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+	CoreApplication::MainView->CoreWindow->Dispatcher->RunAsync(
+		CoreDispatcherPriority::High,
+		ref new DispatchedHandler([]()
+	{
+		// **ATTANTION**: direct call `PickSingleFileAsync` in render loop will crash
+		//http://sertacozercan.com/2013/10/fixing-element-not-found-exception-from-hresult-0x80070490-error-in-windows-8-x/
+		FileOpenPicker^ openPicker = ref new FileOpenPicker();
+		openPicker->ViewMode = PickerViewMode::Thumbnail;
+		openPicker->SuggestedStartLocation = PickerLocationId::PicturesLibrary;
+		openPicker->FileTypeFilter->Append(".png");
+		openPicker->FileTypeFilter->Append(".jpg");
+		openPicker->FileTypeFilter->Append(".jpeg");
+#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
+		static bool initialized = false;
+		if(!initialized)
+		{
+			initialized = true;
+			//PhoneApplicationService.Current.ContractActivated += Application_ContractActivated;
+		}
+		openPicker->PickSingleFileAndContinue();
+
+
+#else
+		auto dataReader = std::make_shared<DataReader^>(nullptr);
+		create_task(openPicker->PickSingleFileAsync()).then([](StorageFile^ file)
+		{
+			if (file == nullptr)
+			{
+				Director::getInstance()->getScheduler()->performFunctionInCocosThread([]{
+					ImagePicker::getInstance()->finishImage(nullptr);
+				});
+				cancel_current_task();
+			}
+			return file->OpenAsync(Windows::Storage::FileAccessMode::Read);
+		}).then([dataReader](Windows::Storage::Streams::IRandomAccessStream^ fileStream)
+		{
+			*dataReader = ref new DataReader(fileStream->GetInputStreamAt(0));
+			return (*dataReader)->LoadAsync(fileStream->Size);
+		}).then([dataReader](unsigned int bytes)
+		{
+			unsigned char* bufferPtr = new unsigned char[bytes];
+			(*dataReader)->ReadBytes(ArrayReference<unsigned char>(bufferPtr, bytes));
+			Image *image = new Image();
+			image->initWithImageData((unsigned char*)bufferPtr, bytes);
+			delete[] bufferPtr;
+
+			Director::getInstance()->getScheduler()->performFunctionInCocosThread([image]{
+				// GL texture should be ensured context
+				Texture2D* texture = new Texture2D();
+				texture->initWithImage(image);
+
+				ImagePicker::getInstance()->finishImage(texture);
+			});
+		});
+#endif
+	}));
 #else
     CCLOG("ImagePickerImpl: unsupported yet");
     ImagePicker::getInstance()->finishImage(nullptr);

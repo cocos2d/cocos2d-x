@@ -12,6 +12,10 @@ namespace cocos2d
         App();
         virtual void OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEventArgs^ e) override;
 
+#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
+	protected:
+		virtual void OnActivated(Windows::ApplicationModel::Activation::IActivatedEventArgs ^ args) override;
+#endif
     private:
         OpenGLESPage^ mPage;
         OpenGLES mOpenGLES;
