@@ -284,15 +284,11 @@ void PURibbonTrail::updateTrail(size_t index, const Node* node)
         Element& nextElem = _chainElementList[seg.start + nextElemIdx];
 
         // Vary the head elem, but bake new version if that exceeds element len
-        Mat4 toWMat = node->getNodeToWorldTransform();
-        Vec3 newPos(toWMat.m[12], toWMat.m[13], toWMat.m[14]);
+        Vec3 newPos = node->getPosition3D();
         if (_parentNode)
         {
-            Mat4 toLMat = _parentNode->getWorldToNodeTransform() * toWMat;
             // Transform position to ourself space
-            newPos.x = (toLMat).m[12];
-            newPos.y = (toLMat).m[13];
-            newPos.z = (toLMat).m[14];
+            _parentNode->getWorldToNodeTransform().transformPoint(newPos, &newPos);
         }
         Vec3 diff = newPos - nextElem.position;
         float sqlen = diff.lengthSquared();
@@ -344,7 +340,7 @@ void PURibbonTrail::updateTrail(size_t index, const Node* node)
         }
     } // end while
 
-
+    _vertexContentDirty = true;
     // Need to dirty the parent node, but can't do it using needUpdate() here 
     // since we're in the middle of the scene graph update (node listener), 
     // so re-entrant calls don't work. Queue.
@@ -393,15 +389,11 @@ void PURibbonTrail::resetTrail(size_t index, const Node* node)
     seg.head = seg.tail = SEGMENT_EMPTY;
     // Create new element, v coord is always 0.0f
     // need to convert to take parent node's position into account
-    Mat4 toWMat = node->getNodeToWorldTransform();
-    Vec3 position(toWMat.m[12], toWMat.m[13], toWMat.m[14]);
+    Vec3 position = node->getPosition3D();
     if (_parentNode)
     {
-        Mat4 toLMat = _parentNode->getWorldToNodeTransform() * toWMat;
         // Transform position to ourself space
-        position.x = (toLMat).m[12];
-        position.y = (toLMat).m[13];
-        position.z = (toLMat).m[14];
+        _parentNode->getWorldToNodeTransform().transformPoint(position, &position);
     }
     Element e(position,
         _initialWidth[index], 0.0f, _initialColor[index], node->getRotationQuat());
