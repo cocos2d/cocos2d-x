@@ -198,16 +198,27 @@ bool BasicPhysics3DDemo::init()
     if (!Physics3DTestDemo::init())
         return false;
 
+    //create floor
     Physics3DRigidBodyDes rbDes;
     rbDes.mass = 0.0f;
-    rbDes.shape = Physics3DShape::createBox(Vec3(10.0f, 10.0f, 10.0f));
-    auto rigitBody = Physics3DRigidBody::create(&rbDes);
-    auto component = Physics3DComponent::create(rigitBody);
-
+    rbDes.shape = Physics3DShape::createBox(Vec3(60.0f, 2.0f, 60.0f));
+    rbDes.originalTransform.translate(0.f, -10.f, 0.f);
+    auto rigidBody = Physics3DRigidBody::create(&rbDes);
+    auto component = Physics3DComponent::create(rigidBody);
     auto node = Node::create();
     node->addComponent(component);
-    //node->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(node);
+    
+    //create several boxes
+    auto sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
+    rbDes.originalTransform.translate(0.f, 20.f, 0.f);
+    rbDes.mass = 10.f;
+    rbDes.shape = Physics3DShape::createBox(Vec3(5.0f, 5.0f, 5.0f));
+    rigidBody = Physics3DRigidBody::create(&rbDes);
+    component = Physics3DComponent::create(rigidBody);
+    sprite->addComponent(component);
+    addChild(sprite);
+    sprite->setCameraMask((unsigned short)CameraFlag::USER1);
 
     physicsScene->setPhysics3DDebugCamera(_camera);
 
