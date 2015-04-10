@@ -866,13 +866,13 @@ void ActionTimelineCache::loadEasingDataWithFlatBuffers(cocostudio::timeline::Fr
     auto points = flatbuffers->points();
     if (points)
     {
+        std::vector<float> easings;
         for (auto it = points->begin(); it != points->end(); ++it)
         {
-            std::vector<float> easings;
             easings.push_back(it->x());
             easings.push_back(it->y());
-            frame->setEasingParams(easings);
         }
+        frame->setEasingParams(easings);
     }
 }
     
