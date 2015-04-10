@@ -1090,6 +1090,9 @@ Developers:
         
     loadrunner
         Added romanian languange support
+        
+    Almax27
+        RenderQueue command buffer optimize.
 
 Retired Core Developers:
     WenSheng Yang
