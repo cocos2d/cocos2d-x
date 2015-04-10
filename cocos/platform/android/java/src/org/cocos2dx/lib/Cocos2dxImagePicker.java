@@ -1,6 +1,7 @@
 package org.cocos2dx.lib;
 
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -31,19 +32,26 @@ public class Cocos2dxImagePicker implements OnActivityResultListener{
     {
         if (requestCode != IMAGE_PICKER_ACTIVITY)
             return false;
-        byte[] byteArray = {0};
         if (resultCode == Activity.RESULT_OK) {
             Uri imageUri = data.getData();  
             try {
-                Bitmap bmp = MediaStore.Images.Media.getBitmap(Cocos2dxHelper.getActivity().getContentResolver(), imageUri);
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                byteArray = stream.toByteArray();
+                InputStream is = Cocos2dxHelper.getActivity().getContentResolver().openInputStream(imageUri);
+                ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+                int bufferSize = 10240;
+                byte[] buffer = new byte[bufferSize];
+
+                int len = 0;
+                while ((len = is.read(buffer)) != -1) {
+                    byteBuffer.write(buffer, 0, len);
+                }
+                is.close();
+                ImagePickerResult(byteBuffer.toByteArray());
+                return true;
             } catch (Exception e) {
             }
         }
-        ImagePickerResult(byteArray);
-        return true;
+        ImagePickerResult(null);
+        return false;
     }
 
     public native void ImagePickerResult(final byte[] imagedata);

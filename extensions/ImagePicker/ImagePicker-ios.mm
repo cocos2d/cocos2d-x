@@ -1,7 +1,15 @@
+// Image Picker for cocos2d-x
+// @Author: Kanglai Qian
+// @url: https://github.com/qiankanglai/ImagePicker
+
 #import <QuartzCore/QuartzCore.h>
 
 #import "ImagePicker.h"
 #import "ImagePicker-ios.h"
+
+#include "cocos2d.h"
+
+using namespace cocos2d;
 
 @implementation ImagePickerIOS
 
@@ -15,42 +23,45 @@
     imagePicker.wantsFullScreenLayout = YES;
     
     // CCEAGLView is a subclass of UIView
-    UIView *view = (UIView *)cocos2d::Director::getInstance()->getOpenGLView()->getEAGLView();
+    UIView *view = (UIView *)Director::getInstance()->getOpenGLView()->getEAGLView();
     [view addSubview:imagePicker.view];
 }
 
 -(void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    
-    cocos2d::Image *imf =new cocos2d::Image();
-    imf->autorelease();
+    Image *image = new Image();
     
     @autoreleasepool
     {
-        NSData *imgData = UIImagePNGRepresentation(image);
+        UIImage *img = [info objectForKey:UIImagePickerControllerOriginalImage];
+        NSData *imgData = UIImagePNGRepresentation(img);
         NSUInteger len = [imgData length];
         
         Byte *byteData = (Byte*)malloc(len);
         memcpy(byteData, [imgData bytes], len);
     
-        imf->initWithImageData(byteData, len);
+        image->initWithImageData(byteData, len);
         
         free(byteData);
     }
     
-    cocos2d::Texture2D* pTexture = new cocos2d::Texture2D();
-    pTexture->initWithImage(imf);
-    pTexture->autorelease();
-
-    ImagePicker::getInstance()->finishImage(pTexture);
+    Director::getInstance()->getScheduler()->performFunctionInCocosThread([image]{
+        Texture2D* texture = new Texture2D();
+        texture->initWithImage(image);
+        texture->autorelease();
+        image->release();
+        
+        ImagePicker::getInstance()->finishImage(texture);
+    });
     
     [picker.view removeFromSuperview];
     [picker release];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
-    ImagePicker::getInstance()->finishImage(nullptr);
+    Director::getInstance()->getScheduler()->performFunctionInCocosThread([]{
+        ImagePicker::getInstance()->finishImage(nullptr);
+    });
     [picker.view removeFromSuperview];
     [picker release];
 }

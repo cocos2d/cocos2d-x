@@ -1,7 +1,11 @@
-#include "cocos2d.h"
+// Image Picker for cocos2d-x
+// @Author: Kanglai Qian
+// @url: https://github.com/qiankanglai/ImagePicker
 
 #include "ImagePicker.h"
 #include "ImagePickerImpl.h"
+
+#include "cocos2d.h"
 
 using namespace cocos2d;
 
@@ -12,16 +16,18 @@ using namespace cocos2d;
 extern "C" {
     void Java_org_cocos2dx_lib_Cocos2dxImagePicker_ImagePickerResult(JNIEnv *env, jobject thiz, jbyteArray array)
     {
-        jbyte* bufferPtr = env->GetByteArrayElements(array, NULL);
-        jsize lengthOfArray = env->GetArrayLength(array);
-        if(lengthOfArray > 1){
-            Image *image =new Image();
+        if(array != NULL){
+        	jsize lengthOfArray = env->GetArrayLength(array);
+        	jbyte* bufferPtr = env->GetByteArrayElements(array, NULL);
+            Image *image = new Image();
             image->initWithImageData((unsigned char*)bufferPtr, lengthOfArray);
+        	env->ReleaseByteArrayElements(array, bufferPtr, 0);  
 
             Director::getInstance()->getScheduler()->performFunctionInCocosThread([image]{
-                // GL texture should be ensured context
                 Texture2D* texture = new Texture2D();
                 texture->initWithImage(image);
+                texture->autorelease();
+                image->release();
 
                 ImagePicker::getInstance()->finishImage(texture);
             });
@@ -31,7 +37,6 @@ extern "C" {
                 ImagePicker::getInstance()->finishImage(nullptr);
             });
         }
-        env->ReleaseByteArrayElements(array, bufferPtr, 0);  
     }
 }
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
@@ -104,15 +109,7 @@ void ImagePickerImpl::openImage()
 		openPicker->FileTypeFilter->Append(".jpg");
 		openPicker->FileTypeFilter->Append(".jpeg");
 #if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
-		static bool initialized = false;
-		if(!initialized)
-		{
-			initialized = true;
-			//PhoneApplicationService.Current.ContractActivated += Application_ContractActivated;
-		}
 		openPicker->PickSingleFileAndContinue();
-
-
 #else
 		auto dataReader = std::make_shared<DataReader^>(nullptr);
 		create_task(openPicker->PickSingleFileAsync()).then([](StorageFile^ file)
@@ -138,9 +135,10 @@ void ImagePickerImpl::openImage()
 			delete[] bufferPtr;
 
 			Director::getInstance()->getScheduler()->performFunctionInCocosThread([image]{
-				// GL texture should be ensured context
 				Texture2D* texture = new Texture2D();
 				texture->initWithImage(image);
+				texture->autorelease();
+				image->release();
 
 				ImagePicker::getInstance()->finishImage(texture);
 			});
