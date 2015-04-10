@@ -43,8 +43,10 @@
 #include "base/CCEventDispatcher.h"
 #include "platform/CCFileUtils.h"
 
-//#include <app_control.h>
-//#include <app_control_product.h>
+#ifdef  LOG_TAG
+#undef  LOG_TAG
+#endif
+#define LOG_TAG "cocos2d-x"
 
 ELEMENTARY_GLVIEW_GLOBAL_DEFINE();
 
@@ -158,7 +160,6 @@ static void create_indicator(Application *ad) {
 static Evas_Object* add_win(const char *name) {
     Evas_Object *win;
 
-    elm_config_accel_preference_set("opengl:depth");
     win = elm_win_util_standard_add(name, "tizen");
 
     if (!win)
@@ -237,60 +238,62 @@ static void touch_up_cb(void *data, Evas *e , Evas_Object *obj , void *event_inf
     cocos2d::Director::getInstance()->getOpenGLView()->handleTouchesEnd(1, &id, &x, &y);
 }
 
-static int get_glview_mode(GLContextAttrs &attrs)
+static void get_glview_mode(GLContextAttrs &attrs, char* gl_mode)
 {
-    int mode = ELM_GLVIEW_NONE;
+    strcat(gl_mode, "opengl");
 
     if (attrs.alphaBits > 0)
     {
-        mode |= ELM_GLVIEW_ALPHA;
+    	strcat(gl_mode, ":alpha");
     }
 
     if (attrs.depthBits > 0)
     {
+    	strcat(gl_mode, ":depth");
         if (attrs.depthBits <= 8)
         {
-            mode |= ELM_GLVIEW_DEPTH_8;
+        	strcat(gl_mode, "8");
         }
         else if (attrs.depthBits <= 16)
         {
-            mode |= ELM_GLVIEW_DEPTH_16;
+        	strcat(gl_mode, "16");
         }
         else if (attrs.depthBits <= 24)
         {
-            mode |= ELM_GLVIEW_DEPTH_24;
+        	strcat(gl_mode, "24");
         }
         else
         {
-            mode |= ELM_GLVIEW_DEPTH_32;
+        	strcat(gl_mode, "32");
         }
     }
 
     if (attrs.stencilBits > 0)
     {
+    	strcat(gl_mode, ":stencil");
         if (attrs.stencilBits == 1)
         {
-            mode |= ELM_GLVIEW_STENCIL_1;
+        	strcat(gl_mode, "1");
         }
         else if (attrs.stencilBits == 2)
         {
-            mode |= ELM_GLVIEW_STENCIL_2;
+        	strcat(gl_mode, "2");
         }
         else if (attrs.stencilBits <= 4)
         {
-            mode |= ELM_GLVIEW_STENCIL_4;
+        	strcat(gl_mode, "4");
         }
         else if (attrs.stencilBits <= 8)
         {
-            mode |= ELM_GLVIEW_STENCIL_8;
+        	strcat(gl_mode, "8");
         }
         else
         {
-            mode |= ELM_GLVIEW_STENCIL_16;
+        	strcat(gl_mode, "16");
         }
     }
 
-    return mode;
+    strcat(gl_mode, "\0");
 }
 
 static bool app_create(void *data) {
@@ -306,6 +309,12 @@ static bool app_create(void *data) {
     if (!data)
         return false;
 
+    /* Create and initialize GLView */
+    ad->initGLContextAttrs();
+    GLContextAttrs attrs = GLView::getGLContextAttrs();
+    char gl_mode[100] = "";
+    get_glview_mode(attrs, gl_mode);
+    elm_config_accel_preference_set(gl_mode);
     /* Create the window */
     ad->_win = add_win("cocos2d-x");
 
@@ -326,19 +335,14 @@ static bool app_create(void *data) {
     elm_win_resize_object_add(ad->_win, bx);
     evas_object_show(bx);
 
-    /* Create and initialize GLView */
     gl = elm_glview_add(ad->_win);
     ELEMENTARY_GLVIEW_GLOBAL_USE(gl);
     evas_object_size_hint_align_set(gl, EVAS_HINT_FILL, EVAS_HINT_FILL);
     evas_object_size_hint_weight_set(gl, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
 
     /* Request a surface with alpha and a depth buffer */
-    ad->initGLContextAttrs();
-    GLContextAttrs attrs = GLView::getGLContextAttrs();
-    int mode = get_glview_mode(attrs);
-    //fixme
-    //mode |= ELM_GLVIEW_DIRECT;
-    //elm_glview_mode_set(gl, (Elm_GLView_Mode)mode);
+    Elm_GLView_Mode mode = (Elm_GLView_Mode)(ELM_GLVIEW_DIRECT | ELM_GLVIEW_DEPTH | ELM_GLVIEW_STENCIL);
+    elm_glview_mode_set(gl, mode);
 
     /* The resize policy tells GLView what to do with the surface when it
      * resizes. ELM_GLVIEW_RESIZE_POLICY_RECREATE will tell it to
