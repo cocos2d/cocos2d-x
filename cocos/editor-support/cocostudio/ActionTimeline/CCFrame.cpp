@@ -164,12 +164,16 @@ void TextureFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
     if(_sprite)
     {
+        auto spriteBlendFunc = _sprite->getBlendFunc();
         SpriteFrame* spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(_textureName);
 
         if(spriteFrame != nullptr)
             _sprite->setSpriteFrame(spriteFrame);
         else
             _sprite->setTexture(_textureName);
+        
+        if(_sprite->getBlendFunc() != spriteBlendFunc)
+            _sprite->setBlendFunc(spriteBlendFunc);
     }
 }
 
@@ -845,5 +849,45 @@ Frame* ZOrderFrame::clone()
 
     return frame;
 }
+
+
+// BlendFuncFrame
+BlendFuncFrame* BlendFuncFrame::create()
+{
+    BlendFuncFrame* frame = new (std::nothrow) BlendFuncFrame();
+    if (frame)
+    {
+        frame->autorelease();
+        return frame;
+    }
+    CC_SAFE_DELETE(frame);
+    return nullptr;
+}
+
+BlendFuncFrame::BlendFuncFrame()
+: _blendFunc(BlendFunc::ALPHA_PREMULTIPLIED)
+{
+}
+
+void BlendFuncFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
+{
+    if(_node)
+    {
+        auto blendnode = dynamic_cast<BlendProtocol*>(_node);
+        if(blendnode)
+            blendnode->setBlendFunc(_blendFunc);
+    }
+}
+
+
+Frame* BlendFuncFrame::clone()
+{
+    BlendFuncFrame* frame = BlendFuncFrame::create();
+    frame->setBlendFunc(_blendFunc);
+    frame->cloneProperty(this);
+    
+    return frame;
+}
+
 
 NS_TIMELINE_END
