@@ -260,7 +260,7 @@ It should work same as apples CFSwapInt32LittleToHost(..)
 #define CC_INCREMENT_GL_DRAWS(__n__) Director::getInstance()->getRenderer()->addDrawnBatches(__n__)
 #define CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(__drawcalls__, __vertices__) \
     do {                                                                \
-        auto __renderer__ = Director::getInstance()->getRenderer();     \
+        auto __renderer__ = cocos2d::Director::getInstance()->getRenderer();     \
         __renderer__->addDrawnBatches(__drawcalls__);                   \
         __renderer__->addDrawnVertices(__vertices__);                   \
     } while(0)
