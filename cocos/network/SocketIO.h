@@ -1,6 +1,6 @@
 /****************************************************************************
- Copyright (c) 2013 Chris Hannon http://www.channon.us
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2013-2015 Chris Hannon http://www.channon.us
+ Copyright (c) 2013-2015 Chukong Technologies Inc.
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -82,19 +82,36 @@ public:
     static void destroyInstance();
 
     /**
-     *  @brief The delegate class to process socket.io events
+     *  @brief The delegate class to process network layer and script events, socket.io events are now fired as events
      */
     class SIODelegate
     {
     public:
         virtual ~SIODelegate() {}
-        virtual void onConnect(SIOClient* client) = 0;
-        virtual void onMessage(SIOClient* client, const std::string& data) = 0;
-        virtual void onClose(SIOClient* client) = 0;
-        virtual void onError(SIOClient* client, const std::string& data) = 0;
-        virtual void fireEventToScript(SIOClient* client, const std::string& eventName, const std::string& data) { CCLOG("SIODelegate event '%s' fired with data: %s", eventName.c_str(), data.c_str()); };
+		/**
+		*  @brief This is kept for backwards compatibility, connect is now fired as a socket.io event "connect"
+		*/
+		virtual void onConnect(SIOClient* client) { CCLOG("SIODelegate onConnect fired");  };
+		/**
+		*  @brief This is kept for backwards compatibility, message is now fired as a socket.io event "message"
+		*/
+		virtual void onMessage(SIOClient* client, const std::string& data) { CCLOG("SIODelegate onMessage fired with data: %s", data.c_str()); };
+		/**
+		*  @brief onClose is used to signal network level socket close outside of socket.io (such as network connectivity loss or timeout)
+		*         socket.io closing should be caught with an event named "disconnect"
+		*/
+		virtual void onClose(SIOClient* client) = 0;
+		/**
+		*  @brief onError is used to signal network level socket errors outside of socket.io
+		*         socket.io errors should be caught with an event named "error"
+		*/
+		virtual void onError(SIOClient* client, const std::string& data) = 0;
+		/**
+		*  @brief fireEventToScript is used to communicate an event to script bindings such as JS
+		*/
+		virtual void fireEventToScript(SIOClient* client, const std::string& eventName, const std::string& data) { CCLOG("SIODelegate event '%s' fired with data: %s", eventName.c_str(), data.c_str()); };
     };
-
+	
     /**
      *  @brief  Static client creation method, similar to socketio.connect(uri) in JS
      *  @param  delegate The delegate which want to receive events from the socket.io client
@@ -148,7 +165,7 @@ private:
 
     void onOpen();
     void onConnect();
-    void receivedDisconnect();
+	void socketClosed();
 
     friend class SIOClientImpl;
 
@@ -162,7 +179,8 @@ public:
     SocketIO::SIODelegate* getDelegate() { return _delegate; };
 
     /**
-     *  @brief Disconnect from the endpoint, onClose will be called on the delegate when complete
+     *  @brief Disconnect from the endpoint, onClose will be no longer be called on the delegate when complete
+	 *         If disconnecting from the default namespace "" or "/", then all endpoints will be disconnected (this is default socket.io behavior)
      */
     void disconnect();
     /**
@@ -170,12 +188,12 @@ public:
      */
     void send(std::string s);
     /**
-     *  @brief The delegate class to process socket.io events
+     *  @brief Emit an event with with name and data
      */
     void emit(std::string eventname, std::string args);
     /**
      *  @brief Used to register a socket.io event callback
-     *         Event argument should be passed using CC_CALLBACK2(&Base::function, this)
+     *         Event argument should be passed using CC_CALLBACK2(&SIODelegate::function, this)
      */
     void on(const std::string& eventName, SIOEvent e);
 
