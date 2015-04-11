@@ -782,6 +782,8 @@
 		3EA0FB5E191B92F100B170C8 /* cocosvideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */; };
 		3EA0FB66191B933000B170C8 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA0FB65191B933000B170C8 /* MediaPlayer.framework */; };
 		3EA0FB72191C844400B170C8 /* UIVideoPlayerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0FB70191C844400B170C8 /* UIVideoPlayerTest.cpp */; };
+		50F40B0D1AD88ACA00BF8FA2 /* MaterialSystemTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F40B0B1AD88ACA00BF8FA2 /* MaterialSystemTest.cpp */; };
+		50F40B0E1AD88ACA00BF8FA2 /* MaterialSystemTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F40B0B1AD88ACA00BF8FA2 /* MaterialSystemTest.cpp */; };
 		527B1F3019EF9819000A1F82 /* Default-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 527B1F2E19EF9819000A1F82 /* Default-667h@2x.png */; };
 		527B1F3119EF9819000A1F82 /* Default-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 527B1F2F19EF9819000A1F82 /* Default-736h@3x.png */; };
 		527B1F3419EF9CF8000A1F82 /* Default-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 527B1F3219EF9CF8000A1F82 /* Default-667h@2x.png */; };
@@ -1729,6 +1731,8 @@
 		3EA0FB70191C844400B170C8 /* UIVideoPlayerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIVideoPlayerTest.cpp; sourceTree = "<group>"; };
 		3EA0FB71191C844400B170C8 /* UIVideoPlayerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIVideoPlayerTest.h; sourceTree = "<group>"; };
 		46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
+		50F40B0B1AD88ACA00BF8FA2 /* MaterialSystemTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MaterialSystemTest.cpp; sourceTree = "<group>"; };
+		50F40B0C1AD88ACA00BF8FA2 /* MaterialSystemTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialSystemTest.h; sourceTree = "<group>"; };
 		527B1F2E19EF9819000A1F82 /* Default-667h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-667h@2x.png"; sourceTree = "<group>"; };
 		527B1F2F19EF9819000A1F82 /* Default-736h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-736h@3x.png"; sourceTree = "<group>"; };
 		527B1F3219EF9CF8000A1F82 /* Default-667h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-667h@2x.png"; sourceTree = "<group>"; };
@@ -2188,6 +2192,7 @@
 		1AC3592418CECF0A00F37B72 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				50F40B0A1AD88ACA00BF8FA2 /* MaterialSystemTest */,
 				B603F1AC1AC8EA2E00A9579C /* TerrainTest */,
 				182C5CB71A95B28A00C30D34 /* CocosStudio3DTest */,
 				B639932B1A490E9900B07923 /* Particle3DTest */,
@@ -3953,6 +3958,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		50F40B0A1AD88ACA00BF8FA2 /* MaterialSystemTest */ = {
+			isa = PBXGroup;
+			children = (
+				50F40B0B1AD88ACA00BF8FA2 /* MaterialSystemTest.cpp */,
+				50F40B0C1AD88ACA00BF8FA2 /* MaterialSystemTest.h */,
+			);
+			path = MaterialSystemTest;
+			sourceTree = "<group>";
+		};
 		A5030C3219D059AB000E78E7 /* OpenURLTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -4950,6 +4964,7 @@
 				1AC35B6918CECF0C00F37B72 /* ButtonTestLayer.cpp in Sources */,
 				1AC35B2F18CECF0C00F37B72 /* Box2dView.cpp in Sources */,
 				1AC35C0F18CECF0C00F37B72 /* LabelTest.cpp in Sources */,
+				50F40B0D1AD88ACA00BF8FA2 /* MaterialSystemTest.cpp in Sources */,
 				1AC35C6918CECF0C00F37B72 /* VisibleRect.cpp in Sources */,
 				1F33634F18E37E840074764D /* RefPtrTest.cpp in Sources */,
 				1AC35C3F18CECF0C00F37B72 /* ReleasePoolTest.cpp in Sources */,
@@ -5180,6 +5195,7 @@
 				1AC35C2618CECF0C00F37B72 /* PerformanceAllocTest.cpp in Sources */,
 				3825CC4E1A2C982A00C92EA8 /* CustomWidgetCallbackBindTest.cpp in Sources */,
 				3E92EA831921A1400094CD21 /* Sprite3DTest.cpp in Sources */,
+				50F40B0E1AD88ACA00BF8FA2 /* MaterialSystemTest.cpp in Sources */,
 				1AC35B5A18CECF0C00F37B72 /* controller.cpp in Sources */,
 				1AC35C2A18CECF0C00F37B72 /* PerformanceEventDispatcherTest.cpp in Sources */,
 				1AC35BEA18CECF0C00F37B72 /* CCControlSceneManager.cpp in Sources */,
