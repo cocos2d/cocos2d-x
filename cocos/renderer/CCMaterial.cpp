@@ -30,11 +30,19 @@
 #include "renderer/CCMaterial.h"
 #include "renderer/CCTechnique.h"
 #include "renderer/CCGLProgramState.h"
+#include "platform/CCFileUtils.h"
+
+#include "json/document.h"
 
 NS_CC_BEGIN
 
-Material* Material::createWithFilename(const std::string& path)
+Material* Material::createWithFilename(const std::string& filepath)
 {
+    auto validfilename = FileUtils::getInstance()->fullPathForFilename(filepath);
+
+    if (validfilename.size() > 0)
+        return new (std::nothrow) Material(validfilename);
+
     return nullptr;
 }
 
@@ -50,6 +58,17 @@ Material::Material(cocos2d::GLProgramState *state)
 
     // weak pointer
     _currentTechnique = technique;
+}
+
+Material::Material(const std::string& validfilename)
+{
+    rapidjson::Document document;
+    document.Parse<0>(validfilename.c_str());
+
+    CCASSERT(document.IsObject(), "Invalid JSON file");
+
+    
+
 }
 
 std::string Material::getName() const

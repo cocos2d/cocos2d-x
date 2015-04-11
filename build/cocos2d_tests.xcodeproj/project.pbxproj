@@ -784,6 +784,8 @@
 		3EA0FB72191C844400B170C8 /* UIVideoPlayerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0FB70191C844400B170C8 /* UIVideoPlayerTest.cpp */; };
 		50F40B0D1AD88ACA00BF8FA2 /* MaterialSystemTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F40B0B1AD88ACA00BF8FA2 /* MaterialSystemTest.cpp */; };
 		50F40B0E1AD88ACA00BF8FA2 /* MaterialSystemTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50F40B0B1AD88ACA00BF8FA2 /* MaterialSystemTest.cpp */; };
+		50F40B101AD8A03000BF8FA2 /* Materials in Resources */ = {isa = PBXBuildFile; fileRef = 50F40B0F1AD8A03000BF8FA2 /* Materials */; };
+		50F40B111AD8A03000BF8FA2 /* Materials in Resources */ = {isa = PBXBuildFile; fileRef = 50F40B0F1AD8A03000BF8FA2 /* Materials */; };
 		527B1F3019EF9819000A1F82 /* Default-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 527B1F2E19EF9819000A1F82 /* Default-667h@2x.png */; };
 		527B1F3119EF9819000A1F82 /* Default-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 527B1F2F19EF9819000A1F82 /* Default-736h@3x.png */; };
 		527B1F3419EF9CF8000A1F82 /* Default-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 527B1F3219EF9CF8000A1F82 /* Default-667h@2x.png */; };
@@ -1733,6 +1735,7 @@
 		46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		50F40B0B1AD88ACA00BF8FA2 /* MaterialSystemTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MaterialSystemTest.cpp; sourceTree = "<group>"; };
 		50F40B0C1AD88ACA00BF8FA2 /* MaterialSystemTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialSystemTest.h; sourceTree = "<group>"; };
+		50F40B0F1AD8A03000BF8FA2 /* Materials */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Materials; path = "../tests/cpp-tests/Resources/Materials"; sourceTree = "<group>"; };
 		527B1F2E19EF9819000A1F82 /* Default-667h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-667h@2x.png"; sourceTree = "<group>"; };
 		527B1F2F19EF9819000A1F82 /* Default-736h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-736h@3x.png"; sourceTree = "<group>"; };
 		527B1F3219EF9CF8000A1F82 /* Default-667h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-667h@2x.png"; sourceTree = "<group>"; };
@@ -3231,6 +3234,7 @@
 		1AC35CA818CED83500F37B72 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				50F40B0F1AD8A03000BF8FA2 /* Materials */,
 				B603F1B31AC8FBFB00A9579C /* TerrainTest */,
 				B63993301A49359F00B07923 /* Particle3D */,
 				15B3709219EE5D1000ABE682 /* Manifests */,
@@ -4497,6 +4501,7 @@
 				1AC35CFE18CED84500F37B72 /* Particles in Resources */,
 				1AC35CF418CED84500F37B72 /* Images in Resources */,
 				1AC35CE018CED84500F37B72 /* configs in Resources */,
+				50F40B101AD8A03000BF8FA2 /* Materials in Resources */,
 				182C5CCD1A95D9BA00C30D34 /* src in Resources */,
 				1AC35CE618CED84500F37B72 /* effect2.ogg in Resources */,
 				1AC35CFA18CED84500F37B72 /* Misc in Resources */,
@@ -4595,6 +4600,7 @@
 				1AC35C9118CECF1400F37B72 /* Icon-40.png in Resources */,
 				1AC35C8B18CECF1400F37B72 /* Icon-100.png in Resources */,
 				1AC35D0118CED84500F37B72 /* pew-pew-lei.wav in Resources */,
+				50F40B111AD8A03000BF8FA2 /* Materials in Resources */,
 				1AC35D0518CED84500F37B72 /* Shaders in Resources */,
 				1AC35CD318CED84500F37B72 /* background.ogg in Resources */,
 				3E2BDB0119C5E5D40055CDCD /* background.wav in Resources */,

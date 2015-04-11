@@ -81,7 +81,8 @@ public:
     Technique* getTechnique() const;
 
 protected:
-    Material(GLProgramState *state);
+    Material(GLProgramState* state);
+    Material(const std::string& file);
     Material();
     ~Material();
 
