@@ -32,6 +32,19 @@
         
 --------------------------------
 -- 
+-- @function [parent=#Frame] getEasingParams 
+-- @param self
+-- @return array_table#array_table ret (return value: array_table)
+        
+--------------------------------
+-- 
+-- @function [parent=#Frame] setEasingParams 
+-- @param self
+-- @param #array_table easingParams
+-- @return Frame#Frame self (return value: ccs.Frame)
+        
+--------------------------------
+-- 
 -- @function [parent=#Frame] getFrameIndex 
 -- @param self
 -- @return unsigned int#unsigned int ret (return value: unsigned int)
