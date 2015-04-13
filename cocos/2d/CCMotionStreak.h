@@ -93,7 +93,7 @@ public:
     inline float getStroke() const { return _stroke; }
     /** Set stroke.
      *
-     * @param float stroke.
+     * @param stroke The width of stroke.
      */
     inline void setStroke(float stroke) { _stroke = stroke; }
 
