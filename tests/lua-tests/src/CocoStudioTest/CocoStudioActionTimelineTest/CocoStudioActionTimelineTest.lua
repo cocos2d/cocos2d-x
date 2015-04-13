@@ -5,8 +5,8 @@ local TimelineTestIndex =
 {
     TEST_ACTION_TIMELINE        = 1,
     TEST_CHANGE_PLAY_SECTION    = 2,
-    --TEST_TIMELINE_FRAME_EVENT   = 3,
-    TEST_TIMELINE_PERFORMACE    = 3,
+    TEST_TIMELINE_FRAME_EVENT   = 3,
+    TEST_TIMELINE_PERFORMACE    = 4,
 }
 local timelineSceneIdx   = TimelineTestIndex.TEST_ACTION_TIMELINE
 
@@ -62,8 +62,8 @@ function TimelineTestLayer.title(idx)
         return "Test ActionTimeline"
     elseif TimelineTestIndex.TEST_CHANGE_PLAY_SECTION == idx then
         return "Test Change Play Section"
-    --elseif TimelineTestIndex.TEST_TIMELINE_FRAME_EVENT == idx then
-    --    return "Test Frame Event"
+    elseif TimelineTestIndex.TEST_TIMELINE_FRAME_EVENT == idx then
+        return "Test Frame Event"
     elseif TimelineTestIndex.TEST_TIMELINE_PERFORMACE == idx then
         return "Test ActionTimeline performance"
     end
@@ -338,6 +338,17 @@ function TestTimelineFrameEvent:onEnter()
     end
 
     action:setFrameEventCallFunc(onFrameEvent)
+
+    local label = cc.Label:createWithTTF("LastFrame: Not entered yet.", "fonts/Thonburi.ttf", 18)
+    label:setColor(cc.c3b(0,255,0))
+    self:addChild(label, 1, 10000)
+    label:setPosition(cc.p(VisibleRect:center().x/2, 60))
+    local i = 0
+
+    action:setLastFrameCallFunc(function()
+        i = i + 1
+        label:setString(string.format('LastFrame entered (%d)', i))
+    end)
 end
 
 function TestTimelineFrameEvent.restartCallback()
@@ -421,7 +432,7 @@ local actionlineSceneArr =
 {
     TestActionTimeline.create,
     TestChangePlaySection.create,
-    --TestTimelineFrameEvent.create,
+    TestTimelineFrameEvent.create,
     TestTimelinePerformance.create,
 }
 
