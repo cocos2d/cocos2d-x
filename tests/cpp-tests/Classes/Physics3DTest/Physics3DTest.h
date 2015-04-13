@@ -53,9 +53,14 @@ public:
     void onTouchesEnded(const std::vector<Touch*>& touches, cocos2d::Event  *event) override;
 
 protected:
+
+    void shootBox(const cocos2d::Vec3 &des);
+
+protected:
     std::string    _title;
     cocos2d::Camera *_camera;
     float _angle;
+    bool _needShootBox;
 };
 
 class BasicPhysics3DDemo : public Physics3DTestDemo
