@@ -7,7 +7,7 @@ if __name__ == '__main__':
     sys_ret = 0
     try:
         jenkins_script_path = "tools" + os.sep + "jenkins-scripts" + os.sep + "do-pull-request-builder.py"
-        sys_ret = os.system(jenkins_script_path)
+        sys_ret = os.system("python " + jenkins_script_path)
     except:
         traceback.print_exc()
         sys_ret = 1
