@@ -42,6 +42,8 @@ Physics3DConstraint::Physics3DConstraint()
 
 Physics3DConstraint::~Physics3DConstraint()
 {
+    CC_SAFE_RELEASE(_bodyA);
+    CC_SAFE_RELEASE(_bodyB);
     CC_SAFE_DELETE(_constraint);
 }
 
@@ -96,6 +98,8 @@ bool Physics3DPointToPointConstraint::init(Physics3DRigidBody* rbA, const cocos2
 {
     
     _constraint = new btPoint2PointConstraint(*rbA->getRigidBody(), convertVec3TobtVector3(pivotPointInA));
+    _bodyA = rbA;
+    _bodyA->retain();
     
     return true;
 }
@@ -103,6 +107,10 @@ bool Physics3DPointToPointConstraint::init(Physics3DRigidBody* rbA, const cocos2
 bool Physics3DPointToPointConstraint::init(Physics3DRigidBody* rbA, Physics3DRigidBody* rbB, const cocos2d::Vec3& pivotPointInA, const cocos2d::Vec3& pivotPointInB)
 {
     _constraint = new btPoint2PointConstraint(*rbA->getRigidBody(), *rbB->getRigidBody(), convertVec3TobtVector3(pivotPointInA), convertVec3TobtVector3(pivotPointInB));
+    _bodyA = rbA;
+    _bodyB = rbB;
+    _bodyA->retain();
+    _bodyB->retain();
     
     return true;
 }
