@@ -145,6 +145,7 @@ def syntronize_remote_pr():
 
 def gen_scripting_bindings():
     global branch
+    print("generate script bindings for branch " + branch)
     # Generate binding glue codes
     if(branch == 'v3' or branch == 'v4-develop' or branch == 'v35-for-tizen'):
         ret = os.system("python tools/jenkins-scripts/slave-scripts/gen_jsb.py")
