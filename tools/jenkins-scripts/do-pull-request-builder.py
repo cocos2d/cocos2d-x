@@ -147,7 +147,7 @@ def gen_scripting_bindings():
     global branch
     # Generate binding glue codes
     if(branch != 'v1' and branch != 'v2'):
-        ret = os.system("python tools/jenkins-scripts/slave-scripts/")
+        ret = os.system("python tools/jenkins-scripts/slave-scripts/gen_jsb.py")
     if(ret != 0):
         sys.exit(ret)
 
@@ -203,9 +203,9 @@ def main():
         syntronize_remote_pr()
         #copy check_current_3rd_libs
         check_current_3rd_libs(branch)
-        #generate jsb and luabindings
-        gen_scripting_bindings()
 
+    #generate jsb and luabindings
+    gen_scripting_bindings()
     #start build jobs on each slave
     ret = do_build_slaves()
 
