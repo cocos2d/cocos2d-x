@@ -51,6 +51,7 @@ UniformValue::UniformValue()
 : _uniform(nullptr)
 , _glprogram(nullptr)
 , _useCallback(false)
+, _arrayCount(0)
 {
 }
 
@@ -58,6 +59,7 @@ UniformValue::UniformValue(Uniform *uniform, GLProgram* glprogram)
 : _uniform(uniform)
 , _glprogram(glprogram)
 , _useCallback(false)
+, _arrayCount(0)
 {
 }
 
@@ -85,7 +87,10 @@ void UniformValue::apply()
                 break;
 
             case GL_FLOAT:
-                _glprogram->setUniformLocationWith1f(_uniform->location, _value.floatValue);
+                if (_arrayCount > 0)
+                    _glprogram->setUniformLocationWith1fv(_uniform->location, _value.floatArray, _arrayCount);
+                else
+                    _glprogram->setUniformLocationWith1f(_uniform->location, _value.floatValue);
                 break;
 
             case GL_FLOAT_VEC2:
@@ -130,6 +135,14 @@ void UniformValue::setFloat(float value)
 {
     CCASSERT (_uniform->type == GL_FLOAT, "");
     _value.floatValue = value;
+    _useCallback = false;
+}
+
+void UniformValue::setFloatArray(float* array, int count)
+{
+    CCASSERT (_uniform->type == GL_FLOAT, "");
+    _value.floatArray = array;
+	_arrayCount = count;
     _useCallback = false;
 }
 
@@ -494,6 +507,24 @@ void GLProgramState::setUniformFloat(GLint uniformLocation, float value)
     auto v = getUniformValue(uniformLocation);
     if (v)
         v->setFloat(value);
+    else
+        CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
+}
+
+void GLProgramState::setUniformFloatArray(const std::string &uniformName, float* array, int count)
+{
+    auto v = getUniformValue(uniformName);
+    if (v)
+        v->setFloatArray(array, count);
+    else
+        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+}
+
+void GLProgramState::setUniformFloatArray(GLint uniformLocation, float* array, int count)
+{
+    auto v = getUniformValue(uniformLocation);
+    if (v)
+        v->setFloatArray(array, count);
     else
         CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
 }

@@ -57,6 +57,7 @@ public:
     ~UniformValue();
 
     void setFloat(float value);
+    void setFloatArray(float* array, int count);
     void setInt(int value);
     void setVec2(const Vec2& value);
     void setVec3(const Vec3& value);
@@ -71,9 +72,11 @@ protected:
 	Uniform* _uniform;  // weak ref
     GLProgram* _glprogram; // weak ref
     bool _useCallback;
+    int _arrayCount;
 
     union U{
         float floatValue;
+        float* floatArray;
         int intValue;
         float v2Value[2];
         float v3Value[3];
@@ -181,6 +184,7 @@ public:
     ssize_t getUniformCount() const { return _uniforms.size(); }
     void setUniformInt(const std::string &uniformName, int value);
     void setUniformFloat(const std::string &uniformName, float value);
+    void setUniformFloatArray(const std::string &uniformName, float* array, int count);
     void setUniformVec2(const std::string &uniformName, const Vec2& value);
     void setUniformVec3(const std::string &uniformName, const Vec3& value);
     void setUniformVec4(const std::string &uniformName, const Vec4& value);
@@ -191,6 +195,7 @@ public:
 
     void setUniformInt(GLint uniformLocation, int value);
     void setUniformFloat(GLint uniformLocation, float value);
+    void setUniformFloatArray(GLint uniformLocation, float* array, int count);
     void setUniformVec2(GLint uniformLocation, const Vec2& value);
     void setUniformVec3(GLint uniformLocation, const Vec3& value);
     void setUniformVec4(GLint uniformLocation, const Vec4& value);
