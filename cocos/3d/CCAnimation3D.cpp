@@ -58,6 +58,8 @@ bool Animation3D::initWithFile(const std::string& filename, const std::string& a
     Animation3DData animationdata;
     if (bundle->load(fullPath) && bundle->loadAnimationData(animationName, &animationdata) && init(animationdata))
     {
+        std::string key = fullPath + "#" + animationName;
+        Animation3DCache::getInstance()->addAnimation(key, this);
         Bundle3D::destroyBundle(bundle);
         return true;
     }
