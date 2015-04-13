@@ -80,26 +80,30 @@ static void accelerometer_sensor_cb(sensor_h _sensor, sensor_event_s *sensor_dat
     _acceleration->z = sensor_data->values[2] / GRAVITY_EARTH;
     _acceleration->timestamp = sensor_data->timestamp;
 
-    double tmp = _acceleration->x;
-    app_device_orientation_e oritentation = app_get_device_orientation();
-    switch (oritentation)
+  	double tmp = _acceleration->x;
+  	Application *app = Application::getInstance();
+  	int oritentation = elm_win_rotation_get(app->_win);
+
+   switch (oritentation)
     {
-    case APP_DEVICE_ORIENTATION_0:
+    case 0:
+        _acceleration->x = _acceleration->y;
+        _acceleration->y = tmp;
+        break;
+
+    case 90:
         _acceleration->x = -_acceleration->y;
         _acceleration->y = tmp;
         break;
 
-    case APP_DEVICE_ORIENTATION_90:
-        _acceleration->x = _acceleration->y;
-        _acceleration->y = -tmp;
-        break;
-
-    case APP_DEVICE_ORIENTATION_180:
+    case 180:
         _acceleration->x = -_acceleration->y;
         _acceleration->y = -tmp;
         break;
 
-    case APP_DEVICE_ORIENTATION_270:
+    case 270:
+        _acceleration->x = _acceleration->y;
+        _acceleration->y = -tmp;
         break;
     default:
         CCLOG("unknow orientation");
