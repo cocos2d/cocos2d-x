@@ -146,9 +146,10 @@ def syntronize_remote_pr():
 def gen_scripting_bindings():
     global branch
     # Generate binding glue codes
-    if(branch == 'v3' or branch == 'v4-develop'):
+    if(branch == 'v3' or branch == 'v4-develop' or branch == 'v35-for-tizen'):
         ret = os.system("python tools/jenkins-scripts/slave-scripts/gen_jsb.py")
     if(ret != 0):
+        print("The branch" + branch + " doesn't accept PR!")
         sys.exit(ret)
 
 
