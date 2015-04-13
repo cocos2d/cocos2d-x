@@ -25,13 +25,6 @@
         
 --------------------------------
 -- 
--- @function [parent=#ColorFrame] apply 
--- @param self
--- @param #float percent
--- @return ColorFrame#ColorFrame self (return value: ccs.ColorFrame)
-        
---------------------------------
--- 
 -- @function [parent=#ColorFrame] clone 
 -- @param self
 -- @return Frame#Frame ret (return value: ccs.Frame)
