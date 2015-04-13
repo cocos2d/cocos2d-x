@@ -1198,9 +1198,9 @@ void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t pare
     {
         if (_shadowNode)
         {
-            _shadowNode->visit(renderer, _modelViewTransform, parentFlags);
+            _shadowNode->visit(renderer, _modelViewTransform, flags);
         }
-        _textSprite->visit(renderer, _modelViewTransform, parentFlags);
+        _textSprite->visit(renderer, _modelViewTransform, flags);
     }
     else
     {

@@ -335,7 +335,6 @@ bool PUEmitter::isEnabled( void ) const
 
 void PUEmitter::notifyStart()
 {
-    _latestPosition = getDerivedPosition(); // V1.3.1
     _forceEmission = _originalForceEmission;
     _forceEmissionExecuted = _originalForceEmissionExecuted;
     _remainder = 0;
@@ -389,6 +388,8 @@ void PUEmitter::prepare()
             }
         }
     }
+
+    _latestPosition = getDerivedPosition(); // V1.3.1
 }
 
 void PUEmitter::unPrepare()

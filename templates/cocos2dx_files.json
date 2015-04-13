@@ -4893,6 +4893,7 @@
         "cocos/scripting/lua-bindings/auto/api/BezierBy.lua", 
         "cocos/scripting/lua-bindings/auto/api/BezierTo.lua", 
         "cocos/scripting/lua-bindings/auto/api/BillBoard.lua", 
+        "cocos/scripting/lua-bindings/auto/api/BlendFuncFrame.lua", 
         "cocos/scripting/lua-bindings/auto/api/Blink.lua", 
         "cocos/scripting/lua-bindings/auto/api/Bone.lua", 
         "cocos/scripting/lua-bindings/auto/api/BoneData.lua", 
