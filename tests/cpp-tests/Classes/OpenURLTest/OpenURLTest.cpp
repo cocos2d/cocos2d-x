@@ -1,5 +1,7 @@
 #include "OpenURLTest.h"
 
+USING_NS_CC;
+
 OpenURLTests::OpenURLTests()
 {
     ADD_TEST_CASE(OpenURLTest);

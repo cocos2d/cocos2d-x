@@ -1,5 +1,8 @@
 #include "UILoadingBarTest.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
 UILoadingBarTests::UILoadingBarTests()
 {
     ADD_TEST_CASE(UILoadingBarTest_Left);

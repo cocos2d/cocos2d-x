@@ -30,16 +30,14 @@
 #include "../testBasic.h"
 #include "../BaseTest.h"
 
-USING_NS_CC;
-
 DEFINE_TEST_SUITE(ActionsEaseTests);
 
 class EaseSpriteDemo : public TestCase
 {
 protected:
-    Sprite*    _grossini;
-    Sprite*    _tamara;
-    Sprite*    _kathia;
+    cocos2d::Sprite*    _grossini;
+    cocos2d::Sprite*    _tamara;
+    cocos2d::Sprite*    _kathia;
 
     std::string    _title;
 

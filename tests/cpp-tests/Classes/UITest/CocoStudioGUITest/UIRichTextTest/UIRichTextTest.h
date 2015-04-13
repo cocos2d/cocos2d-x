@@ -16,10 +16,10 @@ public:
     ~UIRichTextTest();
 
     virtual bool init() override;
-    void touchEvent(Ref *pSender, Widget::TouchEventType type);
+    void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
     
 protected:
-    RichText* _richText;
+    cocos2d::ui::RichText* _richText;
 };
 
 #endif /* defined(__TestCpp__UIRichTextTest__) */

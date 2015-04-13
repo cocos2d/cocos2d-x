@@ -5,6 +5,8 @@
 
 #include "Bug-1174.h"
 
+USING_NS_CC;
+
 int check_for_error( Vec2 p1, Vec2 p2, Vec2 p3, Vec2 p4, float s, float t );
 
 int check_for_error( Vec2 p1, Vec2 p2, Vec2 p3, Vec2 p4, float s, float t )

@@ -1,6 +1,9 @@
 #include "UIPageViewTest_Editor.h"
 #include "VisibleRect.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
 UIPageViewEditorTests::UIPageViewEditorTests()
 {
     ADD_TEST_CASE(UIPageViewTest_Editor);

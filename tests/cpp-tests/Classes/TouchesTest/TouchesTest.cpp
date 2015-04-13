@@ -3,6 +3,8 @@
 #include "Paddle.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum tagPlayer 
 {
     kHighPlayer,

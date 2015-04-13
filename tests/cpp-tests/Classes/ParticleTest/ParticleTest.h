@@ -8,9 +8,9 @@ DEFINE_TEST_SUITE(ParticleTests);
 class ParticleDemo : public TestCase
 {
 protected:
-    ParticleSystemQuad*    _emitter;
-    Sprite*            _background;
-	LayerColor*		 _color;
+    cocos2d::ParticleSystemQuad*    _emitter;
+    cocos2d::Sprite*            _background;
+    cocos2d::LayerColor*		 _color;
 
 public:
     ~ParticleDemo(void);
@@ -20,11 +20,11 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
-    void toggleCallback(Ref* sender);
+    void toggleCallback(cocos2d::Ref* sender);
 
-    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event);
+    void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
 
     virtual void update(float dt) override;
     void setEmitterPosition();
@@ -243,8 +243,8 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 private:
-    Node* _parent1;
-    Node* _parent2;
+    cocos2d::Node* _parent1;
+    cocos2d::Node* _parent2;
 };
 
 class ParticleBatchMultipleEmitters : public ParticleDemo
@@ -288,7 +288,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 private:
-    ParticleBatchNode* _batchNode;
+    cocos2d::ParticleBatchNode* _batchNode;
 };
 
 class AddAndDeleteParticleSystems : public ParticleDemo
@@ -301,7 +301,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 private:
-    ParticleBatchNode* _batchNode;
+    cocos2d::ParticleBatchNode* _batchNode;
 };
 
 class ReorderParticleSystems : public ParticleDemo
@@ -314,7 +314,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 private:
-    ParticleBatchNode* _batchNode;
+    cocos2d::ParticleBatchNode* _batchNode;
 };
 
 class PremultipliedAlphaTest : public ParticleDemo

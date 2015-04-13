@@ -31,9 +31,6 @@
 #include "cocostudio/CocoStudio.h"
 #include "BaseTest.h"
 
-USING_NS_CC;
-USING_NS_CC_EXT;
-using namespace ui;
 
 class UIScene_Editor : public TestCase
 {
@@ -47,9 +44,9 @@ public:
 
     virtual void configureGUIScene();
 protected:
-    Layer* _touchGroup;
-    Layout* _layout;
-    Text* _sceneTitle;
+    cocos2d::Layer* _touchGroup;
+    cocos2d::ui::Layout* _layout;
+    cocos2d::ui::Text* _sceneTitle;
 };
 
 #endif /* defined(__TestCpp__UIScene_Editor__) */

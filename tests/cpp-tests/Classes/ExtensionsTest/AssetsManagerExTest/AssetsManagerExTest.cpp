@@ -2,6 +2,9 @@
 #include "../../testResource.h"
 #include "cocos2d.h"
 
+USING_NS_CC;
+USING_NS_CC_EXT;
+
 const char* sceneManifests[] = {"AMTestScene1/project.manifest", "AMTestScene2/project.manifest", "AMTestScene3/project.manifest"};
 const char* storagePaths[] = {"CppTests/AssetsManagerExTest/scene1/", "CppTests/AssetsManagerExTest/scene2/", "CppTests/AssetsManagerExTest/scene3"};
 const char* backgroundPaths[] = {"Images/assetMgrBackground1.jpg", "Images/assetMgrBackground2.png", "Images/assetMgrBackground3.png"};

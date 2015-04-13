@@ -27,8 +27,6 @@
 
 #include "../UIScene.h"
 
-USING_NS_CC;
-
 DEFINE_TEST_SUITE(WebViewTests);
 
 class WebViewTest : public UIScene
@@ -37,9 +35,9 @@ public:
     CREATE_FUNC(WebViewTest);
     
     virtual bool init() override;
-    bool onWebViewShouldStartLoading(experimental::ui::WebView *sender, const std::string &url);
-    void onWebViewDidFinishLoading(experimental::ui::WebView *sender, const std::string &url);
-    void onWebViewDidFailLoading(experimental::ui::WebView *sender, const std::string &url);
+    bool onWebViewShouldStartLoading(cocos2d::experimental::ui::WebView *sender, const std::string &url);
+    void onWebViewDidFinishLoading(cocos2d::experimental::ui::WebView *sender, const std::string &url);
+    void onWebViewDidFailLoading(cocos2d::experimental::ui::WebView *sender, const std::string &url);
     
     
 private:

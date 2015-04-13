@@ -14,7 +14,7 @@ public:
     virtual void showCurrentTest();
 };
 
-class PerformanceEventDispatcherScene : public Scene
+class PerformanceEventDispatcherScene : public cocos2d::Scene
 {
 public:
     static const int TAG_TITLE = 100;
@@ -53,12 +53,12 @@ protected:
     unsigned int _type;
     std::vector<TestFunction> _testFunctions;
     std::vector<Node*> _nodes;
-    std::vector<EventListener*> _fixedPriorityListeners;
-    MenuItemFont* _increase;
-    MenuItemFont* _decrease;
-    MenuItemFont* _startItem;
-    MenuItemFont* _stopItem;
-    MenuItemToggle* _toggle;
+    std::vector<cocos2d::EventListener*> _fixedPriorityListeners;
+    cocos2d::MenuItemFont* _increase;
+    cocos2d::MenuItemFont* _decrease;
+    cocos2d::MenuItemFont* _startItem;
+    cocos2d::MenuItemFont* _stopItem;
+    cocos2d::MenuItemToggle* _toggle;
 };
 
 class TouchEventDispatchingPerfTest : public PerformanceEventDispatcherScene
@@ -97,7 +97,7 @@ public:
     virtual std::string subtitle() const override;
     
 private:
-    std::vector<EventListener*> _customListeners;
+    std::vector<cocos2d::EventListener*> _customListeners;
 };
 
 void runEventDispatcherPerformanceTest();

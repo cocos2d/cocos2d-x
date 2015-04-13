@@ -9,7 +9,7 @@ class EffectBaseTest : public TestCase
 {
 protected:
     //UxString    _title;
-    NodeGrid* _gridNodeTarget;
+    cocos2d::NodeGrid* _gridNodeTarget;
 public:
     static EffectBaseTest* create(int index)
     {

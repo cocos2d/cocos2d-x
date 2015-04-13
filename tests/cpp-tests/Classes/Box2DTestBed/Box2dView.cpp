@@ -3,6 +3,8 @@
 #include "Test.h"
 #include "renderer/CCRenderer.h"
 
+USING_NS_CC;
+
 #define kAccelerometerFrequency 30
 #define FRAMES_BETWEEN_PRESSES_FOR_DOUBLE_CLICK 10
 

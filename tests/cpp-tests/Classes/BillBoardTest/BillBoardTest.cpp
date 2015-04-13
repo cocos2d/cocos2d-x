@@ -29,6 +29,11 @@
 #include <algorithm>
 #include "../testResource.h"
 
+USING_NS_CC;
+USING_NS_CC_EXT;
+using namespace cocos2d::ui;
+
+
 BillBoardTests::BillBoardTests()
 {
     ADD_TEST_CASE(BillBoardRotationTest);
@@ -108,9 +113,9 @@ BillBoardTest::BillBoardTest()
 :  _camera(nullptr)
 {
     //Create touch listener
-    /*auto listener = EventListenerTouchAllAtOnce::create();
+    auto listener = EventListenerTouchAllAtOnce::create();
     listener->onTouchesMoved = CC_CALLBACK_2(BillBoardTest::onTouchesMoved, this);
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);*/
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     auto layer3D=Layer::create();
     addChild(layer3D,0);
@@ -271,7 +276,6 @@ void BillBoardTest::update(float dt)
 {
 }
 
-/*
 void BillBoardTest::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
 {
     if(touches.size()==1)
@@ -294,7 +298,7 @@ void BillBoardTest::onTouchesMoved(const std::vector<Touch*>& touches, Event* ev
         cameraPos+=cameraRightDir*newPos.x*0.5;
         _camera->setPosition3D(cameraPos);      
     }
-}*/
+}
 
 void BillBoardTest::rotateCameraCallback(Ref* sender,float value)
 {

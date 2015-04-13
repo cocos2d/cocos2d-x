@@ -16,11 +16,11 @@ public:
     ~UISliderTest_Editor();
 
     virtual bool init() override;
-    void sliderEvent(Ref* pSender, Slider::EventType type);
+    void sliderEvent(cocos2d::Ref* sender, cocos2d::ui::Slider::EventType type);
     virtual void configureGUIScene() override;
 
 protected:
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UISliderTest_Editor__) */

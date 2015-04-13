@@ -39,9 +39,9 @@ public:
 
     virtual bool init() override;
     
-    void pageViewEvent(Ref* pSender, PageView::EventType type);
+    void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
 protected:
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UIPageViewTest_Editor__) */

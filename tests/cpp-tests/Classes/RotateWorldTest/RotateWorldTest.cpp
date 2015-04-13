@@ -1,6 +1,8 @@
 #include "RotateWorldTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 RotateWorldTests::RotateWorldTests()
 {
     ADD_TEST_CASE(RotateWorldTest);

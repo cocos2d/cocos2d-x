@@ -35,7 +35,7 @@ public:
     void onMenuSendBinaryClicked(cocos2d::Ref *sender);
 
     virtual std::string title() const override { return "WebSocket Test"; }
-    void startTestCallback(Ref* sender);
+    void startTestCallback(cocos2d::Ref* sender);
 
 private:
     cocos2d::network::WebSocket* _wsiSendText;

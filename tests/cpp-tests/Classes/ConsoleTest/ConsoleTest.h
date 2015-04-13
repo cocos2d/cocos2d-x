@@ -27,8 +27,6 @@
 
 #include "../BaseTest.h"
 
-USING_NS_CC;
-
 DEFINE_TEST_SUITE(ConsoleTests);
 
 class BaseTestConsole : public TestCase

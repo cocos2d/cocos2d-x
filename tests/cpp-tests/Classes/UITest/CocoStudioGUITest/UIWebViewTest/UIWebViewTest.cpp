@@ -24,6 +24,9 @@
 
 #include "UIWebViewTest.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
 WebViewTests::WebViewTests()
 {
     ADD_TEST_CASE(WebViewTest);

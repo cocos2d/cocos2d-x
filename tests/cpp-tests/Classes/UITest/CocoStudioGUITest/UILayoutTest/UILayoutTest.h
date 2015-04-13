@@ -125,9 +125,9 @@ public:
     CREATE_FUNC(UILayoutComponentTest);
 
     virtual bool init() override;
-    void touchEvent(Ref *pSender, Widget::TouchEventType type);
+    void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 protected:
-    LayerColor* _baseLayer;
+    cocos2d::LayerColor* _baseLayer;
     
 };
 

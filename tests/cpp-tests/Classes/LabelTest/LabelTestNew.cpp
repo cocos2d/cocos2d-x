@@ -2,6 +2,7 @@
 #include "../testResource.h"
 #include "renderer/CCRenderer.h"
 
+USING_NS_CC;
 using namespace ui;
 
 enum {

@@ -26,6 +26,8 @@
 #include "CocosStudio3DTest.h"
 #include "cocostudio/CocoStudio.h"
 
+USING_NS_CC;
+
 enum
 {
     IDC_NEXT = 100,

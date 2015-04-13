@@ -1,5 +1,7 @@
 #include "LightTest.h"
 
+USING_NS_CC;
+
 LightTests::LightTests()
 {
     ADD_TEST_CASE(LightTest);

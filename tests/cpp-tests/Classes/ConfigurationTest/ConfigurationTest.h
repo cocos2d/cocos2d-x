@@ -4,8 +4,6 @@
 #include "../testBasic.h"
 #include "../BaseTest.h"
 
-USING_NS_CC;
-
 DEFINE_TEST_SUITE(ConfigurationTests);
 
 class ConfigurationBase : public TestCase

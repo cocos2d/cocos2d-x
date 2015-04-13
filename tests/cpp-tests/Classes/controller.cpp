@@ -93,6 +93,7 @@ public:
 TestController::TestController()
 : _stopAutoTest(true)
 , _isRunInBackground(false)
+, _testSuite(nullptr)
 {
     _rootTestList = new (std::nothrow) RootTests;  
     _rootTestList->runThisTest();

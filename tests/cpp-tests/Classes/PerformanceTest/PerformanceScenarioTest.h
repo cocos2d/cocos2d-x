@@ -30,9 +30,9 @@ public:
     virtual std::string title() const override;
     virtual void performTests() override;
 
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event) override;
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event) override;
 
-    static Scene* scene();
+    static cocos2d::Scene* scene();
 
 private:
     void addNewSprites(int num);
@@ -52,15 +52,15 @@ private:
     static int _initParsysNum;
     static int _parsysStepNum;
 
-    TMXTiledMap* _map1;
-    TMXTiledMap* _map2;
+    cocos2d::TMXTiledMap* _map1;
+    cocos2d::TMXTiledMap* _map2;
 
-    MenuItemToggle* _itemToggle;
-    Vector<Sprite*> _spriteArray;
-    Vector<ParticleSystemQuad*> _parsysArray;
-    Label* _spriteLabel;
-    Label* _particleLabel;
-    Label* _parsysLabel;
+    cocos2d::MenuItemToggle* _itemToggle;
+    cocos2d::Vector<cocos2d::Sprite*> _spriteArray;
+    cocos2d::Vector<cocos2d::ParticleSystemQuad*> _parsysArray;
+    cocos2d::Label* _spriteLabel;
+    cocos2d::Label* _particleLabel;
+    cocos2d::Label* _parsysLabel;
     int _particleNumber;
 };
 

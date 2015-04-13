@@ -5,8 +5,6 @@
 #include "../../BaseTest.h"
 #include "cocostudio/CocoStudio.h"
 
-using namespace cocostudio::timeline;
-
 class CocoStudioActionTimelineTests : public TestSuite
 {
 public:
@@ -45,10 +43,10 @@ public:
     virtual void onEnter() override;
     virtual std::string title() const override;
 
-	void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+	void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
 
 protected:
-    ActionTimeline* action;
+    cocostudio::timeline::ActionTimeline* action;
 };
 
 class TestTimelineFrameEvent : public ActionTimelineBaseTest
@@ -59,7 +57,7 @@ public:
     virtual void onEnter() override;
     virtual std::string title() const override;
 
-    void onFrameEvent(Frame* frame);
+    void onFrameEvent(cocostudio::timeline::Frame* frame);
 };
 
 class TestTimelinePerformance : public ActionTimelineBaseTest
