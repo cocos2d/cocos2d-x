@@ -1,6 +1,6 @@
 local targetPlatform = cc.Application:getInstance():getTargetPlatform()
 local isIOS64bit     = cc.Application:getInstance():isIOS64bit()
-if cc.PLATFORM_OS_LINUX ~= targetPlatform and isIOS64bit ~= true then
+if cc.PLATFORM_OS_LINUX ~= targetPlatform and cc.PLATFORM_OS_TIZEN ~= targetPlatform and isIOS64bit ~= true then
 require("ByteCodeEncryptTest/ByteCodeTest")
 require("ByteCodeEncryptTest/ByteCodeAndEncryptTest")
 end
