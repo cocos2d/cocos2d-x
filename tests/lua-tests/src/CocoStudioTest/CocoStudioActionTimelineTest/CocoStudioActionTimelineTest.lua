@@ -6,7 +6,8 @@ local TimelineTestIndex =
     TEST_ACTION_TIMELINE        = 1,
     TEST_CHANGE_PLAY_SECTION    = 2,
     --TEST_TIMELINE_FRAME_EVENT   = 3,
-    TEST_TIMELINE_PERFORMACE    = 3,
+    TEST_TIMELINE_PERFORMACE    = 3, 
+    TEST_ACTION_TIMELINE_EASE = 4,
 }
 local timelineSceneIdx   = TimelineTestIndex.TEST_ACTION_TIMELINE
 
@@ -66,6 +67,8 @@ function TimelineTestLayer.title(idx)
     --    return "Test Frame Event"
     elseif TimelineTestIndex.TEST_TIMELINE_PERFORMACE == idx then
         return "Test ActionTimeline performance"
+    elseif TimelineTestIndex.TEST_ACTION_TIMELINE_EASE == idx then
+        return "Test ActionTimelineEase"
     end
 end
 
@@ -417,12 +420,59 @@ function TestTimelinePerformance.create()
     return layer
 end
 
+local TestActionTimelineEase = class("TestActionTimelineEase",TimelineTestLayer)
+TestActionTimelineEase.__index = TestActionTimelineEase
+
+function TestActionTimelineEase.extend(target)
+    local t = tolua.getpeer(target)
+    if not t then
+        t = {}
+        tolua.setpeer(target, t)
+    end
+    setmetatable(t, TestActionTimelineEase)
+    return target
+end
+
+function TestActionTimelineEase:onEnter()
+    local node = cc.CSLoader:createNode("ActionTimeline/ActionTimelineEase.csb")
+    local action = cc.CSLoader:createTimeline("ActionTimeline/ActionTimelineEase.csb")
+    node:runAction(action)
+    action:gotoFrameAndPlay(0)
+    self:addChild(node)
+end
+
+function TestActionTimelineEase.restartCallback()
+    ccs.ArmatureDataManager:destroyInstance()
+    local newScene = TimelineTestScene.create()
+    newScene:addChild(restartTimelineTest())
+    cc.Director:getInstance():replaceScene(newScene)
+end
+
+function TestActionTimelineEase.create()
+    local layer = TestActionTimelineEase.extend(cc.Layer:create())
+
+    if nil ~= layer then
+        layer:createMenu()
+        layer:createToExtensionMenu()
+        layer:creatTitleAndSubTitle(timelineSceneIdx)
+        local function onNodeEvent(event)
+            if "enter" == event then
+                layer:onEnter()
+            end
+        end
+        layer:registerScriptHandler(onNodeEvent)
+    end 
+
+    return layer
+end
+
 local actionlineSceneArr =
 {
     TestActionTimeline.create,
     TestChangePlaySection.create,
     --TestTimelineFrameEvent.create,
     TestTimelinePerformance.create,
+    TestActionTimelineEase.create,
 }
 
 function nextTimelineTest()
