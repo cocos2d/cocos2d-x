@@ -1,4 +1,5 @@
 cocos2d-x-3.6beta0 Apr.14 2015
+    [NEW]           3rd: update Spine runtime to v2.1.25
     [NEW]           MotionStreak: add `MotionStreak::getStroke()` and `MotionStreak::setStroke()`
     [NEW]           UI:Text: add `Text::disableEffect(LabelEffect)` to disable a specific effect
 
