@@ -1032,7 +1032,6 @@ end
 ----------------------------------------
 local Sprite3DCubeMapTest = class("Sprite3DCubeMapTest", function ()
     local layer = cc.Layer:create()
-    Helper.initWithLayer(layer)
     return layer
 end)
 
@@ -1045,9 +1044,6 @@ function Sprite3DCubeMapTest:ctor()
 end
 
 function Sprite3DCubeMapTest:init()
-    Helper.titleLabel:setString(self:title())
-    Helper.subtitleLabel:setString(self:subtitle())
-
     self:registerScriptHandler(function (event)
         if event == "enter" then
             self:onEnter()
@@ -1068,6 +1064,9 @@ end
 function Sprite3DCubeMapTest:onEnter()
     local s = cc.Director:getInstance():getWinSize()
     self:addNewSpriteWithCoords(cc.p(s.width / 2, s.height / 2))
+    Helper.initWithLayer(self)
+    Helper.titleLabel:setString(self:title())
+    Helper.subtitleLabel:setString(self:subtitle())
 end
 
 function Sprite3DCubeMapTest:onExit()
