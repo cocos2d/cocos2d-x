@@ -1,4 +1,5 @@
 cocos2d-x-3.6beta0 Apr.14 2015
+    [NEW]           MotionStreak: add `MotionStreak::getStroke()` and `MotionStreak::setStroke()`
     [NEW]           UI:Text: add `Text::disableEffect(LabelEffect)` to disable a specific effect
 
     [FIX]           Physics: rigid body's rotation is wrong if it is attatched to a node which rotation is not 0
