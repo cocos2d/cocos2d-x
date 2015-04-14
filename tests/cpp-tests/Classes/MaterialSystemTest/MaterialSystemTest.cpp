@@ -27,6 +27,8 @@
 #include "../testResource.h"
 #include "cocos2d.h"
 
+#include "renderer/CCMaterial.h"
+
 
 USING_NS_CC;
 
@@ -52,6 +54,9 @@ void Material_SpriteSinglePassTest::onEnter()
     auto sprite = Sprite::create("Images/grossini.png");
     sprite->setNormalizedPosition(Vec2(0.5, 0.5));
     this->addChild(sprite);
+
+    auto material = Material::createWithFilename("Materials/basic.material");
+    sprite->setMaterial(material);
 }
 
 std::string Material_SpriteSinglePassTest::subtitle() const

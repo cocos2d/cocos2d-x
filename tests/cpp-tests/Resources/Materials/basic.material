@@ -1,9 +1,3 @@
 {
-    "name" : "no name","
-    "techniques" : [
-        {
-            "passes" : [
-            ]
-        },
-    ]
+    "name": "simple"
 }

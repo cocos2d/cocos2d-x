@@ -34,6 +34,9 @@
 
 #include "json/document.h"
 
+static const float MATERIAL_FORMAT_VERSION = 1.0;
+static const char* MATERIAL_TYPE = "material";
+
 NS_CC_BEGIN
 
 Material* Material::createWithFilename(const std::string& filepath)
@@ -63,12 +66,50 @@ Material::Material(cocos2d::GLProgramState *state)
 Material::Material(const std::string& validfilename)
 {
     rapidjson::Document document;
-    document.Parse<0>(validfilename.c_str());
+
+
+    document.Parse<rapidjson::kParseInsituFlag>(validfilename.c_str());
+
+    if (document.HasParseError())
+    {
+        CCLOG("GetParseError %s\n", document.GetParseError());
+        return;
+    }
 
     CCASSERT(document.IsObject(), "Invalid JSON file");
 
-    
+    if (! parseMetadata(document)) {
+        CCLOG("Error parsing Material metadata");
+        return;
+    }
 
+    parseProperties(document);
+}
+
+bool Material::parseMetadata(const rapidjson::Document& jsonDocument)
+{
+    bool broken = false;
+
+    const auto& metadata = jsonDocument["metadata"];
+    if (metadata.IsObject())
+    {
+        auto version = metadata["version"].GetDouble();
+        broken |= std::floor(version) != std::floor(MATERIAL_FORMAT_VERSION);
+
+        auto type = metadata["type"].GetString();
+        broken |= strcmp(type, MATERIAL_TYPE) != 0;
+    }
+
+    return !broken;
+}
+
+bool Material::parseProperties(const rapidjson::Document& jsonDocument)
+{
+    auto texture = jsonDocument["texture_0"].GetString();
+    auto vertexShader = jsonDocument["vertex_shader"].GetString();
+    auto fragShader = jsonDocument["fragment_shader"].GetString();
+
+    
 }
 
 std::string Material::getName() const

@@ -31,8 +31,10 @@
 #define __cocos2d_libs__CCMaterial__
 
 #include <string>
-#include <CCVector.h>
 
+#include "json/document.h"
+
+#include "base/CCVector.h"
 #include "platform/CCPlatformMacros.h"
 #include "renderer/CCRenderState.h"
 
@@ -85,6 +87,9 @@ protected:
     Material(const std::string& file);
     Material();
     ~Material();
+
+    bool parseMetadata(const rapidjson::Document& json);
+    bool parseProperties(const rapidjson::Document& json);
 
     // material name
     std::string _name;
