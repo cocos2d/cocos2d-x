@@ -871,7 +871,7 @@ void Label::setFontScale(float fontScale)
 void Label::onDraw(const Mat4& transform, bool transformUpdated)
 {
     // Optimization: Fast Dispatch
-    if( _batchNodes.size() == 1 && _textureAtlas->getTotalQuads() == 0 )
+    if( _textureAtlas == NULL || (_batchNodes.size() == 1 && _textureAtlas->getTotalQuads() == 0) )
     {
         return;
     }
