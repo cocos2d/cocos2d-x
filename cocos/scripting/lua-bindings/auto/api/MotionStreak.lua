@@ -69,11 +69,26 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+--  Get stroke.<br>
+-- return float stroke.
+-- @function [parent=#MotionStreak] getStroke 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
 --  Sets fast mode or not.<br>
 -- param bFastMode True if enabled fast mode.
 -- @function [parent=#MotionStreak] setFastMode 
 -- @param self
 -- @param #bool bFastMode
+-- @return MotionStreak#MotionStreak self (return value: cc.MotionStreak)
+        
+--------------------------------
+--  Set stroke.<br>
+-- param stroke The width of stroke.
+-- @function [parent=#MotionStreak] setStroke 
+-- @param self
+-- @param #float stroke
 -- @return MotionStreak#MotionStreak self (return value: cc.MotionStreak)
         
 --------------------------------
