@@ -33,6 +33,8 @@
 #include "3d/CCSkybox.h"
 #include "3d/CCTextureCube.h"
 
+#include "2d/CCCamera.h"
+
 NS_CC_BEGIN
 
 Skybox::Skybox()
@@ -150,18 +152,31 @@ void Skybox::draw(Renderer* renderer, const Mat4& transform, uint32_t flags)
 
 void Skybox::onDraw(const Mat4& transform, uint32_t flags)
 {
+    Mat4 trans(transform);
+    const cocos2d::Vec3 pos(Camera::getVisitingCamera()->getPosition3D());
+    trans.m[12] = pos.x;
+    trans.m[13] = pos.y;
+    trans.m[14] = pos.z;
+
     auto state = getGLProgramState();
-    state->apply(transform);
-    
+    state->apply(trans);
+
     Vec4 color(_displayedColor.r / 255.f, _displayedColor.g / 255.f, _displayedColor.b / 255.f, 1.f);
     state->setUniformVec4("u_color", color);
 
-    GLboolean   depthFlag = glIsEnabled(GL_DEPTH_TEST);
-    GLint       depthFunc;
+    GLboolean depthFlag = glIsEnabled(GL_DEPTH_TEST);
+    GLint depthFunc;
     glGetIntegerv(GL_DEPTH_FUNC, &depthFunc);
 
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
+
+    GLboolean cullFlag = glIsEnabled(GL_CULL_FACE);
+    GLint cullMode;
+    glGetIntegerv(GL_CULL_FACE_MODE, &cullMode);
+
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
 
     if (Configuration::getInstance()->supportsShareableVAO())
     {
@@ -190,6 +205,10 @@ void Skybox::onDraw(const Mat4& transform, uint32_t flags)
     }
 
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, 8);
+
+    glCullFace(cullMode);
+    if (!cullFlag)
+        glDisable(GL_CULL_FACE);
 
     glDepthFunc(depthFunc);
     if (!depthFlag)

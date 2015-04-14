@@ -202,6 +202,12 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
     {
         glEnable(GL_BLEND);
     }
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+    if(_isDrawWire)//reset state.
+    {
+        glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+    }
+#endif
 }
 
 bool Terrain::initHeightMap(const char * heightMap)
@@ -872,9 +878,6 @@ void Terrain::Chunk::bindAndDraw()
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_NORMAL,3,GL_FLOAT,GL_FALSE,sizeof(TerrainVertexData),(GLvoid *)offset);
     glDrawElements(GL_TRIANGLES, (GLsizei)_chunkIndices._size, GL_UNSIGNED_SHORT, 0);
     CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _chunkIndices._size);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-    glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
-#endif
 }
 
 void Terrain::Chunk::generate(int imgWidth, int imageHei, int m, int n, const unsigned char * data)

@@ -38,7 +38,7 @@
 extern "C" {
 #endif
 
-typedef struct {
+typedef struct spPolygon {
 	float* const vertices;
 	int count;
 	int capacity;
@@ -60,7 +60,7 @@ typedef spPolygon Polygon;
 
 /**/
 
-typedef struct {
+typedef struct spSkeletonBounds {
 	int count;
 	spBoundingBoxAttachment** boundingBoxes;
 	spPolygon** polygons;

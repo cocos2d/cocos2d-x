@@ -519,10 +519,13 @@ public:
 
     void addNewSpriteWithCoords(cocos2d::Vec2);
 
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
+
 protected:
-    cocos2d::TextureCube*   _textureCube;
-    cocos2d::Skybox*                 _skyBox;
-    cocos2d::Sprite3D*               _teapot;
+    cocos2d::TextureCube* _textureCube;
+    cocos2d::Skybox* _skyBox;
+    cocos2d::Sprite3D* _teapot;
+    cocos2d::Camera *_camera;
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     cocos2d::EventListenerCustom* _backToForegroundListener;
