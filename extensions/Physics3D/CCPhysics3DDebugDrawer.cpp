@@ -55,7 +55,7 @@ void Physics3DDebugDrawer::drawLine( const btVector3& from,const btVector3& to,c
 
 void Physics3DDebugDrawer::drawContactPoint( const btVector3& PointOnB,const btVector3& normalOnB,btScalar distance,int lifeTime,const btVector3& color )
 {
-	drawLine(PointOnB, PointOnB + normalOnB * distance, color);
+    drawLine(PointOnB, PointOnB + normalOnB * distance, color);
 }
 
 void Physics3DDebugDrawer::reportErrorWarning( const char* warningString )
@@ -75,7 +75,7 @@ void Physics3DDebugDrawer::setDebugMode( int debugMode )
 
 int Physics3DDebugDrawer::getDebugMode() const 
 {
-    return DBG_DrawWireframe;
+    return DBG_MAX_DEBUG_DRAW_MODE;
 }
 
 void Physics3DDebugDrawer::draw( Renderer *renderer)

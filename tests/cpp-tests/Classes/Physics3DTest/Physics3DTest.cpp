@@ -97,6 +97,7 @@ Physics3DTestScene::Physics3DTestScene()
 #endif
 {
     getPhysics3DWorld()->setDebugDrawEnable(true);
+
     physicsScene = this;
 }
 
@@ -141,7 +142,7 @@ bool Physics3DTestDemo::init()
 
     Size size = Director::getInstance()->getWinSize();
     _camera = Camera::createPerspective(30.0f, size.width / size.height, 1.0f, 1000.0f);
-    _camera->setPosition3D(Vec3(0.0f, 0.0f, 100.0f));
+    _camera->setPosition3D(Vec3(0.0f, 50.0f, 100.0f));
     _camera->lookAt(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
     _camera->setCameraFlag(CameraFlag::USER1);
     this->addChild(_camera);
@@ -169,7 +170,7 @@ void Physics3DTestDemo::onTouchesMoved(const std::vector<Touch*>& touches, cocos
         auto delta = touch->getDelta();
 
         _angle -= CC_DEGREES_TO_RADIANS(delta.x);
-        _camera->setPosition3D(Vec3(100.0f * sinf(_angle), 0.0f, 100.0f * cosf(_angle)));
+        _camera->setPosition3D(Vec3(100.0f * sinf(_angle), 50.0f, 100.0f * cosf(_angle)));
         _camera->lookAt(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
 
         if (delta.lengthSquared() > 16)
@@ -252,7 +253,7 @@ bool BasicPhysics3DDemo::init()
     Physics3DRigidBodyDes rbDes;
     rbDes.mass = 0.0f;
     rbDes.shape = Physics3DShape::createBox(Vec3(60.0f, 2.0f, 60.0f));
-    rbDes.originalTransform.translate(0.f, -10.f, 0.f);
+    rbDes.originalTransform.translate(0.f, -5.f, 0.f);
     auto rigidBody = Physics3DRigidBody::create(&rbDes);
     auto component = Physics3DComponent::create(rigidBody);
     auto node = Node::create();
@@ -336,7 +337,7 @@ bool Physics3DConstraintDemo::init()
     physicsScene->setPhysics3DDebugCamera(_camera);
     
     //create constraint
-    auto constraint = Physics3DPointToPointConstraint::create(rigidBody, Vec3(5.f, 5.f, 5.f));
+    auto constraint = Physics3DPointToPointConstraint::create(rigidBody, Vec3(2.5f, 2.5f, 2.5f));
     physicsScene->getPhysics3DWorld()->addPhysics3DConstraint(constraint);
     
     return true;
