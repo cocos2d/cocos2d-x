@@ -245,7 +245,7 @@ public:
      * Query the font name of button's title
      *@return font name in std::string
      */
-    const std::string& getTitleFontName() const;
+    const std::string getTitleFontName() const;
 
     /** @brief When user pressed the button, the button will zoom to a scale.
      * The final scale of the button  equals (button original scale + _zoomScale)

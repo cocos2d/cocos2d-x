@@ -845,15 +845,22 @@ Label* Button::getTitleRenderer()const
     return _titleRenderer;
 }
 
-const std::string& Button::getTitleFontName() const
+const std::string Button::getTitleFontName() const
 {
-    if(this->_type == FontType::SYSTEM)
+    if (nullptr != _titleRenderer)
     {
-        return _titleRenderer->getSystemFontName();
+        if(this->_type == FontType::SYSTEM)
+        {
+            return _titleRenderer->getSystemFontName();
+        }
+        else
+        {
+            return  _titleRenderer->getTTFConfig().fontFilePath;
+        }
     }
     else
     {
-        return  _titleRenderer->getTTFConfig().fontFilePath;
+        return "";
     }
 }
 
@@ -874,9 +881,21 @@ void Button::copySpecialProperties(Widget *widget)
     {
         _prevIgnoreSize = button->_prevIgnoreSize;
         setScale9Enabled(button->_scale9Enabled);
-        loadTextureNormal(button->_buttonNormalRenderer->getSprite()->getSpriteFrame());
-        loadTexturePressed(button->_buttonClickedRenderer->getSprite()->getSpriteFrame());
-        loadTextureDisabled(button->_buttonDisableRenderer->getSprite()->getSpriteFrame());
+        auto normalSprite = button->_buttonNormalRenderer->getSprite();
+        if (nullptr != normalSprite)
+        {
+            loadTextureNormal(normalSprite->getSpriteFrame());
+        }
+        auto clickedSprite = button->_buttonClickedRenderer->getSprite();
+        if (nullptr != clickedSprite)
+        {
+            loadTexturePressed(clickedSprite->getSpriteFrame());
+        }
+        auto disabledSprite = button->_buttonDisableRenderer->getSprite();
+        if (nullptr != disabledSprite)
+        {
+            loadTextureDisabled(disabledSprite->getSpriteFrame());
+        }
         setCapInsetsNormalRenderer(button->_capInsetsNormal);
         setCapInsetsPressedRenderer(button->_capInsetsPressed);
         setCapInsetsDisabledRenderer(button->_capInsetsDisabled);
