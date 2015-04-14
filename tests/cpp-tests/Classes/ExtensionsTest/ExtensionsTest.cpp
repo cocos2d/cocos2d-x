@@ -35,7 +35,9 @@ static struct {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 	{ "WebSocketTest", [](Ref *sender){ runWebSocketTest();}
 	},
-	{ "SocketIOTest", [](Ref *sender){ runSocketIOTest();}
+	{ "SocketIOTest v0.9.x", [](Ref *sender){ runSocketIOTest("09");}
+	},
+	{ "SocketIOTest v1.x", [](Ref *sender){ runSocketIOTest("10"); }
 	},
 #endif
 
