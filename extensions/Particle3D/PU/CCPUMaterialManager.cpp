@@ -159,7 +159,7 @@ bool PUMaterialCache::loadMaterialsFromSearchPaths( const std::string &fileFolde
 
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     ftw(fileFolder.c_str(), iterPath, 500);
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_TIZEN)
     DIR *d; //dir handle
     struct dirent *file; //readdir
     struct stat statbuf;
