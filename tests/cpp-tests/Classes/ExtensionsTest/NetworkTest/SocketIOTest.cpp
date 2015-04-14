@@ -127,7 +127,7 @@ SocketIOTestLayer::~SocketIOTestLayer(void)
 //test event callback handlers, these will be registered with socket.io
 void SocketIOTestLayer::testevent(SIOClient *client, const std::string& data) {
 
-	log("SocketIOTestLayer::testevent called with data: %s", data.c_str());
+	CCLOGINFO("SocketIOTestLayer::testevent called with data: %s", data.c_str());
 
 	std::stringstream s;
 	s << client->getTag() << " received event testevent with data: " << data.c_str();	
@@ -138,7 +138,7 @@ void SocketIOTestLayer::testevent(SIOClient *client, const std::string& data) {
 
 void SocketIOTestLayer::echotest(SIOClient *client, const std::string& data) {
 
-	log("SocketIOTestLayer::echotest called with data: %s", data.c_str());
+	CCLOGINFO("SocketIOTestLayer::echotest called with data: %s", data.c_str());
 
 	std::stringstream s;
 	s << client->getTag() << " received event echotest with data: " << data.c_str();	
@@ -151,7 +151,7 @@ void SocketIOTestLayer::echotest(SIOClient *client, const std::string& data) {
 // 'message' events and handlers are now registered in the same way that other events are
 void SocketIOTestLayer::message(network::SIOClient* client, const std::string& data)
 {
-	log("SocketIOTestLayer::message received: %s", data.c_str());
+	CCLOGINFO("SocketIOTestLayer::message received: %s", data.c_str());
 
 	std::stringstream s;
 	s << client->getTag() << " received message with content: " << data.c_str();
@@ -161,7 +161,7 @@ void SocketIOTestLayer::message(network::SIOClient* client, const std::string& d
 
 void SocketIOTestLayer::json(network::SIOClient* client, const std::string& data)
 {
-	log("SocketIOTestLayer::json received: %s", data.c_str());
+	CCLOGINFO("SocketIOTestLayer::json received: %s", data.c_str());
 
 	std::stringstream s;
 	s << client->getTag() << " received json message with content: " << data.c_str();
@@ -171,7 +171,7 @@ void SocketIOTestLayer::json(network::SIOClient* client, const std::string& data
 
 void SocketIOTestLayer::connect(network::SIOClient* client, const std::string& data)
 {
-	log("SocketIOTestLayer::connect called");
+	CCLOGINFO("SocketIOTestLayer::connect called");
 
 	std::stringstream s;
 	s << client->getTag() << " connected!";
@@ -181,7 +181,7 @@ void SocketIOTestLayer::connect(network::SIOClient* client, const std::string& d
 
 void SocketIOTestLayer::disconnect(network::SIOClient* client, const std::string& data)
 {
-	log("SocketIOTestLayer::disconnect called");
+	CCLOGINFO("SocketIOTestLayer::disconnect called");
 
 	std::stringstream s;
 	s << client->getTag() << " disconnected by server!";
@@ -320,7 +320,7 @@ void SocketIOTestLayer::onMenuTestEndpointDisconnectClicked(cocos2d::Ref *sender
 
 void SocketIOTestLayer::onClose(network::SIOClient* client)
 {
-	log("SocketIOTestLayer::onClose called");
+	CCLOGINFO("SocketIOTestLayer::onClose called");
 
 	std::stringstream s;
 	s << client->getTag() << " closed!";	
@@ -332,7 +332,7 @@ void SocketIOTestLayer::onClose(network::SIOClient* client)
 
 void SocketIOTestLayer::onError(network::SIOClient* client, const std::string& data)
 {
-	log("SocketIOTestLayer::onError received: %s", data.c_str());
+	CCLOGINFO("SocketIOTestLayer::onError received: %s", data.c_str());
 
 	std::stringstream s;
 	s << client->getTag() << " received error with content: " << data.c_str();	
