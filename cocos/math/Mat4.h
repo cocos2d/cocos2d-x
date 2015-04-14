@@ -31,6 +31,11 @@
 #include <xmmintrin.h>
 #endif
 
+#ifdef __ARM_NEON
+#include <arm_neon.h>
+#endif
+
+
 NS_CC_MATH_BEGIN
 
 //class Plane;
@@ -87,6 +92,11 @@ public:
 #ifdef __SSE__
     union {
         __m128 col[4];
+        float m[16];
+    };
+#elif defined(__ARM_NEON)
+    union {
+        float32x4_t col[4];
         float m[16];
     };
 #else
