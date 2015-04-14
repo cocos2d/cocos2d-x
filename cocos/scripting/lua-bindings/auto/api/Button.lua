@@ -36,7 +36,7 @@
 -- @return Label#Label ret (return value: cc.Label)
         
 --------------------------------
--- brief Return a zoom scale <br>
+-- brief Return a zoom scale<br>
 -- return the zoom scale in float<br>
 -- since v3.3
 -- @function [parent=#Button] getZoomScale 
