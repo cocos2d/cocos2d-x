@@ -3,6 +3,7 @@ cocos2d-x-3.6beta0 Apr.14 2015
     [NEW]           MotionStreak: add `MotionStreak::getStroke()` and `MotionStreak::setStroke()`
     [NEW]           UI:Text: add `Text::disableEffect(LabelEffect)` to disable a specific effect
 
+    [FIX]           3rd: link error on VS2012 caused by libpng
     [FIX]           Label: position is wrong if it is visited by a new camera
     [FIX]           Particle3D: "make local" now working correctly. "Make local" is a properties that toggles particle coordination between local and global.
     [FIX]           Particle3D: particle rotation now no longer stacks up on each other
