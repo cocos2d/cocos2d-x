@@ -239,6 +239,8 @@ void VertexData::clear()
     _dirty = true;
     for (auto& b : _buffers)
         b->clear();
+    if (_indices)
+        _indices->clear();
 }
 
 bool VertexData::isDirty() const
@@ -248,6 +250,8 @@ bool VertexData::isDirty() const
     for (auto b : _buffers)
         if (b->isDirty())
             return true;
+    if (_indices && _indices->isDirty())
+        return true;
     return false;
 }
 
@@ -256,6 +260,8 @@ void VertexData::setDirty(bool dirty)
     _dirty = dirty;
     for (auto b : _buffers)
         b->setDirty(dirty);
+    if (_indices)
+        _indices->setDirty(dirty);
 }
 
 ssize_t VertexData::getCount() const

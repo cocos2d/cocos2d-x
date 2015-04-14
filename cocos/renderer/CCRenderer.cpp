@@ -26,7 +26,6 @@
 
 #include <algorithm>
 
-#include "renderer/CCTrianglesCommand.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCBatchCommand.h"
 #include "renderer/CCCustomCommand.h"
@@ -36,6 +35,8 @@
 #include "renderer/CCMeshCommand.h"
 #include "renderer/CCScissorCommand.h"
 #include "renderer/CCStencilCommand.h"
+#include "renderer/CCVertexIndexData.h"
+#include "renderer/CCVertexIndexBuffer.h"
 #include "base/CCConfiguration.h"
 #include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"
@@ -123,17 +124,13 @@ RenderCommand* RenderQueue::operator[](ssize_t index) const
     
     CCASSERT(false, "invalid index");
     return nullptr;
-
-
 }
 
 void RenderQueue::clear()
 {
     _commands.clear();
     for(int index = 0; index < QUEUE_COUNT; ++index)
-    {
-        _commands.push_back(std::vector<RenderCommand*>());
-    }
+        _commands.emplace_back(std::vector<RenderCommand*>());
 }
 
 void RenderQueue::saveRenderState()
@@ -180,17 +177,11 @@ static const int DEFAULT_RENDER_QUEUE = 0;
 // constructors, destructors, init
 //
 Renderer::Renderer()
-:_lastMaterialID(0)
-,_lastBatchedMeshCommand(nullptr)
-,_filledVertex(0)
-,_filledIndex(0)
-,_numberQuads(0)
-,_glViewAssigned(false)
-,_isRendering(false)
-,_isDepthTestFor2D(false)
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-,_cacheTextureListener(nullptr)
-#endif
+    :_lastMaterialID(0)
+    ,_lastBatchedMeshCommand(nullptr)
+    ,_glViewAssigned(false)
+    ,_isRendering(false)
+    ,_isDepthTestFor2D(false)
 {
     _groupCommandManager = new (std::nothrow) GroupCommandManager();
     
@@ -198,7 +189,7 @@ Renderer::Renderer()
     
     RenderQueue defaultRenderQueue;
     _renderGroups.push_back(defaultRenderQueue);
-    _batchedCommands.reserve(BATCH_QUADCOMMAND_RESEVER_SIZE);
+    _batchQuadCommands.reserve(BATCH_QUADCOMMAND_RESERVE_SIZE);
 
     // default clear color
     _clearColor = Color4F::BLACK;
@@ -208,153 +199,45 @@ Renderer::~Renderer()
 {
     _renderGroups.clear();
     _groupCommandManager->release();
-    
-    glDeleteBuffers(2, _buffersVBO);
-    glDeleteBuffers(2, _quadbuffersVBO);
-    
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        glDeleteVertexArrays(1, &_buffersVAO);
-        glDeleteVertexArrays(1, &_quadVAO);
-        GL::bindVAO(0);
-    }
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_cacheTextureListener);
-#endif
+  
+    CC_SAFE_RELEASE(_vao);
+    CC_SAFE_RELEASE(_vbo);
+    CC_SAFE_RELEASE(_ibo);
 }
 
 void Renderer::initGLView()
 {
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    _cacheTextureListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
-        /** listen the event that renderer was recreated on Android/WP8 */
-        this->setupBuffer();
-    });
+    initBuffers();
+}
+
+void Renderer::initBuffers()
+{
+    _vao = VertexData::create(VertexData::Primitive::Triangles);
+    _vbo = VertexBuffer::create(sizeof(V3F_C4B_T2F), VBO_SIZE, VertexBuffer::ArrayType::All, VertexBuffer::ArrayMode::Dynamic);
+    _ibo = IndexBuffer::create(IndexBuffer::IndexType::INDEX_TYPE_SHORT_16, INDEX_VBO_SIZE, IndexBuffer::ArrayType::All);
+    _vao->setIndexBuffer(_ibo);
     
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_cacheTextureListener, -1);
-#endif
+    _vao->addStream(_vbo, VertexAttribute(offsetof(V3F_C4B_T2F, vertices),  GLProgram::VERTEX_ATTRIB_POSITION,  DataType::Float, 3));
+    _vao->addStream(_vbo, VertexAttribute(offsetof(V3F_C4B_T2F, colors),    GLProgram::VERTEX_ATTRIB_COLOR,     DataType::UByte, 4, true));
+    _vao->addStream(_vbo, VertexAttribute(offsetof(V3F_C4B_T2F, texCoords), GLProgram::VERTEX_ATTRIB_TEX_COORD, DataType::Float, 2));
     
-    //setup index data for quads
-    
+    CC_SAFE_RETAIN(_vao);
+    CC_SAFE_RETAIN(_vbo);
+    CC_SAFE_RETAIN(_ibo);
+
+    // pre setup index data for quads
+    auto indices = _ibo->getElementsOfType<uint16_t>();
     for( int i=0; i < VBO_SIZE/4; i++)
     {
-        _quadIndices[i*6+0] = (GLushort) (i*4+0);
-        _quadIndices[i*6+1] = (GLushort) (i*4+1);
-        _quadIndices[i*6+2] = (GLushort) (i*4+2);
-        _quadIndices[i*6+3] = (GLushort) (i*4+3);
-        _quadIndices[i*6+4] = (GLushort) (i*4+2);
-        _quadIndices[i*6+5] = (GLushort) (i*4+1);
+        indices[i*6+0] = (GLushort) (i*4+0);
+        indices[i*6+1] = (GLushort) (i*4+1);
+        indices[i*6+2] = (GLushort) (i*4+2);
+        indices[i*6+3] = (GLushort) (i*4+3);
+        indices[i*6+4] = (GLushort) (i*4+2);
+        indices[i*6+5] = (GLushort) (i*4+1);
     }
-    
-    setupBuffer();
     
     _glViewAssigned = true;
-}
-
-void Renderer::setupBuffer()
-{
-    if(Configuration::getInstance()->supportsShareableVAO())
-    {
-        setupVBOAndVAO();
-    }
-    else
-    {
-        setupVBO();
-    }
-}
-
-void Renderer::setupVBOAndVAO()
-{
-    //generate vbo and vao for trianglesCommand
-    glGenVertexArrays(1, &_buffersVAO);
-    GL::bindVAO(_buffersVAO);
-
-    glGenBuffers(2, &_buffersVBO[0]);
-
-    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(_verts[0]) * VBO_SIZE, _verts, GL_DYNAMIC_DRAW);
-
-    // vertices
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*) offsetof( V3F_C4B_T2F, vertices));
-
-    // colors
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B_T2F), (GLvoid*) offsetof( V3F_C4B_T2F, colors));
-
-    // tex coords
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*) offsetof( V3F_C4B_T2F, texCoords));
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * INDEX_VBO_SIZE, _indices, GL_STATIC_DRAW);
-
-    // Must unbind the VAO before changing the element buffer.
-    GL::bindVAO(0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    //generate vbo and vao for quadCommand
-    glGenVertexArrays(1, &_quadVAO);
-    GL::bindVAO(_quadVAO);
-    
-    glGenBuffers(2, &_quadbuffersVBO[0]);
-    
-    glBindBuffer(GL_ARRAY_BUFFER, _quadbuffersVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(_quadVerts[0]) * VBO_SIZE, _quadVerts, GL_DYNAMIC_DRAW);
-    
-    // vertices
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_POSITION);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*) offsetof( V3F_C4B_T2F, vertices));
-    
-    // colors
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_COLOR);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B_T2F), (GLvoid*) offsetof( V3F_C4B_T2F, colors));
-    
-    // tex coords
-    glEnableVertexAttribArray(GLProgram::VERTEX_ATTRIB_TEX_COORD);
-    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), (GLvoid*) offsetof( V3F_C4B_T2F, texCoords));
-    
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _quadbuffersVBO[1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_quadIndices[0]) * INDEX_VBO_SIZE, _quadIndices, GL_STATIC_DRAW);
-    
-    // Must unbind the VAO before changing the element buffer.
-    GL::bindVAO(0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    
-    CHECK_GL_ERROR_DEBUG();
-}
-
-void Renderer::setupVBO()
-{
-    glGenBuffers(2, &_buffersVBO[0]);
-    glGenBuffers(2, &_quadbuffersVBO[0]);
-    mapBuffers();
-}
-
-void Renderer::mapBuffers()
-{
-    // Avoid changing the element buffer for whatever VAO might be bound.
-    GL::bindVAO(0);
-
-    glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(_verts[0]) * VBO_SIZE, _verts, GL_DYNAMIC_DRAW);
-    
-    glBindBuffer(GL_ARRAY_BUFFER, _quadbuffersVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(_quadVerts[0]) * VBO_SIZE, _quadVerts, GL_DYNAMIC_DRAW);
-    
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * INDEX_VBO_SIZE, _indices, GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _quadbuffersVBO[1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_quadIndices[0]) * INDEX_VBO_SIZE, _quadIndices, GL_STATIC_DRAW);
-    
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-    CHECK_GL_ERROR_DEBUG();
 }
 
 void Renderer::addCommand(RenderCommand* command)
@@ -394,46 +277,17 @@ int Renderer::createRenderQueue()
 void Renderer::processRenderCommand(RenderCommand* command)
 {
     auto commandType = command->getType();
-    if( RenderCommand::Type::TRIANGLES_COMMAND == commandType)
-    {
-        //Draw if we have batched other commands which are not triangle command
-        flush3D();
-        flushQuads();
-        
-        //Process triangle command
-        auto cmd = static_cast<TrianglesCommand*>(command);
-        
-        //Draw batched Triangles if necessary
-        if(cmd->isSkipBatching() || _filledVertex + cmd->getVertexCount() > VBO_SIZE || _filledIndex + cmd->getIndexCount() > INDEX_VBO_SIZE)
-        {
-            CCASSERT(cmd->getVertexCount()>= 0 && cmd->getVertexCount() < VBO_SIZE, "VBO for vertex is not big enough, please break the data down or use customized render command");
-            CCASSERT(cmd->getIndexCount()>= 0 && cmd->getIndexCount() < INDEX_VBO_SIZE, "VBO for index is not big enough, please break the data down or use customized render command");
-            //Draw batched Triangles if VBO is full
-            drawBatchedTriangles();
-        }
-        
-        //Batch Triangles
-        _batchedCommands.push_back(cmd);
-        
-        fillVerticesAndIndices(cmd);
-        
-        if(cmd->isSkipBatching())
-        {
-            drawBatchedTriangles();
-        }
-        
-    }
-    else if ( RenderCommand::Type::QUAD_COMMAND == commandType )
+    if ( RenderCommand::Type::QUAD_COMMAND == commandType )
     {
         //Draw if we have batched other commands which are not quad command
         flush3D();
-        flushTriangles();
         
         //Process quad command
         auto cmd = static_cast<QuadCommand*>(command);
+        const auto numberQuads = 2 * _vbo->getElementCount();
         
         //Draw batched quads if necessary
-        if(cmd->isSkipBatching()|| (_numberQuads + cmd->getQuadCount()) * 4 > VBO_SIZE )
+        if(cmd->isSkipBatching()|| (numberQuads + cmd->getQuadCount()) * 4 > VBO_SIZE )
         {
             CCASSERT(cmd->getQuadCount()>= 0 && cmd->getQuadCount() * 4 < VBO_SIZE, "VBO for vertex is not big enough, please break the data down or use customized render command");
             //Draw batched quads if VBO is full
@@ -443,7 +297,7 @@ void Renderer::processRenderCommand(RenderCommand* command)
         //Batch Quads
         _batchQuadCommands.push_back(cmd);
         
-        fillQuads(cmd);
+        insertQuads(cmd);
         
         if(cmd->isSkipBatching())
         {
@@ -649,21 +503,11 @@ void Renderer::clean()
 {
     // Clear render group
     for (size_t j = 0 ; j < _renderGroups.size(); j++)
-    {
-        //commands are owned by nodes
-        // for (const auto &cmd : _renderGroups[j])
-        // {
-        //     cmd->releaseToCommandPool();
-        // }
         _renderGroups[j].clear();
-    }
 
     // Clear batch commands
-    _batchedCommands.clear();
     _batchQuadCommands.clear();
-    _filledVertex = 0;
-    _filledIndex = 0;
-    _numberQuads = 0;
+    _vao->clear();
     _lastMaterialID = 0;
     _lastBatchedMeshCommand = nullptr;
 }
@@ -683,7 +527,6 @@ void Renderer::setDepthTest(bool enable)
         glClearDepth(1.0f);
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LEQUAL);
-//        glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
     }
     else
     {
@@ -694,217 +537,42 @@ void Renderer::setDepthTest(bool enable)
     CHECK_GL_ERROR_DEBUG();
 }
 
-void Renderer::fillVerticesAndIndices(const TrianglesCommand* cmd)
+void Renderer::insertQuads(const QuadCommand* cmd)
 {
-    memcpy(_verts + _filledVertex, cmd->getVertices(), sizeof(V3F_C4B_T2F) * cmd->getVertexCount());
+    auto verts = _vbo->getElementsOfType<V3F_C4B_T2F>();
+    
+    const auto currentVertex = _vbo->getElementCount();
+    const auto currentIndex  = _ibo->getElementCount();
+
+    const auto count = 4 * cmd->getQuadCount();
+    memcpy(verts + currentVertex, (void*)cmd->getQuads(), count * sizeof(V3F_C4B_T2F));
+    _vbo->setElementCount(currentVertex + count);
+    _ibo->setElementCount(currentIndex + 6 * cmd->getQuadCount());
+    
     const Mat4& modelView = cmd->getModelView();
     
-    for(ssize_t i=0; i< cmd->getVertexCount(); ++i)
+    auto p = verts + currentVertex;
+    for (auto i = 0; i < count; ++i, ++p)
     {
-        V3F_C4B_T2F *q = &_verts[i + _filledVertex];
-        Vec3 *vec1 = (Vec3*)&q->vertices;
-        modelView.transformPoint(vec1);
+        modelView.transformPoint(&p->vertices);
     }
-    
-    const unsigned short* indices = cmd->getIndices();
-    //fill index
-    for(ssize_t i=0; i< cmd->getIndexCount(); ++i)
-    {
-        _indices[_filledIndex + i] = _filledVertex + indices[i];
-    }
-    
-    _filledVertex += cmd->getVertexCount();
-    _filledIndex += cmd->getIndexCount();
-}
-
-void Renderer::fillQuads(const QuadCommand *cmd)
-{
-    const Mat4& modelView = cmd->getModelView();
-    const V3F_C4B_T2F* quads =  (V3F_C4B_T2F*)cmd->getQuads();
-    for(ssize_t i=0; i< cmd->getQuadCount() * 4; ++i)
-    {
-        _quadVerts[i + _numberQuads * 4] = quads[i];
-        modelView.transformPoint(quads[i].vertices,&(_quadVerts[i + _numberQuads * 4].vertices));
-    }
-    
-    _numberQuads += cmd->getQuadCount();
-}
-
-void Renderer::drawBatchedTriangles()
-{
-    //TODO: we can improve the draw performance by insert material switching command before hand.
-
-    int indexToDraw = 0;
-    int startIndex = 0;
-
-    //Upload buffer to VBO
-    if(_filledVertex <= 0 || _filledIndex <= 0 || _batchedCommands.empty())
-    {
-        return;
-    }
-
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        //Bind VAO
-        GL::bindVAO(_buffersVAO);
-        //Set VBO data
-        glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-
-        // option 1: subdata
-//        glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * n , &_quads[start] );
-
-        // option 2: data
-//        glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), &quads_[start], GL_DYNAMIC_DRAW);
-
-        // option 3: orphaning + glMapBuffer
-        glBufferData(GL_ARRAY_BUFFER, sizeof(_verts[0]) * _filledVertex, nullptr, GL_DYNAMIC_DRAW);
-        void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-        memcpy(buf, _verts, sizeof(_verts[0])* _filledVertex);
-        glUnmapBuffer(GL_ARRAY_BUFFER);
-
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _filledIndex, _indices, GL_STATIC_DRAW);
-    }
-    else
-    {
-#define kQuadSize sizeof(_verts[0])
-        glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-
-        glBufferData(GL_ARRAY_BUFFER, sizeof(_verts[0]) * _filledVertex , _verts, GL_DYNAMIC_DRAW);
-
-        GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
-
-        // vertices
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, vertices));
-
-        // colors
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, colors));
-
-        // tex coords
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, texCoords));
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _filledIndex, _indices, GL_STATIC_DRAW);
-    }
-
-    //Start drawing verties in batch
-    for(const auto& cmd : _batchedCommands)
-    {
-        auto newMaterialID = cmd->getMaterialID();
-        if(_lastMaterialID != newMaterialID || newMaterialID == MATERIAL_ID_DO_NOT_BATCH)
-        {
-            //Draw quads
-            if(indexToDraw > 0)
-            {
-                glDrawElements(GL_TRIANGLES, (GLsizei) indexToDraw, GL_UNSIGNED_SHORT, (GLvoid*) (startIndex*sizeof(_indices[0])) );
-                _drawnBatches++;
-                _drawnVertices += indexToDraw;
-
-                startIndex += indexToDraw;
-                indexToDraw = 0;
-            }
-
-            //Use new material
-            cmd->useMaterial();
-            _lastMaterialID = newMaterialID;
-        }
-
-        indexToDraw += cmd->getIndexCount();
-    }
-
-    //Draw any remaining triangles
-    if(indexToDraw > 0)
-    {
-        glDrawElements(GL_TRIANGLES, (GLsizei) indexToDraw, GL_UNSIGNED_SHORT, (GLvoid*) (startIndex*sizeof(_indices[0])) );
-        _drawnBatches++;
-        _drawnVertices += indexToDraw;
-    }
-
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        //Unbind VAO
-        GL::bindVAO(0);
-    }
-    else
-    {
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    }
-
-    _batchedCommands.clear();
-    _filledVertex = 0;
-    _filledIndex = 0;
 }
 
 void Renderer::drawBatchedQuads()
 {
-    //TODO: we can improve the draw performance by insert material switching command before hand.
-    
     int indexToDraw = 0;
     int startIndex = 0;
     
-    //Upload buffer to VBO
-    if(_numberQuads <= 0 || _batchQuadCommands.empty())
-    {
-        return;
-    }
-    
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        //Bind VAO
-        GL::bindVAO(_quadVAO);
-        //Set VBO data
-        glBindBuffer(GL_ARRAY_BUFFER, _quadbuffersVBO[0]);
-        
-        // option 1: subdata
-        //        glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * n , &_quads[start] );
-        
-        // option 2: data
-        //        glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), &quads_[start], GL_DYNAMIC_DRAW);
-        
-        // option 3: orphaning + glMapBuffer
-        glBufferData(GL_ARRAY_BUFFER, sizeof(_quadVerts[0]) * _numberQuads * 4, nullptr, GL_DYNAMIC_DRAW);
-        void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
-        memcpy(buf, _quadVerts, sizeof(_quadVerts[0])* _numberQuads * 4);
-        glUnmapBuffer(GL_ARRAY_BUFFER);
-        
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _quadbuffersVBO[1]);
-    }
-    else
-    {
-#define kQuadSize sizeof(_verts[0])
-        glBindBuffer(GL_ARRAY_BUFFER, _quadbuffersVBO[0]);
-        
-        glBufferData(GL_ARRAY_BUFFER, sizeof(_quadVerts[0]) * _numberQuads * 4 , _quadVerts, GL_DYNAMIC_DRAW);
-        
-        GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
-        
-        // vertices
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, vertices));
-        
-        // colors
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, colors));
-        
-        // tex coords
-        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof(V3F_C4B_T2F, texCoords));
-        
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _quadbuffersVBO[1]);
-    }
-    
     //Start drawing verties in batch
-    for(const auto& cmd : _batchQuadCommands)
+    for (const auto& cmd : _batchQuadCommands)
     {
         auto newMaterialID = cmd->getMaterialID();
         if(_lastMaterialID != newMaterialID || newMaterialID == MATERIAL_ID_DO_NOT_BATCH)
         {
             //Draw quads
-            if(indexToDraw > 0)
+            if (indexToDraw > 0)
             {
-                glDrawElements(GL_TRIANGLES, (GLsizei) indexToDraw, GL_UNSIGNED_SHORT, (GLvoid*) (startIndex*sizeof(_indices[0])) );
+                _vao->draw(startIndex, indexToDraw);
                 _drawnBatches++;
                 _drawnVertices += indexToDraw;
                 
@@ -921,26 +589,15 @@ void Renderer::drawBatchedQuads()
     }
     
     //Draw any remaining quad
-    if(indexToDraw > 0)
+    if (indexToDraw > 0)
     {
-        glDrawElements(GL_TRIANGLES, (GLsizei) indexToDraw, GL_UNSIGNED_SHORT, (GLvoid*) (startIndex*sizeof(_indices[0])) );
+        _vao->draw(startIndex, indexToDraw);
         _drawnBatches++;
         _drawnVertices += indexToDraw;
     }
-    
-    if (Configuration::getInstance()->supportsShareableVAO())
-    {
-        //Unbind VAO
-        GL::bindVAO(0);
-    }
-    else
-    {
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    }
-    
+
+    _vao->clear();
     _batchQuadCommands.clear();
-    _numberQuads = 0;
 }
 
 void Renderer::flush()
@@ -951,8 +608,11 @@ void Renderer::flush()
 
 void Renderer::flush2D()
 {
-    flushQuads();
-    flushTriangles();
+    if (!_vao->empty())
+    {
+        drawBatchedQuads();
+        _lastMaterialID = 0;
+    }
 }
 
 void Renderer::flush3D()
@@ -961,24 +621,6 @@ void Renderer::flush3D()
     {
         _lastBatchedMeshCommand->postBatchDraw();
         _lastBatchedMeshCommand = nullptr;
-    }
-}
-
-void Renderer::flushQuads()
-{
-    if(_numberQuads > 0)
-    {
-        drawBatchedQuads();
-        _lastMaterialID = 0;
-    }
-}
-
-void Renderer::flushTriangles()
-{
-    if(_filledIndex > 0)
-    {
-        drawBatchedTriangles();
-        _lastMaterialID = 0;
     }
 }
 

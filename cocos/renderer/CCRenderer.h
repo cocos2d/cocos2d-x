@@ -40,6 +40,9 @@ class EventListenerCustom;
 class QuadCommand;
 class TrianglesCommand;
 class MeshCommand;
+class VertexData;
+class VertexBuffer;
+class IndexBuffer;
 
 /** Class that knows how to sort `RenderCommand` objects.
  Since the commands that have `z == 0` are "pushed back" in
@@ -102,14 +105,14 @@ public:
     static const int VBO_SIZE = 65536;
     static const int INDEX_VBO_SIZE = VBO_SIZE * 6 / 4;
     
-    static const int BATCH_QUADCOMMAND_RESEVER_SIZE = 64;
+    static const int BATCH_QUADCOMMAND_RESERVE_SIZE = 64;
     static const int MATERIAL_ID_DO_NOT_BATCH = 0;
     
     Renderer();
     ~Renderer();
 
     //TODO: manage GLView inside Render itself
-    void initGLView();
+    CC_DEPRECATED(v4) void initGLView();
 
     /** Adds a `RenderComamnd` into the renderer */
     void addCommand(RenderCommand* command);
@@ -162,12 +165,8 @@ public:
 
 protected:
 
-    //Setup VBO or VAO based on OpenGL extensions
-    void setupBuffer();
-    void setupVBOAndVAO();
-    void setupVBO();
-    void mapBuffers();
-    void drawBatchedTriangles();
+    void initBuffers();
+    
     void drawBatchedQuads();
 
     //Draw the previews queued quads and flush previous context
@@ -177,14 +176,12 @@ protected:
     
     void flush3D();
 
-    void flushQuads();
-    void flushTriangles();
-
+    void flushGeometry();
+    
     void processRenderCommand(RenderCommand* command);
     void visitRenderQueue(RenderQueue& queue);
 
-    void fillVerticesAndIndices(const TrianglesCommand* cmd);
-    void fillQuads(const QuadCommand* cmd);
+    void insertQuads(const QuadCommand* cmd);
 
     /* clear color set outside be used in setGLDefaultValues() */
     Color4F _clearColor;
@@ -196,24 +193,11 @@ protected:
     uint32_t _lastMaterialID;
 
     MeshCommand*              _lastBatchedMeshCommand;
-    std::vector<TrianglesCommand*> _batchedCommands;
     std::vector<QuadCommand*> _batchQuadCommands;
-
-    //for TrianglesCommand
-    V3F_C4B_T2F _verts[VBO_SIZE];
-    GLushort _indices[INDEX_VBO_SIZE];
-    GLuint _buffersVAO;
-    GLuint _buffersVBO[2]; //0: vertex  1: indices
-
-    int _filledVertex;
-    int _filledIndex;
     
-    //for QuadCommand
-    V3F_C4B_T2F _quadVerts[VBO_SIZE];
-    GLushort _quadIndices[INDEX_VBO_SIZE];
-    GLuint _quadVAO;
-    GLuint _quadbuffersVBO[2]; //0: vertex  1: indices
-    int _numberQuads;
+    VertexData* _vao;
+    VertexBuffer* _vbo;
+    IndexBuffer* _ibo;
     
     bool _glViewAssigned;
 
@@ -226,10 +210,6 @@ protected:
     bool _isDepthTestFor2D;
     
     GroupCommandManager* _groupCommandManager;
-    
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    EventListenerCustom* _cacheTextureListener;
-#endif
 };
 
 NS_CC_END
