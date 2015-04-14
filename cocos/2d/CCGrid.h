@@ -38,7 +38,7 @@ class GLProgram;
 class Node;
 
 /**
- * @addtogroup effects
+ * @addtogroup _2d
  * @{
  */
 
@@ -103,6 +103,7 @@ public:
     
     /**@{
      Interface for custom action when before or after draw.
+     @js NA
      */
     virtual void beforeBlit() {}
     virtual void afterBlit() {}
@@ -158,7 +159,6 @@ public:
      */
     Vec3 getVertex(const Vec2& pos) const;
     /** @deprecated Use getVertex() instead 
-     * @js NA
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE Vec3 vertex(const Vec2& pos) const { return getVertex(pos); }
@@ -168,13 +168,11 @@ public:
      */
     Vec3 getOriginalVertex(const Vec2& pos) const;
     /** @deprecated Use getOriginalVertex() instead 
-     * @js NA
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE Vec3 originalVertex(const Vec2& pos) const { return getOriginalVertex(pos); }
 
     /** Sets a new vertex at a given position.
-     * @js NA
      * @lua NA
      */
     void setVertex(const Vec2& pos, const Vec3& vertex);
@@ -190,6 +188,7 @@ public:
     
     /**@{
      Getter and Setter for depth test state when blit.
+     @js NA
      */
     void setNeedDepthTestForBlit( bool neededDepthTest) { _needDepthTestForBlit = neededDepthTest; }
     bool getNeedDepthTestForBlit() const { return _needDepthTestForBlit; }
@@ -233,7 +232,6 @@ public:
      */
     Quad3 getTile(const Vec2& pos) const;
     /** returns the tile at the given position 
-     * @js NA
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE Quad3 tile(const Vec2& pos) const { return getTile(pos); }
@@ -243,13 +241,11 @@ public:
      */
     Quad3 getOriginalTile(const Vec2& pos) const;
     /** returns the original tile (untransformed) at the given position 
-     * @js NA
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE Quad3 originalTile(const Vec2& pos) const { return getOriginalTile(pos); }
 
     /** Sets a new tile.
-     * @js NA
      * @lua NA
      */
     void setTile(const Vec2& pos, const Quad3& coords);

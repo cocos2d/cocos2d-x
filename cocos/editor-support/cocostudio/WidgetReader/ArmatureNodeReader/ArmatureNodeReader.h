@@ -26,7 +26,6 @@ THE SOFTWARE.
 #define __ARMATURENODEREADER_H_
 
 #include "cocos2d.h"
-#include "cocostudio/FlatBuffersSerialize.h"
 #include "cocostudio/WidgetReader/NodeReaderProtocol.h"
 #include "cocostudio/WidgetReader/NodeReaderDefine.h"
 
@@ -50,7 +49,9 @@ public:
 	~ArmatureNodeReader();
 
 	static ArmatureNodeReader* getInstance();
-	static void purge();
+    /** @deprecated Use method destroyInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static void purge();
+	static void destroyInstance();
 
 	flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
 		flatbuffers::FlatBufferBuilder* builder) override;

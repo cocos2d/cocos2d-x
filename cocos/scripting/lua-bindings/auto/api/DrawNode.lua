@@ -8,7 +8,8 @@
 --  Draw an line from origin to destination with color. <br>
 -- param origin The line origin.<br>
 -- param destination The line destination.<br>
--- param color The line color.
+-- param color The line color.<br>
+-- js NA
 -- @function [parent=#DrawNode] drawLine 
 -- @param self
 -- @param #vec2_table origin
@@ -43,7 +44,7 @@
 -- @return DrawNode#DrawNode self (return value: cc.DrawNode)
 
 --------------------------------
--- 
+-- js NA
 -- @function [parent=#DrawNode] onDrawGLPoint 
 -- @param self
 -- @param #mat4_table transform
@@ -78,14 +79,13 @@
         
 --------------------------------
 --  Get the color mixed mode.<br>
--- js NA<br>
 -- lua NA
 -- @function [parent=#DrawNode] getBlendFunc 
 -- @param self
 -- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
         
 --------------------------------
--- 
+-- js NA
 -- @function [parent=#DrawNode] onDraw 
 -- @param self
 -- @param #mat4_table transform
@@ -124,7 +124,7 @@
 -- @return DrawNode#DrawNode self (return value: cc.DrawNode)
         
 --------------------------------
--- 
+-- js NA
 -- @function [parent=#DrawNode] onDrawGLLine 
 -- @param self
 -- @param #mat4_table transform
@@ -136,7 +136,8 @@
 -- param p1 The triangle vertex point.<br>
 -- param p2 The triangle vertex point.<br>
 -- param p3 The triangle vertex point.<br>
--- param color The triangle color.
+-- param color The triangle color.<br>
+-- js NA
 -- @function [parent=#DrawNode] drawTriangle 
 -- @param self
 -- @param #vec2_table p1
@@ -168,7 +169,8 @@
 -- The origin and the destination can not have the same x and y coordinate.<br>
 -- param origin The rectangle origin.<br>
 -- param destination The rectangle destination.<br>
--- param color The rectangle color.
+-- param color The rectangle color.<br>
+-- js NA
 -- @function [parent=#DrawNode] drawSolidRect 
 -- @param self
 -- @param #vec2_table origin
@@ -180,7 +182,8 @@
 --  Draw a point.<br>
 -- param point A Vec2 used to point.<br>
 -- param pointSize The point size.<br>
--- param color The point color.
+-- param color The point color.<br>
+-- js NA
 -- @function [parent=#DrawNode] drawPoint 
 -- @param self
 -- @param #vec2_table point

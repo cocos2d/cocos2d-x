@@ -18,7 +18,7 @@
         
 --------------------------------
 --  Clears the texture with a specified stencil value.<br>
--- param A specified stencil value.
+-- param stencilValue A specified stencil value.
 -- @function [parent=#RenderTexture] clearStencil 
 -- @param self
 -- @param #int stencilValue
@@ -54,7 +54,7 @@
         
 --------------------------------
 --  Sets the Sprite being used. <br>
--- param A Sprite.
+-- param sprite A Sprite.
 -- @function [parent=#RenderTexture] setSprite 
 -- @param self
 -- @param #cc.Sprite sprite
@@ -77,7 +77,8 @@
         
 --------------------------------
 --  Flag: Use stack matrix computed from scene hierarchy or generate new modelView and projection matrix.<br>
--- param keepMatrix Wether or not use stack matrix computed from scene hierarchy or generate new modelView and projection matrix.
+-- param keepMatrix Wether or not use stack matrix computed from scene hierarchy or generate new modelView and projection matrix.<br>
+-- js NA
 -- @function [parent=#RenderTexture] setKeepMatrix 
 -- @param self
 -- @param #bool keepMatrix
@@ -125,7 +126,8 @@
 -- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
         
 --------------------------------
---  End is key word of lua, use other name to export to lua. 
+--  End is key word of lua, use other name to export to lua.<br>
+-- js NA
 -- @function [parent=#RenderTexture] endToLua 
 -- @param self
 -- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)
@@ -146,7 +148,7 @@
 
 --------------------------------
 --  Clears the texture with a specified depth value. <br>
--- param A specified depth value.
+-- param depthValue A specified depth value.
 -- @function [parent=#RenderTexture] clearDepth 
 -- @param self
 -- @param #float depthValue
@@ -238,7 +240,8 @@
 --------------------------------
 --  FIXME: should be procted.<br>
 -- but due to a bug in PowerVR + Android,<br>
--- the constructor is public again.
+-- the constructor is public again.<br>
+-- js ctor
 -- @function [parent=#RenderTexture] RenderTexture 
 -- @param self
 -- @return RenderTexture#RenderTexture self (return value: cc.RenderTexture)

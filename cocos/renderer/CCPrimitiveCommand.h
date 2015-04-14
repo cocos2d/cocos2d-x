@@ -28,6 +28,11 @@
 #include "renderer/CCPrimitive.h"
 #include "renderer/CCRenderCommand.h"
 
+/**
+ * @addtogroup support
+ * @{
+ */
+
 NS_CC_BEGIN
 class GLProgramState;
 /**
@@ -39,7 +44,7 @@ class CC_DLL PrimitiveCommand : public RenderCommand
 {
 public:
     /**@{
-     @Constructor and Destructor.
+     Constructor and Destructor.
      */
     PrimitiveCommand();
     ~PrimitiveCommand();
@@ -82,4 +87,8 @@ protected:
 
 NS_CC_END
 
+/**
+ end of support group
+ @}
+ */
 #endif //_CC_PRIMITIVE_COMMAND_H__

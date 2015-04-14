@@ -29,51 +29,24 @@
 #include "extensions/cocos-ext.h"
 #include "ui/CocosGUI.h"
 #include "cocostudio/CocoStudio.h"
+#include "BaseTest.h"
 
-USING_NS_CC;
-USING_NS_CC_EXT;
-using namespace ui;
 
-#define UI_SCENE_EDITOR_CREATE_FUNC(UIScene_Editor) \
-public: \
-static Scene* sceneWithTitle(const char * title) \
-{ \
-    Scene* pScene = Scene::create(); \
-    UIScene_Editor* uiLayer = new (std::nothrow) UIScene_Editor(); \
-    if (uiLayer && uiLayer->init()) \
-    { \
-        uiLayer->autorelease(); \
-        uiLayer->getSceneTitle()->setString(title); \
-        pScene->addChild(uiLayer); \
-    } \
-    else \
-    { \
-        CC_SAFE_DELETE(uiLayer); \
-    } \
-    return pScene; \
-}
-
-class UIScene_Editor : public Layer
+class UIScene_Editor : public TestCase
 {
 public:
     UIScene_Editor();
     ~UIScene_Editor();
     
-    bool init();
-    virtual void previousCallback(Ref* sender, Widget::TouchEventType event);
-    virtual void nextCallback(Ref* sender, Widget::TouchEventType event);
-    
-    void toGUIEditorTestScene(Ref* sender, Widget::TouchEventType event);
-    
-    /** Title label of the scene.*/
-    CC_SYNTHESIZE_READONLY(Text*, _sceneTitle, SceneTitle)
-    
-    UI_SCENE_EDITOR_CREATE_FUNC(UIScene_Editor);
-    virtual void switchLoadMethod(Ref* pSender);
+    virtual bool init() override;
+    virtual void onEnter() override;
+    virtual void onExit() override;
 
+    virtual void configureGUIScene();
 protected:
-    Layer* _touchGroup;
-    Layout* _layout;
+    cocos2d::Layer* _touchGroup;
+    cocos2d::ui::Layout* _layout;
+    cocos2d::ui::Text* _sceneTitle;
 };
 
 #endif /* defined(__TestCpp__UIScene_Editor__) */

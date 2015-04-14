@@ -26,6 +26,8 @@
 #include "TransitionsTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 #define TRANSITION_DURATION (1.2f)
 
 class FadeWhiteTransition : public TransitionFade 
@@ -227,31 +229,50 @@ struct _transitions {
     TRANS(TransitionSlideInB),
 };
 
-
-#define MAX_LAYER (sizeof(transitions) / sizeof(transitions[0]))
-
-
-static int s_nSceneIdx = 0;
-
-TransitionScene* createTransition(int index, float t, Scene* s)
+TransitionsTests::TransitionsTests()
 {
-    // fix bug #486, without setDepthTest(false), FlipX,Y will flickers
-    Director::getInstance()->setDepthTest(false);
+    int sceneIndex = 0;
 
-    return transitions[index].function(t,s);
+    for (auto& test : transitions)
+    {
+        addTestCase(test.name, [sceneIndex](){
+            auto scene = TransitionsTest::create();
+            // fix bug #486, without setDepthTest(false), FlipX,Y will flickers
+            Director::getInstance()->setDepthTest(false);
+
+            if (sceneIndex % 2)
+            {
+                scene->addChild(TestLayer2::create(transitions[sceneIndex].name));
+            }
+            else
+            {
+                scene->addChild(TestLayer1::create(transitions[sceneIndex].name));
+            }
+
+            return transitions[sceneIndex].function(TRANSITION_DURATION, scene);
+        });
+
+        sceneIndex++;
+    }
 }
 
-
-void TransitionsTestScene::runThisTest()
+TestLayer1* TestLayer1::create(const std::string& transitionName)
 {
-    auto layer = new (std::nothrow) TestLayer1();
-    addChild(layer);
-    layer->release();
+    auto layer = new (std::nothrow) TestLayer1(transitionName);
+    if (layer && layer->init())
+    {
+        layer->autorelease();
+    }
+    else
+    {
+        delete layer;
+        layer = nullptr;
+    }
 
-    Director::getInstance()->replaceScene(this);
+    return layer;
 }
 
-TestLayer1::TestLayer1(void)
+TestLayer1::TestLayer1(const std::string& transitionName)
 {
     float x,y;
 
@@ -263,7 +284,7 @@ TestLayer1::TestLayer1(void)
     bg1->setPosition( Vec2(size.width/2, size.height/2) );
     addChild(bg1, -1);
 
-    auto title = Label::createWithTTF( (transitions[s_nSceneIdx]).name, "fonts/Thonburi.ttf", 32 );
+    auto title = Label::createWithTTF(transitionName, "fonts/Thonburi.ttf", 32);
     addChild(title);
     title->setColor( Color3B(255,32,32) );
     title->setPosition( Vec2(x/2, y-100) );
@@ -273,82 +294,12 @@ TestLayer1::TestLayer1(void)
     label->setPosition( Vec2(x/2,y/2));    
     addChild( label);
 
-    // menu
-    auto item1 = MenuItemImage::create(s_pathB1, s_pathB2, CC_CALLBACK_1(TestLayer1::backCallback, this) );
-    auto item2 = MenuItemImage::create(s_pathR1, s_pathR2, CC_CALLBACK_1(TestLayer1::restartCallback, this) );
-    auto item3 = MenuItemImage::create(s_pathF1, s_pathF2, CC_CALLBACK_1(TestLayer1::nextCallback, this) );
-
-    auto menu = Menu::create(item1, item2, item3, nullptr);
-
-    menu->setPosition( Vec2::ZERO );
-    item1->setPosition(Vec2(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item2->setPosition(Vec2(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item3->setPosition(Vec2(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-
-    addChild(menu, 1);    
-
     schedule( CC_SCHEDULE_SELECTOR(TestLayer1::step), 1.0f); 
 }
 
-TestLayer1::~TestLayer1(void)
+TestLayer1::~TestLayer1()
 {
 
-}
-
-void TestLayer1::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) TransitionsTestScene();
-
-    auto layer = new (std::nothrow) TestLayer2();
-    s->addChild(layer);
-
-    auto scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
-    s->release();
-    layer->release();
-    if (scene)
-    {
-        Director::getInstance()->replaceScene(scene);
-    }    
-}
-
-void TestLayer1::nextCallback(Ref* sender)
-{
-    s_nSceneIdx++;
-    s_nSceneIdx = s_nSceneIdx % MAX_LAYER;
-
-    auto s = new (std::nothrow) TransitionsTestScene();
-
-    auto layer = new (std::nothrow) TestLayer2();
-    s->addChild(layer);
-
-    auto scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
-    s->release();
-    layer->release();
-    if (scene)
-    {
-        Director::getInstance()->replaceScene(scene);
-    }
-}
-
-void TestLayer1::backCallback(Ref* sender)
-{
-    s_nSceneIdx--;
-    int total = MAX_LAYER;
-    if( s_nSceneIdx < 0 )
-        s_nSceneIdx += total;    
-
-    auto s = new (std::nothrow) TransitionsTestScene();
-
-    auto layer = new (std::nothrow) TestLayer2();
-    s->addChild(layer);
-
-    auto scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
-    s->release();
-    layer->release();
-    if (scene)
-    {
-        Director::getInstance()->replaceScene(scene);
-    }
 }
 
 void TestLayer1::step(float dt)
@@ -381,7 +332,23 @@ void TestLayer1::onExit()
     log("Scene 1 onExit");
 }
 
-TestLayer2::TestLayer2()
+TestLayer2* TestLayer2::create(const std::string& transitionName)
+{
+    auto layer = new (std::nothrow) TestLayer2(transitionName);
+    if (layer && layer->init())
+    {
+        layer->autorelease();
+    }
+    else
+    {
+        delete layer;
+        layer = nullptr;
+    }
+
+    return layer;
+}
+
+TestLayer2::TestLayer2(const std::string& transitionName)
 {
     float x,y;
 
@@ -393,7 +360,7 @@ TestLayer2::TestLayer2()
     bg1->setPosition( Vec2(size.width/2, size.height/2) );
     addChild(bg1, -1);
 
-    auto title = Label::createWithTTF((transitions[s_nSceneIdx]).name, "fonts/Thonburi.ttf", 32 );
+    auto title = Label::createWithTTF(transitionName, "fonts/Thonburi.ttf", 32);
     addChild(title);
     title->setColor( Color3B(255,32,32) );
     title->setPosition( Vec2(x/2, y-100) );
@@ -403,82 +370,12 @@ TestLayer2::TestLayer2()
     label->setPosition( Vec2(x/2,y/2));    
     addChild( label);
 
-    // menu
-    auto item1 = MenuItemImage::create(s_pathB1, s_pathB2, CC_CALLBACK_1(TestLayer2::backCallback, this) );
-    auto item2 = MenuItemImage::create(s_pathR1, s_pathR2, CC_CALLBACK_1(TestLayer2::restartCallback, this) );
-    auto item3 = MenuItemImage::create(s_pathF1, s_pathF2, CC_CALLBACK_1(TestLayer2::nextCallback, this) );
-
-    auto menu = Menu::create(item1, item2, item3, nullptr);
-
-    menu->setPosition( Vec2::ZERO );
-    item1->setPosition(Vec2(VisibleRect::center().x - item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item2->setPosition(Vec2(VisibleRect::center().x, VisibleRect::bottom().y+item2->getContentSize().height/2));
-    item3->setPosition(Vec2(VisibleRect::center().x + item2->getContentSize().width*2, VisibleRect::bottom().y+item2->getContentSize().height/2));
-
-    addChild(menu, 1);    
-
     schedule(CC_SCHEDULE_SELECTOR(TestLayer2::step), 1.0f);
 }
 
 TestLayer2::~TestLayer2()
 {
 
-}
-
-void TestLayer2::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) TransitionsTestScene();
-
-    auto layer = new (std::nothrow) TestLayer1();
-    s->addChild(layer);
-
-    auto scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
-    s->release();
-    layer->release();
-    if (scene)
-    {
-        Director::getInstance()->replaceScene(scene);
-    }
-}
-
-void TestLayer2::nextCallback(Ref* sender)
-{
-    s_nSceneIdx++;
-    s_nSceneIdx = s_nSceneIdx % MAX_LAYER;
-
-    auto s = new (std::nothrow) TransitionsTestScene();
-
-    auto layer = new (std::nothrow) TestLayer1();
-    s->addChild(layer);
-
-    auto scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
-    s->release();
-    layer->release();
-    if (scene)
-    {
-        Director::getInstance()->replaceScene(scene);
-    }
-}
-
-void TestLayer2::backCallback(Ref* sender)
-{
-    s_nSceneIdx--;
-    int total = MAX_LAYER;
-    if( s_nSceneIdx < 0 )
-        s_nSceneIdx += total;    
-
-    auto s = new (std::nothrow) TransitionsTestScene();
-
-    auto layer = new (std::nothrow) TestLayer1();
-    s->addChild(layer);
-
-    auto scene = createTransition(s_nSceneIdx, TRANSITION_DURATION, s);
-    s->release();
-    layer->release();
-    if (scene)
-    {
-        Director::getInstance()->replaceScene(scene);
-    }
 }
 
 void TestLayer2::step(float dt)

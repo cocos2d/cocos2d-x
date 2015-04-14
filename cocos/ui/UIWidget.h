@@ -31,11 +31,11 @@ THE SOFTWARE.
 #include "ui/GUIExport.h"
 #include "base/CCMap.h"
 
-NS_CC_BEGIN
 /**
  * @addtogroup ui
  * @{
  */
+NS_CC_BEGIN
 
 class EventListenerTouchOneByOne;
 
@@ -63,11 +63,6 @@ typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
 #define toucheventselector(_SELECTOR) (SEL_TouchEvent)(&_SELECTOR)
 
 
-/**
-*   @js NA
-*   @lua NA
-*/
-
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #ifdef ABSOLUTE
 #undef ABSOLUTE
@@ -76,7 +71,7 @@ typedef void (Ref::*SEL_TouchEvent)(Ref*,TouchEventType);
 
 /**
  *@brief Base class for all ui widgets.
- * This class inherent from @see `ProtectedNode` and @see `LayoutParameterProtocol`.
+ * This class inherent from `ProtectedNode` and `LayoutParameterProtocol`.
  * If you want to implements your own ui widget, you should subclass it.
  */
 class CC_GUI_DLL Widget : public ProtectedNode, public LayoutParameterProtocol
@@ -159,11 +154,15 @@ public:
     typedef std::function<void(Ref*, int)> ccWidgetEventCallback;
     /**
      * Default constructor
+     * @js ctor
+     * @lua new
      */
     Widget(void);
     
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~Widget();
     /**
@@ -176,7 +175,7 @@ public:
      * 
      * true if the widget is enabled, widget may be touched , false if the widget is disabled, widget cannot be touched.
      *
-     * Note: If you want to change the widget's appearance  to disabled state, you should also call @see `setBright(false)`.
+     * Note: If you want to change the widget's appearance  to disabled state, you should also call  `setBright(false)`.
      *
      * The default value is true, a widget is default to enable touch.
      *
@@ -196,7 +195,7 @@ public:
      *
      * The default value is true, a widget is default to bright
      *
-     * @param visible   true if the widget is bright, false if the widget is dark.
+     * @param bright   true if the widget is bright, false if the widget is dark.
      */
     void setBright(bool bright);
 
@@ -208,11 +207,11 @@ public:
     bool isBright() const;
 
     /**
-     * Sets whether the widget is touch enabled
+     * Sets whether the widget is touch enabled.
      *
-     * The default value is false, a widget is default to touch disabled
+     * The default value is false, a widget is default to touch disabled.
      *
-     * @param visible   true if the widget is touch enabled, false if the widget is touch disabled.
+     * @param enabled   True if the widget is touch enabled, false if the widget is touch disabled.
      */
     virtual void setTouchEnabled(bool enabled);
 
@@ -297,6 +296,9 @@ public:
      */
     float getTopBoundary() const;
 
+    /**
+     * @js NA
+     */
     virtual void visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
 
     /**
@@ -317,6 +319,7 @@ public:
     /**
      * Set a event handler to the widget in order to use cocostudio editor and framework
      * @param callback The callback in `ccWidgetEventCallback`.
+     * @lua NA
      */
     virtual void addCCSEventListener(const ccWidgetEventCallback& callback);
     /**/
@@ -327,7 +330,7 @@ public:
      * Usually we use p(x,y) to compose a Vec2 object.
      * The original point (0,0) is at the left-bottom corner of screen.
      *
-     * @param position  The position (x,y) of the widget in OpenGL coordinates
+     * @param pos  The position (x,y) of the widget in OpenGL coordinates
      */
     virtual void setPosition(const Vec2 &pos) override;
 
@@ -368,7 +371,7 @@ public:
     /**
      * Sets whether the widget should be flipped horizontally or not.
      *
-     * @param bFlippedX true if the widget should be flipped horizaontally, false otherwise.
+     * @param flippedX true if the widget should be flipped horizaontally, false otherwise.
      */
     virtual void setFlippedX(bool flippedX);
 
@@ -386,7 +389,7 @@ public:
     /**
      * Sets whether the widget should be flipped vertically or not.
      *
-     * @param bFlippedY true if the widget should be flipped vertically, flase otherwise.
+     * @param flippedY true if the widget should be flipped vertically, flase otherwise.
      */
     virtual void setFlippedY(bool flippedY);
 
@@ -424,7 +427,7 @@ public:
     /**
      * Checks a point if in parent's area.
      *
-     * @param point A point in `Vec2`.
+     * @param pt A point in `Vec2`.
      * @deprecated  use `isClippingParentContainsPoint` instead.
      * @return true if the point is in parent's area, flase otherwise.
      */
@@ -433,7 +436,7 @@ public:
     /**
      * Checks a point if in parent's area.
      *
-     * @param point A point in `Vec2`.
+     * @param pt A point in `Vec2`.
      * @return true if the point is in parent's area, flase otherwise.
      */
     bool isClippingParentContainsPoint(const Vec2& pt);
@@ -506,8 +509,6 @@ public:
      * Gets the size type of widget.
      *
      * @see `SizeType`
-     *
-     * @param type that is widget's size type
      */
     SizeType getSizeType() const;
 
@@ -580,8 +581,7 @@ public:
      * Sets a LayoutParameter to widget.
      *
      * @see LayoutParameter
-     * @param LayoutParameter pointer
-     * @param type  Relative or Linear
+     * @param parameter LayoutParameter pointer
      */
     void setLayoutParameter(LayoutParameter* parameter);
 
@@ -589,7 +589,6 @@ public:
      * Gets LayoutParameter of widget.
      *
      * @see LayoutParameter
-     * @param type  Relative or Linear
      * @return LayoutParameter
      */
     LayoutParameter* getLayoutParameter()const override;
@@ -607,9 +606,9 @@ public:
     /**
      * Toggle whether ignore user defined content size for widget.
      * Set true will ignore user defined content size which means 
-     * the widget size is always equal to the return value of  @see `getVirtualRendererSize`.
+     * the widget size is always equal to the return value of `getVirtualRendererSize`.
      *
-     * @param ignore, set member variabl _ignoreSize to ignore
+     * @param ignore set member variabl _ignoreSize to ignore
      */
     virtual void ignoreContentAdaptWithSize(bool ignore);
 
@@ -655,8 +654,14 @@ public:
      * @return A cloned widget copy of original.
      */
     Widget* clone();
-
+    /**
+     * @lua NA
+     */
     virtual void onEnter() override;
+    
+    /**
+     * @lua NA
+     */
     virtual void onExit() override;
 
     /**
@@ -741,7 +746,7 @@ public:
     /**
      *  When a widget is in a layout, you could call this method to get the next focused widget within a specified direction. 
      *  If the widget is not in a layout, it will return itself
-     *@param dir the direction to look for the next focused widget in a layout
+     *@param direction the direction to look for the next focused widget in a layout
      *@param current  the current focused widget
      *@return the next focused widget in a layout
      */
@@ -995,8 +1000,8 @@ private:
 };
 }
 
+NS_CC_END
 // end of ui group
 /// @}
-NS_CC_END
 
 #endif /* defined(__Widget__) */

@@ -29,6 +29,8 @@
 
 #include <cmath>
 
+USING_NS_CC;
+
 #if defined(_MSC_VER) && _MSC_VER<1800
 #define CC_ROUND(__f__) __f__
 #else

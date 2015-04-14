@@ -173,7 +173,6 @@ void PUCircleEmitter::initParticleDirection(PUParticle3D* particle)
         {
             Mat4 rotMat;
             Mat4::createRotation(_orientation, &rotMat);
-            particle->direction = Vec3(_x, 0, _z);
             particle->direction = rotMat * Vec3(_x, 0, _z);
         }
     }

@@ -59,7 +59,7 @@ typedef struct CC_DLL PhysicsMaterial
 const PhysicsMaterial PHYSICSSHAPE_MATERIAL_DEFAULT;
 
 /**
- *  @addtogroup physics
+ *  @addtogroup core
  *  @{
  */
 
@@ -486,7 +486,7 @@ public:
     /**
      * Get this polygon's points array count.
      *
-     * @preturn An interger number.
+     * @return An interger number.
      */
     int getPointsCount() const;
     
@@ -523,7 +523,7 @@ public:
     /**
      * Get this box's width and height.
      *
-     * @preturn An Size object.
+     * @return An Size object.
      */
     Size getSize() const;
     
@@ -621,7 +621,7 @@ public:
     /**
      * Get this polygon's points array count.
      *
-     * @preturn An interger number.
+     * @return An interger number.
      */
     int getPointsCount() const;
     
@@ -700,7 +700,7 @@ public:
     /**
      * Get this chain's points array count.
      *
-     * @preturn An interger number.
+     * @return An interger number.
      */
     int getPointsCount() const;
     

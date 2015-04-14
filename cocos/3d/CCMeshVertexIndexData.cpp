@@ -56,7 +56,6 @@ MeshIndexData* MeshIndexData::create(const std::string& id, MeshVertexData* vert
     meshindex->_indexBuffer = indexbuffer;
     meshindex->_vertexData = vertexData;
     indexbuffer->retain();
-    vertexData->retain();
     meshindex->_aabb = aabb;
     
     meshindex->autorelease();
@@ -78,7 +77,6 @@ MeshIndexData::MeshIndexData()
 MeshIndexData::~MeshIndexData()
 {
     CC_SAFE_RELEASE(_indexBuffer);
-    CC_SAFE_RELEASE(_vertexData);
 }
 
 MeshVertexData* MeshVertexData::create(const MeshData& meshdata)

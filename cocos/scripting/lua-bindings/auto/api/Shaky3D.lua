@@ -6,7 +6,7 @@
 
 --------------------------------
 -- brief Create the action with a range, shake Z vertices, a grid and duration.<br>
--- param duration Specify the duration of the Shaky3D action. It's a value in seconds.<br>
+-- param initWithDuration Specify the duration of the Shaky3D action. It's a value in seconds.<br>
 -- param gridSize Specify the size of the grid.<br>
 -- param range Specify the range of the shaky effect.<br>
 -- param shakeZ Specify whether shake on the z axis.<br>

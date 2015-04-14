@@ -45,6 +45,11 @@ namespace cocostudio
         return instanceTextAtalsReader;
     }
     
+    void TextAtlasReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instanceTextAtalsReader);
+    }
+    
     void TextAtlasReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
     {
         this->beginSetBasicProperties(widget);

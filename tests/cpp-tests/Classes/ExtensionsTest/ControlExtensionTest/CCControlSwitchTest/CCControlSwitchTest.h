@@ -30,10 +30,10 @@ class ControlSwitchTest : public ControlScene
 {
 public:
     virtual ~ControlSwitchTest();
-    bool init();
+    virtual bool init() override;
     /** Callback for the change value. */
-    void valueChanged(Ref* sender, Control::EventType controlEvent);
-    Label *_displayValueLabel;
-    CONTROL_SCENE_CREATE_FUNC(ControlSwitchTest)
+    void valueChanged(cocos2d::Ref* sender, cocos2d::extension::Control::EventType controlEvent);
+    cocos2d::Label* _displayValueLabel;
+    CREATE_FUNC(ControlSwitchTest);
 };
 

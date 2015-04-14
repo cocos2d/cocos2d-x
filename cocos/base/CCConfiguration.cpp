@@ -50,6 +50,7 @@ Configuration::Configuration()
 , _maxDirLightInShader(1)
 , _maxPointLightInShader(1)
 , _maxSpotLightInShader(1)
+, _isAnimate3DHighQuality(true)
 {
 }
 
@@ -262,6 +263,11 @@ int Configuration::getMaxSupportSpotLightInShader() const
     return _maxSpotLightInShader;
 }
 
+bool Configuration::isHighAnimate3DQuality() const
+{
+    return _isAnimate3DHighQuality;
+}
+
 //
 // generic getters for properties
 //
@@ -350,6 +356,12 @@ void Configuration::loadConfigFile(const std::string& filename)
         _maxSpotLightInShader = _valueDict[name].asInt();
     else
         _valueDict[name] = Value(_maxSpotLightInShader);
+    
+    name = "cocos2d.x.3d.animate_high_quality";
+    if (_valueDict.find(name) != _valueDict.end())
+        _isAnimate3DHighQuality = _valueDict[name].asBool();
+    else
+        _valueDict[name] = Value(_isAnimate3DHighQuality);
 }
 
 NS_CC_END

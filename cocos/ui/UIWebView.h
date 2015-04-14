@@ -46,11 +46,11 @@ namespace experimental{
 class WebViewImpl;
 
 /**
- * @class WebView
  * @brief A View that displays web pages. 
  *
  * @note WebView displays web pages base on system widget.
  * It's mean WebView displays web pages above all graphical elements of cocos2d-x.
+ * @js NA
  */
 class CC_GUI_DLL WebView : public cocos2d::ui::Widget {
 public:
@@ -62,7 +62,7 @@ public:
     /**
      * Set javascript interface scheme.
      *
-     * @see #onJsCallback
+     * @see WebView::setOnJSCallback()
      */
     void setJavascriptInterfaceScheme(const std::string &scheme);
 
@@ -148,27 +148,27 @@ public:
     /**
      * Call before a web view begins loading.
      *
-     * @param sender The web view that is about to load new content.
-     * @param url Content URL.
+     * @param callback The web view that is about to load new content.
      * @return YES if the web view should begin loading content; otherwise, NO .
      */
     void setOnShouldStartLoading(const std::function<bool(WebView *sender, const std::string &url)>& callback);
     
+    /**
+     * A callback which will be called when a WebView event happens.
+     */
     typedef std::function<void(WebView *sender, const std::string &url)> ccWebViewCallback;
 
     /**
      * Call after a web view finishes loading.
      *
-     * @param sender The web view that has finished loading.
-     * @param url Content URL.
+     * @param callback The web view that has finished loading.
      */
     void setOnDidFinishLoading(const ccWebViewCallback& callback);
     
     /**
      * Call if a web view failed to load content.
      *
-     * @param sender The web view that has failed loading.
-     * @param url Content URL.
+     * @param callback The web view that has failed loading.
      */
     void setOnDidFailLoading(const ccWebViewCallback& callback);
     
@@ -177,13 +177,31 @@ public:
      */
     void setOnJSCallback(const ccWebViewCallback& callback);
     
+    /**
+     * Get the callback when WebView is about to start.
+     */
     std::function<bool(WebView *sender, const std::string &url)> getOnShouldStartLoading()const;
+    
+    /**
+     * Get the callback when WebView has finished loading.
+     */
     ccWebViewCallback getOnDidFinishLoading()const;
+    
+    /**
+     * Get the callback when WebView has failed loading.
+     */
     ccWebViewCallback getOnDidFailLoading()const;
+
+    /**
+     *Get the Javascript callback.
+     */
     ccWebViewCallback getOnJSCallback()const;
 
     virtual void draw(cocos2d::Renderer *renderer, cocos2d::Mat4 const &transform, uint32_t flags) override;
 
+    /**
+     * Toggle visibility of WebView.
+     */
     virtual void setVisible(bool visible) override;
     
 protected:

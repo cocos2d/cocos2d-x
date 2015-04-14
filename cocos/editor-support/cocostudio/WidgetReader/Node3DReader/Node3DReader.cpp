@@ -67,6 +67,11 @@ namespace cocostudio
         CC_SAFE_DELETE(_instanceNode3DReader);
     }
     
+    void Node3DReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(_instanceNode3DReader);
+    }
+    
     Vec3 Node3DReader::getVec3Attribute(const tinyxml2::XMLAttribute* attribute) const
     {
         if(!attribute)

@@ -42,6 +42,11 @@ using std::memset;
 using std::memcpy;
 #endif
 
+/**
+ * @addtogroup lua
+ * @{
+ */
+
 NS_CC_BEGIN
 
 typedef int LUA_FUNCTION;
@@ -182,7 +187,7 @@ public:
     LuaValue(const LuaValue& rhs);
     
     /**
-     * Override of operator=
+     * Override of operator= .
      */
     LuaValue& operator=(const LuaValue& rhs);
     
@@ -203,7 +208,7 @@ public:
     /**
      * Get the typename of the Ref object.
      *
-     * @return the refrence of _ccobjectType
+     * @return the refrence of _ccobjectType.
      */
     const std::string& getObjectTypename(void) const {
         return *_ccobjectType;
@@ -282,4 +287,6 @@ private:
 
 NS_CC_END
 
+// end group
+/// @}
 #endif // __CC_LUA_VALUE_H_

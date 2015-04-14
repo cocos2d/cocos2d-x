@@ -29,11 +29,11 @@ THE SOFTWARE.
 #include <string>
 #include "math/CCGeometry.h"
 
-NS_CC_BEGIN
 /**
  * @addtogroup base
  * @{
  */
+NS_CC_BEGIN
 
 /**
  * A static global empty std::string install.
@@ -58,16 +58,21 @@ class CC_DLL IMEDelegate
 {
 public:
     /**
+     * Default constructor.
      * @js NA
      * @lua NA
      */
     virtual ~IMEDelegate();
+    
     /**
+     * Default destructor.
      * @js NA
      * @lua NA
      */
     virtual bool attachWithIME();
+    
     /**
+     * Determine whether the IME is detached or not.
      * @js NA
      * @lua NA
      */
@@ -158,9 +163,9 @@ protected:
     IMEDelegate();
 };
 
-// end of base group
-/// @}
 
 NS_CC_END
+// end of base group
+/// @}
 
 #endif    // __CC_IME_DELEGATE_H__

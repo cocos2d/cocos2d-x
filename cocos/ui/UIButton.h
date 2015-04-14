@@ -28,21 +28,20 @@ THE SOFTWARE.
 #include "ui/UIWidget.h"
 #include "ui/GUIExport.h"
 
-NS_CC_BEGIN
-
 /**
  * @addtogroup ui
  * @{
  */
+NS_CC_BEGIN
+
 class Label;
 
 namespace ui{
     
     class Scale9Sprite;
 /**
-*   @js NA
-*   @lua NA
-*/
+ * Represents a push-button widget. Push-buttons can be pressed, or clicked, by the user to perform an action.
+ */
 class CC_GUI_DLL Button : public Widget
 {
     
@@ -57,6 +56,8 @@ public:
 
     /**
      * Default destructor.
+     *
+     * @lua NA
      */
     virtual ~Button();
 
@@ -68,9 +69,9 @@ public:
     
     /**
      * Create a button with custom textures.
-     * @normalImage normal state texture name.
-     * @selectedImage  selected state texture name.
-     * @disableImage disabled state texture name.
+     * @param normalImage normal state texture name.
+     * @param selectedImage  selected state texture name.
+     * @param disableImage disabled state texture name.
      * @param texType    @see `TextureResType`
      * @return a Button instance.
      */
@@ -332,8 +333,8 @@ private:
 
 }
 
+NS_CC_END
 // end of ui group
 /// @}
-NS_CC_END
 
 #endif /* defined(__CocoGUI__Button__) */

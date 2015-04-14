@@ -38,6 +38,11 @@ THE SOFTWARE.
 #include "platform/CCGL.h"
 #include "math/CCMath.h"
 
+/**
+ * @addtogroup support
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class GLProgram;
@@ -217,6 +222,11 @@ public:
      Built in shader for skybox
      */
     static const char* SHADER_3D_SKYBOX;
+    
+    /**
+     Built in shader for terrain
+     */
+    static const char* SHADER_3D_TERRAIN;
     
     /**
     end of built shader types.
@@ -422,14 +432,15 @@ public:
     /** calls glUniformMatrix4fv only if the values are different than the previous call for this same shader program. */
     void setUniformLocationWithMatrix4fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices);
     
-    /** @{
-    will update the builtin uniforms if they are different than the previous call for this same shader program. 
-    @param modelView modelView matrix applied to the built in uniform of the shader.
-    */
+    /**
+     Update the builtin uniforms if they are different than the previous call for this same shader program.
+     */
     void setUniformsForBuiltins();
+    /**
+     Update the builtin uniforms if they are different than the previous call for this same shader program.
+     @param modelView modelView matrix applied to the built in uniform of the shader.
+     */
     void setUniformsForBuiltins(const Mat4 &modelView);
-
-    /**@]*/
 
     /** returns the vertexShader error log */
     std::string getVertexShaderLog() const;
@@ -513,5 +524,8 @@ protected:
 };
 
 NS_CC_END
-
+/**
+ end of support group
+ @}
+ */
 #endif /* __CCGLPROGRAM_H__ */

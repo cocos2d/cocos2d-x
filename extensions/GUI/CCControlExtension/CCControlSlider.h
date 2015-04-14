@@ -77,6 +77,7 @@ public:
             Sprite* selectedThumbSprite);
     /**
      * @js ctor
+     * @lua new
      */
     ControlSlider();
     /**

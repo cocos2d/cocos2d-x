@@ -70,6 +70,8 @@ void Cocos2dRenderer::Resume()
     else
     {
         Application::getInstance()->applicationWillEnterForeground();
+        cocos2d::EventCustom foregroundEvent(EVENT_COME_TO_FOREGROUND);
+        cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&foregroundEvent);
     }
 }
 
@@ -77,8 +79,8 @@ void Cocos2dRenderer::Pause()
 {
     if (Director::getInstance()->getOpenGLView()) {
         Application::getInstance()->applicationDidEnterBackground();
-        //cocos2d::EventCustom backgroundEvent(EVENT_COME_TO_BACKGROUND);
-        //cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&backgroundEvent);
+        cocos2d::EventCustom backgroundEvent(EVENT_COME_TO_BACKGROUND);
+        cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&backgroundEvent);
     }
 }
 
@@ -133,11 +135,6 @@ void Cocos2dRenderer::Draw(GLsizei width, GLsizei height, float dpi, DisplayOrie
 void Cocos2dRenderer::QueuePointerEvent(cocos2d::PointerEventType type, Windows::UI::Core::PointerEventArgs^ args)
 {
     GLViewImpl::sharedOpenGLView()->QueuePointerEvent(type, args);
-}
-
-void Cocos2dRenderer::QueueKeyBoardEvent(cocos2d::Cocos2dKeyEvent type, Windows::UI::Core::KeyEventArgs^ e)
-{
-    //GLViewImpl::sharedOpenGLView()->QueuePointerEvent(type, e);
 }
 
 

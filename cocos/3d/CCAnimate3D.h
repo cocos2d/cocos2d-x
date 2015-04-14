@@ -37,8 +37,14 @@ NS_CC_BEGIN
 
 class Bone3D;
 class Sprite3D;
+
 /**
- * Animate3D, Animates a Sprite3D given with an Animation3D
+ * @addtogroup _3d
+ * @{
+ */
+
+/**
+ * @brief Animate3D, Animates a Sprite3D given with an Animation3D
  */
 class CC_DLL Animate3D: public ActionInterval
 {
@@ -99,6 +105,17 @@ public:
     CC_DEPRECATED_ATTRIBUTE bool getPlayBack() const { return _playReverse; }
     CC_DEPRECATED_ATTRIBUTE void setPlayBack(bool reverse) { _playReverse = reverse; }
     
+    /**set high quality
+     * The default value is based on Configuration::isHighAnimate3DQuality(). You can configure it in the config.plist. However, you can modify it using the following function
+     * @param true: is high quality, false: is low quality.
+     */
+    void setHighQuality(bool isHighQuality);
+    
+    /**get high quality
+     * is it high quality
+     */
+    bool isHighQuality() const;
+    
 CC_CONSTRUCTOR_ACCESS:
     
     Animate3D();
@@ -131,13 +148,24 @@ protected:
     float      _accTransTime; // acculate transition time
     float      _lastTime;     // last t (0 - 1)
     float      _originInterval;// save origin interval time
+    
+    // animation quality
+    EvaluateType _translateEvaluate;
+    EvaluateType _roteEvaluate;
+    EvaluateType _scaleEvaluate;
+    bool _isHighQuality;        //  true: is high quality, false: is low quality
+    
     std::unordered_map<Bone3D*, Animation3D::Curve*> _boneCurves; //weak ref
+    std::unordered_map<Node*, Animation3D::Curve*> _nodeCurves;
 
     //sprite animates
-    static std::unordered_map<Sprite3D*, Animate3D*> s_fadeInAnimates;
-    static std::unordered_map<Sprite3D*, Animate3D*> s_fadeOutAnimates;
-    static std::unordered_map<Sprite3D*, Animate3D*> s_runningAnimates;
+    static std::unordered_map<Node*, Animate3D*> s_fadeInAnimates;
+    static std::unordered_map<Node*, Animate3D*> s_fadeOutAnimates;
+    static std::unordered_map<Node*, Animate3D*> s_runningAnimates;
 };
+
+// end of 3d group
+/// @}
 
 NS_CC_END
 

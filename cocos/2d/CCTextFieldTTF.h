@@ -29,14 +29,14 @@ THE SOFTWARE.
 #include "2d/CCLabel.h"
 #include "base/CCIMEDelegate.h"
 
-NS_CC_BEGIN
-
-class TextFieldTTF;
-
 /**
  * @addtogroup ui
  * @{
  */
+NS_CC_BEGIN
+
+class TextFieldTTF;
+
 
 /**
  * A input protocol for TextField.
@@ -46,6 +46,7 @@ class CC_DLL TextFieldDelegate
 public:
     /**
      * Desctructor for TextFieldDelegate.
+     * @js NA
      */
     virtual ~TextFieldDelegate() {}
 
@@ -91,6 +92,7 @@ public:
 
     /**
      *@brief    If the sender doesn't want to draw, return true.
+     * @js NA
      */
     virtual bool onVisit(TextFieldTTF * sender,Renderer *renderer, const Mat4 &transform, uint32_t flags)
     {
@@ -106,19 +108,26 @@ class CC_DLL TextFieldTTF : public Label, public IMEDelegate
 {
 public:
     /**
+     * Default constructor.
      * @js ctor
      */
     TextFieldTTF();
+    
     /**
+     * Default destructor.
      * @js NA
      * @lua NA
      */
     virtual ~TextFieldTTF();
 
-    /** Creates a TextFieldTTF from a fontname, alignment, dimension and font size. */
+    /** Creates a TextFieldTTF from a fontname, alignment, dimension and font size.
+    * @js NA
+    */
     static TextFieldTTF * textFieldWithPlaceHolder(const std::string& placeholder, const Size& dimensions, TextHAlignment alignment, const std::string& fontName, float fontSize);
     
-    /** Creates a TextFieldTTF from a fontname and font size. */
+    /** Creates a TextFieldTTF from a fontname and font size.
+    * @js NA
+    */
     static TextFieldTTF * textFieldWithPlaceHolder(const std::string& placeholder, const std::string& fontName, float fontSize);
     
     /** Initializes the TextFieldTTF with a font name, alignment, dimension and font size. */
@@ -141,12 +150,10 @@ public:
     // properties
     //////////////////////////////////////////////////////////////////////////
     /**
-     * @js NA
      * @lua NA
      */
     inline TextFieldDelegate* getDelegate() const { return _delegate; };
     /**
-     * @js NA
      * @lua NA
      */
     inline void setDelegate(TextFieldDelegate* delegate) { _delegate = delegate; };
@@ -165,7 +172,7 @@ public:
 
     /**
      *@brief Change input placeholder color.
-     *@param color A color value in @see `Color3B`.
+     *@param color A color value in `Color3B`.
      */
     virtual void setColorSpaceHolder(const Color3B& color);
 
@@ -210,12 +217,14 @@ public:
      * Set enable secure text entry represention.
      * If you want to display password in TextField, this option is very helpful.
      *@param value Whether or not to display text with secure text entry.
+     * @js NA
      */
     virtual void setSecureTextEntry(bool value);
 
     /**
      * Query whether the currently display mode is secure text entry or not.
      *@return Whether current text is displayed as secure text entry.
+     * @js NA
      */
     virtual bool isSecureTextEntry();
 
@@ -248,9 +257,8 @@ private:
     LengthStack * _lens;
 };
 
+NS_CC_END
 // end of ui group
 /// @}
-
-NS_CC_END
 
 #endif    // __CC_TEXT_FIELD_H__

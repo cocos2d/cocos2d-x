@@ -31,13 +31,13 @@
 #include <string>   // for ssize_t on linux
 #include "platform/CCStdC.h" // for ssize_t on window
 
-NS_CC_BEGIN
-
 /**
  * @addtogroup base
  * @js NA
  * @lua NA
  */
+NS_CC_BEGIN
+
 class CC_DLL Data
 {
 public:
@@ -126,8 +126,8 @@ private:
     ssize_t _size;
 };
 
-/** @} */
 
 NS_CC_END
 
+/** @} */
 #endif // __CCDATA_H__

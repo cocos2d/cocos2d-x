@@ -62,7 +62,7 @@ void PUFlockCenteringAffector::preUpdateAffector( float deltaTime )
     {
         _average = getDerivedPosition(); // Set to position of the affector
     }
-    _sum = Vec3::ZERO;
+    _sum.setZero();
     _count = 0;
 }
 

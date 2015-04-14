@@ -125,6 +125,7 @@ public:
      * @param tmxString A TMX formatted XML string.
      * @param resourcePath The path to TMX resources.
      * @return An autorelease object.
+     * @js NA
      */
     static TMXTiledMap* createWithXML(const std::string& tmxString, const std::string& resourcePath);
 
@@ -201,7 +202,7 @@ public:
     
     /** Set the tiles's size property measured in pixels. 
      *
-     * @param The tiles's size property measured in pixels.
+     * @param tileSize The tiles's size property measured in pixels.
      */
     inline void setTileSize(const Size& tileSize) { _tileSize = tileSize; };
 
@@ -246,7 +247,9 @@ public:
         _properties = properties;
     };
     
-    /** Get the description. */
+    /** Get the description.
+     * @js NA
+     */
     virtual std::string getDescription() const override;
     
 CC_CONSTRUCTOR_ACCESS:

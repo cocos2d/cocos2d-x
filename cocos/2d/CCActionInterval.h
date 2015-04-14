@@ -404,7 +404,7 @@ public:
     virtual void startWithTarget(Node *target) override;
     virtual void stop(void) override;
     /**
-     * @param dt In seconds.
+     * @param time In seconds.
      */
     virtual void update(float time) override;
     
@@ -464,7 +464,7 @@ public:
     virtual RotateTo* reverse() const override;
     virtual void startWithTarget(Node *target) override;
     /**
-     * @param dt In seconds.
+     * @param time In seconds.
      */
     virtual void update(float time) override;
     
@@ -1429,7 +1429,7 @@ public:
 
     /** Sets the Animation object to be animated 
      * 
-     * @param A certain animation.
+     * @param animation certain animation.
      */
     void setAnimation( Animation* animation );
     /** returns the Animation object that is being animated 

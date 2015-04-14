@@ -10,7 +10,7 @@ public:
     virtual void showCurrentTest();
 };
 
-class ParticleMainScene : public Scene
+class ParticleMainScene : public cocos2d::Scene
 {
 public:
     virtual void initWithSubTest(int subtest, int particles);
@@ -18,7 +18,7 @@ public:
 
     void step(float dt);
     void createParticleSystem();
-    void testNCallback(Ref* sender);
+    void testNCallback(cocos2d::Ref* sender);
     void updateQuantityLabel();
     int getSubTestNum() { return subtestNumber; }
     int getParticlesNum() { return quantityParticles; }

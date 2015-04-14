@@ -2,6 +2,7 @@
 #include "../testResource.h"
 #include "renderer/CCRenderer.h"
 
+USING_NS_CC;
 using namespace ui;
 
 enum {
@@ -30,149 +31,51 @@ enum {
 //
 //------------------------------------------------------------------
 
-enum
+NewLabelTests::NewLabelTests()
 {
-    IDC_NEXT = 100,
-    IDC_BACK,
-    IDC_RESTART
+    ADD_TEST_CASE(LabelFNTColorAndOpacity);
+    ADD_TEST_CASE(LabelFNTSpriteActions);
+    ADD_TEST_CASE(LabelFNTPadding);
+    ADD_TEST_CASE(LabelFNTOffset);
+    ADD_TEST_CASE(LabelFNTColor);
+    ADD_TEST_CASE(LabelFNTHundredLabels);
+    ADD_TEST_CASE(LabelFNTMultiLine);
+    ADD_TEST_CASE(LabelFNTandTTFEmpty);
+    ADD_TEST_CASE(LabelFNTRetina);
+    ADD_TEST_CASE(LabelFNTGlyphDesigner);
+    ADD_TEST_CASE(LabelTTFUnicodeChinese);
+    ADD_TEST_CASE(LabelFNTUnicodeChinese);
+    ADD_TEST_CASE(LabelFNTMultiLineAlignment);
+    ADD_TEST_CASE(LabelFNTUNICODELanguages);
+    ADD_TEST_CASE(LabelTTFAlignmentNew);
+    ADD_TEST_CASE(LabelFNTBounds);
+    ADD_TEST_CASE(LabelTTFLongLineWrapping);
+    ADD_TEST_CASE(LabelTTFColor);
+    ADD_TEST_CASE(LabelTTFFontsTestNew);
+    ADD_TEST_CASE(LabelTTFDynamicAlignment);
+    ADD_TEST_CASE(LabelTTFCJKWrappingTest);
+    ADD_TEST_CASE(LabelTTFUnicodeNew);
+    ADD_TEST_CASE(LabelBMFontTestNew);
+    ADD_TEST_CASE(LabelTTFDistanceField);
+    ADD_TEST_CASE(LabelOutlineAndGlowTest);
+    ADD_TEST_CASE(LabelShadowTest);
+    ADD_TEST_CASE(LabelCharMapTest);
+    ADD_TEST_CASE(LabelCharMapColorTest);
+    ADD_TEST_CASE(LabelCrashTest);
+    ADD_TEST_CASE(LabelTTFOldNew);
+    ADD_TEST_CASE(LabelFontNameTest);
+    ADD_TEST_CASE(LabelAlignmentTest);
+    ADD_TEST_CASE(LabelIssue4428Test);
+    ADD_TEST_CASE(LabelIssue4999Test);
+    ADD_TEST_CASE(LabelLineHeightTest);
+    ADD_TEST_CASE(LabelAdditionalKerningTest);
+    ADD_TEST_CASE(LabelIssue8492Test);
+    ADD_TEST_CASE(LabelMultilineWithOutline);
+    ADD_TEST_CASE(LabelIssue9255Test);
+    ADD_TEST_CASE(LabelSmallDimensionsTest);
+    ADD_TEST_CASE(LabelIssue10089Test);
+    ADD_TEST_CASE(LabelSystemFontColor);
 };
-
-Layer* nextAtlasActionNew();
-Layer* backAtlasActionNew();
-Layer* restartAtlasActionNew();
-
-static int sceneIdx = -1; 
-
-static std::function<Layer*()> createFunctions[] =
-{
-    CL(LabelFNTColorAndOpacity),
-    CL(LabelFNTSpriteActions),
-    CL(LabelFNTPadding),
-    CL(LabelFNTOffset),
-    CL(LabelFNTColor),
-    CL(LabelFNTHundredLabels),
-    CL(LabelFNTMultiLine),
-    CL(LabelFNTandTTFEmpty),
-    CL(LabelFNTRetina),
-    CL(LabelFNTGlyphDesigner),
-    CL(LabelTTFUnicodeChinese),
-    CL(LabelFNTUnicodeChinese),
-    CL(LabelFNTMultiLineAlignment),
-    CL(LabelFNTUNICODELanguages),
-    CL(LabelTTFAlignmentNew),
-    CL(LabelFNTBounds),
-    CL(LabelTTFLongLineWrapping),
-    CL(LabelTTFColor),
-    CL(LabelTTFFontsTestNew),
-    CL(LabelTTFDynamicAlignment),
-    CL(LabelTTFCJKWrappingTest),
-    CL(LabelTTFUnicodeNew),
-    CL(LabelBMFontTestNew),
-    CL(LabelTTFDistanceField),
-    CL(LabelOutlineAndGlowTest),
-    CL(LabelShadowTest),
-    CL(LabelCharMapTest),
-    CL(LabelCharMapColorTest),
-    CL(LabelCrashTest),
-    CL(LabelTTFOldNew),
-    CL(LabelFontNameTest),
-    CL(LabelAlignmentTest),
-    CL(LabelIssue4428Test),
-    CL(LabelIssue4999Test),
-    CL(LabelLineHeightTest),
-    CL(LabelAdditionalKerningTest),
-    CL(LabelIssue8492Test),
-    CL(LabelMultilineWithOutline),
-    CL(LabelIssue9255Test),
-    CL(LabelSmallDimensionsTest),
-    CL(LabelIssue10089Test),
-    CL(LabelSystemFontColor)
-};
-
-#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-Layer* nextAtlasActionNew()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-Layer* backAtlasActionNew()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;    
-    
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-Layer* restartAtlasActionNew()
-{
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-void AtlasTestSceneNew::runThisTest()
-{
-    sceneIdx = -1;
-    auto layer = nextAtlasActionNew();
-    addChild(layer);
-    
-    Director::getInstance()->replaceScene(this);
-}
-
-AtlasDemoNew::AtlasDemoNew(void)
-{
-}
-
-AtlasDemoNew::~AtlasDemoNew(void)
-{
-}
-
-std::string AtlasDemoNew::title() const
-{
-    return "No title";
-}
-
-std::string AtlasDemoNew::subtitle() const
-{
-    return "";
-}
-
-void AtlasDemoNew::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-void AtlasDemoNew::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) AtlasTestSceneNew();
-    s->addChild(restartAtlasActionNew()); 
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void AtlasDemoNew::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) AtlasTestSceneNew();
-    s->addChild( nextAtlasActionNew() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void AtlasDemoNew::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) AtlasTestSceneNew();
-    s->addChild( backAtlasActionNew() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
 
 LabelTTFAlignmentNew::LabelTTFAlignmentNew()
 {
@@ -1289,7 +1192,7 @@ LabelShadowTest::LabelShadowTest()
     shadowLabelOutline->setPosition( Vec2(size.width/2, size.height*0.5f) );
     shadowLabelOutline->setTextColor( Color4B::RED );
     shadowLabelOutline->enableOutline(Color4B::YELLOW,1);
-    shadowLabelOutline->enableShadow(Color4B::BLACK);
+    shadowLabelOutline->enableShadow(Color4B::GREEN);
     addChild(shadowLabelOutline);
 
     shadowLabelBMFont = Label::createWithBMFont("fonts/bitmapFontTest.fnt", "BMFont:Shadow");
@@ -1332,7 +1235,7 @@ void LabelShadowTest::sliderEvent(Ref *pSender, ui::Slider::EventType type)
         auto offset = Size(slider->getPercent()-50,50 - slider2->getPercent());
         shadowLabelTTF->enableShadow(Color4B::BLACK,offset);
         shadowLabelBMFont->enableShadow(Color4B::GREEN,offset);
-        shadowLabelOutline->enableShadow(Color4B::BLACK,offset);
+        shadowLabelOutline->enableShadow(Color4B::GREEN,offset);
     }
 }
 

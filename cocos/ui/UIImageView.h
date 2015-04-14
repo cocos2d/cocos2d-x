@@ -28,18 +28,17 @@ THE SOFTWARE.
 #include "ui/UIWidget.h"
 #include "ui/GUIExport.h"
 
-NS_CC_BEGIN
-
 /**
  * @addtogroup ui
  * @{
  */
+NS_CC_BEGIN
+
 namespace ui {
     class Scale9Sprite;
 /**
-*   @js NA
-*   @lua NA
-*/
+ * @brief A widget to display images.
+ */
 class CC_GUI_DLL ImageView : public Widget
 {
     
@@ -48,11 +47,15 @@ class CC_GUI_DLL ImageView : public Widget
 public:
     /**
      * Default constructor
+     * @js ctor
+     * @lua new
      */
     ImageView();
 
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~ImageView();
 
@@ -88,9 +91,9 @@ public:
     /**
      * Enable scale9 renderer.
      *
-     * @param enable Set to true will use scale9 renderer, false otherwise.
+     * @param enabled Set to true will use scale9 renderer, false otherwise.
      */
-    void setScale9Enabled(bool able);
+    void setScale9Enabled(bool enabled);
 
     /**
      * Query whether button is using scale9 renderer or not.
@@ -146,8 +149,8 @@ protected:
 
 }
 
+NS_CC_END
 // end of ui group
 /// @}
-NS_CC_END
 
 #endif /* defined(__CocoGUI__ImageView__) */

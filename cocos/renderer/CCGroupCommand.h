@@ -32,6 +32,11 @@
 #include "base/CCRef.h"
 #include "CCRenderCommand.h"
 
+/**
+ * @addtogroup support
+ * @{
+ */
+
 NS_CC_BEGIN
 
 //Used for internal
@@ -76,4 +81,8 @@ protected:
 
 NS_CC_END
 
+/**
+ end of support group
+ @}
+ */
 #endif //_CC_GROUPCOMMAND_H_

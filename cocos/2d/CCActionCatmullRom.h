@@ -168,7 +168,7 @@ public:
 
     /** Creates an action with a Cardinal Spline array of points and tension.
      * @param duration In seconds.
-     * @param point An PointArray.
+     * @param points An PointArray.
      * @param tension Goodness of fit.
      * @code
      * When this function bound to js or lua,the input params are changed.
@@ -192,7 +192,7 @@ public:
      * Initializes the action with a duration and an array of points.
      *
      * @param duration In seconds.
-     * @param point An PointArray.
+     * @param points An PointArray.
      * @param tension Goodness of fit.
      */
     bool initWithDuration(float duration, PointArray* points, float tension);

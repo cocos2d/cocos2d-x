@@ -6,7 +6,7 @@
 
 --------------------------------
 --  Returns the action that will be performed with size.<br>
--- param size A given size.<br>
+-- param vector A given size.<br>
 -- return The action that will be performed.
 -- @function [parent=#TransitionPageTurn] actionWithSize 
 -- @param self

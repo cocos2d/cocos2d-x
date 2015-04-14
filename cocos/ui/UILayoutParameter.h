@@ -29,17 +29,16 @@
 #include "base/CCRef.h"
 #include "ui/GUIExport.h"
 
-NS_CC_BEGIN
-
-namespace ui {
 /**
  * @addtogroup ui
  * @{
  */
+NS_CC_BEGIN
+
+namespace ui {
 
 /**
  *@brief Margin of widget's in point. Margin value should be positive.
- *@js NA
  *@lua NA
  */
 class CC_GUI_DLL Margin
@@ -111,11 +110,6 @@ public:
 };
 
 
-/**
-*   @js NA
-*   @lua NA
-*/
-
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #ifdef RELATIVE
 #undef RELATIVE
@@ -123,8 +117,7 @@ public:
 #endif
 
 /**
- *@brief Layout parameter base class.
- * Hold a layout margin and a layout type.
+ *@brief Base class for various LayoutParameter.
  */
 class CC_GUI_DLL LayoutParameter : public Ref
 {
@@ -143,6 +136,8 @@ public:
     };
     /**
      * Default constructor.
+     *
+     * @lua new
      */
     LayoutParameter() : _margin(Margin())
     {
@@ -151,6 +146,7 @@ public:
     
     /**
      * Default destructor.
+     * @lua NA
      */
     virtual ~LayoutParameter(){};
     
@@ -198,7 +194,7 @@ public:
     
     /**
      * Copy all the member field from argument LayoutParameter to self.
-     *@parameter model A LayoutParameter instance.
+     *@param model A LayoutParameter instance.
      */
     virtual void copyProperties(LayoutParameter* model);
 protected:
@@ -227,10 +223,8 @@ public:
 
     
 /**
- *@brief Linear layout parameter.
+ * @brief Linear layout parameter.
  * It is used by linear layout manager for arranging elements linearly.
- *@js NA
- *@lua NA
  */
 class CC_GUI_DLL LinearLayoutParameter : public LayoutParameter
 {
@@ -251,6 +245,8 @@ public:
 
     /**
      * Default constructor.
+     *
+     * @lua new
      */
     LinearLayoutParameter()
     : _linearGravity(LinearGravity::NONE)
@@ -260,6 +256,8 @@ public:
     
     /**
      * Default destructor.
+     *
+     * @lua NA
      */
     virtual ~LinearLayoutParameter(){};
     
@@ -273,7 +271,7 @@ public:
      * Sets LinearGravity parameter for LayoutParameter.
      *
      * @see LinearGravity
-     * @param LinearGravity Gravity in LinearGravity.
+     * @param gravity Gravity in LinearGravity.
      */
     void setGravity(LinearGravity gravity);
     
@@ -296,10 +294,8 @@ protected:
     
 
 /**
- *@brief Relative layout parameter.
- * It is mainly used by @see `RelativeLayoutManager`.
- *@lua NA
- *@js NA
+ * @brief Relative layout parameter.
+ * It is mainly used by  `RelativeLayoutManager`.
  */
 class CC_GUI_DLL RelativeLayoutParameter : public LayoutParameter
 {
@@ -338,6 +334,8 @@ public:
 
     /**
      * Default constructor
+     *
+     * @lua new
      */
     RelativeLayoutParameter()
     : _relativeAlign(RelativeAlign::NONE),
@@ -350,6 +348,8 @@ public:
     
     /**
      * Default destructor
+     *
+     * @lua NA
      */
     virtual ~RelativeLayoutParameter(){};
     
@@ -363,7 +363,7 @@ public:
      * Sets RelativeAlign parameter for LayoutParameter.
      *
      * @see RelativeAlign
-     * @param RelativeAlign Relative align in @see `RelativeAlign`.
+     * @param align Relative align in  `RelativeAlign`.
      */
     void setAlign(RelativeAlign align);
     
@@ -371,7 +371,7 @@ public:
      * Get RelativeAlign parameter for LayoutParameter.
      *
      * @see RelativeAlign
-     * @return RelativeAlign A RelativeAlign variable.
+     * @return  A RelativeAlign variable.
      */
     RelativeAlign getAlign() const;
     
@@ -414,9 +414,8 @@ protected:
 };
 
 }
-
+NS_CC_END
 // end of ui group
 /// @}
-NS_CC_END
 
 #endif /* defined(__LayoutParameter__) */

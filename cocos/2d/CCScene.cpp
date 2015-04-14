@@ -227,6 +227,8 @@ void Scene::addChildToPhysicsWorld(Node* child)
         std::function<void(Node*)> addToPhysicsWorldFunc = nullptr;
         addToPhysicsWorldFunc = [this, &addToPhysicsWorldFunc](Node* node) -> void
         {
+            node->_physicsWorld = _physicsWorld;
+
             if (node->getPhysicsBody())
             {
                 _physicsWorld->addBody(node->getPhysicsBody());

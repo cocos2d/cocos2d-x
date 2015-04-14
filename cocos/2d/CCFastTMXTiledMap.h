@@ -94,6 +94,7 @@ class TMXLayer;
  * object->getProperty(name_of_the_property);
 
  * @since v3.2
+ * @js NA
  */
 class CC_DLL TMXTiledMap : public Node
 {

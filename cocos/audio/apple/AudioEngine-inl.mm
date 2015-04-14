@@ -141,11 +141,31 @@ namespace cocos2d {
 
 @implementation AudioEngineSessionHandler
 
+void AudioEngineInterruptionListenerCallback(void* user_data, UInt32 interruption_state)
+{
+    if (kAudioSessionBeginInterruption == interruption_state)
+    {
+      alcMakeContextCurrent(nullptr);
+    }
+    else if (kAudioSessionEndInterruption == interruption_state)
+    {
+      OSStatus result = AudioSessionSetActive(true);
+      if (result) NSLog(@"Error setting audio session active! %d\n", result);
+
+      alcMakeContextCurrent(s_ALContext);
+    }
+}
+
 -(id) init
 {
     if (self == [super init])
     {
+      if ([[[UIDevice currentDevice] systemVersion] intValue] > 5) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleInterruption:) name:AVAudioSessionInterruptionNotification object:[AVAudioSession sharedInstance]];
+      }
+      else {
+        AudioSessionInitialize(NULL, NULL, AudioEngineInterruptionListenerCallback, self);
+      }
     }
     return self;
 }

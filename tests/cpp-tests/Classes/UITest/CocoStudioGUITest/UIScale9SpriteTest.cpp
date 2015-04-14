@@ -25,6 +25,35 @@
 #include "UIScale9SpriteTest.h"
 #include "testResource.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
+UIScale9SpriteTests::UIScale9SpriteTests()
+{
+    ADD_TEST_CASE(UIScale9SpriteTest);
+    ADD_TEST_CASE(UIScale9SpriteHierarchialTest);
+    ADD_TEST_CASE(UIScale9SpriteTouchTest);
+    ADD_TEST_CASE(UIS9BatchNodeBasic);
+    ADD_TEST_CASE(UIS9FrameNameSpriteSheet);
+    ADD_TEST_CASE(UIS9FrameNameSpriteSheetRotated);
+    ADD_TEST_CASE(UIS9FrameNameSpriteSheetCropped);
+    ADD_TEST_CASE(UIS9FrameNameSpriteSheetCroppedRotated);
+    ADD_TEST_CASE(UIS9BatchNodeScaledNoInsets);
+    ADD_TEST_CASE(UIS9FrameNameSpriteSheetScaledNoInsets);
+    ADD_TEST_CASE(UIS9FrameNameSpriteSheetRotatedScaledNoInsets);
+    ADD_TEST_CASE(UIS9BatchNodeScaleWithCapInsets);
+    ADD_TEST_CASE(UIS9FrameNameSpriteSheetInsets);
+    ADD_TEST_CASE(UIS9FrameNameSpriteSheetInsetsScaled);
+    ADD_TEST_CASE(UIS9FrameNameSpriteSheetRotatedInsets);
+    ADD_TEST_CASE(UIS9_TexturePacker);
+    ADD_TEST_CASE(UIS9FrameNameSpriteSheetRotatedInsetsScaled);
+    ADD_TEST_CASE(UIS9FrameNameSpriteSheetRotatedSetCapInsetLater);
+    ADD_TEST_CASE(UIS9CascadeOpacityAndColor);
+    ADD_TEST_CASE(UIS9ZOrder);
+    ADD_TEST_CASE(UIS9Flip);
+    ADD_TEST_CASE(UIS9ChangeAnchorPoint);
+}
+
 // UIScale9SpriteTest
 UIScale9SpriteTest::UIScale9SpriteTest()
 {

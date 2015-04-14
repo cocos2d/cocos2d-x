@@ -38,72 +38,37 @@
 #include <algorithm>
 #include "../testResource.h"
 
-enum
+USING_NS_CC;
+
+Sprite3DTests::Sprite3DTests()
 {
-    IDC_NEXT = 100,
-    IDC_BACK,
-    IDC_RESTART
-};
-
-static int sceneIdx = -1;
-
-
-static std::function<Layer*()> createFunctions[] =
-{
-    CL(Sprite3DBasicTest),
-    CL(Sprite3DHitTest),
-    CL(AsyncLoadSprite3DTest),
+    ADD_TEST_CASE(Sprite3DBasicTest);
+    ADD_TEST_CASE(Sprite3DHitTest);
+    ADD_TEST_CASE(AsyncLoadSprite3DTest);
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     // 3DEffect use custom shader which is not supported on WP8/WinRT yet. 
-    CL(Sprite3DEffectTest),
-    CL(Sprite3DUVAnimationTest),
-    CL(Sprite3DFakeShadowTest),
-    CL(Sprite3DBasicToonShaderTest),
-    CL(Sprite3DLightMapTest),
+    ADD_TEST_CASE(Sprite3DEffectTest);
+    ADD_TEST_CASE(Sprite3DUVAnimationTest);
+    ADD_TEST_CASE(Sprite3DFakeShadowTest);
+    ADD_TEST_CASE(Sprite3DBasicToonShaderTest);
+    ADD_TEST_CASE(Sprite3DLightMapTest);
 #endif
-    CL(Sprite3DWithSkinTest),
+    ADD_TEST_CASE(Sprite3DWithSkinTest);
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
-    CL(Sprite3DWithSkinOutlineTest),
+    ADD_TEST_CASE(Sprite3DWithSkinOutlineTest);
 #endif
-    CL(Animate3DTest),
-    CL(AttachmentTest),
-    CL(Sprite3DReskinTest),
-    CL(Sprite3DWithOBBPerformanceTest),
-    CL(Sprite3DMirrorTest),
-    CL(QuaternionTest),
-    CL(Sprite3DEmptyTest),
-    CL(UseCaseSprite3D),
-    CL(Sprite3DForceDepthTest),
-    CL(Sprite3DCubeMapTest)
+    ADD_TEST_CASE(Animate3DTest);
+    ADD_TEST_CASE(AttachmentTest);
+    ADD_TEST_CASE(Sprite3DReskinTest);
+    ADD_TEST_CASE(Sprite3DWithOBBPerformanceTest);
+    ADD_TEST_CASE(Sprite3DMirrorTest);
+    ADD_TEST_CASE(QuaternionTest);
+    ADD_TEST_CASE(Sprite3DEmptyTest);
+    ADD_TEST_CASE(UseCaseSprite3D);
+    ADD_TEST_CASE(Sprite3DForceDepthTest);
+    ADD_TEST_CASE(Sprite3DCubeMapTest);
+    ADD_TEST_CASE(NodeAnimationTest);
 };
-
-#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-static Layer* nextSpriteTestAction()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-    
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-static Layer* backSpriteTestAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;
-    
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-static Layer* restartSpriteTestAction()
-{
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
 
 //------------------------------------------------------------------
 //
@@ -111,53 +76,9 @@ static Layer* restartSpriteTestAction()
 //
 //------------------------------------------------------------------
 
-Sprite3DTestDemo::Sprite3DTestDemo(void)
-: BaseTest()
-{
-}
-
-Sprite3DTestDemo::~Sprite3DTestDemo(void)
-{
-}
-
 std::string Sprite3DTestDemo::title() const
 {
     return "No title";
-}
-
-std::string Sprite3DTestDemo::subtitle() const
-{
-    return "";
-}
-
-void Sprite3DTestDemo::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-void Sprite3DTestDemo::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) Sprite3DTestScene();
-    s->addChild(restartSpriteTestAction());
-    
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void Sprite3DTestDemo::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) Sprite3DTestScene();
-    s->addChild( nextSpriteTestAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void Sprite3DTestDemo::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) Sprite3DTestScene();
-    s->addChild( backSpriteTestAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
 }
 
 //------------------------------------------------------------------
@@ -167,9 +88,9 @@ void Sprite3DTestDemo::backCallback(Ref* sender)
 //------------------------------------------------------------------
 Sprite3DForceDepthTest::Sprite3DForceDepthTest()
 {
-    auto orc = Sprite3D::create("Sprite3DTest/orc.c3b");
+    auto orc = cocos2d::Sprite3D::create("Sprite3DTest/orc.c3b");
     orc->setScale(5);
-    orc->setNormalizedPosition(Vec2(.5,.3));
+    orc->setNormalizedPosition(Vec2(.5f,.3f));
     orc->setPositionZ(40);
     orc->setRotation3D(Vec3(0,180,0));
     orc->setGlobalZOrder(-1);
@@ -904,19 +825,6 @@ std::string Sprite3DHitTest::subtitle() const
     return "Tap Sprite3D and Drag";
 }
 
-void Sprite3DTestScene::runThisTest()
-{
-    auto layer = nextSpriteTestAction();
-    addChild(layer);
-    
-    Director::getInstance()->replaceScene(this);
-}
-
-Sprite3DTestScene::Sprite3DTestScene()
-{
-    
-}
-
 static int tuple_sort( const std::tuple<ssize_t,Effect3D*,CustomCommand> &tuple1, const std::tuple<ssize_t,Effect3D*,CustomCommand> &tuple2 )
 {
     return std::get<0>(tuple1) < std::get<0>(tuple2);
@@ -1347,6 +1255,19 @@ Sprite3DWithSkinTest::Sprite3DWithSkinTest()
     listener->onTouchesEnded = CC_CALLBACK_2(Sprite3DWithSkinTest::onTouchesEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
+    // swich camera
+    MenuItemFont::setFontName("fonts/arial.ttf");
+    MenuItemFont::setFontSize(15);
+    _menuItem = MenuItemFont::create("High Quality", CC_CALLBACK_1(Sprite3DWithSkinTest::switchAnimationQualityCallback,this));
+    _menuItem->setColor(Color3B(0,200,20));
+    auto menu = Menu::create(_menuItem,NULL);
+    menu->setPosition(Vec2::ZERO);
+    _menuItem->setPosition(VisibleRect::left().x + 50, VisibleRect::top().y -70);
+    addChild(menu, 1);
+    
+    _highQuality = true;
+    _sprits.clear();
+    
     auto s = Director::getInstance()->getWinSize();
     addNewSpriteWithCoords( Vec2(s.width/2, s.height/2) );
 }
@@ -1365,9 +1286,10 @@ void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
     auto sprite = EffectSprite3D::create(fileName);
     sprite->setScale(3);
     sprite->setRotation3D(Vec3(0,180,0));
-    addChild(sprite);
     sprite->setPosition( Vec2( p.x, p.y) );
-
+    addChild(sprite);
+    _sprits.push_back(sprite);
+    
     auto animation = Animation3D::create(fileName);
     if (animation)
     {
@@ -1385,8 +1307,28 @@ void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
             speed = animate->getSpeed() - 0.5 * CCRANDOM_0_1();
         }
         animate->setSpeed(inverse ? -speed : speed);
+        animate->setTag(110);
+        animate->setHighQuality(_highQuality);
+        auto repeate = RepeatForever::create(animate);
+        repeate->setTag(110);
+        sprite->runAction(repeate);
+    }
+}
 
-        sprite->runAction(RepeatForever::create(animate));
+void Sprite3DWithSkinTest::switchAnimationQualityCallback(Ref* sender)
+{
+    _highQuality = !_highQuality;
+    
+    if (_highQuality)
+        _menuItem->setString("High Quality");
+    else
+        _menuItem->setString("Low Quality");
+    
+    for (auto iter: _sprits)
+    {
+        RepeatForever* repAction = dynamic_cast<RepeatForever*>(iter->getActionByTag(110));
+        Animate3D* animate3D = dynamic_cast<Animate3D*>(repAction->getInnerAction());
+        animate3D->setHighQuality(_highQuality);
     }
 }
 
@@ -2338,6 +2280,104 @@ void UseCaseSprite3D::update(float delta)
         circle->setPositionX(x);
         circle->setPositionZ(z);
     }
+}
+
+/////////////////////////////////////////////
+// Node Frame Animation
+NodeAnimationTest::NodeAnimationTest()
+:_vectorIndex(0)
+{
+    auto s = Director::getInstance()->getWinSize();
+    
+    auto itemPrev = MenuItemImage::create("Images/b1.png", "Images/b2.png",
+                                          [&](Ref *sender) {
+                                              _sprites[_vectorIndex]->setVisible(false);
+                                              
+                                              int tIndex = _vectorIndex - 1;
+                                              if(tIndex < 0)
+                                                  _vectorIndex = (int)_sprites.size()-1;
+                                              else
+                                                  _vectorIndex--;
+                                              
+                                              _sprites[_vectorIndex]->setVisible(true);
+                                          });
+    
+    auto itemNext = MenuItemImage::create("Images/f1.png", "Images/f2.png",
+                                          [&](Ref *sender) {
+                                              _sprites[_vectorIndex]->setVisible(false);
+                                              
+                                              int tIndex = _vectorIndex + 1;
+                                              if(tIndex >= _sprites.size())
+                                                  _vectorIndex = 0;
+                                              else
+                                                  _vectorIndex++;
+                                              
+                                              _sprites[_vectorIndex]->setVisible(true);
+                                          });
+    
+    auto menu = Menu::create(itemPrev, itemNext, nullptr);
+    menu->alignItemsHorizontally();
+    menu->setScale(0.5);
+    menu->setAnchorPoint(Vec2(0,0));
+    menu->setPosition(Vec2(s.width/2,70));
+    addChild(menu);
+    
+    addNewSpriteWithCoords(Vec2(s.width / 2.f, s.height / 2.f));
+}
+std::string NodeAnimationTest::title() const
+{
+    return "Node Animation Test";
+}
+std::string NodeAnimationTest::subtitle() const
+{
+    return "Jumping animation";
+}
+
+void NodeAnimationTest::addNewSpriteWithCoords(Vec2 p)
+{
+    auto s = Director::getInstance()->getWinSize();
+    
+    // add jumping ball
+    std::string fileName = "Sprite3DTest/ball.c3b";
+    auto sprite = Sprite3D::create(fileName);
+    sprite->setRotation3D(Vec3(0, 180, 0));
+    sprite->setScale(3);
+    sprite->setPosition(Vec2(s.width / 2.f, s.height / 3.f));
+    sprite->setTexture("Sprite3DTest/teapot.png");
+    
+    auto light1 = PointLight::create(Vec3(s.width * 0.2f, s.height * 0.8f, 100.0f), Color3B(200, 200, 200), 10000.0f);
+    addChild(light1);
+    auto light2 = AmbientLight::create(Color3B(100, 100, 100));
+    addChild(light2);
+    
+    auto animation = Animation3D::create(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        auto act = RepeatForever::create(animate);
+        act->setTag(0);
+        sprite->runAction(act);
+    }
+    addChild(sprite);
+    _sprites.push_back(sprite);
+    
+    // add jumping orc
+    fileName = "Sprite3DTest/orc_jump.c3t";
+    sprite = Sprite3D::create(fileName);
+    sprite->setRotation3D(Vec3(0, 180, 0));
+    sprite->setScale(3);
+    sprite->setPosition(Vec2(s.width / 2.f, s.height / 3.f));
+    sprite->setVisible(false);
+    animation = Animation3D::create(fileName);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        auto act = RepeatForever::create(animate);
+        act->setTag(0);
+        sprite->runAction(act);
+    }
+    addChild(sprite);
+    _sprites.push_back(sprite);
 }
 
 Sprite3DCubeMapTest::Sprite3DCubeMapTest() :

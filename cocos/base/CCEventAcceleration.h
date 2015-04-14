@@ -52,9 +52,9 @@ private:
     friend class EventListenerAcceleration;
 };
 
+NS_CC_END
+
 // end of base group
 /// @}
-
-NS_CC_END
 
 #endif /* defined(__cocos2d_libs__CCAccelerometerEvent__) */

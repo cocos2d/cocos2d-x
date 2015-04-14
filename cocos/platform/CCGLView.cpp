@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -156,7 +156,7 @@ void GLView::updateDesignResolutionSize()
         // reset director's member variables to fit visible rect
         auto director = Director::getInstance();
         director->_winSizeInPoints = getDesignResolutionSize();
-        director->createStatsLabel();
+        director->_isStatusLabelUpdated = true;
         director->setGLDefaultValues();
     }
 }
