@@ -210,6 +210,54 @@ void Physics3DWorld::debugDraw(Renderer* renderer)
     }
 }
 
+bool Physics3DWorld::rayCast(const cocos2d::Vec3& startPos, const cocos2d::Vec3& endPos, Physics3DWorld::HitResult* result)
+{
+    auto btStart = convertVec3TobtVector3(startPos);
+    auto btEnd = convertVec3TobtVector3(endPos);
+    btCollisionWorld::ClosestRayResultCallback btResult(btStart, btEnd);
+    _btPhyiscsWorld->rayTest(btStart, btEnd, btResult);
+    if (btResult.hasHit())
+    {
+        result->hitObj = getPhysicsObject(btResult.m_collisionObject);
+        result->hitPosition = convertbtVector3ToVec3(btResult.m_hitPointWorld);
+        result->hitNormal = convertbtVector3ToVec3(btResult.m_hitNormalWorld);
+        return true;
+    }
+    result->hitObj = nullptr;
+    return false;
+}
+
+bool Physics3DWorld::sweepShape(Physics3DShape* shape, const cocos2d::Mat4& startTransform, const cocos2d::Mat4& endTransform, Physics3DWorld::HitResult* result)
+{
+    CC_ASSERT(shape->getShapeType() != Physics3DShape::ShapeType::HEIGHT_FIELD && shape->getShapeType() != Physics3DShape::ShapeType::MESH);
+    auto btStart = convertMat4TobtTransform(startTransform);
+    auto btEnd = convertMat4TobtTransform(endTransform);
+    btCollisionWorld::ClosestConvexResultCallback btResult(btStart.getOrigin(), btEnd.getOrigin());
+    _btPhyiscsWorld->convexSweepTest((btConvexShape*)shape->getbtShape(), btStart, btEnd, btResult);
+    if (btResult.hasHit())
+    {
+        result->hitObj = getPhysicsObject(btResult.m_hitCollisionObject);
+        result->hitPosition = convertbtVector3ToVec3(btResult.m_hitPointWorld);
+        result->hitNormal = convertbtVector3ToVec3(btResult.m_hitNormalWorld);
+        return true;
+    }
+    result->hitObj = nullptr;
+    return false;
+}
+
+Physics3DObject* Physics3DWorld::getPhysicsObject(const btCollisionObject* btObj)
+{
+    for(auto it : _objects)
+    {
+        if (it->getObjType() == Physics3DObject::PhysicsObjType::RIGID_BODY)
+        {
+            if (static_cast<Physics3DRigidBody*>(it)->getRigidBody() == btObj)
+                return it;
+        }
+    }
+    return nullptr;
+}
+
 NS_CC_EXT_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION

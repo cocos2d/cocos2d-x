@@ -42,6 +42,7 @@ class btCollisionDispatcher;
 class btDbvtBroadphase;
 class btSequentialImpulseConstraintSolver;
 class btRigidBody;
+class btCollisionObject;
 
 NS_CC_EXT_BEGIN
 
@@ -49,6 +50,7 @@ class Physics3DObject;
 class Physics3DConstraint;
 class Physics3DDebugDrawer;
 class Physics3DComponent;
+class Physics3DShape;
 
 struct CC_EX_DLL Physics3DWorldDes
 {
@@ -65,6 +67,14 @@ class CC_EX_DLL Physics3DWorld : public Ref
 {
     friend class Physics3DComponent;
 public:
+    
+    struct HitResult
+    {
+        cocos2d::Vec3 hitPosition;
+        cocos2d::Vec3 hitNormal;
+        Physics3DObject* hitObj;
+    };
+    
     static Physics3DWorld* create(Physics3DWorldDes* info);
     
     void addPhysics3DObject(Physics3DObject* physicsObj);
@@ -89,6 +99,9 @@ public:
     
     const std::vector<Physics3DObject*>& getPhysicsObjects() const { return _objects; }
     
+    bool rayCast(const cocos2d::Vec3& startPos, const cocos2d::Vec3& endPos, HitResult* result);
+    
+    bool sweepShape(Physics3DShape* shape, const cocos2d::Mat4& startTransform, const cocos2d::Mat4& endTransform, HitResult* result);
     
 CC_CONSTRUCTOR_ACCESS:
     
@@ -96,6 +109,8 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Physics3DWorld();
     
     bool init(Physics3DWorldDes* info);
+    
+    Physics3DObject* getPhysicsObject(const btCollisionObject* btObj);
     
 protected:
     std::vector<Physics3DObject*>      _objects;
