@@ -50,6 +50,7 @@ static Scene* physicsScene = nullptr;
 static std::function<Layer*()> createFunctions[] =
 {
     CL(BasicPhysics3DDemo),
+    CL(Physics3DConstraintDemo),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -304,6 +305,40 @@ bool BasicPhysics3DDemo::init()
 
     physicsScene->setPhysics3DDebugCamera(_camera);
 
+    return true;
+}
+
+std::string Physics3DConstraintDemo::subtitle() const
+{
+    return "Physics3D Constraint";
+}
+
+bool Physics3DConstraintDemo::init()
+{
+    if (!Physics3DTestDemo::init())
+        return false;
+    
+    Physics3DRigidBodyDes rbDes;
+    //create box
+    auto sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
+    rbDes.originalTransform.translate(0.f, 0.f, 0.f);
+    rbDes.mass = 10.f;
+    rbDes.shape = Physics3DShape::createBox(Vec3(5.0f, 5.0f, 5.0f));
+    auto rigidBody = Physics3DRigidBody::create(&rbDes);
+    Mat4 offMat;
+    Mat4::createRotationY(CC_DEGREES_TO_RADIANS(180.f), &offMat);
+    offMat.m[13] = -3.f;
+    auto component = Physics3DComponent::create(rigidBody, offMat);
+    sprite->addComponent(component);
+    addChild(sprite);
+    sprite->setCameraMask((unsigned short)CameraFlag::USER1);
+    
+    physicsScene->setPhysics3DDebugCamera(_camera);
+    
+    //create constraint
+    auto constraint = Physics3DPointToPointConstraint::create(rigidBody, Vec3(5.f, 5.f, 5.f));
+    physicsScene->getPhysics3DWorld()->addPhysics3DConstraint(constraint);
+    
     return true;
 }
 

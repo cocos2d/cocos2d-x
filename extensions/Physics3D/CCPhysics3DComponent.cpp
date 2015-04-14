@@ -150,6 +150,19 @@ void Physics3DComponent::preSimulate()
             if (body->isKinematicObject())
             {
                 auto mat = _owner->getNodeToWorldTransform() * _invTransformInPhysics;
+                //remove scale
+                float oneOverLen = sqrtf(mat.m[0] * mat.m[0] + mat.m[1] * mat.m[1] + mat.m[2] * mat.m[2]);
+                mat.m[0] /= oneOverLen;
+                mat.m[1] /= oneOverLen;
+                mat.m[2] /= oneOverLen;
+                oneOverLen = sqrtf(mat.m[4] * mat.m[4] + mat.m[5] * mat.m[5] + mat.m[6] * mat.m[6]);
+                mat.m[4] /= oneOverLen;
+                mat.m[5] /= oneOverLen;
+                mat.m[6] /= oneOverLen;
+                oneOverLen = sqrtf(mat.m[8] * mat.m[8] + mat.m[9] * mat.m[9] + mat.m[10] * mat.m[10]);
+                mat.m[8] /= oneOverLen;
+                mat.m[9] /= oneOverLen;
+                mat.m[10] /= oneOverLen;
                 body->getMotionState()->setWorldTransform(convertMat4TobtTransform(mat));
             }
         }
@@ -171,10 +184,8 @@ void Physics3DComponent::postSimulate()
             static Quaternion quat;
             mat.decompose(&scale, &quat, &translation);
             _owner->setPosition3D(translation);
+            quat.normalize();
             _owner->setRotationQuat(quat);
-            _owner->setScaleX(scale.x);
-            _owner->setScaleY(scale.y);
-            _owner->setScaleZ(scale.z);
         }
     }
 }
