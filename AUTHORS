@@ -1093,6 +1093,9 @@ Developers:
         
     Almax27
         RenderQueue command buffer optimize.
+        
+    IgorMats
+        Added MotionStreak::getStroke/setStroke
 
 Retired Core Developers:
     WenSheng Yang
