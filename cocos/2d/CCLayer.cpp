@@ -3,7 +3,7 @@ Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
 Copyright (c) 2013-2014 Chukong Technologies Inc.
- 
+
 http://www.cocos2d-x.org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -340,7 +340,7 @@ void Layer::onTouchMoved(Touch *touch, Event *event)
         return;
     }
 #endif
-    
+
     CC_UNUSED_PARAM(event);
 }
 
@@ -353,7 +353,7 @@ void Layer::onTouchEnded(Touch *touch, Event *event)
         return;
     }
 #endif
-    
+
     CC_UNUSED_PARAM(event);
 }
 
@@ -366,9 +366,9 @@ void Layer::onTouchCancelled(Touch *touch, Event *event)
         return;
     }
 #endif
-    
+
     CC_UNUSED_PARAM(event);
-}    
+}
 
 void Layer::onTouchesBegan(const std::vector<Touch*>& touches, Event *event)
 {
@@ -391,7 +391,7 @@ void Layer::onTouchesMoved(const std::vector<Touch*>& touches, Event *event)
         return;
     }
 #endif
-    
+
     CC_UNUSED_PARAM(event);
 }
 
@@ -424,6 +424,11 @@ std::string Layer::getDescription() const
     return StringUtils::format("<Layer | Tag = %d>", _tag);
 }
 
+Layer* Layer::getLayer()
+{
+    return this;
+}
+
 __LayerRGBA::__LayerRGBA()
 {
     CCLOG("LayerRGBA deprecated.");
@@ -442,7 +447,7 @@ LayerColor::LayerColor()
     // default blend function
     _blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
 }
-    
+
 LayerColor::~LayerColor()
 {
 }
@@ -579,7 +584,7 @@ void LayerColor::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     _customCommand.init(_globalZOrder, transform, flags);
     _customCommand.func = CC_CALLBACK_0(LayerColor::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
-    
+
     for(int i = 0; i < 4; ++i)
     {
         Vec4 pos;
@@ -594,9 +599,9 @@ void LayerColor::onDraw(const Mat4& transform, uint32_t flags)
 {
     getGLProgram()->use();
     getGLProgram()->setUniformsForBuiltins(transform);
-    
+
     GL::enableVertexAttribs( GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR );
-    
+
     //
     // Attributes
     //
@@ -611,7 +616,7 @@ void LayerColor::onDraw(const Mat4& transform, uint32_t flags)
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, 0, _noMVPVertices);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
 #endif // EMSCRIPTEN
-    
+
     GL::blendFunc( _blendFunc.src, _blendFunc.dst );
 
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -635,7 +640,7 @@ LayerGradient::LayerGradient()
 , _alongVector(Vec2(0, -1))
 , _compressedInterpolation(true)
 {
-    
+
 }
 
 LayerGradient::~LayerGradient()
