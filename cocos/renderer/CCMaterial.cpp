@@ -29,7 +29,10 @@
 
 #include "renderer/CCMaterial.h"
 #include "renderer/CCTechnique.h"
+#include "renderer/CCPass.h"
 #include "renderer/CCGLProgramState.h"
+#include "renderer/CCTextureCache.h"
+
 #include "platform/CCFileUtils.h"
 
 #include "json/document.h"
@@ -64,11 +67,14 @@ Material::Material(cocos2d::GLProgramState *state)
 }
 
 Material::Material(const std::string& validfilename)
+: _currentTechnique(nullptr)
+, _techniques()
 {
+    Data data = FileUtils::getInstance()->getDataFromFile(validfilename);
+    char* bytes = (char*)data.getBytes();
+
     rapidjson::Document document;
-
-
-    document.Parse<rapidjson::kParseInsituFlag>(validfilename.c_str());
+    document.ParseInsitu<0>(bytes);
 
     if (document.HasParseError())
     {
@@ -105,11 +111,78 @@ bool Material::parseMetadata(const rapidjson::Document& jsonDocument)
 
 bool Material::parseProperties(const rapidjson::Document& jsonDocument)
 {
-    auto texture = jsonDocument["texture_0"].GetString();
-    auto vertexShader = jsonDocument["vertex_shader"].GetString();
-    auto fragShader = jsonDocument["fragment_shader"].GetString();
+    auto name = jsonDocument["name"].GetString();
+    setName(name);
+
+    auto& techniques = jsonDocument["techniques"];
+    return parseTechniques(techniques);
+}
+
+bool Material::parseTechniques(const rapidjson::GenericValue<rapidjson::UTF8<> >& techniques)
+{
+
+    CCASSERT(techniques.IsArray(), "Invalid Techniques");
+
+    for (rapidjson::SizeType i = 0; i < techniques.Size(); i++) {
+        auto& technique = techniques[i];
+        parseTechnique(technique);
+    }
+    return true;
+}
+
+bool Material::parseTechnique(const rapidjson::GenericValue<rapidjson::UTF8<> >& techniqueJSON)
+{
+    CCASSERT(techniqueJSON.IsObject(), "Invalid type for Technique. It must be an object");
+
+    auto technique = Technique::create();
+    _techniques.pushBack(technique);
+
+    // first one is the default one
+    if (!_currentTechnique)
+        _currentTechnique = technique;
+
+    // name
+    if (techniqueJSON.HasMember("name"))
+        setName(techniqueJSON["name"].GetString());
+
+    // passes
+    auto& passes = techniqueJSON["passes"];
+    parsePasses(technique, passes);
+
+    return true;
+}
+
+bool Material::parsePasses(Technique* technique, const rapidjson::GenericValue<rapidjson::UTF8<> >& passesJSON)
+{
+    CCASSERT(passesJSON.IsArray(), "Invalid type for 'passes'");
+
+    for (rapidjson::SizeType i = 0; i < passesJSON.Size(); i++) {
+        auto& pass = passesJSON[i];
+        parsePass(technique, pass);
+    }
+
+    return true;
+}
+
+bool Material::parsePass(Technique* technique, const rapidjson::GenericValue<rapidjson::UTF8<> >& passJSON)
+{
+    auto pass = Pass::create();
+    technique->addPass(pass);
 
     
+
+    return true;
+}
+
+
+bool Material::parseRenderState(Pass* pass, const rapidjson::GenericValue<rapidjson::UTF8<> >& renderState)
+{
+    return true;
+}
+
+void Material::setName(const std::string&name)
+{
+    _name = name;
 }
 
 std::string Material::getName() const

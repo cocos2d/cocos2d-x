@@ -46,6 +46,8 @@ public:
      */
     static Pass* createWithGLProgramState(GLProgramState* programState);
 
+    static Pass* create();
+
     /** Returns the GLProgramState */
     GLProgramState* getGLProgramState() const;
 
@@ -66,7 +68,7 @@ protected:
     Pass(GLProgramState *glProgramState);
     ~Pass();
 
-    GLProgramState *_glProgramState;
+    GLProgramState* _glProgramState;
 };
 
 NS_CC_END

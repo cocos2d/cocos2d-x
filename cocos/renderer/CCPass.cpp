@@ -40,6 +40,11 @@
 NS_CC_BEGIN
 
 
+Pass* Pass::create()
+{
+    return new (std::nothrow) Pass();
+}
+
 Pass* Pass::createWithGLProgramState(GLProgramState* programState)
 {
     auto pass = new (std::nothrow) Pass(programState);
@@ -47,8 +52,8 @@ Pass* Pass::createWithGLProgramState(GLProgramState* programState)
 }
 
 Pass::Pass(GLProgramState *glProgramState)
+: _glProgramState(glProgramState)
 {
-    _glProgramState = glProgramState;
     CC_SAFE_RETAIN(_glProgramState);
 }
 

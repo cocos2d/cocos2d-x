@@ -31,8 +31,8 @@
 #define __cocos2d_libs__CCTechnique__
 
 #include <string>
+#include "base/CCRef.h"
 #include "platform/CCPlatformMacros.h"
-#include "renderer/CCRenderState.h"
 #include "base/CCVector.h"
 
 NS_CC_BEGIN
@@ -41,7 +41,7 @@ class Pass;
 class GLProgramState;
 
 /// Technique
-class CC_DLL Technique : public RenderState
+class CC_DLL Technique : public Ref
 {
     friend class Renderer;
 
@@ -50,6 +50,7 @@ public:
      Method added to support legacy code
      */
     static Technique* createWithGLProgramState(GLProgramState* state);
+    static Technique* create();
 
     /** Adds a new pass to the Technique.
      Order matters. First added, first rendered

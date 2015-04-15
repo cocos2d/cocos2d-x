@@ -34,17 +34,18 @@
 
 #include "json/document.h"
 
+#include "base/CCRef.h"
 #include "base/CCVector.h"
 #include "platform/CCPlatformMacros.h"
-#include "renderer/CCRenderState.h"
 
 NS_CC_BEGIN
 
 class Technique;
+class Pass;
 class GLProgramState;
 
 /// Material
-class CC_DLL Material : public RenderState
+class CC_DLL Material : public Ref
 {
 public:
     /** Creates a Material with a JSON file containing the definition of the material.
@@ -59,6 +60,8 @@ public:
 
     /// returns the material name
     std::string getName() const;
+    /// sets the material name
+    void setName(const std::string& name);
 
     /** Returns a Technique by its name.
      returns `nullptr` if the Technique can't be found.
@@ -90,6 +93,12 @@ protected:
 
     bool parseMetadata(const rapidjson::Document& json);
     bool parseProperties(const rapidjson::Document& json);
+    bool parseTechniques(const rapidjson::GenericValue<rapidjson::UTF8<> >& techniques);
+    bool parseTechnique(const rapidjson::GenericValue<rapidjson::UTF8<> >& technique);
+    bool parsePasses(Technique* technique, const rapidjson::GenericValue<rapidjson::UTF8<> >& passes);
+    bool parsePass(Technique* technique, const rapidjson::GenericValue<rapidjson::UTF8<> >& pass);
+    bool parseRenderState(Pass* pass, const rapidjson::GenericValue<rapidjson::UTF8<> >& renderState);
+
 
     // material name
     std::string _name;

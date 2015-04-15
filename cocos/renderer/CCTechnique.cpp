@@ -42,7 +42,14 @@ Technique* Technique::createWithGLProgramState(GLProgramState* state)
     return technique;
 }
 
+Technique* Technique::create()
+{
+    return new (std::nothrow) Technique();
+}
+
 Technique::Technique()
+: _name("")
+, _passes()
 {
 }
 

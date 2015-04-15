@@ -1,3 +1,62 @@
 {
-    "name": "simple"
+	"metadata" : {
+		"version" : 1,
+		"type" : "material"
+	},
+
+	// material name.
+    "name" : "example",
+
+    "techniques" : [
+         // The first technique is going to be the default one
+         // unless changed programatically with material->setTechnique(name);
+         {
+             "name": "multitexture",
+             "passes": [
+                  // first pass
+                  {
+                  		// defines for shaders. Will be put on top of the shaders before compiling them
+                  		"defines": ["// Add here things that you want to be compiled on the shaders", 
+                  					"// this is the 2nd line",
+                  					"#define USE_MULTITEXTURE 1"
+                  					],
+
+                  		// shaders
+						"vertexShader": "shaders/examples_multitexture.vert",
+						"fragmentShader": "shaders/examples_multitexture.frag",
+
+                  		// valid parameters: DISABLE, ALPHA_PREMULTIPLED, ALPHA_NON_PREMULTIPLIED, ADDITIVE 
+						"blend":  "ALPHA_PREMULTIPLED",
+
+						// cocos2d-x doesn't have samplers yet, so let's keep using textures.
+						"textures": [
+							{
+								// texture 0
+								"path": "Images/grossini.png",
+								"wrapS": "REPEAT",
+                				"wrapT": "REPEAT",
+                				"minFilter": "LINEAR_MIPMAP_LINEAR",
+                				"magFilter": "LINEAR",
+                				"mipmap": "false",
+							},
+							{
+								// texture 1
+								"path": "Images/grossinis_sister1.png",
+							},
+							{
+								// texture 2								
+								"path": "Images/grossinis_sister2.png",
+							}
+						]
+                  },
+
+                  // Add more passes here
+             ]
+
+             // Add more techniques here
+         },
+
+         // second technique
+         {}
+     ]
 }
