@@ -34,6 +34,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CopyTemplateFiles", "..\coc
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcocos2d_wp8", "..\cocos\2d\libcocos2d_wp8.vcxproj", "{7C5DBC42-27F6-4978-AABC-02BA77E2A7F0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js-tests-wp8-xaml", "js-tests-wp8-xaml", "{6AC4C94D-3529-48CC-8B3D-F8E904BA2C95}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libjscocos2d", "..\cocos\scripting\js-bindings\proj.wp8\libjscocos2d.vcxproj", "{DD11890A-006E-4D4B-BBE6-A577601288A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -234,6 +238,26 @@ Global
 		{7C5DBC42-27F6-4978-AABC-02BA77E2A7F0}.Release|x64.ActiveCfg = Release|Win32
 		{7C5DBC42-27F6-4978-AABC-02BA77E2A7F0}.Release|x86.ActiveCfg = Release|Win32
 		{7C5DBC42-27F6-4978-AABC-02BA77E2A7F0}.Release|x86.Build.0 = Release|Win32
+		{DD11890A-006E-4D4B-BBE6-A577601288A2}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{DD11890A-006E-4D4B-BBE6-A577601288A2}.Debug|ARM.ActiveCfg = Debug|ARM
+		{DD11890A-006E-4D4B-BBE6-A577601288A2}.Debug|ARM.Build.0 = Debug|ARM
+		{DD11890A-006E-4D4B-BBE6-A577601288A2}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{DD11890A-006E-4D4B-BBE6-A577601288A2}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{DD11890A-006E-4D4B-BBE6-A577601288A2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DD11890A-006E-4D4B-BBE6-A577601288A2}.Debug|Win32.Build.0 = Debug|Win32
+		{DD11890A-006E-4D4B-BBE6-A577601288A2}.Debug|x64.ActiveCfg = Debug|Win32
+		{DD11890A-006E-4D4B-BBE6-A577601288A2}.Debug|x86.ActiveCfg = Debug|Win32
+		{DD11890A-006E-4D4B-BBE6-A577601288A2}.Debug|x86.Build.0 = Debug|Win32
+		{DD11890A-006E-4D4B-BBE6-A577601288A2}.Release|Any CPU.ActiveCfg = Release|Win32
+		{DD11890A-006E-4D4B-BBE6-A577601288A2}.Release|ARM.ActiveCfg = Release|ARM
+		{DD11890A-006E-4D4B-BBE6-A577601288A2}.Release|ARM.Build.0 = Release|ARM
+		{DD11890A-006E-4D4B-BBE6-A577601288A2}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{DD11890A-006E-4D4B-BBE6-A577601288A2}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{DD11890A-006E-4D4B-BBE6-A577601288A2}.Release|Win32.ActiveCfg = Release|Win32
+		{DD11890A-006E-4D4B-BBE6-A577601288A2}.Release|Win32.Build.0 = Release|Win32
+		{DD11890A-006E-4D4B-BBE6-A577601288A2}.Release|x64.ActiveCfg = Release|Win32
+		{DD11890A-006E-4D4B-BBE6-A577601288A2}.Release|x86.ActiveCfg = Release|Win32
+		{DD11890A-006E-4D4B-BBE6-A577601288A2}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
