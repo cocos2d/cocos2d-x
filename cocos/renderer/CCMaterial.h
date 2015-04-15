@@ -93,10 +93,10 @@ protected:
 
     bool parseMetadata(const rapidjson::Document& json);
     bool parseProperties(const rapidjson::Document& json);
-    bool parseTechniques(const rapidjson::GenericValue<rapidjson::UTF8<> >& techniques);
-    bool parseTechnique(const rapidjson::GenericValue<rapidjson::UTF8<> >& technique);
-    bool parsePasses(Technique* technique, const rapidjson::GenericValue<rapidjson::UTF8<> >& passes);
-    bool parsePass(Technique* technique, const rapidjson::GenericValue<rapidjson::UTF8<> >& pass);
+    bool parseTechnique(const rapidjson::GenericValue<rapidjson::UTF8<> >& techniqueJSON);
+    bool parsePass(Technique* technique, const rapidjson::GenericValue<rapidjson::UTF8<> >& passJSON);
+    bool parseTexture(Pass* pass, const rapidjson::GenericValue<rapidjson::UTF8<> >& textureJSON);
+
     bool parseRenderState(Pass* pass, const rapidjson::GenericValue<rapidjson::UTF8<> >& renderState);
 
 

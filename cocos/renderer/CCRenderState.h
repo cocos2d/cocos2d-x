@@ -37,6 +37,7 @@
 #include "platform/CCPlatformMacros.h"
 #include "base/CCRef.h"
 #include "base/ccTypes.h"
+#include "base/CCVector.h"
 
 NS_CC_BEGIN
 
@@ -44,6 +45,10 @@ class Texture2D;
 
 class CC_DLL RenderState : public Ref
 {
+    friend class Material;
+    friend class Technique;
+    friend class Pass;
+
 public:
     static RenderState* create(RenderState* parent);
 
@@ -69,6 +74,7 @@ protected:
 
     BlendFunc _blendFunc;
     Texture2D* _textureID;
+    Vector<Texture2D*> _textures;
 };
 
 NS_CC_END

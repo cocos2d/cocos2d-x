@@ -32,7 +32,7 @@
 #include "renderer/CCPass.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCTextureCache.h"
-
+#include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
 
 #include "json/document.h"
@@ -114,19 +114,14 @@ bool Material::parseProperties(const rapidjson::Document& jsonDocument)
     auto name = jsonDocument["name"].GetString();
     setName(name);
 
-    auto& techniques = jsonDocument["techniques"];
-    return parseTechniques(techniques);
-}
+    auto& techniquesJSON = jsonDocument["techniques"];
+    CCASSERT(techniquesJSON.IsArray(), "Invalid Techniques");
 
-bool Material::parseTechniques(const rapidjson::GenericValue<rapidjson::UTF8<> >& techniques)
-{
-
-    CCASSERT(techniques.IsArray(), "Invalid Techniques");
-
-    for (rapidjson::SizeType i = 0; i < techniques.Size(); i++) {
-        auto& technique = techniques[i];
-        parseTechnique(technique);
+    for (rapidjson::SizeType i = 0; i < techniquesJSON.Size(); i++) {
+        auto& techniqueJSON = techniquesJSON[i];
+        parseTechnique(techniqueJSON);
     }
+
     return true;
 }
 
@@ -146,19 +141,12 @@ bool Material::parseTechnique(const rapidjson::GenericValue<rapidjson::UTF8<> >&
         setName(techniqueJSON["name"].GetString());
 
     // passes
-    auto& passes = techniqueJSON["passes"];
-    parsePasses(technique, passes);
-
-    return true;
-}
-
-bool Material::parsePasses(Technique* technique, const rapidjson::GenericValue<rapidjson::UTF8<> >& passesJSON)
-{
+    auto& passesJSON = techniqueJSON["passes"];
     CCASSERT(passesJSON.IsArray(), "Invalid type for 'passes'");
 
     for (rapidjson::SizeType i = 0; i < passesJSON.Size(); i++) {
-        auto& pass = passesJSON[i];
-        parsePass(technique, pass);
+        auto& passJSON = passesJSON[i];
+        parsePass(technique, passJSON);
     }
 
     return true;
@@ -169,8 +157,67 @@ bool Material::parsePass(Technique* technique, const rapidjson::GenericValue<rap
     auto pass = Pass::create();
     technique->addPass(pass);
 
-    
+    // Textures
+    if (passJSON.HasMember("textures")) {
+        auto& texturesJSON = passJSON["textures"];
+        CCASSERT(texturesJSON.IsArray(), "Invalid type for 'textures'");
 
+        for (rapidjson::SizeType i = 0; i < texturesJSON.Size(); i++) {
+            auto& textureJSON = texturesJSON[i];
+            parseTexture(pass, textureJSON);
+        }
+    }
+
+    return true;
+}
+
+static const char* getOptionalString(const rapidjson::GenericValue<rapidjson::UTF8<> >& json, const char* key, const char* defaultValue)
+{
+    if (json.HasMember(key)) {
+        return json[key].GetString();
+    }
+    return defaultValue;
+}
+
+bool Material::parseTexture(Pass* pass, const rapidjson::GenericValue<rapidjson::UTF8<> >& textureJSON)
+{
+    CCASSERT(textureJSON.IsObject(), "Invalid type for Texture. It must be an object");
+
+    // required
+    auto filename = textureJSON["path"].GetString();
+
+    auto texture = Director::getInstance()->getTextureCache()->addImage(filename);
+    if (!texture) {
+        CCLOG("Invalid filepath");
+        return false;
+    }
+
+    // optionals
+
+    {
+        // mipmap
+        bool usemipmap = false;
+        const char* mipmap = getOptionalString(textureJSON, "mipmap", "false");
+        if (mipmap && strcasecmp(mipmap, "true")) {
+            texture->generateMipmap();
+            usemipmap = true;
+        }
+
+        // valid options: REPEAT, CLAMP
+        const char* wrapS = getOptionalString(textureJSON, "wrapS", "CLAMP");
+
+        // valid options: REPEAT, CLAMP
+        const char* wrapT = getOptionalString(textureJSON, "wrapT", "CLAMP");
+
+        // valid options: NEAREST, LINEAR, NEAREST_MIPMAP_NEAREST, LINEAR_MIPMAP_NEAREST, NEAREST_MIPMAP_LINEAR, LINEAR_MIPMAP_LINEAR
+        const char* minFilter = getOptionalString(textureJSON, "minFilter", mipmap ? "LINEAR_MIPMAP_NEAREST" : "LINEAR");
+
+        // valid options: NEAREST, LINEAR
+        const char* maxFilter = getOptionalString(textureJSON, "magFilter", "LINEAR");
+    }
+
+
+    pass->_textures.pushBack(texture);
     return true;
 }
 
