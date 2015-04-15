@@ -20,7 +20,7 @@ public:
     virtual ~UIFocusTestBase();
 
     virtual bool init() override;
-    
+
     virtual void onLeftKeyPressed();
     virtual void onRightKeyPressed();
     virtual void onUpKeyPressed();
@@ -44,9 +44,9 @@ public:
     virtual ~UIFocusTestHorizontal();
 
     virtual bool init() override;
-    
+
     void toggleFocusLoop(cocos2d::Ref*,cocos2d::ui::Widget::TouchEventType);
-    
+
 protected:
     cocos2d::ui::Layout* _horizontalLayout;
     cocos2d::ui::Text* _loopText;
@@ -61,7 +61,7 @@ public:
     virtual ~UIFocusTestVertical();
 
     virtual bool init() override;
-    
+
     void toggleFocusLoop(cocos2d::Ref*,cocos2d::ui::Widget::TouchEventType);
 protected:
     cocos2d::ui::Layout* _verticalLayout;
@@ -77,7 +77,7 @@ public:
     virtual ~UIFocusTestNestedLayout1();
 
     virtual bool init() override;
-    
+
     void toggleFocusLoop(cocos2d::Ref*,cocos2d::ui::Widget::TouchEventType);
 protected:
     cocos2d::ui::Layout* _verticalLayout;
@@ -93,7 +93,7 @@ public:
     virtual ~UIFocusTestNestedLayout2();
 
     virtual bool init() override;
-    
+
     void toggleFocusLoop(cocos2d::Ref*,cocos2d::ui::Widget::TouchEventType);
 protected:
     cocos2d::ui::Layout* _horizontalLayout;
@@ -109,26 +109,10 @@ public:
     virtual ~UIFocusTestNestedLayout3();
 
     virtual bool init() override;
-    
+
     void toggleFocusLoop(cocos2d::Ref*,cocos2d::ui::Widget::TouchEventType);
 protected:
     cocos2d::ui::Layout* _verticalLayout;
-    cocos2d::ui::Text* _loopText;
-};
-
-class UIFocusTestListView : public UIFocusTestBase
-{
-public:
-    CREATE_FUNC(UIFocusTestListView);
-
-    UIFocusTestListView();
-    virtual ~UIFocusTestListView();
-
-    virtual bool init() override;
-    
-    void toggleFocusLoop(cocos2d::Ref*,cocos2d::ui::Widget::TouchEventType);
-protected:
-    cocos2d::ui::ListView* _listView;
     cocos2d::ui::Text* _loopText;
 };
 

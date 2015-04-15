@@ -60,6 +60,20 @@ struct spTrackEntry {
 	float mixTime, mixDuration, mix;
 
 	void* rendererObject;
+
+#ifdef __cplusplus
+	spTrackEntry() :
+		state(0),
+		next(0),
+		previous(0),
+		animation(0),
+		loop(0),
+		delay(0), time(0), lastTime(0), endTime(0), timeScale(0),
+		listener(0),
+		mixTime(0), mixDuration(0), mix(0),
+		rendererObject(0) {
+	}
+#endif
 };
 
 struct spAnimationState {
@@ -71,6 +85,17 @@ struct spAnimationState {
 	spTrackEntry** tracks;
 
 	void* rendererObject;
+
+#ifdef __cplusplus
+	spAnimationState() :
+		data(0),
+		timeScale(0),
+		listener(0),
+		tracksCount(0),
+		tracks(0),
+		rendererObject(0) {
+	}
+#endif
 };
 
 /* @param data May be 0 for no mixing. */

@@ -42,7 +42,7 @@
 extern "C" {
 #endif
 
-typedef struct {
+typedef struct spSkeletonData {
 	const char* version;
 	const char* hash;
 	float width, height;

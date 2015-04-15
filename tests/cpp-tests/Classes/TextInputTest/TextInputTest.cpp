@@ -107,10 +107,10 @@ void KeyboardNotificationLayer::onTouchEnded(Touch  *touch, Event  *event)
 
     // decide the trackNode is clicked.
     Rect rect;
-    auto point = convertTouchToNodeSpaceAR(touch);
+    auto point = _trackNode->convertTouchToNodeSpace(touch);
     CCLOG("KeyboardNotificationLayer:clickedAt(%f,%f)", point.x, point.y);
 
-    rect = getRect(_trackNode);
+    rect.size = _trackNode->getContentSize();
     CCLOG("KeyboardNotificationLayer:TrackNode at(origin:%f,%f, size:%f,%f)",
         rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
 
