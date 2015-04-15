@@ -424,6 +424,11 @@ std::string Layer::getDescription() const
     return StringUtils::format("<Layer | Tag = %d>", _tag);
 }
 
+Layer* Layer::getLayer()
+{
+    return this;
+}
+
 __LayerRGBA::__LayerRGBA()
 {
     CCLOG("LayerRGBA deprecated.");
