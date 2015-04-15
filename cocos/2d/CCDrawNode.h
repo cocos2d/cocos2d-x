@@ -67,6 +67,8 @@ public:
 
     void drawLine(const Vec2 &origin, const Vec2 &destination, const Color4F &color);
     
+    void drawRect(const Rect &rect, const Color4F &color);
+    
     void drawRect(const Vec2 &origin, const Vec2 &destination, const Color4F &color);
     
     void drawPoly(const Vec2 *poli, unsigned int numberOfPoints, bool closePolygon, const Color4F &color);
