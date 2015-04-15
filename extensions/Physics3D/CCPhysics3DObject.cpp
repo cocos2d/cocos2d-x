@@ -276,6 +276,26 @@ float Physics3DRigidBody::getHitFraction() const
     return _btRigidBody->getHitFraction();
 }
 
+void Physics3DRigidBody::setCcdMotionThreshold( float ccdMotionThreshold )
+{
+    _btRigidBody->setCcdMotionThreshold(ccdMotionThreshold);
+}
+
+float Physics3DRigidBody::getCcdMotionThreshold() const
+{
+    return _btRigidBody->getCcdMotionThreshold();
+}
+
+void Physics3DRigidBody::setCcdSweptSphereRadius( float radius )
+{
+    _btRigidBody->setCcdSweptSphereRadius(radius);
+}
+
+float Physics3DRigidBody::getCcdSweptSphereRadius() const
+{
+    return _btRigidBody->getCcdSweptSphereRadius();
+}
+
 void Physics3DRigidBody::addConstraint( Physics3DConstraint *constraint )
 {
     auto iter = std::find(_constraintList.begin(), _constraintList.end(), constraint);

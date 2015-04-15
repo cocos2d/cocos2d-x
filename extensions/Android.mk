@@ -179,10 +179,19 @@ Particle3D/PU/CCPUBehaviourManager.cpp \
 Particle3D/PU/CCPUBehaviourTranslator.cpp \
 Particle3D/PU/CCPUSlaveBehaviour.cpp \
 Particle3D/PU/CCPUSlaveBehaviourTranslator.cpp \
+Physics3D/CCPhysics3D.cpp \
+Physics3D/CCPhysics3DWorld.cpp \
+Physics3D/CCPhysics3DComponent.cpp \
+Physics3D/CCPhysics3DDebugDrawer.cpp \
+Physics3D/CCPhysics3DObject.cpp \
+Physics3D/CCPhysics3DShape.cpp \
+Physics3D/CCPhysicsSprite3D.cpp \
+Physics3D/CCPhysics3DConstraint.cpp
 
 LOCAL_STATIC_LIBRARIES := cocos2dx_internal_static
 LOCAL_STATIC_LIBRARIES += cocos_curl_static
 LOCAL_STATIC_LIBRARIES += box2d_static
+LOCAL_STATIC_LIBRARIES += bullet_static
 
 LOCAL_CXXFLAGS += -fexceptions
 

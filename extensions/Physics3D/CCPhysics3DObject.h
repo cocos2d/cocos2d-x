@@ -144,6 +144,10 @@ public:
     float getRollingFriction() const;
     void setHitFraction(float hitFraction);
     float getHitFraction() const;
+    void setCcdMotionThreshold(float ccdMotionThreshold);
+    float getCcdMotionThreshold() const;
+    void setCcdSweptSphereRadius(float radius);
+    float getCcdSweptSphereRadius() const;
     
     void setKinematic(bool kinematic);
     
