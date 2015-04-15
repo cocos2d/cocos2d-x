@@ -317,6 +317,7 @@ void PUObserver::copyAttributesTo( PUObserver* observer )
 {
     // Copy attributes
     observer->setName(_name);
+    observer->setObserverType(_observerType);
     observer->_particleTypeToObserve = _particleTypeToObserve;
     observer->_particleTypeToObserveSet = _particleTypeToObserveSet;
     observer->_particleSystem = _particleSystem;
