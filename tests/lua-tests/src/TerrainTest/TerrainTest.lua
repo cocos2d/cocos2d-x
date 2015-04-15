@@ -5,7 +5,7 @@ require "cocos.3d.3dConstants"
 ----------------------------------------
 local TerrainSimple = class("TerrainSimple", function ()
     local layer = cc.Layer:create()
-    Helper.initWithLayer(layer)
+
     return layer
 end)
 
@@ -15,8 +15,7 @@ function TerrainSimple:ctor()
 end
 
 function TerrainSimple:init()
-    Helper.titleLabel:setString(self:title())
-    Helper.subtitleLabel:setString(self:subtitle())
+
 
     local visibleSize = cc.Director:getInstance():getVisibleSize()
 
@@ -25,6 +24,10 @@ function TerrainSimple:init()
     self._camera:setCameraFlag(cc.CameraFlag.USER1)
     self._camera:setPosition3D(cc.vec3(-1, 1.6, 4))
     self:addChild(self._camera)
+
+    Helper.initWithLayer(self)
+    Helper.titleLabel:setString(self:title())
+    Helper.subtitleLabel:setString(self:subtitle())
 
     local detailMapR = { _detailMapSrc = "TerrainTest/dirt.jpg", _detailMapSize = 35}
     local detailMapG = { _detailMapSrc = "TerrainTest/Grass2.jpg", _detailMapSize = 35}

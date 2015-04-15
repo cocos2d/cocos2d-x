@@ -141,15 +141,15 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
         auto particle = static_cast<PUParticle3D *>(iter);
         determineUVCoords(particle);
         if (_type == ORIENTED_SELF){
-            Vec3 direction;
-            transform.transformVector(particle->direction, &direction);
+            Vec3 direction = particle->direction;
+            //transform.transformVector(particle->direction, &direction);
             up = direction;
             up.normalize();
             Vec3::cross(direction, backward, &right);
             right.normalize();
         }else if (_type == PERPENDICULAR_SELF){
-            Vec3 direction;
-            transform.transformVector(particle->direction, &direction);
+            Vec3 direction = particle->direction;
+            //transform.transformVector(particle->direction, &direction);
             direction.normalize();
             //up = PUUtil::perpendicular(direction);
             //up.normalize();

@@ -369,6 +369,7 @@ Developers:
     giginet
         Fix CCRepeat#create is recieved bad argument on Lua binding.
         Added a feature that CCSSceneReader can load name properties as node names.
+        Added Rect::intersectsCircle().
 
     neokim
         Adds 'setFont' and 'setAnchorPoint' to CCEditBox.
@@ -1093,6 +1094,9 @@ Developers:
         
     Almax27
         RenderQueue command buffer optimize.
+        
+    IgorMats
+        Added MotionStreak::getStroke/setStroke
 
 Retired Core Developers:
     WenSheng Yang

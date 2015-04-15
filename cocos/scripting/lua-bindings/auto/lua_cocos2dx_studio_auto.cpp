@@ -16099,6 +16099,103 @@ int lua_cocos2dx_studio_Frame_isEnterWhenPassed(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_studio_Frame_getEasingParams(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::Frame* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.Frame",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::timeline::Frame*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_Frame_getEasingParams'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_Frame_getEasingParams'", nullptr);
+            return 0;
+        }
+        const std::vector<float, std::allocator<float> >& ret = cobj->getEasingParams();
+        ccvector_float_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.Frame:getEasingParams",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_Frame_getEasingParams'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_Frame_setEasingParams(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::Frame* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.Frame",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::timeline::Frame*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_Frame_setEasingParams'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        std::vector<float, std::allocator<float> > arg0;
+
+        ok &= luaval_to_std_vector_float(tolua_S, 2, &arg0, "ccs.Frame:setEasingParams");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_Frame_setEasingParams'", nullptr);
+            return 0;
+        }
+        cobj->setEasingParams(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.Frame:setEasingParams",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_Frame_setEasingParams'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_studio_Frame_getFrameIndex(lua_State* tolua_S)
 {
     int argc = 0;
@@ -16453,6 +16550,8 @@ int lua_register_cocos2dx_studio_Frame(lua_State* tolua_S)
         tolua_function(tolua_S,"setNode",lua_cocos2dx_studio_Frame_setNode);
         tolua_function(tolua_S,"setTimeline",lua_cocos2dx_studio_Frame_setTimeline);
         tolua_function(tolua_S,"isEnterWhenPassed",lua_cocos2dx_studio_Frame_isEnterWhenPassed);
+        tolua_function(tolua_S,"getEasingParams",lua_cocos2dx_studio_Frame_getEasingParams);
+        tolua_function(tolua_S,"setEasingParams",lua_cocos2dx_studio_Frame_setEasingParams);
         tolua_function(tolua_S,"getFrameIndex",lua_cocos2dx_studio_Frame_getFrameIndex);
         tolua_function(tolua_S,"apply",lua_cocos2dx_studio_Frame_apply);
         tolua_function(tolua_S,"isTween",lua_cocos2dx_studio_Frame_isTween);
@@ -19745,6 +19844,197 @@ int lua_register_cocos2dx_studio_ZOrderFrame(lua_State* tolua_S)
     return 1;
 }
 
+int lua_cocos2dx_studio_BlendFuncFrame_getBlendFunc(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::BlendFuncFrame* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.BlendFuncFrame",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::timeline::BlendFuncFrame*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_BlendFuncFrame_getBlendFunc'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_BlendFuncFrame_getBlendFunc'", nullptr);
+            return 0;
+        }
+        cocos2d::BlendFunc ret = cobj->getBlendFunc();
+        blendfunc_to_luaval(tolua_S, ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.BlendFuncFrame:getBlendFunc",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_BlendFuncFrame_getBlendFunc'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_BlendFuncFrame_setBlendFunc(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::BlendFuncFrame* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccs.BlendFuncFrame",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocostudio::timeline::BlendFuncFrame*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_studio_BlendFuncFrame_setBlendFunc'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::BlendFunc arg0;
+
+        ok &= luaval_to_blendfunc(tolua_S, 2, &arg0, "ccs.BlendFuncFrame:setBlendFunc");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_BlendFuncFrame_setBlendFunc'", nullptr);
+            return 0;
+        }
+        cobj->setBlendFunc(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.BlendFuncFrame:setBlendFunc",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_BlendFuncFrame_setBlendFunc'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_studio_BlendFuncFrame_create(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"ccs.BlendFuncFrame",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_BlendFuncFrame_create'", nullptr);
+            return 0;
+        }
+        cocostudio::timeline::BlendFuncFrame* ret = cocostudio::timeline::BlendFuncFrame::create();
+        object_to_luaval<cocostudio::timeline::BlendFuncFrame>(tolua_S, "ccs.BlendFuncFrame",(cocostudio::timeline::BlendFuncFrame*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccs.BlendFuncFrame:create",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_BlendFuncFrame_create'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_studio_BlendFuncFrame_constructor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocostudio::timeline::BlendFuncFrame* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_studio_BlendFuncFrame_constructor'", nullptr);
+            return 0;
+        }
+        cobj = new cocostudio::timeline::BlendFuncFrame();
+        cobj->autorelease();
+        int ID =  (int)cobj->_ID ;
+        int* luaID =  &cobj->_luaID ;
+        toluafix_pushusertype_ccobject(tolua_S, ID, luaID, (void*)cobj,"ccs.BlendFuncFrame");
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "ccs.BlendFuncFrame:BlendFuncFrame",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_studio_BlendFuncFrame_constructor'.",&tolua_err);
+#endif
+
+    return 0;
+}
+
+static int lua_cocos2dx_studio_BlendFuncFrame_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (BlendFuncFrame)");
+    return 0;
+}
+
+int lua_register_cocos2dx_studio_BlendFuncFrame(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"ccs.BlendFuncFrame");
+    tolua_cclass(tolua_S,"BlendFuncFrame","ccs.BlendFuncFrame","ccs.Frame",nullptr);
+
+    tolua_beginmodule(tolua_S,"BlendFuncFrame");
+        tolua_function(tolua_S,"new",lua_cocos2dx_studio_BlendFuncFrame_constructor);
+        tolua_function(tolua_S,"getBlendFunc",lua_cocos2dx_studio_BlendFuncFrame_getBlendFunc);
+        tolua_function(tolua_S,"setBlendFunc",lua_cocos2dx_studio_BlendFuncFrame_setBlendFunc);
+        tolua_function(tolua_S,"create", lua_cocos2dx_studio_BlendFuncFrame_create);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocostudio::timeline::BlendFuncFrame).name();
+    g_luaType[typeName] = "ccs.BlendFuncFrame";
+    g_typeCast["BlendFuncFrame"] = "ccs.BlendFuncFrame";
+    return 1;
+}
+
 int lua_cocos2dx_studio_Timeline_clone(lua_State* tolua_S)
 {
     int argc = 0;
@@ -22394,6 +22684,7 @@ TOLUA_API int register_all_cocos2dx_studio(lua_State* tolua_S)
 	lua_register_cocos2dx_studio_ActionFrame(tolua_S);
 	lua_register_cocos2dx_studio_ActionRotationFrame(tolua_S);
 	lua_register_cocos2dx_studio_Frame(tolua_S);
+	lua_register_cocos2dx_studio_BlendFuncFrame(tolua_S);
 	lua_register_cocos2dx_studio_ScaleFrame(tolua_S);
 	lua_register_cocos2dx_studio_Tween(tolua_S);
 	lua_register_cocos2dx_studio_ContourData(tolua_S);

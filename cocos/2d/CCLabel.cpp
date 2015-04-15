@@ -871,7 +871,7 @@ void Label::setFontScale(float fontScale)
 void Label::onDraw(const Mat4& transform, bool transformUpdated)
 {
     // Optimization: Fast Dispatch
-    if( _batchNodes.size() == 1 && _textureAtlas->getTotalQuads() == 0 )
+    if( _textureAtlas == NULL || (_batchNodes.size() == 1 && _textureAtlas->getTotalQuads() == 0) )
     {
         return;
     }
@@ -1059,6 +1059,7 @@ void Label::createShadowSpriteForSystemFont()
         {
             _shadowNode->setBlendFunc(_blendFunc);
         }
+        _shadowNode->setCameraMask(getCameraMask());
         _shadowNode->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
         _shadowNode->setPosition(_shadowOffset.width, _shadowOffset.height);
         Node::addChild(_shadowNode, 0, Node::INVALID_TAG);
@@ -1179,7 +1180,7 @@ void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t pare
         _shadowDirty = false;
     }
 
-    if (!isVisitableByVisitingCamera())
+    if (!_textSprite && !isVisitableByVisitingCamera())
     {
         return;
     }
@@ -1187,27 +1188,23 @@ void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t pare
     // IMPORTANT:
     // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    _director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    _director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
     
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
-    
-
     if (_textSprite)
     {
         if (_shadowNode)
         {
-            _shadowNode->visit(renderer, _modelViewTransform, parentFlags);
+            _shadowNode->visit(renderer, _modelViewTransform, flags);
         }
-        _textSprite->visit(renderer, _modelViewTransform, parentFlags);
+        _textSprite->visit(renderer, _modelViewTransform, flags);
     }
     else
     {
         draw(renderer, _modelViewTransform, flags);
     }
 
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    _director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     
     // FIX ME: Why need to set _orderOfArrival to 0??
     // Please refer to https://github.com/cocos2d/cocos2d-x/pull/6920
