@@ -51,6 +51,7 @@ static std::function<Layer*()> createFunctions[] =
 {
     CL(BasicPhysics3DDemo),
     CL(Physics3DConstraintDemo),
+    CL(Physics3DTerrainDemo),
 };
 
 #define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
@@ -341,6 +342,66 @@ bool Physics3DConstraintDemo::init()
     physicsScene->getPhysics3DWorld()->addPhysics3DConstraint(constraint);
     
     return true;
+}
+
+bool Physics3DTerrainDemo::init()
+{
+    if (!Physics3DTestDemo::init())
+        return false;
+
+    unsigned int sz = sizeof(unsigned char);
+    _data = FileUtils::getInstance()->getDataFromFile("images/heightfield64x64.raw");
+
+    //create terrain
+    Physics3DRigidBodyDes rbDes;
+    rbDes.mass = 0.0f;
+    rbDes.shape = Physics3DShape::createHeightfield(64, 64, _data.getBytes(), 0.01f, -100.0f, 100.0f, false, false, true);
+    rbDes.originalTransform.translate(0.f, 0.f, 0.f);
+    auto rigidBody = Physics3DRigidBody::create(&rbDes);
+    auto component = Physics3DComponent::create(rigidBody);
+    auto node = Node::create();
+    node->addComponent(component);
+    this->addChild(node);
+
+
+    //create several boxes
+    rbDes.mass = 1.f;
+    rbDes.shape = Physics3DShape::createSphere(0.5f);
+    float start_x = START_POS_X - ARRAY_SIZE_X/2;
+    float start_y = START_POS_Y + 5.0f;
+    float start_z = START_POS_Z - ARRAY_SIZE_Z/2;
+
+    for (int k=0;k<ARRAY_SIZE_Y;k++)
+    {
+        for (int i=0;i<ARRAY_SIZE_X;i++)
+        {
+            for(int j = 0;j<ARRAY_SIZE_Z;j++)
+            {
+                float x = 1.0*i + start_x;
+                float y = 5.0+1.0*k + start_y;
+                float z = 1.0*j + start_z;
+                rbDes.originalTransform.setIdentity();
+                rbDes.originalTransform.translate(x, y, z);
+
+                rigidBody = Physics3DRigidBody::create(&rbDes);
+                component = Physics3DComponent::create(rigidBody);
+                auto sprite = Sprite3D::create("Sprite3DTest/sphere.c3b");
+                sprite->setTexture("Sprite3DTest/plane.png");
+                sprite->addComponent(component);
+                sprite->setCameraMask((unsigned short)CameraFlag::USER1);
+                sprite->setScale(1.0f / sprite->getContentSize().width);
+                this->addChild(sprite);
+            }
+        }
+    }
+
+    physicsScene->setPhysics3DDebugCamera(_camera);
+    return true;
+}
+
+std::string Physics3DTerrainDemo::subtitle() const 
+{
+    return "Physics3D Terrain";
 }
 
 #endif

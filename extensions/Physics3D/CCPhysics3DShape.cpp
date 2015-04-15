@@ -25,7 +25,7 @@
 #include "CCPhysics3D.h"
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
-
+#include "bullet/BulletCollision//CollisionShapes/btHeightfieldTerrainShape.h"
 
 NS_CC_EXT_BEGIN
 
@@ -96,6 +96,18 @@ Physics3DShape* Physics3DShape::createMesh( const cocos2d::Vec3 *triangles, int 
     return shape;
 }
 
+Physics3DShape* Physics3DShape::createHeightfield( int heightStickWidth,int heightStickLength
+                                                  , const void* heightfieldData, float heightScale
+                                                  , float minHeight, float maxHeight
+                                                  , bool useFloatDatam, bool flipQuadEdges
+                                                  , bool useDiamondSubdivision)
+{
+    auto shape = new (std::nothrow) Physics3DShape();
+    shape->initHeightfield(heightStickWidth, heightStickLength, heightfieldData, heightScale, minHeight, maxHeight, useFloatDatam, flipQuadEdges, useDiamondSubdivision);
+    shape->autorelease();
+    return shape;	
+}
+
 bool Physics3DShape::initBox(const cocos2d::Vec3& ext)
 {
     _shapeType = ShapeType::BOX;
@@ -136,6 +148,20 @@ bool Physics3DShape::initMesh( const cocos2d::Vec3 *triangles, int numTriangles 
         mesh->addTriangle(convertVec3TobtVector3(triangles[i]), convertVec3TobtVector3(triangles[i + 1]), convertVec3TobtVector3(triangles[i + 2]));
     }
     _btShape = new btBvhTriangleMeshShape(mesh, true);
+    return true;
+}
+
+bool Physics3DShape::initHeightfield( int heightStickWidth,int heightStickLength 
+                                     , const void* heightfieldData, float heightScale 
+                                     , float minHeight, float maxHeight 
+                                     , bool useFloatDatam, bool flipQuadEdges
+                                     , bool useDiamondSubdivision)
+{
+    _shapeType = ShapeType::HEIGHT_FIELD;
+    PHY_ScalarType type = useFloatDatam == true? PHY_FLOAT: PHY_UCHAR;
+    auto heightfield = new btHeightfieldTerrainShape(heightStickWidth, heightStickLength, heightfieldData, heightScale, minHeight, maxHeight, 1, type, flipQuadEdges);
+    heightfield->setUseDiamondSubdivision(useDiamondSubdivision);
+    _btShape = heightfield;
     return true;
 }
 

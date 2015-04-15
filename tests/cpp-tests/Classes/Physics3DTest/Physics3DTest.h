@@ -89,18 +89,22 @@ public:
     virtual bool init() override;
 };
 
-//class Physics3DTerrainDemo : public Physics3DTestDemo
-//{
-//public:
-//    
-//    CREATE_FUNC(Physics3DTerrainDemo);
-//    Physics3DTerrainDemo(){};
-//    virtual ~Physics3DTerrainDemo(){};
-//    
-//    virtual std::string subtitle() const override;
-//    
-//    virtual bool init() override;
-//};
+class Physics3DTerrainDemo : public Physics3DTestDemo
+{
+public:
+
+    CREATE_FUNC(Physics3DTerrainDemo);
+    Physics3DTerrainDemo(){};
+    virtual ~Physics3DTerrainDemo(){};
+
+    virtual std::string subtitle() const override;
+
+    virtual bool init() override;
+
+private:
+
+    cocos2d::Data _data;
+};
 
 class Physics3DTestScene : public TestScene
 {
