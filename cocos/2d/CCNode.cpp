@@ -865,7 +865,7 @@ Scene* Node::getScene() const
     return dynamic_cast<Scene*>(sceneNode);
 }
 
-Layer* Node::getLayer() const
+Layer* Node::getLayer()
 {
     if (!_parent)
         return nullptr;
