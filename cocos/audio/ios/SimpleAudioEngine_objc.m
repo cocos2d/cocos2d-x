@@ -41,6 +41,11 @@ static CDBufferManager *bufferManager = nil;
     return sharedEngine;
 }
 
++ (void) configure: (tAudioManagerMode) mode
+{
+    [CDAudioManager configure:mode];
+}
+
 + (id) alloc
 {
     @synchronized(self)     {
@@ -54,6 +59,7 @@ static CDBufferManager *bufferManager = nil;
 {
     if((self=[super init])) {
         am = [CDAudioManager sharedManager];
+        [am setResignBehavior:kAMRBDoNothing autoHandle:YES];
         soundEngine = am.soundEngine;
         bufferManager = [[CDBufferManager alloc] initWithEngine:soundEngine];
         mute_ = NO;

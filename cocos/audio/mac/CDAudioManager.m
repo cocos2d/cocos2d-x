@@ -351,6 +351,14 @@ static BOOL configured = FALSE;
             willPlayBackgroundMusic = YES;
             break;
             
+        case kAMM_MediaPlaybackAndMix:
+            //Use audio exclusively, ignore mute switch and sleep
+            CDLOGINFO(@"Denshion::CDAudioManager -  Media playback mode, audio will be exclusive");
+            //_audioSessionCategory = kAudioSessionCategory_MediaPlayback;
+            _audioSessionCategory = AVAudioSessionCategoryPlayback;
+            willPlayBackgroundMusic = YES;
+            break;
+            
         case kAMM_MediaPlayback:
             //Use audio exclusively, ignore mute switch and sleep
             CDLOGINFO(@"Denshion::CDAudioManager -  Media playback mode, audio will be exclusive");

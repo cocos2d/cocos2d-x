@@ -219,6 +219,10 @@ void SimpleAudioEngine::end()
     CC_SAFE_DELETE(s_engine);
 }
 
+void SimpleAudioEngine::configure(AudioManagerMode mode)
+{
+}
+
 //
 // background audio
 //

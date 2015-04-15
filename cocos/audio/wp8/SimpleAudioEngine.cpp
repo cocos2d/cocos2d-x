@@ -68,7 +68,9 @@ void SimpleAudioEngine::end()
     s_initialized = false;
 }
 
-
+void SimpleAudioEngine::configure(AudioManagerMode mode)
+{
+}
 
 //////////////////////////////////////////////////////////////////////////
 // BackgroundMusic

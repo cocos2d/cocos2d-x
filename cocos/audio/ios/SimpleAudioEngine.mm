@@ -32,6 +32,11 @@ static void static_end()
     [SimpleAudioEngine  end];
 }
 
+void static_configure(CocosDenshion::AudioManagerMode mode)
+{
+    [SimpleAudioEngine configure:static_cast<tAudioManagerMode>(mode)];
+}
+
 static void static_preloadBackgroundMusic(const char* pszFilePath)
 {
     [[SimpleAudioEngine sharedEngine] preloadBackgroundMusic: [NSString stringWithUTF8String: pszFilePath]];
@@ -172,6 +177,11 @@ void SimpleAudioEngine::end()
     }
     
     static_end();
+}
+    
+void SimpleAudioEngine::configure(AudioManagerMode mode)
+{
+    static_configure(mode);
 }
 
 void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
