@@ -100,6 +100,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\FileUtilsTest\FileUtilsTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\FontTest\FontTest.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ImagePickerTest\ImagePickerTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\InputTest\MouseTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\IntervalTest\IntervalTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\LabelTest\LabelTest.cpp" />
@@ -362,6 +363,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ExtensionsTest\TableViewTest\TableViewTestScene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\FileUtilsTest\FileUtilsTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\FontTest\FontTest.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ImagePickerTest\ImagePickerTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\InputTest\MouseTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\IntervalTest\IntervalTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\LabelTest\LabelTest.h" />

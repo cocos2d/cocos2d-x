@@ -179,6 +179,8 @@ Particle3D/PU/CCPUBehaviourManager.cpp \
 Particle3D/PU/CCPUBehaviourTranslator.cpp \
 Particle3D/PU/CCPUSlaveBehaviour.cpp \
 Particle3D/PU/CCPUSlaveBehaviourTranslator.cpp \
+ImagePicker/ImagePicker.cpp \
+ImagePicker/ImagePickerImpl.cpp
 
 LOCAL_STATIC_LIBRARIES := cocos2dx_internal_static
 LOCAL_STATIC_LIBRARIES += cocos_curl_static

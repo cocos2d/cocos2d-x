@@ -262,6 +262,9 @@
     <Filter Include="ui\shaders">
       <UniqueIdentifier>{e6eaa24a-a21e-4c1d-b6b2-19326d129af2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="extension\ImagePicker">
+      <UniqueIdentifier>{d16cbc82-97ea-4d0c-af7a-3a9e9701a953}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\physics\CCPhysicsBody.cpp">
@@ -1799,6 +1802,12 @@
     </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\CocoStudio.cpp">
       <Filter>cocostudio\json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\ImagePicker\ImagePickerImpl.cpp">
+      <Filter>extension\ImagePicker</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\extensions\ImagePicker\ImagePicker.cpp">
+      <Filter>extension\ImagePicker</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3520,6 +3529,12 @@
     </ClInclude>
     <ClInclude Include="..\editor-support\cocostudio\CCObjectExtensionData.h">
       <Filter>cocostudio\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\ImagePicker\ImagePickerImpl.h">
+      <Filter>extension\ImagePicker</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\extensions\ImagePicker\ImagePicker.h">
+      <Filter>extension\ImagePicker</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

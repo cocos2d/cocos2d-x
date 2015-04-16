@@ -355,6 +355,9 @@
     <Filter Include="Classes\TerrainTest">
       <UniqueIdentifier>{3f5069e6-78e5-4388-b614-04c0ea943b4c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ImagePickerTest">
+      <UniqueIdentifier>{8c803540-74f1-4fe0-b245-b496fcf4923b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -929,6 +932,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceParticle3DTest.cpp">
       <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ImagePickerTest\ImagePickerTest.cpp">
+      <Filter>Classes\ImagePickerTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1702,6 +1708,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceParticle3DTest.h">
       <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ImagePickerTest\ImagePickerTest.h">
+      <Filter>Classes\ImagePickerTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

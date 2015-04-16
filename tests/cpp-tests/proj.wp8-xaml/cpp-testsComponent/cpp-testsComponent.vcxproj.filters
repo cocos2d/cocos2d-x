@@ -352,6 +352,9 @@
     <Filter Include="Classes\TerrainTest">
       <UniqueIdentifier>{57e5558c-86f8-4b8d-a8a4-c78f30b28479}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ImagePickerTest">
+      <UniqueIdentifier>{d42c4838-93b2-498d-97fa-ff09bfdd3fda}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Classes\AppDelegate.cpp">
@@ -926,6 +929,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Classes\TerrainTest\TerrainTest.cpp">
       <Filter>Classes\TerrainTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Classes\ImagePickerTest\ImagePickerTest.cpp">
+      <Filter>Classes\ImagePickerTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1700,6 +1706,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Classes\TerrainTest\TerrainTest.h">
       <Filter>Classes\TerrainTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Classes\ImagePickerTest\ImagePickerTest.h">
+      <Filter>Classes\ImagePickerTest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

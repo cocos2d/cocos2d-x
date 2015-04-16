@@ -1743,6 +1743,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\3d\CCTerrain.h">
       <Filter>3d</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\ImagePicker\ImagePickerImpl.h">
+      <Filter>extension\ImagePicker</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\ImagePicker\ImagePicker.h">
+      <Filter>extension\ImagePicker</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos2d.cpp" />
@@ -3315,6 +3321,12 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\editor-support\cocostudio\CocoStudio.cpp">
       <Filter>cocostudio\json</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\ImagePicker\ImagePickerImpl.cpp">
+      <Filter>extension\ImagePicker</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\extensions\ImagePicker\ImagePicker.cpp">
+      <Filter>extension\ImagePicker</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="2d">
@@ -3565,6 +3577,9 @@
     </Filter>
     <Filter Include="extension\Particle3D\PU">
       <UniqueIdentifier>{ed044d4b-058f-4cee-911e-49fad0a03953}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="extension\ImagePicker">
+      <UniqueIdentifier>{3d7dba76-f183-495b-944f-0499a9b00d68}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

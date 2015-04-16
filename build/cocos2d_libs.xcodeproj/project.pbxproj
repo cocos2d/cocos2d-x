@@ -1792,6 +1792,16 @@
 		826294331AAF001C00CB7CF7 /* HttpAsynConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2A1A5349A3004E4C60 /* HttpAsynConnection.m */; };
 		826294341AAF003E00CB7CF7 /* HttpClient-apple.mm in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2B1A5349A3004E4C60 /* HttpClient-apple.mm */; };
 		826294351AAF004C00CB7CF7 /* HttpCookie.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2C1A5349A3004E4C60 /* HttpCookie.cpp */; };
+		920B30D91AD5762E009BEF8B /* ImagePicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 920B30D31AD5762E009BEF8B /* ImagePicker.cpp */; };
+		920B30DA1AD5762E009BEF8B /* ImagePicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 920B30D31AD5762E009BEF8B /* ImagePicker.cpp */; };
+		920B30DB1AD5762E009BEF8B /* ImagePicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 920B30D41AD5762E009BEF8B /* ImagePicker.h */; };
+		920B30DC1AD5762E009BEF8B /* ImagePicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 920B30D41AD5762E009BEF8B /* ImagePicker.h */; };
+		920B30DD1AD5762E009BEF8B /* ImagePickerImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 920B30D51AD5762E009BEF8B /* ImagePickerImpl.h */; };
+		920B30DE1AD5762E009BEF8B /* ImagePickerImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 920B30D51AD5762E009BEF8B /* ImagePickerImpl.h */; };
+		920B30DF1AD5762E009BEF8B /* ImagePickerImpl.mm in Sources */ = {isa = PBXBuildFile; fileRef = 920B30D61AD5762E009BEF8B /* ImagePickerImpl.mm */; };
+		920B30E01AD5762E009BEF8B /* ImagePickerImpl.mm in Sources */ = {isa = PBXBuildFile; fileRef = 920B30D61AD5762E009BEF8B /* ImagePickerImpl.mm */; };
+		920B30E51AD57633009BEF8B /* ImagePicker-ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 920B30D71AD5762E009BEF8B /* ImagePicker-ios.h */; };
+		920B30E61AD57633009BEF8B /* ImagePicker-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 920B30D81AD5762E009BEF8B /* ImagePicker-ios.mm */; };
 		A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
 		B2165EEA19921124000BE3E6 /* CCPrimitiveCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B257B45E198A353E00D9A687 /* CCPrimitiveCommand.cpp */; };
 		B217703C1977ECB4009EE11B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703B1977ECB4009EE11B /* IOKit.framework */; };
@@ -3586,6 +3596,12 @@
 		5E9F61231A3FFE3D0038DE01 /* CCFrustum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFrustum.h; sourceTree = "<group>"; };
 		5E9F61241A3FFE3D0038DE01 /* CCPlane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPlane.cpp; sourceTree = "<group>"; };
 		5E9F61251A3FFE3D0038DE01 /* CCPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlane.h; sourceTree = "<group>"; };
+		920B30D31AD5762E009BEF8B /* ImagePicker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImagePicker.cpp; path = ImagePicker/ImagePicker.cpp; sourceTree = "<group>"; };
+		920B30D41AD5762E009BEF8B /* ImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImagePicker.h; path = ImagePicker/ImagePicker.h; sourceTree = "<group>"; };
+		920B30D51AD5762E009BEF8B /* ImagePickerImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImagePickerImpl.h; path = ImagePicker/ImagePickerImpl.h; sourceTree = "<group>"; };
+		920B30D61AD5762E009BEF8B /* ImagePickerImpl.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ImagePickerImpl.mm; path = ImagePicker/ImagePickerImpl.mm; sourceTree = "<group>"; };
+		920B30D71AD5762E009BEF8B /* ImagePicker-ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ImagePicker-ios.h"; path = "ImagePicker/ImagePicker-ios.h"; sourceTree = "<group>"; };
+		920B30D81AD5762E009BEF8B /* ImagePicker-ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "ImagePicker-ios.mm"; path = "ImagePicker/ImagePicker-ios.mm"; sourceTree = "<group>"; };
 		A07A4D641783777C0073F6A7 /* libcocos2d iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20564AA1A6E5744001C1B6E /* ccShader_PositionColorTextureAsPointsize.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionColorTextureAsPointsize.vert; sourceTree = "<group>"; };
 		B217703B1977ECB4009EE11B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
@@ -5502,6 +5518,7 @@
 		46A167981807AF4D005B8026 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
+				920B30D21AD5761B009BEF8B /* ImagePicker */,
 				B6C0BF4D1A6F733D00BCF15A /* Particle3D */,
 				292DB15D19B461CA00A80320 /* ExtensionDeprecated.cpp */,
 				292DB15E19B461CA00A80320 /* ExtensionDeprecated.h */,
@@ -6184,6 +6201,19 @@
 			path = TextReader;
 			sourceTree = "<group>";
 		};
+		920B30D21AD5761B009BEF8B /* ImagePicker */ = {
+			isa = PBXGroup;
+			children = (
+				920B30D31AD5762E009BEF8B /* ImagePicker.cpp */,
+				920B30D41AD5762E009BEF8B /* ImagePicker.h */,
+				920B30D51AD5762E009BEF8B /* ImagePickerImpl.h */,
+				920B30D61AD5762E009BEF8B /* ImagePickerImpl.mm */,
+				920B30D71AD5762E009BEF8B /* ImagePicker-ios.h */,
+				920B30D81AD5762E009BEF8B /* ImagePicker-ios.mm */,
+			);
+			name = ImagePicker;
+			sourceTree = "<group>";
+		};
 		B29594B81926D61F003EEF37 /* 3d */ = {
 			isa = PBXGroup;
 			children = (
@@ -6716,6 +6746,7 @@
 				ED9C6A9618599AD8000A5232 /* CCNodeGrid.h in Headers */,
 				15AE18A719AAD33D00C27E9E /* CCScrollViewLoader.h in Headers */,
 				15AE184819AAD2F700C27E9E /* cocos3d.h in Headers */,
+				920B30DD1AD5762E009BEF8B /* ImagePickerImpl.h in Headers */,
 				50ABBEC31925AB6F00A911A9 /* CCVector.h in Headers */,
 				1A57008B180BC5A10088DEC7 /* CCActionProgressTimer.h in Headers */,
 				B665E2EC1AA80A6500DDB1C5 /* CCPULinearForceAffectorTranslator.h in Headers */,
@@ -7097,6 +7128,7 @@
 				15AE189E19AAD33D00C27E9E /* CCNodeLoader.h in Headers */,
 				B665E1F81AA80A6500DDB1C5 /* CCPUAffectorManager.h in Headers */,
 				50ABBE7B1925AB6F00A911A9 /* CCEventMouse.h in Headers */,
+				920B30DB1AD5762E009BEF8B /* ImagePicker.h in Headers */,
 				503DD8F91926B0DB00CD74DD /* CCIMEDispatcher.h in Headers */,
 				15AE1B6619AADA9900C27E9E /* UIImageView.h in Headers */,
 				15AE1BB419AADFEF00C27E9E /* HttpResponse.h in Headers */,
@@ -7290,6 +7322,7 @@
 				B29A7E3A19EE1B7700872B35 /* Animation.h in Headers */,
 				B665E2B51AA80A6500DDB1C5 /* CCPUForceField.h in Headers */,
 				B665E2D91AA80A6500DDB1C5 /* CCPUJetAffector.h in Headers */,
+				920B30E51AD57633009BEF8B /* ImagePicker-ios.h in Headers */,
 				15B3708319EE414C00ABE682 /* CCEventListenerAssetsManagerEx.h in Headers */,
 				D0FD03521A3B51AA00825BB5 /* CCAllocatorGlobal.h in Headers */,
 				B665E3D11AA80A6600DDB1C5 /* CCPUScriptCompiler.h in Headers */,
@@ -7689,6 +7722,7 @@
 				B29A7E1219EE1B7700872B35 /* EventData.h in Headers */,
 				1A5702CB180BCE370088DEC7 /* CCTextFieldTTF.h in Headers */,
 				1A5702ED180BCE750088DEC7 /* CCTileMapAtlas.h in Headers */,
+				920B30DE1AD5762E009BEF8B /* ImagePickerImpl.h in Headers */,
 				15AE195E19AAD35100C27E9E /* CCSkin.h in Headers */,
 				1A5702F1180BCE750088DEC7 /* CCTMXLayer.h in Headers */,
 				15AE18AE19AAD33D00C27E9E /* CCBFileLoader.h in Headers */,
@@ -7844,6 +7878,7 @@
 				50ABBE821925AB6F00A911A9 /* CCEventType.h in Headers */,
 				15AE194C19AAD35100C27E9E /* CCComRender.h in Headers */,
 				B665E2C11AA80A6500DDB1C5 /* CCPUGeometryRotator.h in Headers */,
+				920B30DC1AD5762E009BEF8B /* ImagePicker.h in Headers */,
 				1AAF5852180E40B9000584C8 /* LocalStorage.h in Headers */,
 				50CB247619D9C5A100687767 /* AudioCache.h in Headers */,
 				B29A7DDA19EE1B7700872B35 /* SkeletonRenderer.h in Headers */,
@@ -8126,6 +8161,7 @@
 				15AE1A5019AAD40300C27E9E /* b2BlockAllocator.cpp in Sources */,
 				B665E20E1AA80A6500DDB1C5 /* CCPUBaseForceAffector.cpp in Sources */,
 				15AE1A8219AAD40300C27E9E /* b2GearJoint.cpp in Sources */,
+				920B30D91AD5762E009BEF8B /* ImagePicker.cpp in Sources */,
 				1A570071180BC5A10088DEC7 /* CCActionGrid.cpp in Sources */,
 				50CB247F19D9C5A100687767 /* AudioPlayer.mm in Sources */,
 				50ABBFFF1926664800A911A9 /* CCFileUtils-apple.mm in Sources */,
@@ -8589,6 +8625,7 @@
 				15AE182819AAD2F700C27E9E /* CCMeshSkin.cpp in Sources */,
 				B665E42A1AA80A6600DDB1C5 /* CCPUVelocityMatchingAffector.cpp in Sources */,
 				15AE19A619AAD39600C27E9E /* TextReader.cpp in Sources */,
+				920B30DF1AD5762E009BEF8B /* ImagePickerImpl.mm in Sources */,
 				15AE198819AAD36A00C27E9E /* ButtonReader.cpp in Sources */,
 				4D76BE3A1A4AAF0A00102962 /* CCActionTimelineNode.cpp in Sources */,
 				B665E33A1AA80A6500DDB1C5 /* CCPUOnEventFlagObserver.cpp in Sources */,
@@ -8898,6 +8935,7 @@
 				15AE1AA519AAD40300C27E9E /* b2Fixture.cpp in Sources */,
 				B29A7DE219EE1B7700872B35 /* MeshAttachment.c in Sources */,
 				50ED2BE719BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp in Sources */,
+				920B30DA1AD5762E009BEF8B /* ImagePicker.cpp in Sources */,
 				B6D38B8F1AC3AFAC00043997 /* CCTextureCube.cpp in Sources */,
 				15AE1BAD19AADFDF00C27E9E /* UILayoutParameter.cpp in Sources */,
 				3823843E1A259140002C4610 /* SingleNodeReader.cpp in Sources */,
@@ -8905,6 +8943,7 @@
 				B665E28B1AA80A6500DDB1C5 /* CCPUDynamicAttribute.cpp in Sources */,
 				15AE19AA19AAD39700C27E9E /* ListViewReader.cpp in Sources */,
 				1A5701C8180BCB5A0088DEC7 /* CCLabelTextFormatter.cpp in Sources */,
+				920B30E61AD57633009BEF8B /* ImagePicker-ios.mm in Sources */,
 				1A5701CC180BCB5A0088DEC7 /* CCLabelTTF.cpp in Sources */,
 				B665E39B1AA80A6500DDB1C5 /* CCPUPointEmitterTranslator.cpp in Sources */,
 				382384291A2590F9002C4610 /* NodeReader.cpp in Sources */,
@@ -9101,6 +9140,7 @@
 				B665E29B1AA80A6500DDB1C5 /* CCPUEmitterTranslator.cpp in Sources */,
 				382384101A259092002C4610 /* NodeReaderDefine.cpp in Sources */,
 				15AE195B19AAD35100C27E9E /* CCSGUIReader.cpp in Sources */,
+				920B30E01AD5762E009BEF8B /* ImagePickerImpl.mm in Sources */,
 				50ABBD881925AB4100A911A9 /* CCCustomCommand.cpp in Sources */,
 				15AE19B019AAD39700C27E9E /* ScrollViewReader.cpp in Sources */,
 				50ABBE941925AB6F00A911A9 /* CCProfiling.cpp in Sources */,

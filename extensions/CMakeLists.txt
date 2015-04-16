@@ -181,5 +181,7 @@ set(COCOS_EXTENSIONS_SRC
   ../extensions/Particle3D/PU/CCPUBehaviourTranslator.cpp
   ../extensions/Particle3D/PU/CCPUSlaveBehaviour.cpp
   ../extensions/Particle3D/PU/CCPUSlaveBehaviourTranslator.cpp
+  ../extensions/ImagePicker/ImagePicker.cpp
+  ../extensions/ImagePicker/ImagePickerImpl.cpp
   ${PLATFORM_EXTENSIONS_SRC}
 )

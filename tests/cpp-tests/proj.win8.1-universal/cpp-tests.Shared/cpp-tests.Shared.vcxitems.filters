@@ -778,6 +778,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\TerrainTest\TerrainTest.cpp">
       <Filter>Classes\TerrainTest</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ImagePickerTest\ImagePickerTest.cpp">
+      <Filter>Classes\ImagePickerTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ActionManagerTest\ActionManagerTest.cpp">
@@ -1683,6 +1686,9 @@
     <Filter Include="Classes\TerrainTest">
       <UniqueIdentifier>{56386912-b41e-4559-bd2c-b256434179d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\ImagePickerTest">
+      <UniqueIdentifier>{9ce8e7b0-ec34-4961-a0ba-0aef68d57fa3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\OpenGLESPage.xaml" />
@@ -1715,6 +1721,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\TerrainTest\TerrainTest.h">
       <Filter>Classes\TerrainTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ImagePickerTest\ImagePickerTest.h">
+      <Filter>Classes\ImagePickerTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
