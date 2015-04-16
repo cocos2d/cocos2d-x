@@ -36,6 +36,10 @@
 
 #include "base/CCRef.h"
 #include "base/CCVector.h"
+#include "math/Vec2.h"
+#include "math/Vec3.h"
+#include "math/Vec4.h"
+#include "math/Mat4.h"
 #include "platform/CCPlatformMacros.h"
 
 NS_CC_BEGIN
@@ -96,7 +100,13 @@ protected:
     bool parseTechnique(const rapidjson::GenericValue<rapidjson::UTF8<> >& techniqueJSON);
     bool parsePass(Technique* technique, const rapidjson::GenericValue<rapidjson::UTF8<> >& passJSON);
     bool parseTexture(Pass* pass, const rapidjson::GenericValue<rapidjson::UTF8<> >& textureJSON);
-
+    bool parseBlend(Pass* pass, const rapidjson::GenericValue<rapidjson::UTF8<> >& blendJSON);
+    bool parseShader(Pass* pass, const rapidjson::GenericValue<rapidjson::UTF8<> >& shaderJSON);
+    bool parseUniform(GLProgramState* programState, const rapidjson::Value::ConstMemberIterator& iterator);
+    Vec2 parseUniformVec2(const rapidjson::GenericValue<rapidjson::UTF8<> >& uniformJSON);
+    Vec3 parseUniformVec3(const rapidjson::GenericValue<rapidjson::UTF8<> >& uniformJSON);
+    Vec4 parseUniformVec4(const rapidjson::GenericValue<rapidjson::UTF8<> >& uniformJSON);
+    Mat4 parseUniformMat4(const rapidjson::GenericValue<rapidjson::UTF8<> >& uniformJSON);
     bool parseRenderState(Pass* pass, const rapidjson::GenericValue<rapidjson::UTF8<> >& renderState);
 
 

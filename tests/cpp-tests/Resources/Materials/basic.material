@@ -15,18 +15,28 @@
              "passes": [
                   // first pass
                   {
-                  		// defines for shaders. Will be put on top of the shaders before compiling them
-                  		"defines": ["// Add here things that you want to be compiled on the shaders", 
-                  					"// this is the 2nd line",
-                  					"#define USE_MULTITEXTURE 1"
-                  					],
-
-                  		// shaders
-						"vertexShader": "shaders/examples_multitexture.vert",
-						"fragmentShader": "shaders/examples_multitexture.frag",
-
+                  		// Render State
                   		// valid parameters: DISABLE, ALPHA_PREMULTIPLED, ALPHA_NON_PREMULTIPLIED, ADDITIVE 
 						"blend":  "ALPHA_PREMULTIPLED",
+
+						// shader related info
+						// - shaders
+						// - defines for the shaders
+						// - uniforms
+                  		"shader" : {
+		              		// defines for shaders. Will be put on top of the shaders before compiling them
+		              		"defines": ["// Add here things that you want to be compiled on the shaders", 
+		              					"// this is the 2nd line",
+		              					"#define USE_MULTITEXTURE 1"
+		              					],
+
+		              		// shaders
+							"vertexShader": "shaders/examples_multitexture.vert",
+							"fragmentShader": "shaders/examples_multitexture.frag",
+
+							// Uniforms
+							"u_blurMix": [0]
+						},
 
 						// cocos2d-x doesn't have samplers yet, so let's keep using textures.
 						"textures": [

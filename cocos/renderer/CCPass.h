@@ -41,6 +41,8 @@ class GLProgramState;
 
 class CC_DLL Pass : public RenderState
 {
+    friend class Material;
+
 public:
     /** Creates a Pass with a GLProgramState.
      */
@@ -67,6 +69,7 @@ protected:
     Pass();
     Pass(GLProgramState *glProgramState);
     ~Pass();
+    void setGLProgramState(GLProgramState* glProgramState);
 
     GLProgramState* _glProgramState;
 };

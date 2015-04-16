@@ -72,6 +72,17 @@ GLProgramState* Pass::getGLProgramState() const
     return _glProgramState;
 }
 
+void Pass::setGLProgramState(GLProgramState* glProgramState)
+{
+    if ( _glProgramState != glProgramState) {
+        CC_SAFE_RELEASE(_glProgramState);
+        _glProgramState = glProgramState;
+        CC_SAFE_RETAIN(_glProgramState);
+
+        _hashDirty = true;
+    }
+}
+
 uint32_t Pass::getHash() const
 {
     if (_hashDirty) {

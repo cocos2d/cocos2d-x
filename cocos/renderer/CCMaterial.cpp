@@ -30,8 +30,11 @@
 #include "renderer/CCMaterial.h"
 #include "renderer/CCTechnique.h"
 #include "renderer/CCPass.h"
-#include "renderer/CCGLProgramState.h"
 #include "renderer/CCTextureCache.h"
+#include "renderer/CCTexture2D.h"
+#include "renderer/CCGLProgram.h"
+#include "renderer/CCGLProgramState.h"
+
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
 
@@ -39,6 +42,11 @@
 
 static const float MATERIAL_FORMAT_VERSION = 1.0;
 static const char* MATERIAL_TYPE = "material";
+
+
+// Helpers declaration
+static const char* getOptionalString(const rapidjson::GenericValue<rapidjson::UTF8<> >& json, const char* key, const char* defaultValue);
+static bool isValidUniform(const char* name);
 
 NS_CC_BEGIN
 
@@ -168,15 +176,17 @@ bool Material::parsePass(Technique* technique, const rapidjson::GenericValue<rap
         }
     }
 
-    return true;
-}
-
-static const char* getOptionalString(const rapidjson::GenericValue<rapidjson::UTF8<> >& json, const char* key, const char* defaultValue)
-{
-    if (json.HasMember(key)) {
-        return json[key].GetString();
+    // Blending
+    if (passJSON.HasMember("blend")) {
+        parseBlend(pass, passJSON["blend"]);
     }
-    return defaultValue;
+
+    // Shaders
+    if (passJSON.HasMember("shader")) {
+        parseShader(pass, passJSON["shader"]);
+    }
+
+    return true;
 }
 
 bool Material::parseTexture(Pass* pass, const rapidjson::GenericValue<rapidjson::UTF8<> >& textureJSON)
@@ -195,6 +205,8 @@ bool Material::parseTexture(Pass* pass, const rapidjson::GenericValue<rapidjson:
     // optionals
 
     {
+        Texture2D::TexParams texParams;
+
         // mipmap
         bool usemipmap = false;
         const char* mipmap = getOptionalString(textureJSON, "mipmap", "false");
@@ -205,22 +217,200 @@ bool Material::parseTexture(Pass* pass, const rapidjson::GenericValue<rapidjson:
 
         // valid options: REPEAT, CLAMP
         const char* wrapS = getOptionalString(textureJSON, "wrapS", "CLAMP");
+        if (strcasecmp(wrapS, "CLAMP")==0)
+            texParams.wrapS = GL_REPEAT;
+        else if(strcasecmp(wrapS, "EDGE")==0)
+            texParams.wrapS = GL_CLAMP_TO_EDGE;
+        else
+            CCLOG("Invalid wrapS: %s", wrapS);
+
 
         // valid options: REPEAT, CLAMP
         const char* wrapT = getOptionalString(textureJSON, "wrapT", "CLAMP");
+        if (strcasecmp(wrapT, "CLAMP")==0)
+            texParams.wrapT = GL_REPEAT;
+        else if(strcasecmp(wrapT, "EDGE")==0)
+            texParams.wrapT = GL_CLAMP_TO_EDGE;
+        else
+            CCLOG("Invalid wrapT: %s", wrapT);
+
 
         // valid options: NEAREST, LINEAR, NEAREST_MIPMAP_NEAREST, LINEAR_MIPMAP_NEAREST, NEAREST_MIPMAP_LINEAR, LINEAR_MIPMAP_LINEAR
         const char* minFilter = getOptionalString(textureJSON, "minFilter", mipmap ? "LINEAR_MIPMAP_NEAREST" : "LINEAR");
+        if (strcasecmp(minFilter, "NEAREST")==0)
+            texParams.minFilter = GL_NEAREST;
+        else if(strcasecmp(minFilter, "LINEAR")==0)
+            texParams.minFilter = GL_LINEAR;
+        else if(strcasecmp(minFilter, "NEAREST_MIPMAP_NEAREST")==0)
+            texParams.minFilter = GL_NEAREST_MIPMAP_NEAREST;
+        else if(strcasecmp(minFilter, "LINEAR_MIPMAP_NEAREST")==0)
+            texParams.minFilter = GL_LINEAR_MIPMAP_NEAREST;
+        else if(strcasecmp(minFilter, "NEAREST_MIPMAP_LINEAR")==0)
+            texParams.minFilter = GL_NEAREST_MIPMAP_LINEAR;
+        else if(strcasecmp(minFilter, "LINEAR_MIPMAP_LINEAR")==0)
+            texParams.minFilter = GL_LINEAR_MIPMAP_LINEAR;
+        else
+            CCLOG("Invalid minFilter: %s", minFilter);
 
         // valid options: NEAREST, LINEAR
-        const char* maxFilter = getOptionalString(textureJSON, "magFilter", "LINEAR");
-    }
+        const char* magFilter = getOptionalString(textureJSON, "magFilter", "LINEAR");
+        if (strcasecmp(magFilter, "NEAREST")==0)
+            texParams.magFilter = GL_NEAREST;
+        else if(strcasecmp(magFilter, "LINEAR")==0)
+            texParams.magFilter = GL_LINEAR;
+        else
+            CCLOG("Invalid magFilter: %s", magFilter);
 
+        texture->setTexParameters(texParams);
+    }
 
     pass->_textures.pushBack(texture);
     return true;
 }
 
+bool Material::parseBlend(Pass* pass, const rapidjson::GenericValue<rapidjson::UTF8<> >& blendJSON)
+{
+    CCASSERT(blendJSON.IsString(), "Invalid type for blend. It must be an string");
+
+    const char* blend = blendJSON.GetString();
+    if (strcasecmp(blend, "DISABLE")==0)
+        pass->_blendFunc = BlendFunc::DISABLE;
+    else if(strcasecmp(blend, "ADDITIVE")==0)
+        pass->_blendFunc = BlendFunc::ADDITIVE;
+    else if(strcasecmp(blend, "ALPHA_NON_PREMULTIPLIED")==0)
+        pass->_blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+    else if(strcasecmp(blend, "ALPHA_PREMULTIPLIED")==0)
+        pass->_blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+
+    return true;
+}
+
+bool Material::parseShader(Pass* pass, const rapidjson::GenericValue<rapidjson::UTF8<> >& shaderJSON)
+{
+    CCASSERT(shaderJSON.IsObject(), "Invalid type for 'shader'. It must be an object");
+
+    // vertexShader
+    const char* vertShader = getOptionalString(shaderJSON, "vertexShader", nullptr);
+
+    // fragmentShader
+    const char* fragShader = getOptionalString(shaderJSON, "fragmentShader", nullptr);
+
+    // defines
+    const char* defines = getOptionalString(shaderJSON, "defines", nullptr);
+
+
+    if (vertShader && fragShader)
+    {
+        auto glProgram = GLProgram::createWithFilenames(vertShader, fragShader);
+        auto glProgramState = GLProgramState::create(glProgram);
+
+        pass->setGLProgramState(glProgramState);
+
+
+        // Parse uniforms only if the GLProgramState was created
+        for( auto it = shaderJSON.MemberonBegin(); it != shaderJSON.MemberonEnd(); it++)
+        {
+            // skip "defines", "vertexShader", "fragmentShader"
+            if (isValidUniform(it->name.GetString()))
+                parseUniform(glProgramState, it);
+        }
+    }
+
+    return true;
+}
+
+bool Material::parseUniform(GLProgramState* programState, const rapidjson::Value::ConstMemberIterator& iterator)
+{
+    const char* key = iterator->name.GetString();
+    auto& value = iterator->value;
+
+    if (value.IsDouble()) {
+        float v = value.GetDouble();
+        programState->setUniformFloat(key, v);
+
+    }
+    else if (value.IsArray()) {
+
+        int size = value.Size();
+        switch (size) {
+            case 1:
+            {
+                rapidjson::SizeType idx = 0;
+                float v = value[idx].GetDouble();
+                programState->setUniformFloat(key, v);
+                break;
+            }
+            case 2:
+            {
+                Vec2 vect = parseUniformVec2(value);
+                programState->setUniformVec2(key, vect);
+                break;
+            }
+            case 3:
+            {
+                Vec3 vect = parseUniformVec3(value);
+                programState->setUniformVec3(key, vect);
+                break;
+            }
+            case 4:
+            {
+                Vec4 vect = parseUniformVec4(value);
+                programState->setUniformVec4(key, vect);
+                break;
+            }
+            case 16:
+            {
+                Mat4 mat = parseUniformMat4(value);
+                programState->setUniformMat4(key, mat);
+                break;
+            }
+            default:
+                break;
+        }
+
+    }
+    return true;
+}
+
+Vec2 Material::parseUniformVec2(const rapidjson::GenericValue<rapidjson::UTF8<> >& value)
+{
+    Vec2 ret;
+    rapidjson::SizeType idx = 0;
+    ret.x = value[idx++].GetDouble();
+    ret.y = value[idx++].GetDouble();
+    return ret;
+}
+
+Vec3 Material::parseUniformVec3(const rapidjson::GenericValue<rapidjson::UTF8<> >& value)
+{
+    Vec3 ret;
+    rapidjson::SizeType idx = 0;
+    ret.x = value[idx++].GetDouble();
+    ret.y = value[idx++].GetDouble();
+    ret.z = value[idx++].GetDouble();
+    return ret;
+}
+
+Vec4 Material::parseUniformVec4(const rapidjson::GenericValue<rapidjson::UTF8<> >& value)
+{
+    Vec4 ret;
+    rapidjson::SizeType idx = 0;
+    ret.x = value[idx++].GetDouble();
+    ret.y = value[idx++].GetDouble();
+    ret.z = value[idx++].GetDouble();
+    ret.w = value[idx++].GetDouble();
+    return ret;
+}
+
+Mat4 Material::parseUniformMat4(const rapidjson::GenericValue<rapidjson::UTF8<> >& value)
+{
+    Mat4 ret;
+
+    for(rapidjson::SizeType i= 0; i<16; i++)
+        ret.m[i] = value[i].GetDouble();
+
+    return ret;
+}
 
 bool Material::parseRenderState(Pass* pass, const rapidjson::GenericValue<rapidjson::UTF8<> >& renderState)
 {
@@ -283,3 +473,20 @@ ssize_t Material::getTechniqueCount() const
 }
 
 NS_CC_END
+
+// Helpers implementation
+static bool isValidUniform(const char* name)
+{
+    return !(strcmp(name, "defines")==0 ||
+            strcmp(name, "vertexShader")==0 ||
+            strcmp(name, "fragmentShader")==0);
+}
+
+static const char* getOptionalString(const rapidjson::GenericValue<rapidjson::UTF8<> >& json, const char* key, const char* defaultValue)
+{
+    if (json.HasMember(key)) {
+        return json[key].GetString();
+    }
+    return defaultValue;
+}
+
