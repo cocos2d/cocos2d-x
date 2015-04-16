@@ -49,6 +49,8 @@ public:
 	virtual void draw (cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t transformFlags) override;
 	virtual void drawSkeleton (const cocos2d::Mat4& transform, uint32_t transformFlags);
 	virtual cocos2d::Rect getBoundingBox () const override;
+	virtual void onEnter () override;
+	virtual void onExit () override;
 
 	spSkeleton* getSkeleton();
 
@@ -75,13 +77,18 @@ public:
 	
 	/* Sets the skin used to look up attachments not found in the SkeletonData defaultSkin. Attachments from the new skin are
 	 * attached if the corresponding attachment from the old skin was attached. Returns false if the skin was not found.
-	 * @param skin May be 0.*/
+	 * @param skin May be empty string ("") for no skin.*/
 	bool setSkin (const std::string& skinName);
+	/** @param skin May be 0 for no skin.*/
+	bool setSkin (const char* skinName);
 	
 	/* Returns 0 if the slot or attachment was not found. */
 	spAttachment* getAttachment (const std::string& slotName, const std::string& attachmentName) const;
-	/* Returns false if the slot or attachment was not found. */
+	/* Returns false if the slot or attachment was not found.
+	 * @param attachmentName May be empty string ("") for no attachment. */
 	bool setAttachment (const std::string& slotName, const std::string& attachmentName);
+	/* @param attachmentName May be 0 for no attachment. */
+	bool setAttachment (const std::string& slotName, const char* attachmentName);
 
 	// --- BlendProtocol
 	virtual void setBlendFunc (const cocos2d::BlendFunc& blendFunc);
@@ -89,14 +96,21 @@ public:
 	virtual void setOpacityModifyRGB (bool value);
 	virtual bool isOpacityModifyRGB () const;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
 	SkeletonRenderer ();
 	SkeletonRenderer (spSkeletonData* skeletonData, bool ownsSkeletonData = false);
 	SkeletonRenderer (const std::string& skeletonDataFile, spAtlas* atlas, float scale = 1);
 	SkeletonRenderer (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1);
+
 	virtual ~SkeletonRenderer ();
+
+	void initWithData (spSkeletonData* skeletonData, bool ownsSkeletonData = false);
+	void initWithFile (const std::string& skeletonDataFile, spAtlas* atlas, float scale = 1);
+	void initWithFile (const std::string& skeletonDataFile, const std::string& atlasFile, float scale = 1);
+
 	void initialize ();
 
+protected:
 	void setSkeletonData (spSkeletonData* skeletonData, bool ownsSkeletonData);
 	virtual cocos2d::Texture2D* getTexture (spRegionAttachment* attachment) const;
 	virtual cocos2d::Texture2D* getTexture (spMeshAttachment* attachment) const;

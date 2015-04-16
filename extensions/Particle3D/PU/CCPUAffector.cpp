@@ -187,10 +187,13 @@ float PUAffector::getMass() const
 void PUAffector::copyAttributesTo( PUAffector* affector )
 {
     affector->setName(_name);
+    affector->setAffectorType(_affectorType);
+    affector->_position = _position;
     affector->_isEnabled = _isEnabled;
     affector->_particleSystem = _particleSystem;
     affector->_affectorScale = _affectorScale;
     affector->_affectSpecialisation = _affectSpecialisation;
+    affector->_excludedEmitters = _excludedEmitters;
 }
 
 void PUAffector::addEmitterToExclude( const std::string& emitterName )
