@@ -210,8 +210,7 @@
 
 --------------------------------
 -- Sets the source blending function.<br>
--- param blendFunc A structure with source and destination factor to specify pixel arithmetic,<br>
--- e.g. {GL_ONE, GL_ONE}, {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}.<br>
+-- param blendFunc A structure with source and destination factor to specify pixel arithmetic. e.g. {GL_ONE, GL_ONE}, {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}.<br>
 -- js NA<br>
 -- lua NA
 -- @function [parent=#Scale9Sprite] setBlendFunc 
