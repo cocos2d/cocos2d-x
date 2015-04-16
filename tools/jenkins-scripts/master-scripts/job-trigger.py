@@ -35,8 +35,8 @@ def check_queue_build(action, pr_num, statuses_url):
                 try:
                     requests.post(statuses_url, data=json.dumps(data),
                                   headers=Headers, proxies=proxyDict)
-except:
-    traceback.print_exc()
+                except:
+                    traceback.print_exc()
 
 def main():
     #get payload from os env
