@@ -210,26 +210,26 @@ bool Material::parseTexture(Pass* pass, const rapidjson::GenericValue<rapidjson:
         // mipmap
         bool usemipmap = false;
         const char* mipmap = getOptionalString(textureJSON, "mipmap", "false");
-        if (mipmap && strcasecmp(mipmap, "true")) {
+        if (mipmap && strcasecmp(mipmap, "true")==0) {
             texture->generateMipmap();
             usemipmap = true;
         }
 
         // valid options: REPEAT, CLAMP
-        const char* wrapS = getOptionalString(textureJSON, "wrapS", "CLAMP");
-        if (strcasecmp(wrapS, "CLAMP")==0)
+        const char* wrapS = getOptionalString(textureJSON, "wrapS", "CLAMP_TO_EDGE");
+        if (strcasecmp(wrapS, "REPEAT")==0)
             texParams.wrapS = GL_REPEAT;
-        else if(strcasecmp(wrapS, "EDGE")==0)
+        else if(strcasecmp(wrapS, "CLAMP_TO_EDGE")==0)
             texParams.wrapS = GL_CLAMP_TO_EDGE;
         else
             CCLOG("Invalid wrapS: %s", wrapS);
 
 
         // valid options: REPEAT, CLAMP
-        const char* wrapT = getOptionalString(textureJSON, "wrapT", "CLAMP");
-        if (strcasecmp(wrapT, "CLAMP")==0)
+        const char* wrapT = getOptionalString(textureJSON, "wrapT", "CLAMP_TO_EDGE");
+        if (strcasecmp(wrapT, "REPEAT")==0)
             texParams.wrapT = GL_REPEAT;
-        else if(strcasecmp(wrapT, "EDGE")==0)
+        else if(strcasecmp(wrapT, "CLAMP_TO_EDGE")==0)
             texParams.wrapT = GL_CLAMP_TO_EDGE;
         else
             CCLOG("Invalid wrapT: %s", wrapT);
@@ -281,6 +281,11 @@ bool Material::parseBlend(Pass* pass, const rapidjson::GenericValue<rapidjson::U
         pass->_blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
     else if(strcasecmp(blend, "ALPHA_PREMULTIPLIED")==0)
         pass->_blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+    else
+    {
+        CCLOG("Invalid blend function: %s", blend);
+        return false;
+    }
 
     return true;
 }
@@ -295,8 +300,8 @@ bool Material::parseShader(Pass* pass, const rapidjson::GenericValue<rapidjson::
     // fragmentShader
     const char* fragShader = getOptionalString(shaderJSON, "fragmentShader", nullptr);
 
-    // defines
-    const char* defines = getOptionalString(shaderJSON, "defines", nullptr);
+    // defines. Array of strings
+//    const char* defines = getOptionalString(shaderJSON, "defines", nullptr);
 
 
     if (vertShader && fragShader)

@@ -56,7 +56,8 @@ void Material_SpriteSinglePassTest::onEnter()
     this->addChild(sprite);
 
     auto material = Material::createWithFilename("Materials/basic.material");
-    sprite->setMaterial(material);
+    (void)material;
+//    sprite->setMaterial(material);
 }
 
 std::string Material_SpriteSinglePassTest::subtitle() const
