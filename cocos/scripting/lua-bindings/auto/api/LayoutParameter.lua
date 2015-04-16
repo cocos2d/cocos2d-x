@@ -28,7 +28,7 @@
         
 --------------------------------
 -- Copy all the member field from argument LayoutParameter to self.<br>
--- parameter model A LayoutParameter instance.
+-- param model A LayoutParameter instance.
 -- @function [parent=#LayoutParameter] copyProperties 
 -- @param self
 -- @param #ccui.LayoutParameter model

@@ -118,7 +118,7 @@
         
 --------------------------------
 -- Set a item model for listview.<br>
--- When calling @see `pushBackDefaultItem`, the model will be used as a blueprint and new model copy will be inserted into ListView.<br>
+-- When calling `pushBackDefaultItem`, the model will be used as a blueprint and new model copy will be inserted into ListView.<br>
 -- param model  Model in `Widget*`.
 -- @function [parent=#ListView] setItemModel 
 -- @param self
@@ -180,7 +180,7 @@
         
 --------------------------------
 -- Changes scroll direction of scrollview.<br>
--- see Direction Direction::VERTICAL means vertical scroll, Direction::HORIZONTAL means horizontal scroll<br>
+-- Direction Direction::VERTICAL means vertical scroll, Direction::HORIZONTAL means horizontal scroll<br>
 -- param dir, set the list view's scroll direction
 -- @function [parent=#ListView] setDirection 
 -- @param self
