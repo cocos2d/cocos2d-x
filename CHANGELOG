@@ -1,3 +1,6 @@
+cocos2d-x-3.6  ??
+    [FIX]           JNI: JNI illegal start byte error which causes crashing error on Android 5.0
+
 cocos2d-x-3.6beta0 Apr.14 2015
     [NEW]           3rd: update Spine runtime to v2.1.25
     [NEW]           MotionStreak: add `MotionStreak::getStroke()` and `MotionStreak::setStroke()`
