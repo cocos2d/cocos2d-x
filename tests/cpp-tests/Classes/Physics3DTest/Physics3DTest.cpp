@@ -313,17 +313,22 @@ bool Physics3DConstraintDemo::init()
     Physics3DRigidBodyDes rbDes;
     //create box
     auto sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
-    rbDes.originalTransform.translate(0.f, 0.f, 0.f);
     rbDes.mass = 10.f;
     rbDes.shape = Physics3DShape::createBox(Vec3(5.0f, 5.0f, 5.0f));
     auto rigidBody = Physics3DRigidBody::create(&rbDes);
     Quaternion quat;
     Quaternion::createFromAxisAngle(Vec3(0.f, 1.f, 0.f), CC_DEGREES_TO_RADIANS(180), &quat);
     auto component = Physics3DComponent::create(rigidBody, Vec3(0.f, -3.f, 0.f), quat);
+    
     sprite->addComponent(component);
     addChild(sprite);
     sprite->setCameraMask((unsigned short)CameraFlag::USER1);
-    sprite->setScale(0.3f);
+    sprite->setScale(0.4f);
+    sprite->setPosition3D(Vec3(0.f, 10.f, 0.f));
+    //sync node position to physics
+    component->syncToNode();
+    //physics controlled, we will not set position for it, so we can skip sync node position to physics
+    component->setSyncFlag(Physics3DComponent::PhysicsSyncFlag::PHYSICS_TO_NODE);
     
     physicsScene->setPhysics3DDebugCamera(_camera);
     

@@ -85,6 +85,10 @@ public:
      */
     void setSyncFlag(PhysicsSyncFlag syncFlag);
     
+    void syncToPhysics();
+    
+    void syncToNode();
+    
 CC_CONSTRUCTOR_ACCESS:
     Physics3DComponent();
     
