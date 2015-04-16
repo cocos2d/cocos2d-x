@@ -80,6 +80,7 @@ Material::Material(const std::string& validfilename)
 {
     Data data = FileUtils::getInstance()->getDataFromFile(validfilename);
     char* bytes = (char*)data.getBytes();
+    bytes[data.getSize()-1]='\0';
 
     rapidjson::Document document;
     document.ParseInsitu<0>(bytes);

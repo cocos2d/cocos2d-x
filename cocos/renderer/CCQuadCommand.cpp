@@ -111,15 +111,22 @@ void QuadCommand::generateMaterialID()
         auto technique = _material->getTechnique();
         auto count = technique->getPassCount();
 
-        if (count == 1 && technique->getPassByIndex(0)->getGLProgramState()->getUniformCount() == 0)
+        // multiple pass: no batching
+        if (count > 1) {
+            _materialID = Renderer::MATERIAL_ID_DO_NOT_BATCH;
+            _skipBatching = true;
+            _multiplePass = true;
+        }
+        // count == 1. Ok for batching
+        else if (technique->getPassByIndex(0)->getGLProgramState()->getUniformCount() == 0)
         {
             _materialID = technique->getPassByIndex(0)->getHash();
         }
+        // count == 1 + custom uniforms. No batching
         else
         {
             _materialID = Renderer::MATERIAL_ID_DO_NOT_BATCH;
             _skipBatching = true;
-            _multiplePass = true;
         }
     }
     else

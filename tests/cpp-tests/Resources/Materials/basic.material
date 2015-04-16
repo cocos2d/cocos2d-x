@@ -8,7 +8,7 @@
 
     "techniques" : [
          {
-             "name": "multitexture",
+             "name": "blur",
              "passes": [
                   {
 						"blend":  "ALPHA_PREMULTIPLIED",
@@ -19,26 +19,18 @@
 		              					"#define USE_MULTITEXTURE 1"
 		              					],
 
-							"vertexShader": "shaders/examples_multitexture.vert",
-							"fragmentShader": "shaders/examples_multitexture.frag",
-
-							"u_blurMix": [0,1,2,3]
+							"vertexShader": "Shaders/example_MultiTexture.vsh",
+							"fragmentShader": "Shaders/example_Blur.fsh"
 						},
 
 						"textures": [
 							{
-								"path": "Images/grossini.png",
+								"path": "Images/grossinis_sister1.png",
 								"wrapS": "CLAMP_TO_EDGE",
                 				"wrapT": "CLAMP_TO_EDGE",
-                				"minFilter": "LINEAR_MIPMAP_LINEAR",
+                				"minFilter": "LINEAR",
                 				"magFilter": "LINEAR",
                 				"mipmap": "false"
-							},
-							{
-								"path": "Images/grossinis_sister1.png"
-							},
-							{
-								"path": "Images/grossinis_sister2.png"
 							}
 						]
                   }

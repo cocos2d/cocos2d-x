@@ -87,7 +87,7 @@ uint32_t Pass::getHash() const
 {
     if (_hashDirty) {
         int glProgram = (int)_glProgramState->getGLProgram()->getProgram();
-        int intArray[4] = { glProgram, (int)_textureID->getName(), (int)_blendFunc.src, (int)_blendFunc.dst};
+        int intArray[4] = { glProgram, (int)_textures.at(0)->getName(), (int)_blendFunc.src, (int)_blendFunc.dst};
 
         _hash = XXH32((const void*)intArray, sizeof(intArray), 0);
         _hashDirty = false;
@@ -98,7 +98,7 @@ uint32_t Pass::getHash() const
 
 void Pass::bind(const Mat4& modelView)
 {
-    GL::bindTexture2D(_textureID->getName());
+    GL::bindTexture2D(_textures.at(0)->getName());
 
     //set blend mode
     GL::blendFunc(_blendFunc.src, _blendFunc.dst);

@@ -73,7 +73,6 @@ protected:
     mutable bool _hashDirty;
 
     BlendFunc _blendFunc;
-    Texture2D* _textureID;
     Vector<Texture2D*> _textures;
 };
 
