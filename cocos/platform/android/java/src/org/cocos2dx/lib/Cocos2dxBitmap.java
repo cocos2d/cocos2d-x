@@ -93,20 +93,26 @@ public class Cocos2dxBitmap {
             final int fontSize, final int alignment, final int width,
             final int height) {
         
-        createTextBitmapShadowStroke( string, fontName, fontSize, 255, 255, 255, 255,   // text font and color
+        createTextBitmapShadowStroke( string.getBytes(), fontName, fontSize, 255, 255, 255, 255,   // text font and color
                                       alignment, width, height,                         // alignment and size
                                       false, 0.0f, 0.0f, 0.0f, 0.0f,                    // no shadow
                                       false, 255, 255, 255, 255, 0.0f);                   // no stroke
                                      
     }
 
-    public static boolean createTextBitmapShadowStroke(String string,  final String fontName, int fontSize,
+    public static boolean createTextBitmapShadowStroke(byte[] bytes,  final String fontName, int fontSize,
                                                     int fontTintR, int fontTintG, int fontTintB, int fontTintA,
                                                     int alignment, int width, int height, 
                                                     boolean shadow, float shadowDX, float shadowDY, float shadowBlur, float shadowOpacity, 
                                                     boolean stroke, int strokeR, int strokeG, int strokeB, int strokeA, float strokeSize) {
 
-        
+        String string;
+        if (bytes == null || bytes.length == 0) {
+          string = "";
+        } else {
+          string = new String(bytes);
+        }
+
         final int horizontalAlignment = alignment & 0x0F;
         final int verticalAlignment   = (alignment >> 4) & 0x0F;
 

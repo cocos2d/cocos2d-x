@@ -899,10 +899,13 @@ void Button::copySpecialProperties(Widget *widget)
         setCapInsetsNormalRenderer(button->_capInsetsNormal);
         setCapInsetsPressedRenderer(button->_capInsetsPressed);
         setCapInsetsDisabledRenderer(button->_capInsetsDisabled);
-        setTitleText(button->getTitleText());
-        setTitleFontName(button->getTitleFontName());
-        setTitleFontSize(button->getTitleFontSize());
-        setTitleColor(button->getTitleColor());
+        if(nullptr != button->getTitleRenderer())
+        {
+            setTitleText(button->getTitleText());
+            setTitleFontName(button->getTitleFontName());
+            setTitleFontSize(button->getTitleFontSize());
+            setTitleColor(button->getTitleColor());
+        }
         setPressedActionEnabled(button->_pressedActionEnabled);
         setZoomScale(button->_zoomScale);
     }
