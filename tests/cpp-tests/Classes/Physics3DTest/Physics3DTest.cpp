@@ -231,11 +231,12 @@ void Physics3DTestDemo::shootBox( const cocos2d::Vec3 &des )
     rigidBody->setCcdMotionThreshold(0.5f);
     rigidBody->setCcdSweptSphereRadius(0.4f);
 
-    Mat4 offMat;
-    offMat.scale(0.5f);
-    auto component = Physics3DComponent::create(rigidBody, offMat);
+    auto component = Physics3DComponent::create(rigidBody);
+    
     sprite->addComponent(component);
     this->addChild(sprite);
+    sprite->setPosition3D(_camera->getPosition3D());
+    
     sprite->setCameraMask((unsigned short)CameraFlag::USER1);
 }
 
@@ -252,27 +253,18 @@ bool BasicPhysics3DDemo::init()
     //create floor
     Physics3DRigidBodyDes rbDes;
     rbDes.mass = 0.0f;
-    rbDes.shape = Physics3DShape::createBox(Vec3(60.0f, 2.0f, 60.0f));
-    rbDes.originalTransform.translate(0.f, -5.f, 0.f);
+    rbDes.shape = Physics3DShape::createBox(Vec3(60.0f, 1.0f, 60.0f));
+    
     auto rigidBody = Physics3DRigidBody::create(&rbDes);
     auto component = Physics3DComponent::create(rigidBody);
-    auto node = Node::create();
-    node->addComponent(component);
-    this->addChild(node);
+    auto floor = Sprite3D::create("Sprite3DTest/box.c3t");
+    floor->setTexture("Sprite3DTest/plane.png");
+    floor->setScaleX(60);
+    floor->setScaleZ(60);
+    floor->setCameraMask((unsigned short)CameraFlag::USER1);
     
-    //create several boxes
-    //auto sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
-    //rbDes.originalTransform.translate(0.f, 20.f, 0.f);
-    //rbDes.mass = 1.f;
-    //rbDes.shape = Physics3DShape::createBox(Vec3(5.0f, 5.0f, 5.0f));
-    //rigidBody = Physics3DRigidBody::create(&rbDes);
-    //Mat4 offMat;
-    //Mat4::createRotationY(CC_DEGREES_TO_RADIANS(180.f), &offMat);
-    //offMat.m[13] = -3.f;
-    //component = Physics3DComponent::create(rigidBody, offMat);
-    //sprite->addComponent(component);
-    //addChild(sprite);
-    //sprite->setCameraMask((unsigned short)CameraFlag::USER1);
+    floor->addComponent(component);
+    this->addChild(floor);
 
     //create several boxes
     rbDes.mass = 1.f;
@@ -290,13 +282,12 @@ bool BasicPhysics3DDemo::init()
                 float x = 1.0*i + start_x;
                 float y = 5.0+1.0*k + start_y;
                 float z = 1.0*j + start_z;
-                rbDes.originalTransform.setIdentity();
-                rbDes.originalTransform.translate(x, y, z);
-
+                
                 rigidBody = Physics3DRigidBody::create(&rbDes);
                 component = Physics3DComponent::create(rigidBody);
                 auto sprite = Sprite3D::create("Sprite3DTest/box.c3t");
                 sprite->setTexture("Images/CyanSquare.png");
+                sprite->setPosition3D(Vec3(x, y, z));
                 sprite->addComponent(component);
                 sprite->setCameraMask((unsigned short)CameraFlag::USER1);
                 this->addChild(sprite);
@@ -326,13 +317,13 @@ bool Physics3DConstraintDemo::init()
     rbDes.mass = 10.f;
     rbDes.shape = Physics3DShape::createBox(Vec3(5.0f, 5.0f, 5.0f));
     auto rigidBody = Physics3DRigidBody::create(&rbDes);
-    Mat4 offMat;
-    Mat4::createRotationY(CC_DEGREES_TO_RADIANS(180.f), &offMat);
-    offMat.m[13] = -3.f;
-    auto component = Physics3DComponent::create(rigidBody, offMat);
+    Quaternion quat;
+    Quaternion::createFromAxisAngle(Vec3(0.f, 1.f, 0.f), CC_DEGREES_TO_RADIANS(180), &quat);
+    auto component = Physics3DComponent::create(rigidBody, Vec3(0.f, -3.f, 0.f), quat);
     sprite->addComponent(component);
     addChild(sprite);
     sprite->setCameraMask((unsigned short)CameraFlag::USER1);
+    sprite->setScale(0.3f);
     
     physicsScene->setPhysics3DDebugCamera(_camera);
     

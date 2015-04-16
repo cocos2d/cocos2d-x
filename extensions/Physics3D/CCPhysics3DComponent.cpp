@@ -1,4 +1,4 @@
-/****************************************************************************
+ /****************************************************************************
  Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -48,24 +48,17 @@ bool Physics3DComponent::init()
     return Component::init();
 }
 
-Physics3DComponent* Physics3DComponent::create(Physics3DObject* physicsObj, const cocos2d::Mat4& trans)
+Physics3DComponent* Physics3DComponent::create(Physics3DObject* physicsObj, const cocos2d::Vec3& translateInPhysics, const cocos2d::Quaternion& rotInPhsyics)
 {
     auto ret = new (std::nothrow) Physics3DComponent();
     if (ret && ret->init())
     {
         ret->setPhysics3DObject(physicsObj);
-        ret->setTransformInPhysics(trans);
+        ret->setTransformInPhysics(translateInPhysics, rotInPhsyics);
         return ret;
     }
     CC_SAFE_DELETE(ret);
     return nullptr;
-}
-
-//virtual void update(float delta);
-bool Physics3DComponent::serialize(void* r)
-{
-    //TODO: FIXME
-    return Component::serialize(r);
 }
 
 void Physics3DComponent::setPhysics3DObject(Physics3DObject* physicsObj)
@@ -77,6 +70,7 @@ void Physics3DComponent::setPhysics3DObject(Physics3DObject* physicsObj)
 
 Physics3DComponent::Physics3DComponent()
 : _physics3DObj(nullptr)
+, _syncFlag(Physics3DComponent::PhysicsSyncFlag::NODE_AND_NODE)
 {
     
 }
@@ -142,28 +136,32 @@ void Physics3DComponent::onExit()
 
 void Physics3DComponent::preSimulate()
 {
-    if (_physics3DObj && _owner)
+    if (((int)_syncFlag & (int)Physics3DComponent::PhysicsSyncFlag::NODE_TO_PHYSICS) && _physics3DObj && _owner)
     {
         if (_physics3DObj->getObjType() == Physics3DObject::PhysicsObjType::RIGID_BODY)
         {
-            auto body = static_cast<Physics3DRigidBody*>(_physics3DObj)->getRigidBody();
-            if (body->isKinematicObject())
+            auto mat = _owner->getNodeToWorldTransform();
+            //remove scale, no scale support for physics
+            float oneOverLen = 1.f / sqrtf(mat.m[0] * mat.m[0] + mat.m[1] * mat.m[1] + mat.m[2] * mat.m[2]);
+            mat.m[0] *= oneOverLen;
+            mat.m[1] *= oneOverLen;
+            mat.m[2] *= oneOverLen;
+            oneOverLen = 1.f / sqrtf(mat.m[4] * mat.m[4] + mat.m[5] * mat.m[5] + mat.m[6] * mat.m[6]);
+            mat.m[4] *= oneOverLen;
+            mat.m[5] *= oneOverLen;
+            mat.m[6] *= oneOverLen;
+            oneOverLen = 1.f / sqrtf(mat.m[8] * mat.m[8] + mat.m[9] * mat.m[9] + mat.m[10] * mat.m[10]);
+            mat.m[8] *= oneOverLen;
+            mat.m[9] *= oneOverLen;
+            mat.m[10] *= oneOverLen;
+            
+            mat *=  _invTransformInPhysics;
+            if (_physics3DObj->getObjType() == Physics3DObject::PhysicsObjType::RIGID_BODY)
             {
-                auto mat = _owner->getNodeToWorldTransform() * _invTransformInPhysics;
-                //remove scale
-                float oneOverLen = sqrtf(mat.m[0] * mat.m[0] + mat.m[1] * mat.m[1] + mat.m[2] * mat.m[2]);
-                mat.m[0] /= oneOverLen;
-                mat.m[1] /= oneOverLen;
-                mat.m[2] /= oneOverLen;
-                oneOverLen = sqrtf(mat.m[4] * mat.m[4] + mat.m[5] * mat.m[5] + mat.m[6] * mat.m[6]);
-                mat.m[4] /= oneOverLen;
-                mat.m[5] /= oneOverLen;
-                mat.m[6] /= oneOverLen;
-                oneOverLen = sqrtf(mat.m[8] * mat.m[8] + mat.m[9] * mat.m[9] + mat.m[10] * mat.m[10]);
-                mat.m[8] /= oneOverLen;
-                mat.m[9] /= oneOverLen;
-                mat.m[10] /= oneOverLen;
-                body->getMotionState()->setWorldTransform(convertMat4TobtTransform(mat));
+                auto body = static_cast<Physics3DRigidBody*>(_physics3DObj)->getRigidBody();
+                auto motionState = body->getMotionState();
+                motionState->setWorldTransform(convertMat4TobtTransform(mat));
+                body->setMotionState(motionState);
             }
         }
     }
@@ -171,15 +169,30 @@ void Physics3DComponent::preSimulate()
 
 void Physics3DComponent::postSimulate()
 {
-    if (_physics3DObj && _owner)
+    if (((int)_syncFlag & (int)Physics3DComponent::PhysicsSyncFlag::NODE_TO_PHYSICS) && _physics3DObj && _owner)
     {
-        auto body = static_cast<Physics3DRigidBody*>(_physics3DObj)->getRigidBody();
-        if (!body->isStaticOrKinematicObject())
+        if (_physics3DObj->getObjType() == Physics3DObject::PhysicsObjType::RIGID_BODY)
         {
-            Mat4 parentMat = _transformInPhysics;
+            Mat4 parentMat;
             if (_owner->getParent())
                 parentMat = _owner->getParent()->getNodeToWorldTransform();
-            auto mat = parentMat.getInversed() * _physics3DObj->getWorldTransform() * _transformInPhysics;
+            
+            auto mat = parentMat.getInversed() * _physics3DObj->getWorldTransform();
+            //remove scale, no scale support for physics
+            float oneOverLen = 1.f / sqrtf(mat.m[0] * mat.m[0] + mat.m[1] * mat.m[1] + mat.m[2] * mat.m[2]);
+            mat.m[0] *= oneOverLen;
+            mat.m[1] *= oneOverLen;
+            mat.m[2] *= oneOverLen;
+            oneOverLen = 1.f / sqrtf(mat.m[4] * mat.m[4] + mat.m[5] * mat.m[5] + mat.m[6] * mat.m[6]);
+            mat.m[4] *= oneOverLen;
+            mat.m[5] *= oneOverLen;
+            mat.m[6] *= oneOverLen;
+            oneOverLen = 1.f / sqrtf(mat.m[8] * mat.m[8] + mat.m[9] * mat.m[9] + mat.m[10] * mat.m[10]);
+            mat.m[8] *= oneOverLen;
+            mat.m[9] *= oneOverLen;
+            mat.m[10] *= oneOverLen;
+            
+            mat *= _transformInPhysics;
             static Vec3 scale, translation;
             static Quaternion quat;
             mat.decompose(&scale, &quat, &translation);
@@ -190,10 +203,19 @@ void Physics3DComponent::postSimulate()
     }
 }
 
-void Physics3DComponent::setTransformInPhysics(const cocos2d::Mat4& trans)
+void Physics3DComponent::setTransformInPhysics(const cocos2d::Vec3& translateInPhysics, const cocos2d::Quaternion& rotInPhsyics)
 {
-    _transformInPhysics = trans;
-    _invTransformInPhysics = trans.getInversed();
+    Mat4::createRotation(rotInPhsyics, &_transformInPhysics);
+    _transformInPhysics.m[12] = translateInPhysics.x;
+    _transformInPhysics.m[13] = translateInPhysics.y;
+    _transformInPhysics.m[14] = translateInPhysics.z;
+    
+    _invTransformInPhysics = _transformInPhysics.getInversed();
+}
+
+void Physics3DComponent::setSyncFlag(PhysicsSyncFlag syncFlag)
+{
+    _syncFlag = syncFlag;
 }
 
 NS_CC_EXT_END
