@@ -106,17 +106,11 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PreBuildEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-if exist "$(OutDir)\Resource" rd /s /q "$(OutDir)\Resource"
-mkdir "$(OutDir)\Resource"
-mkdir "$(OutDir)\Resource\script"
-mkdir "$(OutDir)\Resource\src"
-mkdir "$(OutDir)\Resource\res"
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\js-bindings\script" "$(OutDir)\Resource\script" /e /Y
-xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\Resource\src" /e /Y
-copy "$(ProjectDir)..\..\..\main.js" "$(OutDir)\Resource\main.js" /Y
-copy "$(ProjectDir)..\..\..\project.json" "$(OutDir)\Resource\project.json" /Y
-xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\Resource\res" /e /Y</Command>
+      <Command>xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\js-bindings\script" "$(OutDir)\script" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\src" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\..\..\main.js" "$(OutDir)" /D /Y
+xcopy "$(ProjectDir)..\..\..\project.json" "$(OutDir)" /D /Y
+xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\res" /D /E /I /F /Y</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy js and resource files.</Message>
@@ -166,17 +160,11 @@ xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\Resource\res" /e /Y</Command>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
-      <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-if exist "$(OutDir)\Resource" rd /s /q "$(OutDir)\Resource"
-mkdir "$(OutDir)\Resource"
-mkdir "$(OutDir)\Resource\script"
-mkdir "$(OutDir)\Resource\src"
-mkdir "$(OutDir)\Resource\res"
-xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\js-bindings\script" "$(OutDir)\Resource\script" /e /Y
-xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\Resource\src" /e /Y
-copy "$(ProjectDir)..\..\..\main.js" "$(OutDir)\Resource\main.js" /Y
-copy "$(ProjectDir)..\..\..\project.json" "$(OutDir)\Resource\project.json" /Y
-xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\Resource\res" /e /Y</Command>
+      <Command>xcopy "$(ProjectDir)..\..\cocos2d-x\cocos\scripting\js-bindings\script" "$(OutDir)\script" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\..\..\src" "$(OutDir)\src" /D /E /I /F /Y
+xcopy "$(ProjectDir)..\..\..\main.js" "$(OutDir)" /D /Y
+xcopy "$(ProjectDir)..\..\..\project.json" "$(OutDir)" /D /Y
+xcopy "$(ProjectDir)..\..\..\res" "$(OutDir)\res" /D /E /I /F /Y</Command>
       <Message>Copy js and resource files.</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
