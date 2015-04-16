@@ -2,12 +2,12 @@
 #define __IMAGEPICKER_TEST_H_
 
 #include "cocos2d.h"
-#include "../BaseTest.h"
 #include "extensions/ImagePicker/ImagePicker.h"
+#include "../BaseTest.h"
 
 DEFINE_TEST_SUITE(ImagePickerTests);
 
-class ImagePickerTest : public TestCase, public ImagePickerDelegate
+class ImagePickerTest : public TestCase, public cocos2d::ImagePickerDelegate
 {
 public:
     ImagePickerTest();
