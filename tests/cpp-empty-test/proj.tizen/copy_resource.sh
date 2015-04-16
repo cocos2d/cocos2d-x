@@ -1,3 +1,3 @@
 #!/bin/bash
 
-cp ../../Resources/* ../res/ -r -u
+cp -r ../../Resources/* ../res/

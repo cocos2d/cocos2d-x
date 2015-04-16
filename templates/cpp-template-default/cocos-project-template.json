@@ -23,7 +23,8 @@
                "proj.win8.1-universal/App.Windows/PROJECT_NAME.Windows.vcxproj",
                "proj.win8.1-universal/App.Windows/PROJECT_NAME.Windows.vcxproj.filters",
                "proj.win8.1-universal/App.WindowsPhone/PROJECT_NAME.WindowsPhone.vcxproj",
-               "proj.win8.1-universal/App.WindowsPhone/PROJECT_NAME.WindowsPhone.vcxproj.filters"
+               "proj.win8.1-universal/App.WindowsPhone/PROJECT_NAME.WindowsPhone.vcxproj.filters",
+               "proj.tizen/shared/res/PROJECT_NAME.png"
             ]
          },
          "project_replace_project_name":{
@@ -52,13 +53,16 @@
                "proj.ios_mac/ios/main.m",
                "proj.ios_mac/ios/Prefix.pch",
                "proj.ios_mac/PROJECT_NAME.xcodeproj/project.pbxproj",
-               "CMakeLists.txt"
+               "CMakeLists.txt",
+               "proj.tizen/.project",
+               "proj.tizen/tizen-manifest.xml"
             ]
          },
          "project_replace_package_name":{
             "src_package_name":"org.cocos2dx.hellocpp",
             "files":[
-               "proj.android/AndroidManifest.xml"
+               "proj.android/AndroidManifest.xml",
+               "proj.tizen/tizen-manifest.xml"
             ]
          },
          "project_replace_mac_bundleid": {
