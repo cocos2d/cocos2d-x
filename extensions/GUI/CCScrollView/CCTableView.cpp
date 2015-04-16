@@ -236,20 +236,25 @@ void TableView::removeCellAtIndex(ssize_t idx)
         this->_setIndexForCell(cell->getIdx()-1, cell);
     }
 }
-
-TableViewCell *TableView::dequeueCell()
+ 
+TableViewCell *TableView::dequeueCell(int tag)
 {
-    TableViewCell *cell;
-
-    if (_cellsFreed.empty()) {
-        cell = nullptr;
+     if (_cellsFreed.empty()) {
+        return NULL;
     } else {
-        cell = _cellsFreed.at(0);
-        cell->retain();
-        _cellsFreed.erase(0);
-        cell->autorelease();
+        for (auto ite= _cellsFreed.begin();ite!=_cellsFreed.end(); ++ite) {
+            if((*ite)->getTag()==tag)
+            {
+                TableViewCell * cell=*ite;
+                cell->retain();
+                _cellsFreed.erase(ite);
+                cell->autorelease();
+                return cell;
+            }
+        }
+       
     }
-    return cell;
+    return  NULL;
 }
 
 void TableView::_addCellIfNecessary(TableViewCell * cell)

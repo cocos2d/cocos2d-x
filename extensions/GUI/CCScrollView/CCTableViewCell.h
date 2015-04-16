@@ -43,9 +43,25 @@ NS_CC_EXT_BEGIN
 class CC_EX_DLL TableViewCell: public Node
 {
 public:
-    CREATE_FUNC(TableViewCell);
+    static TableViewCell* create() \
+    { \
+        TableViewCell *pRet = new(std::nothrow) TableViewCell(); \
+        if (pRet && pRet->init()) \
+        { \
+            pRet->autorelease(); \
+            return pRet; \
+        } \
+        else \
+        { \
+            delete pRet; \
+            pRet = NULL; \
+            return NULL; \
+        } \
+    }
     
-    TableViewCell() {}
+    TableViewCell(int tag=0) {
+        setTag(tag);
+    }
     /**
      * The index used internally by SWTableView and its subclasses
      */

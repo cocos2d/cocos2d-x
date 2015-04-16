@@ -260,9 +260,8 @@ public:
      *
      * @return free cell
      */
-    TableViewCell *dequeueCell();
-
-    /**
+    TableViewCell *dequeueCell(int tag=0);
+     /**
      * Returns an existing cell at a given index. Returns nil if a cell is nonexistent at the moment of query.
      *
      * @param idx index
