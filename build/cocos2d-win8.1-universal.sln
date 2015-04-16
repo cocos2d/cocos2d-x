@@ -53,11 +53,22 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libjscocos2d.Windows", "..\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libjscocos2d.WindowsPhone", "..\cocos\scripting\js-bindings\proj.win8.1-universal\libjscocos2d\libjscocos2d.WindowsPhone\libjscocos2d.WindowsPhone.vcxproj", "{CA082EC4-17CE-430B-8207-D1E947A5D1E9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "js-tests", "js-tests", "{616DCDB6-4727-422A-9CD8-50F27228B237}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "js-tests.Shared", "..\tests\js-tests\project\proj.win8.1-universal\App.Shared\js-tests.Shared.vcxitems", "{AE6763F6-1549-441E-AFB5-377BE1C776DC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "js-tests.Windows", "..\tests\js-tests\project\proj.win8.1-universal\App.Windows\js-tests.Windows.vcxproj", "{70914FC8-7709-4CD6-B86B-C63FDE5478DB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "js-tests.WindowsPhone", "..\tests\js-tests\project\proj.win8.1-universal\App.WindowsPhone\js-tests.WindowsPhone.vcxproj", "{94874B5B-398F-448A-A366-35A35DC1DB9C}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\tests\js-tests\project\proj.win8.1-universal\App.Shared\js-tests.Shared.vcxitems*{ae6763f6-1549-441e-afb5-377be1c776dc}*SharedItemsImports = 9
+		..\tests\js-tests\project\proj.win8.1-universal\App.Shared\js-tests.Shared.vcxitems*{94874b5b-398f-448a-a366-35a35dc1db9c}*SharedItemsImports = 4
 		..\cocos\2d\libcocos2d_8_1\libcocos2d_8_1\libcocos2d_8_1.Shared\libcocos2d_8_1.Shared.vcxitems*{9335005f-678e-4e8e-9b84-50037216aec8}*SharedItemsImports = 4
 		..\tests\cpp-tests\proj.win8.1-universal\cpp-tests.Shared\cpp-tests.Shared.vcxitems*{15247c71-5289-4913-b88f-e253cc353720}*SharedItemsImports = 4
 		..\tests\cpp-empty-test\proj.win8.1-universal\HelloCpp.Shared\HelloCpp.Shared.vcxitems*{a3ad93e4-0b2f-4c58-9181-69bed2e42e3e}*SharedItemsImports = 9
+		..\tests\js-tests\project\proj.win8.1-universal\App.Shared\js-tests.Shared.vcxitems*{70914fc8-7709-4cd6-b86b-c63fde5478db}*SharedItemsImports = 4
 		..\cocos\editor-support\spine\proj.win8.1-universal\libSpine.Shared\libSpine.Shared.vcxitems*{cc1da216-a80d-4be4-b309-acb6af313aff}*SharedItemsImports = 4
 		..\external\Box2D\proj.win8.1-universal\libbox2d.Shared\libbox2d.Shared.vcxitems*{4a3c6ba8-c227-498b-aa21-40bda27b461f}*SharedItemsImports = 9
 		..\tests\cpp-empty-test\proj.win8.1-universal\HelloCpp.Shared\HelloCpp.Shared.vcxitems*{79a8fcda-4b12-4dd1-b676-ff148d651638}*SharedItemsImports = 4
@@ -235,6 +246,38 @@ Global
 		{CA082EC4-17CE-430B-8207-D1E947A5D1E9}.Release|Win32.ActiveCfg = Release|Win32
 		{CA082EC4-17CE-430B-8207-D1E947A5D1E9}.Release|Win32.Build.0 = Release|Win32
 		{CA082EC4-17CE-430B-8207-D1E947A5D1E9}.Release|x64.ActiveCfg = Release|Win32
+		{70914FC8-7709-4CD6-B86B-C63FDE5478DB}.Debug|ARM.ActiveCfg = Debug|ARM
+		{70914FC8-7709-4CD6-B86B-C63FDE5478DB}.Debug|ARM.Build.0 = Debug|ARM
+		{70914FC8-7709-4CD6-B86B-C63FDE5478DB}.Debug|ARM.Deploy.0 = Debug|ARM
+		{70914FC8-7709-4CD6-B86B-C63FDE5478DB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{70914FC8-7709-4CD6-B86B-C63FDE5478DB}.Debug|Win32.Build.0 = Debug|Win32
+		{70914FC8-7709-4CD6-B86B-C63FDE5478DB}.Debug|Win32.Deploy.0 = Debug|Win32
+		{70914FC8-7709-4CD6-B86B-C63FDE5478DB}.Debug|x64.ActiveCfg = Debug|x64
+		{70914FC8-7709-4CD6-B86B-C63FDE5478DB}.Debug|x64.Build.0 = Debug|x64
+		{70914FC8-7709-4CD6-B86B-C63FDE5478DB}.Debug|x64.Deploy.0 = Debug|x64
+		{70914FC8-7709-4CD6-B86B-C63FDE5478DB}.Release|ARM.ActiveCfg = Release|ARM
+		{70914FC8-7709-4CD6-B86B-C63FDE5478DB}.Release|ARM.Build.0 = Release|ARM
+		{70914FC8-7709-4CD6-B86B-C63FDE5478DB}.Release|ARM.Deploy.0 = Release|ARM
+		{70914FC8-7709-4CD6-B86B-C63FDE5478DB}.Release|Win32.ActiveCfg = Release|Win32
+		{70914FC8-7709-4CD6-B86B-C63FDE5478DB}.Release|Win32.Build.0 = Release|Win32
+		{70914FC8-7709-4CD6-B86B-C63FDE5478DB}.Release|Win32.Deploy.0 = Release|Win32
+		{70914FC8-7709-4CD6-B86B-C63FDE5478DB}.Release|x64.ActiveCfg = Release|x64
+		{70914FC8-7709-4CD6-B86B-C63FDE5478DB}.Release|x64.Build.0 = Release|x64
+		{70914FC8-7709-4CD6-B86B-C63FDE5478DB}.Release|x64.Deploy.0 = Release|x64
+		{94874B5B-398F-448A-A366-35A35DC1DB9C}.Debug|ARM.ActiveCfg = Debug|ARM
+		{94874B5B-398F-448A-A366-35A35DC1DB9C}.Debug|ARM.Build.0 = Debug|ARM
+		{94874B5B-398F-448A-A366-35A35DC1DB9C}.Debug|ARM.Deploy.0 = Debug|ARM
+		{94874B5B-398F-448A-A366-35A35DC1DB9C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{94874B5B-398F-448A-A366-35A35DC1DB9C}.Debug|Win32.Build.0 = Debug|Win32
+		{94874B5B-398F-448A-A366-35A35DC1DB9C}.Debug|Win32.Deploy.0 = Debug|Win32
+		{94874B5B-398F-448A-A366-35A35DC1DB9C}.Debug|x64.ActiveCfg = Debug|Win32
+		{94874B5B-398F-448A-A366-35A35DC1DB9C}.Release|ARM.ActiveCfg = Release|ARM
+		{94874B5B-398F-448A-A366-35A35DC1DB9C}.Release|ARM.Build.0 = Release|ARM
+		{94874B5B-398F-448A-A366-35A35DC1DB9C}.Release|ARM.Deploy.0 = Release|ARM
+		{94874B5B-398F-448A-A366-35A35DC1DB9C}.Release|Win32.ActiveCfg = Release|Win32
+		{94874B5B-398F-448A-A366-35A35DC1DB9C}.Release|Win32.Build.0 = Release|Win32
+		{94874B5B-398F-448A-A366-35A35DC1DB9C}.Release|Win32.Deploy.0 = Release|Win32
+		{94874B5B-398F-448A-A366-35A35DC1DB9C}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -260,5 +303,8 @@ Global
 		{BEA66276-51DD-4C53-92A8-F3D1FEA50892} = {151000C9-1FF6-4190-8B3C-EC5DA3C7763D}
 		{BCF5546D-66A0-4998-AFD6-C5514F618930} = {151000C9-1FF6-4190-8B3C-EC5DA3C7763D}
 		{CA082EC4-17CE-430B-8207-D1E947A5D1E9} = {151000C9-1FF6-4190-8B3C-EC5DA3C7763D}
+		{AE6763F6-1549-441E-AFB5-377BE1C776DC} = {616DCDB6-4727-422A-9CD8-50F27228B237}
+		{70914FC8-7709-4CD6-B86B-C63FDE5478DB} = {616DCDB6-4727-422A-9CD8-50F27228B237}
+		{94874B5B-398F-448A-A366-35A35DC1DB9C} = {616DCDB6-4727-422A-9CD8-50F27228B237}
 	EndGlobalSection
 EndGlobal
