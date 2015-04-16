@@ -28,7 +28,7 @@ NS_CC_BEGIN
 
 namespace ui {
 
-static const float AUTOSCROLLMAXSPEED = 1000.0f;
+static const float AUTOSCROLLMAXSPEED = 1300.0f;
 
 const Vec2 SCROLLDIR_UP = Vec2(0.0f, 1.0f);
 const Vec2 SCROLLDIR_DOWN = Vec2(0.0f, -1.0f);
