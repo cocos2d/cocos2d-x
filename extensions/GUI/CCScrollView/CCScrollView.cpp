@@ -222,7 +222,7 @@ void ScrollView::setContentOffset(Vec2 offset, bool animated/* = false*/)
             offset.x = MAX(minOffset.x, MIN(maxOffset.x, offset.x));
             offset.y = MAX(minOffset.y, MIN(maxOffset.y, offset.y));
         }
-        log("offset is %f,%f\n",offset.x,offset.y);
+        
         _container->setPosition(offset);
 
         if (_delegate != nullptr)
@@ -681,7 +681,9 @@ bool ScrollView::onTouchBegan(Touch* touch, Event* event)
     } 
     return true;
 }
-
+bool ScrollView::isScrolling(){
+    return _scrollDistance.x!=0 || _scrollDistance.y!=0;
+}
 void ScrollView::onTouchMoved(Touch* touch, Event* event)
 {
     if (!this->isVisible())

@@ -229,6 +229,7 @@ public:
 
 	void updateInset();
 
+    bool isScrolling();
     /**
      * Determines whether it clips its children or not.
      */
