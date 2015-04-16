@@ -89,6 +89,19 @@ public:
     virtual bool init() override;
 };
 
+class Physics3DKinematicDemo : public Physics3DTestDemo
+{
+public:
+
+    CREATE_FUNC(Physics3DKinematicDemo);
+    Physics3DKinematicDemo(){};
+    virtual ~Physics3DKinematicDemo(){};
+
+    virtual std::string subtitle() const override;
+
+    virtual bool init() override;
+};
+
 class Physics3DTerrainDemo : public Physics3DTestDemo
 {
 public:
