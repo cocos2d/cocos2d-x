@@ -788,6 +788,11 @@ void Label::enableShadow(const Color4B& shadowColor /* = Color4B::BLACK */,const
     //TODO: support blur for shadow
     _shadowBlurRadius = 0;
 
+    _shadowColor3B.r = shadowColor.r;
+    _shadowColor3B.g = shadowColor.g;
+    _shadowColor3B.b = shadowColor.b;
+    _shadowOpacity = shadowColor.a;
+
     if (!_systemFontDirty && !_contentDirty && _textSprite)
     {
         if (_shadowNode)
@@ -808,11 +813,6 @@ void Label::enableShadow(const Color4B& shadowColor /* = Color4B::BLACK */,const
             createShadowSpriteForSystemFont();
         }
     }
-
-    _shadowColor3B.r = shadowColor.r;
-    _shadowColor3B.g = shadowColor.g;
-    _shadowColor3B.b = shadowColor.b;
-    _shadowOpacity = shadowColor.a;
 
     _shadowColor4F.r = shadowColor.r / 255.0f;
     _shadowColor4F.g = shadowColor.g / 255.0f;
@@ -1045,18 +1045,18 @@ void Label::createSpriteForSystemFont()
 
 void Label::createShadowSpriteForSystemFont()
 {
-    if (!_fontDefinition._stroke._strokeEnabled && _fontDefinition._fontFillColor == _shadowColor4F
-        && (_fontDefinition._fontAlpha == _shadowColor4F.a * 255))
+    if (!_fontDefinition._stroke._strokeEnabled && _fontDefinition._fontFillColor == _shadowColor3B
+        && (_fontDefinition._fontAlpha == _shadowOpacity))
     {
         _shadowNode = Sprite::createWithTexture(_textSprite->getTexture());
     }
     else
     {
         auto shadowFontDefinition = _fontDefinition;
-        shadowFontDefinition._fontFillColor.r = _shadowColor4F.r * 255;
-        shadowFontDefinition._fontFillColor.g = _shadowColor4F.g * 255;
-        shadowFontDefinition._fontFillColor.b = _shadowColor4F.b * 255;
-        shadowFontDefinition._fontAlpha = _shadowColor4F.a * 255;
+        shadowFontDefinition._fontFillColor.r = _shadowColor3B.r;
+        shadowFontDefinition._fontFillColor.g = _shadowColor3B.g;
+        shadowFontDefinition._fontFillColor.b = _shadowColor3B.b;
+        shadowFontDefinition._fontAlpha = _shadowOpacity;
 
         shadowFontDefinition._stroke._strokeColor = shadowFontDefinition._fontFillColor;
         shadowFontDefinition._stroke._strokeAlpha = shadowFontDefinition._fontAlpha;
