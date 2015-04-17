@@ -25,7 +25,7 @@
 #include "CCPhysics3D.h"
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
-#include "bullet/BulletCollision//CollisionShapes/btHeightfieldTerrainShape.h"
+#include "bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
 
 NS_CC_EXT_BEGIN
 
