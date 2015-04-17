@@ -1,6 +1,9 @@
 #include "PerformanceParticle3DTest.h"
 #include "Particle3D/PU/CCPUParticleSystem3D.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
 static int kTagInfoLayer = 1;
 static int kTagMenuLayer = 1000;
 static int kTagParticleSystem = 1001;

@@ -2,24 +2,22 @@
 #define _CURL_TEST_H_
 
 #include "cocos2d.h"
-#include "../testBasic.h"
+#include "../BaseTest.h"
 
-class CurlTest : public Layer
+DEFINE_TEST_SUITE(CurlTests);
+
+class CurlTest : public TestCase
 {
 public:
+    CREATE_FUNC(CurlTest);
+
     CurlTest();
     ~CurlTest();
 
-    void onTouchesEnded(const std::vector<Touch*>& touches, cocos2d::Event  *event);
+    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
 
 private:
-    cocos2d::Label*         _label;
-};
-
-class CurlTestScene : public TestScene
-{
-public:
-    virtual void runThisTest();
+    cocos2d::Label* _label;
 };
 
 #endif // _CURL_TEST_H_

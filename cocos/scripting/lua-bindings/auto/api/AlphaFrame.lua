@@ -25,13 +25,6 @@
         
 --------------------------------
 -- 
--- @function [parent=#AlphaFrame] apply 
--- @param self
--- @param #float percent
--- @return AlphaFrame#AlphaFrame self (return value: ccs.AlphaFrame)
-        
---------------------------------
--- 
 -- @function [parent=#AlphaFrame] clone 
 -- @param self
 -- @return Frame#Frame ret (return value: ccs.Frame)

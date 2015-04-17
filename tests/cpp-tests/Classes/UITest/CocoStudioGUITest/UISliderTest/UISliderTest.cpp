@@ -1,7 +1,16 @@
-
-
 #include "UISliderTest.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
+UISliderTests::UISliderTests()
+{
+    ADD_TEST_CASE(UISliderTest);
+    ADD_TEST_CASE(UISliderTest_Scale9);
+    ADD_TEST_CASE(UISliderTest_Scale9_State_Change);
+    ADD_TEST_CASE(UISliderNormalDefaultTest);
+    ADD_TEST_CASE(UISliderDisabledDefaultTest);
+}
 
 // UISliderTest
 

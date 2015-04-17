@@ -196,6 +196,11 @@ public:
      */
     bool intersectsRect(const Rect& rect) const;
     /**
+    Check the intersect status of the rect and a circle.
+     * @js NA
+     */
+    bool intersectsCircle(const Vec2& center, float radius) const;
+    /**
     Get the min rect which can contain this and rect.
      * @js NA
      * @lua NA

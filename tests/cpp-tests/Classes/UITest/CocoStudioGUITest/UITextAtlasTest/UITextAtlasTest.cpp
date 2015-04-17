@@ -1,8 +1,12 @@
-
-
 #include "UITextAtlasTest.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
 
+UITextAtlasTests::UITextAtlasTests()
+{
+    ADD_TEST_CASE(UITextAtlasTest);
+}
 // UITextAtlasTest
 
 bool UITextAtlasTest::init()

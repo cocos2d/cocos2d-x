@@ -76,7 +76,7 @@ public:
 
 	spAnimationState* getState() const;
 
-protected:
+CC_CONSTRUCTOR_ACCESS:
 	SkeletonAnimation ();
 	SkeletonAnimation (spSkeletonData* skeletonData);
 	SkeletonAnimation (const std::string&skeletonDataFile, spAtlas* atlas, float scale = 1);
@@ -84,6 +84,7 @@ protected:
 	virtual ~SkeletonAnimation ();
 	void initialize ();
 
+protected:
 	spAnimationState* _state;
 
 	bool _ownsAnimationStateData;

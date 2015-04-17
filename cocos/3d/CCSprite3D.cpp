@@ -573,7 +573,7 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
     }
     for(const auto& it : nodedata->children)
     {
-        createNode(it,node, matrialdatas, singleSprite);
+        createNode(it,node, matrialdatas, nodedata->children.size() == 1);
     }
 }
 
@@ -820,6 +820,22 @@ const BlendFunc& Sprite3D::getBlendFunc() const
     return _blend;
 }
 
+AABB Sprite3D::getAABBRecursively()
+{
+    AABB aabb;
+    const Vector<Node*>& children = getChildren();
+    for (const auto& iter : children)
+    {
+        Sprite3D* child = dynamic_cast<Sprite3D*>(iter);
+        if(child)
+        {
+            aabb.merge(child->getAABBRecursively());
+        }
+    }
+    aabb.merge(getAABB());
+    return aabb;
+}
+
 const AABB& Sprite3D::getAABB() const
 {
     Mat4 nodeToWorldTransform(getNodeToWorldTransform());
@@ -832,14 +848,18 @@ const AABB& Sprite3D::getAABB() const
     else
     {
         _aabb.reset();
-        Mat4 transform(nodeToWorldTransform);
-        for (const auto& it : _meshes) {
-            if (it->isVisible())
-                _aabb.merge(it->getAABB());
+        if (_meshes.size())
+        {
+            Mat4 transform(nodeToWorldTransform);
+            for (const auto& it : _meshes) {
+                if (it->isVisible())
+                    _aabb.merge(it->getAABB());
+            }
+            
+            _aabb.transform(transform);
+            _nodeToWorldTransform = nodeToWorldTransform;
+            _aabbDirty = false;
         }
-        
-        _aabb.transform(transform);
-        _nodeToWorldTransform = nodeToWorldTransform;
     }
     
     return _aabb;

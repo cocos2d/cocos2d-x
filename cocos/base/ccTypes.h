@@ -45,7 +45,7 @@ NS_CC_BEGIN
 struct Color4B;
 struct Color4F;
 
-/** 
+/**
  * RGB color composed of bytes 3 bytes.
  * @since v3.0
  */
@@ -71,7 +71,7 @@ struct CC_DLL Color3B
     GLubyte r;
     GLubyte g;
     GLubyte b;
-    
+
     static const Color3B WHITE;
     static const Color3B YELLOW;
     static const Color3B BLUE;
@@ -83,7 +83,7 @@ struct CC_DLL Color3B
     static const Color3B GRAY;
 };
 
-/** 
+/**
  * RGBA color composed of 4 bytes.
  * @since v3.0
  */
@@ -118,7 +118,7 @@ struct CC_DLL Color4B
 };
 
 
-/** 
+/**
  * RGBA color composed of 4 floats.
  * @since v3.0
  */
@@ -140,7 +140,7 @@ struct CC_DLL Color4F
     {
         return (*this == other);
     }
-    
+
     GLfloat r;
     GLfloat g;
     GLfloat b;
@@ -163,9 +163,9 @@ struct CC_DLL Color4F
 // struct Vertex2F
 // {
 //     Vertex2F(float _x, float _y) :x(_x), y(_y) {}
-    
+
 //     Vertex2F(): x(0.f), y(0.f) {}
-    
+
 //     GLfloat x;
 //     GLfloat y;
 // };
@@ -181,23 +181,23 @@ struct CC_DLL Color4F
 //         , y(_y)
 //         , z(_z)
 //     {}
-    
+
 //     Vertex3F(): x(0.f), y(0.f), z(0.f) {}
-    
+
 //     GLfloat x;
 //     GLfloat y;
 //     GLfloat z;
 // };
-        
+
 /** @struct Tex2F
  * A TEXCOORD composed of 2 floats: u, y
  * @since v3.0
  */
 struct CC_DLL Tex2F {
     Tex2F(float _u, float _v): u(_u), v(_v) {}
-    
+
     Tex2F(): u(0.f), v(0.f) {}
-    
+
     GLfloat u;
     GLfloat v;
 };
@@ -222,7 +222,7 @@ struct CC_DLL Quad2
     Vec2        bl;
     Vec2        br;
 };
-   
+
 /** @struct Quad3
  * A 3D Quad. 4 * 3 floats.
  */
@@ -307,7 +307,7 @@ struct CC_DLL V2F_C4B_T2F_Triangle
 	V2F_C4B_T2F b;
 	V2F_C4B_T2F c;
 };
- 
+
 /** @struct V2F_C4B_T2F_Quad
  * A Quad of V2F_C4B_T2F.
  */
@@ -354,7 +354,7 @@ struct CC_DLL V2F_C4F_T2F_Quad
 };
 
 /** @struct V3F_T2F_Quad
- * 
+ *
  */
 struct CC_DLL V3F_T2F_Quad
 {
@@ -451,7 +451,7 @@ struct CC_DLL AnimationFrameData
 {
     T2F_Quad texCoords;
     float delay;
-    Size size; 
+    Size size;
 };
 
 /**
@@ -464,7 +464,7 @@ struct CC_DLL AnimationFrameData
 struct CC_DLL FontShadow
 {
 public:
-    
+
     // shadow is not enabled by default
     FontShadow()
         : _shadowEnabled(false)
@@ -488,7 +488,7 @@ public:
 struct CC_DLL FontStroke
 {
 public:
-    
+
     // stroke is disabled by default
     FontStroke()
 	    : _strokeEnabled(false)
@@ -496,7 +496,7 @@ public:
         , _strokeAlpha(255)
         , _strokeSize(0)
     {}
-    
+
     /// true if stroke enabled
     bool      _strokeEnabled;
     /// stroke color
@@ -505,7 +505,7 @@ public:
     GLubyte   _strokeAlpha;
     /// stroke size
     float     _strokeSize;
-    
+
 };
 
 /** @struct FontDefinition
@@ -526,7 +526,7 @@ public:
         , _fontFillColor(Color3B::WHITE)
         , _fontAlpha(255)
     {}
-    
+
     /// font name
     std::string           _fontName;
     /// font size
@@ -545,7 +545,18 @@ public:
     FontShadow            _shadow;
     /// font stroke
     FontStroke            _stroke;
-    
+
+};
+
+/**
+ * @brief Possible LabelEffect used by Label.
+ *
+ */
+enum class LabelEffect {
+    NORMAL,
+    OUTLINE,
+    SHADOW,
+    GLOW
 };
 
 /** @struct Acceleration
@@ -558,9 +569,9 @@ public:
     double x;
     double y;
     double z;
-    
+
     double timestamp;
-    
+
     Acceleration(): x(0), y(0), z(0), timestamp(0) {}
 };
 

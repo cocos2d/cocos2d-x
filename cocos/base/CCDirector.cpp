@@ -2,7 +2,7 @@
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2013 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -107,6 +107,7 @@ Director* Director::getInstance()
 }
 
 Director::Director()
+: _isStatusLabelUpdated(true)
 {
 }
 
@@ -386,7 +387,7 @@ void Director::setOpenGLView(GLView *openGLView)
         // set size
         _winSizeInPoints = _openGLView->getDesignResolutionSize();
 
-        createStatsLabel();
+        _isStatusLabelUpdated = true;
 
         if (_openGLView)
         {
@@ -1110,6 +1111,12 @@ void Director::resume()
 // updates the FPS every frame
 void Director::showStats()
 {
+    if (_isStatusLabelUpdated)
+    {
+        createStatsLabel();
+        _isStatusLabelUpdated = false;
+    }
+
     static unsigned long prevCalls = 0;
     static unsigned long prevVerts = 0;
     static float prevDeltaTime  = 0.016f; // 60FPS
@@ -1255,7 +1262,7 @@ void Director::setContentScaleFactor(float scaleFactor)
     if (scaleFactor != _contentScaleFactor)
     {
         _contentScaleFactor = scaleFactor;
-        createStatsLabel();
+        _isStatusLabelUpdated = true;
     }
 }
 

@@ -308,7 +308,6 @@ void PUParticleSystem3D::startParticleSystem()
 
         scheduleUpdate();
         _state = State::RUNNING;
-        _latestPosition = getDerivedPosition(); // V1.3.1
     }
 
     for (auto iter : _children)
@@ -415,9 +414,12 @@ void PUParticleSystem3D::update(float delta)
 
 void PUParticleSystem3D::forceUpdate( float delta )
 {
-    if (!_emitters.empty()){
+    if (!_emitters.empty())
         calulateRotationOffset();
-        prepared();
+
+    prepared();
+
+    if (!_emitters.empty()){
         emitParticles(delta);
         preUpdator(delta);
         updator(delta);
@@ -511,12 +513,14 @@ void PUParticleSystem3D::prepared()
 
         _prepared = true;
         _timeElapsedSinceStart = 0.0f;
+        _latestPosition = getDerivedPosition(); // V1.3.1
         if (_parentParticleSystem){
             _particleSystemScaleVelocity = _parentParticleSystem->getParticleSystemScaleVelocity();
         }
     }
 
-    notifyRescaled(getDerivedScale());
+    if (!_emitters.empty())
+        notifyRescaled(getDerivedScale());
 }
 
 void PUParticleSystem3D::unPrepared()
@@ -896,7 +900,7 @@ void PUParticleSystem3D::emitParticles( ParticlePool &pool, PUEmitter* emitter, 
 
         initParticleForEmission(particle);
 
-        particle->position += Vec3(particle->direction.x * scale.x * _particleSystemScaleVelocity * timePoint
+        particle->position.add(particle->direction.x * scale.x * _particleSystemScaleVelocity * timePoint
                                  , particle->direction.y * scale.y * _particleSystemScaleVelocity * timePoint
                                  , particle->direction.z * scale.z * _particleSystemScaleVelocity * timePoint);
         // Increment time fragment
@@ -1047,7 +1051,8 @@ void PUParticleSystem3D::copyAttributesTo( PUParticleSystem3D* system )
 
     system->setName(_name);
     system->_state = _state;
-    system->setRender(static_cast<PURender *>(_render)->clone());
+    if (_render)
+        system->setRender(static_cast<PURender *>(_render)->clone());
     system->_particleQuota = _particleQuota;
     system->_blend = _blend;
     system->_keepLocal = _keepLocal;
@@ -1098,6 +1103,11 @@ PUParticleSystem3D* PUParticleSystem3D::clone()
 {
     auto ps = PUParticleSystem3D::create();
     copyAttributesTo(ps);
+    for (auto &iter : _children){
+        PUParticleSystem3D *child = dynamic_cast<PUParticleSystem3D *>(iter);
+        if (child)
+            ps->addChild(child->clone());
+    }
     return ps;
 }
 
@@ -1313,7 +1323,7 @@ void PUParticleSystem3D::processMotion( PUParticle3D* particle, float timeElapse
 
     Vec3 scale = getDerivedScale();
     // Update the position with the direction.
-    particle->position += Vec3(particle->direction.x * scale.x * _particleSystemScaleVelocity * timeElapsed
+    particle->position.add(particle->direction.x * scale.x * _particleSystemScaleVelocity * timeElapsed
                              , particle->direction.y * scale.y * _particleSystemScaleVelocity * timeElapsed
                              , particle->direction.z * scale.z * _particleSystemScaleVelocity * timeElapsed);
 }
@@ -1368,27 +1378,24 @@ int PUParticleSystem3D::getAliveParticleCount() const
 
 void PUParticleSystem3D::forceStopParticleSystem()
 {
-    if (!_emitters.empty()){
-        if (_render)
-            _render->notifyStop();
+    if (_render)
+        _render->notifyStop();
 
-        for (auto &it : _observers){
-            it->notifyStop();
-        }
-
-        for (auto& it : _emitters) {
-            auto emitter = static_cast<PUEmitter*>(it);
-            emitter->notifyStop();
-        }
-
-        for (auto& it : _affectors) {
-            auto affector = static_cast<PUAffector*>(it);
-            affector->notifyStop();
-        }
-
-        unscheduleUpdate();
-        unPrepared();
+    for (auto &it : _observers){
+        it->notifyStop();
     }
+
+    for (auto& it : _emitters) {
+        auto emitter = static_cast<PUEmitter*>(it);
+        emitter->notifyStop();
+    }
+
+    for (auto& it : _affectors) {
+        auto affector = static_cast<PUAffector*>(it);
+        affector->notifyStop();
+    }
+    unscheduleUpdate();
+    unPrepared();
 }
 
 NS_CC_END

@@ -31,112 +31,71 @@
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCGroupCommand.h"
 
-static std::function<Layer*()> createFunctions[] = {
+USING_NS_CC;
 
-    CL(ActionManual),
-    CL(ActionMove),
-    CL(ActionMove3D),
-    CL(ActionRotate),
-    CL(ActionRotateBy3D),
-    CL(ActionScale),
-    CL(ActionSkew),
-    CL(ActionRotationalSkew),
-    CL(ActionRotationalSkewVSStandardSkew),
-    CL(ActionSkewRotateScale),
-    CL(ActionJump),
-    CL(ActionCardinalSpline),
-    CL(ActionCatmullRom),
-    CL(ActionBezier),
-    CL(ActionBlink),
-    CL(ActionFade),
-    CL(ActionTint),
-    CL(ActionAnimate),
-    CL(ActionSequence),
-    CL(ActionSequence2),
-	CL(ActionRemoveSelf),
-    CL(ActionSpawn),
-    CL(ActionReverse),
-    CL(ActionDelayTime),
-    CL(ActionRepeat),
-    CL(ActionRepeatForever),
-    CL(ActionRotateToRepeat),
-    CL(ActionRotateJerk),
-    CL(ActionCallFunction),
-    CL(ActionCallFuncN),
-    CL(ActionCallFuncND),
-    CL(ActionCallFuncO),
-    CL(ActionReverseSequence),
-    CL(ActionReverseSequence2),
-    CL(ActionOrbit),
-    CL(ActionFollow),
-    CL(ActionTargeted),
-    CL(ActionTargetedReverse),
-    CL(ActionMoveStacked),
-    CL(ActionMoveJumpStacked),
-    CL(ActionMoveBezierStacked),
-    CL(ActionCardinalSplineStacked),
-    CL(ActionCatmullRomStacked),
-    CL(PauseResumeActions),
-    CL(Issue1305),
-    CL(Issue1305_2),
-    CL(Issue1288),
-    CL(Issue1288_2),
-    CL(Issue1327),
-    CL(Issue1398),
-    CL(Issue2599)
-};
-
-static int sceneIdx=-1;
-#define MAX_LAYER (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-static Layer* nextAction()
+ActionsTests::ActionsTests()
 {
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-    
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
+    ADD_TEST_CASE(ActionManual);
+    ADD_TEST_CASE(ActionMove);
+    ADD_TEST_CASE(ActionMove3D);
+    ADD_TEST_CASE(ActionRotate);
+    ADD_TEST_CASE(ActionRotateBy3D);
+    ADD_TEST_CASE(ActionScale);
+    ADD_TEST_CASE(ActionSkew);
+    ADD_TEST_CASE(ActionRotationalSkew);
+    ADD_TEST_CASE(ActionRotationalSkewVSStandardSkew);
+    ADD_TEST_CASE(ActionSkewRotateScale);
+    ADD_TEST_CASE(ActionJump);
+    ADD_TEST_CASE(ActionCardinalSpline);
+    ADD_TEST_CASE(ActionCatmullRom);
+    ADD_TEST_CASE(ActionBezier);
+    ADD_TEST_CASE(ActionBlink);
+    ADD_TEST_CASE(ActionFade);
+    ADD_TEST_CASE(ActionTint);
+    ADD_TEST_CASE(ActionAnimate);
+    ADD_TEST_CASE(ActionSequence);
+    ADD_TEST_CASE(ActionSequence2);
+	ADD_TEST_CASE(ActionRemoveSelf);
+    ADD_TEST_CASE(ActionSpawn);
+    ADD_TEST_CASE(ActionReverse);
+    ADD_TEST_CASE(ActionDelayTime);
+    ADD_TEST_CASE(ActionRepeat);
+    ADD_TEST_CASE(ActionRepeatForever);
+    ADD_TEST_CASE(ActionRotateToRepeat);
+    ADD_TEST_CASE(ActionRotateJerk);
+    ADD_TEST_CASE(ActionCallFunction);
+    ADD_TEST_CASE(ActionCallFuncN);
+    ADD_TEST_CASE(ActionCallFuncND);
+    ADD_TEST_CASE(ActionCallFuncO);
+    ADD_TEST_CASE(ActionReverseSequence);
+    ADD_TEST_CASE(ActionReverseSequence2);
+    ADD_TEST_CASE(ActionOrbit);
+    ADD_TEST_CASE(ActionFollow);
+    ADD_TEST_CASE(ActionTargeted);
+    ADD_TEST_CASE(ActionTargetedReverse);
+    ADD_TEST_CASE(ActionMoveStacked);
+    ADD_TEST_CASE(ActionMoveJumpStacked);
+    ADD_TEST_CASE(ActionMoveBezierStacked);
+    ADD_TEST_CASE(ActionCardinalSplineStacked);
+    ADD_TEST_CASE(ActionCatmullRomStacked);
+    ADD_TEST_CASE(PauseResumeActions);
+    ADD_TEST_CASE(Issue1305);
+    ADD_TEST_CASE(Issue1305_2);
+    ADD_TEST_CASE(Issue1288);
+    ADD_TEST_CASE(Issue1288_2);
+    ADD_TEST_CASE(Issue1327);
+    ADD_TEST_CASE(Issue1398);
+    ADD_TEST_CASE(Issue2599)
 }
-
-static Layer* backAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;
-    
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-static Layer* restartAction()
-{
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-void ActionsTestScene::runThisTest()
-{
-    sceneIdx = -1;
-    addChild(nextAction());
-
-    Director::getInstance()->replaceScene(this);
-}
-
 
 std::string ActionsDemo::title() const
 {
     return "ActionsTest";
 }
 
-std::string ActionsDemo::subtitle() const
-{
-    return "";
-}
-
 void ActionsDemo::onEnter()
 {
-    BaseTest::onEnter();
+    TestCase::onEnter();
 
     // Or you can create an sprite using a filename. only PNG is supported now. Probably TIFF too
     _grossini = Sprite::create(s_pathGrossini);
@@ -163,31 +122,7 @@ void ActionsDemo::onExit()
     _tamara->release();
     _kathia->release();
 
-    BaseTest::onExit();
-}
-
-void ActionsDemo::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ActionsTestScene();
-    s->addChild( restartAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void ActionsDemo::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ActionsTestScene();
-    s->addChild( nextAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void ActionsDemo::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ActionsTestScene();
-    s->addChild( backAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
+    TestCase::onExit();
 }
 
 void ActionsDemo::centerSprites(unsigned int numberOfSprites)

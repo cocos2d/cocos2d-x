@@ -27,71 +27,77 @@
 
 #include "../UIScene_Editor.h"
 
+DEFINE_TEST_SUITE(UIScrollViewEditorTests);
+
 class UIScrollViewTest_Vertical_Editor : public UIScene_Editor
 {
 public:
+    CREATE_FUNC(UIScrollViewTest_Vertical_Editor);
+
     UIScrollViewTest_Vertical_Editor();
     ~UIScrollViewTest_Vertical_Editor();
-    bool init();
-    virtual void switchLoadMethod(Ref* pSender);
-    void configureGUIScene();
+
+    virtual bool init() override;
 protected:
-    UI_SCENE_EDITOR_CREATE_FUNC(UIScrollViewTest_Vertical_Editor)
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 
 class UIScrollViewTest_Horizontal_Editor : public UIScene_Editor
 {
 public:
+    CREATE_FUNC(UIScrollViewTest_Horizontal_Editor);
+
     UIScrollViewTest_Horizontal_Editor();
     ~UIScrollViewTest_Horizontal_Editor();
-    bool init();
-    virtual void switchLoadMethod(Ref* pSender);
-    void configureGUIScene();
+
+    virtual bool init() override;
 protected:
-    UI_SCENE_EDITOR_CREATE_FUNC(UIScrollViewTest_Horizontal_Editor)
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 
 class UIScrollViewTest_Both_Editor : public UIScene_Editor
 {
 public:
+    CREATE_FUNC(UIScrollViewTest_Both_Editor);
+
     UIScrollViewTest_Both_Editor();
     ~UIScrollViewTest_Both_Editor();
-    bool init();
-    virtual void switchLoadMethod(Ref* pSender);
-    void configureGUIScene();
+
+    virtual bool init() override;
 protected:
-    UI_SCENE_EDITOR_CREATE_FUNC(UIScrollViewTest_Both_Editor)
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 
 class UIScrollViewTest_ScrollToPercentBothDirection_Editor : public UIScene_Editor
 {
 public:
+    CREATE_FUNC(UIScrollViewTest_ScrollToPercentBothDirection_Editor);
+
     UIScrollViewTest_ScrollToPercentBothDirection_Editor();
     ~UIScrollViewTest_ScrollToPercentBothDirection_Editor();
-    bool init();
+
+    virtual bool init() override;
  
 protected:
-    UI_SCENE_EDITOR_CREATE_FUNC(UIScrollViewTest_ScrollToPercentBothDirection_Editor)
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 
 class UIScrollViewTest_ScrollToPercentBothDirection_Bounce_Editor : public UIScene_Editor
 {
 public:
+    CREATE_FUNC(UIScrollViewTest_ScrollToPercentBothDirection_Bounce_Editor);
+
     UIScrollViewTest_ScrollToPercentBothDirection_Bounce_Editor();
     ~UIScrollViewTest_ScrollToPercentBothDirection_Bounce_Editor();
-    bool init();
+
+    virtual bool init() override;
     
 protected:
-    UI_SCENE_EDITOR_CREATE_FUNC(UIScrollViewTest_ScrollToPercentBothDirection_Bounce_Editor)
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UIScrollViewTest_Editor__) */

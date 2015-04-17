@@ -68,7 +68,7 @@ void PULineEmitter::notifyRescaled(const Vec3& scale)
     // Scale the internal attributes and use them, otherwise this results in too many calculations per particle
     PUEmitter::notifyRescaled(scale);
     float scaleLength = scale.length();
-    _scaledEnd = Vec3(_end.x * scale.x, _end.y * scale.y, _end.z * scale.z);
+    _scaledEnd.set(_end.x * scale.x, _end.y * scale.y, _end.z * scale.z);
     _scaledMaxDeviation = _maxDeviation * scaleLength;
     _scaledMinIncrement = _minIncrement * scaleLength;
     _scaledMaxIncrement = (_maxIncrement - _minIncrement) * scaleLength;
@@ -108,7 +108,7 @@ const Vec3& PULineEmitter::getEnd(void) const
 void PULineEmitter::setEnd(const Vec3& end)
 {
     _end = end;
-    _scaledEnd = Vec3(_end.x * _emitterScale.x, _end.y * _emitterScale.y, _end.z * _emitterScale.z);
+    _scaledEnd.set(_end.x * _emitterScale.x, _end.y * _emitterScale.y, _end.z * _emitterScale.z);
     _length = _end.length();
 }
 //-----------------------------------------------------------------------
