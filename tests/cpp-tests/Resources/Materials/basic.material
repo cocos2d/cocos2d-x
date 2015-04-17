@@ -19,8 +19,12 @@
 		              					"#define USE_MULTITEXTURE 1"
 		              					],
 
-							"vertexShader": "Shaders/example_MultiTexture.vsh",
-							"fragmentShader": "Shaders/example_Blur.fsh"
+							"vertexShader": "Shaders/example_simple.vsh",
+							"fragmentShader": "Shaders/example_Blur.fsh",
+
+							"blurRadius": 10,
+							"sampleNum": 5,
+							"resolution": [80,80]
 						},
 
 						"textures": [

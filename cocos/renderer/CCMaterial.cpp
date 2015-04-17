@@ -330,10 +330,9 @@ bool Material::parseUniform(GLProgramState* programState, const rapidjson::Value
     const char* key = iterator->name.GetString();
     auto& value = iterator->value;
 
-    if (value.IsDouble()) {
+    if (value.IsNumber()) {
         float v = value.GetDouble();
         programState->setUniformFloat(key, v);
-
     }
     else if (value.IsArray()) {
 
