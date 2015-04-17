@@ -39,15 +39,23 @@ class Physics3DWorld;
 
 class CC_EX_DLL Physics3DComponent : public cocos2d::Component
 {
-    //friend class cocos2d::Scene;
 public:
+    enum class PhysicsSyncFlag
+    {
+        NONE = 0,
+        NODE_TO_PHYSICS = 1,
+        PHYSICS_TO_NODE = 2,
+        NODE_AND_NODE = NODE_TO_PHYSICS | PHYSICS_TO_NODE,
+    };
+    
     CREATE_FUNC(Physics3DComponent);
     virtual ~Physics3DComponent();
     virtual bool init() override;
-    
-    //virtual void update(float delta);
-    virtual bool serialize(void* r) override;
-    static Physics3DComponent* create(Physics3DObject* physicsObj, const cocos2d::Mat4& trans = cocos2d::Mat4::IDENTITY);
+
+    /**
+     * create
+     */
+    static Physics3DComponent* create(Physics3DObject* physicsObj, const cocos2d::Vec3& translateInPhysics = cocos2d::Vec3::ZERO, const cocos2d::Quaternion& rotInPhsyics = cocos2d::Quaternion::ZERO);
     
     void setPhysics3DObject(Physics3DObject* physicsObj);
     
@@ -67,7 +75,19 @@ public:
     
     void addToPhysicsWorld(Physics3DWorld* world);
     
-    void setTransformInPhysics(const cocos2d::Mat4& trans);
+    /**
+     * The node's transform in physics space
+     */
+    void setTransformInPhysics(const cocos2d::Vec3& translateInPhysics, const cocos2d::Quaternion& rotInPhsyics);
+    
+    /**
+     * synchronization between node and physics is time consuming, you can skip some synchronization using this function
+     */
+    void setSyncFlag(PhysicsSyncFlag syncFlag);
+    
+    void syncToPhysics();
+    
+    void syncToNode();
     
 CC_CONSTRUCTOR_ACCESS:
     Physics3DComponent();
@@ -77,6 +97,7 @@ protected:
     cocos2d::Mat4             _invTransformInPhysics;
     
     Physics3DObject*          _physics3DObj;
+    PhysicsSyncFlag           _syncFlag;
 };
 
 NS_CC_EXT_END
