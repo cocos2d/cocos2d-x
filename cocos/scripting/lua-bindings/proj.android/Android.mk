@@ -17,7 +17,6 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../.. \
 
 LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
-                       -lz \
                        -landroid
 
 LOCAL_STATIC_LIBRARIES := luajit_static
