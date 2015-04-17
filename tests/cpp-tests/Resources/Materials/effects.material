@@ -11,7 +11,7 @@
              "name": "blur",
              "passes": [
                   {
-						"blend":  "ALPHA_PREMULTIPLIED",
+						"blend":  "ALPHA_NON_PREMULTIPLIED",
 
                   		"shader" : {
 		              		"defines": ["// Add here things that you want to be compiled on the shaders", 
@@ -44,7 +44,7 @@
              "name": "outline",
              "passes": [
                   {
-						"blend":  "ALPHA_PREMULTIPLIED",
+						"blend":  "ALPHA_NON_PREMULTIPLIED",
 
                   		"shader" : {
 		              		"defines": ["// Add here things that you want to be compiled on the shaders", 
@@ -77,7 +77,7 @@
              "name": "noise",
              "passes": [
                   {
-						"blend":  "ALPHA_PREMULTIPLIED",
+						"blend":  "ALPHA_NON_PREMULTIPLIED",
 
                   		"shader" : {
 		              		"defines": ["// Add here things that you want to be compiled on the shaders", 
@@ -108,7 +108,7 @@
              "name": "edge detect",
              "passes": [
                   {
-						"blend":  "ALPHA_PREMULTIPLIED",
+						"blend":  "ALPHA_NON_PREMULTIPLIED",
 
                   		"shader" : {
 		              		"defines": ["// Add here things that you want to be compiled on the shaders", 
@@ -134,7 +134,63 @@
 						]
                   }
 			]
-         }         
+         },
+         {
+             "name": "gray+blur",
+             "passes": [
+                  {
+						"blend":  "ALPHA_NON_PREMULTIPLIED",
 
+                  		"shader" : {
+		              		"defines": ["// Add here things that you want to be compiled on the shaders", 
+		              					"// this is the 2nd line",
+		              					"#define USE_MULTITEXTURE 1"
+		              					],
+
+							"vertexShader": "Shaders/example_simple.vsh",
+							"fragmentShader": "Shaders/example_Blur.fsh",
+
+							"blurRadius": 10,
+							"sampleNum": 5,
+							"resolution": [100,100]
+						},
+
+						"textures": [
+							{
+								"path": "Images/grossinis_sister1.png",
+								"wrapS": "CLAMP_TO_EDGE",
+                				"wrapT": "CLAMP_TO_EDGE",
+                				"minFilter": "LINEAR",
+                				"magFilter": "LINEAR",
+                				"mipmap": "false"
+							}
+						]
+                  },
+                  {
+						"blend":  "ALPHA_NON_PREMULTIPLIED",
+
+                  		"shader" : {
+		              		"defines": ["// Add here things that you want to be compiled on the shaders", 
+		              					"// this is the 2nd line",
+		              					"#define USE_MULTITEXTURE 1"
+		              					],
+
+							"vertexShader": "Shaders/example_simple.vsh",
+							"fragmentShader": "Shaders/example_greyScale.fsh"
+						},
+
+						"textures": [
+							{
+								"path": "Images/grossinis_sister1.png",
+								"wrapS": "CLAMP_TO_EDGE",
+                				"wrapT": "CLAMP_TO_EDGE",
+                				"minFilter": "LINEAR",
+                				"magFilter": "LINEAR",
+                				"mipmap": "false"
+							}
+						]
+                  }                                    
+			]
+         }       
      ]
 }

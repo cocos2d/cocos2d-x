@@ -890,14 +890,19 @@ void Renderer::drawBatchedQuads()
         
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _quadbuffersVBO[1]);
     }
-    
+
+
+    // FIXME: The logic of this code is confusing, and error prone
+    // Needs refactoring
+
     //Start drawing vertices in batch
     for(const auto& cmd : _batchQuadCommands)
     {
+        bool commandQueued = true;
         auto newMaterialID = cmd->getMaterialID();
         if(_lastMaterialID != newMaterialID || newMaterialID == MATERIAL_ID_DO_NOT_BATCH)
         {
-            //Draw previous quads
+            // flush buffer
             if(indexToDraw > 0)
             {
                 glDrawElements(GL_TRIANGLES, (GLsizei) indexToDraw, GL_UNSIGNED_SHORT, (GLvoid*) (startIndex*sizeof(_indices[0])) );
@@ -926,12 +931,18 @@ void Renderer::drawBatchedQuads()
                     pass->unbind();
                 }
 
+                indexToDraw = 0;
+                commandQueued = false;
+
             } else {
                 cmd->useMaterial();
             }
         }
-        
-        indexToDraw += cmd->getQuadCount() * 6;
+
+        if (commandQueued)
+        {
+            indexToDraw += cmd->getQuadCount() * 6;
+        }
     }
     
     //Draw any remaining quad

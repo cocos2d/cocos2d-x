@@ -50,6 +50,9 @@ std::string MaterialSystemBaseTest::title() const
 void Material_SpriteSinglePassTest::onEnter()
 {
     MaterialSystemBaseTest::onEnter();
+    auto layer = LayerColor::create(Color4B::BLUE);
+    this->addChild(layer);
+
 
     auto sprite = Sprite::create("Images/grossini.png");
     sprite->setNormalizedPosition(Vec2(0.5, 0.5));
@@ -61,13 +64,14 @@ void Material_SpriteSinglePassTest::onEnter()
 
 //    material->setTechnique("blur");
 //    material->setTechnique("outline");
-    material->setTechnique("noise");
+//    material->setTechnique("noise");
 //    material->setTechnique("edge detect");
+    material->setTechnique("gray+blur");
 }
 
 std::string Material_SpriteSinglePassTest::subtitle() const
 {
-    return "Sprites with single Pass";
+    return "Testing Effects on sprites";
 }
 
 
