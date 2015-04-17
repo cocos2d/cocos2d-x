@@ -55,27 +55,27 @@
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <Import Project="..\..\..\js-bindings\cocos2d-x\cocos\2d\wp_8.1_props\cocos2d_wp_8.1_platform.props" />
-    <Import Project="..\..\..\js-bindings\cocos2d-x\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1.props" />
-    <Import Project="..\..\..\js-bindings\cocos2d-x\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_app.props" />
+    <Import Project="..\..\..\cocos2d-x\cocos\2d\wp_8.1_props\cocos2d_wp_8.1_platform.props" />
+    <Import Project="..\..\..\cocos2d-x\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1.props" />
+    <Import Project="..\..\..\cocos2d-x\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_app.props" />
     <Import Project="..\resources.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
-    <Import Project="..\..\..\js-bindings\cocos2d-x\cocos\2d\wp_8.1_props\cocos2d_wp_8.1_platform.props" />
-    <Import Project="..\..\..\js-bindings\cocos2d-x\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1.props" />
-    <Import Project="..\..\..\js-bindings\cocos2d-x\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_app.props" />
+    <Import Project="..\..\..\cocos2d-x\cocos\2d\wp_8.1_props\cocos2d_wp_8.1_platform.props" />
+    <Import Project="..\..\..\cocos2d-x\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1.props" />
+    <Import Project="..\..\..\cocos2d-x\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_app.props" />
     <Import Project="..\resources.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <Import Project="..\..\..\js-bindings\cocos2d-x\cocos\2d\wp_8.1_props\cocos2d_wp_8.1_platform.props" />
-    <Import Project="..\..\..\js-bindings\cocos2d-x\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1.props" />
-    <Import Project="..\..\..\js-bindings\cocos2d-x\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_app.props" />
+    <Import Project="..\..\..\cocos2d-x\cocos\2d\wp_8.1_props\cocos2d_wp_8.1_platform.props" />
+    <Import Project="..\..\..\cocos2d-x\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1.props" />
+    <Import Project="..\..\..\cocos2d-x\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_app.props" />
     <Import Project="..\resources.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
-    <Import Project="..\..\..\js-bindings\cocos2d-x\cocos\2d\wp_8.1_props\cocos2d_wp_8.1_platform.props" />
-    <Import Project="..\..\..\js-bindings\cocos2d-x\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1.props" />
-    <Import Project="..\..\..\js-bindings\cocos2d-x\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_app.props" />
+    <Import Project="..\..\..\cocos2d-x\cocos\2d\wp_8.1_props\cocos2d_wp_8.1_platform.props" />
+    <Import Project="..\..\..\cocos2d-x\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1.props" />
+    <Import Project="..\..\..\cocos2d-x\cocos\2d\winrt_8.1_props\cocos2d_winrt_8.1_app.props" />
     <Import Project="..\resources.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
@@ -132,16 +132,16 @@
     <Image Include="Assets\WideLogo.scale-240.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\js-bindings\bindings\proj.win8.1-universal\libJSBinding\libJSBinding.WindowsPhone\libJSBinding.WindowsPhone.vcxproj">
+    <ProjectReference Include="..\..\..\cocos2d-x\cocos\scripting\js-bindings\proj.win8.1-universal\libjscocos2d\libjscocos2d.WindowsPhone\libjscocos2d.WindowsPhone.vcxproj">
       <Project>{ca082ec4-17ce-430b-8207-d1e947a5d1e9}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\js-bindings\cocos2d-x\cocos\2d\libcocos2d_8_1\libcocos2d_8_1\libcocos2d_8_1.WindowsPhone\libcocos2d_8_1.WindowsPhone.vcxproj">
+    <ProjectReference Include="..\..\..\cocos2d-x\cocos\2d\libcocos2d_8_1\libcocos2d_8_1\libcocos2d_8_1.WindowsPhone\libcocos2d_8_1.WindowsPhone.vcxproj">
       <Project>{22f3b9df-1209-4574-8331-003966f562bf}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\js-bindings\cocos2d-x\cocos\editor-support\spine\proj.win8.1-universal\libSpine.WindowsPhone\libSpine.WindowsPhone.vcxproj">
+    <ProjectReference Include="..\..\..\cocos2d-x\cocos\editor-support\spine\proj.win8.1-universal\libSpine.WindowsPhone\libSpine.WindowsPhone.vcxproj">
       <Project>{cc1da216-a80d-4be4-b309-acb6af313aff}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\js-bindings\cocos2d-x\external\Box2D\proj.win8.1-universal\libbox2d.WindowsPhone\libbox2d.WindowsPhone.vcxproj">
+    <ProjectReference Include="..\..\..\cocos2d-x\external\Box2D\proj.win8.1-universal\libbox2d.WindowsPhone\libbox2d.WindowsPhone.vcxproj">
       <Project>{22f798d8-bfff-4754-996f-a5395343d5ec}</Project>
     </ProjectReference>
   </ItemGroup>

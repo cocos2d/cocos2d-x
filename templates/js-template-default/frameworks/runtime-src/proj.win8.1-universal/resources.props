@@ -4,16 +4,16 @@
 
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(EngineRoot)..\bindings\manual;$(EngineRoot)..\bindings\auto;$(EngineRoot)..\external\spidermonkey\include\$(COCOS2D_PLATFORM);$(EngineRoot)cocos\base;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(EngineRoot)cocos\scripting\js-bindings\manual;$(EngineRoot)cocos\scripting\js-bindings\auto;$(EngineRoot)external\spidermonkey\include\$(COCOS2D_PLATFORM);$(EngineRoot)cocos\base;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>mozjs-33.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(EngineRoot)..\external\spidermonkey\prebuilt\$(COCOS2D_PLATFORM)\$(Platform);%(AdditionalLibraryDirectories);</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(EngineRoot)external\spidermonkey\prebuilt\$(COCOS2D_PLATFORM)\$(Platform);%(AdditionalLibraryDirectories);</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   
   <PropertyGroup Label="APP_DLLS">
-    <SpiderMonkeyBinPath Condition=" '$(SpiderMonkeyBinPath)' == '' ">$(EngineRoot)..\external\spidermonkey\prebuilt\$(COCOS2D_PLATFORM)\$(Platform)\</SpiderMonkeyBinPath>
+    <SpiderMonkeyBinPath Condition=" '$(SpiderMonkeyBinPath)' == '' ">$(EngineRoot)external\spidermonkey\prebuilt\$(COCOS2D_PLATFORM)\$(Platform)\</SpiderMonkeyBinPath>
   </PropertyGroup>
 
   <ItemGroup Label="APP_DLLs">
@@ -35,7 +35,7 @@
     </_CustomResource>
   </ItemGroup>
   <ItemGroup>
-    <_CustomResource Include="..\..\..\..\frameworks\js-bindings\bindings\script\**\*">
+    <_CustomResource Include="$(EngineRoot)cocos\scripting\js-bindings\script\**\*">
       <Link>Assets\Resources\script\%(RecursiveDir)%(FileName)%(Extension)</Link>
       <DeploymentContent>true</DeploymentContent>
     </_CustomResource>

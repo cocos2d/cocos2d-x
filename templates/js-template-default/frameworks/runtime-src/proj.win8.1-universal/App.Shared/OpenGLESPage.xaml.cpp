@@ -36,10 +36,6 @@ using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 
-#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
-using namespace Windows::Phone::UI::Input;
-#endif
-
 OpenGLESPage::OpenGLESPage() :
     OpenGLESPage(nullptr)
 {
@@ -53,7 +49,6 @@ OpenGLESPage::OpenGLESPage(OpenGLES* openGLES) :
     mUseCustomRenderSurfaceSize(false),
     m_coreInput(nullptr),
     m_dpi(0.0f),
-    m_visible(false),
     m_deviceLost(false),
     m_orientation(DisplayOrientations::Landscape)
 {
@@ -81,7 +76,6 @@ OpenGLESPage::OpenGLESPage(OpenGLES* openGLES) :
 
 #if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
     Windows::UI::ViewManagement::StatusBar::GetForCurrentView()->HideAsync();
-    HardwareButtons::BackPressed += ref new EventHandler<BackPressedEventArgs^>(this, &OpenGLESPage::OnBackButtonPressed);   
 #else
     // Disable all pointer visual feedback for better performance when touching.
     // This is not supported on Windows Phone applications.
@@ -124,7 +118,6 @@ void OpenGLESPage::OnPageLoaded(Platform::Object^ sender, Windows::UI::Xaml::Rou
 {
     // The SwapChainPanel has been created and arranged in the page layout, so EGL can be initialized.
     CreateRenderSurface();
-    m_visible = true;
     StartRenderLoop();
 }
 
@@ -162,28 +155,13 @@ void OpenGLESPage::OnVisibilityChanged(Windows::UI::Core::CoreWindow^ sender, Wi
 {
     if (args->Visible && mRenderSurface != EGL_NO_SURFACE)
     {
-        m_visible = true;
+        StartRenderLoop();
     }
     else
     {
-        m_visible = false;
+        StopRenderLoop();
     }
 }
-
-#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
-void OpenGLESPage::OnBackButtonPressed(Object^ sender, BackPressedEventArgs^ args)
-{
-    bool myAppCanNavigate = false;
-    if (myAppCanNavigate)
-    {
-        args->Handled = true;
-    }
-    else {
-        // Do nothing. Leave args->Handled set to the current value, false.
-    }
-}
-#endif
-
 
 void OpenGLESPage::OnSwapChainPanelSizeChanged(Object^ sender, Windows::UI::Xaml::SizeChangedEventArgs^ e)
 {
@@ -237,10 +215,19 @@ void OpenGLESPage::DestroyRenderSurface()
 
 void OpenGLESPage::RecoverFromLostDevice()
 {
-    // resets OpenGLES, recreates the render surface
-    DestroyRenderSurface();
-    mOpenGLES->Reset();
-    CreateRenderSurface();
+    // Stop the render loop, reset OpenGLES, recreate the render surface
+    // and start the render loop again to recover from a lost device.
+
+    StopRenderLoop();
+
+    {
+        critical_section::scoped_lock lock(mRenderSurfaceCriticalSection);
+        DestroyRenderSurface();
+        mOpenGLES->Reset();
+        CreateRenderSurface();
+    }
+
+    StartRenderLoop();
 }
 
 void OpenGLESPage::StartRenderLoop()
@@ -259,34 +246,34 @@ void OpenGLESPage::StartRenderLoop()
     // Create a task for rendering that will be run on a background thread.
     auto workItemHandler = ref new Windows::System::Threading::WorkItemHandler([this, dispatcher](Windows::Foundation::IAsyncAction ^ action)
     {
+        critical_section::scoped_lock lock(mRenderSurfaceCriticalSection);
+
         mOpenGLES->MakeCurrent(mRenderSurface);
+
         GLsizei panelWidth = 0;
         GLsizei panelHeight = 0;
         GetSwapChainPanelSize(&panelWidth, &panelHeight);
+        
+
 
         if (m_renderer.get() == nullptr)
         {
             m_renderer = std::make_shared<Cocos2dRenderer>(panelWidth, panelHeight, m_dpi, m_orientation, dispatcher, swapChainPanel);
         }
 
-        m_renderer->Resume();
-
-        while (action->Status == Windows::Foundation::AsyncStatus::Started)
+        if (m_deviceLost)
         {
-            if (!m_visible)
-            {
-                m_renderer->Pause();
-                while (!m_visible)
-                {
-                    if (action->Status != Windows::Foundation::AsyncStatus::Started)
-                    {
-                        return;
-                    }
-                    Sleep(500);
-                }
-                m_renderer->Resume();
-            }
-           
+            m_deviceLost = false;
+            m_renderer->DeviceLost();
+        }
+        else
+        {
+            m_renderer->Resume();
+        }
+
+
+        while (action->Status == Windows::Foundation::AsyncStatus::Started && !m_deviceLost)
+        {
             GetSwapChainPanelSize(&panelWidth, &panelHeight);
             m_renderer.get()->Draw(panelWidth, panelHeight, m_dpi, m_orientation);
 
@@ -302,16 +289,7 @@ void OpenGLESPage::StartRenderLoop()
                     RecoverFromLostDevice();
                 }, CallbackContext::Any));
 
-                while(m_deviceLost)
-                {
-                    if (action->Status != Windows::Foundation::AsyncStatus::Started)
-                    {
-                        return;
-                    }
-                    Sleep(500);
-                }
-                mOpenGLES->MakeCurrent(mRenderSurface);
-                m_renderer->DeviceLost();
+                return;
             }
         }
     });
@@ -326,5 +304,10 @@ void OpenGLESPage::StopRenderLoop()
     {
         mRenderLoopWorker->Cancel();
         mRenderLoopWorker = nullptr;
+    }
+
+    if (m_renderer)
+    {
+        m_renderer->Pause();
     }
 }
