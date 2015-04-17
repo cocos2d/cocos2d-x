@@ -25,11 +25,6 @@
     <ClCompile Include="..\..\..\..\external\lua\luasocket\timeout.c" />
     <ClCompile Include="..\..\..\..\external\lua\luasocket\udp.c" />
     <ClCompile Include="..\..\..\..\external\lua\luasocket\wsocket.c" />
-    <ClCompile Include="..\..\..\..\external\lua\quick\LuaEventNode.cpp" />
-    <ClCompile Include="..\..\..\..\external\lua\quick\LuaNodeManager.cpp" />
-    <ClCompile Include="..\..\..\..\external\lua\quick\LuaTouchEventManager.cpp" />
-    <ClCompile Include="..\..\..\..\external\lua\quick\LuaTouchTargetNode.cpp" />
-    <ClCompile Include="..\..\..\..\external\lua\quick\lua_cocos2dx_quick_manual.cpp" />
     <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_event.c" />
     <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_is.c" />
     <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_map.c" />
@@ -101,11 +96,6 @@
     <ClInclude Include="..\..\..\..\external\lua\luasocket\timeout.h" />
     <ClInclude Include="..\..\..\..\external\lua\luasocket\udp.h" />
     <ClInclude Include="..\..\..\..\external\lua\luasocket\wsocket.h" />
-    <ClInclude Include="..\..\..\..\external\lua\quick\LuaEventNode.h" />
-    <ClInclude Include="..\..\..\..\external\lua\quick\LuaNodeManager.h" />
-    <ClInclude Include="..\..\..\..\external\lua\quick\LuaTouchEventManager.h" />
-    <ClInclude Include="..\..\..\..\external\lua\quick\LuaTouchTargetNode.h" />
-    <ClInclude Include="..\..\..\..\external\lua\quick\lua_cocos2dx_quick_manual.hpp" />
     <ClInclude Include="..\..\..\..\external\lua\tolua\tolua++.h" />
     <ClInclude Include="..\..\..\..\external\lua\tolua\tolua_event.h" />
     <ClInclude Include="..\..\..\..\external\xxtea\xxtea.h" />
