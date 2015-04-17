@@ -111,6 +111,18 @@ Run
 
 Please refer to this document: [ReadMe](../README.md)
 
+# v3.6beta0
+
+## Hilights of v3.6beta0
+
+* 3rd: updated Spine runtime to v2.1.25
+* MotionStreak: added `getStroke()` and `setStroke()`
+* Rect: added `intersectsCircle()`
+* UI:Text: added `disableEffect(LabelEffect)` to disable a specific effect
+* Fixed link error on VS2012 caused by libpng
+* Optimized memory usage for `ui:button`
+* Some bugs fixed for `Particle3D` and other modules
+
 # v3.6alpha0
 
 ## Highlights of v3.6alpha0
