@@ -630,7 +630,7 @@ bool luaval_to_color4b(lua_State* L,int lo,Color4B* outValue, const char* funcNa
         
         lua_pushstring(L, "a");
         lua_gettable(L,lo);
-        outValue->a = lua_isnil(L,-1) ? 0 : lua_tonumber(L,-1);
+        outValue->a = lua_isnil(L,-1) ? 255 : lua_tonumber(L,-1);
         lua_pop(L,1);
     }
     
