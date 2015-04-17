@@ -5,10 +5,6 @@
             "to": "src"
         }, 
         {
-            "from": "../../res", 
-            "to": "res"
-        }, 
-        {
             "from": "../../../cpp-tests/Resources/", 
             "to": "res/"
         }, 
@@ -23,38 +19,6 @@
         {
             "from": "../../../../cocos/scripting/js-bindings/script", 
             "to": "script"
-        },
-        {
-            "from": "../../../../plugin/jsbindings/script", 
-            "to": ""
-        }, 
-        {
-            "from": "../../../../plugin/protocols/proj.android/src", 
-            "to": "../src"
-        }, 
-        {
-            "from": "../../../../plugin/plugins/umeng/proj.android/src", 
-            "to": "../src"
-        }, 
-        {
-            "from": "../../../../plugin/plugins/umeng/proj.android/sdk", 
-            "to": "../libs"
-        }, 
-        {
-            "from": "../../../../plugin/plugins/flurry/proj.android/src", 
-            "to": "../src"
-        }, 
-        {
-            "from": "../../../../plugin/plugins/flurry/proj.android/sdk", 
-            "to": "../libs"
-        },
-        {
-            "from": "../../../../plugin/plugins/facebook/proj.android/src", 
-            "to": "../src"
-        }, 
-        {
-            "from": "../../../../plugin/plugins/facebook/proj.android/sdk", 
-            "to": "../libs"
         }
     ], 
     "ndk_module_path": [

@@ -27,8 +27,6 @@ import org.cocos2dx.js_tests.R;
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 import org.cocos2dx.lib.Cocos2dxJavascriptJavaBridge;
-import org.cocos2dx.plugin.PluginWrapper;
-import org.cocos2dx.plugin.FacebookWrapper;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -50,10 +48,6 @@ public class AppActivity extends Cocos2dxActivity {
         Cocos2dxGLSurfaceView glSurfaceView = new Cocos2dxGLSurfaceView(this);
         // TestCpp should create stencil buffer
         glSurfaceView.setEGLConfigChooser(5, 6, 5, 0, 16, 8);
-        
-        PluginWrapper.init(this);
-        PluginWrapper.setGLSurfaceView(glSurfaceView);
-        FacebookWrapper.onCreate(this);
         
         return glSurfaceView;
     }
@@ -83,15 +77,4 @@ public class AppActivity extends Cocos2dxActivity {
         });
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        FacebookWrapper.onAcitivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        FacebookWrapper.onSaveInstanceState(outState);
-    }
 }

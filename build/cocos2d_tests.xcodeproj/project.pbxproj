@@ -986,8 +986,6 @@
 		FADEC3701ADCE3350018F90E /* Test_Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FADEC36A1ADCE3350018F90E /* Test_Info.plist */; };
 		FADEC3721ADCE3590018F90E /* src in Resources */ = {isa = PBXBuildFile; fileRef = FADEC3711ADCE3590018F90E /* src */; };
 		FADEC3731ADCE3590018F90E /* src in Resources */ = {isa = PBXBuildFile; fileRef = FADEC3711ADCE3590018F90E /* src */; };
-		FADEC3751ADCE3630018F90E /* res in Resources */ = {isa = PBXBuildFile; fileRef = FADEC3741ADCE3620018F90E /* res */; };
-		FADEC3761ADCE3630018F90E /* res in Resources */ = {isa = PBXBuildFile; fileRef = FADEC3741ADCE3620018F90E /* res */; };
 		FADEC3781ADCE39C0018F90E /* script in Resources */ = {isa = PBXBuildFile; fileRef = FADEC3771ADCE39C0018F90E /* script */; };
 		FADEC3791ADCE39C0018F90E /* script in Resources */ = {isa = PBXBuildFile; fileRef = FADEC3771ADCE39C0018F90E /* script */; };
 		FADEC37E1ADCE52F0018F90E /* libjscocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FADEB2311ADCE2050018F90E /* libjscocos2d iOS.a */; };
@@ -2022,7 +2020,6 @@
 		FADEC36A1ADCE3350018F90E /* Test_Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Test_Info.plist; sourceTree = "<group>"; };
 		FADEC36B1ADCE3350018F90E /* Test_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test_Prefix.pch; sourceTree = "<group>"; };
 		FADEC3711ADCE3590018F90E /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; path = src; sourceTree = "<group>"; };
-		FADEC3741ADCE3620018F90E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
 		FADEC3771ADCE39C0018F90E /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; name = script; path = "../../cocos/scripting/js-bindings/script"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -4312,7 +4309,6 @@
 			children = (
 				FADEB2571ADCE2A20018F90E /* project */,
 				FADEC3711ADCE3590018F90E /* src */,
-				FADEC3741ADCE3620018F90E /* res */,
 				FADEC3771ADCE39C0018F90E /* script */,
 				FADEB2551ADCE2A20018F90E /* main.js */,
 				FADEB3A21ADCE2A30018F90E /* project.json */,
@@ -5053,7 +5049,6 @@
 				FADEB19F1ADCE1600018F90E /* TerrainTest in Resources */,
 				FADEC36C1ADCE3350018F90E /* InfoPlist.strings in Resources */,
 				FADEB1A01ADCE1600018F90E /* Particle3D in Resources */,
-				FADEC3751ADCE3630018F90E /* res in Resources */,
 				FADEB1A11ADCE1600018F90E /* Manifests in Resources */,
 				FADEB1A21ADCE1600018F90E /* ActionTimeline in Resources */,
 				FADEB1A31ADCE1600018F90E /* src in Resources */,
@@ -5159,7 +5154,6 @@
 				FADEB2101ADCE1CF0018F90E /* effect1.raw in Resources */,
 				FADEB2111ADCE1CF0018F90E /* Shaders in Resources */,
 				FADEB2121ADCE1CF0018F90E /* configs in Resources */,
-				FADEC3761ADCE3630018F90E /* res in Resources */,
 				FADEB2131ADCE1CF0018F90E /* spine in Resources */,
 				FADEC3731ADCE3590018F90E /* src in Resources */,
 				FADEC35A1ADCE3280018F90E /* Icon-144.png in Resources */,
