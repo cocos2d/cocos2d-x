@@ -41,6 +41,7 @@ AudioPlayer::AudioPlayer()
     , _finishCallbak(nullptr)
     , _ready(false)
     , _audioCache(nullptr)
+    , _streamingEnd(false)
 {
 
 }
@@ -64,7 +65,7 @@ AudioPlayer::~AudioPlayer()
         if (_rotateBufferThread.joinable()) {
             _rotateBufferThread.join();
         }
-        alDeleteBuffers(3, _bufferIds);
+        alDeleteBuffers(QUEUEBUFFER_NUM, _bufferIds);
     }
 }
 
@@ -93,11 +94,10 @@ bool AudioPlayer::play2d(AudioCache* cache)
         alSourcei(_alSource, AL_LOOPING, AL_FALSE);
 
         auto alError = alGetError();
-        alGenBuffers(3, _bufferIds);
+        alGenBuffers(QUEUEBUFFER_NUM, _bufferIds);
         alError = alGetError();
         if (alError == AL_NO_ERROR) {
-            _rotateBufferThread = std::thread(&AudioPlayer::rotateBufferThread,this, _audioCache->_queBufferFrames * QUEUEBUFFER_NUM + 1);
-
+            _rotateBufferThread = std::thread(&AudioPlayer::rotateBufferThread, this, _audioCache->_queBufferFrames * QUEUEBUFFER_NUM + 1);
             for (int index = 0; index < QUEUEBUFFER_NUM; ++index) {
                 alBufferData(_bufferIds[index], _audioCache->_alBufferFormat, _audioCache->_queBuffers[index], _audioCache->_queBufferSize[index], _audioCache->_sampleRate);
             }
@@ -248,11 +248,11 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
             }
         }
 
-        if (_exitThread){
+        if (_exitThread || sourceState == AL_STOPPED)
             break;
-        }
+
         std::unique_lock<std::mutex> lk(_sleepMutex);
-        _sleepCondition.wait_for(lk,std::chrono::milliseconds(75));
+        _sleepCondition.wait_for(lk,std::chrono::milliseconds(20));
     }
 ExitBufferThread:
     switch (audioFileFormat)
@@ -270,6 +270,7 @@ ExitBufferThread:
         break;
     }
     free(tmpBuffer);
+    _streamingEnd = true;
 }
 
 bool AudioPlayer::setLoop(bool loop)

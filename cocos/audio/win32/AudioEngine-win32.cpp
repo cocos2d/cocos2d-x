@@ -61,7 +61,9 @@ namespace cocos2d {
                 
                 for (int index = 0; index < _numThread; ++index) {
                     _tasks.push_back(nullptr);
-                    _threads.push_back( std::thread( std::bind(&AudioEngineThreadPool::threadFunc,this,index) ) );
+                    auto& threadFunc = std::thread(std::bind(&AudioEngineThreadPool::threadFunc, this, index));
+                    threadFunc.detach();
+                    _threads.push_back(&threadFunc);
                 }
             }
             
@@ -77,7 +79,9 @@ namespace cocos2d {
                 }
                 if (targetIndex == -1) {
                     _tasks.push_back(task);
-                    _threads.push_back( std::thread( std::bind(&AudioEngineThreadPool::threadFunc,this,_numThread) ) );
+                    auto& threadFunc = std::thread(std::bind(&AudioEngineThreadPool::threadFunc, this, _numThread));
+                    threadFunc.detach();
+                    _threads.push_back(&threadFunc);
                     
                     _numThread++;
                 }
@@ -91,12 +95,12 @@ namespace cocos2d {
                 _sleepCondition.notify_all();
                 
                 for (int index = 0; index < _numThread; ++index) {
-                    _threads[index].join();
+                    _threads[index]->join();
                 }
             }           
         private:
             bool _running;
-            std::vector<std::thread>  _threads;
+            std::vector<std::thread*>  _threads;
             std::vector< std::function<void ()> > _tasks;
             
             void threadFunc(int index)
@@ -268,7 +272,7 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
         auto scheduler = cocos2d::Director::getInstance()->getScheduler();
         scheduler->schedule(schedule_selector(AudioEngineImpl::update), this, 0.05f, false);
     }
-    
+
     return _currentAudioID++;
 }
 
@@ -498,15 +502,15 @@ void AudioEngineImpl::update(float dt)
         auto& player = it->second;
         alGetSourcei(player._alSource, AL_SOURCE_STATE, &sourceState);
         
-        if (player._ready && sourceState == AL_STOPPED) {
+        if (player._ready && sourceState == AL_STOPPED && (!player._streamingSource || player._streamingEnd)) {
             _alSourceUsed[player._alSource] = false;
             if (player._finishCallbak) {
                 auto& audioInfo = AudioEngine::_audioIDInfoMap[audioID];
                 player._finishCallbak(audioID, *audioInfo.filePath);
             }
-            
+
             AudioEngine::remove(audioID);
-            
+
             it = _audioPlayers.erase(it);
         }
         else{
