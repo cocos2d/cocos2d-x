@@ -283,6 +283,11 @@ void OpenGLESPage::StartRenderLoop()
             {
                 m_deviceLost = true;
 
+                if (m_renderer)
+                {
+                    m_renderer->Pause();
+                }
+
                 // XAML objects like the SwapChainPanel must only be manipulated on the UI thread.
                 swapChainPanel->Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::High, ref new Windows::UI::Core::DispatchedHandler([=]()
                 {
@@ -291,6 +296,11 @@ void OpenGLESPage::StartRenderLoop()
 
                 return;
             }
+        }
+
+        if (m_renderer)
+        {
+            m_renderer->Pause();
         }
     });
 
@@ -304,10 +314,5 @@ void OpenGLESPage::StopRenderLoop()
     {
         mRenderLoopWorker->Cancel();
         mRenderLoopWorker = nullptr;
-    }
-
-    if (m_renderer)
-    {
-        m_renderer->Pause();
     }
 }
