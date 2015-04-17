@@ -70,12 +70,12 @@ void Physics3DDebugDrawer::draw3dText( const btVector3& location,const char* tex
 
 void Physics3DDebugDrawer::setDebugMode( int debugMode )
 {
-
+    _debugMode = debugMode;
 }
 
 int Physics3DDebugDrawer::getDebugMode() const 
 {
-    return DBG_MAX_DEBUG_DRAW_MODE;
+    return _debugMode;
 }
 
 void Physics3DDebugDrawer::draw( Renderer *renderer)
@@ -93,6 +93,7 @@ Physics3DDebugDrawer::Physics3DDebugDrawer()
     , _buffer(nullptr)
     , _blendFunc(BlendFunc::DISABLE)
     , _dirty(true)
+    , _debugMode(DBG_DrawWireframe | DBG_DrawConstraints | DBG_DrawConstraintLimits)
 {
     init();
 }

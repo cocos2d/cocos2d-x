@@ -97,6 +97,20 @@ public:
      */
     static Physics3DShape* createMesh(const cocos2d::Vec3 *triangles, int numTriangles);
 
+    /**
+     * create heightfield
+     * @param heightStickWidth The Width of heightfield
+     * @param heightStickLength The Length of heightfield.
+     * @param heightfieldData The Data of heightfield.
+     * @param minHeight The minHeight of heightfield.
+     * @param maxHeight The maxHeight of heightfield.
+     * @param flipQuadEdges if flip QuadEdges
+     */
+    static Physics3DShape* createHeightfield(int heightStickWidth,int heightStickLength
+        , const void* heightfieldData, float heightScale
+        , float minHeight, float maxHeight
+        , bool useFloatDatam, bool flipQuadEdges, bool useDiamondSubdivision = false);
+
 
     
 #if CC_ENABLE_BULLET_INTEGRATION
@@ -113,6 +127,11 @@ protected:
     bool initCapsule(float radius, float height);
     bool initConvexHull(const cocos2d::Vec3 *points, int numPoints);
     bool initMesh(const cocos2d::Vec3 *triangles, int numTriangles);
+    bool initHeightfield(int heightStickWidth,int heightStickLength
+        , const void* heightfieldData, float heightScale
+        , float minHeight, float maxHeight
+        , bool useFloatDatam, bool flipQuadEdges
+        , bool useDiamondSubdivision);
     
     
     ShapeType _shapeType; //shape type

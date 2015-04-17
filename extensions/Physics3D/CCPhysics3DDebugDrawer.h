@@ -87,6 +87,7 @@ protected:
     cocos2d::GLProgram *_program;
 
     bool        _dirty;
+    int _debugMode;
 };
 
 NS_CC_EXT_END
