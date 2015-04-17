@@ -857,6 +857,13 @@ void Label::disableEffect(LabelEffect effect)
             updateShaderProgram();
         }
         break;
+    case LabelEffect::ALL:
+        {
+            disableEffect(LabelEffect::SHADOW);
+            disableEffect(LabelEffect::GLOW);
+            disableEffect(LabelEffect::OUTLINE);
+        }
+        break;
     default:
         break;
     }
