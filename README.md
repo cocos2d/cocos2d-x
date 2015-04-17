@@ -89,10 +89,14 @@ Run
 
 ### Build and run new project for Windows 8.1 and Windows Phone 8.1 ###
 
-    $ cocos new MyGame -p com.bar.foo -l cpp -d projects
+    $ cocos new MyGame -p com.your_company.mygame -l cpp -d projects
 
-With the Cocos2d-x v3.3, you can create Universal App (Two projects at the same time: Windows(Tablet) and Windows Phone 8.1 )
+Visual Studio 2013 Update 4 or later is required.
+
+Starting with Cocos2d-x v3.3, you can create Windows 8.1 Universal Apps (Windows Store and Windows Phone 8.1)
 See more info on How to install and Create games on Windows RT (Windows and Windows Phone 8.1) at http://msopentech.github.io/cocos2d-x/
+
+Starting with Cocos2d-x v3.6 there will no longer be support for Windows Phone 8.0
 
 Main features
 -------------
@@ -183,6 +187,10 @@ $ bin/lua-empty-test/lua-empty-test
 * For Windows
 
 Open the `cocos2d-x/build/cocos2d-win32.vc2012.sln`
+
+* For Windows 8.1 Universal Apps (Phone and Store)
+
+Open the `cocos2d-x/build/cocos2d-win8.1-universal.sln`
 
 * For Android
 
