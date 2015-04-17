@@ -72,6 +72,11 @@ inline void Vec3::scale(float scalar)
     z *= scalar;
 }
 
+inline Vec3 Vec3::lerp(const Vec3 &target, float alpha) const
+{
+    return *this * (1.f - alpha) + target * alpha;
+}
+
 inline void Vec3::set(float xx, float yy, float zz)
 {
     this->x = xx;
