@@ -32,32 +32,35 @@
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/ccGLStateCache.h"
+#include "renderer/CCTechnique.h"
+#include "renderer/CCMaterial.h"
 
 #include "base/ccTypes.h"
+#include "2d/CCNode.h"
 
 #include <xxhash.h>
 
 NS_CC_BEGIN
 
 
-Pass* Pass::create()
+Pass* Pass::create(Technique* technique)
 {
-    return new (std::nothrow) Pass();
+    return new (std::nothrow) Pass(technique);
 }
 
-Pass* Pass::createWithGLProgramState(GLProgramState* programState)
+Pass* Pass::createWithGLProgramState(Technique* technique, GLProgramState* programState)
 {
-    auto pass = new (std::nothrow) Pass(programState);
+    auto pass = new (std::nothrow) Pass(technique, programState);
     return pass;
 }
 
-Pass::Pass(GLProgramState *glProgramState)
+Pass::Pass(Technique* technique, GLProgramState *glProgramState)
 : _glProgramState(glProgramState)
 {
     CC_SAFE_RETAIN(_glProgramState);
 }
 
-Pass::Pass()
+Pass::Pass(Technique* technique)
 : _glProgramState(nullptr)
 {
 }
@@ -98,14 +101,26 @@ uint32_t Pass::getHash() const
 
 void Pass::bind(const Mat4& modelView)
 {
-    GL::bindTexture2D(_textures.at(0)->getName());
+    if (_textures.size()>=0)
+        GL::bindTexture2D(_textures.at(0)->getName());
 
     //set blend mode
     GL::blendFunc(_blendFunc.src, _blendFunc.dst);
 
-    _glProgramState->apply(modelView);
+    if (_glProgramState)
+        _glProgramState->apply(modelView);
+    else
+        getTarget()->getGLProgramState()->apply(modelView);
 
 }
+
+Node* Pass::getTarget() const
+{
+    CCASSERT(_technique && _technique->_material, "Pass must have a Technique and Material");
+
+    return _technique->_material->_target;
+}
+
 
 void Pass::unbind()
 {

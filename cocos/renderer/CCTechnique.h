@@ -39,19 +39,21 @@ NS_CC_BEGIN
 
 class Pass;
 class GLProgramState;
+class Material;
 
 /// Technique
 class CC_DLL Technique : public Ref
 {
     friend class Material;
     friend class Renderer;
+    friend class Pass;
 
 public:
     /** Creates a new Technique with a GLProgramState.
      Method added to support legacy code
      */
-    static Technique* createWithGLProgramState(GLProgramState* state);
-    static Technique* create();
+    static Technique* createWithGLProgramState(Material* parent, GLProgramState* state);
+    static Technique* create(Material* parent);
 
     /** Adds a new pass to the Technique.
      Order matters. First added, first rendered
@@ -68,12 +70,13 @@ public:
     ssize_t getPassCount() const;
 
 protected:
-    Technique();
+    Technique(Material* parent);
     ~Technique();
     void setName(const std::string& name);
 
     std::string _name;
     Vector<Pass*> _passes;
+    Material* _material;
 };
 
 NS_CC_END

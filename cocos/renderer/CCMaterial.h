@@ -47,10 +47,15 @@ NS_CC_BEGIN
 class Technique;
 class Pass;
 class GLProgramState;
+class Node;
 
 /// Material
 class CC_DLL Material : public Ref
 {
+    friend class Node;
+    friend class Technique;
+    friend class Pass;
+
 public:
     /** Creates a Material with a JSON file containing the definition of the material.
      */
@@ -95,6 +100,8 @@ protected:
     Material();
     ~Material();
 
+    void setTarget(Node* target);
+
     bool parseMetadata(const rapidjson::Document& json);
     bool parseProperties(const rapidjson::Document& json);
     bool parseTechnique(const rapidjson::GenericValue<rapidjson::UTF8<> >& techniqueJSON);
@@ -118,6 +125,9 @@ protected:
 
     // weak pointer since it is being help by _techniques
     Technique* _currentTechnique;
+
+    // weak reference
+    Node* _target;
 };
 
 NS_CC_END

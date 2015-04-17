@@ -66,8 +66,9 @@ Material* Material::createWithGLStateProgram(GLProgramState* programState)
 }
 
 Material::Material(cocos2d::GLProgramState *state)
+: _target(nullptr)
 {
-    auto technique = Technique::createWithGLProgramState(state);
+    auto technique = Technique::createWithGLProgramState(this, state);
     _techniques.pushBack(technique);
 
     // weak pointer
@@ -76,6 +77,7 @@ Material::Material(cocos2d::GLProgramState *state)
 
 Material::Material(const std::string& validfilename)
 : _currentTechnique(nullptr)
+, _target(nullptr)
 , _techniques()
 {
     Data data = FileUtils::getInstance()->getDataFromFile(validfilename);
@@ -99,6 +101,11 @@ Material::Material(const std::string& validfilename)
     }
 
     parseProperties(document);
+}
+
+void Material::setTarget(cocos2d::Node *target)
+{
+    _target = target;
 }
 
 bool Material::parseMetadata(const rapidjson::Document& jsonDocument)
@@ -138,7 +145,7 @@ bool Material::parseTechnique(const rapidjson::GenericValue<rapidjson::UTF8<> >&
 {
     CCASSERT(techniqueJSON.IsObject(), "Invalid type for Technique. It must be an object");
 
-    auto technique = Technique::create();
+    auto technique = Technique::create(this);
     _techniques.pushBack(technique);
 
     // first one is the default one
@@ -163,7 +170,7 @@ bool Material::parseTechnique(const rapidjson::GenericValue<rapidjson::UTF8<> >&
 
 bool Material::parsePass(Technique* technique, const rapidjson::GenericValue<rapidjson::UTF8<> >& passJSON)
 {
-    auto pass = Pass::create();
+    auto pass = Pass::create(technique);
     technique->addPass(pass);
 
     // Textures

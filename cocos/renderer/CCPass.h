@@ -38,6 +38,8 @@
 NS_CC_BEGIN
 
 class GLProgramState;
+class Technique;
+class Node;
 
 class CC_DLL Pass : public RenderState
 {
@@ -46,9 +48,9 @@ class CC_DLL Pass : public RenderState
 public:
     /** Creates a Pass with a GLProgramState.
      */
-    static Pass* createWithGLProgramState(GLProgramState* programState);
+    static Pass* createWithGLProgramState(Technique* parent, GLProgramState* programState);
 
-    static Pass* create();
+    static Pass* create(Technique* parent);
 
     /** Returns the GLProgramState */
     GLProgramState* getGLProgramState() const;
@@ -66,12 +68,16 @@ public:
     uint32_t getHash() const;
 
 protected:
-    Pass();
-    Pass(GLProgramState *glProgramState);
+    Pass(Technique* parent);
+    Pass(Technique* parent, GLProgramState *glProgramState);
     ~Pass();
     void setGLProgramState(GLProgramState* glProgramState);
+    Node* getTarget() const;
 
     GLProgramState* _glProgramState;
+
+    // weak ref
+    Technique* _technique;
 };
 
 NS_CC_END

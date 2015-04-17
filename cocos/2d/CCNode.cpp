@@ -832,9 +832,13 @@ void Node::setMaterial(Material* material)
 {
     if (_material != material)
     {
+        if (_material)
+            _material->setTarget(nullptr);
         CC_SAFE_RELEASE(_material);
+        
         _material = material;
         CC_SAFE_RETAIN(_material);
+        _material->setTarget(this);
     }
 }
 
