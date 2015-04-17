@@ -788,17 +788,24 @@ void Label::enableShadow(const Color4B& shadowColor /* = Color4B::BLACK */,const
     //TODO: support blur for shadow
     _shadowBlurRadius = 0;
 
-    if (_textSprite && _shadowNode)
+    if (!_systemFontDirty && !_contentDirty && _textSprite)
     {
-        if (shadowColor != _shadowColor4F)
+        if (_shadowNode)
         {
-            Node::removeChild(_shadowNode, true);
-            _shadowNode = nullptr;
-            createShadowSpriteForSystemFont();
+            if (shadowColor != _shadowColor4F)
+            {
+                Node::removeChild(_shadowNode, true);
+                _shadowNode = nullptr;
+                createShadowSpriteForSystemFont();
+            }
+            else
+            {
+                _shadowNode->setPosition(_shadowOffset.width, _shadowOffset.height);
+            }
         }
         else
         {
-            _shadowNode->setPosition(_shadowOffset.width, _shadowOffset.height);
+            createShadowSpriteForSystemFont();
         }
     }
 
