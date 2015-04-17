@@ -320,33 +320,22 @@ bool Physics3DKinematicDemo::init()
     //create floor
     Physics3DRigidBodyDes rbDes;
     rbDes.mass = 0.0f;
-    rbDes.shape = Physics3DShape::createBox(Vec3(60.0f, 2.0f, 60.0f));
-    rbDes.originalTransform.translate(0.f, -1.f, 0.f);
+    rbDes.shape = Physics3DShape::createBox(Vec3(60.0f, 1.0f, 60.0f));
     auto rigidBody = Physics3DRigidBody::create(&rbDes);
     auto component = Physics3DComponent::create(rigidBody);
-    auto node = Node::create();
-    node->addComponent(component);
-    this->addChild(node);
+    auto floor = Sprite3D::create("Sprite3DTest/box.c3t");
+    floor->setTexture("Sprite3DTest/plane.png");
+    floor->setScaleX(60);
+    floor->setScaleZ(60);
+    floor->setPosition3D(Vec3(0.f, -1.f, 0.f));
+    floor->addComponent(component);
+    floor->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(floor);
 
     //create Kinematics
-    {
-        rbDes.mass = 1.f;
-        rbDes.shape = Physics3DShape::createBox(Vec3(2.0f, 2.0f, 2.0f));
-        auto rigidBody = Physics3DRigidBody::create(&rbDes);
-        rigidBody->setKinematic(true);
-        auto component = Physics3DComponent::create(rigidBody);
-        auto sprite = Sprite3D::create("Sprite3DTest/box.c3t");
-        sprite->setTexture("Images/CyanSquare.png");
-        sprite->setCameraMask((unsigned short)CameraFlag::USER1);
-        sprite->addComponent(component);
-        this->addChild(sprite);
-
-        sprite->setScale(2.0f);
-    }
-
     for (unsigned int i = 0; i < 3; ++i)
     {
-        rbDes.mass = 1.f;
+        rbDes.mass = 0.f; //kinematic objects. zero mass so that it can not be affected by other dynamic objects
         rbDes.shape = Physics3DShape::createBox(Vec3(2.0f, 2.0f, 2.0f));
         auto rigidBody = Physics3DRigidBody::create(&rbDes);
         rigidBody->setKinematic(true);
@@ -392,6 +381,7 @@ bool Physics3DKinematicDemo::init()
                     sprite->setCameraMask((unsigned short)CameraFlag::USER1);
                     sprite->setScale(1.0f / sprite->getContentSize().width);
                     this->addChild(sprite);
+                    sprite->setPosition3D(Vec3(x, y, z));
                 }
             }
         }
@@ -442,7 +432,6 @@ bool Physics3DTerrainDemo::init()
     if (!Physics3DTestDemo::init())
         return false;
 
-    unsigned int sz = sizeof(unsigned char);
     _data = FileUtils::getInstance()->getDataFromFile("images/heightfield64x64.raw");
 
     //create terrain
@@ -473,8 +462,6 @@ bool Physics3DTerrainDemo::init()
                 float x = 1.0*i + start_x;
                 float y = 5.0+1.0*k + start_y;
                 float z = 1.0*j + start_z;
-                rbDes.originalTransform.setIdentity();
-                rbDes.originalTransform.translate(x, y, z);
 
                 rigidBody = Physics3DRigidBody::create(&rbDes);
                 component = Physics3DComponent::create(rigidBody);
@@ -483,6 +470,7 @@ bool Physics3DTerrainDemo::init()
                 sprite->addComponent(component);
                 sprite->setCameraMask((unsigned short)CameraFlag::USER1);
                 sprite->setScale(1.0f / sprite->getContentSize().width);
+                sprite->setPosition3D(Vec3(x, y, z));
                 this->addChild(sprite);
             }
         }
