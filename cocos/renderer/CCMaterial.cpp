@@ -147,7 +147,7 @@ bool Material::parseTechnique(const rapidjson::GenericValue<rapidjson::UTF8<> >&
 
     // name
     if (techniqueJSON.HasMember("name"))
-        setName(techniqueJSON["name"].GetString());
+        technique->setName(techniqueJSON["name"].GetString());
 
     // passes
     auto& passesJSON = techniqueJSON["passes"];
@@ -447,7 +447,8 @@ Technique* Material::getTechnique() const
 Technique* Material::getTechniqueByName(const std::string& name)
 {
     for(const auto& technique : _techniques) {
-        if( technique->getName() == name)
+        CCLOG("technique name: %s", technique->getName().c_str());
+        if (technique->getName().compare(name)==0)
             return technique;
     }
     return nullptr;

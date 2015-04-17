@@ -67,6 +67,11 @@ std::string Technique::getName() const
     return _name;
 }
 
+void Technique::setName(const std::string &name)
+{
+    _name = name;
+}
+
 Pass* Technique::getPassByIndex(ssize_t index) const
 {
     CC_ASSERT(index>=0 && index<_passes.size() && "Invalid index");

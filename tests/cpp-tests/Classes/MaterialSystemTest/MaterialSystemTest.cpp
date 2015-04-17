@@ -55,9 +55,14 @@ void Material_SpriteSinglePassTest::onEnter()
     sprite->setNormalizedPosition(Vec2(0.5, 0.5));
     this->addChild(sprite);
 
-    auto material = Material::createWithFilename("Materials/basic.material");
+    auto material = Material::createWithFilename("Materials/effects.material");
     (void)material;
     sprite->setMaterial(material);
+
+//    material->setTechnique("blur");
+//    material->setTechnique("outline");
+    material->setTechnique("noise");
+//    material->setTechnique("edge detect");
 }
 
 std::string Material_SpriteSinglePassTest::subtitle() const

@@ -43,6 +43,7 @@ class GLProgramState;
 /// Technique
 class CC_DLL Technique : public Ref
 {
+    friend class Material;
     friend class Renderer;
 
 public:
@@ -69,9 +70,9 @@ public:
 protected:
     Technique();
     ~Technique();
+    void setName(const std::string& name);
 
     std::string _name;
-
     Vector<Pass*> _passes;
 };
 
