@@ -865,6 +865,13 @@ Scene* Node::getScene() const
     return dynamic_cast<Scene*>(sceneNode);
 }
 
+Layer* Node::getLayer() const
+{
+    if (!_parent)
+        return nullptr;
+    return _parent->getLayer();
+}
+
 Rect Node::getBoundingBox() const
 {
     Rect rect(0, 0, _contentSize.width, _contentSize.height);

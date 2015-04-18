@@ -615,12 +615,6 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 }
 
 // MARK: visit, draw, transform
-Layer* Sprite::getLayer()
-{
-    if (!_parent)
-        return nullptr;
-    return _parent->getLayer();
-}
 
 void Sprite::addChild(Node *child, int zOrder, int tag)
 {

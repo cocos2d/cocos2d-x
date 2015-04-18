@@ -246,7 +246,7 @@ public:
 
     // Overrides
     virtual std::string getDescription() const override;
-    virtual Layer *getLayer();
+    virtual Layer *getLayer() override;
 
 CC_CONSTRUCTOR_ACCESS:
     Layer();
