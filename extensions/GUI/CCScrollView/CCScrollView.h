@@ -260,7 +260,12 @@ public:
     void updateTweenAction(float value, const std::string& key) override;
 
     bool hasVisibleParents() const;
+    
+    void setHeadFunctionProcessDone();
+    std::function<void () >    _cb_head_func;
+    std::function<void (float) > _cb_head_offset;
 protected:
+    bool  _is_headFunctionCalling;
     /**
      * Relocates the container at the proper offset, in bounds of max/min offsets.
      *
