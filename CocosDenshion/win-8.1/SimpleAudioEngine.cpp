@@ -21,6 +21,8 @@
 
 #include <map>
 //#include "CCCommon.h"
+#include "cocos2d.h"
+USING_NS_CC;
 using namespace std;
 
 namespace CocosDenshion {
@@ -72,7 +74,8 @@ void SimpleAudioEngine::playBackgroundMusic(const char* pszFilePath, bool bLoop)
         return;
     }
 
-    sharedAudioController()->PlayBackgroundMusic(pszFilePath, bLoop);
+    string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    sharedAudioController()->PlayBackgroundMusic(fullPath.c_str(), bLoop);
 }
 
 void SimpleAudioEngine::stopBackgroundMusic(bool bReleaseData)
@@ -112,7 +115,8 @@ bool SimpleAudioEngine::isBackgroundMusicPlaying()
 unsigned int SimpleAudioEngine::playEffect(const char* pszFilePath, bool bLoop)
 {
     unsigned int sound;
-    sharedAudioController()->PlaySoundEffect(pszFilePath, bLoop, sound);
+    string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    sharedAudioController()->PlaySoundEffect(fullPath.c_str(), bLoop, sound);
 
     return sound;
 }
@@ -124,7 +128,8 @@ void SimpleAudioEngine::stopEffect(unsigned int nSoundId)
 
 void SimpleAudioEngine::preloadEffect(const char* pszFilePath)
 {
-    sharedAudioController()->PreloadSoundEffect(pszFilePath);
+    string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    sharedAudioController()->PreloadSoundEffect(fullPath.c_str());
 }
 
 void SimpleAudioEngine::pauseEffect(unsigned int nSoundId)
@@ -159,7 +164,8 @@ void SimpleAudioEngine::preloadBackgroundMusic(const char* pszFilePath)
 
 void SimpleAudioEngine::unloadEffect(const char* pszFilePath)
 {
-    sharedAudioController()->UnloadSoundEffect(pszFilePath);
+    string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(pszFilePath);
+    sharedAudioController()->UnloadSoundEffect(fullPath.c_str());
 }
 
 //////////////////////////////////////////////////////////////////////////
