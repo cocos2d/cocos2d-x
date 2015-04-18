@@ -278,6 +278,14 @@ public:
      * Makes the Sprite to be updated in the Atlas.
      */
     virtual void setDirty(bool dirty) { _dirty = dirty; }
+    
+    /** Returns the Layer that contains the Node.
+        It returns `nullptr` if the node doesn't belong to any Layer.
+        This function recursively calls parent->getLayer() until parent is a Layer object. The results are not cached. It is that the user caches the results in case this functions is being used inside a loop.
+     *
+     * @return The Scene that contains the node.
+     */
+    virtual Layer* getLayer();
 
     /**
      * Returns the quad (tex coords, vertex coords and color) information.
