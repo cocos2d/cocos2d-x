@@ -250,6 +250,14 @@ void CSLoader::init()
     
 }
 
+Node* CSLoader::createNodeWithRoot(Node* root, const std::string& filename)
+{
+	CSLoader* load = CSLoader::getInstance();
+	load->setRootNode(root);
+
+	return createNode(filename);
+}
+
 Node* CSLoader::createNode(const std::string& filename)
 {
     std::string path = filename;

@@ -31,6 +31,18 @@
 
 namespace cocostudio {
     
+#define CCS_TOUCH_CALLBACK_GLUE(TARGET, SELECTORNAME, METHOD) if(callBackName == SELECTORNAME) { \
+    return CC_CALLBACK_2(METHOD, TARGET); \
+}
+
+#define CCS_CLICK_CALLBACK_GLUE(TARGET, SELECTORNAME, METHOD) if(callBackName == SELECTORNAME) { \
+    return CC_CALLBACK_1(METHOD, TARGET); \
+}
+
+#define CCS_EVENT_CALLBACK_GLUE(TARGET, SELECTORNAME, METHOD) if(callBackName == SELECTORNAME) { \
+    return CC_CALLBACK_2(METHOD, TARGET); \
+}
+
     class CC_STUDIO_DLL WidgetCallBackHandlerProtocol
     {
     public:

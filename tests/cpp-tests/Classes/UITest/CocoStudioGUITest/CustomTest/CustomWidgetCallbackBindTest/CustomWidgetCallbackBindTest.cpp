@@ -16,11 +16,9 @@ bool CustomWidgetCallbackBindScene::init()
 {
     if (TestCase::init())
     {
-        CSLoader* instance = CSLoader::getInstance();
-        instance->registReaderObject("CustomRootNodeReader",
-            (ObjectFactory::Instance)CustomRootNodeReader::getInstance);
+		CustomRootNode* node = CustomRootNode::create();
 
-        auto layer = CSLoader::createNode("cocosui/CustomTest/CustomWidgetCallbackBindTest/CustomWidgetCallbackBindTest.csb");
+        auto layer = CSLoader::createNodeWithRoot(node, "cocosui/CustomTest/CustomWidgetCallbackBindTest/CustomWidgetCallbackBindTest.csb");
         addChild(layer);
 
         return true;

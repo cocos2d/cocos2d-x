@@ -77,6 +77,7 @@ public:
     
     void init();
     
+	static cocos2d::Node* createNodeWithRoot(cocos2d::Node* root, const std::string& filename);
     static cocos2d::Node* createNode(const std::string& filename);
     static cocos2d::Node* createNode(const std::string& filename, const ccNodeLoadCallback& callback);
     static cocostudio::timeline::ActionTimeline* createTimeline(const std::string& filename);
@@ -92,6 +93,9 @@ public:
     
     void setRecordJsonPath(bool record) { _recordJsonPath = record; }
     bool isRecordJsonPath() const { return _recordJsonPath; }
+
+	void setRootNode(Node* root) { _rootNode = root; }
+	Node* getRootNode() const { return _rootNode; }
     
     void setJsonPath(std::string jsonPath) { _jsonPath = jsonPath; }
     std::string getJsonPath() const { return _jsonPath; }

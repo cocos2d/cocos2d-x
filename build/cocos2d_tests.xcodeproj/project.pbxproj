@@ -720,8 +720,6 @@
 		29FBBBFF196A9ECD00E65826 /* CocostudioParserJsonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29FBBBFC196A9ECD00E65826 /* CocostudioParserJsonTest.cpp */; };
 		3825CC491A2C982A00C92EA8 /* CustomRootNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3825CC431A2C982A00C92EA8 /* CustomRootNode.cpp */; };
 		3825CC4A1A2C982A00C92EA8 /* CustomRootNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3825CC431A2C982A00C92EA8 /* CustomRootNode.cpp */; };
-		3825CC4B1A2C982A00C92EA8 /* CustomRootNodeReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3825CC451A2C982A00C92EA8 /* CustomRootNodeReader.cpp */; };
-		3825CC4C1A2C982A00C92EA8 /* CustomRootNodeReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3825CC451A2C982A00C92EA8 /* CustomRootNodeReader.cpp */; };
 		3825CC4D1A2C982A00C92EA8 /* CustomWidgetCallbackBindTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3825CC471A2C982A00C92EA8 /* CustomWidgetCallbackBindTest.cpp */; };
 		3825CC4E1A2C982A00C92EA8 /* CustomWidgetCallbackBindTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3825CC471A2C982A00C92EA8 /* CustomWidgetCallbackBindTest.cpp */; };
 		38FA2E73194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 38FA2E71194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp */; };
@@ -1675,8 +1673,6 @@
 		29FBBBFD196A9ECD00E65826 /* CocostudioParserJsonTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocostudioParserJsonTest.h; sourceTree = "<group>"; };
 		3825CC431A2C982A00C92EA8 /* CustomRootNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomRootNode.cpp; sourceTree = "<group>"; };
 		3825CC441A2C982A00C92EA8 /* CustomRootNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomRootNode.h; sourceTree = "<group>"; };
-		3825CC451A2C982A00C92EA8 /* CustomRootNodeReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomRootNodeReader.cpp; sourceTree = "<group>"; };
-		3825CC461A2C982A00C92EA8 /* CustomRootNodeReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomRootNodeReader.h; sourceTree = "<group>"; };
 		3825CC471A2C982A00C92EA8 /* CustomWidgetCallbackBindTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CustomWidgetCallbackBindTest.cpp; sourceTree = "<group>"; };
 		3825CC481A2C982A00C92EA8 /* CustomWidgetCallbackBindTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomWidgetCallbackBindTest.h; sourceTree = "<group>"; };
 		38FA2E71194AEBE100FF2BE4 /* ActionTimelineTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ActionTimelineTestScene.cpp; sourceTree = "<group>"; };
@@ -3826,8 +3822,6 @@
 			children = (
 				3825CC431A2C982A00C92EA8 /* CustomRootNode.cpp */,
 				3825CC441A2C982A00C92EA8 /* CustomRootNode.h */,
-				3825CC451A2C982A00C92EA8 /* CustomRootNodeReader.cpp */,
-				3825CC461A2C982A00C92EA8 /* CustomRootNodeReader.h */,
 				3825CC471A2C982A00C92EA8 /* CustomWidgetCallbackBindTest.cpp */,
 				3825CC481A2C982A00C92EA8 /* CustomWidgetCallbackBindTest.h */,
 			);
@@ -4906,7 +4900,6 @@
 				1AC35C1118CECF0C00F37B72 /* LabelTestNew.cpp in Sources */,
 				1AC35B4D18CECF0C00F37B72 /* ChipmunkTest.cpp in Sources */,
 				1AC35BDF18CECF0C00F37B72 /* cons.cpp in Sources */,
-				3825CC4B1A2C982A00C92EA8 /* CustomRootNodeReader.cpp in Sources */,
 				1AC35B5718CECF0C00F37B72 /* ConsoleTest.cpp in Sources */,
 				29080DA7191B595E0066F8DF /* UICheckBoxTest.cpp in Sources */,
 				29080DDD191B595E0066F8DF /* UITextFieldTest_Editor.cpp in Sources */,
@@ -5084,7 +5077,6 @@
 				1AC35C5018CECF0C00F37B72 /* SpriteTest.cpp in Sources */,
 				3E2BDAD019BEA3410055CDCD /* NewAudioEngineTest.cpp in Sources */,
 				1AC35C0418CECF0C00F37B72 /* FileUtilsTest.cpp in Sources */,
-				3825CC4C1A2C982A00C92EA8 /* CustomRootNodeReader.cpp in Sources */,
 				1AC35B5C18CECF0C00F37B72 /* CurlTest.cpp in Sources */,
 				1AC35C0018CECF0C00F37B72 /* CustomTableViewCell.cpp in Sources */,
 				29080D92191B595E0066F8DF /* CustomGUIScene.cpp in Sources */,
