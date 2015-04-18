@@ -107,7 +107,7 @@ void TableView::reloadData()
             _tableViewDelegate->tableCellWillRecycle(this, cell);
         }
 
-        _cellsFreed.pushBack(cell);
+        _cellsFreed[cell->getTag()].pushBack(cell);
         
         cell->reset();
         if (cell->getParent() == this->getContainer())
@@ -133,6 +133,7 @@ TableViewCell *TableView::cellAtIndex(ssize_t idx)
     {
         for (const auto& cell : _cellsUsed)
         {
+            
             if (cell->getIdx() == idx)
             {
                 return cell;
@@ -242,12 +243,12 @@ TableViewCell *TableView::dequeueCell(int tag)
      if (_cellsFreed.empty()) {
         return NULL;
     } else {
-        for (auto ite= _cellsFreed.begin();ite!=_cellsFreed.end(); ++ite) {
+        for (auto ite= _cellsFreed[tag].begin();ite!=_cellsFreed[tag].end(); ++ite) {
             if((*ite)->getTag()==tag)
             {
                 TableViewCell * cell=*ite;
                 cell->retain();
-                _cellsFreed.erase(ite);
+                _cellsFreed[tag].erase(ite);
                 cell->autorelease();
                 return cell;
             }
@@ -405,7 +406,7 @@ void TableView::_moveCellOutOfSight(TableViewCell *cell)
         _tableViewDelegate->tableCellWillRecycle(this, cell);
     }
 
-    _cellsFreed.pushBack(cell);
+    _cellsFreed[cell->getTag()].pushBack(cell);
     _cellsUsed.eraseObject(cell);
     _isUsedCellsDirty = true;
     

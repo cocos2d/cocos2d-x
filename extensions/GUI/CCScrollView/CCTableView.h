@@ -311,9 +311,9 @@ protected:
      */
     Vector<TableViewCell*> _cellsUsed;
     /**
-     * free list of cells
+     * free map of cells
      */
-    Vector<TableViewCell*> _cellsFreed;
+    std::map<int,Vector<TableViewCell*> > _cellsFreed;
     /**
      * weak link to the data source object
      */
