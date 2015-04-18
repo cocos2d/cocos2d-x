@@ -584,8 +584,11 @@ void TableView::onTouchEnded(Touch *pTouch, Event *pEvent)
 
 		if (bb.containsPoint(pTouch->getLocation()) && _tableViewDelegate != nullptr)
         {
-            _tableViewDelegate->tableCellUnhighlight(this, _touchedCell);
-            _tableViewDelegate->tableCellTouched(this, _touchedCell);
+            if(!_bEatTouch)
+            {
+                _tableViewDelegate->tableCellUnhighlight(this, _touchedCell);
+                _tableViewDelegate->tableCellTouched(this, _touchedCell);
+            }
         }
 
         _touchedCell = nullptr;

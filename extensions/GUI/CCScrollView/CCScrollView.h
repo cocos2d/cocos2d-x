@@ -310,6 +310,11 @@ protected:
      * If YES, the view is being dragged.
      */
     bool _dragging;
+    
+    /**
+     *  if is scroling, YES ,eat touch.
+     */
+    bool _bEatTouch;
 
     /**
      * Content offset. Note that left-bottom point is the origin

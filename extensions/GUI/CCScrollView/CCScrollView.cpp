@@ -59,6 +59,7 @@ ScrollView::ScrollView()
 , _container(nullptr)
 , _touchMoved(false)
 , _bounceable(false)
+, _bEatTouch(false)
 , _clippingToBounds(false)
 , _touchLength(0.0f)
 , _minScale(0.0f)
@@ -666,6 +667,9 @@ bool ScrollView::onTouchBegan(Touch* touch, Event* event)
         _touchPoint     = this->convertTouchToNodeSpace(touch);
         _touchMoved     = false;
         _dragging     = true; //dragging started
+
+        _bEatTouch=isScrolling();
+
         _scrollDistance = Vec2(0.0f, 0.0f);
         _touchLength    = 0.0f;
     }
