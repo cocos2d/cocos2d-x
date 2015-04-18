@@ -1156,7 +1156,7 @@ public:
      *
      * @return The Layer that contains the node.
      */
-    virtual Layer* getLayer() const;
+    virtual Layer* getLayer();
 
     /**
      * Returns an AABB (axis-aligned bounding-box) in its parent's coordinate system.
