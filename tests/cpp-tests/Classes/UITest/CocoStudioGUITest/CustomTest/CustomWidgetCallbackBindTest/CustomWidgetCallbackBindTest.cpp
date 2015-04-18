@@ -5,7 +5,6 @@
 #include "cocostudio/CocoStudio.h"
 #include "base/ObjectFactory.h"
 #include "CustomRootNode.h"
-#include "CustomRootNodeReader.h"
 
 USING_NS_CC;
 using namespace flatbuffers;
