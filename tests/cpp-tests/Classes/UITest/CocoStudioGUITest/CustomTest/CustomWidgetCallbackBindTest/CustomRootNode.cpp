@@ -19,21 +19,21 @@ CustomRootNode::CustomRootNode()
 
 Widget::ccWidgetTouchCallback CustomRootNode::onLocateTouchCallback(const string &callBackName)
 {
-	CCS_TOUCH_CALLBACK_GLUE(this, "onTouch", CustomRootNode::onTouch)
+    CCS_TOUCH_CALLBACK_GLUE(this, "onTouch", CustomRootNode::onTouch)
 
     return nullptr;
 }
 
 Widget::ccWidgetClickCallback CustomRootNode::onLocateClickCallback(const string &callBackName)
 {
-	CCS_CLICK_CALLBACK_GLUE(this, "onClick", CustomRootNode::onClick)
+    CCS_CLICK_CALLBACK_GLUE(this, "onClick", CustomRootNode::onClick)
 
     return nullptr;
 }
 
 Widget::ccWidgetEventCallback CustomRootNode::onLocateEventCallback(const string &callBackName)
 {
-	CCS_EVENT_CALLBACK_GLUE(this, "onEvent", CustomRootNode::onEvent)
+    CCS_EVENT_CALLBACK_GLUE(this, "onEvent", CustomRootNode::onEvent)
 
     return nullptr;
 }
