@@ -86,6 +86,7 @@ ActionsTests::ActionsTests()
     ADD_TEST_CASE(Issue1327);
     ADD_TEST_CASE(Issue1398);
     ADD_TEST_CASE(Issue2599)
+    ADD_TEST_CASE(ActionFloat);
 }
 
 std::string ActionsDemo::title() const
@@ -2218,3 +2219,42 @@ std::string ActionRemoveSelf::subtitle() const
 {
 	return "Sequence: Move + Rotate + Scale + RemoveSelf";
 }
+
+//------------------------------------------------------------------
+//
+//    ActionFloat
+//
+//------------------------------------------------------------------
+void ActionFloat::onEnter()
+{
+    ActionsDemo::onEnter();
+
+    centerSprites(3);
+
+    auto s = Director::getInstance()->getWinSize();
+
+    auto actionFloat = FloatAction::create(2.f, 0, 3, [this](float value) {
+        _tamara->setScale(value);
+    });
+
+    float grossiniY = _grossini->getPositionY();
+
+    auto actionFloat1 = FloatAction::create(3.f, grossiniY, grossiniY + 50, [this](float value) {
+        _grossini->setPositionY(value);
+    });
+
+    auto actionFloat2 = FloatAction::create(3.f, 3, 1, [this] (float value) {
+        _kathia->cocos2d::Node::setScale(value);
+    });
+
+    _tamara->runAction(actionFloat);
+    _grossini->runAction(actionFloat1);
+    _kathia->runAction(actionFloat2);
+}
+
+std::string ActionFloat::subtitle() const
+{
+    return "ActionFloat";
+}
+
+

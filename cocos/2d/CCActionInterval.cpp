@@ -2511,4 +2511,60 @@ void TargetedAction::setForcedTarget(Node* forcedTarget)
     }
 }
 
+// Float Action
+
+FloatAction* FloatAction::create(float duration, float from, float to, FloatActionCallback callback)
+{
+    auto ref = new (std::nothrow) FloatAction();
+    if (ref && ref->initWithDuration(duration, from, to, callback))
+    {
+        ref->autorelease();
+        return ref;
+    }
+    CC_SAFE_DELETE(ref);
+    return ref;
+}
+
+bool FloatAction::initWithDuration(float duration, float from, float to, FloatActionCallback callback)
+{
+    if (ActionInterval::initWithDuration(duration))
+    {
+        _from = from;
+        _to = to;
+        _callback = callback;
+        return true;
+    }
+    return false;
+}
+
+FloatAction* FloatAction::clone() const
+{
+    auto a = new (std::nothrow) FloatAction();
+    a->initWithDuration(_duration, _from, _to, _callback);
+    a->autorelease();
+    return a;
+}
+
+void FloatAction::startWithTarget(cocos2d::Node *target)
+{
+    ActionInterval::startWithTarget(target);
+    _delta = _to - _from;
+}
+
+void FloatAction::update(float delta)
+{
+    float value = _to - _delta * (1 - delta);
+
+    if (_callback)
+    {
+        // report back
+        _callback(value);
+    }
+}
+
+FloatAction* FloatAction::reverse() const
+{
+    return FloatAction::create(_duration, _to, _from, _callback);
+}
+
 NS_CC_END
