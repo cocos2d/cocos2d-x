@@ -615,7 +615,7 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 }
 
 // MARK: visit, draw, transform
-Layer* Node::getLayer()
+Layer* Sprite::getLayer()
 {
     if (!_parent)
         return nullptr;
