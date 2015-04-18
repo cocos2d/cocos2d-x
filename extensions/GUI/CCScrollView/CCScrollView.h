@@ -261,11 +261,11 @@ public:
 
     bool hasVisibleParents() const;
     
-    void setHeadFunctionProcessDone();
-    std::function<void () >    _cb_head_func;
+    void setPullDownProcessDone();
+    std::function<void () >    _cb_pull_down ;
     std::function<void (float) > _cb_head_offset;
 protected:
-    bool  _is_headFunctionCalling;
+    bool  _is_cb_pull_down_calling;
     /**
      * Relocates the container at the proper offset, in bounds of max/min offsets.
      *

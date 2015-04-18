@@ -60,7 +60,7 @@ ScrollView::ScrollView()
 , _touchMoved(false)
 , _bounceable(false)
 , _bEatTouch(false)
-, _is_headFunctionCalling(false)
+, _is_cb_pull_down_calling(false)
 , _clippingToBounds(false)
 , _touchLength(0.0f)
 , _minScale(0.0f)
@@ -783,7 +783,7 @@ void ScrollView::onTouchMoved(Touch* touch, Event* event)
         }
     }
     float topOffset=-getContentOffset().y+getViewSize().height-getContentSize().height;
-    if(topOffset>0 && !_is_headFunctionCalling)
+    if(topOffset>0 && !_is_cb_pull_down_calling)
     {
        
 //        if(_cb_head_offset)
@@ -819,19 +819,19 @@ void ScrollView::onTouchEnded(Touch* touch, Event* event)
     float topOffset=-getContentOffset().y+getViewSize().height-getContentSize().height;
     
     
-    if(topOffset>100 && !_is_headFunctionCalling)
+    if(topOffset>100 && !_is_cb_pull_down_calling)
     {
-        _is_headFunctionCalling=true;
-        if(_cb_head_func)
-            _cb_head_func();
+        _is_cb_pull_down_calling=true;
+        if(_cb_pull_down )
+            _cb_pull_down ();
         
         
     }
     
     
 }
-void ScrollView::setHeadFunctionProcessDone(){
-    _is_headFunctionCalling=false;
+void ScrollView::setPullDownProcessDone(){
+    _is_cb_pull_down_calling=false;
 };
 
 void ScrollView::onTouchCancelled(Touch* touch, Event* event)
