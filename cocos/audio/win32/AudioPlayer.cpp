@@ -27,6 +27,7 @@
 #include "AudioPlayer.h"
 #include "AudioCache.h"
 #include "base/CCConsole.h"
+#include "platform/CCFileUtils.h"
 #include "mpg123.h"
 #include "vorbis/codec.h"
 #include "vorbis/vorbisfile.h"
@@ -163,7 +164,7 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
         {
             vorbisFile = new OggVorbis_File;
             int openCode;
-            if (openCode = ov_fopen(CC_MAKE_SUITABLE_F_OPEN(_audioCache->_fileFullPath), vorbisFile)){
+            if (openCode = ov_fopen(FileUtils::getInstance()->getSuitableFOpen(_audioCache->_fileFullPath).c_str(), vorbisFile)){
                 log("Input does not appear to be an Ogg bitstream: %s. Code: 0x%x\n", _audioCache->_fileFullPath.c_str(), openCode);
                 goto ExitBufferThread;
             }

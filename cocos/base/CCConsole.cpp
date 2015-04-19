@@ -872,7 +872,7 @@ void Console::commandUpload(int fd)
     static std::string writablePath = FileUtils::getInstance()->getWritablePath();
     std::string filepath = writablePath + std::string(buf);
 
-    FILE* fp = fopen(CC_MAKE_SUITABLE_F_OPEN(filepath), "wb");
+    FILE* fp = fopen(FileUtils::getInstance()->getSuitableFOpen(filepath).c_str(), "wb");
     if(!fp)
     {
         const char err[] = "can't create file!\n";

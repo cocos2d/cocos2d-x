@@ -259,11 +259,11 @@ void Downloader::prepareDownload(const std::string &srcUrl, const std::string &s
     const std::string outFileName = storagePath + TEMP_EXT;
     if (_supportResuming && resumeDownload && _fileUtils->isFileExist(outFileName))
     {
-        fDesc->fp = fopen(CC_MAKE_SUITABLE_F_OPEN(outFileName), "ab");
+        fDesc->fp = fopen(FileUtils::getInstance()->getSuitableFOpen(outFileName).c_str(), "ab");
     }
     else
     {
-        fDesc->fp = fopen(CC_MAKE_SUITABLE_F_OPEN(outFileName), "wb");
+        fDesc->fp = fopen(FileUtils::getInstance()->getSuitableFOpen(outFileName).c_str(), "wb");
     }
     if (!fDesc->fp)
     {

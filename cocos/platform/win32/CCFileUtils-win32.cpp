@@ -105,6 +105,32 @@ static std::string StringWideCharToUtf8(const std::wstring& strWideChar)
     return ret;
 }
 
+static std::string StringUtf8ToAnsi(const std::string& strUtf8)
+{
+    std::string ret;
+    if (!strUtf8.empty())
+    {
+        std::wstring strWideChar = NS_CC::StringUtf8ToWideChar(strUtf8);
+        int nNum = WideCharToMultiByte(CP_ACP, 0, strWideChar.c_str(), -1, nullptr, 0, nullptr, FALSE);
+        if (nNum)
+        {
+            char* ansiString = new char[nNum + 1];
+            ansiString[0] = 0;
+
+            nNum = WideCharToMultiByte(CP_ACP, 0, strWideChar.c_str(), -1, ansiString, nNum + 1, nullptr, FALSE);
+
+            ret = ansiString;
+            delete[] ansiString;
+        }
+        else
+        {
+            CCLOG("Wrong convert to Ansi code:0x%x", GetLastError());
+        }
+    }
+
+    return ret;
+}
+
 static void _checkPath()
 {
     if (0 == s_resourcePath.length())
@@ -383,33 +409,12 @@ string FileUtilsWin32::getWritablePath() const
     return ret;
 }
 
-NS_CC_END
-
-std::string CC_DLL StringUtf8ToAnsi(const std::string& strUtf8)
+std::string FileUtilsWin32::getSuitableFOpen(const std::string& filenameUtf8) const
 {
-    std::string ret;
-    if (!strUtf8.empty())
-    {
-        std::wstring strWideChar = NS_CC::StringUtf8ToWideChar(strUtf8);
-        int nNum = WideCharToMultiByte(CP_ACP, 0, strWideChar.c_str(), -1, nullptr, 0, nullptr, FALSE);
-        if (nNum)
-        {
-            char* ansiString = new char[nNum + 1];
-            ansiString[0] = 0;
-
-            nNum = WideCharToMultiByte(CP_ACP, 0, strWideChar.c_str(), -1, ansiString, nNum + 1, nullptr, FALSE);
-
-            ret = ansiString;
-            delete[] ansiString;
-        }
-        else
-        {
-            CCLOG("Wrong convert to Ansi code:0x%x", GetLastError());
-        }
-    }
-
-    return ret;
+    return StringUtf8ToAnsi(filenameUtf8);
 }
+
+NS_CC_END
 
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
