@@ -45,7 +45,6 @@ const float PUForceFieldAffector::DEFAULT_MOVEMENT_FREQUENCY = 5.0f;
 PUForceFieldAffector::PUForceFieldAffector() :
     _forceFieldType(PUForceField::FF_REALTIME_CALC),
     _delta(DEFAULT_DELTA),
-    _force(Vec3::ZERO),
     _scaleForce(DEFAULT_FORCE),
     _octaves(DEFAULT_OCTAVES),
     _frequency(DEFAULT_FREQUENCY),
@@ -61,8 +60,6 @@ PUForceFieldAffector::PUForceFieldAffector() :
     _movementSet(false),
     _movementFrequency(DEFAULT_MOVEMENT_FREQUENCY),
     _movementFrequencyCount(0.0f),
-    _displacement(Vec3::ZERO),
-    _basePosition(Vec3::ZERO),
     _suppressGeneration(false)
 {
 };
