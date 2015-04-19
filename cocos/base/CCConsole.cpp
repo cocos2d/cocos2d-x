@@ -330,7 +330,6 @@ Console::Console()
 	{
 		_commands[commands[i].name] = commands[i];
 	}
-	_writablePath = FileUtils::getInstance()->getWritablePath();
 }
 
 Console::~Console()
@@ -870,9 +869,10 @@ void Console::commandUpload(int fd)
     }
     *ptr = 0;
 
-    std::string filepath = _writablePath + std::string(buf);
+    static std::string writablePath = FileUtils::getInstance()->getWritablePath();
+    std::string filepath = writablePath + std::string(buf);
 
-    FILE* fp = fopen(filepath.c_str(), "wb");
+    FILE* fp = fopen(FileUtils::getInstance()->getSuitableFOpen(filepath).c_str(), "wb");
     if(!fp)
     {
         const char err[] = "can't create file!\n";

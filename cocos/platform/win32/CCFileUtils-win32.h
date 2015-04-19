@@ -54,6 +54,17 @@ public:
 protected:
 
     virtual bool isFileExistInternal(const std::string& strFilePath) const;
+
+
+    /**
+    * Windows fopen can't support UTF-8 filename
+    * Need convert all parameters fopen and other 3rd-party libs
+    * CC_PLATFORM_WP8 and CC_PLATFORM_WINRT the same needs?
+    *
+    * @param filename std::string name file for convertation from utf-8
+    * @return std::string ansi filename in current locale
+    */
+    virtual std::string getSuitableFOpen(const std::string& filenameUtf8) const override;
     
     /**
      *  Gets resource file data

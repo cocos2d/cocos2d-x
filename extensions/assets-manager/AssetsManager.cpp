@@ -359,7 +359,7 @@ bool AssetsManager::uncompress()
             {
                 const string dir=_storagePath+fileNameStr.substr(0,index);
                 
-                FILE *out = fopen(dir.c_str(), "r");
+                FILE *out = fopen(FileUtils::getInstance()->getSuitableFOpen(dir).c_str(), "r");
                 
                 if(!out)
                 {
@@ -398,7 +398,7 @@ bool AssetsManager::uncompress()
             }
             
             // Create a file to store current file.
-            FILE *out = fopen(fullPath.c_str(), "wb");
+            FILE *out = fopen(FileUtils::getInstance()->getSuitableFOpen(fullPath).c_str(), "wb");
             if (! out)
             {
                 CCLOG("can not open destination file %s", fullPath.c_str());
@@ -517,7 +517,7 @@ bool AssetsManager::downLoad()
 {
     // Create a file to save package.
     const string outFileName = _storagePath + TEMP_PACKAGE_FILE_NAME;
-    FILE *fp = fopen(outFileName.c_str(), "wb");
+    FILE *fp = fopen(FileUtils::getInstance()->getSuitableFOpen(outFileName).c_str(), "wb");
     if (! fp)
     {
         Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{

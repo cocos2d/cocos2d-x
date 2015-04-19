@@ -330,6 +330,16 @@ public:
     // This method is used internally.
     virtual bool writeToFile(ValueMap& dict, const std::string& fullPath);
     
+    /**
+    * Windows fopen can't support UTF-8 filename
+    * Need convert all parameters fopen and other 3rd-party libs
+    * CC_PLATFORM_WP8 and CC_PLATFORM_WINRT the same needs?
+    *
+    * @param filename std::string name file for convertation from utf-8
+    * @return std::string ansi filename in current locale
+    */
+    virtual std::string getSuitableFOpen(const std::string& filenameUtf8) const;
+    
     // Converts the contents of a file to a ValueVector.
     // This method is used internally.
     virtual ValueVector getValueVectorFromFile(const std::string& filename);
