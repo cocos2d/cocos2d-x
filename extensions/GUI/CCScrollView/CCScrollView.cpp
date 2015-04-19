@@ -819,7 +819,7 @@ void ScrollView::onTouchEnded(Touch* touch, Event* event)
     float topOffset=-getContentOffset().y+getViewSize().height-getContentSize().height;
     
     
-    if(topOffset>100 && !_is_cb_pull_down_calling)
+    if(topOffset>200 && !_is_cb_pull_down_calling)
     {
         _is_cb_pull_down_calling=true;
         if(_cb_pull_down )
