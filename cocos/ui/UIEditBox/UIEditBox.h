@@ -132,6 +132,7 @@ namespace ui {
              * The user is allowed to enter a phone number.
              */
             PHONE_NUMBER,
+           
                 
             /**
              * The user is allowed to enter a URL.
@@ -148,6 +149,8 @@ namespace ui {
              * The user is allowed to enter any text, except for line breaks.
              */
             SINGLE_LINE,
+            NUMBER,
+            ASCII,
         };
             
         /**

@@ -315,6 +315,22 @@ void Sprite::setTexture(const std::string &filename)
     setTextureRect(rect);
 }
 
+// MARK: texture
+void Sprite::setTextureFit( Texture2D *texture ,Rect& r)
+{
+
+    setTexture(texture);
+    
+    Rect rect = Rect::ZERO;
+    if (texture)
+        rect.size = texture->getContentSize();
+    setTextureRect(rect);
+
+    setScale(MIN(r.size.width/rect.size.width,r.size.height/rect.size.height));
+    
+}
+
+
 void Sprite::setTexture(Texture2D *texture)
 {
     // If batchnode, then texture id should be the same

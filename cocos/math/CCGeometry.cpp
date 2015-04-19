@@ -102,7 +102,10 @@ Rect::Rect(void)
 {
     setRect(0.0f, 0.0f, 0.0f, 0.0f);
 }
-
+Rect::Rect(const Size& s)
+{
+     setRect(0, 0, s.width, s.height);
+}
 Rect::Rect(float x, float y, float width, float height)
 {
     setRect(x, y, width, height);

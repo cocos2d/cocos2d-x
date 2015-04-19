@@ -229,6 +229,7 @@ public:
 
 	void updateInset();
 
+    bool isScrolling();
     /**
      * Determines whether it clips its children or not.
      */
@@ -259,7 +260,13 @@ public:
     void updateTweenAction(float value, const std::string& key) override;
 
     bool hasVisibleParents() const;
+    
+    void setPullDownProcessDone();
+    std::function<void () >    _cb_pull_down ;
+    std::function<void (float) > _cb_head_offset;
 protected:
+
+    bool  _is_cb_pull_down_calling;
     /**
      * Relocates the container at the proper offset, in bounds of max/min offsets.
      *
@@ -309,6 +316,11 @@ protected:
      * If YES, the view is being dragged.
      */
     bool _dragging;
+    
+    /**
+     *  if is scroling, YES ,eat touch.
+     */
+    bool _bEatTouch;
 
     /**
      * Content offset. Note that left-bottom point is the origin
@@ -370,6 +382,7 @@ protected:
     Rect _parentScissorRect;
     bool _scissorRestored;
     
+    float _SCROLL_DEACCEL_DIST,_SCROLL_DEACCEL_RATE;
     /** Touch listener */
     EventListenerTouchOneByOne* _touchListener;
     

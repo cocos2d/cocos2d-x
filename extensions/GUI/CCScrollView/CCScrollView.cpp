@@ -27,21 +27,22 @@
 #include "platform/CCDevice.h"
 #include "2d/CCActionInstant.h"
 #include "2d/CCActionInterval.h"
+#include "2d/CCActionEase.h"
 #include "2d/CCActionTween.h"
 #include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"
 #include "renderer/CCRenderer.h"
 
 #include <algorithm>
-
+#include <cmath>
 NS_CC_EXT_BEGIN
 
 #define SCROLL_DEACCEL_RATE  0.95f
 #define SCROLL_DEACCEL_DIST  1.0f
 #define BOUNCE_DURATION      0.15f
-#define INSET_RATIO          0.2f
+#define INSET_RATIO          0.03f
 #define MOVE_INCH            7.0f/160.0f
-#define BOUNCE_BACK_FACTOR   0.35f
+#define BOUNCE_BACK_FACTOR   0.45f
 
 static float convertDistanceFromPointToInch(float pointDis)
 {
@@ -58,6 +59,8 @@ ScrollView::ScrollView()
 , _container(nullptr)
 , _touchMoved(false)
 , _bounceable(false)
+, _bEatTouch(false)
+, _is_cb_pull_down_calling(false)
 , _clippingToBounds(false)
 , _touchLength(0.0f)
 , _minScale(0.0f)
@@ -207,8 +210,8 @@ void ScrollView::setTouchEnabled(bool enabled)
 void ScrollView::setContentOffset(Vec2 offset, bool animated/* = false*/)
 {
     if (animated)
-    { //animate scrolling
-        this->setContentOffsetInDuration(offset, BOUNCE_DURATION);
+    {
+        this->setContentOffsetInDuration(offset, 0.7f);
     } 
     else
     { //set the container position directly
@@ -220,7 +223,7 @@ void ScrollView::setContentOffset(Vec2 offset, bool animated/* = false*/)
             offset.x = MAX(minOffset.x, MIN(maxOffset.x, offset.x));
             offset.y = MAX(minOffset.y, MIN(maxOffset.y, offset.y));
         }
-
+        
         _container->setPosition(offset);
 
         if (_delegate != nullptr)
@@ -233,8 +236,8 @@ void ScrollView::setContentOffset(Vec2 offset, bool animated/* = false*/)
 void ScrollView::setContentOffsetInDuration(Vec2 offset, float dt)
 {
     FiniteTimeAction *scroll, *expire;
-    
-    scroll = MoveTo::create(dt, offset);
+  
+    scroll = EaseExponentialOut::create( MoveTo::create(dt, offset));
     expire = CallFuncN::create(CC_CALLBACK_1(ScrollView::stoppedAnimatedScroll,this));
     _container->runAction(Sequence::create(scroll, expire, nullptr));
     this->schedule(CC_SCHEDULE_SELECTOR(ScrollView::performedAnimatedScroll));
@@ -664,6 +667,9 @@ bool ScrollView::onTouchBegan(Touch* touch, Event* event)
         _touchPoint     = this->convertTouchToNodeSpace(touch);
         _touchMoved     = false;
         _dragging     = true; //dragging started
+
+        _bEatTouch=isScrolling();
+
         _scrollDistance = Vec2(0.0f, 0.0f);
         _touchLength    = 0.0f;
     }
@@ -679,7 +685,9 @@ bool ScrollView::onTouchBegan(Touch* touch, Event* event)
     } 
     return true;
 }
-
+bool ScrollView::isScrolling(){
+    return _scrollDistance.x!=0 || _scrollDistance.y!=0;
+}
 void ScrollView::onTouchMoved(Touch* touch, Event* event)
 {
     if (!this->isVisible())
@@ -774,6 +782,15 @@ void ScrollView::onTouchMoved(Touch* touch, Event* event)
             this->setZoomScale(this->getZoomScale()*len/_touchLength);
         }
     }
+    float topOffset=-getContentOffset().y+getViewSize().height-getContentSize().height;
+    if(topOffset>0 && !_is_cb_pull_down_calling)
+    {
+       
+//        if(_cb_head_offset)
+//            _cb_head_offset(topOffset);
+        
+        
+    }
 }
 
 void ScrollView::onTouchEnded(Touch* touch, Event* event)
@@ -799,7 +816,23 @@ void ScrollView::onTouchEnded(Touch* touch, Event* event)
         _dragging = false;    
         _touchMoved = false;
     }
+    float topOffset=-getContentOffset().y+getViewSize().height-getContentSize().height;
+    
+    
+    if(topOffset>200 && !_is_cb_pull_down_calling)
+    {
+        _is_cb_pull_down_calling=true;
+        if(_cb_pull_down )
+            _cb_pull_down ();
+        
+        
+    }
+    
+    
 }
+void ScrollView::setPullDownProcessDone(){
+    _is_cb_pull_down_calling=false;
+};
 
 void ScrollView::onTouchCancelled(Touch* touch, Event* event)
 {

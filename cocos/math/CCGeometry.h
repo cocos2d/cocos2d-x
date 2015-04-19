@@ -128,6 +128,8 @@ public:
      * @js NA
      */
     Rect();
+    
+    Rect(const Size& s);
     /**
     Constructor a rect.
      * @js NA

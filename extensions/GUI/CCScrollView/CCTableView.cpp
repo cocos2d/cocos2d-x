@@ -107,7 +107,7 @@ void TableView::reloadData()
             _tableViewDelegate->tableCellWillRecycle(this, cell);
         }
 
-        _cellsFreed.pushBack(cell);
+        _cellsFreed[cell->getTag()].pushBack(cell);
         
         cell->reset();
         if (cell->getParent() == this->getContainer())
@@ -133,6 +133,7 @@ TableViewCell *TableView::cellAtIndex(ssize_t idx)
     {
         for (const auto& cell : _cellsUsed)
         {
+            
             if (cell->getIdx() == idx)
             {
                 return cell;
@@ -236,20 +237,25 @@ void TableView::removeCellAtIndex(ssize_t idx)
         this->_setIndexForCell(cell->getIdx()-1, cell);
     }
 }
-
-TableViewCell *TableView::dequeueCell()
+ 
+TableViewCell *TableView::dequeueCell(int tag)
 {
-    TableViewCell *cell;
-
-    if (_cellsFreed.empty()) {
-        cell = nullptr;
+     if (_cellsFreed.empty()) {
+        return NULL;
     } else {
-        cell = _cellsFreed.at(0);
-        cell->retain();
-        _cellsFreed.erase(0);
-        cell->autorelease();
+        for (auto ite= _cellsFreed[tag].begin();ite!=_cellsFreed[tag].end(); ++ite) {
+            if((*ite)->getTag()==tag)
+            {
+                TableViewCell * cell=*ite;
+                cell->retain();
+                _cellsFreed[tag].erase(ite);
+                cell->autorelease();
+                return cell;
+            }
+        }
+       
     }
-    return cell;
+    return  NULL;
 }
 
 void TableView::_addCellIfNecessary(TableViewCell * cell)
@@ -400,7 +406,7 @@ void TableView::_moveCellOutOfSight(TableViewCell *cell)
         _tableViewDelegate->tableCellWillRecycle(this, cell);
     }
 
-    _cellsFreed.pushBack(cell);
+    _cellsFreed[cell->getTag()].pushBack(cell);
     _cellsUsed.eraseObject(cell);
     _isUsedCellsDirty = true;
     
@@ -579,8 +585,11 @@ void TableView::onTouchEnded(Touch *pTouch, Event *pEvent)
 
 		if (bb.containsPoint(pTouch->getLocation()) && _tableViewDelegate != nullptr)
         {
-            _tableViewDelegate->tableCellUnhighlight(this, _touchedCell);
-            _tableViewDelegate->tableCellTouched(this, _touchedCell);
+            if(!_bEatTouch)
+            {
+                _tableViewDelegate->tableCellUnhighlight(this, _touchedCell);
+                _tableViewDelegate->tableCellTouched(this, _touchedCell);
+            }
         }
 
         _touchedCell = nullptr;

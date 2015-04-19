@@ -260,9 +260,8 @@ public:
      *
      * @return free cell
      */
-    TableViewCell *dequeueCell();
-
-    /**
+    TableViewCell *dequeueCell(int tag=0);
+     /**
      * Returns an existing cell at a given index. Returns nil if a cell is nonexistent at the moment of query.
      *
      * @param idx index
@@ -312,9 +311,9 @@ protected:
      */
     Vector<TableViewCell*> _cellsUsed;
     /**
-     * free list of cells
+     * free map of cells
      */
-    Vector<TableViewCell*> _cellsFreed;
+    std::map<int,Vector<TableViewCell*> > _cellsFreed;
     /**
      * weak link to the data source object
      */
