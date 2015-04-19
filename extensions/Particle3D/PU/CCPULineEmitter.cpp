@@ -38,7 +38,6 @@ const float PULineEmitter::DEFAULT_MAX_DEVIATION = 0.0f;
 PULineEmitter::PULineEmitter(void) : 
     PUEmitter(),
     _end(DEFAULT_END),
-    _perpendicular(Vec3::ZERO),
     _maxDeviation(DEFAULT_MAX_DEVIATION),
     _minIncrement(DEFAULT_MIN_INCREMENT),
     _maxIncrement(DEFAULT_MAX_INCREMENT),
@@ -46,7 +45,6 @@ PULineEmitter::PULineEmitter(void) :
     _length(0.0f),
     _incrementsLeft(true),
     _first(true),
-    _scaledEnd(Vec3::ZERO),
     _scaledMaxDeviation(0.0f),
     _scaledMinIncrement(0.0f),
     _scaledMaxIncrement(0.0f),
