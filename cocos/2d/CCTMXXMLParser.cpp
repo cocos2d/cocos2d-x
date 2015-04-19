@@ -44,7 +44,6 @@ TMXLayerInfo::TMXLayerInfo()
 : _name("")
 , _tiles(nullptr)
 , _ownTiles(true)
-, _offset(Vec2::ZERO)
 {
 }
 
@@ -355,7 +354,7 @@ void TMXMapInfo::startElement(void *ctx, const char *name, const char **atts)
 
         float x = attributeDict["x"].asFloat();
         float y = attributeDict["y"].asFloat();
-        layer->_offset = Vec2(x,y);
+        layer->_offset.set(x, y);
 
         tmxMapInfo->getLayers().pushBack(layer);
         layer->release();
