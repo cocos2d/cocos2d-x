@@ -81,6 +81,7 @@ public:
 	void OnResuming(Platform::Object^ sender, Platform::Object^ args);
 	void OnSuspending(Platform::Object^ sender, Windows::ApplicationModel::SuspendingEventArgs^ args);
     void OnBackKeyPress();
+    void ExitApp();
 
     void QueueBackKeyPress();
     void QueuePointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);

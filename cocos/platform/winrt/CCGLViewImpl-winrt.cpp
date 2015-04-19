@@ -202,10 +202,21 @@ void GLViewImpl::OnResuming(Platform::Object^ sender, Platform::Object^ args)
 // user pressed the Back Key on the phone
 void GLViewImpl::OnBackKeyPress()
 {
-    std::string str;
-    if(m_delegate)
+    cocos2d::EventKeyboard::KeyCode cocos2dKey = EventKeyboard::KeyCode::KEY_ESCAPE;
+    cocos2d::EventKeyboard event(cocos2dKey, false);
+    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+}
+
+// user pressed the Back Key on the phone
+void GLViewImpl::ExitApp()
+{
+    // run on main UI thread
+    if (m_dispatcher.Get())
     {
-        //m_delegate->Invoke(Cocos2dEvent::TerminateApp, stringToPlatformString(str));
+        m_dispatcher.Get()->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new DispatchedHandler([]()
+        {
+            Windows::UI::Xaml::Application::Current->Exit();
+        }));
     }
 }
 
@@ -220,7 +231,6 @@ void GLViewImpl::OnPointerPressed(PointerEventArgs^ args)
     Vec2 pt = GetPoint(args);
     handleTouchesBegin(1, &id, &pt.x, &pt.y);
 }
-
 
 void GLViewImpl::OnPointerWheelChanged(CoreWindow^ sender, PointerEventArgs^ args)
 {

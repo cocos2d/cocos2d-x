@@ -137,4 +137,9 @@ void Cocos2dRenderer::QueuePointerEvent(cocos2d::PointerEventType type, Windows:
     GLViewImpl::sharedOpenGLView()->QueuePointerEvent(type, args);
 }
 
+void Cocos2dRenderer::QueueBackButtonEvent()
+{
+    GLViewImpl::sharedOpenGLView()->QueueBackKeyPress();
+}
+
 

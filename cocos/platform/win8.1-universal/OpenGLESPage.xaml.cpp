@@ -171,14 +171,12 @@ void OpenGLESPage::OnVisibilityChanged(Windows::UI::Core::CoreWindow^ sender, Wi
 #if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
 void OpenGLESPage::OnBackButtonPressed(Object^ sender, BackPressedEventArgs^ args)
 {
-    bool myAppCanNavigate = false;
-    if (myAppCanNavigate)
+    if (m_renderer)
     {
+        m_renderer->QueueBackButtonEvent();
         args->Handled = true;
     }
-    else {
-        // Do nothing. Leave args->Handled set to the current value, false.
-    }
+
 }
 #endif
 
