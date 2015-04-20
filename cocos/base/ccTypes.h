@@ -556,7 +556,8 @@ enum class LabelEffect {
     NORMAL,
     OUTLINE,
     SHADOW,
-    GLOW
+    GLOW,
+    ALL
 };
 
 /** @struct Acceleration

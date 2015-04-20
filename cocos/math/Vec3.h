@@ -362,6 +362,12 @@ public:
     void smooth(const Vec3& target, float elapsedTime, float responseTime);
 
     /**
+     * Linear interpolation between two vectors A and B by alpha which
+     * is in the range [0,1]
+     */
+    inline Vec3 lerp(const Vec3& target, float alpha) const;
+
+    /**
      * Calculates the sum of this vector with the given vector.
      * 
      * Note: this does not modify this vector.

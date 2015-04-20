@@ -228,7 +228,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         setAnchorPoint(Vec2(0.5f, 0.5f));
         
         // zwoptex default values
-        _offsetPosition = Vec2::ZERO;
+        _offsetPosition.setZero();
 
         // clean the Quad
         memset(&_quad, 0, sizeof(_quad));

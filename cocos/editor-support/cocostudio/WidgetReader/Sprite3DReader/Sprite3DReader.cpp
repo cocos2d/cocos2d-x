@@ -77,7 +77,7 @@ namespace cocostudio
         if(!attribute)
             return Vec2::ZERO;
         
-        Vec2 ret(Vec2::ZERO);
+        Vec2 ret;
         std::string attriname;
         
         while (attribute)
