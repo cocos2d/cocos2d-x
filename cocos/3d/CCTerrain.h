@@ -384,6 +384,17 @@ public:
     QuadTree * getQuadTree();
 
     void reload();
+    
+    /**
+     * get the terrain's size
+     */
+    Size getTerrainSize() const { return Size(_imageWidth, _imageHeight); }
+    
+    /**
+     * get the terrain's height data
+     */
+    void getHeightData(std::vector<float>& data) const;
+    
 protected:
     
     Terrain();
