@@ -82,7 +82,5 @@ void HelloWorld::menuCloseCallback(Ref* sender)
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     exit(0);
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    GLViewImpl::sharedOpenGLView()->ExitApp();
 #endif
 }
