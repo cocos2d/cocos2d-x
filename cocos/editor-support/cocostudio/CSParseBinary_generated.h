@@ -727,6 +727,14 @@ struct ButtonOptions : private flatbuffers::Table {
   const FlatSize *scale9Size() const { return GetStruct<const FlatSize *>(24); }
   uint8_t scale9Enabled() const { return GetField<uint8_t>(26, 0); }
   uint8_t displaystate() const { return GetField<uint8_t>(28, 1); }
+  uint8_t outlineEnabled() const { return GetField<uint8_t>(30, 0); }
+  const Color *outlineColor() const { return GetStruct<const Color *>(32); }
+  int32_t outlineSize() const { return GetField<int32_t>(34, 1); }
+  uint8_t shadowEnabled() const { return GetField<uint8_t>(36, 0); }
+  const Color *shadowColor() const { return GetStruct<const Color *>(38); }
+  float shadowOffsetX() const { return GetField<float>(40, 2); }
+  float shadowOffsetY() const { return GetField<float>(42, -2); }
+  int32_t shadowBlurRadius() const { return GetField<int32_t>(44, 0); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, 4 /* widgetOptions */) &&
@@ -749,6 +757,14 @@ struct ButtonOptions : private flatbuffers::Table {
            VerifyField<FlatSize>(verifier, 24 /* scale9Size */) &&
            VerifyField<uint8_t>(verifier, 26 /* scale9Enabled */) &&
            VerifyField<uint8_t>(verifier, 28 /* displaystate */) &&
+           VerifyField<uint8_t>(verifier, 30 /* outlineEnabled */) &&
+           VerifyField<Color>(verifier, 32 /* outlineColor */) &&
+           VerifyField<int32_t>(verifier, 34 /* outlineSize */) &&
+           VerifyField<uint8_t>(verifier, 36 /* shadowEnabled */) &&
+           VerifyField<Color>(verifier, 38 /* shadowColor */) &&
+           VerifyField<float>(verifier, 40 /* shadowOffsetX */) &&
+           VerifyField<float>(verifier, 42 /* shadowOffsetY */) &&
+           VerifyField<int32_t>(verifier, 44 /* shadowBlurRadius */) &&
            verifier.EndTable();
   }
 };
@@ -769,10 +785,18 @@ struct ButtonOptionsBuilder {
   void add_scale9Size(const FlatSize *scale9Size) { fbb_.AddStruct(24, scale9Size); }
   void add_scale9Enabled(uint8_t scale9Enabled) { fbb_.AddElement<uint8_t>(26, scale9Enabled, 0); }
   void add_displaystate(uint8_t displaystate) { fbb_.AddElement<uint8_t>(28, displaystate, 1); }
+  void add_outlineEnabled(uint8_t outlineEnabled) { fbb_.AddElement<uint8_t>(30, outlineEnabled, 0); }
+  void add_outlineColor(const Color *outlineColor) { fbb_.AddStruct(32, outlineColor); }
+  void add_outlineSize(int32_t outlineSize) { fbb_.AddElement<int32_t>(34, outlineSize, 1); }
+  void add_shadowEnabled(uint8_t shadowEnabled) { fbb_.AddElement<uint8_t>(36, shadowEnabled, 0); }
+  void add_shadowColor(const Color *shadowColor) { fbb_.AddStruct(38, shadowColor); }
+  void add_shadowOffsetX(float shadowOffsetX) { fbb_.AddElement<float>(40, shadowOffsetX, 2); }
+  void add_shadowOffsetY(float shadowOffsetY) { fbb_.AddElement<float>(42, shadowOffsetY, -2); }
+  void add_shadowBlurRadius(int32_t shadowBlurRadius) { fbb_.AddElement<int32_t>(44, shadowBlurRadius, 0); }
   ButtonOptionsBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   ButtonOptionsBuilder &operator=(const ButtonOptionsBuilder &);
   flatbuffers::Offset<ButtonOptions> Finish() {
-    auto o = flatbuffers::Offset<ButtonOptions>(fbb_.EndTable(start_, 13));
+    auto o = flatbuffers::Offset<ButtonOptions>(fbb_.EndTable(start_, 21));
     return o;
   }
 };
@@ -790,8 +814,22 @@ inline flatbuffers::Offset<ButtonOptions> CreateButtonOptions(flatbuffers::FlatB
    const CapInsets *capInsets = 0,
    const FlatSize *scale9Size = 0,
    uint8_t scale9Enabled = 0,
-   uint8_t displaystate = 1) {
+   uint8_t displaystate = 1,
+   uint8_t outlineEnabled = 0,
+   const Color *outlineColor = 0,
+   int32_t outlineSize = 1,
+   uint8_t shadowEnabled = 0,
+   const Color *shadowColor = 0,
+   float shadowOffsetX = 2,
+   float shadowOffsetY = -2,
+   int32_t shadowBlurRadius = 0) {
   ButtonOptionsBuilder builder_(_fbb);
+  builder_.add_shadowBlurRadius(shadowBlurRadius);
+  builder_.add_shadowOffsetY(shadowOffsetY);
+  builder_.add_shadowOffsetX(shadowOffsetX);
+  builder_.add_shadowColor(shadowColor);
+  builder_.add_outlineSize(outlineSize);
+  builder_.add_outlineColor(outlineColor);
   builder_.add_scale9Size(scale9Size);
   builder_.add_capInsets(capInsets);
   builder_.add_textColor(textColor);
@@ -803,6 +841,8 @@ inline flatbuffers::Offset<ButtonOptions> CreateButtonOptions(flatbuffers::FlatB
   builder_.add_pressedData(pressedData);
   builder_.add_normalData(normalData);
   builder_.add_widgetOptions(widgetOptions);
+  builder_.add_shadowEnabled(shadowEnabled);
+  builder_.add_outlineEnabled(outlineEnabled);
   builder_.add_displaystate(displaystate);
   builder_.add_scale9Enabled(scale9Enabled);
   return builder_.Finish();
