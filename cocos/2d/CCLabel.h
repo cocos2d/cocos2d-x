@@ -323,6 +323,7 @@ public:
 
     /**
      * Disable all effect to Label.
+     * @warning Please use disableEffect(LabelEffect::ALL) instead of this API.
      */
     virtual void disableEffect();
 

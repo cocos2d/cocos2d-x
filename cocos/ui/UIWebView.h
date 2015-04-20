@@ -216,6 +216,7 @@ protected:
    
     ccWebViewCallback _onJSCallback;
 
+CC_CONSTRUCTOR_ACCESS:
     /**
      * Default constructor.
      */

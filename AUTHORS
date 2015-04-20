@@ -1097,6 +1097,15 @@ Developers:
         
     IgorMats
         Added MotionStreak::getStroke/setStroke
+        
+    matsuokah
+        Fixed the bug that JNI illegal start byte error causes crashing error on Android 5.0
+        
+    babcca
+        Fixed crashing when playing streamed MP4 file on iOS
+        
+    milos1290
+        Added Lerp for Vec3
 
 Retired Core Developers:
     WenSheng Yang

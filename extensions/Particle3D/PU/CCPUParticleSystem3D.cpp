@@ -1051,7 +1051,8 @@ void PUParticleSystem3D::copyAttributesTo( PUParticleSystem3D* system )
 
     system->setName(_name);
     system->_state = _state;
-    system->setRender(static_cast<PURender *>(_render)->clone());
+    if (_render)
+        system->setRender(static_cast<PURender *>(_render)->clone());
     system->_particleQuota = _particleQuota;
     system->_blend = _blend;
     system->_keepLocal = _keepLocal;
@@ -1102,6 +1103,11 @@ PUParticleSystem3D* PUParticleSystem3D::clone()
 {
     auto ps = PUParticleSystem3D::create();
     copyAttributesTo(ps);
+    for (auto &iter : _children){
+        PUParticleSystem3D *child = dynamic_cast<PUParticleSystem3D *>(iter);
+        if (child)
+            ps->addChild(child->clone());
+    }
     return ps;
 }
 
