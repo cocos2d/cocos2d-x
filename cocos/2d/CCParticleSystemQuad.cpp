@@ -237,7 +237,7 @@ void ParticleSystemQuad::setTexture(Texture2D* texture)
 
 void ParticleSystemQuad::setDisplayFrame(SpriteFrame *spriteFrame)
 {
-    CCASSERT(spriteFrame->getOffsetInPixels().equals(Vec2::ZERO), 
+    CCASSERT(spriteFrame->getOffsetInPixels().isZero(), 
              "QuadParticle only supports SpriteFrames with no offsets");
 
     // update texture before updating texture rect
