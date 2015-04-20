@@ -35,18 +35,20 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class Label;
+class SpriteFrame;
 
 namespace ui{
-    
+
     class Scale9Sprite;
 /**
- * Represents a push-button widget. Push-buttons can be pressed, or clicked, by the user to perform an action.
+ * Represents a push-button widget.
+ * Push-buttons can be pressed, or clicked, by the user to perform an action.
  */
 class CC_GUI_DLL Button : public Widget
 {
-    
+
     DECLARE_CLASS_GUI_INFO
-    
+
 public:
 
     /**
@@ -66,7 +68,7 @@ public:
      *@return A empty Button instance.
      */
     static Button* create();
-    
+
     /**
      * Create a button with custom textures.
      * @param normalImage normal state texture name.
@@ -79,7 +81,7 @@ public:
                           const std::string& selectedImage = "",
                           const std::string& disableImage = "",
                           TextureResType texType = TextureResType::LOCAL);
-    
+
     /**
      * Load textures for button.
      *
@@ -189,7 +191,7 @@ public:
     virtual Size getVirtualRendererSize() const override;
     virtual Node* getVirtualRenderer() override;
     virtual std::string getDescription() const override;
-    
+
     /**
      * Return the inner title renderer of Button.
      * @return The button title.
@@ -207,7 +209,7 @@ public:
      * Query the button title content.
      *@return Get the button's title content.
      */
-    const std::string& getTitleText() const;
+    const std::string getTitleText() const;
 
     /**
      * Change the color of button's title.
@@ -243,7 +245,7 @@ public:
      * Query the font name of button's title
      *@return font name in std::string
      */
-    const std::string& getTitleFontName() const;
+    const std::string getTitleFontName() const;
 
     /** @brief When user pressed the button, the button will zoom to a scale.
      * The final scale of the button  equals (button original scale + _zoomScale)
@@ -252,12 +254,12 @@ public:
     void setZoomScale(float scale);
 
     /**
-     * @brief Return a zoom scale 
+     * @brief Return a zoom scale
      * @return the zoom scale in float
      * @since v3.3
      */
     float getZoomScale()const;
-    
+
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
     virtual bool init(const std::string& normalImage,
@@ -273,45 +275,51 @@ protected:
     virtual void onPressStateChangedToPressed() override;
     virtual void onPressStateChangedToDisabled() override;
     virtual void onSizeChanged() override;
-  
+
+    void loadTextureNormal(SpriteFrame* normalSpriteFrame);
+    void setupNormalTexture();
+    void loadTexturePressed(SpriteFrame* pressedSpriteFrame);
+    void setupPressedTexture();
+    void loadTextureDisabled(SpriteFrame* disabledSpriteFrame);
+    void setupDisabledTexture();
+
     void normalTextureScaleChangedWithSize();
     void pressedTextureScaleChangedWithSize();
     void disabledTextureScaleChangedWithSize();
-    
+
     virtual void adaptRenderers() override;
     void updateTitleLocation();
     void updateContentSize();
-    
+    void createTitleRenderer();
+
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
-   
+
     virtual Size getNormalSize() const;
 protected:
     Scale9Sprite* _buttonNormalRenderer;
     Scale9Sprite* _buttonClickedRenderer;
     Scale9Sprite* _buttonDisableRenderer;
     Label* _titleRenderer;
-   
+
     float _zoomScale;
-    std::string _normalFileName;
-    std::string _clickedFileName;
-    std::string _disabledFileName;
     bool _prevIgnoreSize;
     bool _scale9Enabled;
+    bool _pressedActionEnabled;
+
     Rect _capInsetsNormal;
     Rect _capInsetsPressed;
     Rect _capInsetsDisabled;
-    TextureResType _normalTexType;
-    TextureResType _pressedTexType;
-    TextureResType _disabledTexType;
+
     Size _normalTextureSize;
     Size _pressedTextureSize;
     Size _disabledTextureSize;
-    bool _pressedActionEnabled;
+
     float _normalTextureScaleXInSize;
     float _normalTextureScaleYInSize;
     float _pressedTextureScaleXInSize;
     float _pressedTextureScaleYInSize;
+
     bool _normalTextureLoaded;
     bool _pressedTextureLoaded;
     bool _disabledTextureLoaded;
@@ -326,7 +334,6 @@ private:
         TTF
     };
 
-    std::string _fontName;
     int _fontSize;
     FontType _type;
 };

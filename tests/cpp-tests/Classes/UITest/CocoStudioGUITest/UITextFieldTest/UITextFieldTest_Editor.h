@@ -38,10 +38,10 @@ public:
     ~UITextFieldTest_Editor();
 
     virtual bool init() override;
-    void textFieldEvent(Ref* pSender, TextField::EventType type);
+    void textFieldEvent(cocos2d::Ref* sender, cocos2d::ui::TextField::EventType type);
     virtual void configureGUIScene() override;
 protected:
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UITextFieldTest_Editor__) */

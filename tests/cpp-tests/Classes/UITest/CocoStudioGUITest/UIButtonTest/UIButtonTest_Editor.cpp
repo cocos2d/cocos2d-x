@@ -1,5 +1,8 @@
 #include "UIButtonTest_Editor.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
 // UIButtonTest_Editor
 
 UIButtonEditorTests::UIButtonEditorTests()

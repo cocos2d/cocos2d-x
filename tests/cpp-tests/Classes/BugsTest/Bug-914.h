@@ -6,12 +6,11 @@
 class Bug914Layer : public BugsTestBase
 {
 public:
-    static Scene* scene();
     virtual bool init() override;
 
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event * event);
-    void onTouchesBegan(const std::vector<Touch*>& touches, Event * event);
-    void restart(Ref* sender);
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    void restart(cocos2d::Ref* sender);
 
     CREATE_FUNC(Bug914Layer);
 };

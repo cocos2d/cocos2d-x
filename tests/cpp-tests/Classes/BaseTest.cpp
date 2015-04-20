@@ -27,6 +27,9 @@
 #include "controller.h"
 
 USING_NS_CC;
+USING_NS_CC_EXT;
+
+#define TABEL_LABEL_TAG 1024
 
 TestBase::TestBase()
 : _parentTest(nullptr)
@@ -50,9 +53,82 @@ void TestBase::backsUpOneLevel()
 }
 
 //TestList
+class TestCustomTableView : public TableView
+{
+public:
+    static TestCustomTableView* create(TableViewDataSource* dataSource, Size size)
+    {
+        auto table = new (std::nothrow) TestCustomTableView();
+        table->initWithViewSize(size, nullptr);
+        table->autorelease();
+        table->setDataSource(dataSource);
+        table->_updateCellPositions();
+        table->_updateContentSize();
+
+        return table;
+    }
+   
+    virtual void onTouchEnded(Touch *touch, Event *event) override
+    {
+        if (!this->isVisible())
+        {
+            return;
+        }
+
+        if (_touchedCell)
+        {
+            auto label = (Label*)_touchedCell->getChildByTag(TABEL_LABEL_TAG);
+
+            Rect bbox = label->getBoundingBox();
+            bbox.origin = _touchedCell->convertToWorldSpace(bbox.origin);
+
+            if (bbox.containsPoint(touch->getLocation()) && _tableViewDelegate != nullptr)
+            {
+                _tableViewDelegate->tableCellUnhighlight(this, _touchedCell);
+                _tableViewDelegate->tableCellTouched(this, _touchedCell);
+            }
+
+            _touchedCell = nullptr;
+        }
+
+        ScrollView::onTouchEnded(touch, event);
+    }
+
+    void onMouseScroll(Event *event)
+    {
+        auto mouseEvent = static_cast<EventMouse*>(event);
+        float moveY = mouseEvent->getScrollY() * 20;
+
+        auto minOffset = this->minContainerOffset();
+        auto maxOffset = this->maxContainerOffset();
+
+        auto offset = this->getContentOffset();
+        offset.y += moveY;
+
+        if (offset.y < minOffset.y)
+        {
+            offset.y = minOffset.y;
+        }
+        else if (offset.y > maxOffset.y)
+        {
+            offset.y = maxOffset.y;
+        }
+        this->setContentOffset(offset);
+    }
+
+protected:
+    TestCustomTableView()
+    {
+        auto mouseListener = EventListenerMouse::create();
+        mouseListener->onMouseScroll = CC_CALLBACK_1(TestCustomTableView::onMouseScroll, this);
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
+    }
+};
+
 TestList::TestList()
 {
     _isTestList = true;
+    _shouldRestoreTableOffset = false;
 }
 
 void TestList::addTest(const std::string& testName, std::function<TestBase*()> callback)
@@ -73,7 +149,7 @@ void TestList::runThisTest()
     auto visibleSize = director->getVisibleSize();
     auto origin = director->getVisibleOrigin();
 
-    TableView* tableView = TableView::create(this, Size(400,visibleSize.height));
+    auto tableView = TestCustomTableView::create(this, Size(400, visibleSize.height));
     tableView->setPosition(origin.x + (visibleSize.width - 400) / 2, origin.y);
     tableView->setDirection(ScrollView::Direction::VERTICAL);
     tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
@@ -81,7 +157,7 @@ void TestList::runThisTest()
     scene->addChild(tableView);
     tableView->reloadData();
 
-    if (_tableOffset != Vec2::ZERO)
+    if (_shouldRestoreTableOffset)
     {
         tableView->setContentOffset(_tableOffset);
     }
@@ -142,7 +218,7 @@ void TestList::tableCellTouched(TableView* table, TableViewCell* cell)
             if (test->getChildTestCount() > 0)
             {
                 _tableOffset = table->getContentOffset();
-
+                _shouldRestoreTableOffset = true;
                 _cellTouchEnabled = false;
                 test->setTestParent(this);
                 test->runThisTest();
@@ -162,13 +238,13 @@ TableViewCell* TestList::tableCellAtIndex(TableView *table, ssize_t idx)
     {
         cell = TableViewCell::create();
         auto label = Label::createWithTTF(_childTestNames[idx], "fonts/arial.ttf", 20.0f);
-        label->setTag(1024);
+        label->setTag(TABEL_LABEL_TAG);
         label->setPosition(200, 15);
         cell->addChild(label);
     }
     else
     {
-        auto label = (Label*)cell->getChildByTag(1024);
+        auto label = (Label*)cell->getChildByTag(TABEL_LABEL_TAG);
         label->setString(_childTestNames[idx]);
     }
 
@@ -215,14 +291,14 @@ void TestSuite::runThisTest()
 {
     if (!_childTestNames.empty())
     {
+        TestController::getInstance()->setCurrTestSuite(this);
+
         _currTestIndex = 0;
         auto scene = _testCallbacks[0]();
         auto testCase = getTestCase(scene);
         testCase->setTestSuite(this);
         testCase->setTestCaseName(_childTestNames[_currTestIndex]);
         Director::getInstance()->replaceScene(scene);
-
-        
     }
 }
 
@@ -361,6 +437,11 @@ void TestCase::onEnter()
 
     _titleLabel->setString(title());
     _subtitleLabel->setString(subtitle());
+
+    if (_testSuite == nullptr)
+    {
+        setTestSuite(TestController::getInstance()->getCurrTestSuite());
+    }
 
     if (_testSuite && _testSuite->getChildTestCount() < 2)
     {

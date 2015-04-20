@@ -2,6 +2,8 @@
 #include "stdio.h"
 #include "stdlib.h"
 
+USING_NS_CC;
+
 // enable log
 #define COCOS2D_DEBUG 1
 

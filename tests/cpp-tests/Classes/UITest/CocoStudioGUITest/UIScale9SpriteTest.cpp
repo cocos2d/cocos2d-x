@@ -25,6 +25,9 @@
 #include "UIScale9SpriteTest.h"
 #include "testResource.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
 UIScale9SpriteTests::UIScale9SpriteTests()
 {
     ADD_TEST_CASE(UIScale9SpriteTest);

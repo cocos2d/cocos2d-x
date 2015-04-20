@@ -1154,7 +1154,6 @@
 		1AC0269D1914068200FA920D /* ConvertUTF.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC026991914068200FA920D /* ConvertUTF.h */; };
 		29031E0719BFE8D400EFA1DF /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29031E0619BFE8D400EFA1DF /* libchipmunk.a */; };
 		29031E0919BFE8DE00EFA1DF /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29031E0819BFE8DE00EFA1DF /* libchipmunk.a */; };
-		2905E9CD1ACD3D8C00092DD2 /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2905E9CC1ACD3D8C00092DD2 /* libz.a */; };
 		292DB13D19B4574100A80320 /* UIEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292DB12F19B4574100A80320 /* UIEditBox.cpp */; };
 		292DB13E19B4574100A80320 /* UIEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292DB12F19B4574100A80320 /* UIEditBox.cpp */; };
 		292DB13F19B4574100A80320 /* UIEditBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 292DB13019B4574100A80320 /* UIEditBox.h */; };
@@ -1771,12 +1770,8 @@
 		50ED2BDB19BE76D500A0AB90 /* UIVideoPlayer-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0FB6A191C841D00B170C8 /* UIVideoPlayer-ios.mm */; };
 		50ED2BE019BEAF7900A0AB90 /* UIEditBoxImpl-win32.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ED2BDC19BEAF7900A0AB90 /* UIEditBoxImpl-win32.h */; };
 		50ED2BE119BEAF7900A0AB90 /* UIEditBoxImpl-win32.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ED2BDC19BEAF7900A0AB90 /* UIEditBoxImpl-win32.h */; };
-		50ED2BE219BEAF7900A0AB90 /* UIEditBoxImpl-wp8.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ED2BDD19BEAF7900A0AB90 /* UIEditBoxImpl-wp8.h */; };
-		50ED2BE319BEAF7900A0AB90 /* UIEditBoxImpl-wp8.h in Headers */ = {isa = PBXBuildFile; fileRef = 50ED2BDD19BEAF7900A0AB90 /* UIEditBoxImpl-wp8.h */; };
 		50ED2BE419BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ED2BDE19BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp */; };
 		50ED2BE519BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ED2BDE19BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp */; };
-		50ED2BE619BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ED2BDF19BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp */; };
-		50ED2BE719BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50ED2BDF19BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp */; };
 		52B47A2E1A5349A3004E4C60 /* HttpAsynConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 52B47A291A5349A3004E4C60 /* HttpAsynConnection.h */; };
 		52B47A2F1A5349A3004E4C60 /* HttpAsynConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2A1A5349A3004E4C60 /* HttpAsynConnection.m */; };
 		52B47A301A5349A3004E4C60 /* HttpClient-apple.mm in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2B1A5349A3004E4C60 /* HttpClient-apple.mm */; };
@@ -3546,9 +3541,7 @@
 		50E6D33218E174130051CA34 /* UIVBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIVBox.cpp; sourceTree = "<group>"; };
 		50E6D33318E174130051CA34 /* UIVBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIVBox.h; sourceTree = "<group>"; };
 		50ED2BDC19BEAF7900A0AB90 /* UIEditBoxImpl-win32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIEditBoxImpl-win32.h"; sourceTree = "<group>"; };
-		50ED2BDD19BEAF7900A0AB90 /* UIEditBoxImpl-wp8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIEditBoxImpl-wp8.h"; sourceTree = "<group>"; };
 		50ED2BDE19BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "UIEditBoxImpl-win32.cpp"; sourceTree = "<group>"; };
-		50ED2BDF19BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "UIEditBoxImpl-wp8.cpp"; sourceTree = "<group>"; };
 		50FCEB6A18C72017004AD434 /* ButtonReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ButtonReader.cpp; sourceTree = "<group>"; };
 		50FCEB6B18C72017004AD434 /* ButtonReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonReader.h; sourceTree = "<group>"; };
 		50FCEB6D18C72017004AD434 /* CheckBoxReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CheckBoxReader.cpp; sourceTree = "<group>"; };
@@ -4029,7 +4022,6 @@
 			files = (
 				29031E0719BFE8D400EFA1DF /* libchipmunk.a in Frameworks */,
 				15AE1C1A19AAE3C800C27E9E /* libwebsockets.a in Frameworks */,
-				2905E9CD1ACD3D8C00092DD2 /* libz.a in Frameworks */,
 				292F1A6B1A5250F700E479F8 /* libssl.a in Frameworks */,
 				292F1A631A52447100E479F8 /* libcrypto.a in Frameworks */,
 				B217704E1977ED9F009EE11B /* libsqlite3.dylib in Frameworks */,
@@ -5218,9 +5210,7 @@
 			isa = PBXGroup;
 			children = (
 				50ED2BDC19BEAF7900A0AB90 /* UIEditBoxImpl-win32.h */,
-				50ED2BDD19BEAF7900A0AB90 /* UIEditBoxImpl-wp8.h */,
 				50ED2BDE19BEAF7900A0AB90 /* UIEditBoxImpl-win32.cpp */,
-				50ED2BDF19BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp */,
 				292DB12F19B4574100A80320 /* UIEditBox.cpp */,
 				292DB13019B4574100A80320 /* UIEditBox.h */,
 				292DB13119B4574100A80320 /* UIEditBoxImpl.h */,
@@ -6769,7 +6759,6 @@
 				1A57011D180BC90D0088DEC7 /* CCGrabber.h in Headers */,
 				B665E3C81AA80A6600DDB1C5 /* CCPUScaleVelocityAffector.h in Headers */,
 				B29A7E2B19EE1B7700872B35 /* AtlasAttachmentLoader.h in Headers */,
-				50ED2BE219BEAF7900A0AB90 /* UIEditBoxImpl-wp8.h in Headers */,
 				B665E3781AA80A6500DDB1C5 /* CCPUParticleFollowerTranslator.h in Headers */,
 				15AE1B6819AADA9900C27E9E /* UIScale9Sprite.h in Headers */,
 				1A570121180BC90D0088DEC7 /* CCGrid.h in Headers */,
@@ -7746,7 +7735,6 @@
 				15AE1A9519AAD40300C27E9E /* b2BlockAllocator.h in Headers */,
 				5034CA48191D591100CE6051 /* ccShader_Label_normal.frag in Headers */,
 				15AE183F19AAD2F700C27E9E /* CCSkeleton3D.h in Headers */,
-				50ED2BE319BEAF7900A0AB90 /* UIEditBoxImpl-wp8.h in Headers */,
 				50ABBD531925AB0000A911A9 /* Quaternion.h in Headers */,
 				15AE19B119AAD39700C27E9E /* ScrollViewReader.h in Headers */,
 				503DD8E81926736A00CD74DD /* CCES2Renderer-ios.h in Headers */,
@@ -8609,7 +8597,6 @@
 				B665E20A1AA80A6500DDB1C5 /* CCPUBaseColliderTranslator.cpp in Sources */,
 				B665E3E61AA80A6600DDB1C5 /* CCPUSineForceAffectorTranslator.cpp in Sources */,
 				15AE1B5119AADA9900C27E9E /* UIPageView.cpp in Sources */,
-				50ED2BE619BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp in Sources */,
 				15AE18EC19AAD35000C27E9E /* CCActionObject.cpp in Sources */,
 				296BF6181A4405CB0038EC44 /* UIShaders.cpp in Sources */,
 				B665E2821AA80A6500DDB1C5 /* CCPUDoStopSystemEventHandler.cpp in Sources */,
@@ -8899,7 +8886,6 @@
 				B665E3471AA80A6500DDB1C5 /* CCPUOnExpireObserverTranslator.cpp in Sources */,
 				15AE1AA519AAD40300C27E9E /* b2Fixture.cpp in Sources */,
 				B29A7DE219EE1B7700872B35 /* MeshAttachment.c in Sources */,
-				50ED2BE719BEAF7900A0AB90 /* UIEditBoxImpl-wp8.cpp in Sources */,
 				B6D38B8F1AC3AFAC00043997 /* CCTextureCube.cpp in Sources */,
 				15AE1BAD19AADFDF00C27E9E /* UILayoutParameter.cpp in Sources */,
 				3823843E1A259140002C4610 /* SingleNodeReader.cpp in Sources */,

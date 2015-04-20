@@ -14,7 +14,7 @@ public:
     virtual void showCurrentTest();
 };
 
-class PerformceAllocScene : public Scene
+class PerformceAllocScene : public cocos2d::Scene
 {
 public:
     virtual void initWithQuantityOfNodes(unsigned int nNodes);

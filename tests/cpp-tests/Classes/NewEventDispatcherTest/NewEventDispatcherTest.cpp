@@ -9,6 +9,8 @@
 #include "NewEventDispatcherTest.h"
 #include "testResource.h"
 
+USING_NS_CC;
+
 EventDispatcherTests::EventDispatcherTests()
 {
     ADD_TEST_CASE(TouchableSpriteTest);

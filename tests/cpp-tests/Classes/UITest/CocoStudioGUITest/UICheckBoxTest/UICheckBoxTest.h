@@ -38,10 +38,10 @@ public:
     ~UICheckBoxTest();
 
     virtual bool init() override;
-    void selectedEvent(Ref* pSender,CheckBox::EventType type);
+    void selectedEvent(cocos2d::Ref* sender,cocos2d::ui::CheckBox::EventType type);
     
 protected:
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UICheckBoxDefaultBehaviorTest : public UIScene
@@ -55,7 +55,7 @@ public:
     virtual bool init() override;
     
 protected:
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UICheckBoxTest__) */

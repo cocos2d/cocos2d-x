@@ -1,5 +1,8 @@
 #include "UISliderTest.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
 UISliderTests::UISliderTests()
 {
     ADD_TEST_CASE(UISliderTest);

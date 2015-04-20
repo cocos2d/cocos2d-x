@@ -254,7 +254,7 @@ void ScrollView::setZoomScale(float s)
         
         if (_touchLength == 0.0f) 
         {
-            center = Vec2(_viewSize.width*0.5f, _viewSize.height*0.5f);
+            center.set(_viewSize.width*0.5f, _viewSize.height*0.5f);
             center = this->convertToWorldSpace(center);
         }
         else
@@ -481,10 +481,10 @@ void ScrollView::updateInset()
 	if (this->getContainer() != nullptr)
 	{
 		_maxInset = this->maxContainerOffset();
-		_maxInset = Vec2(_maxInset.x + _viewSize.width * INSET_RATIO,
+        _maxInset.set(_maxInset.x + _viewSize.width * INSET_RATIO,
 			_maxInset.y + _viewSize.height * INSET_RATIO);
 		_minInset = this->minContainerOffset();
-		_minInset = Vec2(_minInset.x - _viewSize.width * INSET_RATIO,
+        _minInset.set(_minInset.x - _viewSize.width * INSET_RATIO,
 			_minInset.y - _viewSize.height * INSET_RATIO);
 	}
 }
@@ -664,7 +664,7 @@ bool ScrollView::onTouchBegan(Touch* touch, Event* event)
         _touchPoint     = this->convertTouchToNodeSpace(touch);
         _touchMoved     = false;
         _dragging     = true; //dragging started
-        _scrollDistance = Vec2(0.0f, 0.0f);
+        _scrollDistance.setZero();
         _touchLength    = 0.0f;
     }
     else if (_touches.size() == 2)
@@ -740,7 +740,7 @@ void ScrollView::onTouchMoved(Touch* touch, Event* event)
             
             if (!_touchMoved)
             {
-                moveDistance = Vec2::ZERO;
+                moveDistance.setZero();
             }
             
             _touchPoint = newPoint;
@@ -751,10 +751,10 @@ void ScrollView::onTouchMoved(Touch* touch, Event* event)
                 switch (_direction)
                 {
                     case Direction::VERTICAL:
-                        moveDistance = Vec2(0.0f, moveDistance.y);
+                        moveDistance.set(0.0f, moveDistance.y);
                         break;
                     case Direction::HORIZONTAL:
-                        moveDistance = Vec2(moveDistance.x, 0.0f);
+                        moveDistance.set(moveDistance.x, 0.0f);
                         break;
                     default:
                         break;

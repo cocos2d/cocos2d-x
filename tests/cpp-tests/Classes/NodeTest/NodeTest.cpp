@@ -27,6 +27,8 @@
 #include <regex>
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum 
 {
     kTagSprite1 = 1,
@@ -333,8 +335,7 @@ void StressTest1::shouldNotCrash(float dt)
 
 // remove
 void StressTest1::removeMe(Node* node)
-{    
-    getParent()->removeChild(node, true);
+{
     getTestSuite()->enterNextTest();
 }
 

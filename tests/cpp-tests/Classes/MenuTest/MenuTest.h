@@ -39,39 +39,39 @@ public:
     virtual bool init() override;
 };
 
-class MenuLayerMainMenu : public Layer
+class MenuLayerMainMenu : public cocos2d::Layer
 {
 protected:
-    MenuItem*    _disabledItem;
-    EventListenerTouchOneByOne* _touchListener;
+    cocos2d::MenuItem*    _disabledItem;
+    cocos2d::EventListenerTouchOneByOne* _touchListener;
 
 public:
     MenuLayerMainMenu();
     ~MenuLayerMainMenu();
 
 public:
-    bool onTouchBegan(Touch *touch, Event * event);
-    void onTouchEnded(Touch *touch, Event * event);
-    void onTouchCancelled(Touch *touch, Event * event);
-    void onTouchMoved(Touch *touch, Event * event);
+    bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
+    void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event);
+    void onTouchCancelled(cocos2d::Touch* touch, cocos2d::Event* event);
+    void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event);
 
     void allowTouches(float dt);
-    void menuCallback(Ref* sender);
-    void menuCallbackConfig(Ref* sender);
-    void menuCallbackDisabled(Ref* sender);
-    void menuCallback2(Ref* sender);
-    void menuCallbackPriorityTest(Ref* sender);
-    void menuCallbackBugsTest(Ref *pSender);
-    void onQuit(Ref* sender);
-    void menuMovingCallback(Ref *pSender);
+    void menuCallback(cocos2d::Ref* sender);
+    void menuCallbackConfig(cocos2d::Ref* sender);
+    void menuCallbackDisabled(cocos2d::Ref* sender);
+    void menuCallback2(cocos2d::Ref* sender);
+    void menuCallbackPriorityTest(cocos2d::Ref* sender);
+    void menuCallbackBugsTest(cocos2d::Ref* pSender);
+    void onQuit(cocos2d::Ref* sender);
+    void menuMovingCallback(cocos2d::Ref* pSender);
 
     //CREATE_NODE(MenuLayer1);
 };
 
-class MenuLayer2 : public Layer
+class MenuLayer2 : public cocos2d::Layer
 {
 protected:
-    Vec2        _centeredMenu;
+    cocos2d::Vec2        _centeredMenu;
     bool                _alignedH; 
 
     void alignMenusH();
@@ -81,56 +81,56 @@ public:
     MenuLayer2();
     ~MenuLayer2();
 
-    void menuCallback(Ref* sender);
-    void menuCallbackOpacity(Ref* sender);
-    void menuCallbackAlign(Ref* sender);
+    void menuCallback(cocos2d::Ref* sender);
+    void menuCallbackOpacity(cocos2d::Ref* sender);
+    void menuCallbackAlign(cocos2d::Ref* sender);
 
     //CREATE_NODE(MenuLayer2);
 };
 
-class MenuLayer3 : public Layer
+class MenuLayer3 : public cocos2d::Layer
 {
 protected:
-    MenuItem*    _disabledItem;
+    cocos2d::MenuItem*    _disabledItem;
 
 public:
     MenuLayer3();
     ~MenuLayer3();
 };
 
-class MenuLayer4 : public Layer
+class MenuLayer4 : public cocos2d::Layer
 {
 public:
     MenuLayer4();
     ~MenuLayer4();
 
-    void menuCallback(Ref* sender);
-    void backCallback(Ref* sender);
+    void menuCallback(cocos2d::Ref* sender);
+    void backCallback(cocos2d::Ref* sender);
 };
 
-class BugsTest : public Layer
+class BugsTest : public cocos2d::Layer
 {
 public:
     BugsTest();
     
-    void issue1410MenuCallback(Ref *pSender);
-    void issue1410v2MenuCallback(Ref *pSender);
-    void backMenuCallback(Ref *pSender);
+    void issue1410MenuCallback(cocos2d::Ref* pSender);
+    void issue1410v2MenuCallback(cocos2d::Ref* pSender);
+    void backMenuCallback(cocos2d::Ref* pSender);
 };
 
-class RemoveMenuItemWhenMove : public Layer
+class RemoveMenuItemWhenMove : public cocos2d::Layer
 {
 public:
     RemoveMenuItemWhenMove();
     ~RemoveMenuItemWhenMove();
-    bool onTouchBegan(Touch  *touch, Event  *event);
-    void onTouchMoved(Touch  *touch, Event  *event);
+    bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
+    void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event);
     
-    void goBack(Ref *pSender);
+    void goBack(cocos2d::Ref* pSender);
     
 private:
-    MenuItemFont *item;
-    EventListenerTouchOneByOne* _touchListener;
+    cocos2d::MenuItemFont *item;
+    cocos2d::EventListenerTouchOneByOne* _touchListener;
 };
 
 #endif

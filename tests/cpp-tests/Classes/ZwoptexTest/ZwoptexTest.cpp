@@ -1,6 +1,8 @@
 #include "ZwoptexTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 ZwoptexTests::ZwoptexTests()
 {
     ADD_TEST_CASE(ZwoptexGenericTest);

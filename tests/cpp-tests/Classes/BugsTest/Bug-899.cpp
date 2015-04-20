@@ -7,6 +7,8 @@
 
 #include "Bug-899.h"
 
+USING_NS_CC;
+
 bool Bug899Layer::init()
 {
 //    Director::getInstance()->enableRetinaDisplay(true);

@@ -3,7 +3,6 @@
 
 #include "../BaseTest.h"
 
-USING_NS_CC;
 
 DEFINE_TEST_SUITE(FileUtilsTests);
 

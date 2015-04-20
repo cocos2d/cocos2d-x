@@ -69,7 +69,9 @@ void spIkConstraint_apply (spIkConstraint* self) {
 void spIkConstraint_apply1 (spBone* bone, float targetX, float targetY, float alpha) {
 	float parentRotation = (!bone->data->inheritRotation || !bone->parent) ? 0 : bone->parent->worldRotation;
 	float rotation = bone->rotation;
-	float rotationIK = ATAN2(targetY - bone->worldY, targetX - bone->worldX) * RAD_DEG - parentRotation;
+	float rotationIK = ATAN2(targetY - bone->worldY, targetX - bone->worldX) * RAD_DEG;
+	if (bone->worldFlipX != (bone->worldFlipY != spBone_isYDown())) rotationIK = -rotationIK;
+	rotationIK -= parentRotation;
 	bone->rotationIK = rotation + (rotationIK - rotation) * alpha;
 }
 

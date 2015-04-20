@@ -9,13 +9,13 @@ DEFINE_TEST_SUITE(EffectAdvanceTests);
 class EffectAdvanceBaseTest: public TestCase
 {
 protected:
-    TextureAtlas* _atlas;
+    cocos2d::TextureAtlas* _atlas;
 
     std::string    _title;
 
-    Node* _bgNode;
-    Node* _target1;
-    Node* _target2;
+    cocos2d::Node* _bgNode;
+    cocos2d::Node* _target1;
+    cocos2d::Node* _target2;
 
 public:
     virtual void onEnter() override;

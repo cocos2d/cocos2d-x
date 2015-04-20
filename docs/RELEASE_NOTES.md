@@ -13,11 +13,14 @@
     - [Windows](#windows)
     - [Linux](#linux)
   - [How to start a new game](#how-to-start-a-new-game)
-- [v3.6alpha0](#v36alpha0)
+- [v3.6beta0](#v36beta0)
   - [Highlights of v3.6beta0](#highlights-of-v36beta0)
+- [v3.6alpha0](#v36alpha0)
+  - [Highlights of v3.6alpha0](#highlights-of-v36alpha0)
   - [Features in detail](#features-in-detail-1)
     - [3D TextureCube](#3d-texturecube)
     - [3D Skybox](#3d-skybox)
+    - [3D Terrain](#3d-terrain)
     - [Animate3D Quality Control](#animate3d-quality-control)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -110,6 +113,18 @@ Run
 
 Please refer to this document: [ReadMe](../README.md)
 
+# v3.6beta0
+
+## Hilights of v3.6beta0
+
+* 3rd: updated Spine runtime to v2.1.25
+* MotionStreak: added `getStroke()` and `setStroke()`
+* Rect: added `intersectsCircle()`
+* UI:Text: added `disableEffect(LabelEffect)` to disable a specific effect
+* Fixed link error on VS2012 caused by libpng
+* Optimized memory usage for `ui:button`
+* Some bugs fixed for `Particle3D` and other modules
+
 # v3.6alpha0
 
 ## Highlights of v3.6alpha0
@@ -118,6 +133,11 @@ Please refer to this document: [ReadMe](../README.md)
 * 3D: added terrian support
 * uses luajit v2.1-20150331 on 64-bit iOS devices
 * added test automation support for cpp-tests
+* 3rd: updated libcurl to v7.4 on all supported platforms except WP8/WP8.1 universal
+* 3rd: updated chipmunk to v6.2.2
+* 3rd: updated openssl to v1.0.11
+* 3rd: updated freetype to v2.5.5
+* 3rd: updated png to v1.6.16 on all supported platforms except WP8/WP8.1 universal because it is not needed on these two platforms
 
 ## Features in detail
 
@@ -176,6 +196,30 @@ addChild(_skyBox);
 ```
 
 For more information please refer to cpp-tests/Sprite3DTest/Sprite3DCubeMapTest.
+
+### 3D Terrain
+
+Terrain is an important component in 3D game. A texture is used to stand for the height map. And up to 4 textures can be used to blend the details of the terrain, grass, road, and so on.
+
+Usage of terrain
+
+```c++
+//blended layers
+Terrain::DetailMap dirt("TerrainTest/dirt.jpg"), grass("TerrainTest/Grass2.jpg"), road("TerrainTest/road.jpg"), green("TerrainTest/GreenSkin.jpg");
+
+//height map, alpha map (blend weight), and blended layers
+Terrain::TerrainData data("TerrainTest/heightmap16.jpg", "TerrainTest/alphamap.png", dirt, grass, road, green);
+
+//create terrain here
+_terrain = Terrain::create(data,Terrain::CrackFixedType::SKIRT);
+//set lod distance
+_terrain->setLODDistance(3.2,6.4,9.6);
+//it must be less than 5
+_terrain->setMaxDetailMapAmount(4);
+addChild(_terrain);
+```
+
+For more information please refer to cpp-tests/Sprite3DTest/TerrainTest.
 
 ### Animate3D Quality Control
 

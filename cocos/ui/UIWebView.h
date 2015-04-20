@@ -27,7 +27,7 @@
 
 #include "platform/CCPlatformConfig.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS )
 
 
 #include "ui/UIWidget.h"
@@ -216,6 +216,7 @@ protected:
    
     ccWebViewCallback _onJSCallback;
 
+CC_CONSTRUCTOR_ACCESS:
     /**
      * Default constructor.
      */

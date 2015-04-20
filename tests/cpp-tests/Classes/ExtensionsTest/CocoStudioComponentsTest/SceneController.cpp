@@ -83,10 +83,8 @@ void SceneController::spriteMoveFinished(Node* sender)
         auto director = Director::getInstance();
 		auto gameOverScene = GameOverScene::create();
 		gameOverScene->getLayer()->getLabel()->setString("You Lose :[");
-        auto currScene = (CocoStudioComponentsTest*)director->getRunningScene();
-        gameOverScene->setTestSuite(currScene->getTestSuite());
 
-		Director::getInstance()->replaceScene(gameOverScene);
+		director->replaceScene(gameOverScene);
 	}
 	else if (sprite->getTag() == 3) 
 	{
@@ -107,8 +105,6 @@ void SceneController::increaseKillCount()
         auto director = Director::getInstance();
         auto gameOverScene = GameOverScene::create();
         gameOverScene->getLayer()->getLabel()->setString("You Win!");
-        auto currScene = (CocoStudioComponentsTest*)director->getRunningScene();
-        gameOverScene->setTestSuite(currScene->getTestSuite());
-        Director::getInstance()->replaceScene(gameOverScene);
+        director->replaceScene(gameOverScene);
     }
 }

@@ -25,13 +25,6 @@
         
 --------------------------------
 -- 
--- @function [parent=#RotationFrame] apply 
--- @param self
--- @param #float percent
--- @return RotationFrame#RotationFrame self (return value: ccs.RotationFrame)
-        
---------------------------------
--- 
 -- @function [parent=#RotationFrame] clone 
 -- @param self
 -- @return Frame#Frame ret (return value: ccs.Frame)

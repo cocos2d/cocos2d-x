@@ -9,6 +9,8 @@
 #include "../testResource.h"
 #include "renderer/CCRenderer.h"
 
+USING_NS_CC;
+
 enum {
 	kTagTitleLabel = 1,
 	kTagSubtitleLabel = 2,

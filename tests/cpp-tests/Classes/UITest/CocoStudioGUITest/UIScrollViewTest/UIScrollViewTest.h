@@ -40,7 +40,7 @@ public:
     
 protected:
     
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UIScrollViewTest_Horizontal : public UIScene
@@ -54,7 +54,7 @@ public:
     
 protected:
     
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UIScrollViewTest_Both : public UIScene
@@ -68,7 +68,7 @@ public:
     
 protected:
     
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UIScrollViewTest_ScrollToPercentBothDirection : public UIScene
@@ -82,7 +82,7 @@ public:
     
 protected:
     
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UIScrollViewTest_ScrollToPercentBothDirection_Bounce : public UIScene
@@ -96,7 +96,7 @@ public:
     
 protected:
     
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UIScrollViewNestTest : public UIScene
@@ -110,7 +110,7 @@ public:
     
 protected:
     
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UIScrollViewRotated : public UIScene
@@ -124,7 +124,7 @@ public:
     
 protected:
     
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UIScrollViewTest__) */
