@@ -297,19 +297,19 @@ void Terrain::setChunksLOD(Vec3 cameraPos)
 
 float Terrain::getHeight(float x, float z, Vec3 * normal)
 {
-    Vec2 pos = Vec2(x,z);
+    Vec2 pos(x,z);
 
     //top-left
-    Vec2 tl = Vec2(-1*_terrainData._mapScale*_imageWidth/2,-1*_terrainData._mapScale*_imageHeight/2);
+    Vec2 tl(-1*_terrainData._mapScale*_imageWidth/2,-1*_terrainData._mapScale*_imageHeight/2);
     auto result  = getNodeToWorldTransform()*Vec4(tl.x,0.0f,tl.y,1.0f);
-    tl = Vec2(result.x,result.z);
+    tl.set(result.x, result.z);
 
     Vec2 to_tl = pos - tl;
 
     //real size
-    Vec2 size = Vec2(_imageWidth*_terrainData._mapScale,_imageHeight*_terrainData._mapScale);
+    Vec2 size(_imageWidth*_terrainData._mapScale,_imageHeight*_terrainData._mapScale);
     result = getNodeToWorldTransform()*Vec4(size.x,0.0f,size.y,0.0f);
-    size = Vec2(result.x,result.z);
+    size.set(result.x, result.z);
 
     float width_ratio = to_tl.x/size.x;
     float height_ratio = to_tl.y/size.y;
@@ -543,19 +543,19 @@ void Terrain::setMaxDetailMapAmount(int max_value)
 
 cocos2d::Vec2 Terrain::convertToTerrainSpace(Vec2 worldSpaceXZ)
 {
-    Vec2 pos = Vec2(worldSpaceXZ.x,worldSpaceXZ.y);
+    Vec2 pos(worldSpaceXZ.x,worldSpaceXZ.y);
 
     //top-left
-    Vec2 tl = Vec2(-1*_terrainData._mapScale*_imageWidth/2,-1*_terrainData._mapScale*_imageHeight/2);
+    Vec2 tl(-1*_terrainData._mapScale*_imageWidth/2,-1*_terrainData._mapScale*_imageHeight/2);
     auto result  = getNodeToWorldTransform()*Vec4(tl.x,0.0f,tl.y,1.0f);
-    tl = Vec2(result.x,result.z);
+    tl.set(result.x, result.z);
 
     Vec2 to_tl = pos - tl;
 
     //real size
-    Vec2 size = Vec2(_imageWidth*_terrainData._mapScale,_imageHeight*_terrainData._mapScale);
+    Vec2 size(_imageWidth*_terrainData._mapScale,_imageHeight*_terrainData._mapScale);
     result = getNodeToWorldTransform()*Vec4(size.x,0.0f,size.y,0.0f);
-    size = Vec2(result.x,result.z);
+    size.set(result.x, result.z);
 
     float width_ratio = to_tl.x/size.x;
     float height_ratio = to_tl.y/size.y;
@@ -1206,8 +1206,8 @@ void Terrain::Chunk::calculateSlope()
             highest = _originalVertices[i]._position;
         }
     }
-    auto a = Vec2(lowest.x,lowest.z);
-    auto b = Vec2(highest.x,highest.z);
+    Vec2 a(lowest.x,lowest.z);
+    Vec2 b(highest.x,highest.z);
     float dist = a.distance(b);
     _slope = (highest.y - lowest.y)/dist;
 }

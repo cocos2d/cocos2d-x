@@ -549,7 +549,7 @@ MenuItem* Menu::getItemForTouch(Touch *touch)
             {
                 Vec2 local = child->convertToNodeSpace(touchLocation);
                 Rect r = child->rect();
-                r.origin = Vec2::ZERO;
+                r.origin.setZero();
                 
                 if (r.containsPoint(local))
                 {
