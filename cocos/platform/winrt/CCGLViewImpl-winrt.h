@@ -81,7 +81,7 @@ public:
 	void OnResuming(Platform::Object^ sender, Platform::Object^ args);
 	void OnSuspending(Platform::Object^ sender, Windows::ApplicationModel::SuspendingEventArgs^ args);
     void OnBackKeyPress();
-    void ExitApp();
+    bool AppShouldExit();
     void BackButtonListener(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 
     void QueueBackKeyPress();
@@ -157,6 +157,7 @@ private:
 
     bool m_running;
 	bool m_initialized;
+    bool m_appShouldExit;
 
     Cocos2dEventDelegate^ m_delegate;
     Cocos2dMessageBoxDelegate^ m_messageBoxDelegate;

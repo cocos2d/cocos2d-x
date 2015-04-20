@@ -81,6 +81,7 @@ GLViewImpl::GLViewImpl()
     , m_width(0)
     , m_height(0)
     , m_orientation(DisplayOrientations::Landscape)
+    , m_appShouldExit(false)
 {
 	s_pEglView = this;
     _viewName =  "cocos2dx";
@@ -192,6 +193,7 @@ bool GLViewImpl::isOpenGLReady()
 void GLViewImpl::end()
 {
 	m_windowClosed = true;
+    m_appShouldExit = true;
 }
 
 
@@ -216,21 +218,12 @@ void GLViewImpl::BackButtonListener(EventKeyboard::KeyCode keyCode, Event* event
     if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE)
     {
         Director::getInstance()->end();
-        ExitApp();
     }
 }
 
-// user pressed the Back Key on the phone
-void GLViewImpl::ExitApp()
+bool GLViewImpl::AppShouldExit()
 {
-    // run on main UI thread
-    if (m_dispatcher.Get())
-    {
-        m_dispatcher.Get()->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new DispatchedHandler([]()
-        {
-            Windows::UI::Xaml::Application::Current->Exit();
-        }));
-    }
+    return m_appShouldExit;
 }
 
 void GLViewImpl::OnPointerPressed(CoreWindow^ sender, PointerEventArgs^ args)

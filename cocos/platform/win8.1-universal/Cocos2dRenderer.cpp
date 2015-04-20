@@ -84,6 +84,11 @@ void Cocos2dRenderer::Pause()
     }
 }
 
+bool Cocos2dRenderer::AppShouldExit()
+{
+    return GLViewImpl::sharedOpenGLView()->AppShouldExit();
+}
+
 void Cocos2dRenderer::DeviceLost()
 {
     Pause();

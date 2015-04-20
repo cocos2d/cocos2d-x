@@ -248,6 +248,15 @@ void OpenGLESPage::RecoverFromLostDevice()
     StartRenderLoop();
 }
 
+void OpenGLESPage::TerminateApp()
+{
+    {
+        critical_section::scoped_lock lock(mRenderSurfaceCriticalSection);
+        DestroyRenderSurface();
+    }
+    Windows::UI::Xaml::Application::Current->Exit();
+}
+
 void OpenGLESPage::StartRenderLoop()
 {
     // If the render loop is already running then do not start another thread.
@@ -271,8 +280,6 @@ void OpenGLESPage::StartRenderLoop()
         GLsizei panelWidth = 0;
         GLsizei panelHeight = 0;
         GetSwapChainPanelSize(&panelWidth, &panelHeight);
-        
-
 
         if (m_renderer.get() == nullptr)
         {
@@ -311,6 +318,17 @@ void OpenGLESPage::StartRenderLoop()
                 {
                     RecoverFromLostDevice();
                 }, CallbackContext::Any));
+
+                return;
+            }
+
+            // run on main UI thread
+            if (m_renderer->AppShouldExit())
+            {
+                swapChainPanel->Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]()
+                {
+                    TerminateApp();
+                }));
 
                 return;
             }

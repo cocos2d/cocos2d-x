@@ -39,7 +39,8 @@ namespace cocos2d
         void Pause();
         void Resume();
         void DeviceLost();
-        
+        bool AppShouldExit();
+
     private:
 
         int m_width;
