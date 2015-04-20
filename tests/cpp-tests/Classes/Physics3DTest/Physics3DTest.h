@@ -31,16 +31,14 @@
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
-class Physics3DTestDemo : public BaseTest
+DEFINE_TEST_SUITE(Physics3DTests);
+
+class Physics3DTestDemo : public TestCase
 {
 public:
     CREATE_FUNC(Physics3DTestDemo);
     Physics3DTestDemo(void);
     virtual ~Physics3DTestDemo(void);
-    
-    void restartCallback(Ref* sender) override;
-    void nextCallback(Ref* sender) override;
-    void backCallback(Ref* sender) override;
     
     // overrides
     virtual bool init() override;
@@ -48,9 +46,9 @@ public:
     virtual std::string subtitle() const override;
     virtual void update(float delta) override;
     
-    void onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event  *event) override;
-    void onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event) override;
-    void onTouchesEnded(const std::vector<Touch*>& touches, cocos2d::Event  *event) override;
+    void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
+    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
 
 protected:
 
@@ -117,14 +115,6 @@ public:
 private:
 
     cocos2d::Data _data;
-};
-
-class Physics3DTestScene : public TestScene
-{
-public:
-    Physics3DTestScene();
-    virtual ~Physics3DTestScene(){};
-    virtual void runThisTest();
 };
 
 #endif

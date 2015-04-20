@@ -33,6 +33,11 @@ extern "C" {
 #include "cocos2d.h"
 #include "CCLuaValue.h"
 
+/**
+ * @addtogroup lua
+ * @{
+ */
+
 NS_CC_BEGIN
 
 /**
@@ -47,11 +52,10 @@ class LuaStack : public Ref
 public:
     /**
      * Create a LuaStack object, it will new a lua_State.
-     *
      */
     static LuaStack *create(void);
     /**
-     * Create a LuaStack object with the existed lua_State
+     * Create a LuaStack object with the existed lua_State.
      */
     static LuaStack *attach(lua_State *L);
     
@@ -60,6 +64,7 @@ public:
     
     /**
      * Method used to get a pointer to the lua_State that the script module is attached to.
+     *
      * @return A pointer to the lua_State that the script module is attached to.
      */
     lua_State* getLuaState(void) {
@@ -68,6 +73,7 @@ public:
     
     /**
      * Add a path to find lua files in.
+     *
      * @param path to be added to the Lua search path.
      */
     virtual void addSearchPath(const char* path);
@@ -117,7 +123,7 @@ public:
      * Execute script code contained in the given string.
      *
      * @param codes holding the valid script code that should be executed.
-     * @return 0 if the string is excuted correctly,other if the string is excuted wrongly
+     * @return 0 if the string is excuted correctly,other if the string is excuted wrongly.
      */
     virtual int executeString(const char* codes);
     
@@ -218,7 +224,7 @@ public:
      * The key of table is the key of LuaValueDict which is std::map.
      * The value of table is according to the the type of LuaValue of LuaValueDict by calling pushLuaValue,@see pushLuaValue.
      *
-     * @param dict a LuaValueDict object
+     * @param dict a LuaValueDict object.
      */
     virtual void pushLuaValueDict(const LuaValueDict& dict);
     
@@ -231,7 +237,7 @@ public:
     
     /**
      * Get the lua function pointer from toluafix_refid_function_mapping table by giving nHanlder.
-     * If the lua function pointer corresponding to the nHanlder isn't found, it would push nil on the top index of stack, then it would output the error log in the debug model
+     * If the lua function pointer corresponding to the nHanlder isn't found, it would push nil on the top index of stack, then it would output the error log in the debug model.
      *
      * @return true if get the no-null function pointer otherwise false.
      */
@@ -250,7 +256,7 @@ public:
      *
      * @param nHandler the index count corresponding to the lua function.
      * @param numArgs the number of variables.
-     * @return the return value is the same as executeFunction,please @see executeFunction
+     * @return the return value is the same as executeFunction,please @see executeFunction.
      */
     virtual int executeFunctionByHandler(int nHandler, int numArgs);
     
@@ -259,7 +265,7 @@ public:
      * By calling this function, the number of return value is numResults(may be > 1).
      * All the return values are stored in the resultArray.
      *
-     * @param nHandler the index count corresponding to the lua function.
+     * @param handler the index count corresponding to the lua function.
      * @param numArgs the number of variables.
      * @param numResults the number of return value.
      * @param resultArray a array used to store the return value.
@@ -308,7 +314,7 @@ public:
      *
      * @param L the current lua_State.
      * @param chunk the buffer pointer.
-     * @param chunSize the size of buffer.
+     * @param chunkSize the size of buffer.
      * @param chunkName the name of chunk pointer.
      * @return 0, LUA_ERRSYNTAX or LUA_ERRMEM:.
      */
@@ -325,7 +331,7 @@ public:
     /**
      * Load the Lua chunks from current lua_State.
      *
-     * @param l the current lua_State.
+     * @param L the current lua_State.
      * @return 1 if load sucessfully otherwise 0.
      */
     int luaLoadChunksFromZIP(lua_State *L);
@@ -356,4 +362,6 @@ protected:
 
 NS_CC_END
 
+// end group
+/// @}
 #endif // __CC_LUA_STACK_H_

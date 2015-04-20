@@ -29,14 +29,13 @@
 -- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
         
 --------------------------------
--- 
+-- js NA
 -- @function [parent=#SpriteBatchNode] removeAllChildrenWithCleanup 
 -- @param self
 -- @param #bool cleanup
 -- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
         
 --------------------------------
--- js NA<br>
 -- lua NA
 -- @function [parent=#SpriteBatchNode] getBlendFunc 
 -- @param self
@@ -192,7 +191,7 @@
 -- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
 
 --------------------------------
--- 
+-- js NA
 -- @function [parent=#SpriteBatchNode] draw 
 -- @param self
 -- @param #cc.Renderer renderer
@@ -201,13 +200,13 @@
 -- @return SpriteBatchNode#SpriteBatchNode self (return value: cc.SpriteBatchNode)
         
 --------------------------------
--- 
+-- js NA
 -- @function [parent=#SpriteBatchNode] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- 
+-- js NA
 -- @function [parent=#SpriteBatchNode] visit 
 -- @param self
 -- @param #cc.Renderer renderer

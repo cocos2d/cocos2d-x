@@ -1,5 +1,7 @@
 #include "PerformanceLabelTest.h"
 
+USING_NS_CC;
+
 enum {
     kMaxNodes = 200,
     kNodesIncrease = 10,

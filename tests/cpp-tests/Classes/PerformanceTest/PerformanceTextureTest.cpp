@@ -1,5 +1,7 @@
 #include "PerformanceTextureTest.h"
 
+USING_NS_CC;
+
 enum
 {
     TEST_COUNT = 1,

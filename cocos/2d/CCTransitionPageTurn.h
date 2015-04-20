@@ -85,7 +85,7 @@ public:
 
     /** Returns the action that will be performed with size.
      *
-     * @param size A given size.
+     * @param vector A given size.
      * @return The action that will be performed.
      */
     ActionInterval* actionWithSize(const Size& vector);

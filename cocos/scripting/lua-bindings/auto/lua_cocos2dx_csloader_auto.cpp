@@ -5,56 +5,6 @@
 
 
 
-int lua_cocos2dx_csloader_CSLoader_setJsonPath(lua_State* tolua_S)
-{
-    int argc = 0;
-    cocos2d::CSLoader* cobj = nullptr;
-    bool ok  = true;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(tolua_S,1,"cc.CSLoader",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    cobj = (cocos2d::CSLoader*)tolua_tousertype(tolua_S,1,0);
-
-#if COCOS2D_DEBUG >= 1
-    if (!cobj) 
-    {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_csloader_CSLoader_setJsonPath'", nullptr);
-        return 0;
-    }
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-    if (argc == 1) 
-    {
-        std::string arg0;
-
-        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.CSLoader:setJsonPath");
-        if(!ok)
-        {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_csloader_CSLoader_setJsonPath'", nullptr);
-            return 0;
-        }
-        cobj->setJsonPath(arg0);
-        lua_settop(tolua_S, 1);
-        return 1;
-    }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:setJsonPath",argc, 1);
-    return 0;
-
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_csloader_CSLoader_setJsonPath'.",&tolua_err);
-#endif
-
-    return 0;
-}
 int lua_cocos2dx_csloader_CSLoader_createNodeFromJson(lua_State* tolua_S)
 {
     int argc = 0;
@@ -264,7 +214,7 @@ int lua_cocos2dx_csloader_CSLoader_bindCallback(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_csloader_CSLoader_purge(lua_State* tolua_S)
+int lua_cocos2dx_csloader_CSLoader_setJsonPath(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::CSLoader* cobj = nullptr;
@@ -284,29 +234,32 @@ int lua_cocos2dx_csloader_CSLoader_purge(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_csloader_CSLoader_purge'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_csloader_CSLoader_setJsonPath'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 0) 
+    if (argc == 1) 
     {
+        std::string arg0;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.CSLoader:setJsonPath");
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_csloader_CSLoader_purge'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_csloader_CSLoader_setJsonPath'", nullptr);
             return 0;
         }
-        cobj->purge();
+        cobj->setJsonPath(arg0);
         lua_settop(tolua_S, 1);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:purge",argc, 0);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.CSLoader:setJsonPath",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_csloader_CSLoader_purge'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_csloader_CSLoader_setJsonPath'.",&tolua_err);
 #endif
 
     return 0;
@@ -636,61 +589,6 @@ int lua_cocos2dx_csloader_CSLoader_destroyInstance(lua_State* tolua_S)
 #endif
     return 0;
 }
-int lua_cocos2dx_csloader_CSLoader_createNode(lua_State* tolua_S)
-{
-    int argc = 0;
-    bool ok  = true;
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertable(tolua_S,1,"cc.CSLoader",0,&tolua_err)) goto tolua_lerror;
-#endif
-
-    argc = lua_gettop(tolua_S)-1;
-
-    do 
-    {
-        if (argc == 2)
-        {
-            std::string arg0;
-            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.CSLoader:createNode");
-            if (!ok) { break; }
-            std::function<void (cocos2d::Ref *)> arg1;
-            do {
-			// Lambda binding for lua is not supported.
-			assert(false);
-		} while(0)
-		;
-            if (!ok) { break; }
-            cocos2d::Node* ret = cocos2d::CSLoader::createNode(arg0, arg1);
-            object_to_luaval<cocos2d::Node>(tolua_S, "cc.Node",(cocos2d::Node*)ret);
-            return 1;
-        }
-    } while (0);
-    ok  = true;
-    do 
-    {
-        if (argc == 1)
-        {
-            std::string arg0;
-            ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.CSLoader:createNode");
-            if (!ok) { break; }
-            cocos2d::Node* ret = cocos2d::CSLoader::createNode(arg0);
-            object_to_luaval<cocos2d::Node>(tolua_S, "cc.Node",(cocos2d::Node*)ret);
-            return 1;
-        }
-    } while (0);
-    ok  = true;
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d", "cc.CSLoader:createNode",argc, 1);
-    return 0;
-#if COCOS2D_DEBUG >= 1
-    tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_csloader_CSLoader_createNode'.",&tolua_err);
-#endif
-    return 0;
-}
 int lua_cocos2dx_csloader_CSLoader_getInstance(lua_State* tolua_S)
 {
     int argc = 0;
@@ -773,12 +671,11 @@ int lua_register_cocos2dx_csloader_CSLoader(lua_State* tolua_S)
 
     tolua_beginmodule(tolua_S,"CSLoader");
         tolua_function(tolua_S,"new",lua_cocos2dx_csloader_CSLoader_constructor);
-        tolua_function(tolua_S,"setJsonPath",lua_cocos2dx_csloader_CSLoader_setJsonPath);
         tolua_function(tolua_S,"createNodeFromJson",lua_cocos2dx_csloader_CSLoader_createNodeFromJson);
         tolua_function(tolua_S,"createNodeWithFlatBuffersFile",lua_cocos2dx_csloader_CSLoader_createNodeWithFlatBuffersFile);
         tolua_function(tolua_S,"loadNodeWithFile",lua_cocos2dx_csloader_CSLoader_loadNodeWithFile);
         tolua_function(tolua_S,"bindCallback",lua_cocos2dx_csloader_CSLoader_bindCallback);
-        tolua_function(tolua_S,"purge",lua_cocos2dx_csloader_CSLoader_purge);
+        tolua_function(tolua_S,"setJsonPath",lua_cocos2dx_csloader_CSLoader_setJsonPath);
         tolua_function(tolua_S,"init",lua_cocos2dx_csloader_CSLoader_init);
         tolua_function(tolua_S,"loadNodeWithContent",lua_cocos2dx_csloader_CSLoader_loadNodeWithContent);
         tolua_function(tolua_S,"isRecordJsonPath",lua_cocos2dx_csloader_CSLoader_isRecordJsonPath);
@@ -786,7 +683,6 @@ int lua_register_cocos2dx_csloader_CSLoader(lua_State* tolua_S)
         tolua_function(tolua_S,"setRecordJsonPath",lua_cocos2dx_csloader_CSLoader_setRecordJsonPath);
         tolua_function(tolua_S,"createNodeWithFlatBuffersForSimulator",lua_cocos2dx_csloader_CSLoader_createNodeWithFlatBuffersForSimulator);
         tolua_function(tolua_S,"destroyInstance", lua_cocos2dx_csloader_CSLoader_destroyInstance);
-        tolua_function(tolua_S,"createNode", lua_cocos2dx_csloader_CSLoader_createNode);
         tolua_function(tolua_S,"getInstance", lua_cocos2dx_csloader_CSLoader_getInstance);
     tolua_endmodule(tolua_S);
     std::string typeName = typeid(cocos2d::CSLoader).name();

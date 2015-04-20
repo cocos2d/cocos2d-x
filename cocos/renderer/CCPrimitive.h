@@ -27,6 +27,11 @@
 
 #include "renderer/CCVertexIndexData.h"
 
+/**
+ * @addtogroup support
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class IndexBuffer;
@@ -80,4 +85,8 @@ protected:
 
 NS_CC_END
 
+/**
+ end of support group
+ @}
+ */
 #endif //__CC_PRIMITIVE_H__

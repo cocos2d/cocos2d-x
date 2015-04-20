@@ -49,7 +49,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * @addtogroup textures
+ * @addtogroup _2d
  * @{
  */
 /*

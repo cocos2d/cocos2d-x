@@ -79,7 +79,7 @@ namespace cocostudio
         return _instanceNodeReader;
     }
     
-    void NodeReader::purge()
+    void NodeReader::destroyInstance()
     {
         CC_SAFE_DELETE(_instanceNodeReader);
     }
@@ -247,11 +247,7 @@ namespace cocostudio
         while (child)
         {
             std::string attriname = child->Name();
-            if (attriname == "Children")
-            {
-                break;
-            }
-            else if (attriname == "Position")
+            if (attriname == "Position")
             {
                 attribute = child->FirstAttribute();
                 

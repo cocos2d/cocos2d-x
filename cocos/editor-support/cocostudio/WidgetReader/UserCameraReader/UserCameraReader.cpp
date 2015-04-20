@@ -66,6 +66,11 @@ namespace cocostudio
         CC_SAFE_DELETE(_instanceUserCameraReader);
     }
     
+    void UserCameraReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(_instanceUserCameraReader);
+    }
+    
     Vec2 UserCameraReader::getVec2Attribute(const tinyxml2::XMLAttribute* attribute) const
     {
         if(!attribute)

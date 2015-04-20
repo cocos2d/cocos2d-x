@@ -41,48 +41,19 @@
 #include <sstream>
 #endif
 
+USING_NS_CC;
+
 //------------------------------------------------------------------
 //
 // ConsoleTest
 //
 //------------------------------------------------------------------
 
-static int sceneIdx = -1;
-
-static std::function<Layer*()> createFunctions[] =
+ConsoleTests::ConsoleTests()
 {
-    CL(ConsoleCustomCommand),
-    CL(ConsoleUploadFile),
-};
-
-#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-Layer* nextConsoleTest()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
+    ADD_TEST_CASE(ConsoleCustomCommand);
+    ADD_TEST_CASE(ConsoleUploadFile);
 }
-
-Layer* backConsoleTest()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;
-
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-Layer* restartConsoleTest()
-{
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-} 
-
 
 BaseTestConsole::BaseTestConsole()
 {
@@ -95,44 +66,6 @@ BaseTestConsole::~BaseTestConsole(void)
 std::string BaseTestConsole::title() const
 {
     return "No title";
-}
-
-void BaseTestConsole::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-void BaseTestConsole::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ConsoleTestScene();
-    s->addChild(restartConsoleTest());
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void BaseTestConsole::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ConsoleTestScene();
-    s->addChild( nextConsoleTest() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void BaseTestConsole::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ConsoleTestScene();
-    s->addChild( backConsoleTest() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-} 
-
-void ConsoleTestScene::runThisTest()
-{
-    auto layer = nextConsoleTest();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
 }
 
 //------------------------------------------------------------------

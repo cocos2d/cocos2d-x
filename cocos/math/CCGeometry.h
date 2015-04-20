@@ -32,12 +32,12 @@ THE SOFTWARE.
 #include "base/ccMacros.h"
 #include "math/CCMath.h"
 
-NS_CC_BEGIN
-
 /**
- * @addtogroup data_structures
+ * @addtogroup base
  * @{
  */
+
+NS_CC_BEGIN
 
 class CC_DLL Size
 {
@@ -196,6 +196,11 @@ public:
      */
     bool intersectsRect(const Rect& rect) const;
     /**
+    Check the intersect status of the rect and a circle.
+     * @js NA
+     */
+    bool intersectsCircle(const Vec2& center, float radius) const;
+    /**
     Get the min rect which can contain this and rect.
      * @js NA
      * @lua NA
@@ -207,9 +212,9 @@ public:
     static const Rect ZERO;
 };
 
-// end of data_structure group
-/// @}
-
 NS_CC_END
+
+// end of base group
+/// @}
 
 #endif // __MATH_CCGEOMETRY_H__

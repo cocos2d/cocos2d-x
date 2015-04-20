@@ -27,18 +27,22 @@
 
 #include "../UIScene_Editor.h"
 
+DEFINE_TEST_SUITE(UICheckBoxEditorTests);
+
 class UICheckBoxTest_Editor : public UIScene_Editor
 {
 public:
+    CREATE_FUNC(UICheckBoxTest_Editor);
+
     UICheckBoxTest_Editor();
     ~UICheckBoxTest_Editor();
-    bool init();
-    void selectedStateEvent(Ref* pSender, CheckBox::EventType type);
-    virtual void switchLoadMethod(Ref* pSender);
-    void configureGUIScene();
+
+    virtual bool init() override;
+
+    void selectedStateEvent(cocos2d::Ref* sender, cocos2d::ui::CheckBox::EventType type);
+    virtual void configureGUIScene() override;
 protected:
-    UI_SCENE_EDITOR_CREATE_FUNC(UICheckBoxTest_Editor)
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UICheckBoxTest_Editor__) */

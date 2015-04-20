@@ -31,6 +31,11 @@
 #include "platform/CCPlatformMacros.h"
 #include "base/ccTypes.h"
 
+/**
+ * @addtogroup support
+ * @{
+ */
+
 NS_CC_BEGIN
 
 /** Base class of the `RenderCommand` hierarchy.
@@ -124,5 +129,8 @@ protected:
 };
 
 NS_CC_END
-
+/**
+ end of support group
+ @}
+ */
 #endif //__CCRENDERCOMMAND_H_

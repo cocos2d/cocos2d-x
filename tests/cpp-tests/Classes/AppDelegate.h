@@ -27,7 +27,8 @@
 #define  _APP_DELEGATE_H_
 
 #include "cocos2d.h"
-#include "BaseTest.h"
+
+class TestController;
 /**
 @brief    The cocos2d Application.
 
@@ -42,7 +43,7 @@ public:
     virtual void initGLContextAttrs();
 
     /**
-    @brief    Implement Director and Scene init code here.
+    @brief    Implement Director and cocos2d::Scene* init code here.
     @return true    Initialize success, app continue.
     @return false   Initialize failed, app terminate.
     */
@@ -60,10 +61,8 @@ public:
     */
     virtual void applicationWillEnterForeground();
 
-    BaseTest* getCurrentTest();
-    void setCurrentTest(BaseTest* curTest);
 private:
-    BaseTest* _curTest;
+    TestController* _testController;
 };
 
 #endif // _APP_DELEGATE_H_

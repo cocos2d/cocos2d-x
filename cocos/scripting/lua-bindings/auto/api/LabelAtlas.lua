@@ -50,7 +50,7 @@
 -- @return LabelAtlas#LabelAtlas self (return value: cc.LabelAtlas)
         
 --------------------------------
--- 
+-- js NA
 -- @function [parent=#LabelAtlas] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)

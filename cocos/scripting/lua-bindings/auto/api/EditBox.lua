@@ -173,7 +173,7 @@
 -- @function [parent=#EditBox] initWithSizeAndBackgroundSprite
 -- @param self
 -- @param #size_table size
--- @param #string pNormal9SpriteBg
+-- @param #string normal9SpriteBg
 -- @param #int texType
 -- @return bool#bool ret (return value: bool)
 
@@ -284,7 +284,8 @@
         
 --------------------------------
 -- Constructor.<br>
--- js ctor
+-- js ctor<br>
+-- lua new
 -- @function [parent=#EditBox] EditBox 
 -- @param self
 -- @return EditBox#EditBox self (return value: ccui.EditBox)

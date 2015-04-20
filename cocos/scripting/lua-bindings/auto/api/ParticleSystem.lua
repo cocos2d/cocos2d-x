@@ -390,7 +390,7 @@
         
 --------------------------------
 --  Sets the source position of the emitter.<br>
--- param The source position of the emitter.
+-- param pos The source position of the emitter.
 -- @function [parent=#ParticleSystem] setSourcePosition 
 -- @param self
 -- @param #vec2_table pos
@@ -713,7 +713,7 @@
 -- This plist files can be created manually or with Particle Designer:<br>
 -- http:particledesigner.71squared.com/<br>
 -- since v2.0<br>
--- param Particle plist file name.<br>
+-- param plistFile Particle plist file name.<br>
 -- return An autoreleased ParticleSystem object.
 -- @function [parent=#ParticleSystem] create 
 -- @param self

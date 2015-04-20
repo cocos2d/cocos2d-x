@@ -215,7 +215,7 @@ class CC_DLL AccelDeccelAmplitude : public ActionInterval
 public:
     /**
     @brief Create the action with an inner action that has the amplitude property, and a duration time.
-    @@param action A pointer of the inner action.
+    @param action A pointer of the inner action.
     @param duration Specify the duration of the AccelDeccelAmplitude action.
     @return Return a pointer of AccelDeccelAmplitude action. When the creation failed, return nil.
     */

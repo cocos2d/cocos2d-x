@@ -76,12 +76,21 @@ NS_CC_BEGIN
 
 class PointArray;
 
+/**
+* @js cc.DrawingPrimitiveCanvas/cc.DrawingPrimitiveWebGL
+*/
 namespace DrawPrimitives
 {
-    /** Initializes the drawing primitives. */
+    /**
+     * Initializes the drawing primitives.
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE void CC_DLL init();
 
-    /** Frees allocated resources by the drawing primitives. */
+    /**
+     * Frees allocated resources by the drawing primitives.
+     * @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE void CC_DLL free();
 
     /** Draws a point given x and y coordinate measured in points
@@ -169,6 +178,7 @@ namespace DrawPrimitives
      * @param segments The number of segments.
      * @param scaleX The scale value in x.
      * @param scaleY The scale value in y.
+     * @js NA
      */
     CC_DEPRECATED_ATTRIBUTE void CC_DLL drawSolidCircle(const Vec2& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY);
     
@@ -177,6 +187,7 @@ namespace DrawPrimitives
      * @param radius The circle rotate of radius.
      * @param angle  The circle angel.
      * @param segments The number of segments.
+     * @js NA
      */
     CC_DEPRECATED_ATTRIBUTE void CC_DLL drawSolidCircle(const Vec2& center, float radius, float angle, unsigned int segments);
 
@@ -229,6 +240,7 @@ namespace DrawPrimitives
      * @param b The blue color with a unsigned bytes.
      * @param a Alpha with a unsigned bytes.
      * @since v2.0
+     * @js setDrawColor
      */
     CC_DEPRECATED_ATTRIBUTE void CC_DLL setDrawColor4B(GLubyte r, GLubyte g, GLubyte b, GLubyte a);
 
@@ -239,6 +251,7 @@ namespace DrawPrimitives
      * @param b The blue color with an floats.
      * @param a Alpha with an floats.
      * @since v2.0
+     * @js setDrawColor
      */
     CC_DEPRECATED_ATTRIBUTE void CC_DLL setDrawColor4F(GLfloat r, GLfloat g, GLfloat b, GLfloat a);
 

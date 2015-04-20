@@ -32,7 +32,24 @@ extern "C" {
 }
 #endif
 
+/// @cond
 TOLUA_API int register_all_cocos2dx_spine_manual(lua_State* L);
+/// @endcond
+
+/**
+ * @addtogroup lua
+ * @{
+ */
+
+/**
+ * Call this function can import the lua bindings for the spine module.
+ * After registering, we could call the related spine code conveniently in the lua.
+ * If you don't want to use the spine module in the lua, you only don't call this registering function.
+ * If you don't register the spine module, the package size would become smaller .
+ * The current mechanism,this registering function is called in the lua_module_register.h
+ */
 TOLUA_API int register_spine_module(lua_State* L);
 
+// end group
+/// @}
 #endif // #ifndef COCOS_SCRIPTING_LUA_BINDINGS_LUA_COCOS2DX_SPINE_MANUAL_H

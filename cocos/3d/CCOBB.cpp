@@ -209,9 +209,9 @@ OBB::OBB(const AABB& aabb)
     
     _center = (aabb._min + aabb._max);
     _center.scale(0.5f);
-    _xAxis = Vec3(1.0f, 0.0f, 0.0f);
-    _yAxis = Vec3(0.0f, 1.0f, 0.0f);
-    _zAxis = Vec3(0.0f, 0.0f, 1.0f);
+    _xAxis.set(1.0f, 0.0f, 0.0f);
+    _yAxis.set(0.0f, 1.0f, 0.0f);
+    _zAxis.set(0.0f, 0.0f, 1.0f);
     
     _extents = aabb._max - aabb._min;
     _extents.scale(0.5f);
@@ -249,9 +249,9 @@ OBB::OBB(const Vec3* verts, int num)
     
     matTransform.transpose();
     
-    _xAxis = Vec3(matTransform.m[0], matTransform.m[1], matTransform.m[2]);
-    _yAxis = Vec3(matTransform.m[4], matTransform.m[5], matTransform.m[6]);
-    _zAxis = Vec3(matTransform.m[8], matTransform.m[9], matTransform.m[10]);
+    _xAxis.set(matTransform.m[0], matTransform.m[1], matTransform.m[2]);
+    _yAxis.set(matTransform.m[4], matTransform.m[5], matTransform.m[6]);
+    _zAxis.set(matTransform.m[8], matTransform.m[9], matTransform.m[10]);
     
     _center	= 0.5f * (vecMax + vecMin);
     _center *= matTransform;

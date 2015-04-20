@@ -17,7 +17,14 @@
 NS_CC_BEGIN
 
 /**
- * .obj file Loader
+ * @addtogroup _3d
+ * @{
+ */
+
+/**
+ * @brief .obj file Loader
+ * @js NA
+ * @lua NA
  **/
 class ObjLoader
 {
@@ -99,6 +106,9 @@ public:
                         const char* mtl_basepath = NULL);
 
 };
+
+// end of 3d group
+/// @}
 
 NS_CC_END
 

@@ -40,6 +40,11 @@ struct libwebsocket;
 struct libwebsocket_context;
 struct libwebsocket_protocols;
 
+/**
+ * @addtogroup core
+ * @{
+ */
+
 NS_CC_BEGIN
 
 namespace network {
@@ -47,6 +52,9 @@ namespace network {
 class WsThreadHelper;
 class WsMessage;
 
+/**
+ * WebSocket is wrapper of the libwebsockets-protocol, let the develop could call the websocket easily.
+ */
 class CC_DLL WebSocket
 {
 public:
@@ -217,5 +225,8 @@ private:
 }
 
 NS_CC_END
+
+// end group
+/// @}
 
 #endif /* defined(__CC_JSB_WEBSOCKET_H__) */

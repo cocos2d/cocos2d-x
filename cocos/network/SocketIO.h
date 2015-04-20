@@ -64,6 +64,11 @@ in the onClose method the pointer should be set to NULL or used to connect to a 
 
 #include <string>
 
+/**
+ * @addtogroup core
+ * @{
+ */
+
 NS_CC_BEGIN
 
 namespace network {
@@ -247,7 +252,7 @@ public:
     /**
      * Used to register a socket.io event callback.
      * Event argument should be passed using CC_CALLBACK2(&Base::function, this).
-     * @param eventName.
+     * @param eventName the name of event.
      * @param e the callback function.
      */
     void on(const std::string& eventName, SIOEvent e);
@@ -275,5 +280,8 @@ public:
 }
 
 NS_CC_END
+
+// end group
+/// @}
 
 #endif /* defined(__CC_JSB_SOCKETIO_H__) */

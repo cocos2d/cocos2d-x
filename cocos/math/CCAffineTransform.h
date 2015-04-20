@@ -31,6 +31,11 @@ THE SOFTWARE.
 #include "math/CCGeometry.h"
 #include "math/CCMath.h"
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 NS_CC_BEGIN
 
 /**@{
@@ -107,5 +112,8 @@ CC_DLL Mat4 TransformConcat(const Mat4& t1, const Mat4& t2);
 extern CC_DLL const AffineTransform AffineTransformIdentity;
 
 NS_CC_END
+
+// end of base transform
+/// @}
 
 #endif // __MATH_CCAFFINETRANSFORM_H__
