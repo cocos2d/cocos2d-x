@@ -220,7 +220,7 @@ void Animate3D::startWithTarget(Node *target)
         CCLOG("warning: no animation finde for the skeleton");
     }
     
-    auto runningAction = s_runningAnimates.find(sprite);
+    auto runningAction = s_runningAnimates.find(target);
     if (runningAction != s_runningAnimates.end())
     {
         //make the running action fade out
@@ -229,19 +229,19 @@ void Animate3D::startWithTarget(Node *target)
         {
             if (_transTime < 0.001f)
             {
-                s_runningAnimates[sprite] = this;
+                s_runningAnimates[target] = this;
                 _state = Animate3D::Animate3DState::Running;
                 _weight = 1.0f;
             }
             else
             {
-                s_fadeOutAnimates[sprite] = action;
+                s_fadeOutAnimates[target] = action;
                 action->_state = Animate3D::Animate3DState::FadeOut;
                 action->_accTransTime = 0.0f;
                 action->_weight = 1.0f;
                 action->_lastTime = 0.f;
                 
-                s_fadeInAnimates[sprite] = this;
+                s_fadeInAnimates[target] = this;
                 _accTransTime = 0.0f;
                 _state = Animate3D::Animate3DState::FadeIn;
                 _weight = 0.f;
@@ -251,7 +251,7 @@ void Animate3D::startWithTarget(Node *target)
     }
     else
     {
-        s_runningAnimates[sprite] = this;
+        s_runningAnimates[target] = this;
         _state = Animate3D::Animate3DState::Running;
         _weight = 1.0f;
     }
@@ -284,9 +284,8 @@ void Animate3D::update(float t)
                 _accTransTime = _transTime;
                 _weight = 1.0f;
                 _state = Animate3D::Animate3DState::Running;
-                Sprite3D* sprite = static_cast<Sprite3D*>(_target);
-                s_fadeInAnimates.erase(sprite);
-                s_runningAnimates[sprite] = this;
+                s_fadeInAnimates.erase(_target);
+                s_runningAnimates[_target] = this;
             }
         }
         else if (_state == Animate3D::Animate3DState::FadeOut && _lastTime > 0.f)
@@ -299,8 +298,7 @@ void Animate3D::update(float t)
                 _accTransTime = _transTime;
                 _weight = 0.0f;
                 
-                Sprite3D* sprite = static_cast<Sprite3D*>(_target);
-                s_fadeOutAnimates.erase(sprite);
+                s_fadeOutAnimates.erase(_target);
             }
         }
         _lastTime = t;
