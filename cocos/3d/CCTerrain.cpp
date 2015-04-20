@@ -604,6 +604,19 @@ Terrain::QuadTree * Terrain::getQuadTree()
     return _quadRoot;
 }
 
+
+void Terrain::getHeightData(std::vector<float>& data) const
+{
+    data.clear();
+    data.resize(_imageWidth * _imageHeight);
+    for (int i = 0; i < _imageHeight; i++) {
+        for (int j = 0; j < _imageWidth; j++) {
+            int idx = i * _imageWidth + j;
+            data[idx] = (_vertices[idx]._position.y);
+        }
+    }
+}
+
 void Terrain::setAlphaMap(cocos2d::Texture2D * newAlphaMapTexture)
 {
     _alphaMap->release();
@@ -1495,4 +1508,5 @@ Terrain::DetailMap::DetailMap()
     _detailMapSrc = ""; 
     _detailMapSize = 35;
 }
+
 NS_CC_END
