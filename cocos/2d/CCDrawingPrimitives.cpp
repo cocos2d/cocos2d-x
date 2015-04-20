@@ -328,7 +328,7 @@ void drawSolidPoly(const Vec2 *poli, unsigned int numberOfPoints, Color4F color)
         // Mac on 64-bit
         for(unsigned int i = 0; i < numberOfPoints; i++)
         {
-            newPoli[i] = Vec2( poli[i].x, poli[i].y );
+            newPoli[i].set(poli[i].x, poli[i].y);
         }
 #ifdef EMSCRIPTEN
         setGLBufferData(newPoli, numberOfPoints * sizeof(Vec2));

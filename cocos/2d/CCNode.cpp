@@ -83,14 +83,11 @@ Node::Node(void)
 , _scaleX(1.0f)
 , _scaleY(1.0f)
 , _scaleZ(1.0f)
-, _position(Vec2::ZERO)
 , _positionZ(0.0f)
 , _usingNormalizedPosition(false)
 , _normalizedPositionDirty(false)
 , _skewX(0.0f)
 , _skewY(0.0f)
-, _anchorPointInPoints(Vec2::ZERO)
-, _anchorPoint(Vec2::ZERO)
 , _contentSize(Size::ZERO)
 , _contentSizeDirty(true)
 , _transformDirty(true)
@@ -723,7 +720,7 @@ void Node::setAnchorPoint(const Vec2& point)
     if (! point.equals(_anchorPoint))
     {
         _anchorPoint = point;
-        _anchorPointInPoints = Vec2(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y);
+        _anchorPointInPoints.set(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y);
         _transformUpdated = _transformDirty = _inverseDirty = true;
     }
 }
@@ -740,7 +737,7 @@ void Node::setContentSize(const Size & size)
     {
         _contentSize = size;
 
-        _anchorPointInPoints = Vec2(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y);
+        _anchorPointInPoints.set(_contentSize.width * _anchorPoint.x, _contentSize.height * _anchorPoint.y);
         _transformUpdated = _transformDirty = _inverseDirty = _contentSizeDirty = true;
     }
 }
@@ -1768,7 +1765,7 @@ const Mat4& Node::getNodeToParentTransform() const
         Vec2 anchorPoint(_anchorPointInPoints.x * _scaleX, _anchorPointInPoints.y * _scaleY);
         
         // caculate real position
-        if (! needsSkewMatrix && !_anchorPointInPoints.equals(Vec2::ZERO))
+        if (! needsSkewMatrix && !_anchorPointInPoints.isZero())
         {
             x += -anchorPoint.x;
             y += -anchorPoint.y;
@@ -1831,7 +1828,7 @@ const Mat4& Node::getNodeToParentTransform() const
             _transform = _transform * skewMatrix;
             
             // adjust anchor point
-            if (!_anchorPointInPoints.equals(Vec2::ZERO))
+            if (!_anchorPointInPoints.isZero())
             {
                 // FIXME:: Argh, Mat4 needs a "translate" method.
                 // FIXME:: Although this is faster than multiplying a vec4 * mat4
