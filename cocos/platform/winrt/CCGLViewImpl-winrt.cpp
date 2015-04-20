@@ -84,6 +84,10 @@ GLViewImpl::GLViewImpl()
 {
 	s_pEglView = this;
     _viewName =  "cocos2dx";
+
+    m_backButtonListener = EventListenerKeyboard::create();
+    m_backButtonListener->onKeyReleased = CC_CALLBACK_2(GLViewImpl::BackButtonListener, this);
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(m_backButtonListener, INT_MAX);
 }
 
 GLViewImpl::~GLViewImpl()
@@ -205,6 +209,15 @@ void GLViewImpl::OnBackKeyPress()
     cocos2d::EventKeyboard::KeyCode cocos2dKey = EventKeyboard::KeyCode::KEY_ESCAPE;
     cocos2d::EventKeyboard event(cocos2dKey, false);
     cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+}
+
+void GLViewImpl::BackButtonListener(EventKeyboard::KeyCode keyCode, Event* event)
+{
+    if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE)
+    {
+        Director::getInstance()->end();
+        ExitApp();
+    }
 }
 
 // user pressed the Back Key on the phone

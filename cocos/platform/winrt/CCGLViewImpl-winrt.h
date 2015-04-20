@@ -82,6 +82,7 @@ public:
 	void OnSuspending(Platform::Object^ sender, Windows::ApplicationModel::SuspendingEventArgs^ args);
     void OnBackKeyPress();
     void ExitApp();
+    void BackButtonListener(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 
     void QueueBackKeyPress();
     void QueuePointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);
@@ -166,6 +167,9 @@ private:
     Platform::Agile<Windows::UI::Core::CoreDispatcher> m_dispatcher;
     Platform::Agile<Windows::UI::Xaml::Controls::Panel> m_panel;
     KeyBoardWinRT^ m_keyboard;
+
+    cocos2d::EventListenerKeyboard* m_backButtonListener;
+
 };
 
 NS_CC_END
