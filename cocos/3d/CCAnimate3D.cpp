@@ -255,6 +255,11 @@ void Animate3D::startWithTarget(Node *target)
     }
     else
     {
+        auto it = s_fadeInAnimates.find(target);
+        if (it != s_fadeInAnimates.end())
+        {
+            s_fadeInAnimates.erase(it);
+        }
         s_runningAnimates[target] = this;
         _state = Animate3D::Animate3DState::Running;
         _weight = 1.0f;
