@@ -253,7 +253,7 @@ void RuntimeEngine::start()
     if (_project.getDebuggerType() == kCCRuntimeDebuggerNone)
     {
         setupRuntime();
-        startScript(_project.getScriptFileRealPath());
+        startScript("");
     }
     else
     {
