@@ -34,8 +34,7 @@ const Vec3 PUPlaneCollider::DEFAULT_NORMAL(0, 0, 0);
 //-----------------------------------------------------------------------
 PUPlaneCollider::PUPlaneCollider(void) : 
     PUBaseCollider(),
-    _normal(DEFAULT_NORMAL),
-    _predictedPosition(Vec3::ZERO)
+    _normal(DEFAULT_NORMAL)
 {
 }
 PUPlaneCollider::~PUPlaneCollider( void )
