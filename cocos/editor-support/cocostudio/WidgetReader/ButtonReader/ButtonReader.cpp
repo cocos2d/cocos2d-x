@@ -274,6 +274,14 @@ namespace cocostudio
         std::string fontResourcePlistFile = "";
         int fontResourceResourceType = 0;
         
+        bool outlineEnabled = false;
+        Color4B outlineColor = Color4B::BLACK;
+        int outlineSize = 1;
+        bool shadowEnabled = false;
+        Color4B shadowColor = Color4B::BLACK;
+        Size shadowOffset = Size(2, -2);
+        int shadowBlurRadius = 0;
+        
         // attributes
         const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
         while (attribute)
@@ -319,6 +327,30 @@ namespace cocostudio
             else if (name == "DisplayState")
             {
                 displaystate = (value == "True") ? true : false;
+            }
+            else if (name == "OutlineEnabled")
+            {
+                outlineEnabled = (value == "True") ? true : false;
+            }
+            else if (name == "OutlineSize")
+            {
+                outlineSize = atoi(value.c_str());
+            }
+            else if (name == "ShadowEnabled")
+            {
+                shadowEnabled = (value == "True") ? true : false;
+            }
+            else if (name == "ShadowOffsetX")
+            {
+                shadowOffset.width = atof(value.c_str());
+            }
+            else if (name == "ShadowOffsetY")
+            {
+                shadowOffset.height = atof(value.c_str());
+            }
+            else if (name == "ShadowBlurRadius")
+            {
+                shadowBlurRadius = atoi(value.c_str());
             }
             
             attribute = attribute->Next();
@@ -505,6 +537,64 @@ namespace cocostudio
                     attribute = attribute->Next();
                 }
             }
+            else if (name == "OutlineColor")
+            {
+                attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "A")
+                    {
+                        outlineColor.a = atoi(value.c_str());
+                    }
+                    else if (name == "R")
+                    {
+                        outlineColor.r = atoi(value.c_str());
+                    }
+                    else if (name == "G")
+                    {
+                        outlineColor.g = atoi(value.c_str());
+                    }
+                    else if (name == "B")
+                    {
+                        outlineColor.b = atoi(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
+            else if (name == "ShadowColor")
+            {
+                attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "A")
+                    {
+                        shadowColor.a = atoi(value.c_str());
+                    }
+                    else if (name == "R")
+                    {
+                        shadowColor.r = atoi(value.c_str());
+                    }
+                    else if (name == "G")
+                    {
+                        shadowColor.g = atoi(value.c_str());
+                    }
+                    else if (name == "B")
+                    {
+                        shadowColor.b = atoi(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
             
             child = child->NextSiblingElement();
         }
@@ -512,6 +602,8 @@ namespace cocostudio
         Color f_textColor(255, textColor.r, textColor.g, textColor.b);
         CapInsets f_capInsets(capInsets.origin.x, capInsets.origin.y, capInsets.size.width, capInsets.size.height);
         FlatSize f_scale9Size(scale9Size.width, scale9Size.height);
+        flatbuffers::Color f_outlineColor(outlineColor.a, outlineColor.r, outlineColor.g, outlineColor.b);
+        flatbuffers::Color f_shadowColor(shadowColor.a, shadowColor.r, shadowColor.g, shadowColor.b);
         
         auto options = CreateButtonOptions(*builder,
                                            widgetOptions,
@@ -538,8 +630,15 @@ namespace cocostudio
                                            &f_capInsets,
                                            &f_scale9Size,
                                            scale9Enabled,
-                                           displaystate
-                                           );
+                                           displaystate,
+                                           outlineEnabled,
+                                           &f_outlineColor,
+                                           outlineSize,
+                                           shadowEnabled,
+                                           &f_shadowColor,
+                                           shadowOffset.width,
+                                           shadowOffset.height,
+                                           shadowBlurRadius);
         
         return *(Offset<Table>*)(&options);
     }
@@ -785,6 +884,30 @@ namespace cocostudio
         bool displaystate = options->displaystate() != 0;
         button->setBright(displaystate);
         button->setEnabled(displaystate);
+        
+        bool outlineEnabled = options->outlineEnabled();
+        if (outlineEnabled)
+        {
+            auto f_outlineColor = options->outlineColor();
+            if (f_outlineColor)
+            {
+                Color4B outlineColor(f_outlineColor->r(), f_outlineColor->g(), f_outlineColor->b(), f_outlineColor->a());
+                auto label = button->getTitleRenderer();
+                label->enableOutline(outlineColor, options->outlineSize());
+            }
+        }
+        
+        bool shadowEnabled = options->shadowEnabled();
+        if (shadowEnabled)
+        {
+            auto f_shadowColor = options->shadowColor();
+            if (f_shadowColor)
+            {
+                Color4B shadowColor(f_shadowColor->r(), f_shadowColor->g(), f_shadowColor->b(), f_shadowColor->a());
+                auto label = button->getTitleRenderer();
+                label->enableShadow(shadowColor, Size(options->shadowOffsetX(), options->shadowOffsetY()), options->shadowBlurRadius());
+            }
+        }
         
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());

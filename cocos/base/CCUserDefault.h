@@ -64,7 +64,7 @@ public:
      * @param defaultValue The default value to return if the key doesn't exist.
      * @js NA
      */
-    bool    getBoolForKey(const char* key, bool defaultValue);
+    virtual bool getBoolForKey(const char* key, bool defaultValue);
     
     /**
      * Get integer value by key, if the key doesn't exist, will return 0.
@@ -82,7 +82,7 @@ public:
      * @return Integer value of the key.
      * @js NA
      */
-    int     getIntegerForKey(const char* key, int defaultValue);
+    virtual int getIntegerForKey(const char* key, int defaultValue);
     
     /**
      * Get float value by key, if the key doesn't exist, will return 0.0.
@@ -99,7 +99,7 @@ public:
      * @return Float value of the key.
      * @js NA
      */
-    float    getFloatForKey(const char* key, float defaultValue);
+    virtual float getFloatForKey(const char* key, float defaultValue);
     
     /**
      * Get double value by key, if the key doesn't exist, will return 0.0.
@@ -116,7 +116,7 @@ public:
      * @return Double value of the key.
      * @js NA
      */
-    double  getDoubleForKey(const char* key, double defaultValue);
+    virtual double getDoubleForKey(const char* key, double defaultValue);
     
     /**
      * Get string value by key, if the key doesn't exist, will return an empty string.
@@ -133,7 +133,7 @@ public:
      * @return String value of the key.
      * @js NA
      */
-    std::string getStringForKey(const char* key, const std::string & defaultValue);
+    virtual std::string getStringForKey(const char* key, const std::string & defaultValue);
     
     /**
      * Get Data value by key, if the key doesn't exist, will return an empty Data.
@@ -150,7 +150,7 @@ public:
      * @return Data value of the key.
      * @js NA
      */
-    Data getDataForKey(const char* key, const Data& defaultValue);
+    virtual Data getDataForKey(const char* key, const Data& defaultValue);
 
     // set value methods
 
@@ -160,47 +160,47 @@ public:
      * @param value A bool value to set to the key.
      * @js NA
      */
-    void    setBoolForKey(const char* key, bool value);
+    virtual void setBoolForKey(const char* key, bool value);
     /**
      * Set integer value by key.
      * @param key The key to set.
      * @param value A integer value to set to the key.
      * @js NA
      */
-    void    setIntegerForKey(const char* key, int value);
+    virtual void setIntegerForKey(const char* key, int value);
     /**
      * Set float value by key.
      * @param key The key to set.
      * @param value A float value to set to the key.
      * @js NA
      */
-    void    setFloatForKey(const char* key, float value);
+    virtual void setFloatForKey(const char* key, float value);
     /**
      * Set double value by key.
      * @param key The key to set.
      * @param value A double value to set to the key.
      * @js NA
      */
-    void    setDoubleForKey(const char* key, double value);
+    virtual void setDoubleForKey(const char* key, double value);
     /**
      * Set string value by key.
      * @param key The key to set.
      * @param value A string value to set to the key.
      * @js NA
      */
-    void    setStringForKey(const char* key, const std::string & value);
+    virtual void setStringForKey(const char* key, const std::string & value);
     /**
      * Set Data value by key.
      * @param key The key to set.
      * @param value A Data value to set to the key.
      * @js NA
      */
-    void    setDataForKey(const char* key, const Data& value);
+    virtual void setDataForKey(const char* key, const Data& value);
     /**
      * You should invoke this function to save values set by setXXXForKey().
      * @js NA
      */
-    void    flush();
+    virtual void flush();
 
     /** Returns the singleton.
      * @js NA
@@ -211,6 +211,18 @@ public:
      * @js NA
      */
     static void destroyInstance();
+
+    /**
+    * You can inherit from platform dependent implementation of UserDefault, such as UserDefaultAndroid,
+    * and use this function to set delegate, then UserDefault will invoke delegate's implementation.
+    * For example, your store native data base or other format store.
+    *
+    * If you don't want to system default implementation after setting delegate, you can just pass nullptr
+    * to this function.
+    *
+    * @warm It will delete previous delegate
+    */
+    static void setDelegate(UserDefault *delegate);
 
     /** @deprecated Use getInstace() instead.
      * @js NA
@@ -231,9 +243,11 @@ public:
      */
     static bool isXMLFileExist();
 
-private:
+protected:
     UserDefault();
     ~UserDefault();
+    
+private:
     
     static bool createXMLFile();
     static void initXMLFilePath();

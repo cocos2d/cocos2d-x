@@ -105,10 +105,12 @@ LOCAL_SRC_FILES += ../manual/spine/lua_cocos2dx_spine_manual.cpp \
                    ../auto/lua_cocos2dx_spine_auto.cpp
 
 #ui
-LOCAL_SRC_FILES += ../manual/ui/lua_cocos2dx_experimental_video_manual.cpp \
+LOCAL_SRC_FILES += ../manual/ui/lua_cocos2dx_experimental_webview_manual.cpp \
+                   ../manual/ui/lua_cocos2dx_experimental_video_manual.cpp \
                    ../manual/ui/lua_cocos2dx_ui_manual.cpp \
                    ../auto/lua_cocos2dx_experimental_video_auto.cpp \
-                   ../auto/lua_cocos2dx_ui_auto.cpp
+                   ../auto/lua_cocos2dx_ui_auto.cpp \
+                   ../auto/lua_cocos2dx_experimental_webview_auto.cpp
 
 #extension
 LOCAL_SRC_FILES += ../manual/extension/lua_cocos2dx_extension_manual.cpp \

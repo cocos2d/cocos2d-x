@@ -1173,7 +1173,7 @@ flatbuffers::Offset<flatbuffers::EasingData> FlatBuffersSerialize::createEasingD
         const tinyxml2::XMLElement* PointF = Points->FirstChildElement();
         while (PointF)
         {
-            Vec2 pointF = Vec2::ZERO;
+            Vec2 pointF;
             
             attribute = PointF->FirstAttribute();
             

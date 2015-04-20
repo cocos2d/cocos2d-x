@@ -96,7 +96,7 @@ void ActionCamera::updateTransform()
 
     Vec2 anchorPoint = _target->getAnchorPointInPoints();
 
-    bool needsTranslation = !anchorPoint.equals(Vec2::ZERO);
+    bool needsTranslation = !anchorPoint.isZero();
 
     Mat4 mv = Mat4::IDENTITY;
 

@@ -59,7 +59,7 @@ public:
 	WICPixelFormatGUID getPixelFormat();
 	int getImageData(ImageBlob rawData, size_t dataLen);
 	bool decodeImageData(ImageBlob data, size_t dataLen);
-	bool encodeImageData(std::string path, ImageBlob data, size_t dataLen, WICPixelFormatGUID pixelFormat, int width, int height, GUID containerFormat);
+    bool encodeImageData(std::string path, const unsigned char* data, size_t dataLen, WICPixelFormatGUID pixelFormat, int width, int height, GUID containerFormat);
 
 protected:
 	bool processImage(IWICBitmapDecoder* decoder);
