@@ -1,6 +1,6 @@
 /****************************************************************************
  Copyright (c) 2012 cocos2d-x.org
- Copyright (c) 2013-2014 Chukong Technologies Inc.
+ Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -26,8 +26,10 @@
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
 #include "Physics3DTest.h"
+#include "3d/CCTerrain.h"
 #include "extensions/Physics3D/CCPhysics3D.h"
 USING_NS_CC_EXT;
+USING_NS_CC;
 
 enum
 {
@@ -36,8 +38,7 @@ enum
     IDC_RESTART
 };
 
-static int sceneIdx = -1;
-static Scene* physicsScene = nullptr;
+static cocos2d::Scene* physicsScene = nullptr;
 
 #define START_POS_X -0.5
 #define START_POS_Y -2.5
@@ -47,86 +48,13 @@ static Scene* physicsScene = nullptr;
 #define ARRAY_SIZE_Y 5
 #define ARRAY_SIZE_Z 5
 
-static std::function<Layer*()> createFunctions[] =
+Physics3DTests::Physics3DTests()
 {
-    CL(BasicPhysics3DDemo),
-    CL(Physics3DConstraintDemo),
-    CL(Physics3DKinematicDemo),
-    CL(Physics3DTerrainDemo),
+    ADD_TEST_CASE(BasicPhysics3DDemo);
+    ADD_TEST_CASE(Physics3DConstraintDemo);
+    ADD_TEST_CASE(Physics3DKinematicDemo);
+    ADD_TEST_CASE(Physics3DTerrainDemo);
 };
-
-#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-static Layer* nextSpriteTestAction()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-static Layer* backSpriteTestAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;
-
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-static Layer* restartSpriteTestAction()
-{
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-void Physics3DTestScene::runThisTest()
-{
-    auto layer = nextSpriteTestAction();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
-}
-
-Physics3DTestScene::Physics3DTestScene()
-#if CC_USE_3D_PHYSICS
-: TestScene(false, true)
-#else
-: TestScene()
-#endif
-{
-    getPhysics3DWorld()->setDebugDrawEnable(true);
-
-    physicsScene = this;
-}
-
-void Physics3DTestDemo::restartCallback( Ref* sender )
-{
-    auto s = new (std::nothrow) Physics3DTestScene();
-    s->addChild(restartSpriteTestAction());
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void Physics3DTestDemo::nextCallback( Ref* sender )
-{
-    auto s = new (std::nothrow) Physics3DTestScene();
-    s->addChild( nextSpriteTestAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void Physics3DTestDemo::backCallback( Ref* sender )
-{
-    auto s = new (std::nothrow) Physics3DTestScene();
-    s->addChild( backSpriteTestAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
 
 std::string Physics3DTestDemo::title() const
 {
@@ -140,23 +68,31 @@ std::string Physics3DTestDemo::subtitle() const
 
 bool Physics3DTestDemo::init()
 {
-    if (!BaseTest::init()) return false;
-
-    Size size = Director::getInstance()->getWinSize();
-    _camera = Camera::createPerspective(30.0f, size.width / size.height, 1.0f, 1000.0f);
-    _camera->setPosition3D(Vec3(0.0f, 50.0f, 100.0f));
-    _camera->lookAt(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
-    _camera->setCameraFlag(CameraFlag::USER1);
-    this->addChild(_camera);
-
-    auto listener = EventListenerTouchAllAtOnce::create();
-    listener->onTouchesBegan = CC_CALLBACK_2(Physics3DTestDemo::onTouchesBegan, this);
-    listener->onTouchesMoved = CC_CALLBACK_2(Physics3DTestDemo::onTouchesMoved, this);
-    listener->onTouchesEnded = CC_CALLBACK_2(Physics3DTestDemo::onTouchesEnded, this);
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    if (!TestCase::init()) return false;
     
-    _angle = 0.0f;
-    return true;
+    if (initWithPhysics())
+    {
+        getPhysics3DWorld()->setDebugDrawEnable(true);
+        
+        physicsScene = this;
+        Size size = Director::getInstance()->getWinSize();
+        _camera = Camera::createPerspective(30.0f, size.width / size.height, 1.0f, 1000.0f);
+        _camera->setPosition3D(Vec3(0.0f, 50.0f, 100.0f));
+        _camera->lookAt(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
+        _camera->setCameraFlag(CameraFlag::USER1);
+        this->addChild(_camera);
+        
+        auto listener = EventListenerTouchAllAtOnce::create();
+        listener->onTouchesBegan = CC_CALLBACK_2(Physics3DTestDemo::onTouchesBegan, this);
+        listener->onTouchesMoved = CC_CALLBACK_2(Physics3DTestDemo::onTouchesMoved, this);
+        listener->onTouchesEnded = CC_CALLBACK_2(Physics3DTestDemo::onTouchesEnded, this);
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+        
+        _angle = 0.0f;
+        return true;
+    }
+    physicsScene = nullptr;
+    return false;
 }
 
 void Physics3DTestDemo::onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event  *event)
@@ -432,18 +368,29 @@ bool Physics3DTerrainDemo::init()
     if (!Physics3DTestDemo::init())
         return false;
 
-    _data = FileUtils::getInstance()->getDataFromFile("images/heightfield64x64.raw");
+    Terrain::DetailMap r("TerrainTest/dirt.jpg"),g("TerrainTest/Grass2.jpg",10),b("TerrainTest/road.jpg"),a("TerrainTest/GreenSkin.jpg",20);
+    
+    Terrain::TerrainData data("TerrainTest/heightmap16.jpg","TerrainTest/alphamap.png",r,g,b,a,Size(32,32),40.0f,2);
+    auto terrain = Terrain::create(data,Terrain::CrackFixedType::SKIRT);
+    terrain->setMaxDetailMapAmount(4);
+    terrain->setCameraMask(2);
+    terrain->setDrawWire(false);
+    
+    terrain->setSkirtHeightRatio(3);
+    terrain->setLODDistance(64,128,192);
+    terrain->setCameraMask((unsigned short)CameraFlag::USER1);
 
     //create terrain
     Physics3DRigidBodyDes rbDes;
     rbDes.mass = 0.0f;
-    rbDes.shape = Physics3DShape::createHeightfield(64, 64, _data.getBytes(), 0.01f, -100.0f, 100.0f, false, false, true);
-    rbDes.originalTransform.translate(0.f, 0.f, 0.f);
+    std::vector<float> heidata;
+    terrain->getHeightData(heidata);
+    auto size = terrain->getTerrainSize();
+    rbDes.shape = Physics3DShape::createHeightfield(size.width, size.height, &heidata[0], 0.01f, -100.0f, 100.0f, true, false, true);
     auto rigidBody = Physics3DRigidBody::create(&rbDes);
-    auto component = Physics3DComponent::create(rigidBody);
-    auto node = Node::create();
-    node->addComponent(component);
-    this->addChild(node);
+    auto component = Physics3DComponent::create(rigidBody, Vec3(-size.width / 2.f, 0.f, size.height / 2.f));
+    terrain->addComponent(component);
+    this->addChild(terrain);
 
 
     //create several spheres

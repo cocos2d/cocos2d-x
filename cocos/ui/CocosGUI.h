@@ -57,12 +57,24 @@ THE SOFTWARE.
 #include "ui/UIEditBox/UIEditBox.h"
 #include "ui/UILayoutComponent.h"
 
+/**
+ * @addtogroup ui
+ * @{
+ */
 NS_CC_BEGIN
 namespace ui {
 
+
+/**
+ * Get current cocos GUI module version string.
+ *@return A string representation of GUI module version number
+ */
 CC_GUI_DLL const char* CocosGUIVersion();
 
 }
+
 NS_CC_END
+// end of ui group
+/// @}
 
 #endif /* defined(__CocosGUITest__Cocos__) */

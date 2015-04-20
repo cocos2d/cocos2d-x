@@ -28,6 +28,11 @@
 
 #include "math/CCMathBase.h"
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 NS_CC_MATH_BEGIN
 
 class Mat4;
@@ -269,13 +274,7 @@ public:
     void normalize();
 
     /**
-     * Normalizes this vector and stores the result in dst.
-     *
-     * If the vector already has unit length or if the length
-     * of the vector is zero, this method simply copies the
-     * current vector into dst.
-     *
-     * @param dst The destination vector.
+     * Get the normalized vector.
      */
     Vec4 getNormalized() const;
 
@@ -460,7 +459,10 @@ public:
 inline const Vec4 operator*(float x, const Vec4& v);
 
 NS_CC_MATH_END
-
+/**
+ end of base group
+ @}
+ */
 #include "math/Vec4.inl"
 
 #endif // MATH_VEC4_H

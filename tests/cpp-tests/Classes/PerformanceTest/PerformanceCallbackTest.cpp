@@ -3,8 +3,9 @@
 //
 
 #include "PerformanceCallbackTest.h"
-
 #include <algorithm>
+
+USING_NS_CC;
 
 // Enable profiles for this file
 #undef CC_PROFILER_DISPLAY_TIMERS

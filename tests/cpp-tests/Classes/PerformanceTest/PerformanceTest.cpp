@@ -15,6 +15,8 @@
 #include "PerformanceCallbackTest.h"
 #include "PerformanceMathTest.h"
 
+USING_NS_CC;
+
 enum
 {
     LINE_SPACE = 40,

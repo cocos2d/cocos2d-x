@@ -55,7 +55,7 @@ typedef struct CC_DLL PhysicsContactData
 }PhysicsContactData;
 
 /**
- * @addtogroup physics
+ * @addtogroup core
  * @{
  */
 
@@ -89,13 +89,18 @@ public:
     /** Get previous contact data */
     inline const PhysicsContactData* getPreContactData() const { return _preContactData; }
     
-    /** Get data. */
+    /** 
+     * Get data. 
+     * @lua NA
+     */
     inline void* getData() const { return _data; }
     
     /**
      * @brief Set data to contact. 
      
      * You must manage the memory yourself, Generally you can set data at contact begin, and distory it at contact seperate.
+     *
+     * @lua NA
      */
     inline void setData(void* data) { _data = data; }
 

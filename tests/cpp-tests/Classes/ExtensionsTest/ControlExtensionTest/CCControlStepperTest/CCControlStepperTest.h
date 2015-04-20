@@ -31,17 +31,18 @@
 class ControlStepperTest : public ControlScene
 {
 public:
+    CREATE_FUNC(ControlStepperTest);
     ControlStepperTest();
     virtual ~ControlStepperTest();
-    bool init();
+    virtual bool init() override;
     /** Creates and returns a new ControlStepper. */
-    ControlStepper* makeControlStepper();
+    cocos2d::extension::ControlStepper* makeControlStepper();
 
     /** Callback for the change value. */
-    void valueChanged(Ref *sender, Control::EventType controlEvent);
+    void valueChanged(cocos2d::Ref* sender, cocos2d::extension::Control::EventType controlEvent);
 protected:
-    CC_SYNTHESIZE_RETAIN(Label*, _displayValueLabel, DisplayValueLabel)
-    CONTROL_SCENE_CREATE_FUNC(ControlStepperTest)
+    CC_SYNTHESIZE_RETAIN(cocos2d::Label*, _displayValueLabel, DisplayValueLabel)
+        
 };
 
 #endif /* __CCCONTROLSTEPPERTEST_H__ */

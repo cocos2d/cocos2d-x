@@ -31,6 +31,11 @@
 #include "base/CCRef.h"
 #include "base/ccMacros.h"
 
+/**
+ * @addtogroup core
+ * @{
+ */
+
 NS_CC_BEGIN
 
 namespace network {
@@ -353,5 +358,8 @@ protected:
 }
 
 NS_CC_END
+
+// end group
+/// @}
 
 #endif //__HTTP_REQUEST_H__

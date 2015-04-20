@@ -46,6 +46,11 @@ cocos2d::log(__VA_ARGS__);                                                  \
 }                                                                           \
 
 /**
+ * @addtogroup lua
+ * @{
+ */
+
+/**
  * If the typename of userdata at the given accepteable index of stack is equal to type it return true,otherwise return false .
  * If def != 0, lo could greater than the top index of stack, return value is true.
  * If the value of the given index is nil, retrun value also is true.
@@ -53,13 +58,12 @@ cocos2d::log(__VA_ARGS__);                                                  \
  * @param L the current lua_State.
  * @param lo the given accpetable index of stack.
  * @param type the typename used to judge.
- * @int def whether has default value.
+ * @param def whether has default value.
  * @return Return true if the typename of userdata at the given accepteable index of stack is equal to type, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_is_usertype(lua_State* L,int lo,const char* type, int def);
 // to native
+
 /**
  * @name luaval_to_native
  * The following function are all used to convert the Lua values at the given acceptable index to the corresponding c++ values.
@@ -67,6 +71,7 @@ extern bool luaval_is_usertype(lua_State* L,int lo,const char* type, int def);
  * If it happens error during the conversion process, it outputs the error msg in the console to provide infromation about the name of calling function, the typename of value at the given acceptable index, and so on.
  * @{
  **/
+
 
 /**
  * Get a unsigned long value from the given accpetable index of stack.
@@ -77,8 +82,6 @@ extern bool luaval_is_usertype(lua_State* L,int lo,const char* type, int def);
  * @param outValue the pointer to store the value converted from the Lua value.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a number or a string convertible to a number, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_ulong(lua_State* L,int lo, unsigned long* outValue, const char* funcName="");
 
@@ -91,8 +94,6 @@ extern bool luaval_to_ulong(lua_State* L,int lo, unsigned long* outValue, const 
  * @param outValue the pointer to store the unsigned short value converted from the Lua value.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a number or a string convertible to a number, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_ushort(lua_State* L, int lo, unsigned short* outValue, const char* funcName = "");
 
@@ -105,8 +106,6 @@ extern bool luaval_to_ushort(lua_State* L, int lo, unsigned short* outValue, con
  * @param outValue the pointer to store the int value converted from the Lua value.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a number or a string convertible to a number, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_int32(lua_State* L,int lo,int* outValue, const char* funcName = "");
 
@@ -119,8 +118,6 @@ extern bool luaval_to_int32(lua_State* L,int lo,int* outValue, const char* funcN
  * @param outValue the pointer to store the unsigned int value converted from the Lua value.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a number or a string convertible to a number, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_uint32(lua_State* L, int lo, unsigned int* outValue, const char* funcName = "");
 
@@ -133,8 +130,6 @@ extern bool luaval_to_uint32(lua_State* L, int lo, unsigned int* outValue, const
  * @param outValue the pointer to store the uint16_t value converted from the Lua value.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a number or a string convertible to a number, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_uint16(lua_State* L,int lo,uint16_t* outValue, const char* funcName = "");
 
@@ -149,8 +144,6 @@ extern bool luaval_to_uint16(lua_State* L,int lo,uint16_t* outValue, const char*
  * @param outValue the pointer to store the boolean value converted from the Lua value.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a number or a string convertible to a number, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_boolean(lua_State* L,int lo,bool* outValue, const char* funcName = "");
 
@@ -163,8 +156,6 @@ extern bool luaval_to_boolean(lua_State* L,int lo,bool* outValue, const char* fu
  * @param outValue the pointer to store the double value converted from the Lua value.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a number or a string convertible to a number, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_number(lua_State* L,int lo,double* outValue, const char* funcName = "");
 
@@ -177,8 +168,6 @@ extern bool luaval_to_number(lua_State* L,int lo,double* outValue, const char* f
  * @param outValue the pointer to store the long long value converted from the Lua value.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a number or a string convertible to a number, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_long_long(lua_State* L,int lo,long long* outValue, const char* funcName = "");
 
@@ -191,8 +180,6 @@ extern bool luaval_to_long_long(lua_State* L,int lo,long long* outValue, const c
  * @param outValue the pointer to store std::string value converted from the Lua value.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is is a string or a number convertible to a string, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_std_string(lua_State* L, int lo, std::string* outValue, const char* funcName = "");
 
@@ -205,8 +192,6 @@ extern bool luaval_to_std_string(lua_State* L, int lo, std::string* outValue, co
  * @param outValue the pointer to store the long value converted from the Lua value.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a number or a string convertible to a number, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_long(lua_State* L,int lo, long* outValue, const char* funcName = "");
 
@@ -219,8 +204,6 @@ extern bool luaval_to_long(lua_State* L,int lo, long* outValue, const char* func
  * @param outValue the pointer to store the ssize_t value converted from the Lua value.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a number or a string convertible to a number, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_ssize(lua_State* L,int lo, ssize_t* outValue, const char* funcName = "");
 
@@ -234,8 +217,6 @@ extern bool luaval_to_ssize(lua_State* L,int lo, ssize_t* outValue, const char* 
  * @param outValue the pointer to a Size object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_size(lua_State* L,int lo,Size* outValue, const char* funcName = "");
 
@@ -249,8 +230,6 @@ extern bool luaval_to_size(lua_State* L,int lo,Size* outValue, const char* funcN
  * @param outValue the pointer to a Rect object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_rect(lua_State* L,int lo,Rect* outValue, const char* funcName = "");
 
@@ -264,8 +243,6 @@ extern bool luaval_to_rect(lua_State* L,int lo,Rect* outValue, const char* funcN
  * @param outValue the pointer to a Color3B object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_color3b(lua_State* L,int lo,Color3B* outValue, const char* funcName = "");
 
@@ -279,8 +256,6 @@ extern bool luaval_to_color3b(lua_State* L,int lo,Color3B* outValue, const char*
  * @param outValue the pointer to a Color4B object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_color4b(lua_State* L,int lo,Color4B* outValue, const char* funcName = "");
 
@@ -294,8 +269,6 @@ extern bool luaval_to_color4b(lua_State* L,int lo,Color4B* outValue, const char*
  * @param outValue the pointer to a Color4F object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_color4f(lua_State* L,int lo,Color4F* outValue, const char* funcName = "");
 #if CC_USE_PHYSICS
@@ -310,8 +283,6 @@ extern bool luaval_to_color4f(lua_State* L,int lo,Color4F* outValue, const char*
  * @param outValue the pointer to a cocos2d::PhysicsMaterial object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_physics_material(lua_State* L,int lo, cocos2d::PhysicsMaterial* outValue, const char* funcName = "");
 #endif //#if CC_USE_PHYSICS
@@ -325,8 +296,6 @@ extern bool luaval_to_physics_material(lua_State* L,int lo, cocos2d::PhysicsMate
  * @param outValue the pointer to a AffineTransform object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_affinetransform(lua_State* L,int lo, AffineTransform* outValue, const char* funcName = "");
 
@@ -340,8 +309,6 @@ extern bool luaval_to_affinetransform(lua_State* L,int lo, AffineTransform* outV
  * @param outValue the pointer to a FontDefinition object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outValue , const char* funcName = "");
 
@@ -355,26 +322,18 @@ extern bool luaval_to_fontdefinition(lua_State* L, int lo, FontDefinition* outVa
  * @param outValue the pointer to a Mat object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_mat4(lua_State* L, int lo, cocos2d::Mat4* outValue , const char* funcName = "");
 
 /**
  * Get a __Array object value frome the given accpetable index of stack.
  * Because __Array is deprecated, so this function would be not called anymore.
- *
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_array(lua_State* L,int lo, __Array** outValue, const char* funcName = "");
 
 /**
  * Get a __Dictionary object value from the given accpetable index of stack.
  * Because __Dictionary is deprecated, so this function would be not called anymore.
- *
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_dictionary(lua_State* L,int lo, __Dictionary** outValue, const char* funcName = "");
 
@@ -388,17 +347,12 @@ extern bool luaval_to_dictionary(lua_State* L,int lo, __Dictionary** outValue, c
  * @param numPoints a int pointer to store the size of a Vec2 object array.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_array_of_vec2(lua_State* L,int lo,cocos2d::Vec2 **points, int *numPoints, const char* funcName = "");
 
 /**
  * Get a __Array object value by the argc numbers of Lua values in the stack.
  * Because __Array is deprecated, so this function would be not called anymore.
- *
- * @lua NA
- * @js NA
  */
 extern bool luavals_variadic_to_array(lua_State* L,int argc, __Array** ret);
 
@@ -409,8 +363,6 @@ extern bool luavals_variadic_to_array(lua_State* L,int argc, __Array** ret);
  * @param argc the numbers of Lua values in the stack.
  * @param ret the pointer to a ValueVector object which stores the values from the Lua table.
  * @return Return false if argc equal to 0 or L equal to nullptr, otherwise return true.
- * @lua NA
- * @js NA
  */
 extern bool luavals_variadic_to_ccvaluevector(lua_State* L, int argc, cocos2d::ValueVector* ret);
 
@@ -424,8 +376,6 @@ extern bool luavals_variadic_to_ccvaluevector(lua_State* L, int argc, cocos2d::V
  * @param outValue the pointer to a Vec2 object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_vec2(lua_State* L,int lo,cocos2d::Vec2* outValue, const char* funcName = "");
 
@@ -439,8 +389,6 @@ extern bool luaval_to_vec2(lua_State* L,int lo,cocos2d::Vec2* outValue, const ch
  * @param outValue the pointer to a Vec3 object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_vec3(lua_State* L,int lo,cocos2d::Vec3* outValue, const char* funcName = "");
 
@@ -454,8 +402,6 @@ extern bool luaval_to_vec3(lua_State* L,int lo,cocos2d::Vec3* outValue, const ch
  * @param outValue the pointer to a Vec4 object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_vec4(lua_State* L,int lo,cocos2d::Vec4* outValue, const char* funcName = "");
 
@@ -469,8 +415,6 @@ extern bool luaval_to_vec4(lua_State* L,int lo,cocos2d::Vec4* outValue, const ch
  * @param outValue the pointer to a BlendFunc object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_blendfunc(lua_State* L, int lo, cocos2d::BlendFunc* outValue, const char* funcName = "");
 
@@ -484,8 +428,6 @@ extern bool luaval_to_blendfunc(lua_State* L, int lo, cocos2d::BlendFunc* outVal
  * @param outValue the pointer to a TTFConfig object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_ttfconfig(lua_State* L, int lo, cocos2d::TTFConfig* outValue, const char* funcName = "");
 
@@ -499,8 +441,6 @@ extern bool luaval_to_ttfconfig(lua_State* L, int lo, cocos2d::TTFConfig* outVal
  * @param outValue the pointer to a Uniform object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_uniform(lua_State* L, int lo, cocos2d::Uniform* outValue, const char* funcName = "");
 
@@ -514,8 +454,6 @@ extern bool luaval_to_uniform(lua_State* L, int lo, cocos2d::Uniform* outValue, 
  * @param outValue the pointer to a VertexAttrib object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_vertexattrib(lua_State* L, int lo, cocos2d::VertexAttrib* outValue, const char* funcName = "");
 
@@ -524,9 +462,6 @@ extern bool luaval_to_vertexattrib(lua_State* L, int lo, cocos2d::VertexAttrib* 
  * Get a Vec2 object value from the given accpetable index of stack.
  * At current, the Point is typedef of Vec2.
  * @see luaval_to_vec2
- *
- * @lua NA
- * @js NA
  */
 static inline bool luaval_to_point(lua_State* L,int lo,cocos2d::Vec2* outValue, const char* funcName = "")
 {
@@ -549,8 +484,6 @@ CC_DEPRECATED_ATTRIBUTE static inline bool luaval_to_array_of_Point(lua_State* L
  * @param argc the numbers of Lua values in the stack.
  * @param ret a cocos2d::Vector of type T objects.
  * @return Return false if argc equal to 0 , L equal to nullptr or the Lua userdata at the index isn't `cc.Ref` type, otherwise return true.
- * @lua NA
- * @js NA
  */
 template <class T>
 bool luavals_variadic_to_ccvector( lua_State* L, int argc, cocos2d::Vector<T>* ret)
@@ -588,8 +521,6 @@ bool luavals_variadic_to_ccvector( lua_State* L, int argc, cocos2d::Vector<T>* r
  * @param ret a cocos2d::Vector of type T objects.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
- * @lua NA
- * @js NA
  */
 template <class T>
 bool luaval_to_ccvector(lua_State* L, int lo , cocos2d::Vector<T>* ret, const char* funcName = "")
@@ -637,8 +568,6 @@ bool luaval_to_ccvector(lua_State* L, int lo , cocos2d::Vector<T>* ret, const ch
  * @param ret a pointer points to a std::vector<std::string>.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
- * @lua NA
- * @js NA
  */
 bool luaval_to_std_vector_string(lua_State* L, int lo, std::vector<std::string>* ret, const char* funcName = "");
 
@@ -650,8 +579,6 @@ bool luaval_to_std_vector_string(lua_State* L, int lo, std::vector<std::string>*
  * @param ret a pointer points to a std::vector<int>.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
- * @lua NA
- * @js NA
  */
 bool luaval_to_std_vector_int(lua_State* L, int lo, std::vector<int>* ret, const char* funcName = "");
 
@@ -664,8 +591,6 @@ bool luaval_to_std_vector_int(lua_State* L, int lo, std::vector<int>* ret, const
  * @param ret a pointer points to a cocos2d::Map whose key/value pair is string value and T object.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
- * @lua NA
- * @js NA
  */
 template <class T>
 bool luaval_to_ccmap_string_key(lua_State* L, int lo, cocos2d::Map<std::string, T>* ret, const char* funcName = "")
@@ -722,8 +647,6 @@ bool luaval_to_ccmap_string_key(lua_State* L, int lo, cocos2d::Map<std::string, 
  * @param ret a pointer points to a cocos2d::Value object.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the L and ret is not nullptr,otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_ccvalue(lua_State* L, int lo, cocos2d::Value* ret, const char* funcName = "");
 
@@ -736,8 +659,6 @@ extern bool luaval_to_ccvalue(lua_State* L, int lo, cocos2d::Value* ret, const c
  * @param ret a pointer points to a cocos2d::ValueMap object.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the type of Lua value at the index is a Lua table, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_ccvaluemap(lua_State* L, int lo, cocos2d::ValueMap* ret, const char* funcName = "");
 
@@ -750,8 +671,6 @@ extern bool luaval_to_ccvaluemap(lua_State* L, int lo, cocos2d::ValueMap* ret, c
  * @param ret a pointer points to a cocos2d::ValueMapIntKey object.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the type of Lua value at the index is a Lua table, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_ccvaluemapintkey(lua_State* L, int lo, cocos2d::ValueMapIntKey* ret, const char* funcName = "");
 
@@ -764,8 +683,6 @@ extern bool luaval_to_ccvaluemapintkey(lua_State* L, int lo, cocos2d::ValueMapIn
  * @param ret a pointer points to a cocos2d::ValueVector object.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the type of Lua value at the index is a Lua table, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_ccvaluevector(lua_State* L, int lo, cocos2d::ValueVector* ret, const char* funcName = "");
 
@@ -778,8 +695,6 @@ extern bool luaval_to_ccvaluevector(lua_State* L, int lo, cocos2d::ValueVector* 
  * @param type a string pointer points to the type name.
  * @param ret the pointer points to a Type T object.
  * @return Return true if the type of Lua value at the index is a Lua userdata, otherwise return false.
- * @lua NA
- * @js NA
  */
 template <class T>
 bool luaval_to_object(lua_State* L, int lo, const char* type, T** ret)
@@ -807,8 +722,6 @@ bool luaval_to_object(lua_State* L, int lo, const char* type, T** ret)
  * @param ret the pointer to a cocos2d::MeshVertexAttrib object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_mesh_vertex_attrib(lua_State* L, int lo, cocos2d::MeshVertexAttrib* ret, const char* funcName = "");
 
@@ -820,8 +733,6 @@ extern bool luaval_to_mesh_vertex_attrib(lua_State* L, int lo, cocos2d::MeshVert
  * @param ret a pointer points to a std::vector<float>.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_std_vector_float(lua_State* L, int lo, std::vector<float>* ret, const char* funcName = "");
 
@@ -833,8 +744,6 @@ extern bool luaval_to_std_vector_float(lua_State* L, int lo, std::vector<float>*
  * @param ret a pointer points to a std::vector<unsigned short>.
  * @param funcName the name of calling function, it is used for error output in the debug model.
  * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
- * @lua NA
- * @js NA
  */
 extern bool luaval_to_std_vector_ushort(lua_State* L, int lo, std::vector<unsigned short>* ret, const char* funcName = "");
 
@@ -844,13 +753,23 @@ extern bool luaval_to_std_vector_ushort(lua_State* L, int lo, std::vector<unsign
  * If the table has the `x`, `y`, `z` and `w` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue.Otherwise, the value of members of outValue would be 0.
  * @param L the current lua_State.
  * @param lo the given accpetable index of stack.
- * @param ret the pointer to a cocos2d::Quaternion object which stores the values from the Lua table.
+ * @param outValue the pointer to a cocos2d::Quaternion object which stores the values from the Lua table.
  * @param funcName the name of calling function, it is used for error output in the debug model.
- * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
- * @lua NA
- * @js NA
+ * @return true if the value at the given accpetable index of stack is a table, otherwise return false.
  */
 extern bool luaval_to_quaternion(lua_State* L,int lo,cocos2d::Quaternion* outValue, const char* funcName = "");
+
+/**
+ * Get a cocos2d::Texture2D::TexParams object value from the given accpetable index of stack.
+ * If the value at the given accpetable index of stack is a table it returns true, otherwise returns false.
+ * If the table has the `minFilter`, `magFilter`, `wrapS` and `wrapT` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue.Otherwise, the value of members of outValue would be 0.
+ * @param L the current lua_State.
+ * @param lo the given accpetable index of stack.
+ * @param outValue the pointer to a cocos2d::Quaternion object which stores the values from the Lua table.
+ * @param funcName the name of calling function, it is used for error output in the debug model.
+ * @return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ */
+extern bool luaval_to_texparams(lua_State* L,int lo,cocos2d::Texture2D::TexParams* outValue, const char* funcName = "");
 
 /**@}**/
 
@@ -869,8 +788,6 @@ extern bool luaval_to_quaternion(lua_State* L,int lo,cocos2d::Quaternion* outVal
  *
  * @param L the current lua_State.
  * @param vec2  a cocos2d::Vec2 object.
- * @lua NA
- * @js NA
  */
 extern void vec2_to_luaval(lua_State* L,const cocos2d::Vec2& vec2);
 
@@ -880,8 +797,6 @@ extern void vec2_to_luaval(lua_State* L,const cocos2d::Vec2& vec2);
  *
  * @param L the current lua_State.
  * @param vec3  a cocos2d::Vec3 object.
- * @lua NA
- * @js NA
  */
 extern void vec3_to_luaval(lua_State* L,const cocos2d::Vec3& vec3);
 
@@ -890,9 +805,7 @@ extern void vec3_to_luaval(lua_State* L,const cocos2d::Vec3& vec3);
  * The format of table as follows: {x=numberValue1, y=numberValue2, z=numberValue3, w=numberValue4}
  *
  * @param L the current lua_State.
- * @param vec3  a cocos2d::Vec4 object.
- * @lua NA
- * @js NA
+ * @param vec4  a cocos2d::Vec4 object.
  */
 extern void vec4_to_luaval(lua_State* L,const cocos2d::Vec4& vec4);
 
@@ -903,9 +816,7 @@ extern void vec4_to_luaval(lua_State* L,const cocos2d::Vec4& vec4);
  *
  * @param L the current lua_State.
  * @param points a pointer points to a cocos2d::Vec2 array.
- * @int count the number of cocos2d::Vec2 object should be converted to a Lua table and push into the Lua stack.
- * @lua NA
- * @js NA
+ * @param count the number of cocos2d::Vec2 object should be converted to a Lua table and push into the Lua stack.
  */
 extern void vec2_array_to_luaval(lua_State* L,const cocos2d::Vec2* points, int count);
 
@@ -915,8 +826,6 @@ extern void vec2_array_to_luaval(lua_State* L,const cocos2d::Vec2* points, int c
  *
  * @param L the current lua_State.
  * @param sz  a cocos2d::Size object.
- * @lua NA
- * @js NA
  */
 extern void size_to_luaval(lua_State* L,const Size& sz);
 
@@ -925,9 +834,7 @@ extern void size_to_luaval(lua_State* L,const Size& sz);
  * The format of table as follows: {x=numberValue1, y=numberValue2, width=numberValue3, height=numberValue4}
  *
  * @param L the current lua_State.
- * @param sz  a cocos2d::Rect object.
- * @lua NA
- * @js NA
+ * @param rt  a cocos2d::Rect object.
  */
 extern void rect_to_luaval(lua_State* L,const Rect& rt);
 
@@ -937,8 +844,6 @@ extern void rect_to_luaval(lua_State* L,const Rect& rt);
  *
  * @param L the current lua_State.
  * @param cc  a cocos2d::Color3B object.
- * @lua NA
- * @js NA
  */
 extern void color3b_to_luaval(lua_State* L,const Color3B& cc);
 
@@ -948,8 +853,6 @@ extern void color3b_to_luaval(lua_State* L,const Color3B& cc);
  *
  * @param L the current lua_State.
  * @param cc a cocos2d::Color4B object.
- * @lua NA
- * @js NA
  */
 extern void color4b_to_luaval(lua_State* L,const Color4B& cc);
 
@@ -959,8 +862,6 @@ extern void color4b_to_luaval(lua_State* L,const Color4B& cc);
  *
  * @param L the current lua_State.
  * @param cc a cocos2d::Color4F object.
- * @lua NA
- * @js NA
  */
 extern void color4f_to_luaval(lua_State* L,const Color4F& cc);
 #if CC_USE_PHYSICS
@@ -971,8 +872,6 @@ extern void color4f_to_luaval(lua_State* L,const Color4F& cc);
  *
  * @param L the current lua_State.
  * @param pm a cocos2d::PhysicsMaterial object.
- * @lua NA
- * @js NA
  */
 extern void physics_material_to_luaval(lua_State* L,const PhysicsMaterial& pm);
 
@@ -982,8 +881,6 @@ extern void physics_material_to_luaval(lua_State* L,const PhysicsMaterial& pm);
  *
  * @param L the current lua_State.
  * @param info a cocos2d::PhysicsRayCastInfo object.
- * @lua NA
- * @js NA
  */
 extern void physics_raycastinfo_to_luaval(lua_State* L, const PhysicsRayCastInfo& info);
 
@@ -993,8 +890,6 @@ extern void physics_raycastinfo_to_luaval(lua_State* L, const PhysicsRayCastInfo
  *
  * @param L the current lua_State.
  * @param data a cocos2d::PhysicsContactData object.
- * @lua NA
- * @js NA
  */
 extern void physics_contactdata_to_luaval(lua_State* L, const PhysicsContactData* data);
 #endif //#if CC_USE_PHYSICS
@@ -1005,8 +900,6 @@ extern void physics_contactdata_to_luaval(lua_State* L, const PhysicsContactData
  *
  * @param L the current lua_State.
  * @param inValue a cocos2d::AffineTransform object.
- * @lua NA
- * @js NA
  */
 extern void affinetransform_to_luaval(lua_State* L,const AffineTransform& inValue);
 
@@ -1016,14 +909,12 @@ extern void affinetransform_to_luaval(lua_State* L,const AffineTransform& inValu
  *
  * @param L the current lua_State.
  * @param inValue a cocos2d::FontDefinition object.
- * @lua NA
- * @js NA
  */
 extern void fontdefinition_to_luaval(lua_State* L,const FontDefinition& inValue);
-/// @cond
+
 extern void array_to_luaval(lua_State* L, __Array* inValue);
 extern void dictionary_to_luaval(lua_State* L, __Dictionary* dict);
-/// @endcond
+
 
 /**
  * Push a table converted from a cocos2d::Mat4 object into the Lua stack.
@@ -1031,8 +922,6 @@ extern void dictionary_to_luaval(lua_State* L, __Dictionary* dict);
  *
  * @param L the current lua_State.
  * @param mat a cocos2d::Mat4 object.
- * @lua NA
- * @js NA
  */
 extern void mat4_to_luaval(lua_State* L, const cocos2d::Mat4& mat);
 
@@ -1042,8 +931,6 @@ extern void mat4_to_luaval(lua_State* L, const cocos2d::Mat4& mat);
  *
  * @param L the current lua_State.
  * @param func a cocos2d::BlendFunc object.
- * @lua NA
- * @js NA
  */
 extern void blendfunc_to_luaval(lua_State* L, const cocos2d::BlendFunc& func);
 
@@ -1053,8 +940,6 @@ extern void blendfunc_to_luaval(lua_State* L, const cocos2d::BlendFunc& func);
  *
  * @param L the current lua_State.
  * @param config a cocos2d::TTFConfig object.
- * @lua NA
- * @js NA
  */
 extern void ttfconfig_to_luaval(lua_State* L, const cocos2d::TTFConfig& config);
 
@@ -1064,8 +949,6 @@ extern void ttfconfig_to_luaval(lua_State* L, const cocos2d::TTFConfig& config);
  *
  * @param L the current lua_State.
  * @param uniform a cocos2d::Uniform object.
- * @lua NA
- * @js NA
  */
 extern void uniform_to_luaval(lua_State* L, const cocos2d::Uniform& uniform);
 
@@ -1075,12 +958,10 @@ extern void uniform_to_luaval(lua_State* L, const cocos2d::Uniform& uniform);
  *
  * @param L the current lua_State.
  * @param verAttrib a cocos2d::VertexAttrib object.
- * @lua NA
- * @js NA
  */
 extern void vertexattrib_to_luaval(lua_State* L, const cocos2d::VertexAttrib& verAttrib);
 
-/// @cond
+
 static inline void point_to_luaval(lua_State* L,const cocos2d::Vec2& pt)
 {
     vec2_to_luaval(L, pt);
@@ -1091,7 +972,6 @@ CC_DEPRECATED_ATTRIBUTE static inline void points_to_luaval(lua_State* L,const c
 {
     vec2_array_to_luaval(L, points, count);
 }
-/// @endcond
 
 /**
  * Push a table converted from a cocos2d::Vector object into the Lua stack.
@@ -1099,9 +979,7 @@ CC_DEPRECATED_ATTRIBUTE static inline void points_to_luaval(lua_State* L,const c
  * The object in the cocos2d::Vector which would be pushed into the table should be Ref type.
  *
  * @param L the current lua_State.
- * @param verAttrib a cocos2d::Vector object.
- * @lua NA
- * @js NA
+ * @param inValue a cocos2d::Vector object.
  */
 template <class T>
 void ccvector_to_luaval(lua_State* L,const cocos2d::Vector<T>& inValue)
@@ -1141,9 +1019,7 @@ void ccvector_to_luaval(lua_State* L,const cocos2d::Vector<T>& inValue)
  * The object in the cocos2d::Map which would be pushed into the table should be Ref type.
  *
  * @param L the current lua_State.
- * @param verAttrib a cocos2d::Map object.
- * @lua NA
- * @js NA
+ * @param v a cocos2d::Map object.
  */
 template <class T>
 void ccmap_string_key_to_luaval(lua_State* L, const cocos2d::Map<std::string, T>& v)
@@ -1185,9 +1061,7 @@ void ccmap_string_key_to_luaval(lua_State* L, const cocos2d::Map<std::string, T>
  * Value::Type::INT_KEY_MAP -> push a hash table into the Lua stack.
  *
  * @param L the current lua_State.
- * @param verAttrib a cocos2d::Value object.
- * @lua NA
- * @js NA
+ * @param inValue a cocos2d::Value object.
  */
 void ccvalue_to_luaval(lua_State* L,const cocos2d::Value& inValue);
 
@@ -1196,9 +1070,7 @@ void ccvalue_to_luaval(lua_State* L,const cocos2d::Value& inValue);
  * The type of value of the key/value pair would be boolean,number, integer, string, array table, hash table.
  *
  * @param L the current lua_State.
- * @param verAttrib a cocos2d::ValueMap object.
- * @lua NA
- * @js NA
+ * @param inValue a cocos2d::ValueMap object.
  */
 void ccvaluemap_to_luaval(lua_State* L,const cocos2d::ValueMap& inValue);
 
@@ -1207,9 +1079,7 @@ void ccvaluemap_to_luaval(lua_State* L,const cocos2d::ValueMap& inValue);
  * The type of value of the key/value pair would be boolean,number, integer, string, array table, hash table.
  *
  * @param L the current lua_State.
- * @param verAttrib a cocos2d::Map object.
- * @lua NA
- * @js NA
+ * @param inValue a cocos2d::ValueMapIntKey object.
  */
 void ccvaluemapintkey_to_luaval(lua_State* L, const cocos2d::ValueMapIntKey& inValue);
 
@@ -1218,9 +1088,7 @@ void ccvaluemapintkey_to_luaval(lua_State* L, const cocos2d::ValueMapIntKey& inV
  * The type of value of the key/value pair would be boolean,number, integer, string, array table, hash table.
  *
  * @param L the current lua_State.
- * @param verAttrib a cocos2d::ValueVector object.
- * @lua NA
- * @js NA
+ * @param inValue a cocos2d::ValueVector object.
  */
 void ccvaluevector_to_luaval(lua_State* L, const cocos2d::ValueVector& inValue);
 
@@ -1230,7 +1098,7 @@ void ccvaluevector_to_luaval(lua_State* L, const cocos2d::ValueVector& inValue);
  * Get the real typename for the specified typename.
  * Because all override functions wouldn't be bound,so we must use `typeid` to get the real class name.
  *
- * @param T the pointer points to a object.
+ * @param ret the pointer points to a type T object.
  * @param type the string pointer points to specified typename.
  * @return return the pointer points to the real typename, or nullptr.
  */
@@ -1291,8 +1159,6 @@ void object_to_luaval(lua_State* L,const char* type, T* ret)
  *
  * @param L the current lua_State.
  * @param inValue a cocos2d::MeshVertexAttrib object.
- * @lua NA
- * @js NA
  */
 void mesh_vertex_attrib_to_luaval(lua_State* L, const cocos2d::MeshVertexAttrib& inValue);
 
@@ -1302,8 +1168,6 @@ void mesh_vertex_attrib_to_luaval(lua_State* L, const cocos2d::MeshVertexAttrib&
  *
  * @param L the current lua_State.
  * @param inValue a std::vector<std::string> value.
- * @lua NA
- * @js NA
  */
 void ccvector_std_string_to_luaval(lua_State* L, const std::vector<std::string>& inValue);
 
@@ -1313,8 +1177,6 @@ void ccvector_std_string_to_luaval(lua_State* L, const std::vector<std::string>&
  *
  * @param L the current lua_State.
  * @param inValue a std::vector<int> vaule.
- * @lua NA
- * @js NA
  */
 void ccvector_int_to_luaval(lua_State* L, const std::vector<int>& inValue);
 
@@ -1324,8 +1186,6 @@ void ccvector_int_to_luaval(lua_State* L, const std::vector<int>& inValue);
  *
  * @param L the current lua_State.
  * @param inValue a std::vector<float> vaule.
- * @lua NA
- * @js NA
  */
 void ccvector_float_to_luaval(lua_State* L, const std::vector<float>& inValue);
 
@@ -1335,8 +1195,6 @@ void ccvector_float_to_luaval(lua_State* L, const std::vector<float>& inValue);
  *
  * @param L the current lua_State.
  * @param inValue a std::vector<float> vaule.
- * @lua NA
- * @js NA
  */
 void ccvector_ushort_to_luaval(lua_State* L, const std::vector<unsigned short>& inValue);
 
@@ -1346,8 +1204,18 @@ void ccvector_ushort_to_luaval(lua_State* L, const std::vector<unsigned short>& 
  *
  * @param L the current lua_State.
  * @param inValue a cocos2d::Quaternion object.
- * @lua NA
- * @js NA
  */
 void quaternion_to_luaval(lua_State* L,const cocos2d::Quaternion& inValue);
+
+/**
+ * Push a table converted from a cocos2d::Texture2D::TexParams object into the Lua stack.
+ * The format of table as follows: {minFilter=numberValue1, magFilter=numberValue2, wrapS=numberValue3, wrapT=numberValue4}
+ *
+ * @param L the current lua_State.
+ * @param inValue a cocos2d::Texture2D::TexParams object.
+ */
+void texParams_to_luaval(lua_State* L, const cocos2d::Texture2D::TexParams& inValue);
+
+// end group
+/// @}
 #endif //__COCOS2DX_SCRIPTING_LUA_COCOS2DXSUPPORT_LUABAISCCONVERSIONS_H__

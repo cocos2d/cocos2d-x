@@ -1,5 +1,7 @@
 #include "Paddle.h"
 
+USING_NS_CC;
+
 Paddle::Paddle(void)
 {
 }

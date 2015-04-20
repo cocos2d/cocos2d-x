@@ -54,13 +54,14 @@ class EventCustom;
  *     Removes a listener
  *
  *        dispatcher->removeEventListener(listener);
+ * \endcode
  * @js cc._EventListenerCustom
  */
 class CC_DLL EventListenerCustom : public EventListener
 {
 public:
     /** Creates an event listener with type and callback.
-     * @param eventType The type of the event.
+     * @param eventName The type of the event.
      * @param callback The callback function when the specified event was emitted.
      * @return An autoreleased EventListenerCustom object.
      */

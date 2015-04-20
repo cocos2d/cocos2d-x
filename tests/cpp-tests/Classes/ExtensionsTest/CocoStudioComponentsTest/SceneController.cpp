@@ -79,9 +79,12 @@ void SceneController::spriteMoveFinished(Node* sender)
 	if (sprite->getTag() == 2)  // target
 	{
         _targets.eraseObject(sprite);
+
+        auto director = Director::getInstance();
 		auto gameOverScene = GameOverScene::create();
 		gameOverScene->getLayer()->getLabel()->setString("You Lose :[");
-		Director::getInstance()->replaceScene(gameOverScene);
+
+		director->replaceScene(gameOverScene);
 	}
 	else if (sprite->getTag() == 3) 
 	{
@@ -99,8 +102,9 @@ void SceneController::increaseKillCount()
 
     if (nProjectilesDestroyed >= 5)
     {
+        auto director = Director::getInstance();
         auto gameOverScene = GameOverScene::create();
         gameOverScene->getLayer()->getLabel()->setString("You Win!");
-        Director::getInstance()->replaceScene(gameOverScene);
+        director->replaceScene(gameOverScene);
     }
 }

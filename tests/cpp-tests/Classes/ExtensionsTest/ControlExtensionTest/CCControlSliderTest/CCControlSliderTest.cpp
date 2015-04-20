@@ -26,6 +26,9 @@
 
 #include "CCControlSliderTest.h"
 
+USING_NS_CC;
+USING_NS_CC_EXT;
+
 ControlSliderTest::ControlSliderTest()
 {
  
@@ -33,7 +36,6 @@ ControlSliderTest::ControlSliderTest()
 
 ControlSliderTest::~ControlSliderTest()
 {
-    CC_SAFE_RELEASE_NULL(_displayValueLabel);
 }
 
 bool ControlSliderTest::init()
@@ -43,10 +45,8 @@ bool ControlSliderTest::init()
         auto screenSize = Director::getInstance()->getWinSize();
 
         // Add a label in which the slider value will be displayed
-        _displayValueLabel = Label::createWithTTF("Move the slider thumb!\nThe lower slider is restricted." ,"fonts/Marker Felt.ttf", 32);
-        _displayValueLabel->retain();
-        _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
-        _displayValueLabel->setPosition(screenSize.width / 1.7f, screenSize.height / 2.0f);
+        _displayValueLabel = Label::createWithTTF("Move the slider thumb!\nThe lower slider is restricted." ,"fonts/Marker Felt.ttf", 20);
+        _displayValueLabel->setPosition(screenSize.width / 2.0f, screenSize.height * 0.7f);
         addChild(_displayValueLabel);
 
         // Add the slider

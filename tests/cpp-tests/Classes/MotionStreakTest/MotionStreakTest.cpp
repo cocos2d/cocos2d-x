@@ -1,52 +1,21 @@
 #include "MotionStreakTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum {
 	kTagLabel = 1,
 	kTagSprite1 = 2,
 	kTagSprite2 = 3,
 };
 
-Layer* nextMotionAction();
-Layer* backMotionAction();
-Layer* restartMotionAction();
-
-static int sceneIdx = -1;
-
-static std::function<Layer*()> createFunctions[] =
+MotionStreakTests::MotionStreakTests()
 {
-	CL(MotionStreakTest1),
-    CL(MotionStreakTest2),
-    CL(Issue1358),
-};
-
-#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-Layer* nextMotionAction()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
+    ADD_TEST_CASE(MotionStreakTest1);
+    ADD_TEST_CASE(MotionStreakTest2);
+    ADD_TEST_CASE(Issue1358);
 }
 
-Layer* backMotionAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;
-
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-Layer* restartMotionAction()
-{
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
 //------------------------------------------------------------------
 //
 // MotionStreakTest1
@@ -207,7 +176,7 @@ std::string MotionStreakTest::subtitle() const
 
 void MotionStreakTest::onEnter()
 {
-    BaseTest::onEnter();
+    TestCase::onEnter();
 
     auto s = Director::getInstance()->getWinSize();
 
@@ -226,37 +195,4 @@ void MotionStreakTest::modeCallback(Ref *pSender)
 {
     bool fastMode = streak->isFastMode();
     streak->setFastMode(! fastMode);
-}
-
-void MotionStreakTest::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) MotionStreakTestScene();//CCScene::create();
-    s->addChild(restartMotionAction()); 
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void MotionStreakTest::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) MotionStreakTestScene();//CCScene::create();
-    s->addChild( nextMotionAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void MotionStreakTest::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) MotionStreakTestScene;//CCScene::create();
-    s->addChild( backMotionAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-} 
-
-void MotionStreakTestScene::runThisTest()
-{
-    auto layer = nextMotionAction();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
 }

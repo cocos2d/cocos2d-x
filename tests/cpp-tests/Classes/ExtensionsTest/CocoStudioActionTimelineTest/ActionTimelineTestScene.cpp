@@ -5,211 +5,66 @@
 #include "VisibleRect.h"
 
 
-using namespace cocos2d;
+USING_NS_CC;
 using namespace cocostudio;
+using namespace cocostudio::timeline;
 
-Layer *NextAnimationTest();
-Layer *BackAnimationTest();
-Layer *RestartAnimationTest();
-
-static int s_nActionIdx = -1;
-
-
-Layer *CreateAnimationLayer(int index)
+CocoStudioActionTimelineTests::CocoStudioActionTimelineTests()
 {
-    Layer *pLayer = nullptr;
-    switch(index)
+    ADD_TEST_CASE(TestActionTimeline);
+    ADD_TEST_CASE(TestChangePlaySection);
+    ADD_TEST_CASE(TestTimelineFrameEvent);
+    ADD_TEST_CASE(TestTimelinePerformance);
+    ADD_TEST_CASE(TestTimelineAnimationList);
+    ADD_TEST_CASE(TestTimelineProjectNode);
+    ADD_TEST_CASE(TestProjectNodeForSimulator);
+    ADD_TEST_CASE(TestTimelineNodeLoadedCallback);
+    ADD_TEST_CASE(TestActionTimelineEase);
+}
+
+CocoStudioActionTimelineTests::~CocoStudioActionTimelineTests()
+{
+
+}
+
+bool ActionTimelineBaseTest::init()
+{
+    if (TestCase::init())
     {
-    case TEST_ANIMATIONELEMENT:
-        pLayer = new (std::nothrow) TestActionTimeline();
-        break;
-    case TEST_CHANGE_PLAY_SECTION:
-        pLayer = new (std::nothrow) TestChangePlaySection();
-        break;
-    /*
-    case TEST_TIMELINE_FRAME_EVENT:
-        pLayer = new (std::nothrow) TestTimelineFrameEvent();
-        break;
-     */
-    case TEST_TIMELINE_PERFORMACE:
-        pLayer = new (std::nothrow) TestTimelinePerformance();
-        break;
-    case TEST_TIMELINEACTION_ANIMATIONLIST:
-        pLayer = new (std::nothrow) TestTimelineAnimationList();
-        break;
-    case TEST_TIMELINEPROJECTNODE:
-        pLayer = new (std::nothrow) TestTimelineProjectNode();
-        break;
-    case TEST_PROJECTNODEFORSIMALATOR:
-        pLayer = new (std::nothrow) TestProjectNodeForSimulator;
-        break;
-    case TEST_NODELOADEDCALLBACK:
-        pLayer = new (std::nothrow)TestTimelineNodeLoadedCallback;
-        break;
-    default:
-        CCLOG("NONE OF THIS TEST LAYER");
-        break;
+        Sprite *bg = Sprite::create("armature/bg.jpg");
+        bg->setPosition(VisibleRect::center());
+
+        float scaleX = VisibleRect::getVisibleRect().size.width / bg->getContentSize().width;
+        float scaleY = VisibleRect::getVisibleRect().size.height / bg->getContentSize().height;
+
+        bg->setScaleX(scaleX);
+        bg->setScaleY(scaleY);
+
+        addChild(bg);
+
+        setGLProgram(ShaderCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
+
+        return true;
     }
-
-    return pLayer;
+    return false;
 }
 
-
-Layer *NextAnimationTest()
+void ActionTimelineBaseTest::onExit()
 {
-    ++s_nActionIdx;
-    s_nActionIdx = s_nActionIdx % TEST_ANIMATION_LAYER_COUNT;
+    cocostudio::destroyCocosStudio();
 
-    Layer *pLayer = CreateAnimationLayer(s_nActionIdx);
-    pLayer->autorelease();
-
-    return pLayer;
+    TestCase::onExit();
 }
 
-Layer *BackAnimationTest()
-{
-    --s_nActionIdx;
-    if( s_nActionIdx < 0 )
-        s_nActionIdx += TEST_ANIMATION_LAYER_COUNT;
-
-    Layer *pLayer = CreateAnimationLayer(s_nActionIdx);
-    pLayer->autorelease();
-
-    return pLayer;
-}
-
-Layer *RestartAnimationTest()
-{
-    Layer *pLayer = CreateAnimationLayer(s_nActionIdx);
-    pLayer->autorelease();
-
-    return pLayer;
-}
-
-
-ActionTimelineTestScene::ActionTimelineTestScene(bool bPortrait)
-{
-    TestScene::init();
-
-    Sprite *bg = Sprite::create("armature/bg.jpg");
-    bg->setPosition(VisibleRect::center());
-
-    float scaleX = VisibleRect::getVisibleRect().size.width / bg->getContentSize().width;
-    float scaleY = VisibleRect::getVisibleRect().size.height / bg->getContentSize().height;
-
-    bg->setScaleX(scaleX);
-    bg->setScaleY(scaleY);
-
-    addChild(bg);
-}
-
-void ActionTimelineTestScene::runThisTest()
-{
-    s_nActionIdx = -1;
-    addChild(NextAnimationTest());
-
-    Director::getInstance()->replaceScene(this);
-}
-
-void ActionTimelineTestScene::MainMenuCallback(Ref *pSender)
-{
-    //TestScene::MainMenuCallback(pSender);
-
-    removeAllChildren();
-}
-
-
-
-void ActionTimelineTestLayer::onEnter()
-{
-
-    Layer::onEnter();
-
-    // add title and subtitle
-    std::string str = title();
-    const char *title = str.c_str();
-    auto label = Label::createWithSystemFont(title, "Arial", 18);
-    label->setColor(Color3B(0, 0, 0));
-    addChild(label, 1, 10000);
-    label->setPosition( Point(VisibleRect::center().x, VisibleRect::top().y - 30) );
-
-    std::string strSubtitle = subtitle();
-    if( ! strSubtitle.empty() )
-    {
-        auto l = Label::createWithSystemFont(strSubtitle.c_str(), "Arial", 18);
-        l->setColor(Color3B(0, 0, 0));
-        addChild(l, 1, 10001);
-        l->setPosition(VisibleRect::center().x, VisibleRect::top().y - 60);
-    }
-
-    // add menu
-    backItem = MenuItemImage::create(s_pathB1, s_pathB2, CC_CALLBACK_1(ActionTimelineTestLayer::backCallback, this) );
-    restartItem = MenuItemImage::create(s_pathR1, s_pathR2, CC_CALLBACK_1(ActionTimelineTestLayer::restartCallback, this) );
-    nextItem = MenuItemImage::create(s_pathF1, s_pathF2, CC_CALLBACK_1(ActionTimelineTestLayer::nextCallback, this) );
-
-    Menu *menu = Menu::create(backItem, restartItem, nextItem, nullptr);
-
-    menu->setPosition(Point::ZERO);
-    backItem->setPosition(VisibleRect::center().x - restartItem->getContentSize().width * 2, VisibleRect::bottom().y + restartItem->getContentSize().height / 2);
-    restartItem->setPosition(VisibleRect::center().x, VisibleRect::bottom().y + restartItem->getContentSize().height / 2);
-    nextItem->setPosition(VisibleRect::center().x + restartItem->getContentSize().width * 2, VisibleRect::bottom().y + restartItem->getContentSize().height / 2);
-
-    addChild(menu, 100);
-
-    setGLProgram(ShaderCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR));
-
-}
-void ActionTimelineTestLayer::onExit()
-{
-    removeAllChildren();
-
-    backItem = restartItem = nextItem = nullptr;
-
-    ActionTimelineCache::getInstance()->purge();
-    CSLoader::getInstance()->purge();
-
-    Layer::onExit();
-}
-
-std::string ActionTimelineTestLayer::title() const
+std::string ActionTimelineBaseTest::title() const
 {
     return "Armature Test Bed";
 }
-std::string ActionTimelineTestLayer::subtitle() const
-{
-    return "";
-}
-
-void ActionTimelineTestLayer::restartCallback(Ref *pSender)
-{
-    Scene *s = new (std::nothrow) ActionTimelineTestScene();
-    s->addChild( RestartAnimationTest() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void ActionTimelineTestLayer::nextCallback(Ref *pSender)
-{
-    Scene *s = new (std::nothrow) ActionTimelineTestScene();
-    s->addChild( NextAnimationTest() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-void ActionTimelineTestLayer::backCallback(Ref *pSender)
-{
-    Scene *s = new (std::nothrow) ActionTimelineTestScene();
-    auto a = BackAnimationTest();
-    s->addChild( a);
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-
 
 // TestActionTimeline
 void TestActionTimeline::onEnter()
 {
-    ActionTimelineTestLayer::onEnter();
+    ActionTimelineBaseTest::onEnter();
 
     Node* node = CSLoader::createNode("ActionTimeline/DemoPlayer.csb");
     ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/DemoPlayer.csb");
@@ -233,7 +88,7 @@ std::string TestActionTimeline::title() const
 // TestActionTimeline
 void TestChangePlaySection::onEnter()
 {
-    ActionTimelineTestLayer::onEnter();
+    ActionTimelineBaseTest::onEnter();
 
     Node* node = CSLoader::createNode("ActionTimeline/DemoPlayer.csb");
     action = CSLoader::createTimeline("ActionTimeline/DemoPlayer.csb");
@@ -272,7 +127,7 @@ void TestChangePlaySection::onTouchesEnded(const std::vector<Touch*>& touches, E
 // TestFrameEvent
 void TestTimelineFrameEvent::onEnter()
 {
-    ActionTimelineTestLayer::onEnter();
+    ActionTimelineBaseTest::onEnter();
 
     Node* node = CSLoader::createNode("ActionTimeline/DemoPlayer.csb");
     ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/DemoPlayer.csb");
@@ -317,7 +172,7 @@ void TestTimelineFrameEvent::onFrameEvent(Frame* frame)
 // TestTimelinePerformance
 void TestTimelinePerformance::onEnter()
 {
-    ActionTimelineTestLayer::onEnter();
+    ActionTimelineBaseTest::onEnter();
 
     for (int i = 0; i< 100; i++)
     {
@@ -341,7 +196,7 @@ std::string TestTimelinePerformance::title() const
 // TestTimelineAnimationList
 void TestTimelineAnimationList::onEnter()
 {
-    ActionTimelineTestLayer::onEnter();
+    ActionTimelineBaseTest::onEnter();
     Node* node = CSLoader::createNode("ActionTimeline/DemoPlayer.csb");
     ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/DemoPlayer.csb");
     cocostudio::timeline::AnimationInfo standinfo("stand", 0, 40);
@@ -366,7 +221,7 @@ std::string TestTimelineAnimationList::title() const
 //InnerActionFrame make InnerAction Play until action's duration or next InnerActionFrame
 void TestTimelineProjectNode::onEnter()
 {
-    ActionTimelineTestLayer::onEnter();
+    ActionTimelineBaseTest::onEnter();
     Node* node = CSLoader::createNode("ActionTimeline/TestAnimation.csb");
     ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/TestAnimation.csb");
     
@@ -386,7 +241,7 @@ std::string TestTimelineProjectNode::title() const
 //InnerActionFrame make InnerAction Play until action's duration or next InnerActionFrame
 void TestProjectNodeForSimulator::onEnter()
 {
-    ActionTimelineTestLayer::onEnter();
+    ActionTimelineBaseTest::onEnter();
     Node* node = CSLoader::getInstance()->createNodeWithFlatBuffersForSimulator("ActionTimeline/TestAnimation.csd");
     ActionTimeline* action = cocostudio::timeline::ActionTimelineCache::getInstance()->createActionWithFlatBuffersForSimulator("ActionTimeline/TestAnimation.csd");
     
@@ -412,7 +267,7 @@ std::string TestProjectNodeForSimulator::title() const
 //TestTimelineNodeLoadedCallback
 void TestTimelineNodeLoadedCallback::onEnter()
 {
-    ActionTimelineTestLayer::onEnter();
+    ActionTimelineBaseTest::onEnter();
     
     Node* node = CSLoader::createNode("ActionTimeline/DemoPlayer.csb", CC_CALLBACK_1(TestTimelineNodeLoadedCallback::nodeLoadedCallback,
                                                                                      this));
@@ -440,4 +295,23 @@ void TestTimelineNodeLoadedCallback::nodeLoadedCallback(cocos2d::Ref *sender)
         CCLOG("node name = %s", node->getName().c_str());
         CCLOG("node parent name = %s", node->getParent()->getName().c_str());
     }
+}
+
+
+// TestActionTimelineEase
+void TestActionTimelineEase::onEnter()
+{
+    ActionTimelineBaseTest::onEnter();
+    
+    Node* node = CSLoader::createNode("ActionTimeline/ActionTimelineEase.csb");
+    ActionTimeline* action = CSLoader::createTimeline("ActionTimeline/ActionTimelineEase.csb");
+    node->runAction(action);
+    action->gotoFrameAndPlay(0);
+    
+    addChild(node);
+}
+
+std::string TestActionTimelineEase::title() const
+{
+    return "Test ActionTimelineEase";
 }

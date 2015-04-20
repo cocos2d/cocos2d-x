@@ -35,7 +35,10 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
+-- brief Toggle 9-slice feature.<br>
+-- If Scale9Sprite is 9-slice disabled, the Scale9Sprite will rendered as a normal sprite.<br>
+-- param enabled True to enable 9-slice, false otherwise.<br>
+-- js NA
 -- @function [parent=#Scale9Sprite] setScale9Enabled 
 -- @param self
 -- @param #bool enabled
@@ -43,7 +46,7 @@
         
 --------------------------------
 -- Sets whether the widget should be flipped vertically or not.<br>
--- param bFlippedY true if the widget should be flipped vertically, false otherwise.
+-- param flippedY true if the widget should be flipped vertically, false otherwise.
 -- @function [parent=#Scale9Sprite] setFlippedY 
 -- @param self
 -- @param #bool flippedY
@@ -51,7 +54,7 @@
         
 --------------------------------
 -- Sets whether the widget should be flipped horizontally or not.<br>
--- param bFlippedX true if the widget should be flipped horizontally, false otherwise.
+-- param flippedX true if the widget should be flipped horizontally, false otherwise.
 -- @function [parent=#Scale9Sprite] setFlippedX 
 -- @param self
 -- @param #bool flippedX
@@ -62,7 +65,8 @@
 -- You use this method to add cap insets to a sprite or to change the existing<br>
 -- cap insets of a sprite. In both cases, you get back a new image and the<br>
 -- original sprite remains untouched.<br>
--- param capInsets The values to use for the cap insets.
+-- param capInsets The values to use for the cap insets.<br>
+-- return A Scale9Sprite instance.
 -- @function [parent=#Scale9Sprite] resizableSpriteWithCapInsets 
 -- @param self
 -- @param #rect_table capInsets
@@ -75,6 +79,9 @@
 -- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
+-- Change the state of 9-slice sprite.<br>
+-- see `State`<br>
+-- param state A enum value in State.<br>
 -- since v3.4
 -- @function [parent=#Scale9Sprite] setState 
 -- @param self
@@ -82,7 +89,8 @@
 -- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
--- 
+-- brief Change the bottom sprite's cap inset.<br>
+-- param bottomInset The values to use for the cap inset.
 -- @function [parent=#Scale9Sprite] setInsetBottom 
 -- @param self
 -- @param #float bottomInset
@@ -98,13 +106,15 @@
 -- @return bool#bool ret (return value: bool)
 
 --------------------------------
--- 
+-- brief Get the original no 9-sliced sprite<br>
+-- return A sprite instance.
 -- @function [parent=#Scale9Sprite] getSprite 
 -- @param self
 -- @return Sprite#Sprite ret (return value: cc.Sprite)
         
 --------------------------------
--- 
+-- brief Change the top sprite's cap inset.<br>
+-- param topInset The values to use for the cap inset.
 -- @function [parent=#Scale9Sprite] setInsetTop 
 -- @param self
 -- @param #float topInset
@@ -126,14 +136,17 @@
 -- @return bool#bool ret (return value: bool)
 
 --------------------------------
--- 
+-- brief Change the prefered size of Scale9Sprite.<br>
+-- param size A delimitation zone.
 -- @function [parent=#Scale9Sprite] setPreferredSize 
 -- @param self
 -- @param #size_table size
 -- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
--- 
+-- brief Change inner sprite's sprite frame.<br>
+-- param spriteFrame A sprite frame pointer.<br>
+-- param capInsets The values to use for the cap insets.
 -- @function [parent=#Scale9Sprite] setSpriteFrame 
 -- @param self
 -- @param #cc.SpriteFrame spriteFrame
@@ -150,31 +163,37 @@
 -- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
         
 --------------------------------
--- 
+-- brief Query the bottom sprite's cap inset.<br>
+-- return The bottom sprite's cap inset.
 -- @function [parent=#Scale9Sprite] getInsetBottom 
 -- @param self
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- 
+-- brief Query the Scale9Sprite's prefered size.<br>
+-- return Scale9Sprite's cap inset.
 -- @function [parent=#Scale9Sprite] getCapInsets 
 -- @param self
 -- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
--- 
+-- brief Query whether the Scale9Sprite is enable 9-slice or not.<br>
+-- return True if 9-slice is enabled, false otherwise.<br>
+-- js NA
 -- @function [parent=#Scale9Sprite] isScale9Enabled 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
+-- brief Query the right sprite's cap inset.<br>
+-- return The right sprite's cap inset.
 -- @function [parent=#Scale9Sprite] getInsetRight 
 -- @param self
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- 
+-- brief Query the sprite's original size.<br>
+-- return Sprite size.
 -- @function [parent=#Scale9Sprite] getOriginalSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
@@ -193,8 +212,7 @@
 
 --------------------------------
 -- Sets the source blending function.<br>
--- param blendFunc A structure with source and destination factor to specify pixel arithmetic,<br>
--- e.g. {GL_ONE, GL_ONE}, {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}.<br>
+-- param blendFunc A structure with source and destination factor to specify pixel arithmetic. e.g. {GL_ONE, GL_ONE}, {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}.<br>
 -- js NA<br>
 -- lua NA
 -- @function [parent=#Scale9Sprite] setBlendFunc 
@@ -203,13 +221,15 @@
 -- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
--- 
+-- brief Query the top sprite's cap inset.<br>
+-- return The top sprite's cap inset.
 -- @function [parent=#Scale9Sprite] getInsetTop 
 -- @param self
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- 
+-- brief Change the left sprite's cap inset.<br>
+-- param leftInset The values to use for the cap inset.
 -- @function [parent=#Scale9Sprite] setInsetLeft 
 -- @param self
 -- @param #float leftInset
@@ -225,13 +245,15 @@
 -- @return bool#bool ret (return value: bool)
 
 --------------------------------
--- 
+-- brief Query the  Scale9Sprite's prefered size.<br>
+-- return Scale9Sprite's prefered size.
 -- @function [parent=#Scale9Sprite] getPreferredSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)
         
 --------------------------------
--- 
+-- brief Change the cap inset size.<br>
+-- param rect A delimitation zone.
 -- @function [parent=#Scale9Sprite] setCapInsets 
 -- @param self
 -- @param #rect_table rect
@@ -249,13 +271,15 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
+-- brief Query the left sprite's cap inset.<br>
+-- return The left sprite's cap inset.
 -- @function [parent=#Scale9Sprite] getInsetLeft 
 -- @param self
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- 
+-- brief Change the right sprite's cap inset.<br>
+-- param rightInset The values to use for the cap inset.
 -- @function [parent=#Scale9Sprite] setInsetRight 
 -- @param self
 -- @param #float rightInset
@@ -376,7 +400,9 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- js ctor
+-- Default constructor.<br>
+-- js ctor<br>
+-- lua new
 -- @function [parent=#Scale9Sprite] Scale9Sprite 
 -- @param self
 -- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)

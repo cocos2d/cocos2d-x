@@ -86,6 +86,16 @@ public:
      * @param bFastMode True if enabled fast mode.
      */
     inline void setFastMode(bool bFastMode) { _fastMode = bFastMode; }
+    /** Get stroke.
+     *
+     * @return float stroke.
+     */
+    inline float getStroke() const { return _stroke; }
+    /** Set stroke.
+     *
+     * @param stroke The width of stroke.
+     */
+    inline void setStroke(float stroke) { _stroke = stroke; }
 
     /** Is the starting position initialized or not.
      *

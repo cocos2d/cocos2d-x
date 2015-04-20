@@ -29,24 +29,17 @@
 #include "../BaseTest.h"
 #include <string>
 
-namespace cocos2d {
+DEFINE_TEST_SUITE(CocosStudio3DTests);
 
-}
-
-class CocosStudio3DTestDemo : public BaseTest
+class CocosStudio3DTestDemo : public TestCase
 {
 public:
     CocosStudio3DTestDemo(void);
     virtual ~CocosStudio3DTestDemo(void);
     
-    void restartCallback(Ref* sender) override;
-    void nextCallback(Ref* sender) override;
-    void backCallback(Ref* sender) override;
-    
     // overrides
     virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-    virtual void onEnter() override;
+    virtual void onExit() override;
 };
 
 class CSNode3DTest : public CocosStudio3DTestDemo
@@ -55,7 +48,6 @@ public:
     CREATE_FUNC(CSNode3DTest);
     CSNode3DTest();
     virtual std::string title() const override;
-    virtual std::string subtitle() const override;
 };
 
 class CSSprite3DTest : public CocosStudio3DTestDemo
@@ -64,7 +56,6 @@ public:
     CREATE_FUNC(CSSprite3DTest);
     CSSprite3DTest();
     virtual std::string title() const override;
-    virtual std::string subtitle() const override;
 };
 
 class CSUserCameraTest : public CocosStudio3DTestDemo
@@ -73,7 +64,6 @@ public:
     CREATE_FUNC(CSUserCameraTest);
     CSUserCameraTest();
     virtual std::string title() const override;
-    virtual std::string subtitle() const override;
 };
 
 class CSParticle3DTest : public CocosStudio3DTestDemo
@@ -82,15 +72,7 @@ public:
     CREATE_FUNC(CSParticle3DTest);
     CSParticle3DTest();
     virtual std::string title() const override;
-    virtual std::string subtitle() const override;
 };
 
-
-class CS3DTestScene : public TestScene
-{
-public:
-    CS3DTestScene();
-    virtual void runThisTest();
-};
 
 #endif

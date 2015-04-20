@@ -64,6 +64,11 @@ namespace cocostudio
         CC_SAFE_DELETE(_instanceParticleReader);
     }
     
+    void ParticleReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(_instanceParticleReader);
+    }
+    
     Offset<Table> ParticleReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
                                                                flatbuffers::FlatBufferBuilder *builder)
     {
@@ -73,6 +78,8 @@ namespace cocostudio
         std::string path = "";
         std::string plistFile = "";
         int resourceType = 0;
+        
+        cocos2d::BlendFunc blendFunc = cocos2d::BlendFunc::ALPHA_PREMULTIPLIED;
         
         // child elements
         const tinyxml2::XMLElement* child = objectData->FirstChildElement();
@@ -105,16 +112,40 @@ namespace cocostudio
                     attribute = attribute->Next();
                 }
             }
+            else if (name == "BlendFunc")
+            {
+                const tinyxml2::XMLAttribute* attribute = child->FirstAttribute();
+                
+                while (attribute)
+                {
+                    name = attribute->Name();
+                    std::string value = attribute->Value();
+                    
+                    if (name == "Src")
+                    {
+                        blendFunc.src = atoi(value.c_str());
+                    }
+                    else if (name == "Dst")
+                    {
+                        blendFunc.dst = atoi(value.c_str());
+                    }
+                    
+                    attribute = attribute->Next();
+                }
+            }
             
             child = child->NextSiblingElement();
         }
+        
+        flatbuffers::BlendFunc f_blendFunc(blendFunc.src, blendFunc.dst);
         
         auto options = CreateParticleSystemOptions(*builder,
                                                    nodeOptions,
                                                    CreateResourceData(*builder,
                                                                       builder->CreateString(path),
                                                                       builder->CreateString(plistFile),
-                                                                      resourceType));
+                                                                      resourceType),
+                                                   &f_blendFunc);
         
         return *(Offset<Table>*)(&options);
     }
@@ -122,7 +153,18 @@ namespace cocostudio
     void ParticleReader::setPropsWithFlatBuffers(cocos2d::Node *node,
                                                  const flatbuffers::Table *particleOptions)
     {
+        auto particle = static_cast<ParticleSystemQuad*>(node);
         auto options = (ParticleSystemOptions*)particleOptions;
+        
+        auto f_blendFunc = options->blendFunc();
+        if (f_blendFunc)
+        {
+            cocos2d::BlendFunc blendFunc = cocos2d::BlendFunc::ALPHA_PREMULTIPLIED;
+            blendFunc.src = f_blendFunc->src();
+            blendFunc.dst = f_blendFunc->dst();
+            particle->setBlendFunc(blendFunc);
+        }
+        
         auto nodeReader = NodeReader::getInstance();
         nodeReader->setPropsWithFlatBuffers(node, (Table*)options->nodeOptions());
     }

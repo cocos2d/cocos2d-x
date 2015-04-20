@@ -90,7 +90,7 @@ THE SOFTWARE.
 #define CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL 0
 #endif
 
-/** @def CC_DIRECTOR_FPS_INTERVAL
+/** @def CC_DIRECTOR_STATS_INTERVAL
  * Seconds between FPS updates.
  * 0.5 seconds, means that the FPS number will be updated every 0.5 seconds.
  * Having a bigger number means a more reliable FPS.
@@ -262,6 +262,12 @@ THE SOFTWARE.
 #define CC_USE_CULLING 1
 #endif
 
+/** Support PNG or not. If your application don't use png format picture, you can undefine this macro to save package size.
+*/
+#ifndef CC_USE_PNG
+#define CC_USE_PNG  1
+#endif // CC_USE_PNG
+
 /** Support JPEG or not. If your application don't use jpeg format picture, you can undefine this macro to save package size.
  */
 #ifndef CC_USE_JPEG
@@ -282,6 +288,17 @@ THE SOFTWARE.
 #endif
 #endif // CC_USE_WEBP
 
+ /** Support WIC (Windows Image Component) or not. Replaces PNG, TIFF and JPEG
+ */
+#ifndef CC_USE_WIC
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#define CC_USE_WIC  1
+#undef CC_USE_TIFF
+#undef CC_USE_JPEG
+#undef CC_USE_PNG
+#endif
+#endif // CC_USE_WIC
+
 /** Enable Script binding. */
 #ifndef CC_ENABLE_SCRIPT_BINDING
 #define CC_ENABLE_SCRIPT_BINDING 1
@@ -289,7 +306,7 @@ THE SOFTWARE.
 
 /** @def CC_CONSTRUCTOR_ACCESS
  * Indicate the init functions access modifier. If value equals to protected, then these functions are protected.
- * If value equals to public, these functions are public
+ * If value equals to public, these functions are public,
  * protected by default.
  */
 #ifndef CC_CONSTRUCTOR_ACCESS

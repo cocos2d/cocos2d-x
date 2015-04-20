@@ -109,7 +109,7 @@ public:
      * @param time A value between 0 and 1.
      */
     virtual void update(float time);
-    /** Return certain target..
+    /** Return certain target.
      *
      * @return A certain target.
      */

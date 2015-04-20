@@ -272,8 +272,8 @@ void PUBeamRender::prepare()
         for (size_t numDev = 0; numDev < _numberOfSegments; ++numDev)
         {
             // Initialise the positions
-            visualData->half[numDev] = Vec3::ZERO;
-            visualData->destinationHalf[numDev] = Vec3::ZERO;
+            visualData->half[numDev].setZero();
+            visualData->destinationHalf[numDev].setZero();
         }
         _allVisualData.push_back(visualData); // Managed by this renderer
         _visualData.push_back(visualData); // Used to assign to a particle

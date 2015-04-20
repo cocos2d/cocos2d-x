@@ -67,6 +67,11 @@ namespace cocostudio
         CC_SAFE_DELETE(_instanceSingleNodeReader);
     }
     
+    void SingleNodeReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(_instanceSingleNodeReader);
+    }
+    
     Offset<Table> SingleNodeReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
                                                                  flatbuffers::FlatBufferBuilder *builder)
     {

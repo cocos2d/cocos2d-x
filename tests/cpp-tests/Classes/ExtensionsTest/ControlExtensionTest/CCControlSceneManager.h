@@ -27,28 +27,8 @@
 
 #include "cocos2d.h"
 #include "extensions/cocos-ext.h"
+#include "BaseTest.h"
 
-USING_NS_CC;
-
-class ControlSceneManager : public cocos2d::Ref
-{
-public:
-    ControlSceneManager();
-    ~ControlSceneManager();
-    /** Returns the singleton of the control scene manager. */
-    static ControlSceneManager * sharedControlSceneManager();
-
-    /** Returns the next control scene. */
-    cocos2d::Scene *nextControlScene();
-
-    /** Returns the previous control scene. */
-    cocos2d::Scene *previousControlScene();
-
-    /** Returns the current control scene. */
-    cocos2d::Scene *currentControlScene();
-
-    /** Control scene id. */
-    CC_SYNTHESIZE(int, _currentControlSceneId, CurrentControlSceneId)
-};
+DEFINE_TEST_SUITE(ControlTests);
 
 #endif /* __CCCONTROLSCENEMANAGER_H__ */

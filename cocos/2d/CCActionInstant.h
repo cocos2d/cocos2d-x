@@ -354,7 +354,7 @@ public:
 
     /** Set the selector target.
      *
-     * @param The selector target.
+     * @param sel The selector target.
      */
     inline void setTargetCallback(Ref* sel)
     {

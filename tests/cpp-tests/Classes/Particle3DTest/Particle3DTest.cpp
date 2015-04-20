@@ -27,94 +27,27 @@
 #include "Particle3D/CCParticleSystem3D.h"
 #include "Particle3D/PU/CCPUParticleSystem3D.h"
 
-enum
-{
-    IDC_NEXT = 100,
-    IDC_BACK,
-    IDC_RESTART
-};
+USING_NS_CC;
 
-static int sceneIdx = -1;
 #define PARTICLE_SYSTEM_TAG 0x0001
 
-static std::function<Layer*()> createFunctions[] =
+Particle3DTests::Particle3DTests()
 {
-    CL(Particle3DExplosionSystemDemo),
-    CL(Particle3DLineStreakDemo),
-    CL(Particle3DBlackHoleDemo),
-    CL(Particle3DHypnoDemo),
-    CL(Particle3DAdvancedLodSystemDemo),
-    CL(Particle3DTimeShiftDemo),
-    CL(Particle3DUVAnimDemo),
-    CL(Particle3DFirePlaceDemo),
-    CL(Particle3DElectricBeamSystemDemo),
-    CL(Particle3DFlareShieldDemo),
-    CL(Particle3DLightningBoltDemo),
-    CL(Particle3DCanOfWormsDemo),
-    CL(Particle3DRibbonTrailDemo),
-    CL(Particle3DWeaponTrailDemo),
-    CL(Particle3DWithSprite3DDemo),
-};
-
-#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-static Layer* nextSpriteTestAction()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-static Layer* backSpriteTestAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;
-
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-static Layer* restartSpriteTestAction()
-{
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-void Particle3DTestScene::runThisTest()
-{
-    auto layer = nextSpriteTestAction();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
-}
-
-void Particle3DTestDemo::restartCallback( Ref* sender )
-{
-    auto s = new (std::nothrow) Particle3DTestScene();
-    s->addChild(restartSpriteTestAction());
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void Particle3DTestDemo::nextCallback( Ref* sender )
-{
-    auto s = new (std::nothrow) Particle3DTestScene();
-    s->addChild( nextSpriteTestAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void Particle3DTestDemo::backCallback( Ref* sender )
-{
-    auto s = new (std::nothrow) Particle3DTestScene();
-    s->addChild( backSpriteTestAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
+    ADD_TEST_CASE(Particle3DExplosionSystemDemo);
+    ADD_TEST_CASE(Particle3DLineStreakDemo);
+    ADD_TEST_CASE(Particle3DBlackHoleDemo);
+    ADD_TEST_CASE(Particle3DHypnoDemo);
+    ADD_TEST_CASE(Particle3DAdvancedLodSystemDemo);
+    ADD_TEST_CASE(Particle3DTimeShiftDemo);
+    ADD_TEST_CASE(Particle3DUVAnimDemo);
+    ADD_TEST_CASE(Particle3DFirePlaceDemo);
+    ADD_TEST_CASE(Particle3DElectricBeamSystemDemo);
+    ADD_TEST_CASE(Particle3DFlareShieldDemo);
+    ADD_TEST_CASE(Particle3DLightningBoltDemo);
+    ADD_TEST_CASE(Particle3DCanOfWormsDemo);
+    ADD_TEST_CASE(Particle3DRibbonTrailDemo);
+    ADD_TEST_CASE(Particle3DWeaponTrailDemo);
+    ADD_TEST_CASE(Particle3DWithSprite3DDemo);
 }
 
 std::string Particle3DTestDemo::title() const 
@@ -122,14 +55,9 @@ std::string Particle3DTestDemo::title() const
     return "Particle3D Test";
 }
 
-std::string Particle3DTestDemo::subtitle() const 
-{
-    return "";
-}
-
 bool Particle3DTestDemo::init()
 {
-    if (!BaseTest::init()) return false;
+    if (!TestCase::init()) return false;
 
     FileUtils::getInstance()->addSearchPath("Particle3D/materials");
     FileUtils::getInstance()->addSearchPath("Particle3D/scripts");

@@ -150,14 +150,15 @@ void Sprite3D::afterAsyncLoad(void* param)
                     }
                     
                     Sprite3DCache::getInstance()->addSprite3DData(asyncParam->modlePath, data);
-                    meshdatas = nullptr;
+                    
+                    CC_SAFE_DELETE(meshdatas);
                     materialdatas = nullptr;
                     nodeDatas = nullptr;
                 }
             }
-            delete meshdatas;
-            delete materialdatas;
-            delete nodeDatas;
+            CC_SAFE_DELETE(meshdatas);
+            CC_SAFE_DELETE(materialdatas);
+            CC_SAFE_DELETE(nodeDatas);
             
             if (asyncParam->texPath != "")
             {
@@ -243,6 +244,7 @@ Sprite3D::Sprite3D()
 , _aabbDirty(true)
 , _lightMask(-1)
 , _shaderUsingLight(false)
+, _forceDepthWrite(false)
 {
 }
 
@@ -290,12 +292,13 @@ bool Sprite3D::initWithFile(const std::string &path)
             }
             
             Sprite3DCache::getInstance()->addSprite3DData(path, data);
+            CC_SAFE_DELETE(meshdatas);
             return true;
         }
     }
-    delete meshdatas;
-    delete materialdatas;
-    delete nodeDatas;
+    CC_SAFE_DELETE(meshdatas);
+    CC_SAFE_DELETE(materialdatas);
+    CC_SAFE_DELETE(nodeDatas);
     
     return false;
 }
@@ -476,6 +479,7 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
         {
             if(it->bones.size() > 0 || singleSprite)
             {
+                this->setName(nodedata->id);
                 auto mesh = Mesh::create(nodedata->id, getMeshIndexData(it->subMeshId));
                 if(mesh)
                 {
@@ -516,6 +520,17 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                             }
                         }
                     }
+                    
+                    Vec3 pos;
+                    Quaternion qua;
+                    Vec3 scale;
+                    nodedata->transform.decompose(&scale, &qua, &pos);
+                    setPosition3D(pos);
+                    setRotationQuat(qua);
+                    setScaleX(scale.x);
+                    setScaleY(scale.y);
+                    setScaleZ(scale.z);
+                    
                 }
             }
             else
@@ -558,7 +573,7 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
     }
     for(const auto& it : nodedata->children)
     {
-        createNode(it,node, matrialdatas, singleSprite);
+        createNode(it,node, matrialdatas, nodedata->children.size() == 1);
     }
 }
 
@@ -805,6 +820,22 @@ const BlendFunc& Sprite3D::getBlendFunc() const
     return _blend;
 }
 
+AABB Sprite3D::getAABBRecursively()
+{
+    AABB aabb;
+    const Vector<Node*>& children = getChildren();
+    for (const auto& iter : children)
+    {
+        Sprite3D* child = dynamic_cast<Sprite3D*>(iter);
+        if(child)
+        {
+            aabb.merge(child->getAABBRecursively());
+        }
+    }
+    aabb.merge(getAABB());
+    return aabb;
+}
+
 const AABB& Sprite3D::getAABB() const
 {
     Mat4 nodeToWorldTransform(getNodeToWorldTransform());
@@ -817,14 +848,18 @@ const AABB& Sprite3D::getAABB() const
     else
     {
         _aabb.reset();
-        Mat4 transform(nodeToWorldTransform);
-        for (const auto& it : _meshes) {
-            if (it->isVisible())
-                _aabb.merge(it->getAABB());
+        if (_meshes.size())
+        {
+            Mat4 transform(nodeToWorldTransform);
+            for (const auto& it : _meshes) {
+                if (it->isVisible())
+                    _aabb.merge(it->getAABB());
+            }
+            
+            _aabb.transform(transform);
+            _nodeToWorldTransform = nodeToWorldTransform;
+            _aabbDirty = false;
         }
-        
-        _aabb.transform(transform);
-        _nodeToWorldTransform = nodeToWorldTransform;
     }
     
     return _aabb;

@@ -86,6 +86,9 @@ public:
     virtual const std::string& getString(void) const override;
 
     virtual void updateAtlasValues() override;
+	/**
+     * @js NA
+     */
     virtual std::string getDescription() const override;
 
 #if CC_LABELATLAS_DEBUG_DRAW

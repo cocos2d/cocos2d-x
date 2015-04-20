@@ -28,6 +28,11 @@
 #include "base/CCRef.h"
 #include <map>
 
+/**
+ * @addtogroup support
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class VertexBuffer;
@@ -175,5 +180,8 @@ protected:
 };
 
 NS_CC_END
-
+/**
+ end of support group
+ @}
+ */
 #endif //__CC_VERTEX_INDEX_DATA_H__

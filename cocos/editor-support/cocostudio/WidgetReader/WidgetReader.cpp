@@ -139,6 +139,11 @@ namespace cocostudio
         CC_SAFE_DELETE(instanceWidgetReader);
     }
     
+    void WidgetReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instanceWidgetReader);
+    }
+    
     void WidgetReader::setPropsFromJsonDictionary(Widget *widget, const rapidjson::Value &options)
     {        
    
@@ -553,11 +558,7 @@ namespace cocostudio
         while (child)
         {
             std::string attriname = child->Name();
-            if (attriname == "Children")
-            {
-                break;
-            }
-            else if (attriname == "Position")
+            if (attriname == "Position")
             {
                 attribute = child->FirstAttribute();
                 

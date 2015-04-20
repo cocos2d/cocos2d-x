@@ -27,39 +27,15 @@
 #define _SPINETEST_H_
 
 #include "cocos2d.h"
-#include "../testBasic.h"
 #include "../BaseTest.h"
 #include <spine/spine-cocos2dx.h>
 
-class SpineTestScene : public TestScene
-{
-public:
-    virtual void runThisTest();
-};
+DEFINE_TEST_SUITE(SpineTests);
 
-class SpineTestSceneFFD : public TestScene
-{
-public:
-    virtual void runThisTest();
-};
-
-class SpineTestLayer : public BaseTest
+class SpineTestLayer : public TestCase
 {
 protected:
     std::string    _title;
-    
-public:
-    SpineTestLayer(void);
-    virtual ~SpineTestLayer(void);
-    
-    void restartCallback(Ref* sender) override;
-    void nextCallback(Ref* sender) override;
-    void backCallback(Ref* sender) override;
-    
-    // overrides
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-    virtual void onEnter() override;
 };
 
 class SpineTestLayerNormal: public SpineTestLayer {
@@ -100,6 +76,25 @@ public:
     //    void animationStateEvent (spine::SkeletonAnimation* node, int trackIndex, spEventType type, spEvent* event, int loopCount);
     
 	CREATE_FUNC (SpineTestLayerFFD);
+};
+
+class SpineTestLayerRapor: public SpineTestLayer
+{
+public:
+    virtual std::string title() const override
+    {
+        return "Spine Test";
+    }
+    virtual std::string subtitle() const override
+    {
+        return "Raptor Test";
+    }
+    virtual bool init () override;
+    
+    CREATE_FUNC (SpineTestLayerRapor);
+    
+private:
+    spine::SkeletonAnimation* skeletonNode;
 };
 
 class SpineTestPerformanceLayer: public SpineTestLayer

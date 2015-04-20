@@ -26,6 +26,8 @@
 #include "MenuTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum {
     kTagMenu = 1,
     kTagMenu0 = 0,                       
@@ -43,6 +45,10 @@ enum {
 #define MID_CALLBACK3    1008
 #define MID_BACKCALLBACK 1009
 
+MenuTests::MenuTests()
+{
+    ADD_TEST_CASE(MenuTest);
+}
 //------------------------------------------------------------------
 //
 // MenuLayerMainMenu
@@ -561,26 +567,31 @@ void RemoveMenuItemWhenMove::onTouchMoved(Touch  *touch, Event  *event)
     }
 }
 
-void MenuTestScene::runThisTest()
+bool MenuTest::init()
 {
-    MenuItemFont::setFontSize(20);
-    
-    auto layer1 = new (std::nothrow) MenuLayerMainMenu();
-    auto layer2 = new (std::nothrow) MenuLayer2();
-    auto layer3 = new (std::nothrow) MenuLayer3();
-    auto layer4 = new (std::nothrow) MenuLayer4();
-    auto layer5 = new (std::nothrow) BugsTest();
-    auto layer6 = new (std::nothrow) RemoveMenuItemWhenMove();
+    if (TestCase::init())
+    {
+        MenuItemFont::setFontSize(20);
 
-    auto layer = LayerMultiplex::create(layer1, layer2, layer3, layer4, layer5, layer6, nullptr);
-    addChild(layer, 0); 
+        auto layer1 = new (std::nothrow) MenuLayerMainMenu();
+        auto layer2 = new (std::nothrow) MenuLayer2();
+        auto layer3 = new (std::nothrow) MenuLayer3();
+        auto layer4 = new (std::nothrow) MenuLayer4();
+        auto layer5 = new (std::nothrow) BugsTest();
+        auto layer6 = new (std::nothrow) RemoveMenuItemWhenMove();
 
-    layer1->release();
-    layer2->release();
-    layer3->release();
-    layer4->release();
-    layer5->release();
-    layer6->release();
+        auto layer = LayerMultiplex::create(layer1, layer2, layer3, layer4, layer5, layer6, nullptr);
+        addChild(layer, 0);
 
-    Director::getInstance()->replaceScene(this);
+        layer1->release();
+        layer2->release();
+        layer3->release();
+        layer4->release();
+        layer5->release();
+        layer6->release();
+
+        return true;
+    }
+
+    return false;
 }

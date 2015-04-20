@@ -36,13 +36,18 @@ extern "C" {
 #include "CCLuaValue.h"
 #include "cocos2d/LuaScriptHandlerMgr.h"
 
+/**
+ * @addtogroup lua
+ * @{
+ */
+
 NS_CC_BEGIN
 
 /**
  * The Lua engine integrated into the cocos2d-x to process the interactive operation between lua and c++.
  *
- * @lua NA.
- * @js NA.
+ * @lua NA
+ * @js NA
  */
 class LuaEngine : public ScriptEngineProtocol
 {
@@ -60,11 +65,13 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE static LuaEngine* defaultEngine(void) { return LuaEngine::getInstance(); }
     
-    /** Destrutor of LuaEngine. */
+    /** 
+     * Destrutor of LuaEngine.
+     */
     virtual ~LuaEngine(void);
     
     /**
-     * Get ccScriptType of LuaEngine used, it is always kScriptTypeLua
+     * Get ccScriptType of LuaEngine used, it is always kScriptTypeLua.
      *
      * @return kScriptTypeLua.
      */
@@ -83,13 +90,15 @@ public:
     }
     
     /**
-     * Add a path to find lua files in
-     * @param path to be added to the Lua path
+     * Add a path to find lua files in.
+     *
+     * @param path to be added to the Lua path.
      */
     virtual void addSearchPath(const char* path);
     
     /**
      * Add lua loader.
+     *
      * @param func a function pointer point to the loader function.
      */
     virtual void addLuaLoader(lua_CFunction func);
@@ -237,5 +246,8 @@ private:
 };
 
 NS_CC_END
+
+// end group
+/// @}
 
 #endif // __CC_LUA_ENGINE_H__

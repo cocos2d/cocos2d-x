@@ -441,6 +441,22 @@ function cc.quaternion(_x, _y ,_z,_w)
     return { x = _x, y = _y, z = _z, w = _w }
 end
 
+function cc.quaternion_createFromAxisAngle(axis, angle)
+
+    local  halfAngle = angle * 0.5
+    local  sinHalfAngle = math.sin(halfAngle)
+
+    local normal = cc.vec3(axis.x, axis.y, axis.z)
+    normal = cc.vec3normalize(normal)
+    local dst = cc.vec3(0.0, 0.0, 0.0)
+    dst.x = normal.x * sinHalfAngle
+    dst.y = normal.y * sinHalfAngle
+    dst.z = normal.z * sinHalfAngle
+    dst.w = math.cos(halfAngle)
+
+    return dst
+end
+
 function cc.blendFunc(_src, _dst)
     return {src = _src, dst = _dst}
 end

@@ -126,7 +126,7 @@ namespace ui {
         Label* m_pLabelPlaceHolder;
         EditBox::InputMode    m_eEditBoxInputMode;
         EditBox::InputFlag    m_eEditBoxInputFlag;
-        (EditBox::KeyboardReturnType  m_eKeyboardReturnType;
+        EditBox::KeyboardReturnType  m_eKeyboardReturnType;
          
          std::string m_strText;
          std::string m_strPlaceHolder;
