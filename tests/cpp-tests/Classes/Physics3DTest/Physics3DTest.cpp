@@ -26,6 +26,7 @@
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
 #include "Physics3DTest.h"
+#include "3d/CCTerrain.h"
 #include "extensions/Physics3D/CCPhysics3D.h"
 USING_NS_CC_EXT;
 USING_NS_CC;
@@ -367,18 +368,29 @@ bool Physics3DTerrainDemo::init()
     if (!Physics3DTestDemo::init())
         return false;
 
-    _data = FileUtils::getInstance()->getDataFromFile("images/heightfield64x64.raw");
+    Terrain::DetailMap r("TerrainTest/dirt.jpg"),g("TerrainTest/Grass2.jpg",10),b("TerrainTest/road.jpg"),a("TerrainTest/GreenSkin.jpg",20);
+    
+    Terrain::TerrainData data("TerrainTest/heightmap16.jpg","TerrainTest/alphamap.png",r,g,b,a,Size(32,32),40.0f,2);
+    auto terrain = Terrain::create(data,Terrain::CrackFixedType::SKIRT);
+    terrain->setMaxDetailMapAmount(4);
+    terrain->setCameraMask(2);
+    terrain->setDrawWire(false);
+    
+    terrain->setSkirtHeightRatio(3);
+    terrain->setLODDistance(64,128,192);
+    terrain->setCameraMask((unsigned short)CameraFlag::USER1);
 
     //create terrain
     Physics3DRigidBodyDes rbDes;
     rbDes.mass = 0.0f;
-    rbDes.shape = Physics3DShape::createHeightfield(64, 64, _data.getBytes(), 0.01f, -100.0f, 100.0f, false, false, true);
-    rbDes.originalTransform.translate(0.f, 0.f, 0.f);
+    std::vector<float> heidata;
+    terrain->getHeightData(heidata);
+    auto size = terrain->getTerrainSize();
+    rbDes.shape = Physics3DShape::createHeightfield(size.width, size.height, &heidata[0], 0.01f, -100.0f, 100.0f, true, false, true);
     auto rigidBody = Physics3DRigidBody::create(&rbDes);
-    auto component = Physics3DComponent::create(rigidBody);
-    auto node = Node::create();
-    node->addComponent(component);
-    this->addChild(node);
+    auto component = Physics3DComponent::create(rigidBody, Vec3(-size.width / 2.f, 0.f, size.height / 2.f));
+    terrain->addComponent(component);
+    this->addChild(terrain);
 
 
     //create several spheres
