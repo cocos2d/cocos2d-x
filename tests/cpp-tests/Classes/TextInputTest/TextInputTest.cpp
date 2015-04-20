@@ -196,8 +196,8 @@ void KeyboardNotificationLayer::onTouchEnded(Touch  *touch, Event  *event)
     auto endPos = touch->getLocation();    
 
     float delta = 5.0f;
-    if (::abs(endPos.x - _beginPos.x) > delta
-        || ::abs(endPos.y - _beginPos.y) > delta)
+    if (std::abs(endPos.x - _beginPos.x) > delta
+        || std::abs(endPos.y - _beginPos.y) > delta)
     {
         // not click
         _beginPos.x = _beginPos.y = -1;
