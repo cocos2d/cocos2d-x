@@ -880,11 +880,44 @@ bool Image::decodeWithWIC(const unsigned char *data, ssize_t dataLen)
 
 bool Image::encodeWithWIC(const std::string& filePath, bool isToRGB, GUID containerFormat)
 {
-    WICPixelFormatGUID format = isToRGB ? GUID_WICPixelFormat24bppRGB : GUID_WICPixelFormat32bppRGBA;
+	// Save formats supported by WIC
+	WICPixelFormatGUID targetFormat = isToRGB ? GUID_WICPixelFormat24bppBGR : GUID_WICPixelFormat32bppBGRA;
+	unsigned char *pSaveData = nullptr;
+	int saveLen = _dataLen;
+	int bpp = 4;
 
-    WICImageLoader img;
-    return img.encodeImageData(filePath, _data, _dataLen, format, _width, _height, containerFormat);
+	if (targetFormat == GUID_WICPixelFormat24bppBGR && _renderFormat == Texture2D::PixelFormat::RGBA8888)
+	{
+		bpp = 3;
+		saveLen = _width * _height * bpp;
+		pSaveData = new unsigned char[saveLen];
+		int indL = 0, indR = 0;
+
+		while (indL < saveLen && indR < _dataLen)
+		{
+			memcpy(&pSaveData[indL], &_data[indR], 3);
+			indL += 3;
+			indR += 4;
+		}
+	}
+	else
+	{
+		pSaveData = new unsigned char[saveLen];
+		memcpy(pSaveData, _data, saveLen);
+	}
+
+	for (int ind = 2; ind < saveLen; ind += bpp) {
+		std::swap(pSaveData[ind - 2], pSaveData[ind]);
+	}
+
+	bool bRet = false;
+	WICImageLoader img;
+	bRet = img.encodeImageData(filePath, pSaveData, saveLen, targetFormat, _width, _height, containerFormat);
+
+	delete[] pSaveData;
+	return bRet;
 }
+
 
 #endif //CC_USE_WIC
 

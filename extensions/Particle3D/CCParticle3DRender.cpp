@@ -124,19 +124,19 @@ void Particle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, Par
         position = particle->position;
         _posuvcolors[vertexindex].position = (position + (- halfwidth - halfheight));
         _posuvcolors[vertexindex].color = particle->color;
-        _posuvcolors[vertexindex].uv = Vec2(particle->lb_uv);
+        _posuvcolors[vertexindex].uv.set(particle->lb_uv);
 
         _posuvcolors[vertexindex + 1].position = (position + (halfwidth - halfheight));
         _posuvcolors[vertexindex + 1].color = particle->color;
-        _posuvcolors[vertexindex + 1].uv = Vec2(particle->rt_uv.x, particle->lb_uv.y);
+        _posuvcolors[vertexindex + 1].uv.set(particle->rt_uv.x, particle->lb_uv.y);
         
         _posuvcolors[vertexindex + 2].position = (position + (- halfwidth + halfheight));
         _posuvcolors[vertexindex + 2].color = particle->color;
-        _posuvcolors[vertexindex + 2].uv = Vec2(particle->lb_uv.x, particle->rt_uv.y);
+        _posuvcolors[vertexindex + 2].uv.set(particle->lb_uv.x, particle->rt_uv.y);
         
         _posuvcolors[vertexindex + 3].position = (position + (halfwidth + halfheight));
         _posuvcolors[vertexindex + 3].color = particle->color;
-        _posuvcolors[vertexindex + 3].uv = Vec2(particle->rt_uv);
+        _posuvcolors[vertexindex + 3].uv.set(particle->rt_uv);
         
         
         _indexData[index] = vertexindex;

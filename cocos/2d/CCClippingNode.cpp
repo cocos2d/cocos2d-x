@@ -202,10 +202,10 @@ void ClippingNode::drawFullScreenQuadClearStencil()
     director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     
     Vec2 vertices[] = {
-        Vec2(-1, -1),
-        Vec2(1, -1),
-        Vec2(1, 1),
-        Vec2(-1, 1)
+        Vec2(-1.0f, -1.0f),
+        Vec2(1.0f, -1.0f),
+        Vec2(1.0f, 1.0f),
+        Vec2(-1.0f, 1.0f)
     };
     
     auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);

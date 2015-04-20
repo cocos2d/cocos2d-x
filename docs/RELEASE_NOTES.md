@@ -13,8 +13,10 @@
     - [Windows](#windows)
     - [Linux](#linux)
   - [How to start a new game](#how-to-start-a-new-game)
-- [v3.6alpha0](#v36alpha0)
+- [v3.6beta0](#v36beta0)
   - [Highlights of v3.6beta0](#highlights-of-v36beta0)
+- [v3.6alpha0](#v36alpha0)
+  - [Highlights of v3.6alpha0](#highlights-of-v36alpha0)
   - [Features in detail](#features-in-detail-1)
     - [3D TextureCube](#3d-texturecube)
     - [3D Skybox](#3d-skybox)
@@ -110,6 +112,18 @@ Run
 ## How to start a new game
 
 Please refer to this document: [ReadMe](../README.md)
+
+# v3.6beta0
+
+## Hilights of v3.6beta0
+
+* 3rd: updated Spine runtime to v2.1.25
+* MotionStreak: added `getStroke()` and `setStroke()`
+* Rect: added `intersectsCircle()`
+* UI:Text: added `disableEffect(LabelEffect)` to disable a specific effect
+* Fixed link error on VS2012 caused by libpng
+* Optimized memory usage for `ui:button`
+* Some bugs fixed for `Particle3D` and other modules
 
 # v3.6alpha0
 
