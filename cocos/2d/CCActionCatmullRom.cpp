@@ -274,7 +274,7 @@ void CardinalSplineTo::startWithTarget(cocos2d::Node *target)
     _deltaT = (float) 1 / (_points->count() - 1);
 
     _previousPosition = target->getPosition();
-    _accumulatedDiff = Vec2::ZERO;
+    _accumulatedDiff.setZero();
 }
 
 CardinalSplineTo* CardinalSplineTo::clone() const

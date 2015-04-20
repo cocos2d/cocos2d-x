@@ -34,7 +34,7 @@
 
 NS_CC_BEGIN
 
-const Vec2 CCPointZero = Vec2::ZERO;
+const Vec2 CCPointZero;
 
 /* The "zero" size -- equivalent to Size(0, 0). */
 const Size CCSizeZero = Size::ZERO;

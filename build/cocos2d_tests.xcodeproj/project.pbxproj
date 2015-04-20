@@ -13,7 +13,6 @@
 			buildPhases = (
 			);
 			dependencies = (
-				FADEB2331ADCE2610018F90E /* PBXTargetDependency */,
 				1ADA8BA418CF277400AE24B9 /* PBXTargetDependency */,
 				1ADA8BA618CF277400AE24B9 /* PBXTargetDependency */,
 				1ADA8BA818CF277400AE24B9 /* PBXTargetDependency */,
@@ -28,7 +27,6 @@
 			buildPhases = (
 			);
 			dependencies = (
-				FADEB2351ADCE2670018F90E /* PBXTargetDependency */,
 				1ADA8BAC18CF277C00AE24B9 /* PBXTargetDependency */,
 				1ADA8BAE18CF277C00AE24B9 /* PBXTargetDependency */,
 				1ADA8BB018CF277C00AE24B9 /* PBXTargetDependency */,
@@ -842,154 +840,6 @@
 		D0FD03651A3B546400825BB5 /* AllocatorTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FD03621A3B546400825BB5 /* AllocatorTest.cpp */; };
 		D60AE43417F7FFE100757E4B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
 		EDCC747F17C455FD007B692C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
-		FADEB1911ADCE1600018F90E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826294421AAF071500CB7CF7 /* Security.framework */; };
-		FADEB1931ADCE1600018F90E /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FB01807A4F9005B8026 /* libcocos2d Mac.a */; };
-		FADEB1941ADCE1600018F90E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA36018CD9AC00087CE3A /* libz.dylib */; };
-		FADEB1951ADCE1600018F90E /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
-		FADEB1961ADCE1600018F90E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA28B18CD91510087CE3A /* Foundation.framework */; };
-		FADEB1971ADCE1600018F90E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA35C18CD9A9E0087CE3A /* AudioToolbox.framework */; };
-		FADEB1981ADCE1600018F90E /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA35A18CD9A950087CE3A /* ApplicationServices.framework */; };
-		FADEB1991ADCE1600018F90E /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA35818CD9A8F0087CE3A /* OpenAL.framework */; };
-		FADEB19A1ADCE1600018F90E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA35618CD9A890087CE3A /* QuartzCore.framework */; };
-		FADEB19B1ADCE1600018F90E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA35418CD9A820087CE3A /* OpenGL.framework */; };
-		FADEB19C1ADCE1600018F90E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
-		FADEB19F1ADCE1600018F90E /* TerrainTest in Resources */ = {isa = PBXBuildFile; fileRef = B603F1B31AC8FBFB00A9579C /* TerrainTest */; };
-		FADEB1A01ADCE1600018F90E /* Particle3D in Resources */ = {isa = PBXBuildFile; fileRef = B63993301A49359F00B07923 /* Particle3D */; };
-		FADEB1A11ADCE1600018F90E /* Manifests in Resources */ = {isa = PBXBuildFile; fileRef = 15B3709219EE5D1000ABE682 /* Manifests */; };
-		FADEB1A21ADCE1600018F90E /* ActionTimeline in Resources */ = {isa = PBXBuildFile; fileRef = 38FA2E75194AECF800FF2BE4 /* ActionTimeline */; };
-		FADEB1A31ADCE1600018F90E /* src in Resources */ = {isa = PBXBuildFile; fileRef = 182C5CCC1A95D9BA00C30D34 /* src */; };
-		FADEB1A41ADCE1600018F90E /* Sprite3DTest in Resources */ = {isa = PBXBuildFile; fileRef = 3E92EA841921A7720094CD21 /* Sprite3DTest */; };
-		FADEB1A51ADCE1600018F90E /* audio in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BDAD119BEA3E20055CDCD /* audio */; };
-		FADEB1A61ADCE1600018F90E /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC118CED84500F37B72 /* Misc */; };
-		FADEB1A71ADCE1600018F90E /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC618CED84500F37B72 /* Shaders */; };
-		FADEB1A81ADCE1600018F90E /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB318CED84500F37B72 /* components */; };
-		FADEB1A91ADCE1600018F90E /* effect2.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB718CED84500F37B72 /* effect2.ogg */; };
-		FADEB1AA1ADCE1600018F90E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35DA818CEE5DA00F37B72 /* InfoPlist.strings */; };
-		FADEB1AB1ADCE1600018F90E /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAF18CED84500F37B72 /* CocosBuilderExample.ccbproj */; };
-		FADEB1AC1ADCE1600018F90E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35DAA18CEE5DA00F37B72 /* MainMenu.xib */; };
-		FADEB1AD1ADCE1600018F90E /* hd in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CBC18CED84500F37B72 /* hd */; };
-		FADEB1AE1ADCE1600018F90E /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC818CED84500F37B72 /* TileMaps */; };
-		FADEB1AF1ADCE1600018F90E /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CBA18CED84500F37B72 /* fonts */; };
-		FADEB1B01ADCE1600018F90E /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB018CED84500F37B72 /* CocosBuilderExample.ccbresourcelog */; };
-		FADEB1B11ADCE1600018F90E /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB418CED84500F37B72 /* configs */; };
-		FADEB1B21ADCE1600018F90E /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAD18CED84500F37B72 /* background.ogg */; };
-		FADEB1B31ADCE1600018F90E /* music.mid in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC218CED84500F37B72 /* music.mid */; };
-		FADEB1B41ADCE1600018F90E /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAC18CED84500F37B72 /* background.mp3 */; };
-		FADEB1B51ADCE1600018F90E /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 1A221C9B191771E300FD2BE4 /* ccs-res */; };
-		FADEB1B61ADCE1600018F90E /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
-		FADEB1B71ADCE1600018F90E /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB618CED84500F37B72 /* effect1.wav */; };
-		FADEB1B81ADCE1600018F90E /* background.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BDB0019C5E5D40055CDCD /* background.wav */; };
-		FADEB1B91ADCE1600018F90E /* Hello.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CBD18CED84500F37B72 /* Hello.png */; };
-		FADEB1BA1ADCE1600018F90E /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC418CED84500F37B72 /* pew-pew-lei.wav */; };
-		FADEB1BB1ADCE1600018F90E /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC318CED84500F37B72 /* Particles */; };
-		FADEB1BC1ADCE1600018F90E /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAE18CED84500F37B72 /* ccb */; };
-		FADEB1BD1ADCE1600018F90E /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35DAC18CEE5DA00F37B72 /* Icon.icns */; };
-		FADEB1BE1ADCE1600018F90E /* fileLookup.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB918CED84500F37B72 /* fileLookup.plist */; };
-		FADEB1BF1ADCE1600018F90E /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB518CED84500F37B72 /* effect1.raw */; };
-		FADEB1C01ADCE1600018F90E /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CBE18CED84500F37B72 /* Images */; };
-		FADEB1C11ADCE1600018F90E /* cocosbuilderRes in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D7818CEE59900F37B72 /* cocosbuilderRes */; };
-		FADEB1C21ADCE1600018F90E /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC918CED84500F37B72 /* zwoptex */; };
-		FADEB1C31ADCE1600018F90E /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB818CED84500F37B72 /* extensions */; };
-		FADEB1C41ADCE1600018F90E /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC718CED84500F37B72 /* spine */; };
-		FADEB1C51ADCE1600018F90E /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CA918CED84500F37B72 /* animations */; };
-		FADEB1DA1ADCE1CF0018F90E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A331A534B2B004E4C60 /* Security.framework */; };
-		FADEB1DC1ADCE1CF0018F90E /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2d iOS.a */; };
-		FADEB1DD1ADCE1CF0018F90E /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EA0FB65191B933000B170C8 /* MediaPlayer.framework */; };
-		FADEB1DE1ADCE1CF0018F90E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA3AF18CDA06D0087CE3A /* libz.dylib */; };
-		FADEB1DF1ADCE1CF0018F90E /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D60AE43317F7FFE100757E4B /* CoreMotion.framework */; };
-		FADEB1E01ADCE1CF0018F90E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA3A818CD9F130087CE3A /* AudioToolbox.framework */; };
-		FADEB1E11ADCE1CF0018F90E /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA3A618CD9F0D0087CE3A /* OpenAL.framework */; };
-		FADEB1E21ADCE1CF0018F90E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA3A418CD9F060087CE3A /* QuartzCore.framework */; };
-		FADEB1E31ADCE1CF0018F90E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA3A218CD9EFE0087CE3A /* CoreGraphics.framework */; };
-		FADEB1E41ADCE1CF0018F90E /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA3A018CD9EF60087CE3A /* OpenGLES.framework */; };
-		FADEB1E51ADCE1CF0018F90E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA39E18CD9EE50087CE3A /* UIKit.framework */; };
-		FADEB1E61ADCE1CF0018F90E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ABCA39C18CD9ED80087CE3A /* AVFoundation.framework */; };
-		FADEB1E71ADCE1CF0018F90E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64832165F3AFD007D4F18 /* Foundation.framework */; };
-		FADEB1EA1ADCE1CF0018F90E /* TerrainTest in Resources */ = {isa = PBXBuildFile; fileRef = B603F1B31AC8FBFB00A9579C /* TerrainTest */; };
-		FADEB1EB1ADCE1CF0018F90E /* Particle3D in Resources */ = {isa = PBXBuildFile; fileRef = B63993301A49359F00B07923 /* Particle3D */; };
-		FADEB1EC1ADCE1CF0018F90E /* Manifests in Resources */ = {isa = PBXBuildFile; fileRef = 15B3709219EE5D1000ABE682 /* Manifests */; };
-		FADEB1ED1ADCE1CF0018F90E /* cocosvideo.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3EA0FB5D191B92F100B170C8 /* cocosvideo.mp4 */; };
-		FADEB1EE1ADCE1CF0018F90E /* ActionTimeline in Resources */ = {isa = PBXBuildFile; fileRef = 38FA2E75194AECF800FF2BE4 /* ActionTimeline */; };
-		FADEB1EF1ADCE1CF0018F90E /* Sprite3DTest in Resources */ = {isa = PBXBuildFile; fileRef = 3E92EA841921A7720094CD21 /* Sprite3DTest */; };
-		FADEB1F01ADCE1CF0018F90E /* Misc in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC118CED84500F37B72 /* Misc */; };
-		FADEB1F11ADCE1CF0018F90E /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB618CED84500F37B72 /* effect1.wav */; };
-		FADEB1F21ADCE1CF0018F90E /* background.caf in Resources */ = {isa = PBXBuildFile; fileRef = C08689C018D370C90093E810 /* background.caf */; };
-		FADEB1F31ADCE1CF0018F90E /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CBA18CED84500F37B72 /* fonts */; };
-		FADEB1F41ADCE1CF0018F90E /* ccb in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAE18CED84500F37B72 /* ccb */; };
-		FADEB1F51ADCE1CF0018F90E /* hd in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CBC18CED84500F37B72 /* hd */; };
-		FADEB1F61ADCE1CF0018F90E /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC318CED84500F37B72 /* Particles */; };
-		FADEB1F71ADCE1CF0018F90E /* src in Resources */ = {isa = PBXBuildFile; fileRef = 182C5CCC1A95D9BA00C30D34 /* src */; };
-		FADEB1F81ADCE1CF0018F90E /* background.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BDB0019C5E5D40055CDCD /* background.wav */; };
-		FADEB1F91ADCE1CF0018F90E /* Icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D8C18CEE5D100F37B72 /* Icon-120.png */; };
-		FADEB1FA1ADCE1CF0018F90E /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D8F18CEE5D100F37B72 /* Icon-57.png */; };
-		FADEB1FB1ADCE1CF0018F90E /* fileLookup.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB918CED84500F37B72 /* fileLookup.plist */; };
-		FADEB1FC1ADCE1CF0018F90E /* background.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAD18CED84500F37B72 /* background.ogg */; };
-		FADEB1FD1ADCE1CF0018F90E /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D8D18CEE5D100F37B72 /* Icon-144.png */; };
-		FADEB1FE1ADCE1CF0018F90E /* pew-pew-lei.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC418CED84500F37B72 /* pew-pew-lei.wav */; };
-		FADEB1FF1ADCE1CF0018F90E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D8818CEE5D100F37B72 /* Default-568h@2x.png */; };
-		FADEB2001ADCE1CF0018F90E /* Default-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 527B1F4219EFAE13000A1F82 /* Default-667h@2x.png */; };
-		FADEB2011ADCE1CF0018F90E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D8A18CEE5D100F37B72 /* Default@2x.png */; };
-		FADEB2021ADCE1CF0018F90E /* components in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB318CED84500F37B72 /* components */; };
-		FADEB2031ADCE1CF0018F90E /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC918CED84500F37B72 /* zwoptex */; };
-		FADEB2041ADCE1CF0018F90E /* CocosBuilderExample.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB018CED84500F37B72 /* CocosBuilderExample.ccbresourcelog */; };
-		FADEB2051ADCE1CF0018F90E /* music.mid in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC218CED84500F37B72 /* music.mid */; };
-		FADEB2061ADCE1CF0018F90E /* Default-736h@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 527B1F4319EFAE13000A1F82 /* Default-736h@3x.png */; };
-		FADEB2071ADCE1CF0018F90E /* extensions in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB818CED84500F37B72 /* extensions */; };
-		FADEB2081ADCE1CF0018F90E /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CBE18CED84500F37B72 /* Images */; };
-		FADEB2091ADCE1CF0018F90E /* effect2.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB718CED84500F37B72 /* effect2.ogg */; };
-		FADEB20A1ADCE1CF0018F90E /* audio in Resources */ = {isa = PBXBuildFile; fileRef = 3E2BDAD119BEA3E20055CDCD /* audio */; };
-		FADEB20B1ADCE1CF0018F90E /* CocosBuilderExample.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAF18CED84500F37B72 /* CocosBuilderExample.ccbproj */; };
-		FADEB20C1ADCE1CF0018F90E /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CA918CED84500F37B72 /* animations */; };
-		FADEB20D1ADCE1CF0018F90E /* ccs-res in Resources */ = {isa = PBXBuildFile; fileRef = 1A221C9B191771E300FD2BE4 /* ccs-res */; };
-		FADEB20E1ADCE1CF0018F90E /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D9018CEE5D100F37B72 /* Icon-72.png */; };
-		FADEB20F1ADCE1CF0018F90E /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D9118CEE5D100F37B72 /* Icon-76.png */; };
-		FADEB2101ADCE1CF0018F90E /* effect1.raw in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB518CED84500F37B72 /* effect1.raw */; };
-		FADEB2111ADCE1CF0018F90E /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC618CED84500F37B72 /* Shaders */; };
-		FADEB2121ADCE1CF0018F90E /* configs in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CB418CED84500F37B72 /* configs */; };
-		FADEB2131ADCE1CF0018F90E /* spine in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC718CED84500F37B72 /* spine */; };
-		FADEB2141ADCE1CF0018F90E /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CC818CED84500F37B72 /* TileMaps */; };
-		FADEB2151ADCE1CF0018F90E /* Hello.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CBD18CED84500F37B72 /* Hello.png */; };
-		FADEB2161ADCE1CF0018F90E /* cocosbuilderRes in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D7818CEE59900F37B72 /* cocosbuilderRes */; };
-		FADEB2171ADCE1CF0018F90E /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D8B18CEE5D100F37B72 /* Icon-114.png */; };
-		FADEB2181ADCE1CF0018F90E /* Icon-152.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D8E18CEE5D100F37B72 /* Icon-152.png */; };
-		FADEB2191ADCE1CF0018F90E /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35CAC18CED84500F37B72 /* background.mp3 */; };
-		FADEB21A1ADCE1CF0018F90E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC35D8918CEE5D100F37B72 /* Default.png */; };
-		FADEB9311ADCE2A80018F90E /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = FADEB2551ADCE2A20018F90E /* main.js */; };
-		FADEB9321ADCE2A80018F90E /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = FADEB2551ADCE2A20018F90E /* main.js */; };
-		FADEB9351ADCE2A80018F90E /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADEB2591ADCE2A20018F90E /* AppDelegate.cpp */; };
-		FADEB9361ADCE2A80018F90E /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADEB2591ADCE2A20018F90E /* AppDelegate.cpp */; };
-		FADEB9371ADCE2A80018F90E /* js_DrawNode3D_bindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADEB25B1ADCE2A20018F90E /* js_DrawNode3D_bindings.cpp */; };
-		FADEB9381ADCE2A80018F90E /* js_DrawNode3D_bindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADEB25B1ADCE2A20018F90E /* js_DrawNode3D_bindings.cpp */; };
-		FADEB9391ADCE2A80018F90E /* js_Effect3D_bindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADEB25D1ADCE2A20018F90E /* js_Effect3D_bindings.cpp */; };
-		FADEB93A1ADCE2A80018F90E /* js_Effect3D_bindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADEB25D1ADCE2A20018F90E /* js_Effect3D_bindings.cpp */; };
-		FADEBA871ADCE2A80018F90E /* project.json in Resources */ = {isa = PBXBuildFile; fileRef = FADEB3A21ADCE2A30018F90E /* project.json */; };
-		FADEBA881ADCE2A80018F90E /* project.json in Resources */ = {isa = PBXBuildFile; fileRef = FADEB3A21ADCE2A30018F90E /* project.json */; };
-		FADEC3541ADCE3280018F90E /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FADEC3421ADCE3280018F90E /* AppController.mm */; };
-		FADEC3551ADCE3280018F90E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FADEC3431ADCE3280018F90E /* Default-568h@2x.png */; };
-		FADEC3561ADCE3280018F90E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = FADEC3441ADCE3280018F90E /* Default.png */; };
-		FADEC3571ADCE3280018F90E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FADEC3451ADCE3280018F90E /* Default@2x.png */; };
-		FADEC3581ADCE3280018F90E /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = FADEC3461ADCE3280018F90E /* Icon-114.png */; };
-		FADEC3591ADCE3280018F90E /* Icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = FADEC3471ADCE3280018F90E /* Icon-120.png */; };
-		FADEC35A1ADCE3280018F90E /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = FADEC3481ADCE3280018F90E /* Icon-144.png */; };
-		FADEC35B1ADCE3280018F90E /* Icon-152.png in Resources */ = {isa = PBXBuildFile; fileRef = FADEC3491ADCE3280018F90E /* Icon-152.png */; };
-		FADEC35C1ADCE3280018F90E /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = FADEC34A1ADCE3280018F90E /* Icon-57.png */; };
-		FADEC35D1ADCE3280018F90E /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = FADEC34B1ADCE3280018F90E /* Icon-72.png */; };
-		FADEC35E1ADCE3280018F90E /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = FADEC34C1ADCE3280018F90E /* Icon-76.png */; };
-		FADEC35F1ADCE3280018F90E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FADEC34D1ADCE3280018F90E /* Info.plist */; };
-		FADEC3601ADCE3280018F90E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FADEC34E1ADCE3280018F90E /* main.m */; };
-		FADEC3611ADCE3280018F90E /* NativeOcClass.m in Sources */ = {isa = PBXBuildFile; fileRef = FADEC3501ADCE3280018F90E /* NativeOcClass.m */; };
-		FADEC3621ADCE3280018F90E /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FADEC3531ADCE3280018F90E /* RootViewController.mm */; };
-		FADEC36C1ADCE3350018F90E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FADEC3641ADCE3350018F90E /* InfoPlist.strings */; };
-		FADEC36D1ADCE3350018F90E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FADEC3661ADCE3350018F90E /* MainMenu.xib */; };
-		FADEC36E1ADCE3350018F90E /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = FADEC3681ADCE3350018F90E /* Icon.icns */; };
-		FADEC36F1ADCE3350018F90E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADEC3691ADCE3350018F90E /* main.cpp */; };
-		FADEC3701ADCE3350018F90E /* Test_Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FADEC36A1ADCE3350018F90E /* Test_Info.plist */; };
-		FADEC3721ADCE3590018F90E /* src in Resources */ = {isa = PBXBuildFile; fileRef = FADEC3711ADCE3590018F90E /* src */; };
-		FADEC3731ADCE3590018F90E /* src in Resources */ = {isa = PBXBuildFile; fileRef = FADEC3711ADCE3590018F90E /* src */; };
-		FADEC3781ADCE39C0018F90E /* script in Resources */ = {isa = PBXBuildFile; fileRef = FADEC3771ADCE39C0018F90E /* script */; };
-		FADEC3791ADCE39C0018F90E /* script in Resources */ = {isa = PBXBuildFile; fileRef = FADEC3771ADCE39C0018F90E /* script */; };
-		FADEC37E1ADCE52F0018F90E /* libjscocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FADEB2311ADCE2050018F90E /* libjscocos2d iOS.a */; };
-		FADEC3801ADCE5400018F90E /* libjscocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FADEB22F1ADCE2050018F90E /* libjscocos2d Mac.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1181,62 +1031,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = A07A517F1783A1D20073F6A7;
 			remoteInfo = "Test cpp iOS";
-		};
-		FADEB1881ADCE1600018F90E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 1551A33E158F2AB200E66CFE;
-			remoteInfo = "cocos2dx Mac";
-		};
-		FADEB1CF1ADCE1CF0018F90E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A07A4C241783777C0073F6A7;
-			remoteInfo = "cocos2dx iOS";
-		};
-		FADEB22E1ADCE2050018F90E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FADEB2291ADCE2050018F90E /* cocos2d_js_bindings.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 1A5410A418B785A10016A3AF;
-			remoteInfo = "libjscocos2d Mac";
-		};
-		FADEB2301ADCE2050018F90E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FADEB2291ADCE2050018F90E /* cocos2d_js_bindings.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 1A5410A518B785A10016A3AF;
-			remoteInfo = "libjscocos2d iOS";
-		};
-		FADEB2321ADCE2610018F90E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FADEB1841ADCE1600018F90E;
-			remoteInfo = "js-tests Mac";
-		};
-		FADEB2341ADCE2670018F90E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FADEB1CB1ADCE1CF0018F90E;
-			remoteInfo = "js-tests iOS";
-		};
-		FADEC37A1ADCE3CB0018F90E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FADEB2291ADCE2050018F90E /* cocos2d_js_bindings.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A03F31E81781479B006731B9;
-			remoteInfo = "libjscocos2d Mac";
-		};
-		FADEC37C1ADCE5210018F90E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = FADEB2291ADCE2050018F90E /* cocos2d_js_bindings.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A07A4FB5178387750073F6A7;
-			remoteInfo = "libjscocos2d iOS";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -1983,44 +1777,6 @@
 		D0FD03631A3B546400825BB5 /* AllocatorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AllocatorTest.h; path = AllocatorTest/AllocatorTest.h; sourceTree = "<group>"; };
 		D60AE43317F7FFE100757E4B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		EDCC747E17C455FD007B692C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
-		FADEB1C91ADCE1600018F90E /* js-tests Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "js-tests Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		FADEB21E1ADCE1CF0018F90E /* js-tests iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "js-tests iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		FADEB2291ADCE2050018F90E /* cocos2d_js_bindings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_js_bindings.xcodeproj; path = "../cocos/scripting/js-bindings/proj.ios_mac/cocos2d_js_bindings.xcodeproj"; sourceTree = "<group>"; };
-		FADEB2551ADCE2A20018F90E /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.js; sourceTree = "<group>"; };
-		FADEB2591ADCE2A20018F90E /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
-		FADEB25A1ADCE2A20018F90E /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		FADEB25B1ADCE2A20018F90E /* js_DrawNode3D_bindings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_DrawNode3D_bindings.cpp; sourceTree = "<group>"; };
-		FADEB25C1ADCE2A20018F90E /* js_DrawNode3D_bindings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_DrawNode3D_bindings.h; sourceTree = "<group>"; };
-		FADEB25D1ADCE2A20018F90E /* js_Effect3D_bindings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_Effect3D_bindings.cpp; sourceTree = "<group>"; };
-		FADEB25E1ADCE2A20018F90E /* js_Effect3D_bindings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_Effect3D_bindings.h; sourceTree = "<group>"; };
-		FADEB3A21ADCE2A30018F90E /* project.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = project.json; sourceTree = "<group>"; };
-		FADEC3411ADCE3280018F90E /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
-		FADEC3421ADCE3280018F90E /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
-		FADEC3431ADCE3280018F90E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		FADEC3441ADCE3280018F90E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		FADEC3451ADCE3280018F90E /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		FADEC3461ADCE3280018F90E /* Icon-114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-114.png"; sourceTree = "<group>"; };
-		FADEC3471ADCE3280018F90E /* Icon-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-120.png"; sourceTree = "<group>"; };
-		FADEC3481ADCE3280018F90E /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-144.png"; sourceTree = "<group>"; };
-		FADEC3491ADCE3280018F90E /* Icon-152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-152.png"; sourceTree = "<group>"; };
-		FADEC34A1ADCE3280018F90E /* Icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-57.png"; sourceTree = "<group>"; };
-		FADEC34B1ADCE3280018F90E /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
-		FADEC34C1ADCE3280018F90E /* Icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76.png"; sourceTree = "<group>"; };
-		FADEC34D1ADCE3280018F90E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FADEC34E1ADCE3280018F90E /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		FADEC34F1ADCE3280018F90E /* NativeOcClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeOcClass.h; sourceTree = "<group>"; };
-		FADEC3501ADCE3280018F90E /* NativeOcClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NativeOcClass.m; sourceTree = "<group>"; };
-		FADEC3511ADCE3280018F90E /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
-		FADEC3521ADCE3280018F90E /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
-		FADEC3531ADCE3280018F90E /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
-		FADEC3651ADCE3350018F90E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		FADEC3671ADCE3350018F90E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		FADEC3681ADCE3350018F90E /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
-		FADEC3691ADCE3350018F90E /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		FADEC36A1ADCE3350018F90E /* Test_Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Test_Info.plist; sourceTree = "<group>"; };
-		FADEC36B1ADCE3350018F90E /* Test_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Test_Prefix.pch; sourceTree = "<group>"; };
-		FADEC3711ADCE3590018F90E /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; path = src; sourceTree = "<group>"; };
-		FADEC3771ADCE39C0018F90E /* script */ = {isa = PBXFileReference; lastKnownFileType = folder; name = script; path = "../../cocos/scripting/js-bindings/script"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2215,46 +1971,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FADEB1901ADCE1600018F90E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FADEC3801ADCE5400018F90E /* libjscocos2d Mac.a in Frameworks */,
-				FADEB1911ADCE1600018F90E /* Security.framework in Frameworks */,
-				FADEB1931ADCE1600018F90E /* libcocos2d Mac.a in Frameworks */,
-				FADEB1941ADCE1600018F90E /* libz.dylib in Frameworks */,
-				FADEB1951ADCE1600018F90E /* IOKit.framework in Frameworks */,
-				FADEB1961ADCE1600018F90E /* Foundation.framework in Frameworks */,
-				FADEB1971ADCE1600018F90E /* AudioToolbox.framework in Frameworks */,
-				FADEB1981ADCE1600018F90E /* ApplicationServices.framework in Frameworks */,
-				FADEB1991ADCE1600018F90E /* OpenAL.framework in Frameworks */,
-				FADEB19A1ADCE1600018F90E /* QuartzCore.framework in Frameworks */,
-				FADEB19B1ADCE1600018F90E /* OpenGL.framework in Frameworks */,
-				FADEB19C1ADCE1600018F90E /* Cocoa.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FADEB1D91ADCE1CF0018F90E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FADEC37E1ADCE52F0018F90E /* libjscocos2d iOS.a in Frameworks */,
-				FADEB1DA1ADCE1CF0018F90E /* Security.framework in Frameworks */,
-				FADEB1DC1ADCE1CF0018F90E /* libcocos2d iOS.a in Frameworks */,
-				FADEB1DD1ADCE1CF0018F90E /* MediaPlayer.framework in Frameworks */,
-				FADEB1DE1ADCE1CF0018F90E /* libz.dylib in Frameworks */,
-				FADEB1DF1ADCE1CF0018F90E /* CoreMotion.framework in Frameworks */,
-				FADEB1E01ADCE1CF0018F90E /* AudioToolbox.framework in Frameworks */,
-				FADEB1E11ADCE1CF0018F90E /* OpenAL.framework in Frameworks */,
-				FADEB1E21ADCE1CF0018F90E /* QuartzCore.framework in Frameworks */,
-				FADEB1E31ADCE1CF0018F90E /* CoreGraphics.framework in Frameworks */,
-				FADEB1E41ADCE1CF0018F90E /* OpenGLES.framework in Frameworks */,
-				FADEB1E51ADCE1CF0018F90E /* UIKit.framework in Frameworks */,
-				FADEB1E61ADCE1CF0018F90E /* AVFoundation.framework in Frameworks */,
-				FADEB1E71ADCE1CF0018F90E /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -2356,8 +2072,6 @@
 				1A0EE47E18CDF799004CD58F /* lua-empty-test iOS.app */,
 				3E6177311960FAED00DE83F5 /* game-controller-test IOS.app */,
 				15CBA063196EE56C005877BB /* lua-game-controller-test iOS.app */,
-				FADEB1C91ADCE1600018F90E /* js-tests Mac.app */,
-				FADEB21E1ADCE1CF0018F90E /* js-tests iOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3714,7 +3428,6 @@
 		1AC35E0318CEE78300F37B72 /* tests */ = {
 			isa = PBXGroup;
 			children = (
-				FADEB2361ADCE2A20018F90E /* js-tests */,
 				15CBA087196EE66D005877BB /* lua-game-controller-test */,
 				3E6176B51960FA6300DE83F5 /* game-controller-test */,
 				1AC358B618CEC19F00F37B72 /* cpp-empty-test */,
@@ -3993,7 +3706,6 @@
 			children = (
 				46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */,
 				1ABCA27618CD90A40087CE3A /* cocos2d_lua_bindings.xcodeproj */,
-				FADEB2291ADCE2050018F90E /* cocos2d_js_bindings.xcodeproj */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				1AC35E0318CEE78300F37B72 /* tests */,
@@ -4295,90 +4007,6 @@
 			name = AllocatorTest;
 			sourceTree = "<group>";
 		};
-		FADEB22A1ADCE2050018F90E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				FADEB22F1ADCE2050018F90E /* libjscocos2d Mac.a */,
-				FADEB2311ADCE2050018F90E /* libjscocos2d iOS.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		FADEB2361ADCE2A20018F90E /* js-tests */ = {
-			isa = PBXGroup;
-			children = (
-				FADEB2571ADCE2A20018F90E /* project */,
-				FADEC3711ADCE3590018F90E /* src */,
-				FADEC3771ADCE39C0018F90E /* script */,
-				FADEB2551ADCE2A20018F90E /* main.js */,
-				FADEB3A21ADCE2A30018F90E /* project.json */,
-			);
-			name = "js-tests";
-			path = "../tests/js-tests";
-			sourceTree = "<group>";
-		};
-		FADEB2571ADCE2A20018F90E /* project */ = {
-			isa = PBXGroup;
-			children = (
-				FADEB2581ADCE2A20018F90E /* Classes */,
-				FADEC3631ADCE3350018F90E /* proj.mac */,
-				FADEC3401ADCE3280018F90E /* proj.ios */,
-			);
-			path = project;
-			sourceTree = "<group>";
-		};
-		FADEB2581ADCE2A20018F90E /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				FADEB2591ADCE2A20018F90E /* AppDelegate.cpp */,
-				FADEB25A1ADCE2A20018F90E /* AppDelegate.h */,
-				FADEB25B1ADCE2A20018F90E /* js_DrawNode3D_bindings.cpp */,
-				FADEB25C1ADCE2A20018F90E /* js_DrawNode3D_bindings.h */,
-				FADEB25D1ADCE2A20018F90E /* js_Effect3D_bindings.cpp */,
-				FADEB25E1ADCE2A20018F90E /* js_Effect3D_bindings.h */,
-			);
-			path = Classes;
-			sourceTree = "<group>";
-		};
-		FADEC3401ADCE3280018F90E /* proj.ios */ = {
-			isa = PBXGroup;
-			children = (
-				FADEC3411ADCE3280018F90E /* AppController.h */,
-				FADEC3421ADCE3280018F90E /* AppController.mm */,
-				FADEC3431ADCE3280018F90E /* Default-568h@2x.png */,
-				FADEC3441ADCE3280018F90E /* Default.png */,
-				FADEC3451ADCE3280018F90E /* Default@2x.png */,
-				FADEC3461ADCE3280018F90E /* Icon-114.png */,
-				FADEC3471ADCE3280018F90E /* Icon-120.png */,
-				FADEC3481ADCE3280018F90E /* Icon-144.png */,
-				FADEC3491ADCE3280018F90E /* Icon-152.png */,
-				FADEC34A1ADCE3280018F90E /* Icon-57.png */,
-				FADEC34B1ADCE3280018F90E /* Icon-72.png */,
-				FADEC34C1ADCE3280018F90E /* Icon-76.png */,
-				FADEC34D1ADCE3280018F90E /* Info.plist */,
-				FADEC34E1ADCE3280018F90E /* main.m */,
-				FADEC34F1ADCE3280018F90E /* NativeOcClass.h */,
-				FADEC3501ADCE3280018F90E /* NativeOcClass.m */,
-				FADEC3511ADCE3280018F90E /* Prefix.pch */,
-				FADEC3521ADCE3280018F90E /* RootViewController.h */,
-				FADEC3531ADCE3280018F90E /* RootViewController.mm */,
-			);
-			path = proj.ios;
-			sourceTree = "<group>";
-		};
-		FADEC3631ADCE3350018F90E /* proj.mac */ = {
-			isa = PBXGroup;
-			children = (
-				FADEC3641ADCE3350018F90E /* InfoPlist.strings */,
-				FADEC3661ADCE3350018F90E /* MainMenu.xib */,
-				FADEC3681ADCE3350018F90E /* Icon.icns */,
-				FADEC3691ADCE3350018F90E /* main.cpp */,
-				FADEC36A1ADCE3350018F90E /* Test_Info.plist */,
-				FADEC36B1ADCE3350018F90E /* Test_Prefix.pch */,
-			);
-			path = proj.mac;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -4574,44 +4202,6 @@
 			productReference = A07A52291783A1D20073F6A7 /* cpp-tests iOS.app */;
 			productType = "com.apple.product-type.application";
 		};
-		FADEB1841ADCE1600018F90E /* js-tests Mac */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = FADEB1C61ADCE1600018F90E /* Build configuration list for PBXNativeTarget "js-tests Mac" */;
-			buildPhases = (
-				FADEB18A1ADCE1600018F90E /* Sources */,
-				FADEB1901ADCE1600018F90E /* Frameworks */,
-				FADEB19E1ADCE1600018F90E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				FADEC37B1ADCE3CB0018F90E /* PBXTargetDependency */,
-				FADEB1871ADCE1600018F90E /* PBXTargetDependency */,
-			);
-			name = "js-tests Mac";
-			productName = "Test lua Mac";
-			productReference = FADEB1C91ADCE1600018F90E /* js-tests Mac.app */;
-			productType = "com.apple.product-type.application";
-		};
-		FADEB1CB1ADCE1CF0018F90E /* js-tests iOS */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = FADEB21B1ADCE1CF0018F90E /* Build configuration list for PBXNativeTarget "js-tests iOS" */;
-			buildPhases = (
-				FADEB1D11ADCE1CF0018F90E /* Sources */,
-				FADEB1D91ADCE1CF0018F90E /* Frameworks */,
-				FADEB1E91ADCE1CF0018F90E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				FADEC37D1ADCE5210018F90E /* PBXTargetDependency */,
-				FADEB1CE1ADCE1CF0018F90E /* PBXTargetDependency */,
-			);
-			name = "js-tests iOS";
-			productName = "Test lua iOS";
-			productReference = FADEB21E1ADCE1CF0018F90E /* js-tests iOS.app */;
-			productType = "com.apple.product-type.application";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -4636,10 +4226,6 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = FADEB22A1ADCE2050018F90E /* Products */;
-					ProjectRef = FADEB2291ADCE2050018F90E /* cocos2d_js_bindings.xcodeproj */;
-				},
-				{
 					ProductGroup = 46A15F9D1807A4F8005B8026 /* Products */;
 					ProjectRef = 46A15F9C1807A4F8005B8026 /* cocos2d_libs.xcodeproj */;
 				},
@@ -4655,13 +4241,11 @@
 				1A0EE1C618CDF6DA004CD58F /* cpp-empty-test Mac */,
 				1ABCA28518CD91510087CE3A /* lua-tests Mac */,
 				1A0EE2B818CDF733004CD58F /* lua-empty-test Mac */,
-				FADEB1841ADCE1600018F90E /* js-tests Mac */,
 				A07A517B1783A1CC0073F6A7 /* build all tests iOS */,
 				A07A517F1783A1D20073F6A7 /* cpp-tests iOS */,
 				1A0EE31818CDF775004CD58F /* cpp-empty-test iOS */,
 				1ABCA2CC18CD93580087CE3A /* lua-tests iOS */,
 				1A0EE41918CDF799004CD58F /* lua-empty-test iOS */,
-				FADEB1CB1ADCE1CF0018F90E /* js-tests iOS */,
 				3E6176FF1960FAED00DE83F5 /* game-controller-test IOS */,
 				15CBA015196EE56C005877BB /* lua-game-controller-test iOS */,
 			);
@@ -4695,20 +4279,6 @@
 			fileType = archive.ar;
 			path = "libcocos2d iOS.a";
 			remoteRef = 46A15FBD1807A4F9005B8026 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		FADEB22F1ADCE2050018F90E /* libjscocos2d Mac.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libjscocos2d Mac.a";
-			remoteRef = FADEB22E1ADCE2050018F90E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		FADEB2311ADCE2050018F90E /* libjscocos2d iOS.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libjscocos2d iOS.a";
-			remoteRef = FADEB2301ADCE2050018F90E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -5039,131 +4609,6 @@
 				1AC35CED18CED84500F37B72 /* fonts in Resources */,
 				1AC35CD718CED84500F37B72 /* CocosBuilderExample.ccbproj in Resources */,
 				1AC35C8918CECF1400F37B72 /* Default.png in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FADEB19E1ADCE1600018F90E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FADEB19F1ADCE1600018F90E /* TerrainTest in Resources */,
-				FADEC36C1ADCE3350018F90E /* InfoPlist.strings in Resources */,
-				FADEB1A01ADCE1600018F90E /* Particle3D in Resources */,
-				FADEB1A11ADCE1600018F90E /* Manifests in Resources */,
-				FADEB1A21ADCE1600018F90E /* ActionTimeline in Resources */,
-				FADEB1A31ADCE1600018F90E /* src in Resources */,
-				FADEB1A41ADCE1600018F90E /* Sprite3DTest in Resources */,
-				FADEC3721ADCE3590018F90E /* src in Resources */,
-				FADEC3701ADCE3350018F90E /* Test_Info.plist in Resources */,
-				FADEB1A51ADCE1600018F90E /* audio in Resources */,
-				FADEB1A61ADCE1600018F90E /* Misc in Resources */,
-				FADEB1A71ADCE1600018F90E /* Shaders in Resources */,
-				FADEB1A81ADCE1600018F90E /* components in Resources */,
-				FADEB1A91ADCE1600018F90E /* effect2.ogg in Resources */,
-				FADEC36D1ADCE3350018F90E /* MainMenu.xib in Resources */,
-				FADEB1AA1ADCE1600018F90E /* InfoPlist.strings in Resources */,
-				FADEB1AB1ADCE1600018F90E /* CocosBuilderExample.ccbproj in Resources */,
-				FADEB1AC1ADCE1600018F90E /* MainMenu.xib in Resources */,
-				FADEB1AD1ADCE1600018F90E /* hd in Resources */,
-				FADEB1AE1ADCE1600018F90E /* TileMaps in Resources */,
-				FADEB1AF1ADCE1600018F90E /* fonts in Resources */,
-				FADEB1B01ADCE1600018F90E /* CocosBuilderExample.ccbresourcelog in Resources */,
-				FADEBA871ADCE2A80018F90E /* project.json in Resources */,
-				FADEB1B11ADCE1600018F90E /* configs in Resources */,
-				FADEB1B21ADCE1600018F90E /* background.ogg in Resources */,
-				FADEB1B31ADCE1600018F90E /* music.mid in Resources */,
-				FADEC3781ADCE39C0018F90E /* script in Resources */,
-				FADEB1B41ADCE1600018F90E /* background.mp3 in Resources */,
-				FADEB1B51ADCE1600018F90E /* ccs-res in Resources */,
-				FADEB1B61ADCE1600018F90E /* background.caf in Resources */,
-				FADEB1B71ADCE1600018F90E /* effect1.wav in Resources */,
-				FADEB1B81ADCE1600018F90E /* background.wav in Resources */,
-				FADEB1B91ADCE1600018F90E /* Hello.png in Resources */,
-				FADEB1BA1ADCE1600018F90E /* pew-pew-lei.wav in Resources */,
-				FADEB1BB1ADCE1600018F90E /* Particles in Resources */,
-				FADEB1BC1ADCE1600018F90E /* ccb in Resources */,
-				FADEB1BD1ADCE1600018F90E /* Icon.icns in Resources */,
-				FADEB1BE1ADCE1600018F90E /* fileLookup.plist in Resources */,
-				FADEB1BF1ADCE1600018F90E /* effect1.raw in Resources */,
-				FADEB1C01ADCE1600018F90E /* Images in Resources */,
-				FADEC36E1ADCE3350018F90E /* Icon.icns in Resources */,
-				FADEB1C11ADCE1600018F90E /* cocosbuilderRes in Resources */,
-				FADEB9311ADCE2A80018F90E /* main.js in Resources */,
-				FADEB1C21ADCE1600018F90E /* zwoptex in Resources */,
-				FADEB1C31ADCE1600018F90E /* extensions in Resources */,
-				FADEB1C41ADCE1600018F90E /* spine in Resources */,
-				FADEB1C51ADCE1600018F90E /* animations in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FADEB1E91ADCE1CF0018F90E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FADEC3791ADCE39C0018F90E /* script in Resources */,
-				FADEC3591ADCE3280018F90E /* Icon-120.png in Resources */,
-				FADEB1EA1ADCE1CF0018F90E /* TerrainTest in Resources */,
-				FADEB1EB1ADCE1CF0018F90E /* Particle3D in Resources */,
-				FADEB1EC1ADCE1CF0018F90E /* Manifests in Resources */,
-				FADEB1ED1ADCE1CF0018F90E /* cocosvideo.mp4 in Resources */,
-				FADEB1EE1ADCE1CF0018F90E /* ActionTimeline in Resources */,
-				FADEB1EF1ADCE1CF0018F90E /* Sprite3DTest in Resources */,
-				FADEB9321ADCE2A80018F90E /* main.js in Resources */,
-				FADEB1F01ADCE1CF0018F90E /* Misc in Resources */,
-				FADEB1F11ADCE1CF0018F90E /* effect1.wav in Resources */,
-				FADEC3551ADCE3280018F90E /* Default-568h@2x.png in Resources */,
-				FADEB1F21ADCE1CF0018F90E /* background.caf in Resources */,
-				FADEBA881ADCE2A80018F90E /* project.json in Resources */,
-				FADEB1F31ADCE1CF0018F90E /* fonts in Resources */,
-				FADEB1F41ADCE1CF0018F90E /* ccb in Resources */,
-				FADEB1F51ADCE1CF0018F90E /* hd in Resources */,
-				FADEC35C1ADCE3280018F90E /* Icon-57.png in Resources */,
-				FADEB1F61ADCE1CF0018F90E /* Particles in Resources */,
-				FADEB1F71ADCE1CF0018F90E /* src in Resources */,
-				FADEB1F81ADCE1CF0018F90E /* background.wav in Resources */,
-				FADEB1F91ADCE1CF0018F90E /* Icon-120.png in Resources */,
-				FADEB1FA1ADCE1CF0018F90E /* Icon-57.png in Resources */,
-				FADEB1FB1ADCE1CF0018F90E /* fileLookup.plist in Resources */,
-				FADEB1FC1ADCE1CF0018F90E /* background.ogg in Resources */,
-				FADEB1FD1ADCE1CF0018F90E /* Icon-144.png in Resources */,
-				FADEC3581ADCE3280018F90E /* Icon-114.png in Resources */,
-				FADEB1FE1ADCE1CF0018F90E /* pew-pew-lei.wav in Resources */,
-				FADEB1FF1ADCE1CF0018F90E /* Default-568h@2x.png in Resources */,
-				FADEB2001ADCE1CF0018F90E /* Default-667h@2x.png in Resources */,
-				FADEB2011ADCE1CF0018F90E /* Default@2x.png in Resources */,
-				FADEC35F1ADCE3280018F90E /* Info.plist in Resources */,
-				FADEB2021ADCE1CF0018F90E /* components in Resources */,
-				FADEB2031ADCE1CF0018F90E /* zwoptex in Resources */,
-				FADEB2041ADCE1CF0018F90E /* CocosBuilderExample.ccbresourcelog in Resources */,
-				FADEC35E1ADCE3280018F90E /* Icon-76.png in Resources */,
-				FADEC3571ADCE3280018F90E /* Default@2x.png in Resources */,
-				FADEB2051ADCE1CF0018F90E /* music.mid in Resources */,
-				FADEB2061ADCE1CF0018F90E /* Default-736h@3x.png in Resources */,
-				FADEB2071ADCE1CF0018F90E /* extensions in Resources */,
-				FADEB2081ADCE1CF0018F90E /* Images in Resources */,
-				FADEB2091ADCE1CF0018F90E /* effect2.ogg in Resources */,
-				FADEB20A1ADCE1CF0018F90E /* audio in Resources */,
-				FADEB20B1ADCE1CF0018F90E /* CocosBuilderExample.ccbproj in Resources */,
-				FADEC35D1ADCE3280018F90E /* Icon-72.png in Resources */,
-				FADEC3561ADCE3280018F90E /* Default.png in Resources */,
-				FADEB20C1ADCE1CF0018F90E /* animations in Resources */,
-				FADEB20D1ADCE1CF0018F90E /* ccs-res in Resources */,
-				FADEC35B1ADCE3280018F90E /* Icon-152.png in Resources */,
-				FADEB20E1ADCE1CF0018F90E /* Icon-72.png in Resources */,
-				FADEB20F1ADCE1CF0018F90E /* Icon-76.png in Resources */,
-				FADEB2101ADCE1CF0018F90E /* effect1.raw in Resources */,
-				FADEB2111ADCE1CF0018F90E /* Shaders in Resources */,
-				FADEB2121ADCE1CF0018F90E /* configs in Resources */,
-				FADEB2131ADCE1CF0018F90E /* spine in Resources */,
-				FADEC3731ADCE3590018F90E /* src in Resources */,
-				FADEC35A1ADCE3280018F90E /* Icon-144.png in Resources */,
-				FADEB2141ADCE1CF0018F90E /* TileMaps in Resources */,
-				FADEB2151ADCE1CF0018F90E /* Hello.png in Resources */,
-				FADEB2161ADCE1CF0018F90E /* cocosbuilderRes in Resources */,
-				FADEB2171ADCE1CF0018F90E /* Icon-114.png in Resources */,
-				FADEB2181ADCE1CF0018F90E /* Icon-152.png in Resources */,
-				FADEB2191ADCE1CF0018F90E /* background.mp3 in Resources */,
-				FADEB21A1ADCE1CF0018F90E /* Default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5758,31 +5203,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FADEB18A1ADCE1600018F90E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FADEC36F1ADCE3350018F90E /* main.cpp in Sources */,
-				FADEB9351ADCE2A80018F90E /* AppDelegate.cpp in Sources */,
-				FADEB9371ADCE2A80018F90E /* js_DrawNode3D_bindings.cpp in Sources */,
-				FADEB9391ADCE2A80018F90E /* js_Effect3D_bindings.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FADEB1D11ADCE1CF0018F90E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				FADEC3621ADCE3280018F90E /* RootViewController.mm in Sources */,
-				FADEB9381ADCE2A80018F90E /* js_DrawNode3D_bindings.cpp in Sources */,
-				FADEB93A1ADCE2A80018F90E /* js_Effect3D_bindings.cpp in Sources */,
-				FADEC3541ADCE3280018F90E /* AppController.mm in Sources */,
-				FADEB9361ADCE2A80018F90E /* AppDelegate.cpp in Sources */,
-				FADEC3601ADCE3280018F90E /* main.m in Sources */,
-				FADEC3611ADCE3280018F90E /* NativeOcClass.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -5901,36 +5321,6 @@
 			target = A07A517F1783A1D20073F6A7 /* cpp-tests iOS */;
 			targetProxy = A07A526C1783AB980073F6A7 /* PBXContainerItemProxy */;
 		};
-		FADEB1871ADCE1600018F90E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "cocos2dx Mac";
-			targetProxy = FADEB1881ADCE1600018F90E /* PBXContainerItemProxy */;
-		};
-		FADEB1CE1ADCE1CF0018F90E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "cocos2dx iOS";
-			targetProxy = FADEB1CF1ADCE1CF0018F90E /* PBXContainerItemProxy */;
-		};
-		FADEB2331ADCE2610018F90E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FADEB1841ADCE1600018F90E /* js-tests Mac */;
-			targetProxy = FADEB2321ADCE2610018F90E /* PBXContainerItemProxy */;
-		};
-		FADEB2351ADCE2670018F90E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = FADEB1CB1ADCE1CF0018F90E /* js-tests iOS */;
-			targetProxy = FADEB2341ADCE2670018F90E /* PBXContainerItemProxy */;
-		};
-		FADEC37B1ADCE3CB0018F90E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "libjscocos2d Mac";
-			targetProxy = FADEC37A1ADCE3CB0018F90E /* PBXContainerItemProxy */;
-		};
-		FADEC37D1ADCE5210018F90E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "libjscocos2d iOS";
-			targetProxy = FADEC37C1ADCE5210018F90E /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -5994,22 +5384,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				1AC35DAB18CEE5DA00F37B72 /* en */,
-			);
-			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
-		FADEC3641ADCE3350018F90E /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FADEC3651ADCE3350018F90E /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		FADEC3661ADCE3350018F90E /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FADEC3671ADCE3350018F90E /* en */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -6540,98 +5914,6 @@
 			};
 			name = Release;
 		};
-		FADEB1C71ADCE1600018F90E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					CC_TARGET_OS_MAC,
-				);
-				INFOPLIST_FILE = "$(SRCROOT)/../tests/js-tests/project/proj.mac/Test_Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-pagezero_size",
-					10000,
-					"-image_base",
-					100000000,
-				);
-				PRODUCT_NAME = "js-tests Mac";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/../cocos/scripting/js-bindings/auto $(SRCROOT)/../cocos/scripting/js-bindings/manual $(SRCROOT)/../cocos/audio/include";
-			};
-			name = Debug;
-		};
-		FADEB1C81ADCE1600018F90E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					CC_TARGET_OS_MAC,
-				);
-				INFOPLIST_FILE = "$(SRCROOT)/../tests/js-tests/project/proj.mac/Test_Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				OTHER_LDFLAGS = (
-					"-pagezero_size",
-					10000,
-					"-image_base",
-					100000000,
-				);
-				PRODUCT_NAME = "js-tests Mac";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/.. $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac $(SRCROOT)/../external/spidermonkey/include/mac $(SRCROOT)/../cocos/scripting/js-bindings/auto $(SRCROOT)/../cocos/scripting/js-bindings/manual $(SRCROOT)/../cocos/audio/include";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		FADEB21C1ADCE1CF0018F90E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					CC_TARGET_OS_IPHONE,
-				);
-				INFOPLIST_FILE = "$(SRCROOT)/../tests/js-tests/project/proj.ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
-				LIBRARY_SEARCH_PATHS = "";
-				"OTHER_LDFLAGS[sdk=iphonesimulator*][arch=x86_64]" = (
-					"-pagezero_size",
-					10000,
-					"-image_base",
-					100000000,
-				);
-				PRODUCT_NAME = "js-tests iOS";
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../plugin/jsbindings/auto $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../cocos/scripting/js-bindings/manual $(SRCROOT)/../cocos/scripting/js-bindings/auto $(SRCROOT)/../external/spidermonkey/include/ios $(SRCROOT)/../plugin/jsbindings/manual $(SRCROOT)/../cocos/audio/include";
-				VALID_ARCHS = "arm64 armv7";
-			};
-			name = Debug;
-		};
-		FADEB21D1ADCE1CF0018F90E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					CC_TARGET_OS_IPHONE,
-				);
-				INFOPLIST_FILE = "$(SRCROOT)/../tests/js-tests/project/proj.ios/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
-				LIBRARY_SEARCH_PATHS = "";
-				"OTHER_LDFLAGS[sdk=iphonesimulator*][arch=x86_64]" = (
-					"-pagezero_size",
-					10000,
-					"-image_base",
-					100000000,
-				);
-				PRODUCT_NAME = "js-tests iOS";
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../plugin/jsbindings/auto $(SRCROOT)/../cocos/platform/ios $(SRCROOT)/../cocos/scripting/js-bindings/manual $(SRCROOT)/../cocos/scripting/js-bindings/auto $(SRCROOT)/../external/spidermonkey/include/ios $(SRCROOT)/../plugin/jsbindings/manual $(SRCROOT)/../cocos/audio/include";
-				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = "arm64 armv7";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -6748,24 +6030,6 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		FADEB1C61ADCE1600018F90E /* Build configuration list for PBXNativeTarget "js-tests Mac" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				FADEB1C71ADCE1600018F90E /* Debug */,
-				FADEB1C81ADCE1600018F90E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		FADEB21B1ADCE1CF0018F90E /* Build configuration list for PBXNativeTarget "js-tests iOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				FADEB21C1ADCE1CF0018F90E /* Debug */,
-				FADEB21D1ADCE1CF0018F90E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

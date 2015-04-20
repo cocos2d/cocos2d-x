@@ -148,7 +148,7 @@ Rect RectFromString(const std::string& str)
 
 Vec2 PointFromString(const std::string& str)
 {
-    Vec2 ret = Vec2::ZERO;
+    Vec2 ret;
 
     do 
     {
@@ -158,7 +158,7 @@ Vec2 PointFromString(const std::string& str)
         float x = (float) utils::atof(strs[0].c_str());
         float y = (float) utils::atof(strs[1].c_str());
 
-        ret = Vec2(x, y);
+        ret.set(x, y);
     } while (0);
 
     return ret;
