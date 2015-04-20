@@ -36,6 +36,10 @@ using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 
+#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
+using namespace Windows::Phone::UI::Input;
+#endif
+
 OpenGLESPage::OpenGLESPage() :
     OpenGLESPage(nullptr)
 {
@@ -76,6 +80,7 @@ OpenGLESPage::OpenGLESPage(OpenGLES* openGLES) :
 
 #if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
     Windows::UI::ViewManagement::StatusBar::GetForCurrentView()->HideAsync();
+    HardwareButtons::BackPressed += ref new EventHandler<BackPressedEventArgs^>(this, &OpenGLESPage::OnBackButtonPressed);
 #else
     // Disable all pointer visual feedback for better performance when touching.
     // This is not supported on Windows Phone applications.
@@ -162,6 +167,21 @@ void OpenGLESPage::OnVisibilityChanged(Windows::UI::Core::CoreWindow^ sender, Wi
         StopRenderLoop();
     }
 }
+
+#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
+void OpenGLESPage::OnBackButtonPressed(Object^ sender, BackPressedEventArgs^ args)
+{
+    bool myAppCanNavigate = false;
+    if (myAppCanNavigate)
+    {
+        args->Handled = true;
+    }
+    else {
+        // Do nothing. Leave args->Handled set to the current value, false.
+    }
+}
+#endif
+
 
 void OpenGLESPage::OnSwapChainPanelSizeChanged(Object^ sender, Windows::UI::Xaml::SizeChangedEventArgs^ e)
 {
@@ -283,6 +303,11 @@ void OpenGLESPage::StartRenderLoop()
             {
                 m_deviceLost = true;
 
+                if (m_renderer)
+                {
+                    m_renderer->Pause();
+                }
+
                 // XAML objects like the SwapChainPanel must only be manipulated on the UI thread.
                 swapChainPanel->Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::High, ref new Windows::UI::Core::DispatchedHandler([=]()
                 {
@@ -291,6 +316,11 @@ void OpenGLESPage::StartRenderLoop()
 
                 return;
             }
+        }
+
+        if (m_renderer)
+        {
+            m_renderer->Pause();
         }
     });
 
@@ -304,10 +334,5 @@ void OpenGLESPage::StopRenderLoop()
     {
         mRenderLoopWorker->Cancel();
         mRenderLoopWorker = nullptr;
-    }
-
-    if (m_renderer)
-    {
-        m_renderer->Pause();
     }
 }

@@ -30,17 +30,16 @@ namespace ui {
 
 static const float AUTOSCROLLMAXSPEED = 1000.0f;
 
-const Vec2 SCROLLDIR_UP = Vec2(0.0f, 1.0f);
-const Vec2 SCROLLDIR_DOWN = Vec2(0.0f, -1.0f);
-const Vec2 SCROLLDIR_LEFT = Vec2(-1.0f, 0.0f);
-const Vec2 SCROLLDIR_RIGHT = Vec2(1.0f, 0.0f);
+const Vec2 SCROLLDIR_UP(0.0f, 1.0f);
+const Vec2 SCROLLDIR_DOWN(0.0f, -1.0f);
+const Vec2 SCROLLDIR_LEFT(-1.0f, 0.0f);
+const Vec2 SCROLLDIR_RIGHT(1.0f, 0.0f);
 
 IMPLEMENT_CLASS_GUI_INFO(ScrollView)
 
 ScrollView::ScrollView():
 _innerContainer(nullptr),
 _direction(Direction::VERTICAL),
-_autoScrollDir(Vec2::ZERO),
 _topBoundary(0.0f),
 _bottomBoundary(0.0f),
 _leftBoundary(0.0f),
@@ -55,10 +54,8 @@ _autoScrollOriginalSpeed(0.0f),
 _autoScrollAcceleration(-1000.0f),
 _isAutoScrollSpeedAttenuated(false),
 _needCheckAutoScrollDestination(false),
-_autoScrollDestination(Vec2::ZERO),
 _bePressed(false),
 _slidTime(0.0f),
-_moveChildPoint(Vec2::ZERO),
 _childFocusCancelOffset(5.0f),
 _leftBounceNeeded(false),
 _topBounceNeeded(false),
@@ -66,7 +63,6 @@ _rightBounceNeeded(false),
 _bottomBounceNeeded(false),
 _bounceEnabled(false),
 _bouncing(false),
-_bounceDir(Vec2::ZERO),
 _bounceOriginalSpeed(0.0f),
 _inertiaScrollEnabled(true),
 _scrollViewEventListener(nullptr),
