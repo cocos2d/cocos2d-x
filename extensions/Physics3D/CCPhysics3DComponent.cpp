@@ -55,6 +55,7 @@ Physics3DComponent* Physics3DComponent::create(Physics3DObject* physicsObj, cons
     {
         ret->setPhysics3DObject(physicsObj);
         ret->setTransformInPhysics(translateInPhysics, rotInPhsyics);
+        ret->autorelease();
         return ret;
     }
     CC_SAFE_DELETE(ret);
