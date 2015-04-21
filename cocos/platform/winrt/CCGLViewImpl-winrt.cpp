@@ -215,6 +215,33 @@ void GLViewImpl::OnBackKeyPress()
 
 void GLViewImpl::BackButtonListener(EventKeyboard::KeyCode keyCode, Event* event)
 {
+    CCLOG("*********************************************************************");
+    CCLOG("GLViewImpl::BackButtonListener: Exiting application!");
+    CCLOG("");
+    CCLOG("If you want to listen for Windows Phone back button events,");
+    CCLOG("add a listener for EventKeyboard::KeyCode::KEY_BACKSPACE");
+    CCLOG("Make sure you call stopPropagation() on the Event if you don't");
+    CCLOG("want your app to exit when the back button is pressed.");
+    CCLOG("");
+    CCLOG("For example, add the following to your scene...");
+    CCLOG("auto listener = EventListenerKeyboard::create();");
+    CCLOG("listener->onKeyReleased = CC_CALLBACK_2(HelloWorld::onKeyReleased, this);");
+    CCLOG("getEventDispatcher()->addEventListenerWithFixedPriority(listener, 1);");
+    CCLOG("");
+    CCLOG("void HelloWorld::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)");
+    CCLOG("{");
+    CCLOG("     if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE)");
+    CCLOG("     {");
+    CCLOG("         if (myAppShouldNotQuit) // or whatever logic you want...");
+    CCLOG("         {");
+    CCLOG("             event->stopPropagation();");
+    CCLOG("         }");
+    CCLOG("     }");
+    CCLOG("}");
+    CCLOG("");
+    CCLOG("You MUST call event->stopPropagation() if you don't want your app to quit!");
+    CCLOG("*********************************************************************");
+
     if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE)
     {
         Director::getInstance()->end();
