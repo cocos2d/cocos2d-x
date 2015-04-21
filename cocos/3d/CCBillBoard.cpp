@@ -119,7 +119,7 @@ void BillBoard::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t 
     }
     
     Director* director = Director::getInstance();
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    CC_PUSH_MATRIX_MV(renderer->getMatrixStack())
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
     
     
@@ -151,7 +151,7 @@ void BillBoard::visit(Renderer *renderer, const Mat4& parentTransform, uint32_t 
         this->draw(renderer, _modelViewTransform, flags);
     }
     
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    CC_POP_MATRIX_MV(renderer->getMatrixStack())
 }
 
 bool BillBoard::calculateBillbaordTransform()

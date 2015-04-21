@@ -151,6 +151,15 @@ Only valid for cocos2d-mac. Not supported on cocos2d-ios.
 #define CC_NODE_RENDER_SUBPIXEL 1
 #endif
 
+/** @def CC_ENABLE_MATRIX_STACK_MV
+ If enabled, a stack will be used to track the modelview matrix for rendering
+ 
+ To enable set it to 0. Disabled by default.
+ */
+#ifndef CC_ENABLE_MATRIX_STACK_MV
+#define CC_ENABLE_MATRIX_STACK_MV 0
+#endif
+
 /** @def CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
  If enabled, the Sprite objects rendered with SpriteBatchNode will be able to render in subpixels.
  If disabled, integer pixels will be used.

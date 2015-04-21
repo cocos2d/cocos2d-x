@@ -30,6 +30,7 @@
 #include "renderer/CCGLProgram.h"
 #include "ui/shaders/UIShaders.h"
 #include "renderer/ccShaders.h"
+#include "renderer/CCRenderer.h"
 
 NS_CC_BEGIN
 namespace ui {
@@ -943,7 +944,7 @@ namespace ui {
         // but it is deprecated and your code should not rely on it
         Director* director = Director::getInstance();
         CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-        director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+        CC_PUSH_MATRIX_MV(renderer->getMatrixStack())
         director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
         
         int i = 0;      // used by _children
@@ -1015,7 +1016,7 @@ namespace ui {
         // Please refer to https://github.com/cocos2d/cocos2d-x/pull/6920
         // setOrderOfArrival(0);
         
-        director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+        CC_POP_MATRIX_MV(renderer->getMatrixStack())
         
     }
     

@@ -273,7 +273,7 @@ void VideoPlayer::drawDebugData()
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
 
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    CC_PUSH_MATRIX_MV(renderer->getMatrixStack())
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
 
     auto size = getContentSize();
@@ -288,7 +288,7 @@ void VideoPlayer::drawDebugData()
 
     DrawPrimitives::drawPoly(vertices, 4, true);
 
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    CC_POP_MATRIX_MV(renderer->getMatrixStack())
 }
 #endif
 

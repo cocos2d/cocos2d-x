@@ -810,24 +810,27 @@ void GLProgram::setUniformLocationWithMatrix4fv(GLint location, const GLfloat* m
 
 void GLProgram::setUniformsForBuiltins()
 {
-    setUniformsForBuiltins(_director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW));
+    setUniformsForBuiltins(_director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW), _director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION));
 }
 
 void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
 {
-    auto& matrixP = _director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    setUniformsForBuiltins(matrixMV, _director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION));
+}
 
+void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV, const Mat4 &matrixP)
+{
     if(_flags.usesP)
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_P_MATRIX], matrixP.m, 1);
-
+    
     if(_flags.usesMV)
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MV_MATRIX], matrixMV.m, 1);
-
+    
     if(_flags.usesMVP) {
         Mat4 matrixMVP = matrixP * matrixMV;
         setUniformLocationWithMatrix4fv(_builtInUniforms[UNIFORM_MVP_MATRIX], matrixMVP.m, 1);
     }
-
+    
     if (_flags.usesNormal)
     {
         Mat4 mvInverse = matrixMV;
@@ -840,7 +843,7 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
         normalMat[6] = mvInverse.m[8];normalMat[7] = mvInverse.m[9];normalMat[8] = mvInverse.m[10];
         setUniformLocationWithMatrix3fv(_builtInUniforms[UNIFORM_NORMAL_MATRIX], normalMat, 1);
     }
-
+    
     if(_flags.usesTime) {
         // This doesn't give the most accurate global time value.
         // Cocos2D doesn't store a high precision time value, so this will have to do.

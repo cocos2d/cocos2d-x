@@ -165,10 +165,9 @@ bool Director::init(void)
 
     //init TextureCache
     initTextureCache();
-    initMatrixStack();
 
     _renderer = new (std::nothrow) Renderer;
-
+    initMatrixStack();
     _console = new (std::nothrow) Console;
 
     return true;
@@ -283,8 +282,8 @@ void Director::drawScene()
         setNextScene();
     }
 
-    pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    
+    CC_PUSH_MATRIX_MV(_renderer->getMatrixStack())
+    loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     if (_runningScene)
     {
 #if CC_USE_PHYSICS
@@ -317,8 +316,8 @@ void Director::drawScene()
 
     _eventDispatcher->dispatchEvent(_eventAfterDraw);
 
-    popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-
+    CC_POP_MATRIX_MV(_renderer->getMatrixStack())
+    loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     _totalFrames++;
 
     // swap buffers
@@ -447,148 +446,100 @@ void Director::setNextDeltaTimeZero(bool nextDeltaTimeZero)
 //
 void Director::initMatrixStack()
 {
-    while (!_modelViewMatrixStack.empty())
-    {
-        _modelViewMatrixStack.pop();
-    }
-    
-    while (!_projectionMatrixStack.empty())
-    {
-        _projectionMatrixStack.pop();
-    }
-    
-    while (!_textureMatrixStack.empty())
-    {
-        _textureMatrixStack.pop();
-    }
-    
-    _modelViewMatrixStack.push(Mat4::IDENTITY);
-    _projectionMatrixStack.push(Mat4::IDENTITY);
-    _textureMatrixStack.push(Mat4::IDENTITY);
+    _renderer->getMatrixStack()->resetMatrixStack();
 }
 
 void Director::resetMatrixStack()
 {
-    initMatrixStack();
+    _renderer->getMatrixStack()->resetMatrixStack();
 }
 
 void Director::popMatrix(MATRIX_STACK_TYPE type)
 {
-    if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
-    {
-        _modelViewMatrixStack.pop();
-    }
-    else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
-    {
-        _projectionMatrixStack.pop();
-    }
-    else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
-    {
-        _textureMatrixStack.pop();
-    }
-    else
-    {
-        CCASSERT(false, "unknow matrix stack type");
-    }
+    _renderer->getMatrixStack()->popMatrix(type);
 }
 
 void Director::loadIdentityMatrix(MATRIX_STACK_TYPE type)
 {
-    if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
-    {
-        _modelViewMatrixStack.top() = Mat4::IDENTITY;
-    }
-    else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
-    {
-        _projectionMatrixStack.top() = Mat4::IDENTITY;
-    }
-    else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
-    {
-        _textureMatrixStack.top() = Mat4::IDENTITY;
-    }
-    else
-    {
-        CCASSERT(false, "unknow matrix stack type");
-    }
+    _renderer->getMatrixStack()->loadIdentityMatrix(type);
 }
 
 void Director::loadMatrix(MATRIX_STACK_TYPE type, const Mat4& mat)
 {
-    if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
-    {
-        _modelViewMatrixStack.top() = mat;
-    }
-    else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
-    {
-        _projectionMatrixStack.top() = mat;
-    }
-    else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
-    {
-        _textureMatrixStack.top() = mat;
-    }
-    else
-    {
-        CCASSERT(false, "unknow matrix stack type");
-    }
+    _renderer->getMatrixStack()->loadMatrix(type, mat);
 }
 
 void Director::multiplyMatrix(MATRIX_STACK_TYPE type, const Mat4& mat)
 {
-    if(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW == type)
-    {
-        _modelViewMatrixStack.top() *= mat;
-    }
-    else if(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION == type)
-    {
-        _projectionMatrixStack.top() *= mat;
-    }
-    else if(MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE == type)
-    {
-        _textureMatrixStack.top() *= mat;
-    }
-    else
-    {
-        CCASSERT(false, "unknow matrix stack type");
-    }
+    _renderer->getMatrixStack()->multiplyMatrix(type, mat);
 }
 
 void Director::pushMatrix(MATRIX_STACK_TYPE type)
 {
-    if(type == MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW)
-    {
-        _modelViewMatrixStack.push(_modelViewMatrixStack.top());
-    }
-    else if(type == MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION)
-    {
-        _projectionMatrixStack.push(_projectionMatrixStack.top());
-    }
-    else if(type == MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE)
-    {
-        _textureMatrixStack.push(_textureMatrixStack.top());
-    }
-    else
-    {
-        CCASSERT(false, "unknow matrix stack type");
-    }
+    _renderer->getMatrixStack()->pushMatrix(type);
 }
 
 const Mat4& Director::getMatrix(MATRIX_STACK_TYPE type)
 {
-    if(type == MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW)
-    {
-        return _modelViewMatrixStack.top();
-    }
-    else if(type == MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION)
-    {
-        return _projectionMatrixStack.top();
-    }
-    else if(type == MATRIX_STACK_TYPE::MATRIX_STACK_TEXTURE)
-    {
-        return _textureMatrixStack.top();
-    }
+    return _renderer->getMatrixStack()->getMatrix(type);
+}
 
-    CCASSERT(false, "unknow matrix stack type, will return modelview matrix instead");
-    return  _modelViewMatrixStack.top();
+Mat4 Director::getMatrixByProjection(MATRIX_STACK_TYPE type, Projection projection) const
+{
+    Size size = _winSizeInPoints;
+    Mat4 matrixMV, matrixP;
+    switch (projection)
+    {
+        case Projection::_2D:
+        {
+            //loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+            Mat4 orthoMatrix;
+            Mat4::createOrthographicOffCenter(0, size.width, 0, size.height, -1024, 1024, &orthoMatrix);
+            
+            //multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
+            //loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+            matrixMV = Mat4::IDENTITY;
+            matrixP = orthoMatrix;
+            break;
+        }
+            
+        case Projection::_3D:
+        {
+            float zeye = this->getZEye();
+            
+            Mat4 matrixPerspective, matrixLookup;
+            
+            //loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+            matrixP = Mat4::IDENTITY;
+            // issue #1334
+            Mat4::createPerspective(60, (GLfloat)size.width/size.height, 10, zeye+size.height/2, &matrixPerspective);
+            
+            //multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, matrixPerspective);
+            matrixP *= matrixPerspective;
+            Vec3 eye(size.width/2, size.height/2, zeye), center(size.width/2, size.height/2, 0.0f), up(0.0f, 1.0f, 0.0f);
+            Mat4::createLookAt(eye, center, up, &matrixLookup);
+            //multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, matrixLookup);
+            matrixP *= matrixLookup;
+            
+            //loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+            matrixMV = Mat4::IDENTITY;
+            break;
+        }
+            
+        case Projection::CUSTOM:
+            // Projection Delegate is no longer needed
+            // since the event "PROJECTION CHANGED" is emitted
+            matrixMV = matrixP = Mat4::IDENTITY;
+            break;
+            
+        default:
+            CCLOG("cocos2d: Director: unrecognized projection");
+            break;
+    }
+    
+    if(type == MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW) return matrixMV;
+    if(type == MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION) return matrixP;
+    return  Mat4::IDENTITY;
 }
 
 void Director::setProjection(Projection projection)
@@ -597,49 +548,10 @@ void Director::setProjection(Projection projection)
 
     setViewport();
 
-    switch (projection)
-    {
-        case Projection::_2D:
-        {
-            loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-            Mat4 orthoMatrix;
-            Mat4::createOrthographicOffCenter(0, size.width, 0, size.height, -1024, 1024, &orthoMatrix);
-            multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, orthoMatrix);
-            loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-            break;
-        }
-            
-        case Projection::_3D:
-        {
-            float zeye = this->getZEye();
-
-            Mat4 matrixPerspective, matrixLookup;
-
-            loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-            
-            // issue #1334
-            Mat4::createPerspective(60, (GLfloat)size.width/size.height, 10, zeye+size.height/2, &matrixPerspective);
-
-            multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, matrixPerspective);
-
-            Vec3 eye(size.width/2, size.height/2, zeye), center(size.width/2, size.height/2, 0.0f), up(0.0f, 1.0f, 0.0f);
-            Mat4::createLookAt(eye, center, up, &matrixLookup);
-            multiplyMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, matrixLookup);
-            
-            loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-            break;
-        }
-
-        case Projection::CUSTOM:
-            // Projection Delegate is no longer needed
-            // since the event "PROJECTION CHANGED" is emitted
-            break;
-
-        default:
-            CCLOG("cocos2d: Director: unrecognized projection");
-            break;
-    }
-
+    loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, getMatrixByProjection(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, projection));
+    
+    loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, getMatrixByProjection(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, projection));
+    
     _projection = projection;
     GL::setProjectionMatrixDirty();
 
@@ -692,22 +604,9 @@ void Director::setClearColor(const Color4F& clearColor)
     _renderer->setClearColor(clearColor);
 }
 
-static void GLToClipTransform(Mat4 *transformOut)
-{
-    if(nullptr == transformOut) return;
-    
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-
-    auto projection = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    auto modelview = director->getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    *transformOut = projection * modelview;
-}
-
 Vec2 Director::convertToGL(const Vec2& uiPoint)
 {
-    Mat4 transform;
-    GLToClipTransform(&transform);
+    Mat4 transform = getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
     Mat4 transformInv = transform.getInversed();
 
@@ -726,8 +625,7 @@ Vec2 Director::convertToGL(const Vec2& uiPoint)
 
 Vec2 Director::convertToUI(const Vec2& glPoint)
 {
-    Mat4 transform;
-    GLToClipTransform(&transform);
+    Mat4 transform = getMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
 
     Vec4 clipCoord;
     // Need to calculate the zero depth from the transform.

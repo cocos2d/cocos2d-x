@@ -166,7 +166,7 @@ void RenderTextureSave::onTouchesMoved(const std::vector<Touch*>& touches, Event
 
     // begin drawing to the render texture
     _target->begin();
-
+    auto matrixMV = _modelViewTransform;
     // for extra points, we'll draw this smoothly from the last position and vary the sprite's
     // scale/rotation/offset
     float distance = start.getDistance(end);
@@ -194,7 +194,7 @@ void RenderTextureSave::onTouchesMoved(const std::vector<Touch*>& touches, Event
             // Use CCRANDOM_0_1() will cause error when loading libtests.so on android, I don't know why.
             _brushs.at(i)->setColor(Color3B(rand() % 127 + 128, 255, 255));
             // Call visit to draw the brush, don't call draw..
-            _brushs.at(i)->visit();
+            _brushs.at(i)->visit(Director::getInstance()->getRenderer(),matrixMV,true);
         }
     }
 

@@ -174,6 +174,7 @@ public:
     inline Projection getProjection() { return _projection; }
     void setProjection(Projection projection);
     
+    Mat4 getMatrixByProjection(MATRIX_STACK_TYPE type, Projection projection) const;
     /** Sets the glViewport*/
     void setViewport();
 
@@ -391,13 +392,13 @@ public:
      */
     float getFrameRate() const { return _frameRate; }
 
-    void pushMatrix(MATRIX_STACK_TYPE type);
-    void popMatrix(MATRIX_STACK_TYPE type);
-    void loadIdentityMatrix(MATRIX_STACK_TYPE type);
-    void loadMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
-    void multiplyMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
-    const Mat4& getMatrix(MATRIX_STACK_TYPE type);
-    void resetMatrixStack();
+    CC_DEPRECATED(v4) void pushMatrix(MATRIX_STACK_TYPE type);
+    CC_DEPRECATED(v4) void popMatrix(MATRIX_STACK_TYPE type);
+    CC_DEPRECATED(v4) void loadIdentityMatrix(MATRIX_STACK_TYPE type);
+    CC_DEPRECATED(v4) void loadMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
+    CC_DEPRECATED(v4) void multiplyMatrix(MATRIX_STACK_TYPE type, const Mat4& mat);
+    CC_DEPRECATED(v4) const Mat4& getMatrix(MATRIX_STACK_TYPE type);
+    CC_DEPRECATED(v4) void resetMatrixStack();
 
 protected:
     void reset();
@@ -423,10 +424,6 @@ protected:
     void destroyTextureCache();
 
     void initMatrixStack();
-
-    std::stack<Mat4> _modelViewMatrixStack;
-    std::stack<Mat4> _projectionMatrixStack;
-    std::stack<Mat4> _textureMatrixStack;
 
     /** Scheduler associated with this director
      @since v2.0

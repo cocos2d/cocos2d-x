@@ -124,7 +124,7 @@ void DrawPrimitivesTest::draw(Renderer *renderer, const Mat4 &transform, uint32_
 void DrawPrimitivesTest::onDraw(const Mat4 &transform, uint32_t flags)
 {
     Director* director = Director::getInstance();
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    CC_PUSH_MATRIX_MV(director->getRenderer()->getMatrixStack())
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, transform);
     
     //draw
@@ -236,7 +236,7 @@ void DrawPrimitivesTest::onDraw(const Mat4 &transform, uint32_t flags)
     CHECK_GL_ERROR_DEBUG();
     
     //end draw
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    CC_POP_MATRIX_MV(director->getRenderer()->getMatrixStack())
 }
 
 string DrawPrimitivesTest::title() const

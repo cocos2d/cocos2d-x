@@ -527,7 +527,7 @@ void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t
     // but it is deprecated and your code should not rely on it
     Director* director = Director::getInstance();
     CCASSERT(nullptr != director, "Director is null when seting matrix stack");
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    CC_PUSH_MATRIX_MV(renderer->getMatrixStack())
     director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
     
     if (_clippingToBounds)
@@ -578,7 +578,7 @@ void ScrollView::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t
         renderer->addCommand(&_endScissorCommand);
     }
 
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    CC_POP_MATRIX_MV(renderer->getMatrixStack())
 }
 
 bool ScrollView::onTouchBegan(Touch* touch, Event* event)
