@@ -45,26 +45,43 @@ NS_CC_BEGIN
 
 Pass* Pass::create(Technique* technique)
 {
-    auto pass = new (std::nothrow) Pass(technique);
-    pass->autorelease();
-    return pass;
+    auto pass = new (std::nothrow) Pass();
+    if (pass && pass->init(technique))
+    {
+        pass->autorelease();
+        return pass;
+    }
+    return nullptr;
 }
 
 Pass* Pass::createWithGLProgramState(Technique* technique, GLProgramState* programState)
 {
-    auto pass = new (std::nothrow) Pass(technique, programState);
-    pass->autorelease();
-    return pass;
+    auto pass = new (std::nothrow) Pass();
+    if (pass && pass->initWithGLProgramState(technique, programState))
+    {
+        pass->autorelease();
+        return pass;
+    }
+    return nullptr;
 }
 
-Pass::Pass(Technique* technique, GLProgramState *glProgramState)
-: _glProgramState(glProgramState)
+bool Pass::init(Technique* technique)
 {
-    CC_SAFE_RETAIN(_glProgramState);
+    _technique = technique;
+    return true;
 }
 
-Pass::Pass(Technique* technique)
+bool Pass::initWithGLProgramState(Technique* technique, GLProgramState *glProgramState)
+{
+    _technique = technique;
+    _glProgramState = glProgramState;
+    CC_SAFE_RETAIN(_glProgramState);
+    return true;
+}
+
+Pass::Pass()
 : _glProgramState(nullptr)
+, _technique(nullptr)
 {
 }
 

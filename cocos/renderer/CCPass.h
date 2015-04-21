@@ -68,9 +68,11 @@ public:
     uint32_t getHash() const;
 
 protected:
-    Pass(Technique* parent);
-    Pass(Technique* parent, GLProgramState *glProgramState);
+    Pass();
     ~Pass();
+    bool init(Technique* parent);
+    bool initWithGLProgramState(Technique* parent, GLProgramState *glProgramState);
+
     void setGLProgramState(GLProgramState* glProgramState);
     Node* getTarget() const;
 
