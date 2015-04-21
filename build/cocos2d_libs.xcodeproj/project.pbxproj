@@ -1191,10 +1191,6 @@
 		29394CF519B01DBA00D2DE1A /* UIWebViewImpl-ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 29394CEE19B01DBA00D2DE1A /* UIWebViewImpl-ios.h */; };
 		29394CF619B01DBA00D2DE1A /* UIWebViewImpl-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 29394CEF19B01DBA00D2DE1A /* UIWebViewImpl-ios.mm */; };
 		29394CF719B01DBA00D2DE1A /* UIWebViewImpl-ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 29394CEF19B01DBA00D2DE1A /* UIWebViewImpl-ios.mm */; };
-		296BF6151A44059B0038EC44 /* UIShaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 296BF6141A44059B0038EC44 /* UIShaders.h */; };
-		296BF6161A44059B0038EC44 /* UIShaders.h in Headers */ = {isa = PBXBuildFile; fileRef = 296BF6141A44059B0038EC44 /* UIShaders.h */; };
-		296BF6181A4405CB0038EC44 /* UIShaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 296BF6171A4405CB0038EC44 /* UIShaders.cpp */; };
-		296BF6191A4405CB0038EC44 /* UIShaders.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 296BF6171A4405CB0038EC44 /* UIShaders.cpp */; };
 		2986667F18B1B246000E39CA /* CCTweenFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2986667818B1B079000E39CA /* CCTweenFunction.cpp */; };
 		299754F4193EC95400A54AC3 /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 299754F2193EC95400A54AC3 /* ObjectFactory.cpp */; };
 		299754F5193EC95400A54AC3 /* ObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 299754F2193EC95400A54AC3 /* ObjectFactory.cpp */; };
@@ -3045,9 +3041,6 @@
 		29394CEF19B01DBA00D2DE1A /* UIWebViewImpl-ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIWebViewImpl-ios.mm"; sourceTree = "<group>"; };
 		2958244919873D8E00F9746D /* UIScale9Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIScale9Sprite.cpp; sourceTree = "<group>"; };
 		2958244A19873D8E00F9746D /* UIScale9Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIScale9Sprite.h; sourceTree = "<group>"; };
-		296BF6131A4403380038EC44 /* ccShader_grayscale.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_grayscale.frag; sourceTree = "<group>"; };
-		296BF6141A44059B0038EC44 /* UIShaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIShaders.h; sourceTree = "<group>"; };
-		296BF6171A4405CB0038EC44 /* UIShaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIShaders.cpp; sourceTree = "<group>"; };
 		2986667818B1B079000E39CA /* CCTweenFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTweenFunction.cpp; sourceTree = "<group>"; };
 		2986667918B1B079000E39CA /* CCTweenFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTweenFunction.h; sourceTree = "<group>"; };
 		299754F2193EC95400A54AC3 /* ObjectFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ObjectFactory.cpp; path = ../base/ObjectFactory.cpp; sourceTree = "<group>"; };
@@ -5194,7 +5187,6 @@
 		2905F9E618CF08D000240AA3 /* ui */ = {
 			isa = PBXGroup;
 			children = (
-				296BF6121A4403380038EC44 /* shaders */,
 				29CB8F531929D67D00C841D6 /* widgets */,
 				29CB8F521929D65500C841D6 /* experimental */,
 				29CB8F511929D64500C841D6 /* base */,
@@ -5233,16 +5225,6 @@
 				292F1A611A52447100E479F8 /* libcurl.a */,
 			);
 			name = mac;
-			sourceTree = "<group>";
-		};
-		296BF6121A4403380038EC44 /* shaders */ = {
-			isa = PBXGroup;
-			children = (
-				296BF6131A4403380038EC44 /* ccShader_grayscale.frag */,
-				296BF6141A44059B0038EC44 /* UIShaders.h */,
-				296BF6171A4405CB0038EC44 /* UIShaders.cpp */,
-			);
-			path = shaders;
 			sourceTree = "<group>";
 		};
 		29CB8F501929D63600C841D6 /* layout */ = {
@@ -6903,7 +6885,6 @@
 				15AE1C1219AAE2C600C27E9E /* CCPhysicsDebugNode.h in Headers */,
 				B665E3381AA80A6500DDB1C5 /* CCPUOnEmissionObserverTranslator.h in Headers */,
 				50ABBE951925AB6F00A911A9 /* CCProfiling.h in Headers */,
-				296BF6151A44059B0038EC44 /* UIShaders.h in Headers */,
 				B665E2301AA80A6500DDB1C5 /* CCPUBoxColliderTranslator.h in Headers */,
 				5034CA4B191D591100CE6051 /* ccShader_Label_df_glow.frag in Headers */,
 				50ABBE4F1925AB6F00A911A9 /* CCEventCustom.h in Headers */,
@@ -7448,7 +7429,6 @@
 				B665E2711AA80A6500DDB1C5 /* CCPUDoFreezeEventHandlerTranslator.h in Headers */,
 				1A570115180BC8EE0088DEC7 /* CCDrawNode.h in Headers */,
 				1A57011E180BC90D0088DEC7 /* CCGrabber.h in Headers */,
-				296BF6161A44059B0038EC44 /* UIShaders.h in Headers */,
 				1A570122180BC90D0088DEC7 /* CCGrid.h in Headers */,
 				15AE1AB319AAD40300C27E9E /* b2CircleContact.h in Headers */,
 				5034CA2E191D591100CE6051 /* ccShader_PositionTextureA8Color.frag in Headers */,
@@ -8598,7 +8578,6 @@
 				B665E3E61AA80A6600DDB1C5 /* CCPUSineForceAffectorTranslator.cpp in Sources */,
 				15AE1B5119AADA9900C27E9E /* UIPageView.cpp in Sources */,
 				15AE18EC19AAD35000C27E9E /* CCActionObject.cpp in Sources */,
-				296BF6181A4405CB0038EC44 /* UIShaders.cpp in Sources */,
 				B665E2821AA80A6500DDB1C5 /* CCPUDoStopSystemEventHandler.cpp in Sources */,
 				1A01C68E18F57BE800EFE3A6 /* CCDictionary.cpp in Sources */,
 				50ABBD381925AB0000A911A9 /* CCAffineTransform.cpp in Sources */,
@@ -9075,7 +9054,6 @@
 				182C5CD71A98F30500C30D34 /* Sprite3DReader.cpp in Sources */,
 				50ABC0061926664800A911A9 /* CCThread-apple.mm in Sources */,
 				50ABBEB61925AB6F00A911A9 /* CCUserDefault-android.cpp in Sources */,
-				296BF6191A4405CB0038EC44 /* UIShaders.cpp in Sources */,
 				1A57034C180BD09B0088DEC7 /* tinyxml2.cpp in Sources */,
 				50ABBDB61925AB4100A911A9 /* CCTexture2D.cpp in Sources */,
 				B665E2871AA80A6500DDB1C5 /* CCPUDoStopSystemEventHandlerTranslator.cpp in Sources */,
