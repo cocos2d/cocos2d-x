@@ -5,7 +5,7 @@
             "to": "src"
         },
         {
-            "from": "../../res",
+            "from": "../../../cpp-tests/Resources",
             "to": "res"
         },
         {
@@ -17,7 +17,7 @@
             "to": ""
         },
         {
-            "from": "../../../../frameworks/js-bindings/bindings/script",
+            "from": "../../../../cocos/scripting/js-bindings/script",
             "to": "script"
         }
     ]
