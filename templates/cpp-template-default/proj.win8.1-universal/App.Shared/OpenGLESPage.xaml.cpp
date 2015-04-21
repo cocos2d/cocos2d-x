@@ -169,6 +169,16 @@ void OpenGLESPage::OnVisibilityChanged(Windows::UI::Core::CoreWindow^ sender, Wi
 }
 
 #if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
+/*
+    We set args->Handled = true to prevent the app from quitting when the back button is pressed.
+    This is because this back button event happens on the XAML UI thread and not the cocos2d-x UI thread.
+    We need to give the game developer a chance to decide to exit the app depending on where they
+    are in their game. They can receive the back button event by listening for the 
+    EventKeyboard::KeyCode::KEY_BACKSPACE event. 
+
+    The default behavior is to exit the app if the  EventKeyboard::KeyCode::KEY_BACKSPACE event
+    is not handled by the game.
+*/
 void OpenGLESPage::OnBackButtonPressed(Object^ sender, BackPressedEventArgs^ args)
 {
     if (m_renderer)
@@ -176,7 +186,6 @@ void OpenGLESPage::OnBackButtonPressed(Object^ sender, BackPressedEventArgs^ arg
         m_renderer->QueueBackButtonEvent();
         args->Handled = true;
     }
-
 }
 #endif
 
