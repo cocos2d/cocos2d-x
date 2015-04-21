@@ -35,8 +35,6 @@ PUSlaveEmitter::PUSlaveEmitter(void) :
     _masterParticle(0),
     _masterTechniqueName(),
     _masterEmitterName(),
-    _masterPosition(Vec3::ZERO),
-    _masterDirection(Vec3::ZERO),
     _masterEmitterNameSet(false)
 {
 }
