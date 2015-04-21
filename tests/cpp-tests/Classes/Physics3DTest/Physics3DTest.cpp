@@ -371,7 +371,7 @@ bool Physics3DTerrainDemo::init()
 
     Terrain::DetailMap r("TerrainTest/dirt.jpg"),g("TerrainTest/Grass2.jpg",10),b("TerrainTest/road.jpg"),a("TerrainTest/GreenSkin.jpg",20);
     
-    Terrain::TerrainData data("TerrainTest/heightmap16.jpg","TerrainTest/alphamap.png",r,g,b,a,Size(32,32), 20.0f, 1.0f);
+    Terrain::TerrainData data("TerrainTest/heightmap129.jpg","TerrainTest/alphamap.png",r,g,b,a,Size(32,32), 20.0f, 1.0f);
     auto terrain = Terrain::create(data,Terrain::CrackFixedType::SKIRT);
     terrain->setMaxDetailMapAmount(4);
     terrain->setCameraMask(2);
