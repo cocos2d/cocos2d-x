@@ -571,7 +571,7 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 					const char* attachmentName = Json_getString(attachmentMap, "name", skinAttachmentName);
 					const char* path = Json_getString(attachmentMap, "path", attachmentName);
 					const char* color;
-					int iii;
+					int currIndex;
 					Json* entry;
 
 					const char* typeString = Json_getString(attachmentMap, "type", "region");
@@ -631,19 +631,19 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 						entry = Json_getItem(attachmentMap, "vertices");
 						mesh->verticesCount = entry->size;
 						mesh->vertices = MALLOC(float, entry->size);
-						for (entry = entry->child, iii = 0; entry; entry = entry->next, ++iii)
-							mesh->vertices[iii] = entry->valueFloat * self->scale;
+						for (entry = entry->child, currIndex = 0; entry; entry = entry->next, ++currIndex)
+							mesh->vertices[currIndex] = entry->valueFloat * self->scale;
 
 						entry = Json_getItem(attachmentMap, "triangles");
 						mesh->trianglesCount = entry->size;
 						mesh->triangles = MALLOC(int, entry->size);
-						for (entry = entry->child, iii = 0; entry; entry = entry->next, ++iii)
-							mesh->triangles[iii] = entry->valueInt;
+						for (entry = entry->child, currIndex = 0; entry; entry = entry->next, ++currIndex)
+							mesh->triangles[currIndex] = entry->valueInt;
 
 						entry = Json_getItem(attachmentMap, "uvs");
 						mesh->regionUVs = MALLOC(float, entry->size);
-						for (entry = entry->child, iii = 0; entry; entry = entry->next, ++iii)
-							mesh->regionUVs[iii] = entry->valueFloat;
+						for (entry = entry->child, currIndex = 0; entry; entry = entry->next, ++currIndex)
+							mesh->regionUVs[currIndex] = entry->valueFloat;
 
 						spMeshAttachment_updateUVs(mesh);
 
@@ -661,8 +661,8 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 						if (entry) {
 							mesh->edgesCount = entry->size;
 							mesh->edges = MALLOC(int, entry->size);
-							for (entry = entry->child, iii = 0; entry; entry = entry->next, ++iii)
-								mesh->edges[iii] = entry->valueInt;
+							for (entry = entry->child, currIndex = 0; entry; entry = entry->next, ++currIndex)
+								mesh->edges[currIndex] = entry->valueInt;
 						}
 
 						mesh->width = Json_getFloat(attachmentMap, "width", 32) * self->scale;
@@ -679,32 +679,32 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 						entry = Json_getItem(attachmentMap, "uvs");
 						mesh->uvsCount = entry->size;
 						mesh->regionUVs = MALLOC(float, entry->size);
-						for (entry = entry->child, iii = 0; entry; entry = entry->next, ++iii)
-							mesh->regionUVs[iii] = entry->valueFloat;
+						for (entry = entry->child, currIndex = 0; entry; entry = entry->next, ++currIndex)
+							mesh->regionUVs[currIndex] = entry->valueFloat;
 
 						entry = Json_getItem(attachmentMap, "vertices");
 						verticesCount = entry->size;
 						vertices = MALLOC(float, entry->size);
-						for (entry = entry->child, iii = 0; entry; entry = entry->next, ++iii)
-							vertices[iii] = entry->valueFloat;
+						for (entry = entry->child, currIndex = 0; entry; entry = entry->next, ++currIndex)
+							vertices[currIndex] = entry->valueFloat;
 
-						for (iii = 0; iii < verticesCount;) {
-							int bonesCount = (int)vertices[iii];
+						for (currIndex = 0; currIndex < verticesCount;) {
+							int bonesCount = (int)vertices[currIndex];
 							mesh->bonesCount += bonesCount + 1;
 							mesh->weightsCount += bonesCount * 3;
-							iii += 1 + bonesCount * 4;
+							currIndex += 1 + bonesCount * 4;
 						}
 						mesh->bones = MALLOC(int, mesh->bonesCount);
 						mesh->weights = MALLOC(float, mesh->weightsCount);
 
-						for (iii = 0, b = 0, w = 0; iii < verticesCount;) {
-							int bonesCount = (int)vertices[iii++];
+						for (currIndex = 0, b = 0, w = 0; currIndex < verticesCount;) {
+							int bonesCount = (int)vertices[currIndex++];
 							mesh->bones[b++] = bonesCount;
-							for (nn = iii + bonesCount * 4; iii < nn; iii += 4, ++b, w += 3) {
-								mesh->bones[b] = (int)vertices[iii];
-								mesh->weights[w] = vertices[iii + 1] * self->scale;
-								mesh->weights[w + 1] = vertices[iii + 2] * self->scale;
-								mesh->weights[w + 2] = vertices[iii + 3];
+							for (nn = currIndex + bonesCount * 4; currIndex < nn; currIndex += 4, ++b, w += 3) {
+								mesh->bones[b] = (int)vertices[currIndex];
+								mesh->weights[w] = vertices[currIndex + 1] * self->scale;
+								mesh->weights[w + 1] = vertices[currIndex + 2] * self->scale;
+								mesh->weights[w + 2] = vertices[currIndex + 3];
 							}
 						}
 
@@ -713,8 +713,8 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 						entry = Json_getItem(attachmentMap, "triangles");
 						mesh->trianglesCount = entry->size;
 						mesh->triangles = MALLOC(int, entry->size);
-						for (entry = entry->child, iii = 0; entry; entry = entry->next, ++iii)
-							mesh->triangles[iii] = entry->valueInt;
+						for (entry = entry->child, currIndex = 0; entry; entry = entry->next, ++currIndex)
+							mesh->triangles[currIndex] = entry->valueInt;
 
 						spSkinnedMeshAttachment_updateUVs(mesh);
 
@@ -732,7 +732,7 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 						if (entry) {
 							mesh->edgesCount = entry->size;
 							mesh->edges = MALLOC(int, entry->size);
-							for (entry = entry->child, iii = 0; entry; entry = entry->next, ++iii)
+							for (entry = entry->child, currIndex = 0; entry; entry = entry->next, ++currIndex)
 								mesh->edges[i] = entry->valueInt;
 						}
 
@@ -745,8 +745,8 @@ spSkeletonData* spSkeletonJson_readSkeletonData (spSkeletonJson* self, const cha
 						entry = Json_getItem(attachmentMap, "vertices");
 						box->verticesCount = entry->size;
 						box->vertices = MALLOC(float, entry->size);
-						for (entry = entry->child, iii = 0; entry; entry = entry->next, ++iii)
-							box->vertices[iii] = entry->valueFloat * self->scale;
+						for (entry = entry->child, currIndex = 0; entry; entry = entry->next, ++currIndex)
+							box->vertices[currIndex] = entry->valueFloat * self->scale;
 						break;
 					}
 					}
