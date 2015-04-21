@@ -109,14 +109,14 @@ public:
      *
      * @return true if this vector contains all zeros, false otherwise.
      */
-    bool isZero() const;
+    inline bool isZero() const;
 
     /**
      * Indicates whether this vector contains all ones.
      *
      * @return true if this vector contains all ones, false otherwise.
      */
-    bool isOne() const;
+    inline bool isOne() const;
 
     /**
      * Returns the angle (in radians) between the specified vectors.
@@ -133,7 +133,7 @@ public:
      *
      * @param v The vector to add.
      */
-    void add(const Vec2& v);
+    inline void add(const Vec2& v);
 
     /**
      * Adds the specified vectors and stores the result in dst.
@@ -187,7 +187,7 @@ public:
      * 
      * @see distance
      */
-    float distanceSquared(const Vec2& v) const;
+    inline float distanceSquared(const Vec2& v) const;
 
     /**
      * Returns the dot product of this vector and the specified vector.
@@ -196,7 +196,7 @@ public:
      * 
      * @return The dot product.
      */
-    float dot(const Vec2& v) const;
+    inline float dot(const Vec2& v) const;
 
     /**
      * Returns the dot product between the specified vectors.
@@ -229,12 +229,12 @@ public:
      * 
      * @see length
      */
-    float lengthSquared() const;
+    inline float lengthSquared() const;
 
     /**
      * Negates this vector.
      */
-    void negate();
+    inline void negate();
 
     /**
      * Normalizes this vector.
@@ -259,14 +259,14 @@ public:
      *
      * @param scalar The scalar value.
      */
-    void scale(float scalar);
+    inline void scale(float scalar);
 
     /**
      * Scales each element of this vector by the matching component of scale.
      *
      * @param scale The vector to scale by.
      */
-    void scale(const Vec2& scale);
+    inline void scale(const Vec2& scale);
 
     /**
      * Rotates this vector by angle (specified in radians) around the given point.
@@ -282,7 +282,7 @@ public:
      * @param xx The new x coordinate.
      * @param yy The new y coordinate.
      */
-    void set(float xx, float yy);
+    inline void set(float xx, float yy);
 
     /**
      * Sets the elements of this vector from the values in the specified array.
@@ -296,7 +296,7 @@ public:
      *
      * @param v The vector to copy.
      */
-    void set(const Vec2& v);
+    inline void set(const Vec2& v);
 
     /**
      * Sets this vector to the directional vector between the specified points.
@@ -304,7 +304,12 @@ public:
      * @param p1 The first point.
      * @param p2 The second point.
      */
-    void set(const Vec2& p1, const Vec2& p2);
+    inline void set(const Vec2& p1, const Vec2& p2);
+
+    /**
+    * Sets the elements of this vector to zero.
+    */
+    inline void setZero();
 
     /**
      * Subtracts this vector and the specified vector as (this - v)
@@ -312,7 +317,7 @@ public:
      *
      * @param v The vector to subtract.
      */
-    void subtract(const Vec2& v);
+    inline void subtract(const Vec2& v);
 
     /**
      * Subtracts the specified vectors and stores the result in dst.
@@ -335,7 +340,7 @@ public:
      * @param elapsedTime elapsed time between calls.
      * @param responseTime response time (in the same units as elapsedTime).
      */
-    void smooth(const Vec2& target, float elapsedTime, float responseTime);
+    inline void smooth(const Vec2& target, float elapsedTime, float responseTime);
 
     /**
      * Calculates the sum of this vector with the given vector.
@@ -452,7 +457,7 @@ public:
      * @js NA
      * @lua NA
      */
-    void setPoint(float xx, float yy);
+    inline void setPoint(float xx, float yy);
     /**
      * @js NA
      */

@@ -1644,6 +1644,7 @@ FrameData *DataReaderHelper::decodeFrame(const rapidjson::Value& json, DataInfo 
     if (length != 0)
     {
         frameData->easingParams = new float[length];
+        frameData->easingParamNumber = length;
         
         for (int i = 0; i < length; i++)
         {

@@ -1478,7 +1478,7 @@ JumpTo* JumpTo::reverse() const
 void JumpTo::startWithTarget(Node *target)
 {
     JumpBy::startWithTarget(target);
-    _delta = Vec2(_endPosition.x - _startPosition.x, _endPosition.y - _startPosition.y);
+    _delta.set(_endPosition.x - _startPosition.x, _endPosition.y - _startPosition.y);
 }
 
 // Bezier cubic formula:

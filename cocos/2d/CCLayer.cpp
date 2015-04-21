@@ -714,7 +714,7 @@ void LayerGradient::updateColor()
         return;
 
     float c = sqrtf(2.0f);
-    Vec2 u = Vec2(_alongVector.x / h, _alongVector.y / h);
+    Vec2 u(_alongVector.x / h, _alongVector.y / h);
 
     // Compressed Interpolation mode
     if (_compressedInterpolation)

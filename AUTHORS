@@ -1103,6 +1103,13 @@ Developers:
         
     babcca
         Fixed crashing when playing streamed MP4 file on iOS
+        
+    milos1290
+        Added Lerp for Vec3
+        
+    perminovVS
+        Optimize Vec3 and Vec2
+        Added `UserDefault::setDelegate()`
 
 Retired Core Developers:
     WenSheng Yang

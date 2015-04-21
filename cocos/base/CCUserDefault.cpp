@@ -406,17 +406,17 @@ void UserDefault::setDataForKey(const char* pKey, const Data& value) {
 
 UserDefault* UserDefault::getInstance()
 {
-    initXMLFilePath();
-
-    // only create xml file one time
-    // the file exists after the program exit
-    if ((! isXMLFileExist()) && (! createXMLFile()))
+    if (!_userDefault)
     {
-        return nullptr;
-    }
+        initXMLFilePath();
 
-    if (! _userDefault)
-    {
+        // only create xml file one time
+        // the file exists after the program exit
+        if ((!isXMLFileExist()) && (!createXMLFile()))
+        {
+            return nullptr;
+        }
+
         _userDefault = new (std::nothrow) UserDefault();
     }
 
@@ -427,6 +427,15 @@ void UserDefault::destroyInstance()
 {
     CC_SAFE_DELETE(_userDefault);
 }
+
+void UserDefault::setDelegate(UserDefault *delegate)
+{
+    if (_userDefault)
+        delete _userDefault;
+
+    _userDefault = delegate;
+}
+
 
 // FIXME:: deprecated
 UserDefault* UserDefault::sharedUserDefault()
@@ -442,16 +451,7 @@ void UserDefault::purgeSharedUserDefault()
 
 bool UserDefault::isXMLFileExist()
 {
-    FILE *fp = fopen(_filePath.c_str(), "r");
-	bool bRet = false;
-
-	if (fp)
-	{
-		bRet = true;
-		fclose(fp);
-	}
-
-	return bRet;
+    return FileUtils::getInstance()->isFileExist(_filePath);
 }
 
 void UserDefault::initXMLFilePath()

@@ -93,8 +93,6 @@ ParticleSystem::ParticleSystem()
 , _isActive(true)
 , _particleCount(0)
 , _duration(0)
-, _sourcePosition(Vec2::ZERO)
-, _posVar(Vec2::ZERO)
 , _life(0)
 , _lifeVar(0)
 , _angle(0)
@@ -116,7 +114,7 @@ ParticleSystem::ParticleSystem()
 , _yCoordFlipped(1)
 , _positionType(PositionType::FREE)
 {
-    modeA.gravity = Vec2::ZERO;
+    modeA.gravity.setZero();
     modeA.speed = 0;
     modeA.speedVar = 0;
     modeA.tangentialAccel = 0;
@@ -683,7 +681,7 @@ void ParticleSystem::update(float dt)
 
     _particleIdx = 0;
 
-    Vec2 currentPosition = Vec2::ZERO;
+    Vec2 currentPosition;
     if (_positionType == PositionType::FREE)
     {
         currentPosition = this->convertToWorldSpace(Vec2::ZERO);
@@ -710,7 +708,6 @@ void ParticleSystem::update(float dt)
                 {
                     Vec2 tmp, radial, tangential;
 
-                    radial = Vec2::ZERO;
                     // radial acceleration
                     if (p->pos.x || p->pos.y)
                     {
