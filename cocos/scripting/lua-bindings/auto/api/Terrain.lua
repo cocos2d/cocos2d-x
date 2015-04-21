@@ -12,44 +12,6 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- set the MaxDetailAmount.
--- @function [parent=#Terrain] setMaxDetailMapAmount 
--- @param self
--- @param #int maxValue
--- @return Terrain#Terrain self (return value: cc.Terrain)
-        
---------------------------------
--- show the wireline instead of the surface,Debug Use only.<br>
--- Note only support desktop platform
--- @function [parent=#Terrain] setDrawWire 
--- @param self
--- @param #bool boolValue
--- @return Terrain#Terrain self (return value: cc.Terrain)
-        
---------------------------------
--- Switch frustum Culling Flag<br>
--- Note frustum culling will remarkable improve your terrain rendering performance. 
--- @function [parent=#Terrain] setIsEnableFrustumCull 
--- @param self
--- @param #bool boolValue
--- @return Terrain#Terrain self (return value: cc.Terrain)
-        
---------------------------------
--- set the Detail Map 
--- @function [parent=#Terrain] setDetailMap 
--- @param self
--- @param #unsigned int index
--- @param #cc.Terrain::DetailMap detailMap
--- @return Terrain#Terrain self (return value: cc.Terrain)
-        
---------------------------------
--- reset the heightmap data.
--- @function [parent=#Terrain] resetHeightMap 
--- @param self
--- @param #char heightMap
--- @return Terrain#Terrain self (return value: cc.Terrain)
-        
---------------------------------
 --  set the alpha map
 -- @function [parent=#Terrain] setAlphaMap 
 -- @param self
@@ -83,16 +45,6 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- Set threshold distance of each LOD level,must equal or gereater than the chunk size<br>
--- Note when invoke initHeightMap, the LOD distance will be automatic calculated.
--- @function [parent=#Terrain] setLODDistance 
--- @param self
--- @param #float lod1
--- @param #float lod2
--- @param #float lod3
--- @return Terrain#Terrain self (return value: cc.Terrain)
-        
---------------------------------
 -- get the normal of the specified pistion in terrain<br>
 -- return the normal vector of the specified position of the terrain.<br>
 -- note the fast normal calculation may not get precise normal vector.
@@ -103,6 +55,28 @@
 -- @return vec3_table#vec3_table ret (return value: vec3_table)
         
 --------------------------------
+-- show the wireline instead of the surface,Debug Use only.<br>
+-- Note only support desktop platform
+-- @function [parent=#Terrain] setDrawWire 
+-- @param self
+-- @param #bool boolValue
+-- @return Terrain#Terrain self (return value: cc.Terrain)
+        
+--------------------------------
+-- 
+-- @function [parent=#Terrain] reload 
+-- @param self
+-- @return Terrain#Terrain self (return value: cc.Terrain)
+        
+--------------------------------
+-- set the Detail Map 
+-- @function [parent=#Terrain] setDetailMap 
+-- @param self
+-- @param #unsigned int index
+-- @param #cc.Terrain::DetailMap detailMap
+-- @return Terrain#Terrain self (return value: cc.Terrain)
+        
+--------------------------------
 -- get height from the raw height filed
 -- @function [parent=#Terrain] getImageHeight 
 -- @param self
@@ -111,16 +85,48 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+-- get the terrain's mininal height.
+-- @function [parent=#Terrain] getMinHeight 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
+-- Set threshold distance of each LOD level,must equal or gereater than the chunk size<br>
+-- Note when invoke initHeightMap, the LOD distance will be automatic calculated.
+-- @function [parent=#Terrain] setLODDistance 
+-- @param self
+-- @param #float lod1
+-- @param #float lod2
+-- @param #float lod3
+-- @return Terrain#Terrain self (return value: cc.Terrain)
+        
+--------------------------------
+-- reset the heightmap data.
+-- @function [parent=#Terrain] resetHeightMap 
+-- @param self
+-- @param #char heightMap
+-- @return Terrain#Terrain self (return value: cc.Terrain)
+        
+--------------------------------
 -- get the terrain's maximum height.
 -- @function [parent=#Terrain] getMaxHeight 
 -- @param self
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- get the terrain's mininal height.
--- @function [parent=#Terrain] getMinHeight 
+-- set the MaxDetailAmount.
+-- @function [parent=#Terrain] setMaxDetailMapAmount 
 -- @param self
--- @return float#float ret (return value: float)
+-- @param #int maxValue
+-- @return Terrain#Terrain self (return value: cc.Terrain)
+        
+--------------------------------
+-- Switch frustum Culling Flag<br>
+-- Note frustum culling will remarkable improve your terrain rendering performance. 
+-- @function [parent=#Terrain] setIsEnableFrustumCull 
+-- @param self
+-- @param #bool boolValue
+-- @return Terrain#Terrain self (return value: cc.Terrain)
         
 --------------------------------
 -- 

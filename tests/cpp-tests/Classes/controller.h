@@ -59,6 +59,8 @@ public:
 
     bool blockTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
 
+    void setCurrTestSuite(TestSuite* testSuite) { _testSuite = testSuite; }
+    TestSuite* getCurrTestSuite() { return _testSuite; }
 private:
     TestController();
 
@@ -72,6 +74,7 @@ private:
     bool _isRunInBackground;
 
     TestList* _rootTestList;
+    TestSuite* _testSuite;
 
     std::thread _autoTestThread;
 

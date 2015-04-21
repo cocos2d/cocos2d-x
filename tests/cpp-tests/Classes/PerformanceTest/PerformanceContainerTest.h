@@ -14,7 +14,7 @@ public:
     virtual void showCurrentTest();
 };
 
-class PerformanceContainerScene : public Scene
+class PerformanceContainerScene : public cocos2d::Scene
 {
 public:
     static const int TAG_TITLE = 100;
@@ -53,11 +53,11 @@ protected:
     unsigned int _type;
     std::vector<TestFunction> _testFunctions;
     
-    MenuItemFont* _increase;
-    MenuItemFont* _decrease;
-    MenuItemFont* _startItem;
-    MenuItemFont* _stopItem;
-    MenuItemToggle* _toggle;
+    cocos2d::MenuItemFont* _increase;
+    cocos2d::MenuItemFont* _decrease;
+    cocos2d::MenuItemFont* _startItem;
+    cocos2d::MenuItemFont* _stopItem;
+    cocos2d::MenuItemToggle* _toggle;
 };
 
 class TemplateVectorPerfTest : public PerformanceContainerScene

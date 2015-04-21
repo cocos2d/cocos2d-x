@@ -3,6 +3,8 @@
 #include "ui/CocosGUI.h"
 #include "UISceneManager_Editor.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
 
 UIScene_Editor::UIScene_Editor()
 :  _touchGroup(nullptr)

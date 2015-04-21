@@ -793,7 +793,7 @@ bool Bundle3D::loadNodes(NodeDatas& nodedatas)
             return true;
         }
         
-        auto nodeDatas = new (std::nothrow) NodeData*[skinData.skinBoneNames.size() + skinData.nodeBoneNames.size()];
+        NodeData* nodeDatas[skinData.skinBoneNames.size() + skinData.nodeBoneNames.size()];
         int index = 0;
         size_t i;
         for (i = 0; i < skinData.skinBoneNames.size(); i++)

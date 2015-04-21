@@ -1,5 +1,7 @@
 #include "MutiTouchTest.h"
 
+USING_NS_CC;
+
 MutiTouchTests::MutiTouchTests()
 {
     ADD_TEST_CASE(MutiTouchTest);

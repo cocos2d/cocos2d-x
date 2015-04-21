@@ -788,24 +788,31 @@ void Label::enableShadow(const Color4B& shadowColor /* = Color4B::BLACK */,const
     //TODO: support blur for shadow
     _shadowBlurRadius = 0;
 
-    if (_textSprite && _shadowNode)
-    {
-        if (shadowColor != _shadowColor4F)
-        {
-            Node::removeChild(_shadowNode, true);
-            _shadowNode = nullptr;
-            createShadowSpriteForSystemFont();
-        }
-        else
-        {
-            _shadowNode->setPosition(_shadowOffset.width, _shadowOffset.height);
-        }
-    }
-
     _shadowColor3B.r = shadowColor.r;
     _shadowColor3B.g = shadowColor.g;
     _shadowColor3B.b = shadowColor.b;
     _shadowOpacity = shadowColor.a;
+
+    if (!_systemFontDirty && !_contentDirty && _textSprite)
+    {
+        if (_shadowNode)
+        {
+            if (shadowColor != _shadowColor4F)
+            {
+                Node::removeChild(_shadowNode, true);
+                _shadowNode = nullptr;
+                createShadowSpriteForSystemFont();
+            }
+            else
+            {
+                _shadowNode->setPosition(_shadowOffset.width, _shadowOffset.height);
+            }
+        }
+        else
+        {
+            createShadowSpriteForSystemFont();
+        }
+    }
 
     _shadowColor4F.r = shadowColor.r / 255.0f;
     _shadowColor4F.g = shadowColor.g / 255.0f;
@@ -857,6 +864,13 @@ void Label::disableEffect(LabelEffect effect)
             updateShaderProgram();
         }
         break;
+    case LabelEffect::ALL:
+        {
+            disableEffect(LabelEffect::SHADOW);
+            disableEffect(LabelEffect::GLOW);
+            disableEffect(LabelEffect::OUTLINE);
+        }
+        break;
     default:
         break;
     }
@@ -871,7 +885,7 @@ void Label::setFontScale(float fontScale)
 void Label::onDraw(const Mat4& transform, bool transformUpdated)
 {
     // Optimization: Fast Dispatch
-    if( _batchNodes.size() == 1 && _textureAtlas->getTotalQuads() == 0 )
+    if( _textureAtlas == NULL || (_batchNodes.size() == 1 && _textureAtlas->getTotalQuads() == 0) )
     {
         return;
     }
@@ -1031,18 +1045,18 @@ void Label::createSpriteForSystemFont()
 
 void Label::createShadowSpriteForSystemFont()
 {
-    if (!_fontDefinition._stroke._strokeEnabled && _fontDefinition._fontFillColor == _shadowColor4F
-        && (_fontDefinition._fontAlpha == _shadowColor4F.a * 255))
+    if (!_fontDefinition._stroke._strokeEnabled && _fontDefinition._fontFillColor == _shadowColor3B
+        && (_fontDefinition._fontAlpha == _shadowOpacity))
     {
         _shadowNode = Sprite::createWithTexture(_textSprite->getTexture());
     }
     else
     {
         auto shadowFontDefinition = _fontDefinition;
-        shadowFontDefinition._fontFillColor.r = _shadowColor4F.r * 255;
-        shadowFontDefinition._fontFillColor.g = _shadowColor4F.g * 255;
-        shadowFontDefinition._fontFillColor.b = _shadowColor4F.b * 255;
-        shadowFontDefinition._fontAlpha = _shadowColor4F.a * 255;
+        shadowFontDefinition._fontFillColor.r = _shadowColor3B.r;
+        shadowFontDefinition._fontFillColor.g = _shadowColor3B.g;
+        shadowFontDefinition._fontFillColor.b = _shadowColor3B.b;
+        shadowFontDefinition._fontAlpha = _shadowOpacity;
 
         shadowFontDefinition._stroke._strokeColor = shadowFontDefinition._fontFillColor;
         shadowFontDefinition._stroke._strokeAlpha = shadowFontDefinition._fontAlpha;
@@ -1059,6 +1073,7 @@ void Label::createShadowSpriteForSystemFont()
         {
             _shadowNode->setBlendFunc(_blendFunc);
         }
+        _shadowNode->setCameraMask(getCameraMask());
         _shadowNode->setAnchorPoint(Vec2::ANCHOR_BOTTOM_LEFT);
         _shadowNode->setPosition(_shadowOffset.width, _shadowOffset.height);
         Node::addChild(_shadowNode, 0, Node::INVALID_TAG);
@@ -1179,7 +1194,7 @@ void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t pare
         _shadowDirty = false;
     }
 
-    if (!isVisitableByVisitingCamera())
+    if (!_textSprite && !isVisitableByVisitingCamera())
     {
         return;
     }
@@ -1187,27 +1202,23 @@ void Label::visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t pare
     // IMPORTANT:
     // To ease the migration to v3.0, we still support the Mat4 stack,
     // but it is deprecated and your code should not rely on it
-    Director* director = Director::getInstance();
-    CCASSERT(nullptr != director, "Director is null when seting matrix stack");
+    _director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    _director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
     
-    director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
-    director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW, _modelViewTransform);
-    
-
     if (_textSprite)
     {
         if (_shadowNode)
         {
-            _shadowNode->visit(renderer, _modelViewTransform, parentFlags);
+            _shadowNode->visit(renderer, _modelViewTransform, flags);
         }
-        _textSprite->visit(renderer, _modelViewTransform, parentFlags);
+        _textSprite->visit(renderer, _modelViewTransform, flags);
     }
     else
     {
         draw(renderer, _modelViewTransform, flags);
     }
 
-    director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+    _director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
     
     // FIX ME: Why need to set _orderOfArrival to 0??
     // Please refer to https://github.com/cocos2d/cocos2d-x/pull/6920

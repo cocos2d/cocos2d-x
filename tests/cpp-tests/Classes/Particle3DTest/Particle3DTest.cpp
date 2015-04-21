@@ -27,6 +27,8 @@
 #include "Particle3D/CCParticleSystem3D.h"
 #include "Particle3D/PU/CCPUParticleSystem3D.h"
 
+USING_NS_CC;
+
 #define PARTICLE_SYSTEM_TAG 0x0001
 
 Particle3DTests::Particle3DTests()

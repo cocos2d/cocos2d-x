@@ -16,9 +16,9 @@ public:
 	virtual std::string title() const override;
 
 protected:
-	MenuItemImage *restartItem;
-	MenuItemImage *nextItem;
-	MenuItemImage *backItem;
+    cocos2d::MenuItemImage* restartItem;
+    cocos2d::MenuItemImage* nextItem;
+    cocos2d::MenuItemImage* backItem;
     
 protected:
 	virtual void changeLoadTypeCallback(cocos2d::Ref *pSender);
@@ -98,7 +98,7 @@ public:
 	virtual void onEnter() override;
     virtual void onExit() override;
     cocos2d::Node* createGameScene();
-	void touchEvent(cocos2d::Ref *pSender, ui::Widget::TouchEventType type);
+	void touchEvent(cocos2d::Ref *pSender, cocos2d::ui::Widget::TouchEventType type);
 private:
 	void defaultPlay();
 };
@@ -201,10 +201,10 @@ public:
     virtual void onExit() override;
     
 	// default implements are used to call script callback if exist
-	virtual bool onTouchBegan(Touch *touch, Event *unused_event); 
-    virtual void onTouchMoved(Touch *touch, Event *unused_event); 
-    virtual void onTouchEnded(Touch *touch, Event *unused_event); 
-    virtual void onTouchCancelled(Touch *touch, Event *unused_event);
+	virtual bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* unused_event); 
+    virtual void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* unused_event); 
+    virtual void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* unused_event); 
+    virtual void onTouchCancelled(cocos2d::Touch* touch, cocos2d::Event* unused_event);
 
 	// update of game
 	void gameLogic(float dt);

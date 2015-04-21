@@ -1,6 +1,9 @@
 #include "SchedulerTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+USING_NS_CC_EXT;
+
 enum {
     kTagAnimationDance = 1,
 };

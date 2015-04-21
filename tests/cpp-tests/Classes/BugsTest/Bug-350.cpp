@@ -5,6 +5,8 @@
 
 #include "Bug-350.h"
 
+USING_NS_CC;
+
 bool Bug350Layer::init()
 {
     if (BugsTestBase::init())

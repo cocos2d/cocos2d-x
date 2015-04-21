@@ -78,6 +78,25 @@ public:
 	CREATE_FUNC (SpineTestLayerFFD);
 };
 
+class SpineTestLayerRapor: public SpineTestLayer
+{
+public:
+    virtual std::string title() const override
+    {
+        return "Spine Test";
+    }
+    virtual std::string subtitle() const override
+    {
+        return "Raptor Test";
+    }
+    virtual bool init () override;
+    
+    CREATE_FUNC (SpineTestLayerRapor);
+    
+private:
+    spine::SkeletonAnimation* skeletonNode;
+};
+
 class SpineTestPerformanceLayer: public SpineTestLayer
 {
 public:

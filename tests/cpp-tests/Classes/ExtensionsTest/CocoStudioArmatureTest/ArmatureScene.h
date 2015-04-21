@@ -40,7 +40,7 @@ public:
 	virtual void onEnter() override;
 	virtual std::string title() const override;
 	virtual std::string subtitle() const override;
-    virtual void restartTestCallback(Ref* pSender) override;
+    virtual void restartTestCallback(cocos2d::Ref* pSender) override;
 
 	void dataLoaded(float percent);
 };
@@ -83,8 +83,8 @@ public:
 	virtual void onEnter() override;
 	virtual std::string title() const override;
 	virtual std::string subtitle() const override;
-    virtual void onIncrease(Ref* pSender);
-    virtual void onDecrease(Ref* pSender);
+    virtual void onIncrease(cocos2d::Ref* pSender);
+    virtual void onDecrease(cocos2d::Ref* pSender);
     virtual void addArmature(int number);
     virtual void addArmatureToParent(cocostudio::Armature *armature);
     virtual void removeArmatureFromParent(int tag);
@@ -149,7 +149,7 @@ public:
     void onFrameEvent(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex);
     void checkAction(float dt);
 protected:
-    NodeGrid* _gridNode;
+    cocos2d::NodeGrid* _gridNode;
 };
 
 
@@ -162,7 +162,7 @@ public:
 	virtual void onExit() override;
 	virtual std::string title() const override;
 	virtual std::string subtitle() const override;
-	void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+	void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
 
 	int displayIndex;
 	cocostudio::Armature *armature;
@@ -177,7 +177,7 @@ public:
 	virtual void onExit() override;
 	virtual std::string title() const override;
 	virtual std::string subtitle() const override;
-	void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+	void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
 
 	int animationID;
 	cocostudio::Armature *armature;
@@ -198,7 +198,7 @@ public:
 	virtual void onEnter() override;
 	virtual void onExit() override;
 	virtual std::string title() const override;
-	virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+	virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t flags) override;
 	virtual void update(float delta);
 
 	void onFrameEvent(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex);
@@ -261,7 +261,7 @@ public:
     virtual void onEnter() override;
     virtual std::string title() const override;
     virtual void update(float delta);
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t flags) override;
     
     void onFrameEvent(cocostudio::Bone *bone, const std::string& evt, int originFrameIndex, int currentFrameIndex);
     
@@ -269,7 +269,7 @@ public:
     cocostudio::Armature *armature;
     cocostudio::Armature *armature2;
     
-    DrawNode *drawNode;
+    cocos2d::DrawNode* drawNode;
     cocos2d::Sprite *bullet;
 };
 #endif
@@ -282,13 +282,13 @@ public:
 
 	virtual void onEnter() override;
 	virtual std::string title() const override;
-	virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+	virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t flags) override;
 
 	cocostudio::Armature *armature;
-	Rect rect;
+    cocos2d::Rect rect;
     
 protected:
-    DrawNode* _drawNode;
+    cocos2d::DrawNode* _drawNode;
 };
 
 class TestAnchorPoint : public ArmatureBaseTest
@@ -308,7 +308,7 @@ public:
 	virtual void onEnter() override;
 	virtual void onExit() override;
 	virtual std::string title() const override;
-	void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+	void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
 
 	cocostudio::Armature *armature;
 	int weaponIndex;
@@ -336,10 +336,10 @@ public:
     virtual void onExit() override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
 
-    void changeMountCallback(Ref* pSender);
-    virtual cocostudio::Armature *createMount(const char *name, Vec2 position);
+    void changeMountCallback(cocos2d::Ref* pSender);
+    virtual cocostudio::Armature *createMount(const char *name, cocos2d::Vec2 position);
 
 private:
     Hero *hero;
@@ -372,7 +372,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
     void updateSubTitle();
 
     int animationID;
@@ -389,7 +389,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
 };
 
 
@@ -403,7 +403,7 @@ public:
     virtual std::string title() const override;
 	virtual std::string subtitle() const override;
     
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
     
     
 	void dataLoaded(float percent);

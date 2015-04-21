@@ -1,6 +1,8 @@
 #include "MotionStreakTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum {
 	kTagLabel = 1,
 	kTagSprite1 = 2,

@@ -817,11 +817,6 @@ void PhysicsWorld::step(float delta)
 
 void PhysicsWorld::update(float delta, bool userCall/* = false*/)
 {
-    if (delta < FLT_EPSILON)
-    {
-        return;
-    }
-
     if(_updateBodyTransform || !_delayAddBodies.empty())
     {
         _scene->updatePhysicsBodyTransform(_scene->getNodeToParentTransform(), 0, 1.0f, 1.0f);
@@ -832,10 +827,15 @@ void PhysicsWorld::update(float delta, bool userCall/* = false*/)
     {
         updateBodies();
     }
-
+    
     if (!_delayAddJoints.empty() || !_delayRemoveJoints.empty())
     {
         updateJoints();
+    }
+    
+    if (delta < FLT_EPSILON)
+    {
+        return;
     }
     
     if (userCall)

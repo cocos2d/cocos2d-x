@@ -28,11 +28,13 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
---  Disable shadow/outline/glow rendering.
--- @function [parent=#Text] disableEffect 
+-- @overload self, int         
+-- @overload self         
+-- @function [parent=#Text] disableEffect
 -- @param self
+-- @param #int effect
 -- @return Text#Text self (return value: ccui.Text)
-        
+
 --------------------------------
 --  Gets text color.<br>
 -- return Text color.
@@ -52,9 +54,15 @@
 -- Sets the font name of label.<br>
 -- If you are trying to use a system font, you could just pass a font name<br>
 -- If you are trying to use a TTF, you should pass a file path to the TTF file<br>
--- Usage:  Text *text = Text::create("Hello", "Arial", 20);create a system font UIText<br>
--- text->setFontName("Marfelt"); it will change the font  to  system font no matter the previous font type is TTF or system font<br>
--- text->setFontName("xxxx/xxx.ttf");it will change the font  to TTF font no matter the previous font type is TTF or system font<br>
+-- Usage:<br>
+-- code<br>
+-- create a system font UIText<br>
+-- Text *text = Text::create("Hello", "Arial", 20);<br>
+-- it will change the font to system font no matter the previous font type is TTF or system font<br>
+-- text->setFontName("Marfelt");<br>
+-- it will change the font to TTF font no matter the previous font type is TTF or system font<br>
+-- text->setFontName("xxxx/xxx.ttf");<br>
+-- endcode<br>
 -- param name Font name.
 -- @function [parent=#Text] setFontName 
 -- @param self
@@ -103,7 +111,8 @@
 --------------------------------
 -- Gets the string length of the label.<br>
 -- Note: This length will be larger than the raw string length,<br>
--- if you want to get the raw string length, you should call this->getString().size() instead.<br>
+-- if you want to get the raw string length,<br>
+-- you should call this->getString().size() instead.<br>
 -- return  String length.
 -- @function [parent=#Text] getStringLength 
 -- @param self

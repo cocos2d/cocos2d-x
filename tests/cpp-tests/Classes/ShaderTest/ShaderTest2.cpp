@@ -28,6 +28,8 @@
 #include "cocos2d.h"
 #include <tuple>
 
+USING_NS_CC;
+
 Shader2Tests::Shader2Tests()
 {
     ADD_TEST_CASE(EffectSpriteTest);

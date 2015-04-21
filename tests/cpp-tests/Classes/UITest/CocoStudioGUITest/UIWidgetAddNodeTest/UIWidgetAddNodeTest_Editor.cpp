@@ -1,5 +1,8 @@
 #include "UIWidgetAddNodeTest_Editor.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
 UIWidgetAddNodeEditorTests::UIWidgetAddNodeEditorTests()
 {
     ADD_TEST_CASE(UIWidgetAddNodeTest_Editor);

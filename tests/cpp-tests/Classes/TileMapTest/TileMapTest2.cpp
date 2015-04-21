@@ -4,6 +4,7 @@
 #include "2d/CCFastTMXLayer.h"
 #include "2d/CCFastTMXTiledMap.h"
 
+USING_NS_CC;
 
 enum
 {

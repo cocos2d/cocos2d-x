@@ -29,8 +29,6 @@
 #include "extensions/cocos-ext.h"
 #include "BaseTest.h"
 
-USING_NS_CC;
-
 DEFINE_TEST_SUITE(ControlTests);
 
 #endif /* __CCCONTROLSCENEMANAGER_H__ */

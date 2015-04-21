@@ -27,6 +27,9 @@
 #include "CCControlSceneManager.h"
 #include "../ExtensionsTest.h"
 
+USING_NS_CC;
+USING_NS_CC_EXT;
+
 bool ControlScene::init()
 {
     if (TestCase::init())

@@ -133,7 +133,7 @@ void CC_DLL CCLogIPAddresses()
         if (hn->IPInformation != nullptr)
         {
             std::string s = PlatformStringToString(hn->DisplayName);
-            CCLog("IP Address: %s:", s.c_str());
+            log("IP Address: %s:", s.c_str());
         }
     }
 #endif

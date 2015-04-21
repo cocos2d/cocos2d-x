@@ -1,5 +1,7 @@
 #include "MouseTest.h"
 
+USING_NS_CC;
+
 template <typename T> std::string tostr(const T& t) { std::ostringstream os; os<<t; return os.str(); }
 
 MouseTests::MouseTests()

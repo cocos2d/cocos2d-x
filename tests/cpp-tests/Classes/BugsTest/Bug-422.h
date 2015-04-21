@@ -12,7 +12,7 @@ public:
 
     void reset();
     void check(Node* target);
-    void menuCallback(Ref* sender);
+    void menuCallback(cocos2d::Ref* sender);
 };
 
 #endif // __BUG_422_H__

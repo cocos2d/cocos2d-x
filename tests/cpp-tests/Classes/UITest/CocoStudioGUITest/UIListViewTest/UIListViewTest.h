@@ -39,12 +39,12 @@ public:
     ~UIListViewTest_Vertical();
 
     virtual bool init() override;
-    void selectedItemEvent(Ref* pSender, ListView::EventType type);
-    void selectedItemEventScrollView(Ref* pSender, ui::ScrollView::EventType type);
+    void selectedItemEvent(cocos2d::Ref* sender, cocos2d::ui::ListView::EventType type);
+    void selectedItemEventScrollView(cocos2d::Ref* sender, cocos2d::ui::ScrollView::EventType type);
 
 protected:
     
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
     
     std::vector<std::string> _array;
 };
@@ -58,12 +58,12 @@ public:
     ~UIListViewTest_Horizontal();
 
     virtual bool init() override;
-    void selectedItemEvent(Ref* pSender, ListView::EventType type);
+    void selectedItemEvent(cocos2d::Ref* sender, cocos2d::ui::ListView::EventType type);
 
     
 protected:
     
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
     
     std::vector<std::string> _array;
 };
