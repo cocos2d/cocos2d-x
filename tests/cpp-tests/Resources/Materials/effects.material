@@ -14,11 +14,7 @@
 						"blend":  "ALPHA_NON_PREMULTIPLIED",
 
                   		"shader" : {
-		              		"defines": ["// Add here things that you want to be compiled on the shaders", 
-		              					"// this is the 2nd line",
-		              					"#define USE_MULTITEXTURE 1"
-		              					],
-
+		              		"defines": "",
 							"vertexShader": "Shaders/example_simple.vsh",
 							"fragmentShader": "Shaders/example_Blur.fsh",
 
@@ -47,11 +43,7 @@
 						"blend":  "ALPHA_NON_PREMULTIPLIED",
 
                   		"shader" : {
-		              		"defines": ["// Add here things that you want to be compiled on the shaders", 
-		              					"// this is the 2nd line",
-		              					"#define USE_MULTITEXTURE 1"
-		              					],
-
+		              		"defines": "",
 							"vertexShader": "Shaders/example_simple.vsh",
 							"fragmentShader": "Shaders/example_outline.fsh",
 
@@ -80,11 +72,7 @@
 						"blend":  "ALPHA_NON_PREMULTIPLIED",
 
                   		"shader" : {
-		              		"defines": ["// Add here things that you want to be compiled on the shaders", 
-		              					"// this is the 2nd line",
-		              					"#define USE_MULTITEXTURE 1"
-		              					],
-
+		              		"defines": "",
 							"vertexShader": "Shaders/example_simple.vsh",
 							"fragmentShader": "Shaders/example_Noisy.fsh",
 
@@ -111,11 +99,7 @@
 						"blend":  "ALPHA_NON_PREMULTIPLIED",
 
                   		"shader" : {
-		              		"defines": ["// Add here things that you want to be compiled on the shaders", 
-		              					"// this is the 2nd line",
-		              					"#define USE_MULTITEXTURE 1"
-		              					],
-
+		              		"defines": "",
 							"vertexShader": "Shaders/example_simple.vsh",
 							"fragmentShader": "Shaders/example_edgeDetection.fsh",
 
@@ -142,11 +126,7 @@
 						"blend":  "ALPHA_NON_PREMULTIPLIED",
 
                   		"shader" : {
-		              		"defines": ["// Add here things that you want to be compiled on the shaders", 
-		              					"// this is the 2nd line",
-		              					"#define USE_MULTITEXTURE 1"
-		              					],
-
+		              		"defines": "TEXTURE_REPEAT",
 							"vertexShader": "Shaders/example_simple.vsh",
 							"fragmentShader": "Shaders/example_Blur.fsh",
 
@@ -170,11 +150,7 @@
 						"blend":  "ALPHA_NON_PREMULTIPLIED",
 
                   		"shader" : {
-		              		"defines": ["// Add here things that you want to be compiled on the shaders", 
-		              					"// this is the 2nd line",
-		              					"#define USE_MULTITEXTURE 1"
-		              					],
-
+		              		"defines": "",
 							"vertexShader": "Shaders/example_simple.vsh",
 							"fragmentShader": "Shaders/example_greyScale.fsh"
 						},

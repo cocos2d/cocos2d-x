@@ -45,12 +45,15 @@ NS_CC_BEGIN
 
 Pass* Pass::create(Technique* technique)
 {
-    return new (std::nothrow) Pass(technique);
+    auto pass = new (std::nothrow) Pass(technique);
+    pass->autorelease();
+    return pass;
 }
 
 Pass* Pass::createWithGLProgramState(Technique* technique, GLProgramState* programState)
 {
     auto pass = new (std::nothrow) Pass(technique, programState);
+    pass->autorelease();
     return pass;
 }
 
@@ -120,7 +123,6 @@ Node* Pass::getTarget() const
 
     return _technique->_material->_target;
 }
-
 
 void Pass::unbind()
 {

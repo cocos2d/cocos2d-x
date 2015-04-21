@@ -35,27 +35,43 @@ NS_CC_BEGIN
 
 Technique* Technique::createWithGLProgramState(Material* parent, GLProgramState* state)
 {
-    auto technique = new (std::nothrow) Technique(parent);
-    auto pass = Pass::createWithGLProgramState(technique, state);
+    auto technique = new (std::nothrow) Technique();
+    if (technique && technique->init(parent))
+    {
+        auto pass = Pass::createWithGLProgramState(technique, state);
+        technique->addPass(pass);
 
-    technique->addPass(pass);
-    return technique;
+        technique->autorelease();
+        return technique;
+    }
+    return  nullptr;
 }
 
 Technique* Technique::create(Material* material)
 {
-    return new (std::nothrow) Technique(material);
+    auto technique = new (std::nothrow) Technique();
+    if (technique && technique->init(material))
+    {
+        technique->autorelease();
+        return technique;
+    }
+    return nullptr;
 }
 
-Technique::Technique(Material* material)
+Technique::Technique()
 : _name("")
-, _passes()
-, _material(material)
+, _material(nullptr)
 {
 }
 
 Technique::~Technique()
 {
+}
+
+bool Technique::init(Material* parent)
+{
+    _material = parent;
+    return true;
 }
 
 void Technique::addPass(Pass *pass)

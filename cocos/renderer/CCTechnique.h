@@ -70,8 +70,10 @@ public:
     ssize_t getPassCount() const;
 
 protected:
-    Technique(Material* parent);
+    Technique();
     ~Technique();
+    bool init(Material* parent);
+
     void setName(const std::string& name);
 
     std::string _name;

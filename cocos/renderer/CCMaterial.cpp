@@ -53,32 +53,47 @@ NS_CC_BEGIN
 Material* Material::createWithFilename(const std::string& filepath)
 {
     auto validfilename = FileUtils::getInstance()->fullPathForFilename(filepath);
-
-    if (validfilename.size() > 0)
-        return new (std::nothrow) Material(validfilename);
+    if (validfilename.size() > 0) {
+        auto mat = new (std::nothrow) Material();
+        if (mat && mat->initWithFile(validfilename))
+        {
+            mat->autorelease();
+            return mat;
+        }
+    }
 
     return nullptr;
 }
 
 Material* Material::createWithGLStateProgram(GLProgramState* programState)
 {
-    return new (std::nothrow) Material(programState);
+    CCASSERT(programState, "Invalid GL Program State");
+
+    auto mat = new (std::nothrow) Material();
+    if (mat && mat->initWithGLProgramState(programState))
+    {
+        mat->autorelease();
+        return mat;
+
+    }
+    return nullptr;
 }
 
-Material::Material(cocos2d::GLProgramState *state)
-: _target(nullptr)
+bool Material::initWithGLProgramState(cocos2d::GLProgramState *state)
 {
     auto technique = Technique::createWithGLProgramState(this, state);
-    _techniques.pushBack(technique);
+    if (technique) {
+        _techniques.pushBack(technique);
 
-    // weak pointer
-    _currentTechnique = technique;
+        // weak pointer
+        _currentTechnique = technique;
+
+        return true;
+    }
+    return false;
 }
 
-Material::Material(const std::string& validfilename)
-: _currentTechnique(nullptr)
-, _target(nullptr)
-, _techniques()
+bool Material::initWithFile(const std::string& validfilename)
 {
     Data data = FileUtils::getInstance()->getDataFromFile(validfilename);
     char* bytes = (char*)data.getBytes();
@@ -90,17 +105,18 @@ Material::Material(const std::string& validfilename)
     if (document.HasParseError())
     {
         CCLOG("GetParseError %s\n", document.GetParseError());
-        return;
+        return false;
     }
 
     CCASSERT(document.IsObject(), "Invalid JSON file");
 
     if (! parseMetadata(document)) {
         CCLOG("Error parsing Material metadata");
-        return;
+        return false;
     }
 
     parseProperties(document);
+    return true;
 }
 
 void Material::setTarget(cocos2d::Node *target)
@@ -300,6 +316,7 @@ bool Material::parseBlend(Pass* pass, const rapidjson::GenericValue<rapidjson::U
 
 bool Material::parseShader(Pass* pass, const rapidjson::GenericValue<rapidjson::UTF8<> >& shaderJSON)
 {
+
     CCASSERT(shaderJSON.IsObject(), "Invalid type for 'shader'. It must be an object");
 
     // vertexShader
@@ -308,17 +325,13 @@ bool Material::parseShader(Pass* pass, const rapidjson::GenericValue<rapidjson::
     // fragmentShader
     const char* fragShader = getOptionalString(shaderJSON, "fragmentShader", nullptr);
 
-    // defines. Array of strings
-//    const char* defines = getOptionalString(shaderJSON, "defines", nullptr);
-
+    // compileTimeDefines
+    const char* compileTimeDefines = getOptionalString(shaderJSON, "defines", "");
 
     if (vertShader && fragShader)
     {
-        auto glProgram = GLProgram::createWithFilenames(vertShader, fragShader);
-        auto glProgramState = GLProgramState::create(glProgram);
-
+        auto glProgramState = GLProgramState::getOrCreateWithShaders(vertShader, fragShader, compileTimeDefines);
         pass->setGLProgramState(glProgramState);
-
 
         // Parse uniforms only if the GLProgramState was created
         for( auto it = shaderJSON.MemberonBegin(); it != shaderJSON.MemberonEnd(); it++)
@@ -440,6 +453,9 @@ std::string Material::getName() const
 }
 
 Material::Material()
+: _name("")
+, _target(nullptr)
+, _currentTechnique(nullptr)
 {
 }
 

@@ -43,6 +43,26 @@ THE SOFTWARE.
 #include "CCPrecompiledShaders.h"
 #endif
 
+
+// helper functions
+
+static void replaceDefines(const std::string& compileTimeDefines, std::string& out)
+{
+    // Replace semicolons with '#define ... \n'
+    if (compileTimeDefines.size() > 0)
+    {
+        size_t pos;
+        out = compileTimeDefines;
+        out.insert(0, "#define ");
+        while ((pos = out.find(';')) != std::string::npos)
+        {
+            out.replace(pos, 1, "\n#define ");
+        }
+        out += "\n";
+    }
+}
+
+
 NS_CC_BEGIN
 
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR = "ShaderPositionTextureColor";
@@ -103,10 +123,32 @@ const char* GLProgram::ATTRIBUTE_NAME_NORMAL = "a_normal";
 const char* GLProgram::ATTRIBUTE_NAME_BLEND_WEIGHT = "a_blendWeight";
 const char* GLProgram::ATTRIBUTE_NAME_BLEND_INDEX = "a_blendIndex";
 
+static const char * COCOS2D_SHADER_UNIFORMS =
+        "uniform mat4 CC_PMatrix;\n"
+        "uniform mat4 CC_MVMatrix;\n"
+        "uniform mat4 CC_MVPMatrix;\n"
+        "uniform mat3 CC_NormalMatrix;\n"
+        "uniform vec4 CC_Time;\n"
+        "uniform vec4 CC_SinTime;\n"
+        "uniform vec4 CC_CosTime;\n"
+        "uniform vec4 CC_Random01;\n"
+        "uniform sampler2D CC_Texture0;\n"
+        "uniform sampler2D CC_Texture1;\n"
+        "uniform sampler2D CC_Texture2;\n"
+        "uniform sampler2D CC_Texture3;\n"
+        "//CC INCLUDES END\n\n";
+
+static const std::string EMPTY_DEFINE;
+
 GLProgram* GLProgram::createWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
 {
+    return createWithByteArrays(vShaderByteArray, fShaderByteArray, EMPTY_DEFINE);
+}
+
+GLProgram* GLProgram::createWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray, const std::string& compileTimeDefines)
+{
     auto ret = new (std::nothrow) GLProgram();
-    if(ret && ret->initWithByteArrays(vShaderByteArray, fShaderByteArray)) {
+    if(ret && ret->initWithByteArrays(vShaderByteArray, fShaderByteArray, compileTimeDefines)) {
         ret->link();
         ret->updateUniforms();
         ret->autorelease();
@@ -116,11 +158,17 @@ GLProgram* GLProgram::createWithByteArrays(const GLchar* vShaderByteArray, const
     CC_SAFE_DELETE(ret);
     return nullptr;
 }
+
 
 GLProgram* GLProgram::createWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename)
 {
+    return createWithFilenames(vShaderFilename, fShaderFilename, EMPTY_DEFINE);
+}
+
+GLProgram* GLProgram::createWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename, const std::string& compileTimeDefines)
+{
     auto ret = new (std::nothrow) GLProgram();
-    if(ret && ret->initWithFilenames(vShaderFilename, fShaderFilename)) {
+    if(ret && ret->initWithFilenames(vShaderFilename, fShaderFilename, compileTimeDefines)) {
         ret->link();
         ret->updateUniforms();
         ret->autorelease();
@@ -130,6 +178,7 @@ GLProgram* GLProgram::createWithFilenames(const std::string& vShaderFilename, co
     CC_SAFE_DELETE(ret);
     return nullptr;
 }
+
 
 GLProgram::GLProgram()
 : _program(0)
@@ -172,6 +221,11 @@ GLProgram::~GLProgram()
 
 bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
 {
+    return initWithByteArrays(vShaderByteArray, fShaderByteArray, EMPTY_DEFINE);
+}
+
+bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray, const std::string& compileTimeDefines)
+{
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     GLboolean hasCompiler = false;
@@ -187,11 +241,16 @@ bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar*
     _program = glCreateProgram();
     CHECK_GL_ERROR_DEBUG();
 
+    // convert defines here. If we do it in "compileShader" we will do it it twice.
+    // a cache for the defines could be useful, but seems like overkill at this point
+    std::string replacedDefines = "";
+    replaceDefines(compileTimeDefines, replacedDefines);
+
     _vertShader = _fragShader = 0;
 
     if (vShaderByteArray)
     {
-        if (!compileShader(&_vertShader, GL_VERTEX_SHADER, vShaderByteArray))
+        if (!compileShader(&_vertShader, GL_VERTEX_SHADER, vShaderByteArray, replacedDefines))
         {
             CCLOG("cocos2d: ERROR: Failed to compile vertex shader");
             return false;
@@ -201,7 +260,7 @@ bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar*
     // Create and compile fragment shader
     if (fShaderByteArray)
     {
-        if (!compileShader(&_fragShader, GL_FRAGMENT_SHADER, fShaderByteArray))
+        if (!compileShader(&_fragShader, GL_FRAGMENT_SHADER, fShaderByteArray, replacedDefines))
         {
             CCLOG("cocos2d: ERROR: Failed to compile fragment shader");
             return false;
@@ -265,13 +324,18 @@ bool GLProgram::initWithPrecompiledProgramByteArray(const GLchar* vShaderByteArr
 }
 #endif
 
-bool GLProgram::initWithFilenames(const std::string &vShaderFilename, const std::string &fShaderFilename)
+bool GLProgram::initWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename)
+{
+    return initWithFilenames(vShaderFilename, fShaderFilename, EMPTY_DEFINE);
+}
+
+bool GLProgram::initWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename, const std::string& compileTimeDefines)
 {
     auto fileUtils = FileUtils::getInstance();
     std::string vertexSource = fileUtils->getStringFromFile(FileUtils::getInstance()->fullPathForFilename(vShaderFilename));
     std::string fragmentSource = fileUtils->getStringFromFile(FileUtils::getInstance()->fullPathForFilename(fShaderFilename));
 
-    return initWithByteArrays(vertexSource.c_str(), fragmentSource.c_str());
+    return initWithByteArrays(vertexSource.c_str(), fragmentSource.c_str(), compileTimeDefines);
 }
 
 void GLProgram::bindPredefinedVertexAttribs()
@@ -419,7 +483,7 @@ std::string GLProgram::getDescription() const
                                       (size_t)this, _program, _vertShader, _fragShader);
 }
 
-bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source)
+bool GLProgram::compileShader(GLuint* shader, GLenum type, const GLchar* source, const std::string& convertedDefines)
 {
     GLint status;
  
@@ -427,28 +491,16 @@ bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source
     {
         return false;
     }
-    
+
     const GLchar *sources[] = {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
         (type == GL_VERTEX_SHADER ? "precision mediump float;\n precision mediump int;\n" : "precision mediump float;\n precision mediump int;\n"),
 #elif (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32 && CC_TARGET_PLATFORM != CC_PLATFORM_LINUX && CC_TARGET_PLATFORM != CC_PLATFORM_MAC)
         (type == GL_VERTEX_SHADER ? "precision highp float;\n precision highp int;\n" : "precision mediump float;\n precision mediump int;\n"),
 #endif
-        "uniform mat4 CC_PMatrix;\n"
-        "uniform mat4 CC_MVMatrix;\n"
-        "uniform mat4 CC_MVPMatrix;\n"
-        "uniform mat3 CC_NormalMatrix;\n"
-        "uniform vec4 CC_Time;\n"
-        "uniform vec4 CC_SinTime;\n"
-        "uniform vec4 CC_CosTime;\n"
-        "uniform vec4 CC_Random01;\n"
-        "uniform sampler2D CC_Texture0;\n"
-        "uniform sampler2D CC_Texture1;\n"
-        "uniform sampler2D CC_Texture2;\n"
-        "uniform sampler2D CC_Texture3;\n"
-        "//CC INCLUDES END\n\n",
-        source,
-    };
+        COCOS2D_SHADER_UNIFORMS,
+        convertedDefines.c_str(),
+        source};
 
     *shader = glCreateShader(type);
     glShaderSource(*shader, sizeof(sources)/sizeof(*sources), sources, nullptr);
@@ -953,3 +1005,4 @@ void GLProgram::reset()
 }
 
 NS_CC_END
+

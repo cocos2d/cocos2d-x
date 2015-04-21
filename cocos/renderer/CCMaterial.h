@@ -95,10 +95,10 @@ public:
     Technique* getTechnique() const;
 
 protected:
-    Material(GLProgramState* state);
-    Material(const std::string& file);
     Material();
     ~Material();
+    bool initWithGLProgramState(GLProgramState* state);
+    bool initWithFile(const std::string& file);
 
     void setTarget(Node* target);
 
