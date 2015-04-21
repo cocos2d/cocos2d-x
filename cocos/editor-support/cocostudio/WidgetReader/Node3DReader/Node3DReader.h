@@ -56,7 +56,8 @@ namespace cocostudio
         cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* node3DOptions);
         
     protected:
-        
+        flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffersForNode(const tinyxml2::XMLElement* objectData,
+                                                                                    flatbuffers::FlatBufferBuilder* builder);
         cocos2d::Vec3 getVec3Attribute(const tinyxml2::XMLAttribute* attribute) const;
     };
 }
