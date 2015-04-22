@@ -200,7 +200,7 @@ bool TextureCube::init(const std::string& positive_x, const std::string& negativ
 
         Texture2D::PixelFormat  ePixelFmt;
         unsigned char*          pData = getImageData(img, ePixelFmt);
-        if (ePixelFmt == Texture2D::PixelFormat::RGBA8888)
+        if (ePixelFmt == Texture2D::PixelFormat::RGBA8888 || ePixelFmt == Texture2D::PixelFormat::DEFAULT)
         {
             glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
                          0,                  // level
