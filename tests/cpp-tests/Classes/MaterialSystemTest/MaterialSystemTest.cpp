@@ -59,7 +59,6 @@ void Material_SpriteTest::onEnter()
     this->addChild(sprite);
 
     auto material = Material::createWithFilename("Materials/effects.material");
-    (void)material;
     sprite->setMaterial(material);
 
 //    material->setTechnique("blur");
@@ -84,6 +83,9 @@ void Material_Sprite3DTest::onEnter()
 //    sprite->setTexture("Sprite3DTest/boss.png");
     this->addChild(sprite);
     sprite->setNormalizedPosition(Vec2(0.5,0.5));
+
+    auto material = Material::createWithFilename("Materials/spaceship.material");
+    sprite->setMaterial(material);
 }
 
 std::string Material_Sprite3DTest::subtitle() const

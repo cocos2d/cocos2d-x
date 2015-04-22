@@ -3,142 +3,22 @@
 		"version" : 1,
 		"type" : "material"
 	},
-	"name" : "simple effects",
+	"name" : "spaceship",
 	"techniques" : [
 	{
-		"name": "blur",
+		"name": "simple",
 		"passes": [
 			{
-				"blend":  "ALPHA_NON_PREMULTIPLIED",
+				"blend": "ALPHA_NON_PREMULTIPLIED",
 				"shader" : {
 					"defines": "",
-					"vertexShader": "Shaders/example_simple.vsh",
-					"fragmentShader": "Shaders/example_Blur.fsh",
-					"blurRadius": 10,
-					"sampleNum": 5,
-					"resolution": [100,100]
+					"vertexShader": "Shaders/example_3D_PositionTex.vsh",
+					"fragmentShader": "Shaders/example_3D_PositionTex.fsh",
+					 "u_color": [1,1,1,1]
 				},
 				"textures": [
 					{
-						"path": "Images/grossinis_sister1.png",
-						"wrapS": "CLAMP_TO_EDGE",
-						"wrapT": "CLAMP_TO_EDGE",
-						"minFilter": "LINEAR",
-						"magFilter": "LINEAR",
-						"mipmap": "false"
-					}
-				]
-			}
-		]
-	},
-	{
-		"name": "outline",
-		"passes": [
-			{
-				"blend":  "ALPHA_NON_PREMULTIPLIED",
-				"shader" : {
-					"defines": "",
-					"vertexShader": "Shaders/example_simple.vsh",
-					"fragmentShader": "Shaders/example_outline.fsh",
-					"u_outlineColor": [0.1, 0.2, 0.3],
-					"u_radius": 0.01,
-					"u_threshold": 1.75
-				},
-				"textures": [
-					{
-						"path": "Images/grossinis_sister1.png",
-						"wrapS": "CLAMP_TO_EDGE",
-						"wrapT": "CLAMP_TO_EDGE",
-						"minFilter": "LINEAR",
-						"magFilter": "LINEAR",
-						"mipmap": "false"
-					}
-				]
-			}
-		]
-	},
-	{
-		"name": "noise",
-		"passes": [
-			{
-				"blend":  "ALPHA_NON_PREMULTIPLIED",
-				"shader" : {
-					"defines": "",
-					"vertexShader": "Shaders/example_simple.vsh",
-					"fragmentShader": "Shaders/example_Noisy.fsh",
-					"resolution": [100,100]
-				},
-				"textures": [
-					{
-						"path": "Images/grossinis_sister1.png",
-						"wrapS": "CLAMP_TO_EDGE",
-						"wrapT": "CLAMP_TO_EDGE",
-						"minFilter": "LINEAR",
-						"magFilter": "LINEAR",
-						"mipmap": "false"
-					}
-				]
-			}
-		]
-	},
-	{
-		"name": "edge detect",
-		"passes": [
-			{
-				"blend":  "ALPHA_NON_PREMULTIPLIED",
-				"shader" : {
-					"defines": "",
-					"vertexShader": "Shaders/example_simple.vsh",
-					"fragmentShader": "Shaders/example_edgeDetection.fsh",
-					"resolution": [100,100]
-				},
-				"textures": [
-					{
-						"path": "Images/grossinis_sister1.png",
-						"wrapS": "CLAMP_TO_EDGE",
-						"wrapT": "CLAMP_TO_EDGE",
-						"minFilter": "LINEAR",
-						"magFilter": "LINEAR",
-						"mipmap": "false"
-					}
-				]
-			}
-		]
-	},
-	{
-		"name": "gray+blur",
-		"passes": [
-			{
-				"blend":  "ALPHA_NON_PREMULTIPLIED",
-				"shader" : {
-					"defines": "TEXTURE_REPEAT",
-					"vertexShader": "Shaders/example_simple.vsh",
-					"fragmentShader": "Shaders/example_Blur.fsh",
-					"blurRadius": 10,
-					"sampleNum": 5,
-					"resolution": [100,100]
-				},
-				"textures": [
-					{
-						"path": "Images/grossinis_sister1.png",
-						"wrapS": "CLAMP_TO_EDGE",
-						"wrapT": "CLAMP_TO_EDGE",
-						"minFilter": "LINEAR",
-						"magFilter": "LINEAR",
-						"mipmap": "false"
-					}
-				]
-			},
-			{
-				"blend":  "ALPHA_NON_PREMULTIPLIED",
-				"shader" : {
-					"defines": "",
-					"vertexShader": "Shaders/example_simple.vsh",
-					"fragmentShader": "Shaders/example_greyScale.fsh"
-					},
-				"textures": [
-					{
-						"path": "Images/grossinis_sister1.png",
+						"path": "Sprite3DTest/boss.png",
 						"wrapS": "CLAMP_TO_EDGE",
 						"wrapT": "CLAMP_TO_EDGE",
 						"minFilter": "LINEAR",

@@ -769,7 +769,14 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         if (isTransparent)
             flags |= Node::FLAGS_RENDER_AS_3D;
 
-        meshCommand.init(globalZ, textureID, programstate, _blend, mesh->getVertexBuffer(), mesh->getIndexBuffer(), mesh->getPrimitiveType(), mesh->getIndexFormat(), mesh->getIndexCount(), transform, flags);
+        if (_material)
+        {
+            meshCommand.init(globalZ, _material, mesh->getVertexBuffer(), mesh->getIndexBuffer(), mesh->getPrimitiveType(), mesh->getIndexFormat(), mesh->getIndexCount(), transform, flags);
+        }
+        else
+        {
+            meshCommand.init(globalZ, textureID, programstate, _blend, mesh->getVertexBuffer(), mesh->getIndexBuffer(), mesh->getPrimitiveType(), mesh->getIndexFormat(), mesh->getIndexCount(), transform, flags);
+        }
         
         meshCommand.setLightMask(_lightMask);
 

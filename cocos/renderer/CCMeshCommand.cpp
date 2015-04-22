@@ -102,6 +102,47 @@ MeshCommand::MeshCommand()
 }
 
 void MeshCommand::init(float globalZOrder,
+                       Material* material,
+                       GLuint vertexBuffer,
+                       GLuint indexBuffer,
+                       GLenum primitive,
+                       GLenum indexFormat,
+                       ssize_t indexCount,
+                       const cocos2d::Mat4 &mv,
+                       uint32_t flags)
+{
+    CCASSERT(material, "material cannot be nill");
+
+    RenderCommand::init(globalZOrder, mv, flags);
+
+    _globalOrder = globalZOrder;
+    _material = material;
+    
+    _vertexBuffer = vertexBuffer;
+    _indexBuffer = indexBuffer;
+    _primitive = primitive;
+    _indexFormat = indexFormat;
+    _indexCount = indexCount;
+    _mv.set(mv);
+
+    _is3D = true;
+}
+
+void MeshCommand::init(float globalOrder,
+                       GLuint textureID,
+                       GLProgramState* glProgramState,
+                       BlendFunc blendType,
+                       GLuint vertexBuffer,
+                       GLuint indexBuffer,
+                       GLenum primitive,
+                       GLenum indexFormat,
+                       ssize_t indexCount,
+                       const Mat4 &mv)
+{
+    init(globalOrder, textureID, glProgramState, blendType, vertexBuffer, indexBuffer, primitive, indexFormat, indexCount, mv, 0);
+}
+
+void MeshCommand::init(float globalZOrder,
                        GLuint textureID,
                        cocos2d::GLProgramState *glProgramState,
                        cocos2d::BlendFunc blendType,
@@ -130,20 +171,6 @@ void MeshCommand::init(float globalZOrder,
     _mv.set(mv);
     
     _is3D = true;
-}
-
-void MeshCommand::init(float globalOrder,
-                       GLuint textureID,
-                       GLProgramState* glProgramState,
-                       BlendFunc blendType,
-                       GLuint vertexBuffer,
-                       GLuint indexBuffer,
-                       GLenum primitive,
-                       GLenum indexFormat,
-                       ssize_t indexCount,
-                       const Mat4 &mv)
-{
-    init(globalOrder, textureID, glProgramState, blendType, vertexBuffer, indexBuffer, primitive, indexFormat, indexCount, mv, 0);
 }
 
 void MeshCommand::setCullFaceEnabled(bool enable)
@@ -277,7 +304,12 @@ void MeshCommand::preBatchDraw()
     else
     {
         glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-        _glProgramState->applyAttributes();
+
+        // FIXME: Assumes that all the passes in the Material share the same Vertex Attribs
+        GLProgramState* programState = (_material != nullptr)
+                                        ? _material->_currentTechnique->_passes.at(0)->getGLProgramState()
+                                        : _glProgramState;
+        programState->applyAttributes();
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     }
 }
@@ -329,7 +361,9 @@ void MeshCommand::batchDraw()
 void MeshCommand::postBatchDraw()
 {
     //restore render state
-    restoreRenderState();
+    if (!_material)
+        restoreRenderState();
+
     if (_vao)
     {
         GL::bindVAO(0);
@@ -379,18 +413,23 @@ void MeshCommand::execute()
 
 void MeshCommand::buildVAO()
 {
+    // FIXME: Assumes that all the passes in the Material share the same Vertex Attribs
+    GLProgramState* programState = (_material != nullptr)
+                                    ? _material->_currentTechnique->_passes.at(0)->getGLProgramState()
+                                    : _glProgramState;
+
     releaseVAO();
     glGenVertexArrays(1, &_vao);
     GL::bindVAO(_vao);
     glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-    auto flags = _glProgramState->getVertexAttribsFlags();
+    auto flags = programState->getVertexAttribsFlags();
     for (int i = 0; flags > 0; i++) {
         int flag = 1 << i;
         if (flag & flags)
             glEnableVertexAttribArray(i);
         flags &= ~flag;
     }
-    _glProgramState->applyAttributes(false);
+    programState->applyAttributes(false);
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     
