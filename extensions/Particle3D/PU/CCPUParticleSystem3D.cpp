@@ -109,20 +109,15 @@ void PUParticle3D::process( float timeElapsed )
 }
 
 PUParticle3D::PUParticle3D():
-    //position(Vec3::ZERO),
     particleEntityPtr(nullptr),
     visualData(nullptr),
     particleType(PT_VISUAL),
-    direction(Vec3::ZERO),
     timeToLive(DEFAULT_TTL),
     totalTimeToLive(DEFAULT_TTL),
     timeFraction(0.0f),
     mass(DEFAULT_MASS),
     eventFlags(0),
     freezed(false),
-    originalPosition(Vec3::ZERO),
-    latestPosition(Vec3::ZERO),
-    originalDirection(Vec3::ZERO),
     originalDirectionLength(0.0f),
     originalScaledDirectionLength(0.0f),
     originalVelocity(0.0f),

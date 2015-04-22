@@ -30,8 +30,7 @@
 NS_CC_BEGIN
 
 Particle3D::Particle3D()
-: position(Vec3::ZERO)
-, color(Vec4::ONE)
+: color(Vec4::ONE)
 , rt_uv(Vec2::ONE)
 , width(1.0f)
 , height(1.0f)

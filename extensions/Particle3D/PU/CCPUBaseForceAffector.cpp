@@ -36,7 +36,6 @@ const PUBaseForceAffector::ForceApplication PUBaseForceAffector::DEFAULT_FORCE_A
 PUBaseForceAffector::PUBaseForceAffector() 
     : PUAffector()
     , _forceVector(DEFAULT_FORCE_VECTOR)
-    , _scaledVector(Vec3::ZERO)
     , _forceApplication(DEFAULT_FORCE_APPL)
 {
 }

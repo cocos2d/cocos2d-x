@@ -6,7 +6,7 @@ Copyright 2012 cocos2d-x.org
 Copyright 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
- 
+
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -78,7 +78,7 @@ const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_U_COLOR = "ShaderPositionTex
 const char* GLProgram::SHADER_NAME_POSITION_TEXTURE_A8_COLOR = "ShaderPositionTextureA8Color";
 const char* GLProgram::SHADER_NAME_POSITION_U_COLOR = "ShaderPosition_uColor";
 const char* GLProgram::SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR = "ShaderPositionLengthTextureColor";
-
+const char* GLProgram::SHADER_NAME_POSITION_GRAYSCALE = "ShaderUIGrayScale";
 const char* GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_NORMAL = "ShaderLabelDFNormal";
 const char* GLProgram::SHADER_NAME_LABEL_DISTANCEFIELD_GLOW = "ShaderLabelDFGlow";
 const char* GLProgram::SHADER_NAME_LABEL_NORMAL = "ShaderLabelNormal";
@@ -199,15 +199,15 @@ GLProgram::~GLProgram()
     {
         glDeleteShader(_vertShader);
     }
-    
+
     if (_fragShader)
     {
         glDeleteShader(_fragShader);
     }
-    
+
     _vertShader = _fragShader = 0;
 
-    if (_program) 
+    if (_program)
     {
         GL::deleteProgram(_program);
     }
@@ -277,9 +277,9 @@ bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar*
     {
         glAttachShader(_program, _fragShader);
     }
-    
+
     _hashForUniforms.clear();
-    
+
     CHECK_GL_ERROR_DEBUG();
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || defined(WP8_SHADER_COMPILER)
@@ -318,7 +318,7 @@ bool GLProgram::initWithPrecompiledProgramByteArray(const GLchar* vShaderByteArr
     CHECK_GL_ERROR_DEBUG();
     _hashForUniforms.clear();
 
-    CHECK_GL_ERROR_DEBUG();  
+    CHECK_GL_ERROR_DEBUG();
 
     return haveProgram;
 }
@@ -437,13 +437,13 @@ void GLProgram::parseUniforms()
                     }
                     uniform.name = std::string(uniformName);
                     uniform.location = glGetUniformLocation(_program, uniformName);
-                    GLenum __gl_error_code = glGetError(); 
-                    if (__gl_error_code != GL_NO_ERROR) 
-                    { 
+                    GLenum __gl_error_code = glGetError();
+                    if (__gl_error_code != GL_NO_ERROR)
+                    {
                         CCLOG("error: 0x%x", (int)__gl_error_code);
-                    } 
+                    }
                     assert(__gl_error_code == GL_NO_ERROR);
-                    
+
                     _userUniforms[uniform.name] = uniform;
                 }
             }
@@ -483,10 +483,15 @@ std::string GLProgram::getDescription() const
                                       (size_t)this, _program, _vertShader, _fragShader);
 }
 
+bool GLProgram::compileShader(GLuint * shader, GLenum type, const GLchar* source)
+{
+    return compileShader(shader, type, source, "");
+}
+
 bool GLProgram::compileShader(GLuint* shader, GLenum type, const GLchar* source, const std::string& convertedDefines)
 {
     GLint status;
- 
+
     if (!source)
     {
         return false;
@@ -513,10 +518,10 @@ bool GLProgram::compileShader(GLuint* shader, GLenum type, const GLchar* source,
         GLsizei length;
         glGetShaderiv(*shader, GL_SHADER_SOURCE_LENGTH, &length);
         GLchar* src = (GLchar *)malloc(sizeof(GLchar) * length);
-        
+
         glGetShaderSource(*shader, length, nullptr, src);
         CCLOG("cocos2d: ERROR: Failed to compile shader:\n%s", src);
-        
+
         if (type == GL_VERTEX_SHADER)
         {
             CCLOG("cocos2d: %s", getVertexShaderLog().c_str());
@@ -554,7 +559,7 @@ void GLProgram::updateUniforms()
     _builtInUniforms[UNIFORM_MV_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_MV_MATRIX);
     _builtInUniforms[UNIFORM_MVP_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_MVP_MATRIX);
     _builtInUniforms[UNIFORM_NORMAL_MATRIX] = glGetUniformLocation(_program, UNIFORM_NAME_NORMAL_MATRIX);
-    
+
     _builtInUniforms[UNIFORM_TIME] = glGetUniformLocation(_program, UNIFORM_NAME_TIME);
     _builtInUniforms[UNIFORM_SIN_TIME] = glGetUniformLocation(_program, UNIFORM_NAME_SIN_TIME);
     _builtInUniforms[UNIFORM_COS_TIME] = glGetUniformLocation(_program, UNIFORM_NAME_COS_TIME);
@@ -578,7 +583,7 @@ void GLProgram::updateUniforms()
     _flags.usesRandom = _builtInUniforms[UNIFORM_RANDOM01] != -1;
 
     this->use();
-    
+
     // Since sample most probably won't change, set it to 0,1,2,3 now.
     if(_builtInUniforms[UNIFORM_SAMPLER0] != -1)
        setUniformLocationWith1i(_builtInUniforms[UNIFORM_SAMPLER0], 0);
@@ -619,17 +624,17 @@ bool GLProgram::link()
     {
         glDeleteShader(_vertShader);
     }
-    
+
     if (_fragShader)
     {
         glDeleteShader(_fragShader);
     }
-    
+
     _vertShader = _fragShader = 0;
-    
+
 #if DEBUG || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     glGetProgramiv(_program, GL_LINK_STATUS, &status);
-    
+
     if (status == GL_FALSE)
     {
         CCLOG("cocos2d: ERROR: Failed to link program: %i", _program);
@@ -714,7 +719,7 @@ bool GLProgram::updateUniformLocation(GLint location, const GLvoid* data, unsign
     }
 
     bool updated = true;
-    
+
     auto element = _hashForUniforms.find(location);
     if (element == _hashForUniforms.end())
     {
@@ -748,14 +753,14 @@ GLint GLProgram::getUniformLocationForName(const char* name) const
 {
     CCASSERT(name != nullptr, "Invalid uniform name" );
     CCASSERT(_program != 0, "Invalid operation. Cannot get uniform location when program is not initialized");
-    
+
     return glGetUniformLocation(_program, name);
 }
 
 void GLProgram::setUniformLocationWith1i(GLint location, GLint i1)
 {
     bool updated = updateUniformLocation(location, &i1, sizeof(i1)*1);
-    
+
     if( updated )
     {
         glUniform1i( (GLint)location, i1);
@@ -766,7 +771,7 @@ void GLProgram::setUniformLocationWith2i(GLint location, GLint i1, GLint i2)
 {
     GLint ints[2] = {i1,i2};
     bool updated = updateUniformLocation(location, ints, sizeof(ints));
-    
+
     if( updated )
     {
         glUniform2i( (GLint)location, i1, i2);
@@ -777,7 +782,7 @@ void GLProgram::setUniformLocationWith3i(GLint location, GLint i1, GLint i2, GLi
 {
     GLint ints[3] = {i1,i2,i3};
     bool updated = updateUniformLocation(location, ints, sizeof(ints));
-    
+
     if( updated )
     {
         glUniform3i( (GLint)location, i1, i2, i3);
@@ -788,7 +793,7 @@ void GLProgram::setUniformLocationWith4i(GLint location, GLint i1, GLint i2, GLi
 {
     GLint ints[4] = {i1,i2,i3,i4};
     bool updated = updateUniformLocation(location, ints, sizeof(ints));
-    
+
     if( updated )
     {
         glUniform4i( (GLint)location, i1, i2, i3, i4);
@@ -798,7 +803,7 @@ void GLProgram::setUniformLocationWith4i(GLint location, GLint i1, GLint i2, GLi
 void GLProgram::setUniformLocationWith2iv(GLint location, GLint* ints, unsigned int numberOfArrays)
 {
     bool updated = updateUniformLocation(location, ints, sizeof(int)*2*numberOfArrays);
-    
+
     if( updated )
     {
         glUniform2iv( (GLint)location, (GLsizei)numberOfArrays, ints );
@@ -808,7 +813,7 @@ void GLProgram::setUniformLocationWith2iv(GLint location, GLint* ints, unsigned 
 void GLProgram::setUniformLocationWith3iv(GLint location, GLint* ints, unsigned int numberOfArrays)
 {
     bool updated = updateUniformLocation(location, ints, sizeof(int)*3*numberOfArrays);
-    
+
     if( updated )
     {
         glUniform3iv( (GLint)location, (GLsizei)numberOfArrays, ints );
@@ -818,7 +823,7 @@ void GLProgram::setUniformLocationWith3iv(GLint location, GLint* ints, unsigned 
 void GLProgram::setUniformLocationWith4iv(GLint location, GLint* ints, unsigned int numberOfArrays)
 {
     bool updated = updateUniformLocation(location, ints, sizeof(int)*4*numberOfArrays);
-    
+
     if( updated )
     {
         glUniform4iv( (GLint)location, (GLsizei)numberOfArrays, ints );
@@ -911,7 +916,7 @@ void GLProgram::setUniformLocationWith4fv(GLint location, const GLfloat* floats,
 
 void GLProgram::setUniformLocationWithMatrix2fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices) {
     bool updated = updateUniformLocation(location, matrixArray, sizeof(float)*4*numberOfMatrices);
-    
+
     if( updated )
     {
         glUniformMatrix2fv( (GLint)location, (GLsizei)numberOfMatrices, GL_FALSE, matrixArray);
@@ -920,7 +925,7 @@ void GLProgram::setUniformLocationWithMatrix2fv(GLint location, const GLfloat* m
 
 void GLProgram::setUniformLocationWithMatrix3fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices) {
     bool updated = updateUniformLocation(location, matrixArray, sizeof(float)*9*numberOfMatrices);
-    
+
     if( updated )
     {
         glUniformMatrix3fv( (GLint)location, (GLsizei)numberOfMatrices, GL_FALSE, matrixArray);
@@ -976,12 +981,12 @@ void GLProgram::setUniformsForBuiltins(const Mat4 &matrixMV)
         // Cocos2D doesn't store a high precision time value, so this will have to do.
         // Getting Mach time per frame per shader using time could be extremely expensive.
         float time = _director->getTotalFrames() * _director->getAnimationInterval();
-        
+
         setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_TIME], time/10.0, time, time*2, time*4);
         setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_SIN_TIME], time/8.0, time/4.0, time/2.0, sinf(time));
         setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_COS_TIME], time/8.0, time/4.0, time/2.0, cosf(time));
     }
-    
+
     if(_flags.usesRandom)
         setUniformLocationWith4f(_builtInUniforms[GLProgram::UNIFORM_RANDOM01], CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1());
 }
@@ -990,7 +995,7 @@ void GLProgram::reset()
 {
     _vertShader = _fragShader = 0;
     memset(_builtInUniforms, 0, sizeof(_builtInUniforms));
-    
+
 
     // it is already deallocated by android
     //GL::deleteProgram(_program);
@@ -1000,7 +1005,7 @@ void GLProgram::reset()
     {
         free(e.second.first);
     }
-    
+
     _hashForUniforms.clear();
 }
 
