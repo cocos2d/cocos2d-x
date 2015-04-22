@@ -17,7 +17,7 @@ bool CocoStudioComponentsTest::init()
 {
     if (TestCase::init())
     {
-        auto bg = LayerColor::create(Color4B(255, 255, 255, 255));
+        auto bg = LayerColor::create(Color4B(0, 128, 255, 255));
         addChild(bg);
 
         auto root = createGameScene();
