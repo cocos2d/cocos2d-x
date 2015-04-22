@@ -601,7 +601,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\renderer\CCVertexIndexData.cpp" />
     <ClCompile Include="..\storage\local-storage\LocalStorage.cpp" />
     <ClCompile Include="..\ui\CocosGUI.cpp" />
-    <ClCompile Include="..\ui\shaders\UIShaders.cpp" />
     <ClCompile Include="..\ui\UIButton.cpp" />
     <ClCompile Include="..\ui\UICheckBox.cpp" />
     <ClCompile Include="..\ui\UIDeprecated.cpp" />
@@ -1176,7 +1175,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\storage\local-storage\LocalStorage.h" />
     <ClInclude Include="..\ui\CocosGUI.h" />
     <ClInclude Include="..\ui\GUIExport.h" />
-    <ClInclude Include="..\ui\shaders\UIShaders.h" />
     <ClInclude Include="..\ui\UIButton.h" />
     <ClInclude Include="..\ui\UICheckBox.h" />
     <ClInclude Include="..\ui\UIDeprecated.h" />
@@ -1285,7 +1283,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <None Include="..\math\Vec2.inl" />
     <None Include="..\math\Vec3.inl" />
     <None Include="..\math\Vec4.inl" />
-    <None Include="..\ui\shaders\ccShader_grayscale.frag" />
     <None Include="cocos2d.def" />
   </ItemGroup>
   <ItemGroup>

@@ -2,10 +2,13 @@ cocos2d-x-3.6  ??
     [NEW]           3rd: update chipmunk to v 6.2.2 on Windows 8.1 Universal App
     [NEW]           3rd: update freetype to v 2.5.5 on Windows 8.1 Universal App
     [NEW]           Label: added LabelEffect::ALL which can be used in disableEffect(LabelEffect) to disable all effects
+    [NEW]           Lua-binding: binded ui:WebView and added corresponidng test case
     [NEW]           MathUtil: added `MathUtil::lerp()`
+    [NEW]           UserDefault: added `UserDefault::setDelegate()`
     [NEW]           Vec2: added `Vec2::setZero()`
     [NEW]           Vec3: added `Vec3::lerp()`
     [NEW]           WP8: remove WP8 support because Angle don't support WP8 any more
+    [NEW]           WP8.1: added back button support
 
     [FIX]           JNI: JNI illegal start byte error which causes crashing error on Android 5.0
     [FIX]           UI:VideoPlayer: crashed when playing streamed MP4 file on iOS

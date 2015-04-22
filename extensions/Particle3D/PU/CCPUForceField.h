@@ -45,9 +45,7 @@ public:
         _frequency(1.0f),
         _amplitude(1.0f),
         _persistence(1.0f),
-        _mapScale(Vec3::ZERO),
-        _worldSize(DEFAULT_WORLDSIZE),
-        _mappedPosition(Vec3::ZERO)
+        _worldSize(DEFAULT_WORLDSIZE)
     {
     };
     virtual ~PUForceFieldCalculationFactory(void){};

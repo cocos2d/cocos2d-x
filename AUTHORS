@@ -1109,6 +1109,7 @@ Developers:
         
     perminovVS
         Optimize Vec3 and Vec2
+        Added `UserDefault::setDelegate()`
 
 Retired Core Developers:
     WenSheng Yang

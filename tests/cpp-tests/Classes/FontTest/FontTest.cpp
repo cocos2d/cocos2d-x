@@ -25,14 +25,6 @@ static std::string fontList[] =
     "fonts/Scissor Cuts.ttf",
 };
 
-FontTests::FontTests()
-{
-    for (auto& fontFile : fontList)
-    {
-        addTestCase("FontTests", [&](){return FontTest::create(fontFile); });
-    }
-}
-
 static int vAlignIdx = 0;
 static TextVAlignment verticalAlignment[] =
 {
@@ -40,6 +32,25 @@ static TextVAlignment verticalAlignment[] =
     TextVAlignment::CENTER,
     TextVAlignment::BOTTOM,
 };
+
+
+FontTests::FontTests()
+{
+    for (auto& fontFile : fontList)
+    {
+        addTestCase("FontTests", [&](){vAlignIdx = 0; return FontTest::create(fontFile); });
+    }
+    
+    for (auto& fontFile : fontList)
+    {
+        addTestCase("FontTests", [&](){ vAlignIdx = 1;  return FontTest::create(fontFile); });
+    }
+    
+    for (auto& fontFile : fontList)
+    {
+        addTestCase("FontTests", [&](){vAlignIdx = 2; return FontTest::create(fontFile); });
+    }
+}
 
 void FontTest::showFont(const std::string& fontFile)
 {

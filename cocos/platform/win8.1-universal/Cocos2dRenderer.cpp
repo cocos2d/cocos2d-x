@@ -84,6 +84,11 @@ void Cocos2dRenderer::Pause()
     }
 }
 
+bool Cocos2dRenderer::AppShouldExit()
+{
+    return GLViewImpl::sharedOpenGLView()->AppShouldExit();
+}
+
 void Cocos2dRenderer::DeviceLost()
 {
     Pause();
@@ -135,6 +140,11 @@ void Cocos2dRenderer::Draw(GLsizei width, GLsizei height, float dpi, DisplayOrie
 void Cocos2dRenderer::QueuePointerEvent(cocos2d::PointerEventType type, Windows::UI::Core::PointerEventArgs^ args)
 {
     GLViewImpl::sharedOpenGLView()->QueuePointerEvent(type, args);
+}
+
+void Cocos2dRenderer::QueueBackButtonEvent()
+{
+    GLViewImpl::sharedOpenGLView()->QueueBackKeyPress();
 }
 
 

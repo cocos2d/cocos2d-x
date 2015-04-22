@@ -159,7 +159,6 @@ PUForceField::PUForceField(void) :
     _worldSize(PUForceFieldCalculationFactory::DEFAULT_WORLDSIZE),
     _forceFieldSize(64),
     _forceFieldCalculationFactory(0),
-    _forceFieldPositionBase(Vec3::ZERO),
     _forceFieldType(FF_REALTIME_CALC)
 {
 }

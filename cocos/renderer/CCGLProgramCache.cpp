@@ -53,6 +53,7 @@ enum {
     kShaderType_PositionLengthTexureColor,
     kShaderType_LabelDistanceFieldNormal,
     kShaderType_LabelDistanceFieldGlow,
+    kShaderType_UIGrayScale,
     kShaderType_LabelNormal,
     kShaderType_LabelOutline,
     kShaderType_3DPosition,
@@ -118,7 +119,7 @@ GLProgramCache::~GLProgramCache()
 }
 
 bool GLProgramCache::init()
-{    
+{
     loadDefaultGLPrograms();
     return true;
 }
@@ -150,12 +151,12 @@ void GLProgramCache::loadDefaultGLPrograms()
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_PositionColor);
     _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_COLOR, p) );
-    
+
     // Position, Color, PointSize shader
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_PositionColorTextureAsPointsize);
     _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_COLOR_TEXASPOINTSIZE, p) );
-    
+
     //
     // Position, Color shader no MVP
     //
@@ -190,7 +191,7 @@ void GLProgramCache::loadDefaultGLPrograms()
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_Position_uColor);
     _programs.insert( std::make_pair(GLProgram::SHADER_NAME_POSITION_U_COLOR, p) );
-    
+
     //
     // Position, Legth(TexCoords, Color (used by Draw Node basically )
     //
@@ -209,13 +210,17 @@ void GLProgramCache::loadDefaultGLPrograms()
 #endif
 
     p = new (std::nothrow) GLProgram();
+    loadDefaultGLProgram(p, kShaderType_UIGrayScale);
+    _programs.insert(std::make_pair(GLProgram::SHADER_NAME_POSITION_GRAYSCALE, p));
+
+    p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_LabelNormal);
     _programs.insert( std::make_pair(GLProgram::SHADER_NAME_LABEL_NORMAL, p) );
 
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_LabelOutline);
     _programs.insert( std::make_pair(GLProgram::SHADER_NAME_LABEL_OUTLINE, p) );
-    
+
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DPosition);
     _programs.insert( std::make_pair(GLProgram::SHADER_3D_POSITION, p) );
@@ -223,7 +228,7 @@ void GLProgramCache::loadDefaultGLPrograms()
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DPositionTex);
     _programs.insert( std::make_pair(GLProgram::SHADER_3D_POSITION_TEXTURE, p) );
-    
+
     p = new (std::nothrow) GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DSkinPositionTex);
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_SKINPOSITION_TEXTURE, p));
@@ -239,19 +244,19 @@ void GLProgramCache::loadDefaultGLPrograms()
     p = new GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DSkinPositionNormalTex);
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_SKINPOSITION_NORMAL_TEXTURE, p));
-    
+
     p = new GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DParticleColor);
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_PARTICLE_COLOR, p));
-    
+
     p = new GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DParticleTex);
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_PARTICLE_TEXTURE, p));
-    
+
     p = new GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DSkyBox);
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_SKYBOX, p));
-    
+
     p = new GLProgram();
     loadDefaultGLProgram(p, kShaderType_3DTerrain);
     _programs.insert(std::make_pair(GLProgram::SHADER_3D_TERRAIN, p));
@@ -260,25 +265,25 @@ void GLProgramCache::loadDefaultGLPrograms()
 void GLProgramCache::reloadDefaultGLPrograms()
 {
     // reset all programs and reload them
-    
+
     // Position Texture Color shader
-    GLProgram *p = getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);    
+    GLProgram *p = getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_PositionTextureColor);
 
     // Position Texture Color without MVP shader
     p = getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP);
-    p->reset();    
+    p->reset();
     loadDefaultGLProgram(p, kShaderType_PositionTextureColor_noMVP);
 
     // Position Texture Color alpha test
     p = getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST);
-    p->reset();    
+    p->reset();
     loadDefaultGLProgram(p, kShaderType_PositionTextureColorAlphaTest);
-    
+
     // Position Texture Color alpha test
     p = getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
-    p->reset();    
+    p->reset();
     loadDefaultGLProgram(p, kShaderType_PositionTextureColorAlphaTestNoMV);
     //
     // Position, Color shader
@@ -286,7 +291,7 @@ void GLProgramCache::reloadDefaultGLPrograms()
     p = getGLProgram(GLProgram::SHADER_NAME_POSITION_COLOR);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_PositionColor);
-    
+
     // Position, Color, PointSize shader
     p = getGLProgram(GLProgram::SHADER_NAME_POSITION_COLOR_TEXASPOINTSIZE);
     p->reset();
@@ -304,28 +309,28 @@ void GLProgramCache::reloadDefaultGLPrograms()
     p = getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_PositionTexture);
-    
+
     //
     // Position, Texture attribs, 1 Color as uniform shader
     //
     p = getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_U_COLOR);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_PositionTexture_uColor);
-    
+
     //
     // Position Texture A8 Color shader
     //
     p = getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_A8_COLOR);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_PositionTextureA8Color);
-    
+
     //
     // Position and 1 color passed as a uniform (to simulate glColor4ub )
     //
     p = getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_Position_uColor);
-    
+
     //
     // Position, Legth(TexCoords, Color (used by Draw Node basically )
     //
@@ -350,19 +355,19 @@ void GLProgramCache::reloadDefaultGLPrograms()
     p = getGLProgram(GLProgram::SHADER_NAME_LABEL_OUTLINE);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_LabelOutline);
-    
+
     p = getGLProgram(GLProgram::SHADER_3D_POSITION);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_3DPosition);
-    
+
     p = getGLProgram(GLProgram::SHADER_3D_POSITION_TEXTURE);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_3DPositionTex);
-    
+
     p = getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_TEXTURE);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_3DSkinPositionTex);
-    
+
     p = getGLProgram(GLProgram::SHADER_3D_POSITION_NORMAL);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_3DPositionNormal);
@@ -374,19 +379,19 @@ void GLProgramCache::reloadDefaultGLPrograms()
     p = getGLProgram(GLProgram::SHADER_3D_SKINPOSITION_NORMAL_TEXTURE);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_3DSkinPositionNormalTex);
-    
+
     p = getGLProgram(GLProgram::SHADER_3D_PARTICLE_TEXTURE);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_3DParticleTex);
-    
+
     p = getGLProgram(GLProgram::SHADER_3D_PARTICLE_COLOR);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_3DParticleColor);
-    
+
     p = getGLProgram(GLProgram::SHADER_3D_SKYBOX);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_3DSkyBox);
-    
+
     p = getGLProgram(GLProgram::SHADER_3D_TERRAIN);
     p->reset();
     loadDefaultGLProgram(p, kShaderType_3DTerrain);
@@ -407,7 +412,7 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
         case kShaderType_PositionTextureColorAlphaTestNoMV:
             p->initWithByteArrays(ccPositionTextureColor_noMVP_vert, ccPositionTextureColorAlphaTest_frag);
             break;
-        case kShaderType_PositionColor:  
+        case kShaderType_PositionColor:
             p->initWithByteArrays(ccPositionColor_vert ,ccPositionColor_frag);
             break;
         case kShaderType_PositionColorTextureAsPointsize:
@@ -440,6 +445,10 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
             p->initWithByteArrays(ccLabel_vert, ccLabelDistanceFieldGlow_frag);
             break;
 #endif
+        case kShaderType_UIGrayScale:
+            p->initWithByteArrays(ccPositionTextureColor_noMVP_vert,
+                                  ccPositionTexture_GrayScale_frag);
+            break;
         case kShaderType_LabelNormal:
             p->initWithByteArrays(ccLabel_vert, ccLabelNormal_frag);
             break;
@@ -496,10 +505,10 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
             CCLOG("cocos2d: %s:%d, error shader type", __FUNCTION__, __LINE__);
             return;
     }
-    
+
     p->link();
     p->updateUniforms();
-    
+
     CHECK_GL_ERROR_DEBUG();
 }
 

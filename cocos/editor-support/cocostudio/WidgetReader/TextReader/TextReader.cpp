@@ -454,7 +454,7 @@ namespace cocostudio
             auto f_outlineColor = options->outlineColor();
             if (f_outlineColor)
             {
-                Color4B outlineColor(f_outlineColor->a(), f_outlineColor->r(), f_outlineColor->g(), f_outlineColor->b());
+                Color4B outlineColor(f_outlineColor->r(), f_outlineColor->g(), f_outlineColor->b(), f_outlineColor->a());
                 label->enableOutline(outlineColor, options->outlineSize());
             }
         }
@@ -465,7 +465,7 @@ namespace cocostudio
             auto f_shadowColor = options->shadowColor();
             if (f_shadowColor)
             {
-                Color4B shadowColor(f_shadowColor->a(), f_shadowColor->r(), f_shadowColor->g(), f_shadowColor->b());
+                Color4B shadowColor(f_shadowColor->r(), f_shadowColor->g(), f_shadowColor->b(), f_shadowColor->a());
                 label->enableShadow(shadowColor, Size(options->shadowOffsetX(), options->shadowOffsetY()), options->shadowBlurRadius());
             }
         }

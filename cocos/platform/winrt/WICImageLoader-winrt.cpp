@@ -24,7 +24,7 @@ THE SOFTWARE.
 Based upon code from the DirectX Tool Kit by Microsoft Corporation,
 obtained from https://directxtk.codeplex.com
 ****************************************************************************/
-#include "WICImageLoader-win.h"
+#include "WICImageLoader-winrt.h"
 
 NS_CC_BEGIN
 
@@ -53,8 +53,8 @@ static WICConvert g_WICConvert[] =
 
 	{ GUID_WICPixelFormat32bppBGR101010,        GUID_WICPixelFormat32bppRGBA1010102 }, // DXGI_FORMAT_R10G10B10A2_UNORM
 
-	{ GUID_WICPixelFormat24bppBGR,              GUID_WICPixelFormat32bppRGBA }, // DXGI_FORMAT_R8G8B8A8_UNORM 
-	{ GUID_WICPixelFormat24bppRGB,              GUID_WICPixelFormat32bppRGBA }, // DXGI_FORMAT_R8G8B8A8_UNORM 
+    { GUID_WICPixelFormat24bppBGR,              GUID_WICPixelFormat24bppRGB }, // DXGI_FORMAT_R8G8B8A8_UNORM 
+    { GUID_WICPixelFormat24bppRGB,              GUID_WICPixelFormat24bppRGB }, // DXGI_FORMAT_R8G8B8A8_UNORM 
 	{ GUID_WICPixelFormat32bppPBGRA,            GUID_WICPixelFormat32bppRGBA }, // DXGI_FORMAT_R8G8B8A8_UNORM 
 	{ GUID_WICPixelFormat32bppPRGBA,            GUID_WICPixelFormat32bppRGBA }, // DXGI_FORMAT_R8G8B8A8_UNORM 
 
