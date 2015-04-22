@@ -209,7 +209,9 @@ CC_CONSTRUCTOR_ACCESS:
 class CC_EX_DLL Physics3DSliderConstraint : public Physics3DConstraint
 {
 public:
-    
+    /**
+     * slide along x axis
+     */
     static Physics3DSliderConstraint* create(Physics3DRigidBody* rbA, Physics3DRigidBody* rbB, const cocos2d::Mat4& frameInA, const cocos2d::Mat4& frameInB ,bool useLinearReferenceFrameA);
     
     cocos2d::Mat4 getFrameOffsetA() const;

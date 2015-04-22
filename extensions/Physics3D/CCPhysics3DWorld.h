@@ -83,7 +83,7 @@ public:
     
     void removeAllPhysics3DObjects();
     
-    void addPhysics3DConstraint(Physics3DConstraint* constraint);
+    void addPhysics3DConstraint(Physics3DConstraint* constraint, bool disableCollisionsBetweenLinkedObjs = true);
     
     void removePhysics3DConstraint(Physics3DConstraint* constraint);
     

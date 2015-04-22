@@ -88,7 +88,17 @@ bool Physics3DRigidBody::init(Physics3DRigidBodyDes* info)
     _type = Physics3DObject::PhysicsObjType::RIGID_BODY;
     _physics3DShape = info->shape;
     _physics3DShape->retain();
+    if (info->disableSleep)
+        _btRigidBody->setActivationState(DISABLE_DEACTIVATION);
     return true;
+}
+
+void Physics3DRigidBody::setActive(bool active)
+{
+    if (_btRigidBody)
+    {
+        _btRigidBody->setActivationState(active ? ACTIVE_TAG : WANTS_DEACTIVATION);
+    }
 }
 
 void Physics3DRigidBody::applyForce( const cocos2d::Vec3& force, const cocos2d::Vec3& rel_pos )
