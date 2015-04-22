@@ -37,6 +37,7 @@ class GLProgram;
 struct Uniform;
 class EventListenerCustom;
 class EventCustom;
+class Material;
 
 //it is a common mesh
 class CC_DLL MeshCommand : public RenderCommand
@@ -138,6 +139,9 @@ protected:
     Mat4 _mv;
 
     unsigned int _lightMask;
+
+    // weak ref
+    Material* _material;
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     EventListenerCustom* _rendererRecreatedListener;

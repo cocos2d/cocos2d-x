@@ -88,6 +88,7 @@ MeshCommand::MeshCommand()
 , _renderStateDepthTest(false)
 , _renderStateDepthWrite(GL_FALSE)
 , _lightMask(-1)
+, _material(nullptr)
 {
     _type = RenderCommand::Type::MESH_COMMAND;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
