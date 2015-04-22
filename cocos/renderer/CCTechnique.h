@@ -47,6 +47,7 @@ class CC_DLL Technique : public Ref
     friend class Material;
     friend class Renderer;
     friend class Pass;
+    friend class MeshCommand;
 
 public:
     /** Creates a new Technique with a GLProgramState.

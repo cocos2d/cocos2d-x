@@ -920,7 +920,7 @@ void Renderer::drawBatchedQuads()
 
                 indexToDraw = cmd->getQuadCount() * 6;
 
-                for(auto& pass : cmd->getMaterial()->getTechnique()->_passes) {
+                for(auto& pass : cmd->getMaterial()->_currentTechnique->_passes) {
 
                     pass->bind(cmd->getModelView());
 

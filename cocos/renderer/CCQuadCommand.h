@@ -107,6 +107,7 @@ protected:
     /**Model view matrix when rendering the triangles.*/
     Mat4 _mv;
 
+    // weak ref
     Material* _material;
     bool _multiplePass;
 };
