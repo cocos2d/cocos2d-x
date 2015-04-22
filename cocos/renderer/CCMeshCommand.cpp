@@ -38,6 +38,9 @@
 #include "renderer/CCTextureAtlas.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/ccGLStateCache.h"
+#include "renderer/CCTechnique.h"
+#include "renderer/CCMaterial.h"
+#include "renderer/CCPass.h"
 #include "xxhash.h"
 
 NS_CC_BEGIN
@@ -265,10 +268,6 @@ void MeshCommand::MatrixPalleteCallBack( GLProgram* glProgram, Uniform* uniform)
 
 void MeshCommand::preBatchDraw()
 {
-    // Set material
-    GL::bindTexture2D(_textureID);
-    GL::blendFunc(_blendType.src, _blendType.dst);
-
     if (Configuration::getInstance()->supportsShareableVAO() && _vao == 0)
         buildVAO();
     if (_vao)
@@ -282,30 +281,50 @@ void MeshCommand::preBatchDraw()
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
     }
 }
+
 void MeshCommand::batchDraw()
 {
-    // set render state
-    applyRenderState();
-    
-    _glProgramState->setUniformVec4("u_color", _displayColor);
-    
-    if (_matrixPaletteSize && _matrixPalette)
+    if (_material)
     {
-        _glProgramState->setUniformCallback("u_matrixPalette", CC_CALLBACK_2(MeshCommand::MatrixPalleteCallBack, this));
-        
-    }
-    
-    _glProgramState->applyGLProgram(_mv);
-    _glProgramState->applyUniforms();
+        for(const auto& pass: _material->_currentTechnique->_passes)
+        {
+            pass->bind(_mv);
 
-    const auto& scene = Director::getInstance()->getRunningScene();
-    if (scene && scene->getLights().size() > 0)
-        setLightUniforms();
-    
-    // Draw
-    glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
-    
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
+            // Draw
+            glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
+            CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
+
+            pass->unbind();
+        }
+    }
+    else
+    {
+        // Set material
+        GL::bindTexture2D(_textureID);
+        GL::blendFunc(_blendType.src, _blendType.dst);
+
+        // set render state
+        applyRenderState();
+        
+        _glProgramState->setUniformVec4("u_color", _displayColor);
+        
+        if (_matrixPaletteSize && _matrixPalette)
+        {
+            _glProgramState->setUniformCallback("u_matrixPalette", CC_CALLBACK_2(MeshCommand::MatrixPalleteCallBack, this));
+            
+        }
+        
+        _glProgramState->applyGLProgram(_mv);
+        _glProgramState->applyUniforms();
+
+        const auto& scene = Director::getInstance()->getRunningScene();
+        if (scene && scene->getLights().size() > 0)
+            setLightUniforms();
+
+        // Draw
+        glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
+        CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
+    }
 }
 void MeshCommand::postBatchDraw()
 {
