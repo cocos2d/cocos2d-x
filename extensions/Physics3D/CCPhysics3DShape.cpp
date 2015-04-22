@@ -39,12 +39,14 @@ Physics3DShape::Physics3DShape()
 {
 #if (CC_ENABLE_BULLET_INTEGRATION)
     _btShape = nullptr;
+    _heightfieldData = nullptr;
 #endif
 }
 Physics3DShape::~Physics3DShape()
 {
 #if (CC_ENABLE_BULLET_INTEGRATION)
     CC_SAFE_DELETE(_btShape);
+    CC_SAFE_DELETE_ARRAY(_heightfieldData);
 #endif
 }
 
@@ -158,8 +160,15 @@ bool Physics3DShape::initHeightfield( int heightStickWidth,int heightStickLength
                                      , bool useDiamondSubdivision)
 {
     _shapeType = ShapeType::HEIGHT_FIELD;
-    PHY_ScalarType type = useFloatDatam == true? PHY_FLOAT: PHY_UCHAR;
-    auto heightfield = new btHeightfieldTerrainShape(heightStickWidth, heightStickLength, heightfieldData, heightScale, minHeight, maxHeight, 1, type, flipQuadEdges);
+    PHY_ScalarType type = PHY_UCHAR;
+    unsigned int dataSizeInByte = heightStickWidth * heightStickLength;
+    if (useFloatDatam){
+        type = PHY_FLOAT;
+        dataSizeInByte *= sizeof(float);
+    }
+    _heightfieldData = new unsigned char[dataSizeInByte];
+    memcpy(_heightfieldData, heightfieldData, dataSizeInByte);
+    auto heightfield = new btHeightfieldTerrainShape(heightStickWidth, heightStickLength, _heightfieldData, heightScale, minHeight, maxHeight, 1, type, flipQuadEdges);
     heightfield->setUseDiamondSubdivision(useDiamondSubdivision);
     _btShape = heightfield;
     return true;

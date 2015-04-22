@@ -174,6 +174,7 @@ void Physics3DTestDemo::shootBox( const cocos2d::Vec3 &des )
     sprite->addComponent(component);
     this->addChild(sprite);
     sprite->setPosition3D(_camera->getPosition3D());
+    sprite->setScale(0.5f);
     
     sprite->setCameraMask((unsigned short)CameraFlag::USER1);
 }
@@ -370,7 +371,7 @@ bool Physics3DTerrainDemo::init()
 
     Terrain::DetailMap r("TerrainTest/dirt.jpg"),g("TerrainTest/Grass2.jpg",10),b("TerrainTest/road.jpg"),a("TerrainTest/GreenSkin.jpg",20);
     
-    Terrain::TerrainData data("TerrainTest/heightmap16.jpg","TerrainTest/alphamap.png",r,g,b,a,Size(32,32),40.0f,2);
+    Terrain::TerrainData data("TerrainTest/heightmap129.jpg","TerrainTest/alphamap.png",r,g,b,a,Size(32,32), 20.0f, 1.0f);
     auto terrain = Terrain::create(data,Terrain::CrackFixedType::SKIRT);
     terrain->setMaxDetailMapAmount(4);
     terrain->setCameraMask(2);
@@ -386,9 +387,9 @@ bool Physics3DTerrainDemo::init()
     std::vector<float> heidata;
     terrain->getHeightData(heidata);
     auto size = terrain->getTerrainSize();
-    rbDes.shape = Physics3DShape::createHeightfield(size.width, size.height, &heidata[0], 0.01f, -100.0f, 100.0f, true, false, true);
+    rbDes.shape = Physics3DShape::createHeightfield(size.width, size.height, &heidata[0], 1.0f, terrain->getMinHeight(), terrain->getMaxHeight(), true, false, true);
     auto rigidBody = Physics3DRigidBody::create(&rbDes);
-    auto component = Physics3DComponent::create(rigidBody, Vec3(-size.width / 2.f, 0.f, size.height / 2.f));
+    auto component = Physics3DComponent::create(rigidBody);
     terrain->addComponent(component);
     this->addChild(terrain);
 
@@ -397,7 +398,7 @@ bool Physics3DTerrainDemo::init()
     rbDes.mass = 1.f;
     rbDes.shape = Physics3DShape::createSphere(0.5f);
     float start_x = START_POS_X - ARRAY_SIZE_X/2;
-    float start_y = START_POS_Y + 5.0f;
+    float start_y = START_POS_Y + 10.0f;
     float start_z = START_POS_Z - ARRAY_SIZE_Z/2;
 
     for (int k=0;k<ARRAY_SIZE_Y;k++)

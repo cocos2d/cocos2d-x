@@ -138,6 +138,7 @@ protected:
     
 #if (CC_ENABLE_BULLET_INTEGRATION)
     btCollisionShape*  _btShape;
+    unsigned char *_heightfieldData;
 #endif
 };
 

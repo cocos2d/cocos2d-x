@@ -68,7 +68,7 @@
 			"textures": [
 				{
 					"id": "Map #1", 
-					"filename": "wood.jpg", 
+					"filename": "", 
 					"type": "DIFFUSE", 
 					"wrapModeU": "REPEAT", 
 					"wrapModeV": "REPEAT"

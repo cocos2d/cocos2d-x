@@ -42,12 +42,12 @@ void Physics3DDebugDrawer::drawLine( const btVector3& from,const btVector3& to,c
     ensureCapacity(count);
 
     Vec3 col = convertbtVector3ToVec3(color);
-    V3F_V4F a = {convertbtVector3ToVec3(from), Vec4(col.x, col.y, col.z, 1.0f)};
-    V3F_V4F b = {convertbtVector3ToVec3(to), Vec4(col.x, col.y, col.z, 1.0f)};
 
     V3F_V4F *lines = (V3F_V4F *)(_buffer + _bufferCount);
-    lines[0] = a;
-    lines[1] = b;
+    lines[0].vertex = convertbtVector3ToVec3(from);
+    lines[0].color = Vec4(col.x, col.y, col.z, 1.0f);
+    lines[1].vertex = convertbtVector3ToVec3(to);
+    lines[1].color = Vec4(col.x, col.y, col.z, 1.0f);
 
     _bufferCount += count;
     _dirty = true;
