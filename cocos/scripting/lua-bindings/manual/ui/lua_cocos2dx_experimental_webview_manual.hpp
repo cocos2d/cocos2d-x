@@ -21,14 +21,21 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+#include "base/ccConfig.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
-#include "UIShaders.h"
+#ifndef COCOS_SCRIPTING_LUA_BINDINGS_LUA_COCOS2DX_EXPERIMENTAL_WEBVIEW_MANUAL_H
+#define COCOS_SCRIPTING_LUA_BINDINGS_LUA_COCOS2DX_EXPERIMENTAL_WEBVIEW_MANUAL_H
 
-#define STRINGIFY(A)  #A
+#ifdef __cplusplus
+extern "C" {
+#endif
+#include "tolua++.h"
+#ifdef __cplusplus
+}
+#endif
 
-NS_CC_BEGIN
+TOLUA_API int register_all_cocos2dx_experimental_webview_manual(lua_State* L);
 
-//include the gray scale shader
-#include "ccShader_grayscale.frag"
-
-NS_CC_END
+#endif //#ifndef COCOS_SCRIPTING_LUA_BINDINGS_LUA_COCOS2DX_EXPERIMENTAL_WEBVIEW_MANUAL_H
+#endif //#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
