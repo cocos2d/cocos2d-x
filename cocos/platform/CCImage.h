@@ -31,7 +31,7 @@ THE SOFTWARE.
 #include "renderer/CCTexture2D.h"
 
 #if defined(CC_USE_WIC)
-#include "WICImageLoader-win.h"
+#include "WICImageLoader-winrt.h"
 #endif
 
 // premultiply alpha, or the effect will wrong when want to use other pixel format in Texture2D,
