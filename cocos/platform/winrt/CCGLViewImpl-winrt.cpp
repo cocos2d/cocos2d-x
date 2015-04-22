@@ -219,7 +219,7 @@ void GLViewImpl::BackButtonListener(EventKeyboard::KeyCode keyCode, Event* event
     CCLOG("GLViewImpl::BackButtonListener: Exiting application!");
     CCLOG("");
     CCLOG("If you want to listen for Windows Phone back button events,");
-    CCLOG("add a listener for EventKeyboard::KeyCode::KEY_BACKSPACE");
+    CCLOG("add a listener for EventKeyboard::KeyCode::KEY_ESCAPE");
     CCLOG("Make sure you call stopPropagation() on the Event if you don't");
     CCLOG("want your app to exit when the back button is pressed.");
     CCLOG("");

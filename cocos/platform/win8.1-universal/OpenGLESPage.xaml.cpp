@@ -174,9 +174,9 @@ void OpenGLESPage::OnVisibilityChanged(Windows::UI::Core::CoreWindow^ sender, Wi
     This is because this back button event happens on the XAML UI thread and not the cocos2d-x UI thread.
     We need to give the game developer a chance to decide to exit the app depending on where they
     are in their game. They can receive the back button event by listening for the 
-    EventKeyboard::KeyCode::KEY_BACKSPACE event. 
+    EventKeyboard::KeyCode::KEY_ESCAPE event. 
 
-    The default behavior is to exit the app if the  EventKeyboard::KeyCode::KEY_BACKSPACE event
+    The default behavior is to exit the app if the  EventKeyboard::KeyCode::KEY_ESCAPE event
     is not handled by the game.
 */
 void OpenGLESPage::OnBackButtonPressed(Object^ sender, BackPressedEventArgs^ args)
