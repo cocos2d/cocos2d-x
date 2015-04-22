@@ -574,7 +574,7 @@ void TestColliderDetector::onEnter()
     armature2->setScaleX(-0.2f);
     armature2->setScaleY(0.2f);
     armature2->setPosition(VisibleRect::right().x - 60, VisibleRect::left().y);
-    addChild(armature2);
+    addChild(armature2,1);
 
 #if ENABLE_PHYSICS_BOX2D_DETECT || ENABLE_PHYSICS_CHIPMUNK_DETECT
     bullet = cocos2d::extension::PhysicsSprite::createWithSpriteFrameName("25.png");
@@ -582,7 +582,7 @@ void TestColliderDetector::onEnter()
     bullet = Sprite::createWithSpriteFrameName("25.png");
 
     drawNode = DrawNode::create();
-    addChild(drawNode, -1);
+    addChild(drawNode);
 
 #endif
     addChild(bullet);
@@ -1227,6 +1227,10 @@ std::string TestPlaySeveralMovement::subtitle()const
 void TestEasing::onEnter()
 {
     ArmatureBaseTest::onEnter();
+    
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(TestEasing::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     animationID = 0;
 
     armature = Armature::create("testEasing");
@@ -1237,6 +1241,7 @@ void TestEasing::onEnter()
     addChild(armature);
 
     updateSubTitle();
+    
 }
 
 std::string TestEasing::title() const
@@ -1264,6 +1269,10 @@ void TestEasing::updateSubTitle()
 void TestChangeAnimationInternal::onEnter()
 {
     ArmatureBaseTest::onEnter();
+    
+    auto listener = EventListenerTouchAllAtOnce::create();
+    listener->onTouchesEnded = CC_CALLBACK_2(TestChangeAnimationInternal::onTouchesEnded, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
     Armature *armature = nullptr;
     armature = Armature::create("Cowboy");

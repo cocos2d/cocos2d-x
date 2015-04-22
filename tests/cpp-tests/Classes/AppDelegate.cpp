@@ -171,6 +171,10 @@ bool AppDelegate::applicationDidFinishLaunching()
 #else
     glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::SHOW_ALL);
 #endif
+    
+    // Enable Remote Console
+    auto console = director->getConsole();
+    console->listenOnTCP(5678);
 
     _testController = TestController::getInstance();
     
