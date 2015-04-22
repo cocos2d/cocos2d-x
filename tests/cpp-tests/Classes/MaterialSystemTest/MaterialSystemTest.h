@@ -35,19 +35,19 @@ public:
     virtual std::string title() const override;
 };
 
-class Material_SpriteSinglePassTest : public MaterialSystemBaseTest
+class Material_SpriteTest : public MaterialSystemBaseTest
 {
 public:
-    CREATE_FUNC(Material_SpriteSinglePassTest);
+    CREATE_FUNC(Material_SpriteTest);
 
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
 };
 
-class Material_SpriteMultiplePassTest : public MaterialSystemBaseTest
+class Material_Sprite3DTest : public MaterialSystemBaseTest
 {
 public:
-    CREATE_FUNC(Material_SpriteMultiplePassTest);
+    CREATE_FUNC(Material_Sprite3DTest);
 
     virtual void onEnter() override;
     virtual std::string subtitle() const override;

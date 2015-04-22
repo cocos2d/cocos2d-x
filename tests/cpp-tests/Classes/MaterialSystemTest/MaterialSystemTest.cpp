@@ -34,8 +34,8 @@ USING_NS_CC;
 
 MaterialSystemTest::MaterialSystemTest()
 {
-    ADD_TEST_CASE(Material_SpriteSinglePassTest);
-    ADD_TEST_CASE(Material_SpriteMultiplePassTest);
+    ADD_TEST_CASE(Material_SpriteTest);
+    ADD_TEST_CASE(Material_Sprite3DTest);
 }
 
 // MARK:
@@ -47,7 +47,7 @@ std::string MaterialSystemBaseTest::title() const
 
 // MARK: Tests start here
 
-void Material_SpriteSinglePassTest::onEnter()
+void Material_SpriteTest::onEnter()
 {
     MaterialSystemBaseTest::onEnter();
     auto layer = LayerColor::create(Color4B::BLUE);
@@ -69,22 +69,24 @@ void Material_SpriteSinglePassTest::onEnter()
     material->setTechnique("gray+blur");
 }
 
-std::string Material_SpriteSinglePassTest::subtitle() const
+std::string Material_SpriteTest::subtitle() const
 {
-    return "Testing Effects on sprites";
+    return "Material System on Sprite";
 }
 
 
-void Material_SpriteMultiplePassTest::onEnter()
+void Material_Sprite3DTest::onEnter()
 {
     MaterialSystemBaseTest::onEnter();
 
-    auto sprite = Sprite::create("Images/grossini.png");
-    sprite->setNormalizedPosition(Vec2(0.5, 0.5));
+    auto sprite = Sprite3D::create("Sprite3DTest/boss1.obj");
+    sprite->setScale(8.f);
+//    sprite->setTexture("Sprite3DTest/boss.png");
     this->addChild(sprite);
+    sprite->setNormalizedPosition(Vec2(0.5,0.5));
 }
 
-std::string Material_SpriteMultiplePassTest::subtitle() const
+std::string Material_Sprite3DTest::subtitle() const
 {
-    return "Sprites with single Pass";
+    return "Material System on Sprite3D";
 }
