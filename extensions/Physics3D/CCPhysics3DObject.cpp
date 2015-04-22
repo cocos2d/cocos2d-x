@@ -51,6 +51,8 @@ Physics3DRigidBody::~Physics3DRigidBody()
         }
         _constraintList.clear();
     }
+    auto ms = _btRigidBody->getMotionState();
+    CC_SAFE_DELETE(ms);
     CC_SAFE_DELETE(_btRigidBody);
     CC_SAFE_RELEASE(_physics3DShape);
 }

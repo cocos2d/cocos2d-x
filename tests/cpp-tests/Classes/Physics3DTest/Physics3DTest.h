@@ -128,8 +128,6 @@ public:
     virtual bool init() override;
 
 private:
-
-    cocos2d::Data _data;
 };
 
 #endif
