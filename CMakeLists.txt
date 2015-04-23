@@ -325,9 +325,9 @@ endif(BUILD_LUA_LIBS)
 if(BUILD_JS_LIBS)
     add_subdirectory(cocos/scripting/js-bindings)
 
-  # build lua tests
+  # build js tests
   if(BUILD_JS_TESTS)
-    add_subdirectory(tests/js-tests)
+    add_subdirectory(tests/js-tests/project)
   endif(BUILD_JS_TESTS)
 
 endif(BUILD_JS_LIBS)
