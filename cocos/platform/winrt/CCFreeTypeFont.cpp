@@ -613,7 +613,7 @@ unsigned char* CCFreeTypeFont::loadFont(const char *pFontName, ssize_t *size)
         return nullptr;
     }
 
-	return FileUtils::sharedFileUtils()->getFileData(fullpath.c_str(), "rb", size);
+	return FileUtils::getInstance()->getFileData(fullpath.c_str(), "rb", size);
 }
 
 unsigned char* CCFreeTypeFont::loadSystemFont(const char *pFontName, ssize_t *size) 

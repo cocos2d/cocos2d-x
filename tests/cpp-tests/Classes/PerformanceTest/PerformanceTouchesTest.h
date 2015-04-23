@@ -18,7 +18,7 @@ public:
     virtual void update(float dt) override;
 
 protected:
-    Label * _plabel;
+    cocos2d::Label*  _plabel;
     int numberOfTouchesB;
     int numberOfTouchesM;
     int numberOfTouchesE;
@@ -37,10 +37,10 @@ public:
     virtual void onEnter() override;
     virtual std::string title() const override;
 
-    bool onTouchBegan(Touch* touch, Event* event) ;
-    void onTouchMoved(Touch* touch, Event* event) ;
-    void onTouchEnded(Touch* touch, Event* event) ;
-    void onTouchCancelled(Touch* touch, Event* event) ;
+    bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event) override;
+    void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event) override;
+    void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event) override;
+    void onTouchCancelled(cocos2d::Touch* touch, cocos2d::Event* event) override;
 };
 
 class TouchesPerformTest2 : public TouchesMainScene
@@ -54,10 +54,10 @@ public:
     virtual void onEnter() override;
     virtual std::string title() const override;
 
-    void onTouchesBegan(const std::vector<Touch*>& touches, Event* event) ;
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event* event) ;
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event) ;
-    void onTouchesCancelled(const std::vector<Touch*>& touches, Event* event) ;
+    void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event) override;
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event) override;
+    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event) override;
+    void onTouchesCancelled(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event) override;
 };
 
 class TouchesPerformTest3 : public PerformBasicLayer

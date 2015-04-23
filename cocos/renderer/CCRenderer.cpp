@@ -57,6 +57,10 @@ static bool compare3DCommand(RenderCommand* a, RenderCommand* b)
 }
 
 // queue
+RenderQueue::RenderQueue()
+{
+    
+}
 
 void RenderQueue::push_back(RenderCommand* command)
 {
@@ -128,17 +132,25 @@ RenderCommand* RenderQueue::operator[](ssize_t index) const
 
 void RenderQueue::clear()
 {
-    _commands.clear();
-    for(int index = 0; index < QUEUE_COUNT; ++index)
+    for(int i = 0; i < QUEUE_COUNT; ++i)
     {
-        _commands.push_back(std::vector<RenderCommand*>());
+        _commands[i].clear();
+    }
+}
+
+void RenderQueue::realloc(size_t reserveSize)
+{
+    for(int i = 0; i < QUEUE_COUNT; ++i)
+    {
+        _commands[i] = std::vector<RenderCommand*>();
+        _commands[i].reserve(reserveSize);
     }
 }
 
 void RenderQueue::saveRenderState()
 {
-    _isDepthEnabled = glIsEnabled(GL_DEPTH_TEST);
-    _isCullEnabled = glIsEnabled(GL_CULL_FACE);
+    _isDepthEnabled = glIsEnabled(GL_DEPTH_TEST) != GL_FALSE;
+    _isCullEnabled = glIsEnabled(GL_CULL_FACE) != GL_FALSE;
     glGetBooleanv(GL_DEPTH_WRITEMASK, &_isDepthWrite);
     
     CHECK_GL_ERROR_DEBUG();
@@ -367,7 +379,7 @@ void Renderer::addCommand(RenderCommand* command, int renderQueue)
     CCASSERT(!_isRendering, "Cannot add command while rendering");
     CCASSERT(renderQueue >=0, "Invalid render queue");
     CCASSERT(command->getType() != RenderCommand::Type::UNKNOWN_COMMAND, "Invalid Command Type");
-    
+
     _renderGroups[renderQueue].push_back(command);
 }
 

@@ -1,32 +1,14 @@
 #ifndef __BUGS_TEST_H__
 #define __BUGS_TEST_H__
 
-#include "../testBasic.h"
+#include "../BaseTest.h"
 
-class BugsTestMainLayer : public Layer
+class BugsTestBase : public TestCase
 {
 public:
-    virtual void onEnter() override;
-
-    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
-    void onTouchesMoved(const std::vector<Touch*>&touches, Event  *event);
-
-protected:
-    Vec2 _beginPos;
-    Menu* _itmeMenu;
+    
 };
 
-class BugsTestBaseLayer : public Layer
-{
-public:
-    virtual void onEnter() override;
-    void backCallback(Ref* sender);
-};
-
-class BugsTestScene : public TestScene
-{
-public:
-    virtual void runThisTest();
-};
+DEFINE_TEST_SUITE(BugsTests);
 
 #endif

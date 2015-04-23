@@ -150,14 +150,15 @@ void Sprite3D::afterAsyncLoad(void* param)
                     }
                     
                     Sprite3DCache::getInstance()->addSprite3DData(asyncParam->modlePath, data);
-                    meshdatas = nullptr;
+                    
+                    CC_SAFE_DELETE(meshdatas);
                     materialdatas = nullptr;
                     nodeDatas = nullptr;
                 }
             }
-            delete meshdatas;
-            delete materialdatas;
-            delete nodeDatas;
+            CC_SAFE_DELETE(meshdatas);
+            CC_SAFE_DELETE(materialdatas);
+            CC_SAFE_DELETE(nodeDatas);
             
             if (asyncParam->texPath != "")
             {
@@ -243,6 +244,7 @@ Sprite3D::Sprite3D()
 , _aabbDirty(true)
 , _lightMask(-1)
 , _shaderUsingLight(false)
+, _forceDepthWrite(false)
 {
 }
 
@@ -290,12 +292,13 @@ bool Sprite3D::initWithFile(const std::string &path)
             }
             
             Sprite3DCache::getInstance()->addSprite3DData(path, data);
+            CC_SAFE_DELETE(meshdatas);
             return true;
         }
     }
-    delete meshdatas;
-    delete materialdatas;
-    delete nodeDatas;
+    CC_SAFE_DELETE(meshdatas);
+    CC_SAFE_DELETE(materialdatas);
+    CC_SAFE_DELETE(nodeDatas);
     
     return false;
 }
@@ -370,7 +373,18 @@ Sprite3D* Sprite3D::createSprite3DNode(NodeData* nodedata,ModelData* modeldata,c
                 }
             }
         }
-        sprite->setAdditionalTransform(&nodedata->transform);
+
+        // set locale transform
+        Vec3 pos;
+        Quaternion qua;
+        Vec3 scale;
+        nodedata->transform.decompose(&scale, &qua, &pos);
+        sprite->setPosition3D(pos);
+        sprite->setRotationQuat(qua);
+        sprite->setScaleX(scale.x);
+        sprite->setScaleY(scale.y);
+        sprite->setScaleZ(scale.z);
+        
         sprite->addMesh(mesh);
         sprite->autorelease();
         sprite->genGLProgramState(); 
@@ -465,6 +479,7 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
         {
             if(it->bones.size() > 0 || singleSprite)
             {
+                this->setName(nodedata->id);
                 auto mesh = Mesh::create(nodedata->id, getMeshIndexData(it->subMeshId));
                 if(mesh)
                 {
@@ -505,6 +520,17 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                             }
                         }
                     }
+                    
+                    Vec3 pos;
+                    Quaternion qua;
+                    Vec3 scale;
+                    nodedata->transform.decompose(&scale, &qua, &pos);
+                    setPosition3D(pos);
+                    setRotationQuat(qua);
+                    setScaleX(scale.x);
+                    setScaleY(scale.y);
+                    setScaleZ(scale.z);
+                    
                 }
             }
             else
@@ -527,7 +553,18 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
         if(node)
         {
             node->setName(nodedata->id);
-            node->setAdditionalTransform(&nodedata->transform);
+            
+            // set locale transform
+            Vec3 pos;
+            Quaternion qua;
+            Vec3 scale;
+            nodedata->transform.decompose(&scale, &qua, &pos);
+            node->setPosition3D(pos);
+            node->setRotationQuat(qua);
+            node->setScaleX(scale.x);
+            node->setScaleY(scale.y);
+            node->setScaleZ(scale.z);
+            
             if(root)
             {
                 root->addChild(node);
@@ -536,7 +573,7 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
     }
     for(const auto& it : nodedata->children)
     {
-        createNode(it,node, matrialdatas, singleSprite);
+        createNode(it,node, matrialdatas, nodedata->children.size() == 1);
     }
 }
 
@@ -578,10 +615,13 @@ AttachNode* Sprite3D::getAttachNode(const std::string& boneName)
     if (_skeleton)
     {
         auto bone = _skeleton->getBoneByName(boneName);
-        auto attachNode = AttachNode::create(bone);
-        addChild(attachNode);
-        _attachments[boneName] = attachNode;
-        return attachNode;
+        if (bone)
+        {
+            auto attachNode = AttachNode::create(bone);
+            addChild(attachNode);
+            _attachments[boneName] = attachNode;
+            return attachNode;
+        }
     }
     
     return nullptr;
@@ -684,15 +724,19 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     color.a = getDisplayedOpacity() / 255.0f;
     
     //check light and determine the shader used
-    const auto& lights = Director::getInstance()->getRunningScene()->getLights();
-    bool usingLight = false;
-    for (const auto light : lights) {
-        usingLight = ((unsigned int)light->getLightFlag() & _lightMask) > 0;
-        if (usingLight)
-            break;
+    const auto& scene = Director::getInstance()->getRunningScene();
+    if (scene)
+    {
+        const auto& lights = scene->getLights();
+        bool usingLight = false;
+        for (const auto light : lights) {
+            usingLight = ((unsigned int)light->getLightFlag() & _lightMask) > 0;
+            if (usingLight)
+                break;
+        }
+        if (usingLight != _shaderUsingLight)
+            genGLProgramState(usingLight);
     }
-    if (usingLight != _shaderUsingLight)
-        genGLProgramState(usingLight);
     
     int i = 0;
     for (auto& mesh : _meshes) {
@@ -720,15 +764,11 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         GLuint textureID = mesh->getTexture() ? mesh->getTexture()->getName() : 0;
 #endif
 
-        float globalZ = _globalZOrder;
         bool isTransparent = (mesh->_isTransparent || color.a < 1.f);
-        if (isTransparent && Camera::getVisitingCamera())
-        {
-            // use the view matrix for Applying to recalculating transparent mesh's Z-Order
-            const auto& viewMat = Camera::getVisitingCamera()->getViewMatrix();
-            //fetch the Z from the result matrix
-            globalZ = -(viewMat.m[2] * transform.m[12] + viewMat.m[6] * transform.m[13] + viewMat.m[10] * transform.m[14] + viewMat.m[14]);
-        }
+        float globalZ = isTransparent ? 0 : _globalZOrder;
+        if (isTransparent)
+            flags |= Node::FLAGS_RENDER_AS_3D;
+
         meshCommand.init(globalZ, textureID, programstate, _blend, mesh->getVertexBuffer(), mesh->getIndexBuffer(), mesh->getPrimitiveType(), mesh->getIndexFormat(), mesh->getIndexCount(), transform, flags);
         
         meshCommand.setLightMask(_lightMask);
@@ -780,6 +820,22 @@ const BlendFunc& Sprite3D::getBlendFunc() const
     return _blend;
 }
 
+AABB Sprite3D::getAABBRecursively()
+{
+    AABB aabb;
+    const Vector<Node*>& children = getChildren();
+    for (const auto& iter : children)
+    {
+        Sprite3D* child = dynamic_cast<Sprite3D*>(iter);
+        if(child)
+        {
+            aabb.merge(child->getAABBRecursively());
+        }
+    }
+    aabb.merge(getAABB());
+    return aabb;
+}
+
 const AABB& Sprite3D::getAABB() const
 {
     Mat4 nodeToWorldTransform(getNodeToWorldTransform());
@@ -792,14 +848,18 @@ const AABB& Sprite3D::getAABB() const
     else
     {
         _aabb.reset();
-        Mat4 transform(nodeToWorldTransform);
-        for (const auto& it : _meshes) {
-            if (it->isVisible())
-                _aabb.merge(it->getAABB());
+        if (_meshes.size())
+        {
+            Mat4 transform(nodeToWorldTransform);
+            for (const auto& it : _meshes) {
+                if (it->isVisible())
+                    _aabb.merge(it->getAABB());
+            }
+            
+            _aabb.transform(transform);
+            _nodeToWorldTransform = nodeToWorldTransform;
+            _aabbDirty = false;
         }
-        
-        _aabb.transform(transform);
-        _nodeToWorldTransform = nodeToWorldTransform;
     }
     
     return _aabb;

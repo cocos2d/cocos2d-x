@@ -8,6 +8,11 @@
 
 USING_NS_CC;
 
+NotificationCenterTests::NotificationCenterTests()
+{
+    ADD_TEST_CASE(NotificationCenterTest);
+}
+
 class Light : public Sprite
 {
 public:
@@ -80,12 +85,6 @@ NotificationCenterTest::NotificationCenterTest()
 {
     auto s = Director::getInstance()->getWinSize();
 
-    auto pBackItem = MenuItemFont::create("Back", CC_CALLBACK_1(NotificationCenterTest::toExtensionsMainLayer, this));
-    pBackItem->setPosition(Vec2(VisibleRect::rightBottom().x - 50, VisibleRect::rightBottom().y + 25));
-    auto pBackMenu = Menu::create(pBackItem, nullptr);
-    pBackMenu->setPosition( Vec2::ZERO );
-    addChild(pBackMenu);
-
     auto label1 = Label::createWithTTF("switch off", "fonts/Marker Felt.ttf", 26);
     auto label2 = Label::createWithTTF("switch on", "fonts/Marker Felt.ttf", 26);
     auto item1 = MenuItemLabel::create(label1);
@@ -132,15 +131,11 @@ NotificationCenterTest::NotificationCenterTest()
     NotificationCenter::getInstance()->addObserver(this, CC_CALLFUNCO_SELECTOR(NotificationCenterTest::doNothing), "random-observer3", nullptr);
 }
 
-void NotificationCenterTest::toExtensionsMainLayer(cocos2d::Ref* sender)
+NotificationCenterTest::~NotificationCenterTest()
 {
     /* for testing removeAllObservers */
     int CC_UNUSED numObserversRemoved = NotificationCenter::getInstance()->removeAllObservers(this);
     CCASSERT(numObserversRemoved >= 3, "All observers were not removed!");
-
-    auto scene = new (std::nothrow) ExtensionsTestScene();
-    scene->runThisTest();
-    scene->release();
 }
 
 void NotificationCenterTest::toggleSwitch(Ref *sender)
@@ -161,13 +156,4 @@ void NotificationCenterTest::connectToSwitch(Ref *sender)
 void NotificationCenterTest::doNothing(cocos2d::Ref *sender)
 {
 
-}
-
-void runNotificationCenterTest()
-{
-    auto scene = Scene::create();
-    NotificationCenterTest* layer = new (std::nothrow) NotificationCenterTest();
-    scene->addChild(layer);
-    Director::getInstance()->replaceScene(scene);
-    layer->release();
 }

@@ -45,3 +45,7 @@ void RuntimeProtocol::onReload(const rapidjson::Document& dArgParse, rapidjson::
 {
     CCLOG("%s: NOT SUPPRT", __FUNCTION__);
 }
+
+void RuntimeProtocol::onRemove(const std::string &filename)
+{
+}

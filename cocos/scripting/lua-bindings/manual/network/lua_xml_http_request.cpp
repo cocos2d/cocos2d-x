@@ -34,7 +34,7 @@ using namespace cocos2d;
 using namespace std;
 
 LuaMinXmlHttpRequest::LuaMinXmlHttpRequest()
-:_isNetwork(true),
+:
 _url(""),
 _meth(""),
 _type(""),
@@ -45,6 +45,7 @@ _statusText(""),
 _responseType(ResponseType::STRING),
 _timeout(0),
 _isAsync(false),
+_isNetwork(true),
 _withCredentialsValue(true),
 _errorFlag(false),
 _isAborted(false)

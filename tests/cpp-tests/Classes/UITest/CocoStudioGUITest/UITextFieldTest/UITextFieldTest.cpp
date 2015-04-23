@@ -1,6 +1,17 @@
-
-
 #include "UITextFieldTest.h"
+
+USING_NS_CC;
+using namespace cocos2d::ui;
+
+UITextFieldTests::UITextFieldTests()
+{
+    ADD_TEST_CASE(UITextFieldTest);
+    ADD_TEST_CASE(UITextFieldTest_MaxLength);
+    ADD_TEST_CASE(UITextFieldTest_Password);
+    ADD_TEST_CASE(UITextFieldTest_LineWrap);
+    ADD_TEST_CASE(UITextFieldTest_TrueTypeFont);
+    ADD_TEST_CASE(UITextFieldTest_PlaceHolderColor);
+}
 
 // UITextFieldTest
 UITextFieldTest::UITextFieldTest()

@@ -38,14 +38,17 @@ NS_TIMELINE_BEGIN
 Frame::Frame()
     : _frameIndex(0)
     , _tween(true)
+    , _tweenType(tweenfunc::TweenType::Linear)
     , _enterWhenPassed(false)
     , _timeline(nullptr)
     , _node(nullptr)
 {
+    _easingParam.clear();
 }
 
 Frame::~Frame()
 {
+    _easingParam.clear();
 }
 
 void Frame::emitEvent()
@@ -60,8 +63,38 @@ void Frame::cloneProperty(Frame* frame)
 {
     _frameIndex = frame->getFrameIndex();
     _tween = frame->isTween();
+    
+    _tweenType = frame->getTweenType();
+    setEasingParams(frame->getEasingParams());
 }
 
+void Frame::apply(float percent)
+{
+    if (!_tween)
+        return;
+    
+    float tweenpercent = percent;
+    if ( _tweenType != tweenfunc::TWEEN_EASING_MAX && _tweenType != tweenfunc::Linear)
+    {
+        tweenpercent = tweenPercent(tweenpercent);
+    }
+    onApply(tweenpercent);
+}
+
+float Frame::tweenPercent(float percent)
+{
+    return tweenfunc::tweenTo(percent, _tweenType, _easingParam.data());
+}
+
+void Frame::setEasingParams(const std::vector<float>& easingParams)
+{
+    _easingParam.assign(easingParams.begin(), easingParams.end());
+}
+
+const std::vector<float>& Frame::getEasingParams() const
+{
+    return _easingParam;
+}
 
 // VisibleFrame
 VisibleFrame* VisibleFrame::create()
@@ -83,7 +116,10 @@ VisibleFrame::VisibleFrame()
 
 void VisibleFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
-    _node->setVisible(_visible);
+    if (_node)
+    {
+        _node->setVisible(_visible);
+    }
 }
 
 
@@ -128,12 +164,16 @@ void TextureFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
     if(_sprite)
     {
+        auto spriteBlendFunc = _sprite->getBlendFunc();
         SpriteFrame* spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName(_textureName);
 
         if(spriteFrame != nullptr)
             _sprite->setSpriteFrame(spriteFrame);
         else
             _sprite->setTexture(_textureName);
+        
+        if(_sprite->getBlendFunc() != spriteBlendFunc)
+            _sprite->setBlendFunc(spriteBlendFunc);
     }
 }
 
@@ -170,6 +210,11 @@ RotationFrame::RotationFrame()
 
 void RotationFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    if (_node == nullptr)
+    {
+        return;
+    }
+	
     _node->setRotation(_rotation);
 
     if(_tween)
@@ -178,9 +223,9 @@ void RotationFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
     }
 }
 
-void RotationFrame::apply(float percent)
+void RotationFrame::onApply(float percent)
 {
-    if (_tween && _betwennRotation != 0)
+    if (_betwennRotation != 0)
     {
         float rotation = _rotation + percent * _betwennRotation;
         _node->setRotation(rotation);
@@ -220,6 +265,11 @@ SkewFrame::SkewFrame()
 
 void SkewFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    if (_node == nullptr)
+    {
+	    return;
+    }
+
     _node->setSkewX(_skewX);
     _node->setSkewY(_skewY);
 
@@ -230,13 +280,13 @@ void SkewFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
     }
 }
 
-void SkewFrame::apply(float percent)
+void SkewFrame::onApply(float percent)
 {
-    if (_tween && (_betweenSkewX != 0 || _betweenSkewY != 0))
+    if (_betweenSkewX != 0 || _betweenSkewY != 0)
     {
         float skewx = _skewX + percent * _betweenSkewX;
         float skewy = _skewY + percent * _betweenSkewY;
-
+        
         _node->setSkewX(skewx);
         _node->setSkewY(skewy);
     }
@@ -275,6 +325,11 @@ RotationSkewFrame::RotationSkewFrame()
 
 void RotationSkewFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    if (_node == nullptr)
+    {
+	    return;
+    }
+
     _node->setRotationSkewX(_skewX);
     _node->setRotationSkewY(_skewY);
 
@@ -285,13 +340,13 @@ void RotationSkewFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
     }
 }
 
-void RotationSkewFrame::apply(float percent)
+void RotationSkewFrame::onApply(float percent)
 {
-    if (_tween && (_betweenSkewX != 0 || _betweenSkewY != 0))
+    if (_betweenSkewX != 0 || _betweenSkewY != 0)
     {
         float skewx = _skewX + percent * _betweenSkewX;
         float skewy = _skewY + percent * _betweenSkewY;
-
+        
         _node->setRotationSkewX(skewx);
         _node->setRotationSkewY(skewy);
     }
@@ -329,6 +384,11 @@ PositionFrame::PositionFrame()
 
 void PositionFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    if (_node == nullptr)
+    {
+	    return;
+    }
+
     _node->setPosition(_position);
 
     if(_tween)
@@ -338,17 +398,18 @@ void PositionFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
     }
 }
 
-void PositionFrame::apply(float percent)
+void PositionFrame::onApply(float percent)
 {
-    if (_tween && (_betweenX != 0 || _betweenY != 0))
+    if (_betweenX != 0 || _betweenY != 0)
     {
         Point p;
         p.x = _position.x + _betweenX * percent;
         p.y = _position.y + _betweenY * percent;
-
+        
         _node->setPosition(p);
     }
 }
+
 
 Frame* PositionFrame::clone()
 {
@@ -382,6 +443,11 @@ ScaleFrame::ScaleFrame()
 
 void ScaleFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    if (_node == nullptr)
+    {
+	    return;
+    }
+	
     _node->setScaleX(_scaleX);
     _node->setScaleY(_scaleY);
 
@@ -392,13 +458,13 @@ void ScaleFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
     }
 }
 
-void ScaleFrame::apply(float percent)
+void ScaleFrame::onApply(float percent)
 {
-    if (_tween && (_betweenScaleX != 0 || _betweenScaleY != 0))
+    if (_betweenScaleX != 0 || _betweenScaleY != 0)
     {
         float scaleX = _scaleX + _betweenScaleX * percent;
         float scaleY = _scaleY + _betweenScaleY * percent;
-
+        
         _node->setScaleX(scaleX);
         _node->setScaleY(scaleY);
     }
@@ -436,6 +502,11 @@ AnchorPointFrame::AnchorPointFrame()
 
 void AnchorPointFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    if (_node == nullptr)
+    {
+	    return;
+    }
+
     _node->setAnchorPoint(_anchorPoint);
 }
 
@@ -472,14 +543,19 @@ InnerActionFrame::InnerActionFrame()
 , _startFrameIndex(0)
 , _endFrameIndex(0)
 , _singleFrameIndex(0)
-, _enterWithName(false)
 , _animationName("")
+, _enterWithName(false)
 {
 
 }
 
 void InnerActionFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    if (_node == nullptr)
+    {
+	    return;
+    }
+
     auto innerActiontimeline = static_cast<ActionTimeline*>(_node->getActionByTag(_node->getTag()));
     if( nullptr == innerActiontimeline)
         return;
@@ -595,20 +671,20 @@ ColorFrame* ColorFrame::create()
 }
 
 ColorFrame::ColorFrame()
-    : _alpha(255)
-    , _color(Color3B(255, 255, 255))
+: _color(Color3B(255, 255, 255))
 {
 }
 
 void ColorFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
-    _node->setOpacity(_alpha);
+    if (_node == nullptr)
+    {
+	    return;
+    }
     _node->setColor(_color);
 
     if(_tween)
     {
-        _betweenAlpha = static_cast<ColorFrame*>(nextFrame)->_alpha - _alpha;
-
         const Color3B& color = static_cast<ColorFrame*>(nextFrame)->_color;
         _betweenRed   = color.r - _color.r;
         _betweenGreen = color.g - _color.g;
@@ -616,18 +692,15 @@ void ColorFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
     }
 }
 
-void ColorFrame::apply(float percent)
+void ColorFrame::onApply(float percent)
 {
-    if (_tween && (_betweenAlpha !=0 || _betweenRed != 0 || _betweenGreen != 0 || _betweenBlue != 0))
+    if (_betweenRed != 0 || _betweenGreen != 0 || _betweenBlue != 0)
     {
-        GLubyte alpha = _alpha + _betweenAlpha * percent;
-
         Color3B color;
         color.r = _color.r+ _betweenRed   * percent;
         color.g = _color.g+ _betweenGreen * percent;
         color.b = _color.b+ _betweenBlue  * percent;
-
-        _node->setOpacity(alpha);
+        
         _node->setColor(color);
     }
 }
@@ -635,7 +708,6 @@ void ColorFrame::apply(float percent)
 Frame* ColorFrame::clone()
 {
     ColorFrame* frame = ColorFrame::create();
-    frame->setAlpha(_alpha);
     frame->setColor(_color);
 
     frame->cloneProperty(this);
@@ -663,6 +735,11 @@ AlphaFrame::AlphaFrame()
 
 void AlphaFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
+    if (_node == nullptr)
+    {
+	    return;
+    }
+
     _node->setOpacity(_alpha);
 
     if (_tween)
@@ -671,13 +748,10 @@ void AlphaFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
     }
 }
 
-void AlphaFrame::apply(float percent)
+void AlphaFrame::onApply(float percent)
 {
-    if (_tween)
-    {
-        GLubyte alpha = _alpha + _betweenAlpha * percent;
-        _node->setOpacity(alpha);
-    }
+    GLubyte alpha = _alpha + _betweenAlpha * percent;
+    _node->setOpacity(alpha);
 }
 
 Frame* AlphaFrame::clone()
@@ -722,10 +796,10 @@ void EventFrame::setNode(cocos2d::Node* node)
 
 void EventFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 {
-    if(_frameIndex < _action->getStartFrame() || _frameIndex > _action->getEndFrame())
+    if (static_cast<int>(_frameIndex) < _action->getStartFrame() || static_cast<int>(_frameIndex) > _action->getEndFrame())
         return;
 
-    if(currentFrameIndex >= _frameIndex)
+    if (currentFrameIndex >= static_cast<int>(_frameIndex))
         emitEvent();
 }
 
@@ -775,5 +849,45 @@ Frame* ZOrderFrame::clone()
 
     return frame;
 }
+
+
+// BlendFuncFrame
+BlendFuncFrame* BlendFuncFrame::create()
+{
+    BlendFuncFrame* frame = new (std::nothrow) BlendFuncFrame();
+    if (frame)
+    {
+        frame->autorelease();
+        return frame;
+    }
+    CC_SAFE_DELETE(frame);
+    return nullptr;
+}
+
+BlendFuncFrame::BlendFuncFrame()
+: _blendFunc(BlendFunc::ALPHA_PREMULTIPLIED)
+{
+}
+
+void BlendFuncFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
+{
+    if(_node)
+    {
+        auto blendnode = dynamic_cast<BlendProtocol*>(_node);
+        if(blendnode)
+            blendnode->setBlendFunc(_blendFunc);
+    }
+}
+
+
+Frame* BlendFuncFrame::clone()
+{
+    BlendFuncFrame* frame = BlendFuncFrame::create();
+    frame->setBlendFunc(_blendFunc);
+    frame->cloneProperty(this);
+    
+    return frame;
+}
+
 
 NS_TIMELINE_END

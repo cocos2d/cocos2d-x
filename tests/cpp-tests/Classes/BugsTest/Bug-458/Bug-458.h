@@ -3,11 +3,13 @@
 
 #include "../BugsTest.h"
 
-class Bug458Layer : public BugsTestBaseLayer
+class Bug458Layer : public BugsTestBase
 {
 public:
-    virtual bool init();
-    void selectAnswer(Ref* sender);
+    CREATE_FUNC(Bug458Layer);
+
+    virtual bool init() override;
+    void selectAnswer(cocos2d::Ref* sender);
 };
 
 #endif // __BUG_458_H__

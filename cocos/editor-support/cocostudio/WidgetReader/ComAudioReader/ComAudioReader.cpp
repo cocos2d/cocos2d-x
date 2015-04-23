@@ -63,6 +63,11 @@ namespace cocostudio
         CC_SAFE_DELETE(_instanceComAudioReader);
     }
     
+    void ComAudioReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(_instanceComAudioReader);
+    }
+    
     Offset<Table> ComAudioReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
                                                                flatbuffers::FlatBufferBuilder *builder)
     {

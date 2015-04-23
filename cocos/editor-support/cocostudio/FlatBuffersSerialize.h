@@ -77,6 +77,7 @@ namespace flatbuffers
     struct IntFrame;
     struct BoolFrame;
     struct InnerActionFrame;
+    struct EasingData;
 }
 
 namespace tinyxml2
@@ -91,7 +92,9 @@ class CC_STUDIO_DLL FlatBuffersSerialize
     
 public:
     static FlatBuffersSerialize* getInstance();
-    static void purge();
+    /** @deprecated Use method destroyInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static void purge();
+    static void destroyInstance();
     
     FlatBuffersSerialize();
     ~FlatBuffersSerialize();
@@ -120,6 +123,8 @@ public:
     flatbuffers::Offset<flatbuffers::IntFrame> createIntFrame(const tinyxml2::XMLElement* objectData);
     flatbuffers::Offset<flatbuffers::BoolFrame> createBoolFrame(const tinyxml2::XMLElement* objectData);
     flatbuffers::Offset<flatbuffers::InnerActionFrame> createInnerActionFrame(const tinyxml2::XMLElement* objectData);
+    
+    flatbuffers::Offset<flatbuffers::EasingData> createEasingData(const tinyxml2::XMLElement* objectData);
 
     //Animation Info
     flatbuffers::Offset<flatbuffers::AnimationInfo> createAnimationInfo(const tinyxml2::XMLElement* objectData);

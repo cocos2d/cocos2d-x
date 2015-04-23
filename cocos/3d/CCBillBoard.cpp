@@ -173,7 +173,7 @@ bool BillBoard::calculateBillbaordTransform()
         switch (_mode)
         {
             case Mode::VIEW_POINT_ORIENTED:
-                camDir = Vec3(localToWorld.m[12] - camWorldMat.m[12], localToWorld.m[13] - camWorldMat.m[13], localToWorld.m[14] - camWorldMat.m[14]);
+                camDir.set(localToWorld.m[12] - camWorldMat.m[12], localToWorld.m[13] - camWorldMat.m[13], localToWorld.m[14] - camWorldMat.m[14]);
                 break;
             case Mode::VIEW_PLANE_ORIENTED:
                 camWorldMat.transformVector(Vec3(0.0f, 0.0f, -1.0f), &camDir);
@@ -196,7 +196,7 @@ bool BillBoard::calculateBillbaordTransform()
         Mat4 rotationMatrix;
         rotationMatrix.setIdentity();
 
-        Vec3 upAxis = Vec3(rotationMatrix.m[4],rotationMatrix.m[5],rotationMatrix.m[6]);
+        Vec3 upAxis(rotationMatrix.m[4],rotationMatrix.m[5],rotationMatrix.m[6]);
         Vec3 x, y;
         camWorldMat.transformVector(upAxis, &y);
         Vec3::cross(camDir, y, &x);
@@ -229,9 +229,10 @@ bool BillBoard::calculateBillbaordTransform()
 void BillBoard::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     //FIXME: frustum culling here
-    _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, _modelViewTransform, flags);
+    flags |= Node::FLAGS_RENDER_AS_3D;
+    _quadCommand.init(0, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, _modelViewTransform, flags);
     _quadCommand.setTransparent(true);
-    _quadCommand.setSkipBatching(true);
+    _quadCommand.set3D(true);
     renderer->addCommand(&_quadCommand);
 }
 

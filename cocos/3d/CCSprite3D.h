@@ -41,12 +41,17 @@
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup _3d
+ * @{
+ */
+
 class Mesh;
 class Texture2D;
 class MeshSkin;
 class AttachNode;
 struct NodeData;
-/** Sprite3D: A sprite can be loaded from 3D model files, .obj, .c3t, .c3b, then can be drawed as sprite */
+/** @brief Sprite3D: A sprite can be loaded from 3D model files, .obj, .c3t, .c3b, then can be drawed as sprite */
 class CC_DLL Sprite3D : public Node, public BlendProtocol
 {
 public:
@@ -85,7 +90,11 @@ public:
     /**get Mesh by Name, it returns the first one if there are more than one mesh with the same name */
     Mesh* getMeshByName(const std::string& name) const;
     
-    /** get mesh array by name, returns all meshes with the given name */
+    /** 
+     * get mesh array by name, returns all meshes with the given name
+     *
+     * @lua NA
+     */
     std::vector<Mesh*> getMeshArrayByName(const std::string& name) const;
 
     /**get mesh*/
@@ -126,6 +135,14 @@ public:
      */
     const AABB& getAABB() const;
     
+    /* 
+     * Get AABB Recursively
+     * Because some times we may have an empty Sprite3D Node as parent, but
+     * the Sprite3D don't contain any meshes, so getAABB()
+     * will return a wrong value at that time.
+     */
+    AABB getAABBRecursively();
+    
     /**
      * Executes an action, and returns the action that is executed. For Sprite3D special logic are needed to take care of Fading.
      *
@@ -156,13 +173,16 @@ public:
     /** light mask getter & setter, light works only when _lightmask & light's flag is true, default value of _lightmask is 0xffff */
     void setLightMask(unsigned int mask) { _lightMask = mask; }
     unsigned int getLightMask() const { return _lightMask; }
+    
+    /**draw*/
+    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
 CC_CONSTRUCTOR_ACCESS:
     
     Sprite3D();
     virtual ~Sprite3D();
     
-    bool init();
+    virtual bool init() override;
     
     bool initWithFile(const std::string &path);
     
@@ -179,9 +199,6 @@ CC_CONSTRUCTOR_ACCESS:
      * Note: all its children will rendered as 3D objects
      */
     virtual void visit(Renderer *renderer, const Mat4& parentTransform, uint32_t parentFlags) override;
-    
-    /**draw*/
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     
     /**generate default GLProgramState*/
     void genGLProgramState(bool useLight = false);
@@ -213,7 +230,7 @@ protected:
 
     mutable AABB                 _aabb;                 // cache current aabb
     mutable Mat4                 _nodeToWorldTransform; // cache the matrix
-    bool                         _aabbDirty;
+    mutable bool                 _aabbDirty;
     unsigned int                 _lightMask;
     bool                         _shaderUsingLight; // is current shader using light ?
     bool                         _forceDepthWrite; // Always write to depth buffer
@@ -233,6 +250,10 @@ protected:
 };
 
 ///////////////////////////////////////////////////////
+/**
+ * Sprite3DCache
+ * @brief the cache data of Sprite3D, use to speed up Sprite3D::create
+ */
 class CC_DLL Sprite3DCache
 {
 public:
@@ -256,13 +277,25 @@ public:
     /**get & destroy*/
     static Sprite3DCache* getInstance();
     static void destroyInstance();
-    
+
+    /**
+     * get the SpriteData struct
+     *
+     * @lua NA
+     */
     Sprite3DData* getSpriteData(const std::string& key) const;
     
+    /**
+     * add the SpriteData into Sprite3D by given the specified key
+     *
+     * @lua NA
+     */
     bool addSprite3DData(const std::string& key, Sprite3DData* spritedata);
     
+    /**remove the SpriteData from Sprite3D by given the specified key*/
     void removeSprite3DData(const std::string& key);
     
+    /**remove all the SpriteData from Sprite3D*/
     void removeAllSprite3DData();
     
     CC_CONSTRUCTOR_ACCESS:
@@ -276,7 +309,12 @@ protected:
     std::unordered_map<std::string, Sprite3DData*> _spriteDatas; //cached sprite datas
 };
 
+/// @cond 
 extern std::string CC_DLL s_attributeNames[];//attribute names array
+/// @endcond
+
+// end of 3d group
+/// @}
 
 NS_CC_END
 #endif // __SPRITE3D_H_

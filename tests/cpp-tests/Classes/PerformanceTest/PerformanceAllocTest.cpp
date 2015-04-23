@@ -5,6 +5,9 @@
 
 #include <algorithm>
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
 // Enable profiles for this file
 #undef CC_PROFILER_DISPLAY_TIMERS
 #define CC_PROFILER_DISPLAY_TIMERS() Profiler::getInstance()->displayTimers()

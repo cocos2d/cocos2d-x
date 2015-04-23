@@ -16,17 +16,17 @@ public:
     }
     
     virtual void onEnter() override;
-    virtual void restartCallback(Ref* sender);
-    virtual void nextCallback(Ref* sender);
-    virtual void backCallback(Ref* sender);
+    virtual void restartCallback(cocos2d::Ref* sender) override;
+    virtual void nextCallback(cocos2d::Ref* sender) override;
+    virtual void backCallback(cocos2d::Ref* sender) override;
     
     virtual void showCurrentTest() {}
     
     virtual std::string title() const { return "Math Performance Test"; }
     virtual std::string subtitle() const { return "PerformanceMathLayer subTitle"; }
     
-    void addLoopCount(Ref* sender);
-    void subLoopCount(Ref* sender);
+    void addLoopCount(cocos2d::Ref* sender);
+    void subLoopCount(cocos2d::Ref* sender);
 protected:
     virtual void doPerformanceTest(float dt) {};
     

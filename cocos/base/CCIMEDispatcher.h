@@ -28,12 +28,12 @@ THE SOFTWARE.
 
 #include "base/CCIMEDelegate.h"
 
-NS_CC_BEGIN
-
 /**
- * @addtogroup input
+ * @addtogroup base
  * @{
  */
+NS_CC_BEGIN
+
 
 /**
 @brief    Input Method Edit Message Dispatcher.
@@ -48,34 +48,26 @@ public:
     ~IMEDispatcher();
 
     /**
-     @brief Returns the shared IMEDispatcher object for the system.
+     * @brief Returns the shared IMEDispatcher object for the system.
      * @js NA
      * @lua NA
      */
     static IMEDispatcher* sharedDispatcher();
 
-//     /**
-//     @brief Releases all IMEDelegates from the shared dispatcher.
-//     */
-//     static void purgeSharedDispatcher();
-
     /**
-     @brief Dispatches the input text from IME.
-     * @js NA
+     * @brief Dispatches the input text from IME.
      * @lua NA
      */
     void dispatchInsertText(const char * text, size_t len);
 
     /**
-     @brief Dispatches the delete-backward operation.
-     * @js NA
+     * @brief Dispatches the delete-backward operation.
      * @lua NA
      */
     void dispatchDeleteBackward();
 
     /**
-     @brief Get the content text from IMEDelegate, retrieved previously from IME.
-     * @js NA
+     * @brief Get the content text from IMEDelegate, retrieved previously from IME.
      * @lua NA
      */
     const std::string& getContentText();
@@ -84,22 +76,18 @@ public:
     // dispatch keyboard notification
     //////////////////////////////////////////////////////////////////////////
     /**
-     * @js NA
      * @lua NA
      */
     void dispatchKeyboardWillShow(IMEKeyboardNotificationInfo& info);
     /**
-     * @js NA
      * @lua NA
      */
     void dispatchKeyboardDidShow(IMEKeyboardNotificationInfo& info);
     /**
-     * @js NA
      * @lua NA
      */
     void dispatchKeyboardWillHide(IMEKeyboardNotificationInfo& info);
     /**
-     * @js NA
      * @lua NA
      */
     void dispatchKeyboardDidHide(IMEKeyboardNotificationInfo& info);
@@ -108,21 +96,31 @@ protected:
     friend class IMEDelegate;
 
     /**
-    @brief Add delegate to receive IME messages.
-    */
+     *@brief Add delegate to receive IME messages.
+     *@param delegate A instance implements IMEDelegate delegate.
+     */
     void addDelegate(IMEDelegate * delegate);
 
     /**
-    @brief Attach the pDelegate to the IME.
-    @return If the old delegate can detach from the IME, and the new delegate 
-            can attach to the IME, return true, otherwise false.
-    */
+     *@brief Attach the Delegate to the IME.
+     *@param delegate A instance implements IMEDelegate delegate.
+     *@return If the old delegate can detach from the IME, and the new delegate 
+     *       can attach to the IME, return true, otherwise false.
+     */
     bool attachDelegateWithIME(IMEDelegate * delegate);
+
+    /**
+     * Dettach the delegate to the IME
+     *@see `attachDelegateWithIME(IMEDelegate*)`
+     *@param delegate  A instance implements IMEDelegate delegate.
+     *@return Whether the IME is detached or not.
+     */
     bool detachDelegateWithIME(IMEDelegate * delegate);
 
     /**
-    @brief Remove the delegate from the delegates which receive IME messages.
-    */
+     *@brief Remove the delegate from the delegates which receive IME messages.
+     *@param delegate A instance implements the IMEDelegate delegate.
+     */
     void removeDelegate(IMEDelegate * delegate);
 
 private:
@@ -132,9 +130,9 @@ private:
     Impl * _impl;
 };
 
-// end of input group
-/// @}
 
 NS_CC_END
+// end of base group
+/// @}
 
 #endif    // __CC_IME_DISPATCHER_H__

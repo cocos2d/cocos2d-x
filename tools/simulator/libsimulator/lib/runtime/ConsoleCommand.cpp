@@ -28,49 +28,10 @@ THE SOFTWARE.
 #include "json/document.h"
 #include "json/filestream.h"
 #include "json/stringbuffer.h"
-#include "CCLuaEngine.h"
 
 #include "RuntimeProtocol.h"
 #include "cocos2d.h"
 using namespace cocos2d;
-
-static void resetLuaModule(const string& fileName)
-{
-    if (fileName.empty())
-    {
-        return;
-    }
-    auto engine = LuaEngine::getInstance();
-    LuaStack* luaStack = engine->getLuaStack();
-    lua_State* stack = luaStack->getLuaState();
-    lua_getglobal(stack, "package");                         /* L: package */
-    lua_getfield(stack, -1, "loaded");                       /* L: package loaded */
-    lua_pushnil(stack);                                     /* L: lotable ?-.. nil */
-    while (0 != lua_next(stack, -2))                     /* L: lotable ?-.. key value */
-    {
-        //CCLOG("%s - %s \n", tolua_tostring(stack, -2, ""), lua_typename(stack, lua_type(stack, -1)));
-        std::string key = tolua_tostring(stack, -2, "");
-        std::string tableKey = key;
-        size_t found = tableKey.rfind(".lua");
-        if (found != std::string::npos)
-            tableKey = tableKey.substr(0, found);
-        tableKey = replaceAll(tableKey, ".", "/");
-        tableKey = replaceAll(tableKey, "\\", "/");
-        tableKey.append(".lua");
-        found = fileName.rfind(tableKey);
-        if (0 == found || (found != std::string::npos && fileName.at(found - 1) == '/'))
-        {
-            lua_pushstring(stack, key.c_str());
-            lua_pushnil(stack);
-            if (lua_istable(stack, -5))
-            {
-                lua_settable(stack, -5);
-            }
-        }
-        lua_pop(stack, 1);
-    }
-    lua_pop(stack, 2);
-}
 
 ConsoleCommand* ConsoleCommand::s_sharedConsoleCommand = nullptr;
 ConsoleCommand* ConsoleCommand::getShareInstance() 
@@ -104,18 +65,10 @@ void ConsoleCommand::init()
 
     // set bind address
     _console->setBindAddress(ConfigParser::getInstance()->getBindAddress());
-#if(CC_PLATFORM_MAC == CC_TARGET_PLATFORM || CC_PLATFORM_WIN32 == CC_TARGET_PLATFORM)
-    _console->listenOnTCP(ConfigParser::getInstance()->getConsolePort());
-#else
-    _console->listenOnTCP(6010);
-#endif
+    _console->listenOnTCP(ConfigParser::getInstance()->getConsolePort()); // 6010,6050
 
     _fileserver = FileServer::getShareInstance();
-#if(CC_PLATFORM_MAC == CC_TARGET_PLATFORM || CC_PLATFORM_WIN32 == CC_TARGET_PLATFORM)
-    _fileserver->listenOnTCP(ConfigParser::getInstance()->getUploadPort());
-#else
-    _fileserver->listenOnTCP(6020);
-#endif
+    _fileserver->listenOnTCP(ConfigParser::getInstance()->getUploadPort()); // 6020,6060
     _fileserver->readResFileFinfo();
 }
 
@@ -136,20 +89,42 @@ void ConsoleCommand::onSendCommand(int fd, const std::string &args)
                 dReplyParse.AddMember("seq",dArgParse["seq"],dReplyParse.GetAllocator());
             }
             
-            auto runtime = RuntimeEngine::getInstance()->getRuntime();
             if(strcmp(strcmd.c_str(), "start-logic") == 0)
             {
-                RuntimeEngine::getInstance()->setupRuntime();
-                RuntimeEngine::getInstance()->getRuntime()->onStartDebuger(dArgParse, dReplyParse);
+                auto runtime = RuntimeEngine::getInstance()->getRuntime();
+                if (!runtime)
+                {
+                    RuntimeEngine::getInstance()->setupRuntime();
+                    runtime = RuntimeEngine::getInstance()->getRuntime();
+                }
+                if (runtime) runtime->onStartDebuger(dArgParse, dReplyParse);
             } else if (strcmp(strcmd.c_str(),"clearcompile")==0)
             {
-                runtime->onClearCompile(dArgParse, dReplyParse);
+                auto runtime = RuntimeEngine::getInstance()->getRuntime();
+                if (!runtime)
+                {
+                    RuntimeEngine::getInstance()->setupRuntime();
+                    runtime = RuntimeEngine::getInstance()->getRuntime();
+                }
+                if (runtime) runtime->onClearCompile(dArgParse, dReplyParse);
             } else if(strcmp(strcmd.c_str(),"precompile")==0)
             {
-                runtime->onPrecompile(dArgParse, dReplyParse);
+                auto runtime = RuntimeEngine::getInstance()->getRuntime();
+                if (!runtime)
+                {
+                    RuntimeEngine::getInstance()->setupRuntime();
+                    runtime = RuntimeEngine::getInstance()->getRuntime();
+                }
+                if (runtime) runtime->onPrecompile(dArgParse, dReplyParse);
             } else if(strcmp(strcmd.c_str(), "reload") == 0)
             {
-                runtime->onReload(dArgParse, dReplyParse);
+                auto runtime = RuntimeEngine::getInstance()->getRuntime();
+                if (!runtime)
+                {
+                    RuntimeEngine::getInstance()->setupRuntime();
+                    runtime = RuntimeEngine::getInstance()->getRuntime();
+                }
+                if (runtime) runtime->onReload(dArgParse, dReplyParse);
             } else if(strcmp(strcmd.c_str(), "getversion") == 0)
             {
                 rapidjson::Value bodyvalue(rapidjson::kObjectType);
@@ -195,6 +170,10 @@ void ConsoleCommand::onSendCommand(int fd, const std::string &args)
                     {
                         filename = objectfiles[i].GetString();
                         
+                        // remove js compiled script
+                        auto runtime = RuntimeEngine::getInstance()->getRuntime();
+                        if (runtime) runtime->onRemove(filename);
+                        
                         // remove file from disk
                         string filepath(_fileserver->getWritePath() + "/" + filename);
                         if (FileUtils::getInstance()->isFileExist(filepath)) 
@@ -226,7 +205,7 @@ void ConsoleCommand::onSendCommand(int fd, const std::string &args)
                 shutDownApp();
 #else
                 exit(0);
-#endif	
+#endif
             } else if(strcmp(strcmd.c_str(), "getplatform") == 0)
             {
                 string platform="UNKNOW";
@@ -290,7 +269,7 @@ void ConsoleCommand::onSendCommand(int fd, const std::string &args)
             dReplyParse.Accept(writer);
             string msgContent = buffer.GetString();
             char msgLength[64] = {0x1, 0};
-            sprintf(msgLength + 1, "%d:", msgContent.size());
+            sprintf(msgLength + 1, "%ld:", msgContent.size());
             
             string msg(msgLength + msgContent);
             

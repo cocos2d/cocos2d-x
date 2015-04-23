@@ -3,35 +3,35 @@
 
 #include "../testBasic.h"
 
-class PerformanceMainLayer : public Layer
+class PerformanceMainLayer : public cocos2d::Layer
 {
 public:
     virtual void onEnter() override;
     
-    bool onTouchBegan(Touch* touches, Event  *event);
-    void onTouchMoved(Touch* touches, Event  *event);
+    bool onTouchBegan(cocos2d::Touch* touches, cocos2d::Event* event) override;
+    void onTouchMoved(cocos2d::Touch* touches, cocos2d::Event* event) override;
     
-    void onMouseScroll(Event *event);
+    void onMouseScroll(cocos2d::Event* event);
 protected:
-    Vec2 _beginPos;
-    Menu* _itemMenu;
+    cocos2d::Vec2 _beginPos;
+    cocos2d::Menu* _itemMenu;
     
-    static Vec2 _CurrentPos;
+    static cocos2d::Vec2 _CurrentPos;
 };
 
-class PerformBasicLayer : public Layer
+class PerformBasicLayer : public cocos2d::Layer
 {
 public:
     PerformBasicLayer(bool bControlMenuVisible, int nMaxCases = 0, int nCurCase = 0);
 
     virtual void onEnter() override;
 
-    virtual void restartCallback(Ref* sender);
-    virtual void nextCallback(Ref* sender);
-    virtual void backCallback(Ref* sender);
+    virtual void restartCallback(cocos2d::Ref* sender);
+    virtual void nextCallback(cocos2d::Ref* sender);
+    virtual void backCallback(cocos2d::Ref* sender);
     virtual void showCurrentTest() = 0;
 
-    virtual void toMainLayer(Ref* sender);
+    virtual void toMainLayer(cocos2d::Ref* sender);
 
 protected:
     bool _controlMenuVisible;

@@ -356,8 +356,6 @@ end
 --BugTest1159
 local function BugTest1159()
     local pLayer = cc.Layer:create()
-    
-    cc.Director:getInstance():setDepthTest(true)
 
     local background = cc.LayerColor:create(cc.c4b(255, 0, 255, 255))
     pLayer:addChild(background)
@@ -398,7 +396,6 @@ local function BugTest1159()
                 scheduler:unscheduleScriptEntry(schedulerEntry)
             end
             ]]--
-            cc.Director:getInstance():setDepthTest(false)
         end
     end
 
@@ -409,7 +406,15 @@ end
 
 --BugTest1174
 local function BugTest1174()
-    local pLayer = cc.Layer:create()
+    local layer = cc.Layer:create()
+
+    local size = cc.Director:getInstance():getWinSize()
+
+
+    local subtitleLabel = cc.Label:createWithTTF("The results output on the console", s_thonburiPath, 24)
+    subtitleLabel:setAnchorPoint(cc.p(0.5, 0.5))
+    layer:addChild(subtitleLabel, 1)
+    subtitleLabel:setPosition(size.width / 2, size.height - 80)
     
     local function check_for_error(p1,p2,p3,p4,s,t)
         local p4_p3 = cc.pSub(p4,p3)
@@ -552,7 +557,7 @@ local function BugTest1174()
     strLog = "Test3 - End. OK="..ok..", Err="..err
     print(strLog)
     
-    return pLayer
+    return layer
 end
 
 --BugTestValueTypeJudgeInTable

@@ -5,8 +5,11 @@
 -- @parent_module cc
 
 --------------------------------
--- creates the action<br>
--- param t in seconds
+-- Creates the action.<br>
+-- param t Duration time, in seconds.<br>
+-- param sx Skew x angle.<br>
+-- param sy Skew y angle.<br>
+-- return An autoreleased SkewTo object.
 -- @function [parent=#SkewTo] create 
 -- @param self
 -- @param #float t
@@ -34,7 +37,7 @@
 -- @return SkewTo#SkewTo ret (return value: cc.SkewTo)
         
 --------------------------------
--- param time in seconds
+-- param time In seconds.
 -- @function [parent=#SkewTo] update 
 -- @param self
 -- @param #float time

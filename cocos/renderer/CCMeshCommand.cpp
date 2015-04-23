@@ -84,7 +84,7 @@ MeshCommand::MeshCommand()
 , _depthTestEnabled(false)
 , _depthWriteEnabled(false)
 , _forceDepthWrite(false)
-, _renderStateCullFace(false)
+, _renderStateCullFaceEnabled(false)
 , _renderStateDepthTest(false)
 , _renderStateDepthWrite(GL_FALSE)
 , _lightMask(-1)
@@ -110,6 +110,8 @@ void MeshCommand::init(float globalZOrder,
                        uint32_t flags)
 {
     CCASSERT(glProgramState, "GLProgramState cannot be nill");
+    
+    RenderCommand::init(globalZOrder, mv, flags);
     
     _globalOrder = globalZOrder;
     _textureID = textureID;
@@ -192,48 +194,55 @@ MeshCommand::~MeshCommand()
 
 void MeshCommand::applyRenderState()
 {
-    _renderStateCullFace = glIsEnabled(GL_CULL_FACE);
-    _renderStateDepthTest = glIsEnabled(GL_DEPTH_TEST);
+    _renderStateCullFaceEnabled = glIsEnabled(GL_CULL_FACE) != GL_FALSE;
+    _renderStateDepthTest = glIsEnabled(GL_DEPTH_TEST) != GL_FALSE;
     glGetBooleanv(GL_DEPTH_WRITEMASK, &_renderStateDepthWrite);
+    GLint cullface;
+    glGetIntegerv(GL_CULL_FACE_MODE, &cullface);
+    _renderStateCullFace = (GLenum)cullface;
     
-    if (_cullFaceEnabled && !_renderStateCullFace)
+    if (_cullFaceEnabled != _renderStateCullFaceEnabled)
     {
-        glEnable(GL_CULL_FACE);
+        _cullFaceEnabled ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
     }
     
-    glCullFace(_cullFace);
-    
-    if (_depthTestEnabled && !_renderStateDepthTest)
+    if (_cullFace != _renderStateCullFace)
     {
-        glEnable(GL_DEPTH_TEST);
+        glCullFace(_cullFace);
     }
-    if (_depthWriteEnabled && !_renderStateDepthWrite)
+    
+    if (_depthTestEnabled != _renderStateDepthTest)
     {
-        glDepthMask(GL_TRUE);
+        _depthTestEnabled ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+    }
+    
+    if (_depthWriteEnabled != _renderStateDepthWrite)
+    {
+        glDepthMask(_depthWriteEnabled);
     }
 }
 
 void MeshCommand::restoreRenderState()
 {
-    if (_renderStateCullFace)
+    if (_cullFaceEnabled != _renderStateCullFaceEnabled)
     {
-        glEnable(GL_CULL_FACE);
-    }
-    else
-    {
-        glDisable(GL_CULL_FACE);
+        _renderStateCullFaceEnabled ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
     }
     
-    if (_renderStateDepthTest)
+    if (_cullFace != _renderStateCullFace)
     {
-        glEnable(GL_DEPTH_TEST);
-    }
-    else
-    {
-        glDisable(GL_DEPTH_TEST);
+        glCullFace(_renderStateCullFace);
     }
     
-    glDepthMask(_renderStateDepthTest);
+    if (_depthTestEnabled != _renderStateDepthTest)
+    {
+        _renderStateDepthTest ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+    }
+    
+    if (_depthWriteEnabled != _renderStateDepthWrite)
+    {
+        glDepthMask(_renderStateDepthWrite);
+    }
 }
 
 void MeshCommand::genMaterialID(GLuint texID, void* glProgramState, GLuint vertexBuffer, GLuint indexBuffer, const BlendFunc& blend)
@@ -288,7 +297,8 @@ void MeshCommand::batchDraw()
     _glProgramState->applyGLProgram(_mv);
     _glProgramState->applyUniforms();
 
-    if (Director::getInstance()->getRunningScene()->getLights().size() > 0)
+    const auto& scene = Director::getInstance()->getRunningScene();
+    if (scene && scene->getLights().size() > 0)
         setLightUniforms();
     
     // Draw
@@ -330,7 +340,8 @@ void MeshCommand::execute()
     
     _glProgramState->apply(_mv);   
 
-    if (Director::getInstance()->getRunningScene()->getLights().size() > 0)
+    const auto& scene = Director::getInstance()->getRunningScene();
+    if (scene && scene->getLights().size() > 0)
         setLightUniforms();
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
@@ -412,7 +423,7 @@ void MeshCommand::setLightUniforms()
                             Vec3 dir = dirLight->getDirectionInWorld();
                             dir.normalize();
                             const Color3B &col = dirLight->getDisplayedColor();
-                            s_dirLightUniformColorValues[enabledDirLightNum] = Vec3(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
+                            s_dirLightUniformColorValues[enabledDirLightNum].set(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
                             s_dirLightUniformDirValues[enabledDirLightNum] = dir;
                             ++enabledDirLightNum;
                         }
@@ -426,8 +437,8 @@ void MeshCommand::setLightUniforms()
                             auto pointLight = static_cast<PointLight *>(light);
                             Mat4 mat= pointLight->getNodeToWorldTransform();
                             const Color3B &col = pointLight->getDisplayedColor();
-                            s_pointLightUniformColorValues[enabledPointLightNum] = Vec3(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
-                            s_pointLightUniformPositionValues[enabledPointLightNum] = Vec3(mat.m[12], mat.m[13], mat.m[14]);
+                            s_pointLightUniformColorValues[enabledPointLightNum].set(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
+                            s_pointLightUniformPositionValues[enabledPointLightNum].set(mat.m[12], mat.m[13], mat.m[14]);
                             s_pointLightUniformRangeInverseValues[enabledPointLightNum] = 1.0f / pointLight->getRange();
                             ++enabledPointLightNum;
                         }
@@ -442,8 +453,8 @@ void MeshCommand::setLightUniforms()
                             dir.normalize();
                             Mat4 mat= light->getNodeToWorldTransform();
                             const Color3B &col = spotLight->getDisplayedColor();
-                            s_spotLightUniformColorValues[enabledSpotLightNum] = Vec3(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
-                            s_spotLightUniformPositionValues[enabledSpotLightNum] = Vec3(mat.m[12], mat.m[13], mat.m[14]);
+                            s_spotLightUniformColorValues[enabledSpotLightNum].set(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
+                            s_spotLightUniformPositionValues[enabledSpotLightNum].set(mat.m[12], mat.m[13], mat.m[14]);
                             s_spotLightUniformDirValues[enabledSpotLightNum] = dir;
                             s_spotLightUniformInnerAngleCosValues[enabledSpotLightNum] = spotLight->getCosInnerAngle();
                             s_spotLightUniformOuterAngleCosValues[enabledSpotLightNum] = spotLight->getCosOuterAngle();
@@ -456,7 +467,7 @@ void MeshCommand::setLightUniforms()
                     {
                         auto ambLight = static_cast<AmbientLight *>(light);
                         const Color3B &col = ambLight->getDisplayedColor();
-                        ambientColor += Vec3(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
+                        ambientColor.add(col.r / 255.0f * intensity, col.g / 255.0f * intensity, col.b / 255.0f * intensity);
                     }
                         break;
                     default:

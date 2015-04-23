@@ -37,6 +37,7 @@ extern "C" {
 
 #include "network/HttpClient.h"
 
+///@cond
 class LuaMinXmlHttpRequest : public cocos2d::Ref
 {
 public:
@@ -129,5 +130,5 @@ private:
 };
 
 TOLUA_API int register_xml_http_request(lua_State* L);
-
+///@endcond
 #endif //#ifndef __COCOS_SCRIPTING_LUA_BINDINGS_LUA_XML_HTTP_REQUEST_H__

@@ -25,15 +25,16 @@
 #include "UIEditBoxTest.h"
 #include "testResource.h"
 
-// UIEditBoxTest
-UIEditBoxTest::UIEditBoxTest()
+USING_NS_CC;
+USING_NS_CC_EXT;
+using namespace cocos2d::ui;
+
+UIEditBoxTests::UIEditBoxTests()
 {
-    
+    ADD_TEST_CASE(UIEditBoxTest);
 }
 
-UIEditBoxTest::~UIEditBoxTest()
-{
-}
+// UIEditBoxTest
 
 bool UIEditBoxTest::init()
 {

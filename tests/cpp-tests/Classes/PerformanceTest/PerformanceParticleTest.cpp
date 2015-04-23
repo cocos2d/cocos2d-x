@@ -1,5 +1,6 @@
 #include "PerformanceParticleTest.h"
 
+USING_NS_CC;
 
 enum {
     kTagInfoLayer = 1,

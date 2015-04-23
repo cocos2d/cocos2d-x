@@ -3,41 +3,41 @@
 
 #include "../UIScene.h"
 
-USING_NS_CC;
+DEFINE_TEST_SUITE(VideoPlayerTests);
 
 class VideoPlayerTest : public UIScene
 {
 public:
-    UI_SCENE_CREATE_FUNC(VideoPlayerTest);
+    CREATE_FUNC(VideoPlayerTest);
 
-    virtual bool init();
+    virtual bool init() override;
 
-    void menuCloseCallback(Ref* sender);
+    void menuCloseCallback(cocos2d::Ref* sender);
 
-    void menuRatioCallback(Ref* sender);
-    void menuResourceVideoCallback(Ref* sender);
-    void menuOnlineVideoCallback(Ref* sender);
+    void menuRatioCallback(cocos2d::Ref* sender);
+    void menuResourceVideoCallback(cocos2d::Ref* sender);
+    void menuOnlineVideoCallback(cocos2d::Ref* sender);
 
-    void menuFullScreenCallback(Ref* sender);
-    void menuPauseCallback(Ref* sender);
-    void menuResumeCallback(Ref* sender);
-    void menuStopCallback(Ref* sender);
-    void menuHintCallback(Ref* sender);
+    void menuFullScreenCallback(cocos2d::Ref* sender);
+    void menuPauseCallback(cocos2d::Ref* sender);
+    void menuResumeCallback(cocos2d::Ref* sender);
+    void menuStopCallback(cocos2d::Ref* sender);
+    void menuHintCallback(cocos2d::Ref* sender);
     
-    void sliderCallback(Ref *sender, ui::Slider::EventType eventType);
+    void sliderCallback(cocos2d::Ref* sender, cocos2d::ui::Slider::EventType eventType);
 
-    void videoEventCallback(Ref* sender, experimental::ui::VideoPlayer::EventType eventType);
+    void videoEventCallback(cocos2d::Ref* sender, cocos2d::experimental::ui::VideoPlayer::EventType eventType);
 
 private:
     void createVideo();
     void createSlider();
 
-    MenuItemFont* _hintItem;
-    experimental::ui::VideoPlayer* _videoPlayer;
-    Label* _videoStateLabel;
-    Rect _visibleRect;
+    cocos2d::MenuItemFont* _hintItem;
+    cocos2d::experimental::ui::VideoPlayer* _videoPlayer;
+    cocos2d::Label* _videoStateLabel;
+    cocos2d::Rect _visibleRect;
 
-    Layer* _rootLayer;
+    cocos2d::Layer* _rootLayer;
 
 };
 

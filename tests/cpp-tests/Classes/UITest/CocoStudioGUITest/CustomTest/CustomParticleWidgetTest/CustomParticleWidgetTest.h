@@ -1,30 +1,25 @@
-//
-//  CustomParticleWidgetTest.h
-//  CustomUI
-//
-//  Created by cai wenzhi on 14-3-7.
-//
-//
-
 #ifndef __CustomUI__CustomParticleWidgetTest__
 #define __CustomUI__CustomParticleWidgetTest__
 
 #include "cocos2d.h"
 #include "extensions/cocos-ext.h"
-#include "../../../../testBasic.h"
+#include "BaseTest.h"
 
 class CustomParticleWidgetLayer : public cocos2d::Layer
 {
 public:
-    virtual void onEnter();
+    CREATE_FUNC(CustomParticleWidgetLayer);
+
+    virtual bool init() override;
 };
 
-class CustomParticleWidgetScene : public cocos2d::Scene
+class CustomParticleWidgetScene : public TestCase
 {
 public:
-    virtual void onEnter();
-    virtual void runThisTest();
-    void BackCallback(cocos2d::Ref* pSender);
+    CREATE_FUNC(CustomParticleWidgetScene);
+
+    virtual bool init() override;
+    virtual std::string title() const override { return getTestCaseName(); }
 };
 
 #endif /* defined(__CustomUI__CustomParticleWidgetTest__) */

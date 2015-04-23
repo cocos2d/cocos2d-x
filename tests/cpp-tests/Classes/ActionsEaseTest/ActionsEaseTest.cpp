@@ -26,15 +26,14 @@
 #include "ActionsEaseTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum {
     kTagAction1 = 1,
     kTagAction2 = 2,
     kTagSlider = 1,
 };
 
-Layer* nextEaseAction();
-Layer* backEaseAction();
-Layer* restartEaseAction();
 
 //------------------------------------------------------------------
 //
@@ -975,83 +974,33 @@ std::string SpeedTest::subtitle() const
 //
 //------------------------------------------------------------------
 
-enum
+ActionsEaseTests::ActionsEaseTests()
 {
-    IDC_NEXT = 100,
-    IDC_BACK,
-    IDC_RESTART
-};
-
-static int sceneIdx = -1; 
-
-#define MAX_LAYER    24
-
-Layer* createEaseLayer(int nIndex)
-{
-    switch(nIndex)
-    {
-        case 0: return new SpriteEase();
-        case 1: return new SpriteEaseInOut();
-        case 2: return new SpriteEaseExponential();
-        case 3: return new SpriteEaseExponentialInOut();
-        case 4: return new SpriteEaseSine();
-        case 5: return new SpriteEaseSineInOut();
-        case 6: return new SpriteEaseElastic();
-        case 7: return new SpriteEaseElasticInOut();
-        case 8: return new SpriteEaseBounce();
-        case 9: return new SpriteEaseBounceInOut();
-        case 10: return new SpriteEaseBack();
-        case 11: return new SpriteEaseBackInOut();
-        case 12: return new SpriteEaseBezier();
-        case 13: return new SpriteEaseQuadratic();
-        case 14: return new SpriteEaseQuadraticInOut();
-        case 15: return new SpriteEaseQuartic();
-        case 16: return new SpriteEaseQuarticInOut();
-        case 17: return new SpriteEaseQuintic();
-        case 18: return new SpriteEaseQuinticInOut();
-        case 19: return new SpriteEaseCircle();
-        case 20: return new SpriteEaseCircleInOut();
-        case 21: return new SpriteEaseCubic();
-        case 22: return new SpriteEaseCubicInOut();
-        case MAX_LAYER-1: return new SpeedTest();
-    }
-
-
-    return nullptr;
+    ADD_TEST_CASE(SpriteEase);
+    ADD_TEST_CASE(SpriteEaseInOut);
+    ADD_TEST_CASE(SpriteEaseExponential);
+    ADD_TEST_CASE(SpriteEaseExponentialInOut);
+    ADD_TEST_CASE(SpriteEaseSine);
+    ADD_TEST_CASE(SpriteEaseSineInOut);
+    ADD_TEST_CASE(SpriteEaseElastic);
+    ADD_TEST_CASE(SpriteEaseElasticInOut);
+    ADD_TEST_CASE(SpriteEaseBounce);
+    ADD_TEST_CASE(SpriteEaseBounceInOut);
+    ADD_TEST_CASE(SpriteEaseBack);
+    ADD_TEST_CASE(SpriteEaseBackInOut);
+    ADD_TEST_CASE(SpriteEaseBezier);
+    ADD_TEST_CASE(SpriteEaseQuadratic);
+    ADD_TEST_CASE(SpriteEaseQuadraticInOut);
+    ADD_TEST_CASE(SpriteEaseQuartic);
+    ADD_TEST_CASE(SpriteEaseQuarticInOut);
+    ADD_TEST_CASE(SpriteEaseQuintic);
+    ADD_TEST_CASE(SpriteEaseQuinticInOut);
+    ADD_TEST_CASE(SpriteEaseCircle);
+    ADD_TEST_CASE(SpriteEaseCircleInOut);
+    ADD_TEST_CASE(SpriteEaseCubic);
+    ADD_TEST_CASE(SpriteEaseCubicInOut);
+    ADD_TEST_CASE(SpeedTest);
 }
-
-Layer* nextEaseAction()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = createEaseLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
-}
-
-Layer* backEaseAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;    
-    
-    auto layer = createEaseLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
-}
-
-Layer* restartEaseAction()
-{
-    auto layer = createEaseLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
-} 
-
 
 EaseSpriteDemo::EaseSpriteDemo(void)
 {
@@ -1079,7 +1028,7 @@ std::string EaseSpriteDemo::subtitle() const
 
 void EaseSpriteDemo::onEnter()
 {
-    BaseTest::onEnter();
+    TestCase::onEnter();
 
     // Or you can create an sprite using a filename. PNG and BMP files are supported. Probably TIFF too
     _grossini = Sprite::create(s_pathGrossini); _grossini->retain();
@@ -1093,37 +1042,4 @@ void EaseSpriteDemo::onEnter()
     _grossini->setPosition(VisibleRect::left().x + 60, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height*1/5);
     _kathia->setPosition(VisibleRect::left().x + 60, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height*2.5f/5);
     _tamara->setPosition(VisibleRect::left().x + 60, VisibleRect::bottom().y+VisibleRect::getVisibleRect().size.height*4/5);
-}
-
-void EaseSpriteDemo::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ActionsEaseTestScene();//CCScene::create();
-    s->addChild(restartEaseAction()); 
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void EaseSpriteDemo::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ActionsEaseTestScene();//CCScene::create();
-    s->addChild( nextEaseAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void EaseSpriteDemo::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ActionsEaseTestScene();//CCScene::create();
-    s->addChild( backEaseAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void ActionsEaseTestScene::runThisTest()
-{
-    auto layer = nextEaseAction();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
 }

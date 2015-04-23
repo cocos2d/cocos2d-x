@@ -11,10 +11,11 @@
 -- @return Device#Device self (return value: cc.Device)
         
 --------------------------------
--- 
+-- Controls whether the screen should remain on.<br>
+-- param keepScreenOn One flag indicating that the screen should remain on.
 -- @function [parent=#Device] setKeepScreenOn 
 -- @param self
--- @param #bool value
+-- @param #bool keepScreenOn
 -- @return Device#Device self (return value: cc.Device)
         
 --------------------------------

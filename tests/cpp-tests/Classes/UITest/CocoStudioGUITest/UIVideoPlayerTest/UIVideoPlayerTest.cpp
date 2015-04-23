@@ -1,7 +1,13 @@
 #include "UIVideoPlayerTest.h"
 
 USING_NS_CC;
+using namespace cocos2d::ui;
 using namespace cocos2d::experimental::ui;
+
+VideoPlayerTests::VideoPlayerTests()
+{
+    ADD_TEST_CASE(VideoPlayerTest);
+}
 
 bool VideoPlayerTest::init()
 {
@@ -98,7 +104,7 @@ void VideoPlayerTest::menuOnlineVideoCallback(Ref* sender)
 {
     if (_videoPlayer)
     {
-        _videoPlayer->setURL("http://video001.smgbb.cn/gslb/program/FDN/FDN1190949/HLSVodService.m3u8?_mdCode=6065719&_cdnCode=B2B_XL_TEST&_type=0&_rCode=TerOut_18865&_userId=020341000456068&_categoryCode=SMG_HUAYU&_categoryPath=SMG_1002,SMG_HUAYU,&_adPositionId=01001000&_adCategorySource=0&_flag=.m3u8&_enCode=m3u8&taskID=ysh_ps_002-ott_1397459105893_020341000456068&_client=103&_cms=ctv&_CDNToken=76C043FD4969501754DC19E54EC8DC2C");
+        _videoPlayer->setURL("http://benchmark.cocos2d-x.org/cocosvideo.mp4");
         _videoPlayer->play();
     }
 }

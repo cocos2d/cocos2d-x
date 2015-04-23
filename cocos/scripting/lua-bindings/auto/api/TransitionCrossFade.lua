@@ -5,7 +5,10 @@
 -- @parent_module cc
 
 --------------------------------
--- 
+--  Creates a transition with duration and incoming scene.<br>
+-- param t Duration time, in seconds.<br>
+-- param scene A given scene.<br>
+-- return A autoreleased TransitionCrossFade object.
 -- @function [parent=#TransitionCrossFade] create 
 -- @param self
 -- @param #float t
@@ -13,7 +16,6 @@
 -- @return TransitionCrossFade#TransitionCrossFade ret (return value: cc.TransitionCrossFade)
         
 --------------------------------
--- js NA<br>
 -- lua NA
 -- @function [parent=#TransitionCrossFade] draw 
 -- @param self

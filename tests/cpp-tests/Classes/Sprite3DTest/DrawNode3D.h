@@ -32,16 +32,16 @@ NS_CC_BEGIN
 /**
  * Copy DrawNode for 3D geometry drawing.
  */
-class DrawNode3D: public Node
+class DrawNode3D: public cocos2d::Node
 {
 public:
     /** creates and initialize a DrawNode3D node */
-    static DrawNode3D* create();
+    static cocos2d::DrawNode3D* create();
     
     /**
      * Draw 3D Line
      */
-    void drawLine(const Vec3 &from, const Vec3 &to, const Color4F &color);
+    void drawLine(const cocos2d::Vec3 &from, const cocos2d::Vec3 &to, const Color4F &color);
     
     /**
     * Draw 3D cube
@@ -56,7 +56,7 @@ public:
     *        vertices[7]:Left-top-back.
     * @param color
     */
-    void drawCube(Vec3* vertices, const Color4F &color);
+    void drawCube(cocos2d::Vec3* vertices, const Color4F &color);
     
     /** Clear the geometry in the node's buffer. */
     void clear();
@@ -76,20 +76,20 @@ public:
     */
     void setBlendFunc(const BlendFunc &blendFunc);
 
-    void onDraw(const Mat4 &transform, uint32_t flags);
+    void onDraw(const cocos2d::Mat4& transform, uint32_t flags);
     
     // Overrides
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t flags) override;
     
 CC_CONSTRUCTOR_ACCESS:
     DrawNode3D();
     virtual ~DrawNode3D();
-    virtual bool init();
+    virtual bool init() override;
 
 protected:
     struct V3F_C4B
     {
-        Vec3     vertices;
+        cocos2d::Vec3     vertices;
         Color4B  colors;
     };
     void ensureCapacity(int count);
@@ -102,7 +102,7 @@ protected:
     V3F_C4B*    _buffer;
 
     BlendFunc   _blendFunc;
-    CustomCommand _customCommand;
+    cocos2d::CustomCommand _customCommand;
 
     bool        _dirty;
 

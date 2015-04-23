@@ -70,7 +70,7 @@ public:
     
     void execute();
     
-    //used for bath
+    //used for batch
     void preBatchDraw();
     void batchDraw();
     void postBatchDraw();
@@ -129,9 +129,10 @@ protected:
     bool _depthWriteEnabled;
     bool _forceDepthWrite;
     
-    bool _renderStateCullFace;
+    bool _renderStateCullFaceEnabled;
     bool _renderStateDepthTest;
     GLboolean _renderStateDepthWrite;
+    GLenum    _renderStateCullFace;
 
     // ModelView transform
     Mat4 _mv;

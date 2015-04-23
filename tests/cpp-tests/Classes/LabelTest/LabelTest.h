@@ -1,7 +1,6 @@
 #ifndef _ATLAS_TEST_H_
 #define _ATLAS_TEST_H_
 
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
@@ -11,29 +10,17 @@
 #pragma warning (disable: 4996)
 #endif
 
-class AtlasDemo : public BaseTest
+DEFINE_TEST_SUITE(LabelTests);
+
+class AtlasDemo : public TestCase
 {
-protected:
-
 public:
-    CREATE_FUNC(AtlasDemo);
-
-    AtlasDemo(void);
-    ~AtlasDemo(void);
-
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-    virtual void onEnter() override;
-
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
 };
 
 
 class Atlas1 : public AtlasDemo
 {
-    TextureAtlas*        _textureAtlas;
+    cocos2d::TextureAtlas*        _textureAtlas;
 public:
     CREATE_FUNC(Atlas1);
 
@@ -41,11 +28,11 @@ public:
     ~Atlas1();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
+    virtual void draw(cocos2d::Renderer* renderer, const cocos2d::Mat4& transform, uint32_t flags) override;
 protected:
-    void onDraw(const Mat4 &transform, uint32_t flags);
+    void onDraw(const cocos2d::Mat4& transform, uint32_t flags);
 protected:
-    CustomCommand _customCommand;
+    cocos2d::CustomCommand _customCommand;
 };
 
 class LabelAtlasTest : public AtlasDemo
@@ -209,14 +196,6 @@ public:
     virtual std::string subtitle() const override;
 };
 
-class AtlasTestScene : public TestScene
-{
-public:
-    CREATE_FUNC(AtlasTestScene);
-
-    virtual void runThisTest();
-};
-
 class LabelTTFTest : public AtlasDemo
 {
 public:
@@ -227,18 +206,18 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 private:
-    void  setAlignmentLeft(Ref* sender);
-    void  setAlignmentCenter(Ref* sender);
-    void  setAlignmentRight(Ref* sender);
-    void  setAlignmentTop(Ref* sender);
-    void  setAlignmentMiddle(Ref* sender);
-    void  setAlignmentBottom(Ref* sender);
+    void  setAlignmentLeft(cocos2d::Ref* sender);
+    void  setAlignmentCenter(cocos2d::Ref* sender);
+    void  setAlignmentRight(cocos2d::Ref* sender);
+    void  setAlignmentTop(cocos2d::Ref* sender);
+    void  setAlignmentMiddle(cocos2d::Ref* sender);
+    void  setAlignmentBottom(cocos2d::Ref* sender);
     void  updateAlignment();
     const char* getCurrentAlignment();
 private:
-    TextHAlignment _horizAlign;
-    LabelTTF* _label;
-    TextVAlignment _vertAlign;
+    cocos2d::TextHAlignment _horizAlign;
+    cocos2d::LabelTTF* _label;
+    cocos2d::TextVAlignment _vertAlign;
 };
 
 class LabelTTFMultiline : public AtlasDemo
@@ -279,17 +258,17 @@ public:
     void snapArrowsToEdge();
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-    void stringChanged(Ref *sender);
-    void alignmentChanged(Ref *sender);
-    void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event  *event);
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
+    void stringChanged(cocos2d::Ref* sender);
+    void alignmentChanged(cocos2d::Ref* sender);
+    void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
 
 public:
-    LabelBMFont *_labelShouldRetain;
-    Sprite *_arrowsBarShouldRetain;
-    Sprite *_arrowsShouldRetain;
-    MenuItemFont *_lastSentenceItem, *_lastAlignmentItem;
+    cocos2d::LabelBMFont* _labelShouldRetain;
+    cocos2d::Sprite* _arrowsBarShouldRetain;
+    cocos2d::Sprite* _arrowsShouldRetain;
+    cocos2d::MenuItemFont *_lastSentenceItem, *_lastAlignmentItem;
     bool _drag;
 };
 

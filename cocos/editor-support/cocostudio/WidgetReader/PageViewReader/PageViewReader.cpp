@@ -40,6 +40,11 @@ namespace cocostudio
         return instancePageViewReader;
     }
     
+    void PageViewReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instancePageViewReader);
+    }
+    
     void PageViewReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
 	{
 		LayoutReader::setPropsFromBinary(widget, cocoLoader, cocoNode);

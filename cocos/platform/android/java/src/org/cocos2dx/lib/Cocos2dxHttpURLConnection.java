@@ -260,8 +260,17 @@ public class Cocos2dxHttpURLConnection
     }
 
     static byte[] getResponseContent(HttpURLConnection http) {
-    	try {
-            DataInputStream in = new DataInputStream(http.getInputStream());
+        DataInputStream in;
+        try {
+            in = new DataInputStream(http.getInputStream());
+        } catch (IOException e) {
+            in = new DataInputStream(http.getErrorStream());
+        } catch (Exception e) {
+            Log.e("Cocos2dxHttpURLConnection exception", e.toString());
+            return null;
+        }
+
+        try {
             byte[] buffer = new byte[1024];
             int size   = 0;
             ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
@@ -272,12 +281,13 @@ public class Cocos2dxHttpURLConnection
             byte retbuffer[] = bytestream.toByteArray();
             bytestream.close();
             return retbuffer;
-		} catch (Exception e) {
-			Log.e("Cocos2dxHttpURLConnection exception", e.toString());
-		}
+        } catch (Exception e) {
+            Log.e("Cocos2dxHttpURLConnection exception", e.toString());
+        }
+
         return null;
     }
-
+    
     static int getResponseCode(HttpURLConnection http) {
         int code = 0;
         try {

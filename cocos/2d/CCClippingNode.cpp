@@ -202,10 +202,10 @@ void ClippingNode::drawFullScreenQuadClearStencil()
     director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     
     Vec2 vertices[] = {
-        Vec2(-1, -1),
-        Vec2(1, -1),
-        Vec2(1, 1),
-        Vec2(-1, 1)
+        Vec2(-1.0f, -1.0f),
+        Vec2(1.0f, -1.0f),
+        Vec2(1.0f, 1.0f),
+        Vec2(-1.0f, 1.0f)
     };
     
     auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
@@ -314,6 +314,14 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
     renderer->popGroup();
     
     director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_MODELVIEW);
+}
+
+void ClippingNode::setCameraMask(unsigned short mask, bool applyChildren)
+{
+    Node::setCameraMask(mask, applyChildren);
+    
+    if (_stencil)
+        _stencil->setCameraMask(mask, applyChildren);
 }
 
 Node* ClippingNode::getStencil() const

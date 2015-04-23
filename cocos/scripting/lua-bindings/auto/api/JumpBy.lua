@@ -5,8 +5,12 @@
 -- @parent_module cc
 
 --------------------------------
--- creates the action<br>
--- param duration in seconds
+-- Creates the action.<br>
+-- param duration Duration time, in seconds.<br>
+-- param position The jumping distance.<br>
+-- param height The jumping height.<br>
+-- param jumps The jumping times.<br>
+-- return An autoreleased JumpBy object.
 -- @function [parent=#JumpBy] create 
 -- @param self
 -- @param #float duration
@@ -35,7 +39,7 @@
 -- @return JumpBy#JumpBy ret (return value: cc.JumpBy)
         
 --------------------------------
--- param time in seconds
+-- param time In seconds.
 -- @function [parent=#JumpBy] update 
 -- @param self
 -- @param #float time

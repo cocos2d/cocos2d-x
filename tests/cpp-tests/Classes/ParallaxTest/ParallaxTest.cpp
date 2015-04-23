@@ -1,15 +1,20 @@
 #include "ParallaxTest.h"
 #include "../testResource.h"
 
+USING_NS_CC;
+
 enum 
 {
     kTagNode,
     kTagGrossini,
 };
 
-Layer* nextParallaxAction();
-Layer* backParallaxAction();
-Layer* restartParallaxAction();
+ParallaxTests::ParallaxTests()
+{
+    ADD_TEST_CASE(Parallax1);
+    ADD_TEST_CASE(Parallax2);
+    ADD_TEST_CASE(Issue2572);
+}
 
 //------------------------------------------------------------------
 //
@@ -154,10 +159,10 @@ std::string Parallax2::title() const
 //
 //------------------------------------------------------------------
 Issue2572::Issue2572()
-: _preListSize(0)
-, _moveTimer(0.0f)
-, _printCount(0)
+: _moveTimer(0.0f)
 , _addTimer(0.0f)
+, _preListSize(0)
+, _printCount(0)
 {
     _addChildStep = 1.0f;
     _wholeMoveTime = 3.0f;
@@ -226,110 +231,4 @@ std::string Issue2572::title() const
 std::string Issue2572::subtitle() const
 {
     return "Look at the output in console";
-}
-
-//------------------------------------------------------------------
-//
-// ParallaxDemo
-//
-//------------------------------------------------------------------
-
-static int sceneIdx = -1; 
-
-#define MAX_LAYER    3
-
-Layer* createParallaxTestLayer(int nIndex)
-{
-    switch(nIndex)
-    {
-        case 0: return new Parallax1();
-        case 1: return new Parallax2();
-        case 2: return new Issue2572();
-    }
-
-    return nullptr;
-}
-
-Layer* nextParallaxAction()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = createParallaxTestLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
-}
-
-Layer* backParallaxAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;    
-    
-    auto layer = createParallaxTestLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
-}
-
-Layer* restartParallaxAction()
-{
-    auto layer = createParallaxTestLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
-} 
-
-
-ParallaxDemo::ParallaxDemo(void)
-{
-}
-
-ParallaxDemo::~ParallaxDemo(void)
-{
-}
-
-std::string ParallaxDemo::title() const
-{
-    return "No title";
-}
-
-void ParallaxDemo::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-void ParallaxDemo::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ParallaxTestScene();
-    s->addChild(restartParallaxAction()); 
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void ParallaxDemo::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ParallaxTestScene();
-    s->addChild( nextParallaxAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void ParallaxDemo::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ParallaxTestScene();
-    s->addChild( backParallaxAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-} 
-
-void ParallaxTestScene::runThisTest()
-{
-    auto layer = nextParallaxAction();
-
-    addChild(layer);
-    Director::getInstance()->replaceScene(this);
 }

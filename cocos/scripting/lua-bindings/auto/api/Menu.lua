@@ -5,26 +5,30 @@
 -- @parent_module cc
 
 --------------------------------
--- 
+-- Set whether the menu is visible.<br>
+-- The default value is true, a menu is default to visible.<br>
+-- param value true if menu is enable, false if menu is disable.
 -- @function [parent=#Menu] setEnabled 
 -- @param self
 -- @param #bool value
 -- @return Menu#Menu self (return value: cc.Menu)
         
 --------------------------------
---  align items vertically 
+--  Align items vertically. 
 -- @function [parent=#Menu] alignItemsVertically 
 -- @param self
 -- @return Menu#Menu self (return value: cc.Menu)
         
 --------------------------------
--- 
+-- Determines if the menu is enable.<br>
+-- see `setEnabled(bool)`.<br>
+-- return whether the menu is enabled or not.
 -- @function [parent=#Menu] isEnabled 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
---  align items horizontally with padding<br>
+--  Align items horizontally with padding.<br>
 -- since v0.7.2
 -- @function [parent=#Menu] alignItemsHorizontallyWithPadding 
 -- @param self
@@ -32,7 +36,7 @@
 -- @return Menu#Menu self (return value: cc.Menu)
         
 --------------------------------
---  align items vertically with padding<br>
+--  Align items vertically with padding.<br>
 -- since v0.7.2
 -- @function [parent=#Menu] alignItemsVerticallyWithPadding 
 -- @param self
@@ -40,7 +44,7 @@
 -- @return Menu#Menu self (return value: cc.Menu)
         
 --------------------------------
---  align items horizontally 
+--  Align items horizontally. 
 -- @function [parent=#Menu] alignItemsHorizontally 
 -- @param self
 -- @return Menu#Menu self (return value: cc.Menu)
@@ -59,15 +63,17 @@
 
 --------------------------------
 -- 
--- @function [parent=#Menu] isOpacityModifyRGB 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- 
 -- @function [parent=#Menu] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
+        
+--------------------------------
+-- 
+-- @function [parent=#Menu] removeChild 
+-- @param self
+-- @param #cc.Node child
+-- @param #bool cleanup
+-- @return Menu#Menu self (return value: cc.Menu)
         
 --------------------------------
 -- 
@@ -78,10 +84,8 @@
         
 --------------------------------
 -- 
--- @function [parent=#Menu] removeChild 
+-- @function [parent=#Menu] isOpacityModifyRGB 
 -- @param self
--- @param #cc.Node child
--- @param #bool cleanup
--- @return Menu#Menu self (return value: cc.Menu)
+-- @return bool#bool ret (return value: bool)
         
 return nil

@@ -81,9 +81,14 @@ GLViewImpl::GLViewImpl()
     , m_width(0)
     , m_height(0)
     , m_orientation(DisplayOrientations::Landscape)
+    , m_appShouldExit(false)
 {
 	s_pEglView = this;
     _viewName =  "cocos2dx";
+
+    m_backButtonListener = EventListenerKeyboard::create();
+    m_backButtonListener->onKeyReleased = CC_CALLBACK_2(GLViewImpl::BackButtonListener, this);
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(m_backButtonListener, INT_MAX);
 }
 
 GLViewImpl::~GLViewImpl()
@@ -188,6 +193,7 @@ bool GLViewImpl::isOpenGLReady()
 void GLViewImpl::end()
 {
 	m_windowClosed = true;
+    m_appShouldExit = true;
 }
 
 
@@ -202,11 +208,49 @@ void GLViewImpl::OnResuming(Platform::Object^ sender, Platform::Object^ args)
 // user pressed the Back Key on the phone
 void GLViewImpl::OnBackKeyPress()
 {
-    std::string str;
-    if(m_delegate)
+    cocos2d::EventKeyboard::KeyCode cocos2dKey = EventKeyboard::KeyCode::KEY_ESCAPE;
+    cocos2d::EventKeyboard event(cocos2dKey, false);
+    cocos2d::Director::getInstance()->getEventDispatcher()->dispatchEvent(&event);
+}
+
+void GLViewImpl::BackButtonListener(EventKeyboard::KeyCode keyCode, Event* event)
+{
+    CCLOG("*********************************************************************");
+    CCLOG("GLViewImpl::BackButtonListener: Exiting application!");
+    CCLOG("");
+    CCLOG("If you want to listen for Windows Phone back button events,");
+    CCLOG("add a listener for EventKeyboard::KeyCode::KEY_ESCAPE");
+    CCLOG("Make sure you call stopPropagation() on the Event if you don't");
+    CCLOG("want your app to exit when the back button is pressed.");
+    CCLOG("");
+    CCLOG("For example, add the following to your scene...");
+    CCLOG("auto listener = EventListenerKeyboard::create();");
+    CCLOG("listener->onKeyReleased = CC_CALLBACK_2(HelloWorld::onKeyReleased, this);");
+    CCLOG("getEventDispatcher()->addEventListenerWithFixedPriority(listener, 1);");
+    CCLOG("");
+    CCLOG("void HelloWorld::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)");
+    CCLOG("{");
+    CCLOG("     if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE)");
+    CCLOG("     {");
+    CCLOG("         if (myAppShouldNotQuit) // or whatever logic you want...");
+    CCLOG("         {");
+    CCLOG("             event->stopPropagation();");
+    CCLOG("         }");
+    CCLOG("     }");
+    CCLOG("}");
+    CCLOG("");
+    CCLOG("You MUST call event->stopPropagation() if you don't want your app to quit!");
+    CCLOG("*********************************************************************");
+
+    if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE)
     {
-        //m_delegate->Invoke(Cocos2dEvent::TerminateApp, stringToPlatformString(str));
+        Director::getInstance()->end();
     }
+}
+
+bool GLViewImpl::AppShouldExit()
+{
+    return m_appShouldExit;
 }
 
 void GLViewImpl::OnPointerPressed(CoreWindow^ sender, PointerEventArgs^ args)
@@ -220,7 +264,6 @@ void GLViewImpl::OnPointerPressed(PointerEventArgs^ args)
     Vec2 pt = GetPoint(args);
     handleTouchesBegin(1, &id, &pt.x, &pt.y);
 }
-
 
 void GLViewImpl::OnPointerWheelChanged(CoreWindow^ sender, PointerEventArgs^ args)
 {
@@ -389,8 +432,9 @@ void GLViewImpl::UpdateWindowSize()
 		ResolutionPolicy resPolicy=view->getResolutionPolicy();
 		view->setFrameSize(width, height);
  		view->setDesignResolutionSize(resSize.width, resSize.height, resPolicy);
-		Director::getInstance()->setViewport();
-        Director::sharedDirector()->setProjection(Director::sharedDirector()->getProjection());
+        auto director = Director::getInstance();
+        director->setViewport();
+        director->setProjection(director->getProjection());
 	}
 }
 

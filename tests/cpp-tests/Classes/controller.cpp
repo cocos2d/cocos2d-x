@@ -1,589 +1,506 @@
-
-// C++ includes
-#include <map>
-#include <functional>
-#include <string>
-#include <chrono>
-#include <thread>
-// test inclues
-#include "AppDelegate.h"
-#include "BaseTest.h"
 #include "controller.h"
-#include "testResource.h"
+#include <functional>
+#include <chrono>
+#include "BaseTest.h"
 #include "tests.h"
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netdb.h>
-#else
-#include <io.h>
-#include <WS2tcpip.h>
-#endif
-#include "cocostudio/CocoStudio.h"
-#include "UITest/UITest.h"
+USING_NS_CC;
 
-typedef struct _Controller{
-	const char *test_name;
-	std::function<TestScene*()> callback;
-} Controller;
-Controller g_aTestNames[] = {
+#define TEST_TIME_OUT 25
+#define CREATE_TIME_OUT 25
+#define LOG_INDENTATION "  "
+#define LOG_TAG "[TestController]"
 
-    //
-    // TESTS MUST BE ORDERED ALPHABETICALLY
-    //     violators will be prosecuted
-    //
-	{ "ActionManager", [](){return new ActionManagerTestScene(); } },
-	{ "Actions - Basic", [](){ return new ActionsTestScene(); } },
-	{ "Actions - Ease", [](){return new ActionsEaseTestScene();} },
-	{ "Actions - Progress", [](){return new ProgressActionsTestScene(); } },
-    { "Allocator - Basic", [](){return new AllocatorTestNS::AllocatorTestScene(); } },
-    { "Audio - CocosDenshion", []() { return new CocosDenshionTestScene(); } },
+class RootTests : public TestList
+{
+public:
+    RootTests()
+    {
+        addTest("ActionManager", [](){return new (std::nothrow) ActionManagerTests(); });
+        addTest("Actions - Basic", [](){ return new (std::nothrow) ActionsTests(); });
+        addTest("Actions - Ease", [](){return new (std::nothrow) ActionsEaseTests(); });
+        addTest("Actions - Progress", [](){return new (std::nothrow) ActionsProgressTests(); });
+        addTest("Allocator - Basic", [](){return new (std::nothrow) AllocatorTests(); });
+        addTest("Audio - CocosDenshion", []() { return new (std::nothrow) CocosDenshionTests(); });
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    { "Audio - NewAudioEngine", []() { return new AudioEngineTestScene(); } },
+        addTest("Audio - NewAudioEngine", []() { return new (std::nothrow) AudioEngineTests(); });
 #endif
 #if CC_ENABLE_BOX2D_INTEGRATION
-	{ "Box2d - Basic", []() { return new Box2DTestScene(); } },
-	{ "Box2d - TestBed", []() { return new Box2dTestBedScene(); } },
+        addTest("Box2d - Basic", []() { return new (std::nothrow) Box2DTests(); });
+        addTest("Box2d - TestBed", []() { return new (std::nothrow) Box2dTestBedSuite(); });
 #endif
-	{ "Bugs", []() { return new BugsTestScene(); } },
-	{ "Chipmunk", []() { return new ChipmunkAccelTouchTestScene(); } },
-	{ "Click and Move", [](){return new ClickAndMoveTestScene(); } },
-	{ "Configuration", []() { return new ConfigurationTestScene(); } },
-	{ "Console", []() { return new ConsoleTestScene(); } },
-	{ "Curl", []() { return new CurlTestScene(); } },
-	{ "Current Language", []() { return new CurrentLanguageTestScene(); } },
-    { "EventDispatcher", []() { return new EventDispatcherTestScene(); } },
-	{ "Effects - Advanced", []() { return new EffectAdvanceScene(); } },
-	{ "Effects - Basic", [](){return new EffectTestScene();} },
-	{ "Extensions", []() { return new ExtensionsTestScene(); } },
-	{ "FileUtils", []() { return new FileUtilsTestScene(); } },
-	{ "Fonts", []() { return new FontTestScene(); } },
-	{ "Interval", [](){return new IntervalTestScene(); } },
-    { "Node: BillBoard Test", [](){  return new BillBoardTestScene(); }},
-    { "Node: Camera 3D Test", [](){  return new Camera3DTestScene(); }},
-	{ "Node: Clipping", []() { return new ClippingNodeTestScene(); } },
-	{ "Node: Draw", [](){return new DrawPrimitivesTestScene();} },
-    { "Node: Label - New API", [](){return new AtlasTestSceneNew(); } },
-	{ "Node: Label - Old API", [](){return new AtlasTestScene(); } },
-	{ "Node: Layer", [](){return new LayerTestScene();} },
-    { "Node: Light", [](){return new LightTestScene();} },
-	{ "Node: Menu", [](){return new MenuTestScene();} },
-	{ "Node: MotionStreak", [](){return new MotionStreakTestScene();} },
-	{ "Node: Node", [](){return new CocosNodeTestScene();} },
-	{ "Node: Parallax", [](){return new ParallaxTestScene(); } },
-	{ "Node: Particles", [](){return new ParticleTestScene(); } },
-	{ "Node: Physics", []() { return new PhysicsTestScene(); } },
-	{ "Node: RenderTexture", [](){return new RenderTextureScene(); } },
-	{ "Node: Scene", [](){return new SceneTestScene();} },
-	{ "Node: Spine", []() { return new SpineTestScene(); } },
-	{ "Node: Sprite", [](){return new SpriteTestScene(); } },
-    { "Node: Sprite3D", [](){  return new Sprite3DTestScene(); }},
-	{ "Node: TileMap", [](){return new TileMapTestScene(); } },
-	{ "Node: FastTileMap", [](){return new TileMapTestSceneNew(); } },
-	{ "Node: Text Input", [](){return new TextInputTestScene(); } },
-    { "Node: UI", [](){  return new UITestScene(); }},
-    { "Mouse", []() { return new MouseTestScene(); } },
-	{ "MultiTouch", []() { return new MutiTouchTestScene(); } },
-	{ "Performance tests", []() { return new PerformanceTestScene(); } },
-    { "Renderer", []() { return new NewRendererTestScene(); } },
-    { "ReleasePool", [](){ return new ReleasePoolTestScene(); } },
-	{ "Rotate World", [](){return new RotateWorldTestScene(); } },
-	{ "Scheduler", [](){return new SchedulerTestScene(); } },
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
-	{ "Shader - Basic", []() { return new ShaderTestScene(); } },
-    { "Shader - Sprite", []() { return new ShaderTestScene2(); } },
-#endif
-	{ "Texture2D", [](){return new TextureTestScene(); } },
-	{ "TextureCache", []() { return new TextureCacheTestScene(); } },
-	{ "TexturePacker Encryption", []() { return new TextureAtlasEncryptionTestScene(); } },
-	{ "Touches", [](){return new PongScene();} },
-	{ "Transitions", [](){return new TransitionsTestScene();} },
-    { "Unit Test", []() { return new UnitTestScene(); }},
-    { "URL Open Test", []() { return new OpenURLTestScene(); } },
-	{ "UserDefault", []() { return new UserDefaultTestScene(); } },
-	{ "Zwoptex", []() { return new ZwoptexTestScene(); } },
+        addTest("Bugs", []() { return new BugsTests(); });
+        addTest("Chipmunk", []() { return new ChipmunkTests(); });
+        addTest("Click and Move", [](){return new ClickAndMoveTest(); });
+        addTest("Configuration", []() { return new ConfigurationTests(); });
+        addTest("Console", []() { return new ConsoleTests(); });
+        addTest("Curl", []() { return new CurlTests(); });
+        addTest("Current Language", []() { return new CurrentLanguageTests(); });
+        addTest("CocosStudio3D Test", []() { return new CocosStudio3DTests(); });
+        addTest("EventDispatcher", []() { return new EventDispatcherTests(); });
+        addTest("Effects - Advanced", []() { return new EffectAdvanceTests(); });
+        addTest("Effects - Basic", [](){return new EffectTests(); });
+        addTest("Extensions", []() { return new ExtensionsTests(); });
+        addTest("FileUtils", []() { return new FileUtilsTests(); });
+        addTest("Fonts", []() { return new FontTests(); });
+        addTest("Interval", [](){return new IntervalTests(); });
+        addTest("Node: BillBoard Test", [](){  return new BillBoardTests(); });
+        addTest("Node: Camera 3D Test", [](){  return new Camera3DTests(); });
+        addTest("Node: Clipping", []() { return new ClippingNodeTests(); });
+        addTest("Node: Draw", [](){return new DrawPrimitivesTests(); });
+        addTest("Node: Label - New API", [](){return new NewLabelTests(); });
+        addTest("Node: Label - Old API", [](){return new LabelTests(); });
+        addTest("Node: Layer", [](){return new LayerTests(); });
+        addTest("Node: Light", [](){return new LightTests(); });
+        addTest("Node: Menu", [](){return new MenuTests(); });
+        addTest("Node: MotionStreak", [](){return new MotionStreakTests(); });
+        addTest("Node: Node", [](){return new CocosNodeTests(); });
+        addTest("Node: Parallax", [](){return new ParallaxTests(); });
+        addTest("Node: Particles", [](){return new ParticleTests(); });
+        addTest("Node: Particle3D (PU)", [](){return new Particle3DTests(); });
+        addTest("Node: Physics", []() { return new PhysicsTests(); });
+        addTest("Node: RenderTexture", [](){return new RenderTextureTests(); });
+        addTest("Node: Scene", [](){return new SceneTests(); });
+        addTest("Node: Spine", [](){return new SpineTests(); });
+        addTest("Node: Sprite", [](){return new SpriteTests(); });
+        addTest("Node: Sprite3D", [](){  return new Sprite3DTests(); });
+        addTest("Node: Terrain", [](){  return new TerrainTests(); });
+        addTest("Node: TileMap", [](){return new TileMapTests(); });
+        addTest("Node: FastTileMap", [](){return new FastTileMapTests(); });
+        addTest("Node: Text Input", [](){return new TextInputTests(); });
+        addTest("Node: UI", [](){  return new UITests(); });
+        addTest("Mouse", []() { return new MouseTests(); });
+        addTest("MultiTouch", []() { return new MutiTouchTests(); });
+        //addTest("Performance tests", []() { return new PerformanceTests(); });
+        addTest("Renderer", []() { return new NewRendererTests(); });
+        addTest("ReleasePool", [](){ return new ReleasePoolTests(); });
+        addTest("Rotate World", [](){return new RotateWorldTests(); });
+        addTest("Scheduler", [](){return new SchedulerTests(); });//!!!!!!
+        addTest("Shader - Basic", []() { return new ShaderTests(); });
+        addTest("Shader - Sprite", []() { return new Shader2Tests(); });
+        addTest("Texture2D", [](){return new Texture2DTests(); });
+        addTest("TextureCache", []() { return new TextureCacheTests(); });
+        addTest("TexturePacker Encryption", []() { return new TextureAtlasEncryptionTests(); });
+        addTest("Touches", [](){return new TouchesTests(); });
+        addTest("Transitions", [](){return new TransitionsTests(); });
+        addTest("Unit Test", []() { return new UnitTests(); });
+        addTest("URL Open Test", []() { return new OpenURLTests(); });
+        addTest("UserDefault", []() { return new UserDefaultTests(); });
+        addTest("Zwoptex", []() { return new ZwoptexTests(); });
+    }
 };
 
-static int g_testCount = sizeof(g_aTestNames) / sizeof(g_aTestNames[0]);
-static Controller *currentController = nullptr;
-#define LINE_SPACE          40
-
-static Vec2 s_tCurPos = Vec2::ZERO;
-
-//sleep for t seconds
-static void wait(int t)
-{
-    std::chrono::milliseconds dura( t * 1000 );
-    std::this_thread::sleep_for( dura );
-}
-
 TestController::TestController()
-: _beginPos(Vec2::ZERO)
-,_exitThread(false)
+: _stopAutoTest(true)
+, _isRunInBackground(false)
+, _testSuite(nullptr)
 {
-    // add close menu
-    auto closeItem = MenuItemImage::create(s_pathClose, s_pathClose, CC_CALLBACK_1(TestController::closeCallback, this) );
-    auto menu =Menu::create(closeItem, nullptr);
+    _rootTestList = new (std::nothrow) RootTests;  
+    _rootTestList->runThisTest();
+    _director = Director::getInstance();
 
-    menu->setPosition( Vec2::ZERO );
-    closeItem->setPosition(VisibleRect::right().x - 30, VisibleRect::top().y - 30);
+    _touchListener = EventListenerTouchOneByOne::create();
+    _touchListener->onTouchBegan = CC_CALLBACK_2(TestController::blockTouchBegan, this);
+    _touchListener->setSwallowTouches(true);
 
-    // add menu items for tests
-    TTFConfig ttfConfig("fonts/arial.ttf", 24);
-    _itemMenu = Menu::create();
-    for (int i = 0; i < g_testCount; ++i)
-    {
-        auto label = Label::createWithTTF(ttfConfig, g_aTestNames[i].test_name);       
-        auto menuItem = MenuItemLabel::create(label, CC_CALLBACK_1(TestController::menuCallback, this));
-
-        _itemMenu->addChild(menuItem, i + 10000);
-        menuItem->setPosition(VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE));
-    }
-
-    _itemMenu->setContentSize(Size(VisibleRect::getVisibleRect().size.width, (g_testCount + 1) * (LINE_SPACE)));
-    _itemMenu->setPosition(s_tCurPos);
-    addChild(_itemMenu);
-
-    addChild(menu, 1);
-
-    // Register Touch Event
-    auto listener = EventListenerTouchOneByOne::create();
-    listener->setSwallowTouches(true);
-    
-    listener->onTouchBegan = CC_CALLBACK_2(TestController::onTouchBegan, this);
-    listener->onTouchMoved = CC_CALLBACK_2(TestController::onTouchMoved, this);
-    
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-
-    auto mouseListener = EventListenerMouse::create();
-    mouseListener->onMouseScroll = CC_CALLBACK_1(TestController::onMouseScroll, this);
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
+    _director->getEventDispatcher()->addEventListenerWithFixedPriority(_touchListener, -200);
 }
 
 TestController::~TestController()
 {
+    _director->getEventDispatcher()->removeEventListener(_touchListener);
+
+    _rootTestList->release();
+    _rootTestList = nullptr;
 }
 
-void TestController::menuCallback(Ref * sender)
+void TestController::startAutoTest()
 {
-	Director::getInstance()->purgeCachedData();
-
-    // get the userdata, it's the index of the menu item clicked
-    auto menuItem = static_cast<MenuItem *>(sender);
-    int idx = menuItem->getLocalZOrder() - 10000;
-
-    // create the test scene and run it
-    auto scene = g_aTestNames[idx].callback();
-
-    if (scene)
+    if (!_autoTestThread.joinable())
     {
-        scene->runThisTest();
-        scene->release();
+        _stopAutoTest = false;
+        _logIndentation = "";
+        _autoTestThread = std::thread(&TestController::traverseTestList, this, _rootTestList);
+        _autoTestThread.detach();
     }
 }
 
-void TestController::closeCallback(Ref * sender)
+void TestController::stopAutoTest()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-	MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
-    return;
-#endif
-
-    Director::getInstance()->end();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
-#endif
-}
-
-bool TestController::onTouchBegan(Touch* touch, Event  *event)
-{
-    _beginPos = touch->getLocation();
-    return true;
-}
-
-void TestController::onTouchMoved(Touch* touch, Event  *event)
-{
-    auto touchLocation = touch->getLocation();    
-    float nMoveY = touchLocation.y - _beginPos.y;
-
-    auto curPos  = _itemMenu->getPosition();
-    auto nextPos = Vec2(curPos.x, curPos.y + nMoveY);
-
-    if (nextPos.y < 0.0f)
-    {
-        _itemMenu->setPosition(Vec2::ZERO);
-        return;
-    }
-
-    if (nextPos.y > ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
-    {
-        _itemMenu->setPosition(0, ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height));
-        return;
-    }
-
-    _itemMenu->setPosition(nextPos);
-    _beginPos = touchLocation;
-    s_tCurPos   = nextPos;
-}
-
-void TestController::onMouseScroll(Event *event)
-{
-    auto mouseEvent = static_cast<EventMouse*>(event);
-    float nMoveY = mouseEvent->getScrollY() * 6;
-
-    auto curPos  = _itemMenu->getPosition();
-    auto nextPos = Vec2(curPos.x, curPos.y + nMoveY);
-
-    if (nextPos.y < 0.0f)
-    {
-        _itemMenu->setPosition(Vec2::ZERO);
-        return;
-    }
-
-    if (nextPos.y > ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height))
-    {
-        _itemMenu->setPosition(0, ((g_testCount + 1)* LINE_SPACE - VisibleRect::getVisibleRect().size.height));
-        return;
-    }
-
-    _itemMenu->setPosition(nextPos);
-    s_tCurPos   = nextPos;
-}
-
-
-void TestController::runAllTests(int fd)
-{
-    AppDelegate* app = (AppDelegate *)Application::getInstance();
-    Scheduler *sched = Director::getInstance()->getScheduler();
-    for (int i = 0; i < g_testCount; i++)
-    {
-
-        // create the test scene and run it
-        std::string  msg("autotest: running test:");
-        msg += g_aTestNames[i].test_name;
-        send(fd, msg.c_str(), strlen(msg.c_str()),0);
-        send(fd, "\n",1,0);
-
-        currentController = &g_aTestNames[i];
-        sched->performFunctionInCocosThread( [&](){
-            auto scene = currentController->callback();
-            if(scene)
-            {
-                scene->runThisTest();
-                scene->release();
-            }
-        } );
-        wait(1);
-        BaseTest* firstTest = app->getCurrentTest();
-        if(firstTest == nullptr)
-        {
-            continue;
-        }
-        std::string  t1("");
-        t1 += firstTest->subtitle();
-        send(fd, t1.c_str(), strlen(t1.c_str()),0);
-        send(fd, "\n",1,0);
-        wait(2);
-
-        while(1)
-        {
-            if(_exitThread)
-            {
-                return;
-            }
-            //currentTest->nextCallback(nullptr);
-            sched->performFunctionInCocosThread( [&](){
-                BaseTest *t = app->getCurrentTest();
-                if(t != nullptr)
-                {
-                    t->nextCallback(nullptr);
-                }
-            } );
-            wait(1);
-            BaseTest * curTest = app->getCurrentTest();
-            if(curTest == nullptr)
-            {
-                break;
-            }
-            std::string  title("");
-            title += curTest->subtitle();
-            send(fd, title.c_str(), strlen(title.c_str()),0);
-            send(fd, "\n",1,0);
-            wait(2);
-
-            if(t1 == title)
-            {
-                break;
-            }
-        }
-    }
-    std::string  msg("autotest run successfully!");
-    send(fd, msg.c_str(), strlen(msg.c_str()),0);
-    send(fd, "\n",1,0);
-    return;
-}
-void TestController::addConsoleAutoTest()
-{
-    auto console = Director::getInstance()->getConsole();
+    _stopAutoTest = true;
     
-    static struct Console::Command autotest = {
-        "autotest", 
-        "testcpp autotest command, use -h to list available tests", 
-        [this](int fd, const std::string& args)
+    if (_autoTestThread.joinable()) {
+        _sleepCondition.notify_all();
+        _autoTestThread.join();
+    }
+}
+
+void TestController::traverseTestList(TestList* testList)
+{
+    if (testList == _rootTestList)
+    {
+        _sleepUniqueLock = std::unique_lock<std::mutex>(_sleepMutex);
+        _sleepCondition.wait_for(_sleepUniqueLock, std::chrono::milliseconds(500));
+        //disable touch
+    }
+    else
+    {
+        _logIndentation += LOG_INDENTATION;
+        _sleepCondition.wait_for(_sleepUniqueLock, std::chrono::milliseconds(500));
+    }
+    logEx("%s%sBegin traverse TestList:%s", LOG_TAG, _logIndentation.c_str(), testList->getTestName().c_str());
+
+    auto scheduler = _director->getScheduler();
+    int testIndex = 0;
+    for (auto& callback : testList->_testCallbacks)
+    {
+        if (_stopAutoTest) break;
+        while (_isRunInBackground)
         {
-            Scheduler *sched = Director::getInstance()->getScheduler();
-            if(args == "help" || args == "-h")
+            logEx("_director is paused");
+            _sleepCondition.wait_for(_sleepUniqueLock, std::chrono::milliseconds(500));
+        }
+        if (callback)
+        {
+            auto test = callback();
+            test->setTestParent(testList);
+            test->setTestName(testList->_childTestNames[testIndex++]);
+            if (test->isTestList())
             {
-                const char msg[] = "usage: autotest ActionsTest\n\tavailable tests: ";
-                send(fd, msg, sizeof(msg),0);
-                send(fd, "\n",1,0);
-                for(int i = 0; i < g_testCount; i++)
-                {
-                    send(fd, "\t",1,0);
-                    send(fd, g_aTestNames[i].test_name, strlen(g_aTestNames[i].test_name)+1,0);
-                    send(fd, "\n",1,0);
-                }
-                const char help_main[] = "\tmain, return to main menu\n";
-                send(fd, help_main, sizeof(help_main),0);
+                scheduler->performFunctionInCocosThread([&](){
+                    test->runThisTest();
+                });
 
-                const char help_next[] = "\tnext, run next test\n";
-                send(fd, help_next, sizeof(help_next),0);
-                
-                const char help_back[] = "\tback, run prev test\n";
-                send(fd, help_back, sizeof(help_back),0);
-                
-                const char help_restart[] = "\trestart, restart current test\n";
-                send(fd, help_restart, sizeof(help_restart),0);
-                return;
+                traverseTestList((TestList*)test);
             }
-            if(args == "main")
+            else
             {
-                
-                sched->performFunctionInCocosThread( [&]()
-                {
-                    auto scene = Scene::create();
-                    auto layer = new (std::nothrow) TestController();
-                    scene->addChild(layer);
-                    layer->release();
-                    Director::getInstance()->replaceScene(scene);
-                    cocostudio::ArmatureDataManager::destroyInstance();
-                } );
-                return;
+                traverseTestSuite((TestSuite*)test);
             }
-            const char msg_notest[] = "autotest: can't detect running test.\n";
-            AppDelegate* app = (AppDelegate *)Application::getInstance();
-            BaseTest* currentTest = app->getCurrentTest();
-            if(args == "next")
-            {
-                if(currentTest != nullptr)
-                {
-                    //currentTest->nextCallback(nullptr);
-                    sched->performFunctionInCocosThread( [&](){
-                            currentTest->nextCallback(nullptr);
-                        } );
-                }
-                else
-                {
-                    send(fd, msg_notest, sizeof(msg_notest),0);
-                }
-                return;
-            }
-            if(args == "back")
-            {
-                if(currentTest != nullptr)
-                {
-                    sched->performFunctionInCocosThread( [&](){
-                        currentTest->backCallback(nullptr);
-                    } );
-                }
-                else
-                {
-                    send(fd, msg_notest, sizeof(msg_notest),0);
-                }
-                return;
-            }
+        }
+    }
 
-            if(args == "restart")
-            {
-                if(currentTest != nullptr)
-                {
-                    sched->performFunctionInCocosThread( [&](){
-                        currentTest->restartCallback(nullptr);
-                    } );
-                }
-                else
-                {
-                    send(fd, msg_notest, sizeof(msg_notest),0);
-                }
-                return;
-            }
-
-            if(args == "run")
-            {
-                _exitThread = false;
-                std::thread t = std::thread( &TestController::runAllTests, this, fd);
-                t.detach();
-                return;
-            }
-
-            if(args == "stop")
-            {
-                _exitThread = true;
-                std::string  msg("autotest: autotest stopped!");
-                send(fd, msg.c_str(), strlen(msg.c_str()),0);
-                send(fd, "\n",1,0);
-                return;
-            }
-
-            for(int i = 0; i < g_testCount; i++)
-            {
-                if(args == g_aTestNames[i].test_name)
-                {
-                    currentController = &g_aTestNames[i];
-                    std::string  msg("autotest: running test:");
-                    msg += args;
-                    send(fd, msg.c_str(), strlen(msg.c_str()),0);
-                    send(fd, "\n",1,0);
-
-                        
-                    sched->performFunctionInCocosThread( [&](){
-                        auto scene = currentController->callback();
-                        if(scene)
-                        {
-                            scene->runThisTest();
-                            scene->release();
-                        }
-                    } );
-                    return;
-                }
-            }
-
-            //no match found,print warning message
-            std::string  msg("autotest: could not find test:");
-            msg += args;
-            send(fd, msg.c_str(), strlen(msg.c_str()),0);
-            send(fd, "\n",1,0);
+    if (testList == _rootTestList)
+    {
+        _sleepUniqueLock.release();
+        _stopAutoTest = true;
+    }
+    else
+    {
+        if (!_stopAutoTest)
+        {
+            //Backs up one level and release TestList object.
+            scheduler->performFunctionInCocosThread([&](){
+                testList->_parentTest->runThisTest();
+            });
+            _sleepCondition.wait_for(_sleepUniqueLock, std::chrono::milliseconds(500));
+            testList->release();
         }
         
-    };
-    console->addCommand(autotest);
+        _logIndentation.erase(_logIndentation.rfind(LOG_INDENTATION));
+    }
 }
 
-void TestController::startAutoRun()
+void TestController::traverseTestSuite(TestSuite* testSuite)
 {
-   
-    std::thread t = std::thread( &TestController::autorun, this);
-    t.detach();
-}
+    auto scheduler = _director->getScheduler();
+    int testIndex = 0;
+    float testCaseDuration = 0.0f;
+    _logIndentation += LOG_INDENTATION;
+    logEx("%s%sBegin traverse TestSuite:%s", LOG_TAG, _logIndentation.c_str(), testSuite->getTestName().c_str());
 
-ssize_t TestController::readline(int fd, char* ptr, size_t maxlen)
-{
-    size_t n, rc;
-    char c;
+    _logIndentation += LOG_INDENTATION;
 
-    for( n = 0; n < maxlen - 1; n++ ) {
-        if( (rc = recv(fd, &c, 1, 0)) ==1 ) {
-            *ptr++ = c;
-            if(c == '\n') {
+    auto logIndentation = _logIndentation;
+    for (auto& callback : testSuite->_testCallbacks)
+    {
+        auto testName = testSuite->_childTestNames[testIndex++];
+        
+        Scene* testScene = nullptr;
+        TestCase* testCase = nullptr;
+        TransitionScene* transitionScene = nullptr;
+
+        if (_stopAutoTest) break;
+        while (_isRunInBackground)
+        {
+            logEx("_director is paused");
+            _sleepCondition.wait_for(_sleepUniqueLock, std::chrono::milliseconds(500));
+        }
+        //Run test case in the cocos[GL] thread.
+        scheduler->performFunctionInCocosThread([&, logIndentation, testName](){
+            if (_stopAutoTest) return;
+            logEx("%s%sRun test:%s.", LOG_TAG, logIndentation.c_str(), testName.c_str());
+
+            auto scene = callback();
+            if (_stopAutoTest) return;
+
+            if (scene)
+            {
+                transitionScene = dynamic_cast<TransitionScene*>(scene);
+                if (transitionScene)
+                {
+                    testCase = (TestCase*)transitionScene->getInScene();
+                    testCaseDuration = transitionScene->getDuration() + 0.5f;
+                }
+                else
+                {
+                    testCase = (TestCase*)scene;
+                    testCaseDuration = testCase->getDuration();
+                }
+                testCase->setTestSuite(testSuite);
+                testCase->setTestCaseName(testName);
+                _director->replaceScene(scene);
+
+                testScene = scene;
+            }
+        });
+
+        if (_stopAutoTest) break;
+
+        //Wait for the test case be created.
+        float waitTime = 0.0f;
+        while (!testScene && !_stopAutoTest)
+        {
+            _sleepCondition.wait_for(_sleepUniqueLock, std::chrono::milliseconds(50));
+            if (!_isRunInBackground)
+            {
+                waitTime += 0.05f;
+            }
+
+            if (waitTime > CREATE_TIME_OUT)
+            {
+                logEx("%sCreate test %s time out", LOG_TAG, testName.c_str());
+                _stopAutoTest = true;
                 break;
             }
-        } else if( rc == 0 ) {
-            return 0;
-        } else if( errno == EINTR ) {
-            continue;
-        } else {
-            return -1;
+        }
+
+        if (_stopAutoTest) break;
+
+        //Wait for test completed.
+        _sleepCondition.wait_for(_sleepUniqueLock, std::chrono::milliseconds(int(1000 * testCaseDuration)));
+
+        if (transitionScene == nullptr)
+        {
+            waitTime = 0.0f;
+            while (!_stopAutoTest && testCase->getRunTime() < testCaseDuration)
+            {
+                _sleepCondition.wait_for(_sleepUniqueLock, std::chrono::milliseconds(50));
+                if (!_isRunInBackground)
+                {
+                    waitTime += 0.05f;
+                }
+
+                if (waitTime > TEST_TIME_OUT)
+                {
+                    logEx("%sRun test %s time out", LOG_TAG, testName.c_str());
+                    _stopAutoTest = true;
+                    break;
+                }
+            }
+
+            if (!_stopAutoTest)
+            {
+                //Check the result of test.
+                checkTest(testCase);
+            }
         }
     }
 
-    *ptr = 0;
-    return n;
+    if (!_stopAutoTest)
+    {
+        //Backs up one level and release TestSuite object.
+        auto parentTest = testSuite->_parentTest;
+        scheduler->performFunctionInCocosThread([&](){
+            parentTest->runThisTest();
+        });
+
+        _sleepCondition.wait_for(_sleepUniqueLock, std::chrono::milliseconds(1000));
+        testSuite->release();
+    }
+
+    _logIndentation.erase(_logIndentation.rfind(LOG_INDENTATION));
+    _logIndentation.erase(_logIndentation.rfind(LOG_INDENTATION));
 }
 
-void TestController::autorun()
+bool TestController::checkTest(TestCase* testCase)
 {
-    struct addrinfo hints;
-    struct addrinfo *result, *rp;
-    int sfd, s;
-
-    /* Obtain address(es) matching host/port */
-    memset(&hints, 0, sizeof(struct addrinfo));
-    hints.ai_family = AF_INET;    /* Allow IPv4 or IPv6 */
-    hints.ai_socktype = SOCK_STREAM; /* stream socket */
-    hints.ai_flags = 0;
-    hints.ai_protocol = 0;          /* Any protocol */
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    WSADATA wsaData;
-    WSAStartup(MAKEWORD(2, 2),&wsaData);
-#endif
-
-    s = getaddrinfo("localhost", "5678", &hints, &result);
-    if (s != 0) 
+    if (testCase)
     {
-       CCLOG("autotest: getaddrinfo error");
-        return;
-    }
-
-    /* getaddrinfo() returns a list of address structures.
-      Try each address until we successfully connect(2).
-      If socket(2) (or connect(2)) fails, we (close the socket
-      and) try the next address. */
-
-    for (rp = result; rp != nullptr; rp = rp->ai_next) {
-        sfd = socket(rp->ai_family, rp->ai_socktype,
-                    rp->ai_protocol);
-        if (sfd == -1)
-            continue;
-
-        if (connect(sfd, rp->ai_addr, rp->ai_addrlen) != -1)
-            break;                  /* Success */
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-        closesocket(sfd);
-#else
-        close(sfd);
-#endif
-    }
-
-    if (rp == nullptr) {               /* No address succeeded */
-        CCLOG("autotest: could not connect!");
-        return;
-    }
-
-    freeaddrinfo(result);           /* No longer needed */
-    
-    std::string tmp = "autotest run\n";
-
-    char cmd[512];
-
-    strcpy(cmd, tmp.c_str());
-    wait(3);
-    send(sfd,cmd,strlen(cmd),0);
-    while(true)
-    {
-        char resp[512];
-        readline(sfd, resp, 512);
-        if(strcmp(resp, "autotest run successfully!\n") == 0)
+        switch (testCase->getTestType())
+        {
+        case TestCase::Type::UNIT:
+        {
+            if (testCase && testCase->getExpectedOutput() != testCase->getActualOutput())
+            {
+                logEx("%s %s test fail", LOG_TAG, testCase->getTestCaseName().c_str());
+            }
+            else
+            {
+                logEx("%s %s test pass", LOG_TAG, testCase->getTestCaseName().c_str());
+            }
+            break;
+        }
+        case TestCase::Type::ROBUSTNESS:
         {
             break;
         }
-        wait(3);
+        case TestCase::Type::MANUAL:
+        {
+            break;
+        }
+        default:
+            break;
+        }
     }
-    
-    tmp = "director end\n";
-    strcpy(cmd, tmp.c_str());
-    send(sfd,cmd,strlen(cmd),0);
-    wait(1);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-        closesocket(sfd);
-        WSACleanup();
-#else
-        close(sfd);
-#endif
-    return;
+
+    return true;
 }
 
+void TestController::handleCrash()
+{
+    logEx("%sCatch an crash event", LOG_TAG);
 
+    if (!_stopAutoTest)
+    {
+        stopAutoTest();
+    }
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX
+    exit(1);
+#endif
+}
+
+void TestController::onEnterBackground()
+{
+    _isRunInBackground = true;
+}
+
+void TestController::onEnterForeground()
+{
+    _isRunInBackground = false;
+}
+
+void TestController::logEx(const char * format, ...)
+{
+    char buff[1024];
+
+    va_list args;
+    va_start(args, format);
+    vsnprintf(buff, 1020, format, args);
+    strcat(buff, "\n");
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    __android_log_print(ANDROID_LOG_DEBUG, "cocos2d-x debug info", "%s", buff);
+
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+    WCHAR wszBuf[1024] = { 0 };
+    MultiByteToWideChar(CP_UTF8, 0, buff, -1, wszBuf, sizeof(wszBuf));
+    OutputDebugStringW(wszBuf);
+
+#else
+    // Linux, Mac, iOS, etc
+    fprintf(stdout, "%s", buff);
+    fflush(stdout);
+#endif
+    va_end(args);
+}
+
+static TestController* s_testController = nullptr;
+
+static void initCrashCatch();
+
+TestController* TestController::getInstance()
+{
+    if (s_testController == nullptr)
+    {
+        s_testController = new (std::nothrow) TestController;
+
+        initCrashCatch();
+    }
+
+    return s_testController;
+}
+
+void TestController::destroyInstance()
+{
+    if (s_testController)
+    {
+        s_testController->stopAutoTest();
+        delete s_testController;
+        s_testController = nullptr;
+    }
+}
+
+bool TestController::blockTouchBegan(Touch* touch, Event* event)
+{
+    return !_stopAutoTest;
+}
+
+//==================================================================================================
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#include <windows.h>
+
+static long __stdcall windowExceptionFilter(_EXCEPTION_POINTERS* excp)
+{
+    if (s_testController)
+    {
+        s_testController->handleCrash();
+    }
+
+    return EXCEPTION_EXECUTE_HANDLER;
+}
+
+static void initCrashCatch()
+{
+    SetUnhandledExceptionFilter(windowExceptionFilter);
+}
+
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+static int s_fatal_signals[] = {
+    SIGILL,
+    SIGABRT,
+    SIGBUS,
+    SIGFPE,
+    SIGSEGV,
+    SIGSTKFLT,
+    SIGPIPE,
+};
+#else
+static int s_fatal_signals[] = {
+    SIGABRT,
+    SIGBUS,
+    SIGFPE,
+    SIGILL,
+    SIGSEGV,
+    SIGTRAP,
+    SIGTERM,
+    SIGKILL,
+};
+#endif
+
+static void signalHandler(int sig)
+{
+    if (s_testController)
+    {
+        s_testController->handleCrash();
+    }
+}
+
+static void initCrashCatch()
+{
+    for (auto sig : s_fatal_signals) {
+        signal(sig, signalHandler);
+    }
+}
+
+#else
+
+static void initCrashCatch()
+{
+
+}
+
+#endif

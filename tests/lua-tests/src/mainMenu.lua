@@ -35,6 +35,7 @@ require "NodeTest/NodeTest"
 require "OpenGLTest/OpenGLTest"
 require "ParallaxTest/ParallaxTest"
 require "ParticleTest/ParticleTest"
+require "Particle3DTest/Particle3DTest"
 require "PerformanceTest/PerformanceTest"
 require "RenderTextureTest/RenderTextureTest"
 require "RotateWorldTest/RotateWorldTest"
@@ -42,6 +43,7 @@ require "Sprite3DTest/Sprite3DTest"
 require "SpriteTest/SpriteTest"
 require "SceneTest/SceneTest"
 require "SpineTest/SpineTest"
+require "TerrainTest/TerrainTest"
 require "Texture2dTest/Texture2dTest"
 require "TileMapTest/TileMapTest"
 require "TouchesTest/TouchesTest"
@@ -55,6 +57,8 @@ require "CaptureScreenTest/CaptureScreenTest"
 require "VideoPlayerTest/VideoPlayerTest"
 require "FastTiledMapTest/FastTiledMapTest"
 require "NewAudioEngineTest/NewAudioEngineTest"
+require "CocosStudio3DTest/CocosStudio3DTest"
+require "WebViewTest/WebViewTest"
 
 local LINE_SPACE = 40
 
@@ -86,6 +90,7 @@ local _allTests = {
     { isSupported = false,  name = "ChipmunkAccelTouchTest" , create_func=    ChipmunkAccelTouchTestMain  },
     { isSupported = true,  name = "ClickAndMoveTest"       , create_func   =          ClickAndMoveTest      },
     { isSupported = true,  name = "CocosDenshionTest"      , create_func   =         CocosDenshionTestMain  },
+    { isSupported = true,  name = "CocosStudio3DTest"      , create_func   =               CocosStudio3DTest},
     { isSupported = true,  name = "CocoStudioTest"         , create_func   =         CocoStudioTestMain  },  
     { isSupported = false,  name = "CurlTest"               , create_func=                  CurlTestMain  },
     { isSupported = true,  name = "CurrentLanguageTest"    , create_func=   CurrentLanguageTestMain      },
@@ -110,8 +115,9 @@ local _allTests = {
     { isSupported = true,   name = "OpenGLTest"             , create_func=          OpenGLTestMain     },
     { isSupported = true,  name = "ParallaxTest"           , create_func   =              ParallaxTestMain  },
     { isSupported = true,  name = "ParticleTest"           , create_func   =              ParticleTest      }, 
+    { isSupported = true,  name = "Particle3D (PU)"        , create_func   =              Particle3DTest  },
     { isSupported = true,  name = "PerformanceTest"        , create_func=           PerformanceTestMain  },
-	{ isSupported = true,  name = "PhysicsTest"            , create_func =          PhysicsTest  },
+    { isSupported = true,  name = "PhysicsTest"            , create_func =          PhysicsTest  },
     { isSupported = true,  name = "RenderTextureTest"      , create_func   =         RenderTextureTestMain  },
     { isSupported = true,  name = "RotateWorldTest"        , create_func   =           RotateWorldTest      },
     { isSupported = true,  name = "SceneTest"              , create_func   =                 SceneTestMain  },
@@ -119,6 +125,7 @@ local _allTests = {
     { isSupported = false,  name = "SchdulerTest"           , create_func=              SchdulerTestMain  },
     { isSupported = false,  name = "ShaderTest"             , create_func=            ShaderTestMain      },
     { isSupported = true,  name = "Sprite3DTest"           , create_func   =                Sprite3DTest    },
+    { isSupported = true,  name = "TerrainTest"           , create_func   =                TerrainTest  },
     { isSupported = true,  name = "SpriteTest"             , create_func   =                SpriteTest      },
     { isSupported = false,  name = "TextInputTest"          , create_func=             TextInputTestMain  },
     { isSupported = true,  name = "Texture2DTest"          , create_func   =             Texture2dTestMain  },
@@ -128,6 +135,7 @@ local _allTests = {
     { isSupported = true,  name = "TransitionsTest"        , create_func   =           TransitionsTest      },   
     { isSupported = true,  name = "UserDefaultTest"        , create_func=           UserDefaultTestMain  },
     { isSupported = true,  name = "VideoPlayerTest"        , create_func=           VideoPlayerTestMain  },
+    { isSupported = true,  name = "WebViewTest"            , create_func=           WebViewTestMain  },
     { isSupported = true,  name = "XMLHttpRequestTest"     , create_func   =        XMLHttpRequestTestMain  },
     { isSupported = true,  name = "ZwoptexTest"            , create_func   =               ZwoptexTestMain  }
 }
@@ -185,6 +193,12 @@ function CreateTestMenu()
         end
 
         if obj.name == "VideoPlayerTest" then
+            if cc.PLATFORM_OS_IPHONE ~= targetPlatform and cc.PLATFORM_OS_ANDROID ~= targetPlatform then
+                testMenuItem:setEnabled(false)
+            end
+         end
+
+        if obj.name == "WebViewTest" then
             if cc.PLATFORM_OS_IPHONE ~= targetPlatform and cc.PLATFORM_OS_ANDROID ~= targetPlatform then
                 testMenuItem:setEnabled(false)
             end

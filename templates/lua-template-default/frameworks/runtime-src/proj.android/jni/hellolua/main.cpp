@@ -28,7 +28,7 @@ extern "C"
 #if (COCOS2D_DEBUG > 0) && (CC_CODE_IDE_DEBUG_SUPPORT > 0)
         return true;
 #else
-        return false;    
+        return false;
 #endif
 	}
 }

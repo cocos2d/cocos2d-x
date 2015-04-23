@@ -228,7 +228,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         setAnchorPoint(Vec2(0.5f, 0.5f));
         
         // zwoptex default values
-        _offsetPosition = Vec2::ZERO;
+        _offsetPosition.setZero();
 
         // clean the Quad
         memset(&_quad, 0, sizeof(_quad));
@@ -367,20 +367,21 @@ void Sprite::setTextureRect(const Rect& rect, bool rotated, const Size& untrimme
     setVertexRect(rect);
     setTextureCoords(rect);
 
-    Vec2 relativeOffset = _unflippedOffsetPositionFromCenter;
+    float relativeOffsetX = _unflippedOffsetPositionFromCenter.x;
+    float relativeOffsetY = _unflippedOffsetPositionFromCenter.y;
 
     // issue #732
     if (_flippedX)
     {
-        relativeOffset.x = -relativeOffset.x;
+        relativeOffsetX = -relativeOffsetX;
     }
     if (_flippedY)
     {
-        relativeOffset.y = -relativeOffset.y;
+        relativeOffsetY = -relativeOffsetY;
     }
 
-    _offsetPosition.x = relativeOffset.x + (_contentSize.width - _rect.size.width) / 2;
-    _offsetPosition.y = relativeOffset.y + (_contentSize.height - _rect.size.height) / 2;
+    _offsetPosition.x = relativeOffsetX + (_contentSize.width - _rect.size.width) / 2;
+    _offsetPosition.y = relativeOffsetY + (_contentSize.height - _rect.size.height) / 2;
 
     // rendering using batch node
     if (_batchNode)
@@ -393,16 +394,16 @@ void Sprite::setTextureRect(const Rect& rect, bool rotated, const Size& untrimme
         // self rendering
         
         // Atlas: Vertex
-        float x1 = 0 + _offsetPosition.x;
-        float y1 = 0 + _offsetPosition.y;
+        float x1 = 0.0f + _offsetPosition.x;
+        float y1 = 0.0f + _offsetPosition.y;
         float x2 = x1 + _rect.size.width;
         float y2 = y1 + _rect.size.height;
 
         // Don't update Z.
-        _quad.bl.vertices = Vec3(x1, y1, 0);
-        _quad.br.vertices = Vec3(x2, y1, 0);
-        _quad.tl.vertices = Vec3(x1, y2, 0);
-        _quad.tr.vertices = Vec3(x2, y2, 0);
+        _quad.bl.vertices.set(x1, y1, 0.0f);
+        _quad.br.vertices.set(x2, y1, 0.0f);
+        _quad.tl.vertices.set(x1, y2, 0.0f);
+        _quad.tr.vertices.set(x2, y2, 0.0f);
     }
 }
 
@@ -507,7 +508,10 @@ void Sprite::updateTransform(void)
         // If it is not visible, or one of its ancestors is not visible, then do nothing:
         if( !_visible || ( _parent && _parent != _batchNode && static_cast<Sprite*>(_parent)->_shouldBeHidden) )
         {
-            _quad.br.vertices = _quad.tl.vertices = _quad.tr.vertices = _quad.bl.vertices = Vec3(0,0,0);
+            _quad.br.vertices.setZero();
+            _quad.tl.vertices.setZero();
+            _quad.tr.vertices.setZero();
+            _quad.bl.vertices.setZero();
             _shouldBeHidden = true;
         }
         else
@@ -556,10 +560,10 @@ void Sprite::updateTransform(void)
             float dx = x1 * cr - y2 * sr2 + x;
             float dy = x1 * sr + y2 * cr2 + y;
 
-            _quad.bl.vertices = Vec3( RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _positionZ );
-            _quad.br.vertices = Vec3( RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _positionZ );
-            _quad.tl.vertices = Vec3( RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _positionZ );
-            _quad.tr.vertices = Vec3( RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _positionZ );
+            _quad.bl.vertices.set(RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _positionZ);
+            _quad.br.vertices.set(RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _positionZ);
+            _quad.tl.vertices.set(RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _positionZ);
+            _quad.tr.vertices.set(RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _positionZ);
         }
 
         // MARMALADE CHANGE: ADDED CHECK FOR nullptr, TO PERMIT SPRITES WITH NO BATCH NODE / TEXTURE ATLAS
@@ -1016,10 +1020,10 @@ void Sprite::setBatchNode(SpriteBatchNode *spriteBatchNode)
         float y1 = _offsetPosition.y;
         float x2 = x1 + _rect.size.width;
         float y2 = y1 + _rect.size.height;
-        _quad.bl.vertices = Vec3( x1, y1, 0 );
-        _quad.br.vertices = Vec3( x2, y1, 0 );
-        _quad.tl.vertices = Vec3( x1, y2, 0 );
-        _quad.tr.vertices = Vec3( x2, y2, 0 );
+        _quad.bl.vertices.set( x1, y1, 0 );
+        _quad.br.vertices.set(x2, y1, 0);
+        _quad.tl.vertices.set(x1, y2, 0);
+        _quad.tr.vertices.set(x2, y2, 0);
 
     } else {
 

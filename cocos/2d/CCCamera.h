@@ -83,13 +83,12 @@ public:
     *
     * @param zoomX The zoom factor along the X-axis of the orthographic projection (the width of the ortho projection).
     * @param zoomY The zoom factor along the Y-axis of the orthographic projection (the height of the ortho projection).
-    * @param aspectRatio The aspect ratio of the orthographic projection.
     * @param nearPlane The near plane distance.
     * @param farPlane The far plane distance.
     */
     static Camera* createOrthographic(float zoomX, float zoomY, float nearPlane, float farPlane);
 
-    /** create default camera, the camera type depends on Director::getProjection */
+    /** create default camera, the camera type depends on Director::getProjection, the depth of the default camera is 0 */
     static Camera* create();
     
     /**
@@ -126,11 +125,30 @@ public:
 
     /**get view projection matrix*/
     const Mat4& getViewProjectionMatrix() const;
+    
+    /* convert the specified point of viewport from world-space coordinates into the screen-space coordinates.
+     *
+     * @param src The world-space position.
+     * @return The screen-space position.
+     */
+    Vec2 project(const Vec3& src) const;
+    
+    /**
+     * Convert the specified point of viewport from screen-space coordinate into the world-space coordinate.
+     *
+     * @param src The screen-space position.
+     * @return The world-space position.
+     */
+    Vec3 unproject(const Vec3& src) const;
 
     /**
-    * Convert the specified point of viewport from screenspace coordinate into the worldspace coordinate.
-    */
-    void unproject(const Size& viewport, Vec3* src, Vec3* dst) const;
+     * Convert the specified point of viewport from screen-space coordinate into the world-space coordinate.
+     *
+     * @param viewport The viewport size to use.
+     * @param src The screen-space position.
+     * @param dst The world-space position.
+     */
+    void unproject(const Size& viewport, const Vec3* src, Vec3* dst) const;
     
     /**
      * Is this aabb visible in frustum
@@ -142,17 +160,37 @@ public:
      */
     float getDepthInView(const Mat4& transform) const;
     
+    /**
+     * set depth, camera with larger depth is drawn on top of camera with smaller depth, the depth of camera with CameraFlag::DEFAULT is 0, user defined camera is -1 by default
+     */
+    void setDepth(int depth);
+    
+    /**
+     * get depth, camera with larger depth is drawn on top of camera with smaller depth, the depth of camera with CameraFlag::DEFAULT is 0, user defined camera is -1 by default
+     */
+    int getDepth() const { return _depth; }
+    
     //override
     virtual void onEnter() override;
     virtual void onExit() override;
-    
+
+    /**
+     * Get the visiting camera , the visiting camera shall be set on Scene::render
+     */
     static const Camera* getVisitingCamera() { return _visitingCamera; }
+
+    /**
+     * Get the default camera of the current running scene.
+     */
     static Camera* getDefaultCamera();
 
 CC_CONSTRUCTOR_ACCESS:
     Camera();
     ~Camera();
     
+    /**
+     * Set the scene,this method shall not be invoke manually
+     */
     void setScene(Scene* scene);
     
     /**set additional matrix for the projection matrix, it multiplys mat to projection matrix when called, used by WP8*/
@@ -181,6 +219,7 @@ protected:
     unsigned short _cameraFlag; // camera flag
     mutable Frustum _frustum;   // camera frustum
     mutable bool _frustumDirty;
+    int  _depth;                 //camera depth, the depth of camera with CameraFlag::DEFAULT flag is 0 by default, a camera with larger depth is drawn on top of camera with smaller detph
     static Camera* _visitingCamera;
     
     friend class Director;

@@ -30,7 +30,7 @@ THE SOFTWARE.
 
 // 0x00 HI ME LO
 // 00   03 03 00
-#define COCOS2D_VERSION 0x00030400
+#define COCOS2D_VERSION 0x00030600
 
 //
 // all cocos2d include files
@@ -285,6 +285,9 @@ THE SOFTWARE.
 #include "3d/CCBillBoard.h"
 #include "3d/CCFrustum.h"
 #include "3d/CCPlane.h"
+#include "3d/CCTextureCube.h"
+#include "3d/CCSkybox.h"
+#include "3d/CCTerrain.h"
 
 // Deprecated include
 #include "deprecated/CCDictionary.h"

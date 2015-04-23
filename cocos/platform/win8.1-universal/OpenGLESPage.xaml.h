@@ -39,10 +39,14 @@ namespace cocos2d
         void OnPageLoaded(Platform::Object^ sender, Windows::UI::Xaml::RoutedEventArgs^ e);
         void OnVisibilityChanged(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::VisibilityChangedEventArgs^ args);
         void OnSwapChainPanelSizeChanged(Platform::Object^ sender, Windows::UI::Xaml::SizeChangedEventArgs^ e);
+#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
+        void OnBackButtonPressed(Platform::Object^ sender, Windows::Phone::UI::Input::BackPressedEventArgs^ args);
+#endif
         void GetSwapChainPanelSize(GLsizei* width, GLsizei* height);
         void CreateRenderSurface();
         void DestroyRenderSurface();
         void RecoverFromLostDevice();
+        void TerminateApp();
         void StartRenderLoop();
         void StopRenderLoop();
 
