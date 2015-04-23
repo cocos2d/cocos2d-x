@@ -99,4 +99,4 @@ Steps to start a new game:
 
 ![generate-tizen-project](https://raw.githubusercontent.com/minggo/Pictures/master/tizen/tizen-generate-project.png)
 
-Because of Tizen toolchain issue, currently you can not use cocos console to run a game on Tizen devices or emulators. You should use Tizen IDE to import the new project and run it.
+Because of Tizen toolchain issue, currently you can not use cocos console to run a game on Tizen devices or emulators. You should use Tizen IDE to import a new project and run it.
