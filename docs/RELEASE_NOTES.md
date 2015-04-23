@@ -83,7 +83,7 @@ You can resolve it by doing following steps:
 
 # How to start a new game on Tizen
 
-Please refer to [How to run cpp-tests on Tizen](#how-to-run-cpp-tests-on-tizen) section beforing reading this section.
+Please refer to [How to run cpp-tests on Tizen](#how-to-run-cpp-tests-on-tizen) section before reading this section.
 
 Steps to start a new game:
 
@@ -93,4 +93,4 @@ Steps to start a new game:
 
 ![generate-tizen-project](https://raw.githubusercontent.com/minggo/Pictures/master/tizen/tizen-generate-project.png)
 
-Because of Tizen tools chain issue, currently you can not use cocos console to run a game on Tizen devices or emulators. You should use Tizen IDE to import the new project and run it.
+Because of Tizen toolchain issue, currently you can not use cocos console to run a game on Tizen devices or emulators. You should use Tizen IDE to import the new project and run it.
