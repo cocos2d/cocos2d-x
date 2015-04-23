@@ -251,9 +251,9 @@ public:
     /**@}*/
     
     /** Get the flag of vertex attribs used by OR operation.*/
-    uint32_t getVertexAttribsFlags() const { return _vertexAttribsFlags; }
+    uint32_t getVertexAttribsFlags() const;
     /**Get the number of vertex attributes.*/
-    ssize_t getVertexAttribCount() const { return _attributes.size(); }
+    ssize_t getVertexAttribCount() const;
     /**@{
      Set the vertex attribute value.
      */

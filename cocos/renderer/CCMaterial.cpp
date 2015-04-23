@@ -340,6 +340,8 @@ bool Material::parseShader(Pass* pass, const rapidjson::GenericValue<rapidjson::
             if (isValidUniform(it->name.GetString()))
                 parseUniform(glProgramState, it);
         }
+
+//        glProgramState->updateUniformsAndAttributes();
     }
 
     return true;

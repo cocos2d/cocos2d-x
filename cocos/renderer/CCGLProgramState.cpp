@@ -331,6 +331,8 @@ bool GLProgramState::init(GLProgram* glprogram)
     for(auto &attrib : _glprogram->_vertexAttribs) {
         VertexAttribValue value(&attrib.second);
         _attributes[attrib.first] = value;
+//        _vertexAttribsFlags |= 1 << value._vertexAttrib->index;
+//        value._enabled = true;
     }
 
     for(auto &uniform : _glprogram->_userUniforms) {
@@ -424,6 +426,16 @@ void GLProgramState::setGLProgram(GLProgram *glprogram)
         resetGLProgram();
         init(glprogram);
     }
+}
+
+uint32_t GLProgramState::getVertexAttribsFlags() const
+{
+    return _vertexAttribsFlags;
+}
+
+ssize_t GLProgramState::getVertexAttribCount() const
+{
+    return _attributes.size();
 }
 
 UniformValue* GLProgramState::getUniformValue(GLint uniformLocation)
