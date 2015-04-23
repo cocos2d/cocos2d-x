@@ -34,7 +34,7 @@ NS_CC_EXT_BEGIN
 
 Physics3DComponent::~Physics3DComponent()
 {
-    
+    CC_SAFE_RELEASE(_physics3DObj);
 }
 
 std::string& Physics3DComponent::getPhysics3DComponentName()

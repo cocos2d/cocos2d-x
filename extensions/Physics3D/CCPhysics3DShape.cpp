@@ -47,6 +47,10 @@ Physics3DShape::~Physics3DShape()
 #if (CC_ENABLE_BULLET_INTEGRATION)
     CC_SAFE_DELETE(_btShape);
     CC_SAFE_DELETE_ARRAY(_heightfieldData);
+    for (auto iter : _compoundChildShapes){
+        CC_SAFE_RELEASE(iter);
+    }
+    _compoundChildShapes.clear();
 #endif
 }
 
@@ -110,6 +114,14 @@ Physics3DShape* Physics3DShape::createHeightfield( int heightStickWidth,int heig
     return shape;	
 }
 
+Physics3DShape* Physics3DShape::createCompoundShape( const std::vector<std::pair<Physics3DShape *, Mat4>> &shapes )
+{
+    auto shape = new (std::nothrow) Physics3DShape();
+    shape->initCompoundShape(shapes);
+    shape->autorelease();
+    return shape;
+}
+
 bool Physics3DShape::initBox(const cocos2d::Vec3& ext)
 {
     _shapeType = ShapeType::BOX;
@@ -146,7 +158,7 @@ bool Physics3DShape::initMesh( const cocos2d::Vec3 *triangles, int numTriangles 
 {
     _shapeType = ShapeType::MESH;
     auto mesh = new btTriangleMesh(false);
-    for (int i = 0; i < numTriangles * 3; ++i){
+    for (int i = 0; i < numTriangles * 3; i += 3){
         mesh->addTriangle(convertVec3TobtVector3(triangles[i]), convertVec3TobtVector3(triangles[i + 1]), convertVec3TobtVector3(triangles[i + 2]));
     }
     _btShape = new btBvhTriangleMeshShape(mesh, true);
@@ -171,6 +183,19 @@ bool Physics3DShape::initHeightfield( int heightStickWidth,int heightStickLength
     auto heightfield = new btHeightfieldTerrainShape(heightStickWidth, heightStickLength, _heightfieldData, heightScale, minHeight, maxHeight, 1, type, flipQuadEdges);
     heightfield->setUseDiamondSubdivision(useDiamondSubdivision);
     _btShape = heightfield;
+    return true;
+}
+
+bool Physics3DShape::initCompoundShape( const std::vector<std::pair<Physics3DShape *, Mat4>> &shapes )
+{
+    _shapeType = ShapeType::COMPOUND;
+    auto compound = new btCompoundShape;
+    for (auto iter : shapes){
+        compound->addChildShape(convertMat4TobtTransform(iter.second), iter.first->getbtShape());
+        CC_SAFE_RETAIN(iter.first);
+        _compoundChildShapes.push_back(iter.first);
+    }
+    _btShape = compound;
     return true;
 }
 

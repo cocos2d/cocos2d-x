@@ -27,6 +27,7 @@
 
 #include "Physics3DTest.h"
 #include "3d/CCTerrain.h"
+#include "3d/CCBundle3D.h"
 #include "extensions/Physics3D/CCPhysics3D.h"
 USING_NS_CC_EXT;
 USING_NS_CC;
@@ -72,7 +73,7 @@ bool Physics3DTestDemo::init()
     
     if (initWithPhysics())
     {
-        getPhysics3DWorld()->setDebugDrawEnable(true);
+        getPhysics3DWorld()->setDebugDrawEnable(false);
         
         physicsScene = this;
         Size size = Director::getInstance()->getWinSize();
@@ -88,6 +89,24 @@ bool Physics3DTestDemo::init()
         listener->onTouchesEnded = CC_CALLBACK_2(Physics3DTestDemo::onTouchesEnded, this);
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
         
+        TTFConfig ttfConfig("fonts/arial.ttf", 10);
+        auto label = Label::createWithTTF(ttfConfig,"DebugDraw OFF");
+        auto menuItem = MenuItemLabel::create(label, [=](Ref *ref){
+            if (getPhysics3DWorld()->isDebugDrawEnabled()){
+                getPhysics3DWorld()->setDebugDrawEnable(false);
+                label->setString("DebugDraw OFF");
+            }else{
+                getPhysics3DWorld()->setDebugDrawEnable(true);
+                label->setString("DebugDraw ON");
+            }
+        });
+
+        auto menu = Menu::create(menuItem, nullptr);
+        menu->setPosition(Vec2::ZERO);
+        menuItem->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+        menuItem->setPosition( Vec2(VisibleRect::left().x, VisibleRect::top().y-50) );
+        this->addChild(menu);
+
         _angle = 0.0f;
         return true;
     }
@@ -441,7 +460,7 @@ bool Physics3DConstraintDemo::init()
     constraint = Physics3DConeTwistConstraint::create(rigidBody, frameInA);
     physicsScene->getPhysics3DWorld()->addPhysics3DConstraint(constraint, true);
     ((Physics3DConeTwistConstraint*)constraint)->setLimit(CC_DEGREES_TO_RADIANS(10), CC_DEGREES_TO_RADIANS(10), CC_DEGREES_TO_RADIANS(40));
-	
+    
     //create 6 dof constraint
     rbDes.mass = 1.0f;
     rbDes.shape = Physics3DShape::createBox(Vec3(3.0f, 3.0f, 3.f));
@@ -559,8 +578,8 @@ bool Physics3DTerrainDemo::init()
     //create several spheres
     rbDes.mass = 1.f;
     rbDes.shape = Physics3DShape::createSphere(0.5f);
-    float start_x = START_POS_X - ARRAY_SIZE_X/2;
-    float start_y = START_POS_Y + 10.0f;
+    float start_x = START_POS_X - ARRAY_SIZE_X/2 + 5.0f;
+    float start_y = START_POS_Y + 20.0f;
     float start_z = START_POS_Z - ARRAY_SIZE_Z/2;
 
     for (int k=0;k<ARRAY_SIZE_Y;k++)
@@ -585,6 +604,65 @@ bool Physics3DTerrainDemo::init()
             }
         }
     }
+
+    //create mesh
+    std::vector<Vec3> trianglesList;
+    auto bundle = Bundle3D::createBundle();
+    bundle->load("Sprite3DTest/boss.c3b");
+    MeshDatas meshs;
+    bundle->loadMeshDatas(meshs);
+    Bundle3D::destroyBundle(bundle);
+    for (auto iter : meshs.meshDatas){
+        int preVertexSize = iter->getPerVertexSize() / sizeof(float);
+        for (auto indexArray : iter->subMeshIndices){
+            for (auto i : indexArray){
+                trianglesList.push_back(Vec3(iter->vertex[i * preVertexSize], iter->vertex[i * preVertexSize + 1], iter->vertex[i * preVertexSize + 2]));
+            }
+        }
+    }
+
+    rbDes.mass = 0.0f;
+    rbDes.shape = Physics3DShape::createMesh(&trianglesList[0], trianglesList.size() / 3);
+    rigidBody = Physics3DRigidBody::create(&rbDes);
+    component = Physics3DComponent::create(rigidBody);
+    auto sprite = Sprite3D::create("Sprite3DTest/boss.c3b");
+    sprite->addComponent(component);
+    sprite->setRotation3D(Vec3(-90.0f, 0.0f, 0.0f));
+    sprite->setPosition3D(Vec3(0.0f, 15.0f, 0.0f));
+    sprite->setCameraMask(2);
+    this->addChild(sprite);
+
+    std::vector<std::pair<Physics3DShape*, Mat4> > shapeList;
+    {
+        Mat4 localTrans;
+        auto bodyshape = Physics3DShape::createBox(Vec3(2.0f, 4.0f, 2.0f));
+        Mat4::createTranslation(0.0f, 2.0f, 0.0f, &localTrans);
+        shapeList.push_back(std::make_pair(bodyshape, localTrans));
+        auto headshape = Physics3DShape::createSphere(1.5f);
+        Mat4::createTranslation(0.6f, 5.0f, -1.5f, &localTrans);
+        shapeList.push_back(std::make_pair(headshape, localTrans));
+        auto lhandshape = Physics3DShape::createBox(Vec3(1.0f, 3.0f, 1.0f));
+        Mat4::createRotation(Vec3(1.0f, 0.0f, 0.0f), CC_DEGREES_TO_RADIANS(15.0f), &localTrans);
+        localTrans.m[12] = -1.5f; localTrans.m[13] = 2.5f; localTrans.m[14] = -2.5f;
+        shapeList.push_back(std::make_pair(lhandshape, localTrans));
+        auto rhandshape = Physics3DShape::createBox(Vec3(1.0f, 3.0f, 1.0f));
+        Mat4::createRotation(Vec3(1.0f, 0.0f, 0.0f), CC_DEGREES_TO_RADIANS(-15.0f), &localTrans);
+        localTrans.m[12] = 2.0f; localTrans.m[13] = 2.5f; localTrans.m[14] = 1.f;
+        shapeList.push_back(std::make_pair(rhandshape, localTrans));
+
+        rbDes.mass = 10.0f;
+        rbDes.shape = Physics3DShape::createCompoundShape(shapeList);
+        rigidBody = Physics3DRigidBody::create(&rbDes);
+        component = Physics3DComponent::create(rigidBody);
+        auto sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
+        sprite->addComponent(component);
+        sprite->setRotation3D(Vec3(0.0f, 180.0f, 0.0f));
+        sprite->setPosition3D(Vec3(-5.0f, 20.0f, 0.0f));
+        sprite->setScale(0.4f);
+        sprite->setCameraMask(2);
+        this->addChild(sprite);
+    }
+
 
     physicsScene->setPhysics3DDebugCamera(_camera);
     return true;
