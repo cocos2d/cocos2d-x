@@ -1,4 +1,4 @@
-# cocos2d-x v3.5.1 Release Notes #
+# cocos2d-x v3.5 fortizen Release Notes #
 
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
