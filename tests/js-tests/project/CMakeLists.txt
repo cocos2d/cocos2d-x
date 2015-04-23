@@ -28,26 +28,26 @@ if(WIN32)
 
 else()
   set(PLATFORM_SRC
-    project/proj.linux/main.cpp
+    proj.linux/main.cpp
   )
 endif()
 
 set(SAMPLE_SRC
-  project/Classes/AppDelegate.cpp
-  project/Classes/js_DrawNode3D_bindings.cpp
-  project/Classes/js_Effect3D_bindings.cpp
+  Classes/AppDelegate.cpp
+  Classes/js_DrawNode3D_bindings.cpp
+  Classes/js_Effect3D_bindings.cpp
   ${PLATFORM_SRC}
 )
 
 include_directories(
-  project/Classes
-  ../../cocos/scripting/js-bindings/auto
-  ../../cocos/scripting/js-bindings/manual
-  ../../cocos/base
-  ../../cocos/editor-support
-  ../../cocos/audio/include
-  ../../external/spidermonkey/include/${PLATFORM_FOLDER}
-  ../../external/chipmunk/include/chipmunk
+  Classes
+  ../../../cocos/scripting/js-bindings/auto
+  ../../../cocos/scripting/js-bindings/manual
+  ../../../cocos/base
+  ../../../cocos/editor-support
+  ../../../cocos/audio/include
+  ../../../external/spidermonkey/include/${PLATFORM_FOLDER}
+  ../../../external/chipmunk/include/chipmunk
 )
 
 # add the executable
@@ -56,7 +56,7 @@ add_executable(${APP_NAME}
 )
 
 target_link_libraries(${APP_NAME}
-  jsbindings
+  jscocos2d
   cocos2d
 )
 
@@ -71,9 +71,9 @@ pre_build(${APP_NAME}
   COMMAND ${CMAKE_COMMAND} -E remove_directory ${APP_BIN_DIR}/src
   COMMAND ${CMAKE_COMMAND} -E remove ${APP_BIN_DIR}/*.js
   COMMAND ${CMAKE_COMMAND} -E remove ${APP_BIN_DIR}/*.json
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../cpp-tests/Resources ${APP_BIN_DIR}/res
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/src ${APP_BIN_DIR}/src
-  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../../cocos/scripting/js-bindings/script ${APP_BIN_DIR}/script
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/main.js ${APP_BIN_DIR}/main.js
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/project.json ${APP_BIN_DIR}/project.json
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../../cpp-tests/Resources ${APP_BIN_DIR}/res
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../src ${APP_BIN_DIR}/src
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/../../../cocos/scripting/js-bindings/script ${APP_BIN_DIR}/script
+  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../main.js ${APP_BIN_DIR}/main.js
+  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/../project.json ${APP_BIN_DIR}/project.json
   )
