@@ -31,6 +31,13 @@
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
+namespace cocos2d {
+    namespace extension
+    {
+        class Physics3DConstraint;
+    }
+}
+
 DEFINE_TEST_SUITE(Physics3DTests);
 
 class Physics3DTestDemo : public TestCase
@@ -46,9 +53,9 @@ public:
     virtual std::string subtitle() const override;
     virtual void update(float delta) override;
     
-    void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
-    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
-    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
+    virtual void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
+    virtual void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
+    virtual void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
 
 protected:
 
@@ -79,12 +86,20 @@ class Physics3DConstraintDemo : public Physics3DTestDemo
 public:
     
     CREATE_FUNC(Physics3DConstraintDemo);
-    Physics3DConstraintDemo(){};
+    Physics3DConstraintDemo():_constraint(nullptr), _pickingDistance(0.f){};
     virtual ~Physics3DConstraintDemo(){};
     
     virtual std::string subtitle() const override;
     
     virtual bool init() override;
+    
+    virtual void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event) override;
+    virtual void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event) override;
+    virtual void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event) override;
+    
+protected:
+    cocos2d::extension::Physics3DConstraint* _constraint; //for picking
+    float                                    _pickingDistance; //picking distance
 };
 
 class Physics3DKinematicDemo : public Physics3DTestDemo

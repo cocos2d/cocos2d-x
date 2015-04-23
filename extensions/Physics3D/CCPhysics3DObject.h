@@ -40,6 +40,7 @@ NS_CC_EXT_BEGIN
 
 class Physics3DShape;
 class Physics3DWorld;
+class Physics3DConstraint;
 
 class CC_EX_DLL Physics3DObject : public Ref
 {
@@ -86,11 +87,13 @@ struct CC_EX_DLL Physics3DRigidBodyDes
     cocos2d::Vec3 localInertia; //default (0, 0, 0)
     Physics3DShape* shape;
     cocos2d::Mat4 originalTransform;
+    bool          disableSleep; //it is always active if disabled
     
     Physics3DRigidBodyDes()
     : mass(0.f)
     , localInertia(0.f, 0.f, 0.f)
     , shape(nullptr)
+    , disableSleep(false)
     {
         
     }
@@ -157,6 +160,8 @@ public:
     
     Physics3DConstraint* getConstraint(unsigned int idx) const;
     unsigned int getConstraintCount() const;
+    
+    void setActive(bool active);
 
 CC_CONSTRUCTOR_ACCESS:
     Physics3DRigidBody();

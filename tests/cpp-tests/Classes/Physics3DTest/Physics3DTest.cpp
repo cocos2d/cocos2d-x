@@ -336,6 +336,7 @@ bool Physics3DConstraintDemo::init()
         return false;
     
     Physics3DRigidBodyDes rbDes;
+    rbDes.disableSleep = true;
     //create box
     auto sprite = Sprite3D::create("Sprite3DTest/orc.c3b");
     rbDes.mass = 10.f;
@@ -349,7 +350,7 @@ bool Physics3DConstraintDemo::init()
     addChild(sprite);
     sprite->setCameraMask((unsigned short)CameraFlag::USER1);
     sprite->setScale(0.4f);
-    sprite->setPosition3D(Vec3(0.f, 10.f, 0.f));
+    sprite->setPosition3D(Vec3(-20.f, 5.f, 0.f));
     //sync node position to physics
     component->syncToNode();
     //physics controlled, we will not set position for it, so we can skip sync node position to physics
@@ -357,11 +358,172 @@ bool Physics3DConstraintDemo::init()
     
     physicsScene->setPhysics3DDebugCamera(_camera);
     
-    //create constraint
-    auto constraint = Physics3DPointToPointConstraint::create(rigidBody, Vec3(2.5f, 2.5f, 2.5f));
+    //create point to point constraint
+    Physics3DConstraint* constraint = Physics3DPointToPointConstraint::create(rigidBody, Vec3(2.5f, 2.5f, 2.5f));
     physicsScene->getPhysics3DWorld()->addPhysics3DConstraint(constraint);
     
+    //create hinge constraint
+    rbDes.mass = 1.0f;
+    rbDes.shape = Physics3DShape::createBox(Vec3(8.0f, 8.0f, 1.f));
+    rigidBody = Physics3DRigidBody::create(&rbDes);
+    component = Physics3DComponent::create(rigidBody);
+    sprite = Sprite3D::create("Sprite3DTest/box.c3t");
+    sprite->setTexture("Sprite3DTest/plane.png");
+    sprite->setScaleX(8.f);
+    sprite->setScaleY(8.f);
+    sprite->setPosition3D(Vec3(5.f, 0.f, 0.f));
+    sprite->addComponent(component);
+    sprite->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(sprite);
+    component->syncToNode();
+    rigidBody->setAngularVelocity(Vec3(0,3,0));
+    constraint = Physics3DHingeConstraint::create(rigidBody, Vec3(4.f, 4.f, 0.5f), Vec3(0.f, 1.f, 0.f));
+    physicsScene->getPhysics3DWorld()->addPhysics3DConstraint(constraint);
+    
+    
+    //create slider constraint
+    rbDes.mass = 1.0f;
+    rbDes.shape = Physics3DShape::createBox(Vec3(3.0f, 1.0f, 3.f));
+    rigidBody = Physics3DRigidBody::create(&rbDes);
+    component = Physics3DComponent::create(rigidBody);
+    sprite = Sprite3D::create("Sprite3DTest/box.c3t");
+    sprite->setTexture("Sprite3DTest/plane.png");
+    sprite->setScaleX(3.f);
+    sprite->setScaleZ(3.f);
+    sprite->setPosition3D(Vec3(30.f, 15.f, 0.f));
+    sprite->addComponent(component);
+    sprite->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(sprite);
+    component->syncToNode();
+    rigidBody->setLinearVelocity(Vec3(0,3,0));
+    
+    rbDes.mass = 0.0f;
+    rbDes.shape = Physics3DShape::createBox(Vec3(3.0f, 3.0f, 3.f));
+    auto rigidBodyB = Physics3DRigidBody::create(&rbDes);
+    component = Physics3DComponent::create(rigidBodyB);
+    sprite = Sprite3D::create("Sprite3DTest/box.c3t");
+    sprite->setTexture("Sprite3DTest/plane.png");
+    sprite->setScale(3.f);
+    sprite->setPosition3D(Vec3(30.f, 5.f, 0.f));
+    sprite->addComponent(component);
+    sprite->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(sprite);
+    component->syncToNode();
+
+    Mat4 frameInA, frameInB;
+    Mat4::createRotationZ(CC_DEGREES_TO_RADIANS(90), &frameInA);
+    frameInB = frameInA;
+    frameInA.m[13] = -5.f;
+    frameInB.m[13] = 5.f;
+    constraint = Physics3DSliderConstraint::create(rigidBody, rigidBodyB, frameInA, frameInB, false);
+    physicsScene->getPhysics3DWorld()->addPhysics3DConstraint(constraint);
+    ((Physics3DSliderConstraint*)constraint)->setLowerLinLimit(-5.f);
+    ((Physics3DSliderConstraint*)constraint)->setUpperLinLimit(5.f);
+    
+    //create ConeTwist constraint
+    rbDes.mass = 1.f;
+    rbDes.shape = Physics3DShape::createBox(Vec3(3.f, 3.f, 3.f));
+    rigidBody = Physics3DRigidBody::create(&rbDes);
+    component = Physics3DComponent::create(rigidBody);
+    sprite = Sprite3D::create("Sprite3DTest/box.c3t");
+    sprite->setTexture("Sprite3DTest/plane.png");
+    sprite->setScale(3.f);
+    sprite->setPosition3D(Vec3(-10.f, 5.f, 0.f));
+    sprite->addComponent(component);
+    sprite->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(sprite);
+    component->syncToNode();
+
+    Mat4::createRotationZ(CC_DEGREES_TO_RADIANS(90), &frameInA);
+    frameInA.m[12] = 0.f;
+    frameInA.m[13] = -10.f;
+    frameInA.m[14] = 0.f;
+    constraint = Physics3DConeTwistConstraint::create(rigidBody, frameInA);
+    physicsScene->getPhysics3DWorld()->addPhysics3DConstraint(constraint, true);
+    ((Physics3DConeTwistConstraint*)constraint)->setLimit(CC_DEGREES_TO_RADIANS(10), CC_DEGREES_TO_RADIANS(10), CC_DEGREES_TO_RADIANS(40));
+	
+    //create 6 dof constraint
+    rbDes.mass = 1.0f;
+    rbDes.shape = Physics3DShape::createBox(Vec3(3.0f, 3.0f, 3.f));
+    rigidBody = Physics3DRigidBody::create(&rbDes);
+    component = Physics3DComponent::create(rigidBody);
+    sprite = Sprite3D::create("Sprite3DTest/box.c3t");
+    sprite->setTexture("Sprite3DTest/plane.png");
+    sprite->setScale(3.f);
+    sprite->setPosition3D(Vec3(30.f, -5.f, 0.f));
+    sprite->addComponent(component);
+    sprite->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(sprite);
+    component->syncToNode();
+    frameInA.setIdentity();
+    constraint = Physics3D6DofConstraint::create(rigidBody, frameInA, false);
+    physicsScene->getPhysics3DWorld()->addPhysics3DConstraint(constraint);
+    ((Physics3D6DofConstraint*)constraint)->setAngularLowerLimit(Vec3(0,0,0));
+    ((Physics3D6DofConstraint*)constraint)->setAngularUpperLimit(Vec3(0,0,0));
+    ((Physics3D6DofConstraint*)constraint)->setLinearLowerLimit(Vec3(-10,0,0));
+    ((Physics3D6DofConstraint*)constraint)->setLinearUpperLimit(Vec3(10,0,0));
+
     return true;
+}
+
+void Physics3DConstraintDemo::onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event)
+{
+    //ray trace
+    if(_camera)
+    {
+        auto touch = touches[0];
+        auto location = touch->getLocationInView();
+        Vec3 nearP(location.x, location.y, 0.0f), farP(location.x, location.y, 1.0f);
+        
+        auto size = Director::getInstance()->getWinSize();
+        _camera->unproject(size, &nearP, &nearP);
+        _camera->unproject(size, &farP, &farP);
+        
+        Physics3DWorld::HitResult result;
+        bool ret = physicsScene->getPhysics3DWorld()->rayCast(nearP, farP, &result);
+        if (ret && result.hitObj->getObjType() == Physics3DObject::PhysicsObjType::RIGID_BODY)
+        {
+            auto mat = result.hitObj->getWorldTransform().getInversed();
+            Vec3 position;
+            mat.transformPoint(result.hitPosition, &position);
+            
+            _constraint = Physics3DPointToPointConstraint::create(static_cast<Physics3DRigidBody*>(result.hitObj), position);
+            physicsScene->getPhysics3DWorld()->addPhysics3DConstraint(_constraint, true);
+            _pickingDistance = (result.hitPosition - nearP).length();
+            return;
+        }
+    }
+    Physics3DTestDemo::onTouchesBegan(touches, event);
+    _needShootBox = false;
+}
+void Physics3DConstraintDemo::onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event)
+{
+    if (_constraint)
+    {
+        auto p2pConstraint = ((Physics3DPointToPointConstraint*)_constraint);
+        
+        auto touch = touches[0];
+        auto location = touch->getLocationInView();
+        Vec3 nearP(location.x, location.y, 0.0f), farP(location.x, location.y, 1.0f);
+        
+        auto size = Director::getInstance()->getWinSize();
+        _camera->unproject(size, &nearP, &nearP);
+        _camera->unproject(size, &farP, &farP);
+        auto dir = (farP - nearP).getNormalized();
+        p2pConstraint->setPivotPointInB(nearP + dir * _pickingDistance);
+        return;
+    }
+    Physics3DTestDemo::onTouchesMoved(touches, event);
+}
+void Physics3DConstraintDemo::onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event)
+{
+    if (_constraint)
+    {
+        physicsScene->getPhysics3DWorld()->removePhysics3DConstraint(_constraint);
+        _constraint = nullptr;
+        return;
+    }
+    Physics3DTestDemo::onTouchesEnded(touches, event);
 }
 
 bool Physics3DTerrainDemo::init()

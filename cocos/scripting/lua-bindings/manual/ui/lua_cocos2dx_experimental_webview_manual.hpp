@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2015 Chukong Technologies Inc.
+ Copyright (c) 2013-2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
  
@@ -21,45 +21,21 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+#include "base/ccConfig.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 
-#ifndef __PHYSICS_SPRITE_3D_H__
-#define __PHYSICS_SPRITE_3D_H__
+#ifndef COCOS_SCRIPTING_LUA_BINDINGS_LUA_COCOS2DX_EXPERIMENTAL_WEBVIEW_MANUAL_H
+#define COCOS_SCRIPTING_LUA_BINDINGS_LUA_COCOS2DX_EXPERIMENTAL_WEBVIEW_MANUAL_H
 
-#include "3d/CCSprite3D.h"
-#include "CCPhysics3DObject.h"
-#include "CCPhysics3DComponent.h"
-#include "extensions/ExtensionMacros.h"
-#include "extensions/ExtensionExport.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
+#include "tolua++.h"
+#ifdef __cplusplus
+}
+#endif
 
-#if (CC_ENABLE_BULLET_INTEGRATION)
+TOLUA_API int register_all_cocos2dx_experimental_webview_manual(lua_State* L);
 
-NS_CC_EXT_BEGIN
-
-class CC_EX_DLL PhysicsSprite3D : public cocos2d::Sprite3D
-{
-public:
-
-    /** creates a PhysicsSprite3D*/
-    static PhysicsSprite3D* create(const std::string &modelPath, Physics3DRigidBodyDes& rigidDes, const cocos2d::Vec3& translateInPhysics = cocos2d::Vec3::ZERO, const cocos2d::Quaternion& rotInPhsyics = cocos2d::Quaternion::ZERO);
-    
-    Physics3DObject* getPhysicsObj() const;
-    
-    void setSyncFlag(Physics3DComponent::PhysicsSyncFlag syncFlag);
-    
-    void syncToPhysics();
-    
-    void syncToNode();
-    
-CC_CONSTRUCTOR_ACCESS:
-    PhysicsSprite3D();
-    virtual ~PhysicsSprite3D();
-
-protected:
-    Physics3DComponent* _physicsComponent;
-};
-
-NS_CC_EXT_END
-
-#endif // CC_ENABLE_BULLET_INTEGRATION
-
-#endif // __PHYSICS_SPRITE_3D_H__
+#endif //#ifndef COCOS_SCRIPTING_LUA_BINDINGS_LUA_COCOS2DX_EXPERIMENTAL_WEBVIEW_MANUAL_H
+#endif //#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)

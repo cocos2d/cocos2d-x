@@ -143,26 +143,30 @@ void Physics3DWorld::removeAllPhysics3DObjects()
     _objects.clear();
 }
 
-void Physics3DWorld::addPhysics3DConstraint(Physics3DConstraint* constraint)
+void Physics3DWorld::addPhysics3DConstraint(Physics3DConstraint* constraint, bool disableCollisionsBetweenLinkedObjs)
 {
-    constraint->getBodyA()->addConstraint(constraint);
-    auto body = constraint->getBodyB();
+    auto body = constraint->getBodyA();
+    if (body)
+        body->addConstraint(constraint);
+    
+    body = constraint->getBodyB();
     if (body)
     {
         body->addConstraint(constraint);
     }
-    _btPhyiscsWorld->addConstraint(constraint->getbtContraint());
+    _btPhyiscsWorld->addConstraint(constraint->getbtContraint(), disableCollisionsBetweenLinkedObjs);
 }
 
 void Physics3DWorld::removePhysics3DConstraint(Physics3DConstraint* constraint)
 {
-    constraint->getBodyA()->removeConstraint(constraint);
-    auto body = constraint->getBodyB();
-    if (body)
-    {
-        body->removeConstraint(constraint);
-    }
     _btPhyiscsWorld->removeConstraint(constraint->getbtContraint());
+    
+    auto body = constraint->getBodyA();
+    if (body)
+        body->removeConstraint(constraint);
+    body = constraint->getBodyB();
+    if (body)
+        body->removeConstraint(constraint);
 }
 
 void Physics3DWorld::removeAllPhysics3DConstraints()

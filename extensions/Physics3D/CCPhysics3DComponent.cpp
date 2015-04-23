@@ -24,6 +24,7 @@
 
 #include "CCPhysics3D.h"
 #include "2d/CCNode.h"
+#include "2d/CCScene.h"
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
@@ -118,6 +119,13 @@ void Physics3DComponent::addToPhysicsWorld(Physics3DWorld* world)
 void Physics3DComponent::onEnter()
 {
     Component::onEnter();
+    
+    if (_physics3DObj->getPhysicsWorld() == nullptr && _owner)
+    {
+        auto scene = _owner->getScene();
+        if (scene)
+            addToPhysicsWorld(scene->getPhysics3DWorld());
+    }
 }
 
 void Physics3DComponent::onExit()

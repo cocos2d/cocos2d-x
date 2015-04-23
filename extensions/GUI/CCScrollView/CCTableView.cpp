@@ -320,10 +320,10 @@ Vec2 TableView::__offsetFromIndex(ssize_t index)
     switch (this->getDirection())
     {
         case Direction::HORIZONTAL:
-            offset = Vec2(_vCellsPositions[index], 0.0f);
+            offset.set(_vCellsPositions[index], 0.0f);
             break;
         default:
-            offset = Vec2(0.0f, _vCellsPositions[index]);
+            offset.set(0.0f, _vCellsPositions[index]);
             break;
     }
 

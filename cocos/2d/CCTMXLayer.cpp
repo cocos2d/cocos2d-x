@@ -605,18 +605,18 @@ void TMXLayer::removeTileAt(const Vec2& pos)
 //CCTMXLayer - obtaining positions, offset
 Vec2 TMXLayer::calculateLayerOffset(const Vec2& pos)
 {
-    Vec2 ret = Vec2::ZERO;
+    Vec2 ret;
     switch (_layerOrientation) 
     {
     case TMXOrientationOrtho:
-        ret = Vec2( pos.x * _mapTileSize.width, -pos.y *_mapTileSize.height);
+        ret.set( pos.x * _mapTileSize.width, -pos.y *_mapTileSize.height);
         break;
     case TMXOrientationIso:
-        ret = Vec2((_mapTileSize.width /2) * (pos.x - pos.y),
+        ret.set((_mapTileSize.width /2) * (pos.x - pos.y),
                   (_mapTileSize.height /2 ) * (-pos.x - pos.y));
         break;
     case TMXOrientationHex:
-        CCASSERT(pos.equals(Vec2::ZERO), "offset for hexagonal map not implemented yet");
+        CCASSERT(pos.isZero(), "offset for hexagonal map not implemented yet");
         break;
     case TMXOrientationStaggered:
         {
@@ -625,7 +625,7 @@ Vec2 TMXLayer::calculateLayerOffset(const Vec2& pos)
             {
                 diffX = _mapTileSize.width/2;
             }
-            ret = Vec2(pos.x * _mapTileSize.width + diffX,
+            ret.set(pos.x * _mapTileSize.width + diffX,
                          (-pos.y) * _mapTileSize.height/2);
         }
         break;
@@ -635,7 +635,7 @@ Vec2 TMXLayer::calculateLayerOffset(const Vec2& pos)
 
 Vec2 TMXLayer::getPositionAt(const Vec2& pos)
 {
-    Vec2 ret = Vec2::ZERO;
+    Vec2 ret;
     switch (_layerOrientation)
     {
     case TMXOrientationOrtho:
@@ -675,7 +675,8 @@ Vec2 TMXLayer::getPositionForHexAt(const Vec2& pos)
         diffY = -_mapTileSize.height/2 ;
     }
 
-    Vec2 xy = Vec2(pos.x * _mapTileSize.width*3/4,
+    Vec2 xy(
+        pos.x * _mapTileSize.width*3/4,
                             (_layerSize.height - pos.y - 1) * _mapTileSize.height + diffY);
     return xy;
 }
