@@ -25,49 +25,50 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef COCOS_2D_POLYSPRITECACHE_H__
-#define COCOS_2D_POLYSPRITECACHE_H__
+#ifndef COCOS_2D_SpritePolygonCACHE_H__
+#define COCOS_2D_SpritePolygonCACHE_H__
 
 #include <vector>
 #include "platform/CCPlatformMacros.h"
 #include "2d/CCNode.h"
 #include "renderer/CCTrianglesCommand.h"
 #include "CCDrawNode.h"
-#include "PolySprite.h"
 
 NS_CC_BEGIN
 
-struct CC_DLL PolySpriteInfo
+struct CC_DLL SpritePolygonInfo
 {
     cocos2d::Rect _rect;
     cocos2d::TrianglesCommand::Triangles _triangles;
     cocos2d::Rect _textureRect;
 };
 
-typedef std::vector<PolySpriteInfo*> VecPolySpriteInfo;
-typedef std::unordered_map<std::string, VecPolySpriteInfo> MapPolySpriteInfo;
+typedef std::vector<SpritePolygonInfo*> VecSpritePolygonInfo;
+typedef std::unordered_map<std::string, VecSpritePolygonInfo> MapSpritePolygonInfo;
 
-class CC_DLL PolySpriteCache: public cocos2d::Ref
+class CC_DLL SpritePolygonCache: public cocos2d::Ref
 {
 public:
-    virtual ~PolySpriteCache();
-    static PolySpriteCache* getInstance();
+    virtual ~SpritePolygonCache();
+    static SpritePolygonCache* getInstance();
     static void destroyInstance();
-    void   addPolySpriteCache(const std::string& filePath, const PolySpriteInfo& polySpriteInfo);
-    PolySpriteInfo* getPolySpriteCache(const std::string& filePath, const cocos2d::Rect& rect);
-    void   removePolySpriteCache(const std::string& filePath, const cocos2d::Rect* rect = nullptr);
-    void   removeAllPolySpriteCache();
-    bool   isPolySpriteCachExist(const std::string& filePath, const cocos2d::Rect& rect);
+    SpritePolygonInfo*   addSpritePolygonCache(const std::string& filePath, const SpritePolygonInfo& SpritePolygonInfo);
+    SpritePolygonInfo* getSpritePolygonCache(const std::string& filePath, const cocos2d::Rect& rect);
+    void   removeSpritePolygonCache(const std::string& filePath, const cocos2d::Rect* rect = nullptr);
+    void   removeAllSpritePolygonCache();
+    bool   isSpritePolygonCachExist(const std::string& filePath, const cocos2d::Rect& rect);
+    
+    static void printInfo(SpritePolygonInfo &info);
 protected:
-    PolySpriteCache();
+    SpritePolygonCache();
 private:
     void init();
 private:
-    static PolySpriteCache* _polySpriteCache;
-    MapPolySpriteInfo _polySpriteCacheMap;
+    static SpritePolygonCache* _SpritePolygonCache;
+    MapSpritePolygonInfo _SpritePolygonCacheMap;
     
 };
 
 NS_CC_END
 
-#endif // #ifndef COCOS_2D_POLYSPRITECACHE_H__
+#endif // #ifndef COCOS_2D_SpritePolygonCACHE_H__
