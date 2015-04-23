@@ -26,6 +26,7 @@
 #include "AppEvent.h"
 #include "AppLang.h"
 #include "runtime/ConfigParser.h"
+#include "runtime/Runtime.h"
 
 #include "platform/win32/PlayerWin.h"
 #include "platform/win32/PlayerMenuServiceWin.h"
@@ -53,9 +54,9 @@ INT_PTR CALLBACK AboutDialogCallback(HWND hDlg, UINT message, WPARAM wParam, LPA
 }
 void onHelpAbout()
 {
-    DialogBox(GetModuleHandle(NULL), 
-        MAKEINTRESOURCE(IDD_DIALOG_ABOUT), 
-        Director::getInstance()->getOpenGLView()->getWin32Window(), 
+    DialogBox(GetModuleHandle(NULL),
+        MAKEINTRESOURCE(IDD_DIALOG_ABOUT),
+        Director::getInstance()->getOpenGLView()->getWin32Window(),
         AboutDialogCallback);
 }
 
@@ -154,7 +155,7 @@ void SimulatorWin::openNewPlayerWithProjectConfig(const ProjectConfig &config)
     commandLine.append(getApplicationExePath());
     commandLine.append(" ");
     commandLine.append(config.makeCommandLine());
-    
+
     CCLOG("SimulatorWin::openNewPlayerWithProjectConfig(): %s", commandLine.c_str());
 
     // http://msdn.microsoft.com/en-us/library/windows/desktop/ms682499(v=vs.85).aspx
@@ -172,15 +173,15 @@ void SimulatorWin::openNewPlayerWithProjectConfig(const ProjectConfig &config)
     MultiByteToWideChar(CP_UTF8, 0, commandLine.c_str(), -1, command, MAX_COMMAND);
 
     BOOL success = CreateProcess(NULL,
-                                 command,   // command line 
-                                 NULL,      // process security attributes 
-                                 NULL,      // primary thread security attributes 
-                                 FALSE,     // handles are inherited 
-                                 0,         // creation flags 
-                                 NULL,      // use parent's environment 
-                                 NULL,      // use parent's current directory 
-                                 &si,       // STARTUPINFO pointer 
-                                 &pi);      // receives PROCESS_INFORMATION 
+                                 command,   // command line
+                                 NULL,      // process security attributes
+                                 NULL,      // primary thread security attributes
+                                 FALSE,     // handles are inherited
+                                 0,         // creation flags
+                                 NULL,      // use parent's environment
+                                 NULL,      // use parent's current directory
+                                 &si,       // STARTUPINFO pointer
+                                 &pi);      // receives PROCESS_INFORMATION
 
     if (!success)
     {
@@ -240,6 +241,7 @@ int SimulatorWin::run()
 
     // create the application instance
     _app = new AppDelegate();
+    RuntimeEngine::getInstance()->setProjectConfig(_project);
 
     // create console window
     if (_project.isShowConsole())
@@ -341,7 +343,7 @@ int SimulatorWin::run()
     // set window position
     if (_project.getProjectDir().length())
     {
-        setZoom(_project.getFrameScale()); 
+        setZoom(_project.getFrameScale());
     }
     Vec2 pos = _project.getWindowOffset();
     if (pos.x != 0 && pos.y != 0)
@@ -496,8 +498,8 @@ void SimulatorWin::setupUI()
                             RECT rect;
                             GetWindowRect(hwnd, &rect);
                             MoveWindow(hwnd, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top + GetSystemMetrics(SM_CYMENU), FALSE);
-                        
-                            // fix: can not update window on some windows system 
+
+                            // fix: can not update window on some windows system
                             ::SendMessage(hwnd, WM_MOVE, NULL, NULL);
                         }
                         else if (data.find("VIEWSIZE_ITEM_MENU_") == 0) // begin with VIEWSIZE_ITEM_MENU_
@@ -549,6 +551,8 @@ void SimulatorWin::setupUI()
                 project.setProjectDir(dirPath);
                 project.setScriptFile(ConfigParser::getInstance()->getEntryFile());
                 project.setWritablePath(dirPath);
+
+                RuntimeEngine::getInstance()->setProjectConfig(project);
             }
         }
     });
@@ -779,7 +783,7 @@ LRESULT CALLBACK SimulatorWin::windowProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
         HDROP hDrop = (HDROP)wParam;
 
         const int count = DragQueryFileW(hDrop, 0xffffffff, NULL, 0);
-        
+
         if (count > 0)
         {
             int fileIndex = 0;
