@@ -12,7 +12,7 @@
         url = git://github.com/dumganhar/ccs-res.git
 [submodule "cocos/scripting/js-bindings"]
         path = cocos/scripting/js-bindings
-        url = git@github.com:natural-law/cocos2d-jsb.git
+        url = git://github.com/cocos2d/js-bindings.git
 [submodule "web"]
         path = web
-        url = git@github.com:cocos2d/cocos2d-html5.git
+        url = git://github.com/cocos2d/cocos2d-html5.git
