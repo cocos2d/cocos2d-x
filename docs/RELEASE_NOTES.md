@@ -1,7 +1,5 @@
 # cocos2d-x v3.5.1 Release Notes #
 
-Compared to `cocos2d-x v3.5`, this version added Tizen platform support.
-
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
 - [Environment requirement](#environment-requirement)
@@ -10,6 +8,8 @@ Compared to `cocos2d-x v3.5`, this version added Tizen platform support.
 	- [Run on Tizen emulator](#run-on-tizen-emulator)
 	- [Security profiles](#security-profiles)
 - [How to start a new game on Tizen](#how-to-start-a-new-game-on-tizen)
+
+Compared to `cocos2d-x v3.5`, this version added Tizen platform support.
 
 # Environment requirement
 
