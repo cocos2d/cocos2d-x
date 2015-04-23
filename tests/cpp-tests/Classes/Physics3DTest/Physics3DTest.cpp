@@ -553,6 +553,8 @@ bool Physics3DTerrainDemo::init()
     auto component = Physics3DComponent::create(rigidBody);
     terrain->addComponent(component);
     this->addChild(terrain);
+    component->syncToNode();
+    component->setSyncFlag(Physics3DComponent::PhysicsSyncFlag::NONE);
 
 
     //create several spheres
