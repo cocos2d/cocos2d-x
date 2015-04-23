@@ -9,14 +9,15 @@ LOCAL_MODULE_FILENAME := libcocos2dlua
 LOCAL_SRC_FILES := \
 ../../Classes/AppDelegate.cpp \
 ../../Classes/ide-support/SimpleConfigParser.cpp \
+../../Classes/ide-support/RuntimeLuaImpl.cpp \
+../../Classes/ide-support/lua_debugger.c \
 hellolua/main.cpp
 
 LOCAL_C_INCLUDES := \
-$(LOCAL_PATH)/../../Classes/protobuf-lite \
-$(LOCAL_PATH)/../../Classes/runtime \
 $(LOCAL_PATH)/../../Classes \
 $(LOCAL_PATH)/../../../cocos2d-x/external \
-$(LOCAL_PATH)/../../../cocos2d-x/tools/simulator/libsimulator/lib
+$(LOCAL_PATH)/../../../cocos2d-x/tools/simulator/libsimulator/lib \
+$(LOCAL_PATH)/../../../cocos2d-x/tools/simulator/libsimulator/lib/protobuf-lite
 
 # _COCOS_HEADER_ANDROID_BEGIN
 # _COCOS_HEADER_ANDROID_END
