@@ -352,12 +352,14 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
     public void fixSize(int left, int top, int width, int height) {
         if (width != 0 && height != 0) {
             if (mKeepRatio) {
-                if ( mVideoWidth * height  >= width * mVideoHeight ) {
-                    mVisibleWidth = width;
-                    mVisibleHeight = width * mVideoHeight / mVideoWidth;
-                } else if ( mVideoWidth * height  < width * mVideoHeight ) {
-                    mVisibleWidth = height * mVideoWidth / mVideoHeight;
-                    mVisibleHeight = height;
+                if ( (mVideoWidth != 0) && (mVideoHeight != 0) ) {      // have we got video size already?
+                    if ( mVideoWidth * height  >= width * mVideoHeight ) {
+                        mVisibleWidth = width;
+                        mVisibleHeight = width * mVideoHeight / mVideoWidth;
+                    } else if ( mVideoWidth * height  < width * mVideoHeight ) {
+                        mVisibleWidth = height * mVideoWidth / mVideoHeight;
+                        mVisibleHeight = height;
+                    }
                 }
                 mVisibleLeft = left + (width - mVisibleWidth) / 2;
                 mVisibleTop = top + (height - mVisibleHeight) / 2;
