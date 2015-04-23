@@ -196,6 +196,13 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\flatbuffers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\idl.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\util.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\common\shapes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\common\utils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\poly2tri.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\sweep\advancing_front.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\sweep\cdt.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\sweep\sweep.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\sweep\sweep_context.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\tinyxml2\tinyxml2.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\unzip\ioapi.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\unzip\ioapi_mem.h" />
@@ -594,6 +601,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCTransitionPageTurn.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCTransitionProgress.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCTweenFunction.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\MarchingSquare.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\PolySprite.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\PolySpriteCache.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)targetver.h" />
   </ItemGroup>
   <ItemGroup>
@@ -781,6 +791,11 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\idl_gen_go.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\idl_gen_text.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\flatbuffers\idl_parser.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\common\shapes.cc" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\sweep\advancing_front.cc" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\sweep\cdt.cc" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\sweep\sweep.cc" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\sweep\sweep_context.cc" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\unzip\ioapi.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\unzip\ioapi_mem.cpp" />
@@ -1146,6 +1161,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCTransitionPageTurn.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCTransitionProgress.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCTweenFunction.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\MarchingSquare.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\PolySprite.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\PolySpriteCache.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectCapability Include="SourceItemsFromImports" />

@@ -166,6 +166,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     fileUtils->setSearchPaths(searchPaths);
 
     glview->setDesignResolutionSize(designSize.width, designSize.height, ResolutionPolicy::SHOW_ALL);
+    
+    // Enable Remote Console
+    auto console = director->getConsole();
+    console->listenOnTCP(5678);
 
     _testController = TestController::getInstance();
     

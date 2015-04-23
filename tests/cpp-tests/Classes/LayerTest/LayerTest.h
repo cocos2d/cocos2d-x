@@ -7,6 +7,8 @@ DEFINE_TEST_SUITE(LayerTests);
 
 class LayerTest : public TestCase
 {
+public:
+    virtual std::string title() const override;
 protected:
     std::string    _title;
 };
