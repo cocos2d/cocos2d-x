@@ -403,6 +403,21 @@ Texture2D* TextureCache::addImage(Image *image, const std::string &key)
     return texture;
 }
 
+bool TextureCache::isTextureLoaded(const std::string& fileName)
+{
+    bool result = false;
+
+    std::string fullpath = FileUtils::getInstance()->fullPathForFilename(fileName);
+    if (fullpath.size() > 0)
+    {
+        if (_textures.find(fullpath) != _textures.end()) {
+            result = true;
+        }
+    }
+
+    return result;
+}
+
 bool TextureCache::reloadTexture(const std::string& fileName)
 {
     Texture2D * texture = nullptr;
