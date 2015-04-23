@@ -194,7 +194,7 @@ void Physics3DTestDemo::shootBox( const cocos2d::Vec3 &des )
     sprite->syncToNode();
     
     //optimize, only sync node to physics
-    sprite->setSyncFlag(Physics3DComponent::PhysicsSyncFlag::NODE_TO_PHYSICS); //sync node to physics
+    sprite->setSyncFlag(Physics3DComponent::PhysicsSyncFlag::PHYSICS_TO_NODE); //sync node to physics
     
     sprite->setCameraMask((unsigned short)CameraFlag::USER1);
 }
@@ -335,7 +335,7 @@ bool Physics3DKinematicDemo::init()
                     sprite->setPosition3D(Vec3(x, y, z));
                     sprite->syncToNode();
                     
-                    sprite->setSyncFlag(Physics3DComponent::PhysicsSyncFlag::NODE_TO_PHYSICS);
+                    sprite->setSyncFlag(Physics3DComponent::PhysicsSyncFlag::PHYSICS_TO_NODE);
                 }
             }
         }
@@ -600,7 +600,7 @@ bool Physics3DTerrainDemo::init()
                 sprite->setPosition3D(Vec3(x, y, z));
                 this->addChild(sprite);
                 sprite->syncToNode();
-                sprite->setSyncFlag(Physics3DComponent::PhysicsSyncFlag::NODE_TO_PHYSICS);
+                sprite->setSyncFlag(Physics3DComponent::PhysicsSyncFlag::PHYSICS_TO_NODE);
             }
         }
     }
