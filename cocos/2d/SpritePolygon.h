@@ -69,11 +69,11 @@ public:
     virtual cocos2d::Texture2D* getTexture(){return _texture;};
     const float getArea();
     const ssize_t getTrianglesCount(){return _polygonInfo->_triangles.vertCount/3;};
+    
+    void showDebug(const bool val);
 protected:
-    #if CC_SPRITE_DEBUG_DRAW
         cocos2d::DrawNode *_debugDrawNode;
         void debugDraw();
-    #endif //CC_SPRITE_DEBUG_DRAW
     
     bool                                    _triangleDirty; //if triangle is dirty, then it needs to be recalculated from verts and indices
     bool                                    _rectRotated;

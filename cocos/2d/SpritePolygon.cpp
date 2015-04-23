@@ -215,8 +215,8 @@ bool SpritePolygon::initWithMarching(const std::string &file, const cocos2d::Rec
     auto marcher = new MarchingSquare(file);
     marcher->trace();
 
-    marcher->optimize(2);
-        marcher->printPoints();
+    marcher->optimize(texture->getPixelsHigh()*texture->getPixelsWide()*0.001);
+//        marcher->printPoints();
     auto p = marcher->getPoints();
     auto calculatedRect = setContentSizeFromVecs(p);
     auto _textureRect = Rect(rect.origin.x,rect.origin.y,calculatedRect.size.width, calculatedRect.size.height);
@@ -236,7 +236,7 @@ bool SpritePolygon::initWithMarching(const std::string &file, const cocos2d::Rec
 #if CC_SPRITE_DEBUG_DRAW
     debugDraw();
 #endif
-    SpritePolygonCache::printInfo(*info);
+//    SpritePolygonCache::printInfo(*info);
     return true;
 }
 bool SpritePolygon::initWithPoly2tri(const std::string &filename, std::vector<cocos2d::Vec2> & verts, const cocos2d::Rect &Rect, bool rotated)
@@ -471,12 +471,8 @@ const float SpritePolygon::getArea(){
 void SpritePolygon::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     _tcmd.init(0, _texture->getName(), getGLProgramState(), _blendFunc, _polygonInfo->_triangles, transform, flags);
-    
-    SpritePolygonCache::printInfo(*_polygonInfo);
-    
     renderer->addCommand(&_tcmd);
 }
-#if CC_SPRITE_DEBUG_DRAW
 void SpritePolygon::debugDraw()
 {
     //draw all points
@@ -489,7 +485,7 @@ void SpritePolygon::debugDraw()
         pos->x = v->vertices.x;
         pos->y = v->vertices.y;
     }
-    _debugDrawNode->drawPoints(positions, _polygonInfo->_triangles.vertCount, 8, Color4F{0.0,1.0,1.0,1.0});
+    _debugDrawNode->drawPoints(positions, (unsigned int)_polygonInfo->_triangles.vertCount, 8, Color4F{0.0,1.0,1.0,1.0});
     //draw lines
     auto last = _polygonInfo->_triangles.indexCount/3;
     auto _indices = _polygonInfo->_triangles.indices;
@@ -512,4 +508,23 @@ void SpritePolygon::debugDraw()
     }
     CC_SAFE_DELETE_ARRAY(positions);
 }
-#endif //CC_SPRITE_DEBUG_DRAW
+
+void SpritePolygon::showDebug(const bool val)
+{
+    if(val)
+    {
+        if(!_debugDrawNode)
+        {
+            debugDraw();
+        }
+        else{
+            _debugDrawNode->setVisible(val);
+        }
+    }
+    else{
+        if(_debugDrawNode)
+        {
+            _debugDrawNode->setVisible(val);
+        }
+    }
+}
