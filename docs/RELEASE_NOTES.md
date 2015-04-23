@@ -4,15 +4,14 @@ Compared to `cocos2d-x v3.5`, this version added Tizen platform support.
 
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
-- [cocos2d-x v3.5.1 Release Notes](#)
-	- [Environment requirement](#)
-- [How to run cpp-tests on Tizen](#)
-	- [Run on Tizen devices](#)
-	- [Run on Tizen emulator](#)
-	- [Security profiles](#)
-- [How to start a new game on Tizen](#)
+- [Environment requirement](#environment-requirement)
+- [How to run cpp-tests on Tizen](#how-to-run-cpp-tests-on-tizen)
+	- [Run on Tizen devices](#run-on-tizen-devices)
+	- [Run on Tizen emulator](#run-on-tizen-emulator)
+	- [Security profiles](#security-profiles)
+- [How to start a new game on Tizen](#how-to-start-a-new-game-on-tizen)
 
-## Environment requirement
+# Environment requirement
 
 * Ubuntu 12.0.4+/Win7+/Mac OS X 10.10
 * [cocos2d-x-3.5.1.zip](http://cdn.cocos2d-x.org/cocos2d-x-3.5.zip)
