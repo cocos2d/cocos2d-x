@@ -136,11 +136,7 @@ void Cocos2dRenderer::Draw(GLsizei width, GLsizei height, float dpi, DisplayOrie
     }
 
     glView->ProcessEvents();
-
-    if (!(glView->AppShouldExit()))
-    {
-        glView->Render();
-    }
+    glView->Render();
 }
 
 void Cocos2dRenderer::QueuePointerEvent(cocos2d::PointerEventType type, Windows::UI::Core::PointerEventArgs^ args)
