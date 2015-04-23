@@ -30,14 +30,15 @@
 
 NS_CC_EXT_BEGIN
 
-PhysicsSprite3D* PhysicsSprite3D::create(const std::string &modelPath, Physics3DRigidBodyDes& rigidDes, const cocos2d::Vec3& translateInPhysics, const cocos2d::Quaternion& rotInPhsyics)
+PhysicsSprite3D* PhysicsSprite3D::create(const std::string &modelPath, Physics3DRigidBodyDes* rigidDes, const cocos2d::Vec3& translateInPhysics, const cocos2d::Quaternion& rotInPhsyics)
 {
     auto ret = new PhysicsSprite3D();
     if (ret && ret->initWithFile(modelPath))
     {
-        auto obj = Physics3DRigidBody::create(&rigidDes);
+        auto obj = Physics3DRigidBody::create(rigidDes);
         ret->_physicsComponent = Physics3DComponent::create(obj);
         ret->addComponent(ret->_physicsComponent);
+        ret->_contentSize = ret->getBoundingBox().size;
         ret->autorelease();
         return ret;
     }

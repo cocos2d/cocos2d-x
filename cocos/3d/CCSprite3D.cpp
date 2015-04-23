@@ -293,6 +293,7 @@ bool Sprite3D::initWithFile(const std::string &path)
             
             Sprite3DCache::getInstance()->addSprite3DData(path, data);
             CC_SAFE_DELETE(meshdatas);
+            _contentSize = getBoundingBox().size;
             return true;
         }
     }

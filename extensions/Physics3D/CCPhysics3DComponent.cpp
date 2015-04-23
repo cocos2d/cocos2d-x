@@ -145,7 +145,7 @@ void Physics3DComponent::onExit()
 
 void Physics3DComponent::preSimulate()
 {
-    if (((int)_syncFlag & (int)Physics3DComponent::PhysicsSyncFlag::NODE_TO_PHYSICS) && _physics3DObj && _owner)
+    if (((int)_syncFlag & (int)Physics3DComponent::PhysicsSyncFlag::PHYSICS_TO_NODE) && _physics3DObj && _owner)
     {
         syncToNode();
     }
@@ -153,7 +153,7 @@ void Physics3DComponent::preSimulate()
 
 void Physics3DComponent::postSimulate()
 {
-    if (((int)_syncFlag & (int)Physics3DComponent::PhysicsSyncFlag::PHYSICS_TO_NODE) && _physics3DObj && _owner)
+    if (((int)_syncFlag & (int)Physics3DComponent::PhysicsSyncFlag::NODE_TO_PHYSICS) && _physics3DObj && _owner)
     {
         syncToPhysics();
     }
