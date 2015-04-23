@@ -41,11 +41,9 @@ public:
     MarchingSquare(const std::string &filename, const unsigned int threshold = 0);
     //TODO: should return list of vec2s
     void trace();
-//    unsigned int getAlphaAt(const unsigned int i);
-//    unsigned int getAlphaAt(int x, int y);
     void setThreshold(unsigned int threshold){_threshold = threshold;};
     unsigned int getThreshold(){return _threshold;};
-    unsigned int getVecCount(){return points.size();};
+    ssize_t getVecCount(){return points.size();};
     std::vector<cocos2d::Vec2> getPoints(){return points;};
     void printPoints();
     //using Ramer–Douglas–Peucker algorithm
