@@ -17,6 +17,8 @@ Compared to `cocos2d-x v3.5`, this version added Tizen platform support.
 * [cocos2d-x-3.5.1.zip](http://cdn.cocos2d-x.org/cocos2d-x-3.5.zip)
 * [Tizen SDK 2.3](https://developer.tizen.org/downloads/tizen-sdk), `please select custom mode and select gcc4.8 package`
 
+![install-sdk](https://raw.githubusercontent.com/minggo/Pictures/master/tizen/tizen-install-sdk.png)
+
 # How to run cpp-tests on Tizen
 
 * download Install-manager and Tizen SDK image from [here](https://developer.tizen.org/downloads/tizen-sdk)
