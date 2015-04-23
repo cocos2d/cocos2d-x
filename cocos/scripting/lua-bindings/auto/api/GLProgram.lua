@@ -58,7 +58,7 @@
 -- @return GLProgram#GLProgram self (return value: cc.GLProgram)
         
 --------------------------------
---  calls glUniform1i only if the values are different than the previous call for this same shader program. <br>
+--  calls glUniform1i only if the values are different than the previous call for this same shader program.<br>
 -- js setUniformLocationI32<br>
 -- lua setUniformLocationI32
 -- @function [parent=#GLProgram] setUniformLocationWith1i 

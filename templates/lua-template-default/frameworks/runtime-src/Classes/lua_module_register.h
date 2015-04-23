@@ -11,7 +11,7 @@
 #include "3d/lua_cocos2dx_3d_manual.h"
 #include "audioengine/lua_cocos2dx_audioengine_manual.h"
 
-int lua_module_register(lua_State* L)
+static int lua_module_register(lua_State* L)
 {
     //Dont' change the module register order unless you know what your are doing
     register_cocosdenshion_module(L);

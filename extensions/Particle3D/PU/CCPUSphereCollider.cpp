@@ -34,7 +34,6 @@ const float PUSphereCollider::DEFAULT_RADIUS = 100.0f;
 PUSphereCollider::PUSphereCollider(void) : 
     PUBaseCollider(),
     _radius(DEFAULT_RADIUS),
-    _predictedPosition(Vec3::ZERO),    
     _innerCollision(false)
 {
 }

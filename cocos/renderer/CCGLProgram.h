@@ -4,10 +4,10 @@ Copyright 2012 Goffredo Marocchi
 Copyright 2012 Ricardo Quesada
 Copyright 2012 cocos2d-x.org
 Copyright 2013-2014 Chukong Technologies Inc.
- 
- 
+
+
 http://www.cocos2d-x.org
- 
+
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -78,8 +78,8 @@ struct Uniform
 
 /** GLProgram
  Class that implements a glProgram
- 
- 
+
+
  @since v2.0.0
  */
 class CC_DLL GLProgram : public Ref
@@ -113,7 +113,7 @@ public:
         // backward compatibility
         VERTEX_ATTRIB_TEX_COORDS = VERTEX_ATTRIB_TEX_COORD,
     };
-    
+
     /**Preallocated uniform handle.*/
     enum
     {
@@ -179,6 +179,9 @@ public:
     static const char* SHADER_NAME_POSITION_U_COLOR;
     /**Built in shader for draw a sector with 90 degrees with center at bottom left point.*/
     static const char* SHADER_NAME_POSITION_LENGTH_TEXTURE_COLOR;
+
+    /**Built in shader for ui effects */
+    static const char* SHADER_NAME_POSITION_GRAYSCALE;
     /** @{
         Built in shader for label and label with effects.
     */
@@ -192,7 +195,7 @@ public:
     /**Built in shader used for 3D, support Position and Texture vertex attribute, with color specified by a uniform.*/
     static const char* SHADER_3D_POSITION_TEXTURE;
     /**
-    Built in shader used for 3D, support Position (Skeletal animation by hardware skin) and Texture vertex attribute, 
+    Built in shader used for 3D, support Position (Skeletal animation by hardware skin) and Texture vertex attribute,
     with color specified by a uniform.
     */
     static const char* SHADER_3D_SKINPOSITION_TEXTURE;
@@ -205,7 +208,7 @@ public:
     */
     static const char* SHADER_3D_POSITION_NORMAL_TEXTURE;
     /**
-    Built in shader used for 3D, support Position(skeletal animation by hardware skin), Normal, Texture vertex attribute, 
+    Built in shader used for 3D, support Position(skeletal animation by hardware skin), Normal, Texture vertex attribute,
     used in lighting. with color specified by a uniform.
     */
     static const char* SHADER_3D_SKINPOSITION_NORMAL_TEXTURE;
@@ -217,22 +220,22 @@ public:
     Built in shader for particles, support Position, with a color specified by a uniform.
     */
     static const char* SHADER_3D_PARTICLE_COLOR;
-    
+
     /**
      Built in shader for skybox
      */
     static const char* SHADER_3D_SKYBOX;
-    
+
     /**
      Built in shader for terrain
      */
     static const char* SHADER_3D_TERRAIN;
-    
+
     /**
     end of built shader types.
     @}
     */
-    
+
     /**
     @name Built uniform names
     @{
@@ -329,7 +332,7 @@ public:
     /**
     @}
     */
-    
+
     /**@{ Get the uniform or vertex attribute by string name in shader, return null if it does not exist.*/
     Uniform* getUniform(const std::string& name);
     VertexAttrib* getVertexAttrib(const std::string& name);
@@ -358,54 +361,54 @@ public:
 
  */
     void updateUniforms();
-    
+
     /** calls retrieves the named uniform location for this shader program. */
     GLint getUniformLocationForName(const char* name) const;
-    
-    /** calls glUniform1i only if the values are different than the previous call for this same shader program. 
+
+    /** calls glUniform1i only if the values are different than the previous call for this same shader program.
      * @js setUniformLocationI32
      * @lua setUniformLocationI32
      */
     void setUniformLocationWith1i(GLint location, GLint i1);
-    
+
     /** calls glUniform2i only if the values are different than the previous call for this same shader program. */
     void setUniformLocationWith2i(GLint location, GLint i1, GLint i2);
-    
+
     /** calls glUniform3i only if the values are different than the previous call for this same shader program. */
     void setUniformLocationWith3i(GLint location, GLint i1, GLint i2, GLint i3);
-    
+
     /** calls glUniform4i only if the values are different than the previous call for this same shader program. */
     void setUniformLocationWith4i(GLint location, GLint i1, GLint i2, GLint i3, GLint i4);
-    
+
     /** calls glUniform2iv only if the values are different than the previous call for this same shader program. */
     void setUniformLocationWith2iv(GLint location, GLint* ints, unsigned int numberOfArrays);
-    
+
     /** calls glUniform3iv only if the values are different than the previous call for this same shader program. */
     void setUniformLocationWith3iv(GLint location, GLint* ints, unsigned int numberOfArrays);
-    
+
     /** calls glUniform4iv only if the values are different than the previous call for this same shader program. */
-    
+
     void setUniformLocationWith4iv(GLint location, GLint* ints, unsigned int numberOfArrays);
 
-    /** calls glUniform1f only if the values are different than the previous call for this same shader program. 
+    /** calls glUniform1f only if the values are different than the previous call for this same shader program.
      * In js or lua,please use setUniformLocationF32
      * @js NA
      */
     void setUniformLocationWith1f(GLint location, GLfloat f1);
 
-    /** calls glUniform2f only if the values are different than the previous call for this same shader program. 
+    /** calls glUniform2f only if the values are different than the previous call for this same shader program.
      * In js or lua,please use setUniformLocationF32
      * @js NA
      */
     void setUniformLocationWith2f(GLint location, GLfloat f1, GLfloat f2);
 
-    /** calls glUniform3f only if the values are different than the previous call for this same shader program. 
+    /** calls glUniform3f only if the values are different than the previous call for this same shader program.
      * In js or lua,please use setUniformLocationF32
      * @js NA
      */
     void setUniformLocationWith3f(GLint location, GLfloat f1, GLfloat f2, GLfloat f3);
 
-    /** calls glUniform4f only if the values are different than the previous call for this same shader program. 
+    /** calls glUniform4f only if the values are different than the previous call for this same shader program.
      * In js or lua,please use setUniformLocationF32
      * @js NA
      */
@@ -425,13 +428,13 @@ public:
 
     /** calls glUniformMatrix2fv only if the values are different than the previous call for this same shader program. */
     void setUniformLocationWithMatrix2fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices);
-    
+
     /** calls glUniformMatrix3fv only if the values are different than the previous call for this same shader program. */
     void setUniformLocationWithMatrix3fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices);
-    
+
     /** calls glUniformMatrix4fv only if the values are different than the previous call for this same shader program. */
     void setUniformLocationWithMatrix4fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices);
-    
+
     /**
      Update the builtin uniforms if they are different than the previous call for this same shader program.
      */
@@ -450,7 +453,7 @@ public:
 
     /** returns the program error log */
     std::string getProgramLog() const;
-    
+
     /** Reload all shaders, this function is designed for android
     when opengl context lost, so don't call it.
     */
@@ -485,7 +488,7 @@ protected:
     void parseUniforms();
     /**Compile the shader sources.*/
     bool compileShader(GLuint * shader, GLenum type, const GLchar* source);
-    
+
     /**OpenGL handle for program.*/
     GLuint            _program;
     /**OpenGL handle for vertex shader.*/
@@ -496,7 +499,7 @@ protected:
     GLint             _builtInUniforms[UNIFORM_MAX];
     /**Indicate whether it has a offline shader compiler or not.*/
     bool              _hasShaderCompiler;
-        
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || defined(WP8_SHADER_COMPILER)
     /**Shader ID in precompiled shaders on Windows phone.*/
     std::string       _shaderId;

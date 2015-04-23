@@ -42,6 +42,8 @@
 		1502702E1AD3BDC90089CD03 /* TerrainTest in Resources */ = {isa = PBXBuildFile; fileRef = B603F1B31AC8FBFB00A9579C /* TerrainTest */; };
 		150F918819DA409E00B89F57 /* lua_test_bindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 150F918619DA409E00B89F57 /* lua_test_bindings.cpp */; };
 		150F918919DA409F00B89F57 /* lua_test_bindings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 150F918619DA409E00B89F57 /* lua_test_bindings.cpp */; };
+		1531B2501AE013DE0075DB94 /* Test.html in Resources */ = {isa = PBXBuildFile; fileRef = 29AFEF6619ACCAA000F6B10A /* Test.html */; };
+		1531B2511AE013F00075DB94 /* Test.html in Resources */ = {isa = PBXBuildFile; fileRef = 29AFEF6619ACCAA000F6B10A /* Test.html */; };
 		15427B79198B879900DC375D /* libluacocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 15EFA665198B33EE000C57D3 /* libluacocos2d iOS.a */; };
 		15427B7A198B87AA00DC375D /* libcocos2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A15FBE1807A4F9005B8026 /* libcocos2d iOS.a */; };
 		15427B7D198B880100DC375D /* lua_cocos2dx_controller_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15427B7B198B880100DC375D /* lua_cocos2dx_controller_manual.cpp */; };
@@ -4378,6 +4380,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1531B2501AE013DE0075DB94 /* Test.html in Resources */,
 				1502702E1AD3BDC90089CD03 /* TerrainTest in Resources */,
 				157B08EC1A90864100B7BEA4 /* Particle3D in Resources */,
 				15B13E5219F0FD4D008A1ADC /* Manifests in Resources */,
@@ -4424,6 +4427,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1531B2511AE013F00075DB94 /* Test.html in Resources */,
 				1502702D1AD3BDBC0089CD03 /* TerrainTest in Resources */,
 				157B08ED1A90865600B7BEA4 /* Particle3D in Resources */,
 				15B3709A19EE5EED00ABE682 /* Manifests in Resources */,

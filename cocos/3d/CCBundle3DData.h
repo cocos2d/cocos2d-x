@@ -367,7 +367,6 @@ public:
     {
         Vec3Key()
         : _time(0)
-        , _key(Vec3::ZERO)
         {
         }
         

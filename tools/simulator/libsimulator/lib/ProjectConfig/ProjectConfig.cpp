@@ -33,7 +33,7 @@ static std::vector<std::string> split(const std::string &s, char delim) {
 }
 
 ProjectConfig::ProjectConfig()
-    : _scriptFile("$(PROJDIR)/src/main.lua")
+    : _scriptFile("")
     , _writablePath("")
     , _packagePath("")
     , _frameSize(960, 640)
