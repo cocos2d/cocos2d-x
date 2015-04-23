@@ -47,15 +47,15 @@ If you meet `security profile` issue, you can refer to [Security profiles](#secu
 
 ## Run on Tizen emulator
 
-* create a eimulator, `please set RAM size to 1024`
+* create an emulator, `please set RAM size to 1024`
 
   ![create-emulator](https://raw.githubusercontent.com/minggo/Pictures/master/tizen/tizen-generate-tizen-simulator.png)
 
-* launch the eimulator by click the arrow button and power on it
+* launch the emulator by click the arrow button and power on it
 
   ![power-on-emulator](https://raw.githubusercontent.com/minggo/Pictures/master/tizen/tizen-power-on-simulator.png)
 
-* change `ligcocos2dx` to eimulator mode and build it
+* change `ligcocos2dx` to emulator mode and build it
   * right click `libcocos2dx` and select `Build Configurations->Set Active->Emulator`
   * right click `libcocos2dx` and select `Build Project`
 * change `cpp-tests` to emulator mode and run it(`make sure screen is unlocked`)
