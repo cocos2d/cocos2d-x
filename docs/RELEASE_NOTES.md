@@ -39,8 +39,12 @@ Compared to `cocos2d-x v3.5`, this version added Tizen platform support.
   
 ## Run on Tizen devices
 
-* right click `libcocos2dx` and select `Build Configurations->Set Active->Debug`
-* right click `cpp-tests` and select `Build Configurations->Set Active->Debug`
+* change `ligcocos2dx` to debug mode and build it
+  * right click `libcocos2dx` and select `Build Configurations->Set Active->Debug`
+  * right click `libcocos2dx` and select `Build Project`
+* change `cpp-tests` to debug mode and build it
+  * right click `cpp-tests` and select `Build Configurations->Set Active->Debug`
+  * right click `cpp-tests` and select `Build Project`
 * right click `cpp-tests` and select `Run As->1 Tizen Native Application`, then cpp-tests will run on your Tizen device
 
 If you meet `security profile` issue, you can refer to [Security profiles](#security-profiles) section to fix it.
