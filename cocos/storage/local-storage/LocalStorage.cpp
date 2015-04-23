@@ -120,23 +120,26 @@ void localStorageSetItem( const std::string& key, const std::string& value)
 }
 
 /** gets an item from the LS */
-std::string localStorageGetItem( const std::string& key )
+bool localStorageGetItem( const std::string& key, std::string *outItem )
 {
 	assert( _initialized );
 
-	std::string ret;
 	int ok = sqlite3_reset(_stmt_select);
 
 	ok |= sqlite3_bind_text(_stmt_select, 1, key.c_str(), -1, SQLITE_TRANSIENT);
 	ok |= sqlite3_step(_stmt_select);
 	const unsigned char *text = sqlite3_column_text(_stmt_select, 0);
-	if (text)
-		ret = (const char*)text;
 
-	if( ok != SQLITE_OK && ok != SQLITE_DONE && ok != SQLITE_ROW)
+	if( (ok != SQLITE_OK && ok != SQLITE_DONE && ok != SQLITE_ROW) || !text)
+	{
 		printf("Error in localStorage.getItem()\n");
-
-	return ret;
+		return false;
+	}
+	else
+    {
+        outItem->assign((const char*)text);
+        return true;
+    }
 }
 
 /** removes an item from the LS */

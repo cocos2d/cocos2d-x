@@ -46,7 +46,7 @@ void CC_DLL localStorageFree();
 void CC_DLL localStorageSetItem( const std::string& key, const std::string& value);
 
 /** Gets an item from the JS. */
-std::string CC_DLL localStorageGetItem( const std::string& key );
+bool CC_DLL localStorageGetItem( const std::string& key, std::string *outItem );
 
 /** Removes an item from the JS. */
 void CC_DLL localStorageRemoveItem( const std::string& key );
