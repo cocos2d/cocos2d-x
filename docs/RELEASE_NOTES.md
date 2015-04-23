@@ -43,7 +43,7 @@ Compared to `cocos2d-x v3.5`, this version added Tizen platform support.
 * right click `cpp-tests` and select `Build Project`
 * right click `cpp-tests` and select `Run As->1 Tizen Native Application`, then cpp-tests will run on your Tizen device
 
-If you meet `security profile` issue, you can refer to `Security profiles` section to fix it.
+If you meet `security profile` issue, you can refer to [Security profiles](#security-profiles) section to fix it.
 
 ## Run on Tizen emulator
 
@@ -83,7 +83,7 @@ You can resolve it by doing following steps:
 
 # How to start a new game on Tizen
 
-Please refer to `How to run cpp-tests on Tizen` section beforing reading this section.
+Please refer to [How to run cpp-tests on Tizen](#how-to-run-cpp-tests-on-tizen) section beforing reading this section.
 
 Steps to start a new game:
 
