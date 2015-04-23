@@ -1,4 +1,4 @@
-# cocos2d-x v3.5 for tizen Release Notes #
+# cocos2d-x v3.5 for Tizen Release Notes #
 
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
