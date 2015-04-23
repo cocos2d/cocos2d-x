@@ -129,7 +129,8 @@ void ShaderNode::onDraw(const Mat4 &transform, uint32_t flags)
 
     auto glProgramState = getGLProgramState();
     glProgramState->setVertexAttribPointer("a_position", 2, GL_FLOAT, GL_FALSE, 0, vertices);
-    glProgramState->apply(transform);
+    glProgramState->applyGLProgram(transform);
+    glProgramState->applyUniforms();
 
     glDrawArrays(GL_TRIANGLES, 0, 6);
     

@@ -54,7 +54,7 @@ void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* shad
                        const Mat4& mv, uint32_t flags)
 {
     CCASSERT(shader, "Invalid GLProgramState");
-    CCASSERT(shader->getVertexAttribsFlags() == 0, "No custom attributes are supported in QuadCommand");
+    CCASSERT(shader->getVertexAttribsFlags() == 7, "No custom attributes are supported in QuadCommand");
     
     RenderCommand::init(globalOrder, mv, flags);
     
@@ -157,7 +157,8 @@ void QuadCommand::useMaterial() const
         //set blend mode
         GL::blendFunc(_blendType.src, _blendType.dst);
         
-        _glProgramState->apply(_mv);
+        _glProgramState->applyGLProgram(_mv);
+        _glProgramState->applyUniforms();
     } else {
         _material->getTechnique()->getPassByIndex(0)->bind(_mv);
     }

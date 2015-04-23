@@ -330,9 +330,9 @@ bool GLProgramState::init(GLProgram* glprogram)
 
     for(auto &attrib : _glprogram->_vertexAttribs) {
         VertexAttribValue value(&attrib.second);
+        value._enabled = true;
         _attributes[attrib.first] = value;
-//        _vertexAttribsFlags |= 1 << value._vertexAttrib->index;
-//        value._enabled = true;
+        _vertexAttribsFlags |= 1 << value._vertexAttrib->index;
     }
 
     for(auto &uniform : _glprogram->_userUniforms) {
@@ -341,6 +341,7 @@ bool GLProgramState::init(GLProgram* glprogram)
         _uniformsByName[uniform.first] = uniform.second.location;
     }
 
+    _uniformAttributeValueDirty = false;
     return true;
 }
 
@@ -393,6 +394,7 @@ void GLProgramState::applyGLProgram(const Mat4& modelView)
     _glprogram->use();
     _glprogram->setUniformsForBuiltins(modelView);
 }
+
 void GLProgramState::applyAttributes(bool applyAttribFlags)
 {
     // Don't set attributes if they weren't set
