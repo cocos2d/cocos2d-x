@@ -30,7 +30,53 @@
 
 NS_CC_EXT_BEGIN
 
+PhysicsSprite3D* PhysicsSprite3D::create(const std::string &modelPath, Physics3DRigidBodyDes& rigidDes, const cocos2d::Vec3& translateInPhysics, const cocos2d::Quaternion& rotInPhsyics)
+{
+    auto ret = new PhysicsSprite3D();
+    if (ret && ret->initWithFile(modelPath))
+    {
+        auto obj = Physics3DRigidBody::create(&rigidDes);
+        ret->_physicsComponent = Physics3DComponent::create(obj);
+        ret->addComponent(ret->_physicsComponent);
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return ret;
+}
 
+Physics3DObject* PhysicsSprite3D::getPhysicsObj() const
+{
+    return _physicsComponent->getPhysics3DObject();
+}
+
+void PhysicsSprite3D::setSyncFlag(Physics3DComponent::PhysicsSyncFlag syncFlag)
+{
+    if (_physicsComponent)
+        _physicsComponent->setSyncFlag(syncFlag);
+}
+
+void PhysicsSprite3D::syncToPhysics()
+{
+    if (_physicsComponent)
+        _physicsComponent->syncToPhysics();
+}
+
+void PhysicsSprite3D::syncToNode()
+{
+    if (_physicsComponent)
+        _physicsComponent->syncToNode();
+}
+
+PhysicsSprite3D::PhysicsSprite3D()
+: _physicsComponent(nullptr)
+{
+    
+}
+PhysicsSprite3D::~PhysicsSprite3D()
+{
+    
+}
 
 NS_CC_EXT_END
 

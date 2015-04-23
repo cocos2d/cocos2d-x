@@ -40,6 +40,7 @@ NS_CC_EXT_BEGIN
 
 class Physics3DShape;
 class Physics3DWorld;
+class Physics3DConstraint;
 
 class CC_EX_DLL Physics3DObject : public Ref
 {

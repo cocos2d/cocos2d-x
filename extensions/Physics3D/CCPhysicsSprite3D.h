@@ -26,18 +26,36 @@
 #define __PHYSICS_SPRITE_3D_H__
 
 #include "3d/CCSprite3D.h"
+#include "CCPhysics3DObject.h"
+#include "CCPhysics3DComponent.h"
 #include "extensions/ExtensionMacros.h"
 #include "extensions/ExtensionExport.h"
 
-#if 1//(CC_ENABLE_BULLET_INTEGRATION)
+#if (CC_ENABLE_BULLET_INTEGRATION)
 
 NS_CC_EXT_BEGIN
 
-class CC_EX_DLL PhysicsSprite3D : public Sprite3D
+class CC_EX_DLL PhysicsSprite3D : public cocos2d::Sprite3D
 {
 public:
 
+    /** creates a PhysicsSprite3D*/
+    static PhysicsSprite3D* create(const std::string &modelPath, Physics3DRigidBodyDes& rigidDes, const cocos2d::Vec3& translateInPhysics = cocos2d::Vec3::ZERO, const cocos2d::Quaternion& rotInPhsyics = cocos2d::Quaternion::ZERO);
     
+    Physics3DObject* getPhysicsObj() const;
+    
+    void setSyncFlag(Physics3DComponent::PhysicsSyncFlag syncFlag);
+    
+    void syncToPhysics();
+    
+    void syncToNode();
+    
+CC_CONSTRUCTOR_ACCESS:
+    PhysicsSprite3D();
+    virtual ~PhysicsSprite3D();
+
+protected:
+    Physics3DComponent* _physicsComponent;
 };
 
 NS_CC_EXT_END
