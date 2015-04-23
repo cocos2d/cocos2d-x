@@ -13,8 +13,8 @@ Compared to `cocos2d-x v3.5`, this version added Tizen platform support.
 
 If had the Samsung Z1 device, you can get more information from the following two links:
 
-* [suamsung z developer page](http://developer.samsung.com/samsung-z)
-* [how to enable usb debugging option on samsung z1](https://developer.tizen.org/ko/forums/general-support/how-enable-usb-debugging-option-on-my-tizen-mobile-samsung-z1)
+* [Suamsung Z developer page](http://developer.samsung.com/samsung-z)
+* [how to enable usb debugging option on Samsung Z1](https://developer.tizen.org/ko/forums/general-support/how-enable-usb-debugging-option-on-my-tizen-mobile-samsung-z1)
 
 
 # Environment requirement
