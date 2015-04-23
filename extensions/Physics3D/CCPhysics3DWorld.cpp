@@ -161,12 +161,12 @@ void Physics3DWorld::removePhysics3DConstraint(Physics3DConstraint* constraint)
 {
     _btPhyiscsWorld->removeConstraint(constraint->getbtContraint());
     
-    auto body = constraint->getBodyA();
-    if (body)
-        body->removeConstraint(constraint);
-    body = constraint->getBodyB();
-    if (body)
-        body->removeConstraint(constraint);
+    auto bodyA = constraint->getBodyA();
+    auto bodyB = constraint->getBodyB();
+    if (bodyA)
+        bodyA->removeConstraint(constraint);
+    if (bodyB)
+        bodyB->removeConstraint(constraint);
 }
 
 void Physics3DWorld::removeAllPhysics3DConstraints()
@@ -179,6 +179,7 @@ void Physics3DWorld::removeAllPhysics3DConstraints()
             auto& constraints = static_cast<Physics3DRigidBody*>(it)->_constraintList;
             for (auto constraint : constraints) {
                 _btPhyiscsWorld->removeConstraint(constraint->getbtContraint());
+                constraint->release();
             }
             constraints.clear();
         }

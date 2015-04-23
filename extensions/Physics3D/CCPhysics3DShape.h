@@ -50,6 +50,7 @@ public:
         CONVEX,
         MESH,
         HEIGHT_FIELD,
+        COMPOUND
     };
     
     /**
@@ -111,6 +112,11 @@ public:
         , float minHeight, float maxHeight
         , bool useFloatDatam, bool flipQuadEdges, bool useDiamondSubdivision = false);
 
+    /**
+     * create Compound Shape
+     * @param shapes The list of child shape
+     */
+    static Physics3DShape* createCompoundShape(const std::vector<std::pair<Physics3DShape *, Mat4>> &shapes);
 
     
 #if CC_ENABLE_BULLET_INTEGRATION
@@ -132,6 +138,7 @@ protected:
         , float minHeight, float maxHeight
         , bool useFloatDatam, bool flipQuadEdges
         , bool useDiamondSubdivision);
+    bool initCompoundShape(const std::vector<std::pair<Physics3DShape *, Mat4>> &shapes);
     
     
     ShapeType _shapeType; //shape type
@@ -139,6 +146,7 @@ protected:
 #if (CC_ENABLE_BULLET_INTEGRATION)
     btCollisionShape*  _btShape;
     unsigned char *_heightfieldData;
+    std::vector<Physics3DShape *> _compoundChildShapes;
 #endif
 };
 
