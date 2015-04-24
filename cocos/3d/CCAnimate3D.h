@@ -41,7 +41,7 @@ class Sprite3D;
 
 enum class Animate3DQuality
 {
-    QUALITY_NONE = 0,          // it'll not to be calculate the animate.
+    QUALITY_NONE = 0,          // it'll be ignore the curve-evaluating(the animation looks like stop), just acculate transition time.
     QUALITY_LOW,               // low animation quality, it'll be more efficient.
     QUALITY_HIGH,              // high animation quality.
 };
