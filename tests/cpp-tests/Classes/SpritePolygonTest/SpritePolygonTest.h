@@ -7,10 +7,16 @@ DEFINE_TEST_SUITE(SpritePolygonTest);
 class SpritePolygonTestDemo : public TestCase
 {
 public:
-    void initDefaultSprite(const std::string &filename);
+    void initDefaultSprite(const std::string &filename, cocos2d::experimental::SpritePolygon *inst);
 protected:
-    std::string    _title;
-    cocos2d::experimental::SpritePolygon* inst;
+    cocos2d::experimental::SpritePolygon* spp;
+    cocos2d::Sprite* sp;
+    cocos2d::DrawNode *debugForNormalSprite;
+    virtual void onBackCallback(Ref* sender);
+    std::string _title;
+    std::string _subtitle;
+    virtual std::string title() const override {return _title;};
+    virtual std::string subtitle() const override {return _subtitle;};
 };
 
 class SpritePolygonTest1 : public SpritePolygonTestDemo
@@ -18,9 +24,6 @@ class SpritePolygonTest1 : public SpritePolygonTestDemo
 public:
     CREATE_FUNC(SpritePolygonTest1);
     SpritePolygonTest1();
-    virtual std::string title() const override {return "Create Polygon Sprite";};
-    virtual std::string subtitle() const override {return "from a vector of V3F_C4b_T2F";};
-
 
 };
 

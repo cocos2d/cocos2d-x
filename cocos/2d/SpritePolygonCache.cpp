@@ -88,7 +88,7 @@ SpritePolygonInfo* SpritePolygonCache::addSpritePolygonCache(const std::string& 
             if ((*infoIt)->_rect.equals(SpritePolygonInfo._rect))
             {
                 (*infoIt)->_triangles = SpritePolygonInfo._triangles;
-                (*infoIt)->_textureRect = SpritePolygonInfo._textureRect;
+//                (*infoIt)->_textureRect = SpritePolygonInfo._textureRect;
                 return nullptr;
             }
         }
@@ -108,7 +108,7 @@ SpritePolygonInfo* SpritePolygonCache::addSpritePolygonCache(const std::string& 
         
         memcpy(info->_triangles.verts, SpritePolygonInfo._triangles.verts, SpritePolygonInfo._triangles.vertCount*sizeof(V3F_C4B_T2F));
         memcpy(info->_triangles.indices, SpritePolygonInfo._triangles.indices, SpritePolygonInfo._triangles.indexCount*sizeof(unsigned short));
-        info->_textureRect = SpritePolygonInfo._textureRect;
+//        info->_textureRect = SpritePolygonInfo._textureRect;
         
         vecInfo.push_back(info);
         _SpritePolygonCacheMap[filePath] = vecInfo;

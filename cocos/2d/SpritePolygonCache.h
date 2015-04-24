@@ -40,7 +40,6 @@ struct CC_DLL SpritePolygonInfo
 {
     cocos2d::Rect _rect;
     cocos2d::TrianglesCommand::Triangles _triangles;
-    cocos2d::Rect _textureRect;
 };
 
 typedef std::vector<SpritePolygonInfo*> VecSpritePolygonInfo;

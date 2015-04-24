@@ -56,8 +56,8 @@ public:
     
     //create from a texture (rect), and automatically trace and optimize the points.
     //not recommended for production, its better to use the vec2 list for better performance
-    static SpritePolygon *create(const std::string&, const cocos2d::Rect& rect = cocos2d::Rect::ZERO, unsigned short optimization = 1);
-    bool initWithMarching(const std::string &file, const cocos2d::Rect &rect, unsigned short optimization);
+    static SpritePolygon *create(const std::string&, const cocos2d::Rect& rect = cocos2d::Rect::ZERO, float optimization = -1);
+    bool initWithMarching(const std::string &file, const cocos2d::Rect &rect, float optimization);
     bool initWithCache(const std::string &file, const SpritePolygonInfo *info);
     
     bool initWithTexture(cocos2d::Texture2D *texture, const cocos2d::Rect &rect = cocos2d::Rect::ZERO);
@@ -68,12 +68,15 @@ public:
     /** returns the Texture2D object used by the sprite */
     virtual cocos2d::Texture2D* getTexture(){return _texture;};
     const float getArea();
-    const ssize_t getTrianglesCount(){return _polygonInfo->_triangles.vertCount/3;};
+    const ssize_t getTrianglesCount(){return _polygonInfo->_triangles.indexCount/3;};
+    const ssize_t getVertCount(){return _polygonInfo->_triangles.vertCount;};
     
     void showDebug(const bool val);
 protected:
-        cocos2d::DrawNode *_debugDrawNode;
-        void debugDraw();
+    cocos2d::DrawNode *_debugDrawNode;
+    void debugDraw();
+    
+    void calculateUV();
     
     bool                                    _triangleDirty; //if triangle is dirty, then it needs to be recalculated from verts and indices
     bool                                    _rectRotated;

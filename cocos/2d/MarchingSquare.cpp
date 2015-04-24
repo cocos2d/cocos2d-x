@@ -41,6 +41,7 @@ MarchingSquare::MarchingSquare(const std::string &filename, const unsigned int t
     data = image->getData();
     width = image->getWidth();
     height = image->getHeight();
+    scaleFactor = Director::getInstance()->getContentScaleFactor();
 }
 
 void MarchingSquare::trace()
@@ -248,8 +249,8 @@ void MarchingSquare::marchSquare(int startx, int starty)
         cury += stepy;
         if(stepx == prevx && stepy == prevy)
         {
-            points.back().x = (float)curx-halfWidth;
-            points.back().y =(float)height-cury-halfHeight;
+            points.back().x = (float)(curx-halfWidth) / scaleFactor;
+            points.back().y = (float)(height-cury-halfHeight) / scaleFactor;
         }
         else if(problem)
         {
@@ -257,10 +258,10 @@ void MarchingSquare::marchSquare(int startx, int starty)
             //TODO: maybe we can detect if we go into a hole and coming back the hole, we should extract those points and remove them
             points.back().x -= 0.00001;
             points.back().y -= 0.00001;
-            points.push_back(Vec2((float)curx-halfWidth, (float)height-cury-halfHeight));
+            points.push_back(Vec2((float)curx-halfWidth, (float)height-cury-halfHeight)/ scaleFactor);
         }
         else{
-            points.push_back(Vec2((float)curx-halfWidth, (float)height-cury-halfHeight));
+            points.push_back(Vec2((float)curx-halfWidth, (float)height-cury-halfHeight)/ scaleFactor);
         }
 
         count++;

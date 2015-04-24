@@ -68,6 +68,7 @@ protected:
     float epsilon;
     std::vector<cocos2d::Vec2> rdp(std::vector<cocos2d::Vec2> v);
     float perpendicularDistance(cocos2d::Vec2 i, cocos2d::Vec2 start, cocos2d::Vec2 end);
+    float scaleFactor;
 };
 
 NS_CC_END
