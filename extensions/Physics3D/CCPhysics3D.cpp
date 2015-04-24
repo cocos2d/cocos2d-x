@@ -53,7 +53,24 @@ btVector3 convertVec3TobtVector3( const cocos2d::Vec3 &vec3 )
 cocos2d::Mat4 convertbtTransformToMat4( const btTransform &btTrans )
 {
     cocos2d::Mat4 mat;
-    btTrans.getOpenGLMatrix(mat.m);
+    auto rot = btTrans.getBasis();
+    auto row = rot.getRow(0);
+    mat.m[0] = row.getX();
+    mat.m[4] = row.getY();
+    mat.m[8] = row.getZ();
+    row = rot.getRow(1);
+    mat.m[1] = row.getX();
+    mat.m[5] = row.getY();
+    mat.m[9] = row.getZ();
+    row = rot.getRow(2);
+    mat.m[2] = row.getX();
+    mat.m[6] = row.getY();
+    mat.m[10] = row.getZ();
+    
+    row = btTrans.getOrigin();
+    mat.m[12] = row.getX();
+    mat.m[13] = row.getY();
+    mat.m[14] = row.getZ();
     return mat;
 }
 
