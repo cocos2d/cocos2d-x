@@ -670,22 +670,6 @@ void Sprite3D::removeAllAttachNode()
     }
     _attachments.clear();
 }
-#if (!defined NDEBUG) || (defined CC_MODEL_VIEWER) 
-//Generate a dummy texture when the texture file is missing
-static Texture2D * getDummyTexture()
-{
-    auto texture = Director::getInstance()->getTextureCache()->getTextureForKey("/dummyTexture");
-    if(!texture)
-    {
-        unsigned char data[] ={255,0,0,255};//1*1 pure red picture
-        Image * image =new (std::nothrow) Image();
-        image->initWithRawData(data,sizeof(data),1,1,sizeof(unsigned char));
-        texture=Director::getInstance()->getTextureCache()->addImage(image,"/dummyTexture");
-        image->release();
-    }
-    return texture;
-}
-#endif
 
 void Sprite3D::visit(cocos2d::Renderer *renderer, const cocos2d::Mat4 &parentTransform, uint32_t parentFlags)
 {
@@ -764,42 +748,10 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
             genGLProgramState(usingLight);
     }
     
-    int i = 0;
-
     for (auto& mesh : _meshes)
     {
-        if (!mesh->isVisible())
-        {
-            i++;
-            continue;
-        }
-        auto material = mesh->getMaterial();
-        auto& meshCommand = mesh->getMeshCommand();
-
-#if (!defined NDEBUG) || (defined CC_MODEL_VIEWER) 
-        GLuint textureID = 0;
-        if(mesh->getTexture())
-        {
-            textureID = mesh->getTexture()->getName();
-        }
-        else
-        { //let the mesh use a dummy texture instead of the missing or crashing texture file
-            auto texture = getDummyTexture();
-            mesh->setTexture(texture);
-            textureID = texture->getName();
-        }
-
-#else
-        GLuint textureID = mesh->getTexture() ? mesh->getTexture()->getName() : 0;
-#endif
-
-        bool isTransparent = (mesh->_isTransparent || color.a < 1.f);
-        float globalZ = isTransparent ? 0 : _globalZOrder;
-        if (isTransparent)
-            flags |= Node::FLAGS_RENDER_AS_3D;
-
         mesh->draw(renderer,
-                   globalZ,
+                   _globalZOrder,
                    transform,
                    flags,
                    _lightMask,

@@ -36,7 +36,27 @@
 
 using namespace std;
 
+
 NS_CC_BEGIN
+
+#if (!defined NDEBUG) || (defined CC_MODEL_VIEWER)
+//Generate a dummy texture when the texture file is missing
+static Texture2D * getDummyTexture()
+{
+    auto texture = Director::getInstance()->getTextureCache()->getTextureForKey("/dummyTexture");
+    if(!texture)
+    {
+        unsigned char data[] ={255,0,0,255};//1*1 pure red picture
+        Image * image =new (std::nothrow) Image();
+        image->initWithRawData(data,sizeof(data),1,1,sizeof(unsigned char));
+        texture = Director::getInstance()->getTextureCache()->addImage(image,"/dummyTexture");
+        image->release();
+    }
+    return texture;
+}
+#endif
+
+
 
 Mesh::Mesh()
 : _texture(nullptr)
@@ -208,12 +228,31 @@ Material* Mesh::getMaterial() const
     return _material;
 }
 
-void Mesh::draw(Renderer* renderer, float globalZ, const Mat4& transform, uint32_t flags, unsigned int lightMask, const Vec4& color, bool forceDepthWrite)
+void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, uint32_t flags, unsigned int lightMask, const Vec4& color, bool forceDepthWrite)
 {
+    if (! isVisible())
+        return;
+
     bool isTransparent = (_isTransparent || color.w < 1.f);
+    float globalZ = isTransparent ? 0 : globalZOrder;
+    if (isTransparent)
+        flags |= Node::FLAGS_RENDER_AS_3D;
+
+#if (!defined NDEBUG) || (defined CC_MODEL_VIEWER)
+    if(!_texture)
+    {
+        //let the mesh use a dummy texture instead of the missing or crashing texture file
+        setTexture(getDummyTexture());
+    }
+    GLuint textureID = _texture->getName();
+
+#else
+    GLuint textureID = _texture ? _texture->getName() : 0;
+#endif
+
 
     _meshCommand.init(globalZ,
-                      _texture->getName(),
+                      textureID,
                       _glProgramState,
                       _blend,
                       getVertexBuffer(),
