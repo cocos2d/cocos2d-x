@@ -292,7 +292,7 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist)
     }
 }
 
-bool SpriteFrameCache::isSpriteFramesWithFileLoaded(const std::string& plist)
+bool SpriteFrameCache::isSpriteFramesWithFileLoaded(const std::string& plist) const
 {
     bool result = false;
 

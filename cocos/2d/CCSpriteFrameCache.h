@@ -147,7 +147,7 @@ public:
     * @param plist Plist file name.
     * @return True if the file is loaded.
     */
-    bool isSpriteFramesWithFileLoaded(const std::string& plist);
+    bool isSpriteFramesWithFileLoaded(const std::string& plist) const;
 
     /** Purges the dictionary of loaded sprite frames.
      * Call this method if you receive the "Memory Warning".

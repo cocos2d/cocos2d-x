@@ -151,13 +151,6 @@ public:
     Texture2D* getTextureForKey(const std::string& key) const;
     CC_DEPRECATED_ATTRIBUTE Texture2D* textureForKey(const std::string& key) const { return getTextureForKey(key); }
 
-    /** Check if texture file have already been loaded to cache.
-    * If the file have been loaded before, return true; otherwise return false.
-    * @param fileName It's the related/absolute path of the file image.
-    * @return True if the texture file is loaded.
-    */
-    bool isTextureLoaded(const std::string& fileName);
-
     /** Reload texture from the image file.
     * If the file image hasn't loaded before, load it.
     * Otherwise the texture will be reloaded from the file image.
