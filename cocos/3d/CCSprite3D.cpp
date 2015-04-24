@@ -417,8 +417,7 @@ void Sprite3D::genGLProgramState(bool useLight)
     for(auto& mesh : _meshVertexDatas)
     {
         bool textured = mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_TEX_COORD);
-        bool hasSkin = mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_INDEX)
-        && mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT);
+        bool hasSkin = mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_INDEX) && mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT);
         bool hasNormal = mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_NORMAL);
         
         GLProgram* glProgram = nullptr;
@@ -446,7 +445,7 @@ void Sprite3D::genGLProgramState(bool useLight)
         }
         if (shader)
             glProgram = GLProgramCache::getInstance()->getGLProgram(shader);
-        
+
         auto programstate = GLProgramState::create(glProgram);
         long offset = 0;
         auto attributeCount = mesh->getMeshVertexAttribCount();
