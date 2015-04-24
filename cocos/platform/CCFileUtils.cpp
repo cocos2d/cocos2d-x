@@ -977,7 +977,7 @@ bool FileUtils::isFileExist(const std::string& filename) const
 
 bool FileUtils::isAbsolutePath(const std::string& path) const
 {
-    return (path[0] == '/');
+    return (path[0] == '/' || path.find("http://") == 0);
 }
 
 bool FileUtils::isDirectoryExistInternal(const std::string& dirPath) const
