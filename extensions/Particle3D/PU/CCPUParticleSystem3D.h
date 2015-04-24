@@ -357,6 +357,9 @@ CC_CONSTRUCTOR_ACCESS:
     PUParticleSystem3D();
     virtual ~PUParticleSystem3D();
 
+    bool initWithFilePath(const std::string &filePath);
+    bool initWithFilePathAndMaterialPath (const std::string &filePath, const std::string &materialPath);
+
 protected:
 
     void prepared();
