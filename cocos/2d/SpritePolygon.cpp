@@ -78,7 +78,7 @@ SpritePolygon *SpritePolygon::create(const std::string& file, std::vector<cocos2
 SpritePolygon *SpritePolygon::create(const std::string& file, std::vector<cocos2d::Vec2>& verts,  const cocos2d::Rect& rect)
 {
     SpritePolygon *ret = new (std::nothrow) SpritePolygon();
-    if (ret)
+    if (ret && ret->initWithPoly2tri(file, verts, rect))
     {
         ret->autorelease();
         return ret;
@@ -252,6 +252,8 @@ bool SpritePolygon::initWithMarching(const std::string &file, const cocos2d::Rec
     marcher->optimize(optimization);
 
     auto p = marcher->getPoints();
+//    marcher->printPoints();
+    
 //    auto calculatedRect = setContentSizeFromVecs(p);
 //    auto _textureRect = Rect(rect.origin.x,rect.origin.y,calculatedRect.size.width, calculatedRect.size.height);
     auto _triangles = triangulate(p);
@@ -285,7 +287,8 @@ bool SpritePolygon::initWithPoly2tri(const std::string &filename, std::vector<co
         throw "some error";
     }
     SpritePolygonInfo info = SpritePolygonInfo{Rect, triangulate(verts)};
-    SpritePolygonCache::getInstance()->addSpritePolygonCache(filename, info);
+    _polygonInfo = SpritePolygonCache::getInstance()->addSpritePolygonCache(filename, info);
+        calculateUVandContentSize();
     #if CC_SPRITE_DEBUG_DRAW
         debugDraw();
     #endif
