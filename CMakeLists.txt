@@ -58,11 +58,15 @@ endif()
 set(BUILD_CPP_TESTS_DEFAULT ON)
 set(BUILD_LUA_LIBS_DEFAULT ON)
 set(BUILD_LUA_TESTS_DEFAULT ON)
+set(BUILD_JS_LIBS_DEFAULT OFF)
+set(BUILD_JS_TESTS_DEFAULT OFF)
 # TODO: fix test samples for MSVC
 if(MSVC)
   set(BUILD_CPP_TESTS_DEFAULT OFF)
   set(BUILD_LUA_LIBS_DEFAULT OFF)
   set(BUILD_LUA_TESTS_DEFAULT OFF)
+  set(BUILD_JS_LIBS_DEFAULT OFF)
+  set(BUILD_JS_TESTS_DEFAULT OFF)
 endif()
 
 option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
@@ -77,6 +81,8 @@ option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
 option(BUILD_CPP_TESTS "Build TestCpp samples" ${BUILD_CPP_TESTS_DEFAULT})
 option(BUILD_LUA_LIBS "Build lua libraries" ${BUILD_LUA_LIBS_DEFAULT})
 option(BUILD_LUA_TESTS "Build TestLua samples" ${BUILD_LUA_TESTS_DEFAULT})
+option(BUILD_JS_LIBS "Build js libraries" ${BUILD_JS_LIBS_DEFAULT})
+option(BUILD_JS_TESTS "Build TestJS samples" ${BUILD_JS_TESTS_DEFAULT})
 option(USE_PREBUILT_LIBS "Use prebuilt libraries in external directory" ${USE_PREBUILT_LIBS_DEFAULT})
 
 if(USE_PREBUILT_LIBS AND MINGW)
@@ -314,3 +320,18 @@ if(BUILD_LUA_LIBS)
   endif(BUILD_LUA_TESTS)
 
 endif(BUILD_LUA_LIBS)
+
+## JS
+if(BUILD_JS_LIBS)
+  link_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
+  )
+
+  add_subdirectory(cocos/scripting/js-bindings)
+
+  # build js tests
+  if(BUILD_JS_TESTS)
+    add_subdirectory(tests/js-tests/project)
+  endif(BUILD_JS_TESTS)
+
+endif(BUILD_JS_LIBS)
