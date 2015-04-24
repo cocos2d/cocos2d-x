@@ -24,7 +24,13 @@ class SpritePolygonTest1 : public SpritePolygonTestDemo
 public:
     CREATE_FUNC(SpritePolygonTest1);
     SpritePolygonTest1();
+};
 
+class SpritePolygonTest2 : public SpritePolygonTestDemo
+{
+public:
+    CREATE_FUNC(SpritePolygonTest2);
+    SpritePolygonTest2();
 };
 
 #endif /* defined(__cocos2d_tests__SpritePolygonTest__) */

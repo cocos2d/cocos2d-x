@@ -15,6 +15,7 @@ USING_NS_CC;
 SpritePolygonTest::SpritePolygonTest()
 {
     ADD_TEST_CASE(SpritePolygonTest1);
+    ADD_TEST_CASE(SpritePolygonTest2);
 }
 void SpritePolygonTestDemo::initDefaultSprite(const std::string &filename, cocos2d::experimental::SpritePolygon * inst)
 {
@@ -88,6 +89,16 @@ void SpritePolygonTestDemo::onBackCallback(cocos2d::Ref *sender)
 
 SpritePolygonTest1::SpritePolygonTest1()
 {
+    SpritePolygonCache::getInstance()->removeAllSpritePolygonCache();
+    _title = "SpritePolygon Creation";
+    _subtitle = "SpritePolygon::create(\"Images/grossini.png\")";
+    auto s = experimental::SpritePolygon::create(s_pathGrossini);
+    initDefaultSprite(s_pathGrossini, s);
+}
+
+SpritePolygonTest2::SpritePolygonTest2()
+{
+    SpritePolygonCache::getInstance()->removeAllSpritePolygonCache();
     _title = "SpritePolygon Creation";
     _subtitle = "SpritePolygon::create(\"Images/grossini.png\")";
     auto s = experimental::SpritePolygon::create(s_pathGrossini);

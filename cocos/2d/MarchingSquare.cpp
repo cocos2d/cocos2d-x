@@ -105,8 +105,6 @@ void MarchingSquare::marchSquare(int startx, int starty)
     int prevy = 0;
     int curx = startx;
     int cury = starty;
-    float halfWidth = width/2.0;
-    float halfHeight = height/2.0;
     unsigned int count = 0;
     unsigned int totalPixel = width*height;
     bool problem = false;
@@ -249,8 +247,8 @@ void MarchingSquare::marchSquare(int startx, int starty)
         cury += stepy;
         if(stepx == prevx && stepy == prevy)
         {
-            points.back().x = (float)(curx-halfWidth) / scaleFactor;
-            points.back().y = (float)(height-cury-halfHeight) / scaleFactor;
+            points.back().x = (float)(curx) / scaleFactor;
+            points.back().y = (float)(height-cury) / scaleFactor;
         }
         else if(problem)
         {
@@ -258,10 +256,10 @@ void MarchingSquare::marchSquare(int startx, int starty)
             //TODO: maybe we can detect if we go into a hole and coming back the hole, we should extract those points and remove them
             points.back().x -= 0.00001;
             points.back().y -= 0.00001;
-            points.push_back(Vec2((float)curx-halfWidth, (float)height-cury-halfHeight)/ scaleFactor);
+            points.push_back(Vec2((float)curx, (float)height-cury)/ scaleFactor);
         }
         else{
-            points.push_back(Vec2((float)curx-halfWidth, (float)height-cury-halfHeight)/ scaleFactor);
+            points.push_back(Vec2((float)curx, (float)height-cury)/ scaleFactor);
         }
 
         count++;

@@ -47,12 +47,12 @@ public:
     bool initWithVerts(const std::string&, std::vector<cocos2d::V3F_C4B_T2F>&, std::vector<unsigned short>&);
 
     //create from list of vertices, with texture rect, and triangle indices, UV is calculated from the texture rect
-    static SpritePolygon *create(const std::string&, std::vector<cocos2d::Vec2>&, std::vector<unsigned short>&, const cocos2d::Rect& rect = cocos2d::Rect::ZERO, bool rotated = false);
-    bool initWithRect(const std::string&, std::vector<cocos2d::Vec2>&, std::vector<unsigned short>&, const cocos2d::Rect&, bool);
+    static SpritePolygon *create(const std::string&, std::vector<cocos2d::Vec2>&, std::vector<unsigned short>&, const cocos2d::Rect& rect = cocos2d::Rect::ZERO);
+    bool initWithRect(const std::string&, std::vector<cocos2d::Vec2>&, std::vector<unsigned short>&, const cocos2d::Rect&);
     
-//    //create from ordered list of vertices, with texture rect, and rotated property, Triangles and UV is calculated on the fly
-    static SpritePolygon *create(const std::string&, std::vector<cocos2d::Vec2>&,  const cocos2d::Rect& rect = cocos2d::Rect::ZERO, bool rotated = false);
-    bool initWithPoly2tri(const std::string&, std::vector<cocos2d::Vec2>&,  const cocos2d::Rect&, bool);
+//    //create from ordered list of vertices, with texture rect, Triangles and UV is calculated on the fly
+    static SpritePolygon *create(const std::string&, std::vector<cocos2d::Vec2>&,  const cocos2d::Rect& rect = cocos2d::Rect::ZERO);
+    bool initWithPoly2tri(const std::string&, std::vector<cocos2d::Vec2>&,  const cocos2d::Rect&);
     
     //create from a texture (rect), and automatically trace and optimize the points.
     //not recommended for production, its better to use the vec2 list for better performance
@@ -76,10 +76,9 @@ protected:
     cocos2d::DrawNode *_debugDrawNode;
     void debugDraw();
     
-    void calculateUV();
+    void calculateUVandContentSize();
     
     bool                                    _triangleDirty; //if triangle is dirty, then it needs to be recalculated from verts and indices
-    bool                                    _rectRotated;
 //    std::vector<cocos2d::V3F_C4B_T2F>       _verts;
 //    std::vector<unsigned short>             _indices;
     cocos2d::TrianglesCommand               _tcmd;

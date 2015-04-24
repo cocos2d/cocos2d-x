@@ -61,10 +61,10 @@ SpritePolygon *SpritePolygon::create(const std::string& file, std::vector<cocos2
         return nullptr;
     }
 }
-SpritePolygon *SpritePolygon::create(const std::string& file, std::vector<cocos2d::Vec2>& verts,std::vector<unsigned short>& indices,  const cocos2d::Rect& rect, bool rotated)
+SpritePolygon *SpritePolygon::create(const std::string& file, std::vector<cocos2d::Vec2>& verts,std::vector<unsigned short>& indices,  const cocos2d::Rect& rect)
 {
     SpritePolygon *ret = new (std::nothrow) SpritePolygon();
-    if (ret && ret->initWithRect(file, verts, indices, rect, rotated))
+    if (ret && ret->initWithRect(file, verts, indices, rect))
     {
         ret->autorelease();
         return ret;
@@ -75,7 +75,7 @@ SpritePolygon *SpritePolygon::create(const std::string& file, std::vector<cocos2
         return nullptr;
     }
 }
-SpritePolygon *SpritePolygon::create(const std::string& file, std::vector<cocos2d::Vec2>& verts,  const cocos2d::Rect& rect, bool rotated)
+SpritePolygon *SpritePolygon::create(const std::string& file, std::vector<cocos2d::Vec2>& verts,  const cocos2d::Rect& rect)
 {
     SpritePolygon *ret = new (std::nothrow) SpritePolygon();
     if (ret)
@@ -115,7 +115,7 @@ SpritePolygon *SpritePolygon::create(const std::string &file, const cocos2d::Rec
 }
 
 
-void SpritePolygon::calculateUV()
+void SpritePolygon::calculateUVandContentSize()
 {
     /*
      whole texture UV coordination
@@ -142,6 +142,8 @@ void SpritePolygon::calculateUV()
     
     // the texture rect in pixels, for example, an image is 32x32 pixels
     Rect* textRect = &_polygonInfo->_rect;
+
+    
     bool needDelete = false;
     if(textRect->equals(Rect::ZERO))
     {
@@ -149,22 +151,18 @@ void SpritePolygon::calculateUV()
         textRect = new Rect(0,0, texWidth, texHeight);
         needDelete = true;
     }
+    setContentSize(textRect->size);
 
-    // find center point of the texture rect, as all vertices refers to this point
-    Vec2 center = Vec2(textRect->size.width/2 + textRect->origin.x, textRect->size.height/2 + textRect->origin.y);
-    
+
     auto end = &_polygonInfo->_triangles.verts[_polygonInfo->_triangles.vertCount];
     for(auto i = _polygonInfo->_triangles.verts; i != end; i++)
     {
         // for every point, offset with the centerpoint
-        float u = (i->vertices.x + center.x) / texWidth;
-        float v = (texHeight - i->vertices.y - center.y) / texHeight;
+        float u = i->vertices.x / texWidth;
+        float v = (texHeight - i->vertices.y) / texHeight;
         i->texCoords.u = u;
         i->texCoords.v = v;
-//        CCLOG("%f, %f",u,v);
     }
-    
-    
     
     if(needDelete)
         delete textRect;
@@ -184,16 +182,7 @@ TrianglesCommand::Triangles SpritePolygon::triangulate(std::vector<cocos2d::Vec2
     
     vector<V3F_C4B_T2F> *_verts = new vector<V3F_C4B_T2F>();
     vector<unsigned short> *_indices = new vector<unsigned short>;
-    auto bb = setContentSizeFromVecs(verts);
-//    auto bb = Rect(_textureRect);
-//    bb.origin.x = -bb.size.width/2;
-//    bb.origin.y = -bb.size.height/2;
     unsigned short idx = 0;
-    auto texture = _texture;
-    auto textureWidth = (float)texture->getPixelsWide();
-    auto textureHeight = (float)texture->getPixelsHigh();
-//    auto scaledRect = CC_RECT_POINTS_TO_PIXELS(Rect(0,0, bb.size.width, bb.size.height));
-    auto scaledRect =Rect(0,0, bb.size.width, bb.size.height);
     for(std::vector<p2t::Triangle*>::const_iterator ite = tris.begin(); ite < tris.end(); ite++)
     {
         for(int i = 0; i < 3; i++)
@@ -219,16 +208,11 @@ TrianglesCommand::Triangles SpritePolygon::triangulate(std::vector<cocos2d::Vec2
             {
                 //vert does not exist yet, so we need to create a new one,
                 auto c4b = Color4B::WHITE;
-                auto u = (scaledRect.origin.x + scaledRect.size.width* (p->x - bb.origin.x)/_contentSize.width)/textureWidth;
-                auto v = (scaledRect.origin.y + scaledRect.size.height* (p->y - bb.origin.y)/_contentSize.height)/textureHeight;
-                auto t2f = Tex2F(u,1-v);
+                auto t2f = Tex2F(0,0);
                 _verts->push_back(V3F_C4B_T2F{v3,c4b,t2f});
                 _indices->push_back(idx);
                 idx++;
             }
-
-
-
         }
     }
     for(auto j : points)
@@ -257,13 +241,8 @@ bool SpritePolygon::initWithMarching(const std::string &file, const cocos2d::Rec
 {
     CCASSERT(file.size()>0, "Invalid filename for sprite");
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(file);
-    if (texture)
-    {
-        initWithTexture(texture, rect);
-    }
-    else{
-        throw "some error";
-    }
+    CCASSERT(texture, "texture was not loaded properly");
+    initWithTexture(texture, rect);
     optimization = (optimization < 0)? (float)texture->getPixelsHigh()*(float)texture->getPixelsWide()*0.00015/Director::getInstance()->getContentScaleFactor() : optimization/Director::getInstance()->getContentScaleFactor();
     
     //Marching Square
@@ -271,10 +250,10 @@ bool SpritePolygon::initWithMarching(const std::string &file, const cocos2d::Rec
     marcher->trace();
 
     marcher->optimize(optimization);
-//        marcher->printPoints();
+
     auto p = marcher->getPoints();
-    auto calculatedRect = setContentSizeFromVecs(p);
-    auto _textureRect = Rect(rect.origin.x,rect.origin.y,calculatedRect.size.width, calculatedRect.size.height);
+//    auto calculatedRect = setContentSizeFromVecs(p);
+//    auto _textureRect = Rect(rect.origin.x,rect.origin.y,calculatedRect.size.width, calculatedRect.size.height);
     auto _triangles = triangulate(p);
 
     delete marcher;
@@ -283,20 +262,18 @@ bool SpritePolygon::initWithMarching(const std::string &file, const cocos2d::Rec
     //save result to cache
     SpritePolygonInfo *info = new SpritePolygonInfo();
     info->_rect = rect;
-//    info->_vertRect = _textureRect;
     info->_triangles = _triangles;
     _polygonInfo = SpritePolygonCache::getInstance()->addSpritePolygonCache(file, *info);
-        calculateUV();
-//    _polygonInfo = info;
+    calculateUVandContentSize();
+    
     delete _triangles.verts;
     delete _triangles.indices;
 #if CC_SPRITE_DEBUG_DRAW
     debugDraw();
 #endif
-//    SpritePolygonCache::printInfo(*info);
     return true;
 }
-bool SpritePolygon::initWithPoly2tri(const std::string &filename, std::vector<cocos2d::Vec2> & verts, const cocos2d::Rect &Rect, bool rotated)
+bool SpritePolygon::initWithPoly2tri(const std::string &filename, std::vector<cocos2d::Vec2> & verts, const cocos2d::Rect &Rect)
 {
     CCASSERT(filename.size()>0, "Invalid filename for sprite");
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
@@ -405,10 +382,9 @@ Rect SpritePolygon::setContentSizeFromVecs(std::vector<cocos2d::Vec2>& verts)
     setContentSize(Size(width, height));
     return Rect(left,bot,width,height);
 }
-bool SpritePolygon::initWithRect(const std::string& filename, std::vector<cocos2d::Vec2>& verts, std::vector<unsigned short>& indices, const cocos2d::Rect& rect, bool rotated)
+bool SpritePolygon::initWithRect(const std::string& filename, std::vector<cocos2d::Vec2>& verts, std::vector<unsigned short>& indices, const cocos2d::Rect& rect)
 {
     CCASSERT(filename.size()>0, "Invalid filename for sprite");
-    _rectRotated = rotated;
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(filename);
     if (texture)
     {
@@ -455,7 +431,7 @@ bool SpritePolygon::initWithTexture(Texture2D *texture, const Rect &rect)
     
     setTexture(texture);
 //    _textureRect = (rect.equals(Rect::ZERO))? Rect(0,0,texture->getPixelsWide(), texture->getPixelsHigh()) : rect;
-    
+    setAnchorPoint(Vec2(0.5,0.5));
 
     return true;
 }

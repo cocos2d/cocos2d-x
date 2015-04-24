@@ -152,15 +152,20 @@ void   SpritePolygonCache::removeSpritePolygonCache(const std::string& filePath,
     auto infoIter = it->second.begin();
     for (; infoIter != it->second.end(); infoIter++)
     {
-        
+        //TODO: write clean up code...
     }
     
     return;
 }
 
-void   SpritePolygonCache::removeAllSpritePolygonCache()
+void SpritePolygonCache::removeAllSpritePolygonCache()
 {
-    
+    for (std::unordered_map<std::string, VecSpritePolygonInfo>::iterator it = _SpritePolygonCacheMap.begin(); it != _SpritePolygonCacheMap.end(); ++it)
+    {
+                //TODO: write clean up code...
+        it->second.clear();
+    }
+    _SpritePolygonCacheMap.clear();
 }
 
 bool SpritePolygonCache::isSpritePolygonCachExist(const std::string& filePath, const cocos2d::Rect& rect)
