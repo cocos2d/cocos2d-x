@@ -41,6 +41,9 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCGLProgramCache.h"
+#include "renderer/CCMaterial.h"
+#include "renderer/CCTechnique.h"
+#include "renderer/CCPass.h"
 
 #include "deprecated/CCString.h" // For StringUtils::format
 
@@ -409,6 +412,30 @@ void Sprite3D::createAttachSprite3DNode(NodeData* nodedata,const MaterialDatas& 
         createAttachSprite3DNode(it,matrialdatas);
     }
 }
+
+void Sprite3D::setMaterial(Material *material)
+{
+    setMaterial(material, -1);
+}
+
+void Sprite3D::setMaterial(Material *material, int meshIndex)
+{
+    CCASSERT(material, "Invalid Material");
+    CCASSERT(meshIndex == -1 || (meshIndex >=0 && meshIndex < _meshes.size()), "Invalid meshIndex");
+
+    if (meshIndex == -1)
+    {
+        for(auto& mesh: _meshes)
+        {
+            mesh->setMaterial(material);
+        }
+    }
+    else
+    {
+        _meshes.at(meshIndex)->setMaterial(material);
+    }
+}
+
 void Sprite3D::genGLProgramState(bool useLight)
 {
     _shaderUsingLight = useLight;
@@ -738,13 +765,15 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     }
     
     int i = 0;
-    for (auto& mesh : _meshes) {
+
+    for (auto& mesh : _meshes)
+    {
         if (!mesh->isVisible())
         {
             i++;
             continue;
         }
-        auto programstate = mesh->getGLProgramState();
+        auto material = mesh->getMaterial();
         auto& meshCommand = mesh->getMeshCommand();
 
 #if (!defined NDEBUG) || (defined CC_MODEL_VIEWER) 
@@ -752,7 +781,8 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         if(mesh->getTexture())
         {
             textureID = mesh->getTexture()->getName();
-        }else
+        }
+        else
         { //let the mesh use a dummy texture instead of the missing or crashing texture file
             auto texture = getDummyTexture();
             mesh->setTexture(texture);
@@ -768,31 +798,13 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         if (isTransparent)
             flags |= Node::FLAGS_RENDER_AS_3D;
 
-        if (_material)
-        {
-            meshCommand.init(globalZ, _material, mesh->getVertexBuffer(), mesh->getIndexBuffer(), mesh->getPrimitiveType(), mesh->getIndexFormat(), mesh->getIndexCount(), transform, flags);
-        }
-        else
-        {
-            meshCommand.init(globalZ, textureID, programstate, _blend, mesh->getVertexBuffer(), mesh->getIndexBuffer(), mesh->getPrimitiveType(), mesh->getIndexFormat(), mesh->getIndexCount(), transform, flags);
-        }
-        
-        meshCommand.setLightMask(_lightMask);
-
-        auto skin = mesh->getSkin();
-        if (skin)
-        {
-            meshCommand.setMatrixPaletteSize((int)skin->getMatrixPaletteSize());
-            meshCommand.setMatrixPalette(skin->getMatrixPalette());
-        }
-        //support tint and fade
-        meshCommand.setDisplayColor(Vec4(color.r, color.g, color.b, color.a));
-        if (_forceDepthWrite)
-        {
-            meshCommand.setDepthWriteEnabled(true);
-        }
-        meshCommand.setTransparent(isTransparent);
-        renderer->addCommand(&meshCommand);
+        mesh->draw(renderer,
+                   globalZ,
+                   transform,
+                   flags,
+                   _lightMask,
+                   Vec4(color.r, color.g, color.b, color.a),
+                   _forceDepthWrite);
     }
 }
 

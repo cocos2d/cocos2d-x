@@ -30,6 +30,9 @@
 #include "base/CCDirector.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCGLProgramState.h"
+#include "renderer/CCMaterial.h"
+#include "renderer/CCRenderer.h"
+#include "math/Mat4.h"
 
 using namespace std;
 
@@ -44,6 +47,7 @@ Mesh::Mesh()
 , _glProgramState(nullptr)
 , _blend(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 , _visibleChanged(nullptr)
+, _material(nullptr)
 {
     
 }
@@ -53,6 +57,7 @@ Mesh::~Mesh()
     CC_SAFE_RELEASE(_skin);
     CC_SAFE_RELEASE(_meshIndexData);
     CC_SAFE_RELEASE(_glProgramState);
+    CC_SAFE_RELEASE(_material);
 }
 
 GLuint Mesh::getVertexBuffer() const
@@ -187,6 +192,54 @@ void Mesh::setTexture(Texture2D* tex)
         _texture = tex;
         bindMeshCommand();
     }
+}
+
+void Mesh::setMaterial(Material* material)
+{
+    if (_material != material) {
+        CC_SAFE_RELEASE(_material);
+        _material = material;
+        CC_SAFE_RETAIN(_material);
+    }
+}
+
+Material* Mesh::getMaterial() const
+{
+    return _material;
+}
+
+void Mesh::draw(Renderer* renderer, float globalZ, const Mat4& transform, uint32_t flags, unsigned int lightMask, const Vec4& color, bool forceDepthWrite)
+{
+    bool isTransparent = (_isTransparent || color.w < 1.f);
+
+    _meshCommand.init(globalZ,
+                      _texture->getName(),
+                      _glProgramState,
+                      _blend,
+                      getVertexBuffer(),
+                      getIndexBuffer(),
+                      getPrimitiveType(),
+                      getIndexFormat(),
+                      getIndexCount(),
+                      transform,
+                      flags);
+
+    _meshCommand.setLightMask(lightMask);
+
+    if (_skin)
+    {
+        _meshCommand.setMatrixPaletteSize((int)_skin->getMatrixPaletteSize());
+        _meshCommand.setMatrixPalette(_skin->getMatrixPalette());
+    }
+
+    //support tint and fade
+    _meshCommand.setDisplayColor(color);
+    if (forceDepthWrite)
+    {
+        _meshCommand.setDepthWriteEnabled(true);
+    }
+    _meshCommand.setTransparent(isTransparent);
+    renderer->addCommand(&_meshCommand);
 }
 
 void Mesh::setSkin(MeshSkin* skin)

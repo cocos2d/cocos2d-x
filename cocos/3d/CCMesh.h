@@ -46,6 +46,9 @@ class MeshSkin;
 class MeshIndexData;
 class GLProgramState;
 class GLProgram;
+class Material;
+class Renderer;
+
 /** 
  * @brief Mesh: contains ref to index buffer, GLProgramState, texture, skin, blend function, aabb and so on
  */
@@ -167,7 +170,12 @@ CC_CONSTRUCTOR_ACCESS:
      * Set the default GL program.
      */
     void setGLProgramState(GLProgramState* glProgramState);
-    
+
+    void setMaterial(Material* material);
+    Material* getMaterial() const;
+
+    void draw(Renderer* renderer, float globalZ, const Mat4& transform, uint32_t flags, unsigned int lightMask, const Vec4& color, bool forceDepthWrite);
+
     /** 
      * Get the MeshCommand.
      */
@@ -201,6 +209,7 @@ protected:
     GLProgramState* _glProgramState;
     MeshCommand     _meshCommand;
     BlendFunc       _blend;
+    Material* _material;
     AABB         _aabb;
     std::function<void()> _visibleChanged;
 };
