@@ -114,7 +114,7 @@ SocketIOTest::~SocketIOTest(void)
 //test event callback handlers, these will be registered with socket.io
 void SocketIOTest::testevent(SIOClient *client, const std::string& data) {
 
-	log("SocketIOTest::testevent called with data: %s", data.c_str());
+    CCLOGINFO("SocketIOTest::testevent called with data: %s", data.c_str());
 
 	std::stringstream s;
 	s << client->getTag() << " received event testevent with data: " << data.c_str();
@@ -125,7 +125,7 @@ void SocketIOTest::testevent(SIOClient *client, const std::string& data) {
 
 void SocketIOTest::echotest(SIOClient *client, const std::string& data) {
 
-	log("SocketIOTest::echotest called with data: %s", data.c_str());
+    CCLOGINFO("SocketIOTest::echotest called with data: %s", data.c_str());
 
 	std::stringstream s;
 	s << client->getTag() << " received event echotest with data: " << data.c_str();
@@ -138,7 +138,7 @@ void SocketIOTest::echotest(SIOClient *client, const std::string& data) {
 // 'message' events and handlers are now registered in the same way that other events are
 void SocketIOTest::message(network::SIOClient* client, const std::string& data)
 {
-	log("SocketIOTest::message received: %s", data.c_str());
+    CCLOGINFO("SocketIOTest::message received: %s", data.c_str());
 
 	std::stringstream s;
 	s << client->getTag() << " received message with content: " << data.c_str();
@@ -148,7 +148,7 @@ void SocketIOTest::message(network::SIOClient* client, const std::string& data)
 
 void SocketIOTest::json(network::SIOClient* client, const std::string& data)
 {
-	log("SocketIOTest::json received: %s", data.c_str());
+    CCLOGINFO("SocketIOTest::json received: %s", data.c_str());
 
 	std::stringstream s;
 	s << client->getTag() << " received json message with content: " << data.c_str();
@@ -158,7 +158,7 @@ void SocketIOTest::json(network::SIOClient* client, const std::string& data)
 
 void SocketIOTest::connect(network::SIOClient* client, const std::string& data)
 {
-	log("SocketIOTest::connect called");
+    CCLOGINFO("SocketIOTest::connect called");
 
 	std::stringstream s;
 	s << client->getTag() << " connected!";
@@ -168,7 +168,7 @@ void SocketIOTest::connect(network::SIOClient* client, const std::string& data)
 
 void SocketIOTest::disconnect(network::SIOClient* client, const std::string& data)
 {
-	log("SocketIOTest::disconnect called");
+    CCLOGINFO("SocketIOTest::disconnect called");
 
 	std::stringstream s;
 	s << client->getTag() << " disconnected by server!";
@@ -195,7 +195,7 @@ void SocketIOTest::closedSocketAction(network::SIOClient* client)
 void SocketIOTest::onMenuSIOClientClicked(cocos2d::Ref *sender)
 {
 	//create a client by using this static method, url does not need to contain the protocol
-	_sioClient = SocketIO::connect("ws://dev.channon.us:3009", *this);
+	_sioClient = SocketIO::connect("ws://dev.channon.us:3010", *this);
 	//you may set a tag for the client for reference in callbacks
 	_sioClient->setTag("Test Client");
 
@@ -212,7 +212,7 @@ void SocketIOTest::onMenuSIOClientClicked(cocos2d::Ref *sender)
 void SocketIOTest::onMenuSIOEndpointClicked(cocos2d::Ref *sender)
 {
 	//repeat the same connection steps for the namespace "testpoint"
-	_sioEndpoint = SocketIO::connect("ws://dev.channon.us:3009/testpoint", *this);
+	_sioEndpoint = SocketIO::connect("ws://dev.channon.us:3010/testpoint", *this);
 	//a tag to differentiate in shared callbacks
 	_sioEndpoint->setTag("Test Endpoint");
 
@@ -295,7 +295,7 @@ void SocketIOTest::onMenuTestEndpointDisconnectClicked(cocos2d::Ref *sender)
 
 void SocketIOTest::onClose(network::SIOClient* client)
 {
-	log("SocketIOTest::onClose called");
+    CCLOGINFO("SocketIOTest::onClose called");
 
 	std::stringstream s;
 	s << client->getTag() << " closed!";
@@ -307,7 +307,7 @@ void SocketIOTest::onClose(network::SIOClient* client)
 
 void SocketIOTest::onError(network::SIOClient* client, const std::string& data)
 {
-	log("SocketIOTest::onError received: %s", data.c_str());
+	CCLOGERROR("SocketIOTest::onError received: %s", data.c_str());
 
 	std::stringstream s;
 	s << client->getTag() << " received error with content: " << data.c_str();
