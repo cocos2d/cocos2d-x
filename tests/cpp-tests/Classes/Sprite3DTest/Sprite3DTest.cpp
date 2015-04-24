@@ -1265,7 +1265,7 @@ Sprite3DWithSkinTest::Sprite3DWithSkinTest()
     _menuItem->setPosition(VisibleRect::left().x + 50, VisibleRect::top().y -70);
     addChild(menu, 1);
     
-    _animateQuality = 2;
+    _animateQuality = (int)Animate3DQuality::QUALITY_HIGH;
     _sprits.clear();
     
     auto s = Director::getInstance()->getWinSize();
