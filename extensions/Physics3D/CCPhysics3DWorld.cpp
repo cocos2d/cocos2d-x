@@ -196,7 +196,7 @@ void Physics3DWorld::stepSimulate(float dt)
         {
             it->preSimulate();
         }
-        _btPhyiscsWorld->stepSimulation(dt);
+        _btPhyiscsWorld->stepSimulation(dt, 3);
         //sync dynamic node after simulation
         for (auto it : _physicsComponents)
         {
