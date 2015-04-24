@@ -114,27 +114,29 @@ void Cocos2dRenderer::DeviceLost()
 
 void Cocos2dRenderer::Draw(GLsizei width, GLsizei height, float dpi, DisplayOrientations orientation)
 {
+    auto glView = GLViewImpl::sharedOpenGLView();
+
     if (orientation != m_orientation)
     {
         m_orientation = orientation;
-        GLViewImpl::sharedOpenGLView()->UpdateOrientation(orientation);
+        glView->UpdateOrientation(orientation);
     }
 
     if (width != m_width || height != m_height)
     {
         m_width = width;
         m_height = height;
-        GLViewImpl::sharedOpenGLView()->UpdateForWindowSizeChange(static_cast<float>(width), static_cast<float>(height));
+        glView->UpdateForWindowSizeChange(static_cast<float>(width), static_cast<float>(height));
     }
 
     if (dpi != m_dpi)
     {
         m_dpi = dpi;
-        GLViewImpl::sharedOpenGLView()->SetDPI(m_dpi);
+        glView->SetDPI(m_dpi);
     }
 
-    GLViewImpl::sharedOpenGLView()->ProcessEvents();
-    GLViewImpl::sharedOpenGLView()->Render();
+    glView->ProcessEvents();
+    glView->Render();
 }
 
 void Cocos2dRenderer::QueuePointerEvent(cocos2d::PointerEventType type, Windows::UI::Core::PointerEventArgs^ args)

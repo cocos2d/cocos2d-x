@@ -1313,6 +1313,9 @@ uint32_t Node::processParentFlags(const Mat4& parentTransform, uint32_t parentFl
         }
     }
     
+    if (!isVisitableByVisitingCamera())
+        return parentFlags;
+    
     uint32_t flags = parentFlags;
     flags |= (_transformUpdated ? FLAGS_TRANSFORM_DIRTY : 0);
     flags |= (_contentSizeDirty ? FLAGS_CONTENT_SIZE_DIRTY : 0);

@@ -261,7 +261,13 @@ void OpenGLESPage::TerminateApp()
 {
     {
         critical_section::scoped_lock lock(mRenderSurfaceCriticalSection);
-        DestroyRenderSurface();
+
+        if (mOpenGLES)
+        {
+            mOpenGLES->DestroySurface(mRenderSurface);
+            mOpenGLES->Cleanup();
+        }
+
     }
     Windows::UI::Xaml::Application::Current->Exit();
 }
@@ -311,10 +317,21 @@ void OpenGLESPage::StartRenderLoop()
             GetSwapChainPanelSize(&panelWidth, &panelHeight);
             m_renderer.get()->Draw(panelWidth, panelHeight, m_dpi, m_orientation);
 
-            // The call to eglSwapBuffers might not be successful (i.e. due to Device Lost)
-            // If the call fails, then we must reinitialize EGL and the GL resources.
-            if (mOpenGLES->SwapBuffers(mRenderSurface) != GL_TRUE)
+            // run on main UI thread
+            if (m_renderer->AppShouldExit())
             {
+                swapChainPanel->Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]()
+                {
+                    TerminateApp();
+                }));
+
+                return;
+            }
+            else if (mOpenGLES->SwapBuffers(mRenderSurface) != GL_TRUE)
+            {
+                // The call to eglSwapBuffers might not be successful (i.e. due to Device Lost)
+                // If the call fails, then we must reinitialize EGL and the GL resources.
+
                 m_deviceLost = true;
 
                 if (m_renderer)
@@ -327,17 +344,6 @@ void OpenGLESPage::StartRenderLoop()
                 {
                     RecoverFromLostDevice();
                 }, CallbackContext::Any));
-
-                return;
-            }
-
-            // run on main UI thread
-            if (m_renderer->AppShouldExit())
-            {
-                swapChainPanel->Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal, ref new DispatchedHandler([this]()
-                {
-                    TerminateApp();
-                }));
 
                 return;
             }

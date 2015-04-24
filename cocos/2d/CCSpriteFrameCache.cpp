@@ -292,6 +292,18 @@ void SpriteFrameCache::addSpriteFramesWithFile(const std::string& plist)
     }
 }
 
+bool SpriteFrameCache::isSpriteFramesWithFileLoaded(const std::string& plist) const
+{
+    bool result = false;
+
+    if (_loadedFileNames->find(plist) != _loadedFileNames->end())
+    {
+        result = true;
+    }
+
+    return result;
+}
+
 void SpriteFrameCache::addSpriteFrame(SpriteFrame* frame, const std::string& frameName)
 {
     _spriteFrames.insert(frameName, frame);
