@@ -441,11 +441,11 @@ void Sprite3D::genGLProgramState(bool useLight)
     _shaderUsingLight = useLight;
     
     std::unordered_map<const MeshVertexData*, GLProgramState*> glProgramestates;
-    for(auto& mesh : _meshVertexDatas)
+    for(auto& meshVertexData : _meshVertexDatas)
     {
-        bool textured = mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_TEX_COORD);
-        bool hasSkin = mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_INDEX) && mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT);
-        bool hasNormal = mesh->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_NORMAL);
+        bool textured = meshVertexData->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_TEX_COORD);
+        bool hasSkin = meshVertexData->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_INDEX) && meshVertexData->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT);
+        bool hasNormal = meshVertexData->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_NORMAL);
         
         GLProgram* glProgram = nullptr;
         const char* shader = nullptr;
@@ -475,24 +475,24 @@ void Sprite3D::genGLProgramState(bool useLight)
 
         auto programstate = GLProgramState::create(glProgram);
         long offset = 0;
-        auto attributeCount = mesh->getMeshVertexAttribCount();
+        auto attributeCount = meshVertexData->getMeshVertexAttribCount();
         for (auto k = 0; k < attributeCount; k++) {
-            auto meshattribute = mesh->getMeshVertexAttrib(k);
+            auto meshattribute = meshVertexData->getMeshVertexAttrib(k);
             programstate->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
                                                  meshattribute.size,
                                                  meshattribute.type,
                                                  GL_FALSE,
-                                                 mesh->getVertexBuffer()->getSizePerVertex(),
+                                                 meshVertexData->getVertexBuffer()->getSizePerVertex(),
                                                  (GLvoid*)offset);
             offset += meshattribute.attribSizeBytes;
         }
         
-        glProgramestates[mesh] = programstate;
+        glProgramestates[meshVertexData] = programstate;
     }
     
-    for (auto& it : _meshes) {
-        auto glProgramState = glProgramestates[it->getMeshIndexData()->getMeshVertexData()];
-        it->setGLProgramState(glProgramState);
+    for (auto& mesh : _meshes) {
+        auto glProgramState = glProgramestates[mesh->getMeshIndexData()->getMeshVertexData()];
+        mesh->setGLProgramState(glProgramState);
     }
 }
 
@@ -778,9 +778,9 @@ void Sprite3D::setBlendFunc(const BlendFunc &blendFunc)
     if(_blend.src != blendFunc.src || _blend.dst != blendFunc.dst)
     {
         _blend = blendFunc;
-        for(auto& state : _meshes)
+        for(auto& mesh : _meshes)
         {
-            state->setBlendFunc(blendFunc);
+            mesh->setBlendFunc(blendFunc);
         }
     }
 }
