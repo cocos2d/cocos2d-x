@@ -793,7 +793,7 @@ bool Bundle3D::loadNodes(NodeDatas& nodedatas)
             return true;
         }
         
-        NodeData* nodeDatas[skinData.skinBoneNames.size() + skinData.nodeBoneNames.size()];
+        auto nodeDatas = new (std::nothrow) NodeData*[skinData.skinBoneNames.size() + skinData.nodeBoneNames.size()];
         int index = 0;
         size_t i;
         for (i = 0; i < skinData.skinBoneNames.size(); i++)
@@ -828,6 +828,7 @@ bool Bundle3D::loadNodes(NodeDatas& nodedatas)
         modelnode->invBindPose = skinData.inverseBindPoseMatrices;
         node->modelNodeDatas.push_back(modelnode);
         nodedatas.nodes.push_back(node);
+        delete[] nodeDatas;
     }
     else
     {
