@@ -120,7 +120,7 @@ public:
      * 
      * @lua NA
      */
-    GLProgramState* getGLProgramState() const { return _glProgramState; }
+    GLProgramState* getGLProgramState() const;
     
     /**name getter */
     const std::string& getName() const { return _name; }
@@ -205,9 +205,9 @@ protected:
     bool       _isTransparent; // is this mesh transparent, it is a property of material in fact
     
     std::string  _name;
+    MeshCommand     _meshCommand;
     MeshIndexData*     _meshIndexData;
     GLProgramState* _glProgramState;
-    MeshCommand     _meshCommand;
     BlendFunc       _blend;
     Material* _material;
     AABB         _aabb;

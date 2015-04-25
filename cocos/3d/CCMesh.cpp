@@ -31,11 +31,14 @@
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCMaterial.h"
+#include "renderer/CCTechnique.h"
+#include "renderer/CCPass.h"
 #include "renderer/CCRenderer.h"
 #include "math/Mat4.h"
 
-using namespace std;
+#define USE_MATERIAL 0
 
+using namespace std;
 
 NS_CC_BEGIN
 
@@ -64,10 +67,10 @@ Mesh::Mesh()
 , _visible(true)
 , _isTransparent(false)
 , _meshIndexData(nullptr)
+, _material(nullptr)
 , _glProgramState(nullptr)
 , _blend(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 , _visibleChanged(nullptr)
-, _material(nullptr)
 {
     
 }
@@ -76,8 +79,8 @@ Mesh::~Mesh()
     CC_SAFE_RELEASE(_texture);
     CC_SAFE_RELEASE(_skin);
     CC_SAFE_RELEASE(_meshIndexData);
-    CC_SAFE_RELEASE(_glProgramState);
     CC_SAFE_RELEASE(_material);
+    CC_SAFE_RELEASE(_glProgramState);
 }
 
 GLuint Mesh::getVertexBuffer() const
@@ -238,6 +241,19 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
     if (isTransparent)
         flags |= Node::FLAGS_RENDER_AS_3D;
 
+
+#if USE_MATERIAL
+    _meshCommand.init(globalZ,
+                      _material,
+                      getVertexBuffer(),
+                      getIndexBuffer(),
+                      getPrimitiveType(),
+                      getIndexFormat(),
+                      getIndexCount(),
+                      transform,
+                      flags);
+#else
+
 #if (!defined NDEBUG) || (defined CC_MODEL_VIEWER)
     if(!_texture)
     {
@@ -250,7 +266,6 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
     GLuint textureID = _texture ? _texture->getName() : 0;
 #endif
 
-
     _meshCommand.init(globalZ,
                       textureID,
                       _glProgramState,
@@ -262,6 +277,7 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
                       getIndexCount(),
                       transform,
                       flags);
+#endif // !MATERIAL
 
     _meshCommand.setLightMask(lightMask);
 
@@ -306,6 +322,11 @@ void Mesh::setMeshIndexData(MeshIndexData* subMesh)
 
 void Mesh::setGLProgramState(GLProgramState* glProgramState)
 {
+    // XXX create dummy texture
+#if USE_MATERIAL
+    auto material = Material::createWithGLStateProgram(glProgramState);
+    setMaterial(material);
+#else
     if (_glProgramState != glProgramState)
     {
         CC_SAFE_RETAIN(glProgramState);
@@ -313,6 +334,17 @@ void Mesh::setGLProgramState(GLProgramState* glProgramState)
         _glProgramState = glProgramState;
         bindMeshCommand();
     }
+#endif
+}
+
+GLProgramState* Mesh::getGLProgramState() const
+{
+#if USE_MATERIAL
+    return _material ? _material->_currentTechnique->_passes.at(0)->getGLProgramState()
+                    : nullptr;
+#else
+    return _glProgramState;
+#endif
 }
 
 void Mesh::calculateAABB()
@@ -354,6 +386,16 @@ void Mesh::calculateAABB()
 
 void Mesh::bindMeshCommand()
 {
+#if USE_MATERIAL
+    if (_material && _meshIndexData && _texture)
+    {
+        GLuint texID = _texture ? _texture->getName() : 0;
+        // XXX update id
+//        _meshCommand.genMaterialID(texID, _glProgramState, _meshIndexData->getVertexBuffer()->getVBO(), _meshIndexData->getIndexBuffer()->getVBO(), _blend);
+        _meshCommand.setCullFaceEnabled(true);
+        _meshCommand.setDepthTestEnabled(true);
+    }
+#else
     if (_glProgramState && _meshIndexData && _texture)
     {
         GLuint texID = _texture ? _texture->getName() : 0;
@@ -361,19 +403,30 @@ void Mesh::bindMeshCommand()
         _meshCommand.setCullFaceEnabled(true);
         _meshCommand.setDepthTestEnabled(true);
     }
+#endif
 }
 
 void Mesh::setBlendFunc(const BlendFunc &blendFunc)
 {
+#if USE_MATERIAL
+    for(auto& pass: _material->_currentTechnique->_passes) {
+        pass->setBlendFunc(blendFunc);
+    }
+#else
     if(_blend.src != blendFunc.src || _blend.dst != blendFunc.dst)
     {
         _blend = blendFunc;
         bindMeshCommand();
     }
+#endif
 }
-const BlendFunc &Mesh::getBlendFunc() const
+const BlendFunc& Mesh::getBlendFunc() const
 {
+#if USE_MATERIAL
+    return _material->_currentTechnique->_passes.at(0)->getBlendFunc();
+#else
     return _blend;
+#endif
 }
 
 GLenum Mesh::getPrimitiveType() const

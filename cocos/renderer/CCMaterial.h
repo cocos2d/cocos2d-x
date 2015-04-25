@@ -57,6 +57,7 @@ class CC_DLL Material : public Ref
     friend class Pass;
     friend class MeshCommand;
     friend class Renderer;
+    friend class Mesh;
 
 public:
     /** Creates a Material with a JSON file containing the definition of the material.

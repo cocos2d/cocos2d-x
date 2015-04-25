@@ -72,8 +72,23 @@ protected:
     mutable uint32_t _hash;
     mutable bool _hashDirty;
 
-    BlendFunc _blendFunc;
     Vector<Texture2D*> _textures;
+
+    BlendFunc _blendFunc;
+
+    // taken from MeshCommand
+    bool _cullFaceEnabled;
+    GLenum _cullFace;
+    bool _depthTestEnabled;
+    bool _depthWriteEnabled;
+    bool _forceDepthWrite;
+
+    bool _renderStateCullFaceEnabled;
+    bool _renderStateDepthTest;
+    GLboolean _renderStateDepthWrite;
+    GLenum    _renderStateCullFace;
+
+    // TODO: add stencil operations
 };
 
 NS_CC_END

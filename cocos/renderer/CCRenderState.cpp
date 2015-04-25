@@ -39,7 +39,7 @@ RenderState* RenderState::create(RenderState* parent)
 
 RenderState::RenderState()
 : _parent(nullptr)
-, _blendFunc(BlendFunc::DISABLE)
+, _blendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 , _textures()
 , _hash(0)
 , _hashDirty(true)
