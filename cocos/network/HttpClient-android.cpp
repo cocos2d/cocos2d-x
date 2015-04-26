@@ -422,6 +422,7 @@ private:
             jobject jObj = methodInfo.env->CallStaticObjectMethod(methodInfo.classID, methodInfo.methodID, jurl);
             _httpURLConnection = methodInfo.env->NewGlobalRef(jObj);
             methodInfo.env->DeleteLocalRef(jurl);
+            methodInfo.env->DeleteLocalRef(jObj);
             methodInfo.env->DeleteLocalRef(methodInfo.classID);
         }
     }
