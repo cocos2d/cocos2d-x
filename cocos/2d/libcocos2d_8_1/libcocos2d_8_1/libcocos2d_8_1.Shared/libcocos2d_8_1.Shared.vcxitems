@@ -602,8 +602,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCTransitionProgress.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\CCTweenFunction.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\MarchingSquare.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\PolySprite.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\PolySpriteCache.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\SpritePolygon.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\SpritePolygonCache.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)targetver.h" />
   </ItemGroup>
   <ItemGroup>
@@ -1162,8 +1162,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCTransitionProgress.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\CCTweenFunction.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\MarchingSquare.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\PolySprite.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\PolySpriteCache.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\SpritePolygon.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\SpritePolygonCache.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectCapability Include="SourceItemsFromImports" />
