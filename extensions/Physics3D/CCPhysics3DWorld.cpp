@@ -36,6 +36,8 @@ Physics3DWorld::Physics3DWorld()
 , _broadphase(nullptr)
 , _solver(nullptr)
 , _debugDrawer(nullptr)
+, _needCollisionChecking(false)
+, _collisionCheckingFlag(false)
 {
     
 }
@@ -66,17 +68,17 @@ Physics3DWorld* Physics3DWorld::create(Physics3DWorldDes* info)
 bool Physics3DWorld::init(Physics3DWorldDes* info)
 {
     ///collision configuration contains default setup for memory, collision setup
-	_collisionConfiguration = new (std::nothrow) btDefaultCollisionConfiguration();
-	//_collisionConfiguration->setConvexConvexMultipointIterations();
+    _collisionConfiguration = new (std::nothrow) btDefaultCollisionConfiguration();
+    //_collisionConfiguration->setConvexConvexMultipointIterations();
     
-	///use the default collision dispatcher. For parallel processing you can use a diffent dispatcher (see Extras/BulletMultiThreaded)
-	_dispatcher = new (std::nothrow) btCollisionDispatcher(_collisionConfiguration);
+    ///use the default collision dispatcher. For parallel processing you can use a diffent dispatcher (see Extras/BulletMultiThreaded)
+    _dispatcher = new (std::nothrow) btCollisionDispatcher(_collisionConfiguration);
     
-	_broadphase = new (std::nothrow) btDbvtBroadphase();
+    _broadphase = new (std::nothrow) btDbvtBroadphase();
     
-	///the default constraint solver. For parallel processing you can use a different solver (see Extras/BulletMultiThreaded)
-	btSequentialImpulseConstraintSolver* sol = new btSequentialImpulseConstraintSolver();
-	_solver = sol;
+    ///the default constraint solver. For parallel processing you can use a different solver (see Extras/BulletMultiThreaded)
+    btSequentialImpulseConstraintSolver* sol = new btSequentialImpulseConstraintSolver();
+    _solver = sol;
     
     _btPhyiscsWorld = new btDiscreteDynamicsWorld(_dispatcher,_broadphase,_solver,_collisionConfiguration);
     _btPhyiscsWorld->setGravity(convertVec3TobtVector3(info->gravity));
@@ -114,6 +116,7 @@ void Physics3DWorld::addPhysics3DObject(Physics3DObject* physicsObj)
         {
             _btPhyiscsWorld->addRigidBody(static_cast<Physics3DRigidBody*>(physicsObj)->getRigidBody());
         }
+        _collisionCheckingFlag = true;
     }
 }
 
@@ -128,6 +131,7 @@ void Physics3DWorld::removePhysics3DObject(Physics3DObject* physicsObj)
         }
         physicsObj->release();
         _objects.erase(it);
+        _collisionCheckingFlag = true;
     }
 }
 
@@ -141,6 +145,7 @@ void Physics3DWorld::removeAllPhysics3DObjects()
         it->release();
     }
     _objects.clear();
+    _collisionCheckingFlag = true;
 }
 
 void Physics3DWorld::addPhysics3DConstraint(Physics3DConstraint* constraint, bool disableCollisionsBetweenLinkedObjs)
@@ -202,6 +207,8 @@ void Physics3DWorld::stepSimulate(float dt)
         {
             it->postSimulate();
         }
+        if (needCollisionChecking())
+            collisionChecking();
     }
 }
 
@@ -261,6 +268,58 @@ Physics3DObject* Physics3DWorld::getPhysicsObject(const btCollisionObject* btObj
         }
     }
     return nullptr;
+}
+
+void Physics3DWorld::collisionChecking()
+{
+    int numManifolds = _dispatcher->getNumManifolds();
+    for (int i = 0; i < numManifolds; ++i){
+        btPersistentManifold * contactManifold = _dispatcher->getManifoldByIndexInternal(i);
+        int numContacts = contactManifold->getNumContacts();
+        if (0 < numContacts){
+            const btCollisionObject* obA = static_cast<const btCollisionObject*>(contactManifold->getBody0());
+            const btCollisionObject* obB = static_cast<const btCollisionObject*>(contactManifold->getBody1());
+            Physics3DObject *poA = getPhysicsObject(obA);
+            Physics3DObject *poB = getPhysicsObject(obB);
+            if (poA->needCollisionCallback() || poB->needCollisionCallback()){
+                Physics3DCollisionInfo ci;
+                ci.objA = poA;
+                ci.objB = poB;
+                for (int c = 0; c < numContacts; ++c){
+                    btManifoldPoint& pt = contactManifold->getContactPoint(c);
+                    Physics3DCollisionInfo::CollisionPoint cp = {
+                          convertbtVector3ToVec3(pt.m_localPointA), convertbtVector3ToVec3(pt.m_positionWorldOnA)
+                        , convertbtVector3ToVec3(pt.m_localPointB), convertbtVector3ToVec3(pt.m_positionWorldOnB)
+                        , convertbtVector3ToVec3(pt.m_normalWorldOnB)
+                    };
+                    ci.collisionPointList.push_back(cp);
+                }
+
+                if (poA->needCollisionCallback()){
+                    poA->getCollisionCallback()(ci);
+                }
+                if (poB->needCollisionCallback()){
+                    poB->getCollisionCallback()(ci);
+                }
+            }
+        }
+    }
+}
+
+bool Physics3DWorld::needCollisionChecking()
+{
+    if (_collisionCheckingFlag){
+        _needCollisionChecking = false;
+        for(auto it : _objects)
+        {
+            if (it->getCollisionCallback() != nullptr){
+                _needCollisionChecking = true;
+                break;
+            }
+        }
+        _collisionCheckingFlag = false;
+    }
+    return _needCollisionChecking;
 }
 
 NS_CC_EXT_END

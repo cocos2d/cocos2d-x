@@ -34,6 +34,16 @@ USING_NS_CC;
 
 NS_CC_EXT_BEGIN
 
+void Physics3DObject::setPhysicsWorld( Physics3DWorld* world )
+{
+    _physicsWorld = world;
+}
+
+void Physics3DObject::setCollisionCallback( const CollisionCallbackFunc &func )
+{
+    _collisionCallbackFunc = func;
+}
+
 Physics3DRigidBody::Physics3DRigidBody()
 : _btRigidBody(nullptr)
 , _physics3DShape(nullptr)

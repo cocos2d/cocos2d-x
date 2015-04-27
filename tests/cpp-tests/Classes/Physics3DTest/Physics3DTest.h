@@ -115,6 +115,19 @@ public:
     virtual bool init() override;
 };
 
+class Physics3DCollisionCallbackDemo : public Physics3DTestDemo
+{
+public:
+
+    CREATE_FUNC(Physics3DCollisionCallbackDemo);
+    Physics3DCollisionCallbackDemo(){};
+    virtual ~Physics3DCollisionCallbackDemo(){};
+
+    virtual std::string subtitle() const override;
+
+    virtual bool init() override;
+};
+
 class Physics3DTerrainDemo : public Physics3DTestDemo
 {
 public:
