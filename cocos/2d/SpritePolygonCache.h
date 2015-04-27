@@ -44,12 +44,12 @@ typedef struct CC_DLL _SpritePolygonInfo
     {
         if(nullptr != _triangles.verts)
         {
-            CC_SAFE_DELETE(_triangles.verts);
+            CC_SAFE_DELETE_ARRAY(_triangles.verts);
         }
         
         if(nullptr != _triangles.indices)
         {
-            CC_SAFE_DELETE(_triangles.indices);
+            CC_SAFE_DELETE_ARRAY(_triangles.indices);
         }
     }
 } SpritePolygonInfo;
@@ -63,7 +63,7 @@ public:
     virtual ~SpritePolygonCache();
     static SpritePolygonCache* getInstance();
     static void destroyInstance();
-    SpritePolygonInfo*   addSpritePolygonCache(const std::string& filePath, const SpritePolygonInfo& SpritePolygonInfo);
+    SpritePolygonInfo*   addSpritePolygonCache(const std::string& filePath, const cocos2d::Rect& rect, const cocos2d::TrianglesCommand::Triangles trianglesCommand);
     SpritePolygonInfo* getSpritePolygonCache(const std::string& filePath, const cocos2d::Rect& rect);
     void   removeSpritePolygonCache(const std::string& filePath, const cocos2d::Rect* rect = nullptr);
     void   removeAllSpritePolygonCache();

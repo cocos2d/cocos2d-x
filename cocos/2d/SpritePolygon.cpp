@@ -251,14 +251,11 @@ bool SpritePolygon::initWithMarching(const std::string &file, const cocos2d::Rec
     marcher->optimize(optimization);
 
     auto p = marcher->getPoints();
-    auto _triangles = triangulate(p);
+    auto triangles = triangulate(p);
     delete marcher;
     
     //save result to cache
-    SpritePolygonInfo info;
-    info._rect = rect;
-    info._triangles = _triangles;
-    _polygonInfo = SpritePolygonCache::getInstance()->addSpritePolygonCache(file, info);
+    _polygonInfo = SpritePolygonCache::getInstance()->addSpritePolygonCache(file, rect, triangles);
     calculateUVandContentSize();
 //    SpritePolygonCache::printInfo(*_polygonInfo);
 #if CC_SPRITE_DEBUG_DRAW
@@ -277,8 +274,7 @@ bool SpritePolygon::initWithPoly2tri(const std::string &filename, std::vector<co
     else{
         throw "some error";
     }
-    SpritePolygonInfo info = SpritePolygonInfo{Rect, triangulate(verts)};
-    _polygonInfo = SpritePolygonCache::getInstance()->addSpritePolygonCache(filename, info);
+    _polygonInfo = SpritePolygonCache::getInstance()->addSpritePolygonCache(filename, Rect, triangulate(verts));
     calculateUVandContentSize();
     #if CC_SPRITE_DEBUG_DRAW
         debugDraw();
@@ -331,8 +327,7 @@ bool SpritePolygon::initWithVerts(const std::string& filename,std::vector<cocos2
     setContentSize(_textureRect.size);
     _transformDirty = true;
     auto _triangles = TrianglesCommand::Triangles{&verts[0], &indices[0], (ssize_t)verts.size(), (ssize_t)indices.size()};
-    SpritePolygonInfo info = SpritePolygonInfo{_textureRect, _triangles};
-    _polygonInfo = SpritePolygonCache::getInstance()->addSpritePolygonCache(filename, info);
+    _polygonInfo = SpritePolygonCache::getInstance()->addSpritePolygonCache(filename, _textureRect, _triangles);
 #if CC_SPRITE_DEBUG_DRAW
     debugDraw();
 #endif
@@ -356,8 +351,7 @@ bool SpritePolygon::initWithRect(const std::string& filename, std::vector<cocos2
     }
 
     auto _triangles = TrianglesCommand::Triangles{&_verts[0], &indices[0], (ssize_t)_verts.size(), (ssize_t)indices.size()};
-    SpritePolygonInfo info = SpritePolygonInfo{rect, _triangles};
-    _polygonInfo = SpritePolygonCache::getInstance()->addSpritePolygonCache(filename, info);
+    _polygonInfo = SpritePolygonCache::getInstance()->addSpritePolygonCache(filename, rect, _triangles);
     calculateUVandContentSize();
 #if CC_SPRITE_DEBUG_DRAW
     debugDraw();
