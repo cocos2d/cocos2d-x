@@ -71,7 +71,7 @@
 NS_CC_BEGIN
 
 extern const char* cocos2dVersion(void);
-//TODO: these general utils should be in a seperate class
+//TODO: these general utils should be in a separate class
 //
 // Trimming functions were taken from: http://stackoverflow.com/a/217605
 //
