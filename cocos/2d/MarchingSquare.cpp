@@ -343,4 +343,12 @@ void MarchingSquare::optimize(float level)
         return;
     epsilon = level;
     points = rdp(points);
+    auto last = points.back();
+    
+    if(last.y > points.front().y)
+        points.front().y = last.y;
+    points.pop_back();
+    
+    //delete the last point, because its almost the same as the starting point
+//    CCLOG("%.1f, %.1f, %.1f, %.1f", points[0].x, points[0].y, points.back().x, points.back().y);
 }
