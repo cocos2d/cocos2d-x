@@ -1110,6 +1110,9 @@ Developers:
     perminovVS
         Optimize Vec3 and Vec2
         Added `UserDefault::setDelegate()`
+        
+    qiutaoleo
+        Added a feature to check case characters for filename on windows
 
 Retired Core Developers:
     WenSheng Yang
