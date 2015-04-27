@@ -113,19 +113,32 @@ void MeshCommand::init(float globalZOrder,
 {
     CCASSERT(material, "material cannot be nill");
 
-    RenderCommand::init(globalZOrder, mv, flags);
+//    RenderCommand::init(globalZOrder, mv, flags);
+//
+//    _globalOrder = globalZOrder;
+//    _material = material;
+//    
+//    _vertexBuffer = vertexBuffer;
+//    _indexBuffer = indexBuffer;
+//    _primitive = primitive;
+//    _indexFormat = indexFormat;
+//    _indexCount = indexCount;
+//    _mv.set(mv);
+//
+//    _is3D = true;
 
-    _globalOrder = globalZOrder;
-    _material = material;
-    
-    _vertexBuffer = vertexBuffer;
-    _indexBuffer = indexBuffer;
-    _primitive = primitive;
-    _indexFormat = indexFormat;
-    _indexCount = indexCount;
-    _mv.set(mv);
-
-    _is3D = true;
+    Pass* pass = material->getTechnique()->getPassByIndex(0);
+    init(globalZOrder,
+         pass->getTexture()->getName(),
+         pass->getGLProgramState(),
+         pass->getBlendFunc(),
+         vertexBuffer,
+         indexBuffer,
+         primitive,
+         indexFormat,
+         indexCount,
+         mv,
+         flags);
 }
 
 void MeshCommand::init(float globalOrder,
@@ -322,6 +335,8 @@ void MeshCommand::batchDraw()
         {
             pass->bind(_mv);
 
+            applyRenderState();
+
             // Draw
             glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
             CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
@@ -361,8 +376,7 @@ void MeshCommand::batchDraw()
 void MeshCommand::postBatchDraw()
 {
     //restore render state
-    if (!_material)
-        restoreRenderState();
+    restoreRenderState();
 
     if (_vao)
     {

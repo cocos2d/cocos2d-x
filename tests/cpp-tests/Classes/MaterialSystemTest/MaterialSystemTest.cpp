@@ -80,12 +80,12 @@ void Material_Sprite3DTest::onEnter()
 
     auto sprite = Sprite3D::create("Sprite3DTest/boss1.obj");
     sprite->setScale(8.f);
-//    sprite->setTexture("Sprite3DTest/boss.png");
+    sprite->setTexture("Sprite3DTest/boss.png");
     this->addChild(sprite);
     sprite->setNormalizedPosition(Vec2(0.5,0.5));
 
-    auto material = Material::createWithFilename("Materials/spaceship.material");
-    sprite->setMaterial(material);
+//    auto material = Material::createWithFilename("Materials/spaceship.material");
+//    sprite->setMaterial(material);
 }
 
 std::string Material_Sprite3DTest::subtitle() const

@@ -57,6 +57,18 @@ public:
     void setBlendFunc(const BlendFunc& blendFunc);
     BlendFunc getBlendFunc() const;
 
+    const Vector<Texture2D*>& getTextures() const;
+
+    /** Replaces the texture that is at the front of _textures array.
+     Added to be backwards compatible.
+     */
+    void setTexture(Texture2D* texture);
+
+    /** Returns the texture that is at the front of the _textures array.
+     Added to be backwards compatible.
+     */
+    Texture2D* getTexture() const;
+
 protected:
     RenderState();
     RenderState(RenderState* parent);

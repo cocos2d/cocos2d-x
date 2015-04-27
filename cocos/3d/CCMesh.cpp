@@ -36,7 +36,7 @@
 #include "renderer/CCRenderer.h"
 #include "math/Mat4.h"
 
-#define USE_MATERIAL 0
+#define USE_MATERIAL 1
 
 using namespace std;
 
@@ -208,6 +208,14 @@ void Mesh::setTexture(const std::string& texPath)
 
 void Mesh::setTexture(Texture2D* tex)
 {
+#if USE_MATERIAL
+    auto technique = _material->_currentTechnique;
+    for(auto& pass: technique->_passes)
+    {
+        pass->setTexture(tex);
+    }
+
+#else
     if (tex != _texture)
     {
         CC_SAFE_RETAIN(tex);
@@ -215,6 +223,7 @@ void Mesh::setTexture(Texture2D* tex)
         _texture = tex;
         bindMeshCommand();
     }
+#endif
 }
 
 void Mesh::setMaterial(Material* material)
@@ -326,6 +335,7 @@ void Mesh::setGLProgramState(GLProgramState* glProgramState)
 #if USE_MATERIAL
     auto material = Material::createWithGLStateProgram(glProgramState);
     setMaterial(material);
+    bindMeshCommand();
 #else
     if (_glProgramState != glProgramState)
     {
@@ -387,11 +397,15 @@ void Mesh::calculateAABB()
 void Mesh::bindMeshCommand()
 {
 #if USE_MATERIAL
-    if (_material && _meshIndexData && _texture)
+    if (_material && _meshIndexData)
     {
-        GLuint texID = _texture ? _texture->getName() : 0;
-        // XXX update id
-//        _meshCommand.genMaterialID(texID, _glProgramState, _meshIndexData->getVertexBuffer()->getVBO(), _meshIndexData->getIndexBuffer()->getVBO(), _blend);
+        auto pass = _material->_currentTechnique->_passes.at(0);
+        auto glprogramstate = pass->getGLProgramState();
+        auto texture = pass->getTexture();
+        auto textureid = texture ? texture->getName() : 0;
+        auto blend = pass->getBlendFunc();
+
+        _meshCommand.genMaterialID(textureid, glprogramstate, _meshIndexData->getVertexBuffer()->getVBO(), _meshIndexData->getIndexBuffer()->getVBO(), blend);
         _meshCommand.setCullFaceEnabled(true);
         _meshCommand.setDepthTestEnabled(true);
     }

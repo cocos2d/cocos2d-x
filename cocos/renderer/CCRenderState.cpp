@@ -77,5 +77,24 @@ BlendFunc RenderState::getBlendFunc() const
     return _blendFunc;
 }
 
+const Vector<Texture2D*>& RenderState::getTextures() const
+{
+    return _textures;
+}
+
+void RenderState::setTexture(Texture2D* texture)
+{
+    if (_textures.size() > 0)
+        _textures.replace(0, texture);
+    else
+        _textures.pushBack(texture);
+}
+
+Texture2D* RenderState::getTexture() const
+{
+    if (_textures.size() > 0)
+        return _textures.at(0);
+    return nullptr;
+}
 
 NS_CC_END
