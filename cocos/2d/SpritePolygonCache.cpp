@@ -112,7 +112,6 @@ SpritePolygonInfo* SpritePolygonCache::addSpritePolygonCache(const std::string& 
         
         memcpy(info->_triangles.verts, spritePolygonInfo._triangles.verts, spritePolygonInfo._triangles.vertCount*sizeof(V3F_C4B_T2F));
         memcpy(info->_triangles.indices, spritePolygonInfo._triangles.indices, spritePolygonInfo._triangles.indexCount*sizeof(unsigned short));
-//        info->_textureRect = SpritePolygonInfo._textureRect;
         
         vecInfo.push_back(info);
         _SpritePolygonCacheMap[filePath] = vecInfo;

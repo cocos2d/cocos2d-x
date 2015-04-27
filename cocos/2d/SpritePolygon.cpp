@@ -249,7 +249,8 @@ bool SpritePolygon::initWithMarching(const std::string &file, const cocos2d::Rec
     auto marcher = new MarchingSquare(file);
     marcher->trace();
     marcher->optimize(optimization);
-
+//    marcher->test();
+    
     auto p = marcher->getPoints();
     auto _triangles = triangulate(p);
     delete marcher;
@@ -259,6 +260,7 @@ bool SpritePolygon::initWithMarching(const std::string &file, const cocos2d::Rec
     info._rect = rect;
     info._triangles = _triangles;
     _polygonInfo = SpritePolygonCache::getInstance()->addSpritePolygonCache(file, info);
+//    test();
     calculateUVandContentSize();
 //    SpritePolygonCache::printInfo(*_polygonInfo);
 #if CC_SPRITE_DEBUG_DRAW
@@ -352,13 +354,13 @@ bool SpritePolygon::initWithRect(const std::string& filename, std::vector<cocos2
         auto c4b = Color4B::WHITE;
         auto t2f = Tex2F(0,0);
         _verts.push_back(V3F_C4B_T2F{v3,c4b,t2f});
-//        _indices.push_back(idx);
     }
 
     auto _triangles = TrianglesCommand::Triangles{&_verts[0], &indices[0], (ssize_t)_verts.size(), (ssize_t)indices.size()};
     SpritePolygonInfo info = SpritePolygonInfo{rect, _triangles};
     _polygonInfo = SpritePolygonCache::getInstance()->addSpritePolygonCache(filename, info);
     calculateUVandContentSize();
+    
 #if CC_SPRITE_DEBUG_DRAW
     debugDraw();
 #endif
@@ -453,6 +455,9 @@ void SpritePolygon::debugDraw()
     {
         _debugDrawNode = DrawNode::create();
         addChild(_debugDrawNode);
+    }
+    else{
+        _debugDrawNode->clear();
     }
     //draw all points
     auto positions = new (std::nothrow) Vec2[_polygonInfo->_triangles.vertCount];

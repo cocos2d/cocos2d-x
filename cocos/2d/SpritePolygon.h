@@ -78,14 +78,9 @@ protected:
     
     void calculateUVandContentSize();
     
-    bool                                    _triangleDirty; //if triangle is dirty, then it needs to be recalculated from verts and indices
-//    std::vector<cocos2d::V3F_C4B_T2F>       _verts;
-//    std::vector<unsigned short>             _indices;
     cocos2d::TrianglesCommand               _tcmd;
     cocos2d::BlendFunc                      _blendFunc;
-//    cocos2d::TrianglesCommand::Triangles    _triangles;
     cocos2d::Texture2D                     *_texture;
-//    cocos2d::Rect                           _textureRect;
     SpritePolygonInfo                          *_polygonInfo;
     virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags);
     
