@@ -58,7 +58,7 @@ public:
     //not recommended for production, its better to use the vec2 list for better performance
     static SpritePolygon *create(const std::string&, const cocos2d::Rect& rect = cocos2d::Rect::ZERO, float optimization = -1);
     bool initWithMarching(const std::string &file, const cocos2d::Rect &rect, float optimization);
-    bool initWithCache(const std::string &file, const SpritePolygonInfo *info);
+    bool initWithCache(const std::string &file, SpritePolygonInfo *info);
     
     bool initWithTexture(cocos2d::Texture2D *texture);
     
