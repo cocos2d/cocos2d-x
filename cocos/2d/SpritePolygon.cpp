@@ -255,14 +255,12 @@ bool SpritePolygon::initWithMarching(const std::string &file, const cocos2d::Rec
     delete marcher;
     
     //save result to cache
-    SpritePolygonInfo *info = new SpritePolygonInfo();
-    info->_rect = rect;
-    info->_triangles = _triangles;
-    _polygonInfo = SpritePolygonCache::getInstance()->addSpritePolygonCache(file, *info);
+    SpritePolygonInfo info;
+    info._rect = rect;
+    info._triangles = _triangles;
+    _polygonInfo = SpritePolygonCache::getInstance()->addSpritePolygonCache(file, info);
     calculateUVandContentSize();
-    SpritePolygonCache::printInfo(*_polygonInfo);
-    delete _triangles.verts;
-    delete _triangles.indices;
+//    SpritePolygonCache::printInfo(*_polygonInfo);
 #if CC_SPRITE_DEBUG_DRAW
     debugDraw();
 #endif
