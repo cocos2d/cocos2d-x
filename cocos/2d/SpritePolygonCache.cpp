@@ -94,8 +94,12 @@ SpritePolygonInfo* SpritePolygonCache::addSpritePolygonCache(const std::string& 
         }
     }
     
-    VecSpritePolygonInfo vecInfo;
+    VecSpritePolygonInfo vecInfo ;
     vecInfo.clear();
+    if (it != _SpritePolygonCacheMap.end())
+    {
+        vecInfo = it->second;
+    }
     SpritePolygonInfo* info = new SpritePolygonInfo;
     if (nullptr != info)
     {
@@ -148,20 +152,13 @@ void   SpritePolygonCache::removeSpritePolygonCache(const std::string& filePath,
         return;
     
     auto infoIter = it->second.begin();
-    bool exist = false;
     for (; infoIter != it->second.end(); infoIter++)
     {
         if((*infoIter)->_rect.equals(*rect))
         {
-            exist = true;
+            it->second.erase(infoIter);
             break;
         }
-    }
-    
-    if (exist)
-    {
-        CC_SAFE_DELETE(*infoIter);
-        it->second.erase(infoIter);
     }
     
     return;
@@ -171,11 +168,6 @@ void SpritePolygonCache::removeAllSpritePolygonCache()
 {
     for (std::unordered_map<std::string, VecSpritePolygonInfo>::iterator it = _SpritePolygonCacheMap.begin(); it != _SpritePolygonCacheMap.end(); ++it)
     {
-        auto infoIter = it->second.begin();
-        for (; infoIter != it->second.end(); infoIter++)
-        {
-            CC_SAFE_DELETE(*infoIter);
-        }
         it->second.clear();
     }
     _SpritePolygonCacheMap.clear();

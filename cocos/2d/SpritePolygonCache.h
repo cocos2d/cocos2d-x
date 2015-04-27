@@ -44,12 +44,12 @@ typedef struct CC_DLL _SpritePolygonInfo
     {
         if(nullptr != _triangles.verts)
         {
-            CC_SAFE_DELETE_ARRAY(_triangles.verts);
+            CC_SAFE_DELETE(_triangles.verts);
         }
         
         if(nullptr != _triangles.indices)
         {
-            CC_SAFE_DELETE_ARRAY(_triangles.indices);
+            CC_SAFE_DELETE(_triangles.indices);
         }
     }
 } SpritePolygonInfo;
