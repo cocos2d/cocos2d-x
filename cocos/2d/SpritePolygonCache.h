@@ -36,11 +36,14 @@
 
 NS_CC_BEGIN
 
-struct CC_DLL SpritePolygonInfo
+typedef struct CC_DLL _SpritePolygonInfo
 {
     cocos2d::Rect _rect;
     cocos2d::TrianglesCommand::Triangles _triangles;
-};
+    ~_SpritePolygonInfo(){
+        
+    }
+} SpritePolygonInfo;
 
 typedef std::vector<SpritePolygonInfo*> VecSpritePolygonInfo;
 typedef std::unordered_map<std::string, VecSpritePolygonInfo> MapSpritePolygonInfo;
