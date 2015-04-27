@@ -229,6 +229,16 @@ bool SpritePolygon::initWithCache(const std::string &file, SpritePolygonInfo *in
     CCASSERT(texture, "texture was not loaded properly");
     _polygonInfo = info;
     initWithTexture(texture);
+    if(_polygonInfo->_rect.equals(Rect::ZERO))
+    {
+        setContentSize(Size(texture->getPixelsWide(), texture->getPixelsHigh())/Director::getInstance()->getContentScaleFactor());
+    }
+    else
+    {
+        setContentSize(_polygonInfo->_rect.size);
+    }
+    
+
     setAnchorPoint(Vec2(0.5,0.5));
     return true;
 }
@@ -318,7 +328,7 @@ bool SpritePolygon::initWithVerts(const std::string& filename,std::vector<cocos2
 
     initWithTexture(texture);
     auto _textureRect = getTextRectFromTriangles(verts);
-    setContentSize(_textureRect.size);
+    setContentSize(_textureRect.size/Director::getInstance()->getContentScaleFactor());
         setAnchorPoint(Vec2(0.5,0.5));
     _transformDirty = true;
     auto _triangles = TrianglesCommand::Triangles{&verts[0], &indices[0], (ssize_t)verts.size(), (ssize_t)indices.size()};
