@@ -1,3 +1,6 @@
+cocos2d-x-3.7  ??
+    [FIX]           EaseRateAction: no way to create an `EaseRateAction`
+
 cocos2d-x-3.6  ??
     [NEW]           3rd: update chipmunk to v 6.2.2 on Windows 8.1 Universal App
     [NEW]           3rd: update freetype to v 2.5.5 on Windows 8.1 Universal App
