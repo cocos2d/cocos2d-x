@@ -12,6 +12,26 @@
 
 
 --------------------------------------------------------
+-- the cc Action
+-- @field [parent=#cc] Action#Action Action preloaded module
+
+
+--------------------------------------------------------
+-- the cc FiniteTimeAction
+-- @field [parent=#cc] FiniteTimeAction#FiniteTimeAction FiniteTimeAction preloaded module
+
+
+--------------------------------------------------------
+-- the cc Speed
+-- @field [parent=#cc] Speed#Speed Speed preloaded module
+
+
+--------------------------------------------------------
+-- the cc Follow
+-- @field [parent=#cc] Follow#Follow Follow preloaded module
+
+
+--------------------------------------------------------
 -- the cc Texture2D
 -- @field [parent=#cc] Texture2D#Texture2D Texture2D preloaded module
 
@@ -39,126 +59,6 @@
 --------------------------------------------------------
 -- the cc Node
 -- @field [parent=#cc] Node#Node Node preloaded module
-
-
---------------------------------------------------------
--- the cc Scene
--- @field [parent=#cc] Scene#Scene Scene preloaded module
-
-
---------------------------------------------------------
--- the cc GLView
--- @field [parent=#cc] GLView#GLView GLView preloaded module
-
-
---------------------------------------------------------
--- the cc Director
--- @field [parent=#cc] Director#Director Director preloaded module
-
-
---------------------------------------------------------
--- the cc Timer
--- @field [parent=#cc] Timer#Timer Timer preloaded module
-
-
---------------------------------------------------------
--- the cc Scheduler
--- @field [parent=#cc] Scheduler#Scheduler Scheduler preloaded module
-
-
---------------------------------------------------------
--- the cc FileUtils
--- @field [parent=#cc] FileUtils#FileUtils FileUtils preloaded module
-
-
---------------------------------------------------------
--- the cc UserDefault
--- @field [parent=#cc] UserDefault#UserDefault UserDefault preloaded module
-
-
---------------------------------------------------------
--- the cc EventListener
--- @field [parent=#cc] EventListener#EventListener EventListener preloaded module
-
-
---------------------------------------------------------
--- the cc EventDispatcher
--- @field [parent=#cc] EventDispatcher#EventDispatcher EventDispatcher preloaded module
-
-
---------------------------------------------------------
--- the cc EventListenerTouchOneByOne
--- @field [parent=#cc] EventListenerTouchOneByOne#EventListenerTouchOneByOne EventListenerTouchOneByOne preloaded module
-
-
---------------------------------------------------------
--- the cc EventListenerTouchAllAtOnce
--- @field [parent=#cc] EventListenerTouchAllAtOnce#EventListenerTouchAllAtOnce EventListenerTouchAllAtOnce preloaded module
-
-
---------------------------------------------------------
--- the cc EventListenerKeyboard
--- @field [parent=#cc] EventListenerKeyboard#EventListenerKeyboard EventListenerKeyboard preloaded module
-
-
---------------------------------------------------------
--- the cc EventMouse
--- @field [parent=#cc] EventMouse#EventMouse EventMouse preloaded module
-
-
---------------------------------------------------------
--- the cc EventListenerMouse
--- @field [parent=#cc] EventListenerMouse#EventListenerMouse EventListenerMouse preloaded module
-
-
---------------------------------------------------------
--- the cc EventAcceleration
--- @field [parent=#cc] EventAcceleration#EventAcceleration EventAcceleration preloaded module
-
-
---------------------------------------------------------
--- the cc EventListenerAcceleration
--- @field [parent=#cc] EventListenerAcceleration#EventListenerAcceleration EventListenerAcceleration preloaded module
-
-
---------------------------------------------------------
--- the cc EventCustom
--- @field [parent=#cc] EventCustom#EventCustom EventCustom preloaded module
-
-
---------------------------------------------------------
--- the cc EventListenerCustom
--- @field [parent=#cc] EventListenerCustom#EventListenerCustom EventListenerCustom preloaded module
-
-
---------------------------------------------------------
--- the cc EventFocus
--- @field [parent=#cc] EventFocus#EventFocus EventFocus preloaded module
-
-
---------------------------------------------------------
--- the cc EventListenerFocus
--- @field [parent=#cc] EventListenerFocus#EventListenerFocus EventListenerFocus preloaded module
-
-
---------------------------------------------------------
--- the cc Action
--- @field [parent=#cc] Action#Action Action preloaded module
-
-
---------------------------------------------------------
--- the cc FiniteTimeAction
--- @field [parent=#cc] FiniteTimeAction#FiniteTimeAction FiniteTimeAction preloaded module
-
-
---------------------------------------------------------
--- the cc Speed
--- @field [parent=#cc] Speed#Speed Speed preloaded module
-
-
---------------------------------------------------------
--- the cc Follow
--- @field [parent=#cc] Follow#Follow Follow preloaded module
 
 
 --------------------------------------------------------
@@ -304,6 +204,106 @@
 --------------------------------------------------------
 -- the cc TargetedAction
 -- @field [parent=#cc] TargetedAction#TargetedAction TargetedAction preloaded module
+
+
+--------------------------------------------------------
+-- the cc Scene
+-- @field [parent=#cc] Scene#Scene Scene preloaded module
+
+
+--------------------------------------------------------
+-- the cc GLView
+-- @field [parent=#cc] GLView#GLView GLView preloaded module
+
+
+--------------------------------------------------------
+-- the cc Director
+-- @field [parent=#cc] Director#Director Director preloaded module
+
+
+--------------------------------------------------------
+-- the cc Timer
+-- @field [parent=#cc] Timer#Timer Timer preloaded module
+
+
+--------------------------------------------------------
+-- the cc Scheduler
+-- @field [parent=#cc] Scheduler#Scheduler Scheduler preloaded module
+
+
+--------------------------------------------------------
+-- the cc FileUtils
+-- @field [parent=#cc] FileUtils#FileUtils FileUtils preloaded module
+
+
+--------------------------------------------------------
+-- the cc UserDefault
+-- @field [parent=#cc] UserDefault#UserDefault UserDefault preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventListener
+-- @field [parent=#cc] EventListener#EventListener EventListener preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventDispatcher
+-- @field [parent=#cc] EventDispatcher#EventDispatcher EventDispatcher preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventListenerTouchOneByOne
+-- @field [parent=#cc] EventListenerTouchOneByOne#EventListenerTouchOneByOne EventListenerTouchOneByOne preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventListenerTouchAllAtOnce
+-- @field [parent=#cc] EventListenerTouchAllAtOnce#EventListenerTouchAllAtOnce EventListenerTouchAllAtOnce preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventListenerKeyboard
+-- @field [parent=#cc] EventListenerKeyboard#EventListenerKeyboard EventListenerKeyboard preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventMouse
+-- @field [parent=#cc] EventMouse#EventMouse EventMouse preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventListenerMouse
+-- @field [parent=#cc] EventListenerMouse#EventListenerMouse EventListenerMouse preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventAcceleration
+-- @field [parent=#cc] EventAcceleration#EventAcceleration EventAcceleration preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventListenerAcceleration
+-- @field [parent=#cc] EventListenerAcceleration#EventListenerAcceleration EventListenerAcceleration preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventCustom
+-- @field [parent=#cc] EventCustom#EventCustom EventCustom preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventListenerCustom
+-- @field [parent=#cc] EventListenerCustom#EventListenerCustom EventListenerCustom preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventFocus
+-- @field [parent=#cc] EventFocus#EventFocus EventFocus preloaded module
+
+
+--------------------------------------------------------
+-- the cc EventListenerFocus
+-- @field [parent=#cc] EventListenerFocus#EventListenerFocus EventListenerFocus preloaded module
 
 
 --------------------------------------------------------
