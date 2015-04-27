@@ -98,6 +98,14 @@ class CC_DLL EaseRateAction : public ActionEase
 {
 public:
     /**
+     @brief Creates the action with the inner action and the rate parameter.
+     @param action A given ActionInterval
+     @param rate A given rate
+     @return An autoreleased EaseRateAction object.
+    **/
+    static EaseRateAction* create(ActionInterval* action, float rate);
+    
+    /**
      @brief Set the rate value for the ease rate action.
      @param rate The value will be set.
      */
