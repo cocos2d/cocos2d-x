@@ -30,6 +30,7 @@ THE SOFTWARE.
 
 #include <string>
 #include <vector>
+#include "base/CCConsole.h"
 #include "platform/CCPlatformMacros.h"
 #include "math/Vec2.h"
 
