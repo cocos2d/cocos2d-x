@@ -1,4 +1,6 @@
 cocos2d-x-3.7  ??
+    [NEW]           FileUtils: check filename case characters on windows
+
     [FIX]           EaseRateAction: no way to create an `EaseRateAction`
 
 cocos2d-x-3.6  ??
