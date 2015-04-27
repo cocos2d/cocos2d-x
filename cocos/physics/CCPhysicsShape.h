@@ -212,6 +212,8 @@ public:
      * @param material A PhysicsMaterial object.
      */
     void setMaterial(const PhysicsMaterial& material);
+    inline bool isSensor() const { return _sensor; }
+    void setSensor(bool sensor);
     
     /** 
      * Calculate the default moment value.
@@ -346,6 +348,7 @@ protected:
     float _area;
     float _mass;
     float _moment;
+    bool _sensor;
     float _scaleX;
     float _scaleY;
     float _newScaleX;

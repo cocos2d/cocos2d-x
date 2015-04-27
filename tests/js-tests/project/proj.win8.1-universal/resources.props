@@ -23,7 +23,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <_CustomResource Include="..\..\..\res\**\*">
+    <_CustomResource Include="..\..\..\..\cpp-tests\Resources\**\*">
       <Link>Assets\Resources\res\%(RecursiveDir)%(FileName)%(Extension)</Link>
       <DeploymentContent>true</DeploymentContent>
     </_CustomResource>

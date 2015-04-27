@@ -1,3 +1,9 @@
+cocos2d-x-3.7  ??
+    [NEW]           FileUtils: checked filename case characters on windows
+    [NEW]           PhysicsShape: added sensor property
+
+    [FIX]           EaseRateAction: no way to create an `EaseRateAction` instance
+
 cocos2d-x-3.6  ??
     [NEW]           3rd: update chipmunk to v 6.2.2 on Windows 8.1 Universal App
     [NEW]           3rd: update freetype to v 2.5.5 on Windows 8.1 Universal App
