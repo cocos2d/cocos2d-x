@@ -320,7 +320,7 @@ void PhysicsWorld::collisionSeparateCallback(PhysicsContact& contact)
         return;
     }
     
-    contact.setEventCode(PhysicsContact::EventCode::SEPERATE);
+    contact.setEventCode(PhysicsContact::EventCode::SEPARATE);
     contact.setWorld(this);
     _scene->getEventDispatcher()->dispatchEvent(&contact);
 }

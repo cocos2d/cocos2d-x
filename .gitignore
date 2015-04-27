@@ -123,6 +123,7 @@ project.properties
 /templates/lua-template-runtime/runtime
 /v*-deps-*.zip
 /v*-lua-runtime-*.zip
+/v*-console-*.zip
 /tools/fbx-conv/
 tests/cpp-tests/Resources/audio
 /tests/js-tests/

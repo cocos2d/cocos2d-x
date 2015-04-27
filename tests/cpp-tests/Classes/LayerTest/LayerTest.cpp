@@ -44,6 +44,11 @@ static void setEnableRecursiveCascading(Node* node, bool enable)
     }
 }
 
+std::string LayerTest::title() const
+{
+    return "Layer Test";
+}
+
 // LayerTestCascadingOpacityA
 void LayerTestCascadingOpacityA::onEnter()
 {

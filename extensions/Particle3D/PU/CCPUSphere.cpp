@@ -29,7 +29,6 @@ NS_CC_BEGIN
 
 PUSphere::PUSphere()
  : _radius(1.0)
- , _center(Vec3::ZERO)
 {
 
 }
