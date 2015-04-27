@@ -76,6 +76,8 @@
 		ED2719DB1AE4FA1200C17085 /* libcocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2719571AE4E68200C17085 /* libcocos2d Mac.a */; };
 		ED2719DC1AE4FA1600C17085 /* libjscocos2d Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED27195F1AE4E69800C17085 /* libjscocos2d Mac.a */; };
 		ED743D1717D099F10004076B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDCC747E17C455FD007B692C /* IOKit.framework */; };
+		EDCA13E81AEA4D4A00F445CA /* res in Resources */ = {isa = PBXBuildFile; fileRef = EDCA13E71AEA4D4A00F445CA /* res */; };
+		EDCA13E91AEA4D4A00F445CA /* res in Resources */ = {isa = PBXBuildFile; fileRef = EDCA13E71AEA4D4A00F445CA /* res */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -207,6 +209,7 @@
 		ED2719CF1AE4F63D00C17085 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		ED2719D11AE4F64600C17085 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		ED2719D31AE4F64D00C17085 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		EDCA13E71AEA4D4A00F445CA /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; name = res; path = "../tests/js-tests/res"; sourceTree = "<group>"; };
 		EDCC747E17C455FD007B692C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -286,6 +289,7 @@
 		1A604F2E18BF1D3300CC9A93 /* js-tests */ = {
 			isa = PBXGroup;
 			children = (
+				EDCA13E71AEA4D4A00F445CA /* res */,
 				BAA7DEE218C84F5000D9A10E /* main.js */,
 				1A2B72DA18D294AE00ED9E74 /* project */,
 				BAA7DEE318C84F5000D9A10E /* project.json */,
@@ -433,6 +437,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A01E176F1784C06E00B0CA4A /* Build configuration list for PBXNativeTarget "js-tests iOS" */;
 			buildPhases = (
+				EDCA13EE1AEA4E7B00F445CA /* ShellScript */,
 				A01E16CB1784C06E00B0CA4A /* Resources */,
 				A01E16F51784C06E00B0CA4A /* Sources */,
 				A01E17601784C06E00B0CA4A /* Frameworks */,
@@ -452,6 +457,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A035A5E91782290400987F6C /* Build configuration list for PBXNativeTarget "js-tests Mac" */;
 			buildPhases = (
+				EDCA13E61AEA4C8100F445CA /* Run Script */,
 				A035A54F1782290400987F6C /* Resources */,
 				A035A5701782290400987F6C /* Sources */,
 				A035A5DA1782290400987F6C /* Frameworks */,
@@ -475,7 +481,7 @@
 			attributes = {
 				LastUpgradeCheck = 0510;
 			};
-			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "cocos2d_jsb_samples" */;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "cocos2d_js_tests" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
@@ -545,6 +551,7 @@
 				BA2350561948262700E17B2A /* script in Resources */,
 				BAA7DEE718C84F5000D9A10E /* project.json in Resources */,
 				1A604F5518BF1D6000CC9A93 /* Icon-57.png in Resources */,
+				EDCA13E91AEA4D4A00F445CA /* res in Resources */,
 				1A604F5218BF1D6000CC9A93 /* Icon-120.png in Resources */,
 				1A604F5618BF1D6000CC9A93 /* Icon-72.png in Resources */,
 				1A604F5118BF1D6000CC9A93 /* Icon-114.png in Resources */,
@@ -568,12 +575,43 @@
 				BA2350551948262700E17B2A /* script in Resources */,
 				1A604F6618BF1D6600CC9A93 /* Icon.icns in Resources */,
 				1A604F3418BF1D4900CC9A93 /* src in Resources */,
+				EDCA13E81AEA4D4A00F445CA /* res in Resources */,
 				1A604F6518BF1D6600CC9A93 /* MainMenu.xib in Resources */,
 				BAA7DEE418C84F5000D9A10E /* main.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		EDCA13E61AEA4C8100F445CA /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\ncocos_dir=${SRCROOT}/../tests/js-tests/res\nif [ -d \"${cocos_dir}\" ]; then\nrm -rv \"${cocos_dir}\"\nmkdir \"${cocos_dir}\"\nelse\nmkdir \"${cocos_dir}\"\nfi\n\ncp -r \"${SRCROOT}/../tests/cpp-tests/Resources/\" \"${cocos_dir}\"";
+		};
+		EDCA13EE1AEA4E7B00F445CA /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\ncocos_dir=${SRCROOT}/../tests/js-tests/res\nif [ -d \"${cocos_dir}\" ]; then\nrm -rv \"${cocos_dir}\"\nmkdir \"${cocos_dir}\"\nelse\nmkdir \"${cocos_dir}\"\nfi\n\ncp -r \"${SRCROOT}/../tests/cpp-tests/Resources/\" \"${cocos_dir}\"";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A01E16F51784C06E00B0CA4A /* Sources */ = {
@@ -830,7 +868,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "cocos2d_jsb_samples" */ = {
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "cocos2d_js_tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
