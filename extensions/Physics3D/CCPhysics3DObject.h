@@ -76,13 +76,13 @@ public:
     
     void* getUserData() const { return _userData; }
     
-    void setPhysicsWorld(Physics3DWorld* world);
+    void setPhysicsWorld(Physics3DWorld* world) { _physicsWorld = world; };
     
     Physics3DWorld* getPhysicsWorld() const { return _physicsWorld; }
     
     virtual cocos2d::Mat4 getWorldTransform() const = 0;
 
-    void setCollisionCallback(const CollisionCallbackFunc &func);
+    void setCollisionCallback(const CollisionCallbackFunc &func) { _collisionCallbackFunc = func; };
     const CollisionCallbackFunc& getCollisionCallback() const { return _collisionCallbackFunc; }
 
     bool needCollisionCallback() { return _collisionCallbackFunc != nullptr; };
