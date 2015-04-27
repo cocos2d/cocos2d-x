@@ -268,8 +268,7 @@ bool SpritePolygon::initWithMarching(const std::string &file, const cocos2d::Rec
     _polygonInfo = SpritePolygonCache::getInstance()->addSpritePolygonCache(file, *info);
     calculateUVandContentSize();
     
-    delete _triangles.verts;
-    delete _triangles.indices;
+    delete info;
 #if CC_SPRITE_DEBUG_DRAW
     debugDraw();
 #endif

@@ -40,8 +40,17 @@ typedef struct CC_DLL _SpritePolygonInfo
 {
     cocos2d::Rect _rect;
     cocos2d::TrianglesCommand::Triangles _triangles;
-    ~_SpritePolygonInfo(){
+    ~_SpritePolygonInfo()
+    {
+        if(nullptr != _triangles.verts)
+        {
+            CC_SAFE_DELETE_ARRAY(_triangles.verts);
+        }
         
+        if(nullptr != _triangles.indices)
+        {
+            CC_SAFE_DELETE_ARRAY(_triangles.indices);
+        }
     }
 } SpritePolygonInfo;
 
