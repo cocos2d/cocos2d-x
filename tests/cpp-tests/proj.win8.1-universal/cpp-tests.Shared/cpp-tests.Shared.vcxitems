@@ -143,6 +143,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\SpineTest\SpineTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\Sprite3DTest\DrawNode3D.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\Sprite3DTest\Sprite3DTest.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\SpritePolygonTest\SpritePolygonTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\SpriteTest\SpriteTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\TerrainTest\TerrainTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\testBasic.cpp" />
@@ -407,6 +408,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\SpineTest\SpineTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\Sprite3DTest\DrawNode3D.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\Sprite3DTest\Sprite3DTest.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\SpritePolygonTest\SpritePolygonTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\SpriteTest\SpriteTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\TerrainTest\TerrainTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\testBasic.h" />

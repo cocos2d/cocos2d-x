@@ -71,6 +71,9 @@ cocos2d.cpp \
 2d/CCSpriteBatchNode.cpp \
 2d/CCSpriteFrame.cpp \
 2d/CCSpriteFrameCache.cpp \
+2d/MarchingSquare.cpp \
+2d/PolySprite.cpp \
+2d/PolySpriteCache.cpp \
 2d/CCTMXLayer.cpp \
 2d/CCFastTMXLayer.cpp \
 2d/CCTMXObjectGroup.cpp \
@@ -192,7 +195,12 @@ physics/CCPhysicsWorld.cpp \
 ../external/unzip/ioapi.cpp \
 ../external/unzip/unzip.cpp \
 ../external/edtaa3func/edtaa3func.cpp \
-../external/xxhash/xxhash.c
+../external/xxhash/xxhash.c \
+../external/poly2tri/common/shapes.cc \
+../external/poly2tri/sweep/advancing_front.cc \
+../external/poly2tri/sweep/cdt.cc \
+../external/poly2tri/sweep/sweep_context.cc \
+../external/poly2tri/sweep/sweep.cc
 
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
@@ -205,7 +213,10 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/unzip \
                     $(LOCAL_PATH)/../external/chipmunk/include/chipmunk \
                     $(LOCAL_PATH)/../external/xxhash \
-                    $(LOCAL_PATH)/../external/nslog
+                    $(LOCAL_PATH)/../external/nslog \
+                    $(LOCAL_PATH)/../external/poly2tri \
+                    $(LOCAL_PATH)/../external/poly2tri/common \
+                    $(LOCAL_PATH)/../external/poly2tri/sweep
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/. \
@@ -217,7 +228,10 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/edtaa3func \
                     $(LOCAL_PATH)/../external/xxhash \
                     $(LOCAL_PATH)/../external/ConvertUTF \
-                    $(LOCAL_PATH)/../external/nslog
+                    $(LOCAL_PATH)/../external/nslog \
+                    $(LOCAL_PATH)/../external/poly2tri \
+                    $(LOCAL_PATH)/../external/poly2tri/common \
+                    $(LOCAL_PATH)/../external/poly2tri/sweep
 
 LOCAL_EXPORT_LDLIBS := -lGLESv2 \
                        -llog \
@@ -235,6 +249,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dxandroid_static
 
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS   :=  -DUSE_FILE32API
+LOCAL_CFLAGS   +=  -fexceptions
 LOCAL_CPPFLAGS := -Wno-deprecated-declarations -Wno-extern-c-compat
 LOCAL_EXPORT_CFLAGS   := -DUSE_FILE32API
 LOCAL_EXPORT_CPPFLAGS := -Wno-deprecated-declarations -Wno-extern-c-compat
