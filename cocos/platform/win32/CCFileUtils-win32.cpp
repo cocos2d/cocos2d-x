@@ -132,45 +132,48 @@ bool FileUtilsWin32::isAbsolutePath(const std::string& strPath) const
     return false;
 }
 
+// Because windows is case insensitive, so we should check the file names.
 static bool checkFileName(const std::string& fullPath, const std::string& filename)
 {
-	//效验文件大小写
-	std::string tmpPath=convertPathFormatToUnixStyle(fullPath);
-	size_t len = tmpPath.length();
-	size_t nl = filename.length();
-	std::string realName;
-
-	while (tmpPath.length() >= len - nl&&
-		tmpPath.length()>2)
+    std::string tmpPath=convertPathFormatToUnixStyle(fullPath);
+    size_t len = tmpPath.length();
+    size_t nl = filename.length();
+    std::string realName;
+    
+    while (tmpPath.length() >= len - nl && tmpPath.length()>2)
 	{
-		//CCLOG("%s", tmpPath.c_str());
-		WIN32_FIND_DATAA data;
-		HANDLE h = FindFirstFileA(tmpPath.c_str(), &data);
-		FindClose(h);
-		if (h != INVALID_HANDLE_VALUE)
-		{
-			int fl = strlen(data.cFileName);
-			if (data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
-				realName = "/" + realName;
-			realName = data.cFileName + realName;
-			if (0 != strcmp(&tmpPath.c_str()[tmpPath.length() - fl], data.cFileName))
-			{
-				std::string msg = "File path error: \"";
-				msg.append(filename).append("\" the real name is: ").append(realName);
+        //CCLOG("%s", tmpPath.c_str());
+        WIN32_FIND_DATAA data;
+        HANDLE h = FindFirstFileA(tmpPath.c_str(), &data);
+        FindClose(h);
+        if (h != INVALID_HANDLE_VALUE)
+        {
+            int fl = strlen(data.cFileName);
+            if (data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+            {
+                realName = "/" + realName;
+            }
+            realName = data.cFileName + realName;
+            if (0 != strcmp(&tmpPath.c_str()[tmpPath.length() - fl], data.cFileName))
+            {
+                std::string msg = "File path error: \"";
+                msg.append(filename).append("\" the real name is: ").append(realName);
+            
+                CCLOG("%s", msg.c_str());
+                return false;
+            }
 
-				CCLOG("%s", msg.c_str());
-				return false;
-			}
+        }
+        else
+        {
+            break;
+        }
 
-		}
-		else
-			break;
-
-		do
-		{
-			tmpPath = tmpPath.substr(0, tmpPath.rfind("/"));
-		} while (tmpPath.back() == '.');
-	}
+        do
+        {
+            tmpPath = tmpPath.substr(0, tmpPath.rfind("/"));
+        } while (tmpPath.back() == '.');
+    }
 	return true;
 }
 
@@ -189,7 +192,7 @@ static Data getData(const std::string& filename, bool forString)
         // read the file from hardware
         std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
 
-		//效验路径大小写是否正确
+        // check if the filename uses correct case characters
 		CC_BREAK_IF(!checkFileName(fullPath, filename));
 
         WCHAR wszBuf[CC_MAX_PATH] = {0};
@@ -274,8 +277,8 @@ unsigned char* FileUtilsWin32::getFileData(const std::string& filename, const ch
         // read the file from hardware
         std::string fullPath = fullPathForFilename(filename);
 
-		//效验路径大小写是否正确
-		CC_BREAK_IF(!checkFileName(fullPath, filename));
+         // check if the filename uses correct case characters
+        CC_BREAK_IF(!checkFileName(fullPath, filename));
 
         WCHAR wszBuf[CC_MAX_PATH] = {0};
         MultiByteToWideChar(CP_UTF8, 0, fullPath.c_str(), -1, wszBuf, sizeof(wszBuf)/sizeof(wszBuf[0]));
