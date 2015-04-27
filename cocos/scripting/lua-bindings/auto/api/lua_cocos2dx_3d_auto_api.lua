@@ -2,6 +2,16 @@
 -- @module cc
 
 --------------------------------------------------------
+-- the cc Animation3D
+-- @field [parent=#cc] Animation3D#Animation3D Animation3D preloaded module
+
+
+--------------------------------------------------------
+-- the cc Animate3D
+-- @field [parent=#cc] Animate3D#Animate3D Animate3D preloaded module
+
+
+--------------------------------------------------------
 -- the cc Skeleton3D
 -- @field [parent=#cc] Skeleton3D#Skeleton3D Skeleton3D preloaded module
 
@@ -19,16 +29,6 @@
 --------------------------------------------------------
 -- the cc Mesh
 -- @field [parent=#cc] Mesh#Mesh Mesh preloaded module
-
-
---------------------------------------------------------
--- the cc Animation3D
--- @field [parent=#cc] Animation3D#Animation3D Animation3D preloaded module
-
-
---------------------------------------------------------
--- the cc Animate3D
--- @field [parent=#cc] Animate3D#Animate3D Animate3D preloaded module
 
 
 --------------------------------------------------------
