@@ -201,7 +201,13 @@ void SpritePolygonCache::printInfo(SpritePolygonInfo &info){
     auto indEnd = &info._triangles.indices[info._triangles.indexCount];
     for(auto i = info._triangles.indices; i < indEnd; i+=3)
     {
-        CCLOG("%d, %d, %d", *i,*(i+1), *(i+2));
+        CCLOG("%d, %d, %d,", *i,*(i+1), *(i+2));
+    }
+    
+    auto uvEnd = &info._triangles.verts[info._triangles.vertCount];
+    for(auto v = info._triangles.verts; v < uvEnd; v++)
+    {
+        CCLOG("%f, %f", v->texCoords.u, v->texCoords.v);
     }
 }
 
