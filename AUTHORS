@@ -1091,6 +1091,7 @@ Developers:
         
     loadrunner
         Added romanian languange support
+        Added sensor property for PhysicsShape
         
     Almax27
         RenderQueue command buffer optimize.
