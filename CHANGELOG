@@ -10,7 +10,11 @@ cocos2d-x-3.6  ??
     [NEW]           WP8: remove WP8 support because Angle don't support WP8 any more
     [NEW]           WP8.1: added back button support
 
+    [FIX]           Animate3D: modify `Animate3D::setHighQuality()` Animate3D::setQuality(), add a new animation quality type none which means that will not update animation to the bone, it is useful when the Sprite3D is out of the screen, it can safe a lot of cpu time.
+    [FIX]           AnimationCurve: memory leak
+    [FIX]           Bundle3D: memory leak when failed to load file
     [FIX]           JNI: JNI illegal start byte error which causes crashing error on Android 5.0
+    [FIX]           PUParticleSystem3D: refactoring create function using initWithXXX
     [FIX]           UI:VideoPlayer: crashed when playing streamed MP4 file on iOS
 
 cocos2d-x-3.6beta0 Apr.14 2015

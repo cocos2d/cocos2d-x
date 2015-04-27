@@ -38,6 +38,14 @@ NS_CC_BEGIN
 class Bone3D;
 class Sprite3D;
 
+
+enum class Animate3DQuality
+{
+    QUALITY_NONE = 0,          // it'll be ignore the curve-evaluating(the animation looks like stop), just acculate transition time.
+    QUALITY_LOW,               // low animation quality, it'll be more efficient.
+    QUALITY_HIGH,              // high animation quality.
+};
+
 /**
  * @addtogroup _3d
  * @{
@@ -105,16 +113,11 @@ public:
     CC_DEPRECATED_ATTRIBUTE bool getPlayBack() const { return _playReverse; }
     CC_DEPRECATED_ATTRIBUTE void setPlayBack(bool reverse) { _playReverse = reverse; }
     
-    /**set high quality
-     * The default value is based on Configuration::isHighAnimate3DQuality(). You can configure it in the config.plist. However, you can modify it using the following function
-     * @param true: is high quality, false: is low quality.
-     */
-    void setHighQuality(bool isHighQuality);
+    /**set animate quality*/
+    void setQuality(Animate3DQuality quality);
     
-    /**get high quality
-     * is it high quality
-     */
-    bool isHighQuality() const;
+    /**get animate quality*/
+    Animate3DQuality getQuality() const;
     
 CC_CONSTRUCTOR_ACCESS:
     
@@ -153,7 +156,7 @@ protected:
     EvaluateType _translateEvaluate;
     EvaluateType _roteEvaluate;
     EvaluateType _scaleEvaluate;
-    bool _isHighQuality;        //  true: is high quality, false: is low quality
+    Animate3DQuality _quality;
     
     std::unordered_map<Bone3D*, Animation3D::Curve*> _boneCurves; //weak ref
     std::unordered_map<Node*, Animation3D::Curve*> _nodeCurves;
