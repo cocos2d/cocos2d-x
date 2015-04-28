@@ -26,7 +26,7 @@ SpritePolygonTest::SpritePolygonTest()
 SpritePolygonPerformance::SpritePolygonPerformance()
 {
     SpritePolygonCache::getInstance()->removeAllSpritePolygonCache();
-    Director::getInstance()->setClearColor(Color4F(102./255, 184./255, 204./255, 255.));
+    Director::getInstance()->setClearColor(Color4F(102.f/255, 184.f/255, 204.f/255, 255.f));
     TTFConfig ttfConfig("fonts/arial.ttf", 10);
     perfLabel = Label::createWithTTF(ttfConfig, "performance test");
     addChild(perfLabel);
@@ -38,7 +38,7 @@ SpritePolygonPerformance::SpritePolygonPerformance()
     _posX = _leftX = size.width*0.15;
     _rightX = size.width*0.85;
     _posY = size.height/2;
-    prevDt = 0.016;
+    prevDt = 0.016f;
     goRight = true;
     ended = false;
     scheduleUpdate();
@@ -187,8 +187,7 @@ Sprite* SpritePerformanceTestDynamic::makeSprite()
 
 void SpritePolygonTestDemo::initDefaultSprite(const std::string &filename, cocos2d::experimental::SpritePolygon * inst)
 {
-    Director::getInstance()->setClearColor(Color4F(102./255, 184./255, 204./255, 255.));
-    
+    Director::getInstance()->setClearColor(Color4F(102.f/255, 184.f/255, 204.f/255, 255.f));
     
     spp = inst;
     addChild(spp);
@@ -205,11 +204,11 @@ void SpritePolygonTestDemo::initDefaultSprite(const std::string &filename, cocos
     touchListener->onTouchBegan = [&](Touch* touch, Event* event){
         spp->showDebug(true);
         debugForNormalSprite->setVisible(true);
-        return 1;
+        return true;
     };
     touchListener->onTouchMoved = [&](Touch* touch, Event* event){
             auto pos = touch->getDelta();
-            float newScale = clampf(spp->getScale()+pos.x*0.01, 0.1, 2);
+            float newScale = clampf(spp->getScale() + pos.x * 0.01f, 0.1f, 2.f);
             spp->setScale(newScale);
             sp->setScale(newScale);
     };
@@ -463,24 +462,24 @@ SpritePolygonTest4::SpritePolygonTest4(){
     unsigned short idxs[] = {0, 1, 2, 3, 0, 2, 4, 0, 3, 5, 0, 4, 5, 6, 0, 0, 6, 7, 8, 7, 6, 6, 9, 8, 9, 10, 8, 9, 11, 10, 11, 12, 10, 8, 10, 13, 14, 5, 4, 15, 5, 14, 4, 3, 16, 3, 17, 16};
     std::vector<unsigned short> indices(idxs, idxs + sizeof idxs / sizeof idxs[0]);
     Tex2F t2f[] = {
-        Tex2F(0.394118, 0.392562),
-        Tex2F(0.323529, 0.392562),
-        Tex2F(0.194118, 0.483471),
-        Tex2F(0.358824, 0.632231),
-        Tex2F(0.641176, 0.632231),
-        Tex2F(0.605882, 0.392562),
-        Tex2F(0.711765, 0.276859),
-        Tex2F(0.311765, 0.334711),
-        Tex2F(0.288235, 0.202479),
-        Tex2F(0.676471, 0.103306),
-        Tex2F(0.429412, 0.061983),
-        Tex2F(0.570588, 0.053719),
-        Tex2F(0.429412, 0.053719),
-        Tex2F(0.323529, 0.103306),
-        Tex2F(0.805882, 0.524793),
-        Tex2F(0.676471, 0.392562),
-        Tex2F(0.664706, 0.962810),
-        Tex2F(0.335294, 0.962810)
+        Tex2F(0.394118f, 0.392562f),
+        Tex2F(0.323529f, 0.392562f),
+        Tex2F(0.194118f, 0.483471f),
+        Tex2F(0.358824f, 0.632231f),
+        Tex2F(0.641176f, 0.632231f),
+        Tex2F(0.605882f, 0.392562f),
+        Tex2F(0.711765f, 0.276859f),
+        Tex2F(0.311765f, 0.334711f),
+        Tex2F(0.288235f, 0.202479f),
+        Tex2F(0.676471f, 0.103306f),
+        Tex2F(0.429412f, 0.061983f),
+        Tex2F(0.570588f, 0.053719f),
+        Tex2F(0.429412f, 0.053719f),
+        Tex2F(0.323529f, 0.103306f),
+        Tex2F(0.805882f, 0.524793f),
+        Tex2F(0.676471f, 0.392562f),
+        Tex2F(0.664706f, 0.962810f),
+        Tex2F(0.335294f, 0.962810f)
     };
     std::vector<V3F_C4B_T2F> vs;
     for(int i = 0; i < 18; i++)
