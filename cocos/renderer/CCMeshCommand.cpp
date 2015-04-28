@@ -113,7 +113,7 @@ void MeshCommand::init(float globalZOrder,
 {
     CCASSERT(material, "material cannot be nill");
 
-#if 0
+#if 1
     RenderCommand::init(globalZOrder, mv, flags);
 
     _globalOrder = globalZOrder;
@@ -317,18 +317,29 @@ void MeshCommand::restoreRenderState()
 
 void MeshCommand::applyUniforms(GLProgramState* glprogramstate)
 {
-    glprogramstate->setUniformVec4("u_color", _displayColor);
-
-    if (_matrixPaletteSize && _matrixPalette)
-    {
-        glprogramstate->setUniformCallback("u_matrixPalette", CC_CALLBACK_2(MeshCommand::MatrixPalleteCallBack, this));
-
-    }
-
-    // XXX: uniforms are applied here, but I think
-    // they were applied on another part as well
+    // XXX:
+    // apply user defined uniforms... in case there is any.
     glprogramstate->applyUniforms();
 
+    // Don't use the Uniform API here since these are hardcoded values and need to be applied in order.
+    // Why order is important? I don't know... I guess it has to do with the location of Uniforms and a bug
+    // in the initialization... just a guess.
+
+    auto glprogram = glprogramstate->getGLProgram();
+
+    // 'u_color'
+    auto location = glprogram->getUniformLocationForName("u_color");
+    glprogram->setUniformLocationWith4f(location, _displayColor.x, _displayColor.y, _displayColor.z, _displayColor.w);
+
+    // 'u_matrixPalette'
+    if (_matrixPaletteSize && _matrixPalette)
+    {
+        location = glprogram->getUniformLocationForName("u_matrixPalette");
+        glprogram->setUniformLocationWith4fv(location, (const float*)_matrixPalette, (GLsizei)_matrixPaletteSize);
+//        glprogramstate->setUniformCallback("u_matrixPalette", CC_CALLBACK_2(MeshCommand::MatrixPalleteCallBack, this));
+    }
+
+    // light related
     const auto& scene = Director::getInstance()->getRunningScene();
     if (scene && scene->getLights().size() > 0)
         setLightUniforms(glprogramstate);
@@ -446,7 +457,7 @@ void MeshCommand::execute()
 
             // don't bind attributes, since they were
             // already bound in preBatchDraw
-            pass->bind(_mv, false);
+            pass->bind(_mv, true);
 
             // XXX should be part of material
             applyRenderState();
@@ -462,6 +473,7 @@ void MeshCommand::execute()
     {
         // set render state
         _glProgramState->apply(_mv);
+
         applyRenderState();
         applyUniforms(_glProgramState);
 
