@@ -305,7 +305,7 @@ void TestSuite::restartCurrTest()
     testCase->setTestSuite(this);
     testCase->setTestCaseName(_childTestNames[_currTestIndex]);
 
-    Director::getInstance()->replaceScene(testCase);
+    Director::getInstance()->replaceScene(scene);
 }
 
 void TestSuite::enterNextTest()
@@ -317,7 +317,7 @@ void TestSuite::enterNextTest()
     testCase->setTestSuite(this);
     testCase->setTestCaseName(_childTestNames[_currTestIndex]);
 
-    Director::getInstance()->replaceScene(testCase);
+    Director::getInstance()->replaceScene(scene);
 }
 
 void TestSuite::enterPreviousTest()
@@ -336,7 +336,7 @@ void TestSuite::enterPreviousTest()
     testCase->setTestSuite(this);
     testCase->setTestCaseName(_childTestNames[_currTestIndex]);
 
-    Director::getInstance()->replaceScene(testCase);
+    Director::getInstance()->replaceScene(scene);
 }
 
 //TestCase
