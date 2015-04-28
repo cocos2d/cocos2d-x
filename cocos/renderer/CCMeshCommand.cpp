@@ -113,7 +113,7 @@ void MeshCommand::init(float globalZOrder,
 {
     CCASSERT(material, "material cannot be nill");
 
-#if 1
+#if 0
     RenderCommand::init(globalZOrder, mv, flags);
 
     _globalOrder = globalZOrder;
@@ -223,8 +223,6 @@ void MeshCommand::setMatrixPalette(const Vec4* matrixPalette)
 
 void MeshCommand::setMatrixPaletteSize(int size)
 {
-    if (size>1000 || size<0)
-        printf("que locura\n");
     _matrixPaletteSize = size;
 }
 
@@ -396,7 +394,6 @@ void MeshCommand::batchDraw()
             applyRenderState();
             applyUniforms(glprogramstate);
 
-            // Draw
             glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
             CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
 
@@ -414,13 +411,15 @@ void MeshCommand::batchDraw()
         // Draw
         glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
         CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
+
     }
-}
-void MeshCommand::postBatchDraw()
-{
+
     //restore render state
     restoreRenderState();
 
+}
+void MeshCommand::postBatchDraw()
+{
     if (_vao)
     {
         GL::bindVAO(0);
@@ -434,6 +433,10 @@ void MeshCommand::postBatchDraw()
 
 void MeshCommand::execute()
 {
+    // Draw without VAO
+    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
+
     if (_material)
     {
         for(const auto& pass: _material->_currentTechnique->_passes)
@@ -443,14 +446,12 @@ void MeshCommand::execute()
 
             // don't bind attributes, since they were
             // already bound in preBatchDraw
-            pass->bind(_mv);
+            pass->bind(_mv, false);
 
             // XXX should be part of material
             applyRenderState();
             applyUniforms(glprogramstate);
 
-            // Draw without VAO
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
             glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
             CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
 
@@ -464,16 +465,15 @@ void MeshCommand::execute()
         applyRenderState();
         applyUniforms(_glProgramState);
 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
-        
         // Draw
         glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
         
         CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
     }
-    
+
     //restore render state
     restoreRenderState();
+
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
