@@ -44,6 +44,13 @@
 -- @return PhysicsMaterial#PhysicsMaterial ret (return value: cc.PhysicsMaterial)
         
 --------------------------------
+-- 
+-- @function [parent=#PhysicsShape] setSensor 
+-- @param self
+-- @param #bool sensor
+-- @return PhysicsShape#PhysicsShape self (return value: cc.PhysicsShape)
+        
+--------------------------------
 -- Get a mask that defines which categories of physics bodies can collide with this physics body.<br>
 -- return An interger number.
 -- @function [parent=#PhysicsShape] getCollisionBitmask 
@@ -97,6 +104,12 @@
 -- @function [parent=#PhysicsShape] getCategoryBitmask 
 -- @param self
 -- @return int#int ret (return value: int)
+        
+--------------------------------
+-- 
+-- @function [parent=#PhysicsShape] isSensor 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- Return this shape's type.<br>
