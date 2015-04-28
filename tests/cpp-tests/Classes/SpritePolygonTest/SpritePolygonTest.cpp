@@ -18,7 +18,173 @@ SpritePolygonTest::SpritePolygonTest()
     ADD_TEST_CASE(SpritePolygonTest2);
     ADD_TEST_CASE(SpritePolygonTest3);
     ADD_TEST_CASE(SpritePolygonTest4);
+    ADD_TEST_CASE(SpritePolygonPerformanceTestStatic);
+    ADD_TEST_CASE(SpritePerformanceTestStatic);
+    ADD_TEST_CASE(SpritePolygonPerformanceTestDynamic);
+    ADD_TEST_CASE(SpritePerformanceTestDynamic);
 }
+SpritePolygonPerformance::SpritePolygonPerformance()
+{
+    SpritePolygonCache::getInstance()->removeAllSpritePolygonCache();
+    Director::getInstance()->setClearColor(Color4F(102./255, 184./255, 204./255, 255.));
+    TTFConfig ttfConfig("fonts/arial.ttf", 10);
+    perfLabel = Label::createWithTTF(ttfConfig, "performance test");
+    addChild(perfLabel);
+    perfLabel->setPosition(Director::getInstance()->getVisibleSize().width/2, 80);
+    
+    spriteCount = vertCount = triCount = pixelCount = continuousLowDt =0;
+    auto size = Director::getInstance()->getVisibleSize();
+    elapsedTime = 0;
+    _posX = _leftX = size.width*0.15;
+    _rightX = size.width*0.85;
+    _posY = size.height/2;
+    prevDt = 0.016;
+    goRight = true;
+    ended = false;
+    scheduleUpdate();
+    continuousHighDtTime = 0.0;
+    waitingTime = 0.0;
+}
+void SpritePolygonPerformance::updateLabel()
+{
+//    std::string temp = "Nodes: " + Value(spriteCount).asString() + " Triangles: " + Value(triCount).asString() + "\nPixels: " + Value(pixelCount).asString() + " Vertices: " + Value(vertCount).asString();
+    if(!ended)
+    perfLabel->setString("Nodes: " + Value(spriteCount).asString() + "   Triangles: " + Value(triCount).asString() + "\nPixels: " + Value(pixelCount).asString() + "   Vertices: " + Value(vertCount).asString());
+}
+Node *SpritePolygonPerformance::makeSprite()
+{
+    return Node::create();
+}
+void SpritePolygonPerformance::update(float dt)
+{
+    dt = dt*0.3 + prevDt*0.7;
+    prevDt = dt;
+    elapsedTime += dt;
+    int loops = (0.025-dt)*1000;
+    if(dt < 0.025 && loops>0)
+    {
+        continuousHighDtTime = clampf(continuousHighDtTime-dt*2, 0.0, 1.0);
+        waitingTime = clampf(waitingTime-dt, 0.0, 5.0);
+        continuousLowDt++;
+    }
+    else
+    {
+        continuousHighDtTime+=dt;
+        continuousLowDt = 0;
+    }
+    if (continuousLowDt >= 5 && loops > 0) {
+        for(int i = 0; i < loops; i++)
+        {
+            if(_posX >= _rightX)
+            {
+                goRight = false;
+            }
+            else if(_posX <= _leftX)
+            {
+                goRight = true;
+            }
+            auto s = makeSprite();
+            addChild(s);
+            s->setPosition(_posX, _posY);
+            if(goRight)
+                _posX++;
+            else
+                _posX--;
+            
+            incrementStats();
+        }
+        updateLabel();
+    }
+
+    //if we have 10 continuous low dt, then we will start to create more sprites
+    else if(continuousHighDtTime >= .5 || waitingTime > 3.0){
+        // its now 1 seconds with high DT time, time to end
+        ended = true;
+        unscheduleUpdate();
+        perfLabel->setString("Test ended in " + Value(elapsedTime).asString() + " seconds\nNodes: " + Value(spriteCount).asString() + "   Triangles: " + Value(triCount).asString() + "\nPixels: " + Value(pixelCount).asString() + "   Vertices: " + Value(vertCount).asString());
+        _subtitleLabel->setString("Test ended");
+    }
+    else{
+        waitingTime += dt;
+    }
+}
+void SpritePolygonPerformance::incrementStats()
+{
+    spriteCount ++;
+    vertCount += _incVert;
+    triCount += _incTri;
+    pixelCount += _incPix;
+}
+
+
+
+
+
+SpritePolygonPerformanceTestStatic::SpritePolygonPerformanceTestStatic()
+{
+    _title = "Static SpritePolygon Performance";
+    _subtitle = "Test running, please wait until it ends";
+    initIncrementStats();
+}
+experimental::SpritePolygon* SpritePolygonPerformanceTestStatic::makeSprite()
+{
+    return experimental::SpritePolygon::create(s_pathGrossini);
+}
+void SpritePolygonPerformanceTestStatic::initIncrementStats()
+{
+    auto t = experimental::SpritePolygon::create(s_pathGrossini);
+    _incVert = (int)t->getVertCount();
+    _incTri = (int)t->getTrianglesCount();
+    _incPix = (int)t->getArea();
+}
+
+SpritePolygonPerformanceTestDynamic::SpritePolygonPerformanceTestDynamic()
+{
+    _title = "Dynamic SpritePolygon Performance";
+    _subtitle = "Test running, please wait until it ends";
+    initIncrementStats();
+}
+experimental::SpritePolygon* SpritePolygonPerformanceTestDynamic::makeSprite()
+{
+    auto ret = experimental::SpritePolygon::create(s_pathGrossini);
+    ret->runAction(RepeatForever::create(RotateBy::create(1.0,360.0)));
+    return ret;
+}
+
+
+SpritePerformanceTestStatic::SpritePerformanceTestStatic()
+{
+    _title = "Static Sprite Performance";
+    _subtitle = "Test running, please wait until it ends";
+    initIncrementStats();
+}
+Sprite* SpritePerformanceTestStatic::makeSprite()
+{
+    return Sprite::create(s_pathGrossini);
+}
+void SpritePerformanceTestStatic::initIncrementStats()
+{
+    auto t = Sprite::create(s_pathGrossini);
+    _incVert = 4;
+    _incTri = 2;
+    _incPix = t->getContentSize().width * t->getContentSize().height;
+}
+
+SpritePerformanceTestDynamic::SpritePerformanceTestDynamic()
+{
+    _title = "Dynamic Sprite Performance";
+    _subtitle = "Test running, please wait until it ends";
+    initIncrementStats();
+}
+Sprite* SpritePerformanceTestDynamic::makeSprite()
+{
+    auto ret = Sprite::create(s_pathGrossini);
+    ret->runAction(RepeatForever::create(RotateBy::create(1.0,360.0)));
+    return ret;
+}
+
+
+
 void SpritePolygonTestDemo::initDefaultSprite(const std::string &filename, cocos2d::experimental::SpritePolygon * inst)
 {
     Director::getInstance()->setClearColor(Color4F(102./255, 184./255, 204./255, 255.));
@@ -82,7 +248,7 @@ void SpritePolygonTestDemo::initDefaultSprite(const std::string &filename, cocos
     spp->addChild(sppArea);
     sppArea->setAnchorPoint(Vec2(0,1));
 }
-void SpritePolygonTestDemo::onBackCallback(cocos2d::Ref *sender)
+void SpritePolygonTestCase::onBackCallback(cocos2d::Ref *sender)
 {
     TestCase::onBackCallback(sender);
     Director::getInstance()->setClearColor(Color4F::BLACK);
@@ -329,3 +495,4 @@ SpritePolygonTest4::SpritePolygonTest4(){
     auto s = experimental::SpritePolygon::create(s_pathGrossini, vs, indices);
     initDefaultSprite(s_pathGrossini, s);
 }
+
