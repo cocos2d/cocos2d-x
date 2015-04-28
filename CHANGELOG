@@ -16,6 +16,7 @@ cocos2d-x-3.6  ??
     [NEW]           WP8: remove WP8 support because Angle don't support WP8 any more
     [NEW]           WP8.1: added back button support
 
+    [FIX]           HttpClient: memory leak
     [FIX]           JNI: JNI illegal start byte error which causes crashing error on Android 5.0
     [FIX]           UI:VideoPlayer: crashed when playing streamed MP4 file on iOS
 
