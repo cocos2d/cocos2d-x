@@ -1110,6 +1110,9 @@ Developers:
     perminovVS
         Optimize Vec3 and Vec2
         Added `UserDefault::setDelegate()`
+        
+    HueyPark
+        Fixed memory leak in HttpClient on iOS
 
 Retired Core Developers:
     WenSheng Yang
