@@ -692,6 +692,7 @@ bool Physics3DCollisionCallbackDemo::init()
     {
         Physics3DRigidBodyDes rbDes;
 
+        float scale = 2.0f;
         std::vector<Vec3> trianglesList;
         auto bundle = Bundle3D::createBundle();
         bundle->load("Sprite3DTest/boss.c3b");
@@ -702,7 +703,7 @@ bool Physics3DCollisionCallbackDemo::init()
             int preVertexSize = iter->getPerVertexSize() / sizeof(float);
             for (auto indexArray : iter->subMeshIndices){
                 for (auto i : indexArray){
-                    trianglesList.push_back(Vec3(iter->vertex[i * preVertexSize], iter->vertex[i * preVertexSize + 1], iter->vertex[i * preVertexSize + 2]));
+                    trianglesList.push_back(Vec3(iter->vertex[i * preVertexSize], iter->vertex[i * preVertexSize + 1], iter->vertex[i * preVertexSize + 2]) * scale);
                 }
             }
         }
@@ -714,10 +715,13 @@ bool Physics3DCollisionCallbackDemo::init()
         auto sprite = Sprite3D::create("Sprite3DTest/boss.c3b");
         sprite->addComponent(component);
         sprite->setRotation3D(Vec3(-90.0f, 0.0f, 0.0f));
+        sprite->setScale(scale);
         sprite->setCameraMask((unsigned short)CameraFlag::USER1);
         this->addChild(sprite);
+        //preload
         auto ps = PUParticleSystem3D::create("Particle3D/scripts/mp_hit_04.pu");
-
+        (void *)ps;
+        //
         rigidBody->setCollisionCallback([=](const Physics3DCollisionInfo &ci){
             if (!ci.collisionPointList.empty()){
                 static Vec3 lastestPosition = Vec3::ZERO;

@@ -189,6 +189,9 @@ public:
     
     void setActive(bool active);
 
+    void setMask(unsigned int mask) { _mask = mask; };
+    unsigned int getMask() const { return _mask; };
+
 CC_CONSTRUCTOR_ACCESS:
     Physics3DRigidBody();
     virtual ~Physics3DRigidBody();
@@ -203,6 +206,7 @@ protected:
     btRigidBody* _btRigidBody;
     Physics3DShape *_physics3DShape;
     std::vector<Physics3DConstraint *> _constraintList;
+    unsigned int _mask;
 };
 
 NS_CC_EXT_END
