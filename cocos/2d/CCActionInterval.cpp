@@ -2511,11 +2511,11 @@ void TargetedAction::setForcedTarget(Node* forcedTarget)
     }
 }
 
-// Float Action
+// ActionFloat
 
-FloatAction* FloatAction::create(float duration, float from, float to, FloatActionCallback callback)
+ActionFloat* ActionFloat::create(float duration, float from, float to, ActionFloatCallback callback)
 {
-    auto ref = new (std::nothrow) FloatAction();
+    auto ref = new (std::nothrow) ActionFloat();
     if (ref && ref->initWithDuration(duration, from, to, callback))
     {
         ref->autorelease();
@@ -2525,7 +2525,7 @@ FloatAction* FloatAction::create(float duration, float from, float to, FloatActi
     return ref;
 }
 
-bool FloatAction::initWithDuration(float duration, float from, float to, FloatActionCallback callback)
+bool ActionFloat::initWithDuration(float duration, float from, float to, ActionFloatCallback callback)
 {
     if (ActionInterval::initWithDuration(duration))
     {
@@ -2537,34 +2537,34 @@ bool FloatAction::initWithDuration(float duration, float from, float to, FloatAc
     return false;
 }
 
-FloatAction* FloatAction::clone() const
+ActionFloat* ActionFloat::clone() const
 {
-    auto a = new (std::nothrow) FloatAction();
+    auto a = new (std::nothrow) ActionFloat();
     a->initWithDuration(_duration, _from, _to, _callback);
     a->autorelease();
     return a;
 }
 
-void FloatAction::startWithTarget(cocos2d::Node *target)
+void ActionFloat::startWithTarget(Node *target)
 {
     ActionInterval::startWithTarget(target);
     _delta = _to - _from;
 }
 
-void FloatAction::update(float delta)
+void ActionFloat::update(float delta)
 {
     float value = _to - _delta * (1 - delta);
 
     if (_callback)
     {
-        // report back
+        // report back value to caller
         _callback(value);
     }
 }
 
-FloatAction* FloatAction::reverse() const
+ActionFloat* ActionFloat::reverse() const
 {
-    return FloatAction::create(_duration, _to, _from, _callback);
+    return ActionFloat::create(_duration, _to, _from, _callback);
 }
 
 NS_CC_END

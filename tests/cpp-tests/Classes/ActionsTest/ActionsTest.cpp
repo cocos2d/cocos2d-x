@@ -86,7 +86,7 @@ ActionsTests::ActionsTests()
     ADD_TEST_CASE(Issue1327);
     ADD_TEST_CASE(Issue1398);
     ADD_TEST_CASE(Issue2599)
-    ADD_TEST_CASE(ActionFloat);
+    ADD_TEST_CASE(ActionFloatTest);
 }
 
 std::string ActionsDemo::title() const
@@ -2225,7 +2225,7 @@ std::string ActionRemoveSelf::subtitle() const
 //    ActionFloat
 //
 //------------------------------------------------------------------
-void ActionFloat::onEnter()
+void ActionFloatTest::onEnter()
 {
     ActionsDemo::onEnter();
 
@@ -2233,18 +2233,19 @@ void ActionFloat::onEnter()
 
     auto s = Director::getInstance()->getWinSize();
 
-    auto actionFloat = FloatAction::create(2.f, 0, 3, [this](float value) {
+    // create float action with duration and from to value, using lambda function we can easly animate any property of the Node.
+    auto actionFloat = ActionFloat::create(2.f, 0, 3, [this](float value) {
         _tamara->setScale(value);
     });
 
     float grossiniY = _grossini->getPositionY();
 
-    auto actionFloat1 = FloatAction::create(3.f, grossiniY, grossiniY + 50, [this](float value) {
+    auto actionFloat1 = ActionFloat::create(3.f, grossiniY, grossiniY + 50, [this](float value) {
         _grossini->setPositionY(value);
     });
 
-    auto actionFloat2 = FloatAction::create(3.f, 3, 1, [this] (float value) {
-        _kathia->cocos2d::Node::setScale(value);
+    auto actionFloat2 = ActionFloat::create(3.f, 3, 1, [this] (float value) {
+        _kathia->setScale(value);
     });
 
     _tamara->runAction(actionFloat);
@@ -2252,7 +2253,7 @@ void ActionFloat::onEnter()
     _kathia->runAction(actionFloat2);
 }
 
-std::string ActionFloat::subtitle() const
+std::string ActionFloatTest::subtitle() const
 {
     return "ActionFloat";
 }

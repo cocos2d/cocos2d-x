@@ -580,10 +580,10 @@ private:
     cocos2d::Vector<Node*> _pausedTargets;
 };
 
-class ActionFloat : public ActionsDemo
+class ActionFloatTest : public ActionsDemo
 {
 public:
-    CREATE_FUNC(ActionFloat);
+    CREATE_FUNC(ActionFloatTest);
 
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
