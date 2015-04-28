@@ -2,6 +2,7 @@
 #include "cocos2d.h"
 #include "CCProtectedNode.h"
 #include "CCAsyncTaskPool.h"
+#include "SpritePolygonCache.h"
 #include "tolua_fix.h"
 #include "LuaBasicConversions.h"
 
@@ -72675,6 +72676,303 @@ int lua_register_cocos2dx_AsyncTaskPool(lua_State* tolua_S)
     g_typeCast["AsyncTaskPool"] = "cc.AsyncTaskPool";
     return 1;
 }
+
+int lua_cocos2dx_SpritePolygonCache_isSpritePolygonCachExist(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::SpritePolygonCache* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.SpritePolygonCache",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::SpritePolygonCache*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpritePolygonCache_isSpritePolygonCachExist'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 2) 
+    {
+        std::string arg0;
+        cocos2d::Rect arg1;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.SpritePolygonCache:isSpritePolygonCachExist");
+
+        ok &= luaval_to_rect(tolua_S, 3, &arg1, "cc.SpritePolygonCache:isSpritePolygonCachExist");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_SpritePolygonCache_isSpritePolygonCachExist'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->isSpritePolygonCachExist(arg0, arg1);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SpritePolygonCache:isSpritePolygonCachExist",argc, 2);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpritePolygonCache_isSpritePolygonCachExist'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_SpritePolygonCache_removeAllSpritePolygonCache(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::SpritePolygonCache* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.SpritePolygonCache",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::SpritePolygonCache*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpritePolygonCache_removeAllSpritePolygonCache'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_SpritePolygonCache_removeAllSpritePolygonCache'", nullptr);
+            return 0;
+        }
+        cobj->removeAllSpritePolygonCache();
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SpritePolygonCache:removeAllSpritePolygonCache",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpritePolygonCache_removeAllSpritePolygonCache'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_SpritePolygonCache_removeSpritePolygonCache(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::SpritePolygonCache* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.SpritePolygonCache",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::SpritePolygonCache*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_SpritePolygonCache_removeSpritePolygonCache'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        std::string arg0;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.SpritePolygonCache:removeSpritePolygonCache");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_SpritePolygonCache_removeSpritePolygonCache'", nullptr);
+            return 0;
+        }
+        cobj->removeSpritePolygonCache(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    if (argc == 2) 
+    {
+        std::string arg0;
+        const cocos2d::Rect* arg1;
+
+        ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.SpritePolygonCache:removeSpritePolygonCache");
+
+        ok &= luaval_to_object<const cocos2d::Rect>(tolua_S, 3, "cc.Rect",&arg1);
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_SpritePolygonCache_removeSpritePolygonCache'", nullptr);
+            return 0;
+        }
+        cobj->removeSpritePolygonCache(arg0, arg1);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.SpritePolygonCache:removeSpritePolygonCache",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpritePolygonCache_removeSpritePolygonCache'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_SpritePolygonCache_destroyInstance(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.SpritePolygonCache",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_SpritePolygonCache_destroyInstance'", nullptr);
+            return 0;
+        }
+        cocos2d::SpritePolygonCache::destroyInstance();
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.SpritePolygonCache:destroyInstance",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpritePolygonCache_destroyInstance'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_SpritePolygonCache_printInfo(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.SpritePolygonCache",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 1)
+    {
+        cocos2d::_SpritePolygonInfo arg0;
+        #pragma warning NO CONVERSION TO NATIVE FOR _SpritePolygonInfo
+		ok = false;
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_SpritePolygonCache_printInfo'", nullptr);
+            return 0;
+        }
+        cocos2d::SpritePolygonCache::printInfo(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.SpritePolygonCache:printInfo",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpritePolygonCache_printInfo'.",&tolua_err);
+#endif
+    return 0;
+}
+int lua_cocos2dx_SpritePolygonCache_getInstance(lua_State* tolua_S)
+{
+    int argc = 0;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(tolua_S,1,"cc.SpritePolygonCache",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    argc = lua_gettop(tolua_S) - 1;
+
+    if (argc == 0)
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_SpritePolygonCache_getInstance'", nullptr);
+            return 0;
+        }
+        cocos2d::SpritePolygonCache* ret = cocos2d::SpritePolygonCache::getInstance();
+        object_to_luaval<cocos2d::SpritePolygonCache>(tolua_S, "cc.SpritePolygonCache",(cocos2d::SpritePolygonCache*)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.SpritePolygonCache:getInstance",argc, 0);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_SpritePolygonCache_getInstance'.",&tolua_err);
+#endif
+    return 0;
+}
+static int lua_cocos2dx_SpritePolygonCache_finalize(lua_State* tolua_S)
+{
+    printf("luabindings: finalizing LUA object (SpritePolygonCache)");
+    return 0;
+}
+
+int lua_register_cocos2dx_SpritePolygonCache(lua_State* tolua_S)
+{
+    tolua_usertype(tolua_S,"cc.SpritePolygonCache");
+    tolua_cclass(tolua_S,"SpritePolygonCache","cc.SpritePolygonCache","cc.Ref",nullptr);
+
+    tolua_beginmodule(tolua_S,"SpritePolygonCache");
+        tolua_function(tolua_S,"isSpritePolygonCachExist",lua_cocos2dx_SpritePolygonCache_isSpritePolygonCachExist);
+        tolua_function(tolua_S,"removeAllSpritePolygonCache",lua_cocos2dx_SpritePolygonCache_removeAllSpritePolygonCache);
+        tolua_function(tolua_S,"removeSpritePolygonCache",lua_cocos2dx_SpritePolygonCache_removeSpritePolygonCache);
+        tolua_function(tolua_S,"destroyInstance", lua_cocos2dx_SpritePolygonCache_destroyInstance);
+        tolua_function(tolua_S,"printInfo", lua_cocos2dx_SpritePolygonCache_printInfo);
+        tolua_function(tolua_S,"getInstance", lua_cocos2dx_SpritePolygonCache_getInstance);
+    tolua_endmodule(tolua_S);
+    std::string typeName = typeid(cocos2d::SpritePolygonCache).name();
+    g_luaType[typeName] = "cc.SpritePolygonCache";
+    g_typeCast["SpritePolygonCache"] = "cc.SpritePolygonCache";
+    return 1;
+}
 TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 {
 	tolua_open(tolua_S);
@@ -72870,6 +73168,7 @@ TOLUA_API int register_all_cocos2dx(lua_State* tolua_S)
 	lua_register_cocos2dx_TransitionSlideInL(tolua_S);
 	lua_register_cocos2dx_TransitionSlideInT(tolua_S);
 	lua_register_cocos2dx_Grid3D(tolua_S);
+	lua_register_cocos2dx_SpritePolygonCache(tolua_S);
 	lua_register_cocos2dx_EaseCircleActionOut(tolua_S);
 	lua_register_cocos2dx_TransitionProgressInOut(tolua_S);
 	lua_register_cocos2dx_EaseCubicActionInOut(tolua_S);
