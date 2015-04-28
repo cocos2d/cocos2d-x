@@ -209,7 +209,8 @@ TrianglesCommand::Triangles SpritePolygon::triangulate(std::vector<cocos2d::Vec2
                 //vert does not exist yet, so we need to create a new one,
                 auto c4b = Color4B::WHITE;
                 auto t2f = Tex2F(0,0); // don't worry about tex coords now, we calculate that later
-                _verts->push_back(V3F_C4B_T2F{v3,c4b,t2f});
+                V3F_C4B_T2F vert = {v3,c4b,t2f};
+                _verts->push_back(vert);
                 _indices->push_back(idx);
                 idx++;
             }
@@ -220,7 +221,9 @@ TrianglesCommand::Triangles SpritePolygon::triangulate(std::vector<cocos2d::Vec2
         delete j;
     }
     delete cdt;
-    return TrianglesCommand::Triangles{&(*_verts)[0], &(*_indices)[0], (ssize_t)_verts->size(), (ssize_t)_indices->size()};
+
+    TrianglesCommand::Triangles triangles = {&(*_verts)[0], &(*_indices)[0], (ssize_t)_verts->size(), (ssize_t)_indices->size()};
+    return triangles;
 }
 bool SpritePolygon::initWithCache(const std::string &file, SpritePolygonInfo *info)
 {
@@ -331,14 +334,15 @@ bool SpritePolygon::initWithVerts(const std::string& filename,std::vector<cocos2
     setContentSize(_textureRect.size/Director::getInstance()->getContentScaleFactor());
         setAnchorPoint(Vec2(0.5,0.5));
     _transformDirty = true;
-    auto _triangles = TrianglesCommand::Triangles{&verts[0], &indices[0], (ssize_t)verts.size(), (ssize_t)indices.size()};
-    _polygonInfo = SpritePolygonCache::getInstance()->addSpritePolygonCache(filename, _textureRect, _triangles);
+    TrianglesCommand::Triangles triangles = {&verts[0], &indices[0], (ssize_t)verts.size(), (ssize_t)indices.size()};
+    _polygonInfo = SpritePolygonCache::getInstance()->addSpritePolygonCache(filename, _textureRect, triangles);
 
 #if CC_SPRITE_DEBUG_DRAW
     debugDraw();
 #endif
     return true;
 }
+
 bool SpritePolygon::initWithRect(const std::string& filename, std::vector<cocos2d::Vec2>& verts, std::vector<unsigned short>& indices, const cocos2d::Rect& rect)
 {
     CCASSERT(filename.size()>0, "Invalid filename for sprite");
@@ -352,11 +356,12 @@ bool SpritePolygon::initWithRect(const std::string& filename, std::vector<cocos2
         auto v3 = Vec3(it->x, it->y, 0);
         auto c4b = Color4B::WHITE;
         auto t2f = Tex2F(0,0);
-        _verts.push_back(V3F_C4B_T2F{v3,c4b,t2f});
+        V3F_C4B_T2F vert = {v3,c4b,t2f};
+        _verts.push_back(vert);
     }
 
-    auto _triangles = TrianglesCommand::Triangles{&_verts[0], &indices[0], (ssize_t)_verts.size(), (ssize_t)indices.size()};
-    _polygonInfo = SpritePolygonCache::getInstance()->addSpritePolygonCache(filename, rect, _triangles);
+    TrianglesCommand::Triangles triangles = {&_verts[0], &indices[0], (ssize_t)_verts.size(), (ssize_t)indices.size()};
+    _polygonInfo = SpritePolygonCache::getInstance()->addSpritePolygonCache(filename, rect, triangles);
     calculateUVandContentSize();
         setAnchorPoint(Vec2(0.5,0.5));
 #if CC_SPRITE_DEBUG_DRAW
@@ -456,7 +461,7 @@ void SpritePolygon::debugDraw()
         pos->x = v->vertices.x;
         pos->y = v->vertices.y;
     }
-    _debugDrawNode->drawPoints(positions, (unsigned int)_polygonInfo->_triangles.vertCount, 8, Color4F{0.0,1.0,1.0,1.0});
+    _debugDrawNode->drawPoints(positions, (unsigned int)_polygonInfo->_triangles.vertCount, 8, Color4F(0.0f, 1.0f, 1.0f, 1.0f));
     //draw lines
     auto last = _polygonInfo->_triangles.indexCount/3;
     auto _indices = _polygonInfo->_triangles.indices;
