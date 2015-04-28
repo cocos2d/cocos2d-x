@@ -63,11 +63,11 @@ public:
     
     void setDisplayColor(const Vec4& color);
     
-    void setMatrixPalette(const Vec4* matrixPalette) { _matrixPalette = matrixPalette; }
+    void setMatrixPalette(const Vec4* matrixPalette);
     
-    void setMatrixPaletteSize(int size) { _matrixPaletteSize = size; }
+    void setMatrixPaletteSize(int size);
 
-    void setLightMask(unsigned int lightmask) { _lightMask = lightmask; }
+    void setLightMask(unsigned int lightmask);
     
     void setTransparent(bool value);
     
@@ -80,7 +80,7 @@ public:
     
     void genMaterialID(GLuint texID, void* glProgramState, GLuint vertexBuffer, GLuint indexBuffer, const BlendFunc& blend);
     
-    uint32_t getMaterialID() const { return _materialID; }
+    uint32_t getMaterialID() const;
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     void listenRendererRecreated(EventCustom* event);

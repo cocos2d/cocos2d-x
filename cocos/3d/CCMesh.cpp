@@ -71,6 +71,7 @@ Mesh::Mesh()
 , _glProgramState(nullptr)
 , _blend(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 , _visibleChanged(nullptr)
+, _blendDirty(false)
 {
     
 }
@@ -200,6 +201,11 @@ void Mesh::setVisible(bool visible)
     }
 }
 
+bool Mesh::isVisible() const
+{
+    return _visible;
+}
+
 void Mesh::setTexture(const std::string& texPath)
 {
     auto tex = Director::getInstance()->getTextureCache()->addImage(texPath);
@@ -209,12 +215,26 @@ void Mesh::setTexture(const std::string& texPath)
 void Mesh::setTexture(Texture2D* tex)
 {
 #if USE_MATERIAL
-    auto technique = _material->_currentTechnique;
-    for(auto& pass: technique->_passes)
+
+    // Texture must be saved for future use
+    // it doesn't matter if the material is already set or not
+    // This functionality is added for compatibility issues
+    if (tex != _texture)
     {
-        pass->setTexture(tex);
+        CC_SAFE_RETAIN(tex);
+        CC_SAFE_RELEASE(_texture);
+        _texture = tex;
     }
 
+    if (_material) {
+        auto technique = _material->_currentTechnique;
+        for(auto& pass: technique->_passes)
+        {
+            pass->setTexture(tex);
+        }
+    }
+
+    bindMeshCommand();
 #else
     if (tex != _texture)
     {
@@ -224,6 +244,11 @@ void Mesh::setTexture(Texture2D* tex)
         bindMeshCommand();
     }
 #endif
+}
+
+Texture2D* Mesh::getTexture() const
+{
+    return _texture;
 }
 
 void Mesh::setMaterial(Material* material)
@@ -335,6 +360,14 @@ void Mesh::setGLProgramState(GLProgramState* glProgramState)
 #if USE_MATERIAL
     auto material = Material::createWithGLStateProgram(glProgramState);
     setMaterial(material);
+
+    // Was the texture set before teh GLProgramState ? Set it
+    if (_texture)
+        setTexture(_texture);
+
+    if (_blendDirty)
+        setBlendFunc(_blend);
+
     bindMeshCommand();
 #else
     if (_glProgramState != glProgramState)
@@ -423,8 +456,21 @@ void Mesh::bindMeshCommand()
 void Mesh::setBlendFunc(const BlendFunc &blendFunc)
 {
 #if USE_MATERIAL
-    for(auto& pass: _material->_currentTechnique->_passes) {
-        pass->setBlendFunc(blendFunc);
+    // Blend must be saved for future use
+    // it doesn't matter if the material is already set or not
+    // This functionality is added for compatibility issues
+    if(_blend != blendFunc)
+    {
+        _blendDirty = true;
+        _blend = blendFunc;
+    }
+
+    if (_material) {
+        for(auto& pass: _material->_currentTechnique->_passes) {
+            pass->setBlendFunc(blendFunc);
+        }
+
+        bindMeshCommand();
     }
 #else
     if(_blend.src != blendFunc.src || _blend.dst != blendFunc.dst)
@@ -437,7 +483,8 @@ void Mesh::setBlendFunc(const BlendFunc &blendFunc)
 const BlendFunc& Mesh::getBlendFunc() const
 {
 #if USE_MATERIAL
-    return _material->_currentTechnique->_passes.at(0)->getBlendFunc();
+// return _material->_currentTechnique->_passes.at(0)->getBlendFunc();
+    return _blend;
 #else
     return _blend;
 #endif

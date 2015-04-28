@@ -134,15 +134,10 @@ void Pass::bind(const Mat4& modelView, bool bindAttributes)
 
     auto glprogramstate = _glProgramState ?: getTarget()->getGLProgramState();
 
+    glprogramstate->applyGLProgram(modelView);
     if (bindAttributes)
-    {
-        glprogramstate->apply(modelView);
-    }
-    else
-    {
-        glprogramstate->applyGLProgram(modelView);
-        glprogramstate->applyUniforms();
-    }
+        glprogramstate->applyAttributes();
+    glprogramstate->applyUniforms();
 }
 
 Node* Pass::getTarget() const

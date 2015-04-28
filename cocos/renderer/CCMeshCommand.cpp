@@ -130,8 +130,9 @@ void MeshCommand::init(float globalZOrder,
 #else
 
     Pass* pass = material->getTechnique()->getPassByIndex(0);
+    auto textureId = pass->getTexture() ? pass->getTexture()->getName() : 0;
     init(globalZOrder,
-         pass->getTexture()->getName(),
+         textureId,
          pass->getGLProgramState(),
          pass->getBlendFunc(),
          vertexBuffer,
@@ -213,6 +214,23 @@ void MeshCommand::setDepthWriteEnabled(bool enable)
 void MeshCommand::setDisplayColor(const Vec4& color)
 {
     _displayColor = color;
+}
+
+void MeshCommand::setMatrixPalette(const Vec4* matrixPalette)
+{
+    _matrixPalette = matrixPalette;
+}
+
+void MeshCommand::setMatrixPaletteSize(int size)
+{
+    if (size>1000 || size<0)
+        printf("que locura\n");
+    _matrixPaletteSize = size;
+}
+
+void MeshCommand::setLightMask(unsigned int lightmask)
+{
+    _lightMask = lightmask;
 }
 
 void MeshCommand::setTransparent(bool value)
@@ -309,9 +327,9 @@ void MeshCommand::applyUniforms(GLProgramState* glprogramstate)
 
     }
 
-    // Material binds Uniforms automatically
-    if (!_material)
-        glprogramstate->applyUniforms();
+    // XXX: uniforms are applied here, but I think
+    // they were applied on another part as well
+    glprogramstate->applyUniforms();
 
     const auto& scene = Director::getInstance()->getRunningScene();
     if (scene && scene->getLights().size() > 0)
@@ -328,6 +346,11 @@ void MeshCommand::genMaterialID(GLuint texID, void* glProgramState, GLuint verte
     intArray[5] = (int) blend.src;
     intArray[6] = (int) blend.dst;
     _materialID = XXH32((const void*)intArray, sizeof(intArray), 0);
+}
+
+uint32_t MeshCommand::getMaterialID() const
+{
+    return _materialID;
 }
 
 void MeshCommand::MatrixPalleteCallBack( GLProgram* glProgram, Uniform* uniform)
@@ -348,7 +371,7 @@ void MeshCommand::preBatchDraw()
         glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
 
         // FIXME: Assumes that all the passes in the Material share the same Vertex Attribs
-        GLProgramState* programState = (_material != nullptr)
+        GLProgramState* programState = _material
                                         ? _material->_currentTechnique->_passes.at(0)->getGLProgramState()
                                         : _glProgramState;
         programState->applyAttributes();

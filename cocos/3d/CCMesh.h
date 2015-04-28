@@ -95,11 +95,11 @@ public:
     /**texture getter and setter*/
     void setTexture(const std::string& texPath);
     void setTexture(Texture2D* tex);
-    Texture2D* getTexture() const { return _texture; }
+    Texture2D* getTexture() const;
     
     /**visible getter and setter*/
     void setVisible(bool visible);
-    bool isVisible() const { return _visible; }
+    bool isVisible() const;
     
     /**
      * skin getter
@@ -209,6 +209,7 @@ protected:
     MeshIndexData*     _meshIndexData;
     GLProgramState* _glProgramState;
     BlendFunc       _blend;
+    bool            _blendDirty;
     Material* _material;
     AABB         _aabb;
     std::function<void()> _visibleChanged;
