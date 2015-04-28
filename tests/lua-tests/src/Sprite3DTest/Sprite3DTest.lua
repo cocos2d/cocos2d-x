@@ -1078,7 +1078,8 @@ end
 
 function Sprite3DCubeMapTest:addNewSpriteWithCoords(pos)
     local visibleSize = cc.Director:getInstance():getVisibleSize()
-    local camera = cc.Camera:createPerspective(60, visibleSize.width / visibleSize.height, 0.1, 200)
+    local camera = cc.Camera:createPerspective(60, visibleSize.width / visibleSize.height, 10, 1000)
+    camera:setPosition3D(cc.vec3(0.0, 0.0, 50.0))
     camera:setCameraFlag(cc.CameraFlag.USER1)
     --create a teapot
     self._teapot = cc.Sprite3D:create("Sprite3DTest/teapot.c3b")
@@ -1091,14 +1092,14 @@ function Sprite3DCubeMapTest:addNewSpriteWithCoords(pos)
         "Sprite3DTest/skybox/front.jpg", "Sprite3DTest/skybox/back.jpg")
 
     --set texture parameters
-    local tRepeatParams = { magFilter=gl.NEAREST , minFilter=gl.NEAREST , wrapS=gl.MIRRORED_REPEAT  , wrapT=gl.MIRRORED_REPEAT }
+    local tRepeatParams = { magFilter=gl.LINEAR , minFilter=gl.LINEAR , wrapS=gl.MIRRORED_REPEAT  , wrapT=gl.MIRRORED_REPEAT }
     self._textureCube:setTexParameters(tRepeatParams)
 
     --pass the texture sampler to our custom shader
     state:setUniformTexture("u_cubeTex", self._textureCube)
 
     self._teapot:setGLProgramState(state)
-    self._teapot:setPosition3D(cc.vec3(0, -5, -20))
+    self._teapot:setPosition3D(cc.vec3(0, -5, 0))
     self._teapot:setRotation3D(cc.vec3(-90, 180, 0))
 
     local rotate_action = cc.RotateBy:create(1.5, cc.vec3(0, 30, 0))
@@ -1133,15 +1134,16 @@ function Sprite3DCubeMapTest:addNewSpriteWithCoords(pos)
     end
 
     self:addChild(self._teapot)
-    self:addChild(camera)
-
-    self:setCameraMask(2)
 
     --config skybox
     self._skyBox = cc.Skybox:create()
 
     self._skyBox:setTexture(self._textureCube)
     self:addChild(self._skyBox)
+    self._skyBox:setScale(700)
+
+    self:addChild(camera)
+    self:setCameraMask(2)
 
     local targetPlatform = cc.Application:getInstance():getTargetPlatform()
     if targetPlatform == cc.PLATFORM_OS_ANDROID  or targetPlatform == cc.PLATFORM_OS_WINRT  or targetPlatform == cc.PLATFORM_OS_WP8  then
