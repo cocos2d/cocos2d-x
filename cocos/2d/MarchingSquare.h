@@ -49,7 +49,6 @@ public:
     void printPoints();
     //using Ramer–Douglas–Peucker algorithm
     void optimize(float level = 0);
-    
 protected:
     unsigned int findFirstNoneTransparentPixel();
     void marchSquare(int startx, int starty);
@@ -70,6 +69,8 @@ protected:
     std::vector<cocos2d::Vec2> rdp(std::vector<cocos2d::Vec2> v);
     float perpendicularDistance(cocos2d::Vec2 i, cocos2d::Vec2 start, cocos2d::Vec2 end);
     float scaleFactor;
+    
+
 };
 
 NS_CC_END

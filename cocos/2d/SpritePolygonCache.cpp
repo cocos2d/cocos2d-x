@@ -73,7 +73,7 @@ void SpritePolygonCache::init()
     
 }
 
-SpritePolygonInfo* SpritePolygonCache::addSpritePolygonCache(const std::string& filePath, const SpritePolygonInfo& spritePolygonInfo)
+SpritePolygonInfo* SpritePolygonCache::addSpritePolygonCache(const std::string& filePath, const cocos2d::Rect& rect, const cocos2d::TrianglesCommand::Triangles trianglesCommand)
 {
     auto fullpath = filePath;
     
@@ -85,16 +85,23 @@ SpritePolygonInfo* SpritePolygonCache::addSpritePolygonCache(const std::string& 
         auto infoIt = vecInfo.begin();
         for (; infoIt != vecInfo.end(); infoIt++)
         {
-            if ((*infoIt)->_rect.equals(spritePolygonInfo._rect))
+            if ((*infoIt)->_rect.equals(rect))
             {
-                (*infoIt)->_triangles = spritePolygonInfo._triangles;
-//                (*infoIt)->_textureRect = SpritePolygonInfo._textureRect;
-                return nullptr;
+                //Update
+                CC_SAFE_DELETE((*infoIt)->_triangles.verts);
+                CC_SAFE_DELETE((*infoIt)->_triangles.indices);
+                (*infoIt)->_triangles.verts = new V3F_C4B_T2F[trianglesCommand.vertCount];
+                (*infoIt)->_triangles.indices = new unsigned short[trianglesCommand.indexCount];
+                (*infoIt)->_triangles.vertCount = trianglesCommand.vertCount;
+                (*infoIt)->_triangles.indexCount = trianglesCommand.indexCount;
+                memcpy((*infoIt)->_triangles.verts, trianglesCommand.verts, trianglesCommand.vertCount*sizeof(V3F_C4B_T2F));
+                memcpy((*infoIt)->_triangles.indices, trianglesCommand.indices, trianglesCommand.indexCount*sizeof(unsigned short));
+                return *infoIt;
             }
         }
     }
     
-    VecSpritePolygonInfo vecInfo ;
+    VecSpritePolygonInfo vecInfo;
     vecInfo.clear();
     if (it != _SpritePolygonCacheMap.end())
     {
@@ -103,16 +110,16 @@ SpritePolygonInfo* SpritePolygonCache::addSpritePolygonCache(const std::string& 
     SpritePolygonInfo* info = new SpritePolygonInfo;
     if (nullptr != info)
     {
-        info->_rect = spritePolygonInfo._rect;
+        info->_rect = rect;
         
-        info->_triangles.verts = new V3F_C4B_T2F[spritePolygonInfo._triangles.vertCount];
-        info->_triangles.indices = new unsigned short[spritePolygonInfo._triangles.indexCount];
-        info->_triangles.vertCount = spritePolygonInfo._triangles.vertCount;
-        info->_triangles.indexCount = spritePolygonInfo._triangles.indexCount;
+        info->_triangles.verts = new V3F_C4B_T2F[trianglesCommand.vertCount];
+        info->_triangles.indices = new unsigned short[trianglesCommand.indexCount];
+        info->_triangles.vertCount = trianglesCommand.vertCount;
+        info->_triangles.indexCount = trianglesCommand.indexCount;
         
-        memcpy(info->_triangles.verts, spritePolygonInfo._triangles.verts, spritePolygonInfo._triangles.vertCount*sizeof(V3F_C4B_T2F));
-        memcpy(info->_triangles.indices, spritePolygonInfo._triangles.indices, spritePolygonInfo._triangles.indexCount*sizeof(unsigned short));
-//        info->_textureRect = SpritePolygonInfo._textureRect;
+
+        memcpy(info->_triangles.verts, trianglesCommand.verts, trianglesCommand.vertCount*sizeof(V3F_C4B_T2F));
+        memcpy(info->_triangles.indices, trianglesCommand.indices, trianglesCommand.indexCount*sizeof(unsigned short));
         
         vecInfo.push_back(info);
         _SpritePolygonCacheMap[filePath] = vecInfo;
@@ -156,6 +163,7 @@ void   SpritePolygonCache::removeSpritePolygonCache(const std::string& filePath,
     {
         if((*infoIter)->_rect.equals(*rect))
         {
+            CC_SAFE_DELETE(*infoIter);
             it->second.erase(infoIter);
             break;
         }
@@ -168,6 +176,10 @@ void SpritePolygonCache::removeAllSpritePolygonCache()
 {
     for (std::unordered_map<std::string, VecSpritePolygonInfo>::iterator it = _SpritePolygonCacheMap.begin(); it != _SpritePolygonCacheMap.end(); ++it)
     {
+        for (auto infoIter = it->second.begin(); infoIter != it->second.end(); infoIter++)
+        {
+            CC_SAFE_DELETE(*infoIter);
+        }
         it->second.clear();
     }
     _SpritePolygonCacheMap.clear();

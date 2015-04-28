@@ -94,7 +94,11 @@ SpritePolygonTest1::SpritePolygonTest1()
     SpritePolygonCache::getInstance()->removeAllSpritePolygonCache();
     _title = "SpritePolygon Creation";
     _subtitle = "SpritePolygon::create(\"Images/grossini.png\")";
-    auto s = experimental::SpritePolygon::create(s_pathGrossini);
+    cocos2d::experimental::SpritePolygon *s;
+    for(int i = 0; i < 10; i ++)
+    {
+         s=   experimental::SpritePolygon::create(s_pathGrossini);
+    }
     initDefaultSprite(s_pathGrossini, s);
 }
 
