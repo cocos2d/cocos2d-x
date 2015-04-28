@@ -40,7 +40,7 @@
 
 NS_CC_BEGIN
 
-const int Label::DistanceFieldFontSize = 50;
+const int Label::DistanceFieldFontSize = 100;
 
 Label* Label::create()
 {
