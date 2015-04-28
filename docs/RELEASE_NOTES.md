@@ -22,6 +22,8 @@
     - [3D Skybox](#3d-skybox)
     - [3D Terrain](#3d-terrain)
     - [Animate3D Quality Control](#animate3d-quality-control)
+    - [LuaJit ARM64](#luajit-arm64)
+    - [Button memory usage optimization](#button-memory-usage-optimization)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -138,6 +140,7 @@ Please refer to this document: [ReadMe](../README.md)
 * 3rd: updated openssl to v1.0.11
 * 3rd: updated freetype to v2.5.5
 * 3rd: updated png to v1.6.16 on all supported platforms except WP8/WP8.1 universal because it is not needed on these two platforms
+* ui: button memory usage optimization
 
 ## Features in detail
 
@@ -251,3 +254,43 @@ Using luajit arm64 version is that because it can improve the performance. In pr
 Bytecode of luajit and luajit arm64 are not compatible, which means you can not use one version of bytecode on iOS 32-bit devices and iOS 64-bit devices.
 
 As there is not mandatory requirement of having arm64 bit bin on Android, so we don't use luajit arm64 on Android as its bytecode is not compatible with luajit arm32.
+
+### Button memory usage optimization
+Now the title label of Button is created on demand. A Button without title won't
+create an extra empty label.
+
+And we have also removed some redundant string variables in Button's header file.
+
+We use Cpp-Empty-Test to verify this optimization.
+
+Here is the test code:
+
+```
+auto visibleSize = Director::getInstance()->getVisibleSize();
+auto origin = Director::getInstance()->getVisibleOrigin();
+
+int num = 100;
+for (int i=0; i < num; ++i)
+{
+auto button = ui::Button::create("ClosedNormal.png",
+"ClosedSelected.png");
+button->setPosition(origin + visibleSize/2);
+this->addChild(button);
+}
+```
+
+And here is the result:
+
+#### On iOS platform
+
+|Num of buttons|100 | 200 | 500| 1000|
+|-----|-----|-----|-----|-----|
+|Before optimization | 61M | 61.9M | 67.1M | 72.2M|
+|After optimization |60.7M| 61.1M | 66M | 67.9M|
+
+#### On Mac platform
+
+|Num of buttons|100 | 200 | 500| 1000|
+|-----|-----|-----|-----|-----|
+|Before optimization |26.8M | 27.1M| 33.2M| 35.4M|
+|After optimization |25.1M|25.9M|28M|32.4M|

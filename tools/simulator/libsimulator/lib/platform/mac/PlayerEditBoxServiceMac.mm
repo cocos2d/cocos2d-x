@@ -2,7 +2,9 @@
 #include "PlayerEditBoxServiceMac.h"
 
 #include "cocos2d.h"
+#if (CC_LUA_ENGINE_ENABLED > 0)
 #include "CCLuaEngine.h"
+#endif
 #include "glfw3native.h"
 
 // internal
@@ -70,11 +72,13 @@
     // hide first
     [self.textField setHidden:YES];
     
+#if (CC_LUA_ENGINE_ENABLED > 0)
     player::PlayerEditBoxServiceMac *macEditBox = static_cast<player::PlayerEditBoxServiceMac *>(self.editBox);
     auto luaStack = cocos2d::LuaEngine::getInstance()->getLuaStack();
     
     luaStack->pushString([self.textField.stringValue UTF8String]);
     luaStack->executeFunctionByHandler(macEditBox->getHandler(), 1);
+#endif
 }
 
 - (void)setupTextField:(NSTextField *)textField

@@ -30,8 +30,6 @@ NS_CC_BEGIN
 //-----------------------------------------------------------------------
 PUFlockCenteringAffector::PUFlockCenteringAffector() 
 : PUAffector(),
-  _sum(Vec3::ZERO),
-  _average(Vec3::ZERO),
   _count(0.0f)
 {
 }

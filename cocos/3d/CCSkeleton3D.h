@@ -136,8 +136,7 @@ protected:
         float         weight;
         void*         tag; //
         BoneBlendState()
-        : localTranslate(Vec3::ZERO)
-        , localRot(Quaternion::identity())
+        : localRot(Quaternion::identity())
         , localScale(Vec3::ONE)
         , weight(1.f)
         , tag(nullptr)

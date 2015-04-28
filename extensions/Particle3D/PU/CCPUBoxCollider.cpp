@@ -45,7 +45,6 @@ PUBoxCollider::PUBoxCollider() :
     _ymax(0.0f),
     _zmin(0.0f),
     _zmax(0.0f),
-    _predictedPosition(Vec3::ZERO),
     _innerCollision(false)
 {
 }

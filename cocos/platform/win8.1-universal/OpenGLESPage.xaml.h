@@ -46,6 +46,7 @@ namespace cocos2d
         void CreateRenderSurface();
         void DestroyRenderSurface();
         void RecoverFromLostDevice();
+        void TerminateApp();
         void StartRenderLoop();
         void StopRenderLoop();
 
