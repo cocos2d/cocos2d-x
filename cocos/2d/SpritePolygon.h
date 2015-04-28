@@ -73,6 +73,14 @@ public:
     
     void showDebug(const bool val);
 protected:
+    SpritePolygon()
+        : _debugDrawNode(nullptr)
+        , _texture(nullptr)
+        , _polygonInfo(nullptr)
+    {
+
+    }
+
     cocos2d::DrawNode *_debugDrawNode;
     void debugDraw();
     
