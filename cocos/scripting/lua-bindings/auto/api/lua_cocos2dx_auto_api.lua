@@ -1251,4 +1251,9 @@
 -- @field [parent=#cc] AsyncTaskPool#AsyncTaskPool AsyncTaskPool preloaded module
 
 
+--------------------------------------------------------
+-- the cc SpritePolygonCache
+-- @field [parent=#cc] SpritePolygonCache#SpritePolygonCache SpritePolygonCache preloaded module
+
+
 return nil
