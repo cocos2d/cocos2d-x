@@ -198,7 +198,8 @@ LOCAL_SRC_FILES := main.cpp \
 ../../Classes/UserDefaultTest/UserDefaultTest.cpp \
 ../../Classes/OpenURLTest/OpenURLTest.cpp \
 ../../Classes/ZwoptexTest/ZwoptexTest.cpp \
-../../Classes/TerrainTest/TerrainTest.cpp
+../../Classes/TerrainTest/TerrainTest.cpp \
+../../Classes/SpritePolygonTest/SpritePolygonTest.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
                     $(LOCAL_PATH)/../../../..

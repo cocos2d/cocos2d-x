@@ -72,8 +72,8 @@ cocos2d.cpp \
 2d/CCSpriteFrame.cpp \
 2d/CCSpriteFrameCache.cpp \
 2d/MarchingSquare.cpp \
-2d/PolySprite.cpp \
-2d/PolySpriteCache.cpp \
+2d/SpritePolygon.cpp \
+2d/SpritePolygonCache.cpp \
 2d/CCTMXLayer.cpp \
 2d/CCFastTMXLayer.cpp \
 2d/CCTMXObjectGroup.cpp \
