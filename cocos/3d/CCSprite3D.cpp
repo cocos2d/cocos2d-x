@@ -280,7 +280,7 @@ bool Sprite3D::initWithFile(const std::string &path)
     
     MeshDatas* meshdatas = new (std::nothrow) MeshDatas();
     MaterialDatas* materialdatas = new (std::nothrow) MaterialDatas();
-    NodeDatas*   nodeDatas = new (std::nothrow) NodeDatas();
+    NodeDatas* nodeDatas = new (std::nothrow) NodeDatas();
     if (loadFromFile(path, nodeDatas, meshdatas, materialdatas))
     {
         if (initFrom(*nodeDatas, *meshdatas, *materialdatas))
@@ -339,22 +339,22 @@ bool Sprite3D::initFrom(const NodeDatas& nodeDatas, const MeshDatas& meshdatas, 
     
     return true;
 }
-Sprite3D* Sprite3D::createSprite3DNode(NodeData* nodedata,ModelData* modeldata,const MaterialDatas& matrialdatas)
+Sprite3D* Sprite3D::createSprite3DNode(NodeData* nodedata,ModelData* modeldata,const MaterialDatas& materialdatas)
 {
     auto sprite = new (std::nothrow) Sprite3D();
     if (sprite)
     {
         sprite->setName(nodedata->id);
         auto mesh = Mesh::create(nodedata->id, getMeshIndexData(modeldata->subMeshId));
-        if (modeldata->matrialId == "" && matrialdatas.materials.size())
+        if (modeldata->matrialId == "" && materialdatas.materials.size())
         {
-            const NTextureData* textureData = matrialdatas.materials[0].getTextureData(NTextureData::Usage::Diffuse);
+            const NTextureData* textureData = materialdatas.materials[0].getTextureData(NTextureData::Usage::Diffuse);
             if (!textureData->filename.empty())
                 mesh->setTexture(textureData->filename);
         }
         else
         {
-            const NMaterialData*  materialData=matrialdatas.getMaterialData(modeldata->matrialId);
+            const NMaterialData*  materialData=materialdatas.getMaterialData(modeldata->matrialId);
             if(materialData)
             {
                 const NTextureData* textureData = materialData->getTextureData(NTextureData::Usage::Diffuse);
@@ -394,13 +394,13 @@ Sprite3D* Sprite3D::createSprite3DNode(NodeData* nodedata,ModelData* modeldata,c
     }
     return   sprite;
 }
-void Sprite3D::createAttachSprite3DNode(NodeData* nodedata,const MaterialDatas& matrialdatas)
+void Sprite3D::createAttachSprite3DNode(NodeData* nodedata,const MaterialDatas& materialdatas)
 {
     for(const auto& it : nodedata->modelNodeDatas)
     {
         if(it && getAttachNode(nodedata->id))
         {
-            auto sprite = createSprite3DNode(nodedata,it,matrialdatas);
+            auto sprite = createSprite3DNode(nodedata,it,materialdatas);
             if (sprite)
             {
                 getAttachNode(nodedata->id)->addChild(sprite);
@@ -409,7 +409,7 @@ void Sprite3D::createAttachSprite3DNode(NodeData* nodedata,const MaterialDatas& 
     }
     for(const auto& it : nodedata->children)
     {
-        createAttachSprite3DNode(it,matrialdatas);
+        createAttachSprite3DNode(it,materialdatas);
     }
 }
 
@@ -496,7 +496,7 @@ void Sprite3D::genGLProgramState(bool useLight)
     }
 }
 
-void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& matrialdatas, bool singleSprite)
+void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& materialdatas, bool singleSprite)
 {
     Node* node=nullptr;
     for(const auto& it : nodedata->modelNodeDatas)
@@ -517,14 +517,14 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                     }
                     mesh->_visibleChanged = std::bind(&Sprite3D::onAABBDirty, this);
 
-                    if (it->matrialId == "" && matrialdatas.materials.size())
+                    if (it->matrialId == "" && materialdatas.materials.size())
                     {
-                        const NTextureData* textureData = matrialdatas.materials[0].getTextureData(NTextureData::Usage::Diffuse);
+                        const NTextureData* textureData = materialdatas.materials[0].getTextureData(NTextureData::Usage::Diffuse);
                         mesh->setTexture(textureData->filename);
                     }
                     else
                     {
-                        const NMaterialData*  materialData=matrialdatas.getMaterialData(it->matrialId);
+                        const NMaterialData*  materialData=materialdatas.getMaterialData(it->matrialId);
                         if(materialData)
                         {
                             const NTextureData* textureData = materialData->getTextureData(NTextureData::Usage::Diffuse);
@@ -533,7 +533,7 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
                                 auto tex = Director::getInstance()->getTextureCache()->addImage(textureData->filename);
                                 if(tex)
                                 {
-                                    Texture2D::TexParams    texParams;
+                                    Texture2D::TexParams texParams;
                                     texParams.minFilter = GL_LINEAR;
                                     texParams.magFilter = GL_LINEAR;
                                     texParams.wrapS = textureData->wrapS;
@@ -561,7 +561,7 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
             }
             else
             {
-                auto sprite = createSprite3DNode(nodedata,it,matrialdatas);
+                auto sprite = createSprite3DNode(nodedata,it,materialdatas);
                 if (sprite)
                 {
                     if(root)
@@ -599,7 +599,7 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
     }
     for(const auto& it : nodedata->children)
     {
-        createNode(it,node, matrialdatas, nodedata->children.size() == 1);
+        createNode(it,node, materialdatas, nodedata->children.size() == 1);
     }
 }
 

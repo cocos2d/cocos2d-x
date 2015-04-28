@@ -93,13 +93,13 @@ protected:
     
     // apply renderstate
     void applyRenderState();
-
-    void setLightUniforms();
+    void applyUniforms(GLProgramState* glprogramstate);
+    void setLightUniforms(GLProgramState* glprogramstate);
     
     //restore to all false
     void restoreRenderState();
     
-    void MatrixPalleteCallBack( GLProgram* glProgram, Uniform* uniform);
+    void MatrixPalleteCallBack(GLProgram* glProgram, Uniform* uniform);
 
     void resetLightUniformValues();
 

@@ -121,17 +121,28 @@ uint32_t Pass::getHash() const
 
 void Pass::bind(const Mat4& modelView)
 {
-    if (_textures.size()>=0)
+    bind(modelView, true);
+}
+
+void Pass::bind(const Mat4& modelView, bool bindAttributes)
+{
+    if (_textures.size() > 0)
         GL::bindTexture2D(_textures.at(0)->getName());
 
     //set blend mode
     GL::blendFunc(_blendFunc.src, _blendFunc.dst);
 
-    if (_glProgramState)
-        _glProgramState->apply(modelView);
-    else
-        getTarget()->getGLProgramState()->apply(modelView);
+    auto glprogramstate = _glProgramState ?: getTarget()->getGLProgramState();
 
+    if (bindAttributes)
+    {
+        glprogramstate->apply(modelView);
+    }
+    else
+    {
+        glprogramstate->applyGLProgram(modelView);
+        glprogramstate->applyUniforms();
+    }
 }
 
 Node* Pass::getTarget() const

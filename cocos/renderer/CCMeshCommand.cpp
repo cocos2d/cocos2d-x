@@ -113,19 +113,21 @@ void MeshCommand::init(float globalZOrder,
 {
     CCASSERT(material, "material cannot be nill");
 
-//    RenderCommand::init(globalZOrder, mv, flags);
-//
-//    _globalOrder = globalZOrder;
-//    _material = material;
-//    
-//    _vertexBuffer = vertexBuffer;
-//    _indexBuffer = indexBuffer;
-//    _primitive = primitive;
-//    _indexFormat = indexFormat;
-//    _indexCount = indexCount;
-//    _mv.set(mv);
-//
-//    _is3D = true;
+#if 1
+    RenderCommand::init(globalZOrder, mv, flags);
+
+    _globalOrder = globalZOrder;
+    _material = material;
+    
+    _vertexBuffer = vertexBuffer;
+    _indexBuffer = indexBuffer;
+    _primitive = primitive;
+    _indexFormat = indexFormat;
+    _indexCount = indexCount;
+    _mv.set(mv);
+
+    _is3D = true;
+#else
 
     Pass* pass = material->getTechnique()->getPassByIndex(0);
     init(globalZOrder,
@@ -139,6 +141,7 @@ void MeshCommand::init(float globalZOrder,
          indexCount,
          mv,
          flags);
+#endif
 }
 
 void MeshCommand::init(float globalOrder,
@@ -238,6 +241,13 @@ MeshCommand::~MeshCommand()
 
 void MeshCommand::applyRenderState()
 {
+    // texture and blend are bound by Material
+    if (!_material)
+    {
+        GL::bindTexture2D(_textureID);
+        GL::blendFunc(_blendType.src, _blendType.dst);
+    }
+
     _renderStateCullFaceEnabled = glIsEnabled(GL_CULL_FACE) != GL_FALSE;
     _renderStateDepthTest = glIsEnabled(GL_DEPTH_TEST) != GL_FALSE;
     glGetBooleanv(GL_DEPTH_WRITEMASK, &_renderStateDepthWrite);
@@ -289,6 +299,25 @@ void MeshCommand::restoreRenderState()
     }
 }
 
+void MeshCommand::applyUniforms(GLProgramState* glprogramstate)
+{
+    glprogramstate->setUniformVec4("u_color", _displayColor);
+
+    if (_matrixPaletteSize && _matrixPalette)
+    {
+        glprogramstate->setUniformCallback("u_matrixPalette", CC_CALLBACK_2(MeshCommand::MatrixPalleteCallBack, this));
+
+    }
+
+    // Material binds Uniforms automatically
+    if (!_material)
+        glprogramstate->applyUniforms();
+
+    const auto& scene = Director::getInstance()->getRunningScene();
+    if (scene && scene->getLights().size() > 0)
+        setLightUniforms(glprogramstate);
+}
+
 void MeshCommand::genMaterialID(GLuint texID, void* glProgramState, GLuint vertexBuffer, GLuint indexBuffer, const BlendFunc& blend)
 {
     int intArray[7] = {0};
@@ -333,9 +362,16 @@ void MeshCommand::batchDraw()
     {
         for(const auto& pass: _material->_currentTechnique->_passes)
         {
-            pass->bind(_mv);
 
+            auto glprogramstate = pass->getGLProgramState();
+
+            // don't bind attributes, since they were
+            // already bound in preBatchDraw
+            pass->bind(_mv, false);
+
+            // XXX should be part of material
             applyRenderState();
+            applyUniforms(glprogramstate);
 
             // Draw
             glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
@@ -346,27 +382,11 @@ void MeshCommand::batchDraw()
     }
     else
     {
-        // Set material
-        GL::bindTexture2D(_textureID);
-        GL::blendFunc(_blendType.src, _blendType.dst);
+        _glProgramState->applyGLProgram(_mv);
 
         // set render state
         applyRenderState();
-        
-        _glProgramState->setUniformVec4("u_color", _displayColor);
-        
-        if (_matrixPaletteSize && _matrixPalette)
-        {
-            _glProgramState->setUniformCallback("u_matrixPalette", CC_CALLBACK_2(MeshCommand::MatrixPalleteCallBack, this));
-            
-        }
-        
-        _glProgramState->applyGLProgram(_mv);
-        _glProgramState->applyUniforms();
-
-        const auto& scene = Director::getInstance()->getRunningScene();
-        if (scene && scene->getLights().size() > 0)
-            setLightUniforms();
+        applyUniforms(_glProgramState);
 
         // Draw
         glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
@@ -391,33 +411,43 @@ void MeshCommand::postBatchDraw()
 
 void MeshCommand::execute()
 {
-    // set render state
-    applyRenderState();
-    // Set material
-    GL::bindTexture2D(_textureID);
-    GL::blendFunc(_blendType.src, _blendType.dst);
-
-    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-    _glProgramState->setUniformVec4("u_color", _displayColor);
-    
-    if (_matrixPaletteSize && _matrixPalette)
+    if (_material)
     {
-        _glProgramState->setUniformCallback("u_matrixPalette", CC_CALLBACK_2(MeshCommand::MatrixPalleteCallBack, this));
-        
-    }
-    
-    _glProgramState->apply(_mv);   
+        for(const auto& pass: _material->_currentTechnique->_passes)
+        {
 
-    const auto& scene = Director::getInstance()->getRunningScene();
-    if (scene && scene->getLights().size() > 0)
-        setLightUniforms();
-    
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
-    
-    // Draw
-    glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
-    
-    CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
+            auto glprogramstate = pass->getGLProgramState();
+
+            // don't bind attributes, since they were
+            // already bound in preBatchDraw
+            pass->bind(_mv);
+
+            // XXX should be part of material
+            applyRenderState();
+            applyUniforms(glprogramstate);
+
+            // Draw without VAO
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
+            glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
+            CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
+
+            pass->unbind();
+        }
+    }
+    else
+    {
+        // set render state
+        _glProgramState->apply(_mv);
+        applyRenderState();
+        applyUniforms(_glProgramState);
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
+        
+        // Draw
+        glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
+        
+        CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
+    }
     
     //restore render state
     restoreRenderState();
@@ -462,7 +492,7 @@ void MeshCommand::releaseVAO()
 }
 
 
-void MeshCommand::setLightUniforms()
+void MeshCommand::setLightUniforms(GLProgramState* glProgramState)
 {
     Director *director = Director::getInstance();
     auto scene = director->getRunningScene();
@@ -471,8 +501,12 @@ void MeshCommand::setLightUniforms()
     int maxPointLight = conf->getMaxSupportPointLightInShader();
     int maxSpotLight = conf->getMaxSupportSpotLightInShader();
     auto &lights = scene->getLights();
-    auto glProgram = _glProgramState->getGLProgram();
-    if (_glProgramState->getVertexAttribsFlags() & (1 << GLProgram::VERTEX_ATTRIB_NORMAL))
+
+    // XXX: Lights should be part of the Material's RenderState
+    // In the meantime we keep using it
+    auto glProgram = glProgramState->getGLProgram();
+
+    if (glProgramState->getVertexAttribsFlags() & (1 << GLProgram::VERTEX_ATTRIB_NORMAL))
     {
         resetLightUniformValues();
 
