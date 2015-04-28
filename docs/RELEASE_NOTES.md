@@ -226,7 +226,7 @@ For more information please refer to cpp-tests/Sprite3DTest/TerrainTest.
 
 ### Animate3D Quality Control
 
-In order to make `Animate3D` run fast, you can use low quality animation.
+In order to make `Animate3D` run fast, you can use low quality animation. There are three types of animation quality, `Animate3DQuality::QUALITY_NONE`, `Animate3DQuality::QUALITY_LOW` and `Animate3DQuality::QUALITY_HIGH`. `Animate3DQuality::QUALITY_NONE` means that does not update the animation you can use this when you are sure that the `Sprite3D` is out of screen. `Animate3DQuality::QUALITY_LOW` uses the nearest frame, and `Animate3DQuality::QUALITY_LOW` interpolate current frame using the nearest two frames.
 
 ```c++
 std::string fileName = "Sprite3DTest/orc.c3b";
@@ -238,7 +238,7 @@ if (animation)
 {
    auto animate = Animate3D::create(animation);
    //use low quality animation
-   animate->setHighQuality(false);
+   animate->setQuality(Animate3DQuality::QUALITY_LOW);
    sprite->runAction(RepeatForever::create(animate));
 }
 ```
