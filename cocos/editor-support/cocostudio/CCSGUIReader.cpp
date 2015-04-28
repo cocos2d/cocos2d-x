@@ -1412,8 +1412,8 @@ Widget* WidgetPropertiesReader0300::widgetFromBinary(CocoLoader* cocoLoader,  st
                             }
                             else
                             {
-								//- bug fix 3.3 version if (!dynamic_cast<Layout*>(widget)) 建议修改成如下方式
-								//- 同1508行
+								//- bug fix 3.3 version if (!dynamic_cast<Layout*>(widget)) 
+								//- same as 1508 
                                 if (nullptr == dynamic_cast<Layout*>(widget))
                                 {
                                     if (child->getPositionType() == ui::Widget::PositionType::PERCENT)
@@ -1507,10 +1507,9 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
                 }
                 else
                 {
-					//- bug fix:  3.3 version if (!dynamic_cast<Layout*>(widget)) 建议修改成如下方式
-					//- 3.5 版本改成if (dynamic_cast<Layout*>(widget)) 意义完全相反，所以读取 cocostudio 的百分比是方式的时候是乱的
-					//- 建议修改成以下方式
-					//- 同 1416行
+					//- bug fix: from  3.3 version if (!dynamic_cast<Layout*>(widget)) to 3.5 -> if (dynamic_cast<Layout*>(widget)) 
+					//- and can not work successful on loading PERCENT mode
+					//- change it
                     if (nullptr == dynamic_cast<Layout*>(widget))
                     {
                         if (child->getPositionType() == ui::Widget::PositionType::PERCENT)
