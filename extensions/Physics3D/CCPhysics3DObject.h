@@ -35,16 +35,35 @@
 
 class btCollisionShape;
 class btRigidBody;
+class btPersistentManifold;
 
 NS_CC_EXT_BEGIN
 
 class Physics3DShape;
 class Physics3DWorld;
 class Physics3DConstraint;
+class Physics3DObject;
+struct CC_EX_DLL Physics3DCollisionInfo
+{
+    struct CollisionPoint
+    {
+        Vec3 localPositionOnA;
+        Vec3 worldPositionOnA;
+        Vec3 localPositionOnB;
+        Vec3 worldPositionOnB;
+        Vec3 worldNormalOnB;
+    };
+
+    Physics3DObject *objA;
+    Physics3DObject *objB;
+    std::vector<CollisionPoint> collisionPointList;
+};
 
 class CC_EX_DLL Physics3DObject : public Ref
 {
 public:
+    typedef std::function<void(const Physics3DCollisionInfo &ci)> CollisionCallbackFunc;
+
     enum class PhysicsObjType
     {
         UNKNOWN = 0,
@@ -57,11 +76,16 @@ public:
     
     void* getUserData() const { return _userData; }
     
-    void setPhysicsWorld(Physics3DWorld* world) { _physicsWorld = world; }
+    void setPhysicsWorld(Physics3DWorld* world) { _physicsWorld = world; };
     
     Physics3DWorld* getPhysicsWorld() const { return _physicsWorld; }
     
     virtual cocos2d::Mat4 getWorldTransform() const = 0;
+
+    void setCollisionCallback(const CollisionCallbackFunc &func) { _collisionCallbackFunc = func; };
+    const CollisionCallbackFunc& getCollisionCallback() const { return _collisionCallbackFunc; }
+
+    bool needCollisionCallback() { return _collisionCallbackFunc != nullptr; };
     
 CC_CONSTRUCTOR_ACCESS:
     Physics3DObject()
@@ -74,11 +98,13 @@ CC_CONSTRUCTOR_ACCESS:
     }
     virtual ~Physics3DObject(){}
     
+
 protected:
     bool           _isEnabled;
     PhysicsObjType _type;
     void*          _userData;
     Physics3DWorld* _physicsWorld;
+    CollisionCallbackFunc _collisionCallbackFunc;
 };
 
 struct CC_EX_DLL Physics3DRigidBodyDes

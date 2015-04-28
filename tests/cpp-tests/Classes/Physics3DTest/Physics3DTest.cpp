@@ -29,6 +29,7 @@
 #include "3d/CCTerrain.h"
 #include "3d/CCBundle3D.h"
 #include "extensions/Physics3D/CCPhysics3D.h"
+#include "extensions/Particle3D/PU/CCPUParticleSystem3D.h"
 USING_NS_CC_EXT;
 USING_NS_CC;
 
@@ -54,6 +55,7 @@ Physics3DTests::Physics3DTests()
     ADD_TEST_CASE(BasicPhysics3DDemo);
     ADD_TEST_CASE(Physics3DConstraintDemo);
     ADD_TEST_CASE(Physics3DKinematicDemo);
+    ADD_TEST_CASE(Physics3DCollisionCallbackDemo);
     ADD_TEST_CASE(Physics3DTerrainDemo);
 };
 
@@ -676,3 +678,74 @@ std::string Physics3DTerrainDemo::subtitle() const
 }
 
 #endif
+
+std::string Physics3DCollisionCallbackDemo::subtitle() const 
+{
+    return "Physics3D CollisionCallback";
+}
+
+bool Physics3DCollisionCallbackDemo::init()
+{
+    if (!Physics3DTestDemo::init())
+        return false;
+
+    {
+        Physics3DRigidBodyDes rbDes;
+
+        std::vector<Vec3> trianglesList;
+        auto bundle = Bundle3D::createBundle();
+        bundle->load("Sprite3DTest/boss.c3b");
+        MeshDatas meshs;
+        bundle->loadMeshDatas(meshs);
+        Bundle3D::destroyBundle(bundle);
+        for (auto iter : meshs.meshDatas){
+            int preVertexSize = iter->getPerVertexSize() / sizeof(float);
+            for (auto indexArray : iter->subMeshIndices){
+                for (auto i : indexArray){
+                    trianglesList.push_back(Vec3(iter->vertex[i * preVertexSize], iter->vertex[i * preVertexSize + 1], iter->vertex[i * preVertexSize + 2]));
+                }
+            }
+        }
+
+        rbDes.mass = 0.0f;
+        rbDes.shape = Physics3DShape::createMesh(&trianglesList[0], (int)trianglesList.size() / 3);
+        auto rigidBody = Physics3DRigidBody::create(&rbDes);
+        auto component = Physics3DComponent::create(rigidBody);
+        auto sprite = Sprite3D::create("Sprite3DTest/boss.c3b");
+        sprite->addComponent(component);
+        sprite->setRotation3D(Vec3(-90.0f, 0.0f, 0.0f));
+        sprite->setCameraMask((unsigned short)CameraFlag::USER1);
+        this->addChild(sprite);
+        auto ps = PUParticleSystem3D::create("Particle3D/scripts/mp_hit_04.pu");
+
+        rigidBody->setCollisionCallback([=](const Physics3DCollisionInfo &ci){
+            if (!ci.collisionPointList.empty()){
+                static Vec3 lastestPosition = Vec3::ZERO;
+                if (lastestPosition != ci.collisionPointList[0].worldPositionOnB){
+                    auto ps = PUParticleSystem3D::create("Particle3D/scripts/mp_hit_04.pu");
+                    ps->setPosition3D(ci.collisionPointList[0].worldPositionOnB);
+                    ps->setScale(0.05f);
+                    ps->startParticleSystem();
+                    ps->setCameraMask(2);
+                    this->addChild(ps);
+                    ps->runAction(Sequence::create(DelayTime::create(1.0f), CallFunc::create([=](){
+                        ps->removeFromParent();
+                    }), nullptr));
+
+                    lastestPosition = ci.collisionPointList[0].worldPositionOnB;
+                }
+            }
+            //CCLOG("------------BoxB Collision Info------------");
+            //CCLOG("Collision Point Num: %d", ci.collisionPointList.size());
+            //for (auto &iter : ci.collisionPointList){
+            //	CCLOG("Collision Position On A: (%.2f, %.2f, %.2f)", iter.worldPositionOnA.x, iter.worldPositionOnA.y, iter.worldPositionOnA.z);
+            //	CCLOG("Collision Position On B: (%.2f, %.2f, %.2f)", iter.worldPositionOnB.x, iter.worldPositionOnB.y, iter.worldPositionOnB.z);
+            //	CCLOG("Collision Normal On B: (%.2f, %.2f, %.2f)", iter.worldNormalOnB.x, iter.worldNormalOnB.y, iter.worldNormalOnB.z);
+            //}
+            //CCLOG("------------BoxB Collision Info------------");
+        });
+    }
+
+    physicsScene->setPhysics3DDebugCamera(_camera);
+    return true;
+}

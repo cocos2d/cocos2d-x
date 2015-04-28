@@ -111,10 +111,15 @@ CC_CONSTRUCTOR_ACCESS:
     bool init(Physics3DWorldDes* info);
     
     Physics3DObject* getPhysicsObject(const btCollisionObject* btObj);
+
+    void collisionChecking();
+    bool needCollisionChecking();
     
 protected:
     std::vector<Physics3DObject*>      _objects;
     std::vector<Physics3DComponent*>   _physicsComponents; //physics3d components
+    bool _needCollisionChecking;
+    bool _collisionCheckingFlag;
     
 #if (CC_ENABLE_BULLET_INTEGRATION)
     btDynamicsWorld* _btPhyiscsWorld;
