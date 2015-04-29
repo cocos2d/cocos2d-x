@@ -1412,7 +1412,9 @@ Widget* WidgetPropertiesReader0300::widgetFromBinary(CocoLoader* cocoLoader,  st
                             }
                             else
                             {
-                                if (dynamic_cast<Layout*>(widget))
+								//- bug fix 3.3 version if (!dynamic_cast<Layout*>(widget)) 
+								//- same as 1508 
+                                if (nullptr == dynamic_cast<Layout*>(widget))
                                 {
                                     if (child->getPositionType() == ui::Widget::PositionType::PERCENT)
                                     {
@@ -1488,6 +1490,7 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
     {
         const rapidjson::Value& subData = DICTOOL->getDictionaryFromArray_json(data, "children", i);
         cocos2d::ui::Widget* child = widgetFromJsonDictionary(subData);
+
         if (child)
         {
             PageView* pageView = dynamic_cast<PageView*>(widget);
@@ -1504,7 +1507,10 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
                 }
                 else
                 {
-                    if (dynamic_cast<Layout*>(widget))
+					//- bug fix: from  3.3 version if (!dynamic_cast<Layout*>(widget)) to 3.5 -> if (dynamic_cast<Layout*>(widget)) 
+					//- and can not work successful on loading PERCENT mode
+					//- change it
+                    if (nullptr == dynamic_cast<Layout*>(widget))
                     {
                         if (child->getPositionType() == ui::Widget::PositionType::PERCENT)
                         {
