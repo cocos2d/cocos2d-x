@@ -652,10 +652,10 @@ static Texture2D * getDummyTexture()
     auto texture = Director::getInstance()->getTextureCache()->getTextureForKey("/dummyTexture");
     if(!texture)
     {
-#if (!defined NDEBUG)
-        unsigned char data[] ={0,0,0,0};//1*1 pure red picture
+#ifdef NDEBUG
+        unsigned char data[] ={0,0,0,0};//1*1 transparent picture
 #else
-        unsigned char data[] ={255,0,0,255};//1*1 pure red picture
+        unsigned char data[] ={255,0,0,255};//1*1 red picture
 #endif
         Image * image =new (std::nothrow) Image();
         image->initWithRawData(data,sizeof(data),1,1,sizeof(unsigned char));
