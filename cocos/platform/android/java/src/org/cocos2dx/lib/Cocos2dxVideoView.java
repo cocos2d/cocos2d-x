@@ -216,7 +216,7 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
     private static final String AssetResourceRoot = "assets/";
     
     public void setVideoFileName(String path) {
-    	if (path.startsWith(AssetResourceRoot)) {
+        if (path.startsWith(AssetResourceRoot)) {
             path = path.substring(AssetResourceRoot.length());
         }
         if (CocosPlayClient.isEnabled() && !CocosPlayClient.isDemo()) {
@@ -344,13 +344,13 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
     }
     
     public void fixSize(int left, int top, int width, int height) {
-    	if (mVideoWidth == 0 || mVideoHeight == 0) {
-    		mVisibleLeft = left;
+        if (mVideoWidth == 0 || mVideoHeight == 0) {
+            mVisibleLeft = left;
             mVisibleTop = top;
             mVisibleWidth = width;
             mVisibleHeight = height;
-		}
-    	else if (width != 0 && height != 0) {
+        }
+        else if (width != 0 && height != 0) {
             if (mKeepRatio) {
                 if ( mVideoWidth * height  > width * mVideoHeight ) {
                     mVisibleWidth = width;
