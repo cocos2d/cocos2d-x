@@ -400,7 +400,7 @@ void PositionFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 
 void PositionFrame::onApply(float percent)
 {
-    if (nullptr != _node && _betweenX != 0 || _betweenY != 0)
+    if (nullptr != _node && (_betweenX != 0 || _betweenY != 0))
     {
         Point p;
         p.x = _position.x + _betweenX * percent;
