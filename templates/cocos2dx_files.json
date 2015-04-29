@@ -4858,6 +4858,8 @@
         "cocos/scripting/lua-bindings/auto/api/SpriteDisplayData.lua", 
         "cocos/scripting/lua-bindings/auto/api/SpriteFrame.lua", 
         "cocos/scripting/lua-bindings/auto/api/SpriteFrameCache.lua", 
+        "cocos/scripting/lua-bindings/auto/api/SpritePolygon.lua", 
+        "cocos/scripting/lua-bindings/auto/api/SpritePolygonCache.lua", 
         "cocos/scripting/lua-bindings/auto/api/StopGrid.lua", 
         "cocos/scripting/lua-bindings/auto/api/TMXLayer.lua", 
         "cocos/scripting/lua-bindings/auto/api/TMXLayerInfo.lua", 
