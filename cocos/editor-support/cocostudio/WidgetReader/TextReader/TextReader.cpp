@@ -469,11 +469,20 @@ namespace cocostudio
                 label->enableShadow(shadowColor, Size(options->shadowOffsetX(), options->shadowOffsetY()), options->shadowBlurRadius());
             }
         }
-        
-        
+
+        // Save node color before set widget properties
+        auto oldColor = node->getColor();
+
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
-        
+
+        // restore node color and set color to text to fix shadow & outline color won't show correct bug
+        node->setColor(oldColor);
+        auto optionsWidget = (WidgetOptions*)options->widgetOptions();
+        auto f_color = optionsWidget->color();
+        Color4B color(f_color->r(), f_color->g(), f_color->b(), f_color->a());
+        ((Text *)node)->setTextColor(color);
+
         label->setUnifySizeEnabled(false);
         
         bool IsCustomSize = options->isCustomSize() != 0;
