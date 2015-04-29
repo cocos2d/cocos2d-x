@@ -108,11 +108,14 @@ void Pass::setGLProgramState(GLProgramState* glProgramState)
 
 uint32_t Pass::getHash() const
 {
-    if (_hashDirty) {
-        int glProgram = (int)_glProgramState->getGLProgram()->getProgram();
-        int intArray[4] = { glProgram, (int)_textures.at(0)->getName(), (int)_blendFunc.src, (int)_blendFunc.dst};
+    if (_hashDirty || _state->isDirty()) {
+        uint32_t glProgram = (uint32_t)_glProgramState->getGLProgram()->getProgram();
+        uint32_t textureid = (uint32_t)_textures.at(0)->getName();
+        uint32_t stateblockid = _state->getHash();
 
-        _hash = XXH32((const void*)intArray, sizeof(intArray), 0);
+        _hash = glProgram ^ textureid ^ stateblockid;
+
+//        _hash = XXH32((const void*)intArray, sizeof(intArray), 0);
         _hashDirty = false;
     }
 
@@ -126,11 +129,8 @@ void Pass::bind(const Mat4& modelView)
 
 void Pass::bind(const Mat4& modelView, bool bindAttributes)
 {
-    if (_textures.size() > 0)
-        GL::bindTexture2D(_textures.at(0)->getName());
-
     //set blend mode
-    GL::blendFunc(_blendFunc.src, _blendFunc.dst);
+    RenderState::bind(this);
 
     auto glprogramstate = _glProgramState ?: getTarget()->getGLProgramState();
 

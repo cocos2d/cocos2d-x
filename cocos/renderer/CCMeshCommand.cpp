@@ -345,7 +345,7 @@ void MeshCommand::applyUniforms(GLProgramState* glprogramstate)
         setLightUniforms(glprogramstate);
 }
 
-void MeshCommand::genMaterialID(GLuint texID, void* glProgramState, GLuint vertexBuffer, GLuint indexBuffer, const BlendFunc& blend)
+void MeshCommand::genMaterialID(GLuint texID, void* glProgramState, GLuint vertexBuffer, GLuint indexBuffer, BlendFunc blend)
 {
     int intArray[7] = {0};
     intArray[0] = (int)texID;

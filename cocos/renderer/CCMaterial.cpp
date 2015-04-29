@@ -296,20 +296,20 @@ bool Material::parseBlend(Pass* pass, const rapidjson::GenericValue<rapidjson::U
 {
     CCASSERT(blendJSON.IsString(), "Invalid type for blend. It must be an string");
 
-    const char* blend = blendJSON.GetString();
-    if (strcasecmp(blend, "DISABLE")==0)
-        pass->_blendFunc = BlendFunc::DISABLE;
-    else if(strcasecmp(blend, "ADDITIVE")==0)
-        pass->_blendFunc = BlendFunc::ADDITIVE;
-    else if(strcasecmp(blend, "ALPHA_NON_PREMULTIPLIED")==0)
-        pass->_blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
-    else if(strcasecmp(blend, "ALPHA_PREMULTIPLIED")==0)
-        pass->_blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
-    else
-    {
-        CCLOG("Invalid blend function: %s", blend);
-        return false;
-    }
+//    const char* blend = blendJSON.GetString();
+//    if (strcasecmp(blend, "DISABLE")==0)
+//        pass->_blendFunc = BlendFunc::DISABLE;
+//    else if(strcasecmp(blend, "ADDITIVE")==0)
+//        pass->_blendFunc = BlendFunc::ADDITIVE;
+//    else if(strcasecmp(blend, "ALPHA_NON_PREMULTIPLIED")==0)
+//        pass->_blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
+//    else if(strcasecmp(blend, "ALPHA_PREMULTIPLIED")==0)
+//        pass->_blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
+//    else
+//    {
+//        CCLOG("Invalid blend function: %s", blend);
+//        return false;
+//    }
 
     return true;
 }

@@ -436,7 +436,9 @@ void Mesh::bindMeshCommand()
         auto glprogramstate = pass->getGLProgramState();
         auto texture = pass->getTexture();
         auto textureid = texture ? texture->getName() : 0;
-        auto blend = pass->getBlendFunc();
+        // XXX
+//        auto blend = pass->getStateBlock()->getBlendFunc();
+        auto blend = BlendFunc::ALPHA_PREMULTIPLIED;
 
         _meshCommand.genMaterialID(textureid, glprogramstate, _meshIndexData->getVertexBuffer()->getVBO(), _meshIndexData->getIndexBuffer()->getVBO(), blend);
         _meshCommand.setCullFaceEnabled(true);
@@ -467,7 +469,7 @@ void Mesh::setBlendFunc(const BlendFunc &blendFunc)
 
     if (_material) {
         for(auto& pass: _material->_currentTechnique->_passes) {
-            pass->setBlendFunc(blendFunc);
+            pass->getStateBlock()->setBlendFunc(blendFunc);
         }
 
         bindMeshCommand();
