@@ -13,15 +13,14 @@
     - [Windows](#windows)
     - [Linux](#linux)
   - [How to start a new game](#how-to-start-a-new-game)
-- [v3.6beta0](#v36beta0)
-  - [Highlights of v3.6beta0](#highlights-of-v36beta0)
-- [v3.6alpha0](#v36alpha0)
-  - [Highlights of v3.6alpha0](#highlights-of-v36alpha0)
+- [v3.6](#v36)
+  - [Highlights of v3.6](#highlights-of-v36)
   - [Features in detail](#features-in-detail-1)
     - [3D TextureCube](#3d-texturecube)
     - [3D Skybox](#3d-skybox)
     - [3D Terrain](#3d-terrain)
     - [Animate3D Quality Control](#animate3d-quality-control)
+    - [Un-bottleneck your fill-rate with SpritePolygon](#un-bottleneck-your-fill-rate-with-spritepolygon)
     - [LuaJit ARM64](#luajit-arm64)
     - [Button memory usage optimization](#button-memory-usage-optimization)
 
@@ -40,7 +39,7 @@
 * iOS 5.0 or newer
 * OS X 10.7 or newer
 * Windows 7 or newer
-* Windows Phone 8 or newer
+* Windows Phone 8.1
 * Linux Ubuntu 14.04 or newer
 
 ## Compiler Requirements
@@ -115,32 +114,25 @@ Run
 
 Please refer to this document: [ReadMe](../README.md)
 
-# v3.6beta0
+# v3.6
 
-## Hilights of v3.6beta0
-
-* 3rd: updated Spine runtime to v2.1.25
-* MotionStreak: added `getStroke()` and `setStroke()`
-* Rect: added `intersectsCircle()`
-* UI:Text: added `disableEffect(LabelEffect)` to disable a specific effect
-* Fixed link error on VS2012 caused by libpng
-* Optimized memory usage for `ui:button`
-* Some bugs fixed for `Particle3D` and other modules
-
-# v3.6alpha0
-
-## Highlights of v3.6alpha0
+## Highlights of v3.6
 
 * 3D: added skybox support
-* 3D: added terrian support
-* uses luajit v2.1-20150331 on 64-bit iOS devices
-* added test automation support for cpp-tests
-* 3rd: updated libcurl to v7.4 on all supported platforms except WP8/WP8.1 universal
+* 3D: added terrain support
+* added `SpritePolygon` to fix overdraw issue
+* used luajit v2.1-20150331 on 64-bit iOS devices
+* removed WP8 support
+* memory usage optimization of `ui::Button`
+* 3rd: updated Spine runtime to v2.1.25
+* 3rd: updated libcurl to v7.4 on all supported platforms except WP8.1 universal
 * 3rd: updated chipmunk to v6.2.2
 * 3rd: updated openssl to v1.0.11
 * 3rd: updated freetype to v2.5.5
-* 3rd: updated png to v1.6.16 on all supported platforms except WP8/WP8.1 universal because it is not needed on these two platforms
-* ui: button memory usage optimization
+* 3rd: updated png to v1.6.16
+
+Because Angle doesn't support WP8 any more, and WP8's market share is around 20% worldwide with variations across countries, so we removed WP8 support suggested by MS OPEN TECK guys since v3.6.
+
 
 ## Features in detail
 
@@ -148,7 +140,7 @@ Please refer to this document: [ReadMe](../README.md)
 
 TextureCube is useful for skybox and environment mapping. It uses 6 faces of a cube as map shape, and 6 pictures are projected onto the sides of a cube and stored as six square textures.
 
-#### TexturesCube usage
+**TexturesCube usage**
 
 ```c++
 auto texturecube = TextureCube::create("left.jpg", "right.jpg", "top.jpg", "bottom.jpg","front.jpg", "back.jpg");
@@ -200,6 +192,8 @@ addChild(_skyBox);
 
 For more information please refer to cpp-tests/Sprite3DTest/Sprite3DCubeMapTest.
 
+![tecturecube-and-skybox](https://raw.githubusercontent.com/minggo/Pictures/master/texturecube-skybox.gif)
+
 ### 3D Terrain
 
 Terrain is an important component in 3D game. A texture is used to stand for the height map. And up to 4 textures can be used to blend the details of the terrain, grass, road, and so on.
@@ -224,9 +218,18 @@ addChild(_terrain);
 
 For more information please refer to cpp-tests/Sprite3DTest/TerrainTest.
 
+![terrian](https://raw.githubusercontent.com/minggo/Pictures/master/terrian.png)
+
 ### Animate3D Quality Control
 
-In order to make `Animate3D` run fast, you can use low quality animation. There are three types of animation quality, `Animate3DQuality::QUALITY_NONE`, `Animate3DQuality::QUALITY_LOW` and `Animate3DQuality::QUALITY_HIGH`. `Animate3DQuality::QUALITY_NONE` means that does not update the animation you can use this when you are sure that the `Sprite3D` is out of screen. `Animate3DQuality::QUALITY_LOW` uses the nearest frame, and `Animate3DQuality::QUALITY_LOW` interpolate current frame using the nearest two frames.
+In order to make Animate3D run fast, you can use low quality animation. There are three types of animation quality：
+
+* Animate3DQuality::QUALITY_NONE
+* Animate3DQuality::QUALITY_LOW
+* Animate3DQuality::QUALITY_HIGH
+
+`Animate3DQuality::QUALITY_NONE` means the animation will not be updated. You can use this type on the animation that you are sure it is not visible. `Animate3DQuality::QUALITY_LOW` will use the nearest keyframe to display current frame; `Animate3DQuality::QUALITY_HIGH` will will interpolate between keyframes.
+
 
 ```c++
 std::string fileName = "Sprite3DTest/orc.c3b";
@@ -243,7 +246,24 @@ if (animation)
 }
 ```
 
-The animation quality is also configurable in config.plist, the key is cocos2d.x.3d.animate_high_quality. All the created `Animate3D` base on this key if exist. You can modify it using the above method.
+The animation quality is also configurable in config.plist, the key is cocos2d.x.3d.animate_high_quality. All created Animate3D base on this key if exist. You can modify it using the above method.
+
+### Un-bottleneck your fill-rate with SpritePolygon
+
+SpritePolygon is a 2d Node, like Sprites, it displays a 2d Image.
+But the difference is where Sprites is made of 2 triangles to form a quad, SpritePolygon is made of N number of triangles. `It is an experimental feature.`
+
+![sprite-polygon](https://raw.githubusercontent.com/minggo/Pictures/master/sprite-polygon.jpg)
+
+This allows the GPU to draw the same graphics with much lower pixels.
+
+Because 2d games tends to not use much vertices compared to 3d games, but almost of all sprites are `none rectangular`, GPU wastes precious bandwidth drawing area that is totally transparent. Fill-rate is often the bottleneck in a graphic intense 2d game. SpritePolygon is the perfect cure for "Over-Draw".
+
+Following picture is the result of performance comparing, corresponding performance test cases are in `tests/cpp-tests/Classes/SpritePolygonTest`:
+
+![spritepolygon-performance](http://discuss.cocos2d-x.org/uploads/default/_optimized/336/215/1423528cff_690x149.png)
+
+For more detail description of SpritePolygon please refer to [this thread](http://discuss.cocos2d-x.org/t/new-feature-meshsprite-polygonsprite/21153)
 
 ### luajit arm64 
 
