@@ -37,7 +37,6 @@ NS_CC_EXT_BEGIN
 Physics3DRigidBody::Physics3DRigidBody()
 : _btRigidBody(nullptr)
 , _physics3DShape(nullptr)
-, _mask(-1)
 {
     
 }

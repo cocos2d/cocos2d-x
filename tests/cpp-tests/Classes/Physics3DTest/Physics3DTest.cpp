@@ -724,8 +724,7 @@ bool Physics3DCollisionCallbackDemo::init()
         //
         rigidBody->setCollisionCallback([=](const Physics3DCollisionInfo &ci){
             if (!ci.collisionPointList.empty()){
-                static Vec3 lastestPosition = Vec3::ZERO;
-                if (lastestPosition != ci.collisionPointList[0].worldPositionOnB){
+                if (ci.objA->getMask() != 0){
                     auto ps = PUParticleSystem3D::create("Particle3D/scripts/mp_hit_04.pu");
                     ps->setPosition3D(ci.collisionPointList[0].worldPositionOnB);
                     ps->setScale(0.05f);
@@ -735,8 +734,7 @@ bool Physics3DCollisionCallbackDemo::init()
                     ps->runAction(Sequence::create(DelayTime::create(1.0f), CallFunc::create([=](){
                         ps->removeFromParent();
                     }), nullptr));
-
-                    lastestPosition = ci.collisionPointList[0].worldPositionOnB;
+                    ci.objA->setMask(0);
                 }
             }
             //CCLOG("------------BoxB Collision Info------------");
