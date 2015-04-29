@@ -174,6 +174,10 @@ renderer/CCVertexIndexData.cpp \
 renderer/CCPrimitive.cpp \
 renderer/CCPrimitiveCommand.cpp \
 renderer/CCTrianglesCommand.cpp \
+renderer/CCMaterial.cpp \
+renderer/CCTechnique.cpp \
+renderer/CCPass.cpp \
+renderer/CCRenderState.cpp \
 deprecated/CCArray.cpp \
 deprecated/CCSet.cpp \
 deprecated/CCString.cpp \

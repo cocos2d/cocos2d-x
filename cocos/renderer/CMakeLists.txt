@@ -22,5 +22,8 @@ set(COCOS_RENDERER_SRC
   renderer/CCVertexIndexData.cpp
   renderer/ccGLStateCache.cpp
   renderer/ccShaders.cpp
-
+  renderer/CCMaterial.cpp
+  renderer/CCTechnique.cpp
+  renderer/CCPass.cpp
+  renderer/CCRenderState.cpp
 )
