@@ -40,9 +40,9 @@ import java.util.Map;
 import com.chukong.cocosplay.client.CocosPlayClient;
 
 public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl {
-    private String TAG = "VideoView";
+    private String TAG = "Cocos2dxVideoView";
     
-    private Uri         mUri;   
+    private Uri         mVideoUri;   
     private int         mDuration;
 
     // all possible internal states
@@ -123,9 +123,7 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
         mViewWidth = maxWidth;
         mViewHeight = maxHeight;
         
-        if (mVideoWidth != 0 && mVideoHeight != 0) {
-            fixSize(mViewLeft, mViewTop, mViewWidth, mViewHeight);
-        }
+        fixSize(mViewLeft, mViewTop, mViewWidth, mViewHeight);
     }
     
     public void setFullScreenEnabled(boolean enabled, int width, int height) {
@@ -166,8 +164,9 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
                 result = specSize;
                 break;
         }
+        
         return result;
-}
+    }
 
     private boolean mNeedResume = false;
     
@@ -190,6 +189,8 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
         mVideoWidth = 0;
         mVideoHeight = 0;
         getHolder().addCallback(mSHCallback);
+        //Fix issue#11516:Can't play video on Android 2.3.x
+        getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         setFocusable(true);
         setFocusableInTouchMode(true);
         mCurrentState = STATE_IDLE;
@@ -210,30 +211,31 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
         return true;
     }
     
-    private boolean isAssetRouse = false;
-    private String fileName = null;
-    private String assetResourceRoot = "assets/";
+    private boolean mIsAssetRouse = false;
+    private String mVideoFilePath = null;
+    private static final String AssetResourceRoot = "assets/";
+    
     public void setVideoFileName(String path) {
-    	if (path.startsWith(assetResourceRoot)) {
-            path = path.substring(assetResourceRoot.length());
+        if (path.startsWith(AssetResourceRoot)) {
+            path = path.substring(AssetResourceRoot.length());
         }
         if (CocosPlayClient.isEnabled() && !CocosPlayClient.isDemo()) {
             CocosPlayClient.updateAssets(path);
         }
         CocosPlayClient.notifyFileLoaded(path);
         if (path.startsWith("/")) {
-            isAssetRouse = false;
+            mIsAssetRouse = false;
             setVideoURI(Uri.parse(path),null);
         }
         else {
-            fileName = path;
-            isAssetRouse = true;
+            mVideoFilePath = path;
+            mIsAssetRouse = true;
             setVideoURI(Uri.parse(path),null);
         }
     }
     
     public void setVideoURL(String url) {
-        isAssetRouse = false;
+        mIsAssetRouse = false;
         setVideoURI(Uri.parse(url), null);
     }
 
@@ -241,7 +243,7 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
      * @hide
      */
     private void setVideoURI(Uri uri, Map<String, String> headers) {
-        mUri = uri;
+        mVideoUri = uri;
         mSeekWhenPrepared = 0;
         mVideoWidth = 0;
         mVideoHeight = 0;
@@ -265,12 +267,11 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
             // not ready for playback just yet, will try again later
             return;
         }
-        if (isAssetRouse) {
-            if(fileName == null)
+        if (mIsAssetRouse) {
+            if(mVideoFilePath == null)
                 return;
-        } else {
-            if(mUri == null)
-                return;
+        } else if(mVideoUri == null) {
+            return;
         }
         
         // Tell the music playback service to pause
@@ -299,11 +300,11 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
             
             mDuration = -1;
             mCurrentBufferPercentage = 0;
-            if (isAssetRouse) {
-                AssetFileDescriptor afd = mCocos2dxActivity.getAssets().openFd(fileName);
+            if (mIsAssetRouse) {
+                AssetFileDescriptor afd = mCocos2dxActivity.getAssets().openFd(mVideoFilePath);
                 mMediaPlayer.setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
             } else {
-                mMediaPlayer.setDataSource(mCocos2dxActivity, mUri);
+                mMediaPlayer.setDataSource(mCocos2dxActivity, mVideoUri);
             }
             
             mMediaPlayer.prepareAsync();
@@ -313,13 +314,13 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
              */
             mCurrentState = STATE_PREPARING;
         } catch (IOException ex) {
-            Log.w(TAG, "Unable to open content: " + mUri, ex);
+            Log.w(TAG, "Unable to open content: " + mVideoUri, ex);
             mCurrentState = STATE_ERROR;
             mTargetState = STATE_ERROR;
             mErrorListener.onError(mMediaPlayer, MediaPlayer.MEDIA_ERROR_UNKNOWN, 0);
             return;
         } catch (IllegalArgumentException ex) {
-            Log.w(TAG, "Unable to open content: " + mUri, ex);
+            Log.w(TAG, "Unable to open content: " + mVideoUri, ex);
             mCurrentState = STATE_ERROR;
             mTargetState = STATE_ERROR;
             mErrorListener.onError(mMediaPlayer, MediaPlayer.MEDIA_ERROR_UNKNOWN, 0);
@@ -343,7 +344,13 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
     }
     
     public void fixSize(int left, int top, int width, int height) {
-        if (width != 0 && height != 0) {
+        if (mVideoWidth == 0 || mVideoHeight == 0) {
+            mVisibleLeft = left;
+            mVisibleTop = top;
+            mVisibleWidth = width;
+            mVisibleHeight = height;
+        }
+        else if (width != 0 && height != 0) {
             if (mKeepRatio) {
                 if ( mVideoWidth * height  > width * mVideoHeight ) {
                     mVisibleWidth = width;
@@ -407,6 +414,7 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
             if (seekToPosition != 0) {
                 seekTo(seekToPosition);
             }
+            
             if (mVideoWidth != 0 && mVideoHeight != 0) {
                 fixSize();
             } 
@@ -691,24 +699,20 @@ public class Cocos2dxVideoView extends SurfaceView implements MediaPlayerControl
 
     @Override
     public boolean canPause() {
-        // TODO Auto-generated method stub
         return true;
     }
 
     @Override
     public boolean canSeekBackward() {
-        // TODO Auto-generated method stub
         return true;
     }
 
     @Override
     public boolean canSeekForward() {
-        // TODO Auto-generated method stub
         return true;
     }
         
     public int getAudioSessionId () {
-       // TODO Auto-generated method stub
        return mMediaPlayer.getAudioSessionId();
     }
 }
