@@ -327,11 +327,11 @@ void RenderState::StateBlock::setState(const std::string& name, const std::strin
     {
         setBlend(parseBoolean(value));
     }
-    else if (name.compare("blendSrc") == 0 || name.compare("srcBlend") == 0 )   // Leaving srcBlend for backward compat.
+    else if (name.compare("blendSrc") == 0)
     {
         setBlendSrc(parseBlend(value));
     }
-    else if (name.compare("blendDst") == 0 || name.compare("dstBlend") == 0)    // // Leaving dstBlend for backward compat.
+    else if (name.compare("blendDst") == 0)
     {
         setBlendDst(parseBlend(value));
     }

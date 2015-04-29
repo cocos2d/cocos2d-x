@@ -200,9 +200,9 @@ bool Material::parsePass(Technique* technique, const rapidjson::GenericValue<rap
         }
     }
 
-    // Blending
-    if (passJSON.HasMember("blend")) {
-        parseBlend(pass, passJSON["blend"]);
+    // Render State
+    if (passJSON.HasMember("renderState")) {
+        parseRenderState(pass, passJSON["renderState"]);
     }
 
     // Shaders
@@ -289,28 +289,6 @@ bool Material::parseTexture(Pass* pass, const rapidjson::GenericValue<rapidjson:
     }
 
     pass->_textures.pushBack(texture);
-    return true;
-}
-
-bool Material::parseBlend(Pass* pass, const rapidjson::GenericValue<rapidjson::UTF8<> >& blendJSON)
-{
-    CCASSERT(blendJSON.IsString(), "Invalid type for blend. It must be an string");
-
-//    const char* blend = blendJSON.GetString();
-//    if (strcasecmp(blend, "DISABLE")==0)
-//        pass->_blendFunc = BlendFunc::DISABLE;
-//    else if(strcasecmp(blend, "ADDITIVE")==0)
-//        pass->_blendFunc = BlendFunc::ADDITIVE;
-//    else if(strcasecmp(blend, "ALPHA_NON_PREMULTIPLIED")==0)
-//        pass->_blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
-//    else if(strcasecmp(blend, "ALPHA_PREMULTIPLIED")==0)
-//        pass->_blendFunc = BlendFunc::ALPHA_PREMULTIPLIED;
-//    else
-//    {
-//        CCLOG("Invalid blend function: %s", blend);
-//        return false;
-//    }
-
     return true;
 }
 
@@ -441,6 +419,15 @@ Mat4 Material::parseUniformMat4(const rapidjson::GenericValue<rapidjson::UTF8<> 
 
 bool Material::parseRenderState(Pass* pass, const rapidjson::GenericValue<rapidjson::UTF8<> >& renderState)
 {
+    auto state = pass->getStateBlock();
+
+    // Parse uniforms only if the GLProgramState was created
+    for( auto it = renderState.MemberonBegin(); it != renderState.MemberonEnd(); it++)
+    {
+        // Render state only can have "strings" or numbers as values. No objects or lists
+        state->setState(it->name.GetString(), it->value.GetString());
+    }
+
     return true;
 }
 

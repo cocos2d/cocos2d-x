@@ -9,9 +9,13 @@
 		"name": "blur",
 		"passes": [
 			{
-				"blend":  "ALPHA_NON_PREMULTIPLIED",
+				"renderState": {
+					"blend": "true",
+					"blendSrc": "ONE",
+					"blendDst": "ONE_MINUS_SRC_ALPHA"
+				},
 				"shader" : {
-					"defines": "",
+					"defines": "THIS_IS_AN_EXAMPLE 1;TOMORROW_IS_HOLIDAY 2",
 					"vertexShader": "Shaders/example_simple.vsh",
 					"fragmentShader": "Shaders/example_Blur.fsh",
 					"blurRadius": 10,
@@ -35,7 +39,11 @@
 		"name": "outline",
 		"passes": [
 			{
-				"blend":  "ALPHA_NON_PREMULTIPLIED",
+				"renderState": {
+					"blend": "true",
+					"blendSrc": "ONE",
+					"blendDst": "ONE_MINUS_SRC_ALPHA"
+				},
 				"shader" : {
 					"defines": "",
 					"vertexShader": "Shaders/example_simple.vsh",
@@ -61,7 +69,11 @@
 		"name": "noise",
 		"passes": [
 			{
-				"blend":  "ALPHA_NON_PREMULTIPLIED",
+				"renderState": {
+					"blend": "true",
+					"blendSrc": "ONE",
+					"blendDst": "ONE_MINUS_SRC_ALPHA"
+				},
 				"shader" : {
 					"defines": "",
 					"vertexShader": "Shaders/example_simple.vsh",
@@ -85,7 +97,11 @@
 		"name": "edge detect",
 		"passes": [
 			{
-				"blend":  "ALPHA_NON_PREMULTIPLIED",
+				"renderState": {
+					"blend": "true",
+					"blendSrc": "ONE",
+					"blendDst": "ONE_MINUS_SRC_ALPHA"
+				},
 				"shader" : {
 					"defines": "",
 					"vertexShader": "Shaders/example_simple.vsh",
@@ -109,7 +125,11 @@
 		"name": "gray+blur",
 		"passes": [
 			{
-				"blend":  "ALPHA_NON_PREMULTIPLIED",
+				"renderState": {
+					"blend": "true",
+					"blendSrc": "ONE",
+					"blendDst": "ONE_MINUS_SRC_ALPHA"
+				},
 				"shader" : {
 					"defines": "TEXTURE_REPEAT",
 					"vertexShader": "Shaders/example_simple.vsh",
@@ -130,7 +150,11 @@
 				]
 			},
 			{
-				"blend":  "ALPHA_NON_PREMULTIPLIED",
+				"renderState": {
+					"blend": "true",
+					"blendSrc": "ONE_MINUS_SRC_ALPHA",
+					"blendDst": "ONE_MINUS_SRC_ALPHA"
+				},
 				"shader" : {
 					"defines": "",
 					"vertexShader": "Shaders/example_simple.vsh",

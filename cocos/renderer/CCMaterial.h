@@ -110,7 +110,6 @@ protected:
     bool parseTechnique(const rapidjson::GenericValue<rapidjson::UTF8<> >& techniqueJSON);
     bool parsePass(Technique* technique, const rapidjson::GenericValue<rapidjson::UTF8<> >& passJSON);
     bool parseTexture(Pass* pass, const rapidjson::GenericValue<rapidjson::UTF8<> >& textureJSON);
-    bool parseBlend(Pass* pass, const rapidjson::GenericValue<rapidjson::UTF8<> >& blendJSON);
     bool parseShader(Pass* pass, const rapidjson::GenericValue<rapidjson::UTF8<> >& shaderJSON);
     bool parseUniform(GLProgramState* programState, const rapidjson::Value::ConstMemberIterator& iterator);
     Vec2 parseUniformVec2(const rapidjson::GenericValue<rapidjson::UTF8<> >& uniformJSON);

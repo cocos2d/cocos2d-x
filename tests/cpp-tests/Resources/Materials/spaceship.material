@@ -9,7 +9,11 @@
 		"name": "simple",
 		"passes": [
 			{
-				"blend": "ALPHA_NON_PREMULTIPLIED",
+				"renderState": {
+					"blend": "true",
+					"blendSrc": "ONE_MINUS_SRC_ALPHA",
+					"blendDst": "ONE_MINUS_SRC_ALPHA"
+				},
 				"shader" : {
 					"defines": "",
 					"vertexShader": "Shaders/example_3D_PositionTex.vsh",
