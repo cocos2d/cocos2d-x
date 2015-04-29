@@ -719,8 +719,6 @@ bool Physics3DCollisionCallbackDemo::init()
         sprite->setCameraMask((unsigned short)CameraFlag::USER1);
         this->addChild(sprite);
         //preload
-        auto ps = PUParticleSystem3D::create("Particle3D/scripts/mp_hit_04.pu");
-        (void *)ps;
         //
         rigidBody->setCollisionCallback([=](const Physics3DCollisionInfo &ci){
             if (!ci.collisionPointList.empty()){
