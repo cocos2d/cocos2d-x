@@ -39,7 +39,7 @@
 * iOS 5.0 or newer
 * OS X 10.7 or newer
 * Windows 7 or newer
-* Windows Phone 8 or newer
+* Windows Phone 8.1
 * Linux Ubuntu 14.04 or newer
 
 ## Compiler Requirements
