@@ -28,9 +28,7 @@
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
-
-
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
 
 Physics3DComponent::~Physics3DComponent()
 {
@@ -237,6 +235,6 @@ void Physics3DComponent::syncToNode()
     }
 }
 
-NS_CC_EXT_END
+NS_CC_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION

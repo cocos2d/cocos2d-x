@@ -32,10 +32,7 @@
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
 namespace cocos2d {
-    namespace extension
-    {
-        class Physics3DConstraint;
-    }
+    class Physics3DConstraint;
 }
 
 DEFINE_TEST_SUITE(Physics3DTests);
@@ -98,8 +95,8 @@ public:
     virtual void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event) override;
     
 protected:
-    cocos2d::extension::Physics3DConstraint* _constraint; //for picking
-    float                                    _pickingDistance; //picking distance
+    cocos2d::Physics3DConstraint*     _constraint; //for picking
+    float                             _pickingDistance; //picking distance
 };
 
 class Physics3DKinematicDemo : public Physics3DTestDemo

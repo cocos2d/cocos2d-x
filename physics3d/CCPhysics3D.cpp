@@ -28,16 +28,16 @@
 
 
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
 
-CC_EX_DLL const char* physics3dVersion()
+CC_DLL const char* physics3dVersion()
 {
 #if CC_ENABLE_BULLET_INTEGRATION
     return "bullet2.82";
 #endif
 }
 
-NS_CC_EXT_END
+NS_CC_END
 
 
 cocos2d::Vec3 convertbtVector3ToVec3( const btVector3 &btVec3 )

@@ -28,7 +28,7 @@
 #include "Physics3DTest.h"
 #include "3d/CCTerrain.h"
 #include "3d/CCBundle3D.h"
-#include "extensions/Physics3D/CCPhysics3D.h"
+#include "physics3d/CCPhysics3D.h"
 #include "extensions/Particle3D/PU/CCPUParticleSystem3D.h"
 USING_NS_CC_EXT;
 USING_NS_CC;

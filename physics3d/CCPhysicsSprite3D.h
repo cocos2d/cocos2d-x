@@ -22,63 +22,43 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "CCPhysics3D.h"
+#ifndef __PHYSICS_SPRITE_3D_H__
+#define __PHYSICS_SPRITE_3D_H__
+
+#include "base/ccConfig.h"
+#include "3d/CCSprite3D.h"
+#include "CCPhysics3DObject.h"
+#include "CCPhysics3DComponent.h"
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
+NS_CC_BEGIN
 
-
-NS_CC_EXT_BEGIN
-
-PhysicsSprite3D* PhysicsSprite3D::create(const std::string &modelPath, Physics3DRigidBodyDes* rigidDes, const cocos2d::Vec3& translateInPhysics, const cocos2d::Quaternion& rotInPhsyics)
+class CC_DLL PhysicsSprite3D : public cocos2d::Sprite3D
 {
-    auto ret = new PhysicsSprite3D();
-    if (ret && ret->initWithFile(modelPath))
-    {
-        auto obj = Physics3DRigidBody::create(rigidDes);
-        ret->_physicsComponent = Physics3DComponent::create(obj);
-        ret->addComponent(ret->_physicsComponent);
-        ret->_contentSize = ret->getBoundingBox().size;
-        ret->autorelease();
-        return ret;
-    }
-    CC_SAFE_DELETE(ret);
-    return ret;
-}
+public:
 
-Physics3DObject* PhysicsSprite3D::getPhysicsObj() const
-{
-    return _physicsComponent->getPhysics3DObject();
-}
-
-void PhysicsSprite3D::setSyncFlag(Physics3DComponent::PhysicsSyncFlag syncFlag)
-{
-    if (_physicsComponent)
-        _physicsComponent->setSyncFlag(syncFlag);
-}
-
-void PhysicsSprite3D::syncToPhysics()
-{
-    if (_physicsComponent)
-        _physicsComponent->syncToPhysics();
-}
-
-void PhysicsSprite3D::syncToNode()
-{
-    if (_physicsComponent)
-        _physicsComponent->syncToNode();
-}
-
-PhysicsSprite3D::PhysicsSprite3D()
-: _physicsComponent(nullptr)
-{
+    /** creates a PhysicsSprite3D*/
+    static PhysicsSprite3D* create(const std::string &modelPath, Physics3DRigidBodyDes* rigidDes, const cocos2d::Vec3& translateInPhysics = cocos2d::Vec3::ZERO, const cocos2d::Quaternion& rotInPhsyics = cocos2d::Quaternion::ZERO);
     
-}
-PhysicsSprite3D::~PhysicsSprite3D()
-{
+    Physics3DObject* getPhysicsObj() const;
     
-}
+    void setSyncFlag(Physics3DComponent::PhysicsSyncFlag syncFlag);
+    
+    void syncToPhysics();
+    
+    void syncToNode();
+    
+CC_CONSTRUCTOR_ACCESS:
+    PhysicsSprite3D();
+    virtual ~PhysicsSprite3D();
 
-NS_CC_EXT_END
+protected:
+    Physics3DComponent* _physicsComponent;
+};
+
+NS_CC_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION
+
+#endif // __PHYSICS_SPRITE_3D_H__

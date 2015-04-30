@@ -25,14 +25,12 @@
 #include "CCPhysics3D.h"
 #include "base/ccUTF8.h"
 
-USING_NS_CC;
-
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
 #include "bullet/btBulletCollisionCommon.h"
 #include "bullet/btBulletDynamicsCommon.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
 
 Physics3DRigidBody::Physics3DRigidBody()
 : _btRigidBody(nullptr)
@@ -370,6 +368,6 @@ bool Physics3DRigidBody::isKinematic() const
     return false;
 }
 
-NS_CC_EXT_END
+NS_CC_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION

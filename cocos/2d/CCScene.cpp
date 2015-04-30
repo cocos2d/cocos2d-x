@@ -251,10 +251,10 @@ bool Scene::initWithPhysics()
 #endif
         
 #if CC_USE_3D_PHYSICS
-        extension::Physics3DWorldDes info;
+        Physics3DWorldDes info;
         //TODO: FIX ME
         //info.isDebugDrawEnabled = true;
-        CC_BREAK_IF(! (_physics3DWorld = extension::Physics3DWorld::create(&info)));
+        CC_BREAK_IF(! (_physics3DWorld = Physics3DWorld::create(&info)));
         _physics3DWorld->retain();
 #endif
         
@@ -295,8 +295,8 @@ void Scene::addChildToPhysicsWorld(Node* child)
         std::function<void(Node*)> addToPhysicsWorldFunc = nullptr;
         addToPhysicsWorldFunc = [this, &addToPhysicsWorldFunc](Node* node) -> void
         {
-            static std::string comName = extension::Physics3DComponent::getPhysics3DComponentName();
-            auto com = static_cast<extension::Physics3DComponent*>(node->getComponent(comName));
+            static std::string comName = Physics3DComponent::getPhysics3DComponentName();
+            auto com = static_cast<Physics3DComponent*>(node->getComponent(comName));
             if (com)
             {
                 com->addToPhysicsWorld(_physics3DWorld);

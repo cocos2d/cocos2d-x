@@ -28,20 +28,17 @@
 #include "math/CCMath.h"
 #include "base/CCRef.h"
 #include "base/ccTypes.h"
-#include "extensions/ExtensionMacros.h"
-#include "extensions/ExtensionExport.h"
+#include "base/ccConfig.h"
 #include "renderer/CCCustomCommand.h"
-
-namespace cocos2d {
-    class GLProgram;
-    class Renderer;
-}
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
 #include "renderer/CCCustomCommand.h"
 #include "bullet/LinearMath/btIDebugDraw.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
+
+class GLProgram;
+class Renderer;
 
 class Physics3DDebugDrawer : public btIDebugDraw
 {
@@ -90,7 +87,7 @@ protected:
     int _debugMode;
 };
 
-NS_CC_EXT_END
+NS_CC_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION
 

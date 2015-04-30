@@ -27,8 +27,8 @@
 
 #include "math/CCMath.h"
 #include "base/CCRef.h"
-#include "extensions/ExtensionMacros.h"
-#include "extensions/ExtensionExport.h"
+#include "base/ccConfig.h"
+
 #include <vector>
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
@@ -37,13 +37,13 @@ class btCollisionShape;
 class btRigidBody;
 class btPersistentManifold;
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
 
 class Physics3DShape;
 class Physics3DWorld;
 class Physics3DConstraint;
 class Physics3DObject;
-struct CC_EX_DLL Physics3DCollisionInfo
+struct CC_DLL Physics3DCollisionInfo
 {
     struct CollisionPoint
     {
@@ -59,7 +59,7 @@ struct CC_EX_DLL Physics3DCollisionInfo
     std::vector<CollisionPoint> collisionPointList;
 };
 
-class CC_EX_DLL Physics3DObject : public Ref
+class CC_DLL Physics3DObject : public Ref
 {
 public:
     typedef std::function<void(const Physics3DCollisionInfo &ci)> CollisionCallbackFunc;
@@ -112,7 +112,7 @@ protected:
     unsigned int _mask;
 };
 
-struct CC_EX_DLL Physics3DRigidBodyDes
+struct CC_DLL Physics3DRigidBodyDes
 {
     float mass; //Note: mass equals zero means static, default 0
     cocos2d::Vec3 localInertia; //default (0, 0, 0)
@@ -129,7 +129,7 @@ struct CC_EX_DLL Physics3DRigidBodyDes
         
     }
 };
-class CC_EX_DLL Physics3DRigidBody : public Physics3DObject
+class CC_DLL Physics3DRigidBody : public Physics3DObject
 {
     friend class Physics3DWorld;
 public:
@@ -210,7 +210,7 @@ protected:
     std::vector<Physics3DConstraint *> _constraintList;
 };
 
-NS_CC_EXT_END
+NS_CC_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION
 

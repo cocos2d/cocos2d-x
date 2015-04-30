@@ -25,19 +25,19 @@
 #ifndef __PHYSICS_3D_COMPONENT_H__
 #define __PHYSICS_3D_COMPONENT_H__
 
+#include "base/ccConfig.h"
 #include "math/CCMath.h"
-#include "extensions/ExtensionMacros.h"
-#include "extensions/ExtensionExport.h"
+
 #include "2d/CCComponent.h"
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
 
 class Physics3DObject;
 class Physics3DWorld;
 
-class CC_EX_DLL Physics3DComponent : public cocos2d::Component
+class CC_DLL Physics3DComponent : public cocos2d::Component
 {
 public:
     enum class PhysicsSyncFlag
@@ -100,7 +100,7 @@ protected:
     PhysicsSyncFlag           _syncFlag;
 };
 
-NS_CC_EXT_END
+NS_CC_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION
 

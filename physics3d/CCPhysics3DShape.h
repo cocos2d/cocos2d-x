@@ -26,18 +26,17 @@
 #define __PHYSICS_3D_SHAPE_H__
 
 #include "base/CCRef.h"
+#include "base/ccConfig.h"
 #include "math/CCMath.h"
-#include "extensions/ExtensionMacros.h"
-#include "extensions/ExtensionExport.h"
 
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
 class btCollisionShape;
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
 
-class CC_EX_DLL Physics3DShape : public Ref
+class CC_DLL Physics3DShape : public Ref
 {
 public:
     enum class ShapeType
@@ -150,7 +149,7 @@ protected:
 #endif
 };
 
-NS_CC_EXT_END
+NS_CC_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION
 

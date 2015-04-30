@@ -28,7 +28,7 @@
 
 
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
 
 Physics3DConstraint::Physics3DConstraint()
 : _bodyA(nullptr)
@@ -840,6 +840,6 @@ void Physics3D6DofConstraint::setUseFrameOffset(bool frameOffsetOnOff)
     static_cast<btGeneric6DofConstraint*>(_constraint)->setUseFrameOffset(frameOffsetOnOff);
 }
 
-NS_CC_EXT_END
+NS_CC_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION

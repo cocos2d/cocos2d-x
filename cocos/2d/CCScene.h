@@ -42,10 +42,7 @@ class EventCustom;
 class PhysicsWorld;
 #endif
 #if CC_USE_3D_PHYSICS
-namespace extension
-{
-    class Physics3DWorld;
-}
+class Physics3DWorld;
 #endif
 /**
  * @addtogroup _2d
@@ -160,7 +157,7 @@ public:
      * @return The 3d physics world of the scene.
      * @js NA
      */
-    inline extension::Physics3DWorld* getPhysics3DWorld() { return _physics3DWorld; }
+    inline Physics3DWorld* getPhysics3DWorld() { return _physics3DWorld; }
     
     /** 
      * Set Physics3D debug draw camera.
@@ -185,7 +182,7 @@ protected:
 #endif
     
 #if CC_USE_3D_PHYSICS
-    extension::Physics3DWorld* _physics3DWorld;
+    Physics3DWorld*            _physics3DWorld;
     Camera*                    _physics3dDebugCamera; //
 #endif
 #endif // (CC_USE_PHYSICS || CC_USE_3D_PHYSICS)

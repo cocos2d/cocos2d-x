@@ -22,45 +22,63 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __PHYSICS_3D_H__
-#define __PHYSICS_3D_H__
-
-#include "math/CCMath.h"
-#include "extensions/ExtensionMacros.h"
-#include "extensions/ExtensionExport.h"
-
-#include "CCPhysics3DShape.h"
-#include "CCPhysicsSprite3D.h"
-#include "CCPhysics3DWorld.h"
-#include "CCPhysics3DDebugDrawer.h"
-#include "CCPhysics3DObject.h"
-#include "CCPhysics3DComponent.h"
-#include "CCPhysics3DConstraint.h"
-
-NS_CC_EXT_BEGIN
-
-CC_EX_DLL const char* physics3dVersion();
-
-NS_CC_EXT_END
+#include "CCPhysics3D.h"
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
-//include bullet header files
-#include "bullet/LinearMath/btTransform.h"
-#include "bullet/LinearMath/btVector3.h"
-#include "bullet/LinearMath/btQuaternion.h"
 
-#include "bullet/btBulletCollisionCommon.h"
-#include "bullet/btBulletDynamicsCommon.h"
 
-//convert between cocos and bullet
-cocos2d::Vec3 convertbtVector3ToVec3(const btVector3 &btVec3);
-btVector3 convertVec3TobtVector3(const cocos2d::Vec3 &vec3);
-cocos2d::Mat4 convertbtTransformToMat4(const btTransform &btTrans);
-btTransform convertMat4TobtTransform(const cocos2d::Mat4 &mat4);
-cocos2d::Quaternion convertbtQuatToQuat(const btQuaternion &btQuat);
-btQuaternion convertQuatTobtQuat(const cocos2d::Quaternion &quat);
+NS_CC_BEGIN
+
+PhysicsSprite3D* PhysicsSprite3D::create(const std::string &modelPath, Physics3DRigidBodyDes* rigidDes, const cocos2d::Vec3& translateInPhysics, const cocos2d::Quaternion& rotInPhsyics)
+{
+    auto ret = new PhysicsSprite3D();
+    if (ret && ret->initWithFile(modelPath))
+    {
+        auto obj = Physics3DRigidBody::create(rigidDes);
+        ret->_physicsComponent = Physics3DComponent::create(obj);
+        ret->addComponent(ret->_physicsComponent);
+        ret->_contentSize = ret->getBoundingBox().size;
+        ret->autorelease();
+        return ret;
+    }
+    CC_SAFE_DELETE(ret);
+    return ret;
+}
+
+Physics3DObject* PhysicsSprite3D::getPhysicsObj() const
+{
+    return _physicsComponent->getPhysics3DObject();
+}
+
+void PhysicsSprite3D::setSyncFlag(Physics3DComponent::PhysicsSyncFlag syncFlag)
+{
+    if (_physicsComponent)
+        _physicsComponent->setSyncFlag(syncFlag);
+}
+
+void PhysicsSprite3D::syncToPhysics()
+{
+    if (_physicsComponent)
+        _physicsComponent->syncToPhysics();
+}
+
+void PhysicsSprite3D::syncToNode()
+{
+    if (_physicsComponent)
+        _physicsComponent->syncToNode();
+}
+
+PhysicsSprite3D::PhysicsSprite3D()
+: _physicsComponent(nullptr)
+{
+    
+}
+PhysicsSprite3D::~PhysicsSprite3D()
+{
+    
+}
+
+NS_CC_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION
-
-#endif // __PHYSICS_3D_H__

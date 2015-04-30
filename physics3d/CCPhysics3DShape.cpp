@@ -27,7 +27,7 @@
 #if (CC_ENABLE_BULLET_INTEGRATION)
 #include "bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
 
 Physics3DShape::ShapeType Physics3DShape::getShapeType() const
 {
@@ -199,6 +199,6 @@ bool Physics3DShape::initCompoundShape( const std::vector<std::pair<Physics3DSha
     return true;
 }
 
-NS_CC_EXT_END
+NS_CC_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION

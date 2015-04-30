@@ -33,8 +33,7 @@
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
-USING_NS_CC;
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
 
 void Physics3DDebugDrawer::drawLine( const btVector3& from,const btVector3& to,const btVector3& color )
 {
@@ -195,6 +194,6 @@ void Physics3DDebugDrawer::clear()
     _bufferCount = 0;
 }
 
-NS_CC_EXT_END
+NS_CC_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION

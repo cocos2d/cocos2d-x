@@ -27,12 +27,7 @@
 
 #include "math/CCMath.h"
 #include "base/CCRef.h"
-#include "extensions/ExtensionMacros.h"
-#include "extensions/ExtensionExport.h"
-
-namespace cocos2d{
-    class Renderer;
-}
+#include "base/ccConfig.h"
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
@@ -44,15 +39,16 @@ class btSequentialImpulseConstraintSolver;
 class btRigidBody;
 class btCollisionObject;
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
 
 class Physics3DObject;
 class Physics3DConstraint;
 class Physics3DDebugDrawer;
 class Physics3DComponent;
 class Physics3DShape;
+class Renderer;
 
-struct CC_EX_DLL Physics3DWorldDes
+struct CC_DLL Physics3DWorldDes
 {
     bool           isDebugDrawEnabled; //using physics debug draw?, false by default
     cocos2d::Vec3  gravity;//gravity, (0, -9.8, 0)
@@ -63,7 +59,7 @@ struct CC_EX_DLL Physics3DWorldDes
     }
 };
 
-class CC_EX_DLL Physics3DWorld : public Ref
+class CC_DLL Physics3DWorld : public Ref
 {
     friend class Physics3DComponent;
 public:
@@ -131,7 +127,7 @@ protected:
 #endif // CC_ENABLE_BULLET_INTEGRATION
 };
 
-NS_CC_EXT_END
+NS_CC_END
 
 #endif
 

@@ -27,18 +27,17 @@
 
 #include "math/CCMath.h"
 #include "base/CCRef.h"
-#include "extensions/ExtensionMacros.h"
-#include "extensions/ExtensionExport.h"
+#include "base/ccConfig.h"
 
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
 class btTypedConstraint;
 
-NS_CC_EXT_BEGIN
+NS_CC_BEGIN
 
 class Physics3DRigidBody;
 
-class CC_EX_DLL Physics3DConstraint : public Ref
+class CC_DLL Physics3DConstraint : public Ref
 {
 public:
     enum class ConstraintType
@@ -95,7 +94,7 @@ protected:
 /**
  * Point to point constraint limits the translation so that the local pivot points of 2 rigidbodies match in worldspace.
  */
-class CC_EX_DLL Physics3DPointToPointConstraint : public Physics3DConstraint
+class CC_DLL Physics3DPointToPointConstraint : public Physics3DConstraint
 {
 public:
     /**
@@ -138,7 +137,7 @@ protected:
  * Hinge constraint restricts two additional angular degrees of freedom, so the body can only rotate around one axis, the hinge axis. This can be useful to represent doors or wheels rotating around one axis.
  * hinge constraint between two rigidbodies each with a pivotpoint that descibes the axis location in local space
  */
-class CC_EX_DLL Physics3DHingeConstraint : public Physics3DConstraint
+class CC_DLL Physics3DHingeConstraint : public Physics3DConstraint
 {
 public:
     static Physics3DHingeConstraint* create(Physics3DRigidBody* rbA, const cocos2d::Mat4& rbAFrame, bool useReferenceFrameA = false);
@@ -206,7 +205,7 @@ CC_CONSTRUCTOR_ACCESS:
 /**
  * It allows the body to rotate around one axis and translate along this axis.
  */
-class CC_EX_DLL Physics3DSliderConstraint : public Physics3DConstraint
+class CC_DLL Physics3DSliderConstraint : public Physics3DConstraint
 {
 public:
     /**
@@ -294,7 +293,7 @@ CC_CONSTRUCTOR_ACCESS:
 /**
  * It is a special point to point constraint that adds cone and twist axis limits. The x-axis serves as twist axis.
  */
-class CC_EX_DLL Physics3DConeTwistConstraint : public Physics3DConstraint
+class CC_DLL Physics3DConeTwistConstraint : public Physics3DConstraint
 {
 public:
     static Physics3DConeTwistConstraint* create(Physics3DRigidBody* rbA, const cocos2d::Mat4& frameA);
@@ -364,7 +363,7 @@ CC_CONSTRUCTOR_ACCESS:
  * Lowerlimit > Upperlimit -> axis is free
  * Lowerlimit < Upperlimit -> axis it limited in that range
  */
-class CC_EX_DLL Physics3D6DofConstraint : public Physics3DConstraint
+class CC_DLL Physics3D6DofConstraint : public Physics3DConstraint
 {
 public:
     static Physics3D6DofConstraint* create(Physics3DRigidBody* rbA, Physics3DRigidBody* rbB, const cocos2d::Mat4& frameInA, const cocos2d::Mat4& frameInB, bool useLinearReferenceFrameA);
@@ -409,7 +408,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Physics3D6DofConstraint(){}
 };
 
-NS_CC_EXT_END
+NS_CC_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION
 
