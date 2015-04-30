@@ -259,8 +259,8 @@
     <Filter Include="cocostudio\reader\WidgetReader\ArmatureNodeReader">
       <UniqueIdentifier>{e1848cce-b225-42c4-bb6e-6430b6da123b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="extension\Physics3D">
-      <UniqueIdentifier>{50304dd6-eb8d-4bd4-abbd-82ac0bd78b47}</UniqueIdentifier>
+    <Filter Include="physics3d">
+      <UniqueIdentifier>{5cbe45d9-16b0-4d09-9467-770ba1843a58}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1794,32 +1794,32 @@
     <ClCompile Include="..\editor-support\cocostudio\CCObjectExtensionData.cpp">
       <Filter>cocostudio\json</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\extensions\Physics3D\CCPhysics3D.cpp">
-      <Filter>extension\Physics3D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\extensions\Physics3D\CCPhysics3DShape.cpp">
-      <Filter>extension\Physics3D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\extensions\Physics3D\CCPhysicsSprite3D.cpp">
-      <Filter>extension\Physics3D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\extensions\Physics3D\CCPhysics3DComponent.cpp">
-      <Filter>extension\Physics3D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\extensions\Physics3D\CCPhysics3DConstraint.cpp">
-      <Filter>extension\Physics3D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\extensions\Physics3D\CCPhysics3DObject.cpp">
-      <Filter>extension\Physics3D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\extensions\Physics3D\CCPhysics3DWorld.cpp">
-      <Filter>extension\Physics3D</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\extensions\Physics3D\CCPhysics3DDebugDrawer.cpp">
-      <Filter>extension\Physics3D</Filter>
-    </ClCompile>
     <ClCompile Include="..\editor-support\cocostudio\CocoStudio.cpp">
       <Filter>cocostudio\json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\physics3d\CCPhysics3D.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\physics3d\CCPhysics3DComponent.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\physics3d\CCPhysics3DConstraint.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\physics3d\CCPhysics3DDebugDrawer.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\physics3d\CCPhysics3DObject.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\physics3d\CCPhysics3DShape.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\physics3d\CCPhysics3DWorld.cpp">
+      <Filter>physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\physics3d\CCPhysicsSprite3D.cpp">
+      <Filter>physics3d</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3539,29 +3539,29 @@
     <ClInclude Include="..\editor-support\cocostudio\CCObjectExtensionData.h">
       <Filter>cocostudio\json</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\extensions\Physics3D\CCPhysics3D.h">
-      <Filter>extension\Physics3D</Filter>
+    <ClInclude Include="..\physics3d\CCPhysics3D.h">
+      <Filter>physics3d</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\extensions\Physics3D\CCPhysics3DShape.h">
-      <Filter>extension\Physics3D</Filter>
+    <ClInclude Include="..\physics3d\CCPhysics3DComponent.h">
+      <Filter>physics3d</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\extensions\Physics3D\CCPhysicsSprite3D.h">
-      <Filter>extension\Physics3D</Filter>
+    <ClInclude Include="..\physics3d\CCPhysics3DConstraint.h">
+      <Filter>physics3d</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\extensions\Physics3D\CCPhysics3DComponent.h">
-      <Filter>extension\Physics3D</Filter>
+    <ClInclude Include="..\physics3d\CCPhysics3DDebugDrawer.h">
+      <Filter>physics3d</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\extensions\Physics3D\CCPhysics3DConstraint.h">
-      <Filter>extension\Physics3D</Filter>
+    <ClInclude Include="..\physics3d\CCPhysics3DObject.h">
+      <Filter>physics3d</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\extensions\Physics3D\CCPhysics3DObject.h">
-      <Filter>extension\Physics3D</Filter>
+    <ClInclude Include="..\physics3d\CCPhysics3DShape.h">
+      <Filter>physics3d</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\extensions\Physics3D\CCPhysics3DWorld.h">
-      <Filter>extension\Physics3D</Filter>
+    <ClInclude Include="..\physics3d\CCPhysics3DWorld.h">
+      <Filter>physics3d</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\extensions\Physics3D\CCPhysics3DDebugDrawer.h">
-      <Filter>extension\Physics3D</Filter>
+    <ClInclude Include="..\physics3d\CCPhysicsSprite3D.h">
+      <Filter>physics3d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
