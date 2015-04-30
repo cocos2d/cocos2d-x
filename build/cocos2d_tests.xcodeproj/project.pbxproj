@@ -803,6 +803,8 @@
 		59E170151AB42EB10007F2BF /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826294421AAF071500CB7CF7 /* Security.framework */; };
 		5EBEECB01995247000429821 /* DrawNode3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EBEECAE1995247000429821 /* DrawNode3D.cpp */; };
 		5EBEECB11995247000429821 /* DrawNode3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EBEECAE1995247000429821 /* DrawNode3D.cpp */; };
+		688669711AE8E8B500C2CFD9 /* SpritePolygonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6886696F1AE8E8B500C2CFD9 /* SpritePolygonTest.cpp */; };
+		688669721AE8E8B500C2CFD9 /* SpritePolygonTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6886696F1AE8E8B500C2CFD9 /* SpritePolygonTest.cpp */; };
 		826294431AAF071500CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826294421AAF071500CB7CF7 /* Security.framework */; };
 		A05FCACA177C124500BE600E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64822165F391E007D4F18 /* Cocoa.framework */; };
 		A07A521E1783A1D20073F6A7 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C6482E165F399D007D4F18 /* libz.dylib */; };
@@ -1748,6 +1750,8 @@
 		59620E8E1921E5CF002021B6 /* Bug-Child.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-Child.h"; sourceTree = "<group>"; };
 		5EBEECAE1995247000429821 /* DrawNode3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DrawNode3D.cpp; path = Sprite3DTest/DrawNode3D.cpp; sourceTree = "<group>"; };
 		5EBEECAF1995247000429821 /* DrawNode3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DrawNode3D.h; path = Sprite3DTest/DrawNode3D.h; sourceTree = "<group>"; };
+		6886696F1AE8E8B500C2CFD9 /* SpritePolygonTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpritePolygonTest.cpp; sourceTree = "<group>"; };
+		688669701AE8E8B500C2CFD9 /* SpritePolygonTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpritePolygonTest.h; sourceTree = "<group>"; };
 		70A7F72D191D3E4900F0F206 /* shaderTest.psh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = shaderTest.psh.h; sourceTree = "<group>"; };
 		70A7F730191D421B00F0F206 /* ShaderTest.vsh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTest.vsh.h; sourceTree = "<group>"; };
 		826294421AAF071500CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -2190,6 +2194,7 @@
 		1AC3592418CECF0A00F37B72 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				6886696E1AE8E8A000C2CFD9 /* SpritePolygonTest */,
 				B603F1AC1AC8EA2E00A9579C /* TerrainTest */,
 				182C5CB71A95B28A00C30D34 /* CocosStudio3DTest */,
 				B639932B1A490E9900B07923 /* Particle3DTest */,
@@ -3955,6 +3960,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		6886696E1AE8E8A000C2CFD9 /* SpritePolygonTest */ = {
+			isa = PBXGroup;
+			children = (
+				6886696F1AE8E8B500C2CFD9 /* SpritePolygonTest.cpp */,
+				688669701AE8E8B500C2CFD9 /* SpritePolygonTest.h */,
+			);
+			path = SpritePolygonTest;
+			sourceTree = "<group>";
+		};
 		A5030C3219D059AB000E78E7 /* OpenURLTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -4868,6 +4882,7 @@
 				1AC35B2718CECF0C00F37B72 /* ActionsTest.cpp in Sources */,
 				1AC35C4918CECF0C00F37B72 /* ShaderTest.cpp in Sources */,
 				1AC35B4318CECF0C00F37B72 /* Bug-624.cpp in Sources */,
+				688669711AE8E8B500C2CFD9 /* SpritePolygonTest.cpp in Sources */,
 				1AC35BF718CECF0C00F37B72 /* SocketIOTest.cpp in Sources */,
 				1AC35C4F18CECF0C00F37B72 /* SpriteTest.cpp in Sources */,
 				29080D9D191B595E0066F8DF /* CustomParticleWidgetReader.cpp in Sources */,
@@ -5010,6 +5025,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1AC35B3218CECF0C00F37B72 /* GLES-Render.cpp in Sources */,
+				688669721AE8E8B500C2CFD9 /* SpritePolygonTest.cpp in Sources */,
 				1AC35C5418CECF0C00F37B72 /* TextInputTest.cpp in Sources */,
 				1AC35B4618CECF0C00F37B72 /* Bug-886.cpp in Sources */,
 				1AC35BE218CECF0C00F37B72 /* CCControlButtonTest.cpp in Sources */,

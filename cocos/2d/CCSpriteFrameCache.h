@@ -140,6 +140,15 @@ public:
      */
     void addSpriteFrame(SpriteFrame *frame, const std::string& frameName);
 
+    /** Check if multiple Sprite Frames from a plist file have been loaded.
+    * @js NA
+    * @lua NA
+    *
+    * @param plist Plist file name.
+    * @return True if the file is loaded.
+    */
+    bool isSpriteFramesWithFileLoaded(const std::string& plist) const;
+
     /** Purges the dictionary of loaded sprite frames.
      * Call this method if you receive the "Memory Warning".
      * In the short term: it will free some resources preventing your app from being killed.

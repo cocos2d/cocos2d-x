@@ -1114,6 +1114,9 @@ Developers:
         
     qiutaoleo
         Added a feature to check case characters for filename on windows
+        
+    HueyPark
+        Fixed memory leak in HttpClient on iOS
 
 Retired Core Developers:
     WenSheng Yang
