@@ -134,14 +134,52 @@ void RenderState::bind(Pass* pass)
     if (_textures.size() > 0)
         GL::bindTexture2D(_textures.at(0)->getName());
 
-
+    // Get the combined modified state bits for our RenderState hierarchy.
     long stateOverrideBits = _state ? _state->_bits : 0;
+    RenderState* rs = _parent;
+    while (rs)
+    {
+        if (rs->_state)
+        {
+            stateOverrideBits |= rs->_state->_bits;
+        }
+        rs = rs->_parent;
+    }
 
     // Restore renderer state to its default, except for explicitly specified states
     StateBlock::restore(stateOverrideBits);
 
-    if (_state)
-        _state->bindNoRestore();
+    // Apply renderer state for the entire hierarchy, top-down.
+    rs = NULL;
+    while ((rs = getTopmost(rs)))
+    {
+        if (rs->_state)
+        {
+            rs->_state->bindNoRestore();
+        }
+    }
+}
+
+RenderState* RenderState::getTopmost(RenderState* below)
+{
+    RenderState* rs = this;
+    if (rs == below)
+    {
+        // Nothing below ourself.
+        return NULL;
+    }
+
+    while (rs)
+    {
+        if (rs->_parent == below || rs->_parent == NULL)
+        {
+            // Stop traversing up here.
+            return rs;
+        }
+        rs = rs->_parent;
+    }
+
+    return NULL;
 }
 
 RenderState::StateBlock* RenderState::getStateBlock() const

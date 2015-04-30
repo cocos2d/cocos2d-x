@@ -31,9 +31,9 @@
 #define __cocos2d_libs__CCMaterial__
 
 #include <string>
-
 #include "json/document.h"
 
+#include "renderer/CCRenderState.h"
 #include "base/CCRef.h"
 #include "base/CCVector.h"
 #include "math/Vec2.h"
@@ -50,7 +50,7 @@ class GLProgramState;
 class Node;
 
 /// Material
-class CC_DLL Material : public Ref
+class CC_DLL Material : public RenderState
 {
     friend class Node;
     friend class Technique;

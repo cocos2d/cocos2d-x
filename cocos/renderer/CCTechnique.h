@@ -31,6 +31,7 @@
 #define __cocos2d_libs__CCTechnique__
 
 #include <string>
+#include "renderer/CCRenderState.h"
 #include "base/CCRef.h"
 #include "platform/CCPlatformMacros.h"
 #include "base/CCVector.h"
@@ -42,7 +43,7 @@ class GLProgramState;
 class Material;
 
 /// Technique
-class CC_DLL Technique : public Ref
+class CC_DLL Technique : public RenderState
 {
     friend class Material;
     friend class Renderer;

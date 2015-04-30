@@ -84,6 +84,10 @@ public:
      */
     void bind(Pass* pass);
 
+    /**
+     * Returns the topmost RenderState in the hierarchy below the given RenderState.
+     */
+    RenderState* getTopmost(RenderState* below);
 
     enum Blend
     {
@@ -389,18 +393,23 @@ protected:
     ~RenderState();
     bool init(RenderState* parent);
 
-    // parent, for inheritance
+    mutable uint32_t _hash;
+    mutable bool _hashDirty;
+
+    /**
+     * The StateBlock of fixed-function render states that can be applied to the RenderState.
+     */
+    mutable StateBlock* _state;
+
+    /**
+     * The RenderState's parent.
+     */
     RenderState* _parent;
 
     // name, for filtering
     std::string _name;
 
-
     Vector<Texture2D*> _textures;
-
-    mutable StateBlock* _state;
-    mutable uint32_t _hash;
-    mutable bool _hashDirty;
 };
 
 NS_CC_END
