@@ -32,6 +32,8 @@
 
 NS_CC_BEGIN
 
+RenderState::StateBlock* RenderState::StateBlock::_defaultState = nullptr;
+
 // Render state override bits
 enum
 {
@@ -55,25 +57,19 @@ enum
 
 RenderState* RenderState::create(RenderState* parent)
 {
-    return new (std::nothrow) RenderState(parent);
+    auto renderstate = new (std::nothrow) RenderState();
+    if (renderstate && renderstate->init(parent))
+        renderstate->autorelease();
+    return renderstate;
 }
+
 
 RenderState::RenderState()
-: _parent(nullptr)
-, _textures()
+: _textures()
 , _hash(0)
 , _hashDirty(true)
-, _state(nullptr)
+, _parent(nullptr)
 {
-    _state = StateBlock::create();
-    CC_SAFE_RETAIN(_state);
-}
-
-RenderState::RenderState(RenderState *parent)
-{
-    _parent = parent;
-    CC_SAFE_RETAIN(parent);
-
     _state = StateBlock::create();
     CC_SAFE_RETAIN(_state);
 }
@@ -82,6 +78,27 @@ RenderState::~RenderState()
 {
     CC_SAFE_RELEASE(_parent);
     CC_SAFE_RELEASE(_state);
+}
+
+void RenderState::initialize()
+{
+    if (StateBlock::_defaultState == NULL)
+    {
+        StateBlock::_defaultState = StateBlock::create();
+        CC_SAFE_RETAIN(StateBlock::_defaultState);
+    }
+}
+
+void RenderState::finalize()
+{
+    CC_SAFE_RELEASE(StateBlock::_defaultState);
+}
+
+bool RenderState::init(RenderState* parent)
+{
+    _parent = parent;
+    CC_SAFE_RETAIN(_parent);
+    return true;
 }
 
 std::string RenderState::getName() const
@@ -117,7 +134,14 @@ void RenderState::bind(Pass* pass)
     if (_textures.size() > 0)
         GL::bindTexture2D(_textures.at(0)->getName());
 
-    _state->bind();
+
+    long stateOverrideBits = _state ? _state->_bits : 0;
+
+    // Restore renderer state to its default, except for explicitly specified states
+    StateBlock::restore(stateOverrideBits);
+
+    if (_state)
+        _state->bindNoRestore();
 }
 
 RenderState::StateBlock* RenderState::getStateBlock() const
@@ -148,6 +172,198 @@ RenderState::StateBlock::StateBlock()
 
 RenderState::StateBlock::~StateBlock()
 {
+}
+
+void RenderState::StateBlock::bind()
+{
+    // When the public bind() is called with no RenderState object passed in,
+    // we assume we are being called to bind the state of a single StateBlock,
+    // irrespective of whether it belongs to a hierarchy of RenderStates.
+    // Therefore, we call restore() here with only this StateBlock's override
+    // bits to restore state before applying the new state.
+    StateBlock::restore(_bits);
+
+    bindNoRestore();
+}
+
+void RenderState::StateBlock::bindNoRestore()
+{
+    GP_ASSERT(_defaultState);
+
+    // Update any state that differs from _defaultState and flip _defaultState bits
+    if ((_bits & RS_BLEND) && (_blendEnabled != _defaultState->_blendEnabled))
+    {
+        if (_blendEnabled)
+            glEnable(GL_BLEND);
+        else
+            glDisable(GL_BLEND);
+        _defaultState->_blendEnabled = _blendEnabled;
+    }
+    if ((_bits & RS_BLEND_FUNC) && (_blendSrc != _defaultState->_blendSrc || _blendDst != _defaultState->_blendDst))
+    {
+        glBlendFunc((GLenum)_blendSrc, (GLenum)_blendDst);
+        _defaultState->_blendSrc = _blendSrc;
+        _defaultState->_blendDst = _blendDst;
+    }
+    if ((_bits & RS_CULL_FACE) && (_cullFaceEnabled != _defaultState->_cullFaceEnabled))
+    {
+        if (_cullFaceEnabled)
+            glEnable(GL_CULL_FACE);
+        else
+            glDisable(GL_CULL_FACE);
+        _defaultState->_cullFaceEnabled = _cullFaceEnabled;
+    }
+    if ((_bits & RS_CULL_FACE_SIDE) && (_cullFaceSide != _defaultState->_cullFaceSide))
+    {
+        glCullFace((GLenum)_cullFaceSide);
+        _defaultState->_cullFaceSide = _cullFaceSide;
+    }
+    if ((_bits & RS_FRONT_FACE) && (_frontFace != _defaultState->_frontFace))
+    {
+        glFrontFace((GLenum)_frontFace);
+        _defaultState->_frontFace = _frontFace;
+    }
+    if ((_bits & RS_DEPTH_TEST) && (_depthTestEnabled != _defaultState->_depthTestEnabled))
+    {
+        if (_depthTestEnabled)
+            glEnable(GL_DEPTH_TEST);
+        else
+            glDisable(GL_DEPTH_TEST);
+        _defaultState->_depthTestEnabled = _depthTestEnabled;
+    }
+    if ((_bits & RS_DEPTH_WRITE) && (_depthWriteEnabled != _defaultState->_depthWriteEnabled))
+    {
+        glDepthMask(_depthWriteEnabled ? GL_TRUE : GL_FALSE);
+        _defaultState->_depthWriteEnabled = _depthWriteEnabled;
+    }
+    if ((_bits & RS_DEPTH_FUNC) && (_depthFunction != _defaultState->_depthFunction))
+    {
+        glDepthFunc((GLenum)_depthFunction);
+        _defaultState->_depthFunction = _depthFunction;
+    }
+    if ((_bits & RS_STENCIL_TEST) && (_stencilTestEnabled != _defaultState->_stencilTestEnabled))
+    {
+        if (_stencilTestEnabled)
+            glEnable(GL_STENCIL_TEST);
+        else
+            glDisable(GL_STENCIL_TEST);
+        _defaultState->_stencilTestEnabled = _stencilTestEnabled;
+    }
+    if ((_bits & RS_STENCIL_WRITE) && (_stencilWrite != _defaultState->_stencilWrite))
+    {
+        glStencilMask(_stencilWrite);
+        _defaultState->_stencilWrite = _stencilWrite;
+    }
+    if ((_bits & RS_STENCIL_FUNC) && (_stencilFunction != _defaultState->_stencilFunction ||
+                                      _stencilFunctionRef != _defaultState->_stencilFunctionRef ||
+                                      _stencilFunctionMask != _defaultState->_stencilFunctionMask))
+    {
+        glStencilFunc((GLenum)_stencilFunction, _stencilFunctionRef, _stencilFunctionMask);
+        _defaultState->_stencilFunction = _stencilFunction;
+        _defaultState->_stencilFunctionRef = _stencilFunctionRef;
+        _defaultState->_stencilFunctionMask = _stencilFunctionMask;
+    }
+    if ((_bits & RS_STENCIL_OP) && (_stencilOpSfail != _defaultState->_stencilOpSfail ||
+                                    _stencilOpDpfail != _defaultState->_stencilOpDpfail ||
+                                    _stencilOpDppass != _defaultState->_stencilOpDppass))
+    {
+        glStencilOp((GLenum)_stencilOpSfail, (GLenum)_stencilOpDpfail, (GLenum)_stencilOpDppass);
+        _defaultState->_stencilOpSfail = _stencilOpSfail;
+        _defaultState->_stencilOpDpfail = _stencilOpDpfail;
+        _defaultState->_stencilOpDppass = _stencilOpDppass;
+    }
+
+    _defaultState->_bits |= _bits;
+}
+
+void RenderState::StateBlock::restore(long stateOverrideBits)
+{
+    GP_ASSERT(_defaultState);
+
+    // If there is no state to restore (i.e. no non-default state), do nothing.
+    if (_defaultState->_bits == 0)
+    {
+        return;
+    }
+
+    // Restore any state that is not overridden and is not default
+    if (!(stateOverrideBits & RS_BLEND) && (_defaultState->_bits & RS_BLEND))
+    {
+        glDisable(GL_BLEND);
+        _defaultState->_bits &= ~RS_BLEND;
+        _defaultState->_blendEnabled = false;
+    }
+    if (!(stateOverrideBits & RS_BLEND_FUNC) && (_defaultState->_bits & RS_BLEND_FUNC))
+    {
+        glBlendFunc(GL_ONE, GL_ZERO);
+        _defaultState->_bits &= ~RS_BLEND_FUNC;
+        _defaultState->_blendSrc = RenderState::BLEND_ONE;
+        _defaultState->_blendDst = RenderState::BLEND_ZERO;
+    }
+    if (!(stateOverrideBits & RS_CULL_FACE) && (_defaultState->_bits & RS_CULL_FACE))
+    {
+        glDisable(GL_CULL_FACE);
+        _defaultState->_bits &= ~RS_CULL_FACE;
+        _defaultState->_cullFaceEnabled = false;
+    }
+    if (!(stateOverrideBits & RS_CULL_FACE_SIDE) && (_defaultState->_bits & RS_CULL_FACE_SIDE))
+    {
+        glCullFace((GLenum)GL_BACK);
+        _defaultState->_bits &= ~RS_CULL_FACE_SIDE;
+        _defaultState->_cullFaceSide = RenderState::CULL_FACE_SIDE_BACK;
+    }
+    if (!(stateOverrideBits & RS_FRONT_FACE) && (_defaultState->_bits & RS_FRONT_FACE))
+    {
+        glFrontFace((GLenum)GL_CCW);
+        _defaultState->_bits &= ~RS_FRONT_FACE;
+        _defaultState->_frontFace = RenderState::FRONT_FACE_CCW;
+    }
+    if (!(stateOverrideBits & RS_DEPTH_TEST) && (_defaultState->_bits & RS_DEPTH_TEST))
+    {
+        glDisable(GL_DEPTH_TEST);
+        _defaultState->_bits &= ~RS_DEPTH_TEST;
+        _defaultState->_depthTestEnabled = false;
+    }
+    if (!(stateOverrideBits & RS_DEPTH_WRITE) && (_defaultState->_bits & RS_DEPTH_WRITE))
+    {
+        glDepthMask(GL_TRUE);
+        _defaultState->_bits &= ~RS_DEPTH_WRITE;
+        _defaultState->_depthWriteEnabled = true;
+    }
+    if (!(stateOverrideBits & RS_DEPTH_FUNC) && (_defaultState->_bits & RS_DEPTH_FUNC))
+    {
+        glDepthFunc((GLenum)GL_LESS);
+        _defaultState->_bits &= ~RS_DEPTH_FUNC;
+        _defaultState->_depthFunction = RenderState::DEPTH_LESS;
+    }
+    if (!(stateOverrideBits & RS_STENCIL_TEST) && (_defaultState->_bits & RS_STENCIL_TEST))
+    {
+        glDisable(GL_STENCIL_TEST);
+        _defaultState->_bits &= ~RS_STENCIL_TEST;
+        _defaultState->_stencilTestEnabled = false;
+    }
+    if (!(stateOverrideBits & RS_STENCIL_WRITE) && (_defaultState->_bits & RS_STENCIL_WRITE))
+    {
+        glStencilMask(RS_ALL_ONES);
+        _defaultState->_bits &= ~RS_STENCIL_WRITE;
+        _defaultState->_stencilWrite = RS_ALL_ONES;
+    }
+    if (!(stateOverrideBits & RS_STENCIL_FUNC) && (_defaultState->_bits & RS_STENCIL_FUNC))
+    {
+        glStencilFunc((GLenum)RenderState::STENCIL_ALWAYS, 0, RS_ALL_ONES);
+        _defaultState->_bits &= ~RS_STENCIL_FUNC;
+        _defaultState->_stencilFunction = RenderState::STENCIL_ALWAYS;
+        _defaultState->_stencilFunctionRef = 0;
+        _defaultState->_stencilFunctionMask = RS_ALL_ONES;
+    }
+    if (!(stateOverrideBits & RS_STENCIL_OP) && (_defaultState->_bits & RS_STENCIL_OP))
+    {
+        glStencilOp((GLenum)RenderState::STENCIL_OP_KEEP, (GLenum)RenderState::STENCIL_OP_KEEP, (GLenum)RenderState::STENCIL_OP_KEEP);
+        _defaultState->_bits &= ~RS_STENCIL_OP;
+        _defaultState->_stencilOpSfail = RenderState::STENCIL_OP_KEEP;
+        _defaultState->_stencilOpDpfail = RenderState::STENCIL_OP_KEEP;
+        _defaultState->_stencilOpDppass = RenderState::STENCIL_OP_KEEP;
+    }
 }
 
 static bool parseBoolean(const std::string& value)
@@ -407,11 +623,6 @@ uint32_t RenderState::StateBlock::getHash() const
 {
     // XXX
     return 0x12345678;
-}
-
-void RenderState::StateBlock::bind()
-{
-    GL::blendFunc(_blendSrc, _blendDst);
 }
 
 void RenderState::StateBlock::setBlend(bool enabled)

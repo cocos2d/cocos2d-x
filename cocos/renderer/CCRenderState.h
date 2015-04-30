@@ -53,6 +53,16 @@ class CC_DLL RenderState : public Ref
 public:
     static RenderState* create(RenderState* parent);
 
+    /**
+     * Static initializer that is called during game startup.
+     */
+    static void initialize();
+
+    /**
+     * Static finalizer that is called during game shutdown.
+     */
+    static void finalize();
+
     std::string getName() const;
 
 
@@ -341,6 +351,10 @@ public:
         StateBlock();
         ~StateBlock();
 
+        void bindNoRestore();
+        static void restore(long stateOverrideBits);
+        static void enableDepthWrite();
+
         bool _cullFaceEnabled;
         bool _depthTestEnabled;
         bool _depthWriteEnabled;
@@ -361,7 +375,7 @@ public:
 
         long _bits;
 
-        unsigned int _lightMask;
+        static StateBlock* _defaultState;
 
         mutable uint32_t _hash;
         mutable bool _hashDirty;
@@ -372,8 +386,8 @@ public:
 
 protected:
     RenderState();
-    RenderState(RenderState* parent);
     ~RenderState();
+    bool init(RenderState* parent);
 
     // parent, for inheritance
     RenderState* _parent;
