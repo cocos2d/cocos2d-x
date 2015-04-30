@@ -193,7 +193,7 @@ void RenderState::StateBlock::bind()
 
 void RenderState::StateBlock::bindNoRestore()
 {
-    GP_ASSERT(_defaultState);
+    CC_ASSERT(_defaultState);
 
     // Update any state that differs from _defaultState and flip _defaultState bits
     if ((_bits & RS_BLEND) && (_blendEnabled != _defaultState->_blendEnabled))
@@ -206,7 +206,7 @@ void RenderState::StateBlock::bindNoRestore()
     }
     if ((_bits & RS_BLEND_FUNC) && (_blendSrc != _defaultState->_blendSrc || _blendDst != _defaultState->_blendDst))
     {
-        glBlendFunc((GLenum)_blendSrc, (GLenum)_blendDst);
+        GL::blendFunc((GLenum)_blendSrc, (GLenum)_blendDst);
         _defaultState->_blendSrc = _blendSrc;
         _defaultState->_blendDst = _blendDst;
     }
@@ -283,7 +283,7 @@ void RenderState::StateBlock::bindNoRestore()
 
 void RenderState::StateBlock::restore(long stateOverrideBits)
 {
-    GP_ASSERT(_defaultState);
+    CC_ASSERT(_defaultState);
 
     // If there is no state to restore (i.e. no non-default state), do nothing.
     if (_defaultState->_bits == 0)
