@@ -287,6 +287,17 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
                       getIndexCount(),
                       transform,
                       flags);
+
+
+    if (isTransparent && !forceDepthWrite)
+    {
+        _material->getStateBlock()->setDepthWrite(false);
+    }
+    else
+    {
+        _material->getStateBlock()->setDepthWrite(true);
+    }
+
 #else
 
     if(!_texture)
@@ -308,6 +319,13 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
                       getIndexCount(),
                       transform,
                       flags);
+
+    if (forceDepthWrite)
+    {
+        _meshCommand.setDepthWriteEnabled(true);
+    }
+    _meshCommand.setTransparent(isTransparent);
+
 #endif // !MATERIAL
 
     _meshCommand.setLightMask(lightMask);
@@ -320,11 +338,6 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
 
     //support tint and fade
     _meshCommand.setDisplayColor(color);
-    if (forceDepthWrite)
-    {
-        _meshCommand.setDepthWriteEnabled(true);
-    }
-    _meshCommand.setTransparent(isTransparent);
     renderer->addCommand(&_meshCommand);
 }
 
@@ -438,8 +451,11 @@ void Mesh::bindMeshCommand()
         auto blend = BlendFunc::ALPHA_PREMULTIPLIED;
 
         _meshCommand.genMaterialID(textureid, glprogramstate, _meshIndexData->getVertexBuffer()->getVBO(), _meshIndexData->getIndexBuffer()->getVBO(), blend);
-        _meshCommand.setCullFaceEnabled(true);
-        _meshCommand.setDepthTestEnabled(true);
+        _material->getStateBlock()->setCullFace(true);
+        _material->getStateBlock()->setDepthTest(true);
+
+//        _meshCommand.setCullFaceEnabled(true);
+//        _meshCommand.setDepthTestEnabled(true);
     }
 #else
     if (_glProgramState && _meshIndexData && _texture)
@@ -465,10 +481,7 @@ void Mesh::setBlendFunc(const BlendFunc &blendFunc)
     }
 
     if (_material) {
-        for(auto& pass: _material->_currentTechnique->_passes) {
-            pass->getStateBlock()->setBlendFunc(blendFunc);
-        }
-
+        _material->getStateBlock()->setBlendFunc(blendFunc);
         bindMeshCommand();
     }
 #else

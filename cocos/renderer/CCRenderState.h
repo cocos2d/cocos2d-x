@@ -51,8 +51,6 @@ class CC_DLL RenderState : public Ref
     friend class Pass;
 
 public:
-    static RenderState* create(RenderState* parent);
-
     /**
      * Static initializer that is called during game startup.
      */
@@ -402,7 +400,7 @@ protected:
     mutable StateBlock* _state;
 
     /**
-     * The RenderState's parent.
+     * The RenderState's parent. Weak Reference
      */
     RenderState* _parent;
 

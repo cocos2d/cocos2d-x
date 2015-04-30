@@ -192,21 +192,29 @@ void MeshCommand::init(float globalZOrder,
 
 void MeshCommand::setCullFaceEnabled(bool enable)
 {
+    CCASSERT(!_material, "If using material, you should call material->setCullFace()");
+
     _cullFaceEnabled = enable;
 }
 
 void MeshCommand::setCullFace(GLenum cullFace)
 {
+    CCASSERT(!_material, "If using material, you should call material->setCullFaceSide()");
+
     _cullFace = cullFace;
 }
 
 void MeshCommand::setDepthTestEnabled(bool enable)
 {
+    CCASSERT(!_material, "If using material, you should call material->setDepthTest()");
+
     _depthTestEnabled = enable;
 }
 
 void MeshCommand::setDepthWriteEnabled(bool enable)
 {
+    CCASSERT(!_material, "If using material, you should call material->setDepthWrite()");
+
     _forceDepthWrite = enable;
     _depthWriteEnabled = enable;
 }
@@ -257,61 +265,69 @@ MeshCommand::~MeshCommand()
 
 void MeshCommand::applyRenderState()
 {
-    // texture and blend are bound by Material
-    if (!_material)
-    {
+    if (!_material) {
+
+        // blend and texture
         GL::bindTexture2D(_textureID);
         GL::blendFunc(_blendType.src, _blendType.dst);
-    }
 
-    _renderStateCullFaceEnabled = glIsEnabled(GL_CULL_FACE) != GL_FALSE;
-    _renderStateDepthTest = glIsEnabled(GL_DEPTH_TEST) != GL_FALSE;
-    glGetBooleanv(GL_DEPTH_WRITEMASK, &_renderStateDepthWrite);
-    GLint cullface;
-    glGetIntegerv(GL_CULL_FACE_MODE, &cullface);
-    _renderStateCullFace = (GLenum)cullface;
-    
-    if (_cullFaceEnabled != _renderStateCullFaceEnabled)
-    {
-        _cullFaceEnabled ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
-    }
-    
-    if (_cullFace != _renderStateCullFace)
-    {
-        glCullFace(_cullFace);
-    }
-    
-    if (_depthTestEnabled != _renderStateDepthTest)
-    {
-        _depthTestEnabled ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
-    }
-    
-    if (_depthWriteEnabled != _renderStateDepthWrite)
-    {
-        glDepthMask(_depthWriteEnabled);
+        // cull face
+        _renderStateCullFaceEnabled = glIsEnabled(GL_CULL_FACE) != GL_FALSE;
+        GLint cullface;
+        glGetIntegerv(GL_CULL_FACE_MODE, &cullface);
+        _renderStateCullFace = (GLenum)cullface;
+        
+        if (_cullFaceEnabled != _renderStateCullFaceEnabled)
+        {
+            _cullFaceEnabled ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
+        }
+        
+        if (_cullFace != _renderStateCullFace)
+        {
+            glCullFace(_cullFace);
+        }
+
+        // depth
+        _renderStateDepthTest = (glIsEnabled(GL_DEPTH_TEST) != GL_FALSE);
+        glGetBooleanv(GL_DEPTH_WRITEMASK, &_renderStateDepthWrite);
+
+        if (_depthTestEnabled != _renderStateDepthTest)
+        {
+            _depthTestEnabled ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+        }
+
+        if (_depthWriteEnabled != _renderStateDepthWrite)
+        {
+            glDepthMask(_depthWriteEnabled);
+        }
     }
 }
 
 void MeshCommand::restoreRenderState()
 {
-    if (_cullFaceEnabled != _renderStateCullFaceEnabled)
+    if (!_material)
     {
-        _renderStateCullFaceEnabled ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
-    }
-    
-    if (_cullFace != _renderStateCullFace)
-    {
-        glCullFace(_renderStateCullFace);
-    }
-    
-    if (_depthTestEnabled != _renderStateDepthTest)
-    {
-        _renderStateDepthTest ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
-    }
-    
-    if (_depthWriteEnabled != _renderStateDepthWrite)
-    {
-        glDepthMask(_renderStateDepthWrite);
+        // cull
+        if (_cullFaceEnabled != _renderStateCullFaceEnabled)
+        {
+            _renderStateCullFaceEnabled ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
+        }
+
+        if (_cullFace != _renderStateCullFace)
+        {
+            glCullFace(_renderStateCullFace);
+        }
+
+        // depth
+        if (_depthTestEnabled != _renderStateDepthTest)
+        {
+            _renderStateDepthTest ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+        }
+
+        if (_depthWriteEnabled != _renderStateDepthWrite)
+        {
+            glDepthMask(_renderStateDepthWrite);
+        }
     }
 }
 

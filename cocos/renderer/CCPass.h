@@ -78,9 +78,6 @@ protected:
     Node* getTarget() const;
 
     GLProgramState* _glProgramState;
-
-    // weak ref
-    Technique* _technique;
 };
 
 NS_CC_END

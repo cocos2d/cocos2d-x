@@ -29,6 +29,7 @@
 
 #include "renderer/CCTechnique.h"
 #include "renderer/CCGLProgramState.h"
+#include "renderer/CCMaterial.h"
 #include "renderer/CCPass.h"
 
 NS_CC_BEGIN
@@ -60,7 +61,6 @@ Technique* Technique::create(Material* material)
 
 Technique::Technique()
 : _name("")
-, _material(nullptr)
 {
 }
 
@@ -70,7 +70,7 @@ Technique::~Technique()
 
 bool Technique::init(Material* parent)
 {
-    _material = parent;
+    _parent = parent;
     return true;
 }
 

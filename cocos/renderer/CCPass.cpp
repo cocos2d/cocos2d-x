@@ -67,13 +67,13 @@ Pass* Pass::createWithGLProgramState(Technique* technique, GLProgramState* progr
 
 bool Pass::init(Technique* technique)
 {
-    _technique = technique;
+    _parent = technique;
     return true;
 }
 
 bool Pass::initWithGLProgramState(Technique* technique, GLProgramState *glProgramState)
 {
-    _technique = technique;
+    _parent = technique;
     _glProgramState = glProgramState;
     CC_SAFE_RETAIN(_glProgramState);
     return true;
@@ -81,7 +81,6 @@ bool Pass::initWithGLProgramState(Technique* technique, GLProgramState *glProgra
 
 Pass::Pass()
 : _glProgramState(nullptr)
-, _technique(nullptr)
 {
 }
 
@@ -142,14 +141,15 @@ void Pass::bind(const Mat4& modelView, bool bindAttributes)
 
 Node* Pass::getTarget() const
 {
-    CCASSERT(_technique && _technique->_material, "Pass must have a Technique and Material");
+    CCASSERT(_parent && _parent->_parent, "Pass must have a Technique and Material");
 
-    return _technique->_material->_target;
+    Material *material = static_cast<Material*>(_parent->_parent);
+    return material->_target;
 }
 
 void Pass::unbind()
 {
-
+    RenderState::StateBlock::restore(0);
 }
 
 NS_CC_END

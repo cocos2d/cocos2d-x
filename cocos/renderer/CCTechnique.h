@@ -81,7 +81,6 @@ protected:
 
     std::string _name;
     Vector<Pass*> _passes;
-    Material* _material;
 };
 
 NS_CC_END

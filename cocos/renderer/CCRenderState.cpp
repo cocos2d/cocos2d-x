@@ -54,16 +54,6 @@ enum
 };
 
 
-
-RenderState* RenderState::create(RenderState* parent)
-{
-    auto renderstate = new (std::nothrow) RenderState();
-    if (renderstate && renderstate->init(parent))
-        renderstate->autorelease();
-    return renderstate;
-}
-
-
 RenderState::RenderState()
 : _textures()
 , _hash(0)
@@ -76,7 +66,6 @@ RenderState::RenderState()
 
 RenderState::~RenderState()
 {
-    CC_SAFE_RELEASE(_parent);
     CC_SAFE_RELEASE(_state);
 }
 
@@ -96,8 +85,11 @@ void RenderState::finalize()
 
 bool RenderState::init(RenderState* parent)
 {
+    CCASSERT(!_parent, "Cannot reinitialize Render State");
+    CCASSERT(parent, "parent must be non-null");
+
+    // Weak reference
     _parent = parent;
-    CC_SAFE_RETAIN(_parent);
     return true;
 }
 
@@ -201,9 +193,12 @@ RenderState::StateBlock* RenderState::StateBlock::create()
     return state;
 }
 
+//
+// The defaults are based on GamePlay3D defaults, with only one change:
+// _depthWriteEnabled is FALSE in cocos2d-x in order to by backwards compatible
 RenderState::StateBlock::StateBlock()
 : _cullFaceEnabled(false)
-, _depthTestEnabled(false), _depthWriteEnabled(true), _depthFunction(RenderState::DEPTH_LESS)
+, _depthTestEnabled(false), _depthWriteEnabled(false), _depthFunction(RenderState::DEPTH_LESS)
 , _blendEnabled(false), _blendSrc(RenderState::BLEND_ONE), _blendDst(RenderState::BLEND_ZERO)
 , _cullFaceSide(CULL_FACE_SIDE_BACK), _frontFace(FRONT_FACE_CCW)
 , _stencilTestEnabled(false), _stencilWrite(RS_ALL_ONES)
@@ -369,9 +364,9 @@ void RenderState::StateBlock::restore(long stateOverrideBits)
     }
     if (!(stateOverrideBits & RS_DEPTH_WRITE) && (_defaultState->_bits & RS_DEPTH_WRITE))
     {
-        glDepthMask(GL_TRUE);
+        glDepthMask(GL_FALSE);
         _defaultState->_bits &= ~RS_DEPTH_WRITE;
-        _defaultState->_depthWriteEnabled = true;
+        _defaultState->_depthWriteEnabled = false;
     }
     if (!(stateOverrideBits & RS_DEPTH_FUNC) && (_defaultState->_bits & RS_DEPTH_FUNC))
     {
@@ -790,7 +785,7 @@ void RenderState::StateBlock::setDepthTest(bool enabled)
 void RenderState::StateBlock::setDepthWrite(bool enabled)
 {
     _depthWriteEnabled = enabled;
-    if (enabled)
+    if (!enabled)
     {
         _bits &= ~RS_DEPTH_WRITE;
     }
