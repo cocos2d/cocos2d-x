@@ -1,3 +1,5 @@
+require "cocos.3d.3dConstants"
+
 local size = cc.Director:getInstance():getWinSize()
 local scheduler = cc.Director:getInstance():getScheduler()
 local attributeNames = 
@@ -140,6 +142,8 @@ end
 ----------------------------------------
 local Sprite3DWithSkinTest = {}
 Sprite3DWithSkinTest.__index = Sprite3DWithSkinTest
+Sprite3DWithSkinTest._animateQuality = cc.Animate3DQuality.QUALITY_HIGH
+Sprite3DWithSkinTest._sprites = {}
 
 function Sprite3DWithSkinTest.onTouchesEnd(touches, event)
     for i = 1,table.getn(touches) do
@@ -154,6 +158,7 @@ function Sprite3DWithSkinTest.addNewSpriteWithCoords(parent,x,y)
     sprite:setRotation3D({x = 0, y = 180, z = 0})
     sprite:setPosition(cc.p(x, y))
     parent:addChild(sprite)
+    table.insert(Sprite3DWithSkinTest._sprites, sprite)
 
     local animation = cc.Animation3D:create("Sprite3DTest/orc.c3b")
     if nil ~= animation then
@@ -177,8 +182,11 @@ function Sprite3DWithSkinTest.addNewSpriteWithCoords(parent,x,y)
         else
             animate:setSpeed(speed)
         end
-
-        sprite:runAction(cc.RepeatForever:create(animate))
+        animate:setTag(110)
+        animate:setQuality(Sprite3DWithSkinTest._animateQuality)
+        local repeate = cc.RepeatForever:create(animate)
+        repeate:setTag(110)
+        sprite:runAction(repeate)
     end
 end
 
@@ -193,8 +201,39 @@ function Sprite3DWithSkinTest.create()
 
     local eventDispatcher = layer:getEventDispatcher()
     eventDispatcher:addEventListenerWithSceneGraphPriority(listener, layer)
-
+    Sprite3DWithSkinTest._sprites = {}
     Sprite3DWithSkinTest.addNewSpriteWithCoords(layer, size.width / 2, size.height / 2)
+    
+    cc.MenuItemFont:setFontName("fonts/arial.ttf")
+    cc.MenuItemFont:setFontSize(15)
+    local menuItem =  cc.MenuItemFont:create("High Quality")
+    Sprite3DWithSkinTest._animateQuality = cc.Animate3DQuality.QUALITY_HIGH
+    menuItem:registerScriptTapHandler(function(tag, sender)
+        Sprite3DWithSkinTest._animateQuality  = Sprite3DWithSkinTest._animateQuality  + 1
+
+        if Sprite3DWithSkinTest._animateQuality > cc.Animate3DQuality.QUALITY_HIGH then
+            Sprite3DWithSkinTest._animateQuality = cc.Animate3DQuality.QUALITY_NONE
+        end
+
+        if Sprite3DWithSkinTest._animateQuality == cc.Animate3DQuality.QUALITY_NONE then
+            menuItem:setString("None Quality")
+        elseif Sprite3DWithSkinTest._animateQuality == cc.Animate3DQuality.QUALITY_LOW then
+            menuItem:setString("Low Quality")
+        elseif Sprite3DWithSkinTest._animateQuality == cc.Animate3DQuality.QUALITY_HIGH then
+            menuItem:setString("High Quality")
+        end
+
+        for i,spriteIter in ipairs(Sprite3DWithSkinTest._sprites) do
+            local repAction = spriteIter:getActionByTag(110)
+            local animate3D = repAction:getInnerAction()
+            animate3D:setQuality(Sprite3DWithSkinTest._animateQuality)
+        end
+    end)
+    local menu = cc.Menu:create(menuItem)
+    menu:setPosition(cc.p(0.0, 0.0))
+    menuItem:setPosition(VisibleRect:left().x + 50, VisibleRect:top().y -70)
+    layer:addChild(menu, 1)
+
     return layer
 end
 
@@ -1078,7 +1117,8 @@ end
 
 function Sprite3DCubeMapTest:addNewSpriteWithCoords(pos)
     local visibleSize = cc.Director:getInstance():getVisibleSize()
-    local camera = cc.Camera:createPerspective(60, visibleSize.width / visibleSize.height, 0.1, 200)
+    local camera = cc.Camera:createPerspective(60, visibleSize.width / visibleSize.height, 10, 1000)
+    camera:setPosition3D(cc.vec3(0.0, 0.0, 50.0))
     camera:setCameraFlag(cc.CameraFlag.USER1)
     --create a teapot
     self._teapot = cc.Sprite3D:create("Sprite3DTest/teapot.c3b")
@@ -1091,14 +1131,14 @@ function Sprite3DCubeMapTest:addNewSpriteWithCoords(pos)
         "Sprite3DTest/skybox/front.jpg", "Sprite3DTest/skybox/back.jpg")
 
     --set texture parameters
-    local tRepeatParams = { magFilter=gl.NEAREST , minFilter=gl.NEAREST , wrapS=gl.MIRRORED_REPEAT  , wrapT=gl.MIRRORED_REPEAT }
+    local tRepeatParams = { magFilter=gl.LINEAR , minFilter=gl.LINEAR , wrapS=gl.MIRRORED_REPEAT  , wrapT=gl.MIRRORED_REPEAT }
     self._textureCube:setTexParameters(tRepeatParams)
 
     --pass the texture sampler to our custom shader
     state:setUniformTexture("u_cubeTex", self._textureCube)
 
     self._teapot:setGLProgramState(state)
-    self._teapot:setPosition3D(cc.vec3(0, -5, -20))
+    self._teapot:setPosition3D(cc.vec3(0, -5, 0))
     self._teapot:setRotation3D(cc.vec3(-90, 180, 0))
 
     local rotate_action = cc.RotateBy:create(1.5, cc.vec3(0, 30, 0))
@@ -1133,15 +1173,16 @@ function Sprite3DCubeMapTest:addNewSpriteWithCoords(pos)
     end
 
     self:addChild(self._teapot)
-    self:addChild(camera)
-
-    self:setCameraMask(2)
 
     --config skybox
     self._skyBox = cc.Skybox:create()
 
     self._skyBox:setTexture(self._textureCube)
     self:addChild(self._skyBox)
+    self._skyBox:setScale(700)
+
+    self:addChild(camera)
+    self:setCameraMask(2)
 
     local targetPlatform = cc.Application:getInstance():getTargetPlatform()
     if targetPlatform == cc.PLATFORM_OS_ANDROID  or targetPlatform == cc.PLATFORM_OS_WINRT  or targetPlatform == cc.PLATFORM_OS_WP8  then

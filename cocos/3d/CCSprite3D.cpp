@@ -505,7 +505,8 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
         {
             if(it->bones.size() > 0 || singleSprite)
             {
-                this->setName(nodedata->id);
+                if(singleSprite)
+                    root->setName(nodedata->id);
                 auto mesh = Mesh::create(nodedata->id, getMeshIndexData(it->subMeshId));
                 if(mesh)
                 {
@@ -757,6 +758,7 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
                    _lightMask,
                    Vec4(color.r, color.g, color.b, color.a),
                    _forceDepthWrite);
+
     }
 }
 

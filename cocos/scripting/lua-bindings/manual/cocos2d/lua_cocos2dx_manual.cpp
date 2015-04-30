@@ -3355,6 +3355,46 @@ int tolua_cocos2dx_DrawNode_drawPoints(lua_State* tolua_S)
             return 0;
         }
     }
+    else if (argc == 4)
+    {
+        unsigned int size;
+        luaval_to_uint32(tolua_S, 3, &size, "cc.DrawNode:drawPoints");
+        if ( size > 0 )
+        {
+            cocos2d::Vec2* points = new cocos2d::Vec2[size];
+            if (nullptr == points)
+                return 0;
+            
+            for (int i = 0; i < size; i++)
+            {
+                lua_pushnumber(tolua_S,i + 1);
+                lua_gettable(tolua_S,2);
+                if (!tolua_istable(tolua_S,-1, 0, &tolua_err))
+                {
+                    CC_SAFE_DELETE_ARRAY(points);
+#if COCOS2D_DEBUG >= 1
+                    goto tolua_lerror;
+#endif
+                }
+                
+                if(!luaval_to_vec2(tolua_S, lua_gettop(tolua_S), &points[i], "cc.DrawNode:drawPoints"))
+                {
+                    lua_pop(tolua_S, 1);
+                    CC_SAFE_DELETE_ARRAY(points);
+                    return 0;
+                }
+                lua_pop(tolua_S, 1);
+            }
+            
+            float pointSize = (float)tolua_tonumber(tolua_S, 4, 0);
+            cocos2d::Color4F color;
+            ok &=luaval_to_color4f(tolua_S, 5, &color, "cc.DrawNode:drawPoints");
+            if(!ok)
+                return 0;
+            self->drawPoints(points, size, pointSize, color);
+            return 0;
+        }
+    }
     
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.DrawNode:drawPoints",argc, 3);
     return 0;

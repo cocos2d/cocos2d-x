@@ -77,7 +77,7 @@
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(EngineRoot)external\box2d;$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\win32;$(EngineRoot)external\jpeg\include\win32;$(EngineRoot)external\tiff\include\win32;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\win32;$(EngineRoot)external\win32-specific\OpenalSoft\include;$(EngineRoot)external\win32-specific\MP3Decoder\include;$(EngineRoot)external\win32-specific\OggDecoder\include;$(EngineRoot)external\win32-specific\icon\include;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\xxhash;$(EngineRoot)external\ConvertUTF;$(EngineRoot)external\curl\include\win32;$(EngineRoot)external\websockets\include\win32;$(EngineRoot)external;$(EngineRoot)cocos;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\audio\include;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(EngineRoot)external\box2d;$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\win32;$(EngineRoot)external\jpeg\include\win32;$(EngineRoot)external\tiff\include\win32;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\win32;$(EngineRoot)external\win32-specific\OpenalSoft\include;$(EngineRoot)external\win32-specific\MP3Decoder\include;$(EngineRoot)external\win32-specific\OggDecoder\include;$(EngineRoot)external\win32-specific\icon\include;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\xxhash;$(EngineRoot)external\ConvertUTF;$(EngineRoot)external\curl\include\win32;$(EngineRoot)external\websockets\include\win32;$(EngineRoot)external\poly2tri\common;$(EngineRoot)external\poly2tri\sweep;$(EngineRoot)external\poly2tri;$(EngineRoot)external;$(EngineRoot)cocos;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\audio\include;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_USRDLL;_DEBUG;_WINDOWS;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;COCOS2D_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_USE3DDLL;_EXPORT_DLL_;_USRSTUDIODLL;_USREXDLL;_USEGUIDLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;PROTOBUF_USE_DLLS;LIBPROTOBUF_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -132,7 +132,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\debug-lib\*.*" 
       </Command>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\win32;$(EngineRoot)external\jpeg\include\win32;$(EngineRoot)external\tiff\include\win32;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\win32;$(EngineRoot)external\win32-specific\MP3Decoder\include;$(EngineRoot)external\win32-specific\OggDecoder\include;$(EngineRoot)external\win32-specific\OpenalSoft\include;$(EngineRoot)external\win32-specific\icon\include;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\xxhash;$(EngineRoot)external\ConvertUTF;$(EngineRoot)external\Box2d;$(EngineRoot)external\curl\include\win32;$(EngineRoot)external\websockets\include\win32\;$(EngineRoot)external;$(EngineRoot)cocos;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\audio\include;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(EngineRoot)external\sqlite3\include;$(EngineRoot)external\unzip;$(EngineRoot)external\edtaa3func;$(EngineRoot)external\tinyxml2;$(EngineRoot)external\png\include\win32;$(EngineRoot)external\jpeg\include\win32;$(EngineRoot)external\tiff\include\win32;$(EngineRoot)external\webp\include\win32;$(EngineRoot)external\freetype2\include\win32;$(EngineRoot)external\win32-specific\MP3Decoder\include;$(EngineRoot)external\win32-specific\OggDecoder\include;$(EngineRoot)external\win32-specific\OpenalSoft\include;$(EngineRoot)external\win32-specific\icon\include;$(EngineRoot)external\win32-specific\zlib\include;$(EngineRoot)external\chipmunk\include\chipmunk;$(EngineRoot)external\xxhash;$(EngineRoot)external\ConvertUTF;$(EngineRoot)external\Box2d;$(EngineRoot)external\curl\include\win32;$(EngineRoot)external\websockets\include\win32\;$(EngineRoot)external\poly2tri\common;$(EngineRoot)external\poly2tri\sweep;$(EngineRoot)external\poly2tri;$(EngineRoot)external;$(EngineRoot)cocos;$(EngineRoot)cocos\editor-support;$(EngineRoot)cocos\audio\include;$(EngineRoot)extensions;$(EngineRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_USRDLL;NDEBUG;_WINDOWS;_LIB;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;_USE3DDLL;_EXPORT_DLL_;_USRSTUDIODLL;_USREXDLL;_USEGUIDLL;CC_ENABLE_CHIPMUNK_INTEGRATION=1;PROTOBUF_USE_DLLS;LIBPROTOBUF_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -367,6 +367,11 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\..\external\flatbuffers\idl_gen_go.cpp" />
     <ClCompile Include="..\..\external\flatbuffers\idl_gen_text.cpp" />
     <ClCompile Include="..\..\external\flatbuffers\idl_parser.cpp" />
+    <ClCompile Include="..\..\external\poly2tri\common\shapes.cc" />
+    <ClCompile Include="..\..\external\poly2tri\sweep\advancing_front.cc" />
+    <ClCompile Include="..\..\external\poly2tri\sweep\cdt.cc" />
+    <ClCompile Include="..\..\external\poly2tri\sweep\sweep.cc" />
+    <ClCompile Include="..\..\external\poly2tri\sweep\sweep_context.cc" />
     <ClCompile Include="..\..\external\tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="..\..\external\unzip\ioapi_mem.cpp" />
     <ClCompile Include="..\..\external\unzip\ioapi.cpp" />
@@ -697,6 +702,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="CCTransitionPageTurn.cpp" />
     <ClCompile Include="CCTransitionProgress.cpp" />
     <ClCompile Include="CCTweenFunction.cpp" />
+    <ClCompile Include="MarchingSquare.cpp" />
+    <ClCompile Include="SpritePolygon.cpp" />
+    <ClCompile Include="SpritePolygonCache.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\extensions\assets-manager\AssetsManager.h" />
@@ -891,6 +899,13 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\..\external\json\reader.h" />
     <ClInclude Include="..\..\external\json\stringbuffer.h" />
     <ClInclude Include="..\..\external\json\writer.h" />
+    <ClInclude Include="..\..\external\poly2tri\common\shapes.h" />
+    <ClInclude Include="..\..\external\poly2tri\common\utils.h" />
+    <ClInclude Include="..\..\external\poly2tri\poly2tri.h" />
+    <ClInclude Include="..\..\external\poly2tri\sweep\advancing_front.h" />
+    <ClInclude Include="..\..\external\poly2tri\sweep\cdt.h" />
+    <ClInclude Include="..\..\external\poly2tri\sweep\sweep.h" />
+    <ClInclude Include="..\..\external\poly2tri\sweep\sweep_context.h" />
     <ClInclude Include="..\..\external\tinyxml2\tinyxml2.h" />
     <ClInclude Include="..\..\external\unzip\ioapi_mem.h" />
     <ClInclude Include="..\..\external\unzip\ioapi.h" />
@@ -1273,6 +1288,9 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="CCTransitionPageTurn.h" />
     <ClInclude Include="CCTransitionProgress.h" />
     <ClInclude Include="CCTweenFunction.h" />
+    <ClInclude Include="MarchingSquare.h" />
+    <ClInclude Include="SpritePolygon.h" />
+    <ClInclude Include="SpritePolygonCache.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\3d\CCAnimationCurve.inl" />

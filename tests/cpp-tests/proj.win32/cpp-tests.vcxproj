@@ -204,6 +204,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClCompile Include="..\Classes\SpineTest\SpineTest.cpp" />
     <ClCompile Include="..\Classes\Sprite3DTest\DrawNode3D.cpp" />
     <ClCompile Include="..\Classes\Sprite3DTest\Sprite3DTest.cpp" />
+    <ClCompile Include="..\Classes\SpritePolygonTest\SpritePolygonTest.cpp" />
     <ClCompile Include="..\Classes\TerrainTest\TerrainTest.cpp" />
     <ClCompile Include="..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.cpp" />
     <ClCompile Include="..\Classes\TileMapTest\TileMapTest2.cpp" />
@@ -405,6 +406,7 @@ xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y</Command>
     <ClInclude Include="..\Classes\SpineTest\SpineTest.h" />
     <ClInclude Include="..\Classes\Sprite3DTest\DrawNode3D.h" />
     <ClInclude Include="..\Classes\Sprite3DTest\Sprite3DTest.h" />
+    <ClInclude Include="..\Classes\SpritePolygonTest\SpritePolygonTest.h" />
     <ClInclude Include="..\Classes\TerrainTest\TerrainTest.h" />
     <ClInclude Include="..\Classes\TexturePackerEncryptionTest\TextureAtlasEncryptionTest.h" />
     <ClInclude Include="..\Classes\TileMapTest\TileMapTest2.h" />

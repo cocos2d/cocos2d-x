@@ -42,23 +42,24 @@ using namespace std;
 
 NS_CC_BEGIN
 
-#if (!defined NDEBUG) || (defined CC_MODEL_VIEWER)
 //Generate a dummy texture when the texture file is missing
 static Texture2D * getDummyTexture()
 {
     auto texture = Director::getInstance()->getTextureCache()->getTextureForKey("/dummyTexture");
     if(!texture)
     {
-        unsigned char data[] ={255,0,0,255};//1*1 pure red picture
+#ifdef NDEBUG
+        unsigned char data[] ={0,0,0,0};//1*1 transparent picture
+#else
+        unsigned char data[] ={255,0,0,255};//1*1 red picture
+#endif
         Image * image =new (std::nothrow) Image();
         image->initWithRawData(data,sizeof(data),1,1,sizeof(unsigned char));
-        texture = Director::getInstance()->getTextureCache()->addImage(image,"/dummyTexture");
+        texture=Director::getInstance()->getTextureCache()->addImage(image,"/dummyTexture");
         image->release();
     }
     return texture;
 }
-#endif
-
 
 
 Mesh::Mesh()
@@ -288,7 +289,6 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
                       flags);
 #else
 
-#if (!defined NDEBUG) || (defined CC_MODEL_VIEWER)
     if(!_texture)
     {
         //let the mesh use a dummy texture instead of the missing or crashing texture file
@@ -296,9 +296,6 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
     }
     GLuint textureID = _texture->getName();
 
-#else
-    GLuint textureID = _texture ? _texture->getName() : 0;
-#endif
 
     _meshCommand.init(globalZ,
                       textureID,

@@ -59,6 +59,7 @@ require "FastTiledMapTest/FastTiledMapTest"
 require "NewAudioEngineTest/NewAudioEngineTest"
 require "CocosStudio3DTest/CocosStudio3DTest"
 require "WebViewTest/WebViewTest"
+require "SpritePolygonTest/SpritePolygonTest"
 
 local LINE_SPACE = 40
 
@@ -127,6 +128,7 @@ local _allTests = {
     { isSupported = true,  name = "Sprite3DTest"           , create_func   =                Sprite3DTest    },
     { isSupported = true,  name = "TerrainTest"           , create_func   =                TerrainTest  },
     { isSupported = true,  name = "SpriteTest"             , create_func   =                SpriteTest      },
+    { isSupported = true,  name = "SpritePolygonTest"             , create_func   =         SpritePolygonTest      },
     { isSupported = false,  name = "TextInputTest"          , create_func=             TextInputTestMain  },
     { isSupported = true,  name = "Texture2DTest"          , create_func   =             Texture2dTestMain  },
     { isSupported = false,  name = "TextureCacheTest"       , create_func=      TextureCacheTestMain      },
