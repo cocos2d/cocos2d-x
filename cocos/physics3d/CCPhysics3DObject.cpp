@@ -25,6 +25,8 @@
 #include "CCPhysics3D.h"
 #include "base/ccUTF8.h"
 
+#if CC_USE_3D_PHYSICS
+
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
 #include "bullet/btBulletCollisionCommon.h"
@@ -371,3 +373,5 @@ bool Physics3DRigidBody::isKinematic() const
 NS_CC_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION
+
+#endif // CC_USE_3D_PHYSICS

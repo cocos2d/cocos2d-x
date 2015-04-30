@@ -29,6 +29,8 @@
 #include "base/CCRef.h"
 #include "base/ccConfig.h"
 
+#if CC_USE_3D_PHYSICS
+
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
 class btDynamicsWorld;
@@ -130,5 +132,7 @@ protected:
 NS_CC_END
 
 #endif
+
+#endif //CC_USE_3D_PHYSICS
 
 #endif // __PHYSICS_3D_WORLD_H__

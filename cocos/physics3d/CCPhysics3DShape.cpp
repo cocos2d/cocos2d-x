@@ -24,6 +24,8 @@
 
 #include "CCPhysics3D.h"
 
+#if CC_USE_3D_PHYSICS
+
 #if (CC_ENABLE_BULLET_INTEGRATION)
 #include "bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h"
 
@@ -202,3 +204,5 @@ bool Physics3DShape::initCompoundShape( const std::vector<std::pair<Physics3DSha
 NS_CC_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION
+
+#endif // CC_USE_3D_PHYSICS

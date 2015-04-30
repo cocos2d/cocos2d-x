@@ -24,6 +24,8 @@
 
 #include "CCPhysics3D.h"
 
+#if CC_USE_3D_PHYSICS
+
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
 
@@ -92,3 +94,5 @@ btQuaternion convertQuatTobtQuat( const cocos2d::Quaternion &quat )
 }
 
 #endif // CC_ENABLE_BULLET_INTEGRATION
+
+#endif //CC_USE_3D_PHYSICS

@@ -24,9 +24,9 @@
 
 #include "CCPhysics3D.h"
 
+#if CC_USE_3D_PHYSICS
+
 #if (CC_ENABLE_BULLET_INTEGRATION)
-
-
 
 NS_CC_BEGIN
 
@@ -82,3 +82,5 @@ PhysicsSprite3D::~PhysicsSprite3D()
 NS_CC_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION
+
+#endif // CC_USE_3D_PHYSICS

@@ -26,6 +26,8 @@
 #include "2d/CCNode.h"
 #include "2d/CCScene.h"
 
+#if CC_USE_3D_PHYSICS
+
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
 NS_CC_BEGIN
@@ -238,3 +240,5 @@ void Physics3DComponent::syncToNode()
 NS_CC_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION
+
+#endif //CC_USE_3D_PHYSICS

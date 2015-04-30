@@ -22,43 +22,48 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __PHYSICS_SPRITE_3D_H__
-#define __PHYSICS_SPRITE_3D_H__
+#ifndef __PHYSICS_3D_H__
+#define __PHYSICS_3D_H__
 
 #include "base/ccConfig.h"
-#include "3d/CCSprite3D.h"
+#include "math/CCMath.h"
+
+#if CC_USE_3D_PHYSICS
+
+#include "CCPhysics3DShape.h"
+#include "CCPhysicsSprite3D.h"
+#include "CCPhysics3DWorld.h"
+#include "CCPhysics3DDebugDrawer.h"
 #include "CCPhysics3DObject.h"
 #include "CCPhysics3DComponent.h"
-
-#if (CC_ENABLE_BULLET_INTEGRATION)
+#include "CCPhysics3DConstraint.h"
 
 NS_CC_BEGIN
 
-class CC_DLL PhysicsSprite3D : public cocos2d::Sprite3D
-{
-public:
-
-    /** creates a PhysicsSprite3D*/
-    static PhysicsSprite3D* create(const std::string &modelPath, Physics3DRigidBodyDes* rigidDes, const cocos2d::Vec3& translateInPhysics = cocos2d::Vec3::ZERO, const cocos2d::Quaternion& rotInPhsyics = cocos2d::Quaternion::ZERO);
-    
-    Physics3DObject* getPhysicsObj() const;
-    
-    void setSyncFlag(Physics3DComponent::PhysicsSyncFlag syncFlag);
-    
-    void syncToPhysics();
-    
-    void syncToNode();
-    
-CC_CONSTRUCTOR_ACCESS:
-    PhysicsSprite3D();
-    virtual ~PhysicsSprite3D();
-
-protected:
-    Physics3DComponent* _physicsComponent;
-};
+CC_DLL const char* physics3dVersion();
 
 NS_CC_END
 
+#if (CC_ENABLE_BULLET_INTEGRATION)
+
+//include bullet header files
+#include "bullet/LinearMath/btTransform.h"
+#include "bullet/LinearMath/btVector3.h"
+#include "bullet/LinearMath/btQuaternion.h"
+
+#include "bullet/btBulletCollisionCommon.h"
+#include "bullet/btBulletDynamicsCommon.h"
+
+//convert between cocos and bullet
+cocos2d::Vec3 convertbtVector3ToVec3(const btVector3 &btVec3);
+btVector3 convertVec3TobtVector3(const cocos2d::Vec3 &vec3);
+cocos2d::Mat4 convertbtTransformToMat4(const btTransform &btTrans);
+btTransform convertMat4TobtTransform(const cocos2d::Mat4 &mat4);
+cocos2d::Quaternion convertbtQuatToQuat(const btQuaternion &btQuat);
+btQuaternion convertQuatTobtQuat(const cocos2d::Quaternion &quat);
+
 #endif // CC_ENABLE_BULLET_INTEGRATION
 
-#endif // __PHYSICS_SPRITE_3D_H__
+#endif //CC_USE_3D_PHYSICS
+
+#endif // __PHYSICS_3D_H__

@@ -31,6 +31,8 @@
 #include "base/ccConfig.h"
 #include "renderer/CCCustomCommand.h"
 
+#if CC_USE_3D_PHYSICS
+
 #if (CC_ENABLE_BULLET_INTEGRATION)
 #include "renderer/CCCustomCommand.h"
 #include "bullet/LinearMath/btIDebugDraw.h"
@@ -90,5 +92,7 @@ protected:
 NS_CC_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION
+
+#endif // CC_USE_3D_PHYSICS
 
 #endif // __PHYSICS_3D_VIEWER_H__

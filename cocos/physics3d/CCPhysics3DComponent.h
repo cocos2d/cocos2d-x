@@ -30,6 +30,8 @@
 
 #include "2d/CCComponent.h"
 
+#if CC_USE_3D_PHYSICS
+
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
 NS_CC_BEGIN
@@ -103,5 +105,7 @@ protected:
 NS_CC_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION
+
+#endif //CC_USE_3D_PHYSICS
 
 #endif // __PHYSICS_3D_COMPONENT_H__

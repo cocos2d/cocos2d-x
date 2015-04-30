@@ -25,6 +25,8 @@
 #include "CCPhysics3D.h"
 #include "renderer/CCRenderer.h"
 
+#if CC_USE_3D_PHYSICS
+
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
 NS_CC_BEGIN
@@ -325,3 +327,5 @@ bool Physics3DWorld::needCollisionChecking()
 NS_CC_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION
+
+#endif //CC_USE_3D_PHYSICS
