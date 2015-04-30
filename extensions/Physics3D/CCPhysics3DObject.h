@@ -86,6 +86,9 @@ public:
     const CollisionCallbackFunc& getCollisionCallback() const { return _collisionCallbackFunc; }
 
     bool needCollisionCallback() { return _collisionCallbackFunc != nullptr; };
+
+    void setMask(unsigned int mask) { _mask = mask; };
+    unsigned int getMask() const { return _mask; };
     
 CC_CONSTRUCTOR_ACCESS:
     Physics3DObject()
@@ -93,6 +96,7 @@ CC_CONSTRUCTOR_ACCESS:
     , _userData(nullptr)
     , _isEnabled(true)
     , _physicsWorld(nullptr)
+    , _mask(-1)
     {
         
     }
@@ -105,6 +109,7 @@ protected:
     void*          _userData;
     Physics3DWorld* _physicsWorld;
     CollisionCallbackFunc _collisionCallbackFunc;
+    unsigned int _mask;
 };
 
 struct CC_EX_DLL Physics3DRigidBodyDes
@@ -189,9 +194,6 @@ public:
     
     void setActive(bool active);
 
-    void setMask(unsigned int mask) { _mask = mask; };
-    unsigned int getMask() const { return _mask; };
-
 CC_CONSTRUCTOR_ACCESS:
     Physics3DRigidBody();
     virtual ~Physics3DRigidBody();
@@ -206,7 +208,6 @@ protected:
     btRigidBody* _btRigidBody;
     Physics3DShape *_physics3DShape;
     std::vector<Physics3DConstraint *> _constraintList;
-    unsigned int _mask;
 };
 
 NS_CC_EXT_END
