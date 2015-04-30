@@ -591,10 +591,6 @@ void Label::alignText()
         return;
     }
 
-    for (const auto& batchNode:_batchNodes)
-    {
-        batchNode->getTextureAtlas()->removeAllQuads();
-    }
     _fontAtlas->prepareLetterDefinitions(_currentUTF16String);
     auto& textures = _fontAtlas->getTextures();
     if (textures.size() > _batchNodes.size())
@@ -615,29 +611,37 @@ void Label::alignText()
     if(_labelWidth > 0 || (_currNumLines > 1 && _hAlignment != TextHAlignment::LEFT))
         LabelTextFormatter::alignText(this);
 
-    int strLen = static_cast<int>(_currentUTF16String.length());
-    Rect uvRect;
-    Sprite* letterSprite;
-    for(const auto &child : _children) {
-        int tag = child->getTag();
-        if(tag >= strLen)
-        {
-            SpriteBatchNode::removeChild(child, true);
-        }
-        else if(tag >= 0)
-        {
-            letterSprite = dynamic_cast<Sprite*>(child);
-            if (letterSprite)
+    if (!_children.empty())
+    {
+        int strLen = static_cast<int>(_currentUTF16String.length());
+        Rect uvRect;
+        Sprite* letterSprite;
+        for (const auto &child : _children) {
+            int tag = child->getTag();
+            if (tag >= strLen)
             {
-                uvRect.size.height = _lettersInfo[tag].def.height;
-                uvRect.size.width  = _lettersInfo[tag].def.width;
-                uvRect.origin.x    = _lettersInfo[tag].def.U;
-                uvRect.origin.y    = _lettersInfo[tag].def.V;
+                SpriteBatchNode::removeChild(child, true);
+            }
+            else if (tag >= 0)
+            {
+                letterSprite = dynamic_cast<Sprite*>(child);
+                if (letterSprite)
+                {
+                    uvRect.size.height = _lettersInfo[tag].def.height;
+                    uvRect.size.width = _lettersInfo[tag].def.width;
+                    uvRect.origin.x = _lettersInfo[tag].def.U;
+                    uvRect.origin.y = _lettersInfo[tag].def.V;
 
-                letterSprite->setTexture(textures.at(_lettersInfo[tag].def.textureID));
-                letterSprite->setTextureRect(uvRect);
+                    letterSprite->setTexture(textures.at(_lettersInfo[tag].def.textureID));
+                    letterSprite->setTextureRect(uvRect);
+                }
             }
         }
+    }
+
+    for (const auto& batchNode : _batchNodes)
+    {
+        batchNode->getTextureAtlas()->removeAllQuads();
     }
 
     updateQuads();
