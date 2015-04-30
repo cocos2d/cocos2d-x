@@ -238,19 +238,35 @@ PUParticleSystem3D* PUParticleSystem3D::create()
 
 PUParticleSystem3D* PUParticleSystem3D::create( const std::string &filePath, const std::string &materialPath )
 {
-    std::string matfullPath = FileUtils::getInstance()->fullPathForFilename(materialPath);
-    convertToUnixStylePath(matfullPath);
-    PUMaterialCache::Instance()->loadMaterials(matfullPath);
-    PUParticleSystem3D* ps = PUParticleSystem3D::create();
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
-    convertToUnixStylePath(fullPath);
-    if (!ps->initSystem(fullPath)){
-        CC_SAFE_DELETE(ps);
+    PUParticleSystem3D *ret = new (std::nothrow) PUParticleSystem3D();
+    if (ret && ret->initWithFilePathAndMaterialPath(filePath, materialPath))
+    {
+        ret->autorelease();
+        return ret;
     }
-    return ps;
+    else
+    {
+        CC_SAFE_DELETE(ret);
+        return nullptr;
+    }
 }
 
 PUParticleSystem3D* PUParticleSystem3D::create( const std::string &filePath )
+{
+    PUParticleSystem3D *ret = new (std::nothrow) PUParticleSystem3D();
+    if (ret && ret->initWithFilePath(filePath))
+    {
+        ret->autorelease();
+        return ret;
+    }
+    else
+    {
+        CC_SAFE_DELETE(ret);
+        return nullptr;
+    }
+}
+
+bool PUParticleSystem3D::initWithFilePath( const std::string &filePath )
 {
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
     convertToUnixStylePath(fullPath);
@@ -269,12 +285,24 @@ PUParticleSystem3D* PUParticleSystem3D::create( const std::string &filePath )
         PUMaterialCache::Instance()->loadMaterialsFromSearchPaths(materialFolder);
         loadedFolder.push_back(materialFolder);
     }
-    
-    PUParticleSystem3D* ps = PUParticleSystem3D::create();
-    if (!ps->initSystem(fullPath)){
-        CC_SAFE_DELETE(ps);
+
+    if (!initSystem(fullPath)){
+        return false;
     }
-    return ps;
+    return true;
+}
+
+bool PUParticleSystem3D::initWithFilePathAndMaterialPath( const std::string &filePath, const std::string &materialPath )
+{
+    std::string matfullPath = FileUtils::getInstance()->fullPathForFilename(materialPath);
+    convertToUnixStylePath(matfullPath);
+    PUMaterialCache::Instance()->loadMaterials(matfullPath);
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filePath);
+    convertToUnixStylePath(fullPath);
+    if (!initSystem(fullPath)){
+        return false;
+    }
+    return true;
 }
 
 void PUParticleSystem3D::startParticleSystem()

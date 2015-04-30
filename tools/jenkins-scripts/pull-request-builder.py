@@ -12,4 +12,7 @@ if __name__ == '__main__':
         traceback.print_exc()
         sys_ret = 1
     finally:
-        sys.exit(sys_ret)
+        if sys_ret != 0:
+            sys.exit(1)
+        else:
+            sys.exit(0)

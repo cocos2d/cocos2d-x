@@ -771,6 +771,53 @@ extern bool luaval_to_quaternion(lua_State* L,int lo,cocos2d::Quaternion* outVal
  */
 extern bool luaval_to_texparams(lua_State* L,int lo,cocos2d::Texture2D::TexParams* outValue, const char* funcName = "");
 
+/**
+ * Get a cocos2d::V3F_C4B_T2F object value from the given accpetable index of stack.
+ * If the value at the given accpetable index of stack is a table it returns true, otherwise returns false.
+ * If the table has the `vertices`, `colors`, and `texCoords` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue.
+ * @param L the current lua_State.
+ * @param lo the given accpetable index of stack.
+ * @param outValue the pointer to a cocos2d::V3F_C4B_T2F object which stores the values from the Lua table.
+ * @param funcName the name of calling function, it is used for error output in the debug model.
+ * @return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ */
+extern bool luaval_to_v3f_c4b_t2f(lua_State* L,int lo,cocos2d::V3F_C4B_T2F* outValue, const char* funcName = "");
+
+
+/**
+ * Get a cocos2d::Tex2F object value from the given accpetable index of stack.
+ * If the value at the given accpetable index of stack is a table it returns true, otherwise returns false.
+ * If the table has the `u`, and `v` keys and the corresponding values are not nil, this function would assign the values to the corresponding members of outValue.Otherwise, the value of members of outValue would be 0.
+ * @param L the current lua_State.
+ * @param lo the given accpetable index of stack.
+ * @param outValue the pointer to a cocos2d::Tex2F object which stores the values from the Lua table.
+ * @param funcName the name of calling function, it is used for error output in the debug model.
+ * @return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ */
+extern bool luaval_to_tex2f(lua_State* L, int lo, cocos2d::Tex2F* outValue, const char* funcName = "");
+
+/**
+ * Get a pointer points to a std::vector<cocos2d::V3F_C4B_T2F> from a Lua array table in the stack.
+ *
+ * @param L the current lua_State.
+ * @param lo the given accpetable index of stack.
+ * @param ret a pointer points to a std::vector<cocos2d::V3F_C4B_T2F>.
+ * @param funcName the name of calling function, it is used for error output in the debug model.
+ * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ */
+extern bool luaval_to_std_vector_v3f_c4b_t2f(lua_State* L, int lo, std::vector<cocos2d::V3F_C4B_T2F>* ret, const char* funcName = "");
+
+/**
+ * Get a pointer points to a std::vector<cocos2d::Vec2> from a Lua array table in the stack.
+ *
+ * @param L the current lua_State.
+ * @param lo the given accpetable index of stack.
+ * @param ret a pointer points to a std::vector<cocos2d::Vec2>.
+ * @param funcName the name of calling function, it is used for error output in the debug model.
+ * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ */
+extern bool luaval_to_std_vector_vec2(lua_State* L, int lo, std::vector<cocos2d::Vec2>* ret, const char* funcName = "");
+
 /**@}**/
 
 // from native

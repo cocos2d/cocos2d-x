@@ -40,7 +40,7 @@ public:
     void sliderEvent(cocos2d::Ref* sender, cocos2d::ui::Slider::EventType type);
     
 protected:
-    cocos2d::ui::Text* _displayValueLabel;
+    cocos2d::ui::TextBMFont* _displayValueLabel;
 };
 
 class UISliderTest_Scale9 : public UIScene

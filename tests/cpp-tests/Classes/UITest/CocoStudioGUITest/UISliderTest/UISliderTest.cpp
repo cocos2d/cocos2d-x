@@ -31,7 +31,7 @@ bool UISliderTest::init()
         Size widgetSize = _widget->getContentSize();
         
         // Add a label in which the slider alert will be displayed
-        _displayValueLabel = Text::create("Move the slider thumb","Move the slider thumb",32);
+        _displayValueLabel = TextBMFont::create("Move the slider thumb", "ccb/markerfelt24shadow.fnt");
         _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1));
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f));
         _uiLayer->addChild(_displayValueLabel);
