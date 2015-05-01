@@ -514,8 +514,8 @@ PUParticle3DEntityRender::PUParticle3DEntityRender()
     : _meshCommand(nullptr)
     , _texture(nullptr)
     , _glProgramState(nullptr)
-    , _vertexBuffer(nullptr)
     , _indexBuffer(nullptr)
+    , _vertexBuffer(nullptr)
 {
 
 }
