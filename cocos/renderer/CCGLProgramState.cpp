@@ -51,6 +51,7 @@ UniformValue::UniformValue()
 : _uniform(nullptr)
 , _glprogram(nullptr)
 , _useCallback(false)
+, _isPointer(false)
 {
 }
 
@@ -58,6 +59,7 @@ UniformValue::UniformValue(Uniform *uniform, GLProgram* glprogram)
 : _uniform(uniform)
 , _glprogram(glprogram)
 , _useCallback(false)
+, _isPointer(false)
 {
 }
 
@@ -71,6 +73,16 @@ void UniformValue::apply()
 {
     if(_useCallback) {
         (*_value.callback)(_glprogram, _uniform);
+    }
+    else if(_isPointer)
+    {
+        switch (_uniform->type) {
+            case GL_FLOAT_VEC4:
+                _glprogram->setUniformLocationWith4fv(_uniform->location, _value.v4f.pointer, _value.v4f.size);
+                break;
+            default:
+                CCLOG("Invalid type");
+        }
     }
     else
     {
@@ -161,16 +173,25 @@ void UniformValue::setVec2(const Vec2& value)
 
 void UniformValue::setVec3(const Vec3& value)
 {
-    CCASSERT (_uniform->type == GL_FLOAT_VEC3, "");
+    CCASSERT (_uniform->type == GL_FLOAT_VEC3, "wrong type");
 	memcpy(_value.v3Value, &value, sizeof(_value.v3Value));
 	_useCallback = false;
 }
 
 void UniformValue::setVec4(const Vec4& value)
 {
-    CCASSERT (_uniform->type == GL_FLOAT_VEC4, "");
+    CCASSERT (_uniform->type == GL_FLOAT_VEC4, "wrong type");
 	memcpy(_value.v4Value, &value, sizeof(_value.v4Value));
 	_useCallback = false;
+}
+
+void UniformValue::setVec4v(const Vec4* pointer, GLsizei size)
+{
+    CCASSERT (_uniform->type == GL_FLOAT_VEC4, "");
+    _value.v4f.pointer = (const float*)pointer;
+    _value.v4f.size = size;
+    _useCallback = false;
+    _isPointer = true;
 }
 
 void UniformValue::setMat4(const Mat4& value)
@@ -601,6 +622,25 @@ void GLProgramState::setUniformVec4(GLint uniformLocation, const Vec4& value)
     else
         CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
 }
+
+void GLProgramState::setUniformVec4v(const std::string &uniformName, const Vec4* value, GLsizei size)
+{
+    auto v = getUniformValue(uniformName);
+    if (v)
+        v->setVec4v(value, size);
+    else
+        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+}
+
+void GLProgramState::setUniformVec4v(GLint uniformLocation, const Vec4* value, GLsizei size)
+{
+    auto v = getUniformValue(uniformLocation);
+    if (v)
+        v->setVec4v(value, size);
+    else
+        CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
+}
+
 
 void GLProgramState::setUniformMat4(const std::string &uniformName, const Mat4& value)
 {

@@ -221,16 +221,22 @@ void MeshCommand::setDepthWriteEnabled(bool enable)
 
 void MeshCommand::setDisplayColor(const Vec4& color)
 {
+    CCASSERT(!_material, "If using material, you should set the color as a uniform: use u_color");
+
     _displayColor = color;
 }
 
 void MeshCommand::setMatrixPalette(const Vec4* matrixPalette)
 {
+    CCASSERT(!_material, "If using material, you should set the color as a uniform: use u_matrixPalette");
+
     _matrixPalette = matrixPalette;
 }
 
 void MeshCommand::setMatrixPaletteSize(int size)
 {
+    CCASSERT(!_material, "If using material, you should set the color as a uniform: use u_matrixPalette with its size");
+
     _matrixPaletteSize = size;
 }
 
@@ -241,6 +247,8 @@ void MeshCommand::setLightMask(unsigned int lightmask)
 
 void MeshCommand::setTransparent(bool value)
 {
+    CCASSERT(!_material, "If using material, you shouldn't call setTransparent.");
+
     _isTransparent = value;
     //Skip batching for transparent mesh
     _skipBatching = value;
@@ -265,94 +273,93 @@ MeshCommand::~MeshCommand()
 
 void MeshCommand::applyRenderState()
 {
-    if (!_material) {
+    CCASSERT(!_material, "Must not be called when using materials");
 
-        // blend and texture
-        GL::bindTexture2D(_textureID);
-        GL::blendFunc(_blendType.src, _blendType.dst);
+    // blend and texture
+    GL::bindTexture2D(_textureID);
+    GL::blendFunc(_blendType.src, _blendType.dst);
 
-        // cull face
-        _renderStateCullFaceEnabled = glIsEnabled(GL_CULL_FACE) != GL_FALSE;
-        GLint cullface;
-        glGetIntegerv(GL_CULL_FACE_MODE, &cullface);
-        _renderStateCullFace = (GLenum)cullface;
-        
-        if (_cullFaceEnabled != _renderStateCullFaceEnabled)
-        {
-            _cullFaceEnabled ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
-        }
-        
-        if (_cullFace != _renderStateCullFace)
-        {
-            glCullFace(_cullFace);
-        }
+    // cull face
+    _renderStateCullFaceEnabled = glIsEnabled(GL_CULL_FACE) != GL_FALSE;
+    GLint cullface;
+    glGetIntegerv(GL_CULL_FACE_MODE, &cullface);
+    _renderStateCullFace = (GLenum)cullface;
+    
+    if (_cullFaceEnabled != _renderStateCullFaceEnabled)
+    {
+        _cullFaceEnabled ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
+    }
+    
+    if (_cullFace != _renderStateCullFace)
+    {
+        glCullFace(_cullFace);
+    }
 
-        // depth
-        _renderStateDepthTest = (glIsEnabled(GL_DEPTH_TEST) != GL_FALSE);
-        glGetBooleanv(GL_DEPTH_WRITEMASK, &_renderStateDepthWrite);
+    // depth
+    _renderStateDepthTest = (glIsEnabled(GL_DEPTH_TEST) != GL_FALSE);
+    glGetBooleanv(GL_DEPTH_WRITEMASK, &_renderStateDepthWrite);
 
-        if (_depthTestEnabled != _renderStateDepthTest)
-        {
-            _depthTestEnabled ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
-        }
+    if (_depthTestEnabled != _renderStateDepthTest)
+    {
+        _depthTestEnabled ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+    }
 
-        if (_depthWriteEnabled != _renderStateDepthWrite)
-        {
-            glDepthMask(_depthWriteEnabled);
-        }
+    if (_depthWriteEnabled != _renderStateDepthWrite)
+    {
+        glDepthMask(_depthWriteEnabled);
     }
 }
 
 void MeshCommand::restoreRenderState()
 {
-    if (!_material)
+    CCASSERT(!_material, "Must not be called when using Material");
+
+    // cull
+    if (_cullFaceEnabled != _renderStateCullFaceEnabled)
     {
-        // cull
-        if (_cullFaceEnabled != _renderStateCullFaceEnabled)
-        {
-            _renderStateCullFaceEnabled ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
-        }
+        _renderStateCullFaceEnabled ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
+    }
 
-        if (_cullFace != _renderStateCullFace)
-        {
-            glCullFace(_renderStateCullFace);
-        }
+    if (_cullFace != _renderStateCullFace)
+    {
+        glCullFace(_renderStateCullFace);
+    }
 
-        // depth
-        if (_depthTestEnabled != _renderStateDepthTest)
-        {
-            _renderStateDepthTest ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
-        }
+    // depth
+    if (_depthTestEnabled != _renderStateDepthTest)
+    {
+        _renderStateDepthTest ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
+    }
 
-        if (_depthWriteEnabled != _renderStateDepthWrite)
-        {
-            glDepthMask(_renderStateDepthWrite);
-        }
+    if (_depthWriteEnabled != _renderStateDepthWrite)
+    {
+        glDepthMask(_renderStateDepthWrite);
     }
 }
 
 void MeshCommand::applyUniforms(GLProgramState* glprogramstate)
 {
-    // XXX:
-    // apply user defined uniforms... in case there is any.
-    glprogramstate->applyUniforms();
-
     // Don't use the Uniform API here since these are hardcoded values and need to be applied in order.
     // Why order is important? I don't know... I guess it has to do with the location of Uniforms and a bug
     // in the initialization... just a guess.
 
     auto glprogram = glprogramstate->getGLProgram();
 
-    // 'u_color'
-    auto location = glprogram->getUniformLocationForName("u_color");
-    glprogram->setUniformLocationWith4f(location, _displayColor.x, _displayColor.y, _displayColor.z, _displayColor.w);
+    if (!_material) {
 
-    // 'u_matrixPalette'
-    if (_matrixPaletteSize && _matrixPalette)
-    {
-        location = glprogram->getUniformLocationForName("u_matrixPalette");
-        glprogram->setUniformLocationWith4fv(location, (const float*)_matrixPalette, (GLsizei)_matrixPaletteSize);
-//        glprogramstate->setUniformCallback("u_matrixPalette", CC_CALLBACK_2(MeshCommand::MatrixPalleteCallBack, this));
+        // user defined
+        glprogramstate->applyUniforms();
+
+        // 'u_color'
+        auto location = glprogram->getUniformLocationForName("u_color");
+        glprogram->setUniformLocationWith4f(location, _displayColor.x, _displayColor.y, _displayColor.z, _displayColor.w);
+
+        // 'u_matrixPalette'
+        if (_matrixPaletteSize && _matrixPalette)
+        {
+            location = glprogram->getUniformLocationForName("u_matrixPalette");
+            glprogram->setUniformLocationWith4fv(location, (const float*)_matrixPalette, (GLsizei)_matrixPaletteSize);
+        }
     }
 
     // light related
@@ -376,11 +383,6 @@ void MeshCommand::genMaterialID(GLuint texID, void* glProgramState, GLuint verte
 uint32_t MeshCommand::getMaterialID() const
 {
     return _materialID;
-}
-
-void MeshCommand::MatrixPalleteCallBack( GLProgram* glProgram, Uniform* uniform)
-{
-    glUniform4fv( uniform->location, (GLsizei)_matrixPaletteSize, (const float*)_matrixPalette );
 }
 
 void MeshCommand::preBatchDraw()
@@ -410,15 +412,12 @@ void MeshCommand::batchDraw()
     {
         for(const auto& pass: _material->_currentTechnique->_passes)
         {
-
             auto glprogramstate = pass->getGLProgramState();
 
             // don't bind attributes, since they were
             // already bound in preBatchDraw
             pass->bind(_mv, false);
 
-            // XXX should be part of material
-            applyRenderState();
             applyUniforms(glprogramstate);
 
             glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
@@ -439,11 +438,9 @@ void MeshCommand::batchDraw()
         glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
         CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
 
+        //restore render state
+        restoreRenderState();
     }
-
-    //restore render state
-    restoreRenderState();
-
 }
 void MeshCommand::postBatchDraw()
 {
@@ -468,15 +465,12 @@ void MeshCommand::execute()
     {
         for(const auto& pass: _material->_currentTechnique->_passes)
         {
-
             auto glprogramstate = pass->getGLProgramState();
 
             // don't bind attributes, since they were
             // already bound in preBatchDraw
             pass->bind(_mv, true);
 
-            // XXX should be part of material
-            applyRenderState();
             applyUniforms(glprogramstate);
 
             glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
@@ -497,10 +491,10 @@ void MeshCommand::execute()
         glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
         
         CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
-    }
 
-    //restore render state
-    restoreRenderState();
+        //restore render state
+        restoreRenderState();
+    }
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);

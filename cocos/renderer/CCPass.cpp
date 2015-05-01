@@ -128,15 +128,15 @@ void Pass::bind(const Mat4& modelView)
 
 void Pass::bind(const Mat4& modelView, bool bindAttributes)
 {
-    //set blend mode
-    RenderState::bind(this);
-
     auto glprogramstate = _glProgramState ?: getTarget()->getGLProgramState();
 
     glprogramstate->applyGLProgram(modelView);
     if (bindAttributes)
         glprogramstate->applyAttributes();
     glprogramstate->applyUniforms();
+
+    //set blend mode
+    RenderState::bind(this);
 }
 
 Node* Pass::getTarget() const

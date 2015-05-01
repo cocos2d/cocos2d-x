@@ -98,8 +98,6 @@ protected:
     
     //restore to all false
     void restoreRenderState();
-    
-    void MatrixPalleteCallBack(GLProgram* glProgram, Uniform* uniform);
 
     void resetLightUniformValues();
 

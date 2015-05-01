@@ -80,6 +80,7 @@ public:
     void setVec2(const Vec2& value);
     void setVec3(const Vec3& value);
     void setVec4(const Vec4& value);
+    void setVec4v(const Vec4* pointer, GLsizei size);
     void setMat4(const Mat4& value);
     /**
      @}
@@ -107,6 +108,8 @@ protected:
     GLProgram* _glprogram;
     /**Whether or not callback is used.*/
     bool _useCallback;
+    /**Whether or not the value is pointer*/
+    bool _isPointer;
     /**
      @name Uniform Value Uniform
      @{
@@ -122,6 +125,10 @@ protected:
             GLuint textureId;
             GLuint textureUnit;
         } tex;
+        struct {
+            const float* pointer;
+            GLsizei size;
+        } v4f;
         std::function<void(GLProgram*, Uniform*)> *callback;
 
         U() { memset( this, 0, sizeof(*this) ); }
@@ -272,6 +279,7 @@ public:
     void setUniformVec2(const std::string &uniformName, const Vec2& value);
     void setUniformVec3(const std::string &uniformName, const Vec3& value);
     void setUniformVec4(const std::string &uniformName, const Vec4& value);
+    void setUniformVec4v(const std::string &uniformName, const Vec4* pointer, GLsizei size);
     void setUniformMat4(const std::string &uniformName, const Mat4& value);
     void setUniformCallback(const std::string &uniformName, const std::function<void(GLProgram*, Uniform*)> &callback);
     void setUniformTexture(const std::string &uniformName, Texture2D *texture);
@@ -286,6 +294,7 @@ public:
     void setUniformVec2(GLint uniformLocation, const Vec2& value);
     void setUniformVec3(GLint uniformLocation, const Vec3& value);
     void setUniformVec4(GLint uniformLocation, const Vec4& value);
+    void setUniformVec4v(GLint uniformLocation, const Vec4* pointer, GLsizei size);
     void setUniformMat4(GLint uniformLocation, const Mat4& value);
     void setUniformCallback(GLint uniformLocation, const std::function<void(GLProgram*, Uniform*)> &callback);
     void setUniformTexture(GLint uniformLocation, Texture2D *texture);

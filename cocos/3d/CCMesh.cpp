@@ -290,14 +290,21 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
 
 
     if (isTransparent && !forceDepthWrite)
-    {
         _material->getStateBlock()->setDepthWrite(false);
-    }
     else
-    {
         _material->getStateBlock()->setDepthWrite(true);
-    }
 
+    // set default uniforms for Mesh
+    // 'u_color' and others
+    auto technique = _material->_currentTechnique;
+    for(auto& pass : technique->_passes)
+    {
+        auto programState = pass->getGLProgramState();
+        programState->setUniformVec4("u_color", color);
+
+        if (_skin)
+            programState->setUniformVec4v("u_matrixPalette", _skin->getMatrixPalette(), (int)_skin->getMatrixPaletteSize());
+    }
 #else
 
     if(!_texture)
@@ -326,9 +333,8 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
     }
     _meshCommand.setTransparent(isTransparent);
 
-#endif // !MATERIAL
-
-    _meshCommand.setLightMask(lightMask);
+    //support tint and fade
+    _meshCommand.setDisplayColor(color);
 
     if (_skin)
     {
@@ -336,8 +342,11 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
         _meshCommand.setMatrixPalette(_skin->getMatrixPalette());
     }
 
-    //support tint and fade
-    _meshCommand.setDisplayColor(color);
+#endif // !MATERIAL
+
+    _meshCommand.setLightMask(lightMask);
+
+
     renderer->addCommand(&_meshCommand);
 }
 
@@ -453,9 +462,6 @@ void Mesh::bindMeshCommand()
         _meshCommand.genMaterialID(textureid, glprogramstate, _meshIndexData->getVertexBuffer()->getVBO(), _meshIndexData->getIndexBuffer()->getVBO(), blend);
         _material->getStateBlock()->setCullFace(true);
         _material->getStateBlock()->setDepthTest(true);
-
-//        _meshCommand.setCullFaceEnabled(true);
-//        _meshCommand.setDepthTestEnabled(true);
     }
 #else
     if (_glProgramState && _meshIndexData && _texture)
