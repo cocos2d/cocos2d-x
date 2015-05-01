@@ -204,9 +204,8 @@ bool Sprite3D::loadFromCache(const std::string& path)
         }
         
         for (ssize_t i = 0; i < _meshes.size(); i++) {
-            // XXX BUG The GLProgram must be shared, but the GLProgramState must not
-            // the glprogramstate must be cloned
-            _meshes.at(i)->setGLProgramState(spritedata->glProgramStates.at(i));
+            // cloning is needed in order to have one state per sprite
+            _meshes.at(i)->setGLProgramState(spritedata->glProgramStates.at(i)->clone());
         }
         return true;
     }

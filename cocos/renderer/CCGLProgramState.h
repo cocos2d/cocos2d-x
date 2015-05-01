@@ -229,6 +229,9 @@ public:
     /** gets-or-creates an instance of GLProgramState for given shaders */
     static GLProgramState* getOrCreateWithShaders(const std::string& vertexShader, const std::string& fragShader, const std::string& compileTimeDefines);
 
+    /** Returns a new copy of the GLProgramState. The GLProgram is reused */
+    GLProgramState* clone() const;
+
     /**
      Apply GLProgram, attributes and uniforms.
      @param modelView The applied modelView matrix to shader.

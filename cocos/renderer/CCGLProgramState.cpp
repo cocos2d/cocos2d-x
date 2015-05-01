@@ -342,6 +342,31 @@ GLProgramState::~GLProgramState()
     CC_SAFE_RELEASE(_glprogram);
 }
 
+GLProgramState* GLProgramState::clone() const
+{
+    auto glprogramstate = new (std::nothrow) GLProgramState();
+
+    // copy everything manually, instead of calling init since this is faster
+
+    glprogramstate->_glprogram = this->_glprogram;
+    CC_SAFE_RETAIN(glprogramstate->_glprogram);
+
+    glprogramstate->_attributes = this->_attributes;
+    glprogramstate->_vertexAttribsFlags = this->_vertexAttribsFlags;
+
+    // copy uniforms
+    glprogramstate->_uniformsByName = this->_uniformsByName;
+    glprogramstate->_uniforms = this->_uniforms;
+    glprogramstate->_uniformAttributeValueDirty = this->_uniformAttributeValueDirty;
+
+    // copy textures
+    glprogramstate->_textureUnitIndex = this->_textureUnitIndex;
+    glprogramstate->_boundTextureUnits = this->_boundTextureUnits;
+
+    glprogramstate->autorelease();
+    return glprogramstate;
+}
+
 bool GLProgramState::init(GLProgram* glprogram)
 {
     CCASSERT(glprogram, "invalid shader");
