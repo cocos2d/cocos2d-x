@@ -81,7 +81,8 @@ void UniformValue::apply()
                 _glprogram->setUniformLocationWith4fv(_uniform->location, _value.v4f.pointer, _value.v4f.size);
                 break;
             default:
-                CCLOG("Invalid type");
+                CCASSERT(false, "Unsupported type");
+                break;
         }
     }
     else

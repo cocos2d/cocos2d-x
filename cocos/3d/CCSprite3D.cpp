@@ -205,7 +205,8 @@ bool Sprite3D::loadFromCache(const std::string& path)
         
         for (ssize_t i = 0; i < _meshes.size(); i++) {
             // cloning is needed in order to have one state per sprite
-            _meshes.at(i)->setGLProgramState(spritedata->glProgramStates.at(i)->clone());
+            auto glstate = spritedata->glProgramStates.at(i);
+            _meshes.at(i)->setGLProgramState(glstate->clone());
         }
         return true;
     }
@@ -445,10 +446,10 @@ void Sprite3D::genGLProgramState(bool useLight)
     for(auto& meshVertexData : _meshVertexDatas)
     {
         bool textured = meshVertexData->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_TEX_COORD);
-        bool hasSkin = meshVertexData->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_INDEX) && meshVertexData->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT);
+        bool hasSkin = meshVertexData->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_INDEX)
+                        && meshVertexData->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT);
         bool hasNormal = meshVertexData->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_NORMAL);
-        
-        GLProgram* glProgram = nullptr;
+
         const char* shader = nullptr;
         if(textured)
         {
@@ -471,15 +472,17 @@ void Sprite3D::genGLProgramState(bool useLight)
         {
             shader = GLProgram::SHADER_3D_POSITION;
         }
-        if (shader)
-            glProgram = GLProgramCache::getInstance()->getGLProgram(shader);
 
-        auto programstate = GLProgramState::create(glProgram);
+        CCASSERT(shader, "Couldn't find shader for sprite");
+
+        auto glProgram = GLProgramCache::getInstance()->getGLProgram(shader);
+        auto glprogramstate = GLProgramState::create(glProgram);
+
         long offset = 0;
         auto attributeCount = meshVertexData->getMeshVertexAttribCount();
         for (auto k = 0; k < attributeCount; k++) {
             auto meshattribute = meshVertexData->getMeshVertexAttrib(k);
-            programstate->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
+            glprogramstate->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
                                                  meshattribute.size,
                                                  meshattribute.type,
                                                  GL_FALSE,
@@ -488,12 +491,17 @@ void Sprite3D::genGLProgramState(bool useLight)
             offset += meshattribute.attribSizeBytes;
         }
         
-        glProgramestates[meshVertexData] = programstate;
+        glProgramestates[meshVertexData] = glprogramstate;
     }
     
     for (auto& mesh : _meshes) {
         auto glProgramState = glProgramestates[mesh->getMeshIndexData()->getMeshVertexData()];
-        mesh->setGLProgramState(glProgramState);
+
+        // hack to prevent cloning the very first time
+        if (glProgramState->getReferenceCount() == 1)
+            mesh->setGLProgramState(glProgramState);
+        else
+            mesh->setGLProgramState(glProgramState->clone());
     }
 }
 

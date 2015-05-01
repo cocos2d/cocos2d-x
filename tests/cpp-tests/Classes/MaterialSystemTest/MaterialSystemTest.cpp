@@ -34,6 +34,7 @@ USING_NS_CC;
 
 MaterialSystemTest::MaterialSystemTest()
 {
+    ADD_TEST_CASE(Material_MultipleSprite3D);
     ADD_TEST_CASE(Material_SpriteTest);
     ADD_TEST_CASE(Material_Sprite3DTest);
 }
@@ -92,3 +93,41 @@ std::string Material_Sprite3DTest::subtitle() const
 {
     return "Material System on Sprite3D";
 }
+
+
+//
+//
+//
+void Material_MultipleSprite3D::onEnter()
+{
+    MaterialSystemBaseTest::onEnter();
+
+    const char* names[] = {
+        "Sprite3DTest/ReskinGirl.c3b",
+        "Sprite3DTest/ReskinGirl.c3b",
+        "Sprite3DTest/ReskinGirl.c3b",
+        "Sprite3DTest/ReskinGirl.c3b",
+        "Sprite3DTest/ReskinGirl.c3b",
+        "Sprite3DTest/ReskinGirl.c3b",
+        "Sprite3DTest/ReskinGirl.c3b",
+        "Sprite3DTest/ReskinGirl.c3b",
+    };
+
+    const int totalNames = sizeof(names) / sizeof(names[0]);
+
+    auto size = Director::getInstance()->getWinSize();
+
+    for(int i=0;i<totalNames;i++)
+    {
+        auto sprite = Sprite3D::create(names[i]);
+        this->addChild(sprite);
+        sprite->setPosition(Vec2((size.width/(totalNames+1))*(i+1), size.height/4));
+        sprite->setScale(3);
+    }
+}
+
+std::string Material_MultipleSprite3D::subtitle() const
+{
+    return "Sprites with multiple meshes";
+}
+
