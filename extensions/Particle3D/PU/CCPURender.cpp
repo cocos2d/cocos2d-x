@@ -50,10 +50,10 @@ void PURender::copyAttributesTo( PURender *render )
     render->_renderType = _renderType;
 }
 
-static bool compareParticle3D(PUParticle3D* left, PUParticle3D* right)
-{
-    return left->depthInView > right->depthInView;
-}
+//static bool compareParticle3D(PUParticle3D* left, PUParticle3D* right)
+//{
+//    return left->depthInView > right->depthInView;
+//}
 
 PUParticle3DQuadRender* PUParticle3DQuadRender::create(const std::string& texFile)
 {
