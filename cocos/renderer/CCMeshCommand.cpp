@@ -337,35 +337,34 @@ void MeshCommand::restoreRenderState()
     }
 }
 
-void MeshCommand::applyUniforms(GLProgramState* glprogramstate)
+void MeshCommand::applyUniforms()
 {
     // Don't use the Uniform API here since these are hardcoded values and need to be applied in order.
     // Why order is important? I don't know... I guess it has to do with the location of Uniforms and a bug
     // in the initialization... just a guess.
 
-    auto glprogram = glprogramstate->getGLProgram();
+    CCASSERT(!_material, "If using material, call material->apply() instead");
 
-    if (!_material) {
+    auto glprogram = _glProgramState->getGLProgram();
 
-        // user defined
-        glprogramstate->applyUniforms();
+    // user defined
+    _glProgramState->applyUniforms();
 
-        // 'u_color'
-        auto location = glprogram->getUniformLocationForName("u_color");
-        glprogram->setUniformLocationWith4f(location, _displayColor.x, _displayColor.y, _displayColor.z, _displayColor.w);
+    // 'u_color'
+    auto location = glprogram->getUniformLocationForName("u_color");
+    glprogram->setUniformLocationWith4f(location, _displayColor.x, _displayColor.y, _displayColor.z, _displayColor.w);
 
-        // 'u_matrixPalette'
-        if (_matrixPaletteSize && _matrixPalette)
-        {
-            location = glprogram->getUniformLocationForName("u_matrixPalette");
-            glprogram->setUniformLocationWith4fv(location, (const float*)_matrixPalette, (GLsizei)_matrixPaletteSize);
-        }
+    // 'u_matrixPalette'
+    if (_matrixPaletteSize && _matrixPalette)
+    {
+        location = glprogram->getUniformLocationForName("u_matrixPalette");
+        glprogram->setUniformLocationWith4fv(location, (const float*)_matrixPalette, (GLsizei)_matrixPaletteSize);
     }
 
     // light related
     const auto& scene = Director::getInstance()->getRunningScene();
     if (scene && scene->getLights().size() > 0)
-        setLightUniforms(glprogramstate);
+        setLightUniforms();
 }
 
 void MeshCommand::genMaterialID(GLuint texID, void* glProgramState, GLuint vertexBuffer, GLuint indexBuffer, BlendFunc blend)
@@ -412,13 +411,9 @@ void MeshCommand::batchDraw()
     {
         for(const auto& pass: _material->_currentTechnique->_passes)
         {
-            auto glprogramstate = pass->getGLProgramState();
-
             // don't bind attributes, since they were
             // already bound in preBatchDraw
             pass->bind(_mv, false);
-
-            applyUniforms(glprogramstate);
 
             glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
             CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
@@ -432,7 +427,7 @@ void MeshCommand::batchDraw()
 
         // set render state
         applyRenderState();
-        applyUniforms(_glProgramState);
+        applyUniforms();
 
         // Draw
         glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
@@ -465,13 +460,9 @@ void MeshCommand::execute()
     {
         for(const auto& pass: _material->_currentTechnique->_passes)
         {
-            auto glprogramstate = pass->getGLProgramState();
-
             // don't bind attributes, since they were
             // already bound in preBatchDraw
             pass->bind(_mv, true);
-
-            applyUniforms(glprogramstate);
 
             glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
             CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
@@ -485,7 +476,7 @@ void MeshCommand::execute()
         _glProgramState->apply(_mv);
 
         applyRenderState();
-        applyUniforms(_glProgramState);
+        applyUniforms();
 
         // Draw
         glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
@@ -537,7 +528,7 @@ void MeshCommand::releaseVAO()
 }
 
 
-void MeshCommand::setLightUniforms(GLProgramState* glProgramState)
+void MeshCommand::setLightUniforms()
 {
     Director *director = Director::getInstance();
     auto scene = director->getRunningScene();
@@ -549,9 +540,9 @@ void MeshCommand::setLightUniforms(GLProgramState* glProgramState)
 
     // XXX: Lights should be part of the Material's RenderState
     // In the meantime we keep using it
-    auto glProgram = glProgramState->getGLProgram();
+    auto glProgram = _glProgramState->getGLProgram();
 
-    if (glProgramState->getVertexAttribsFlags() & (1 << GLProgram::VERTEX_ATTRIB_NORMAL))
+    if (_glProgramState->getVertexAttribsFlags() & (1 << GLProgram::VERTEX_ATTRIB_NORMAL))
     {
         resetLightUniformValues();
 

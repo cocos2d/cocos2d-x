@@ -91,10 +91,10 @@ protected:
     void buildVAO();
     void releaseVAO();
     
-    // apply renderstate
+    // apply renderstate, not used when using material
     void applyRenderState();
-    void applyUniforms(GLProgramState* glprogramstate);
-    void setLightUniforms(GLProgramState* glprogramstate);
+    void applyUniforms();
+    void setLightUniforms();
     
     //restore to all false
     void restoreRenderState();
