@@ -219,17 +219,7 @@ void TextureCache::loadImage()
             const std::string& filename = asyncStruct->filename;
             // generate image      
             image = new (std::nothrow) Image();
-            
-            Texture2D::PixelFormat oldformat = Texture2D::getDefaultAlphaPixelFormat();
-            auto formatit = _fileTextureFormat.find(filename);
-            if( formatit != _fileTextureFormat.end()){
-                Texture2D::setDefaultAlphaPixelFormat(formatit->second);
-            }
-            
-            bool ret = image->initWithImageFileThreadSafe(filename);
-            
-            Texture2D::setDefaultAlphaPixelFormat(oldformat);
-            if (image && !ret)
+            if (image && !image->initWithImageFileThreadSafe(filename))
             {
                 CC_SAFE_RELEASE(image);
                 CCLOG("can not load %s", filename.c_str());
