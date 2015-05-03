@@ -219,7 +219,17 @@ void TextureCache::loadImage()
             const std::string& filename = asyncStruct->filename;
             // generate image      
             image = new (std::nothrow) Image();
-            if (image && !image->initWithImageFileThreadSafe(filename))
+            
+            Texture2D::PixelFormat oldformat = Texture2D::getDefaultAlphaPixelFormat();
+            auto formatit = _fileTextureFormat.find(filename);
+            if( formatit != _fileTextureFormat.end()){
+                Texture2D::setDefaultAlphaPixelFormat(formatit->second);
+            }
+            
+            bool ret = image->initWithImageFileThreadSafe(filename);
+            
+            Texture2D::setDefaultAlphaPixelFormat(oldformat);
+            if (image && !ret)
             {
                 CC_SAFE_RELEASE(image);
                 CCLOG("can not load %s", filename.c_str());
@@ -273,9 +283,15 @@ void TextureCache::addImageAsyncCallBack(float dt)
         {
             // generate texture in render thread
             texture = new (std::nothrow) Texture2D();
-
+            Texture2D::PixelFormat oldformat = Texture2D::getDefaultAlphaPixelFormat();
+            auto formatit = _fileTextureFormat.find(filename);
+            if( formatit != _fileTextureFormat.end()){
+                Texture2D::setDefaultAlphaPixelFormat(formatit->second);
+            }
+            
             texture->initWithImage(image);
 
+            Texture2D::setDefaultAlphaPixelFormat(oldformat);
 #if CC_ENABLE_CACHE_TEXTURE_DATA
             // cache the texture file name
             VolatileTextureMgr::addImageTexture(texture, filename);
@@ -337,13 +353,19 @@ Texture2D * TextureCache::addImage(const std::string &path)
         {
             image = new (std::nothrow) Image();
             CC_BREAK_IF(nullptr == image);
-
             bool bRet = image->initWithImageFile(fullpath);
             CC_BREAK_IF(!bRet);
 
             texture = new (std::nothrow) Texture2D();
-
-            if( texture && texture->initWithImage(image) )
+            
+            Texture2D::PixelFormat oldformat = Texture2D::getDefaultAlphaPixelFormat();
+            auto formatit = _fileTextureFormat.find(fullpath);
+            if( formatit != _fileTextureFormat.end()){
+                Texture2D::setDefaultAlphaPixelFormat(formatit->second);
+            }
+            bool ret = texture->initWithImage(image);
+            Texture2D::setDefaultAlphaPixelFormat(oldformat);
+            if( texture && ret )
             {
 #if CC_ENABLE_CACHE_TEXTURE_DATA
                 // cache the texture file name
@@ -380,7 +402,16 @@ Texture2D* TextureCache::addImage(Image *image, const std::string &key)
 
         // prevents overloading the autorelease pool
         texture = new (std::nothrow) Texture2D();
+        
+        Texture2D::PixelFormat oldformat = Texture2D::getDefaultAlphaPixelFormat();
+        auto formatit = _fileTextureFormat.find(key);
+        if( formatit != _fileTextureFormat.end()){
+            Texture2D::setDefaultAlphaPixelFormat(formatit->second);
+        }
+        
         texture->initWithImage(image);
+        
+        Texture2D::setDefaultAlphaPixelFormat(oldformat);
 
         if(texture)
         {
@@ -433,7 +464,15 @@ bool TextureCache::reloadTexture(const std::string& fileName)
             bool bRet = image->initWithImageFile(fullpath);
             CC_BREAK_IF(!bRet);
             
+            Texture2D::PixelFormat oldformat = Texture2D::getDefaultAlphaPixelFormat();
+            auto formatit = _fileTextureFormat.find(fullpath);
+            if( formatit != _fileTextureFormat.end()){
+                Texture2D::setDefaultAlphaPixelFormat(formatit->second);
+            }
             ret = texture->initWithImage(image);
+            
+            Texture2D::setDefaultAlphaPixelFormat(oldformat);
+
         } while (0);
     }
     
@@ -530,6 +569,16 @@ void TextureCache::waitForQuit()
     _needQuit = true;
     _sleepCondition.notify_one();
     if (_loadingThread) _loadingThread->join();
+}
+
+void TextureCache::setFileTextureFormat(std::string path, Texture2D::PixelFormat format)
+{
+    std::string key = FileUtils::getInstance()->fullPathForFilename(path);;
+    auto it = _fileTextureFormat.find(key);
+    if( it != _fileTextureFormat.end() )
+        _fileTextureFormat.erase(it);
+    
+    _fileTextureFormat.insert( std::make_pair(key, format) );
 }
 
 std::string TextureCache::getCachedTextureInfo() const
