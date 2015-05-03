@@ -93,13 +93,7 @@ protected:
     
     // apply renderstate, not used when using material
     void applyRenderState();
-    void applyUniforms();
-    void setLightUniforms();
-    
-    //restore to all false
     void restoreRenderState();
-
-    void resetLightUniformValues();
 
     GLuint _textureID;
     GLProgramState* _glProgramState;
@@ -135,8 +129,6 @@ protected:
 
     // ModelView transform
     Mat4 _mv;
-
-    unsigned int _lightMask;
 
     // weak ref
     Material* _material;
