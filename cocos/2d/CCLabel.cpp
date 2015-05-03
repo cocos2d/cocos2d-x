@@ -616,7 +616,8 @@ void Label::alignText()
         int strLen = static_cast<int>(_currentUTF16String.length());
         Rect uvRect;
         Sprite* letterSprite;
-        for (const auto &child : _children) {
+        for (auto index = 0; index < _children.size();) {
+            auto child = _children.at(index);
             int tag = child->getTag();
             if (tag >= strLen)
             {
@@ -635,6 +636,11 @@ void Label::alignText()
                     letterSprite->setTexture(textures.at(_lettersInfo[tag].def.textureID));
                     letterSprite->setTextureRect(uvRect);
                 }
+                ++index;
+            }
+            else
+            {
+                ++index;
             }
         }
     }
