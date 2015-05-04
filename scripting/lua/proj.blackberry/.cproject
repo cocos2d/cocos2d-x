@@ -47,6 +47,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../lua"/>
 									<listOptionValue builtIn="false" value="../../tolua"/>
+									<listOptionValue builtIn="false" value="../../xxtea"/>
 									<listOptionValue builtIn="false" value="../../third_party/blackberry/include"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
@@ -95,6 +96,7 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="lua"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tolua"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="xxtea"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos2dx_support"/>
 					</sourceEntries>
 				</configuration>
@@ -134,6 +136,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../lua"/>
 									<listOptionValue builtIn="false" value="../../tolua"/>
+									<listOptionValue builtIn="false" value="../../xxtea"/>
 									<listOptionValue builtIn="false" value="../../third_party/blackberry/include"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
@@ -171,6 +174,7 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="lua"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tolua"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="xxtea"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos2dx_support"/>
 					</sourceEntries>
 				</configuration>
@@ -211,6 +215,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../lua"/>
 									<listOptionValue builtIn="false" value="../../tolua"/>
+									<listOptionValue builtIn="false" value="../../xxtea"/>
 									<listOptionValue builtIn="false" value="../../third_party/blackberry/include"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
@@ -252,6 +257,7 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="lua"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tolua"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="xxtea"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos2dx_support"/>
 					</sourceEntries>
 				</configuration>
@@ -292,6 +298,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../lua"/>
 									<listOptionValue builtIn="false" value="../../tolua"/>
+									<listOptionValue builtIn="false" value="../../xxtea"/>
 									<listOptionValue builtIn="false" value="../../third_party/blackberry/include"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
@@ -333,6 +340,7 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="lua"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tolua"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="xxtea"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos2dx_support"/>
 					</sourceEntries>
 				</configuration>
@@ -371,6 +379,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../lua"/>
 									<listOptionValue builtIn="false" value="../../tolua"/>
+									<listOptionValue builtIn="false" value="../../xxtea"/>
 									<listOptionValue builtIn="false" value="../../third_party/blackberry/include"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
@@ -411,6 +420,7 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="lua"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tolua"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="xxtea"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos2dx_support"/>
 					</sourceEntries>
 				</configuration>
@@ -452,6 +462,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../lua"/>
 									<listOptionValue builtIn="false" value="../../tolua"/>
+									<listOptionValue builtIn="false" value="../../xxtea"/>
 									<listOptionValue builtIn="false" value="../../third_party/blackberry/include"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
@@ -493,6 +504,7 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="lua"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tolua"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="xxtea"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos2dx_support"/>
 					</sourceEntries>
 				</configuration>
@@ -532,6 +544,7 @@
 									<listOptionValue builtIn="false" value="${QNX_TARGET}/../target-override/usr/include"/>
 									<listOptionValue builtIn="false" value="../../lua"/>
 									<listOptionValue builtIn="false" value="../../tolua"/>
+									<listOptionValue builtIn="false" value="../../xxtea"/>
 									<listOptionValue builtIn="false" value="../../third_party/blackberry/include"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx/include"/>
 									<listOptionValue builtIn="false" value="../../../../cocos2dx"/>
@@ -573,6 +586,7 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="lua"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="tolua"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="xxtea"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="cocos2dx_support"/>
 					</sourceEntries>
 				</configuration>

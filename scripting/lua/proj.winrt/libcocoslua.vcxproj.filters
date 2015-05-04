@@ -11,6 +11,9 @@
     <Filter Include="tolua">
       <UniqueIdentifier>{31bce0ea-cb08-4b5d-a4b9-8381ec7dc00e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="xxtea">
+      <UniqueIdentifier>{d5be2300-81c1-4a14-9164-a98fe556453d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\cocos2dx_support\CCBProxy.cpp">
@@ -48,6 +51,9 @@
     </ClCompile>
     <ClCompile Include="..\cocos2dx_support\platform\winrt\LuaCocos2d.cpp">
       <Filter>cocos2dx_support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\xxtea\xxtea.cpp">
+      <Filter>xxtea</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -92,6 +98,9 @@
     </ClInclude>
     <ClInclude Include="..\tolua\tolua++.h">
       <Filter>tolua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\xxtea\xxtea.h">
+      <Filter>xxtea</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

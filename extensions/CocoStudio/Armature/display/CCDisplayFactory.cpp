@@ -191,7 +191,7 @@ void CCDisplayFactory::initSpriteDisplay(CCBone *bone, CCDecorativeDisplay *deco
         textureName = textureName.erase(startPos);
     }
 
-    CCTextureData *textureData = CCArmatureDataManager::sharedArmatureDataManager()->getTextureData(textureName.c_str());
+    CCTextureData *textureData = CCArmatureDataManager::getInstance()->getTextureData(textureName.c_str());
     if(textureData)
     {
         //! Init display anchorPoint, every Texture have a anchor point

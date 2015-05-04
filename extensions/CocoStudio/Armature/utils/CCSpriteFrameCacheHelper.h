@@ -37,9 +37,11 @@ NS_CC_EXT_BEGIN
 class  CC_EX_DLL CCSpriteFrameCacheHelper
 {
 public:
-    static CCSpriteFrameCacheHelper *sharedSpriteFrameCacheHelper();
+    CC_DEPRECATED_ATTRIBUTE static CCSpriteFrameCacheHelper *sharedSpriteFrameCacheHelper();
+    static CCSpriteFrameCacheHelper *getInstance();
 
-    static void purge();
+    CC_DEPRECATED_ATTRIBUTE static void purge();
+    static void destroyInstance();
 public:
 
     /**

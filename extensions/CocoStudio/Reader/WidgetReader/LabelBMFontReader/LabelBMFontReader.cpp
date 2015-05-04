@@ -28,12 +28,22 @@ LabelBMFontReader* LabelBMFontReader::getInstance()
     return instanceLabelBMFontReader;
 }
 
+void LabelBMFontReader::purge()
+{
+    LabelBMFontReader::destroyInstance();
+}
+
+void LabelBMFontReader::destroyInstance()
+{
+    CC_SAFE_DELETE(instanceLabelBMFontReader);
+}
+
 void LabelBMFontReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)
 {
     WidgetReader::setPropsFromJsonDictionary(widget, options);
     
     
-    std::string jsonPath = GUIReader::shareReader()->getFilePath();
+    std::string jsonPath = GUIReader::getInstance()->getFilePath();
     
     ui::LabelBMFont* labelBMFont = (ui::LabelBMFont*)widget;
     

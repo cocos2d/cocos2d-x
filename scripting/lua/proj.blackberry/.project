@@ -94,6 +94,11 @@
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/tolua</locationURI>
 		</link>
+		<link>
+			<name>xxtea</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/xxtea</locationURI>
+		</link>
 	</linkedResources>
 	<filteredResources>
 		<filter>

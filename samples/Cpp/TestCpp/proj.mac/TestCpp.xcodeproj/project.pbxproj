@@ -424,6 +424,7 @@
 		8C583FA6169DB64700F63A10 /* EditBoxTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8C583FA4169DB64700F63A10 /* EditBoxTest.cpp */; };
 		8C583FAD169DB6D500F63A10 /* CCEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8C583FA8169DB6D500F63A10 /* CCEditBox.cpp */; };
 		8C583FAE169DB6D500F63A10 /* CCEditBoxImplMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 8C583FAC169DB6D500F63A10 /* CCEditBoxImplMac.mm */; };
+		94AE1B4F1ACAC1DC00EC6016 /* CocoStudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 94AE1B4D1ACAC1DC00EC6016 /* CocoStudio.cpp */; };
 		A01B535317DE8C0700A3D114 /* PerformanceAllocTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A01B535117DE8C0700A3D114 /* PerformanceAllocTest.cpp */; };
 		A0A890A217DE997500494489 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A0A890A117DE997500494489 /* libcurl.dylib */; };
 		D4EFE03715D27336002D3DA0 /* HttpClientTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4EFE03515D27336002D3DA0 /* HttpClientTest.cpp */; };
@@ -1328,6 +1329,8 @@
 		8C583FAA169DB6D500F63A10 /* CCEditBoxImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEditBoxImpl.h; path = CCEditBox/CCEditBoxImpl.h; sourceTree = "<group>"; };
 		8C583FAB169DB6D500F63A10 /* CCEditBoxImplMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCEditBoxImplMac.h; path = CCEditBox/CCEditBoxImplMac.h; sourceTree = "<group>"; };
 		8C583FAC169DB6D500F63A10 /* CCEditBoxImplMac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CCEditBoxImplMac.mm; path = CCEditBox/CCEditBoxImplMac.mm; sourceTree = "<group>"; };
+		94AE1B4D1ACAC1DC00EC6016 /* CocoStudio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoStudio.cpp; sourceTree = "<group>"; };
+		94AE1B4E1ACAC1DC00EC6016 /* CocoStudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoStudio.h; sourceTree = "<group>"; };
 		A01B535117DE8C0700A3D114 /* PerformanceAllocTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PerformanceAllocTest.cpp; path = ../../Classes/PerformanceTest/PerformanceAllocTest.cpp; sourceTree = "<group>"; };
 		A01B535217DE8C0700A3D114 /* PerformanceAllocTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PerformanceAllocTest.h; path = ../../Classes/PerformanceTest/PerformanceAllocTest.h; sourceTree = "<group>"; };
 		A0A890A117DE997500494489 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
@@ -3307,6 +3310,8 @@
 		37CA1D2417D87B5700A649D0 /* CocoStudio */ = {
 			isa = PBXGroup;
 			children = (
+				94AE1B4D1ACAC1DC00EC6016 /* CocoStudio.cpp */,
+				94AE1B4E1ACAC1DC00EC6016 /* CocoStudio.h */,
 				38FA2EB9194EB31B00FF2BE4 /* ActionTimeline */,
 				379369AF18686AF800E974DD /* Trigger */,
 				3793699C186869D300E974DD /* Action */,
@@ -3774,6 +3779,7 @@
 				15AA9D6215B7EC460033D6C2 /* Bug-886.cpp in Sources */,
 				15AA9D6315B7EC460033D6C2 /* Bug-899.cpp in Sources */,
 				15AA9D6415B7EC460033D6C2 /* Bug-914.cpp in Sources */,
+				94AE1B4F1ACAC1DC00EC6016 /* CocoStudio.cpp in Sources */,
 				15AA9D6515B7EC460033D6C2 /* BugsTest.cpp in Sources */,
 				2961E06718C9B6B30017F5DB /* UIWidgetAddNodeTest.cpp in Sources */,
 				15AA9D6715B7EC460033D6C2 /* ClickAndMoveTest.cpp in Sources */,

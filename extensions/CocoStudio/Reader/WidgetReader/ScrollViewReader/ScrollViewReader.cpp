@@ -28,7 +28,15 @@ ScrollViewReader* ScrollViewReader::getInstance()
     return instanceScrollViewReader;
 }
 
+void ScrollViewReader::purge()
+{
+    ScrollViewReader::destroyInstance();
+}
 
+void ScrollViewReader::destroyInstance()
+{
+    CC_SAFE_DELETE(instanceScrollViewReader);
+}
 
 void ScrollViewReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)
 {
@@ -41,8 +49,8 @@ void ScrollViewReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapi
     float innerHeight = DICTOOL->getFloatValue_json(options, "innerHeight",200);
     scrollView->setInnerContainerSize(CCSizeMake(innerWidth, innerHeight));
     
-	int direction = DICTOOL->getFloatValue_json(options, "direction",1);
-	scrollView->setDirection((ui::SCROLLVIEW_DIR)direction);
+    int direction = DICTOOL->getFloatValue_json(options, "direction",1);
+    scrollView->setDirection((ui::SCROLLVIEW_DIR)direction);
     
     scrollView->setBounceEnabled(DICTOOL->getBooleanValue_json(options, "bounceEnable"));
     

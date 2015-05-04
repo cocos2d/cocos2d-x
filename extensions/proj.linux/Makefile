@@ -15,6 +15,7 @@ INCLUDES = -I$(COCOS_ROOT)/external \
 	-I../CocoStudio/GUI \
 	-I../CocoStudio/Json \
 	-I../CocoStudio/Reader \
+	-I../CocoStudio \
 
 SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CCBReader/CCMenuItemImageLoader.cpp \
@@ -159,6 +160,7 @@ SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CocoStudio/Trigger/TriggerBase.cpp \
 ../CocoStudio/Trigger/TriggerMng.cpp \
 ../CocoStudio/Trigger/TriggerObj.cpp \
+../CocoStudio/CocoStudio.cpp \
 
 include $(COCOS_ROOT)/cocos2dx/proj.linux/cocos2dx.mk
 

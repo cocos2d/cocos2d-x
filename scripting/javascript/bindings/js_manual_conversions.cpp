@@ -16,12 +16,12 @@ JSBool jsval_to_opaque( JSContext *cx, jsval vp, void **r)
 	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
 		return JS_FALSE;
 
-	JSB_PRECONDITION( js_IsTypedArray( tmp_arg ), "jsb: Not a TypedArray object");
+	JSB_PRECONDITION( JS_IsTypedArrayObject( tmp_arg ), "jsb: Not a TypedArray object");
 
 	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(void*), "jsb: Invalid Typed Array lenght");
 	
-	int32_t* arg_array = (int32_t*)JS_GetTypedArrayData( tmp_arg );
-	uint64 ret =  arg_array[0];
+    uint32_t* arg_array = (uint32_t*)JS_GetArrayBufferViewData( tmp_arg );
+	uint64_t ret =  arg_array[0];
 	ret = ret << 32;
 	ret |= arg_array[1];
 	
@@ -56,11 +56,11 @@ JSBool jsval_to_long( JSContext *cx, jsval vp, long *r )
 	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
 		return JS_FALSE;
 
-	JSB_PRECONDITION( js_IsTypedArray( tmp_arg ), "jsb: Not a TypedArray object");
+	JSB_PRECONDITION( JS_IsTypedArrayObject( tmp_arg ), "jsb: Not a TypedArray object");
 
 	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(long), "jsb: Invalid Typed Array lenght");
 	
-	int32_t* arg_array = (int32_t*)JS_GetTypedArrayData( tmp_arg );
+    uint32_t* arg_array = (uint32_t*)JS_GetArrayBufferViewData( tmp_arg );
 	long ret =  arg_array[0];
 	ret = ret << 32;
 	ret |= arg_array[1];
@@ -97,9 +97,9 @@ jsval opaque_to_jsval( JSContext *cx, void *opaque )
 {
 #ifdef __LP64__
 	uint64_t number = (uint64_t)opaque;
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_UINT32, 2);
-	int32_t *buffer = (int32_t*)JS_GetTypedArrayData(typedArray);
-	buffer[0] = number >> 32;
+    JSObject *typedArray = JS_NewUint32Array( cx, 2 );
+    uint32_t *buffer = (uint32_t*)JS_GetArrayBufferViewData(typedArray);
+    buffer[0] = number >> 32;
 	buffer[1] = number & 0xffffffff;
 	return OBJECT_TO_JSVAL(typedArray);		
 #else
@@ -198,7 +198,7 @@ jsval uint_to_jsval( JSContext *cx, unsigned int number )
 jsval long_to_jsval( JSContext *cx, long number )
 {
 #ifdef __LP64__
-	NSCAssert( sizeof(long)==8, @"Error!");
+	assert( sizeof(long)==8);
     
 	char chr[128];
 	snprintf(chr, sizeof(chr)-1, "%ld", number);

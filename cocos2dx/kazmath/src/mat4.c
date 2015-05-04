@@ -216,7 +216,7 @@ kmMat4* const kmMat4Transpose(kmMat4* pOut, const kmMat4* pIn)
  */
 kmMat4* const kmMat4Multiply(kmMat4* pOut, const kmMat4* pM1, const kmMat4* pM2)
 {
-#if defined(__ARM_NEON__)
+#if defined(__ARM_ARCH_7)
 
     float mat[16];
 

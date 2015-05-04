@@ -416,6 +416,7 @@
 		50FCEB5818C6D695004AD434 /* UIRichText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50FCEB5618C6D695004AD434 /* UIRichText.cpp */; };
 		50FCEB5B18C6F174004AD434 /* CustomGUIScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 50FCEB5918C6F174004AD434 /* CustomGUIScene.cpp */; };
 		6442E66D17297DB40008499D /* TextureAtlasEncryptionTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6442E66B17297DB40008499D /* TextureAtlasEncryptionTest.cpp */; };
+		943E874D1ACAC0240047C42E /* CocoStudio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 943E874B1ACAC0240047C42E /* CocoStudio.cpp */; };
 		A01B534F17DE7F7900A3D114 /* PerformanceAllocTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A01B534D17DE7F7900A3D114 /* PerformanceAllocTest.cpp */; };
 		A059B9AD174D9B8E0078F84F /* ConfigurationTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A059B9AB174D9B8E0078F84F /* ConfigurationTest.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
@@ -1321,6 +1322,8 @@
 		50FCEB5A18C6F174004AD434 /* CustomGUIScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomGUIScene.h; sourceTree = "<group>"; };
 		6442E66B17297DB40008499D /* TextureAtlasEncryptionTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextureAtlasEncryptionTest.cpp; sourceTree = "<group>"; };
 		6442E66C17297DB40008499D /* TextureAtlasEncryptionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureAtlasEncryptionTest.h; sourceTree = "<group>"; };
+		943E874B1ACAC0240047C42E /* CocoStudio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CocoStudio.cpp; sourceTree = "<group>"; };
+		943E874C1ACAC0240047C42E /* CocoStudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoStudio.h; sourceTree = "<group>"; };
 		A01B534D17DE7F7900A3D114 /* PerformanceAllocTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PerformanceAllocTest.cpp; path = ../../Classes/PerformanceTest/PerformanceAllocTest.cpp; sourceTree = "<group>"; };
 		A01B534E17DE7F7900A3D114 /* PerformanceAllocTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PerformanceAllocTest.h; path = ../../Classes/PerformanceTest/PerformanceAllocTest.h; sourceTree = "<group>"; };
 		A059B9AB174D9B8E0078F84F /* ConfigurationTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigurationTest.cpp; sourceTree = "<group>"; };
@@ -2883,6 +2886,8 @@
 		37CA1B8117D87A3300A649D0 /* CocoStudio */ = {
 			isa = PBXGroup;
 			children = (
+				943E874B1ACAC0240047C42E /* CocoStudio.cpp */,
+				943E874C1ACAC0240047C42E /* CocoStudio.h */,
 				38FA2E84194E92F400FF2BE4 /* ActionTimeline */,
 				372902421867D36800B59D3A /* Trigger */,
 				37BB5ADD17E86BF1002746B4 /* Action */,
@@ -3953,6 +3958,7 @@
 				15A3D9A41682F7F9002FB0C5 /* cpBB.c in Sources */,
 				50F853F618C57E040019FBFB /* ScrollViewReader.cpp in Sources */,
 				15A3D9A51682F7F9002FB0C5 /* cpBBTree.c in Sources */,
+				943E874D1ACAC0240047C42E /* CocoStudio.cpp in Sources */,
 				15A3D9A61682F7F9002FB0C5 /* cpBody.c in Sources */,
 				15A3D9A71682F7F9002FB0C5 /* cpCollision.c in Sources */,
 				15A3D9A81682F7F9002FB0C5 /* cpHashSet.c in Sources */,
@@ -4159,6 +4165,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -4188,7 +4195,7 @@
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/ios/Simulation\"",
 				);
 				INFOPLIST_FILE = "Test-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries\"",
 					"\"$(SRCROOT)/../../../../external/libwebsockets/ios/lib\"",
@@ -4205,6 +4212,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -4231,7 +4239,7 @@
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/ios/Simulation\"",
 				);
 				INFOPLIST_FILE = "Test-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries\"",
 					"\"$(SRCROOT)/../../../../external/libwebsockets/ios/lib\"",

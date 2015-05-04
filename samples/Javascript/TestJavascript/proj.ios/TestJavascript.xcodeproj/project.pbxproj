@@ -2770,6 +2770,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 1;
@@ -2798,7 +2799,7 @@
 					"${SRCROOT}/../../../../cocos2dx/platform/third_party/ios",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/lib\"",
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries\"",
@@ -2819,6 +2820,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
@@ -2844,7 +2846,7 @@
 					"${SRCROOT}/../../../../cocos2dx/platform/third_party/ios",
 				);
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/lib\"",
 					"\"$(SRCROOT)/../../../../cocos2dx/platform/third_party/ios/libraries\"",
@@ -2866,6 +2868,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 1;
@@ -2894,7 +2897,7 @@
 					"$(SRCROOT)/../../../../scripting/javascript/bindings",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Info-obfuscated.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/lib\"";
 				OTHER_LDFLAGS = (
 					"-lxml2",
@@ -2911,6 +2914,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
@@ -2936,7 +2940,7 @@
 					"$(SRCROOT)/../../../../scripting/javascript/bindings",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Info-obfuscated.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../../scripting/javascript/spidermonkey-ios/lib\"";
 				OTHER_LDFLAGS = (
 					"-lxml2",

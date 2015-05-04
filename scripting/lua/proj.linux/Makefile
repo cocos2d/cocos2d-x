@@ -1,7 +1,7 @@
 TARGET = liblua.so
 
-INCLUDES += -I.. -I../lua -I../tolua \
-        -I../Classes -I../../../CocosDenshion/include -I../../../extensions -I../../../external/chipmunk/include/chipmunk
+INCLUDES += -I.. -I../lua -I../tolua -I../xxtea \
+        -I../Classes -I../../../CocosDenshion/include -I../../../extensions -I../../../external/chipmunk/include/chipmunk 
 
 SOURCES = ../lua/lapi.o \
           ../lua/lauxlib.c \
@@ -50,7 +50,8 @@ SOURCES = ../lua/lapi.o \
           ../cocos2dx_support/Lua_extensions_CCB.cpp \
           ../cocos2dx_support/lua_cocos2dx_manual.cpp \
           ../cocos2dx_support/lua_cocos2dx_extensions_manual.cpp \
-          ../cocos2dx_support/lua_cocos2dx_cocostudio_manual.cpp
+          ../cocos2dx_support/lua_cocos2dx_cocostudio_manual.cpp \
+          ../xxtea/xxtea.cpp
 
 include ../../../cocos2dx/proj.linux/cocos2dx.mk
 

@@ -142,7 +142,7 @@ void ArmatureTestScene::MainMenuCallback(CCObject *pSender)
     TestScene::MainMenuCallback(pSender);
 
     removeAllChildren();
-    CCArmatureDataManager::purge();
+    CCArmatureDataManager::destroyInstance();
 }
 
 
@@ -246,17 +246,17 @@ void TestAsynchronousLoading::onEnter()
 
 
     //! create a new thread to load data
-    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/knight.png", "armature/knight.plist", "armature/knight.xml", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
-    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/weapon.png", "armature/weapon.plist", "armature/weapon.xml", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
-    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/robot.png", "armature/robot.plist", "armature/robot.xml", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
-    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/cyborg.png", "armature/cyborg.plist", "armature/cyborg.xml", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
-    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/Dragon.png", "armature/Dragon.plist", "armature/Dragon.xml", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
-    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/Cowboy.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
-    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/hero.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
-    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/horse.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
-    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/bear.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
-    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/HeroAnimation.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
-    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync("armature/testEasing.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
+    CCArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/knight.png", "armature/knight.plist", "armature/knight.xml", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
+	CCArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/weapon.png", "armature/weapon.plist", "armature/weapon.xml", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
+	CCArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/robot.png", "armature/robot.plist", "armature/robot.xml", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
+	CCArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/cyborg.png", "armature/cyborg.plist", "armature/cyborg.xml", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
+	CCArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/Dragon.png", "armature/Dragon.plist", "armature/Dragon.xml", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
+	CCArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/Cowboy.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
+	CCArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/hero.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
+	CCArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/horse.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
+	CCArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/bear.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
+	CCArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/HeroAnimation.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
+	CCArmatureDataManager::getInstance()->addArmatureFileInfoAsync("armature/testEasing.ExportJson", this, schedule_selector(TestAsynchronousLoading::dataLoaded));
 }
 
 std::string TestAsynchronousLoading::title()
@@ -269,7 +269,7 @@ std::string TestAsynchronousLoading::subtitle()
 }
 void TestAsynchronousLoading::restartCallback(CCObject* pSender)
 {
-    CCArmatureDataManager::sharedArmatureDataManager()->purge();
+	CCArmatureDataManager::destroyInstance();
     ArmatureTestLayer::restartCallback(pSender);
 }
 void TestAsynchronousLoading::dataLoaded(float percent)
@@ -296,10 +296,10 @@ void TestDirectLoading::onEnter()
     ArmatureTestLayer::onEnter();
 
     // remove sigle resource
-    CCArmatureDataManager::sharedArmatureDataManager()->removeArmatureFileInfo("armature/bear.ExportJson");
+	CCArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/bear.ExportJson");
 
     // load resource directly
-    CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo("armature/bear.ExportJson");
+	CCArmatureDataManager::getInstance()->addArmatureFileInfo("armature/bear.ExportJson");
 
     CCArmature *armature = CCArmature::create("bear");
     armature->getAnimation()->playWithIndex(0);
@@ -1511,10 +1511,10 @@ void TestLoadFromBinary::onEnter()
 
 	// remove json created 
 	// remove sync resource
-	CCArmatureDataManager::sharedArmatureDataManager()->removeArmatureFileInfo("armature/bear.ExportJson");
-	CCArmatureDataManager::sharedArmatureDataManager()->removeArmatureFileInfo(m_binaryFilesNames[0]);
+	CCArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/bear.ExportJson");
+	CCArmatureDataManager::getInstance()->removeArmatureFileInfo(m_binaryFilesNames[0]);
 	// load from binary
-	CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfo(m_binaryFilesNames[0]);
+	CCArmatureDataManager::getInstance()->addArmatureFileInfo(m_binaryFilesNames[0]);
 
 	m_armature = cocos2d::extension::CCArmature::create(m_armatureNames[0]);
 	m_armature->getAnimation()->playWithIndex(0);
@@ -1545,16 +1545,16 @@ bool TestLoadFromBinary::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 	// remove sync resource
 	if(-1 == m_armatureIndex )
 	{
-		CCArmatureDataManager::sharedArmatureDataManager()->removeArmatureFileInfo(m_binaryFilesNames[0]);
-		CCArmatureDataManager::sharedArmatureDataManager()->removeArmatureFileInfo("armature/Cowboy.ExportJson");
-		CCArmatureDataManager::sharedArmatureDataManager()->removeArmatureFileInfo("armature/hero.ExportJson");
-		CCArmatureDataManager::sharedArmatureDataManager()->removeArmatureFileInfo("armature/horse.ExportJson");
-		CCArmatureDataManager::sharedArmatureDataManager()->removeArmatureFileInfo("armature/HeroAnimation.ExportJson");
-		CCArmatureDataManager::sharedArmatureDataManager()->removeArmatureFileInfo("armature/testEasing.ExportJson");
+		CCArmatureDataManager::getInstance()->removeArmatureFileInfo(m_binaryFilesNames[0]);
+		CCArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/Cowboy.ExportJson");
+		CCArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/hero.ExportJson");
+		CCArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/horse.ExportJson");
+		CCArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/HeroAnimation.ExportJson");
+		CCArmatureDataManager::getInstance()->removeArmatureFileInfo("armature/testEasing.ExportJson");
 
 		for( int i = 0; i < BINARYFILECOUNT; i++)
 		{
-			CCArmatureDataManager::sharedArmatureDataManager()->addArmatureFileInfoAsync(m_binaryFilesNames[i], this, schedule_selector(TestLoadFromBinary::dataLoaded));
+			CCArmatureDataManager::getInstance()->addArmatureFileInfoAsync(m_binaryFilesNames[i], this, schedule_selector(TestLoadFromBinary::dataLoaded));
 		}
 
 		m_armatureIndex = -2;    // is loading

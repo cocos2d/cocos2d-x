@@ -103,7 +103,7 @@ CocoStudio/ActionTimeline/CCActionTimeline.cpp \
 CocoStudio/ActionTimeline/CCActionTimelineCache.cpp \
 CocoStudio/ActionTimeline/CCFrame.cpp \
 CocoStudio/ActionTimeline/CCNodeReader.cpp \
-CocoStudio/ActionTimeline/CCTimeline.cpp \
+CocoStudio/ActionTimeline/CCTimeLine.cpp \
 CocoStudio/Reader/SceneReader.cpp \
 CocoStudio/Reader/GUIReader.cpp \
 CocoStudio/Reader/WidgetReader/WidgetReader.cpp \
@@ -130,6 +130,7 @@ CocoStudio/Trigger/ObjectFactory.cpp \
 CocoStudio/Trigger/TriggerBase.cpp \
 CocoStudio/Trigger/TriggerMng.cpp \
 CocoStudio/Trigger/TriggerObj.cpp \
+CocoStudio/CocoStudio.cpp \
 spine/Animation.cpp \
 spine/AnimationState.cpp \
 spine/AnimationStateData.cpp \
@@ -170,7 +171,8 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                            $(LOCAL_PATH)/GUI/CCScrollView \
                            $(LOCAL_PATH)/network \
                            $(LOCAL_PATH)/LocalStorage \
-						               $(LOCAL_PATH)/CocoStudio/Armature
+                           $(LOCAL_PATH)/CocoStudio/Armature \
+                           $(LOCAL_PATH)/CocoStudio
 
 LOCAL_CFLAGS := -fexceptions
                     

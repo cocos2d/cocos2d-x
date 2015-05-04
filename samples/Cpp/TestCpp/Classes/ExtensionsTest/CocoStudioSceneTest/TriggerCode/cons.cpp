@@ -101,7 +101,7 @@ bool ArmatureActionState::init()
 {
 	do 
 	{
-		CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+		CCNode *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
 		CC_BREAK_IF(pNode == NULL);
 		CCComRender *pRender = (CCComRender*)(pNode->getComponent(_comName.c_str()));
 		CC_BREAK_IF(pRender == NULL);
@@ -197,7 +197,7 @@ void ArmatureActionState::removeAll()
 {
 	do 
 	{
-		CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+		CCNode *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
 		CC_BREAK_IF(pNode == NULL);
 		CCComRender *pRender = (CCComRender*)(pNode->getComponent(_comName.c_str()));
 		CC_BREAK_IF(pRender == NULL);
@@ -234,8 +234,8 @@ bool NodeInRect::init()
 
 bool NodeInRect::detect()
 {
-	CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
-	if (pNode != NULL && abs(pNode->getPositionX() - _origin.x) <= _size.width && abs(pNode->getPositionY() - _origin.y) <= _size.height)
+	CCNode *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
+	if (pNode != NULL && fabs(pNode->getPositionX() - _origin.x) <= _size.width && fabs(pNode->getPositionY() - _origin.y) <= _size.height)
 	{
 		return true;
 	}
@@ -352,7 +352,7 @@ bool NodeVisible::init()
 
 bool NodeVisible::detect()
 {
-	CCNode *pNode = SceneReader::sharedSceneReader()->getNodeByTag(_nTag);
+	CCNode *pNode = SceneReader::getInstance()->getNodeByTag(_nTag);
 	if (pNode != NULL && pNode->isVisible() == _bVisible)
 	{
 		return true;

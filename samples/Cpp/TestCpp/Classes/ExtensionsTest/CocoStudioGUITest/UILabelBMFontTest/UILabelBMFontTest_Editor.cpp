@@ -10,14 +10,14 @@ void UILabelBMFontTest_Editor::switchLoadMethod(cocos2d::CCObject *pSender)
     if (item->getSelectedIndex() == 0){
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UILabelBMFont_Editor/ui_labelbmfont_editor_1.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILabelBMFont_Editor/ui_labelbmfont_editor_1.json"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
     }else{
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromBinaryFile("cocosui/UIEditorTest/UILabelBMFont_Editor/ui_labelbmfont_editor_1.csb"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILabelBMFont_Editor/ui_labelbmfont_editor_1.csb"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -43,7 +43,7 @@ bool UILabelBMFontTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UILabelBMFont_Editor/ui_labelbmfont_editor_1.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILabelBMFont_Editor/ui_labelbmfont_editor_1.json"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
