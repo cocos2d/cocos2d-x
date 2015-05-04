@@ -65,7 +65,7 @@ public:
      * If you don't want to system default implementation after setting delegate, you can just pass nullptr
      * to this function.
      *
-     * @warm It will delete previous delegate
+     * @warning It will delete previous delegate
      * @lua NA
      */
     static void setDelegate(FileUtils *delegate);
@@ -103,8 +103,8 @@ public:
      *  Gets resource file data
      *
      *  @param[in]  filename The resource file name which contains the path.
-     *  @param[in]  pszMode The read mode of the file.
-     *  @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
+     *  @param[in]  mode The read mode of the file.
+     *  @param[out] size If the file read operation succeeds, it will be the data size, otherwise 0.
      *  @return Upon success, a pointer to the data is returned, otherwise NULL.
      *  @warning Recall: you are responsible for calling free() on any Non-NULL pointer returned.
      */
@@ -166,7 +166,7 @@ public:
 
      @since v2.1
      */
-    virtual std::string fullPathForFilename(const std::string &filename);
+    virtual std::string fullPathForFilename(const std::string &filename) const;
     
     /**
      * Loads the filenameLookup dictionary from the contents of a filename.
@@ -311,7 +311,7 @@ public:
     /** Checks whether to pop up a message box when failed to load an image. 
      *  @return True if pop up a message box when failed to load an image, false if not.
      */
-    virtual bool isPopupNotify();
+    virtual bool isPopupNotify() const;
 
     /**
      *  Converts the contents of a file to a ValueMap.
@@ -360,7 +360,7 @@ public:
      *  @param dirPath The path of the directory, it could be a relative or an absolute path.
      *  @return True if the directory exists, false if not.
      */
-    virtual bool isDirectoryExist(const std::string& dirPath);
+    virtual bool isDirectoryExist(const std::string& dirPath) const;
     
     /**
      *  Creates a directory.
@@ -455,7 +455,7 @@ protected:
      *  @param searchPath The search path.
      *  @return The full path of the file. It will return an empty string if the full path of the file doesn't exist.
      */
-    virtual std::string getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath);
+    virtual std::string getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath) const;
     
     /**
      *  Gets full path for the directory and the filename.
@@ -467,13 +467,12 @@ protected:
      *  @param filename  The name of the file.
      *  @return The full path of the file, if the file can't be found, it will return an empty string.
      */
-    virtual std::string getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename);
+    virtual std::string getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename) const;
     
     /** 
      *  Returns the fullpath for a given filename.
-     *  This is an alternative for fullPathForFilename, there are two main differences:
-     *  First, it returns empty string instead of the original filename when no file found for the given name.
-     *  Secondly, it's a const function.
+     *  This is an alternative for fullPathForFilename
+     *  It returns empty string instead of the original filename when no file found for the given name.
      *  @param filename The file name to look up for
      *  @return The full path for the file, if not found, the return value will be an empty string
      */
@@ -514,7 +513,7 @@ protected:
      *  The full path cache. When a file is found, it will be added into this cache. 
      *  This variable is used for improving the performance of file search.
      */
-    std::unordered_map<std::string, std::string> _fullPathCache;
+    mutable std::unordered_map<std::string, std::string> _fullPathCache;
     
     /**
      * Writable path.

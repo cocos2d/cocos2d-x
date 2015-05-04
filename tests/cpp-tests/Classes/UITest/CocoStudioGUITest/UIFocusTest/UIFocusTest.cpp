@@ -8,6 +8,19 @@
 
 #include "UIFocusTest.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
+UIFocusTests::UIFocusTests()
+{
+    ADD_TEST_CASE(UIFocusTestHorizontal);
+    ADD_TEST_CASE(UIFocusTestVertical);
+    ADD_TEST_CASE(UIFocusTestNestedLayout1);
+    ADD_TEST_CASE(UIFocusTestNestedLayout2);
+    ADD_TEST_CASE(UIFocusTestNestedLayout3);
+    ADD_TEST_CASE(UIFocusTestListView);
+}
+
 UIFocusTestBase::UIFocusTestBase()
 {
     

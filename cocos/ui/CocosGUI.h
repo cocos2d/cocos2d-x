@@ -25,10 +25,6 @@ THE SOFTWARE.
 #ifndef __COCOSGUI_H__
 #define __COCOSGUI_H__
 
-/**
- * @addtogroup ui
- * @{
- */
 
 #include "ui/UIWidget.h"
 #include "ui/UILayout.h"
@@ -61,8 +57,13 @@ THE SOFTWARE.
 #include "ui/UIEditBox/UIEditBox.h"
 #include "ui/UILayoutComponent.h"
 
+/**
+ * @addtogroup ui
+ * @{
+ */
 NS_CC_BEGIN
 namespace ui {
+
 
 /**
  * Get current cocos GUI module version string.
@@ -72,8 +73,8 @@ CC_GUI_DLL const char* CocosGUIVersion();
 
 }
 
+NS_CC_END
 // end of ui group
 /// @}
-NS_CC_END
 
 #endif /* defined(__CocosGUITest__Cocos__) */

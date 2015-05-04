@@ -72,18 +72,18 @@
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
-    <TargetName>libcocos2d_v3.5_WindowsPhone_8.0</TargetName>
+    <TargetName>libcocos2d_v3.6_WindowsPhone_8.0</TargetName>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
-    <TargetName>libcocos2d_v3.5_WindowsPhone_8.0</TargetName>
+    <TargetName>libcocos2d_v3.6_WindowsPhone_8.0</TargetName>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <TargetName>libcocos2d_v3.5_WindowsPhone_8.0</TargetName>
+    <TargetName>libcocos2d_v3.6_WindowsPhone_8.0</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <TargetName>libcocos2d_v3.5_WindowsPhone_8.0</TargetName>
+    <TargetName>libcocos2d_v3.6_WindowsPhone_8.0</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -389,6 +389,7 @@
     <ClInclude Include="..\3d\CCSkybox.h" />
     <ClInclude Include="..\3d\CCSprite3D.h" />
     <ClInclude Include="..\3d\CCSprite3DMaterial.h" />
+    <ClInclude Include="..\3d\CCTerrain.h" />
     <ClInclude Include="..\3d\CCTextureCube.h" />
     <ClInclude Include="..\3d\cocos3d.h" />
     <ClInclude Include="..\audio\include\Export.h" />
@@ -501,7 +502,6 @@
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimelineCache.h" />
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimelineNode.h" />
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCFrame.h" />
-    <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCNodeReader.h" />
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCTimeLine.h" />
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CCTimelineMacro.h" />
     <ClInclude Include="..\editor-support\cocostudio\ActionTimeline\CSLoader.h" />
@@ -538,6 +538,7 @@
     <ClInclude Include="..\editor-support\cocostudio\CCTween.h" />
     <ClInclude Include="..\editor-support\cocostudio\CCUtilMath.h" />
     <ClInclude Include="..\editor-support\cocostudio\CocoLoader.h" />
+    <ClInclude Include="..\editor-support\cocostudio\CocoStudio.h" />
     <ClInclude Include="..\editor-support\cocostudio\CSParseBinary_generated.h" />
     <ClInclude Include="..\editor-support\cocostudio\CSParse3DBinary_generated.h" />
     <ClInclude Include="..\editor-support\cocostudio\DictionaryHelper.h" />
@@ -995,6 +996,7 @@
     <ClCompile Include="..\3d\CCSkybox.cpp" />
     <ClCompile Include="..\3d\CCSprite3D.cpp" />
     <ClCompile Include="..\3d\CCSprite3DMaterial.cpp" />
+    <ClCompile Include="..\3d\CCTerrain.cpp" />
     <ClCompile Include="..\3d\CCTextureCube.cpp" />
     <ClCompile Include="..\audio\wp8\Audio.cpp">
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -1144,7 +1146,6 @@
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimelineCache.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCActionTimelineNode.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCFrame.cpp" />
-    <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCNodeReader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CCTimeLine.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\ActionTimeline\CSLoader.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\CCActionFrame.cpp" />
@@ -1179,6 +1180,7 @@
     <ClCompile Include="..\editor-support\cocostudio\CCTween.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\CCUtilMath.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\CocoLoader.cpp" />
+    <ClCompile Include="..\editor-support\cocostudio\CocoStudio.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\DictionaryHelper.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\FlatBuffersSerialize.cpp" />
     <ClCompile Include="..\editor-support\cocostudio\TriggerBase.cpp" />

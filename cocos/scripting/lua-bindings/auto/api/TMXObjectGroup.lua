@@ -15,7 +15,8 @@
 --------------------------------
 --  Return the value for the specific property name. <br>
 -- param propertyName The specific property name.<br>
--- return Return the value for the specific property name.
+-- return Return the value for the specific property name.<br>
+-- js NA
 -- @function [parent=#TMXObjectGroup] getProperty 
 -- @param self
 -- @param #string propertyName
@@ -46,7 +47,7 @@
 
 --------------------------------
 --  Set the group name. <br>
--- param groupname A string,it is used to set the group name.
+-- param groupName A string,it is used to set the group name.
 -- @function [parent=#TMXObjectGroup] setGroupName 
 -- @param self
 -- @param #string groupName

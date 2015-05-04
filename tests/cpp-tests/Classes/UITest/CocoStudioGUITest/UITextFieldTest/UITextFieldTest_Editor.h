@@ -27,18 +27,21 @@
 
 #include "../UIScene_Editor.h"
 
+DEFINE_TEST_SUITE(UITextFieldEditorTests);
+
 class UITextFieldTest_Editor : public UIScene_Editor
 {
 public:
+    CREATE_FUNC(UITextFieldTest_Editor);
+
     UITextFieldTest_Editor();
     ~UITextFieldTest_Editor();
-    bool init();
-    void textFieldEvent(Ref* pSender, TextField::EventType type);
-    virtual void switchLoadMethod(Ref* pSender);
-    void configureGUIScene();
+
+    virtual bool init() override;
+    void textFieldEvent(cocos2d::Ref* sender, cocos2d::ui::TextField::EventType type);
+    virtual void configureGUIScene() override;
 protected:
-    UI_SCENE_EDITOR_CREATE_FUNC(UITextFieldTest_Editor)
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 #endif /* defined(__TestCpp__UITextFieldTest_Editor__) */

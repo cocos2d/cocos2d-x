@@ -178,6 +178,7 @@ set(TESTS_SRC
   Classes/SpriteTest/SpriteTest.cpp
   Classes/Sprite3DTest/Sprite3DTest.cpp
   Classes/Sprite3DTest/DrawNode3D.cpp
+  Classes/TerrainTest/TerrainTest.cpp
   Classes/TextInputTest/TextInputTest.cpp
   Classes/Texture2dTest/Texture2dTest.cpp
   Classes/TexturePackerEncryptionTest/TextureAtlasEncryptionTest.cpp

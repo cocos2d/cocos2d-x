@@ -63,7 +63,7 @@ public:
     
     /** Set the group name. 
      *
-     * @param groupname A string,it is used to set the group name.
+     * @param groupName A string,it is used to set the group name.
      */
     inline void setGroupName(const std::string& groupName){ _groupName = groupName; }
 
@@ -71,6 +71,7 @@ public:
      *
      * @param propertyName The specific property name.
      * @return Return the value for the specific property name.
+     * @js NA
      */
     Value getProperty(const std::string& propertyName) const;
     

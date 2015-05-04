@@ -1,7 +1,25 @@
-
-
 #include "UIButtonTest.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
+
+UIButtonTests::UIButtonTests()
+{
+    ADD_TEST_CASE(UIButtonTest);
+    ADD_TEST_CASE(UIButtonTest_Scale9);
+    ADD_TEST_CASE(UIButtonTest_Scale9_State_Change);
+    ADD_TEST_CASE(UIButtonTest_PressedAction);
+    ADD_TEST_CASE(UIButtonTest_Title);
+    ADD_TEST_CASE(UIButtonTestRemoveSelf);
+    ADD_TEST_CASE(UIButtonTestSwitchScale9);
+    ADD_TEST_CASE(UIButtonTestZoomScale);
+    ADD_TEST_CASE(UIButtonTextOnly);
+    ADD_TEST_CASE(UIButtonIgnoreContentSizeTest);
+    ADD_TEST_CASE(UIButtonTitleEffectTest);
+    ADD_TEST_CASE(UIButtonFlipTest);
+    ADD_TEST_CASE(UIButtonNormalDefaultTest);
+    ADD_TEST_CASE(UIButtonDisableDefaultTest);
+}
 
 // UIButtonTest
 UIButtonTest::UIButtonTest()
@@ -1006,4 +1024,3 @@ bool UIButtonDisableDefaultTest::init()
     }
     return false;
 }
-

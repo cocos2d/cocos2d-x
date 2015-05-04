@@ -26,6 +26,8 @@
 #include "CocosStudio3DTest.h"
 #include "cocostudio/CocoStudio.h"
 
+USING_NS_CC;
+
 enum
 {
     IDC_NEXT = 100,
@@ -33,43 +35,12 @@ enum
     IDC_RESTART
 };
 
-static int sceneIdx = -1;
-
-
-static std::function<Layer*()> createFunctions[] =
+CocosStudio3DTests::CocosStudio3DTests()
 {
-    CL(CSNode3DTest),
-    CL(CSSprite3DTest),
-    CL(CSUserCameraTest),
-    CL(CSParticle3DTest)
-};
-
-#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-static Layer* nextCocosStudio3DTestAction()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-    
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-static Layer* backCocosStudio3DTestAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;
-    
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-static Layer* restartCocosStudio3DTestAction()
-{
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
+    ADD_TEST_CASE(CSNode3DTest);
+    ADD_TEST_CASE(CSSprite3DTest);
+    ADD_TEST_CASE(CSUserCameraTest);
+    ADD_TEST_CASE(CSParticle3DTest);
 }
 
 //------------------------------------------------------------------
@@ -79,7 +50,6 @@ static Layer* restartCocosStudio3DTestAction()
 //------------------------------------------------------------------
 
 CocosStudio3DTestDemo::CocosStudio3DTestDemo(void)
-: BaseTest()
 {
 }
 
@@ -92,39 +62,10 @@ std::string CocosStudio3DTestDemo::title() const
     return "No title";
 }
 
-std::string CocosStudio3DTestDemo::subtitle() const
+void CocosStudio3DTestDemo::onExit()
 {
-    return "";
-}
-
-void CocosStudio3DTestDemo::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-void CocosStudio3DTestDemo::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) CS3DTestScene();
-    s->addChild(restartCocosStudio3DTestAction());
-    
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void CocosStudio3DTestDemo::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) CS3DTestScene();
-    s->addChild( nextCocosStudio3DTestAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void CocosStudio3DTestDemo::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) CS3DTestScene();
-    s->addChild( backCocosStudio3DTestAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
+    cocostudio::destroyCocosStudio();
+    TestCase::onExit();
 }
 
 //------------------------------------------------------------------
@@ -142,11 +83,6 @@ CSNode3DTest::CSNode3DTest()
 std::string CSNode3DTest::title() const
 {
     return "Node3DReader Test";
-}
-
-std::string CSNode3DTest::subtitle() const
-{
-    return "";
 }
 
 //------------------------------------------------------------------
@@ -173,11 +109,6 @@ std::string CSSprite3DTest::title() const
     return "Sprite3DReader Test";
 }
 
-std::string CSSprite3DTest::subtitle() const
-{
-    return "";
-}
-
 //------------------------------------------------------------------
 //
 // CSUserCameraTest
@@ -200,11 +131,6 @@ std::string CSUserCameraTest::title() const
     return "UserCameraReader Test";
 }
 
-std::string CSUserCameraTest::subtitle() const
-{
-    return "";
-}
-
 //------------------------------------------------------------------
 //
 // CSParticle3DTest
@@ -220,28 +146,4 @@ CSParticle3DTest::CSParticle3DTest()
 std::string CSParticle3DTest::title() const
 {
     return "Particle3DReader Test";
-}
-
-std::string CSParticle3DTest::subtitle() const
-{
-    return "";
-}
-
-
-//------------------------------------------------------------------
-//
-// CS3DTestScene
-//
-//------------------------------------------------------------------
-void CS3DTestScene::runThisTest()
-{
-    auto layer = nextCocosStudio3DTestAction();
-    addChild(layer);
-        
-    Director::getInstance()->replaceScene(this);
-}
-                   
-CS3DTestScene::CS3DTestScene()
-{
-        
 }

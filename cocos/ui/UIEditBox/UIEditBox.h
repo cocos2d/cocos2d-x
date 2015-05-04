@@ -45,21 +45,18 @@ namespace ui {
     /**
      *@brief Editbox delgate class.
      * It's useful when you want to do some customization duing Editbox input event
+     *
+     * @js NA
+     * @lua NA
      */
     class CC_GUI_DLL EditBoxDelegate
     {
     public:
-        /**
-         * @js NA
-         * @lua NA
-         */
         virtual ~EditBoxDelegate() {};
             
         /**
          * This method is called when an edit box gains focus after keyboard is shown.
          * @param editBox The edit box object that generated the event.
-         * @js NA
-         * @lua NA
          */
         virtual void editBoxEditingDidBegin(EditBox* editBox) {};
             
@@ -67,8 +64,6 @@ namespace ui {
         /**
          * This method is called when an edit box loses focus after keyboard is hidden.
          * @param editBox The edit box object that generated the event.
-         * @js NA
-         * @lua NA
          */
         virtual void editBoxEditingDidEnd(EditBox* editBox) {};
             
@@ -76,16 +71,12 @@ namespace ui {
          * This method is called when the edit box text was changed.
          * @param editBox The edit box object that generated the event.
          * @param text The new text.
-         * @js NA
-         * @lua NA
          */
         virtual void editBoxTextChanged(EditBox* editBox, const std::string& text) {};
             
         /**
          * This method is called when the return button was pressed or the outside area of keyboard was touched.
          * @param editBox The edit box object that generated the event.
-         * @js NA
-         * @lua NA
          */
         virtual void editBoxReturn(EditBox* editBox) = 0;
             
@@ -217,6 +208,7 @@ namespace ui {
         /**
          * Constructor.
          * @js ctor
+         * @lua new
          */
         EditBox(void);
             

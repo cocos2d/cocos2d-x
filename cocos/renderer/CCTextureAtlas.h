@@ -41,7 +41,7 @@ class EventCustom;
 class EventListenerCustom;
 
 /**
- * @addtogroup textures
+ * @addtogroup _2d
  * @{
  */
 
@@ -122,7 +122,7 @@ public:
     void insertQuad(V3F_C4B_T2F_Quad* quad, ssize_t index);
 
     /** Inserts a c array of quads at a given index.
-     @param quad Quad that are going to be rendered.
+     @param quads Quad that are going to be rendered.
      @param index Index must be between 0 and the atlas capacity - 1.
      @param amount The quads array amount.
      @attention This method doesn't enlarge the array when amount + index > totalQuads.

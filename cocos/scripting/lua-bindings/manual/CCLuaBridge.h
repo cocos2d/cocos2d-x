@@ -34,6 +34,10 @@ extern "C" {
 }
 
 using namespace std;
+/**
+ * @addtogroup lua
+ * @{
+ */
 
 NS_CC_BEGIN
 /** LuaBridge Error enum, with inline docs. */
@@ -53,13 +57,16 @@ typedef enum {
 /**
  * Build bridge between ObjC and Lua.
  * It makes Lua and ObjC can call each other conveniently.
+ *
  * @lua NA
+ * @js NA
  */
 class LuaBridge
 {
 public:
     /**
      * Get the LuaStack of LuaEngine.
+     *
      * @return the LuaStack object.
      */
     static LuaStack *getStack(void);
@@ -88,7 +95,7 @@ public:
      * If the vaule of retain count is 0 after reducing, it would update the `lua_bridge_function_id_retain` table and `lua_bridge_function_id_retain` table to remove the  reference corresponding to this functionId
      *
      * @param functionId the value used to search the `lua_bridge_function_id` table and `lua_bridge_function_id` table.
-     * @return the retain count or 0
+     * @return the retain count or 0.
      */
     static int releaseLuaFunctionById(int functionId);
     
@@ -100,5 +107,8 @@ protected:
 };
 
 NS_CC_END
+
+// end group
+/// @}
 
 #endif // __LUA_BRIDGE_H_

@@ -1,4 +1,4 @@
-# cocos2d-x v3.5 Release Notes #
+# cocos2d-x v3.6 Release Notes #
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
@@ -13,17 +13,13 @@
     - [Windows](#windows)
     - [Linux](#linux)
   - [How to start a new game](#how-to-start-a-new-game)
-- [v3.5](#v35)
-- [v3.5rc0](#v35rc0)
-  - [Highlights of v3.5rc0](#highlights-of-v35rc0)
-  - [Features in detail](#features-in-detail)
-    - [More 3D particle features of (PU) supported](#more-3d-particle-features-of-pu-supported)
-- [v3.5beta0](#v35beta0)
-  - [Highlights of v3.5beta0](#highlights-of-v35beta0)
+- [v3.6alpha0](#v36alpha0)
+  - [Highlights of v3.6beta0](#highlights-of-v36beta0)
   - [Features in detail](#features-in-detail-1)
-    - [3D Particles](#3d-particles)
-      - [Supported PU features](#supported-pu-features)
-      - [Particle usage](#particle-usage)
+    - [3D TextureCube](#3d-texturecube)
+    - [3D Skybox](#3d-skybox)
+    - [3D Terrain](#3d-terrain)
+    - [Animate3D Quality Control](#animate3d-quality-control)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -114,64 +110,130 @@ Run
 ## How to start a new game
 
 Please refer to this document: [ReadMe](../README.md)
-# v3.5
-There are only some minor changes and bug fixes in this verison.
 
-* EditBox: Color4B font color is supported
-* Fix memory leak in AutoReleasePool
-* Fix FileUtils:getWritablePath() return wrong path on Mac&Windows
+# v3.6alpha0
 
-# v3.5rc0
-## Highlights of v3.5rc0
-* More features of Particle(PU) is supported
-* Disable reverse of MoveTo
-* CsLoader: add callback when loading a CSB file
-* Fix transparent Billboard and Sprite3D rendering error
-* Fix Motionstreak does not work with MoveTo and MoveBy
-* More bugs fixed
+## Highlights of v3.6alpha0
+
+* 3D: added skybox support
+* 3D: added terrian support
+* uses luajit v2.1-20150331 on 64-bit iOS devices
+* added test automation support for cpp-tests
+* 3rd: updated libcurl to v7.4 on all supported platforms except WP8/WP8.1 universal
+* 3rd: updated chipmunk to v6.2.2
+* 3rd: updated openssl to v1.0.11
+* 3rd: updated freetype to v2.5.5
+* 3rd: updated png to v1.6.16 on all supported platforms except WP8/WP8.1 universal because it is not needed on these two platforms
 
 ## Features in detail
-###More 3D particle features of (PU) supported
-* Observer: On Count Observer, On Emission Observer, On Expire Observer, On Position observer, On Clear Observer, On Time Observer, On Quota Observer, On Velocity Observer, On Collision Observer, On Event Flag Observer, On Random Observer.
 
-* Event Handler: Do Enable Component Event Handler, Do Expire Event Handler, Do Placement Particle Event Handler, Do Stop System Event Handler, Do Affector Event Handler, Do Freeze Event Handler, Do Scale Event Handler.
+### 3D TextureCube
 
-* Behavior: Slave Behavior
+TextureCube is useful for skybox and environment mapping. It uses 6 faces of a cube as map shape, and 6 pictures are projected onto the sides of a cube and stored as six square textures.
 
-Observer and Event Handler allow you to listen to the particle system and trigger some events. The Event handler can do something when the event happens. For example, there is a observer on the particle system, and it listens to the particle number when the number is greater than 100, it tirggers an event to stop the particle system. This allows you to create more complex particles. For more details, please refer to the Particle Universe User's Guide.
-
-# v3.5beta0
-
-## Highlights of v3.5beta0
-## Features in detail
-
-### 3D Particles
-
-#### Supported PU features
-
-* Render: Billboard Renderer, Box Renderer, Sphere Renderer, Entity Renderer, Ribbon Trail Renderer.
-
-* Emitter: Point Emitter, Box Emitter, Sphere Surface Emitter, Line Emitter, Circle Emitter, Position Emitter, Slave Emitter.
-
-* Affector: Gravity Affector, Linear Force Affector, Scale Affector, Sine Force Affector, Color Affector, Randomiser, Line Affector, Align Affector, Jet Affector, Vortex Affector, Geometry Rotator, Texture Rotator, Texture Animator, Particle Follower, Sphere Collider, Plane Collider, box Collider, Path Follower, Flock Centering Affector, Velocity Matching Affector.
-
-#### Particle usage
-
-It allows to import particles from Particle Universe (http://www.fxpression.com). The usage of particles is as follow,
-
-Option 1, create 3D particle with particle (.pu) file and material file
+#### TexturesCube usage
 
 ```c++
-auto rootps = PUParticleSystem3D::create("lineStreak.pu", "pu_mediapack_01.material");
-addChild(rootps);
-rootps->startParticleSystem();
+auto texturecube = TextureCube::create("left.jpg", "right.jpg", "top.jpg", "bottom.jpg","front.jpg", "back.jpg");
+//set texture parameters
+Texture2D::TexParams tRepeatParams;
+tRepeatParams.magFilter = GL_NEAREST;
+tRepeatParams.minFilter = GL_NEAREST;
+tRepeatParams.wrapS = GL_MIRRORED_REPEAT;
+tRepeatParams.wrapT = GL_MIRRORED_REPEAT;
+texturecube->setTexParameters(tRepeatParams);
+
+//create a GLProgramState using custom shader
+auto shader = GLProgram::createWithFilenames("cube_map.vert", "cube_map.frag");
+auto state = GLProgramState::create(shader);
+// pass the texture sampler to our custom shader, state is a pointer of GLProgramState, u_cubeTex is a uniform in shader
+state->setUniformTexture("u_cubeTex", texturecube);
 ```
 
-Option 2, you can also create 3d particle with particle (.pu) file only, it will load all the material files in the material path
+Then the shader cube_map.frag can be something like this,
+
 ```c++
-auto rootps = PUParticleSystem3D::create("advancedLodSystem.pu");
-addChild(rootps);
-rootps->startParticleSystem();
+varying vec3        v_reflect; //reflect direction
+uniform samplerCube u_cubeTex;
+
+void main(void)
+{
+    gl_FragColor = textureCube(u_cubeTex, v_reflect); //sample the color of reflection direction
+}
 ```
 
-For more information, please refer to `cpp-tests/Particle3DTest`
+For more information please refer to cpp-tests/Sprite3DTest/Sprite3DCubeMapTest.
+
+### 3D Skybox
+
+Skybox is a common component in 3D game. It is based on TextureCube.
+
+Usage of skybox
+
+```c++
+// create a texture cube
+auto textureCube = TextureCube::create("left.jpg", "right.jpg","top.jpg", "bottom.jpg","front.jpg", "back.jpg");
+//create a skybox
+auto skyBox = Skybox::create();
+skyBox->retain();
+//set cube texture to the skybox
+skyBox->setTexture(textureCube);
+addChild(_skyBox);
+```
+
+For more information please refer to cpp-tests/Sprite3DTest/Sprite3DCubeMapTest.
+
+### 3D Terrain
+
+Terrain is an important component in 3D game. A texture is used to stand for the height map. And up to 4 textures can be used to blend the details of the terrain, grass, road, and so on.
+
+Usage of terrain
+
+```c++
+//blended layers
+Terrain::DetailMap dirt("TerrainTest/dirt.jpg"), grass("TerrainTest/Grass2.jpg"), road("TerrainTest/road.jpg"), green("TerrainTest/GreenSkin.jpg");
+
+//height map, alpha map (blend weight), and blended layers
+Terrain::TerrainData data("TerrainTest/heightmap16.jpg", "TerrainTest/alphamap.png", dirt, grass, road, green);
+
+//create terrain here
+_terrain = Terrain::create(data,Terrain::CrackFixedType::SKIRT);
+//set lod distance
+_terrain->setLODDistance(3.2,6.4,9.6);
+//it must be less than 5
+_terrain->setMaxDetailMapAmount(4);
+addChild(_terrain);
+```
+
+For more information please refer to cpp-tests/Sprite3DTest/TerrainTest.
+
+### Animate3D Quality Control
+
+In order to make `Animate3D` run fast, you can use low quality animation.
+
+```c++
+std::string fileName = "Sprite3DTest/orc.c3b";
+auto sprite = Sprite3D::create(fileName);
+addChild(sprite);
+    
+auto animation = Animation3D::create(fileName);
+if (animation)
+{
+   auto animate = Animate3D::create(animation);
+   //use low quality animation
+   animate->setHighQuality(false);
+   sprite->runAction(RepeatForever::create(animate));
+}
+```
+
+The animation quality is also configurable in config.plist, the key is cocos2d.x.3d.animate_high_quality. All the created `Animate3D` base on this key if exist. You can modify it using the above method.
+
+### luajit arm64 
+
+The version of the luajit is [v2.1-20150331](https://github.com/openresty/luajit2/releases). We have consulted the author of luajit, he said it was stability enough to be used. We will update to v2.1 when it is released.
+
+Using luajit arm64 version is that because it can improve the performance. In previous versions of cocos2d-x, it uses lua on iOS 64-bit devices. 
+
+Bytecode of luajit and luajit arm64 are not compatible, which means you can not use one version of bytecode on iOS 32-bit devices and iOS 64-bit devices.
+
+As there is not mandatory requirement of having arm64 bit bin on Android, so we don't use luajit arm64 on Android as its bytecode is not compatible with luajit arm32.

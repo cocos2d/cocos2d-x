@@ -34,6 +34,11 @@ ArmatureNodeReader* ArmatureNodeReader::getInstance()
 	return _instanceArmatureNodeReader;
 }
 
+void ArmatureNodeReader::destroyInstance()
+{
+    CC_SAFE_DELETE(_instanceArmatureNodeReader);
+}
+
 Offset<Table> ArmatureNodeReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
 	flatbuffers::FlatBufferBuilder *builder)
 {

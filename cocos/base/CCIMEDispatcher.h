@@ -28,12 +28,12 @@ THE SOFTWARE.
 
 #include "base/CCIMEDelegate.h"
 
-NS_CC_BEGIN
-
 /**
  * @addtogroup base
  * @{
  */
+NS_CC_BEGIN
+
 
 /**
 @brief    Input Method Edit Message Dispatcher.
@@ -56,21 +56,18 @@ public:
 
     /**
      * @brief Dispatches the input text from IME.
-     * @js NA
      * @lua NA
      */
     void dispatchInsertText(const char * text, size_t len);
 
     /**
      * @brief Dispatches the delete-backward operation.
-     * @js NA
      * @lua NA
      */
     void dispatchDeleteBackward();
 
     /**
      * @brief Get the content text from IMEDelegate, retrieved previously from IME.
-     * @js NA
      * @lua NA
      */
     const std::string& getContentText();
@@ -79,22 +76,18 @@ public:
     // dispatch keyboard notification
     //////////////////////////////////////////////////////////////////////////
     /**
-     * @js NA
      * @lua NA
      */
     void dispatchKeyboardWillShow(IMEKeyboardNotificationInfo& info);
     /**
-     * @js NA
      * @lua NA
      */
     void dispatchKeyboardDidShow(IMEKeyboardNotificationInfo& info);
     /**
-     * @js NA
      * @lua NA
      */
     void dispatchKeyboardWillHide(IMEKeyboardNotificationInfo& info);
     /**
-     * @js NA
      * @lua NA
      */
     void dispatchKeyboardDidHide(IMEKeyboardNotificationInfo& info);
@@ -137,9 +130,9 @@ private:
     Impl * _impl;
 };
 
-// end of base group
-/// @}
 
 NS_CC_END
+// end of base group
+/// @}
 
 #endif    // __CC_IME_DISPATCHER_H__

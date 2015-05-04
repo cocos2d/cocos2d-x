@@ -751,8 +751,8 @@ bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
             const rapidjson::Value& mesh_part_aabb = mesh_part[AABBS];
             if (mesh_part.HasMember(AABBS) && mesh_part_aabb.Size() == 6)
             {
-                Vec3 min = Vec3(mesh_part_aabb[(rapidjson::SizeType)0].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)1].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)2].GetDouble());
-                Vec3 max = Vec3(mesh_part_aabb[(rapidjson::SizeType)3].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)4].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)5].GetDouble());
+                Vec3 min(mesh_part_aabb[(rapidjson::SizeType)0].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)1].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)2].GetDouble());
+                Vec3 max(mesh_part_aabb[(rapidjson::SizeType)3].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)4].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)5].GetDouble());
                 meshData->subMeshAABB.push_back(AABB(min, max));
             }
             else
@@ -874,9 +874,11 @@ bool Bundle3D::loadMaterialsBinary(MaterialDatas& materialdatas)
     {
         NMaterialData materialData;
         materialData.id = _binaryReader.readString();
+        
+        // skip: diffuse(3), ambient(3), emissive(3), opacity(1), specular(3), shininess(1)
         float  data[14];
         _binaryReader.read(&data,sizeof(float), 14);
-
+        
         unsigned int textruenum = 1;
         _binaryReader.read(&textruenum, 4, 1);
         for(unsigned int j = 0; j < textruenum ; j++ )
@@ -1434,7 +1436,7 @@ bool Bundle3D::loadAnimationDataJson(const std::string& id, Animation3DData* ani
                 {
                     const rapidjson::Value&  bone_keyframe_translation =  bone_keyframe[TRANSLATION];
                     float keytime =  bone_keyframe[KEYTIME].GetDouble();
-                    Vec3 val = Vec3(bone_keyframe_translation[(rapidjson::SizeType)0].GetDouble(), bone_keyframe_translation[1].GetDouble(), bone_keyframe_translation[2].GetDouble());
+                    Vec3 val(bone_keyframe_translation[(rapidjson::SizeType)0].GetDouble(), bone_keyframe_translation[1].GetDouble(), bone_keyframe_translation[2].GetDouble());
                     animationdata->_translationKeys[bone_name].push_back(Animation3DData::Vec3Key(keytime,val));
                 }
 
@@ -1450,7 +1452,7 @@ bool Bundle3D::loadAnimationDataJson(const std::string& id, Animation3DData* ani
                 {
                     const rapidjson::Value&  bone_keyframe_scale =  bone_keyframe[SCALE];
                     float keytime =  bone_keyframe[KEYTIME].GetDouble();
-                    Vec3 val = Vec3(bone_keyframe_scale[(rapidjson::SizeType)0].GetDouble(), bone_keyframe_scale[1].GetDouble(), bone_keyframe_scale[2].GetDouble());
+                    Vec3 val(bone_keyframe_scale[(rapidjson::SizeType)0].GetDouble(), bone_keyframe_scale[1].GetDouble(), bone_keyframe_scale[2].GetDouble());
                     animationdata->_scaleKeys[bone_name].push_back(Animation3DData::Vec3Key(keytime,val));
                 }
             }
@@ -1616,7 +1618,7 @@ bool Bundle3D::loadNodesJson(NodeDatas& nodedatas)
     {
         const rapidjson::Value& jnode = nodes[i];
         std::string id = jnode[ID].GetString();
-        NodeData* nodedata = parseNodesRecursivelyJson(jnode);
+        NodeData* nodedata = parseNodesRecursivelyJson(jnode, nodes.Size() == 1);
 
         bool isSkeleton = jnode[SKELETON].GetBool();
         if (isSkeleton)
@@ -1626,23 +1628,25 @@ bool Bundle3D::loadNodesJson(NodeDatas& nodedatas)
     }
     return true;
 }
-NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue)
+NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue, bool singleSprite)
 {
     NodeData* nodedata = new (std::nothrow) NodeData();;
     // id
     nodedata->id = jvalue[ID].GetString();
 
     // transform
-    Mat4 tranform;
+    Mat4 transform;
     const rapidjson::Value& jtransform = jvalue[TRANSFORM];
 
     for (rapidjson::SizeType j = 0; j < jtransform.Size(); j++)
     {
-        tranform.m[j] = jtransform[j].GetDouble();
+        transform.m[j] = jtransform[j].GetDouble();
     }
 
-    nodedata->transform = tranform;
+    nodedata->transform = transform;
 
+    bool isSkin = false;
+    
     // parts
     if (jvalue.HasMember(PARTS))
     {
@@ -1690,11 +1694,31 @@ NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue)
                     //invbindpos.inverse();
                     modelnodedata->invBindPose.push_back(invbindpos);
                 }
+                
+                if (bones.Size() > 0)
+                    isSkin = true;
             }
              nodedata->modelNodeDatas.push_back(modelnodedata);
         }
     }
 
+    // set transform
+    if(_version == "0.1" || _version == "0.2" || _version == "0.3" || _version == "0.4" || _version == "0.5" || _version == "0.6")
+    {
+       if(isSkin || singleSprite)
+       {
+           nodedata->transform = Mat4::IDENTITY;
+       }
+       else
+       {
+           nodedata->transform = transform;
+       }
+    }
+    else
+    {
+       nodedata->transform = transform;
+    }
+    
     if (jvalue.HasMember(CHILDREN))
     {
         const rapidjson::Value& children = jvalue[CHILDREN];
@@ -1702,7 +1726,7 @@ NodeData* Bundle3D::parseNodesRecursivelyJson(const rapidjson::Value& jvalue)
         {
             const rapidjson::Value& child = children[i];
 
-            NodeData* tempdata = parseNodesRecursivelyJson(child);
+            NodeData* tempdata = parseNodesRecursivelyJson(child, singleSprite);
             nodedata->children.push_back(tempdata);
         }
     }
@@ -1725,7 +1749,7 @@ bool Bundle3D::loadNodesBinary(NodeDatas& nodedatas)
     for (rapidjson::SizeType i = 0; i < nodeSize; i++)
     {
         bool skeleton = false;
-        NodeData* nodedata = parseNodesRecursivelyBinary(skeleton);
+        NodeData* nodedata = parseNodesRecursivelyBinary(skeleton, nodeSize == 1);
 
         if (skeleton)
             nodedatas.skeleton.push_back(nodedata);
@@ -1734,7 +1758,7 @@ bool Bundle3D::loadNodesBinary(NodeDatas& nodedatas)
     }
     return true;
 }
-NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
+NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton, bool singleSprite)
 {
     // id
     std::string id = _binaryReader.readString();
@@ -1765,7 +1789,9 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
 
     NodeData* nodedata = new (std::nothrow) NodeData();
     nodedata->id = id;
-    nodedata->transform = transform;
+    
+    bool isSkin = false;
+    
     if (partsSize > 0)
     {
         for (unsigned int i = 0; i < partsSize; i++)
@@ -1804,6 +1830,7 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
 
                     modelnodedata->invBindPose.push_back(invbindpos);
                 }
+                isSkin = true;
             }
             unsigned int uvMapping = 0;
             if (_binaryReader.read(&uvMapping, 4, 1) != 1)
@@ -1832,6 +1859,23 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
         }
     }
 
+    // set transform
+   if(_version == "0.1" || _version == "0.2" || _version == "0.3" || _version == "0.4" || _version == "0.5" || _version == "0.6")
+   {
+       if(isSkin || singleSprite)
+       {
+           nodedata->transform = Mat4::IDENTITY;
+       }
+       else
+       {
+           nodedata->transform = transform;
+       }
+   }
+   else
+   {
+       nodedata->transform = transform;
+   }
+    
     unsigned int childrenSize = 0;
     if (_binaryReader.read(&childrenSize, 4, 1) != 1)
     {
@@ -1842,7 +1886,7 @@ NodeData* Bundle3D::parseNodesRecursivelyBinary(bool& skeleton)
     {
         for (unsigned int i = 0; i <  childrenSize; i++)
         {
-            NodeData* tempdata = parseNodesRecursivelyBinary(skeleton);
+            NodeData* tempdata = parseNodesRecursivelyBinary(skeleton, singleSprite);
             nodedata->children.push_back(tempdata);
         }
     }
@@ -2058,11 +2102,11 @@ cocos2d::AABB Bundle3D::calculateAABB( const std::vector<float>& vertex, int str
 {
     AABB aabb;
     stride /= 4;
-    for(const auto& it : index)
-        {
-            Vec3 point = Vec3(vertex[it * stride ], vertex[ it * stride + 1], vertex[it * stride + 2 ]);
-            aabb.updateMinMax(&point, 1);
-        }
+    for (const auto& it : index)
+    {
+        Vec3 point(vertex[it * stride], vertex[it * stride + 1], vertex[it * stride + 2]);
+        aabb.updateMinMax(&point, 1);
+    }
     return aabb;
 }
 

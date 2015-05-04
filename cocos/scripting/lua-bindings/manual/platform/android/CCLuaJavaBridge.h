@@ -26,9 +26,13 @@ using namespace cocos2d;
 #define LUAJ_REGISTRY_RETAIN        "luaj_function_id_retain"   // table[id] = retain count
 
 /**
+ * @addtogroup lua
+ * @{
+ */
+
+/**
  * Build a bridge between Java and Lua script.
  * This mechanism make Lua and Java call each other easily.
- * @js NA
  */
 class LuaJavaBridge
 {
@@ -38,7 +42,6 @@ public:
      * Bind callStaticMethod of LuaJavaBridge to Lua.
      * In current mechanism,we could call LuaJavaBridge.callStaticMethod(className, methodName, args) in Lua directly.
      * Meanwhile the callStaticMethod of LuaObjcBridge binding function is wrapped in the luaj.lua
-     * @lua NA
      */
     static void luaopen_luaj(lua_State *L);
     ///@endcond
@@ -48,7 +51,9 @@ public:
      * 
      * @param functionId the id of Lua function.
      * @return the reference count of the functionId if luaj_function_id_retain table exists and the corresponding value for functionId exists, otherwise return 0.
+     *
      * @lua NA
+     * @js NA
      */
     static int retainLuaFunctionById(int functionId);
 
@@ -58,7 +63,9 @@ public:
      * 
      * @param functionId the id of Lua function.
      * @return the reference count of the functionId if the luaj_function_id table, the luaj_function_id_retain table and the corresponding value for functionId exists a reference count for the Lua functionId is still greater than 0,and otherwise return 0.
+     *
      * @lua NA
+     * @js NA
      */
     static int releaseLuaFunctionById(int functionId);
 
@@ -68,7 +75,9 @@ public:
      * @param functionId the values corresponding to the Lua function.
      * @param arg the string pointer point to the argument.
      * @return a number value returned frome the Lua function when call sucessfully, otherwise return -1 or the opposite number for one of the three numbers LUA_ERRRUN,LUA_ERRMEM and LUA_ERRERR.
+     *
      * @lua NA
+     * @js NA
      */
     static int callLuaFunctionById(int functionId, const char *arg);
 
@@ -78,7 +87,9 @@ public:
      * @param functionName the name of global function.
      * @param arg the string pointer point to the argument.
      * @return a number value returned frome the Lua function when call sucessfully, otherwise return -1 or the opposite number for one of the three numbers LUA_ERRRUN,LUA_ERRMEM and LUA_ERRERR.
+     *
      * @lua NA
+     * @js NA
      */
     static int callLuaGlobalFunction(const char *functionName, const char *arg);
 
@@ -180,4 +191,6 @@ private:
     static int        s_newFunctionId;
 };
 
+// end group
+/// @}
 #endif //COCOS2DX_SCRIPT_LUA_COCOS2DX_SUPPORT_PLATFORM_ANDROID_LUA_JAVA_BRIDGE_H

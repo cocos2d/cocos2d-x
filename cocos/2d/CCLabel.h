@@ -1,7 +1,7 @@
 /****************************************************************************
  Copyright (c) 2013      Zynga Inc.
  Copyright (c) 2013-2015 Chukong Technologies Inc.
- 
+
  http://www.cocos2d-x.org
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -29,6 +29,7 @@
 #include "2d/CCSpriteBatchNode.h"
 #include "renderer/CCCustomCommand.h"
 #include "2d/CCFontAtlas.h"
+#include "base/ccTypes.h"
 
 NS_CC_BEGIN
 
@@ -50,16 +51,6 @@ enum class GlyphCollection {
     CUSTOM
 };
 
-/**
- * @brief Possible LabelEffect used by Label.
- *
- */
-enum class LabelEffect {
-    NORMAL,
-    OUTLINE,
-    SHADOW,
-    GLOW
-};
 
 /**
  * @struct TTFConfig
@@ -70,9 +61,9 @@ typedef struct _ttfConfig
     std::string fontFilePath;
     int fontSize;
 
-    GlyphCollection glyphs; 
+    GlyphCollection glyphs;
     const char *customGlyphs;
-    
+
     bool distanceFieldEnabled;
     int outlineSize;
 
@@ -94,7 +85,7 @@ typedef struct _ttfConfig
 
 /**
  * @brief Label is a subclass of SpriteBatchNode that knows how to render text labels.
- * 
+ *
  * Label can be created with:
  * - A true type font file.
  * - A bitmap font file.
@@ -106,6 +97,7 @@ typedef struct _ttfConfig
  * - http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
  * - http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
  * - http://www.angelcode.com/products/bmfont/ (Free, Windows only)
+ * @js NA
  */
 class CC_DLL Label : public SpriteBatchNode, public LabelProtocol
 {
@@ -122,13 +114,13 @@ public:
     */
     static Label* create();
 
-    /** 
+    /**
      * Allocates and initializes a Label, base on platform-dependent API.
      *
      * @param text The initial text.
      * @param font A font file or a font family name.
      * @param fontSize The font size. This value must be > 0.
-     * @param dimensions 
+     * @param dimensions
      * @param hAlignment The text horizontal alignment.
      * @param vAlignment The text vertical alignment.
      *
@@ -146,7 +138,7 @@ public:
     * @param text The initial text.
     * @param fontFilePath A font file.
     * @param fontSize The font size. This value must be > 0.
-    * @param dimensions 
+    * @param dimensions
     * @param hAlignment The text horizontal alignment.
     * @param vAlignment The text vertical alignment.
     *
@@ -168,7 +160,7 @@ public:
     * @see TTFConfig setTTFConfig setMaxLineWidth
     */
     static Label* createWithTTF(const TTFConfig& ttfConfig, const std::string& text, TextHAlignment hAlignment = TextHAlignment::LEFT, int maxLineWidth = 0);
-    
+
     /**
     * Allocates and initializes a Label, with a bitmap font file.
     *
@@ -176,7 +168,7 @@ public:
     * @param text The initial text.
     * @param hAlignment Text horizontal alignment.
     * @param maxLineWidth The max line width.
-    * @param imageOffset 
+    * @param imageOffset
     *
     * @return An automatically released Label object.
     * @see setBMFontFilePath setMaxLineWidth
@@ -184,7 +176,7 @@ public:
     static Label* createWithBMFont(const std::string& bmfontPath, const std::string& text,
         const TextHAlignment& hAlignment = TextHAlignment::LEFT, int maxLineWidth = 0,
         const Vec2& imageOffset = Vec2::ZERO);
-    
+
     /**
     * Allocates and initializes a Label, with char map configuration.
     *
@@ -257,7 +249,7 @@ public:
     virtual bool setCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
 
     /**
-     * Sets a new char map configuration to Label. 
+     * Sets a new char map configuration to Label.
      *
      * @see `createWithCharMap(const std::string&)`
      */
@@ -298,12 +290,12 @@ public:
 
     int getStringLength() const;
 
-    /** 
+    /**
      * Sets the text color of Label.
      *
      * The text color is different from the color of Node.
-     * 
-     * @warning Limiting use to only when the Label created with true type font or system font. 
+     *
+     * @warning Limiting use to only when the Label created with true type font or system font.
      */
     virtual void setTextColor(const Color4B &color);
 
@@ -334,6 +326,13 @@ public:
      */
     virtual void disableEffect();
 
+    /**
+     * Disable effect to Label.
+     *
+     * @see `LabelEffect`
+     */
+    virtual void disableEffect(LabelEffect effect);
+
     /** Sets the Label's text horizontal alignment.*/
     void setAlignment(TextHAlignment hAlignment) { setAlignment(hAlignment,_vAlignment);}
 
@@ -357,19 +356,19 @@ public:
 
     /**
      * Specify what happens when a line is too long for Label.
-     * 
+     *
      * @param breakWithoutSpace Lines are automatically broken between words if this value is false.
      */
     void setLineBreakWithoutSpace(bool breakWithoutSpace);
 
-    /** 
+    /**
      * Makes the Label at most this line untransformed width.
      * The Label's max line width be used for force line breaks if the value not equal zero.
      */
     void setMaxLineWidth(float maxLineWidth);
     float getMaxLineWidth() { return _maxLineWidth; }
 
-    /** 
+    /**
      * Makes the Label exactly this untransformed width.
      *
      * The Label's width be used for text align if the value not equal zero.
@@ -410,14 +409,14 @@ public:
      */
     void setLineHeight(float height);
 
-    /** 
+    /**
      * Returns the line height of this Label.
      * @warning Not support system font.
      * @since v3.2.0
      */
     float getLineHeight() const;
 
-    /** 
+    /**
      * Sets the additional kerning of the Label.
      *
      * @warning Not support system font.
@@ -425,7 +424,7 @@ public:
      */
     void setAdditionalKerning(float space);
 
-    /** 
+    /**
      * Returns the additional kerning of the Label.
      *
      * @warning Not support system font.
@@ -434,7 +433,7 @@ public:
     float getAdditionalKerning() const;
 
     FontAtlas* getFontAtlas() { return _fontAtlas; }
-    
+
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
 
     virtual bool isOpacityModifyRGB() const override;
@@ -514,9 +513,9 @@ protected:
     bool recordPlaceholderInfo(int spriteIndex);
 
     void setFontScale(float fontScale);
-    
+
     virtual void alignText();
-    
+
     bool computeHorizontalKernings(const std::u16string& stringToRender);
 
     void computeStringNumLines();
@@ -527,13 +526,10 @@ protected:
 
     virtual void updateShaderProgram();
 
-    void drawShadowWithoutBlur();
+    void createSpriteForSystemFont();
 
-    void drawTextSprite(Renderer *renderer, uint32_t parentFlags);
+    void createShadowSpriteForSystemFont();
 
-    void createSpriteWithFontDefinition();
-
-    void updateFont();
     void reset();
 
     std::string _bmFontPath;
@@ -589,15 +585,16 @@ protected:
 
     GLuint _uniformEffectColor;
     GLuint _uniformTextColor;
-    CustomCommand _customCommand;   
+    CustomCommand _customCommand;
 
     bool    _shadowDirty;
     bool    _shadowEnabled;
     Size    _shadowOffset;
     int     _shadowBlurRadius;
     Mat4  _shadowTransform;
-    Color3B _shadowColor;
-    float   _shadowOpacity;
+    Color4F _shadowColor4F;
+    Color3B _shadowColor3B;
+    GLubyte _shadowOpacity;
     Sprite*   _shadowNode;
 
     int     _outlineSize;

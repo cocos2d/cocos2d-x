@@ -1,5 +1,12 @@
 #include "OpenURLTest.h"
 
+USING_NS_CC;
+
+OpenURLTests::OpenURLTests()
+{
+    ADD_TEST_CASE(OpenURLTest);
+}
+
 OpenURLTest::OpenURLTest()
 {
     auto label = Label::createWithTTF("Open URL Test", "fonts/arial.ttf", 28);
@@ -26,13 +33,4 @@ void OpenURLTest::onTouchesEnded(const std::vector<Touch*>& touches, Event  *eve
 OpenURLTest::~OpenURLTest()
 {
     _label->release();
-}
-
-void OpenURLTestScene::runThisTest()
-{
-    auto layer = new (std::nothrow) OpenURLTest();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
-    layer->release();
 }

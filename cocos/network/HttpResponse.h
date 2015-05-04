@@ -28,6 +28,11 @@
 
 #include "network/HttpRequest.h"
 
+/**
+ * @addtogroup core
+ * @{
+ */
+
 NS_CC_BEGIN
 
 namespace network {
@@ -235,5 +240,8 @@ protected:
 }
 
 NS_CC_END
+
+// end group
+/// @}
 
 #endif //__HTTP_RESPONSE_H__

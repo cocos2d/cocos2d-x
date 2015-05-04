@@ -157,7 +157,7 @@ Select the test you want from Xcode Scheme chooser.
 
 ```
 $ cd cocos2d-x/build
-$ open cocos_tests.xcodeproj
+$ open cocos2d_tests.xcodeproj
 ```
 
 * For Linux

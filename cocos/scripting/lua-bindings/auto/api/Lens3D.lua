@@ -6,7 +6,7 @@
 
 --------------------------------
 -- brief Set the center position of lens effect.<br>
--- param The center position will be set.
+-- param position The center position will be set.
 -- @function [parent=#Lens3D] setPosition 
 -- @param self
 -- @param #vec2_table position

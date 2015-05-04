@@ -41,12 +41,17 @@
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup _3d
+ * @{
+ */
+
 class Mesh;
 class Texture2D;
 class MeshSkin;
 class AttachNode;
 struct NodeData;
-/** Sprite3D: A sprite can be loaded from 3D model files, .obj, .c3t, .c3b, then can be drawed as sprite */
+/** @brief Sprite3D: A sprite can be loaded from 3D model files, .obj, .c3t, .c3b, then can be drawed as sprite */
 class CC_DLL Sprite3D : public Node, public BlendProtocol
 {
 public:
@@ -85,7 +90,11 @@ public:
     /**get Mesh by Name, it returns the first one if there are more than one mesh with the same name */
     Mesh* getMeshByName(const std::string& name) const;
     
-    /** get mesh array by name, returns all meshes with the given name */
+    /** 
+     * get mesh array by name, returns all meshes with the given name
+     *
+     * @lua NA
+     */
     std::vector<Mesh*> getMeshArrayByName(const std::string& name) const;
 
     /**get mesh*/
@@ -125,6 +134,14 @@ public:
      * to calculate the AABB.
      */
     const AABB& getAABB() const;
+    
+    /* 
+     * Get AABB Recursively
+     * Because some times we may have an empty Sprite3D Node as parent, but
+     * the Sprite3D don't contain any meshes, so getAABB()
+     * will return a wrong value at that time.
+     */
+    AABB getAABBRecursively();
     
     /**
      * Executes an action, and returns the action that is executed. For Sprite3D special logic are needed to take care of Fading.
@@ -213,7 +230,7 @@ protected:
 
     mutable AABB                 _aabb;                 // cache current aabb
     mutable Mat4                 _nodeToWorldTransform; // cache the matrix
-    bool                         _aabbDirty;
+    mutable bool                 _aabbDirty;
     unsigned int                 _lightMask;
     bool                         _shaderUsingLight; // is current shader using light ?
     bool                         _forceDepthWrite; // Always write to depth buffer
@@ -261,10 +278,18 @@ public:
     static Sprite3DCache* getInstance();
     static void destroyInstance();
 
-    /**get the SpriteData struct*/
+    /**
+     * get the SpriteData struct
+     *
+     * @lua NA
+     */
     Sprite3DData* getSpriteData(const std::string& key) const;
     
-    /**add the SpriteData into Sprite3D by given the specified key*/
+    /**
+     * add the SpriteData into Sprite3D by given the specified key
+     *
+     * @lua NA
+     */
     bool addSprite3DData(const std::string& key, Sprite3DData* spritedata);
     
     /**remove the SpriteData from Sprite3D by given the specified key*/
@@ -284,7 +309,12 @@ protected:
     std::unordered_map<std::string, Sprite3DData*> _spriteDatas; //cached sprite datas
 };
 
+/// @cond 
 extern std::string CC_DLL s_attributeNames[];//attribute names array
+/// @endcond
+
+// end of 3d group
+/// @}
 
 NS_CC_END
 #endif // __SPRITE3D_H_

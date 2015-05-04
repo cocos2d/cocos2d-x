@@ -29,6 +29,11 @@
 #include "base/CCRef.h"
 #include "platform/CCGL.h"
 
+/**
+ * @addtogroup support
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class EventListenerCustom;
@@ -253,4 +258,8 @@ public:
 
 NS_CC_END
 
+/**
+ end of support group
+ @}
+ */
 #endif /* __CC_VERTEX_INDEX_BUFFER_H__*/

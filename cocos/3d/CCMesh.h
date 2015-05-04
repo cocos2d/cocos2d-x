@@ -36,13 +36,18 @@
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup _3d
+ * @{
+ */
+
 class Texture2D;
 class MeshSkin;
 class MeshIndexData;
 class GLProgramState;
 class GLProgram;
 /** 
- * Mesh: contains ref to index buffer, GLProgramState, texture, skin, blend function, aabb and so on
+ * @brief Mesh: contains ref to index buffer, GLProgramState, texture, skin, blend function, aabb and so on
  */
 class CC_DLL Mesh : public Ref
 {
@@ -54,14 +59,28 @@ public:
     /**create mesh with vertex attributes*/
     CC_DEPRECATED_ATTRIBUTE static Mesh* create(const std::vector<float>& vertices, int perVertexSizeInFloat, const IndexArray& indices, int numIndex, const std::vector<MeshVertexAttrib>& attribs, int attribCount){ return create(vertices, perVertexSizeInFloat, indices, attribs); }
     
+    /**
+     * @lua NA
+     */
     static Mesh* create(const std::vector<float>& vertices, int perVertexSizeInFloat, const IndexArray& indices, const std::vector<MeshVertexAttrib>& attribs);
     
-    /** create mesh */
+    /** 
+     * create mesh
+     * @lua NA
+     */
     static Mesh* create(const std::string& name, MeshIndexData* indexData, MeshSkin* skin = nullptr);
     
-    /**get vertex buffer*/
+    /**
+     * get vertex buffer
+     * 
+     * @lua NA
+     */
     GLuint getVertexBuffer() const;
-    /**has vertex attribute?*/
+    /**
+     * has vertex attribute?
+     *
+     * @lua NA
+     */
     bool hasVertexAttrib(int attrib) const;
     /**get mesh vertex attribute count*/
     ssize_t getMeshVertexAttribCount() const;
@@ -79,13 +98,25 @@ public:
     void setVisible(bool visible);
     bool isVisible() const { return _visible; }
     
-    /**skin getter */
+    /**
+     * skin getter
+     *
+     * @lua NA
+     */
     MeshSkin* getSkin() const { return _skin; }
     
-    /**mesh index data getter */
+    /**
+     * mesh index data getter
+     *
+     * @lua NA
+     */
     MeshIndexData* getMeshIndexData() const { return _meshIndexData; }
     
-    /**get GLProgramState*/
+    /**
+     * get GLProgramState
+     * 
+     * @lua NA
+     */
     GLProgramState* getGLProgramState() const { return _glProgramState; }
     
     /**name getter */
@@ -94,13 +125,29 @@ public:
     void setBlendFunc(const BlendFunc &blendFunc);
     const BlendFunc &getBlendFunc() const;
     
-    /** get primitive type*/
+    /** 
+     * get primitive type
+     *
+     * @lua NA
+     */
     GLenum getPrimitiveType() const;
-    /**get index count*/
+    /**
+     * get index count
+     *
+     * @lua NA
+     */
     ssize_t getIndexCount() const;
-    /**get index format*/
+    /**
+     * get index format
+     *
+     * @lua NA
+     */
     GLenum getIndexFormat() const;
-    /**get index buffer*/
+    /**
+     * get index buffer
+     *
+     * @lua NA
+     */
     GLuint getIndexBuffer() const;
     
     /**get AABB*/
@@ -157,6 +204,10 @@ protected:
     AABB         _aabb;
     std::function<void()> _visibleChanged;
 };
+
+// end of 3d group
+/// @}
+
 
 NS_CC_END
 

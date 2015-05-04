@@ -28,12 +28,14 @@
 class ControlSliderTest : public ControlScene
 {
 public:
+    CREATE_FUNC(ControlSliderTest);
+
     ControlSliderTest();
     virtual ~ControlSliderTest();
-    bool init();
-    void valueChanged(Ref *sender, Control::EventType controlEvent);
+    virtual bool init() override;
+    void valueChanged(cocos2d::Ref* sender, cocos2d::extension::Control::EventType controlEvent);
 protected:
-    Label* _displayValueLabel;
-    CONTROL_SCENE_CREATE_FUNC(ControlSliderTest)
+    cocos2d::Label* _displayValueLabel;
+    
 };
 

@@ -35,17 +35,17 @@ THE SOFTWARE.
 #include "base/CCRef.h"
 #include "platform/CCGL.h"
 
-NS_CC_BEGIN
-
 /**
  * @addtogroup base
  * @{
  */
 
+NS_CC_BEGIN
+
 struct Color4B;
 struct Color4F;
 
-/** 
+/**
  * RGB color composed of bytes 3 bytes.
  * @since v3.0
  */
@@ -71,7 +71,7 @@ struct CC_DLL Color3B
     GLubyte r;
     GLubyte g;
     GLubyte b;
-    
+
     static const Color3B WHITE;
     static const Color3B YELLOW;
     static const Color3B BLUE;
@@ -83,7 +83,7 @@ struct CC_DLL Color3B
     static const Color3B GRAY;
 };
 
-/** 
+/**
  * RGBA color composed of 4 bytes.
  * @since v3.0
  */
@@ -118,7 +118,7 @@ struct CC_DLL Color4B
 };
 
 
-/** 
+/**
  * RGBA color composed of 4 floats.
  * @since v3.0
  */
@@ -140,7 +140,7 @@ struct CC_DLL Color4F
     {
         return (*this == other);
     }
-    
+
     GLfloat r;
     GLfloat g;
     GLfloat b;
@@ -163,9 +163,9 @@ struct CC_DLL Color4F
 // struct Vertex2F
 // {
 //     Vertex2F(float _x, float _y) :x(_x), y(_y) {}
-    
+
 //     Vertex2F(): x(0.f), y(0.f) {}
-    
+
 //     GLfloat x;
 //     GLfloat y;
 // };
@@ -181,23 +181,23 @@ struct CC_DLL Color4F
 //         , y(_y)
 //         , z(_z)
 //     {}
-    
+
 //     Vertex3F(): x(0.f), y(0.f), z(0.f) {}
-    
+
 //     GLfloat x;
 //     GLfloat y;
 //     GLfloat z;
 // };
-        
+
 /** @struct Tex2F
  * A TEXCOORD composed of 2 floats: u, y
  * @since v3.0
  */
 struct CC_DLL Tex2F {
     Tex2F(float _u, float _v): u(_u), v(_v) {}
-    
+
     Tex2F(): u(0.f), v(0.f) {}
-    
+
     GLfloat u;
     GLfloat v;
 };
@@ -222,7 +222,7 @@ struct CC_DLL Quad2
     Vec2        bl;
     Vec2        br;
 };
-   
+
 /** @struct Quad3
  * A 3D Quad. 4 * 3 floats.
  */
@@ -238,11 +238,11 @@ struct CC_DLL Quad3 {
  */
 struct V2F_C4B_T2F
 {
-    //! vertices (2F)
+    /// vertices (2F)
     Vec2       vertices;
-    //! colors (4B)
+    /// colors (4B)
     Color4B        colors;
-    //! tex coords (2F)
+    /// tex coords (2F)
     Tex2F          texCoords;
 };
 
@@ -251,11 +251,11 @@ struct V2F_C4B_T2F
  */
 struct V2F_C4B_PF
 {
-    //! vertices (2F)
+    /// vertices (2F)
     Vec2       vertices;
-    //! colors (4B)
+    /// colors (4B)
     Color4B        colors;
-    //! pointsize
+    /// pointsize
     float      pointSize;
 };
 
@@ -264,11 +264,11 @@ struct V2F_C4B_PF
  */
 struct CC_DLL V2F_C4F_T2F
 {
-    //! vertices (2F)
+    /// vertices (2F)
     Vec2       vertices;
-    //! colors (4F)
+    /// colors (4F)
     Color4F        colors;
-    //! tex coords (2F)
+    /// tex coords (2F)
     Tex2F          texCoords;
 };
 
@@ -277,10 +277,10 @@ struct CC_DLL V2F_C4F_T2F
  */
 struct CC_DLL V3F_C4B_T2F
 {
-    //! vertices (3F)
+    /// vertices (3F)
     Vec3     vertices;            // 12 bytes
 
-    //! colors (4B)
+    /// colors (4B)
     Color4B      colors;              // 4 bytes
 
     // tex coords (2F)
@@ -292,9 +292,9 @@ struct CC_DLL V3F_C4B_T2F
  */
 struct CC_DLL V3F_T2F
 {
-    //! vertices (2F)
+    /// vertices (2F)
     Vec3       vertices;
-    //! tex coords (2F)
+    /// tex coords (2F)
     Tex2F          texCoords;
 };
 
@@ -303,26 +303,23 @@ struct CC_DLL V3F_T2F
  */
 struct CC_DLL V2F_C4B_T2F_Triangle
 {
-	//! Vec2 A
 	V2F_C4B_T2F a;
-	//! Vec2 B
 	V2F_C4B_T2F b;
-	//! Vec2 B
 	V2F_C4B_T2F c;
 };
- 
+
 /** @struct V2F_C4B_T2F_Quad
  * A Quad of V2F_C4B_T2F.
  */
 struct CC_DLL V2F_C4B_T2F_Quad
 {
-    //! bottom left
+    /// bottom left
     V2F_C4B_T2F    bl;
-    //! bottom right
+    /// bottom right
     V2F_C4B_T2F    br;
-    //! top left
+    /// top left
     V2F_C4B_T2F    tl;
-    //! top right
+    /// top right
     V2F_C4B_T2F    tr;
 };
 
@@ -331,13 +328,13 @@ struct CC_DLL V2F_C4B_T2F_Quad
  */
 struct CC_DLL V3F_C4B_T2F_Quad
 {
-    //! top left
+    /// top left
     V3F_C4B_T2F    tl;
-    //! bottom left
+    /// bottom left
     V3F_C4B_T2F    bl;
-    //! top right
+    /// top right
     V3F_C4B_T2F    tr;
-    //! bottom right
+    /// bottom right
     V3F_C4B_T2F    br;
 };
 
@@ -346,28 +343,28 @@ struct CC_DLL V3F_C4B_T2F_Quad
  */
 struct CC_DLL V2F_C4F_T2F_Quad
 {
-    //! bottom left
+    /// bottom left
     V2F_C4F_T2F    bl;
-    //! bottom right
+    /// bottom right
     V2F_C4F_T2F    br;
-    //! top left
+    /// top left
     V2F_C4F_T2F    tl;
-    //! top right
+    /// top right
     V2F_C4F_T2F    tr;
 };
 
 /** @struct V3F_T2F_Quad
- * 
+ *
  */
 struct CC_DLL V3F_T2F_Quad
 {
-    //! bottom left
+    /// bottom left
     V3F_T2F    bl;
-    //! bottom right
+    /// bottom right
     V3F_T2F    br;
-    //! top left
+    /// top left
     V3F_T2F    tl;
-    //! top right
+    /// top right
     V3F_T2F    tr;
 };
 
@@ -376,18 +373,18 @@ struct CC_DLL V3F_T2F_Quad
  */
 struct CC_DLL BlendFunc
 {
-    //! source blend function
+    /** source blend function */
     GLenum src;
-    //! destination blend function
+    /** destination blend function */
     GLenum dst;
 
-    //! Blending disabled. Uses {GL_ONE, GL_ZERO}
+    /** Blending disabled. Uses {GL_ONE, GL_ZERO} */
     static const BlendFunc DISABLE;
-    //! Blending enabled for textures with Alpha premultiplied. Uses {GL_ONE, GL_ONE_MINUS_SRC_ALPHA}
+    /** Blending enabled for textures with Alpha premultiplied. Uses {GL_ONE, GL_ONE_MINUS_SRC_ALPHA} */
     static const BlendFunc ALPHA_PREMULTIPLIED;
-    //! Blending enabled for textures with Alpha NON premultiplied. Uses {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}
+    /** Blending enabled for textures with Alpha NON premultiplied. Uses {GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA} */
     static const BlendFunc ALPHA_NON_PREMULTIPLIED;
-    //! Enables Additive blending. Uses {GL_SRC_ALPHA, GL_ONE}
+    /** Enables Additive blending. Uses {GL_SRC_ALPHA, GL_ONE} */
     static const BlendFunc ADDITIVE;
 
     bool operator==(const BlendFunc &a) const
@@ -437,13 +434,13 @@ enum class CC_DLL TextHAlignment
  */
 struct CC_DLL T2F_Quad
 {
-    //! bottom left
+    /// bottom left
     Tex2F    bl;
-    //! bottom right
+    /// bottom right
     Tex2F    br;
-    //! top left
+    /// top left
     Tex2F    tl;
-    //! top right
+    /// top right
     Tex2F    tr;
 };
 
@@ -454,7 +451,7 @@ struct CC_DLL AnimationFrameData
 {
     T2F_Quad texCoords;
     float delay;
-    Size size; 
+    Size size;
 };
 
 /**
@@ -467,7 +464,7 @@ struct CC_DLL AnimationFrameData
 struct CC_DLL FontShadow
 {
 public:
-    
+
     // shadow is not enabled by default
     FontShadow()
         : _shadowEnabled(false)
@@ -475,13 +472,13 @@ public:
         , _shadowOpacity(0)
     {}
 
-    // true if shadow enabled
+    /// true if shadow enabled
     bool   _shadowEnabled;
-    // shadow x and y offset
+    /// shadow x and y offset
 	Size   _shadowOffset;
-    // shadow blurrines
+    /// shadow blurrines
 	float  _shadowBlur;
-    // shadow opacity
+    /// shadow opacity
 	float  _shadowOpacity;
 };
 
@@ -491,7 +488,7 @@ public:
 struct CC_DLL FontStroke
 {
 public:
-    
+
     // stroke is disabled by default
     FontStroke()
 	    : _strokeEnabled(false)
@@ -499,16 +496,16 @@ public:
         , _strokeAlpha(255)
         , _strokeSize(0)
     {}
-    
-    // true if stroke enabled
+
+    /// true if stroke enabled
     bool      _strokeEnabled;
-    // stroke color
+    /// stroke color
 	Color3B   _strokeColor;
-    // stroke alpha
+    /// stroke alpha
     GLubyte   _strokeAlpha;
-    // stroke size
+    /// stroke size
     float     _strokeSize;
-    
+
 };
 
 /** @struct FontDefinition
@@ -529,26 +526,37 @@ public:
         , _fontFillColor(Color3B::WHITE)
         , _fontAlpha(255)
     {}
-    
-    // font name
+
+    /// font name
     std::string           _fontName;
-    // font size
+    /// font size
     int                   _fontSize;
-    // horizontal alignment
+    /// horizontal alignment
     TextHAlignment        _alignment;
-    // vertical alignment
+    /// vertical alignment
     TextVAlignment _vertAlignment;
-    // renering box
+    /// renering box
     Size                  _dimensions;
-    // font color
+    /// font color
     Color3B               _fontFillColor;
-    //font alpha
+    /// font alpha
     GLubyte               _fontAlpha;
-    // font shadow
+    /// font shadow
     FontShadow            _shadow;
-    // font stroke
+    /// font stroke
     FontStroke            _stroke;
-    
+
+};
+
+/**
+ * @brief Possible LabelEffect used by Label.
+ *
+ */
+enum class LabelEffect {
+    NORMAL,
+    OUTLINE,
+    SHADOW,
+    GLOW
 };
 
 /** @struct Acceleration
@@ -561,9 +569,9 @@ public:
     double x;
     double y;
     double z;
-    
+
     double timestamp;
-    
+
     Acceleration(): x(0), y(0), z(0), timestamp(0) {}
 };
 

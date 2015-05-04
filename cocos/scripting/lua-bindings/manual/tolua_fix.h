@@ -7,6 +7,11 @@
 #define TOLUA_REFID_PTR_MAPPING "toluafix_refid_ptr_mapping"
 #define TOLUA_REFID_TYPE_MAPPING "toluafix_refid_type_mapping"
 #define TOLUA_REFID_FUNCTION_MAPPING "toluafix_refid_function_mapping"
+
+/**
+ * @addtogroup lua
+ * @{
+ */
 /// @cond
 TOLUA_API void toluafix_open(lua_State* L);
 /// @endcond
@@ -25,8 +30,8 @@ TOLUA_API void toluafix_open(lua_State* L);
  * @param ptr the pointer points to the Ref object.
  * @param type the type name of the ptr.
  * @return -1 if the p_refid equal to nullptr or ptr equal to nullptr, otherwise return 0.
- * @lua NA.
- * @js NA.
+ * @lua NA
+ * @js NA
  */
 TOLUA_API int toluafix_pushusertype_ccobject(lua_State* L,
                                              int uid,
@@ -43,8 +48,8 @@ TOLUA_API int toluafix_pushusertype_ccobject(lua_State* L,
  * @param L the current lua_State.
  * @param refid the value of the _luaID of a Ref object.
  * @return -1,if refid equals to 0 , type name found by refid equals to nil or corresponding userdata pointer equal to nullptr; return -2, if the Ref object pointer found by refid is nullptr; return 3, if the value corresponding to the Ref object pointer in the tolua_ubox is nil; otherwise return 0.
- * @lua NA.
- * @js NA.
+ * @lua NA
+ * @js NA
  */
 TOLUA_API int toluafix_remove_ccobject_by_refid(lua_State* L, int refid);
 
@@ -56,8 +61,8 @@ TOLUA_API int toluafix_remove_ccobject_by_refid(lua_State* L, int refid);
  * @param lo the given accepteable index lo of stack.
  * @param def useless.
  * @return 0 if the type of value at the given accepteable index lo of stack is not LUA_TFUNCTION; otherwise return the refrence id.
- * @lua NA.
- * @js NA.
+ * @lua NA
+ * @js NA
  */
 TOLUA_API int toluafix_ref_function(lua_State* L, int lo, int def);
 
@@ -66,8 +71,8 @@ TOLUA_API int toluafix_ref_function(lua_State* L, int lo, int def);
  *
  * @param L the current lua_State.
  * @param refid referenc id corresponding to the Lua function.
- * @lua NA.
- * @js NA.
+ * @lua NA
+ * @js NA
  */
 TOLUA_API void toluafix_get_function_by_refid(lua_State* L, int refid);
 
@@ -76,8 +81,8 @@ TOLUA_API void toluafix_get_function_by_refid(lua_State* L, int refid);
  *
  * @param L the current lua_State.
  * @param refid referenc id corresponding to the Lua function.
- * @lua NA.
- * @js NA.
+ * @lua NA
+ * @js NA
  */
 TOLUA_API void toluafix_remove_function_by_refid(lua_State* L, int refid);
 
@@ -90,8 +95,8 @@ TOLUA_API void toluafix_remove_function_by_refid(lua_State* L, int refid);
  * @param def useless.
  * @param err if triggger the error, record the error message to err.
  * @return 1 if the value at the given acceptable index is a function, otherwise return 0.
- * @lua NA.
- * @js NA.
+ * @lua NA
+ * @js NA
  */
 TOLUA_API int toluafix_isfunction(lua_State* L, int lo, const char* type, int def, tolua_Error* err);
 
@@ -108,8 +113,8 @@ TOLUA_API int toluafix_totable(lua_State* L, int lo, int def);
  * @param def whether has the default value.
  * @param err if triggger the error, record the error message to err.
  * @return 1 if the value at the given acceptable index is a table or have def value is not 0, otherwise return 0.
- * @lua NA.
- * @js NA.
+ * @lua NA
+ * @js NA
  */
 TOLUA_API int toluafix_istable(lua_State* L, int lo, const char* type, int def, tolua_Error* err);
 
@@ -119,9 +124,12 @@ TOLUA_API int toluafix_istable(lua_State* L, int lo, const char* type, int def, 
  *
  * @param L the current lua_State.
  * @param label the string pointer to define the label of the dump information.
- * @lua NA.
- * @js NA.
+ * @lua NA
+ * @js NA
  */
 TOLUA_API void toluafix_stack_dump(lua_State* L, const char* label);
+
+// end group
+/// @}
 
 #endif // __TOLUA_FIX_H_

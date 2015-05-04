@@ -38,11 +38,13 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- Disable all effect to Label.
--- @function [parent=#Label] disableEffect 
+-- @overload self, int         
+-- @overload self         
+-- @function [parent=#Label] disableEffect
 -- @param self
+-- @param #int effect
 -- @return Label#Label self (return value: cc.Label)
-        
+
 --------------------------------
 -- Sets a new TTF configuration to Label.<br>
 -- see `TTFConfig`
@@ -236,7 +238,7 @@
 --------------------------------
 -- Sets the text color of Label.<br>
 -- The text color is different from the color of Node.<br>
--- warning Limiting use to only when the Label created with true type font or system font. 
+-- warning Limiting use to only when the Label created with true type font or system font.
 -- @function [parent=#Label] setTextColor 
 -- @param self
 -- @param #color4b_table color
@@ -328,7 +330,7 @@
 -- param text The initial text.<br>
 -- param hAlignment Text horizontal alignment.<br>
 -- param maxLineWidth The max line width.<br>
--- param imageOffset <br>
+-- param imageOffset<br>
 -- return An automatically released Label object.<br>
 -- see setBMFontFilePath setMaxLineWidth
 -- @function [parent=#Label] createWithBMFont 
@@ -364,7 +366,7 @@
 -- param text The initial text.<br>
 -- param font A font file or a font family name.<br>
 -- param fontSize The font size. This value must be > 0.<br>
--- param dimensions <br>
+-- param dimensions<br>
 -- param hAlignment The text horizontal alignment.<br>
 -- param vAlignment The text vertical alignment.<br>
 -- warning It will generate texture by the platform-dependent code.<br>

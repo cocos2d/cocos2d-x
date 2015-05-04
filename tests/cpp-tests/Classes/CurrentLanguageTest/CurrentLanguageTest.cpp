@@ -1,5 +1,12 @@
 #include "CurrentLanguageTest.h"
 
+USING_NS_CC;
+
+CurrentLanguageTests::CurrentLanguageTests()
+{
+    ADD_TEST_CASE(CurrentLanguageTest);
+}
+
 CurrentLanguageTest::CurrentLanguageTest()
 {
     auto label = Label::createWithTTF("Current language Test", "fonts/arial.ttf", 28);
@@ -73,11 +80,3 @@ CurrentLanguageTest::CurrentLanguageTest()
     addChild(labelLanguageCode);
 }
 
-void CurrentLanguageTestScene::runThisTest()
-{
-    auto layer = new (std::nothrow) CurrentLanguageTest();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
-    layer->release();
-}

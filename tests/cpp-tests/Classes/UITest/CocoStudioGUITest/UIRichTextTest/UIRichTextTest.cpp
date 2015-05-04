@@ -1,8 +1,14 @@
-
-
 #include "UIRichTextTest.h"
 #include "cocostudio/CCArmatureDataManager.h"
 #include "cocostudio/CCArmature.h"
+
+USING_NS_CC;
+using namespace cocos2d::ui;
+
+UIRichTextTests::UIRichTextTests()
+{
+    ADD_TEST_CASE(UIRichTextTest);
+}
 
 UIRichTextTest::UIRichTextTest()
 {

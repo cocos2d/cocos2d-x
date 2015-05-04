@@ -1,6 +1,7 @@
 #include "CocosDenshionTest.h"
 #include "cocos2d.h"
 #include "extensions/GUI/CCControlExtension/CCControlSlider.h"
+#include "audio/include/SimpleAudioEngine.h"
 
 // android effect only support ogg
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -248,7 +249,7 @@ CocosDenshionTest::~CocosDenshionTest()
 
 void CocosDenshionTest::onExit()
 {
-    Layer::onExit();
+    TestCase::onExit();
 
     SimpleAudioEngine::end();
 }
@@ -416,11 +417,7 @@ void CocosDenshionTest::updateVolumes(float)
     }
 }
 
-void CocosDenshionTestScene::runThisTest()
+CocosDenshionTests::CocosDenshionTests()
 {
-    auto layer = new (std::nothrow) CocosDenshionTest();
-    addChild(layer);
-    layer->autorelease();
-
-    Director::getInstance()->replaceScene(this);
+    ADD_TEST_CASE(CocosDenshionTest);
 }

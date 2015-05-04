@@ -13,7 +13,7 @@
         
 --------------------------------
 -- brief Enable/Disable the clipping.<br>
--- param Pass true to enable clipping. Pass false to disable clipping.
+-- param enabled Pass true to enable clipping. Pass false to disable clipping.
 -- @function [parent=#ClippingRectangleNode] setClippingEnabled 
 -- @param self
 -- @param #bool enabled
@@ -28,7 +28,7 @@
         
 --------------------------------
 -- brief Set the clipping rectangle.<br>
--- param Specify the clipping rectangle.
+-- param clippingRegion Specify the clipping rectangle.
 -- @function [parent=#ClippingRectangleNode] setClippingRegion 
 -- @param self
 -- @param #rect_table clippingRegion

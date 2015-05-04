@@ -1,106 +1,13 @@
 #include "MouseTest.h"
 
+USING_NS_CC;
+
 template <typename T> std::string tostr(const T& t) { std::ostringstream os; os<<t; return os.str(); }
 
-static int sceneIdx = -1;
-
-
-static std::function<Layer*()> createFunctions[] =
+MouseTests::MouseTests()
 {
-    CL(MouseEventTest),
-    CL(HideMouseTest)
-};
-
-#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-static Layer* nextSpriteTestAction()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-    
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-static Layer* backSpriteTestAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;
-    
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-static Layer* restartSpriteTestAction()
-{
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-
-//------------------------------------------------------------------
-//
-// BaseMouseTest
-//
-//------------------------------------------------------------------
-
-BaseMouseTest::BaseMouseTest(void)
-: BaseTest()
-{
-}
-
-BaseMouseTest::~BaseMouseTest(void)
-{
-}
-
-std::string BaseMouseTest::title() const
-{
-    return "No title";
-}
-
-std::string BaseMouseTest::subtitle() const
-{
-    return "";
-}
-
-void BaseMouseTest::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-void BaseMouseTest::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) MouseTestScene();
-    s->addChild(restartSpriteTestAction());
-    
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void BaseMouseTest::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) MouseTestScene();
-    s->addChild( nextSpriteTestAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void BaseMouseTest::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) MouseTestScene();
-    s->addChild( backSpriteTestAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void MouseTestScene::runThisTest()
-{
-    auto layer = nextSpriteTestAction();
-    addChild(layer);
-    
-    Director::getInstance()->replaceScene(this);
+    ADD_TEST_CASE(MouseEventTest);
+    ADD_TEST_CASE(HideMouseTest);
 }
 
 //------------------------------------------------------------------

@@ -29,13 +29,13 @@ THE SOFTWARE.
 #include "ui/UIScrollView.h"
 #include "ui/GUIExport.h"
 
-NS_CC_BEGIN
-
-namespace ui{
 /**
  * @addtogroup ui
  * @{
  */
+NS_CC_BEGIN
+
+namespace ui{
     
 /**
  * ListView click item event type.
@@ -48,16 +48,16 @@ typedef enum
 
 /**
  * A callback which would be called when a ListView item is clicked.
- *@deprecated Use @see `ccListViewCallback` instead.
+ *@deprecated Use `ccListViewCallback` instead.
  */
 typedef void (Ref::*SEL_ListViewEvent)(Ref*,ListViewEventType);
 #define listvieweventselector(_SELECTOR) (SEL_ListViewEvent)(&_SELECTOR)
 
 /**
  *@brief ListView is a view group that displays a list of scrollable items.
- *The list items are inserted to the list by using @see `addChild` or @see `insertDefaultItem`.
- * @warning The list item in ListView doesn't support cell reuse at the moment, if you have a large amount of data need to be displayed, use @see `TableView` instead.
- * ListView is a subclass of @see `ScrollView`, so it shares many features of ScrollView.
+ *The list items are inserted to the list by using `addChild` or  `insertDefaultItem`.
+ * @warning The list item in ListView doesn't support cell reuse at the moment, if you have a large amount of data need to be displayed, use  `TableView` instead.
+ * ListView is a subclass of  `ScrollView`, so it shares many features of ScrollView.
  */
 class CC_GUI_DLL ListView : public ScrollView
 {
@@ -93,11 +93,15 @@ public:
     
     /**
      * Default constructor
+     * @js ctor
+     * @lua new
      */
     ListView();
     
     /**
      * Default destructor
+     * @js NA
+     * @lua NA
      */
     virtual ~ListView();
     
@@ -110,7 +114,7 @@ public:
     /**
      * Set a item model for listview.
      *
-     * When calling @see `pushBackDefaultItem`, the model will be used as a blueprint and new model copy will be inserted into ListView.
+     * When calling `pushBackDefaultItem`, the model will be used as a blueprint and new model copy will be inserted into ListView.
      * @param model  Model in `Widget*`.
      */
     void setItemModel(Widget* model);
@@ -227,7 +231,7 @@ public:
     
     /**
      * Add a event click callback to ListView, then one item of Listview is clicked, the callback will be called.
-     *@deprecated Use @see `addEventListener` instead.
+     *@deprecated Use  `addEventListener` instead.
      *@param target A pointer of `Ref*` type.
      *@param selector A member function pointer with type of `SEL_ListViewEvent`.
      */
@@ -243,8 +247,8 @@ public:
     /**
      * Changes scroll direction of scrollview.
      *
-     * @see Direction Direction::VERTICAL means vertical scroll, Direction::HORIZONTAL means horizontal scroll
-     * @param dir, set the list view's scroll direction
+     *  Direction Direction::VERTICAL means vertical scroll, Direction::HORIZONTAL means horizontal scroll.
+     * @param dir Set the list view's scroll direction.
      */
     virtual void setDirection(Direction dir) override;
     
@@ -307,8 +311,8 @@ protected:
 };
 
 }
+NS_CC_END
 // end of ui group
 /// @}
-NS_CC_END
 
 #endif /* defined(__ListView__) */

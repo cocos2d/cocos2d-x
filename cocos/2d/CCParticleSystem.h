@@ -180,7 +180,7 @@ public:
     http://particledesigner.71squared.com/
      @since v2.0
      *
-     * @param Particle plist file name.
+     * @param plistFile Particle plist file name.
      * @return An autoreleased ParticleSystem object.
      */
     static ParticleSystem * create(const std::string& plistFile);
@@ -229,7 +229,7 @@ public:
 
     /** Call the update mathod with no time..
      */
-    virtual void updateWithNoTime(void);
+    virtual void updateWithNoTime();
 
     /** Whether or not the particle system removed self on finish.
      *
@@ -453,7 +453,7 @@ public:
     inline const Vec2& getSourcePosition() const { return _sourcePosition; };
     /** Sets the source position of the emitter.
      *
-     * @param The source position of the emitter.
+     * @param pos The source position of the emitter.
      */
     inline void setSourcePosition(const Vec2& pos) { _sourcePosition = pos; };
     

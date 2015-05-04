@@ -34,6 +34,11 @@
 #include "renderer/CCGLProgram.h"
 #include "platform/CCGL.h"
 
+/**
+ * @addtogroup support
+ * @{
+ */
+
 NS_CC_BEGIN
 
 class EventListenerCustom;
@@ -68,10 +73,7 @@ public:
 
 public:
     /**Constructor.*/
-    RenderQueue()
-    {
-        clear();
-    }
+    RenderQueue();
     /**Push a renderCommand into current renderqueue.*/
     void push_back(RenderCommand* command);
     /**Return the number of render commands.*/
@@ -82,6 +84,8 @@ public:
     RenderCommand* operator[](ssize_t index) const;
     /**Clear all rendered commands.*/
     void clear();
+    /**Realloc command queues and reserve with given size. Note: this clears any existing commands.*/
+    void realloc(size_t reserveSize);
     /**Get a sub group of the render queue.*/
     inline std::vector<RenderCommand*>& getSubQueue(QUEUE_GROUP group) { return _commands[group]; }
     /**Get the number of render commands contained in a subqueue.*/
@@ -94,7 +98,7 @@ public:
     
 protected:
     /**The commands in the render queue.*/
-    std::vector<std::vector<RenderCommand*>> _commands;
+    std::vector<RenderCommand*> _commands[QUEUE_COUNT];
     
     /**Cull state.*/
     bool _isCullEnabled;
@@ -260,4 +264,8 @@ protected:
 
 NS_CC_END
 
+/**
+ end of support group
+ @}
+ */
 #endif //__CC_RENDERER_H_

@@ -1,97 +1,16 @@
 #include "FileUtilsTest.h"
 
-static std::function<Layer*()> createFunctions[] = {
-    CL(TestResolutionDirectories),
-    CL(TestSearchPath),
-    CL(TestFilenameLookup),
-    CL(TestIsFileExist),
-    CL(TestFileFuncs),
-    CL(TestDirectoryFuncs),
-    CL(TextWritePlist),
-};
+USING_NS_CC;
 
-static int sceneIdx=-1;
-#define MAX_LAYER (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-static Layer* nextAction()
+FileUtilsTests::FileUtilsTests()
 {
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-    
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-static Layer* backAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;
-    
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-static Layer* restartAction()
-{
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-void FileUtilsTestScene::runThisTest()
-{
-    auto layer = nextAction();
-    addChild(layer);
-    
-    Director::getInstance()->replaceScene(this);
-}
-
-//  FileUtilsDemo
-
-void FileUtilsDemo::onEnter()
-{
-    BaseTest::onEnter();    
-}
-
-void FileUtilsDemo::backCallback(Ref* sender)
-{
-    auto scene = new (std::nothrow) FileUtilsTestScene();
-    auto layer = backAction();
-    
-    scene->addChild(layer);
-    Director::getInstance()->replaceScene(scene);
-    scene->release();
-}
-
-void FileUtilsDemo::nextCallback(Ref* sender)
-{
-    auto scene = new (std::nothrow) FileUtilsTestScene();
-    auto layer = nextAction();
-    
-    scene->addChild(layer);
-    Director::getInstance()->replaceScene(scene);
-    scene->release();
-}
-
-void FileUtilsDemo::restartCallback(Ref* sender)
-{
-    auto scene = new (std::nothrow) FileUtilsTestScene();
-    auto layer = restartAction();
-    
-    scene->addChild(layer);
-    Director::getInstance()->replaceScene(scene);
-    scene->release();
-}
-
-std::string FileUtilsDemo::title() const
-{
-    return "No title";
-}
-
-std::string FileUtilsDemo::subtitle() const
-{
-    return "";
+    ADD_TEST_CASE(TestResolutionDirectories);
+    ADD_TEST_CASE(TestSearchPath);
+    ADD_TEST_CASE(TestFilenameLookup);
+    ADD_TEST_CASE(TestIsFileExist);
+    ADD_TEST_CASE(TestFileFuncs);
+    ADD_TEST_CASE(TestDirectoryFuncs);
+    ADD_TEST_CASE(TextWritePlist);
 }
 
 // TestResolutionDirectories

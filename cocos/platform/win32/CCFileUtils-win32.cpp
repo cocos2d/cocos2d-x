@@ -264,7 +264,7 @@ unsigned char* FileUtilsWin32::getFileData(const std::string& filename, const ch
     return pBuffer;
 }
 
-std::string FileUtilsWin32::getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath)
+std::string FileUtilsWin32::getPathForFilename(const std::string& filename, const std::string& resolutionDirectory, const std::string& searchPath) const
 {
     std::string unixFileName = convertPathFormatToUnixStyle(filename);
     std::string unixResolutionDirectory = convertPathFormatToUnixStyle(resolutionDirectory);
@@ -273,7 +273,7 @@ std::string FileUtilsWin32::getPathForFilename(const std::string& filename, cons
     return FileUtils::getPathForFilename(unixFileName, unixResolutionDirectory, unixSearchPath);
 }
 
-std::string FileUtilsWin32::getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename)
+std::string FileUtilsWin32::getFullPathForDirectoryAndFilename(const std::string& strDirectory, const std::string& strFilename) const
 {
     std::string unixDirectory = convertPathFormatToUnixStyle(strDirectory);
     std::string unixFilename = convertPathFormatToUnixStyle(strFilename);

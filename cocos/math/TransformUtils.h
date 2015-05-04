@@ -31,6 +31,11 @@ THE SOFTWARE.
 #include "platform/CCGL.h"
 #include "base/ccMacros.h"
 
+/**
+ * @addtogroup base
+ * @{
+ */
+
 namespace   cocos2d {
 
 struct AffineTransform;
@@ -43,5 +48,8 @@ CC_DLL void CGAffineToGL(const AffineTransform &t, GLfloat *m);
 CC_DLL void GLToCGAffine(const GLfloat *m, AffineTransform *t);
 /**@}*/
 }//namespace   cocos2d 
-
+/**
+ end of base group
+ @}
+ */
 #endif // __SUPPORT_TRANSFORM_UTILS_H__
