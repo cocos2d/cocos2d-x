@@ -85,7 +85,6 @@ void MeshCommand::init(float globalZOrder,
 {
     CCASSERT(material, "material cannot be nill");
 
-#if 1
     RenderCommand::init(globalZOrder, mv, flags);
 
     _globalOrder = globalZOrder;
@@ -99,22 +98,6 @@ void MeshCommand::init(float globalZOrder,
     _mv.set(mv);
 
     _is3D = true;
-#else
-
-    Pass* pass = material->getTechnique()->getPassByIndex(0);
-    auto textureId = pass->getTexture() ? pass->getTexture()->getName() : 0;
-    init(globalZOrder,
-         textureId,
-         pass->getGLProgramState(),
-         pass->getBlendFunc(),
-         vertexBuffer,
-         indexBuffer,
-         primitive,
-         indexFormat,
-         indexCount,
-         mv,
-         flags);
-#endif
 }
 
 void MeshCommand::init(float globalOrder,

@@ -336,7 +336,7 @@ void RenderState::StateBlock::restore(long stateOverrideBits)
     }
     if (!(stateOverrideBits & RS_BLEND_FUNC) && (_defaultState->_bits & RS_BLEND_FUNC))
     {
-        glBlendFunc(GL_ONE, GL_ZERO);
+        GL::blendFunc(GL_ONE, GL_ZERO);
         _defaultState->_bits &= ~RS_BLEND_FUNC;
         _defaultState->_blendSrc = RenderState::BLEND_ONE;
         _defaultState->_blendDst = RenderState::BLEND_ZERO;

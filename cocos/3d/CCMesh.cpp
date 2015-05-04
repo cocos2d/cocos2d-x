@@ -127,7 +127,7 @@ Mesh::Mesh()
 , _glProgramState(nullptr)
 , _blend(BlendFunc::ALPHA_NON_PREMULTIPLIED)
 , _visibleChanged(nullptr)
-, _blendDirty(false)
+, _blendDirty(true)
 {
     
 }
@@ -348,6 +348,9 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
         _material->getStateBlock()->setDepthWrite(false);
     else
         _material->getStateBlock()->setDepthWrite(true);
+
+
+    _meshCommand.setSkipBatching(isTransparent);
 
     // set default uniforms for Mesh
     // 'u_color' and others
