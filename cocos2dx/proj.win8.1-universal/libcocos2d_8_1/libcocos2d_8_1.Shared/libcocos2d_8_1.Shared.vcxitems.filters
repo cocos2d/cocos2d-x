@@ -1020,6 +1020,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\platform\win-8.1\Keyboard-winrt.h">
       <Filter>libcocos2d\platform\win-8.1</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\CocoStudio\CocoStudio.h">
+      <Filter>libExtensions\CocoStudio</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)pch.cpp">
@@ -1873,6 +1876,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\platform\win-8.1\Keyboard-winrt.cpp">
       <Filter>libcocos2d\platform\win-8.1</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\CocoStudio\CocoStudio.cpp">
+      <Filter>libExtensions\CocoStudio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

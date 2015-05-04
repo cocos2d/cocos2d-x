@@ -80,6 +80,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\CocoStudio\Armature\utils\CCTransformHelp.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\CocoStudio\Armature\utils\CCTweenFunction.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\CocoStudio\Armature\utils\CCUtilMath.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\CocoStudio\CocoStudio.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\CocoStudio\Components\CCComAttribute.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\CocoStudio\Components\CCComAudio.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\CocoStudio\Components\CCComBase.h" />
@@ -427,6 +428,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\CocoStudio\Armature\utils\CCTransformHelp.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\CocoStudio\Armature\utils\CCTweenFunction.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\CocoStudio\Armature\utils\CCUtilMath.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\CocoStudio\CocoStudio.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\CocoStudio\Components\CCComAttribute.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\CocoStudio\Components\CCComAudio.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\extensions\CocoStudio\Components\CCComController.cpp" />
