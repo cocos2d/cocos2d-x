@@ -563,7 +563,7 @@ void TextureCache::waitForQuit()
 
 void TextureCache::setFileTextureFormat(std::string path, Texture2D::PixelFormat format)
 {
-    std::string key = FileUtils::getInstance()->fullPathForFilename(path);;
+    std::string key = FileUtils::getInstance()->fullPathForFilename(path);
     auto it = _fileTextureFormat.find(key);
     if( it != _fileTextureFormat.end() )
         _fileTextureFormat.erase(it);
