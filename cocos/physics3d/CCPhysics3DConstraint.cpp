@@ -291,13 +291,6 @@ float Physics3DHingeConstraint::getHingeAngle(const cocos2d::Mat4& transA, const
     return static_cast<btHingeConstraint*>(_constraint)->getHingeAngle(btTransA, btTransB);
 }
 
-void Physics3DHingeConstraint::testLimit(const cocos2d::Mat4& transA,const cocos2d::Mat4& transB)
-{
-    auto btTransA = convertMat4TobtTransform(transA);
-    auto btTransB = convertMat4TobtTransform(transB);
-    static_cast<btHingeConstraint*>(_constraint)->testLimit(btTransA, btTransB);
-}
-
 cocos2d::Mat4 Physics3DHingeConstraint::getAFrame()
 {
     const auto& trans = static_cast<btHingeConstraint*>(_constraint)->getAFrame();

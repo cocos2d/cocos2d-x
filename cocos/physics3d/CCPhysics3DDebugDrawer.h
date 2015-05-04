@@ -39,9 +39,15 @@
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup _3d
+ * @{
+ */
+
 class GLProgram;
 class Renderer;
 
+/** @brief Physics3DDebugDrawer: debug draw the physics object, used by Physics3DWorld */
 class Physics3DDebugDrawer : public btIDebugDraw
 {
 public:
@@ -51,6 +57,7 @@ public:
 
     void draw(cocos2d::Renderer *renderer);
 
+    // override function
     virtual void	drawLine(const btVector3& from,const btVector3& to,const btVector3& color) override;
     virtual void	drawContactPoint(const btVector3& PointOnB,const btVector3& normalOnB,btScalar distance,int lifeTime,const btVector3& color) override;
     virtual void	reportErrorWarning(const char* warningString) override;
@@ -88,6 +95,9 @@ protected:
     bool        _dirty;
     int _debugMode;
 };
+
+// end of 3d group
+/// @}
 
 NS_CC_END
 

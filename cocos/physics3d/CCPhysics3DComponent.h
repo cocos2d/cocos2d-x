@@ -36,18 +36,25 @@
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup _3d
+ * @{
+ */
+
 class Physics3DObject;
 class Physics3DWorld;
 
+/** @brief Physics3DComponent: A component with 3D physics, you can add a rigid body to it, and then add this component to a node, the node will move and rotate with this rigid body */
 class CC_DLL Physics3DComponent : public cocos2d::Component
 {
+    friend class Physics3DWorld;
 public:
     enum class PhysicsSyncFlag
     {
         NONE = 0,
-        NODE_TO_PHYSICS = 1,
-        PHYSICS_TO_NODE = 2,
-        NODE_AND_NODE = NODE_TO_PHYSICS | PHYSICS_TO_NODE,
+        NODE_TO_PHYSICS = 1, //align node transform to the physics
+        PHYSICS_TO_NODE = 2, // align physics transform to the node
+        NODE_AND_NODE = NODE_TO_PHYSICS | PHYSICS_TO_NODE, //pre simulation, align the physics object to the node and align the node transform according to physics object after simulation
     };
     
     CREATE_FUNC(Physics3DComponent);
@@ -55,30 +62,45 @@ public:
     virtual bool init() override;
 
     /**
-     * create
+     * create Physics3DComponent
+     * @param physicsObj pointer to a Physics object contain in the component
+     * @param translateInPhysics offset that the owner node in the physics object's space
+     * @param rotInPhsyics offset rotation that the owner node in the physics object's space
+     * @return created Physics3DComponent
      */
     static Physics3DComponent* create(Physics3DObject* physicsObj, const cocos2d::Vec3& translateInPhysics = cocos2d::Vec3::ZERO, const cocos2d::Quaternion& rotInPhsyics = cocos2d::Quaternion::ZERO);
     
+    /**
+     * set Physics object to the component
+     */
     void setPhysics3DObject(Physics3DObject* physicsObj);
     
+    /**
+     * get physics object
+     */
     Physics3DObject* getPhysics3DObject() const { return _physics3DObj; }
     
+    /**
+     * get the component name, it is used to find whether it is Physics3DComponent
+     */
     static std::string& getPhysics3DComponentName();
     
+    /**
+     * set it enable or not
+     */
     virtual void setEnabled(bool b) override;
     
     
     virtual void onEnter() override;
     virtual void onExit() override;
     
-    void preSimulate();
-    
-    void postSimulate();
-    
+    /**
+     * add this component to physics world, called by scene
+     */
     void addToPhysicsWorld(Physics3DWorld* world);
     
     /**
-     * The node's transform in physics space
+     * The node's transform in physics object space
      */
     void setTransformInPhysics(const cocos2d::Vec3& translateInPhysics, const cocos2d::Quaternion& rotInPhsyics);
     
@@ -87,14 +109,24 @@ public:
      */
     void setSyncFlag(PhysicsSyncFlag syncFlag);
     
+    /**
+     * align node and physics according to physics object
+     */
     void syncToPhysics();
     
+    /**
+     * align node and physics according to node
+     */
     void syncToNode();
     
 CC_CONSTRUCTOR_ACCESS:
     Physics3DComponent();
     
 protected:
+    void preSimulate();
+    
+    void postSimulate();
+    
     cocos2d::Mat4             _transformInPhysics; //transform in physics space
     cocos2d::Mat4             _invTransformInPhysics;
     
@@ -102,6 +134,8 @@ protected:
     PhysicsSyncFlag           _syncFlag;
 };
 
+// end of 3d group
+/// @}
 NS_CC_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION
