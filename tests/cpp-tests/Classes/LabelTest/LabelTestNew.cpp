@@ -76,6 +76,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelIssue10089Test);
     ADD_TEST_CASE(LabelSystemFontColor);
     ADD_TEST_CASE(LabelIssue10773Test);
+    ADD_TEST_CASE(LabelIssue10576Test);
 };
 
 LabelTTFAlignmentNew::LabelTTFAlignmentNew()
@@ -1883,4 +1884,32 @@ std::string LabelIssue10773Test::title() const
 std::string LabelIssue10773Test::subtitle() const
 {
     return "Should not crash!";
+}
+
+LabelIssue10576Test::LabelIssue10576Test()
+{
+    auto center = VisibleRect::center();
+
+    auto label = Label::createWithTTF("abcdefg", "fonts/arial.ttf", 24);
+    for (int index = 0; index < label->getStringLength(); ++index)
+    {
+        label->getLetter(index);
+    }
+
+    this->runAction(Sequence::create(DelayTime::create(2.0f), CallFunc::create([label](){
+        label->setString("Hello World!");
+    }), nullptr));
+
+    label->setPosition(center.x, center.y);
+    addChild(label);
+}
+
+std::string LabelIssue10576Test::title() const
+{
+    return "Test for Issue #10576";
+}
+
+std::string LabelIssue10576Test::subtitle() const
+{
+    return "You should see another string displayed correctly after 2 seconds.";
 }
