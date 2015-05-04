@@ -289,6 +289,9 @@ THE SOFTWARE.
 #include "3d/CCSkybox.h"
 #include "3d/CCTerrain.h"
 
+//3d physics
+#include "physics3d/CCPhysics3D.h"
+
 // Deprecated include
 #include "deprecated/CCDictionary.h"
 #include "deprecated/CCArray.h"
