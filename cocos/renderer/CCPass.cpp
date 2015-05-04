@@ -135,7 +135,7 @@ void Pass::bind(const Mat4& modelView, bool bindAttributes)
         glprogramstate->applyAttributes();
     glprogramstate->applyUniforms();
 
-    //set blend mode
+    //set render state
     RenderState::bind(this);
 }
 

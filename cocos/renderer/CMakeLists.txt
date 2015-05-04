@@ -1,6 +1,5 @@
 
 set(COCOS_RENDERER_SRC
-
   renderer/CCBatchCommand.cpp
   renderer/CCCustomCommand.cpp
   renderer/CCGLProgram.cpp
