@@ -628,13 +628,15 @@ void Label::alignText()
                 letterSprite = dynamic_cast<Sprite*>(child);
                 if (letterSprite)
                 {
-                    uvRect.size.height = _lettersInfo[tag].def.height;
-                    uvRect.size.width = _lettersInfo[tag].def.width;
-                    uvRect.origin.x = _lettersInfo[tag].def.U;
-                    uvRect.origin.y = _lettersInfo[tag].def.V;
+                    auto& letterDef = _lettersInfo[tag].def;
+                    uvRect.size.height = letterDef.height;
+                    uvRect.size.width = letterDef.width;
+                    uvRect.origin.x = letterDef.U;
+                    uvRect.origin.y = letterDef.V;
 
-                    letterSprite->setTexture(textures.at(_lettersInfo[tag].def.textureID));
+                    letterSprite->setTexture(textures.at(letterDef.textureID));
                     letterSprite->setTextureRect(uvRect);
+                    letterSprite->setPosition(_lettersInfo[tag].position);
                 }
                 ++index;
             }
