@@ -16,6 +16,7 @@ class RootTests : public TestList
 public:
     RootTests()
     {
+        addTest("SpritePolygon", [](){return new (std::nothrow) SpritePolygonTest(); });
         addTest("ActionManager", [](){return new (std::nothrow) ActionManagerTests(); });
         addTest("Actions - Basic", [](){ return new (std::nothrow) ActionsTests(); });
         addTest("Actions - Ease", [](){return new (std::nothrow) ActionsEaseTests(); });

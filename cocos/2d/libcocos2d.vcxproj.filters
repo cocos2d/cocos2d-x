@@ -259,8 +259,14 @@
     <Filter Include="cocostudio\reader\WidgetReader\ArmatureNodeReader">
       <UniqueIdentifier>{e1848cce-b225-42c4-bb6e-6430b6da123b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="physics3d">
-      <UniqueIdentifier>{5cbe45d9-16b0-4d09-9467-770ba1843a58}</UniqueIdentifier>
+    <Filter Include="external\poly2tri">
+      <UniqueIdentifier>{46294cdb-c29a-4480-9988-2e017f5f7846}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\poly2tri\common">
+      <UniqueIdentifier>{b0703876-33ee-433c-bba3-45304ce83813}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\poly2tri\sweep">
+      <UniqueIdentifier>{c37eceeb-5702-4ff7-88de-94680a22266f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1797,29 +1803,29 @@
     <ClCompile Include="..\editor-support\cocostudio\CocoStudio.cpp">
       <Filter>cocostudio\json</Filter>
     </ClCompile>
-    <ClCompile Include="..\physics3d\CCPhysics3D.cpp">
-      <Filter>physics3d</Filter>
+    <ClCompile Include="..\..\external\poly2tri\common\shapes.cc">
+      <Filter>external\poly2tri\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\physics3d\CCPhysics3DComponent.cpp">
-      <Filter>physics3d</Filter>
+    <ClCompile Include="..\..\external\poly2tri\sweep\advancing_front.cc">
+      <Filter>external\poly2tri\sweep</Filter>
     </ClCompile>
-    <ClCompile Include="..\physics3d\CCPhysics3DConstraint.cpp">
-      <Filter>physics3d</Filter>
+    <ClCompile Include="..\..\external\poly2tri\sweep\cdt.cc">
+      <Filter>external\poly2tri\sweep</Filter>
     </ClCompile>
-    <ClCompile Include="..\physics3d\CCPhysics3DDebugDrawer.cpp">
-      <Filter>physics3d</Filter>
+    <ClCompile Include="..\..\external\poly2tri\sweep\sweep.cc">
+      <Filter>external\poly2tri\sweep</Filter>
     </ClCompile>
-    <ClCompile Include="..\physics3d\CCPhysics3DObject.cpp">
-      <Filter>physics3d</Filter>
+    <ClCompile Include="..\..\external\poly2tri\sweep\sweep_context.cc">
+      <Filter>external\poly2tri\sweep</Filter>
     </ClCompile>
-    <ClCompile Include="..\physics3d\CCPhysics3DShape.cpp">
-      <Filter>physics3d</Filter>
+    <ClCompile Include="MarchingSquare.cpp">
+      <Filter>2d</Filter>
     </ClCompile>
-    <ClCompile Include="..\physics3d\CCPhysics3DWorld.cpp">
-      <Filter>physics3d</Filter>
+    <ClCompile Include="SpritePolygon.cpp">
+      <Filter>2d</Filter>
     </ClCompile>
-    <ClCompile Include="..\physics3d\CCPhysicsSprite3D.cpp">
-      <Filter>physics3d</Filter>
+    <ClCompile Include="SpritePolygonCache.cpp">
+      <Filter>2d</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3539,29 +3545,35 @@
     <ClInclude Include="..\editor-support\cocostudio\CCObjectExtensionData.h">
       <Filter>cocostudio\json</Filter>
     </ClInclude>
-    <ClInclude Include="..\physics3d\CCPhysics3D.h">
-      <Filter>physics3d</Filter>
+    <ClInclude Include="..\..\external\poly2tri\poly2tri.h">
+      <Filter>external\poly2tri</Filter>
     </ClInclude>
-    <ClInclude Include="..\physics3d\CCPhysics3DComponent.h">
-      <Filter>physics3d</Filter>
+    <ClInclude Include="..\..\external\poly2tri\common\shapes.h">
+      <Filter>external\poly2tri\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\physics3d\CCPhysics3DConstraint.h">
-      <Filter>physics3d</Filter>
+    <ClInclude Include="..\..\external\poly2tri\common\utils.h">
+      <Filter>external\poly2tri\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\physics3d\CCPhysics3DDebugDrawer.h">
-      <Filter>physics3d</Filter>
+    <ClInclude Include="..\..\external\poly2tri\sweep\advancing_front.h">
+      <Filter>external\poly2tri\sweep</Filter>
     </ClInclude>
-    <ClInclude Include="..\physics3d\CCPhysics3DObject.h">
-      <Filter>physics3d</Filter>
+    <ClInclude Include="..\..\external\poly2tri\sweep\cdt.h">
+      <Filter>external\poly2tri\sweep</Filter>
     </ClInclude>
-    <ClInclude Include="..\physics3d\CCPhysics3DShape.h">
-      <Filter>physics3d</Filter>
+    <ClInclude Include="..\..\external\poly2tri\sweep\sweep.h">
+      <Filter>external\poly2tri\sweep</Filter>
     </ClInclude>
-    <ClInclude Include="..\physics3d\CCPhysics3DWorld.h">
-      <Filter>physics3d</Filter>
+    <ClInclude Include="..\..\external\poly2tri\sweep\sweep_context.h">
+      <Filter>external\poly2tri\sweep</Filter>
     </ClInclude>
-    <ClInclude Include="..\physics3d\CCPhysicsSprite3D.h">
-      <Filter>physics3d</Filter>
+    <ClInclude Include="MarchingSquare.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="SpritePolygon.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="SpritePolygonCache.h">
+      <Filter>2d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

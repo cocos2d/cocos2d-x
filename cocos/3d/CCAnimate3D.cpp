@@ -69,7 +69,7 @@ bool Animate3D::init(Animation3D* animation)
     animation->retain();
     setDuration(animation->getDuration());
     setOriginInterval(animation->getDuration());
-    setHighQuality(Configuration::getInstance()->isHighAnimate3DQuality());
+    setQuality(Configuration::getInstance()->getAnimate3DQuality());
     return true;
 }
 
@@ -85,7 +85,7 @@ bool Animate3D::init(Animation3D* animation, float fromTime, float duration)
     setOriginInterval(duration);
     _animation = animation;
     animation->retain();
-    setHighQuality(Configuration::getInstance()->isHighAnimate3DQuality());
+    setQuality(Configuration::getInstance()->getAnimate3DQuality());
     return true;
 }
 
@@ -312,58 +312,61 @@ void Animate3D::update(float t)
         }
         _lastTime = t;
         
-        if (_weight > 0.0f)
+        if (_quality != Animate3DQuality::QUALITY_NONE)
         {
-            float transDst[3], rotDst[4], scaleDst[3];
-            float* trans = nullptr, *rot = nullptr, *scale = nullptr;
-            if (_playReverse)
-                t = 1 - t;
-            
-            t = _start + t * _last;
- 
-            for (const auto& it : _boneCurves) {
-                auto bone = it.first;
-                auto curve = it.second;
-                if (curve->translateCurve)
-                {
-                    curve->translateCurve->evaluate(t, transDst, _translateEvaluate);
-                    trans = &transDst[0];
-                }
-                if (curve->rotCurve)
-                {
-                    curve->rotCurve->evaluate(t, rotDst, _roteEvaluate);
-                    rot = &rotDst[0];
-                }
-                if (curve->scaleCurve)
-                {
-                    curve->scaleCurve->evaluate(t, scaleDst, _scaleEvaluate);
-                    scale = &scaleDst[0];
-                }
-                bone->setAnimationValue(trans, rot, scale, this, _weight);
-            }
-            
-            for (const auto& it : _nodeCurves)
+            if (_weight > 0.0f)
             {
-                auto node = it.first;
-                auto curve = it.second;
-                Mat4 transform;
-                if (curve->translateCurve)
-                {
-                    curve->translateCurve->evaluate(t, transDst, _translateEvaluate);
-                    transform.translate(transDst[0], transDst[1], transDst[2]);
+                float transDst[3], rotDst[4], scaleDst[3];
+                float* trans = nullptr, *rot = nullptr, *scale = nullptr;
+                if (_playReverse)
+                    t = 1 - t;
+                
+                t = _start + t * _last;
+                
+                for (const auto& it : _boneCurves) {
+                    auto bone = it.first;
+                    auto curve = it.second;
+                    if (curve->translateCurve)
+                    {
+                        curve->translateCurve->evaluate(t, transDst, _translateEvaluate);
+                        trans = &transDst[0];
+                    }
+                    if (curve->rotCurve)
+                    {
+                        curve->rotCurve->evaluate(t, rotDst, _roteEvaluate);
+                        rot = &rotDst[0];
+                    }
+                    if (curve->scaleCurve)
+                    {
+                        curve->scaleCurve->evaluate(t, scaleDst, _scaleEvaluate);
+                        scale = &scaleDst[0];
+                    }
+                    bone->setAnimationValue(trans, rot, scale, this, _weight);
                 }
-                if (curve->rotCurve)
+                
+                for (const auto& it : _nodeCurves)
                 {
-                    curve->rotCurve->evaluate(t, rotDst, _roteEvaluate);
-                    Quaternion qua(rotDst[0], rotDst[1], rotDst[2], rotDst[3]);
-                    transform.rotate(qua);
+                    auto node = it.first;
+                    auto curve = it.second;
+                    Mat4 transform;
+                    if (curve->translateCurve)
+                    {
+                        curve->translateCurve->evaluate(t, transDst, _translateEvaluate);
+                        transform.translate(transDst[0], transDst[1], transDst[2]);
+                    }
+                    if (curve->rotCurve)
+                    {
+                        curve->rotCurve->evaluate(t, rotDst, _roteEvaluate);
+                        Quaternion qua(rotDst[0], rotDst[1], rotDst[2], rotDst[3]);
+                        transform.rotate(qua);
+                    }
+                    if (curve->scaleCurve)
+                    {
+                        curve->scaleCurve->evaluate(t, scaleDst, _scaleEvaluate);
+                        transform.scale(scaleDst[0], scaleDst[1], scaleDst[2]);
+                    }
+                    node->setAdditionalTransform(&transform);
                 }
-                if (curve->scaleCurve)
-                {
-                    curve->scaleCurve->evaluate(t, scaleDst, _scaleEvaluate);
-                    transform.scale(scaleDst[0], scaleDst[1], scaleDst[2]);
-                }
-                node->setAdditionalTransform(&transform);
             }
         }
     }
@@ -391,26 +394,26 @@ void Animate3D::setOriginInterval(float interval)
     _originInterval = interval;
 }
 
-void Animate3D::setHighQuality(bool isHighQuality)
+void Animate3D::setQuality(Animate3DQuality quality)
 {
-    if (isHighQuality)
+    if (quality == Animate3DQuality::QUALITY_HIGH)
     {
         _translateEvaluate = EvaluateType::INT_LINEAR;
         _roteEvaluate = EvaluateType::INT_QUAT_SLERP;
         _scaleEvaluate = EvaluateType::INT_LINEAR;
     }
-    else
+    else if(quality == Animate3DQuality::QUALITY_LOW)
     {
         _translateEvaluate = EvaluateType::INT_NEAR;
         _roteEvaluate = EvaluateType::INT_NEAR;
         _scaleEvaluate = EvaluateType::INT_NEAR;
     }
-    _isHighQuality = isHighQuality;
+    _quality = quality;
 }
 
-bool Animate3D::isHighQuality() const
+Animate3DQuality Animate3D::getQuality() const
 {
-    return _isHighQuality;
+    return _quality;
 }
 
 Animate3D::Animate3D()
@@ -425,7 +428,7 @@ Animate3D::Animate3D()
 , _lastTime(0.0f)
 , _originInterval(0.0f)
 {
-    setHighQuality(true);
+    setQuality(Animate3DQuality::QUALITY_HIGH);
 }
 Animate3D::~Animate3D()
 {

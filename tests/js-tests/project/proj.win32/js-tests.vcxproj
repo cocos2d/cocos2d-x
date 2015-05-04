@@ -121,7 +121,7 @@ mkdir "$(OutDir)\res"
 xcopy "$(OutDir)..\*.dll" "$(OutDir)" /D /Y
 xcopy "$(ProjectDir)..\..\..\..\cocos\scripting\js-bindings\script\*" "$(OutDir)\script" /e /Y
 xcopy "$(ProjectDir)..\..\src" "$(OutDir)\src\" /e /Y
-xcopy "$(ProjectDir)..\..\res" "$(OutDir)\res\" /e /Y
+xcopy "$(ProjectDir)..\..\..\cpp-tests\Resources" "$(OutDir)\res\" /e /Y
 copy "$(ProjectDir)..\..\main.js" "$(OutDir)"
 copy "$(ProjectDir)..\..\project.json" "$(OutDir)"</Command>
     </PreBuildEvent>

@@ -1743,6 +1743,36 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\WICImageLoader-winrt.h">
       <Filter>platform\winrt</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\MarchingSquare.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\common\shapes.h">
+      <Filter>external\poly2tri\common</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\common\utils.h">
+      <Filter>external\poly2tri\common</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\sweep\advancing_front.h">
+      <Filter>external\poly2tri\sweep</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\sweep\cdt.h">
+      <Filter>external\poly2tri\sweep</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\sweep\sweep.h">
+      <Filter>external\poly2tri\sweep</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\sweep\sweep_context.h">
+      <Filter>external\poly2tri\sweep</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\poly2tri.h">
+      <Filter>external\poly2tri</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\SpritePolygon.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\SpritePolygonCache.h">
+      <Filter>2d</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos2d.cpp" />
@@ -3315,6 +3345,30 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\platform\winrt\WICImageLoader-winrt.cpp">
       <Filter>platform\winrt</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\MarchingSquare.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\common\shapes.cc">
+      <Filter>external\poly2tri\common</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\sweep\advancing_front.cc">
+      <Filter>external\poly2tri\sweep</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\sweep\cdt.cc">
+      <Filter>external\poly2tri\sweep</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\sweep\sweep.cc">
+      <Filter>external\poly2tri\sweep</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\external\poly2tri\sweep\sweep_context.cc">
+      <Filter>external\poly2tri\sweep</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\SpritePolygon.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\SpritePolygonCache.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="2d">
@@ -3562,6 +3616,15 @@
     </Filter>
     <Filter Include="extension\Particle3D\PU">
       <UniqueIdentifier>{ed044d4b-058f-4cee-911e-49fad0a03953}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\poly2tri">
+      <UniqueIdentifier>{1567b8a7-947d-4cf9-883d-5e0cd06efffc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\poly2tri\common">
+      <UniqueIdentifier>{292e8d6b-015b-40ad-a77c-8d190940da04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\poly2tri\sweep">
+      <UniqueIdentifier>{932c5f6e-07b3-4b34-97ae-2f3d42024149}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

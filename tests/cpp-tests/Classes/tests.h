@@ -1,6 +1,7 @@
 #ifndef _TESTS_H_
 #define _TESTS_H_
 
+#include "SpritePolygonTest/SpritePolygonTest.h"
 #include "UnitTest/UnitTest.h"
 #include "NewRendererTest/NewRendererTest.h"
 #include "ConsoleTest/ConsoleTest.h"
