@@ -106,6 +106,9 @@
     <Filter Include="touch_dispatcher">
       <UniqueIdentifier>{7b1b3b9d-7307-4a5c-8e6c-40e96804ed08}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CocosDenshion">
+      <UniqueIdentifier>{2fe9984f-5255-4bce-8408-99849c76c508}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\actions\CCAction.cpp">
@@ -499,6 +502,15 @@
       <Filter>platform\winrt</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="..\..\CocosDenshion\wp8\Audio.cpp">
+      <Filter>CocosDenshion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CocosDenshion\wp8\MediaStreamer.cpp">
+      <Filter>CocosDenshion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\CocosDenshion\wp8\SimpleAudioEngine.cpp">
+      <Filter>CocosDenshion</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\actions\CCAction.h">
@@ -963,5 +975,11 @@
       <Filter>platform\winrt</Filter>
     </ClInclude>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="..\..\CocosDenshion\wp8\Audio.h">
+      <Filter>CocosDenshion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\CocosDenshion\wp8\MediaStreamer.h">
+      <Filter>CocosDenshion</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

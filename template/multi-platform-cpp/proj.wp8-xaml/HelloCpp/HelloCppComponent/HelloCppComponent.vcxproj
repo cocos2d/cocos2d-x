@@ -192,9 +192,6 @@
     <ProjectReference Include="..\..\..\..\..\cocos2dx\proj.wp8\libcocos2d.vcxproj">
       <Project>{871aadce-3905-48ef-ac2b-c67c335b0dcc}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\CocosDenshion\proj.wp8\CocosDenshion.vcxproj">
-      <Project>{72ddd46b-55b1-4531-9eea-72081acbcaa2}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\..\extensions\proj.wp8\libExtensions.vcxproj">
       <Project>{a5ce59f9-2785-4e08-bd3c-0f370eeca439}</Project>
     </ProjectReference>

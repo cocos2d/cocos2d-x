@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2012 for Windows Phone
+# Visual Studio 14
+VisualStudioVersion = 14.0.22823.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloCpp", "HelloCpp.vcxproj", "{2AC777CA-2D3B-41C8-98AC-B6ED1A4B0988}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcocos2d", "..\..\..\cocos2dx\proj.wp8\libcocos2d.vcxproj", "{871AADCE-3905-48EF-AC2B-C67C335B0DCC}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CocosDenshion", "..\..\..\CocosDenshion\proj.wp8\CocosDenshion.vcxproj", "{72DDD46B-55B1-4531-9EEA-72081ACBCAA2}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libExtensions", "..\..\..\extensions\proj.wp8\libExtensions.vcxproj", "{A5CE59F9-2785-4E08-BD3C-0F370EECA439}"
 EndProject
@@ -47,16 +47,6 @@ Global
 		{871AADCE-3905-48EF-AC2B-C67C335B0DCC}.Release|Win32.ActiveCfg = Release|Win32
 		{871AADCE-3905-48EF-AC2B-C67C335B0DCC}.Release|Win32.Build.0 = Release|Win32
 		{871AADCE-3905-48EF-AC2B-C67C335B0DCC}.Release|x64.ActiveCfg = Release|Win32
-		{72DDD46B-55B1-4531-9EEA-72081ACBCAA2}.Debug|ARM.ActiveCfg = Debug|ARM
-		{72DDD46B-55B1-4531-9EEA-72081ACBCAA2}.Debug|ARM.Build.0 = Debug|ARM
-		{72DDD46B-55B1-4531-9EEA-72081ACBCAA2}.Debug|Win32.ActiveCfg = Debug|Win32
-		{72DDD46B-55B1-4531-9EEA-72081ACBCAA2}.Debug|Win32.Build.0 = Debug|Win32
-		{72DDD46B-55B1-4531-9EEA-72081ACBCAA2}.Debug|x64.ActiveCfg = Debug|Win32
-		{72DDD46B-55B1-4531-9EEA-72081ACBCAA2}.Release|ARM.ActiveCfg = Release|ARM
-		{72DDD46B-55B1-4531-9EEA-72081ACBCAA2}.Release|ARM.Build.0 = Release|ARM
-		{72DDD46B-55B1-4531-9EEA-72081ACBCAA2}.Release|Win32.ActiveCfg = Release|Win32
-		{72DDD46B-55B1-4531-9EEA-72081ACBCAA2}.Release|Win32.Build.0 = Release|Win32
-		{72DDD46B-55B1-4531-9EEA-72081ACBCAA2}.Release|x64.ActiveCfg = Release|Win32
 		{A5CE59F9-2785-4E08-BD3C-0F370EECA439}.Debug|ARM.ActiveCfg = Debug|ARM
 		{A5CE59F9-2785-4E08-BD3C-0F370EECA439}.Debug|ARM.Build.0 = Debug|ARM
 		{A5CE59F9-2785-4E08-BD3C-0F370EECA439}.Debug|Win32.ActiveCfg = Debug|Win32

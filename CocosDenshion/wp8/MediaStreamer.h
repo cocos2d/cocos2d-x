@@ -19,6 +19,8 @@
 #pragma once
 
 
+#include <wrl.h>
+#include <xaudio2.h>
 #include <vector>
 
 ref class MediaStreamer
