@@ -42,6 +42,10 @@ class btRigidBody;
 class btCollisionObject;
 
 NS_CC_BEGIN
+/**
+ * @addtogroup _3d
+ * @{
+ */
 
 class Physics3DObject;
 class Physics3DConstraint;
@@ -50,6 +54,9 @@ class Physics3DComponent;
 class Physics3DShape;
 class Renderer;
 
+/**
+ * @brief The description of Physics3DWorld.
+ */
 struct CC_DLL Physics3DWorldDes
 {
     bool           isDebugDrawEnabled; //using physics debug draw?, false by default
@@ -61,6 +68,9 @@ struct CC_DLL Physics3DWorldDes
     }
 };
 
+/**
+ * @brief The physics information container, include Physics3DObjects, Physics3DConstraints, collision information and so on.
+ */
 class CC_DLL Physics3DWorld : public Ref
 {
     friend class Physics3DComponent;
@@ -73,32 +83,55 @@ public:
         Physics3DObject* hitObj;
     };
     
+    /**
+     * Creates a Physics3DWorld with Physics3DWorldDes. 
+     *
+     * @return An autoreleased Physics3DWorld object.
+     */
     static Physics3DWorld* create(Physics3DWorldDes* info);
     
+    /** Add a Physics3DObject. */
     void addPhysics3DObject(Physics3DObject* physicsObj);
     
+    /** Remove a Physics3DObject. */
     void removePhysics3DObject(Physics3DObject* physicsObj);
     
+    /** Remove all Physics3DObjects. */
     void removeAllPhysics3DObjects();
     
+    /** Add a Physics3DConstraint. */
     void addPhysics3DConstraint(Physics3DConstraint* constraint, bool disableCollisionsBetweenLinkedObjs = true);
     
+    /** Remove a Physics3DConstraint. */
     void removePhysics3DConstraint(Physics3DConstraint* constraint);
     
+    /** Remove all Physics3DConstraint. */
     void removeAllPhysics3DConstraints();
     
+    /** Simulate one frame. */
     void stepSimulate(float dt);
     
+    /** Enable or disable debug drawing. */
     void setDebugDrawEnable(bool enableDebugDraw);
     
+    /** Check debug drawing is enabled. */
     bool isDebugDrawEnabled() const;
     
+    /** Internal method, the updater of debug drawing, need called each frame. */
     void debugDraw(cocos2d::Renderer* renderer);
     
+    /** Get the list of Physics3DObjects. */
     const std::vector<Physics3DObject*>& getPhysicsObjects() const { return _objects; }
     
+    /**
+     * Ray cast method
+     * @param startPos The start position of ray.
+     * @param endPos The end position of ray.
+     * @param result the result of ray cast.
+     */
     bool rayCast(const cocos2d::Vec3& startPos, const cocos2d::Vec3& endPos, HitResult* result);
     
+    /** Performs a swept shape cast on all objects in the Physics3DWorld. */
     bool sweepShape(Physics3DShape* shape, const cocos2d::Mat4& startTransform, const cocos2d::Mat4& endTransform, HitResult* result);
     
 CC_CONSTRUCTOR_ACCESS:
@@ -129,6 +162,8 @@ protected:
 #endif // CC_ENABLE_BULLET_INTEGRATION
 };
 
+// end of 3d group
+/// @}
 NS_CC_END
 
 #endif

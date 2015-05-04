@@ -35,7 +35,14 @@
 #if (CC_ENABLE_BULLET_INTEGRATION)
 
 NS_CC_BEGIN
+/**
+ * @addtogroup _3d
+ * @{
+ */
 
+ /**
+ * @brief Convenient class to create a rigid body with Sprite3D
+ */
 class CC_DLL PhysicsSprite3D : public cocos2d::Sprite3D
 {
 public:
@@ -43,12 +50,16 @@ public:
     /** creates a PhysicsSprite3D*/
     static PhysicsSprite3D* create(const std::string &modelPath, Physics3DRigidBodyDes* rigidDes, const cocos2d::Vec3& translateInPhysics = cocos2d::Vec3::ZERO, const cocos2d::Quaternion& rotInPhsyics = cocos2d::Quaternion::ZERO);
     
+    /** Get the Physics3DObject. */
     Physics3DObject* getPhysicsObj() const;
     
+    /** Set synchronization flag, see Physics3DComponent. */
     void setSyncFlag(Physics3DComponent::PhysicsSyncFlag syncFlag);
     
+    /** Physics synchronize rendering. */
     void syncToPhysics();
     
+    /** Rendering synchronize physics. */
     void syncToNode();
     
 CC_CONSTRUCTOR_ACCESS:
@@ -59,6 +70,8 @@ protected:
     Physics3DComponent* _physicsComponent;
 };
 
+// end of 3d group
+/// @}
 NS_CC_END
 
 #endif // CC_ENABLE_BULLET_INTEGRATION
