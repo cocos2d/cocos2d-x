@@ -14,4 +14,10 @@
 -- @param #int o
 -- @return TransitionZoomFlipAngular#TransitionZoomFlipAngular ret (return value: cc.TransitionZoomFlipAngular)
 
+--------------------------------
+-- 
+-- @function [parent=#TransitionZoomFlipAngular] TransitionZoomFlipAngular 
+-- @param self
+-- @return TransitionZoomFlipAngular#TransitionZoomFlipAngular self (return value: cc.TransitionZoomFlipAngular)
+        
 return nil
