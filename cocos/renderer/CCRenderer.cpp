@@ -695,6 +695,8 @@ void Renderer::clear()
     glDepthMask(true);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glDepthMask(false);
+
+    RenderState::StateBlock::_defaultState->setDepthWrite(false);
 }
 
 void Renderer::setDepthTest(bool enable)
@@ -886,10 +888,10 @@ void Renderer::drawBatchedQuads()
         glBindBuffer(GL_ARRAY_BUFFER, _quadbuffersVBO[0]);
         
         // option 1: subdata
-        //        glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * n , &_quads[start] );
+        //  glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * n , &_quads[start] );
         
         // option 2: data
-        //        glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), &quads_[start], GL_DYNAMIC_DRAW);
+        //  glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), &quads_[start], GL_DYNAMIC_DRAW);
         
         // option 3: orphaning + glMapBuffer
         glBufferData(GL_ARRAY_BUFFER, sizeof(_quadVerts[0]) * _numberQuads * 4, nullptr, GL_DYNAMIC_DRAW);
@@ -947,27 +949,7 @@ void Renderer::drawBatchedQuads()
             //Use new material
             _lastMaterialID = newMaterialID;
 
-            if (cmd->isMultiplePass()) {
-
-                indexToDraw = cmd->getQuadCount() * 6;
-
-                for(auto& pass : cmd->getMaterial()->_currentTechnique->_passes) {
-
-                    pass->bind(cmd->getModelView());
-
-                    glDrawElements(GL_TRIANGLES, (GLsizei) indexToDraw, GL_UNSIGNED_SHORT, (GLvoid*) (startIndex*sizeof(_indices[0])) );
-                    _drawnBatches++;
-                    _drawnVertices += indexToDraw;
-
-                    pass->unbind();
-                }
-
-                indexToDraw = 0;
-                commandQueued = false;
-
-            } else {
-                cmd->useMaterial();
-            }
+            cmd->useMaterial();
         }
 
         if (commandQueued)

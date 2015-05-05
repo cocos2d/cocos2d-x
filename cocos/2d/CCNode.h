@@ -1811,7 +1811,6 @@ protected:
     Ref *_userObject;               ///< A user assigned Object
 
     GLProgramState *_glProgramState; ///< OpenGL Program State
-    Material* _material;
 
     int _orderOfArrival;            ///< used to preserve sequence while sorting children with the same localZOrder
 

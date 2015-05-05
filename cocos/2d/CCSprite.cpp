@@ -598,11 +598,7 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     if(_insideBounds)
 #endif
     {
-        if (_material) {
-            _quadCommand.init(_globalZOrder, _material, &_quad, 1, transform, flags);
-        } else {
-            _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, transform, flags);
-        }
+        _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, transform, flags);
         renderer->addCommand(&_quadCommand);
         
 #if CC_SPRITE_DEBUG_DRAW

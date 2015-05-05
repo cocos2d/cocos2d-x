@@ -108,7 +108,6 @@ Node::Node(void)
 , _userData(nullptr)
 , _userObject(nullptr)
 , _glProgramState(nullptr)
-, _material(nullptr)
 , _orderOfArrival(0)
 , _running(false)
 , _visible(true)
@@ -818,25 +817,6 @@ void Node::setUserObject(Ref *userObject)
     CC_SAFE_RETAIN(userObject);
     CC_SAFE_RELEASE(_userObject);
     _userObject = userObject;
-}
-
-Material* Node::getMaterial() const
-{
-    return _material;
-}
-
-void Node::setMaterial(Material* material)
-{
-    if (_material != material)
-    {
-        if (_material)
-            _material->setTarget(nullptr);
-        CC_SAFE_RELEASE(_material);
-        
-        _material = material;
-        CC_SAFE_RETAIN(_material);
-        _material->setTarget(this);
-    }
 }
 
 GLProgramState* Node::getGLProgramState() const
