@@ -70,15 +70,9 @@ def do_build_slaves():
             # patch_cpp_empty_test()
             slave_build_scripts = jenkins_script_path + "android-build.sh"
         elif(node_name == 'win32' or node_name == 'win32_win7' or node_name == 'win32_bak'):
-            if branch == 'v3':
-                slave_build_scripts = jenkins_script_path + "win32-vs2012-build.bat"
-            else:
-                slave_build_scripts = jenkins_script_path + "win32-vs2013-build.bat"
+            slave_build_scripts = jenkins_script_path + "win32-vs2013-build.bat"
         elif(node_name == 'windows-universal' or node_name == 'windows-universal_bak'):
-            if branch == 'v3':
-                slave_build_scripts = jenkins_script_path + "windows-universal-v3.bat"
-            else:
-                slave_build_scripts = jenkins_script_path + "windows-universal.bat"
+            slave_build_scripts = jenkins_script_path + "windows-universal.bat"
         elif(node_name == 'ios_mac' or node_name == 'ios' or node_name == 'ios_bak'):
             slave_build_scripts = jenkins_script_path + "ios-build.sh"
         elif(node_name == 'mac' or node_name == 'mac_bak'):
