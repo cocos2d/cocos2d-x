@@ -37,6 +37,7 @@
 #include "renderer/CCMaterial.h"
 #include "renderer/CCTechnique.h"
 #include "renderer/CCPass.h"
+#include "renderer/CCRenderState.h"
 #include "renderer/ccGLStateCache.h"
 
 #include "base/CCConfiguration.h"
@@ -165,24 +166,29 @@ void RenderQueue::restoreRenderState()
     if (_isCullEnabled)
     {
         glEnable(GL_CULL_FACE);
+        RenderState::StateBlock::_defaultState->setCullFace(true);
     }
     else
     {
         glDisable(GL_CULL_FACE);
+        RenderState::StateBlock::_defaultState->setCullFace(false);
     }
     
     
     if (_isDepthEnabled)
     {
         glEnable(GL_DEPTH_TEST);
+        RenderState::StateBlock::_defaultState->setDepthTest(true);
     }
     else
     {
         glDisable(GL_DEPTH_TEST);
+        RenderState::StateBlock::_defaultState->setDepthTest(false);
     }
     
     glDepthMask(_isDepthWrite);
-    
+    RenderState::StateBlock::_defaultState->setDepthWrite(_isDepthEnabled);
+
     CHECK_GL_ERROR_DEBUG();
 }
 
@@ -534,11 +540,15 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
         {
             glEnable(GL_DEPTH_TEST);
             glDepthMask(true);
+            RenderState::StateBlock::_defaultState->setDepthTest(true);
+            RenderState::StateBlock::_defaultState->setDepthWrite(true);
         }
         else
         {
             glDisable(GL_DEPTH_TEST);
             glDepthMask(false);
+            RenderState::StateBlock::_defaultState->setDepthTest(false);
+            RenderState::StateBlock::_defaultState->setDepthWrite(false);
         }
         for (auto it = zNegQueue.cbegin(); it != zNegQueue.cend(); ++it)
         {
@@ -554,9 +564,12 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     if (opaqueQueue.size() > 0)
     {
         //Clear depth to achieve layered rendering
-        glDepthMask(true);
         glEnable(GL_DEPTH_TEST);
-        
+        glDepthMask(true);
+        RenderState::StateBlock::_defaultState->setDepthTest(true);
+        RenderState::StateBlock::_defaultState->setDepthWrite(true);
+
+
         for (auto it = opaqueQueue.cbegin(); it != opaqueQueue.cend(); ++it)
         {
             processRenderCommand(*it);
@@ -572,7 +585,11 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     {
         glEnable(GL_DEPTH_TEST);
         glDepthMask(false);
-        
+
+        RenderState::StateBlock::_defaultState->setDepthTest(true);
+        RenderState::StateBlock::_defaultState->setDepthWrite(false);
+
+
         for (auto it = transQueue.cbegin(); it != transQueue.cend(); ++it)
         {
             processRenderCommand(*it);
@@ -590,11 +607,19 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
         {
             glEnable(GL_DEPTH_TEST);
             glDepthMask(true);
+
+            RenderState::StateBlock::_defaultState->setDepthTest(true);
+            RenderState::StateBlock::_defaultState->setDepthWrite(true);
+
         }
         else
         {
             glDisable(GL_DEPTH_TEST);
             glDepthMask(false);
+
+            RenderState::StateBlock::_defaultState->setDepthTest(false);
+            RenderState::StateBlock::_defaultState->setDepthWrite(false);
+
         }
         for (auto it = zZeroQueue.cbegin(); it != zZeroQueue.cend(); ++it)
         {
@@ -679,13 +704,19 @@ void Renderer::setDepthTest(bool enable)
         glClearDepth(1.0f);
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LEQUAL);
+
+        RenderState::StateBlock::_defaultState->setDepthTest(true);
+        RenderState::StateBlock::_defaultState->setDepthFunction(RenderState::DEPTH_LEQUAL);
+
 //        glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
     }
     else
     {
         glDisable(GL_DEPTH_TEST);
+
+        RenderState::StateBlock::_defaultState->setDepthTest(false);
     }
-    
+
     _isDepthTestFor2D = enable;
     CHECK_GL_ERROR_DEBUG();
 }

@@ -194,6 +194,8 @@ public:
     {
         friend class RenderState;
         friend class Pass;
+        friend class RenderQueue;
+        friend class Renderer;
         
     public:
         /**

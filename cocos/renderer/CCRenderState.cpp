@@ -197,12 +197,14 @@ RenderState::StateBlock* RenderState::StateBlock::create()
 }
 
 //
-// The defaults are based on GamePlay3D defaults, with only one change:
-// _depthWriteEnabled is FALSE in cocos2d-x in order to by backwards compatible
+// The defaults are based on GamePlay3D defaults, with the following chagnes
+// _depthWriteEnabled is FALSE
+// _depthTestEnabled is TRUE
+// _blendEnabled is TRUE
 RenderState::StateBlock::StateBlock()
 : _cullFaceEnabled(false)
-, _depthTestEnabled(false), _depthWriteEnabled(false), _depthFunction(RenderState::DEPTH_LESS)
-, _blendEnabled(false), _blendSrc(RenderState::BLEND_ONE), _blendDst(RenderState::BLEND_ZERO)
+, _depthTestEnabled(true), _depthWriteEnabled(false), _depthFunction(RenderState::DEPTH_LESS)
+, _blendEnabled(true), _blendSrc(RenderState::BLEND_ONE), _blendDst(RenderState::BLEND_ZERO)
 , _cullFaceSide(CULL_FACE_SIDE_BACK), _frontFace(FRONT_FACE_CCW)
 , _stencilTestEnabled(false), _stencilWrite(RS_ALL_ONES)
 , _stencilFunction(RenderState::STENCIL_ALWAYS), _stencilFunctionRef(0), _stencilFunctionMask(RS_ALL_ONES)
@@ -330,9 +332,9 @@ void RenderState::StateBlock::restore(long stateOverrideBits)
     // Restore any state that is not overridden and is not default
     if (!(stateOverrideBits & RS_BLEND) && (_defaultState->_bits & RS_BLEND))
     {
-        glDisable(GL_BLEND);
+        glEnable(GL_BLEND);
         _defaultState->_bits &= ~RS_BLEND;
-        _defaultState->_blendEnabled = false;
+        _defaultState->_blendEnabled = true;
     }
     if (!(stateOverrideBits & RS_BLEND_FUNC) && (_defaultState->_bits & RS_BLEND_FUNC))
     {
@@ -361,9 +363,9 @@ void RenderState::StateBlock::restore(long stateOverrideBits)
     }
     if (!(stateOverrideBits & RS_DEPTH_TEST) && (_defaultState->_bits & RS_DEPTH_TEST))
     {
-        glDisable(GL_DEPTH_TEST);
+        glEnable(GL_DEPTH_TEST);
         _defaultState->_bits &= ~RS_DEPTH_TEST;
-        _defaultState->_depthTestEnabled = false;
+        _defaultState->_depthTestEnabled = true;
     }
     if (!(stateOverrideBits & RS_DEPTH_WRITE) && (_defaultState->_bits & RS_DEPTH_WRITE))
     {
@@ -680,7 +682,7 @@ uint32_t RenderState::StateBlock::getHash() const
 void RenderState::StateBlock::setBlend(bool enabled)
 {
     _blendEnabled = enabled;
-    if (!enabled)
+    if (enabled)
     {
         _bits &= ~RS_BLEND;
     }
@@ -786,7 +788,7 @@ void RenderState::StateBlock::setFrontFace(FrontFace winding)
 void RenderState::StateBlock::setDepthTest(bool enabled)
 {
     _depthTestEnabled = enabled;
-    if (!enabled)
+    if (enabled)
     {
         _bits &= ~RS_DEPTH_TEST;
     }
