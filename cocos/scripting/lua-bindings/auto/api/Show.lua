@@ -30,4 +30,10 @@
 -- @param self
 -- @return ActionInstant#ActionInstant ret (return value: cc.ActionInstant)
         
+--------------------------------
+-- 
+-- @function [parent=#Show] Show 
+-- @param self
+-- @return Show#Show self (return value: cc.Show)
+        
 return nil

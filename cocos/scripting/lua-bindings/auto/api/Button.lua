@@ -5,6 +5,12 @@
 -- @parent_module ccui
 
 --------------------------------
+-- 
+-- @function [parent=#Button] getNormalTextureSize 
+-- @param self
+-- @return size_table#size_table ret (return value: size_table)
+        
+--------------------------------
 -- Query the button title content.<br>
 -- return Get the button's title content.
 -- @function [parent=#Button] getTitleText 
@@ -84,6 +90,16 @@
 -- @param #string disabled
 -- @param #int texType
 -- @return Button#Button self (return value: ccui.Button)
+        
+--------------------------------
+-- 
+-- @function [parent=#Button] init 
+-- @param self
+-- @param #string normalImage
+-- @param #string selectedImage
+-- @param #string disableImage
+-- @param #int texType
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- Change the content of button's title.<br>
@@ -232,6 +248,12 @@
 -- @function [parent=#Button] getVirtualRenderer 
 -- @param self
 -- @return Node#Node ret (return value: cc.Node)
+        
+--------------------------------
+-- 
+-- @function [parent=#Button] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 

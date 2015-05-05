@@ -33,12 +33,6 @@
         
 --------------------------------
 -- 
--- @function [parent=#ControlColourPicker] init 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- 
 -- @function [parent=#ControlColourPicker] setcolourPicker 
 -- @param self
 -- @param #cc.ControlSaturationBrightnessPicker var
@@ -77,6 +71,12 @@
 -- @param self
 -- @param #bool bEnabled
 -- @return ControlColourPicker#ControlColourPicker self (return value: cc.ControlColourPicker)
+        
+--------------------------------
+-- 
+-- @function [parent=#ControlColourPicker] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 

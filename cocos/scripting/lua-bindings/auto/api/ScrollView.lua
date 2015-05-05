@@ -299,6 +299,12 @@
 
 --------------------------------
 -- 
+-- @function [parent=#ScrollView] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#ScrollView] getChildByName 
 -- @param self
 -- @param #string name
