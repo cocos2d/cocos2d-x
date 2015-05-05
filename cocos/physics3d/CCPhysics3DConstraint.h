@@ -349,65 +349,65 @@ public:
     /**use A's frame as linear refference*/
 	bool getUseLinearReferenceFrameA();
     
-	float getSoftnessDirLin();
-	float getRestitutionDirLin();
-	float getDampingDirLin();
-	float getSoftnessDirAng();
-	float getRestitutionDirAng();
-	float getDampingDirAng();
-	float getSoftnessLimLin();
-	float getRestitutionLimLin();
-	float getDampingLimLin();
-	float getSoftnessLimAng();
-	float getRestitutionLimAng();
-	float getDampingLimAng();
-	float getSoftnessOrthoLin();
-	float getRestitutionOrthoLin();
-	float getDampingOrthoLin();
-	float getSoftnessOrthoAng();
-	float getRestitutionOrthoAng();
-	float getDampingOrthoAng();
-	void setSoftnessDirLin(float softnessDirLin);
-	void setRestitutionDirLin(float restitutionDirLin);
-	void setDampingDirLin(float dampingDirLin);
-	void setSoftnessDirAng(float softnessDirAng);
-	void setRestitutionDirAng(float restitutionDirAng);
-	void setDampingDirAng(float dampingDirAng);
-	void setSoftnessLimLin(float softnessLimLin);
-	void setRestitutionLimLin(float restitutionLimLin);
-	void setDampingLimLin(float dampingLimLin);
-	void setSoftnessLimAng(float softnessLimAng);
-	void setRestitutionLimAng(float restitutionLimAng);
-	void setDampingLimAng(float dampingLimAng);
-	void setSoftnessOrthoLin(float softnessOrthoLin);
-	void setRestitutionOrthoLin(float restitutionOrthoLin);
-	void setDampingOrthoLin(float dampingOrthoLin);
-	void setSoftnessOrthoAng(float softnessOrthoAng);
-	void setRestitutionOrthoAng(float restitutionOrthoAng);
-	void setDampingOrthoAng(float dampingOrthoAng);
-	void setPoweredLinMotor(bool onOff);
-	bool getPoweredLinMotor();
-	void setTargetLinMotorVelocity(float targetLinMotorVelocity);
-	float getTargetLinMotorVelocity();
-	void setMaxLinMotorForce(float maxLinMotorForce);
-	float getMaxLinMotorForce();
-	void setPoweredAngMotor(bool onOff);
-	bool getPoweredAngMotor();
-	void setTargetAngMotorVelocity(float targetAngMotorVelocity);
-	float getTargetAngMotorVelocity();
-	void setMaxAngMotorForce(float maxAngMotorForce);
-	float getMaxAngMotorForce();
+    float getSoftnessDirLin();
+    float getRestitutionDirLin();
+    float getDampingDirLin();
+    float getSoftnessDirAng();
+    float getRestitutionDirAng();
+    float getDampingDirAng();
+    float getSoftnessLimLin();
+    float getRestitutionLimLin();
+    float getDampingLimLin();
+    float getSoftnessLimAng();
+    float getRestitutionLimAng();
+    float getDampingLimAng();
+    float getSoftnessOrthoLin();
+    float getRestitutionOrthoLin();
+    float getDampingOrthoLin();
+    float getSoftnessOrthoAng();
+    float getRestitutionOrthoAng();
+    float getDampingOrthoAng();
+    void setSoftnessDirLin(float softnessDirLin);
+    void setRestitutionDirLin(float restitutionDirLin);
+    void setDampingDirLin(float dampingDirLin);
+    void setSoftnessDirAng(float softnessDirAng);
+    void setRestitutionDirAng(float restitutionDirAng);
+    void setDampingDirAng(float dampingDirAng);
+    void setSoftnessLimLin(float softnessLimLin);
+    void setRestitutionLimLin(float restitutionLimLin);
+    void setDampingLimLin(float dampingLimLin);
+    void setSoftnessLimAng(float softnessLimAng);
+    void setRestitutionLimAng(float restitutionLimAng);
+    void setDampingLimAng(float dampingLimAng);
+    void setSoftnessOrthoLin(float softnessOrthoLin);
+    void setRestitutionOrthoLin(float restitutionOrthoLin);
+    void setDampingOrthoLin(float dampingOrthoLin);
+    void setSoftnessOrthoAng(float softnessOrthoAng);
+    void setRestitutionOrthoAng(float restitutionOrthoAng);
+    void setDampingOrthoAng(float dampingOrthoAng);
+    void setPoweredLinMotor(bool onOff);
+    bool getPoweredLinMotor();
+    void setTargetLinMotorVelocity(float targetLinMotorVelocity);
+    float getTargetLinMotorVelocity();
+    void setMaxLinMotorForce(float maxLinMotorForce);
+    float getMaxLinMotorForce();
+    void setPoweredAngMotor(bool onOff);
+    bool getPoweredAngMotor();
+    void setTargetAngMotorVelocity(float targetAngMotorVelocity);
+    float getTargetAngMotorVelocity();
+    void setMaxAngMotorForce(float maxAngMotorForce);
+    float getMaxAngMotorForce();
     
-	float getLinearPos() const;
-	float getAngularPos() const;
+    float getLinearPos() const;
+    float getAngularPos() const;
 	
 	/** access for UseFrameOffset*/
-	bool getUseFrameOffset();
+    bool getUseFrameOffset();
     /**set use frame offset*/
-	void setUseFrameOffset(bool frameOffsetOnOff);
+    void setUseFrameOffset(bool frameOffsetOnOff);
     
     /**set frames for rigid body A and B*/
-	void setFrames(const cocos2d::Mat4& frameA, const cocos2d::Mat4& frameB);
+    void setFrames(const cocos2d::Mat4& frameA, const cocos2d::Mat4& frameB);
     
 CC_CONSTRUCTOR_ACCESS:
     Physics3DSliderConstraint()
