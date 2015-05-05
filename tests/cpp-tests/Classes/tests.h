@@ -86,4 +86,6 @@
 #include "CocosStudio3DTest/CocosStudio3DTest.h"
 #include "UITest/UITest.h"
 
+#include "MaterialSystemTest/MaterialSystemTest.h"
+
 #endif
