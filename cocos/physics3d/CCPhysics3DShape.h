@@ -36,7 +36,14 @@
 class btCollisionShape;
 
 NS_CC_BEGIN
+/**
+ * @addtogroup _3d
+ * @{
+ */
 
+/**
+ * @brief Create a physical shape(box, sphere, cylinder, capsule, convexhull, mesh and heightfield)
+ */
 class CC_DLL Physics3DShape : public Ref
 {
 public:
@@ -92,7 +99,7 @@ public:
     static Physics3DShape* createConvexHull(const cocos2d::Vec3 *points, int numPoints);
 
     /**
-     * create convex hull
+     * create mesh
      * @param triangles The pointer of triangle list
      * @param numTriangles The number of triangles.
      */
@@ -149,6 +156,9 @@ protected:
     std::vector<Physics3DShape *> _compoundChildShapes;
 #endif
 };
+
+// end of 3d group
+/// @}
 
 NS_CC_END
 
