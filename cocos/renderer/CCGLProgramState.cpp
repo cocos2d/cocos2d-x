@@ -63,13 +63,13 @@ UniformValue::UniformValue(Uniform *uniform, GLProgram* glprogram)
 
 UniformValue::~UniformValue()
 {
-	if (_type == Type::CALLBACK)
+	if (_type == Type::CALLBACK_FN)
 		delete _value.callback;
 }
 
 void UniformValue::apply()
 {
-    if (_type == Type::CALLBACK)
+    if (_type == Type::CALLBACK_FN)
     {
         (*_value.callback)(_glprogram, _uniform);
     }
@@ -147,7 +147,7 @@ void UniformValue::setCallback(const std::function<void(GLProgram*, Uniform*)> &
 	// TODO: memory will leak if the user does:
 	//    value->setCallback();
 	//    value->setFloat();
-    if (_type == Type::CALLBACK)
+    if (_type == Type::CALLBACK_FN)
 		delete _value.callback;
 
     _value.callback = new std::function<void(GLProgram*, Uniform*)>();

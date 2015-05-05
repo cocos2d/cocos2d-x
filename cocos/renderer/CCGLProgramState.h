@@ -109,7 +109,7 @@ protected:
     enum class Type {
         VALUE,
         POINTER,
-        CALLBACK,
+        CALLBACK_FN     // CALLBACK is already defined in windows, can't use it.
     };
 
     /**Weak reference to Uniform.*/
