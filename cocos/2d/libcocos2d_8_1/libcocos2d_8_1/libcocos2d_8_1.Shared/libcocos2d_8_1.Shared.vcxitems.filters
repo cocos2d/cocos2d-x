@@ -1773,6 +1773,18 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\SpritePolygonCache.h">
       <Filter>2d</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCRenderState.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCTechnique.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCMaterial.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCPass.h">
+      <Filter>renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos2d.cpp" />
@@ -3368,6 +3380,18 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\SpritePolygonCache.cpp">
       <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCRenderState.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCTechnique.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCMaterial.cpp">
+      <Filter>renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCPass.cpp">
+      <Filter>renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

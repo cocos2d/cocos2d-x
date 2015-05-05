@@ -31,6 +31,7 @@ THE SOFTWARE.
 #define __CCGLPROGRAM_H__
 
 #include <unordered_map>
+#include <string>
 
 #include "base/ccMacros.h"
 #include "base/CCRef.h"
@@ -319,6 +320,9 @@ public:
      */
     static GLProgram* createWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
     bool initWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
+    static GLProgram* createWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray, const std::string& compileTimeDefines);
+    bool initWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray, const std::string& compileTimeDefines);
+
     /**
     @}
     */
@@ -329,6 +333,9 @@ public:
      */
     static GLProgram* createWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename);
     bool initWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename);
+
+    static GLProgram* createWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename, const std::string& compileTimeDefines);
+    bool initWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename, const std::string& compileTimeDefines);
     /**
     @}
     */
@@ -487,6 +494,7 @@ protected:
     /**Parse user defined uniform automatically.*/
     void parseUniforms();
     /**Compile the shader sources.*/
+    bool compileShader(GLuint * shader, GLenum type, const GLchar* source, const std::string& convertedDefines);
     bool compileShader(GLuint * shader, GLenum type, const GLchar* source);
 
     /**OpenGL handle for program.*/
