@@ -131,4 +131,10 @@
 -- @param #bool visible
 -- @return experimental::ui::VideoPlayer#experimental::ui::VideoPlayer self (return value: cc.experimental::ui::VideoPlayer)
         
+--------------------------------
+-- 
+-- @function [parent=#VideoPlayer] VideoPlayer 
+-- @param self
+-- @return experimental::ui::VideoPlayer#experimental::ui::VideoPlayer self (return value: cc.experimental::ui::VideoPlayer)
+        
 return nil

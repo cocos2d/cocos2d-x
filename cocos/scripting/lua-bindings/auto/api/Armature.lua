@@ -79,9 +79,8 @@
 -- @return BatchNode#BatchNode ret (return value: ccs.BatchNode)
         
 --------------------------------
--- @overload self, string         
--- @overload self         
 -- @overload self, string, ccs.Bone         
+-- @overload self, string         
 -- @function [parent=#Armature] init
 -- @param self
 -- @param #string name
@@ -203,6 +202,12 @@
 -- @param self
 -- @param #float dt
 -- @return Armature#Armature self (return value: ccs.Armature)
+        
+--------------------------------
+-- Init the empty armature
+-- @function [parent=#Armature] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 

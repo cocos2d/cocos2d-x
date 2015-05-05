@@ -32,4 +32,10 @@
 -- @param self
 -- @return ActionEase#ActionEase ret (return value: cc.ActionEase)
         
+--------------------------------
+-- 
+-- @function [parent=#EaseBackOut] EaseBackOut 
+-- @param self
+-- @return EaseBackOut#EaseBackOut self (return value: cc.EaseBackOut)
+        
 return nil

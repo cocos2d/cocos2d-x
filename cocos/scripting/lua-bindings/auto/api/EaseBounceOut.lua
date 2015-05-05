@@ -32,4 +32,10 @@
 -- @param self
 -- @return EaseBounce#EaseBounce ret (return value: cc.EaseBounce)
         
+--------------------------------
+-- 
+-- @function [parent=#EaseBounceOut] EaseBounceOut 
+-- @param self
+-- @return EaseBounceOut#EaseBounceOut self (return value: cc.EaseBounceOut)
+        
 return nil
