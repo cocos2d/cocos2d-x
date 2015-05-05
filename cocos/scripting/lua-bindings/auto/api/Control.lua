@@ -126,6 +126,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#Control] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#Control] onTouchEnded 
 -- @param self
 -- @param #cc.Touch touch
@@ -139,5 +145,11 @@
 -- @param #cc.Touch touch
 -- @param #cc.Event event
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- js ctor
+-- @function [parent=#Control] Control 
+-- @param self
+-- @return Control#Control self (return value: cc.Control)
         
 return nil

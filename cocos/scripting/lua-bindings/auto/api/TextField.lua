@@ -333,6 +333,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#TextField] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#TextField] getVirtualRendererSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)

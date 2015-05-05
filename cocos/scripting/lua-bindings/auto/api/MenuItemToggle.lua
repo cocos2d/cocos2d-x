@@ -12,6 +12,13 @@
 -- @return MenuItemToggle#MenuItemToggle self (return value: cc.MenuItemToggle)
         
 --------------------------------
+--  Initializes a menu item with a item. 
+-- @function [parent=#MenuItemToggle] initWithItem 
+-- @param self
+-- @param #cc.MenuItem item
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  Gets the index of the selected item. 
 -- @function [parent=#MenuItemToggle] getSelectedIndex 
 -- @param self
@@ -59,6 +66,12 @@
 --------------------------------
 -- 
 -- @function [parent=#MenuItemToggle] selected 
+-- @param self
+-- @return MenuItemToggle#MenuItemToggle self (return value: cc.MenuItemToggle)
+        
+--------------------------------
+-- js ctor
+-- @function [parent=#MenuItemToggle] MenuItemToggle 
 -- @param self
 -- @return MenuItemToggle#MenuItemToggle self (return value: cc.MenuItemToggle)
         
