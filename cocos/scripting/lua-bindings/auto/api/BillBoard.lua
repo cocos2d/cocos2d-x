@@ -48,4 +48,10 @@
 -- @param #unsigned int parentFlags
 -- @return BillBoard#BillBoard self (return value: cc.BillBoard)
         
+--------------------------------
+-- 
+-- @function [parent=#BillBoard] BillBoard 
+-- @param self
+-- @return BillBoard#BillBoard self (return value: cc.BillBoard)
+        
 return nil

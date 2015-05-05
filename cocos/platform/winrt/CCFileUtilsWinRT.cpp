@@ -111,16 +111,15 @@ bool CCFileUtilsWinRT::isFileExistInternal(const std::string& strFilePath) const
         strPath.insert(0, _defaultResRootPath);
     }
 
-    const char* path = strPath.c_str();
+    strPath = getSuitableFOpen(strPath);
 
-	if (path && strlen(path) && (pf = fopen(path, "rb")))
+    if (!strPath.empty() && (pf = fopen(strPath.c_str(), "rb")))
     {
         ret = true;
         fclose(pf);
     }
     return ret;
 }
-
 
 bool CCFileUtilsWinRT::isAbsolutePath(const std::string& strPath) const
 {
@@ -181,8 +180,6 @@ static Data getData(const std::string& filename, bool forString)
     return ret;
 }
 
-
-
 std::string CCFileUtilsWinRT::getStringFromFile(const std::string& filename)
 {
     Data data = getData(filename, true);
@@ -193,8 +190,6 @@ std::string CCFileUtilsWinRT::getStringFromFile(const std::string& filename)
     std::string ret((const char*)data.getBytes());
     return ret;
 }
-
-
 
 string CCFileUtilsWinRT::getWritablePath() const
 {

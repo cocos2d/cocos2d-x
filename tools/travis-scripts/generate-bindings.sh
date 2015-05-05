@@ -17,14 +17,17 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PROJECT_ROOT="$DIR/../.."
 TOLUA_ROOT="$PROJECT_ROOT/tools/tolua"
-AUTO_GENERATED_DIR="$PROJECT_ROOT/cocos/scripting/lua-bindings/auto"
-COMMITTAG="[AUTO]: updating luabinding automatically"
+TOJS_ROOT="$PROJECT_ROOT/tools/tojs"
+LUA_AUTO_GENERATED_DIR="$PROJECT_ROOT/cocos/scripting/lua-bindings/auto"
+JS_AUTO_GENERATED_DIR="$PROJECT_ROOT/cocos/scripting/js-bindings/auto"
+COMMITTAG="[AUTO]: updating luabinding & jsbinding automatically"
 ELAPSEDSECS=`date +%s`
 COCOS_BRANCH="update_lua_bindings_$ELAPSEDSECS"
 COCOS_ROBOT_REMOTE="https://${GH_USER}:${GH_PASSWORD}@github.com/${GH_USER}/cocos2d-x.git"
 PULL_REQUEST_REPO="https://api.github.com/repos/cocos2d/cocos2d-x/pulls"
 FETCH_REMOTE_BRANCH="v3"
-COMMIT_PATH="cocos/scripting/lua-bindings/auto"
+LUA_COMMIT_PATH="cocos/scripting/lua-bindings/auto"
+JS_COMMIT_PATH="cocos/scripting/js-bindings/auto"
 
 # Exit on error
 set -e
@@ -52,6 +55,11 @@ generate_bindings_glue_codes()
     pushd "$TOLUA_ROOT"
     ./genbindings.py
     popd
+
+    echo "Create auto-generated jsbinding glue codes."
+    pushd "$TOJS_ROOT"
+    ./genbindings.py
+    popd
 }
 
 if [ "$GEN_BINDING"x != "YES"x ]; then
@@ -65,8 +73,11 @@ git config user.email ${GH_EMAIL}
 git config user.name ${GH_USER}
 popd
 
-rm -rf "$AUTO_GENERATED_DIR"
-mkdir "$AUTO_GENERATED_DIR"
+rm -rf "$LUA_AUTO_GENERATED_DIR"
+mkdir "$LUA_AUTO_GENERATED_DIR"
+
+rm -rf "$JS_AUTO_GENERATED_DIR"
+mkdir "$JS_AUTO_GENERATED_DIR"
 
 # 1. Generate LUA bindings
 generate_bindings_glue_codes
@@ -97,10 +108,14 @@ git fetch origin ${FETCH_REMOTE_BRANCH}
 
 # Don't exit on non-zero return value
 set +e
-git diff FETCH_HEAD --stat --exit-code ${COMMIT_PATH}
+git diff FETCH_HEAD --stat --exit-code ${LUA_COMMIT_PATH}
 
-DIFF_RETVAL=$?
-if [ $DIFF_RETVAL -eq 0 ]
+LUA_DIFF_RETVAL=$?
+
+git diff FETCH_HEAD --stat --exit-code ${JS_COMMIT_PATH}
+
+JS_DIFF_RETVAL=$?
+if [ $LUA_DIFF_RETVAL -eq 0 -a $JS_DIFF_RETVAL -eq 0 ]
 then
     echo
     echo "No differences in generated files"
@@ -116,7 +131,8 @@ fi
 # Exit on error
 set -e
 
-git add -f --all "$AUTO_GENERATED_DIR"
+git add -f --all "$LUA_AUTO_GENERATED_DIR"
+git add -f --all "$JS_AUTO_GENERATED_DIR"
 git checkout -b "$COCOS_BRANCH"
 git commit -m "$COMMITTAG"
 
