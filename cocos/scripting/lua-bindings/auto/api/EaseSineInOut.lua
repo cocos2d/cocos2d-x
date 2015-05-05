@@ -32,4 +32,10 @@
 -- @param self
 -- @return EaseSineInOut#EaseSineInOut ret (return value: cc.EaseSineInOut)
         
+--------------------------------
+-- 
+-- @function [parent=#EaseSineInOut] EaseSineInOut 
+-- @param self
+-- @return EaseSineInOut#EaseSineInOut self (return value: cc.EaseSineInOut)
+        
 return nil
