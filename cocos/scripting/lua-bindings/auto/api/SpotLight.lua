@@ -104,4 +104,10 @@
 -- @param self
 -- @return int#int ret (return value: int)
         
+--------------------------------
+-- 
+-- @function [parent=#SpotLight] SpotLight 
+-- @param self
+-- @return SpotLight#SpotLight self (return value: cc.SpotLight)
+        
 return nil
