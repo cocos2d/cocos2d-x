@@ -35,8 +35,10 @@ USING_NS_CC;
 MaterialSystemTest::MaterialSystemTest()
 {
     ADD_TEST_CASE(Material_MultipleSprite3D);
-    ADD_TEST_CASE(Material_SpriteTest);
     ADD_TEST_CASE(Material_Sprite3DTest);
+
+//    ADD_TEST_CASE(Material_SpriteTest);
+
 }
 
 // MARK:
@@ -50,6 +52,9 @@ std::string MaterialSystemBaseTest::title() const
 
 void Material_SpriteTest::onEnter()
 {
+    // Material remove from Sprite since it is hacking.
+    // Sprite (or Node) should have "Effect" instead of "Material"
+    
     MaterialSystemBaseTest::onEnter();
     auto layer = LayerColor::create(Color4B::BLUE);
     this->addChild(layer);
@@ -59,14 +64,14 @@ void Material_SpriteTest::onEnter()
     sprite->setNormalizedPosition(Vec2(0.5, 0.5));
     this->addChild(sprite);
 
-    auto material = Material::createWithFilename("Materials/effects.material");
-    sprite->setMaterial(material);
+//    auto material = Material::createWithFilename("Materials/effects.material");
+//    sprite->setMaterial(material);
 
 //    material->setTechnique("blur");
 //    material->setTechnique("outline");
 //    material->setTechnique("noise");
 //    material->setTechnique("edge detect");
-    material->setTechnique("gray+blur");
+//    material->setTechnique("gray+blur");
 }
 
 std::string Material_SpriteTest::subtitle() const
