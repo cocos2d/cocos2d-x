@@ -34,6 +34,7 @@
 #include "json/document.h"
 
 #include "renderer/CCRenderState.h"
+#include "renderer/CCTechnique.h"
 #include "base/CCRef.h"
 #include "base/CCVector.h"
 #include "math/Vec2.h"
@@ -41,6 +42,7 @@
 #include "math/Vec4.h"
 #include "math/Mat4.h"
 #include "platform/CCPlatformMacros.h"
+
 
 NS_CC_BEGIN
 

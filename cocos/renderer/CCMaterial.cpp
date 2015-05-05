@@ -40,9 +40,12 @@
 
 #include "json/document.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#define strcasecmp _stricmp
+#endif
+
 static const float MATERIAL_FORMAT_VERSION = 1.0;
 static const char* MATERIAL_TYPE = "material";
-
 
 // Helpers declaration
 static const char* getOptionalString(const rapidjson::GenericValue<rapidjson::UTF8<> >& json, const char* key, const char* defaultValue);

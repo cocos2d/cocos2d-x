@@ -32,6 +32,7 @@
 
 #include <string>
 #include "renderer/CCRenderState.h"
+#include "renderer/CCPass.h"
 #include "base/CCRef.h"
 #include "platform/CCPlatformMacros.h"
 #include "base/CCVector.h"

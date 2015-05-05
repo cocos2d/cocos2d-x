@@ -153,7 +153,7 @@ void UniformValue::setCallback(const std::function<void(GLProgram*, Uniform*)> &
     _value.callback = new std::function<void(GLProgram*, Uniform*)>();
 	*_value.callback = callback;
 
-    _type = Type::CALLBACK;
+    _type = Type::CALLBACK_FN;
 }
 
 void UniformValue::setTexture(GLuint textureId, GLuint textureUnit)

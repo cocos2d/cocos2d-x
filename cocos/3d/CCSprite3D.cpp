@@ -66,8 +66,7 @@ Sprite3D* Sprite3D::create()
 
 Sprite3D* Sprite3D::create(const std::string &modelPath)
 {
-    if (modelPath.length() < 4)
-        CCASSERT(false, "invalid filename for Sprite3D");
+    CCASSERT(modelPath.length() < 4, "invalid filename for Sprite3D");
     
     auto sprite = new (std::nothrow) Sprite3D();
     if (sprite && sprite->initWithFile(modelPath))

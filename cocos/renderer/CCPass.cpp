@@ -128,7 +128,7 @@ void Pass::bind(const Mat4& modelView)
 
 void Pass::bind(const Mat4& modelView, bool bindAttributes)
 {
-    auto glprogramstate = _glProgramState ?: getTarget()->getGLProgramState();
+    auto glprogramstate = _glProgramState ? _glProgramState : getTarget()->getGLProgramState();
 
     glprogramstate->applyGLProgram(modelView);
     if (bindAttributes)
