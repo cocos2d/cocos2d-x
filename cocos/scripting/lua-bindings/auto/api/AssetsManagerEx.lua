@@ -60,4 +60,12 @@
 -- @param #string storagePath
 -- @return AssetsManagerEx#AssetsManagerEx ret (return value: cc.AssetsManagerEx)
         
+--------------------------------
+-- 
+-- @function [parent=#AssetsManagerEx] AssetsManagerEx 
+-- @param self
+-- @param #string manifestUrl
+-- @param #string storagePath
+-- @return AssetsManagerEx#AssetsManagerEx self (return value: cc.AssetsManagerEx)
+        
 return nil

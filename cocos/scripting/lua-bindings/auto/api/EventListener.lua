@@ -17,17 +17,17 @@
 -- @return EventListener#EventListener self (return value: cc.EventListener)
         
 --------------------------------
---  Clones the listener, its subclasses have to override this method.
--- @function [parent=#EventListener] clone 
--- @param self
--- @return EventListener#EventListener ret (return value: cc.EventListener)
-        
---------------------------------
 --  Checks whether the listener is enabled.<br>
 -- return True if the listenrt is enabled.
 -- @function [parent=#EventListener] isEnabled 
 -- @param self
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+--  Clones the listener, its subclasses have to override this method.
+-- @function [parent=#EventListener] clone 
+-- @param self
+-- @return EventListener#EventListener ret (return value: cc.EventListener)
         
 --------------------------------
 --  Checks whether the listener is available.<br>
