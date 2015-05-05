@@ -9,19 +9,19 @@ uniform vec2 resolution;
 uniform float blurRadius;
 uniform float sampleNum;
 
-vec3 blur(vec2);
+vec4 blur(vec2);
 
 void main(void)
 {
-	vec3 col = blur(v_texCoord);
-	gl_FragColor = vec4(col, 1.0) * v_fragmentColor;
+    vec4 col = blur(v_texCoord); //* v_fragmentColor.rgb;
+    gl_FragColor = vec4(col) * v_fragmentColor;
 }
 
-vec3 blur(vec2 p)
+vec4 blur(vec2 p)
 {
     if (blurRadius > 0.0 && sampleNum > 1.0)
     {
-        vec3 col = vec3(0);
+        vec4 col = vec4(0);
         vec2 unit = 1.0 / resolution.xy;
         
         float r = blurRadius;
@@ -34,7 +34,7 @@ vec3 blur(vec2 p)
             for(float y = -r; y < r; y += sampleStep)
             {
                 float weight = (r - abs(x)) * (r - abs(y));
-                col += texture2D(CC_Texture0, p + vec2(x * unit.x, y * unit.y)).rgb * weight;
+                col += texture2D(CC_Texture0, p + vec2(x * unit.x, y * unit.y)) * weight;
                 count += weight;
             }
         }
@@ -42,5 +42,5 @@ vec3 blur(vec2 p)
         return col / count;
     }
     
-    return texture2D(CC_Texture0, p).rgb;
+    return texture2D(CC_Texture0, p);
 }

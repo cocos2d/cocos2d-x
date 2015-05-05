@@ -27,8 +27,12 @@
 
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgram.h"
+#include "renderer/CCMaterial.h"
+#include "renderer/CCTechnique.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCPass.h"
+
 #include "xxhash.h"
-#include "CCRenderer.h"
 
 NS_CC_BEGIN
 
@@ -40,6 +44,8 @@ QuadCommand::QuadCommand()
 ,_blendType(BlendFunc::DISABLE)
 ,_quads(nullptr)
 ,_quadsCount(0)
+,_material(nullptr)
+,_multiplePass(false)
 {
     _type = RenderCommand::Type::QUAD_COMMAND;
 }
@@ -67,6 +73,24 @@ void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* shad
     }
 }
 
+void QuadCommand::init(float globalOrder, Material* material, V3F_C4B_T2F_Quad* quads, ssize_t quadCount, const Mat4& mv, uint32_t flags)
+{
+    CCASSERT(material, "Invalid Material");
+
+    RenderCommand::init(globalOrder, mv, flags);
+
+    _quadsCount = quadCount;
+    _quads = quads;
+
+    _mv = mv;
+
+    if (_material != material) {
+        _material = material;
+
+        generateMaterialID();
+    }
+}
+
 void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* shader, const BlendFunc& blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount, const Mat4 &mv)
 {
     init(globalOrder, textureID, shader, blendType, quads, quadCount, mv, 0);
@@ -74,33 +98,70 @@ void QuadCommand::init(float globalOrder, GLuint textureID, GLProgramState* shad
 
 QuadCommand::~QuadCommand()
 {
+    CC_SAFE_RELEASE(_material);
 }
 
 void QuadCommand::generateMaterialID()
 {
+    _skipBatching = false;
+    _multiplePass = false;
     
-    if(_glProgramState->getUniformCount() > 0)
+    if (_material)
     {
-        _materialID = Renderer::MATERIAL_ID_DO_NOT_BATCH;
+        auto technique = _material->getTechnique();
+        auto count = technique->getPassCount();
+
+        // multiple pass: no batching
+        if (count > 1) {
+            _materialID = Renderer::MATERIAL_ID_DO_NOT_BATCH;
+            _skipBatching = true;
+            _multiplePass = true;
+        }
+        // count == 1. Ok for batching
+        else if (technique->getPassByIndex(0)->getGLProgramState()->getUniformCount() == 0)
+        {
+            _materialID = technique->getPassByIndex(0)->getHash();
+        }
+        // count == 1 + custom uniforms. No batching
+        else
+        {
+            _materialID = Renderer::MATERIAL_ID_DO_NOT_BATCH;
+            _skipBatching = true;
+        }
     }
     else
     {
-        int glProgram = (int)_glProgramState->getGLProgram()->getProgram();
-        int intArray[4] = { glProgram, (int)_textureID, (int)_blendType.src, (int)_blendType.dst};
-        
-        _materialID = XXH32((const void*)intArray, sizeof(intArray), 0);
+        if(_glProgramState->getUniformCount() == 0)
+        {
+            int glProgram = (int)_glProgramState->getGLProgram()->getProgram();
+            int intArray[4] = { glProgram, (int)_textureID, (int)_blendType.src, (int)_blendType.dst};
+
+            _materialID = XXH32((const void*)intArray, sizeof(intArray), 0);
+        }
+        else
+        {
+            _materialID = Renderer::MATERIAL_ID_DO_NOT_BATCH;
+            _skipBatching = true;
+        }
     }
 }
 
 void QuadCommand::useMaterial() const
 {
-    //Set texture
-    GL::bindTexture2D(_textureID);
-    
-    //set blend mode
-    GL::blendFunc(_blendType.src, _blendType.dst);
-    
-    _glProgramState->apply(_mv);
+    CCASSERT(!_multiplePass, "Material with multiple passes cannot be bound");
+
+    if (!_material) {
+        //Set texture
+        GL::bindTexture2D(_textureID);
+        
+        //set blend mode
+        GL::blendFunc(_blendType.src, _blendType.dst);
+        
+        _glProgramState->applyGLProgram(_mv);
+        _glProgramState->applyUniforms();
+    } else {
+        _material->getTechnique()->getPassByIndex(0)->bind(_mv);
+    }
 }
 
 NS_CC_END

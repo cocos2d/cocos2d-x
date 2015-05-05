@@ -45,6 +45,7 @@ public:
         addTest("FileUtils", []() { return new FileUtilsTests(); });
         addTest("Fonts", []() { return new FontTests(); });
         addTest("Interval", [](){return new IntervalTests(); });
+        addTest("Material System", [](){return new MaterialSystemTest(); });
         addTest("Node: BillBoard Test", [](){  return new BillBoardTests(); });
         addTest("Node: Camera 3D Test", [](){  return new Camera3DTests(); });
         addTest("Node: Clipping", []() { return new ClippingNodeTests(); });

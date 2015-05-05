@@ -32,9 +32,14 @@
 #include "renderer/CCCustomCommand.h"
 #include "renderer/CCGroupCommand.h"
 #include "renderer/CCPrimitiveCommand.h"
-#include "renderer/CCGLProgramCache.h"
-#include "renderer/ccGLStateCache.h"
 #include "renderer/CCMeshCommand.h"
+#include "renderer/CCGLProgramCache.h"
+#include "renderer/CCMaterial.h"
+#include "renderer/CCTechnique.h"
+#include "renderer/CCPass.h"
+#include "renderer/CCRenderState.h"
+#include "renderer/ccGLStateCache.h"
+
 #include "base/CCConfiguration.h"
 #include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"
@@ -161,24 +166,29 @@ void RenderQueue::restoreRenderState()
     if (_isCullEnabled)
     {
         glEnable(GL_CULL_FACE);
+        RenderState::StateBlock::_defaultState->setCullFace(true);
     }
     else
     {
         glDisable(GL_CULL_FACE);
+        RenderState::StateBlock::_defaultState->setCullFace(false);
     }
     
     
     if (_isDepthEnabled)
     {
         glEnable(GL_DEPTH_TEST);
+        RenderState::StateBlock::_defaultState->setDepthTest(true);
     }
     else
     {
         glDisable(GL_DEPTH_TEST);
+        RenderState::StateBlock::_defaultState->setDepthTest(false);
     }
     
     glDepthMask(_isDepthWrite);
-    
+    RenderState::StateBlock::_defaultState->setDepthWrite(_isDepthEnabled);
+
     CHECK_GL_ERROR_DEBUG();
 }
 
@@ -530,11 +540,15 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
         {
             glEnable(GL_DEPTH_TEST);
             glDepthMask(true);
+            RenderState::StateBlock::_defaultState->setDepthTest(true);
+            RenderState::StateBlock::_defaultState->setDepthWrite(true);
         }
         else
         {
             glDisable(GL_DEPTH_TEST);
             glDepthMask(false);
+            RenderState::StateBlock::_defaultState->setDepthTest(false);
+            RenderState::StateBlock::_defaultState->setDepthWrite(false);
         }
         for (auto it = zNegQueue.cbegin(); it != zNegQueue.cend(); ++it)
         {
@@ -550,9 +564,12 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     if (opaqueQueue.size() > 0)
     {
         //Clear depth to achieve layered rendering
-        glDepthMask(true);
         glEnable(GL_DEPTH_TEST);
-        
+        glDepthMask(true);
+        RenderState::StateBlock::_defaultState->setDepthTest(true);
+        RenderState::StateBlock::_defaultState->setDepthWrite(true);
+
+
         for (auto it = opaqueQueue.cbegin(); it != opaqueQueue.cend(); ++it)
         {
             processRenderCommand(*it);
@@ -568,7 +585,11 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
     {
         glEnable(GL_DEPTH_TEST);
         glDepthMask(false);
-        
+
+        RenderState::StateBlock::_defaultState->setDepthTest(true);
+        RenderState::StateBlock::_defaultState->setDepthWrite(false);
+
+
         for (auto it = transQueue.cbegin(); it != transQueue.cend(); ++it)
         {
             processRenderCommand(*it);
@@ -586,11 +607,19 @@ void Renderer::visitRenderQueue(RenderQueue& queue)
         {
             glEnable(GL_DEPTH_TEST);
             glDepthMask(true);
+
+            RenderState::StateBlock::_defaultState->setDepthTest(true);
+            RenderState::StateBlock::_defaultState->setDepthWrite(true);
+
         }
         else
         {
             glDisable(GL_DEPTH_TEST);
             glDepthMask(false);
+
+            RenderState::StateBlock::_defaultState->setDepthTest(false);
+            RenderState::StateBlock::_defaultState->setDepthWrite(false);
+
         }
         for (auto it = zZeroQueue.cbegin(); it != zZeroQueue.cend(); ++it)
         {
@@ -675,13 +704,19 @@ void Renderer::setDepthTest(bool enable)
         glClearDepth(1.0f);
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LEQUAL);
+
+        RenderState::StateBlock::_defaultState->setDepthTest(true);
+        RenderState::StateBlock::_defaultState->setDepthFunction(RenderState::DEPTH_LEQUAL);
+
 //        glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
     }
     else
     {
         glDisable(GL_DEPTH_TEST);
+
+        RenderState::StateBlock::_defaultState->setDepthTest(false);
     }
-    
+
     _isDepthTestFor2D = enable;
     CHECK_GL_ERROR_DEBUG();
 }
@@ -834,7 +869,7 @@ void Renderer::drawBatchedQuads()
 {
     //TODO: we can improve the draw performance by insert material switching command before hand.
     
-    int indexToDraw = 0;
+    ssize_t indexToDraw = 0;
     int startIndex = 0;
     
     //Upload buffer to VBO
@@ -886,14 +921,19 @@ void Renderer::drawBatchedQuads()
         
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _quadbuffersVBO[1]);
     }
-    
-    //Start drawing verties in batch
+
+
+    // FIXME: The logic of this code is confusing, and error prone
+    // Needs refactoring
+
+    //Start drawing vertices in batch
     for(const auto& cmd : _batchQuadCommands)
     {
+        bool commandQueued = true;
         auto newMaterialID = cmd->getMaterialID();
         if(_lastMaterialID != newMaterialID || newMaterialID == MATERIAL_ID_DO_NOT_BATCH)
         {
-            //Draw quads
+            // flush buffer
             if(indexToDraw > 0)
             {
                 glDrawElements(GL_TRIANGLES, (GLsizei) indexToDraw, GL_UNSIGNED_SHORT, (GLvoid*) (startIndex*sizeof(_indices[0])) );
@@ -905,11 +945,35 @@ void Renderer::drawBatchedQuads()
             }
             
             //Use new material
-            cmd->useMaterial();
             _lastMaterialID = newMaterialID;
+
+            if (cmd->isMultiplePass()) {
+
+                indexToDraw = cmd->getQuadCount() * 6;
+
+                for(auto& pass : cmd->getMaterial()->_currentTechnique->_passes) {
+
+                    pass->bind(cmd->getModelView());
+
+                    glDrawElements(GL_TRIANGLES, (GLsizei) indexToDraw, GL_UNSIGNED_SHORT, (GLvoid*) (startIndex*sizeof(_indices[0])) );
+                    _drawnBatches++;
+                    _drawnVertices += indexToDraw;
+
+                    pass->unbind();
+                }
+
+                indexToDraw = 0;
+                commandQueued = false;
+
+            } else {
+                cmd->useMaterial();
+            }
         }
-        
-        indexToDraw += cmd->getQuadCount() * 6;
+
+        if (commandQueued)
+        {
+            indexToDraw += cmd->getQuadCount() * 6;
+        }
     }
     
     //Draw any remaining quad

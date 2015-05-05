@@ -1,6 +1,5 @@
 
 set(COCOS_RENDERER_SRC
-
   renderer/CCBatchCommand.cpp
   renderer/CCCustomCommand.cpp
   renderer/CCGLProgram.cpp
@@ -8,12 +7,16 @@ set(COCOS_RENDERER_SRC
   renderer/CCGLProgramState.cpp
   renderer/CCGLProgramStateCache.cpp
   renderer/CCGroupCommand.cpp
+  renderer/CCMaterial.cpp
   renderer/CCMeshCommand.cpp
+  renderer/CCPass.cpp
   renderer/CCPrimitive.cpp
   renderer/CCPrimitiveCommand.cpp
   renderer/CCQuadCommand.cpp
   renderer/CCRenderCommand.cpp
+  renderer/CCRenderState.cpp
   renderer/CCRenderer.cpp
+  renderer/CCTechnique.cpp
   renderer/CCTexture2D.cpp
   renderer/CCTextureAtlas.cpp
   renderer/CCTextureCache.cpp
@@ -22,5 +25,4 @@ set(COCOS_RENDERER_SRC
   renderer/CCVertexIndexData.cpp
   renderer/ccGLStateCache.cpp
   renderer/ccShaders.cpp
-
 )

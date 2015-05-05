@@ -358,6 +358,9 @@
     <Filter Include="Classes\SpritePolygonTest">
       <UniqueIdentifier>{b35cfbde-9e13-4981-8458-f7596f089bde}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\MaterialSystemTest">
+      <UniqueIdentifier>{4fd79779-ff32-4400-aa05-af4fd7f0f4a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -935,6 +938,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\SpritePolygonTest\SpritePolygonTest.cpp">
       <Filter>Classes\SpritePolygonTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MaterialSystemTest\MaterialSystemTest.cpp">
+      <Filter>Classes\MaterialSystemTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1711,6 +1717,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\SpritePolygonTest\SpritePolygonTest.h">
       <Filter>Classes\SpritePolygonTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MaterialSystemTest\MaterialSystemTest.h">
+      <Filter>Classes\MaterialSystemTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
