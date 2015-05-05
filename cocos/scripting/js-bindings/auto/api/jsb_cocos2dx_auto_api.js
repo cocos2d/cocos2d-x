@@ -1239,6 +1239,16 @@ touch
 },
 
 /**
+ * @method getMaterial
+ * @return {cc.Material}
+ */
+getMaterial : function (
+)
+{
+    return cc.Material;
+},
+
+/**
  * @method removeAllChildrenWithCleanup
 * @param {bool} bool
 */
@@ -1286,6 +1296,16 @@ isCascadeOpacityEnabled : function (
 )
 {
     return false;
+},
+
+/**
+ * @method setMaterial
+ * @param {cc.Material} arg0
+ */
+setMaterial : function (
+material 
+)
+{
 },
 
 /**
@@ -10166,38 +10186,6 @@ ProtectedNode : function (
 cc.GLProgramState = {
 
 /**
- * @method setUniformTexture
-* @param {String|String|int|int} str
-* @param {unsigned int|cc.Texture2D|cc.Texture2D|unsigned int} int
-*/
-setUniformTexture : function(
-int,
-int 
-)
-{
-},
-
-/**
- * @method setUniformMat4
-* @param {int|String} int
-* @param {mat4_object|mat4_object} mat4
-*/
-setUniformMat4 : function(
-str,
-mat4 
-)
-{
-},
-
-/**
- * @method applyUniforms
- */
-applyUniforms : function (
-)
-{
-},
-
-/**
  * @method setUniformCallback
 * @param {int|String} int
 * @param {function|function} func
@@ -10210,87 +10198,13 @@ func
 },
 
 /**
- * @method applyGLProgram
- * @param {mat4_object} arg0
+ * @method getVertexAttribsFlags
+ * @return {unsigned int}
  */
-applyGLProgram : function (
-mat4 
-)
-{
-},
-
-/**
- * @method getUniformCount
- * @return {long}
- */
-getUniformCount : function (
+getVertexAttribsFlags : function (
 )
 {
     return 0;
-},
-
-/**
- * @method applyAttributes
- */
-applyAttributes : function (
-)
-{
-},
-
-/**
- * @method setUniformFloat
-* @param {int|String} int
-* @param {float|float} float
-*/
-setUniformFloat : function(
-str,
-float 
-)
-{
-},
-
-/**
- * @method setUniformVec3
-* @param {int|String} int
-* @param {vec3_object|vec3_object} vec3
-*/
-setUniformVec3 : function(
-str,
-vec3 
-)
-{
-},
-
-/**
- * @method setUniformInt
-* @param {int|String} int
-* @param {int|int} int
-*/
-setUniformInt : function(
-str,
-int 
-)
-{
-},
-
-/**
- * @method getVertexAttribCount
- * @return {long}
- */
-getVertexAttribCount : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setGLProgram
- * @param {cc.GLProgram} arg0
- */
-setGLProgram : function (
-glprogram 
-)
-{
 },
 
 /**
@@ -10306,13 +10220,15 @@ vec2
 },
 
 /**
- * @method getVertexAttribsFlags
- * @return {unsigned int}
- */
-getVertexAttribsFlags : function (
+ * @method setUniformVec3
+* @param {int|String} int
+* @param {vec3_object|vec3_object} vec3
+*/
+setUniformVec3 : function(
+str,
+vec3 
 )
 {
-    return 0;
 },
 
 /**
@@ -10338,6 +10254,94 @@ mat4
 },
 
 /**
+ * @method applyGLProgram
+ * @param {mat4_object} arg0
+ */
+applyGLProgram : function (
+mat4 
+)
+{
+},
+
+/**
+ * @method setUniformInt
+* @param {int|String} int
+* @param {int|int} int
+*/
+setUniformInt : function(
+str,
+int 
+)
+{
+},
+
+/**
+ * @method setUniformVec2v
+* @param {int|String} int
+* @param {vec2_object|vec2_object} vec2
+* @param {long|long} long
+*/
+setUniformVec2v : function(
+str,
+vec2,
+long 
+)
+{
+},
+
+/**
+ * @method getUniformCount
+ * @return {long}
+ */
+getUniformCount : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method applyAttributes
+ */
+applyAttributes : function (
+)
+{
+},
+
+/**
+ * @method clone
+ * @return {cc.GLProgramState}
+ */
+clone : function (
+)
+{
+    return cc.GLProgramState;
+},
+
+/**
+ * @method setGLProgram
+ * @param {cc.GLProgram} arg0
+ */
+setGLProgram : function (
+glprogram 
+)
+{
+},
+
+/**
+ * @method setUniformFloatv
+* @param {int|String} int
+* @param {float|float} float
+* @param {long|long} long
+*/
+setUniformFloatv : function(
+str,
+float,
+long 
+)
+{
+},
+
+/**
  * @method getGLProgram
  * @return {cc.GLProgram}
  */
@@ -10345,6 +10349,74 @@ getGLProgram : function (
 )
 {
     return cc.GLProgram;
+},
+
+/**
+ * @method setUniformTexture
+* @param {String|String|int|int} str
+* @param {unsigned int|cc.Texture2D|cc.Texture2D|unsigned int} int
+*/
+setUniformTexture : function(
+int,
+int 
+)
+{
+},
+
+/**
+ * @method applyUniforms
+ */
+applyUniforms : function (
+)
+{
+},
+
+/**
+ * @method setUniformFloat
+* @param {int|String} int
+* @param {float|float} float
+*/
+setUniformFloat : function(
+str,
+float 
+)
+{
+},
+
+/**
+ * @method setUniformMat4
+* @param {int|String} int
+* @param {mat4_object|mat4_object} mat4
+*/
+setUniformMat4 : function(
+str,
+mat4 
+)
+{
+},
+
+/**
+ * @method setUniformVec3v
+* @param {int|String} int
+* @param {vec3_object|vec3_object} vec3
+* @param {long|long} long
+*/
+setUniformVec3v : function(
+str,
+vec3,
+long 
+)
+{
+},
+
+/**
+ * @method getVertexAttribCount
+ * @return {long}
+ */
+getVertexAttribCount : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -10378,6 +10450,22 @@ str
  */
 getOrCreateWithGLProgram : function (
 glprogram 
+)
+{
+    return cc.GLProgramState;
+},
+
+/**
+ * @method getOrCreateWithShaders
+ * @param {String} arg0
+ * @param {String} arg1
+ * @param {String} arg2
+ * @return {cc.GLProgramState}
+ */
+getOrCreateWithShaders : function (
+str, 
+str, 
+str 
 )
 {
     return cc.GLProgramState;
@@ -18915,13 +19003,15 @@ str
 
 /**
  * @method initWithByteArrays
- * @param {char} arg0
- * @param {char} arg1
- * @return {bool}
- */
-initWithByteArrays : function (
-char, 
-char 
+* @param {char|char} char
+* @param {char|char} char
+* @param {String} str
+* @return {bool|bool}
+*/
+initWithByteArrays : function(
+char,
+char,
+str 
 )
 {
     return false;
@@ -18941,12 +19031,14 @@ float
 
 /**
  * @method initWithFilenames
- * @param {String} arg0
- * @param {String} arg1
- * @return {bool}
- */
-initWithFilenames : function (
-str, 
+* @param {String|String} str
+* @param {String|String} str
+* @param {String} str
+* @return {bool|bool}
+*/
+initWithFilenames : function(
+str,
+str,
 str 
 )
 {
@@ -19135,13 +19227,15 @@ int
 
 /**
  * @method createWithByteArrays
- * @param {char} arg0
- * @param {char} arg1
- * @return {cc.GLProgram}
- */
-createWithByteArrays : function (
-char, 
-char 
+* @param {char|char} char
+* @param {char|char} char
+* @param {String} str
+* @return {cc.GLProgram|cc.GLProgram}
+*/
+createWithByteArrays : function(
+char,
+char,
+str 
 )
 {
     return cc.GLProgram;
@@ -19149,12 +19243,14 @@ char
 
 /**
  * @method createWithFilenames
- * @param {String} arg0
- * @param {String} arg1
- * @return {cc.GLProgram}
- */
-createWithFilenames : function (
-str, 
+* @param {String|String} str
+* @param {String|String} str
+* @param {String} str
+* @return {cc.GLProgram|cc.GLProgram}
+*/
+createWithFilenames : function(
+str,
+str,
 str 
 )
 {
