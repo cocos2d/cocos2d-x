@@ -78,8 +78,8 @@ namespace {
         
     private:
         TextButton()
-        : _enabled(true)
-        , _onTriggered(nullptr)
+        : _onTriggered(nullptr)
+        , _enabled(true)
         {
             auto listener = EventListenerTouchOneByOne::create();
             listener->setSwallowTouches(true);
