@@ -15,4 +15,10 @@
 -- @param #cc.Scene scene
 -- @return TransitionProgressOutIn#TransitionProgressOutIn ret (return value: cc.TransitionProgressOutIn)
         
+--------------------------------
+-- js ctor
+-- @function [parent=#TransitionProgressOutIn] TransitionProgressOutIn 
+-- @param self
+-- @return TransitionProgressOutIn#TransitionProgressOutIn self (return value: cc.TransitionProgressOutIn)
+        
 return nil

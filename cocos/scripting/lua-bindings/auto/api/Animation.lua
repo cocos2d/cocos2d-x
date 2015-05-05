@@ -41,6 +41,22 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+--  Initializes a Animation with AnimationFrame.<br>
+-- since v2.0
+-- @function [parent=#Animation] initWithAnimationFrames 
+-- @param self
+-- @param #array_table arrayOfAnimationFrameNames
+-- @param #float delayPerUnit
+-- @param #unsigned int loops
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+--  Initializes a Animation. 
+-- @function [parent=#Animation] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  Sets the array of AnimationFrames. <br>
 -- param frames The array of AnimationFrames.
 -- @function [parent=#Animation] setFrames 
@@ -96,6 +112,16 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+--  Initializes a Animation with frames and a delay between frames.<br>
+-- since v0.99.5
+-- @function [parent=#Animation] initWithSpriteFrames 
+-- @param self
+-- @param #array_table arrayOfSpriteFrameNames
+-- @param #float delay
+-- @param #unsigned int loops
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  Checks whether to restore the original frame when animation finishes. <br>
 -- return Restore the original frame when animation finishes.
 -- @function [parent=#Animation] getRestoreOriginalFrame 
@@ -132,5 +158,11 @@
 -- @param #float delay
 -- @param #unsigned int loops
 -- @return Animation#Animation ret (return value: cc.Animation)
+        
+--------------------------------
+-- 
+-- @function [parent=#Animation] Animation 
+-- @param self
+-- @return Animation#Animation self (return value: cc.Animation)
         
 return nil

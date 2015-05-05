@@ -22,4 +22,10 @@
 -- @param #cc.Scene scene
 -- @return TransitionShrinkGrow#TransitionShrinkGrow ret (return value: cc.TransitionShrinkGrow)
         
+--------------------------------
+-- 
+-- @function [parent=#TransitionShrinkGrow] TransitionShrinkGrow 
+-- @param self
+-- @return TransitionShrinkGrow#TransitionShrinkGrow self (return value: cc.TransitionShrinkGrow)
+        
 return nil

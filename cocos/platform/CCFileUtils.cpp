@@ -403,7 +403,7 @@ bool FileUtils::writeToFile(ValueMap& dict, const std::string &fullPath)
     }
     rootEle->LinkEndChild(innerDict);
     
-    bool ret = tinyxml2::XML_SUCCESS == doc->SaveFile(fullPath.c_str());
+    bool ret = tinyxml2::XML_SUCCESS == doc->SaveFile(getSuitableFOpen(fullPath).c_str());
     
     delete doc;
     return ret;
@@ -566,7 +566,7 @@ static Data getData(const std::string& filename, bool forString)
     {
         // Read the file from hardware
         std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
-        FILE *fp = fopen(fullPath.c_str(), mode);
+        FILE *fp = fopen(FileUtils::getInstance()->getSuitableFOpen(fullPath).c_str(), mode);
         CC_BREAK_IF(!fp);
         fseek(fp,0,SEEK_END);
         size = ftell(fp);
@@ -629,7 +629,7 @@ unsigned char* FileUtils::getFileData(const std::string& filename, const char* m
     {
         // read the file from hardware
         const std::string fullPath = fullPathForFilename(filename);
-        FILE *fp = fopen(fullPath.c_str(), mode);
+        FILE *fp = fopen(getSuitableFOpen(fullPath).c_str(), mode);
         CC_BREAK_IF(!fp);
         
         fseek(fp,0,SEEK_END);
@@ -1363,6 +1363,68 @@ bool FileUtils::isPopupNotify() const
 {
     return s_popupNotify;
 }
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+static std::wstring StringUtf8ToWideChar(const std::string& strUtf8)
+{
+    std::wstring ret;
+    if (!strUtf8.empty())
+    {
+        int nNum = MultiByteToWideChar(CP_UTF8, 0, strUtf8.c_str(), -1, nullptr, 0);
+        if (nNum)
+        {
+            WCHAR* wideCharString = new WCHAR[nNum + 1];
+            wideCharString[0] = 0;
+
+            nNum = MultiByteToWideChar(CP_UTF8, 0, strUtf8.c_str(), -1, wideCharString, nNum + 1);
+
+            ret = wideCharString;
+            delete[] wideCharString;
+        }
+        else
+        {
+            CCLOG("Wrong convert to WideChar code:0x%x", GetLastError());
+        }
+    }
+    return ret;
+}
+
+static std::string UTF8StringToMultiByte(const std::string& strUtf8)
+{
+    std::string ret;
+    if (!strUtf8.empty())
+    {
+        std::wstring strWideChar = StringUtf8ToWideChar(strUtf8);
+        int nNum = WideCharToMultiByte(CP_ACP, 0, strWideChar.c_str(), -1, nullptr, 0, nullptr, FALSE);
+        if (nNum)
+        {
+            char* ansiString = new char[nNum + 1];
+            ansiString[0] = 0;
+
+            nNum = WideCharToMultiByte(CP_ACP, 0, strWideChar.c_str(), -1, ansiString, nNum + 1, nullptr, FALSE);
+
+            ret = ansiString;
+            delete[] ansiString;
+        }
+        else
+        {
+            CCLOG("Wrong convert to Ansi code:0x%x", GetLastError());
+        }
+    }
+
+    return ret;
+}
+
+std::string FileUtils::getSuitableFOpen(const std::string& filenameUtf8) const
+{
+    return UTF8StringToMultiByte(filenameUtf8);
+}
+#else
+std::string FileUtils::getSuitableFOpen(const std::string& filenameUtf8) const
+{
+    return filenameUtf8;
+}
+#endif
 
 NS_CC_END
 

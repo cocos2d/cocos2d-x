@@ -75,6 +75,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelSmallDimensionsTest);
     ADD_TEST_CASE(LabelIssue10089Test);
     ADD_TEST_CASE(LabelSystemFontColor);
+    ADD_TEST_CASE(LabelIssue10773Test);
 };
 
 LabelTTFAlignmentNew::LabelTTFAlignmentNew()
@@ -1861,4 +1862,25 @@ std::string LabelSystemFontColor::title() const
 std::string LabelSystemFontColor::subtitle() const
 {
     return "Testing text color of system font";
+}
+
+LabelIssue10773Test::LabelIssue10773Test()
+{
+    auto center = VisibleRect::center();
+
+    auto label = Label::createWithTTF("create label with TTF", "fonts/arial.ttf", 24);
+    label->getLetter(5);
+    label->setString("Hi");
+    label->setPosition(center.x, center.y);
+    addChild(label);
+}
+
+std::string LabelIssue10773Test::title() const
+{
+    return "Test for Issue #10773";
+}
+
+std::string LabelIssue10773Test::subtitle() const
+{
+    return "Should not crash!";
 }
