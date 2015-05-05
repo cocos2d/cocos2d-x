@@ -2440,8 +2440,8 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
     Texture2D::TexParams tRepeatParams;
     tRepeatParams.magFilter = GL_LINEAR;
     tRepeatParams.minFilter = GL_LINEAR;
-    tRepeatParams.wrapS = GL_MIRRORED_REPEAT;
-    tRepeatParams.wrapT = GL_MIRRORED_REPEAT;
+    tRepeatParams.wrapS = GL_CLAMP_TO_EDGE;
+    tRepeatParams.wrapT = GL_CLAMP_TO_EDGE;
     _textureCube->setTexParameters(tRepeatParams);
 
     // pass the texture sampler to our custom shader
@@ -2501,8 +2501,8 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
         Texture2D::TexParams tRepeatParams;
         tRepeatParams.magFilter = GL_NEAREST;
         tRepeatParams.minFilter = GL_NEAREST;
-        tRepeatParams.wrapS = GL_MIRRORED_REPEAT;
-        tRepeatParams.wrapT = GL_MIRRORED_REPEAT;
+        tRepeatParams.wrapS = GL_CLAMP_TO_EDGE;
+        tRepeatParams.wrapT = GL_CLAMP_TO_EDGE;
         _textureCube->setTexParameters(tRepeatParams);
         state->setUniformTexture("u_cubeTex", _textureCube);
 
