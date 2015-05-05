@@ -31,6 +31,7 @@
 #include <functional>
 #include <cstdint>
 
+#include "renderer/CCTexture2D.h"
 #include "platform/CCPlatformMacros.h"
 #include "base/CCRef.h"
 #include "base/ccTypes.h"
