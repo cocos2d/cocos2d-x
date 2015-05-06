@@ -12079,22 +12079,6 @@ bool js_cocos2dx_studio_ActionTimeline_removeTimeline(JSContext *cx, uint32_t ar
     JS_ReportError(cx, "js_cocos2dx_studio_ActionTimeline_removeTimeline : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_cocos2dx_studio_ActionTimeline_clearFrameEventCallFunc(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocostudio::timeline::ActionTimeline* cobj = (cocostudio::timeline::ActionTimeline *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ActionTimeline_clearFrameEventCallFunc : Invalid Native Object");
-    if (argc == 0) {
-        cobj->clearFrameEventCallFunc();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_studio_ActionTimeline_clearFrameEventCallFunc : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_cocos2dx_studio_ActionTimeline_setLastFrameCallFunc(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -12132,6 +12116,28 @@ bool js_cocos2dx_studio_ActionTimeline_setLastFrameCallFunc(JSContext *cx, uint3
     }
 
     JS_ReportError(cx, "js_cocos2dx_studio_ActionTimeline_setLastFrameCallFunc : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_studio_ActionTimeline_IsAnimationInfoExists(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocostudio::timeline::ActionTimeline* cobj = (cocostudio::timeline::ActionTimeline *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ActionTimeline_IsAnimationInfoExists : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ActionTimeline_IsAnimationInfoExists : Error processing arguments");
+        bool ret = cobj->IsAnimationInfoExists(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_studio_ActionTimeline_IsAnimationInfoExists : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_studio_ActionTimeline_getTimelines(JSContext *cx, uint32_t argc, jsval *vp)
@@ -12399,26 +12405,20 @@ bool js_cocos2dx_studio_ActionTimeline_gotoFrameAndPlay(JSContext *cx, uint32_t 
     JS_ReportError(cx, "js_cocos2dx_studio_ActionTimeline_gotoFrameAndPlay : wrong number of arguments");
     return false;
 }
-bool js_cocos2dx_studio_ActionTimeline_IsAnimationInfoExists(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_studio_ActionTimeline_clearFrameEventCallFunc(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocostudio::timeline::ActionTimeline* cobj = (cocostudio::timeline::ActionTimeline *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ActionTimeline_IsAnimationInfoExists : Invalid Native Object");
-    if (argc == 1) {
-        std::string arg0;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_studio_ActionTimeline_IsAnimationInfoExists : Error processing arguments");
-        bool ret = cobj->IsAnimationInfoExists(arg0);
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_studio_ActionTimeline_clearFrameEventCallFunc : Invalid Native Object");
+    if (argc == 0) {
+        cobj->clearFrameEventCallFunc();
+        args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_studio_ActionTimeline_IsAnimationInfoExists : wrong number of arguments: %d, was expecting %d", argc, 1);
+    JS_ReportError(cx, "js_cocos2dx_studio_ActionTimeline_clearFrameEventCallFunc : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_studio_ActionTimeline_getEndFrame(JSContext *cx, uint32_t argc, jsval *vp)
@@ -12598,8 +12598,8 @@ void js_register_cocos2dx_studio_ActionTimeline(JSContext *cx, JS::HandleObject 
         JS_FN("pause", js_cocos2dx_studio_ActionTimeline_pause, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("init", js_cocos2dx_studio_ActionTimeline_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeTimeline", js_cocos2dx_studio_ActionTimeline_removeTimeline, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("clearFrameEventCallFunc", js_cocos2dx_studio_ActionTimeline_clearFrameEventCallFunc, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setLastFrameCallFunc", js_cocos2dx_studio_ActionTimeline_setLastFrameCallFunc, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isAnimationInfoExists", js_cocos2dx_studio_ActionTimeline_IsAnimationInfoExists, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTimelines", js_cocos2dx_studio_ActionTimeline_getTimelines, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("play", js_cocos2dx_studio_ActionTimeline_play, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getAnimationInfo", js_cocos2dx_studio_ActionTimeline_getAnimationInfo, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -12611,7 +12611,7 @@ void js_register_cocos2dx_studio_ActionTimeline(JSContext *cx, JS::HandleObject 
         JS_FN("gotoFrameAndPause", js_cocos2dx_studio_ActionTimeline_gotoFrameAndPause, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isPlaying", js_cocos2dx_studio_ActionTimeline_isPlaying, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("gotoFrameAndPlay", js_cocos2dx_studio_ActionTimeline_gotoFrameAndPlay, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("IsAnimationInfoExists", js_cocos2dx_studio_ActionTimeline_IsAnimationInfoExists, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("clearFrameEventCallFunc", js_cocos2dx_studio_ActionTimeline_clearFrameEventCallFunc, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getEndFrame", js_cocos2dx_studio_ActionTimeline_getEndFrame, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTimeSpeed", js_cocos2dx_studio_ActionTimeline_setTimeSpeed, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("clearLastFrameCallFunc", js_cocos2dx_studio_ActionTimeline_clearLastFrameCallFunc, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),

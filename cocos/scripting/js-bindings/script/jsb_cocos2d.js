@@ -26,7 +26,7 @@
 
 // CCConfig.js
 //
-cc.ENGINE_VERSION = "Cocos2d-JS v3.5";
+cc.ENGINE_VERSION = "Cocos2d-JS v3.6";
 
 cc.FIX_ARTIFACTS_BY_STRECHING_TEXEL = 0;
 cc.DIRECTOR_STATS_POSITION = {x: 0, y: 0};
@@ -1534,7 +1534,7 @@ var setTimeout = function (code, delay) {
         original.apply(this, arguments);
         clearTimeout(target._intervalId);
     }
-    cc.Director.getInstance().getScheduler().scheduleCallbackForTarget(target, target.fun, delay / 1000, 0, 0, false);
+    cc.director.getScheduler().schedule(target.fun, target, delay / 1000, 0, 0, false, target._intervalId+"");
     _windowTimeFunHash[target._intervalId] = target;
     return target._intervalId;
 };
@@ -1549,7 +1549,7 @@ var setInterval = function (code, delay) {
     var target = new WindowTimeFun(code);
     if (arguments.length > 2)
         target._args = Array.prototype.slice.call(arguments, 2);
-    cc.director.getScheduler().scheduleCallbackForTarget(target, target.fun, delay / 1000, cc.REPEAT_FOREVER, 0, false);
+    cc.director.getScheduler().schedule(target.fun, target, delay / 1000, cc.REPEAT_FOREVER, 0, false, target._intervalId+"");
     _windowTimeFunHash[target._intervalId] = target;
     return target._intervalId;
 };
@@ -1561,7 +1561,7 @@ var setInterval = function (code, delay) {
 var clearInterval = function (intervalId) {
     var target = _windowTimeFunHash[intervalId];
     if (target) {
-        cc.Director.getInstance().getScheduler().unscheduleCallbackForTarget(target, target.fun);
+        cc.director.getScheduler().unschedule(target._intervalId+"", target);
         delete _windowTimeFunHash[intervalId];
     }
 };
@@ -2077,9 +2077,8 @@ cc.DrawNode = cc._DrawNode.extend({
         cc._DrawNode.prototype.drawDot.call(this, pos, radius, color);
     },
 
-    drawSegment:function (from, to, radius, color) {
-        color = color || this._drawColor;
-        cc._DrawNode.prototype.drawSegment.call(this, from, to, radius, color);
+    drawSegment:function (from, to, lineWidth = this._lineWidth, color = this._drawColor) {
+        cc._DrawNode.prototype.drawSegment.call(this, from, to, lineWidth, color);
     },
 
     drawPoly:function (verts, fillColor, borderWidth, borderColor) {
@@ -2761,6 +2760,8 @@ cc.Texture2D.prototype.setTexParameters = function (texParams, magFilter, wrapS,
     this._setTexParameters(minFilter, magFilter, wrapS, wrapT);
 };
 
+cc.Texture2D.prototype.handleLoadedTexture = function (premultipled) {};
+
 
 //
 // MenuItemImage support sprite frame name as paramter
@@ -2813,10 +2814,6 @@ _p.setBoundingHeight = _p.setHeight;
 // cc.Scheduler scheduleCallbackForTarget
 //
 _p = cc.Scheduler.prototype;
-_p.scheduleCallbackForTarget = function (target, callback_fn, interval, repeat, delay, paused) {
-    this.schedule(callback_fn, target, interval, repeat, delay, paused, target.__instanceId + "");
-};
-_p.unscheduleCallbackForTarget = _p.unschedule;
 _p.unscheduleUpdateForTarget = _p.unscheduleUpdate;
 _p.unscheduleAllCallbacksForTarget = _p.unscheduleAllForTarget;
 

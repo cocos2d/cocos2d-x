@@ -60,6 +60,7 @@ xcschememanagement.plist
 ._.*
 xcuserdata/
 DerivedData/
+proj.ios_mac/build/
 
 # Ignore vim swaps
 *.swp

@@ -277,8 +277,6 @@ void js_log(const char *format, ...) {
     }
 }
 
-#define JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES 1
-
 bool JSBCore_platform(JSContext *cx, uint32_t argc, jsval *vp)
 {
     if (argc!=0)
@@ -434,6 +432,7 @@ void registerDefaultClasses(JSContext* cx, JS::HandleObject global) {
     JS_DefineFunction(cx, global, "__getVersion", JSBCore_version, 0, JSPROP_READONLY | JSPROP_PERMANENT);
     JS_DefineFunction(cx, global, "__restartVM", JSB_core_restartVM, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
     JS_DefineFunction(cx, global, "__cleanScript", JSB_cleanScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, global, "__isObjectValid", ScriptingCore::isObjectValid, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 }
 
 static void sc_finalize(JSFreeOp *freeOp, JSObject *obj) {
@@ -741,32 +740,6 @@ bool ScriptingCore::runScript(const char *path, JS::HandleObject global, JSConte
         cx = _cx;
     }
 
-#if(CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    //FIX ME : compileScript breaks on windows, execute the script directly 
-    auto fileUtil = FileUtils::getInstance();
-
-
-    // check jsc file first
-    std::string byteCodePath = RemoveFileExt(std::string(path)) + BYTE_CODE_FILE_EXT;
-
-    // Check whether '.jsc' files exist to avoid outputing log which says 'couldn't find .jsc file'.
-    if (fileUtil->isFileExist(byteCodePath))
-    {
-        Data data = fileUtil->getDataFromFile(byteCodePath);
-        if (!data.isNull())
-        {
-            JSAutoCompartment ac(cx, global);
-            JS::RootedScript script(cx, JS_DecodeScript(cx, data.getBytes(), static_cast<uint32_t>(data.getSize()), nullptr));
-            bool ok = JS_ExecuteScript(cx, global, script);
-            return ok;
-        }
-    }
-    
-    auto fullpath = fileUtil->fullPathForFilename(path);
-    auto content = fileUtil->getStringFromFile(fullpath);
-    JSAutoCompartment ac(cx, global);
-    bool evaluatedOK = JS_EvaluateScript(cx, global, content.c_str(), content.length(), path, 1);
-#else
     compileScript(path,global,cx);
     JS::RootedScript script(cx, getScript(path));
     bool evaluatedOK = false;
@@ -779,7 +752,7 @@ bool ScriptingCore::runScript(const char *path, JS::HandleObject global, JSConte
             JS_ReportPendingException(cx);
         }
     }
-#endif   
+ 
     return evaluatedOK;
 }
 
@@ -1382,9 +1355,6 @@ bool ScriptingCore::handleFocusEvent(void* nativeObj, cocos2d::ui::Widget* widge
 
     bool ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onFocusChanged", 2, args);
 
-    removeJSObject(_cx, widgetLoseFocus);
-    removeJSObject(_cx, widgetGetFocus);
-
     return ret;
 }
 
@@ -1513,6 +1483,26 @@ bool ScriptingCore::parseConfig(ConfigType type, const std::string &str)
     args[0] = int32_to_jsval(_cx, static_cast<int>(type));
     args[1] = std_string_to_jsval(_cx, str);
     return (true == executeFunctionWithOwner(OBJECT_TO_JSVAL(_global.ref().get()), "__onParseConfig", 2, args));
+}
+
+bool ScriptingCore::isObjectValid(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 1) {
+        JS::RootedObject tmpObj(cx, args.get(0).toObjectOrNull());
+        js_proxy_t *proxy = jsb_get_js_proxy(tmpObj);
+        if (proxy && proxy->ptr) {
+            args.rval().set(JSVAL_TRUE);
+        }
+        else {
+            args.rval().set(JSVAL_FALSE);
+        }
+        return true;
+    }
+    else {
+        JS_ReportError(cx, "Invalid number of arguments: %d. Expecting: 1", argc);
+        return false;
+    }
 }
 
 #pragma mark - Debug
@@ -1761,10 +1751,10 @@ void ScriptingCore::enableDebugger(unsigned int port)
         _debugGlobal.construct(_cx);
         _debugGlobal.ref() = NewGlobalObject(_cx, true);
         // Adds the debugger object to root, otherwise it may be collected by GC.
-        //AddObjectRoot(_cx, &_debugGlobal); no need, it's persistent rooted now
-        JS::RootedObject rootedDebugObj(_cx, _debugGlobal.ref());
-        JS_WrapObject(_cx, &rootedDebugObj);
-        //JSAutoCompartment ac(_cx, _debugGlobal.ref()); //really needed?
+        //AddObjectRoot(_cx, &_debugGlobal.ref()); no need, it's persistent rooted now
+        //JS_WrapObject(_cx, &_debugGlobal.ref()); Not really needed, JS_WrapObject makes a cross-compartment wrapper for the given JS object
+        JS::RootedObject rootedDebugObj(_cx, _debugGlobal.ref().get());
+        JSAutoCompartment ac(_cx, rootedDebugObj);
         // these are used in the debug program
         JS_DefineFunction(_cx, rootedDebugObj, "log", ScriptingCore::log, 0, JSPROP_READONLY | JSPROP_ENUMERATE | JSPROP_PERMANENT);
         JS_DefineFunction(_cx, rootedDebugObj, "_bufferWrite", JSBDebug_BufferWrite, 1, JSPROP_READONLY | JSPROP_PERMANENT);
@@ -1772,11 +1762,12 @@ void ScriptingCore::enableDebugger(unsigned int port)
         JS_DefineFunction(_cx, rootedDebugObj, "_exitNestedEventLoop", JSBDebug_exitNestedEventLoop, 0, JSPROP_READONLY | JSPROP_PERMANENT);
         JS_DefineFunction(_cx, rootedDebugObj, "_getEventLoopNestLevel", JSBDebug_getEventLoopNestLevel, 0, JSPROP_READONLY | JSPROP_PERMANENT);
         
-        
         runScript("script/jsb_debugger.js", rootedDebugObj);
         
+        JS::RootedObject globalObj(_cx, _global.ref().get());
+        JS_WrapObject(_cx, &globalObj);
         // prepare the debugger
-        jsval argv = OBJECT_TO_JSVAL(_global.ref().get());
+        jsval argv = OBJECT_TO_JSVAL(globalObj);
         JS::RootedValue outval(_cx);
         bool ok = JS_CallFunctionName(_cx, rootedDebugObj, "_prepareDebugger", JS::HandleValueArray::fromMarkedLocation(1, &argv), &outval);
         if (!ok) {

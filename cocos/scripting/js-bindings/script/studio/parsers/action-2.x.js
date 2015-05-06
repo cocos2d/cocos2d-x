@@ -237,7 +237,8 @@
                 frame.setSingleFrameIndex(singleFrameIndex);
 
                 frame.setEnterWithName(true);
-                frame.setAnimationName(currentAnimationFrame);
+                if (currentAnimationFrame)
+                     frame.setAnimationName(currentAnimationFrame);
 
                 return frame;
             }

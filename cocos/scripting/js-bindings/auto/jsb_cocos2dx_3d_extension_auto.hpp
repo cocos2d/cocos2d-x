@@ -35,10 +35,12 @@ bool js_cocos2dx_3d_extension_PUParticleSystem3D_constructor(JSContext *cx, uint
 void js_cocos2dx_3d_extension_PUParticleSystem3D_finalize(JSContext *cx, JSObject *obj);
 void js_register_cocos2dx_3d_extension_PUParticleSystem3D(JSContext *cx, JS::HandleObject global);
 void register_all_cocos2dx_3d_extension(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_3d_extension_PUParticleSystem3D_initWithFilePath(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_extension_PUParticleSystem3D_getParticleSystemScaleVelocity(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_extension_PUParticleSystem3D_setEmittedSystemQuota(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_extension_PUParticleSystem3D_getDefaultDepth(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_extension_PUParticleSystem3D_getEmittedSystemQuota(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_3d_extension_PUParticleSystem3D_initWithFilePathAndMaterialPath(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_extension_PUParticleSystem3D_clearAllParticles(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_extension_PUParticleSystem3D_getMaterialName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_extension_PUParticleSystem3D_calulateRotationOffset(JSContext *cx, uint32_t argc, jsval *vp);

@@ -39,7 +39,7 @@
 #include <assert.h>
 #include <memory>
 
-#define ENGINE_VERSION "Cocos2d-JS v3.5"
+#define ENGINE_VERSION "Cocos2d-JS v3.6"
 
 void js_log(const char *format, ...);
 
@@ -244,6 +244,8 @@ public:
     static bool dumpRoot(JSContext *cx, uint32_t argc, jsval *vp);
     static bool addRootJS(JSContext *cx, uint32_t argc, jsval *vp);
     static bool removeRootJS(JSContext *cx, uint32_t argc, jsval *vp);
+    
+    static bool isObjectValid(JSContext *cx, uint32_t argc, jsval *vp);
 
     /**
      * enable the debug environment

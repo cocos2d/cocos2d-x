@@ -1435,6 +1435,11 @@ cc._initSys = function(config, CONFIG_KEY){
     locSys.cleanScript = function(jsFile) {
         __cleanScript(jsFile);
     };
+    
+    // Check whether an object is valid
+    locSys.isObjectValid = function(obj) {
+        return __isObjectValid(obj);
+    };
 
 
     locSys.dump = function(){

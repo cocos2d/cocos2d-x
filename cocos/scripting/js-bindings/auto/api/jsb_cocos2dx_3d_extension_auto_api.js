@@ -157,6 +157,18 @@ ParticleSystem3D : function (
 jsb.PUParticleSystem3D = {
 
 /**
+ * @method initWithFilePath
+ * @param {String} arg0
+ * @return {bool}
+ */
+initWithFilePath : function (
+str 
+)
+{
+    return false;
+},
+
+/**
  * @method getParticleSystemScaleVelocity
  * @return {float}
  */
@@ -194,6 +206,20 @@ getEmittedSystemQuota : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method initWithFilePathAndMaterialPath
+ * @param {String} arg0
+ * @param {String} arg1
+ * @return {bool}
+ */
+initWithFilePathAndMaterialPath : function (
+str, 
+str 
+)
+{
+    return false;
 },
 
 /**

@@ -34,7 +34,7 @@ cc._emptyLoader = {
 
 cc.loader.register([
                         "mp3", "ogg", "wav", "mp4", "m4a", 
-                        "font", "eot", "ttf", "woff", "svg"
+                        "font", "eot", "ttf", "woff", "svg", "gaf"
                     ], 
                     cc._emptyLoader);
 

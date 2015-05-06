@@ -405,7 +405,7 @@ str
 
 /**
  * @method getMovementCount
- * @return {int}
+ * @return {long}
  */
 getMovementCount : function (
 )
@@ -1776,7 +1776,7 @@ bool
 
 /**
  * @method getMovementCount
- * @return {int}
+ * @return {long}
  */
 getMovementCount : function (
 )
@@ -4196,14 +4196,6 @@ timeline
 },
 
 /**
- * @method clearFrameEventCallFunc
- */
-clearFrameEventCallFunc : function (
-)
-{
-},
-
-/**
  * @method setLastFrameCallFunc
  * @param {function} arg0
  */
@@ -4211,6 +4203,18 @@ setLastFrameCallFunc : function (
 func 
 )
 {
+},
+
+/**
+ * @method IsAnimationInfoExists
+ * @param {String} arg0
+ * @return {bool}
+ */
+IsAnimationInfoExists : function (
+str 
+)
+{
+    return false;
 },
 
 /**
@@ -4332,15 +4336,11 @@ bool
 },
 
 /**
- * @method IsAnimationInfoExists
- * @param {String} arg0
- * @return {bool}
+ * @method clearFrameEventCallFunc
  */
-IsAnimationInfoExists : function (
-str 
+clearFrameEventCallFunc : function (
 )
 {
-    return false;
 },
 
 /**

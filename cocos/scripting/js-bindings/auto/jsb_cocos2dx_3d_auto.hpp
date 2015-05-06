@@ -5,6 +5,44 @@
 #include "jsfriendapi.h"
 
 
+extern JSClass  *jsb_cocos2d_Animation3D_class;
+extern JSObject *jsb_cocos2d_Animation3D_prototype;
+
+bool js_cocos2dx_3d_Animation3D_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_3d_Animation3D_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_3d_Animation3D(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx_3d(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_3d_Animation3D_initWithFile(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_3d_Animation3D_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_3d_Animation3D_getBoneCurveByName(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_3d_Animation3D_getDuration(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_3d_Animation3D_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_3d_Animation3D_Animation3D(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_Animate3D_class;
+extern JSObject *jsb_cocos2d_Animate3D_prototype;
+
+bool js_cocos2dx_3d_Animate3D_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_3d_Animate3D_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_3d_Animate3D(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx_3d(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_3d_Animate3D_getSpeed(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_3d_Animate3D_setQuality(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_3d_Animate3D_setWeight(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_3d_Animate3D_removeFromMap(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_3d_Animate3D_initWithFrames(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_3d_Animate3D_getOriginInterval(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_3d_Animate3D_setSpeed(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_3d_Animate3D_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_3d_Animate3D_setOriginInterval(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_3d_Animate3D_getWeight(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_3d_Animate3D_getQuality(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_3d_Animate3D_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_3d_Animate3D_getTransitionTime(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_3d_Animate3D_createWithFrames(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_3d_Animate3D_setTransitionTime(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_3d_Animate3D_Animate3D(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_cocos2d_Skeleton3D_class;
 extern JSObject *jsb_cocos2d_Skeleton3D_prototype;
 
@@ -109,44 +147,6 @@ bool js_cocos2dx_3d_Mesh_getIndexBuffer(JSContext *cx, uint32_t argc, jsval *vp)
 bool js_cocos2dx_3d_Mesh_setGLProgramState(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Mesh_setVisible(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_3d_Mesh_Mesh(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *jsb_cocos2d_Animation3D_class;
-extern JSObject *jsb_cocos2d_Animation3D_prototype;
-
-bool js_cocos2dx_3d_Animation3D_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_3d_Animation3D_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_3d_Animation3D(JSContext *cx, JS::HandleObject global);
-void register_all_cocos2dx_3d(JSContext* cx, JS::HandleObject obj);
-bool js_cocos2dx_3d_Animation3D_initWithFile(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_3d_Animation3D_init(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_3d_Animation3D_getBoneCurveByName(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_3d_Animation3D_getDuration(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_3d_Animation3D_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_3d_Animation3D_Animation3D(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *jsb_cocos2d_Animate3D_class;
-extern JSObject *jsb_cocos2d_Animate3D_prototype;
-
-bool js_cocos2dx_3d_Animate3D_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_3d_Animate3D_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_3d_Animate3D(JSContext *cx, JS::HandleObject global);
-void register_all_cocos2dx_3d(JSContext* cx, JS::HandleObject obj);
-bool js_cocos2dx_3d_Animate3D_getSpeed(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_3d_Animate3D_setHighQuality(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_3d_Animate3D_setWeight(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_3d_Animate3D_removeFromMap(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_3d_Animate3D_initWithFrames(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_3d_Animate3D_getOriginInterval(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_3d_Animate3D_setSpeed(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_3d_Animate3D_init(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_3d_Animate3D_isHighQuality(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_3d_Animate3D_setOriginInterval(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_3d_Animate3D_getWeight(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_3d_Animate3D_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_3d_Animate3D_getTransitionTime(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_3d_Animate3D_createWithFrames(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_3d_Animate3D_setTransitionTime(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_3d_Animate3D_Animate3D(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_AttachNode_class;
 extern JSObject *jsb_cocos2d_AttachNode_prototype;
