@@ -27,8 +27,6 @@
 #include "../testResource.h"
 #include "cocos2d.h"
 
-#include "renderer/CCMaterial.h"
-
 
 USING_NS_CC;
 

@@ -24,15 +24,6 @@
  ****************************************************************************/
 
 #include "Sprite3DTest.h"
-#include "base/CCAsyncTaskPool.h"
-#include "3d/CCAnimation3D.h"
-#include "3d/CCAnimate3D.h"
-#include "3d/CCAttachNode.h"
-#include "3d/CCRay.h"
-#include "3d/CCSprite3D.h"
-#include "3d/CCTextureCube.h"
-#include "3d/CCSkybox.h"
-#include "renderer/CCVertexIndexBuffer.h"
 #include "DrawNode3D.h"
 
 #include <algorithm>
