@@ -19,10 +19,23 @@
 -- @return Texture2D#Texture2D ret (return value: cc.Texture2D)
         
 --------------------------------
+--  Returns the Material being used by the Mesh 
+-- @function [parent=#Mesh] getMaterial 
+-- @param self
+-- @return Material#Material ret (return value: cc.Material)
+        
+--------------------------------
 -- get per vertex size in bytes
 -- @function [parent=#Mesh] getVertexSizeInBytes 
 -- @param self
 -- @return int#int ret (return value: int)
+        
+--------------------------------
+--  Sets a new Material to the Mesh 
+-- @function [parent=#Mesh] setMaterial 
+-- @param self
+-- @param #cc.Material material
+-- @return Mesh#Mesh self (return value: cc.Mesh)
         
 --------------------------------
 -- name getter 
@@ -46,6 +59,19 @@
         
 --------------------------------
 -- 
+-- @function [parent=#Mesh] draw 
+-- @param self
+-- @param #cc.Renderer renderer
+-- @param #float globalZ
+-- @param #mat4_table transform
+-- @param #unsigned int flags
+-- @param #unsigned int lightMask
+-- @param #vec4_table color
+-- @param #bool forceDepthWrite
+-- @return Mesh#Mesh self (return value: cc.Mesh)
+        
+--------------------------------
+-- 
 -- @function [parent=#Mesh] getBlendFunc 
 -- @param self
 -- @return BlendFunc#BlendFunc ret (return value: cc.BlendFunc)
@@ -55,18 +81,6 @@
 -- @function [parent=#Mesh] setName 
 -- @param self
 -- @param #string name
--- @return Mesh#Mesh self (return value: cc.Mesh)
-        
---------------------------------
--- 
--- @function [parent=#Mesh] isVisible 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- Bind to the MeshCommand
--- @function [parent=#Mesh] bindMeshCommand 
--- @param self
 -- @return Mesh#Mesh self (return value: cc.Mesh)
         
 --------------------------------
@@ -97,7 +111,14 @@
 -- @return Mesh#Mesh self (return value: cc.Mesh)
         
 --------------------------------
--- Set the default GL program.
+-- 
+-- @function [parent=#Mesh] isVisible 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+--   Sets a new GLProgramState for the Mesh<br>
+-- A new Material will be created for it
 -- @function [parent=#Mesh] setGLProgramState 
 -- @param self
 -- @param #cc.GLProgramState glProgramState
