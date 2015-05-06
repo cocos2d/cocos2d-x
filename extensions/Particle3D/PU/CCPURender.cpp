@@ -50,10 +50,10 @@ void PURender::copyAttributesTo( PURender *render )
     render->_renderType = _renderType;
 }
 
-static bool compareParticle3D(PUParticle3D* left, PUParticle3D* right)
-{
-    return left->depthInView > right->depthInView;
-}
+//static bool compareParticle3D(PUParticle3D* left, PUParticle3D* right)
+//{
+//    return left->depthInView > right->depthInView;
+//}
 
 PUParticle3DQuadRender* PUParticle3DQuadRender::create(const std::string& texFile)
 {
@@ -174,20 +174,20 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
             float sintheta = sinf(-particle->zRotation);
             Vec2 texOffset = particle->lb_uv + 0.5f * (particle->rt_uv - particle->lb_uv);
             Vec2 val;
-            val = Vec2((particle->lb_uv.x - texOffset.x), (particle->lb_uv.y - texOffset.y));
-            val = Vec2(val.x * costheta - val.y * sintheta, val.x * sintheta + val.y * costheta);
+            val.set((particle->lb_uv.x - texOffset.x), (particle->lb_uv.y - texOffset.y));
+            val.set(val.x * costheta - val.y * sintheta, val.x * sintheta + val.y * costheta);
             fillVertex(vertexindex, (position + (- halfwidth - halfheight + halfwidth * offsetX + halfheight * offsetY)), particle->color, Vec2(val.x + texOffset.x, val.y + texOffset.y));
 
-            val = Vec2(particle->rt_uv.x - texOffset.x, particle->lb_uv.y - texOffset.y);
-            val = Vec2(val.x * costheta - val.y * sintheta, val.x * sintheta + val.y * costheta);
+            val.set(particle->rt_uv.x - texOffset.x, particle->lb_uv.y - texOffset.y);
+            val.set(val.x * costheta - val.y * sintheta, val.x * sintheta + val.y * costheta);
             fillVertex(vertexindex + 1, (position + (halfwidth - halfheight + halfwidth * offsetX + halfheight * offsetY)), particle->color, Vec2(val.x + texOffset.x, val.y + texOffset.y));
 
-            val = Vec2(particle->lb_uv.x - texOffset.x, particle->rt_uv.y - texOffset.y);
-            val = Vec2(val.x * costheta - val.y * sintheta, val.x * sintheta + val.y * costheta);
+            val.set(particle->lb_uv.x - texOffset.x, particle->rt_uv.y - texOffset.y);
+            val.set(val.x * costheta - val.y * sintheta, val.x * sintheta + val.y * costheta);
             fillVertex(vertexindex + 2, (position + (- halfwidth + halfheight + halfwidth * offsetX + halfheight * offsetY)), particle->color, Vec2(val.x + texOffset.x, val.y + texOffset.y));
 
-            val = Vec2(particle->rt_uv.x - texOffset.x, particle->rt_uv.y - texOffset.y);
-            val = Vec2(val.x * costheta - val.y * sintheta, val.x * sintheta + val.y * costheta);
+            val.set(particle->rt_uv.x - texOffset.x, particle->rt_uv.y - texOffset.y);
+            val.set(val.x * costheta - val.y * sintheta, val.x * sintheta + val.y * costheta);
             fillVertex(vertexindex + 3, (position + (halfwidth + halfheight + halfwidth * offsetX + halfheight * offsetY)), particle->color, Vec2(val.x + texOffset.x, val.y + texOffset.y));
         }else{
             Mat4::createRotation(backward, -particle->zRotation, &pRotMat);
@@ -202,25 +202,25 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
 
         //_posuvcolors[vertexindex].position = (position + (- halfwidth - halfheight + halfwidth * offsetX + halfheight * offsetY));
         //_posuvcolors[vertexindex].color = particle->color;
-        //_posuvcolors[vertexindex].uv = Vec2(val.x + texOffset.x, val.y + texOffset.y);
+        //_posuvcolors[vertexindex].uv.set(val.x + texOffset.x, val.y + texOffset.y);
 
-        //val = Vec2(particle->rt_uv.x - texOffset.x, particle->lb_uv.y - texOffset.y);
-        //val = Vec2(val.x * costheta - val.y * sintheta, val.x * sintheta + val.y * costheta);
+        //val.set(particle->rt_uv.x - texOffset.x, particle->lb_uv.y - texOffset.y);
+        //val.set(val.x * costheta - val.y * sintheta, val.x * sintheta + val.y * costheta);
         //_posuvcolors[vertexindex + 1].position = (position + (halfwidth - halfheight + halfwidth * offsetX + halfheight * offsetY));
         //_posuvcolors[vertexindex + 1].color = particle->color;
-        //_posuvcolors[vertexindex + 1].uv = Vec2(val.x + texOffset.x, val.y + texOffset.y);
+        //_posuvcolors[vertexindex + 1].uv.set(val.x + texOffset.x, val.y + texOffset.y);
         //
-        //val = Vec2(particle->lb_uv.x - texOffset.x, particle->rt_uv.y - texOffset.y);
-        //val = Vec2(val.x * costheta - val.y * sintheta, val.x * sintheta + val.y * costheta);
+        //val.set(particle->lb_uv.x - texOffset.x, particle->rt_uv.y - texOffset.y);
+        //val.set(val.x * costheta - val.y * sintheta, val.x * sintheta + val.y * costheta);
         //_posuvcolors[vertexindex + 2].position = (position + (- halfwidth + halfheight + halfwidth * offsetX + halfheight * offsetY));
         //_posuvcolors[vertexindex + 2].color = particle->color;
-        //_posuvcolors[vertexindex + 2].uv = Vec2(val.x + texOffset.x, val.y + texOffset.y);
+        //_posuvcolors[vertexindex + 2].uv.set(val.x + texOffset.x, val.y + texOffset.y);
         //
-        //val = Vec2(particle->rt_uv.x - texOffset.x, particle->rt_uv.y - texOffset.y);
-        //val = Vec2(val.x * costheta - val.y * sintheta, val.x * sintheta + val.y * costheta);
+        //val.set(particle->rt_uv.x - texOffset.x, particle->rt_uv.y - texOffset.y);
+        //val.set(val.x * costheta - val.y * sintheta, val.x * sintheta + val.y * costheta);
         //_posuvcolors[vertexindex + 3].position = (position + (halfwidth + halfheight + halfwidth * offsetX + halfheight * offsetY));
         //_posuvcolors[vertexindex + 3].color = particle->color;
-        //_posuvcolors[vertexindex + 3].uv = Vec2(val.x + texOffset.x, val.y + texOffset.y);
+        //_posuvcolors[vertexindex + 3].uv.set(val.x + texOffset.x, val.y + texOffset.y);
         //
         //
         //_indexData[index] = vertexindex;
@@ -245,6 +245,7 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
         GLuint texId = (_texture ? _texture->getName() : 0);
         _meshCommand->init(0, texId, _glProgramState, particleSystem->getBlendFunc(), _vertexBuffer->getVBO(), _indexBuffer->getVBO(), GL_TRIANGLES, GL_UNSIGNED_SHORT, index, transform, Node::FLAGS_RENDER_AS_3D);
         _meshCommand->setTransparent(true);
+        _glProgramState->setUniformVec4("u_color", Vec4(1,1,1,1));
         renderer->addCommand(_meshCommand);
     }
 }
@@ -372,7 +373,7 @@ void PUParticle3DQuadRender::determineUVCoords( PUParticle3D *particle )
     unsigned short currentCol = particle->textureCoordsCurrent - _textureCoordsColumns * currentRow;
     currentRow = _textureCoordsRows - currentRow - 1;
 
-    particle->lb_uv = Vec2(_textureCoordsColStep * currentCol, _textureCoordsRowStep * currentRow);
+    particle->lb_uv.set(_textureCoordsColStep * currentCol, _textureCoordsRowStep * currentRow);
     particle->rt_uv = particle->lb_uv + Vec2(_textureCoordsColStep, _textureCoordsRowStep);
 }
 
@@ -514,8 +515,8 @@ PUParticle3DEntityRender::PUParticle3DEntityRender()
     : _meshCommand(nullptr)
     , _texture(nullptr)
     , _glProgramState(nullptr)
-    , _vertexBuffer(nullptr)
     , _indexBuffer(nullptr)
+    , _vertexBuffer(nullptr)
 {
 
 }
@@ -691,6 +692,7 @@ void PUParticle3DBoxRender::render( Renderer* renderer, const Mat4 &transform, P
         GLuint texId = (_texture ? _texture->getName() : 0);
         _meshCommand->init(0, texId, _glProgramState, particleSystem->getBlendFunc(), _vertexBuffer->getVBO(), _indexBuffer->getVBO(), GL_TRIANGLES, GL_UNSIGNED_SHORT, index, transform, Node::FLAGS_RENDER_AS_3D);
         _meshCommand->setTransparent(true);
+        _glProgramState->setUniformVec4("u_color", Vec4(1,1,1,1));
         renderer->addCommand(_meshCommand);
     }
 }
@@ -841,6 +843,7 @@ void PUSphereRender::render( Renderer* renderer, const Mat4 &transform, Particle
         GLuint texId = (_texture ? _texture->getName() : 0);
         _meshCommand->init(0, texId, _glProgramState, particleSystem->getBlendFunc(), _vertexBuffer->getVBO(), _indexBuffer->getVBO(), GL_TRIANGLES, GL_UNSIGNED_SHORT, index, transform, Node::FLAGS_RENDER_AS_3D);
         _meshCommand->setTransparent(true);
+        _glProgramState->setUniformVec4("u_color", Vec4(1,1,1,1));        
         renderer->addCommand(_meshCommand);
     }
 }

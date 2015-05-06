@@ -59,4 +59,13 @@
 -- @param #bool cleanup
 -- @return ParallaxNode#ParallaxNode self (return value: cc.ParallaxNode)
         
+--------------------------------
+--  Adds a child to the container with a z-order, a parallax ratio and a position offset<br>
+-- It returns self, so you can chain several addChilds.<br>
+-- since v0.8<br>
+-- js ctor
+-- @function [parent=#ParallaxNode] ParallaxNode 
+-- @param self
+-- @return ParallaxNode#ParallaxNode self (return value: cc.ParallaxNode)
+        
 return nil

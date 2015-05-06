@@ -32,6 +32,11 @@
 #include "renderer/CCRenderer.h"
 #include "base/CCDirector.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#define CC_CLIPPING_NODE_OPENGLES 0
+#else
+#define CC_CLIPPING_NODE_OPENGLES 1
+#endif
 
 NS_CC_BEGIN
 
@@ -41,6 +46,7 @@ static GLint g_sStencilBits = -1;
 // where n is the number of bits of the stencil buffer.
 static GLint s_layer = -1;
 
+#if CC_CLIPPING_NODE_OPENGLES
 static void setProgram(Node *n, GLProgram *p)
 {
     n->setGLProgram(p);
@@ -50,6 +56,7 @@ static void setProgram(Node *n, GLProgram *p)
         setProgram(child, p);
     }
 }
+#endif
 
 ClippingNode::ClippingNode()
 : _stencil(nullptr)
@@ -202,10 +209,10 @@ void ClippingNode::drawFullScreenQuadClearStencil()
     director->loadIdentityMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     
     Vec2 vertices[] = {
-        Vec2(-1, -1),
-        Vec2(1, -1),
-        Vec2(1, 1),
-        Vec2(-1, 1)
+        Vec2(-1.0f, -1.0f),
+        Vec2(1.0f, -1.0f),
+        Vec2(1.0f, 1.0f),
+        Vec2(-1.0f, 1.0f)
     };
     
     auto glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_U_COLOR);
@@ -257,8 +264,7 @@ void ClippingNode::visit(Renderer *renderer, const Mat4 &parentTransform, uint32
     renderer->addCommand(&_beforeVisitCmd);
     if (_alphaThreshold < 1)
     {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
-#else
+#if CC_CLIPPING_NODE_OPENGLES
         // since glAlphaTest do not exists in OES, use a shader that writes
         // pixel only if greater than an alpha threshold
         GLProgram *program = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_TEXTURE_ALPHA_TEST_NO_MV);
@@ -438,7 +444,7 @@ void ClippingNode::onBeforeVisit()
     // enable alpha test only if the alpha threshold < 1,
     // indeed if alpha threshold == 1, every pixel will be drawn anyways
     if (_alphaThreshold < 1) {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#if !CC_CLIPPING_NODE_OPENGLES
         // manually save the alpha test state
         _currentAlphaTestEnabled = glIsEnabled(GL_ALPHA_TEST);
         glGetIntegerv(GL_ALPHA_TEST_FUNC, (GLint *)&_currentAlphaTestFunc);
@@ -449,8 +455,6 @@ void ClippingNode::onBeforeVisit()
         CHECK_GL_ERROR_DEBUG();
         // pixel will be drawn only if greater than an alpha threshold
         glAlphaFunc(GL_GREATER, _alphaThreshold);
-#else
-        
 #endif
     }
 
@@ -462,15 +466,15 @@ void ClippingNode::onAfterDrawStencil()
     // restore alpha test state
     if (_alphaThreshold < 1)
     {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#if CC_CLIPPING_NODE_OPENGLES
+        // FIXME: we need to find a way to restore the shaders of the stencil node and its childs
+#else
         // manually restore the alpha test state
         glAlphaFunc(_currentAlphaTestFunc, _currentAlphaTestRef);
         if (!_currentAlphaTestEnabled)
         {
             glDisable(GL_ALPHA_TEST);
         }
-#else
-// FIXME: we need to find a way to restore the shaders of the stencil node and its childs
 #endif
     }
 

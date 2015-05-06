@@ -637,7 +637,12 @@ bool Texture2D::initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, PixelFormat
     }
 #endif
 
-    CHECK_GL_ERROR_DEBUG(); // clean possible GL error
+    // clean possible GL error
+    GLenum err = glGetError();
+    if (err != GL_NO_ERROR)
+    {
+        cocos2d::log("OpenGL error 0x%04X in %s %s %d\n", err, __FILE__, __FUNCTION__, __LINE__);
+    }
     
     // Specify OpenGL texture image
     int width = pixelsWide;

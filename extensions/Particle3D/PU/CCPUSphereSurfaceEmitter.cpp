@@ -34,8 +34,7 @@ const float PUSphereSurfaceEmitter::DEFAULT_RADIUS = 10.0f;
 //-----------------------------------------------------------------------
 PUSphereSurfaceEmitter::PUSphereSurfaceEmitter(void) : 
     PUEmitter(),
-    _radius(DEFAULT_RADIUS),
-    _randomVector(Vec3::ZERO)
+    _radius(DEFAULT_RADIUS)
 {
 }
 //-----------------------------------------------------------------------

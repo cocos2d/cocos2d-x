@@ -591,10 +591,6 @@ void Label::alignText()
         return;
     }
 
-    for (const auto& batchNode:_batchNodes)
-    {
-        batchNode->getTextureAtlas()->removeAllQuads();
-    }
     _fontAtlas->prepareLetterDefinitions(_currentUTF16String);
     auto& textures = _fontAtlas->getTextures();
     if (textures.size() > _batchNodes.size())
@@ -615,29 +611,45 @@ void Label::alignText()
     if(_labelWidth > 0 || (_currNumLines > 1 && _hAlignment != TextHAlignment::LEFT))
         LabelTextFormatter::alignText(this);
 
-    int strLen = static_cast<int>(_currentUTF16String.length());
-    Rect uvRect;
-    Sprite* letterSprite;
-    for(const auto &child : _children) {
-        int tag = child->getTag();
-        if(tag >= strLen)
-        {
-            SpriteBatchNode::removeChild(child, true);
-        }
-        else if(tag >= 0)
-        {
-            letterSprite = dynamic_cast<Sprite*>(child);
-            if (letterSprite)
+    if (!_children.empty())
+    {
+        int strLen = static_cast<int>(_currentUTF16String.length());
+        Rect uvRect;
+        Sprite* letterSprite;
+        for (auto index = 0; index < _children.size();) {
+            auto child = _children.at(index);
+            int tag = child->getTag();
+            if (tag >= strLen)
             {
-                uvRect.size.height = _lettersInfo[tag].def.height;
-                uvRect.size.width  = _lettersInfo[tag].def.width;
-                uvRect.origin.x    = _lettersInfo[tag].def.U;
-                uvRect.origin.y    = _lettersInfo[tag].def.V;
+                SpriteBatchNode::removeChild(child, true);
+            }
+            else if (tag >= 0)
+            {
+                letterSprite = dynamic_cast<Sprite*>(child);
+                if (letterSprite)
+                {
+                    auto& letterDef = _lettersInfo[tag].def;
+                    uvRect.size.height = letterDef.height;
+                    uvRect.size.width = letterDef.width;
+                    uvRect.origin.x = letterDef.U;
+                    uvRect.origin.y = letterDef.V;
 
-                letterSprite->setTexture(textures.at(_lettersInfo[tag].def.textureID));
-                letterSprite->setTextureRect(uvRect);
+                    letterSprite->setTexture(textures.at(letterDef.textureID));
+                    letterSprite->setTextureRect(uvRect);
+                    letterSprite->setPosition(_lettersInfo[tag].position);
+                }
+                ++index;
+            }
+            else
+            {
+                ++index;
             }
         }
+    }
+
+    for (const auto& batchNode : _batchNodes)
+    {
+        batchNode->getTextureAtlas()->removeAllQuads();
     }
 
     updateQuads();
@@ -788,24 +800,31 @@ void Label::enableShadow(const Color4B& shadowColor /* = Color4B::BLACK */,const
     //TODO: support blur for shadow
     _shadowBlurRadius = 0;
 
-    if (_textSprite && _shadowNode)
-    {
-        if (shadowColor != _shadowColor4F)
-        {
-            Node::removeChild(_shadowNode, true);
-            _shadowNode = nullptr;
-            createShadowSpriteForSystemFont();
-        }
-        else
-        {
-            _shadowNode->setPosition(_shadowOffset.width, _shadowOffset.height);
-        }
-    }
-
     _shadowColor3B.r = shadowColor.r;
     _shadowColor3B.g = shadowColor.g;
     _shadowColor3B.b = shadowColor.b;
     _shadowOpacity = shadowColor.a;
+
+    if (!_systemFontDirty && !_contentDirty && _textSprite)
+    {
+        if (_shadowNode)
+        {
+            if (shadowColor != _shadowColor4F)
+            {
+                Node::removeChild(_shadowNode, true);
+                _shadowNode = nullptr;
+                createShadowSpriteForSystemFont();
+            }
+            else
+            {
+                _shadowNode->setPosition(_shadowOffset.width, _shadowOffset.height);
+            }
+        }
+        else
+        {
+            createShadowSpriteForSystemFont();
+        }
+    }
 
     _shadowColor4F.r = shadowColor.r / 255.0f;
     _shadowColor4F.g = shadowColor.g / 255.0f;
@@ -857,6 +876,13 @@ void Label::disableEffect(LabelEffect effect)
             updateShaderProgram();
         }
         break;
+    case LabelEffect::ALL:
+        {
+            disableEffect(LabelEffect::SHADOW);
+            disableEffect(LabelEffect::GLOW);
+            disableEffect(LabelEffect::OUTLINE);
+        }
+        break;
     default:
         break;
     }
@@ -886,8 +912,11 @@ void Label::onDraw(const Mat4& transform, bool transformUpdated)
         {
             glprogram->setUniformLocationWith4f(_uniformTextColor,
                 _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
-            glprogram->setUniformLocationWith4f(_uniformEffectColor,
-                _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
+            if (_currLabelEffect == LabelEffect::OUTLINE || _currLabelEffect == LabelEffect::GLOW)
+            {
+                glprogram->setUniformLocationWith4f(_uniformEffectColor,
+                    _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
+            }
 
             getGLProgram()->setUniformsForBuiltins(_shadowTransform);
             for (const auto &child : _children)
@@ -1031,18 +1060,18 @@ void Label::createSpriteForSystemFont()
 
 void Label::createShadowSpriteForSystemFont()
 {
-    if (!_fontDefinition._stroke._strokeEnabled && _fontDefinition._fontFillColor == _shadowColor4F
-        && (_fontDefinition._fontAlpha == _shadowColor4F.a * 255))
+    if (!_fontDefinition._stroke._strokeEnabled && _fontDefinition._fontFillColor == _shadowColor3B
+        && (_fontDefinition._fontAlpha == _shadowOpacity))
     {
         _shadowNode = Sprite::createWithTexture(_textSprite->getTexture());
     }
     else
     {
         auto shadowFontDefinition = _fontDefinition;
-        shadowFontDefinition._fontFillColor.r = _shadowColor4F.r * 255;
-        shadowFontDefinition._fontFillColor.g = _shadowColor4F.g * 255;
-        shadowFontDefinition._fontFillColor.b = _shadowColor4F.b * 255;
-        shadowFontDefinition._fontAlpha = _shadowColor4F.a * 255;
+        shadowFontDefinition._fontFillColor.r = _shadowColor3B.r;
+        shadowFontDefinition._fontFillColor.g = _shadowColor3B.g;
+        shadowFontDefinition._fontFillColor.b = _shadowColor3B.b;
+        shadowFontDefinition._fontAlpha = _shadowOpacity;
 
         shadowFontDefinition._stroke._strokeColor = shadowFontDefinition._fontFillColor;
         shadowFontDefinition._stroke._strokeAlpha = shadowFontDefinition._fontAlpha;

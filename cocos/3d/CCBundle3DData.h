@@ -117,6 +117,11 @@ struct NodeDatas
     std::vector<NodeData*> skeleton; //skeleton
     std::vector<NodeData*> nodes; // nodes, CCNode, Sprite3D or part of Sprite3D
     
+    virtual ~NodeDatas()
+    {
+        resetData();
+    }
+    
     void resetData()
     {
         for(auto& it : skeleton)
@@ -367,7 +372,6 @@ public:
     {
         Vec3Key()
         : _time(0)
-        , _key(Vec3::ZERO)
         {
         }
         

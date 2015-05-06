@@ -454,7 +454,7 @@ namespace cocostudio
             auto f_outlineColor = options->outlineColor();
             if (f_outlineColor)
             {
-                Color4B outlineColor(f_outlineColor->a(), f_outlineColor->r(), f_outlineColor->g(), f_outlineColor->b());
+                Color4B outlineColor(f_outlineColor->r(), f_outlineColor->g(), f_outlineColor->b(), f_outlineColor->a());
                 label->enableOutline(outlineColor, options->outlineSize());
             }
         }
@@ -465,15 +465,24 @@ namespace cocostudio
             auto f_shadowColor = options->shadowColor();
             if (f_shadowColor)
             {
-                Color4B shadowColor(f_shadowColor->a(), f_shadowColor->r(), f_shadowColor->g(), f_shadowColor->b());
+                Color4B shadowColor(f_shadowColor->r(), f_shadowColor->g(), f_shadowColor->b(), f_shadowColor->a());
                 label->enableShadow(shadowColor, Size(options->shadowOffsetX(), options->shadowOffsetY()), options->shadowBlurRadius());
             }
         }
-        
-        
+
+        // Save node color before set widget properties
+        auto oldColor = node->getColor();
+
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
-        
+
+        // restore node color and set color to text to fix shadow & outline color won't show correct bug
+        node->setColor(oldColor);
+        auto optionsWidget = (WidgetOptions*)options->widgetOptions();
+        auto f_color = optionsWidget->color();
+        Color4B color(f_color->r(), f_color->g(), f_color->b(), f_color->a());
+        ((Text *)node)->setTextColor(color);
+
         label->setUnifySizeEnabled(false);
         
         bool IsCustomSize = options->isCustomSize() != 0;

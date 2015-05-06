@@ -118,6 +118,12 @@
 -- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
+-- 
+-- @function [parent=#Node] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  get & set camera mask, the node is visible by the camera whose camera flag & node's camera mask is true 
 -- @function [parent=#Node] getCameraMask 
 -- @param self
@@ -331,6 +337,12 @@
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
+--  Returns the Material used for this Node 
+-- @function [parent=#Node] getMaterial 
+-- @param self
+-- @return Material#Material ret (return value: cc.Material)
+        
+--------------------------------
 -- @overload self, bool         
 -- @overload self         
 -- @function [parent=#Node] removeAllChildrenWithCleanup
@@ -349,6 +361,13 @@
 -- @function [parent=#Node] isCascadeOpacityEnabled 
 -- @param self
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+--  Sets the Material used for this Node 
+-- @function [parent=#Node] setMaterial 
+-- @param self
+-- @param #cc.Material material
+-- @return Node#Node self (return value: cc.Node)
         
 --------------------------------
 -- Sets the parent node.<br>
@@ -1141,5 +1160,11 @@
 -- @function [parent=#Node] create 
 -- @param self
 -- @return Node#Node ret (return value: cc.Node)
+        
+--------------------------------
+-- 
+-- @function [parent=#Node] Node 
+-- @param self
+-- @return Node#Node self (return value: cc.Node)
         
 return nil

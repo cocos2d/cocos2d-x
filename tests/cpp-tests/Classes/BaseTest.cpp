@@ -180,10 +180,6 @@ void TestList::runThisTest()
     {
         //Add close and "Start AutoTest" button.
         auto closeItem = MenuItemImage::create(s_pathClose, s_pathClose, [](Ref* sender){
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-            MessageBox("You pressed the close button. Windows Store Apps do not implement a close button.", "Alert");
-            return;
-#endif
             TestController::getInstance()->stopAutoTest();
             TestController::destroyInstance();
             Director::getInstance()->end();
@@ -309,7 +305,7 @@ void TestSuite::restartCurrTest()
     testCase->setTestSuite(this);
     testCase->setTestCaseName(_childTestNames[_currTestIndex]);
 
-    Director::getInstance()->replaceScene(testCase);
+    Director::getInstance()->replaceScene(scene);
 }
 
 void TestSuite::enterNextTest()
@@ -321,7 +317,7 @@ void TestSuite::enterNextTest()
     testCase->setTestSuite(this);
     testCase->setTestCaseName(_childTestNames[_currTestIndex]);
 
-    Director::getInstance()->replaceScene(testCase);
+    Director::getInstance()->replaceScene(scene);
 }
 
 void TestSuite::enterPreviousTest()
@@ -340,7 +336,7 @@ void TestSuite::enterPreviousTest()
     testCase->setTestSuite(this);
     testCase->setTestCaseName(_childTestNames[_currTestIndex]);
 
-    Director::getInstance()->replaceScene(testCase);
+    Director::getInstance()->replaceScene(scene);
 }
 
 //TestCase

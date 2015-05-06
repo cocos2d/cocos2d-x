@@ -1,6 +1,7 @@
 #ifndef _TESTS_H_
 #define _TESTS_H_
 
+#include "SpritePolygonTest/SpritePolygonTest.h"
 #include "UnitTest/UnitTest.h"
 #include "NewRendererTest/NewRendererTest.h"
 #include "ConsoleTest/ConsoleTest.h"
@@ -84,5 +85,7 @@
 #include "AllocatorTest/AllocatorTest.h"
 #include "CocosStudio3DTest/CocosStudio3DTest.h"
 #include "UITest/UITest.h"
+
+#include "MaterialSystemTest/MaterialSystemTest.h"
 
 #endif

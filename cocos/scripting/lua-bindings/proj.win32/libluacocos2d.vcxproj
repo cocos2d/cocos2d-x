@@ -25,11 +25,6 @@
     <ClCompile Include="..\..\..\..\external\lua\luasocket\timeout.c" />
     <ClCompile Include="..\..\..\..\external\lua\luasocket\udp.c" />
     <ClCompile Include="..\..\..\..\external\lua\luasocket\wsocket.c" />
-    <ClCompile Include="..\..\..\..\external\lua\quick\LuaEventNode.cpp" />
-    <ClCompile Include="..\..\..\..\external\lua\quick\LuaNodeManager.cpp" />
-    <ClCompile Include="..\..\..\..\external\lua\quick\LuaTouchEventManager.cpp" />
-    <ClCompile Include="..\..\..\..\external\lua\quick\LuaTouchTargetNode.cpp" />
-    <ClCompile Include="..\..\..\..\external\lua\quick\lua_cocos2dx_quick_manual.cpp" />
     <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_event.c" />
     <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_is.c" />
     <ClCompile Include="..\..\..\..\external\lua\tolua\tolua_map.c" />
@@ -44,6 +39,7 @@
     <ClCompile Include="..\auto\lua_cocos2dx_csloader_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_experimental_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_experimental_video_auto.cpp" />
+    <ClCompile Include="..\auto\lua_cocos2dx_experimental_webview_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_extension_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_physics_auto.cpp" />
     <ClCompile Include="..\auto\lua_cocos2dx_spine_auto.cpp" />
@@ -79,6 +75,7 @@
     <ClCompile Include="..\manual\spine\lua_cocos2dx_spine_manual.cpp" />
     <ClCompile Include="..\manual\tolua_fix.cpp" />
     <ClCompile Include="..\manual\ui\lua_cocos2dx_experimental_video_manual.cpp" />
+    <ClCompile Include="..\manual\ui\lua_cocos2dx_experimental_webview_manual.cpp" />
     <ClCompile Include="..\manual\ui\lua_cocos2dx_ui_manual.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -101,11 +98,6 @@
     <ClInclude Include="..\..\..\..\external\lua\luasocket\timeout.h" />
     <ClInclude Include="..\..\..\..\external\lua\luasocket\udp.h" />
     <ClInclude Include="..\..\..\..\external\lua\luasocket\wsocket.h" />
-    <ClInclude Include="..\..\..\..\external\lua\quick\LuaEventNode.h" />
-    <ClInclude Include="..\..\..\..\external\lua\quick\LuaNodeManager.h" />
-    <ClInclude Include="..\..\..\..\external\lua\quick\LuaTouchEventManager.h" />
-    <ClInclude Include="..\..\..\..\external\lua\quick\LuaTouchTargetNode.h" />
-    <ClInclude Include="..\..\..\..\external\lua\quick\lua_cocos2dx_quick_manual.hpp" />
     <ClInclude Include="..\..\..\..\external\lua\tolua\tolua++.h" />
     <ClInclude Include="..\..\..\..\external\lua\tolua\tolua_event.h" />
     <ClInclude Include="..\..\..\..\external\xxtea\xxtea.h" />
@@ -117,6 +109,7 @@
     <ClInclude Include="..\auto\lua_cocos2dx_csloader_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_experimental_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_experimental_video_auto.hpp" />
+    <ClInclude Include="..\auto\lua_cocos2dx_experimental_webview_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_extension_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_physics_auto.hpp" />
     <ClInclude Include="..\auto\lua_cocos2dx_spine_auto.hpp" />
@@ -152,6 +145,7 @@
     <ClInclude Include="..\manual\spine\lua_cocos2dx_spine_manual.hpp" />
     <ClInclude Include="..\manual\tolua_fix.h" />
     <ClInclude Include="..\manual\ui\lua_cocos2dx_experimental_video_manual.hpp" />
+    <ClInclude Include="..\manual\ui\lua_cocos2dx_experimental_webview_manual.hpp" />
     <ClInclude Include="..\manual\ui\lua_cocos2dx_ui_manual.hpp" />
   </ItemGroup>
   <ItemGroup>

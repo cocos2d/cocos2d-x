@@ -47,6 +47,7 @@ THE SOFTWARE.
 #include "renderer/CCTextureCache.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCRenderState.h"
 #include "2d/CCCamera.h"
 #include "base/CCUserDefault.h"
 #include "base/ccFPSImages.h"
@@ -170,6 +171,7 @@ bool Director::init(void)
     initMatrixStack();
 
     _renderer = new (std::nothrow) Renderer;
+    RenderState::initialize();
 
     return true;
 }
@@ -937,16 +939,7 @@ void Director::restart()
 }
 
 void Director::reset()
-{
-    // cleanup scheduler
-    getScheduler()->unscheduleAll();
-    
-    // Remove all events
-    if (_eventDispatcher)
-    {
-        _eventDispatcher->removeAllEventListeners();
-    }
-    
+{    
     if (_runningScene)
     {
         _runningScene->onExit();
@@ -956,6 +949,15 @@ void Director::reset()
     
     _runningScene = nullptr;
     _nextScene = nullptr;
+
+    // cleanup scheduler
+    getScheduler()->unscheduleAll();
+    
+    // Remove all events
+    if (_eventDispatcher)
+    {
+        _eventDispatcher->removeAllEventListeners();
+    }
     
     // remove all objects, but don't release it.
     // runWithScene might be executed after 'end'.
@@ -1000,6 +1002,8 @@ void Director::reset()
     UserDefault::destroyInstance();
     
     GL::invalidateStateCache();
+
+    RenderState::finalize();
     
     destroyTextureCache();
 }

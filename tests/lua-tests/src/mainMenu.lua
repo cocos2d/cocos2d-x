@@ -58,6 +58,8 @@ require "VideoPlayerTest/VideoPlayerTest"
 require "FastTiledMapTest/FastTiledMapTest"
 require "NewAudioEngineTest/NewAudioEngineTest"
 require "CocosStudio3DTest/CocosStudio3DTest"
+require "WebViewTest/WebViewTest"
+require "SpritePolygonTest/SpritePolygonTest"
 
 local LINE_SPACE = 40
 
@@ -126,6 +128,7 @@ local _allTests = {
     { isSupported = true,  name = "Sprite3DTest"           , create_func   =                Sprite3DTest    },
     { isSupported = true,  name = "TerrainTest"           , create_func   =                TerrainTest  },
     { isSupported = true,  name = "SpriteTest"             , create_func   =                SpriteTest      },
+    { isSupported = true,  name = "SpritePolygonTest"             , create_func   =         SpritePolygonTest      },
     { isSupported = false,  name = "TextInputTest"          , create_func=             TextInputTestMain  },
     { isSupported = true,  name = "Texture2DTest"          , create_func   =             Texture2dTestMain  },
     { isSupported = false,  name = "TextureCacheTest"       , create_func=      TextureCacheTestMain      },
@@ -134,6 +137,7 @@ local _allTests = {
     { isSupported = true,  name = "TransitionsTest"        , create_func   =           TransitionsTest      },   
     { isSupported = true,  name = "UserDefaultTest"        , create_func=           UserDefaultTestMain  },
     { isSupported = true,  name = "VideoPlayerTest"        , create_func=           VideoPlayerTestMain  },
+    { isSupported = true,  name = "WebViewTest"            , create_func=           WebViewTestMain  },
     { isSupported = true,  name = "XMLHttpRequestTest"     , create_func   =        XMLHttpRequestTestMain  },
     { isSupported = true,  name = "ZwoptexTest"            , create_func   =               ZwoptexTestMain  }
 }
@@ -191,6 +195,12 @@ function CreateTestMenu()
         end
 
         if obj.name == "VideoPlayerTest" then
+            if cc.PLATFORM_OS_IPHONE ~= targetPlatform and cc.PLATFORM_OS_ANDROID ~= targetPlatform then
+                testMenuItem:setEnabled(false)
+            end
+         end
+
+        if obj.name == "WebViewTest" then
             if cc.PLATFORM_OS_IPHONE ~= targetPlatform and cc.PLATFORM_OS_ANDROID ~= targetPlatform then
                 testMenuItem:setEnabled(false)
             end

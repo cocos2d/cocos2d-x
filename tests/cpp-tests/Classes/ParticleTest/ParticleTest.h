@@ -287,8 +287,6 @@ public:
     virtual void update(float dt) override;
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
-private:
-    cocos2d::ParticleBatchNode* _batchNode;
 };
 
 class AddAndDeleteParticleSystems : public ParticleDemo

@@ -247,6 +247,56 @@ int lua_cocos2dx_physics_PhysicsShape_getMaterial(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_physics_PhysicsShape_setSensor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PhysicsShape* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.PhysicsShape",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::PhysicsShape*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_setSensor'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        bool arg0;
+
+        ok &= luaval_to_boolean(tolua_S, 2,&arg0, "cc.PhysicsShape:setSensor");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics_PhysicsShape_setSensor'", nullptr);
+            return 0;
+        }
+        cobj->setSensor(arg0);
+        lua_settop(tolua_S, 1);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsShape:setSensor",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsShape_setSensor'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_physics_PhysicsShape_getCollisionBitmask(lua_State* tolua_S)
 {
     int argc = 0;
@@ -581,6 +631,53 @@ int lua_cocos2dx_physics_PhysicsShape_getCategoryBitmask(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
     tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsShape_getCategoryBitmask'.",&tolua_err);
+#endif
+
+    return 0;
+}
+int lua_cocos2dx_physics_PhysicsShape_isSensor(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::PhysicsShape* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.PhysicsShape",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::PhysicsShape*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_physics_PhysicsShape_isSensor'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 0) 
+    {
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics_PhysicsShape_isSensor'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->isSensor();
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.PhysicsShape:isSensor",argc, 0);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_physics_PhysicsShape_isSensor'.",&tolua_err);
 #endif
 
     return 0;
@@ -1422,6 +1519,7 @@ int lua_register_cocos2dx_physics_PhysicsShape(lua_State* tolua_S)
         tolua_function(tolua_S,"setDensity",lua_cocos2dx_physics_PhysicsShape_setDensity);
         tolua_function(tolua_S,"getMass",lua_cocos2dx_physics_PhysicsShape_getMass);
         tolua_function(tolua_S,"getMaterial",lua_cocos2dx_physics_PhysicsShape_getMaterial);
+        tolua_function(tolua_S,"setSensor",lua_cocos2dx_physics_PhysicsShape_setSensor);
         tolua_function(tolua_S,"getCollisionBitmask",lua_cocos2dx_physics_PhysicsShape_getCollisionBitmask);
         tolua_function(tolua_S,"getArea",lua_cocos2dx_physics_PhysicsShape_getArea);
         tolua_function(tolua_S,"setCategoryBitmask",lua_cocos2dx_physics_PhysicsShape_setCategoryBitmask);
@@ -1429,6 +1527,7 @@ int lua_register_cocos2dx_physics_PhysicsShape(lua_State* tolua_S)
         tolua_function(tolua_S,"setMoment",lua_cocos2dx_physics_PhysicsShape_setMoment);
         tolua_function(tolua_S,"containsPoint",lua_cocos2dx_physics_PhysicsShape_containsPoint);
         tolua_function(tolua_S,"getCategoryBitmask",lua_cocos2dx_physics_PhysicsShape_getCategoryBitmask);
+        tolua_function(tolua_S,"isSensor",lua_cocos2dx_physics_PhysicsShape_isSensor);
         tolua_function(tolua_S,"getType",lua_cocos2dx_physics_PhysicsShape_getType);
         tolua_function(tolua_S,"getContactTestBitmask",lua_cocos2dx_physics_PhysicsShape_getContactTestBitmask);
         tolua_function(tolua_S,"getCenter",lua_cocos2dx_physics_PhysicsShape_getCenter);

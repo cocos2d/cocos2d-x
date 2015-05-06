@@ -72,7 +72,6 @@ _dynParticleAllDimensionsSet(false),
 _dynParticleWidthSet(false),
 _dynParticleHeightSet(false),
 _dynParticleDepthSet(false),
-_upVector(Vec3::ZERO),
 _remainder(0),
 _durationRemain(0),
 _dynDurationSet(false),
@@ -890,6 +889,10 @@ void PUEmitter::copyAttributesTo( PUEmitter* emitter )
     emitter->setEmitterType(_emitterType);
     emitter->setEmitsName(_emitsName);
     emitter->setEmitsType(_emitsType);
+    emitter->_position = _position;
+    emitter->_isEnabled = _isEnabled;
+    emitter->_originEnabled = _originEnabled;
+    emitter->_originEnabledSet = _originEnabledSet;
     emitter->_particleDirection = _particleDirection;
     emitter->_originalParticleDirection = _originalParticleDirection;
     emitter->_particleOrientation = _particleOrientation;

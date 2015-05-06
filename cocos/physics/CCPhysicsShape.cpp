@@ -46,6 +46,7 @@ PhysicsShape::PhysicsShape()
 , _area(0.0f)
 , _mass(0.0f)
 , _moment(0.0f)
+, _sensor(false)
 , _scaleX(1.0f)
 , _scaleY(1.0f)
 , _newScaleX(1.0f)
@@ -250,6 +251,17 @@ void PhysicsShape::setFriction(float friction)
     }
 }
 
+void PhysicsShape::setSensor(bool sensor)
+{
+    if (sensor != _sensor)
+    {
+        for (cpShape* shape : _cpShapes)
+        {
+            cpShapeSetSensor(shape, sensor);
+        }
+        _sensor = sensor;
+    }
+}
 
 void PhysicsShape::recenterPoints(Vec2* points, int count, const Vec2& center)
 {

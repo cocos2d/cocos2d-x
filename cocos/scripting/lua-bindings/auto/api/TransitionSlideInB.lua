@@ -21,4 +21,10 @@
 -- @param self
 -- @return ActionInterval#ActionInterval ret (return value: cc.ActionInterval)
         
+--------------------------------
+-- 
+-- @function [parent=#TransitionSlideInB] TransitionSlideInB 
+-- @param self
+-- @return TransitionSlideInB#TransitionSlideInB self (return value: cc.TransitionSlideInB)
+        
 return nil

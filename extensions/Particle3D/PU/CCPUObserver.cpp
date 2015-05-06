@@ -43,14 +43,14 @@ PUObserver::PUObserver(void) :
     _originalEnabled(DEFAULT_ENABLED),
     _originalEnabledSet(false),
     _observe(true),
+    _observeUntilEvent(DEFAULT_UNTIL_EVENT),
+    _eventHandlersExecuted(false),
+    _observerScale(Vec3::ONE),
     _particleTypeToObserve(DEFAULT_PARTICLE_TYPE),
     _particleTypeToObserveSet(false),
-    _observerScale(Vec3::ONE),
     _observerInterval(DEFAULT_INTERVAL),
     _observerIntervalRemainder(0.0),
-    _observerIntervalSet(false),
-    _observeUntilEvent(DEFAULT_UNTIL_EVENT),
-    _eventHandlersExecuted(false)
+    _observerIntervalSet(false)
 {
     //mAliasType = AT_OBSERVER;
 }
@@ -317,6 +317,7 @@ void PUObserver::copyAttributesTo( PUObserver* observer )
 {
     // Copy attributes
     observer->setName(_name);
+    observer->setObserverType(_observerType);
     observer->_particleTypeToObserve = _particleTypeToObserve;
     observer->_particleTypeToObserveSet = _particleTypeToObserveSet;
     observer->_particleSystem = _particleSystem;

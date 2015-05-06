@@ -50,29 +50,54 @@ NS_CC_BEGIN
 UniformValue::UniformValue()
 : _uniform(nullptr)
 , _glprogram(nullptr)
-, _useCallback(false)
+, _type(Type::VALUE)
 {
 }
 
 UniformValue::UniformValue(Uniform *uniform, GLProgram* glprogram)
 : _uniform(uniform)
 , _glprogram(glprogram)
-, _useCallback(false)
+, _type(Type::VALUE)
 {
 }
 
 UniformValue::~UniformValue()
 {
-	if (_useCallback)
+	if (_type == Type::CALLBACK_FN)
 		delete _value.callback;
 }
 
 void UniformValue::apply()
 {
-    if(_useCallback) {
+    if (_type == Type::CALLBACK_FN)
+    {
         (*_value.callback)(_glprogram, _uniform);
     }
-    else
+    else if (_type == Type::POINTER)
+    {
+        switch (_uniform->type) {
+            case GL_FLOAT:
+                _glprogram->setUniformLocationWith1fv(_uniform->location, _value.floatv.pointer, _value.floatv.size);
+                break;
+
+            case GL_FLOAT_VEC2:
+                _glprogram->setUniformLocationWith2fv(_uniform->location, _value.v2f.pointer, _value.v2f.size);
+                break;
+
+            case GL_FLOAT_VEC3:
+                _glprogram->setUniformLocationWith3fv(_uniform->location, _value.v3f.pointer, _value.v3f.size);
+                break;
+
+            case GL_FLOAT_VEC4:
+                _glprogram->setUniformLocationWith4fv(_uniform->location, _value.v4f.pointer, _value.v4f.size);
+                break;
+
+            default:
+                CCASSERT(false, "Unsupported type");
+                break;
+        }
+    }
+    else /* _type == VALUE */
     {
         switch (_uniform->type) {
             case GL_SAMPLER_2D:
@@ -122,20 +147,13 @@ void UniformValue::setCallback(const std::function<void(GLProgram*, Uniform*)> &
 	// TODO: memory will leak if the user does:
 	//    value->setCallback();
 	//    value->setFloat();
-	if (_useCallback)
+    if (_type == Type::CALLBACK_FN)
 		delete _value.callback;
 
     _value.callback = new std::function<void(GLProgram*, Uniform*)>();
 	*_value.callback = callback;
 
-    _useCallback = true;
-}
-
-void UniformValue::setFloat(float value)
-{
-    CCASSERT (_uniform->type == GL_FLOAT, "");
-    _value.floatValue = value;
-    _useCallback = false;
+    _type = Type::CALLBACK_FN;
 }
 
 void UniformValue::setTexture(GLuint textureId, GLuint textureUnit)
@@ -143,41 +161,82 @@ void UniformValue::setTexture(GLuint textureId, GLuint textureUnit)
     //CCASSERT(_uniform->type == GL_SAMPLER_2D, "Wrong type. expecting GL_SAMPLER_2D");
     _value.tex.textureId = textureId;
     _value.tex.textureUnit = textureUnit;
-    _useCallback = false;
+    _type = Type::VALUE;
 }
 void UniformValue::setInt(int value)
 {
     CCASSERT(_uniform->type == GL_INT, "Wrong type: expecting GL_INT");
     _value.intValue = value;
-    _useCallback = false;
+    _type = Type::VALUE;
+}
+
+void UniformValue::setFloat(float value)
+{
+    CCASSERT(_uniform->type == GL_FLOAT, "Wrong type: expecting GL_FLOAT");
+    _value.floatValue = value;
+    _type = Type::VALUE;
+}
+
+void UniformValue::setFloatv(const float* pointer, ssize_t size)
+{
+    CCASSERT(_uniform->type == GL_FLOAT, "Wrong type: expecting GL_FLOAT");
+    _value.floatv.pointer = (const float*)pointer;
+    _value.floatv.size = (GLsizei)size;
+    _type = Type::POINTER;
 }
 
 void UniformValue::setVec2(const Vec2& value)
 {
-    CCASSERT (_uniform->type == GL_FLOAT_VEC2, "");
+    CCASSERT(_uniform->type == GL_FLOAT_VEC2, "Wrong type: expecting GL_FLOAT_VEC2");
 	memcpy(_value.v2Value, &value, sizeof(_value.v2Value));
-    _useCallback = false;
+    _type = Type::VALUE;
+}
+
+void UniformValue::setVec2v(const Vec2* pointer, ssize_t size)
+{
+    CCASSERT(_uniform->type == GL_FLOAT_VEC2, "Wrong type: expecting GL_FLOAT_VEC2");
+    _value.v2f.pointer = (const float*)pointer;
+    _value.v2f.size = (GLsizei)size;
+    _type = Type::POINTER;
 }
 
 void UniformValue::setVec3(const Vec3& value)
 {
-    CCASSERT (_uniform->type == GL_FLOAT_VEC3, "");
+    CCASSERT(_uniform->type == GL_FLOAT_VEC3, "Wrong type: expecting GL_FLOAT_VEC3");
 	memcpy(_value.v3Value, &value, sizeof(_value.v3Value));
-	_useCallback = false;
+    _type = Type::VALUE;
+
+}
+
+void UniformValue::setVec3v(const Vec3* pointer, ssize_t size)
+{
+    CCASSERT(_uniform->type == GL_FLOAT_VEC3, "Wrong type: expecting GL_FLOAT_VEC3");
+    _value.v3f.pointer = (const float*)pointer;
+    _value.v3f.size = (GLsizei)size;
+    _type = Type::POINTER;
+
 }
 
 void UniformValue::setVec4(const Vec4& value)
 {
-    CCASSERT (_uniform->type == GL_FLOAT_VEC4, "");
+    CCASSERT (_uniform->type == GL_FLOAT_VEC4, "Wrong type: expecting GL_FLOAT_VEC4");
 	memcpy(_value.v4Value, &value, sizeof(_value.v4Value));
-	_useCallback = false;
+    _type = Type::VALUE;
+}
+
+void UniformValue::setVec4v(const Vec4* pointer, ssize_t size)
+{
+    CCASSERT (_uniform->type == GL_FLOAT_VEC4, "Wrong type: expecting GL_FLOAT_VEC4");
+    _value.v4f.pointer = (const float*)pointer;
+    _value.v4f.size = (GLsizei)size;
+    _type = Type::POINTER;
 }
 
 void UniformValue::setMat4(const Mat4& value)
 {
     CCASSERT(_uniform->type == GL_FLOAT_MAT4, "");
 	memcpy(_value.matrixValue, &value, sizeof(_value.matrixValue));
-	_useCallback = false;
+    _type = Type::VALUE;
 }
 
 //
@@ -278,6 +337,21 @@ GLProgramState* GLProgramState::getOrCreateWithGLProgram(GLProgram *glprogram)
     return ret;
 }
 
+GLProgramState* GLProgramState::getOrCreateWithShaders(const std::string& vertexShader, const std::string& fragShader, const std::string& compileTimeDefines)
+{
+    auto glprogramcache = GLProgramCache::getInstance();
+    const std::string key = vertexShader + "+" + fragShader + "+" + compileTimeDefines;
+    auto glprogram = glprogramcache->getGLProgram(key);
+
+    if (!glprogram) {
+        glprogram = GLProgram::createWithFilenames(vertexShader, fragShader, compileTimeDefines);
+        glprogramcache->addGLProgram(glprogram, key);
+    }
+
+    return create(glprogram);
+}
+
+
 GLProgramState::GLProgramState()
 : _uniformAttributeValueDirty(true)
 , _textureUnitIndex(1)
@@ -304,6 +378,31 @@ GLProgramState::~GLProgramState()
 #endif
     
     CC_SAFE_RELEASE(_glprogram);
+}
+
+GLProgramState* GLProgramState::clone() const
+{
+    auto glprogramstate = new (std::nothrow) GLProgramState();
+
+    // copy everything manually, instead of calling init since this is faster
+
+    glprogramstate->_glprogram = this->_glprogram;
+    CC_SAFE_RETAIN(glprogramstate->_glprogram);
+
+    glprogramstate->_attributes = this->_attributes;
+    glprogramstate->_vertexAttribsFlags = this->_vertexAttribsFlags;
+
+    // copy uniforms
+    glprogramstate->_uniformsByName = this->_uniformsByName;
+    glprogramstate->_uniforms = this->_uniforms;
+    glprogramstate->_uniformAttributeValueDirty = this->_uniformAttributeValueDirty;
+
+    // copy textures
+    glprogramstate->_textureUnitIndex = this->_textureUnitIndex;
+    glprogramstate->_boundTextureUnits = this->_boundTextureUnits;
+
+    glprogramstate->autorelease();
+    return glprogramstate;
 }
 
 bool GLProgramState::init(GLProgram* glprogram)
@@ -376,6 +475,7 @@ void GLProgramState::applyGLProgram(const Mat4& modelView)
     _glprogram->use();
     _glprogram->setUniformsForBuiltins(modelView);
 }
+
 void GLProgramState::applyAttributes(bool applyAttribFlags)
 {
     // Don't set attributes if they weren't set
@@ -409,6 +509,16 @@ void GLProgramState::setGLProgram(GLProgram *glprogram)
         resetGLProgram();
         init(glprogram);
     }
+}
+
+uint32_t GLProgramState::getVertexAttribsFlags() const
+{
+    return _vertexAttribsFlags;
+}
+
+ssize_t GLProgramState::getVertexAttribCount() const
+{
+    return _attributes.size();
 }
 
 UniformValue* GLProgramState::getUniformValue(GLint uniformLocation)
@@ -522,6 +632,24 @@ void GLProgramState::setUniformInt(GLint uniformLocation, int value)
 
 }
 
+void GLProgramState::setUniformFloatv(const std::string &uniformName, const float* pointer, ssize_t size)
+{
+    auto v = getUniformValue(uniformName);
+    if (v)
+        v->setFloatv(pointer, size);
+    else
+        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+}
+
+void GLProgramState::setUniformFloatv(GLint uniformLocation, const float* pointer, ssize_t size)
+{
+    auto v = getUniformValue(uniformLocation);
+    if (v)
+        v->setFloatv(pointer, size);
+    else
+        CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
+}
+
 void GLProgramState::setUniformVec2(const std::string &uniformName, const Vec2& value)
 {
     auto v = getUniformValue(uniformName);
@@ -536,6 +664,24 @@ void GLProgramState::setUniformVec2(GLint uniformLocation, const Vec2& value)
     auto v = getUniformValue(uniformLocation);
     if (v)
         v->setVec2(value);
+    else
+        CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
+}
+
+void GLProgramState::setUniformVec2v(const std::string &uniformName, const Vec2* pointer, ssize_t size)
+{
+    auto v = getUniformValue(uniformName);
+    if (v)
+        v->setVec2v(pointer, size);
+    else
+        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+}
+
+void GLProgramState::setUniformVec2v(GLint uniformLocation, const Vec2* pointer, ssize_t size)
+{
+    auto v = getUniformValue(uniformLocation);
+    if (v)
+        v->setVec2v(pointer, size);
     else
         CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
 }
@@ -558,6 +704,24 @@ void GLProgramState::setUniformVec3(GLint uniformLocation, const Vec3& value)
         CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
 }
 
+void GLProgramState::setUniformVec3v(const std::string &uniformName, const Vec3* pointer, ssize_t size)
+{
+    auto v = getUniformValue(uniformName);
+    if (v)
+        v->setVec3v(pointer, size);
+    else
+        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+}
+
+void GLProgramState::setUniformVec3v(GLint uniformLocation, const Vec3* pointer, ssize_t size)
+{
+    auto v = getUniformValue(uniformLocation);
+    if (v)
+        v->setVec3v(pointer, size);
+    else
+        CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
+}
+
 void GLProgramState::setUniformVec4(const std::string &uniformName, const Vec4& value)
 {
     auto v = getUniformValue(uniformName);
@@ -575,6 +739,25 @@ void GLProgramState::setUniformVec4(GLint uniformLocation, const Vec4& value)
     else
         CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
 }
+
+void GLProgramState::setUniformVec4v(const std::string &uniformName, const Vec4* value, ssize_t size)
+{
+    auto v = getUniformValue(uniformName);
+    if (v)
+        v->setVec4v(value, size);
+    else
+        CCLOG("cocos2d: warning: Uniform not found: %s", uniformName.c_str());
+}
+
+void GLProgramState::setUniformVec4v(GLint uniformLocation, const Vec4* value, ssize_t size)
+{
+    auto v = getUniformValue(uniformLocation);
+    if (v)
+        v->setVec4v(value, size);
+    else
+        CCLOG("cocos2d: warning: Uniform at location not found: %i", uniformLocation);
+}
+
 
 void GLProgramState::setUniformMat4(const std::string &uniformName, const Mat4& value)
 {
