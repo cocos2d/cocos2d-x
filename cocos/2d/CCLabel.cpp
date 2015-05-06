@@ -912,8 +912,11 @@ void Label::onDraw(const Mat4& transform, bool transformUpdated)
         {
             glprogram->setUniformLocationWith4f(_uniformTextColor,
                 _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
-            glprogram->setUniformLocationWith4f(_uniformEffectColor,
-                _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
+            if (_currLabelEffect == LabelEffect::OUTLINE || _currLabelEffect == LabelEffect::GLOW)
+            {
+                glprogram->setUniformLocationWith4f(_uniformEffectColor,
+                    _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
+            }
 
             getGLProgram()->setUniformsForBuiltins(_shadowTransform);
             for (const auto &child : _children)
