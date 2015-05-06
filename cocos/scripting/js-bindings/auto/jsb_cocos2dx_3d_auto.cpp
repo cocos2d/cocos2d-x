@@ -41,6 +41,775 @@ static bool js_is_native_obj(JSContext *cx, uint32_t argc, jsval *vp)
     args.rval().setBoolean(true);
     return true;    
 }
+JSClass  *jsb_cocos2d_Animation3D_class;
+JSObject *jsb_cocos2d_Animation3D_prototype;
+
+bool js_cocos2dx_3d_Animation3D_initWithFile(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Animation3D* cobj = (cocos2d::Animation3D *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animation3D_initWithFile : Invalid Native Object");
+    if (argc == 2) {
+        std::string arg0;
+        std::string arg1;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animation3D_initWithFile : Error processing arguments");
+        bool ret = cobj->initWithFile(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_3d_Animation3D_initWithFile : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_cocos2dx_3d_Animation3D_init(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Animation3D* cobj = (cocos2d::Animation3D *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animation3D_init : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Animation3DData arg0;
+        #pragma warning NO CONVERSION TO NATIVE FOR Animation3DData
+		ok = false;
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animation3D_init : Error processing arguments");
+        bool ret = cobj->init(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_3d_Animation3D_init : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_3d_Animation3D_getBoneCurveByName(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Animation3D* cobj = (cocos2d::Animation3D *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animation3D_getBoneCurveByName : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animation3D_getBoneCurveByName : Error processing arguments");
+        cocos2d::Animation3D::Curve* ret = cobj->getBoneCurveByName(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Animation3D::Curve>(cx, (cocos2d::Animation3D::Curve*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_3d_Animation3D_getBoneCurveByName : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_3d_Animation3D_getDuration(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Animation3D* cobj = (cocos2d::Animation3D *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animation3D_getDuration : Invalid Native Object");
+    if (argc == 0) {
+        double ret = cobj->getDuration();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_3d_Animation3D_getDuration : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_3d_Animation3D_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animation3D_create : Error processing arguments");
+        cocos2d::Animation3D* ret = cocos2d::Animation3D::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Animation3D>(cx, (cocos2d::Animation3D*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    if (argc == 2) {
+        std::string arg0;
+        std::string arg1;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animation3D_create : Error processing arguments");
+        cocos2d::Animation3D* ret = cocos2d::Animation3D::create(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Animation3D>(cx, (cocos2d::Animation3D*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_3d_Animation3D_create : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_3d_Animation3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    cocos2d::Animation3D* cobj = new (std::nothrow) cocos2d::Animation3D();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::Animation3D> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "cocos2d::Animation3D");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}
+
+
+
+void js_cocos2d_Animation3D_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (Animation3D)", obj);
+}
+
+void js_register_cocos2dx_3d_Animation3D(JSContext *cx, JS::HandleObject global) {
+    jsb_cocos2d_Animation3D_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_cocos2d_Animation3D_class->name = "Animation3D";
+    jsb_cocos2d_Animation3D_class->addProperty = JS_PropertyStub;
+    jsb_cocos2d_Animation3D_class->delProperty = JS_DeletePropertyStub;
+    jsb_cocos2d_Animation3D_class->getProperty = JS_PropertyStub;
+    jsb_cocos2d_Animation3D_class->setProperty = JS_StrictPropertyStub;
+    jsb_cocos2d_Animation3D_class->enumerate = JS_EnumerateStub;
+    jsb_cocos2d_Animation3D_class->resolve = JS_ResolveStub;
+    jsb_cocos2d_Animation3D_class->convert = JS_ConvertStub;
+    jsb_cocos2d_Animation3D_class->finalize = js_cocos2d_Animation3D_finalize;
+    jsb_cocos2d_Animation3D_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("initWithFile", js_cocos2dx_3d_Animation3D_initWithFile, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("init", js_cocos2dx_3d_Animation3D_init, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getBoneCurveByName", js_cocos2dx_3d_Animation3D_getBoneCurveByName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getDuration", js_cocos2dx_3d_Animation3D_getDuration, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_cocos2dx_3d_Animation3D_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_cocos2d_Animation3D_prototype = JS_InitClass(
+        cx, global,
+        JS::NullPtr(), // parent proto
+        jsb_cocos2d_Animation3D_class,
+        js_cocos2dx_3d_Animation3D_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27 
+//  JS_SetPropertyAttributes(cx, global, "Animation3D", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<cocos2d::Animation3D> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_cocos2d_Animation3D_class;
+        p->proto = jsb_cocos2d_Animation3D_prototype;
+        p->parentProto = NULL;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+
+JSClass  *jsb_cocos2d_Animate3D_class;
+JSObject *jsb_cocos2d_Animate3D_prototype;
+
+bool js_cocos2dx_3d_Animate3D_getSpeed(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Animate3D* cobj = (cocos2d::Animate3D *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animate3D_getSpeed : Invalid Native Object");
+    if (argc == 0) {
+        double ret = cobj->getSpeed();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_getSpeed : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_3d_Animate3D_setQuality(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Animate3D* cobj = (cocos2d::Animate3D *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animate3D_setQuality : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Animate3DQuality arg0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animate3D_setQuality : Error processing arguments");
+        cobj->setQuality(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_setQuality : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_3d_Animate3D_setWeight(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Animate3D* cobj = (cocos2d::Animate3D *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animate3D_setWeight : Invalid Native Object");
+    if (argc == 1) {
+        double arg0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animate3D_setWeight : Error processing arguments");
+        cobj->setWeight(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_setWeight : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_3d_Animate3D_removeFromMap(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Animate3D* cobj = (cocos2d::Animate3D *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animate3D_removeFromMap : Invalid Native Object");
+    if (argc == 0) {
+        cobj->removeFromMap();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_removeFromMap : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_3d_Animate3D_initWithFrames(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Animate3D* cobj = (cocos2d::Animate3D *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animate3D_initWithFrames : Invalid Native Object");
+    if (argc == 4) {
+        cocos2d::Animation3D* arg0;
+        int arg1;
+        int arg2;
+        double arg3;
+        do {
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::Animation3D*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
+        ok &= jsval_to_int32(cx, args.get(2), (int32_t *)&arg2);
+        ok &= JS::ToNumber( cx, args.get(3), &arg3) && !isnan(arg3);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animate3D_initWithFrames : Error processing arguments");
+        bool ret = cobj->initWithFrames(arg0, arg1, arg2, arg3);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_initWithFrames : wrong number of arguments: %d, was expecting %d", argc, 4);
+    return false;
+}
+bool js_cocos2dx_3d_Animate3D_getOriginInterval(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Animate3D* cobj = (cocos2d::Animate3D *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animate3D_getOriginInterval : Invalid Native Object");
+    if (argc == 0) {
+        double ret = cobj->getOriginInterval();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_getOriginInterval : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_3d_Animate3D_setSpeed(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Animate3D* cobj = (cocos2d::Animate3D *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animate3D_setSpeed : Invalid Native Object");
+    if (argc == 1) {
+        double arg0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animate3D_setSpeed : Error processing arguments");
+        cobj->setSpeed(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_setSpeed : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_3d_Animate3D_init(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+
+    JS::RootedObject obj(cx);
+    cocos2d::Animate3D* cobj = NULL;
+    obj = args.thisv().toObjectOrNull();
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cobj = (cocos2d::Animate3D *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animate3D_init : Invalid Native Object");
+    do {
+        if (argc == 3) {
+            cocos2d::Animation3D* arg0;
+            do {
+                if (!args.get(0).isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg0 = (cocos2d::Animation3D*)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+            } while (0);
+            if (!ok) { ok = true; break; }
+            double arg1;
+            ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+            if (!ok) { ok = true; break; }
+            double arg2;
+            ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+            if (!ok) { ok = true; break; }
+            bool ret = cobj->init(arg0, arg1, arg2);
+            jsval jsret = JSVAL_NULL;
+            jsret = BOOLEAN_TO_JSVAL(ret);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while(0);
+
+    do {
+        if (argc == 1) {
+            cocos2d::Animation3D* arg0;
+            do {
+                if (!args.get(0).isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg0 = (cocos2d::Animation3D*)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+            } while (0);
+            if (!ok) { ok = true; break; }
+            bool ret = cobj->init(arg0);
+            jsval jsret = JSVAL_NULL;
+            jsret = BOOLEAN_TO_JSVAL(ret);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while(0);
+
+    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_init : wrong number of arguments");
+    return false;
+}
+bool js_cocos2dx_3d_Animate3D_setOriginInterval(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Animate3D* cobj = (cocos2d::Animate3D *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animate3D_setOriginInterval : Invalid Native Object");
+    if (argc == 1) {
+        double arg0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animate3D_setOriginInterval : Error processing arguments");
+        cobj->setOriginInterval(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_setOriginInterval : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_3d_Animate3D_getWeight(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Animate3D* cobj = (cocos2d::Animate3D *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animate3D_getWeight : Invalid Native Object");
+    if (argc == 0) {
+        double ret = cobj->getWeight();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_getWeight : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_3d_Animate3D_getQuality(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Animate3D* cobj = (cocos2d::Animate3D *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animate3D_getQuality : Invalid Native Object");
+    if (argc == 0) {
+        int ret = (int)cobj->getQuality();
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_getQuality : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_3d_Animate3D_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    
+    do {
+        if (argc == 3) {
+            cocos2d::Animation3D* arg0;
+            do {
+                if (!args.get(0).isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg0 = (cocos2d::Animation3D*)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+            } while (0);
+            if (!ok) { ok = true; break; }
+            double arg1;
+            ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+            if (!ok) { ok = true; break; }
+            double arg2;
+            ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
+            if (!ok) { ok = true; break; }
+            cocos2d::Animate3D* ret = cocos2d::Animate3D::create(arg0, arg1, arg2);
+            jsval jsret = JSVAL_NULL;
+            do {
+                if (ret) {
+                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Animate3D>(cx, (cocos2d::Animate3D*)ret);
+                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                } else {
+                    jsret = JSVAL_NULL;
+                }
+            } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while (0);
+    
+    do {
+        if (argc == 1) {
+            cocos2d::Animation3D* arg0;
+            do {
+                if (!args.get(0).isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg0 = (cocos2d::Animation3D*)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+            } while (0);
+            if (!ok) { ok = true; break; }
+            cocos2d::Animate3D* ret = cocos2d::Animate3D::create(arg0);
+            jsval jsret = JSVAL_NULL;
+            do {
+                if (ret) {
+                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Animate3D>(cx, (cocos2d::Animate3D*)ret);
+                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+                } else {
+                    jsret = JSVAL_NULL;
+                }
+            } while (0);
+            args.rval().set(jsret);
+            return true;
+        }
+    } while (0);
+    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_create : wrong number of arguments");
+    return false;
+}
+bool js_cocos2dx_3d_Animate3D_getTransitionTime(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 0) {
+        double ret = cocos2d::Animate3D::getTransitionTime();
+        jsval jsret = JSVAL_NULL;
+        jsret = DOUBLE_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_getTransitionTime : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_3d_Animate3D_createWithFrames(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 3) {
+        cocos2d::Animation3D* arg0;
+        int arg1;
+        int arg2;
+        do {
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::Animation3D*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
+        ok &= jsval_to_int32(cx, args.get(2), (int32_t *)&arg2);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animate3D_createWithFrames : Error processing arguments");
+        cocos2d::Animate3D* ret = cocos2d::Animate3D::createWithFrames(arg0, arg1, arg2);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Animate3D>(cx, (cocos2d::Animate3D*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    if (argc == 4) {
+        cocos2d::Animation3D* arg0;
+        int arg1;
+        int arg2;
+        double arg3;
+        do {
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::Animation3D*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
+        ok &= jsval_to_int32(cx, args.get(2), (int32_t *)&arg2);
+        ok &= JS::ToNumber( cx, args.get(3), &arg3) && !isnan(arg3);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animate3D_createWithFrames : Error processing arguments");
+        cocos2d::Animate3D* ret = cocos2d::Animate3D::createWithFrames(arg0, arg1, arg2, arg3);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Animate3D>(cx, (cocos2d::Animate3D*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_createWithFrames : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_3d_Animate3D_setTransitionTime(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        double arg0;
+        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animate3D_setTransitionTime : Error processing arguments");
+        cocos2d::Animate3D::setTransitionTime(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_setTransitionTime : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_3d_Animate3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    cocos2d::Animate3D* cobj = new (std::nothrow) cocos2d::Animate3D();
+    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
+    if (_ccobj) {
+        _ccobj->autorelease();
+    }
+    TypeTest<cocos2d::Animate3D> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCASSERT(typeClass, "The value is null.");
+    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "cocos2d::Animate3D");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}
+
+
+extern JSObject *jsb_cocos2d_ActionInterval_prototype;
+
+void js_cocos2d_Animate3D_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (Animate3D)", obj);
+}
+
+void js_register_cocos2dx_3d_Animate3D(JSContext *cx, JS::HandleObject global) {
+    jsb_cocos2d_Animate3D_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_cocos2d_Animate3D_class->name = "Animate3D";
+    jsb_cocos2d_Animate3D_class->addProperty = JS_PropertyStub;
+    jsb_cocos2d_Animate3D_class->delProperty = JS_DeletePropertyStub;
+    jsb_cocos2d_Animate3D_class->getProperty = JS_PropertyStub;
+    jsb_cocos2d_Animate3D_class->setProperty = JS_StrictPropertyStub;
+    jsb_cocos2d_Animate3D_class->enumerate = JS_EnumerateStub;
+    jsb_cocos2d_Animate3D_class->resolve = JS_ResolveStub;
+    jsb_cocos2d_Animate3D_class->convert = JS_ConvertStub;
+    jsb_cocos2d_Animate3D_class->finalize = js_cocos2d_Animate3D_finalize;
+    jsb_cocos2d_Animate3D_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("getSpeed", js_cocos2dx_3d_Animate3D_getSpeed, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setQuality", js_cocos2dx_3d_Animate3D_setQuality, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setWeight", js_cocos2dx_3d_Animate3D_setWeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("removeFromMap", js_cocos2dx_3d_Animate3D_removeFromMap, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("initWithFrames", js_cocos2dx_3d_Animate3D_initWithFrames, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getOriginInterval", js_cocos2dx_3d_Animate3D_getOriginInterval, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setSpeed", js_cocos2dx_3d_Animate3D_setSpeed, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("init", js_cocos2dx_3d_Animate3D_init, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setOriginInterval", js_cocos2dx_3d_Animate3D_setOriginInterval, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getWeight", js_cocos2dx_3d_Animate3D_getWeight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getQuality", js_cocos2dx_3d_Animate3D_getQuality, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_cocos2dx_3d_Animate3D_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getTransitionTime", js_cocos2dx_3d_Animate3D_getTransitionTime, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createWithFrames", js_cocos2dx_3d_Animate3D_createWithFrames, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTransitionTime", js_cocos2dx_3d_Animate3D_setTransitionTime, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_cocos2d_Animate3D_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_cocos2d_ActionInterval_prototype),
+        jsb_cocos2d_Animate3D_class,
+        js_cocos2dx_3d_Animate3D_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27 
+//  JS_SetPropertyAttributes(cx, global, "Animate3D", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<cocos2d::Animate3D> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_cocos2d_Animate3D_class;
+        p->proto = jsb_cocos2d_Animate3D_prototype;
+        p->parentProto = jsb_cocos2d_ActionInterval_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+
 JSClass  *jsb_cocos2d_Skeleton3D_class;
 JSObject *jsb_cocos2d_Skeleton3D_prototype;
 
@@ -551,6 +1320,59 @@ bool js_cocos2dx_3d_Sprite3D_removeAllAttachNode(JSContext *cx, uint32_t argc, j
     }
 
     JS_ReportError(cx, "js_cocos2dx_3d_Sprite3D_removeAllAttachNode : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_3d_Sprite3D_setMaterial(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+
+    JS::RootedObject obj(cx);
+    cocos2d::Sprite3D* cobj = NULL;
+    obj = args.thisv().toObjectOrNull();
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cobj = (cocos2d::Sprite3D *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Sprite3D_setMaterial : Invalid Native Object");
+    do {
+        if (argc == 2) {
+            cocos2d::Material* arg0;
+            do {
+                if (!args.get(0).isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg0 = (cocos2d::Material*)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+            } while (0);
+            if (!ok) { ok = true; break; }
+            int arg1;
+            ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
+            if (!ok) { ok = true; break; }
+            cobj->setMaterial(arg0, arg1);
+            args.rval().setUndefined();
+            return true;
+        }
+    } while(0);
+
+    do {
+        if (argc == 1) {
+            cocos2d::Material* arg0;
+            do {
+                if (!args.get(0).isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JSObject *tmpObj = args.get(0).toObjectOrNull();
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg0 = (cocos2d::Material*)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+            } while (0);
+            if (!ok) { ok = true; break; }
+            cobj->setMaterial(arg0);
+            args.rval().setUndefined();
+            return true;
+        }
+    } while(0);
+
+    JS_ReportError(cx, "js_cocos2dx_3d_Sprite3D_setMaterial : wrong number of arguments");
     return false;
 }
 bool js_cocos2dx_3d_Sprite3D_genGLProgramState(JSContext *cx, uint32_t argc, jsval *vp)
@@ -1205,6 +2027,7 @@ void js_register_cocos2dx_3d_Sprite3D(JSContext *cx, JS::HandleObject global) {
         JS_FN("setCullFace", js_cocos2dx_3d_Sprite3D_setCullFace, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("addMesh", js_cocos2dx_3d_Sprite3D_addMesh, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeAllAttachNode", js_cocos2dx_3d_Sprite3D_removeAllAttachNode, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setMaterial", js_cocos2dx_3d_Sprite3D_setMaterial, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("genGLProgramState", js_cocos2dx_3d_Sprite3D_genGLProgramState, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getMesh", js_cocos2dx_3d_Sprite3D_getMesh, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("createSprite3DNode", js_cocos2dx_3d_Sprite3D_createSprite3DNode, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -1495,6 +2318,31 @@ bool js_cocos2dx_3d_Mesh_getSkin(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_3d_Mesh_getSkin : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_cocos2dx_3d_Mesh_getMaterial(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Mesh* cobj = (cocos2d::Mesh *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Mesh_getMaterial : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::Material* ret = cobj->getMaterial();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Material>(cx, (cocos2d::Material*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_3d_Mesh_getMaterial : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_3d_Mesh_getVertexSizeInBytes(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -1511,6 +2359,33 @@ bool js_cocos2dx_3d_Mesh_getVertexSizeInBytes(JSContext *cx, uint32_t argc, jsva
     }
 
     JS_ReportError(cx, "js_cocos2dx_3d_Mesh_getVertexSizeInBytes : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_3d_Mesh_setMaterial(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Mesh* cobj = (cocos2d::Mesh *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Mesh_setMaterial : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Material* arg0;
+        do {
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::Material*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Mesh_setMaterial : Error processing arguments");
+        cobj->setMaterial(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_3d_Mesh_setMaterial : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_3d_Mesh_getName(JSContext *cx, uint32_t argc, jsval *vp)
@@ -1630,6 +2505,52 @@ bool js_cocos2dx_3d_Mesh_hasVertexAttrib(JSContext *cx, uint32_t argc, jsval *vp
     JS_ReportError(cx, "js_cocos2dx_3d_Mesh_hasVertexAttrib : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_3d_Mesh_draw(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Mesh* cobj = (cocos2d::Mesh *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Mesh_draw : Invalid Native Object");
+    if (argc == 7) {
+        cocos2d::Renderer* arg0;
+        double arg1;
+        cocos2d::Mat4 arg2;
+        unsigned int arg3;
+        unsigned int arg4;
+        cocos2d::Vec4 arg5;
+        bool arg6;
+        do {
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::Renderer*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
+        ok &= jsval_to_matrix(cx, args.get(2), &arg2);
+        ok &= jsval_to_uint32(cx, args.get(3), &arg3);
+        ok &= jsval_to_uint32(cx, args.get(4), &arg4);
+        do {
+            if (!args.get(5).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(5).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg5 = (const cocos2d::Vec4&)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg5, cx, false, "Invalid Native Object");
+        } while (0);
+        arg6 = JS::ToBoolean(args.get(6));
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Mesh_draw : Error processing arguments");
+        cobj->draw(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_3d_Mesh_draw : wrong number of arguments: %d, was expecting %d", argc, 7);
+    return false;
+}
 bool js_cocos2dx_3d_Mesh_getBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -1693,24 +2614,6 @@ bool js_cocos2dx_3d_Mesh_setName(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_3d_Mesh_setName : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_cocos2dx_3d_Mesh_isVisible(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Mesh* cobj = (cocos2d::Mesh *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Mesh_isVisible : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isVisible();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_3d_Mesh_isVisible : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_cocos2dx_3d_Mesh_getIndexCount(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -1727,22 +2630,6 @@ bool js_cocos2dx_3d_Mesh_getIndexCount(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     JS_ReportError(cx, "js_cocos2dx_3d_Mesh_getIndexCount : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_3d_Mesh_bindMeshCommand(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Mesh* cobj = (cocos2d::Mesh *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Mesh_bindMeshCommand : Invalid Native Object");
-    if (argc == 0) {
-        cobj->bindMeshCommand();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_3d_Mesh_bindMeshCommand : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_3d_Mesh_setMeshIndexData(JSContext *cx, uint32_t argc, jsval *vp)
@@ -1853,6 +2740,24 @@ bool js_cocos2dx_3d_Mesh_setSkin(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     JS_ReportError(cx, "js_cocos2dx_3d_Mesh_setSkin : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_3d_Mesh_isVisible(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Mesh* cobj = (cocos2d::Mesh *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Mesh_isVisible : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->isVisible();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_3d_Mesh_isVisible : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_3d_Mesh_getIndexBuffer(JSContext *cx, uint32_t argc, jsval *vp)
@@ -1977,24 +2882,26 @@ void js_register_cocos2dx_3d_Mesh(JSContext *cx, JS::HandleObject global) {
         JS_FN("setTexture", js_cocos2dx_3d_Mesh_setTexture, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTexture", js_cocos2dx_3d_Mesh_getTexture, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getSkin", js_cocos2dx_3d_Mesh_getSkin, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getMaterial", js_cocos2dx_3d_Mesh_getMaterial, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getVertexSizeInBytes", js_cocos2dx_3d_Mesh_getVertexSizeInBytes, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setMaterial", js_cocos2dx_3d_Mesh_setMaterial, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getName", js_cocos2dx_3d_Mesh_getName, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getIndexFormat", js_cocos2dx_3d_Mesh_getIndexFormat, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getGLProgramState", js_cocos2dx_3d_Mesh_getGLProgramState, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getVertexBuffer", js_cocos2dx_3d_Mesh_getVertexBuffer, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("calculateAABB", js_cocos2dx_3d_Mesh_calculateAABB, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("hasVertexAttrib", js_cocos2dx_3d_Mesh_hasVertexAttrib, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("draw", js_cocos2dx_3d_Mesh_draw, 7, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getBlendFunc", js_cocos2dx_3d_Mesh_getBlendFunc, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getMeshIndexData", js_cocos2dx_3d_Mesh_getMeshIndexData, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setName", js_cocos2dx_3d_Mesh_setName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isVisible", js_cocos2dx_3d_Mesh_isVisible, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getIndexCount", js_cocos2dx_3d_Mesh_getIndexCount, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("bindMeshCommand", js_cocos2dx_3d_Mesh_bindMeshCommand, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setMeshIndexData", js_cocos2dx_3d_Mesh_setMeshIndexData, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getMeshVertexAttribCount", js_cocos2dx_3d_Mesh_getMeshVertexAttribCount, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setBlendFunc", js_cocos2dx_3d_Mesh_setBlendFunc, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getPrimitiveType", js_cocos2dx_3d_Mesh_getPrimitiveType, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSkin", js_cocos2dx_3d_Mesh_setSkin, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("isVisible", js_cocos2dx_3d_Mesh_isVisible, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getIndexBuffer", js_cocos2dx_3d_Mesh_getIndexBuffer, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setGLProgramState", js_cocos2dx_3d_Mesh_setGLProgramState, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setVisible", js_cocos2dx_3d_Mesh_setVisible, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -2027,775 +2934,6 @@ void js_register_cocos2dx_3d_Mesh(JSContext *cx, JS::HandleObject global) {
         p->jsclass = jsb_cocos2d_Mesh_class;
         p->proto = jsb_cocos2d_Mesh_prototype;
         p->parentProto = NULL;
-        _js_global_type_map.insert(std::make_pair(typeName, p));
-    }
-}
-
-JSClass  *jsb_cocos2d_Animation3D_class;
-JSObject *jsb_cocos2d_Animation3D_prototype;
-
-bool js_cocos2dx_3d_Animation3D_initWithFile(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Animation3D* cobj = (cocos2d::Animation3D *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animation3D_initWithFile : Invalid Native Object");
-    if (argc == 2) {
-        std::string arg0;
-        std::string arg1;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animation3D_initWithFile : Error processing arguments");
-        bool ret = cobj->initWithFile(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_3d_Animation3D_initWithFile : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
-bool js_cocos2dx_3d_Animation3D_init(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Animation3D* cobj = (cocos2d::Animation3D *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animation3D_init : Invalid Native Object");
-    if (argc == 1) {
-        cocos2d::Animation3DData arg0;
-        #pragma warning NO CONVERSION TO NATIVE FOR Animation3DData
-		ok = false;
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animation3D_init : Error processing arguments");
-        bool ret = cobj->init(arg0);
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_3d_Animation3D_init : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_3d_Animation3D_getBoneCurveByName(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Animation3D* cobj = (cocos2d::Animation3D *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animation3D_getBoneCurveByName : Invalid Native Object");
-    if (argc == 1) {
-        std::string arg0;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animation3D_getBoneCurveByName : Error processing arguments");
-        cocos2d::Animation3D::Curve* ret = cobj->getBoneCurveByName(arg0);
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Animation3D::Curve>(cx, (cocos2d::Animation3D::Curve*)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_3d_Animation3D_getBoneCurveByName : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_3d_Animation3D_getDuration(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Animation3D* cobj = (cocos2d::Animation3D *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animation3D_getDuration : Invalid Native Object");
-    if (argc == 0) {
-        double ret = cobj->getDuration();
-        jsval jsret = JSVAL_NULL;
-        jsret = DOUBLE_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_3d_Animation3D_getDuration : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_3d_Animation3D_create(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    if (argc == 1) {
-        std::string arg0;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animation3D_create : Error processing arguments");
-        cocos2d::Animation3D* ret = cocos2d::Animation3D::create(arg0);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Animation3D>(cx, (cocos2d::Animation3D*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-    if (argc == 2) {
-        std::string arg0;
-        std::string arg1;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animation3D_create : Error processing arguments");
-        cocos2d::Animation3D* ret = cocos2d::Animation3D::create(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Animation3D>(cx, (cocos2d::Animation3D*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-    JS_ReportError(cx, "js_cocos2dx_3d_Animation3D_create : wrong number of arguments");
-    return false;
-}
-
-bool js_cocos2dx_3d_Animation3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    cocos2d::Animation3D* cobj = new (std::nothrow) cocos2d::Animation3D();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
-    TypeTest<cocos2d::Animation3D> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-    JS::RootedObject proto(cx, typeClass->proto.get());
-    JS::RootedObject parent(cx, typeClass->parentProto.get());
-    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-    args.rval().set(OBJECT_TO_JSVAL(obj));
-    // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    AddNamedObjectRoot(cx, &p->obj, "cocos2d::Animation3D");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
-    return true;
-}
-
-
-
-void js_cocos2d_Animation3D_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (Animation3D)", obj);
-}
-
-void js_register_cocos2dx_3d_Animation3D(JSContext *cx, JS::HandleObject global) {
-    jsb_cocos2d_Animation3D_class = (JSClass *)calloc(1, sizeof(JSClass));
-    jsb_cocos2d_Animation3D_class->name = "Animation3D";
-    jsb_cocos2d_Animation3D_class->addProperty = JS_PropertyStub;
-    jsb_cocos2d_Animation3D_class->delProperty = JS_DeletePropertyStub;
-    jsb_cocos2d_Animation3D_class->getProperty = JS_PropertyStub;
-    jsb_cocos2d_Animation3D_class->setProperty = JS_StrictPropertyStub;
-    jsb_cocos2d_Animation3D_class->enumerate = JS_EnumerateStub;
-    jsb_cocos2d_Animation3D_class->resolve = JS_ResolveStub;
-    jsb_cocos2d_Animation3D_class->convert = JS_ConvertStub;
-    jsb_cocos2d_Animation3D_class->finalize = js_cocos2d_Animation3D_finalize;
-    jsb_cocos2d_Animation3D_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
-
-    static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_PS_END
-    };
-
-    static JSFunctionSpec funcs[] = {
-        JS_FN("initWithFile", js_cocos2dx_3d_Animation3D_initWithFile, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("init", js_cocos2dx_3d_Animation3D_init, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getBoneCurveByName", js_cocos2dx_3d_Animation3D_getBoneCurveByName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getDuration", js_cocos2dx_3d_Animation3D_getDuration, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FS_END
-    };
-
-    static JSFunctionSpec st_funcs[] = {
-        JS_FN("create", js_cocos2dx_3d_Animation3D_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FS_END
-    };
-
-    jsb_cocos2d_Animation3D_prototype = JS_InitClass(
-        cx, global,
-        JS::NullPtr(), // parent proto
-        jsb_cocos2d_Animation3D_class,
-        js_cocos2dx_3d_Animation3D_constructor, 0, // constructor
-        properties,
-        funcs,
-        NULL, // no static properties
-        st_funcs);
-    // make the class enumerable in the registered namespace
-//  bool found;
-//FIXME: Removed in Firefox v27 
-//  JS_SetPropertyAttributes(cx, global, "Animation3D", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
-
-    // add the proto and JSClass to the type->js info hash table
-    TypeTest<cocos2d::Animation3D> t;
-    js_type_class_t *p;
-    std::string typeName = t.s_name();
-    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
-    {
-        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-        p->jsclass = jsb_cocos2d_Animation3D_class;
-        p->proto = jsb_cocos2d_Animation3D_prototype;
-        p->parentProto = NULL;
-        _js_global_type_map.insert(std::make_pair(typeName, p));
-    }
-}
-
-JSClass  *jsb_cocos2d_Animate3D_class;
-JSObject *jsb_cocos2d_Animate3D_prototype;
-
-bool js_cocos2dx_3d_Animate3D_getSpeed(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Animate3D* cobj = (cocos2d::Animate3D *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animate3D_getSpeed : Invalid Native Object");
-    if (argc == 0) {
-        double ret = cobj->getSpeed();
-        jsval jsret = JSVAL_NULL;
-        jsret = DOUBLE_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_getSpeed : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_3d_Animate3D_setHighQuality(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Animate3D* cobj = (cocos2d::Animate3D *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animate3D_setHighQuality : Invalid Native Object");
-    if (argc == 1) {
-        bool arg0;
-        arg0 = JS::ToBoolean(args.get(0));
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animate3D_setHighQuality : Error processing arguments");
-        cobj->setHighQuality(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_setHighQuality : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_3d_Animate3D_setWeight(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Animate3D* cobj = (cocos2d::Animate3D *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animate3D_setWeight : Invalid Native Object");
-    if (argc == 1) {
-        double arg0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animate3D_setWeight : Error processing arguments");
-        cobj->setWeight(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_setWeight : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_3d_Animate3D_removeFromMap(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Animate3D* cobj = (cocos2d::Animate3D *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animate3D_removeFromMap : Invalid Native Object");
-    if (argc == 0) {
-        cobj->removeFromMap();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_removeFromMap : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_3d_Animate3D_initWithFrames(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Animate3D* cobj = (cocos2d::Animate3D *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animate3D_initWithFrames : Invalid Native Object");
-    if (argc == 4) {
-        cocos2d::Animation3D* arg0;
-        int arg1;
-        int arg2;
-        double arg3;
-        do {
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::Animation3D*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
-        ok &= jsval_to_int32(cx, args.get(2), (int32_t *)&arg2);
-        ok &= JS::ToNumber( cx, args.get(3), &arg3) && !isnan(arg3);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animate3D_initWithFrames : Error processing arguments");
-        bool ret = cobj->initWithFrames(arg0, arg1, arg2, arg3);
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_initWithFrames : wrong number of arguments: %d, was expecting %d", argc, 4);
-    return false;
-}
-bool js_cocos2dx_3d_Animate3D_getOriginInterval(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Animate3D* cobj = (cocos2d::Animate3D *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animate3D_getOriginInterval : Invalid Native Object");
-    if (argc == 0) {
-        double ret = cobj->getOriginInterval();
-        jsval jsret = JSVAL_NULL;
-        jsret = DOUBLE_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_getOriginInterval : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_3d_Animate3D_setSpeed(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Animate3D* cobj = (cocos2d::Animate3D *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animate3D_setSpeed : Invalid Native Object");
-    if (argc == 1) {
-        double arg0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animate3D_setSpeed : Error processing arguments");
-        cobj->setSpeed(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_setSpeed : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_3d_Animate3D_init(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-
-    JS::RootedObject obj(cx);
-    cocos2d::Animate3D* cobj = NULL;
-    obj = args.thisv().toObjectOrNull();
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cobj = (cocos2d::Animate3D *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animate3D_init : Invalid Native Object");
-    do {
-        if (argc == 3) {
-            cocos2d::Animation3D* arg0;
-            do {
-                if (!args.get(0).isObject()) { ok = false; break; }
-                js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
-                jsProxy = jsb_get_js_proxy(tmpObj);
-                arg0 = (cocos2d::Animation3D*)(jsProxy ? jsProxy->ptr : NULL);
-                JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-            } while (0);
-            if (!ok) { ok = true; break; }
-            double arg1;
-            ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
-            if (!ok) { ok = true; break; }
-            double arg2;
-            ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
-            if (!ok) { ok = true; break; }
-            bool ret = cobj->init(arg0, arg1, arg2);
-            jsval jsret = JSVAL_NULL;
-            jsret = BOOLEAN_TO_JSVAL(ret);
-            args.rval().set(jsret);
-            return true;
-        }
-    } while(0);
-
-    do {
-        if (argc == 1) {
-            cocos2d::Animation3D* arg0;
-            do {
-                if (!args.get(0).isObject()) { ok = false; break; }
-                js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
-                jsProxy = jsb_get_js_proxy(tmpObj);
-                arg0 = (cocos2d::Animation3D*)(jsProxy ? jsProxy->ptr : NULL);
-                JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-            } while (0);
-            if (!ok) { ok = true; break; }
-            bool ret = cobj->init(arg0);
-            jsval jsret = JSVAL_NULL;
-            jsret = BOOLEAN_TO_JSVAL(ret);
-            args.rval().set(jsret);
-            return true;
-        }
-    } while(0);
-
-    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_init : wrong number of arguments");
-    return false;
-}
-bool js_cocos2dx_3d_Animate3D_isHighQuality(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Animate3D* cobj = (cocos2d::Animate3D *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animate3D_isHighQuality : Invalid Native Object");
-    if (argc == 0) {
-        bool ret = cobj->isHighQuality();
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_isHighQuality : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_3d_Animate3D_setOriginInterval(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Animate3D* cobj = (cocos2d::Animate3D *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animate3D_setOriginInterval : Invalid Native Object");
-    if (argc == 1) {
-        double arg0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animate3D_setOriginInterval : Error processing arguments");
-        cobj->setOriginInterval(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_setOriginInterval : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_3d_Animate3D_getWeight(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Animate3D* cobj = (cocos2d::Animate3D *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Animate3D_getWeight : Invalid Native Object");
-    if (argc == 0) {
-        double ret = cobj->getWeight();
-        jsval jsret = JSVAL_NULL;
-        jsret = DOUBLE_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_getWeight : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_3d_Animate3D_create(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    
-    do {
-        if (argc == 3) {
-            cocos2d::Animation3D* arg0;
-            do {
-                if (!args.get(0).isObject()) { ok = false; break; }
-                js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
-                jsProxy = jsb_get_js_proxy(tmpObj);
-                arg0 = (cocos2d::Animation3D*)(jsProxy ? jsProxy->ptr : NULL);
-                JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-            } while (0);
-            if (!ok) { ok = true; break; }
-            double arg1;
-            ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
-            if (!ok) { ok = true; break; }
-            double arg2;
-            ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
-            if (!ok) { ok = true; break; }
-            cocos2d::Animate3D* ret = cocos2d::Animate3D::create(arg0, arg1, arg2);
-            jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Animate3D>(cx, (cocos2d::Animate3D*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
-            args.rval().set(jsret);
-            return true;
-        }
-    } while (0);
-    
-    do {
-        if (argc == 1) {
-            cocos2d::Animation3D* arg0;
-            do {
-                if (!args.get(0).isObject()) { ok = false; break; }
-                js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(0).toObjectOrNull();
-                jsProxy = jsb_get_js_proxy(tmpObj);
-                arg0 = (cocos2d::Animation3D*)(jsProxy ? jsProxy->ptr : NULL);
-                JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-            } while (0);
-            if (!ok) { ok = true; break; }
-            cocos2d::Animate3D* ret = cocos2d::Animate3D::create(arg0);
-            jsval jsret = JSVAL_NULL;
-            do {
-                if (ret) {
-                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Animate3D>(cx, (cocos2d::Animate3D*)ret);
-                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-                } else {
-                    jsret = JSVAL_NULL;
-                }
-            } while (0);
-            args.rval().set(jsret);
-            return true;
-        }
-    } while (0);
-    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_create : wrong number of arguments");
-    return false;
-}
-bool js_cocos2dx_3d_Animate3D_getTransitionTime(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    if (argc == 0) {
-        double ret = cocos2d::Animate3D::getTransitionTime();
-        jsval jsret = JSVAL_NULL;
-        jsret = DOUBLE_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
-    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_getTransitionTime : wrong number of arguments");
-    return false;
-}
-
-bool js_cocos2dx_3d_Animate3D_createWithFrames(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    if (argc == 3) {
-        cocos2d::Animation3D* arg0;
-        int arg1;
-        int arg2;
-        do {
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::Animation3D*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
-        ok &= jsval_to_int32(cx, args.get(2), (int32_t *)&arg2);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animate3D_createWithFrames : Error processing arguments");
-        cocos2d::Animate3D* ret = cocos2d::Animate3D::createWithFrames(arg0, arg1, arg2);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Animate3D>(cx, (cocos2d::Animate3D*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-    if (argc == 4) {
-        cocos2d::Animation3D* arg0;
-        int arg1;
-        int arg2;
-        double arg3;
-        do {
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::Animation3D*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
-        ok &= jsval_to_int32(cx, args.get(2), (int32_t *)&arg2);
-        ok &= JS::ToNumber( cx, args.get(3), &arg3) && !isnan(arg3);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animate3D_createWithFrames : Error processing arguments");
-        cocos2d::Animate3D* ret = cocos2d::Animate3D::createWithFrames(arg0, arg1, arg2, arg3);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Animate3D>(cx, (cocos2d::Animate3D*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_createWithFrames : wrong number of arguments");
-    return false;
-}
-
-bool js_cocos2dx_3d_Animate3D_setTransitionTime(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    if (argc == 1) {
-        double arg0;
-        ok &= JS::ToNumber( cx, args.get(0), &arg0) && !isnan(arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Animate3D_setTransitionTime : Error processing arguments");
-        cocos2d::Animate3D::setTransitionTime(arg0);
-        args.rval().setUndefined();
-        return true;
-    }
-    JS_ReportError(cx, "js_cocos2dx_3d_Animate3D_setTransitionTime : wrong number of arguments");
-    return false;
-}
-
-bool js_cocos2dx_3d_Animate3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    cocos2d::Animate3D* cobj = new (std::nothrow) cocos2d::Animate3D();
-    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
-    if (_ccobj) {
-        _ccobj->autorelease();
-    }
-    TypeTest<cocos2d::Animate3D> t;
-    js_type_class_t *typeClass = nullptr;
-    std::string typeName = t.s_name();
-    auto typeMapIter = _js_global_type_map.find(typeName);
-    CCASSERT(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
-    typeClass = typeMapIter->second;
-    CCASSERT(typeClass, "The value is null.");
-    // JSObject *obj = JS_NewObject(cx, typeClass->jsclass, typeClass->proto, typeClass->parentProto);
-    JS::RootedObject proto(cx, typeClass->proto.get());
-    JS::RootedObject parent(cx, typeClass->parentProto.get());
-    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-    args.rval().set(OBJECT_TO_JSVAL(obj));
-    // link the native object with the javascript object
-    js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    AddNamedObjectRoot(cx, &p->obj, "cocos2d::Animate3D");
-    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
-        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
-    return true;
-}
-
-
-extern JSObject *jsb_cocos2d_ActionInterval_prototype;
-
-void js_cocos2d_Animate3D_finalize(JSFreeOp *fop, JSObject *obj) {
-    CCLOGINFO("jsbindings: finalizing JS object %p (Animate3D)", obj);
-}
-
-void js_register_cocos2dx_3d_Animate3D(JSContext *cx, JS::HandleObject global) {
-    jsb_cocos2d_Animate3D_class = (JSClass *)calloc(1, sizeof(JSClass));
-    jsb_cocos2d_Animate3D_class->name = "Animate3D";
-    jsb_cocos2d_Animate3D_class->addProperty = JS_PropertyStub;
-    jsb_cocos2d_Animate3D_class->delProperty = JS_DeletePropertyStub;
-    jsb_cocos2d_Animate3D_class->getProperty = JS_PropertyStub;
-    jsb_cocos2d_Animate3D_class->setProperty = JS_StrictPropertyStub;
-    jsb_cocos2d_Animate3D_class->enumerate = JS_EnumerateStub;
-    jsb_cocos2d_Animate3D_class->resolve = JS_ResolveStub;
-    jsb_cocos2d_Animate3D_class->convert = JS_ConvertStub;
-    jsb_cocos2d_Animate3D_class->finalize = js_cocos2d_Animate3D_finalize;
-    jsb_cocos2d_Animate3D_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
-
-    static JSPropertySpec properties[] = {
-        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_PS_END
-    };
-
-    static JSFunctionSpec funcs[] = {
-        JS_FN("getSpeed", js_cocos2dx_3d_Animate3D_getSpeed, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setHighQuality", js_cocos2dx_3d_Animate3D_setHighQuality, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setWeight", js_cocos2dx_3d_Animate3D_setWeight, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("removeFromMap", js_cocos2dx_3d_Animate3D_removeFromMap, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("initWithFrames", js_cocos2dx_3d_Animate3D_initWithFrames, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getOriginInterval", js_cocos2dx_3d_Animate3D_getOriginInterval, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setSpeed", js_cocos2dx_3d_Animate3D_setSpeed, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("init", js_cocos2dx_3d_Animate3D_init, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isHighQuality", js_cocos2dx_3d_Animate3D_isHighQuality, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setOriginInterval", js_cocos2dx_3d_Animate3D_setOriginInterval, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getWeight", js_cocos2dx_3d_Animate3D_getWeight, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FS_END
-    };
-
-    static JSFunctionSpec st_funcs[] = {
-        JS_FN("create", js_cocos2dx_3d_Animate3D_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getTransitionTime", js_cocos2dx_3d_Animate3D_getTransitionTime, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("createWithFrames", js_cocos2dx_3d_Animate3D_createWithFrames, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setTransitionTime", js_cocos2dx_3d_Animate3D_setTransitionTime, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FS_END
-    };
-
-    jsb_cocos2d_Animate3D_prototype = JS_InitClass(
-        cx, global,
-        JS::RootedObject(cx, jsb_cocos2d_ActionInterval_prototype),
-        jsb_cocos2d_Animate3D_class,
-        js_cocos2dx_3d_Animate3D_constructor, 0, // constructor
-        properties,
-        funcs,
-        NULL, // no static properties
-        st_funcs);
-    // make the class enumerable in the registered namespace
-//  bool found;
-//FIXME: Removed in Firefox v27 
-//  JS_SetPropertyAttributes(cx, global, "Animate3D", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
-
-    // add the proto and JSClass to the type->js info hash table
-    TypeTest<cocos2d::Animate3D> t;
-    js_type_class_t *p;
-    std::string typeName = t.s_name();
-    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
-    {
-        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-        p->jsclass = jsb_cocos2d_Animate3D_class;
-        p->proto = jsb_cocos2d_Animate3D_prototype;
-        p->parentProto = jsb_cocos2d_ActionInterval_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
 }
@@ -4213,8 +4351,8 @@ void register_all_cocos2dx_3d(JSContext* cx, JS::HandleObject obj) {
     js_register_cocos2dx_3d_Terrain(cx, ns);
     js_register_cocos2dx_3d_Skybox(cx, ns);
     js_register_cocos2dx_3d_BillBoard(cx, ns);
-    js_register_cocos2dx_3d_Animation3D(cx, ns);
     js_register_cocos2dx_3d_Skeleton3D(cx, ns);
     js_register_cocos2dx_3d_Mesh(cx, ns);
+    js_register_cocos2dx_3d_Animation3D(cx, ns);
 }
 
