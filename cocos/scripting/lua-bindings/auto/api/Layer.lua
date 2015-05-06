@@ -13,8 +13,20 @@
         
 --------------------------------
 -- 
+-- @function [parent=#Layer] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#Layer] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
+        
+--------------------------------
+-- 
+-- @function [parent=#Layer] Layer 
+-- @param self
+-- @return Layer#Layer self (return value: cc.Layer)
         
 return nil

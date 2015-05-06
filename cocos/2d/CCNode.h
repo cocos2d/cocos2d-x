@@ -52,6 +52,7 @@ class Renderer;
 class Director;
 class GLProgram;
 class GLProgramState;
+class Material;
 #if CC_USE_PHYSICS
 class PhysicsBody;
 class PhysicsWorld;
@@ -1046,6 +1047,11 @@ public:
      * @param glProgramState The GLProgramState for this node.
      */
     virtual void setGLProgramState(GLProgramState *glProgramState);
+
+    /** Returns the Material used for this Node */
+    Material* getMaterial() const;
+    /** Sets the Material used for this Node */
+    void setMaterial(Material* material);
     
     /// @} end of Shader Program
 

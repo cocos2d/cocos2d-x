@@ -441,6 +441,9 @@ EffectSpriteTest::EffectSpriteTest()
 {
     if (ShaderTestDemo2::init()) {
 
+        auto layer = LayerColor::create(Color4B::BLUE);
+        this->addChild(layer);
+
         auto s = Director::getInstance()->getWinSize();
 
         auto itemPrev = MenuItemImage::create("Images/b1.png", "Images/b2.png",

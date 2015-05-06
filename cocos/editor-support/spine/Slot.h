@@ -53,7 +53,7 @@ typedef struct spSlot {
 	spSlot() :
 		data(0),
 		bone(0),
-		r(0), b(0), g(0), a(0),
+		r(0), g(0), b(0), a(0),
 		attachment(0),
 		attachmentVerticesCapacity(0),
 		attachmentVerticesCount(0),

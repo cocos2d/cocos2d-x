@@ -44,6 +44,7 @@ THE SOFTWARE.
 #include "2d/CCComponentContainer.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
+#include "renderer/CCMaterial.h"
 #include "math/TransformUtils.h"
 
 #include "deprecated/CCString.h"
@@ -832,6 +833,7 @@ void Node::setGLProgramState(cocos2d::GLProgramState *glProgramState)
         CC_SAFE_RETAIN(_glProgramState);
     }
 }
+
 
 void Node::setGLProgram(GLProgram *glProgram)
 {

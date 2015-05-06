@@ -44,8 +44,8 @@ public:
     //Constructor
     PURibbonTrailVisualData (Node* sceneNode, PURibbonTrail* ribbonTrail) : 
         node(sceneNode),
-        trail(ribbonTrail),
         addedToTrail(false),
+        trail(ribbonTrail),
         index(0){};
 
     Node* node;

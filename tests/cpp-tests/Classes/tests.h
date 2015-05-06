@@ -89,5 +89,6 @@
 #if (CC_ENABLE_BULLET_INTEGRATION)
 #include "Physics3DTest/Physics3DTest.h"
 #endif
+#include "MaterialSystemTest/MaterialSystemTest.h"
 
 #endif

@@ -32,4 +32,10 @@
 -- @param self
 -- @return EaseCircleActionInOut#EaseCircleActionInOut ret (return value: cc.EaseCircleActionInOut)
         
+--------------------------------
+-- 
+-- @function [parent=#EaseCircleActionInOut] EaseCircleActionInOut 
+-- @param self
+-- @return EaseCircleActionInOut#EaseCircleActionInOut self (return value: cc.EaseCircleActionInOut)
+        
 return nil

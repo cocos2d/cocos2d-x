@@ -13,6 +13,23 @@
 -- @return Twirl#Twirl self (return value: cc.Twirl)
         
 --------------------------------
+-- brief Initializes the action with center position, number of twirls, amplitude, a grid size and duration.<br>
+-- param duration Specify the duration of the Twirl action. It's a value in seconds.<br>
+-- param gridSize Specify the size of the grid.<br>
+-- param position Specify the center position of the twirl action.<br>
+-- param twirls Specify the twirls count of the Twirl action.<br>
+-- param amplitude Specify the amplitude of the Twirl action.<br>
+-- return If the initialization sucess, return true; otherwise, return false.
+-- @function [parent=#Twirl] initWithDuration 
+-- @param self
+-- @param #float duration
+-- @param #size_table gridSize
+-- @param #vec2_table position
+-- @param #unsigned int twirls
+-- @param #float amplitude
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- brief Get the amplitude rate of the effect.<br>
 -- return Return the amplitude rate of the effect.
 -- @function [parent=#Twirl] getAmplitudeRate 
@@ -77,6 +94,12 @@
 -- @function [parent=#Twirl] update 
 -- @param self
 -- @param #float time
+-- @return Twirl#Twirl self (return value: cc.Twirl)
+        
+--------------------------------
+-- 
+-- @function [parent=#Twirl] Twirl 
+-- @param self
 -- @return Twirl#Twirl self (return value: cc.Twirl)
         
 return nil

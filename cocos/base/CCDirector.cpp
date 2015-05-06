@@ -47,6 +47,7 @@ THE SOFTWARE.
 #include "renderer/CCTextureCache.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCRenderState.h"
 #include "2d/CCCamera.h"
 #include "base/CCUserDefault.h"
 #include "base/ccFPSImages.h"
@@ -174,6 +175,7 @@ bool Director::init(void)
     initMatrixStack();
 
     _renderer = new (std::nothrow) Renderer;
+    RenderState::initialize();
 
     return true;
 }
@@ -1011,6 +1013,8 @@ void Director::reset()
     UserDefault::destroyInstance();
     
     GL::invalidateStateCache();
+
+    RenderState::finalize();
     
     destroyTextureCache();
 }
