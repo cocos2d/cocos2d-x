@@ -39,6 +39,15 @@
 -- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
         
 --------------------------------
+-- @overload self, cc.Material, int         
+-- @overload self, cc.Material         
+-- @function [parent=#Sprite3D] setMaterial
+-- @param self
+-- @param #cc.Material material
+-- @param #int meshIndex
+-- @return Sprite3D#Sprite3D self (return value: cc.Sprite3D)
+
+--------------------------------
 -- get mesh
 -- @function [parent=#Sprite3D] getMesh 
 -- @param self
