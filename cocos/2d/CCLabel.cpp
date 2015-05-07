@@ -621,7 +621,7 @@ void Label::alignText()
             int tag = child->getTag();
             if (tag >= strLen)
             {
-                SpriteBatchNode::removeChild(child, true);
+                child->removeFromParentAndCleanup(true);
             }
             else if (tag >= 0)
             {
@@ -633,10 +633,11 @@ void Label::alignText()
                     uvRect.size.width = letterDef.width;
                     uvRect.origin.x = letterDef.U;
                     uvRect.origin.y = letterDef.V;
-
-                    letterSprite->setTexture(textures.at(letterDef.textureID));
-                    letterSprite->setTextureRect(uvRect);
-                    letterSprite->setPosition(_lettersInfo[tag].position);
+                    
+                    letterSprite->setBatchNode(_batchNodes[letterDef.textureID]);
+                    letterSprite->setTextureRect(uvRect, false, uvRect.size);
+                    letterSprite->setPosition(_lettersInfo[tag].position.x + letterDef.width/2,
+                                              _lettersInfo[tag].position.y - letterDef.height/2);
                 }
                 ++index;
             }
@@ -966,8 +967,7 @@ void Label::onDraw(const Mat4& transform, bool transformUpdated)
 
     for(const auto &child: _children)
     {
-        if(child->getTag() >= 0)
-            child->updateTransform();
+        child->updateTransform();
     }
 
     for (const auto& batchNode:_batchNodes)
