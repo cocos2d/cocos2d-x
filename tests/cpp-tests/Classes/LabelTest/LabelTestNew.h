@@ -565,12 +565,12 @@ public:
     virtual std::string subtitle() const override;
 };
 
-class LabelIssue10576Test : public AtlasDemoNew
+class LabelIssue11576Test : public AtlasDemoNew
 {
 public:
-    CREATE_FUNC(LabelIssue10576Test);
+    CREATE_FUNC(LabelIssue11576Test);
 
-    LabelIssue10576Test();
+    LabelIssue11576Test();
 
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
