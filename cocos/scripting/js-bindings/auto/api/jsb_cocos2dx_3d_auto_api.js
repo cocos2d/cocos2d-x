@@ -918,28 +918,6 @@ int
 },
 
 /**
- * @method draw
- * @param {cc.Renderer} arg0
- * @param {float} arg1
- * @param {mat4_object} arg2
- * @param {unsigned int} arg3
- * @param {unsigned int} arg4
- * @param {vec4_object} arg5
- * @param {bool} arg6
- */
-draw : function (
-renderer, 
-float, 
-mat4, 
-int, 
-int, 
-vec4, 
-bool 
-)
-{
-},
-
-/**
  * @method getBlendFunc
  * @return {cc.BlendFunc}
  */

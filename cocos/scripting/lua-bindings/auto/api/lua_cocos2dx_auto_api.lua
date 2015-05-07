@@ -207,6 +207,11 @@
 
 
 --------------------------------------------------------
+-- the cc ActionFloat
+-- @field [parent=#cc] ActionFloat#ActionFloat ActionFloat preloaded module
+
+
+--------------------------------------------------------
 -- the cc Scene
 -- @field [parent=#cc] Scene#Scene Scene preloaded module
 
@@ -239,6 +244,11 @@
 --------------------------------------------------------
 -- the cc UserDefault
 -- @field [parent=#cc] UserDefault#UserDefault UserDefault preloaded module
+
+
+--------------------------------------------------------
+-- the cc AsyncTaskPool
+-- @field [parent=#cc] AsyncTaskPool#AsyncTaskPool AsyncTaskPool preloaded module
 
 
 --------------------------------------------------------
@@ -1244,11 +1254,6 @@
 --------------------------------------------------------
 -- the cc Component
 -- @field [parent=#cc] Component#Component Component preloaded module
-
-
---------------------------------------------------------
--- the cc AsyncTaskPool
--- @field [parent=#cc] AsyncTaskPool#AsyncTaskPool AsyncTaskPool preloaded module
 
 
 --------------------------------------------------------
