@@ -1525,6 +1525,58 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TargetedAction);
 };
 
+/**
+ * @class ActionFloat
+ * @brief Action used to animate any value in range [from,to] over specified time interval
+ */
+class CC_DLL ActionFloat : public ActionInterval
+{
+public:
+    /**
+     *  Callback function used to report back result
+     */
+    typedef std::function<void(float value)> ActionFloatCallback;
+
+    /**
+     * Creates FloatAction with specified duration, from value, to value and callback to report back
+     * results
+     * @param duration of the action
+     * @param from value to start from
+     * @param to value to be at the end of the action
+     * @param callback to report back result
+     *
+     * @return An autoreleased ActionFloat object
+     */
+    static ActionFloat* create(float duration, float from, float to, ActionFloatCallback callback);
+
+    /**
+     * Overrided ActionInterval methods
+     */
+    void startWithTarget(Node* target) override;
+    void update(float delta) override;
+    ActionFloat* reverse() const override;
+    ActionFloat* clone() const override;
+
+CC_CONSTRUCTOR_ACCESS:
+    ActionFloat() {};
+    virtual ~ActionFloat() {};
+
+    bool initWithDuration(float duration, float from, float to, ActionFloatCallback callback);
+
+protected:
+    /* From value */
+    float _from;
+    /* To value */
+    float _to;
+    /* delta time */
+    float _delta;
+
+    /* Callback to report back results */
+    ActionFloatCallback _callback;
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ActionFloat);
+};
+
 // end of actions group
 /// @}
 
