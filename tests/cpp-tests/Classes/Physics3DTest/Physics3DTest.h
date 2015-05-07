@@ -29,7 +29,7 @@
 #include "../BaseTest.h"
 #include <string>
 
-#if (CC_ENABLE_BULLET_INTEGRATION)
+#if (CC_ENABLE_BULLET_INTEGRATION && CC_USE_3D_PHYSICS)
 
 namespace cocos2d {
     class Physics3DConstraint;
