@@ -1452,6 +1452,10 @@
 		503DD8F81926B0DB00CD74DD /* CCIMEDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 503DD8F31926B0DB00CD74DD /* CCIMEDispatcher.cpp */; };
 		503DD8F91926B0DB00CD74DD /* CCIMEDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 503DD8F41926B0DB00CD74DD /* CCIMEDispatcher.h */; };
 		503DD8FA1926B0DB00CD74DD /* CCIMEDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 503DD8F41926B0DB00CD74DD /* CCIMEDispatcher.h */; };
+		505384F31AFC1C7300793096 /* CCProperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505384F11AFC1C7300793096 /* CCProperties.cpp */; };
+		505384F41AFC1C7300793096 /* CCProperties.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 505384F11AFC1C7300793096 /* CCProperties.cpp */; };
+		505384F51AFC1C7300793096 /* CCProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 505384F21AFC1C7300793096 /* CCProperties.h */; };
+		505384F61AFC1C7300793096 /* CCProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = 505384F21AFC1C7300793096 /* CCProperties.h */; };
 		50643BD419BFAECF00EF68ED /* CCGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 50643BD319BFAECF00EF68ED /* CCGL.h */; };
 		50643BD519BFAECF00EF68ED /* CCGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 50643BD319BFAECF00EF68ED /* CCGL.h */; };
 		50643BD619BFAEDA00EF68ED /* CCPlatformDefine.h in Headers */ = {isa = PBXBuildFile; fileRef = 5091A7A219BFABA800AC8789 /* CCPlatformDefine.h */; };
@@ -3412,6 +3416,8 @@
 		503DD8F21926B0DB00CD74DD /* CCIMEDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCIMEDelegate.h; path = ../base/CCIMEDelegate.h; sourceTree = "<group>"; };
 		503DD8F31926B0DB00CD74DD /* CCIMEDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCIMEDispatcher.cpp; path = ../base/CCIMEDispatcher.cpp; sourceTree = "<group>"; };
 		503DD8F41926B0DB00CD74DD /* CCIMEDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCIMEDispatcher.h; path = ../base/CCIMEDispatcher.h; sourceTree = "<group>"; };
+		505384F11AFC1C7300793096 /* CCProperties.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCProperties.cpp; sourceTree = "<group>"; };
+		505384F21AFC1C7300793096 /* CCProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProperties.h; sourceTree = "<group>"; };
 		50643BD319BFAECF00EF68ED /* CCGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGL.h; sourceTree = "<group>"; };
 		50643BD719BFAF4400EF68ED /* CCApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCApplication.h; sourceTree = "<group>"; };
 		50643BD819BFAF4400EF68ED /* CCStdC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCStdC.h; sourceTree = "<group>"; };
@@ -5980,6 +5986,8 @@
 				501216991AC473A3009A4BEA /* CCTechnique.h */,
 				5012169E1AC473AD009A4BEA /* CCMaterial.cpp */,
 				5012169F1AC473AD009A4BEA /* CCMaterial.h */,
+				505384F11AFC1C7300793096 /* CCProperties.cpp */,
+				505384F21AFC1C7300793096 /* CCProperties.h */,
 			);
 			name = renderer;
 			path = ../cocos/renderer;
@@ -7347,6 +7355,7 @@
 				B665E2FC1AA80A6500DDB1C5 /* CCPUMaterialManager.h in Headers */,
 				15AE1BC619AAE00000C27E9E /* AssetsManager.h in Headers */,
 				50ABBEA91925AB6F00A911A9 /* CCTouch.h in Headers */,
+				505384F51AFC1C7300793096 /* CCProperties.h in Headers */,
 				15AE1A5E19AAD40300C27E9E /* b2Body.h in Headers */,
 				50ABBE971925AB6F00A911A9 /* CCProtocols.h in Headers */,
 				50ABC0691926664800A911A9 /* CCStdC-mac.h in Headers */,
@@ -7648,6 +7657,7 @@
 				B665E39D1AA80A6500DDB1C5 /* CCPUPointEmitterTranslator.h in Headers */,
 				15AE1C1819AAE2C700C27E9E /* CCPhysicsSprite.h in Headers */,
 				15AE1BC819AAE00000C27E9E /* AssetsManager.h in Headers */,
+				505384F61AFC1C7300793096 /* CCProperties.h in Headers */,
 				B665E2E11AA80A6500DDB1C5 /* CCPULineAffector.h in Headers */,
 				B29A7E0419EE1B7700872B35 /* BoundingBoxAttachment.h in Headers */,
 				52B47A2E1A5349A3004E4C60 /* HttpAsynConnection.h in Headers */,
@@ -8238,6 +8248,7 @@
 				1A570065180BC5A10088DEC7 /* CCActionCamera.cpp in Sources */,
 				50ABBEAB1925AB6F00A911A9 /* ccTypes.cpp in Sources */,
 				B665E3AE1AA80A6500DDB1C5 /* CCPURender.cpp in Sources */,
+				505384F31AFC1C7300793096 /* CCProperties.cpp in Sources */,
 				15AE18A219AAD33D00C27E9E /* CCParticleSystemQuadLoader.cpp in Sources */,
 				15AE188C19AAD33D00C27E9E /* CCLabelBMFontLoader.cpp in Sources */,
 				DA8C62A219E52C6400000516 /* ioapi_mem.cpp in Sources */,
@@ -9228,6 +9239,7 @@
 				15AE193219AAD35100C27E9E /* CCActionNode.cpp in Sources */,
 				15AE195319AAD35100C27E9E /* CCDisplayFactory.cpp in Sources */,
 				182C5CD71A98F30500C30D34 /* Sprite3DReader.cpp in Sources */,
+				505384F41AFC1C7300793096 /* CCProperties.cpp in Sources */,
 				50ABC0061926664800A911A9 /* CCThread-apple.mm in Sources */,
 				50ABBEB61925AB6F00A911A9 /* CCUserDefault-android.cpp in Sources */,
 				1A57034C180BD09B0088DEC7 /* tinyxml2.cpp in Sources */,
