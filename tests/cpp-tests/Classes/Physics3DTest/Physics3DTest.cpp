@@ -23,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#if (CC_ENABLE_BULLET_INTEGRATION)
+#if (CC_ENABLE_BULLET_INTEGRATION && CC_USE_3D_PHYSICS)
 
 #include "Physics3DTest.h"
 #include "3d/CCTerrain.h"
@@ -676,8 +676,6 @@ std::string Physics3DTerrainDemo::subtitle() const
     return "Physics3D Terrain";
 }
 
-#endif
-
 std::string Physics3DCollisionCallbackDemo::subtitle() const 
 {
     return "Physics3D CollisionCallback";
@@ -748,3 +746,5 @@ bool Physics3DCollisionCallbackDemo::init()
     physicsScene->setPhysics3DDebugCamera(_camera);
     return true;
 }
+
+#endif
