@@ -102,7 +102,7 @@
     </ResourceCompile>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\spidermonkey\prebuilt\win32\debug-build\*.*" "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\spidermonkey\prebuilt\win32\*.*" "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\websockets\prebuilt\win32\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
     <Link>
@@ -163,7 +163,7 @@ copy "$(ProjectDir)..\..\project.json" "$(OutDir)"</Command>
     </ResourceCompile>
     <PreLinkEvent>
       <Command>if not exist "$(OutDir)" mkdir "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\spidermonkey\prebuilt\win32\release-build\*.*" "$(OutDir)"
+xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\spidermonkey\prebuilt\win32\*.*" "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\..\..\..\external\websockets\prebuilt\win32\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
     <Link>
