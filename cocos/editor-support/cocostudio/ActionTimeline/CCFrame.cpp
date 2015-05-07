@@ -606,32 +606,20 @@ void InnerActionFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 
 void InnerActionFrame::setStartFrameIndex(int frameIndex)
 {
-    if(_enterWithName)
-    {
-        CCLOG(" cannot set start when enter frame with name. setEnterWithName false firstly!");
-        throw std::exception();
-    }
+    CCASSERT(_enterWithName, " cannot setStartFrameIndex when enterWithName is set");
     _startFrameIndex = frameIndex;
 }
 
 
 void InnerActionFrame::setEndFrameIndex(int frameIndex)
 {
-    if(_enterWithName)
-    {
-         CCLOG(" cannot set end when enter frame with name. setEnterWithName false firstly!");
-        throw std::exception();
-    }
+    CCASSERT(_enterWithName, " cannot setEndFrameIndex when enterWithName is set");
     _endFrameIndex = frameIndex;
 }
 
 void InnerActionFrame::setAnimationName(const std::string& animationName)
 {
-    if(!_enterWithName)
-    {
-         CCLOG(" cannot set aniamtioname when enter frame with index. setEnterWithName true firstly!");
-        throw std::exception();
-    }
+    CCASSERT(!_enterWithName, " cannot set aniamtioname when enter frame with index. setEnterWithName true firstly!");
     _animationName = animationName;
    
 }

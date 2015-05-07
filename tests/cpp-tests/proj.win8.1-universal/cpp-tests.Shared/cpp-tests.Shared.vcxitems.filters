@@ -781,6 +781,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\SpritePolygonTest\SpritePolygonTest.cpp">
       <Filter>Classes\SpritePolygonTest</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\MaterialSystemTest\MaterialSystemTest.cpp">
+      <Filter>Classes\MaterialSystemTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ActionManagerTest\ActionManagerTest.cpp">
@@ -1689,6 +1692,9 @@
     <Filter Include="Classes\SpritePolygonTest">
       <UniqueIdentifier>{ee1c5d87-3c80-4a10-892e-985fcd93a6c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\MaterialSystemTest">
+      <UniqueIdentifier>{9113774a-5e49-433b-b851-11533bc178ec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos\platform\win8.1-universal\OpenGLESPage.xaml" />
@@ -1724,6 +1730,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\SpritePolygonTest\SpritePolygonTest.h">
       <Filter>Classes\SpritePolygonTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\MaterialSystemTest\MaterialSystemTest.h">
+      <Filter>Classes\MaterialSystemTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

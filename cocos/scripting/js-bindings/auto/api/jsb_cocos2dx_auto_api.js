@@ -1239,6 +1239,16 @@ touch
 },
 
 /**
+ * @method getMaterial
+ * @return {cc.Material}
+ */
+getMaterial : function (
+)
+{
+    return cc.Material;
+},
+
+/**
  * @method removeAllChildrenWithCleanup
 * @param {bool} bool
 */
@@ -1286,6 +1296,16 @@ isCascadeOpacityEnabled : function (
 )
 {
     return false;
+},
+
+/**
+ * @method setMaterial
+ * @param {cc.Material} arg0
+ */
+setMaterial : function (
+material 
+)
+{
 },
 
 /**
@@ -1444,7 +1464,7 @@ getAnchorPoint : function (
 
 /**
  * @method getNumberOfRunningActions
- * @return {int}
+ * @return {long}
  */
 getNumberOfRunningActions : function (
 )
@@ -1472,7 +1492,7 @@ isVisible : function (
 
 /**
  * @method getChildrenCount
- * @return {int}
+ * @return {long}
  */
 getChildrenCount : function (
 )
@@ -5752,6 +5772,18 @@ str
 },
 
 /**
+ * @method getSuitableFOpen
+ * @param {String} arg0
+ * @return {String}
+ */
+getSuitableFOpen : function (
+str 
+)
+{
+    return ;
+},
+
+/**
  * @method setWritablePath
  * @param {String} arg0
  */
@@ -6756,7 +6788,7 @@ node
 /**
  * @method getNumberOfRunningActionsInTarget
  * @param {cc.Node} arg0
- * @return {int}
+ * @return {long}
  */
 getNumberOfRunningActionsInTarget : function (
 node 
@@ -10154,38 +10186,6 @@ ProtectedNode : function (
 cc.GLProgramState = {
 
 /**
- * @method setUniformTexture
-* @param {String|String|int|int} str
-* @param {unsigned int|cc.Texture2D|cc.Texture2D|unsigned int} int
-*/
-setUniformTexture : function(
-int,
-int 
-)
-{
-},
-
-/**
- * @method setUniformMat4
-* @param {int|String} int
-* @param {mat4_object|mat4_object} mat4
-*/
-setUniformMat4 : function(
-str,
-mat4 
-)
-{
-},
-
-/**
- * @method applyUniforms
- */
-applyUniforms : function (
-)
-{
-},
-
-/**
  * @method setUniformCallback
 * @param {int|String} int
 * @param {function|function} func
@@ -10198,87 +10198,13 @@ func
 },
 
 /**
- * @method applyGLProgram
- * @param {mat4_object} arg0
+ * @method getVertexAttribsFlags
+ * @return {unsigned int}
  */
-applyGLProgram : function (
-mat4 
-)
-{
-},
-
-/**
- * @method getUniformCount
- * @return {int}
- */
-getUniformCount : function (
+getVertexAttribsFlags : function (
 )
 {
     return 0;
-},
-
-/**
- * @method applyAttributes
- */
-applyAttributes : function (
-)
-{
-},
-
-/**
- * @method setUniformFloat
-* @param {int|String} int
-* @param {float|float} float
-*/
-setUniformFloat : function(
-str,
-float 
-)
-{
-},
-
-/**
- * @method setUniformVec3
-* @param {int|String} int
-* @param {vec3_object|vec3_object} vec3
-*/
-setUniformVec3 : function(
-str,
-vec3 
-)
-{
-},
-
-/**
- * @method setUniformInt
-* @param {int|String} int
-* @param {int|int} int
-*/
-setUniformInt : function(
-str,
-int 
-)
-{
-},
-
-/**
- * @method getVertexAttribCount
- * @return {int}
- */
-getVertexAttribCount : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setGLProgram
- * @param {cc.GLProgram} arg0
- */
-setGLProgram : function (
-glprogram 
-)
-{
 },
 
 /**
@@ -10294,13 +10220,15 @@ vec2
 },
 
 /**
- * @method getVertexAttribsFlags
- * @return {unsigned int}
- */
-getVertexAttribsFlags : function (
+ * @method setUniformVec3
+* @param {int|String} int
+* @param {vec3_object|vec3_object} vec3
+*/
+setUniformVec3 : function(
+str,
+vec3 
 )
 {
-    return 0;
 },
 
 /**
@@ -10326,6 +10254,94 @@ mat4
 },
 
 /**
+ * @method applyGLProgram
+ * @param {mat4_object} arg0
+ */
+applyGLProgram : function (
+mat4 
+)
+{
+},
+
+/**
+ * @method setUniformInt
+* @param {int|String} int
+* @param {int|int} int
+*/
+setUniformInt : function(
+str,
+int 
+)
+{
+},
+
+/**
+ * @method setUniformVec2v
+* @param {int|String} int
+* @param {vec2_object|vec2_object} vec2
+* @param {long|long} long
+*/
+setUniformVec2v : function(
+str,
+vec2,
+long 
+)
+{
+},
+
+/**
+ * @method getUniformCount
+ * @return {long}
+ */
+getUniformCount : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method applyAttributes
+ */
+applyAttributes : function (
+)
+{
+},
+
+/**
+ * @method clone
+ * @return {cc.GLProgramState}
+ */
+clone : function (
+)
+{
+    return cc.GLProgramState;
+},
+
+/**
+ * @method setGLProgram
+ * @param {cc.GLProgram} arg0
+ */
+setGLProgram : function (
+glprogram 
+)
+{
+},
+
+/**
+ * @method setUniformFloatv
+* @param {int|String} int
+* @param {float|float} float
+* @param {long|long} long
+*/
+setUniformFloatv : function(
+str,
+float,
+long 
+)
+{
+},
+
+/**
  * @method getGLProgram
  * @return {cc.GLProgram}
  */
@@ -10333,6 +10349,74 @@ getGLProgram : function (
 )
 {
     return cc.GLProgram;
+},
+
+/**
+ * @method setUniformTexture
+* @param {String|String|int|int} str
+* @param {unsigned int|cc.Texture2D|cc.Texture2D|unsigned int} int
+*/
+setUniformTexture : function(
+int,
+int 
+)
+{
+},
+
+/**
+ * @method applyUniforms
+ */
+applyUniforms : function (
+)
+{
+},
+
+/**
+ * @method setUniformFloat
+* @param {int|String} int
+* @param {float|float} float
+*/
+setUniformFloat : function(
+str,
+float 
+)
+{
+},
+
+/**
+ * @method setUniformMat4
+* @param {int|String} int
+* @param {mat4_object|mat4_object} mat4
+*/
+setUniformMat4 : function(
+str,
+mat4 
+)
+{
+},
+
+/**
+ * @method setUniformVec3v
+* @param {int|String} int
+* @param {vec3_object|vec3_object} vec3
+* @param {long|long} long
+*/
+setUniformVec3v : function(
+str,
+vec3,
+long 
+)
+{
+},
+
+/**
+ * @method getVertexAttribCount
+ * @return {long}
+ */
+getVertexAttribCount : function (
+)
+{
+    return 0;
 },
 
 /**
@@ -10366,6 +10450,22 @@ str
  */
 getOrCreateWithGLProgram : function (
 glprogram 
+)
+{
+    return cc.GLProgramState;
+},
+
+/**
+ * @method getOrCreateWithShaders
+ * @param {String} arg0
+ * @param {String} arg1
+ * @param {String} arg2
+ * @return {cc.GLProgramState}
+ */
+getOrCreateWithShaders : function (
+str, 
+str, 
+str 
 )
 {
     return cc.GLProgramState;
@@ -10456,7 +10556,7 @@ getBlendFunc : function (
 
 /**
  * @method getQuadsToDraw
- * @return {int}
+ * @return {long}
  */
 getQuadsToDraw : function (
 )
@@ -10494,10 +10594,10 @@ int
 
 /**
  * @method setQuadsToDraw
- * @param {int} arg0
+ * @param {long} arg0
  */
 setQuadsToDraw : function (
-int 
+long 
 )
 {
 },
@@ -11333,12 +11433,12 @@ bool
 /**
  * @method initWithTexture
  * @param {cc.Texture2D} arg0
- * @param {int} arg1
+ * @param {long} arg1
  * @return {bool}
  */
 initWithTexture : function (
 texture2d, 
-int 
+long 
 )
 {
     return false;
@@ -11357,7 +11457,7 @@ getBlendFunc : function (
 /**
  * @method lowestAtlasIndexInChild
  * @param {cc.Sprite} arg0
- * @return {int}
+ * @return {long}
  */
 lowestAtlasIndexInChild : function (
 sprite 
@@ -11370,7 +11470,7 @@ sprite
  * @method atlasIndexForChild
  * @param {cc.Sprite} arg0
  * @param {int} arg1
- * @return {int}
+ * @return {long}
  */
 atlasIndexForChild : function (
 sprite, 
@@ -11393,12 +11493,12 @@ textureatlas
 /**
  * @method initWithFile
  * @param {String} arg0
- * @param {int} arg1
+ * @param {long} arg1
  * @return {bool}
  */
 initWithFile : function (
 str, 
-int 
+long 
 )
 {
     return false;
@@ -11435,11 +11535,11 @@ getTextureAtlas : function (
 /**
  * @method insertQuadFromSprite
  * @param {cc.Sprite} arg0
- * @param {int} arg1
+ * @param {long} arg1
  */
 insertQuadFromSprite : function (
 sprite, 
-int 
+long 
 )
 {
 },
@@ -11457,12 +11557,12 @@ texture2d
 /**
  * @method rebuildIndexInOrder
  * @param {cc.Sprite} arg0
- * @param {int} arg1
- * @return {int}
+ * @param {long} arg1
+ * @return {long}
  */
 rebuildIndexInOrder : function (
 sprite, 
-int 
+long 
 )
 {
     return 0;
@@ -11471,7 +11571,7 @@ int
 /**
  * @method highestAtlasIndexInChild
  * @param {cc.Sprite} arg0
- * @return {int}
+ * @return {long}
  */
 highestAtlasIndexInChild : function (
 sprite 
@@ -11482,11 +11582,11 @@ sprite
 
 /**
  * @method removeChildAtIndex
- * @param {int} arg0
+ * @param {long} arg0
  * @param {bool} arg1
  */
 removeChildAtIndex : function (
-int, 
+long, 
 bool 
 )
 {
@@ -11515,12 +11615,12 @@ blendfunc
 /**
  * @method create
  * @param {String} arg0
- * @param {int} arg1
+ * @param {long} arg1
  * @return {cc.SpriteBatchNode}
  */
 create : function (
 str, 
-int 
+long 
 )
 {
     return cc.SpriteBatchNode;
@@ -11529,12 +11629,12 @@ int
 /**
  * @method createWithTexture
  * @param {cc.Texture2D} arg0
- * @param {int} arg1
+ * @param {long} arg1
  * @return {cc.SpriteBatchNode}
  */
 createWithTexture : function (
 texture2d, 
-int 
+long 
 )
 {
     return cc.SpriteBatchNode;
@@ -15219,7 +15319,7 @@ spriteframe
 
 /**
  * @method getAtlasIndex
- * @return {int}
+ * @return {long}
  */
 getAtlasIndex : function (
 )
@@ -15250,11 +15350,11 @@ getBlendFunc : function (
 /**
  * @method setDisplayFrameWithAnimationName
  * @param {String} arg0
- * @param {int} arg1
+ * @param {long} arg1
  */
 setDisplayFrameWithAnimationName : function (
 str, 
-int 
+long 
 )
 {
 },
@@ -15291,10 +15391,10 @@ isDirty : function (
 
 /**
  * @method setAtlasIndex
- * @param {int} arg0
+ * @param {long} arg0
  */
 setAtlasIndex : function (
-int 
+long 
 )
 {
 },
@@ -15487,7 +15587,7 @@ hasPremultipliedAlpha : function (
 
 /**
  * @method getDataLen
- * @return {int}
+ * @return {long}
  */
 getDataLen : function (
 )
@@ -15624,7 +15724,7 @@ getMipmaps : function (
 /**
  * @method initWithRawData
  * @param {unsigned char} arg0
- * @param {int} arg1
+ * @param {long} arg1
  * @param {int} arg2
  * @param {int} arg3
  * @param {int} arg4
@@ -15633,7 +15733,7 @@ getMipmaps : function (
  */
 initWithRawData : function (
 char, 
-int, 
+long, 
 int, 
 int, 
 int, 
@@ -18903,13 +19003,15 @@ str
 
 /**
  * @method initWithByteArrays
- * @param {char} arg0
- * @param {char} arg1
- * @return {bool}
- */
-initWithByteArrays : function (
-char, 
-char 
+* @param {char|char} char
+* @param {char|char} char
+* @param {String} str
+* @return {bool|bool}
+*/
+initWithByteArrays : function(
+char,
+char,
+str 
 )
 {
     return false;
@@ -18929,12 +19031,14 @@ float
 
 /**
  * @method initWithFilenames
- * @param {String} arg0
- * @param {String} arg1
- * @return {bool}
- */
-initWithFilenames : function (
-str, 
+* @param {String|String} str
+* @param {String|String} str
+* @param {String} str
+* @return {bool|bool}
+*/
+initWithFilenames : function(
+str,
+str,
 str 
 )
 {
@@ -19123,13 +19227,15 @@ int
 
 /**
  * @method createWithByteArrays
- * @param {char} arg0
- * @param {char} arg1
- * @return {cc.GLProgram}
- */
-createWithByteArrays : function (
-char, 
-char 
+* @param {char|char} char
+* @param {char|char} char
+* @param {String} str
+* @return {cc.GLProgram|cc.GLProgram}
+*/
+createWithByteArrays : function(
+char,
+char,
+str 
 )
 {
     return cc.GLProgram;
@@ -19137,12 +19243,14 @@ char
 
 /**
  * @method createWithFilenames
- * @param {String} arg0
- * @param {String} arg1
- * @return {cc.GLProgram}
- */
-createWithFilenames : function (
-str, 
+* @param {String|String} str
+* @param {String|String} str
+* @param {String} str
+* @return {cc.GLProgram|cc.GLProgram}
+*/
+createWithFilenames : function(
+str,
+str,
 str 
 )
 {

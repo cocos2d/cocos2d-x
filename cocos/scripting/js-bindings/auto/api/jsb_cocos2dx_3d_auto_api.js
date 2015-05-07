@@ -342,7 +342,7 @@ int
 
 /**
  * @method getRootCount
- * @return {int}
+ * @return {long}
  */
 getRootCount : function (
 )
@@ -364,7 +364,7 @@ bone3d
 
 /**
  * @method getBoneCount
- * @return {int}
+ * @return {long}
  */
 getBoneCount : function (
 )
@@ -477,6 +477,18 @@ removeAllAttachNode : function (
 },
 
 /**
+ * @method setMaterial
+* @param {cc.Material|cc.Material} material
+* @param {int} int
+*/
+setMaterial : function(
+material,
+int 
+)
+{
+},
+
+/**
  * @method genGLProgramState
  */
 genGLProgramState : function (
@@ -512,7 +524,7 @@ materialdatas
 
 /**
  * @method getMeshCount
- * @return {int}
+ * @return {long}
  */
 getMeshCount : function (
 )
@@ -816,6 +828,16 @@ getSkin : function (
 },
 
 /**
+ * @method getMaterial
+ * @return {cc.Material}
+ */
+getMaterial : function (
+)
+{
+    return cc.Material;
+},
+
+/**
  * @method getVertexSizeInBytes
  * @return {int}
  */
@@ -823,6 +845,16 @@ getVertexSizeInBytes : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method setMaterial
+ * @param {cc.Material} arg0
+ */
+setMaterial : function (
+material 
+)
+{
 },
 
 /**
@@ -886,6 +918,28 @@ int
 },
 
 /**
+ * @method draw
+ * @param {cc.Renderer} arg0
+ * @param {float} arg1
+ * @param {mat4_object} arg2
+ * @param {unsigned int} arg3
+ * @param {unsigned int} arg4
+ * @param {vec4_object} arg5
+ * @param {bool} arg6
+ */
+draw : function (
+renderer, 
+float, 
+mat4, 
+int, 
+int, 
+vec4, 
+bool 
+)
+{
+},
+
+/**
  * @method getBlendFunc
  * @return {cc.BlendFunc}
  */
@@ -916,31 +970,13 @@ str
 },
 
 /**
- * @method isVisible
- * @return {bool}
- */
-isVisible : function (
-)
-{
-    return false;
-},
-
-/**
  * @method getIndexCount
- * @return {int}
+ * @return {long}
  */
 getIndexCount : function (
 )
 {
     return 0;
-},
-
-/**
- * @method bindMeshCommand
- */
-bindMeshCommand : function (
-)
-{
 },
 
 /**
@@ -955,7 +991,7 @@ meshindexdata
 
 /**
  * @method getMeshVertexAttribCount
- * @return {int}
+ * @return {long}
  */
 getMeshVertexAttribCount : function (
 )
@@ -991,6 +1027,16 @@ setSkin : function (
 meshskin 
 )
 {
+},
+
+/**
+ * @method isVisible
+ * @return {bool}
+ */
+isVisible : function (
+)
+{
+    return false;
 },
 
 /**

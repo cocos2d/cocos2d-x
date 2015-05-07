@@ -27,8 +27,12 @@
 
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgram.h"
+#include "renderer/CCMaterial.h"
+#include "renderer/CCTechnique.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCPass.h"
+
 #include "xxhash.h"
-#include "CCRenderer.h"
 
 NS_CC_BEGIN
 
@@ -78,17 +82,19 @@ QuadCommand::~QuadCommand()
 
 void QuadCommand::generateMaterialID()
 {
-    
-    if(_glProgramState->getUniformCount() > 0)
-    {
-        _materialID = Renderer::MATERIAL_ID_DO_NOT_BATCH;
-    }
-    else
+    _skipBatching = false;
+
+    if(_glProgramState->getUniformCount() == 0)
     {
         int glProgram = (int)_glProgramState->getGLProgram()->getProgram();
         int intArray[4] = { glProgram, (int)_textureID, (int)_blendType.src, (int)_blendType.dst};
-        
+
         _materialID = XXH32((const void*)intArray, sizeof(intArray), 0);
+    }
+    else
+    {
+        _materialID = Renderer::MATERIAL_ID_DO_NOT_BATCH;
+        _skipBatching = true;
     }
 }
 
@@ -100,7 +106,8 @@ void QuadCommand::useMaterial() const
     //set blend mode
     GL::blendFunc(_blendType.src, _blendType.dst);
     
-    _glProgramState->apply(_mv);
+    _glProgramState->applyGLProgram(_mv);
+    _glProgramState->applyUniforms();
 }
 
 NS_CC_END

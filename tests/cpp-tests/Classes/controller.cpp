@@ -16,7 +16,6 @@ class RootTests : public TestList
 public:
     RootTests()
     {
-        addTest("SpritePolygon", [](){return new (std::nothrow) SpritePolygonTest(); });
         addTest("ActionManager", [](){return new (std::nothrow) ActionManagerTests(); });
         addTest("Actions - Basic", [](){ return new (std::nothrow) ActionsTests(); });
         addTest("Actions - Ease", [](){return new (std::nothrow) ActionsEaseTests(); });
@@ -45,6 +44,7 @@ public:
         addTest("FileUtils", []() { return new FileUtilsTests(); });
         addTest("Fonts", []() { return new FontTests(); });
         addTest("Interval", [](){return new IntervalTests(); });
+        addTest("Material System", [](){return new MaterialSystemTest(); });
         addTest("Node: BillBoard Test", [](){  return new BillBoardTests(); });
         addTest("Node: Camera 3D Test", [](){  return new Camera3DTests(); });
         addTest("Node: Clipping", []() { return new ClippingNodeTests(); });
@@ -65,6 +65,7 @@ public:
         addTest("Node: Spine", [](){return new SpineTests(); });
         addTest("Node: Sprite", [](){return new SpriteTests(); });
         addTest("Node: Sprite3D", [](){  return new Sprite3DTests(); });
+        addTest("Node: SpritePolygon", [](){return new (std::nothrow) SpritePolygonTest(); });
         addTest("Node: Terrain", [](){  return new TerrainTests(); });
         addTest("Node: TileMap", [](){return new TileMapTests(); });
         addTest("Node: FastTileMap", [](){return new FastTileMapTests(); });
