@@ -227,15 +227,6 @@ protected:
     static Camera* _visitingCamera;
     
     friend class Director;
-protected:
-    //callback for clear background
-    void onBeforeClear();
-    void onEndClear();
-    GLboolean _oldDepthTest;
-    GLint _oldDepthFunc;
-    CustomCommand _beforeClearCommand;
-    QuadCommand _clearCommand;
-    CustomCommand _endClearCommand;
 };
 
 NS_CC_END
