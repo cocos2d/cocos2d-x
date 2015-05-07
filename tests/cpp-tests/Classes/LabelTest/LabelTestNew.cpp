@@ -77,6 +77,7 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelSystemFontColor);
     ADD_TEST_CASE(LabelIssue10773Test);
     ADD_TEST_CASE(LabelIssue10576Test);
+    ADD_TEST_CASE(LabelIssue11699Test);
 };
 
 LabelTTFAlignmentNew::LabelTTFAlignmentNew()
@@ -1912,4 +1913,24 @@ std::string LabelIssue10576Test::title() const
 std::string LabelIssue10576Test::subtitle() const
 {
     return "You should see another string displayed correctly after 2 seconds.";
+}
+
+LabelIssue11699Test::LabelIssue11699Test()
+{
+    auto center = VisibleRect::center();
+
+    auto label = Label::createWithTTF("中国", "fonts/HKYuanMini.ttf", 150);
+    label->enableOutline(Color4B::RED, 2);
+    label->setPosition(center.x, center.y);
+    addChild(label);
+}
+
+std::string LabelIssue11699Test::title() const
+{
+    return "Test for Issue #11699";
+}
+
+std::string LabelIssue11699Test::subtitle() const
+{
+    return "Outline should match with the characters exactly.";
 }
