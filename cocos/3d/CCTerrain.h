@@ -388,7 +388,7 @@ public:
     /**
      * get the terrain's size
      */
-    Size getTerrainSize() const { return Size(_imageWidth, _imageHeight); }
+    void getTerrainSize(Size& size) const { size.setSize(_imageWidth, _imageHeight); }
     
     /**
      * get the terrain's height data
