@@ -25,9 +25,10 @@ private:
 };
 #define GAME_3D_MASK        CameraFlag::DEFAULT
 #define GAME_UI_MASK        CameraFlag::USER1
-#define GAME_DIALOG_MASK    CameraFlag::USER2
-#define GAME_UI_ZORDER      1
-#define GAME_DIALOG_ZORDER  2
+#define GAME_ACTOR_MASK     CameraFlag::USER3
+
+#define UI_CAMERA_DEPTH      1
+#define ACTOR_CAMERA_DEPTH   3
 
 Scene3DTestScene::Scene3DTestScene()
 : _dialog(nullptr)
@@ -76,12 +77,13 @@ void Scene3DTestScene::createUI()
     auto menu = Menu::create(closeItem, nullptr);
     menu->setPosition(Vec2::ZERO);
     menu->setCameraMask((unsigned short)GAME_UI_MASK, true);
-    this->addChild(menu, GAME_UI_ZORDER);
+    this->addChild(menu);
     _ui = menu;
     
     auto uiCamera = Camera::create();
     // uiCamera->setPositionX(uiCamera->getPositionX() + 50);
     uiCamera->setCameraFlag(GAME_UI_MASK);
+    uiCamera->setDepth(UI_CAMERA_DEPTH);
     this->addChild(uiCamera);
 }
 
@@ -105,7 +107,15 @@ void Scene3DTestScene::createDialog()
     girl->setPosition(100, -20);
     layer->addChild(girl);
     
-    this->addChild(layer, GAME_DIALOG_ZORDER);
+    this->addChild(layer);
+    layer->setCameraMask((unsigned short)GAME_UI_MASK);
+    girl->setCameraMask((unsigned short)GAME_ACTOR_MASK);
+    
+    auto actorCamera = Camera::create();
+    actorCamera->setCameraFlag(GAME_ACTOR_MASK);
+    actorCamera->setDepth(ACTOR_CAMERA_DEPTH);
+    this->addChild(actorCamera);
+    
     _dialog = layer;
 }
 
