@@ -71,7 +71,7 @@ THE SOFTWARE.
 #endif
 
 #if CC_USE_3D_PHYSICS
-#include "Physics3D/CCPhysics3DWorld.h"
+#include "physics3d/CCPhysics3DWorld.h"
 #endif
 
 /**

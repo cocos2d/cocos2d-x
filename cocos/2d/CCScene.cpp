@@ -38,8 +38,8 @@ THE SOFTWARE.
 #endif
 
 #if CC_USE_3D_PHYSICS
-#include "Physics3D/CCPhysics3DWorld.h"
-#include "Physics3D/CCPhysics3DComponent.h"
+#include "physics3d/CCPhysics3DWorld.h"
+#include "physics3d/CCPhysics3DComponent.h"
 #endif
 
 NS_CC_BEGIN
