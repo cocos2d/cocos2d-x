@@ -28,6 +28,7 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCGLProgramCache.h"
+#include "renderer/ccGLStateCache.h"
 
 NS_CC_BEGIN
 
@@ -380,34 +381,21 @@ void Camera::setScene(Scene* scene)
     }
 }
 
-void Camera::onBeforeClear()
-{
-    glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
-    glStencilMask(0);
-    _oldDepthTest = glIsEnabled(GL_DEPTH_TEST);
-    glGetIntegerv(GL_DEPTH_FUNC, &_oldDepthFunc);
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_ALWAYS);
-}
-
-void Camera::onEndClear()
-{
-    if(GL_FALSE == _oldDepthTest)
-    {
-        glDisable(GL_DEPTH_TEST);
-    }
-    glDepthFunc(_oldDepthFunc);
-    
-    glStencilMask(0xFFFFF);
-    glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-}
-
 void Camera::clearBackground(float depth)
 {
-    auto renderer = Director::getInstance()->getRenderer();
-    _beforeClearCommand.init(0,Mat4(),0);
-    _beforeClearCommand.func = CC_CALLBACK_0(Camera::onBeforeClear, this);
-    renderer->addCommand(&_beforeClearCommand);
+    GLboolean oldDepthTest;
+    GLint oldDepthFunc;
+    GLboolean oldDepthMask;
+    {
+        glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+        glStencilMask(0);
+        oldDepthTest = glIsEnabled(GL_DEPTH_TEST);
+        glGetIntegerv(GL_DEPTH_FUNC, &oldDepthFunc);
+        glGetBooleanv(GL_DEPTH_WRITEMASK, &oldDepthMask);
+        glDepthMask(GL_TRUE);
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_ALWAYS);
+    }
     
     //draw
     static V3F_C4B_T2F_Quad quad;
@@ -426,13 +414,43 @@ void Camera::clearBackground(float depth)
     auto shader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_CAMERA_CLEAR);
     auto programState = GLProgramState::create(shader);
     programState->setUniformFloat("depth", 1.0);
-    _clearCommand.init(0, 0, programState, BlendFunc::DISABLE, &quad, 1, Mat4(), 0);
-    renderer->addCommand(&_clearCommand);
+    programState->apply(Mat4());
+    GLshort indices[6] = {0, 1, 2, 3, 2, 1};
     
+    {
+        GL::bindVAO(0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        
+        GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
+        
+        // vertices
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), &quad.bl.vertices);
+        
+        // colors
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B_T2F), &quad.bl.colors);
+        
+        // tex coords
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), &quad.bl.texCoords);
+        
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
+    }
+
     
-    _endClearCommand.init(0,Mat4(),0);
-    _endClearCommand.func = CC_CALLBACK_0(Camera::onEndClear, this);
-    renderer->addCommand(&_endClearCommand);
+    {
+        if(GL_FALSE == oldDepthTest)
+        {
+            glDisable(GL_DEPTH_TEST);
+        }
+        glDepthFunc(oldDepthFunc);
+        if(GL_FALSE == oldDepthMask)
+        {
+            glDepthMask(GL_FALSE);
+        }
+        
+        glStencilMask(0xFFFFF);
+        glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+    }
 }
 
 NS_CC_END
