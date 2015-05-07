@@ -25,6 +25,9 @@
 #include "base/CCDirector.h"
 #include "platform/CCGLView.h"
 #include "2d/CCScene.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCQuadCommand.h"
+#include "renderer/CCGLProgramCache.h"
 
 NS_CC_BEGIN
 
@@ -375,6 +378,61 @@ void Camera::setScene(Scene* scene)
             }
         }
     }
+}
+
+void Camera::onBeforeClear()
+{
+    glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+    glStencilMask(0);
+    _oldDepthTest = glIsEnabled(GL_DEPTH_TEST);
+    glGetIntegerv(GL_DEPTH_FUNC, &_oldDepthFunc);
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_ALWAYS);
+}
+
+void Camera::onEndClear()
+{
+    if(GL_FALSE == _oldDepthTest)
+    {
+        glDisable(GL_DEPTH_TEST);
+    }
+    glDepthFunc(_oldDepthFunc);
+    
+    glStencilMask(0xFFFFF);
+    glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+}
+
+void Camera::clearBackground(float depth)
+{
+    auto renderer = Director::getInstance()->getRenderer();
+    _beforeClearCommand.init(0,Mat4(),0);
+    _beforeClearCommand.func = CC_CALLBACK_0(Camera::onBeforeClear, this);
+    renderer->addCommand(&_beforeClearCommand);
+    
+    //draw
+    static V3F_C4B_T2F_Quad quad;
+    quad.bl.vertices = Vec3(-1,-1,0);
+    quad.br.vertices = Vec3(1,-1,0);
+    quad.tl.vertices = Vec3(-1,1,0);
+    quad.tr.vertices = Vec3(1,1,0);
+    
+    quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = Color4B(0,0,0,1);
+    
+    quad.bl.texCoords = Tex2F(0,0);
+    quad.br.texCoords = Tex2F(1,0);
+    quad.tl.texCoords = Tex2F(0,1);
+    quad.tr.texCoords = Tex2F(1,1);
+    
+    auto shader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_CAMERA_CLEAR);
+    auto programState = GLProgramState::create(shader);
+    programState->setUniformFloat("depth", 1.0);
+    _clearCommand.init(0, 0, programState, BlendFunc::DISABLE, &quad, 1, Mat4(), 0);
+    renderer->addCommand(&_clearCommand);
+    
+    
+    _endClearCommand.init(0,Mat4(),0);
+    _endClearCommand.func = CC_CALLBACK_0(Camera::onEndClear, this);
+    renderer->addCommand(&_endClearCommand);
 }
 
 NS_CC_END

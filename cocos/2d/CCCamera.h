@@ -26,6 +26,8 @@ THE SOFTWARE.
 
 #include "2d/CCNode.h"
 #include "3d/CCFrustum.h"
+#include "renderer/CCQuadCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -183,7 +185,9 @@ public:
      * Get the default camera of the current running scene.
      */
     static Camera* getDefaultCamera();
-
+    
+    void clearBackground(float depth);
+    
 CC_CONSTRUCTOR_ACCESS:
     Camera();
     ~Camera();
@@ -200,7 +204,7 @@ CC_CONSTRUCTOR_ACCESS:
     bool initDefault();
     bool initPerspective(float fieldOfView, float aspectRatio, float nearPlane, float farPlane);
     bool initOrthographic(float zoomX, float zoomY, float nearPlane, float farPlane);
-
+    
 protected:
 
     Scene* _scene; //Scene camera belongs to
@@ -223,6 +227,15 @@ protected:
     static Camera* _visitingCamera;
     
     friend class Director;
+protected:
+    //callback for clear background
+    void onBeforeClear();
+    void onEndClear();
+    GLboolean _oldDepthTest;
+    GLint _oldDepthFunc;
+    CustomCommand _beforeClearCommand;
+    QuadCommand _clearCommand;
+    CustomCommand _endClearCommand;
 };
 
 NS_CC_END
