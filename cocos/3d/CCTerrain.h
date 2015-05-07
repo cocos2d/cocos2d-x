@@ -388,12 +388,12 @@ public:
     /**
      * get the terrain's size
      */
-    void getTerrainSize(Size& size) const { size.setSize(_imageWidth, _imageHeight); }
+    Size getTerrainSize() const { return Size(_imageWidth, _imageHeight); }
     
     /**
      * get the terrain's height data
      */
-    void getHeightData(std::vector<float>& data) const;
+    std::vector<float> getHeightData() const;
     
 protected:
     

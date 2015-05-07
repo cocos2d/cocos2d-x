@@ -605,9 +605,9 @@ Terrain::QuadTree * Terrain::getQuadTree()
 }
 
 
-void Terrain::getHeightData(std::vector<float>& data) const
+std::vector<float> Terrain::getHeightData() const
 {
-    data.clear();
+    std::vector<float> data;
     data.resize(_imageWidth * _imageHeight);
     for (int i = 0; i < _imageHeight; i++) {
         for (int j = 0; j < _imageWidth; j++) {
@@ -615,6 +615,7 @@ void Terrain::getHeightData(std::vector<float>& data) const
             data[idx] = (_vertices[idx]._position.y);
         }
     }
+    return data;
 }
 
 void Terrain::setAlphaMap(cocos2d::Texture2D * newAlphaMapTexture)

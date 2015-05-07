@@ -568,10 +568,8 @@ bool Physics3DTerrainDemo::init()
     //create terrain
     Physics3DRigidBodyDes rbDes;
     rbDes.mass = 0.0f;
-    std::vector<float> heidata;
-    terrain->getHeightData(heidata);
-    Size size;
-    terrain->getTerrainSize(size);
+    std::vector<float> heidata = terrain->getHeightData();
+    auto size = terrain->getTerrainSize();
     rbDes.shape = Physics3DShape::createHeightfield(size.width, size.height, &heidata[0], 1.0f, terrain->getMinHeight(), terrain->getMaxHeight(), true, false, true);
     auto rigidBody = Physics3DRigidBody::create(&rbDes);
     auto component = Physics3DComponent::create(rigidBody);
