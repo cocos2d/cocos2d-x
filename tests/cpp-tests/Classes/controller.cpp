@@ -60,7 +60,7 @@ public:
         addTest("Node: Particles", [](){return new ParticleTests(); });
         addTest("Node: Particle3D (PU)", [](){return new Particle3DTests(); });
         addTest("Node: Physics", []() { return new PhysicsTests(); });
-#if (CC_ENABLE_BULLET_INTEGRATION)
+#if (CC_ENABLE_BULLET_INTEGRATION && CC_USE_3D_PHYSICS)
         addTest( "Node: Physics3D", []() { return new Physics3DTests(); } );
 #endif
         addTest("Node: RenderTexture", [](){return new RenderTextureTests(); });
