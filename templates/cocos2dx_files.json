@@ -6294,6 +6294,7 @@
         "cocos/scripting/lua-bindings/auto/api/ActionCamera.lua", 
         "cocos/scripting/lua-bindings/auto/api/ActionEase.lua", 
         "cocos/scripting/lua-bindings/auto/api/ActionFadeFrame.lua", 
+        "cocos/scripting/lua-bindings/auto/api/ActionFloat.lua", 
         "cocos/scripting/lua-bindings/auto/api/ActionFrame.lua", 
         "cocos/scripting/lua-bindings/auto/api/ActionInstant.lua", 
         "cocos/scripting/lua-bindings/auto/api/ActionInterval.lua", 
