@@ -152,6 +152,10 @@ if(USE_BOX2D)
   cocos_use_pkg(cocos2d Box2D)
 endif()
 
+if(USE_BULLET)
+  cocos_use_pkg(cocos2d BULLET)
+endif()
+
 set_target_properties(cocos2d
     PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
