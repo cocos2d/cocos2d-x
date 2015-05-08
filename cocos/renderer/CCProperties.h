@@ -40,6 +40,8 @@ class Vec2;
 class Vec3;
 class Vec4;
 class Mat4;
+class Data;
+class Data;
 
 
 /**
@@ -184,7 +186,7 @@ public:
      * @return The created Properties or NULL if there was an error.
      * @script{create}
      */
-    static Properties* create(const char* url);
+    static Properties* create(const std::string& url);
 
     /**
      * Destructor.
@@ -546,7 +548,7 @@ private:
     {
         std::string name;
         std::string value;
-        Property(const char* name, const char* value) : name(name), value(value) { }
+        Property(const char* aname, const char* avalue) : name(aname), value(avalue) { }
     };
 
     /**
@@ -559,19 +561,22 @@ private:
      *
      * @param stream The stream used for reading the properties from file.
      */
-//    Properties(Stream* stream);
+    Properties(Data* data);
     Properties(const Properties& copy);
 
     /**
      * Constructor. Read from the beginning of namespace specified.
      */
-//    Properties(Stream* stream, const char* name, const char* id, const char* parentID, Properties* parent);
-//
-//    void readProperties(Stream* stream);
-//
-//    void skipWhiteSpace(Stream* stream);
+    Properties(Data* data, const char* name, const char* id, const char* parentID, Properties* parent);
 
+    // Data manipulation methods
+    void readProperties();
+    void skipWhiteSpace();
     char* trimWhiteSpace(char* str);
+    signed char readChar();
+    char* readLine(char* output, int num);
+    bool seekFromCurrent(int offset);
+    bool eof();
 
     // Called after create(); copies info from parents into derived namespaces.
     void resolveInheritance(const char* id = NULL);
@@ -584,6 +589,14 @@ private:
 
     void setDirectoryPath(const std::string* path);
     void setDirectoryPath(const std::string& path);
+
+    /**
+     * Reads the next character from the Data. Returns EOF if the end of the Data is reached.
+     */
+
+    // XXX: hack in order to simulate GamePlay's Stream with Cocos2d's Data
+    ssize_t _dataPointer;
+    Data *_data;
 
     std::string _namespace;
     std::string _id;

@@ -28,26 +28,13 @@
 #include "math/Vec4.h"
 #include "math/Mat4.h"
 #include "base/ccUTF8.h"
+#include "base/CCData.h"
 #include "deprecated/CCString.h"
 
 
 
 USING_NS_CC;
 
-/**
- * Reads the next character from the stream. Returns EOF if the end of the stream is reached.
- */
-#if 0
-static signed char readChar(Stream* stream)
-{
-    if (stream->eof())
-        return EOF;
-    signed char c;
-    if (stream->read(&c, 1, 1) != 1)
-        return EOF;
-    return c;
-}
-#endif
 
 // Utility functions (shared with SceneLoader).
 /** @script{ignore} */
@@ -56,12 +43,14 @@ void calculateNamespacePath(const std::string& urlString, std::string& fileStrin
 Properties* getPropertiesFromNamespacePath(Properties* properties, const std::vector<std::string>& namespacePath);
 
 Properties::Properties()
-    : _variables(NULL), _dirPath(NULL), _parent(NULL)
+: _variables(nullptr), _dirPath(nullptr), _parent(nullptr), _dataPointer(0), _data(nullptr)
 {
 }
 
 Properties::Properties(const Properties& copy)
-    : _namespace(copy._namespace), _id(copy._id), _parentID(copy._parentID), _properties(copy._properties), _variables(NULL), _dirPath(NULL), _parent(copy._parent)
+    : _namespace(copy._namespace), _id(copy._id), _parentID(copy._parentID), _properties(copy._properties),
+      _variables(nullptr), _dirPath(nullptr), _parent(copy._parent),
+      _dataPointer(copy._dataPointer), _data(copy._data)
 {
     setDirectoryPath(copy._dirPath);
     _namespaces = std::vector<Properties*>();
@@ -69,23 +58,20 @@ Properties::Properties(const Properties& copy)
     for (it = copy._namespaces.begin(); it < copy._namespaces.end(); ++it)
     {
         GP_ASSERT(*it);
-        _namespaces.push_back(new Properties(**it));
+        _namespaces.push_back(new (std::nothrow) Properties(**it));
     }
     rewind();
 }
 
-#if 0
-Properties::Properties(Stream* stream)
-    : _variables(NULL), _dirPath(NULL), _parent(NULL)
+Properties::Properties(Data* data)
+    : _variables(NULL), _dirPath(NULL), _parent(NULL), _dataPointer(0), _data(data)
 {
-    readProperties(stream);
+    readProperties();
     rewind();
 }
-#endif
 
-#if 0
-Properties::Properties(Stream* stream, const char* name, const char* id, const char* parentID, Properties* parent)
-    : _namespace(name), _variables(NULL), _dirPath(NULL), _parent(parent)
+Properties::Properties(Data* data, const char* name, const char* id, const char* parentID, Properties* parent)
+    : _namespace(name), _variables(NULL), _dirPath(NULL), _parent(parent), _dataPointer(0), _data(data)
 {
     if (id)
     {
@@ -95,14 +81,13 @@ Properties::Properties(Stream* stream, const char* name, const char* id, const c
     {
         _parentID = parentID;
     }
-    readProperties(stream);
+    readProperties();
     rewind();
 }
-#endif
 
-Properties* Properties::create(const char* url)
+Properties* Properties::create(const std::string& url)
 {
-    if (!url || strlen(url) == 0)
+    if (url.size() == 0)
     {
         CCLOGERROR("Attempting to create a Properties object from an empty URL!");
         return NULL;
@@ -114,23 +99,16 @@ Properties* Properties::create(const char* url)
     std::vector<std::string> namespacePath;
     calculateNamespacePath(urlString, fileString, namespacePath);
 
-#if 0
-    std::unique_ptr<Stream> stream(FileSystem::open(fileString.c_str()));
-    if (stream.get() == NULL)
-    {
-        CCLOGWARN("Failed to open file '%s'.", fileString.c_str());
-        return NULL;
-    }
-
-    Properties* properties = new Properties(stream.get());
+    // XXX Who owns data?
+    auto data = FileUtils::getInstance()->getDataFromFile(url);
+    Properties* properties = new (std::nothrow) Properties(&data);
     properties->resolveInheritance();
-    stream->close();
 
     // Get the specified properties object.
     Properties* p = getPropertiesFromNamespacePath(properties, namespacePath);
     if (!p)
     {
-        CCLOGWARN("Failed to load properties from url '%s'.", url);
+        CCLOGWARN("Failed to load properties from url '%s'.", url.c_str());
         CC_SAFE_DELETE(properties);
         return NULL;
     }
@@ -143,9 +121,10 @@ Properties* Properties::create(const char* url)
         p = p->clone();
         CC_SAFE_DELETE(properties);
     }
-    p->setDirectoryPath(FileSystem::getDirectoryName(fileString.c_str()));
+    // XXX
+//    p->setDirectoryPath(FileSystem::getDirectoryName(fileString));
+    p->setDirectoryPath("");
     return p;
-#endif
 }
 
 static bool isVariable(const char* str, char* outName, size_t outSize)
@@ -164,10 +143,9 @@ static bool isVariable(const char* str, char* outName, size_t outSize)
     return false;
 }
 
-#if 0
-void Properties::readProperties(Stream* stream)
+void Properties::readProperties()
 {
-    GP_ASSERT(stream);
+    CCASSERT(_data->getSize() >0, "Invalid data");
 
     char line[2048];
     char variable[256];
@@ -183,14 +161,14 @@ void Properties::readProperties(Stream* stream)
     while (true)
     {
         // Skip whitespace at the start of lines
-        skipWhiteSpace(stream);
+        skipWhiteSpace();
 
         // Stop when we have reached the end of the file.
-        if (stream->eof())
+        if (eof())
             break;
 
         // Read the next line.
-        rc = stream->readLine(line, 2048);
+        rc = readLine(line, 2048);
         if (rc == NULL)
         {
             CCLOGERROR("Error reading line from file.");
@@ -305,20 +283,20 @@ void Properties::readProperties(Stream* stream)
                     // If the namespace ends on this line, seek back to right before the '}' character.
                     if (rccc && rccc == lineEnd)
                     {
-                        if (stream->seek(-1, SEEK_CUR) == false)
+                        if (seekFromCurrent(-1) == false)
                         {
                             CCLOGERROR("Failed to seek back to before a '}' character in properties file.");
                             return;
                         }
-                        while (readChar(stream) != '}')
+                        while (readChar() != '}')
                         {
-                            if (stream->seek(-2, SEEK_CUR) == false)
+                            if (seekFromCurrent(-2) == false)
                             {
                                 CCLOGERROR("Failed to seek back to before a '}' character in properties file.");
                                 return;
                             }
                         }
-                        if (stream->seek(-1, SEEK_CUR) == false)
+                        if (seekFromCurrent(-1) == false)
                         {
                             CCLOGERROR("Failed to seek back to before a '}' character in properties file.");
                             return;
@@ -326,13 +304,13 @@ void Properties::readProperties(Stream* stream)
                     }
 
                     // New namespace without an ID.
-                    Properties* space = new Properties(stream, name, NULL, parentID, this);
+                    Properties* space = new (std::nothrow) Properties(_data, name, NULL, parentID, this);
                     _namespaces.push_back(space);
 
                     // If the namespace ends on this line, seek to right after the '}' character.
                     if (rccc && rccc == lineEnd)
                     {
-                        if (stream->seek(1, SEEK_CUR) == false)
+                        if (seekFromCurrent(1) == false)
                         {
                             CCLOGERROR("Failed to seek to immediately after a '}' character in properties file.");
                             return;
@@ -347,20 +325,20 @@ void Properties::readProperties(Stream* stream)
                         // If the namespace ends on this line, seek back to right before the '}' character.
                         if (rccc && rccc == lineEnd)
                         {
-                            if (stream->seek(-1, SEEK_CUR) == false)
+                            if (seekFromCurrent(-1) == false)
                             {
                                 CCLOGERROR("Failed to seek back to before a '}' character in properties file.");
                                 return;
                             }
-                            while (readChar(stream) != '}')
+                            while (readChar() != '}')
                             {
-                                if (stream->seek(-2, SEEK_CUR) == false)
+                                if (seekFromCurrent(-2) == false)
                                 {
                                     CCLOGERROR("Failed to seek back to before a '}' character in properties file.");
                                     return;
                                 }
                             }
-                            if (stream->seek(-1, SEEK_CUR) == false)
+                            if (seekFromCurrent(-1) == false)
                             {
                                 CCLOGERROR("Failed to seek back to before a '}' character in properties file.");
                                 return;
@@ -368,13 +346,13 @@ void Properties::readProperties(Stream* stream)
                         }
 
                         // Create new namespace.
-                        Properties* space = new Properties(stream, name, value, parentID, this);
+                        Properties* space = new (std::nothrow) Properties(_data, name, value, parentID, this);
                         _namespaces.push_back(space);
 
                         // If the namespace ends on this line, seek to right after the '}' character.
                         if (rccc && rccc == lineEnd)
                         {
-                            if (stream->seek(1, SEEK_CUR) == false)
+                            if (seekFromCurrent(1) == false)
                             {
                                 CCLOGERROR("Failed to seek to immediately after a '}' character in properties file.");
                                 return;
@@ -384,18 +362,18 @@ void Properties::readProperties(Stream* stream)
                     else
                     {
                         // Find out if the next line starts with "{"
-                        skipWhiteSpace(stream);
-                        c = readChar(stream);
+                        skipWhiteSpace();
+                        c = readChar();
                         if (c == '{')
                         {
                             // Create new namespace.
-                            Properties* space = new Properties(stream, name, value, parentID, this);
+                            Properties* space = new (std::nothrow) Properties(_data, name, value, parentID, this);
                             _namespaces.push_back(space);
                         }
                         else
                         {
                             // Back up from fgetc()
-                            if (stream->seek(-1, SEEK_CUR) == false)
+                            if (seekFromCurrent(-1) == false)
                                 CCLOGERROR("Failed to seek backwards a single character after testing if the next line starts with '{'.");
 
                             // Store "name value" as a name/value pair, or even just "name".
@@ -414,7 +392,6 @@ void Properties::readProperties(Stream* stream)
         }
     }
 }
-#endif
 
 Properties::~Properties()
 {
@@ -427,26 +404,51 @@ Properties::~Properties()
     CC_SAFE_DELETE(_variables);
 }
 
-#if 0
-void Properties::skipWhiteSpace(Stream* stream)
+//
+// Stream simulation
+//
+signed char Properties::readChar()
+{
+    if (eof())
+        return EOF;
+    return _data->getBytes()[_dataPointer++];
+}
+
+char* Properties::readLine(char* output, int num)
+{
+    return nullptr;
+}
+
+bool Properties::seekFromCurrent(int offset)
+{
+    _dataPointer += offset;
+
+    return (!eof() && _dataPointer >= 0);
+}
+
+bool Properties::eof()
+{
+    return (_dataPointer >= _data->getSize());
+}
+
+void Properties::skipWhiteSpace()
 {
     signed char c;
     do
     {
-        c = readChar(stream);
+        c = readChar();
     } while (isspace(c) && c != EOF);
 
     // If we are not at the end of the file, then since we found a
     // non-whitespace character, we put the cursor back in front of it.
     if (c != EOF)
     {
-        if (stream->seek(-1, SEEK_CUR) == false)
+        if (seekFromCurrent(-1) == false)
         {
             CCLOGERROR("Failed to seek backwards one character after skipping whitespace.");
         }
     }
 }
-#endif
 
 char* Properties::trimWhiteSpace(char *str)
 {
@@ -505,7 +507,7 @@ void Properties::resolveInheritance(const char* id)
                 resolveInheritance(parent->getId());
 
                 // Copy the child.
-                Properties* overrides = new Properties(*derived);
+                Properties* overrides = new (std::nothrow) Properties(*derived);
 
                 // Delete the child's data.
                 for (size_t i = 0, count = derived->_namespaces.size(); i < count; i++)
@@ -520,7 +522,7 @@ void Properties::resolveInheritance(const char* id)
                 for (itt = parent->_namespaces.begin(); itt < parent->_namespaces.end(); ++itt)
                 {
                     GP_ASSERT(*itt);
-                    derived->_namespaces.push_back(new Properties(**itt));
+                    derived->_namespaces.push_back(new (std::nothrow) Properties(**itt));
                 }
                 derived->rewind();
 
@@ -584,7 +586,7 @@ void Properties::mergeWith(Properties* overrides)
         if (!merged)
         {
             // Add this new namespace.
-            Properties* newNamespace = new Properties(*overridesNamespace);
+            Properties* newNamespace = new (std::nothrow) Properties(*overridesNamespace);
 
             this->_namespaces.push_back(newNamespace);
             this->_namespacesItr = this->_namespaces.end();
@@ -1038,14 +1040,14 @@ void Properties::setVariable(const char* name, const char* value)
     {
         // Add a new variable with this name
         if (!_variables)
-            _variables = new std::vector<Property>();
+            _variables = new (std::nothrow) std::vector<Property>();
         _variables->push_back(Property(name, value ? value : ""));
     }
 }
 
 Properties* Properties::clone()
 {
-    Properties* p = new Properties();
+    Properties* p = new (std::nothrow) Properties();
     
     p->_namespace = _namespace;
     p->_id = _id;
@@ -1082,7 +1084,7 @@ void Properties::setDirectoryPath(const std::string& path)
 {
     if (_dirPath == NULL)
     {
-        _dirPath = new std::string(path);
+        _dirPath = new (std::nothrow) std::string(path);
     }
     else
     {
@@ -1306,4 +1308,6 @@ bool Properties::parseColor(const char* str, Vec4* out)
         out->set(0.0f, 0.0f, 0.0f, 0.0f);
     return false;
 }
+
+
 
