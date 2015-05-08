@@ -23,9 +23,9 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#if (CC_ENABLE_BULLET_INTEGRATION && CC_USE_3D_PHYSICS)
-
 #include "Physics3DTest.h"
+
+#if (CC_ENABLE_BULLET_INTEGRATION && CC_USE_3D_PHYSICS)
 #include "3d/CCTerrain.h"
 #include "3d/CCBundle3D.h"
 #include "physics3d/CCPhysics3D.h"
