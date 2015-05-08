@@ -15,4 +15,7 @@
 	url = https://github.com/stammen/angleproject
 [submodule "scripting/javascript/bindings/generated"]
 	path = scripting/javascript/bindings/generated
-	url = https://github.com/lumoslabs/cocos2dx-autogen-bindings
+    url = https://github.com/lumoslabs/cocos2dx-autogen-bindings
+[submodule "samples/Cpp/TestCpp/Resources/ccs-res"]
+   path = samples/Cpp/TestCpp/Resources/ccs-res
+   url = https://github.com/dumganhar/ccs-res
