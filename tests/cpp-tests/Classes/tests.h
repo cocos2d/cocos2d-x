@@ -80,6 +80,7 @@
 #include "BillBoardTest/BillBoardTest.h"
 #include "LightTest/LightTest.h"
 #include "Particle3DTest/Particle3DTest.h"
+#include "Physics3DTest/Physics3DTest.h"
 
 #include "OpenURLTest/OpenURLTest.h"
 #include "AllocatorTest/AllocatorTest.h"
