@@ -29,13 +29,21 @@
 #include "../BaseTest.h"
 #include <string>
 
-#if (CC_ENABLE_BULLET_INTEGRATION && CC_USE_3D_PHYSICS)
-
 namespace cocos2d {
     class Physics3DConstraint;
 }
 
 DEFINE_TEST_SUITE(Physics3DTests);
+
+#if CC_USE_3D_PHYSICS == 0
+class Physics3DDemoDisabled : public TestCase
+{
+public:
+	CREATE_FUNC(Physics3DDemoDisabled);
+
+	virtual void onEnter() override;
+};
+#else
 
 class Physics3DTestDemo : public TestCase
 {
