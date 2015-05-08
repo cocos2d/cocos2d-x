@@ -1,4 +1,5 @@
 cocos2d-x-3.7  ??
+    [NEW]           3d: added physics3d support
     [NEW]           C++: added ActionFloat
     [NEW]           FileUtils: checked filename case characters on windows
     [NEW]           FileUitls: added supporting loading files that which file path include utf-8 characters
