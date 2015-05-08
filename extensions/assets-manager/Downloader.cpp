@@ -701,7 +701,6 @@ void Downloader::groupBatchDownload(const DownloadUnits &units)
     }
     
     // Clean up and close files
-    curl_multi_cleanup(multi_handle);
     for (auto it = _files.begin(); it != _files.end(); ++it)
     {
         FILE *f = (*it)->fp;
@@ -710,6 +709,7 @@ void Downloader::groupBatchDownload(const DownloadUnits &units)
         curl_multi_remove_handle(multi_handle, single);
         curl_easy_cleanup(single);
     }
+    curl_multi_cleanup(multi_handle);
     
     // Check unfinished files and notify errors, succeed files will be renamed from temporary file name to real name
     for (auto it = _progDatas.begin(); it != _progDatas.end(); ++it) {

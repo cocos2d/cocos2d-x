@@ -2505,52 +2505,6 @@ bool js_cocos2dx_3d_Mesh_hasVertexAttrib(JSContext *cx, uint32_t argc, jsval *vp
     JS_ReportError(cx, "js_cocos2dx_3d_Mesh_hasVertexAttrib : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_cocos2dx_3d_Mesh_draw(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Mesh* cobj = (cocos2d::Mesh *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Mesh_draw : Invalid Native Object");
-    if (argc == 7) {
-        cocos2d::Renderer* arg0;
-        double arg1;
-        cocos2d::Mat4 arg2;
-        unsigned int arg3;
-        unsigned int arg4;
-        cocos2d::Vec4 arg5;
-        bool arg6;
-        do {
-            if (!args.get(0).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(0).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (cocos2d::Renderer*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
-        } while (0);
-        ok &= JS::ToNumber( cx, args.get(1), &arg1) && !isnan(arg1);
-        ok &= jsval_to_matrix(cx, args.get(2), &arg2);
-        ok &= jsval_to_uint32(cx, args.get(3), &arg3);
-        ok &= jsval_to_uint32(cx, args.get(4), &arg4);
-        do {
-            if (!args.get(5).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(5).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg5 = (const cocos2d::Vec4&)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg5, cx, false, "Invalid Native Object");
-        } while (0);
-        arg6 = JS::ToBoolean(args.get(6));
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_3d_Mesh_draw : Error processing arguments");
-        cobj->draw(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_3d_Mesh_draw : wrong number of arguments: %d, was expecting %d", argc, 7);
-    return false;
-}
 bool js_cocos2dx_3d_Mesh_getBlendFunc(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -2891,7 +2845,6 @@ void js_register_cocos2dx_3d_Mesh(JSContext *cx, JS::HandleObject global) {
         JS_FN("getVertexBuffer", js_cocos2dx_3d_Mesh_getVertexBuffer, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("calculateAABB", js_cocos2dx_3d_Mesh_calculateAABB, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("hasVertexAttrib", js_cocos2dx_3d_Mesh_hasVertexAttrib, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("draw", js_cocos2dx_3d_Mesh_draw, 7, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getBlendFunc", js_cocos2dx_3d_Mesh_getBlendFunc, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getMeshIndexData", js_cocos2dx_3d_Mesh_getMeshIndexData, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setName", js_cocos2dx_3d_Mesh_setName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
