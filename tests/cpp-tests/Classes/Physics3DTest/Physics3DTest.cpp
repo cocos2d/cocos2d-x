@@ -25,7 +25,6 @@
 
 #include "Physics3DTest.h"
 
-#if (CC_ENABLE_BULLET_INTEGRATION && CC_USE_3D_PHYSICS)
 #include "3d/CCTerrain.h"
 #include "3d/CCBundle3D.h"
 #include "physics3d/CCPhysics3D.h"
@@ -52,13 +51,31 @@ static cocos2d::Scene* physicsScene = nullptr;
 
 Physics3DTests::Physics3DTests()
 {
+#if CC_USE_3D_PHYSICS == 0
+	ADD_TEST_CASE(Physics3DDemoDisabled);
+#else
     ADD_TEST_CASE(BasicPhysics3DDemo);
     ADD_TEST_CASE(Physics3DConstraintDemo);
     ADD_TEST_CASE(Physics3DKinematicDemo);
     ADD_TEST_CASE(Physics3DCollisionCallbackDemo);
     ADD_TEST_CASE(Physics3DTerrainDemo);
+#endif
 };
 
+#if CC_USE_3D_PHYSICS == 0
+void Physics3DDemoDisabled::onEnter()
+{
+	TTFConfig ttfConfig("fonts/arial.ttf", 16);
+	auto label = Label::createWithTTF(ttfConfig, "Should define CC_USE_3D_PHYSICS\n to run this test case");
+	
+	auto size = Director::getInstance()->getWinSize();
+	label->setPosition(Vec2(size.width / 2, size.height / 2));
+
+	addChild(label);
+
+	TestCase::onEnter();
+}
+#else
 std::string Physics3DTestDemo::title() const
 {
     return "Physics3D Test";

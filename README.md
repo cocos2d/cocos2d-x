@@ -135,10 +135,10 @@ Build Requirements
 
 * Mac OS X 10.7+, Xcode 5.1+
 * or Ubuntu 12.10+, CMake 2.6+
-* or Windows 7+, VS 2012+
+* or Windows 7+, VS 2013+
 * Python 2.7.5
 * NDK r10c+ is required to build Android games
-* Windows Phone/Store 8.0 VS 2012+
+* Windows Phone/Store 8.0 VS 2013+
 * Windows Phone/Store 8.1 VS 2013 Update 3+
 
 
@@ -186,7 +186,7 @@ $ bin/lua-empty-test/lua-empty-test
 
 * For Windows
 
-Open the `cocos2d-x/build/cocos2d-win32.vc2012.sln`
+Open the `cocos2d-x/build/cocos2d-win32.vc2013.sln`
 
 * For Windows 8.1 Universal Apps (Phone and Store)
 
