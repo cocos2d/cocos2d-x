@@ -1,0 +1,102 @@
+material colored
+{
+    technique
+    {
+        pass
+        {
+            // shaders
+            vertexShader = res/shaders/colored.vert
+            fragmentShader = res/shaders/colored.frag
+            defines = DIRECTIONAL_LIGHT_COUNT 1
+
+            // uniforms
+            u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+            u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX
+            u_ambientColor = SCENE_AMBIENT_COLOR
+
+            // render state
+            renderState
+            {
+                cullFace = true
+                depthTest = true
+            }
+        }
+    }
+}
+
+material cube : colored
+{
+    technique
+    {
+        pass
+        {
+            u_diffuseColor = 0.1, .6, 0.1, 1
+        }
+    }
+}
+
+material blue : colored
+{
+    technique
+    {
+        pass
+        {
+            u_diffuseColor = 0, 0, 1, 1
+        }
+    }
+}
+
+material red : colored
+{
+    technique
+    {
+        pass
+        {
+            u_diffuseColor = 1, 0, 0, 1
+        }
+    }
+}
+
+material cylinder : colored
+{
+    technique
+    {
+        pass
+        {
+            u_diffuseColor = 0.38, 0.63, 1, 1
+        }
+    }
+}
+
+material torus : colored
+{
+    technique
+    {
+        pass
+        {
+            u_diffuseColor = 1, 0.5, 0.0, 1
+        }
+    }
+}
+
+material sphere : colored
+{
+    technique
+    {
+        pass
+        {
+            u_diffuseColor = 0.7, 0.7, 0.7, 1
+        }
+    }
+}
+
+material cone : colored
+{
+    technique
+    {
+        pass
+        {
+            u_diffuseColor = 0.5, 0.25, 0.5, 1
+        }
+    }
+}

@@ -26,12 +26,14 @@
 #include "MaterialSystemTest.h"
 #include "../testResource.h"
 #include "cocos2d.h"
+#include "renderer/CCProperties.h"
 
 
 USING_NS_CC;
 
 MaterialSystemTest::MaterialSystemTest()
 {
+    ADD_TEST_CASE(Material_NewMaterialFormat);
     ADD_TEST_CASE(Material_MultipleSprite3D);
     ADD_TEST_CASE(Material_Sprite3DTest);
 
@@ -133,4 +135,50 @@ std::string Material_MultipleSprite3D::subtitle() const
 {
     return "Sprites with multiple meshes";
 }
+
+//
+//
+//
+static void printProperties(Properties* properties)
+{
+    // Print the name and ID of the current namespace.
+    const char* spacename = properties->getNamespace();
+    const char* id = properties->getId();
+    CCLOG("Namespace: %s  ID: %s\n{", spacename, id);
+
+    // Print all properties in this namespace.
+    const char* name = properties->getNextProperty();
+    const char* value = NULL;
+    while (name != NULL)
+    {
+        value = properties->getString(name);
+        CCLOG("%s = %s", name, value);
+        name = properties->getNextProperty();
+    }
+    CCLOG("}\n");
+}
+
+void Material_NewMaterialFormat::onEnter()
+{
+    MaterialSystemBaseTest::onEnter();
+
+    auto properties = Properties::create("Materials/light.material");
+
+
+    // Print the properties of every namespace within this one.
+    Properties* space = properties->getNextNamespace();
+    while (space != NULL)
+    {
+        printProperties(space);
+        space = properties->getNextNamespace();
+    }
+
+}
+
+std::string Material_NewMaterialFormat::subtitle() const
+{
+    return "Testing new material file format";
+}
+
+
 

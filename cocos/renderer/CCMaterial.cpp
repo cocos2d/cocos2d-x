@@ -34,6 +34,7 @@
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
+#include "renderer/CCProperties.h"
 
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
@@ -65,6 +66,11 @@ Material* Material::createWithFilename(const std::string& filepath)
         }
     }
 
+    return nullptr;
+}
+
+Material* Material::createWithProperties(Properties* materialProperties)
+{
     return nullptr;
 }
 
@@ -120,6 +126,11 @@ bool Material::initWithFile(const std::string& validfilename)
 
     parseProperties(document);
     return true;
+}
+
+bool Material::initWithProperties(Properties* materialProperties)
+{
+    return false;
 }
 
 void Material::setTarget(cocos2d::Node *target)

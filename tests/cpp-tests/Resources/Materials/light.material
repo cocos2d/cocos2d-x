@@ -1,0 +1,506 @@
+material lighting
+{
+	u_textureRepeat = 1.5, 1.5
+	
+	technique unlit
+    {
+        pass 0
+        {
+            // shaders
+            vertexShader = res/shaders/textured.vert
+            fragmentShader = res/shaders/textured.frag
+			defines = TEXTURE_REPEAT
+            
+            // uniforms
+			u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+ 
+            // samplers
+            sampler u_diffuseTexture
+            {
+                path = res/png/brick.png
+                mipmap = true
+                wrapS = REPEAT
+                wrapT = REPEAT
+                minFilter = NEAREST_MIPMAP_LINEAR
+                magFilter = LINEAR
+            }
+
+            // render state
+            renderState
+            {
+                cullFace = true
+                depthTest = true
+            }
+        }
+    }
+	
+	technique directional
+    {
+        pass 0
+        {
+            // shaders
+            vertexShader = res/shaders/textured.vert
+            fragmentShader = res/shaders/textured.frag
+			defines = TEXTURE_REPEAT;DIRECTIONAL_LIGHT_COUNT 1
+            
+            // uniforms
+			u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+			u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX
+            
+            // samplers
+            sampler u_diffuseTexture
+            {
+                path = res/png/brick.png
+                mipmap = true
+                wrapS = REPEAT
+                wrapT = REPEAT
+                minFilter = NEAREST_MIPMAP_LINEAR
+                magFilter = LINEAR
+            }
+
+            // render state
+            renderState
+            {
+                cullFace = true
+                depthTest = true
+            }
+        }
+    }
+
+	technique directionalSpecular
+    {
+        pass 0
+        {
+            // shaders
+            vertexShader = res/shaders/textured.vert
+            fragmentShader = res/shaders/textured.frag
+			defines = TEXTURE_REPEAT;SPECULAR;DIRECTIONAL_LIGHT_COUNT 1
+            
+            // uniforms
+			u_worldViewMatrix = WORLD_VIEW_MATRIX
+ 			u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+			u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX
+
+            // samplers
+            sampler u_diffuseTexture
+            {
+                path = res/png/brick.png
+                mipmap = true
+                wrapS = REPEAT
+                wrapT = REPEAT
+                minFilter = NEAREST_MIPMAP_LINEAR
+                magFilter = LINEAR
+            }
+
+            // render state
+            renderState
+            {
+                cullFace = true
+                depthTest = true
+            }
+        }
+    }
+
+	technique directionalBumped
+    {
+        pass 0
+        {
+            // shaders
+            vertexShader = res/shaders/textured.vert
+            fragmentShader = res/shaders/textured.frag
+			defines = TEXTURE_REPEAT;BUMPED;DIRECTIONAL_LIGHT_COUNT 1
+            
+            // uniforms
+			u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+			u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX
+
+            // samplers
+            sampler u_diffuseTexture
+            {
+                path = res/png/brick.png
+                mipmap = true
+                wrapS = REPEAT
+                wrapT = REPEAT
+                minFilter = NEAREST_MIPMAP_LINEAR
+                magFilter = LINEAR
+            }
+			
+			sampler u_normalmapTexture
+            {
+                path = res/png/brickn.png
+                mipmap = true
+                wrapS = REPEAT
+                wrapT = REPEAT
+                minFilter = NEAREST_MIPMAP_LINEAR
+                magFilter = LINEAR
+            }
+
+            // render state
+            renderState
+            {
+                cullFace = true
+                depthTest = true
+            }
+        }
+    }
+
+	technique directionalSpecularBumped
+    {
+        pass 0
+        {
+            // shaders
+            vertexShader = res/shaders/textured.vert
+            fragmentShader = res/shaders/textured.frag
+			defines = TEXTURE_REPEAT;SPECULAR;BUMPED;DIRECTIONAL_LIGHT_COUNT 1
+            
+            // uniforms
+			u_cameraPosition = CAMERA_VIEW_POSITION 
+			u_worldViewMatrix = WORLD_VIEW_MATRIX
+			u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+			u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX
+
+            // samplers
+            sampler u_diffuseTexture
+            {
+                path = res/png/brick.png
+                mipmap = true
+                wrapS = REPEAT
+                wrapT = REPEAT
+                minFilter = NEAREST_MIPMAP_LINEAR
+                magFilter = LINEAR
+            }
+			
+			sampler u_normalmapTexture
+            {
+                path = res/png/brickn.png
+                mipmap = true
+                wrapS = REPEAT
+                wrapT = REPEAT
+                minFilter = NEAREST_MIPMAP_LINEAR
+                magFilter = LINEAR
+            }
+
+            // render state
+            renderState
+            {
+                cullFace = true
+                depthTest = true
+            }
+        }
+    }
+
+	technique spot
+    {
+        pass 0
+        {
+            // shaders
+            vertexShader = res/shaders/textured.vert
+            fragmentShader = res/shaders/textured.frag
+			defines = TEXTURE_REPEAT;SPOT_LIGHT_COUNT 1
+            
+            // uniforms
+			u_worldViewMatrix = WORLD_VIEW_MATRIX
+			u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+			u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX
+ 
+            // samplers
+            sampler u_diffuseTexture
+            {
+                path = res/png/brick.png
+                mipmap = true
+                wrapS = REPEAT
+                wrapT = REPEAT
+                minFilter = NEAREST_MIPMAP_LINEAR
+                magFilter = LINEAR
+            }
+			
+            // render state
+            renderState
+            {
+                cullFace = true
+                depthTest = true
+            }
+        }
+    }
+
+    technique spotSpecular
+    {
+        pass 0
+        {
+            // shaders
+            vertexShader = res/shaders/textured.vert
+            fragmentShader = res/shaders/textured.frag
+			defines = TEXTURE_REPEAT;SPECULAR;SPOT_LIGHT_COUNT 1
+            
+            // uniforms
+			u_worldViewMatrix = WORLD_VIEW_MATRIX
+			u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+			u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX
+ 
+            // samplers
+            sampler u_diffuseTexture
+            {
+                path = res/png/brick.png
+                mipmap = true
+                wrapS = REPEAT
+                wrapT = REPEAT
+                minFilter = NEAREST_MIPMAP_LINEAR
+                magFilter = LINEAR
+            }
+
+            // render state
+            renderState
+            {
+                cullFace = true
+                depthTest = true
+            }
+        }
+    }
+
+	technique spotBumped
+    {
+        pass 0
+        {
+            // shaders
+            vertexShader = res/shaders/textured.vert
+            fragmentShader = res/shaders/textured.frag
+			defines = TEXTURE_REPEAT;BUMPED;SPOT_LIGHT_COUNT 1
+            
+            // uniforms
+			u_worldViewMatrix = WORLD_VIEW_MATRIX
+			u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+			u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX
+
+            // samplers
+            sampler u_diffuseTexture
+            {
+                path = res/png/brick.png
+                mipmap = true
+                wrapS = REPEAT
+                wrapT = REPEAT
+                minFilter = NEAREST_MIPMAP_LINEAR
+                magFilter = LINEAR
+            }
+			
+			sampler u_normalmapTexture
+            {
+                path = res/png/brickn.png
+                mipmap = true
+                wrapS = REPEAT
+                wrapT = REPEAT
+                minFilter = NEAREST_MIPMAP_LINEAR
+                magFilter = LINEAR
+            }
+
+            // render state
+            renderState
+            {
+                cullFace = true
+                depthTest = true
+            }
+        }
+    }
+
+	technique spotSpecularBumped
+    {
+	    pass 0
+        {
+            // shaders
+            vertexShader = res/shaders/textured.vert
+            fragmentShader = res/shaders/textured.frag
+			defines = TEXTURE_REPEAT;SPECULAR;BUMPED;SPOT_LIGHT_COUNT 1
+            
+            // uniforms
+			u_cameraPosition = CAMERA_VIEW_POSITION 
+			u_worldViewMatrix = WORLD_VIEW_MATRIX
+			u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+            u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX
+
+            // samplers
+            sampler u_diffuseTexture
+            {
+                path = res/png/brick.png
+                mipmap = true
+                wrapS = REPEAT
+                wrapT = REPEAT
+                minFilter = NEAREST_MIPMAP_LINEAR
+                magFilter = LINEAR
+            }
+			
+			sampler u_normalmapTexture
+            {
+                path = res/png/brickn.png
+                mipmap = true
+                wrapS = REPEAT
+                wrapT = REPEAT
+                minFilter = NEAREST_MIPMAP_LINEAR
+                magFilter = LINEAR
+            }
+
+            // render state
+            renderState
+            {
+                cullFace = true
+                depthTest = true
+            }
+        }
+    }
+
+	technique point
+    {
+        pass 0
+        {
+            // shaders
+            vertexShader = res/shaders/textured.vert
+            fragmentShader = res/shaders/textured.frag
+			defines = TEXTURE_REPEAT;POINT_LIGHT_COUNT 1
+            
+            // uniforms
+			u_worldViewMatrix = WORLD_VIEW_MATRIX
+			u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+			u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX
+ 
+            // samplers
+            sampler u_diffuseTexture
+            {
+                path = res/png/brick.png
+                mipmap = true
+                wrapS = REPEAT
+                wrapT = REPEAT
+                minFilter = NEAREST_MIPMAP_LINEAR
+                magFilter = LINEAR
+            }
+
+            // render state
+            renderState
+            {
+                cullFace = true
+                depthTest = true
+            }
+        }
+    }
+
+    technique pointSpecular
+    {
+        pass 0
+        {
+            // shaders
+            vertexShader = res/shaders/textured.vert
+            fragmentShader = res/shaders/textured.frag
+			defines = TEXTURE_REPEAT;SPECULAR;POINT_LIGHT_COUNT 1
+            
+            // uniforms
+			u_cameraPosition = CAMERA_VIEW_POSITION 
+			u_worldViewMatrix = WORLD_VIEW_MATRIX
+			u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+			u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX
+ 
+            // samplers
+            sampler u_diffuseTexture
+            {
+                path = res/png/brick.png
+                mipmap = true
+                wrapS = REPEAT
+                wrapT = REPEAT
+                minFilter = NEAREST_MIPMAP_LINEAR
+                magFilter = LINEAR
+            }
+
+            // render state
+            renderState
+            {
+                cullFace = true
+                depthTest = true
+            }
+        }
+    }
+
+	technique pointBumped
+    {
+        pass 0
+        {
+            // shaders
+            vertexShader = res/shaders/textured.vert
+            fragmentShader = res/shaders/textured.frag
+			defines = TEXTURE_REPEAT;BUMPED;POINT_LIGHT_COUNT 1
+            
+            // uniforms
+			u_worldViewMatrix = WORLD_VIEW_MATRIX
+			u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+			u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX
+
+            // samplers
+            sampler u_diffuseTexture
+            {
+                path = res/png/brick.png
+                mipmap = true
+                wrapS = REPEAT
+                wrapT = REPEAT
+                minFilter = NEAREST_MIPMAP_LINEAR
+                magFilter = LINEAR
+            }
+			
+			sampler u_normalmapTexture
+            {
+                path = res/png/brickn.png
+                mipmap = true
+                wrapS = REPEAT
+                wrapT = REPEAT
+                minFilter = NEAREST_MIPMAP_LINEAR
+                magFilter = LINEAR
+            }
+
+            // render state
+            renderState
+            {
+                cullFace = true
+                depthTest = true
+            }
+        }
+    }
+
+	technique pointSpecularBumped
+    {
+        pass 0
+        {
+            // shaders
+            vertexShader = res/shaders/textured.vert
+            fragmentShader = res/shaders/textured.frag
+			defines = TEXTURE_REPEAT;SPECULAR;BUMPED;POINT_LIGHT_COUNT 1
+            
+            // uniforms
+			u_cameraPosition = CAMERA_VIEW_POSITION 
+			u_worldViewMatrix = WORLD_VIEW_MATRIX
+			u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+			u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX
+
+            // samplers
+            sampler u_diffuseTexture
+            {
+                path = res/png/brick.png
+                mipmap = true
+                wrapS = REPEAT
+                wrapT = REPEAT
+                minFilter = NEAREST_MIPMAP_LINEAR
+                magFilter = LINEAR
+            }
+			
+			sampler u_normalmapTexture
+            {
+                path = res/png/brickn.png
+                mipmap = true
+                wrapS = REPEAT
+                wrapT = REPEAT
+                minFilter = NEAREST_MIPMAP_LINEAR
+                magFilter = LINEAR
+            }
+
+            // render state
+            renderState
+            {
+                cullFace = true
+                depthTest = true
+            }
+        }
+    }
+}

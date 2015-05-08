@@ -50,6 +50,7 @@ class Technique;
 class Pass;
 class GLProgramState;
 class Node;
+class Properties;
 
 /// Material
 class CC_DLL Material : public RenderState
@@ -62,7 +63,14 @@ class CC_DLL Material : public RenderState
     friend class Mesh;
 
 public:
-    /** Creates a Material with a JSON file containing the definition of the material.
+    /**
+     * Creates a Material using the data from the Properties object defined at the specified URL,
+     * where the URL is of the format "<file-path>.<extension>#<namespace-id>/<namespace-id>/.../<namespace-id>"
+     * (and "#<namespace-id>/<namespace-id>/.../<namespace-id>" is optional).
+     *
+     * @param url The URL pointing to the Properties object defining the material.
+     *
+     * @return A new Material or NULL if there was an error.
      */
     static Material* createWithFilename(const std::string& path);
 
@@ -71,6 +79,15 @@ public:
      Added in order to support legacy code.
      */
     static Material* createWithGLStateProgram(GLProgramState* programState);
+
+    /**
+     * Creates a material from the specified properties object.
+     *
+     * @param materialProperties The properties object defining the
+     *      material (must have namespace equal to 'material').
+     * @return A new Material.
+     */
+    static Material* createWithProperties(Properties* materialProperties);
 
     /// returns the material name
     std::string getName() const;
@@ -104,6 +121,7 @@ protected:
     ~Material();
     bool initWithGLProgramState(GLProgramState* state);
     bool initWithFile(const std::string& file);
+    bool initWithProperties(Properties* materialProperties);
 
     void setTarget(Node* target);
 

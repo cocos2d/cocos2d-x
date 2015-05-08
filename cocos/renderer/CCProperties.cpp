@@ -70,8 +70,8 @@ Properties::Properties(Data* data)
     rewind();
 }
 
-Properties::Properties(Data* data, const char* name, const char* id, const char* parentID, Properties* parent)
-    : _namespace(name), _variables(NULL), _dirPath(NULL), _parent(parent), _dataPointer(0), _data(data)
+Properties::Properties(Data* data, ssize_t dataIdx, const char* name, const char* id, const char* parentID, Properties* parent)
+    : _namespace(name), _variables(NULL), _dirPath(NULL), _parent(parent), _dataPointer(dataIdx), _data(data)
 {
     if (id)
     {
@@ -304,7 +304,7 @@ void Properties::readProperties()
                     }
 
                     // New namespace without an ID.
-                    Properties* space = new (std::nothrow) Properties(_data, name, NULL, parentID, this);
+                    Properties* space = new (std::nothrow) Properties(_data, _dataPointer, name, NULL, parentID, this);
                     _namespaces.push_back(space);
 
                     // If the namespace ends on this line, seek to right after the '}' character.
@@ -346,7 +346,7 @@ void Properties::readProperties()
                         }
 
                         // Create new namespace.
-                        Properties* space = new (std::nothrow) Properties(_data, name, value, parentID, this);
+                        Properties* space = new (std::nothrow) Properties(_data, _dataPointer, name, value, parentID, this);
                         _namespaces.push_back(space);
 
                         // If the namespace ends on this line, seek to right after the '}' character.
@@ -367,7 +367,7 @@ void Properties::readProperties()
                         if (c == '{')
                         {
                             // Create new namespace.
-                            Properties* space = new (std::nothrow) Properties(_data, name, value, parentID, this);
+                            Properties* space = new (std::nothrow) Properties(_data, _dataPointer, name, value, parentID, this);
                             _namespaces.push_back(space);
                         }
                         else
@@ -416,7 +416,19 @@ signed char Properties::readChar()
 
 char* Properties::readLine(char* output, int num)
 {
-    return nullptr;
+    int idx=0;
+
+    if (eof())
+        return nullptr;
+
+    auto c = readChar();
+    while (c!=EOF && c!='\n' && idx<num)
+    {
+        output[idx++] = c;
+        c = readChar();
+
+    }
+    return output;
 }
 
 bool Properties::seekFromCurrent(int offset)

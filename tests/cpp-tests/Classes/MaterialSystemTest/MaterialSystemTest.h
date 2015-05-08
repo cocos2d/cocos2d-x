@@ -62,4 +62,13 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class Material_NewMaterialFormat : public MaterialSystemBaseTest
+{
+public:
+    CREATE_FUNC(Material_NewMaterialFormat);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
 
