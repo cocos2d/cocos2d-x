@@ -39,11 +39,6 @@ THE SOFTWARE.
 
 #include "deprecated/CCString.h"
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || defined(WP8_SHADER_COMPILER)
-#include "CCPrecompiledShaders.h"
-#endif
-
-
 // helper functions
 
 static void replaceDefines(const std::string& compileTimeDefines, std::string& out)
@@ -226,18 +221,6 @@ bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar*
 
 bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray, const std::string& compileTimeDefines)
 {
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-    GLboolean hasCompiler = false;
-    glGetBooleanv(GL_SHADER_COMPILER, &hasCompiler);
-    _hasShaderCompiler = (hasCompiler == GL_TRUE);
-
-    if(!_hasShaderCompiler)
-    {
-        return initWithPrecompiledProgramByteArray(vShaderByteArray,fShaderByteArray);
-    }
-#endif
-
     _program = glCreateProgram();
     CHECK_GL_ERROR_DEBUG();
 
@@ -282,47 +265,8 @@ bool GLProgram::initWithByteArrays(const GLchar* vShaderByteArray, const GLchar*
 
     CHECK_GL_ERROR_DEBUG();
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || defined(WP8_SHADER_COMPILER)
-    _shaderId = CCPrecompiledShaders::getInstance()->addShaders(vShaderByteArray, fShaderByteArray);
-#endif
-
     return true;
 }
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-GLProgram* GLProgram::createWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
-{
-    auto ret = new (std::nothrow) GLProgram();
-    if(ret && ret->initWithPrecompiledProgramByteArray(vShaderByteArray, fShaderByteArray)) {
-        ret->link();
-        ret->updateUniforms();
-        ret->autorelease();
-        return ret;
-    }
-
-    CC_SAFE_DELETE(ret);
-    return nullptr;
-}
-
-bool GLProgram::initWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray)
-{
-    bool haveProgram = false;
-
-    _program = glCreateProgram();
-    CHECK_GL_ERROR_DEBUG();
-
-    _vertShader = _fragShader = 0;
-
-    haveProgram = CCPrecompiledShaders::getInstance()->loadProgram(_program, vShaderByteArray, fShaderByteArray);
-
-    CHECK_GL_ERROR_DEBUG();
-    _hashForUniforms.clear();
-
-    CHECK_GL_ERROR_DEBUG();
-
-    return haveProgram;
-}
-#endif
 
 bool GLProgram::initWithFilenames(const std::string& vShaderFilename, const std::string& fShaderFilename)
 {
@@ -599,18 +543,6 @@ bool GLProgram::link()
 {
     CCASSERT(_program != 0, "Cannot link invalid program");
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-    if(!_hasShaderCompiler)
-    {
-        // precompiled shader program is already linked
-
-        //bindPredefinedVertexAttribs();
-        parseVertexAttribs();
-        parseUniforms();
-        return true;
-    }
-#endif
-
     GLint status = GL_TRUE;
 
     bindPredefinedVertexAttribs();
@@ -632,7 +564,7 @@ bool GLProgram::link()
 
     _vertShader = _fragShader = 0;
 
-#if DEBUG || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if DEBUG || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     glGetProgramiv(_program, GL_LINK_STATUS, &status);
 
     if (status == GL_FALSE)
@@ -640,13 +572,6 @@ bool GLProgram::link()
         CCLOG("cocos2d: ERROR: Failed to link program: %i", _program);
         GL::deleteProgram(_program);
         _program = 0;
-    }
-#endif
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || defined(WP8_SHADER_COMPILER)
-    if (status == GL_TRUE)
-    {
-        CCPrecompiledShaders::getInstance()->addProgram(_program, _shaderId);
     }
 #endif
 
