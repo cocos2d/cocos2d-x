@@ -189,13 +189,11 @@ bool js_cocos2dx_Node_setOnEnterCallback(JSContext *cx, uint32_t argc, jsval *vp
 bool js_cocos2dx_Node_setNormalizedPosition(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setonExitTransitionDidStartCallback(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_convertTouchToNodeSpace(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_getMaterial(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_removeAllChildrenWithCleanup(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getRotationSkewX(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getRotationSkewY(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getNodeToWorldTransform(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_isCascadeOpacityEnabled(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_setMaterial(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_setParent(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Node_getRotation3D(JSContext *cx, uint32_t argc, jsval *vp);
@@ -677,6 +675,17 @@ bool js_cocos2dx_TargetedAction_setForcedTarget(JSContext *cx, uint32_t argc, js
 bool js_cocos2dx_TargetedAction_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TargetedAction_TargetedAction(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_cocos2d_ActionFloat_class;
+extern JSObject *jsb_cocos2d_ActionFloat_prototype;
+
+bool js_cocos2dx_ActionFloat_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_ActionFloat_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_ActionFloat(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_ActionFloat_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ActionFloat_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ActionFloat_ActionFloat(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_cocos2d_Configuration_class;
 extern JSObject *jsb_cocos2d_Configuration_prototype;
 
@@ -889,6 +898,17 @@ bool js_cocos2dx_FileUtils_createDirectory(JSContext *cx, uint32_t argc, jsval *
 bool js_cocos2dx_FileUtils_getWritablePath(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_FileUtils_setDelegate(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_FileUtils_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_AsyncTaskPool_class;
+extern JSObject *jsb_cocos2d_AsyncTaskPool_prototype;
+
+bool js_cocos2dx_AsyncTaskPool_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_AsyncTaskPool_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_AsyncTaskPool(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_AsyncTaskPool_stopTasks(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_AsyncTaskPool_destoryInstance(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_AsyncTaskPool_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_EventListener_class;
 extern JSObject *jsb_cocos2d_EventListener_prototype;
@@ -3838,16 +3858,5 @@ bool js_cocos2dx_SimpleAudioEngine_unloadEffect(JSContext *cx, uint32_t argc, js
 bool js_cocos2dx_SimpleAudioEngine_resumeEffect(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_SimpleAudioEngine_end(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_SimpleAudioEngine_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *jsb_cocos2d_AsyncTaskPool_class;
-extern JSObject *jsb_cocos2d_AsyncTaskPool_prototype;
-
-bool js_cocos2dx_AsyncTaskPool_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_AsyncTaskPool_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_AsyncTaskPool(JSContext *cx, JS::HandleObject global);
-void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
-bool js_cocos2dx_AsyncTaskPool_stopTasks(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_AsyncTaskPool_destoryInstance(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_AsyncTaskPool_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
 #endif
 
