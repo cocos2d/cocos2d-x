@@ -59,7 +59,7 @@ public:
     Size getRenerTargetSize() const { return Size(m_width, m_height); }
 
     virtual void setIMEKeyboardState(bool bOpen);
-    virtual void setIMEKeyboardState(bool bOpen, std::string str);
+    virtual void setIMEKeyboardState(bool bOpen, const std::string& str);
 
     virtual bool Create(float width, float height, float dpi, Windows::Graphics::Display::DisplayOrientations orientation);
 

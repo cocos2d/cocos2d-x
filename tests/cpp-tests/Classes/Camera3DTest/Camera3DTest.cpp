@@ -39,10 +39,7 @@ Camera3DTests::Camera3DTests()
     ADD_TEST_CASE(CameraRotationTest);
     ADD_TEST_CASE(Camera3DTestDemo);
     ADD_TEST_CASE(CameraCullingDemo);
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
-    // 3DEffect use custom shader which is not supported on WP8 yet. 
     ADD_TEST_CASE(FogTestDemo);
-#endif
     ADD_TEST_CASE(CameraArcBallDemo);
 }
 
@@ -1317,7 +1314,7 @@ void FogTestDemo::onEnter()
     _layer3D->setCameraMask(2);
 
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
                                                             [this](EventCustom*)
                                                             {
@@ -1380,7 +1377,7 @@ void FogTestDemo::onExit()
         _camera = nullptr;
     }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 }
