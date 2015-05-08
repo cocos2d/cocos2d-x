@@ -352,6 +352,9 @@
     <Filter Include="Classes\AllocatorTest">
       <UniqueIdentifier>{eed1887a-757e-4625-b21c-bbfcfaa5200f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\Physics3DTest">
+      <UniqueIdentifier>{31d7c504-94c7-43ab-818d-996f957a3741}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Classes\TerrainTest">
       <UniqueIdentifier>{3f5069e6-78e5-4388-b614-04c0ea943b4c}</UniqueIdentifier>
     </Filter>
@@ -935,6 +938,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\PerformanceTest\PerformanceParticle3DTest.cpp">
       <Filter>Classes\PerformanceTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Physics3DTest\Physics3DTest.cpp">
+      <Filter>Classes\Physics3DTest</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\SpritePolygonTest\SpritePolygonTest.cpp">
       <Filter>Classes\SpritePolygonTest</Filter>
@@ -1714,6 +1720,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\PerformanceTest\PerformanceParticle3DTest.h">
       <Filter>Classes\PerformanceTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Physics3DTest\Physics3DTest.h">
+      <Filter>Classes\Physics3DTest</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\SpritePolygonTest\SpritePolygonTest.h">
       <Filter>Classes\SpritePolygonTest</Filter>
