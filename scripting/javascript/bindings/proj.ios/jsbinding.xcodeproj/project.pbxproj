@@ -44,6 +44,7 @@
 		D3190B4918074E7200E1069E /* jsb_websocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3190B2E18074E7200E1069E /* jsb_websocket.cpp */; };
 		D3190B4A18074E7200E1069E /* ScriptingCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3190B3018074E7200E1069E /* ScriptingCore.cpp */; };
 		D3190B4B18074E7200E1069E /* XMLHTTPRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3190B3318074E7200E1069E /* XMLHTTPRequest.cpp */; };
+		F98DA9541ACA13BF0096EF99 /* jsb_cocos2dx_studio_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F98DA9521ACA13BF0096EF99 /* jsb_cocos2dx_studio_auto.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -111,6 +112,9 @@
 		D3190B3218074E7200E1069E /* spidermonkey_specifics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = spidermonkey_specifics.h; path = ../spidermonkey_specifics.h; sourceTree = "<group>"; };
 		D3190B3318074E7200E1069E /* XMLHTTPRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = XMLHTTPRequest.cpp; path = ../XMLHTTPRequest.cpp; sourceTree = "<group>"; };
 		D3190B3418074E7200E1069E /* XMLHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMLHTTPRequest.h; path = ../XMLHTTPRequest.h; sourceTree = "<group>"; };
+		F98DA9511ACA13BF0096EF99 /* jsb_cocos2dx_studio_auto_api.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2dx_studio_auto_api.js; sourceTree = "<group>"; };
+		F98DA9521ACA13BF0096EF99 /* jsb_cocos2dx_studio_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_cocos2dx_studio_auto.cpp; sourceTree = "<group>"; };
+		F98DA9531ACA13BF0096EF99 /* jsb_cocos2dx_studio_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jsb_cocos2dx_studio_auto.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +191,9 @@
 		D3190B0518074E7100E1069E /* generated */ = {
 			isa = PBXGroup;
 			children = (
+				F98DA9511ACA13BF0096EF99 /* jsb_cocos2dx_studio_auto_api.js */,
+				F98DA9521ACA13BF0096EF99 /* jsb_cocos2dx_studio_auto.cpp */,
+				F98DA9531ACA13BF0096EF99 /* jsb_cocos2dx_studio_auto.hpp */,
 				D3190B0618074E7100E1069E /* jsb_cocos2dx_auto.cpp */,
 				D3190B0718074E7100E1069E /* jsb_cocos2dx_auto.hpp */,
 				D3190B0818074E7100E1069E /* jsb_cocos2dx_auto_api.js */,
@@ -289,6 +296,7 @@
 				D3190B3F18074E7200E1069E /* js_bindings_chipmunk_registration.cpp in Sources */,
 				D3190B3818074E7200E1069E /* jsb_cocos2dx_auto_api.js in Sources */,
 				D3190B4B18074E7200E1069E /* XMLHTTPRequest.cpp in Sources */,
+				F98DA9541ACA13BF0096EF99 /* jsb_cocos2dx_studio_auto.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

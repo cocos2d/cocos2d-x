@@ -27,6 +27,7 @@ CCBAnimationManager::CCBAnimationManager()
 , mRunningSequence(NULL)
 , jsControlled(false)
 , mOwner(NULL)
+, _speed(1.0f)
 {
     init();
 }
@@ -601,7 +602,7 @@ CCObject* CCBAnimationManager::actionForCallbackChannel(CCBSequenceProperty* cha
     for (int i = 0; i < numKeyframes; ++i) {
 
         CCBKeyframe *keyframe = (CCBKeyframe*)keyframes->objectAtIndex(i);
-        float timeSinceLastKeyframe = keyframe->getTime() - lastKeyframeTime;
+        float timeSinceLastKeyframe = (keyframe->getTime() - lastKeyframeTime)/_speed;
         lastKeyframeTime = keyframe->getTime();
         if(timeSinceLastKeyframe > 0) {
             actions->addObject(CCDelayTime::create(timeSinceLastKeyframe));
@@ -720,14 +721,26 @@ void CCBAnimationManager::runAction(CCNode *pNode, CCBSequenceProperty *pSeqProp
             {
                 // Apply easing
                 action = getEaseAction(action, kf0->getEasingType(), kf0->getEasingOpt());
-                
                 actions->addObject(action);
             }
         }
-        
+        //
+        //NOTE: River Ranger needs to be able to dynamically modify the animation speed.
+        //
         CCFiniteTimeAction *seq = CCSequence::create(actions);
-        pNode->runAction(seq);
+        CCSpeed *speedAction = CCSpeed::create((CCActionInterval*)seq, _speed);
+        pNode->runAction(speedAction);
     }
+}
+
+float CCBAnimationManager::getSpeed()
+{
+    return _speed;
+}
+
+void CCBAnimationManager::setSpeed(float speed)
+{
+    _speed = speed;
 }
 
 void CCBAnimationManager::runAnimations(const char *pName, float fTweenDuration)
@@ -800,7 +813,7 @@ void CCBAnimationManager::runAnimationsForSequenceIdTweenDuration(int nSeqId, fl
     
     // Make callback at end of sequence
     CCBSequence *seq = getSequence(nSeqId);
-    CCAction *completeAction = CCSequence::createWithTwoActions(CCDelayTime::create(seq->getDuration() + fTweenDuration),
+    CCAction *completeAction = CCSequence::createWithTwoActions(CCDelayTime::create((seq->getDuration() + fTweenDuration)/_speed),
                                                                 CCCallFunc::create(this, callfunc_selector(CCBAnimationManager::sequenceCompleted)));
     mRootNode->runAction(completeAction);
     

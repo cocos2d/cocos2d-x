@@ -44,7 +44,10 @@ gen/
 assets/
 local.properties
 
-# Ignore specific winrt files
+# Ignore Android Studio files
+*.iml
+
+# Ignore specific winrt files 
 cocos2dx/platform/third_party/winrt/freetype/src
 cocos2dx/platform/third_party/winrt/libpng/lpng142
 cocos2dx/platform/third_party/winrt/libjpeg/jpeg-8b

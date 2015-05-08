@@ -26,6 +26,7 @@ private:
     CCDictionary *mNodeSequences;
     CCDictionary *mBaseValues;
     int mAutoPlaySequenceId;
+    float _speed;
     
     CCNode *mRootNode;
     
@@ -131,6 +132,9 @@ public:
 
     CCObject* actionForCallbackChannel(CCBSequenceProperty* channel);
     CCObject* actionForSoundChannel(CCBSequenceProperty* channel);
+    
+    float getSpeed();
+    void setSpeed(float speed);
     
 private:
     CCObject* getBaseValue(CCNode *pNode, const char* pPropName);

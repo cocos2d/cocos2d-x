@@ -161,6 +161,11 @@ public:
     virtual void handleTouchesCancel(int num, int ids[], float xs[], float ys[]);
 
     /**
+     * Clear the stored touch handling state/.
+     */
+    void clearTouchesState();
+
+    /**
      * Get the opengl view port rectangle.
      */
     const CCRect& getViewPortRect() const;
@@ -192,9 +197,6 @@ protected:
     float  m_fScaleX;
     float  m_fScaleY;
     ResolutionPolicy m_eResolutionPolicy;
-
-    void clearTouchesDict();
-
 };
 
 // end of platform group
