@@ -133,6 +133,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceTextureTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceTouchesTest.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\Physics3DTest\Physics3DTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\PhysicsTest\PhysicsTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ReleasePoolTest\ReleasePoolTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\RenderTextureTest\RenderTextureTest.cpp" />
@@ -397,6 +398,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceTextureTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PerformanceTest\PerformanceTouchesTest.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\Physics3DTest\Physics3DTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\PhysicsTest\PhysicsTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ReleasePoolTest\ReleasePoolTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\RenderTextureTest\RenderTextureTest.h" />
