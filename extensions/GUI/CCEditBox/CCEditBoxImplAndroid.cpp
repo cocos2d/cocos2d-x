@@ -164,7 +164,7 @@ void CCEditBoxImplAndroid::setText(const char* pText)
 			
             if (kEditBoxInputFlagPassword == m_eEditBoxInputFlag)
             {
-                long length = cc_utf8_strlen(m_strText.c_str());
+                long length = cc_utf8_strlen(m_strText.c_str(), -1);
                 for (long i = 0; i < length; i++)
                 {
                     strToShow.append("\u25CF");

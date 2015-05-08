@@ -109,6 +109,12 @@ class CC_EX_DLL TextField : public Widget
 public:
     TextField();
     virtual ~TextField();
+    //
+    //MJDE CODE Making this public to allow Android Studio to compile. I realize this is horrible, sorry :/
+    //
+    virtual bool init();
+    virtual void initRenderer();
+
     static TextField* create();
     void setTouchSize(const CCSize &size);
     CCSize getTouchSize();
@@ -161,8 +167,6 @@ public:
     /*=*/
     
 protected:
-    virtual bool init();
-    virtual void initRenderer();
     // event
     void attachWithIMEEvent();
     void detachWithIMEEvent();
