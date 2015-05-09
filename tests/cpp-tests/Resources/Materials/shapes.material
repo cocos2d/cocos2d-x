@@ -1,0 +1,50 @@
+material textured
+{
+    u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+    u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX
+
+    u_ambientColor = SCENE_AMBIENT_COLOR
+    u_directionalLightDirection[0] = LIGHT_DIRECTION_0
+    u_directionalLightColor[0] = LIGHT_COLOR_0
+
+    sampler u_diffuseTexture
+    {
+        mipmap = true
+        wrapS = CLAMP
+        wrapT = CLAMP
+        minFilter = LINEAR_MIPMAP_LINEAR
+        magFilter = LINEAR
+    }
+
+    renderState
+    {
+        cullFace = true
+        depthTest = true
+    }
+
+    technique
+    {
+        pass
+        {
+            vertexShader = res/shaders/textured.vert
+            fragmentShader = res/shaders/textured.frag
+            defines = DIRECTIONAL_LIGHT_COUNT 1
+        }
+    }
+}
+
+material sphere : textured
+{
+    sampler u_diffuseTexture
+    {
+        path = res/png/dirt.png
+    }
+}
+
+material box : textured
+{
+    sampler u_diffuseTexture
+    {
+        path = res/png/crate.png
+    }
+}

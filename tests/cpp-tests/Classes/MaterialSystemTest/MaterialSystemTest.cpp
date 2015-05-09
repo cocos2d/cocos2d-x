@@ -155,6 +155,14 @@ static void printProperties(Properties* properties)
         CCLOG("%s = %s", name, value);
         name = properties->getNextProperty();
     }
+
+    Properties* space = properties->getNextNamespace();
+    while (space != NULL)
+    {
+        printProperties(space);
+        space = properties->getNextNamespace();
+    }
+
     CCLOG("}\n");
 }
 
@@ -162,16 +170,13 @@ void Material_NewMaterialFormat::onEnter()
 {
     MaterialSystemBaseTest::onEnter();
 
-    auto properties = Properties::create("Materials/light.material");
-
+//    auto properties = Properties::create("Materials/light.material");
+//    auto properties = Properties::create("Materials/sample.material");
+//    auto properties = Properties::create("Materials/shapes.material#box");
+    auto properties = Properties::create("Materials/test.material");
 
     // Print the properties of every namespace within this one.
-    Properties* space = properties->getNextNamespace();
-    while (space != NULL)
-    {
-        printProperties(space);
-        space = properties->getNextNamespace();
-    }
+    printProperties(properties);
 
 }
 

@@ -1,0 +1,15 @@
+material test1
+{
+        chau = carlos
+}
+
+material test2 : test1
+{
+        hola = mundo
+}
+
+material test3 : test1
+{
+        hola = cielo
+}
+

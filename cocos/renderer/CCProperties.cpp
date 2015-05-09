@@ -35,6 +35,33 @@
 
 USING_NS_CC;
 
+static void printProperties(Properties* properties)
+{
+    // Print the name and ID of the current namespace.
+    const char* spacename = properties->getNamespace();
+    const char* id = properties->getId();
+    CCLOG("Namespace: %s  ID: %s\n{", spacename, id);
+
+    // Print all properties in this namespace.
+    const char* name = properties->getNextProperty();
+    const char* value = NULL;
+    while (name != NULL)
+    {
+        value = properties->getString(name);
+        CCLOG("%s = %s", name, value);
+        name = properties->getNextProperty();
+    }
+
+    // Print the properties of every namespace within this one.
+    Properties* space = properties->getNextNamespace();
+    while (space != NULL)
+    {
+        printProperties(space);
+        space = properties->getNextNamespace();
+    }
+
+    CCLOG("}\n");
+}
 
 // Utility functions (shared with SceneLoader).
 /** @script{ignore} */
@@ -43,14 +70,14 @@ void calculateNamespacePath(const std::string& urlString, std::string& fileStrin
 Properties* getPropertiesFromNamespacePath(Properties* properties, const std::vector<std::string>& namespacePath);
 
 Properties::Properties()
-: _variables(nullptr), _dirPath(nullptr), _parent(nullptr), _dataPointer(0), _data(nullptr)
+: _variables(nullptr), _dirPath(nullptr), _parent(nullptr), _dataIdx(nullptr), _data(nullptr)
 {
 }
 
 Properties::Properties(const Properties& copy)
     : _namespace(copy._namespace), _id(copy._id), _parentID(copy._parentID), _properties(copy._properties),
       _variables(nullptr), _dirPath(nullptr), _parent(copy._parent),
-      _dataPointer(copy._dataPointer), _data(copy._data)
+      _dataIdx(copy._dataIdx), _data(copy._data)
 {
     setDirectoryPath(copy._dirPath);
     _namespaces = std::vector<Properties*>();
@@ -63,15 +90,15 @@ Properties::Properties(const Properties& copy)
     rewind();
 }
 
-Properties::Properties(Data* data)
-    : _variables(NULL), _dirPath(NULL), _parent(NULL), _dataPointer(0), _data(data)
+Properties::Properties(Data* data, ssize_t* dataIdx)
+    : _variables(NULL), _dirPath(NULL), _parent(NULL), _dataIdx(dataIdx), _data(data)
 {
     readProperties();
     rewind();
 }
 
-Properties::Properties(Data* data, ssize_t dataIdx, const char* name, const char* id, const char* parentID, Properties* parent)
-    : _namespace(name), _variables(NULL), _dirPath(NULL), _parent(parent), _dataPointer(dataIdx), _data(data)
+Properties::Properties(Data* data, ssize_t* dataIdx, const char* name, const char* id, const char* parentID, Properties* parent)
+    : _namespace(name), _variables(NULL), _dirPath(NULL), _parent(parent), _dataIdx(dataIdx), _data(data)
 {
     if (id)
     {
@@ -99,9 +126,12 @@ Properties* Properties::create(const std::string& url)
     std::vector<std::string> namespacePath;
     calculateNamespacePath(urlString, fileString, namespacePath);
 
-    // XXX Who owns data?
-    auto data = FileUtils::getInstance()->getDataFromFile(url);
-    Properties* properties = new (std::nothrow) Properties(&data);
+
+    // data will be released automatically when 'data' goes out of scope
+    // so we pass data as weak pointer
+    auto data = FileUtils::getInstance()->getDataFromFile(fileString);
+    ssize_t dataIdx = 0;
+    Properties* properties = new (std::nothrow) Properties(&data, &dataIdx);
     properties->resolveInheritance();
 
     // Get the specified properties object.
@@ -304,7 +334,7 @@ void Properties::readProperties()
                     }
 
                     // New namespace without an ID.
-                    Properties* space = new (std::nothrow) Properties(_data, _dataPointer, name, NULL, parentID, this);
+                    Properties* space = new (std::nothrow) Properties(_data, _dataIdx, name, NULL, parentID, this);
                     _namespaces.push_back(space);
 
                     // If the namespace ends on this line, seek to right after the '}' character.
@@ -346,7 +376,7 @@ void Properties::readProperties()
                         }
 
                         // Create new namespace.
-                        Properties* space = new (std::nothrow) Properties(_data, _dataPointer, name, value, parentID, this);
+                        Properties* space = new (std::nothrow) Properties(_data, _dataIdx, name, value, parentID, this);
                         _namespaces.push_back(space);
 
                         // If the namespace ends on this line, seek to right after the '}' character.
@@ -367,7 +397,7 @@ void Properties::readProperties()
                         if (c == '{')
                         {
                             // Create new namespace.
-                            Properties* space = new (std::nothrow) Properties(_data, _dataPointer, name, value, parentID, this);
+                            Properties* space = new (std::nothrow) Properties(_data, _dataIdx, name, value, parentID, this);
                             _namespaces.push_back(space);
                         }
                         else
@@ -411,7 +441,7 @@ signed char Properties::readChar()
 {
     if (eof())
         return EOF;
-    return _data->getBytes()[_dataPointer++];
+    return _data->getBytes()[(*_dataIdx)++];
 }
 
 char* Properties::readLine(char* output, int num)
@@ -422,25 +452,27 @@ char* Properties::readLine(char* output, int num)
         return nullptr;
 
     auto c = readChar();
-    while (c!=EOF && c!='\n' && idx<num)
+    while (c!=EOF && c!='\n' && idx-1<num)
     {
         output[idx++] = c;
         c = readChar();
 
     }
+    output[idx] = '\0';
+
     return output;
 }
 
 bool Properties::seekFromCurrent(int offset)
 {
-    _dataPointer += offset;
+    (*_dataIdx) += offset;
 
-    return (!eof() && _dataPointer >= 0);
+    return (!eof() && *_dataIdx >= 0);
 }
 
 bool Properties::eof()
 {
-    return (_dataPointer >= _data->getSize());
+    return (*_dataIdx >= _data->getSize());
 }
 
 void Properties::skipWhiteSpace()

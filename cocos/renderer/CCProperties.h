@@ -561,13 +561,13 @@ private:
      *
      * @param stream The stream used for reading the properties from file.
      */
-    Properties(Data* data);
+    Properties(Data* data, ssize_t* dataIdx);
     Properties(const Properties& copy);
 
     /**
      * Constructor. Read from the beginning of namespace specified.
      */
-    Properties(Data* data, ssize_t dataIdx, const char* name, const char* id, const char* parentID, Properties* parent);
+    Properties(Data* data, ssize_t* dataIdx, const char* name, const char* id, const char* parentID, Properties* parent);
 
     // Data manipulation methods
     void readProperties();
@@ -595,7 +595,7 @@ private:
      */
 
     // XXX: hack in order to simulate GamePlay's Stream with Cocos2d's Data
-    ssize_t _dataPointer;
+    ssize_t *_dataIdx;
     Data *_data;
 
     std::string _namespace;
