@@ -169,41 +169,39 @@ bool Material::parseTechnique(Properties* techniqueProperties)
     return true;
 }
 
-bool Material::parsePass(Technique* technique, Properties* properties)
+bool Material::parsePass(Technique* technique, Properties* passProperties)
 {
     auto pass = Pass::create(technique);
     technique->addPass(pass);
 
-    // Textures
-    if (passJSON.HasMember("textures")) {
-        auto& texturesJSON = passJSON["textures"];
-        CCASSERT(texturesJSON.IsArray(), "Invalid type for 'textures'");
+    // Pass can have 3 different namespaces:
+    //  - one or more "texture"
+    //  - one "renderState"
+    //  - one "shader"
 
-        for (rapidjson::SizeType i = 0; i < texturesJSON.Size(); i++) {
-            auto& textureJSON = texturesJSON[i];
-            parseTexture(pass, textureJSON);
+    auto space = passProperties->getNextNamespace();
+    while (space)
+    {
+        const char* name = space->getNamespace();
+        if (strcmp(name, "texture") == 0)
+            parseTexture(pass, space);
+        else if (strcmp(name, "shader") == 0)
+            parseShader(pass, space);
+        else if (strcmp(name, "renderState") == 0)
+            parseRenderState(pass, space);
+        else {
+            CCASSERT(false, "Invalid namespace");
+            return false;
         }
-    }
-
-    // Render State
-    if (passJSON.HasMember("renderState")) {
-        parseRenderState(pass, passJSON["renderState"]);
-    }
-
-    // Shaders
-    if (passJSON.HasMember("shader")) {
-        parseShader(pass, passJSON["shader"]);
     }
 
     return true;
 }
 
-bool Material::parseTexture(Pass* pass, Properties* properties)
+bool Material::parseTexture(Pass* pass, Properties* textureProperties)
 {
-    CCASSERT(textureJSON.IsObject(), "Invalid type for Texture. It must be an object");
-
     // required
-    auto filename = textureJSON["path"].GetString();
+    auto filename = textureProperties->getString("path");
 
     auto texture = Director::getInstance()->getTextureCache()->addImage(filename);
     if (!texture) {
@@ -218,14 +216,14 @@ bool Material::parseTexture(Pass* pass, Properties* properties)
 
         // mipmap
         bool usemipmap = false;
-        const char* mipmap = getOptionalString(textureJSON, "mipmap", "false");
+        const char* mipmap = getOptionalString(textureProperties, "mipmap", "false");
         if (mipmap && strcasecmp(mipmap, "true")==0) {
             texture->generateMipmap();
             usemipmap = true;
         }
 
         // valid options: REPEAT, CLAMP
-        const char* wrapS = getOptionalString(textureJSON, "wrapS", "CLAMP_TO_EDGE");
+        const char* wrapS = getOptionalString(textureProperties, "wrapS", "CLAMP_TO_EDGE");
         if (strcasecmp(wrapS, "REPEAT")==0)
             texParams.wrapS = GL_REPEAT;
         else if(strcasecmp(wrapS, "CLAMP_TO_EDGE")==0)
@@ -235,7 +233,7 @@ bool Material::parseTexture(Pass* pass, Properties* properties)
 
 
         // valid options: REPEAT, CLAMP
-        const char* wrapT = getOptionalString(textureJSON, "wrapT", "CLAMP_TO_EDGE");
+        const char* wrapT = getOptionalString(textureProperties, "wrapT", "CLAMP_TO_EDGE");
         if (strcasecmp(wrapT, "REPEAT")==0)
             texParams.wrapT = GL_REPEAT;
         else if(strcasecmp(wrapT, "CLAMP_TO_EDGE")==0)
@@ -245,7 +243,7 @@ bool Material::parseTexture(Pass* pass, Properties* properties)
 
 
         // valid options: NEAREST, LINEAR, NEAREST_MIPMAP_NEAREST, LINEAR_MIPMAP_NEAREST, NEAREST_MIPMAP_LINEAR, LINEAR_MIPMAP_LINEAR
-        const char* minFilter = getOptionalString(textureJSON, "minFilter", mipmap ? "LINEAR_MIPMAP_NEAREST" : "LINEAR");
+        const char* minFilter = getOptionalString(textureProperties, "minFilter", mipmap ? "LINEAR_MIPMAP_NEAREST" : "LINEAR");
         if (strcasecmp(minFilter, "NEAREST")==0)
             texParams.minFilter = GL_NEAREST;
         else if(strcasecmp(minFilter, "LINEAR")==0)
@@ -262,7 +260,7 @@ bool Material::parseTexture(Pass* pass, Properties* properties)
             CCLOG("Invalid minFilter: %s", minFilter);
 
         // valid options: NEAREST, LINEAR
-        const char* magFilter = getOptionalString(textureJSON, "magFilter", "LINEAR");
+        const char* magFilter = getOptionalString(textureProperties, "magFilter", "LINEAR");
         if (strcasecmp(magFilter, "NEAREST")==0)
             texParams.magFilter = GL_NEAREST;
         else if(strcasecmp(magFilter, "LINEAR")==0)
@@ -277,19 +275,16 @@ bool Material::parseTexture(Pass* pass, Properties* properties)
     return true;
 }
 
-bool Material::parseShader(Pass* pass, Properties* properties)
+bool Material::parseShader(Pass* pass, Properties* shaderProperties)
 {
-
-    CCASSERT(shaderJSON.IsObject(), "Invalid type for 'shader'. It must be an object");
-
     // vertexShader
-    const char* vertShader = getOptionalString(shaderJSON, "vertexShader", nullptr);
+    const char* vertShader = getOptionalString(shaderProperties, "vertexShader", nullptr);
 
     // fragmentShader
-    const char* fragShader = getOptionalString(shaderJSON, "fragmentShader", nullptr);
+    const char* fragShader = getOptionalString(shaderProperties, "fragmentShader", nullptr);
 
     // compileTimeDefines
-    const char* compileTimeDefines = getOptionalString(shaderJSON, "defines", "");
+    const char* compileTimeDefines = getOptionalString(shaderProperties, "defines", "");
 
     if (vertShader && fragShader)
     {
@@ -310,7 +305,7 @@ bool Material::parseShader(Pass* pass, Properties* properties)
     return true;
 }
 
-bool Material::parseUniform(GLProgramState* programState, Properties* properties)
+bool Material::parseUniform(GLProgramState* programState, Properties* uniformProperties)
 {
     const char* key = iterator->name.GetString();
     auto& value = iterator->value;
@@ -487,9 +482,11 @@ static bool isValidUniform(const char* name)
 
 static const char* getOptionalString(Properties* properties, const char* key, const char* defaultValue)
 {
-    if (json.HasMember(key)) {
-        return json[key].GetString();
-    }
-    return defaultValue;
+
+    char* ret = properties->getString("key");
+    if (!ret)
+        ret = defaultValue;
+
+    return ret;
 }
 
