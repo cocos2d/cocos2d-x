@@ -31,7 +31,6 @@
 #define __cocos2d_libs__CCMaterial__
 
 #include <string>
-#include "json/document.h"
 
 #include "renderer/CCRenderState.h"
 #include "renderer/CCTechnique.h"
@@ -125,18 +124,17 @@ protected:
 
     void setTarget(Node* target);
 
-    bool parseMetadata(const rapidjson::Document& json);
-    bool parseProperties(const rapidjson::Document& json);
-    bool parseTechnique(const rapidjson::GenericValue<rapidjson::UTF8<> >& techniqueJSON);
-    bool parsePass(Technique* technique, const rapidjson::GenericValue<rapidjson::UTF8<> >& passJSON);
-    bool parseTexture(Pass* pass, const rapidjson::GenericValue<rapidjson::UTF8<> >& textureJSON);
-    bool parseShader(Pass* pass, const rapidjson::GenericValue<rapidjson::UTF8<> >& shaderJSON);
-    bool parseUniform(GLProgramState* programState, const rapidjson::Value::ConstMemberIterator& iterator);
-    Vec2 parseUniformVec2(const rapidjson::GenericValue<rapidjson::UTF8<> >& uniformJSON);
-    Vec3 parseUniformVec3(const rapidjson::GenericValue<rapidjson::UTF8<> >& uniformJSON);
-    Vec4 parseUniformVec4(const rapidjson::GenericValue<rapidjson::UTF8<> >& uniformJSON);
-    Mat4 parseUniformMat4(const rapidjson::GenericValue<rapidjson::UTF8<> >& uniformJSON);
-    bool parseRenderState(Pass* pass, const rapidjson::GenericValue<rapidjson::UTF8<> >& renderState);
+    bool parseProperties(Properties* properties);
+    bool parseTechnique(Properties* properties);
+    bool parsePass(Technique* technique, Properties* properties);
+    bool parseTexture(Pass* pass, Properties* properties);
+    bool parseShader(Pass* pass, Properties* properties);
+    bool parseUniform(GLProgramState* programState, Properties* properties);
+    Vec2 parseUniformVec2(Properties* properties);
+    Vec3 parseUniformVec3(Properties* properties);
+    Vec4 parseUniformVec4(Properties* properties);
+    Mat4 parseUniformMat4(Properties* properties);
+    bool parseRenderState(Pass* pass, Properties* properties);
 
 
     // material name

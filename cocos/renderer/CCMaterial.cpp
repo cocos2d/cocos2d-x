@@ -39,7 +39,6 @@
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
 
-#include "json/document.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #define strcasecmp _stricmp
@@ -48,11 +47,11 @@
 static const float MATERIAL_FORMAT_VERSION = 1.0;
 static const char* MATERIAL_TYPE = "material";
 
-// Helpers declaration
-static const char* getOptionalString(const rapidjson::GenericValue<rapidjson::UTF8<> >& json, const char* key, const char* defaultValue);
-static bool isValidUniform(const char* name);
-
 NS_CC_BEGIN
+
+// Helpers declaration
+static const char* getOptionalString(Properties* properties, const char* key, const char* defaultValue);
+static bool isValidUniform(const char* name);
 
 Material* Material::createWithFilename(const std::string& filepath)
 {
@@ -108,23 +107,10 @@ bool Material::initWithFile(const std::string& validfilename)
     char* bytes = (char*)data.getBytes();
     bytes[data.getSize()-1]='\0';
 
-    rapidjson::Document document;
-    document.ParseInsitu<0>(bytes);
+    Properties* properties = Properties::create(validfilename);
 
-    if (document.HasParseError())
-    {
-        CCLOG("GetParseError %s\n", document.GetParseError());
-        return false;
-    }
-
-    CCASSERT(document.IsObject(), "Invalid JSON file");
-
-    if (! parseMetadata(document)) {
-        CCLOG("Error parsing Material metadata");
-        return false;
-    }
-
-    parseProperties(document);
+    // get the first material
+    parseProperties((strlen(properties->getNamespace()) > 0) ? properties : properties->getNextNamespace());
     return true;
 }
 
@@ -138,43 +124,25 @@ void Material::setTarget(cocos2d::Node *target)
     _target = target;
 }
 
-bool Material::parseMetadata(const rapidjson::Document& jsonDocument)
+bool Material::parseProperties(Properties* materialProperties)
 {
-    bool broken = false;
-
-    const auto& metadata = jsonDocument["metadata"];
-    if (metadata.IsObject())
+    setName(materialProperties->getId());
+    auto space = materialProperties->getNextNamespace();
+    while (space)
     {
-        auto version = metadata["version"].GetDouble();
-        broken |= std::floor(version) != std::floor(MATERIAL_FORMAT_VERSION);
+        const char* name = space->getNamespace();
+        if (strcmp(name, "technique") == 0) {
+            parseTechnique(space);
+        }
 
-        auto type = metadata["type"].GetString();
-        broken |= strcmp(type, MATERIAL_TYPE) != 0;
+        space = materialProperties->getNextNamespace();
+
     }
-
-    return !broken;
-}
-
-bool Material::parseProperties(const rapidjson::Document& jsonDocument)
-{
-    auto name = jsonDocument["name"].GetString();
-    setName(name);
-
-    auto& techniquesJSON = jsonDocument["techniques"];
-    CCASSERT(techniquesJSON.IsArray(), "Invalid Techniques");
-
-    for (rapidjson::SizeType i = 0; i < techniquesJSON.Size(); i++) {
-        auto& techniqueJSON = techniquesJSON[i];
-        parseTechnique(techniqueJSON);
-    }
-
     return true;
 }
 
-bool Material::parseTechnique(const rapidjson::GenericValue<rapidjson::UTF8<> >& techniqueJSON)
+bool Material::parseTechnique(Properties* techniqueProperties)
 {
-    CCASSERT(techniqueJSON.IsObject(), "Invalid type for Technique. It must be an object");
-
     auto technique = Technique::create(this);
     _techniques.pushBack(technique);
 
@@ -183,22 +151,25 @@ bool Material::parseTechnique(const rapidjson::GenericValue<rapidjson::UTF8<> >&
         _currentTechnique = technique;
 
     // name
-    if (techniqueJSON.HasMember("name"))
-        technique->setName(techniqueJSON["name"].GetString());
+    technique->setName(techniqueProperties->getId());
+
 
     // passes
-    auto& passesJSON = techniqueJSON["passes"];
-    CCASSERT(passesJSON.IsArray(), "Invalid type for 'passes'");
+    auto space = techniqueProperties->getNextNamespace();
+    while (space)
+    {
+        const char* name = space->getNamespace();
+        if (strcmp(name, "pass") == 0) {
+            parsePass(technique, space);
+        }
 
-    for (rapidjson::SizeType i = 0; i < passesJSON.Size(); i++) {
-        auto& passJSON = passesJSON[i];
-        parsePass(technique, passJSON);
+        space = techniqueProperties->getNextNamespace();
     }
 
     return true;
 }
 
-bool Material::parsePass(Technique* technique, const rapidjson::GenericValue<rapidjson::UTF8<> >& passJSON)
+bool Material::parsePass(Technique* technique, Properties* properties)
 {
     auto pass = Pass::create(technique);
     technique->addPass(pass);
@@ -227,7 +198,7 @@ bool Material::parsePass(Technique* technique, const rapidjson::GenericValue<rap
     return true;
 }
 
-bool Material::parseTexture(Pass* pass, const rapidjson::GenericValue<rapidjson::UTF8<> >& textureJSON)
+bool Material::parseTexture(Pass* pass, Properties* properties)
 {
     CCASSERT(textureJSON.IsObject(), "Invalid type for Texture. It must be an object");
 
@@ -306,7 +277,7 @@ bool Material::parseTexture(Pass* pass, const rapidjson::GenericValue<rapidjson:
     return true;
 }
 
-bool Material::parseShader(Pass* pass, const rapidjson::GenericValue<rapidjson::UTF8<> >& shaderJSON)
+bool Material::parseShader(Pass* pass, Properties* properties)
 {
 
     CCASSERT(shaderJSON.IsObject(), "Invalid type for 'shader'. It must be an object");
@@ -339,7 +310,7 @@ bool Material::parseShader(Pass* pass, const rapidjson::GenericValue<rapidjson::
     return true;
 }
 
-bool Material::parseUniform(GLProgramState* programState, const rapidjson::Value::ConstMemberIterator& iterator)
+bool Material::parseUniform(GLProgramState* programState, Properties* properties)
 {
     const char* key = iterator->name.GetString();
     auto& value = iterator->value;
@@ -391,7 +362,7 @@ bool Material::parseUniform(GLProgramState* programState, const rapidjson::Value
     return true;
 }
 
-Vec2 Material::parseUniformVec2(const rapidjson::GenericValue<rapidjson::UTF8<> >& value)
+Vec2 Material::parseUniformVec2(Properties* properties)
 {
     Vec2 ret;
     rapidjson::SizeType idx = 0;
@@ -400,7 +371,7 @@ Vec2 Material::parseUniformVec2(const rapidjson::GenericValue<rapidjson::UTF8<> 
     return ret;
 }
 
-Vec3 Material::parseUniformVec3(const rapidjson::GenericValue<rapidjson::UTF8<> >& value)
+Vec3 Material::parseUniformVec3(Properties* properties)
 {
     Vec3 ret;
     rapidjson::SizeType idx = 0;
@@ -410,7 +381,7 @@ Vec3 Material::parseUniformVec3(const rapidjson::GenericValue<rapidjson::UTF8<> 
     return ret;
 }
 
-Vec4 Material::parseUniformVec4(const rapidjson::GenericValue<rapidjson::UTF8<> >& value)
+Vec4 Material::parseUniformVec4(Properties* properties)
 {
     Vec4 ret;
     rapidjson::SizeType idx = 0;
@@ -421,7 +392,7 @@ Vec4 Material::parseUniformVec4(const rapidjson::GenericValue<rapidjson::UTF8<> 
     return ret;
 }
 
-Mat4 Material::parseUniformMat4(const rapidjson::GenericValue<rapidjson::UTF8<> >& value)
+Mat4 Material::parseUniformMat4(Properties* properties)
 {
     Mat4 ret;
 
@@ -431,7 +402,7 @@ Mat4 Material::parseUniformMat4(const rapidjson::GenericValue<rapidjson::UTF8<> 
     return ret;
 }
 
-bool Material::parseRenderState(Pass* pass, const rapidjson::GenericValue<rapidjson::UTF8<> >& renderState)
+bool Material::parseRenderState(Pass* pass, Properties* properties)
 {
     auto state = pass->getStateBlock();
 
@@ -514,7 +485,7 @@ static bool isValidUniform(const char* name)
             strcmp(name, "fragmentShader")==0);
 }
 
-static const char* getOptionalString(const rapidjson::GenericValue<rapidjson::UTF8<> >& json, const char* key, const char* defaultValue)
+static const char* getOptionalString(Properties* properties, const char* key, const char* defaultValue)
 {
     if (json.HasMember(key)) {
         return json[key].GetString();
