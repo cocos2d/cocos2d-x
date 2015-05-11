@@ -29,9 +29,6 @@ USING_NS_CC;
 #undef CC_PROFILER_RESET_INSTANCE
 #define CC_PROFILER_RESET_INSTANCE(__id__, __name__) do{ ProfilingResetTimingBlock( String::createWithFormat("%08X - %s", __id__, __name__)->getCString() ); } while(0)
 
-static const int TEST_COUNT = 2;
-static int s_nTouchCurCase = 0;
-
 static const int K_INFO_LOOP_TAG = 1581;
 
 PerformceMathTests::PerformceMathTests()

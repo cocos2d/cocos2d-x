@@ -5,14 +5,10 @@ USING_NS_CC;
 using namespace cocos2d::ui;
 
 static int kTagInfoLayer = 1;
-static int kTagMenuLayer = 1000;
 static int kTagParticleSystem = 1001;
-static int test_Count = 2;
 
 static int kMaxParticles = 14000;
 static int kNodesIncrease = 1;
-
-static int s_parCurIdx = 0;
 
 PerformceParticle3DTests::PerformceParticle3DTests()
 {

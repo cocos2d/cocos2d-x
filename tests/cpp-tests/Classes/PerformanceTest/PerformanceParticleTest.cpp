@@ -17,8 +17,6 @@ enum {
     kNodesIncrease = 500,
 };
 
-static int s_nParCurIdx = 0;
-
 int ParticleMainScene::quantityParticles = kNodesIncrease;
 int ParticleMainScene::subtestNumber = 1;
 
