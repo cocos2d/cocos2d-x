@@ -179,11 +179,33 @@ void Material_NewMaterialFormat::onEnter()
 //    auto properties = Properties::create("Materials/light.material");
 //    auto properties = Properties::create("Materials/sample.material");
 //    auto properties = Properties::create("Materials/shapes.material#box");
-    auto properties = Properties::create("Materials/effects2.material");
+    auto properties = Properties::create("Materials/effects2.material#sample");
 
     // Print the properties of every namespace within this one.
     printProperties(properties, 0);
 
+    Material *mat1 = Material::createWithProperties(properties);
+    (void)mat1;
+
+    auto spriteBlur = Sprite::create("Images/grossini.png");
+    spriteBlur->setNormalizedPosition(Vec2(0.2, 0.5));
+    this->addChild(spriteBlur);
+    spriteBlur->setGLProgramState(mat1->getTechniqueByName("blur")->getPassByIndex(0)->getGLProgramState());
+
+    auto spriteOutline = Sprite::create("Images/grossini.png");
+    spriteOutline->setNormalizedPosition(Vec2(0.4, 0.5));
+    this->addChild(spriteOutline);
+    spriteOutline->setGLProgramState(mat1->getTechniqueByName("outline")->getPassByIndex(0)->getGLProgramState());
+
+    auto spriteNoise = Sprite::create("Images/grossini.png");
+    spriteNoise->setNormalizedPosition(Vec2(0.6, 0.5));
+    this->addChild(spriteNoise);
+    spriteNoise->setGLProgramState(mat1->getTechniqueByName("noise")->getPassByIndex(0)->getGLProgramState());
+
+    auto spriteEdgeDetect = Sprite::create("Images/grossini.png");
+    spriteEdgeDetect->setNormalizedPosition(Vec2(0.8, 0.5));
+    this->addChild(spriteEdgeDetect);
+    spriteEdgeDetect->setGLProgramState(mat1->getTechniqueByName("edge_detect")->getPassByIndex(0)->getGLProgramState());
 }
 
 std::string Material_NewMaterialFormat::subtitle() const

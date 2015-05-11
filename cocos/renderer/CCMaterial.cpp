@@ -44,9 +44,6 @@
 #define strcasecmp _stricmp
 #endif
 
-static const float MATERIAL_FORMAT_VERSION = 1.0;
-static const char* MATERIAL_TYPE = "material";
-
 NS_CC_BEGIN
 
 // Helpers declaration
@@ -70,6 +67,12 @@ Material* Material::createWithFilename(const std::string& filepath)
 
 Material* Material::createWithProperties(Properties* materialProperties)
 {
+    auto mat = new (std::nothrow) Material();
+    if (mat && mat->initWithProperties(materialProperties))
+    {
+        mat->autorelease();
+        return mat;
+    }
     return nullptr;
 }
 
@@ -116,7 +119,7 @@ bool Material::initWithFile(const std::string& validfilename)
 
 bool Material::initWithProperties(Properties* materialProperties)
 {
-    return false;
+    return parseProperties(materialProperties);
 }
 
 void Material::setTarget(cocos2d::Node *target)
@@ -193,6 +196,8 @@ bool Material::parsePass(Technique* technique, Properties* passProperties)
             CCASSERT(false, "Invalid namespace");
             return false;
         }
+
+        space = passProperties->getNextNamespace();
     }
 
     return true;
@@ -301,7 +306,6 @@ bool Material::parseShader(Pass* pass, Properties* shaderProperties)
             }
 
             property = shaderProperties->getNextProperty();
-            
         }
 
 //        glProgramState->updateUniformsAndAttributes();
