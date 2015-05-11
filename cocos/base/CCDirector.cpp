@@ -70,7 +70,7 @@ THE SOFTWARE.
 #include "physics/CCPhysicsWorld.h"
 #endif
 
-#if CC_USE_3D_PHYSICS
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
 #include "physics3d/CCPhysics3DWorld.h"
 #endif
 
@@ -298,7 +298,7 @@ void Director::drawScene()
             physicsWorld->update(_deltaTime, false);
         }
 #endif
-#if CC_USE_3D_PHYSICS
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
         auto physics3DWorld = _runningScene->getPhysics3DWorld();
         if (physics3DWorld)
         {
