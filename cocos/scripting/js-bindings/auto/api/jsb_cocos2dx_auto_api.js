@@ -4432,26 +4432,6 @@ getInstance : function (
 cc.Scene = {
 
 /**
- * @method setPhysics3DDebugCamera
- * @param {cc.Camera} arg0
- */
-setPhysics3DDebugCamera : function (
-camera 
-)
-{
-},
-
-/**
- * @method getPhysics3DWorld
- * @return {cc.Physics3DWorld}
- */
-getPhysics3DWorld : function (
-)
-{
-    return cc.Physics3DWorld;
-},
-
-/**
  * @method setCameraOrderDirty
  */
 setCameraOrderDirty : function (
