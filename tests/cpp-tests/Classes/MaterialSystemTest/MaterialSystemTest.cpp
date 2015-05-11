@@ -139,12 +139,18 @@ std::string Material_MultipleSprite3D::subtitle() const
 //
 //
 //
-static void printProperties(Properties* properties)
+static void printProperties(Properties* properties, int indent)
 {
     // Print the name and ID of the current namespace.
     const char* spacename = properties->getNamespace();
     const char* id = properties->getId();
-    CCLOG("Namespace: %s  ID: %s\n{", spacename, id);
+    char chindent[64];
+    int i=0;
+    for(i=0; i<indent*2;i++)
+        chindent[i] = ' ';
+    chindent[i] = '\0';
+
+    CCLOG("%sNamespace: %s  ID: %s\n%s{", chindent, spacename, id, chindent);
 
     // Print all properties in this namespace.
     const char* name = properties->getNextProperty();
@@ -152,18 +158,18 @@ static void printProperties(Properties* properties)
     while (name != NULL)
     {
         value = properties->getString(name);
-        CCLOG("%s = %s", name, value);
+        CCLOG("%s%s = %s", chindent, name, value);
         name = properties->getNextProperty();
     }
 
     Properties* space = properties->getNextNamespace();
     while (space != NULL)
     {
-        printProperties(space);
+        printProperties(space, indent+1);
         space = properties->getNextNamespace();
     }
 
-    CCLOG("}\n");
+    CCLOG("%s}\n",chindent);
 }
 
 void Material_NewMaterialFormat::onEnter()
@@ -173,10 +179,10 @@ void Material_NewMaterialFormat::onEnter()
 //    auto properties = Properties::create("Materials/light.material");
 //    auto properties = Properties::create("Materials/sample.material");
 //    auto properties = Properties::create("Materials/shapes.material#box");
-    auto properties = Properties::create("Materials/test.material");
+    auto properties = Properties::create("Materials/effects2.material");
 
     // Print the properties of every namespace within this one.
-    printProperties(properties);
+    printProperties(properties, 0);
 
 }
 
