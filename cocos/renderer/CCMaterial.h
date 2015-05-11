@@ -103,17 +103,21 @@ public:
      */
     Technique* getTechniqueByIndex(ssize_t index);
 
+    /** Returns the Technique used by the Material */
+    Technique* getTechnique() const;
+
+    /** Returns the list of Techniques */
+    const Vector<Technique*>& getTechniques() const;
+
+    /** Returns the number of Techniques in the Material. */
+    ssize_t getTechniqueCount() const;
+
     /** Adds a Technique into the Material */
     void addTechnique(Technique* technique);
 
     /** Sets the current technique */
     void setTechnique(const std::string& techniqueName);
 
-    /** Returns the number of Techniques in the Material. */
-    ssize_t getTechniqueCount() const;
-
-    /** Returns the Technique used by the Material */
-    Technique* getTechnique() const;
 
 protected:
     Material();

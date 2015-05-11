@@ -69,6 +69,12 @@ public:
 
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
+
+private:
+    void changeMaterial(float dt);
+
+    cocos2d::Sprite3D* _sprite;
+    int _techniqueState;
 };
 
 

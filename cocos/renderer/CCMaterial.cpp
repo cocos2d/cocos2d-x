@@ -414,10 +414,15 @@ Technique* Material::getTechnique() const
 {
     return _currentTechnique;
 }
+
+const Vector<Technique*>& Material::getTechniques() const
+{
+    return _techniques;
+}
+
 Technique* Material::getTechniqueByName(const std::string& name)
 {
     for(const auto& technique : _techniques) {
-        CCLOG("technique name: %s", technique->getName().c_str());
         if (technique->getName().compare(name)==0)
             return technique;
     }

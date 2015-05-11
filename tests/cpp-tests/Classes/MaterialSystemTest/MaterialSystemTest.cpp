@@ -184,13 +184,50 @@ void Material_3DEffects::onEnter()
     sprite->setTexture("Sprite3DTest/boss.png");
     this->addChild(sprite);
     sprite->setNormalizedPosition(Vec2(0.5,0.5));
+    _sprite = sprite;
 
-//    Material *mat = Material::createWithFilename("Materials/3d_effects.material");
-//    sprite->setMaterial(mat);
+    auto rot = RotateBy::create(5, Vec3(30,60,270));
+    auto repeat = RepeatForever::create(rot);
+    sprite->runAction(repeat);
+
+    Material *mat = Material::createWithFilename("Materials/3d_effects.material");
+    sprite->setMaterial(mat);
+
+    // lights
+    auto light1 = AmbientLight::create(Color3B::RED);
+    addChild(light1);
+
+
+    auto light2 = DirectionLight::create(Vec3(-1,1,0), Color3B::GREEN);
+    addChild(light2);
+
+    this->schedule(CC_CALLBACK_1(Material_3DEffects::changeMaterial, this),  3, "ignore");
+
+    _techniqueState = 0;
 }
 
 std::string Material_3DEffects::subtitle() const
 {
     return "Testing effects on Sprite3D";
+}
+
+void Material_3DEffects::changeMaterial(float dt)
+{
+    // get it from Mesh 0
+    switch (_techniqueState)
+    {
+        case 0:
+            _sprite->getMaterial(0)->setTechnique("lit");
+            break;
+        case 1:
+            _sprite->getMaterial(0)->setTechnique("unlit");
+            break;
+        default:
+            break;
+    }
+
+    _techniqueState++;
+    if (_techniqueState>1)
+        _techniqueState = 0;
 }
 
