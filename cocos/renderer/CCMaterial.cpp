@@ -292,11 +292,16 @@ bool Material::parseShader(Pass* pass, Properties* shaderProperties)
         pass->setGLProgramState(glProgramState);
 
         // Parse uniforms only if the GLProgramState was created
-        for( auto it = shaderJSON.MemberonBegin(); it != shaderJSON.MemberonEnd(); it++)
+        auto property = shaderProperties->getNextProperty();
+        while (property)
         {
-            // skip "defines", "vertexShader", "fragmentShader"
-            if (isValidUniform(it->name.GetString()))
-                parseUniform(glProgramState, it);
+            if (isValidUniform(property))
+            {
+                parseUniform(glProgramState, shaderProperties, property);
+            }
+
+            property = shaderProperties->getNextProperty();
+            
         }
 
 //        glProgramState->updateUniformsAndAttributes();
@@ -305,107 +310,75 @@ bool Material::parseShader(Pass* pass, Properties* shaderProperties)
     return true;
 }
 
-bool Material::parseUniform(GLProgramState* programState, Properties* uniformProperties)
+bool Material::parseUniform(GLProgramState* programState, Properties* properties, const char* uniformName)
 {
-    const char* key = iterator->name.GetString();
-    auto& value = iterator->value;
+    auto type = properties->getType(uniformName);
 
-    if (value.IsNumber()) {
-        float v = value.GetDouble();
-        programState->setUniformFloat(key, v);
-    }
-    else if (value.IsArray()) {
-
-        int size = value.Size();
-        switch (size) {
-            case 1:
-            {
-                rapidjson::SizeType idx = 0;
-                float v = value[idx].GetDouble();
-                programState->setUniformFloat(key, v);
-                break;
-            }
-            case 2:
-            {
-                Vec2 vect = parseUniformVec2(value);
-                programState->setUniformVec2(key, vect);
-                break;
-            }
-            case 3:
-            {
-                Vec3 vect = parseUniformVec3(value);
-                programState->setUniformVec3(key, vect);
-                break;
-            }
-            case 4:
-            {
-                Vec4 vect = parseUniformVec4(value);
-                programState->setUniformVec4(key, vect);
-                break;
-            }
-            case 16:
-            {
-                Mat4 mat = parseUniformMat4(value);
-                programState->setUniformMat4(key, mat);
-                break;
-            }
-            default:
-                break;
+    switch (type) {
+        case Properties::Type::NUMBER:
+        {
+            auto f = properties->getFloat(uniformName);
+            programState->setUniformFloat(uniformName, f);
+            break;
         }
 
+        case Properties::Type::STRING:
+            CCASSERT(false, "invalid type for a uniform");
+            return false;
+            break;
+
+        case Properties::Type::VECTOR2:
+        {
+            Vec2 v2;
+            properties->getVec2(uniformName, &v2);
+            programState->setUniformVec2(uniformName, v2);
+            break;
+        }
+
+        case Properties::Type::VECTOR3:
+        {
+            Vec3 v3;
+            properties->getVec3(uniformName, &v3);
+            programState->setUniformVec3(uniformName, v3);
+            break;
+        }
+
+        case Properties::Type::VECTOR4:
+        {
+            Vec4 v4;
+            properties->getVec4(uniformName, &v4);
+            programState->setUniformVec4(uniformName, v4);
+            break;
+        }
+
+        case Properties::Type::MATRIX:
+        {
+            Mat4 m4;
+            properties->getMat4(uniformName, &m4);
+            programState->setUniformMat4(uniformName, m4);
+            break;
+        }
+
+        default:
+            return false;
+            break;
     }
     return true;
 }
 
-Vec2 Material::parseUniformVec2(Properties* properties)
-{
-    Vec2 ret;
-    rapidjson::SizeType idx = 0;
-    ret.x = value[idx++].GetDouble();
-    ret.y = value[idx++].GetDouble();
-    return ret;
-}
-
-Vec3 Material::parseUniformVec3(Properties* properties)
-{
-    Vec3 ret;
-    rapidjson::SizeType idx = 0;
-    ret.x = value[idx++].GetDouble();
-    ret.y = value[idx++].GetDouble();
-    ret.z = value[idx++].GetDouble();
-    return ret;
-}
-
-Vec4 Material::parseUniformVec4(Properties* properties)
-{
-    Vec4 ret;
-    rapidjson::SizeType idx = 0;
-    ret.x = value[idx++].GetDouble();
-    ret.y = value[idx++].GetDouble();
-    ret.z = value[idx++].GetDouble();
-    ret.w = value[idx++].GetDouble();
-    return ret;
-}
-
-Mat4 Material::parseUniformMat4(Properties* properties)
-{
-    Mat4 ret;
-
-    for(rapidjson::SizeType i= 0; i<16; i++)
-        ret.m[i] = value[i].GetDouble();
-
-    return ret;
-}
 
 bool Material::parseRenderState(Pass* pass, Properties* properties)
 {
     auto state = pass->getStateBlock();
 
-    // Parse uniforms only if the GLProgramState was created
-    for( auto it = renderState.MemberonBegin(); it != renderState.MemberonEnd(); it++)
+    auto property = properties->getNextProperty();
+    while (property)
     {
-        // Render state only can have "strings" or numbers as values. No objects or lists
-        state->setState(it->name.GetString(), it->value.GetString());
+        // Parse uniforms only if the GLProgramState was created
+        // Render state only can have "strings" or numbers as values. No new namespaces
+        state->setState(property, properties->getString(property));
+
+        property = properties->getNextProperty();
     }
 
     return true;
@@ -470,7 +443,6 @@ ssize_t Material::getTechniqueCount() const
     return _techniques.size();
 }
 
-NS_CC_END
 
 // Helpers implementation
 static bool isValidUniform(const char* name)
@@ -483,10 +455,11 @@ static bool isValidUniform(const char* name)
 static const char* getOptionalString(Properties* properties, const char* key, const char* defaultValue)
 {
 
-    char* ret = properties->getString("key");
+    const char* ret = properties->getString(key);
     if (!ret)
         ret = defaultValue;
 
     return ret;
 }
 
+NS_CC_END

@@ -129,11 +129,7 @@ protected:
     bool parsePass(Technique* technique, Properties* properties);
     bool parseTexture(Pass* pass, Properties* properties);
     bool parseShader(Pass* pass, Properties* properties);
-    bool parseUniform(GLProgramState* programState, Properties* properties);
-    Vec2 parseUniformVec2(Properties* properties);
-    Vec3 parseUniformVec3(Properties* properties);
-    Vec4 parseUniformVec4(Properties* properties);
-    Mat4 parseUniformMat4(Properties* properties);
+    bool parseUniform(GLProgramState* programState, Properties* properties, const char* uniformName);
     bool parseRenderState(Pass* pass, Properties* properties);
 
 
