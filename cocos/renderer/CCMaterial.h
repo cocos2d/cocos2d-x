@@ -127,7 +127,7 @@ protected:
     bool parseProperties(Properties* properties);
     bool parseTechnique(Properties* properties);
     bool parsePass(Technique* technique, Properties* properties);
-    bool parseTexture(Pass* pass, Properties* properties);
+    bool parseSampler(Pass* pass, Properties* properties);
     bool parseShader(Pass* pass, Properties* properties);
     bool parseUniform(GLProgramState* programState, Properties* properties, const char* uniformName);
     bool parseRenderState(Pass* pass, Properties* properties);

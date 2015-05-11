@@ -19,7 +19,7 @@ material sample
 				sampleNum = 5
 				resolution = 100,100
 			}
-			texture 0
+			sampler 0
 			{
 				path = Images/grossinis_sister1.png
 				wrapS = CLAMP_TO_EDGE
@@ -48,7 +48,7 @@ material sample
 				u_radius = 0.01
 				u_threshold = 1.75
 			}
-			texture 0
+			sampler 0
 			{
 				path = Images/grossinis_sister1.png
 				wrapS = CLAMP_TO_EDGE
@@ -74,7 +74,7 @@ material sample
 				fragmentShader = Shaders/example_Noisy.fsh
 				resolution = 100,100
 			}
-			texture 0
+			sampler 0
 			{
 				path = Images/grossinis_sister1.png
 				wrapS = CLAMP_TO_EDGE
@@ -102,7 +102,7 @@ material sample
 				fragmentShader = Shaders/example_edgeDetection.fsh
 				resolution = 100, 100
 			}
-			texture 0
+			sampler 0
 			{
 				path = Images/grossinis_sister1.png
 				wrapS = CLAMP_TO_EDGE
@@ -132,7 +132,7 @@ material sample
 				sampleNum = 5
 				resolution = 100, 100
 			}
-			texture 0
+			sampler 0
 			{
 				path = Images/grossinis_sister1.png
 				wrapS = CLAMP_TO_EDGE
@@ -156,7 +156,7 @@ material sample
 				vertexShader = Shaders/example_simple.vsh
 				fragmentShader = Shaders/example_greyScale.fsh
 			}
-			texture 0
+			sampler 0
 			{
 				path = Images/grossinis_sister1.png
 				wrapS = CLAMP_TO_EDGE
@@ -167,5 +167,4 @@ material sample
 			}
 		}
 	}
-	]
 }

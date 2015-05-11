@@ -49,7 +49,20 @@
 
 NS_CC_BEGIN
 
-std::string s_attributeNames[] = {GLProgram::ATTRIBUTE_NAME_POSITION, GLProgram::ATTRIBUTE_NAME_COLOR, GLProgram::ATTRIBUTE_NAME_TEX_COORD, GLProgram::ATTRIBUTE_NAME_TEX_COORD1, GLProgram::ATTRIBUTE_NAME_TEX_COORD2,GLProgram::ATTRIBUTE_NAME_TEX_COORD3,GLProgram::ATTRIBUTE_NAME_NORMAL, GLProgram::ATTRIBUTE_NAME_BLEND_WEIGHT, GLProgram::ATTRIBUTE_NAME_BLEND_INDEX};
+static GLProgramState* getGLProgramStateForAttribs(MeshVertexData* meshVertexData, bool usesLight);
+static void setVertexAttribForGLProgramState(GLProgramState* glprogramstate, MeshVertexData* meshVertexData);
+
+std::string s_attributeNames[] = {
+    GLProgram::ATTRIBUTE_NAME_POSITION,
+    GLProgram::ATTRIBUTE_NAME_COLOR,
+    GLProgram::ATTRIBUTE_NAME_TEX_COORD,
+    GLProgram::ATTRIBUTE_NAME_TEX_COORD1,
+    GLProgram::ATTRIBUTE_NAME_TEX_COORD2,
+    GLProgram::ATTRIBUTE_NAME_TEX_COORD3,
+    GLProgram::ATTRIBUTE_NAME_NORMAL,
+    GLProgram::ATTRIBUTE_NAME_BLEND_WEIGHT,
+    GLProgram::ATTRIBUTE_NAME_BLEND_INDEX
+};
 
 Sprite3D* Sprite3D::create()
 {
@@ -64,7 +77,7 @@ Sprite3D* Sprite3D::create()
     return nullptr;
 }
 
-Sprite3D* Sprite3D::create(const std::string &modelPath)
+Sprite3D* Sprite3D::create(const std::string& modelPath)
 {
     CCASSERT(modelPath.length() >= 4, "invalid filename for Sprite3D");
     
@@ -78,7 +91,7 @@ Sprite3D* Sprite3D::create(const std::string &modelPath)
     CC_SAFE_DELETE(sprite);
     return nullptr;
 }
-Sprite3D* Sprite3D::create(const std::string &modelPath, const std::string &texturePath)
+Sprite3D* Sprite3D::create(const std::string& modelPath, const std::string& texturePath)
 {
     auto sprite = create(modelPath);
     if (sprite)
@@ -89,12 +102,12 @@ Sprite3D* Sprite3D::create(const std::string &modelPath, const std::string &text
     return sprite;
 }
 
-void Sprite3D::createAsync(const std::string &modelPath, const std::function<void(Sprite3D*, void*)>& callback, void* callbackparam)
+void Sprite3D::createAsync(const std::string& modelPath, const std::function<void(Sprite3D*, void*)>& callback, void* callbackparam)
 {
     createAsync(modelPath, "", callback, callbackparam);
 }
 
-void Sprite3D::createAsync(const std::string &modelPath, const std::string &texturePath, const std::function<void(Sprite3D*, void*)>& callback, void* callbackparam)
+void Sprite3D::createAsync(const std::string& modelPath, const std::string& texturePath, const std::function<void(Sprite3D*, void*)>& callback, void* callbackparam)
 {
     Sprite3D *sprite = new (std::nothrow) Sprite3D();
     if (sprite->loadFromCache(modelPath))
@@ -269,7 +282,7 @@ bool Sprite3D::init()
     return false;
 }
 
-bool Sprite3D::initWithFile(const std::string &path)
+bool Sprite3D::initWithFile(const std::string& path)
 {
     _meshes.clear();
     _meshVertexDatas.clear();
@@ -364,7 +377,7 @@ Sprite3D* Sprite3D::createSprite3DNode(NodeData* nodedata,ModelData* modeldata,c
                     auto tex = Director::getInstance()->getTextureCache()->addImage(textureData->filename);
                     if(tex)
                     {
-                        Texture2D::TexParams    texParams;
+                        Texture2D::TexParams texParams;
                         texParams.minFilter = GL_LINEAR;
                         texParams.magFilter = GL_LINEAR;
                         texParams.wrapS = textureData->wrapS;
@@ -395,7 +408,7 @@ Sprite3D* Sprite3D::createSprite3DNode(NodeData* nodedata,ModelData* modeldata,c
     }
     return   sprite;
 }
-void Sprite3D::createAttachSprite3DNode(NodeData* nodedata,const MaterialDatas& materialdatas)
+void Sprite3D::createAttachSprite3DNode(NodeData* nodedata, const MaterialDatas& materialdatas)
 {
     for(const auto& it : nodedata->modelNodeDatas)
     {
@@ -440,56 +453,13 @@ void Sprite3D::setMaterial(Material *material, int meshIndex)
 void Sprite3D::genGLProgramState(bool useLight)
 {
     _shaderUsingLight = useLight;
-    
+
     std::unordered_map<const MeshVertexData*, GLProgramState*> glProgramestates;
-    for(auto& meshVertexData : _meshVertexDatas)
+    for(auto meshVertexData : _meshVertexDatas)
     {
-        bool textured = meshVertexData->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_TEX_COORD);
-        bool hasSkin = meshVertexData->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_INDEX)
-                        && meshVertexData->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT);
-        bool hasNormal = meshVertexData->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_NORMAL);
+        auto glprogramstate = getGLProgramStateForAttribs(meshVertexData, useLight);
+        setVertexAttribForGLProgramState(glprogramstate, meshVertexData);
 
-        const char* shader = nullptr;
-        if(textured)
-        {
-            if (hasSkin)
-            {
-                if (hasNormal && _shaderUsingLight)
-                    shader = GLProgram::SHADER_3D_SKINPOSITION_NORMAL_TEXTURE;
-                else
-                    shader = GLProgram::SHADER_3D_SKINPOSITION_TEXTURE;
-            }
-            else
-            {
-                if (hasNormal && _shaderUsingLight)
-                    shader = GLProgram::SHADER_3D_POSITION_NORMAL_TEXTURE;
-                else
-                    shader = GLProgram::SHADER_3D_POSITION_TEXTURE;
-            }
-        }
-        else
-        {
-            shader = GLProgram::SHADER_3D_POSITION;
-        }
-
-        CCASSERT(shader, "Couldn't find shader for sprite");
-
-        auto glProgram = GLProgramCache::getInstance()->getGLProgram(shader);
-        auto glprogramstate = GLProgramState::create(glProgram);
-
-        long offset = 0;
-        auto attributeCount = meshVertexData->getMeshVertexAttribCount();
-        for (auto k = 0; k < attributeCount; k++) {
-            auto meshattribute = meshVertexData->getMeshVertexAttrib(k);
-            glprogramstate->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
-                                                 meshattribute.size,
-                                                 meshattribute.type,
-                                                 GL_FALSE,
-                                                 meshVertexData->getVertexBuffer()->getSizePerVertex(),
-                                                 (GLvoid*)offset);
-            offset += meshattribute.attribSizeBytes;
-        }
-        
         glProgramestates[meshVertexData] = glprogramstate;
     }
     
@@ -972,4 +942,60 @@ Sprite3DCache::~Sprite3DCache()
     removeAllSprite3DData();
 }
 
+//
+// MARK: Helpers
+//
+static GLProgramState* getGLProgramStateForAttribs(MeshVertexData* meshVertexData, bool usesLight)
+{
+    bool textured = meshVertexData->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_TEX_COORD);
+    bool hasSkin = meshVertexData->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_INDEX)
+    && meshVertexData->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_BLEND_WEIGHT);
+    bool hasNormal = meshVertexData->hasVertexAttrib(GLProgram::VERTEX_ATTRIB_NORMAL);
+
+    const char* shader = nullptr;
+    if(textured)
+    {
+        if (hasSkin)
+        {
+            if (hasNormal && usesLight)
+                shader = GLProgram::SHADER_3D_SKINPOSITION_NORMAL_TEXTURE;
+            else
+                shader = GLProgram::SHADER_3D_SKINPOSITION_TEXTURE;
+        }
+        else
+        {
+            if (hasNormal && usesLight)
+                shader = GLProgram::SHADER_3D_POSITION_NORMAL_TEXTURE;
+            else
+                shader = GLProgram::SHADER_3D_POSITION_TEXTURE;
+        }
+    }
+    else
+    {
+        shader = GLProgram::SHADER_3D_POSITION;
+    }
+
+    CCASSERT(shader, "Couldn't find shader for sprite");
+
+    auto glProgram = GLProgramCache::getInstance()->getGLProgram(shader);
+    auto glprogramstate = GLProgramState::create(glProgram);
+
+    return glprogramstate;
+}
+
+static void setVertexAttribForGLProgramState(GLProgramState* glprogramstate, MeshVertexData* meshVertexData)
+{
+    long offset = 0;
+    auto attributeCount = meshVertexData->getMeshVertexAttribCount();
+    for (auto k = 0; k < attributeCount; k++) {
+        auto meshattribute = meshVertexData->getMeshVertexAttrib(k);
+        glprogramstate->setVertexAttribPointer(s_attributeNames[meshattribute.vertexAttrib],
+                                               meshattribute.size,
+                                               meshattribute.type,
+                                               GL_FALSE,
+                                               meshVertexData->getVertexBuffer()->getSizePerVertex(),
+                                               (GLvoid*)offset);
+        offset += meshattribute.attribSizeBytes;
+    }
+}
 NS_CC_END

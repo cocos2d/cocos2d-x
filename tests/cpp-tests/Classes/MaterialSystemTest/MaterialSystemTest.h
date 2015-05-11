@@ -35,15 +35,6 @@ public:
     virtual std::string title() const override;
 };
 
-class Material_SpriteTest : public MaterialSystemBaseTest
-{
-public:
-    CREATE_FUNC(Material_SpriteTest);
-
-    virtual void onEnter() override;
-    virtual std::string subtitle() const override;
-};
-
 class Material_Sprite3DTest : public MaterialSystemBaseTest
 {
 public:
@@ -62,10 +53,19 @@ public:
     virtual std::string subtitle() const override;
 };
 
-class Material_NewMaterialFormat : public MaterialSystemBaseTest
+class Material_2DEffects : public MaterialSystemBaseTest
 {
 public:
-    CREATE_FUNC(Material_NewMaterialFormat);
+    CREATE_FUNC(Material_2DEffects);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
+class Material_3DEffects : public MaterialSystemBaseTest
+{
+public:
+    CREATE_FUNC(Material_3DEffects);
 
     virtual void onEnter() override;
     virtual std::string subtitle() const override;

@@ -178,7 +178,7 @@ bool Material::parsePass(Technique* technique, Properties* passProperties)
     technique->addPass(pass);
 
     // Pass can have 3 different namespaces:
-    //  - one or more "texture"
+    //  - one or more "sampler"
     //  - one "renderState"
     //  - one "shader"
 
@@ -186,8 +186,8 @@ bool Material::parsePass(Technique* technique, Properties* passProperties)
     while (space)
     {
         const char* name = space->getNamespace();
-        if (strcmp(name, "texture") == 0)
-            parseTexture(pass, space);
+        if (strcmp(name, "sampler") == 0)
+            parseSampler(pass, space);
         else if (strcmp(name, "shader") == 0)
             parseShader(pass, space);
         else if (strcmp(name, "renderState") == 0)
@@ -203,7 +203,8 @@ bool Material::parsePass(Technique* technique, Properties* passProperties)
     return true;
 }
 
-bool Material::parseTexture(Pass* pass, Properties* textureProperties)
+// cocos2d-x doesn't support Samplers yet. But will be added soon
+bool Material::parseSampler(Pass* pass, Properties* textureProperties)
 {
     // required
     auto filename = textureProperties->getString("path");
