@@ -19,49 +19,15 @@ enum {
 
 static int s_nParCurIdx = 0;
 
-////////////////////////////////////////////////////////
-//
-// ParticleMenuLayer
-//
-////////////////////////////////////////////////////////
-ParticleMenuLayer::ParticleMenuLayer(bool bControlMenuVisible, int nMaxCases, int nCurCase)
-: PerformBasicLayer(bControlMenuVisible, nMaxCases, nCurCase)
+int ParticleMainScene::quantityParticles = kNodesIncrease;
+int ParticleMainScene::subtestNumber = 1;
+
+PerformceParticleTests::PerformceParticleTests()
 {
-
-}
-
-void ParticleMenuLayer::showCurrentTest()
-{
-    auto scene = (ParticleMainScene*)getParent();
-    int subTest = scene->getSubTestNum();
-    int parNum  = scene->getParticlesNum();
-
-    ParticleMainScene* pNewScene = nullptr;
-
-    switch (_curCase)
-    {
-    case 0:
-        pNewScene = new (std::nothrow) ParticlePerformTest1;
-        break;
-    case 1:
-        pNewScene = new (std::nothrow) ParticlePerformTest2;
-        break;
-    case 2:
-        pNewScene = new (std::nothrow) ParticlePerformTest3;
-        break;
-    case 3:
-        pNewScene = new (std::nothrow) ParticlePerformTest4;
-        break;
-    }
-
-    s_nParCurIdx = _curCase;
-    if (pNewScene)
-    {
-        pNewScene->initWithSubTest(subTest, parNum);
-
-        Director::getInstance()->replaceScene(pNewScene);
-        pNewScene->release();
-    }
+    ADD_TEST_CASE(ParticlePerformTest1);
+    ADD_TEST_CASE(ParticlePerformTest2);
+    ADD_TEST_CASE(ParticlePerformTest3);
+    ADD_TEST_CASE(ParticlePerformTest4);
 }
 
 ////////////////////////////////////////////////////////
@@ -69,6 +35,17 @@ void ParticleMenuLayer::showCurrentTest()
 // ParticleMainScene
 //
 ////////////////////////////////////////////////////////
+bool ParticleMainScene::init()
+{
+    if (TestCase::init())
+    {
+        initWithSubTest(subtestNumber, quantityParticles);
+        return true;
+    }
+
+    return false;
+}
+
 void ParticleMainScene::initWithSubTest(int asubtest, int particles)
 {
     //srandom(0);
@@ -114,11 +91,6 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     addChild(labelAtlas, 0, kTagLabelAtlas);
     labelAtlas->setPosition(Vec2(s.width-66,50));
 
-    // Next Prev Test
-    auto menuLayer = new (std::nothrow) ParticleMenuLayer(true, TEST_COUNT, s_nParCurIdx);
-    addChild(menuLayer, 1, kTagMenuLayer);
-    menuLayer->release();
-
     // Sub Tests
     MenuItemFont::setFontSize(40);
     auto pSubMenu = Menu::create();
@@ -151,11 +123,6 @@ void ParticleMainScene::initWithSubTest(int asubtest, int particles)
     createParticleSystem();
 
     schedule(CC_SCHEDULE_SELECTOR(ParticleMainScene::step));
-}
-
-std::string ParticleMainScene::title() const
-{
-    return "No title";
 }
 
 void ParticleMainScene::step(float dt)
@@ -251,8 +218,7 @@ void ParticleMainScene::testNCallback(Ref* sender)
 {
     subtestNumber = static_cast<Node*>(sender)->getTag();
 
-    auto menu = static_cast<ParticleMenuLayer*>( getChildByTag(kTagMenuLayer) );
-    menu->restartCallback(sender);
+    this->restartTestCallback(sender);
 }
 
 void ParticleMainScene::updateQuantityLabel()
@@ -547,13 +513,4 @@ void ParticlePerformTest4::doTest()
     // additive
     particleSystem->setBlendAdditive(false);
 
-}
-
-void runParticleTest()
-{
-    auto scene = new (std::nothrow) ParticlePerformTest1;
-    scene->initWithSubTest(1, kNodesIncrease);
-
-    Director::getInstance()->replaceScene(scene);
-    scene->release();
 }
