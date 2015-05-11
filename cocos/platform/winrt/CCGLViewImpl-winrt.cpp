@@ -157,7 +157,7 @@ bool GLViewImpl::ShowMessageBox(Platform::String^ title, Platform::String^ messa
     return false;
 }
 
-void GLViewImpl::setIMEKeyboardState(bool bOpen, std::string str)
+void GLViewImpl::setIMEKeyboardState(bool bOpen, const std::string& str)
 {
     if(bOpen)
     {

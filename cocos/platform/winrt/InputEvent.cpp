@@ -25,13 +25,7 @@ THE SOFTWARE.
 
 #include "InputEvent.h"
 #include "CCWinRTUtils.h"
-
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-#include "CCGLViewImpl-wp8.h"
-#else
 #include "CCGLViewImpl-winrt.h"
-#endif
-
 #include "base/CCEventAcceleration.h"
 
 NS_CC_BEGIN
