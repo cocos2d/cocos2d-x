@@ -37,7 +37,7 @@ THE SOFTWARE.
 #include "physics/CCPhysicsWorld.h"
 #endif
 
-#if CC_USE_3D_PHYSICS
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
 #include "physics3d/CCPhysics3DWorld.h"
 #include "physics3d/CCPhysics3DComponent.h"
 #endif
@@ -49,7 +49,7 @@ Scene::Scene()
 : _physicsWorld(nullptr)
 #endif
 {
-#if CC_USE_3D_PHYSICS
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
     _physics3DWorld = nullptr;
     _physics3dDebugCamera = nullptr;
 #endif
@@ -71,7 +71,7 @@ Scene::~Scene()
 #if CC_USE_PHYSICS
     CC_SAFE_DELETE(_physicsWorld);
 #endif
-#if CC_USE_3D_PHYSICS
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
     CC_SAFE_RELEASE(_physics3DWorld);
     CC_SAFE_RELEASE(_physics3dDebugCamera);
 #endif
@@ -172,7 +172,7 @@ void Scene::render(Renderer* renderer)
         director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     }
     
-#if CC_USE_3D_PHYSICS
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
     if (_physics3DWorld && _physics3DWorld->isDebugDrawEnabled())
     {
         director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
@@ -200,7 +200,7 @@ void Scene::removeAllChildren()
     }
 }
 
-#if CC_USE_3D_PHYSICS
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
 void Scene::setPhysics3DDebugCamera(Camera* camera)
 {
     CC_SAFE_RETAIN(camera);
@@ -209,7 +209,7 @@ void Scene::setPhysics3DDebugCamera(Camera* camera)
 }
 #endif
 
-#if (CC_USE_PHYSICS || CC_USE_3D_PHYSICS)
+#if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION))
 void Scene::addChild(Node* child, int zOrder, int tag)
 {
     Node::addChild(child, zOrder, tag);
@@ -250,7 +250,7 @@ bool Scene::initWithPhysics()
         CC_BREAK_IF(! (_physicsWorld = PhysicsWorld::construct(*this)));
 #endif
         
-#if CC_USE_3D_PHYSICS
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
         Physics3DWorldDes info;
         //TODO: FIX ME
         //info.isDebugDrawEnabled = true;
@@ -289,7 +289,7 @@ void Scene::addChildToPhysicsWorld(Node* child)
     }
 #endif
     
-#if CC_USE_3D_PHYSICS
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
     if (_physics3DWorld)
     {
         std::function<void(Node*)> addToPhysicsWorldFunc = nullptr;

@@ -41,7 +41,7 @@ class EventCustom;
 #if CC_USE_PHYSICS
 class PhysicsWorld;
 #endif
-#if CC_USE_3D_PHYSICS
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
 class Physics3DWorld;
 #endif
 /**
@@ -139,7 +139,7 @@ protected:
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Scene);
     
-#if (CC_USE_PHYSICS || CC_USE_3D_PHYSICS)
+#if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION))
 public:
     virtual void addChild(Node* child, int zOrder, int tag) override;
     virtual void addChild(Node* child, int zOrder, const std::string &name) override;
@@ -152,7 +152,7 @@ public:
     inline PhysicsWorld* getPhysicsWorld() { return _physicsWorld; }
 #endif
     
-#if CC_USE_3D_PHYSICS
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
     /** Get the 3d physics world of the scene.
      * @return The 3d physics world of the scene.
      * @js NA
@@ -181,7 +181,7 @@ protected:
     PhysicsWorld* _physicsWorld;
 #endif
     
-#if CC_USE_3D_PHYSICS
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
     Physics3DWorld*            _physics3DWorld;
     Camera*                    _physics3dDebugCamera; //
 #endif
