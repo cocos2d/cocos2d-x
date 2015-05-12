@@ -37,6 +37,11 @@
 #include "js_Effect3D_bindings.h"
 #endif
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include "jsb_cocos2dx_experimental_webView_auto.hpp"
+#include "experimental/jsb_cocos2dx_experimental_webView_manual.h"
+#endif
+
 USING_NS_CC;
 USING_NS_CC_EXT;
 using namespace CocosDenshion;
@@ -114,6 +119,11 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_DrawNode3D_bindings);
 #if(CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     sc->addRegisterCallback(register_Effect3D_bindings);
+#endif
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    sc->addRegisterCallback(register_all_cocos2dx_experimental_webView);
+    sc->addRegisterCallback(register_all_cocos2dx_experimental_webView_manual);
 #endif
 
     sc->start();
