@@ -100,4 +100,9 @@ ssize_t Technique::getPassCount() const
     return _passes.size();
 }
 
+const Vector<Pass*>& Technique::getPasses() const
+{
+    return _passes;
+}
+
 NS_CC_END

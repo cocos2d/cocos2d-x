@@ -1,0 +1,58 @@
+material spaceship
+{
+	technique unlit
+	{
+		pass 0
+		{
+			renderState
+			{
+				blend = true
+				blendSrc = ONE
+				blendDst = ONE_MINUS_SRC_ALPHA
+			}
+			shader
+			{
+				defines = THIS_IS_AN_EXAMPLE 1;TOMORROW_IS_HOLIDAY 2
+				vertexShader = Shaders3D/3d_position_tex.vert
+				fragmentShader = Shaders3D/3d_color_tex.frag
+			}
+			sampler 0
+			{
+				path = Sprite3DTest/boss.png
+				wrapS = CLAMP_TO_EDGE
+				wrapT = CLAMP_TO_EDGE
+				minFilter = LINEAR
+				magFilter = LINEAR
+				mipmap = false
+			}
+		}
+	}
+
+	technique lit
+	{
+		pass 0
+		{
+			renderState
+			{
+				blend = true
+				blendSrc = ONE
+				blendDst = ONE_MINUS_SRC_ALPHA
+			}
+			shader
+			{
+				defines = MAX_POINT_LIGHT_NUM 1;MAX_SPOT_LIGHT_NUM 1;MAX_DIRECTIONAL_LIGHT_NUM 1
+				vertexShader = Shaders3D/3d_position_normal_tex.vert
+				fragmentShader = Shaders3D/3d_color_normal_tex.frag
+			}
+			sampler 0
+			{
+				path = Sprite3DTest/boss.png
+				wrapS = CLAMP_TO_EDGE
+				wrapT = CLAMP_TO_EDGE
+				minFilter = LINEAR
+				magFilter = LINEAR
+				mipmap = false
+			}
+		}
+	}
+}
