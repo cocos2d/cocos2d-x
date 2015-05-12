@@ -26,7 +26,6 @@
 #include "MaterialSystemTest.h"
 #include "../testResource.h"
 #include "cocos2d.h"
-#include "renderer/CCProperties.h"
 
 
 USING_NS_CC;
@@ -181,7 +180,7 @@ void Material_3DEffects::onEnter()
 
     auto sprite = Sprite3D::create("Sprite3DTest/boss1.obj");
     sprite->setScale(8.f);
-    sprite->setTexture("Sprite3DTest/boss.png");
+//    sprite->setTexture("Sprite3DTest/boss.png");
     this->addChild(sprite);
     sprite->setNormalizedPosition(Vec2(0.5,0.5));
     _sprite = sprite;
@@ -191,17 +190,17 @@ void Material_3DEffects::onEnter()
     sprite->runAction(repeat);
 
     Material *mat = Material::createWithFilename("Materials/3d_effects.material");
+    mat->setTechnique("lit");
     sprite->setMaterial(mat);
 
     // lights
     auto light1 = AmbientLight::create(Color3B::RED);
     addChild(light1);
 
-
     auto light2 = DirectionLight::create(Vec3(-1,1,0), Color3B::GREEN);
     addChild(light2);
 
-    this->schedule(CC_CALLBACK_1(Material_3DEffects::changeMaterial, this),  3, "ignore");
+    this->schedule(CC_CALLBACK_1(Material_3DEffects::changeMaterial, this),  3, "cookie");
 
     _techniqueState = 0;
 }

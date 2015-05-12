@@ -34,8 +34,7 @@
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCGLProgramState.h"
-#include "renderer/CCProperties.h"
-
+#include "base/CCProperties.h"
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
 

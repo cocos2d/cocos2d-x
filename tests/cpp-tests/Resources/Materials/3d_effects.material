@@ -40,7 +40,7 @@ material spaceship
 			}
 			shader
 			{
-				defines = MAX_POINT_LIGHT_NUM 2;MAX_SPOT_LIGHT_NUM 2;MAX_DIRECTIONAL_LIGHT_NUM 2
+				defines = MAX_POINT_LIGHT_NUM 1;MAX_SPOT_LIGHT_NUM 1;MAX_DIRECTIONAL_LIGHT_NUM 1
 				vertexShader = Shaders3D/3d_position_normal_tex.vert
 				fragmentShader = Shaders3D/3d_color_normal_tex.frag
 			}

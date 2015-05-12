@@ -548,7 +548,7 @@ private:
     {
         std::string name;
         std::string value;
-        Property(const char* aname, const char* avalue) : name(aname), value(avalue) { }
+        Property(const std::string& aname, const std::string& avalue) : name(aname), value(avalue) { }
     };
 
     /**
