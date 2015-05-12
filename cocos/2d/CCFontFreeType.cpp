@@ -312,6 +312,9 @@ unsigned char* FontFreeType::getGlyphBitmap(unsigned short theChar, long &outWid
             auto blendWidth = MAX(outlineMaxX, glyphMaxX) - blendImageMinX;
             auto blendHeight = blendImageMaxY - MIN(outlineMinY, glyphMinY);
 
+            outRect.origin.x = blendImageMinX;
+            outRect.origin.y = -blendImageMaxY;
+
             long index, index2;
             auto blendImage = new unsigned char[blendWidth * blendHeight * 2];
             memset(blendImage, 0, blendWidth * blendHeight * 2);
