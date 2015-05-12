@@ -235,14 +235,6 @@ THE SOFTWARE.
 	#include "platform/winrt/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	#include "platform/winrt/CCApplication.h"
-	#include "platform/wp8/CCGLViewImpl-wp8.h"
-	#include "platform/winrt/CCGL.h"
-	#include "platform/winrt/CCStdC.h"
-	#include "platform/winrt/CCPrecompiledShaders.h"
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-
 // script_support
 #include "base/CCScriptSupport.h"
 

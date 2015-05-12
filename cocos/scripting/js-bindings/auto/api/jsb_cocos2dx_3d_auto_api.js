@@ -918,28 +918,6 @@ int
 },
 
 /**
- * @method draw
- * @param {cc.Renderer} arg0
- * @param {float} arg1
- * @param {mat4_object} arg2
- * @param {unsigned int} arg3
- * @param {unsigned int} arg4
- * @param {vec4_object} arg5
- * @param {bool} arg6
- */
-draw : function (
-renderer, 
-float, 
-mat4, 
-int, 
-int, 
-vec4, 
-bool 
-)
-{
-},
-
-/**
  * @method getBlendFunc
  * @return {cc.BlendFunc}
  */
@@ -1318,15 +1296,65 @@ char
 },
 
 /**
- * @method getIntersectionPoint
- * @param {cc.Ray} arg0
- * @return {vec3_object}
+ * @method setMaxDetailMapAmount
+ * @param {int} arg0
  */
-getIntersectionPoint : function (
-ray 
+setMaxDetailMapAmount : function (
+int 
 )
 {
-    return cc.Vec3;
+},
+
+/**
+ * @method setDrawWire
+ * @param {bool} arg0
+ */
+setDrawWire : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setIsEnableFrustumCull
+ * @param {bool} arg0
+ */
+setIsEnableFrustumCull : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getHeightData
+ * @return {Array}
+ */
+getHeightData : function (
+)
+{
+    return new Array();
+},
+
+/**
+ * @method setDetailMap
+ * @param {unsigned int} arg0
+ * @param {cc.Terrain::DetailMap} arg1
+ */
+setDetailMap : function (
+int, 
+map 
+)
+{
+},
+
+/**
+ * @method resetHeightMap
+ * @param {char} arg0
+ */
+resetHeightMap : function (
+char 
+)
+{
 },
 
 /**
@@ -1362,22 +1390,6 @@ vec2
 },
 
 /**
- * @method getHeight
-* @param {vec2_object|float} vec2
-* @param {vec3_object|float} vec3
-* @param {vec3_object} vec3
-* @return {float|float}
-*/
-getHeight : function(
-float,
-float,
-vec3 
-)
-{
-    return 0;
-},
-
-/**
  * @method initTextures
  * @return {bool}
  */
@@ -1398,68 +1410,16 @@ initProperties : function (
 },
 
 /**
- * @method getNormal
- * @param {int} arg0
- * @param {int} arg1
- * @return {vec3_object}
- */
-getNormal : function (
-int, 
-int 
-)
-{
-    return cc.Vec3;
-},
-
-/**
- * @method setDrawWire
- * @param {bool} arg0
- */
-setDrawWire : function (
-bool 
-)
-{
-},
-
-/**
- * @method reload
- */
-reload : function (
-)
-{
-},
-
-/**
- * @method setDetailMap
- * @param {unsigned int} arg0
- * @param {cc.Terrain::DetailMap} arg1
- */
-setDetailMap : function (
-int, 
-map 
-)
-{
-},
-
-/**
- * @method getImageHeight
- * @param {int} arg0
- * @param {int} arg1
- * @return {float}
- */
-getImageHeight : function (
-int, 
-int 
-)
-{
-    return 0;
-},
-
-/**
- * @method getMinHeight
- * @return {float}
- */
-getMinHeight : function (
+ * @method getHeight
+* @param {vec2_object|float} vec2
+* @param {vec3_object|float} vec3
+* @param {vec3_object} vec3
+* @return {float|float}
+*/
+getHeight : function(
+float,
+float,
+vec3 
 )
 {
     return 0;
@@ -1480,13 +1440,61 @@ float
 },
 
 /**
- * @method resetHeightMap
- * @param {char} arg0
+ * @method getTerrainSize
+ * @return {size_object}
  */
-resetHeightMap : function (
-char 
+getTerrainSize : function (
 )
 {
+    return cc.Size;
+},
+
+/**
+ * @method getIntersectionPoint
+ * @param {cc.Ray} arg0
+ * @return {vec3_object}
+ */
+getIntersectionPoint : function (
+ray 
+)
+{
+    return cc.Vec3;
+},
+
+/**
+ * @method getNormal
+ * @param {int} arg0
+ * @param {int} arg1
+ * @return {vec3_object}
+ */
+getNormal : function (
+int, 
+int 
+)
+{
+    return cc.Vec3;
+},
+
+/**
+ * @method reload
+ */
+reload : function (
+)
+{
+},
+
+/**
+ * @method getImageHeight
+ * @param {int} arg0
+ * @param {int} arg1
+ * @return {float}
+ */
+getImageHeight : function (
+int, 
+int 
+)
+{
+    return 0;
 },
 
 /**
@@ -1500,23 +1508,13 @@ getMaxHeight : function (
 },
 
 /**
- * @method setMaxDetailMapAmount
- * @param {int} arg0
+ * @method getMinHeight
+ * @return {float}
  */
-setMaxDetailMapAmount : function (
-int 
+getMinHeight : function (
 )
 {
-},
-
-/**
- * @method setIsEnableFrustumCull
- * @param {bool} arg0
- */
-setIsEnableFrustumCull : function (
-bool 
-)
-{
+    return 0;
 },
 
 };

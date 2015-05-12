@@ -1118,6 +1118,9 @@ Developers:
         
     HueyPark
         Fixed memory leak in HttpClient on iOS
+        
+    Dimon4eg
+        Fixed crash on AssetsManager
 
 Retired Core Developers:
     WenSheng Yang

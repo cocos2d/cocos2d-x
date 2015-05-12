@@ -311,6 +311,7 @@ bool Sprite3D::initWithFile(const std::string& path)
             
             Sprite3DCache::getInstance()->addSprite3DData(path, data);
             CC_SAFE_DELETE(meshdatas);
+            _contentSize = getBoundingBox().size;
             return true;
         }
     }
@@ -519,7 +520,7 @@ void Sprite3D::createNode(NodeData* nodedata, Node* root, const MaterialDatas& m
         {
             if(it->bones.size() > 0 || singleSprite)
             {
-                if(singleSprite)
+                if(singleSprite && root!=nullptr)
                     root->setName(nodedata->id);
                 auto mesh = Mesh::create(nodedata->id, getMeshIndexData(it->subMeshId));
                 if(mesh)
