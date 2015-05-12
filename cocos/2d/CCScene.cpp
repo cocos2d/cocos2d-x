@@ -136,7 +136,7 @@ void Scene::onProjectionChanged(EventCustom* event)
 
 static bool camera_cmp(const Camera* a, const Camera* b)
 {
-    return a->getDepth() < b->getDepth();
+    return a->getRenderOrder() < b->getRenderOrder();
 }
 
 void Scene::render(Renderer* renderer)

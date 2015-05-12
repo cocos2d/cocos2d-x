@@ -1997,6 +1997,10 @@
 		B29A7E3F19EE1B7700872B35 /* AnimationState.h in Headers */ = {isa = PBXBuildFile; fileRef = B29A7DC619EE1B7700872B35 /* AnimationState.h */; };
 		B29A7E4019EE1B7700872B35 /* AnimationState.h in Headers */ = {isa = PBXBuildFile; fileRef = B29A7DC619EE1B7700872B35 /* AnimationState.h */; };
 		B2CC507C19776DD10041958E /* CCPhysicsJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A170721807CE7A005B8026 /* CCPhysicsJoint.cpp */; };
+		B2F0A8EB1B019A6D005B198F /* CCFrameBufferObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F0A8E91B019A6C005B198F /* CCFrameBufferObject.cpp */; };
+		B2F0A8EC1B019A6D005B198F /* CCFrameBufferObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F0A8E91B019A6C005B198F /* CCFrameBufferObject.cpp */; };
+		B2F0A8ED1B019A6D005B198F /* CCFrameBufferObject.h in Headers */ = {isa = PBXBuildFile; fileRef = B2F0A8EA1B019A6C005B198F /* CCFrameBufferObject.h */; };
+		B2F0A8EE1B019A6D005B198F /* CCFrameBufferObject.h in Headers */ = {isa = PBXBuildFile; fileRef = B2F0A8EA1B019A6C005B198F /* CCFrameBufferObject.h */; };
 		B603F1A81AC8EA0900A9579C /* CCTerrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B603F1A61AC8EA0900A9579C /* CCTerrain.cpp */; };
 		B603F1A91AC8EA0900A9579C /* CCTerrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B603F1A61AC8EA0900A9579C /* CCTerrain.cpp */; };
 		B603F1AA1AC8EA0900A9579C /* CCTerrain.h in Headers */ = {isa = PBXBuildFile; fileRef = B603F1A71AC8EA0900A9579C /* CCTerrain.h */; };
@@ -4570,6 +4574,8 @@
 		B29A7DC419EE1B7700872B35 /* Animation.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Animation.c; sourceTree = "<group>"; };
 		B29A7DC519EE1B7700872B35 /* AnimationState.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = AnimationState.c; sourceTree = "<group>"; };
 		B29A7DC619EE1B7700872B35 /* AnimationState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationState.h; sourceTree = "<group>"; };
+		B2F0A8E91B019A6C005B198F /* CCFrameBufferObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCFrameBufferObject.cpp; sourceTree = "<group>"; };
+		B2F0A8EA1B019A6C005B198F /* CCFrameBufferObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFrameBufferObject.h; sourceTree = "<group>"; };
 		B3AF019E1842FBA400A98B85 /* b2MotorJoint.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2MotorJoint.cpp; sourceTree = "<group>"; };
 		B3AF019F1842FBA400A98B85 /* b2MotorJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2MotorJoint.h; sourceTree = "<group>"; };
 		B603F1A61AC8EA0900A9579C /* CCTerrain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTerrain.cpp; sourceTree = "<group>"; };
@@ -7171,6 +7177,8 @@
 		500DC89819105D41007B91BF /* renderer */ = {
 			isa = PBXGroup;
 			children = (
+				B2F0A8E91B019A6C005B198F /* CCFrameBufferObject.cpp */,
+				B2F0A8EA1B019A6C005B198F /* CCFrameBufferObject.h */,
 				B276EF5B1988D1D500CD400F /* CCVertexIndexData.h */,
 				B276EF5C1988D1D500CD400F /* CCVertexIndexData.cpp */,
 				B276EF5D1988D1D500CD400F /* CCVertexIndexBuffer.h */,
@@ -9190,6 +9198,7 @@
 				B6CAB4351AF9AA1A00B9B856 /* btGpu3DGridBroadphase.h in Headers */,
 				50ABBE331925AB6F00A911A9 /* CCConfiguration.h in Headers */,
 				B665E2101AA80A6500DDB1C5 /* CCPUBaseForceAffector.h in Headers */,
+				B2F0A8ED1B019A6D005B198F /* CCFrameBufferObject.h in Headers */,
 				382F7ADE1AB1292A002EBECF /* CCObjectExtensionData.h in Headers */,
 				B6CAB4D51AF9AA1A00B9B856 /* SpuGatheringCollisionTask.h in Headers */,
 				15AE199519AAD39600C27E9E /* LayoutReader.h in Headers */,
@@ -9798,6 +9807,7 @@
 				B665E2D51AA80A6500DDB1C5 /* CCPUInterParticleColliderTranslator.h in Headers */,
 				1A5701C0180BCB5A0088DEC7 /* CCLabelAtlas.h in Headers */,
 				B29A7E1819EE1B7700872B35 /* Atlas.h in Headers */,
+				B2F0A8EE1B019A6D005B198F /* CCFrameBufferObject.h in Headers */,
 				50ABBE681925AB6F00A911A9 /* CCEventListenerCustom.h in Headers */,
 				B665E2AD1AA80A6500DDB1C5 /* CCPUFlockCenteringAffector.h in Headers */,
 				15AE196B19AAD35100C27E9E /* DictionaryHelper.h in Headers */,
@@ -10992,6 +11002,7 @@
 				B6CAB20B1AF9AA1A00B9B856 /* btQuantizedBvh.cpp in Sources */,
 				B6CAB5411AF9AA1A00B9B856 /* MiniCL.cpp in Sources */,
 				B29A7E3D19EE1B7700872B35 /* AnimationState.c in Sources */,
+				B2F0A8EB1B019A6D005B198F /* CCFrameBufferObject.cpp in Sources */,
 				B665E2E61AA80A6500DDB1C5 /* CCPULinearForceAffector.cpp in Sources */,
 				15AE192219AAD35000C27E9E /* DictionaryHelper.cpp in Sources */,
 				B6CAB4F51AF9AA1A00B9B856 /* btAlignedAllocator.cpp in Sources */,
@@ -11452,6 +11463,7 @@
 				15AE193A19AAD35100C27E9E /* CCArmatureDataManager.cpp in Sources */,
 				B665E21F1AA80A6500DDB1C5 /* CCPUBehaviourManager.cpp in Sources */,
 				B665E37B1AA80A6500DDB1C5 /* CCPUParticleSystem3D.cpp in Sources */,
+				B2F0A8EC1B019A6D005B198F /* CCFrameBufferObject.cpp in Sources */,
 				3EACC9A519F5014D00EB3C5E /* CCLight.cpp in Sources */,
 				15AE1B7A19AADA9A00C27E9E /* UIScrollView.cpp in Sources */,
 				1A570076180BC5A10088DEC7 /* CCActionGrid3D.cpp in Sources */,
