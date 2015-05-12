@@ -380,6 +380,8 @@
         "cocos/base/CCNS.h", 
         "cocos/base/CCProfiling.cpp", 
         "cocos/base/CCProfiling.h", 
+        "cocos/base/CCProperties.cpp", 
+        "cocos/base/CCProperties.h", 
         "cocos/base/CCProtocols.h", 
         "cocos/base/CCRef.cpp", 
         "cocos/base/CCRef.h", 
