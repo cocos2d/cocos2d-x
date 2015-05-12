@@ -105,11 +105,12 @@ public:
     /**
      * get override number of solver iterations
      */
-    int	getOverrideNumSolverIterations() const;
+    int getOverrideNumSolverIterations() const;
     
-	///override the number of constraint solver iterations used to solve this constraint
-	///-1 will use the default number of iterations, as specified in SolverInfo.m_numIterations
-	void setOverrideNumSolverIterations(int overideNumIterations);
+    /**
+     * override the number of constraint solver iterations used to solve this constraint, -1 will use the default number of iterations, as specified in SolverInfo.m_numIterations
+     */
+    void setOverrideNumSolverIterations(int overideNumIterations);
     
 #if (CC_ENABLE_BULLET_INTEGRATION)
     btTypedConstraint* getbtContraint() { return _constraint; }
@@ -156,22 +157,22 @@ public:
     /**
      * set pivot point in A's local space
      */
-    void	setPivotPointInA(const cocos2d::Vec3& pivotA);
+    void setPivotPointInA(const cocos2d::Vec3& pivotA);
     
     /**
      * set pivot point in B's local space
      */
-	void	setPivotPointInB(const cocos2d::Vec3&& pivotB);
+    void setPivotPointInB(const cocos2d::Vec3&& pivotB);
     
     /**
      * get pivot point in A's local space
      */
-	cocos2d::Vec3 getPivotPointInA() const;
+    cocos2d::Vec3 getPivotPointInA() const;
     
     /**
      * get pivot point in B's local space
      */
-	cocos2d::Vec3 getPivotPointInB() const;
+    cocos2d::Vec3 getPivotPointInB() const;
     
 CC_CONSTRUCTOR_ACCESS:
     Physics3DPointToPointConstraint();
@@ -237,64 +238,64 @@ public:
     /**
      * get rigid body B's frame offset
      */
-	cocos2d::Mat4 getFrameOffsetB() const;
+    cocos2d::Mat4 getFrameOffsetB() const;
     
     /**
      * set frames for rigid body A and B
      */
-	void setFrames(const cocos2d::Mat4& frameA, const cocos2d::Mat4& frameB);
-	
+    void setFrames(const cocos2d::Mat4& frameA, const cocos2d::Mat4& frameB);
+    
     /**
      * set angular only
      */
-	void	setAngularOnly(bool angularOnly);
+    void setAngularOnly(bool angularOnly);
     
     /** enable angular motor */
-	void	enableAngularMotor(bool enableMotor, float targetVelocity, float maxMotorImpulse);
+    void enableAngularMotor(bool enableMotor, float targetVelocity, float maxMotorImpulse);
     
-	// extra motor API, including ability to set a target rotation (as opposed to angular velocity)
-	// note: setMotorTarget sets angular velocity under the hood, so you must call it every tick to
-	//       maintain a given angular target.
-	void enableMotor(bool enableMotor);
+    // extra motor API, including ability to set a target rotation (as opposed to angular velocity)
+    // note: setMotorTarget sets angular velocity under the hood, so you must call it every tick to
+    //       maintain a given angular target.
+    void enableMotor(bool enableMotor);
     /** set max motor impulse */
-	void setMaxMotorImpulse(float maxMotorImpulse);
+    void setMaxMotorImpulse(float maxMotorImpulse);
     /**
      * set motor target
      */
-	void setMotorTarget(const cocos2d::Quaternion& qAinB, float dt);
+    void setMotorTarget(const cocos2d::Quaternion& qAinB, float dt);
     /** set motor target */
-	void setMotorTarget(float targetAngle, float dt);
+    void setMotorTarget(float targetAngle, float dt);
     
     /** set limit */
-	void	setLimit(float low, float high, float _softness = 0.9f, float _biasFactor = 0.3f, float _relaxationFactor = 1.0f);
+    void setLimit(float low, float high, float _softness = 0.9f, float _biasFactor = 0.3f, float _relaxationFactor = 1.0f);
     /**set axis*/
-	void	setAxis(const cocos2d::Vec3& axisInA);
+    void setAxis(const cocos2d::Vec3& axisInA);
     /**get lower limit*/
-	float	getLowerLimit() const;
+    float getLowerLimit() const;
     /**get upper limit*/
-	float	getUpperLimit() const;
+    float getUpperLimit() const;
     /**get hinge angle*/
-	float getHingeAngle();
+    float getHingeAngle() const;
     /**get hinge angle*/
-	float getHingeAngle(const cocos2d::Mat4& transA, const cocos2d::Mat4& transB);
+    float getHingeAngle(const cocos2d::Mat4& transA, const cocos2d::Mat4& transB);
     
     /**get A's frame */
-	cocos2d::Mat4 getAFrame();
+    cocos2d::Mat4 getAFrame() const;
     /**get B's frame*/
-	cocos2d::Mat4 getBFrame();
+    cocos2d::Mat4 getBFrame() const;
     /**get angular only*/
-	bool getAngularOnly();
+    bool getAngularOnly() const;
     /**get enable angular motor*/
-	bool getEnableAngularMotor();
+    bool getEnableAngularMotor() const;
     /**get motor target velosity*/
-	float getMotorTargetVelosity();
+    float getMotorTargetVelosity() const;
     /**get max motor impulse*/
-	float getMaxMotorImpulse();
+    float getMaxMotorImpulse() const;
     
-	/** access for UseFrameOffset*/
-	bool getUseFrameOffset();
+    /** access for UseFrameOffset*/
+    bool getUseFrameOffset() const;
     /**set use frame offset*/
-	void setUseFrameOffset(bool frameOffsetOnOff);
+    void setUseFrameOffset(bool frameOffsetOnOff);
     
 CC_CONSTRUCTOR_ACCESS:
     Physics3DHingeConstraint()
@@ -331,42 +332,42 @@ public:
     /**get B's frame offset*/
     cocos2d::Mat4 getFrameOffsetB() const;
     /**get lower linear limit*/
-    float getLowerLinLimit();
+    float getLowerLinLimit() const;
     /**set lower linear limit*/
     void setLowerLinLimit(float lowerLimit);
     /**get upper linear limit*/
-    float getUpperLinLimit();
+    float getUpperLinLimit() const;
     /**set upper linear limit*/
     void setUpperLinLimit(float upperLimit);
     /**get lower angular limit*/
-    float getLowerAngLimit();
+    float getLowerAngLimit() const;
     /**set lower angualr limit*/
     void setLowerAngLimit(float lowerLimit);
     /**get upper anglular limit*/
-    float getUpperAngLimit();
+    float getUpperAngLimit() const;
     /**set upper anglular limit*/
     void setUpperAngLimit(float upperLimit);
     /**use A's frame as linear refference*/
-	bool getUseLinearReferenceFrameA();
+    bool getUseLinearReferenceFrameA() const;
     
-    float getSoftnessDirLin();
-    float getRestitutionDirLin();
-    float getDampingDirLin();
-    float getSoftnessDirAng();
-    float getRestitutionDirAng();
-    float getDampingDirAng();
-    float getSoftnessLimLin();
-    float getRestitutionLimLin();
-    float getDampingLimLin();
-    float getSoftnessLimAng();
-    float getRestitutionLimAng();
-    float getDampingLimAng();
-    float getSoftnessOrthoLin();
-    float getRestitutionOrthoLin();
-    float getDampingOrthoLin();
-    float getSoftnessOrthoAng();
-    float getRestitutionOrthoAng();
-    float getDampingOrthoAng();
+    float getSoftnessDirLin() const;
+    float getRestitutionDirLin() const;
+    float getDampingDirLin() const;
+    float getSoftnessDirAng() const;
+    float getRestitutionDirAng() const;
+    float getDampingDirAng() const;
+    float getSoftnessLimLin() const;
+    float getRestitutionLimLin() const;
+    float getDampingLimLin() const;
+    float getSoftnessLimAng() const;
+    float getRestitutionLimAng() const;
+    float getDampingLimAng() const;
+    float getSoftnessOrthoLin() const;
+    float getRestitutionOrthoLin() const;
+    float getDampingOrthoLin() const;
+    float getSoftnessOrthoAng() const;
+    float getRestitutionOrthoAng() const;
+    float getDampingOrthoAng() const;
     void setSoftnessDirLin(float softnessDirLin);
     void setRestitutionDirLin(float restitutionDirLin);
     void setDampingDirLin(float dampingDirLin);
@@ -386,23 +387,23 @@ public:
     void setRestitutionOrthoAng(float restitutionOrthoAng);
     void setDampingOrthoAng(float dampingOrthoAng);
     void setPoweredLinMotor(bool onOff);
-    bool getPoweredLinMotor();
+    bool getPoweredLinMotor() const;
     void setTargetLinMotorVelocity(float targetLinMotorVelocity);
-    float getTargetLinMotorVelocity();
+    float getTargetLinMotorVelocity() const;
     void setMaxLinMotorForce(float maxLinMotorForce);
-    float getMaxLinMotorForce();
+    float getMaxLinMotorForce() const;
     void setPoweredAngMotor(bool onOff);
-    bool getPoweredAngMotor();
+    bool getPoweredAngMotor() const;
     void setTargetAngMotorVelocity(float targetAngMotorVelocity);
-    float getTargetAngMotorVelocity();
+    float getTargetAngMotorVelocity() const;
     void setMaxAngMotorForce(float maxAngMotorForce);
-    float getMaxAngMotorForce();
+    float getMaxAngMotorForce() const;
     
     float getLinearPos() const;
     float getAngularPos() const;
-	
-	/** access for UseFrameOffset*/
-    bool getUseFrameOffset();
+    
+    /** access for UseFrameOffset*/
+    bool getUseFrameOffset() const;
     /**set use frame offset*/
     void setUseFrameOffset(bool frameOffsetOnOff);
     
@@ -447,56 +448,56 @@ public:
      * @param biasFactor 0->1?, recommend 0.3 +/-0.3 or so. Strength with which constraint resists zeroth order (angular, not angular velocity) limit violation.
      * @param relaxationFactor 0->1, recommend to stay near 1. the lower the value, the less the constraint will fight velocities which violate the angular limits.
      */
-	void	setLimit(float swingSpan1,float swingSpan2,float twistSpan, float softness = 1.f, float biasFactor = 0.3f, float relaxationFactor = 1.0f);
+    void setLimit(float swingSpan1,float swingSpan2,float twistSpan, float softness = 1.f, float biasFactor = 0.3f, float relaxationFactor = 1.0f);
     
     /**get A's frame*/
-	cocos2d::Mat4 getAFrame();
+    cocos2d::Mat4 getAFrame() const;
     /**get B's frame*/
-	cocos2d::Mat4 getBFrame();
+    cocos2d::Mat4 getBFrame() const;
     
     /**get swing span1*/
-	float getSwingSpan1();
+    float getSwingSpan1() const;
     /**get swing span2*/
-	float getSwingSpan2();
+    float getSwingSpan2() const;
     /**get twist span*/
-	float getTwistSpan();
+    float getTwistSpan() const;
     /**get twist angle*/
-	float getTwistAngle();
+    float getTwistAngle() const;
     
     /**set damping*/
-	void setDamping(float damping);
+    void setDamping(float damping);
     
     /**enable motor*/
-	void enableMotor(bool b);
+    void enableMotor(bool b);
     /**set max motor impulse*/
-	void setMaxMotorImpulse(float maxMotorImpulse);
+    void setMaxMotorImpulse(float maxMotorImpulse);
     /**set max motor impulse normalize*/
-	void setMaxMotorImpulseNormalized(float maxMotorImpulse);
+    void setMaxMotorImpulseNormalized(float maxMotorImpulse);
     /**get fix thresh*/
-	float getFixThresh();
+    float getFixThresh() const;
     /**set fix thresh*/
-	void setFixThresh(float fixThresh);
+    void setFixThresh(float fixThresh);
     
     /**
      * setMotorTarget
      * @param q the desired rotation of bodyA wrt bodyB. Note: if q violates the joint limits, the internal target is clamped to avoid conflicting impulses (very bad for stability), also don't forget to enableMotor()
      */
-	void setMotorTarget(const btQuaternion &q);
+    void setMotorTarget(const btQuaternion &q);
     
-	/** setMotorTarget, q is the desired rotation of frameA wrt frameB in constraint space*/
-	void setMotorTargetInConstraintSpace(const btQuaternion &q);
+    /** setMotorTarget, q is the desired rotation of frameA wrt frameB in constraint space*/
+    void setMotorTargetInConstraintSpace(const btQuaternion &q);
     
     /**get point for angle*/
-	cocos2d::Vec3 GetPointForAngle(float fAngleInRadians, float fLength) const;
+    cocos2d::Vec3 GetPointForAngle(float fAngleInRadians, float fLength) const;
     
     /**set A and B's frame*/
-	virtual void setFrames(const cocos2d::Mat4& frameA, const cocos2d::Mat4& frameB);
+    virtual void setFrames(const cocos2d::Mat4& frameA, const cocos2d::Mat4& frameB);
     
     /**get A's frame offset*/
-	cocos2d::Mat4 getFrameOffsetA() const;
+    cocos2d::Mat4 getFrameOffsetA() const;
     
     /**get B's frame offset*/
-	cocos2d::Mat4 getFrameOffsetB() const;
+    cocos2d::Mat4 getFrameOffsetB() const;
     
 CC_CONSTRUCTOR_ACCESS:
     Physics3DConeTwistConstraint()
@@ -537,39 +538,39 @@ public:
     static Physics3D6DofConstraint* create(Physics3DRigidBody* rbB, const cocos2d::Mat4& frameInB, bool useLinearReferenceFrameB);
     
     /**set linear lower limit*/
-    void	setLinearLowerLimit(const cocos2d::Vec3& linearLower);
+    void setLinearLowerLimit(const cocos2d::Vec3& linearLower);
     
     /**get linear lower limit*/
-	cocos2d::Vec3	getLinearLowerLimit();
+    cocos2d::Vec3 getLinearLowerLimit() const;
     
     /**set linear upper limit*/
-	void	setLinearUpperLimit(const cocos2d::Vec3& linearUpper);
+    void setLinearUpperLimit(const cocos2d::Vec3& linearUpper);
     
     /**get linear upper limit*/
-	cocos2d::Vec3	getLinearUpperLimit();
+    cocos2d::Vec3 getLinearUpperLimit() const;
     
     /**set angular lower limit*/
-    void	setAngularLowerLimit(const cocos2d::Vec3& angularLower);
+    void setAngularLowerLimit(const cocos2d::Vec3& angularLower);
     
     /**get angular lower limit*/
-	cocos2d::Vec3	getAngularLowerLimit();
+    cocos2d::Vec3 getAngularLowerLimit() const;
     
     /**set angular upper limit*/
-    void	setAngularUpperLimit(const cocos2d::Vec3& angularUpper);
+    void setAngularUpperLimit(const cocos2d::Vec3& angularUpper);
     
     /**get angular upper limit*/
-	cocos2d::Vec3	getAngularUpperLimit();
+    cocos2d::Vec3 getAngularUpperLimit() const;
     
     /** 
      * is limited?
      * @param limitIndex first 3 are linear, next 3 are angular
      */
-    bool	isLimited(int limitIndex);
+    bool isLimited(int limitIndex) const;
     
-	/** access for UseFrameOffset*/
-	bool getUseFrameOffset();
+    /** access for UseFrameOffset*/
+    bool getUseFrameOffset() const;
     /**set use frame offset*/
-	void setUseFrameOffset(bool frameOffsetOnOff);
+    void setUseFrameOffset(bool frameOffsetOnOff) const;
 
     
 CC_CONSTRUCTOR_ACCESS:
