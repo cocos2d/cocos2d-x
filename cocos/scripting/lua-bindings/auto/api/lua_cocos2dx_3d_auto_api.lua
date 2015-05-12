@@ -12,8 +12,28 @@
 
 
 --------------------------------------------------------
+-- the cc AttachNode
+-- @field [parent=#cc] AttachNode#AttachNode AttachNode preloaded module
+
+
+--------------------------------------------------------
+-- the cc BillBoard
+-- @field [parent=#cc] BillBoard#BillBoard BillBoard preloaded module
+
+
+--------------------------------------------------------
+-- the cc Mesh
+-- @field [parent=#cc] Mesh#Mesh Mesh preloaded module
+
+
+--------------------------------------------------------
 -- the cc Skeleton3D
 -- @field [parent=#cc] Skeleton3D#Skeleton3D Skeleton3D preloaded module
+
+
+--------------------------------------------------------
+-- the cc Skybox
+-- @field [parent=#cc] Skybox#Skybox Skybox preloaded module
 
 
 --------------------------------------------------------
@@ -27,33 +47,13 @@
 
 
 --------------------------------------------------------
--- the cc Mesh
--- @field [parent=#cc] Mesh#Mesh Mesh preloaded module
-
-
---------------------------------------------------------
--- the cc AttachNode
--- @field [parent=#cc] AttachNode#AttachNode AttachNode preloaded module
-
-
---------------------------------------------------------
--- the cc BillBoard
--- @field [parent=#cc] BillBoard#BillBoard BillBoard preloaded module
+-- the cc Terrain
+-- @field [parent=#cc] Terrain#Terrain Terrain preloaded module
 
 
 --------------------------------------------------------
 -- the cc TextureCube
 -- @field [parent=#cc] TextureCube#TextureCube TextureCube preloaded module
-
-
---------------------------------------------------------
--- the cc Skybox
--- @field [parent=#cc] Skybox#Skybox Skybox preloaded module
-
-
---------------------------------------------------------
--- the cc Terrain
--- @field [parent=#cc] Terrain#Terrain Terrain preloaded module
 
 
 return nil
