@@ -12,6 +12,7 @@ cocos2d-x-3.7  ??
     [FIX]           Label: position is wrong if label content is changed after invoking `getLetter(letterIndex)`
     [FIX]           Label: shadow effect cause OpenGL error on iOS
     [FIX]           Label: outline effect doesn't match characters well
+    [FIX]           Terrain: terrain is on top of particles, particles can not be seen.
 
 cocos2d-x-3.6  Apr.30 2015
     [NEW]           3rd: update chipmunk to v 6.2.2 on Windows 8.1 Universal App
