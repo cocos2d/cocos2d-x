@@ -2691,32 +2691,6 @@
 		B6CAB5E21AF9F22300B9B856 /* DetourTileCacheBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB5871AF9F22300B9B856 /* DetourTileCacheBuilder.cpp */; };
 		B6CAB5E31AF9F22300B9B856 /* DetourTileCacheBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB5881AF9F22300B9B856 /* DetourTileCacheBuilder.h */; };
 		B6CAB5E41AF9F22300B9B856 /* DetourTileCacheBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB5881AF9F22300B9B856 /* DetourTileCacheBuilder.h */; };
-		B6CAB5E51AF9F22300B9B856 /* Recast.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB58A1AF9F22300B9B856 /* Recast.cpp */; };
-		B6CAB5E61AF9F22300B9B856 /* Recast.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB58A1AF9F22300B9B856 /* Recast.cpp */; };
-		B6CAB5E71AF9F22300B9B856 /* Recast.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB58B1AF9F22300B9B856 /* Recast.h */; };
-		B6CAB5E81AF9F22300B9B856 /* Recast.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB58B1AF9F22300B9B856 /* Recast.h */; };
-		B6CAB5E91AF9F22300B9B856 /* RecastAlloc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB58C1AF9F22300B9B856 /* RecastAlloc.cpp */; };
-		B6CAB5EA1AF9F22300B9B856 /* RecastAlloc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB58C1AF9F22300B9B856 /* RecastAlloc.cpp */; };
-		B6CAB5EB1AF9F22300B9B856 /* RecastAlloc.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB58D1AF9F22300B9B856 /* RecastAlloc.h */; };
-		B6CAB5EC1AF9F22300B9B856 /* RecastAlloc.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB58D1AF9F22300B9B856 /* RecastAlloc.h */; };
-		B6CAB5ED1AF9F22300B9B856 /* RecastArea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB58E1AF9F22300B9B856 /* RecastArea.cpp */; };
-		B6CAB5EE1AF9F22300B9B856 /* RecastArea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB58E1AF9F22300B9B856 /* RecastArea.cpp */; };
-		B6CAB5EF1AF9F22300B9B856 /* RecastAssert.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB58F1AF9F22300B9B856 /* RecastAssert.h */; };
-		B6CAB5F01AF9F22300B9B856 /* RecastAssert.h in Headers */ = {isa = PBXBuildFile; fileRef = B6CAB58F1AF9F22300B9B856 /* RecastAssert.h */; };
-		B6CAB5F11AF9F22300B9B856 /* RecastContour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB5901AF9F22300B9B856 /* RecastContour.cpp */; };
-		B6CAB5F21AF9F22300B9B856 /* RecastContour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB5901AF9F22300B9B856 /* RecastContour.cpp */; };
-		B6CAB5F31AF9F22300B9B856 /* RecastFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB5911AF9F22300B9B856 /* RecastFilter.cpp */; };
-		B6CAB5F41AF9F22300B9B856 /* RecastFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB5911AF9F22300B9B856 /* RecastFilter.cpp */; };
-		B6CAB5F51AF9F22300B9B856 /* RecastLayers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB5921AF9F22300B9B856 /* RecastLayers.cpp */; };
-		B6CAB5F61AF9F22300B9B856 /* RecastLayers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB5921AF9F22300B9B856 /* RecastLayers.cpp */; };
-		B6CAB5F71AF9F22300B9B856 /* RecastMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB5931AF9F22300B9B856 /* RecastMesh.cpp */; };
-		B6CAB5F81AF9F22300B9B856 /* RecastMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB5931AF9F22300B9B856 /* RecastMesh.cpp */; };
-		B6CAB5F91AF9F22300B9B856 /* RecastMeshDetail.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB5941AF9F22300B9B856 /* RecastMeshDetail.cpp */; };
-		B6CAB5FA1AF9F22300B9B856 /* RecastMeshDetail.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB5941AF9F22300B9B856 /* RecastMeshDetail.cpp */; };
-		B6CAB5FB1AF9F22300B9B856 /* RecastRasterization.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB5951AF9F22300B9B856 /* RecastRasterization.cpp */; };
-		B6CAB5FC1AF9F22300B9B856 /* RecastRasterization.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB5951AF9F22300B9B856 /* RecastRasterization.cpp */; };
-		B6CAB5FD1AF9F22300B9B856 /* RecastRegion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB5961AF9F22300B9B856 /* RecastRegion.cpp */; };
-		B6CAB5FE1AF9F22300B9B856 /* RecastRegion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6CAB5961AF9F22300B9B856 /* RecastRegion.cpp */; };
 		B6D38B8A1AC3AFAC00043997 /* CCSkybox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6D38B861AC3AFAC00043997 /* CCSkybox.cpp */; };
 		B6D38B8B1AC3AFAC00043997 /* CCSkybox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6D38B861AC3AFAC00043997 /* CCSkybox.cpp */; };
 		B6D38B8C1AC3AFAC00043997 /* CCSkybox.h in Headers */ = {isa = PBXBuildFile; fileRef = B6D38B871AC3AFAC00043997 /* CCSkybox.h */; };
@@ -4200,19 +4174,6 @@
 		B6CAB5861AF9F22300B9B856 /* DetourTileCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetourTileCache.h; sourceTree = "<group>"; };
 		B6CAB5871AF9F22300B9B856 /* DetourTileCacheBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DetourTileCacheBuilder.cpp; sourceTree = "<group>"; };
 		B6CAB5881AF9F22300B9B856 /* DetourTileCacheBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetourTileCacheBuilder.h; sourceTree = "<group>"; };
-		B6CAB58A1AF9F22300B9B856 /* Recast.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Recast.cpp; sourceTree = "<group>"; };
-		B6CAB58B1AF9F22300B9B856 /* Recast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recast.h; sourceTree = "<group>"; };
-		B6CAB58C1AF9F22300B9B856 /* RecastAlloc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecastAlloc.cpp; sourceTree = "<group>"; };
-		B6CAB58D1AF9F22300B9B856 /* RecastAlloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecastAlloc.h; sourceTree = "<group>"; };
-		B6CAB58E1AF9F22300B9B856 /* RecastArea.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecastArea.cpp; sourceTree = "<group>"; };
-		B6CAB58F1AF9F22300B9B856 /* RecastAssert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecastAssert.h; sourceTree = "<group>"; };
-		B6CAB5901AF9F22300B9B856 /* RecastContour.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecastContour.cpp; sourceTree = "<group>"; };
-		B6CAB5911AF9F22300B9B856 /* RecastFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecastFilter.cpp; sourceTree = "<group>"; };
-		B6CAB5921AF9F22300B9B856 /* RecastLayers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecastLayers.cpp; sourceTree = "<group>"; };
-		B6CAB5931AF9F22300B9B856 /* RecastMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecastMesh.cpp; sourceTree = "<group>"; };
-		B6CAB5941AF9F22300B9B856 /* RecastMeshDetail.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecastMeshDetail.cpp; sourceTree = "<group>"; };
-		B6CAB5951AF9F22300B9B856 /* RecastRasterization.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecastRasterization.cpp; sourceTree = "<group>"; };
-		B6CAB5961AF9F22300B9B856 /* RecastRegion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RecastRegion.cpp; sourceTree = "<group>"; };
 		B6D38B861AC3AFAC00043997 /* CCSkybox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSkybox.cpp; sourceTree = "<group>"; };
 		B6D38B871AC3AFAC00043997 /* CCSkybox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSkybox.h; sourceTree = "<group>"; };
 		B6D38B881AC3AFAC00043997 /* CCTextureCube.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCTextureCube.cpp; sourceTree = "<group>"; };
@@ -6822,7 +6783,6 @@
 				B6CAB5671AF9F22300B9B856 /* Detour */,
 				B6CAB5771AF9F22300B9B856 /* DetourCrowd */,
 				B6CAB5841AF9F22300B9B856 /* DetourTileCache */,
-				B6CAB5891AF9F22300B9B856 /* Recast */,
 			);
 			name = recast;
 			sourceTree = "<group>";
@@ -6896,27 +6856,6 @@
 			);
 			name = DetourTileCache;
 			path = ../external/recast/DetourTileCache;
-			sourceTree = "<group>";
-		};
-		B6CAB5891AF9F22300B9B856 /* Recast */ = {
-			isa = PBXGroup;
-			children = (
-				B6CAB58A1AF9F22300B9B856 /* Recast.cpp */,
-				B6CAB58B1AF9F22300B9B856 /* Recast.h */,
-				B6CAB58C1AF9F22300B9B856 /* RecastAlloc.cpp */,
-				B6CAB58D1AF9F22300B9B856 /* RecastAlloc.h */,
-				B6CAB58E1AF9F22300B9B856 /* RecastArea.cpp */,
-				B6CAB58F1AF9F22300B9B856 /* RecastAssert.h */,
-				B6CAB5901AF9F22300B9B856 /* RecastContour.cpp */,
-				B6CAB5911AF9F22300B9B856 /* RecastFilter.cpp */,
-				B6CAB5921AF9F22300B9B856 /* RecastLayers.cpp */,
-				B6CAB5931AF9F22300B9B856 /* RecastMesh.cpp */,
-				B6CAB5941AF9F22300B9B856 /* RecastMeshDetail.cpp */,
-				B6CAB5951AF9F22300B9B856 /* RecastRasterization.cpp */,
-				B6CAB5961AF9F22300B9B856 /* RecastRegion.cpp */,
-			);
-			name = Recast;
-			path = ../external/recast/Recast;
 			sourceTree = "<group>";
 		};
 		D0FD03391A3B51AA00825BB5 /* allocator */ = {
@@ -7030,7 +6969,6 @@
 				50ABBEC11925AB6F00A911A9 /* CCValue.h in Headers */,
 				B276EF631988D1D500CD400F /* CCVertexIndexBuffer.h in Headers */,
 				B29A7DE519EE1B7700872B35 /* SkeletonAnimation.h in Headers */,
-				B6CAB5E71AF9F22300B9B856 /* Recast.h in Headers */,
 				50ABBE871925AB6F00A911A9 /* ccMacros.h in Headers */,
 				B665E32C1AA80A6500DDB1C5 /* CCPUOnCountObserver.h in Headers */,
 				15B3708A19EE414C00ABE682 /* Manifest.h in Headers */,
@@ -7100,7 +7038,6 @@
 				50ABBDB71925AB4100A911A9 /* CCTexture2D.h in Headers */,
 				50ABBE811925AB6F00A911A9 /* CCEventType.h in Headers */,
 				B665E2B81AA80A6500DDB1C5 /* CCPUForceFieldAffector.h in Headers */,
-				B6CAB5EB1AF9F22300B9B856 /* RecastAlloc.h in Headers */,
 				1A57008F180BC5A10088DEC7 /* CCActionTiledGrid.h in Headers */,
 				15AE19A319AAD39600C27E9E /* TextBMFontReader.h in Headers */,
 				B665E4041AA80A6600DDB1C5 /* CCPUSphereColliderTranslator.h in Headers */,
@@ -7282,7 +7219,6 @@
 				15AE1A6719AAD40300C27E9E /* b2World.h in Headers */,
 				15AE199B19AAD39600C27E9E /* PageViewReader.h in Headers */,
 				B665E2A41AA80A6500DDB1C5 /* CCPUEventHandlerManager.h in Headers */,
-				B6CAB5EF1AF9F22300B9B856 /* RecastAssert.h in Headers */,
 				15AE1A6219AAD40300C27E9E /* b2Fixture.h in Headers */,
 				B665E43C1AA80A6600DDB1C5 /* CCPUVortexAffectorTranslator.h in Headers */,
 				15AE191C19AAD35000C27E9E /* CCTransformHelp.h in Headers */,
@@ -7663,7 +7599,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B6CAB5EC1AF9F22300B9B856 /* RecastAlloc.h in Headers */,
 				503DD8F01926736A00CD74DD /* CCStdC-ios.h in Headers */,
 				15AE1A9A19AAD40300C27E9E /* b2Math.h in Headers */,
 				B665E3851AA80A6500DDB1C5 /* CCPUPathFollower.h in Headers */,
@@ -7864,7 +7799,6 @@
 				50ABBE8A1925AB6F00A911A9 /* CCMap.h in Headers */,
 				B665E32D1AA80A6500DDB1C5 /* CCPUOnCountObserver.h in Headers */,
 				503DD8E61926736A00CD74DD /* CCEAGLView-ios.h in Headers */,
-				B6CAB5E81AF9F22300B9B856 /* Recast.h in Headers */,
 				50ABBE4C1925AB6F00A911A9 /* CCEventAcceleration.h in Headers */,
 				B665E2F91AA80A6500DDB1C5 /* CCPUListener.h in Headers */,
 				50ABBD571925AB0000A911A9 /* TransformUtils.h in Headers */,
@@ -8343,7 +8277,6 @@
 				501216A31AC473AD009A4BEA /* CCMaterial.h in Headers */,
 				B665E20D1AA80A6500DDB1C5 /* CCPUBaseColliderTranslator.h in Headers */,
 				1A01C68D18F57BE800EFE3A6 /* CCDeprecated.h in Headers */,
-				B6CAB5F01AF9F22300B9B856 /* RecastAssert.h in Headers */,
 				B665E2E91AA80A6500DDB1C5 /* CCPULinearForceAffector.h in Headers */,
 				382384321A259112002C4610 /* ParticleReader.h in Headers */,
 				B665E28D1AA80A6500DDB1C5 /* CCPUDynamicAttribute.h in Headers */,
@@ -8647,7 +8580,6 @@
 				38B8E2E119E671D2002D7CE7 /* UILayoutComponent.cpp in Sources */,
 				B665E3F61AA80A6600DDB1C5 /* CCPUSlaveEmitterTranslator.cpp in Sources */,
 				1A57019D180BCB590088DEC7 /* CCFont.cpp in Sources */,
-				B6CAB5F11AF9F22300B9B856 /* RecastContour.cpp in Sources */,
 				50CB247B19D9C5A100687767 /* AudioEngine-inl.mm in Sources */,
 				1A5701A1180BCB590088DEC7 /* CCFontAtlas.cpp in Sources */,
 				B29A7DFF19EE1B7700872B35 /* Json.c in Sources */,
@@ -8724,7 +8656,6 @@
 				B665E29A1AA80A6500DDB1C5 /* CCPUEmitterTranslator.cpp in Sources */,
 				1A5701EA180BCB8C0088DEC7 /* CCTransitionPageTurn.cpp in Sources */,
 				15AE186B19AAD31D00C27E9E /* SimpleAudioEngine.mm in Sources */,
-				B6CAB5FD1AF9F22300B9B856 /* RecastRegion.cpp in Sources */,
 				B665E2CE1AA80A6500DDB1C5 /* CCPUInterParticleCollider.cpp in Sources */,
 				50ABBDAD1925AB4100A911A9 /* CCRenderer.cpp in Sources */,
 				15AE199019AAD37200C27E9E /* ImageViewReader.cpp in Sources */,
@@ -8801,7 +8732,6 @@
 				15AE190F19AAD35000C27E9E /* CCInputDelegate.cpp in Sources */,
 				15AE181A19AAD2F700C27E9E /* CCBundle3D.cpp in Sources */,
 				B665E3BE1AA80A6500DDB1C5 /* CCPUScaleAffector.cpp in Sources */,
-				B6CAB5ED1AF9F22300B9B856 /* RecastArea.cpp in Sources */,
 				15B3708019EE414C00ABE682 /* CCEventListenerAssetsManagerEx.cpp in Sources */,
 				1A570292180BCCAB0088DEC7 /* CCAnimation.cpp in Sources */,
 				B665E3421AA80A6500DDB1C5 /* CCPUOnExpireObserver.cpp in Sources */,
@@ -8864,7 +8794,6 @@
 				B6CAB5A31AF9F22300B9B856 /* RecastDump.cpp in Sources */,
 				B665E2BE1AA80A6500DDB1C5 /* CCPUGeometryRotator.cpp in Sources */,
 				3823841A1A2590D2002C4610 /* ComAudioReader.cpp in Sources */,
-				B6CAB5F71AF9F22300B9B856 /* RecastMesh.cpp in Sources */,
 				15AE1BC519AAE00000C27E9E /* AssetsManager.cpp in Sources */,
 				50ABBD5C1925AB0000A911A9 /* Vec3.cpp in Sources */,
 				1A570300180BCE890088DEC7 /* CCParallaxNode.cpp in Sources */,
@@ -8888,7 +8817,6 @@
 				15AE190719AAD35000C27E9E /* CCDatas.cpp in Sources */,
 				1A01C69C18F57BE800EFE3A6 /* CCString.cpp in Sources */,
 				B665E2721AA80A6500DDB1C5 /* CCPUDoPlacementParticleEventHandler.cpp in Sources */,
-				B6CAB5E51AF9F22300B9B856 /* Recast.cpp in Sources */,
 				50ABBD3C1925AB0000A911A9 /* CCGeometry.cpp in Sources */,
 				15FB206A1AE7BE7400C31518 /* SpritePolygon.cpp in Sources */,
 				B29A7DDD19EE1B7700872B35 /* BoneData.c in Sources */,
@@ -8910,7 +8838,6 @@
 				15AE196E19AAD35700C27E9E /* CCActionTimelineCache.cpp in Sources */,
 				50ABBEB31925AB6F00A911A9 /* CCUserDefault-apple.mm in Sources */,
 				50ABBEB51925AB6F00A911A9 /* CCUserDefault-android.cpp in Sources */,
-				B6CAB5F51AF9F22300B9B856 /* RecastLayers.cpp in Sources */,
 				5E9F61261A3FFE3D0038DE01 /* CCFrustum.cpp in Sources */,
 				B665E4221AA80A6600DDB1C5 /* CCPUTranslateManager.cpp in Sources */,
 				B665E38E1AA80A6500DDB1C5 /* CCPUPlaneCollider.cpp in Sources */,
@@ -8918,7 +8845,6 @@
 				B665E3661AA80A6500DDB1C5 /* CCPUOnTimeObserverTranslator.cpp in Sources */,
 				B665E4361AA80A6600DDB1C5 /* CCPUVortexAffector.cpp in Sources */,
 				B665E3DE1AA80A6600DDB1C5 /* CCPUSimpleSpline.cpp in Sources */,
-				B6CAB5E91AF9F22300B9B856 /* RecastAlloc.cpp in Sources */,
 				B665E22E1AA80A6500DDB1C5 /* CCPUBoxColliderTranslator.cpp in Sources */,
 				29394CF619B01DBA00D2DE1A /* UIWebViewImpl-ios.mm in Sources */,
 				382383FC1A258FA7002C4610 /* idl_gen_text.cpp in Sources */,
@@ -9029,9 +8955,7 @@
 				15AE1B4F19AADA9900C27E9E /* UILoadingBar.cpp in Sources */,
 				B665E2BA1AA80A6500DDB1C5 /* CCPUForceFieldAffectorTranslator.cpp in Sources */,
 				299754F4193EC95400A54AC3 /* ObjectFactory.cpp in Sources */,
-				B6CAB5F31AF9F22300B9B856 /* RecastFilter.cpp in Sources */,
 				15AE1A7E19AAD40300C27E9E /* b2DistanceJoint.cpp in Sources */,
-				B6CAB5F91AF9F22300B9B856 /* RecastMeshDetail.cpp in Sources */,
 				15AE190919AAD35000C27E9E /* CCDecorativeDisplay.cpp in Sources */,
 				B665E40E1AA80A6600DDB1C5 /* CCPUTechniqueTranslator.cpp in Sources */,
 				B665E21E1AA80A6500DDB1C5 /* CCPUBehaviourManager.cpp in Sources */,
@@ -9039,7 +8963,6 @@
 				15AE1BA119AADFDF00C27E9E /* UILayoutParameter.cpp in Sources */,
 				50ABC0211926664800A911A9 /* CCGLViewImpl-desktop.cpp in Sources */,
 				B6CAB5B71AF9F22300B9B856 /* DetourNavMeshBuilder.cpp in Sources */,
-				B6CAB5FB1AF9F22300B9B856 /* RecastRasterization.cpp in Sources */,
 				50ABC00D1926664800A911A9 /* CCFileUtils.cpp in Sources */,
 				50ABBE4D1925AB6F00A911A9 /* CCEventCustom.cpp in Sources */,
 				15AE1A6819AAD40300C27E9E /* b2WorldCallbacks.cpp in Sources */,
@@ -9107,7 +9030,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B6CAB5EE1AF9F22300B9B856 /* RecastArea.cpp in Sources */,
 				D0FD03541A3B51AA00825BB5 /* CCAllocatorGlobalNewDelete.cpp in Sources */,
 				15AE1B9819AADAA100C27E9E /* UIVideoPlayer-ios.mm in Sources */,
 				B665E38F1AA80A6500DDB1C5 /* CCPUPlaneCollider.cpp in Sources */,
@@ -9131,7 +9053,6 @@
 				50ABC0161926664800A911A9 /* CCImage.cpp in Sources */,
 				B665E3AB1AA80A6500DDB1C5 /* CCPURandomiserTranslator.cpp in Sources */,
 				1A01C6A518F58F7500EFE3A6 /* CCNotificationCenter.cpp in Sources */,
-				B6CAB5F81AF9F22300B9B856 /* RecastMesh.cpp in Sources */,
 				292DB14E19B4574100A80320 /* UIEditBoxImpl-mac.mm in Sources */,
 				B665E3A71AA80A6500DDB1C5 /* CCPURandomiser.cpp in Sources */,
 				15AE1BFB19AAE01E00C27E9E /* CCControlUtils.cpp in Sources */,
@@ -9213,7 +9134,6 @@
 				15AE198E19AAD36E00C27E9E /* CheckBoxReader.cpp in Sources */,
 				50ABBE621925AB6F00A911A9 /* CCEventListenerAcceleration.cpp in Sources */,
 				B665E2C71AA80A6500DDB1C5 /* CCPUGravityAffector.cpp in Sources */,
-				B6CAB5F41AF9F22300B9B856 /* RecastFilter.cpp in Sources */,
 				B665E2E31AA80A6500DDB1C5 /* CCPULineAffectorTranslator.cpp in Sources */,
 				15AE1AB619AAD40300C27E9E /* b2ContactSolver.cpp in Sources */,
 				292DB13E19B4574100A80320 /* UIEditBox.cpp in Sources */,
@@ -9321,7 +9241,6 @@
 				1A57009F180BC5D20088DEC7 /* CCNode.cpp in Sources */,
 				1A57010F180BC8EE0088DEC7 /* CCDrawingPrimitives.cpp in Sources */,
 				B665E3F31AA80A6600DDB1C5 /* CCPUSlaveEmitter.cpp in Sources */,
-				B6CAB5EA1AF9F22300B9B856 /* RecastAlloc.cpp in Sources */,
 				1A570113180BC8EE0088DEC7 /* CCDrawNode.cpp in Sources */,
 				1A57011C180BC90D0088DEC7 /* CCGrabber.cpp in Sources */,
 				382384301A259112002C4610 /* ParticleReader.cpp in Sources */,
@@ -9329,7 +9248,6 @@
 				1A570120180BC90D0088DEC7 /* CCGrid.cpp in Sources */,
 				15AE181119AAD2F700C27E9E /* CCAnimation3D.cpp in Sources */,
 				5E9F612B1A3FFE3D0038DE01 /* CCPlane.cpp in Sources */,
-				B6CAB5F21AF9F22300B9B856 /* RecastContour.cpp in Sources */,
 				1A57019E180BCB590088DEC7 /* CCFont.cpp in Sources */,
 				15AE1ACC19AAD40300C27E9E /* b2PrismaticJoint.cpp in Sources */,
 				15AE195F19AAD35100C27E9E /* CCSpriteFrameCacheHelper.cpp in Sources */,
@@ -9353,7 +9271,6 @@
 				1A5701A6180BCB590088DEC7 /* CCFontAtlasCache.cpp in Sources */,
 				15AE192B19AAD35100C27E9E /* TriggerObj.cpp in Sources */,
 				4D76BE3B1A4AAF0A00102962 /* CCActionTimelineNode.cpp in Sources */,
-				B6CAB5E61AF9F22300B9B856 /* Recast.cpp in Sources */,
 				15AE198519AAD36400C27E9E /* WidgetReader.cpp in Sources */,
 				B665E36B1AA80A6500DDB1C5 /* CCPUOnVelocityObserver.cpp in Sources */,
 				B665E3171AA80A6500DDB1C5 /* CCPUObserverTranslator.cpp in Sources */,
@@ -9367,7 +9284,6 @@
 				B665E40F1AA80A6600DDB1C5 /* CCPUTechniqueTranslator.cpp in Sources */,
 				292DB16019B461CA00A80320 /* ExtensionDeprecated.cpp in Sources */,
 				50ABBEAC1925AB6F00A911A9 /* ccTypes.cpp in Sources */,
-				B6CAB5F61AF9F22300B9B856 /* RecastLayers.cpp in Sources */,
 				15AE196A19AAD35100C27E9E /* DictionaryHelper.cpp in Sources */,
 				B665E26B1AA80A6500DDB1C5 /* CCPUDoFreezeEventHandler.cpp in Sources */,
 				15AE1A3F19AAD3D500C27E9E /* b2Collision.cpp in Sources */,
@@ -9461,7 +9377,6 @@
 				B603F1A91AC8EA0900A9579C /* CCTerrain.cpp in Sources */,
 				B665E3CF1AA80A6600DDB1C5 /* CCPUScriptCompiler.cpp in Sources */,
 				1A57022A180BCC1A0088DEC7 /* CCParticleSystem.cpp in Sources */,
-				B6CAB5FE1AF9F22300B9B856 /* RecastRegion.cpp in Sources */,
 				15AE182919AAD2F700C27E9E /* CCMeshSkin.cpp in Sources */,
 				3EACC9A119F5014D00EB3C5E /* CCCamera.cpp in Sources */,
 				B665E3E71AA80A6600DDB1C5 /* CCPUSineForceAffectorTranslator.cpp in Sources */,
@@ -9598,7 +9513,6 @@
 				15AE18BB19AAD33D00C27E9E /* CCControlLoader.cpp in Sources */,
 				15AE19B819AAD39700C27E9E /* TextFieldReader.cpp in Sources */,
 				B665E29B1AA80A6500DDB1C5 /* CCPUEmitterTranslator.cpp in Sources */,
-				B6CAB5FA1AF9F22300B9B856 /* RecastMeshDetail.cpp in Sources */,
 				382384101A259092002C4610 /* NodeReaderDefine.cpp in Sources */,
 				15AE195B19AAD35100C27E9E /* CCSGUIReader.cpp in Sources */,
 				50ABBD881925AB4100A911A9 /* CCCustomCommand.cpp in Sources */,
@@ -9737,7 +9651,6 @@
 				B665E31F1AA80A6500DDB1C5 /* CCPUOnClearObserverTranslator.cpp in Sources */,
 				B665E4331AA80A6600DDB1C5 /* CCPUVertexEmitter.cpp in Sources */,
 				B665E3C71AA80A6600DDB1C5 /* CCPUScaleVelocityAffector.cpp in Sources */,
-				B6CAB5FC1AF9F22300B9B856 /* RecastRasterization.cpp in Sources */,
 				50ABBED01925AB6F00A911A9 /* TGAlib.cpp in Sources */,
 				1A01C68518F57BE800EFE3A6 /* CCArray.cpp in Sources */,
 				B6CAB5D21AF9F22300B9B856 /* DetourPathCorridor.cpp in Sources */,
