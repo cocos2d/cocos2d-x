@@ -26,6 +26,7 @@
 #include <string>
 #include <functional>
 #include <cstdint>
+#include <list>
 
 #include "renderer/CCTexture2D.h"
 #include "platform/CCPlatformMacros.h"
@@ -156,7 +157,7 @@ class Data;
  * of a property. If the type is unknown, its string can be retrieved and interpreted
  * as necessary.
  */
-class Properties
+class CC_DLL Properties
 {
     friend class Game;
 
