@@ -570,7 +570,7 @@ void Mesh::setLightUniforms(GLProgramState* glProgramState, Scene* scene, const 
             glProgramState->setUniformFloatv(s_spotLightUniformRangeInverseName, &s_spotLightUniformRangeInverseValues[0], s_spotLightUniformRangeInverseValues.size());
         }
 
-            glProgramState->setUniformVec3(s_ambientLightUniformColorName, Vec3(ambientColor.x, ambientColor.y, ambientColor.z));
+        glProgramState->setUniformVec3(s_ambientLightUniformColorName, Vec3(ambientColor.x, ambientColor.y, ambientColor.z));
     }
     else // normal does not exist
     {
