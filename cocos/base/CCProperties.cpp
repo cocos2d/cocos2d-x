@@ -97,7 +97,7 @@ Properties::Properties(Data* data, ssize_t* dataIdx)
     rewind();
 }
 
-Properties::Properties(Data* data, ssize_t* dataIdx, const char* name, const char* id, const char* parentID, Properties* parent)
+Properties::Properties(Data* data, ssize_t* dataIdx, const std::string& name, const char* id, const char* parentID, Properties* parent)
     : _namespace(name), _variables(NULL), _dirPath(NULL), _parent(parent), _dataIdx(dataIdx), _data(data)
 {
     if (id)

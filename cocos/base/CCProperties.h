@@ -567,7 +567,7 @@ private:
     /**
      * Constructor. Read from the beginning of namespace specified.
      */
-    Properties(Data* data, ssize_t* dataIdx, const char* name, const char* id, const char* parentID, Properties* parent);
+    Properties(Data* data, ssize_t* dataIdx, const std::string& name, const char* id, const char* parentID, Properties* parent);
 
     // Data manipulation methods
     void readProperties();
