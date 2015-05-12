@@ -4,6 +4,7 @@
 #include "SimpleAudioEngine.h"
 #include "CCProtectedNode.h"
 #include "CCAsyncTaskPool.h"
+#include "SpritePolygonCache.h"
 
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -65934,6 +65935,202 @@ void js_register_cocos2dx_SimpleAudioEngine(JSContext *cx, JS::HandleObject glob
     }
 }
 
+JSClass  *jsb_cocos2d_SpritePolygonCache_class;
+JSObject *jsb_cocos2d_SpritePolygonCache_prototype;
+
+bool js_cocos2dx_SpritePolygonCache_isSpritePolygonCachExist(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::SpritePolygonCache* cobj = (cocos2d::SpritePolygonCache *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpritePolygonCache_isSpritePolygonCachExist : Invalid Native Object");
+    if (argc == 2) {
+        std::string arg0;
+        cocos2d::Rect arg1;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        ok &= jsval_to_ccrect(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpritePolygonCache_isSpritePolygonCachExist : Error processing arguments");
+        bool ret = cobj->isSpritePolygonCachExist(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_SpritePolygonCache_isSpritePolygonCachExist : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
+bool js_cocos2dx_SpritePolygonCache_removeAllSpritePolygonCache(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::SpritePolygonCache* cobj = (cocos2d::SpritePolygonCache *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpritePolygonCache_removeAllSpritePolygonCache : Invalid Native Object");
+    if (argc == 0) {
+        cobj->removeAllSpritePolygonCache();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_SpritePolygonCache_removeAllSpritePolygonCache : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_SpritePolygonCache_removeSpritePolygonCache(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::SpritePolygonCache* cobj = (cocos2d::SpritePolygonCache *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpritePolygonCache_removeSpritePolygonCache : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpritePolygonCache_removeSpritePolygonCache : Error processing arguments");
+        cobj->removeSpritePolygonCache(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+    if (argc == 2) {
+        std::string arg0;
+        const cocos2d::Rect* arg1;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        do {
+            if (!args.get(1).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(1).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg1 = (const cocos2d::Rect*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpritePolygonCache_removeSpritePolygonCache : Error processing arguments");
+        cobj->removeSpritePolygonCache(arg0, arg1);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_SpritePolygonCache_removeSpritePolygonCache : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_SpritePolygonCache_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 0) {
+        cocos2d::SpritePolygonCache::destroyInstance();
+        args.rval().setUndefined();
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_SpritePolygonCache_destroyInstance : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_SpritePolygonCache_printInfo(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        cocos2d::_SpritePolygonInfo arg0;
+        #pragma warning NO CONVERSION TO NATIVE FOR _SpritePolygonInfo
+		ok = false;
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_SpritePolygonCache_printInfo : Error processing arguments");
+        cocos2d::SpritePolygonCache::printInfo(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_SpritePolygonCache_printInfo : wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_SpritePolygonCache_getInstance(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    if (argc == 0) {
+        cocos2d::SpritePolygonCache* ret = cocos2d::SpritePolygonCache::getInstance();
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::SpritePolygonCache>(cx, (cocos2d::SpritePolygonCache*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_SpritePolygonCache_getInstance : wrong number of arguments");
+    return false;
+}
+
+
+
+void js_cocos2d_SpritePolygonCache_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (SpritePolygonCache)", obj);
+}
+
+void js_register_cocos2dx_SpritePolygonCache(JSContext *cx, JS::HandleObject global) {
+    jsb_cocos2d_SpritePolygonCache_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_cocos2d_SpritePolygonCache_class->name = "SpritePolygonCache";
+    jsb_cocos2d_SpritePolygonCache_class->addProperty = JS_PropertyStub;
+    jsb_cocos2d_SpritePolygonCache_class->delProperty = JS_DeletePropertyStub;
+    jsb_cocos2d_SpritePolygonCache_class->getProperty = JS_PropertyStub;
+    jsb_cocos2d_SpritePolygonCache_class->setProperty = JS_StrictPropertyStub;
+    jsb_cocos2d_SpritePolygonCache_class->enumerate = JS_EnumerateStub;
+    jsb_cocos2d_SpritePolygonCache_class->resolve = JS_ResolveStub;
+    jsb_cocos2d_SpritePolygonCache_class->convert = JS_ConvertStub;
+    jsb_cocos2d_SpritePolygonCache_class->finalize = js_cocos2d_SpritePolygonCache_finalize;
+    jsb_cocos2d_SpritePolygonCache_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("isSpritePolygonCachExist", js_cocos2dx_SpritePolygonCache_isSpritePolygonCachExist, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("removeAllSpritePolygonCache", js_cocos2dx_SpritePolygonCache_removeAllSpritePolygonCache, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("removeSpritePolygonCache", js_cocos2dx_SpritePolygonCache_removeSpritePolygonCache, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("destroyInstance", js_cocos2dx_SpritePolygonCache_destroyInstance, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("printInfo", js_cocos2dx_SpritePolygonCache_printInfo, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getInstance", js_cocos2dx_SpritePolygonCache_getInstance, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_cocos2d_SpritePolygonCache_prototype = JS_InitClass(
+        cx, global,
+        JS::NullPtr(), // parent proto
+        jsb_cocos2d_SpritePolygonCache_class,
+        empty_constructor, 0,
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27 
+//  JS_SetPropertyAttributes(cx, global, "SpritePolygonCache", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<cocos2d::SpritePolygonCache> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_cocos2d_SpritePolygonCache_class;
+        p->proto = jsb_cocos2d_SpritePolygonCache_prototype;
+        p->parentProto = NULL;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
+
 void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj) {
     // Get the ns
     JS::RootedObject ns(cx);
@@ -66131,6 +66328,7 @@ void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj) {
     js_register_cocos2dx_TransitionSlideInL(cx, ns);
     js_register_cocos2dx_TransitionSlideInT(cx, ns);
     js_register_cocos2dx_Grid3D(cx, ns);
+    js_register_cocos2dx_SpritePolygonCache(cx, ns);
     js_register_cocos2dx_EaseCircleActionOut(cx, ns);
     js_register_cocos2dx_TransitionProgressInOut(cx, ns);
     js_register_cocos2dx_EaseCubicActionInOut(cx, ns);

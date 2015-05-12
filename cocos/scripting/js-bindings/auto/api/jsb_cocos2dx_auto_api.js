@@ -21649,3 +21649,72 @@ getInstance : function (
 },
 
 };
+
+/**
+ * @class SpritePolygonCache
+ */
+cc.SpritePolygonCache = {
+
+/**
+ * @method isSpritePolygonCachExist
+ * @param {String} arg0
+ * @param {rect_object} arg1
+ * @return {bool}
+ */
+isSpritePolygonCachExist : function (
+str, 
+rect 
+)
+{
+    return false;
+},
+
+/**
+ * @method removeAllSpritePolygonCache
+ */
+removeAllSpritePolygonCache : function (
+)
+{
+},
+
+/**
+ * @method removeSpritePolygonCache
+ * @param {String} arg0
+ * @param {rect_object} arg1
+ */
+removeSpritePolygonCache : function (
+str, 
+rect 
+)
+{
+},
+
+/**
+ * @method destroyInstance
+ */
+destroyInstance : function (
+)
+{
+},
+
+/**
+ * @method printInfo
+ * @param {cc._SpritePolygonInfo} arg0
+ */
+printInfo : function (
+_spritepolygoninfo 
+)
+{
+},
+
+/**
+ * @method getInstance
+ * @return {cc.SpritePolygonCache}
+ */
+getInstance : function (
+)
+{
+    return cc.SpritePolygonCache;
+},
+
+};
