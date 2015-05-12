@@ -29,8 +29,8 @@ THE SOFTWARE.
 #define __COCOS2D_H__
 
 // 0x00 HI ME LO
-// 00   03 03 00
-#define COCOS2D_VERSION 0x00030600
+// 00   03 07 00
+#define COCOS2D_VERSION 0x00030700
 
 //
 // all cocos2d include files
@@ -61,6 +61,7 @@ THE SOFTWARE.
 #include "base/CCIMEDelegate.h"
 #include "base/CCIMEDispatcher.h"
 #include "base/ccUtils.h"
+#include "base/CCAsyncTaskPool.h"
 
 // EventDispatcher
 #include "base/CCEventType.h"
@@ -163,6 +164,10 @@ THE SOFTWARE.
 #include "renderer/CCPrimitive.h"
 #include "renderer/CCPrimitiveCommand.h"
 #include "renderer/CCTrianglesCommand.h"
+#include "renderer/CCMaterial.h"
+#include "renderer/CCTechnique.h"
+#include "renderer/CCPass.h"
+#include "renderer/CCRenderState.h"
 
 // physics
 #include "physics/CCPhysicsBody.h"
@@ -229,14 +234,6 @@ THE SOFTWARE.
 	#include "platform/winrt/CCGL.h"
 	#include "platform/winrt/CCStdC.h"
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	#include "platform/winrt/CCApplication.h"
-	#include "platform/wp8/CCGLViewImpl-wp8.h"
-	#include "platform/winrt/CCGL.h"
-	#include "platform/winrt/CCStdC.h"
-	#include "platform/winrt/CCPrecompiledShaders.h"
-#endif // CC_TARGET_PLATFORM == CC_PLATFORM_WP8
 
 // script_support
 #include "base/CCScriptSupport.h"

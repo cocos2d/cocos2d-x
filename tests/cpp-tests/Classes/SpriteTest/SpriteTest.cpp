@@ -3332,32 +3332,26 @@ class MySprite1 : public Sprite
 {
 public:
     CREATE_FUNC(MySprite1);
-    MySprite1() : ivar(10) {}
+    MySprite1() {}
     static MySprite1* createWithSpriteFrameName(const std::string& spriteFrameName)
     {
         auto sprite = MySprite1::create();
         sprite->setSpriteFrame(spriteFrameName);
         return sprite;
     }
-
-private:
-    int ivar;
 };
 
 class MySprite2 : public Sprite
 {
 public:
     CREATE_FUNC(MySprite2);
-    MySprite2() : ivar(10) {}
+    MySprite2() {}
     static MySprite2* create(const std::string& name)
     {
         auto sprite = MySprite2::create();
         sprite ->setTexture(name);
         return sprite;
     }
-
-private:
-    int ivar;
 };
 
 //------------------------------------------------------------------

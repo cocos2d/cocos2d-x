@@ -5,6 +5,14 @@
 -- @parent_module cc
 
 --------------------------------
+--  initializes a MultiplexLayer with an array of layers<br>
+-- since v2.1
+-- @function [parent=#LayerMultiplex] initWithArray 
+-- @param self
+-- @param #array_table arrayOfLayers
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  release the current layer and switches to another layer indexed by n.<br>
 -- The current (old) layer will be removed from it's parent with 'cleanup=true'.<br>
 -- param n The layer indexed by n will display.
@@ -32,8 +40,20 @@
         
 --------------------------------
 -- 
+-- @function [parent=#LayerMultiplex] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#LayerMultiplex] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
+        
+--------------------------------
+-- js ctor
+-- @function [parent=#LayerMultiplex] LayerMultiplex 
+-- @param self
+-- @return LayerMultiplex#LayerMultiplex self (return value: cc.LayerMultiplex)
         
 return nil

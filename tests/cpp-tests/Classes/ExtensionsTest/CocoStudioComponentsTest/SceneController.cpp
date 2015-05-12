@@ -84,7 +84,7 @@ void SceneController::spriteMoveFinished(Node* sender)
 		auto gameOverScene = GameOverScene::create();
 		gameOverScene->getLayer()->getLabel()->setString("You Lose :[");
 
-		director->replaceScene(gameOverScene);
+        director->replaceScene(gameOverScene);
 	}
 	else if (sprite->getTag() == 3) 
 	{

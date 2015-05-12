@@ -2138,7 +2138,7 @@ bool Image::initWithWebpData(const unsigned char * data, ssize_t dataLen)
 #if CC_USE_WEBP
 	bool ret = false;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     CCLOG("WEBP image format not supported on WinRT or WP8");
 #else
 	do
@@ -2173,7 +2173,7 @@ bool Image::initWithWebpData(const unsigned char * data, ssize_t dataLen)
         
         ret = true;
 	} while (0);
-#endif // (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#endif // (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 	return ret;
 #else 
     CCLOG("webp is not enabled, please enable it in ccConfig.h");
@@ -2265,7 +2265,7 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
         png_colorp palette;
         png_bytep *row_pointers;
 
-        fp = fopen(filePath.c_str(), "wb");
+        fp = fopen(FileUtils::getInstance()->getSuitableFOpen(filePath).c_str(), "wb");
         CC_BREAK_IF(nullptr == fp);
 
         png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
@@ -2421,7 +2421,7 @@ bool Image::saveImageToJPG(const std::string& filePath)
         /* Now we can initialize the JPEG compression object. */
         jpeg_create_compress(&cinfo);
 
-        CC_BREAK_IF((outfile = fopen(filePath.c_str(), "wb")) == nullptr);
+        CC_BREAK_IF((outfile = fopen(FileUtils::getInstance()->getSuitableFOpen(filePath).c_str(), "wb")) == nullptr);
         
         jpeg_stdio_dest(&cinfo, outfile);
 

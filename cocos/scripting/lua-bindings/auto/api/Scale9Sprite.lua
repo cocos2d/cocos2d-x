@@ -121,9 +121,8 @@
 -- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
         
 --------------------------------
--- @overload self, cc.Sprite, rect_table, bool, rect_table         
--- @overload self         
 -- @overload self, cc.Sprite, rect_table, rect_table         
+-- @overload self, cc.Sprite, rect_table, bool, rect_table         
 -- @overload self, cc.Sprite, rect_table, bool, vec2_table, size_table, rect_table         
 -- @function [parent=#Scale9Sprite] init
 -- @param self
@@ -358,11 +357,9 @@
         
 --------------------------------
 -- 
--- @function [parent=#Scale9Sprite] setCameraMask 
+-- @function [parent=#Scale9Sprite] init 
 -- @param self
--- @param #unsigned short mask
--- @param #bool applyChildren
--- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 
@@ -379,6 +376,14 @@
 -- @param #float scaleY
 -- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
 
+--------------------------------
+-- 
+-- @function [parent=#Scale9Sprite] setCameraMask 
+-- @param self
+-- @param #unsigned short mask
+-- @param #bool applyChildren
+-- @return Scale9Sprite#Scale9Sprite self (return value: ccui.Scale9Sprite)
+        
 --------------------------------
 -- 
 -- @function [parent=#Scale9Sprite] updateDisplayedColor 

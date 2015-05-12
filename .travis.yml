@@ -37,4 +37,4 @@ before_install:
 # whitelist
 branches:
   only:
-    - v3.6
+    - v3

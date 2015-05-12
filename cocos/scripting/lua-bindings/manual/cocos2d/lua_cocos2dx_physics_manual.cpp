@@ -705,7 +705,7 @@ int lua_cocos2dx_physics_PhysicsShape_recenterPoints(lua_State* tolua_S)
         vec2_array_to_luaval(tolua_S, arg0, arg1);
         CC_SAFE_DELETE_ARRAY(arg0);
         
-        return 0;
+        return 1;
     }
     if (argc == 2)
     {
@@ -726,7 +726,7 @@ int lua_cocos2dx_physics_PhysicsShape_recenterPoints(lua_State* tolua_S)
         cocos2d::PhysicsShape::recenterPoints(arg0, arg1, arg2);
         vec2_array_to_luaval(tolua_S, arg0, arg1);
         CC_SAFE_DELETE_ARRAY(arg0);
-        return 0;
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "recenterPoints",argc, 2);
     return 0;
@@ -809,7 +809,7 @@ int lua_cocos2dx_physics_PhysicsShapeBox_getPoints(lua_State* tolua_S)
         cocos2d::Vec2 arg0[4];
         cobj->getPoints(arg0);
         vec2_array_to_luaval(tolua_S, arg0, 4);
-        return 0;
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "getPoints",argc, 1);
     return 0;
@@ -853,7 +853,7 @@ int lua_cocos2dx_physics_PhysicsShapePolygon_getPoints(lua_State* tolua_S)
         cobj->getPoints(arg0);
         vec2_array_to_luaval(tolua_S, arg0, count);
         CC_SAFE_DELETE_ARRAY(arg0);
-        return 0;
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "getPoints",argc, 1);
     return 0;
@@ -1094,7 +1094,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeBox_getPoints(lua_State* tolua_S)
         cobj->getPoints(arg0);
         vec2_array_to_luaval(tolua_S, arg0, count);
         CC_SAFE_DELETE_ARRAY(arg0);
-        return 0;
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "getPoints",argc, 1);
     return 0;
@@ -1138,7 +1138,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgePolygon_getPoints(lua_State* tolua_S)
         cobj->getPoints(arg0);
         vec2_array_to_luaval(tolua_S, arg0, count);
         CC_SAFE_DELETE_ARRAY(arg0);
-        return 0;
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "getPoints",argc, 1);
     return 0;
@@ -1182,7 +1182,7 @@ int lua_cocos2dx_physics_PhysicsShapeEdgeChain_getPoints(lua_State* tolua_S)
         cobj->getPoints(arg0);
         vec2_array_to_luaval(tolua_S, arg0, count);
         CC_SAFE_DELETE_ARRAY(arg0);
-        return 0;
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "getPoints",argc, 1);
     return 0;
@@ -1271,11 +1271,11 @@ static int tolua_cocos2dx_EventListenerPhysicsContact_registerScriptHandler(lua_
                 };
             }
                 break;
-            case ScriptHandlerMgr::HandlerType::EVENT_PHYSICS_CONTACT_SEPERATE:
+            case ScriptHandlerMgr::HandlerType::EVENT_PHYSICS_CONTACT_SEPARATE:
             {
                 ScriptHandlerMgr::getInstance()->addObjectHandler((void*)self, handler, type);
                 
-                self->onContactSeperate = [handler](PhysicsContact& contact){
+                self->onContactSeparate = [handler](PhysicsContact& contact){
                     LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
                     stack->pushObject(&contact, "cc.PhysicsContact");
                     stack->executeFunctionByHandler(handler, 1);

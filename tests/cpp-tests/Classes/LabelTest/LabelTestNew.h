@@ -554,4 +554,37 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class LabelIssue10773Test : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelIssue10773Test);
+
+    LabelIssue10773Test();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class LabelIssue11576Test : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelIssue11576Test);
+
+    LabelIssue11576Test();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
+class LabelIssue11699Test : public AtlasDemoNew
+{
+public:
+    CREATE_FUNC(LabelIssue11699Test);
+
+    LabelIssue11699Test();
+
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 #endif

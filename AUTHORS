@@ -1091,6 +1091,7 @@ Developers:
         
     loadrunner
         Added romanian languange support
+        Added sensor property for PhysicsShape
         
     Almax27
         RenderQueue command buffer optimize.
@@ -1106,13 +1107,20 @@ Developers:
         
     milos1290
         Added Lerp for Vec3
+        Added ActionFloat
         
     perminovVS
         Optimize Vec3 and Vec2
         Added `UserDefault::setDelegate()`
         
+    qiutaoleo
+        Added a feature to check case characters for filename on windows
+        
     HueyPark
         Fixed memory leak in HttpClient on iOS
+        
+    Dimon4eg
+        Fixed crash on AssetsManager
 
 Retired Core Developers:
     WenSheng Yang

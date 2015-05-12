@@ -129,6 +129,7 @@ void ShaderNode::onDraw(const Mat4 &transform, uint32_t flags)
 
     auto glProgramState = getGLProgramState();
     glProgramState->setVertexAttribPointer("a_position", 2, GL_FLOAT, GL_FALSE, 0, vertices);
+
     glProgramState->apply(transform);
 
     glDrawArrays(GL_TRIANGLES, 0, 6);
@@ -181,7 +182,7 @@ bool ShaderMandelbrot::init()
 {
     if (ShaderTestDemo::init())
     {
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WINRT && CC_TARGET_PLATFORM != CC_PLATFORM_WP8
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
         auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Mandelbrot.fsh");
 
         auto s = Director::getInstance()->getWinSize();
@@ -215,7 +216,7 @@ bool ShaderJulia::init()
 {
     if (ShaderTestDemo::init())
     {
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WINRT && CC_TARGET_PLATFORM != CC_PLATFORM_WP8
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
         auto sn = ShaderNode::shaderNodeWithVertex("", "Shaders/example_Julia.fsh");
 
         auto s = Director::getInstance()->getWinSize();
@@ -486,7 +487,7 @@ bool ShaderBlur::init()
 {
     if( ShaderTestDemo::init() ) 
     {
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WINRT && CC_TARGET_PLATFORM != CC_PLATFORM_WP8
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
         _blurSprite = SpriteBlur::create("Images/grossini.png");
         auto sprite = Sprite::create("Images/grossini.png");
         auto s = Director::getInstance()->getWinSize();

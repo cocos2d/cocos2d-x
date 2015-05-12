@@ -58,15 +58,20 @@ endif()
 set(BUILD_CPP_TESTS_DEFAULT ON)
 set(BUILD_LUA_LIBS_DEFAULT ON)
 set(BUILD_LUA_TESTS_DEFAULT ON)
+set(BUILD_JS_LIBS_DEFAULT OFF)
+set(BUILD_JS_TESTS_DEFAULT OFF)
 # TODO: fix test samples for MSVC
 if(MSVC)
   set(BUILD_CPP_TESTS_DEFAULT OFF)
   set(BUILD_LUA_LIBS_DEFAULT OFF)
   set(BUILD_LUA_TESTS_DEFAULT OFF)
+  set(BUILD_JS_LIBS_DEFAULT OFF)
+  set(BUILD_JS_TESTS_DEFAULT OFF)
 endif()
 
 option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
 option(USE_BOX2D "Use box2d for physics library" OFF)
+option(USE_BULLET "Use bullet for physics3d library" ON)
 option(USE_WEBP "Use WebP codec" ${USE_WEBP_DEFAULT})
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 option(DEBUG_MODE "Debug or release?" ON)
@@ -77,6 +82,8 @@ option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
 option(BUILD_CPP_TESTS "Build TestCpp samples" ${BUILD_CPP_TESTS_DEFAULT})
 option(BUILD_LUA_LIBS "Build lua libraries" ${BUILD_LUA_LIBS_DEFAULT})
 option(BUILD_LUA_TESTS "Build TestLua samples" ${BUILD_LUA_TESTS_DEFAULT})
+option(BUILD_JS_LIBS "Build js libraries" ${BUILD_JS_LIBS_DEFAULT})
+option(BUILD_JS_TESTS "Build TestJS samples" ${BUILD_JS_TESTS_DEFAULT})
 option(USE_PREBUILT_LIBS "Use prebuilt libraries in external directory" ${USE_PREBUILT_LIBS_DEFAULT})
 
 if(USE_PREBUILT_LIBS AND MINGW)
@@ -242,6 +249,24 @@ else()
   add_definitions(-DCC_ENABLE_BOX2D_INTEGRATION=0)
 endif(USE_BOX2D)
 
+# Bullet (not prebuilded, exists as source)
+if(USE_BULLET)
+  if(USE_PREBUILT_LIBS)
+    add_subdirectory(external/bullet)
+    set(BULLET_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/bullet)
+    set(BULLET_LIBRARIES bullet)
+  else()
+    cocos_find_package(bullet BULLET REQUIRED)
+    set(BULLET_LIBRARIES bullet)
+  endif()
+  message(STATUS "Bullet include dirs: ${BULLET_INCLUDE_DIRS}")
+  add_definitions(-DCC_ENABLE_BULLET_INTEGRATION=1)
+  add_definitions(-DCC_USE_PHYSICS=1)
+else()
+  add_definitions(-DCC_ENABLE_BULLET_INTEGRATION=0)
+  add_definitions(-DCC_USE_3D_PHYSICS=0)
+endif(USE_BULLET)
+
 # Tinyxml2 (not prebuilded, exists as source)
 if(USE_PREBUILT_LIBS)
   add_subdirectory(external/tinyxml2)
@@ -314,3 +339,18 @@ if(BUILD_LUA_LIBS)
   endif(BUILD_LUA_TESTS)
 
 endif(BUILD_LUA_LIBS)
+
+## JS
+if(BUILD_JS_LIBS)
+  link_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
+  )
+
+  add_subdirectory(cocos/scripting/js-bindings)
+
+  # build js tests
+  if(BUILD_JS_TESTS)
+    add_subdirectory(tests/js-tests/project)
+  endif(BUILD_JS_TESTS)
+
+endif(BUILD_JS_LIBS)
