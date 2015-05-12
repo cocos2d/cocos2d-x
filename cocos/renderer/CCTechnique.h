@@ -73,6 +73,9 @@ public:
     /** Returns the number of Passes in the Technique */
     ssize_t getPassCount() const;
 
+    /** Returns the list of passes */
+    const Vector<Pass*>& getPasses() const;
+
 protected:
     Technique();
     ~Technique();
