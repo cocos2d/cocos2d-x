@@ -114,7 +114,7 @@ def main():
     if platform == 'win32':
         config.set('DEFAULT', 'extra_flags', '-D__WCHAR_MAX__=0x7fffffff -U__MINGW32__')
 
-    conf_ini_file = os.path.abspath(os.path.join(os.path.dirname(__file__), 'userconf.ini')) 
+    conf_ini_file = os.path.abspath(os.path.join(os.path.dirname(__file__), 'userconf.ini'))
 
     print 'generating userconf.ini...'
     with open(conf_ini_file, 'w') as configfile:
@@ -141,7 +141,8 @@ def main():
                     'cocos2dx_studio.ini' : ('cocos2dx_studio', 'jsb_cocos2dx_studio_auto'), \
                     'cocos2dx_spine.ini' : ('cocos2dx_spine', 'jsb_cocos2dx_spine_auto'), \
                     'cocos2dx_3d.ini' : ('cocos2dx_3d', 'jsb_cocos2dx_3d_auto'), \
-                    'cocos2dx_3d_ext.ini' : ('cocos2dx_3d_extension', 'jsb_cocos2dx_3d_extension_auto')
+                    'cocos2dx_3d_ext.ini' : ('cocos2dx_3d_extension', 'jsb_cocos2dx_3d_extension_auto'), \
+                    'cocos2dx_experimental.ini' : ('cocos2dx_experimental', 'jsb_cocos2dx_experimental')
                     }
         target = 'spidermonkey'
         generator_py = '%s/generator.py' % cxx_generator_root
@@ -156,7 +157,7 @@ def main():
             with _pushd(output_dir):
                 _run_cmd('dos2unix *')
 
-        
+
         custom_cmd_args = {}
         if len(custom_cmd_args) > 0:
             output_dir = '%s/frameworks/custom/auto' % project_root
@@ -182,7 +183,7 @@ def main():
             sys.exit(1)
         else:
             raise
-    
+
 
 # -------------- main --------------
 if __name__ == '__main__':

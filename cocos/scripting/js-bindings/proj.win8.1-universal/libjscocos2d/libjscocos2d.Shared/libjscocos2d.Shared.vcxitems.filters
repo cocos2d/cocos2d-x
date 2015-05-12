@@ -122,6 +122,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_3d_extension_auto.hpp">
       <Filter>auto</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_experimental.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\experimental\jsb_cocos2dx_experimental_manual.h">
+      <Filter>manual\experimental</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_3d_auto.cpp">
@@ -223,6 +229,12 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_3d_extension_auto.cpp">
       <Filter>auto</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_experimental.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\experimental\jsb_cocos2dx_experimental_manual.cpp">
+      <Filter>manual\experimental</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="auto">
@@ -260,6 +272,9 @@
     </Filter>
     <Filter Include="manual\ui">
       <UniqueIdentifier>{d5fa188f-db09-4c4b-a366-682bf76fcea2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\experimental">
+      <UniqueIdentifier>{ddd3651e-c6e7-4dea-80c1-a0a3dc51a740}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
