@@ -1265,7 +1265,7 @@ Sprite3DWithSkinTest::Sprite3DWithSkinTest()
     _menuItem->setPosition(VisibleRect::left().x + 50, VisibleRect::top().y -70);
     addChild(menu, 1);
     
-    _highQuality = true;
+    _animateQuality = (int)Animate3DQuality::QUALITY_HIGH;
     _sprits.clear();
     
     auto s = Director::getInstance()->getWinSize();
@@ -1308,7 +1308,7 @@ void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
         }
         animate->setSpeed(inverse ? -speed : speed);
         animate->setTag(110);
-        animate->setHighQuality(_highQuality);
+        animate->setQuality((Animate3DQuality)_animateQuality);
         auto repeate = RepeatForever::create(animate);
         repeate->setTag(110);
         sprite->runAction(repeate);
@@ -1317,18 +1317,22 @@ void Sprite3DWithSkinTest::addNewSpriteWithCoords(Vec2 p)
 
 void Sprite3DWithSkinTest::switchAnimationQualityCallback(Ref* sender)
 {
-    _highQuality = !_highQuality;
+    ++_animateQuality;
+    if (_animateQuality > (int)Animate3DQuality::QUALITY_HIGH)
+        _animateQuality = (int)Animate3DQuality::QUALITY_NONE;
     
-    if (_highQuality)
-        _menuItem->setString("High Quality");
-    else
+    if (_animateQuality == (int)Animate3DQuality::QUALITY_NONE)
+        _menuItem->setString("None Quality");
+    else if (_animateQuality == (int)Animate3DQuality::QUALITY_LOW)
         _menuItem->setString("Low Quality");
+    else if (_animateQuality == (int)Animate3DQuality::QUALITY_HIGH)
+        _menuItem->setString("High Quality");
     
     for (auto iter: _sprits)
     {
         RepeatForever* repAction = dynamic_cast<RepeatForever*>(iter->getActionByTag(110));
         Animate3D* animate3D = dynamic_cast<Animate3D*>(repAction->getInnerAction());
-        animate3D->setHighQuality(_highQuality);
+        animate3D->setQuality((Animate3DQuality)_animateQuality);
     }
 }
 

@@ -289,7 +289,7 @@ public:
     void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
 private:
     std::vector<cocos2d::Sprite3D*> _sprits;
-    bool _highQuality;
+    int _animateQuality;
     cocos2d::MenuItemFont* _menuItem;
 };
 
