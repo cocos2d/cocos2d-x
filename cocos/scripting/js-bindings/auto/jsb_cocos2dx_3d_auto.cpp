@@ -3709,31 +3709,6 @@ bool js_cocos2dx_3d_Terrain_setIsEnableFrustumCull(JSContext *cx, uint32_t argc,
     JS_ReportError(cx, "js_cocos2dx_3d_Terrain_setIsEnableFrustumCull : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_cocos2dx_3d_Terrain_getHeightData(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Terrain* cobj = (cocos2d::Terrain *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_3d_Terrain_getHeightData : Invalid Native Object");
-    if (argc == 0) {
-        std::vector<float, std::allocator<float> > ret = cobj->getHeightData();
-        jsval jsret = JSVAL_NULL;
-        do {
-            if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<std::vector<float, std::allocator<float> >>(cx, (std::vector<float, std::allocator<float> >)ret);
-                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-            } else {
-                jsret = JSVAL_NULL;
-            }
-        } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_3d_Terrain_getHeightData : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_cocos2dx_3d_Terrain_setDetailMap(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -4168,7 +4143,6 @@ void js_register_cocos2dx_3d_Terrain(JSContext *cx, JS::HandleObject global) {
         JS_FN("setMaxDetailMapAmount", js_cocos2dx_3d_Terrain_setMaxDetailMapAmount, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setDrawWire", js_cocos2dx_3d_Terrain_setDrawWire, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setIsEnableFrustumCull", js_cocos2dx_3d_Terrain_setIsEnableFrustumCull, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getHeightData", js_cocos2dx_3d_Terrain_getHeightData, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setDetailMap", js_cocos2dx_3d_Terrain_setDetailMap, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("resetHeightMap", js_cocos2dx_3d_Terrain_resetHeightMap, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setAlphaMap", js_cocos2dx_3d_Terrain_setAlphaMap, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
