@@ -190,7 +190,6 @@ void Material_3DEffects::onEnter()
     sprite->runAction(repeat);
 
     Material *mat = Material::createWithFilename("Materials/3d_effects.material");
-    mat->setTechnique("lit");
     sprite->setMaterial(mat);
 
     // lights
