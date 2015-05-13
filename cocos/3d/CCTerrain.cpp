@@ -263,7 +263,9 @@ Terrain::Terrain()
 {
     _alphaMap = nullptr;
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-     auto _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
+    _customCommand.setTransparent(false);
+    _customCommand.set3D(true);
+    auto _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
         [this](EventCustom*)
     {
         reload();
