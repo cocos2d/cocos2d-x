@@ -1069,6 +1069,8 @@
         "cocos/renderer/CCTextureCache.h", 
         "cocos/renderer/CCTrianglesCommand.cpp", 
         "cocos/renderer/CCTrianglesCommand.h", 
+        "cocos/renderer/CCVertexAttribBinding.cpp", 
+        "cocos/renderer/CCVertexAttribBinding.h", 
         "cocos/renderer/CCVertexIndexBuffer.cpp", 
         "cocos/renderer/CCVertexIndexBuffer.h", 
         "cocos/renderer/CCVertexIndexData.cpp", 
