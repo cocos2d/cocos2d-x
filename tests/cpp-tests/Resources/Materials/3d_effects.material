@@ -4,12 +4,6 @@ material spaceship
 	{
 		pass 0
 		{
-			renderState
-			{
-				blend = true
-				blendSrc = ONE
-				blendDst = ONE_MINUS_SRC_ALPHA
-			}
 			shader
 			{
 				vertexShader = Shaders3D/3d_position_tex.vert
@@ -18,11 +12,6 @@ material spaceship
 			sampler 0
 			{
 				path = Sprite3DTest/boss.png
-				wrapS = CLAMP_TO_EDGE
-				wrapT = CLAMP_TO_EDGE
-				minFilter = LINEAR
-				magFilter = LINEAR
-				mipmap = false
 			}
 		}
 	}
@@ -31,12 +20,6 @@ material spaceship
 	{
 		pass 0
 		{
-			renderState
-			{
-				blend = true
-				blendSrc = ONE
-				blendDst = ONE_MINUS_SRC_ALPHA
-			}
 			shader
 			{
 				defines = MAX_POINT_LIGHT_NUM 1;MAX_SPOT_LIGHT_NUM 1;MAX_DIRECTIONAL_LIGHT_NUM 1
@@ -46,11 +29,6 @@ material spaceship
 			sampler 0
 			{
 				path = Sprite3DTest/boss.png
-				wrapS = CLAMP_TO_EDGE
-				wrapT = CLAMP_TO_EDGE
-				minFilter = LINEAR
-				magFilter = LINEAR
-				mipmap = false
 			}
 		}
 	}
@@ -61,82 +39,54 @@ material spaceship
 		{
 			renderState
 			{
-				blend = true
-				blendSrc = ONE
-				blendDst = ONE_MINUS_SRC_ALPHA
-                                cullFace = true
-                                cullFaceSide = FRONT
-                                depthTest = true
+				cullFace = true
+				cullFaceSide = BACK
+				depthTest = false
 			}
 			shader
 			{
 				vertexShader = Shaders3D/OutLine.vert
 				fragmentShader = Shaders3D/OutLine.frag
-                                OutLineColor = 1,0,0
-                                OutlineWidth = 0.01
-
+				// Uniforms
+				OutLineColor = 1,1,0
+				OutlineWidth = 0.04
 			}
 			sampler 0
 			{
 				path = Sprite3DTest/boss.png
-				wrapS = CLAMP_TO_EDGE
-				wrapT = CLAMP_TO_EDGE
-				minFilter = LINEAR
-				magFilter = LINEAR
-				mipmap = false
 			}
 		}
 		pass outline thick
 		{
 			renderState
 			{
-				blend = true
-				blendSrc = ONE
-				blendDst = ONE_MINUS_SRC_ALPHA
-                                cullFace = true
-                                cullFaceSide = FRONT
-                                depthTest = true
+				cullFace = true
+				cullFaceSide = FRONT
+				depthTest = true
 			}
 			shader
 			{
 				vertexShader = Shaders3D/OutLine.vert
 				fragmentShader = Shaders3D/OutLine.frag
-                                OutLineColor = 0,0,1
-                                OutlineWidth = 0.02
-
+				// Uniforms
+				OutLineColor = 0,0,1
+				OutlineWidth = 0.02
 			}
 			sampler 0
 			{
 				path = Sprite3DTest/boss.png
-				wrapS = CLAMP_TO_EDGE
-				wrapT = CLAMP_TO_EDGE
-				minFilter = LINEAR
-				magFilter = LINEAR
-				mipmap = false
 			}
 		}
 		pass 1
 		{
-			renderState
-			{
-				blend = true
-				blendSrc = ONE
-				blendDst = ONE_MINUS_SRC_ALPHA
-			}
 			shader
 			{
 				vertexShader = Shaders3D/3d_position_tex.vert
 				fragmentShader = Shaders3D/3d_color_tex.frag
-
 			}
 			sampler 0
 			{
 				path = Sprite3DTest/boss.png
-				wrapS = CLAMP_TO_EDGE
-				wrapT = CLAMP_TO_EDGE
-				minFilter = LINEAR
-				magFilter = LINEAR
-				mipmap = false
 			}
 		}
 	}
