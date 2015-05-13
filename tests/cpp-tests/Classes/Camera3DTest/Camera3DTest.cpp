@@ -1430,16 +1430,17 @@ std::string CameraFrameBufferObjectTest::title() const
 
 void CameraFrameBufferObjectTest::onEnter()
 {
-    auto size = Director::getInstance()->getWinSizeInPixels();
-    auto fbo = FrameBufferObject::create(1, size.width, size.height);
+    auto sizeInpixels = Director::getInstance()->getWinSizeInPixels();
+    auto size = Director::getInstance()->getWinSize();
+    auto fbo = FrameBufferObject::create(1, sizeInpixels.width, sizeInpixels.height);
     
     CameraBaseTest::onEnter();
     auto sprite = Sprite::createWithTexture(fbo);
-    sprite->setPosition(Vec2(200,200));
+    sprite->setPosition(Vec2(100,100));
     addChild(sprite);
     
     auto sprite2 = Sprite::create(s_pathGrossini);
-    sprite2->setPosition(Vec2(200,200));
+    sprite2->setPosition(Vec2(size.width/5,size.height/5));
     addChild(sprite2);
     sprite2->setCameraMask((unsigned short)CameraFlag::USER1);
     auto move = MoveBy::create(1.0, Vec2(100,100));

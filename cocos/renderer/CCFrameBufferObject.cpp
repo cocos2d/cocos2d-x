@@ -27,6 +27,7 @@
 NS_CC_BEGIN
 
 GLuint FrameBufferObject::_defaultFBO(0);
+std::set<FrameBufferObject*> FrameBufferObject::_frameBufferObjects;
 
 void FrameBufferObject::initDefaultFBO()
 {
@@ -38,6 +39,14 @@ void FrameBufferObject::initDefaultFBO()
 void FrameBufferObject::applyDefaultFBO()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, _defaultFBO);
+}
+
+void FrameBufferObject::clearAllFBOs()
+{
+    for (auto fbo : _frameBufferObjects)
+    {
+        fbo->clearFBO();
+    }
 }
 
 FrameBufferObject* FrameBufferObject::create(uint8_t fid, unsigned int width, unsigned int height)
@@ -94,11 +103,26 @@ bool FrameBufferObject::init(uint8_t fid, unsigned int width, unsigned int heigh
 }
 
 FrameBufferObject::FrameBufferObject()
+: _clearColor(Color4F(0, 0, 0, 1))
+, _clearDepth(1.0)
+, _clearStencil(0)
 {
+    _frameBufferObjects.insert(this);
 }
 
 FrameBufferObject::~FrameBufferObject()
 {
+    _frameBufferObjects.erase(this);
+}
+
+void FrameBufferObject::clearFBO()
+{
+    glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
+    glClearColor(_clearColor.r, _clearColor.g, _clearColor.b, _clearColor.a);
+    glClearDepth(_clearDepth);
+    glClearStencil(_clearStencil);
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_STENCIL_BUFFER_BIT);
+    applyDefaultFBO();
 }
 
 NS_CC_END

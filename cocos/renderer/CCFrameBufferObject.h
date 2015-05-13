@@ -28,7 +28,7 @@
 #include "base/CCRef.h"
 #include "platform/CCGL.h"
 #include "renderer/CCTexture2D.h"
-
+#include <set>
 NS_CC_BEGIN
 
 class FrameBufferObject : public Texture2D
@@ -40,7 +40,15 @@ public:
 public:
     GLuint getFBO() const { return _fbo; }
     GLuint getFID() const { return _fid; }
+    //call glclear to clear frame buffer object
+    void clearFBO();
     
+    void setClearColor(const Color4F& color) { _clearColor = color;}
+    void setClearDepth(float depth) { _clearDepth = depth; }
+    void setClearStencil(int8_t stencil) { _clearStencil = stencil; }
+    const Color4F& getClearColor() const { return _clearColor; }
+    float getClearDepth() const { return _clearDepth; }
+    int8_t getClearStencil() const { return _clearStencil; }
 CC_CONSTRUCTOR_ACCESS:
     FrameBufferObject();
     virtual ~FrameBufferObject();
@@ -50,12 +58,17 @@ private:
     GLuint _depthBuffer;
     //
     uint8_t _fid;
+    //
+    Color4F _clearColor;
+    float   _clearDepth;
+    int8_t  _clearStencil;
 public:
     static void initDefaultFBO();
     static void applyDefaultFBO();
+    static void clearAllFBOs();
 private:
     static GLuint _defaultFBO;
-    static GLuint _defaultRenderBuffer;
+    static std::set<FrameBufferObject*> _frameBufferObjects;
 };
 
 NS_CC_END

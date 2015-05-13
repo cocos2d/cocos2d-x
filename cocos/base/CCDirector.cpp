@@ -279,7 +279,7 @@ void Director::drawScene()
     }
 
     _renderer->clear();
-
+    FrameBufferObject::clearAllFBOs();
     /* to avoid flickr, nextScene MUST be here: after tick and before draw.
      * FIXME: Which bug is this one. It seems that it can't be reproduced with v0.9
      */
