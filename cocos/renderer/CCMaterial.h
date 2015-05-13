@@ -134,7 +134,7 @@ protected:
     bool parseSampler(Pass* pass, Properties* properties);
     bool parseShader(Pass* pass, Properties* properties);
     bool parseUniform(GLProgramState* programState, Properties* properties, const char* uniformName);
-    bool parseRenderState(Pass* pass, Properties* properties);
+    bool parseRenderState(RenderState* renderState, Properties* properties);
 
 
     // material name
