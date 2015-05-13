@@ -55,6 +55,7 @@ Sprite3DTests::Sprite3DTests()
     ADD_TEST_CASE(Sprite3DForceDepthTest);
     ADD_TEST_CASE(Sprite3DCubeMapTest);
     ADD_TEST_CASE(NodeAnimationTest);
+    ADD_TEST_CASE(Issue9767);
 };
 
 //------------------------------------------------------------------
@@ -2509,3 +2510,58 @@ void Sprite3DCubeMapTest::onTouchesMoved(const std::vector<Touch*>& touches, coc
         _camera->lookAt(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
     }
 }
+
+Issue9767::Issue9767()
+{
+    _shaderType = Issue9767::ShaderType::SHADER_TEX;
+    
+    auto s = Director::getInstance()->getWinSize();
+    auto sprite = Sprite3D::create("Sprite3DTest/boss1.obj");
+    sprite->setScale(3.f);
+    sprite->setTexture("Sprite3DTest/boss.png");
+    addChild( sprite );
+    sprite->setPosition(Vec2(s.width/2, s.height/2));
+    _sprite = sprite;
+    
+    TTFConfig ttfConfig("fonts/arial.ttf", 15);
+    auto label1 = Label::createWithTTF(ttfConfig,"switch shader");
+    auto item1 = MenuItemLabel::create(label1,CC_CALLBACK_1(Issue9767::menuCallback_SwitchShader,this) );
+    
+    item1->setPosition( Vec2(s.width * 0.9f - item1->getContentSize().width * 0.5f, s.height * 0.5f - item1->getContentSize().height ) );
+    
+    auto pMenu1 = CCMenu::create(item1, nullptr);
+    pMenu1->setPosition(Vec2(0,0));
+    addChild(pMenu1);
+}
+
+Issue9767::~Issue9767()
+{
+    
+}
+
+void Issue9767::menuCallback_SwitchShader(cocos2d::Ref* sender)
+{
+    GLProgram* glProgram = nullptr;
+    if (_shaderType == Issue9767::ShaderType::SHADER_TEX)
+    {
+        _shaderType = Issue9767::ShaderType::SHADER_COLOR;
+        glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION);
+    }
+    else
+    {
+        _shaderType = Issue9767::ShaderType::SHADER_TEX;
+        glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION_TEXTURE);
+    }
+    _sprite->setGLProgram(glProgram);
+}
+
+std::string Issue9767::title() const
+{
+    return "Issue9767: test setGLProgram";
+}
+
+std::string Issue9767::subtitle() const
+{
+    return "";
+}
+
