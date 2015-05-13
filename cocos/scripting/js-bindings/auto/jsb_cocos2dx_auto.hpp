@@ -3854,5 +3854,19 @@ bool js_cocos2dx_SimpleAudioEngine_unloadEffect(JSContext *cx, uint32_t argc, js
 bool js_cocos2dx_SimpleAudioEngine_resumeEffect(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_SimpleAudioEngine_end(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_SimpleAudioEngine_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_cocos2d_SpritePolygonCache_class;
+extern JSObject *jsb_cocos2d_SpritePolygonCache_prototype;
+
+bool js_cocos2dx_SpritePolygonCache_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_SpritePolygonCache_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_SpritePolygonCache(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_SpritePolygonCache_isSpritePolygonCachExist(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpritePolygonCache_removeAllSpritePolygonCache(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpritePolygonCache_removeSpritePolygonCache(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpritePolygonCache_destroyInstance(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpritePolygonCache_printInfo(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_SpritePolygonCache_getInstance(JSContext *cx, uint32_t argc, jsval *vp);
 #endif
 

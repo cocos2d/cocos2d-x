@@ -1290,16 +1290,6 @@ bool
 },
 
 /**
- * @method getHeightData
- * @return {Array}
- */
-getHeightData : function (
-)
-{
-    return new Array();
-},
-
-/**
  * @method setDetailMap
  * @param {unsigned int} arg0
  * @param {cc.Terrain::DetailMap} arg1
