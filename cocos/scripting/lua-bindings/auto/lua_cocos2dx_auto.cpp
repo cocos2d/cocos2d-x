@@ -42597,12 +42597,12 @@ int lua_cocos2dx_GLProgramState_setUniformVec4v(lua_State* tolua_S)
             ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.GLProgramState:setUniformVec4v");
 
             if (!ok) { break; }
-            const cocos2d::Vec4* arg1;
-            ok &= luaval_to_object<const cocos2d::Vec4>(tolua_S, 3, "cc.Vec4",&arg1);
+            ssize_t arg1;
+            ok &= luaval_to_ssize(tolua_S, 3, &arg1, "cc.GLProgramState:setUniformVec4v");
 
             if (!ok) { break; }
-            ssize_t arg2;
-            ok &= luaval_to_ssize(tolua_S, 4, &arg2, "cc.GLProgramState:setUniformVec4v");
+            const cocos2d::Vec4* arg2;
+            ok &= luaval_to_object<const cocos2d::Vec4>(tolua_S, 4, "cc.Vec4",&arg2);
 
             if (!ok) { break; }
             cobj->setUniformVec4v(arg0, arg1, arg2);
@@ -42617,12 +42617,12 @@ int lua_cocos2dx_GLProgramState_setUniformVec4v(lua_State* tolua_S)
             ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.GLProgramState:setUniformVec4v");
 
             if (!ok) { break; }
-            const cocos2d::Vec4* arg1;
-            ok &= luaval_to_object<const cocos2d::Vec4>(tolua_S, 3, "cc.Vec4",&arg1);
+            ssize_t arg1;
+            ok &= luaval_to_ssize(tolua_S, 3, &arg1, "cc.GLProgramState:setUniformVec4v");
 
             if (!ok) { break; }
-            ssize_t arg2;
-            ok &= luaval_to_ssize(tolua_S, 4, &arg2, "cc.GLProgramState:setUniformVec4v");
+            const cocos2d::Vec4* arg2;
+            ok &= luaval_to_object<const cocos2d::Vec4>(tolua_S, 4, "cc.Vec4",&arg2);
 
             if (!ok) { break; }
             cobj->setUniformVec4v(arg0, arg1, arg2);
@@ -42781,12 +42781,12 @@ int lua_cocos2dx_GLProgramState_setUniformVec2v(lua_State* tolua_S)
             ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.GLProgramState:setUniformVec2v");
 
             if (!ok) { break; }
-            const cocos2d::Vec2* arg1;
-            ok &= luaval_to_object<const cocos2d::Vec2>(tolua_S, 3, "cc.Vec2",&arg1);
+            ssize_t arg1;
+            ok &= luaval_to_ssize(tolua_S, 3, &arg1, "cc.GLProgramState:setUniformVec2v");
 
             if (!ok) { break; }
-            ssize_t arg2;
-            ok &= luaval_to_ssize(tolua_S, 4, &arg2, "cc.GLProgramState:setUniformVec2v");
+            const cocos2d::Vec2* arg2;
+            ok &= luaval_to_object<const cocos2d::Vec2>(tolua_S, 4, "cc.Vec2",&arg2);
 
             if (!ok) { break; }
             cobj->setUniformVec2v(arg0, arg1, arg2);
@@ -42801,12 +42801,12 @@ int lua_cocos2dx_GLProgramState_setUniformVec2v(lua_State* tolua_S)
             ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.GLProgramState:setUniformVec2v");
 
             if (!ok) { break; }
-            const cocos2d::Vec2* arg1;
-            ok &= luaval_to_object<const cocos2d::Vec2>(tolua_S, 3, "cc.Vec2",&arg1);
+            ssize_t arg1;
+            ok &= luaval_to_ssize(tolua_S, 3, &arg1, "cc.GLProgramState:setUniformVec2v");
 
             if (!ok) { break; }
-            ssize_t arg2;
-            ok &= luaval_to_ssize(tolua_S, 4, &arg2, "cc.GLProgramState:setUniformVec2v");
+            const cocos2d::Vec2* arg2;
+            ok &= luaval_to_object<const cocos2d::Vec2>(tolua_S, 4, "cc.Vec2",&arg2);
 
             if (!ok) { break; }
             cobj->setUniformVec2v(arg0, arg1, arg2);
@@ -43057,13 +43057,13 @@ int lua_cocos2dx_GLProgramState_setUniformFloatv(lua_State* tolua_S)
             ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.GLProgramState:setUniformFloatv");
 
             if (!ok) { break; }
-            const float* arg1;
-            #pragma warning NO CONVERSION TO NATIVE FOR float*
-		ok = false;
+            ssize_t arg1;
+            ok &= luaval_to_ssize(tolua_S, 3, &arg1, "cc.GLProgramState:setUniformFloatv");
 
             if (!ok) { break; }
-            ssize_t arg2;
-            ok &= luaval_to_ssize(tolua_S, 4, &arg2, "cc.GLProgramState:setUniformFloatv");
+            const float* arg2;
+            #pragma warning NO CONVERSION TO NATIVE FOR float*
+		ok = false;
 
             if (!ok) { break; }
             cobj->setUniformFloatv(arg0, arg1, arg2);
@@ -43078,13 +43078,13 @@ int lua_cocos2dx_GLProgramState_setUniformFloatv(lua_State* tolua_S)
             ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.GLProgramState:setUniformFloatv");
 
             if (!ok) { break; }
-            const float* arg1;
-            #pragma warning NO CONVERSION TO NATIVE FOR float*
-		ok = false;
+            ssize_t arg1;
+            ok &= luaval_to_ssize(tolua_S, 3, &arg1, "cc.GLProgramState:setUniformFloatv");
 
             if (!ok) { break; }
-            ssize_t arg2;
-            ok &= luaval_to_ssize(tolua_S, 4, &arg2, "cc.GLProgramState:setUniformFloatv");
+            const float* arg2;
+            #pragma warning NO CONVERSION TO NATIVE FOR float*
+		ok = false;
 
             if (!ok) { break; }
             cobj->setUniformFloatv(arg0, arg1, arg2);
@@ -43445,12 +43445,12 @@ int lua_cocos2dx_GLProgramState_setUniformVec3v(lua_State* tolua_S)
             ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.GLProgramState:setUniformVec3v");
 
             if (!ok) { break; }
-            const cocos2d::Vec3* arg1;
-            ok &= luaval_to_object<const cocos2d::Vec3>(tolua_S, 3, "cc.Vec3",&arg1);
+            ssize_t arg1;
+            ok &= luaval_to_ssize(tolua_S, 3, &arg1, "cc.GLProgramState:setUniformVec3v");
 
             if (!ok) { break; }
-            ssize_t arg2;
-            ok &= luaval_to_ssize(tolua_S, 4, &arg2, "cc.GLProgramState:setUniformVec3v");
+            const cocos2d::Vec3* arg2;
+            ok &= luaval_to_object<const cocos2d::Vec3>(tolua_S, 4, "cc.Vec3",&arg2);
 
             if (!ok) { break; }
             cobj->setUniformVec3v(arg0, arg1, arg2);
@@ -43465,12 +43465,12 @@ int lua_cocos2dx_GLProgramState_setUniformVec3v(lua_State* tolua_S)
             ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.GLProgramState:setUniformVec3v");
 
             if (!ok) { break; }
-            const cocos2d::Vec3* arg1;
-            ok &= luaval_to_object<const cocos2d::Vec3>(tolua_S, 3, "cc.Vec3",&arg1);
+            ssize_t arg1;
+            ok &= luaval_to_ssize(tolua_S, 3, &arg1, "cc.GLProgramState:setUniformVec3v");
 
             if (!ok) { break; }
-            ssize_t arg2;
-            ok &= luaval_to_ssize(tolua_S, 4, &arg2, "cc.GLProgramState:setUniformVec3v");
+            const cocos2d::Vec3* arg2;
+            ok &= luaval_to_object<const cocos2d::Vec3>(tolua_S, 4, "cc.Vec3",&arg2);
 
             if (!ok) { break; }
             cobj->setUniformVec3v(arg0, arg1, arg2);
