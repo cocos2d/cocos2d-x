@@ -10215,13 +10215,13 @@ int
 /**
  * @method setUniformVec2v
 * @param {int|String} int
-* @param {vec2_object|vec2_object} vec2
 * @param {long|long} long
+* @param {vec2_object|vec2_object} vec2
 */
 setUniformVec2v : function(
 str,
-vec2,
-long 
+long,
+vec2 
 )
 {
 },
@@ -10267,13 +10267,13 @@ glprogram
 /**
  * @method setUniformFloatv
 * @param {int|String} int
-* @param {float|float} float
 * @param {long|long} long
+* @param {float|float} float
 */
 setUniformFloatv : function(
 str,
-float,
-long 
+long,
+float 
 )
 {
 },
@@ -10335,13 +10335,13 @@ mat4
 /**
  * @method setUniformVec3v
 * @param {int|String} int
-* @param {vec3_object|vec3_object} vec3
 * @param {long|long} long
+* @param {vec3_object|vec3_object} vec3
 */
 setUniformVec3v : function(
 str,
-vec3,
-long 
+long,
+vec3 
 )
 {
 },
