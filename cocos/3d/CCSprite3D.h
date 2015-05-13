@@ -328,10 +328,6 @@ protected:
     std::unordered_map<std::string, Sprite3DData*> _spriteDatas; //cached sprite datas
 };
 
-/// @cond 
-extern std::string CC_DLL s_attributeNames[];//attribute names array
-/// @endcond
-
 // end of 3d group
 /// @}
 

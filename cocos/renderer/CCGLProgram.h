@@ -86,6 +86,7 @@ struct Uniform
 class CC_DLL GLProgram : public Ref
 {
     friend class GLProgramState;
+    friend class VertexAttribBinding;
 
 public:
     /**Enum the preallocated vertex attribute. */
