@@ -35,13 +35,11 @@ class FrameBufferObject : public Texture2D
 {
 public:
     static FrameBufferObject* create(uint8_t fid, unsigned int width, unsigned int height);
-    bool init(uint8_t fid, unsigned int width, unsigned int height);
     
+    bool init(uint8_t fid, unsigned int width, unsigned int height);
 public:
     GLuint getFBO() const { return _fbo; }
     GLuint getFID() const { return _fid; }
-    GLuint getWidth() const { return _width; }
-    GLuint getHeight() const { return _height; }
     
 CC_CONSTRUCTOR_ACCESS:
     FrameBufferObject();
@@ -50,11 +48,14 @@ private:
     //openGL content for FrameBuffer
     GLuint _fbo;
     GLuint _depthBuffer;
-    GLuint _stencilBuffer;
     //
     uint8_t _fid;
-    unsigned int _width;
-    unsigned int _height;
+public:
+    static void initDefaultFBO();
+    static void applyDefaultFBO();
+private:
+    static GLuint _defaultFBO;
+    static GLuint _defaultRenderBuffer;
 };
 
 NS_CC_END

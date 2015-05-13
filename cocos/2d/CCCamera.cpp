@@ -454,7 +454,7 @@ void Camera::applyFrameBufferObject()
 {
     if(nullptr == _fbo)
     {
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        FrameBufferObject::applyDefaultFBO();
     }
     else
     {

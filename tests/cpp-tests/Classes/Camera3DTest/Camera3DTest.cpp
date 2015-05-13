@@ -24,6 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "Camera3DTest.h"
+#include "testResource.h"
 
 USING_NS_CC;
 
@@ -41,6 +42,7 @@ Camera3DTests::Camera3DTests()
     ADD_TEST_CASE(CameraCullingDemo);
     ADD_TEST_CASE(FogTestDemo);
     ADD_TEST_CASE(CameraArcBallDemo);
+    ADD_TEST_CASE(CameraFrameBufferObjectTest);
 }
 
 //------------------------------------------------------------------
@@ -1409,4 +1411,48 @@ void FogTestDemo::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Ev
             _camera->setPosition3D(cameraPos);
         }
     }
+}
+
+CameraFrameBufferObjectTest::CameraFrameBufferObjectTest()
+{
+    
+}
+
+CameraFrameBufferObjectTest::~CameraFrameBufferObjectTest()
+{
+    
+}
+
+std::string CameraFrameBufferObjectTest::title() const
+{
+    return "Camera FrameBuffer Object Test";
+}
+
+void CameraFrameBufferObjectTest::onEnter()
+{
+    auto size = Director::getInstance()->getWinSizeInPixels();
+    auto fbo = FrameBufferObject::create(1, size.width, size.height);
+    
+    CameraBaseTest::onEnter();
+    auto sprite = Sprite::createWithTexture(fbo);
+    sprite->setPosition(Vec2(200,200));
+    addChild(sprite);
+    
+    auto sprite2 = Sprite::create(s_pathGrossini);
+    sprite2->setPosition(Vec2(200,200));
+    addChild(sprite2);
+    sprite2->setCameraMask((unsigned short)CameraFlag::USER1);
+    auto move = MoveBy::create(1.0, Vec2(100,100));
+    sprite2->runAction(
+                       RepeatForever::create(
+                                             Sequence::createWithTwoActions(
+                                                                            move, move->reverse())
+                                             )
+                       );
+    
+    auto camera = Camera::create();
+    camera->setCameraFlag(CameraFlag::USER1);
+    camera->setDepth(-1);
+    camera->setFrameBufferObject(fbo);
+    addChild(camera);
 }

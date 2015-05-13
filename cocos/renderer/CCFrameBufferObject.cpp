@@ -25,6 +25,21 @@
 #include "CCFrameBufferObject.h"
 
 NS_CC_BEGIN
+
+GLuint FrameBufferObject::_defaultFBO(0);
+
+void FrameBufferObject::initDefaultFBO()
+{
+    GLint fbo;
+    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &fbo);
+    _defaultFBO = fbo;
+}
+
+void FrameBufferObject::applyDefaultFBO()
+{
+    glBindFramebuffer(GL_FRAMEBUFFER, _defaultFBO);
+}
+
 FrameBufferObject* FrameBufferObject::create(uint8_t fid, unsigned int width, unsigned int height)
 {
     auto result = new (std::nothrow) FrameBufferObject();
@@ -49,32 +64,33 @@ bool FrameBufferObject::init(uint8_t fid, unsigned int width, unsigned int heigh
     //generate texture
     glGenTextures(1, &_name);
     glBindTexture(GL_TEXTURE_2D, _name);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _width, _height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _pixelsWide, _pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
     glBindTexture(GL_TEXTURE_2D, 0);
     _pixelFormat = Texture2D::PixelFormat::RGBA8888;
     _hasPremultipliedAlpha = false;
     _hasMipmaps = false;
     _shaderProgram = nullptr;
     _antialiasEnabled = false;
+    _contentSize = Size(_pixelsWide, _pixelsHigh);
+    GLint oldRenderBuffer(0);
+    glGetIntegerv(GL_RENDERBUFFER_BINDING, &oldRenderBuffer);
     
     //generate depthStencil
     glGenRenderbuffers(1, &_depthBuffer);
     glBindRenderbuffer(GL_RENDERBUFFER, _depthBuffer);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, _width, _height);
-    
-    glGenRenderbuffers(1, &_stencilBuffer);
-    glBindRenderbuffer(GL_RENDERBUFFER, _stencilBuffer);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_STENCIL_INDEX8, _width, _height);
-    glBindRenderbuffer(GL_RENDERBUFFER, 0);
-    
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, _pixelsWide, _pixelsHigh);
+    glBindRenderbuffer(GL_RENDERBUFFER, oldRenderBuffer);
     //generate Frame buffer object
     glGenFramebuffers(1, &_fbo);
     glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthBuffer);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _stencilBuffer);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthBuffer);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _name, 0);
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    return false;
+    applyDefaultFBO();
+    return true;
 }
 
 FrameBufferObject::FrameBufferObject()

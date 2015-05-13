@@ -168,6 +168,7 @@ THE SOFTWARE.
 #include "renderer/CCTechnique.h"
 #include "renderer/CCPass.h"
 #include "renderer/CCRenderState.h"
+#include "renderer/CCFrameBufferObject.h"
 
 // physics
 #include "physics/CCPhysicsBody.h"
