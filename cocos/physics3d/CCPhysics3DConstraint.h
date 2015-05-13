@@ -162,7 +162,7 @@ public:
     /**
      * set pivot point in B's local space
      */
-    void setPivotPointInB(const cocos2d::Vec3&& pivotB);
+    void setPivotPointInB(const cocos2d::Vec3& pivotB);
     
     /**
      * get pivot point in A's local space

@@ -134,7 +134,7 @@ void	Physics3DPointToPointConstraint::setPivotPointInA(const cocos2d::Vec3& pivo
     static_cast<btPoint2PointConstraint*>(_constraint)->setPivotA(point);
 }
 
-void	Physics3DPointToPointConstraint::setPivotPointInB(const cocos2d::Vec3&& pivotB)
+void	Physics3DPointToPointConstraint::setPivotPointInB(const cocos2d::Vec3& pivotB)
 {
     auto point = convertVec3TobtVector3(pivotB);
     static_cast<btPoint2PointConstraint*>(_constraint)->setPivotB(point);
