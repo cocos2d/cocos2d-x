@@ -32069,18 +32069,18 @@ bool js_cocos2dx_GLProgramState_setUniformVec2v(JSContext *cx, uint32_t argc, js
             int arg0;
             ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
             if (!ok) { ok = true; break; }
-            const cocos2d::Vec2* arg1;
-            do {
-                if (!args.get(1).isObject()) { ok = false; break; }
-                js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(1).toObjectOrNull();
-                jsProxy = jsb_get_js_proxy(tmpObj);
-                arg1 = (const cocos2d::Vec2*)(jsProxy ? jsProxy->ptr : NULL);
-                JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
-            } while (0);
+            ssize_t arg1;
+            ok &= jsval_to_ssize(cx, args.get(1), &arg1);
             if (!ok) { ok = true; break; }
-            ssize_t arg2;
-            ok &= jsval_to_ssize(cx, args.get(2), &arg2);
+            const cocos2d::Vec2* arg2;
+            do {
+                if (!args.get(2).isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JSObject *tmpObj = args.get(2).toObjectOrNull();
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg2 = (const cocos2d::Vec2*)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg2, cx, false, "Invalid Native Object");
+            } while (0);
             if (!ok) { ok = true; break; }
             cobj->setUniformVec2v(arg0, arg1, arg2);
             args.rval().setUndefined();
@@ -32093,18 +32093,18 @@ bool js_cocos2dx_GLProgramState_setUniformVec2v(JSContext *cx, uint32_t argc, js
             std::string arg0;
             ok &= jsval_to_std_string(cx, args.get(0), &arg0);
             if (!ok) { ok = true; break; }
-            const cocos2d::Vec2* arg1;
-            do {
-                if (!args.get(1).isObject()) { ok = false; break; }
-                js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(1).toObjectOrNull();
-                jsProxy = jsb_get_js_proxy(tmpObj);
-                arg1 = (const cocos2d::Vec2*)(jsProxy ? jsProxy->ptr : NULL);
-                JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
-            } while (0);
+            ssize_t arg1;
+            ok &= jsval_to_ssize(cx, args.get(1), &arg1);
             if (!ok) { ok = true; break; }
-            ssize_t arg2;
-            ok &= jsval_to_ssize(cx, args.get(2), &arg2);
+            const cocos2d::Vec2* arg2;
+            do {
+                if (!args.get(2).isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JSObject *tmpObj = args.get(2).toObjectOrNull();
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg2 = (const cocos2d::Vec2*)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg2, cx, false, "Invalid Native Object");
+            } while (0);
             if (!ok) { ok = true; break; }
             cobj->setUniformVec2v(arg0, arg1, arg2);
             args.rval().setUndefined();
@@ -32226,12 +32226,12 @@ bool js_cocos2dx_GLProgramState_setUniformFloatv(JSContext *cx, uint32_t argc, j
             int arg0;
             ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
             if (!ok) { ok = true; break; }
-            const float* arg1;
+            ssize_t arg1;
+            ok &= jsval_to_ssize(cx, args.get(1), &arg1);
+            if (!ok) { ok = true; break; }
+            const float* arg2;
             #pragma warning NO CONVERSION TO NATIVE FOR float*
 			ok = false;
-            if (!ok) { ok = true; break; }
-            ssize_t arg2;
-            ok &= jsval_to_ssize(cx, args.get(2), &arg2);
             if (!ok) { ok = true; break; }
             cobj->setUniformFloatv(arg0, arg1, arg2);
             args.rval().setUndefined();
@@ -32244,12 +32244,12 @@ bool js_cocos2dx_GLProgramState_setUniformFloatv(JSContext *cx, uint32_t argc, j
             std::string arg0;
             ok &= jsval_to_std_string(cx, args.get(0), &arg0);
             if (!ok) { ok = true; break; }
-            const float* arg1;
+            ssize_t arg1;
+            ok &= jsval_to_ssize(cx, args.get(1), &arg1);
+            if (!ok) { ok = true; break; }
+            const float* arg2;
             #pragma warning NO CONVERSION TO NATIVE FOR float*
 			ok = false;
-            if (!ok) { ok = true; break; }
-            ssize_t arg2;
-            ok &= jsval_to_ssize(cx, args.get(2), &arg2);
             if (!ok) { ok = true; break; }
             cobj->setUniformFloatv(arg0, arg1, arg2);
             args.rval().setUndefined();
@@ -32485,18 +32485,18 @@ bool js_cocos2dx_GLProgramState_setUniformVec3v(JSContext *cx, uint32_t argc, js
             int arg0;
             ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
             if (!ok) { ok = true; break; }
-            const cocos2d::Vec3* arg1;
-            do {
-                if (!args.get(1).isObject()) { ok = false; break; }
-                js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(1).toObjectOrNull();
-                jsProxy = jsb_get_js_proxy(tmpObj);
-                arg1 = (const cocos2d::Vec3*)(jsProxy ? jsProxy->ptr : NULL);
-                JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
-            } while (0);
+            ssize_t arg1;
+            ok &= jsval_to_ssize(cx, args.get(1), &arg1);
             if (!ok) { ok = true; break; }
-            ssize_t arg2;
-            ok &= jsval_to_ssize(cx, args.get(2), &arg2);
+            const cocos2d::Vec3* arg2;
+            do {
+                if (!args.get(2).isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JSObject *tmpObj = args.get(2).toObjectOrNull();
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg2 = (const cocos2d::Vec3*)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg2, cx, false, "Invalid Native Object");
+            } while (0);
             if (!ok) { ok = true; break; }
             cobj->setUniformVec3v(arg0, arg1, arg2);
             args.rval().setUndefined();
@@ -32509,18 +32509,18 @@ bool js_cocos2dx_GLProgramState_setUniformVec3v(JSContext *cx, uint32_t argc, js
             std::string arg0;
             ok &= jsval_to_std_string(cx, args.get(0), &arg0);
             if (!ok) { ok = true; break; }
-            const cocos2d::Vec3* arg1;
-            do {
-                if (!args.get(1).isObject()) { ok = false; break; }
-                js_proxy_t *jsProxy;
-                JSObject *tmpObj = args.get(1).toObjectOrNull();
-                jsProxy = jsb_get_js_proxy(tmpObj);
-                arg1 = (const cocos2d::Vec3*)(jsProxy ? jsProxy->ptr : NULL);
-                JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
-            } while (0);
+            ssize_t arg1;
+            ok &= jsval_to_ssize(cx, args.get(1), &arg1);
             if (!ok) { ok = true; break; }
-            ssize_t arg2;
-            ok &= jsval_to_ssize(cx, args.get(2), &arg2);
+            const cocos2d::Vec3* arg2;
+            do {
+                if (!args.get(2).isObject()) { ok = false; break; }
+                js_proxy_t *jsProxy;
+                JSObject *tmpObj = args.get(2).toObjectOrNull();
+                jsProxy = jsb_get_js_proxy(tmpObj);
+                arg2 = (const cocos2d::Vec3*)(jsProxy ? jsProxy->ptr : NULL);
+                JSB_PRECONDITION2( arg2, cx, false, "Invalid Native Object");
+            } while (0);
             if (!ok) { ok = true; break; }
             cobj->setUniformVec3v(arg0, arg1, arg2);
             args.rval().setUndefined();
