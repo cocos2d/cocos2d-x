@@ -199,7 +199,7 @@ void Material_3DEffects::onEnter()
     auto light2 = DirectionLight::create(Vec3(-1,1,0), Color3B::GREEN);
     addChild(light2);
 
-    this->schedule(CC_CALLBACK_1(Material_3DEffects::changeMaterial, this),  3, "cookie");
+    this->schedule(CC_CALLBACK_1(Material_3DEffects::changeMaterial, this),  1, "cookie");
 
     _techniqueState = 0;
 }

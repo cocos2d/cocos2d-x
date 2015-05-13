@@ -248,7 +248,7 @@ bool Material::parseSampler(Pass* pass, Properties* textureProperties)
 
 
         // valid options: NEAREST, LINEAR, NEAREST_MIPMAP_NEAREST, LINEAR_MIPMAP_NEAREST, NEAREST_MIPMAP_LINEAR, LINEAR_MIPMAP_LINEAR
-        const char* minFilter = getOptionalString(textureProperties, "minFilter", mipmap ? "LINEAR_MIPMAP_NEAREST" : "LINEAR");
+        const char* minFilter = getOptionalString(textureProperties, "minFilter", usemipmap ? "LINEAR_MIPMAP_NEAREST" : "LINEAR");
         if (strcasecmp(minFilter, "NEAREST")==0)
             texParams.minFilter = GL_NEAREST;
         else if(strcasecmp(minFilter, "LINEAR")==0)
