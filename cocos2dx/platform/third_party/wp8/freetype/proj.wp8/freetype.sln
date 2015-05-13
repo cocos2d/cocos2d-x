@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "freetype", "freetype.vcxproj", "{BFE5A437-9CD8-475C-9217-DF1E00129631}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|Win32 = Debug|Win32
+		Release|ARM = Release|ARM
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BFE5A437-9CD8-475C-9217-DF1E00129631}.Debug|ARM.ActiveCfg = Debug|ARM
+		{BFE5A437-9CD8-475C-9217-DF1E00129631}.Debug|ARM.Build.0 = Debug|ARM
+		{BFE5A437-9CD8-475C-9217-DF1E00129631}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BFE5A437-9CD8-475C-9217-DF1E00129631}.Debug|Win32.Build.0 = Debug|Win32
+		{BFE5A437-9CD8-475C-9217-DF1E00129631}.Release|ARM.ActiveCfg = Release|ARM
+		{BFE5A437-9CD8-475C-9217-DF1E00129631}.Release|ARM.Build.0 = Release|ARM
+		{BFE5A437-9CD8-475C-9217-DF1E00129631}.Release|Win32.ActiveCfg = Release|Win32
+		{BFE5A437-9CD8-475C-9217-DF1E00129631}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
