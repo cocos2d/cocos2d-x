@@ -133,8 +133,13 @@ bool Material::parseProperties(Properties* materialProperties)
     while (space)
     {
         const char* name = space->getNamespace();
-        if (strcmp(name, "technique") == 0) {
+        if (strcmp(name, "technique") == 0)
+        {
             parseTechnique(space);
+        }
+        else if (strcmp(name, "renderState") == 0)
+        {
+            parseRenderState(this, space);
         }
 
         space = materialProperties->getNextNamespace();
@@ -161,8 +166,13 @@ bool Material::parseTechnique(Properties* techniqueProperties)
     while (space)
     {
         const char* name = space->getNamespace();
-        if (strcmp(name, "pass") == 0) {
+        if (strcmp(name, "pass") == 0)
+        {
             parsePass(technique, space);
+        }
+        else if (strcmp(name, "renderState") == 0)
+        {
+            parseRenderState(this, space);
         }
 
         space = techniqueProperties->getNextNamespace();
@@ -371,9 +381,9 @@ bool Material::parseUniform(GLProgramState* programState, Properties* properties
 }
 
 
-bool Material::parseRenderState(Pass* pass, Properties* properties)
+bool Material::parseRenderState(RenderState* renderState, Properties* properties)
 {
-    auto state = pass->getStateBlock();
+    auto state = renderState->getStateBlock();
 
     auto property = properties->getNextProperty();
     while (property)
