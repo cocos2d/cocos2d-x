@@ -34,7 +34,6 @@
 #include "vorbis/codec.h"
 #include "vorbis/vorbisfile.h"
 #include "base/ccUtils.h"
-#include "base/ccUTF8.h"
 
 #define PCMDATA_CACHEMAXSIZE 2621440
 
@@ -85,25 +84,6 @@ AudioCache::~AudioCache()
     }
 }
 
-static bool UTF8ToANSI(const std::string& utf8Text, std::string& outANSIText)
-{
-    std::u16string utf16Text;
-
-    if (cocos2d::StringUtils::UTF8ToUTF16(utf8Text, utf16Text) == false)
-    {
-        return false;
-    }
-
-    int requiredSize = ::WideCharToMultiByte(CP_ACP, 0, (LPCWSTR) utf16Text.c_str(), -1, 0, 0, 0, 0);
-    if(requiredSize > 0)
-    {
-        std::vector<char> buffer(requiredSize);
-        ::WideCharToMultiByte(CP_ACP, 0, (LPCWSTR) utf16Text.c_str(), -1, &buffer[0], requiredSize, 0, 0);
-        outANSIText.assign(buffer.begin(), buffer.end() - 1);
-    }
-    return true;
-}
-
 void AudioCache::readDataTask()
 {
     _readDataTaskMutex.lock();
@@ -117,11 +97,9 @@ void AudioCache::readDataTask()
      case FileFormat::OGG:
          {
              vf = new OggVorbis_File;
-             std::string ansiFullPath;
-             UTF8ToANSI(_fileFullPath, ansiFullPath);
-             if (ov_fopen(ansiFullPath.c_str(), vf))
-             {
-                 log("Input does not appear to be an Ogg bitstream.\n");
+             int openCode;
+             if (openCode = ov_fopen(FileUtils::getInstance()->getSuitableFOpen(_fileFullPath).c_str(), vf)){
+                 log("Input does not appear to be an Ogg bitstream: %s. Code: 0x%x\n", _fileFullPath.c_str(), openCode);
                  goto ExitThread;
              }
 
