@@ -1023,11 +1023,6 @@ void Effect3DOutline::setTarget(EffectSprite3D *sprite)
     
 }
 
-static void MatrixPalleteCallBack( GLProgram* glProgram, Uniform* uniform, int paletteSize, const float* palette)
-{
-    glUniform4fv( uniform->location, (GLsizei)paletteSize, (const float*)palette );
-}
-
 void Effect3DOutline::draw(const Mat4 &transform)
 {
     //draw
@@ -1046,9 +1041,7 @@ void Effect3DOutline::draw(const Mat4 &transform)
         auto skin = _sprite->getMesh()->getSkin();
         if(_sprite && skin)
         {
-            auto function = std::bind(MatrixPalleteCallBack, std::placeholders::_1, std::placeholders::_2,
-                                      skin->getMatrixPaletteSize(), (float*)skin->getMatrixPalette());
-            _glProgramState->setUniformCallback("u_matrixPalette", function);
+            _glProgramState->setUniformVec4v("u_matrixPalette", skin->getMatrixPaletteSize(), skin->getMatrixPalette());
         }
         
         if(_sprite)
@@ -1132,7 +1125,6 @@ void Sprite3DEffectTest::addNewSpriteWithCoords(Vec2 p)
     sprite->addEffect(effect2, -2);
     effect2->setOutlineWidth(0.02f);
     effect2->setOutlineColor(Vec3(1,1,0));
-    //sprite->setEffect3D(effect);
     sprite->setScale(6.f);
     
     //add to scene

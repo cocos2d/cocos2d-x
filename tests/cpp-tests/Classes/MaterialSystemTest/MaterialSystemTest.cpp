@@ -220,12 +220,15 @@ void Material_3DEffects::changeMaterial(float dt)
         case 1:
             _sprite->getMaterial(0)->setTechnique("unlit");
             break;
+        case 2:
+            _sprite->getMaterial(0)->setTechnique("outline");
+            break;
         default:
             break;
     }
 
     _techniqueState++;
-    if (_techniqueState>1)
+    if (_techniqueState>2)
         _techniqueState = 0;
 }
 
