@@ -37,6 +37,7 @@
 #include "renderer/CCTechnique.h"
 #include "renderer/CCPass.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCVertexAttribBinding.h"
 #include "math/Mat4.h"
 
 using namespace std;
@@ -301,6 +302,18 @@ void Mesh::setMaterial(Material* material)
         _material = material;
         CC_SAFE_RETAIN(_material);
     }
+
+    if (_material)
+    {
+        for (auto technique: _material->getTechniques())
+        {
+            for (auto pass: technique->getPasses())
+            {
+                auto vertexAttribBinding = VertexAttribBinding::create(_meshIndexData, pass->getGLProgramState());
+                pass->setVertexAttribBinding(vertexAttribBinding);
+            }
+        }
+    }
 }
 
 Material* Mesh::getMaterial() const
@@ -348,10 +361,10 @@ void Mesh::draw(Renderer* renderer, float globalZOrder, const Mat4& transform, u
         programState->setUniformVec4("u_color", color);
 
         if (_skin)
-            programState->setUniformVec4v("u_matrixPalette", _skin->getMatrixPalette(), (GLsizei)_skin->getMatrixPaletteSize());
+            programState->setUniformVec4v("u_matrixPalette", (GLsizei)_skin->getMatrixPaletteSize(), _skin->getMatrixPalette());
 
         if (scene && scene->getLights().size() > 0)
-            setLightUniforms(programState, scene, color, lightMask);
+            setLightUniforms(pass, scene, color, lightMask);
     }
 
     renderer->addCommand(&_meshCommand);
@@ -458,9 +471,9 @@ void Mesh::bindMeshCommand()
     }
 }
 
-void Mesh::setLightUniforms(GLProgramState* glProgramState, Scene* scene, const Vec4& color, unsigned int lightmask)
+void Mesh::setLightUniforms(Pass* pass, Scene* scene, const Vec4& color, unsigned int lightmask)
 {
-    CCASSERT(glProgramState, "Invalid glProgramstate");
+    CCASSERT(pass, "Invalid Pass");
     CCASSERT(scene, "Invalid scene");
 
     const auto& conf = Configuration::getInstance();
@@ -469,8 +482,10 @@ void Mesh::setLightUniforms(GLProgramState* glProgramState, Scene* scene, const 
     int maxSpotLight = conf->getMaxSupportSpotLightInShader();
     auto &lights = scene->getLights();
 
+    auto glProgramState = pass->getGLProgramState();
+    auto attributes = pass->getVertexAttributeBinding()->getVertexAttribsFlags();
 
-    if (glProgramState->getVertexAttribsFlags() & (1 << GLProgram::VERTEX_ATTRIB_NORMAL))
+    if (attributes & (1 << GLProgram::VERTEX_ATTRIB_NORMAL))
     {
         resetLightUniformValues();
 
@@ -549,28 +564,28 @@ void Mesh::setLightUniforms(GLProgramState* glProgramState, Scene* scene, const 
 
         if (0 < maxDirLight)
         {
-            glProgramState->setUniformVec3v(s_dirLightUniformColorName, &s_dirLightUniformColorValues[0], s_dirLightUniformColorValues.size());
-            glProgramState->setUniformVec3v(s_dirLightUniformDirName, &s_dirLightUniformDirValues[0], s_dirLightUniformDirValues.size());
+            glProgramState->setUniformVec3v(s_dirLightUniformColorName, s_dirLightUniformColorValues.size(), &s_dirLightUniformColorValues[0]);
+            glProgramState->setUniformVec3v(s_dirLightUniformDirName, s_dirLightUniformDirValues.size(), &s_dirLightUniformDirValues[0]);
         }
 
         if (0 < maxPointLight)
         {
-            glProgramState->setUniformVec3v(s_pointLightUniformColorName, &s_pointLightUniformColorValues[0], s_pointLightUniformColorValues.size());
-            glProgramState->setUniformVec3v(s_pointLightUniformPositionName, &s_pointLightUniformPositionValues[0], s_pointLightUniformPositionValues.size());
-            glProgramState->setUniformFloatv(s_pointLightUniformRangeInverseName, &s_pointLightUniformRangeInverseValues[0], s_pointLightUniformRangeInverseValues.size());
+            glProgramState->setUniformVec3v(s_pointLightUniformColorName, s_pointLightUniformColorValues.size(), &s_pointLightUniformColorValues[0]);
+            glProgramState->setUniformVec3v(s_pointLightUniformPositionName, s_pointLightUniformPositionValues.size(), &s_pointLightUniformPositionValues[0]);
+            glProgramState->setUniformFloatv(s_pointLightUniformRangeInverseName, s_pointLightUniformRangeInverseValues.size(), &s_pointLightUniformRangeInverseValues[0]);
         }
 
         if (0 < maxSpotLight)
         {
-            glProgramState->setUniformVec3v(s_spotLightUniformColorName, &s_spotLightUniformColorValues[0], s_spotLightUniformColorValues.size());
-            glProgramState->setUniformVec3v(s_spotLightUniformPositionName, &s_spotLightUniformPositionValues[0], s_spotLightUniformPositionValues.size());
-            glProgramState->setUniformVec3v(s_spotLightUniformDirName, &s_spotLightUniformDirValues[0], s_spotLightUniformDirValues.size());
-            glProgramState->setUniformFloatv(s_spotLightUniformInnerAngleCosName, &s_spotLightUniformInnerAngleCosValues[0], s_spotLightUniformInnerAngleCosValues.size());
-            glProgramState->setUniformFloatv(s_spotLightUniformOuterAngleCosName, &s_spotLightUniformOuterAngleCosValues[0], s_spotLightUniformOuterAngleCosValues.size());
-            glProgramState->setUniformFloatv(s_spotLightUniformRangeInverseName, &s_spotLightUniformRangeInverseValues[0], s_spotLightUniformRangeInverseValues.size());
+            glProgramState->setUniformVec3v(s_spotLightUniformColorName, s_spotLightUniformColorValues.size(), &s_spotLightUniformColorValues[0]);
+            glProgramState->setUniformVec3v(s_spotLightUniformPositionName, s_spotLightUniformPositionValues.size(), &s_spotLightUniformPositionValues[0]);
+            glProgramState->setUniformVec3v(s_spotLightUniformDirName, s_spotLightUniformDirValues.size(), &s_spotLightUniformDirValues[0]);
+            glProgramState->setUniformFloatv(s_spotLightUniformInnerAngleCosName, s_spotLightUniformInnerAngleCosValues.size(), &s_spotLightUniformInnerAngleCosValues[0]);
+            glProgramState->setUniformFloatv(s_spotLightUniformOuterAngleCosName, s_spotLightUniformOuterAngleCosValues.size(), &s_spotLightUniformOuterAngleCosValues[0]);
+            glProgramState->setUniformFloatv(s_spotLightUniformRangeInverseName, s_spotLightUniformRangeInverseValues.size(), &s_spotLightUniformRangeInverseValues[0]);
         }
 
-            glProgramState->setUniformVec3(s_ambientLightUniformColorName, Vec3(ambientColor.x, ambientColor.y, ambientColor.z));
+        glProgramState->setUniformVec3(s_ambientLightUniformColorName, Vec3(ambientColor.x, ambientColor.y, ambientColor.z));
     }
     else // normal does not exist
     {

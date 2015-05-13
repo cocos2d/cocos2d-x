@@ -581,6 +581,14 @@ var testNames = [
         }
     },
     {
+        title:"SpritePolygon Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/SpritePolygonTest/SpritePolygonTest.js",
+        testScene:function () {
+            return new SpritePolygonTestScene();
+        }
+    },
+    {
         title:"Sprite Test",
         resource:g_sprites,
         platforms: PLATFORM_ALL,
