@@ -1435,8 +1435,21 @@ void CameraFrameBufferObjectTest::onEnter()
     auto fbo = FrameBufferObject::create(1, sizeInpixels.width, sizeInpixels.height);
     
     CameraBaseTest::onEnter();
-    auto sprite = Sprite::createWithTexture(fbo);
+    //auto sprite = Sprite::createWithTexture(fbo);
+    //sprite->setPosition(Vec2(100,100));
+    std::string filename = "Sprite3DTest/girl.c3b";
+    auto sprite = Sprite3D::create(filename);
+    sprite->setScale(1.0);
+    auto animation = Animation3D::create(filename);
+    if (animation)
+    {
+        auto animate = Animate3D::create(animation);
+        
+        sprite->runAction(RepeatForever::create(animate));
+    }
     sprite->setPosition(Vec2(100,100));
+    sprite->setTexture(fbo);
+    
     addChild(sprite);
     
     auto sprite2 = Sprite::create(s_pathGrossini);
@@ -1455,5 +1468,6 @@ void CameraFrameBufferObjectTest::onEnter()
     camera->setCameraFlag(CameraFlag::USER1);
     camera->setDepth(-1);
     camera->setFrameBufferObject(fbo);
+    fbo->setClearColor(Color4F(1,1,1,1));
     addChild(camera);
 }
