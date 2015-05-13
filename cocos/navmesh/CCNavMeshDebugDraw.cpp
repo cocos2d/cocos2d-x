@@ -35,6 +35,8 @@ NavMeshDebugDraw::NavMeshDebugDraw()
 , _dirtyBuffer(true)
 , _currentPrimitive(nullptr)
 {
+	_customCmd.set3D(true);
+	_customCmd.setTransparent(true);
 	_program = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_COLOR);
 	glGenBuffers(1, &_vbo);
 }
@@ -113,7 +115,7 @@ GLenum NavMeshDebugDraw::getPrimitiveType(duDebugDrawPrimitives prim)
 	}
 }
 
-void NavMeshDebugDraw::draw(const cocos2d::Mat4& transform, uint32_t flags)
+void cocos2d::NavMeshDebugDraw::drawImplement(const cocos2d::Mat4& transform, uint32_t flags)
 {
 	_program->use();
 	_program->setUniformsForBuiltins(transform);
@@ -139,6 +141,13 @@ void NavMeshDebugDraw::draw(const cocos2d::Mat4& transform, uint32_t flags)
 	}
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glDisable(GL_DEPTH_TEST);
+}
+
+void NavMeshDebugDraw::draw(Renderer* renderer)
+{
+	_customCmd.init(0, Mat4::IDENTITY, 0);
+	_customCmd.func = CC_CALLBACK_0(NavMeshDebugDraw::drawImplement, this, Mat4::IDENTITY, 0);
+	renderer->addCommand(&_customCmd);
 }
 
 NS_CC_END

@@ -26,20 +26,22 @@
 #define __CCNAV_MESH_AGENT_H__
 
 #include "base/ccConfig.h"
+#include "2d/CCComponent.h"
 
 #include "base/CCRef.h"
+#include "math/Vec3.h"
 #include "recast/DetourCrowd/DetourCrowd.h"
 
-
+class dtNavMeshQuery;
 NS_CC_BEGIN
 
 /**
  * @addtogroup 3d
  * @{
  */
-
 struct CC_DLL NavMeshAgentParam
 {
+	Vec3 position;
 	float radius;						///< Agent radius. [Limit: >= 0]
 	float height;						///< Agent height. [Limit: > 0]
 	float maxAcceleration;				///< Maximum allowed acceleration. [Limit: >= 0]
@@ -64,12 +66,29 @@ struct CC_DLL NavMeshAgentParam
 	unsigned char queryFilterType;
 };
 
-class CC_DLL NavMeshAgent : public Ref
+class CC_DLL NavMeshAgent : public Component
 {
+	friend class NavMesh;
 public:
 
 	static NavMeshAgent* create(const NavMeshAgentParam &param);
 
+	virtual void onEnter() override;
+	virtual void onExit() override;
+	virtual void update(float delta) override;
+
+	void setPosition(const Vec3 & pos);
+	Vec3 getPosition() const;
+	void setRadius(float radius);
+	float getRadius() const;
+	void setHeight(float height);
+	float getHeight() const;
+	void setMaxAcceleration(float maxAcceleration);
+	float getMaxAcceleration() const;
+	void setMaxSpeed(float maxSpeed);
+	float getMaxSpeed() const;
+
+	void move(const Vec3 &destination);
 
 CC_CONSTRUCTOR_ACCESS:
 	NavMeshAgent();
@@ -78,12 +97,20 @@ CC_CONSTRUCTOR_ACCESS:
 private:
 
 	bool init(const NavMeshAgentParam &param);
+	void addTo(dtCrowd *crowed);
+	void removeFrom(dtCrowd *crowed);
+	void setNavMeshQuery(dtNavMeshQuery *query);
+	static void convertTodtAgentParam(const NavMeshAgentParam &inParam, dtCrowdAgentParams &outParam);
 
 private:
 
 	NavMeshAgentParam _param;
+	Vec3 _destination;
 	int _agentID;
+	bool _needUpdateAgent;
+	bool _needMove;
 	dtCrowd *_crowd;
+	dtNavMeshQuery *_navMeshQuery;
 };
 
 /** @} */

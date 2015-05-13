@@ -22,6 +22,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "navmesh/CCNavMeshAgent.h"
+#include "navmesh/CCNavMesh.h"
+#include "recast/DetourCrowd/DetourCrowd.h"
+#include "2d/CCNode.h"
+#include "2d/CCScene.h"
 #include <algorithm>
 
 NS_CC_BEGIN
@@ -39,6 +43,11 @@ NavMeshAgent* NavMeshAgent::create(const NavMeshAgentParam &param)
 }
 
 cocos2d::NavMeshAgent::NavMeshAgent()
+	: _agentID(-1)
+	, _crowd(nullptr)
+	, _needUpdateAgent(true)
+	, _needMove(false)
+	, _navMeshQuery(nullptr)
 {
 
 }
@@ -51,19 +60,140 @@ cocos2d::NavMeshAgent::~NavMeshAgent()
 bool NavMeshAgent::init(const NavMeshAgentParam &param)
 {
 	_param = param;
-	//dtCrowdAgentParams ap;
-	//memset(&ap, 0, sizeof(ap));
-	//ap.collisionQueryRange = param.collisionQueryRange;
-	//ap.height = param.height;
-	//ap.maxAcceleration = param.maxAcceleration;
-	//ap.maxSpeed = param.maxSpeed;
-	//ap.obstacleAvoidanceType = param.obstacleAvoidanceType;
-	//ap.pathOptimizationRange = param.pathOptimizationRange;
-	//ap.queryFilterType = param.queryFilterType;
-	//ap.radius = param.radius;
-	//ap.separationWeight = param.separationWeight;
-	//ap.updateFlags = param.updateFlags;
+	setName("___NavMeshAgentComponent___");
 	return true;
+}
+
+void cocos2d::NavMeshAgent::setNavMeshQuery(dtNavMeshQuery *query)
+{
+	_navMeshQuery = query;
+}
+
+void cocos2d::NavMeshAgent::removeFrom(dtCrowd *crowed)
+{
+	crowed->removeAgent(_agentID);
+	_crowd = nullptr;
+}
+
+void cocos2d::NavMeshAgent::addTo(dtCrowd *crowed)
+{
+	_crowd = crowed;
+	dtCrowdAgentParams ap;
+	convertTodtAgentParam(_param, ap);
+	_agentID = _crowd->addAgent(&_param.position.x, &ap);
+}
+
+void cocos2d::NavMeshAgent::convertTodtAgentParam(const NavMeshAgentParam &inParam, dtCrowdAgentParams &outParam)
+{
+	memset(&outParam, 0, sizeof(outParam));
+	outParam.collisionQueryRange = inParam.collisionQueryRange;
+	outParam.height = inParam.height;
+	outParam.maxAcceleration = inParam.maxAcceleration;
+	outParam.maxSpeed = inParam.maxSpeed;
+	outParam.obstacleAvoidanceType = inParam.obstacleAvoidanceType;
+	outParam.pathOptimizationRange = inParam.pathOptimizationRange;
+	outParam.queryFilterType = inParam.queryFilterType;
+	outParam.radius = inParam.radius;
+	outParam.separationWeight = inParam.separationWeight;
+	outParam.updateFlags = inParam.updateFlags;
+}
+
+void cocos2d::NavMeshAgent::onExit()
+{
+	Component::onExit();
+
+	auto navMesh = _owner->getScene()->getNavMesh();
+	if (navMesh){
+		navMesh->removeNavMeshAgent(this);
+	}		
+}
+
+void cocos2d::NavMeshAgent::onEnter()
+{
+	Component::onEnter();
+
+	auto navMesh = _owner->getScene()->getNavMesh();
+	if (navMesh){
+		navMesh->addNavMeshAgent(this);
+	}
+}
+
+cocos2d::Vec3 NavMeshAgent::getPosition() const
+{
+	return _param.position;
+}
+
+float NavMeshAgent::getMaxSpeed() const
+{
+	return _param.maxSpeed;
+}
+
+void NavMeshAgent::setMaxSpeed(float maxSpeed)
+{
+	_param.maxSpeed;
+	_needUpdateAgent = true;
+}
+
+float NavMeshAgent::getMaxAcceleration() const
+{
+	return _param.maxAcceleration;
+}
+
+void NavMeshAgent::setMaxAcceleration(float maxAcceleration)
+{
+	_param.maxAcceleration = maxAcceleration;
+	_needUpdateAgent = true;
+}
+
+float NavMeshAgent::getHeight() const
+{
+	return _param.height;
+}
+
+void NavMeshAgent::setHeight(float height)
+{
+	_param.height = height;
+	_needUpdateAgent = true;
+}
+
+float NavMeshAgent::getRadius() const
+{
+	return _param.radius;
+}
+
+void NavMeshAgent::setRadius(float radius)
+{
+	_param.radius = radius;
+	_needUpdateAgent = true;
+}
+
+void NavMeshAgent::move(const Vec3 &destination)
+{
+	_destination = destination;
+	_needMove = true;
+}
+
+void cocos2d::NavMeshAgent::update(float delta)
+{
+	if (_needUpdateAgent && _crowd){
+		dtCrowdAgentParams ap;
+		convertTodtAgentParam(_param, ap);
+		_crowd->updateAgentParameters(_agentID, &ap);
+		_needUpdateAgent = false;
+	}
+
+	if (_needMove && _crowd && _navMeshQuery){
+		dtPolyRef pRef = 0;
+		float nearestPos[3];
+		_navMeshQuery->findNearestPoly(&_destination.x, _crowd->getQueryExtents(), _crowd->getFilter(0), &pRef, nearestPos);
+		_crowd->requestMoveTarget(_agentID, pRef, nearestPos);
+		_needMove = false;
+	}
+}
+
+void NavMeshAgent::setPosition(const Vec3 & pos)
+{
+	_param.position = pos;
 }
 
 NS_CC_END

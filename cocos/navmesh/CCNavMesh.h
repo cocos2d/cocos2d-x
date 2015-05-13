@@ -31,9 +31,14 @@
 #include "math/Vec3.h"
 #include "recast/Detour/DetourNavMesh.h"
 #include "recast/Detour/DetourNavMeshQuery.h"
+#include "recast/DetourCrowd/DetourCrowd.h"
+#include "recast/DetourTileCache/DetourTileCache.h"
 #include <string>
 #include <vector>
 
+#include "navmesh/CCNavMeshAgent.h"
+#include "navmesh/CCNavMeshDebugDraw.h"
+#include "navmesh/CCNavMeshObstacle.h"
 
 NS_CC_BEGIN
 
@@ -41,15 +46,30 @@ NS_CC_BEGIN
  * @addtogroup 3d
  * @{
  */
-
+class Renderer;
 class CC_DLL NavMesh : public Ref
 {
 public:
 
-	static NavMesh* create(const std::string &filePath, int maxSearchNodes = 2048);
+	struct hitInfo
+	{
+		Vec3 position;
+		Vec3 normal;
+	};
+
+	static NavMesh* create(const std::string &filePath);
+
+	void update(float dt);
+	void debugDraw(Renderer* renderer);
+	void setDebugDrawEnable(bool enable);
+	bool isDebugDrawEnabled() const;
+	void addNavMeshAgent(NavMeshAgent *agent);
+	void removeNavMeshAgent(NavMeshAgent *agent);
+	void addNavMeshObstacle(NavMeshObstacle *obstacle);
+	void removeNavMeshObstacle(NavMeshObstacle *obstacle);
 
 	void findPath(const Vec3 &start, const Vec3 &end, std::vector<Vec3> &pathPoints);
-
+	bool rayCast(const Vec3 &start, const Vec3 &end, hitInfo & hits);
 
 CC_CONSTRUCTOR_ACCESS:
 	NavMesh();
@@ -57,14 +77,21 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
 
-	bool initWithFilePath(const std::string &filePath, int maxSearchNodes);
+	bool initWithFilePath(const std::string &filePath);
 	bool read();
 
 protected:
 
 	dtNavMesh *_navMesh;
 	dtNavMeshQuery *_navMeshQuery;
+	dtCrowd *_crowed;
+	dtTileCache *_tileCache;
+
+	std::vector<NavMeshAgent*> _agentList;
+	std::vector<NavMeshObstacle*> _obstacleList;
+	NavMeshDebugDraw _debugDraw;
 	std::string _filePath;
+	bool _isDebugDrawEnabled;
 };
 
 /** @} */

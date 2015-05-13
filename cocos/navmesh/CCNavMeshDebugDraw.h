@@ -27,6 +27,7 @@
 
 #include "base/ccConfig.h"
 #include "renderer/CCGLProgram.h"
+#include "renderer/CCCustomCommand.h"
 #include "math/Vec3.h"
 #include "recast/DebugUtils/DebugDraw.h"
 #include <string>
@@ -39,7 +40,7 @@ NS_CC_BEGIN
  * @addtogroup 3d
  * @{
  */
-
+class Renderer;
 class NavMeshDebugDraw : duDebugDraw
 {
 public:
@@ -58,13 +59,14 @@ public:
 
 	virtual void end() override;
 
-	void draw(const cocos2d::Mat4& transform, uint32_t flags);
+	void draw(Renderer* renderer);
 
 private:
 
 	Vec4 getColor(unsigned int col);
 
 	GLenum getPrimitiveType(duDebugDrawPrimitives prim);
+	void drawImplement(const cocos2d::Mat4& transform, uint32_t flags);
 
 private:
 
@@ -84,9 +86,10 @@ private:
 
 	std::vector<V3F_C4F> _vertices;
 	std::vector<Primitive*> _primitiveList;
-	GLenum _primitiveType;
 	Primitive *_currentPrimitive;
 	GLProgram *_program;
+	CustomCommand _customCmd;
+	GLenum _primitiveType;
 	GLuint _vbo;
 	bool _dirtyBuffer;
 };

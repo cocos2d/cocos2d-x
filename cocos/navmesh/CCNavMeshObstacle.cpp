@@ -22,6 +22,10 @@
  THE SOFTWARE.
  ****************************************************************************/
 #include "navmesh/CCNavMeshObstacle.h"
+#include "navmesh/CCNavMesh.h"
+#include "2d/CCNode.h"
+#include "2d/CCScene.h"
+#include "recast/DetourTileCache/DetourTileCache.h"
 
 NS_CC_BEGIN
 
@@ -40,6 +44,9 @@ NavMeshObstacle* NavMeshObstacle::create(const Vec3 &position, float radius, flo
 NavMeshObstacle::NavMeshObstacle()
 : _radius(0.0f)
 , _height(0.0f)
+, _needUpdateObstacle(true)
+, _tileCache(nullptr)
+, _obstacleID(-1)
 {
 
 }
@@ -54,7 +61,48 @@ bool NavMeshObstacle::init(const Vec3 &position, float radius, float height)
 	_position = position;
 	_radius = radius;
 	_height = height;
+	setName("___NavMeshObstacleComponent___");
 	return true;
+}
+
+void cocos2d::NavMeshObstacle::removeFrom(dtTileCache *tileCache)
+{
+	_tileCache->removeObstacle(_obstacleID);
+	_tileCache = nullptr;
+	_obstacleID = -1;
+}
+
+void cocos2d::NavMeshObstacle::addTo(dtTileCache *tileCache)
+{
+	_tileCache = tileCache;
+	_tileCache->addObstacle(&_position.x, _radius, _height, &_obstacleID);
+}
+
+void cocos2d::NavMeshObstacle::onExit()
+{
+	Component::onExit();
+	auto navMesh = _owner->getScene()->getNavMesh();
+	if (navMesh){
+		navMesh->removeNavMeshObstacle(this);
+	}
+}
+
+void cocos2d::NavMeshObstacle::onEnter()
+{
+	Component::onEnter();
+	auto navMesh = _owner->getScene()->getNavMesh();
+	if (navMesh){
+		navMesh->addNavMeshObstacle(this);
+	}
+}
+
+void cocos2d::NavMeshObstacle::update(float delta)
+{
+	if (_needUpdateObstacle && _tileCache){
+		_tileCache->removeObstacle(_obstacleID);
+		_tileCache->addObstacle(&_position.x, _radius, _height, &_obstacleID);
+		_needUpdateObstacle = false;
+	}
 }
 
 NS_CC_END

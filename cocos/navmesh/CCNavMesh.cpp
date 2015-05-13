@@ -23,30 +23,33 @@
  ****************************************************************************/
 #include "navmesh/CCNavMesh.h"
 #include "platform/CCFileUtils.h"
+#include "renderer/CCRenderer.h"
 
 NS_CC_BEGIN
 
-struct NavMeshSetHeader
+struct TileCacheSetHeader
 {
 	int magic;
 	int version;
 	int numTiles;
-	dtNavMeshParams params;
+	dtNavMeshParams meshParams;
+	dtTileCacheParams cacheParams;
 };
 
-struct NavMeshTileHeader
+struct TileCacheTileHeader
 {
-	dtTileRef tileRef;
+	dtCompressedTileRef tileRef;
 	int dataSize;
 };
 
-static const int NAVMESHSET_MAGIC = 'M' << 24 | 'S' << 16 | 'E' << 8 | 'T'; //'MSET';
-static const int NAVMESHSET_VERSION = 1;
+static const int TILECACHESET_MAGIC = 'T' << 24 | 'S' << 16 | 'E' << 8 | 'T'; //'TSET';
+static const int TILECACHESET_VERSION = 1;
+static const int MAX_AGENTS = 128;
 
-NavMesh* NavMesh::create(const std::string &filePath, int maxSearchNodes)
+NavMesh* NavMesh::create(const std::string &filePath)
 {
 	auto ref = new (std::nothrow) NavMesh();
-	if (ref && ref->initWithFilePath(filePath, maxSearchNodes))
+	if (ref && ref->initWithFilePath(filePath))
 	{
 		ref->autorelease();
 		return ref;
@@ -58,22 +61,24 @@ NavMesh* NavMesh::create(const std::string &filePath, int maxSearchNodes)
 NavMesh::NavMesh()
 	: _navMesh(nullptr)
 	, _navMeshQuery(nullptr)
+	, _crowed(nullptr)
+	, _tileCache(nullptr)
 {
 
 }
 
 NavMesh::~NavMesh()
 {
+	dtFreeTileCache(_tileCache);
+	dtFreeCrowd(_crowed);
 	dtFreeNavMesh(_navMesh);
 	dtFreeNavMeshQuery(_navMeshQuery);
 }
 
-bool NavMesh::initWithFilePath(const std::string &filePath, int maxSearchNodes)
+bool NavMesh::initWithFilePath(const std::string &filePath)
 {
 	_filePath = filePath;
 	if (!read()) return false;
-	_navMeshQuery = dtAllocNavMeshQuery();
-	_navMeshQuery->init(_navMesh, maxSearchNodes);
 	return true;
 }
 
@@ -84,64 +89,145 @@ bool NavMesh::read()
 	if (!fp) return false;
 
 	// Read header.
-	NavMeshSetHeader header;
-	size_t readLen = fread(&header, sizeof(NavMeshSetHeader), 1, fp);
-	if (readLen != 1)
+	TileCacheSetHeader header;
+	fread(&header, sizeof(TileCacheSetHeader), 1, fp);
+	if (header.magic != TILECACHESET_MAGIC)
 	{
 		fclose(fp);
-		return 0;
+		return false;
 	}
-	if (header.magic != NAVMESHSET_MAGIC)
+	if (header.version != TILECACHESET_VERSION)
 	{
 		fclose(fp);
-		return 0;
+		return false;
 	}
-	if (header.version != NAVMESHSET_VERSION)
-	{
-		fclose(fp);
-		return 0;
-	}
-
-	if (_navMesh) dtFreeNavMesh(_navMesh);
 
 	_navMesh = dtAllocNavMesh();
 	if (!_navMesh)
 	{
 		fclose(fp);
-		return 0;
+		return false;
 	}
-	dtStatus status = _navMesh->init(&header.params);
+	dtStatus status = _navMesh->init(&header.meshParams);
 	if (dtStatusFailed(status))
 	{
 		fclose(fp);
-		return 0;
+		return false;
+	}
+
+	_tileCache = dtAllocTileCache();
+	if (!_tileCache)
+	{
+		fclose(fp);
+		return false;
+	}
+
+	//status = _tileCache->init(&header.cacheParams, m_talloc, m_tcomp, m_tmproc);
+
+	if (dtStatusFailed(status))
+	{
+		fclose(fp);
+		return false;
 	}
 
 	// Read tiles.
 	for (int i = 0; i < header.numTiles; ++i)
 	{
-		NavMeshTileHeader tileHeader;
-		readLen = fread(&tileHeader, sizeof(tileHeader), 1, fp);
-		if (readLen != 1)
-			return 0;
-
+		TileCacheTileHeader tileHeader;
+		fread(&tileHeader, sizeof(tileHeader), 1, fp);
 		if (!tileHeader.tileRef || !tileHeader.dataSize)
 			break;
 
 		unsigned char* data = (unsigned char*)dtAlloc(tileHeader.dataSize, DT_ALLOC_PERM);
 		if (!data) break;
 		memset(data, 0, tileHeader.dataSize);
-		readLen = fread(data, tileHeader.dataSize, 1, fp);
-		if (readLen != 1)
-			return 0;
+		fread(data, tileHeader.dataSize, 1, fp);
 
-		_navMesh->addTile(data, tileHeader.dataSize, DT_TILE_FREE_DATA, tileHeader.tileRef, 0);
+		dtCompressedTileRef tile = 0;
+		_tileCache->addTile(data, tileHeader.dataSize, DT_COMPRESSEDTILE_FREE_DATA, &tile);
+
+		if (tile)
+			_tileCache->buildNavMeshTile(tile, _navMesh);
 	}
 
-	fclose(fp);
+	//create crowed
+	_crowed = dtAllocCrowd();
+	_crowed->init(MAX_AGENTS, header.cacheParams.walkableRadius, _navMesh);
 
+	//create NavMeshQuery
+	_navMeshQuery = dtAllocNavMeshQuery();
+	_navMeshQuery->init(_navMesh, 2048);
+
+	_agentList.assign(MAX_AGENTS, nullptr);
+	_obstacleList.assign(header.cacheParams.maxObstacles, nullptr);
 	//duDebugDrawNavMesh(&_debugDraw, *_navMesh, DU_DRAWNAVMESH_OFFMESHCONS);
 	return true;
+}
+
+
+void NavMesh::removeNavMeshObstacle(NavMeshObstacle *obstacle)
+{
+	auto iter = std::find(_obstacleList.begin(), _obstacleList.end(), obstacle);
+	if (iter != _obstacleList.end()){
+		obstacle->removeFrom(_tileCache);
+		obstacle->release();
+		_obstacleList[iter - _obstacleList.begin()] = nullptr;
+	}
+}
+
+void NavMesh::addNavMeshObstacle(NavMeshObstacle *obstacle)
+{
+	auto iter = std::find(_obstacleList.begin(), _obstacleList.end(), nullptr);
+	if (iter != _obstacleList.end()){
+		obstacle->addTo(_tileCache);
+		obstacle->retain();
+		_obstacleList[iter - _obstacleList.begin()] = obstacle;
+	}
+}
+
+void NavMesh::removeNavMeshAgent(NavMeshAgent *agent)
+{
+	auto iter = std::find(_agentList.begin(), _agentList.end(), agent);
+	if (iter != _agentList.end()){
+		agent->removeFrom(_crowed);
+		agent->setNavMeshQuery(nullptr);
+		agent->release();
+		_agentList[iter - _agentList.begin()] = nullptr;
+	}
+}
+
+void NavMesh::addNavMeshAgent(NavMeshAgent *agent)
+{
+	auto iter = std::find(_agentList.begin(), _agentList.end(), nullptr);
+	if (iter != _agentList.end()){
+		agent->addTo(_crowed);
+		agent->setNavMeshQuery(_navMeshQuery);
+		agent->retain();
+		_agentList[iter - _agentList.begin()] = agent;
+	}
+}
+
+bool NavMesh::isDebugDrawEnabled() const
+{
+	return _isDebugDrawEnabled;
+}
+
+void NavMesh::setDebugDrawEnable(bool enable)
+{
+	_isDebugDrawEnabled = enable;
+}
+
+void NavMesh::debugDraw(Renderer* renderer)
+{
+	if (_isDebugDrawEnabled){
+		_debugDraw.draw(renderer);
+	}
+}
+
+void NavMesh::update(float dt)
+{
+	if (_crowed)
+		_crowed->update(dt, nullptr);
 }
 
 NS_CC_END

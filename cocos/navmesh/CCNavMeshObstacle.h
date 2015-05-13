@@ -26,11 +26,12 @@
 #define __CCNAV_MESH_OBSTACLE_H__
 
 #include "base/ccConfig.h"
+#include "2d/CCComponent.h"
 
 #include "base/CCRef.h"
 #include "math/Vec3.h"
 #include "recast/Detour/DetourNavMesh.h"
-
+#include "recast/DetourTileCache/DetourTileCache.h"
 
 NS_CC_BEGIN
 
@@ -39,11 +40,16 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL NavMeshObstacle : public Ref
+class CC_DLL NavMeshObstacle : public Component
 {
+	friend class NavMesh;
 public:
 
 	static NavMeshObstacle* create(const Vec3 &position, float radius, float height);
+
+	virtual void onEnter() override;
+	virtual void onExit() override;
+	virtual void update(float delta) override;
 
 	void setPosition(const Vec3 &position);
 	const Vec3 getPosition() const { return _position;  }
@@ -58,11 +64,20 @@ CC_CONSTRUCTOR_ACCESS:
 
 	bool init(const Vec3 &position, float radius, float height);
 
-protected:
+private:
+
+	void addTo(dtTileCache *tileCache);
+	void removeFrom(dtTileCache *tileCache);
+	void setTileCache(dtTileCache *tileCache);
+
+private:
 
 	Vec3 _position;
 	float _radius;
 	float _height;
+	bool _needUpdateObstacle;
+	dtObstacleRef _obstacleID;
+	dtTileCache *_tileCache;
 };
 
 /** @} */
