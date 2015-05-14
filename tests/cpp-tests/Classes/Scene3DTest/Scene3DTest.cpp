@@ -4,7 +4,7 @@
 #include <spine/spine-cocos2dx.h>
 
 #include "../testResource.h"
-#include "TerrainTest.h"
+#include "../TerrainTest/TerrainTest.h"
 
 USING_NS_CC;
 using namespace spine;
