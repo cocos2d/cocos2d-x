@@ -923,9 +923,9 @@ bool Image::encodeWithWIC(const std::string& filePath, bool isToRGB, GUID contai
 
 bool Image::initWithJpgData(const unsigned char * data, ssize_t dataLen)
 {
-#if defined(CC_USE_WIC)
+#if CC_USE_WIC
     return decodeWithWIC(data, dataLen);
-#elif defined(CC_USE_JPEG)
+#elif CC_USE_JPEG
     /* these are standard libjpeg structures for reading(decompression) */
     struct jpeg_decompress_struct cinfo;
     /* We use our private extension JPEG error handler.
@@ -1019,9 +1019,9 @@ bool Image::initWithJpgData(const unsigned char * data, ssize_t dataLen)
 
 bool Image::initWithPngData(const unsigned char * data, ssize_t dataLen)
 {
-#if defined(CC_USE_WIC)
+#if CC_USE_WIC
     return decodeWithWIC(data, dataLen);
-#elif defined(CC_USE_PNG)
+#elif CC_USE_PNG
     // length of bytes to check if it is a valid png file
 #define PNGSIGSIZE  8
     bool ret = false;
@@ -1288,9 +1288,9 @@ namespace
 
 bool Image::initWithTiffData(const unsigned char * data, ssize_t dataLen)
 {
-#if defined(CC_USE_WIC)
+#if CC_USE_WIC
     return decodeWithWIC(data, dataLen);
-#elif defined(CC_USE_TIFF)
+#elif CC_USE_TIFF
     bool ret = false;
     do 
     {
@@ -2253,9 +2253,9 @@ bool Image::saveToFile(const std::string& filename, bool isToRGB)
 
 bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
 {
-#if defined(CC_USE_WIC)
+#if CC_USE_WIC
     return encodeWithWIC(filePath, isToRGB, GUID_ContainerFormatPng);
-#elif defined(CC_USE_PNG)
+#elif CC_USE_PNG
     bool ret = false;
     do
     {
@@ -2405,9 +2405,9 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
 
 bool Image::saveImageToJPG(const std::string& filePath)
 {
-#if defined(CC_USE_WIC)
+#if CC_USE_WIC
     return encodeWithWIC(filePath, false, GUID_ContainerFormatJpeg);
-#elif defined(CC_USE_JPEG)
+#elif CC_USE_JPEG
     bool ret = false;
     do 
     {
