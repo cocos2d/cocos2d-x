@@ -71,14 +71,25 @@ bool FrameBufferObject::init(uint8_t fid, unsigned int width, unsigned int heigh
     _height = height;
     
     _colorTexture = new (std::nothrow) Texture2D();
+    if(nullptr == _colorTexture) return false;
     auto dataLen = width * height * 4;
     auto data = malloc(dataLen);
-    if(nullptr == data || nullptr == _colorTexture)
-        return false;
+    if( nullptr == data) return false;
     
     memset(data, 0, dataLen);
-    _colorTexture->initWithData(data, dataLen, Texture2D::PixelFormat::RGBA8888, width, height, Size(width, height));
-    free(data);
+    if(_colorTexture->initWithData(data, dataLen, Texture2D::PixelFormat::RGBA8888, width, height, Size(width, height)))
+    {
+        _colorTexture->autorelease();
+        CC_SAFE_RETAIN(_colorTexture);
+        free(data);
+    }
+    else
+    {
+        CC_SAFE_DELETE(_colorTexture);
+        free(data);
+        return false;
+    }
+    
     
     GLint oldRenderBuffer(0);
     glGetIntegerv(GL_RENDERBUFFER_BINDING, &oldRenderBuffer);
@@ -102,6 +113,8 @@ FrameBufferObject::FrameBufferObject()
 : _clearColor(Color4F(0, 0, 0, 1))
 , _clearDepth(1.0)
 , _clearStencil(0)
+, _depthBuffer(0)
+, _fbo(0)
 , _colorTexture(nullptr)
 {
     _frameBufferObjects.insert(this);
@@ -110,6 +123,9 @@ FrameBufferObject::FrameBufferObject()
 FrameBufferObject::~FrameBufferObject()
 {
     CC_SAFE_RELEASE_NULL(_colorTexture);
+    glDeleteRenderbuffers(1, &_depthBuffer);
+    glDeleteFramebuffers(1, &_fbo);
+    _fbo = _depthBuffer = 0;
     _frameBufferObjects.erase(this);
 }
 
