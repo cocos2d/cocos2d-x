@@ -35,10 +35,10 @@ NavMeshDebugDraw::NavMeshDebugDraw()
 , _dirtyBuffer(true)
 , _currentPrimitive(nullptr)
 {
-	_customCmd.set3D(true);
-	_customCmd.setTransparent(true);
-	_program = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_COLOR);
-	glGenBuffers(1, &_vbo);
+    _customCmd.set3D(true);
+    _customCmd.setTransparent(true);
+    _program = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_COLOR);
+    glGenBuffers(1, &_vbo);
 }
 
 void NavMeshDebugDraw::vertex(const float x, const float y, const float z, unsigned int color, const float u, const float v)
@@ -48,106 +48,106 @@ void NavMeshDebugDraw::vertex(const float x, const float y, const float z, unsig
 
 void NavMeshDebugDraw::vertex(const float* pos, unsigned int color, const float* uv)
 {
-	vertex(pos[0], pos[1], pos[2], color, uv[0], uv[1]);
+    vertex(pos[0], pos[1], pos[2], color, uv[0], uv[1]);
 }
 
 void NavMeshDebugDraw::vertex(const float x, const float y, const float z, unsigned int color)
 {
-	if (!_currentPrimitive) return;
-	V3F_C4F vertex = { Vec3(x, y, z), getColor(color) };
-	_vertices.push_back(vertex);
-	_dirtyBuffer = true;
+    if (!_currentPrimitive) return;
+    V3F_C4F vertex = { Vec3(x, y, z), getColor(color) };
+    _vertices.push_back(vertex);
+    _dirtyBuffer = true;
 }
 
 void NavMeshDebugDraw::vertex(const float* pos, unsigned int color)
 {
-	vertex(pos[0], pos[1], pos[2], color);
+    vertex(pos[0], pos[1], pos[2], color);
 }
 
 NavMeshDebugDraw::~NavMeshDebugDraw()
 {
-	for (auto iter : _primitiveList){
-		delete iter;
-	}
-	glDeleteBuffers(1, &_vbo);
+    for (auto iter : _primitiveList){
+        delete iter;
+    }
+    glDeleteBuffers(1, &_vbo);
 }
 
 void NavMeshDebugDraw::begin(duDebugDrawPrimitives prim, float size /*= 1.0f*/)
 {
-	if (_currentPrimitive) return;
-	_currentPrimitive = new Primitive;
-	_currentPrimitive->type = getPrimitiveType(prim);
-	_currentPrimitive->start = _vertices.size();
-	_currentPrimitive->size = size;
+    if (_currentPrimitive) return;
+    _currentPrimitive = new Primitive;
+    _currentPrimitive->type = getPrimitiveType(prim);
+    _currentPrimitive->start = _vertices.size();
+    _currentPrimitive->size = size;
 }
 
 void NavMeshDebugDraw::end()
 {
-	if (!_currentPrimitive) return;
-	_currentPrimitive->end = _vertices.size();
-	_primitiveList.push_back(_currentPrimitive);
-	_currentPrimitive = nullptr;
+    if (!_currentPrimitive) return;
+    _currentPrimitive->end = _vertices.size();
+    _primitiveList.push_back(_currentPrimitive);
+    _currentPrimitive = nullptr;
 }
 
 Vec4 cocos2d::NavMeshDebugDraw::getColor(unsigned int col)
 {
-	const unsigned int r = col & 0xff;
-	const unsigned int g = (col >> 8) & 0xff;
-	const unsigned int b = (col >> 16) & 0xff;
-	const unsigned int a = (col >> 24) & 0xff;
+    const unsigned int r = col & 0xff;
+    const unsigned int g = (col >> 8) & 0xff;
+    const unsigned int b = (col >> 16) & 0xff;
+    const unsigned int a = (col >> 24) & 0xff;
 
-	float factor = 1.0f / 255.0f;
-	return Vec4(r, g, b, a) * factor;
+    float factor = 1.0f / 255.0f;
+    return Vec4(r, g, b, a) * factor;
 }
 
 GLenum NavMeshDebugDraw::getPrimitiveType(duDebugDrawPrimitives prim)
 {
-	switch (prim)
-	{
-	case DU_DRAW_POINTS:
-		return GL_POINTS;
-	case DU_DRAW_LINES:
-		return GL_LINES;
-	case DU_DRAW_TRIS:
-		return GL_TRIANGLES;
-	default:
-		return GL_POINTS;
-	}
+    switch (prim)
+    {
+    case DU_DRAW_POINTS:
+        return GL_POINTS;
+    case DU_DRAW_LINES:
+        return GL_LINES;
+    case DU_DRAW_TRIS:
+        return GL_TRIANGLES;
+    default:
+        return GL_POINTS;
+    }
 }
 
 void cocos2d::NavMeshDebugDraw::drawImplement(const cocos2d::Mat4& transform, uint32_t flags)
 {
-	_program->use();
-	_program->setUniformsForBuiltins(transform);
-	glEnable(GL_DEPTH_TEST);
-	GL::blendFunc(BlendFunc::ALPHA_PREMULTIPLIED.src, BlendFunc::ALPHA_PREMULTIPLIED.dst);
-	glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-	GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR);
-	glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4F), (GLvoid *)offsetof(V3F_C4F, position));
-	glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, sizeof(V3F_C4F), (GLvoid *)offsetof(V3F_C4F, color));
-	if (_dirtyBuffer){
-		glBufferData(GL_ARRAY_BUFFER, sizeof(V3F_C4F)* _vertices.size(), &_vertices[0], GL_STATIC_DRAW);
-		_dirtyBuffer = false;
-	}
-	for (auto &iter : _primitiveList){
-		if (iter->type == GL_POINTS){
-			glPointSize(iter->size);
-		}
-		else if (iter->type == GL_LINES){
-			glLineWidth(iter->size);
-		}
-		glDrawArrays(iter->type, iter->start, iter->end - iter->start);
-		CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, iter->end - iter->start);
-	}
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glDisable(GL_DEPTH_TEST);
+    _program->use();
+    _program->setUniformsForBuiltins(transform);
+    glEnable(GL_DEPTH_TEST);
+    GL::blendFunc(BlendFunc::ALPHA_PREMULTIPLIED.src, BlendFunc::ALPHA_PREMULTIPLIED.dst);
+    glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+    GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR);
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4F), (GLvoid *)offsetof(V3F_C4F, position));
+    glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_FLOAT, GL_FALSE, sizeof(V3F_C4F), (GLvoid *)offsetof(V3F_C4F, color));
+    if (_dirtyBuffer){
+        glBufferData(GL_ARRAY_BUFFER, sizeof(V3F_C4F)* _vertices.size(), &_vertices[0], GL_STATIC_DRAW);
+        _dirtyBuffer = false;
+    }
+    for (auto &iter : _primitiveList){
+        if (iter->type == GL_POINTS){
+            glPointSize(iter->size);
+        }
+        else if (iter->type == GL_LINES){
+            glLineWidth(iter->size);
+        }
+        glDrawArrays(iter->type, iter->start, iter->end - iter->start);
+        CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, iter->end - iter->start);
+    }
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glDisable(GL_DEPTH_TEST);
 }
 
 void NavMeshDebugDraw::draw(Renderer* renderer)
 {
-	_customCmd.init(0, Mat4::IDENTITY, 0);
-	_customCmd.func = CC_CALLBACK_0(NavMeshDebugDraw::drawImplement, this, Mat4::IDENTITY, 0);
-	renderer->addCommand(&_customCmd);
+    _customCmd.init(0, Mat4::IDENTITY, 0);
+    _customCmd.func = CC_CALLBACK_0(NavMeshDebugDraw::drawImplement, this, Mat4::IDENTITY, 0);
+    renderer->addCommand(&_customCmd);
 }
 
 NS_CC_END

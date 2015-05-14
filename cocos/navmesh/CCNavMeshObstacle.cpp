@@ -31,14 +31,14 @@ NS_CC_BEGIN
 
 NavMeshObstacle* NavMeshObstacle::create(const Vec3 &position, float radius, float height)
 {
-	auto ref = new (std::nothrow) NavMeshObstacle();
-	if (ref && ref->init(position, radius, height))
-	{
-		ref->autorelease();
-		return ref;
-	}
-	CC_SAFE_DELETE(ref);
-	return nullptr;
+    auto ref = new (std::nothrow) NavMeshObstacle();
+    if (ref && ref->init(position, radius, height))
+    {
+        ref->autorelease();
+        return ref;
+    }
+    CC_SAFE_DELETE(ref);
+    return nullptr;
 }
 
 NavMeshObstacle::NavMeshObstacle()
@@ -58,51 +58,77 @@ cocos2d::NavMeshObstacle::~NavMeshObstacle()
 
 bool NavMeshObstacle::init(const Vec3 &position, float radius, float height)
 {
-	_position = position;
-	_radius = radius;
-	_height = height;
-	setName("___NavMeshObstacleComponent___");
-	return true;
+    _position = position;
+    _radius = radius;
+    _height = height;
+    setName("___NavMeshObstacleComponent___");
+    return true;
 }
 
 void cocos2d::NavMeshObstacle::removeFrom(dtTileCache *tileCache)
 {
-	_tileCache->removeObstacle(_obstacleID);
-	_tileCache = nullptr;
-	_obstacleID = -1;
+    _tileCache->removeObstacle(_obstacleID);
+    _tileCache = nullptr;
+    _obstacleID = -1;
 }
 
 void cocos2d::NavMeshObstacle::addTo(dtTileCache *tileCache)
 {
-	_tileCache = tileCache;
-	_tileCache->addObstacle(&_position.x, _radius, _height, &_obstacleID);
+    _tileCache = tileCache;
+    _tileCache->addObstacle(&_position.x, _radius, _height, &_obstacleID);
 }
 
 void cocos2d::NavMeshObstacle::onExit()
 {
-	Component::onExit();
-	auto navMesh = _owner->getScene()->getNavMesh();
-	if (navMesh){
-		navMesh->removeNavMeshObstacle(this);
-	}
+    Component::onExit();
+    auto navMesh = _owner->getScene()->getNavMesh();
+    if (navMesh){
+        navMesh->removeNavMeshObstacle(this);
+    }
 }
 
 void cocos2d::NavMeshObstacle::onEnter()
 {
-	Component::onEnter();
-	auto navMesh = _owner->getScene()->getNavMesh();
-	if (navMesh){
-		navMesh->addNavMeshObstacle(this);
-	}
+    Component::onEnter();
+    auto navMesh = _owner->getScene()->getNavMesh();
+    if (navMesh){
+        navMesh->addNavMeshObstacle(this);
+    }
 }
 
-void cocos2d::NavMeshObstacle::update(float delta)
+void cocos2d::NavMeshObstacle::postUpdate(float delta)
 {
-	if (_needUpdateObstacle && _tileCache){
-		_tileCache->removeObstacle(_obstacleID);
-		_tileCache->addObstacle(&_position.x, _radius, _height, &_obstacleID);
-		_needUpdateObstacle = false;
-	}
+    syncToNode();
+}
+
+void cocos2d::NavMeshObstacle::preUpdate(float delta)
+{
+    syncToObstacle();
+
+    if (_needUpdateObstacle && _tileCache){
+        _tileCache->removeObstacle(_obstacleID);
+        _tileCache->addObstacle(&_position.x, _radius, _height, &_obstacleID);
+        _needUpdateObstacle = false;
+    }
+}
+
+void NavMeshObstacle::syncToNode()
+{
+    if (_tileCache){
+        _owner->setPosition3D(_position);
+    }
+}
+
+void NavMeshObstacle::syncToObstacle()
+{
+    setPosition(_owner->getPosition3D());
+}
+
+void NavMeshObstacle::setPosition(const Vec3 &position)
+{
+    if (_position == position) return;
+    _position = position;
+    _needUpdateObstacle = true;
 }
 
 NS_CC_END

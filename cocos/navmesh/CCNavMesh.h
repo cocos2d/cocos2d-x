@@ -39,6 +39,7 @@
 #include "navmesh/CCNavMeshAgent.h"
 #include "navmesh/CCNavMeshDebugDraw.h"
 #include "navmesh/CCNavMeshObstacle.h"
+#include "navmesh/CCNavMeshTool.h"
 
 NS_CC_BEGIN
 
@@ -51,47 +52,50 @@ class CC_DLL NavMesh : public Ref
 {
 public:
 
-	struct hitInfo
-	{
-		Vec3 position;
-		Vec3 normal;
-	};
+    struct hitInfo
+    {
+        Vec3 position;
+        Vec3 normal;
+    };
 
-	static NavMesh* create(const std::string &filePath);
+    static NavMesh* create(const std::string &filePath);
 
-	void update(float dt);
-	void debugDraw(Renderer* renderer);
-	void setDebugDrawEnable(bool enable);
-	bool isDebugDrawEnabled() const;
-	void addNavMeshAgent(NavMeshAgent *agent);
-	void removeNavMeshAgent(NavMeshAgent *agent);
-	void addNavMeshObstacle(NavMeshObstacle *obstacle);
-	void removeNavMeshObstacle(NavMeshObstacle *obstacle);
+    void update(float dt);
+    void debugDraw(Renderer* renderer);
+    void setDebugDrawEnable(bool enable);
+    bool isDebugDrawEnabled() const;
+    void addNavMeshAgent(NavMeshAgent *agent);
+    void removeNavMeshAgent(NavMeshAgent *agent);
+    void addNavMeshObstacle(NavMeshObstacle *obstacle);
+    void removeNavMeshObstacle(NavMeshObstacle *obstacle);
 
-	void findPath(const Vec3 &start, const Vec3 &end, std::vector<Vec3> &pathPoints);
-	bool rayCast(const Vec3 &start, const Vec3 &end, hitInfo & hits);
+    void findPath(const Vec3 &start, const Vec3 &end, std::vector<Vec3> &pathPoints);
+    bool rayCast(const Vec3 &start, const Vec3 &end, hitInfo & hits);
 
 CC_CONSTRUCTOR_ACCESS:
-	NavMesh();
-	virtual ~NavMesh();
+    NavMesh();
+    virtual ~NavMesh();
 
 protected:
 
-	bool initWithFilePath(const std::string &filePath);
-	bool read();
+    bool initWithFilePath(const std::string &filePath);
+    bool read();
 
 protected:
 
-	dtNavMesh *_navMesh;
-	dtNavMeshQuery *_navMeshQuery;
-	dtCrowd *_crowed;
-	dtTileCache *_tileCache;
+    dtNavMesh *_navMesh;
+    dtNavMeshQuery *_navMeshQuery;
+    dtCrowd *_crowed;
+    dtTileCache *_tileCache;
+    LinearAllocator *_allocator;
+    FastLZCompressor *_compressor;
+    MeshProcess *_meshProcess;
 
-	std::vector<NavMeshAgent*> _agentList;
-	std::vector<NavMeshObstacle*> _obstacleList;
-	NavMeshDebugDraw _debugDraw;
-	std::string _filePath;
-	bool _isDebugDrawEnabled;
+    std::vector<NavMeshAgent*> _agentList;
+    std::vector<NavMeshObstacle*> _obstacleList;
+    NavMeshDebugDraw _debugDraw;
+    std::string _filePath;
+    bool _isDebugDrawEnabled;
 };
 
 /** @} */

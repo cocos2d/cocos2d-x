@@ -44,54 +44,54 @@ class Renderer;
 class NavMeshDebugDraw : duDebugDraw
 {
 public:
-	NavMeshDebugDraw();
-	virtual ~NavMeshDebugDraw();
+    NavMeshDebugDraw();
+    virtual ~NavMeshDebugDraw();
 
-	virtual void depthMask(bool state){};
-	virtual void texture(bool state){};
-	virtual void begin(duDebugDrawPrimitives prim, float size = 1.0f) override;
+    virtual void depthMask(bool state){};
+    virtual void texture(bool state){};
+    virtual void begin(duDebugDrawPrimitives prim, float size = 1.0f) override;
 
-	virtual void vertex(const float* pos, unsigned int color) override;
-	virtual void vertex(const float x, const float y, const float z, unsigned int color) override;
+    virtual void vertex(const float* pos, unsigned int color) override;
+    virtual void vertex(const float x, const float y, const float z, unsigned int color) override;
 
-	virtual void vertex(const float* pos, unsigned int color, const float* uv) override;
-	virtual void vertex(const float x, const float y, const float z, unsigned int color, const float u, const float v) override;
+    virtual void vertex(const float* pos, unsigned int color, const float* uv) override;
+    virtual void vertex(const float x, const float y, const float z, unsigned int color, const float u, const float v) override;
 
-	virtual void end() override;
+    virtual void end() override;
 
-	void draw(Renderer* renderer);
-
-private:
-
-	Vec4 getColor(unsigned int col);
-
-	GLenum getPrimitiveType(duDebugDrawPrimitives prim);
-	void drawImplement(const cocos2d::Mat4& transform, uint32_t flags);
+    void draw(Renderer* renderer);
 
 private:
 
-	struct V3F_C4F
-	{
-		Vec3 position;
-		Vec4 color;
-	};
+    Vec4 getColor(unsigned int col);
 
-	struct Primitive
-	{
-		GLenum type;
-		unsigned short start;
-		unsigned short end;
-		float size;
-	};
+    GLenum getPrimitiveType(duDebugDrawPrimitives prim);
+    void drawImplement(const cocos2d::Mat4& transform, uint32_t flags);
 
-	std::vector<V3F_C4F> _vertices;
-	std::vector<Primitive*> _primitiveList;
-	Primitive *_currentPrimitive;
-	GLProgram *_program;
-	CustomCommand _customCmd;
-	GLenum _primitiveType;
-	GLuint _vbo;
-	bool _dirtyBuffer;
+private:
+
+    struct V3F_C4F
+    {
+        Vec3 position;
+        Vec4 color;
+    };
+
+    struct Primitive
+    {
+        GLenum type;
+        unsigned short start;
+        unsigned short end;
+        float size;
+    };
+
+    std::vector<V3F_C4F> _vertices;
+    std::vector<Primitive*> _primitiveList;
+    Primitive *_currentPrimitive;
+    GLProgram *_program;
+    CustomCommand _customCmd;
+    GLenum _primitiveType;
+    GLuint _vbo;
+    bool _dirtyBuffer;
 };
 
 /** @} */

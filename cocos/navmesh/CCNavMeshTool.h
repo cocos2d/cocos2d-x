@@ -22,16 +22,14 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __CCNAV_MESH_OBSTACLE_H__
-#define __CCNAV_MESH_OBSTACLE_H__
+#ifndef __CCNAV_MESH_TOOL_H__
+#define __CCNAV_MESH_TOOL_H__
 
 #include "base/ccConfig.h"
-#include "2d/CCComponent.h"
+#include "platform/CCPlatformMacros.h"
 
-#include "base/CCRef.h"
-#include "math/Vec3.h"
-#include "recast/Detour/DetourNavMesh.h"
 #include "recast/DetourTileCache/DetourTileCache.h"
+#include "recast/DetourTileCache/DetourTileCacheBuilder.h"
 
 NS_CC_BEGIN
 
@@ -40,52 +38,54 @@ NS_CC_BEGIN
  * @{
  */
 
-class CC_DLL NavMeshObstacle : public Component
+struct LinearAllocator : public dtTileCacheAlloc
 {
-    friend class NavMesh;
-public:
+    unsigned char* buffer;
+    int capacity;
+    int top;
+    int high;
 
-    static NavMeshObstacle* create(const Vec3 &position, float radius, float height);
+    LinearAllocator(const int cap);
 
-    virtual void onEnter() override;
-    virtual void onExit() override;
+    ~LinearAllocator();
 
-    void setPosition(const Vec3 &position);
-    const Vec3 getPosition() const { return _position;  }
-    void setRadius(float radius);
-    float getRadius() const { return _radius; }
-    void setHeight(float height);
-    float getHeight() const { return _height; }
+    void resize(const int cap);
 
-    void syncToObstacle();
-    void syncToNode();
+    virtual void reset();
 
-CC_CONSTRUCTOR_ACCESS:
-    NavMeshObstacle();
-    virtual ~NavMeshObstacle();
+    virtual void* alloc(const int size);
 
-    bool init(const Vec3 &position, float radius, float height);
+    virtual void free(void* /*ptr*/);
+};
 
-private:
+struct FastLZCompressor : public dtTileCacheCompressor
+{
+    virtual int maxCompressedSize(const int bufferSize);
 
-    void addTo(dtTileCache *tileCache);
-    void removeFrom(dtTileCache *tileCache);
-    void setTileCache(dtTileCache *tileCache);
-    void preUpdate(float delta);
-    void postUpdate(float delta);
+    virtual dtStatus compress(const unsigned char* buffer, const int bufferSize,
+        unsigned char* compressed, const int /*maxCompressedSize*/, int* compressedSize);
 
-private:
+    virtual dtStatus decompress(const unsigned char* compressed, const int compressedSize,
+        unsigned char* buffer, const int maxBufferSize, int* bufferSize);
+};
 
-    Vec3 _position;
-    float _radius;
-    float _height;
-    bool _needUpdateObstacle;
-    dtObstacleRef _obstacleID;
-    dtTileCache *_tileCache;
+struct MeshProcess : public dtTileCacheMeshProcess
+{
+    //InputGeom* m_geom;
+
+    MeshProcess();
+
+    //void init(InputGeom* geom)
+    //{
+    //	m_geom = geom;
+    //}
+
+    virtual void process(struct dtNavMeshCreateParams* params,
+        unsigned char* polyAreas, unsigned short* polyFlags) override;
 };
 
 /** @} */
 
 NS_CC_END
 
-#endif // __CCNAV_MESH_OBSTACLE_H__
+#endif // __CCNAV_MESH_H__
