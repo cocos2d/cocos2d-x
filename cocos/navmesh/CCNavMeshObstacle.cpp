@@ -21,6 +21,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+#if CC_USE_NAVMESH
+
 #include "navmesh/CCNavMeshObstacle.h"
 #include "navmesh/CCNavMesh.h"
 #include "2d/CCNode.h"
@@ -133,3 +135,4 @@ void NavMeshObstacle::setPosition(const Vec3 &position)
 
 NS_CC_END
 
+#endif //CC_USE_NAVMESH

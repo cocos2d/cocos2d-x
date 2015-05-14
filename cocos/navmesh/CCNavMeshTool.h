@@ -25,6 +25,8 @@
 #ifndef __CCNAV_MESH_TOOL_H__
 #define __CCNAV_MESH_TOOL_H__
 
+#if CC_USE_NAVMESH
+
 #include "base/ccConfig.h"
 #include "platform/CCPlatformMacros.h"
 
@@ -87,5 +89,7 @@ struct MeshProcess : public dtTileCacheMeshProcess
 /** @} */
 
 NS_CC_END
+
+#endif //CC_USE_NAVMESH
 
 #endif // __CCNAV_MESH_H__

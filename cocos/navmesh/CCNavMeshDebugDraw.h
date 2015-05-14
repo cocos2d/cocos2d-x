@@ -25,6 +25,8 @@
 #ifndef __CCNAV_MESH_DEBUG_DRAW_H__
 #define __CCNAV_MESH_DEBUG_DRAW_H__
 
+#if CC_USE_NAVMESH
+
 #include "base/ccConfig.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCCustomCommand.h"
@@ -32,7 +34,6 @@
 #include "recast/DebugUtils/DebugDraw.h"
 #include <string>
 #include <vector>
-
 
 NS_CC_BEGIN
 
@@ -97,5 +98,7 @@ private:
 /** @} */
 
 NS_CC_END
+
+#endif //CC_USE_NAVMESH
 
 #endif // __CCNAV_MESH_DEBUG_DRAW_H__

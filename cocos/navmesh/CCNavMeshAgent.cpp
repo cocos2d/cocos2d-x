@@ -21,6 +21,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+#if CC_USE_NAVMESH
+
 #include "navmesh/CCNavMeshAgent.h"
 #include "navmesh/CCNavMesh.h"
 #include "recast/DetourCrowd/DetourCrowd.h"
@@ -234,3 +236,5 @@ void NavMeshAgent::setPosition(const Vec3 & pos)
 }
 
 NS_CC_END
+
+#endif //CC_USE_NAVMESH

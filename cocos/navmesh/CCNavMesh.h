@@ -25,6 +25,8 @@
 #ifndef __CCNAV_MESH_H__
 #define __CCNAV_MESH_H__
 
+#if CC_USE_NAVMESH
+
 #include "base/ccConfig.h"
 
 #include "base/CCRef.h"
@@ -40,6 +42,7 @@
 #include "navmesh/CCNavMeshDebugDraw.h"
 #include "navmesh/CCNavMeshObstacle.h"
 #include "navmesh/CCNavMeshTool.h"
+
 
 NS_CC_BEGIN
 
@@ -101,5 +104,7 @@ protected:
 /** @} */
 
 NS_CC_END
+
+#endif //CC_USE_NAVMESH
 
 #endif // __CCNAV_MESH_H__

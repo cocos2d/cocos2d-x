@@ -25,6 +25,8 @@
 #ifndef __CCNAV_MESH_AGENT_H__
 #define __CCNAV_MESH_AGENT_H__
 
+#if CC_USE_NAVMESH
+
 #include "base/ccConfig.h"
 #include "2d/CCComponent.h"
 
@@ -122,5 +124,7 @@ private:
 /** @} */
 
 NS_CC_END
+
+#endif //CC_USE_NAVMESH
 
 #endif // __CCNAV_MESH_AGENT_H__
