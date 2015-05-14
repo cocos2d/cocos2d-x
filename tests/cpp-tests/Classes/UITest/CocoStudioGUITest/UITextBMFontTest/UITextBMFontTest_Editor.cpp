@@ -14,7 +14,7 @@ bool UITextBMFontTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILabelBMFont/crossplatform_UILabelBMFont_Editor_1.csb");
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILabelBMFont/res.csb");
         Node* child = node->getChildByTag(5);
         child->removeFromParent();
         _layout = static_cast<Layout*>(child);
