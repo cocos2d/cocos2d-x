@@ -5,6 +5,7 @@ import os
 import sys
 import time
 import shutil
+import excopy
 from argparse import ArgumentParser
 
 def os_is_win32():
@@ -44,7 +45,7 @@ def execute_command(cmdstring, cwd=None, timeout=None, shell=False):
 	# 没有指定标准输出和错误输出的管道,因此会打印到屏幕上
 	sub = None
 	try:
-		sub = subprocess.Popen(cmdstring_list, cwd=cwd, stdin=subprocess.PIPE,shell=shell,bufsize=4096)
+		sub = subprocess.Popen(cmdstring_list, cwd=cwd, stdin=subprocess.PIPE, shell=shell, bufsize=4096)
 	except Exception, e:
 		print "execute command fail:%s" % cmdstring
 		raise e
@@ -209,13 +210,15 @@ class CocosLibsCompiler(object):
 		execute_command(build_cmd)
 
 		# copy .a to prebuilt dir
-		self.mkdir(android_out_dir)
 		obj_dir = os.path.join(proj_path, ANDROID_A_PATH)
-		obj_dir = "/Users/htl/Documents/Work/cocos2d-x/tools/framework-compile/a"
-		self.cpdir(obj_dir, android_out_dir)
-		# cp_cmd = "cp -R %s %s" %(os.path.join(obj_dir, "*.a"),  android_out_dir)
-		# execute_command(cp_cmd)
-		# print ">>> copy a file :%s" % cp_cmd
+		copy_cfg = {
+			"from": obj_dir,
+			"to": android_out_dir,
+			"include": [
+				"*.a$"
+			]
+		}
+		excopy.copy_files_with_config(copy_cfg, obj_dir, android_out_dir)
 
 		if not self.disable_strip:
 			# strip the android libs
@@ -233,16 +236,16 @@ class CocosLibsCompiler(object):
 			strip_cmd_path = os.path.join(ndk_root, "toolchains/arm-linux-androideabi-4.8/prebuilt/%s/arm-linux-androideabi/bin/strip" % sys_folder_name)
 			if os.path.exists(strip_cmd_path):
 				strip_cmd = "%s -S %s/armeabi*/*.a" % (strip_cmd_path, android_out_dir)
-				execute_command(strip_cmd)
+				execute_command(strip_cmd, shell = True)
 
 			# strip x86 libs
 			strip_cmd_path = os.path.join(ndk_root, "toolchains/x86-4.8/prebuilt/%s/i686-linux-android/bin/strip" % sys_folder_name)
 			if os.path.exists(strip_cmd_path) and os.path.exists(os.path.join(android_out_dir, "x86")):
 				strip_cmd = "%s -S %s/x86/*.a" % (strip_cmd_path, android_out_dir)
-				execute_command(strip_cmd)
+				execute_command(strip_cmd, shell = True)
 
 		# remove the project
-		# self.rmdir(proj_path)
+		self.rmdir(proj_path)
 
 	def modify_mk(self, mk_file):
 		if os.path.isfile(mk_file):
