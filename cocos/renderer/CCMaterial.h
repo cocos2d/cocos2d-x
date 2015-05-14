@@ -118,6 +118,8 @@ public:
     /** Sets the current technique */
     void setTechnique(const std::string& techniqueName);
 
+    /** returns a clone (deep-copy) of the material */
+    Material* clone() const;
 
 protected:
     Material();
