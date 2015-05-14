@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<project name="Javascript compress project" basedir="%projectDir%" default="compile">
+
+    <taskdef name="jscomp" classname="com.google.javascript.jscomp.ant.CompileTask"
+             classpath="%toolsDir%/compiler/compiler.jar"/>
+
+    <target name="compile">
+        <jscomp compilationLevel="%compilationLevel%" warning="quiet"
+                debug="false" output="%publishDir%/%outputFileName%"
+                %sourceMapCfg%
+                >
+            <sources dir="%engineDir%">
+%ccJsList%
+            </sources>
+            <sources dir="${basedir}">
+%userJsList%
+            </sources>
+        </jscomp>
+    </target>
+</project>
