@@ -1212,6 +1212,11 @@
 
 
 --------------------------------------------------------
+-- the cc ParallaxNode
+-- @field [parent=#cc] ParallaxNode#ParallaxNode ParallaxNode preloaded module
+
+
+--------------------------------------------------------
 -- the cc TMXObjectGroup
 -- @field [parent=#cc] TMXObjectGroup#TMXObjectGroup TMXObjectGroup preloaded module
 
@@ -1239,11 +1244,6 @@
 --------------------------------------------------------
 -- the cc TMXTiledMap
 -- @field [parent=#cc] TMXTiledMap#TMXTiledMap TMXTiledMap preloaded module
-
-
---------------------------------------------------------
--- the cc ParallaxNode
--- @field [parent=#cc] ParallaxNode#ParallaxNode ParallaxNode preloaded module
 
 
 --------------------------------------------------------
