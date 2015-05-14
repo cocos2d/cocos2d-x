@@ -3624,6 +3624,20 @@ bool js_cocos2dx_TextFieldTTF_attachWithIME(JSContext *cx, uint32_t argc, jsval 
 bool js_cocos2dx_TextFieldTTF_textFieldWithPlaceHolder(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TextFieldTTF_TextFieldTTF(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_cocos2d_ParallaxNode_class;
+extern JSObject *jsb_cocos2d_ParallaxNode_prototype;
+
+bool js_cocos2dx_ParallaxNode_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_cocos2dx_ParallaxNode_finalize(JSContext *cx, JSObject *obj);
+void js_register_cocos2dx_ParallaxNode(JSContext *cx, JS::HandleObject global);
+void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
+bool js_cocos2dx_ParallaxNode_getParallaxArray(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ParallaxNode_addChild(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ParallaxNode_removeAllChildrenWithCleanup(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ParallaxNode_setParallaxArray(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ParallaxNode_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_ParallaxNode_ParallaxNode(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_cocos2d_TMXObjectGroup_class;
 extern JSObject *jsb_cocos2d_TMXObjectGroup_prototype;
 
@@ -3707,8 +3721,8 @@ bool js_cocos2dx_TMXMapInfo_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXMapInfo_createWithXML(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXMapInfo_TMXMapInfo(JSContext *cx, uint32_t argc, jsval *vp);
 
-extern JSClass  *jsb_cocos2d_experimental_TMXLayer_class;
-extern JSObject *jsb_cocos2d_experimental_TMXLayer_prototype;
+extern JSClass  *jsb_cocos2d_TMXLayer_class;
+extern JSObject *jsb_cocos2d_TMXLayer_prototype;
 
 bool js_cocos2dx_TMXLayer_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_cocos2dx_TMXLayer_finalize(JSContext *cx, JSObject *obj);
@@ -3717,6 +3731,7 @@ void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
 bool js_cocos2dx_TMXLayer_getTileGIDAt(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXLayer_getPositionAt(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXLayer_setLayerOrientation(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_TMXLayer_releaseMap(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXLayer_setTiles(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXLayer_getLayerSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXLayer_setMapTileSize(JSContext *cx, uint32_t argc, jsval *vp);
@@ -3724,9 +3739,8 @@ bool js_cocos2dx_TMXLayer_getLayerOrientation(JSContext *cx, uint32_t argc, jsva
 bool js_cocos2dx_TMXLayer_setProperties(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXLayer_setLayerName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXLayer_removeTileAt(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_TMXLayer_getProperties(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_TMXLayer_initWithTilesetInfo(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXLayer_setupTiles(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_TMXLayer_setupTileSprite(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXLayer_setTileGID(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXLayer_getMapTileSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXLayer_getProperty(JSContext *cx, uint32_t argc, jsval *vp);
@@ -3734,12 +3748,13 @@ bool js_cocos2dx_TMXLayer_setLayerSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXLayer_getLayerName(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXLayer_setTileSet(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXLayer_getTileSet(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_TMXLayer_getProperties(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXLayer_getTileAt(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXLayer_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXLayer_TMXLayer(JSContext *cx, uint32_t argc, jsval *vp);
 
-extern JSClass  *jsb_cocos2d_experimental_TMXTiledMap_class;
-extern JSObject *jsb_cocos2d_experimental_TMXTiledMap_prototype;
+extern JSClass  *jsb_cocos2d_TMXTiledMap_class;
+extern JSObject *jsb_cocos2d_TMXTiledMap_prototype;
 
 bool js_cocos2dx_TMXTiledMap_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_cocos2dx_TMXTiledMap_finalize(JSContext *cx, JSObject *obj);
@@ -3750,6 +3765,8 @@ bool js_cocos2dx_TMXTiledMap_getProperty(JSContext *cx, uint32_t argc, jsval *vp
 bool js_cocos2dx_TMXTiledMap_setMapSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXTiledMap_getObjectGroup(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXTiledMap_getObjectGroups(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_TMXTiledMap_initWithXML(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_TMXTiledMap_initWithTMXFile(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXTiledMap_getTileSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXTiledMap_getMapSize(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXTiledMap_getProperties(JSContext *cx, uint32_t argc, jsval *vp);
@@ -3761,20 +3778,7 @@ bool js_cocos2dx_TMXTiledMap_getMapOrientation(JSContext *cx, uint32_t argc, jsv
 bool js_cocos2dx_TMXTiledMap_setMapOrientation(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXTiledMap_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_TMXTiledMap_createWithXML(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *jsb_cocos2d_ParallaxNode_class;
-extern JSObject *jsb_cocos2d_ParallaxNode_prototype;
-
-bool js_cocos2dx_ParallaxNode_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_cocos2dx_ParallaxNode_finalize(JSContext *cx, JSObject *obj);
-void js_register_cocos2dx_ParallaxNode(JSContext *cx, JS::HandleObject global);
-void register_all_cocos2dx(JSContext* cx, JS::HandleObject obj);
-bool js_cocos2dx_ParallaxNode_getParallaxArray(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_ParallaxNode_addChild(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_ParallaxNode_removeAllChildrenWithCleanup(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_ParallaxNode_setParallaxArray(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_ParallaxNode_create(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_ParallaxNode_ParallaxNode(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_TMXTiledMap_TMXTiledMap(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_TileMapAtlas_class;
 extern JSObject *jsb_cocos2d_TileMapAtlas_prototype;
