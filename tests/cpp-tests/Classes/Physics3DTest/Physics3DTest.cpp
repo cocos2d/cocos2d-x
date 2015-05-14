@@ -695,6 +695,9 @@ bool Physics3DCollisionCallbackDemo::init()
 
         float scale = 2.0f;
         std::vector<Vec3> trianglesList = Bundle3D::getTrianglesList("Sprite3DTest/boss.c3b");
+        for (auto& it : trianglesList) {
+            it *= scale;
+        }
 
         rbDes.mass = 0.0f;
         rbDes.shape = Physics3DShape::createMesh(&trianglesList[0], (int)trianglesList.size() / 3);
