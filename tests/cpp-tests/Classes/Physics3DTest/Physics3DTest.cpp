@@ -626,20 +626,7 @@ bool Physics3DTerrainDemo::init()
     }
 
     //create mesh
-    std::vector<Vec3> trianglesList;
-    auto bundle = Bundle3D::createBundle();
-    bundle->load("Sprite3DTest/boss.c3b");
-    MeshDatas meshs;
-    bundle->loadMeshDatas(meshs);
-    Bundle3D::destroyBundle(bundle);
-    for (auto iter : meshs.meshDatas){
-        int preVertexSize = iter->getPerVertexSize() / sizeof(float);
-        for (auto indexArray : iter->subMeshIndices){
-            for (auto i : indexArray){
-                trianglesList.push_back(Vec3(iter->vertex[i * preVertexSize], iter->vertex[i * preVertexSize + 1], iter->vertex[i * preVertexSize + 2]));
-            }
-        }
-    }
+    std::vector<Vec3> trianglesList = Bundle3D::getTrianglesList("Sprite3DTest/boss.c3b");
 
     rbDes.mass = 0.0f;
     rbDes.shape = Physics3DShape::createMesh(&trianglesList[0], (int)trianglesList.size() / 3);
@@ -707,19 +694,9 @@ bool Physics3DCollisionCallbackDemo::init()
         Physics3DRigidBodyDes rbDes;
 
         float scale = 2.0f;
-        std::vector<Vec3> trianglesList;
-        auto bundle = Bundle3D::createBundle();
-        bundle->load("Sprite3DTest/boss.c3b");
-        MeshDatas meshs;
-        bundle->loadMeshDatas(meshs);
-        Bundle3D::destroyBundle(bundle);
-        for (auto iter : meshs.meshDatas){
-            int preVertexSize = iter->getPerVertexSize() / sizeof(float);
-            for (auto indexArray : iter->subMeshIndices){
-                for (auto i : indexArray){
-                    trianglesList.push_back(Vec3(iter->vertex[i * preVertexSize], iter->vertex[i * preVertexSize + 1], iter->vertex[i * preVertexSize + 2]) * scale);
-                }
-            }
+        std::vector<Vec3> trianglesList = Bundle3D::getTrianglesList("Sprite3DTest/boss.c3b");
+        for (auto& it : trianglesList) {
+            it *= scale;
         }
 
         rbDes.mass = 0.0f;
