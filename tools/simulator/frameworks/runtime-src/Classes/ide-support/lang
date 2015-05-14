@@ -1,0 +1,29 @@
+{
+  "zh-CN": {
+    "View": "视图(&V)",
+    "Exit": "退出(&X)",
+    "File": "文件(&F)",
+    "Portrait": "竖屏",
+    "Landscape": "横屏",
+    "Refresh": "刷新(重启)",
+    "Zoom Out": "缩放",
+    "Simulator": "模拟器",
+    "Open File": "打开文件",
+    "Open Project": "打开工程",
+    "Error": "错误",
+    "Help": "帮助(&H)",
+    "About": "关于(&A)"
+  },
+  "zh-Hans": {
+    "View": "视图",
+    "Exit": "退出",
+    "File": "文件",
+    "Portrait": "竖屏",
+    "Landscape": "横屏",
+    "Refresh": "刷新(重启)",
+    "Zoom Out": "缩放",
+    "Simulator": "模拟器",
+    "Help": "帮助(&H)",
+    "About": "关于(&A)"
+  }
+}
