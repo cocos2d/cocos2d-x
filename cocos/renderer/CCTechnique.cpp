@@ -74,6 +74,26 @@ bool Technique::init(Material* parent)
     return true;
 }
 
+Technique* Technique::clone() const
+{
+    auto technique = new (std::nothrow) Technique();
+
+    if (technique)
+    {
+        technique->_name = _name;
+        RenderState::cloneInto(technique);
+
+        for (const auto pass: _passes)
+        {
+            auto p = pass->clone();
+            technique->_passes.pushBack(p);
+        }
+
+        technique->autorelease();
+    }
+    return technique;
+}
+
 void Technique::addPass(Pass *pass)
 {
     _passes.pushBack(pass);

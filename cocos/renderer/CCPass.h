@@ -86,6 +86,10 @@ public:
 
     uint32_t getHash() const;
 
+    /**
+     * Returns a clone (deep-copy) of this instance */
+    Pass* clone() const;
+
 protected:
     Pass();
     ~Pass();

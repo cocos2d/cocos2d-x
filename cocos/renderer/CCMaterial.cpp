@@ -419,6 +419,28 @@ Material::~Material()
 {
 }
 
+Material* Material::clone() const
+{
+    auto material = new (std::nothrow) Material();
+    if (material)
+    {
+        RenderState::cloneInto(material);
+
+        for (const auto& technique: _techniques)
+        {
+            auto t = technique->clone();
+            material->_techniques.pushBack(t);
+        }
+
+        // current technique
+        auto name = _currentTechnique->getName();
+        material->_currentTechnique = material->getTechniqueByName(name);
+
+        material->autorelease();
+    }
+    return material;
+}
+
 Technique* Material::getTechnique() const
 {
     return _currentTechnique;

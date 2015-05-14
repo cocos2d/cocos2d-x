@@ -234,7 +234,7 @@ protected:
  A GLProgram can be used by thousands of Nodes, but if different uniform values 
  are going to be used, then each node will need its own GLProgramState
  */
-class CC_DLL GLProgramState : public Ref, public Clonable
+class CC_DLL GLProgramState : public Ref
 {
     friend class GLProgramStateCache;
 public:
