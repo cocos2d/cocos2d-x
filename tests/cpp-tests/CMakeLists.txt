@@ -223,6 +223,12 @@ if(USE_BOX2D)
     )
 endif()
 
+if(USE_BULLET)
+  list(APPEND TESTS_SRC
+    Classes/Physics3DTest/Physics3DTest.cpp
+    )
+endif()
+
 if(LINUX)
     set(EXTENDED_TESTS_SRC
     )

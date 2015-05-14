@@ -51,6 +51,9 @@ bool CC_DLL localStorageGetItem( const std::string& key, std::string *outItem );
 /** Removes an item from the JS. */
 void CC_DLL localStorageRemoveItem( const std::string& key );
 
+/** Removes all items from the JS. */
+void CC_DLL localStorageClear();
+
 // end group
 /// @}
 

@@ -132,6 +132,7 @@ base/CCEventTouch.cpp \
 base/CCIMEDispatcher.cpp \
 base/CCNS.cpp \
 base/CCProfiling.cpp \
+base/CCProperties.cpp \
 base/CCRef.cpp \
 base/CCScheduler.cpp \
 base/CCScriptSupport.cpp \
@@ -177,6 +178,7 @@ renderer/CCTexture2D.cpp \
 renderer/CCTextureAtlas.cpp \
 renderer/CCTextureCache.cpp \
 renderer/CCTrianglesCommand.cpp \
+renderer/CCVertexAttribBinding.cpp \
 renderer/CCVertexIndexBuffer.cpp \
 renderer/CCVertexIndexData.cpp \
 renderer/ccGLStateCache.cpp \
@@ -192,6 +194,14 @@ physics/CCPhysicsContact.cpp \
 physics/CCPhysicsJoint.cpp \
 physics/CCPhysicsShape.cpp \
 physics/CCPhysicsWorld.cpp \
+physics3d/CCPhysics3D.cpp \
+physics3d/CCPhysics3DWorld.cpp \
+physics3d/CCPhysics3DComponent.cpp \
+physics3d/CCPhysics3DDebugDrawer.cpp \
+physics3d/CCPhysics3DObject.cpp \
+physics3d/CCPhysics3DShape.cpp \
+physics3d/CCPhysicsSprite3D.cpp \
+physics3d/CCPhysics3DConstraint.cpp \
 ../external/ConvertUTF/ConvertUTFWrapper.cpp \
 ../external/ConvertUTF/ConvertUTF.c \
 ../external/tinyxml2/tinyxml2.cpp \
@@ -223,7 +233,6 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/poly2tri/sweep
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH) \
-                    $(LOCAL_PATH)/. \
                     $(LOCAL_PATH)/platform \
                     $(LOCAL_PATH)/../external \
                     $(LOCAL_PATH)/../external/tinyxml2 \
@@ -273,6 +282,7 @@ LOCAL_STATIC_LIBRARIES += cocos3d_static
 LOCAL_STATIC_LIBRARIES += spine_static
 LOCAL_STATIC_LIBRARIES += cocos_network_static
 LOCAL_STATIC_LIBRARIES += audioengine_static
+LOCAL_STATIC_LIBRARIES += bullet_static
 
 include $(BUILD_STATIC_LIBRARY)
 #==============================================================
@@ -293,6 +303,7 @@ $(call import-module,network)
 $(call import-module,ui)
 $(call import-module,extensions)
 $(call import-module,Box2D)
+$(call import-module,bullet)
 $(call import-module,curl/prebuilt/android)
 $(call import-module,websockets/prebuilt/android)
 $(call import-module,flatbuffers)
