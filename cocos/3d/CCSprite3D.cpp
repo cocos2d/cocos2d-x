@@ -752,8 +752,8 @@ void Sprite3D::setGLProgramState(GLProgramState *glProgramState)
 }
 void Sprite3D::setGLProgram(GLProgram *glprogram)
 {
-    Node::setGLProgram(glprogram);
-    setGLProgramState(getGLProgramState());
+    auto glProgramState = GLProgramState::create(glprogram);
+    setGLProgramState(glProgramState);
 }
 
 void Sprite3D::setBlendFunc(const BlendFunc &blendFunc)
