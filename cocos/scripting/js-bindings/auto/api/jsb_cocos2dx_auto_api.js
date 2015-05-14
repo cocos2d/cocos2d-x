@@ -20070,6 +20070,78 @@ TextFieldTTF : function (
 };
 
 /**
+ * @class ParallaxNode
+ */
+cc.ParallaxNode = {
+
+/**
+ * @method getParallaxArray
+* @return {cc._ccArray|cc._ccArray}
+*/
+getParallaxArray : function(
+)
+{
+    return cc._ccArray;
+},
+
+/**
+ * @method addChild
+ * @param {cc.Node} arg0
+ * @param {int} arg1
+ * @param {vec2_object} arg2
+ * @param {vec2_object} arg3
+ */
+addChild : function (
+node, 
+int, 
+vec2, 
+vec2 
+)
+{
+},
+
+/**
+ * @method removeAllChildrenWithCleanup
+ * @param {bool} arg0
+ */
+removeAllChildrenWithCleanup : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setParallaxArray
+ * @param {cc._ccArray} arg0
+ */
+setParallaxArray : function (
+_ccarray 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {cc.ParallaxNode}
+ */
+create : function (
+)
+{
+    return cc.ParallaxNode;
+},
+
+/**
+ * @method ParallaxNode
+ * @constructor
+ */
+ParallaxNode : function (
+)
+{
+},
+
+};
+
+/**
  * @class TMXObjectGroup
  */
 cc.TMXObjectGroup = {
@@ -20634,7 +20706,7 @@ cc.TMXLayer = {
  * @method getTileGIDAt
  * @param {vec2_object} arg0
  * @param {cc.TMXTileFlags_} arg1
- * @return {int}
+ * @return {unsigned int}
  */
 getTileGIDAt : function (
 vec2, 
@@ -20662,6 +20734,14 @@ vec2
  */
 setLayerOrientation : function (
 int 
+)
+{
+},
+
+/**
+ * @method releaseMap
+ */
+releaseMap : function (
 )
 {
 },
@@ -20737,13 +20817,19 @@ vec2
 },
 
 /**
- * @method getProperties
-* @return {map_object|map_object}
-*/
-getProperties : function(
+ * @method initWithTilesetInfo
+ * @param {cc.TMXTilesetInfo} arg0
+ * @param {cc.TMXLayerInfo} arg1
+ * @param {cc.TMXMapInfo} arg2
+ * @return {bool}
+ */
+initWithTilesetInfo : function (
+tmxtilesetinfo, 
+tmxlayerinfo, 
+map 
 )
 {
-    return map_object;
+    return false;
 },
 
 /**
@@ -20755,22 +20841,8 @@ setupTiles : function (
 },
 
 /**
- * @method setupTileSprite
- * @param {cc.Sprite} arg0
- * @param {vec2_object} arg1
- * @param {int} arg2
- */
-setupTileSprite : function (
-sprite, 
-vec2, 
-int 
-)
-{
-},
-
-/**
  * @method setTileGID
-* @param {int|int} int
+* @param {unsigned int|unsigned int} int
 * @param {vec2_object|vec2_object} vec2
 * @param {cc.TMXTileFlags_} tmxtileflags_
 */
@@ -20845,6 +20917,16 @@ getTileSet : function (
 },
 
 /**
+ * @method getProperties
+* @return {map_object|map_object}
+*/
+getProperties : function(
+)
+{
+    return map_object;
+},
+
+/**
  * @method getTileAt
  * @param {vec2_object} arg0
  * @return {cc.Sprite}
@@ -20861,7 +20943,7 @@ vec2
  * @param {cc.TMXTilesetInfo} arg0
  * @param {cc.TMXLayerInfo} arg1
  * @param {cc.TMXMapInfo} arg2
- * @return {cc.experimental::TMXLayer}
+ * @return {cc.TMXLayer}
  */
 create : function (
 tmxtilesetinfo, 
@@ -20869,7 +20951,7 @@ tmxlayerinfo,
 map 
 )
 {
-    return cc.experimental::TMXLayer;
+    return cc.TMXLayer;
 },
 
 /**
@@ -20943,6 +21025,32 @@ getObjectGroups : function(
 },
 
 /**
+ * @method initWithXML
+ * @param {String} arg0
+ * @param {String} arg1
+ * @return {bool}
+ */
+initWithXML : function (
+str, 
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method initWithTMXFile
+ * @param {String} arg0
+ * @return {bool}
+ */
+initWithTMXFile : function (
+str 
+)
+{
+    return false;
+},
+
+/**
  * @method getTileSize
  * @return {size_object}
  */
@@ -20974,14 +21082,16 @@ getProperties : function (
 
 /**
  * @method getPropertiesForGID
- * @param {int} arg0
- * @return {cc.Value}
- */
-getPropertiesForGID : function (
-int 
+* @param {int|int} int
+* @param {cc.Value} value
+* @return {bool|cc.Value}
+*/
+getPropertiesForGID : function(
+int,
+value 
 )
 {
-    return cc.Value;
+    return false;
 },
 
 /**
@@ -21007,13 +21117,13 @@ map
 /**
  * @method getLayer
  * @param {String} arg0
- * @return {cc.experimental::TMXLayer}
+ * @return {cc.TMXLayer}
  */
 getLayer : function (
 str 
 )
 {
-    return cc.experimental::TMXLayer;
+    return cc.TMXLayer;
 },
 
 /**
@@ -21039,97 +21149,34 @@ int
 /**
  * @method create
  * @param {String} arg0
- * @return {cc.experimental::TMXTiledMap}
+ * @return {cc.TMXTiledMap}
  */
 create : function (
 str 
 )
 {
-    return cc.experimental::TMXTiledMap;
+    return cc.TMXTiledMap;
 },
 
 /**
  * @method createWithXML
  * @param {String} arg0
  * @param {String} arg1
- * @return {cc.experimental::TMXTiledMap}
+ * @return {cc.TMXTiledMap}
  */
 createWithXML : function (
 str, 
 str 
 )
 {
-    return cc.experimental::TMXTiledMap;
-},
-
-};
-
-/**
- * @class ParallaxNode
- */
-cc.ParallaxNode = {
-
-/**
- * @method getParallaxArray
-* @return {cc._ccArray|cc._ccArray}
-*/
-getParallaxArray : function(
-)
-{
-    return cc._ccArray;
+    return cc.TMXTiledMap;
 },
 
 /**
- * @method addChild
- * @param {cc.Node} arg0
- * @param {int} arg1
- * @param {vec2_object} arg2
- * @param {vec2_object} arg3
- */
-addChild : function (
-node, 
-int, 
-vec2, 
-vec2 
-)
-{
-},
-
-/**
- * @method removeAllChildrenWithCleanup
- * @param {bool} arg0
- */
-removeAllChildrenWithCleanup : function (
-bool 
-)
-{
-},
-
-/**
- * @method setParallaxArray
- * @param {cc._ccArray} arg0
- */
-setParallaxArray : function (
-_ccarray 
-)
-{
-},
-
-/**
- * @method create
- * @return {cc.ParallaxNode}
- */
-create : function (
-)
-{
-    return cc.ParallaxNode;
-},
-
-/**
- * @method ParallaxNode
+ * @method TMXTiledMap
  * @constructor
  */
-ParallaxNode : function (
+TMXTiledMap : function (
 )
 {
 },
