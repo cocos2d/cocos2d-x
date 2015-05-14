@@ -29,7 +29,7 @@ bool UIScrollViewTest_Vertical_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView/Vertical/crossplatform_UIScrollView_Vertical_Editor_1.csb");
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView/Vertical/res.csb");
         Node* child = node->getChildByTag(5);
         child->removeFromParent();
         _layout = static_cast<Layout*>(child);
@@ -60,7 +60,7 @@ bool UIScrollViewTest_Horizontal_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView/Horizontal/crossplatform_UIScrollView_Horizontal_Editor_1.csb");
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView/Horizontal/res.csb");
         Node* child = node->getChildByTag(5);
         child->removeFromParent();
         _layout = static_cast<Layout*>(child);
@@ -91,7 +91,7 @@ bool UIScrollViewTest_Both_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView/Both/crossplatform_UIScrollView_Both_Editor_1.csb");
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIScrollView/Both/res.csb");
         Node* child = node->getChildByTag(5);
         child->removeFromParent();
         _layout = static_cast<Layout*>(child);
