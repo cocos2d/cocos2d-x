@@ -42,7 +42,12 @@ def execute_command(cmdstring, cwd=None, timeout=None, shell=False):
 		end_time = datetime.datetime.now() + datetime.timedelta(seconds=timeout)
 
 	# 没有指定标准输出和错误输出的管道,因此会打印到屏幕上
-	sub = subprocess.Popen(cmdstring_list, cwd=cwd, stdin=subprocess.PIPE,shell=shell,bufsize=4096)
+	sub = None
+	try:
+		sub = subprocess.Popen(cmdstring_list, cwd=cwd, stdin=subprocess.PIPE,shell=shell,bufsize=4096)
+	except Exception, e:
+		print "execute command fail:%s" % cmdstring
+		raise e
 
 	# subprocess.poll()方法：检查子进程是否结束了，如果结束了，设定并返回码，放在subprocess.returncode变量中
 	while sub.poll() is None:
@@ -52,7 +57,9 @@ def execute_command(cmdstring, cwd=None, timeout=None, shell=False):
 				raise Exception("Timeout：%s"%cmdstring)
 
 	if 0 != sub.returncode :
-		print "[ERROR] execute command fail:%s" % cmdstring
+		errStr = "[ERROR] execute command fail:%s" % cmdstring
+		print errStr
+		raise Exception(errStr)
 
 	return sub.returncode
 
@@ -87,7 +94,7 @@ class CocosLibsCompiler(object):
 		if self.build_mac:
 			self.compile_mac_ios()
 		if self.build_android:
-			self.compile_android("lua")
+			#self.compile_android("lua")
 			self.compile_android("js")
 
 	def compile_win(self):
@@ -203,8 +210,9 @@ class CocosLibsCompiler(object):
 
 		# copy .a to prebuilt dir
 		obj_dir = os.path.join(proj_path, ANDROID_A_PATH)
-		cpy_cmd = "cp -R %s %s" %(os.path.join(obj_dir, "*.a"),  android_out_dir)
-		execute_command(cpy_cmd)
+		cp_cmd = "cp -R %s %s" %(os.path.join(obj_dir, "*.a"),  android_out_dir)
+		execute_command(cp_cmd)
+		print ">>> copy a file :%s" % cp_cmd
 
 		if not self.disable_strip:
 			# strip the android libs
@@ -231,7 +239,7 @@ class CocosLibsCompiler(object):
 				execute_command(strip_cmd)
 
 		# remove the project
-		self.rmdir(proj_path)
+		# self.rmdir(proj_path)
 
 	def modify_mk(self, mk_file):
 		if os.path.isfile(mk_file):
