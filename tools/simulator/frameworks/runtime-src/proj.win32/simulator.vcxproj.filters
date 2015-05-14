@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{fc5cb953-2953-4968-83b3-39e3ff951754}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win32">
+      <UniqueIdentifier>{037a9a02-b906-4cc5-ad98-304acd4e25ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource">
+      <UniqueIdentifier>{2d1d0979-58cd-4ab6-b91c-13650158f1fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes\ide-support">
+      <UniqueIdentifier>{9f68f9a7-7069-4c93-94ae-942a0aa910c1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Classes\AppDelegate.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="SimulatorWin.h" />
+    <ClInclude Include="stdafx.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ide-support\CodeIDESupport.h">
+      <Filter>Classes\ide-support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ide-support\lua_debugger.h">
+      <Filter>Classes\ide-support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ide-support\RuntimeJsImpl.h">
+      <Filter>Classes\ide-support</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ide-support\RuntimeLuaImpl.h">
+      <Filter>Classes\ide-support</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Classes\AppDelegate.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="SimulatorWin.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <Filter>win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ide-support\lua_debugger.c">
+      <Filter>Classes\ide-support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ide-support\RuntimeLuaImpl.cpp">
+      <Filter>Classes\ide-support</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\ide-support\RuntimeJsImpl.cpp">
+      <Filter>Classes\ide-support</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="game.rc">
+      <Filter>resource</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\game.ico" />
+  </ItemGroup>
+</Project>
