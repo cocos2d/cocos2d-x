@@ -138,6 +138,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ReleasePoolTest\ReleasePoolTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\RenderTextureTest\RenderTextureTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\RotateWorldTest\RotateWorldTest.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\Scene3DTest\Scene3DTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\SceneTest\SceneTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\SchedulerTest\SchedulerTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\ShaderTest\ShaderTest.cpp" />
@@ -403,6 +404,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ReleasePoolTest\ReleasePoolTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\RenderTextureTest\RenderTextureTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\RotateWorldTest\RotateWorldTest.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\Scene3DTest\Scene3DTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\SceneTest\SceneTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\SchedulerTest\SchedulerTest.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\ShaderTest\ShaderTest.h" />
