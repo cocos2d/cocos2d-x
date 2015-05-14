@@ -92,6 +92,23 @@ Pass::~Pass()
     CC_SAFE_RELEASE(_vertexAttribBinding);
 }
 
+Pass* Pass::clone() const
+{
+    auto pass = new (std::nothrow) Pass();
+    if (pass)
+    {
+        RenderState::cloneInto(pass);
+        pass->_glProgramState = _glProgramState->clone();
+        CC_SAFE_RETAIN(pass->_glProgramState);
+
+        pass->_vertexAttribBinding = _vertexAttribBinding;
+        CC_SAFE_RETAIN(pass->_vertexAttribBinding);
+
+        pass->autorelease();
+    }
+    return pass;
+}
+
 GLProgramState* Pass::getGLProgramState() const
 {
     return _glProgramState;

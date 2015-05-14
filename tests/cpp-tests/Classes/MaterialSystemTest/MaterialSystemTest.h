@@ -62,10 +62,10 @@ public:
     virtual std::string subtitle() const override;
 };
 
-class Material_3DEffects : public MaterialSystemBaseTest
+class Material_setTechnique : public MaterialSystemBaseTest
 {
 public:
-    CREATE_FUNC(Material_3DEffects);
+    CREATE_FUNC(Material_setTechnique);
 
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
@@ -75,6 +75,15 @@ private:
 
     cocos2d::Sprite3D* _sprite;
     int _techniqueState;
+};
+
+class Material_clone : public MaterialSystemBaseTest
+{
+public:
+    CREATE_FUNC(Material_clone);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
 };
 
 

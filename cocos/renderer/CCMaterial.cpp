@@ -133,8 +133,13 @@ bool Material::parseProperties(Properties* materialProperties)
     while (space)
     {
         const char* name = space->getNamespace();
-        if (strcmp(name, "technique") == 0) {
+        if (strcmp(name, "technique") == 0)
+        {
             parseTechnique(space);
+        }
+        else if (strcmp(name, "renderState") == 0)
+        {
+            parseRenderState(this, space);
         }
 
         space = materialProperties->getNextNamespace();
@@ -161,8 +166,13 @@ bool Material::parseTechnique(Properties* techniqueProperties)
     while (space)
     {
         const char* name = space->getNamespace();
-        if (strcmp(name, "pass") == 0) {
+        if (strcmp(name, "pass") == 0)
+        {
             parsePass(technique, space);
+        }
+        else if (strcmp(name, "renderState") == 0)
+        {
+            parseRenderState(this, space);
         }
 
         space = techniqueProperties->getNextNamespace();
@@ -248,7 +258,7 @@ bool Material::parseSampler(Pass* pass, Properties* textureProperties)
 
 
         // valid options: NEAREST, LINEAR, NEAREST_MIPMAP_NEAREST, LINEAR_MIPMAP_NEAREST, NEAREST_MIPMAP_LINEAR, LINEAR_MIPMAP_LINEAR
-        const char* minFilter = getOptionalString(textureProperties, "minFilter", mipmap ? "LINEAR_MIPMAP_NEAREST" : "LINEAR");
+        const char* minFilter = getOptionalString(textureProperties, "minFilter", usemipmap ? "LINEAR_MIPMAP_NEAREST" : "LINEAR");
         if (strcasecmp(minFilter, "NEAREST")==0)
             texParams.minFilter = GL_NEAREST;
         else if(strcasecmp(minFilter, "LINEAR")==0)
@@ -371,9 +381,9 @@ bool Material::parseUniform(GLProgramState* programState, Properties* properties
 }
 
 
-bool Material::parseRenderState(Pass* pass, Properties* properties)
+bool Material::parseRenderState(RenderState* renderState, Properties* properties)
 {
-    auto state = pass->getStateBlock();
+    auto state = renderState->getStateBlock();
 
     auto property = properties->getNextProperty();
     while (property)
@@ -407,6 +417,28 @@ Material::Material()
 
 Material::~Material()
 {
+}
+
+Material* Material::clone() const
+{
+    auto material = new (std::nothrow) Material();
+    if (material)
+    {
+        RenderState::cloneInto(material);
+
+        for (const auto& technique: _techniques)
+        {
+            auto t = technique->clone();
+            material->_techniques.pushBack(t);
+        }
+
+        // current technique
+        auto name = _currentTechnique->getName();
+        material->_currentTechnique = material->getTechniqueByName(name);
+
+        material->autorelease();
+    }
+    return material;
 }
 
 Technique* Material::getTechnique() const

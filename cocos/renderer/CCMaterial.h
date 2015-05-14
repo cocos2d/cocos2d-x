@@ -118,6 +118,8 @@ public:
     /** Sets the current technique */
     void setTechnique(const std::string& techniqueName);
 
+    /** returns a clone (deep-copy) of the material */
+    Material* clone() const;
 
 protected:
     Material();
@@ -134,7 +136,7 @@ protected:
     bool parseSampler(Pass* pass, Properties* properties);
     bool parseShader(Pass* pass, Properties* properties);
     bool parseUniform(GLProgramState* programState, Properties* properties, const char* uniformName);
-    bool parseRenderState(Pass* pass, Properties* properties);
+    bool parseRenderState(RenderState* renderState, Properties* properties);
 
 
     // material name

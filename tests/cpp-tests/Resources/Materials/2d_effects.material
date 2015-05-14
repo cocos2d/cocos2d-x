@@ -4,29 +4,15 @@ material sample
 	{
 		pass 0
 		{
-			renderState
-			{
-				blend = true
-				blendSrc = ONE
-				blendDst = ONE_MINUS_SRC_ALPHA
-			}
 			shader
 			{
 				defines = THIS_IS_AN_EXAMPLE 1;TOMORROW_IS_HOLIDAY 2
 				vertexShader = Shaders/example_simple.vsh
 				fragmentShader = Shaders/example_Blur.fsh
-				blurRadius = 10
+				// Uniforms
+				blurRadius = 3
 				sampleNum = 5
 				resolution = 100,100
-			}
-			sampler 0
-			{
-				path = Images/grossinis_sister1.png
-				wrapS = CLAMP_TO_EDGE
-				wrapT = CLAMP_TO_EDGE
-				minFilter = LINEAR
-				magFilter = LINEAR
-				mipmap = false
 			}
 		}
 	}
@@ -34,12 +20,6 @@ material sample
 	{
 		pass 0
 		{
-			renderState
-			{
-				blend = true
-				blendSrc = ONE
-				blendDst = ONE_MINUS_SRC_ALPHA
-			}
 			shader
 			{
 				vertexShader = Shaders/example_simple.vsh
@@ -48,40 +28,16 @@ material sample
 				u_radius = 0.01
 				u_threshold = 1.75
 			}
-			sampler 0
-			{
-				path = Images/grossinis_sister1.png
-				wrapS = CLAMP_TO_EDGE
-				wrapT = CLAMP_TO_EDGE
-				minFilter = LINEAR
-				magFilter = LINEAR
-				mipmap = false
-			}
 		}
 	}
 	technique noise {
 		pass 0
 		{
-			renderState
-			{
-				blend = true
-				blendSrc = ONE
-				blendDst = ONE_MINUS_SRC_ALPHA
-			}
 			shader
 			{
 				vertexShader = Shaders/example_simple.vsh
 				fragmentShader = Shaders/example_Noisy.fsh
 				resolution = 100,100
-			}
-			sampler 0
-			{
-				path = Images/grossinis_sister1.png
-				wrapS = CLAMP_TO_EDGE
-				wrapT = CLAMP_TO_EDGE
-				minFilter = LINEAR
-				magFilter = LINEAR
-				mipmap = false
 			}
 		}
 	}
@@ -89,81 +45,12 @@ material sample
 	{
 		pass 0
 		{
-			renderState
-			{
-				blend = true
-				blendSrc = ONE
-				blendDst = ONE_MINUS_SRC_ALPHA
-			}
 			shader
 			{
 				defines = 
 				vertexShader = Shaders/example_simple.vsh
 				fragmentShader = Shaders/example_edgeDetection.fsh
 				resolution = 100, 100
-			}
-			sampler 0
-			{
-				path = Images/grossinis_sister1.png
-				wrapS = CLAMP_TO_EDGE
-				wrapT = CLAMP_TO_EDGE
-				minFilter = LINEAR
-				magFilter = LINEAR
-				mipmap = false
-			}
-		}
-	}
-	technique gray+blur
-	{
-		pass 0
-		{
-			renderState
-			{
-				blend = true
-				blendSrc = ONE
-				blendDst = ONE_MINUS_SRC_ALPHA
-			}
-			shader
-			{
-				defines = TEXTURE_REPEAT
-				vertexShader = Shaders/example_simple.vsh
-				fragmentShader = Shaders/example_Blur.fsh
-				blurRadius = 10
-				sampleNum = 5
-				resolution = 100, 100
-			}
-			sampler 0
-			{
-				path = Images/grossinis_sister1.png
-				wrapS = CLAMP_TO_EDGE
-				wrapT = CLAMP_TO_EDGE
-				minFilter = LINEAR
-				magFilter = LINEAR
-				mipmap = false
-			}
-		}
-		pass 1
-		{
-			renderState
-			{
-				blend = true
-				blendSrc = ONE_MINUS_SRC_ALPHA
-				blendDst = ONE_MINUS_SRC_ALPHA
-			}
-			shader
-			{
-				defines = 
-				vertexShader = Shaders/example_simple.vsh
-				fragmentShader = Shaders/example_greyScale.fsh
-			}
-			sampler 0
-			{
-				path = Images/grossinis_sister1.png
-				wrapS = CLAMP_TO_EDGE
-				wrapT = CLAMP_TO_EDGE
-				minFilter = LINEAR
-				magFilter = LINEAR
-				mipmap = false
 			}
 		}
 	}
