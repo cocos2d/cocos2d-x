@@ -209,10 +209,13 @@ class CocosLibsCompiler(object):
 		execute_command(build_cmd)
 
 		# copy .a to prebuilt dir
+		self.mkdir(android_out_dir)
 		obj_dir = os.path.join(proj_path, ANDROID_A_PATH)
-		cp_cmd = "cp -R %s %s" %(os.path.join(obj_dir, "*.a"),  android_out_dir)
-		execute_command(cp_cmd)
-		print ">>> copy a file :%s" % cp_cmd
+		obj_dir = "/Users/htl/Documents/Work/cocos2d-x/tools/framework-compile/a"
+		self.cpdir(obj_dir, android_out_dir)
+		# cp_cmd = "cp -R %s %s" %(os.path.join(obj_dir, "*.a"),  android_out_dir)
+		# execute_command(cp_cmd)
+		# print ">>> copy a file :%s" % cp_cmd
 
 		if not self.disable_strip:
 			# strip the android libs
@@ -254,6 +257,28 @@ class CocosLibsCompiler(object):
 	def rmdir(self, folder):
 		if os.path.exists(folder):
 			shutil.rmtree(folder)
+
+	def mkdir(self, folder):
+		if not os.path.exists(folder):
+			os.makedirs(folder)
+
+	def cpdir(self, source, dest):
+		source_dir = source
+		dest_dir = dest
+
+		if not os.path.exists(source_dir):
+			raise Exception("cpdir source_dir (%s) not exists" % source_dir)
+
+		self.mkdir(dest_dir)
+
+		for f in os.listdir(source_dir):
+			path = os.path.join(source_dir, f)
+			if os.path.isfile(path):
+				shutil.copy(path, dest_dir)
+			elif os.path.isdir(path):
+				new_dest = os.path.join(dest_dir, f)
+				self.cpdir(path, new_dest)
+
 
 
 if __name__ == "__main__":
