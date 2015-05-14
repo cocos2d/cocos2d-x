@@ -178,7 +178,7 @@ EventListenerPhysicsContact::EventListenerPhysicsContact()
 : onContactBegin(nullptr)
 , onContactPreSolve(nullptr)
 , onContactPostSolve(nullptr)
-, onContactSeperate(nullptr)
+, onContactSeparate(nullptr)
 {
 }
 
@@ -243,12 +243,12 @@ void EventListenerPhysicsContact::onEvent(EventCustom* event)
             }
             break;
         }
-        case PhysicsContact::EventCode::SEPERATE:
+        case PhysicsContact::EventCode::SEPARATE:
         {
-            if (onContactSeperate != nullptr
+            if (onContactSeparate != nullptr
                 && hitTest(contact->getShapeA(), contact->getShapeB()))
             {
-                onContactSeperate(*contact);
+                onContactSeparate(*contact);
             }
             break;
         }
@@ -286,7 +286,7 @@ bool EventListenerPhysicsContact::hitTest(PhysicsShape* shapeA, PhysicsShape* sh
 bool EventListenerPhysicsContact::checkAvailable()
 {
     if (onContactBegin == nullptr && onContactPreSolve == nullptr
-        && onContactPostSolve == nullptr && onContactSeperate == nullptr)
+        && onContactPostSolve == nullptr && onContactSeparate == nullptr)
     {
         CCASSERT(false, "Invalid PhysicsContactListener.");
         return false;
@@ -304,7 +304,7 @@ EventListenerPhysicsContact* EventListenerPhysicsContact::clone()
         obj->onContactBegin = onContactBegin;
         obj->onContactPreSolve = onContactPreSolve;
         obj->onContactPostSolve = onContactPostSolve;
-        obj->onContactSeperate = onContactSeperate;
+        obj->onContactSeparate = onContactSeparate;
         
         return obj;
     }
@@ -362,7 +362,7 @@ EventListenerPhysicsContactWithBodies* EventListenerPhysicsContactWithBodies::cl
         obj->onContactBegin = onContactBegin;
         obj->onContactPreSolve = onContactPreSolve;
         obj->onContactPostSolve = onContactPostSolve;
-        obj->onContactSeperate = onContactSeperate;
+        obj->onContactSeparate = onContactSeparate;
         
         return obj;
     }
@@ -417,7 +417,7 @@ EventListenerPhysicsContactWithShapes* EventListenerPhysicsContactWithShapes::cl
         obj->onContactBegin = onContactBegin;
         obj->onContactPreSolve = onContactPreSolve;
         obj->onContactPostSolve = onContactPostSolve;
-        obj->onContactSeperate = onContactSeperate;
+        obj->onContactSeparate = onContactSeparate;
         
         return obj;
     }
@@ -469,7 +469,7 @@ EventListenerPhysicsContactWithGroup* EventListenerPhysicsContactWithGroup::clon
         obj->onContactBegin = onContactBegin;
         obj->onContactPreSolve = onContactPreSolve;
         obj->onContactPostSolve = onContactPostSolve;
-        obj->onContactSeperate = onContactSeperate;
+        obj->onContactSeparate = onContactSeparate;
         
         return obj;
     }

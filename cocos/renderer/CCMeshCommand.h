@@ -37,6 +37,7 @@ class GLProgram;
 struct Uniform;
 class EventListenerCustom;
 class EventCustom;
+class Material;
 
 //it is a common mesh
 class CC_DLL MeshCommand : public RenderCommand
@@ -45,7 +46,9 @@ public:
 
     MeshCommand();
     ~MeshCommand();
-    
+
+    void init(float globalZOrder, Material* material, GLuint vertexBuffer, GLuint indexBuffer, GLenum primitive, GLenum indexFormat, ssize_t indexCount, const Mat4 &mv, uint32_t flags);
+
     void init(float globalZOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, GLuint vertexBuffer, GLuint indexBuffer, GLenum primitive, GLenum indexFormat, ssize_t indexCount, const Mat4 &mv, uint32_t flags);
     
     CC_DEPRECATED_ATTRIBUTE void init(float globalZOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, GLuint vertexBuffer, GLuint indexBuffer, GLenum primitive, GLenum indexType, ssize_t indexCount, const Mat4 &mv);
@@ -60,11 +63,11 @@ public:
     
     void setDisplayColor(const Vec4& color);
     
-    void setMatrixPalette(const Vec4* matrixPalette) { _matrixPalette = matrixPalette; }
+    void setMatrixPalette(const Vec4* matrixPalette);
     
-    void setMatrixPaletteSize(int size) { _matrixPaletteSize = size; }
+    void setMatrixPaletteSize(int size);
 
-    void setLightMask(unsigned int lightmask) { _lightMask = lightmask; }
+    void setLightMask(unsigned int lightmask);
     
     void setTransparent(bool value);
     
@@ -75,11 +78,11 @@ public:
     void batchDraw();
     void postBatchDraw();
     
-    void genMaterialID(GLuint texID, void* glProgramState, GLuint vertexBuffer, GLuint indexBuffer, const BlendFunc& blend);
+    void genMaterialID(GLuint texID, void* glProgramState, GLuint vertexBuffer, GLuint indexBuffer, BlendFunc blend);
     
-    uint32_t getMaterialID() const { return _materialID; }
+    uint32_t getMaterialID() const;
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     void listenRendererRecreated(EventCustom* event);
 #endif
 
@@ -88,23 +91,13 @@ protected:
     void buildVAO();
     void releaseVAO();
     
-    // apply renderstate
+    // apply renderstate, not used when using material
     void applyRenderState();
-
-    void setLightUniforms();
-    
-    //restore to all false
     void restoreRenderState();
-    
-    void MatrixPalleteCallBack( GLProgram* glProgram, Uniform* uniform);
-
-    void resetLightUniformValues();
 
     GLuint _textureID;
     GLProgramState* _glProgramState;
     BlendFunc _blendType;
-
-    GLuint _textrueID;
     
     Vec4 _displayColor; // in order to support tint and fade in fade out
     
@@ -137,9 +130,10 @@ protected:
     // ModelView transform
     Mat4 _mv;
 
-    unsigned int _lightMask;
+    // weak ref
+    Material* _material;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     EventListenerCustom* _rendererRecreatedListener;
 #endif
 };

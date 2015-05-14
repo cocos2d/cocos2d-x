@@ -298,7 +298,7 @@ std::set<unsigned int>* BMFontConfiguration::parseConfigFile(const std::string& 
     int parseCount = 0;
     while (next)
     {
-        lineLength = next - base;
+        lineLength = ((int)(next - base));
         memcpy(line, contents + parseCount, lineLength);
         line[lineLength] = 0;
 

@@ -58,6 +58,10 @@ public:
     virtual bool remove(Component *com);
     virtual void removeAll();
     virtual void visit(float delta);
+    
+    virtual void onEnter();
+    virtual void onExit();
+    
 public:
     bool isEmpty() const;
     

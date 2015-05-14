@@ -123,9 +123,10 @@ project.properties
 /templates/lua-template-runtime/runtime
 /v*-deps-*.zip
 /v*-lua-runtime-*.zip
+/v*-console-*.zip
 /tools/fbx-conv/
 tests/cpp-tests/Resources/audio
-/tests/js-tests/
 /tests/lua-empty-test/src/cocos/
 /tests/lua-game-controller-test/src/cocos/
 /tests/lua-tests/src/cocos/
+/tests/js-tests/res/

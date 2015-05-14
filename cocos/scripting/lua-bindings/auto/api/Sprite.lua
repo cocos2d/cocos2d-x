@@ -43,6 +43,17 @@
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 --------------------------------
+-- @overload self, cc.Texture2D, rect_table         
+-- @overload self, cc.Texture2D         
+-- @overload self, cc.Texture2D, rect_table, bool         
+-- @function [parent=#Sprite] initWithTexture
+-- @param self
+-- @param #cc.Texture2D texture
+-- @param #rect_table rect
+-- @param #bool rotated
+-- @return bool#bool ret (return value: bool)
+
+--------------------------------
 -- Returns the batch node object if this sprite is rendered by SpriteBatchNode.<br>
 -- return The SpriteBatchNode object if this sprite is rendered by SpriteBatchNode,<br>
 -- nullptr if the sprite isn't used batch node.
@@ -73,6 +84,17 @@
 -- @param #size_table untrimmedSize
 -- @return Sprite#Sprite self (return value: cc.Sprite)
 
+--------------------------------
+-- Initializes a sprite with an sprite frame name.<br>
+-- A SpriteFrame will be fetched from the SpriteFrameCache by name.<br>
+-- If the SpriteFrame doesn't exist it will raise an exception.<br>
+-- param   spriteFrameName  A key string that can fected a volid SpriteFrame from SpriteFrameCache.<br>
+-- return  True if the sprite is initialized properly, false otherwise.
+-- @function [parent=#Sprite] initWithSpriteFrameName 
+-- @param self
+-- @param #string spriteFrameName
+-- @return bool#bool ret (return value: bool)
+        
 --------------------------------
 -- Returns whether or not a SpriteFrame is being displayed.
 -- @function [parent=#Sprite] isFrameDisplayed 
@@ -165,6 +187,15 @@
 -- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
+-- @overload self, string, rect_table         
+-- @overload self, string         
+-- @function [parent=#Sprite] initWithFile
+-- @param self
+-- @param #string filename
+-- @param #rect_table rect
+-- @return bool#bool ret (return value: bool)
+
+--------------------------------
 -- / @{/ @name Functions inherited from TextureProtocol.<br>
 -- code<br>
 -- When this function bound into js or lua,the parameter will be changed.<br>
@@ -181,6 +212,15 @@
 -- @function [parent=#Sprite] getTextureAtlas 
 -- @param self
 -- @return TextureAtlas#TextureAtlas ret (return value: cc.TextureAtlas)
+        
+--------------------------------
+-- Initializes a sprite with an SpriteFrame. The texture and rect in SpriteFrame will be applied on this sprite.<br>
+-- param   spriteFrame  A SpriteFrame object. It should includes a valid texture and a rect.<br>
+-- return  True if the sprite is initialized properly, false otherwise.
+-- @function [parent=#Sprite] initWithSpriteFrame 
+-- @param self
+-- @param #cc.SpriteFrame spriteFrame
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- Returns the flag which indicates whether the sprite is flipped horizontally or not.<br>
@@ -309,6 +349,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#Sprite] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#Sprite] setRotation 
 -- @param self
 -- @param #float rotation
@@ -404,6 +450,12 @@
 -- @function [parent=#Sprite] setVisible 
 -- @param self
 -- @param #bool bVisible
+-- @return Sprite#Sprite self (return value: cc.Sprite)
+        
+--------------------------------
+-- js ctor
+-- @function [parent=#Sprite] Sprite 
+-- @param self
 -- @return Sprite#Sprite self (return value: cc.Sprite)
         
 return nil

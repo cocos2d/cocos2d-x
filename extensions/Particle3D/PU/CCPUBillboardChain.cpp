@@ -32,6 +32,7 @@
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/CCVertexIndexBuffer.h"
+#include "renderer/CCVertexAttribBinding.h"
 #include "2d/CCCamera.h"
 #include "3d/CCSprite3D.h"
 
@@ -684,6 +685,7 @@ void PUBillboardChain::render( Renderer* renderer, const Mat4 &transform, Partic
             GLuint texId = (_texture ? _texture->getName() : 0);
             _meshCommand->init(0, texId, _glProgramState, particleSystem->getBlendFunc(), _vertexBuffer->getVBO(), _indexBuffer->getVBO(), GL_TRIANGLES, GL_UNSIGNED_SHORT, _indices.size(), transform, Node::FLAGS_RENDER_AS_3D);
             _meshCommand->setTransparent(true);
+            _glProgramState->setUniformVec4("u_color", Vec4(1,1,1,1));            
             renderer->addCommand(_meshCommand);
         }
     }

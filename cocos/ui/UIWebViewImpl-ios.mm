@@ -124,6 +124,7 @@ static std::string getFixedBaseUrl(const std::string& baseUrl)
 - (void)dealloc {
     self.uiWebView.delegate = nil;
     [self.uiWebView removeFromSuperview];
+    self.uiWebView = nil;
     self.jsScheme = nil;
     [super dealloc];
 }

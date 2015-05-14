@@ -5,49 +5,14 @@ USING_NS_CC;
 using namespace cocos2d::ui;
 
 static int kTagInfoLayer = 1;
-static int kTagMenuLayer = 1000;
 static int kTagParticleSystem = 1001;
-static int test_Count = 2;
 
 static int kMaxParticles = 14000;
 static int kNodesIncrease = 1;
 
-static int s_parCurIdx = 0;
-
-////////////////////////////////////////////////////////
-//
-// ParticleMenuLayer
-//
-////////////////////////////////////////////////////////
-Particle3DMenuLayer::Particle3DMenuLayer(bool isControlMenuVisible, int maxCases, int curCase)
-: PerformBasicLayer(isControlMenuVisible, maxCases, curCase)
+PerformceParticle3DTests::PerformceParticle3DTests()
 {
-
-}
-
-void Particle3DMenuLayer::showCurrentTest()
-{
-    auto scene = (Particle3DMainScene*)getParent();
-    int subTest = scene->getSubTestNum();
-    int parNum  = scene->getParticlesNum();
-
-    Particle3DMainScene* pNewScene = nullptr;
-
-    switch (_curCase)
-    {
-    case 0:
-        pNewScene = new (std::nothrow) Particle3DPerformTest;
-        break;
-    }
-
-    s_parCurIdx = _curCase;
-    if (pNewScene)
-    {
-        pNewScene->initWithSubTest(subTest, parNum);
-
-        Director::getInstance()->replaceScene(pNewScene);
-        pNewScene->release();
-    }
+    ADD_TEST_CASE(Particle3DPerformTest);
 }
 
 ////////////////////////////////////////////////////////
@@ -95,15 +60,6 @@ void Particle3DMainScene::initWithSubTest(int asubtest, int particles)
     infoLabel->setPosition(Vec2(s.width/2, s.height - 90));
     addChild(infoLabel, 1, kTagInfoLayer);
 
-    // Next Prev Test
-    auto menuLayer = new (std::nothrow) Particle3DMenuLayer(true, test_Count, s_parCurIdx);
-    addChild(menuLayer, 1, kTagMenuLayer);
-    menuLayer->release();
-
-    auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 32);
-    addChild(label, 1);
-    label->setPosition(Vec2(s.width/2, s.height-50));
-
     auto camera = Camera::createPerspective(30.0f, s.width / s.height, 1.0f, 1000.0f);
     camera->setPosition3D(Vec3(0.0f, 0.0f, 150.0f));
     camera->lookAt(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
@@ -120,11 +76,6 @@ void Particle3DMainScene::initWithSubTest(int asubtest, int particles)
     createParticleSystem(_quantityParticles - 1);
     
     schedule(CC_SCHEDULE_SELECTOR(Particle3DMainScene::step));
-}
-
-std::string Particle3DMainScene::title() const
-{
-    return "No title";
 }
 
 void Particle3DMainScene::step(float dt)
@@ -158,14 +109,6 @@ void Particle3DMainScene::createParticleSystem(int idx)
     addChild(ps, 0, kTagParticleSystem + idx);
 }
 
-void Particle3DMainScene::testNCallback(Ref* sender)
-{
-    _subtestNumber = static_cast<Node*>(sender)->getTag();
-
-    auto menu = static_cast<Particle3DMenuLayer*>( getChildByTag(kTagMenuLayer) );
-    menu->restartCallback(sender);
-}
-
 void Particle3DMainScene::updateQuantityLabel()
 {
     if( _quantityParticles != _lastRenderedCount )
@@ -186,22 +129,16 @@ void Particle3DMainScene::updateQuantityLabel()
 ////////////////////////////////////////////////////////
 std::string Particle3DPerformTest::title() const
 {
-    char str[20] = {0};
-    sprintf(str, "Particle3D Test"/*, subtestNumber*/);
-    std::string strRet = str;
-    return strRet;
+    return "Particle3D Test";
 }
 
-void Particle3DPerformTest::doTest()
+bool Particle3DPerformTest::init()
 {
-    auto s = Director::getInstance()->getWinSize();
-}
+    if (Particle3DMainScene::init())
+    {
+        initWithSubTest(1, kNodesIncrease);
+        return true;
+    }
 
-void runParticle3DTest()
-{
-    auto scene = new (std::nothrow) Particle3DPerformTest;
-    scene->initWithSubTest(1, kNodesIncrease);
-
-    Director::getInstance()->replaceScene(scene);
-    scene->release();
+    return false;
 }

@@ -39,4 +39,10 @@
 -- @param self
 -- @return FadeTo#FadeTo ret (return value: cc.FadeTo)
         
+--------------------------------
+-- 
+-- @function [parent=#FadeIn] FadeIn 
+-- @param self
+-- @return FadeIn#FadeIn self (return value: cc.FadeIn)
+        
 return nil

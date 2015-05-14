@@ -26,6 +26,22 @@
         
 --------------------------------
 -- 
+-- @function [parent=#Animate3D] removeFromMap 
+-- @param self
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
+        
+--------------------------------
+-- 
+-- @function [parent=#Animate3D] initWithFrames 
+-- @param self
+-- @param #cc.Animation3D animation
+-- @param #int startFrame
+-- @param #int endFrame
+-- @param #float frameRate
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#Animate3D] getOriginInterval 
 -- @param self
 -- @return float#float ret (return value: float)
@@ -37,6 +53,16 @@
 -- @param #float speed
 -- @return Animate3D#Animate3D self (return value: cc.Animate3D)
         
+--------------------------------
+-- @overload self, cc.Animation3D, float, float         
+-- @overload self, cc.Animation3D         
+-- @function [parent=#Animate3D] init
+-- @param self
+-- @param #cc.Animation3D animation
+-- @param #float fromTime
+-- @param #float duration
+-- @return bool#bool ret (return value: bool)
+
 --------------------------------
 -- get & set origin interval
 -- @function [parent=#Animate3D] setOriginInterval 
@@ -131,6 +157,12 @@
 -- @function [parent=#Animate3D] step 
 -- @param self
 -- @param #float dt
+-- @return Animate3D#Animate3D self (return value: cc.Animate3D)
+        
+--------------------------------
+-- 
+-- @function [parent=#Animate3D] Animate3D 
+-- @param self
 -- @return Animate3D#Animate3D self (return value: cc.Animate3D)
         
 return nil

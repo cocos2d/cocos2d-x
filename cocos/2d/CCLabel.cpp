@@ -406,13 +406,7 @@ void Label::setFontAtlas(FontAtlas* atlas,bool distanceFieldEnabled /* = false *
         _commonLineHeight = _fontAtlas->getCommonLineHeight();
         _contentDirty = true;
     }
-#if CC_TARGET_PLATFORM != CC_PLATFORM_WP8
     _useDistanceField = distanceFieldEnabled;
-#else
-    // some older Windows Phones cannot run the ccShader_Label_df.frag program
-    // so we must disable distance field
-    _useDistanceField = false;
-#endif
     _useA8Shader = useA8Shader;
 
     if (_currentLabelType != LabelType::TTF)
@@ -591,10 +585,6 @@ void Label::alignText()
         return;
     }
 
-    for (const auto& batchNode:_batchNodes)
-    {
-        batchNode->getTextureAtlas()->removeAllQuads();
-    }
     _fontAtlas->prepareLetterDefinitions(_currentUTF16String);
     auto& textures = _fontAtlas->getTextures();
     if (textures.size() > _batchNodes.size())
@@ -615,29 +605,46 @@ void Label::alignText()
     if(_labelWidth > 0 || (_currNumLines > 1 && _hAlignment != TextHAlignment::LEFT))
         LabelTextFormatter::alignText(this);
 
-    int strLen = static_cast<int>(_currentUTF16String.length());
-    Rect uvRect;
-    Sprite* letterSprite;
-    for(const auto &child : _children) {
-        int tag = child->getTag();
-        if(tag >= strLen)
-        {
-            SpriteBatchNode::removeChild(child, true);
-        }
-        else if(tag >= 0)
-        {
-            letterSprite = dynamic_cast<Sprite*>(child);
-            if (letterSprite)
+    if (!_children.empty())
+    {
+        int strLen = static_cast<int>(_currentUTF16String.length());
+        Rect uvRect;
+        Sprite* letterSprite;
+        for (auto index = 0; index < _children.size();) {
+            auto child = _children.at(index);
+            int tag = child->getTag();
+            if (tag >= strLen)
             {
-                uvRect.size.height = _lettersInfo[tag].def.height;
-                uvRect.size.width  = _lettersInfo[tag].def.width;
-                uvRect.origin.x    = _lettersInfo[tag].def.U;
-                uvRect.origin.y    = _lettersInfo[tag].def.V;
-
-                letterSprite->setTexture(textures.at(_lettersInfo[tag].def.textureID));
-                letterSprite->setTextureRect(uvRect);
+                child->removeFromParentAndCleanup(true);
+            }
+            else if (tag >= 0)
+            {
+                letterSprite = dynamic_cast<Sprite*>(child);
+                if (letterSprite)
+                {
+                    auto& letterDef = _lettersInfo[tag].def;
+                    uvRect.size.height = letterDef.height;
+                    uvRect.size.width = letterDef.width;
+                    uvRect.origin.x = letterDef.U;
+                    uvRect.origin.y = letterDef.V;
+                    
+                    letterSprite->setBatchNode(_batchNodes[letterDef.textureID]);
+                    letterSprite->setTextureRect(uvRect, false, uvRect.size);
+                    letterSprite->setPosition(_lettersInfo[tag].position.x + letterDef.width/2,
+                                              _lettersInfo[tag].position.y - letterDef.height/2);
+                }
+                ++index;
+            }
+            else
+            {
+                ++index;
             }
         }
+    }
+
+    for (const auto& batchNode : _batchNodes)
+    {
+        batchNode->getTextureAtlas()->removeAllQuads();
     }
 
     updateQuads();
@@ -900,8 +907,11 @@ void Label::onDraw(const Mat4& transform, bool transformUpdated)
         {
             glprogram->setUniformLocationWith4f(_uniformTextColor,
                 _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
-            glprogram->setUniformLocationWith4f(_uniformEffectColor,
-                _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
+            if (_currLabelEffect == LabelEffect::OUTLINE || _currLabelEffect == LabelEffect::GLOW)
+            {
+                glprogram->setUniformLocationWith4f(_uniformEffectColor,
+                    _shadowColor4F.r, _shadowColor4F.g, _shadowColor4F.b, _shadowColor4F.a);
+            }
 
             getGLProgram()->setUniformsForBuiltins(_shadowTransform);
             for (const auto &child : _children)
@@ -951,8 +961,7 @@ void Label::onDraw(const Mat4& transform, bool transformUpdated)
 
     for(const auto &child: _children)
     {
-        if(child->getTag() >= 0)
-            child->updateTransform();
+        child->updateTransform();
     }
 
     for (const auto& batchNode:_batchNodes)

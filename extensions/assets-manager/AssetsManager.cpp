@@ -29,7 +29,7 @@
 #include <vector>
 #include <thread>
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
@@ -359,7 +359,7 @@ bool AssetsManager::uncompress()
             {
                 const string dir=_storagePath+fileNameStr.substr(0,index);
                 
-                FILE *out = fopen(dir.c_str(), "r");
+                FILE *out = fopen(FileUtils::getInstance()->getSuitableFOpen(dir).c_str(), "r");
                 
                 if(!out)
                 {
@@ -398,7 +398,7 @@ bool AssetsManager::uncompress()
             }
             
             // Create a file to store current file.
-            FILE *out = fopen(fullPath.c_str(), "wb");
+            FILE *out = fopen(FileUtils::getInstance()->getSuitableFOpen(fullPath).c_str(), "wb");
             if (! out)
             {
                 CCLOG("can not open destination file %s", fullPath.c_str());
@@ -454,7 +454,7 @@ bool AssetsManager::uncompress()
  */
 bool AssetsManager::createDirectory(const char *path)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     return FileUtils::getInstance()->createDirectory(_storagePath.c_str());
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     BOOL ret = CreateDirectoryA(path, nullptr);
@@ -517,7 +517,7 @@ bool AssetsManager::downLoad()
 {
     // Create a file to save package.
     const string outFileName = _storagePath + TEMP_PACKAGE_FILE_NAME;
-    FILE *fp = fopen(outFileName.c_str(), "wb");
+    FILE *fp = fopen(FileUtils::getInstance()->getSuitableFOpen(outFileName).c_str(), "wb");
     if (! fp)
     {
         Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
@@ -646,7 +646,7 @@ AssetsManager* AssetsManager::create(const char* packageUrl, const char* version
 void AssetsManager::createStoragePath()
 {
     // Remove downloaded files
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     FileUtils::getInstance()->createDirectory(_storagePath.c_str());
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     if ((GetFileAttributesA(_storagePath.c_str())) == INVALID_FILE_ATTRIBUTES)
@@ -669,7 +669,7 @@ void AssetsManager::destroyStoragePath()
     deleteVersion();
     
     // Remove downloaded files
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     FileUtils::getInstance()->removeDirectory(_storagePath.c_str());
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     string command = "rd /s /q ";

@@ -37,10 +37,11 @@ PUDoPlacementParticleEventHandler::PUDoPlacementParticleEventHandler(void) :
     PUEventHandler(),
     PUListener(),
     _numberOfParticles(DEFAULT_NUMBER_OF_PARTICLES),
+    _system(0),
+    _emitter(0),
     _found(false),
     _alwaysUsePosition(true),
-    _emitter(0),
-    _system(0),
+    _baseParticle(0),
     _inheritPosition(true),
     _inheritDirection(false),
     _inheritOrientation(false),
@@ -50,8 +51,7 @@ PUDoPlacementParticleEventHandler::PUDoPlacementParticleEventHandler(void) :
     _inheritColour(false),
     _inheritParticleWidth(false),
     _inheritParticleHeight(false),
-    _inheritParticleDepth(false),
-    _baseParticle(0)
+    _inheritParticleDepth(false)
 {
 }
 //-----------------------------------------------------------------------

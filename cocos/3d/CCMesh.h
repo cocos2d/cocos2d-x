@@ -46,6 +46,11 @@ class MeshSkin;
 class MeshIndexData;
 class GLProgramState;
 class GLProgram;
+class Material;
+class Renderer;
+class Scene;
+class Pass;
+
 /** 
  * @brief Mesh: contains ref to index buffer, GLProgramState, texture, skin, blend function, aabb and so on
  */
@@ -92,11 +97,11 @@ public:
     /**texture getter and setter*/
     void setTexture(const std::string& texPath);
     void setTexture(Texture2D* tex);
-    Texture2D* getTexture() const { return _texture; }
+    Texture2D* getTexture() const;
     
     /**visible getter and setter*/
     void setVisible(bool visible);
-    bool isVisible() const { return _visible; }
+    bool isVisible() const;
     
     /**
      * skin getter
@@ -117,7 +122,7 @@ public:
      * 
      * @lua NA
      */
-    GLProgramState* getGLProgramState() const { return _glProgramState; }
+    GLProgramState* getGLProgramState() const;
     
     /**name getter */
     const std::string& getName() const { return _name; }
@@ -153,21 +158,19 @@ public:
     /**get AABB*/
     const AABB& getAABB() const { return _aabb; }
 
-CC_CONSTRUCTOR_ACCESS:
-    
-    Mesh();
-    virtual ~Mesh();
-
-    /** 
-     * Get the default GL program.
-     */
-    GLProgram* getDefaultGLProgram(bool textured);
-    
-    /** 
-     * Set the default GL program.
+    /**  Sets a new GLProgramState for the Mesh
+     * A new Material will be created for it
      */
     void setGLProgramState(GLProgramState* glProgramState);
-    
+
+    /** Sets a new Material to the Mesh */
+    void setMaterial(Material* material);
+
+    /** Returns the Material being used by the Mesh */
+    Material* getMaterial() const;
+
+    void draw(Renderer* renderer, float globalZ, const Mat4& transform, uint32_t flags, unsigned int lightMask, const Vec4& color, bool forceDepthWrite);
+
     /** 
      * Get the MeshCommand.
      */
@@ -186,22 +189,29 @@ CC_CONSTRUCTOR_ACCESS:
      */
     void calculateAABB();
     
-    /** 
-     * Bind to the MeshCommand
-     */
-    void bindMeshCommand();
+
+CC_CONSTRUCTOR_ACCESS:
+
+    Mesh();
+    virtual ~Mesh();
+
 protected:
-    Texture2D* _texture;  //texture that submesh is using
-    MeshSkin*  _skin;     //skin
-    bool       _visible; // is the submesh visible
-    bool       _isTransparent; // is this mesh transparent, it is a property of material in fact
+    void setLightUniforms(Pass* pass, Scene* scene, const Vec4& color, unsigned int lightmask);
+    void bindMeshCommand();
+
+    Texture2D*          _texture;  //texture that submesh is using
+    MeshSkin*           _skin;     //skin
+    bool                _visible; // is the submesh visible
+    bool                _isTransparent; // is this mesh transparent, it is a property of material in fact
     
-    std::string  _name;
-    MeshIndexData*     _meshIndexData;
-    GLProgramState* _glProgramState;
-    MeshCommand     _meshCommand;
-    BlendFunc       _blend;
-    AABB         _aabb;
+    std::string         _name;
+    MeshCommand         _meshCommand;
+    MeshIndexData*      _meshIndexData;
+    GLProgramState*     _glProgramState;
+    BlendFunc           _blend;
+    bool                _blendDirty;
+    Material*           _material;
+    AABB                _aabb;
     std::function<void()> _visibleChanged;
 };
 

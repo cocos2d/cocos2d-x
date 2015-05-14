@@ -33,6 +33,7 @@
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/CCVertexIndexBuffer.h"
+#include "renderer/CCVertexAttribBinding.h"
 #include "base/CCDirector.h"
 #include "3d/CCSprite3D.h"
 #include "3d/CCMesh.h"
@@ -50,10 +51,10 @@ void PURender::copyAttributesTo( PURender *render )
     render->_renderType = _renderType;
 }
 
-static bool compareParticle3D(PUParticle3D* left, PUParticle3D* right)
-{
-    return left->depthInView > right->depthInView;
-}
+//static bool compareParticle3D(PUParticle3D* left, PUParticle3D* right)
+//{
+//    return left->depthInView > right->depthInView;
+//}
 
 PUParticle3DQuadRender* PUParticle3DQuadRender::create(const std::string& texFile)
 {
@@ -245,6 +246,7 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
         GLuint texId = (_texture ? _texture->getName() : 0);
         _meshCommand->init(0, texId, _glProgramState, particleSystem->getBlendFunc(), _vertexBuffer->getVBO(), _indexBuffer->getVBO(), GL_TRIANGLES, GL_UNSIGNED_SHORT, index, transform, Node::FLAGS_RENDER_AS_3D);
         _meshCommand->setTransparent(true);
+        _glProgramState->setUniformVec4("u_color", Vec4(1,1,1,1));
         renderer->addCommand(_meshCommand);
     }
 }
@@ -514,8 +516,8 @@ PUParticle3DEntityRender::PUParticle3DEntityRender()
     : _meshCommand(nullptr)
     , _texture(nullptr)
     , _glProgramState(nullptr)
-    , _vertexBuffer(nullptr)
     , _indexBuffer(nullptr)
+    , _vertexBuffer(nullptr)
 {
 
 }
@@ -691,6 +693,7 @@ void PUParticle3DBoxRender::render( Renderer* renderer, const Mat4 &transform, P
         GLuint texId = (_texture ? _texture->getName() : 0);
         _meshCommand->init(0, texId, _glProgramState, particleSystem->getBlendFunc(), _vertexBuffer->getVBO(), _indexBuffer->getVBO(), GL_TRIANGLES, GL_UNSIGNED_SHORT, index, transform, Node::FLAGS_RENDER_AS_3D);
         _meshCommand->setTransparent(true);
+        _glProgramState->setUniformVec4("u_color", Vec4(1,1,1,1));
         renderer->addCommand(_meshCommand);
     }
 }
@@ -841,6 +844,7 @@ void PUSphereRender::render( Renderer* renderer, const Mat4 &transform, Particle
         GLuint texId = (_texture ? _texture->getName() : 0);
         _meshCommand->init(0, texId, _glProgramState, particleSystem->getBlendFunc(), _vertexBuffer->getVBO(), _indexBuffer->getVBO(), GL_TRIANGLES, GL_UNSIGNED_SHORT, index, transform, Node::FLAGS_RENDER_AS_3D);
         _meshCommand->setTransparent(true);
+        _glProgramState->setUniformVec4("u_color", Vec4(1,1,1,1));        
         renderer->addCommand(_meshCommand);
     }
 }

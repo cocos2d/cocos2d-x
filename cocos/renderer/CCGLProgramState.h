@@ -77,9 +77,13 @@ public:
      */
     void setFloat(float value);
     void setInt(int value);
+    void setFloatv(ssize_t size, const float* pointer);
     void setVec2(const Vec2& value);
+    void setVec2v(ssize_t size, const Vec2* pointer);
     void setVec3(const Vec3& value);
+    void setVec3v(ssize_t size, const Vec3* pointer);
     void setVec4(const Vec4& value);
+    void setVec4v(ssize_t size, const Vec4* pointer);
     void setMat4(const Mat4& value);
     /**
      @}
@@ -101,12 +105,20 @@ public:
     void apply();
 
 protected:
+
+    enum class Type {
+        VALUE,
+        POINTER,
+        CALLBACK_FN     // CALLBACK is already defined in windows, can't use it.
+    };
+
     /**Weak reference to Uniform.*/
 	Uniform* _uniform;
     /**Weak reference to GLprogram.*/
     GLProgram* _glprogram;
-    /**Whether or not callback is used.*/
-    bool _useCallback;
+    /** What kind of type is the Uniform */
+    Type _type;
+
     /**
      @name Uniform Value Uniform
      @{
@@ -122,6 +134,22 @@ protected:
             GLuint textureId;
             GLuint textureUnit;
         } tex;
+        struct {
+            const float* pointer;
+            GLsizei size;
+        } floatv;
+        struct {
+            const float* pointer;
+            GLsizei size;
+        } v2f;
+        struct {
+            const float* pointer;
+            GLsizei size;
+        } v3f;
+        struct {
+            const float* pointer;
+            GLsizei size;
+        } v4f;
         std::function<void(GLProgram*, Uniform*)> *callback;
 
         U() { memset( this, 0, sizeof(*this) ); }
@@ -145,6 +173,7 @@ class CC_DLL VertexAttribValue
 {
     friend class GLProgram;
     friend class GLProgramState;
+    friend class VertexAttribBinding;
 
 public:
     /**
@@ -219,6 +248,12 @@ public:
     /** gets-or-creates an instance of GLProgramState for a given GLProgramName */
     static GLProgramState* getOrCreateWithGLProgramName(const std::string &glProgramName );
 
+    /** gets-or-creates an instance of GLProgramState for given shaders */
+    static GLProgramState* getOrCreateWithShaders(const std::string& vertexShader, const std::string& fragShader, const std::string& compileTimeDefines);
+
+    /** Returns a new copy of the GLProgramState. The GLProgram is reused */
+    GLProgramState* clone() const;
+
     /**
      Apply GLProgram, attributes and uniforms.
      @param modelView The applied modelView matrix to shader.
@@ -248,9 +283,9 @@ public:
     /**@}*/
     
     /** Get the flag of vertex attribs used by OR operation.*/
-    uint32_t getVertexAttribsFlags() const { return _vertexAttribsFlags; }
+    uint32_t getVertexAttribsFlags() const;
     /**Get the number of vertex attributes.*/
-    ssize_t getVertexAttribCount() const { return _attributes.size(); }
+    ssize_t getVertexAttribCount() const;
     /**@{
      Set the vertex attribute value.
      */
@@ -266,9 +301,13 @@ public:
      */
     void setUniformInt(const std::string &uniformName, int value);
     void setUniformFloat(const std::string &uniformName, float value);
+    void setUniformFloatv(const std::string &uniformName, ssize_t size, const float* pointer);
     void setUniformVec2(const std::string &uniformName, const Vec2& value);
+    void setUniformVec2v(const std::string &uniformName, ssize_t size, const Vec2* pointer);
     void setUniformVec3(const std::string &uniformName, const Vec3& value);
+    void setUniformVec3v(const std::string &uniformName, ssize_t size, const Vec3* pointer);
     void setUniformVec4(const std::string &uniformName, const Vec4& value);
+    void setUniformVec4v(const std::string &uniformName, ssize_t size, const Vec4* pointer);
     void setUniformMat4(const std::string &uniformName, const Mat4& value);
     void setUniformCallback(const std::string &uniformName, const std::function<void(GLProgram*, Uniform*)> &callback);
     void setUniformTexture(const std::string &uniformName, Texture2D *texture);
@@ -280,9 +319,13 @@ public:
      */
     void setUniformInt(GLint uniformLocation, int value);
     void setUniformFloat(GLint uniformLocation, float value);
+    void setUniformFloatv(GLint uniformLocation, ssize_t size, const float* pointer);
     void setUniformVec2(GLint uniformLocation, const Vec2& value);
+    void setUniformVec2v(GLint uniformLocation, ssize_t size, const Vec2* pointer);
     void setUniformVec3(GLint uniformLocation, const Vec3& value);
+    void setUniformVec3v(GLint uniformLocation, ssize_t size, const Vec3* pointer);
     void setUniformVec4(GLint uniformLocation, const Vec4& value);
+    void setUniformVec4v(GLint uniformLocation, ssize_t size, const Vec4* pointer);
     void setUniformMat4(GLint uniformLocation, const Mat4& value);
     void setUniformCallback(GLint uniformLocation, const std::function<void(GLProgram*, Uniform*)> &callback);
     void setUniformTexture(GLint uniformLocation, Texture2D *texture);
@@ -309,7 +352,7 @@ protected:
     uint32_t _vertexAttribsFlags;
     GLProgram *_glprogram;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     EventListenerCustom* _backToForegroundlistener;
 #endif
 };

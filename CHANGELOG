@@ -1,4 +1,23 @@
-cocos2d-x-3.6  ??
+cocos2d-x-3.7  ??
+    [NEW]           3d: added physics3d support
+    [NEW]           C++: added ActionFloat
+    [NEW]           C++: support physical keyboard on WinRT
+    [NEW]           FileUtils: checked filename case characters on windows
+    [NEW]           FileUitls: added supporting loading files that which file path include utf-8 characters
+    [NEW]           PhysicsShape: added sensor property
+
+    [FIX]           3rd: fix PIE link error on iOS caused by libpng and libtiff
+    [FIX]           AssetsManager: crashed issue
+    [FIX]           EaseRateAction: no way to create an `EaseRateAction` instance
+    [FIX]           Label: crashed if invoking `setString(text` after `getLetter(letterIndex)` and `letterIndex` is greater than the length of text
+    [FIX]           Label: position is wrong if label content is changed after invoking `getLetter(letterIndex)`
+    [FIX]           Label: shadow effect cause OpenGL error on iOS
+    [FIX]           Label: outline effect doesn't match characters well
+    [FIX]           Sprite3D: setGLProgram() does not work
+    [FIX]           Terrain: terrain is on top of particles, particles can not be seen
+    [FIX]           WebView: memory leak on iOS
+
+cocos2d-x-3.6  Apr.30 2015
     [NEW]           3rd: update chipmunk to v 6.2.2 on Windows 8.1 Universal App
     [NEW]           3rd: update freetype to v 2.5.5 on Windows 8.1 Universal App
     [NEW]           C++: Added SpritePolygon

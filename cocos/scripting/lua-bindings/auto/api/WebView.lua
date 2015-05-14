@@ -5,14 +5,6 @@
 -- @parent_module ccexp
 
 --------------------------------
--- Loads the given URL.<br>
--- param url Content URL.
--- @function [parent=#WebView] loadURL 
--- @param self
--- @param #string url
--- @return experimental::ui::WebView#experimental::ui::WebView self (return value: cc.experimental::ui::WebView)
-        
---------------------------------
 -- Gets whether this WebView has a back history item.<br>
 -- return WebView has a back history item.
 -- @function [parent=#WebView] canGoBack 
@@ -42,11 +34,26 @@
 -- @return experimental::ui::WebView#experimental::ui::WebView self (return value: cc.experimental::ui::WebView)
         
 --------------------------------
--- Set javascript interface scheme.<br>
--- see WebView::setOnJSCallback()
--- @function [parent=#WebView] setJavascriptInterfaceScheme 
+-- Set WebView should support zooming. The default value is false.
+-- @function [parent=#WebView] setScalesPageToFit 
 -- @param self
--- @param #string scheme
+-- @param #bool scalesPageToFit
+-- @return experimental::ui::WebView#experimental::ui::WebView self (return value: cc.experimental::ui::WebView)
+        
+--------------------------------
+-- Loads the given fileName.<br>
+-- param fileName Content fileName.
+-- @function [parent=#WebView] loadFile 
+-- @param self
+-- @param #string fileName
+-- @return experimental::ui::WebView#experimental::ui::WebView self (return value: cc.experimental::ui::WebView)
+        
+--------------------------------
+-- Loads the given URL.<br>
+-- param url Content URL.
+-- @function [parent=#WebView] loadURL 
+-- @param self
+-- @param #string url
 -- @return experimental::ui::WebView#experimental::ui::WebView self (return value: cc.experimental::ui::WebView)
         
 --------------------------------
@@ -63,19 +70,6 @@
 -- @return function#function ret (return value: function)
         
 --------------------------------
--- Reloads the current URL.
--- @function [parent=#WebView] reload 
--- @param self
--- @return experimental::ui::WebView#experimental::ui::WebView self (return value: cc.experimental::ui::WebView)
-        
---------------------------------
--- Set WebView should support zooming. The default value is false.
--- @function [parent=#WebView] setScalesPageToFit 
--- @param self
--- @param #bool scalesPageToFit
--- @return experimental::ui::WebView#experimental::ui::WebView self (return value: cc.experimental::ui::WebView)
-        
---------------------------------
 -- Gets whether this WebView has a forward history item.<br>
 -- return WebView has a forward history item.
 -- @function [parent=#WebView] canGoForward 
@@ -83,17 +77,23 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- Loads the given fileName.<br>
--- param fileName Content fileName.
--- @function [parent=#WebView] loadFile 
--- @param self
--- @param #string fileName
--- @return experimental::ui::WebView#experimental::ui::WebView self (return value: cc.experimental::ui::WebView)
-        
---------------------------------
 -- Stops the current load.
 -- @function [parent=#WebView] stopLoading 
 -- @param self
+-- @return experimental::ui::WebView#experimental::ui::WebView self (return value: cc.experimental::ui::WebView)
+        
+--------------------------------
+-- Reloads the current URL.
+-- @function [parent=#WebView] reload 
+-- @param self
+-- @return experimental::ui::WebView#experimental::ui::WebView self (return value: cc.experimental::ui::WebView)
+        
+--------------------------------
+-- Set javascript interface scheme.<br>
+-- see WebView::setOnJSCallback()
+-- @function [parent=#WebView] setJavascriptInterfaceScheme 
+-- @param self
+-- @param #string scheme
 -- @return experimental::ui::WebView#experimental::ui::WebView self (return value: cc.experimental::ui::WebView)
         
 --------------------------------
@@ -107,6 +107,12 @@
 -- @function [parent=#WebView] setVisible 
 -- @param self
 -- @param #bool visible
+-- @return experimental::ui::WebView#experimental::ui::WebView self (return value: cc.experimental::ui::WebView)
+        
+--------------------------------
+-- Default constructor.
+-- @function [parent=#WebView] WebView 
+-- @param self
 -- @return experimental::ui::WebView#experimental::ui::WebView self (return value: cc.experimental::ui::WebView)
         
 return nil
