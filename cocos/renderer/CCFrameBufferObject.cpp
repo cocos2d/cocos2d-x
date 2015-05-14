@@ -67,37 +67,33 @@ FrameBufferObject* FrameBufferObject::create(uint8_t fid, unsigned int width, un
 bool FrameBufferObject::init(uint8_t fid, unsigned int width, unsigned int height)
 {
     _fid = fid;
-    _pixelsWide = width;
-    _pixelsHigh = height;
+    _width = width;
+    _height = height;
     
-    //generate texture
-    glGenTextures(1, &_name);
-    glBindTexture(GL_TEXTURE_2D, _name);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _pixelsWide, _pixelsHigh, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
-    glBindTexture(GL_TEXTURE_2D, 0);
-    _pixelFormat = Texture2D::PixelFormat::RGBA8888;
-    _hasPremultipliedAlpha = false;
-    _hasMipmaps = false;
-    _shaderProgram = nullptr;
-    _antialiasEnabled = false;
-    _contentSize = Size(_pixelsWide, _pixelsHigh);
+    _colorTexture = new (std::nothrow) Texture2D();
+    auto dataLen = width * height * 4;
+    auto data = malloc(dataLen);
+    if(nullptr == data || nullptr == _colorTexture)
+        return false;
+    
+    memset(data, 0, dataLen);
+    _colorTexture->initWithData(data, dataLen, Texture2D::PixelFormat::RGBA8888, width, height, Size(width, height));
+    free(data);
+    
     GLint oldRenderBuffer(0);
     glGetIntegerv(GL_RENDERBUFFER_BINDING, &oldRenderBuffer);
     
     //generate depthStencil
     glGenRenderbuffers(1, &_depthBuffer);
     glBindRenderbuffer(GL_RENDERBUFFER, _depthBuffer);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, _pixelsWide, _pixelsHigh);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
     glBindRenderbuffer(GL_RENDERBUFFER, oldRenderBuffer);
     //generate Frame buffer object
     glGenFramebuffers(1, &_fbo);
     glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthBuffer);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthBuffer);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _name, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _colorTexture->getName(), 0);
     applyDefaultFBO();
     return true;
 }
@@ -106,12 +102,14 @@ FrameBufferObject::FrameBufferObject()
 : _clearColor(Color4F(0, 0, 0, 1))
 , _clearDepth(1.0)
 , _clearStencil(0)
+, _colorTexture(nullptr)
 {
     _frameBufferObjects.insert(this);
 }
 
 FrameBufferObject::~FrameBufferObject()
 {
+    CC_SAFE_RELEASE_NULL(_colorTexture);
     _frameBufferObjects.erase(this);
 }
 

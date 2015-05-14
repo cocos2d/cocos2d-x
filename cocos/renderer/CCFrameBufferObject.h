@@ -31,7 +31,7 @@
 #include <set>
 NS_CC_BEGIN
 
-class FrameBufferObject : public Texture2D
+class FrameBufferObject : public Ref
 {
 public:
     static FrameBufferObject* create(uint8_t fid, unsigned int width, unsigned int height);
@@ -49,6 +49,8 @@ public:
     const Color4F& getClearColor() const { return _clearColor; }
     float getClearDepth() const { return _clearDepth; }
     int8_t getClearStencil() const { return _clearStencil; }
+    
+    Texture2D* getColorTexture() const { return _colorTexture; }
 CC_CONSTRUCTOR_ACCESS:
     FrameBufferObject();
     virtual ~FrameBufferObject();
@@ -62,6 +64,9 @@ private:
     Color4F _clearColor;
     float   _clearDepth;
     int8_t  _clearStencil;
+    int _width;
+    int _height;
+    Texture2D* _colorTexture;
 public:
     static void initDefaultFBO();
     static void applyDefaultFBO();

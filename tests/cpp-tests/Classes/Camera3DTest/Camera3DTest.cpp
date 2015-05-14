@@ -1448,7 +1448,7 @@ void CameraFrameBufferObjectTest::onEnter()
         sprite->runAction(RepeatForever::create(animate));
     }
     sprite->setPosition(Vec2(100,100));
-    sprite->setTexture(fbo);
+    sprite->setTexture(fbo->getColorTexture());
     
     addChild(sprite);
     
