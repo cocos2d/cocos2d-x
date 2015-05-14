@@ -113,7 +113,7 @@ PlayerMenuServiceWin::PlayerMenuServiceWin(HWND hwnd)
     _root._commandId = 0;
 
     // hwnd has menu 
-    HMENU menu = GetMenu(hwnd);
+    HMENU menu = GetSystemMenu(hwnd, FALSE);// GetMenu(hwnd);
     if (menu)
     {
         _root._hmenu = menu;

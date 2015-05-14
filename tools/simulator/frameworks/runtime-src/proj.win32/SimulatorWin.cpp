@@ -420,11 +420,6 @@ int SimulatorWin::run()
 
     g_oldWindowProc = (WNDPROC)SetWindowLong(_hwnd, GWL_WNDPROC, (LONG)SimulatorWin::windowProc);
 
-    // update window size
-    RECT rect;
-    GetWindowRect(_hwnd, &rect);
-    MoveWindow(_hwnd, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top + GetSystemMetrics(SM_CYMENU), FALSE);
-
     // update window title
     updateWindowTitle();
 
@@ -461,6 +456,10 @@ void SimulatorWin::setupUI()
             menuItem->setChecked(true);
         }
     }
+
+    // About
+    menuBar->addItem("HELP_MENU", tr("Help"));
+    menuBar->addItem("ABOUT_MENUITEM", tr("About"), "HELP_MENU");
 
     menuBar->addItem("DIRECTION_MENU_SEP", "-", "VIEW_MENU");
     menuBar->addItem("DIRECTION_PORTRAIT_MENU", tr("Portrait"), "VIEW_MENU")
@@ -631,6 +630,10 @@ void SimulatorWin::setupUI()
                             auto path = fileDialog->openDirectory(tr("Choose Folder"), "");
 
                             _instance->onOpenProjectFolder(path);
+                        }
+                        else if (data == "ABOUT_MENUITEM")
+                        {
+                            onHelpAbout();
                         }
                     }
                 }
@@ -839,6 +842,7 @@ LRESULT CALLBACK SimulatorWin::windowProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
 
     switch (uMsg)
     {
+    case WM_SYSCOMMAND:
     case WM_COMMAND:
     {
         if (HIWORD(wParam) == 0)
