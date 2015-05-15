@@ -637,10 +637,14 @@ static void glfwDropFunc(GLFWwindow *window, int count, const char **files)
     NSData *data = [[note userInfo] objectForKey:NSFileHandleNotificationDataItem];
     NSString *str = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
     
-    //show log to console
-    [_consoleController trace:str];
-    if(_fileHandle!=nil){
-        [_fileHandle writeData:[str dataUsingEncoding:NSUTF8StringEncoding]];
+    if (str)
+    {
+        //show log to console
+        [_consoleController trace:str];
+        if(_fileHandle!=nil)
+        {
+            [_fileHandle writeData:[str dataUsingEncoding:NSUTF8StringEncoding]];
+        }
     }
 }
 
