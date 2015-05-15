@@ -28,30 +28,6 @@ function CreateEnumTable(tbl, index)
     return enumTable
 end
 
--- back menu callback
-local function MainMenuCallback()
-    local scene = cc.Scene:create()
-    scene:addChild(CreateTestMenu())
-
-    cc.Director:getInstance():replaceScene(scene)
-end
-
--- add the menu item for back to main menu
-function CreateBackMenuItem()
-    local label = cc.Label:createWithTTF("MainMenu", s_arialPath, 20)
-    label:setAnchorPoint(cc.p(0.5, 0.5))
-    local MenuItem = cc.MenuItemLabel:create(label)
-    MenuItem:registerScriptTapHandler(MainMenuCallback)
-
-    local s = cc.Director:getInstance():getWinSize()
-    local Menu = cc.Menu:create()
-    Menu:addChild(MenuItem)
-    Menu:setPosition(0, 0)
-    MenuItem:setPosition(s.width - 50, 25)
-
-    return Menu
-end
-
 Helper = {
     index = 1,
     createFunctioinTable = nil,
@@ -59,6 +35,7 @@ Helper = {
     titleLabel = nil,
     subtitleLabel = nil
 }
+
 function Helper.nextAction()
     Helper.index = Helper.index + 1
     if Helper.index > table.getn(Helper.createFunctionTable) then
@@ -129,6 +106,30 @@ function Helper.initWithLayer(layer)
 
     local background = cc.Layer:create()
     layer:addChild(background, -10)
+end
+
+-- back menu callback
+local function MainMenuCallback()
+    local scene = cc.Scene:create()
+    scene:addChild(CreateTestMenu())
+    Helper.usePhysics = false
+    cc.Director:getInstance():replaceScene(scene)
+end
+
+-- add the menu item for back to main menu
+function CreateBackMenuItem()
+    local label = cc.Label:createWithTTF("MainMenu", s_arialPath, 20)
+    label:setAnchorPoint(cc.p(0.5, 0.5))
+    local MenuItem = cc.MenuItemLabel:create(label)
+    MenuItem:registerScriptTapHandler(MainMenuCallback)
+
+    local s = cc.Director:getInstance():getWinSize()
+    local Menu = cc.Menu:create()
+    Menu:addChild(MenuItem)
+    Menu:setPosition(0, 0)
+    MenuItem:setPosition(s.width - 50, 25)
+
+    return Menu
 end
 
 function createTestLayer(title, subtitle)

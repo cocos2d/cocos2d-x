@@ -25,6 +25,7 @@
 #include "lua_cocos2dx_3d_auto.hpp"
 #include "LuaBasicConversions.h"
 #include "CCLuaEngine.h"
+#include "3d/CCBundle3D.h"
 
 extern int lua_cocos2dx_3d_Sprite3D_setBlendFunc(lua_State* L);
 
@@ -231,9 +232,9 @@ bool luaval_to_terraindata(lua_State* L, int lo, cocos2d::Terrain::TerrainData* 
     {
         lua_pushstring(L, "_chunkSize");
         lua_gettable(L,lo);
-        if (!lua_isnil(L, -1))
+        if (!lua_isnil(L, lua_gettop(L)))
         {
-            luaval_to_size(L, -1, &(outValue->_chunkSize));
+            luaval_to_size(L, lua_gettop(L), &(outValue->_chunkSize));
         }
         else
         {
@@ -526,6 +527,70 @@ static void extendTerrain(lua_State* L)
     lua_pop(L, 1);
 }
 
+int lua_cocos2dx_3d_Bundle3D_loadMeshDatas(lua_State* L)
+{
+    int argc = 0;
+    cocos2d::Bundle3D* cobj = nullptr;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(L,1,"cc.Bundle3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    cobj = (cocos2d::Bundle3D*)tolua_tousertype(L,1,0);
+    
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(L,"invalid 'cobj' in function 'lua_cocos2dx_3d_Bundle3D_loadMeshDatas'", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(L)-1;
+    if (argc == 1)
+    {
+        cocos2d::MeshDatas* arg0 = nullptr;
+        
+        ok &= luaval_to_object<cocos2d::MeshDatas>(L, 2, "cc.MeshDatas",&arg0);
+        if(!ok)
+        {
+            tolua_error(L,"invalid arguments in function 'lua_cocos2dx_3d_Bundle3D_loadMeshDatas'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->loadMeshDatas(*arg0);
+        tolua_pushboolean(L,(bool)ret);
+        object_to_luaval<cocos2d::MeshDatas>(L, "cc.MeshDatas", arg0);
+        return 2;
+    }
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Bundle3D:loadMeshDatas",argc, 1);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_3d_Bundle3D_loadMeshDatas'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+
+void extendBundle3D(lua_State* L)
+{
+    lua_pushstring(L, "cc.Bundle3D");
+    lua_rawget(L, LUA_REGISTRYINDEX);
+    if (lua_istable(L,-1))
+    {
+        tolua_function(L, "loadMeshDatas", lua_cocos2dx_3d_Bundle3D_loadMeshDatas);
+    }
+    lua_pop(L, 1);
+}
+
+
 static int register_all_cocos2dx_3d_manual(lua_State* L)
 {
     if (nullptr == L)
@@ -533,6 +598,7 @@ static int register_all_cocos2dx_3d_manual(lua_State* L)
     
     extendSprite3D(L);
     extendTerrain(L);
+    extendBundle3D(L);
     return 0;
 }
 
@@ -2209,6 +2275,483 @@ int lua_register_cocos2dx_3d_Ray(lua_State* L)
     return 1;
 }
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+    extern int lua_isusertype (lua_State* L, int lo, const char* type);
+#ifdef __cplusplus
+}
+#endif
+
+int lua_cocos2dx_3d_get_MeshData_vertex(lua_State* L)
+{
+    cocos2d::MeshData* self = nullptr;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(L,1,"cc.MeshData",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = (cocos2d::MeshData*)  tolua_tousertype(L,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self)
+    {
+        tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_3d_get_MeshData_vertex'\n", nullptr);
+        return 0;
+    }
+#endif
+    ccvector_float_to_luaval(L, self->vertex);
+    return 1;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_3d_get_MeshData_vertex'.",&tolua_err);
+    return 0;
+#endif
+}
+
+int lua_cocos2dx_3d_set_MeshData_vertex(lua_State* L)
+{
+    int argc = 0;
+    cocos2d::MeshData* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(L,1,"cc.MeshData",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = (cocos2d::MeshData*)  tolua_tousertype(L,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self)
+    {
+        tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_3d_set_MeshData_vertex'\n", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    
+    if (1 == argc)
+    {
+#if COCOS2D_DEBUG >= 1
+        if (!tolua_istable(L, 2, 0, &tolua_err))
+            goto tolua_lerror;
+#endif
+        self->vertex.clear();
+        luaval_to_std_vector_float(L, 2, &(self->vertex));
+        return 0;
+    }
+    
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_3d_set_MeshData_vertex'.",&tolua_err);
+    return 0;
+#endif
+}
+
+int lua_cocos2dx_3d_get_MeshData_subMeshIndices(lua_State* L)
+{
+    cocos2d::MeshData* self = nullptr;
+    int index = 1;
+    int subIndex = 1;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(L,1,"cc.MeshData",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = (cocos2d::MeshData*)  tolua_tousertype(L,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self)
+    {
+        tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_3d_get_MeshData_subMeshIndices'\n", nullptr);
+        return 0;
+    }
+#endif
+    
+    lua_newtable(L);
+    for (auto indexArray : self->subMeshIndices)
+    {
+        lua_pushnumber(L, (lua_Number)index);
+        lua_newtable(L);
+        for (auto value : indexArray)
+        {
+            lua_pushnumber(L, (lua_Number)subIndex);
+            lua_pushnumber(L, (lua_Number)value);
+            lua_rawset(L, -3);
+            ++subIndex;
+        }
+        lua_rawset(L, -3);
+        ++index;
+    }
+    return 1;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_3d_get_MeshData_subMeshIndices'.",&tolua_err);
+    return 0;
+#endif
+}
+
+int lua_cocos2dx_3d_get_MeshData_vertexSizeInFloat(lua_State* L)
+{
+    cocos2d::MeshData* self = nullptr;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(L,1,"cc.MeshData",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = (cocos2d::MeshData*)  tolua_tousertype(L,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self)
+    {
+        tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_3d_get_MeshData_vertexSizeInFloat'\n", nullptr);
+        return 0;
+    }
+#endif
+    lua_pushnumber(L, (lua_Number)self->vertexSizeInFloat);
+    return 1;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_3d_get_MeshData_vertexSizeInFloat'.",&tolua_err);
+    return 0;
+#endif
+}
+
+int lua_cocos2dx_3d_MeshData_getPerVertexSize(lua_State* L)
+{
+    int argc = 0;
+    cocos2d::MeshData* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(L,1,"cc.MeshData",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = (cocos2d::MeshData*)  tolua_tousertype(L,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self)
+    {
+        tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_3d_MeshData_getPerVertexSize'\n", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    
+    if (0 == argc)
+    {
+        int ret = self->getPerVertexSize();
+        lua_pushnumber(L, (lua_Number)ret);
+        return 1;
+    }
+    
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_3d_MeshData_getPerVertexSize'.",&tolua_err);
+    return 0;
+#endif
+}
+
+int lua_cocos2dx_3d_MeshData_getPerVertexSizeInFloat(lua_State* L)
+{
+    int argc = 0;
+    cocos2d::MeshData* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(L,1,"cc.MeshData",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = (cocos2d::MeshData*)  tolua_tousertype(L,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self)
+    {
+        tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_3d_MeshData_getPerVertexSizeInFloat'\n", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    
+    if (0 == argc)
+    {
+        int ret = self->getPerVertexSize() / sizeof(float);
+        lua_pushnumber(L, (lua_Number)ret);
+        return 1;
+    }
+    
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_3d_MeshData_getPerVertexSizeInFloat'.",&tolua_err);
+    return 0;
+#endif
+}
+
+int lua_cocos2dx_3d_MeshData_constructor(lua_State* L)
+{
+    int argc = 0;
+    cocos2d::MeshData* cobj = nullptr;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+    argc = lua_gettop(L)-1;
+    
+    if (argc == 0)
+    {
+        cobj = new cocos2d::MeshData();
+        object_to_luaval(L, "cc.MeshData", cobj);
+        tolua_register_gc(L,lua_gettop(L));
+        return 1;
+    }
+
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n",  "cc.MeshData:MeshData",argc, 0);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_3d_MeshData_constructor'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+
+int lua_cocos2dx_3d_MeshData_resetData(lua_State* L)
+{
+    int argc = 0;
+    cocos2d::MeshData* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(L,1,"cc.MeshData",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = (cocos2d::MeshData*)  tolua_tousertype(L,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self)
+    {
+        tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_3d_MeshData_resetData'\n", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    
+    if (0 == argc)
+    {
+        self->resetData();
+        return 0;
+    }
+    
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_3d_MeshData_resetData'.",&tolua_err);
+    return 0;
+#endif
+}
+
+int lua_cocos2dx_3d_MeshData_finalize(lua_State* L)
+{
+    cocos2d::MeshData* self = (cocos2d::MeshData*) tolua_tousertype(L,1,0);
+    CC_SAFE_DELETE(self);
+    return 0;
+}
+
+int lua_register_cocos2dx_3d_MeshData(lua_State* L)
+{
+    tolua_usertype(L,"cc.MeshData");
+    tolua_cclass(L,"MeshData","cc.MeshData","",lua_cocos2dx_3d_MeshData_finalize);
+    tolua_beginmodule(L,"MeshData");
+        tolua_variable(L, "vertex", lua_cocos2dx_3d_get_MeshData_vertex, lua_cocos2dx_3d_set_MeshData_vertex);
+        tolua_variable(L, "subMeshIndices", lua_cocos2dx_3d_get_MeshData_subMeshIndices, nullptr);
+        tolua_variable(L, "vertexSizeInFloat", lua_cocos2dx_3d_get_MeshData_vertexSizeInFloat, nullptr);
+        tolua_function(L,"getPerVertexSize",lua_cocos2dx_3d_MeshData_getPerVertexSize);
+        tolua_function(L,"new",lua_cocos2dx_3d_MeshData_constructor);
+        tolua_function(L, "resetData", lua_cocos2dx_3d_MeshData_resetData);
+        tolua_function(L, "getPerVertexSizeInFloat", lua_cocos2dx_3d_MeshData_getPerVertexSizeInFloat);
+    tolua_endmodule(L);
+    std::string typeName = typeid(cocos2d::Ray).name();
+    g_luaType[typeName] = "cc.MeshData";
+    g_typeCast["MeshData"] = "cc.MeshData";
+    return 1;
+}
+
+int lua_cocos2dx_3d_get_MeshDatas_meshDatas(lua_State* L)
+{
+    cocos2d::MeshDatas* self = nullptr;
+    int index = 1;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(L,1,"cc.MeshDatas",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = (cocos2d::MeshDatas*)  tolua_tousertype(L,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self)
+    {
+        tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_3d_get_MeshDatas_meshDatas'\n", nullptr);
+        return 0;
+    }
+#endif
+    
+    lua_newtable(L);
+    for (auto& data: self->meshDatas)
+    {
+        lua_pushnumber(L, (lua_Number)index);
+        object_to_luaval<cocos2d::MeshData>(L, "cc.MeshData", data);
+        lua_rawset(L, -3);
+        ++index;
+    }
+    return 1;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_3d_get_MeshDatas_meshDatas'.",&tolua_err);
+    return 0;
+#endif
+}
+
+int lua_cocos2dx_3d_set_MeshDatas_meshDatas(lua_State* L)
+{
+    int argc = 0;
+    cocos2d::MeshDatas* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(L,1,"cc.MeshDatas",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = (cocos2d::MeshDatas*)  tolua_tousertype(L,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self)
+    {
+        tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_3d_set_MeshDatas_meshDatas'\n", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    
+    if (1 == argc)
+    {
+#if COCOS2D_DEBUG >= 1
+        if (!tolua_istable(L, 2, 0, &tolua_err))
+            goto tolua_lerror;
+#endif
+        self->resetData();
+        
+        size_t len = lua_objlen(L, 2);
+        
+        for (size_t i = 0; i < len; i++)
+        {
+            lua_pushnumber(L, i + 1);
+            lua_gettable(L, 2);
+            if (lua_isusertype(L, -1, "cc.MeshData"))
+            {
+                self->meshDatas.push_back(static_cast<cocos2d::MeshData*>(tolua_tousertype(L, -1, nullptr)));
+            }
+        }
+        return 0;
+    }
+    
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_3d_set_MeshDatas_meshDatas'.",&tolua_err);
+    return 0;
+#endif
+}
+
+int lua_cocos2dx_3d_MeshDatas_resetData(lua_State* L)
+{
+    int argc = 0;
+    cocos2d::MeshDatas* self = nullptr;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+    if (!tolua_isusertype(L,1,"cc.MeshDatas",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    self = (cocos2d::MeshDatas*)  tolua_tousertype(L,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (nullptr == self)
+    {
+        tolua_error(L,"invalid 'self' in function 'lua_cocos2dx_3d_MeshDatas_resetData'\n", nullptr);
+        return 0;
+    }
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    
+    if (0 == argc)
+    {
+        self->resetData();
+        return 0;
+    }
+    
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_3d_MeshDatas_resetData'.",&tolua_err);
+    return 0;
+#endif
+}
+
+int lua_cocos2dx_3d_MeshDatas_constructor(lua_State* L)
+{
+    int argc = 0;
+    cocos2d::MeshDatas* cobj = nullptr;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+    argc = lua_gettop(L)-1;
+    
+    if (argc == 0)
+    {
+        cobj = new cocos2d::MeshDatas();
+        object_to_luaval(L, "cc.MeshDatas", cobj);
+        tolua_register_gc(L,lua_gettop(L));
+        return 1;
+    }
+    
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n",  "cc.MeshDatas:MeshDatas",argc, 0);
+    return 0;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_3d_MeshDatas_constructor'.",&tolua_err);
+#endif
+    
+    return 0;
+}
+
+int lua_cocos2dx_3d_MeshDatas_finalize(lua_State* L)
+{
+    cocos2d::MeshDatas* self = (cocos2d::MeshDatas*) tolua_tousertype(L,1,0);
+    CC_SAFE_DELETE(self);
+    return 0;
+}
+
+int lua_register_cocos2dx_3d_MeshDatas(lua_State* L)
+{
+    tolua_usertype(L,"cc.MeshDatas");
+    tolua_cclass(L,"MeshDatas","cc.MeshDatas","",lua_cocos2dx_3d_MeshDatas_finalize);
+    tolua_beginmodule(L,"MeshDatas");
+        tolua_variable(L, "meshDatas", lua_cocos2dx_3d_get_MeshDatas_meshDatas, lua_cocos2dx_3d_set_MeshDatas_meshDatas);
+        tolua_function(L,"resetData",lua_cocos2dx_3d_MeshDatas_resetData);
+        tolua_function(L, "new", lua_cocos2dx_3d_MeshDatas_constructor);
+    tolua_endmodule(L);
+    std::string typeName = typeid(cocos2d::Ray).name();
+    g_luaType[typeName] = "cc.MeshDatas";
+    g_typeCast["MeshDatas"] = "cc.MeshDatas";
+    return 1;
+}
+
 int register_all_cocos3d_manual_class(lua_State* L)
 {
     tolua_module(L,"cc",0);
@@ -2216,6 +2759,8 @@ int register_all_cocos3d_manual_class(lua_State* L)
         lua_register_cocos2dx_3d_AABB(L);
         lua_register_cocos2dx_3d_OBB(L);
     	lua_register_cocos2dx_3d_Ray(L);
+        lua_register_cocos2dx_3d_MeshDatas(L);
+        lua_register_cocos2dx_3d_MeshData(L);
     tolua_endmodule(L);
     
     return 0;

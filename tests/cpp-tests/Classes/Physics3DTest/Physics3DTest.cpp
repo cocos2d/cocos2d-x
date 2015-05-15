@@ -715,8 +715,10 @@ bool Physics3DCollisionCallbackDemo::init()
         Bundle3D::destroyBundle(bundle);
         for (auto iter : meshs.meshDatas){
             int preVertexSize = iter->getPerVertexSize() / sizeof(float);
+            CCLOG("Value of preVertexSize is %d", preVertexSize);
             for (auto indexArray : iter->subMeshIndices){
                 for (auto i : indexArray){
+                    CCLOG("Index value is %d, %d, %d, %d value of vec3 is %f, %f, %f", i, i * preVertexSize, i * preVertexSize + 1, i * preVertexSize + 2, iter->vertex[i * preVertexSize], iter->vertex[i * preVertexSize + 1], iter->vertex[i * preVertexSize + 2]);
                     trianglesList.push_back(Vec3(iter->vertex[i * preVertexSize], iter->vertex[i * preVertexSize + 1], iter->vertex[i * preVertexSize + 2]) * scale);
                 }
             }

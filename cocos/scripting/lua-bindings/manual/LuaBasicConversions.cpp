@@ -2243,6 +2243,49 @@ bool luaval_to_std_vector_vec2(lua_State* L, int lo, std::vector<cocos2d::Vec2>*
     return ok;
 }
 
+bool luaval_to_std_vector_vec3(lua_State* L, int lo, std::vector<cocos2d::Vec3>* ret, const char* funcName)
+{
+    if (nullptr == L || nullptr == ret || lua_gettop(L) < lo)
+        return false;
+    
+    tolua_Error tolua_err;
+    bool ok = true;
+    
+    if (!tolua_istable(L, lo, 0, &tolua_err))
+    {
+#if COCOS2D_DEBUG >=1
+        luaval_to_native_err(L,"#ferror:",&tolua_err,funcName);
+#endif
+        ok = false;
+    }
+    
+    if (ok)
+    {
+        size_t len = lua_objlen(L, lo);
+        cocos2d::Vec3 value;
+        for (size_t i = 0; i < len; i++)
+        {
+            lua_pushnumber(L, i + 1);
+            lua_gettable(L,lo);
+            if (lua_istable(L, lua_gettop(L)))
+            {
+                ok &= luaval_to_vec3(L, lua_gettop(L), &value);
+                if (ok)
+                {
+                    ret->push_back(value);
+                }
+            }
+            else
+            {
+                CCASSERT(false, "vec3 type is needed");
+            }
+            lua_pop(L, 1);
+        }
+    }
+    
+    return ok;
+}
+
 bool luaval_to_std_vector_v3f_c4b_t2f(lua_State* L, int lo, std::vector<cocos2d::V3F_C4B_T2F>* ret, const char* funcName)
 {
     if (nullptr == L || nullptr == ret || lua_gettop(L) < lo)

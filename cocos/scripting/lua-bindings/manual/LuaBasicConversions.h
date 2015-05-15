@@ -818,6 +818,17 @@ extern bool luaval_to_std_vector_v3f_c4b_t2f(lua_State* L, int lo, std::vector<c
  */
 extern bool luaval_to_std_vector_vec2(lua_State* L, int lo, std::vector<cocos2d::Vec2>* ret, const char* funcName = "");
 
+/**
+ * Get a pointer points to a std::vector<cocos2d::Vec3> from a Lua array table in the stack.
+ *
+ * @param L the current lua_State.
+ * @param lo the given accpetable index of stack.
+ * @param ret a pointer points to a std::vector<cocos2d::Vec3>.
+ * @param funcName the name of calling function, it is used for error output in the debug model.
+ * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ */
+extern bool luaval_to_std_vector_vec3(lua_State* L, int lo, std::vector<cocos2d::Vec3>* ret, const char* funcName = "");
+
 /**@}**/
 
 // from native
