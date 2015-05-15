@@ -109,10 +109,13 @@ bool Material::initWithFile(const std::string& validfilename)
     char* bytes = (char*)data.getBytes();
     bytes[data.getSize()-1]='\0';
 
-    Properties* properties = Properties::create(validfilename);
+    // Warning: properties is not a "Ref" object, must be manually deleted
+    Properties* properties = Properties::createWithoutAutorelease(validfilename);
 
     // get the first material
     parseProperties((strlen(properties->getNamespace()) > 0) ? properties : properties->getNextNamespace());
+
+    CC_SAFE_DELETE(properties);
     return true;
 }
 
