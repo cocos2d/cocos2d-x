@@ -536,24 +536,9 @@ function Physics3DCollisionCallbackDemo:extend()
     local rbDes = {}
 
     local scale = 2.0
-    local trianglesList = {}
-    local bundle = cc.Bundle3D:createBundle()
-    bundle:load("Sprite3DTest/boss.c3b")
-    local meshs = cc.MeshDatas:new()
-    local ret = false
-    ret, meshs = bundle:loadMeshDatas(meshs)
-    cc.Bundle3D:destroyBundle(bundle)
-    local meshDatas = meshs.meshDatas
-    for i = 1,#meshDatas do
-        local meshData = meshDatas[i]
-        local preVertexSize = meshData:getPerVertexSizeInFloat()
-        for j = 1, #(meshData.subMeshIndices) do
-            local indexArray = meshData.subMeshIndices[j]
-            for k = 1, #indexArray do
-                local indexValue = indexArray[k]
-                table.insert(trianglesList, cc.vec3(meshData.vertex[indexValue * preVertexSize + 1] * scale, meshData.vertex[ indexValue * preVertexSize + 2] * scale, meshData.vertex[ indexValue * preVertexSize + 3] * scale))
-            end 
-        end
+    local trianglesList = cc.Bundle3D:getTrianglesList("Sprite3DTest/boss.c3b")
+    for i = 1, #trianglesList do
+        trianglesList[i] = {x = trianglesList[i].x * scale, y = trianglesList[i].y * scale, z = trianglesList[i].z * scale}
     end
 
     rbDes.mass = 0.0
@@ -653,26 +638,8 @@ function Physics3DTerrainDemo:extend()
     end
 
     --create mesh
-    local trianglesList = {}
-    local bundle = cc.Bundle3D:createBundle()
-    bundle:load("Sprite3DTest/boss.c3b")
-    local meshs = cc.MeshDatas:new()
-    local ret = false
-    ret, meshs = bundle:loadMeshDatas(meshs)
-    cc.Bundle3D:destroyBundle(bundle)
-    local meshDatas = meshs.meshDatas
-    for i = 1,#meshDatas do
-        local meshData = meshDatas[i]
-        local preVertexSize = meshData:getPerVertexSizeInFloat()
-        for j = 1, #(meshData.subMeshIndices) do
-            local indexArray = meshData.subMeshIndices[j]
-            for k = 1, #indexArray do
-                local indexValue = indexArray[k]
-                table.insert(trianglesList, cc.vec3(meshData.vertex[indexValue * preVertexSize + 1] , meshData.vertex[ indexValue * preVertexSize + 2] , meshData.vertex[ indexValue * preVertexSize + 3]))
-            end 
-        end
-    end
-
+    local trianglesList = cc.Bundle3D:getTrianglesList("Sprite3DTest/boss.c3b")
+    
     rbDes.mass = 0.0
     rbDes.shape = cc.Physics3DShape:createMesh(trianglesList, math.floor(#trianglesList / 3))
     local rigidBody = cc.Physics3DRigidBody:create(rbDes)
@@ -688,16 +655,13 @@ function Physics3DTerrainDemo:extend()
     local localTrans = cc.mat4.createIdentity()
     local bodyshape  = cc.Physics3DShape:createBox(cc.vec3(2.0, 4.0, 2.0))
     localTrans = cc.mat4.createTranslation(0.0, 2.0, 0.0, localTrans)
-    print("step1",localTrans)
     table.insert(shapeList, {bodyshape, localTrans})
 
     local headshape = cc.Physics3DShape:createSphere(1.5)
     localTrans = cc.mat4.createTranslation(0.6, 5.0, -1.5, localTrans)
-    print("step2",localTrans)
     table.insert(shapeList, {headshape, localTrans})
 
     local lhandshape = cc.Physics3DShape:createBox(cc.vec3(1.0, 3.0, 1.0))
-    print("step3",localTrans)
     localTrans = cc.mat4.createRotation(cc.vec3(1.0, 0.0, 0.0), 15.0 * math.pi / 180, localTrans)
     localTrans[13] = -1.5
     localTrans[14] = 2.5

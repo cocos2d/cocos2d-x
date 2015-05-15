@@ -3313,3 +3313,20 @@ void texParams_to_luaval(lua_State* L, const cocos2d::Texture2D::TexParams& inVa
     lua_pushnumber(L, (lua_Number) inValue.wrapT);       /* L: table key value*/
     lua_rawset(L, -3);
 }
+
+void std_vector_vec3_to_luaval(lua_State* L, const std::vector<cocos2d::Vec3>& inValue)
+{
+    if (nullptr == L)
+        return;
+    
+    lua_newtable(L);
+    
+    int index = 1;
+    for (const cocos2d::Vec3& value : inValue)
+    {
+        lua_pushnumber(L, (lua_Number)index);
+        vec3_to_luaval(L, value);
+        lua_rawset(L, -3);
+        ++index;
+    }
+}

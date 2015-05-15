@@ -1274,6 +1274,14 @@ void quaternion_to_luaval(lua_State* L,const cocos2d::Quaternion& inValue);
  */
 void texParams_to_luaval(lua_State* L, const cocos2d::Texture2D::TexParams& inValue);
 
+/**
+ * Push a Lua array table converted from a std::vector<cocos2d::Vec3> into the Lua stack.
+ * The format of table as follows: {vec3Value1, vec3Value2, ..., vec3ValueSize}
+ *
+ * @param L the current lua_State.
+ * @param inValue a std::vector<cocos2d::Vec3> vaule.
+ */
+void std_vector_vec3_to_luaval(lua_State* L, const std::vector<cocos2d::Vec3>& inValue);
 // end group
 /// @}
 #endif //__COCOS2DX_SCRIPTING_LUA_COCOS2DXSUPPORT_LUABAISCCONVERSIONS_H__

@@ -62,7 +62,7 @@ bool luaval_to_Physics3DRigidBodyDes(lua_State* L,int lo,cocos2d::Physics3DRigid
         }
         else
         {
-            luaval_to_vec3(L, -1, &outValue->localInertia);
+            luaval_to_vec3(L, lua_gettop(L), &outValue->localInertia);
         }
         lua_pop(L, 1);
         
@@ -74,7 +74,7 @@ bool luaval_to_Physics3DRigidBodyDes(lua_State* L,int lo,cocos2d::Physics3DRigid
         }
         else
         {
-            outValue->shape = static_cast<cocos2d::Physics3DShape*>(tolua_tousertype(L, -1, nullptr));
+            outValue->shape = static_cast<cocos2d::Physics3DShape*>(tolua_tousertype(L, lua_gettop(L), nullptr));
         }
         lua_pop(L, 1);
         
@@ -86,7 +86,7 @@ bool luaval_to_Physics3DRigidBodyDes(lua_State* L,int lo,cocos2d::Physics3DRigid
         }
         else
         {
-            luaval_to_mat4(L, -1, &outValue->originalTransform);
+            luaval_to_mat4(L, lua_gettop(L), &outValue->originalTransform);
         }
         lua_pop(L, 1);
         
@@ -124,7 +124,7 @@ bool luaval_to_Physics3DWorld_HitResult(lua_State* L,int lo, cocos2d::Physics3DW
         }
         else
         {
-            luaval_to_vec3(L, -1, &(outValue->hitPosition));
+            luaval_to_vec3(L, lua_gettop(L), &(outValue->hitPosition));
         }
         lua_pop(L, 1);
         
@@ -136,7 +136,7 @@ bool luaval_to_Physics3DWorld_HitResult(lua_State* L,int lo, cocos2d::Physics3DW
         }
         else
         {
-            luaval_to_vec3(L, -1, &(outValue->hitNormal));
+            luaval_to_vec3(L, lua_gettop(L), &(outValue->hitNormal));
         }
         lua_pop(L, 1);
         
@@ -148,7 +148,7 @@ bool luaval_to_Physics3DWorld_HitResult(lua_State* L,int lo, cocos2d::Physics3DW
         }
         else
         {
-            outValue->hitObj = static_cast<cocos2d::Physics3DObject*>(tolua_tousertype(L, -1, nullptr));
+            outValue->hitObj = static_cast<cocos2d::Physics3DObject*>(tolua_tousertype(L, lua_gettop(L), nullptr));
         }
         lua_pop(L, 1);
     }
@@ -475,67 +475,6 @@ void extendPhysics3DWorld(lua_State* L)
     lua_pop(L, 1);
 }
 
-int lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_setPivotPointInB(lua_State* L)
-{
-    int argc = 0;
-    cocos2d::Physics3DPointToPointConstraint* cobj = nullptr;
-    bool ok  = true;
-    
-#if COCOS2D_DEBUG >= 1
-    tolua_Error tolua_err;
-#endif
-    
-    
-#if COCOS2D_DEBUG >= 1
-    if (!tolua_isusertype(L,1,"cc.Physics3DPointToPointConstraint",0,&tolua_err)) goto tolua_lerror;
-#endif
-    
-    cobj = (cocos2d::Physics3DPointToPointConstraint*)tolua_tousertype(L,1,0);
-    
-#if COCOS2D_DEBUG >= 1
-    if (!cobj)
-    {
-        tolua_error(L,"invalid 'cobj' in function 'lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_setPivotPointInB'", nullptr);
-        return 0;
-    }
-#endif
-    
-    argc = lua_gettop(L)-1;
-    if (argc == 1)
-    {
-        cocos2d::Vec3 arg0;
-        
-        ok &= luaval_to_vec3(L, 2, &arg0, "cc.Physics3DPointToPointConstraint:setPivotPointInB");
-        if(!ok)
-        {
-            tolua_error(L,"invalid arguments in function 'lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_setPivotPointInB'", nullptr);
-            return 0;
-        }
-        cobj->setPivotPointInB(arg0 + cocos2d::Vec3(0.0, 0.0, 0.0));
-        return 0;
-    }
-    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_setPivotPointInB",argc, 1);
-    return 0;
-    
-#if COCOS2D_DEBUG >= 1
-tolua_lerror:
-    tolua_error(L,"#ferror in function 'lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_setPivotPointInB'.",&tolua_err);
-#endif
-    
-    return 0;
-}
-
-void extendPhysics3DPointToPointConstraint(lua_State* L)
-{
-    lua_pushstring(L, "cc.Physics3DPointToPointConstraint");
-    lua_rawget(L, LUA_REGISTRYINDEX);
-    if (lua_istable(L,-1))
-    {
-        tolua_function(L, "setPivotPointInB", lua_cocos2dx_physics3d_Physics3DPointToPointConstraint_setPivotPointInB);
-    }
-    lua_pop(L, 1);
-}
-
 int lua_cocos2dx_physics3d_Physics3DShape_createMesh(lua_State* L)
 {
     int argc = 0;
@@ -834,8 +773,8 @@ int lua_cocos2dx_physics3d_Physics3DObject_setCollisionCallback(lua_State* L)
             LuaEngine::getInstance()->getLuaStack()->executeFunctionByHandler(handler, 1);
         });
         
-        lua_settop(L, 1);
-        return 1;
+        ScriptHandlerMgr::getInstance()->addCustomHandler((void*)cobj, handler);
+        return 0;
     }
     luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Physics3DObject:setCollisionCallback",argc, 1);
     return 0;
@@ -868,7 +807,6 @@ int register_all_physics3d_manual(lua_State* L)
     extendPhysics3DRigidBody(L);
     extendPhysics3DComponent(L);
     extendPhysics3DWorld(L);
-    extendPhysics3DPointToPointConstraint(L);
     extendPhysics3DShape(L);
     extendPhysics3DObject(L);
     
