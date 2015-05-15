@@ -63,6 +63,11 @@ FontAtlas::FontAtlas(Font &theFont)
         {
             _letterPadding += 2 * FontFreeType::DistanceMapSpread;    
         }
+        else
+        {
+            _letterPadding += 2;
+        }
+        
         _currentPageDataSize = CacheTextureWidth * CacheTextureHeight;
         auto outlineSize = fontTTf->getOutlineSize();
         if(outlineSize > 0)
@@ -178,7 +183,7 @@ bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16String)
     auto  pixelFormat = fontTTf->getOutlineSize() > 0 ? Texture2D::PixelFormat::AI88 : Texture2D::PixelFormat::A8; 
 
     bool existNewLetter = false;
-    int bottomHeight = _commonLineHeight - _fontAscender;
+    int bottomHeight = _commonLineHeight - _fontAscender + offsetAdjust;
 
     float startY = _currentPageOrigY;
 
@@ -203,7 +208,7 @@ bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16String)
 
                 if (_currentPageOrigX + tempDef.width > CacheTextureWidth)
                 {
-                    _currentPageOrigY += _commonLineHeight;
+                    _currentPageOrigY += _commonLineHeight + _letterPadding;
                     _currentPageOrigX = 0;
                     if(_currentPageOrigY + _commonLineHeight >= CacheTextureHeight)
                     {
@@ -239,17 +244,17 @@ bool FontAtlas::prepareLetterDefinitions(const std::u16string& utf16String)
                         tex->release();
                     }  
                 }
-                fontTTf->renderCharAt(_currentPageData,_currentPageOrigX,_currentPageOrigY,bitmap,bitmapWidth,bitmapHeight);
+                fontTTf->renderCharAt(_currentPageData,_currentPageOrigX + offsetAdjust,_currentPageOrigY+offsetAdjust,bitmap,bitmapWidth,bitmapHeight);
 
-                tempDef.U                = _currentPageOrigX;
-                tempDef.V                = _currentPageOrigY;
+                tempDef.U                = _currentPageOrigX + offsetAdjust;
+                tempDef.V                = _currentPageOrigY + offsetAdjust;
                 tempDef.textureID        = _currentPage;
                 _currentPageOrigX        += tempDef.width + 1;
                 // take from pixels to points
-                tempDef.width  =    tempDef.width  / scaleFactor;
-                tempDef.height =    tempDef.height / scaleFactor;      
-                tempDef.U      =    tempDef.U      / scaleFactor;
-                tempDef.V      =    tempDef.V      / scaleFactor;
+                tempDef.width  =    (tempDef.width + 0.5f) / scaleFactor;
+                tempDef.height =    (tempDef.height + 0.5f) / scaleFactor;
+                tempDef.U      =    (tempDef.U - 0.5f) / scaleFactor;
+                tempDef.V      =    (tempDef.V - 0.5f) / scaleFactor;
             }
             else{
                 if(tempDef.xAdvance)
