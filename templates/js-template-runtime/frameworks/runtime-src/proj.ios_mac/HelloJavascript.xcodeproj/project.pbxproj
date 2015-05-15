@@ -290,7 +290,7 @@
 		5091731717ECDF7A00D62437 /* Icon-58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-58.png"; path = "ios/Icon-58.png"; sourceTree = "<group>"; };
 		5091731817ECDF7A00D62437 /* Icon-80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-80.png"; path = "ios/Icon-80.png"; sourceTree = "<group>"; };
 		5091731917ECDF7A00D62437 /* Icon-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-100.png"; path = "ios/Icon-100.png"; sourceTree = "<group>"; };
-		509D4AAA17EBB24E00697056 /* HelloJavascript Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HelloJavascript Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		509D4AAA17EBB24E00697056 /* HelloJavascript-desktop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HelloJavascript-desktop.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		509D4AAB17EBB2AB00697056 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = ios/AppController.h; sourceTree = "<group>"; };
 		509D4AAC17EBB2AB00697056 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppController.mm; path = ios/AppController.mm; sourceTree = "<group>"; };
 		509D4AAD17EBB2AB00697056 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "ios/Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -344,7 +344,7 @@
 		9FFEB9B21A6AB8810095C43A /* libsimulator.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libsimulator.xcodeproj; path = "../../cocos2d-x/tools/simulator/libsimulator/proj.ios_mac/libsimulator.xcodeproj"; sourceTree = "<group>"; };
 		9FFEB9C01A6B86360095C43A /* SimpleConfigParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimpleConfigParser.cpp; sourceTree = "<group>"; };
 		9FFEB9C11A6B86360095C43A /* SimpleConfigParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleConfigParser.h; sourceTree = "<group>"; };
-		A922753D1517C094001B78AA /* HelloJavascript iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HelloJavascript iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A922753D1517C094001B78AA /* HelloJavascript-mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HelloJavascript-mobile.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A92275411517C094001B78AA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A92275431517C094001B78AA /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		A92275451517C094001B78AA /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
@@ -554,8 +554,8 @@
 		A922753E1517C094001B78AA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A922753D1517C094001B78AA /* HelloJavascript iOS.app */,
-				509D4AAA17EBB24E00697056 /* HelloJavascript Mac.app */,
+				A922753D1517C094001B78AA /* HelloJavascript-mobile.app */,
+				509D4AAA17EBB24E00697056 /* HelloJavascript-desktop.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -637,9 +637,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		509D4A7517EBB24E00697056 /* HelloJavascript Mac */ = {
+		509D4A7517EBB24E00697056 /* HelloJavascript-desktop */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 509D4AA717EBB24E00697056 /* Build configuration list for PBXNativeTarget "HelloJavascript Mac" */;
+			buildConfigurationList = 509D4AA717EBB24E00697056 /* Build configuration list for PBXNativeTarget "HelloJavascript-desktop" */;
 			buildPhases = (
 				509D4A8017EBB24E00697056 /* Sources */,
 				509D4A9317EBB24E00697056 /* Resources */,
@@ -655,14 +655,14 @@
 				1A676824180E9BF70076BC67 /* PBXTargetDependency */,
 				1A676826180E9BF70076BC67 /* PBXTargetDependency */,
 			);
-			name = "HelloJavascript Mac";
+			name = "HelloJavascript-desktop";
 			productName = HelloJavascript;
-			productReference = 509D4AAA17EBB24E00697056 /* HelloJavascript Mac.app */;
+			productReference = 509D4AAA17EBB24E00697056 /* HelloJavascript-desktop.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A922753C1517C094001B78AA /* HelloJavascript iOS */ = {
+		A922753C1517C094001B78AA /* HelloJavascript-mobile */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A92277001517C097001B78AA /* Build configuration list for PBXNativeTarget "HelloJavascript iOS" */;
+			buildConfigurationList = A92277001517C097001B78AA /* Build configuration list for PBXNativeTarget "HelloJavascript-mobile" */;
 			buildPhases = (
 				A92275391517C094001B78AA /* Sources */,
 				A922753A1517C094001B78AA /* Frameworks */,
@@ -679,9 +679,9 @@
 				1A676833180E9C110076BC67 /* PBXTargetDependency */,
 				1A676835180E9C110076BC67 /* PBXTargetDependency */,
 			);
-			name = "HelloJavascript iOS";
+			name = "HelloJavascript-mobile";
 			productName = HelloJavascript;
-			productReference = A922753D1517C094001B78AA /* HelloJavascript iOS.app */;
+			productReference = A922753D1517C094001B78AA /* HelloJavascript-mobile.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -725,8 +725,8 @@
 			);
 			projectRoot = "";
 			targets = (
-				A922753C1517C094001B78AA /* HelloJavascript iOS */,
-				509D4A7517EBB24E00697056 /* HelloJavascript Mac */,
+				A922753C1517C094001B78AA /* HelloJavascript-mobile */,
+				509D4A7517EBB24E00697056 /* HelloJavascript-desktop */,
 			);
 		};
 /* End PBXProject section */
@@ -1191,7 +1191,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		509D4AA717EBB24E00697056 /* Build configuration list for PBXNativeTarget "HelloJavascript Mac" */ = {
+		509D4AA717EBB24E00697056 /* Build configuration list for PBXNativeTarget "HelloJavascript-desktop" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				509D4AA817EBB24E00697056 /* Debug */,
@@ -1209,7 +1209,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A92277001517C097001B78AA /* Build configuration list for PBXNativeTarget "HelloJavascript iOS" */ = {
+		A92277001517C097001B78AA /* Build configuration list for PBXNativeTarget "HelloJavascript-mobile" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A92277011517C097001B78AA /* Debug */,
