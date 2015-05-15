@@ -28,6 +28,7 @@ THE SOFTWARE.
 #ifndef COCOS_2D_MARCHINGSQUARE_H__
 #define COCOS_2D_MARCHINGSQUARE_H__
 
+#include "cocos2d.h"
 #include <string>
 #include <vector>
 #include "base/CCConsole.h"
@@ -40,37 +41,43 @@ class CC_DLL MarchingSquare
 {
 public:
     MarchingSquare(const std::string &filename, const unsigned int threshold = 0);
+    ~MarchingSquare();
     //TODO: should return list of vec2s
     void trace();
     void setThreshold(unsigned int threshold){_threshold = threshold;};
     unsigned int getThreshold(){return _threshold;};
-    ssize_t getVecCount(){return points.size();};
-    std::vector<cocos2d::Vec2> getPoints(){return points;};
+    ssize_t getVecCount(){return _points.size();};
+    std::vector<cocos2d::Vec2> getPoints(){return _points;};
     void printPoints();
     //using Ramer–Douglas–Peucker algorithm
-    void optimize(float level = 0);
+    void optimize(const cocos2d::Rect &rect, float level = 0);
+    void expand(const cocos2d::Rect &rect, float level = 0);
+    
 protected:
     unsigned int findFirstNoneTransparentPixel();
     void marchSquare(int startx, int starty);
     unsigned int getSquareValue(int x, int y);
-    unsigned char * data;
-    std::string _filename;
-    unsigned int width;
-    unsigned int height;
-    unsigned int _threshold;
+
     unsigned char getAlphaAt(const unsigned int i);
     unsigned char getAlphaAt(const int x, const int y);
-    cocos2d::Vec2 start;
-    std::vector<cocos2d::Vec2> points;
-    int getIndexFromPos(int x, int y){return y*width+x;};
-    cocos2d::Vec2 getPosFromIndex(int i){return cocos2d::Vec2(i%width, i/width);};
-    
-    float epsilon;
+
+    int getIndexFromPos(int x, int y){return y*_width+x;};
+    cocos2d::Vec2 getPosFromIndex(int i){return cocos2d::Vec2(i%_width, i/_width);};
+
     std::vector<cocos2d::Vec2> rdp(std::vector<cocos2d::Vec2> v);
     float perpendicularDistance(cocos2d::Vec2 i, cocos2d::Vec2 start, cocos2d::Vec2 end);
-    float scaleFactor;
-    
 
+    bool isAConvexPoint(const cocos2d::Vec2& p1, const cocos2d::Vec2& p2);
+    
+    cocos2d::Image* _image;
+    unsigned char * _data;
+    std::string _filename;
+    unsigned int _width;
+    unsigned int _height;
+    unsigned int _threshold;
+    std::vector<cocos2d::Vec2> _points;
+    float _epsilon;
+    float _scaleFactor;
 };
 
 NS_CC_END

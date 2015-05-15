@@ -26,38 +26,53 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "MarchingSquare.h"
-#include "cocos2d.h"
 #include <algorithm>
+#include <math.h>
+#include <stdio.h>
 
 USING_NS_CC;
 
 MarchingSquare::MarchingSquare(const std::string &filename, const unsigned int threshold)
+:_image(nullptr)
+,_filename("")
+,_threshold(0)
+,_width(0)
+,_height(0)
+,_scaleFactor(0)
+,_epsilon(0)
 {
     _filename = filename;
     _threshold = threshold;
-    Image *image = new Image();
-    image->initWithImageFile(filename);
-    CCASSERT(image->getRenderFormat()==Texture2D::PixelFormat::RGBA8888, "unsupported format, currently only supports rgba8888");
-    data = image->getData();
-    width = image->getWidth();
-    height = image->getHeight();
-    scaleFactor = Director::getInstance()->getContentScaleFactor();
+    _image = new Image();
+    _image->initWithImageFile(filename);
+    CCASSERT(_image->getRenderFormat()==Texture2D::PixelFormat::RGBA8888, "unsupported format, currently only supports rgba8888");
+    _data = _image->getData();
+    _width = _image->getWidth();
+    _height = _image->getHeight();
+    _scaleFactor = Director::getInstance()->getContentScaleFactor();
+}
+
+MarchingSquare::~MarchingSquare()
+{
+    if (_image) {
+        delete _image;
+        _image = nullptr;
+    }
 }
 
 void MarchingSquare::trace()
 {
     unsigned int first = findFirstNoneTransparentPixel();
-    start = Vec2(first%width, first/width);
+    auto start = Vec2(first%_width, first/_width);
     marchSquare(start.x, start.y);
 }
 
 unsigned int MarchingSquare::findFirstNoneTransparentPixel()
 {
-    for(unsigned int i = 0; i < width*height; i++)
+    for(unsigned int i = 0; i < _width*_height; i++)
     {
         if(getAlphaAt(i) > _threshold)
         {
-//            CCLOG("first non transparent is at x:%d, y%d", i%width, i/width);
             return i;
         }
     }
@@ -66,13 +81,13 @@ unsigned int MarchingSquare::findFirstNoneTransparentPixel()
 
 unsigned char MarchingSquare::getAlphaAt(const unsigned int i)
 {
-    return *(data+i*4+3);
+    return *(_data+i*4+3);
 }
 unsigned char MarchingSquare::getAlphaAt(const int x, const int y)
 {
-    if(x < 0 || y < 0 || x > width-1 || y > height-1)
+    if(x < 0 || y < 0 || x > _width-1 || y > _height-1)
         return 0;
-    return *(data+(y*width+x)*4+3);
+    return *(_data+(y*_width+x)*4+3);
 }
 
 unsigned int MarchingSquare::getSquareValue(int x, int y)
@@ -106,7 +121,7 @@ void MarchingSquare::marchSquare(int startx, int starty)
     int curx = startx;
     int cury = starty;
     unsigned int count = 0;
-    unsigned int totalPixel = width*height;
+    unsigned int totalPixel = _width*_height;
     bool problem = false;
     std::vector<int> case9s;
     std::vector<int> case6s;
@@ -247,19 +262,19 @@ void MarchingSquare::marchSquare(int startx, int starty)
         cury += stepy;
         if(stepx == prevx && stepy == prevy)
         {
-            points.back().x = (float)(curx) / scaleFactor;
-            points.back().y = (float)(height-cury) / scaleFactor;
+            _points.back().x = (float)(curx) / _scaleFactor;
+            _points.back().y = (float)(_height-cury) / _scaleFactor;
         }
         else if(problem)
         {
             //TODO: we triangulation cannot work collineer points, so we need to modify same point a little
             //TODO: maybe we can detect if we go into a hole and coming back the hole, we should extract those points and remove them
-            points.back().x -= 0.00001;
-            points.back().y -= 0.00001;
-            points.push_back(Vec2((float)curx, (float)height-cury)/ scaleFactor);
+            _points.back().x -= 0.00001;
+            _points.back().y -= 0.00001;
+            _points.push_back(Vec2((float)curx, (float)_height-cury)/ _scaleFactor);
         }
         else{
-            points.push_back(Vec2((float)curx, (float)height-cury)/ scaleFactor);
+            _points.push_back(Vec2((float)curx, (float)_height-cury)/ _scaleFactor);
         }
 
         count++;
@@ -273,9 +288,9 @@ void MarchingSquare::marchSquare(int startx, int starty)
 
 void MarchingSquare::printPoints()
 {
-    for(auto p : points)
+    for(auto p : _points)
     {
-        CCLOG("%.1f %.1f", p.x, height-p.y);
+        CCLOG("%.1f %.1f", p.x, _height-p.y);
     }
 }
 
@@ -317,7 +332,7 @@ std::vector<cocos2d::Vec2> MarchingSquare::rdp(std::vector<cocos2d::Vec2> v)
             index = i;
         }
     }
-    if (dist>epsilon)
+    if (dist>_epsilon)
     {
         std::vector<Vec2>::const_iterator begin = v.begin();
         std::vector<Vec2>::const_iterator end   = v.end();
@@ -337,18 +352,58 @@ std::vector<cocos2d::Vec2> MarchingSquare::rdp(std::vector<cocos2d::Vec2> v)
         return ret;
     }
 }
-void MarchingSquare::optimize(float level)
+void MarchingSquare::optimize(const cocos2d::Rect &rect, float level)
 {
-    if(level <= 0 || points.size()<4)
+    if(level <= 0 || _points.size()<4)
         return;
-    epsilon = level;
-    points = rdp(points);
-    auto last = points.back();
+    _epsilon = level;
+    _points = rdp(_points);
+    auto last = _points.back();
     
-    if(last.y > points.front().y)
-        points.front().y = last.y;
-    points.pop_back();
+    if(last.y > _points.front().y)
+        _points.front().y = last.y;
+    _points.pop_back();
     
-    //delete the last point, because its almost the same as the starting point
-//    CCLOG("%.1f, %.1f, %.1f, %.1f", points[0].x, points[0].y, points.back().x, points.back().y);
+    printPoints();
+    expand(rect, level);
+}
+
+void MarchingSquare::expand(const cocos2d::Rect &rect, float level)
+{
+    std::vector<cocos2d::Vec2> offsets;
+    size_t length = _points.size();
+    for (int i=0; i<length; i++) {
+        Vec2 v1;
+        Vec2 v2;
+        if (i == 0) {
+            v1 = _points[i]-_points[length-1];
+            v2 = _points[i]-_points[i+1];
+        }
+        else if(i == length-1){
+            v1 = _points[i]-_points[i-1];
+            v2 = _points[i]-_points[0];
+        }
+        else{
+            v1 = _points[i]-_points[i-1];
+            v2 = _points[i]-_points[i+1];
+        }
+        v1.normalize();
+        v2.normalize();
+        Vec2 v3 = isAConvexPoint(v1, -v2)? (v1 + v2) : (-v1-v2);
+        v3.normalize();
+        offsets.push_back(v3);
+     }
+    for (int i=0; i<length; i++) {
+        _points[i].x = _points[i].x + offsets[i].x * level*2;
+        _points[i].y = _points[i].y + offsets[i].y * level*2;
+        _points[i].clamp(rect.origin, rect.origin+rect.size);
+    }
+}
+
+bool MarchingSquare::isAConvexPoint(const cocos2d::Vec2& p1, const cocos2d::Vec2& p2)
+{
+    if(p1.cross(p2)>0)
+        return true;
+    else
+        return false;
 }

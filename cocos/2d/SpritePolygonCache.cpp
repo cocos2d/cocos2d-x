@@ -42,7 +42,7 @@ using namespace std;
 
 USING_NS_CC;
 
-SpritePolygonCache* SpritePolygonCache::_SpritePolygonCache = nullptr;
+SpritePolygonCache* SpritePolygonCache::s_spritePolygonCache = nullptr;
 
 SpritePolygonCache::SpritePolygonCache()
 {
@@ -55,30 +55,30 @@ SpritePolygonCache::~SpritePolygonCache()
 
 SpritePolygonCache* SpritePolygonCache::getInstance()
 {
-    if (NULL == _SpritePolygonCache)
+    if (nullptr == s_spritePolygonCache)
     {
-        _SpritePolygonCache = new (std::nothrow) SpritePolygonCache();
-        _SpritePolygonCache->init();
+        s_spritePolygonCache = new (std::nothrow) SpritePolygonCache();
+        s_spritePolygonCache->init();
     }
-    return _SpritePolygonCache;
+    return s_spritePolygonCache;
 }
 
 void SpritePolygonCache::destroyInstance()
 {
-    CC_SAFE_DELETE(_SpritePolygonCache);
+    CC_SAFE_DELETE(s_spritePolygonCache);
 }
 
 void SpritePolygonCache::init()
 {
-    
+    _spritePolygonCacheMap.reserve(20);
 }
 
 SpritePolygonInfo* SpritePolygonCache::addSpritePolygonCache(const std::string& filePath, const cocos2d::Rect& rect, const cocos2d::TrianglesCommand::Triangles trianglesCommand)
 {
-    auto fullpath = filePath;
+    auto fullpath = FileUtils::getInstance()->fullPathForFilename(filePath);;
     
-    auto it = _SpritePolygonCacheMap.find(fullpath);
-    if (_SpritePolygonCacheMap.end() != it)
+    auto it = _spritePolygonCacheMap.find(fullpath);
+    if (_spritePolygonCacheMap.end() != it)
     {
         VecSpritePolygonInfo vecInfo = it->second;
         
@@ -87,7 +87,6 @@ SpritePolygonInfo* SpritePolygonCache::addSpritePolygonCache(const std::string& 
         {
             if ((*infoIt)->_rect.equals(rect))
             {
-                //Update
                 CC_SAFE_DELETE((*infoIt)->_triangles.verts);
                 CC_SAFE_DELETE((*infoIt)->_triangles.indices);
                 (*infoIt)->_triangles.verts = new V3F_C4B_T2F[trianglesCommand.vertCount];
@@ -103,7 +102,7 @@ SpritePolygonInfo* SpritePolygonCache::addSpritePolygonCache(const std::string& 
     
     VecSpritePolygonInfo vecInfo;
     vecInfo.clear();
-    if (it != _SpritePolygonCacheMap.end())
+    if (it != _spritePolygonCacheMap.end())
     {
         vecInfo = it->second;
     }
@@ -111,28 +110,25 @@ SpritePolygonInfo* SpritePolygonCache::addSpritePolygonCache(const std::string& 
     if (nullptr != info)
     {
         info->_rect = rect;
-        
         info->_triangles.verts = new V3F_C4B_T2F[trianglesCommand.vertCount];
         info->_triangles.indices = new unsigned short[trianglesCommand.indexCount];
         info->_triangles.vertCount = trianglesCommand.vertCount;
         info->_triangles.indexCount = trianglesCommand.indexCount;
-        
-
         memcpy(info->_triangles.verts, trianglesCommand.verts, trianglesCommand.vertCount*sizeof(V3F_C4B_T2F));
         memcpy(info->_triangles.indices, trianglesCommand.indices, trianglesCommand.indexCount*sizeof(unsigned short));
         
         vecInfo.push_back(info);
-        _SpritePolygonCacheMap[filePath] = vecInfo;
+        _spritePolygonCacheMap[filePath] = vecInfo;
     }
     return info;
 }
 
 SpritePolygonInfo* SpritePolygonCache::getSpritePolygonCache(const std::string& filePath, const cocos2d::Rect& rect)
 {
-    auto fullpath = filePath;
-    
-    auto it = _SpritePolygonCacheMap.find(fullpath);
-    if (_SpritePolygonCacheMap.end() == it)
+    auto fullpath = FileUtils::getInstance()->fullPathForFilename(filePath);;
+        
+    auto it = _spritePolygonCacheMap.find(fullpath);
+    if (_spritePolygonCacheMap.end() == it)
         return nullptr;
     
     auto infoIter = it->second.begin();
@@ -145,14 +141,14 @@ SpritePolygonInfo* SpritePolygonCache::getSpritePolygonCache(const std::string& 
     return nullptr;
 }
 
-void   SpritePolygonCache::removeSpritePolygonCache(const std::string& filePath, const cocos2d::Rect* rect)
+void SpritePolygonCache::removeSpritePolygonCache(const std::string& filePath, const cocos2d::Rect* rect)
 {
     std::string fullpath = FileUtils::getInstance()->fullPathForFilename(filePath);
     if (fullpath.size() == 0)
         return;
     
-    auto it = _SpritePolygonCacheMap.find(fullpath);
-    if (_SpritePolygonCacheMap.end() == it)
+    auto it = _spritePolygonCacheMap.find(fullpath);
+    if (_spritePolygonCacheMap.end() == it)
         return;
     
     if (nullptr == rect)
@@ -174,7 +170,7 @@ void   SpritePolygonCache::removeSpritePolygonCache(const std::string& filePath,
 
 void SpritePolygonCache::removeAllSpritePolygonCache()
 {
-    for (std::unordered_map<std::string, VecSpritePolygonInfo>::iterator it = _SpritePolygonCacheMap.begin(); it != _SpritePolygonCacheMap.end(); ++it)
+    for (std::unordered_map<std::string, VecSpritePolygonInfo>::iterator it = _spritePolygonCacheMap.begin(); it != _spritePolygonCacheMap.end(); ++it)
     {
         for (auto infoIter = it->second.begin(); infoIter != it->second.end(); infoIter++)
         {
@@ -182,17 +178,17 @@ void SpritePolygonCache::removeAllSpritePolygonCache()
         }
         it->second.clear();
     }
-    _SpritePolygonCacheMap.clear();
+    _spritePolygonCacheMap.clear();
 }
 
-bool SpritePolygonCache::isSpritePolygonCachExist(const std::string& filePath, const cocos2d::Rect& rect)
+bool SpritePolygonCache::isSpritePolygonCacheExist(const std::string& filePath, const cocos2d::Rect& rect)
 {
     std::string fullpath = FileUtils::getInstance()->fullPathForFilename(filePath);
     if (fullpath.size() == 0)
         return false;
     
-    auto it = _SpritePolygonCacheMap.find(fullpath);
-    if (_SpritePolygonCacheMap.end() == it)
+    auto it = _spritePolygonCacheMap.find(fullpath);
+    if (_spritePolygonCacheMap.end() == it)
         return false;
     
     auto infoIter = it->second.begin();
