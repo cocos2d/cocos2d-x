@@ -186,22 +186,10 @@ class CocosLibsCompiler(object):
 
 			# get the build folder & win32 output folder
 			build_folder_path = os.path.join(os.path.dirname(proj_path), "Release.win32")
-			## if os.path.exists(build_folder_path):
-			##     shutil.rmtree(build_folder_path)
-			## os.makedirs(build_folder_path)
 
 			win32_output_dir = os.path.join(self.repo_x, output_dir)
 			if not os.path.exists(win32_output_dir):
 				os.makedirs(win32_output_dir)
-
-			# upgrade projects
-			## if needUpgrade:
-			##     commandUpgrade = ' '.join([
-			##         "\"%s\"" % vs_command,
-			##         "\"%s\"" % proj_path,
-			##         "/Upgrade"
-			##     ])
-			##     execute_command(commandUpgrade)
 
 			# clean solution
 			clean_cmd = " ".join([
@@ -210,28 +198,6 @@ class CocosLibsCompiler(object):
 				"/clean \"Release|Win32\""
 			])
 			execute_command(clean_cmd)
-
-			# rename the output file of libcocos2d
-			# if needUpgrade:
-			# 	suffix = "_2013"
-			# else:
-			# 	suffix = "_2012"
-			suffix = ""
-
-			# reset_file = None
-			# if key.find("cocos2d-win32") >= 0:
-			# 	engine_root = os.path.join(os.path.dirname(proj_path), os.path.pardir)
-			# 	cocos2d_proj_path = os.path.join(engine_root, "cocos", "2d", "libcocos2d.vcxproj")
-			# 	f = open(cocos2d_proj_path)
-			# 	file_content = f.read()
-			# 	f.close()
-
-			# 	file_content = file_content.replace("$(OutDir)$(ProjectName).dll", "$(OutDir)$(ProjectName)%s.dll" % suffix)
-
-			# 	f = open(cocos2d_proj_path, "w")
-			# 	f.write(file_content)
-			# 	f.close()
-			# 	reset_file = cocos2d_proj_path
 
 			if self.use_incredibuild:
 				# use incredibuild, build whole sln
@@ -255,18 +221,6 @@ class CocosLibsCompiler(object):
 					if not os.path.exists(lib_file_path):
 						raise Exception("Library %s not generated as expected!" % lib_file_path)
 
-			# if reset_file is not None:
-			# 	f = open(reset_file)
-			# 	file_content = f.read()
-			# 	f.close()
-
-			# 	file_content = file_content.replace("$(OutDir)$(ProjectName)%s.dll" % suffix, "$(OutDir)$(ProjectName).dll")
-
-			# 	f = open(reset_file, "w")
-			# 	f.write(file_content)
-			# 	f.close()
-
-
 			# copy the libs into prebuilt dir
 			for file_name in os.listdir(build_folder_path):
 				name, ext = os.path.splitext(file_name)
@@ -276,12 +230,7 @@ class CocosLibsCompiler(object):
 				file_path = os.path.join(build_folder_path, file_name)
 				shutil.copy(file_path, win32_output_dir)
 
-			# rename the build folder
-			# new_name = os.path.join(os.path.dirname(proj_path), "Release.win32%s" % suffix)
-			# if os.path.exists(new_name):
-			# 	shutil.rmtree(new_name)
-			# os.rename(build_folder_path, new_name)
-
+			suffix = ""
 			for proj_name in win32_proj_info[key]["rename_targets"]:
 				src_name = os.path.join(win32_output_dir, "%s.lib" % proj_name)
 				dst_name = os.path.join(win32_output_dir, "%s%s.lib" % (proj_name, suffix))
