@@ -21,9 +21,9 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+#include "navmesh/CCNavMeshTool.h"
 #if CC_USE_NAVMESH
 
-#include "navmesh/CCNavMeshTool.h"
 #include "recast/Detour/DetourCommon.h"
 #include "recast/fastlz/fastlz.h"
 
@@ -94,6 +94,11 @@ dtStatus cocos2d::FastLZCompressor::compress(const unsigned char* buffer, const 
 MeshProcess::MeshProcess()
 //	: m_geom(0)
 {
+}
+
+MeshProcess::~MeshProcess()
+{
+
 }
 
 void MeshProcess::process(struct dtNavMeshCreateParams* params
