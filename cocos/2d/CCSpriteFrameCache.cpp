@@ -39,7 +39,7 @@ THE SOFTWARE.
 #include "base/CCDirector.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCTextureCache.h"
-
+#include "base/CCNinePatchImageParser.h"
 
 #include "deprecated/CCString.h"
 
@@ -104,6 +104,8 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
     // check the format
     CCASSERT(format >=0 && format <= 3, "format is not supported for SpriteFrameCache addSpriteFramesWithDictionary:textureFilename:");
 
+    auto image = texture->getImage();
+    NinePatchImageParser parser(image);
     for (auto iter = framesDict.begin(); iter != framesDict.end(); ++iter)
     {
         ValueMap& frameDict = iter->second.asValueMap();
@@ -183,7 +185,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
 
                 _spriteFramesAliases[oneAlias] = Value(spriteFrameName);
             }
-            
+
             // create frame
             spriteFrame = SpriteFrame::createWithTexture(texture,
                                                          Rect(textureRect.origin.x, textureRect.origin.y, spriteSize.width, spriteSize.height),
@@ -192,6 +194,19 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
                                                          spriteSourceSize);
         }
 
+        bool flag = NinePatchImageParser::isNinePatchImage(spriteFrameName);
+        if(flag)
+        {
+            parser.setSpriteFrameInfo(spriteFrame->getRectInPixels(), spriteFrame->isRotated());
+            auto patchInfoMap = texture->getNinePatchInfo();
+            if(nullptr == patchInfoMap)
+            {
+                patchInfoMap = new NinePatchInfo;
+                patchInfoMap->isSpriteAtlas = true;
+            }
+            patchInfoMap->capInsetMap[spriteFrame] = parser.parseCapInset();
+            texture->setNinePatchInfo(patchInfoMap);
+        }
         // add sprite frame
         _spriteFrames.insert(spriteFrameName, spriteFrame);
     }
@@ -327,13 +342,14 @@ void SpriteFrameCache::removeUnusedSpriteFrames()
         if( spriteFrame->getReferenceCount() == 1 )
         {
             toRemoveFrames.push_back(iter->first);
+            spriteFrame->getTexture()->removeUnusedSpriteFrame(spriteFrame);
             CCLOG("cocos2d: SpriteFrameCache: removing unused frame: %s", iter->first.c_str());
             removed = true;
         }
     }
 
     _spriteFrames.erase(toRemoveFrames);
-    
+
     // FIXME:. Since we don't know the .plist file that originated the frame, we must remove all .plist from the cache
     if( removed )
     {

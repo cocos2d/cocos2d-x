@@ -45,7 +45,7 @@ THE SOFTWARE.
 #include "renderer/CCGLProgram.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCGLProgramCache.h"
-
+#include "base/CCNinePatchImageParser.h"
 #include "deprecated/CCString.h"
 
 
@@ -435,6 +435,7 @@ Texture2D::Texture2D()
 , _hasMipmaps(false)
 , _shaderProgram(nullptr)
 , _antialiasEnabled(true)
+, _ninePatchInfo(nullptr)
 {
 }
 
@@ -446,6 +447,8 @@ Texture2D::~Texture2D()
 
     CCLOGINFO("deallocing Texture2D: %p - id=%u", this, _name);
     CC_SAFE_RELEASE(_shaderProgram);
+
+    CC_SAFE_DELETE(_ninePatchInfo);
 
     if(_name)
     {
@@ -1251,6 +1254,25 @@ void Texture2D::setTexParameters(const TexParams &texParams)
 #endif
 }
 
+void Texture2D::setTextureFileName(const std::string& textureFileName)
+{
+  this->_textureFileName = textureFileName;
+}
+
+
+const std::string& Texture2D::getTextureFileName()const
+{
+  return this->_textureFileName;
+}
+
+Image* Texture2D::getImage()const
+{
+  auto image = new Image();
+  image->initWithImageFile(this->_textureFileName);
+  image->autorelease();
+  return image;
+}
+
 void Texture2D::setAliasTexParameters()
 {
     if (! _antialiasEnabled)
@@ -1393,5 +1415,26 @@ const Texture2D::PixelFormatInfoMap& Texture2D::getPixelFormatInfoMap()
     return _pixelFormatInfoTables;
 }
 
+NinePatchInfo* Texture2D::getNinePatchInfo()const
+{
+    return this->_ninePatchInfo;
+}
+
+void Texture2D::setNinePatchInfo(NinePatchInfo* info)
+{
+    this->_ninePatchInfo = info;
+}
+
+void Texture2D::removeUnusedSpriteFrame(SpriteFrame* spriteFrame)
+{
+    if(nullptr != this->_ninePatchInfo)
+    {
+        auto capInsetMap = this->_ninePatchInfo->capInsetMap;
+        if(capInsetMap.find(spriteFrame) != capInsetMap.end())
+        {
+            capInsetMap.erase(spriteFrame);
+        }
+    }
+}
 
 NS_CC_END

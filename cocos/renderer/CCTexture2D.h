@@ -40,6 +40,8 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 class Image;
+class NinePatchInfo;
+class SpriteFrame;
 typedef struct _MipmapInfo MipmapInfo;
 
 /**
@@ -309,6 +311,27 @@ public:
     * @endcode
     */
     void setTexParameters(const TexParams& texParams);
+
+    /**
+     * Assign the texture file name to Texture2D instance.
+     *
+     * @param textureFileName The texture file name.
+     */
+    void setTextureFileName(const std::string& textureFileName);
+    /**
+     * Query the texture file name associated with the Texture2D object.
+     *
+     * @return The texture file name in string.
+     */
+    const std::string& getTextureFileName()const;
+
+    /**
+     * Query the image data of texture.
+     * The return object is a autorelease object.
+     *
+     * @return The `Image` data.
+     */
+    Image* getImage()const;
     /**
      * @js NA
      * @lua NA
@@ -402,6 +425,27 @@ public:
 
     /** Get a shader program from the texture.*/
     GLProgram* getGLProgram() const;
+
+    /**
+     * Return the nine patched info.
+     *
+     * @return A NinePatchInfo info pointer.
+     */
+    NinePatchInfo* getNinePatchInfo()const;
+
+    /**
+    * Modify the NinePatchInfo pointer.
+    *
+    * @param infoMap The NinePatchInfo pointer.
+    */
+    void setNinePatchInfo(NinePatchInfo* infoMap);
+
+    /**
+    * Remove the spriteFrame capInset info when the spriteFrame is removed.
+    *
+    * @param spriteFrame A SpriteFrame object pointer.
+    */
+    void removeUnusedSpriteFrame(SpriteFrame* spriteFrame);
     
 public:
     /** Get pixel info map, the key-value pairs is PixelFormat and PixelFormatInfo.*/
@@ -490,6 +534,8 @@ protected:
     static const PixelFormatInfoMap _pixelFormatInfoTables;
 
     bool _antialiasEnabled;
+    std::string _textureFileName;
+    NinePatchInfo* _ninePatchInfo;
 };
 
 
