@@ -54,12 +54,6 @@ class CC_DLL NavMesh : public Ref
 {
 public:
 
-    struct hitInfo
-    {
-        Vec3 position;
-        Vec3 normal;
-    };
-
     static NavMesh* create(const std::string &filePath);
 
     void update(float dt);
