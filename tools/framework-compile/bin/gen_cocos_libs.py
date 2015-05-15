@@ -19,7 +19,10 @@ def is_32bit_windows():
 def os_is_mac():
 	return sys.platform == 'darwin'
 
-def execute_command(cmdstring, cwd=None, timeout=None, shell=False):
+def convert_to_python_path(path):
+	return path.replace("\\","/")
+
+def execute_command(cmdstring, cwd=None, timeout=None, shell=True):
 	""" 执行一个SHELL命令
 		封装了subprocess的Popen方法, 支持超时判断，支持读取stdout和stderr
 		参数:
@@ -34,6 +37,14 @@ def execute_command(cmdstring, cwd=None, timeout=None, shell=False):
 	import datetime
 	import subprocess
 	import time
+
+	if os_is_win32():
+		cmdstring = convert_to_python_path(cmdstring)
+
+	print("")
+	print("Execute command:")
+	print(cmdstring)
+	print("")
 
 	if shell:
 		cmdstring_list = cmdstring
@@ -77,6 +88,8 @@ class CocosLibsCompiler(object):
 		self.build_android = args.android
 		self.disable_strip = args.disable_strip
 		self.repo_x = args.repo_x
+		self.vs_version = args.vs_version
+		self.use_incredibuild = False
 		if args.all:
 			self.build_win = True
 			self.build_mac = True
@@ -95,14 +108,189 @@ class CocosLibsCompiler(object):
 		if self.build_mac:
 			self.compile_mac_ios()
 		if self.build_android:
-			#self.compile_android("lua")
+			self.compile_android("lua")
 			self.compile_android("js")
+
+
+	def build_win32_proj(self, cmd_path, sln_path, proj_name, mode):
+		build_cmd = " ".join([
+			"\"%s\"" % cmd_path,
+			"\"%s\"" % sln_path,
+			"/%s \"Release|Win32\"" % mode,
+			"/Project \"%s\"" % proj_name
+		])
+		execute_command(build_cmd)
 
 	def compile_win(self):
 		if not os_is_win32():
 			print "this is not win platform, needn't compile"
 			return
-		print "compile win"
+
+		win32_proj_info = {
+			"build/cocos2d-win32.vc2013.sln" : {
+				"outputdir" : self.lib_dir,
+				"build_targets" : [
+					"libluacocos2d"
+				],
+				"rename_targets" : [
+					# "libcocos2d", "libluacocos2d", "libSpine", "libbox2d"
+				]
+			},
+			"build/cocos2d-js-win32.vc2013.sln" : {
+				"outputdir" : self.lib_dir,
+				"build_targets" : [
+					"libjscocos2d"
+				],
+				"rename_targets" : [
+					# "libjscocos2d"
+				]
+			},
+			"tools/simulator/frameworks/runtime-src/proj.win32/simulator.sln" : {
+				"outputdir" : self.lib_dir,
+				"build_targets" : [
+					"libsimulator"
+				],
+				"rename_targets" : [
+					# "libsimulator"
+				]
+			}
+		}
+
+		import _winreg
+		from utils_win32 import get_vs_cmd_path
+		# find the VS in register
+		try:
+			if is_32bit_windows():
+				reg_flag = _winreg.KEY_WOW64_32KEY
+			else:
+				# reg_flag = _winreg.KEY_WOW64_64KEY
+				reg_flag = _winreg.KEY_WOW64_32KEY   # _winreg.KEY_WOW64_64KEY
+
+			vs_reg = _winreg.OpenKey(
+				_winreg.HKEY_LOCAL_MACHINE,
+				r"SOFTWARE\Microsoft\VisualStudio",
+				0,
+				_winreg.KEY_READ | reg_flag
+			)
+
+		except WindowsError:
+			message = "Visual Studio wasn't installed"
+			raise Exception(message)
+
+		for key in win32_proj_info.keys():
+			output_dir = os.path.join(win32_proj_info[key]["outputdir"], "windows")
+
+			proj_path = os.path.join(self.repo_x, key)
+
+			vs_command, needUpgrade = get_vs_cmd_path(vs_reg, proj_path, self.vs_version)
+
+			# get the build folder & win32 output folder
+			build_folder_path = os.path.join(os.path.dirname(proj_path), "Release.win32")
+			## if os.path.exists(build_folder_path):
+			##     shutil.rmtree(build_folder_path)
+			## os.makedirs(build_folder_path)
+
+			win32_output_dir = os.path.join(self.repo_x, output_dir)
+			if not os.path.exists(win32_output_dir):
+				os.makedirs(win32_output_dir)
+
+			# upgrade projects
+			## if needUpgrade:
+			##     commandUpgrade = ' '.join([
+			##         "\"%s\"" % vs_command,
+			##         "\"%s\"" % proj_path,
+			##         "/Upgrade"
+			##     ])
+			##     execute_command(commandUpgrade)
+
+			# clean solution
+			clean_cmd = " ".join([
+				"\"%s\"" % vs_command,
+				"\"%s\"" % proj_path,
+				"/clean \"Release|Win32\""
+			])
+			execute_command(clean_cmd)
+
+			# rename the output file of libcocos2d
+			# if needUpgrade:
+			# 	suffix = "_2013"
+			# else:
+			# 	suffix = "_2012"
+			suffix = ""
+
+			# reset_file = None
+			# if key.find("cocos2d-win32") >= 0:
+			# 	engine_root = os.path.join(os.path.dirname(proj_path), os.path.pardir)
+			# 	cocos2d_proj_path = os.path.join(engine_root, "cocos", "2d", "libcocos2d.vcxproj")
+			# 	f = open(cocos2d_proj_path)
+			# 	file_content = f.read()
+			# 	f.close()
+
+			# 	file_content = file_content.replace("$(OutDir)$(ProjectName).dll", "$(OutDir)$(ProjectName)%s.dll" % suffix)
+
+			# 	f = open(cocos2d_proj_path, "w")
+			# 	f.write(file_content)
+			# 	f.close()
+			# 	reset_file = cocos2d_proj_path
+
+			if self.use_incredibuild:
+				# use incredibuild, build whole sln
+				build_cmd = " ".join([
+					"BuildConsole",
+					"%s" % proj_path,
+					"/build",
+					"/cfg=\"Release|Win32\""
+				])
+				execute_command(build_cmd)
+			else:
+				for proj_name in win32_proj_info[key]["build_targets"]:
+					# build the projects
+					self.build_win32_proj(vs_command, proj_path, proj_name, "build")
+
+					lib_file_path = os.path.join(build_folder_path, "%s.lib" % proj_name)
+					if not os.path.exists(lib_file_path):
+						# if the lib is not generated, rebuild the project
+						self.build_win32_proj(vs_command, proj_path, proj_name, "rebuild")
+
+					if not os.path.exists(lib_file_path):
+						raise Exception("Library %s not generated as expected!" % lib_file_path)
+
+			# if reset_file is not None:
+			# 	f = open(reset_file)
+			# 	file_content = f.read()
+			# 	f.close()
+
+			# 	file_content = file_content.replace("$(OutDir)$(ProjectName)%s.dll" % suffix, "$(OutDir)$(ProjectName).dll")
+
+			# 	f = open(reset_file, "w")
+			# 	f.write(file_content)
+			# 	f.close()
+
+
+			# copy the libs into prebuilt dir
+			for file_name in os.listdir(build_folder_path):
+				name, ext = os.path.splitext(file_name)
+				if ext != ".lib" and ext != ".dll":
+					continue
+
+				file_path = os.path.join(build_folder_path, file_name)
+				shutil.copy(file_path, win32_output_dir)
+
+			# rename the build folder
+			# new_name = os.path.join(os.path.dirname(proj_path), "Release.win32%s" % suffix)
+			# if os.path.exists(new_name):
+			# 	shutil.rmtree(new_name)
+			# os.rename(build_folder_path, new_name)
+
+			for proj_name in win32_proj_info[key]["rename_targets"]:
+				src_name = os.path.join(win32_output_dir, "%s.lib" % proj_name)
+				dst_name = os.path.join(win32_output_dir, "%s%s.lib" % (proj_name, suffix))
+				if os.path.exists(src_name):
+					if os.path.exists(dst_name):
+						os.remove(dst_name)
+					os.rename(src_name, dst_name)
+
+		print("Win32 build succeeded.")
 
 	def compile_mac_ios(self):
 		if not os_is_mac():
@@ -191,7 +379,11 @@ class CocosLibsCompiler(object):
 		android_out_dir = os.path.join(self.lib_dir, "android")
 		engine_dir = self.repo_x
 		console_dir = os.path.join(engine_dir, CONSOLE_PATH)
-		cmd_path = os.path.join(console_dir, "cocos")
+		if os_is_win32():
+			cmd_path = os.path.join(console_dir, "cocos.bat")
+		else:
+			cmd_path = os.path.join(console_dir, "cocos")
+
 		proj_name = "My%sGame" % language
 		proj_dir = os.path.join(self.cur_dir, "temp")
 		proj_path = os.path.join(proj_dir, proj_name)
@@ -232,17 +424,29 @@ class CocosLibsCompiler(object):
 			elif os_is_mac():
 				sys_folder_name = "darwin-x86_64"
 
+			# set strip execute file name
+			if os_is_win32():
+				strip_execute_name = "strip.exe"
+			else:
+				strip_execute_name = "strip"
+
 			# strip arm libs
-			strip_cmd_path = os.path.join(ndk_root, "toolchains/arm-linux-androideabi-4.8/prebuilt/%s/arm-linux-androideabi/bin/strip" % sys_folder_name)
+			strip_cmd_path = os.path.join(ndk_root, "toolchains/arm-linux-androideabi-4.8/prebuilt/%s/arm-linux-androideabi/bin/%s"
+				% (sys_folder_name, strip_execute_name))
+			if not os.path.exists(strip_cmd_path):
+				strip_cmd_path = os.path.join(ndk_root, "toolchains/arm-linux-androideabi-4.8/prebuilt/%s/arm-linux-androideabi/bin/%s"
+					% (sys_folder_name.replace(bit_str, ""), strip_execute_name))
 			if os.path.exists(strip_cmd_path):
-				strip_cmd = "%s -S %s/armeabi*/*.a" % (strip_cmd_path, android_out_dir)
-				execute_command(strip_cmd, shell = True)
+				armlibs = ["armeabi", "armeabi-v7a"]
+				for fold in armlibs:
+					strip_cmd = "%s -S %s/%s/*.a" % (strip_cmd_path, android_out_dir, fold)
+					execute_command(strip_cmd)
 
 			# strip x86 libs
-			strip_cmd_path = os.path.join(ndk_root, "toolchains/x86-4.8/prebuilt/%s/i686-linux-android/bin/strip" % sys_folder_name)
+			strip_cmd_path = os.path.join(ndk_root, "toolchains/x86-4.8/prebuilt/%s/i686-linux-android/bin/%s" % (sys_folder_name, strip_execute_name))
 			if os.path.exists(strip_cmd_path) and os.path.exists(os.path.join(android_out_dir, "x86")):
 				strip_cmd = "%s -S %s/x86/*.a" % (strip_cmd_path, android_out_dir)
-				execute_command(strip_cmd, shell = True)
+				execute_command(strip_cmd)
 
 		# remove the project
 		self.rmdir(proj_path)
@@ -293,6 +497,7 @@ if __name__ == "__main__":
 	parser.add_argument('--android', dest='android', action="store_true",help='complile android platform')
 	parser.add_argument('--dis-strip', "--disable-strip", dest='disable_strip', action="store_true", help='Disable the strip of the generated libs.')
 	parser.add_argument('--repo-x',  dest='repo_x', help='Set the repo path of cocos2d-x.')
+	parser.add_argument('--vs', dest='vs_version', help='visual studio version, such as 2013.', default=2013)
 
 	(args, unknown) = parser.parse_known_args()
 
