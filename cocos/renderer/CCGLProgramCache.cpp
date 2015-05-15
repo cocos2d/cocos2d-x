@@ -63,9 +63,6 @@ enum {
     kShaderType_3DSkyBox,
     kShaderType_3DTerrain,
     kShaderType_CameraClear,
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || defined(WP8_SHADER_COMPILER)
-    kShaderType_PositionColor_noMVP_GrayScale,
-#endif
     kShaderType_MAX,
 };
 
@@ -498,11 +495,6 @@ void GLProgramCache::loadDefaultGLProgram(GLProgram *p, int type)
         case kShaderType_CameraClear:
             p->initWithByteArrays(ccCameraClearVert, ccCameraClearFrag);
             break;
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || defined(WP8_SHADER_COMPILER)
-        case kShaderType_PositionColor_noMVP_GrayScale:
-            p->initWithByteArrays(ccPositionTextureColor_noMVP_vert, ccUIGrayScale_frag);
-            break;
-#endif
         default:
             CCLOG("cocos2d: %s:%d, error shader type", __FUNCTION__, __LINE__);
             return;
