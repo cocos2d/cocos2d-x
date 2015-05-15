@@ -24,6 +24,9 @@
  ****************************************************************************/
 
 #include "MaterialSystemTest.h"
+
+#include <ctime>
+
 #include "../testResource.h"
 #include "cocos2d.h"
 
@@ -42,6 +45,7 @@ MaterialSystemTest::MaterialSystemTest()
     ADD_TEST_CASE(Material_clone);
     ADD_TEST_CASE(Material_MultipleSprite3D);
     ADD_TEST_CASE(Material_Sprite3DTest);
+    ADD_TEST_CASE(Material_parsePerformance);
 }
 
 std::string MaterialSystemBaseTest::title() const
@@ -107,7 +111,7 @@ void Material_2DEffects::onEnter()
 {
     MaterialSystemBaseTest::onEnter();
 
-    auto properties = Properties::create("Materials/2d_effects.material#sample");
+    auto properties = Properties::createWithoutAutorelease("Materials/2d_effects.material#sample");
 
     // Print the properties of every namespace within this one.
     printProperties(properties, 0);
@@ -133,6 +137,9 @@ void Material_2DEffects::onEnter()
     spriteEdgeDetect->setNormalizedPosition(Vec2(0.8, 0.5));
     this->addChild(spriteEdgeDetect);
     spriteEdgeDetect->setGLProgramState(mat1->getTechniqueByName("edge_detect")->getPassByIndex(0)->getGLProgramState());
+
+    // properties is not a "Ref" object
+    CC_SAFE_DELETE(properties);
 }
 
 std::string Material_2DEffects::subtitle() const
@@ -250,6 +257,32 @@ std::string Material_clone::subtitle() const
     return "Testing material->clone()";
 }
 
+//
+//
+//
+void Material_parsePerformance::onEnter()
+{
+    MaterialSystemBaseTest::onEnter();
+
+    std::clock_t begin = std::clock();
+
+    for(int i=0;i<5000;i++)
+    {
+        Material::createWithFilename("Materials/2d_effects.material");
+        Material::createWithFilename("Materials/3d_effects.material");
+    }
+
+    std::clock_t end = std::clock();
+    double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+
+    log("Parsing took: %f", elapsed_secs);
+}
+
+std::string Material_parsePerformance::subtitle() const
+{
+    return "Testing parsing performance";
+}
+
 // MARK: Helper functions
 
 static void printProperties(Properties* properties, int indent)
@@ -263,7 +296,7 @@ static void printProperties(Properties* properties, int indent)
         chindent[i] = ' ';
     chindent[i] = '\0';
 
-    CCLOG("%sNamespace: %s  ID: %s\n%s{", chindent, spacename, id, chindent);
+    log("%sNamespace: %s  ID: %s\n%s{", chindent, spacename, id, chindent);
 
     // Print all properties in this namespace.
     const char* name = properties->getNextProperty();
@@ -271,7 +304,7 @@ static void printProperties(Properties* properties, int indent)
     while (name != NULL)
     {
         value = properties->getString(name);
-        CCLOG("%s%s = %s", chindent, name, value);
+        log("%s%s = %s", chindent, name, value);
         name = properties->getNextProperty();
     }
 
@@ -282,5 +315,5 @@ static void printProperties(Properties* properties, int indent)
         space = properties->getNextNamespace();
     }
 
-    CCLOG("%s}\n",chindent);
+    log("%s}\n",chindent);
 }

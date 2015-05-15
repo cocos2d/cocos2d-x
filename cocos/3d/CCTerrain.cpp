@@ -262,9 +262,9 @@ bool Terrain::initHeightMap(const char * heightMap)
 Terrain::Terrain()
 {
     _alphaMap = nullptr;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     _customCommand.setTransparent(false);
     _customCommand.set3D(true);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     auto _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
         [this](EventCustom*)
     {

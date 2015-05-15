@@ -1,0 +1,12 @@
+{
+    "init_cfg":{
+       "isLandscape": true,
+       "isWindowTop": false,
+       "name": "simulator",
+       "width": 960,
+       "height": 640,
+       "entry": "",
+       "consolePort": 6050,
+       "uploadPort": 6060
+    }
+}

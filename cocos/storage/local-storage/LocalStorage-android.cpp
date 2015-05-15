@@ -147,4 +147,16 @@ void localStorageRemoveItem( const std::string& key )
 
 }
 
+/** removes all items from the LS */
+void localStorageClear()
+{
+    assert( _initialized );
+    JniMethodInfo t;
+
+    if (JniHelper::getStaticMethodInfo(t, "org/cocos2dx/lib/Cocos2dxLocalStorage", "clear", "()V")) {
+        t.env->CallStaticVoidMethod(t.classID, t.methodID);
+        t.env->DeleteLocalRef(t.classID);
+    }
+}
+
 #endif // #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)

@@ -26,7 +26,7 @@
 #include <string>
 #include <functional>
 #include <cstdint>
-#include <list>
+#include <vector>
 
 #include "renderer/CCTexture2D.h"
 #include "platform/CCPlatformMacros.h"
@@ -105,7 +105,7 @@ class Data;
  
  @verbatim
     // Create the top-level Properties object.
-    Properties* properties = Properties::create("example.properties");
+    Properties* properties = Properties::createWithoutAutorelease("example.properties");
     // Retrieve the "spriteTexture" namespace.
     Properties* spriteTexture = properties->getNamespace("spriteTexture");
  
@@ -187,7 +187,7 @@ public:
      * @return The created Properties or NULL if there was an error.
      * @script{create}
      */
-    static Properties* create(const std::string& url);
+    static Properties* createWithoutAutorelease(const std::string& url);
 
     /**
      * Destructor.
@@ -579,7 +579,7 @@ private:
     bool seekFromCurrent(int offset);
     bool eof();
 
-    // Called after create(); copies info from parents into derived namespaces.
+    // Called after createWithoutAutorelease(); copies info from parents into derived namespaces.
     void resolveInheritance(const char* id = NULL);
 
     // Called by resolveInheritance().
@@ -602,8 +602,8 @@ private:
     std::string _namespace;
     std::string _id;
     std::string _parentID;
-    std::list<Property> _properties;
-    std::list<Property>::iterator _propertiesItr;
+    std::vector<Property> _properties;
+    std::vector<Property>::iterator _propertiesItr;
     std::vector<Properties*> _namespaces;
     std::vector<Properties*>::const_iterator _namespacesItr;
     std::vector<Property>* _variables;
