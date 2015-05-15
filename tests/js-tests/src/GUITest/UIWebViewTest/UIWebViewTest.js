@@ -3,7 +3,7 @@ var UIWebViewTest = UIScene.extend({
     onEnter: function(){
         UIScene.prototype.onEnter.call(this);
 
-        var webView = new ccui.WebView("src/GUITest/UIWebViewTest/weview.html");
+        var webView = new ccui.WebView("src/GUITest/UIWebViewTest/webview.html");
         webView.setContentSize(320, 240);
         webView.setPosition(800/2, 450/2);
         webView.setScale(0.5);
@@ -18,7 +18,7 @@ var UIWebViewTest = UIScene.extend({
         var list = [
             { name: "loadURL", func: function(){
                 cc.log("loadURL!");
-                webView.loadURL("src/GUITest/UIWebViewTest/weview2.html");
+                webView.loadURL("src/GUITest/UIWebViewTest/webview2.html");
             }},
             { name: "reload", func: function(){
                 cc.log("reload!");
