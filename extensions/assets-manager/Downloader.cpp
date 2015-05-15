@@ -273,7 +273,7 @@ void Downloader::prepareDownload(const std::string &srcUrl, const std::string &s
     }
 }
 
-#if(CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 Downloader::HeaderInfo Downloader::prepare(const std::string &srcUrl)
 {
     return prepareHeader(srcUrl);
@@ -335,7 +335,7 @@ long Downloader::getContentSize(const std::string &srcUrl)
 void Downloader::getHeaderAsync(const std::string &srcUrl, const HeaderCallback &callback)
 {
     setHeaderCallback(callback);
-#if(CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     auto t = std::thread(&Downloader::prepare, this, srcUrl);
 #else
     auto t = std::thread(&Downloader::prepareHeader, this, srcUrl, nullptr);
@@ -701,7 +701,6 @@ void Downloader::groupBatchDownload(const DownloadUnits &units)
     }
     
     // Clean up and close files
-    curl_multi_cleanup(multi_handle);
     for (auto it = _files.begin(); it != _files.end(); ++it)
     {
         FILE *f = (*it)->fp;
@@ -710,6 +709,7 @@ void Downloader::groupBatchDownload(const DownloadUnits &units)
         curl_multi_remove_handle(multi_handle, single);
         curl_easy_cleanup(single);
     }
+    curl_multi_cleanup(multi_handle);
     
     // Check unfinished files and notify errors, succeed files will be renamed from temporary file name to real name
     for (auto it = _progDatas.begin(); it != _progDatas.end(); ++it) {

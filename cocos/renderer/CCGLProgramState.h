@@ -77,13 +77,13 @@ public:
      */
     void setFloat(float value);
     void setInt(int value);
-    void setFloatv(const float* pointer, ssize_t size);
+    void setFloatv(ssize_t size, const float* pointer);
     void setVec2(const Vec2& value);
-    void setVec2v(const Vec2* pointer, ssize_t size);
+    void setVec2v(ssize_t size, const Vec2* pointer);
     void setVec3(const Vec3& value);
-    void setVec3v(const Vec3* pointer, ssize_t size);
+    void setVec3v(ssize_t size, const Vec3* pointer);
     void setVec4(const Vec4& value);
-    void setVec4v(const Vec4* pointer, ssize_t size);
+    void setVec4v(ssize_t size, const Vec4* pointer);
     void setMat4(const Mat4& value);
     /**
      @}
@@ -173,6 +173,7 @@ class CC_DLL VertexAttribValue
 {
     friend class GLProgram;
     friend class GLProgramState;
+    friend class VertexAttribBinding;
 
 public:
     /**
@@ -233,7 +234,7 @@ protected:
  A GLProgram can be used by thousands of Nodes, but if different uniform values 
  are going to be used, then each node will need its own GLProgramState
  */
-class CC_DLL GLProgramState : public Ref, public Clonable
+class CC_DLL GLProgramState : public Ref
 {
     friend class GLProgramStateCache;
 public:
@@ -300,13 +301,13 @@ public:
      */
     void setUniformInt(const std::string &uniformName, int value);
     void setUniformFloat(const std::string &uniformName, float value);
-    void setUniformFloatv(const std::string &uniformName, const float* pointer, ssize_t size);
+    void setUniformFloatv(const std::string &uniformName, ssize_t size, const float* pointer);
     void setUniformVec2(const std::string &uniformName, const Vec2& value);
-    void setUniformVec2v(const std::string &uniformName, const Vec2* pointer, ssize_t size);
+    void setUniformVec2v(const std::string &uniformName, ssize_t size, const Vec2* pointer);
     void setUniformVec3(const std::string &uniformName, const Vec3& value);
-    void setUniformVec3v(const std::string &uniformName, const Vec3* pointer, ssize_t size);
+    void setUniformVec3v(const std::string &uniformName, ssize_t size, const Vec3* pointer);
     void setUniformVec4(const std::string &uniformName, const Vec4& value);
-    void setUniformVec4v(const std::string &uniformName, const Vec4* pointer, ssize_t size);
+    void setUniformVec4v(const std::string &uniformName, ssize_t size, const Vec4* pointer);
     void setUniformMat4(const std::string &uniformName, const Mat4& value);
     void setUniformCallback(const std::string &uniformName, const std::function<void(GLProgram*, Uniform*)> &callback);
     void setUniformTexture(const std::string &uniformName, Texture2D *texture);
@@ -318,13 +319,13 @@ public:
      */
     void setUniformInt(GLint uniformLocation, int value);
     void setUniformFloat(GLint uniformLocation, float value);
-    void setUniformFloatv(GLint uniformLocation, const float* pointer, ssize_t size);
+    void setUniformFloatv(GLint uniformLocation, ssize_t size, const float* pointer);
     void setUniformVec2(GLint uniformLocation, const Vec2& value);
-    void setUniformVec2v(GLint uniformLocation, const Vec2* pointer, ssize_t size);
+    void setUniformVec2v(GLint uniformLocation, ssize_t size, const Vec2* pointer);
     void setUniformVec3(GLint uniformLocation, const Vec3& value);
-    void setUniformVec3v(GLint uniformLocation, const Vec3* pointer, ssize_t size);
+    void setUniformVec3v(GLint uniformLocation, ssize_t size, const Vec3* pointer);
     void setUniformVec4(GLint uniformLocation, const Vec4& value);
-    void setUniformVec4v(GLint uniformLocation, const Vec4* pointer, ssize_t size);
+    void setUniformVec4v(GLint uniformLocation, ssize_t size, const Vec4* pointer);
     void setUniformMat4(GLint uniformLocation, const Mat4& value);
     void setUniformCallback(GLint uniformLocation, const std::function<void(GLProgram*, Uniform*)> &callback);
     void setUniformTexture(GLint uniformLocation, Texture2D *texture);
@@ -351,7 +352,7 @@ protected:
     uint32_t _vertexAttribsFlags;
     GLProgram *_glprogram;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     EventListenerCustom* _backToForegroundlistener;
 #endif
 };

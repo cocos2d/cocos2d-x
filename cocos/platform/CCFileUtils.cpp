@@ -41,7 +41,7 @@ THE SOFTWARE.
 #endif
 #include <sys/stat.h>
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #include <regex>
 #endif
 
@@ -49,7 +49,7 @@ THE SOFTWARE.
 #include <ftw.h>
 #endif
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #include <sys/types.h>
 #include <errno.h>
 #include <dirent.h>
@@ -561,12 +561,13 @@ static Data getData(const std::string& filename, bool forString)
         mode = "rt";
     else
         mode = "rb";
-    
+
+    auto fileutils = FileUtils::getInstance();
     do
     {
         // Read the file from hardware
-        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
-        FILE *fp = fopen(FileUtils::getInstance()->getSuitableFOpen(fullPath).c_str(), mode);
+        std::string fullPath = fileutils->fullPathForFilename(filename);
+        FILE *fp = fopen(fileutils->getSuitableFOpen(fullPath).c_str(), mode);
         CC_BREAK_IF(!fp);
         fseek(fp,0,SEEK_END);
         size = ftell(fp);
@@ -593,9 +594,7 @@ static Data getData(const std::string& filename, bool forString)
     
     if (nullptr == buffer || 0 == readsize)
     {
-        std::string msg = "Get data from file(";
-        msg.append(filename).append(") failed!");
-        CCLOG("%s", msg.c_str());
+        CCLOG("Get data from file %s failed", filename.c_str());
     }
     else
     {
@@ -982,7 +981,7 @@ bool FileUtils::isAbsolutePath(const std::string& path) const
 
 bool FileUtils::isDirectoryExistInternal(const std::string& dirPath) const
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) ||  (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     WIN32_FILE_ATTRIBUTE_DATA wfad;
     std::wstring wdirPath(dirPath.begin(), dirPath.end());
     if (GetFileAttributesEx(wdirPath.c_str(), GetFileExInfoStandard, &wfad))
@@ -1078,7 +1077,7 @@ bool FileUtils::createDirectory(const std::string& path)
     }
 
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 	WIN32_FILE_ATTRIBUTE_DATA wfad;
     std::wstring wpath(path.begin(), path.end());
     if (!(GetFileAttributesEx(wpath.c_str(), GetFileExInfoStandard, &wfad)))
@@ -1172,7 +1171,7 @@ bool FileUtils::removeDirectory(const std::string& path)
     
     // Remove downloaded files
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     std::wstring wpath = std::wstring(path.begin(), path.end());
     std::wstring files = wpath +  L"*.*";
 	WIN32_FIND_DATA wfd;
@@ -1236,7 +1235,7 @@ bool FileUtils::removeFile(const std::string &path)
 {
     // Remove downloaded file
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     std::wstring wpath(path.begin(), path.end());
     if (DeleteFile(wpath.c_str()))
 	{
@@ -1276,7 +1275,7 @@ bool FileUtils::renameFile(const std::string &path, const std::string &oldname, 
     std::string newPath = path + name;
  
     // Rename a file
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     std::regex pat("\\/");
     std::string _old = std::regex_replace(oldPath, pat, "\\");
     std::string _new = std::regex_replace(newPath, pat, "\\");
@@ -1364,7 +1363,7 @@ bool FileUtils::isPopupNotify() const
     return s_popupNotify;
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 static std::wstring StringUtf8ToWideChar(const std::string& strUtf8)
 {
     std::wstring ret;

@@ -47,8 +47,8 @@
 * Xcode 5.1 or newer for iOS or Mac
 * gcc 4.9 or newer for Linux
 * ndk-r10c for Android
-* Visual Studio 2012  or newer for Windows (win32)
-* Visual Studio 2012  or newer for Windows Phone 8
+* Visual Studio 2013  or newer for Windows (win32)
+* Visual Studio 2013  or newer for Windows Phone 8
 
 ## How to run tests
 

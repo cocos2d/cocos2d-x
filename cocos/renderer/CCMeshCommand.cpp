@@ -66,7 +66,7 @@ MeshCommand::MeshCommand()
 , _material(nullptr)
 {
     _type = RenderCommand::Type::MESH_COMMAND;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     // listen the event that renderer was recreated on Android/WP8
     _rendererRecreatedListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, CC_CALLBACK_1(MeshCommand::listenRendererRecreated, this));
     Director::getInstance()->getEventDispatcher()->addEventListenerWithFixedPriority(_rendererRecreatedListener, -1);
@@ -216,7 +216,7 @@ void MeshCommand::setTransparent(bool value)
 MeshCommand::~MeshCommand()
 {
     releaseVAO();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_rendererRecreatedListener);
 #endif
 }
@@ -306,22 +306,26 @@ uint32_t MeshCommand::getMaterialID() const
 
 void MeshCommand::preBatchDraw()
 {
-    if (Configuration::getInstance()->supportsShareableVAO() && _vao == 0)
-        buildVAO();
-    if (_vao)
+    // Do nothing if using material since each pass needs to bind its own VAO
+    if (!_material)
     {
-        GL::bindVAO(_vao);
-    }
-    else
-    {
-        glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+        if (Configuration::getInstance()->supportsShareableVAO() && _vao == 0)
+            buildVAO();
+        if (_vao)
+        {
+            GL::bindVAO(_vao);
+        }
+        else
+        {
+            glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
 
-        // FIXME: Assumes that all the passes in the Material share the same Vertex Attribs
-        GLProgramState* programState = _material
-                                        ? _material->_currentTechnique->_passes.at(0)->getGLProgramState()
-                                        : _glProgramState;
-        programState->applyAttributes();
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
+            // FIXME: Assumes that all the passes in the Material share the same Vertex Attribs
+            GLProgramState* programState = _material
+                                            ? _material->_currentTechnique->_passes.at(0)->getGLProgramState()
+                                            : _glProgramState;
+            programState->applyAttributes();
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
+        }
     }
 }
 
@@ -331,9 +335,7 @@ void MeshCommand::batchDraw()
     {
         for(const auto& pass: _material->_currentTechnique->_passes)
         {
-            // don't bind attributes, since they were
-            // already bound in preBatchDraw
-            pass->bind(_mv, false);
+            pass->bind(_mv);
 
             glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
             CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
@@ -358,14 +360,18 @@ void MeshCommand::batchDraw()
 }
 void MeshCommand::postBatchDraw()
 {
-    if (_vao)
+    // when using material, unbind is after draw
+    if (!_material)
     {
-        GL::bindVAO(0);
-    }
-    else
-    {
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        if (_vao)
+        {
+            GL::bindVAO(0);
+        }
+        else
+        {
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+            glBindBuffer(GL_ARRAY_BUFFER, 0);
+        }
     }
 }
 
@@ -379,8 +385,6 @@ void MeshCommand::execute()
     {
         for(const auto& pass: _material->_currentTechnique->_passes)
         {
-            // don't bind attributes, since they were
-            // already bound in preBatchDraw
             pass->bind(_mv, true);
 
             glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
@@ -445,7 +449,7 @@ void MeshCommand::releaseVAO()
     }
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 void MeshCommand::listenRendererRecreated(EventCustom* event)
 {
     _vao = 0;

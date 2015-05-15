@@ -262,8 +262,10 @@ bool Terrain::initHeightMap(const char * heightMap)
 Terrain::Terrain()
 {
     _alphaMap = nullptr;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-     auto _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
+    _customCommand.setTransparent(false);
+    _customCommand.set3D(true);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    auto _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
         [this](EventCustom*)
     {
         reload();
@@ -482,7 +484,7 @@ Terrain::~Terrain()
         glDeleteBuffers(1,&(_chunkLodIndicesSkirtSet[i]._chunkIndices._indices));
     }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 }
@@ -602,6 +604,20 @@ cocos2d::AABB Terrain::getAABB()
 Terrain::QuadTree * Terrain::getQuadTree()
 {
     return _quadRoot;
+}
+
+
+std::vector<float> Terrain::getHeightData() const
+{
+    std::vector<float> data;
+    data.resize(_imageWidth * _imageHeight);
+    for (int i = 0; i < _imageHeight; i++) {
+        for (int j = 0; j < _imageWidth; j++) {
+            int idx = i * _imageWidth + j;
+            data[idx] = (_vertices[idx]._position.y);
+        }
+    }
+    return data;
 }
 
 void Terrain::setAlphaMap(cocos2d::Texture2D * newAlphaMapTexture)
@@ -1495,4 +1511,5 @@ Terrain::DetailMap::DetailMap()
     _detailMapSrc = ""; 
     _detailMapSize = 35;
 }
+
 NS_CC_END
