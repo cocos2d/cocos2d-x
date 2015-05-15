@@ -33,6 +33,7 @@ import java.lang.Runnable;
 import com.chukong.cocosplay.client.CocosPlayClient;
 
 import android.app.Activity;
+import android.content.ComponentName;  //Enhance API modification
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -40,18 +41,26 @@ import android.content.pm.ApplicationInfo;
 import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.IBinder;  //Enhance API modification
 import android.preference.PreferenceManager.OnActivityResultListener;
 import android.util.DisplayMetrics;
+import android.util.Log;  //Enhance API modification
 import android.view.Display;
 import android.view.WindowManager;
+import android.content.ServiceConnection;  //Enhance API modification	
+
+import com.enhance.gameservice.IGameTunningService;  //Enhance API modification
 
 public class Cocos2dxHelper {
     // ===========================================================
     // Constants
     // ===========================================================
+	//Enhance API modification begin    
+    private final static String TAG = Cocos2dxHelper.class.getSimpleName();
+    //Enhance API modification end
     private static final String PREFS_NAME = "Cocos2dxPrefsFile";
     private static final int RUNNABLES_PER_FRAME = 5;
-
+    
     // ===========================================================
     // Fields
     // ===========================================================
@@ -67,7 +76,10 @@ public class Cocos2dxHelper {
     private static Activity sActivity = null;
     private static Cocos2dxHelperListener sCocos2dxHelperListener;
     private static Set<OnActivityResultListener> onActivityResultListeners = new LinkedHashSet<OnActivityResultListener>();
-
+	//Enhance API modification begin
+    private static IGameTunningService mGameServiceBinder = null;
+    private static final int BOOST_TIME = 7;
+	//Enhance API modification end
 
     // ===========================================================
     // Constructors
@@ -104,10 +116,26 @@ public class Cocos2dxHelper {
             sActivity = activity;
 
             sInited = true;
-
+            
+            //Enhance API modification begin
+            activity.getApplicationContext().bindService(new Intent(IGameTunningService.class.getName()), connection, Context.BIND_AUTO_CREATE);
+            //Enhance API modification end
         }
     }
     
+    //Enhance API modification begin
+	private static ServiceConnection connection = new ServiceConnection() {
+		public void onServiceConnected(ComponentName name, IBinder service) {
+			mGameServiceBinder = IGameTunningService.Stub.asInterface(service);
+			fastLoading(BOOST_TIME);
+		}
+
+		public void onServiceDisconnected(ComponentName name) {
+			sActivity.getApplicationContext().unbindService(connection);
+		}
+	};
+	//Enhance API modification end
+	
     public static Activity getActivity() {
         return sActivity;
     }
@@ -424,4 +452,76 @@ public class Cocos2dxHelper {
 
         public void runOnGLThread(final Runnable pRunnable);
     }
+
+    //Enhance API modification begin
+    public static int setResolutionPercent(int per)
+    {
+    	try{
+    		if(mGameServiceBinder != null)
+    		{    			
+        		return mGameServiceBinder.setPreferredResolution(per);
+    		}
+    		return -1;
+    	}catch (Exception e) {
+			e.printStackTrace(); 
+			return -1;
+		}
+    }
+
+    public static int setFPS(int fps)
+    {
+    	try{
+    		if(mGameServiceBinder != null)
+    		{    			
+        		return mGameServiceBinder.setFramePerSecond(fps);
+    		}
+    		return -1;
+    	}catch (Exception e) {
+			e.printStackTrace(); 
+			return -1;
+		}
+    }
+    
+    public static int fastLoading(int sec)
+    {
+    	try{
+    		if(mGameServiceBinder != null)
+    		{
+    			return mGameServiceBinder.boostUp(sec);
+    		}
+    		return -1;
+    	}catch (Exception e) {
+			e.printStackTrace(); 
+			return -1;
+		}
+    }
+    
+	public static int getTemperature()
+    {
+    	try{
+    		if(mGameServiceBinder != null)
+    		{
+    			return mGameServiceBinder.getAbstractTemperature();  
+    		}
+    		return -1;
+    	}catch (Exception e) {
+			e.printStackTrace(); 
+			return -1;
+		}
+    }
+	
+	public static int setLowPowerMode(boolean enable)
+	{
+	   	try{
+    		if(mGameServiceBinder != null)
+    		{
+    			return mGameServiceBinder.setGamePowerSaving(enable);  
+    		}
+    		return -1;
+    	}catch (Exception e) {
+			e.printStackTrace(); 
+			return -1;
+		}
+	}
+    //Enhance API modification end	   
 }
