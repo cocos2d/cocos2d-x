@@ -142,11 +142,7 @@ bool TextFieldTTF::attachWithIME()
         auto pGlView = Director::getInstance()->getOpenGLView();
         if (pGlView)
         {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8 && CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
             pGlView->setIMEKeyboardState(true);
-#else
-            pGlView->setIMEKeyboardState(true, _inputText);
-#endif
         }
     }
     return ret;
@@ -161,11 +157,7 @@ bool TextFieldTTF::detachWithIME()
         auto glView = Director::getInstance()->getOpenGLView();
         if (glView)
         {
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8 && CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
             glView->setIMEKeyboardState(false);
-#else
-            glView->setIMEKeyboardState(false, "");
-#endif
         }
     }
     return ret;

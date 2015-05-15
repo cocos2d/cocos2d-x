@@ -36,18 +36,14 @@ Sprite3DTests::Sprite3DTests()
     ADD_TEST_CASE(Sprite3DBasicTest);
     ADD_TEST_CASE(Sprite3DHitTest);
     ADD_TEST_CASE(AsyncLoadSprite3DTest);
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     // 3DEffect use custom shader which is not supported on WP8/WinRT yet. 
     ADD_TEST_CASE(Sprite3DEffectTest);
     ADD_TEST_CASE(Sprite3DUVAnimationTest);
     ADD_TEST_CASE(Sprite3DFakeShadowTest);
     ADD_TEST_CASE(Sprite3DBasicToonShaderTest);
     ADD_TEST_CASE(Sprite3DLightMapTest);
-#endif
     ADD_TEST_CASE(Sprite3DWithSkinTest);
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     ADD_TEST_CASE(Sprite3DWithSkinOutlineTest);
-#endif
     ADD_TEST_CASE(Animate3DTest);
     ADD_TEST_CASE(AttachmentTest);
     ADD_TEST_CASE(Sprite3DReskinTest);
@@ -59,6 +55,7 @@ Sprite3DTests::Sprite3DTests()
     ADD_TEST_CASE(Sprite3DForceDepthTest);
     ADD_TEST_CASE(Sprite3DCubeMapTest);
     ADD_TEST_CASE(NodeAnimationTest);
+    ADD_TEST_CASE(Issue9767);
 };
 
 //------------------------------------------------------------------
@@ -274,7 +271,7 @@ Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
     //the callback function update cylinder's texcoord
     schedule(schedule_selector(Sprite3DUVAnimationTest::cylinderUpdate));
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
                                                             [this](EventCustom*)
                                                             {
@@ -302,7 +299,7 @@ Sprite3DUVAnimationTest::Sprite3DUVAnimationTest()
 
 Sprite3DUVAnimationTest::~Sprite3DUVAnimationTest()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 }
@@ -410,7 +407,7 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
 
     schedule(CC_SCHEDULE_SELECTOR(Sprite3DFakeShadowTest::updateCamera), 0.0f);
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
                                                             [this](EventCustom*)
                                                             {
@@ -439,7 +436,7 @@ Sprite3DFakeShadowTest::Sprite3DFakeShadowTest()
 
 Sprite3DFakeShadowTest::~Sprite3DFakeShadowTest()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 }
@@ -639,7 +636,7 @@ Sprite3DBasicToonShaderTest::Sprite3DBasicToonShaderTest()
     addChild(_camera);
     setCameraMask(2);
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
                                                             [this](EventCustom*)
                                                             {
@@ -656,7 +653,7 @@ Sprite3DBasicToonShaderTest::Sprite3DBasicToonShaderTest()
 
 Sprite3DBasicToonShaderTest::~Sprite3DBasicToonShaderTest()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 }
@@ -942,7 +939,7 @@ Effect3DOutline::Effect3DOutline()
 , _outlineWidth(1.0f)
 , _sprite(nullptr)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
                                                           [this](EventCustom*)
                                                           {
@@ -959,7 +956,7 @@ Effect3DOutline::Effect3DOutline()
 
 Effect3DOutline::~Effect3DOutline()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 }
@@ -1027,11 +1024,6 @@ void Effect3DOutline::setTarget(EffectSprite3D *sprite)
     
 }
 
-static void MatrixPalleteCallBack( GLProgram* glProgram, Uniform* uniform, int paletteSize, const float* palette)
-{
-    glUniform4fv( uniform->location, (GLsizei)paletteSize, (const float*)palette );
-}
-
 void Effect3DOutline::draw(const Mat4 &transform)
 {
     //draw
@@ -1050,9 +1042,7 @@ void Effect3DOutline::draw(const Mat4 &transform)
         auto skin = _sprite->getMesh()->getSkin();
         if(_sprite && skin)
         {
-            auto function = std::bind(MatrixPalleteCallBack, std::placeholders::_1, std::placeholders::_2,
-                                      skin->getMatrixPaletteSize(), (float*)skin->getMatrixPalette());
-            _glProgramState->setUniformCallback("u_matrixPalette", function);
+            _glProgramState->setUniformVec4v("u_matrixPalette", skin->getMatrixPaletteSize(), skin->getMatrixPalette());
         }
         
         if(_sprite)
@@ -1136,7 +1126,6 @@ void Sprite3DEffectTest::addNewSpriteWithCoords(Vec2 p)
     sprite->addEffect(effect2, -2);
     effect2->setOutlineWidth(0.02f);
     effect2->setOutlineColor(Vec3(1,1,0));
-    //sprite->setEffect3D(effect);
     sprite->setScale(6.f);
     
     //add to scene
@@ -2386,7 +2375,7 @@ Sprite3DCubeMapTest::Sprite3DCubeMapTest() :
 
 Sprite3DCubeMapTest::~Sprite3DCubeMapTest()
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backToForegroundListener);
 #endif
 
@@ -2480,7 +2469,7 @@ void Sprite3DCubeMapTest::addNewSpriteWithCoords(Vec2 p)
     addChild(_camera);
     setCameraMask(2);
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     _backToForegroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
                                 [this](EventCustom*)
     {
@@ -2521,3 +2510,58 @@ void Sprite3DCubeMapTest::onTouchesMoved(const std::vector<Touch*>& touches, coc
         _camera->lookAt(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
     }
 }
+
+Issue9767::Issue9767()
+{
+    _shaderType = Issue9767::ShaderType::SHADER_TEX;
+    
+    auto s = Director::getInstance()->getWinSize();
+    auto sprite = Sprite3D::create("Sprite3DTest/boss1.obj");
+    sprite->setScale(3.f);
+    sprite->setTexture("Sprite3DTest/boss.png");
+    addChild( sprite );
+    sprite->setPosition(Vec2(s.width/2, s.height/2));
+    _sprite = sprite;
+    
+    TTFConfig ttfConfig("fonts/arial.ttf", 15);
+    auto label1 = Label::createWithTTF(ttfConfig,"switch shader");
+    auto item1 = MenuItemLabel::create(label1,CC_CALLBACK_1(Issue9767::menuCallback_SwitchShader,this) );
+    
+    item1->setPosition( Vec2(s.width * 0.9f - item1->getContentSize().width * 0.5f, s.height * 0.5f - item1->getContentSize().height ) );
+    
+    auto pMenu1 = CCMenu::create(item1, nullptr);
+    pMenu1->setPosition(Vec2(0,0));
+    addChild(pMenu1);
+}
+
+Issue9767::~Issue9767()
+{
+    
+}
+
+void Issue9767::menuCallback_SwitchShader(cocos2d::Ref* sender)
+{
+    GLProgram* glProgram = nullptr;
+    if (_shaderType == Issue9767::ShaderType::SHADER_TEX)
+    {
+        _shaderType = Issue9767::ShaderType::SHADER_COLOR;
+        glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION);
+    }
+    else
+    {
+        _shaderType = Issue9767::ShaderType::SHADER_TEX;
+        glProgram = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_3D_POSITION_TEXTURE);
+    }
+    _sprite->setGLProgram(glProgram);
+}
+
+std::string Issue9767::title() const
+{
+    return "Issue9767: test setGLProgram";
+}
+
+std::string Issue9767::subtitle() const
+{
+    return "";
+}
+

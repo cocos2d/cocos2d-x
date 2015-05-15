@@ -1,19 +1,13 @@
 #ifndef __PERFORMANCE_TOUCHES_TEST_H__
 #define __PERFORMANCE_TOUCHES_TEST_H__
 
-#include "PerformanceTest.h"
+#include "BaseTest.h"
 
-class TouchesMainScene : public PerformBasicLayer
+DEFINE_TEST_SUITE(PerformceTouchesTests);
+
+class TouchesMainScene : public TestCase
 {
 public:
-    TouchesMainScene(bool bControlMenuVisible, int nMaxCases = 0, int nCurCase = 0)
-        : PerformBasicLayer(bControlMenuVisible, nMaxCases, nCurCase)
-    {
-    }
-
-    virtual std::string title() const;
-
-    virtual void showCurrentTest() override;
     virtual void onEnter() override;
     virtual void update(float dt) override;
 
@@ -29,50 +23,39 @@ protected:
 class TouchesPerformTest1 : public TouchesMainScene
 {
 public:
-    TouchesPerformTest1(bool bControlMenuVisible, int nMaxCases = 0, int nCurCase = 0)
-        : TouchesMainScene(bControlMenuVisible, nMaxCases, nCurCase)
-    {
-    }
+    CREATE_FUNC(TouchesPerformTest1);
 
     virtual void onEnter() override;
     virtual std::string title() const override;
 
-    bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event) override;
-    void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event) override;
-    void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event) override;
-    void onTouchCancelled(cocos2d::Touch* touch, cocos2d::Event* event) override;
+    bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
+    void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event);
+    void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event);
+    void onTouchCancelled(cocos2d::Touch* touch, cocos2d::Event* event);
 };
 
 class TouchesPerformTest2 : public TouchesMainScene
 {
 public:
-    TouchesPerformTest2(bool bControlMenuVisible, int nMaxCases = 0, int nCurCase = 0)
-        : TouchesMainScene(bControlMenuVisible, nMaxCases, nCurCase)
-    {
-    }
+    CREATE_FUNC(TouchesPerformTest2);
 
     virtual void onEnter() override;
     virtual std::string title() const override;
 
-    void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event) override;
-    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event) override;
-    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event) override;
-    void onTouchesCancelled(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event) override;
+    void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    void onTouchesCancelled(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
 };
 
-class TouchesPerformTest3 : public PerformBasicLayer
+class TouchesPerformTest3 : public TestCase
 {
 public:
-    TouchesPerformTest3(bool bControlMenuVisible, int nMaxCases = 0, int nCurCase = 0)
-    : PerformBasicLayer(bControlMenuVisible, nMaxCases, nCurCase)
-    {
-    }
-    
+    CREATE_FUNC(TouchesPerformTest3);
+
     virtual void onEnter() override;
     virtual std::string title() const;
-    virtual void showCurrentTest() override;
 };
 
-void runTouchesTest();
 
 #endif

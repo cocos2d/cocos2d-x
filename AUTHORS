@@ -1121,6 +1121,7 @@ Developers:
         
     Dimon4eg
         Fixed crash on AssetsManager
+        Fixed memory leak of WebView on iOS
 
 Retired Core Developers:
     WenSheng Yang
