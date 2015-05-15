@@ -40,6 +40,8 @@ NS_CC_BEGIN
 
 class CC_DLL Data
 {
+    friend class Properties;
+    
 public:
     /**
      * This parameter is defined for convenient reference if a null Data object is needed.

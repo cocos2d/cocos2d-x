@@ -86,4 +86,13 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class Material_parsePerformance : public MaterialSystemBaseTest
+{
+public:
+    CREATE_FUNC(Material_parsePerformance);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
 
