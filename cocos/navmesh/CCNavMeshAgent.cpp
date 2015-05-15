@@ -235,6 +235,19 @@ void NavMeshAgent::setPosition(const Vec3 & pos)
     _needUpdateAgent = true;
 }
 
+Vec3 NavMeshAgent::getVelocity() const
+{
+    const dtCrowdAgent *agent = nullptr;
+    if (_crowd){
+        agent = _crowd->getAgent(_agentID);
+    }
+    if (agent)
+    {
+        return Vec3(agent->vel[0], agent->vel[1], agent->vel[2]);
+    }
+    return Vec3::zero;
+}
+
 NS_CC_END
 
 #endif //CC_USE_NAVMESH

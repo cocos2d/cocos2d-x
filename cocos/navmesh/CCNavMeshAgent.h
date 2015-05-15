@@ -93,6 +93,9 @@ public:
 
     void syncToAgent();
     void syncToNode();
+    
+    /** get current velocity */
+    Vec3 getVelocity() const;
 
 CC_CONSTRUCTOR_ACCESS:
     NavMeshAgent();
