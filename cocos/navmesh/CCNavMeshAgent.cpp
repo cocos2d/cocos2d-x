@@ -54,6 +54,7 @@ cocos2d::NavMeshAgent::NavMeshAgent()
     , _navMeshQuery(nullptr)
     , _state(DT_CROWDAGENT_STATE_INVALID)
     , _syncFlag(NODE_AND_NODE)
+    , _isOnOffMesh(false)
 {
 
 }
@@ -201,7 +202,16 @@ OffMeshLinkData NavMeshAgent::getCurrentOffMeshLinkData()
 
 bool NavMeshAgent::isOnOffMeshLink()
 {
-    return _state == DT_CROWDAGENT_STATE_OFFMESH;
+    if (_state == DT_CROWDAGENT_STATE_OFFMESH){
+        _isOnOffMesh = true;
+    }
+
+    return _isOnOffMesh;
+}
+
+void cocos2d::NavMeshAgent::completeOffMeshLink()
+{
+    _isOnOffMesh = false;
 }
 
 void NavMeshAgent::stop()

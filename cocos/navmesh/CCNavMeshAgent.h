@@ -110,6 +110,7 @@ public:
     void stop();
 
     bool isOnOffMeshLink();
+    void completeOffMeshLink();
     OffMeshLinkData getCurrentOffMeshLinkData();
 
     void setSyncFlag(const NavMeshAgentSyncFlag &flag) { _syncFlag = flag;  }
@@ -144,6 +145,7 @@ private:
     int _agentID;
     bool _needUpdateAgent;
     bool _needMove;
+    bool _isOnOffMesh;
     dtCrowd *_crowd;
     dtNavMeshQuery *_navMeshQuery;
 };
