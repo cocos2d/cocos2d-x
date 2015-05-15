@@ -1,0 +1,437 @@
+{
+    "template_copy_config" : [
+        {
+            "from": "cocos2d-x/build",
+            "to": "gen-src/Cocos/frameworks/cocos2d-x/build",
+            "include": [
+                "cocos2d_libs.xcodeproj"
+            ]
+        },
+        {
+            "from": "cocos2d-x/cocos",
+            "to": "gen-src/Cocos/frameworks/cocos2d-x/cocos",
+            "exclude": [
+                "*.h$",
+                "*.hpp$",
+                "*.inl$",
+                "*.frag$",
+                "*.vert$",
+                "*.lua$",
+                "*wp8",
+                "*winrt",
+                "*CMakeLists.txt",
+                "*linux",
+                "*java/*",
+                "*Release.win32",
+                "*Debug.win32",
+                "*/build/*"
+            ]
+        },
+        {
+            "from": "cocos2d-x/cocos/audio",
+            "to": "gen-src/Cocos/frameworks/cocos2d-x/cocos/audio",
+            "include": [
+                "ios/*.h$",
+                "mac/*.h$",
+                "openal/*.h$",
+                "win32/*.h$"
+            ]
+        },
+        {
+            "from": "cocos2d-x/extensions",
+            "to": "gen-src/Cocos/frameworks/cocos2d-x/extensions",
+            "exclude": [
+                "*.h$",
+                "*wp8",
+                "*winrt",
+                "*CMakeLists.txt",
+                "*linux",
+                "*Release.win32",
+                "*Debug.win32",
+                "*/build/*"
+            ]
+        },
+        {
+            "from": "cocos2d-x/external",
+            "to": "gen-src/Cocos/frameworks/cocos2d-x/external",
+            "include": [
+                "*prebuilt/ios/*",
+                "*prebuilt/mac/*",
+                "*prebuilt/win32/*",
+                "flatbuffers/*.cpp",
+                "flatbuffers/Android.mk",
+                "win32-specific/*/prebuilt/*",
+                "Box2D/*.cpp$",
+                "chipmunk/*.c$",
+                "ConvertUTF/*.c$",
+                "ConvertUTF/*.cpp$",
+                "edtaa3func/*.cpp$",
+                "tinyxml2/*.cpp$",
+                "unzip/*.cpp$",
+                "xxhash/*.c$",
+                "xxtea/*.cpp$",
+                "lua/tolua/*.c",
+                "lua/luasocket/*.c",
+                "lua/quick/*.cpp",
+                "lua/quick/*.c",
+                "Box2D/Android.mk",
+                "Box2D/proj.win32/*.vcxproj",
+                "chipmunk/Android.mk",
+                "chipmunk/proj.win32/*.vcxproj"
+            ]
+        },
+        {
+            "from": "cocos2d-x/build/cocos2d_tests.xcodeproj",
+            "to": "gen-tests/cocos2d-x/build/cocos2d_tests.xcodeproj",
+            "exclude": [
+                "xcshareddata/*",
+                "project.xcworkspace*",
+                "xcuserdata/*"
+            ]
+        },
+        {
+            "from": "cocos2d-x/tests/cpp-tests",
+            "to": "gen-tests/cocos2d-x/tests/cpp-tests",
+            "exclude": [
+                "proj.linux/*",
+                "proj.win8.1*",
+                "proj.wp8*",
+                "CMakeLists.txt"
+            ]
+        },
+        {
+            "from": "cocos2d-x/tests/lua-tests",
+            "to": "gen-tests/cocos2d-x/tests/lua-tests",
+            "exclude": [
+                "project/proj.linux/*",
+                "project/CMakeLists.txt"
+            ]
+        },
+        {
+            "from": "cocos2d-x/tests/js-tests",
+            "to": "gen-tests/cocos2d-x/tests/js-tests",
+            "exclude": [
+                "project/proj.linux/*",
+                "CMakeLists.txt"
+            ]
+        },
+        {
+            "from": "cocos2d-x/plugin",
+            "to": "gen-tests/cocos2d-x/plugin",
+            "exclude": [
+                "samples"
+            ]
+        },
+        {
+            "from": "cocos2d-x/cocos/platform/android/java/src",
+            "to": "gen-tests/cocos2d-x/tests/cpp-tests/proj.android/src"
+        },
+        {
+            "from": "cocos2d-x/cocos/platform/android/java/src",
+            "to": "gen-tests/cocos2d-x/tests/lua-tests/project/proj.android/src"
+        },
+        {
+            "from": "cocos2d-x/cocos/platform/android/java/src",
+            "to": "gen-tests/cocos2d-x/tests/js-tests/project/proj.android/src"
+        },
+        {
+            "from": "cocos2d-x/cocos/scripting/lua-bindings/script/",
+            "to": "gen-tests/cocos2d-x/tests/lua-tests/src/cocos"
+        },
+        {
+            "from": "cocos2d-x/external/lua/luasocket",
+            "to": "gen-tests/cocos2d-x/tests/lua-tests/luasocket"
+        },
+        {
+            "from": "cocos2d-x",
+            "to": "gen/Cocos/frameworks/cocos2d-x",
+            "include": [
+                "setup.py$"
+            ]
+        },
+        {
+            "from": "cocos2d-x/cocos",
+            "to": "gen/Cocos/frameworks/cocos2d-x/cocos",
+            "exclude": [
+                "^Android.mk$",
+                "audio/android/Android.mk",
+                "scripting/lua-bindings/proj.android/Android.mk",
+                "scripting/js-bindings/proj.android/Android.mk",
+                "*.cpp$",
+                "*.c$",
+                "*.m$",
+                "*.mm$",
+                "*wp8",
+                "*winrt",
+                "*.vcxproj",
+                "*CMakeLists.txt",
+                "*linux",
+                "*java/bin/*",
+                "*java/libs/*",
+                "*java/gen/*",
+                "*proj.*",
+                "audio/ios/*",
+                "audio/mac/*",
+                "audio/openal/*",
+                "audio/win32/*",
+                "*Release.win32",
+                "*Debug.win32",
+                "*/build/*"
+            ]
+        },
+        {
+            "from": "cocos2d-x/extensions",
+            "to": "gen/Cocos/frameworks/cocos2d-x/extensions",
+            "include": [
+                "*.mk$",
+                "*.h$"
+            ]
+        },
+        {
+            "from": "cocos2d-x/external",
+            "to": "gen/Cocos/frameworks/cocos2d-x/external",
+            "exclude": [
+                "*.cpp$",
+                "*.c$",
+                "*.m$",
+                "*.mm$",
+                "*wp8",
+                "*linux",
+                "*winrt",
+                "*proj.*",
+                "*CMakeLists.txt",
+                "config.json",
+                "version.json",
+                "lua/lua/*",
+                "lua/luajit/*.sh",
+                "lua/luajit/src/*",
+                "*prebuilt/ios/*",
+                "*prebuilt/mac/*",
+                "*prebuilt/win32/*",
+                "win32-specific/*/prebuilt/*",
+                "*Release.win32/*",
+                "*Debug.win32/*",
+                "*wp_8*"
+            ]
+        },
+        {
+            "from": "cocos2d-x/external/spidermonkey/prebuilt/win32",
+            "to": "gen/Cocos/frameworks/cocos2d-x/prebuilt/win32",
+            "include": [
+                "*.lib",
+                "*.dll"
+            ]
+        },
+        {
+            "from": "cocos2d-x/tools/cocos2d-console",
+            "to": "gen/Cocos/frameworks/cocos2d-x/tools/cocos2d-console",
+            "exclude": [
+                "config.json",
+                "download-bin.py",
+                "version.json",
+                "*.pyc",
+                ".gitignore",
+                "*linux*"
+            ]
+        },
+        {
+            "from": "cocos2d-x/tools",
+            "to": "gen/Cocos/frameworks/cocos2d-x/tools",
+            "include": [
+                "bindings-generator",
+                "tolua",
+                "tojs"
+            ]
+        },
+        {
+            "from": "cocos2d-x/tools/simulator/libsimulator",
+            "to": "gen/Cocos/frameworks/cocos2d-x/tools/simulator/libsimulator",
+            "include": [
+                "lib/*.h",
+                "proj.android/Android.mk"
+            ]
+        },
+        {
+            "from": "x-modified",
+            "to": "gen/Cocos/frameworks/cocos2d-x"
+        },
+        {
+            "from": "cocos2d-x/templates/cpp-template-default",
+            "to": "gen/Cocos/templates/cocos2d-x/cpp-template-default",
+            "exclude": [
+                "*wp8",
+                "*win8.1-universal",
+                "*linux",
+                "*CMakeLists.txt",
+                "Resources",
+                "cocos-project-template.json"
+            ]
+        },
+        {
+            "from": "cocos2d-x/templates/lua-template-default",
+            "to": "gen/Cocos/templates/cocos2d-x/lua-template-runtime",
+            "include" : [
+                "config.json",
+                ".settings",
+                ".project"
+            ]
+        },
+        {
+            "from": "cocos2d-x/templates/lua-template-default/frameworks",
+            "to": "gen/Cocos/templates/cocos2d-x/lua-template-runtime/frameworks",
+            "exclude": [
+                "*wp8",
+                "*win8.1-universal",
+                "*linux",
+                "*CMakeLists.txt"
+            ]
+        },
+        {
+            "from": "cocos2d-x/templates/lua-template-default/src",
+            "to": "gen/Cocos/templates/cocos2d-x/lua-template-runtime/src",
+            "exclude": [
+                "app/*"
+            ]
+        },
+        {
+            "from": "cocos2d-x/templates/js-template-runtime",
+            "to": "gen/Cocos/templates/cocos2d-x/js-template-runtime",
+            "exclude": [
+                "*wp8",
+                "*win8.1-universal",
+                "*linux",
+                "*CMakeLists.txt",
+                "res/*",
+                "runtime/*"
+            ]
+        },
+        {
+            "from": "cocos2d-x/tools/simulator/frameworks/runtime-src/Classes/ide-support",
+            "to": "gen/Cocos/templates/cocos2d-x/lua-template-runtime/frameworks/runtime-src/Classes/ide-support/",
+            "exclude": [
+                "RuntimeJsImpl.*"
+            ]
+        },
+        {
+            "from": "cocos2d-x/tools/simulator/frameworks/runtime-src/proj.ios_mac/ios",
+            "to": "gen/Cocos/templates/cocos2d-x/lua-template-runtime/frameworks/runtime-src/proj.ios_mac/ios",
+            "exclude": [
+                "RootViewController.*",
+                "Info.plist"
+            ]
+        },
+        {
+            "from": "cocos2d-x/tools/simulator/frameworks/runtime-src/proj.ios_mac/mac",
+            "to": "gen/Cocos/templates/cocos2d-x/lua-template-runtime/frameworks/runtime-src/proj.ios_mac/mac",
+            "exclude": [
+                "Info.plist",
+                "Icon.icns",
+                "build-cfg.json"
+            ]
+        },
+        {
+            "from": "cocos2d-x/tools/simulator/frameworks/runtime-src/proj.win32",
+            "to": "gen/Cocos/templates/cocos2d-x/lua-template-runtime/frameworks/runtime-src/proj.win32/",
+            "include": [
+                "build-cfg.json",
+                "game.rc",
+                "main.cpp",
+                "main.h",
+                "res",
+                "resource.h",
+                "SimulatorWin.cpp",
+                "SimulatorWin.h"
+            ]
+        },
+        {
+            "from": "cocos2d-x/tools/simulator/frameworks/runtime-src/Classes/ide-support",
+            "to": "gen/Cocos/templates/cocos2d-x/js-template-runtime/frameworks/runtime-src/Classes/ide-support/",
+            "exclude": [
+                "RuntimeLuaImpl.*",
+                "lua_debugger.*"
+            ]
+        },
+        {
+            "from": "cocos2d-x/tools/simulator/frameworks/runtime-src/proj.ios_mac/ios",
+            "to": "gen/Cocos/templates/cocos2d-x/js-template-runtime/frameworks/runtime-src/proj.ios_mac/ios",
+            "exclude": [
+                "RootViewController.*",
+                "Info.plist"
+            ]
+        },
+        {
+            "from": "cocos2d-x/tools/simulator/frameworks/runtime-src/proj.ios_mac/mac",
+            "to": "gen/Cocos/templates/cocos2d-x/js-template-runtime/frameworks/runtime-src/proj.ios_mac/mac",
+            "exclude": [
+                "Info.plist",
+                "Icon.icns",
+                "build-cfg.json"
+            ]
+        },
+        {
+            "from": "cocos2d-x/tools/simulator/frameworks/runtime-src/proj.win32",
+            "to": "gen/Cocos/templates/cocos2d-x/js-template-runtime/frameworks/runtime-src/proj.win32/",
+            "include": [
+                "build-cfg.json",
+                "game.rc",
+                "main.cpp",
+                "main.h",
+                "res",
+                "resource.h",
+                "SimulatorWin.cpp",
+                "SimulatorWin.h"
+            ]
+        },
+        {
+            "from": "x-templates",
+            "to": "gen/Cocos/templates/cocos2d-x"
+        },
+        {
+            "from": "cocos2d-x/cocos/platform/android/java/src",
+            "to": "gen/Cocos/templates/cocos2d-x/cpp-template-default/proj.android/src",
+            "include": [
+                "*.java"
+            ]
+        },
+        {
+            "from": "cocos2d-x/cocos/platform/android/java/src",
+            "to": "gen/Cocos/templates/cocos2d-x/lua-template-runtime/frameworks/runtime-src/proj.android/src",
+            "include": [
+                "*.java"
+            ]
+        },
+        {
+            "from": "cocos2d-x/cocos/platform/android/java/src",
+            "to": "gen/Cocos/templates/cocos2d-x/js-template-runtime/frameworks/runtime-src/proj.android/src",
+            "include": [
+                "*.java"
+            ]
+        }
+    ],
+    "modify_config": [
+        {
+            "file_path": "gen/Cocos/frameworks/cocos2d-x/cocos/2d/cocos2dx.props",
+            "pattern": "libbox2d\\.lib;",
+            "replace_string": ""
+        },
+        {
+            "file_path": "gen/Cocos/frameworks/cocos2d-x/cocos/2d/cocos2dx.props",
+            "pattern": "libSpine\\.lib;",
+            "replace_string": ""
+        }
+    ],
+    "android_mks" : [
+        "gen/Cocos/frameworks/cocos2d-x/cocos/storage/local-storage/Android.mk",
+        "gen/Cocos/frameworks/cocos2d-x/external/flatbuffers/Android.mk",
+        "gen/Cocos/frameworks/cocos2d-x/external/Box2D/Android.mk",
+        "gen/Cocos/frameworks/cocos2d-x/cocos/editor-support/cocosbuilder/Android.mk",
+        "gen/Cocos/frameworks/cocos2d-x/extensions/Android.mk",
+        "gen/Cocos/frameworks/cocos2d-x/cocos/3d/Android.mk",
+        "gen/Cocos/frameworks/cocos2d-x/cocos/ui/Android.mk",
+        "gen/Cocos/frameworks/cocos2d-x/cocos/editor-support/cocostudio/Android.mk",
+        "gen/Cocos/frameworks/cocos2d-x/cocos/network/Android.mk",
+        "gen/Cocos/frameworks/cocos2d-x/cocos/platform/android/Android.mk",
+        "gen/Cocos/frameworks/cocos2d-x/cocos/editor-support/spine/Android.mk",
+        "gen/Cocos/frameworks/cocos2d-x/tools/simulator/libsimulator/proj.android/Android.mk"
+    ]
+}
