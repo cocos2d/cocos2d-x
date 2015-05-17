@@ -989,24 +989,17 @@ bool FileUtils::isDirectoryExistInternal(const std::string& dirPath) const
 		return true;
 	}
 	return false;
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-	unsigned long fAttrib = GetFileAttributesA(dirPath.c_str());
-    if (fAttrib != INVALID_FILE_ATTRIBUTES &&
-        (fAttrib & FILE_ATTRIBUTE_DIRECTORY))
-    {
-		return true;
-    }
-    return false;
-#else
+#elif (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
     struct stat st;
     if (stat(dirPath.c_str(), &st) == 0)
     {
         return S_ISDIR(st.st_mode);
     }
     return false;
+#else
+    CCASSERT(false, "FileUtils not support isDirectoryExistInternal");
+    return false;
 #endif
-
-
 }
 
 bool FileUtils::isDirectoryExist(const std::string& dirPath) const
@@ -1098,25 +1091,7 @@ bool FileUtils::createDirectory(const std::string& path)
 		}
 	}
 	return true;
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    if ((GetFileAttributesA(path.c_str())) == INVALID_FILE_ATTRIBUTES)
-    {
-		subpath = "";
-		for (unsigned int i = 0; i < dirs.size(); ++i)
-		{
-			subpath += dirs[i];
-			if (!isDirectoryExist(subpath))
-			{
-				BOOL ret = CreateDirectoryA(subpath.c_str(), NULL);
-				if (!ret && ERROR_ALREADY_EXISTS != GetLastError())
-				{
-					return false;
-				}
-			}
-		}
-    }
-    return true;
-#else
+#elif (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
     DIR *dir = NULL;
 
     // Create path recursively
@@ -1145,6 +1120,9 @@ bool FileUtils::createDirectory(const std::string& path)
         }
     }
     return true;
+#else
+    CCASSERT(false, "FileUtils not support createDirectory");
+    return false;
 #endif
 }
 
@@ -1206,21 +1184,12 @@ bool FileUtils::removeDirectory(const std::string& path)
         return true;
     }
 	return false;
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-	std::string command = "cmd /c rd /s /q ";
-	// Path may include space.
-	command += "\"" + path + "\"";
-
-	if (WinExec(command.c_str(), SW_HIDE) > 31)
-		return true;
-	else
-		return false;
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     if (nftw(path.c_str(),unlink_cb, 64, FTW_DEPTH | FTW_PHYS))
         return false;
     else
         return true;
-#else
+#elif (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
     std::string command = "rm -r ";
     // Path may include space.
     command += "\"" + path + "\"";
@@ -1228,6 +1197,9 @@ bool FileUtils::removeDirectory(const std::string& path)
         return true;
     else
         return false;
+#else
+    CCASSERT(false, "FileUtils not support removeDirectory");
+    return false;
 #endif
 }
 
@@ -1242,29 +1214,15 @@ bool FileUtils::removeFile(const std::string &path)
 		return true;
 	}
 	return false;
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-	std::string command = "cmd /c del /q ";
-	std::string win32path = path;
-	int len = win32path.length();
-	for (int i = 0; i < len; ++i)
-	{
-		if (win32path[i] == '/')
-		{
-			win32path[i] = '\\';
-		}
-	}
-	command += win32path;
-
-	if (WinExec(command.c_str(), SW_HIDE) > 31)
-		return true;
-	else
-		return false;
-#else
+#elif (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
     if (remove(path.c_str())) {
         return false;
     } else {
         return true;
     }
+#else
+    CCASSERT(false, "FileUtils not support removeFile");
+    return false;
 #endif
 }
 
@@ -1286,29 +1244,7 @@ bool FileUtils::renameFile(const std::string &path, const std::string &oldname, 
         return true;
     }
     return false;
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) 
-    std::regex pat("\\/");
-    std::string _old = std::regex_replace(oldPath, pat, "\\");
-    std::string _new = std::regex_replace(newPath, pat, "\\");
-
-    if(FileUtils::getInstance()->isFileExist(_new))
-    {
-        if (!DeleteFileA(_new.c_str()))
-        {
-            CCLOGERROR("Fail to delete file %s !Error code is 0x%x", newPath.c_str(), GetLastError());
-        }
-    }
-
-    if (MoveFileA(_old.c_str(), _new.c_str()))
-    {
-        return true;
-    }
-    else
-    {
-        CCLOGERROR("Fail to rename file %s to %s !Error code is 0x%x", oldPath.c_str(), newPath.c_str(), GetLastError());
-        return false;
-    }
-#else
+#elif (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
     int errorCode = rename(oldPath.c_str(), newPath.c_str());
 
     if (0 != errorCode)
@@ -1317,6 +1253,9 @@ bool FileUtils::renameFile(const std::string &path, const std::string &oldname, 
         return false;
     }
     return true;
+#else
+    CCASSERT(false, "FileUtils not support renameFile");
+    return false;
 #endif
 }
 
