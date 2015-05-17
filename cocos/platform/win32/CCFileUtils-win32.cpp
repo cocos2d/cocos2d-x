@@ -110,27 +110,16 @@ static void _checkPath()
 {
     if (0 == s_resourcePath.length())
     {
-		if (IsDebuggerPresent())
-		{
-			WCHAR utf16Path[CC_MAX_PATH] = { 0 };
-			GetCurrentDirectoryW(sizeof(utf16Path)-1, utf16Path);
+        WCHAR *pUtf16ExePath = nullptr;
+        _get_wpgmptr(&pUtf16ExePath);
 
-            s_resourcePath = convertPathFormatToUnixStyle(StringWideCharToUtf8(utf16Path));
-			s_resourcePath.append("/");
-		}
-		else
-		{
-			WCHAR *pUtf16ExePath = nullptr;
-			_get_wpgmptr(&pUtf16ExePath);
+        // We need only directory part without exe
+        WCHAR *pUtf16DirEnd = wcsrchr(pUtf16ExePath, L'\\');
 
-			// We need only directory part without exe
-			WCHAR *pUtf16DirEnd = wcsrchr(pUtf16ExePath, L'\\');
+        char utf8ExeDir[CC_MAX_PATH] = { 0 };
+        int nNum = WideCharToMultiByte(CP_UTF8, 0, pUtf16ExePath, pUtf16DirEnd-pUtf16ExePath+1, utf8ExeDir, sizeof(utf8ExeDir), nullptr, nullptr);
 
-			char utf8ExeDir[CC_MAX_PATH] = { 0 };
-			int nNum = WideCharToMultiByte(CP_UTF8, 0, pUtf16ExePath, pUtf16DirEnd - pUtf16ExePath + 1, utf8ExeDir, sizeof(utf8ExeDir), nullptr, nullptr);
-
-			s_resourcePath = convertPathFormatToUnixStyle(utf8ExeDir);
-		}
+        s_resourcePath = convertPathFormatToUnixStyle(utf8ExeDir);
     }
 }
 
