@@ -75,6 +75,9 @@ protected:
 
     bool initWithFilePath(const std::string &filePath);
     bool read();
+    void dtDraw();
+    void drawAgents();
+    void drawObstacles();
 
 protected:
 

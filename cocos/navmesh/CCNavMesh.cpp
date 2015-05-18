@@ -27,6 +27,7 @@
 #include "platform/CCFileUtils.h"
 #include "renderer/CCRenderer.h"
 #include "recast/Detour/DetourCommon.h"
+#include "recast/DebugUtils/DetourDebugDraw.h"
 
 NS_CC_BEGIN
 
@@ -176,6 +177,65 @@ bool NavMesh::read()
     return true;
 }
 
+void NavMesh::dtDraw()
+{
+    duDebugDrawNavMesh(&_debugDraw, *_navMesh, DU_DRAWNAVMESH_OFFMESHCONS);
+    duDebugDrawNavMeshNodes(&_debugDraw, *_navMeshQuery);
+    drawAgents();
+    drawObstacles();
+}
+
+void cocos2d::NavMesh::drawObstacles()
+{
+    // Draw obstacles
+    for (auto iter : _obstacleList)
+    {
+        const dtTileCacheObstacle* ob = _tileCache->getObstacleByRef(iter->_obstacleID);
+        if (ob->state == DT_OBSTACLE_EMPTY) continue;
+        float bmin[3], bmax[3];
+        _tileCache->getObstacleBounds(ob, bmin, bmax);
+
+        unsigned int col = 0;
+        if (ob->state == DT_OBSTACLE_PROCESSING)
+            col = duRGBA(255, 255, 0, 128);
+        else if (ob->state == DT_OBSTACLE_PROCESSED)
+            col = duRGBA(255, 192, 0, 192);
+        else if (ob->state == DT_OBSTACLE_REMOVING)
+            col = duRGBA(220, 0, 0, 128);
+
+        duDebugDrawCylinder(&_debugDraw, bmin[0], bmin[1], bmin[2], bmax[0], bmax[1], bmax[2], col);
+        duDebugDrawCylinderWire(&_debugDraw, bmin[0], bmin[1], bmin[2], bmax[0], bmax[1], bmax[2], duDarkenCol(col), 2);
+    }
+}
+
+void cocos2d::NavMesh::drawAgents(/*const float* pos, float r, float h, float c, const unsigned int col*/)
+{
+    _debugDraw.depthMask(false);
+    for (auto iter : _agentList)
+    {
+        auto agent = _crowed->getAgent(iter->_agentID);
+        float r = iter->getRadius();
+        float h = iter->getHeight();
+        float c = _tileCache->getParams()->walkableClimb;
+        // Agent dimensions.	
+        duDebugDrawCylinderWire(&_debugDraw, agent->npos[0] - r, agent->npos[1] + 0.02f, agent->npos[2] - r, agent->npos[0] + r, agent->npos[1] + h, agent->npos[2] + r, duRGBA(128, 25, 0, 192), 2.0f);
+
+        duDebugDrawCircle(&_debugDraw, agent->npos[0], agent->npos[1] + c, agent->npos[2], r, duRGBA(0, 0, 0, 64), 1.0f);
+
+        unsigned int colb = duRGBA(0, 0, 0, 196);
+        _debugDraw.begin(DU_DRAW_LINES);
+        _debugDraw.vertex(agent->npos[0], agent->npos[1] - c, agent->npos[2], colb);
+        _debugDraw.vertex(agent->npos[0], agent->npos[1] + c, agent->npos[2], colb);
+        _debugDraw.vertex(agent->npos[0] - r / 2, agent->npos[1] + 0.02f, agent->npos[2], colb);
+        _debugDraw.vertex(agent->npos[0] + r / 2, agent->npos[1] + 0.02f, agent->npos[2], colb);
+        _debugDraw.vertex(agent->npos[0], agent->npos[1] + 0.02f, agent->npos[2] - r / 2, colb);
+        _debugDraw.vertex(agent->npos[0], agent->npos[1] + 0.02f, agent->npos[2] + r / 2, colb);
+        _debugDraw.end();
+
+    }
+    _debugDraw.depthMask(true);
+}
+
 void NavMesh::removeNavMeshObstacle(NavMeshObstacle *obstacle)
 {
     auto iter = std::find(_obstacleList.begin(), _obstacleList.end(), obstacle);
@@ -231,6 +291,8 @@ void NavMesh::setDebugDrawEnable(bool enable)
 void NavMesh::debugDraw(Renderer* renderer)
 {
     if (_isDebugDrawEnabled){
+        _debugDraw.clear();
+        dtDraw();
         _debugDraw.draw(renderer);
     }
 }

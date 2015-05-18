@@ -364,6 +364,9 @@
     <Filter Include="Classes\MaterialSystemTest">
       <UniqueIdentifier>{4fd79779-ff32-4400-aa05-af4fd7f0f4a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Classes\NavMeshTest">
+      <UniqueIdentifier>{8c06b227-cf6c-4e4b-8312-94f834bdeeea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -947,6 +950,9 @@
     </ClCompile>
     <ClCompile Include="..\Classes\MaterialSystemTest\MaterialSystemTest.cpp">
       <Filter>Classes\MaterialSystemTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\NavMeshTest\NavMeshTest.cpp">
+      <Filter>Classes\NavMeshTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1729,6 +1735,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\MaterialSystemTest\MaterialSystemTest.h">
       <Filter>Classes\MaterialSystemTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\NavMeshTest\NavMeshTest.h">
+      <Filter>Classes\NavMeshTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

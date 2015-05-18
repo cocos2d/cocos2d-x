@@ -36,6 +36,7 @@ NavMeshDebugDraw::NavMeshDebugDraw()
 : _primitiveType(GL_POINTS)
 , _dirtyBuffer(true)
 , _currentPrimitive(nullptr)
+, _currentDepthMask(true)
 {
     _customCmd.set3D(true);
     _customCmd.setTransparent(true);
@@ -74,11 +75,17 @@ NavMeshDebugDraw::~NavMeshDebugDraw()
     glDeleteBuffers(1, &_vbo);
 }
 
+void NavMeshDebugDraw::depthMask(bool state)
+{
+    _currentDepthMask = state;
+}
+
 void NavMeshDebugDraw::begin(duDebugDrawPrimitives prim, float size /*= 1.0f*/)
 {
     if (_currentPrimitive) return;
     _currentPrimitive = new Primitive;
     _currentPrimitive->type = getPrimitiveType(prim);
+    _currentPrimitive->depthMask = _currentDepthMask;
     _currentPrimitive->start = _vertices.size();
     _currentPrimitive->size = size;
 }
@@ -91,7 +98,7 @@ void NavMeshDebugDraw::end()
     _currentPrimitive = nullptr;
 }
 
-Vec4 cocos2d::NavMeshDebugDraw::getColor(unsigned int col)
+Vec4 NavMeshDebugDraw::getColor(unsigned int col)
 {
     const unsigned int r = col & 0xff;
     const unsigned int g = (col >> 8) & 0xff;
@@ -117,7 +124,7 @@ GLenum NavMeshDebugDraw::getPrimitiveType(duDebugDrawPrimitives prim)
     }
 }
 
-void cocos2d::NavMeshDebugDraw::drawImplement(const cocos2d::Mat4& transform, uint32_t flags)
+void NavMeshDebugDraw::drawImplement(const cocos2d::Mat4& transform, uint32_t flags)
 {
     _program->use();
     _program->setUniformsForBuiltins(transform);
@@ -132,6 +139,7 @@ void cocos2d::NavMeshDebugDraw::drawImplement(const cocos2d::Mat4& transform, ui
         _dirtyBuffer = false;
     }
     for (auto &iter : _primitiveList){
+        glDepthMask(iter->depthMask);
         if (iter->type == GL_POINTS){
             glPointSize(iter->size);
         }
@@ -139,6 +147,7 @@ void cocos2d::NavMeshDebugDraw::drawImplement(const cocos2d::Mat4& transform, ui
             glLineWidth(iter->size);
         }
         glDrawArrays(iter->type, iter->start, iter->end - iter->start);
+        glDepthMask(!iter->depthMask);
         CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, iter->end - iter->start);
     }
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -150,6 +159,15 @@ void NavMeshDebugDraw::draw(Renderer* renderer)
     _customCmd.init(0, Mat4::IDENTITY, 0);
     _customCmd.func = CC_CALLBACK_0(NavMeshDebugDraw::drawImplement, this, Mat4::IDENTITY, 0);
     renderer->addCommand(&_customCmd);
+}
+
+void NavMeshDebugDraw::clear()
+{
+    _vertices.clear();
+    for (auto iter : _primitiveList){
+        delete iter;
+    }
+    _primitiveList.clear();
 }
 
 NS_CC_END

@@ -42,13 +42,13 @@ NS_CC_BEGIN
  * @{
  */
 class Renderer;
-class NavMeshDebugDraw : duDebugDraw
+class NavMeshDebugDraw : public duDebugDraw
 {
 public:
     NavMeshDebugDraw();
     virtual ~NavMeshDebugDraw();
 
-    virtual void depthMask(bool state){};
+    virtual void depthMask(bool state);
     virtual void texture(bool state){};
     virtual void begin(duDebugDrawPrimitives prim, float size = 1.0f) override;
 
@@ -61,6 +61,8 @@ public:
     virtual void end() override;
 
     void draw(Renderer* renderer);
+
+    void clear();
 
 private:
 
@@ -80,6 +82,7 @@ private:
     struct Primitive
     {
         GLenum type;
+        bool depthMask;
         unsigned short start;
         unsigned short end;
         float size;
@@ -91,6 +94,7 @@ private:
     GLProgram *_program;
     CustomCommand _customCmd;
     GLenum _primitiveType;
+    bool _currentDepthMask;
     GLuint _vbo;
     bool _dirtyBuffer;
 };
