@@ -599,9 +599,7 @@ int lua_cocos2dx_physics3d_Physics3DShape_createCompoundShape(lua_State* L)
     int argc = 0;
     bool ok  = true;
     
-#if COCOS2D_DEBUG >= 1
     tolua_Error tolua_err;
-#endif
     
 #if COCOS2D_DEBUG >= 1
     if (!tolua_isusertable(L,1,"cc.Physics3DShape",0,&tolua_err)) goto tolua_lerror;
