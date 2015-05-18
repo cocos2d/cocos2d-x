@@ -83,7 +83,7 @@ void RenderState::initialize()
 
 void RenderState::finalize()
 {
-    CC_SAFE_RELEASE(StateBlock::_defaultState);
+    CC_SAFE_RELEASE_NULL(StateBlock::_defaultState);
 }
 
 bool RenderState::init(RenderState* parent)
