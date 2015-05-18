@@ -137,7 +137,7 @@ float NavMeshAgent::getMaxSpeed() const
 
 void NavMeshAgent::setMaxSpeed(float maxSpeed)
 {
-    _param.maxSpeed;
+    _param.maxSpeed = maxSpeed;
     _needUpdateAgent = true;
 }
 
@@ -317,7 +317,7 @@ Vec3 NavMeshAgent::getVelocity() const
     {
         return Vec3(agent->vel[0], agent->vel[1], agent->vel[2]);
     }
-    return Vec3::zero;
+    return Vec3::ZERO;
 }
 
 NS_CC_END
