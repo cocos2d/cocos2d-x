@@ -35,6 +35,7 @@ NinePatchImageParser::~NinePatchImageParser()
 
 NinePatchImageParser::NinePatchImageParser(Image* image)
 {
+    CCASSERT(nullptr != image, "image pointer can't be nullptr!");
     this->_image = image;
     this->_imageFrame = Rect(0,0,image->getWidth(), image->getHeight());
     CCASSERT(image->getRenderFormat()==Texture2D::PixelFormat::RGBA8888,
@@ -44,6 +45,7 @@ NinePatchImageParser::NinePatchImageParser(Image* image)
 
 NinePatchImageParser::NinePatchImageParser(Image* image, const Rect& frame, bool rotated)
 {
+    CCASSERT(nullptr != image, "image pointer can't be nullptr!");
     this->_image = image;
     CCASSERT(image->getRenderFormat()==Texture2D::PixelFormat::RGBA8888,
              "unsupported format, currently only supports rgba8888");
