@@ -461,6 +461,8 @@ void SpriteMainScene::testNCallback(Ref* sender)
         return;
     }
     
+    _subtestNumber = static_cast<MenuItemFont*>(sender)->getTag();
+    
     this->restartTestCallback(sender);
 }
 

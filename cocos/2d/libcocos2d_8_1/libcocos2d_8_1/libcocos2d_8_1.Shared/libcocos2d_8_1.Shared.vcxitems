@@ -284,6 +284,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCMap.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNS.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCProfiling.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCProperties.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCProtocols.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccRandom.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCRef.h" />
@@ -504,6 +505,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCTextureAtlas.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCTextureCache.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCTrianglesCommand.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCVertexAttribBinding.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCVertexIndexBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCVertexIndexData.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\storage\local-storage\LocalStorage.h" />
@@ -883,6 +885,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCIMEDispatcher.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNS.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCProfiling.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCProperties.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccRandom.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCRef.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCScheduler.cpp" />
@@ -1070,6 +1073,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCTextureAtlas.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCTextureCache.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCTrianglesCommand.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCVertexAttribBinding.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCVertexIndexBuffer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCVertexIndexData.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\storage\local-storage\LocalStorage.cpp" />

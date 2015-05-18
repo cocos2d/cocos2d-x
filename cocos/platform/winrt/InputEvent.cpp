@@ -111,6 +111,15 @@ void KeyboardEvent::execute()
     }
 }
 
+WinRTKeyboardEvent::WinRTKeyboardEvent(WinRTKeyboardEventType type, Windows::UI::Core::KeyEventArgs^ args)
+	: m_type(type), m_key(args)
+{
+}
+
+void WinRTKeyboardEvent::execute()
+{
+	GLViewImpl::sharedOpenGLView()->OnWinRTKeyboardEvent(m_type, m_key.Get());
+}
 
 BackButtonEvent::BackButtonEvent()
 {

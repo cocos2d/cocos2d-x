@@ -28,12 +28,13 @@
  ****************************************************************************/
 
 #include "SocketIO.h"
+#include <algorithm>
+#include <sstream>
+#include <iterator>
 #include "base/CCDirector.h"
 #include "base/CCScheduler.h"
 #include "WebSocket.h"
 #include "HttpClient.h"
-#include <algorithm>
-#include <sstream>
 
 NS_CC_BEGIN
 

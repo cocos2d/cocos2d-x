@@ -134,7 +134,7 @@ void	Physics3DPointToPointConstraint::setPivotPointInA(const cocos2d::Vec3& pivo
     static_cast<btPoint2PointConstraint*>(_constraint)->setPivotA(point);
 }
 
-void	Physics3DPointToPointConstraint::setPivotPointInB(const cocos2d::Vec3&& pivotB)
+void	Physics3DPointToPointConstraint::setPivotPointInB(const cocos2d::Vec3& pivotB)
 {
     auto point = convertVec3TobtVector3(pivotB);
     static_cast<btPoint2PointConstraint*>(_constraint)->setPivotB(point);
@@ -279,7 +279,7 @@ float	Physics3DHingeConstraint::getUpperLimit() const
     return static_cast<btHingeConstraint*>(_constraint)->getUpperLimit();
 }
 
-float Physics3DHingeConstraint::getHingeAngle()
+float Physics3DHingeConstraint::getHingeAngle() const
 {
     return static_cast<btHingeConstraint*>(_constraint)->getHingeAngle();
 }
@@ -291,35 +291,35 @@ float Physics3DHingeConstraint::getHingeAngle(const cocos2d::Mat4& transA, const
     return static_cast<btHingeConstraint*>(_constraint)->getHingeAngle(btTransA, btTransB);
 }
 
-cocos2d::Mat4 Physics3DHingeConstraint::getAFrame()
+cocos2d::Mat4 Physics3DHingeConstraint::getAFrame() const
 {
     const auto& trans = static_cast<btHingeConstraint*>(_constraint)->getAFrame();
     return convertbtTransformToMat4(trans);
 }
-cocos2d::Mat4 Physics3DHingeConstraint::getBFrame()
+cocos2d::Mat4 Physics3DHingeConstraint::getBFrame() const
 {
     const auto& trans = static_cast<btHingeConstraint*>(_constraint)->getBFrame();
     return convertbtTransformToMat4(trans);
 }
 
-bool Physics3DHingeConstraint::getAngularOnly()
+bool Physics3DHingeConstraint::getAngularOnly() const
 {
     return static_cast<btHingeConstraint*>(_constraint)->getAngularOnly();
 }
-bool Physics3DHingeConstraint::getEnableAngularMotor()
+bool Physics3DHingeConstraint::getEnableAngularMotor() const
 {
     return static_cast<btHingeConstraint*>(_constraint)->getEnableAngularMotor();
 }
-float Physics3DHingeConstraint::getMotorTargetVelosity()
+float Physics3DHingeConstraint::getMotorTargetVelosity() const
 {
     return static_cast<btHingeConstraint*>(_constraint)->getMotorTargetVelosity();
 }
-float Physics3DHingeConstraint::getMaxMotorImpulse()
+float Physics3DHingeConstraint::getMaxMotorImpulse() const
 {
     return static_cast<btHingeConstraint*>(_constraint)->getMaxMotorImpulse();
 }
 
-bool Physics3DHingeConstraint::getUseFrameOffset()
+bool Physics3DHingeConstraint::getUseFrameOffset() const
 {
     return static_cast<btHingeConstraint*>(_constraint)->getUseFrameOffset();
 }
@@ -354,7 +354,7 @@ cocos2d::Mat4 Physics3DSliderConstraint::getFrameOffsetB() const
     const auto& frameOff = static_cast<btSliderConstraint*>(_constraint)->getFrameOffsetB();
     return convertbtTransformToMat4(frameOff);
 }
-float Physics3DSliderConstraint::getLowerLinLimit()
+float Physics3DSliderConstraint::getLowerLinLimit() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getLowerLinLimit();
 }
@@ -362,7 +362,7 @@ void Physics3DSliderConstraint::setLowerLinLimit(float lowerLimit)
 {
     static_cast<btSliderConstraint*>(_constraint)->setLowerLinLimit(lowerLimit);
 }
-float Physics3DSliderConstraint::getUpperLinLimit()
+float Physics3DSliderConstraint::getUpperLinLimit() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getUpperLinLimit();
 }
@@ -370,7 +370,7 @@ void Physics3DSliderConstraint::setUpperLinLimit(float upperLimit)
 {
     static_cast<btSliderConstraint*>(_constraint)->setUpperLinLimit(upperLimit);
 }
-float Physics3DSliderConstraint::getLowerAngLimit()
+float Physics3DSliderConstraint::getLowerAngLimit() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getLowerAngLimit();
 }
@@ -378,7 +378,7 @@ void Physics3DSliderConstraint::setLowerAngLimit(float lowerLimit)
 {
     static_cast<btSliderConstraint*>(_constraint)->setLowerAngLimit(lowerLimit);
 }
-float Physics3DSliderConstraint::getUpperAngLimit()
+float Physics3DSliderConstraint::getUpperAngLimit() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getUpperAngLimit();
 }
@@ -386,79 +386,79 @@ void Physics3DSliderConstraint::setUpperAngLimit(float upperLimit)
 {
     static_cast<btSliderConstraint*>(_constraint)->setUpperAngLimit(upperLimit);
 }
-bool Physics3DSliderConstraint::getUseLinearReferenceFrameA()
+bool Physics3DSliderConstraint::getUseLinearReferenceFrameA() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getUseLinearReferenceFrameA();
 }
-float Physics3DSliderConstraint::getSoftnessDirLin()
+float Physics3DSliderConstraint::getSoftnessDirLin() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getSoftnessDirLin();
 }
-float Physics3DSliderConstraint::getRestitutionDirLin()
+float Physics3DSliderConstraint::getRestitutionDirLin() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getRestitutionDirLin();
 }
-float Physics3DSliderConstraint::getDampingDirLin()
+float Physics3DSliderConstraint::getDampingDirLin() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getDampingDirLin();
 }
-float Physics3DSliderConstraint::getSoftnessDirAng()
+float Physics3DSliderConstraint::getSoftnessDirAng() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getSoftnessDirAng();
 }
-float Physics3DSliderConstraint::getRestitutionDirAng()
+float Physics3DSliderConstraint::getRestitutionDirAng() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getRestitutionDirAng();
 }
-float Physics3DSliderConstraint::getDampingDirAng()
+float Physics3DSliderConstraint::getDampingDirAng() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getDampingDirAng();
 }
-float Physics3DSliderConstraint::getSoftnessLimLin()
+float Physics3DSliderConstraint::getSoftnessLimLin() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getSoftnessLimLin();
 }
-float Physics3DSliderConstraint::getRestitutionLimLin()
+float Physics3DSliderConstraint::getRestitutionLimLin() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getRestitutionLimLin();
 }
-float Physics3DSliderConstraint::getDampingLimLin()
+float Physics3DSliderConstraint::getDampingLimLin() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getDampingLimAng();
 }
-float Physics3DSliderConstraint::getSoftnessLimAng()
+float Physics3DSliderConstraint::getSoftnessLimAng() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getSoftnessLimAng();
 }
-float Physics3DSliderConstraint::getRestitutionLimAng()
+float Physics3DSliderConstraint::getRestitutionLimAng() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getRestitutionLimAng();
 }
-float Physics3DSliderConstraint::getDampingLimAng()
+float Physics3DSliderConstraint::getDampingLimAng() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getDampingLimAng();
 }
-float Physics3DSliderConstraint::getSoftnessOrthoLin()
+float Physics3DSliderConstraint::getSoftnessOrthoLin() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getSoftnessOrthoLin();
 }
-float Physics3DSliderConstraint::getRestitutionOrthoLin()
+float Physics3DSliderConstraint::getRestitutionOrthoLin() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getRestitutionOrthoAng();
 }
-float Physics3DSliderConstraint::getDampingOrthoLin()
+float Physics3DSliderConstraint::getDampingOrthoLin() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getDampingOrthoLin();
 }
-float Physics3DSliderConstraint::getSoftnessOrthoAng()
+float Physics3DSliderConstraint::getSoftnessOrthoAng() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getSoftnessOrthoAng();
 }
-float Physics3DSliderConstraint::getRestitutionOrthoAng()
+float Physics3DSliderConstraint::getRestitutionOrthoAng() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getRestitutionOrthoAng();
 }
-float Physics3DSliderConstraint::getDampingOrthoAng()
+float Physics3DSliderConstraint::getDampingOrthoAng() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getDampingOrthoAng();
 }
@@ -538,7 +538,7 @@ void Physics3DSliderConstraint::setPoweredLinMotor(bool onOff)
 {
     static_cast<btSliderConstraint*>(_constraint)->setPoweredLinMotor(onOff);
 }
-bool Physics3DSliderConstraint::getPoweredLinMotor()
+bool Physics3DSliderConstraint::getPoweredLinMotor() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getPoweredLinMotor();
 }
@@ -546,7 +546,7 @@ void Physics3DSliderConstraint::setTargetLinMotorVelocity(float targetLinMotorVe
 {
     static_cast<btSliderConstraint*>(_constraint)->setTargetLinMotorVelocity(targetLinMotorVelocity);
 }
-float Physics3DSliderConstraint::getTargetLinMotorVelocity()
+float Physics3DSliderConstraint::getTargetLinMotorVelocity() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getTargetLinMotorVelocity();
 }
@@ -554,7 +554,7 @@ void Physics3DSliderConstraint::setMaxLinMotorForce(float maxLinMotorForce)
 {
     static_cast<btSliderConstraint*>(_constraint)->setMaxLinMotorForce(maxLinMotorForce);
 }
-float Physics3DSliderConstraint::getMaxLinMotorForce()
+float Physics3DSliderConstraint::getMaxLinMotorForce() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getMaxLinMotorForce();
 }
@@ -562,7 +562,7 @@ void Physics3DSliderConstraint::setPoweredAngMotor(bool onOff)
 {
     static_cast<btSliderConstraint*>(_constraint)->setPoweredAngMotor(onOff);
 }
-bool Physics3DSliderConstraint::getPoweredAngMotor()
+bool Physics3DSliderConstraint::getPoweredAngMotor() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getPoweredAngMotor();
 }
@@ -570,7 +570,7 @@ void Physics3DSliderConstraint::setTargetAngMotorVelocity(float targetAngMotorVe
 {
     return static_cast<btSliderConstraint*>(_constraint)->setTargetAngMotorVelocity(targetAngMotorVelocity);
 }
-float Physics3DSliderConstraint::getTargetAngMotorVelocity()
+float Physics3DSliderConstraint::getTargetAngMotorVelocity() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getTargetAngMotorVelocity();
 }
@@ -578,7 +578,7 @@ void Physics3DSliderConstraint::setMaxAngMotorForce(float maxAngMotorForce)
 {
     return static_cast<btSliderConstraint*>(_constraint)->setMaxAngMotorForce(maxAngMotorForce);
 }
-float Physics3DSliderConstraint::getMaxAngMotorForce()
+float Physics3DSliderConstraint::getMaxAngMotorForce() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getMaxAngMotorForce();
 }
@@ -593,7 +593,7 @@ float Physics3DSliderConstraint::getAngularPos() const
 }
 
 // access for UseFrameOffset
-bool Physics3DSliderConstraint::getUseFrameOffset()
+bool Physics3DSliderConstraint::getUseFrameOffset() const
 {
     return static_cast<btSliderConstraint*>(_constraint)->getUseFrameOffset();
 }
@@ -645,30 +645,30 @@ void	Physics3DConeTwistConstraint::setLimit(float swingSpan1,float swingSpan2,fl
     static_cast<btConeTwistConstraint*>(_constraint)->setLimit(swingSpan1, swingSpan2, twistSpan, softness, biasFactor, relaxationFactor);
 }
 
-cocos2d::Mat4 Physics3DConeTwistConstraint::getAFrame()
+cocos2d::Mat4 Physics3DConeTwistConstraint::getAFrame() const
 {
     const auto& frame = static_cast<btConeTwistConstraint*>(_constraint)->getAFrame();
     return convertbtTransformToMat4(frame);
 }
-cocos2d::Mat4 Physics3DConeTwistConstraint::getBFrame()
+cocos2d::Mat4 Physics3DConeTwistConstraint::getBFrame() const
 {
     const auto& frame = static_cast<btConeTwistConstraint*>(_constraint)->getBFrame();
     return convertbtTransformToMat4(frame);
 }
 
-float Physics3DConeTwistConstraint::getSwingSpan1()
+float Physics3DConeTwistConstraint::getSwingSpan1() const
 {
     return static_cast<btConeTwistConstraint*>(_constraint)->getSwingSpan1();
 }
-float Physics3DConeTwistConstraint::getSwingSpan2()
+float Physics3DConeTwistConstraint::getSwingSpan2() const
 {
     return static_cast<btConeTwistConstraint*>(_constraint)->getSwingSpan2();
 }
-float Physics3DConeTwistConstraint::getTwistSpan()
+float Physics3DConeTwistConstraint::getTwistSpan() const
 {
     return static_cast<btConeTwistConstraint*>(_constraint)->getTwistSpan();
 }
-float Physics3DConeTwistConstraint::getTwistAngle()
+float Physics3DConeTwistConstraint::getTwistAngle() const
 {
     return static_cast<btConeTwistConstraint*>(_constraint)->getTwistAngle();
 }
@@ -691,7 +691,7 @@ void Physics3DConeTwistConstraint::setMaxMotorImpulseNormalized(float maxMotorIm
     static_cast<btConeTwistConstraint*>(_constraint)->setMaxMotorImpulseNormalized(maxMotorImpulse);
 }
 
-float Physics3DConeTwistConstraint::getFixThresh()
+float Physics3DConeTwistConstraint::getFixThresh() const
 {
     return static_cast<btConeTwistConstraint*>(_constraint)->getFixThresh();
 }
@@ -773,7 +773,7 @@ void	Physics3D6DofConstraint::setLinearLowerLimit(const cocos2d::Vec3& linearLow
     static_cast<btGeneric6DofConstraint*>(_constraint)->setLinearLowerLimit(lower);
 }
 
-cocos2d::Vec3	Physics3D6DofConstraint::getLinearLowerLimit()
+cocos2d::Vec3	Physics3D6DofConstraint::getLinearLowerLimit() const
 {
     btVector3 lower;
     static_cast<btGeneric6DofConstraint*>(_constraint)->getLinearLowerLimit(lower);
@@ -786,7 +786,7 @@ void	Physics3D6DofConstraint::setLinearUpperLimit(const cocos2d::Vec3& linearUpp
     static_cast<btGeneric6DofConstraint*>(_constraint)->setLinearUpperLimit(upper);
 }
 
-cocos2d::Vec3	Physics3D6DofConstraint::getLinearUpperLimit()
+cocos2d::Vec3	Physics3D6DofConstraint::getLinearUpperLimit() const
 {
     btVector3 upper;
     static_cast<btGeneric6DofConstraint*>(_constraint)->getLinearUpperLimit(upper);
@@ -799,7 +799,7 @@ void	Physics3D6DofConstraint::setAngularLowerLimit(const cocos2d::Vec3& angularL
     static_cast<btGeneric6DofConstraint*>(_constraint)->setAngularLowerLimit(lower);
 }
 
-cocos2d::Vec3	Physics3D6DofConstraint::getAngularLowerLimit()
+cocos2d::Vec3	Physics3D6DofConstraint::getAngularLowerLimit() const
 {
     btVector3 lower;
     static_cast<btGeneric6DofConstraint*>(_constraint)->getAngularLowerLimit(lower);
@@ -812,23 +812,23 @@ void	Physics3D6DofConstraint::setAngularUpperLimit(const cocos2d::Vec3& angularU
     static_cast<btGeneric6DofConstraint*>(_constraint)->setAngularUpperLimit(upper);
 }
 
-cocos2d::Vec3	Physics3D6DofConstraint::getAngularUpperLimit()
+cocos2d::Vec3	Physics3D6DofConstraint::getAngularUpperLimit() const
 {
     btVector3 upper;
     static_cast<btGeneric6DofConstraint*>(_constraint)->getAngularUpperLimit(upper);
     return convertbtVector3ToVec3(upper);
 }
 
-bool	Physics3D6DofConstraint::isLimited(int limitIndex)
+bool	Physics3D6DofConstraint::isLimited(int limitIndex) const
 {
     return static_cast<btGeneric6DofConstraint*>(_constraint)->isLimited(limitIndex);
 }
 
-bool Physics3D6DofConstraint::getUseFrameOffset()
+bool Physics3D6DofConstraint::getUseFrameOffset() const
 {
     return static_cast<btGeneric6DofConstraint*>(_constraint)->getUseFrameOffset();
 }
-void Physics3D6DofConstraint::setUseFrameOffset(bool frameOffsetOnOff)
+void Physics3D6DofConstraint::setUseFrameOffset(bool frameOffsetOnOff) const
 {
     static_cast<btGeneric6DofConstraint*>(_constraint)->setUseFrameOffset(frameOffsetOnOff);
 }

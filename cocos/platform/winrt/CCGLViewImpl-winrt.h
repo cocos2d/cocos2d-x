@@ -72,6 +72,9 @@ public:
 	void OnPointerPressed(Windows::UI::Core::PointerEventArgs^ args);
 	void OnPointerMoved(Windows::UI::Core::PointerEventArgs^ args);
 	void OnPointerReleased(Windows::UI::Core::PointerEventArgs^ args);
+	void OnWinRTKeyboardEvent(WinRTKeyboardEventType type, Windows::UI::Core::KeyEventArgs^ args);
+
+
 	void OnPointerPressed(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::PointerEventArgs^ args);
 	void OnPointerWheelChanged(Windows::UI::Core::CoreWindow^, Windows::UI::Core::PointerEventArgs^ args);
 	void OnPointerMoved(Windows::UI::Core::CoreWindow^, Windows::UI::Core::PointerEventArgs^ args);
@@ -85,8 +88,9 @@ public:
     void BackButtonListener(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 
     void QueueBackKeyPress();
-    void QueuePointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);
-    void QueueEvent(std::shared_ptr<InputEvent>& event);
+	void QueuePointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);
+	void QueueWinRTKeyboardEvent(WinRTKeyboardEventType type, Windows::UI::Core::KeyEventArgs^ args);
+	void QueueEvent(std::shared_ptr<InputEvent>& event);
 
     bool ShowMessageBox(Platform::String^ title, Platform::String^ message);
 

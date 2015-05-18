@@ -447,6 +447,14 @@ var testNames = [
         }
     },
     {
+        title:"MaterialSystem Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/MaterialSystemTest/MaterialSystemTest.js",
+        testScene:function () {
+            return new MaterialSystemTestScene();
+        }
+    },
+    {
         title:"Menu Test",
         resource:g_menu,
         platforms: PLATFORM_ALL,
@@ -578,6 +586,14 @@ var testNames = [
         linksrc:"src/Sprite3DTest/Sprite3DTest.js",
         testScene:function () {
             return new Sprite3DTestScene();
+        }
+    },
+    {
+        title:"SpritePolygon Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/SpritePolygonTest/SpritePolygonTest.js",
+        testScene:function () {
+            return new SpritePolygonTestScene();
         }
     },
     {
