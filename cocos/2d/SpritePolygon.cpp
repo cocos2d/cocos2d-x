@@ -26,21 +26,8 @@
  ****************************************************************************/
 
 #include "SpritePolygon.h"
-
 #include "MarchingSquare.h"
-
-#include "base/CCDirector.h"
-#include "renderer/CCRenderer.h"
-#include "renderer/CCTextureCache.h"
-#include "renderer/CCGLProgramState.h"
-#include "renderer/CCGLProgramCache.h"
-#include <vector>
-
 #include "poly2tri/poly2tri.h"
-#include "SpritePolygonCache.h"
-#include "platform/CCFileUtils.h"
-using namespace std;
-
 
 USING_NS_CC;
 using namespace cocos2d::experimental;
@@ -176,8 +163,8 @@ void SpritePolygon::triangulate(const std::string& file, const cocos2d::Rect& re
     cdt->Triangulate();
     std::vector<p2t::Triangle*> tris = cdt->GetTriangles();
     
-    vector<V3F_C4B_T2F> *_verts = new vector<V3F_C4B_T2F>();
-    vector<unsigned short> *_indices = new vector<unsigned short>;
+    std::vector<V3F_C4B_T2F> *_verts = new std::vector<V3F_C4B_T2F>();
+    std::vector<unsigned short> *_indices = new std::vector<unsigned short>;
     unsigned short idx = 0;
     for(std::vector<p2t::Triangle*>::const_iterator ite = tris.begin(); ite < tris.end(); ite++)
     {
@@ -253,7 +240,8 @@ bool SpritePolygon::initWithMarching(const std::string &file, const cocos2d::Rec
     initWithTexture(texture);
     
     //Marching Square
-    optimization = 1.169;
+    if(-1 == optimization)
+        optimization = 1.169;
     auto newrect = rect;
     auto marcher = new MarchingSquare(file);
     marcher->trace();
@@ -354,7 +342,7 @@ bool SpritePolygon::initWithRect(const std::string& file, std::vector<cocos2d::V
     CCASSERT(texture, "texture was not loaded properly");
     initWithTexture(texture);
     //build v3f_c4b_t2f verts from vec2 vector
-    vector<V3F_C4B_T2F> _verts;
+    std::vector<V3F_C4B_T2F> _verts;
     for(std::vector<Vec2>::const_iterator it = verts.begin(); it<verts.end(); it++)
     {
         auto v3 = Vec3(it->x, it->y, 0);
@@ -436,7 +424,7 @@ const float SpritePolygon::getArea(){
     float area = 0;
     V3F_C4B_T2F *verts = _polygonInfo->_triangles.verts;
     unsigned short *indices = _polygonInfo->_triangles.indices;
-    for(int i = 0; i < _polygonInfo->_triangles.indexCount; i=i+3)
+    for(int i = 0; i < _polygonInfo->_triangles.indexCount; i+=3)
     {
         auto A = verts[indices[i]].vertices;
         auto B = verts[indices[i+1]].vertices;

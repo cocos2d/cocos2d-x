@@ -28,11 +28,7 @@
 #ifndef COCOS_2D_SpritePolygonCACHE_H__
 #define COCOS_2D_SpritePolygonCACHE_H__
 
-#include <vector>
-#include "platform/CCPlatformMacros.h"
-#include "2d/CCNode.h"
 #include "renderer/CCTrianglesCommand.h"
-#include "CCDrawNode.h"
 
 NS_CC_BEGIN
 
@@ -63,7 +59,7 @@ public:
     virtual ~SpritePolygonCache();
     static SpritePolygonCache* getInstance();
     static void destroyInstance();
-    SpritePolygonInfo* addSpritePolygonCache(const std::string& filePath, const cocos2d::Rect& rect, const cocos2d::TrianglesCommand::Triangles trianglesCommand);
+    SpritePolygonInfo* addSpritePolygonCache(const std::string& filePath, const cocos2d::Rect& rect, const cocos2d::TrianglesCommand::Triangles& trianglesCommand);
     SpritePolygonInfo* getSpritePolygonCache(const std::string& filePath, const cocos2d::Rect& rect);
     void removeSpritePolygonCache(const std::string& filePath, const cocos2d::Rect* rect = nullptr);
     void removeAllSpritePolygonCache();

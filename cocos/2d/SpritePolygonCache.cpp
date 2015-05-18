@@ -26,19 +26,8 @@
  ****************************************************************************/
 
 #include "SpritePolygonCache.h"
-#include "3d/CCMesh.h"
-#include "3d/CCMeshVertexIndexData.h"
-
-#include "base/CCDirector.h"
-#include "renderer/CCRenderer.h"
-#include "renderer/CCTextureCache.h"
-#include "renderer/CCGLProgramState.h"
-#include "renderer/CCGLProgramCache.h"
-#include <vector>
-
 #include "poly2tri/poly2tri.h"
 #include "platform/CCFileUtils.h"
-using namespace std;
 
 USING_NS_CC;
 
@@ -73,7 +62,7 @@ void SpritePolygonCache::init()
     _spritePolygonCacheMap.reserve(20);
 }
 
-SpritePolygonInfo* SpritePolygonCache::addSpritePolygonCache(const std::string& filePath, const cocos2d::Rect& rect, const cocos2d::TrianglesCommand::Triangles trianglesCommand)
+SpritePolygonInfo* SpritePolygonCache::addSpritePolygonCache(const std::string& filePath, const cocos2d::Rect& rect, const cocos2d::TrianglesCommand::Triangles& trianglesCommand)
 {
     auto fullpath = FileUtils::getInstance()->fullPathForFilename(filePath);;
     
@@ -87,8 +76,8 @@ SpritePolygonInfo* SpritePolygonCache::addSpritePolygonCache(const std::string& 
         {
             if ((*infoIt)->_rect.equals(rect))
             {
-                CC_SAFE_DELETE((*infoIt)->_triangles.verts);
-                CC_SAFE_DELETE((*infoIt)->_triangles.indices);
+                CC_SAFE_DELETE_ARRAY((*infoIt)->_triangles.verts);
+                CC_SAFE_DELETE_ARRAY((*infoIt)->_triangles.indices);
                 (*infoIt)->_triangles.verts = new V3F_C4B_T2F[trianglesCommand.vertCount];
                 (*infoIt)->_triangles.indices = new unsigned short[trianglesCommand.indexCount];
                 (*infoIt)->_triangles.vertCount = trianglesCommand.vertCount;

@@ -28,12 +28,12 @@ THE SOFTWARE.
 #include "MarchingSquare.h"
 #include <algorithm>
 #include <math.h>
-#include <stdio.h>
 
 USING_NS_CC;
 
 MarchingSquare::MarchingSquare(const std::string &filename, const unsigned int threshold)
 :_image(nullptr)
+,_data(nullptr)
 ,_filename("")
 ,_threshold(0)
 ,_width(0)
@@ -58,6 +58,7 @@ MarchingSquare::~MarchingSquare()
         delete _image;
         _image = nullptr;
     }
+    _points.clear();
 }
 
 void MarchingSquare::trace()
@@ -69,28 +70,31 @@ void MarchingSquare::trace()
 
 unsigned int MarchingSquare::findFirstNoneTransparentPixel()
 {
+    unsigned int first = -1;
     for(unsigned int i = 0; i < _width*_height; i++)
     {
-        if(getAlphaAt(i) > _threshold)
+        if(getAlphaByIndex(i) > _threshold)
         {
-            return i;
+            first = i;
+            break;
         }
     }
-    throw "image is all transparent!";
+    CCASSERT(-1 != first, "image is all transparent!");
+    return first;
 }
 
-unsigned char MarchingSquare::getAlphaAt(const unsigned int i)
+unsigned char MarchingSquare::getAlphaByIndex(const unsigned int& i)
 {
+    CCASSERT(i < _width*_height, "coordinate is out of range.");
     return *(_data+i*4+3);
 }
-unsigned char MarchingSquare::getAlphaAt(const int x, const int y)
+unsigned char MarchingSquare::getAlphaByPos(const unsigned int& x, const unsigned int& y)
 {
-    if(x < 0 || y < 0 || x > _width-1 || y > _height-1)
-        return 0;
+    CCASSERT(x < _width-1 && y < _height-1, "coordinate is out of range.");
     return *(_data+(y*_width+x)*4+3);
 }
 
-unsigned int MarchingSquare::getSquareValue(int x, int y)
+unsigned int MarchingSquare::getSquareValue(const unsigned int& x, const unsigned int& y)
 {
     /*
      checking the 2x2 pixel grid, assigning these values to each pixel, if not transparent
@@ -101,18 +105,18 @@ unsigned int MarchingSquare::getSquareValue(int x, int y)
      +---+---+
      */
     unsigned int sv = 0;
-    if(getAlphaAt(x-1, y-1) > _threshold)
+    if(getAlphaByPos(x-1, y-1) > _threshold)
         sv += 1;
-    if(getAlphaAt(x,y-1) > _threshold)
+    if(getAlphaByPos(x,y-1) > _threshold)
         sv += 2;
-    if(getAlphaAt(x-1, y) > _threshold)
+    if(getAlphaByPos(x-1, y) > _threshold)
         sv += 4;
-    if(getAlphaAt(x, y) > _threshold)
+    if(getAlphaByPos(x, y) > _threshold)
         sv += 8;
     return sv;
 }
 
-void MarchingSquare::marchSquare(int startx, int starty)
+void MarchingSquare::marchSquare(const unsigned int& startx, const unsigned int& starty)
 {
     int stepx = 0;
     int stepy = 0;
@@ -248,12 +252,8 @@ void MarchingSquare::marchSquare(int startx, int starty)
                     case6s.push_back(i);
                 }
                 break;
-            case 0:
-                CCLOG("case 0 at x:%d, y:%d, coming from %d, %d", curx, cury, prevx, prevy);
-                throw "this shoudln't happen";
-            case 15:
-                CCLOG("case 15 at x:%d, y:%d, coming from %d, %d", curx, cury, prevx, prevy);
-                throw "this shoudln't happen";
+            default:
+                CCLOG("this shouldn't happen.");
         }
         //little optimization
         // if previous direction is same as current direction,
@@ -281,8 +281,7 @@ void MarchingSquare::marchSquare(int startx, int starty)
         prevx = stepx;
         prevy = stepy;
         problem = false;
-        if(count > totalPixel)
-            throw "oh no, marching square cannot find starting position";
+        CCASSERT(count <= totalPixel, "oh no, marching square cannot find starting position");
     } while(curx != startx || cury != starty);
 }
 
@@ -294,24 +293,24 @@ void MarchingSquare::printPoints()
     }
 }
 
-float MarchingSquare::perpendicularDistance(cocos2d::Vec2 ii, cocos2d::Vec2 ss, cocos2d::Vec2 ee)
+float MarchingSquare::perpendicularDistance(const cocos2d::Vec2& i, const cocos2d::Vec2& start, const cocos2d::Vec2& end)
 {
     float res;
     float slope;
     float intercept;
     
-    if(ss.x == ee.x)
+    if(start.x == end.x)
     {
-        res = fabsf(ii.x- ee.x);
+        res = fabsf(i.x- end.x);
     }
-    else if (ss.y == ee.y)
+    else if (start.y == end.y)
     {
-        res = fabsf(ii.y - ee.y);
+        res = fabsf(i.y - end.y);
     }
     else{
-        slope = (ee.y - ss.y) / (ee.x - ss.x);
-        intercept = ss.y - (slope*ss.x);
-        res = fabsf(slope * ii.x - ii.y + intercept) / sqrtf(powf(slope, 2)+1);
+        slope = (end.y - start.y) / (end.x - start.x);
+        intercept = start.y - (slope*start.x);
+        res = fabsf(slope * i.x - i.y + intercept) / sqrtf(powf(slope, 2)+1);
     }
     return res;
 }
@@ -352,7 +351,7 @@ std::vector<cocos2d::Vec2> MarchingSquare::rdp(std::vector<cocos2d::Vec2> v)
         return ret;
     }
 }
-void MarchingSquare::optimize(const cocos2d::Rect &rect, float level)
+void MarchingSquare::optimize(const cocos2d::Rect &rect, const float level)
 {
     if(level <= 0 || _points.size()<4)
         return;
@@ -364,38 +363,36 @@ void MarchingSquare::optimize(const cocos2d::Rect &rect, float level)
         _points.front().y = last.y;
     _points.pop_back();
     
-    printPoints();
     expand(rect, level);
 }
 
-void MarchingSquare::expand(const cocos2d::Rect &rect, float level)
+void MarchingSquare::expand(const cocos2d::Rect &rect, const float& level)
 {
     std::vector<cocos2d::Vec2> offsets;
     size_t length = _points.size();
+    Vec2 v1,v2,v3;
     for (int i=0; i<length; i++) {
-        Vec2 v1;
-        Vec2 v2;
         if (i == 0) {
-            v1 = _points[i]-_points[length-1];
-            v2 = _points[i]-_points[i+1];
+            v1.set(_points[i]-_points[length-1]);
+            v2.set(_points[i]-_points[i+1]);
         }
         else if(i == length-1){
-            v1 = _points[i]-_points[i-1];
-            v2 = _points[i]-_points[0];
+            v1.set(_points[i]-_points[i-1]);
+            v2.set(_points[i]-_points[0]);
         }
         else{
-            v1 = _points[i]-_points[i-1];
-            v2 = _points[i]-_points[i+1];
+            v1.set(_points[i]-_points[i-1]);
+            v2.set(_points[i]-_points[i+1]);
         }
         v1.normalize();
         v2.normalize();
-        Vec2 v3 = isAConvexPoint(v1, -v2)? (v1 + v2) : (-v1-v2);
+        v3 = isAConvexPoint(v1, -v2)? (v1 + v2) : (-v1-v2);
         v3.normalize();
         offsets.push_back(v3);
      }
     for (int i=0; i<length; i++) {
-        _points[i].x = _points[i].x + offsets[i].x * level*2;
-        _points[i].y = _points[i].y + offsets[i].y * level*2;
+        _points[i].x = _points[i].x + offsets[i].x * level;
+        _points[i].y = _points[i].y + offsets[i].y * level;
         _points[i].clamp(rect.origin, rect.origin+rect.size);
     }
 }

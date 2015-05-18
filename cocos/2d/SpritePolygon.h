@@ -28,10 +28,7 @@
 #ifndef COCOS_2D_SpritePolygon_H__
 #define COCOS_2D_SpritePolygon_H__
 
-#include <vector>
-#include "platform/CCPlatformMacros.h"
-#include "2d/CCNode.h"
-#include "renderer/CCTrianglesCommand.h"
+#include "CCNode.h"
 #include "CCDrawNode.h"
 #include "SpritePolygonCache.h"
 
@@ -57,7 +54,7 @@ public:
     //create from a texture (rect), and automatically trace and optimize the points.
     //not recommended for production, its better to use the vec2 list for better performance
     static SpritePolygon *create(const std::string& file, const cocos2d::Rect& rect = cocos2d::Rect::ZERO, float optimization = -1);
-    bool initWithMarching(const std::string &file, const cocos2d::Rect &rect, float optimization);
+    bool initWithMarching(const std::string &file, const cocos2d::Rect &rect, float optimization = -1);
     bool initWithCache(const std::string &file, SpritePolygonInfo *info);
     
     bool initWithTexture(cocos2d::Texture2D *texture);

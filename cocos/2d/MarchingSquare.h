@@ -28,12 +28,9 @@ THE SOFTWARE.
 #ifndef COCOS_2D_MARCHINGSQUARE_H__
 #define COCOS_2D_MARCHINGSQUARE_H__
 
-#include "cocos2d.h"
 #include <string>
 #include <vector>
-#include "base/CCConsole.h"
-#include "platform/CCPlatformMacros.h"
-#include "math/Vec2.h"
+#include "cocos2d.h"
 
 NS_CC_BEGIN
 
@@ -42,32 +39,35 @@ class CC_DLL MarchingSquare
 public:
     MarchingSquare(const std::string &filename, const unsigned int threshold = 0);
     ~MarchingSquare();
-    //TODO: should return list of vec2s
-    void trace();
+    
     void setThreshold(unsigned int threshold){_threshold = threshold;};
-    unsigned int getThreshold(){return _threshold;};
+    const unsigned int getThreshold(){return _threshold;};
+    
     ssize_t getVecCount(){return _points.size();};
-    std::vector<cocos2d::Vec2> getPoints(){return _points;};
+    const std::vector<cocos2d::Vec2> getPoints(){return _points;};
+    
     void printPoints();
+    
     //using Ramer–Douglas–Peucker algorithm
-    void optimize(const cocos2d::Rect &rect, float level = 0);
-    void expand(const cocos2d::Rect &rect, float level = 0);
+    void trace();
+    void optimize(const cocos2d::Rect &rect, const float level = 0);
     
 protected:
     unsigned int findFirstNoneTransparentPixel();
-    void marchSquare(int startx, int starty);
-    unsigned int getSquareValue(int x, int y);
+    void marchSquare(const unsigned int& startx, const unsigned int& starty);
+    unsigned int getSquareValue(const unsigned int& x, const unsigned int& y);
 
-    unsigned char getAlphaAt(const unsigned int i);
-    unsigned char getAlphaAt(const int x, const int y);
+    unsigned char getAlphaByIndex(const unsigned int& i);
+    unsigned char getAlphaByPos(const unsigned int& x, const unsigned int& y);
 
-    int getIndexFromPos(int x, int y){return y*_width+x;};
-    cocos2d::Vec2 getPosFromIndex(int i){return cocos2d::Vec2(i%_width, i/_width);};
+    int getIndexFromPos(const unsigned int& x, const unsigned int& y){return y*_width+x;};
+    cocos2d::Vec2 getPosFromIndex(const unsigned int& i){return cocos2d::Vec2(i%_width, i/_width);};
 
     std::vector<cocos2d::Vec2> rdp(std::vector<cocos2d::Vec2> v);
-    float perpendicularDistance(cocos2d::Vec2 i, cocos2d::Vec2 start, cocos2d::Vec2 end);
+    float perpendicularDistance(const cocos2d::Vec2& i, const cocos2d::Vec2& start, const cocos2d::Vec2& end);
 
     bool isAConvexPoint(const cocos2d::Vec2& p1, const cocos2d::Vec2& p2);
+    void expand(const cocos2d::Rect &rect, const float& level = 0);
     
     cocos2d::Image* _image;
     unsigned char * _data;
