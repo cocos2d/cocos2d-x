@@ -274,366 +274,6 @@ Animate3D : function (
 };
 
 /**
- * @class AttachNode
- */
-jsb.AttachNode = {
-
-/**
- * @method create
- * @param {cc.Bone3D} arg0
- * @return {cc.AttachNode}
- */
-create : function (
-bone3d 
-)
-{
-    return cc.AttachNode;
-},
-
-/**
- * @method AttachNode
- * @constructor
- */
-AttachNode : function (
-)
-{
-},
-
-};
-
-/**
- * @class BillBoard
- */
-jsb.BillBoard = {
-
-/**
- * @method getMode
- * @return {cc.BillBoard::Mode}
- */
-getMode : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setMode
- * @param {cc.BillBoard::Mode} arg0
- */
-setMode : function (
-mode 
-)
-{
-},
-
-/**
- * @method create
-* @param {String|cc.BillBoard::Mode|String} str
-* @param {cc.BillBoard::Mode|rect_object} mode
-* @param {cc.BillBoard::Mode} mode
-* @return {cc.BillBoard|cc.BillBoard|cc.BillBoard}
-*/
-create : function(
-str,
-rect,
-mode 
-)
-{
-    return cc.BillBoard;
-},
-
-/**
- * @method createWithTexture
- * @param {cc.Texture2D} arg0
- * @param {cc.BillBoard::Mode} arg1
- * @return {cc.BillBoard}
- */
-createWithTexture : function (
-texture2d, 
-mode 
-)
-{
-    return cc.BillBoard;
-},
-
-/**
- * @method BillBoard
- * @constructor
- */
-BillBoard : function (
-)
-{
-},
-
-};
-
-/**
- * @class Mesh
- */
-jsb.Mesh = {
-
-/**
- * @method setTexture
-* @param {cc.Texture2D|String} texture2d
-*/
-setTexture : function(
-str 
-)
-{
-},
-
-/**
- * @method getTexture
- * @return {cc.Texture2D}
- */
-getTexture : function (
-)
-{
-    return cc.Texture2D;
-},
-
-/**
- * @method getSkin
- * @return {cc.MeshSkin}
- */
-getSkin : function (
-)
-{
-    return cc.MeshSkin;
-},
-
-/**
- * @method getMaterial
- * @return {cc.Material}
- */
-getMaterial : function (
-)
-{
-    return cc.Material;
-},
-
-/**
- * @method getVertexSizeInBytes
- * @return {int}
- */
-getVertexSizeInBytes : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setMaterial
- * @param {cc.Material} arg0
- */
-setMaterial : function (
-material 
-)
-{
-},
-
-/**
- * @method getName
- * @return {String}
- */
-getName : function (
-)
-{
-    return ;
-},
-
-/**
- * @method getIndexFormat
- * @return {unsigned int}
- */
-getIndexFormat : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getGLProgramState
- * @return {cc.GLProgramState}
- */
-getGLProgramState : function (
-)
-{
-    return cc.GLProgramState;
-},
-
-/**
- * @method getVertexBuffer
- * @return {unsigned int}
- */
-getVertexBuffer : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method calculateAABB
- */
-calculateAABB : function (
-)
-{
-},
-
-/**
- * @method hasVertexAttrib
- * @param {int} arg0
- * @return {bool}
- */
-hasVertexAttrib : function (
-int 
-)
-{
-    return false;
-},
-
-/**
- * @method getBlendFunc
- * @return {cc.BlendFunc}
- */
-getBlendFunc : function (
-)
-{
-    return cc.BlendFunc;
-},
-
-/**
- * @method getMeshIndexData
- * @return {cc.MeshIndexData}
- */
-getMeshIndexData : function (
-)
-{
-    return cc.MeshIndexData;
-},
-
-/**
- * @method setName
- * @param {String} arg0
- */
-setName : function (
-str 
-)
-{
-},
-
-/**
- * @method getIndexCount
- * @return {long}
- */
-getIndexCount : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setMeshIndexData
- * @param {cc.MeshIndexData} arg0
- */
-setMeshIndexData : function (
-meshindexdata 
-)
-{
-},
-
-/**
- * @method getMeshVertexAttribCount
- * @return {long}
- */
-getMeshVertexAttribCount : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setBlendFunc
- * @param {cc.BlendFunc} arg0
- */
-setBlendFunc : function (
-blendfunc 
-)
-{
-},
-
-/**
- * @method getPrimitiveType
- * @return {unsigned int}
- */
-getPrimitiveType : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setSkin
- * @param {cc.MeshSkin} arg0
- */
-setSkin : function (
-meshskin 
-)
-{
-},
-
-/**
- * @method isVisible
- * @return {bool}
- */
-isVisible : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getIndexBuffer
- * @return {unsigned int}
- */
-getIndexBuffer : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setGLProgramState
- * @param {cc.GLProgramState} arg0
- */
-setGLProgramState : function (
-glprogramstate 
-)
-{
-},
-
-/**
- * @method setVisible
- * @param {bool} arg0
- */
-setVisible : function (
-bool 
-)
-{
-},
-
-/**
- * @method Mesh
- * @constructor
- */
-Mesh : function (
-)
-{
-},
-
-};
-
-/**
  * @class Skeleton3D
  */
 jsb.Skeleton3D = {
@@ -744,84 +384,6 @@ Skeleton3D : function (
 };
 
 /**
- * @class Skybox
- */
-jsb.Skybox = {
-
-/**
- * @method reload
- */
-reload : function (
-)
-{
-},
-
-/**
- * @method init
-* @param {String} str
-* @param {String} str
-* @param {String} str
-* @param {String} str
-* @param {String} str
-* @param {String} str
-* @return {bool|bool}
-*/
-init : function(
-str,
-str,
-str,
-str,
-str,
-str 
-)
-{
-    return false;
-},
-
-/**
- * @method setTexture
- * @param {cc.TextureCube} arg0
- */
-setTexture : function (
-texturecube 
-)
-{
-},
-
-/**
- * @method create
-* @param {String} str
-* @param {String} str
-* @param {String} str
-* @param {String} str
-* @param {String} str
-* @param {String} str
-* @return {cc.Skybox|cc.Skybox}
-*/
-create : function(
-str,
-str,
-str,
-str,
-str,
-str 
-)
-{
-    return cc.Skybox;
-},
-
-/**
- * @method Skybox
- * @constructor
- */
-Skybox : function (
-)
-{
-},
-
-};
-
-/**
  * @class Sprite3D
  */
 jsb.Sprite3D = {
@@ -884,18 +446,6 @@ materialdatas
 )
 {
     return false;
-},
-
-/**
- * @method getMaterial
- * @param {int} arg0
- * @return {cc.Material}
- */
-getMaterial : function (
-int 
-)
-{
-    return cc.Material;
 },
 
 /**
@@ -1051,6 +601,16 @@ str
 },
 
 /**
+ * @method removeAttachNode
+ * @param {String} arg0
+ */
+removeAttachNode : function (
+str 
+)
+{
+},
+
+/**
  * @method setLightMask
  * @param {unsigned int} arg0
  */
@@ -1128,16 +688,6 @@ str
  */
 setBlendFunc : function (
 blendfunc 
-)
-{
-},
-
-/**
- * @method removeAttachNode
- * @param {String} arg0
- */
-removeAttachNode : function (
-str 
 )
 {
 },
@@ -1243,232 +793,383 @@ getInstance : function (
 };
 
 /**
- * @class Terrain
+ * @class Mesh
  */
-jsb.Terrain = {
+jsb.Mesh = {
 
 /**
- * @method initHeightMap
- * @param {char} arg0
- * @return {bool}
- */
-initHeightMap : function (
-char 
-)
-{
-    return false;
-},
-
-/**
- * @method setMaxDetailMapAmount
- * @param {int} arg0
- */
-setMaxDetailMapAmount : function (
-int 
-)
-{
-},
-
-/**
- * @method setDrawWire
- * @param {bool} arg0
- */
-setDrawWire : function (
-bool 
-)
-{
-},
-
-/**
- * @method setIsEnableFrustumCull
- * @param {bool} arg0
- */
-setIsEnableFrustumCull : function (
-bool 
-)
-{
-},
-
-/**
- * @method setDetailMap
- * @param {unsigned int} arg0
- * @param {cc.Terrain::DetailMap} arg1
- */
-setDetailMap : function (
-int, 
-map 
-)
-{
-},
-
-/**
- * @method resetHeightMap
- * @param {char} arg0
- */
-resetHeightMap : function (
-char 
-)
-{
-},
-
-/**
- * @method setAlphaMap
- * @param {cc.Texture2D} arg0
- */
-setAlphaMap : function (
-texture2d 
-)
-{
-},
-
-/**
- * @method setSkirtHeightRatio
- * @param {float} arg0
- */
-setSkirtHeightRatio : function (
-float 
-)
-{
-},
-
-/**
- * @method convertToTerrainSpace
- * @param {vec2_object} arg0
- * @return {vec2_object}
- */
-convertToTerrainSpace : function (
-vec2 
-)
-{
-    return cc.Vec2;
-},
-
-/**
- * @method initTextures
- * @return {bool}
- */
-initTextures : function (
-)
-{
-    return false;
-},
-
-/**
- * @method initProperties
- * @return {bool}
- */
-initProperties : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getHeight
-* @param {vec2_object|float} vec2
-* @param {vec3_object|float} vec3
-* @param {vec3_object} vec3
-* @return {float|float}
+ * @method setTexture
+* @param {cc.Texture2D|String} texture2d
 */
-getHeight : function(
-float,
-float,
-vec3 
+setTexture : function(
+str 
+)
+{
+},
+
+/**
+ * @method getTexture
+ * @return {cc.Texture2D}
+ */
+getTexture : function (
+)
+{
+    return cc.Texture2D;
+},
+
+/**
+ * @method getSkin
+ * @return {cc.MeshSkin}
+ */
+getSkin : function (
+)
+{
+    return cc.MeshSkin;
+},
+
+/**
+ * @method getMaterial
+ * @return {cc.Material}
+ */
+getMaterial : function (
+)
+{
+    return cc.Material;
+},
+
+/**
+ * @method getVertexSizeInBytes
+ * @return {int}
+ */
+getVertexSizeInBytes : function (
 )
 {
     return 0;
 },
 
 /**
- * @method setLODDistance
- * @param {float} arg0
+ * @method setMaterial
+ * @param {cc.Material} arg0
+ */
+setMaterial : function (
+material 
+)
+{
+},
+
+/**
+ * @method getName
+ * @return {String}
+ */
+getName : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getIndexFormat
+ * @return {unsigned int}
+ */
+getIndexFormat : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getGLProgramState
+ * @return {cc.GLProgramState}
+ */
+getGLProgramState : function (
+)
+{
+    return cc.GLProgramState;
+},
+
+/**
+ * @method getVertexBuffer
+ * @return {unsigned int}
+ */
+getVertexBuffer : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method calculateAABB
+ */
+calculateAABB : function (
+)
+{
+},
+
+/**
+ * @method hasVertexAttrib
+ * @param {int} arg0
+ * @return {bool}
+ */
+hasVertexAttrib : function (
+int 
+)
+{
+    return false;
+},
+
+/**
+ * @method draw
+ * @param {cc.Renderer} arg0
  * @param {float} arg1
- * @param {float} arg2
+ * @param {mat4_object} arg2
+ * @param {unsigned int} arg3
+ * @param {unsigned int} arg4
+ * @param {vec4_object} arg5
+ * @param {bool} arg6
  */
-setLODDistance : function (
+draw : function (
+renderer, 
 float, 
-float, 
-float 
-)
-{
-},
-
-/**
- * @method getTerrainSize
- * @return {size_object}
- */
-getTerrainSize : function (
-)
-{
-    return cc.Size;
-},
-
-/**
- * @method getIntersectionPoint
- * @param {cc.Ray} arg0
- * @return {vec3_object}
- */
-getIntersectionPoint : function (
-ray 
-)
-{
-    return cc.Vec3;
-},
-
-/**
- * @method getNormal
- * @param {int} arg0
- * @param {int} arg1
- * @return {vec3_object}
- */
-getNormal : function (
+mat4, 
 int, 
-int 
-)
-{
-    return cc.Vec3;
-},
-
-/**
- * @method reload
- */
-reload : function (
-)
-{
-},
-
-/**
- * @method getImageHeight
- * @param {int} arg0
- * @param {int} arg1
- * @return {float}
- */
-getImageHeight : function (
 int, 
-int 
+vec4, 
+bool 
+)
+{
+},
+
+/**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
+},
+
+/**
+ * @method getMeshIndexData
+ * @return {cc.MeshIndexData}
+ */
+getMeshIndexData : function (
+)
+{
+    return cc.MeshIndexData;
+},
+
+/**
+ * @method setName
+ * @param {String} arg0
+ */
+setName : function (
+str 
+)
+{
+},
+
+/**
+ * @method getIndexCount
+ * @return {long}
+ */
+getIndexCount : function (
 )
 {
     return 0;
 },
 
 /**
- * @method getMaxHeight
- * @return {float}
+ * @method setMeshIndexData
+ * @param {cc.MeshIndexData} arg0
  */
-getMaxHeight : function (
+setMeshIndexData : function (
+meshindexdata 
+)
+{
+},
+
+/**
+ * @method getMeshVertexAttribCount
+ * @return {long}
+ */
+getMeshVertexAttribCount : function (
 )
 {
     return 0;
 },
 
 /**
- * @method getMinHeight
- * @return {float}
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
  */
-getMinHeight : function (
+setBlendFunc : function (
+blendfunc 
+)
+{
+},
+
+/**
+ * @method getPrimitiveType
+ * @return {unsigned int}
+ */
+getPrimitiveType : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method setSkin
+ * @param {cc.MeshSkin} arg0
+ */
+setSkin : function (
+meshskin 
+)
+{
+},
+
+/**
+ * @method isVisible
+ * @return {bool}
+ */
+isVisible : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getIndexBuffer
+ * @return {unsigned int}
+ */
+getIndexBuffer : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setGLProgramState
+ * @param {cc.GLProgramState} arg0
+ */
+setGLProgramState : function (
+glprogramstate 
+)
+{
+},
+
+/**
+ * @method setVisible
+ * @param {bool} arg0
+ */
+setVisible : function (
+bool 
+)
+{
+},
+
+/**
+ * @method Mesh
+ * @constructor
+ */
+Mesh : function (
+)
+{
+},
+
+};
+
+/**
+ * @class AttachNode
+ */
+jsb.AttachNode = {
+
+/**
+ * @method create
+ * @param {cc.Bone3D} arg0
+ * @return {cc.AttachNode}
+ */
+create : function (
+bone3d 
+)
+{
+    return cc.AttachNode;
+},
+
+/**
+ * @method AttachNode
+ * @constructor
+ */
+AttachNode : function (
+)
+{
+},
+
+};
+
+/**
+ * @class BillBoard
+ */
+jsb.BillBoard = {
+
+/**
+ * @method getMode
+ * @return {cc.BillBoard::Mode}
+ */
+getMode : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setMode
+ * @param {cc.BillBoard::Mode} arg0
+ */
+setMode : function (
+mode 
+)
+{
+},
+
+/**
+ * @method create
+* @param {String|cc.BillBoard::Mode|String} str
+* @param {cc.BillBoard::Mode|rect_object} mode
+* @param {cc.BillBoard::Mode} mode
+* @return {cc.BillBoard|cc.BillBoard|cc.BillBoard}
+*/
+create : function(
+str,
+rect,
+mode 
+)
+{
+    return cc.BillBoard;
+},
+
+/**
+ * @method createWithTexture
+ * @param {cc.Texture2D} arg0
+ * @param {cc.BillBoard::Mode} arg1
+ * @return {cc.BillBoard}
+ */
+createWithTexture : function (
+texture2d, 
+mode 
+)
+{
+    return cc.BillBoard;
+},
+
+/**
+ * @method BillBoard
+ * @constructor
+ */
+BillBoard : function (
+)
+{
 },
 
 };
@@ -1515,6 +1216,305 @@ str
  * @constructor
  */
 TextureCube : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Skybox
+ */
+jsb.Skybox = {
+
+/**
+ * @method reload
+ */
+reload : function (
+)
+{
+},
+
+/**
+ * @method init
+* @param {String} str
+* @param {String} str
+* @param {String} str
+* @param {String} str
+* @param {String} str
+* @param {String} str
+* @return {bool|bool}
+*/
+init : function(
+str,
+str,
+str,
+str,
+str,
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method setTexture
+ * @param {cc.TextureCube} arg0
+ */
+setTexture : function (
+texturecube 
+)
+{
+},
+
+/**
+ * @method create
+* @param {String} str
+* @param {String} str
+* @param {String} str
+* @param {String} str
+* @param {String} str
+* @param {String} str
+* @return {cc.Skybox|cc.Skybox}
+*/
+create : function(
+str,
+str,
+str,
+str,
+str,
+str 
+)
+{
+    return cc.Skybox;
+},
+
+/**
+ * @method Skybox
+ * @constructor
+ */
+Skybox : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Terrain
+ */
+jsb.Terrain = {
+
+/**
+ * @method initHeightMap
+ * @param {char} arg0
+ * @return {bool}
+ */
+initHeightMap : function (
+char 
+)
+{
+    return false;
+},
+
+/**
+ * @method getIntersectionPoint
+ * @param {cc.Ray} arg0
+ * @return {vec3_object}
+ */
+getIntersectionPoint : function (
+ray 
+)
+{
+    return cc.Vec3;
+},
+
+/**
+ * @method setAlphaMap
+ * @param {cc.Texture2D} arg0
+ */
+setAlphaMap : function (
+texture2d 
+)
+{
+},
+
+/**
+ * @method setSkirtHeightRatio
+ * @param {float} arg0
+ */
+setSkirtHeightRatio : function (
+float 
+)
+{
+},
+
+/**
+ * @method convertToTerrainSpace
+ * @param {vec2_object} arg0
+ * @return {vec2_object}
+ */
+convertToTerrainSpace : function (
+vec2 
+)
+{
+    return cc.Vec2;
+},
+
+/**
+ * @method getHeight
+* @param {vec2_object|float} vec2
+* @param {vec3_object|float} vec3
+* @param {vec3_object} vec3
+* @return {float|float}
+*/
+getHeight : function(
+float,
+float,
+vec3 
+)
+{
+    return 0;
+},
+
+/**
+ * @method initTextures
+ * @return {bool}
+ */
+initTextures : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method initProperties
+ * @return {bool}
+ */
+initProperties : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getNormal
+ * @param {int} arg0
+ * @param {int} arg1
+ * @return {vec3_object}
+ */
+getNormal : function (
+int, 
+int 
+)
+{
+    return cc.Vec3;
+},
+
+/**
+ * @method setDrawWire
+ * @param {bool} arg0
+ */
+setDrawWire : function (
+bool 
+)
+{
+},
+
+/**
+ * @method reload
+ */
+reload : function (
+)
+{
+},
+
+/**
+ * @method setDetailMap
+ * @param {unsigned int} arg0
+ * @param {cc.Terrain::DetailMap} arg1
+ */
+setDetailMap : function (
+int, 
+map 
+)
+{
+},
+
+/**
+ * @method getImageHeight
+ * @param {int} arg0
+ * @param {int} arg1
+ * @return {float}
+ */
+getImageHeight : function (
+int, 
+int 
+)
+{
+    return 0;
+},
+
+/**
+ * @method getMinHeight
+ * @return {float}
+ */
+getMinHeight : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setLODDistance
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ */
+setLODDistance : function (
+float, 
+float, 
+float 
+)
+{
+},
+
+/**
+ * @method resetHeightMap
+ * @param {char} arg0
+ */
+resetHeightMap : function (
+char 
+)
+{
+},
+
+/**
+ * @method getMaxHeight
+ * @return {float}
+ */
+getMaxHeight : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setMaxDetailMapAmount
+ * @param {int} arg0
+ */
+setMaxDetailMapAmount : function (
+int 
+)
+{
+},
+
+/**
+ * @method setIsEnableFrustumCull
+ * @param {bool} arg0
+ */
+setIsEnableFrustumCull : function (
+bool 
 )
 {
 },

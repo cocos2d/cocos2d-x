@@ -3,9 +3,10 @@
 // Used by game.rc
 //
 #define IDS_PROJNAME                    100
-#define IDR_MENU_COCOS                  200
+#define IDR_TESTLUA                     100
+#define IDR_MENU_COCOS                  201
 #define IDD_DIALOG1                     202
-#define IDD_DIALOG_ABOUT                203
+#define IDD_DIALOG_ABOUT                202
 #define IDC_EDIT2                       1001
 #define ID_VIEW_SIZE                    30001
 #define ID_FILE_NEW_WINDOW              32771
@@ -26,7 +27,7 @@
 #define ID_CONTROL_TOP                  32793
 
 // Next default values for new objects
-//
+// 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        201

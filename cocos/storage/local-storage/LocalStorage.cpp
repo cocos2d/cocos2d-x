@@ -42,7 +42,6 @@ static sqlite3 *_db;
 static sqlite3_stmt *_stmt_select;
 static sqlite3_stmt *_stmt_remove;
 static sqlite3_stmt *_stmt_update;
-static sqlite3_stmt *_stmt_clear;
 
 
 static void localStorageCreateTable()
@@ -81,10 +80,6 @@ void localStorageInit( const std::string& fullpath/* = "" */)
 		// DELETE
 		const char *sql_remove = "DELETE FROM data WHERE key=?;";
 		ret |= sqlite3_prepare_v2(_db, sql_remove, -1, &_stmt_remove, nullptr);
-        
-        // Clear
-        const char *sql_clear = "DELETE FROM data;";
-        ret |= sqlite3_prepare_v2(_db, sql_clear, -1, &_stmt_clear, nullptr);
 
 		if( ret != SQLITE_OK ) {
 			printf("Error initializing DB\n");
@@ -135,15 +130,11 @@ bool localStorageGetItem( const std::string& key, std::string *outItem )
 	ok |= sqlite3_step(_stmt_select);
 	const unsigned char *text = sqlite3_column_text(_stmt_select, 0);
 
-	if ( ok != SQLITE_OK && ok != SQLITE_DONE && ok != SQLITE_ROW )
+	if( (ok != SQLITE_OK && ok != SQLITE_DONE && ok != SQLITE_ROW) || !text)
 	{
 		printf("Error in localStorage.getItem()\n");
 		return false;
 	}
-	else if (!text)
-    {
-        return false;
-    }
 	else
     {
         outItem->assign((const char*)text);
@@ -164,17 +155,6 @@ void localStorageRemoveItem( const std::string& key )
 
 	if( ok != SQLITE_OK && ok != SQLITE_DONE)
 		printf("Error in localStorage.removeItem()\n");
-}
-
-/** removes all items from the LS */
-void localStorageClear()
-{
-    assert( _initialized );
-    
-    int ok = sqlite3_step(_stmt_clear);
-    
-    if( ok != SQLITE_OK && ok != SQLITE_DONE)
-        printf("Error in localStorage.clear()\n");
 }
 
 #endif // #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)

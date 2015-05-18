@@ -9,16 +9,20 @@
 #ifndef __PERFORMANCE_RENDERER_TEST_H__
 #define __PERFORMANCE_RENDERER_TEST_H__
 
-#include "BaseTest.h"
+#include "PerformanceTest.h"
 
-DEFINE_TEST_SUITE(PerformceRenderTests);
-
-class RenderPerformceTest : public TestCase
+class RenderTestLayer : public PerformBasicLayer
 {
+    
 public:
-    CREATE_FUNC(RenderPerformceTest);
+    RenderTestLayer();
+    virtual ~RenderTestLayer();
     
     virtual void onEnter() override;
+    virtual void showCurrentTest() override;
+public:
+    static cocos2d::Scene* scene();
 };
 
+void runRendererTest();
 #endif

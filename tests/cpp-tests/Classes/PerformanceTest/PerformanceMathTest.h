@@ -1,15 +1,14 @@
 #ifndef __PERFORMANCE_MATH_TEST_H__
 #define __PERFORMANCE_MATH_TEST_H__
 
-#include "BaseTest.h"
+#include "PerformanceTest.h"
 
-DEFINE_TEST_SUITE(PerformceMathTests);
-
-class PerformanceMathLayer : public TestCase
+class PerformanceMathLayer : public PerformBasicLayer
 {
 public:
-    PerformanceMathLayer()
-    : _loopCount(1000)
+    PerformanceMathLayer(bool bControlMenuVisible, int nMaxCases = 0, int nCurCase = 0):
+    PerformBasicLayer(bControlMenuVisible, nMaxCases, nCurCase)
+    , _loopCount(1000)
     , _stepCount(500)
     , _profileName("")
     {
@@ -17,6 +16,11 @@ public:
     }
     
     virtual void onEnter() override;
+    virtual void restartCallback(cocos2d::Ref* sender) override;
+    virtual void nextCallback(cocos2d::Ref* sender) override;
+    virtual void backCallback(cocos2d::Ref* sender) override;
+    
+    virtual void showCurrentTest() {}
     
     virtual std::string title() const { return "Math Performance Test"; }
     virtual std::string subtitle() const { return "PerformanceMathLayer subTitle"; }
@@ -37,9 +41,8 @@ protected:
 class PerformanceMathLayer1 : public PerformanceMathLayer
 {
 public:
-    CREATE_FUNC(PerformanceMathLayer1);
-
-    PerformanceMathLayer1()
+    PerformanceMathLayer1(bool bControlMenuVisible, int nMaxCases = 0, int nCurCase = 0):
+    PerformanceMathLayer(bControlMenuVisible, nMaxCases, nCurCase)
     {
         _profileName = "profile_Mat4*Mat4";
     }
@@ -53,9 +56,8 @@ private:
 class PerformanceMathLayer2 : public PerformanceMathLayer
 {
 public:
-    CREATE_FUNC(PerformanceMathLayer2);
-
-    PerformanceMathLayer2()
+    PerformanceMathLayer2(bool bControlMenuVisible, int nMaxCases = 0, int nCurCase = 0):
+    PerformanceMathLayer(bControlMenuVisible, nMaxCases, nCurCase)
     {
         _profileName = "profile_MatTransformVec4";
     }
@@ -65,5 +67,7 @@ public:
     virtual std::string subtitle() const { return "Mat4 TransformVec4"; }
     
 };
+
+void runMathPerformanceTest();
 
 #endif //__PERFORMANCE_MATH_TEST_H__

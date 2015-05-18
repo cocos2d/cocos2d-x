@@ -31,6 +31,7 @@
 #define __cocos2d_libs__CCMaterial__
 
 #include <string>
+#include "json/document.h"
 
 #include "renderer/CCRenderState.h"
 #include "renderer/CCTechnique.h"
@@ -49,7 +50,6 @@ class Technique;
 class Pass;
 class GLProgramState;
 class Node;
-class Properties;
 
 /// Material
 class CC_DLL Material : public RenderState
@@ -62,14 +62,7 @@ class CC_DLL Material : public RenderState
     friend class Mesh;
 
 public:
-    /**
-     * Creates a Material using the data from the Properties object defined at the specified URL,
-     * where the URL is of the format "<file-path>.<extension>#<namespace-id>/<namespace-id>/.../<namespace-id>"
-     * (and "#<namespace-id>/<namespace-id>/.../<namespace-id>" is optional).
-     *
-     * @param url The URL pointing to the Properties object defining the material.
-     *
-     * @return A new Material or NULL if there was an error.
+    /** Creates a Material with a JSON file containing the definition of the material.
      */
     static Material* createWithFilename(const std::string& path);
 
@@ -78,15 +71,6 @@ public:
      Added in order to support legacy code.
      */
     static Material* createWithGLStateProgram(GLProgramState* programState);
-
-    /**
-     * Creates a material from the specified properties object.
-     *
-     * @param materialProperties The properties object defining the
-     *      material (must have namespace equal to 'material').
-     * @return A new Material.
-     */
-    static Material* createWithProperties(Properties* materialProperties);
 
     /// returns the material name
     std::string getName() const;
@@ -103,40 +87,38 @@ public:
      */
     Technique* getTechniqueByIndex(ssize_t index);
 
-    /** Returns the Technique used by the Material */
-    Technique* getTechnique() const;
-
-    /** Returns the list of Techniques */
-    const Vector<Technique*>& getTechniques() const;
-
-    /** Returns the number of Techniques in the Material. */
-    ssize_t getTechniqueCount() const;
-
     /** Adds a Technique into the Material */
     void addTechnique(Technique* technique);
 
     /** Sets the current technique */
     void setTechnique(const std::string& techniqueName);
 
-    /** returns a clone (deep-copy) of the material */
-    Material* clone() const;
+    /** Returns the number of Techniques in the Material. */
+    ssize_t getTechniqueCount() const;
+
+    /** Returns the Technique used by the Material */
+    Technique* getTechnique() const;
 
 protected:
     Material();
     ~Material();
     bool initWithGLProgramState(GLProgramState* state);
     bool initWithFile(const std::string& file);
-    bool initWithProperties(Properties* materialProperties);
 
     void setTarget(Node* target);
 
-    bool parseProperties(Properties* properties);
-    bool parseTechnique(Properties* properties);
-    bool parsePass(Technique* technique, Properties* properties);
-    bool parseSampler(Pass* pass, Properties* properties);
-    bool parseShader(Pass* pass, Properties* properties);
-    bool parseUniform(GLProgramState* programState, Properties* properties, const char* uniformName);
-    bool parseRenderState(RenderState* renderState, Properties* properties);
+    bool parseMetadata(const rapidjson::Document& json);
+    bool parseProperties(const rapidjson::Document& json);
+    bool parseTechnique(const rapidjson::GenericValue<rapidjson::UTF8<> >& techniqueJSON);
+    bool parsePass(Technique* technique, const rapidjson::GenericValue<rapidjson::UTF8<> >& passJSON);
+    bool parseTexture(Pass* pass, const rapidjson::GenericValue<rapidjson::UTF8<> >& textureJSON);
+    bool parseShader(Pass* pass, const rapidjson::GenericValue<rapidjson::UTF8<> >& shaderJSON);
+    bool parseUniform(GLProgramState* programState, const rapidjson::Value::ConstMemberIterator& iterator);
+    Vec2 parseUniformVec2(const rapidjson::GenericValue<rapidjson::UTF8<> >& uniformJSON);
+    Vec3 parseUniformVec3(const rapidjson::GenericValue<rapidjson::UTF8<> >& uniformJSON);
+    Vec4 parseUniformVec4(const rapidjson::GenericValue<rapidjson::UTF8<> >& uniformJSON);
+    Mat4 parseUniformMat4(const rapidjson::GenericValue<rapidjson::UTF8<> >& uniformJSON);
+    bool parseRenderState(Pass* pass, const rapidjson::GenericValue<rapidjson::UTF8<> >& renderState);
 
 
     // material name

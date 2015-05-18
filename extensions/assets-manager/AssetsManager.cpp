@@ -29,7 +29,7 @@
 #include <vector>
 #include <thread>
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32) && (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
@@ -85,10 +85,10 @@ struct ProgressMessage
 // Implementation of AssetsManager
 
 AssetsManager::AssetsManager(const char* packageUrl/* =nullptr */, const char* versionFileUrl/* =nullptr */, const char* storagePath/* =nullptr */)
-:  _storagePath(storagePath ? storagePath : "")
+:  _storagePath(storagePath)
 , _version("")
-, _packageUrl(packageUrl ? packageUrl : "")
-, _versionFileUrl(versionFileUrl ? versionFileUrl : "")
+, _packageUrl(packageUrl)
+, _versionFileUrl(versionFileUrl)
 , _downloadedVersion("")
 , _curl(nullptr)
 , _connectionTimeout(0)
@@ -180,7 +180,8 @@ bool AssetsManager::checkUpdate()
         return false;
     }
     
-    if (getVersion() == _version)
+    string recordedVersion = UserDefault::getInstance()->getStringForKey(keyOfVersion().c_str());
+    if (recordedVersion == _version)
     {
         Director::getInstance()->getScheduler()->performFunctionInCocosThread([&, this]{
             if (this->_delegate)
@@ -453,7 +454,7 @@ bool AssetsManager::uncompress()
  */
 bool AssetsManager::createDirectory(const char *path)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     return FileUtils::getInstance()->createDirectory(_storagePath.c_str());
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     BOOL ret = CreateDirectoryA(path, nullptr);
@@ -495,10 +496,7 @@ static size_t downLoadPackage(void *ptr, size_t size, size_t nmemb, void *userda
 int assetsManagerProgressFunc(void *ptr, double totalToDownload, double nowDownloaded, double totalToUpLoad, double nowUpLoaded)
 {
     static int percent = 0;
-    int tmp = 0;
-    if (totalToDownload > 0) {
-        tmp = (int)(nowDownloaded / totalToDownload * 100);
-    }
+    int tmp = (int)(nowDownloaded / totalToDownload * 100);
     
     if (percent != tmp)
     {
@@ -648,7 +646,7 @@ AssetsManager* AssetsManager::create(const char* packageUrl, const char* version
 void AssetsManager::createStoragePath()
 {
     // Remove downloaded files
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     FileUtils::getInstance()->createDirectory(_storagePath.c_str());
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     if ((GetFileAttributesA(_storagePath.c_str())) == INVALID_FILE_ATTRIBUTES)
@@ -671,7 +669,7 @@ void AssetsManager::destroyStoragePath()
     deleteVersion();
     
     // Remove downloaded files
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
     FileUtils::getInstance()->removeDirectory(_storagePath.c_str());
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     string command = "rd /s /q ";

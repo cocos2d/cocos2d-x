@@ -77,37 +77,19 @@ var LocalStorageTest = SysTestBase.extend({
 
         var key = 'key_' + Math.random();
         var ls = cc.sys.localStorage;
-        cc.log("- Adding items");
+        cc.log(1);
         ls.setItem(key, "Hello world");
-        var key1 = "1" + key;
-        ls.setItem(key1, "Hello JavaScript");
-        var key2 = "2" + key;
-        ls.setItem(key2, "Hello Cocos2d-JS");
-        var key3 = "3" + key;
-        ls.setItem(key3, "Hello Cocos");
 
-        cc.log("- Getting Hello world");
+        cc.log(2);
         var r = ls.getItem(key);
         cc.log(r);
 
-        cc.log("- Removing Hello world");
+        cc.log(3);
         ls.removeItem(key);
 
-        cc.log("- Getting Hello world");
+        cc.log(4);
         r = ls.getItem(key);
         cc.log(r);
-
-        cc.log("- Getting other items");
-        cc.log( ls.getItem(key1) );
-        cc.log( ls.getItem(key2) );
-        cc.log( ls.getItem(key3) );
-
-        cc.log("- Clearing local storage");
-        ls.clear();
-        cc.log("- Getting other items");
-        cc.log( ls.getItem(key1) );
-        cc.log( ls.getItem(key2) );
-        cc.log( ls.getItem(key3) );
     }
 
 });

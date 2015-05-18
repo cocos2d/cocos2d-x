@@ -43,7 +43,7 @@
 #include "platform/win32/inet_pton_mingw.h"
 #endif
 #define bzero(a, b) memset(a, 0, b);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #include "inet_ntop_winrt.h"
 #include "inet_pton_winrt.h"
 #include "CCWinRTUtils.h"
@@ -384,7 +384,7 @@ bool Console::listenOnTCP(int port)
     hints.ai_family = AF_INET; // AF_UNSPEC: Do we need IPv6 ?
     hints.ai_socktype = SOCK_STREAM;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     WSADATA wsaData;
     n = WSAStartup(MAKEWORD(2, 2),&wsaData);
 
@@ -426,7 +426,7 @@ bool Console::listenOnTCP(int port)
             break;          /* success */
 
 /* bind error, close and try next one */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
         closesocket(listenfd);
 #else
         close(listenfd);
@@ -513,7 +513,7 @@ void Console::commandExit(int fd, const std::string &args)
 {
     FD_CLR(fd, &_read_set);
     _fds.erase(std::remove(_fds.begin(), _fds.end(), fd), _fds.end());
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
         closesocket(fd);
 #else
         close(fd);
@@ -1157,7 +1157,7 @@ void Console::loop()
                     //receive a SIGPIPE, which will cause linux system shutdown the sending process.
                     //Add this ioctl code to check if the socket has been closed by peer.
                     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
                     u_long n = 0;
                     ioctlsocket(fd, FIONREAD, &n);
 #else
@@ -1202,14 +1202,14 @@ void Console::loop()
     // clean up: ignore stdin, stdout and stderr
     for(const auto &fd: _fds )
     {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
         closesocket(fd);
 #else
         close(fd);
 #endif
     }
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     closesocket(_listenfd);
     WSACleanup();
 #else

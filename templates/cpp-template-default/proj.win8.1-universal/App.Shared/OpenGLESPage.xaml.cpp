@@ -36,7 +36,7 @@ using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 
-#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP) || _MSC_VER >= 1900
+#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
 using namespace Windows::Phone::UI::Input;
 #endif
 
@@ -63,12 +63,6 @@ OpenGLESPage::OpenGLESPage(OpenGLES* openGLES) :
     window->VisibilityChanged +=
         ref new Windows::Foundation::TypedEventHandler<Windows::UI::Core::CoreWindow^, Windows::UI::Core::VisibilityChangedEventArgs^>(this, &OpenGLESPage::OnVisibilityChanged);
 
-	window->KeyDown += ref new TypedEventHandler<CoreWindow^, KeyEventArgs^>(this, &OpenGLESPage::OnKeyPressed);
-
-	window->KeyUp += ref new TypedEventHandler<CoreWindow^, KeyEventArgs^>(this, &OpenGLESPage::OnKeyReleased);
-
-	window->CharacterReceived += ref new TypedEventHandler<CoreWindow^, CharacterReceivedEventArgs^>(this, &OpenGLESPage::OnCharacterReceived);
-
     swapChainPanel->SizeChanged +=
         ref new Windows::UI::Xaml::SizeChangedEventHandler(this, &OpenGLESPage::OnSwapChainPanelSizeChanged);
 
@@ -84,17 +78,6 @@ OpenGLESPage::OpenGLESPage(OpenGLES* openGLES) :
 
     mSwapChainPanelSize = { swapChainPanel->RenderSize.Width, swapChainPanel->RenderSize.Height };
 
-#if _MSC_VER >= 1900
-    if (Windows::Foundation::Metadata::ApiInformation::IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-    {
-        Windows::UI::ViewManagement::StatusBar::GetForCurrentView()->HideAsync();
-    }
-
-    if (Windows::Foundation::Metadata::ApiInformation::IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
-    {
-        HardwareButtons::BackPressed += ref new EventHandler<BackPressedEventArgs^>(this, &OpenGLESPage::OnBackButtonPressed);
-	}
-#else
 #if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
     Windows::UI::ViewManagement::StatusBar::GetForCurrentView()->HideAsync();
     HardwareButtons::BackPressed += ref new EventHandler<BackPressedEventArgs^>(this, &OpenGLESPage::OnBackButtonPressed);
@@ -104,7 +87,6 @@ OpenGLESPage::OpenGLESPage(OpenGLES* openGLES) :
     auto pointerVisualizationSettings = Windows::UI::Input::PointerVisualizationSettings::GetForCurrentView();
     pointerVisualizationSettings->IsContactFeedbackEnabled = false;
     pointerVisualizationSettings->IsBarrelButtonFeedbackEnabled = false;
-#endif
 #endif
 
     // Register our SwapChainPanel to get independent input pointer events
@@ -122,12 +104,13 @@ OpenGLESPage::OpenGLESPage(OpenGLES* openGLES) :
         m_coreInput->PointerMoved += ref new TypedEventHandler<Object^, PointerEventArgs^>(this, &OpenGLESPage::OnPointerMoved);
         m_coreInput->PointerReleased += ref new TypedEventHandler<Object^, PointerEventArgs^>(this, &OpenGLESPage::OnPointerReleased);
 
-		// Begin processing input messages as they're delivered.
+        // Begin processing input messages as they're delivered.
         m_coreInput->Dispatcher->ProcessEvents(CoreProcessEventsOption::ProcessUntilQuit);
     });
 
     // Run task on a dedicated high priority background thread.
     m_inputLoopWorker = ThreadPool::RunAsync(workItemHandler, WorkItemPriority::High, WorkItemOptions::TimeSliced);
+
 }
 
 OpenGLESPage::~OpenGLESPage()
@@ -167,38 +150,6 @@ void OpenGLESPage::OnPointerReleased(Object^ sender, PointerEventArgs^ e)
     }
 }
 
-void OpenGLESPage::OnKeyPressed(CoreWindow^ sender, KeyEventArgs^ e)
-{
-	if (!e->KeyStatus.WasKeyDown)
-	{
-		//log("OpenGLESPage::OnKeyPressed %d", e->VirtualKey);
-		if (m_renderer)
-		{
-			m_renderer->QueueKeyboardEvent(WinRTKeyboardEventType::KeyPressed, e);
-		}
-	}
-}
-
-void OpenGLESPage::OnCharacterReceived(CoreWindow^ sender, CharacterReceivedEventArgs^ e)
-{
-#if 0
-	if (!e->KeyStatus.WasKeyDown)
-	{
-		log("OpenGLESPage::OnCharacterReceived %d", e->KeyCode);
-	}
-#endif
-}
-
-void OpenGLESPage::OnKeyReleased(CoreWindow^ sender, KeyEventArgs^ e)
-{
-	//log("OpenGLESPage::OnKeyReleased %d", e->VirtualKey);
-	if (m_renderer)
-	{
-		m_renderer->QueueKeyboardEvent(WinRTKeyboardEventType::KeyReleased, e);
-	}
-}
-
-
 void OpenGLESPage::OnOrientationChanged(DisplayInformation^ sender, Object^ args)
 {
     critical_section::scoped_lock lock(mSwapChainPanelSizeCriticalSection);
@@ -217,7 +168,7 @@ void OpenGLESPage::OnVisibilityChanged(Windows::UI::Core::CoreWindow^ sender, Wi
     }
 }
 
-#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP) || _MSC_VER >= 1900
+#if (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
 /*
     We set args->Handled = true to prevent the app from quitting when the back button is pressed.
     This is because this back button event happens on the XAML UI thread and not the cocos2d-x UI thread.
@@ -266,7 +217,7 @@ void OpenGLESPage::GetSwapChainPanelSize(GLsizei* width, GLsizei* height)
 
 void OpenGLESPage::CreateRenderSurface()
 {
-    if (mOpenGLES && mRenderSurface == EGL_NO_SURFACE)
+    if (mOpenGLES)
     {
         //
         // A Custom render surface size can be specified by uncommenting the following lines.

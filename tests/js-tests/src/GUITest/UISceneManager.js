@@ -528,40 +528,21 @@
                     return new UIRichTextTest();
                 }
             }
-        ],
-        "UIVideoPlayer": [
-            {
-                title: "UIVideoPlayerTest",
-                func: function () {
-                    return new UIVideoPlayerTest();
-                }
-            }
-        ],
-        "UIWebViewTest": [
-            {
-                title: "UIWebViewTest",
-                func: function () {
-                    return new UIWebViewTest();
-                }
-            }
         ]
     };
 
-    var guiTestScene = null;
     global.GUITestScene = cc.Class.extend({
 
         runThisTest: function(){
-            if(guiTestScene === null)
-                guiTestScene = new listScene;
-            cc.director.runScene(guiTestScene);
+            cc.director.runScene(new listScene);
         }
 
     });
 
     var listScene = TestScene.extend({
 
-        ctor: function(){
-            TestScene.prototype.ctor.call(this);
+        onEnter: function(){
+            TestScene.prototype.onEnter.call(this);
 
             var menu = new cc.Menu();
             menu.x = 0;
@@ -586,14 +567,6 @@
             this._menu = menu;
             this.addChild(menu);
 
-            this._length = 0;
-            for(var p in testingItems){
-                this._length++;
-            }
-        },
-
-        onEnter: function(){
-            TestScene.prototype.onEnter.call(this);
             if ('touches' in cc.sys.capabilities)
                 cc.eventManager.addListener({
                     event: cc.EventListener.TOUCH_ALL_AT_ONCE,
@@ -617,6 +590,11 @@
                         return true;
                     }
                 }, this);
+            }
+
+            this._length = 0;
+            for(var p in testingItems){
+                this._length++;
             }
         },
 

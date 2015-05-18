@@ -101,15 +101,6 @@ public class Cocos2dxLocalStorage {
         }
     }
     
-    public static void clear() {
-        try {
-            String sql = "delete from "+TABLE_NAME;
-            mDatabase.execSQL(sql);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
 
     /**
      * This creates/opens the database.

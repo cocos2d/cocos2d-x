@@ -1,0 +1,94 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cpp-tests", "..\tests\cpp-tests\proj.win32\cpp-tests.vcxproj", "{76A39BB2-9B84-4C65-98A5-654D86B86F2A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lua-tests", "..\tests\lua-tests\project\proj.win32\lua-tests.win32.vcxproj", "{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cpp-empty-test", "..\tests\cpp-empty-test\proj.win32\cpp-empty-test.vcxproj", "{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lua-empty-test", "..\tests\lua-empty-test\project\proj.win32\lua-empty-test.vcxproj", "{13E55395-94A2-4CD9-BFC2-1A051F80C17D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcocos2d", "..\cocos\2d\libcocos2d.vcxproj", "{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libluacocos2d", "..\cocos\scripting\lua-bindings\proj.win32\libluacocos2d.vcxproj", "{9F2D6CE6-C893-4400-B50C-6DB70CC2562F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{92D54E36-7916-48EF-A951-224DD3B25442}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libSpine", "..\cocos\editor-support\spine\proj.win32\libSpine.vcxproj", "{B7C2A162-DEC9-4418-972E-240AB3CBFCAE}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libbox2d", "..\external\Box2D\proj.win32\libbox2d.vcxproj", "{929480E7-23C0-4DF6-8456-096D71547116}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|Win32 = Debug|Win32
+		Release|ARM = Release|ARM
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{76A39BB2-9B84-4C65-98A5-654D86B86F2A}.Debug|ARM.ActiveCfg = Debug|Win32
+		{76A39BB2-9B84-4C65-98A5-654D86B86F2A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{76A39BB2-9B84-4C65-98A5-654D86B86F2A}.Debug|Win32.Build.0 = Debug|Win32
+		{76A39BB2-9B84-4C65-98A5-654D86B86F2A}.Release|ARM.ActiveCfg = Release|Win32
+		{76A39BB2-9B84-4C65-98A5-654D86B86F2A}.Release|Win32.ActiveCfg = Release|Win32
+		{76A39BB2-9B84-4C65-98A5-654D86B86F2A}.Release|Win32.Build.0 = Release|Win32
+		{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}.Debug|ARM.ActiveCfg = Debug|Win32
+		{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}.Debug|Win32.Build.0 = Debug|Win32
+		{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}.Release|ARM.ActiveCfg = Release|Win32
+		{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}.Release|Win32.ActiveCfg = Release|Win32
+		{4E6A7A0E-DDD8-4BAA-8B22-C964069364ED}.Release|Win32.Build.0 = Release|Win32
+		{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}.Debug|ARM.ActiveCfg = Debug|Win32
+		{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}.Debug|Win32.Build.0 = Debug|Win32
+		{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}.Release|ARM.ActiveCfg = Release|Win32
+		{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}.Release|Win32.ActiveCfg = Release|Win32
+		{B8BF9E81-35FD-4582-BA1C-B85FA365BABB}.Release|Win32.Build.0 = Release|Win32
+		{13E55395-94A2-4CD9-BFC2-1A051F80C17D}.Debug|ARM.ActiveCfg = Debug|Win32
+		{13E55395-94A2-4CD9-BFC2-1A051F80C17D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{13E55395-94A2-4CD9-BFC2-1A051F80C17D}.Debug|Win32.Build.0 = Debug|Win32
+		{13E55395-94A2-4CD9-BFC2-1A051F80C17D}.Release|ARM.ActiveCfg = Release|Win32
+		{13E55395-94A2-4CD9-BFC2-1A051F80C17D}.Release|Win32.ActiveCfg = Release|Win32
+		{13E55395-94A2-4CD9-BFC2-1A051F80C17D}.Release|Win32.Build.0 = Release|Win32
+		{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}.Debug|ARM.ActiveCfg = Debug|Win32
+		{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}.Debug|Win32.Build.0 = Debug|Win32
+		{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}.Release|ARM.ActiveCfg = Release|Win32
+		{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}.Release|Win32.ActiveCfg = Release|Win32
+		{98A51BA8-FC3A-415B-AC8F-8C7BD464E93E}.Release|Win32.Build.0 = Release|Win32
+		{9F2D6CE6-C893-4400-B50C-6DB70CC2562F}.Debug|ARM.ActiveCfg = Debug|Win32
+		{9F2D6CE6-C893-4400-B50C-6DB70CC2562F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9F2D6CE6-C893-4400-B50C-6DB70CC2562F}.Debug|Win32.Build.0 = Debug|Win32
+		{9F2D6CE6-C893-4400-B50C-6DB70CC2562F}.Release|ARM.ActiveCfg = Release|Win32
+		{9F2D6CE6-C893-4400-B50C-6DB70CC2562F}.Release|Win32.ActiveCfg = Release|Win32
+		{9F2D6CE6-C893-4400-B50C-6DB70CC2562F}.Release|Win32.Build.0 = Release|Win32
+		{B7C2A162-DEC9-4418-972E-240AB3CBFCAE}.Debug|ARM.ActiveCfg = Debug|Win32
+		{B7C2A162-DEC9-4418-972E-240AB3CBFCAE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B7C2A162-DEC9-4418-972E-240AB3CBFCAE}.Debug|Win32.Build.0 = Debug|Win32
+		{B7C2A162-DEC9-4418-972E-240AB3CBFCAE}.Release|ARM.ActiveCfg = Release|Win32
+		{B7C2A162-DEC9-4418-972E-240AB3CBFCAE}.Release|Win32.ActiveCfg = Release|Win32
+		{B7C2A162-DEC9-4418-972E-240AB3CBFCAE}.Release|Win32.Build.0 = Release|Win32
+		{929480E7-23C0-4DF6-8456-096D71547116}.Debug|ARM.ActiveCfg = Debug|Win32
+		{929480E7-23C0-4DF6-8456-096D71547116}.Debug|Win32.ActiveCfg = Debug|Win32
+		{929480E7-23C0-4DF6-8456-096D71547116}.Debug|Win32.Build.0 = Debug|Win32
+		{929480E7-23C0-4DF6-8456-096D71547116}.Release|ARM.ActiveCfg = Release|Win32
+		{929480E7-23C0-4DF6-8456-096D71547116}.Release|Win32.ActiveCfg = Release|Win32
+		{929480E7-23C0-4DF6-8456-096D71547116}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B7C2A162-DEC9-4418-972E-240AB3CBFCAE} = {92D54E36-7916-48EF-A951-224DD3B25442}
+		{929480E7-23C0-4DF6-8456-096D71547116} = {92D54E36-7916-48EF-A951-224DD3B25442}
+	EndGlobalSection
+	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
+		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
+	EndGlobalSection
+	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
+		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
+	EndGlobalSection
+EndGlobal

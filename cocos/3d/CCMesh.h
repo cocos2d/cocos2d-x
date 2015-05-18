@@ -49,7 +49,6 @@ class GLProgram;
 class Material;
 class Renderer;
 class Scene;
-class Pass;
 
 /** 
  * @brief Mesh: contains ref to index buffer, GLProgramState, texture, skin, blend function, aabb and so on
@@ -196,7 +195,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~Mesh();
 
 protected:
-    void setLightUniforms(Pass* pass, Scene* scene, const Vec4& color, unsigned int lightmask);
+    void setLightUniforms(GLProgramState* glProgramState, Scene* scene, const Vec4& color, unsigned int lightmask);
     void bindMeshCommand();
 
     Texture2D*          _texture;  //texture that submesh is using

@@ -28,16 +28,50 @@ enum {
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 
-PerformceLabelTests::PerformceLabelTests()
+
+////////////////////////////////////////////////////////
+//
+// LabelMenuLayer
+//
+////////////////////////////////////////////////////////
+void LabelMenuLayer::restartCallback(Ref* sender)
 {
-    LabelMainScene::_s_labelCurCase = 0;
-    addTestCase("LabelTTF Performance Test", [](){ return LabelMainScene::create(); });
-    addTestCase("LabelBMFont Performance Test", [](){ return LabelMainScene::create(); });
-    addTestCase("Label Performance Test", [](){ return LabelMainScene::create(); });
-    addTestCase("LabelBMFont large text Performance", [](){ return LabelMainScene::create(); });
-    addTestCase("Label large text Performance", [](){ return LabelMainScene::create(); });
+    if ( LabelMainScene::_s_autoTest )
+    {
+        log("It's auto label performance testing,so this operation is invalid");
+        return;
+    }
+    
+    PerformBasicLayer::restartCallback(sender);
 }
 
+void LabelMenuLayer::nextCallback(Ref* sender)
+{
+    if ( LabelMainScene::_s_autoTest )
+    {
+        log("It's auto label performance testing,so this operation is invalid");
+        return;
+    }
+    
+    PerformBasicLayer::nextCallback(sender);
+}
+
+void LabelMenuLayer::backCallback(Ref* sender)
+{
+    if ( LabelMainScene::_s_autoTest )
+    {
+        log("It's auto label performance testing,so this operation is invalid");
+        return;
+    }
+    
+    PerformBasicLayer::backCallback(sender);
+}
+
+void LabelMenuLayer::showCurrentTest()
+{
+    auto scene = (LabelMainScene*) getParent();
+    scene->autoShowLabelTests(_curCase,LabelMainScene::AUTO_TEST_NODE_NUM);
+}
 ////////////////////////////////////////////////////////
 //
 // LabelMainScene
@@ -46,16 +80,10 @@ PerformceLabelTests::PerformceLabelTests()
 
 bool LabelMainScene::_s_autoTest = false;
 int  LabelMainScene::_s_labelCurCase = 0;
-int LabelMainScene::NODE_TEST_COUNT = AUTO_TEST_NODE_NUM;
 
-bool LabelMainScene::init()
+void LabelMainScene::initWithSubTest(int nodes)
 {
     //srandom(0);
-    if (!TestCase::init())
-    {
-        return false;
-    }
-
     auto s = Director::getInstance()->getWinSize();
 
     _lastRenderedCount = 0;
@@ -80,6 +108,11 @@ bool LabelMainScene::init()
     infoLabel->setColor(Color3B(0,200,20));
     infoLabel->setPosition(Vec2(s.width/2, s.height-90));
     addChild(infoLabel, 1, kTagInfoLayer);
+
+    // add menu
+    auto menuLayer = new (std::nothrow) LabelMenuLayer(true, TEST_COUNT, LabelMainScene::_s_labelCurCase);
+    addChild(menuLayer, 1, kTagMenuLayer);
+    menuLayer->release();
     
     /**
      *  auto test menu
@@ -104,11 +137,13 @@ bool LabelMainScene::init()
     autoTestItem->setColor(Color3B::RED);
     menuAutoTest->addChild(autoTestItem);
     addChild( menuAutoTest, 3, kTagAutoTestMenu );
+    
+    _title = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 32);
+    addChild(_title, 1);
+    _title->setPosition(Vec2(s.width/2, s.height-50));
 
-    while (_quantityNodes < NODE_TEST_COUNT)
+    while(_quantityNodes < nodes)
         onIncrease(this);
-
-    return true;
 }
 
 std::string LabelMainScene::title() const
@@ -155,6 +190,7 @@ void LabelMainScene::onIncrease(Ref* sender)
         return;
 
     auto size = Director::getInstance()->getWinSize();
+
     switch (_s_labelCurCase)
     {
     case kCaseLabelTTFUpdate:
@@ -333,6 +369,20 @@ void LabelMainScene::onExit()
     Scene::onExit();
 }
 
+void LabelMainScene::autoShowLabelTests(int curCase,int nodes)
+{
+    LabelMainScene::_s_labelCurCase = curCase; 
+    _title->setString(title());
+    _vecFPS.clear();
+    _executeTimes = 0;
+    _labelContainer->removeAllChildren();
+    _lastRenderedCount = 0;
+    _quantityNodes = 0;
+    _accumulativeTime = 0.0f;
+    while(_quantityNodes < nodes)
+        onIncrease(this);
+}
+
 void  LabelMainScene::endAutoTest()
 {
     LabelMainScene::_s_autoTest = false;
@@ -345,7 +395,8 @@ void  LabelMainScene::nextAutoTest()
 {
     if ( LabelMainScene::_s_labelCurCase + 1 < LabelMainScene::MAX_SUB_TEST_NUMS )
     {
-        nextTestCallback(nullptr);
+        LabelMainScene::_s_labelCurCase += 1;
+        autoShowLabelTests(LabelMainScene::_s_labelCurCase, _quantityNodes);
     }
     else
     {
@@ -356,9 +407,7 @@ void  LabelMainScene::nextAutoTest()
 void  LabelMainScene::finishAutoTest()
 {
     LabelMainScene::_s_autoTest = false;
-    _vecFPS.clear();
-    _executeTimes = 0;
-
+    
     auto autoTestMenu = dynamic_cast<Menu*>(getChildByTag(kTagAutoTestMenu));
     if (nullptr != autoTestMenu)
     {
@@ -375,14 +424,13 @@ void  LabelMainScene::finishAutoTest()
 void  LabelMainScene::onAutoTest(Ref* sender)
 {
     LabelMainScene::_s_autoTest = !LabelMainScene::_s_autoTest;
-    _vecFPS.clear();
-    _executeTimes = 0;
     MenuItemFont* menuItem = dynamic_cast<MenuItemFont*>(sender);
     if (nullptr != menuItem)
     {
         if (LabelMainScene::_s_autoTest)
         {
             menuItem->setString("Auto Test On");
+            autoShowLabelTests(0,_quantityNodes);
         }
         else
         {
@@ -392,23 +440,11 @@ void  LabelMainScene::onAutoTest(Ref* sender)
     }
 }
 
-void LabelMainScene::nextTestCallback(cocos2d::Ref* sender)
+void runLabelTest()
 {
-    NODE_TEST_COUNT = _quantityNodes;
-    _s_labelCurCase = (_s_labelCurCase + 1) % MAX_SUB_TEST_NUMS;
-    TestCase::nextTestCallback(sender);
-}
-
-void LabelMainScene::priorTestCallback(cocos2d::Ref* sender)
-{
-    NODE_TEST_COUNT = _quantityNodes;
-    if (_s_labelCurCase > 0)
-    {
-        _s_labelCurCase -= 1;
-    } 
-    else
-    {
-        _s_labelCurCase = MAX_SUB_TEST_NUMS - 1;
-    }
-    TestCase::priorTestCallback(sender);
+    LabelMainScene::_s_autoTest = false;
+    auto scene = new (std::nothrow) LabelMainScene;
+    scene->initWithSubTest(LabelMainScene::AUTO_TEST_NODE_NUM);
+    Director::getInstance()->replaceScene(scene);
+    scene->release();
 }

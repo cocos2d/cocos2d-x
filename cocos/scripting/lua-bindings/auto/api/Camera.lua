@@ -68,16 +68,6 @@
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
--- 
--- @function [parent=#Camera] initOrthographic 
--- @param self
--- @param #float zoomX
--- @param #float zoomY
--- @param #float nearPlane
--- @param #float farPlane
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
 -- Get object depth towards camera
 -- @function [parent=#Camera] getDepthInView 
 -- @param self
@@ -110,10 +100,13 @@
         
 --------------------------------
 -- 
--- @function [parent=#Camera] clearBackground 
+-- @function [parent=#Camera] initOrthographic 
 -- @param self
--- @param #float depth
--- @return Camera#Camera self (return value: cc.Camera)
+-- @param #float zoomX
+-- @param #float zoomY
+-- @param #float nearPlane
+-- @param #float farPlane
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- set additional matrix for the projection matrix, it multiplys mat to projection matrix when called, used by WP8

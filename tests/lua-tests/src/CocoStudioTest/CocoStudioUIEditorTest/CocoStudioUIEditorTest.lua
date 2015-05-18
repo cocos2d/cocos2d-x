@@ -57,7 +57,7 @@ end
 
 function UIButtonTest:configureGUIScene()
     local screenSize = cc.Director:getInstance():getWinSize()
-    local rootSize = self._layout:getContentSize()
+    local rootSize = self._layout:getSize()
     self._uiLayer:setPosition(cc.p((screenSize.width - rootSize.width) / 2, (screenSize.height - rootSize.height) / 2))
     
     local root = self._layout:getChildByName("root_Panel")  
@@ -93,11 +93,7 @@ end
 
 function UIButtonTest:initExtend()
     self:init()
-
-    local node = cc.CSLoader:createNode("cocosui/UIEditorTest/UIButton/res.csb")
-    local child = node:getChildByTag(4)
-    child:removeFromParent()
-    self._layout = child
+    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UIButton/windows_UIButton_Editor_1.csb")
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
 
@@ -107,8 +103,8 @@ function UIButtonTest:initExtend()
     self._displayValueLabel:setFontName("fonts/Marker Felt.ttf")
     self._displayValueLabel:setFontSize(30)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
-    self._displayValueLabel:setPosition(cc.p(self._layout:getContentSize().width / 2,
-                                            self._layout:getContentSize().height - self._displayValueLabel:getContentSize().height * 2))
+    self._displayValueLabel:setPosition(cc.p(self._layout:getSize().width / 2,
+                                            self._layout:getSize().height - self._displayValueLabel:getSize().height * 2))
     self._uiLayer:addChild(self._displayValueLabel)
 end
 
@@ -139,7 +135,7 @@ end
 
 function UICheckBoxEditorTest:configureGUIScene()
     local screenSize = cc.Director:getInstance():getWinSize()
-    local rootSize = self._layout:getContentSize()
+    local rootSize = self._layout:getSize()
     self._uiLayer:setPosition(cc.p((screenSize.width - rootSize.width) / 2, (screenSize.height - rootSize.height) / 2))
     
     local root = self._layout:getChildByName("root_Panel")   
@@ -165,11 +161,7 @@ end
 
 function UICheckBoxEditorTest:initExtend()
     self:init()
-
-    local node = cc.CSLoader:createNode("cocosui/UIEditorTest/UICheckBox/res.csb")
-    local child = node:getChildByTag(5)
-    child:removeFromParent()
-    self._layout = child
+    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UICheckBox/windows_ui_checkbox_editor_1.csb")
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
 
@@ -179,8 +171,8 @@ function UICheckBoxEditorTest:initExtend()
     self._displayValueLabel:setFontName("fonts/Marker Felt.ttf")
     self._displayValueLabel:setFontSize(30)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
-    self._displayValueLabel:setPosition(cc.p(self._layout:getContentSize().width / 2,
-                                            self._layout:getContentSize().height - self._displayValueLabel:getContentSize().height * 2))
+    self._displayValueLabel:setPosition(cc.p(self._layout:getSize().width / 2,
+                                            self._layout:getSize().height - self._displayValueLabel:getSize().height * 2))
     self._uiLayer:addChild(self._displayValueLabel)
 end
 
@@ -212,7 +204,7 @@ end
 
 function UISliderEditorTest:configureGUIScene()
     local screenSize = cc.Director:getInstance():getWinSize()
-    local rootSize = self._layout:getContentSize()
+    local rootSize = self._layout:getSize()
     self._uiLayer:setPosition(cc.p((screenSize.width - rootSize.width) / 2, (screenSize.height - rootSize.height) / 2))
     
     local root = self._layout:getChildByName("root_Panel")
@@ -234,15 +226,14 @@ function UISliderEditorTest:configureGUIScene()
 
     local slider = ccui.Helper:seekWidgetByName(root, "Slider_738")
     slider:addEventListener(sliderEvent)
+
+    local scaleSlider = ccui.Helper:seekWidgetByName(root, "Slider_740")
+    scaleSlider:addEventListener(sliderEvent)
 end
 
 function UISliderEditorTest:initExtend()
     self:init()
-
-    local node = cc.CSLoader:createNode("cocosui/UIEditorTest/UISlider/res.csb")
-    local child = node:getChildByTag(5)
-    child:removeFromParent()
-    self._layout = child
+    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UISlider/windows_ui_slider_editor_1.csb")
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
 
@@ -251,8 +242,8 @@ function UISliderEditorTest:initExtend()
     self._displayValueLabel:setFontName("fonts/Marker Felt.ttf")
     self._displayValueLabel:setFontSize(30)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
-    self._displayValueLabel:setPosition(cc.p(self._layout:getContentSize().width / 2,
-                                            self._layout:getContentSize().height - self._displayValueLabel:getContentSize().height * 2))
+    self._displayValueLabel:setPosition(cc.p(self._layout:getSize().width / 2,
+                                            self._layout:getSize().height - self._displayValueLabel:getSize().height * 2))
     self._uiLayer:addChild(self._displayValueLabel)
 end
 
@@ -283,7 +274,7 @@ end
 
 function UIImageViewEditorTest:configureGUIScene()
     local screenSize = cc.Director:getInstance():getWinSize()
-    local rootSize = self._layout:getContentSize()
+    local rootSize = self._layout:getSize()
     self._uiLayer:setPosition(cc.p((screenSize.width - rootSize.width) / 2, (screenSize.height - rootSize.height) / 2))
     
     local root = self._layout:getChildByName("root_Panel")
@@ -298,11 +289,7 @@ end
 
 function UIImageViewEditorTest:initExtend()
     self:init()
-
-    local node = cc.CSLoader:createNode("cocosui/UIEditorTest/UIImageView/res.csb")
-    local child = node:getChildByTag(5)
-    child:removeFromParent()
-    self._layout = child
+    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UIImageView/windows_ui_ImageView_editor_1.csb")
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
 end
@@ -334,7 +321,7 @@ end
 
 function LoadingBarEditorTest:configureGUIScene()
     local screenSize = cc.Director:getInstance():getWinSize()
-    local rootSize = self._layout:getContentSize()
+    local rootSize = self._layout:getSize()
     self._uiLayer:setPosition(cc.p((screenSize.width - rootSize.width) / 2, (screenSize.height - rootSize.height) / 2))
     
     local root = self._layout:getChildByName("root_Panel")    
@@ -356,11 +343,7 @@ end
 
 function LoadingBarEditorTest:initExtend()
     self:init()
-
-    local node = cc.CSLoader:createNode("cocosui/UIEditorTest/UILoadingBar/res.csb")
-    local child = node:getChildByTag(5)
-    child:removeFromParent()
-    self._layout = child
+    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UILoadingBar/windows_ui_loadingbar_editor_1.csb")
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
 
@@ -411,7 +394,7 @@ end
 
 function LabelAtalsEditorTest:configureGUIScene()
     local screenSize = cc.Director:getInstance():getWinSize()
-    local rootSize = self._layout:getContentSize()
+    local rootSize = self._layout:getSize()
     self._uiLayer:setPosition(cc.p((screenSize.width - rootSize.width) / 2, (screenSize.height - rootSize.height) / 2))
     
     local root = self._layout:getChildByName("root_Panel")
@@ -427,11 +410,7 @@ end
 
 function LabelAtalsEditorTest:initExtend()
     self:init()
-
-    local node = cc.CSLoader:createNode("cocosui/UIEditorTest/UILabelAtlas/res.csb")
-    local child = node:getChildByTag(5)
-    child:removeFromParent()
-    self._layout = child
+    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UILabelAtlas/windows_ui_labelatlas_editor_1.csb")
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
 end
@@ -463,7 +442,7 @@ end
 
 function LabelEditorTest:configureGUIScene()
     local screenSize = cc.Director:getInstance():getWinSize()
-    local rootSize = self._layout:getContentSize()
+    local rootSize = self._layout:getSize()
     self._uiLayer:setPosition(cc.p((screenSize.width - rootSize.width) / 2, (screenSize.height - rootSize.height) / 2))
     
     local root = self._layout:getChildByName("root_Panel")   
@@ -479,11 +458,7 @@ end
 
 function LabelEditorTest:initExtend()
     self:init()
-
-    local node = cc.CSLoader:createNode("cocosui/UIEditorTest/UILabel/res.csb")
-    local child = node:getChildByTag(5)
-    child:removeFromParent()
-    self._layout = child
+    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UILabel/windows_ui_label_editor_1.csb")
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
 end
@@ -515,7 +490,7 @@ end
 
 function LabelBMFontEditorTest:configureGUIScene()
     local screenSize = cc.Director:getInstance():getWinSize()
-    local rootSize = self._layout:getContentSize()
+    local rootSize = self._layout:getSize()
     self._uiLayer:setPosition(cc.p((screenSize.width - rootSize.width) / 2, (screenSize.height - rootSize.height) / 2))
     
     local root = self._layout:getChildByName("root_Panel")
@@ -531,11 +506,7 @@ end
 
 function LabelBMFontEditorTest:initExtend()
     self:init()
-
-    local node = cc.CSLoader:createNode("cocosui/UIEditorTest/UILabelBMFont/res.csb")
-    local child = node:getChildByTag(5)
-    child:removeFromParent()
-    self._layout = child
+    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UILabelBMFont/windows_ui_labelbmfont_editor_1.csb")
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
 end
@@ -567,7 +538,7 @@ end
 
 function TextFieldEditorTest:configureGUIScene()
     local screenSize = cc.Director:getInstance():getWinSize()
-    local rootSize = self._layout:getContentSize()
+    local rootSize = self._layout:getSize()
     self._uiLayer:setPosition(cc.p((screenSize.width - rootSize.width) / 2, (screenSize.height - rootSize.height) / 2))
     
     local root = self._layout:getChildByName("root_Panel") 
@@ -604,11 +575,7 @@ end
 
 function TextFieldEditorTest:initExtend()
     self:init()
-
-    local node = cc.CSLoader:createNode("cocosui/UIEditorTest/UITextField/res.csb")
-    local child = node:getChildByTag(5)
-    child:removeFromParent()
-    self._layout = child
+    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UITextField/windows_ui_textfield_editor_1.csb")
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
 
@@ -617,8 +584,8 @@ function TextFieldEditorTest:initExtend()
     self._displayValueLabel:setFontName("fonts/Marker Felt.ttf")
     self._displayValueLabel:setFontSize(30)
     self._displayValueLabel:setAnchorPoint(cc.p(0.5, -1))
-    self._displayValueLabel:setPosition(cc.p(self._layout:getContentSize().width / 2,
-                                            self._layout:getContentSize().height - self._displayValueLabel:getContentSize().height * 2))
+    self._displayValueLabel:setPosition(cc.p(self._layout:getSize().width / 2,
+                                            self._layout:getSize().height - self._displayValueLabel:getSize().height * 2))
     self._uiLayer:addChild(self._displayValueLabel)
 end
 
@@ -649,7 +616,7 @@ end
 
 function LayoutEditorTest:configureGUIScene()
     local screenSize = cc.Director:getInstance():getWinSize()
-    local rootSize = self._layout:getContentSize()
+    local rootSize = self._layout:getSize()
     self._uiLayer:setPosition(cc.p((screenSize.width - rootSize.width) / 2, (screenSize.height - rootSize.height) / 2))
     
     local root = self._layout:getChildByName("root_Panel")  
@@ -665,11 +632,7 @@ end
 
 function LayoutEditorTest:initExtend()
     self:init()
-
-    local node = cc.CSLoader:createNode("cocosui/UIEditorTest/UILayout/Layout/res.csb")
-    local child = node:getChildByTag(5)
-    child:removeFromParent()
-    self._layout = child
+    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UILayout/Layout/windows_ui_layout_editor_1.csb")
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
 end
@@ -920,11 +883,12 @@ end
 function LayoutComponentTest:initExtend()
     self:init()
 
-    local node = cc.CSLoader:createNode("cocosui/UIEditorTest/UILayout/LayoutComponent/res.csb")
+    local node = cc.CSLoader:createNode("cocosui/UIEditorTest/UILayout/LayoutComponent/UILayoutComponent.csb")
     local child = node:getChildByTag(5)
     child:removeFromParent()
     self._layout = child
     self._uiLayer:addChild(self._layout)
+
     self:configureGUIScene()
 end
 
@@ -955,7 +919,7 @@ end
 
 function ScrollViewEditorTest:configureGUIScene()
     local screenSize = cc.Director:getInstance():getWinSize()
-    local rootSize = self._layout:getContentSize()
+    local rootSize = self._layout:getSize()
     self._uiLayer:setPosition(cc.p((screenSize.width - rootSize.width) / 2, (screenSize.height - rootSize.height) / 2))
     
     local root = self._layout:getChildByName("root_Panel")    
@@ -971,11 +935,7 @@ end
 
 function ScrollViewEditorTest:initExtend()
     self:init()
-
-    local node = cc.CSLoader:createNode("cocosui/UIEditorTest/UIScrollView/Vertical/res.csb")
-    local child = node:getChildByTag(5)
-    child:removeFromParent()
-    self._layout = child
+    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UIScrollView/Vertical/windows_ui_scrollview_editor_1.csb")
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
 end
@@ -1007,7 +967,7 @@ end
 
 function PageViewEditorTest:configureGUIScene()
     local screenSize = cc.Director:getInstance():getWinSize()
-    local rootSize = self._layout:getContentSize()
+    local rootSize = self._layout:getSize()
     self._uiLayer:setPosition(cc.p((screenSize.width - rootSize.width) / 2, (screenSize.height - rootSize.height) / 2))
     
     local root = self._layout:getChildByName("root_Panel") 
@@ -1023,11 +983,7 @@ end
 
 function PageViewEditorTest:initExtend()
     self:init()
-
-    local node = cc.CSLoader:createNode("cocosui/UIEditorTest/UIPageView/res.csb")
-    local child = node:getChildByTag(5)
-    child:removeFromParent()
-    self._layout = child
+    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UIPageView/windows_ui_pageview_editor_1.csb")
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
 end
@@ -1059,7 +1015,7 @@ end
 
 function ListViewEditorTest:configureGUIScene()
     local screenSize = cc.Director:getInstance():getWinSize()
-    local rootSize = self._layout:getContentSize()
+    local rootSize = self._layout:getSize()
     self._uiLayer:setPosition(cc.p((screenSize.width - rootSize.width) / 2, (screenSize.height - rootSize.height) / 2))
     
     local root = self._layout:getChildByName("root_Panel")   
@@ -1078,75 +1034,11 @@ function ListViewEditorTest:configureGUIScene()
     -- end
 end
 
-function ListViewEditorTest:setupListView(listView)
-    local scale = 0.5
-    local itemMargin = listView:getItemsMargin()
-
-    local item0 = ccui.Text:create()
-    item0:setString(string.format("Item margin: %d", math.floor(itemMargin)))
-    listView:addChild(item0)
-
-    local item1 = ccui.Layout:create()
-    local checkbox = ccui.CheckBox:create("selected01.png", "selected01.png", "selected02.png", "selected01.png", "selected01.png")
-    checkbox:setPosition(cc.p(checkbox:getCustomSize().width / 2, checkbox:getCustomSize().height / 2))
-    item1:addChild(checkbox)
-    local checkboxText = ccui.Text:create()
-    checkboxText:setString("CheckBox")
-    checkboxText:setFontSize(checkbox:getCustomSize().width * 0.8)
-    checkboxText:setPosition(cc.p(checkbox:getCustomSize().width + checkboxText:getCustomSize().width / 2, checkbox:getCustomSize().height / 2))
-    item1:addChild(checkboxText)
-    local item1Width = scale * (checkbox:getCustomSize().width + checkboxText:getCustomSize().width)
-    local item1Height = scale * checkbox:getCustomSize().height
-    item1:setContentSize(cc.size(item1Width, item1Height))
-    item1:setScale(scale)
-    listView:addChild(item1)
-
-    local item2 = ccui.Text:create()
-    item2:setString("Text2")
-    item2:setFontSize(checkbox:getCustomSize().width * 0.4)
-    item2:setTextColor(cc.c4b(0, 255, 0, 255))
-    listView:addChild(item2)
-
-    local item3 = ccui.Layout:create()
-    local imageview0 = ccui.ImageView:create("image.png")
-    local imageview1 = ccui.ImageView:create("image.png")
-    imageview1:setPositionX(imageview1:getCustomSize().width * 2)
-    imageview0:setAnchorPoint(cc.p(0, 0))
-    imageview1:setAnchorPoint(cc.p(0, 0))
-    item3:setContentSize(cc.size(imageview0:getCustomSize().width * 3 * scale, imageview0:getCustomSize().height * scale))
-    item3:addChild(imageview0)
-    item3:addChild(imageview1)
-    item3:setScale(scale)
-    listView:addChild(item3)
-
-    local item4 = ccui.Button:create("button.png", "button_p.png")
-    item4:setTitleText("Button")
-    listView:pushBackCustomItem(item4)
-
-    local itemModel = ccui.Text:create()
-    itemModel:setTextColor(cc.c4b(255, 0, 0, 125))
-    itemModel:setString("List item model")
-    listView:setItemModel(itemModel)
-    listView:pushBackDefaultItem()
-    listView:pushBackDefaultItem()
-end
-
 function ListViewEditorTest:initExtend()
     self:init()
-
-    local node = cc.CSLoader:createNode("cocosui/UIEditorTest/UIListView/New/resV.csb")
-    local child = node:getChildByTag(5)
-    child:removeFromParent()
-    self._layout = child
+    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UIListView/Vertical/windows_ui_listview_editor_1.csb")
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
-
-    local listView1 = ccui.Helper:seekWidgetByName(self._layout, "ListView1")
-    local listView2 = ccui.Helper:seekWidgetByName(self._layout, "ListView2")
-    local listView3 = ccui.Helper:seekWidgetByName(self._layout, "ListView3")
-    self:setupListView(listView1)
-    self:setupListView(listView2)
-    self:setupListView(listView3)
 end
 
 function ListViewEditorTest.create()
@@ -1176,7 +1068,7 @@ end
 
 function WidgetAddNodeEditorTest:configureGUIScene()
     local screenSize = cc.Director:getInstance():getWinSize()
-    local rootSize = self._layout:getContentSize()
+    local rootSize = self._layout:getSize()
     self._uiLayer:setPosition(cc.p((screenSize.width - rootSize.width) / 2, (screenSize.height - rootSize.height) / 2))
     
     local root = self._layout:getChildByName("root_Panel")   
@@ -1201,11 +1093,7 @@ end
 
 function WidgetAddNodeEditorTest:initExtend()
     self:init()
-    
-    local node = cc.CSLoader:createNode("cocosui/UIEditorTest/UIWidgetAddNode/res.csb")
-    local child = node:getChildByTag(5)
-    child:removeFromParent()
-    self._layout = child
+    self._layout = ccs.GUIReader:getInstance():widgetFromBinaryFile("cocosui/UIEditorTest/UIWidgetAddNode/windows_ui_widget_add_node_editor.csb")
     self._uiLayer:addChild(self._layout)
     self:configureGUIScene()
 end
@@ -1259,12 +1147,12 @@ local UIEditorTestItemNames =
         end
     },
 
-    -- {
-    --     itemTitle = "gui Editor LabelAtalsTest",
-    --     testScene = function () 
-    --         runLabelAtalsEditorTestScene()
-    --     end
-    -- },
+    {
+        itemTitle = "gui Editor LabelAtalsTest",
+        testScene = function () 
+            runLabelAtalsEditorTestScene()
+        end
+    },
 
     {
         itemTitle = "gui Editor LabelTest",

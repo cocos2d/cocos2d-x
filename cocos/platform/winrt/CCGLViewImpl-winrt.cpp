@@ -31,11 +31,9 @@ THE SOFTWARE.
 #include "CCApplication.h"
 #include "CCWinRTUtils.h"
 #include "deprecated/CCNotificationCenter.h"
-#include <map>
 
 using namespace Platform;
 using namespace Concurrency;
-using namespace Windows::System;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 using namespace Windows::Graphics::Display;
@@ -70,6 +68,7 @@ GLViewImpl* GLViewImpl::create(const std::string& viewName)
     return nullptr;
 }
 
+
 GLViewImpl::GLViewImpl()
 	: _frameZoomFactor(1.0f)
 	, _supportTouch(true)
@@ -86,8 +85,6 @@ GLViewImpl::GLViewImpl()
 {
 	s_pEglView = this;
     _viewName =  "cocos2dx";
-
-    m_keyboard = ref new KeyBoardWinRT();
 
     m_backButtonListener = EventListenerKeyboard::create();
     m_backButtonListener->onKeyReleased = CC_CALLBACK_2(GLViewImpl::BackButtonListener, this);
@@ -115,6 +112,7 @@ bool GLViewImpl::initWithFullScreen(const std::string& viewName)
     return initWithRect(viewName, Rect(0, 0, m_width, m_height), 1.0f);
 }
 
+
 bool GLViewImpl::Create(float width, float height, float dpi, DisplayOrientations orientation)
 {
     m_orientation = orientation;
@@ -132,6 +130,8 @@ void GLViewImpl::setPanel(Windows::UI::Xaml::Controls::Panel^ panel)
 {
     m_panel = panel;
 }
+
+
 
 void GLViewImpl::setIMEKeyboardState(bool bOpen)
 {
@@ -157,22 +157,33 @@ bool GLViewImpl::ShowMessageBox(Platform::String^ title, Platform::String^ messa
     return false;
 }
 
-void GLViewImpl::setIMEKeyboardState(bool bOpen, const std::string& str)
+void GLViewImpl::setIMEKeyboardState(bool bOpen, std::string str)
 {
     if(bOpen)
     {
+        if (m_keyboard == nullptr)
+        {
+            m_keyboard = ref new KeyBoardWinRT(m_dispatcher.Get(), m_panel.Get());
+        }
         m_keyboard->ShowKeyboard(PlatformStringFromString(str));
     }
     else
     {
-        m_keyboard->HideKeyboard(PlatformStringFromString(str));
+        if (m_keyboard != nullptr)
+        {
+            m_keyboard->HideKeyboard(PlatformStringFromString(str));
+        }
+        m_keyboard = nullptr;
     }
 }
+
+
 
 void GLViewImpl::swapBuffers()
 {
     
 }
+
 
 bool GLViewImpl::isOpenGLReady()
 {
@@ -184,6 +195,7 @@ void GLViewImpl::end()
 	m_windowClosed = true;
     m_appShouldExit = true;
 }
+
 
 void GLViewImpl::OnSuspending(Platform::Object^ sender, SuspendingEventArgs^ args)
 {
@@ -203,36 +215,36 @@ void GLViewImpl::OnBackKeyPress()
 
 void GLViewImpl::BackButtonListener(EventKeyboard::KeyCode keyCode, Event* event)
 {
-	if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE)
-	{
-		CCLOG("*********************************************************************");
-		CCLOG("GLViewImpl::BackButtonListener: Exiting application!");
-		CCLOG("");
-		CCLOG("If you want to listen for Windows Phone back button events,");
-		CCLOG("add a listener for EventKeyboard::KeyCode::KEY_ESCAPE");
-		CCLOG("Make sure you call stopPropagation() on the Event if you don't");
-		CCLOG("want your app to exit when the back button is pressed.");
-		CCLOG("");
-		CCLOG("For example, add the following to your scene...");
-		CCLOG("auto listener = EventListenerKeyboard::create();");
-		CCLOG("listener->onKeyReleased = CC_CALLBACK_2(HelloWorld::onKeyReleased, this);");
-		CCLOG("getEventDispatcher()->addEventListenerWithFixedPriority(listener, 1);");
-		CCLOG("");
-		CCLOG("void HelloWorld::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)");
-		CCLOG("{");
-		CCLOG("     if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE)");
-		CCLOG("     {");
-		CCLOG("         if (myAppShouldNotQuit) // or whatever logic you want...");
-		CCLOG("         {");
-		CCLOG("             event->stopPropagation();");
-		CCLOG("         }");
-		CCLOG("     }");
-		CCLOG("}");
-		CCLOG("");
-		CCLOG("You MUST call event->stopPropagation() if you don't want your app to quit!");
-		CCLOG("*********************************************************************");
+    CCLOG("*********************************************************************");
+    CCLOG("GLViewImpl::BackButtonListener: Exiting application!");
+    CCLOG("");
+    CCLOG("If you want to listen for Windows Phone back button events,");
+    CCLOG("add a listener for EventKeyboard::KeyCode::KEY_ESCAPE");
+    CCLOG("Make sure you call stopPropagation() on the Event if you don't");
+    CCLOG("want your app to exit when the back button is pressed.");
+    CCLOG("");
+    CCLOG("For example, add the following to your scene...");
+    CCLOG("auto listener = EventListenerKeyboard::create();");
+    CCLOG("listener->onKeyReleased = CC_CALLBACK_2(HelloWorld::onKeyReleased, this);");
+    CCLOG("getEventDispatcher()->addEventListenerWithFixedPriority(listener, 1);");
+    CCLOG("");
+    CCLOG("void HelloWorld::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)");
+    CCLOG("{");
+    CCLOG("     if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE)");
+    CCLOG("     {");
+    CCLOG("         if (myAppShouldNotQuit) // or whatever logic you want...");
+    CCLOG("         {");
+    CCLOG("             event->stopPropagation();");
+    CCLOG("         }");
+    CCLOG("     }");
+    CCLOG("}");
+    CCLOG("");
+    CCLOG("You MUST call event->stopPropagation() if you don't want your app to quit!");
+    CCLOG("*********************************************************************");
 
-		Director::getInstance()->end();
+    if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE)
+    {
+        Director::getInstance()->end();
     }
 }
 
@@ -496,17 +508,6 @@ void GLViewImpl::QueuePointerEvent(PointerEventType type, PointerEventArgs^ args
 {
     std::shared_ptr<PointerEvent> e(new PointerEvent(type, args));
     mInputEvents.push(e);
-}
-
-void GLViewImpl::QueueWinRTKeyboardEvent(WinRTKeyboardEventType type, KeyEventArgs^ args)
-{
-	std::shared_ptr<WinRTKeyboardEvent> e(new WinRTKeyboardEvent(type, args));
-	mInputEvents.push(e);
-}
-
-void GLViewImpl::OnWinRTKeyboardEvent(WinRTKeyboardEventType type, KeyEventArgs^ args)
-{
-    m_keyboard->OnWinRTKeyboardEvent(type, args);
 }
 
 void GLViewImpl::QueueEvent(std::shared_ptr<InputEvent>& event)

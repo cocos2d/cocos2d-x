@@ -4,14 +4,19 @@
 #ifndef __PERFORMANCE_ALLOC_TEST_H__
 #define __PERFORMANCE_ALLOC_TEST_H__
 
-#include "BaseTest.h"
+#include "PerformanceTest.h"
 
-DEFINE_TEST_SUITE(PerformceAllocTests);
-
-class PerformceAllocScene : public TestCase
+class AllocBasicLayer : public PerformBasicLayer
 {
 public:
-    virtual bool init() override;
+    AllocBasicLayer(bool bControlMenuVisible, int nMaxCases = 0, int nCurCase = 0);
+
+    virtual void showCurrentTest();
+};
+
+class PerformceAllocScene : public cocos2d::Scene
+{
+public:
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
     virtual std::string title() const;
     virtual std::string subtitle() const;
@@ -36,7 +41,7 @@ public:
 protected:
     char   _profilerName[256];
     int    lastRenderedCount;
-    static int quantityOfNodes;
+    int    quantityOfNodes;
     int    currentQuantityOfNodes;
 };
 
@@ -109,5 +114,8 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
+
+
+void runAllocPerformanceTest();
 
 #endif // __PERFORMANCE_ALLOC_TEST_H__

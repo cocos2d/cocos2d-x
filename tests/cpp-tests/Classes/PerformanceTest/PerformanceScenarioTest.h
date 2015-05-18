@@ -1,20 +1,36 @@
 #ifndef __PERFORMANCE_SCENARIO_TEST_H__
 #define __PERFORMANCE_SCENARIO_TEST_H__
 
-#include "BaseTest.h"
+#include "PerformanceTest.h"
 
-DEFINE_TEST_SUITE(PerformceScenarioTests);
-
-class ScenarioTest : public TestCase
+class ScenarioMenuLayer : public PerformBasicLayer
 {
 public:
-    CREATE_FUNC(ScenarioTest);
+    ScenarioMenuLayer(bool bControlMenuVisible, int nMaxCases = 0, int nCurCase = 0)
+        :PerformBasicLayer(bControlMenuVisible, nMaxCases, nCurCase)
+    {
+    }
 
-    virtual bool init() override;
+    virtual void showCurrentTest() override;
+
+    virtual void onEnter() override;
+    virtual std::string title() const;
+    virtual std::string subtitle() const;
+    virtual void performTests() = 0;
+};
+
+class ScenarioTest : public ScenarioMenuLayer
+{
+public:
+    ScenarioTest(bool bControlMenuVisible, int nMaxCases = 0, int nCurCase = 0)
+        :ScenarioMenuLayer(bControlMenuVisible, nMaxCases, nCurCase)
+    {
+    }
+
     virtual std::string title() const override;
-    virtual void performTests();
+    virtual void performTests() override;
 
-    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event) ;
+    void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event) override;
 
     static cocos2d::Scene* scene();
 
@@ -47,5 +63,7 @@ private:
     cocos2d::Label* _parsysLabel;
     int _particleNumber;
 };
+
+void runScenarioTest();
 
 #endif

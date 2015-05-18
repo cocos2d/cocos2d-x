@@ -2,12 +2,14 @@
 
 USING_NS_CC;
 
-PerformceTextureTests::PerformceTextureTests()
+enum
 {
-    ADD_TEST_CASE(TexturePerformceTest);
-}
+    TEST_COUNT = 1,
+};
 
-static float calculateDeltaTime( struct timeval *lastUpdate )
+static int s_nTexCurCase = 0;
+
+float calculateDeltaTime( struct timeval *lastUpdate )
 {
     struct timeval now;
 
@@ -20,10 +22,66 @@ static float calculateDeltaTime( struct timeval *lastUpdate )
 
 ////////////////////////////////////////////////////////
 //
-// TexturePerformceTest
+// TextureMenuLayer
 //
 ////////////////////////////////////////////////////////
-void TexturePerformceTest::performTestsPNG(const char* filename)
+void TextureMenuLayer::showCurrentTest()
+{
+    Scene* scene = nullptr;
+
+    switch (_curCase)
+    {
+    case 0:
+        scene = TextureTest::scene();
+        break;
+    }
+    s_nTexCurCase = _curCase;
+
+    if (scene)
+    {
+        Director::getInstance()->replaceScene(scene);
+    }
+}
+
+void TextureMenuLayer::onEnter()
+{
+    PerformBasicLayer::onEnter();
+
+    auto s = Director::getInstance()->getWinSize();
+
+    // Title
+    auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 32);
+    addChild(label, 1);
+    label->setPosition(Vec2(s.width/2, s.height-50));
+
+    // Subtitle
+    std::string strSubTitle = subtitle();
+    if(strSubTitle.length())
+    {
+        auto l = Label::createWithTTF(strSubTitle.c_str(), "fonts/Thonburi.ttf", 16);
+        addChild(l, 1);
+        l->setPosition(Vec2(s.width/2, s.height-80));
+    }
+
+    performTests();
+}
+
+std::string TextureMenuLayer::title() const
+{
+    return "no title";
+}
+
+std::string TextureMenuLayer::subtitle() const
+{
+    return "no subtitle";
+}
+
+////////////////////////////////////////////////////////
+//
+// TextureTest
+//
+////////////////////////////////////////////////////////
+void TextureTest::performTestsPNG(const char* filename)
 {
     struct timeval now;
     Texture2D *texture;
@@ -74,7 +132,7 @@ void TexturePerformceTest::performTestsPNG(const char* filename)
     Texture2D::setDefaultAlphaPixelFormat(defaultFormat);
 }
 
-void TexturePerformceTest::performTests()
+void TextureTest::performTests()
 {
 //     Texture2D *texture;
 //     struct timeval now;
@@ -279,19 +337,29 @@ void TexturePerformceTest::performTests()
 //     cache->removeTexture(texture);
 }
 
-void TexturePerformceTest::onEnter()
-{
-    TestCase::onEnter();
-
-    performTests();
-}
-
-std::string TexturePerformceTest::title() const
+std::string TextureTest::title() const
 {
     return "Texture Performance Test";
 }
 
-std::string TexturePerformceTest::subtitle() const
+std::string TextureTest::subtitle() const
 {
     return "See console for results";
+}
+
+Scene* TextureTest::scene()
+{
+    auto scene = Scene::create();
+    TextureTest *layer = new (std::nothrow) TextureTest(false, TEST_COUNT, s_nTexCurCase);
+    scene->addChild(layer);
+    layer->release();
+
+    return scene;
+}
+
+void runTextureTest()
+{
+    s_nTexCurCase = 0;
+    auto scene = TextureTest::scene();
+    Director::getInstance()->replaceScene(scene);
 }

@@ -4,11 +4,17 @@
 #ifndef __PERFORMANCE_CONTAINER_TEST_H__
 #define __PERFORMANCE_CONTAINER_TEST_H__
 
-#include "BaseTest.h"
+#include "PerformanceTest.h"
 
-DEFINE_TEST_SUITE(PerformceContainerTests);
+class ContainerBasicLayer : public PerformBasicLayer
+{
+public:
+    ContainerBasicLayer(bool bControlMenuVisible, int nMaxCases = 0, int nCurCase = 0);
+    
+    virtual void showCurrentTest();
+};
 
-class PerformanceContainerScene : public TestCase
+class PerformanceContainerScene : public cocos2d::Scene
 {
 public:
     static const int TAG_TITLE = 100;
@@ -20,7 +26,6 @@ public:
         std::function<void()> func;
     };
     
-    virtual bool init() override;
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
     virtual void generateTestFunctions() = 0;
     
@@ -41,10 +46,9 @@ public:
     virtual void update(float dt) override;
     
 protected:
-    static int quantityOfNodes;
-
     char   _profilerName[256];
     int    lastRenderedCount;
+    int    quantityOfNodes;
     int    currentQuantityOfNodes;
     unsigned int _type;
     std::vector<TestFunction> _testFunctions;
@@ -121,5 +125,7 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
+
+void runContainerPerformanceTest();
 
 #endif // __PERFORMANCE_CONTAINER_TEST_H__

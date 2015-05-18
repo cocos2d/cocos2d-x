@@ -164,7 +164,7 @@ bool ParticleSystem::initWithFile(const std::string& plistFile)
 {
     bool ret = false;
     _plistFile = FileUtils::getInstance()->fullPathForFilename(plistFile);
-    ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(_plistFile);
+    ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(_plistFile.c_str());
 
     CCASSERT( !dict.empty(), "Particles: file not found");
     

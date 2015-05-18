@@ -360,8 +360,6 @@ public:
         static void restore(long stateOverrideBits);
         static void enableDepthWrite();
 
-        void cloneInto(StateBlock* renderState) const;
-
         bool _cullFaceEnabled;
         bool _depthTestEnabled;
         bool _depthWriteEnabled;
@@ -395,7 +393,6 @@ protected:
     RenderState();
     ~RenderState();
     bool init(RenderState* parent);
-    void cloneInto(RenderState* state) const;
 
     mutable uint32_t _hash;
     mutable bool _hashDirty;
