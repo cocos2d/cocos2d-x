@@ -63,20 +63,19 @@ public:
     virtual ~SpritePolygonCache();
     static SpritePolygonCache* getInstance();
     static void destroyInstance();
-    SpritePolygonInfo*   addSpritePolygonCache(const std::string& filePath, const cocos2d::Rect& rect, const cocos2d::TrianglesCommand::Triangles trianglesCommand);
+    SpritePolygonInfo* addSpritePolygonCache(const std::string& filePath, const cocos2d::Rect& rect, const cocos2d::TrianglesCommand::Triangles trianglesCommand);
     SpritePolygonInfo* getSpritePolygonCache(const std::string& filePath, const cocos2d::Rect& rect);
-    void   removeSpritePolygonCache(const std::string& filePath, const cocos2d::Rect* rect = nullptr);
-    void   removeAllSpritePolygonCache();
-    bool   isSpritePolygonCachExist(const std::string& filePath, const cocos2d::Rect& rect);
+    void removeSpritePolygonCache(const std::string& filePath, const cocos2d::Rect* rect = nullptr);
+    void removeAllSpritePolygonCache();
+    bool isSpritePolygonCacheExist(const std::string& filePath, const cocos2d::Rect& rect);
     
     static void printInfo(SpritePolygonInfo &info);
 protected:
     SpritePolygonCache();
-private:
     void init();
 private:
-    static SpritePolygonCache* _SpritePolygonCache;
-    MapSpritePolygonInfo _SpritePolygonCacheMap;
+    static SpritePolygonCache* s_spritePolygonCache;
+    MapSpritePolygonInfo _spritePolygonCacheMap;
     
 };
 
