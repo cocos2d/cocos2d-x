@@ -447,6 +447,14 @@ var testNames = [
         }
     },
     {
+        title:"MaterialSystem Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/MaterialSystemTest/MaterialSystemTest.js",
+        testScene:function () {
+            return new MaterialSystemTestScene();
+        }
+    },
+    {
         title:"Menu Test",
         resource:g_menu,
         platforms: PLATFORM_ALL,
