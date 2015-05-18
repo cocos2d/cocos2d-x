@@ -18187,6 +18187,24 @@ vec3
 },
 
 /**
+ * @method initOrthographic
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {float} arg3
+ * @return {bool}
+ */
+initOrthographic : function (
+float, 
+float, 
+float, 
+float 
+)
+{
+    return false;
+},
+
+/**
  * @method getDepthInView
  * @param {mat4_object} arg0
  * @return {float}
@@ -18221,21 +18239,13 @@ cameraflag
 },
 
 /**
- * @method initOrthographic
+ * @method clearBackground
  * @param {float} arg0
- * @param {float} arg1
- * @param {float} arg2
- * @param {float} arg3
- * @return {bool}
  */
-initOrthographic : function (
-float, 
-float, 
-float, 
+clearBackground : function (
 float 
 )
 {
-    return false;
 },
 
 /**
