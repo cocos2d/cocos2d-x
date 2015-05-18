@@ -198,7 +198,7 @@ public:
 private:
     void addImageAsyncCallBack(float dt);
     void loadImage();
-
+    void parseNinePatchImage(Image* image, Texture2D* texture, const std::string& path);
 public:
     struct AsyncStruct
     {
