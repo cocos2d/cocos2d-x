@@ -40,6 +40,7 @@ SpritePolygonCache::SpritePolygonCache()
 
 SpritePolygonCache::~SpritePolygonCache()
 {
+    removeAllSpritePolygonCache();
 }
 
 SpritePolygonCache* SpritePolygonCache::getInstance()

@@ -364,6 +364,11 @@ bool SpritePolygon::initWithRect(const std::string& file, std::vector<cocos2d::V
     return true;
 }
 
+SpritePolygon::~SpritePolygon()
+{
+    CC_SAFE_RELEASE(_texture);
+}
+
 bool SpritePolygon::initWithTexture(Texture2D *texture)
 {
     Node::init();
