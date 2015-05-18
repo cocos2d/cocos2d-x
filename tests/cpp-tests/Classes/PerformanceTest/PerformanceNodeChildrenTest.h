@@ -1,29 +1,17 @@
 #ifndef __PERFORMANCE_NODE_CHILDREN_TEST_H__
 #define __PERFORMANCE_NODE_CHILDREN_TEST_H__
 
-#include "PerformanceTest.h"
+#include "BaseTest.h"
 
-class NodeChildrenMenuLayer : public PerformBasicLayer
+DEFINE_TEST_SUITE(PerformceNodeChildrenTests);
+
+class NodeChildrenMainScene : public TestCase
 {
 public:
-    CREATE_FUNC(NodeChildrenMenuLayer);
-
-    NodeChildrenMenuLayer();
-    NodeChildrenMenuLayer(bool bControlMenuVisible, int nMaxCases = 0, int nCurCase = 0);
-    virtual void showCurrentTest();
-    void dumpProfilerInfo(float dt);
-
-    // overrides
-    virtual void onExitTransitionDidStart() override;
-    virtual void onEnterTransitionDidFinish() override;
-};
-
-class NodeChildrenMainScene : public cocos2d::Scene
-{
-public:
+    virtual bool init() override;
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
-    virtual std::string title() const;
-    virtual std::string subtitle() const;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
     virtual void updateQuantityOfNodes() = 0;
 
     const char* profilerName();
@@ -34,19 +22,21 @@ public:
 
     void updateQuantityLabel();
 
-    int getQuantityOfNodes() { return quantityOfNodes; }
+    void dumpProfilerInfo(float dt);
 
+    virtual void onExitTransitionDidStart() override;
+    virtual void onEnterTransitionDidFinish() override;
 protected:
+    static int quantityOfNodes;
     char   _profilerName[256];
     int    lastRenderedCount;
-    int    quantityOfNodes;
     int    currentQuantityOfNodes;
 };
 
 class IterateSpriteSheet : public NodeChildrenMainScene
 {
 public:
-    ~IterateSpriteSheet();
+    virtual ~IterateSpriteSheet();
     virtual void updateQuantityOfNodes();
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
     virtual void update(float dt) = 0;
@@ -98,7 +88,7 @@ public:
 class AddRemoveSpriteSheet : public NodeChildrenMainScene
 {
 public:
-    ~AddRemoveSpriteSheet();
+    virtual ~AddRemoveSpriteSheet();
     virtual void updateQuantityOfNodes();
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
     virtual void update(float dt) = 0;
@@ -225,7 +215,5 @@ public:
     virtual std::string subtitle() const override;
     virtual const char* testName() override;
 };
-
-void runNodeChildrenTest();
 
 #endif // __PERFORMANCE_NODE_CHILDREN_TEST_H__

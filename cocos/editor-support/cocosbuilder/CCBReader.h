@@ -131,11 +131,6 @@ public:
         MULTIPLY_RESOLUTION,
     };
    
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-#ifdef ABSOLUTE
-#undef ABSOLUTE
-#endif
-#endif
     enum class SizeType
     {
         ABSOLUTE,

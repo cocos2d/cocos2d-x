@@ -46,13 +46,13 @@
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
         
 --------------------------------
--- @overload self, int, vec4_table, long         
--- @overload self, string, vec4_table, long         
+-- @overload self, int, long, vec4_table         
+-- @overload self, string, long, vec4_table         
 -- @function [parent=#GLProgramState] setUniformVec4v
 -- @param self
 -- @param #string uniformName
--- @param #vec4_table pointer
 -- @param #long size
+-- @param #vec4_table pointer
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
 
 --------------------------------
@@ -73,13 +73,13 @@
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
 
 --------------------------------
--- @overload self, int, vec2_table, long         
--- @overload self, string, vec2_table, long         
+-- @overload self, int, long, vec2_table         
+-- @overload self, string, long, vec2_table         
 -- @function [parent=#GLProgramState] setUniformVec2v
 -- @param self
 -- @param #string uniformName
--- @param #vec2_table pointer
 -- @param #long size
+-- @param #vec2_table pointer
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
 
 --------------------------------
@@ -110,13 +110,13 @@
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
         
 --------------------------------
--- @overload self, int, float, long         
--- @overload self, string, float, long         
+-- @overload self, int, long, float         
+-- @overload self, string, long, float         
 -- @function [parent=#GLProgramState] setUniformFloatv
 -- @param self
 -- @param #string uniformName
--- @param #float pointer
 -- @param #long size
+-- @param #float pointer
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
 
 --------------------------------
@@ -161,13 +161,13 @@
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
 
 --------------------------------
--- @overload self, int, vec3_table, long         
--- @overload self, string, vec3_table, long         
+-- @overload self, int, long, vec3_table         
+-- @overload self, string, long, vec3_table         
 -- @function [parent=#GLProgramState] setUniformVec3v
 -- @param self
 -- @param #string uniformName
--- @param #vec3_table pointer
 -- @param #long size
+-- @param #vec3_table pointer
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
 
 --------------------------------

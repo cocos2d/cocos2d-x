@@ -120,10 +120,6 @@ public:
      * @param open Open or close IME keyboard.
      */
     virtual void setIMEKeyboardState(bool open) = 0;
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    virtual void setIMEKeyboardState(bool open, std::string str) = 0;
-#endif
     
     /** When the window is closed, it will return false if the platforms is Ios or Android.
      * If the platforms is windows or Mac,it will return true.
@@ -215,11 +211,6 @@ public:
     virtual void* getEAGLView() const { return nullptr; }
 #endif /* (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) */
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	virtual Size getRenerTargetSize() const = 0;
-	virtual const Mat4& getOrientationMatrix() const = 0;
-	virtual const Mat4& getReverseOrientationMatrix() const = 0;
-#endif
     /**
      * Get the visible area size of opengl viewport.
      *

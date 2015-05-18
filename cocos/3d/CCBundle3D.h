@@ -85,6 +85,12 @@ public:
     //since 3.3, to support reskin
     virtual bool loadMaterials(MaterialDatas& materialdatas);
     
+    /**
+     * load triangle list
+     * @param path the file path to load
+     */
+    static std::vector<Vec3> getTrianglesList(const std::string& path);
+    
     //load .obj file
     static bool loadObj(MeshDatas& meshdatas, MaterialDatas& materialdatas, NodeDatas& nodedatas, const std::string& fullPath, const char* mtl_basepath = nullptr);
     

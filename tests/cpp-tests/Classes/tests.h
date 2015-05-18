@@ -20,6 +20,7 @@
 #include "MenuTest/MenuTest.h"
 #include "ActionManagerTest/ActionManagerTest.h"
 #include "LayerTest/LayerTest.h"
+#include "Scene3DTest/Scene3DTest.h"
 #include "SceneTest/SceneTest.h"
 #include "ParallaxTest/ParallaxTest.h"
 #include "TileMapTest/TileMapTest.h"
@@ -80,6 +81,7 @@
 #include "BillBoardTest/BillBoardTest.h"
 #include "LightTest/LightTest.h"
 #include "Particle3DTest/Particle3DTest.h"
+#include "Physics3DTest/Physics3DTest.h"
 
 #include "OpenURLTest/OpenURLTest.h"
 #include "AllocatorTest/AllocatorTest.h"

@@ -92,7 +92,7 @@ protected:
     float _shining_duraion;
     cocos2d::GLProgramState * _state;
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     cocos2d::EventListenerCustom* _backToForegroundListener;
 #endif
 };
@@ -128,7 +128,7 @@ private:
     cocos2d::Sprite3D * _orc;
     cocos2d::GLProgramState * _state;
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     cocos2d::EventListenerCustom* _backToForegroundListener;
 #endif
 };
@@ -158,7 +158,7 @@ public:
 protected:
     cocos2d::GLProgramState * _state;
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     cocos2d::EventListenerCustom* _backToForegroundListener;
 #endif
 
@@ -202,7 +202,7 @@ protected:
     float _outlineWidth;
     //weak reference
     EffectSprite3D* _sprite;
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     cocos2d::EventListenerCustom* _backToForegroundListener;
 #endif
     
@@ -527,9 +527,31 @@ protected:
     cocos2d::Sprite3D* _teapot;
     cocos2d::Camera *_camera;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     cocos2d::EventListenerCustom* _backToForegroundListener;
 #endif
+};
+
+/// issue 9767 setGLProgram
+class Issue9767 : public Sprite3DTestDemo
+{
+    enum class ShaderType
+    {
+        SHADER_TEX,
+        SHADER_COLOR,
+    };
+public:
+    CREATE_FUNC(Issue9767);
+    Issue9767();
+    ~Issue9767();
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+    void menuCallback_SwitchShader(cocos2d::Ref* sender);
+    
+protected:
+    ShaderType          _shaderType;
+    cocos2d::Sprite3D*  _sprite;
 };
 
 #endif
