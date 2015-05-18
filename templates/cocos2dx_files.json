@@ -1090,6 +1090,8 @@
         "cocos/renderer/ccShader_3D_Skybox.vert", 
         "cocos/renderer/ccShader_3D_Terrain.frag", 
         "cocos/renderer/ccShader_3D_Terrain.vert", 
+        "cocos/renderer/ccShader_CameraClear.frag", 
+        "cocos/renderer/ccShader_CameraClear.vert", 
         "cocos/renderer/ccShader_Label.vert", 
         "cocos/renderer/ccShader_Label_df.frag", 
         "cocos/renderer/ccShader_Label_df_glow.frag", 
