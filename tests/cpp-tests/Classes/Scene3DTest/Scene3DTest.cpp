@@ -90,7 +90,7 @@ bool Scene3DTestScene::init()
     {
         CC_BREAK_IF(false == TerrainWalkThru::init());
         
-        Director::getInstance()->setDisplayStats(false);
+        //Director::getInstance()->setDisplayStats(false);
 
         // prepare for camera creation, we need create three custom cameras
         _gameCameras.resize(LAYER_COUNT);
