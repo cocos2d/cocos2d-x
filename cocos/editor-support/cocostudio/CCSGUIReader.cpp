@@ -1512,6 +1512,10 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
                         }
                         child->setPosition(Vec2(child->getPositionX() + widget->getAnchorPointInPoints().x, child->getPositionY() + widget->getAnchorPointInPoints().y));
                     }
+                    if (widget == NULL) {
+                        CCLOG("widget unexpectedly null!\n");
+                        assert(false);
+                    }
                     widget->addChild(child);
                 }
             }

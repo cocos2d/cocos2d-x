@@ -51,7 +51,7 @@
     [sslFile release];
     [responseHeader release];
     [responseData release];
-    [statusString release];
+    //[statusString release];
     [responseError release];
     [conn release];
     [runLoop release];
@@ -180,7 +180,12 @@
         SecTrustSetExceptions(serverTrust, errDataRef);
         
         SecTrustEvaluate(serverTrust, &trustResult);
+        [(id)errDataRef release];
+        
     }
+    
+    [certData release];
+    [(id)certArrayRef release];
     
     //Did our custom trust chain evaluate successfully?
     return trustResult = kSecTrustResultUnspecified || trustResult == kSecTrustResultProceed;    

@@ -148,6 +148,11 @@ bool ComRender::serialize(void* r)
 		}
 		if (resType == 0)
 		{
+            if (className == nullptr)
+            {
+                CCLOG("className unexpectedly null!\n");
+                assert(false);
+            }
 			if (strcmp(className, "CCSprite") == 0 && (filePath.find(".png") != filePath.npos || filePath.find(".pvr.ccz") != filePath.npos))
 			{
 				_render = CCSprite::create(filePath.c_str());
