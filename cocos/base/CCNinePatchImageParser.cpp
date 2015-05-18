@@ -23,6 +23,7 @@
 ****************************************************************************/
 #include "CCNinePatchImageParser.h"
 #include "platform/CCImage.h"
+#include "base/CCDirector.h"
 
 NS_CC_BEGIN
 
@@ -119,11 +120,17 @@ Rect NinePatchImageParser::parseCapInset() const
 
     if(_isRotated)
     {
-        return Rect(y1, _imageFrame.size.height - x2, y2 - y1, x2 - x1);
+        return Rect(y1 / CC_CONTENT_SCALE_FACTOR(),
+                    (_imageFrame.size.height - x2) / CC_CONTENT_SCALE_FACTOR(),
+                    (y2 - y1)/CC_CONTENT_SCALE_FACTOR(),
+                    (x2 - x1)/CC_CONTENT_SCALE_FACTOR());
     }
     else
     {
-        return Rect(x1, y1, x2 - x1, y2 - y1);
+        return Rect(x1 / CC_CONTENT_SCALE_FACTOR(),
+                    y1 / CC_CONTENT_SCALE_FACTOR(),
+                    (x2 - x1) / CC_CONTENT_SCALE_FACTOR(),
+                    (y2 - y1) / CC_CONTENT_SCALE_FACTOR());
     }
 }
 

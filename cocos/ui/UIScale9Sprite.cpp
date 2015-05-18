@@ -171,10 +171,7 @@ namespace ui {
                 }
                 if(capInsets.equals(Rect::ZERO))
                 {
-                    this->_capInsetsInternal = this->_capInsets = Rect(parsedCapInset.origin.x / CC_CONTENT_SCALE_FACTOR(),
-                                                                       parsedCapInset.origin.y / CC_CONTENT_SCALE_FACTOR(),
-                                                                       parsedCapInset.size.width/CC_CONTENT_SCALE_FACTOR(),
-                                                                       parsedCapInset.size.height/CC_CONTENT_SCALE_FACTOR());
+                    this->_capInsetsInternal = this->_capInsets = parsedCapInset;
                 }
             }
 
