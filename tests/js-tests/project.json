@@ -38,6 +38,7 @@
         "src/TransitionsTest/TransitionsTest.js",
         "src/DrawPrimitivesTest/DrawPrimitivesTest.js",
         "src/ParticleTest/ParticleTest.js",
+        "src/Particle3DTest/Particle3DTest.js",
         "src/ProgressActionsTest/ProgressActionsTest.js",
         "src/LayerTest/LayerTest.js",
         "src/SceneTest/SceneTest.js",
@@ -186,6 +187,7 @@
         "src/ReflectionTest/ReflectionTest.js",
 
         "src/SpritePolygonTest/SpritePolygonTest.js",
-        "src/MaterialSystemTest/MaterialSystemTest.js"
+        "src/MaterialSystemTest/MaterialSystemTest.js",
+        "src/TerrainTest/TerrainTest.js"
     ]
 }

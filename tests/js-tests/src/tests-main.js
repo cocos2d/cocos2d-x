@@ -498,6 +498,13 @@ var testNames = [
         }
     },
     {
+        title:"Particle3D Test",
+        platforms: PLATFORM_JSB,
+        testScene:function () {
+            return new Particle3DTestScene();
+        }
+    },
+    {
         title:"Particle Test",
         platforms: PLATFORM_ALL,
         linksrc:"",
@@ -612,6 +619,14 @@ var testNames = [
         linksrc:"src/ExtensionsTest/S9SpriteTest/S9SpriteTest.js",
         testScene:function () {
             return new S9SpriteTestScene();
+        }
+    },
+    {
+        title:"Terrain Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/TerrainTest/TerrainTest.js",
+        testScene:function () {
+            return new TerrainTestScene();
         }
     },
     {
