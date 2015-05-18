@@ -396,7 +396,7 @@ void Camera::clearBackground(float depth)
     quad.tr.texCoords = Tex2F(1,1);
     
     auto shader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_CAMERA_CLEAR);
-    auto programState = GLProgramState::create(shader);
+    auto programState = GLProgramState::getOrCreateWithGLProgram(shader);
     programState->setUniformFloat("depth", 1.0);
     programState->apply(Mat4());
     GLshort indices[6] = {0, 1, 2, 3, 2, 1};
