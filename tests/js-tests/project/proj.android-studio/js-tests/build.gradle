@@ -16,7 +16,7 @@ android {
     sourceSets.main {
         java.srcDir "src"
         res.srcDir "res"
-        jniLibs.srcDir "jniLibs"
+        jniLibs.srcDir "libs"
         manifest.srcFile "AndroidManifest.xml"
         assets.srcDir "assets"
     }
