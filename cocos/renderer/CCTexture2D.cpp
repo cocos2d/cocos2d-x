@@ -1415,17 +1415,49 @@ const Texture2D::PixelFormatInfoMap& Texture2D::getPixelFormatInfoMap()
     return _pixelFormatInfoTables;
 }
 
-NinePatchInfo* Texture2D::getNinePatchInfo()const
+void Texture2D::addSpriteFrameCapInset(SpriteFrame* spritframe, const Rect& capInsets)
 {
-    return this->_ninePatchInfo;
+    if(nullptr == _ninePatchInfo)
+    {
+        _ninePatchInfo = new NinePatchInfo;
+    }
+    if(nullptr == spritframe)
+    {
+        _ninePatchInfo->capInsetSize = capInsets;
+        return;
+    }
+    _ninePatchInfo->capInsetMap[spritframe] = capInsets;
 }
 
-void Texture2D::setNinePatchInfo(NinePatchInfo* info)
+bool Texture2D::isContain9PatchInfo()const
 {
-    this->_ninePatchInfo = info;
+    return nullptr != _ninePatchInfo;
 }
 
-void Texture2D::removeUnusedSpriteFrame(SpriteFrame* spriteFrame)
+const Rect& Texture2D::getSpriteFrameCapInset( cocos2d::SpriteFrame *spriteFrame )const
+{
+    CCASSERT(_ninePatchInfo != nullptr,
+             "Can't get the sprite frame capInset when the texture contains no 9-patch info.");
+    if(nullptr == spriteFrame)
+    {
+        return this->_ninePatchInfo->capInsetSize;
+    }
+    else
+    {
+        auto capInsetMap = this->_ninePatchInfo->capInsetMap;
+        if(capInsetMap.find(spriteFrame) != capInsetMap.end())
+        {
+            return capInsetMap.at(spriteFrame);
+        }
+        else
+        {
+            return this->_ninePatchInfo->capInsetSize;
+        }
+    }
+}
+
+
+void Texture2D::removeSpriteFrameCapInset(SpriteFrame* spriteFrame)
 {
     if(nullptr != this->_ninePatchInfo)
     {

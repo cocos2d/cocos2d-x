@@ -149,32 +149,20 @@ namespace ui {
         {
             auto texture = sprite->getTexture();
             auto spriteFrame = sprite->getSpriteFrame();
-            auto ninePatchInfo = texture->getNinePatchInfo();
-            if (nullptr !=  ninePatchInfo)
+            if (texture->isContain9PatchInfo())
             {
-                this->_isPatch9 = true;
-                Rect parsedCapInset;
-                if(!ninePatchInfo->isSpriteAtlas)
+                auto parsedCapInset = texture->getSpriteFrameCapInset(spriteFrame);
+                if(!parsedCapInset.equals(Rect::ZERO))
                 {
-                    parsedCapInset = ninePatchInfo->capInsetSize;
-                }
-                else
-                {
-                    if (ninePatchInfo->capInsetMap.find(spriteFrame) != ninePatchInfo->capInsetMap.end())
+                    this->_isPatch9 = true;
+                    if(capInsets.equals(Rect::ZERO))
                     {
-                        parsedCapInset = ninePatchInfo->capInsetMap.at(spriteFrame);
+                        this->_capInsetsInternal = this->_capInsets = parsedCapInset;
                     }
-                    else
-                    {
-                        parsedCapInset = Rect::ZERO;
-                    }
-                }
-                if(capInsets.equals(Rect::ZERO))
-                {
-                    this->_capInsetsInternal = this->_capInsets = parsedCapInset;
+
                 }
             }
-
+           
             this->updateWithSprite(sprite,
                                    rect,
                                    rotated,

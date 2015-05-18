@@ -198,14 +198,7 @@ void SpriteFrameCache::addSpriteFramesWithDictionary(ValueMap& dictionary, Textu
         if(flag)
         {
             parser.setSpriteFrameInfo(spriteFrame->getRectInPixels(), spriteFrame->isRotated());
-            auto patchInfoMap = texture->getNinePatchInfo();
-            if(nullptr == patchInfoMap)
-            {
-                patchInfoMap = new NinePatchInfo;
-                patchInfoMap->isSpriteAtlas = true;
-            }
-            patchInfoMap->capInsetMap[spriteFrame] = parser.parseCapInset();
-            texture->setNinePatchInfo(patchInfoMap);
+            texture->addSpriteFrameCapInset(spriteFrame, parser.parseCapInset());
         }
         // add sprite frame
         _spriteFrames.insert(spriteFrameName, spriteFrame);
@@ -342,7 +335,7 @@ void SpriteFrameCache::removeUnusedSpriteFrames()
         if( spriteFrame->getReferenceCount() == 1 )
         {
             toRemoveFrames.push_back(iter->first);
-            spriteFrame->getTexture()->removeUnusedSpriteFrame(spriteFrame);
+            spriteFrame->getTexture()->removeSpriteFrameCapInset(spriteFrame);
             CCLOG("cocos2d: SpriteFrameCache: removing unused frame: %s", iter->first.c_str());
             removed = true;
         }

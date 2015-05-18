@@ -21,7 +21,6 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
 ****************************************************************************/
-#include <unordered_map>
 #include "platform/CCPlatformMacros.h"
 #include "math/CCGeometry.h"
 
@@ -30,17 +29,6 @@ NS_CC_BEGIN
 class Image;
 class SpriteFrame;
 
-/**
- * A struct for storing 9-patch image capInsets.
- */
-
-class NinePatchInfo
-{
-public:
-    bool isSpriteAtlas;
-    Rect capInsetSize;
-    std::unordered_map<SpriteFrame*, Rect> capInsetMap;
-};
 
 /**
  * A class for paring Android .9 patch image.

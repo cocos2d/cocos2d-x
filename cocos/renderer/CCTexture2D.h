@@ -29,6 +29,7 @@ THE SOFTWARE.
 
 #include <string>
 #include <map>
+#include <unordered_map>
 
 #include "base/CCRef.h"
 #include "math/CCGeometry.h"
@@ -427,31 +428,53 @@ public:
     GLProgram* getGLProgram() const;
 
     /**
-     * Return the nine patched info.
+     * Whether the texture contains a 9-patch capInset info or not.
      *
-     * @return A NinePatchInfo info pointer.
+     * @return True is Texture contains a 9-patch info, false otherwise.
      */
-    NinePatchInfo* getNinePatchInfo()const;
+    bool isContain9PatchInfo()const;
 
     /**
-    * Modify the NinePatchInfo pointer.
-    *
-    * @param infoMap The NinePatchInfo pointer.
-    */
-    void setNinePatchInfo(NinePatchInfo* infoMap);
-
+     * Get spriteFrame capInset, If spriteFrame can't be found in 9-patch info map,
+     * then single 9-patch texture capInset will be returned.
+     * If the arg is nullptr, the capInset of single 9-patch texture will be returned.
+     *
+     * @param spriteFrame A SpriteFrame object pointer.
+     *
+     * @return The capInset of the SpriteFrame object.
+     */
+    const Rect& getSpriteFrameCapInset(SpriteFrame* spriteFrame)const;
     /**
     * Remove the spriteFrame capInset info when the spriteFrame is removed.
     *
     * @param spriteFrame A SpriteFrame object pointer.
     */
-    void removeUnusedSpriteFrame(SpriteFrame* spriteFrame);
+    void removeSpriteFrameCapInset(SpriteFrame* spriteFrame);
     
 public:
     /** Get pixel info map, the key-value pairs is PixelFormat and PixelFormatInfo.*/
     static const PixelFormatInfoMap& getPixelFormatInfoMap();
     
 private:
+    /**
+    * A struct for storing 9-patch image capInsets.
+    */
+
+    class NinePatchInfo
+    {
+    public:
+        Rect capInsetSize;
+        std::unordered_map<SpriteFrame*, Rect> capInsetMap;
+    };
+
+    /**
+     * Add capInset for sprite atlas.
+     * When handling single texture, pass nullptr in the first arg.
+     *
+     * @param spritframe The sprite frame object.
+     * @param capInsets The parsed capInset from a .9 patch image.
+     */
+    void addSpriteFrameCapInset(SpriteFrame* spritframe, const Rect& capInsets);
 
     /**convert functions*/
 
@@ -536,6 +559,8 @@ protected:
     bool _antialiasEnabled;
     std::string _textureFileName;
     NinePatchInfo* _ninePatchInfo;
+    friend class SpriteFrameCache;
+    friend class TextureCache;
 };
 
 

@@ -118,20 +118,21 @@ Rect NinePatchImageParser::parseCapInset() const
         lastPixel = pixel;
     }
 
+    Rect capInsets;
+
     if(_isRotated)
     {
-        return Rect(y1 / CC_CONTENT_SCALE_FACTOR(),
-                    (_imageFrame.size.height - x2) / CC_CONTENT_SCALE_FACTOR(),
-                    (y2 - y1)/CC_CONTENT_SCALE_FACTOR(),
-                    (x2 - x1)/CC_CONTENT_SCALE_FACTOR());
+        capInsets =  Rect(y1, _imageFrame.size.height - x2 , y2 - y1, x2 - x1);
     }
     else
     {
-        return Rect(x1 / CC_CONTENT_SCALE_FACTOR(),
-                    y1 / CC_CONTENT_SCALE_FACTOR(),
-                    (x2 - x1) / CC_CONTENT_SCALE_FACTOR(),
-                    (y2 - y1) / CC_CONTENT_SCALE_FACTOR());
+        capInsets = Rect(x1, y1 , x2 - x1, y2 - y1);
     }
+    capInsets = Rect(capInsets.origin.x / CC_CONTENT_SCALE_FACTOR(),
+                     capInsets.origin.y / CC_CONTENT_SCALE_FACTOR(),
+                     capInsets.size.width / CC_CONTENT_SCALE_FACTOR(),
+                     capInsets.size.height / CC_CONTENT_SCALE_FACTOR());
+    return capInsets;
 }
 
 void NinePatchImageParser::setSpriteFrameInfo( const cocos2d::Rect& frameRect, bool rotated )
