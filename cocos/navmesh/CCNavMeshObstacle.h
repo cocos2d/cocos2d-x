@@ -25,9 +25,9 @@
 #ifndef __CCNAV_MESH_OBSTACLE_H__
 #define __CCNAV_MESH_OBSTACLE_H__
 
+#include "base/ccConfig.h"
 #if CC_USE_NAVMESH
 
-#include "base/ccConfig.h"
 #include "2d/CCComponent.h"
 
 #include "base/CCRef.h"
@@ -47,6 +47,14 @@ class CC_DLL NavMeshObstacle : public Component
     friend class NavMesh;
 public:
 
+    enum NavMeshObstacleSyncFlag
+    {
+        NONE = 0,
+        NODE_TO_OBSTACLE = 1,
+        OBSTACLE_TO_NODE = 2,
+        NODE_AND_NODE = NODE_TO_OBSTACLE | OBSTACLE_TO_NODE,
+    };
+
     static NavMeshObstacle* create(const Vec3 &position, float radius, float height);
 
     virtual void onEnter() override;
@@ -59,6 +67,8 @@ public:
     void setHeight(float height);
     float getHeight() const { return _height; }
 
+    void setSyncFlag(const NavMeshObstacleSyncFlag &flag) { _syncFlag = flag; }
+    NavMeshObstacleSyncFlag getSyncFlag() const { return _syncFlag; }
     void syncToObstacle();
     void syncToNode();
 
@@ -82,6 +92,7 @@ private:
     float _radius;
     float _height;
     bool _needUpdateObstacle;
+    NavMeshObstacleSyncFlag _syncFlag;
     dtObstacleRef _obstacleID;
     dtTileCache *_tileCache;
 };

@@ -21,9 +21,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-#if CC_USE_NAVMESH
 
 #include "navmesh/CCNavMeshObstacle.h"
+#if CC_USE_NAVMESH
+
 #include "navmesh/CCNavMesh.h"
 #include "2d/CCNode.h"
 #include "2d/CCScene.h"
@@ -49,6 +50,7 @@ NavMeshObstacle::NavMeshObstacle()
 , _needUpdateObstacle(true)
 , _tileCache(nullptr)
 , _obstacleID(-1)
+, _syncFlag(NODE_AND_NODE)
 {
 
 }
@@ -100,12 +102,14 @@ void cocos2d::NavMeshObstacle::onEnter()
 
 void cocos2d::NavMeshObstacle::postUpdate(float delta)
 {
-    syncToNode();
+    if ((_syncFlag & OBSTACLE_TO_NODE) != 0)
+        syncToNode();
 }
 
 void cocos2d::NavMeshObstacle::preUpdate(float delta)
 {
-    syncToObstacle();
+    if ((_syncFlag & NODE_TO_OBSTACLE) != 0)
+        syncToObstacle();
 
     if (_needUpdateObstacle && _tileCache){
         _tileCache->removeObstacle(_obstacleID);

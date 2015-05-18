@@ -25,9 +25,8 @@
 #ifndef __CCNAV_MESH_H__
 #define __CCNAV_MESH_H__
 
-#if CC_USE_NAVMESH
-
 #include "base/ccConfig.h"
+#if CC_USE_NAVMESH
 
 #include "base/CCRef.h"
 #include "math/Vec3.h"
@@ -55,12 +54,6 @@ class CC_DLL NavMesh : public Ref
 {
 public:
 
-    struct hitInfo
-    {
-        Vec3 position;
-        Vec3 normal;
-    };
-
     static NavMesh* create(const std::string &filePath);
 
     void update(float dt);
@@ -73,7 +66,6 @@ public:
     void removeNavMeshObstacle(NavMeshObstacle *obstacle);
 
     void findPath(const Vec3 &start, const Vec3 &end, std::vector<Vec3> &pathPoints);
-    bool rayCast(const Vec3 &start, const Vec3 &end, hitInfo & hits);
 
 CC_CONSTRUCTOR_ACCESS:
     NavMesh();

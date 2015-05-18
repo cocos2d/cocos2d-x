@@ -25,9 +25,8 @@
 #ifndef __CCNAV_MESH_AGENT_H__
 #define __CCNAV_MESH_AGENT_H__
 
-#if CC_USE_NAVMESH
-
 #include "base/ccConfig.h"
+#if CC_USE_NAVMESH
 #include "2d/CCComponent.h"
 
 #include "base/CCRef.h"
@@ -68,10 +67,26 @@ struct CC_DLL NavMeshAgentParam
     unsigned char queryFilterType;
 };
 
+struct CC_DLL OffMeshLinkData
+{
+    Vec3 startPosition;
+    Vec3 endPosition;
+};
+
 class CC_DLL NavMeshAgent : public Component
 {
     friend class NavMesh;
 public:
+
+    enum NavMeshAgentSyncFlag
+    {
+        NONE = 0,
+        NODE_TO_AGENT = 1,
+        AGENT_TO_NODE = 2,
+        NODE_AND_NODE = NODE_TO_AGENT | AGENT_TO_NODE,
+    };
+
+    typedef std::function<void(const NavMeshAgent *, bool &)> MoveCallback;
 
     static NavMeshAgent* create(const NavMeshAgentParam &param);
 
@@ -89,8 +104,17 @@ public:
     void setMaxSpeed(float maxSpeed);
     float getMaxSpeed() const;
 
-    void move(const Vec3 &destination, const Vec3 &rotRefAxes = Vec3::UNIT_Z, bool needAutoOrientation = false);
+    void move(const Vec3 &destination, const MoveCallback &callback = nullptr, const Vec3 &rotRefAxes = Vec3::UNIT_Z, bool needAutoOrientation = false);
+    void pause();
+    void resume();
+    void stop();
 
+    bool isOnOffMeshLink();
+    void completeOffMeshLink();
+    OffMeshLinkData getCurrentOffMeshLinkData();
+
+    void setSyncFlag(const NavMeshAgentSyncFlag &flag) { _syncFlag = flag;  }
+    NavMeshAgentSyncFlag getSyncFlag() const { return _syncFlag; }
     void syncToAgent();
     void syncToNode();
     
@@ -113,13 +137,18 @@ private:
 
 private:
 
+    MoveCallback _moveCallback;
     NavMeshAgentParam _param;
+    NavMeshAgentSyncFlag _syncFlag;
+    Vec3 _origination;
     Vec3 _destination;
     Vec3 _rotRefAxes;
+    unsigned char _state;
     bool _needAutoOrientation;
     int _agentID;
     bool _needUpdateAgent;
     bool _needMove;
+    bool _isOnOffMesh;
     dtCrowd *_crowd;
     dtNavMeshQuery *_navMeshQuery;
 };

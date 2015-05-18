@@ -25,9 +25,9 @@
 #ifndef __CCNAV_MESH_DEBUG_DRAW_H__
 #define __CCNAV_MESH_DEBUG_DRAW_H__
 
+#include "base/ccConfig.h"
 #if CC_USE_NAVMESH
 
-#include "base/ccConfig.h"
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCCustomCommand.h"
 #include "math/Vec3.h"
