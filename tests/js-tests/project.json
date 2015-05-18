@@ -183,6 +183,7 @@
         "src/Presentation/Presentation.js",
         "src/ReflectionTest/ReflectionTest.js",
 
-        "src/SpritePolygonTest/SpritePolygonTest.js"
+        "src/SpritePolygonTest/SpritePolygonTest.js",
+        "src/MaterialSystemTest/MaterialSystemTest.js"
     ]
 }
