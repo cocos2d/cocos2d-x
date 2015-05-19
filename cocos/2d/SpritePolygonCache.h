@@ -59,7 +59,7 @@ public:
     virtual ~SpritePolygonCache();
     static SpritePolygonCache* getInstance();
     static void destroyInstance();
-    SpritePolygonInfo* addSpritePolygonCache(const std::string& filePath, const cocos2d::Rect& rect, const cocos2d::TrianglesCommand::Triangles& trianglesCommand);
+    SpritePolygonInfo* addSpritePolygonCache(const std::string& filePath, const cocos2d::Rect& rect, const cocos2d::TrianglesCommand::Triangles& triangles);
     SpritePolygonInfo* getSpritePolygonCache(const std::string& filePath, const cocos2d::Rect& rect, float optimization);
     void removeSpritePolygonCache(const std::string& filePath, const cocos2d::Rect* rect = nullptr);
     void removeAllSpritePolygonCache();
@@ -69,8 +69,6 @@ public:
 protected:
     SpritePolygonCache();
     void init();
-    void calculateUV(SpritePolygonInfo* spritePolygonInfo, const cocos2d::Texture2D* texture2D);
-    SpritePolygonInfo* triangulate(const std::string& file, const cocos2d::Rect& rect, std::vector<cocos2d::Vec2> & verts);
 private:
     static SpritePolygonCache* s_spritePolygonCache;
     MapSpritePolygonInfo _spritePolygonCacheMap;

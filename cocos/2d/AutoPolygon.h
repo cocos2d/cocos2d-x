@@ -25,8 +25,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef COCOS_2D_MARCHINGSQUARE_H__
-#define COCOS_2D_MARCHINGSQUARE_H__
+#ifndef COCOS_2D_AUTOPOLYGON_H__
+#define COCOS_2D_AUTOPOLYGON_H__
 
 #include <string>
 #include <vector>
@@ -34,11 +34,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
-class CC_DLL MarchingSquare
+class CC_DLL AutoPolygon
 {
 public:
-    MarchingSquare(const std::string &filename, const unsigned int threshold = 0);
-    ~MarchingSquare();
+    AutoPolygon(const std::string &filename);
+    ~AutoPolygon();
     
     void setThreshold(unsigned int threshold){_threshold = threshold;};
     const unsigned int getThreshold(){return _threshold;};
@@ -46,12 +46,17 @@ public:
     ssize_t getVecCount(){return _points.size();};
     const std::vector<cocos2d::Vec2>& getPoints(){return _points;};
     
+    const TrianglesCommand::Triangles& getTriangles(){return _triangles;};
     void printPoints();
     
     //using Ramer–Douglas–Peucker algorithm
-    void trace(const cocos2d::Rect& rect);
+    void trace(const cocos2d::Rect& rect, const unsigned int threshold = 0);
     void optimize(const float& optimization);
     void expand(const cocos2d::Rect& rect, const float& optimization);
+    void triangulate();
+    void calculateUV();
+    
+    void generateTriangles(const cocos2d::Rect& rect, const float& optimization, const unsigned int threshold = 0);
 
 protected:
     unsigned int findFirstNoneTransparentPixel();
@@ -64,7 +69,7 @@ protected:
     int getIndexFromPos(const unsigned int& x, const unsigned int& y){return y*_width+x;};
     cocos2d::Vec2 getPosFromIndex(const unsigned int& i){return cocos2d::Vec2(i%_width, i/_width);};
 
-    std::vector<cocos2d::Vec2> rdp(std::vector<cocos2d::Vec2> v);
+    std::vector<cocos2d::Vec2> rdp(std::vector<cocos2d::Vec2> v, const float& optimization);
     float perpendicularDistance(const cocos2d::Vec2& i, const cocos2d::Vec2& start, const cocos2d::Vec2& end);
 
     bool isAConvexPoint(const cocos2d::Vec2& p1, const cocos2d::Vec2& p2);
@@ -74,12 +79,13 @@ protected:
     std::string _filename;
     unsigned int _width;
     unsigned int _height;
+    float _scaleFactor;
+    cocos2d::Rect _rect;
     unsigned int _threshold;
     std::vector<cocos2d::Vec2> _points;
-    float _epsilon;
-    float _scaleFactor;
+    TrianglesCommand::Triangles _triangles;
 };
 
 NS_CC_END
 
-#endif // #ifndef COCOS_2D_MARCHINGSQUARE_H__
+#endif // #ifndef COCOS_2D_AUTOPOLYGON_H__

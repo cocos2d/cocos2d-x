@@ -25,13 +25,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "MarchingSquare.h"
+#include "AutoPolygon.h"
+#include "poly2tri/poly2tri.h"
 #include <algorithm>
 #include <math.h>
 
 USING_NS_CC;
 
-MarchingSquare::MarchingSquare(const std::string &filename, const unsigned int threshold)
+AutoPolygon::AutoPolygon(const std::string &filename)
 :_image(nullptr)
 ,_data(nullptr)
 ,_filename("")
@@ -39,10 +40,8 @@ MarchingSquare::MarchingSquare(const std::string &filename, const unsigned int t
 ,_width(0)
 ,_height(0)
 ,_scaleFactor(0)
-,_epsilon(0)
 {
     _filename = filename;
-    _threshold = threshold;
     _image = new Image();
     _image->initWithImageFile(filename);
     CCASSERT(_image->getRenderFormat()==Texture2D::PixelFormat::RGBA8888, "unsupported format, currently only supports rgba8888");
@@ -50,25 +49,37 @@ MarchingSquare::MarchingSquare(const std::string &filename, const unsigned int t
     _width = _image->getWidth();
     _height = _image->getHeight();
     _scaleFactor = Director::getInstance()->getContentScaleFactor();
+    _points.clear();
+    _triangles = {nullptr, nullptr, 0, 0};
 }
 
-MarchingSquare::~MarchingSquare()
+AutoPolygon::~AutoPolygon()
 {
     CC_SAFE_DELETE(_image);
+    CC_SAFE_DELETE_ARRAY(_triangles.verts);
+    CC_SAFE_DELETE_ARRAY(_triangles.indices);
     _points.clear();
 }
 
-void MarchingSquare::trace(const Rect& rect)
+void AutoPolygon::trace(const Rect& rect, const unsigned int threshold)
 {
+    _points.clear();
+    CC_SAFE_DELETE_ARRAY(_triangles.verts);
+    CC_SAFE_DELETE_ARRAY(_triangles.indices);
+    _triangles.vertCount = 0;
+    _triangles.indexCount = 0;
+    _rect = rect;
+    _threshold = threshold;
+    
     unsigned int first = findFirstNoneTransparentPixel();
     auto start = Vec2(first%_width, first/_width);
     marchSquare(start.x, start.y);
 }
 
-unsigned int MarchingSquare::findFirstNoneTransparentPixel()
+unsigned int AutoPolygon::findFirstNoneTransparentPixel()
 {
     unsigned int first = -1;
-    for(unsigned int i = 0; i < _width*_height; i++)
+    for(unsigned int i = 0; i < _rect.size.width*_rect.size.height; i++)
     {
         if(getAlphaByIndex(i) > _threshold)
         {
@@ -80,18 +91,29 @@ unsigned int MarchingSquare::findFirstNoneTransparentPixel()
     return first;
 }
 
-unsigned char MarchingSquare::getAlphaByIndex(const unsigned int& i)
+unsigned char AutoPolygon::getAlphaByIndex(const unsigned int& i)
 {
-    CCASSERT(i < _width*_height, "coordinate is out of range.");
+//    CCASSERT(i < _width*_height, "coordinate is out of range.");
+//    unsigned int x = i % (int)_rect.size.width;
+//    unsigned int y = i / (int)_rect.size.width;
+//     CCLOG("i=%d, x=%d,y=%d",i,x,y);
+//    x += _rect.origin.x;
+//    y += _height - _rect.origin.y - _rect.size.height;
+//    y = _height - _rect.origin.y -_rect.size.height + y;
+//    return getAlphaByPos(x, y);
     return *(_data+i*4+3);
 }
-unsigned char MarchingSquare::getAlphaByPos(const unsigned int& x, const unsigned int& y)
+unsigned char AutoPolygon::getAlphaByPos(const unsigned int& x, const unsigned int& y)
 {
-    CCASSERT(x < _width-1 && y < _height-1, "coordinate is out of range.");
+//    CCASSERT(x <= _width-1 && y <= _height-1, "coordinate is out of range.");
+//    if (x<_rect.origin.x || x>_rect.origin.x+_rect.size.width
+//        || y<_rect.origin.y || y>_rect.origin.y+_rect.size.height) {
+//        return 0;
+//    }
     return *(_data+(y*_width+x)*4+3);
 }
 
-unsigned int MarchingSquare::getSquareValue(const unsigned int& x, const unsigned int& y)
+unsigned int AutoPolygon::getSquareValue(const unsigned int& x, const unsigned int& y)
 {
     /*
      checking the 2x2 pixel grid, assigning these values to each pixel, if not transparent
@@ -113,7 +135,7 @@ unsigned int MarchingSquare::getSquareValue(const unsigned int& x, const unsigne
     return sv;
 }
 
-void MarchingSquare::marchSquare(const unsigned int& startx, const unsigned int& starty)
+void AutoPolygon::marchSquare(const unsigned int& startx, const unsigned int& starty)
 {
     int stepx = 0;
     int stepy = 0;
@@ -282,7 +304,7 @@ void MarchingSquare::marchSquare(const unsigned int& startx, const unsigned int&
     } while(curx != startx || cury != starty);
 }
 
-void MarchingSquare::printPoints()
+void AutoPolygon::printPoints()
 {
     for(auto p : _points)
     {
@@ -290,7 +312,7 @@ void MarchingSquare::printPoints()
     }
 }
 
-float MarchingSquare::perpendicularDistance(const cocos2d::Vec2& i, const cocos2d::Vec2& start, const cocos2d::Vec2& end)
+float AutoPolygon::perpendicularDistance(const cocos2d::Vec2& i, const cocos2d::Vec2& start, const cocos2d::Vec2& end)
 {
     float res;
     float slope;
@@ -311,7 +333,7 @@ float MarchingSquare::perpendicularDistance(const cocos2d::Vec2& i, const cocos2
     }
     return res;
 }
-std::vector<cocos2d::Vec2> MarchingSquare::rdp(std::vector<cocos2d::Vec2> v)
+std::vector<cocos2d::Vec2> AutoPolygon::rdp(std::vector<cocos2d::Vec2> v, const float& optimization)
 {
     if(v.size() < 3)
         return v;
@@ -328,15 +350,15 @@ std::vector<cocos2d::Vec2> MarchingSquare::rdp(std::vector<cocos2d::Vec2> v)
             index = i;
         }
     }
-    if (dist>_epsilon)
+    if (dist>optimization)
     {
         std::vector<Vec2>::const_iterator begin = v.begin();
         std::vector<Vec2>::const_iterator end   = v.end();
         std::vector<Vec2> l1(begin, begin+index+1);
         std::vector<Vec2> l2(begin+index, end);
         
-        std::vector<Vec2> r1 = rdp(l1);
-        std::vector<Vec2> r2 = rdp(l2);
+        std::vector<Vec2> r1 = rdp(l1, optimization);
+        std::vector<Vec2> r2 = rdp(l2, optimization);
         
         r1.insert(r1.end(), r2.begin()+1, r2.end());
         return r1;
@@ -348,12 +370,11 @@ std::vector<cocos2d::Vec2> MarchingSquare::rdp(std::vector<cocos2d::Vec2> v)
         return ret;
     }
 }
-void MarchingSquare::optimize(const float& optimization)
+void AutoPolygon::optimize(const float& optimization)
 {
     if(optimization <= 0 || _points.size()<4)
         return;
-    _epsilon = optimization;
-    _points = rdp(_points);
+    _points = rdp(_points, optimization);
     auto last = _points.back();
     
     if(last.y > _points.front().y)
@@ -361,7 +382,7 @@ void MarchingSquare::optimize(const float& optimization)
     _points.pop_back();
 }
 
-void MarchingSquare::expand(const cocos2d::Rect &rect, const float& optimization)
+void AutoPolygon::expand(const cocos2d::Rect &rect, const float& optimization)
 {
     std::vector<cocos2d::Vec2> offsets;
     size_t length = _points.size();
@@ -392,10 +413,113 @@ void MarchingSquare::expand(const cocos2d::Rect &rect, const float& optimization
     }
 }
 
-bool MarchingSquare::isAConvexPoint(const cocos2d::Vec2& p1, const cocos2d::Vec2& p2)
+bool AutoPolygon::isAConvexPoint(const cocos2d::Vec2& p1, const cocos2d::Vec2& p2)
 {
-    if(p1.cross(p2)>0)
-        return true;
-    else
-        return false;
+    return p1.cross(p2) >0 ? true : false;
+}
+
+void AutoPolygon::triangulate()
+{
+    CCASSERT(_points.size()>=3, "the points size is less than 3.");
+    std::vector<p2t::Point*> points;
+    for(std::vector<Vec2>::const_iterator it = _points.begin(); it<_points.end(); it++)
+    {
+        p2t::Point * p = new p2t::Point(it->x, it->y);
+        points.push_back(p);
+    }
+    p2t::CDT cdt(points);
+    cdt.Triangulate();
+    std::vector<p2t::Triangle*> tris = cdt.GetTriangles();
+    
+    V3F_C4B_T2F* verts= new V3F_C4B_T2F[_points.size()];
+    unsigned short* indices = new unsigned short[tris.size()*3];
+    unsigned short idx = 0;
+    unsigned short vdx = 0;
+
+    for(std::vector<p2t::Triangle*>::const_iterator ite = tris.begin(); ite < tris.end(); ite++)
+    {
+        for(int i = 0; i < 3; i++)
+        {
+            auto p = (*ite)->GetPoint(i);
+            auto v3 = Vec3(p->x, p->y, 0);
+            bool found = false;
+            int j;
+            size_t length = vdx;
+            for(j = 0; j < length; j++)
+            {
+                if(verts[j].vertices == v3)
+                {
+                    found = true;
+                    break;
+                }
+            }
+            if(found)
+            {
+                //if we found the same vertice, don't add to verts, but use the same vert with indices
+                indices[idx] = j;
+                idx++;
+            }
+            else
+            {
+                //vert does not exist yet, so we need to create a new one,
+                auto c4b = Color4B::WHITE;
+                auto t2f = Tex2F(0,0); // don't worry about tex coords now, we calculate that later
+                V3F_C4B_T2F vert = {v3,c4b,t2f};
+                verts[vdx] = vert;
+                indices[idx] = vdx;
+                idx++;
+                vdx++;
+            }
+        }
+    }
+    for(auto j : points)
+    {
+        delete j;
+    };
+    _triangles = {verts, indices, vdx, idx};
+}
+
+void AutoPolygon::calculateUV()
+{
+    /*
+     whole texture UV coordination
+     0,0                  1,0
+     +---------------------+
+     |                     |0.1
+     |                     |0.2
+     |     +--------+      |0.3
+     |     |texRect |      |0.4
+     |     |        |      |0.5
+     |     |        |      |0.6
+     |     +--------+      |0.7
+     |                     |0.8
+     |                     |0.9
+     +---------------------+
+     0,1                  1,1
+     
+     because when we scanned the image upside down, our uv is now upside down too
+     */
+    
+    Texture2D* texture = Director::getInstance()->getTextureCache()->addImage(_filename);
+    float texWidth  = texture->getPixelsWide()/_scaleFactor;
+    float texHeight = texture->getPixelsHigh()/_scaleFactor;
+    
+    auto end = &_triangles.verts[_triangles.vertCount];
+    for(auto i = _triangles.verts; i != end; i++)
+    {
+        // for every point, offset with the centerpoint
+        float u = i->vertices.x / texWidth;
+        float v = (texHeight - i->vertices.y) / texHeight;
+        i->texCoords.u = u;
+        i->texCoords.v = v;
+    }
+}
+
+void AutoPolygon::generateTriangles(const Rect& rect, const float& optimization, const unsigned int threshold)
+{
+    trace(rect, threshold);
+    optimize(optimization);
+    expand(rect, optimization);
+    triangulate();
+    calculateUV();
 }
