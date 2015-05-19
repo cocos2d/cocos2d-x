@@ -31,7 +31,7 @@
 #include <set>
 NS_CC_BEGIN
 
-class FrameBufferObject : public Ref
+class CC_DLL FrameBufferObject : public Ref
 {
 public:
     static FrameBufferObject* create(uint8_t fid, unsigned int width, unsigned int height);
