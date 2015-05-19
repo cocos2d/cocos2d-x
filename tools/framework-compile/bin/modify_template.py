@@ -55,13 +55,16 @@ class TemplateModifier(object):
         if language == "cpp":
             targetName = "HelloCpp"
             link_libs = XCODE_LINK_CPP_LIBS
+            replace_engine_strs.append("$(SRCROOT)/../cocos2d")
         elif language == "lua":
             targetName = "HelloLua"
             link_libs = XCODE_LINK_CPP_LIBS + XCODE_LINK_LUA_LIBS
+            replace_engine_strs.append("$(SRCROOT)/../../cocos2d-x")
         else:
             targetName = "HelloJavascript"
             link_libs = XCODE_LINK_CPP_LIBS + XCODE_LINK_JS_LIBS
-
+            replace_engine_strs.append("$(SRCROOT)/../../cocos2d-x")
+            replace_engine_strs.append("../../cocos2d-x")
         ios_target_name = "%s-mobile" % targetName
         mac_target_name = "%s-desktop" % targetName
 
@@ -113,6 +116,18 @@ class TemplateModifier(object):
         if pbx_proj.modified:
             print "Save xcode project"
             pbx_proj.save()
+
+        # modify the engine path
+        f = open(proj_file_path)
+        file_content = f.read()
+        f.close()
+
+        for old_engine_path in replace_engine_strs:
+            file_content = file_content.replace(old_engine_path, self.engine_path)
+
+        f = open(proj_file_path, "w")
+        f.write(file_content)
+        f.close()
 
     def modify_vs_proj(self, proj_file_path, language):
         proj_modifier_path = os.path.join(os.path.dirname(__file__), "proj_modifier")

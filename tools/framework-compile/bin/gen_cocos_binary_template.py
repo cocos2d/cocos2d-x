@@ -55,6 +55,19 @@ class CocosBinTemplateGenerator(object):
 			tmp_obj = gen_prebuilt_mk.MKGenerator(mk_file_path, android_libs, dst_file_path)
 			tmp_obj.do_generate()
 
+		def process_file(sour, dest):
+			f = open(sour)
+			file_content = f.read()
+			f.close()
+
+			file_content = file_content.replace("__LIBS_DIR__", self.lib_dir)
+
+			f = open(os.path.join(dest, os.path.basename(sour)), "w")
+			f.write(file_content)
+			f.close()
+
+		excopy.copy_files_with_cb(os.path.join(self.cur_dir, os.path.pardir, "x-modified"), self.repo_x, process_file)
+
 	def getConfigJson(self):
 		cfg_json_path = os.path.join(self.cur_dir, "template_binary_config.json")
 		f = open(cfg_json_path)
@@ -84,6 +97,14 @@ class CocosBinTemplateGenerator(object):
 		modifier.modify_xcode_proj(cpp_proj_path, "cpp")
 		modifier.modify_xcode_proj(lua_proj_path, "lua")
 		modifier.modify_xcode_proj(js_proj_path, "js")
+
+		# modify the build-cfg.json for templates
+		cpp_build_cfg = os.path.join(dst_dir, "cpp-template-binary/proj.android/build-cfg.json")
+		lua_build_cfg = os.path.join(dst_dir, "lua-template-binary/frameworks/runtime-src/proj.android/build-cfg.json")
+		js_build_cfg = os.path.join(dst_dir, "js-template-binary/frameworks/runtime-src/proj.android/build-cfg.json")
+		self.modify_android_build_cfg(cpp_build_cfg, "cpp")
+		self.modify_android_build_cfg(lua_build_cfg, "lua")
+		self.modify_android_build_cfg(js_build_cfg, "js")
 
 		self.modify_version_json(os.path.join(dst_dir, "lua-template-binary/.settings/version.json"))
 		self.modify_version_json(os.path.join(dst_dir, "js-template-binary/.settings/version.json"))
@@ -147,6 +168,24 @@ class CocosBinTemplateGenerator(object):
 			json.dump(cfg_info, f, sort_keys=True, indent=4)
 			f.close()
 
+	def modify_android_build_cfg(self, cfg_path, language):
+		f = open(cfg_path)
+		content = f.read()
+		f.close()
+
+		if language == "cpp":
+			replace_str = "../cocos2d"
+		elif language == "lua":
+			replace_str = "../../cocos2d-x"
+		else:
+			replace_str = "../../cocos2d-x"
+
+		if replace_str is not None:
+			content = content.replace(replace_str, self.repo_x)
+
+			f = open(cfg_path, "w")
+			f.write(content)
+			f.close()
 
 
 if __name__ == "__main__":

@@ -88,3 +88,31 @@ def cpdir(source, dest):
 			new_dest = os.path.join(dest_dir, f)
 			cpdir(path, new_dest)
 
+def win2unix(filePath):
+	try:
+		oldfile = open(filePath, "rb+")
+		path, name = os.path.split(filePath)
+		newfile = open(path + '$' + name, "wa+")
+
+		old = b'\r'
+		new = b''
+
+		data = b''
+		while (True):
+			data = oldfile.read(200)
+			newData = data.replace(old, new)
+			newfile.write(newData)
+			if len(data) < 200:
+				break
+		newfile.close()
+		oldfile.close()
+
+		os.remove(filePath)
+		os.rename(path + '$' + name, filePath)
+	except IOError as e:
+		print(e)
+
+
+
+
+
