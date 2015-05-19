@@ -2,7 +2,11 @@
 #-*- coding: UTF-8 -*-
 
 import os
-import _winreg
+import sys
+import shutil
+
+if sys.platform == 'win32':
+	import _winreg
 
 def get_required_vs_version(proj_file):
 		# Now VS2012 is the mini version required
@@ -58,3 +62,29 @@ def get_vs_cmd_path(vs_reg, proj_path, vs_version):
 
 	commandPath = os.path.join(vsPath, "Common7", "IDE", "devenv")
 	return (commandPath, needUpgrade)
+
+def rmdir(folder):
+	if os.path.exists(folder):
+		shutil.rmtree(folder)
+
+def mkdir(folder):
+	if not os.path.exists(folder):
+		os.makedirs(folder)
+
+def cpdir(source, dest):
+	source_dir = source
+	dest_dir = dest
+
+	if not os.path.exists(source_dir):
+		raise Exception("cpdir source_dir (%s) not exists" % source_dir)
+
+	mkdir(dest_dir)
+
+	for f in os.listdir(source_dir):
+		path = os.path.join(source_dir, f)
+		if os.path.isfile(path):
+			shutil.copy(path, dest_dir)
+		elif os.path.isdir(path):
+			new_dest = os.path.join(dest_dir, f)
+			cpdir(path, new_dest)
+

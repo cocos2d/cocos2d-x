@@ -4,6 +4,7 @@
 import os
 import json
 import excopy
+from utils_cocos import rmdir
 from argparse import ArgumentParser
 
 class CocosBinTemplateGenerator(object):
@@ -28,10 +29,10 @@ class CocosBinTemplateGenerator(object):
 
 	def clean_template(self):
 		import shutil
-		shutil.rmtree(self.template_dir)
-		shutil.rmtree(os.path.join(self.repo_x, "templates", "cpp-template-binary"))
-		shutil.rmtree(os.path.join(self.repo_x, "templates", "lua-template-binary"))
-		shutil.rmtree(os.path.join(self.repo_x, "templates", "js-template-binary"))
+		rmdir(self.template_dir)
+		rmdir(os.path.join(self.repo_x, "templates", "cpp-template-binary"))
+		rmdir(os.path.join(self.repo_x, "templates", "lua-template-binary"))
+		rmdir(os.path.join(self.repo_x, "templates", "js-template-binary"))
 
 	def copy_template(self):
 		for item in self.config_json["template_copy_config"]:

@@ -308,8 +308,8 @@ class CocosLibsCompiler(object):
 				execute_command(lipo_cmd)
 
 			# remove the simulator & device libs in iOS
-			self.rmdir(ios_sim_libs_dir)
-			self.rmdir(ios_dev_libs_dir)
+			rmdir(ios_sim_libs_dir)
+			rmdir(ios_dev_libs_dir)
 
 			if not self.disable_strip:
 				# strip the libs
@@ -336,7 +336,7 @@ class CocosLibsCompiler(object):
 		proj_name = "My%sGame" % language
 		proj_dir = os.path.join(self.cur_dir, "temp")
 		proj_path = os.path.join(proj_dir, proj_name)
-		self.rmdir(proj_path)
+		rmdir(proj_path)
 
 		# create a runtime project
 		create_cmd = "%s new -l %s -t runtime -d %s %s" % (cmd_path, language, proj_dir, proj_name)
@@ -398,7 +398,7 @@ class CocosLibsCompiler(object):
 				execute_command(strip_cmd)
 
 		# remove the project
-		self.rmdir(proj_path)
+		rmdir(proj_path)
 
 	def modify_mk(self, mk_file):
 		if os.path.isfile(mk_file):
@@ -408,33 +408,7 @@ class CocosLibsCompiler(object):
 
 	def clean_libs(self):
 		print "to clean libs"
-		self.rmdir(self.lib_dir)
-
-	def rmdir(self, folder):
-		if os.path.exists(folder):
-			shutil.rmtree(folder)
-
-	def mkdir(self, folder):
-		if not os.path.exists(folder):
-			os.makedirs(folder)
-
-	def cpdir(self, source, dest):
-		source_dir = source
-		dest_dir = dest
-
-		if not os.path.exists(source_dir):
-			raise Exception("cpdir source_dir (%s) not exists" % source_dir)
-
-		self.mkdir(dest_dir)
-
-		for f in os.listdir(source_dir):
-			path = os.path.join(source_dir, f)
-			if os.path.isfile(path):
-				shutil.copy(path, dest_dir)
-			elif os.path.isdir(path):
-				new_dest = os.path.join(dest_dir, f)
-				self.cpdir(path, new_dest)
-
+		rmdir(self.lib_dir)
 
 
 if __name__ == "__main__":
