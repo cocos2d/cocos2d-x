@@ -35,40 +35,6 @@
 
 using namespace cocos2d;
 
-static int SendBinaryMessageToLua(int nHandler,const unsigned char* pTable,int nLength)
-{
-    if (NULL == pTable || nHandler <= 0) {
-        return 0;
-    }
-    
-    if (NULL == ScriptEngineManager::getInstance()->getScriptEngine()) {
-        return 0;
-    }
-    
-    LuaStack *pStack = LuaEngine::getInstance()->getLuaStack();
-    if (NULL == pStack) {
-        return 0;
-    }
-
-    lua_State *tolua_s = pStack->getLuaState();
-    if (NULL == tolua_s) {
-        return 0;
-    }
-    
-    int nRet = 0;
-    LuaValueArray array;
-    for (int i = 0 ; i < nLength; i++) {
-        LuaValue value = LuaValue::intValue(pTable[i]);
-        array.push_back(value);
-    }
-    
-    pStack->pushLuaValueArray(array);
-    nRet = pStack->executeFunctionByHandler(nHandler, 1);
-    pStack->clean();
-    return nRet;
-}
-
-
 
 LuaWebSocket::~LuaWebSocket()
 {
@@ -92,23 +58,14 @@ void LuaWebSocket::onMessage(WebSocket* ws, const WebSocket::Data& data)
 {
     LuaWebSocket* luaWs = dynamic_cast<LuaWebSocket*>(ws);
     if (NULL != luaWs) {
-        if (data.isBinary) {
-            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::HandlerType::WEBSOCKET_MESSAGE);
-            if (0 != handler) {
-                SendBinaryMessageToLua(handler, (const unsigned char*)data.bytes, (int)data.len);
-            }
-        }
-        else{
-                
-            int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::HandlerType::WEBSOCKET_MESSAGE);
-            if (0 != handler)
+        int handler = ScriptHandlerMgr::getInstance()->getObjectHandler((void*)this,ScriptHandlerMgr::HandlerType::WEBSOCKET_MESSAGE);
+        if (0 != handler)
+        {
+            LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
+            if (nullptr != stack)
             {
-                LuaStack* stack = LuaEngine::getInstance()->getLuaStack();
-                if (nullptr != stack)
-                {
-                    stack->pushString(data.bytes,(int)data.len);
-                    stack->executeFunctionByHandler(handler,  1);
-                }
+                stack->pushString(data.bytes,(int)data.len);
+                stack->executeFunctionByHandler(handler,  1);
             }
         }
     }
