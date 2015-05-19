@@ -54,14 +54,11 @@ MarchingSquare::MarchingSquare(const std::string &filename, const unsigned int t
 
 MarchingSquare::~MarchingSquare()
 {
-    if (_image) {
-        delete _image;
-        _image = nullptr;
-    }
+    CC_SAFE_DELETE(_image);
     _points.clear();
 }
 
-void MarchingSquare::trace()
+void MarchingSquare::trace(const Rect& rect)
 {
     unsigned int first = findFirstNoneTransparentPixel();
     auto start = Vec2(first%_width, first/_width);
@@ -351,22 +348,20 @@ std::vector<cocos2d::Vec2> MarchingSquare::rdp(std::vector<cocos2d::Vec2> v)
         return ret;
     }
 }
-void MarchingSquare::optimize(const cocos2d::Rect &rect, const float level)
+void MarchingSquare::optimize(const float& optimization)
 {
-    if(level <= 0 || _points.size()<4)
+    if(optimization <= 0 || _points.size()<4)
         return;
-    _epsilon = level;
+    _epsilon = optimization;
     _points = rdp(_points);
     auto last = _points.back();
     
     if(last.y > _points.front().y)
         _points.front().y = last.y;
     _points.pop_back();
-    
-    expand(rect, level);
 }
 
-void MarchingSquare::expand(const cocos2d::Rect &rect, const float& level)
+void MarchingSquare::expand(const cocos2d::Rect &rect, const float& optimization)
 {
     std::vector<cocos2d::Vec2> offsets;
     size_t length = _points.size();
@@ -391,8 +386,8 @@ void MarchingSquare::expand(const cocos2d::Rect &rect, const float& level)
         offsets.push_back(v3);
      }
     for (int i=0; i<length; i++) {
-        _points[i].x = _points[i].x + offsets[i].x * level;
-        _points[i].y = _points[i].y + offsets[i].y * level;
+        _points[i].x = _points[i].x + offsets[i].x * optimization;
+        _points[i].y = _points[i].y + offsets[i].y * optimization;
         _points[i].clamp(rect.origin, rect.origin+rect.size);
     }
 }

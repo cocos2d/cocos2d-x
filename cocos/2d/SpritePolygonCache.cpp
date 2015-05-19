@@ -27,7 +27,10 @@
 
 #include "SpritePolygonCache.h"
 #include "poly2tri/poly2tri.h"
+#include "MarchingSquare.h"
 #include "platform/CCFileUtils.h"
+#include "base/CCDirector.h"
+#include "renderer/CCTextureCache.h"
 
 USING_NS_CC;
 
@@ -113,22 +116,53 @@ SpritePolygonInfo* SpritePolygonCache::addSpritePolygonCache(const std::string& 
     return info;
 }
 
-SpritePolygonInfo* SpritePolygonCache::getSpritePolygonCache(const std::string& filePath, const cocos2d::Rect& rect)
+SpritePolygonInfo* SpritePolygonCache::getSpritePolygonCache(const std::string& filePath, const cocos2d::Rect& rect, float optimization)
 {
-    auto fullpath = FileUtils::getInstance()->fullPathForFilename(filePath);;
-        
-    auto it = _spritePolygonCacheMap.find(fullpath);
-    if (_spritePolygonCacheMap.end() == it)
-        return nullptr;
+    SpritePolygonInfo* spritePolygonInfo = nullptr;
+    bool isFound = false;
     
-    auto infoIter = it->second.begin();
-    for (; infoIter != it->second.end(); infoIter++)
+    auto fullpath = FileUtils::getInstance()->fullPathForFilename(filePath);
+    if(fullpath.size() == 0)
     {
-        if ((*infoIter)->_rect.equals(rect))
-            return *infoIter;
+        return nullptr;
     }
     
-    return nullptr;
+    auto it = _spritePolygonCacheMap.find(fullpath);
+    if (_spritePolygonCacheMap.end() != it)
+    {
+        auto infoIter = it->second.begin();
+        for (; infoIter != it->second.end(); infoIter++)
+        {
+            if ((*infoIter)->_rect.equals(rect))
+            {
+                spritePolygonInfo = *infoIter;
+                isFound = true;
+            }
+        }
+    }
+    
+    if(!isFound)//TODO:: for temp.
+    {
+        //TODO:: can be removed.
+        Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(fullpath);
+        CCASSERT(texture, "texture was not loaded properly");
+        
+        //Marching Square
+        if(-1 == optimization) optimization = 1.169;
+        MarchingSquare marcher(fullpath);
+        marcher.trace(rect);
+        marcher.optimize(optimization);
+        marcher.expand(rect, optimization);
+        
+        marcher.printPoints();
+        auto p = marcher.getPoints();
+        SpritePolygonInfo* spi = triangulate(fullpath, rect, p);
+        
+        calculateUV(spi, texture);//TODO:return spritepolygon and pass to calculateUV();
+        spritePolygonInfo = spi;
+
+    }
+    return spritePolygonInfo;
 }
 
 void SpritePolygonCache::removeSpritePolygonCache(const std::string& filePath, const cocos2d::Rect* rect)
@@ -211,6 +245,102 @@ void SpritePolygonCache::printInfo(SpritePolygonInfo &info){
     for(auto v = info._triangles.verts; v < uvEnd; v++)
     {
         CCLOG("%f, %f", v->texCoords.u, v->texCoords.v);
+    }
+}
+
+SpritePolygonInfo* SpritePolygonCache::triangulate(const std::string& file, const cocos2d::Rect& rect, std::vector<cocos2d::Vec2> & verts)
+{
+    std::vector<p2t::Point*> points;
+    for(std::vector<Vec2>::const_iterator it = verts.begin(); it<verts.end(); it++)
+    {
+        p2t::Point * p = new p2t::Point(it->x, it->y);
+        points.push_back(p);
+    }
+    p2t::CDT cdt(points);
+    cdt.Triangulate();
+    std::vector<p2t::Triangle*> tris = cdt.GetTriangles();
+    
+    std::vector<V3F_C4B_T2F> _verts;
+    std::vector<unsigned short> _indices;
+    unsigned short idx = 0;
+    for(std::vector<p2t::Triangle*>::const_iterator ite = tris.begin(); ite < tris.end(); ite++)
+    {
+        for(int i = 0; i < 3; i++)
+        {
+            auto p = (*ite)->GetPoint(i);
+            auto v3 = Vec3(p->x, p->y, 0);
+            bool found = false;
+            int j;
+            for(j = 0; j < _verts.size(); j++)
+            {
+                if(_verts[j].vertices == v3)
+                {
+                    found = true;
+                    break;
+                }
+            }
+            if(found)
+            {
+                //if we found the same vertice, don't add to verts, but use the same vert with indices
+                _indices.push_back(j);
+            }
+            else
+            {
+                //vert does not exist yet, so we need to create a new one,
+                auto c4b = Color4B::WHITE;
+                auto t2f = Tex2F(0,0); // don't worry about tex coords now, we calculate that later
+                V3F_C4B_T2F vert = {v3,c4b,t2f};
+                _verts.push_back(vert);
+                _indices.push_back(idx);
+                idx++;
+            }
+        }
+    }
+    for(auto j : points)
+    {
+        delete j;
+    }
+    
+    TrianglesCommand::Triangles triangles = {&_verts[0], &_indices[0], (ssize_t)_verts.size(), (ssize_t)_indices.size()};
+    return SpritePolygonCache::getInstance()->addSpritePolygonCache(file, rect, triangles);
+}
+
+void SpritePolygonCache::calculateUV(SpritePolygonInfo* spritePolygonInfo, const cocos2d::Texture2D* texture2D)
+{
+    /*
+     whole texture UV coordination
+     0,0                  1,0
+     +---------------------+
+     |                     |0.1
+     |                     |0.2
+     |     +--------+      |0.3
+     |     |texRect |      |0.4
+     |     |        |      |0.5
+     |     |        |      |0.6
+     |     +--------+      |0.7
+     |                     |0.8
+     |                     |0.9
+     +---------------------+
+     0,1                  1,1
+     
+     because when we scanned the image upside down, our uv is now upside down too
+     */
+    
+    float scaleFactor = Director::getInstance()->getContentScaleFactor();
+    float texWidth  = texture2D->getPixelsWide()/scaleFactor;
+    float texHeight = texture2D->getPixelsHigh()/scaleFactor;
+    
+    if(nullptr != spritePolygonInfo)
+    {
+        auto end = &spritePolygonInfo->_triangles.verts[spritePolygonInfo->_triangles.vertCount];
+        for(auto i = spritePolygonInfo->_triangles.verts; i != end; i++)
+        {
+            // for every point, offset with the centerpoint
+            float u = i->vertices.x / texWidth;
+            float v = (texHeight - i->vertices.y) / texHeight;
+            i->texCoords.u = u;
+            i->texCoords.v = v;
+        }
     }
 }
 

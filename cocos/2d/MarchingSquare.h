@@ -44,14 +44,15 @@ public:
     const unsigned int getThreshold(){return _threshold;};
     
     ssize_t getVecCount(){return _points.size();};
-    const std::vector<cocos2d::Vec2> getPoints(){return _points;};
+    const std::vector<cocos2d::Vec2>& getPoints(){return _points;};
     
     void printPoints();
     
     //using Ramer–Douglas–Peucker algorithm
-    void trace();
-    void optimize(const cocos2d::Rect &rect, const float level = 0);
-    
+    void trace(const cocos2d::Rect& rect);
+    void optimize(const float& optimization);
+    void expand(const cocos2d::Rect& rect, const float& optimization);
+
 protected:
     unsigned int findFirstNoneTransparentPixel();
     void marchSquare(const unsigned int& startx, const unsigned int& starty);
@@ -67,7 +68,6 @@ protected:
     float perpendicularDistance(const cocos2d::Vec2& i, const cocos2d::Vec2& start, const cocos2d::Vec2& end);
 
     bool isAConvexPoint(const cocos2d::Vec2& p1, const cocos2d::Vec2& p2);
-    void expand(const cocos2d::Rect &rect, const float& level = 0);
     
     cocos2d::Image* _image;
     unsigned char * _data;
