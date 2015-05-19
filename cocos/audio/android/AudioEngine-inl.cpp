@@ -365,7 +365,11 @@ void AudioEngineImpl::stop(int audioID)
         log("%s error:%u",__func__, result);
     }
 
-    //If destroy openSL object immediately,it may cause dead lock.
+    /*If destroy openSL object immediately,it may cause dead lock.
+     *It's a system issue.For more information:
+     *    https://github.com/cocos2d/cocos2d-x/issues/11697
+     *    https://groups.google.com/forum/#!msg/android-ndk/zANdS2n2cQI/AT6q1F3nNGIJ
+     */
     player._delayTimeToRemove = DELAY_TIME_TO_REMOVE;
     //_audioPlayers.erase(audioID);
 }
