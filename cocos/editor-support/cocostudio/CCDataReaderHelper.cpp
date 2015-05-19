@@ -862,6 +862,11 @@ MovementBoneData *DataReaderHelper::decodeMovementBone(tinyxml2::XMLElement *mov
             movBoneData->delay = delay;
         }
     }
+    else
+    {
+        CCLOG("movBoneXml is unexpectedly null.\n");
+        assert(false);
+    }
 
     unsigned long length = 0;
     unsigned long index = 0;

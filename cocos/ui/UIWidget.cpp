@@ -558,6 +558,10 @@ void Widget::setTouchEnabled(bool enable)
     if (_touchEnabled)
     {
         _touchListener = EventListenerTouchOneByOne::create();
+        if (!_touchListener) {
+            CCLOG("Unable to create touch listener!\n");
+            assert(false);
+        }
         CC_SAFE_RETAIN(_touchListener);
         _touchListener->setSwallowTouches(true);
         _touchListener->onTouchBegan = CC_CALLBACK_2(Widget::onTouchBegan, this);

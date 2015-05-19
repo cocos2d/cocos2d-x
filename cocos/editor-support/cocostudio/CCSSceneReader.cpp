@@ -364,6 +364,10 @@ cocos2d::Node* SceneReader::createObject(CocoLoader *cocoLoader, stExpCocoNode *
     {
         className = pNodeArray[1].GetValue(cocoLoader);
     }
+    if (className == nullptr) {
+        CCLOG("className unexpectedly a nullptr!\n");
+        assert(false);
+    }
     if(strcmp(className, "CCNode") == 0)
     {
         Node* gb = nullptr;
@@ -443,6 +447,10 @@ cocos2d::Node* SceneReader::createObject(CocoLoader *cocoLoader, stExpCocoNode *
         setPropertyFromJsonDict(cocoLoader, cocoNode, gb);
         for (std::vector<Component*>::iterator iter = _vecComs.begin(); iter != _vecComs.end(); ++iter)
         {
+            if (gb == NULL) {
+                CCLOG("gb unexpectedly null!\n");
+                assert(false);
+            }
             gb->addComponent(*iter);
         }
         

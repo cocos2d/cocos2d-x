@@ -83,13 +83,22 @@ MeshVertexData* MeshVertexData::create(const MeshData& meshdata)
 {
     auto vertexdata = new (std::nothrow) MeshVertexData();
     int pervertexsize = meshdata.getPerVertexSize();
-    vertexdata->_vertexBuffer = VertexBuffer::create(pervertexsize, (int)(meshdata.vertex.size() / (pervertexsize / 4)));
+    auto divisor = pervertexsize / 4;
+    if (divisor == 0) {
+        CCLOG("Divide by zero error!\n");
+        assert(false);
+    }
+    vertexdata->_vertexBuffer = VertexBuffer::create(pervertexsize, (int)(meshdata.vertex.size() / divisor));
     vertexdata->_vertexData = VertexData::create();
     CC_SAFE_RETAIN(vertexdata->_vertexData);
     CC_SAFE_RETAIN(vertexdata->_vertexBuffer);
     
     int offset = 0;
     for (const auto& it : meshdata.attribs) {
+        if (vertexdata->_vertexData == NULL) {
+            CCLOG("_vertexData unexpectedly null!\n");
+            assert(false);
+        }
         vertexdata->_vertexData->setStream(vertexdata->_vertexBuffer, VertexStreamAttribute(offset, it.vertexAttrib, it.type, it.size));
         offset += it.attribSizeBytes;
     }

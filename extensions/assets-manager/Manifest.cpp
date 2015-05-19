@@ -499,11 +499,12 @@ void Manifest::loadManifest(const rapidjson::Document &json)
 
 void Manifest::saveToFile(const std::string &filepath)
 {
-    rapidjson::StringBuffer buffer;
+    rapidjson::StringBuffer buffer = NULL;
     rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
     _json.Accept(writer);
     
     std::ofstream output(filepath, std::ofstream::out);
+    
     if(!output.bad())
         output << buffer.GetString() << std::endl;
 }

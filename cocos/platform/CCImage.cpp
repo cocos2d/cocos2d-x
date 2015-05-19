@@ -1914,6 +1914,10 @@ bool Image::initWithS3TCData(const unsigned char * data, ssize_t dataLen)
             width >>= 1;
             height >>= 1;
         }
+        if (_dataLen <= 0) {
+            CCLOG("_dataLen unexpected non-positive!\n");
+            assert(false);
+        }
         _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
     }
     

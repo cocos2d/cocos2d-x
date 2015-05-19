@@ -707,6 +707,10 @@ Node * CCBReader::readNodeGraph(Node * pParent)
     for(int i = 0; i < numChildren; i++)
     {
         Node * child = this->readNodeGraph(node);
+        if (node == nullptr) {
+            CCLOG("node unexpectedly null!\n");
+            assert(false);
+        }
         node->addChild(child);
     }
 

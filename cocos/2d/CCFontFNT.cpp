@@ -254,7 +254,7 @@ void BMFontConfiguration::purgeKerningDictionary()
     tKerningHashElement *current;
     while(_kerningDictionary) 
     {
-        current = _kerningDictionary; 
+        current = _kerningDictionary;
         HASH_DEL(_kerningDictionary,current);
         free(current);
     }
