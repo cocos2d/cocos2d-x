@@ -164,6 +164,8 @@ void Scene::render(Renderer* renderer)
         director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
         director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
         
+        //clear background with max depth
+        camera->clearBackground(1.0);
         //visit the scene
         visit(renderer, transform, 0);
         

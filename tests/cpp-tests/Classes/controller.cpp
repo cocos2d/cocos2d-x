@@ -16,6 +16,8 @@ class RootTests : public TestList
 public:
     RootTests()
     {
+        addTest("Node: Scene3D", [](){return new (std::nothrow) Scene3DTests(); });
+        addTest("SpritePolygon", [](){return new (std::nothrow) SpritePolygonTest(); });
         addTest("ActionManager", [](){return new (std::nothrow) ActionManagerTests(); });
         addTest("Actions - Basic", [](){ return new (std::nothrow) ActionsTests(); });
         addTest("Actions - Ease", [](){return new (std::nothrow) ActionsEaseTests(); });
@@ -98,7 +100,7 @@ TestController::TestController()
 , _isRunInBackground(false)
 , _testSuite(nullptr)
 {
-    _rootTestList = new (std::nothrow) RootTests;  
+    _rootTestList = new (std::nothrow) RootTests;
     _rootTestList->runThisTest();
     _director = Director::getInstance();
 
