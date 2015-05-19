@@ -561,12 +561,13 @@ static Data getData(const std::string& filename, bool forString)
         mode = "rt";
     else
         mode = "rb";
-    
+
+    auto fileutils = FileUtils::getInstance();
     do
     {
         // Read the file from hardware
-        std::string fullPath = FileUtils::getInstance()->fullPathForFilename(filename);
-        FILE *fp = fopen(FileUtils::getInstance()->getSuitableFOpen(fullPath).c_str(), mode);
+        std::string fullPath = fileutils->fullPathForFilename(filename);
+        FILE *fp = fopen(fileutils->getSuitableFOpen(fullPath).c_str(), mode);
         CC_BREAK_IF(!fp);
         fseek(fp,0,SEEK_END);
         size = ftell(fp);
@@ -593,9 +594,7 @@ static Data getData(const std::string& filename, bool forString)
     
     if (nullptr == buffer || 0 == readsize)
     {
-        std::string msg = "Get data from file(";
-        msg.append(filename).append(") failed!");
-        CCLOG("%s", msg.c_str());
+        CCLOG("Get data from file %s failed", filename.c_str());
     }
     else
     {

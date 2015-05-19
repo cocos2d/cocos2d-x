@@ -13,7 +13,7 @@ bool UIImageViewTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIImageView/crossplatform_UIImageView_Editor_1.csb");
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIImageView/res.csb");
         Node* child = node->getChildByTag(5);
         child->removeFromParent();
         _layout = static_cast<Layout*>(child);

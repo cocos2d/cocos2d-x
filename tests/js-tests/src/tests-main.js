@@ -447,6 +447,14 @@ var testNames = [
         }
     },
     {
+        title:"MaterialSystem Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/MaterialSystemTest/MaterialSystemTest.js",
+        testScene:function () {
+            return new MaterialSystemTestScene();
+        }
+    },
+    {
         title:"Menu Test",
         resource:g_menu,
         platforms: PLATFORM_ALL,
@@ -487,6 +495,13 @@ var testNames = [
         linksrc:"src/ParallaxTest/ParallaxTest.js",
         testScene:function () {
             return new ParallaxTestScene();
+        }
+    },
+    {
+        title:"Particle3D Test",
+        platforms: PLATFORM_JSB,
+        testScene:function () {
+            return new Particle3DTestScene();
         }
     },
     {
@@ -604,6 +619,14 @@ var testNames = [
         linksrc:"src/ExtensionsTest/S9SpriteTest/S9SpriteTest.js",
         testScene:function () {
             return new S9SpriteTestScene();
+        }
+    },
+    {
+        title:"Terrain Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/TerrainTest/TerrainTest.js",
+        testScene:function () {
+            return new TerrainTestScene();
         }
     },
     {
