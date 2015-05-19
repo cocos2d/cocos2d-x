@@ -901,11 +901,11 @@ bool js_cocos2dx_Properties_getNextProperty(JSContext *cx, uint32_t argc, jsval 
 bool js_cocos2dx_Properties_getFloat(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Properties_getQuaternionFromAxisAngle(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Properties_parseColor(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Properties_parseVec3(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Properties_parseAxisAngle(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Properties_parseVec2(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Properties_parseVec3(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Properties_createNonRefCounted(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Properties_parseVec4(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Properties_createWithoutAutorelease(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSClass  *jsb_cocos2d_FileUtils_class;
 extern JSObject *jsb_cocos2d_FileUtils_prototype;

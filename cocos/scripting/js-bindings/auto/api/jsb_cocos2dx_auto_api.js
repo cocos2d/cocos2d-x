@@ -5869,6 +5869,20 @@ vec3
 },
 
 /**
+ * @method parseVec3
+ * @param {char} arg0
+ * @param {vec3_object} arg1
+ * @return {bool}
+ */
+parseVec3 : function (
+char, 
+vec3 
+)
+{
+    return false;
+},
+
+/**
  * @method parseAxisAngle
  * @param {char} arg0
  * @param {cc.Quaternion} arg1
@@ -5897,17 +5911,15 @@ vec2
 },
 
 /**
- * @method parseVec3
- * @param {char} arg0
- * @param {vec3_object} arg1
- * @return {bool}
+ * @method createNonRefCounted
+ * @param {String} arg0
+ * @return {cc.Properties}
  */
-parseVec3 : function (
-char, 
-vec3 
+createNonRefCounted : function (
+str 
 )
 {
-    return false;
+    return cc.Properties;
 },
 
 /**
@@ -5922,18 +5934,6 @@ vec4
 )
 {
     return false;
-},
-
-/**
- * @method createWithoutAutorelease
- * @param {String} arg0
- * @return {cc.Properties}
- */
-createWithoutAutorelease : function (
-str 
-)
-{
-    return cc.Properties;
 },
 
 };
