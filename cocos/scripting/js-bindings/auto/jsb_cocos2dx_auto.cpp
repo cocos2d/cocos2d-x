@@ -16639,6 +16639,33 @@ bool js_cocos2dx_Properties_parseColor(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_Properties_parseColor : wrong number of arguments");
     return false;
 }
+bool js_cocos2dx_Properties_parseVec3(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 2) {
+        const char* arg0;
+        cocos2d::Vec3* arg1;
+        std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = arg0_tmp.c_str();
+        do {
+            if (!args.get(1).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(1).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg1 = (cocos2d::Vec3*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Properties_parseVec3 : Error processing arguments");
+        bool ret = cocos2d::Properties::parseVec3(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_cocos2dx_Properties_parseVec3 : wrong number of arguments");
+    return false;
+}
+
 bool js_cocos2dx_Properties_parseAxisAngle(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -16693,30 +16720,28 @@ bool js_cocos2dx_Properties_parseVec2(JSContext *cx, uint32_t argc, jsval *vp)
     return false;
 }
 
-bool js_cocos2dx_Properties_parseVec3(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_Properties_createNonRefCounted(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    if (argc == 2) {
-        const char* arg0;
-        cocos2d::Vec3* arg1;
-        std::string arg0_tmp; ok &= jsval_to_std_string(cx, args.get(0), &arg0_tmp); arg0 = arg0_tmp.c_str();
-        do {
-            if (!args.get(1).isObject()) { ok = false; break; }
-            js_proxy_t *jsProxy;
-            JSObject *tmpObj = args.get(1).toObjectOrNull();
-            jsProxy = jsb_get_js_proxy(tmpObj);
-            arg1 = (cocos2d::Vec3*)(jsProxy ? jsProxy->ptr : NULL);
-            JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
-        } while (0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Properties_parseVec3 : Error processing arguments");
-        bool ret = cocos2d::Properties::parseVec3(arg0, arg1);
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Properties_createNonRefCounted : Error processing arguments");
+        cocos2d::Properties* ret = cocos2d::Properties::createNonRefCounted(arg0);
         jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Properties>(cx, (cocos2d::Properties*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
         args.rval().set(jsret);
         return true;
     }
-    JS_ReportError(cx, "js_cocos2dx_Properties_parseVec3 : wrong number of arguments");
+    JS_ReportError(cx, "js_cocos2dx_Properties_createNonRefCounted : wrong number of arguments");
     return false;
 }
 
@@ -16744,31 +16769,6 @@ bool js_cocos2dx_Properties_parseVec4(JSContext *cx, uint32_t argc, jsval *vp)
         return true;
     }
     JS_ReportError(cx, "js_cocos2dx_Properties_parseVec4 : wrong number of arguments");
-    return false;
-}
-
-bool js_cocos2dx_Properties_createWithoutAutorelease(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    if (argc == 1) {
-        std::string arg0;
-        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Properties_createWithoutAutorelease : Error processing arguments");
-        cocos2d::Properties* ret = cocos2d::Properties::createWithoutAutorelease(arg0);
-        jsval jsret = JSVAL_NULL;
-        do {
-        if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Properties>(cx, (cocos2d::Properties*)ret);
-            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-        } else {
-            jsret = JSVAL_NULL;
-        }
-    } while (0);
-        args.rval().set(jsret);
-        return true;
-    }
-    JS_ReportError(cx, "js_cocos2dx_Properties_createWithoutAutorelease : wrong number of arguments");
     return false;
 }
 
@@ -16824,11 +16824,11 @@ void js_register_cocos2dx_Properties(JSContext *cx, JS::HandleObject global) {
 
     static JSFunctionSpec st_funcs[] = {
         JS_FN("parseColor", js_cocos2dx_Properties_parseColor, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("parseVec3", js_cocos2dx_Properties_parseVec3, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("parseAxisAngle", js_cocos2dx_Properties_parseAxisAngle, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("parseVec2", js_cocos2dx_Properties_parseVec2, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("parseVec3", js_cocos2dx_Properties_parseVec3, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createNonRefCounted", js_cocos2dx_Properties_createNonRefCounted, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("parseVec4", js_cocos2dx_Properties_parseVec4, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("createWithoutAutorelease", js_cocos2dx_Properties_createWithoutAutorelease, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
