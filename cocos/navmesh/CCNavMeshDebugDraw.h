@@ -66,10 +66,9 @@ public:
 
 private:
 
-    Vec4 getColor(unsigned int col);
-
     GLenum getPrimitiveType(duDebugDrawPrimitives prim);
     void drawImplement(const cocos2d::Mat4& transform, uint32_t flags);
+    static Vec4 getColor(unsigned int col);
 
 private:
 

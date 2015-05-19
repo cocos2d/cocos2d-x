@@ -25,6 +25,7 @@
 #if CC_USE_NAVMESH
 
 #include "recast/Detour/DetourCommon.h"
+#include "recast/Detour/DetourNavMeshBuilder.h"
 #include "recast/fastlz/fastlz.h"
 
 NS_CC_BEGIN
@@ -104,27 +105,30 @@ MeshProcess::~MeshProcess()
 void MeshProcess::process(struct dtNavMeshCreateParams* params
     , unsigned char* polyAreas, unsigned short* polyFlags)
 {
-    //// Update poly flags from areas.
-    //for (int i = 0; i < params->polyCount; ++i)
-    //{
-    //	if (polyAreas[i] == DT_TILECACHE_WALKABLE_AREA)
-    //		polyAreas[i] = SAMPLE_POLYAREA_GROUND;
+    // Update poly flags from areas.
+    for (int i = 0; i < params->polyCount; ++i)
+    {
+        if (polyAreas[i] == DT_TILECACHE_WALKABLE_AREA)
+            polyAreas[i] = 0;
 
-    //	if (polyAreas[i] == SAMPLE_POLYAREA_GROUND ||
-    //		polyAreas[i] == SAMPLE_POLYAREA_GRASS ||
-    //		polyAreas[i] == SAMPLE_POLYAREA_ROAD)
-    //	{
-    //		polyFlags[i] = SAMPLE_POLYFLAGS_WALK;
-    //	}
-    //	else if (polyAreas[i] == SAMPLE_POLYAREA_WATER)
-    //	{
-    //		polyFlags[i] = SAMPLE_POLYFLAGS_SWIM;
-    //	}
-    //	else if (polyAreas[i] == SAMPLE_POLYAREA_DOOR)
-    //	{
-    //		polyFlags[i] = SAMPLE_POLYFLAGS_WALK | SAMPLE_POLYFLAGS_DOOR;
-    //	}
-    //}
+        if (polyAreas[i] == 0)
+            polyFlags[i] = 1;
+
+        //if (polyAreas[i] == SAMPLE_POLYAREA_GROUND ||
+        //	polyAreas[i] == SAMPLE_POLYAREA_GRASS ||
+        //	polyAreas[i] == SAMPLE_POLYAREA_ROAD)
+        //{
+        //	polyFlags[i] = SAMPLE_POLYFLAGS_WALK;
+        //}
+        //else if (polyAreas[i] == SAMPLE_POLYAREA_WATER)
+        //{
+        //	polyFlags[i] = SAMPLE_POLYFLAGS_SWIM;
+        //}
+        //else if (polyAreas[i] == SAMPLE_POLYAREA_DOOR)
+        //{
+        //	polyFlags[i] = SAMPLE_POLYFLAGS_WALK | SAMPLE_POLYFLAGS_DOOR;
+        //}
+    }
 
     //// Pass in off-mesh connections.
     //if (m_geom)

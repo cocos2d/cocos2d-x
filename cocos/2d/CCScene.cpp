@@ -59,6 +59,7 @@ Scene::Scene()
 #endif
 #if CC_USE_NAVMESH
     _navMesh = nullptr;
+    _navMeshDebugCamera = nullptr;
 #endif
     _ignoreAnchorPointForPosition = true;
     setAnchorPoint(Vec2(0.5f, 0.5f));
@@ -202,6 +203,17 @@ void Scene::render(Renderer* renderer)
     }
 #endif
 
+#if CC_USE_NAVMESH
+    if (_navMesh)
+    {
+        director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+        director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, _navMeshDebugCamera != nullptr ? _navMeshDebugCamera->getViewProjectionMatrix() : defaultCamera->getViewProjectionMatrix());
+        _navMesh->debugDraw(renderer);
+        renderer->render();
+        director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
+    }
+#endif
+
     Camera::_visitingCamera = nullptr;
 }
 
@@ -225,6 +237,15 @@ void Scene::setPhysics3DDebugCamera(Camera* camera)
     CC_SAFE_RETAIN(camera);
     CC_SAFE_RELEASE(_physics3dDebugCamera);
     _physics3dDebugCamera = camera;
+}
+#endif
+
+#if CC_USE_NAVMESH
+void Scene::setNavMeshDebugCamera(Camera *camera)
+{
+    CC_SAFE_RETAIN(camera);
+    CC_SAFE_RELEASE(_navMeshDebugCamera);
+    _navMeshDebugCamera = camera;
 }
 #endif
 

@@ -197,9 +197,14 @@ public:
     void setNavMesh(NavMesh* navMesh);
     /** get navigation mesh */
     NavMesh* getNavMesh() const { return _navMesh; }
-    
+    /**
+    * Set NavMesh debug draw camera.
+    */
+    void setNavMeshDebugCamera(Camera *camera);
+
 protected:
     NavMesh*       _navMesh;
+    Camera *       _navMeshDebugCamera;
 #endif
 };
 

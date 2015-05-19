@@ -82,7 +82,6 @@ private:
 
     void addTo(dtTileCache *tileCache);
     void removeFrom(dtTileCache *tileCache);
-    void setTileCache(dtTileCache *tileCache);
     void preUpdate(float delta);
     void postUpdate(float delta);
 

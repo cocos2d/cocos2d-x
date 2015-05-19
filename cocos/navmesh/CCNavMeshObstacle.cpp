@@ -98,6 +98,8 @@ void cocos2d::NavMeshObstacle::onEnter()
     if (navMesh){
         navMesh->addNavMeshObstacle(this);
     }
+    if ((_syncFlag & OBSTACLE_TO_NODE) != 0)
+        syncToNode();
 }
 
 void cocos2d::NavMeshObstacle::postUpdate(float delta)

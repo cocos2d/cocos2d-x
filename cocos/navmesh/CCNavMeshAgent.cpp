@@ -33,6 +33,21 @@
 
 NS_CC_BEGIN
 
+NavMeshAgentParam::NavMeshAgentParam()
+: radius(0.6f)
+, height(2.0f)
+, maxAcceleration(8.0f)
+, maxSpeed(3.5f)
+, collisionQueryRange(radius * 12.0f)
+, pathOptimizationRange(radius * 30.0f)
+, updateFlags(DT_CROWD_ANTICIPATE_TURNS | DT_CROWD_OPTIMIZE_VIS | DT_CROWD_OPTIMIZE_TOPO | DT_CROWD_OBSTACLE_AVOIDANCE)
+, obstacleAvoidanceType(3)
+, separationWeight(2.0f)
+, queryFilterType(0)
+{
+
+}
+
 NavMeshAgent* NavMeshAgent::create(const NavMeshAgentParam &param)
 {
     auto ref = new (std::nothrow) NavMeshAgent();
@@ -112,7 +127,7 @@ void cocos2d::NavMeshAgent::onExit()
     auto navMesh = _owner->getScene()->getNavMesh();
     if (navMesh){
         navMesh->removeNavMeshAgent(this);
-    }		
+    }
 }
 
 void cocos2d::NavMeshAgent::onEnter()
@@ -123,6 +138,8 @@ void cocos2d::NavMeshAgent::onEnter()
     if (navMesh){
         navMesh->addNavMeshAgent(this);
     }
+    if ((_syncFlag & AGENT_TO_NODE) != 0)
+        syncToNode();
 }
 
 cocos2d::Vec3 NavMeshAgent::getPosition() const
@@ -176,7 +193,6 @@ void NavMeshAgent::setRadius(float radius)
 
 void NavMeshAgent::move(const Vec3 &destination, const MoveCallback &callback, const Vec3 &rotRefAxes, bool needAutoOrientation)
 {
-    if (_state != DT_CROWDAGENT_STATE_INVALID) return;
     _origination = _param.position;
     _destination = destination;
     _moveCallback = callback;

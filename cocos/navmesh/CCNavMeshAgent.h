@@ -42,6 +42,8 @@ NS_CC_BEGIN
  */
 struct CC_DLL NavMeshAgentParam
 {
+    NavMeshAgentParam();
+
     Vec3 position;
     float radius;						///< Agent radius. [Limit: >= 0]
     float height;						///< Agent height. [Limit: > 0]

@@ -129,6 +129,8 @@ void NavMeshDebugDraw::drawImplement(const cocos2d::Mat4& transform, uint32_t fl
     _program->use();
     _program->setUniformsForBuiltins(transform);
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
     GL::blendFunc(BlendFunc::ALPHA_PREMULTIPLIED.src, BlendFunc::ALPHA_PREMULTIPLIED.dst);
     glBindBuffer(GL_ARRAY_BUFFER, _vbo);
     GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR);
@@ -151,6 +153,7 @@ void NavMeshDebugDraw::drawImplement(const cocos2d::Mat4& transform, uint32_t fl
         CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, iter->end - iter->start);
     }
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glDisable(GL_CULL_FACE);
     glDisable(GL_DEPTH_TEST);
 }
 

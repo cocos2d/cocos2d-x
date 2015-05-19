@@ -70,6 +70,7 @@ NavMesh::NavMesh()
     , _allocator(nullptr)
     , _compressor(nullptr)
     , _meshProcess(nullptr)
+    , _isDebugDrawEnabled(false)
 {
 
 }
@@ -83,6 +84,16 @@ NavMesh::~NavMesh()
     CC_SAFE_DELETE(_allocator);
     CC_SAFE_DELETE(_compressor);
     CC_SAFE_DELETE(_meshProcess);
+
+    for (auto iter : _agentList){
+        CC_SAFE_RELEASE(iter);
+    }
+    _agentList.clear();
+
+    for (auto iter : _obstacleList){
+        CC_SAFE_RELEASE(iter);
+    }
+    _obstacleList.clear();
 }
 
 bool NavMesh::initWithFilePath(const std::string &filePath)
@@ -179,10 +190,11 @@ bool NavMesh::read()
 
 void NavMesh::dtDraw()
 {
-    duDebugDrawNavMesh(&_debugDraw, *_navMesh, DU_DRAWNAVMESH_OFFMESHCONS);
-    duDebugDrawNavMeshNodes(&_debugDraw, *_navMeshQuery);
-    drawAgents();
     drawObstacles();
+    _debugDraw.depthMask(false);
+    duDebugDrawNavMeshWithClosedList(&_debugDraw, *_navMesh, *_navMeshQuery, DU_DRAWNAVMESH_OFFMESHCONS | DU_DRAWNAVMESH_CLOSEDLIST/* | DU_DRAWNAVMESH_COLOR_TILES*/);
+    drawAgents();
+    _debugDraw.depthMask(true);
 }
 
 void cocos2d::NavMesh::drawObstacles()
@@ -190,50 +202,87 @@ void cocos2d::NavMesh::drawObstacles()
     // Draw obstacles
     for (auto iter : _obstacleList)
     {
-        const dtTileCacheObstacle* ob = _tileCache->getObstacleByRef(iter->_obstacleID);
-        if (ob->state == DT_OBSTACLE_EMPTY) continue;
-        float bmin[3], bmax[3];
-        _tileCache->getObstacleBounds(ob, bmin, bmax);
+        if (iter){
+            const dtTileCacheObstacle* ob = _tileCache->getObstacleByRef(iter->_obstacleID);
+            if (ob->state == DT_OBSTACLE_EMPTY) continue;
+            float bmin[3], bmax[3];
+            _tileCache->getObstacleBounds(ob, bmin, bmax);
 
-        unsigned int col = 0;
-        if (ob->state == DT_OBSTACLE_PROCESSING)
-            col = duRGBA(255, 255, 0, 128);
-        else if (ob->state == DT_OBSTACLE_PROCESSED)
-            col = duRGBA(255, 192, 0, 192);
-        else if (ob->state == DT_OBSTACLE_REMOVING)
-            col = duRGBA(220, 0, 0, 128);
+            unsigned int col = 0;
+            if (ob->state == DT_OBSTACLE_PROCESSING)
+                col = duRGBA(255, 255, 0, 128);
+            else if (ob->state == DT_OBSTACLE_PROCESSED)
+                col = duRGBA(255, 192, 0, 192);
+            else if (ob->state == DT_OBSTACLE_REMOVING)
+                col = duRGBA(220, 0, 0, 128);
 
-        duDebugDrawCylinder(&_debugDraw, bmin[0], bmin[1], bmin[2], bmax[0], bmax[1], bmax[2], col);
-        duDebugDrawCylinderWire(&_debugDraw, bmin[0], bmin[1], bmin[2], bmax[0], bmax[1], bmax[2], duDarkenCol(col), 2);
+            duDebugDrawCylinder(&_debugDraw, bmin[0], bmin[1], bmin[2], bmax[0], bmax[1], bmax[2], col);
+            duDebugDrawCylinderWire(&_debugDraw, bmin[0], bmin[1], bmin[2], bmax[0], bmax[1], bmax[2], duDarkenCol(col), 2);
+        }
     }
 }
 
-void cocos2d::NavMesh::drawAgents(/*const float* pos, float r, float h, float c, const unsigned int col*/)
+void cocos2d::NavMesh::drawAgents()
 {
-    _debugDraw.depthMask(false);
     for (auto iter : _agentList)
     {
-        auto agent = _crowed->getAgent(iter->_agentID);
-        float r = iter->getRadius();
-        float h = iter->getHeight();
-        float c = _tileCache->getParams()->walkableClimb;
-        // Agent dimensions.	
-        duDebugDrawCylinderWire(&_debugDraw, agent->npos[0] - r, agent->npos[1] + 0.02f, agent->npos[2] - r, agent->npos[0] + r, agent->npos[1] + h, agent->npos[2] + r, duRGBA(128, 25, 0, 192), 2.0f);
+        if (iter){
+            auto agent = _crowed->getAgent(iter->_agentID);
+            float r = iter->getRadius();
+            float h = iter->getHeight();
 
-        duDebugDrawCircle(&_debugDraw, agent->npos[0], agent->npos[1] + c, agent->npos[2], r, duRGBA(0, 0, 0, 64), 1.0f);
+            unsigned int col = duRGBA(0, 0, 0, 32);
+            duDebugDrawCircle(&_debugDraw, agent->npos[0], agent->npos[1], agent->npos[2], r, col, 2.0f);
 
-        unsigned int colb = duRGBA(0, 0, 0, 196);
-        _debugDraw.begin(DU_DRAW_LINES);
-        _debugDraw.vertex(agent->npos[0], agent->npos[1] - c, agent->npos[2], colb);
-        _debugDraw.vertex(agent->npos[0], agent->npos[1] + c, agent->npos[2], colb);
-        _debugDraw.vertex(agent->npos[0] - r / 2, agent->npos[1] + 0.02f, agent->npos[2], colb);
-        _debugDraw.vertex(agent->npos[0] + r / 2, agent->npos[1] + 0.02f, agent->npos[2], colb);
-        _debugDraw.vertex(agent->npos[0], agent->npos[1] + 0.02f, agent->npos[2] - r / 2, colb);
-        _debugDraw.vertex(agent->npos[0], agent->npos[1] + 0.02f, agent->npos[2] + r / 2, colb);
-        _debugDraw.end();
+            col = duRGBA(220, 220, 220, 128);
+            if (agent->targetState == DT_CROWDAGENT_TARGET_REQUESTING || agent->targetState == DT_CROWDAGENT_TARGET_WAITING_FOR_QUEUE)
+                col = duLerpCol(col, duRGBA(128, 0, 255, 128), 32);
+            else if (agent->targetState == DT_CROWDAGENT_TARGET_WAITING_FOR_PATH)
+                col = duLerpCol(col, duRGBA(128, 0, 255, 128), 128);
+            else if (agent->targetState == DT_CROWDAGENT_TARGET_FAILED)
+                col = duRGBA(255, 32, 16, 128);
+            else if (agent->targetState == DT_CROWDAGENT_TARGET_VELOCITY)
+                col = duLerpCol(col, duRGBA(64, 255, 0, 128), 128);
 
+            duDebugDrawCylinder(&_debugDraw, agent->npos[0] - r, agent->npos[1] + r*0.1f, agent->npos[2] - r,
+                agent->npos[0] + r, agent->npos[1] + h, agent->npos[2] + r, col);
+
+        }
     }
-    _debugDraw.depthMask(true);
+
+    // Velocity stuff.
+    for (auto iter : _agentList)
+    {
+        if (iter){
+            auto agent = _crowed->getAgent(iter->_agentID);
+
+            const float radius = agent->params.radius;
+            const float height = agent->params.height;
+            const float* pos = agent->npos;
+            const float* vel = agent->vel;
+            const float* dvel = agent->dvel;
+
+            unsigned int col = duRGBA(220, 220, 220, 192);
+            if (agent->targetState == DT_CROWDAGENT_TARGET_REQUESTING || agent->targetState == DT_CROWDAGENT_TARGET_WAITING_FOR_QUEUE)
+                col = duLerpCol(col, duRGBA(128, 0, 255, 192), 32);
+            else if (agent->targetState == DT_CROWDAGENT_TARGET_WAITING_FOR_PATH)
+                col = duLerpCol(col, duRGBA(128, 0, 255, 192), 128);
+            else if (agent->targetState == DT_CROWDAGENT_TARGET_FAILED)
+                col = duRGBA(255, 32, 16, 192);
+            else if (agent->targetState == DT_CROWDAGENT_TARGET_VELOCITY)
+                col = duLerpCol(col, duRGBA(64, 255, 0, 192), 128);
+
+            duDebugDrawCircle(&_debugDraw, pos[0], pos[1] + height, pos[2], radius, col, 2.0f);
+
+            //duDebugDrawArrow(&_debugDraw, pos[0], pos[1] + height, pos[2],
+            //    pos[0] + dvel[0], pos[1] + height + dvel[1], pos[2] + dvel[2],
+            //    0.0f, 0.4f, duRGBA(0, 192, 255, 192), 2.0f);
+
+            duDebugDrawArrow(&_debugDraw, pos[0], pos[1] + height, pos[2],
+                pos[0] + vel[0], pos[1] + height + vel[1], pos[2] + vel[2],
+                0.0f, 0.4f, duRGBA(0, 0, 0, 160), 2.0f);
+        }
+    }
 }
 
 void NavMesh::removeNavMeshObstacle(NavMeshObstacle *obstacle)
@@ -300,22 +349,29 @@ void NavMesh::debugDraw(Renderer* renderer)
 void NavMesh::update(float dt)
 {
     for (auto iter : _agentList){
-        iter->preUpdate(dt);
+        if (iter)
+            iter->preUpdate(dt);
     }
 
     for (auto iter : _obstacleList){
-        iter->preUpdate(dt);
+        if (iter)
+            iter->preUpdate(dt);
     }
 
     if (_crowed)
         _crowed->update(dt, nullptr);
 
+    if (_tileCache)
+        _tileCache->update(dt, _navMesh);
+
     for (auto iter : _agentList){
-        iter->postUpdate(dt);
+        if (iter)
+            iter->postUpdate(dt);
     }
 
     for (auto iter : _obstacleList){
-        iter->postUpdate(dt);
+        if (iter)
+            iter->postUpdate(dt);
     }
 }
 
