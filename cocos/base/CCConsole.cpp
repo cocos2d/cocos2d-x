@@ -438,6 +438,7 @@ bool Console::listenOnFileDescriptor(int fd)
 
     _listenfd = fd;
     _thread = std::thread( std::bind( &Console::loop, this) );
+    _thread.detach();
 
     return true;
 }
@@ -446,7 +447,10 @@ void Console::stop()
 {
     if( _running ) {
         _endThread = true;
-        _thread.join();
+        if (_thread.joinable())
+        {
+            _thread.join();
+        }
     }
 }
 
@@ -1155,14 +1159,16 @@ void Console::loop()
 
         /* Any message for the remote console ? send it! */
         if( !_DebugStrings.empty() ) {
-            _DebugStringsMutex.lock();
-            for(const auto &str : _DebugStrings) {
-                for(const auto &fd : _fds) {
-                    send(fd, str.c_str(), str.length(),0);
+            if (_DebugStringsMutex.try_lock())
+            {
+                for (const auto &str : _DebugStrings) {
+                    for (auto fd : _fds) {
+                        send(fd, str.c_str(), str.length(), 0);
+                    }
                 }
+                _DebugStrings.clear();
+                _DebugStringsMutex.unlock();
             }
-            _DebugStrings.clear();
-            _DebugStringsMutex.unlock();
         }
     }
 
