@@ -157,7 +157,7 @@ class CocosLibsCompiler(object):
 		}
 
 		import _winreg
-		from utils_win32 import get_vs_cmd_path
+		from utils_cocos import get_vs_cmd_path
 		# find the VS in register
 		try:
 			if is_32bit_windows():
