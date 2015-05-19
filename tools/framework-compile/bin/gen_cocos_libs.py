@@ -6,6 +6,7 @@ import sys
 import time
 import shutil
 import excopy
+from utils_cocos import rmdir
 from argparse import ArgumentParser
 
 def os_is_win32():
