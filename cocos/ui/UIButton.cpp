@@ -788,11 +788,14 @@ void Button::setTitleFontSize(float size)
     {
         _titleRenderer->setSystemFontSize(size);
     }
-    else
+    else if (_type == FontType::TTF)
     {
         TTFConfig config = _titleRenderer->getTTFConfig();
         config.fontSize = size;
         _titleRenderer->setTTFConfig(config);
+    } else {
+        // BMFont can't set its font size
+        size = _fontSize;
     }
     updateContentSize();
     _fontSize = size;
@@ -821,11 +824,19 @@ void Button::setTitleFontName(const std::string& fontName)
     }
     if(FileUtils::getInstance()->isFileExist(fontName))
     {
-        TTFConfig config = _titleRenderer->getTTFConfig();
-        config.fontFilePath = fontName;
-        config.fontSize = _fontSize;
-        _titleRenderer->setTTFConfig(config);
-        _type = FontType::TTF;
+        if (fontName.find(".fnt") != std::string::npos || fontName.find(".FNT") != std::string::npos)
+        {
+            _titleRenderer->setBMFontFilePath(fontName);
+            _type = FontType::BMFont;
+        }
+        else
+        {
+            TTFConfig config = _titleRenderer->getTTFConfig();
+            config.fontFilePath = fontName;
+            config.fontSize = _fontSize;
+            _titleRenderer->setTTFConfig(config);
+            _type = FontType::TTF;
+        }
     }
     else
     {
@@ -849,13 +860,17 @@ const std::string Button::getTitleFontName() const
 {
     if (nullptr != _titleRenderer)
     {
-        if(this->_type == FontType::SYSTEM)
+        if (this->_type == FontType::SYSTEM)
         {
             return _titleRenderer->getSystemFontName();
         }
-        else
+        else if (this->_type == FontType::TTF)
         {
             return  _titleRenderer->getTTFConfig().fontFilePath;
+        }
+        else
+        {
+            return _titleRenderer->getBMFontFilePath();
         }
     }
     else
