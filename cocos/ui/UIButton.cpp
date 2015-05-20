@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "2d/CCActionInterval.h"
 #include "platform/CCFileUtils.h"
 #include "ui/UIHelper.h"
+#include <algorithm>
 
 NS_CC_BEGIN
 
