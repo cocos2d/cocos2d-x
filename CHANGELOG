@@ -1,5 +1,6 @@
 cocos2d-x-3.7  ??
     [NEW]           3d: added physics3d support
+    [NEW]           Audio: added support on WP8.1, now it supports wav format
     [NEW]           C++: added ActionFloat
     [NEW]           C++: support physical keyboard on WinRT
     [NEW]           FileUtils: checked filename case characters on windows
