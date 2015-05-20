@@ -919,7 +919,6 @@
         "cocos/platform/android/jni/TouchesJni.cpp", 
         "cocos/platform/android/libcocos2dx-with-controller/AndroidManifest.xml", 
         "cocos/platform/android/libcocos2dx-with-controller/build.gradle", 
-        "cocos/platform/android/libcocos2dx-with-controller/libcocos2dx_with_controller.iml", 
         "cocos/platform/android/libcocos2dx-with-controller/proguard-rules.pro", 
         "cocos/platform/android/libcocos2dx/AndroidManifest.xml", 
         "cocos/platform/android/libcocos2dx/build.gradle", 
