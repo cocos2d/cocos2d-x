@@ -10,6 +10,7 @@
 #include "jsb_cocos2dx_3d_auto.hpp"
 #include "jsb_cocos2dx_3d_extension_auto.hpp"
 #include "jsb_cocos2dx_experimental.hpp"
+#include "jsb_cocos2dx_physics3d_auto.hpp"
 #include "experimental/jsb_cocos2dx_experimental_manual.h"
 #include "3d/jsb_cocos2dx_3d_manual.h"
 #include "extension/jsb_cocos2dx_extension_manual.h"
@@ -109,6 +110,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     sc->addRegisterCallback(register_all_cocos2dx_experimental);
     sc->addRegisterCallback(register_all_cocos2dx_experimental_manual);
+
+    sc->addRegisterCallback(register_all_cocos2dx_physics3d);
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     sc->addRegisterCallback(JavascriptJavaBridge::_js_register);
