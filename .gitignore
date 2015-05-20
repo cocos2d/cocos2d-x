@@ -116,6 +116,7 @@ tests/*/publish/
 
 # Android
 project.properties
+*.iml
 
 # Ignore prebuilt libraries folder
 /external/*
