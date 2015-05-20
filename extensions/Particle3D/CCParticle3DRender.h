@@ -25,9 +25,12 @@
 #ifndef __CC_PARTICLE_3D_RENDER_H__
 #define __CC_PARTICLE_3D_RENDER_H__
 
+#include <vector>
+
+#include "renderer/CCRenderState.h"
 #include "base/CCRef.h"
 #include "math/CCMath.h"
-#include <vector>
+
 
 NS_CC_BEGIN
 
@@ -64,21 +67,19 @@ public:
     
     bool isVisible() const { return _isVisible; }
 
-    virtual void setDepthTest(bool isDepthTest) { _depthTest = isDepthTest; }
-    virtual void setDepthWrite(bool isDepthWrite) {_depthWrite = isDepthWrite; }
-    
+    void setDepthTest(bool isDepthTest);
+    void setDepthWrite(bool isDepthWrite);
+    void setBlendFunc(const BlendFunc& blendFunc);
+
+    void copyAttributesTo (Particle3DRender *render);
+
 CC_CONSTRUCTOR_ACCESS:
-    Particle3DRender()
-        : _particleSystem(nullptr)
-        , _isVisible(true)
-        , _rendererScale(Vec3::ONE)
-        , _depthTest(true)
-        , _depthWrite(false)
-    {};
-    virtual ~Particle3DRender(){};
+    Particle3DRender();
+    virtual ~Particle3DRender();
     
 protected:
     ParticleSystem3D *_particleSystem;
+    RenderState::StateBlock* _stateBlock;
     bool  _isVisible;
     Vec3 _rendererScale;
     bool _depthTest;
@@ -93,9 +94,6 @@ public:
     
     virtual void render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem) override;
 
-    virtual void setDepthTest(bool isDepthTest) override;
-    virtual void setDepthWrite(bool isDepthWrite) override;
-    
 CC_CONSTRUCTOR_ACCESS:
     Particle3DQuadRender();
     virtual ~Particle3DQuadRender();
@@ -105,7 +103,7 @@ protected:
     bool initQuadRender(const std::string& texFile);
     
 protected:
-    MeshCommand* _meshCommand;
+    MeshCommand*           _meshCommand;
     Texture2D*             _texture;
     GLProgramState*        _glProgramState;
     IndexBuffer*           _indexBuffer; //index buffer
