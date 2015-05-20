@@ -445,6 +445,14 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\network\HttpResponse.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\network\SocketIO.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\network\WebSocket.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3D.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DComponent.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DConstraint.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DDebugDrawer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DObject.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DShape.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DWorld.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysicsSprite3D.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCPhysicsBody.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCPhysicsContact.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCPhysicsHelper.h" />
@@ -1026,6 +1034,14 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\network\HttpClient.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\network\SocketIO.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\network\WebSocket.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3D.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DComponent.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DConstraint.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DDebugDrawer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DObject.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DShape.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysics3DWorld.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysicsSprite3D.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCPhysicsBody.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCPhysicsContact.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics\CCPhysicsJoint.cpp" />
@@ -1228,5 +1244,8 @@
     <None Include="$(MSBuildThisFileDirectory)..\..\..\cocos2d.def" />
     <None Include="$(MSBuildThisFileDirectory)..\..\..\libcocos2d.vcxproj.filters" />
     <None Include="$(MSBuildThisFileDirectory)..\..\..\libcocos2d_wp8.vcxproj.filters" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CMakeLists.txt" />
   </ItemGroup>
 </Project>
