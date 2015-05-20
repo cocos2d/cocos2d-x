@@ -81,12 +81,12 @@ public:
      * 
      * @return The scroll data of x axis.
      */
-    inline float getScrollX() { return _scrollX; };
+    inline float getScrollX() const { return _scrollX; };
     /** Get mouse scroll data of y axis.
      *
      * @return The scroll data of y axis.
      */
-    inline float getScrollY() { return _scrollY; };
+    inline float getScrollY() const { return _scrollY; };
 
     /** Set the cursor position.
      *
@@ -118,19 +118,19 @@ public:
      * @return The mouse button.
      * @js getButton
      */
-    inline int getMouseButton() { return _mouseButton; };
+    inline int getMouseButton() const { return _mouseButton; };
     /** Get the cursor position of x axis.
      *
      * @return The x coordinate of cursor position.
      * @js getLocationX
      */
-    inline float getCursorX() { return _x; };
+    inline float getCursorX() const { return _x; };
     /** Get the cursor position of y axis.
      *
      * @return The y coordinate of cursor position.
      * @js getLocationY
      */
-    inline float getCursorY() { return _y; };
+    inline float getCursorY() const { return _y; };
 
     /** Returns the current touch location in OpenGL coordinates.
      *
