@@ -57,9 +57,9 @@ THE SOFTWARE.
 
  * It is recommended to enable whenever possible to improve speed.
  * If you are migrating your code from GL ES 1.1, then keep it disabled. Once all your code works as expected, turn it on.
- 
+
  * Default value: Enabled by default
- 
+
  * @since v2.0.0
  */
 #ifndef CC_ENABLE_GL_STATE_CACHE
@@ -81,9 +81,9 @@ THE SOFTWARE.
  * - LabelAtlas.
  * - QuadParticleSystem.
  * - TileMap.
- 
+
  * To enabled set it to 1. Disabled by default.
- 
+
  * @since v0.99.5
  */
 #ifndef CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
@@ -94,7 +94,7 @@ THE SOFTWARE.
  * Seconds between FPS updates.
  * 0.5 seconds, means that the FPS number will be updated every 0.5 seconds.
  * Having a bigger number means a more reliable FPS.
- 
+
  * Default value: 0.1f
  */
 #ifndef CC_DIRECTOR_STATS_INTERVAL
@@ -115,13 +115,13 @@ THE SOFTWARE.
  * dispatch all the events, even if there are not events to dispatch.
  * If your game uses lot's of events (eg: touches) it might be a good idea to enable this feature.
  * Otherwise, it is safe to leave it disabled.
- 
+
  * To enable set it to 1. Disabled by default.
- 
+
  * @warning This feature is experimental.
  */
 #ifndef CC_DIRECTOR_DISPATCH_FAST_EVENTS
- #define CC_DIRECTOR_DISPATCH_FAST_EVENTS 0
+#define CC_DIRECTOR_DISPATCH_FAST_EVENTS 0
 #endif
 
 /** @def CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
@@ -160,15 +160,15 @@ THE SOFTWARE.
  * To disable it set it to 0. Enabled by default.
  */
 #ifndef CC_TEXTURE_ATLAS_USE_VAO
-    #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
-        #define CC_TEXTURE_ATLAS_USE_VAO 1
-    #else
-        /* Some Windows display adapter driver cannot support VAO.
-         * Some android devices cannot support VAO very well, so we disable it by default for android platform.
-         * Blackberry also doesn't support this feature. 
-         */
-		#define CC_TEXTURE_ATLAS_USE_VAO 0
-    #endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#define CC_TEXTURE_ATLAS_USE_VAO 1
+#else
+/* Some Windows display adapter driver cannot support VAO.
+ * Some android devices cannot support VAO very well, so we disable it by default for android platform.
+ * Blackberry also doesn't support this feature.
+ */
+#define CC_TEXTURE_ATLAS_USE_VAO 0
+#endif
 #endif
 
 
@@ -254,9 +254,7 @@ THE SOFTWARE.
 
 /** Use 3d physics integration API. */
 #ifndef CC_USE_3D_PHYSICS
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
 #define CC_USE_3D_PHYSICS 1
-#endif
 #endif
 
 /** Use culling or not. */
@@ -290,8 +288,8 @@ THE SOFTWARE.
 #endif
 #endif // CC_USE_WEBP
 
- /** Support WIC (Windows Image Component) or not. Replaces PNG, TIFF and JPEG
- */
+/** Support WIC (Windows Image Component) or not. Replaces PNG, TIFF and JPEG
+*/
 #ifndef CC_USE_WIC
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 #define CC_USE_WIC  1
