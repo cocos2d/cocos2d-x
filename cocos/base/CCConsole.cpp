@@ -354,10 +354,6 @@ bool Console::listenOnTCP(int port)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     WSADATA wsaData;
     n = WSAStartup(MAKEWORD(2, 2),&wsaData);
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-    CCLogIPAddresses();
-#endif
 #endif
 
     if ( (n = getaddrinfo(nullptr, serv, &hints, &res)) != 0) {
