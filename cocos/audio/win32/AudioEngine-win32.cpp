@@ -62,6 +62,7 @@ namespace cocos2d {
                 for (int index = 0; index < _numThread; ++index) {
                     _tasks.push_back(nullptr);
                     _threads.push_back( std::thread( std::bind(&AudioEngineThreadPool::threadFunc,this,index) ) );
+                    _threads[index].detach();
                 }
             }
             
@@ -78,7 +79,7 @@ namespace cocos2d {
                 if (targetIndex == -1) {
                     _tasks.push_back(task);
                     _threads.push_back( std::thread( std::bind(&AudioEngineThreadPool::threadFunc,this,_numThread) ) );
-                    
+                    _threads[_numThread].detach();
                     _numThread++;
                 }
                 _taskMutex.unlock();
@@ -212,16 +213,14 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
     auto it = _audioCaches.find(filePath);
     if (it == _audioCaches.end()) {
         audioCache = &_audioCaches[filePath];
-        
-        auto ext = filePath.substr(filePath.rfind('.'));
-        transform(ext.begin(), ext.end(), ext.begin(), tolower);
-
+        auto ext = strchr(filePath.c_str(), '.');
         bool eraseCache = true;
-        if (ext.compare(".ogg") == 0){
+
+        if (_stricmp(ext, ".ogg") == 0){
             audioCache->_fileFormat = AudioCache::FileFormat::OGG;
             eraseCache = false;
         }
-        else if (ext.compare(".mp3") == 0){
+        else if (_stricmp(ext, ".mp3") == 0){
             audioCache->_fileFormat = AudioCache::FileFormat::MP3;
 
             if (MPG123_LAZYINIT){
@@ -239,7 +238,7 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
             }
         }
         else{
-            log("unsupported media type:%s\n",ext.c_str());
+            log("unsupported media type:%s\n", ext);
         }
         
         if (eraseCache){

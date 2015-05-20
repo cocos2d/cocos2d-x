@@ -37,6 +37,7 @@
 #include <AL/al.h>
 #endif
 #include "CCPlatformMacros.h"
+#include "AudioCache.h"
 
 NS_CC_BEGIN
 namespace experimental{
@@ -73,7 +74,7 @@ protected:
     float _currTime;
     bool _timeDirty;
     bool _streamingSource;
-    ALuint _bufferIds[3];
+    ALuint _bufferIds[QUEUEBUFFER_NUM];
     std::thread _rotateBufferThread;
     std::mutex _sleepMutex;
     std::condition_variable _sleepCondition;
