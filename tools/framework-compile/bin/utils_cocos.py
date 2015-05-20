@@ -92,7 +92,7 @@ def win2unix(filePath):
 	try:
 		oldfile = open(filePath, "rb+")
 		path, name = os.path.split(filePath)
-		newfile = open(path + '$' + name, "wa+")
+		newfile = open(path + '$' + name, "wb+")
 
 		old = b'\r'
 		new = b''

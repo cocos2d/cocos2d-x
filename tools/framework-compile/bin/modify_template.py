@@ -140,11 +140,15 @@ class TemplateModifier(object):
         vcx_proj.remove_proj_reference()
 
         copy_libs_cmd = "if not exist \"$(OutDir)\" mkdir \"$(OutDir)\"\n" \
-                        "xcopy /Y /Q \"$(EngineRoot)prebuilt\\win32\\*.*\" \"$(OutDir)\"\n"
+                        "xcopy /Y /Q \"$(EngineRoot)tools\\framework-compile\\libs\\windows\\*.*\" \"$(OutDir)\"\n"
         if language == "cpp":
             copy_libs_cmd = copy_libs_cmd + "xcopy \"$(ProjectDir)..\\Resources\" \"$(OutDir)\" /D /E /I /F /Y\n"
 
         vcx_proj.set_event_command("PreLinkEvent", copy_libs_cmd)
+
+        if language == "lua":
+            link_cmd = "libcmt.lib;%(IgnoreSpecificDefaultLibraries)"
+            vcx_proj.set_item("Link", "IgnoreSpecificDefaultLibraries", link_cmd)
 
         vcx_proj.remove_predefine_macro("_DEBUG")
 
@@ -161,6 +165,17 @@ class TemplateModifier(object):
 
         vcx_proj.save()
 
+        replace_strs = []
+        if language == "cpp":
+            # link_libs = WIN32_LINK_CPP_LIBS
+            replace_strs.append("..\\cocos2d")
+        elif language == "lua":
+            # link_libs = WIN32_LINK_CPP_LIBS + WIN32_LINK_LUA_LIBS
+            replace_strs.append("..\\..\\cocos2d-x")
+        else:
+            # link_libs = WIN32_LINK_CPP_LIBS + WIN32_LINK_JS_LIBS
+            replace_strs.append("..\\..\\cocos2d-x")
+
         # modify the Runtime.cpp
         vcx_proj_path = os.path.dirname(proj_file_path)
         cpp_path = os.path.join(vcx_proj_path, os.path.pardir, "Classes/runtime/Runtime.cpp")
@@ -173,3 +188,23 @@ class TemplateModifier(object):
             f = open(cpp_path, "w")
             f.write(file_content)
             f.close()
+
+        f = open(proj_file_path)
+        file_content = f.read()
+        f.close()
+
+        if language == "lua":
+            # replace the "lua\lua;" to "lua\luajit;"
+            file_content = file_content.replace("lua\\lua;", "lua\\luajit\\include;")
+
+        file_content = file_content.replace("MultiThreadedDebugDLL", "MultiThreadedDLL")
+        for str in replace_strs:
+            file_content = file_content.replace(str, self.engine_path)
+        f = open(proj_file_path, "w")
+        f.write(file_content)
+        f.close()
+
+
+
+
+

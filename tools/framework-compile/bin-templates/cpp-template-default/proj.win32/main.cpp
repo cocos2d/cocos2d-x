@@ -4,15 +4,9 @@
 
 USING_NS_CC;
 
-#if _MSC_VER > 1700
-#pragma comment(lib,"libcocos2d_2013.lib")
-#pragma comment(lib,"libbox2d_2013.lib")
-#pragma comment(lib,"libSpine_2013.lib")
-#else
-#pragma comment(lib,"libcocos2d_2012.lib")
-#pragma comment(lib,"libbox2d_2012.lib")
-#pragma comment(lib,"libSpine_2012.lib")
-#endif
+#pragma comment(lib,"libcocos2d.lib")
+#pragma comment(lib,"libbox2d.lib")
+#pragma comment(lib,"libSpine.lib")
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
                        HINSTANCE hPrevInstance,
