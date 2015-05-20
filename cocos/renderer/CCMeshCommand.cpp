@@ -49,23 +49,27 @@ NS_CC_BEGIN
 MeshCommand::MeshCommand()
 : _textureID(0)
 , _glProgramState(nullptr)
-, _blendType(BlendFunc::DISABLE)
 , _displayColor(1.0f, 1.0f, 1.0f, 1.0f)
 , _matrixPalette(nullptr)
 , _matrixPaletteSize(0)
 , _materialID(0)
 , _vao(0)
-, _cullFaceEnabled(false)
-, _cullFace(GL_BACK)
-, _depthTestEnabled(false)
-, _depthWriteEnabled(false)
-, _forceDepthWrite(false)
-, _renderStateCullFaceEnabled(false)
-, _renderStateDepthTest(false)
-, _renderStateDepthWrite(GL_FALSE)
 , _material(nullptr)
+, _stateBlock(nullptr)
+, _forceDepthWrite(false)
 {
     _type = RenderCommand::Type::MESH_COMMAND;
+
+    _stateBlock = RenderState::StateBlock::create();
+    CC_SAFE_RETAIN(_stateBlock);
+
+    _stateBlock->setCullFace(false);
+    _stateBlock->setCullFaceSide(RenderState::CULL_FACE_SIDE_BACK);
+    _stateBlock->setDepthTest(false);
+    _stateBlock->setDepthWrite(false);
+    _stateBlock->setBlend(true);
+
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     // listen the event that renderer was recreated on Android/WP8
     _rendererRecreatedListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, CC_CALLBACK_1(MeshCommand::listenRendererRecreated, this));
@@ -116,23 +120,23 @@ void MeshCommand::init(float globalOrder,
 
 void MeshCommand::init(float globalZOrder,
                        GLuint textureID,
-                       cocos2d::GLProgramState *glProgramState,
+                       cocos2d::GLProgramState* glProgramState,
                        cocos2d::BlendFunc blendType,
                        GLuint vertexBuffer,
                        GLuint indexBuffer,
                        GLenum primitive,
                        GLenum indexFormat,
                        ssize_t indexCount,
-                       const cocos2d::Mat4 &mv,
+                       const cocos2d::Mat4& mv,
                        uint32_t flags)
 {
     CCASSERT(glProgramState, "GLProgramState cannot be nill");
-    
+    CCASSERT(!_material, "cannot init with GLProgramState if previously inited without GLProgramState");
+
     RenderCommand::init(globalZOrder, mv, flags);
     
     _globalOrder = globalZOrder;
     _textureID = textureID;
-    _blendType = blendType;
     _glProgramState = glProgramState;
     
     _vertexBuffer = vertexBuffer;
@@ -143,27 +147,34 @@ void MeshCommand::init(float globalZOrder,
     _mv.set(mv);
     
     _is3D = true;
+
+    if (!_stateBlock) {
+        _stateBlock = RenderState::StateBlock::create();
+        CC_SAFE_RETAIN(_stateBlock);
+    }
+
+    _stateBlock->setBlendFunc(blendType);
 }
 
 void MeshCommand::setCullFaceEnabled(bool enable)
 {
     CCASSERT(!_material, "If using material, you should call material->setCullFace()");
 
-    _cullFaceEnabled = enable;
+    _stateBlock->setCullFace(enable);
 }
 
 void MeshCommand::setCullFace(GLenum cullFace)
 {
     CCASSERT(!_material, "If using material, you should call material->setCullFaceSide()");
 
-    _cullFace = cullFace;
+    _stateBlock->setCullFaceSide((RenderState::CullFaceSide)cullFace);
 }
 
 void MeshCommand::setDepthTestEnabled(bool enable)
 {
     CCASSERT(!_material, "If using material, you should call material->setDepthTest()");
 
-    _depthTestEnabled = enable;
+    _stateBlock->setDepthTest(enable);
 }
 
 void MeshCommand::setDepthWriteEnabled(bool enable)
@@ -171,7 +182,7 @@ void MeshCommand::setDepthWriteEnabled(bool enable)
     CCASSERT(!_material, "If using material, you should call material->setDepthWrite()");
 
     _forceDepthWrite = enable;
-    _depthWriteEnabled = enable;
+    _stateBlock->setDepthWrite(enable);
 }
 
 void MeshCommand::setDisplayColor(const Vec4& color)
@@ -205,16 +216,18 @@ void MeshCommand::setTransparent(bool value)
     
     if (_isTransparent && !_forceDepthWrite)
     {
-        _depthWriteEnabled = false;
+        _stateBlock->setDepthWrite(false);
     }
     else
     {
-        _depthWriteEnabled = true;
+        _stateBlock->setDepthWrite(true);
     }
 }
 
 MeshCommand::~MeshCommand()
 {
+    CC_SAFE_RELEASE(_stateBlock);
+
     releaseVAO();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_rendererRecreatedListener);
@@ -227,64 +240,8 @@ void MeshCommand::applyRenderState()
 
     // blend and texture
     GL::bindTexture2D(_textureID);
-    GL::blendFunc(_blendType.src, _blendType.dst);
 
-    // cull face
-    _renderStateCullFaceEnabled = glIsEnabled(GL_CULL_FACE) != GL_FALSE;
-    GLint cullface;
-    glGetIntegerv(GL_CULL_FACE_MODE, &cullface);
-    _renderStateCullFace = (GLenum)cullface;
-    
-    if (_cullFaceEnabled != _renderStateCullFaceEnabled)
-    {
-        _cullFaceEnabled ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
-    }
-    
-    if (_cullFace != _renderStateCullFace)
-    {
-        glCullFace(_cullFace);
-    }
-
-    // depth
-    _renderStateDepthTest = (glIsEnabled(GL_DEPTH_TEST) != GL_FALSE);
-    glGetBooleanv(GL_DEPTH_WRITEMASK, &_renderStateDepthWrite);
-
-    if (_depthTestEnabled != _renderStateDepthTest)
-    {
-        _depthTestEnabled ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
-    }
-
-    if (_depthWriteEnabled != _renderStateDepthWrite)
-    {
-        glDepthMask(_depthWriteEnabled);
-    }
-}
-
-void MeshCommand::restoreRenderState()
-{
-    CCASSERT(!_material, "Must not be called when using Material");
-
-    // cull
-    if (_cullFaceEnabled != _renderStateCullFaceEnabled)
-    {
-        _renderStateCullFaceEnabled ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
-    }
-
-    if (_cullFace != _renderStateCullFace)
-    {
-        glCullFace(_renderStateCullFace);
-    }
-
-    // depth
-    if (_depthTestEnabled != _renderStateDepthTest)
-    {
-        _renderStateDepthTest ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
-    }
-
-    if (_depthWriteEnabled != _renderStateDepthWrite)
-    {
-        glDepthMask(_renderStateDepthWrite);
-    }
+    _stateBlock->bind();
 }
 
 void MeshCommand::genMaterialID(GLuint texID, void* glProgramState, GLuint vertexBuffer, GLuint indexBuffer, BlendFunc blend)
@@ -353,9 +310,6 @@ void MeshCommand::batchDraw()
         // Draw
         glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
         CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
-
-        //restore render state
-        restoreRenderState();
     }
 }
 void MeshCommand::postBatchDraw()
@@ -404,9 +358,6 @@ void MeshCommand::execute()
         glDrawElements(_primitive, (GLsizei)_indexCount, _indexFormat, 0);
         
         CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, _indexCount);
-
-        //restore render state
-        restoreRenderState();
     }
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);

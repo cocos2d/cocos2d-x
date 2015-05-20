@@ -28,6 +28,7 @@
 #include <unordered_map>
 #include "renderer/CCRenderCommand.h"
 #include "renderer/CCGLProgram.h"
+#include "renderer/CCRenderState.h"
 #include "math/CCMath.h"
 
 NS_CC_BEGIN
@@ -93,11 +94,9 @@ protected:
     
     // apply renderstate, not used when using material
     void applyRenderState();
-    void restoreRenderState();
 
     GLuint _textureID;
     GLProgramState* _glProgramState;
-    BlendFunc _blendType;
     
     Vec4 _displayColor; // in order to support tint and fade in fade out
     
@@ -116,16 +115,8 @@ protected:
     ssize_t _indexCount;
     
     // States, default value all false
-    bool _cullFaceEnabled;
-    GLenum _cullFace;
-    bool _depthTestEnabled;
-    bool _depthWriteEnabled;
     bool _forceDepthWrite;
-    
-    bool _renderStateCullFaceEnabled;
-    bool _renderStateDepthTest;
-    GLboolean _renderStateDepthWrite;
-    GLenum    _renderStateCullFace;
+    RenderState::StateBlock* _stateBlock;
 
     // ModelView transform
     Mat4 _mv;
