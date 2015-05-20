@@ -69,9 +69,10 @@ protected:
 protected:
     std::string    _title;
     cocos2d::Camera *_camera;
-    std::vector<cocos2d::NavMeshAgent *> _agents;
+    std::vector<std::pair<cocos2d::NavMeshAgent *, cocos2d::Animate3D *> > _agents;
     float _angle;
     cocos2d::Label *_stateLabel;
+	cocos2d::Label *_debugLabel;
 };
 
 #endif

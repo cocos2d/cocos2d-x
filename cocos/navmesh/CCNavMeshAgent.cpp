@@ -60,6 +60,12 @@ NavMeshAgent* NavMeshAgent::create(const NavMeshAgentParam &param)
     return nullptr;
 }
 
+std::string& NavMeshAgent::getNavMeshAgentComponentName()
+{
+    static std::string comName = "___NavMeshAgentComponent___";
+    return comName;
+}
+
 cocos2d::NavMeshAgent::NavMeshAgent()
     : _agentID(-1)
     , _needAutoOrientation(false)
@@ -67,7 +73,7 @@ cocos2d::NavMeshAgent::NavMeshAgent()
     , _needUpdateAgent(true)
     , _needMove(false)
     , _navMeshQuery(nullptr)
-    , _state(DT_CROWDAGENT_STATE_INVALID)
+    , _state(DT_CROWDAGENT_STATE_WALKING)
     , _syncFlag(NODE_AND_NODE)
     , _isOnOffMesh(false)
 {
@@ -82,7 +88,7 @@ cocos2d::NavMeshAgent::~NavMeshAgent()
 bool NavMeshAgent::init(const NavMeshAgentParam &param)
 {
     _param = param;
-    setName("___NavMeshAgentComponent___");
+    setName(getNavMeshAgentComponentName());
     return true;
 }
 
@@ -95,6 +101,7 @@ void cocos2d::NavMeshAgent::removeFrom(dtCrowd *crowed)
 {
     crowed->removeAgent(_agentID);
     _crowd = nullptr;
+    _agentID = -1;
 }
 
 void cocos2d::NavMeshAgent::addTo(dtCrowd *crowed)
@@ -122,24 +129,24 @@ void cocos2d::NavMeshAgent::convertTodtAgentParam(const NavMeshAgentParam &inPar
 
 void cocos2d::NavMeshAgent::onExit()
 {
+    if (_agentID == -1) return;
     Component::onExit();
 
-    auto navMesh = _owner->getScene()->getNavMesh();
-    if (navMesh){
-        navMesh->removeNavMeshAgent(this);
+    auto scene = _owner->getScene();
+    if (scene && scene->getNavMesh()){
+        scene->getNavMesh()->removeNavMeshAgent(this);
     }
 }
 
 void cocos2d::NavMeshAgent::onEnter()
 {
+    if (_agentID != -1) return;
     Component::onEnter();
-
-    auto navMesh = _owner->getScene()->getNavMesh();
-    if (navMesh){
-        navMesh->addNavMeshAgent(this);
+    auto scene = _owner->getScene();
+    if (scene && scene->getNavMesh()){
+        scene->getNavMesh()->addNavMeshAgent(this);
     }
-    if ((_syncFlag & AGENT_TO_NODE) != 0)
-        syncToNode();
+    _owner->setPosition3D(_param.position);
 }
 
 cocos2d::Vec3 NavMeshAgent::getPosition() const
@@ -150,6 +157,17 @@ cocos2d::Vec3 NavMeshAgent::getPosition() const
 float NavMeshAgent::getMaxSpeed() const
 {
     return _param.maxSpeed;
+}
+
+Vec3 NavMeshAgent::getCurrentVelocity() const
+{
+    if (_crowd){
+        auto agent = _crowd->getAgent(_agentID);
+        if (agent){
+            return Vec3(agent->vel[0], agent->vel[1], agent->vel[2]);
+        }
+    }
+    return Vec3::ZERO;
 }
 
 void NavMeshAgent::setMaxSpeed(float maxSpeed)
@@ -191,10 +209,12 @@ void NavMeshAgent::setRadius(float radius)
     _needUpdateAgent = true;
 }
 
-void NavMeshAgent::move(const Vec3 &destination, const MoveCallback &callback, const Vec3 &rotRefAxes, bool needAutoOrientation)
+void NavMeshAgent::move(const Vec3 &destination, bool needAutoOrientation, const Vec3 &rotRefAxes, const MoveCallback &callback)
 {
     _origination = _param.position;
     _destination = destination;
+    _needAutoOrientation = needAutoOrientation;
+    _rotRefAxes = rotRefAxes;
     _moveCallback = callback;
     _state = DT_CROWDAGENT_STATE_WALKING;
     _needMove = true;
@@ -257,15 +277,6 @@ void NavMeshAgent::preUpdate(float delta)
     if ((_syncFlag & NODE_TO_AGENT) != 0)
         syncToAgent();
 
-    if (_needUpdateAgent && _crowd){
-        auto agent = _crowd->getEditableAgent(_agentID);
-        dtCrowdAgentParams ap;
-        convertTodtAgentParam(_param, ap);
-        agent->params = ap;
-        agent->state = _state;
-        _needUpdateAgent = false;
-    }
-
     if (_needMove && _crowd && _navMeshQuery){
         dtPolyRef pRef = 0;
         float nearestPos[3];
@@ -289,8 +300,11 @@ void NavMeshAgent::syncToNode()
     }
 
     if (agent){
+        Mat4 wtop;
+        if (_owner->getParent())
+            wtop = _owner->getParent()->getWorldToNodeTransform();
         _state = agent->state;
-        _param.position = Vec3(agent->npos[0], agent->npos[1], agent->npos[2]);
+        wtop.transformPoint(Vec3(agent->npos[0], agent->npos[1], agent->npos[2]), &_param.position);
         bool autoMove = true;
         if (_moveCallback){
             _moveCallback(this, autoMove);
@@ -304,7 +318,11 @@ void NavMeshAgent::syncToNode()
                     Vec3 dir(agent->vel[0], agent->vel[1], agent->vel[2]);
                     dir.normalize();
                     float cosTheta = Vec3::dot(axes, dir);
-                    _owner->setRotationQuat(Quaternion(_rotRefAxes, acosf(cosTheta)));
+                    Vec3 rotAxes;
+                    Vec3::cross(axes, dir, &rotAxes);
+                    Quaternion rot = Quaternion(rotAxes, acosf(cosTheta));
+                    rot = rot * wtop;
+                    _owner->setRotationQuat(rot);
                 }
             }
         }
@@ -313,7 +331,23 @@ void NavMeshAgent::syncToNode()
 
 void NavMeshAgent::syncToAgent()
 {
-    setPosition(_owner->getPosition3D());
+    if (_needUpdateAgent && _crowd){
+        setPosition(_owner->getPosition3D());
+        auto agent = _crowd->getEditableAgent(_agentID);
+        dtCrowdAgentParams ap;
+        convertTodtAgentParam(_param, ap);
+        agent->params = ap;
+        agent->state = _state;
+        Mat4 mat;
+        if (_owner->getParent())
+            mat = _owner->getParent()->getNodeToWorldTransform();
+        Vec3 pos;
+        mat.transformPoint(_param.position, &pos);
+        agent->npos[0] = pos.x;
+        agent->npos[1] = pos.y;
+        agent->npos[2] = pos.z;
+        _needUpdateAgent = false;
+    }
 }
 
 void NavMeshAgent::setPosition(const Vec3 & pos)

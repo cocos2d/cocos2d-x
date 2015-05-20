@@ -44,6 +44,12 @@ NavMeshObstacle* NavMeshObstacle::create(const Vec3 &position, float radius, flo
     return nullptr;
 }
 
+std::string& NavMeshObstacle::getNavMeshObstacleComponentName()
+{
+    static std::string comName = "___NavMeshObstacleComponent___";
+    return comName;
+}
+
 NavMeshObstacle::NavMeshObstacle()
 : _radius(0.0f)
 , _height(0.0f)
@@ -65,7 +71,7 @@ bool NavMeshObstacle::init(const Vec3 &position, float radius, float height)
     _position = position;
     _radius = radius;
     _height = height;
-    setName("___NavMeshObstacleComponent___");
+    setName(getNavMeshObstacleComponentName());
     return true;
 }
 
@@ -84,22 +90,23 @@ void cocos2d::NavMeshObstacle::addTo(dtTileCache *tileCache)
 
 void cocos2d::NavMeshObstacle::onExit()
 {
+    if (_obstacleID == -1) return;
     Component::onExit();
-    auto navMesh = _owner->getScene()->getNavMesh();
-    if (navMesh){
-        navMesh->removeNavMeshObstacle(this);
+    auto scene = _owner->getScene();
+    if (scene && scene->getNavMesh()){
+        scene->getNavMesh()->removeNavMeshObstacle(this);
     }
 }
 
 void cocos2d::NavMeshObstacle::onEnter()
 {
+    if (_obstacleID != -1) return;
     Component::onEnter();
-    auto navMesh = _owner->getScene()->getNavMesh();
-    if (navMesh){
-        navMesh->addNavMeshObstacle(this);
+    auto scene = _owner->getScene();
+    if (scene && scene->getNavMesh()){
+        scene->getNavMesh()->addNavMeshObstacle(this);
     }
-    if ((_syncFlag & OBSTACLE_TO_NODE) != 0)
-        syncToNode();
+    _owner->setPosition3D(_position);
 }
 
 void cocos2d::NavMeshObstacle::postUpdate(float delta)
@@ -115,14 +122,17 @@ void cocos2d::NavMeshObstacle::preUpdate(float delta)
 
     if (_needUpdateObstacle && _tileCache){
         _tileCache->removeObstacle(_obstacleID);
-        _tileCache->addObstacle(&_position.x, _radius, _height, &_obstacleID);
+        Vec3 worldPos = _position;
+        if (_owner->getParent())
+            _owner->getParent()->getNodeToWorldTransform().transformPoint(_position, &worldPos);
+        _tileCache->addObstacle(&worldPos.x, _radius, _height, &_obstacleID);
         _needUpdateObstacle = false;
     }
 }
 
 void NavMeshObstacle::syncToNode()
 {
-    if (_tileCache){
+    if (_tileCache && _owner->getPosition3D() != _position){
         _owner->setPosition3D(_position);
     }
 }

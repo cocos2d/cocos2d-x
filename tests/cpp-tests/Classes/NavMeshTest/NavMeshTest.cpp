@@ -97,14 +97,30 @@ bool NavMeshTestDemo::init()
         TTFConfig ttfConfig("fonts/arial.ttf", 15);
         _stateLabel = Label::createWithTTF(ttfConfig, "Create Obstacle");
         _stateLabel->retain();
+        _debugLabel = Label::createWithTTF(ttfConfig, "Debug Draw ON");
+        _debugLabel->retain();
         auto menuItem0 = MenuItemLabel::create(_stateLabel, CC_CALLBACK_0(NavMeshTestDemo::switchState, this));
-        auto menu = Menu::create(menuItem0, nullptr);
-        menu->setPosition(Vec2::ZERO);
         menuItem0->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
         menuItem0->setPosition(Vec2(VisibleRect::left().x, VisibleRect::top().y - 50));
+        auto menuItem1 = MenuItemLabel::create(_debugLabel, [=](Ref*){
+            bool enabledDebug = !getNavMesh()->isDebugDrawEnabled();
+            getNavMesh()->setDebugDrawEnable(enabledDebug);
+            if (enabledDebug){
+                _debugLabel->setString("Debug Draw ON");
+            }
+            else{
+                _debugLabel->setString("Debug Draw OFF");
+            }
+        });
+        menuItem1->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+        menuItem1->setPosition(Vec2(VisibleRect::left().x, VisibleRect::top().y - 100));
+        auto menu = Menu::create(menuItem0, menuItem1, nullptr);
+        menu->setPosition(Vec2::ZERO);
         addChild(menu);
 
         initScene();
+
+        scheduleUpdate();
     }
     
     
@@ -192,6 +208,11 @@ void NavMeshTestDemo::initScene()
     setNavMesh(navMesh);
     setNavMeshDebugCamera(_camera);
 
+
+    auto ambientLight = AmbientLight::create(Color3B(64, 64, 64));
+    ambientLight->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(ambientLight);
+
     auto dirLight = DirectionLight::create(Vec3(-1.0f, -1.0f, -1.0f), Color3B(255, 255, 255));
     dirLight->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(dirLight);
@@ -199,29 +220,48 @@ void NavMeshTestDemo::initScene()
 
 void NavMeshTestDemo::createAgent(const Vec3 &pos)
 {
+    std::string filePath = "Sprite3DTest/girl.c3b";
     NavMeshAgentParam param;
-    param.position = pos;
+    //param.position = pos;
+    param.radius = 2.0f;
+    param.height = 8.0f;
     auto agent = NavMeshAgent::create(param);
-    auto agentNode = Node::create();
-    this->addChild(agentNode);
+    auto agentNode = Sprite3D::create(filePath);
+    agentNode->setScale(0.05f);
     agentNode->addComponent(agent);
-    agentNode->setCameraMask((unsigned short)CameraFlag::USER1);
-    _agents.push_back(agent);
+
+    auto node = Node::create();
+    node->addChild(agentNode);
+    node->setPosition3D(pos);
+    node->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(node);
+
+
+    auto animation = Animation3D::create(filePath);
+    auto animate = Animate3D::create(animation);
+    if (animate){
+        agentNode->runAction(RepeatForever::create(animate));
+        animate->setSpeed(0);
+    }
+
+    _agents.push_back(std::make_pair(agent, animate));
 }
 
 void NavMeshTestDemo::createObstacle(const Vec3 &pos)
 {
-    auto obstacle = NavMeshObstacle::create(pos + Vec3(0.0f, -0.5f, 0.0f), 1.0f, 2.0f);
-    auto obstacleNode = Node::create();
-    this->addChild(obstacleNode);
+    auto obstacle = NavMeshObstacle::create(pos + Vec3(0.0f, -0.5f, 0.0f), 2.0f, 8.0f);
+    auto obstacleNode = Sprite3D::create("Sprite3DTest/cylinder.c3b");
+    obstacleNode->setRotation3D(Vec3(-90.0f, 0.0f, 0.0f));
+    obstacleNode->setScale(0.3f);
     obstacleNode->addComponent(obstacle);
     obstacleNode->setCameraMask((unsigned short)CameraFlag::USER1);
+    this->addChild(obstacleNode);
 }
 
 void NavMeshTestDemo::moveAgents(const cocos2d::Vec3 &des)
 {
     for (auto iter : _agents){
-        iter->move(des);
+        iter.first->move(des, true, Vec3(-1.0f, 0.0f, 1.0f));
     }
 }
 
@@ -246,7 +286,10 @@ NavMeshTestDemo::NavMeshTestDemo(void)
 
 void NavMeshTestDemo::update( float delta )
 {
-    
+    for (auto iter : _agents){
+        float speed = iter.first->getCurrentVelocity().length() * 0.2;
+        iter.second->setSpeed(0.0f < speed ? speed : 0.0f);
+    }
 }
 
 NavMeshTestDemo::~NavMeshTestDemo( void )

@@ -91,6 +91,7 @@ public:
     typedef std::function<void(const NavMeshAgent *, bool &)> MoveCallback;
 
     static NavMeshAgent* create(const NavMeshAgentParam &param);
+    static std::string& getNavMeshAgentComponentName();
 
     virtual void onEnter() override;
     virtual void onExit() override;
@@ -105,8 +106,9 @@ public:
     float getMaxAcceleration() const;
     void setMaxSpeed(float maxSpeed);
     float getMaxSpeed() const;
+    Vec3 getCurrentVelocity() const;
 
-    void move(const Vec3 &destination, const MoveCallback &callback = nullptr, const Vec3 &rotRefAxes = Vec3::UNIT_Z, bool needAutoOrientation = false);
+    void move(const Vec3 &destination, bool needAutoOrientation = false, const Vec3 &rotRefAxes = Vec3::UNIT_Z, const MoveCallback &callback = nullptr);
     void pause();
     void resume();
     void stop();

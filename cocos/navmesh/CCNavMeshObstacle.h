@@ -56,6 +56,7 @@ public:
     };
 
     static NavMeshObstacle* create(const Vec3 &position, float radius, float height);
+    static std::string& getNavMeshObstacleComponentName();
 
     virtual void onEnter() override;
     virtual void onExit() override;
