@@ -379,7 +379,14 @@ bool AudioEngineImpl::stop(int audioID)
     alSourcei(player._alSource, AL_BUFFER, NULL);
     
     _alSourceUsed[player._alSource] = false;
-    _audioPlayers.erase(audioID);
+    if (player._streamingSource)
+    {
+        player.notifyExitThread();
+    } 
+    else
+    {
+        _audioPlayers.erase(audioID);
+    }
     
     return ret;
 }
@@ -393,7 +400,19 @@ void AudioEngineImpl::stopAll()
         _alSourceUsed[_alSources[index]] = false;
     }
     
-    _audioPlayers.clear();
+    for (auto it = _audioPlayers.begin(); it != _audioPlayers.end();) 
+    {
+        auto& player = it->second;
+        if (player._streamingSource)
+        {
+            player.notifyExitThread();
+            ++it;
+        }
+        else
+        {
+            it = _audioPlayers.erase(it);
+        }
+    }
 }
 
 float AudioEngineImpl::getDuration(int audioID)
@@ -497,7 +516,11 @@ void AudioEngineImpl::update(float dt)
         auto& player = it->second;
         alGetSourcei(player._alSource, AL_SOURCE_STATE, &sourceState);
         
-        if (player._ready && sourceState == AL_STOPPED) {
+        if (player._readForRemove)
+        {
+            it = _audioPlayers.erase(it);
+        }
+        else if (player._ready && sourceState == AL_STOPPED) {
             _alSourceUsed[player._alSource] = false;
             if (player._finishCallbak) {
                 auto& audioInfo = AudioEngine::_audioIDInfoMap[audioID];
@@ -506,7 +529,15 @@ void AudioEngineImpl::update(float dt)
             
             AudioEngine::remove(audioID);
             
-            it = _audioPlayers.erase(it);
+            if (player._streamingSource)
+            {
+                player.notifyExitThread();
+                ++it;
+            } 
+            else
+            {
+                it = _audioPlayers.erase(it);
+            }
         }
         else{
             ++it;

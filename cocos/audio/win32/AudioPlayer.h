@@ -56,7 +56,8 @@ public:
     bool setTime(float time);
     float getTime() { return _currTime;}
     bool setLoop(bool loop);
-    
+    void notifyExitThread();
+
 protected:
     void rotateBufferThread(int offsetFrame);
     bool play2d(AudioCache* cache);
@@ -78,7 +79,8 @@ protected:
     std::thread _rotateBufferThread;
     std::mutex _sleepMutex;
     std::condition_variable _sleepCondition;
-    bool _exitThread; 
+    bool _exitThread;
+    bool _readForRemove;
     
     friend class AudioEngineImpl;
 };

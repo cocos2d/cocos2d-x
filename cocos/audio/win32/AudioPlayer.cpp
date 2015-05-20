@@ -42,6 +42,7 @@ AudioPlayer::AudioPlayer()
     , _finishCallbak(nullptr)
     , _ready(false)
     , _audioCache(nullptr)
+    , _readForRemove(false)
 {
 
 }
@@ -60,14 +61,16 @@ AudioPlayer::AudioPlayer(const AudioPlayer& player)
 AudioPlayer::~AudioPlayer()
 {
     if (_audioCache && _audioCache->_queBufferFrames > 0) {
+        alDeleteBuffers(QUEUEBUFFER_NUM, _bufferIds);
+    }
+}
+
+void AudioPlayer::notifyExitThread()
+{
+    if (_audioCache && _audioCache->_queBufferFrames > 0) {
         std::unique_lock<std::mutex> lk(_sleepMutex);
         _exitThread = true;
         _sleepCondition.notify_all();
-
-        if (_rotateBufferThread.joinable()) {
-            _rotateBufferThread.join();
-        }
-        alDeleteBuffers(QUEUEBUFFER_NUM, _bufferIds);
     }
 }
 
@@ -269,7 +272,7 @@ void AudioPlayer::rotateBufferThread(int offsetFrame)
             break;
         }
         
-        _sleepCondition.wait_for(lk,std::chrono::milliseconds(50));
+        _sleepCondition.wait_for(lk,std::chrono::milliseconds(35));
     }
 ExitBufferThread:
     switch (audioFileFormat)
@@ -287,6 +290,7 @@ ExitBufferThread:
         break;
     }
     free(tmpBuffer);
+    _readForRemove = true;
 }
 
 bool AudioPlayer::setLoop(bool loop)
