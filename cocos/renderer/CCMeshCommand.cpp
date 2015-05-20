@@ -56,19 +56,8 @@ MeshCommand::MeshCommand()
 , _vao(0)
 , _material(nullptr)
 , _stateBlock(nullptr)
-, _forceDepthWrite(false)
 {
     _type = RenderCommand::Type::MESH_COMMAND;
-
-    _stateBlock = RenderState::StateBlock::create();
-    CC_SAFE_RETAIN(_stateBlock);
-
-    _stateBlock->setCullFace(false);
-    _stateBlock->setCullFaceSide(RenderState::CULL_FACE_SIDE_BACK);
-    _stateBlock->setDepthTest(false);
-    _stateBlock->setDepthWrite(false);
-    _stateBlock->setBlend(true);
-
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     // listen the event that renderer was recreated on Android/WP8
@@ -104,24 +93,10 @@ void MeshCommand::init(float globalZOrder,
     _is3D = true;
 }
 
-void MeshCommand::init(float globalOrder,
-                       GLuint textureID,
-                       GLProgramState* glProgramState,
-                       BlendFunc blendType,
-                       GLuint vertexBuffer,
-                       GLuint indexBuffer,
-                       GLenum primitive,
-                       GLenum indexFormat,
-                       ssize_t indexCount,
-                       const Mat4 &mv)
-{
-    init(globalOrder, textureID, glProgramState, blendType, vertexBuffer, indexBuffer, primitive, indexFormat, indexCount, mv, 0);
-}
-
 void MeshCommand::init(float globalZOrder,
                        GLuint textureID,
-                       cocos2d::GLProgramState* glProgramState,
-                       cocos2d::BlendFunc blendType,
+                       GLProgramState* glProgramState,
+                       RenderState::StateBlock* stateBlock,
                        GLuint vertexBuffer,
                        GLuint indexBuffer,
                        GLenum primitive,
@@ -131,13 +106,17 @@ void MeshCommand::init(float globalZOrder,
                        uint32_t flags)
 {
     CCASSERT(glProgramState, "GLProgramState cannot be nill");
+    CCASSERT(stateBlock, "StateBlock cannot be nill");
     CCASSERT(!_material, "cannot init with GLProgramState if previously inited without GLProgramState");
 
     RenderCommand::init(globalZOrder, mv, flags);
     
     _globalOrder = globalZOrder;
     _textureID = textureID;
+
+    // weak ref
     _glProgramState = glProgramState;
+    _stateBlock = stateBlock;
     
     _vertexBuffer = vertexBuffer;
     _indexBuffer = indexBuffer;
@@ -148,42 +127,8 @@ void MeshCommand::init(float globalZOrder,
     
     _is3D = true;
 
-    if (!_stateBlock) {
-        _stateBlock = RenderState::StateBlock::create();
-        CC_SAFE_RETAIN(_stateBlock);
-    }
-
-    _stateBlock->setBlendFunc(blendType);
 }
 
-void MeshCommand::setCullFaceEnabled(bool enable)
-{
-    CCASSERT(!_material, "If using material, you should call material->setCullFace()");
-
-    _stateBlock->setCullFace(enable);
-}
-
-void MeshCommand::setCullFace(GLenum cullFace)
-{
-    CCASSERT(!_material, "If using material, you should call material->setCullFaceSide()");
-
-    _stateBlock->setCullFaceSide((RenderState::CullFaceSide)cullFace);
-}
-
-void MeshCommand::setDepthTestEnabled(bool enable)
-{
-    CCASSERT(!_material, "If using material, you should call material->setDepthTest()");
-
-    _stateBlock->setDepthTest(enable);
-}
-
-void MeshCommand::setDepthWriteEnabled(bool enable)
-{
-    CCASSERT(!_material, "If using material, you should call material->setDepthWrite()");
-
-    _forceDepthWrite = enable;
-    _stateBlock->setDepthWrite(enable);
-}
 
 void MeshCommand::setDisplayColor(const Vec4& color)
 {
@@ -206,28 +151,8 @@ void MeshCommand::setMatrixPaletteSize(int size)
     _matrixPaletteSize = size;
 }
 
-void MeshCommand::setTransparent(bool value)
-{
-    CCASSERT(!_material, "If using material, you shouldn't call setTransparent.");
-
-    _isTransparent = value;
-    //Skip batching for transparent mesh
-    _skipBatching = value;
-    
-    if (_isTransparent && !_forceDepthWrite)
-    {
-        _stateBlock->setDepthWrite(false);
-    }
-    else
-    {
-        _stateBlock->setDepthWrite(true);
-    }
-}
-
 MeshCommand::~MeshCommand()
 {
-    CC_SAFE_RELEASE(_stateBlock);
-
     releaseVAO();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_rendererRecreatedListener);
@@ -237,6 +162,7 @@ MeshCommand::~MeshCommand()
 void MeshCommand::applyRenderState()
 {
     CCASSERT(!_material, "Must not be called when using materials");
+    CCASSERT(_stateBlock, "StateBlock must be non null");
 
     // blend and texture
     GL::bindTexture2D(_textureID);
