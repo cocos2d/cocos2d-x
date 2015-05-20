@@ -331,7 +331,8 @@ private:
     enum class FontType
     {
         SYSTEM,
-        TTF
+        TTF,
+        BMFONT
     };
 
     int _fontSize;
