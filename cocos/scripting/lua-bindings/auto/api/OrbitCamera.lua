@@ -22,9 +22,9 @@
 -- param t Duration in seconds.<br>
 -- param radius The start radius.<br>
 -- param deltaRadius The delta radius.<br>
--- param angleZ The start Angel in Z.<br>
+-- param angleZ The start angle in Z.<br>
 -- param deltaAngleZ The delta angle in Z.<br>
--- param angleX The start Angel in X.<br>
+-- param angleX The start angle in X.<br>
 -- param deltaAngleX The delta angle in X.<br>
 -- return An OrbitCamera.
 -- @function [parent=#OrbitCamera] create 
