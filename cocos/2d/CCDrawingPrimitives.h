@@ -153,7 +153,7 @@ namespace DrawPrimitives
      *
      * @param center The circle center point.
      * @param radius The circle rotate of radius.
-     * @param angle  The circle angel.
+     * @param angle  The circle angle.
      * @param segments The number of segments.
      * @param drawLineToCenter Whether or not draw the line from the origin to center.
      * @param scaleX The scale value in x.
@@ -165,7 +165,7 @@ namespace DrawPrimitives
      *
      * @param center The circle center point.
      * @param radius The circle rotate of radius.
-     * @param angle  The circle angel.
+     * @param angle  The circle angle.
      * @param segments The number of segments.
      * @param drawLineToCenter Whether or not draw the line from the origin to center.
      */
@@ -174,7 +174,7 @@ namespace DrawPrimitives
     /** Draws a solid circle given the center, radius and number of segments.
      * @param center The circle center point.
      * @param radius The circle rotate of radius.
-     * @param angle  The circle angel.
+     * @param angle  The circle angle.
      * @param segments The number of segments.
      * @param scaleX The scale value in x.
      * @param scaleY The scale value in y.
@@ -185,7 +185,7 @@ namespace DrawPrimitives
     /** Draws a solid circle given the center, radius and number of segments.
      * @param center The circle center point.
      * @param radius The circle rotate of radius.
-     * @param angle  The circle angel.
+     * @param angle  The circle angle.
      * @param segments The number of segments.
      * @js NA
      */

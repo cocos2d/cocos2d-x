@@ -456,7 +456,7 @@ int lua_cocos2dx_3d_Terrain_getHeight(lua_State* L)
             
             if (!ok) { break; }
             cocos2d::Vec3* arg1;
-            ok &= luaval_to_object<cocos2d::Vec3>(L, 3, "cc.Vec3",&arg1);
+            ok &= luaval_to_object<cocos2d::Vec3>(L, 3, "cc.Vec3",&arg1, "cc.Terrain:getHeight");
             
             if (!ok) { break; }
             double ret = cobj->getHeight(arg0, arg1);
@@ -793,7 +793,7 @@ int lua_cocos2dx_3d_AABB_getCorners(lua_State* L)
     {
         cocos2d::Vec3* arg0;
         
-        ok &= luaval_to_object<cocos2d::Vec3>(L, 2, "cc.Vec3",&arg0);
+        ok &= luaval_to_object<cocos2d::Vec3>(L, 2, "cc.Vec3",&arg0, "cc.AABB:getCorners");
         if(!ok)
             return 0;
         cobj->getCorners(arg0);
@@ -840,7 +840,7 @@ int lua_cocos2dx_3d_AABB_updateMinMax(lua_State* L)
         const cocos2d::Vec3* arg0;
         ssize_t arg1;
         
-        ok &= luaval_to_object<const cocos2d::Vec3>(L, 2, "cc.Vec3",&arg0);
+        ok &= luaval_to_object<const cocos2d::Vec3>(L, 2, "cc.Vec3",&arg0, "cc.AABB:updateMinMax");
         
         ok &= luaval_to_ssize(L, 3, &arg1, "cc.AABB:updateMinMax");
         if(!ok)
@@ -1326,7 +1326,7 @@ int lua_cocos2dx_3d_OBB_constructor(lua_State* L)
     do{
         if (argc == 1) {
             cocos2d::AABB* arg0;
-            ok &= luaval_to_object<cocos2d::AABB>(L, 2, "cc.AABB",&arg0);
+            ok &= luaval_to_object<cocos2d::AABB>(L, 2, "cc.AABB",&arg0, "cc.OBB:OBB");
             
             if (!ok) { break; }
             cobj = new cocos2d::OBB(*arg0);
@@ -1348,7 +1348,7 @@ int lua_cocos2dx_3d_OBB_constructor(lua_State* L)
     do{
         if (argc == 2) {
             const cocos2d::Vec3* arg0;
-            ok &= luaval_to_object<const cocos2d::Vec3>(L, 2, "cc.Vec3",&arg0);
+            ok &= luaval_to_object<const cocos2d::Vec3>(L, 2, "cc.Vec3",&arg0, "cc.OBB:OBB");
             
             if (!ok) { break; }
             int arg1;
@@ -1394,7 +1394,7 @@ int lua_cocos2dx_3d_OBB_intersects(lua_State* L)
     if(1 == argc)
     {
         cocos2d::OBB* arg0;
-        ok &= luaval_to_object<cocos2d::OBB>(L, 2, "cc.OBB",&arg0);
+        ok &= luaval_to_object<cocos2d::OBB>(L, 2, "cc.OBB",&arg0, "cc.OBB:intersects");
         
         if (!ok)
             return 0;
@@ -1985,7 +1985,7 @@ int lua_cocos2dx_3d_Ray_intersects(lua_State* L)
     if(1 == argc)
     {
         cocos2d::OBB* arg0 = nullptr;
-        ok &= luaval_to_object<cocos2d::OBB>(L, 2, "cc.OBB",&arg0);
+        ok &= luaval_to_object<cocos2d::OBB>(L, 2, "cc.OBB",&arg0, "cc.Ray:intersects");
         
         if (!ok)
             return 0;
