@@ -270,7 +270,10 @@ void Director::drawScene()
         _eventDispatcher->dispatchEvent(_eventAfterUpdate);
     }
 
-    _openGLView->makeContextCurrent();
+    if (_openGLView)
+    {
+        _openGLView->makeContextCurrent();
+    }
     
     _renderer->clear();
 
