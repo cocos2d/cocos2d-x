@@ -45,18 +45,27 @@ UIScene = cc.Scene.extend({
 
             var widget;
             if(cocoStudioOldApiFlag == 0){
-                var json = ccs.load("res/cocosui/UITest/UITest.json");
+                var json = ccs.load("ccs-res/cocosui/UITest/UITest.json");
                 widget = json.node;
             }else{
                 //old api
-                widget = ccs.uiReader.widgetFromJsonFile("res/cocosui/UITest/UITest.json");
+                widget = ccs.uiReader.widgetFromJsonFile("ccs-res/cocosui/UITest/UITest.json");
             }
             mainNode.addChild(widget,-1);
 
             this._sceneTitle = widget.getChildByName("UItest");
 
-            var back_label = widget.getChildByName("back");
-            back_label.addTouchEventListener(this.toExtensionsMainLayer, this);
+
+            var label = new cc.LabelTTF("Main Menu", "Arial", 20);
+            var menuItem = new cc.MenuItemLabel(label, this.toExtensionsMainLayer, this);
+
+            var menu = new cc.Menu(menuItem);
+            menu.x = 0;
+            menu.y = 0;
+            menuItem.x = winSize.width - 50;
+            menuItem.y = 25;
+
+            this.addChild(menu, 1);
 
             var left_button = widget.getChildByName("left_Button");
             left_button.addTouchEventListener(this.previousCallback ,this);
@@ -104,18 +113,9 @@ UIScene = cc.Scene.extend({
     setSceneTitle: function (title) {
         this._sceneTitle.setString(title);
     },
-    toExtensionsMainLayer: function (sender, type) {
-        if (type == ccui.Widget.TOUCH_ENDED) {
-            UISceneManager.purge();
-            /*
-            var scene = new cc.Scene();
-            var layer = new TestController();
-            scene.addChild(layer);
-            var transition = new cc.TransitionProgressRadialCCW(0.5,scene);
-            director.runScene(transition);
-            */
-            GUITestScene.prototype.runThisTest();
-        }
+    toExtensionsMainLayer: function (sender) {
+        UISceneManager.purge();
+        GUITestScene.prototype.runThisTest();
     },
 
     previousCallback: function (sender, type) {
