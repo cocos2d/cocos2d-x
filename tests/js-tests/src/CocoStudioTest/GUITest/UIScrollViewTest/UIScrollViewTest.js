@@ -25,9 +25,9 @@
  ****************************************************************************/
 
 var SCROLLVIEW_RES = [
-    "res/cocosui/CCS/ScrollView/Vertical/vertical_1.json",
-    "res/cocosui/CCS/ScrollView/Horizontal/horizontal_1.json",
-    "res/cocosui/CCS/ScrollView/Both/both_1.json"
+    "ccs-res/cocosui/UIEditorTest/UIScrollView/Vertical/vertical_1.json",
+    "ccs-res/cocosui/UIEditorTest/UIScrollView/Horizontal/horizontal_1.json",
+    "ccs-res/cocosui/UIEditorTest/UIScrollView/Both/both_1.json"
 ];
 var SCROLLVIEW_INDEX = 0;
 var UIScrollViewEditorTest = UIBaseLayer.extend({
@@ -40,7 +40,7 @@ var UIScrollViewEditorTest = UIBaseLayer.extend({
         back_label.addTouchEventListener(this.backEvent, this);
 
         var left_button = new ccui.Button();
-        left_button.loadTextures("res/Images/b1.png", "res/Images/b2.png", "");
+        left_button.loadTextures("Images/b1.png", "Images/b2.png", "");
         left_button.x = 240-50;
         left_button.y = 50;
         left_button.anchorX = 0.5;
@@ -50,7 +50,7 @@ var UIScrollViewEditorTest = UIBaseLayer.extend({
         this._mainNode.addChild(left_button);
 
         var right_button = new ccui.Button();
-        right_button.loadTextures("res/Images/f1.png", "res/Images/f2.png", "");
+        right_button.loadTextures("Images/f1.png", "Images/f2.png", "");
         right_button.x = 240+50;
         right_button.y = 50;
         right_button.zOrder = 999;

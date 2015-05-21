@@ -28,7 +28,7 @@
 var UITextBMFontEditorTest = UIBaseLayer.extend({
     ctor: function () {
         this._super();
-        var root = this._parseUIFile("res/cocosui/CCS/LabelBMFont/labelbmfont_1.json");
+        var root = this._parseUIFile("ccs-res/cocosui/UIEditorTest/UILabelBMFont/labelbmfont_1.json");
         this._mainNode.addChild(root);
 
         var back_label =ccui.helper.seekWidgetByName(root, "back");

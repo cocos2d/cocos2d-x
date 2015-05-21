@@ -151,7 +151,7 @@ var LoadSceneEdtiorFileTest = SceneEditorTestLayer.extend({
     onEnter: function () {
         this._super();
         var node,
-            file = "res/scenetest/LoadSceneEdtiorFileTest/FishJoy2.json";
+            file = "ccs-res/scenetest/LoadSceneEdtiorFileTest/FishJoy2.json";
         if(cocoStudioOldApiFlag == 0){
             cc.log("ccs.load : %s", file);
             var json = ccs.load(file);
@@ -183,7 +183,7 @@ var SpriteComponentTest = SceneEditorTestLayer.extend({
     onEnter: function () {
         this._super();
         var node,
-            file = "res/scenetest/SpriteComponentTest/SpriteComponentTest.json";
+            file = "ccs-res/scenetest/SpriteComponentTest/SpriteComponentTest.json";
         if(cocoStudioOldApiFlag == 0){
             cc.log("ccs.load : %s", file);
             var json = ccs.load(file);
@@ -219,7 +219,7 @@ var ArmatureComponentTest = SceneEditorTestLayer.extend({
     onEnter: function () {
         this._super();
         var node,
-            file = "res/scenetest/ArmatureComponentTest/ArmatureComponentTest.json";
+            file = "ccs-res/scenetest/ArmatureComponentTest/ArmatureComponentTest.json";
         if(cocoStudioOldApiFlag == 0){
             cc.log("ccs.load : %s", file);
             var json = ccs.load(file);
@@ -254,7 +254,7 @@ var UIComponentTest = SceneEditorTestLayer.extend({
     onEnter: function () {
         this._super();
         var node,
-            file = "res/scenetest/UIComponentTest/UIComponentTest.json";
+            file = "ccs-res/scenetest/UIComponentTest/UIComponentTest.json";
         if(cocoStudioOldApiFlag == 0){
             cc.log("ccs.load : %s", file);
             var json = ccs.load(file);
@@ -299,7 +299,7 @@ var TmxMapComponentTest = SceneEditorTestLayer.extend({
     onEnter: function () {
         this._super();
         var node,
-            file = "res/scenetest/TmxMapComponentTest/TmxMapComponentTest.json";
+            file = "ccs-res/scenetest/TmxMapComponentTest/TmxMapComponentTest.json";
         if(cocoStudioOldApiFlag == 0){
             cc.log("ccs.load : %s", file);
             var json = ccs.load(file);
@@ -340,7 +340,7 @@ var ParticleComponentTest = SceneEditorTestLayer.extend({
     onEnter: function () {
         this._super();
         var node,
-            file = "res/scenetest/ParticleComponentTest/ParticleComponentTest.json";
+            file = "ccs-res/scenetest/ParticleComponentTest/ParticleComponentTest.json";
         if(cocoStudioOldApiFlag == 0){
             cc.log("ccs.load : %s", file);
             var json = ccs.load(file);
@@ -374,7 +374,7 @@ var EffectComponentTest = SceneEditorTestLayer.extend({
     onEnter: function () {
         this._super();
         var node,
-            file = "res/scenetest/EffectComponentTest/EffectComponentTest.json";
+            file = "ccs-res/scenetest/EffectComponentTest/EffectComponentTest.json";
         if(cocoStudioOldApiFlag == 0){
             cc.log("ccs.load : %s", file);
             var json = ccs.load(file);
@@ -414,7 +414,7 @@ var BackgroundComponentTest = SceneEditorTestLayer.extend({
     onEnter: function () {
         this._super();
         var node,
-            file = "res/scenetest/BackgroundComponentTest/BackgroundComponentTest.json";
+            file = "ccs-res/scenetest/BackgroundComponentTest/BackgroundComponentTest.json";
         if(cocoStudioOldApiFlag == 0){
             cc.log("ccs.load : %s", file);
             var json = ccs.load(file);
@@ -450,7 +450,7 @@ var AttributeComponentTest = SceneEditorTestLayer.extend({
     onEnter: function () {
         this._super();
         var node,
-            file = "res/scenetest/AttributeComponentTest/AttributeComponentTest.json";
+            file = "ccs-res/scenetest/AttributeComponentTest/AttributeComponentTest.json";
         if(cocoStudioOldApiFlag == 0){
             cc.log("ccs.load : %s", file);
             var json = ccs.load(file);
@@ -488,7 +488,7 @@ var TriggerTest = SceneEditorTestLayer.extend({
     onEnter: function () {
         this._super();
         var node,
-            file = "res/scenetest/TriggerTest/TriggerTest.json";
+            file = "ccs-res/scenetest/TriggerTest/TriggerTest.json";
         if(cocoStudioOldApiFlag == 0){
             cc.log("ccs.load : %s", file);
             var json = ccs.load(file);
