@@ -495,7 +495,7 @@ int lua_cocos2dx_3d_Animate3D_initWithFrames(lua_State* tolua_S)
         int arg2;
         double arg3;
 
-        ok &= luaval_to_object<cocos2d::Animation3D>(tolua_S, 2, "cc.Animation3D",&arg0);
+        ok &= luaval_to_object<cocos2d::Animation3D>(tolua_S, 2, "cc.Animation3D",&arg0, "cc.Animate3D:initWithFrames");
 
         ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.Animate3D:initWithFrames");
 
@@ -642,7 +642,7 @@ int lua_cocos2dx_3d_Animate3D_init(lua_State* tolua_S)
     do{
         if (argc == 3) {
             cocos2d::Animation3D* arg0;
-            ok &= luaval_to_object<cocos2d::Animation3D>(tolua_S, 2, "cc.Animation3D",&arg0);
+            ok &= luaval_to_object<cocos2d::Animation3D>(tolua_S, 2, "cc.Animation3D",&arg0, "cc.Animate3D:init");
 
             if (!ok) { break; }
             double arg1;
@@ -662,7 +662,7 @@ int lua_cocos2dx_3d_Animate3D_init(lua_State* tolua_S)
     do{
         if (argc == 1) {
             cocos2d::Animation3D* arg0;
-            ok &= luaval_to_object<cocos2d::Animation3D>(tolua_S, 2, "cc.Animation3D",&arg0);
+            ok &= luaval_to_object<cocos2d::Animation3D>(tolua_S, 2, "cc.Animation3D",&arg0, "cc.Animate3D:init");
 
             if (!ok) { break; }
             bool ret = cobj->init(arg0);
@@ -844,7 +844,7 @@ int lua_cocos2dx_3d_Animate3D_create(lua_State* tolua_S)
         if (argc == 3)
         {
             cocos2d::Animation3D* arg0;
-            ok &= luaval_to_object<cocos2d::Animation3D>(tolua_S, 2, "cc.Animation3D",&arg0);
+            ok &= luaval_to_object<cocos2d::Animation3D>(tolua_S, 2, "cc.Animation3D",&arg0, "cc.Animate3D:create");
             if (!ok) { break; }
             double arg1;
             ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.Animate3D:create");
@@ -863,7 +863,7 @@ int lua_cocos2dx_3d_Animate3D_create(lua_State* tolua_S)
         if (argc == 1)
         {
             cocos2d::Animation3D* arg0;
-            ok &= luaval_to_object<cocos2d::Animation3D>(tolua_S, 2, "cc.Animation3D",&arg0);
+            ok &= luaval_to_object<cocos2d::Animation3D>(tolua_S, 2, "cc.Animation3D",&arg0, "cc.Animate3D:create");
             if (!ok) { break; }
             cocos2d::Animate3D* ret = cocos2d::Animate3D::create(arg0);
             object_to_luaval<cocos2d::Animate3D>(tolua_S, "cc.Animate3D",(cocos2d::Animate3D*)ret);
@@ -933,7 +933,7 @@ int lua_cocos2dx_3d_Animate3D_createWithFrames(lua_State* tolua_S)
         cocos2d::Animation3D* arg0;
         int arg1;
         int arg2;
-        ok &= luaval_to_object<cocos2d::Animation3D>(tolua_S, 2, "cc.Animation3D",&arg0);
+        ok &= luaval_to_object<cocos2d::Animation3D>(tolua_S, 2, "cc.Animation3D",&arg0, "cc.Animate3D:createWithFrames");
         ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.Animate3D:createWithFrames");
         ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "cc.Animate3D:createWithFrames");
         if(!ok)
@@ -951,7 +951,7 @@ int lua_cocos2dx_3d_Animate3D_createWithFrames(lua_State* tolua_S)
         int arg1;
         int arg2;
         double arg3;
-        ok &= luaval_to_object<cocos2d::Animation3D>(tolua_S, 2, "cc.Animation3D",&arg0);
+        ok &= luaval_to_object<cocos2d::Animation3D>(tolua_S, 2, "cc.Animation3D",&arg0, "cc.Animate3D:createWithFrames");
         ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.Animate3D:createWithFrames");
         ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "cc.Animate3D:createWithFrames");
         ok &= luaval_to_number(tolua_S, 5,&arg3, "cc.Animate3D:createWithFrames");
@@ -1098,7 +1098,7 @@ int lua_cocos2dx_3d_AttachNode_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::Bone3D* arg0;
-        ok &= luaval_to_object<cocos2d::Bone3D>(tolua_S, 2, "cc.Bone3D",&arg0);
+        ok &= luaval_to_object<cocos2d::Bone3D>(tolua_S, 2, "cc.Bone3D",&arg0, "cc.AttachNode:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_AttachNode_create'", nullptr);
@@ -1398,7 +1398,7 @@ int lua_cocos2dx_3d_BillBoard_createWithTexture(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::Texture2D* arg0;
-        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.BillBoard:createWithTexture");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_BillBoard_createWithTexture'", nullptr);
@@ -1412,7 +1412,7 @@ int lua_cocos2dx_3d_BillBoard_createWithTexture(lua_State* tolua_S)
     {
         cocos2d::Texture2D* arg0;
         cocos2d::BillBoard::Mode arg1;
-        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.BillBoard:createWithTexture");
         ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.BillBoard:createWithTexture");
         if(!ok)
         {
@@ -1516,7 +1516,7 @@ int lua_cocos2dx_3d_Mesh_setTexture(lua_State* tolua_S)
     do{
         if (argc == 1) {
             cocos2d::Texture2D* arg0;
-            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.Mesh:setTexture");
 
             if (!ok) { break; }
             cobj->setTexture(arg0);
@@ -1718,7 +1718,7 @@ int lua_cocos2dx_3d_Mesh_setMaterial(lua_State* tolua_S)
     {
         cocos2d::Material* arg0;
 
-        ok &= luaval_to_object<cocos2d::Material>(tolua_S, 2, "cc.Material",&arg0);
+        ok &= luaval_to_object<cocos2d::Material>(tolua_S, 2, "cc.Material",&arg0, "cc.Mesh:setMaterial");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Mesh_setMaterial'", nullptr);
@@ -1918,7 +1918,7 @@ int lua_cocos2dx_3d_Mesh_draw(lua_State* tolua_S)
         cocos2d::Vec4 arg5;
         bool arg6;
 
-        ok &= luaval_to_object<cocos2d::Renderer>(tolua_S, 2, "cc.Renderer",&arg0);
+        ok &= luaval_to_object<cocos2d::Renderer>(tolua_S, 2, "cc.Renderer",&arg0, "cc.Mesh:draw");
 
         ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.Mesh:draw");
 
@@ -2077,7 +2077,7 @@ int lua_cocos2dx_3d_Mesh_setMeshIndexData(lua_State* tolua_S)
     {
         cocos2d::MeshIndexData* arg0;
 
-        ok &= luaval_to_object<cocos2d::MeshIndexData>(tolua_S, 2, "cc.MeshIndexData",&arg0);
+        ok &= luaval_to_object<cocos2d::MeshIndexData>(tolua_S, 2, "cc.MeshIndexData",&arg0, "cc.Mesh:setMeshIndexData");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Mesh_setMeshIndexData'", nullptr);
@@ -2224,7 +2224,7 @@ int lua_cocos2dx_3d_Mesh_setSkin(lua_State* tolua_S)
     {
         cocos2d::MeshSkin* arg0;
 
-        ok &= luaval_to_object<cocos2d::MeshSkin>(tolua_S, 2, "cc.MeshSkin",&arg0);
+        ok &= luaval_to_object<cocos2d::MeshSkin>(tolua_S, 2, "cc.MeshSkin",&arg0, "cc.Mesh:setSkin");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Mesh_setSkin'", nullptr);
@@ -2321,7 +2321,7 @@ int lua_cocos2dx_3d_Mesh_setGLProgramState(lua_State* tolua_S)
     {
         cocos2d::GLProgramState* arg0;
 
-        ok &= luaval_to_object<cocos2d::GLProgramState>(tolua_S, 2, "cc.GLProgramState",&arg0);
+        ok &= luaval_to_object<cocos2d::GLProgramState>(tolua_S, 2, "cc.GLProgramState",&arg0, "cc.Mesh:setGLProgramState");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Mesh_setGLProgramState'", nullptr);
@@ -2543,7 +2543,7 @@ int lua_cocos2dx_3d_Skeleton3D_addBone(lua_State* tolua_S)
     {
         cocos2d::Bone3D* arg0;
 
-        ok &= luaval_to_object<cocos2d::Bone3D>(tolua_S, 2, "cc.Bone3D",&arg0);
+        ok &= luaval_to_object<cocos2d::Bone3D>(tolua_S, 2, "cc.Bone3D",&arg0, "cc.Skeleton3D:addBone");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Skeleton3D_addBone'", nullptr);
@@ -2837,7 +2837,7 @@ int lua_cocos2dx_3d_Skeleton3D_getBoneIndex(lua_State* tolua_S)
     {
         cocos2d::Bone3D* arg0;
 
-        ok &= luaval_to_object<cocos2d::Bone3D>(tolua_S, 2, "cc.Bone3D",&arg0);
+        ok &= luaval_to_object<cocos2d::Bone3D>(tolua_S, 2, "cc.Bone3D",&arg0, "cc.Skeleton3D:getBoneIndex");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Skeleton3D_getBoneIndex'", nullptr);
@@ -3118,7 +3118,7 @@ int lua_cocos2dx_3d_Skybox_setTexture(lua_State* tolua_S)
     {
         cocos2d::TextureCube* arg0;
 
-        ok &= luaval_to_object<cocos2d::TextureCube>(tolua_S, 2, "cc.TextureCube",&arg0);
+        ok &= luaval_to_object<cocos2d::TextureCube>(tolua_S, 2, "cc.TextureCube",&arg0, "cc.Skybox:setTexture");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Skybox_setTexture'", nullptr);
@@ -3333,7 +3333,7 @@ int lua_cocos2dx_3d_Sprite3D_setTexture(lua_State* tolua_S)
     do{
         if (argc == 1) {
             cocos2d::Texture2D* arg0;
-            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.Sprite3D:setTexture");
 
             if (!ok) { break; }
             cobj->setTexture(arg0);
@@ -3582,7 +3582,7 @@ int lua_cocos2dx_3d_Sprite3D_setMaterial(lua_State* tolua_S)
     do{
         if (argc == 2) {
             cocos2d::Material* arg0;
-            ok &= luaval_to_object<cocos2d::Material>(tolua_S, 2, "cc.Material",&arg0);
+            ok &= luaval_to_object<cocos2d::Material>(tolua_S, 2, "cc.Material",&arg0, "cc.Sprite3D:setMaterial");
 
             if (!ok) { break; }
             int arg1;
@@ -3598,7 +3598,7 @@ int lua_cocos2dx_3d_Sprite3D_setMaterial(lua_State* tolua_S)
     do{
         if (argc == 1) {
             cocos2d::Material* arg0;
-            ok &= luaval_to_object<cocos2d::Material>(tolua_S, 2, "cc.Material",&arg0);
+            ok &= luaval_to_object<cocos2d::Material>(tolua_S, 2, "cc.Material",&arg0, "cc.Sprite3D:setMaterial");
 
             if (!ok) { break; }
             cobj->setMaterial(arg0);
@@ -4860,7 +4860,7 @@ int lua_cocos2dx_3d_Terrain_setAlphaMap(lua_State* tolua_S)
     {
         cocos2d::Texture2D* arg0;
 
-        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.Terrain:setAlphaMap");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_3d_Terrain_setAlphaMap'", nullptr);
