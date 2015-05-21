@@ -75,11 +75,23 @@ struct FastLZCompressor : public dtTileCacheCompressor
         unsigned char* buffer, const int maxBufferSize, int* bufferSize);
 };
 
+struct GeomData
+{
+    static const int MAX_OFFMESH_CONNECTIONS = 256;
+    float offMeshConVerts[MAX_OFFMESH_CONNECTIONS * 3 * 2];
+    float offMeshConRads[MAX_OFFMESH_CONNECTIONS];
+    unsigned char offMeshConDirs[MAX_OFFMESH_CONNECTIONS];
+    unsigned char offMeshConAreas[MAX_OFFMESH_CONNECTIONS];
+    unsigned short offMeshConFlags[MAX_OFFMESH_CONNECTIONS];
+    unsigned int offMeshConId[MAX_OFFMESH_CONNECTIONS];
+    int offMeshConCount;
+};
+
 struct MeshProcess : public dtTileCacheMeshProcess
 {
-    //InputGeom* m_geom;
+    const GeomData *data;
 
-    MeshProcess();
+    MeshProcess(const GeomData *geom);
     virtual ~MeshProcess();
 
     //void init(InputGeom* geom)
@@ -251,6 +263,38 @@ static bool getSteerTarget(dtNavMeshQuery* navQuery, const float* startPos, cons
     return true;
 }
 
+static char* parseRow(char* buf, char* bufEnd, char* row, int len)
+{
+    bool start = true;
+    bool done = false;
+    int n = 0;
+    while (!done && buf < bufEnd)
+    {
+        char c = *buf;
+        buf++;
+        // multirow
+        switch (c)
+        {
+        case '\n':
+            if (start) break;
+            done = true;
+            break;
+        case '\r':
+            break;
+        case '\t':
+        case ' ':
+            if (start) break;
+        default:
+            start = false;
+            row[n++] = c;
+            if (n >= len - 1)
+                done = true;
+            break;
+        }
+    }
+    row[n] = '\0';
+    return buf;
+}
 /** @} */
 
 NS_CC_END

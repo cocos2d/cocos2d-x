@@ -50,10 +50,10 @@ static const int TILECACHESET_MAGIC = 'T' << 24 | 'S' << 16 | 'E' << 8 | 'T'; //
 static const int TILECACHESET_VERSION = 1;
 static const int MAX_AGENTS = 128;
 
-NavMesh* NavMesh::create(const std::string &filePath)
+NavMesh* NavMesh::create(const std::string &navFilePath, const std::string &geomFilePath)
 {
     auto ref = new (std::nothrow) NavMesh();
-    if (ref && ref->initWithFilePath(filePath))
+    if (ref && ref->initWithFilePath(navFilePath, geomFilePath))
     {
         ref->autorelease();
         return ref;
@@ -70,6 +70,7 @@ NavMesh::NavMesh()
     , _allocator(nullptr)
     , _compressor(nullptr)
     , _meshProcess(nullptr)
+    , _geomData(nullptr)
     , _isDebugDrawEnabled(false)
 {
 
@@ -84,6 +85,7 @@ NavMesh::~NavMesh()
     CC_SAFE_DELETE(_allocator);
     CC_SAFE_DELETE(_compressor);
     CC_SAFE_DELETE(_meshProcess);
+    CC_SAFE_DELETE(_geomData);
 
     for (auto iter : _agentList){
         CC_SAFE_RELEASE(iter);
@@ -96,16 +98,25 @@ NavMesh::~NavMesh()
     _obstacleList.clear();
 }
 
-bool NavMesh::initWithFilePath(const std::string &filePath)
+bool NavMesh::initWithFilePath(const std::string &navFilePath, const std::string &geomFilePath)
 {
-    _filePath = filePath;
+    _navFilePath = navFilePath;
+    _geomFilePath = geomFilePath;
     if (!read()) return false;
     return true;
 }
 
 bool NavMesh::read()
 {
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(_filePath);
+    if (!loadGeomFile()) return false;
+    if (!loadNavMeshFile()) return false;
+
+    return true;
+}
+
+bool NavMesh::loadNavMeshFile()
+{
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(_navFilePath);
     FILE* fp = fopen(fullPath.c_str(), "rb");
     if (!fp) return false;
 
@@ -145,7 +156,7 @@ bool NavMesh::read()
 
     _allocator = new LinearAllocator(32000);
     _compressor = new FastLZCompressor;
-    _meshProcess = new MeshProcess;
+    _meshProcess = new MeshProcess(_geomData);
     status = _tileCache->init(&header.cacheParams, _allocator, _compressor, _meshProcess);
 
     if (dtStatusFailed(status))
@@ -188,13 +199,100 @@ bool NavMesh::read()
     return true;
 }
 
+bool NavMesh::loadGeomFile()
+{
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(_geomFilePath);
+    char* buf = 0;
+    FILE* fp = fopen(fullPath.c_str(), "rb");
+    if (!fp)
+        return false;
+    fseek(fp, 0, SEEK_END);
+    int bufSize = ftell(fp);
+    fseek(fp, 0, SEEK_SET);
+    buf = new char[bufSize];
+    if (!buf)
+    {
+        fclose(fp);
+        return false;
+    }
+    size_t readLen = fread(buf, bufSize, 1, fp);
+    fclose(fp);
+    if (readLen != 1)
+    {
+        delete[] buf;
+        return false;
+    }
+
+    _geomData = new GeomData;
+    _geomData->offMeshConCount = 0;
+
+    char* src = buf;
+    char* srcEnd = buf + bufSize;
+    char row[512];
+    while (src < srcEnd)
+    {
+        // Parse one row
+        row[0] = '\0';
+        src = parseRow(src, srcEnd, row, sizeof(row) / sizeof(char));
+        if (row[0] == 'c')
+        {
+            // Off-mesh connection
+            if (_geomData->offMeshConCount < GeomData::MAX_OFFMESH_CONNECTIONS)
+            {
+                float* v = &_geomData->offMeshConVerts[_geomData->offMeshConCount * 3 * 2];
+                int bidir, area = 0, flags = 0;
+                float rad;
+                sscanf(row + 1, "%f %f %f  %f %f %f %f %d %d %d",
+                    &v[0], &v[1], &v[2], &v[3], &v[4], &v[5], &rad, &bidir, &area, &flags);
+                _geomData->offMeshConRads[_geomData->offMeshConCount] = rad;
+                _geomData->offMeshConDirs[_geomData->offMeshConCount] = (unsigned char)bidir;
+                _geomData->offMeshConAreas[_geomData->offMeshConCount] = (unsigned char)area;
+                _geomData->offMeshConFlags[_geomData->offMeshConCount] = (unsigned short)flags;
+                _geomData->offMeshConCount++;
+            }
+        }
+    }
+
+    delete[] buf;
+
+    return true;
+}
+
 void NavMesh::dtDraw()
 {
     drawObstacles();
     _debugDraw.depthMask(false);
     duDebugDrawNavMeshWithClosedList(&_debugDraw, *_navMesh, *_navMeshQuery, DU_DRAWNAVMESH_OFFMESHCONS | DU_DRAWNAVMESH_CLOSEDLIST/* | DU_DRAWNAVMESH_COLOR_TILES*/);
     drawAgents();
+    drawOffMeshConnections();
     _debugDraw.depthMask(true);
+}
+
+void cocos2d::NavMesh::drawOffMeshConnections()
+{
+    unsigned int conColor = duRGBA(192, 0, 128, 192);
+    unsigned int baseColor = duRGBA(0, 0, 0, 64);
+    _debugDraw.begin(DU_DRAW_LINES, 2.0f);
+    for (int i = 0; i < _geomData->offMeshConCount; ++i)
+    {
+        float* v = &_geomData->offMeshConVerts[i * 3 * 2];
+
+        _debugDraw.vertex(v[0], v[1], v[2], baseColor);
+        _debugDraw.vertex(v[0], v[1] + 0.2f, v[2], baseColor);
+
+        _debugDraw.vertex(v[3], v[4], v[5], baseColor);
+        _debugDraw.vertex(v[3], v[4] + 0.2f, v[5], baseColor);
+
+        duAppendCircle(&_debugDraw, v[0], v[1] + 0.1f, v[2], _geomData->offMeshConRads[i], baseColor);
+        duAppendCircle(&_debugDraw, v[3], v[4] + 0.1f, v[5], _geomData->offMeshConRads[i], baseColor);
+
+        if (/*hilight*/true)
+        {
+            duAppendArc(&_debugDraw, v[0], v[1], v[2], v[3], v[4], v[5], 0.25f,
+                (_geomData->offMeshConDirs[i] & 1) ? 0.6f : 0.0f, 0.6f, conColor);
+        }
+    }
+    _debugDraw.end();
 }
 
 void cocos2d::NavMesh::drawObstacles()

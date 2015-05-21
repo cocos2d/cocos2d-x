@@ -92,8 +92,8 @@ dtStatus cocos2d::FastLZCompressor::compress(const unsigned char* buffer, const 
     return DT_SUCCESS;
 }
 
-MeshProcess::MeshProcess()
-//	: m_geom(0)
+MeshProcess::MeshProcess(const GeomData *geom)
+    : data(geom)
 {
 }
 
@@ -130,17 +130,14 @@ void MeshProcess::process(struct dtNavMeshCreateParams* params
         //}
     }
 
-    //// Pass in off-mesh connections.
-    //if (m_geom)
-    //{
-    //	params->offMeshConVerts = m_geom->getOffMeshConnectionVerts();
-    //	params->offMeshConRad = m_geom->getOffMeshConnectionRads();
-    //	params->offMeshConDir = m_geom->getOffMeshConnectionDirs();
-    //	params->offMeshConAreas = m_geom->getOffMeshConnectionAreas();
-    //	params->offMeshConFlags = m_geom->getOffMeshConnectionFlags();
-    //	params->offMeshConUserID = m_geom->getOffMeshConnectionId();
-    //	params->offMeshConCount = m_geom->getOffMeshConnectionCount();
-    //}
+    // Pass in off-mesh connections.
+    params->offMeshConVerts = data->offMeshConVerts;
+    params->offMeshConRad = data->offMeshConRads;
+    params->offMeshConDir = data->offMeshConDirs;
+    params->offMeshConAreas = data->offMeshConAreas;
+    params->offMeshConFlags = data->offMeshConFlags;
+    params->offMeshConUserID = data->offMeshConId;
+    params->offMeshConCount = data->offMeshConCount;
 }
 
 NS_CC_END

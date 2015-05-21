@@ -203,7 +203,7 @@ void NavMeshTestDemo::initScene()
     this->addChild(sprite);
     setPhysics3DDebugCamera(_camera);
 
-    auto navMesh = NavMesh::create("NavMesh/all_tiles_tilecache.bin");
+    auto navMesh = NavMesh::create("NavMesh/all_tiles_tilecache.bin", "NavMesh/geomset.txt");
     navMesh->setDebugDrawEnable(true);
     setNavMesh(navMesh);
     setNavMeshDebugCamera(_camera);
