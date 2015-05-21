@@ -345,7 +345,7 @@ bool UILayoutComponentTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/LayoutComponent/UILayoutComponent.csb");
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/LayoutComponent/res.csb");
         Node* child = node->getChildByTag(5);
         child->removeFromParent();
         _layout = static_cast<Layout*>(child);

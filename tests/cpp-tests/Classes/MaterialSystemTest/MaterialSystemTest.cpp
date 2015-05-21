@@ -111,7 +111,7 @@ void Material_2DEffects::onEnter()
 {
     MaterialSystemBaseTest::onEnter();
 
-    auto properties = Properties::createWithoutAutorelease("Materials/2d_effects.material#sample");
+    auto properties = Properties::createNonRefCounted("Materials/2d_effects.material#sample");
 
     // Print the properties of every namespace within this one.
     printProperties(properties, 0);

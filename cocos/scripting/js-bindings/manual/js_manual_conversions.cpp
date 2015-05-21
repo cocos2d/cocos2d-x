@@ -523,7 +523,7 @@ bool jsval_to_long_long(JSContext *cx, JS::HandleValue vp, long long* r)
     JSB_PRECONDITION2(str, cx, false, "Error encoding string");
     
     char *endptr;
-#if(CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     __int64 ret = _strtoi64(str, &endptr, 10);
 #else
     long long ret = strtoll(str, &endptr, 10);

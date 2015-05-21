@@ -147,6 +147,7 @@ xcopy "$(ProjectDir)..\..\..\src" "$(ProjectDir)..\..\..\runtime\win32\src" /D /
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories);$(_COCOS_LIB_PATH_WIN32_BEGIN);$(_COCOS_LIB_PATH_WIN32_END)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libcurl_imp.lib;lua51.lib;websockets.lib;%(AdditionalDependencies);$(_COCOS_LIB_WIN32_BEGIN);$(_COCOS_LIB_WIN32_END)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OutputFile>$(ProjectDir)../../../runtime/win32/$(TargetName)$(TargetExt)</OutputFile>
     </Link>

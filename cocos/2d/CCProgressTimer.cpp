@@ -115,6 +115,8 @@ void ProgressTimer::setSprite(Sprite *sprite)
             CC_SAFE_FREE(_vertexData);
             _vertexDataCount = 0;
         }
+        
+        updateProgress();
     }        
 }
 

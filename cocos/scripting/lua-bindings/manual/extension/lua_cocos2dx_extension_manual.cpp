@@ -647,9 +647,9 @@ public:
                 LuaEngine::getInstance()->handleEvent(ScriptHandlerMgr::HandlerType::TABLECELL_SIZE_FOR_INDEX, (void*)&data,2,[&](lua_State* L,int numReturn){
                     CCASSERT(numReturn == 2, "tableCellSizeForIndex return count error");
                     ValueVector vec;
-                    width  = (float)tolua_tonumber(L, -1, 0);
+                    height  = (float)tolua_tonumber(L, -1, 0);
                     lua_pop(L, 1);
-                    height = (float)tolua_tonumber(L, -1, 0);
+                    width = (float)tolua_tonumber(L, -1, 0);
                     lua_pop(L, 1);
                 });
                 
