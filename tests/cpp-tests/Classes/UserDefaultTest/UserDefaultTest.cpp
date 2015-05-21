@@ -2,6 +2,7 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include <vector>
+#include <sstream>
 
 using namespace std;
 
@@ -33,13 +34,13 @@ void logData(const char* key)
     T* buffer = (T*) data.getBytes();
     int length = data.getSize() / sizeof(T);
 
-    std::string s;
+    std::ostringstream ss;
     for (int i = 0; i < length; i++)
     {
-        s += to_string(buffer[i]);
-        s += " ";
+        s << buffer[i];
+        s << " ";
     }
-    CCLOG("%s is %s", key, s.c_str());
+    CCLOG("%s is %s", key, ss.str());
 }
 
 template<typename T>
