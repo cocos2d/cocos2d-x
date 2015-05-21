@@ -40,6 +40,7 @@ THE SOFTWARE.
 #include "base/ccUtils.h"
 
 #include "deprecated/CCString.h"
+#include "base/CCNinePatchImageParser.h"
 
 
 #ifdef EMSCRIPTEN
@@ -275,7 +276,8 @@ void TextureCache::addImageAsyncCallBack(float dt)
             texture = new (std::nothrow) Texture2D();
 
             texture->initWithImage(image);
-
+            //parse 9-patch info
+            this->parseNinePatchImage(image, texture, filename);
 #if CC_ENABLE_CACHE_TEXTURE_DATA
             // cache the texture file name
             VolatileTextureMgr::addImageTexture(texture, filename);
@@ -351,6 +353,9 @@ Texture2D * TextureCache::addImage(const std::string &path)
 #endif
                 // texture already retained, no need to re-retain it
                 _textures.insert( std::make_pair(fullpath, texture) );
+
+                //parse 9-patch info
+                this->parseNinePatchImage(image, texture, path);
             }
             else
             {
@@ -362,6 +367,17 @@ Texture2D * TextureCache::addImage(const std::string &path)
     CC_SAFE_RELEASE(image);
 
     return texture;
+}
+
+void TextureCache::parseNinePatchImage(cocos2d::Image *image, cocos2d::Texture2D *texture,const std::string& path)
+{
+    if(NinePatchImageParser::isNinePatchImage(path))
+    {
+        Rect frameRect = Rect(0,0,image->getWidth(), image->getHeight());
+        NinePatchImageParser parser(image, frameRect, false);
+        texture->addSpriteFrameCapInset(nullptr, parser.parseCapInset());
+    }
+
 }
 
 Texture2D* TextureCache::addImage(Image *image, const std::string &key)
@@ -522,6 +538,19 @@ void TextureCache::reloadAllTextures()
 // #if CC_ENABLE_CACHE_TEXTURE_DATA
 //     VolatileTextureMgr::reloadAllTextures();
 // #endif
+}
+
+const std::string TextureCache::getTextureFilePath( cocos2d::Texture2D *texture )const
+{
+    for(auto& item : _textures)
+    {
+        if(item.second == texture)
+        {
+            return item.first;
+            break;
+        }
+    }
+    return "";
 }
 
 void TextureCache::waitForQuit()

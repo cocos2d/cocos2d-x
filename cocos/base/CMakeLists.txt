@@ -15,6 +15,7 @@ set(COCOS_BASE_SRC
   base/CCController.cpp
   base/CCData.cpp
   base/CCDataVisitor.cpp
+  base/CCNinePatchImageParser.cpp
   base/CCDirector.cpp
   base/CCEvent.cpp
   base/CCEventAcceleration.cpp
