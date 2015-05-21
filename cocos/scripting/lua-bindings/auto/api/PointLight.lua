@@ -15,6 +15,7 @@
 -- @function [parent=#PointLight] setRange 
 -- @param self
 -- @param #float range
+-- @return point_table#point_table self (return value: point_table)
         
 --------------------------------
 -- Creates a point light.<br>
@@ -34,5 +35,11 @@
 -- @function [parent=#PointLight] getLightType 
 -- @param self
 -- @return int#int ret (return value: int)
+        
+--------------------------------
+-- 
+-- @function [parent=#PointLight] PointLight 
+-- @param self
+-- @return point_table#point_table self (return value: point_table)
         
 return nil

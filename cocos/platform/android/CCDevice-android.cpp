@@ -84,25 +84,11 @@ public:
     									int nWidth,
     									int nHeight,
     									Device::TextAlign eAlignMask,
-    									const char * pFontName,
-    									float fontSize,
-    									float textTintR 		= 1.0,
-    									float textTintG 		= 1.0,
-    									float textTintB 		= 1.0,
-    									bool shadow 			= false,
-    									float shadowDeltaX 		= 0.0,
-    									float shadowDeltaY 		= 0.0,
-    									float shadowBlur 		= 0.0,
-    									float shadowOpacity 	= 0.0,
-    									bool stroke 			= false,
-    									float strokeColorR 		= 0.0,
-    									float strokeColorG 		= 0.0,
-    									float strokeColorB 		= 0.0,
-    									float strokeSize 		= 0.0 )
+                      const FontDefinition& textDefinition )
     {
            JniMethodInfo methodInfo;
            if (! JniHelper::getStaticMethodInfo(methodInfo, "org/cocos2dx/lib/Cocos2dxBitmap", "createTextBitmapShadowStroke",
-               "(Ljava/lang/String;Ljava/lang/String;IFFFIIIZFFFFZFFFF)Z"))
+               "([BLjava/lang/String;IIIIIIIIZFFFFZIIIIF)Z"))
            {
                CCLOG("%s %d: error to get methodInfo", __FILE__, __LINE__);
                return false;
@@ -110,7 +96,7 @@ public:
 
            // Do a full lookup for the font path using FileUtils in case the given font name is a relative path to a font file asset,
            // or the path has been mapped to a different location in the app package:
-           std::string fullPathOrFontName = FileUtils::getInstance()->fullPathForFilename(pFontName);
+           std::string fullPathOrFontName = FileUtils::getInstance()->fullPathForFilename(textDefinition._fontName);
             
            // If the path name returned includes the 'assets' dir then that needs to be removed, because the android.content.Context
            // requires this portion of the path to be omitted for assets inside the app package.
@@ -125,30 +111,24 @@ public:
             * and data.
             * use this approach to decrease the jni call number
            */
-           jstring jstrText = methodInfo.env->NewStringUTF(text);
+           int count = strlen(text);
+           jbyteArray strArray = methodInfo.env->NewByteArray(count);
+           methodInfo.env->SetByteArrayRegion(strArray, 0, count, reinterpret_cast<const jbyte*>(text));
            jstring jstrFont = methodInfo.env->NewStringUTF(fullPathOrFontName.c_str());
 
-           if(!shadow)
-           {
-               shadowDeltaX = 0.0f;
-               shadowDeltaY = 0.0f;
-               shadowBlur = 0.0f;
-               shadowOpacity = 0.0f;
-           }
-           if (!stroke)
-           {
-               strokeColorR = 0.0f;
-               strokeColorG = 0.0f;
-               strokeColorB = 0.0f;
-               strokeSize = 0.0f;
-           }
-           if(!methodInfo.env->CallStaticBooleanMethod(methodInfo.classID, methodInfo.methodID, jstrText,
-               jstrFont, (int)fontSize, textTintR, textTintG, textTintB, eAlignMask, nWidth, nHeight, shadow, shadowDeltaX, -shadowDeltaY, shadowBlur, shadowOpacity, stroke, strokeColorR, strokeColorG, strokeColorB, strokeSize))
+           if(!methodInfo.env->CallStaticBooleanMethod(methodInfo.classID, methodInfo.methodID, strArray,
+               jstrFont, textDefinition._fontSize, textDefinition._fontFillColor.r, textDefinition._fontFillColor.g, 
+               textDefinition._fontFillColor.b, textDefinition._fontAlpha,
+               eAlignMask, nWidth, nHeight, 
+               textDefinition._shadow._shadowEnabled, textDefinition._shadow._shadowOffset.width, -textDefinition._shadow._shadowOffset.height, 
+               textDefinition._shadow._shadowBlur, textDefinition._shadow._shadowOpacity, 
+               textDefinition._stroke._strokeEnabled, textDefinition._stroke._strokeColor.r, textDefinition._stroke._strokeColor.g, 
+               textDefinition._stroke._strokeColor.b, textDefinition._stroke._strokeAlpha, textDefinition._stroke._strokeSize))
            {
                 return false;
            }
 
-           methodInfo.env->DeleteLocalRef(jstrText);
+           methodInfo.env->DeleteLocalRef(strArray);
            methodInfo.env->DeleteLocalRef(jstrFont);
            methodInfo.env->DeleteLocalRef(methodInfo.classID);
 
@@ -177,21 +157,7 @@ Data Device::getTextureDataForText(const char * text, const FontDefinition& text
         if(! dc.getBitmapFromJavaShadowStroke(text, 
             (int)textDefinition._dimensions.width, 
             (int)textDefinition._dimensions.height, 
-            align, textDefinition._fontName.c_str(),
-            textDefinition._fontSize,
-            textDefinition._fontFillColor.r / 255.0f, 
-            textDefinition._fontFillColor.g / 255.0f, 
-            textDefinition._fontFillColor.b / 255.0f, 
-            textDefinition._shadow._shadowEnabled,
-            textDefinition._shadow._shadowOffset.width, 
-            textDefinition._shadow._shadowOffset.height, 
-            textDefinition._shadow._shadowBlur, 
-            textDefinition._shadow._shadowOpacity,
-            textDefinition._stroke._strokeEnabled, 
-            textDefinition._stroke._strokeColor.r / 255.0f, 
-            textDefinition._stroke._strokeColor.g / 255.0f, 
-            textDefinition._stroke._strokeColor.b / 255.0f, 
-            textDefinition._stroke._strokeSize )) { break;};
+            align, textDefinition )) { break;};
 
         width = dc._width;
         height = dc._height;

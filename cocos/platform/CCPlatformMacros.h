@@ -1,6 +1,6 @@
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
-Copyright (c) 2013-2014 Chukong Technologies
+Copyright (c) 2013-2015 Chukong Technologies
  
  http://www.cocos2d-x.org
  
@@ -22,24 +22,26 @@ Copyright (c) 2013-2014 Chukong Technologies
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
+
 #ifndef __CC_PLATFORM_MACROS_H__
 #define __CC_PLATFORM_MACROS_H__
 
 /**
- * define some platform specific macros
+ * Define some platform specific macros.
  */
 #include "base/ccConfig.h"
 #include "platform/CCPlatformConfig.h"
 #include "platform/CCPlatformDefine.h"
 
-/**
- * define a create function for a specific type, such as Layer
- * @param \__TYPE__  class type to add create(), such as Layer
+/** @def CREATE_FUNC(__TYPE__)
+ * Define a create function for a specific type, such as Layer.
+ *
+ * @param __TYPE__  class type to add create(), such as Layer.
  */
 #define CREATE_FUNC(__TYPE__) \
 static __TYPE__* create() \
 { \
-    __TYPE__ *pRet = new __TYPE__(); \
+    __TYPE__ *pRet = new(std::nothrow) __TYPE__(); \
     if (pRet && pRet->init()) \
     { \
         pRet->autorelease(); \
@@ -53,15 +55,16 @@ static __TYPE__* create() \
     } \
 }
 
-/**
- * define a node function for a specific type, such as Layer
- * @param \__TYPE__  class type to add node(), such as Layer
+/** @def NODE_FUNC(__TYPE__)
+ * Define a node function for a specific type, such as Layer.
+ *
+ * @param __TYPE__  class type to add node(), such as Layer.
  * @deprecated  This interface will be deprecated sooner or later.
  */
 #define NODE_FUNC(__TYPE__) \
 CC_DEPRECATED_ATTRIBUTE static __TYPE__* node() \
 { \
-    __TYPE__ *pRet = new __TYPE__(); \
+    __TYPE__ *pRet = new(std::nothrow) __TYPE__(); \
     if (pRet && pRet->init()) \
     { \
         pRet->autorelease(); \
@@ -76,30 +79,31 @@ CC_DEPRECATED_ATTRIBUTE static __TYPE__* node() \
 }
 
 /** @def CC_ENABLE_CACHE_TEXTURE_DATA
-Enable it if you want to cache the texture data.
-Not enabling for Emscripten any more -- doesn't seem necessary and don't want
-to be different from other platforms unless there's a good reason.
-
-It's new in cocos2d-x since v0.99.5
-*/
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) 
+ * Enable it if you want to cache the texture data.
+ * Not enabling for Emscripten any more -- doesn't seem necessary and don't want
+ * to be different from other platforms unless there's a good reason.
+ * 
+ * @since v0.99.5
+ */
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) 
     #define CC_ENABLE_CACHE_TEXTURE_DATA       1
 #else
     #define CC_ENABLE_CACHE_TEXTURE_DATA       0
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN)
-    /* Application will crash in glDrawElements function on some win32 computers and some android devices.
-       Indices should be bound again while drawing to avoid this bug.
+    /** Application will crash in glDrawElements function on some win32 computers and some android devices.
+     *  Indices should be bound again while drawing to avoid this bug.
      */
     #define CC_REBIND_INDICES_BUFFER  1
 #else
     #define CC_REBIND_INDICES_BUFFER  0
 #endif
 
-// generic macros
+// Generic macros
 
-// namespace cocos2d {}
+/// @name namespace cocos2d
+/// @{
 #ifdef __cplusplus
     #define NS_CC_BEGIN                     namespace cocos2d {
     #define NS_CC_END                       }
@@ -111,15 +115,18 @@ It's new in cocos2d-x since v0.99.5
     #define USING_NS_CC 
     #define NS_CC
 #endif 
+//  end of namespace group
+/// @}
 
-/** CC_PROPERTY_READONLY is used to declare a protected variable.
- We can use getter to read the variable.
- @param varType     the type of variable.
- @param varName     variable name.
- @param funName     "get + funName" will be the name of the getter.
- @warning   The getter is a public virtual function, you should rewrite it first.
-            The variables and methods declared after CC_PROPERTY_READONLY are all public.
-            If you need protected or private, please declare.
+/** @def CC_PROPERTY_READONLY 
+ * It is used to declare a protected variable. We can use getter to read the variable.
+ * 
+ * @param varType     the type of variable.
+ * @param varName     variable name.
+ * @param funName     "get + funName" will be the name of the getter.
+ * @warning   The getter is a public virtual function, you should rewrite it first.
+ *            The variables and methods declared after CC_PROPERTY_READONLY are all public.
+ *            If you need protected or private, please declare.
  */
 #define CC_PROPERTY_READONLY(varType, varName, funName)\
 protected: varType varName;\
@@ -129,15 +136,17 @@ public: virtual varType get##funName(void) const;
 protected: varType varName;\
 public: virtual const varType& get##funName(void) const;
 
-/** CC_PROPERTY is used to declare a protected variable.
- We can use getter to read the variable, and use the setter to change the variable.
- @param varType     the type of variable.
- @param varName     variable name.
- @param funName     "get + funName" will be the name of the getter.
-                    "set + funName" will be the name of the setter.
- @warning   The getter and setter are public virtual functions, you should rewrite them first.
-            The variables and methods declared after CC_PROPERTY are all public.
-            If you need protected or private, please declare.
+/** @def CC_PROPERTY 
+ * It is used to declare a protected variable.
+ * We can use getter to read the variable, and use the setter to change the variable.
+ *
+ * @param varType     The type of variable.
+ * @param varName     Variable name.
+ * @param funName     "get + funName" will be the name of the getter.
+ *                    "set + funName" will be the name of the setter.
+ * @warning   The getter and setter are public virtual functions, you should rewrite them first.
+ *            The variables and methods declared after CC_PROPERTY are all public.
+ *            If you need protected or private, please declare.
  */
 #define CC_PROPERTY(varType, varName, funName)\
 protected: varType varName;\
@@ -149,14 +158,15 @@ protected: varType varName;\
 public: virtual const varType& get##funName(void) const;\
 public: virtual void set##funName(const varType& var);
 
-/** CC_SYNTHESIZE_READONLY is used to declare a protected variable.
- We can use getter to read the variable.
- @param varType     the type of variable.
- @param varName     variable name.
- @param funName     "get + funName" will be the name of the getter.
- @warning   The getter is a public inline function.
-            The variables and methods declared after CC_SYNTHESIZE_READONLY are all public.
-            If you need protected or private, please declare.
+/** @def CC_SYNTHESIZE_READONLY 
+ * It is used to declare a protected variable. We can use getter to read the variable.
+ *
+ * @param varType     The type of variable.
+ * @param varName     Variable name.
+ * @param funName     "get + funName" will be the name of the getter.
+ * @warning   The getter is a public inline function.
+ *            The variables and methods declared after CC_SYNTHESIZE_READONLY are all public.
+ *            If you need protected or private, please declare.
  */
 #define CC_SYNTHESIZE_READONLY(varType, varName, funName)\
 protected: varType varName;\
@@ -166,15 +176,17 @@ public: virtual varType get##funName(void) const { return varName; }
 protected: varType varName;\
 public: virtual const varType& get##funName(void) const { return varName; }
 
-/** CC_SYNTHESIZE is used to declare a protected variable.
- We can use getter to read the variable, and use the setter to change the variable.
- @param varType     the type of variable.
- @param varName     variable name.
- @param funName     "get + funName" will be the name of the getter.
-                    "set + funName" will be the name of the setter.
- @warning   The getter and setter are public inline functions.
-            The variables and methods declared after CC_SYNTHESIZE are all public.
-            If you need protected or private, please declare.
+/** @def CC_SYNTHESIZE 
+ * It is used to declare a protected variable.
+ * We can use getter to read the variable, and use the setter to change the variable.
+ *
+ * @param varType     The type of variable.
+ * @param varName     Variable name.
+ * @param funName     "get + funName" will be the name of the getter.
+ *                    "set + funName" will be the name of the setter.
+ * @warning   The getter and setter are public inline functions.
+ *            The variables and methods declared after CC_SYNTHESIZE are all public.
+ *            If you need protected or private, please declare.
  */
 #define CC_SYNTHESIZE(varType, varName, funName)\
 protected: varType varName;\
@@ -210,7 +222,8 @@ public: virtual void set##funName(varType var)   \
 #define __CCLOGWITHFUNCTION(s, ...) \
     log("%s : %s",__FUNCTION__, StringUtils::format(s, ##__VA_ARGS__).c_str())
 
-// cocos2d debug
+/// @name Cocos2d debug
+/// @{
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0
 #define CCLOG(...)       do {} while (0)
 #define CCLOGINFO(...)   do {} while (0)
@@ -230,15 +243,20 @@ public: virtual void set##funName(varType var)   \
 #define CCLOGWARN(...) __CCLOGWITHFUNCTION(__VA_ARGS__)
 #endif // COCOS2D_DEBUG
 
-// Lua engine debug
+/** Lua engine debug */
 #if !defined(COCOS2D_DEBUG) || COCOS2D_DEBUG == 0 || CC_LUA_ENGINE_DEBUG == 0
 #define LUALOG(...)
 #else
 #define LUALOG(format, ...)     cocos2d::log(format, ##__VA_ARGS__)
 #endif // Lua engine debug
 
-// A macro to disallow the copy constructor and operator= functions
-// This should be used in the private: declarations for a class
+//  end of debug group
+/// @}
+
+/** @def CC_DISALLOW_COPY_AND_ASSIGN(TypeName)
+ * A macro to disallow the copy constructor and operator= functions.
+ * This should be used in the private: declarations for a class
+ */
 #if defined(__GNUC__) && ((__GNUC__ >= 5) || ((__GNUG__ == 4) && (__GNUC_MINOR__ >= 4))) \
 	|| (defined(__clang__) && (__clang_major__ >= 3)) || (_MSC_VER >= 1800)
 #define CC_DISALLOW_COPY_AND_ASSIGN(TypeName) \
@@ -250,18 +268,20 @@ public: virtual void set##funName(varType var)   \
     TypeName &operator =(const TypeName &);
 #endif
 
-// A macro to disallow all the implicit constructors, namely the
-// default constructor, copy constructor and operator= functions.
-//
-// This should be used in the private: declarations for a class
-// that wants to prevent anyone from instantiating it. This is
-// especially useful for classes containing only static methods.
+/** @def CC_DISALLOW_IMPLICIT_CONSTRUCTORS(TypeName)
+ * A macro to disallow all the implicit constructors, namely the
+ * default constructor, copy constructor and operator= functions.
+ *
+ * This should be used in the private: declarations for a class
+ * that wants to prevent anyone from instantiating it. This is
+ * especially useful for classes containing only static methods. 
+ */
 #define CC_DISALLOW_IMPLICIT_CONSTRUCTORS(TypeName)    \
     TypeName();                                        \
     CC_DISALLOW_COPY_AND_ASSIGN(TypeName)
 
-/*
- * only certain compilers support __attribute__((deprecated))
+/** @def CC_DEPRECATED_ATTRIBUTE
+ * Only certain compilers support __attribute__((deprecated)).
  */
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
     #define CC_DEPRECATED_ATTRIBUTE __attribute__((deprecated))
@@ -271,10 +291,18 @@ public: virtual void set##funName(varType var)   \
     #define CC_DEPRECATED_ATTRIBUTE
 #endif 
 
-/*
- * only certain compiler support __attribute__((format))
- * formatPos - 1-based position of format string argument
- * argPos - 1-based position of first format-dependent argument
+/** @def CC_DEPRECATED(...)
+ * Macro to mark things deprecated as of a particular version
+ * can be used with artibrary parameters which are thrown away.
+ * e.g. CC_DEPRECATED(4.0) or CC_DEPRECATED(4.0, "not going to need this anymore") etc.
+ */
+#define CC_DEPRECATED(...) CC_DEPRECATED_ATTRIBUTE
+
+/** @def CC_FORMAT_PRINTF(formatPos, argPos)
+ * Only certain compiler support __attribute__((format))
+ *
+ * @param formatPos 1-based position of format string argument.
+ * @param argPos    1-based position of first format-dependent argument.
  */
 #if defined(__GNUC__) && (__GNUC__ >= 4)
 #define CC_FORMAT_PRINTF(formatPos, argPos) __attribute__((__format__(printf, formatPos, argPos)))
@@ -298,9 +326,9 @@ public: virtual void set##funName(varType var)   \
 #define CC_UNUSED
 #endif
 
-//
-// CC_REQUIRES_NULL_TERMINATION
-//
+/** @def CC_REQUIRES_NULL_TERMINATION
+ * 
+ */
 #if !defined(CC_REQUIRES_NULL_TERMINATION)
     #if defined(__APPLE_CC__) && (__APPLE_CC__ >= 5549)
         #define CC_REQUIRES_NULL_TERMINATION __attribute__((sentinel(0,1)))

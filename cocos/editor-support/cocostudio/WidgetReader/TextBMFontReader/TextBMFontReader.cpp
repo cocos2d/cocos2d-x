@@ -42,6 +42,11 @@ namespace cocostudio
         return instanceTextBMFontReader;
     }
     
+    void TextBMFontReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instanceTextBMFontReader);
+    }
+    
     void TextBMFontReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
     {
         this->beginSetBasicProperties(widget);
@@ -241,6 +246,8 @@ namespace cocostudio
         
         auto widgetReader = WidgetReader::getInstance();
         widgetReader->setPropsWithFlatBuffers(node, (Table*)options->widgetOptions());
+        
+        labelBMFont->ignoreContentAdaptWithSize(true);
     }
     
     Node* TextBMFontReader::createNodeWithFlatBuffers(const flatbuffers::Table *textBMFontOptions)

@@ -66,8 +66,9 @@ struct WIN32INPUTBOX_PARAM
 	IN LPCSTR szTitle, szPrompt;
 
 	// Return buffer
-	OUT LPSTR szResult;
-	IN DWORD nResultSize;
+	std::string* pstrResult;
+
+	IN DWORD nMaxLength;
 
 	// Owner window
 	HWND hwndOwner;
@@ -100,13 +101,10 @@ public:
 	static INT_PTR InputBox(
 		LPCSTR szTitle,
 		LPCSTR szPrompt,
-		LPSTR szResult,
-		DWORD nResultSize,
+		std::string* pstrResult,
+		DWORD nMaxLength,
 		bool bMultiLine = false,
 		HWND hwndParent = 0);
-
-	static std::string AnsiToUtf8(std::string strAnsi);
-	static std::string Utf8ToAnsi(std::string strUTF8);
 };
 
 
@@ -201,8 +199,8 @@ WIN32INPUTBOX_PARAM::WIN32INPUTBOX_PARAM()
 
 	xPos = yPos = -1;
 
-	szResult = 0;
-	nResultSize = 0;
+	pstrResult = nullptr;
+	nMaxLength = (DWORD) -1;
 }
 
 CWin32InputBox::CWin32InputBox(WIN32INPUTBOX_PARAM *param)
@@ -228,7 +226,7 @@ WIN32INPUTBOX_PARAM *CWin32InputBox::GetParam()
 INT_PTR CWin32InputBox::InputBoxEx(WIN32INPUTBOX_PARAM *param)
 {
 	// Check mandatory parameters
-	if (param->szResult == 0)
+	if (param->pstrResult == nullptr)
 	{
 		::SetLastError(ERROR_INVALID_PARAMETER);
 		return 0;
@@ -304,7 +302,7 @@ INT_PTR CWin32InputBox::InputBoxEx(WIN32INPUTBOX_PARAM *param)
 INT_PTR CWin32InputBox::InputBox(
 	LPCSTR szTitle,
 	LPCSTR szPrompt,
-	LPSTR szResult,
+	std::string* pstrResult,
 	DWORD nResultSize,
 	bool bMultiLine,
 	HWND hwndParent)
@@ -313,8 +311,8 @@ INT_PTR CWin32InputBox::InputBox(
 
 	param.szTitle = szTitle;
 	param.szPrompt = szPrompt;
-	param.szResult = szResult;
-	param.nResultSize = nResultSize;
+	param.pstrResult = pstrResult;
+	param.nMaxLength = nResultSize;
 	param.bMultiline = bMultiLine;
 	param.hwndOwner = hwndParent;
 	return InputBoxEx(&param);
@@ -327,8 +325,13 @@ void CWin32InputBox::InitDialog()
 		::SetDlgItemText(_param->hDlg, (int)definputbox_buttonids[i], definputbox_buttonnames[i]);
 
 	// Set other controls
-	::SetWindowTextA(_param->hDlg, Utf8ToAnsi(_param->szTitle).c_str());
-	::SetDlgItemTextA(_param->hDlg, definputbox_id_prompt, Utf8ToAnsi(_param->szPrompt).c_str());
+	std::u16string utf16Title;
+	cocos2d::StringUtils::UTF8ToUTF16(_param->szTitle, utf16Title);
+	::SetWindowTextW(_param->hDlg, (LPCWSTR) utf16Title.c_str());
+
+	std::u16string utf16Prompt;
+	cocos2d::StringUtils::UTF8ToUTF16(_param->szTitle, utf16Prompt);
+	::SetDlgItemTextW(_param->hDlg, definputbox_id_prompt, (LPCWSTR) utf16Prompt.c_str());
 
 	HWND hwndEdit1 = ::GetDlgItem(_param->hDlg, definputbox_id_edit1);
 	HWND hwndEdit2 = ::GetDlgItem(_param->hDlg, definputbox_id_edit2);
@@ -338,7 +341,9 @@ void CWin32InputBox::InitDialog()
 	else
 		_hwndEditCtrl = hwndEdit1;
 
-	::SetWindowTextA(_hwndEditCtrl, Utf8ToAnsi(_param->szResult).c_str());
+	std::u16string utf16Result;
+	cocos2d::StringUtils::UTF8ToUTF16(_param->pstrResult->c_str(), utf16Result);
+	::SetWindowTextW(_hwndEditCtrl, (LPCWSTR) utf16Result.c_str());
 
 	RECT rectDlg, rectEdit1, rectEdit2;
 
@@ -416,15 +421,43 @@ LRESULT CALLBACK CWin32InputBox::DlgProc(HWND hDlg, UINT message, WPARAM wParam,
 					   {
 						   if (buttonId == definputbox_buttonids[i])
 						   {
-							   ::GetWindowTextA(
+							   std::u16string wstrResult;
+							   std::string utf8Result;
+
+							   int inputLength = ::GetWindowTextLengthW(_this->_hwndEditCtrl);
+							   wstrResult.resize(inputLength);
+
+							   ::GetWindowTextW(
 								   _this->_hwndEditCtrl,
-								   _this->_param->szResult,
-								   _this->_param->nResultSize);
+								   (LPWSTR) const_cast<char16_t*>(wstrResult.c_str()),
+								   inputLength+1);
 
-							   std::string strUtf8 = AnsiToUtf8(_this->_param->szResult);
+							   bool conversionResult = cocos2d::StringUtils::UTF16ToUTF8(wstrResult, utf8Result);
+							   _this->_param->pstrResult->clear();
+							   if (conversionResult)
+							   {
+								   DWORD inputLengthAsUTF8 = (DWORD) cocos2d::StringUtils::getCharacterCountInUTF8String(utf8Result);
+								   if ((_this->_param->nMaxLength > 0) &&
+									   (_this->_param->nMaxLength < inputLengthAsUTF8))
+								   {
+									   // LengthFilter
+									   for (size_t pos=0; pos < _this->_param->nMaxLength; pos++)
+									   {
+										   std::string utf8Bytes;
+										   std::u16string utf16Character(1, wstrResult[pos]);
 
-							   memset(_this->_param->szResult, 0, _this->_param->nResultSize);
-							   strncpy(_this->_param->szResult, strUtf8.c_str(), _this->_param->nResultSize - 1);
+										   bool utf16toutf8ConversionResult = cocos2d::StringUtils::UTF16ToUTF8(utf16Character, utf8Bytes);
+										   if (utf16toutf8ConversionResult)
+										   {
+											   _this->_param->pstrResult->append(utf8Bytes);
+										   }
+									   }
+								   }
+								   else
+								   {
+									   *(_this->_param->pstrResult) = utf8Result;
+								   }
+							   }
 
 							   ::EndDialog(hDlg, buttonId);
 							   return TRUE;
@@ -435,55 +468,6 @@ LRESULT CALLBACK CWin32InputBox::DlgProc(HWND hDlg, UINT message, WPARAM wParam,
 	}
 	return FALSE;
 }
-
-
-std::string CWin32InputBox::AnsiToUtf8(std::string strAnsi)
-{
-	std::string ret;
-	if (strAnsi.length() > 0)
-	{
-		int nWideStrLength = MultiByteToWideChar(CP_ACP, 0, strAnsi.c_str(), -1, nullptr, 0);
-		WCHAR* pwszBuf = (WCHAR*)malloc((nWideStrLength + 1)*sizeof(WCHAR));
-		memset(pwszBuf, 0, (nWideStrLength + 1)*sizeof(WCHAR));
-		MultiByteToWideChar(CP_ACP, 0, strAnsi.c_str(), -1, pwszBuf, (nWideStrLength + 1)*sizeof(WCHAR));
-
-		int nUtf8Length = WideCharToMultiByte(CP_UTF8, 0, pwszBuf, -1, nullptr, 0, nullptr, FALSE);
-		char* pszUtf8Buf = (char*)malloc((nUtf8Length + 1)*sizeof(char));
-		memset(pszUtf8Buf, 0, (nUtf8Length + 1)*sizeof(char));
-
-		WideCharToMultiByte(CP_UTF8, 0, pwszBuf, -1, pszUtf8Buf, (nUtf8Length + 1)*sizeof(char), nullptr, FALSE);
-		ret = pszUtf8Buf;
-
-		free(pszUtf8Buf);
-		free(pwszBuf);
-	}
-	return ret;
-}
-
-std::string CWin32InputBox::Utf8ToAnsi(std::string strUTF8)
-{
-	std::string ret;
-	if (strUTF8.length() > 0)
-	{
-		int nWideStrLength = MultiByteToWideChar(CP_UTF8, 0, strUTF8.c_str(), -1, nullptr, 0);
-		WCHAR* pwszBuf = (WCHAR*)malloc((nWideStrLength + 1)*sizeof(WCHAR));
-		memset(pwszBuf, 0, (nWideStrLength + 1)*sizeof(WCHAR));
-		MultiByteToWideChar(CP_UTF8, 0, strUTF8.c_str(), -1, pwszBuf, (nWideStrLength + 1)*sizeof(WCHAR));
-
-		int nAnsiStrLength = WideCharToMultiByte(CP_ACP, 0, pwszBuf, -1, nullptr, 0, nullptr, FALSE);
-		char* pszAnsiBuf = (char*)malloc((nAnsiStrLength + 1)*sizeof(char));
-		memset(pszAnsiBuf, 0, (nAnsiStrLength + 1)*sizeof(char));
-
-		WideCharToMultiByte(CP_ACP, 0, pwszBuf, -1, pszAnsiBuf, (nAnsiStrLength + 1)*sizeof(char), nullptr, FALSE);
-		ret = pszAnsiBuf;
-
-		free(pszAnsiBuf);
-		free(pwszBuf);
-	}
-
-	return ret;
-}
-
 
 
 NS_CC_BEGIN
@@ -517,6 +501,8 @@ void EditBoxImplWin::doAnimationWhenKeyboardMove(float duration, float distance)
 {
 }
 
+static const int CC_EDIT_BOX_PADDING = 5;
+
 bool EditBoxImplWin::initWithSize(const Size& size)
 {
     //! int fontSize = getFontSizeAccordingHeightJni(size.height-12);
@@ -524,17 +510,17 @@ bool EditBoxImplWin::initWithSize(const Size& size)
     _label->setSystemFontSize(size.height-12);
 	// align the text vertically center
     _label->setAnchorPoint(Vec2(0, 0.5f));
-    _label->setPosition(Vec2(5, size.height / 2.0f));
-    _label->setColor(_colText);
+    _label->setPosition(Vec2(CC_EDIT_BOX_PADDING, size.height / 2.0f));
+    _label->setTextColor(_colText);
     _editBox->addChild(_label);
 
     _labelPlaceHolder = Label::create();
     _labelPlaceHolder->setSystemFontSize(size.height-12);
 	// align the text vertically center
     _labelPlaceHolder->setAnchorPoint(Vec2(0, 0.5f));
-    _labelPlaceHolder->setPosition(5, size.height / 2.0f);
+    _labelPlaceHolder->setPosition(CC_EDIT_BOX_PADDING, size.height / 2.0f);
     _labelPlaceHolder->setVisible(false);
-    _labelPlaceHolder->setColor(_colPlaceHolder);
+    _labelPlaceHolder->setTextColor(_colPlaceHolder);
     _editBox->addChild(_labelPlaceHolder);
     
     _editSize = size;
@@ -543,35 +529,38 @@ bool EditBoxImplWin::initWithSize(const Size& size)
 
 void EditBoxImplWin::setFont(const char* pFontName, int fontSize)
 {
-	if(_label != nullptr) {
+	if (_label != nullptr)
+	{
 		_label->setSystemFontName(pFontName);
 		_label->setSystemFontSize(fontSize);
 	}
 	
-	if(_labelPlaceHolder != nullptr) {
+	if (_labelPlaceHolder != nullptr)
+	{
 		_labelPlaceHolder->setSystemFontName(pFontName);
 		_labelPlaceHolder->setSystemFontSize(fontSize);
 	}
 }
 
-void EditBoxImplWin::setFontColor(const Color3B& color)
+void EditBoxImplWin::setFontColor(const Color4B& color)
 {
     _colText = color;
-    _label->setColor(color);
+    _label->setTextColor(color);
 }
 
 void EditBoxImplWin::setPlaceholderFont(const char* pFontName, int fontSize)
 {
-	if(_labelPlaceHolder != nullptr) {
+	if (_labelPlaceHolder != nullptr)
+	{
 		_labelPlaceHolder->setSystemFontName(pFontName);
 		_labelPlaceHolder->setSystemFontSize(fontSize);
 	}
 }
 
-void EditBoxImplWin::setPlaceholderFontColor(const Color3B& color)
+void EditBoxImplWin::setPlaceholderFontColor(const Color4B& color)
 {
     _colPlaceHolder = color;
-    _labelPlaceHolder->setColor(color);
+    _labelPlaceHolder->setTextColor(color);
 }
 
 void EditBoxImplWin::setInputMode(EditBox::InputMode inputMode)
@@ -631,7 +620,14 @@ void EditBoxImplWin::setText(const char* pText)
 
             //! std::string strWithEllipsis = getStringWithEllipsisJni(strToShow.c_str(), _editSize.width, _editSize.height-12);
             //! _label->setString(strWithEllipsis.c_str());
-			_label->setString(strToShow.c_str());
+            _label->setString(strToShow.c_str());
+            
+            float maxWidth = _editSize.width - 2 * CC_EDIT_BOX_PADDING;
+            auto labelSize = _label->getContentSize();
+            if (labelSize.width > maxWidth)
+            {
+                _label->setDimensions(maxWidth, labelSize.height);
+            }
         }
         else
         {
@@ -705,18 +701,16 @@ void EditBoxImplWin::openKeyboard()
 	if (placeHolder.length() == 0)
 		placeHolder = "Enter value";
 
-	char pText[100]= {0};
 	std::string text = getText();
-	if (text.length())
-		strncpy(pText, text.c_str(), 100);
 	auto glView = Director::getInstance()->getOpenGLView();
 	HWND hwnd = glView->getWin32Window();
-	bool didChange = CWin32InputBox::InputBox("Input", placeHolder.c_str(), pText, 100, false, hwnd) == IDOK;
+	bool didChange = CWin32InputBox::InputBox("Input", placeHolder.c_str(), &text, _maxLength, false, hwnd) == IDOK;
 	
 	if (didChange) 	
-		setText(pText);
+		setText(text.c_str());
 
-	if (_delegate != nullptr) {
+	if (_delegate != nullptr)
+	{
 		if (didChange)
 			_delegate->editBoxTextChanged(_editBox, getText());
 		_delegate->editBoxEditingDidEnd(_editBox);

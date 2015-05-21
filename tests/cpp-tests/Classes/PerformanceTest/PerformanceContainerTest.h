@@ -4,17 +4,11 @@
 #ifndef __PERFORMANCE_CONTAINER_TEST_H__
 #define __PERFORMANCE_CONTAINER_TEST_H__
 
-#include "PerformanceTest.h"
+#include "BaseTest.h"
 
-class ContainerBasicLayer : public PerformBasicLayer
-{
-public:
-    ContainerBasicLayer(bool bControlMenuVisible, int nMaxCases = 0, int nCurCase = 0);
-    
-    virtual void showCurrentTest();
-};
+DEFINE_TEST_SUITE(PerformceContainerTests);
 
-class PerformanceContainerScene : public Scene
+class PerformanceContainerScene : public TestCase
 {
 public:
     static const int TAG_TITLE = 100;
@@ -26,6 +20,7 @@ public:
         std::function<void()> func;
     };
     
+    virtual bool init() override;
     virtual void initWithQuantityOfNodes(unsigned int nNodes);
     virtual void generateTestFunctions() = 0;
     
@@ -46,18 +41,19 @@ public:
     virtual void update(float dt) override;
     
 protected:
+    static int quantityOfNodes;
+
     char   _profilerName[256];
     int    lastRenderedCount;
-    int    quantityOfNodes;
     int    currentQuantityOfNodes;
     unsigned int _type;
     std::vector<TestFunction> _testFunctions;
     
-    MenuItemFont* _increase;
-    MenuItemFont* _decrease;
-    MenuItemFont* _startItem;
-    MenuItemFont* _stopItem;
-    MenuItemToggle* _toggle;
+    cocos2d::MenuItemFont* _increase;
+    cocos2d::MenuItemFont* _decrease;
+    cocos2d::MenuItemFont* _startItem;
+    cocos2d::MenuItemFont* _stopItem;
+    cocos2d::MenuItemToggle* _toggle;
 };
 
 class TemplateVectorPerfTest : public PerformanceContainerScene
@@ -125,7 +121,5 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
 };
-
-void runContainerPerformanceTest();
 
 #endif // __PERFORMANCE_CONTAINER_TEST_H__

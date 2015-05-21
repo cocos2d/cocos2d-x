@@ -1,5 +1,7 @@
 #include "PerformanceTouchesTest.h"
 
+USING_NS_CC;
+
 // Enable profiles for this file
 #undef CC_PROFILER_DISPLAY_TIMERS
 #define CC_PROFILER_DISPLAY_TIMERS() Profiler::getInstance()->displayTimers()
@@ -27,55 +29,24 @@
 #undef CC_PROFILER_RESET_INSTANCE
 #define CC_PROFILER_RESET_INSTANCE(__id__, __name__) do{ ProfilingResetTimingBlock( String::createWithFormat("%08X - %s", __id__, __name__)->getCString() ); } while(0)
 
-enum
+PerformceTouchesTests::PerformceTouchesTests()
 {
-    TEST_COUNT = 3,
-};
-
-static int s_nTouchCurCase = 0;
+    ADD_TEST_CASE(TouchesPerformTest1);
+    ADD_TEST_CASE(TouchesPerformTest2);
+    ADD_TEST_CASE(TouchesPerformTest3);
+}
 
 ////////////////////////////////////////////////////////
 //
 // TouchesMainScene
 //
 ////////////////////////////////////////////////////////
-void TouchesMainScene::showCurrentTest()
-{
-    Layer* layer = nullptr;
-    switch (_curCase)
-    {
-    case 0:
-        layer = new (std::nothrow) TouchesPerformTest1(true, TEST_COUNT, _curCase);
-        break;
-    case 1:
-        layer = new (std::nothrow) TouchesPerformTest2(true, TEST_COUNT, _curCase);
-        break;
-    case 2:
-        layer = new (std::nothrow) TouchesPerformTest3(true, TEST_COUNT, _curCase);
-        break;
-    }
-    s_nTouchCurCase = _curCase;
-
-    if (layer)
-    {
-        auto scene = Scene::create();
-        scene->addChild(layer);
-        layer->release();
-
-        Director::getInstance()->replaceScene(scene);
-    }
-}
 
 void TouchesMainScene::onEnter()
 {
-    PerformBasicLayer::onEnter();
+    TestCase::onEnter();
 
     auto s = Director::getInstance()->getWinSize();
-
-    // add title
-    auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 32);
-    addChild(label, 1);
-    label->setPosition(Vec2(s.width/2, s.height-50));
 
     scheduleUpdate();
 
@@ -104,11 +75,6 @@ void TouchesMainScene::update(float dt)
         sprintf(str, "%.1f %.1f %.1f %.1f", frameRateB, frameRateM, frameRateE, frameRateC);
         _plabel->setString(str);
     }
-}
-
-std::string TouchesMainScene::title() const
-{
-    return "No title";
 }
 
 ////////////////////////////////////////////////////////
@@ -213,19 +179,11 @@ public:
     void onTouchCancelled(Touch *touch, Event *event) {}
 };
 
-
-
 void TouchesPerformTest3::onEnter()
 {
-    PerformBasicLayer::onEnter();
-    
+    TestCase::onEnter();
     
     auto s = Director::getInstance()->getWinSize();
-    
-    // add title
-    auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 32);
-    addChild(label, 1);
-    label->setPosition(Vec2(s.width/2, s.height-50));
     
 #define TOUCH_PROFILER_NAME  "TouchProfileName"
 #define TOUCHABLE_NODE_NUM 1000
@@ -290,43 +248,4 @@ void TouchesPerformTest3::onEnter()
 std::string TouchesPerformTest3::title() const
 {
     return "Touch Event Perf Test";
-}
-
-void TouchesPerformTest3::showCurrentTest()
-{
-    Layer* layer = nullptr;
-    switch (_curCase)
-    {
-        case 0:
-            layer = new (std::nothrow) TouchesPerformTest1(true, TEST_COUNT, _curCase);
-            break;
-        case 1:
-            layer = new (std::nothrow) TouchesPerformTest2(true, TEST_COUNT, _curCase);
-            break;
-        case 2:
-            layer = new (std::nothrow) TouchesPerformTest3(true, TEST_COUNT, _curCase);
-            break;
-    }
-    s_nTouchCurCase = _curCase;
-    
-    if (layer)
-    {
-        auto scene = Scene::create();
-        scene->addChild(layer);
-        layer->release();
-        
-        Director::getInstance()->replaceScene(scene);
-    }
-}
-
-void runTouchesTest()
-{
-    s_nTouchCurCase = 0;
-    auto scene = Scene::create();
-    auto layer = new (std::nothrow) TouchesPerformTest1(true, TEST_COUNT, s_nTouchCurCase);
-
-    scene->addChild(layer);
-    layer->release();
-
-    Director::getInstance()->replaceScene(scene);
 }

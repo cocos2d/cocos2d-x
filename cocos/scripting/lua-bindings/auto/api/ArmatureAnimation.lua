@@ -11,34 +11,6 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
--- Pause the Process
--- @function [parent=#ArmatureAnimation] pause 
--- @param self
-        
---------------------------------
--- Scale animation play speed.<br>
--- param animationScale Scale value
--- @function [parent=#ArmatureAnimation] setSpeedScale 
--- @param self
--- @param #float speedScale
-        
---------------------------------
--- Init with a Armature<br>
--- param armature The Armature ArmatureAnimation will bind to
--- @function [parent=#ArmatureAnimation] init 
--- @param self
--- @param #ccs.Armature armature
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- 
--- @function [parent=#ArmatureAnimation] playWithIndexes 
--- @param self
--- @param #array_table movementIndexes
--- @param #int durationTo
--- @param #bool loop
-        
---------------------------------
 -- Play animation by animation name.<br>
 -- param  animationName  The animation name you want to play<br>
 -- param  durationTo The frames between two animation changing-over.<br>
@@ -53,55 +25,44 @@
 -- @param #string animationName
 -- @param #int durationTo
 -- @param #int loop
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
         
 --------------------------------
 -- Go to specified frame and pause current movement.
 -- @function [parent=#ArmatureAnimation] gotoAndPause 
 -- @param self
 -- @param #int frameIndex
-        
---------------------------------
--- Resume the Process
--- @function [parent=#ArmatureAnimation] resume 
--- @param self
-        
---------------------------------
--- Stop the Process
--- @function [parent=#ArmatureAnimation] stop 
--- @param self
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
         
 --------------------------------
 -- 
--- @function [parent=#ArmatureAnimation] update 
+-- @function [parent=#ArmatureAnimation] playWithIndexes 
 -- @param self
--- @param #float dt
-        
---------------------------------
--- 
--- @function [parent=#ArmatureAnimation] getAnimationData 
--- @param self
--- @return AnimationData#AnimationData ret (return value: ccs.AnimationData)
-        
---------------------------------
--- 
--- @function [parent=#ArmatureAnimation] playWithIndex 
--- @param self
--- @param #int animationIndex
+-- @param #array_table movementIndexes
 -- @param #int durationTo
--- @param #int loop
-        
---------------------------------
--- Get current movementID<br>
--- return The name of current movement
--- @function [parent=#ArmatureAnimation] getCurrentMovementID 
--- @param self
--- @return string#string ret (return value: string)
+-- @param #bool loop
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
         
 --------------------------------
 -- 
 -- @function [parent=#ArmatureAnimation] setAnimationData 
 -- @param self
 -- @param #ccs.AnimationData data
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
+        
+--------------------------------
+-- Scale animation play speed.<br>
+-- param animationScale Scale value
+-- @function [parent=#ArmatureAnimation] setSpeedScale 
+-- @param self
+-- @param #float speedScale
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
+        
+--------------------------------
+-- 
+-- @function [parent=#ArmatureAnimation] getAnimationData 
+-- @param self
+-- @return AnimationData#AnimationData ret (return value: ccs.AnimationData)
         
 --------------------------------
 -- Go to specified frame and play current movement.<br>
@@ -114,6 +75,15 @@
 -- @function [parent=#ArmatureAnimation] gotoAndPlay 
 -- @param self
 -- @param #int frameIndex
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
+        
+--------------------------------
+-- Init with a Armature<br>
+-- param armature The Armature ArmatureAnimation will bind to
+-- @function [parent=#ArmatureAnimation] init 
+-- @param self
+-- @param #ccs.Armature armature
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 
@@ -122,12 +92,29 @@
 -- @param #array_table movementNames
 -- @param #int durationTo
 -- @param #bool loop
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
         
 --------------------------------
 -- Get movement count
 -- @function [parent=#ArmatureAnimation] getMovementCount 
 -- @param self
 -- @return long#long ret (return value: long)
+        
+--------------------------------
+-- 
+-- @function [parent=#ArmatureAnimation] playWithIndex 
+-- @param self
+-- @param #int animationIndex
+-- @param #int durationTo
+-- @param #int loop
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
+        
+--------------------------------
+-- Get current movementID<br>
+-- return The name of current movement
+-- @function [parent=#ArmatureAnimation] getCurrentMovementID 
+-- @param self
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- Create with a Armature<br>
@@ -138,8 +125,34 @@
 -- @return ArmatureAnimation#ArmatureAnimation ret (return value: ccs.ArmatureAnimation)
         
 --------------------------------
+-- Pause the Process
+-- @function [parent=#ArmatureAnimation] pause 
+-- @param self
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
+        
+--------------------------------
+-- Stop the Process
+-- @function [parent=#ArmatureAnimation] stop 
+-- @param self
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
+        
+--------------------------------
+-- 
+-- @function [parent=#ArmatureAnimation] update 
+-- @param self
+-- @param #float dt
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
+        
+--------------------------------
+-- Resume the Process
+-- @function [parent=#ArmatureAnimation] resume 
+-- @param self
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
+        
+--------------------------------
 -- js ctor
 -- @function [parent=#ArmatureAnimation] ArmatureAnimation 
 -- @param self
+-- @return ArmatureAnimation#ArmatureAnimation self (return value: ccs.ArmatureAnimation)
         
 return nil

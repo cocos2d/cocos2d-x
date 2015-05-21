@@ -602,7 +602,7 @@ void _spDrawOrderTimeline_apply (const spTimeline* timeline, spSkeleton* skeleto
 
 	drawOrderToSetupIndex = self->drawOrders[frameIndex];
 	if (!drawOrderToSetupIndex)
-		memcpy(skeleton->drawOrder, skeleton->slots, self->slotsCount * sizeof(int));
+		memcpy(skeleton->drawOrder, skeleton->slots, self->slotsCount * sizeof(spSlot*));
 	else {
 		for (i = 0; i < self->slotsCount; ++i)
 			skeleton->drawOrder[i] = skeleton->slots[drawOrderToSetupIndex[i]];
@@ -659,12 +659,8 @@ void _spFFDTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, flo
 	spSlot *slot = skeleton->slots[self->slotIndex];
 	if (slot->attachment != self->attachment) return;
 
-	if (time < self->frames[0]) {
-		slot->attachmentVerticesCount = 0;
-		return; /* Time is before first frame. */
-	}
+	if (time < self->frames[0]) return; /* Time is before first frame. */
 
-	if (slot->attachmentVerticesCount != self->frameVerticesCount) alpha = 1; // Don't mix from uninitialized slot vertices.
 	if (slot->attachmentVerticesCount < self->frameVerticesCount) {
 		if (slot->attachmentVerticesCapacity < self->frameVerticesCount) {
 			FREE(slot->attachmentVertices);
@@ -672,6 +668,7 @@ void _spFFDTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, flo
 			slot->attachmentVerticesCapacity = self->frameVerticesCount;
 		}
 	}
+	if (slot->attachmentVerticesCount != self->frameVerticesCount) alpha = 1; /* Don't mix from uninitialized slot vertices. */
 	slot->attachmentVerticesCount = self->frameVerticesCount;
 
 	if (time >= self->frames[self->framesCount - 1]) {
@@ -789,3 +786,51 @@ void spIkConstraintTimeline_setFrame (spIkConstraintTimeline* self, int frameInd
 	self->frames[frameIndex + 1] = mix;
 	self->frames[frameIndex + 2] = (float)bendDirection;
 }
+
+/**/
+
+void _spFlipTimeline_apply (const spTimeline* timeline, spSkeleton* skeleton, float lastTime, float time,
+		spEvent** firedEvents, int* eventsCount, float alpha) {
+	int frameIndex;
+	spFlipTimeline* self = (spFlipTimeline*)timeline;
+
+	if (time < self->frames[0]) {
+		if (lastTime > time) _spFlipTimeline_apply(timeline, skeleton, lastTime, (float)INT_MAX, 0, 0, 0);
+		return;
+	} else if (lastTime > time) /**/
+		lastTime = -1;
+
+	frameIndex = (time >= self->frames[self->framesCount - 2] ?
+		self->framesCount : binarySearch(self->frames, self->framesCount, time, 2)) - 2;
+	if (self->frames[frameIndex] < lastTime) return;
+
+	if (self->x)
+		skeleton->bones[self->boneIndex]->flipX = (int)self->frames[frameIndex + 1];
+	else
+		skeleton->bones[self->boneIndex]->flipY = (int)self->frames[frameIndex + 1];
+}
+
+void _spFlipTimeline_dispose (spTimeline* timeline) {
+	spFlipTimeline* self = SUB_CAST(spFlipTimeline, timeline);
+	_spTimeline_deinit(SUPER(self));
+	FREE(self->frames);
+	FREE(self);
+}
+
+spFlipTimeline* spFlipTimeline_create (int framesCount, int/*bool*/x) {
+	spFlipTimeline* self = NEW(spFlipTimeline);
+	_spTimeline_init(SUPER(self), x ? SP_TIMELINE_FLIPX : SP_TIMELINE_FLIPY, _spFlipTimeline_dispose, _spFlipTimeline_apply);
+	CONST_CAST(int, self->x) = x;
+	CONST_CAST(int, self->framesCount) = framesCount << 1;
+	CONST_CAST(float*, self->frames) = CALLOC(float, self->framesCount);
+	return self;
+}
+
+void spFlipTimeline_setFrame (spFlipTimeline* self, int frameIndex, float time, int/*bool*/flip) {
+	frameIndex <<= 1;
+	self->frames[frameIndex] = time;
+	self->frames[frameIndex + 1] = (float)flip;
+}
+
+/**/
+

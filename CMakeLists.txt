@@ -29,10 +29,16 @@ cmake_minimum_required(VERSION 2.8)
 # also from cmake's Modules dir, to not clash with per-project files.
 cmake_policy(SET CMP0017 NEW)
 
+# Use new behaviour with cmake >= 3.1:
+# Only interpret if() arguments as variables or keywords when unquoted.
+if(CMAKE_VERSION VERSION_GREATER 3.1)
+    cmake_policy(SET CMP0054 NEW)
+endif()
+
 project (Cocos2d-X)
 
 # The version number
-set(COCOS2D_X_VERSION 3.3.0-rc1)
+set(COCOS2D_X_VERSION 3.6)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake/Modules/")
 include(CocosBuildHelpers)
@@ -49,8 +55,23 @@ if(MINGW)
   set(USE_PREBUILT_LIBS_DEFAULT OFF)
 endif()
 
+set(BUILD_CPP_TESTS_DEFAULT ON)
+set(BUILD_LUA_LIBS_DEFAULT ON)
+set(BUILD_LUA_TESTS_DEFAULT ON)
+set(BUILD_JS_LIBS_DEFAULT OFF)
+set(BUILD_JS_TESTS_DEFAULT OFF)
+# TODO: fix test samples for MSVC
+if(MSVC)
+  set(BUILD_CPP_TESTS_DEFAULT OFF)
+  set(BUILD_LUA_LIBS_DEFAULT OFF)
+  set(BUILD_LUA_TESTS_DEFAULT OFF)
+  set(BUILD_JS_LIBS_DEFAULT OFF)
+  set(BUILD_JS_TESTS_DEFAULT OFF)
+endif()
+
 option(USE_CHIPMUNK "Use chipmunk for physics library" ON)
 option(USE_BOX2D "Use box2d for physics library" OFF)
+option(USE_BULLET "Use bullet for physics3d library" ON)
 option(USE_WEBP "Use WebP codec" ${USE_WEBP_DEFAULT})
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 option(DEBUG_MODE "Debug or release?" ON)
@@ -58,9 +79,11 @@ option(BUILD_EXTENSIONS "Build extension library" ON)
 option(BUILD_EDITOR_SPINE "Build editor support for spine" ON)
 option(BUILD_EDITOR_COCOSTUDIO "Build editor support for cocostudio" ON)
 option(BUILD_EDITOR_COCOSBUILDER "Build editor support for cocosbuilder" ON)
-option(BUILD_CPP_TESTS "Build TestCpp samples" ON)
-option(BUILD_LUA_LIBS "Build lua libraries" ON)
-option(BUILD_LUA_TESTS "Build TestLua samples" ON)
+option(BUILD_CPP_TESTS "Build TestCpp samples" ${BUILD_CPP_TESTS_DEFAULT})
+option(BUILD_LUA_LIBS "Build lua libraries" ${BUILD_LUA_LIBS_DEFAULT})
+option(BUILD_LUA_TESTS "Build TestLua samples" ${BUILD_LUA_TESTS_DEFAULT})
+option(BUILD_JS_LIBS "Build js libraries" ${BUILD_JS_LIBS_DEFAULT})
+option(BUILD_JS_TESTS "Build TestJS samples" ${BUILD_JS_TESTS_DEFAULT})
 option(USE_PREBUILT_LIBS "Use prebuilt libraries in external directory" ${USE_PREBUILT_LIBS_DEFAULT})
 
 if(USE_PREBUILT_LIBS AND MINGW)
@@ -81,6 +104,14 @@ if(MSVC)
   ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS
                   -wd4251 -wd4244 -wd4334 -wd4005 -wd4820 -wd4710
                   -wd4514 -wd4056 -wd4996 -wd4099)
+
+  # Use inline debug info (/Z7) format. Or internal error may occur.
+  # Errors looks like: "xmemory0(592): error C3130: Internal Compiler Error: failed to write injected code block to PDB"
+  foreach(lang C CXX)
+    string(REGEX REPLACE "/Z[iI7]" "" CMAKE_${lang}_FLAGS_DEBUG "${CMAKE_${lang}_FLAGS_DEBUG}")
+    set(CMAKE_${lang}_FLAGS_DEBUG "${CMAKE_${lang}_FLAGS_DEBUG} /Z7")
+  endforeach()
+
 else()
   set(CMAKE_C_FLAGS_DEBUG "-g -Wall -DCOCOS2D_DEBUG=1")
   set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
@@ -150,12 +181,14 @@ if(USE_PREBUILT_LIBS)
   include(CocosUsePrebuiltLibs)
 endif()
 
-# GLFW3 used on Mac, Windows and Linux desktop platforms
+# desktop platforms
 if(LINUX OR MACOSX OR WINDOWS)
   cocos_find_package(OpenGL OPENGL REQUIRED)
 
   if(LINUX OR WINDOWS)
     cocos_find_package(GLEW GLEW REQUIRED)
+    #TODO: implement correct schema for pass cocos2d specific requirements to projects
+    include_directories(${GLEW_INCLUDE_DIRS})
   endif()
 
   cocos_find_package(GLFW3 GLFW3 REQUIRED)
@@ -216,6 +249,24 @@ else()
   add_definitions(-DCC_ENABLE_BOX2D_INTEGRATION=0)
 endif(USE_BOX2D)
 
+# Bullet (not prebuilded, exists as source)
+if(USE_BULLET)
+  if(USE_PREBUILT_LIBS)
+    add_subdirectory(external/bullet)
+    set(BULLET_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/bullet)
+    set(BULLET_LIBRARIES bullet)
+  else()
+    cocos_find_package(bullet BULLET REQUIRED)
+    set(BULLET_LIBRARIES bullet)
+  endif()
+  message(STATUS "Bullet include dirs: ${BULLET_INCLUDE_DIRS}")
+  add_definitions(-DCC_ENABLE_BULLET_INTEGRATION=1)
+  add_definitions(-DCC_USE_PHYSICS=1)
+else()
+  add_definitions(-DCC_ENABLE_BULLET_INTEGRATION=0)
+  add_definitions(-DCC_USE_3D_PHYSICS=0)
+endif(USE_BULLET)
+
 # Tinyxml2 (not prebuilded, exists as source)
 if(USE_PREBUILT_LIBS)
   add_subdirectory(external/tinyxml2)
@@ -236,9 +287,11 @@ cocos_find_package(ZLIB ZLIB REQUIRED)
 # moreover our embedded version modified to quick provide
 # functionality needed by cocos.
 if(USE_PREBUILT_LIBS OR NOT MINGW)
+  #TODO: hack! should be in external/unzip/CMakeLists.txt
+  include_directories(${ZLIB_INCLUDE_DIRS})
   add_subdirectory(external/unzip)
-  set(MINIZIP_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/unzip)
-  set(MINIZIP_LIBRARIES unzip)
+  set(MINIZIP_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/unzip ${ZLIB_INCLUDE_DIRS})
+  set(MINIZIP_LIBRARIES unzip ${ZLIB_LIBRARIES})
   message(STATUS "MINIZIP include dirs: ${MINIZIP_INCLUDE_DIRS}")
 else()
   cocos_find_package(MINIZIP MINIZIP REQUIRED)
@@ -261,10 +314,10 @@ set(FLATBUFFERS_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external)
 message(STATUS "Flatbuffers include dirs: ${FLATBUFFERS_INCLUDE_DIRS}")
 
 
-# build for 3rd party libraries
-if(LINUX OR APPLE)
+# build xxhash
 add_subdirectory(external/xxhash)
-endif()
+set(XXHASH_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/external/xxhash)
+set(XXHASH_LIBRARIES xxhash)
 
 # libcocos2d.a
 add_subdirectory(cocos)
@@ -286,3 +339,18 @@ if(BUILD_LUA_LIBS)
   endif(BUILD_LUA_TESTS)
 
 endif(BUILD_LUA_LIBS)
+
+## JS
+if(BUILD_JS_LIBS)
+  link_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/spidermonkey/prebuilt/${PLATFORM_FOLDER}/${ARCH_DIR}
+  )
+
+  add_subdirectory(cocos/scripting/js-bindings)
+
+  # build js tests
+  if(BUILD_JS_TESTS)
+    add_subdirectory(tests/js-tests/project)
+  endif(BUILD_JS_TESTS)
+
+endif(BUILD_JS_LIBS)

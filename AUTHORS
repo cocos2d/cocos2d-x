@@ -369,6 +369,7 @@ Developers:
     giginet
         Fix CCRepeat#create is recieved bad argument on Lua binding.
         Added a feature that CCSSceneReader can load name properties as node names.
+        Added Rect::intersectsCircle().
 
     neokim
         Adds 'setFont' and 'setAnchorPoint' to CCEditBox.
@@ -536,9 +537,11 @@ Developers:
 
     musikov
         Fixing a bug that missing precision when getting strokeColor and fontFillColor
+        added Turkish and Ukrainian language support
         
     hawkwood (Justin Hawkwood)
         Fixing a bug that EditBox doesn't show any text if it's initialized with text.
+        Fixed a memory leak in new Audio.
         
     wtyqm (zhang peng)
         Fixing a bug that ccbRootPath wasn't passed to sub ccb nodes.
@@ -708,6 +711,8 @@ Developers:
     seobyeongky
         Updates spine runtime.
         Fixed a potential bug in Data's copy constructor. 
+        Fixed the bug that MotionStreak can not work with MoveTo and MoveBy
+        Fixed a bug that  HttpAsynConnection can not get error content if response code less than 200 or response code greater or equal than 300
         
     luocker
         Fix a bug that string itself is also modified in `String::componentsSeparatedByString`.
@@ -814,6 +819,7 @@ Developers:
         Precompiled headers improvements
         Added Application::openUrl for all supported platforms ecept WP8 and WinRT
         Scale9Sprite capInsets set fix
+        Clang static analyzer crash fix
         
     youknowone
         Adds iOS-like elastic bounceback support for cocos2d::extension::ScrollView
@@ -848,6 +854,7 @@ Developers:
         EditBox: mac secure input
         Fix a bug that can not get/set text in password mode on Mac OS X
         Make sure TableView parents are visible before handling touch
+        Fixed memory leak in HttpRequest
         
     iSevenDays
         Fixed a bug that the result of 'malloc' is incompatible with type 'unsigned char *' in Image::saveImageToPNG
@@ -1060,7 +1067,66 @@ Developers:
     shrimpz
         Fix two typos in luaval_to_quaternion
         Fix label crashed on android
+        
+    ton1517
+        Fix the issue that JumpTo can not be applied more than once
     
+    takaokato
+        Fix wrong result in Node:getParenttoNodeTransform() if node is transformed
+    
+    AknEp
+        Fix FileUtils::fullPathForFilename return empty string if file not found
+        
+    kompjoefriek
+        Fix compiling warnings
+        
+    tmr111116
+        fix random int overflow
+        
+    flamefox
+        fix the bug that Sprite3D::getAttachNode() should failed when there is no bone with name
+        
+    ryule
+        Fixed HttpClient-ios request to work when the data is started by 0x00
+        
+    loadrunner
+        Added romanian languange support
+        Added sensor property for PhysicsShape
+        
+    Almax27
+        RenderQueue command buffer optimize.
+        
+    IgorMats
+        Added MotionStreak::getStroke/setStroke
+        
+    matsuokah
+        Fixed the bug that JNI illegal start byte error causes crashing error on Android 5.0
+        
+    babcca
+        Fixed crashing when playing streamed MP4 file on iOS
+        
+    milos1290
+        Added Lerp for Vec3
+        Added ActionFloat
+        
+    perminovVS
+        Optimize Vec3 and Vec2
+        Added `UserDefault::setDelegate()`
+        
+    qiutaoleo
+        Added a feature to check case characters for filename on windows
+        
+    HueyPark
+        Fixed memory leak in HttpClient on iOS
+        
+    Dimon4eg
+        Fixed crash on AssetsManager
+        Fixed memory leak of WebView on iOS
+        Fixed crahed that if url contains illegal characters on Android
+        
+    tankorsmash
+        Fixed the bug that ProgressTimer::setSprite() doesn't take effect
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,

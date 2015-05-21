@@ -1,18 +1,18 @@
 /****************************************************************************
  Copyright (c) 2013 cocos2d-x.org
- 
+
  http://www.cocos2d-x.org
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
- 
+
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
- 
+
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -27,142 +27,223 @@
 
 #include "../UIScene.h"
 
+DEFINE_TEST_SUITE(UIButtonTests);
+
 class UIButtonTest : public UIScene
 {
 public:
+    CREATE_FUNC(UIButtonTest);
+
     UIButtonTest();
     ~UIButtonTest();
-    bool init();
-    void touchEvent(Ref *pSender, Widget::TouchEventType type);
+
+    virtual bool init() override;
+    void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
 
 protected:
-    UI_SCENE_CREATE_FUNC(UIButtonTest)
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UIButtonTest_Scale9 : public UIScene
 {
 public:
+    CREATE_FUNC(UIButtonTest_Scale9);
+
     UIButtonTest_Scale9();
     ~UIButtonTest_Scale9();
-    bool init();
-    void touchEvent(Ref *pSender, Widget::TouchEventType type);
-    
+
+    virtual bool init() override;
+    void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+
 protected:
-    UI_SCENE_CREATE_FUNC(UIButtonTest_Scale9)
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
+};
+
+class UIButtonTest_Scale9_State_Change : public UIScene
+{
+public:
+    CREATE_FUNC(UIButtonTest_Scale9_State_Change);
+
+    UIButtonTest_Scale9_State_Change();
+    ~UIButtonTest_Scale9_State_Change();
+
+    virtual bool init() override;
+    void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+
+protected:
+        cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UIButtonTest_PressedAction : public UIScene
 {
 public:
+    CREATE_FUNC(UIButtonTest_PressedAction);
+
     UIButtonTest_PressedAction();
     ~UIButtonTest_PressedAction();
-    bool init();
-    void touchEvent(Ref *pSender, Widget::TouchEventType type);
-    
+
+    virtual bool init() override;
+    void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+
 protected:
-    UI_SCENE_CREATE_FUNC(UIButtonTest_PressedAction)
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UIButtonTest_Title : public UIScene
 {
 public:
+    CREATE_FUNC(UIButtonTest_Title);
+
     UIButtonTest_Title();
     ~UIButtonTest_Title();
-    bool init();
-    void touchEvent(Ref *pSender, Widget::TouchEventType type);
-    
+
+    virtual bool init() override;
+    void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+
 protected:
-    UI_SCENE_CREATE_FUNC(UIButtonTest_Title)
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UIButtonTestRemoveSelf : public UIScene
 {
 public:
+    CREATE_FUNC(UIButtonTestRemoveSelf);
+
     UIButtonTestRemoveSelf();
     ~UIButtonTestRemoveSelf();
-    bool init();
-    void touchEvent(Ref *pSender, Widget::TouchEventType type);
-    
+
+    virtual bool init() override;
+    void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+
 protected:
-    UI_SCENE_CREATE_FUNC(UIButtonTestRemoveSelf)
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UIButtonTestSwitchScale9 : public UIScene
 {
 public:
+    CREATE_FUNC(UIButtonTestSwitchScale9);
+
     UIButtonTestSwitchScale9();
     ~UIButtonTestSwitchScale9();
-    bool init();
-    void touchEvent(Ref *pSender, Widget::TouchEventType type);
-    
+
+    virtual bool init() override;
+    void touchEvent(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
+
 protected:
-    UI_SCENE_CREATE_FUNC(UIButtonTestSwitchScale9)
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UIButtonTestZoomScale : public UIScene
 {
 public:
+    CREATE_FUNC(UIButtonTestZoomScale);
+
     UIButtonTestZoomScale();
     ~UIButtonTestZoomScale();
-    bool init();
-    void sliderEvent(Ref* pSender, Slider::EventType type);
+
+    virtual bool init() override;
+    void sliderEvent(cocos2d::Ref* sender, cocos2d::ui::Slider::EventType type);
 
 protected:
-    UI_SCENE_CREATE_FUNC(UIButtonTestZoomScale)
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UIButtonTextOnly : public UIScene
 {
 public:
+    CREATE_FUNC(UIButtonTextOnly);
+
     UIButtonTextOnly();
     ~UIButtonTextOnly();
-    bool init();
+
+    virtual bool init() override;
 
 protected:
-    UI_SCENE_CREATE_FUNC(UIButtonTextOnly)
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UIButtonIgnoreContentSizeTest : public UIScene
 {
 public:
+    CREATE_FUNC(UIButtonIgnoreContentSizeTest);
+
     UIButtonIgnoreContentSizeTest();
     ~UIButtonIgnoreContentSizeTest();
-    bool init();
-    
+
+    virtual bool init() override;
+
 protected:
-    UI_SCENE_CREATE_FUNC(UIButtonIgnoreContentSizeTest)
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UIButtonTitleEffectTest : public UIScene
 {
 public:
+    CREATE_FUNC(UIButtonTitleEffectTest);
+
     UIButtonTitleEffectTest();
     ~UIButtonTitleEffectTest();
-    bool init();
-    
+
+    virtual bool init() override;
+
 protected:
-    UI_SCENE_CREATE_FUNC(UIButtonTitleEffectTest)
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
 };
 
 class UIButtonFlipTest : public UIScene
 {
 public:
+    CREATE_FUNC(UIButtonFlipTest);
+
     UIButtonFlipTest();
     ~UIButtonFlipTest();
-    bool init();
-    
+
+    virtual bool init() override;
+
 protected:
-    UI_SCENE_CREATE_FUNC(UIButtonFlipTest)
-    Text* _displayValueLabel;
+    cocos2d::ui::Text* _displayValueLabel;
+};
+
+class UIButtonNormalDefaultTest : public UIScene
+{
+public:
+    CREATE_FUNC(UIButtonNormalDefaultTest);
+
+    UIButtonNormalDefaultTest();
+    ~UIButtonNormalDefaultTest();
+
+    virtual bool init() override;
+
+protected:
+    cocos2d::ui::Text* _displayValueLabel;
+};
+
+class UIButtonDisableDefaultTest : public UIScene
+{
+public:
+    CREATE_FUNC(UIButtonDisableDefaultTest);
+
+    UIButtonDisableDefaultTest();
+    ~UIButtonDisableDefaultTest();
+
+    virtual bool init() override;
+
+protected:
+    cocos2d::ui::Text* _displayValueLabel;
+};
+
+class UIButtonCloneTest : public UIScene
+{
+public:
+    CREATE_FUNC(UIButtonCloneTest);
+
+    UIButtonCloneTest();
+    ~UIButtonCloneTest();
+
+    virtual bool init() override;
+
+protected:
+    cocos2d::ui::Text* _displayValueLabel;
 };
 #endif /* defined(__TestCpp__UIButtonTest__) */

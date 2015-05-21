@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #include "NewAudioEngineTest.h"
 #include "ui/CocosGUI.h"
@@ -32,48 +32,17 @@ using namespace cocos2d;
 using namespace cocos2d::ui;
 using namespace cocos2d::experimental;
 
+AudioEngineTests::AudioEngineTests()
+{
+    ADD_TEST_CASE(AudioControlTest);
+    ADD_TEST_CASE(PlaySimultaneouslyTest);
+    ADD_TEST_CASE(AudioProfileTest);
+    ADD_TEST_CASE(InvalidAudioFileTest);
+    ADD_TEST_CASE(LargeAudioFileTest);
+}
+
 namespace {
     
-std::function<Layer*()> createFunctions[] =
-{
-    CL(AudioControlTest),
-    CL(PlaySimultaneouslyTest),
-    CL(AudioProfileTest),
-    CL(InvalidAudioFileTest),
-    CL(LargeAudioFileTest)
-};
-
-unsigned int TEST_CASE_COUNT = sizeof(createFunctions) / sizeof(createFunctions[0]);
-
-int s_sceneIdx = -1;
-Layer* createTest(int index)
-{
-    auto layer = (createFunctions[index])();;    
-    return layer;
-}
-
-Layer* nextAction()
-{
-    s_sceneIdx++;
-    s_sceneIdx = s_sceneIdx % TEST_CASE_COUNT;
-    
-    return createTest(s_sceneIdx);
-}
-
-Layer* backAction()
-{
-    s_sceneIdx--;
-    if( s_sceneIdx < 0 )
-        s_sceneIdx = TEST_CASE_COUNT -1;
-    
-    return createTest(s_sceneIdx);
-}
-
-Layer* restartAction()
-{
-    return createTest(s_sceneIdx);
-}
-
     class TextButton : public cocos2d::Label
     {
     public:
@@ -109,8 +78,8 @@ Layer* restartAction()
         
     private:
         TextButton()
-        : _enabled(true)
-        , _onTriggered(nullptr)
+        : _onTriggered(nullptr)
+        , _enabled(true)
         {
             auto listener = EventListenerTouchOneByOne::create();
             listener->setSwallowTouches(true);
@@ -291,51 +260,10 @@ Layer* restartAction()
     };
 }
 
-void AudioEngineTestScene::runThisTest()
-{
-    CCASSERT(AudioEngine::lazyInit(),"Fail to initialize AudioEngine!");
-    
-    s_sceneIdx = -1;
-    auto layer = nextAction();
-    addChild(layer);
-    
-    Director::getInstance()->replaceScene(this);
-}
-
 void AudioEngineTestDemo::onExit()
 {
     AudioEngine::stopAll();
-    BaseTest::onExit();
-}
-
-void AudioEngineTestDemo::backCallback(Ref* sender)
-{
-    auto scene = new AudioEngineTestScene();
-    auto layer = backAction();
-    
-    scene->addChild(layer);
-    Director::getInstance()->replaceScene(scene);
-    scene->release();
-}
-
-void AudioEngineTestDemo::nextCallback(Ref* sender)
-{
-    auto scene = new AudioEngineTestScene();
-    auto layer = nextAction();
-    
-    scene->addChild(layer);
-    Director::getInstance()->replaceScene(scene);
-    scene->release();
-}
-
-void AudioEngineTestDemo::restartCallback(Ref* sender)
-{
-    auto scene = new AudioEngineTestScene();
-    auto layer = restartAction();
-    
-    scene->addChild(layer);
-    Director::getInstance()->replaceScene(scene);
-    scene->release();
+    TestCase::onExit();
 }
 
 std::string AudioEngineTestDemo::title() const
@@ -347,7 +275,7 @@ std::string AudioEngineTestDemo::title() const
 bool AudioControlTest::init()
 {
     auto ret = AudioEngineTestDemo::init();
-    _audioID = AudioEngine::INVAILD_AUDIO_ID;
+    _audioID = AudioEngine::INVALID_AUDIO_ID;
     _loopEnabled = false;
     _volume = 1.0f;
     _duration = AudioEngine::TIME_UNKNOWN;
@@ -359,13 +287,17 @@ bool AudioControlTest::init()
     auto& layerSize = this->getContentSize();
     
     auto playItem = TextButton::create("play", [&](TextButton* button){
-        if (_audioID == AudioEngine::INVAILD_AUDIO_ID) {
+        if (_audioID == AudioEngine::INVALID_AUDIO_ID) {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+            _audioID = AudioEngine::play2d("background.wav", _loopEnabled, _volume);
+#else
             _audioID = AudioEngine::play2d("background.mp3", _loopEnabled, _volume);
+#endif
             
-            if(_audioID != AudioEngine::INVAILD_AUDIO_ID) {
+            if(_audioID != AudioEngine::INVALID_AUDIO_ID) {
                 button->setEnabled(false);
                 AudioEngine::setFinishCallback(_audioID, [&](int id, const std::string& filePath){
-                    _audioID = AudioEngine::INVAILD_AUDIO_ID;
+                    _audioID = AudioEngine::INVALID_AUDIO_ID;
                     ((TextButton*)_playItem)->setEnabled(true);
                     
                     _timeRatio = 0.0f;
@@ -379,10 +311,10 @@ bool AudioControlTest::init()
     addChild(playItem);
     
     auto stopItem = TextButton::create("stop", [&](TextButton* button){
-        if (_audioID != AudioEngine::INVAILD_AUDIO_ID ) {
+        if (_audioID != AudioEngine::INVALID_AUDIO_ID ) {
             AudioEngine::stop(_audioID);
             
-            _audioID = AudioEngine::INVAILD_AUDIO_ID;
+            _audioID = AudioEngine::INVALID_AUDIO_ID;
             ((TextButton*)_playItem)->setEnabled(true);
         }
     });
@@ -390,7 +322,7 @@ bool AudioControlTest::init()
     addChild(stopItem);
     
     auto pauseItem = TextButton::create("pause", [&](TextButton* button){
-        if (_audioID != AudioEngine::INVAILD_AUDIO_ID ) {
+        if (_audioID != AudioEngine::INVALID_AUDIO_ID ) {
             AudioEngine::pause(_audioID);
         }
     });
@@ -398,7 +330,7 @@ bool AudioControlTest::init()
     addChild(pauseItem);
     
     auto resumeItem = TextButton::create("resume", [&](TextButton* button){
-        if (_audioID != AudioEngine::INVAILD_AUDIO_ID ) {
+        if (_audioID != AudioEngine::INVALID_AUDIO_ID ) {
             AudioEngine::resume(_audioID);
         }
     });
@@ -408,7 +340,7 @@ bool AudioControlTest::init()
     auto loopItem = TextButton::create("enable-loop", [&](TextButton* button){
         _loopEnabled = !_loopEnabled;
         
-        if (_audioID != AudioEngine::INVAILD_AUDIO_ID ) {
+        if (_audioID != AudioEngine::INVALID_AUDIO_ID ) {
             AudioEngine::setLoop(_audioID, _loopEnabled);
         }
         if(_loopEnabled){
@@ -422,9 +354,13 @@ bool AudioControlTest::init()
     addChild(loopItem);
     
     auto uncacheItem = TextButton::create("uncache", [&](TextButton* button){
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+        AudioEngine::uncache("background.wav");
+#else
         AudioEngine::uncache("background.mp3");
+#endif
         
-        _audioID = AudioEngine::INVAILD_AUDIO_ID;
+        _audioID = AudioEngine::INVALID_AUDIO_ID;
         ((TextButton*)_playItem)->setEnabled(true);
     });
     uncacheItem->setPosition(layerSize.width * 0.7f,layerSize.height * 0.5f);
@@ -434,7 +370,7 @@ bool AudioControlTest::init()
     volumeSlider->setPercent(100);
     volumeSlider->setCallBack([&](SliderEx* sender,float ratio,SliderEx::TouchEvent event){
         _volume = ratio;
-        if (_audioID != AudioEngine::INVAILD_AUDIO_ID ) {
+        if (_audioID != AudioEngine::INVALID_AUDIO_ID ) {
             AudioEngine::setVolume(_audioID, _volume);
         }
     });
@@ -449,7 +385,7 @@ bool AudioControlTest::init()
                 _updateTimeSlider = false;
                 break;
             case SliderEx::TouchEvent::UP:
-                if (_audioID != AudioEngine::INVAILD_AUDIO_ID && _duration != AudioEngine::TIME_UNKNOWN) {
+                if (_audioID != AudioEngine::INVALID_AUDIO_ID && _duration != AudioEngine::TIME_UNKNOWN) {
                     AudioEngine::setCurrentTime(_audioID,_duration * ratio);
                 }
             case SliderEx::TouchEvent::CANCEL:
@@ -481,7 +417,7 @@ bool AudioControlTest::init()
 
 void AudioControlTest::update(float dt)
 {
-    if (_audioID != AudioEngine::INVAILD_AUDIO_ID ) {
+    if (_audioID != AudioEngine::INVALID_AUDIO_ID ) {
         if(_duration == AudioEngine::TIME_UNKNOWN){
             _duration = AudioEngine::getDuration(_audioID);
         }
@@ -512,7 +448,11 @@ bool PlaySimultaneouslyTest::init()
     char text[36];
     int tmp = 81;
     for(int index = 0; index < TEST_COUNT; ++index){
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+        sprintf(text, "audio/SoundEffectsFX009/FX0%d.wav", tmp + index);
+#else
         sprintf(text,"audio/SoundEffectsFX009/FX0%d.mp3",tmp + index);
+#endif
         _files[index] = text;
     }
     _playingcount = 0;
@@ -524,7 +464,7 @@ bool PlaySimultaneouslyTest::init()
         auto startTime = utils::gettime();
         for(int index = 0; index < TEST_COUNT; ++index){
             audioId = AudioEngine::play2d(_files[index]);
-            if(audioId != AudioEngine::INVAILD_AUDIO_ID){
+            if(audioId != AudioEngine::INVALID_AUDIO_ID){
                 _playingcount += 1;
                 
                 AudioEngine::setFinishCallback(audioId, [&](int id, const std::string& filePath){
@@ -562,7 +502,11 @@ bool AudioProfileTest::init()
     auto ret = AudioEngineTestDemo::init();
     
     char text[30];
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+    _files[0] = "background.wav";
+#else
     _files[0] = "background.mp3";
+#endif
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
     _files[1] = "background.caf";
 #else
@@ -584,7 +528,7 @@ bool AudioProfileTest::init()
         auto playItem = TextButton::create(text, [&](TextButton* button){
             int index = button->getTag();
             auto id = AudioEngine::play2d(_files[index], false, 1.0f, &_audioProfile);
-            if(id != AudioEngine::INVAILD_AUDIO_ID){
+            if(id != AudioEngine::INVALID_AUDIO_ID){
                 _time = _minDelay;
                 _audioCount += 1;
                 char show[30];
@@ -699,7 +643,11 @@ bool LargeAudioFileTest::init()
     auto ret = AudioEngineTestDemo::init();
     
     auto playItem = TextButton::create("play large audio file", [&](TextButton* button){
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+        AudioEngine::play2d("audio/LuckyDay.wav");
+#else
         AudioEngine::play2d("audio/LuckyDay.mp3");
+#endif
     });
     playItem->setNormalizedPosition(Vec2::ANCHOR_MIDDLE);
     this->addChild(playItem);

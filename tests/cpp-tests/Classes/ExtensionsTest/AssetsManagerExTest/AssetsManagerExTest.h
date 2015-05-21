@@ -2,52 +2,34 @@
 #define __AssetsManagerEx_Test_H__
 
 #include "extensions/cocos-ext.h"
-#include "../../testBasic.h"
 #include "../../BaseTest.h"
 
-USING_NS_CC;
-USING_NS_CC_EXT;
+DEFINE_TEST_SUITE(AssetsManagerExTests);
 
-class AssetsManagerExTestLayer : public BaseTest
+class AssetsManagerExLoaderScene : public TestCase
 {
 public:
-    AssetsManagerExTestLayer(const std::string& spritePath);
-    ~AssetsManagerExTestLayer(void);
+    static AssetsManagerExLoaderScene* create(int testIndex);
+
+    AssetsManagerExLoaderScene(int testIndex);
     
+    void startDownloadCallback(cocos2d::Ref* sender);
+
     virtual std::string title() const;
-    void onEnter();
-    
-    virtual void restartCallback(Ref* sender);
-    virtual void nextCallback(Ref* sender);
-    virtual void backCallback(Ref* sender);
-    
-private:
-    Sprite *_background;
-    std::string _spritePath;
-};
 
-class AssetsManagerExTestScene : public TestScene
-{
-public:
-    AssetsManagerExTestScene(std::string background);
-    virtual void runThisTest() override;
-};
-
-class AssetsManagerExLoaderScene : public TestScene
-{
-public:
-    AssetsManagerExLoaderScene();
-    
-    virtual void runThisTest() override;
-    
+    virtual bool init() override;
     virtual void onExit() override;
     
-    static int currentScene;
-    
 private:
-    AssetsManagerEx *_am;
-    Label *_progress;
-    EventListenerAssetsManagerEx* _amListener;
+    int _testIndex;
+    cocos2d::Layer* _loadLayer;
+    cocos2d::Menu* _downloadMenu;
+
+    cocos2d::extension::AssetsManagerEx* _am;
+    cocos2d::Label* _progress;
+    cocos2d::extension::EventListenerAssetsManagerEx* _amListener;
+
+    void onLoadEnd();
 };
 
 #endif /* defined(__AssetsManagerEx_Test_H__) */

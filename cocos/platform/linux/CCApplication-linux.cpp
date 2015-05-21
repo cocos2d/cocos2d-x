@@ -104,7 +104,7 @@ int Application::run()
         director = nullptr;
     }
     glview->release();
-    return -1;
+    return EXIT_SUCCESS;
 }
 
 void Application::setAnimationInterval(double interval)
@@ -173,62 +173,62 @@ const char * Application::getCurrentLanguageCode()
 
 LanguageType Application::getCurrentLanguage()
 {
-	char *pLanguageName = getenv("LANG");
-	LanguageType ret = LanguageType::ENGLISH;
-	if (!pLanguageName)
-	{
-		return LanguageType::ENGLISH;
-	}
-	strtok(pLanguageName, "_");
-	if (!pLanguageName)
-	{
-		return LanguageType::ENGLISH;
-	}
-	
-	if (0 == strcmp("zh", pLanguageName))
-	{
-		ret = LanguageType::CHINESE;
-	}
-	else if (0 == strcmp("en", pLanguageName))
-	{
-		ret = LanguageType::ENGLISH;
-	}
-	else if (0 == strcmp("fr", pLanguageName))
-	{
-		ret = LanguageType::FRENCH;
-	}
-	else if (0 == strcmp("it", pLanguageName))
-	{
-		ret = LanguageType::ITALIAN;
-	}
-	else if (0 == strcmp("de", pLanguageName))
-	{
-		ret = LanguageType::GERMAN;
-	}
-	else if (0 == strcmp("es", pLanguageName))
-	{
-		ret = LanguageType::SPANISH;
-	}
-	else if (0 == strcmp("nl", pLanguageName))
-	{
-		ret = LanguageType::DUTCH;
-	}
-	else if (0 == strcmp("ru", pLanguageName))
-	{
-		ret = LanguageType::RUSSIAN;
-	}
-	else if (0 == strcmp("ko", pLanguageName))
-	{
-		ret = LanguageType::KOREAN;
-	}
-	else if (0 == strcmp("ja", pLanguageName))
-	{
-		ret = LanguageType::JAPANESE;
-	}
-	else if (0 == strcmp("hu", pLanguageName))
-	{
-		ret = LanguageType::HUNGARIAN;
-	}
+    char *pLanguageName = getenv("LANG");
+    LanguageType ret = LanguageType::ENGLISH;
+    if (!pLanguageName)
+    {
+        return LanguageType::ENGLISH;
+    }
+    strtok(pLanguageName, "_");
+    if (!pLanguageName)
+    {
+        return LanguageType::ENGLISH;
+    }
+    
+    if (0 == strcmp("zh", pLanguageName))
+    {
+        ret = LanguageType::CHINESE;
+    }
+    else if (0 == strcmp("en", pLanguageName))
+    {
+        ret = LanguageType::ENGLISH;
+    }
+    else if (0 == strcmp("fr", pLanguageName))
+    {
+        ret = LanguageType::FRENCH;
+    }
+    else if (0 == strcmp("it", pLanguageName))
+    {
+        ret = LanguageType::ITALIAN;
+    }
+    else if (0 == strcmp("de", pLanguageName))
+    {
+        ret = LanguageType::GERMAN;
+    }
+    else if (0 == strcmp("es", pLanguageName))
+    {
+        ret = LanguageType::SPANISH;
+    }
+    else if (0 == strcmp("nl", pLanguageName))
+    {
+        ret = LanguageType::DUTCH;
+    }
+    else if (0 == strcmp("ru", pLanguageName))
+    {
+        ret = LanguageType::RUSSIAN;
+    }
+    else if (0 == strcmp("ko", pLanguageName))
+    {
+        ret = LanguageType::KOREAN;
+    }
+    else if (0 == strcmp("ja", pLanguageName))
+    {
+        ret = LanguageType::JAPANESE;
+    }
+    else if (0 == strcmp("hu", pLanguageName))
+    {
+        ret = LanguageType::HUNGARIAN;
+    }
     else if (0 == strcmp("pt", pLanguageName))
     {
         ret = LanguageType::PORTUGUESE;
@@ -244,6 +244,22 @@ LanguageType Application::getCurrentLanguage()
     else if (0 == strcmp("pl", pLanguageName))
     {
         ret = LanguageType::POLISH;
+    }
+    else if (0 == strcmp("tr", pLanguageName))
+    {
+        ret = LanguageType::TURKISH;
+    }
+    else if (0 == strcmp("uk", pLanguageName))
+    {
+        ret = LanguageType::UKRAINIAN;
+    }
+    else if (0 == strcmp("ro", pLanguageName))
+    {
+        ret = LanguageType::ROMANIAN;
+    }
+    else if (0 == strcmp("bg", pLanguageName))
+    {
+        ret = LanguageType::BULGARIAN;
     }
     
     return ret;

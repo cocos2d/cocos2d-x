@@ -38,11 +38,11 @@ class GLProgram;
 class Node;
 
 /**
- * @addtogroup effects
+ * @addtogroup _2d
  * @{
  */
 
-/** Base class for other
+/** Base class for Other grid.
 */
 class CC_DLL GridBase : public Ref
 {
@@ -52,42 +52,71 @@ public:
     /** create one Grid */
     static GridBase* create(const Size& gridSize);
     /**
+    Destructor.
      * @js NA
      * @lua NA
      */
     virtual ~GridBase(void);
 
+    /**@{
+     Init the Grid base.
+     @param gridSize the size of the grid.
+     @param texture The texture used for grab.
+     @param flipped whether or not the grab texture should be flip by Y or not.
+    */
     bool initWithSize(const Size& gridSize, Texture2D *texture, bool flipped);
     bool initWithSize(const Size& gridSize);
-
-    /** whether or not the grid is active */
+    /**@}*/
+    /** @{
+    Getter and setter of the active state of the grid.
+    */
     inline bool isActive(void) const { return _active; }
     void setActive(bool active);
+    /**@}*/
 
-    /** number of times that the grid will be reused */
+    /** Get number of times that the grid will be reused. */
     inline int getReuseGrid(void) const { return _reuseGrid; }
+    /** Set number of times that the grid will be reused. */
     inline void setReuseGrid(int reuseGrid) { _reuseGrid = reuseGrid; }
 
-    /** size of the grid */
+    /** Size of the grid. */
     inline const Size& getGridSize(void) const { return _gridSize; }
+    /**Set the size of the grid.*/
     inline void setGridSize(const Size& gridSize) { _gridSize = gridSize; }
 
-    /** pixels between the grids */
+    /** Pixels between the grids. */
     inline const Vec2& getStep(void) const { return _step; }
+    /**Get the pixels between the grids.*/
     inline void setStep(const Vec2& step) { _step = step; }
 
-    /** is texture flipped */
+    /** is texture flipped. */
     inline bool isTextureFlipped(void) const { return _isTextureFlipped; }
+    /**Set the texture flipped or not.*/
     void setTextureFlipped(bool flipped);
-
+    
+    /**@{
+     Init and reset the status when render effects by using the grid.
+     */
     void beforeDraw(void);
     void afterDraw(Node *target);
+    /**@}*/
+    
+    /**@{
+     Interface for custom action when before or after draw.
+     @js NA
+     */
     virtual void beforeBlit() {}
     virtual void afterBlit() {}
+    /**@}*/
+    
+    /**Interface used to blit the texture with grid to screen.*/
     virtual void blit(void);
+    /**Interface, Reuse the grid vertices.*/
     virtual void reuse(void);
+    /**Interface, Calculate the vertices used for the blit.*/
     virtual void calculateVertexPoints(void);
-
+    
+    /**Change projection to 2D for grabbing.*/
     void set2DProjection(void);
 
 protected:
@@ -108,56 +137,62 @@ protected:
 class CC_DLL Grid3D : public GridBase
 {
 public:
-    /** create one Grid */
+    /** create one Grid. */
     static Grid3D* create(const Size& gridSize, Texture2D *texture, bool flipped);
-    /** create one Grid */
+    /** create one Grid. */
     static Grid3D* create(const Size& gridSize);
     /**
+     Constructor.
      * @js ctor
      */
     Grid3D();
     /**
+     Destructor.
      * @js NA
      * @lua NA
      */
     ~Grid3D(void);
 
-    /** returns the vertex at a given position 
+    /** Returns the vertex at a given position.
      * @js NA
      * @lua NA
      */
     Vec3 getVertex(const Vec2& pos) const;
     /** @deprecated Use getVertex() instead 
-     * @js NA
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE Vec3 vertex(const Vec2& pos) const { return getVertex(pos); }
-    /** returns the original (non-transformed) vertex at a given position
+    /** Returns the original (non-transformed) vertex at a given position.
      * @js NA
      * @lua NA
      */
     Vec3 getOriginalVertex(const Vec2& pos) const;
     /** @deprecated Use getOriginalVertex() instead 
-     * @js NA
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE Vec3 originalVertex(const Vec2& pos) const { return getOriginalVertex(pos); }
 
-    /** sets a new vertex at a given position 
-     * @js NA
+    /** Sets a new vertex at a given position.
      * @lua NA
      */
     void setVertex(const Vec2& pos, const Vec3& vertex);
-    
+    /**@{
+     Implementations for interfaces in base calss.
+     */
     virtual void beforeBlit() override;
     virtual void afterBlit() override;
-    // Overrides
     virtual void blit() override;
     virtual void reuse() override;
     virtual void calculateVertexPoints() override;
+    /**@}*/
     
+    /**@{
+     Getter and Setter for depth test state when blit.
+     @js NA
+     */
     void setNeedDepthTestForBlit( bool neededDepthTest) { _needDepthTestForBlit = neededDepthTest; }
     bool getNeedDepthTestForBlit() const { return _needDepthTestForBlit; }
+    /**@}*/
 protected:
     GLvoid *_texCoordinates;
     GLvoid *_vertices;
@@ -165,6 +200,7 @@ protected:
     GLushort *_indices;
     bool _needDepthTestForBlit;
     bool _oldDepthTestValue;
+    bool _oldDepthWriteValue;
 };
 
 /**
@@ -174,52 +210,53 @@ protected:
 class CC_DLL TiledGrid3D : public GridBase
 {
 public:
-    /** create one Grid */
+    /** Create one Grid. */
     static TiledGrid3D* create(const Size& gridSize, Texture2D *texture, bool flipped);
-    /** create one Grid */
+    /** Create one Grid. */
     static TiledGrid3D* create(const Size& gridSize);
     /**
+     Constructor.
      * @js ctor
      */
     TiledGrid3D();
     /**
+     Destructor.
      * @js NA
      * @lua NA
      */
     ~TiledGrid3D();
 
-    /** returns the tile at the given position 
+    /** Returns the tile at the given position.
      * @js NA
      * @lua NA
      */
     Quad3 getTile(const Vec2& pos) const;
     /** returns the tile at the given position 
-     * @js NA
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE Quad3 tile(const Vec2& pos) const { return getTile(pos); }
-    /** returns the original tile (untransformed) at the given position 
+    /** Returns the original tile (untransformed) at the given position.
      * @js NA
      * @lua NA
      */
     Quad3 getOriginalTile(const Vec2& pos) const;
     /** returns the original tile (untransformed) at the given position 
-     * @js NA
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE Quad3 originalTile(const Vec2& pos) const { return getOriginalTile(pos); }
 
-    /** sets a new tile 
-     * @js NA
+    /** Sets a new tile.
      * @lua NA
      */
     void setTile(const Vec2& pos, const Quad3& coords);
 
-    // Overrides
+    /**@{
+     Implementations for interfaces in base calss.
+     */
     virtual void blit() override;
     virtual void reuse() override;
     virtual void calculateVertexPoints() override;
-
+    /**@}*/
 protected:
     GLvoid *_texCoordinates;
     GLvoid *_vertices;

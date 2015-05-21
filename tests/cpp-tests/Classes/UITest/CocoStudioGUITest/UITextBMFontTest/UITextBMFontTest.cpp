@@ -1,8 +1,12 @@
-
-
 #include "UITextBMFontTest.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
 
+UITextBMFontTests::UITextBMFontTests()
+{
+    ADD_TEST_CASE(UITextBMFontTest);
+}
 // UITextBMFontTest
 
 bool UITextBMFontTest::init()

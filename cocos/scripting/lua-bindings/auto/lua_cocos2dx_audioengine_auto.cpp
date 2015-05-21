@@ -194,7 +194,8 @@ int lua_cocos2dx_audioengine_AudioEngine_uncache(lua_State* tolua_S)
             return 0;
         }
         cocos2d::experimental::AudioEngine::uncache(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccexp.AudioEngine:uncache",argc, 1);
     return 0;
@@ -227,7 +228,8 @@ int lua_cocos2dx_audioengine_AudioEngine_resumeAll(lua_State* tolua_S)
             return 0;
         }
         cocos2d::experimental::AudioEngine::resumeAll();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccexp.AudioEngine:resumeAll",argc, 0);
     return 0;
@@ -260,7 +262,8 @@ int lua_cocos2dx_audioengine_AudioEngine_stopAll(lua_State* tolua_S)
             return 0;
         }
         cocos2d::experimental::AudioEngine::stopAll();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccexp.AudioEngine:stopAll",argc, 0);
     return 0;
@@ -295,7 +298,8 @@ int lua_cocos2dx_audioengine_AudioEngine_pause(lua_State* tolua_S)
             return 0;
         }
         cocos2d::experimental::AudioEngine::pause(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccexp.AudioEngine:pause",argc, 1);
     return 0;
@@ -328,7 +332,8 @@ int lua_cocos2dx_audioengine_AudioEngine_end(lua_State* tolua_S)
             return 0;
         }
         cocos2d::experimental::AudioEngine::end();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccexp.AudioEngine:end",argc, 0);
     return 0;
@@ -503,7 +508,8 @@ int lua_cocos2dx_audioengine_AudioEngine_pauseAll(lua_State* tolua_S)
             return 0;
         }
         cocos2d::experimental::AudioEngine::pauseAll();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccexp.AudioEngine:pauseAll",argc, 0);
     return 0;
@@ -536,7 +542,8 @@ int lua_cocos2dx_audioengine_AudioEngine_uncacheAll(lua_State* tolua_S)
             return 0;
         }
         cocos2d::experimental::AudioEngine::uncacheAll();
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccexp.AudioEngine:uncacheAll",argc, 0);
     return 0;
@@ -573,7 +580,8 @@ int lua_cocos2dx_audioengine_AudioEngine_setVolume(lua_State* tolua_S)
             return 0;
         }
         cocos2d::experimental::AudioEngine::setVolume(arg0, arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccexp.AudioEngine:setVolume",argc, 2);
     return 0;
@@ -652,7 +660,7 @@ int lua_cocos2dx_audioengine_AudioEngine_play2d(lua_State* tolua_S)
         ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccexp.AudioEngine:play2d");
         ok &= luaval_to_boolean(tolua_S, 3,&arg1, "ccexp.AudioEngine:play2d");
         ok &= luaval_to_number(tolua_S, 4,&arg2, "ccexp.AudioEngine:play2d");
-        ok &= luaval_to_object<const cocos2d::experimental::AudioProfile>(tolua_S, 5, "ccexp.AudioProfile",&arg3);
+        ok &= luaval_to_object<const cocos2d::experimental::AudioProfile>(tolua_S, 5, "ccexp.AudioProfile",&arg3, "ccexp.AudioEngine:play2d");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_audioengine_AudioEngine_play2d'", nullptr);
@@ -731,7 +739,8 @@ int lua_cocos2dx_audioengine_AudioEngine_resume(lua_State* tolua_S)
             return 0;
         }
         cocos2d::experimental::AudioEngine::resume(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccexp.AudioEngine:resume",argc, 1);
     return 0;
@@ -766,7 +775,8 @@ int lua_cocos2dx_audioengine_AudioEngine_stop(lua_State* tolua_S)
             return 0;
         }
         cocos2d::experimental::AudioEngine::stop(arg0);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccexp.AudioEngine:stop",argc, 1);
     return 0;
@@ -839,7 +849,8 @@ int lua_cocos2dx_audioengine_AudioEngine_setLoop(lua_State* tolua_S)
             return 0;
         }
         cocos2d::experimental::AudioEngine::setLoop(arg0, arg1);
-        return 0;
+        lua_settop(tolua_S, 1);
+        return 1;
     }
     luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d\n ", "ccexp.AudioEngine:setLoop",argc, 2);
     return 0;

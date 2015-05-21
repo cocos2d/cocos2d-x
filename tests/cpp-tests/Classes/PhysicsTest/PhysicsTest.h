@@ -2,28 +2,14 @@
 #define _PHYSICS_TEST_H_
 
 #include "cocos2d.h"
-#include "../testBasic.h"
 #include "../BaseTest.h"
 
 #include <map>
 
-
-class PhysicsTestScene : public TestScene
-{
-public:
-    PhysicsTestScene();
-    
-public:
-    virtual void runThisTest();
-    
-    void toggleDebug();
-    
-private:
-    bool _debugDraw;
-};
+DEFINE_TEST_SUITE(PhysicsTests);
 
 #if CC_USE_PHYSICS == 0
-class PhysicsDemoDisabled : public BaseTest
+class PhysicsDemoDisabled : public TestCase
 {
 public:
     CREATE_FUNC(PhysicsDemoDisabled);
@@ -32,37 +18,33 @@ public:
 };
 #else
 
-class PhysicsDemo : public BaseTest
+class PhysicsDemo : public TestCase
 {
 public:
-    CREATE_FUNC(PhysicsDemo);
-
     PhysicsDemo();
     virtual ~PhysicsDemo();
     
+    virtual bool init() override;
     virtual void onEnter() override;
     virtual std::string title() const override;
-    virtual std::string subtitle() const override;
     
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
-    void toggleDebugCallback(Ref* sender);
+    void toggleDebugCallback(cocos2d::Ref* sender);
     
-    Sprite* addGrossiniAtPosition(Vec2 p, float scale = 1.0);
-    Sprite* makeBall(Vec2 point, float radius, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
-    Sprite* makeBox(Vec2 point, Size size, int color = 0, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
-    Sprite* makeTriangle(Vec2 point, Size size, int color = 0, PhysicsMaterial material = PHYSICSBODY_MATERIAL_DEFAULT);
+    cocos2d::Sprite* addGrossiniAtPosition(cocos2d::Vec2 p, float scale = 1.0);
+    cocos2d::Sprite* makeBall(cocos2d::Vec2 point, float radius, cocos2d::PhysicsMaterial material = cocos2d::PHYSICSBODY_MATERIAL_DEFAULT);
+    cocos2d::Sprite* makeBox(cocos2d::Vec2 point, cocos2d::Size size, int color = 0, cocos2d::PhysicsMaterial material = cocos2d::PHYSICSBODY_MATERIAL_DEFAULT);
+    cocos2d::Sprite* makeTriangle(cocos2d::Vec2 point, cocos2d::Size size, int color = 0, cocos2d::PhysicsMaterial material = cocos2d::PHYSICSBODY_MATERIAL_DEFAULT);
     
-    bool onTouchBegan(Touch* touch, Event* event);
-    void onTouchMoved(Touch* touch, Event* event);
-    void onTouchEnded(Touch* touch, Event* event);
-    
+    bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
+    void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event);
+    void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event);
+
+    void toggleDebug();
 protected:
-    PhysicsTestScene* _scene;
-    Texture2D* _spriteTexture;    // weak ref
-    SpriteBatchNode* _ball;
-    std::unordered_map<int, Node*> _mouses;
+    cocos2d::Texture2D* _spriteTexture;
+    cocos2d::SpriteBatchNode* _ball;
+    std::unordered_map<int, cocos2d::Node*> _mouses;
+    bool _debugDraw;
 };
 
 class PhysicsDemoClickAdd : public PhysicsDemo
@@ -74,8 +56,8 @@ public:
     void onEnter() override;
     virtual std::string subtitle() const override;
     
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
-    void onAcceleration(Acceleration* acc, Event* event);
+    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
+    void onAcceleration(cocos2d::Acceleration* acc, cocos2d::Event* event);
 };
 
 class PhysicsDemoLogoSmash : public PhysicsDemo
@@ -107,15 +89,15 @@ public:
     void onEnter() override;
     virtual std::string title() const override;
     void update(float delta) override;
-    void onTouchesEnded(const std::vector<Touch*>& touches, Event* event);
+    void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event* event);
     
-    void changeModeCallback(Ref* sender);
+    void changeModeCallback(cocos2d::Ref* sender);
     
-    bool anyRay(PhysicsWorld& world, const PhysicsRayCastInfo& info, void* data);
+    bool anyRay(cocos2d::PhysicsWorld& world, const cocos2d::PhysicsRayCastInfo& info, void* data);
     
 private:
     float _angle;
-    DrawNode* _node;
+    cocos2d::DrawNode* _node;
     int _mode;
 };
 
@@ -147,9 +129,9 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
-    bool onTouchBegan(Touch* touch, Event* event);
-    void onTouchMoved(Touch* touch, Event* event);
-    void onTouchEnded(Touch* touch, Event* event);
+    bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
+    void onTouchMoved(cocos2d::Touch* touch, cocos2d::Event* event);
+    void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event);
     
 private:
     float _distance;
@@ -164,7 +146,7 @@ public:
     void onEnter() override;
     virtual std::string title() const override;
     
-    bool onContactBegin(PhysicsContact& contact);
+    bool onContactBegin(cocos2d::PhysicsContact& contact);
 };
 
 class PhysicsDemoSlice : public PhysicsDemo
@@ -176,10 +158,10 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
-    bool slice(PhysicsWorld& world, const PhysicsRayCastInfo& info, void* data);
-    void clipPoly(PhysicsShapePolygon* shape, Vec2 normal, float distance);
+    bool slice(cocos2d::PhysicsWorld& world, const cocos2d::PhysicsRayCastInfo& info, void* data);
+    void clipPoly(cocos2d::PhysicsShapePolygon* shape, cocos2d::Vec2 normal, float distance);
     
-    void onTouchEnded(Touch *touch, Event *event);
+    void onTouchEnded(cocos2d::Touch* touch, cocos2d::Event* event);
     
 private:
     int _sliceTag;
@@ -202,12 +184,12 @@ public:
     
     void onEnter() override;
     void resetTest();
-    bool onContactBegin(PhysicsContact& contact);
+    bool onContactBegin(cocos2d::PhysicsContact& contact);
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
-    void onDecrease(Ref* sender);
-    void onIncrease(Ref* sender);
+    void onDecrease(cocos2d::Ref* sender);
+    void onIncrease(cocos2d::Ref* sender);
     
 private:
     int _yellowBoxNum;
@@ -246,12 +228,12 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     
-    void changeBodyCallback(Ref* sender);
+    void changeBodyCallback(cocos2d::Ref* sender);
 private:
-    Sprite* _nodeA;
-    Sprite* _nodeB;
-    PhysicsBody* _body;
-    MenuItemFont* _button;
+    cocos2d::Sprite* _nodeA;
+    cocos2d::Sprite* _nodeB;
+    cocos2d::PhysicsBody* _body;
+    cocos2d::MenuItemFont* _button;
     bool _bodyInA;
 };
 
@@ -275,8 +257,22 @@ public:
     void onEnter() override;
     virtual std::string title() const override;
     
-    bool onTouchBegan(Touch* touch, Event* event);
+    bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
     
+private:
+    cocos2d::Sprite* _parentSprite;
+    cocos2d::Layer* _rootLayer;
 };
+
+class PhysicsIssue9959 : public PhysicsDemo
+{
+public:
+    CREATE_FUNC(PhysicsIssue9959);
+    
+    void onEnter() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+};
+
 #endif
 #endif

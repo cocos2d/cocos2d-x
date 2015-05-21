@@ -5,12 +5,6 @@
 
 --------------------------------
 -- 
--- @function [parent=#CSLoader] setJsonPath 
--- @param self
--- @param #string jsonPath
-        
---------------------------------
--- 
 -- @function [parent=#CSLoader] createNodeFromJson 
 -- @param self
 -- @param #string filename
@@ -42,13 +36,16 @@
         
 --------------------------------
 -- 
--- @function [parent=#CSLoader] purge 
+-- @function [parent=#CSLoader] setJsonPath 
 -- @param self
+-- @param #string jsonPath
+-- @return CSLoader#CSLoader self (return value: cc.CSLoader)
         
 --------------------------------
 -- 
 -- @function [parent=#CSLoader] init 
 -- @param self
+-- @return CSLoader#CSLoader self (return value: cc.CSLoader)
         
 --------------------------------
 -- 
@@ -74,6 +71,7 @@
 -- @function [parent=#CSLoader] setRecordJsonPath 
 -- @param self
 -- @param #bool record
+-- @return CSLoader#CSLoader self (return value: cc.CSLoader)
         
 --------------------------------
 -- 
@@ -84,21 +82,9 @@
         
 --------------------------------
 -- 
--- @function [parent=#CSLoader] getCsdVersion 
--- @param self
--- @return string#string ret (return value: string)
-        
---------------------------------
--- 
 -- @function [parent=#CSLoader] destroyInstance 
 -- @param self
-        
---------------------------------
--- 
--- @function [parent=#CSLoader] createNode 
--- @param self
--- @param #string filename
--- @return Node#Node ret (return value: cc.Node)
+-- @return CSLoader#CSLoader self (return value: cc.CSLoader)
         
 --------------------------------
 -- 
@@ -110,5 +96,6 @@
 -- 
 -- @function [parent=#CSLoader] CSLoader 
 -- @param self
+-- @return CSLoader#CSLoader self (return value: cc.CSLoader)
         
 return nil

@@ -3,26 +3,17 @@
 
 #include "cocos2d.h"
 #include "extensions/cocos-ext.h"
+#include "BaseTest.h"
 
-void runComponentsTestLayerTest();
+DEFINE_TEST_SUITE(CocoStudioComponentsTests);
 
-class ComponentsTestLayer : public cocos2d::LayerColor
+class CocoStudioComponentsTest : public TestCase
 {
 public:
-	ComponentsTestLayer();
-	~ComponentsTestLayer();
+    CREATE_FUNC(CocoStudioComponentsTest);
 
-	// Here's a difference. Method 'init' in cocos2d-x returns bool, 
-    // instead of returning 'id' in cocos2d-iphone
-	virtual bool init() override;
-    
-    // there's no 'id' in cpp, so we recommand to return the exactly class pointer
-	static cocos2d::Scene* scene();
+    virtual bool init() override;
 
-	// implement the "static node()" method manually
-	CREATE_FUNC(ComponentsTestLayer);
-
-    // init scene
     cocos2d::Node* createGameScene();
 };
 

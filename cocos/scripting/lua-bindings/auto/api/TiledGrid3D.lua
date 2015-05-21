@@ -18,20 +18,26 @@
 -- 
 -- @function [parent=#TiledGrid3D] calculateVertexPoints 
 -- @param self
+-- @return TiledGrid3D#TiledGrid3D self (return value: cc.TiledGrid3D)
         
 --------------------------------
--- 
+-- @{<br>
+-- Implementations for interfaces in base calss.
 -- @function [parent=#TiledGrid3D] blit 
 -- @param self
+-- @return TiledGrid3D#TiledGrid3D self (return value: cc.TiledGrid3D)
         
 --------------------------------
 -- 
 -- @function [parent=#TiledGrid3D] reuse 
 -- @param self
+-- @return TiledGrid3D#TiledGrid3D self (return value: cc.TiledGrid3D)
         
 --------------------------------
+-- Constructor.<br>
 -- js ctor
 -- @function [parent=#TiledGrid3D] TiledGrid3D 
 -- @param self
+-- @return TiledGrid3D#TiledGrid3D self (return value: cc.TiledGrid3D)
         
 return nil

@@ -115,6 +115,8 @@ void ProgressTimer::setSprite(Sprite *sprite)
             CC_SAFE_FREE(_vertexData);
             _vertexDataCount = 0;
         }
+        
+        updateProgress();
     }        
 }
 
@@ -157,8 +159,8 @@ Tex2F ProgressTimer::textureCoordFromAlphaPoint(Vec2 alpha)
         return ret;
     }
     V3F_C4B_T2F_Quad quad = _sprite->getQuad();
-    Vec2 min = Vec2(quad.bl.texCoords.u,quad.bl.texCoords.v);
-    Vec2 max = Vec2(quad.tr.texCoords.u,quad.tr.texCoords.v);
+    Vec2 min(quad.bl.texCoords.u,quad.bl.texCoords.v);
+    Vec2 max(quad.tr.texCoords.u,quad.tr.texCoords.v);
     //  Fix bug #1303 so that progress timer handles sprite frame texture rotation
     if (_sprite->isTextureRectRotated()) {
         std::swap(alpha.x, alpha.y);
@@ -173,8 +175,8 @@ Vec2 ProgressTimer::vertexFromAlphaPoint(Vec2 alpha)
         return ret;
     }
     V3F_C4B_T2F_Quad quad = _sprite->getQuad();
-    Vec2 min = Vec2(quad.bl.vertices.x,quad.bl.vertices.y);
-    Vec2 max = Vec2(quad.tr.vertices.x,quad.tr.vertices.y);
+    Vec2 min(quad.bl.vertices.x,quad.bl.vertices.y);
+    Vec2 max(quad.tr.vertices.x,quad.tr.vertices.y);
     ret.x = min.x * (1.f - alpha.x) + max.x * alpha.x;
     ret.y = min.y * (1.f - alpha.y) + max.y * alpha.y;
     return ret;
@@ -269,12 +271,12 @@ void ProgressTimer::updateRadial(void)
     //    We find the vector to do a hit detection based on the percentage
     //    We know the first vector is the one @ 12 o'clock (top,mid) so we rotate
     //    from that by the progress angle around the _midpoint pivot
-    Vec2 topMid = Vec2(_midpoint.x, 1.f);
+    Vec2 topMid(_midpoint.x, 1.f);
     Vec2 percentagePt = topMid.rotateByAngle(_midpoint, angle);
 
 
     int index = 0;
-    Vec2 hit = Vec2::ZERO;
+    Vec2 hit;
 
     if (alpha == 0.f) {
         //    More efficient since we don't always need to check intersection
@@ -537,7 +539,7 @@ void ProgressTimer::draw(Renderer *renderer, const Mat4 &transform, uint32_t fla
     if( ! _vertexData || ! _sprite)
         return;
 
-    _customCommand.init(_globalZOrder);
+    _customCommand.init(_globalZOrder, transform, flags);
     _customCommand.func = CC_CALLBACK_0(ProgressTimer::onDraw, this, transform, flags);
     renderer->addCommand(&_customCommand);
 }

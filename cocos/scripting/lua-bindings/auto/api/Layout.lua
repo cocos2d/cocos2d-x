@@ -5,24 +5,31 @@
 -- @parent_module ccui
 
 --------------------------------
--- Sets background color vector for layout, if color type is BackGroundColorType::GRADIENT<br>
--- param vector
+-- Sets background color vector for layout.<br>
+-- This setting only take effect when layout's color type is BackGroundColorType::GRADIENT<br>
+-- param vector The color vector in `Vec2`.
 -- @function [parent=#Layout] setBackGroundColorVector 
 -- @param self
 -- @param #vec2_table vector
+-- @return Layout#Layout self (return value: ccui.Layout)
         
 --------------------------------
--- 
+-- Change the clipping type of layout.<br>
+-- On default, the clipping type is `ClippingType::STENCIL`.<br>
+-- see `ClippingType`<br>
+-- param type The clipping type of layout.
 -- @function [parent=#Layout] setClippingType 
 -- @param self
 -- @param #int type
+-- @return Layout#Layout self (return value: ccui.Layout)
         
 --------------------------------
--- Sets Color Type for layout.<br>
--- param type   @see LayoutBackGroundColorType.
+-- Sets Color Type for layout's background<br>
+-- param type   @see `BackGroundColorType`
 -- @function [parent=#Layout] setBackGroundColorType 
 -- @param self
 -- @param #int type
+-- @return Layout#Layout self (return value: ccui.Layout)
         
 --------------------------------
 -- If a layout is loop focused which means that the focus movement will be inside the layout<br>
@@ -30,21 +37,25 @@
 -- @function [parent=#Layout] setLoopFocus 
 -- @param self
 -- @param #bool loop
+-- @return Layout#Layout self (return value: ccui.Layout)
         
 --------------------------------
--- 
+-- Set layout's background image color.<br>
+-- param color Background color value in `Color3B`.
 -- @function [parent=#Layout] setBackGroundImageColor 
 -- @param self
 -- @param #color3b_table color
+-- @return Layout#Layout self (return value: ccui.Layout)
         
 --------------------------------
--- 
+-- Get the layout's background color vector.<br>
+-- return Background color vector.
 -- @function [parent=#Layout] getBackGroundColorVector 
 -- @param self
 -- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
--- 
+-- see `setClippingType(ClippingType)`
 -- @function [parent=#Layout] getClippingType 
 -- @param self
 -- @return int#int ret (return value: int)
@@ -59,9 +70,11 @@
 -- Remove the background image of layout.
 -- @function [parent=#Layout] removeBackGroundImage 
 -- @param self
+-- @return Layout#Layout self (return value: ccui.Layout)
         
 --------------------------------
--- 
+-- Get the layout's background color opacity.<br>
+-- return Background color opacity value.
 -- @function [parent=#Layout] getBackGroundColorOpacity 
 -- @param self
 -- @return unsigned char#unsigned char ret (return value: unsigned char)
@@ -74,19 +87,22 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
+-- Set opacity of background image.<br>
+-- param opacity Background image opacity in GLubyte.
 -- @function [parent=#Layout] setBackGroundImageOpacity 
 -- @param self
 -- @param #unsigned char opacity
+-- @return Layout#Layout self (return value: ccui.Layout)
         
 --------------------------------
--- Sets a background image for layout<br>
+-- Sets a background image for layout.<br>
 -- param fileName image file path.<br>
--- param texType @see TextureResType. TextureResType::LOCAL means local file, TextureResType::PLIST means sprite frame.
+-- param texType @see TextureResType. 
 -- @function [parent=#Layout] setBackGroundImage 
 -- @param self
 -- @param #string fileName
 -- @param #int texType
+-- @return Layout#Layout self (return value: ccui.Layout)
         
 --------------------------------
 -- @overload self, color3b_table, color3b_table         
@@ -95,65 +111,76 @@
 -- @param self
 -- @param #color3b_table startColor
 -- @param #color3b_table endColor
+-- @return Layout#Layout self (return value: ccui.Layout)
 
 --------------------------------
 -- request to refresh widget layout
 -- @function [parent=#Layout] requestDoLayout 
 -- @param self
+-- @return Layout#Layout self (return value: ccui.Layout)
         
 --------------------------------
--- 
+-- Query background image's capInsets size.<br>
+-- return The background image capInsets.
 -- @function [parent=#Layout] getBackGroundImageCapInsets 
 -- @param self
 -- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
--- 
+-- Query the layout's background color.<br>
+-- return Background color in Color3B.
 -- @function [parent=#Layout] getBackGroundColor 
 -- @param self
 -- @return color3b_table#color3b_table ret (return value: color3b_table)
         
 --------------------------------
--- Changes if layout can clip it's content and child.<br>
--- If you really need this, please enable it. But it would reduce the rendering efficiency. <br>
--- param clipping enabled.
+-- Toggle layout clipping.<br>
+-- If you do need clipping, you pass true to this function.<br>
+-- param enabled Pass true to enable clipping, false otherwise.
 -- @function [parent=#Layout] setClippingEnabled 
 -- @param self
 -- @param #bool enabled
+-- @return Layout#Layout self (return value: ccui.Layout)
         
 --------------------------------
--- 
+-- Get color of layout's background image.<br>
+-- return Layout's background image color.
 -- @function [parent=#Layout] getBackGroundImageColor 
 -- @param self
 -- @return color3b_table#color3b_table ret (return value: color3b_table)
         
 --------------------------------
--- 
+-- Query background image scale9 enable status.<br>
+-- return Whehter background image is scale9 enabled or not.
 -- @function [parent=#Layout] isBackGroundImageScale9Enabled 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
+-- Query the layout's background color type.<br>
+-- return The layout's background color type.
 -- @function [parent=#Layout] getBackGroundColorType 
 -- @param self
 -- @return int#int ret (return value: int)
         
 --------------------------------
--- 
+-- Get the gradient background end color.<br>
+-- return Gradient background end color value.
 -- @function [parent=#Layout] getBackGroundEndColor 
 -- @param self
 -- @return color3b_table#color3b_table ret (return value: color3b_table)
         
 --------------------------------
--- Sets background opacity layout.<br>
--- param opacity
+-- Sets background color opacity of layout.<br>
+-- param opacity The opacity in `GLubyte`.
 -- @function [parent=#Layout] setBackGroundColorOpacity 
 -- @param self
 -- @param #unsigned char opacity
+-- @return Layout#Layout self (return value: ccui.Layout)
         
 --------------------------------
--- 
+-- Get the opacity of layout's background image.<br>
+-- return The opacity of layout's background image.
 -- @function [parent=#Layout] getBackGroundImageOpacity 
 -- @param self
 -- @return unsigned char#unsigned char ret (return value: unsigned char)
@@ -165,11 +192,12 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- Sets a background image capinsets for layout, if the background image is a scale9 render.<br>
--- param capinsets of background image.
+-- Sets a background image capinsets for layout, it only affects the scale9 enabled background image<br>
+-- param capInsets  The capInsets in Rect.
 -- @function [parent=#Layout] setBackGroundImageCapInsets 
 -- @param self
 -- @param #rect_table capInsets
+-- @return Layout#Layout self (return value: ccui.Layout)
         
 --------------------------------
 -- Gets background image texture size.<br>
@@ -182,9 +210,11 @@
 -- force refresh widget layout
 -- @function [parent=#Layout] forceDoLayout 
 -- @param self
+-- @return Layout#Layout self (return value: ccui.Layout)
         
 --------------------------------
--- 
+-- Query layout type.<br>
+-- return Get the layout type.
 -- @function [parent=#Layout] getLayoutType 
 -- @param self
 -- @return int#int ret (return value: int)
@@ -194,28 +224,33 @@
 -- @function [parent=#Layout] setPassFocusToChild 
 -- @param self
 -- @param #bool pass
+-- @return Layout#Layout self (return value: ccui.Layout)
         
 --------------------------------
--- 
+-- Get the gradient background start color.<br>
+-- return  Gradient background start color value.
 -- @function [parent=#Layout] getBackGroundStartColor 
 -- @param self
 -- @return color3b_table#color3b_table ret (return value: color3b_table)
         
 --------------------------------
--- Sets background iamge use scale9 renderer.<br>
--- param enabled   true that use scale9 renderer, false otherwise.
+-- Enable background image scale9 rendering.<br>
+-- param enabled  True means enable scale9 rendering for background image, false otherwise.
 -- @function [parent=#Layout] setBackGroundImageScale9Enabled 
 -- @param self
 -- @param #bool enabled
+-- @return Layout#Layout self (return value: ccui.Layout)
         
 --------------------------------
--- 
+-- Change the layout type.<br>
+-- param type Layout type.
 -- @function [parent=#Layout] setLayoutType 
 -- @param self
 -- @param #int type
+-- @return Layout#Layout self (return value: ccui.Layout)
         
 --------------------------------
--- Allocates and initializes a layout.
+-- Create a empty layout.
 -- @function [parent=#Layout] create 
 -- @param self
 -- @return Layout#Layout ret (return value: ccui.Layout)
@@ -234,8 +269,9 @@
 -- @function [parent=#Layout] addChild
 -- @param self
 -- @param #cc.Node child
--- @param #int zOrder
+-- @param #int localZOrder
 -- @param #string name
+-- @return Layout#Layout self (return value: ccui.Layout)
 
 --------------------------------
 -- Returns the "class name" of widget.
@@ -251,17 +287,19 @@
 -- @function [parent=#Layout] removeAllChildrenWithCleanup 
 -- @param self
 -- @param #bool cleanup
+-- @return Layout#Layout self (return value: ccui.Layout)
         
 --------------------------------
 -- Removes all children from the container with a cleanup.<br>
 -- see `removeAllChildrenWithCleanup(bool)`
 -- @function [parent=#Layout] removeAllChildren 
 -- @param self
+-- @return Layout#Layout self (return value: ccui.Layout)
         
 --------------------------------
 -- When a widget is in a layout, you could call this method to get the next focused widget within a specified direction.<br>
 -- If the widget is not in a layout, it will return itself<br>
--- param dir the direction to look for the next focused widget in a layout<br>
+-- param direction the direction to look for the next focused widget in a layout<br>
 -- param current  the current focused widget<br>
 -- return the next focused widget in a layout
 -- @function [parent=#Layout] findNextFocusedWidget 
@@ -276,10 +314,20 @@
 -- @param self
 -- @param #cc.Node child
 -- @param #bool cleanup
+-- @return Layout#Layout self (return value: ccui.Layout)
         
 --------------------------------
--- Default constructor
+-- 
+-- @function [parent=#Layout] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- Default constructor<br>
+-- js ctor<br>
+-- lua new
 -- @function [parent=#Layout] Layout 
 -- @param self
+-- @return Layout#Layout self (return value: ccui.Layout)
         
 return nil

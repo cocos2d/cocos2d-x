@@ -48,6 +48,18 @@ typedef struct spSlot {
 	int attachmentVerticesCapacity;
 	int attachmentVerticesCount;
 	float* attachmentVertices;
+
+#ifdef __cplusplus
+	spSlot() :
+		data(0),
+		bone(0),
+		r(0), g(0), b(0), a(0),
+		attachment(0),
+		attachmentVerticesCapacity(0),
+		attachmentVerticesCount(0),
+		attachmentVertices(0) {
+	}
+#endif
 } spSlot;
 
 spSlot* spSlot_create (spSlotData* data, spBone* bone);

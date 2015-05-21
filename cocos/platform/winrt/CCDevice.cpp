@@ -24,7 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "platform/CCPlatformConfig.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) ||  (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 
 #include "cocos2d.h"
 #include "platform/CCDevice.h"
@@ -42,14 +42,7 @@ CCFreeTypeFont sFT;
 
 int Device::getDPI()
 {
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-	static const float dipsPerInch = 96.0f;
-	return floor(DisplayProperties::LogicalDpi / dipsPerInch + 0.5f); // Round to nearest integer.
-#elif defined WP8_SHADER_COMPILER
-    return 0;
-#else
     return cocos2d::GLViewImpl::sharedOpenGLView()->GetDPI();
-#endif
 }
 
 static Accelerometer^ sAccelerometer = nullptr;
@@ -75,7 +68,9 @@ void Device::setAccelerometerEnabled(bool isEnabled)
 
         if(sAccelerometer == nullptr)
         {
-	        MessageBox("This device does not have an accelerometer.","Alert");
+            // It's not a friendly experience and may cause crash.
+            //MessageBox("This device does not have an accelerometer.","Alert");
+            log("This device does not have an accelerometer.");
             return;
         }
 
@@ -120,7 +115,7 @@ void Device::setAccelerometerEnabled(bool isEnabled)
                 
             case DisplayOrientations::LandscapeFlipped:
  				acc.x = reading->AccelerationY;
-				acc.y = reading->AccelerationX;
+				acc.y = -reading->AccelerationX;
                     break;
               
             default:
@@ -148,8 +143,8 @@ void Device::setAccelerometerEnabled(bool isEnabled)
                 break;
 
             case DisplayOrientations::LandscapeFlipped:
-                acc.x = -reading->AccelerationY;
-                acc.y = reading->AccelerationX;
+                acc.x = -reading->AccelerationX;
+                acc.y = -reading->AccelerationY;
                 break;
 
             default:
@@ -169,9 +164,15 @@ void Device::setAccelerometerInterval(float interval)
 {
     if (sAccelerometer)
     {
-        int minInterval = sAccelerometer->MinimumReportInterval;
-	    int reqInterval = (int) interval;
-        sAccelerometer->ReportInterval = reqInterval < minInterval ? minInterval : reqInterval;
+        try {
+            int minInterval = sAccelerometer->MinimumReportInterval;
+            int reqInterval = (int) interval;
+            sAccelerometer->ReportInterval = reqInterval < minInterval ? minInterval : reqInterval;
+        }
+        catch (Platform::COMException^)
+        {
+            CCLOG("Device::setAccelerometerInterval not supported on this device");
+        }
     }
     else
     {
@@ -203,4 +204,4 @@ void Device::setKeepScreenOn(bool value)
 
 NS_CC_END
 
-#endif // (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) ||  (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) 
+#endif // (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) 

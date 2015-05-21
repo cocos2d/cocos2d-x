@@ -40,6 +40,7 @@ IMPLEMENT_CLASS_GUI_INFO(Slider)
 Slider::Slider():
 _barRenderer(nullptr),
 _progressBarRenderer(nullptr),
+_barTextureSize(Size::ZERO),
 _progressBarTextureSize(Size::ZERO),
 _slidBallNormalRenderer(nullptr),
 _slidBallPressedRenderer(nullptr),
@@ -49,6 +50,9 @@ _barLength(0.0),
 _percent(0),
 _scale9Enabled(false),
 _prevIgnoreSize(true),
+_zoomScale(0.1f),
+_sliderBallNormalTextureScaleX(1.0),
+_sliderBallNormalTextureScaleY(1.0),
 _textureFile(""),
 _progressBarTextureFile(""),
 _slidBallNormalTextureFile(""),
@@ -81,6 +85,22 @@ Slider* Slider::create()
     Slider* widget = new (std::nothrow) Slider();
     if (widget && widget->init())
     {
+        widget->autorelease();
+        return widget;
+    }
+    CC_SAFE_DELETE(widget);
+    return nullptr;
+}
+    
+Slider* Slider::create(const std::string& barTextureName,
+                      const std::string& normalBallTextureName,
+                      TextureResType resType)
+{
+    Slider* widget = new (std::nothrow) Slider();
+    if (widget && widget->init())
+    {
+        widget->loadBarTexture(barTextureName);
+        widget->loadSlidBallTextureNormal(normalBallTextureName);
         widget->autorelease();
         return widget;
     }
@@ -149,6 +169,7 @@ void Slider::loadBarTexture(const std::string& fileName, TextureResType texType)
     _barRendererAdaptDirty = true;
     _progressBarRendererDirty = true;
     updateContentSizeWithTextureSize(_barRenderer->getContentSize());
+    _barTextureSize = _barRenderer->getContentSize();
 }
 
 void Slider::loadProgressBarTexture(const std::string& fileName, TextureResType texType)
@@ -199,6 +220,8 @@ void Slider::setScale9Enabled(bool able)
     }
     setCapInsetsBarRenderer(_capInsetsBarRenderer);
     setCapInsetProgressBarRebderer(_capInsetsProgressBarRenderer);
+    _barRendererAdaptDirty = true;
+    _progressBarRendererDirty = true;
 }
     
 bool Slider::isScale9Enabled()const
@@ -344,7 +367,7 @@ void Slider::setPercent(int percent)
     _slidBallRenderer->setPosition(dis, _contentSize.height / 2.0f);
     if (_scale9Enabled)
     {
-        _progressBarRenderer->setPreferredSize(Size(dis,_progressBarTextureSize.height));
+        _progressBarRenderer->setPreferredSize(Size(dis,_contentSize.height));
     }
     else
     {
@@ -489,10 +512,11 @@ void Slider::barRendererScaleChangedWithSize()
         if (_scale9Enabled)
         {
             _barRenderer->setPreferredSize(_contentSize);
+            _barRenderer->setScale(1.0f);
         }
         else
         {
-            Size btextureSize = _barRenderer->getContentSize();
+            Size btextureSize = _barTextureSize;
             if (btextureSize.width <= 0.0f || btextureSize.height <= 0.0f)
             {
                 _barRenderer->setScale(1.0f);
@@ -530,7 +554,7 @@ void Slider::progressBarRendererScaleChangedWithSize()
         if (_scale9Enabled)
         {
             _progressBarRenderer->setPreferredSize(_contentSize);
-            _progressBarTextureSize = _progressBarRenderer->getContentSize();
+            _progressBarRenderer->setScale(1.0);
         }
         else
         {
@@ -555,21 +579,57 @@ void Slider::onPressStateChangedToNormal()
     _slidBallNormalRenderer->setVisible(true);
     _slidBallPressedRenderer->setVisible(false);
     _slidBallDisabledRenderer->setVisible(false);
+    
+    _slidBallNormalRenderer->setGLProgramState(this->getNormalGLProgramState());
+    _slidBallNormalRenderer->setScale(_sliderBallNormalTextureScaleX, _sliderBallNormalTextureScaleY);
 }
 
 void Slider::onPressStateChangedToPressed()
 {
-    _slidBallNormalRenderer->setVisible(false);
-    _slidBallPressedRenderer->setVisible(true);
-    _slidBallDisabledRenderer->setVisible(false);
+    _slidBallNormalRenderer->setGLProgramState(this->getNormalGLProgramState());
+
+    
+    if (_slidBallPressedTextureFile.empty())
+    {
+        _slidBallNormalRenderer->setScale(_sliderBallNormalTextureScaleX + _zoomScale,
+                                          _sliderBallNormalTextureScaleY + _zoomScale);
+    }
+    else
+    {
+        _slidBallNormalRenderer->setVisible(false);
+        _slidBallPressedRenderer->setVisible(true);
+        _slidBallDisabledRenderer->setVisible(false);
+    }
 }
 
 void Slider::onPressStateChangedToDisabled()
 {
-    _slidBallNormalRenderer->setVisible(false);
+    if (_slidBallDisabledTextureFile.empty())
+    {
+        _slidBallNormalRenderer->setGLProgramState(this->getGrayGLProgramState());
+    }
+    else
+    {
+        _slidBallNormalRenderer->setVisible(false);
+        _slidBallDisabledRenderer->setVisible(true);
+    }
+    
+    _slidBallNormalRenderer->setScale(_sliderBallNormalTextureScaleX, _sliderBallNormalTextureScaleY);
+    
     _slidBallPressedRenderer->setVisible(false);
-    _slidBallDisabledRenderer->setVisible(true);
 }
+    
+    
+void Slider::setZoomScale(float scale)
+{
+    _zoomScale = scale;
+}
+
+float Slider::getZoomScale()const
+{
+    return _zoomScale;
+}
+
 
 std::string Slider::getDescription() const
 {

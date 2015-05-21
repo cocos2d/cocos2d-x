@@ -2,6 +2,8 @@
 #include "../testResource.h"
 #include "cocos2d.h"
 
+USING_NS_CC;
+
 enum 
 {
     kTagNode,
@@ -9,60 +11,15 @@ enum
     kTagSequence,
 }; 
 
-Layer* nextActionManagerAction();
-Layer* backActionManagerAction();
-Layer* restartActionManagerAction();
-
-static int sceneIdx = -1; 
-
-#define MAX_LAYER    6
-
-Layer* createActionManagerLayer(int nIndex)
+ActionManagerTests::ActionManagerTests()
 {
-    switch(nIndex)
-    {
-        case 0: return new CrashTest();
-        case 1: return new LogicTest();
-        case 2: return new PauseTest();
-        case 3: return new StopActionTest();
-        case 4: return new StopAllActionsTest();
-        case 5: return new ResumeTest();
-    }
-
-    return nullptr;
+    ADD_TEST_CASE(CrashTest);
+    ADD_TEST_CASE(LogicTest);
+    ADD_TEST_CASE(PauseTest);
+    ADD_TEST_CASE(StopActionTest);
+    ADD_TEST_CASE(StopAllActionsTest);
+    ADD_TEST_CASE(ResumeTest);
 }
-
-Layer* nextActionManagerAction()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = createActionManagerLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
-}
-
-Layer* backActionManagerAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;    
-    
-    auto layer = createActionManagerLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
-}
-
-Layer* restartActionManagerAction()
-{
-    auto layer = createActionManagerLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
-} 
 
 //------------------------------------------------------------------
 //
@@ -86,30 +43,6 @@ std::string ActionManagerTest::subtitle() const
 {
     return "No title";
 }
-void ActionManagerTest::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ActionManagerTestScene();
-    s->addChild(restartActionManagerAction()); 
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void ActionManagerTest::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ActionManagerTestScene();
-    s->addChild( nextActionManagerAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void ActionManagerTest::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) ActionManagerTestScene();
-    s->addChild( backActionManagerAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-} 
 
 //------------------------------------------------------------------
 //
@@ -123,7 +56,7 @@ void CrashTest::onEnter()
 
     auto child = Sprite::create(s_pathGrossini);
     child->setPosition( VisibleRect::center() );
-    addChild(child, 1);
+    addChild(child, 1, kTagGrossini);
 
     //Sum of all action's duration is 1.5 second.
     child->runAction(RotateBy::create(1.5f, 90));
@@ -134,7 +67,7 @@ void CrashTest::onEnter()
                     );
     
     //After 1.5 second, self will be removed.
-    runAction( Sequence::create(
+    child->runAction(Sequence::create(
                                     DelayTime::create(1.4f),
                                     CallFunc::create( CC_CALLBACK_0(CrashTest::removeThis,this)),
                                     nullptr)
@@ -143,9 +76,10 @@ void CrashTest::onEnter()
 
 void CrashTest::removeThis()
 {
-    _parent->removeChild(this, true);
+    auto child = getChildByTag(kTagGrossini);
+    child->removeChild(child, true);
     
-    nextCallback(this);
+    getTestSuite()->enterNextTest();
 }
 
 std::string CrashTest::subtitle() const
@@ -356,17 +290,4 @@ void ResumeTest::resumeGrossini(float time)
     auto pGrossini = getChildByTag(kTagGrossini);
     auto director = Director::getInstance();
     director->getActionManager()->resumeTarget(pGrossini);
-}
-
-//------------------------------------------------------------------
-//
-// ActionManagerTestScene
-//
-//------------------------------------------------------------------
-void ActionManagerTestScene::runThisTest()
-{
-    auto layer = nextActionManagerAction();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
 }

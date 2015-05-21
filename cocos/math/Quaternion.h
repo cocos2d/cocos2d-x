@@ -1,6 +1,7 @@
 /**
  Copyright 2013 BlackBerry Inc.
-
+ Copyright (c) 2014-2015 Chukong Technologies
+ 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
  You may obtain a copy of the License at
@@ -24,6 +25,11 @@
 #include "math/Vec3.h"
 #include "math/Mat4.h"
 //#include "Plane.h"
+
+/**
+ * @addtogroup base
+ * @{
+ */
 
 NS_CC_MATH_BEGIN
 
@@ -183,9 +189,8 @@ public:
     void conjugate();
 
     /**
-     * Gets the conjugate of this quaternion in dst.
+     * Gets the conjugate of this quaternion.
      *
-     * @param dst A quaternion to store the conjugate in.
      */
     Quaternion getConjugated() const;
 
@@ -202,16 +207,12 @@ public:
     bool inverse();
 
     /**
-     * Gets the inverse of this quaternion in dst.
+     * Gets the inverse of this quaternion.
      *
      * Note that the inverse of a quaternion is equal to its conjugate
      * when the quaternion is unit-length. For this reason, it is more
      * efficient to use the conjugate method directly when you know your
      * quaternion is already unit-length.
-     *
-     * @param dst A quaternion to store the inverse in.
-     * 
-     * @return true if the inverse can be computed, false otherwise.
      */
     Quaternion getInversed() const;
 
@@ -240,13 +241,11 @@ public:
     void normalize();
 
     /**
-     * Normalizes this quaternion and stores the result in dst.
+     * Get the normalized quaternion.
      *
      * If the quaternion already has unit length or if the length
      * of the quaternion is zero, this method simply copies
-     * this vector into dst.
-     *
-     * @param dst A quaternion to store the result in.
+     * this vector.
      */
     Quaternion getNormalized() const;
 
@@ -363,6 +362,13 @@ public:
     inline const Quaternion operator*(const Quaternion& q) const;
 
     /**
+     * Calculates the quaternion product of this quaternion with the given vec3.
+     * @param v The vec3 to multiply.
+     * @return The vec3 product.
+     */
+    inline Vec3 operator*(const Vec3& v) const;
+
+    /**
      * Multiplies this quaternion with the given quaternion.
      * 
      * @param q The quaternion to multiply.
@@ -405,7 +411,10 @@ private:
 };
 
 NS_CC_MATH_END
-
+/**
+ end of base group
+ @}
+ */
 #include "Quaternion.inl"
 
 #endif

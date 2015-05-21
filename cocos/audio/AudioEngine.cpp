@@ -24,7 +24,7 @@
 
 #include "platform/CCPlatformConfig.h"
 
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #include "audio/include/AudioEngine.h"
 #include "platform/CCFileUtils.h"
@@ -36,6 +36,8 @@
 #include "apple/AudioEngine-inl.h"
 #elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 #include "win32/AudioEngine-win32.h"
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+#include "winrt/AudioEngine-winrt.h"
 #endif
 
 #define TIME_DELAY_PRECISION 0.0001
@@ -47,14 +49,14 @@
 using namespace cocos2d;
 using namespace cocos2d::experimental;
 
-const int AudioEngine::INVAILD_AUDIO_ID = -1;
+const int AudioEngine::INVALID_AUDIO_ID = -1;
 const float AudioEngine::TIME_UNKNOWN = -1.0f;
 
 //audio file path,audio IDs
 std::unordered_map<std::string,std::list<int>> AudioEngine::_audioPathIDMap;
 //profileName,ProfileHelper
 std::unordered_map<std::string, AudioEngine::ProfileHelper> AudioEngine::_audioPathProfileHelperMap;
-int AudioEngine::_maxInstances = MAX_AUDIOINSTANCES;
+unsigned int AudioEngine::_maxInstances = MAX_AUDIOINSTANCES;
 AudioEngine::ProfileHelper* AudioEngine::_defaultProfileHelper = nullptr;
 std::unordered_map<int, AudioEngine::AudioInfo> AudioEngine::_audioIDInfoMap;
 AudioEngineImpl* AudioEngine::_audioEngineImpl = nullptr;
@@ -85,7 +87,7 @@ bool AudioEngine::lazyInit()
 
 int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, const AudioProfile *profile)
 {
-    int ret = AudioEngine::INVAILD_AUDIO_ID;
+    int ret = AudioEngine::INVALID_AUDIO_ID;
 
     do {
         if ( !lazyInit() ){
@@ -130,7 +132,7 @@ int AudioEngine::play2d(const std::string& filePath, bool loop, float volume, co
         }
         
         ret = _audioEngineImpl->play2d(filePath, loop, volume);
-        if (ret != INVAILD_AUDIO_ID)
+        if (ret != INVALID_AUDIO_ID)
         {
             _audioPathIDMap[filePath].push_back(ret);
             auto it = _audioPathIDMap.find(filePath);

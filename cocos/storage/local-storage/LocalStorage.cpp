@@ -42,6 +42,7 @@ static sqlite3 *_db;
 static sqlite3_stmt *_stmt_select;
 static sqlite3_stmt *_stmt_remove;
 static sqlite3_stmt *_stmt_update;
+static sqlite3_stmt *_stmt_clear;
 
 
 static void localStorageCreateTable()
@@ -80,6 +81,10 @@ void localStorageInit( const std::string& fullpath/* = "" */)
 		// DELETE
 		const char *sql_remove = "DELETE FROM data WHERE key=?;";
 		ret |= sqlite3_prepare_v2(_db, sql_remove, -1, &_stmt_remove, nullptr);
+        
+        // Clear
+        const char *sql_clear = "DELETE FROM data;";
+        ret |= sqlite3_prepare_v2(_db, sql_clear, -1, &_stmt_clear, nullptr);
 
 		if( ret != SQLITE_OK ) {
 			printf("Error initializing DB\n");
@@ -120,23 +125,30 @@ void localStorageSetItem( const std::string& key, const std::string& value)
 }
 
 /** gets an item from the LS */
-std::string localStorageGetItem( const std::string& key )
+bool localStorageGetItem( const std::string& key, std::string *outItem )
 {
 	assert( _initialized );
 
-	std::string ret;
 	int ok = sqlite3_reset(_stmt_select);
 
 	ok |= sqlite3_bind_text(_stmt_select, 1, key.c_str(), -1, SQLITE_TRANSIENT);
 	ok |= sqlite3_step(_stmt_select);
 	const unsigned char *text = sqlite3_column_text(_stmt_select, 0);
-	if (text)
-		ret = (const char*)text;
 
-	if( ok != SQLITE_OK && ok != SQLITE_DONE && ok != SQLITE_ROW)
+	if ( ok != SQLITE_OK && ok != SQLITE_DONE && ok != SQLITE_ROW )
+	{
 		printf("Error in localStorage.getItem()\n");
-
-	return ret;
+		return false;
+	}
+	else if (!text)
+    {
+        return false;
+    }
+	else
+    {
+        outItem->assign((const char*)text);
+        return true;
+    }
 }
 
 /** removes an item from the LS */
@@ -152,6 +164,17 @@ void localStorageRemoveItem( const std::string& key )
 
 	if( ok != SQLITE_OK && ok != SQLITE_DONE)
 		printf("Error in localStorage.removeItem()\n");
+}
+
+/** removes all items from the LS */
+void localStorageClear()
+{
+    assert( _initialized );
+    
+    int ok = sqlite3_step(_stmt_clear);
+    
+    if( ok != SQLITE_OK && ok != SQLITE_DONE)
+        printf("Error in localStorage.clear()\n");
 }
 
 #endif // #if (CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)

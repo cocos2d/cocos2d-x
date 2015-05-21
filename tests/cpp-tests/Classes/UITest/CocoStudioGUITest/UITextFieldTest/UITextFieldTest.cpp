@@ -1,6 +1,17 @@
-
-
 #include "UITextFieldTest.h"
+
+USING_NS_CC;
+using namespace cocos2d::ui;
+
+UITextFieldTests::UITextFieldTests()
+{
+    ADD_TEST_CASE(UITextFieldTest);
+    ADD_TEST_CASE(UITextFieldTest_MaxLength);
+    ADD_TEST_CASE(UITextFieldTest_Password);
+    ADD_TEST_CASE(UITextFieldTest_LineWrap);
+    ADD_TEST_CASE(UITextFieldTest_TrueTypeFont);
+    ADD_TEST_CASE(UITextFieldTest_PlaceHolderColor);
+}
 
 // UITextFieldTest
 UITextFieldTest::UITextFieldTest()
@@ -426,7 +437,7 @@ bool UITextFieldTest_PlaceHolderColor::init()
         Size widgetSize = _widget->getContentSize();
         
         // Add a label in which the textfield events will be displayed
-        _displayValueLabel = Text::create("Set place hold color","fonts/Marker Felt.ttf",32);
+        _displayValueLabel = Text::create("You should see 16.50000, 34.0000 in the output window the first time you type","fonts/Marker Felt.ttf",12);
         _displayValueLabel->setAnchorPoint(Vec2(0.5f, -1.0f));
         _displayValueLabel->setPosition(Vec2(widgetSize.width / 2.0f, widgetSize.height / 2.0f + _displayValueLabel->getContentSize().height * 1.5f));
         _uiLayer->addChild(_displayValueLabel);
@@ -473,7 +484,10 @@ void UITextFieldTest_PlaceHolderColor::textFieldEvent(Ref *pSender, TextField::E
             break;
             
         case TextField::EventType::INSERT_TEXT:
+        {
             _displayValueLabel->setString(String::createWithFormat("insert words")->getCString());
+            CCLOG("%f, %f", dynamic_cast<TextField*>(pSender)->getContentSize().width, dynamic_cast<TextField*>(pSender)->getContentSize().height);
+        }
             break;
             
         case TextField::EventType::DELETE_BACKWARD:

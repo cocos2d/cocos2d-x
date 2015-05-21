@@ -25,36 +25,8 @@
 #ifndef __TestCpp__CocosGUIScene__
 #define __TestCpp__CocosGUIScene__
 
-#include "cocos2d.h"
-#include "extensions/cocos-ext.h"
-#include "../../testBasic.h"
-#include "ui/CocosGUI.h"
+#include "BaseTest.h"
 
-USING_NS_CC;
-USING_NS_CC_EXT;
-using namespace cocos2d::ui;
-
-class CocosGUITestMainLayer : public Layer
-{
-public:
-    virtual void onEnter();
-    
-	void onTouchesBegan(const std::vector<Touch*>& touches, Event  *event);
-    void onTouchesMoved(const std::vector<Touch*>& touches, Event  *event);
-    
-	Vec2 _beginPos;
-    Menu* _itemMenu;
-    
-	int _testcount;
-};
-
-class CocosGUITestScene : public TestScene
-{
-public:
-    virtual void onEnter();
-    virtual void runThisTest();
-    void BackCallback(Ref* pSender);
-};
-
+DEFINE_TEST_LIST(GUIDynamicCreateTests);
 
 #endif /* defined(__TestCpp__CocosGUIScene__) */

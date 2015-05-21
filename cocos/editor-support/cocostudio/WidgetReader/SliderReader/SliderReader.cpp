@@ -48,6 +48,11 @@ namespace cocostudio
         return instanceSliderReader;
     }
     
+    void SliderReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instanceSliderReader);
+    }
+    
     void SliderReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode* cocoNode)
     {
         this->beginSetBasicProperties(widget);
@@ -787,7 +792,7 @@ namespace cocostudio
             slider->addChild(label);
         }
         
-        bool displaystate = options->displaystate();
+        bool displaystate = options->displaystate() != 0;
         slider->setBright(displaystate);
         slider->setEnabled(displaystate);
         

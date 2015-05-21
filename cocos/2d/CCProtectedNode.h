@@ -34,9 +34,22 @@
 
 NS_CC_BEGIN
 	
+/**
+ * @addtogroup _2d
+ * @{
+ */
+
+/**
+ *@brief A inner node type mainly used for UI module.
+ * It is useful for composing complex node type and it's children are protected.
+ */
 class  CC_DLL ProtectedNode : public Node
 {
 public:
+    /**
+     * Creates a ProtectedNode with no argument.
+     *@return A instance of ProtectedNode.
+     */
     static ProtectedNode * create(void);
     
     /// @{
@@ -51,30 +64,30 @@ public:
      */
     virtual void addProtectedChild(Node * child);
     /**
-     * Adds a child to the container with a local z-order
+     * Adds a child to the container with a local z-order.
      *
      * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      *
      * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`
+     * @param localZOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`
      */
     virtual void addProtectedChild(Node * child, int localZOrder);
     /**
-     * Adds a child to the container with z order and tag
+     * Adds a child to the container with z order and tag.
      *
      * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
      *
      * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`
+     * @param localZOrder    Z order for drawing priority. Please refer to `setLocalZOrder(int)`
      * @param tag       An integer to identify the node easily. Please refer to `setTag(int)`
      */
     virtual void addProtectedChild(Node* child, int localZOrder, int tag);
     /**
-     * Gets a child from the container with its tag
+     * Gets a child from the container with its tag.
      *
      * @param tag   An identifier to find the child node.
      *
-     * @return a Node object whose tag equals to the input parameter
+     * @return a Node object whose tag equals to the input parameter.
      */
     virtual Node * getProtectedChildByTag(int tag);
     
@@ -89,16 +102,17 @@ public:
     virtual void removeProtectedChild(Node* child, bool cleanup = true);
     
     /**
-     * Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
+     * Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter.
      *
-     * @param tag       An interger number that identifies a child node
+     * @param tag       An interger number that identifies a child node.
      * @param cleanup   true if all running actions and callbacks on the child node will be cleanup, false otherwise.
      */
     virtual void removeProtectedChildByTag(int tag, bool cleanup = true);
+    
     /**
      * Removes all children from the container with a cleanup.
      *
-     * @see `removeAllChildrenWithCleanup(bool)`
+     * @see `removeAllChildrenWithCleanup(bool)`.
      */
     virtual void removeAllProtectedChildren();
     /**
@@ -127,6 +141,9 @@ public:
     
     /// @} end of Children and Parent
     
+    /**
+     * @js NA
+     */
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, uint32_t parentFlags) override;
     
     virtual void cleanup() override;
@@ -163,6 +180,7 @@ public:
     virtual void updateDisplayedColor(const Color3B& parentColor) override;
     virtual void disableCascadeColor() override;
     virtual void disableCascadeOpacity()override;
+    virtual void setCameraMask(unsigned short mask, bool applyChildren = true) override;
 CC_CONSTRUCTOR_ACCESS:
     ProtectedNode();
     virtual ~ProtectedNode();
@@ -179,6 +197,8 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(ProtectedNode);
 };
 
+// end of 2d group
+/// @}
 
 NS_CC_END
 

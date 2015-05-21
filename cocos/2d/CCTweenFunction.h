@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2015 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -24,6 +24,8 @@ THE SOFTWARE.
 
 #ifndef __CCTWEENFUNCTION_H__
 #define __CCTWEENFUNCTION_H__
+
+/// @cond DO_NOT_SHOW
 
 #include "platform/CCPlatformMacros.h"
 
@@ -82,65 +84,216 @@ namespace tweenfunc {
     
     
     //tween functions for CCActionEase
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL easeIn(float time, float rate);
+    
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL easeOut(float time, float rate);
+    
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL easeInOut(float time, float rate);
     
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL bezieratFunction( float a, float b, float c, float d, float t );
     
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL quadraticIn(float time);
+    
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL quadraticOut(float time);
+    
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL quadraticInOut(float time);
     
+    /**
+     * @param time in seconds.
+     */
+    float CC_DLL quadraticInOut(float time);
     
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL tweenTo(float time, TweenType type, float *easingParam);
     
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL linear(float time);
     
-    
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL sineEaseIn(float time);
+    
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL sineEaseOut(float time);
+    
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL sineEaseInOut(float time);
     
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL quadEaseIn(float time);
+    
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL quadEaseOut(float time);
+    
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL quadEaseInOut(float time);
     
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL cubicEaseIn(float time);
+    
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL cubicEaseOut(float time);
+    
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL cubicEaseInOut(float time);
     
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL quartEaseIn(float time);
+    
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL quartEaseOut(float time);
+    
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL quartEaseInOut(float time);
     
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL quintEaseIn(float time);
+    
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL quintEaseOut(float time);
+    
+    /**
+     @param time in seconds.
+     */
     float CC_DLL quintEaseInOut(float time);
     
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL expoEaseIn(float time);
+    
+    /**
+     @param time in seconds.
+     */
     float CC_DLL expoEaseOut(float time);
+    
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL expoEaseInOut(float time);
     
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL circEaseIn(float time);
+    
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL circEaseOut(float time);
+    
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL circEaseInOut(float time);
     
+    /**
+     * @param time in seconds.
+     * @param period in seconds.
+     */
     float CC_DLL elasticEaseIn(float time, float period);
+    
+    /**
+     * @param time in seconds.
+     * @param period in seconds.
+     */
     float CC_DLL elasticEaseOut(float time, float period);
+    
+    /**
+     * @param time in seconds.
+     * @param period in seconds.
+     */
     float CC_DLL elasticEaseInOut(float time, float period);
     
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL backEaseIn(float time);
+    
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL backEaseOut(float time);
+    
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL backEaseInOut(float time);
     
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL bounceEaseIn(float time);
+    
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL bounceEaseOut(float time);
+    
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL bounceEaseInOut(float time);
     
+    /**
+     * @param time in seconds.
+     */
     float CC_DLL customEase(float time, float *easingParam);
 }
 
 NS_CC_END
 
+/// @endcond
 #endif /*__CCTWEENFUNCTION_H__*/

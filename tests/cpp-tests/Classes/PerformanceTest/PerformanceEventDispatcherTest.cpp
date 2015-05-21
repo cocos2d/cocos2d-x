@@ -3,8 +3,9 @@
 //
 
 #include "PerformanceEventDispatcherTest.h"
-
 #include <algorithm>
+
+USING_NS_CC;
 
 // Enable profiles for this file
 #undef CC_PROFILER_DISPLAY_TIMERS
@@ -33,14 +34,12 @@
 #undef CC_PROFILER_RESET_INSTANCE
 #define CC_PROFILER_RESET_INSTANCE(__id__, __name__) do{ ProfilingResetTimingBlock( String::createWithFormat("%08X - %s", __id__, __name__)->getCString() ); } while(0)
 
-static std::function<PerformanceEventDispatcherScene*()> createFunctions[] =
+PerformceEventDispatcherTests::PerformceEventDispatcherTests()
 {
-    CL(TouchEventDispatchingPerfTest),
-    CL(KeyboardEventDispatchingPerfTest),
-    CL(CustomEventDispatchingPerfTest),
-};
-
-#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
+    ADD_TEST_CASE(TouchEventDispatchingPerfTest);
+    ADD_TEST_CASE(KeyboardEventDispatchingPerfTest);
+    ADD_TEST_CASE(CustomEventDispatchingPerfTest);
+}
 
 enum {
     kTagInfoLayer = 1,
@@ -53,69 +52,39 @@ enum {
     kNodesIncrease = 500,
 };
 
-static int g_curCase = 0;
-
-////////////////////////////////////////////////////////
-//
-// EventDispatcherBasicLayer
-//
-////////////////////////////////////////////////////////
-
-EventDispatcherBasicLayer::EventDispatcherBasicLayer(bool bControlMenuVisible, int nMaxCases, int nCurCase)
-: PerformBasicLayer(bControlMenuVisible, nMaxCases, nCurCase)
-{
-}
-
-void EventDispatcherBasicLayer::showCurrentTest()
-{
-    int nodes = ((PerformanceEventDispatcherScene*)getParent())->getQuantityOfNodes();
-    
-    auto scene = createFunctions[_curCase]();
-    
-    g_curCase = _curCase;
-    
-    if (scene)
-    {
-        scene->initWithQuantityOfNodes(nodes);
-        
-        Director::getInstance()->replaceScene(scene);
-    }
-}
+int PerformanceEventDispatcherScene::quantityOfNodes = kNodesIncrease;
 
 ////////////////////////////////////////////////////////
 //
 // PerformanceEventDispatcherScene
 //
 ////////////////////////////////////////////////////////
+bool PerformanceEventDispatcherScene::init()
+{
+    if (TestCase::init())
+    {
+        initWithQuantityOfNodes(quantityOfNodes);
+        return true;
+    }
+
+    return false;
+}
+
 void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNodes)
 {
     _type = 0;
     srand((unsigned)time(nullptr));
     auto s = Director::getInstance()->getWinSize();
     
-    // Title
-    auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 32);
-    addChild(label, 1, TAG_TITLE);
-    label->setPosition(Vec2(s.width/2, s.height-50));
-    
-    // Subtitle
-    std::string strSubTitle = subtitle();
-    if(strSubTitle.length())
-    {
-        auto l = Label::createWithTTF(strSubTitle.c_str(), "fonts/Thonburi.ttf", 16);
-        addChild(l, 1, TAG_SUBTITLE);
-        l->setPosition(Vec2(s.width/2, s.height-80));
-    }
-    
     _lastRenderedCount = 0;
     _currentQuantityOfNodes = 0;
-    _quantityOfNodes = nNodes;
+    quantityOfNodes = nNodes;
     
     MenuItemFont::setFontSize(65);
     auto decrease = MenuItemFont::create(" - ", [&](Ref *sender) {
-		_quantityOfNodes -= kNodesIncrease;
-		if( _quantityOfNodes < 0 )
-			_quantityOfNodes = 0;
+		quantityOfNodes -= kNodesIncrease;
+		if( quantityOfNodes < 0 )
+			quantityOfNodes = 0;
         
 		updateQuantityLabel();
 		updateQuantityOfNodes();
@@ -127,9 +96,9 @@ void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNode
     _decrease = decrease;
     
     auto increase = MenuItemFont::create(" + ", [&](Ref *sender) {
-		_quantityOfNodes += kNodesIncrease;
-		if( _quantityOfNodes > kMaxNodes )
-			_quantityOfNodes = kMaxNodes;
+		quantityOfNodes += kNodesIncrease;
+		if( quantityOfNodes > kMaxNodes )
+			quantityOfNodes = kMaxNodes;
         
 		updateQuantityLabel();
 		updateQuantityOfNodes();
@@ -149,10 +118,6 @@ void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNode
     infoLabel->setColor(Color3B(0,200,20));
     infoLabel->setPosition(Vec2(s.width/2, s.height/2-15));
     addChild(infoLabel, 1, kTagInfoLayer);
-    
-    auto menuLayer = new (std::nothrow) EventDispatcherBasicLayer(true, MAX_LAYER, g_curCase);
-    addChild(menuLayer);
-    menuLayer->release();
     
     int oldFontSize = MenuItemFont::getFontSize();
     MenuItemFont::setFontSize(24);
@@ -190,8 +155,7 @@ void PerformanceEventDispatcherScene::initWithQuantityOfNodes(unsigned int nNode
     auto toggle = MenuItemToggle::createWithCallback([=](Ref* sender){
         auto toggle = static_cast<MenuItemToggle*>(sender);
         this->_type = toggle->getSelectedIndex();
-        auto label = static_cast<Label*>(this->getChildByTag(TAG_SUBTITLE));
-        label->setString(StringUtils::format("Test '%s', See console", this->_testFunctions[this->_type].name));
+        _subtitleLabel->setString(StringUtils::format("Test '%s', See console", this->_testFunctions[this->_type].name));
         this->updateProfilerName();
         reset();
     }, toggleItems);
@@ -263,11 +227,11 @@ std::string PerformanceEventDispatcherScene::subtitle() const
 
 void PerformanceEventDispatcherScene::updateQuantityLabel()
 {
-    if( _quantityOfNodes != _lastRenderedCount )
+    if( quantityOfNodes != _lastRenderedCount )
     {
         auto infoLabel = static_cast<Label*>( getChildByTag(kTagInfoLayer) );
         char str[20] = {0};
-        sprintf(str, "%u listeners", _quantityOfNodes);
+        sprintf(str, "%u listeners", quantityOfNodes);
         infoLabel->setString(str);
     }
 }
@@ -279,7 +243,7 @@ const char * PerformanceEventDispatcherScene::profilerName()
 
 void PerformanceEventDispatcherScene::updateProfilerName()
 {
-    snprintf(_profilerName, sizeof(_profilerName)-1, "%s(%d)", testName(), _quantityOfNodes);
+    snprintf(_profilerName, sizeof(_profilerName)-1, "%s(%d)", testName(), quantityOfNodes);
 }
 
 void PerformanceEventDispatcherScene::dumpProfilerInfo(float dt)
@@ -294,7 +258,7 @@ void PerformanceEventDispatcherScene::update(float dt)
 
 void PerformanceEventDispatcherScene::updateQuantityOfNodes()
 {
-    _currentQuantityOfNodes = _quantityOfNodes;
+    _currentQuantityOfNodes = quantityOfNodes;
 }
 
 const char*  PerformanceEventDispatcherScene::testName()
@@ -314,7 +278,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
     TestFunction testFunctions[] = {
         { "OneByOne-scenegraph",    [=](){
             auto dispatcher = Director::getInstance()->getEventDispatcher();
-            if (_quantityOfNodes != _lastRenderedCount)
+            if (quantityOfNodes != _lastRenderedCount)
             {
                 auto listener = EventListenerTouchOneByOne::create();
                 listener->onTouchBegan = [](Touch* touch, Event* event){
@@ -325,7 +289,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
                 listener->onTouchEnded = [](Touch* touch, Event* event){};
 
                 // Create new touchable nodes
-                for (int i = 0; i < this->_quantityOfNodes; ++i)
+                for (int i = 0; i < this->quantityOfNodes; ++i)
                 {
                     auto node = Node::create();
                     node->setTag(1000 + i);
@@ -334,7 +298,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
                     dispatcher->addEventListenerWithSceneGraphPriority(listener->clone(), node);
                 }
                 
-                _lastRenderedCount = _quantityOfNodes;
+                _lastRenderedCount = quantityOfNodes;
             }
             
             Size size = Director::getInstance()->getWinSize();
@@ -358,7 +322,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
         
         { "OneByOne-fixed",    [=](){
             auto dispatcher = Director::getInstance()->getEventDispatcher();
-            if (_quantityOfNodes != _lastRenderedCount)
+            if (quantityOfNodes != _lastRenderedCount)
             {
                 auto listener = EventListenerTouchOneByOne::create();
                 listener->onTouchBegan = [](Touch* touch, Event* event){
@@ -368,14 +332,14 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
                 listener->onTouchMoved = [](Touch* touch, Event* event){};
                 listener->onTouchEnded = [](Touch* touch, Event* event){};
                 
-                for (int i = 0; i < this->_quantityOfNodes; ++i)
+                for (int i = 0; i < this->quantityOfNodes; ++i)
                 {
                     auto l = listener->clone();
                     this->_fixedPriorityListeners.push_back(l);
                     dispatcher->addEventListenerWithFixedPriority(l, i+1);
                 }
                 
-                _lastRenderedCount = _quantityOfNodes;
+                _lastRenderedCount = quantityOfNodes;
             }
             
             Size size = Director::getInstance()->getWinSize();
@@ -399,7 +363,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
         
         { "AllAtOnce-scenegraph",    [=](){
             auto dispatcher = Director::getInstance()->getEventDispatcher();
-            if (_quantityOfNodes != _lastRenderedCount)
+            if (quantityOfNodes != _lastRenderedCount)
             {
                 auto listener = EventListenerTouchAllAtOnce::create();
                 listener->onTouchesBegan = [](const std::vector<Touch*> touches, Event* event){};
@@ -407,7 +371,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
                 listener->onTouchesEnded = [](const std::vector<Touch*> touches, Event* event){};
                 
                 // Create new touchable nodes
-                for (int i = 0; i < this->_quantityOfNodes; ++i)
+                for (int i = 0; i < this->quantityOfNodes; ++i)
                 {
                     auto node = Node::create();
                     node->setTag(1000 + i);
@@ -416,7 +380,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
                     dispatcher->addEventListenerWithSceneGraphPriority(listener->clone(), node);
                 }
                 
-                _lastRenderedCount = _quantityOfNodes;
+                _lastRenderedCount = quantityOfNodes;
             }
             
             Size size = Director::getInstance()->getWinSize();
@@ -440,21 +404,21 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
         
         { "AllAtOnce-fixed",    [=](){
             auto dispatcher = Director::getInstance()->getEventDispatcher();
-            if (_quantityOfNodes != _lastRenderedCount)
+            if (quantityOfNodes != _lastRenderedCount)
             {
                 auto listener = EventListenerTouchAllAtOnce::create();
                 listener->onTouchesBegan = [](const std::vector<Touch*> touches, Event* event){};
                 listener->onTouchesMoved = [](const std::vector<Touch*> touches, Event* event){};
                 listener->onTouchesEnded = [](const std::vector<Touch*> touches, Event* event){};
                 
-                for (int i = 0; i < this->_quantityOfNodes; ++i)
+                for (int i = 0; i < this->quantityOfNodes; ++i)
                 {
                     auto l = listener->clone();
                     this->_fixedPriorityListeners.push_back(l);
                     dispatcher->addEventListenerWithFixedPriority(l, i+1);
                 }
                 
-                _lastRenderedCount = _quantityOfNodes;
+                _lastRenderedCount = quantityOfNodes;
             }
             
             Size size = Director::getInstance()->getWinSize();
@@ -478,7 +442,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
         
         { "TouchModeMix-scenegraph",    [=](){
             auto dispatcher = Director::getInstance()->getEventDispatcher();
-            if (_quantityOfNodes != _lastRenderedCount)
+            if (quantityOfNodes != _lastRenderedCount)
             {
                 auto listenerOneByOne = EventListenerTouchOneByOne::create();
                 listenerOneByOne->onTouchBegan = [](Touch* touch, Event* event){
@@ -495,7 +459,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
                 
                 int i = 0;
                 // Create new touchable nodes
-                for (; i < this->_quantityOfNodes/2; ++i)
+                for (; i < this->quantityOfNodes/2; ++i)
                 {
                     auto node = Node::create();
                     node->setTag(1000 + i);
@@ -504,7 +468,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
                     dispatcher->addEventListenerWithSceneGraphPriority(listenerOneByOne->clone(), node);
                 }
                 
-                for (; i < this->_quantityOfNodes; ++i)
+                for (; i < this->quantityOfNodes; ++i)
                 {
                     auto node = Node::create();
                     node->setTag(1000 + i);
@@ -513,7 +477,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
                     dispatcher->addEventListenerWithSceneGraphPriority(listenerAllAtOnce->clone(), node);
                 }
                 
-                _lastRenderedCount = _quantityOfNodes;
+                _lastRenderedCount = quantityOfNodes;
             }
             
             Size size = Director::getInstance()->getWinSize();
@@ -537,7 +501,7 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
         
         { "TouchModeMix-fixed",    [=](){
             auto dispatcher = Director::getInstance()->getEventDispatcher();
-            if (_quantityOfNodes != _lastRenderedCount)
+            if (quantityOfNodes != _lastRenderedCount)
             {
                 auto listenerOneByOne = EventListenerTouchOneByOne::create();
                 listenerOneByOne->onTouchBegan = [](Touch* touch, Event* event){
@@ -554,21 +518,21 @@ void TouchEventDispatchingPerfTest::generateTestFunctions()
                 
                 int i = 0;
 
-                for (; i < this->_quantityOfNodes/2; ++i)
+                for (; i < this->quantityOfNodes/2; ++i)
                 {
                     auto l = listenerOneByOne->clone();
                     this->_fixedPriorityListeners.push_back(l);
                     dispatcher->addEventListenerWithFixedPriority(l, i+1);
                 }
                 
-                for (; i < this->_quantityOfNodes; ++i)
+                for (; i < this->quantityOfNodes; ++i)
                 {
                     auto l = listenerAllAtOnce->clone();
                     this->_fixedPriorityListeners.push_back(l);
                     dispatcher->addEventListenerWithFixedPriority(l, i+1);
                 }
                 
-                _lastRenderedCount = _quantityOfNodes;
+                _lastRenderedCount = quantityOfNodes;
             }
             
             Size size = Director::getInstance()->getWinSize();
@@ -618,14 +582,14 @@ void KeyboardEventDispatchingPerfTest::generateTestFunctions()
     TestFunction testFunctions[] = {
         { "keyboard-scenegraph",    [=](){
             auto dispatcher = Director::getInstance()->getEventDispatcher();
-            if (_quantityOfNodes != _lastRenderedCount)
+            if (quantityOfNodes != _lastRenderedCount)
             {
                 auto listener = EventListenerKeyboard::create();
                 listener->onKeyPressed = [](EventKeyboard::KeyCode keyCode, Event* event){};
                 listener->onKeyReleased = [](EventKeyboard::KeyCode keyCode, Event* event){};
                 
                 // Create new nodes listen to keyboard event
-                for (int i = 0; i < this->_quantityOfNodes; ++i)
+                for (int i = 0; i < this->quantityOfNodes; ++i)
                 {
                     auto node = Node::create();
                     node->setTag(1000 + i);
@@ -634,7 +598,7 @@ void KeyboardEventDispatchingPerfTest::generateTestFunctions()
                     dispatcher->addEventListenerWithSceneGraphPriority(listener->clone(), node);
                 }
                 
-                _lastRenderedCount = _quantityOfNodes;
+                _lastRenderedCount = quantityOfNodes;
             }
             
             EventKeyboard event(EventKeyboard::KeyCode::KEY_RETURN, true);
@@ -646,20 +610,20 @@ void KeyboardEventDispatchingPerfTest::generateTestFunctions()
         
         { "keyboard-fixed",    [=](){
             auto dispatcher = Director::getInstance()->getEventDispatcher();
-            if (_quantityOfNodes != _lastRenderedCount)
+            if (quantityOfNodes != _lastRenderedCount)
             {
                 auto listener = EventListenerKeyboard::create();
                 listener->onKeyPressed = [](EventKeyboard::KeyCode keyCode, Event* event){};
                 listener->onKeyReleased = [](EventKeyboard::KeyCode keyCode, Event* event){};
                 
-                for (int i = 0; i < this->_quantityOfNodes; ++i)
+                for (int i = 0; i < this->quantityOfNodes; ++i)
                 {
                     auto l = listener->clone();
                     this->_fixedPriorityListeners.push_back(l);
                     dispatcher->addEventListenerWithFixedPriority(l, i+1);
                 }
                 
-                _lastRenderedCount = _quantityOfNodes;
+                _lastRenderedCount = quantityOfNodes;
             }
             
             EventKeyboard event(EventKeyboard::KeyCode::KEY_RETURN, true);
@@ -718,12 +682,12 @@ void CustomEventDispatchingPerfTest::generateTestFunctions()
     TestFunction testFunctions[] = {
         { "custom-scenegraph",    [=](){
             auto dispatcher = Director::getInstance()->getEventDispatcher();
-            if (_quantityOfNodes != _lastRenderedCount)
+            if (quantityOfNodes != _lastRenderedCount)
             {
                 auto listener = EventListenerCustom::create("custom_event_test_scenegraph", [](EventCustom* event){});
                 
                 // Create new nodes listen to custom event
-                for (int i = 0; i < this->_quantityOfNodes; ++i)
+                for (int i = 0; i < this->quantityOfNodes; ++i)
                 {
                     auto node = Node::create();
                     node->setTag(1000 + i);
@@ -732,7 +696,7 @@ void CustomEventDispatchingPerfTest::generateTestFunctions()
                     dispatcher->addEventListenerWithSceneGraphPriority(listener->clone(), node);
                 }
                 
-                _lastRenderedCount = _quantityOfNodes;
+                _lastRenderedCount = quantityOfNodes;
             }
             
             EventCustom event("custom_event_test_scenegraph");
@@ -743,18 +707,18 @@ void CustomEventDispatchingPerfTest::generateTestFunctions()
         } } ,
         { "custom-fixed",    [=](){
             auto dispatcher = Director::getInstance()->getEventDispatcher();
-            if (_quantityOfNodes != _lastRenderedCount)
+            if (quantityOfNodes != _lastRenderedCount)
             {
                 auto listener = EventListenerCustom::create("custom_event_test_fixed", [](EventCustom* event){});
                 
-                for (int i = 0; i < this->_quantityOfNodes; ++i)
+                for (int i = 0; i < this->quantityOfNodes; ++i)
                 {
                     auto l = listener->clone();
                     this->_fixedPriorityListeners.push_back(l);
                     dispatcher->addEventListenerWithFixedPriority(l, i+1);
                 }
                 
-                _lastRenderedCount = _quantityOfNodes;
+                _lastRenderedCount = quantityOfNodes;
             }
             
             EventCustom event("custom_event_test_fixed");
@@ -780,13 +744,3 @@ std::string CustomEventDispatchingPerfTest::subtitle() const
 {
     return "Test 'custom-scenegraph', See console";
 }
-
-///----------------------------------------
-void runEventDispatcherPerformanceTest()
-{
-    auto scene = createFunctions[g_curCase]();
-    scene->initWithQuantityOfNodes(kNodesIncrease);
-    
-    Director::getInstance()->replaceScene(scene);
-}
-

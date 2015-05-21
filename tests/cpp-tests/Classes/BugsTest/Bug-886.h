@@ -3,10 +3,12 @@
 
 #include "BugsTest.h"
 
-class Bug886Layer : public BugsTestBaseLayer
+class Bug886Layer : public BugsTestBase
 {
 public:
-    virtual bool init();
+    CREATE_FUNC(Bug886Layer);
+
+    virtual bool init() override;
 };
 
 #endif // __BUG_886_H__

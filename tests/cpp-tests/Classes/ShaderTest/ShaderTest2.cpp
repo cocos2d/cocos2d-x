@@ -22,89 +22,18 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-
 #include "ShaderTest2.h"
 #include "ShaderTest.h"
 #include "../testResource.h"
 #include "cocos2d.h"
 #include <tuple>
 
-namespace ShaderTest2
-{
-    static std::function<Layer*()> createFunctions[] =
-    {
-        CL(EffectSpriteTest),
-        CL(EffectSpriteLamp),
-    };
-    
-    static unsigned int TEST_CASE_COUNT = sizeof(ShaderTest2::createFunctions) / sizeof(ShaderTest2::createFunctions[0]);
-    
-    static int sceneIdx=-1;
-    Layer* createTest(int index)
-    {
-        auto layer = (createFunctions[index])();;
-        return layer;
-    }
-    
-    Layer* nextAction();
-    Layer* backAction();
-    Layer* restartAction();
-    
-    Layer* nextAction()
-    {
-        sceneIdx++;
-        sceneIdx = sceneIdx % TEST_CASE_COUNT;
-        
-        return createTest(sceneIdx);
-    }
-    
-    Layer* backAction()
-    {
-        sceneIdx--;
-        if( sceneIdx < 0 )
-            sceneIdx = TEST_CASE_COUNT -1;
-        
-        return createTest(sceneIdx);
-    }
-    
-    Layer* restartAction()
-    {
-        return createTest(sceneIdx);
-    }
-    
-}
+USING_NS_CC;
 
-ShaderTestDemo2::ShaderTestDemo2()
+Shader2Tests::Shader2Tests()
 {
-    
-}
-
-void ShaderTestDemo2::backCallback(Ref* sender)
-{
-    auto s = ShaderTestScene2::create();
-    s->addChild( ShaderTest2::backAction() );
-    Director::getInstance()->replaceScene(s);
-}
-
-void ShaderTestDemo2::nextCallback(Ref* sender)
-{
-    auto s = ShaderTestScene2::create();
-    s->addChild( ShaderTest2::nextAction() );
-    Director::getInstance()->replaceScene(s);
-}
-
-void ShaderTestDemo2::restartCallback(Ref* sender)
-{
-    auto s = ShaderTestScene2::create();
-    s->addChild(ShaderTest2::restartAction());    
-    Director::getInstance()->replaceScene(s);
-}
-
-void ShaderTestScene2::runThisTest()
-{
-    auto layer = ShaderTest2::nextAction();
-    addChild(layer);
-    Director::getInstance()->replaceScene(this);
+    ADD_TEST_CASE(EffectSpriteTest);
+    ADD_TEST_CASE(EffectSpriteLamp);
 }
 
 //
@@ -151,10 +80,12 @@ public:
 
     void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override
     {
+#if CC_USE_CULLING
         // Don't do calculate the culling if the transform was not updated
         _insideBounds = (flags & FLAGS_TRANSFORM_DIRTY) ? renderer->checkVisibility(transform, _contentSize) : _insideBounds;
 
         if(_insideBounds)
+#endif
         {
             // negative effects: order < 0
             int idx=0;
@@ -163,20 +94,20 @@ public:
                 if(std::get<0>(effect) >=0)
                     break;
                 QuadCommand &q = std::get<2>(effect);
-                q.init(_globalZOrder, _texture->getName(), std::get<1>(effect)->getGLProgramState(), _blendFunc, &_quad, 1, transform);
+                q.init(_globalZOrder, _texture->getName(), std::get<1>(effect)->getGLProgramState(), _blendFunc, &_quad, 1, transform, flags);
                 renderer->addCommand(&q);
                 idx++;
 
             }
 
             // normal effect: order == 0
-            _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, transform);
+            _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, transform, flags);
             renderer->addCommand(&_quadCommand);
 
             // postive effects: oder >= 0
             for(auto it = std::begin(_effects)+idx; it != std::end(_effects); ++it) {
                 QuadCommand &q = std::get<2>(*it);
-                q.init(_globalZOrder, _texture->getName(), std::get<1>(*it)->getGLProgramState(), _blendFunc, &_quad, 1, transform);
+                q.init(_globalZOrder, _texture->getName(), std::get<1>(*it)->getGLProgramState(), _blendFunc, &_quad, 1, transform, flags);
                 renderer->addCommand(&q);
                 idx++;
             }
@@ -209,7 +140,7 @@ bool Effect::initGLProgramState(const std::string &fragmentFilename)
     auto fragSource = fileUtiles->getStringFromFile(fragmentFullPath);
     auto glprogram = GLProgram::createWithByteArrays(ccPositionTextureColor_noMVP_vert, fragSource.c_str());
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     _fragSource = fragSource;
 #endif
     
@@ -222,7 +153,7 @@ bool Effect::initGLProgramState(const std::string &fragmentFilename)
 Effect::Effect()
 : _glprogramstate(nullptr)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     _backgroundListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED,
                                                       [this](EventCustom*)
                                                       {
@@ -240,7 +171,7 @@ Effect::Effect()
 Effect::~Effect()
 {
     CC_SAFE_RELEASE_NULL(_glprogramstate);
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     Director::getInstance()->getEventDispatcher()->removeEventListener(_backgroundListener);
 #endif
 }
@@ -509,6 +440,9 @@ void EffectNormalMapped::setLightColor(const Color4F& color)
 EffectSpriteTest::EffectSpriteTest()
 {
     if (ShaderTestDemo2::init()) {
+
+        auto layer = LayerColor::create(Color4B::BLUE);
+        this->addChild(layer);
 
         auto s = Director::getInstance()->getWinSize();
 

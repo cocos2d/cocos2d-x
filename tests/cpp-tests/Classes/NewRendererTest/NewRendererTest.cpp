@@ -22,74 +22,21 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-
 #include "NewRendererTest.h"
 
-static int sceneIdx = -1;
+USING_NS_CC;
 
-Layer* nextSpriteTestAction();
-Layer* backSpriteTestAction();
-Layer* restartSpriteTestAction();
-
-static std::function<Layer*()> createFunctions[] =
+NewRendererTests::NewRendererTests()
 {
-    CL(NewSpriteTest),
-    CL(NewSpriteBatchTest),
-    CL(GroupCommandTest),
-    CL(NewClippingNodeTest),
-    CL(NewDrawNodeTest),
-    CL(NewCullingTest),
-    CL(VBOFullTest),
-    CL(CaptureScreenTest)
+    ADD_TEST_CASE(NewSpriteTest);
+    ADD_TEST_CASE(NewSpriteBatchTest);
+    ADD_TEST_CASE(GroupCommandTest);
+    ADD_TEST_CASE(NewClippingNodeTest);
+    ADD_TEST_CASE(NewDrawNodeTest);
+    ADD_TEST_CASE(NewCullingTest);
+    ADD_TEST_CASE(VBOFullTest);
+    ADD_TEST_CASE(CaptureScreenTest);
 };
-
-#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-Layer* nextTest()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-Layer* prevTest()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;
-
-    auto layer = (createFunctions[sceneIdx])();
-
-    return layer;
-}
-
-Layer* restartTest()
-{
-    auto layer = (createFunctions[sceneIdx])();
-
-    return layer;
-}
-
-void NewRendererTestScene::runThisTest()
-{
-    auto layer = nextTest();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
-}
-
-MultiSceneTest::MultiSceneTest()
-{
-
-}
-
-MultiSceneTest::~MultiSceneTest()
-{
-
-}
 
 std::string MultiSceneTest::title() const
 {
@@ -99,38 +46,6 @@ std::string MultiSceneTest::title() const
 std::string MultiSceneTest::subtitle() const
 {
     return "MultiSceneTest";
-}
-
-void MultiSceneTest::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-void MultiSceneTest::restartCallback(Ref *sender)
-{
-    auto s = new (std::nothrow) NewRendererTestScene();
-    s->addChild(restartTest());
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void MultiSceneTest::nextCallback(Ref *sender)
-{
-    auto s = new (std::nothrow) NewRendererTestScene();
-    s->addChild(nextTest());
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void MultiSceneTest::backCallback(Ref *sender)
-{
-    auto s = new (std::nothrow) NewRendererTestScene();
-    s->addChild(prevTest());
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
 }
 
 NewSpriteTest::NewSpriteTest()
@@ -541,7 +456,7 @@ VBOFullTest::VBOFullTest()
     for (int i=0; i< Renderer::VBO_SIZE / 3.9; ++i)
     {
         Sprite* sprite = Sprite::create("Images/grossini_dance_01.png");
-        sprite->setScale(0.1, 0.1);
+        sprite->setScale(0.1f, 0.1f);
         float x = ((float)std::rand()) /RAND_MAX;
         float y = ((float)std::rand()) /RAND_MAX;
         sprite->setPosition(Vec2(x * s.width, y * s.height));

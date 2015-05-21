@@ -422,6 +422,8 @@ void DataReaderHelper::addDataFromFileAsync(const std::string& imagePath, const 
     ssize_t size;
     // FIXME: fileContent is being leaked
     
+    // This getFileData only read exportJson file, it takes only a little time.
+    // Large image files are loaded in DataReaderHelper::addDataFromJsonCache(dataInfo) asynchronously.
     _dataReaderHelper->_getFileMutex.lock();
     unsigned char *pBytes = FileUtils::getInstance()->getFileData(fullPath.c_str() , filereadmode.c_str(), &size);
     _dataReaderHelper->_getFileMutex.unlock();
@@ -1332,8 +1334,13 @@ void DataReaderHelper::addDataFromJsonCache(const std::string& fileContent, Data
             {
                 std::string plistPath = filePath + ".plist";
                 std::string pngPath =  filePath + ".png";
+                if (FileUtils::getInstance()->isFileExist(dataInfo->baseFilePath + plistPath) && FileUtils::getInstance()->isFileExist(dataInfo->baseFilePath + pngPath))
+                {
+                    ValueMap dict = FileUtils::getInstance()->getValueMapFromFile(dataInfo->baseFilePath + plistPath);
+                    if (dict.find("particleLifespan") != dict.end()) continue;
 
-                ArmatureDataManager::getInstance()->addSpriteFrameFromFile((dataInfo->baseFilePath + plistPath).c_str(), (dataInfo->baseFilePath + pngPath).c_str(), dataInfo->filename.c_str());
+                    ArmatureDataManager::getInstance()->addSpriteFrameFromFile((dataInfo->baseFilePath + plistPath).c_str(), (dataInfo->baseFilePath + pngPath).c_str(), dataInfo->filename.c_str());
+                }
             }
         }
     }
@@ -1640,6 +1647,7 @@ FrameData *DataReaderHelper::decodeFrame(const rapidjson::Value& json, DataInfo 
     if (length != 0)
     {
         frameData->easingParams = new float[length];
+        frameData->easingParamNumber = length;
         
         for (int i = 0; i < length; i++)
         {

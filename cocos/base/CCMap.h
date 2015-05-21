@@ -1,5 +1,5 @@
 /****************************************************************************
- Copyright (c) 2013-2014 Chukong Technologies
+ Copyright (c) 2013-2015 Chukong Technologies
  
  http://www.cocos2d-x.org
  
@@ -37,36 +37,52 @@
 #include <map>
 #endif
 
-NS_CC_BEGIN
 
 /**
- * @addtogroup data_structures
+ * @addtogroup base
  * @{
  */
+NS_CC_BEGIN
 
+ /**
+ * Similar to std::unordered_map, but it will manage reference count automatically internally.
+ * Which means it will invoke Ref::retain() when adding an element, and invoke Ref::release() when removing an element.
+ * @warning The element should be `Ref` or its sub-class.
+ * @js NA
+ * @lua NA
+ */
 template <class K, class V>
 class Map
 {
-public:
-    // ------------------------------------------
-    // Iterators
-    // ------------------------------------------
+public: 
 #if USE_STD_UNORDERED_MAP
     typedef std::unordered_map<K, V> RefMap;
 #else
     typedef std::map<K, V> RefMap;
 #endif
     
+    // ------------------------------------------
+    // Iterators
+    // ------------------------------------------
+
+    /** Iterator, can be used to loop the Map. */
     typedef typename RefMap::iterator iterator;
+    /** Const iterator, can be used to loop the Map. */
     typedef typename RefMap::const_iterator const_iterator;
     
+    /** Return iterator to beginning. */
     iterator begin() { return _data.begin(); }
+    /** Return const_iterator to beginning. */
     const_iterator begin() const { return _data.begin(); }
     
+    /** Return iterator to end.*/
     iterator end() { return _data.end(); }
+    /** Return const_iterator to end.*/
     const_iterator end() const { return _data.end(); }
     
+    /** Return const_iterator to beginning.*/
     const_iterator cbegin() const { return _data.cbegin(); }
+    /** Return const_iterator to end.*/
     const_iterator cend() const { return _data.cend(); }
     
     /** Default constructor */
@@ -77,7 +93,7 @@ public:
         CCLOGINFO("In the default constructor of Map!");
     }
     
-    /** Contructor with capacity */
+    /** Constructor with capacity. */
     explicit Map<K, V>(ssize_t capacity)
     : _data()
     {
@@ -86,7 +102,7 @@ public:
         _data.reserve(capacity);
     }
     
-    /** Copy constructor */
+    /** Copy constructor. */
     Map<K, V>(const Map<K, V>& other)
     {
         static_assert(std::is_convertible<V, Ref*>::value, "Invalid Type for cocos2d::Map<K, V>!");
@@ -95,7 +111,7 @@ public:
         addRefForAllObjects();
     }
     
-    /** Move constructor */
+    /** Move constructor. */
     Map<K, V>(Map<K, V>&& other)
     {
         static_assert(std::is_convertible<V, Ref*>::value, "Invalid Type for cocos2d::Map<K, V>!");
@@ -103,8 +119,9 @@ public:
         _data = std::move(other._data);
     }
     
-    /** Destructor
-     *  It will release all objects in map.
+    /** 
+     * Destructor.
+     * It will release all objects in map.
      */
     ~Map<K, V>()
     {
@@ -112,7 +129,7 @@ public:
         clear();
     }
     
-    /** Sets capacity of the map */
+    /** Sets capacity of the map. */
     void reserve(ssize_t capacity)
     {
 #if USE_STD_UNORDERED_MAP
@@ -156,7 +173,8 @@ public:
         return _data.size();
     }
     
-    /** Returns a bool value indicating whether the map container is empty, i.e. whether its size is 0.
+    /** 
+     * Returns a bool value indicating whether the map container is empty, i.e. whether its size is 0.
      *  @note This function does not modify the content of the container in any way.
      *        To clear the content of an array object, member function unordered_map::clear exists.
      */
@@ -165,7 +183,7 @@ public:
         return _data.empty();
     }
     
-    /** Returns all keys in the map */
+    /** Returns all keys in the map. */
     std::vector<K> keys() const
     {
         std::vector<K> keys;
@@ -182,7 +200,7 @@ public:
         return keys;
     }
     
-    /** Returns all keys that matches the object */
+    /** Returns all keys that matches the object. */
     std::vector<K> keys(V object) const
     {
         std::vector<K> keys;
@@ -205,7 +223,9 @@ public:
         return keys;
     }
     
-    /** @brief Returns a reference to the mapped value of the element with key k in the map.
+    /** 
+     * Returns a reference to the mapped value of the element with key k in the map.
+     *
      *  @note If key does not match the key of any element in the container, the function return nullptr.
      *  @param key Key value of the element whose mapped value is accessed.
      *       Member type K is the keys for the elements in the container. defined in Map<K, V> as an alias of its first template parameter (Key).
@@ -226,12 +246,13 @@ public:
         return nullptr;
     }
     
-    /** @brief Searches the container for an element with 'key' as key and returns an iterator to it if found,
+    /** 
+     * Searches the container for an element with 'key' as key and returns an iterator to it if found,
      *         otherwise it returns an iterator to Map<K, V>::end (the element past the end of the container).
-     *  @param key Key to be searched for.
-     *         Member type 'K' is the type of the keys for the elements in the container,
-     *         defined in Map<K, V> as an alias of its first template parameter (Key).
      *
+     * @param key Key to be searched for.
+     *        Member type 'K' is the type of the keys for the elements in the container,
+     *        defined in Map<K, V> as an alias of its first template parameter (Key).
      */
     const_iterator find(const K& key) const
     {
@@ -243,10 +264,12 @@ public:
         return _data.find(key);
     }
     
-    /** @brief Inserts new elements in the map.
-     *  @note If the container has already contained the key, this function will erase the old pair(key, object)  and insert the new pair.
-     *  @param key The key to be inserted.
-     *  @param object The object to be inserted.
+    /** 
+     * Inserts new elements in the map.
+     *
+     * @note If the container has already contained the key, this function will erase the old pair(key, object)  and insert the new pair.
+     * @param key The key to be inserted.
+     * @param object The object to be inserted.
      */
     void insert(const K& key, V object)
     {
@@ -256,9 +279,11 @@ public:
         object->retain();
     }
     
-    /** @brief Removes an element with an iterator from the Map<K, V> container.
-     *  @param position Iterator pointing to a single element to be removed from the Map<K, V>.
-     *         Member type const_iterator is a forward iterator type.
+    /** 
+     * Removes an element with an iterator from the Map<K, V> container.
+     *
+     * @param position Iterator pointing to a single element to be removed from the Map<K, V>.
+     *        Member type const_iterator is a forward iterator type.
      */
     iterator erase(const_iterator position)
     {
@@ -267,10 +292,12 @@ public:
         return _data.erase(position);
     }
     
-    /** @brief Removes an element with an iterator from the Map<K, V> container.
-     *  @param k Key of the element to be erased.
-     *         Member type 'K' is the type of the keys for the elements in the container,
-     *         defined in Map<K, V> as an alias of its first template parameter (Key).
+    /** 
+     * Removes an element with an iterator from the Map<K, V> container.
+     *
+     * @param k Key of the element to be erased.
+     *        Member type 'K' is the type of the keys for the elements in the container,
+     *        defined in Map<K, V> as an alias of its first template parameter (Key).
      */
     size_t erase(const K& k)
     {
@@ -285,8 +312,10 @@ public:
         return 0;
     }
     
-    /** @brief Removes some elements with a vector which contains keys in the map.
-     *  @param keys Keys of elements to be erased.
+    /** 
+     * Removes some elements with a vector which contains keys in the map.
+     *
+     * @param keys Keys of elements to be erased.
      */
     void erase(const std::vector<K>& keys)
     {
@@ -295,7 +324,8 @@ public:
         }
     }
     
-    /** All the elements in the Map<K,V> container are dropped:
+    /** 
+     * All the elements in the Map<K,V> container are dropped:
      *  their reference count will be decreased, and they are removed from the container,
      *  leaving it with a size of 0.
      */
@@ -309,8 +339,9 @@ public:
         _data.clear();
     }
     
-    /** @brief Gets a random object in the map
-     *  @return Returns the random object if the map isn't empty, otherwise it returns nullptr.
+    /** 
+     * Gets a random object in the map.
+     * @return Returns the random object if the map isn't empty, otherwise it returns nullptr.
      */
     V getRandomObject() const
     {
@@ -349,7 +380,7 @@ public:
     //        return _data.at(key);
     //    }
     
-    /** Copy assignment operator */
+    /** Copy assignment operator. */
     Map<K, V>& operator= ( const Map<K, V>& other )
     {
         if (this != &other) {
@@ -361,7 +392,7 @@ public:
         return *this;
     }
     
-    /** Move assignment operator */
+    /** Move assignment operator. */
     Map<K, V>& operator= ( Map<K, V>&& other )
     {
         if (this != &other) {
@@ -386,9 +417,9 @@ protected:
     RefMap _data;
 };
 
-// end of data_structure group
-/// @}
 
 NS_CC_END
+// end group
+/// @}
 
 #endif /* __CCMAP_H__ */

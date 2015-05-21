@@ -36,7 +36,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * @addtogroup layer
+ * @addtogroup _2d
  * @{
  */
 
@@ -52,7 +52,8 @@ class Touch;
 //
 // Layer
 //
-/** @brief Layer is a subclass of Node that implements the TouchEventsDelegate protocol.
+/** @class Layer
+ * @brief Layer is a subclass of Node that implements the TouchEventsDelegate protocol.
 
 All features from Node are valid, plus the following new features:
 - It can receive iPhone Touches
@@ -61,7 +62,10 @@ All features from Node are valid, plus the following new features:
 class CC_DLL Layer : public Node
 {
 public:    
-    /** creates a fullscreen black layer */
+    /** Creates a fullscreen black layer.
+     *
+     * @return An autoreleased Layer object.
+     */
     static Layer *create();
 
     // Deprecated touch callbacks.
@@ -78,21 +82,78 @@ public:
     /* Callback function should not be deprecated, it will generate lots of warnings.
        Since 'setTouchEnabled' was deprecated, it will make warnings if developer overrides onTouchXXX and invokes setTouchEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
     */
-    virtual bool onTouchBegan(Touch *touch, Event *unused_event); 
-    virtual void onTouchMoved(Touch *touch, Event *unused_event); 
-    virtual void onTouchEnded(Touch *touch, Event *unused_event); 
+    /** Callback function for touch began.
+     *
+     * @param touch Touch infomation.
+     * @param unused_event Event information.
+     * @return if return false, onTouchMoved, onTouchEnded, onTouchCancelled will never called.
+     * @js NA
+     */
+    virtual bool onTouchBegan(Touch *touch, Event *unused_event);
+    /** Callback function for touch moved.
+    *
+    * @param touch Touch infomation.
+    * @param unused_event Event information.
+    * @js NA
+    */
+    virtual void onTouchMoved(Touch *touch, Event *unused_event);
+    /** Callback function for touch ended.
+    *
+    * @param touch Touch infomation.
+    * @param unused_event Event information.
+    * @js NA
+    */
+    virtual void onTouchEnded(Touch *touch, Event *unused_event);
+    /** Callback function for touch cancelled.
+    *
+    * @param touch Touch infomation.
+    * @param unused_event Event information.
+    * @js NA
+    */
     virtual void onTouchCancelled(Touch *touch, Event *unused_event);
 
+    /** Callback function for multiple touches began.
+    *
+    * @param touches Touches information.
+    * @param unused_event Event information.
+    * @js NA
+    */
     virtual void onTouchesBegan(const std::vector<Touch*>& touches, Event *unused_event);
+    /** Callback function for multiple touches moved.
+    *
+    * @param touches Touches information.
+    * @param unused_event Event information.
+    * @js NA
+    */
     virtual void onTouchesMoved(const std::vector<Touch*>& touches, Event *unused_event);
+    /** Callback function for multiple touches ended.
+    *
+    * @param touches Touches information.
+    * @param unused_event Event information.
+    * @js NA
+    */
     virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event *unused_event);
+    /** Callback function for multiple touches cancelled.
+    *
+    * @param touches Touches information.
+    * @param unused_event Event information.
+    * @js NA
+    */
     virtual void onTouchesCancelled(const std::vector<Touch*>&touches, Event *unused_event);
-    /** @deprecated Please override onAcceleration */
+    /** 
+      @deprecated Please override onAcceleration 
+      @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE virtual void didAccelerate(Acceleration* accelerationValue) final {};
 
 	/* Callback function should not be deprecated, it will generate lots of warnings.
 	Since 'setAccelerometerEnabled' was deprecated, it will make warnings if developer overrides onAcceleration and invokes setAccelerometerEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
     */
+    /** Callback funtion for acceleration.
+     * @param acc Acceleration information.
+     * @param unused_event Event information.
+     * @js NA
+     */
     virtual void onAcceleration(Acceleration* acc, Event* unused_event);
 
     /** If isTouchEnabled, this method is called onEnter. Override it to change the
@@ -104,6 +165,7 @@ public:
     TouchDispatcher::sharedDispatcher()->addTargetedDelegate(this,INT_MIN+1,true);
     }
     @since v0.8.0
+    @js NA
     */
     CC_DEPRECATED_ATTRIBUTE virtual void registerWithTouchDispatcher() final {};
 
@@ -111,6 +173,7 @@ public:
     You can enable / disable touch events with this property.
     Only the touches of this node will be affected. This "method" is not propagated to it's children.
     @since v0.8.1
+    @js NA
     */
     CC_DEPRECATED_ATTRIBUTE bool isTouchEnabled() const;
     CC_DEPRECATED_ATTRIBUTE void setTouchEnabled(bool value);
@@ -118,13 +181,17 @@ public:
     CC_DEPRECATED_ATTRIBUTE virtual void setTouchMode(Touch::DispatchMode mode);
     CC_DEPRECATED_ATTRIBUTE virtual Touch::DispatchMode getTouchMode() const;
 
-    /** swallowsTouches of the touch events. Default is true */
+    /** 
+      swallowsTouches of the touch events. Default is true 
+      @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE virtual void setSwallowsTouches(bool swallowsTouches);
     CC_DEPRECATED_ATTRIBUTE virtual bool isSwallowsTouches() const;
 
     /** whether or not it will receive Accelerometer events
     You can enable / disable accelerometer events with this property.
     @since v0.8.1
+    @js NA
     */
     CC_DEPRECATED_ATTRIBUTE virtual bool isAccelerometerEnabled() const;
     CC_DEPRECATED_ATTRIBUTE virtual void setAccelerometerEnabled(bool value);
@@ -133,27 +200,47 @@ public:
     /** whether or not it will receive keyboard or keypad events
     You can enable / disable accelerometer events with this property.
     it's new in cocos2d-x
+    @js NA
     */
 
     CC_DEPRECATED_ATTRIBUTE virtual bool isKeyboardEnabled() const;
     CC_DEPRECATED_ATTRIBUTE virtual void setKeyboardEnabled(bool value);
 
-    /** Please use onKeyPressed instead. */
+    /** 
+      Please use onKeyPressed instead. 
+      @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE virtual void keyPressed(int keyCode) final {};
     
-    /** Please use onKeyReleased instead. */
+    /** 
+      Please use onKeyReleased instead. 
+      @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE virtual void keyReleased(int keyCode) final {};
 
 	/* Callback function should not be deprecated, it will generate lots of warnings.
 	Since 'setKeyboardEnabled' was deprecated, it will make warnings if developer overrides onKeyXXX and invokes setKeyboardEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
     */
+    /** Callback function for key pressed.
+     * @param keyCode KeyCode information.
+     * @param event Event information.
+     * @js NA
+     */
     virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
+    /** Callback function for key released.
+    * @param keyCode KeyCode information.
+    * @param event Event information.
+    * @js NA
+    */
     virtual void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
 
     CC_DEPRECATED_ATTRIBUTE virtual bool isKeypadEnabled() const final { return _keyboardEnabled; }
     CC_DEPRECATED_ATTRIBUTE virtual void setKeypadEnabled(bool value);
 
-    /** @deprecated Please override onKeyReleased and check the keycode of KeyboardEvent::KeyCode::Menu(KEY_BACKSPACE) instead. */
+    /** 
+      @deprecated Please override onKeyReleased and check the keycode of KeyboardEvent::KeyCode::Menu(KEY_BACKSPACE) instead. 
+      @js NA
+     */
     CC_DEPRECATED_ATTRIBUTE virtual void keyBackClicked() final {};
     CC_DEPRECATED_ATTRIBUTE virtual void keyMenuClicked() final {};
 
@@ -190,12 +277,14 @@ private:
 };
 
 
-/** LayerRGBA is a subclass of Layer that implements the RGBAProtocol protocol using a solid color as the background.
+/** @class __LayerRGBA
+ * @brief LayerRGBA is a subclass of Layer that implements the RGBAProtocol protocol using a solid color as the background.
  
  All features from Layer are valid, plus the following new features that propagate into children that conform to the RGBAProtocol:
  - opacity
  - RGB colors
  @since 2.1
+ @js NA
  */
 class CC_DLL __LayerRGBA : public Layer, public __RGBAProtocol
 {
@@ -234,7 +323,8 @@ private:
 //
 // LayerColor
 //
-/** @brief LayerColor is a subclass of Layer that implements the RGBAProtocol protocol.
+/** @class LayerColor
+ * @brief LayerColor is a subclass of Layer that implements the RGBAProtocol protocol.
 
 All features from Layer are valid, plus the following new features:
 - opacity
@@ -243,18 +333,40 @@ All features from Layer are valid, plus the following new features:
 class CC_DLL LayerColor : public Layer, public BlendProtocol
 {
 public:
-    /** creates a fullscreen black layer */
+    /** Creates a fullscreen black layer.
+     *
+     * @return An autoreleased LayerColor object.
+     */
     static LayerColor* create();
-    /** creates a Layer with color, width and height in Points */
+    /** Creates a Layer with color, width and height in Points.
+     *
+     * @param color The color of layer.
+     * @param width The width of layer.
+     * @param height The height of layer.
+     * @return An autoreleased LayerColor object.
+     */
     static LayerColor * create(const Color4B& color, GLfloat width, GLfloat height);
-    /** creates a Layer with color. Width and height are the window size. */
+    /** Creates a Layer with color. Width and height are the window size.
+     *
+     * @param color The color of layer.
+     * @return An autoreleased LayerColor object.
+     */
     static LayerColor * create(const Color4B& color);
 
-    /** change width in Points*/
+    /** Change width in Points.
+     * 
+     * @param w The width of layer.
+     */
     void changeWidth(GLfloat w);
-    /** change height in Points*/
+    /** Change height in Points.
+     *
+     * @param h The height of layer.
+     */
     void changeHeight(GLfloat h);
-    /** change width and height in Points
+    /** Change width and height in Points.
+     * 
+     * @param w The width of layer.
+     * @param h The Height of layer.
     @since v0.8
     */
     void changeWidthAndHeight(GLfloat w ,GLfloat h);
@@ -267,7 +379,6 @@ public:
     virtual void setContentSize(const Size & var) override;
     /** BlendFunction. Conforms to BlendProtocol protocol */
     /**
-    * @js NA
     * @lua NA
     */
     virtual const BlendFunc& getBlendFunc() const override;
@@ -286,7 +397,7 @@ CC_CONSTRUCTOR_ACCESS:
     LayerColor();
     virtual ~LayerColor();
     
-    bool init();
+    bool init() override;
     bool initWithColor(const Color4B& color, GLfloat width, GLfloat height);
     bool initWithColor(const Color4B& color);
 
@@ -308,7 +419,8 @@ private:
 //
 // LayerGradient
 //
-/** @brief LayerGradient is a subclass of LayerColor that draws gradients across the background.
+/** @class LayerGradient
+ * @brief LayerGradient is a subclass of LayerColor that draws gradients across the background.
 
 All features from LayerColor are valid, plus the following new features:
 - direction
@@ -330,46 +442,95 @@ If ' compressedInterpolation' is enabled (default mode) you will see both the st
 class CC_DLL LayerGradient : public LayerColor
 {
 public:
-    /** Creates a fullscreen black layer */
+    /** Creates a fullscreen black layer.
+     *
+     * @return An autoreleased LayerGradient object.
+     */
     static LayerGradient* create();
 
-    /** Creates a full-screen Layer with a gradient between start and end. */
+    /** Creates a full-screen Layer with a gradient between start and end.
+     *
+     * @param start The start color.
+     * @param end The end color.
+     * @return An autoreleased LayerGradient object.
+     */
     static LayerGradient* create(const Color4B& start, const Color4B& end);
 
-    /** Creates a full-screen Layer with a gradient between start and end in the direction of v. */
+    /** Creates a full-screen Layer with a gradient between start and end in the direction of v.
+     *
+     * @param start The start color.
+     * @param end The end color.
+     * @param v The direction of gradient color.
+     * @return An autoreleased LayerGradient object.
+     */
     static LayerGradient* create(const Color4B& start, const Color4B& end, const Vec2& v);
     
-    /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
-     Default: true
+    /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors.
+     Default: true.
+     *
+     * @param compressedInterpolation The interpolation will be compressed if true.
      */
     void setCompressedInterpolation(bool compressedInterpolation);
+    /** Get the compressedInterpolation
+     *
+     * @return The interpolation will be compressed if true.
+     */
     bool isCompressedInterpolation() const;
 
-    /** Sets the start color of the gradient */
+    /** Sets the start color of the gradient.
+     * 
+     * @param startColor The start color.
+     */
     void setStartColor( const Color3B& startColor );
-    /** Returns the start color of the gradient */
+    /** Returns the start color of the gradient.
+     *
+     * @return The start color.
+     */
     const Color3B& getStartColor() const;
 
-    /** Sets the end color of the gradient */
+    /** Sets the end color of the gradient.
+     *
+     * @param endColor The end color.
+     */
     void setEndColor( const Color3B& endColor );
-    /** Returns the end color of the gradient */
+    /** Returns the end color of the gradient.
+     *
+     * @return The end color.
+     */
     const Color3B& getEndColor() const;
 
-    /** Returns the start opacity of the gradient */
+    /** Returns the start opacity of the gradient.
+     *
+     * @param startOpacity The start opacity, from 0 to 255.
+     */
     void setStartOpacity( GLubyte startOpacity );
-    /** Returns the start opacity of the gradient */
+    /** Returns the start opacity of the gradient.
+     *
+     * @return The start opacity.
+     */
     GLubyte getStartOpacity() const;
 
-    /** Returns the end opacity of the gradient */
+    /** Returns the end opacity of the gradient.
+     *
+     * @param endOpacity The end opacity, from 0 to 255.
+     */
     void setEndOpacity( GLubyte endOpacity );
-    /** Returns the end opacity of the gradient */
+    /** Returns the end opacity of the gradient.
+     *
+     * @return The end opacity.
+     */
     GLubyte getEndOpacity() const;
 
     /** Sets the directional vector that will be used for the gradient.
     The default value is vertical direction (0,-1). 
+     *
+     * @param alongVector The direction of gradient.
      */
     void setVector(const Vec2& alongVector);
-    /** Returns the directional vector used for the gradient */
+    /** Returns the directional vector used for the gradient.
+     *
+     * @return The direction of gradient.
+     */
     const Vec2& getVector() const;
 
     virtual std::string getDescription() const override;
@@ -378,7 +539,7 @@ CC_CONSTRUCTOR_ACCESS:
     LayerGradient();
     virtual ~LayerGradient();
     
-    virtual bool init();
+    virtual bool init() override;
     /** Initializes the Layer with a gradient between start and end.
      * @js init
      * @lua init
@@ -403,7 +564,8 @@ protected:
 };
 
 
-/** @brief MultipleLayer is a Layer with the ability to multiplex it's children.
+/** @class LayerMultiplex
+ * @brief MultipleLayer is a Layer with the ability to multiplex it's children.
 Features:
 - It supports one or more children
 - Only one children will be active a time
@@ -411,27 +573,31 @@ Features:
 class CC_DLL LayerMultiplex : public Layer
 {
 public:
-    /** creates and initializes a LayerMultiplex object 
-     * @js NA
+    /** Creates and initializes a LayerMultiplex object.
      * @lua NA
+     * 
+     * @return An autoreleased LayerMultiplex object.
      */
     static LayerMultiplex* create();
 
-    /** creates a LayerMultiplex with an array of layers.
+    /** Creates a LayerMultiplex with an array of layers.
      @since v2.1
      * @js NA
+     *
+     * @param arrayOfLayers An array of layers.
+     * @return An autoreleased LayerMultiplex object.
      */
     static LayerMultiplex* createWithArray(const Vector<Layer*>& arrayOfLayers);
 
-    /** creates a LayerMultiplex with one or more layers using a variable argument list. 
+    /** Creates a LayerMultiplex with one or more layers using a variable argument list.
      * @code
      * When this function bound to lua or js,the input params are changed.
      * In js:var create(...)
      * In lua:local create(...)
      * @endcode
      */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    // WP8 in VS2012 does not support nullptr in variable args lists and variadic templates are also not supported
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    // VS2013 does not support nullptr in variable args lists and variadic templates are also not supported
     typedef Layer* M;
     static LayerMultiplex* create(M m1, std::nullptr_t listEnd) { return createVariadic(m1, NULL); }
     static LayerMultiplex* create(M m1, M m2, std::nullptr_t listEnd) { return createVariadic(m1, m2, NULL); }
@@ -450,24 +616,35 @@ public:
     static LayerMultiplex * create(Layer* layer, ... );
 #endif
 
-    /**
-     * lua script can not init with undetermined number of variables
+    /** Creates a LayerMultiplex with one layer.
+     * Lua script can not init with undetermined number of variables
      * so add these functions to be used with lua.
      * @js NA
      * @lua NA
+     *
+     * @param layer A certain layer.
+     * @return An autoreleased LayerMultiplex object.
      */
     static LayerMultiplex * createWithLayer(Layer* layer);
 
 
+    /** Add a certain layer to LayerMultiplex.
+     *
+     * @param layer A layer need to be added to the LayerMultiplex.
+     */
     void addLayer(Layer* layer);
 
-    /** switches to a certain layer indexed by n.
+    /** Switches to a certain layer indexed by n.
      The current (old) layer will be removed from it's parent with 'cleanup=true'.
+     *
+     * @param n The layer indexed by n will display.
      */
     void switchTo(int n);
     /** release the current layer and switches to another layer indexed by n.
     The current (old) layer will be removed from it's parent with 'cleanup=true'.
-    */
+     *
+     * @param n The layer indexed by n will display.
+     */
     void switchToAndReleaseMe(int n);
 
     virtual std::string getDescription() const override;
@@ -483,7 +660,7 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual ~LayerMultiplex();
     
-    virtual bool init();
+    virtual bool init() override;
     /** initializes a MultiplexLayer with one or more layers using a variable argument list.
      * @js NA
      * @lua NA
@@ -504,7 +681,7 @@ private:
 };
 
 
-// end of layer group
+// end of _2d group
 /// @}
 
 NS_CC_END

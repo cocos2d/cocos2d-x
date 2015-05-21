@@ -2,6 +2,8 @@
 #include "../testResource.h"
 #include "cocos2d.h"
 
+USING_NS_CC;
+
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #elif _MSC_VER >= 1400 //vs 2005 or higher
@@ -29,137 +31,40 @@ enum {
     kTagSprite8,
 };
 
-//------------------------------------------------------------------
-//
-// AtlasDemo
-//
-//------------------------------------------------------------------
-
-enum
+LabelTests::LabelTests()
 {
-    IDC_NEXT = 100,
-    IDC_BACK,
-    IDC_RESTART
-};
-
-Layer* nextAtlasAction();
-Layer* backAtlasAction();
-Layer* restartAtlasAction();
-
-static int sceneIdx = -1; 
-
-static std::function<Layer*()> createFunctions[] =
-{
-    CL(LabelAtlasTest),
-    CL(LabelAtlasColorTest),
-    CL(Atlas3),
-    CL(Atlas4),
-    CL(Atlas5),
-    CL(Atlas6),
-    CL(AtlasBitmapColor),
-    CL(AtlasFastBitmap),
-    CL(BitmapFontMultiLine),
-    CL(LabelsEmpty),
-    CL(LabelBMFontHD),
-    CL(LabelAtlasHD),
-    CL(LabelGlyphDesigner),
-    CL(LabelTTFTest),
-    CL(LabelTTFMultiline),
-    CL(LabelTTFChinese),
-    CL(LabelBMFontChinese),
-    CL(BitmapFontMultiLineAlignment),
-    CL(LabelTTFOpacityTest),
-    CL(BMFontOneAtlas),
-    CL(BMFontUnicode),
-    CL(BMFontInit),
-    CL(TTFFontInit),
-    CL(Issue1343),
-    CL(LabelTTFAlignment),
-    CL(LabelBMFontBounds),
-    CL(TTFFontShadowAndStroke),
+    ADD_TEST_CASE(LabelAtlasTest);
+    ADD_TEST_CASE(LabelAtlasColorTest);
+    ADD_TEST_CASE(Atlas3);
+    ADD_TEST_CASE(Atlas4);
+    ADD_TEST_CASE(Atlas5);
+    ADD_TEST_CASE(Atlas6);
+    ADD_TEST_CASE(AtlasBitmapColor);
+    ADD_TEST_CASE(AtlasFastBitmap);
+    ADD_TEST_CASE(BitmapFontMultiLine);
+    ADD_TEST_CASE(LabelsEmpty);
+    ADD_TEST_CASE(LabelBMFontHD);
+    ADD_TEST_CASE(LabelAtlasHD);
+    ADD_TEST_CASE(LabelGlyphDesigner);
+    ADD_TEST_CASE(LabelTTFTest);
+    ADD_TEST_CASE(LabelTTFMultiline);
+    ADD_TEST_CASE(LabelTTFChinese);
+    ADD_TEST_CASE(LabelBMFontChinese);
+    ADD_TEST_CASE(BitmapFontMultiLineAlignment);
+    ADD_TEST_CASE(LabelTTFOpacityTest);
+    ADD_TEST_CASE(BMFontOneAtlas);
+    ADD_TEST_CASE(BMFontUnicode);
+    ADD_TEST_CASE(BMFontInit);
+    ADD_TEST_CASE(TTFFontInit);
+    ADD_TEST_CASE(Issue1343);
+    ADD_TEST_CASE(LabelTTFAlignment);
+    ADD_TEST_CASE(LabelBMFontBounds);
+    ADD_TEST_CASE(TTFFontShadowAndStroke);
     // should be moved to another test
-    CL(Atlas1),
-    CL(LabelBMFontCrashTest),
-	CL(LabelBMFontBinaryFormat),
-};
-
-#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-Layer* nextAtlasAction()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
+    ADD_TEST_CASE(Atlas1);
+    ADD_TEST_CASE(LabelBMFontCrashTest);
+	ADD_TEST_CASE(LabelBMFontBinaryFormat);
 }
-
-Layer* backAtlasAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;    
-    
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-Layer* restartAtlasAction()
-{
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-} 
-
-
-AtlasDemo::AtlasDemo(void)
-{
-}
-
-AtlasDemo::~AtlasDemo(void)
-{
-}
-
-std::string AtlasDemo::title() const
-{
-    return "No title";
-}
-
-std::string AtlasDemo::subtitle() const
-{
-    return "";
-}
-
-void AtlasDemo::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-void AtlasDemo::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) AtlasTestScene();
-    s->addChild(restartAtlasAction()); 
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void AtlasDemo::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) AtlasTestScene();
-    s->addChild( nextAtlasAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void AtlasDemo::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) AtlasTestScene();
-    s->addChild( backAtlasAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-} 
-
 
 //------------------------------------------------------------------
 //
@@ -916,15 +821,6 @@ std::string LabelGlyphDesigner::subtitle() const
     return "You should see a font with shawdows and outline";
 }
 
-void AtlasTestScene::runThisTest()
-{
-    sceneIdx = -1;
-    auto layer = nextAtlasAction();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
-}
-
 //------------------------------------------------------------------
 //
 // LabelTTFTest
@@ -1537,11 +1433,7 @@ TTFFontShadowAndStroke::TTFFontShadowAndStroke()
     strokeShaodwTextDef._fontFillColor   = tintColorBlue;
     
     // shadow + stroke label
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
-    auto fontStrokeAndShadow = LabelTTF::createWithFontDefinition("Stroke && Shadow Blue Text", strokeShaodwTextDef);
-#else
-    auto fontStrokeAndShadow = LabelTTF::createWithFontDefinition("Stroke &Shadow Blue Text", strokeShaodwTextDef);
-#endif 
+    auto fontStrokeAndShadow = LabelTTF::createWithFontDefinition("Stroke & Shadow Blue Text", strokeShaodwTextDef);
     
     // add label to the scene
     this->addChild(fontStrokeAndShadow);

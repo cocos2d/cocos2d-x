@@ -9,6 +9,7 @@
 -- @function [parent=#LabelAtlas] setString 
 -- @param self
 -- @param #string label
+-- @return LabelAtlas#LabelAtlas self (return value: cc.LabelAtlas)
         
 --------------------------------
 -- @overload self, string, string         
@@ -23,11 +24,6 @@
 -- @param #int startCharMap
 -- @return bool#bool ret (return value: bool)
 
---------------------------------
--- 
--- @function [parent=#LabelAtlas] updateAtlasValues 
--- @param self
-        
 --------------------------------
 -- 
 -- @function [parent=#LabelAtlas] getString 
@@ -49,8 +45,20 @@
 
 --------------------------------
 -- 
+-- @function [parent=#LabelAtlas] updateAtlasValues 
+-- @param self
+-- @return LabelAtlas#LabelAtlas self (return value: cc.LabelAtlas)
+        
+--------------------------------
+-- js NA
 -- @function [parent=#LabelAtlas] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)
+        
+--------------------------------
+-- 
+-- @function [parent=#LabelAtlas] LabelAtlas 
+-- @param self
+-- @return LabelAtlas#LabelAtlas self (return value: cc.LabelAtlas)
         
 return nil

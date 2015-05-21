@@ -25,15 +25,16 @@
 #include "UIEditBoxTest.h"
 #include "testResource.h"
 
-// UIEditBoxTest
-UIEditBoxTest::UIEditBoxTest()
+USING_NS_CC;
+USING_NS_CC_EXT;
+using namespace cocos2d::ui;
+
+UIEditBoxTests::UIEditBoxTests()
 {
-    
+    ADD_TEST_CASE(UIEditBoxTest);
 }
 
-UIEditBoxTest::~UIEditBoxTest()
-{
-}
+// UIEditBoxTest
 
 bool UIEditBoxTest::init()
 {
@@ -71,12 +72,6 @@ bool UIEditBoxTest::init()
         // middle
         _editPassword = ui::EditBox::create(editBoxSize, "extensions/orange_edit.png");
         _editPassword->setPosition(Vec2(visibleOrigin.x+visibleSize.width/2, visibleOrigin.y+visibleSize.height/2));
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        _editPassword->setFont("American Typewriter", 30);
-#else
-        _editPassword->setFont("American Typewriter", 80);
-        _editPassword->setPlaceholderFont("American Typewriter", 80);
-#endif
         _editPassword->setFontColor(Color3B::GREEN);
         _editPassword->setPlaceHolder("Password:");
         _editPassword->setMaxLength(6);

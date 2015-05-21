@@ -40,6 +40,11 @@ namespace cocostudio
         return instancePageViewReader;
     }
     
+    void PageViewReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instancePageViewReader);
+    }
+    
     void PageViewReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
 	{
 		LayoutReader::setPropsFromBinary(widget, cocoLoader, cocoNode);
@@ -311,10 +316,10 @@ namespace cocostudio
         PageView* pageView = static_cast<PageView*>(node);
         auto options = (PageViewOptions*)pageViewOptions;
         
-        bool clipEnabled = options->clipEnabled();
+        bool clipEnabled = options->clipEnabled() != 0;
         pageView->setClippingEnabled(clipEnabled);
         
-        bool backGroundScale9Enabled = options->backGroundScale9Enabled();
+        bool backGroundScale9Enabled = options->backGroundScale9Enabled() != 0;
         pageView->setBackGroundImageScale9Enabled(backGroundScale9Enabled);
         
         

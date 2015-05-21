@@ -265,7 +265,7 @@ cc.Handler.EVENT_SPINE            = 52
 cc.Handler.EVENT_PHYSICS_CONTACT_BEGIN = 53
 cc.Handler.EVENT_PHYSICS_CONTACT_PRESOLVE = 54
 cc.Handler.EVENT_PHYSICS_CONTACT_POSTSOLVE = 55
-cc.Handler.EVENT_PHYSICS_CONTACT_SEPERATE = 56
+cc.Handler.EVENT_PHYSICS_CONTACT_SEPARATE = 56
 cc.Handler.EVENT_FOCUS = 57
 cc.Handler.EVENT_CONTROLLER_CONNECTED = 58
 cc.Handler.EVENT_CONTROLLER_DISCONNECTED = 59
@@ -610,3 +610,12 @@ cc.LightFlag =
     LIGHT14 = math.pow(2,14),
     LIGHT15 = math.pow(2,15),
 }
+
+cc.AsyncTaskPool.TaskType =
+{
+    TASK_IO = 0,
+    TASK_NETWORK = 1,
+    TASK_OTHER = 2,
+    TASK_MAX_TYPE = 3,  
+}
+

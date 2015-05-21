@@ -29,6 +29,8 @@
 
 #include <cmath>
 
+USING_NS_CC;
+
 #if defined(_MSC_VER) && _MSC_VER<1800
 #define CC_ROUND(__f__) __f__
 #else
@@ -48,6 +50,20 @@ enum {
     kTagAutoTestMenu = 3,
     kTagMenuLayer = (kMaxNodes + 1000),
 };
+
+PerformceSpriteTests::PerformceSpriteTests()
+{
+    ADD_TEST_CASE(SpritePerformTestA);
+    ADD_TEST_CASE(SpritePerformTestB);
+    ADD_TEST_CASE(SpritePerformTestC);
+    ADD_TEST_CASE(SpritePerformTestD);
+    ADD_TEST_CASE(SpritePerformTestE);
+    ADD_TEST_CASE(SpritePerformTestF);
+    ADD_TEST_CASE(SpritePerformTestG);
+}
+
+int SpriteMainScene::_quantityNodes = 50;
+int SpriteMainScene::_subtestNumber = 1;
 
 ////////////////////////////////////////////////////////
 //
@@ -293,83 +309,6 @@ void SubTest::removeByTag(int tag)
 
 ////////////////////////////////////////////////////////
 //
-// SpriteMenuLayer
-//
-////////////////////////////////////////////////////////
-void SpriteMenuLayer::restartCallback(Ref* sender)
-{
-    if ( SpriteMainScene::_s_autoTest )
-    {
-        log("It's auto sprite performace testing,so this operation is invalid");
-        return;
-    }
-    
-    PerformBasicLayer::restartCallback(sender);
-}
-void SpriteMenuLayer::nextCallback(Ref* sender)
-{
-    if ( SpriteMainScene::_s_autoTest )
-    {
-        log("It's auto sprite performace testing,so this operation is invalid");
-        return;
-    }
-    
-    PerformBasicLayer::nextCallback(sender);
-}
-void SpriteMenuLayer::backCallback(Ref* sender)
-{
-    if ( SpriteMainScene::_s_autoTest )
-    {
-        log("It's auto sprite performace testing,so this operation is invalid");
-        return;
-    }
-    
-    PerformBasicLayer::backCallback(sender);
-}
-
-void SpriteMenuLayer::showCurrentTest()
-{
-    SpriteMainScene* scene = nullptr;
-    auto pPreScene = (SpriteMainScene*) getParent();
-    int nSubTest = pPreScene->getSubTestNum();
-    int nNodes   = pPreScene->getNodesNum();
-
-    switch (_curCase)
-    {
-    case 0:
-        scene = new (std::nothrow) SpritePerformTestA;
-        break;
-    case 1:
-        scene = new (std::nothrow) SpritePerformTestB;
-        break;
-    case 2:
-        scene = new (std::nothrow) SpritePerformTestC;
-        break;
-    case 3:
-        scene = new (std::nothrow) SpritePerformTestD;
-        break;
-    case 4:
-        scene = new (std::nothrow) SpritePerformTestE;
-        break;
-    case 5:
-        scene = new (std::nothrow) SpritePerformTestF;
-        break;
-    case 6:
-        scene = new (std::nothrow) SpritePerformTestG;
-        break;
-    }
-    
-    SpriteMainScene::_s_nSpriteCurCase = _curCase;
-
-    if (scene)
-    {
-        scene->initWithSubTest(nSubTest, nNodes);
-        Director::getInstance()->replaceScene(scene);
-        scene->release();
-    }
-}
-////////////////////////////////////////////////////////
-//
 // SpriteMainScene
 //
 ////////////////////////////////////////////////////////
@@ -386,6 +325,17 @@ int SpriteMainScene::_s_spritesQuatityIndex = 0;
 int SpriteMainScene::_s_spritesQuanityArray[] = {1000, 3000, 0};
 // FIXME: to make VS2012 happy. Once VS2012 is deprecated, we can just simply replace it with {}
 std::vector<float> SpriteMainScene::_s_saved_fps = std::vector<float>(); 
+
+bool SpriteMainScene::init()
+{
+    if (TestCase::init())
+    {
+        initWithSubTest(_subtestNumber, _quantityNodes);
+        return true;
+    }
+
+    return false;
+}
 
 void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
 {
@@ -415,11 +365,6 @@ void SpriteMainScene::initWithSubTest(int asubtest, int nNodes)
     infoLabel->setColor(Color3B(0,200,20));
     infoLabel->setPosition(Vec2(s.width/2, s.height-90));
     addChild(infoLabel, 1, kTagInfoLayer);
-
-    // add menu
-    auto menuLayer = new (std::nothrow) SpriteMenuLayer(true, TEST_COUNT, SpriteMainScene::_s_nSpriteCurCase);
-    addChild(menuLayer, 1, kTagMenuLayer);
-    menuLayer->release();
     
     /**
      *  auto test menu
@@ -512,13 +457,13 @@ void SpriteMainScene::testNCallback(Ref* sender)
 {
     if (SpriteMainScene::_s_autoTest)
     {
-        log("It's auto sprite performace testing,so this operation is invalid");
+        log("It's auto sprite performance testing,so this operation is invalid");
         return;
     }
     
     _subtestNumber = static_cast<MenuItemFont*>(sender)->getTag();
-    auto menu = static_cast<SpriteMenuLayer*>( getChildByTag(kTagMenuLayer) );
-    menu->restartCallback(sender);
+    
+    this->restartTestCallback(sender);
 }
 
 void SpriteMainScene::updateNodes()
@@ -972,13 +917,4 @@ std::string SpritePerformTestG::title() const
 void SpritePerformTestG::doTest(Sprite* sprite)
 {
     performanceActions20(sprite);
-}
-
-void runSpriteTest()
-{
-    SpriteMainScene::_s_autoTest = false;
-    auto scene = new (std::nothrow) SpritePerformTestA;
-    scene->initWithSubTest(1, 50);
-    Director::getInstance()->replaceScene(scene);
-    scene->release();
 }

@@ -64,6 +64,11 @@ namespace cocostudio
         return instanceLayoutReader;
     }
     
+    void LayoutReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instanceLayoutReader);
+    }
+    
     void LayoutReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
     {
         WidgetReader::setPropsFromBinary(widget, cocoLoader, cocoNode);
@@ -570,10 +575,10 @@ namespace cocostudio
         Layout* panel = static_cast<Layout*>(node);
         auto options = (PanelOptions*)layoutOptions;
         
-        bool clipEnabled = options->clipEnabled();
+        bool clipEnabled = options->clipEnabled() != 0;
         panel->setClippingEnabled(clipEnabled);
         
-        bool backGroundScale9Enabled = options->backGroundScale9Enabled();
+        bool backGroundScale9Enabled = options->backGroundScale9Enabled() != 0;
         panel->setBackGroundImageScale9Enabled(backGroundScale9Enabled);
         
         

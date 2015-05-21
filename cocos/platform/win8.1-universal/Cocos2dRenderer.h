@@ -29,15 +29,19 @@ namespace cocos2d
     class Cocos2dRenderer
     {
     public:
-        Cocos2dRenderer( int width, int height, float dpi, Windows::UI::Core::CoreDispatcher^ dispathcer, Windows::UI::Xaml::Controls::Panel^ panel);
+        Cocos2dRenderer(int width, int height, float dpi, 
+            Windows::Graphics::Display::DisplayOrientations orientation, 
+            Windows::UI::Core::CoreDispatcher^ dispathcer, Windows::UI::Xaml::Controls::Panel^ panel);
         ~Cocos2dRenderer();
-        void Draw(GLsizei width, GLsizei height, float dpi);
-        void QueuePointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);
-        void QueueKeyBoardEvent(Cocos2dKeyEvent type, Windows::UI::Core::KeyEventArgs^ e);
+        void Draw(GLsizei width, GLsizei height, float dpi, Windows::Graphics::Display::DisplayOrientations orientation);
+		void QueuePointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);
+		void QueueKeyboardEvent(WinRTKeyboardEventType type, Windows::UI::Core::KeyEventArgs^ args);
+		void QueueBackButtonEvent();
         void Pause();
         void Resume();
         void DeviceLost();
-        
+        bool AppShouldExit();
+
     private:
 
         int m_width;
@@ -48,5 +52,6 @@ namespace cocos2d
         AppDelegate* m_app;
         Platform::Agile<Windows::UI::Core::CoreDispatcher> m_dispatcher;
         Platform::Agile<Windows::UI::Xaml::Controls::Panel> m_panel;
+        Windows::Graphics::Display::DisplayOrientations m_orientation;
     };
 }

@@ -29,7 +29,6 @@
  */
 
 #include "2d/CCParticleBatchNode.h"
-
 #include "2d/CCGrid.h"
 #include "2d/CCParticleSystem.h"
 #include "renderer/CCTextureCache.h"
@@ -402,13 +401,7 @@ void ParticleBatchNode::draw(Renderer *renderer, const Mat4 &transform, uint32_t
     {
         return;
     }
-
-    _batchCommand.init(
-                       _globalZOrder,
-                       getGLProgram(),
-                       _blendFunc,
-                       _textureAtlas,
-                       _modelViewTransform);
+    _batchCommand.init(_globalZOrder, getGLProgram(), _blendFunc, _textureAtlas, _modelViewTransform, flags);
     renderer->addCommand(&_batchCommand);
     CC_PROFILER_STOP("CCParticleBatchNode - draw");
 }

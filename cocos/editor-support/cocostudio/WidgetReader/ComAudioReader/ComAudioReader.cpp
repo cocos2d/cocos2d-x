@@ -63,6 +63,11 @@ namespace cocostudio
         CC_SAFE_DELETE(_instanceComAudioReader);
     }
     
+    void ComAudioReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(_instanceComAudioReader);
+    }
+    
     Offset<Table> ComAudioReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
                                                                flatbuffers::FlatBufferBuilder *builder)
     {
@@ -181,11 +186,10 @@ namespace cocostudio
                 break;
         }
         
-        bool loop = options->loop();
+        bool loop = options->loop() != 0;
         audio->setLoop(loop);
         
         audio->setName(options->name()->c_str());
-        audio->setLoop(options->loop());
         
         return component;
     }

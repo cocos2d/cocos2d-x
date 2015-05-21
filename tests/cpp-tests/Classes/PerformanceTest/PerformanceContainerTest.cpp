@@ -2,8 +2,9 @@
  *
  */
 #include "PerformanceContainerTest.h"
-
 #include <algorithm>
+
+USING_NS_CC;
 
 // Enable profiles for this file
 #undef CC_PROFILER_DISPLAY_TIMERS
@@ -32,17 +33,15 @@
 #undef CC_PROFILER_RESET_INSTANCE
 #define CC_PROFILER_RESET_INSTANCE(__id__, __name__) do{ ProfilingResetTimingBlock( String::createWithFormat("%08X - %s", __id__, __name__)->getCString() ); } while(0)
 
-static std::function<PerformanceContainerScene*()> createFunctions[] =
+PerformceContainerTests::PerformceContainerTests()
 {
-    CL(TemplateVectorPerfTest),
-    CL(ArrayPerfTest),
-    CL(TemplateMapStringKeyPerfTest),
-    CL(DictionaryStringKeyPerfTest),
-    CL(TemplateMapIntKeyPerfTest),
-    CL(DictionaryIntKeyPerfTest)
-};
-
-#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
+    ADD_TEST_CASE(TemplateVectorPerfTest);
+    ADD_TEST_CASE(ArrayPerfTest);
+    ADD_TEST_CASE(TemplateMapStringKeyPerfTest);
+    ADD_TEST_CASE(DictionaryStringKeyPerfTest);
+    ADD_TEST_CASE(TemplateMapIntKeyPerfTest);
+    ADD_TEST_CASE(DictionaryIntKeyPerfTest);
+}
 
 enum {
     kTagInfoLayer = 1,
@@ -55,59 +54,29 @@ enum {
     kNodesIncrease = 500,
 };
 
-static int g_curCase = 0;
-
-////////////////////////////////////////////////////////
-//
-// ContainerBasicLayer
-//
-////////////////////////////////////////////////////////
-
-ContainerBasicLayer::ContainerBasicLayer(bool bControlMenuVisible, int nMaxCases, int nCurCase)
-: PerformBasicLayer(bControlMenuVisible, nMaxCases, nCurCase)
-{
-}
-
-void ContainerBasicLayer::showCurrentTest()
-{
-    int nodes = ((PerformanceContainerScene*)getParent())->getQuantityOfNodes();
-
-    auto scene = createFunctions[_curCase]();
-
-    g_curCase = _curCase;
-
-    if (scene)
-    {
-        scene->initWithQuantityOfNodes(nodes);
-
-        Director::getInstance()->replaceScene(scene);
-    }
-}
+int PerformanceContainerScene::quantityOfNodes = kNodesIncrease;
 
 ////////////////////////////////////////////////////////
 //
 // PerformanceContainerScene
 //
 ////////////////////////////////////////////////////////
+bool PerformanceContainerScene::init()
+{
+    if (TestCase::init())
+    {
+        initWithQuantityOfNodes(quantityOfNodes);
+        return true;
+    }
+
+    return false;
+}
+
 void PerformanceContainerScene::initWithQuantityOfNodes(unsigned int nNodes)
 {
     _type = 0;
     //srand(time());
     auto s = Director::getInstance()->getWinSize();
-
-    // Title
-    auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 32);
-    addChild(label, 1, TAG_TITLE);
-    label->setPosition(Vec2(s.width/2, s.height-50));
-
-    // Subtitle
-    std::string strSubTitle = subtitle();
-    if(strSubTitle.length())
-    {
-        auto l = Label::createWithTTF(strSubTitle.c_str(), "fonts/Thonburi.ttf", 16);
-        addChild(l, 1, TAG_SUBTITLE);
-        l->setPosition(Vec2(s.width/2, s.height-80));
-    }
 
     lastRenderedCount = 0;
     currentQuantityOfNodes = 0;
@@ -152,10 +121,6 @@ void PerformanceContainerScene::initWithQuantityOfNodes(unsigned int nNodes)
     infoLabel->setPosition(Vec2(s.width/2, s.height/2-15));
     addChild(infoLabel, 1, kTagInfoLayer);
 
-    auto menuLayer = new (std::nothrow) ContainerBasicLayer(true, MAX_LAYER, g_curCase);
-    addChild(menuLayer);
-    menuLayer->release();
-
     log("Size of Node: %d\n", (int)sizeof(Node));
     
     int oldFontSize = MenuItemFont::getFontSize();
@@ -176,8 +141,7 @@ void PerformanceContainerScene::initWithQuantityOfNodes(unsigned int nNodes)
     auto toggle = MenuItemToggle::createWithCallback([this](Ref* sender){
         auto toggle = static_cast<MenuItemToggle*>(sender);
         this->_type = toggle->getSelectedIndex();
-        auto label = static_cast<Label*>(this->getChildByTag(TAG_SUBTITLE));
-        label->setString(StringUtils::format("Test '%s', See console", this->_testFunctions[this->_type].name));
+        _subtitleLabel->setString(StringUtils::format("Test '%s', See console", this->_testFunctions[this->_type].name));
         this->updateProfilerName();
     }, toggleItems);
     
@@ -1355,14 +1319,4 @@ std::string DictionaryIntKeyPerfTest::title() const
 std::string DictionaryIntKeyPerfTest::subtitle() const
 {
     return "Test `setObject`, See console";
-}
-
-
-///----------------------------------------
-void runContainerPerformanceTest()
-{
-    auto scene = createFunctions[g_curCase]();
-    scene->initWithQuantityOfNodes(kNodesIncrease);
-    
-    Director::getInstance()->replaceScene(scene);
 }

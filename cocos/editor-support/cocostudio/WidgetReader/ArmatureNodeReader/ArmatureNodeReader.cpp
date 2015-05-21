@@ -34,6 +34,11 @@ ArmatureNodeReader* ArmatureNodeReader::getInstance()
 	return _instanceArmatureNodeReader;
 }
 
+void ArmatureNodeReader::destroyInstance()
+{
+    CC_SAFE_DELETE(_instanceArmatureNodeReader);
+}
+
 Offset<Table> ArmatureNodeReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
 	flatbuffers::FlatBufferBuilder *builder)
 {
@@ -115,17 +120,47 @@ void ArmatureNodeReader::setPropsWithFlatBuffers(cocos2d::Node *node,
 	const flatbuffers::Table *nodeOptions)
 {
 
-	auto* custom = static_cast<CCArmature*>(node);
+	auto* custom = static_cast<Armature*>(node);
 	auto options = (flatbuffers::CSArmatureNodeOption*)nodeOptions;
-	auto reader = ArmatureNodeReader::getInstance();
+    
+    bool fileExist = false;
+    std::string errorFilePath = "";
 
-	std::string filepath(options->fileData()->path()->c_str());
-	ArmatureDataManager::getInstance()->addArmatureFileInfo(FileUtils::getInstance()->fullPathForFilename(filepath));
-	custom->init(getArmatureName(filepath));
-	if (options->isAutoPlay())
-		custom->getAnimation()->play(options->currentAnimationName()->c_str(), -1, options->isLoop());
-	else
-		custom->getAnimation()->setIsPlaying(false);
+	std::string filepath(options->fileData()->path()->c_str());    
+    
+    if (FileUtils::getInstance()->isFileExist(filepath))
+    {
+        fileExist = true;
+        
+        std::string fullpath = FileUtils::getInstance()->fullPathForFilename(filepath);
+        
+        std::string dirpath = fullpath.substr(0, fullpath.find_last_of("/"));
+        FileUtils::getInstance()->addSearchPath(dirpath);
+        
+        ArmatureDataManager::getInstance()->addArmatureFileInfo(fullpath);
+        custom->init(getArmatureName(filepath));
+        std::string currentname = options->currentAnimationName()->c_str();
+        if (options->isAutoPlay())
+            custom->getAnimation()->play(currentname, -1, options->isLoop());
+        else
+        {
+            custom->getAnimation()->play(currentname);
+            custom->getAnimation()->gotoAndPause(0);
+        }
+    }
+    else
+    {
+        errorFilePath = filepath;
+        fileExist = false;
+    }
+    
+    if (!fileExist)
+    {
+        auto label = Label::create();
+        label->setString(__String::createWithFormat("%s missed", filepath.c_str())->getCString());
+        custom->addChild(label);
+    }
+    
 }
 
 cocos2d::Node*  ArmatureNodeReader::createNodeWithFlatBuffers(const flatbuffers::Table *nodeOptions)
@@ -148,9 +183,9 @@ cocos2d::Node*  ArmatureNodeReader::createNodeWithFlatBuffers(const flatbuffers:
 std::string ArmatureNodeReader::getArmatureName(const std::string& exporJsonPath)
 {
 	//FileUtils.getFileData(exporJsonPath, "r", size)   // need read armature name in exportJsonPath
-	int end = exporJsonPath.find_last_of(".");
-	int start = exporJsonPath.find_last_of("\\") + 1;
-	int start1 = exporJsonPath.find_last_of("/") + 1;
+	size_t end = exporJsonPath.find_last_of(".");
+	size_t start = exporJsonPath.find_last_of("\\") + 1;
+	size_t start1 = exporJsonPath.find_last_of("/") + 1;
 	if (start < start1)
 		start = start1;
 

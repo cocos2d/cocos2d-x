@@ -25,9 +25,7 @@
 #include "base/CCDirector.h"
 #include "platform/CCFileUtils.h"
 
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 #include <dwrite.h>
-#endif
 #include <map>
 #include <string>
 #include <sstream>
@@ -41,6 +39,8 @@ NS_CC_BEGIN
 
 static map<std::string, FontBufferInfo> s_fontsNames;
 static FT_Library s_FreeTypeLibrary = nullptr;
+
+const std::string CCFreeTypeFont::DEFAULT_FONT = "arial";
 
 CCFreeTypeFont::CCFreeTypeFont() 
     :m_space(" ")
@@ -87,6 +87,7 @@ unsigned char* CCFreeTypeFont::initWithString(const char * text, const FontDefin
     m_fontFillColorR = textDefinition._fontFillColor.r;
     m_fontFillColorG = textDefinition._fontFillColor.g;
     m_fontFillColorB = textDefinition._fontFillColor.b;
+    m_fontFillColorA = textDefinition._fontAlpha;
 
 #if 0
     // check the cache for the font file buffer
@@ -111,12 +112,12 @@ unsigned char* CCFreeTypeFont::initWithString(const char * text, const FontDefin
         if(!pBuffer)
         {
             // attempt to load default font from Resources fonts folder
-		    pBuffer = loadFont("Arial", &size);
+            pBuffer = loadFont(DEFAULT_FONT.c_str(), &size);
         }
         if(!pBuffer)
         {
             // attempt to load default font from System fonts folder
-		    pBuffer = loadSystemFont("Arial", &size);
+            pBuffer = loadSystemFont(DEFAULT_FONT.c_str(), &size);
         }
 
         if(!pBuffer) // font not found!
@@ -295,6 +296,7 @@ void CCFreeTypeFont::draw_bitmap(unsigned char* pBuffer, FT_Bitmap*  bitmap, FT_
     FT_Int  i, j, p, q;
     FT_Int  x_max = x + bitmap->width;
     FT_Int  y_max = y + bitmap->rows;
+    float fontAlpha = m_fontFillColorA / 255.0f;
 
     for (i = x, p = 0; i < x_max; i++, p++)
     {
@@ -311,7 +313,7 @@ void CCFreeTypeFont::draw_bitmap(unsigned char* pBuffer, FT_Bitmap*  bitmap, FT_
                 pBuffer[index++] = m_fontFillColorR;
                 pBuffer[index++] = m_fontFillColorG;
                 pBuffer[index++] = m_fontFillColorB;
-                pBuffer[index++] = value;
+                pBuffer[index++] = value * fontAlpha;
            }
         }
     }  
@@ -576,6 +578,8 @@ void  CCFreeTypeFont::compute_bbox(std::vector<TGlyph>& glyphs, FT_BBox  *abbox)
 
 unsigned char* CCFreeTypeFont::loadFont(const char *pFontName, ssize_t *size) 
 {
+
+
 	std::string lowerCase(pFontName);
 	std::string path(pFontName);
 
@@ -584,10 +588,15 @@ unsigned char* CCFreeTypeFont::loadFont(const char *pFontName, ssize_t *size)
         lowerCase[i] = tolower(lowerCase[i]);
     }
 
+    if (lowerCase == "")
+    {
+        lowerCase = DEFAULT_FONT;
+        path = lowerCase;
+    }
+
     if (std::string::npos == lowerCase.find("fonts/"))
     {
-        path = "fonts/";
-        path += pFontName;
+        path = "fonts/" + lowerCase;
     }
 
     if (std::string::npos == lowerCase.find(".ttf"))
@@ -596,14 +605,17 @@ unsigned char* CCFreeTypeFont::loadFont(const char *pFontName, ssize_t *size)
     }
 
 	std::string fullpath  = FileUtils::getInstance()->fullPathForFilename(path.c_str());
-	return FileUtils::sharedFileUtils()->getFileData(fullpath.c_str(), "rb", size);
+
+    if (fullpath == "")
+    {
+        return nullptr;
+    }
+
+	return FileUtils::getInstance()->getFileData(fullpath.c_str(), "rb", size);
 }
 
 unsigned char* CCFreeTypeFont::loadSystemFont(const char *pFontName, ssize_t *size) 
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	return nullptr;
-#else
     std::string aName(pFontName);
     unsigned char* pBuffer = nullptr;
     HRESULT hr = S_OK;
@@ -735,7 +747,6 @@ unsigned char* CCFreeTypeFont::loadSystemFont(const char *pFontName, ssize_t *si
     }
 
     return pBuffer;
-#endif
 }
 
 NS_CC_END

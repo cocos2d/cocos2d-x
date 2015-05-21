@@ -1,6 +1,7 @@
 #include "PerformanceNodeChildrenTest.h"
-
 #include <algorithm>
+
+USING_NS_CC;
 
 // Enable profiles for this file
 #undef CC_PROFILER_DISPLAY_TIMERS
@@ -29,26 +30,21 @@
 #undef CC_PROFILER_RESET_INSTANCE
 #define CC_PROFILER_RESET_INSTANCE(__id__, __name__) do{ ProfilingResetTimingBlock( String::createWithFormat("%08X - %s", __id__, __name__)->getCString() ); } while(0)
 
-static std::function<NodeChildrenMainScene*()> createFunctions[] =
+PerformceNodeChildrenTests::PerformceNodeChildrenTests()
 {
-    CL(IterateSpriteSheetForLoop),
-    CL(IterateSpriteSheetIterator),
-    CL(IterateSpriteSheetForEach),
-
-    CL(CallFuncsSpriteSheetForEach),
-
-    CL(AddSprite),
-    CL(AddSpriteSheet),
-    CL(GetSpriteSheet),
-    CL(RemoveSprite),
-    CL(RemoveSpriteSheet),
-    CL(ReorderSpriteSheet),
-    CL(SortAllChildrenSpriteSheet),
-
-    CL(VisitSceneGraph),
-};
-
-#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
+    ADD_TEST_CASE(IterateSpriteSheetForLoop);
+    ADD_TEST_CASE(IterateSpriteSheetIterator);
+    ADD_TEST_CASE(IterateSpriteSheetForEach);
+    ADD_TEST_CASE(CallFuncsSpriteSheetForEach);
+    ADD_TEST_CASE(AddSprite);
+    ADD_TEST_CASE(AddSpriteSheet);
+    ADD_TEST_CASE(GetSpriteSheet);
+    ADD_TEST_CASE(RemoveSprite);
+    ADD_TEST_CASE(RemoveSpriteSheet);
+    ADD_TEST_CASE(ReorderSpriteSheet);
+    ADD_TEST_CASE(SortAllChildrenSpriteSheet);
+    ADD_TEST_CASE(VisitSceneGraph);
+}
 
 enum {
     kTagInfoLayer = 1,
@@ -61,80 +57,50 @@ enum {
     kNodesIncrease = 500,
 };
 
-static int g_curCase = 0;
-
-////////////////////////////////////////////////////////
-//
-// NodeChildrenMenuLayer
-//
-////////////////////////////////////////////////////////
-NodeChildrenMenuLayer::NodeChildrenMenuLayer(bool bControlMenuVisible, int nMaxCases, int nCurCase)
-: PerformBasicLayer(bControlMenuVisible, nMaxCases, nCurCase)
-{
-}
-
-void NodeChildrenMenuLayer::onExitTransitionDidStart()
-{
-    auto director = Director::getInstance();
-    auto sched = director->getScheduler();
-
-    sched->unschedule(CC_SCHEDULE_SELECTOR(NodeChildrenMenuLayer::dumpProfilerInfo), this);
-}
-
-void NodeChildrenMenuLayer::onEnterTransitionDidFinish()
-{
-    auto director = Director::getInstance();
-    auto sched = director->getScheduler();
-
-    CC_PROFILER_PURGE_ALL();
-    sched->schedule(CC_SCHEDULE_SELECTOR(NodeChildrenMenuLayer::dumpProfilerInfo), this, 2, false);
-}
-
-
-void NodeChildrenMenuLayer::dumpProfilerInfo(float dt)
-{
-	CC_PROFILER_DISPLAY_TIMERS();
-}
-
-void NodeChildrenMenuLayer::showCurrentTest()
-{
-    int nodes = ((NodeChildrenMainScene*)getParent())->getQuantityOfNodes();
-
-    auto scene = createFunctions[_curCase]();
-
-    g_curCase = _curCase;
-
-    if (scene)
-    {
-        scene->initWithQuantityOfNodes(nodes);
-
-        Director::getInstance()->replaceScene(scene);
-    }
-}
+int NodeChildrenMainScene::quantityOfNodes = kNodesIncrease;
 
 ////////////////////////////////////////////////////////
 //
 // NodeChildrenMainScene
 //
 ////////////////////////////////////////////////////////
+bool NodeChildrenMainScene::init()
+{
+    if (TestCase::init())
+    {
+        initWithQuantityOfNodes(quantityOfNodes);
+        return true;
+    }
+
+    return false;
+}
+
+void NodeChildrenMainScene::onExitTransitionDidStart()
+{
+    auto director = Director::getInstance();
+    auto sched = director->getScheduler();
+
+    sched->unschedule(CC_SCHEDULE_SELECTOR(NodeChildrenMainScene::dumpProfilerInfo), this);
+}
+
+void NodeChildrenMainScene::onEnterTransitionDidFinish()
+{
+    auto director = Director::getInstance();
+    auto sched = director->getScheduler();
+
+    CC_PROFILER_PURGE_ALL();
+    sched->schedule(CC_SCHEDULE_SELECTOR(NodeChildrenMainScene::dumpProfilerInfo), this, 2, false);
+}
+
+void NodeChildrenMainScene::dumpProfilerInfo(float dt)
+{
+    CC_PROFILER_DISPLAY_TIMERS();
+}
+
 void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
 {
     //srand(time());
     auto s = Director::getInstance()->getWinSize();
-
-    // Title
-    auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 32);
-    addChild(label, 1);
-    label->setPosition(Vec2(s.width/2, s.height-50));
-
-    // Subtitle
-    std::string strSubTitle = subtitle();
-    if(strSubTitle.length())
-    {
-        auto l = Label::createWithTTF(strSubTitle.c_str(), "fonts/Thonburi.ttf", 16);
-        addChild(l, 1);
-        l->setPosition(Vec2(s.width/2, s.height-80));
-    }
 
     lastRenderedCount = 0;
     currentQuantityOfNodes = 0;
@@ -175,10 +141,6 @@ void NodeChildrenMainScene::initWithQuantityOfNodes(unsigned int nNodes)
     infoLabel->setColor(Color3B(0,200,20));
     infoLabel->setPosition(Vec2(s.width/2, s.height/2-15));
     addChild(infoLabel, 1, kTagInfoLayer);
-
-    auto menuLayer = new (std::nothrow) NodeChildrenMenuLayer(true, MAX_LAYER, g_curCase);
-    addChild(menuLayer);
-    menuLayer->release();
 
     updateQuantityLabel();
     updateQuantityOfNodes();
@@ -966,13 +928,4 @@ std::string VisitSceneGraph::subtitle() const
 const char*  VisitSceneGraph::testName()
 {
     return "visit()";
-}
-
-///----------------------------------------
-void runNodeChildrenTest()
-{
-    auto scene = createFunctions[g_curCase]();
-    scene->initWithQuantityOfNodes(kNodesIncrease);
-
-    Director::getInstance()->replaceScene(scene);
 }

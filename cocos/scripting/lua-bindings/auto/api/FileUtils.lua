@@ -57,11 +57,12 @@
 -- @function [parent=#FileUtils] setFilenameLookupDictionary 
 -- @param self
 -- @param #map_table filenameLookupDict
+-- @return FileUtils#FileUtils self (return value: cc.FileUtils)
         
 --------------------------------
--- Remove a file<br>
+-- Removes a file.<br>
 -- param filepath The full path of the file, it must be an absolute path.<br>
--- return true if the file have been removed successfully, otherwise it will return false.
+-- return True if the file have been removed successfully, false if not.
 -- @function [parent=#FileUtils] removeFile 
 -- @param self
 -- @param #string filepath
@@ -71,19 +72,19 @@
 -- Checks whether the path is an absolute path.<br>
 -- note On Android, if the parameter passed in is relative to "assets/", this method will treat it as an absolute path.<br>
 -- Also on Blackberry, path starts with "app/native/Resources/" is treated as an absolute path.<br>
--- param strPath The path that needs to be checked.<br>
--- return true if it's an absolute path, otherwise it will return false.
+-- param path The path that needs to be checked.<br>
+-- return True if it's an absolute path, false if not.
 -- @function [parent=#FileUtils] isAbsolutePath 
 -- @param self
 -- @param #string path
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- Rename a file under the given directory<br>
+-- Renames a file under the given directory.<br>
 -- param path     The parent directory path of the file, it must be an absolute path.<br>
 -- param oldname  The current name of the file.<br>
 -- param name     The new name of the file.<br>
--- return true if the file have been renamed successfully, otherwise it will return false.
+-- return True if the file have been renamed successfully, false if not.
 -- @function [parent=#FileUtils] renameFile 
 -- @param self
 -- @param #string path
@@ -123,16 +124,17 @@
 -- @function [parent=#FileUtils] loadFilenameLookupDictionaryFromFile 
 -- @param self
 -- @param #string filename
+-- @return FileUtils#FileUtils self (return value: cc.FileUtils)
         
 --------------------------------
--- 
+--  Checks whether to pop up a message box when failed to load an image. <br>
+-- return True if pop up a message box when failed to load an image, false if not.
 -- @function [parent=#FileUtils] isPopupNotify 
 -- @param self
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- Converts the contents of a file to a ValueVector.<br>
--- note This method is used internally.
+-- 
 -- @function [parent=#FileUtils] getValueVectorFromFile 
 -- @param self
 -- @param #string filename
@@ -148,8 +150,7 @@
 -- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
--- Write a ValueMap to a plist file.<br>
--- note This method is used internally.
+-- 
 -- @function [parent=#FileUtils] writeToFile 
 -- @param self
 -- @param #map_table dict
@@ -158,6 +159,8 @@
         
 --------------------------------
 -- Converts the contents of a file to a ValueMap.<br>
+-- param filename The filename of the file to gets content.<br>
+-- return ValueMap of the file contents.<br>
 -- note This method is used internally.
 -- @function [parent=#FileUtils] getValueMapFromFile 
 -- @param self
@@ -165,8 +168,7 @@
 -- @return map_table#map_table ret (return value: map_table)
         
 --------------------------------
--- Converts the contents of a file to a ValueMap.<br>
--- note This method is used internally.
+-- 
 -- @function [parent=#FileUtils] getValueMapFromData 
 -- @param self
 -- @param #char filedata
@@ -174,9 +176,9 @@
 -- @return map_table#map_table ret (return value: map_table)
         
 --------------------------------
--- Remove a directory<br>
+-- Removes a directory.<br>
 -- param dirPath  The full path of the directory, it must be an absolute path.<br>
--- return true if the directory have been removed successfully, otherwise it will return false.
+-- return True if the directory have been removed successfully, false if not.
 -- @function [parent=#FileUtils] removeDirectory 
 -- @param self
 -- @param #string dirPath
@@ -200,9 +202,10 @@
 -- @function [parent=#FileUtils] setSearchPaths 
 -- @param self
 -- @param #array_table searchPaths
+-- @return FileUtils#FileUtils self (return value: cc.FileUtils)
         
 --------------------------------
--- Retrieve the file size<br>
+-- Retrieve the file size.<br>
 -- note If a relative path was passed in, it will be inserted a default root path at the beginning.<br>
 -- param filepath The path of the file, it could be a relative or absolute path.<br>
 -- return The file size.
@@ -214,13 +217,14 @@
 --------------------------------
 -- Sets the array that contains the search order of the resources.<br>
 -- param searchResolutionsOrder The source array that contains the search order of the resources.<br>
--- see getSearchResolutionsOrder(void), fullPathForFilename(const char*).<br>
+-- see getSearchResolutionsOrder(), fullPathForFilename(const char*).<br>
 -- since v2.1<br>
 -- In js:var setSearchResolutionsOrder(var jsval)<br>
 -- lua NA
 -- @function [parent=#FileUtils] setSearchResolutionsOrder 
 -- @param self
 -- @param #array_table searchResolutionsOrder
+-- @return FileUtils#FileUtils self (return value: cc.FileUtils)
         
 --------------------------------
 -- Append search order of the resources.<br>
@@ -230,6 +234,7 @@
 -- @param self
 -- @param #string order
 -- @param #bool front
+-- @return FileUtils#FileUtils self (return value: cc.FileUtils)
         
 --------------------------------
 -- Add search path.<br>
@@ -238,28 +243,26 @@
 -- @param self
 -- @param #string path
 -- @param #bool front
+-- @return FileUtils#FileUtils self (return value: cc.FileUtils)
         
 --------------------------------
 -- Checks whether a file exists.<br>
 -- note If a relative path was passed in, it will be inserted a default root path at the beginning.<br>
--- param strFilePath The path of the file, it could be a relative or absolute path.<br>
--- return true if the file exists, otherwise it will return false.
+-- param filename The path of the file, it could be a relative or absolute path.<br>
+-- return True if the file exists, false if not.
 -- @function [parent=#FileUtils] isFileExist 
 -- @param self
 -- @param #string filename
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- Purges the file searching cache.<br>
--- note It should be invoked after the resources were updated.<br>
--- For instance, in the CocosPlayer sample, every time you run application from CocosBuilder,<br>
--- All the resources will be downloaded to the writable folder, before new js app launchs,<br>
--- this method should be invoked to clean the file search cache.
+-- Purges full path caches.
 -- @function [parent=#FileUtils] purgeCachedEntries 
 -- @param self
+-- @return FileUtils#FileUtils self (return value: cc.FileUtils)
         
 --------------------------------
--- Gets full path from a file name and the path of the reletive file.<br>
+-- Gets full path from a file name and the path of the relative file.<br>
 -- param filename The file name.<br>
 -- param pszRelativeFile The path of the relative file.<br>
 -- return The full path.<br>
@@ -272,19 +275,44 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- Sets/Gets whether to pop-up a message box when failed to load an image.
+-- Windows fopen can't support UTF-8 filename<br>
+-- Need convert all parameters fopen and other 3rd-party libs<br>
+-- param filename std::string name file for convertation from utf-8<br>
+-- return std::string ansi filename in current locale
+-- @function [parent=#FileUtils] getSuitableFOpen 
+-- @param self
+-- @param #string filenameUtf8
+-- @return string#string ret (return value: string)
+        
+--------------------------------
+-- Sets writable path.
+-- @function [parent=#FileUtils] setWritablePath 
+-- @param self
+-- @param #string writablePath
+-- @return FileUtils#FileUtils self (return value: cc.FileUtils)
+        
+--------------------------------
+-- Sets whether to pop-up a message box when failed to load an image.
 -- @function [parent=#FileUtils] setPopupNotify 
 -- @param self
 -- @param #bool notify
+-- @return FileUtils#FileUtils self (return value: cc.FileUtils)
         
 --------------------------------
--- Checks whether the path is a directory<br>
+-- Checks whether the path is a directory.<br>
 -- param dirPath The path of the directory, it could be a relative or an absolute path.<br>
--- return true if the directory exists, otherwise it will return false.
+-- return True if the directory exists, false if not.
 -- @function [parent=#FileUtils] isDirectoryExist 
 -- @param self
 -- @param #string dirPath
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- Set default resource root path.
+-- @function [parent=#FileUtils] setDefaultResourceRootPath 
+-- @param self
+-- @param #string path
+-- @return FileUtils#FileUtils self (return value: cc.FileUtils)
         
 --------------------------------
 -- Gets the array that contains the search order of the resources.<br>
@@ -296,9 +324,9 @@
 -- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
--- Creates a directory<br>
+-- Creates a directory.<br>
 -- param dirPath The path of the directory, it must be an absolute path.<br>
--- return true if the directory have been created successfully, otherwise it will return false.
+-- return True if the directory have been created successfully, false if not.
 -- @function [parent=#FileUtils] createDirectory 
 -- @param self
 -- @param #string dirPath
@@ -315,6 +343,7 @@
 -- Destroys the instance of FileUtils.
 -- @function [parent=#FileUtils] destroyInstance 
 -- @param self
+-- @return FileUtils#FileUtils self (return value: cc.FileUtils)
         
 --------------------------------
 -- Gets the instance of FileUtils.

@@ -49,6 +49,11 @@ namespace cocostudio
         return instanceImageViewReader;
     }
     
+    void ImageViewReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(instanceImageViewReader);
+    }
+    
     void ImageViewReader::setPropsFromBinary(cocos2d::ui::Widget *widget, CocoLoader *cocoLoader, stExpCocoNode *cocoNode)
     {
         WidgetReader::setPropsFromBinary(widget, cocoLoader, cocoNode);
@@ -355,7 +360,7 @@ namespace cocostudio
             imageView->addChild(label);
         }
         
-        bool scale9Enabled = options->scale9Enabled();
+        bool scale9Enabled = options->scale9Enabled() != 0;
         imageView->setScale9Enabled(scale9Enabled);
         
         auto widgetReader = WidgetReader::getInstance();

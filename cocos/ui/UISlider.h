@@ -30,6 +30,11 @@ THE SOFTWARE.
 
 NS_CC_BEGIN
 
+/**
+ * @addtogroup ui
+ * @{
+ */
+
 class Sprite;
 
 namespace ui {
@@ -43,149 +48,169 @@ typedef enum
 typedef void (Ref::*SEL_SlidPercentChangedEvent)(Ref*,SliderEventType);
 #define sliderpercentchangedselector(_SELECTOR) (SEL_SlidPercentChangedEvent)(&_SELECTOR)
 
-/**
-*   @js NA
-*   @lua NA
-*/
+/** 
+ * @brief UI Slider widget.
+ */
 class CC_GUI_DLL Slider : public Widget
 {
     
     DECLARE_CLASS_GUI_INFO
     
 public:
+    /** EventType Slider event type.
+     */
     enum class EventType
     {
         ON_PERCENTAGE_CHANGED
     };
     typedef std::function<void(Ref*,EventType)> ccSliderCallback;
     /**
-     * Default constructor
+     * Default constructor.
+     * @js ctor
+     * @lua new
      */
     Slider();
     
     /**
-     * Default destructor
+     * Default destructor.
+     * @js NA
+     * @lua NA
      */
     virtual ~Slider();
     
-    /**
-     * Allocates and initializes.
+    /** Create a slider widget.
+     *
+     * @return An autoreleased Slider object.
      */
     static Slider* create();
+    
+    /** Create a slider widget with bar texture, ball texture and texture resource type.
+     *
+     * @param barTextureName Bar texture file name.
+     * @param normalBallTextureName Ball texture file name.
+     * @param resType Texture resource type.
+     * @return An autoreleased Slider object.
+     */
+    static Slider* create(const std::string& barTextureName,
+                          const std::string& normalBallTextureName,
+                          TextureResType resType = TextureResType::LOCAL);
     
     /**
      * Load texture for slider bar.
      *
-     * @param fileName   file name of texture.
-     *
-     * @param texType    @see TextureResType
+     * @param fileName   File name of texture.
+     * @param resType    @see TextureResType .
      */
-    void loadBarTexture(const std::string& fileName,TextureResType texType = TextureResType::LOCAL);
+    void loadBarTexture(const std::string& fileName,TextureResType resType = TextureResType::LOCAL);
     
     /**
      * Sets if slider is using scale9 renderer.
-     *
-     * @param true that using scale9 renderer, false otherwise.
+     * @param able True that using scale9 renderer, false otherwise.
      */
     void setScale9Enabled(bool able);
     
+    /**
+     * Gets If slider is using scale9 renderer.
+     * @return True that using scale9 renderer, false otherwise.
+     */
     bool isScale9Enabled()const;
     
     /**
      * Sets capinsets for slider, if slider is using scale9 renderer.
-     *
-     * @param capInsets    capinsets for slider
+     * @param capInsets Capinsets for slider.
      */
     void setCapInsets(const Rect &capInsets);
     
     /**
-     * Sets capinsets for slider, if slider is using scale9 renderer.
-     *
-     * @param capInsets    capinsets for slider
+     * Sets capinsets for bar slider, if slider is using scale9 renderer.
+     * @param capInsets Capinsets for bar slider.
      */
     void setCapInsetsBarRenderer(const Rect &capInsets);
     
+    /**
+     * Gets capinsets for bar slider, if slider is using scale9 renderer.
+     * @return capInsets Capinsets for bar slider.
+     */
     const Rect& getCapInsetsBarRenderer()const;
     
     /**
-     * Sets capinsets for slider, if slider is using scale9 renderer.
-     *
-     * @param capInsets    capinsets for slider
+     * Sets capinsets for progress bar slider, if slider is using scale9 renderer.
+     * @param capInsets Capinsets for progress bar slider.
+     * @js NA
      */
     void setCapInsetProgressBarRebderer(const Rect &capInsets);
     
+    /**
+     * Gets capinsets for progress bar slider, if slider is using scale9 renderer.
+     * @return Capinsets for progress bar slider.
+     * @js NA
+     */
     const Rect& getCapInsetsProgressBarRebderer()const;
     
     /**
      * Load textures for slider ball.
      *
-     * @param slider ball normal    normal state texture.
-     *
-     * @param slider ball selected    selected state texture.
-     *
-     * @param slider ball disabled    dark state texture.
-     *
-     * @param texType    @see TextureResType
+     * @param normal     Normal state texture.
+     * @param pressed    Pressed state texture.
+     * @param disabled    Disabled state texture.
+     * @param texType    @see TextureResType .
      */
     void loadSlidBallTextures(const std::string& normal,
-                              const std::string& pressed,
-                              const std::string& disabled,
+                              const std::string& pressed = "",
+                              const std::string& disabled = "",
                               TextureResType texType = TextureResType::LOCAL);
     
     /**
      * Load normal state texture for slider ball.
      *
-     * @param normal    normal state texture.
-     *
-     * @param texType    @see TextureResType
+     * @param normal    Normal state texture.
+     * @param resType    @see TextureResType .
      */
-    void loadSlidBallTextureNormal(const std::string& normal,TextureResType texType = TextureResType::LOCAL);
+    void loadSlidBallTextureNormal(const std::string& normal,TextureResType resType = TextureResType::LOCAL);
     
     /**
-     * Load selected state texture for slider ball.
+     * Load pressed state texture for slider ball.
      *
-     * @param selected    selected state texture.
-     *
-     * @param texType    @see TextureResType
+     * @param pressed    Pressed state texture.
+     * @param resType    @see TextureResType .
      */
-    void loadSlidBallTexturePressed(const std::string& pressed,TextureResType texType = TextureResType::LOCAL);
+    void loadSlidBallTexturePressed(const std::string& pressed,TextureResType resType = TextureResType::LOCAL);
     
     /**
-     * Load dark state texture for slider ball.
+     * Load disabled state texture for slider ball.
      *
-     * @param disabled    dark state texture.
-     *
-     * @param texType    @see TextureResType
+     * @param disabled   Disabled state texture.
+     * @param resType    @see TextureResType .
      */
-    void loadSlidBallTextureDisabled(const std::string& disabled,TextureResType texType = TextureResType::LOCAL);
+    void loadSlidBallTextureDisabled(const std::string& disabled,TextureResType resType = TextureResType::LOCAL);
     
     /**
      * Load dark state texture for slider progress bar.
      *
-     * @param fileName    file path of texture.
-     *
-     * @param texType    @see TextureResType
+     * @param fileName   File path of texture.
+     * @param resType    @see TextureResType .
      */
-    void loadProgressBarTexture(const std::string& fileName, TextureResType texType = TextureResType::LOCAL);
+    void loadProgressBarTexture(const std::string& fileName, TextureResType resType = TextureResType::LOCAL);
     
     /**
      * Changes the progress direction of slider.
-     *
-     * @param percent    percent value from 1 to 100.
+     * @param percent  Percent value from 1 to 100.
      */
     void setPercent(int percent);
     
     /**
      * Gets the progress direction of slider.
      *
-     * @return percent    percent value from 1 to 100.
+     * @return percent Percent value from 1 to 100.
      */
     int getPercent()const;
     
+    CC_DEPRECATED_ATTRIBUTE void addEventListenerSlider(Ref* target,SEL_SlidPercentChangedEvent selector);
     /**
      * Add call back function called when slider's percent has changed to slider.
+     *
+     * @param callback An given call back function called when slider's percent has changed to slider.
      */
-    CC_DEPRECATED_ATTRIBUTE void addEventListenerSlider(Ref* target,SEL_SlidPercentChangedEvent selector);
     void addEventListener(const ccSliderCallback& callback);
     
     virtual bool onTouchBegan(Touch *touch, Event *unusedEvent) override;
@@ -209,6 +234,18 @@ public:
      */
     virtual std::string getDescription() const override;
     
+    /** When user pressed the button, the button will zoom to a scale.
+     * The final scale of the button  equals (button original scale + _zoomScale)
+     * @since v3.3
+     */
+    void setZoomScale(float scale);
+    /**
+     * @brief Return a zoom scale
+     * @since v3.3
+     */
+    float getZoomScale()const;
+
+    
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
 
@@ -229,6 +266,7 @@ protected:
 protected:
     Scale9Sprite*  _barRenderer;
     Scale9Sprite* _progressBarRenderer;
+    Size _barTextureSize;
     Size _progressBarTextureSize;
     
     Sprite* _slidBallNormalRenderer;
@@ -241,6 +279,11 @@ protected:
     
     bool _scale9Enabled;
     bool _prevIgnoreSize;
+    
+    float _zoomScale;
+    float _sliderBallNormalTextureScaleX;
+    float _sliderBallNormalTextureScaleY;
+    
     std::string _textureFile;
     std::string _progressBarTextureFile;
     std::string _slidBallNormalTextureFile;
@@ -276,6 +319,10 @@ protected:
 };
 
 }
+
+// end of ui group
+/// @}
+
 NS_CC_END
 
 #endif /* defined(__CocoGUI__Slider__) */

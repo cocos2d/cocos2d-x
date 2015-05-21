@@ -27,6 +27,12 @@ THE SOFTWARE.
 
 #include "ui/UIWidget.h"
 #include "ui/GUIExport.h"
+#include "base/ccTypes.h"
+
+/**
+ * @addtogroup ui
+ * @{
+ */
 
 NS_CC_BEGIN
 
@@ -36,40 +42,56 @@ namespace ui {
 
 /**
  *  For creating a system font or a TTF font Text
- *@js 
- *@lua NA
  */
 class CC_GUI_DLL Text : public Widget
 {
-    
+
     DECLARE_CLASS_GUI_INFO
-    
+
 public:
+    /** Type Text type.
+     */
     enum class Type
     {
         SYSTEM,
         TTF
     };
     /**
-     * Default constructor
+     * Default constructor.
+     * @js ctor
+     * @lua new
      */
     Text();
 
     /**
-     * Default destructor
+     * Default destructor.
+     * @js NA
+     * @lua NA
      */
     virtual ~Text();
 
     /**
-     * Allocates and initializes.
+     * Create a Text object.
+     *
+     * @return An autoreleased Text object.
      */
     static Text* create();
-    
+
     /**
-     *  create a Text object with textContent, fontName and fontSize
-     *  the fontName could be a system font name or a TTF file path.
-     *  Usage:  Text *text = Text::create("Hello", "Arial", 20);  //create a system font UIText
-     *          Text *text = Text::create("Hello", "xxx\xxx.ttf", 20); //create a TTF font UIText
+     *  Create a Text object with textContent, fontName and fontSize.
+     *  The fontName could be a system font name or a TTF file path.
+     *  Usage:
+     *  @code
+     *       //create a system font UIText.
+     *       Text *text = Text::create("Hello", "Arial", 20);
+     *       //create a TTF font UIText.
+     *       Text *text = Text::create("Hello", "xxx\xxx.ttf", 20);
+     *  @endcode
+     *
+     * @param textContent Text content string.
+     * @param fontName A given font name.
+     * @param fontSize A given font size.
+     * @return An autoreleased Text object.
      */
     static Text* create(const std::string& textContent,
                         const std::string& fontName,
@@ -78,63 +100,88 @@ public:
     /**
      * Changes the string value of label.
      *
-     * @param text  string value.
+     * @param text  String value.
      */
-    CC_DEPRECATED_ATTRIBUTE void setText(const std::string& text){this->setString(text);}
+    CC_DEPRECATED_ATTRIBUTE void setText(const std::string& text)
+    {
+        this->setString(text);
+    }
     void setString(const std::string& text);
 
     /**
      * Gets the string value of label.
      *
-     * @return string value.
+     * @return String value.
      */
-    CC_DEPRECATED_ATTRIBUTE const std::string& getStringValue(){ return this->getString();}
+    CC_DEPRECATED_ATTRIBUTE const std::string& getStringValue()
+    {
+        return this->getString();
+    }
     const std::string& getString()const;
 
     /**
      * Gets the string length of the label.
      * Note: This length will be larger than the raw string length,
-     * if you want to get the raw string length, you should call this->getString().size() instead
+     * if you want to get the raw string length,
+     * you should call this->getString().size() instead.
      *
-     * @return  string length.
+     * @return  String length.
      */
     ssize_t getStringLength()const;
 
     /**
      * Sets the font size of label.
      *
-     * @param size font size.
+     * @param size The font size.
      */
     void setFontSize(int size);
 
+    /**
+     * Gets the font size of label.
+     *
+     * @return The font size.
+     */
     int getFontSize()const;
 
     /**
      * Sets the font name of label.
      *  If you are trying to use a system font, you could just pass a font name
      * If you are trying to use a TTF, you should pass a file path to the TTF file
-     * Usage:  Text *text = Text::create("Hello", "Arial", 20);  //create a system font UIText
-     *         text->setFontName("Marfelt");  // it will change the font  to  system font no matter the previous font type is TTF or system font
-     *         text->setFontName("xxxx/xxx.ttf"); //it will change the font  to TTF font no matter the previous font type is TTF or system font
-     * @param name font name.
+     * Usage:
+     * @code
+     *          //create a system font UIText
+     *         Text *text = Text::create("Hello", "Arial", 20);
+     *         // it will change the font to system font no matter the previous font type is TTF or system font
+     *         text->setFontName("Marfelt");
+     *         //it will change the font to TTF font no matter the previous font type is TTF or system font
+     *         text->setFontName("xxxx/xxx.ttf");
+     * @endcode
+     * @param name Font name.
      */
     void setFontName(const std::string& name);
 
+    /** Gets the font name.
+     *
+     * @return Font name.
+     */
     const std::string& getFontName()const;
-    
+
+    /** Gets the font type.
+     * @return The font type.
+     */
     Type getType() const;
 
     /**
      * Sets the touch scale enabled of label.
      *
-     * @param enabled touch scale enabled of label.
+     * @param enabled Touch scale enabled of label.
      */
     void setTouchScaleChangeEnabled(bool enabled);
 
     /**
      * Gets the touch scale enabled of label.
      *
-     * @return  touch scale enabled of label.
+     * @return  Touch scale enabled of label.
      */
     bool isTouchScaleChangeEnabled()const;
 
@@ -144,53 +191,109 @@ public:
     //override "getVirtualRenderer" method of widget.
     virtual Node* getVirtualRenderer() override;
 
+    /** Gets the render size in auto mode.
+     *
+     * @return The size of render size in auto mode.
+     */
+    virtual Size getAutoRenderSize();
+
     /**
      * Returns the "class name" of widget.
      */
     virtual std::string getDescription() const override;
 
     /**
-     * Set the rendering size of the text, you should call this method
+     * Sets the rendering size of the text, you should call this method
      * along with calling `ignoreContentAdaptWithSize(false)`, otherwise the text area
-     * size is caculated by the real size of the text content
-     * @param size   The text rendering area size
+     * size is caculated by the real size of the text content.
+     *
+     * @param size The text rendering area size.
      *
      */
     void setTextAreaSize(const Size &size);
 
+    /** Return the text rendering area size.
+     *
+     * @return The text rendering area size.
+     */
     const Size& getTextAreaSize()const;
 
+    /** Sets text horizontal alignment.
+     *
+     * @param alignment Horizontal text alignment type
+     */
     void setTextHorizontalAlignment(TextHAlignment alignment);
 
+    /** Gets text horizontal alignment.
+     *
+     * @return Horizontal text alignment type
+     */
     TextHAlignment getTextHorizontalAlignment()const;
 
+    /** Sets text vertical alignment.
+     *
+     * @param alignment vertical text alignment type
+     */
     void setTextVerticalAlignment(TextVAlignment alignment);
 
+    /** Gets text vertical alignment.
+     *
+     * @return Vertical text alignment type
+     */
     TextVAlignment getTextVerticalAlignment()const;
-    
+
+    /** Sets text color.
+     *
+     * @param color Text color.
+     */
     void setTextColor(const Color4B color);
-    
+
+    /** Gets text color.
+     *
+     * @return Text color.
+     */
     const Color4B& getTextColor() const;
-    
+
     /**
-     * Enable shadow for the label
+     * Enable shadow for the label.
      *
      * @todo support blur for shadow effect
+     *
+     * @param shadowColor The color of shadow effect.
+     * @param offset The offset of shadow effect.
+     * @param blurRadius The blur radius of shadow effect.
      */
-    void enableShadow(const Color4B& shadowColor = Color4B::BLACK,const Size &offset = Size(2,-2), int blurRadius = 0);
-    
+    void enableShadow(const Color4B& shadowColor = Color4B::BLACK,
+                      const Size &offset = Size(2,-2),
+                      int blurRadius = 0);
+
     /**
-     * Enable outline for the label
-     * It only works on IOS and Android when you use System fonts
-     */ 
+     * Enable outline for the label.
+     * It only works on IOS and Android when you use System fonts.
+     *
+     * @param outlineColor The color of outline.
+     * @param outlineSize The size of outline.
+     */
     void enableOutline(const Color4B& outlineColor,int outlineSize = 1);
-    
-    /** only support for TTF */
+
+    /** Only support for TTF.
+     *
+     * @param glowColor The color of glow.
+     */
     void enableGlow(const Color4B& glowColor);
-    
-    /** disable shadow/outline/glow rendering */
+
+    /** Disable all text effects, including shadow, outline and glow.
+     */
     void disableEffect();
-    
+
+    /**
+     * Disable specific text effect.
+     * Use LabelEffect parameter to specify which effect should be disabled.
+     *
+     * @see `LabelEffect`
+     */
+    void disableEffect(LabelEffect effect);
+
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
     virtual bool init(const std::string& textContent,
@@ -203,7 +306,7 @@ protected:
     virtual void onPressStateChangedToPressed() override;
     virtual void onPressStateChangedToDisabled() override;
     virtual void onSizeChanged() override;
-   
+
     void labelScaleChangedWithSize();
     virtual Widget* createCloneInstance() override;
     virtual void copySpecialProperties(Widget* model) override;
@@ -223,5 +326,8 @@ protected:
 }
 
 NS_CC_END
+
+// end of ui group
+/// @}
 
 #endif /* defined(__CocoGUI__Label__) */

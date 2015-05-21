@@ -6,32 +6,55 @@
 
 --------------------------------
 -- 
--- @function [parent=#Scene] getPhysicsWorld 
+-- @function [parent=#Scene] setCameraOrderDirty 
 -- @param self
--- @return PhysicsWorld#PhysicsWorld ret (return value: cc.PhysicsWorld)
+-- @return Scene#Scene self (return value: cc.Scene)
         
 --------------------------------
---  render the scene 
+--  Render the scene.<br>
+-- param renderer The renderer use to render the scene.<br>
+-- js NA
 -- @function [parent=#Scene] render 
 -- @param self
 -- @param #cc.Renderer renderer
+-- @return Scene#Scene self (return value: cc.Scene)
         
 --------------------------------
---  creates a new Scene object with a predefined Size 
+-- 
+-- @function [parent=#Scene] onProjectionChanged 
+-- @param self
+-- @param #cc.EventCustom event
+-- @return Scene#Scene self (return value: cc.Scene)
+        
+--------------------------------
+-- 
+-- @function [parent=#Scene] initWithSize 
+-- @param self
+-- @param #size_table size
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+--  Get the default camera.<br>
+-- js NA<br>
+-- return The default camera of scene.
+-- @function [parent=#Scene] getDefaultCamera 
+-- @param self
+-- @return Camera#Camera ret (return value: cc.Camera)
+        
+--------------------------------
+--  Creates a new Scene object with a predefined Size. <br>
+-- param size The predefined size of scene.<br>
+-- return An autoreleased Scene object.<br>
+-- js NA
 -- @function [parent=#Scene] createWithSize 
 -- @param self
 -- @param #size_table size
 -- @return Scene#Scene ret (return value: cc.Scene)
         
 --------------------------------
---  creates a new Scene object 
+--  Creates a new Scene object. <br>
+-- return An autoreleased Scene object.
 -- @function [parent=#Scene] create 
--- @param self
--- @return Scene#Scene ret (return value: cc.Scene)
-        
---------------------------------
--- 
--- @function [parent=#Scene] createWithPhysics 
 -- @param self
 -- @return Scene#Scene ret (return value: cc.Scene)
         
@@ -43,7 +66,14 @@
 -- @param #cc.Node child
 -- @param #int zOrder
 -- @param #int tag
+-- @return Scene#Scene self (return value: cc.Scene)
 
+--------------------------------
+-- 
+-- @function [parent=#Scene] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
 --------------------------------
 -- 
 -- @function [parent=#Scene] getDescription 
@@ -51,9 +81,15 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- 
--- @function [parent=#Scene] update 
+--  override function 
+-- @function [parent=#Scene] removeAllChildren 
 -- @param self
--- @param #float delta
+-- @return Scene#Scene self (return value: cc.Scene)
+        
+--------------------------------
+-- 
+-- @function [parent=#Scene] Scene 
+-- @param self
+-- @return Scene#Scene self (return value: cc.Scene)
         
 return nil

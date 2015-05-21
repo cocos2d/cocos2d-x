@@ -33,7 +33,13 @@
 NS_CC_BEGIN
 
 /**
- * Defines a basic hierachial structure of transformation spaces.
+ * @addtogroup _3d
+ * @{
+ */
+
+/**
+ * @brief Defines a basic hierachial structure of transformation spaces.
+ * @lua NA
  */
 class CC_DLL Bone3D : public Ref
 {
@@ -118,7 +124,10 @@ public:
     
     
 protected:
-    
+    /**
+     * the BoneBlendState struct
+     * @brief store the transformation and weight for bone blending
+     */
     struct BoneBlendState
     {
         Vec3          localTranslate;
@@ -127,8 +136,7 @@ protected:
         float         weight;
         void*         tag; //
         BoneBlendState()
-        : localTranslate(Vec3::ZERO)
-        , localRot(Quaternion::identity())
+        : localRot(Quaternion::identity())
         , localScale(Vec3::ONE)
         , weight(1.f)
         , tag(nullptr)
@@ -181,7 +189,9 @@ protected:
 class CC_DLL Skeleton3D: public Ref
 {
 public:
-    
+    /**
+     * @lua NA
+     */
     static Skeleton3D* create(const std::vector<NodeData*>& skeletondata);
     
     /**get total bone count*/
@@ -222,6 +232,9 @@ protected:
 
     Vector<Bone3D*> _rootBones;
 };
+
+// end of 3d group
+/// @}
 
 NS_CC_END
 

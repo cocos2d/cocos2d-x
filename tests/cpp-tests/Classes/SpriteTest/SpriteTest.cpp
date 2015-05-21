@@ -28,6 +28,7 @@
 #include <algorithm>
 #include "../testResource.h"
 
+USING_NS_CC;
 
 enum 
 {
@@ -51,173 +52,74 @@ enum
     kTagSprite8,
 };
 
-enum
+SpriteTests::SpriteTests()
 {
-    IDC_NEXT = 100,
-    IDC_BACK,
-    IDC_RESTART
+	ADD_TEST_CASE(Sprite1);
+	ADD_TEST_CASE(SpriteBatchNode1);
+	ADD_TEST_CASE(SpriteAnchorPoint);
+	ADD_TEST_CASE(SpriteBatchNodeAnchorPoint);
+	ADD_TEST_CASE(SpriteOffsetAnchorRotation);
+	ADD_TEST_CASE(SpriteBatchNodeOffsetAnchorRotation);
+	ADD_TEST_CASE(SpriteOffsetAnchorScale);
+	ADD_TEST_CASE(SpriteBatchNodeOffsetAnchorScale);
+	ADD_TEST_CASE(SpriteOffsetAnchorSkew);
+	ADD_TEST_CASE(SpriteBatchNodeOffsetAnchorSkew);
+	ADD_TEST_CASE(SpriteOffsetAnchorRotationalSkew);
+	ADD_TEST_CASE(SpriteBatchNodeOffsetAnchorRotationalSkew);
+	ADD_TEST_CASE(SpriteOffsetAnchorSkewScale);
+	ADD_TEST_CASE(SpriteBatchNodeOffsetAnchorSkewScale);
+	ADD_TEST_CASE(SpriteOffsetAnchorRotationalSkewScale);
+	ADD_TEST_CASE(SpriteBatchNodeOffsetAnchorRotationalSkewScale);
+	ADD_TEST_CASE(SpriteSkewNegativeScaleChildren);
+	ADD_TEST_CASE(SpriteBatchNodeSkewNegativeScaleChildren);
+	ADD_TEST_CASE(SpriteRotationalSkewNegativeScaleChildren);
+	ADD_TEST_CASE(SpriteBatchNodeRotationalSkewNegativeScaleChildren);
+	ADD_TEST_CASE(SpriteOffsetAnchorFlip);
+	ADD_TEST_CASE(SpriteBatchNodeOffsetAnchorFlip);
+	ADD_TEST_CASE(SpriteChildrenChildren);
+	ADD_TEST_CASE(SpriteBatchNodeChildrenChildren);
+	ADD_TEST_CASE(SpriteChildrenAnchorPoint);
+	ADD_TEST_CASE(SpriteBatchNodeChildrenAnchorPoint);
+	ADD_TEST_CASE(SpriteColorOpacity);
+	ADD_TEST_CASE(SpriteBatchNodeColorOpacity);
+	ADD_TEST_CASE(SpriteZOrder);
+	ADD_TEST_CASE(SpriteBatchNodeZOrder);
+	ADD_TEST_CASE(SpriteZVertex);
+	ADD_TEST_CASE(SpriteBatchNodeZVertex);
+	ADD_TEST_CASE(SpriteAliased);
+	ADD_TEST_CASE(SpriteBatchNodeAliased);
+	ADD_TEST_CASE(SpriteNewTexture);
+	ADD_TEST_CASE(SpriteBatchNodeNewTexture);
+	ADD_TEST_CASE(SpriteFlip);
+	ADD_TEST_CASE(SpriteBatchNodeFlip);
+	ADD_TEST_CASE(SpriteAnimationSplit);
+	ADD_TEST_CASE(SpriteFrameTest);
+	ADD_TEST_CASE(SpriteFrameAliasNameTest);
+	ADD_TEST_CASE(SpriteFramesFromFileContent);
+	ADD_TEST_CASE(SpriteBatchNodeReorder);
+	ADD_TEST_CASE(SpriteBatchNodeReorderIssue744);
+	ADD_TEST_CASE(SpriteBatchNodeReorderIssue766);
+	ADD_TEST_CASE(SpriteBatchNodeReorderIssue767);
+	ADD_TEST_CASE(SpriteBatchNodeReorderSameIndex);
+	ADD_TEST_CASE(SpriteBatchNodeReorderOneChild);
+	ADD_TEST_CASE(NodeSort);
+	ADD_TEST_CASE(Sprite6);
+	ADD_TEST_CASE(SpriteHybrid);
+	ADD_TEST_CASE(SpriteBatchNodeChildren);
+	ADD_TEST_CASE(SpriteBatchNodeChildrenZ);
+	ADD_TEST_CASE(SpriteChildrenVisibility);
+	ADD_TEST_CASE(SpriteChildrenVisibilityIssue665);
+	ADD_TEST_CASE(SpriteBatchNodeChildrenScale);
+	ADD_TEST_CASE(SpriteNilTexture);
+	ADD_TEST_CASE(SpriteSubclass);
+	ADD_TEST_CASE(SpriteDoubleResolution);
+	ADD_TEST_CASE(SpriteBatchBug1217);
+	ADD_TEST_CASE(AnimationCacheTest);
+	ADD_TEST_CASE(AnimationCacheFile);
+	ADD_TEST_CASE(SpriteCullTest1);
+	ADD_TEST_CASE(SpriteCullTest2);
+    ADD_TEST_CASE(Sprite3DRotationTest);
 };
-
-static int sceneIdx = -1; 
-
-
-Layer* nextSpriteTestAction();
-Layer* backSpriteTestAction();
-Layer* restartSpriteTestAction();
-
-
-static std::function<Layer*()> createFunctions[] =
-{
-	CL(Sprite1),
-	CL(SpriteBatchNode1),
-	CL(SpriteAnchorPoint),
-	CL(SpriteBatchNodeAnchorPoint),
-	CL(SpriteOffsetAnchorRotation),
-	CL(SpriteBatchNodeOffsetAnchorRotation),
-	CL(SpriteOffsetAnchorScale),
-	CL(SpriteBatchNodeOffsetAnchorScale),
-	CL(SpriteOffsetAnchorSkew),
-	CL(SpriteBatchNodeOffsetAnchorSkew),
-	CL(SpriteOffsetAnchorRotationalSkew),
-	CL(SpriteBatchNodeOffsetAnchorRotationalSkew),
-	CL(SpriteOffsetAnchorSkewScale),
-	CL(SpriteBatchNodeOffsetAnchorSkewScale),
-	CL(SpriteOffsetAnchorRotationalSkewScale),
-	CL(SpriteBatchNodeOffsetAnchorRotationalSkewScale),
-	CL(SpriteSkewNegativeScaleChildren),
-	CL(SpriteBatchNodeSkewNegativeScaleChildren),
-	CL(SpriteRotationalSkewNegativeScaleChildren),
-	CL(SpriteBatchNodeRotationalSkewNegativeScaleChildren),
-	CL(SpriteOffsetAnchorFlip),
-	CL(SpriteBatchNodeOffsetAnchorFlip),
-	CL(SpriteChildrenChildren),
-	CL(SpriteBatchNodeChildrenChildren),
-	CL(SpriteChildrenAnchorPoint),
-	CL(SpriteBatchNodeChildrenAnchorPoint),
-	CL(SpriteColorOpacity),
-	CL(SpriteBatchNodeColorOpacity),
-	CL(SpriteZOrder),
-	CL(SpriteBatchNodeZOrder),
-	CL(SpriteZVertex),
-	CL(SpriteBatchNodeZVertex),
-	CL(SpriteAliased),
-	CL(SpriteBatchNodeAliased),
-	CL(SpriteNewTexture),
-	CL(SpriteBatchNodeNewTexture),
-	CL(SpriteFlip),
-	CL(SpriteBatchNodeFlip),
-	CL(SpriteAnimationSplit),
-	CL(SpriteFrameTest),
-	CL(SpriteFrameAliasNameTest),
-	CL(SpriteFramesFromFileContent),
-	CL(SpriteBatchNodeReorder),
-	CL(SpriteBatchNodeReorderIssue744),
-	CL(SpriteBatchNodeReorderIssue766),
-	CL(SpriteBatchNodeReorderIssue767),
-	CL(SpriteBatchNodeReorderSameIndex),
-	CL(SpriteBatchNodeReorderOneChild),
-	CL(NodeSort),
-	CL(Sprite6),
-	CL(SpriteHybrid),
-	CL(SpriteBatchNodeChildren),
-	CL(SpriteBatchNodeChildrenZ),
-	CL(SpriteChildrenVisibility),
-	CL(SpriteChildrenVisibilityIssue665),
-	CL(SpriteBatchNodeChildrenScale),
-	CL(SpriteNilTexture),
-	CL(SpriteSubclass),
-	CL(SpriteDoubleResolution),
-	CL(SpriteBatchBug1217),
-	CL(AnimationCacheTest),
-	CL(AnimationCacheFile),
-	CL(SpriteCullTest1),
-	CL(SpriteCullTest2),
-    CL(Sprite3DRotationTest),
-};
-
-#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-Layer* nextSpriteTestAction()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-Layer* backSpriteTestAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;    
-    
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-}
-
-Layer* restartSpriteTestAction()
-{
-    auto layer = (createFunctions[sceneIdx])();
-    return layer;
-} 
-
-//------------------------------------------------------------------
-//
-// SpriteTestDemo
-//
-//------------------------------------------------------------------
-
-SpriteTestDemo::SpriteTestDemo(void)
-: BaseTest()
-{
-}
-
-SpriteTestDemo::~SpriteTestDemo(void)
-{
-}
-
-std::string SpriteTestDemo::title() const
-{
-    return "No title";
-}
-
-std::string SpriteTestDemo::subtitle() const
-{
-    return "";
-}
-
-void SpriteTestDemo::onEnter()
-{
-    BaseTest::onEnter();  
-}
-
-void SpriteTestDemo::restartCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) SpriteTestScene();
-    s->addChild(restartSpriteTestAction()); 
-
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void SpriteTestDemo::nextCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) SpriteTestScene();
-    s->addChild( nextSpriteTestAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void SpriteTestDemo::backCallback(Ref* sender)
-{
-    auto s = new (std::nothrow) SpriteTestScene();
-    s->addChild( backSpriteTestAction() );
-    Director::getInstance()->replaceScene(s);
-    s->release();
-} 
-
 
 //------------------------------------------------------------------
 //
@@ -3430,32 +3332,26 @@ class MySprite1 : public Sprite
 {
 public:
     CREATE_FUNC(MySprite1);
-    MySprite1() : ivar(10) {}
+    MySprite1() {}
     static MySprite1* createWithSpriteFrameName(const std::string& spriteFrameName)
     {
         auto sprite = MySprite1::create();
         sprite->setSpriteFrame(spriteFrameName);
         return sprite;
     }
-
-private:
-    int ivar;
 };
 
 class MySprite2 : public Sprite
 {
 public:
     CREATE_FUNC(MySprite2);
-    MySprite2() : ivar(10) {}
+    MySprite2() {}
     static MySprite2* create(const std::string& name)
     {
         auto sprite = MySprite2::create();
         sprite ->setTexture(name);
         return sprite;
     }
-
-private:
-    int ivar;
 };
 
 //------------------------------------------------------------------
@@ -3814,15 +3710,6 @@ std::string SpriteBatchBug1217::title() const
 std::string SpriteBatchBug1217::subtitle() const
 {
     return "Adding big family to spritebatch. You shall see 3 heads";
-}
-
-
-void SpriteTestScene::runThisTest()
-{
-    auto layer = nextSpriteTestAction();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
 }
 
 //

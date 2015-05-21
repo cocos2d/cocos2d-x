@@ -29,71 +29,15 @@
 #include "../BaseTest.h"
 #include "base/allocator/CCAllocatorStrategyPool.h"
 
-namespace AllocatorTestNS
+DEFINE_TEST_SUITE(AllocatorTests);
+
+class AllocatorTest : public TestCase
 {
-    
-    //
-    // Test Classes
-    //
-    
-#define kNumberOfInstances 100000
-#define kObjectSize 952 // sizeof(Sprite)
-    
-    class Test1;
-    
-    class Test1
-    {
-    public:
-        
-        Test1()
-        {
-            memset(bytes, 0, sizeof(bytes));
-        }
-        uint8_t bytes[kObjectSize];
-        
-#if CC_ENABLE_ALLOCATOR
-        typedef cocos2d::allocator::AllocatorStrategyPool<Test1> tAllocator;
-        static tAllocator _allocator;
-#endif // CC_ENABLE_ALLOCATOR
-        CC_USE_ALLOCATOR_POOL(Test1, _allocator);
-    };
-    
-    class Test2
-    {
-    public:
-        
-        Test2()
-        {
-            memset(bytes, 0, sizeof(bytes));
-        }
-        uint8_t bytes[kObjectSize];
-    };
-    
-    class AllocatorTest : public BaseTest
-    {
-    public:
-        CREATE_FUNC(AllocatorTest);
-        AllocatorTest();
-        virtual ~AllocatorTest();
-        
-        virtual std::string title() const;
-        virtual std::string subtitle() const;
-        
-        virtual void restartCallback(Ref* sender);
-        virtual void nextCallback(Ref* sender);
-        virtual void backCallback(Ref* sender);
-        
-        virtual void onEnter() override;
-        virtual void onExit() override;
-        
-        virtual void update(float delta);
-    };
-    
-    class AllocatorTestScene : public TestScene
-    {
-    public:
-        AllocatorTestScene();
-        virtual void runThisTest();
-    };
-    
-} // AllocatorTestNS
+public:
+    CREATE_FUNC(AllocatorTest);
+
+    AllocatorTest();
+    virtual ~AllocatorTest();
+
+    virtual std::string title() const override;
+};

@@ -154,7 +154,7 @@ void TMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
         _dirty = false;
     }
     
-    if(_renderCommands.size() < _primitives.size())
+    if(_renderCommands.size() < static_cast<size_t>(_primitives.size()))
     {
         _renderCommands.resize(_primitives.size());
     }
@@ -165,7 +165,7 @@ void TMXLayer::draw(Renderer *renderer, const Mat4& transform, uint32_t flags)
         if(iter.second->getCount() > 0)
         {
             auto& cmd = _renderCommands[index++];
-            cmd.init(iter.first, _texture->getName(), getGLProgramState(), BlendFunc::ALPHA_NON_PREMULTIPLIED, iter.second, _modelViewTransform);
+            cmd.init(iter.first, _texture->getName(), getGLProgramState(), BlendFunc::ALPHA_NON_PREMULTIPLIED, iter.second, _modelViewTransform, flags);
             renderer->addCommand(&cmd);
         }
     }
@@ -740,19 +740,19 @@ void TMXLayer::parseInternalProperties()
 //CCTMXLayer2 - obtaining positions, offset
 Vec2 TMXLayer::calculateLayerOffset(const Vec2& pos)
 {
-    Vec2 ret = Vec2::ZERO;
+    Vec2 ret;
     switch (_layerOrientation) 
     {
     case FAST_TMX_ORIENTATION_ORTHO:
-        ret = Vec2( pos.x * _mapTileSize.width, -pos.y *_mapTileSize.height);
+        ret.set( pos.x * _mapTileSize.width, -pos.y *_mapTileSize.height);
         break;
     case FAST_TMX_ORIENTATION_ISO:
-        ret = Vec2((_mapTileSize.width /2) * (pos.x - pos.y),
+        ret.set((_mapTileSize.width /2) * (pos.x - pos.y),
                   (_mapTileSize.height /2 ) * (-pos.x - pos.y));
         break;
     case FAST_TMX_ORIENTATION_HEX:
     default:
-        CCASSERT(pos.equals(Vec2::ZERO), "offset for this map not implemented yet");
+        CCASSERT(pos.isZero(), "offset for this map not implemented yet");
         break;
     }
     return ret;    

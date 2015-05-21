@@ -1,95 +1,11 @@
 #include "ZwoptexTest.h"
 #include "../testResource.h"
 
-#define MAX_LAYER    1
+USING_NS_CC;
 
-static int sceneIdx = -1;
-
-Layer* nextZwoptexTest();
-Layer* backZwoptexTest();
-Layer* restartZwoptexTest();
-
-Layer* createZwoptexLayer(int nIndex)
+ZwoptexTests::ZwoptexTests()
 {
-    switch(nIndex)
-    {
-    case 0: return new ZwoptexGenericTest();
-    }
-
-    return nullptr;
-}
-
-Layer* nextZwoptexTest()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-
-    auto layer = createZwoptexLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
-}
-
-Layer* backZwoptexTest()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;    
-
-    auto layer = createZwoptexLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
-}
-
-Layer* restartZwoptexTest()
-{
-    auto layer = createZwoptexLayer(sceneIdx);
-    layer->autorelease();
-
-    return layer;
-} 
-
-//------------------------------------------------------------------
-//
-// ZwoptexTest
-//
-//------------------------------------------------------------------
-void ZwoptexTest::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-void ZwoptexTest::restartCallback(Ref* sender)
-{
-    auto s = ZwoptexTestScene::create();
-    s->addChild(restartZwoptexTest());
-    Director::getInstance()->replaceScene(s);
-}
-
-void ZwoptexTest::nextCallback(Ref* sender)
-{
-    auto s = ZwoptexTestScene::create();
-    s->addChild(nextZwoptexTest());
-    Director::getInstance()->replaceScene(s);
-}
-
-void ZwoptexTest::backCallback(Ref* sender)
-{
-    auto s = ZwoptexTestScene::create();
-    s->addChild(backZwoptexTest());
-    Director::getInstance()->replaceScene(s);
-}
-
-std::string ZwoptexTest::title() const
-{
-    return "No title";
-}
-
-std::string ZwoptexTest::subtitle() const
-{
-    return "";
+    ADD_TEST_CASE(ZwoptexGenericTest);
 }
 
 //------------------------------------------------------------------
@@ -206,12 +122,4 @@ std::string ZwoptexGenericTest::title() const
 std::string ZwoptexGenericTest::subtitle() const
 {
     return "Coordinate Formats, Rotation, Trimming, flipX/Y";
-}
-
-void ZwoptexTestScene::runThisTest()
-{
-    auto layer = nextZwoptexTest();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
 }

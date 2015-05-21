@@ -29,24 +29,23 @@
 #include "../testBasic.h"
 #include "../BaseTest.h"
 
-class SpriteDemo : public BaseTest
+DEFINE_TEST_SUITE(ActionsProgressTests);
+
+class SpriteDemo : public TestCase
 {
 public:
     SpriteDemo(void);
     ~SpriteDemo(void);
 
     virtual std::string title() const override;
-    virtual std::string subtitle() const override;
     virtual void onEnter() override;
-
-    void restartCallback(Ref* sender);
-    void nextCallback(Ref* sender);
-    void backCallback(Ref* sender);
 };
 
 class SpriteProgressToRadial : public SpriteDemo
 {
 public:
+    CREATE_FUNC(SpriteProgressToRadial);
+
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
 };
@@ -54,6 +53,8 @@ public:
 class SpriteProgressToHorizontal : public SpriteDemo
 {
 public:
+    CREATE_FUNC(SpriteProgressToHorizontal);
+
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
 };
@@ -61,6 +62,8 @@ public:
 class SpriteProgressToVertical : public SpriteDemo
 {
 public:
+    CREATE_FUNC(SpriteProgressToVertical);
+
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
 };
@@ -68,6 +71,8 @@ public:
 class SpriteProgressToRadialMidpointChanged : public SpriteDemo
 {
 public:
+    CREATE_FUNC(SpriteProgressToRadialMidpointChanged);
+
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
 };
@@ -75,6 +80,8 @@ public:
 class SpriteProgressBarVarious : public SpriteDemo
 {
 public:
+    CREATE_FUNC(SpriteProgressBarVarious);
+
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
 };
@@ -82,6 +89,8 @@ public:
 class SpriteProgressBarTintAndFade : public SpriteDemo
 {
 public:
+    CREATE_FUNC(SpriteProgressBarTintAndFade);
+
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
 };
@@ -89,14 +98,10 @@ public:
 class SpriteProgressWithSpriteFrame : public SpriteDemo
 {
 public:
+    CREATE_FUNC(SpriteProgressWithSpriteFrame);
+
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
-};
-
-class ProgressActionsTestScene : public TestScene
-{
-public:
-    virtual void runThisTest();
 };
 
 #endif // _ACTIONS__PROGRESS_TEST_H_

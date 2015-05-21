@@ -2,6 +2,8 @@
 #include "renderer/CCRenderer.h"
 #include "renderer/CCCustomCommand.h"
 
+USING_NS_CC;
+
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #elif _MSC_VER >= 1400 //vs 2005 or higher
@@ -11,108 +13,15 @@
 
 using namespace std;
 
-static int sceneIdx = -1;
-
-
-Layer* nextSpriteTestAction();
-Layer* backSpriteTestAction();
-Layer* restartSpriteTestAction();
-
-typedef Layer* (*NEWDRAWPRIMITIVESFUNC)();
-#define DRAWPRIMITIVES_CREATE_FUNC(className) \
-static Layer* create##className() \
-{ return new className(); }
-
-DRAWPRIMITIVES_CREATE_FUNC(DrawPrimitivesTest);
-DRAWPRIMITIVES_CREATE_FUNC(DrawNodeTest);
-
-static NEWDRAWPRIMITIVESFUNC createFunctions[] =
+DrawPrimitivesTests::DrawPrimitivesTests()
 {
-    createDrawPrimitivesTest,
-    createDrawNodeTest,
-};
-
-#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-static Layer* nextAction()
-{
-    sceneIdx++;
-    sceneIdx = sceneIdx % MAX_LAYER;
-    
-    auto layer = (createFunctions[sceneIdx])();
-    layer->autorelease();
-    
-    return layer;
+    ADD_TEST_CASE(DrawPrimitivesTest);
+    ADD_TEST_CASE(DrawNodeTest);
 }
 
-static Layer* backAction()
-{
-    sceneIdx--;
-    int total = MAX_LAYER;
-    if( sceneIdx < 0 )
-        sceneIdx += total;
-    
-    auto layer = (createFunctions[sceneIdx])();
-    layer->autorelease();
-    
-    return layer;
-}
-
-static Layer* restartAction()
-{
-    auto layer = (createFunctions[sceneIdx])();
-    layer->autorelease();
-    
-    return layer;
-}
-
-// BaseLayer
-
-BaseLayer::BaseLayer()
-{
-    
-}
-
-void BaseLayer::onEnter()
-{
-    BaseTest::onEnter();
-}
-
-void BaseLayer::restartCallback(cocos2d::Ref *pSender)
-{
-    auto s = new (std::nothrow) DrawPrimitivesTestScene();
-    s->addChild(restartAction());
-    
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void BaseLayer::nextCallback(cocos2d::Ref *pSender)
-{
-    auto s = new (std::nothrow) DrawPrimitivesTestScene();;
-    s->addChild(nextAction());
-    
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-void BaseLayer::backCallback(cocos2d::Ref *pSender)
-{
-    auto s = new (std::nothrow) DrawPrimitivesTestScene();
-    s->addChild(backAction());
-    
-    Director::getInstance()->replaceScene(s);
-    s->release();
-}
-
-string BaseLayer::title() const
+string DrawPrimitivesBaseTest::title() const
 {
     return "No title";
-}
-
-string BaseLayer::subtitle() const
-{
-    return "";
 }
 
 // DrawPrimitivesTest
@@ -270,13 +179,15 @@ DrawNodeTest::DrawNodeTest()
     
     // draw 4 small points
     Vec2 position[] = { Vec2(60,60), Vec2(70,70), Vec2(60,70), Vec2(70,60) };
-    draw->drawPoints( position, 4,  Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
+    draw->drawPoints( position, 4, 5, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
  
     // draw a line
     draw->drawLine(Vec2(0,0), Vec2(s.width, s.height), Color4F(1.0, 0.0, 0.0, 0.5));
     
     // draw a rectangle
     draw->drawRect(Vec2(23,23), Vec2(7,7), Color4F(1,1,0,1));
+    
+    draw->drawRect(Vec2(15,30), Vec2(30,15), Vec2(15,0), Vec2(0,15), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
     
     // draw a circle
     draw->drawCircle(VisibleRect::center() + Vec2(140,0), 100, CC_DEGREES_TO_RADIANS(90), 50, true, 1.0f, 2.0f, Color4F(1.0, 0.0, 0.0, 0.5));
@@ -377,7 +288,7 @@ DrawNodeTest::DrawNodeTest()
     draw->drawTriangle(Vec2(10, 10), Vec2(70, 30), Vec2(100, 140), Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 0.5));
     
     for (int i = 0; i < 100; i++) {
-        draw->drawPoint(Vec2(i*7, 5), 5, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
+        draw->drawPoint(Vec2(i*7, 5), (float)i/5+1, Color4F(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1));
     }
 }
 
@@ -389,14 +300,6 @@ string DrawNodeTest::title() const
 string DrawNodeTest::subtitle() const
 {
     return "Testing DrawNode - batched draws. Concave polygons are BROKEN";
-}
-
-void DrawPrimitivesTestScene::runThisTest()
-{
-    auto layer = nextAction();
-    addChild(layer);
-
-    Director::getInstance()->replaceScene(this);
 }
 
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))

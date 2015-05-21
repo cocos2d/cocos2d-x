@@ -9,6 +9,7 @@
 -- @function [parent=#BaseLight] setEnabled 
 -- @param self
 -- @param #bool enabled
+-- @return BaseLight#BaseLight self (return value: cc.BaseLight)
         
 --------------------------------
 --  intensity getter and setter 
@@ -23,7 +24,8 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- 
+-- Get the light type,light type MUST be one of LightType::DIRECTIONAL ,<br>
+-- LightType::POINT, LightType::SPOT, LightType::AMBIENT.
 -- @function [parent=#BaseLight] getLightType 
 -- @param self
 -- @return int#int ret (return value: int)
@@ -33,12 +35,14 @@
 -- @function [parent=#BaseLight] setLightFlag 
 -- @param self
 -- @param #int flag
+-- @return BaseLight#BaseLight self (return value: cc.BaseLight)
         
 --------------------------------
 -- 
 -- @function [parent=#BaseLight] setIntensity 
 -- @param self
 -- @param #float intensity
+-- @return BaseLight#BaseLight self (return value: cc.BaseLight)
         
 --------------------------------
 -- light flag getter and setter

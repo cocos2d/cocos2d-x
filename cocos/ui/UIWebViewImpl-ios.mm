@@ -34,6 +34,30 @@
 #include "platform/CCFileUtils.h"
 #include "ui/UIWebView.h"
 
+static std::string getFixedBaseUrl(const std::string& baseUrl)
+{
+    std::string fixedBaseUrl;
+    if (baseUrl.empty() || baseUrl.c_str()[0] != '/') {
+        fixedBaseUrl = [[[NSBundle mainBundle] resourcePath] UTF8String];
+        fixedBaseUrl += "/";
+        fixedBaseUrl += baseUrl;
+    }
+    else {
+        fixedBaseUrl = baseUrl;
+    }
+    
+    size_t pos = 0;
+    while ((pos = fixedBaseUrl.find(" ")) != std::string::npos) {
+        fixedBaseUrl.replace(pos, 1, "%20");
+    }
+    
+    if (fixedBaseUrl.c_str()[fixedBaseUrl.length() - 1] != '/') {
+        fixedBaseUrl += "/";
+    }
+    
+    return fixedBaseUrl;
+}
+
 @interface UIWebViewWrapper : NSObject
 @property (nonatomic) std::function<bool(std::string url)> shouldStartLoading;
 @property (nonatomic) std::function<void(std::string url)> didFinishLoading;
@@ -100,6 +124,7 @@
 - (void)dealloc {
     self.uiWebView.delegate = nil;
     [self.uiWebView removeFromSuperview];
+    self.uiWebView = nil;
     self.jsScheme = nil;
     [super dealloc];
 }
@@ -136,11 +161,12 @@
     [self.uiWebView loadData:[NSData dataWithBytes:data.c_str() length:data.length()]
                     MIMEType:@(MIMEType.c_str())
             textEncodingName:@(encodingName.c_str())
-                     baseURL:[NSURL URLWithString:@(baseURL.c_str())]];
+                     baseURL:[NSURL URLWithString:@(getFixedBaseUrl(baseURL).c_str())]];
 }
 
 - (void)loadHTMLString:(const std::string &)string baseURL:(const std::string &)baseURL {
-    [self.uiWebView loadHTMLString:@(string.c_str()) baseURL:[NSURL URLWithString:@(baseURL.c_str())]];
+    if (!self.uiWebView) {[self setupWebView];}
+    [self.uiWebView loadHTMLString:@(string.c_str()) baseURL:[NSURL URLWithString:@(getFixedBaseUrl(baseURL).c_str())]];
 }
 
 - (void)loadUrl:(const std::string &)urlString {
@@ -187,6 +213,7 @@
 }
 
 - (void)setScalesPageToFit:(const bool)scalesPageToFit {
+    if (!self.uiWebView) {[self setupWebView];}
     self.uiWebView.scalesPageToFit = scalesPageToFit;
 }
 

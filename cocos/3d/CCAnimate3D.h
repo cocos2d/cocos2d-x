@@ -37,8 +37,22 @@ NS_CC_BEGIN
 
 class Bone3D;
 class Sprite3D;
+
+
+enum class Animate3DQuality
+{
+    QUALITY_NONE = 0,          // it'll be ignore the curve-evaluating(the animation looks like stop), just acculate transition time.
+    QUALITY_LOW,               // low animation quality, it'll be more efficient.
+    QUALITY_HIGH,              // high animation quality.
+};
+
 /**
- * Animate3D, Animates a Sprite3D given with an Animation3D
+ * @addtogroup _3d
+ * @{
+ */
+
+/**
+ * @brief Animate3D, Animates a Sprite3D given with an Animation3D
  */
 class CC_DLL Animate3D: public ActionInterval
 {
@@ -85,12 +99,25 @@ public:
     float getWeight() const { return _weight; }
     void setWeight(float weight);
     
-    /** animate transition time */
+    /**get & set origin interval*/
+    void setOriginInterval(float interval);
+    float getOriginInterval() const {return _originInterval; }
+    
+    /** get animate transition time between 3d animations */
     static float getTransitionTime() { return _transTime; }
+    
+    /** set animate transition time between 3d animations */
+    static void setTransitionTime(float transTime) { if (transTime >= 0.f) _transTime = transTime; }
     
     /**get & set play reverse, these are deprecated, use set negative speed instead*/
     CC_DEPRECATED_ATTRIBUTE bool getPlayBack() const { return _playReverse; }
     CC_DEPRECATED_ATTRIBUTE void setPlayBack(bool reverse) { _playReverse = reverse; }
+    
+    /**set animate quality*/
+    void setQuality(Animate3DQuality quality);
+    
+    /**get animate quality*/
+    Animate3DQuality getQuality() const;
     
 CC_CONSTRUCTOR_ACCESS:
     
@@ -99,7 +126,13 @@ CC_CONSTRUCTOR_ACCESS:
     
     void removeFromMap();
     
+    /** init method */
+    bool init(Animation3D* animation);
+    bool init(Animation3D* animation, float fromTime, float duration);
+    bool initWithFrames(Animation3D* animation, int startFrame, int endFrame, float frameRate);
+    
 protected:
+    
     enum class Animate3DState
     {
         FadeIn,
@@ -117,13 +150,25 @@ protected:
     static float      _transTime; //transition time from one animate3d to another
     float      _accTransTime; // acculate transition time
     float      _lastTime;     // last t (0 - 1)
+    float      _originInterval;// save origin interval time
+    
+    // animation quality
+    EvaluateType _translateEvaluate;
+    EvaluateType _roteEvaluate;
+    EvaluateType _scaleEvaluate;
+    Animate3DQuality _quality;
+    
     std::unordered_map<Bone3D*, Animation3D::Curve*> _boneCurves; //weak ref
+    std::unordered_map<Node*, Animation3D::Curve*> _nodeCurves;
 
     //sprite animates
-    static std::unordered_map<Sprite3D*, Animate3D*> s_fadeInAnimates;
-    static std::unordered_map<Sprite3D*, Animate3D*> s_fadeOutAnimates;
-    static std::unordered_map<Sprite3D*, Animate3D*> s_runningAnimates;
+    static std::unordered_map<Node*, Animate3D*> s_fadeInAnimates;
+    static std::unordered_map<Node*, Animate3D*> s_fadeOutAnimates;
+    static std::unordered_map<Node*, Animate3D*> s_runningAnimates;
 };
+
+// end of 3d group
+/// @}
 
 NS_CC_END
 

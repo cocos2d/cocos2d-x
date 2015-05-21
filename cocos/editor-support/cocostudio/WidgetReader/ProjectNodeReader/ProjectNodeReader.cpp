@@ -62,6 +62,11 @@ namespace cocostudio
         CC_SAFE_DELETE(_instanceProjectNodeReader);
     }
     
+    void ProjectNodeReader::destroyInstance()
+    {
+        CC_SAFE_DELETE(_instanceProjectNodeReader);
+    }
+    
     Offset<Table> ProjectNodeReader::createOptionsWithFlatBuffers(const tinyxml2::XMLElement *objectData,
                                                                   flatbuffers::FlatBufferBuilder *builder)
     {
@@ -69,25 +74,20 @@ namespace cocostudio
         auto nodeOptions = *(Offset<WidgetOptions>*)(&temp);
         
         std::string filename = "";
-        bool isloop = true;
-        bool isAutoPlay = true;
+        float innerspeed = 1.0f;
 
-        const tinyxml2::XMLAttribute* attribute = objectData->FirstAttribute();
-        while (attribute)
+        const tinyxml2::XMLAttribute* objattri = objectData->FirstAttribute();
+        // inneraction speed
+        while (objattri)
         {
-            std::string attriname = attribute->Name();
-            std::string value = attribute->Value();
-
-            if (attriname == "IsLoop")
+            std::string name = objattri->Name();
+            std::string value = objattri->Value();
+            if (name == "InnerActionSpeed")
             {
-                isloop = (value == "True") ? true : false;
+                    innerspeed = atof(objattri->Value());
+                    break;
             }
-            else if (attriname == "IsAutoPlay")
-            {
-                isAutoPlay = (value == "True") ? true : false;
-            }
-
-            attribute = attribute->Next();
+            objattri = objattri->Next();
         }
 
         // FileData
@@ -122,8 +122,7 @@ namespace cocostudio
         auto options = CreateProjectNodeOptions(*builder,
                                                 nodeOptions,
                                                 builder->CreateString(filename),
-                                                isloop,
-                                                isAutoPlay);
+                                                innerspeed);
         
         return *(Offset<Table>*)(&options);
     }

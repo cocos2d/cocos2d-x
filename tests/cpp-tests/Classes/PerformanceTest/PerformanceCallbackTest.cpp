@@ -3,8 +3,9 @@
 //
 
 #include "PerformanceCallbackTest.h"
-
 #include <algorithm>
+
+USING_NS_CC;
 
 // Enable profiles for this file
 #undef CC_PROFILER_DISPLAY_TIMERS
@@ -33,39 +34,11 @@
 #undef CC_PROFILER_RESET_INSTANCE
 #define CC_PROFILER_RESET_INSTANCE(__id__, __name__) do{ ProfilingResetTimingBlock( String::createWithFormat("%08X - %s", __id__, __name__)->getCString() ); } while(0)
 
-static std::function<PerformanceCallbackScene*()> createFunctions[] =
+PerformceCallbackTests::PerformceCallbackTests()
 {
-    CL(SimulateNewSchedulerCallbackPerfTest),
-    CL(InvokeMemberFunctionPerfTest),
-    CL(InvokeStdFunctionPerfTest),
-};
-
-#define MAX_LAYER    (sizeof(createFunctions) / sizeof(createFunctions[0]))
-
-
-static int g_curCase = 0;
-
-////////////////////////////////////////////////////////
-//
-// CallbackBasicLayer
-//
-////////////////////////////////////////////////////////
-
-CallbackBasicLayer::CallbackBasicLayer(bool bControlMenuVisible, int nMaxCases, int nCurCase)
-: PerformBasicLayer(bControlMenuVisible, nMaxCases, nCurCase)
-{
-}
-
-void CallbackBasicLayer::showCurrentTest()
-{
-    auto scene = createFunctions[_curCase]();
-    
-    g_curCase = _curCase;
-    
-    if (scene)
-    {
-        Director::getInstance()->replaceScene(scene);
-    }
+    ADD_TEST_CASE(SimulateNewSchedulerCallbackPerfTest);
+    ADD_TEST_CASE(InvokeMemberFunctionPerfTest);
+    ADD_TEST_CASE(InvokeStdFunctionPerfTest);
 }
 
 ////////////////////////////////////////////////////////
@@ -79,26 +52,6 @@ void PerformanceCallbackScene::onEnter()
     Scene::onEnter();
 
     CC_PROFILER_PURGE_ALL();
-    
-    auto s = Director::getInstance()->getWinSize();
-    
-    auto menuLayer = new (std::nothrow) CallbackBasicLayer(true, MAX_LAYER, g_curCase);
-    addChild(menuLayer);
-    menuLayer->release();
-    
-    // Title
-    auto label = Label::createWithTTF(title().c_str(), "fonts/arial.ttf", 32);
-    addChild(label, 1);
-    label->setPosition(Vec2(s.width/2, s.height-50));
-    
-    // Subtitle
-    std::string strSubTitle = subtitle();
-    if(strSubTitle.length())
-    {
-        auto l = Label::createWithTTF(strSubTitle.c_str(), "fonts/Thonburi.ttf", 16);
-        addChild(l, 1);
-        l->setPosition(Vec2(s.width/2, s.height-80));
-    }
     
     getScheduler()->schedule(CC_SCHEDULE_SELECTOR(PerformanceCallbackScene::onUpdate), this, 0.0f, false);
     getScheduler()->schedule(CC_SCHEDULE_SELECTOR(PerformanceCallbackScene::dumpProfilerInfo), this, 2, false);
@@ -208,11 +161,4 @@ void InvokeStdFunctionPerfTest::onUpdate(float dt)
         _callback(dt);
     }
     CC_PROFILER_STOP(_profileName.c_str());
-}
-
-void runCallbackPerformanceTest()
-{
-    auto scene = createFunctions[g_curCase]();
-    
-    Director::getInstance()->replaceScene(scene);
 }

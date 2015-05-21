@@ -7,6 +7,15 @@
 --------------------------------
 -- @overload self, float, vec3_table         
 -- @overload self, float, vec2_table         
+-- @function [parent=#MoveBy] initWithDuration
+-- @param self
+-- @param #float duration
+-- @param #vec2_table deltaPosition
+-- @return bool#bool ret (return value: bool)
+
+--------------------------------
+-- @overload self, float, vec3_table         
+-- @overload self, float, vec2_table         
 -- @function [parent=#MoveBy] create
 -- @param self
 -- @param #float duration
@@ -18,6 +27,7 @@
 -- @function [parent=#MoveBy] startWithTarget 
 -- @param self
 -- @param #cc.Node target
+-- @return MoveBy#MoveBy self (return value: cc.MoveBy)
         
 --------------------------------
 -- 
@@ -32,9 +42,16 @@
 -- @return MoveBy#MoveBy ret (return value: cc.MoveBy)
         
 --------------------------------
--- 
+-- param time in seconds
 -- @function [parent=#MoveBy] update 
 -- @param self
 -- @param #float time
+-- @return MoveBy#MoveBy self (return value: cc.MoveBy)
+        
+--------------------------------
+-- 
+-- @function [parent=#MoveBy] MoveBy 
+-- @param self
+-- @return MoveBy#MoveBy self (return value: cc.MoveBy)
         
 return nil

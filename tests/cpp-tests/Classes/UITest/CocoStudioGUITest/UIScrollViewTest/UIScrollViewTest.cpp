@@ -1,8 +1,18 @@
-
-
 #include "UIScrollViewTest.h"
 
+USING_NS_CC;
+using namespace cocos2d::ui;
 
+UIScrollViewTests::UIScrollViewTests()
+{
+    ADD_TEST_CASE(UIScrollViewTest_Vertical);
+    ADD_TEST_CASE(UIScrollViewTest_Horizontal);
+    ADD_TEST_CASE(UIScrollViewTest_Both);
+    ADD_TEST_CASE(UIScrollViewTest_ScrollToPercentBothDirection);
+    ADD_TEST_CASE(UIScrollViewTest_ScrollToPercentBothDirection_Bounce);
+    ADD_TEST_CASE(UIScrollViewNestTest);
+    ADD_TEST_CASE(UIScrollViewRotated);
+}
 // UIScrollViewTest_Vertical
 
 UIScrollViewTest_Vertical::UIScrollViewTest_Vertical()

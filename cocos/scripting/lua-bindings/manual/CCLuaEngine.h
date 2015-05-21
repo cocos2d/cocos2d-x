@@ -36,81 +36,131 @@ extern "C" {
 #include "CCLuaValue.h"
 #include "cocos2d/LuaScriptHandlerMgr.h"
 
+/**
+ * @addtogroup lua
+ * @{
+ */
+
 NS_CC_BEGIN
 
-// Lua support for cocos2d-x
+/**
+ * The Lua engine integrated into the cocos2d-x to process the interactive operation between lua and c++.
+ *
+ * @lua NA
+ * @js NA
+ */
 class LuaEngine : public ScriptEngineProtocol
 {
 public:
+    /**
+     * Get instance of LuaEngine.
+     *
+     * @return the instance of LuaEngine.
+     */
     static LuaEngine* getInstance(void);
+    /**
+     * Get defaultEngine of LuaEngine, it was deprecated.
+     *
+     * @return the instance of LuaEngine.
+     */
     CC_DEPRECATED_ATTRIBUTE static LuaEngine* defaultEngine(void) { return LuaEngine::getInstance(); }
+    
+    /** 
+     * Destrutor of LuaEngine.
+     */
     virtual ~LuaEngine(void);
     
-    virtual ccScriptType getScriptType() {
+    /**
+     * Get ccScriptType of LuaEngine used, it is always kScriptTypeLua.
+     *
+     * @return kScriptTypeLua.
+     */
+    virtual ccScriptType getScriptType() override {
         return kScriptTypeLua;
     };
-
+    
+    /**
+     * Get LuaStack of the LuaEngine.
+     * All the interactive operation are all base on the LuaStack.
+     *
+     * @return LuaStack object.
+     */
     LuaStack *getLuaStack(void) {
         return _stack;
     }
     
     /**
-     @brief Add a path to find lua files in
-     @param path to be added to the Lua path
+     * Add a path to find lua files in.
+     *
+     * @param path to be added to the Lua path.
      */
     virtual void addSearchPath(const char* path);
     
     /**
-     @brief Add lua loader, now it is used on android
+     * Add lua loader.
+     *
+     * @param func a function pointer point to the loader function.
      */
     virtual void addLuaLoader(lua_CFunction func);
     
     /**
-     @brief reload script code contained in the given string.
-     @param moduleFileName String object holding the filename of the script file that is to be executed
-     @return 0 if the string is excuted correctly.
-     @return other if the string is excuted wrongly.
+     * Reload script code corresponding to moduleFileName.
+     * If value of package["loaded"][moduleFileName] is existed, it would set the vaule nil.Then,it calls executeString function.
+     *
+     * @param moduleFileName String object holding the filename of the script file that is to be executed.
+     * @return 0 if the string is excuted correctly or other if the string is excuted wrongly.
      */
     virtual int reload(const char* moduleFileName);
     
     /**
-     @brief Remove Object from lua state
-     @param object to remove
+     * Remove the related reference about the Ref object stored in the Lua table by set the value of corresponding key nil:
+     * The related Lua tables are toluafix_refid_ptr_mapping,toluafix_refid_type_mapping,tolua_value_root and object_Metatable["tolua_ubox"] or tolua_ubox.
+     * Meanwhile set the corresponding userdata nullptr and remove the all the lua function refrence corresponding to this object.
+     * 
+     * In current mechanism, this function is called in the destructor of Ref object, developer don't call this functions.
+     *
+     * @param object the key object to remove script object.
      */
-    virtual void removeScriptObjectByObject(Ref* object);
+    virtual void removeScriptObjectByObject(Ref* object) override;
     
     /**
-     @brief Remove Lua function reference
+     * Remove Lua function reference by nHandler by setting toluafix_refid_function_mapping[nHandle] nil.
+     *
+     * @param nHandler the function refrence index to find the correspoinding Lua function pointer.
      */
-    virtual void removeScriptHandler(int nHandler);
+    virtual void removeScriptHandler(int nHandler) override;
     
     /**
-     @brief Reallocate Lua function reference
+     * Reallocate Lua function reference index to the Lua function pointer to add refrence.
+     *
+     * @param nHandler the function refrence index to find the correspoinding Lua function pointer.
      */
-    virtual int reallocateScriptHandler(int nHandler);
+    virtual int reallocateScriptHandler(int nHandler) override;
     
     /**
-     @brief Execute script code contained in the given string.
-     @param codes holding the valid script code that should be executed.
-     @return 0 if the string is excuted correctly.
-     @return other if the string is excuted wrongly.
+     * Execute script code contained in the given string.
+     *
+     * @param codes holding the valid script code that should be executed.
+     * @return 0 if the string is excuted correctly,other if the string is excuted wrongly.
      */
-    virtual int executeString(const char* codes);
+    virtual int executeString(const char* codes) override;
     
     /**
-     @brief Execute a script file.
-     @param filename String object holding the filename of the script file that is to be executed
+     * Execute a script file.
+     *
+     * @param filename String object holding the filename of the script file that is to be executed.
+     * @return the return values by calling executeFunction.
      */
-    virtual int executeScriptFile(const char* filename);
+    virtual int executeScriptFile(const char* filename) override;
     
     /**
-     @brief Execute a scripted global function.
-     @brief The function should not take any parameters and should return an integer.
-     @param functionName String object holding the name of the function, in the global script environment, that is to be executed.
-     @return The integer value returned from the script function.
+     * Execute a scripted global function.
+     * The function should not take any parameters and should return an integer.
+     *
+     * @param functionName String object holding the name of the function, in the global script environment, that is to be executed.
+     * @return The integer value returned from the script function.
      */
-    virtual int executeGlobalFunction(const char* functionName);
-
+    virtual int executeGlobalFunction(const char* functionName) override;
     virtual int executeNodeEvent(Node* pNode, int nAction);
     virtual int executeMenuItemEvent(MenuItem* pMenuItem);
     virtual int executeNotificationEvent(__NotificationCenter* pNotificationCenter, const char* pszName);
@@ -119,15 +169,49 @@ public:
     virtual int executeLayerTouchesEvent(Layer* pLayer, int eventType, __Set *pTouches);
     virtual int executeLayerTouchEvent(Layer* pLayer, int eventType, Touch *pTouch);
     virtual int executeLayerKeypadEvent(Layer* pLayer, int eventType);
-    /** execute a accelerometer event */
     virtual int executeAccelerometerEvent(Layer* pLayer, Acceleration* pAccelerationValue);
     virtual int executeEvent(int nHandler, const char* pEventName, Ref* pEventSource = NULL, const char* pEventSourceClassName = NULL);
-
-    virtual bool handleAssert(const char *msg);
+    /**
+     * Handle the assert message.
+     *
+     * @return return true if current _callFromLua of LuaStack is not equal to 0 otherwise return false.
+     */
+    virtual bool handleAssert(const char *msg) override;
     
+    /**
+     * Parse the config information data.
+     * 
+     * @param type in current mechanism,it always ConfigType::COCOSTUDIO.
+     * @param str  the information data.
+     * @return if __onParseConfig function exist in the Lua, it return the value that _stack->executeFunction returns otherwise return false.
+     */
     virtual bool parseConfig(ConfigType type, const std::string& str) override;
+    
+    /**
+     * When some events triggered in the c++ also needs to pass on to lua to handle, we could call this function to send events.
+     *
+     * @param message the ScriptEvent object that has ScriptEventType and the pointer to information data.
+     * @return default return 0 otherwise return values the same as handleNodeEvent, handleMenuClickedEvent or handleCallFuncActionEvent,etc.
+     */
     virtual int sendEvent(ScriptEvent* message) override;
+    
+    /**
+     * Pass on the events related with ScrollView,TableCell,AssertManager, Armature, Accelerometer, Keyboard, Touch, Touches ,Mouse and Custom event to lua to handle.
+     *
+     * @param type Different ScriptHandlerMgr::HandlerType means different processing for the data.
+     * @param data The pointer point to the information which should be pass on to lua, it would be parsed in the function to convert to the specific data according to the ScriptHandlerMgr::HandlerType,then pass to lua as function parameters.
+     * @return default return 0 otherwise return values according different ScriptHandlerMgr::HandlerType.
+     */
     virtual int handleEvent(ScriptHandlerMgr::HandlerType type,void* data);
+    /**
+     * Pass on the events related with TableCell and TableView to lua to handle.
+     *
+     * @param type Different ScriptHandlerMgr::HandlerType means different processing for the data.
+     * @param data The pointer point to the information which should be pass on to lua, it would be parsed in the function to convert to the specific data according to the ScriptHandlerMgr::HandlerType,then pass to lua as function parameters.
+     * @param numResults The number of the return values.
+     * @param func The callback would be called when numResults is > 0.
+     * @return default return 0 otherwise return values according different ScriptHandlerMgr::HandlerType.
+     */
     virtual int handleEvent(ScriptHandlerMgr::HandlerType type, void* data, int numResults, const std::function<void(lua_State*,int)>& func);
 private:
     LuaEngine(void)
@@ -162,5 +246,8 @@ private:
 };
 
 NS_CC_END
+
+// end group
+/// @}
 
 #endif // __CC_LUA_ENGINE_H__
