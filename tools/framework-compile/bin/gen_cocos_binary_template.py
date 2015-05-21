@@ -84,7 +84,11 @@ class CocosBinTemplateGenerator(object):
 		lib_dir = self.lib_dir
 		import modify_template
 		# modify the VS project file of templates
-		modifier = modify_template.TemplateModifier(x_path, lib_dir, x_path, self.is_for_package)
+		if self.is_for_package:
+			version = self.version.replace(" ", "-")
+			modifier = modify_template.TemplateModifier(x_path, lib_dir, version, self.is_for_package)
+		else:
+			modifier = modify_template.TemplateModifier(x_path, lib_dir, "no_use", self.is_for_package)
 		cpp_proj_path = os.path.join(dst_dir, "cpp-template-binary/proj.win32/HelloCpp.vcxproj")
 		lua_proj_path = os.path.join(dst_dir, "lua-template-binary/frameworks/runtime-src/proj.win32/HelloLua.vcxproj")
 		js_proj_path = os.path.join(dst_dir, "js-template-binary/frameworks/runtime-src/proj.win32/HelloJavascript.vcxproj")
