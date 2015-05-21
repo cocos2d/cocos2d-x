@@ -389,17 +389,32 @@ class CocosLibsCompiler(object):
 			if os.path.exists(strip_cmd_path):
 				armlibs = ["armeabi", "armeabi-v7a"]
 				for fold in armlibs:
-					strip_cmd = "%s -S %s/%s/*.a" % (strip_cmd_path, android_out_dir, fold)
-					execute_command(strip_cmd)
+					# strip_cmd = "%s -S %s/%s/*.a" % (strip_cmd_path, android_out_dir, fold)
+					# execute_command(strip_cmd)
+					self.trip_libs(strip_cmd_path, "%s/%s" % (android_out_dir, fold))
 
 			# strip x86 libs
 			strip_cmd_path = os.path.join(ndk_root, "toolchains/x86-4.8/prebuilt/%s/i686-linux-android/bin/%s" % (sys_folder_name, strip_execute_name))
 			if os.path.exists(strip_cmd_path) and os.path.exists(os.path.join(android_out_dir, "x86")):
-				strip_cmd = "%s -S %s/x86/*.a" % (strip_cmd_path, android_out_dir)
-				execute_command(strip_cmd)
+				# strip_cmd = "%s -S %s/x86/*.a" % (strip_cmd_path, android_out_dir)
+				# execute_command(strip_cmd)
+				self.trip_libs(strip_cmd_path, "%s/x86" % android_out_dir)
 
 		# remove the project
 		rmdir(proj_path)
+
+	def trip_libs(self, strip_cmd, folder):
+		if os_is_win32():
+			for name in os.listdir(folder):
+				if name[-2:] != ".a":
+					pass
+				full_name = os.path.join(folder, name)
+				command = "%s -S %s" % (strip_cmd, full_name)
+				execute_command(command)
+		else:
+			strip_cmd = "%s -S %s/*.a" % (strip_cmd, folder)
+			execute_command(strip_cmd)
+
 
 	def modify_mk(self, mk_file):
 		if os.path.isfile(mk_file):
