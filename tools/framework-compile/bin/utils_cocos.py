@@ -65,7 +65,11 @@ def get_vs_cmd_path(vs_reg, proj_path, vs_version):
 
 def rmdir(folder):
 	if os.path.exists(folder):
-		shutil.rmtree(folder)
+		def errorHandler(fun, path, excinfo):
+			print "[utils_cocos:rmdir] remove error file:%s" % path
+			print excinfo[1]
+
+		shutil.rmtree(folder, ignore_errors=False, onerror= errorHandler)
 
 def mkdir(folder):
 	if not os.path.exists(folder):
