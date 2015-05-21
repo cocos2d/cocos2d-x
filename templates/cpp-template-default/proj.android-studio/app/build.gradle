@@ -5,7 +5,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "org.cocos2dx.cpp_empty_test"
+        applicationId "org.cocos2dx.hellocpp"
         minSdkVersion 10
         targetSdkVersion 22
         versionCode 1

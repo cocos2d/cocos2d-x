@@ -5,7 +5,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "org.cocos2dx.hellolua"
+        applicationId "org.cocos2dx.hellojavascript"
         minSdkVersion 10
         targetSdkVersion 22
         versionCode 1
