@@ -45,6 +45,7 @@ SpineTests::SpineTests()
     ADD_TEST_CASE(SpineTestLayerFFD);
     ADD_TEST_CASE(SpineTestPerformanceLayer);
     ADD_TEST_CASE(SpineTestLayerRapor);
+    ADD_TEST_CASE(SpineTestBlendModeLayer);
 }
 
 bool SpineTestLayerNormal::init () {
@@ -199,4 +200,22 @@ bool SpineTestLayerRapor::init () {
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     return true;
+}
+
+bool SpineTestBlendModeLayer::init () {
+    if (!SpineTestLayer::init()) return false;
+    
+	scheduleUpdate();
+	
+    auto skeletonNode = SkeletonAnimation::createWithFile("spine/testBlendMode.json", "spine/testBlendMode.atlas");
+    Size windowSize = Director::getInstance()->getWinSize();
+    skeletonNode->setPosition(Vec2(windowSize.width / 2, 20));
+    
+    addChild(skeletonNode);
+    return true;
+    
+}
+
+void SpineTestBlendModeLayer::update (float deltaTime) {
+    
 }
