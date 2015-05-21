@@ -116,7 +116,19 @@ def win2unix(filePath):
 	except IOError as e:
 		print(e)
 
-
+def copy_files_with_cb(src, dst, cb):
+	for item in os.listdir(src):
+		path = os.path.join(src, item)
+		if os.path.isfile(path):
+			if cb is None:
+				shutil.copy(path, dst)
+			else:
+				cb(path, dst)
+		if os.path.isdir(path):
+			new_dst = os.path.join(dst, item)
+			if not os.path.isdir(new_dst):
+				os.makedirs(new_dst)
+			copy_files_with_cb(path, new_dst, cb)
 
 
 

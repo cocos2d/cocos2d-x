@@ -17,6 +17,7 @@ class CocosBinTemplateGenerator(object):
 		self.template_dir = os.path.realpath(os.path.join(self.cur_dir, os.path.pardir, "templates"))
 		self.lib_dir = os.path.realpath(os.path.join(self.cur_dir, os.path.pardir, "libs"))
 		self.version = self.get_version_from_source()
+		self.is_for_package = args.is_for_package
 
 	def generate(self):
 		self.clean_template()
@@ -66,7 +67,8 @@ class CocosBinTemplateGenerator(object):
 			f.write(file_content)
 			f.close()
 
-		excopy.copy_files_with_cb(os.path.join(self.cur_dir, os.path.pardir, "x-modified"), self.repo_x, process_file)
+		from utils_cocos import copy_files_with_cb
+		copy_files_with_cb(os.path.join(self.cur_dir, os.path.pardir, "x-modified"), self.repo_x, process_file)
 
 	def getConfigJson(self):
 		cfg_json_path = os.path.join(self.cur_dir, "template_binary_config.json")
@@ -82,7 +84,7 @@ class CocosBinTemplateGenerator(object):
 		lib_dir = self.lib_dir
 		import modify_template
 		# modify the VS project file of templates
-		modifier = modify_template.TemplateModifier(x_path, lib_dir)
+		modifier = modify_template.TemplateModifier(x_path, lib_dir, x_path, self.is_for_package)
 		cpp_proj_path = os.path.join(dst_dir, "cpp-template-binary/proj.win32/HelloCpp.vcxproj")
 		lua_proj_path = os.path.join(dst_dir, "lua-template-binary/frameworks/runtime-src/proj.win32/HelloLua.vcxproj")
 		js_proj_path = os.path.join(dst_dir, "js-template-binary/frameworks/runtime-src/proj.win32/HelloJavascript.vcxproj")

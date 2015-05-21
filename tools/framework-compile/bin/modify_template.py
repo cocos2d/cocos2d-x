@@ -33,7 +33,7 @@ XCODE_LINK_LUA_LIBS = [ "libluacocos2d", "libsimulator" ]
 XCODE_LINK_JS_LIBS = [ "libjscocos2d", "libsimulator" ]
 
 class TemplateModifier(object):
-    def __init__(self, engine_path, libs_path):
+    def __init__(self, engine_path, libs_path, install_path, is_for_package):
         if os.path.isabs(engine_path):
             self.engine_path = engine_path
         else:
@@ -43,6 +43,15 @@ class TemplateModifier(object):
             self.libs_path = libs_path
         else:
             self.libs_path = os.path.abspath(libs_path)
+
+        if install_path is None:
+            install_path = engine_path
+        if os.path.isabs(install_path):
+            self.install_path = install_path
+        else:
+            self.install_path = os.path.abspath(install_path)
+
+        self.is_for_package = is_for_package
 
     def modify_xcode_proj(self, proj_file_path, language):
         proj_modifier_path = os.path.join(os.path.dirname(__file__), 'proj_modifier')
@@ -123,7 +132,7 @@ class TemplateModifier(object):
         f.close()
 
         for old_engine_path in replace_engine_strs:
-            file_content = file_content.replace(old_engine_path, self.engine_path)
+            file_content = file_content.replace(old_engine_path, self.install_path)
 
         f = open(proj_file_path, "w")
         f.write(file_content)
@@ -141,6 +150,9 @@ class TemplateModifier(object):
 
         copy_libs_cmd = "if not exist \"$(OutDir)\" mkdir \"$(OutDir)\"\n" \
                         "xcopy /Y /Q \"$(EngineRoot)tools\\framework-compile\\libs\\windows\\*.*\" \"$(OutDir)\"\n"
+        if self.is_for_package:
+            copy_libs_cmd = "if not exist \"$(OutDir)\" mkdir \"$(OutDir)\"\n" \
+                        "xcopy /Y /Q \"%s\\windows\\*.*\" \"$(OutDir)\"\n" % self.install_path
         if language == "cpp":
             copy_libs_cmd = copy_libs_cmd + "xcopy \"$(ProjectDir)..\\Resources\" \"$(OutDir)\" /D /E /I /F /Y\n"
 
@@ -166,6 +178,8 @@ class TemplateModifier(object):
         vcx_proj.save()
 
         replace_strs = []
+        if self.is_for_package:
+            replace_strs.append("$(EngineRoot)")
         if language == "cpp":
             # link_libs = WIN32_LINK_CPP_LIBS
             replace_strs.append("..\\cocos2d")
@@ -199,7 +213,7 @@ class TemplateModifier(object):
 
         file_content = file_content.replace("MultiThreadedDebugDLL", "MultiThreadedDLL")
         for str in replace_strs:
-            file_content = file_content.replace(str, self.engine_path)
+            file_content = file_content.replace(str, self.install_path)
         f = open(proj_file_path, "w")
         f.write(file_content)
         f.close()
