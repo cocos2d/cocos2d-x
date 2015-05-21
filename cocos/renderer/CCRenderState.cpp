@@ -340,7 +340,8 @@ void RenderState::StateBlock::restore(long stateOverrideBits)
     CC_ASSERT(_defaultState);
 
     // If there is no state to restore (i.e. no non-default state), do nothing.
-    if (_defaultState->_bits == 0)
+//    if (_defaultState->_bits == 0)
+    if ( (stateOverrideBits | _defaultState->_bits) == stateOverrideBits)
     {
         return;
     }

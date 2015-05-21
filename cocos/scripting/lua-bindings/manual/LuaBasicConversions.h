@@ -697,7 +697,7 @@ extern bool luaval_to_ccvaluevector(lua_State* L, int lo, cocos2d::ValueVector* 
  * @return Return true if the type of Lua value at the index is a Lua userdata, otherwise return false.
  */
 template <class T>
-bool luaval_to_object(lua_State* L, int lo, const char* type, T** ret)
+bool luaval_to_object(lua_State* L, int lo, const char* type, T** ret, const char* funcName = "")
 {
     if(nullptr == L || lua_gettop(L) < lo)
         return false;
@@ -707,8 +707,8 @@ bool luaval_to_object(lua_State* L, int lo, const char* type, T** ret)
     
     *ret = static_cast<T*>(tolua_tousertype(L, lo, 0));
     
-    if (nullptr == ret)
-        LUA_PRECONDITION(ret, "Invalid Native Object");
+    if (nullptr == *ret)
+        CCLOG("Warning: %s argument %d is invalid native object(nullptr)", funcName, lo);
     
     return true;
 }

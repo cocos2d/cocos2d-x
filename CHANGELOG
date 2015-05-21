@@ -6,9 +6,10 @@ cocos2d-x-3.7  ??
     [NEW]           FileUtils: checked filename case characters on windows
     [NEW]           FileUitls: added supporting loading files that which file path include utf-8 characters
     [NEW]           PhysicsShape: added sensor property
-
+    
     [FIX]           3rd: fix PIE link error on iOS caused by libpng and libtiff
     [FIX]           AssetsManager: crashed issue
+    [FIX]           Audio: can not play large ogg files on windows
     [FIX]           EaseRateAction: no way to create an `EaseRateAction` instance
     [FIX]           Label: crashed if invoking `setString(text` after `getLetter(letterIndex)` and `letterIndex` is greater than the length of text
     [FIX]           Label: position is wrong if label content is changed after invoking `getLetter(letterIndex)`

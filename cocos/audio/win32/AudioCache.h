@@ -38,7 +38,7 @@
 #endif
 #include "CCPlatformMacros.h"
 
-#define QUEUEBUFFER_NUM 3
+#define QUEUEBUFFER_NUM 5
 #define QUEUEBUFFER_TIME_STEP 0.1f
 
 NS_CC_BEGIN
