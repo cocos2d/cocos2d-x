@@ -135,6 +135,18 @@
                     "proj.win32/Debug",
                     "proj.win32/Release"
                 ]
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/Classes/ide-support",
+                "to": "frameworks/runtime-src/Classes/ide-support",
+                "exclude": [
+                    "RuntimeJsImpl.h",
+                    "RuntimeJsImpl.cpp"
+                ]
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/Classes/lua_module_register.h",
+                "to": "frameworks/runtime-src/Classes/"
             }
         ],
         "project_rename": {
