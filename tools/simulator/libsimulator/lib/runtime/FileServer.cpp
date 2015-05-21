@@ -213,6 +213,7 @@ bool FileServer::listenOnTCP(int port)
     _receiveThread = std::thread(std::bind( &FileServer::loopReceiveFile, this));
     _writeThread = std::thread(std::bind(&FileServer::loopWriteFile, this));
     _responseThread = std::thread(std::bind(&FileServer::loopResponse, this));
+    _responseThread.detach();
     return true;
 }
 
@@ -222,17 +223,17 @@ void FileServer::stop()
 	_writeEndThread = true;
 	_responseEndThread = true;
 
-    if(_receiveRunning)
+    if (_receiveRunning && _receiveThread.joinable())
     {
         _receiveThread.join();
     }
 
-	if (_writeRunning)
+    if (_writeRunning && _writeThread.joinable())
 	{
 		_writeThread.join();
 	}
 
-	if (_responseRunning)
+    if (_responseRunning && _responseThread.joinable())
 	{
 		_responseThread.join();
 	}

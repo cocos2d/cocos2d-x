@@ -1123,6 +1123,9 @@ Developers:
         Fixed crash on AssetsManager
         Fixed memory leak of WebView on iOS
         Fixed crahed that if url contains illegal characters on Android
+        
+    tankorsmash
+        Fixed the bug that ProgressTimer::setSprite() doesn't take effect
 
 Retired Core Developers:
     WenSheng Yang

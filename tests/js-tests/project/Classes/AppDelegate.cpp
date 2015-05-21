@@ -35,9 +35,7 @@
 #include "platform/ios/JavaScriptObjCBridge.h"
 #endif
 
-#if(CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 #include "js_Effect3D_bindings.h"
-#endif
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -65,7 +63,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-#if(CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
         glview = cocos2d::GLViewImpl::create("js-tests");
 #else
         glview = cocos2d::GLViewImpl::createWithRect("js-tests", Rect(0,0,900,640));
@@ -117,9 +115,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 #endif
 
     sc->addRegisterCallback(register_DrawNode3D_bindings);
-#if(CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     sc->addRegisterCallback(register_Effect3D_bindings);
-#endif
 
     sc->start();
     sc->runScript("script/jsb_boot.js");
