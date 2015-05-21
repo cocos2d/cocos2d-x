@@ -194,6 +194,10 @@ public:
     //Wait for texture cahe to quit befor destroy instance.
     /**Called by director, please do not called outside.*/
     void waitForQuit();
+    
+    /** Set the texture format for image file.
+     */
+    void setFileTextureFormat(std::string path, Texture2D::PixelFormat format);
 
 private:
     void addImageAsyncCallBack(float dt);
@@ -232,6 +236,7 @@ protected:
     int _asyncRefCount;
 
     std::unordered_map<std::string, Texture2D*> _textures;
+    std::unordered_map<std::string, Texture2D::PixelFormat> _fileTextureFormat;
 };
 
 #if CC_ENABLE_CACHE_TEXTURE_DATA
