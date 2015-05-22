@@ -131,7 +131,7 @@ void CCLabelAtlas::updateAtlasValues()
 
     CCAssert( n <= m_pTextureAtlas->getCapacity(), "updateAtlasValues: Invalid String length");
     ccV3F_C4B_T2F_Quad* quads = m_pTextureAtlas->getQuads();
-	ccColor4B c = { _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity };
+    ccColor4B c = { _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity };
     for(unsigned int i = 0; i < n; i++) {
 
         unsigned char a = s[i] - m_uMapStartChar;
@@ -160,7 +160,7 @@ void CCLabelAtlas::updateAtlasValues()
         quads[i].br.texCoords.u = right;
         quads[i].br.texCoords.v = bottom;
 
-		float beginX = (float)(i * m_uItemWidth);
+        float beginX = (float)(i * m_uItemWidth);
 
         quads[i].bl.vertices.x = beginX;
         quads[i].bl.vertices.y = 0;
