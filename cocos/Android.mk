@@ -288,6 +288,7 @@ LOCAL_STATIC_LIBRARIES += spine_static
 LOCAL_STATIC_LIBRARIES += cocos_network_static
 LOCAL_STATIC_LIBRARIES += audioengine_static
 LOCAL_STATIC_LIBRARIES += bullet_static
+LOCAL_STATIC_LIBRARIES += recast_static
 
 include $(BUILD_STATIC_LIBRARY)
 #==============================================================
