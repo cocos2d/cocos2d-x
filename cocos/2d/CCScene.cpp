@@ -83,6 +83,9 @@ Scene::~Scene()
     CC_SAFE_RELEASE(_physics3DWorld);
     CC_SAFE_RELEASE(_physics3dDebugCamera);
 #endif
+#if CC_USE_NAVMESH
+    CC_SAFE_RELEASE(_navMesh);
+#endif
     Director::getInstance()->getEventDispatcher()->removeEventListener(_event);
     CC_SAFE_RELEASE(_event);
 }

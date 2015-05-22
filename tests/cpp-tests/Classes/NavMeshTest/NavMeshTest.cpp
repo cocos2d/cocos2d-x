@@ -32,13 +32,10 @@
 USING_NS_CC_EXT;
 USING_NS_CC;
 
-#define START_POS_X -0.5
-#define START_POS_Y -2.5
-#define START_POS_Z -0.5
-
-#define ARRAY_SIZE_X 4
-#define ARRAY_SIZE_Y 3
-#define ARRAY_SIZE_Z 4
+struct AgentUserData
+{
+    float time;
+};
 
 NavMeshTests::NavMeshTests()
 {
@@ -222,11 +219,13 @@ void NavMeshTestDemo::createAgent(const Vec3 &pos)
 {
     std::string filePath = "Sprite3DTest/girl.c3b";
     NavMeshAgentParam param;
-    //param.position = pos;
     param.radius = 2.0f;
     param.height = 8.0f;
     auto agent = NavMeshAgent::create(param);
     auto agentNode = Sprite3D::create(filePath);
+    agent->setOrientationRefAxes(Vec3(-1.0f, 0.0f, 1.0f));
+    AgentUserData *data = new AgentUserData{ 0.0f };
+    agent->setUserData(data);
     agentNode->setScale(0.05f);
     agentNode->addComponent(agent);
 
@@ -249,8 +248,9 @@ void NavMeshTestDemo::createAgent(const Vec3 &pos)
 
 void NavMeshTestDemo::createObstacle(const Vec3 &pos)
 {
-    auto obstacle = NavMeshObstacle::create(pos + Vec3(0.0f, -0.5f, 0.0f), 2.0f, 8.0f);
+    auto obstacle = NavMeshObstacle::create(2.0f, 8.0f);
     auto obstacleNode = Sprite3D::create("Sprite3DTest/cylinder.c3b");
+    obstacleNode->setPosition3D(pos + Vec3(0.0f, -0.5f, 0.0f));
     obstacleNode->setRotation3D(Vec3(-90.0f, 0.0f, 0.0f));
     obstacleNode->setScale(0.3f);
     obstacleNode->addComponent(obstacle);
@@ -258,10 +258,45 @@ void NavMeshTestDemo::createObstacle(const Vec3 &pos)
     this->addChild(obstacleNode);
 }
 
+Vec3 jump(const Vec3* pV1, const Vec3* pV2, float height, float t)
+{
+    Vec3 pOut;
+    pOut.x = pV1->x + t * (pV2->x - pV1->x);
+    pOut.y = pV1->y + t * (pV2->y - pV1->y);
+    pOut.z = pV1->z + t * (pV2->z - pV1->z);
+    pOut.y += height * sinf(M_PI * t);
+    return pOut;
+}
+
 void NavMeshTestDemo::moveAgents(const cocos2d::Vec3 &des)
 {
     for (auto iter : _agents){
-        iter.first->move(des, true, Vec3(-1.0f, 0.0f, 1.0f));
+        NavMeshAgent::MoveCallback callback = [](NavMeshAgent *agent, float totalTimeAfterMove){
+            AgentUserData *data = static_cast<AgentUserData *>(agent->getUserData());
+            if (agent->isOnOffMeshLink()){
+                agent->setAutoTraverseOffMeshLink(false);
+                agent->setAutoOrientation(false);
+                OffMeshLinkData linkdata = agent->getCurrentOffMeshLinkData();
+
+                agent->getOwner()->setPosition3D(jump(&linkdata.startPosition, &linkdata.endPosition, 10.0f, data->time));
+                Vec3 dir = linkdata.endPosition - linkdata.startPosition;
+                dir.y = 0.0f;
+                dir.normalize();
+                Vec3 axes;
+                Vec3 refAxes = Vec3(-1.0f, 0.0f, 1.0f);
+                refAxes.normalize();
+                Vec3::cross(refAxes, dir, &axes);
+                float angle = Vec3::dot(refAxes, dir);
+                agent->getOwner()->setRotationQuat(Quaternion(axes, acosf(angle)));
+                data->time += 0.01f;
+                if (1.0f < data->time){
+                    agent->completeOffMeshLink();
+                    agent->setAutoOrientation(true);
+                    data->time = 0.0f;
+                }
+            }
+        };
+        iter.first->move(des, callback);
     }
 }
 
@@ -294,7 +329,10 @@ void NavMeshTestDemo::update( float delta )
 
 NavMeshTestDemo::~NavMeshTestDemo( void )
 {
-    
+    for (auto iter : _agents){
+        AgentUserData *data = static_cast<AgentUserData *>(iter.first->getUserData());
+        delete data;
+    }
 }
 
 #endif

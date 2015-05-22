@@ -46,6 +46,39 @@ struct TileCacheTileHeader
     int dataSize;
 };
 
+static char* parseRow(char* buf, char* bufEnd, char* row, int len)
+{
+    bool start = true;
+    bool done = false;
+    int n = 0;
+    while (!done && buf < bufEnd)
+    {
+        char c = *buf;
+        buf++;
+        // multirow
+        switch (c)
+        {
+        case '\n':
+            if (start) break;
+            done = true;
+            break;
+        case '\r':
+            break;
+        case '\t':
+        case ' ':
+            if (start) break;
+        default:
+            start = false;
+            row[n++] = c;
+            if (n >= len - 1)
+                done = true;
+            break;
+        }
+    }
+    row[n] = '\0';
+    return buf;
+}
+
 static const int TILECACHESET_MAGIC = 'T' << 24 | 'S' << 16 | 'E' << 8 | 'T'; //'TSET';
 static const int TILECACHESET_VERSION = 1;
 static const int MAX_AGENTS = 128;
