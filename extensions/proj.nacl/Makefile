@@ -135,6 +135,7 @@ EXTENSIONS_SOURCES = ../CCBReader/CCBFileLoader.cpp \
 ../CocoStudio/Trigger/TriggerBase.cpp \
 ../CocoStudio/Trigger/TriggerMng.cpp \
 ../CocoStudio/Trigger/TriggerObj.cpp \
+../CocoStudio/CocoStudio.cpp \
 
 all:
 

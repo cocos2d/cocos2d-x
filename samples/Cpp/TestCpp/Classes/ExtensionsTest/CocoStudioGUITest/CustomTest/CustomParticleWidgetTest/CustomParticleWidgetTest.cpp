@@ -26,7 +26,7 @@ void CustomParticleWidgetLayer::onEnter()
 {
     CCLayer::onEnter();
     
-    GUIReader* guiReader = GUIReader::shareReader();
+    GUIReader* guiReader = GUIReader::getInstance();
     guiReader->registerTypeAndCallBack("CustomParticleWidget",
                                        &CustomParticleWidget::createInstance,
                                        CustomParticleWidgetReader::getInstance(),

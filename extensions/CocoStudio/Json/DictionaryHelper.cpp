@@ -40,6 +40,11 @@ DictionaryHelper::~DictionaryHelper()
 
 DictionaryHelper* DictionaryHelper::shareHelper()
 {
+    return DictionaryHelper::getInstance();
+}
+
+DictionaryHelper* DictionaryHelper::getInstance()
+{
     if (!sharedHelper) {
         sharedHelper = new DictionaryHelper();
     }
@@ -48,7 +53,12 @@ DictionaryHelper* DictionaryHelper::shareHelper()
 
 void DictionaryHelper::purgeDictionaryHelper()
 {
-	 CC_SAFE_DELETE(sharedHelper);
+    DictionaryHelper::destroyInstance();
+}
+
+void DictionaryHelper::destroyInstance()
+{
+    CC_SAFE_DELETE(sharedHelper);
 }
 
 cocos2d::CCDictionary* DictionaryHelper::getSubDictionary(cocos2d::CCDictionary* root,const char* key)
@@ -181,7 +191,7 @@ cocos2d::CCArray* DictionaryHelper::objectToCCArray(cocos2d::CCObject *obj)
 
 const rapidjson::Value& DictionaryHelper::getSubDictionary_json(const rapidjson::Value &root, const char* key)
 {
-	return root[key];
+    return root[key];
 }
 
 const rapidjson::Value& DictionaryHelper::getSubDictionary_json(const rapidjson::Value &root, const char* key, int idx)
@@ -209,7 +219,7 @@ int DictionaryHelper::getIntValue_json(const rapidjson::Value& root, const char*
 
 float DictionaryHelper::getFloatValue_json(const rapidjson::Value& root,const char* key, float def)
 {
-	float fRet = def;
+    float fRet = def;
     do {
         CC_BREAK_IF(root.IsNull());
         CC_BREAK_IF(root[key].IsNull());
@@ -287,7 +297,7 @@ float DictionaryHelper::getFloatValueFromArray_json(const rapidjson::Value& root
 
 bool DictionaryHelper::getBoolValueFromArray_json(const rapidjson::Value& root,const char* arrayKey,int idx, bool def)
 {
-	bool bRet = def;
+    bool bRet = def;
     do {
         CC_BREAK_IF(root.IsNull());
         CC_BREAK_IF(root[arrayKey].IsNull());
@@ -313,7 +323,7 @@ const char* DictionaryHelper::getStringValueFromArray_json(const rapidjson::Valu
 
 const rapidjson::Value &DictionaryHelper::getDictionaryFromArray_json(const rapidjson::Value &root, const char* key,int idx)
 {
-	return root[key][idx];
+    return root[key][idx];
 }
 
 bool DictionaryHelper::checkObjectExist_json(const rapidjson::Value &root)

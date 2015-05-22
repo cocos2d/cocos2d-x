@@ -49,22 +49,24 @@ typedef void (CCObject::*SEL_ParseEventBinary)(const std::string&, CCObject*, Co
 class CC_EX_DLL GUIReader : public CCObject
 {
 public:
-	/**
+    /**
      *  @js ctor
      */
     GUIReader();
-	/**
+    /**
      *  @js NA
      */
     ~GUIReader();
-	/**
+    /**
      *  @js getInstance
      */
-    static GUIReader* shareReader();
+    CC_DEPRECATED_ATTRIBUTE static GUIReader* shareReader();
+    static GUIReader* getInstance();
     /**
      *  @js pure
      */
-	static void purge();
+    CC_DEPRECATED_ATTRIBUTE static void purge();
+    static void destroyInstance();
     
     cocos2d::ui::Widget* widgetFromJsonFile(const char* fileName);
     cocos2d::ui::Widget* widgetFromBinaryFile(const char* fileName);

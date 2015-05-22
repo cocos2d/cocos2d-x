@@ -30,10 +30,10 @@ THE SOFTWARE.
 
 namespace cocos2d
 {
-	namespace extension
-	{
-		class WidgetPropertiesReader0300;
-	}
+    namespace extension
+    {
+        class WidgetPropertiesReader0300;
+    }
 }
 
 NS_TIMELINE_BEGIN
@@ -103,13 +103,11 @@ protected:
     cocos2d::CCNode* loadSimpleNode(const rapidjson::Value& json, cocos2d::CCNode* parent);
     cocos2d::CCNode* loadSprite(const rapidjson::Value& json, cocos2d::CCNode* parent);
     cocos2d::CCNode* loadParticle(const rapidjson::Value& json, cocos2d::CCNode* parent);
-	cocos2d::CCNode* loadWidget(const rapidjson::Value& json, cocos2d::CCNode* parent);
+    cocos2d::CCNode* loadWidget(const rapidjson::Value& json, cocos2d::CCNode* parent);
 
     bool isUiWidget(const std::string& type);
 
     cocos2d::CCDictionary* _funcs;  // <std::string, NodeCreateCallFunc*>
-
-	cocos2d::extension::WidgetPropertiesReader0300* _guiReader;
 
     bool _recordJsonPath;
     std::string _jsonPath;

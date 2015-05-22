@@ -28,12 +28,22 @@ LoadingBarReader* LoadingBarReader::getInstance()
     return instanceLoadingBar;
 }
 
+void LoadingBarReader::purge()
+{
+    LoadingBarReader::destroyInstance();
+}
+
+void LoadingBarReader::destroyInstance()
+{
+    CC_SAFE_DELETE(instanceLoadingBar);
+}
+
 void LoadingBarReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)
 {
     WidgetReader::setPropsFromJsonDictionary(widget, options);
     
     
-    std::string jsonPath = GUIReader::shareReader()->getFilePath();
+    std::string jsonPath = GUIReader::getInstance()->getFilePath();
     {
         ui::LoadingBar* loadingBar = (ui::LoadingBar*)widget;
         

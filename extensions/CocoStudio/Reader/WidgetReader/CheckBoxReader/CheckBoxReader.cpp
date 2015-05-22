@@ -28,12 +28,22 @@ CheckBoxReader* CheckBoxReader::getInstance()
     return instanceCheckBoxReader;
 }
 
+void CheckBoxReader::purge()
+{
+    CheckBoxReader::destroyInstance();
+}
+
+void CheckBoxReader::destroyInstance()
+{
+    CC_SAFE_DELETE(instanceCheckBoxReader);
+}
+
 void CheckBoxReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)
 {
     WidgetReader::setPropsFromJsonDictionary(widget, options);
     
 
-    std::string jsonPath = GUIReader::shareReader()->getFilePath();
+    std::string jsonPath = GUIReader::getInstance()->getFilePath();
     
     ui::CheckBox* checkBox = (ui::CheckBox*)widget;
     

@@ -32,6 +32,11 @@ static ActionManager* sharedActionManager = NULL;
 
 ActionManager* ActionManager::shareManager()
 {
+    return ActionManager::getInstance();
+}
+
+ActionManager* ActionManager::getInstance()
+{
     if (!sharedActionManager) {
         sharedActionManager = new ActionManager();
     }
@@ -40,47 +45,52 @@ ActionManager* ActionManager::shareManager()
 
 void ActionManager::purge()
 {
-	CC_SAFE_DELETE(sharedActionManager);
+    ActionManager::destroyInstance();
+}
+
+void ActionManager::destroyInstance()
+{
+    CC_SAFE_DELETE(sharedActionManager);
 }
 
 ActionManager::ActionManager()
 : m_pActionDic(NULL)
 {
-	m_pActionDic = CCDictionary::create();
+    m_pActionDic = CCDictionary::create();
     m_pActionDic->retain();
 }
 
 ActionManager::~ActionManager()
 {
-	m_pActionDic->removeAllObjects();
+    m_pActionDic->removeAllObjects();
     m_pActionDic->release();
 }
 
 void ActionManager::initWithDictionary(const char* jsonName,const rapidjson::Value &dic,CCObject* root)
 {
-	std::string path = jsonName;
-	int pos = path.find_last_of("/");
-	std::string fileName = path.substr(pos+1,path.length());
-	CCLOG("filename == %s",fileName.c_str());
-	CCArray* actionList = CCArray::create();
-	int actionCount = DICTOOL->getArrayCount_json(dic, "actionlist");
+    std::string path = jsonName;
+    int pos = path.find_last_of("/");
+    std::string fileName = path.substr(pos+1,path.length());
+    CCLOG("filename == %s",fileName.c_str());
+    CCArray* actionList = CCArray::create();
+    int actionCount = DICTOOL->getArrayCount_json(dic, "actionlist");
     for (int i=0; i< actionCount; i++) {
         ActionObject* action = new ActionObject();
-		action->autorelease();
-		const rapidjson::Value &actionDic = DICTOOL->getDictionaryFromArray_json(dic, "actionlist", i);
+        action->autorelease();
+        const rapidjson::Value &actionDic = DICTOOL->getDictionaryFromArray_json(dic, "actionlist", i);
         action->initWithDictionary(actionDic,root);
         actionList->addObject(action);
     }
-	m_pActionDic->setObject(actionList, fileName);
+    m_pActionDic->setObject(actionList, fileName);
 }
 
 void ActionManager::initWithBinary(const char* file, cocos2d::CCObject *root,  CocoLoader* pCocoLoader, stExpCocoNode*	pCocoNode)
 {
     std::string path = file;
-	int pos = path.find_last_of("/");
-	std::string fileName = path.substr(pos+1,path.length());
-	CCLOG("filename == %s",fileName.c_str());
-	CCArray* actionList = CCArray::create();
+    int pos = path.find_last_of("/");
+    std::string fileName = path.substr(pos+1,path.length());
+    CCLOG("filename == %s",fileName.c_str());
+    CCArray* actionList = CCArray::create();
     
     stExpCocoNode *stChildArray = pCocoNode->GetChildArray(pCocoLoader);
     stExpCocoNode *actionNode = NULL;
@@ -91,9 +101,9 @@ void ActionManager::initWithBinary(const char* file, cocos2d::CCObject *root,  C
             break;
         }
     }
-	if (NULL != actionNode)
+    if (NULL != actionNode)
     {
-		int actionCount = actionNode->GetChildNum();
+        int actionCount = actionNode->GetChildNum();
         for (int i = 0; i < actionCount; ++i) {
             ActionObject* action = new ActionObject();
             action->autorelease();
@@ -102,7 +112,7 @@ void ActionManager::initWithBinary(const char* file, cocos2d::CCObject *root,  C
             
             actionList->addObject(action);
         }
-	}
+    }
     m_pActionDic->setObject(actionList, fileName);
 
 }
@@ -110,40 +120,40 @@ void ActionManager::initWithBinary(const char* file, cocos2d::CCObject *root,  C
 
 ActionObject* ActionManager::getActionByName(const char* jsonName,const char* actionName)
 {
-	CCArray* actionList = (CCArray*)(m_pActionDic->objectForKey(jsonName));
-	if (!actionList)
-	{
-		return NULL;
-	}
-	for (unsigned int i=0; i<actionList->count(); i++)
-	{
-		ActionObject* action = dynamic_cast<ActionObject*>(actionList->objectAtIndex(i));
-		if (strcmp(actionName, action->getName()) == 0)
-		{
-			return action;
-		}
-	}
-	return NULL;
+    CCArray* actionList = (CCArray*)(m_pActionDic->objectForKey(jsonName));
+    if (!actionList)
+    {
+        return NULL;
+    }
+    for (unsigned int i=0; i<actionList->count(); i++)
+    {
+        ActionObject* action = dynamic_cast<ActionObject*>(actionList->objectAtIndex(i));
+        if (strcmp(actionName, action->getName()) == 0)
+        {
+            return action;
+        }
+    }
+    return NULL;
 }
 
 ActionObject* ActionManager::playActionByName(const char* jsonName,const char* actionName)
 {
-	ActionObject* action = getActionByName(jsonName,actionName);
-	if (action)
-	{
-		action->play();
-	}
-	return action;
+    ActionObject* action = getActionByName(jsonName,actionName);
+    if (action)
+    {
+        action->play();
+    }
+    return action;
 }
 
 ActionObject* ActionManager::playActionByName(const char* jsonName,const char* actionName, CCCallFunc* func)
 {
-	ActionObject* action = getActionByName(jsonName,actionName);
-	if (action)
-	{
-		action->play(func);
-	}
-	return action;
+    ActionObject* action = getActionByName(jsonName,actionName);
+    if (action)
+    {
+        action->play(func);
+    }
+    return action;
 }
 
 void ActionManager::releaseActions()

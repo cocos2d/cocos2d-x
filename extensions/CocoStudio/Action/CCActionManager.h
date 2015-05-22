@@ -33,78 +33,80 @@ NS_CC_EXT_BEGIN
 
 class CocoLoader;
 struct stExpCocoNode;
-	/**
-	*   @js NA
-	*   @lua NA
-	*/
+    /**
+    *   @js NA
+    *   @lua NA
+    */
 class CC_EX_DLL ActionManager:public CCObject
 {
 public:
 
-	/**
-	* Default constructor
-	* @js ctor
-	*/
-	ActionManager();
+    /**
+    * Default constructor
+    * @js ctor
+    */
+    ActionManager();
 
-	/**
-	* Default destructor
-	* @js NA
-	*/
-	virtual ~ActionManager();
+    /**
+    * Default destructor
+    * @js NA
+    */
+    virtual ~ActionManager();
 
-	/**
-	* Gets the static instance of ActionManager.
-	*/
-	static ActionManager* shareManager();
+    /**
+    * Gets the static instance of ActionManager.
+    */
+    CC_DEPRECATED_ATTRIBUTE static ActionManager* shareManager();
+    static ActionManager* getInstance();
 
-	/**
-	* Purges ActionManager point.
-	*/
-	static void purge();
+    /**
+    * Purges ActionManager point.
+    */
+    CC_DEPRECATED_ATTRIBUTE static void purge();
+    static void destroyInstance();
 
-	/**
-	* Gets an ActionObject with a name.
-	*
-	* @param jsonName  UI file name
-	*
-	* @param actionName  action name in the UI file.
-	*
-	* @return  ActionObject which named as the param name
-	*/
-	ActionObject* getActionByName(const char* jsonName,const char* actionName);
+    /**
+    * Gets an ActionObject with a name.
+    *
+    * @param jsonName  UI file name
+    *
+    * @param actionName  action name in the UI file.
+    *
+    * @return  ActionObject which named as the param name
+    */
+    ActionObject* getActionByName(const char* jsonName,const char* actionName);
 
-	/**
-	* Play an Action with a name.
-	*
-	* @param jsonName  UI file name
-	*
-	* @param actionName  action name in teh UIfile.
-	*/
-	ActionObject* playActionByName(const char* jsonName,const char* actionName);
+    /**
+    * Play an Action with a name.
+    *
+    * @param jsonName  UI file name
+    *
+    * @param actionName  action name in teh UIfile.
+    */
+    ActionObject* playActionByName(const char* jsonName,const char* actionName);
 
-	/**
-	* Play an Action with a name.
-	*
-	* @param jsonName  UI file name
-	*
-	* @param actionName  action name in teh UIfile.
-	*
-	* @param func ui action call back
-	*/
-	ActionObject* playActionByName(const char* jsonName,const char* actionName, CCCallFunc* func);
+    /**
+    * Play an Action with a name.
+    *
+    * @param jsonName  UI file name
+    *
+    * @param actionName  action name in teh UIfile.
+    *
+    * @param func ui action call back
+    */
+    ActionObject* playActionByName(const char* jsonName,const char* actionName, CCCallFunc* func);
 
-	/*init properties with json dictionay*/
-	void initWithDictionary(const char* jsonName,const rapidjson::Value &dic,CCObject* root);
+    /*init properties with json dictionay*/
+    void initWithDictionary(const char* jsonName,const rapidjson::Value &dic,CCObject* root);
     void initWithBinary(const char* file, CCObject* root,  CocoLoader* pCocoLoader, stExpCocoNode*	pCocoNode);
-	/**
-	* Release all actions.
-	*
-	*/
-	void releaseActions();
+    /**
+    * Release all actions.
+    *
+    */
+    void releaseActions();
 
 protected:
-	CCDictionary* m_pActionDic;
+    CCDictionary* m_pActionDic;
 };
 
 NS_CC_EXT_END

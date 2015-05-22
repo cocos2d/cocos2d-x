@@ -1,5 +1,5 @@
 /****************************************************************************
-Copyright (c) 2013 cocos2d-x.org
+Copyright (c) 2015 cocos2d-x.org
 
 http://www.cocos2d-x.org
 
@@ -22,50 +22,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "CCSpriteFrameCacheHelper.h"
+#include "CocoStudio.h"
+#include "cocos2d.h"
+#include "ExtensionMacros.h"
+#include "cocos-ext.h"
 
+USING_NS_CC_EXT;
 
-NS_CC_EXT_BEGIN
-
-CCSpriteFrameCacheHelper *CCSpriteFrameCacheHelper::s_SpriteFrameCacheHelper = NULL;
-
-CCSpriteFrameCacheHelper *CCSpriteFrameCacheHelper::sharedSpriteFrameCacheHelper()
+void destroyCocosStudio()
 {
-    return CCSpriteFrameCacheHelper::getInstance();
+    SceneReader::destroyInstance();
+    ActionManager::destroyInstance();
+    cocostudio::timeline::ActionTimelineCache::destroyInstance();
+    cocostudio::timeline::NodeReader::destroyInstance();
+    CCArmatureDataManager::destroyInstance();
+    GUIReader::destroyInstance();
+    TriggerMng::destroyInstance();
 }
-
-CCSpriteFrameCacheHelper *CCSpriteFrameCacheHelper::getInstance()
-{
-    if (!s_SpriteFrameCacheHelper)
-    {
-        s_SpriteFrameCacheHelper = new CCSpriteFrameCacheHelper();
-    }
-
-    return s_SpriteFrameCacheHelper;
-}
-
-void CCSpriteFrameCacheHelper::purge()
-{
-    CCSpriteFrameCacheHelper::destroyInstance();
-}
-
-void CCSpriteFrameCacheHelper::destroyInstance()
-{
-    delete s_SpriteFrameCacheHelper;
-    s_SpriteFrameCacheHelper = NULL;
-}
-
-void CCSpriteFrameCacheHelper::addSpriteFrameFromFile(const char *plistPath, const char *imagePath)
-{
-    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plistPath, imagePath);
-}
-
-CCSpriteFrameCacheHelper::CCSpriteFrameCacheHelper()
-{
-}
-
-CCSpriteFrameCacheHelper::~CCSpriteFrameCacheHelper()
-{
-}
-
-NS_CC_EXT_END

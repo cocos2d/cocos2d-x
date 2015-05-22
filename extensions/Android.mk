@@ -130,6 +130,7 @@ CocoStudio/Trigger/ObjectFactory.cpp \
 CocoStudio/Trigger/TriggerBase.cpp \
 CocoStudio/Trigger/TriggerMng.cpp \
 CocoStudio/Trigger/TriggerObj.cpp \
+CocoStudio/CocoStudio.cpp \
 spine/Animation.cpp \
 spine/AnimationState.cpp \
 spine/AnimationStateData.cpp \
@@ -170,7 +171,8 @@ LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
                            $(LOCAL_PATH)/GUI/CCScrollView \
                            $(LOCAL_PATH)/network \
                            $(LOCAL_PATH)/LocalStorage \
-						               $(LOCAL_PATH)/CocoStudio/Armature
+                           $(LOCAL_PATH)/CocoStudio/Armature \
+                           $(LOCAL_PATH)/CocoStudio
 
 LOCAL_CFLAGS := -fexceptions
                     

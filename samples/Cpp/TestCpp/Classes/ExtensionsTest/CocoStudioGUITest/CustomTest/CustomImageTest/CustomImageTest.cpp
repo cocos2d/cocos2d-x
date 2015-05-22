@@ -16,13 +16,13 @@ void CustomImageLayer::onEnter()
 {
     CCLayer::onEnter();
     
-    GUIReader* guiReader = GUIReader::shareReader();
+    GUIReader* guiReader = GUIReader::getInstance();
     guiReader->registerTypeAndCallBack("CustomImageView",
                                        &CustomImageView::createInstance,
                                        CustomImageViewReader::getInstance(),
                                        parseselector(CustomImageViewReader::setProperties));        
     
-    Layout* layout = static_cast<Layout*>(GUIReader::shareReader()->
+    Layout* layout = static_cast<Layout*>(GUIReader::getInstance()->
                                           widgetFromBinaryFile
                                           ("cocosui/CustomImageViewTest/NewProject_2_1.csb"));
     addChild(layout);

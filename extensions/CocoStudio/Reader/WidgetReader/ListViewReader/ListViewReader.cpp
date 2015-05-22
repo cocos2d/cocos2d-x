@@ -28,6 +28,16 @@ ListViewReader* ListViewReader::getInstance()
     return instanceListViewReader;
 }
 
+void ListViewReader::purge()
+{
+    ListViewReader::destroyInstance();
+}
+
+void ListViewReader::destroyInstance()
+{
+    CC_SAFE_DELETE(instanceListViewReader);
+}
+
 void ListViewReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidjson::Value &options)
 {
     ScrollViewReader::setPropsFromJsonDictionary(widget, options);
@@ -35,8 +45,8 @@ void ListViewReader::setPropsFromJsonDictionary(ui::Widget *widget, const rapidj
     
     ui::ListView* listView = (ui::ListView*)widget;
     
-	int direction = DICTOOL->getFloatValue_json(options, "direction",2);
-	listView->setDirection((ui::SCROLLVIEW_DIR)direction);
+    int direction = DICTOOL->getFloatValue_json(options, "direction",2);
+    listView->setDirection((ui::SCROLLVIEW_DIR)direction);
     
     ui::ListViewGravity gravity = (ui::ListViewGravity)DICTOOL->getIntValue_json(options, "gravity",3);
     listView->setGravity(gravity);

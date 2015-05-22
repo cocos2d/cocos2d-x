@@ -23,7 +23,7 @@ void UILoadingBarTest_Editor::switchLoadMethod(cocos2d::CCObject *pSender)
         _layout->removeAllChildrenWithCleanup(true);
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UILoadingBar_Editor/ui_loadingbar_editor_1.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILoadingBar_Editor/ui_loadingbar_editor_1.json"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -31,7 +31,7 @@ void UILoadingBarTest_Editor::switchLoadMethod(cocos2d::CCObject *pSender)
         _layout->removeAllChildrenWithCleanup(true);
         _layout->removeFromParentAndCleanup(true);
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromBinaryFile("cocosui/UIEditorTest/UILoadingBar_Editor/ui_loadingbar_editor_1.csb"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromBinaryFile("cocosui/UIEditorTest/UILoadingBar_Editor/ui_loadingbar_editor_1.csb"));
         _touchGroup->addWidget(_layout);
         
         this->configureGUIScene();
@@ -65,7 +65,7 @@ bool UILoadingBarTest_Editor::init()
     {
         scheduleUpdate();
         
-        _layout = static_cast<Layout*>(GUIReader::shareReader()->widgetFromJsonFile("cocosui/UIEditorTest/UILoadingBar_Editor/ui_loadingbar_editor_1.json"));
+        _layout = static_cast<Layout*>(GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILoadingBar_Editor/ui_loadingbar_editor_1.json"));
         _touchGroup->addWidget(_layout);
        
         this->configureGUIScene();
