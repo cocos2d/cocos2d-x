@@ -144,23 +144,24 @@ bool js_cocos2dx_physics3d_Physics3DRigidBody_create(JSContext *cx, uint32_t arg
     return false;
 }
 
-bool jsval_to_std_vector_vec3(JSContext* cx, JS::HandleValue v, std::vector<Vec3>* ret)
+std::vector<Vec3> jsval_to_std_vector_vec3(JSContext* cx, JS::HandleValue v)
 {
+    std::vector<Vec3> ret;
     JS::RootedObject jsobj(cx, v.toObjectOrNull());
     uint32_t length;
     JS_GetArrayLength(cx, jsobj, &length);
-    ret->reserve(length);
+    ret.reserve(length);
 
     for(size_t i = 0; i < length; ++i)
     {
         JS::RootedValue element(cx);
-        JS_GetElement(cx, jsobj, i, &element);
+        JS_GetElement(cx, jsobj, (uint32_t)i, &element);
 
-        Vec3 v;
-        jsval_to_vector3(cx, element, &v);
-        ret->push_back(v);
+        Vec3 v3;
+        jsval_to_vector3(cx, element, &v3);
+        ret.push_back(v3);
     }
-    return true;
+    return ret;
 }
 
 bool js_cocos2dx_physics3d_Physics3dShape_createMesh(JSContext *cx, uint32_t argc, jsval *vp)
@@ -169,10 +170,10 @@ bool js_cocos2dx_physics3d_Physics3dShape_createMesh(JSContext *cx, uint32_t arg
     {
         JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 
-        std::vector<Vec3> arg0;
+        std::vector<Vec3> arg0 = jsval_to_std_vector_vec3(cx, args.get(0));
         int arg1;
 
-        bool ok = jsval_to_std_vector_vec3(cx, args.get(0), &arg0) & jsval_to_int(cx, args.get(1), &arg1);
+        bool ok = jsval_to_int(cx, args.get(1), &arg1);
         JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_physics3d_Physics3dShape_createMesh : Error processing arguments");
 
         Physics3DShape* ret = Physics3DShape::createMesh(&arg0[0], arg1);
