@@ -17,7 +17,11 @@ class CocosBinTemplateGenerator(object):
 		self.template_dir = os.path.realpath(os.path.join(self.cur_dir, os.path.pardir, "templates"))
 		self.lib_dir = os.path.realpath(os.path.join(self.cur_dir, os.path.pardir, "libs"))
 		self.version = self.get_version_from_source()
-		self.is_for_package = args.is_for_package
+		self.is_for_package = False
+		try:
+			self.is_for_package = args.is_for_package
+		except Exception, e:
+			print "[Warn] %s" % e
 
 	def generate(self):
 		self.clean_template()

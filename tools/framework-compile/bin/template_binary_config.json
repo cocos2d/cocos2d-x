@@ -51,6 +51,13 @@
             ]
         },
         {
+            "from": "web",
+            "to": "js-template-binary/frameworks/cocos2d-html5",
+            "exclude": [
+                ".*"
+            ]
+        },
+        {
             "from": "tools/simulator/frameworks/runtime-src/Classes/ide-support",
             "to": "lua-template-binary/frameworks/runtime-src/Classes/ide-support/",
             "exclude": [

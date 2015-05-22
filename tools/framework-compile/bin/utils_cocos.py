@@ -117,10 +117,10 @@ def get_vs_cmd_path(vs_reg, proj_path, vs_version):
 	return (commandPath, needUpgrade)
 
 def rmdir(folder):
-	if os.path.eaxists(folder):
+	if os.path.exists(folder):
 		if sys.platform == 'win32':
 			execute_command("rd /s/q %s" % folder)
-		elsae:
+		else:
 			shutil.rmtree(folder)
 
 def mkdir(folder):
