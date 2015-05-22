@@ -312,6 +312,10 @@ float Terrain::getHeight(float x, float z, Vec3 * normal) const
             normal->setZero();
         }
         return 0;
+        if (normal)
+        {
+            normal->setZero();
+        }
     }else
     {
         float a = getImageHeight(i,j)*getScaleY();
