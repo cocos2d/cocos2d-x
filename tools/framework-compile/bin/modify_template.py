@@ -87,9 +87,12 @@ class TemplateModifier(object):
             # pbx_proj.remove_group_by_name("JS Common")
 
         # add libraries search path
-        ios_template_prebuilt_path = os.path.join(self.libs_path, "ios")
+        libs_path = self.libs_path
+        if self.is_for_package:
+            libs_path = "/Applications/Cocos/frameworks/%s/prebuilt" % self.version
+        ios_template_prebuilt_path = os.path.join(libs_path, "ios")
         pbx_proj.add_library_search_paths(ios_template_prebuilt_path, target_name=ios_target_name, recursive=False)
-        mac_template_prebuilt_path = os.path.join(self.libs_path, "mac")
+        mac_template_prebuilt_path = os.path.join(libs_path, "mac")
         pbx_proj.add_library_search_paths(mac_template_prebuilt_path, target_name=mac_target_name, recursive=False)
 
         # add libraries for targets
@@ -153,7 +156,7 @@ class TemplateModifier(object):
                         "xcopy /Y /Q \"$(EngineRoot)tools\\framework-compile\\libs\\windows\\*.*\" \"$(OutDir)\"\n"
         if self.is_for_package:
             copy_libs_cmd = "if not exist \"$(OutDir)\" mkdir \"$(OutDir)\"\n" \
-                        "xcopy /Y /Q \"%s\\windows\\*.*\" \"$(OutDir)\"\n" % install_path
+                        "xcopy /Y /Q \"%s\\prebuilt\\win32\\*.*\" \"$(OutDir)\"\n" % install_path
         if language == "cpp":
             copy_libs_cmd = copy_libs_cmd + "xcopy \"$(ProjectDir)..\\Resources\" \"$(OutDir)\" /D /E /I /F /Y\n"
 
