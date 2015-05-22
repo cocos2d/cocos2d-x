@@ -407,7 +407,7 @@ public:
 class CC_DLL CCEaseBounce : public CCActionEase
 {
 public:
-    float bounceTime(float time);
+    static float bounceTime(float time);
     /**
      *  @js NA
      *  @lua NA
