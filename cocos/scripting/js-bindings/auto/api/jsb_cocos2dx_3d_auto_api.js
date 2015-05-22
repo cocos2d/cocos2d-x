@@ -1520,3 +1520,143 @@ TextureCube : function (
 },
 
 };
+
+/**
+ * @class Bundle3D
+ */
+jsb.Bundle3D = {
+
+/**
+ * @method load
+ * @param {String} arg0
+ * @return {bool}
+ */
+load : function (
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method loadSkinData
+ * @param {String} arg0
+ * @param {cc.SkinData} arg1
+ * @return {bool}
+ */
+loadSkinData : function (
+str, 
+skindata 
+)
+{
+    return false;
+},
+
+/**
+ * @method clear
+ */
+clear : function (
+)
+{
+},
+
+/**
+ * @method loadMaterials
+ * @param {cc.MaterialDatas} arg0
+ * @return {bool}
+ */
+loadMaterials : function (
+materialdatas 
+)
+{
+    return false;
+},
+
+/**
+ * @method loadMeshDatas
+ * @param {cc.MeshDatas} arg0
+ * @return {bool}
+ */
+loadMeshDatas : function (
+meshdatas 
+)
+{
+    return false;
+},
+
+/**
+ * @method loadNodes
+ * @param {cc.NodeDatas} arg0
+ * @return {bool}
+ */
+loadNodes : function (
+nodedatas 
+)
+{
+    return false;
+},
+
+/**
+ * @method loadAnimationData
+ * @param {String} arg0
+ * @param {cc.Animation3DData} arg1
+ * @return {bool}
+ */
+loadAnimationData : function (
+str, 
+animation3ddata 
+)
+{
+    return false;
+},
+
+/**
+ * @method createBundle
+ * @return {cc.Bundle3D}
+ */
+createBundle : function (
+)
+{
+    return cc.Bundle3D;
+},
+
+/**
+ * @method destroyBundle
+ * @param {cc.Bundle3D} arg0
+ */
+destroyBundle : function (
+bundle3d 
+)
+{
+},
+
+/**
+ * @method loadObj
+ * @param {cc.MeshDatas} arg0
+ * @param {cc.MaterialDatas} arg1
+ * @param {cc.NodeDatas} arg2
+ * @param {String} arg3
+ * @param {char} arg4
+ * @return {bool}
+ */
+loadObj : function (
+meshdatas, 
+materialdatas, 
+nodedatas, 
+str, 
+char 
+)
+{
+    return false;
+},
+
+/**
+ * @method Bundle3D
+ * @constructor
+ */
+Bundle3D : function (
+)
+{
+},
+
+};
