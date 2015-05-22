@@ -28,6 +28,7 @@
 #include "renderer/CCRenderer.h"
 #include "recast/Detour/DetourCommon.h"
 #include "recast/DebugUtils/DetourDebugDraw.h"
+#include <sstream>
 
 NS_CC_BEGIN
 
@@ -46,7 +47,7 @@ struct TileCacheTileHeader
     int dataSize;
 };
 
-static char* parseRow(char* buf, char* bufEnd, char* row, int len)
+static unsigned char* parseRow(unsigned char* buf, unsigned char* bufEnd, char* row, int len)
 {
     bool start = true;
     bool done = false;
@@ -149,41 +150,36 @@ bool NavMesh::read()
 
 bool NavMesh::loadNavMeshFile()
 {
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(_navFilePath);
-    FILE* fp = fopen(fullPath.c_str(), "rb");
-    if (!fp) return false;
+    auto data = FileUtils::getInstance()->getDataFromFile(_navFilePath);
+    if (data.isNull()) return false;
 
     // Read header.
-    TileCacheSetHeader header;
-    fread(&header, sizeof(TileCacheSetHeader), 1, fp);
+    unsigned int offset = 0;
+    TileCacheSetHeader header = *((TileCacheSetHeader*)(data.getBytes() + offset));
+    offset += sizeof(TileCacheSetHeader);
     if (header.magic != TILECACHESET_MAGIC)
     {
-        fclose(fp);
         return false;
     }
     if (header.version != TILECACHESET_VERSION)
     {
-        fclose(fp);
         return false;
     }
 
     _navMesh = dtAllocNavMesh();
     if (!_navMesh)
     {
-        fclose(fp);
         return false;
     }
     dtStatus status = _navMesh->init(&header.meshParams);
     if (dtStatusFailed(status))
     {
-        fclose(fp);
         return false;
     }
 
     _tileCache = dtAllocTileCache();
     if (!_tileCache)
     {
-        fclose(fp);
         return false;
     }
 
@@ -194,25 +190,24 @@ bool NavMesh::loadNavMeshFile()
 
     if (dtStatusFailed(status))
     {
-        fclose(fp);
         return false;
     }
 
     // Read tiles.
     for (int i = 0; i < header.numTiles; ++i)
     {
-        TileCacheTileHeader tileHeader;
-        fread(&tileHeader, sizeof(tileHeader), 1, fp);
+        TileCacheTileHeader tileHeader = *((TileCacheTileHeader*)(data.getBytes() + offset));
+        offset += sizeof(TileCacheTileHeader);
         if (!tileHeader.tileRef || !tileHeader.dataSize)
             break;
 
-        unsigned char* data = (unsigned char*)dtAlloc(tileHeader.dataSize, DT_ALLOC_PERM);
-        if (!data) break;
-        memset(data, 0, tileHeader.dataSize);
-        fread(data, tileHeader.dataSize, 1, fp);
+        unsigned char* tileData = (unsigned char*)dtAlloc(tileHeader.dataSize, DT_ALLOC_PERM);
+        if (!tileData) break;
+        memcpy(tileData, (data.getBytes() + offset), tileHeader.dataSize);
+        offset += tileHeader.dataSize;
 
         dtCompressedTileRef tile = 0;
-        _tileCache->addTile(data, tileHeader.dataSize, DT_COMPRESSEDTILE_FREE_DATA, &tile);
+        _tileCache->addTile(tileData, tileHeader.dataSize, DT_COMPRESSEDTILE_FREE_DATA, &tile);
 
         if (tile)
             _tileCache->buildNavMeshTile(tile, _navMesh);
@@ -234,33 +229,15 @@ bool NavMesh::loadNavMeshFile()
 
 bool NavMesh::loadGeomFile()
 {
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(_geomFilePath);
-    char* buf = 0;
-    FILE* fp = fopen(fullPath.c_str(), "rb");
-    if (!fp)
-        return false;
-    fseek(fp, 0, SEEK_END);
-    int bufSize = ftell(fp);
-    fseek(fp, 0, SEEK_SET);
-    buf = new char[bufSize];
-    if (!buf)
-    {
-        fclose(fp);
-        return false;
-    }
-    size_t readLen = fread(buf, bufSize, 1, fp);
-    fclose(fp);
-    if (readLen != 1)
-    {
-        delete[] buf;
-        return false;
-    }
-
+    unsigned char* buf = 0;
+    auto data = FileUtils::getInstance()->getDataFromFile(_geomFilePath);
+    if (data.isNull()) return false;
+    buf = data.getBytes();
     _geomData = new GeomData;
     _geomData->offMeshConCount = 0;
 
-    char* src = buf;
-    char* srcEnd = buf + bufSize;
+    unsigned char* src = buf;
+    unsigned char* srcEnd = buf + data.getSize();
     char row[512];
     while (src < srcEnd)
     {
@@ -285,8 +262,6 @@ bool NavMesh::loadGeomFile()
             }
         }
     }
-
-    delete[] buf;
 
     return true;
 }
