@@ -27,8 +27,12 @@
 #ifndef __CCHTTPCLIENT_H__
 #define __CCHTTPCLIENT_H__
 
+#include "base/CCVector.h"
+#include "base/CCScheduler.h"
 #include "network/HttpRequest.h"
 #include "network/HttpResponse.h"
+#include <thread>
+#include <condition_variable>
 
 /**
  * @addtogroup core
@@ -124,7 +128,6 @@ public:
 private:
     HttpClient();
     virtual ~HttpClient();
-    bool init(void);
     
     /**
      * Init pthread mutex, semaphore, and create new thread for http requests
@@ -135,10 +138,40 @@ private:
     void networkThreadAlone(HttpRequest* request, HttpResponse* response);
     /** Poll function called from main thread to dispatch callbacks when http requests finished **/
     void dispatchResponseCallbacks();
-    
+    void processResponse(HttpResponse* response, std::string& responseMessage);
+
+    void increaseThreadCount();
+    void decreaseThreadCountAndMayDeleteThis();
+
 private:
+    bool _isInited;
+    int _threadCount;
+    std::mutex _threadCountMutex;
+
+    Scheduler* _scheduler;
+    std::mutex _schedulerMutex;
+
+    std::mutex _requestQueueMutex;
+    std::mutex _responseQueueMutex;
+    std::mutex _cookieFileMutex;
+
+    std::condition_variable_any _sleepCondition;
+
+    Vector<HttpRequest*>  _requestQueue;
+    Vector<HttpResponse*> _responseQueue;
+
+    std::string _responseMessage;
+
+    std::string _cookieFilename;
+        
+    std::string _sslCaFilename;
+
+    HttpRequest* _requestSentinel;
+
     int _timeoutForConnect;
     int _timeoutForRead;
+
+    friend class HttpURLConnection;
 };
 
 }
@@ -148,4 +181,4 @@ NS_CC_END
 // end group
 /// @}
 
-#endif //__CCHTTPREQUEST_H__
+#endif //__CCHTTPCLIENT_H__
