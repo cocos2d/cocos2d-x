@@ -1056,6 +1056,12 @@ void Console::addClient()
 
         sendPrompt(fd);
 
+        /**
+         * A SIGPIPE is sent to a process if it tried to write to socket that had been shutdown for 
+         * writing or isn't connected (anymore) on iOS.
+         *
+         * The default behaviour for this signal is to end the process.So we make the process ignore SIGPIPE.
+         */
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
         int set = 1;
         setsockopt(fd, SOL_SOCKET, SO_NOSIGPIPE, (void*)&set, sizeof(int));
