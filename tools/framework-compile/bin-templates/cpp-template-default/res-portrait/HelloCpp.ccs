@@ -1,0 +1,11 @@
+<Solution>
+  <PropertyGroup Name="HelloCpp" Version="2.1.0.0" Type="CocosStudio" />
+  <SolutionFolder>
+    <Group ctype="ResourceGroup">
+      <RootFolder Name=".">
+        <Project Name="MainScene.csd" />
+        <Image Name="HelloWorld.png" />
+      </RootFolder>
+    </Group>
+  </SolutionFolder>
+</Solution>
