@@ -882,8 +882,8 @@ void CCNode::transform()
     kmMat4 transfrom4x4;
 
     // Convert 3x3 into 4x4 matrix
-    CCAffineTransform tmpAffine = this->nodeToParentTransform();
-    CGAffineToGL(&tmpAffine, transfrom4x4.mat);
+    nodeToParentTransform();
+    CGAffineToGL(&m_sTransform, transfrom4x4.mat);
 
     // Update Z vertex manually
     transfrom4x4.mat[14] = m_fVertexZ;
@@ -1143,7 +1143,7 @@ void CCNode::update(float fDelta)
     }
 }
 
-CCAffineTransform CCNode::nodeToParentTransform(void)
+const CCAffineTransform& CCNode::nodeToParentTransform(void)
 {
     if (m_bTransformDirty) 
     {
@@ -1226,7 +1226,7 @@ void CCNode::setAdditionalTransform(const CCAffineTransform& additionalTransform
     m_bAdditionalTransformDirty = true;
 }
 
-CCAffineTransform CCNode::parentToNodeTransform(void)
+const CCAffineTransform& CCNode::parentToNodeTransform(void)
 {
     if ( m_bInverseDirty ) {
         m_sInverse = CCAffineTransformInvert(this->nodeToParentTransform());

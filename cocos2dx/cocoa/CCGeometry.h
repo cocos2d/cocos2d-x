@@ -211,7 +211,7 @@ public:
     inline CCPoint normalize() const {
         float length = getLength();
         if(length == 0.) return CCPoint(1.f, 0);
-        return *this / getLength();
+        return *this / length;
     };
 
     /** Linear Interpolation between two points a and b

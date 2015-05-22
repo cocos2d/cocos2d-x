@@ -347,20 +347,21 @@ void CCParticleSystemQuad::postStep()
 // overriding draw method
 void CCParticleSystemQuad::draw()
 {    
-
 	if (NULL == m_pTexture)
 	{
 		return;
 	}
-	
-    CCAssert(!m_pBatchNode,"draw should not be called when added to a particleBatchNode");
+	if(m_uParticleCount == 0)
+	{
+		return;
+	}
+    CCAssert(!m_pBatchNode, "draw should not be called when added to a particleBatchNode");
+	CCAssert( m_uParticleIdx == m_uParticleCount, "Abnormal error in particle quad");
 
     CC_NODE_DRAW_SETUP();
 
     ccGLBindTexture2D( m_pTexture->getName() );
     ccGLBlendFunc( m_tBlendFunc.src, m_tBlendFunc.dst );
-
-    CCAssert( m_uParticleIdx == m_uParticleCount, "Abnormal error in particle quad");
 
 #if CC_TEXTURE_ATLAS_USE_VAO
     //

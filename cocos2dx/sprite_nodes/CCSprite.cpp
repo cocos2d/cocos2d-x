@@ -365,9 +365,9 @@ void CCSprite::setVertexRect(const CCRect& rect)
     m_obRect = rect;
 }
 
-void CCSprite::setTextureCoords(CCRect rect)
+void CCSprite::setTextureCoords(const CCRect& _rect)
 {
-    rect = CC_RECT_POINTS_TO_PIXELS(rect);
+    CCRect rect = CC_RECT_POINTS_TO_PIXELS(_rect);
 
     CCTexture2D *tex = m_pobBatchNode ? m_pobTextureAtlas->getTexture() : m_pobTexture;
     if (! tex)
