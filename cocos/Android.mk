@@ -202,6 +202,11 @@ physics3d/CCPhysics3DObject.cpp \
 physics3d/CCPhysics3DShape.cpp \
 physics3d/CCPhysicsSprite3D.cpp \
 physics3d/CCPhysics3DConstraint.cpp \
+navmesh/CCNavMesh.cpp \
+navmesh/CCNavMeshAgent.cpp \
+navmesh/CCNavMeshDebugDraw.cpp \
+navmesh/CCNavMeshObstacle.cpp \
+navmesh/CCNavMeshTool.cpp \
 ../external/ConvertUTF/ConvertUTFWrapper.cpp \
 ../external/ConvertUTF/ConvertUTF.c \
 ../external/tinyxml2/tinyxml2.cpp \
@@ -304,6 +309,7 @@ $(call import-module,ui)
 $(call import-module,extensions)
 $(call import-module,Box2D)
 $(call import-module,bullet)
+$(call import-module,recast)
 $(call import-module,curl/prebuilt/android)
 $(call import-module,websockets/prebuilt/android)
 $(call import-module,flatbuffers)
