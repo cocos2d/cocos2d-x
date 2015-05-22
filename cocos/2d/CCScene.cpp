@@ -258,13 +258,13 @@ void Scene::addChildToNavMesh(Node* child)
         std::function<void(Node*)> addToNavMeshFunc = nullptr;
         addToNavMeshFunc = [this, &addToNavMeshFunc](Node* node) -> void
         {
-            auto agCom = static_cast<Physics3DComponent*>(node->getComponent(NavMeshAgent::getNavMeshAgentComponentName()));
+            auto agCom = static_cast<NavMeshAgent*>(node->getComponent(NavMeshAgent::getNavMeshAgentComponentName()));
             if (agCom)
             {
                 agCom->onEnter();
             }
 
-            auto obCom = static_cast<Physics3DComponent*>(node->getComponent(NavMeshObstacle::getNavMeshObstacleComponentName()));
+            auto obCom = static_cast<NavMeshObstacle*>(node->getComponent(NavMeshObstacle::getNavMeshObstacleComponentName()));
             if (obCom)
             {
                 obCom->onEnter();
