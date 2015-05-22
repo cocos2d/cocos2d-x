@@ -400,6 +400,7 @@
         "cocos/base/CCTouch.h", 
         "cocos/base/CCUserDefault-android.cpp", 
         "cocos/base/CCUserDefault-apple.mm", 
+        "cocos/base/CCUserDefault-winrt.cpp", 
         "cocos/base/CCUserDefault.cpp", 
         "cocos/base/CCUserDefault.h", 
         "cocos/base/CCValue.cpp", 
