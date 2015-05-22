@@ -412,9 +412,9 @@ CCTexture2D * CCTextureCache::addImage(const char * path)
     }
     texture = (CCTexture2D*)m_pTextures->objectForKey(pathKey.c_str());
 
-    std::string fullpath = pathKey; // (CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(path));
     if (! texture) 
     {
+		std::string fullpath = pathKey; // (CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(path));
         std::string lowerCase(pathKey);
         for (unsigned int i = 0; i < lowerCase.length(); ++i)
         {

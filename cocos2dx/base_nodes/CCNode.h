@@ -1246,13 +1246,13 @@ public:
      * Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
      * The matrix is in Pixels.
      */
-    virtual CCAffineTransform nodeToParentTransform(void);
+    virtual const CCAffineTransform& nodeToParentTransform(void);
 
     /** 
      * Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
      * The matrix is in Pixels.
      */
-    virtual CCAffineTransform parentToNodeTransform(void);
+    virtual const CCAffineTransform& parentToNodeTransform(void);
 
     /** 
      * Returns the world affine transform matrix. The matrix is in Pixels.
