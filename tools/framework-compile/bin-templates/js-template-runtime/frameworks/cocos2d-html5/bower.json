@@ -1,0 +1,37 @@
+{
+  "name": "cocos2d-html5",
+  "version": "3.4",
+  "homepage": "http://www.cocos2d-x.org",
+  "authors": [
+    "AUTHORS.txt"
+  ],
+  "description": "Cocos2d-html5 is a cross-platform 2D game engine written in Javascript, based on Cocos2d-X and licensed under MIT. It incorporates the same high level api as “Cocos2d JS-binding engine” and compatible with Cocos2d-X. It currently supports canvas and WebGL renderering.",
+  "main": "README.mdown",
+  "keywords": [
+    "cocos2d-x",
+    "cocos2d",
+    "game",
+    "engine",
+    "opengl",
+    "cross",
+    "multi",
+    "platform",
+    "iphone",
+    "ipad",
+    "android",
+    "windows",
+    "metro",
+    "bada",
+    "marmalade",
+    "playbook"
+  ],
+  "license": "MIT",
+  "private": false,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

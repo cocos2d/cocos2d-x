@@ -1,0 +1,778 @@
+ChangeLog:
+
+Cocos2d-JS v3.5 @ April 1 2015
+
+* Upgraded Cocos Studio parser to support Cocos Studio v2.2.
+* Upgraded Spine support to v2.1, added spine test case with FFD. FFD is supported in native but not in web, both engine can parse the new version file correctly, but the web engine will ignore FFD informations.
+* Replaced '==' with '===' for better performance.
+* Added `path` parameter in `ccs.load` to support modifying cocostudio project resource path.
+* Added animationList to Cocostudio ActionTimeline to support playing animation by name.
+* Made ParticleSystem support creation from an map object. 
+* Added missing functions to `cc.Grid3D` and `cc.PageTurn3D`.
+* Added tip message functions to `cc.TextFieldTTF` for mobile browser. 
+* Added a function `cc.sys.openURL`.
+* Disabled retina display by default for better performance.
+* Added Bower support.
+* Updated `cc.sys.OS_XXX` informations for supported systems.
+
+* Bug fixes:
+    1. Fixed a bug of chipmunk.js that it doesn't work under closure compiler advanced mode.
+    2. Fixed a bug of Cocos Studio parser that widget didn't set its layout component.
+    3. Fixed grammatical mistakes in cocostudio parser logs. 
+    4. Fixed memory leak issue in `cc.LabelBMFont`.
+    5. Fixed a bug of `cc.Scale9Sprite` that its `updateDisplayColor` doesn't take effect.
+    6. Fixed a bug of Cocos Studio parser that `cc.Scale9Sprite` doesn't display correctly if its texture isn't preloaded.
+    7. Fixed a bug of `cc.MenuItemSprite` that the construction will fail when parameter `selectedSprite` is a Scale9Sprite instance. 
+    8. Fixed a bug of Cocos Studio parser that the background color of `ccui.Layout` can't be parsed correctly.
+    9. Fixed a bug of `cc.ClippingNode` that it doesn't work when set `inverted` to true in Canvas Mode.
+    10. Fixed a bug of `ccs.Armature` that its name was modified to animation name when loading from json files.
+    11. Fixed a bug of `ccui.PageView` that it cancel child touch during movment of page view. 
+    12. Fixed a bug of `cc.Scheduler` that its parameter `repeat` is invalid in schedule function.
+    13. Fixed a bug of `cc.Scheduler` that `unschedule` function may fail.
+
+Cocos2d-JS v3.4 Beta0 @ March 19 2015
+
+* Added Windows Phone 8.0 platform support.
+* Upgraded SpiderMonkey to v33, greatly improved JS object garbage collection and performance.
+* Bound 3D modules including camera, light, sprite 3d, animation 3d, billboard, etc.
+* Improved `cc.FontDefinition` & `ccui.RichText` in the web engine.
+* Added gradient stops feature to `cc.LayerGradient` [Web exclusive].
+* Upgraded `cc.Scheduler` in the web engine with Cocos2d-x v3.4 implementation.
+* Added a loading screen when scripts are loading.
+* Improved performance by replacing `Object.defineProperties` with `cc.defineGetterSetter`.
+* Supported loading sprite frames from json object.
+* Refactored math library to improve web engine performance.
+* Removed some variables from `cc` namespace to improve web engine performance.
+* Added the Firefox OS Web manifest to support Firefox OS apps.
+* Added `cocos` attr to the script element in templates.
+* Moved loading.js to res folder for Cocos Console release mode.
+
+* Bug fixes:
+    1. Added `getSpriteFrame` to `cc.Sprite` to fix API inconsistency.
+    2. Added `getObejct` to `cc.TMXObjectGroup` to fix API inconsistency.
+    3. Added `addImageAsync` to `cc.textureCache` to fix API inconsistency.
+    4. Fixed a bug of `cc.text` that its default font name is incorrect. 
+    5. Fixed a bug of `ccui.PageView` that its `getPage` doesn't work.
+    6. Fixed a bug of `ccui.ImageView` that its `loadTexture` doesn't work while it's invoked multiple times at the same frame.
+    7. Fixed a bug of `ccui` that its load event callbacks have some mistakes.
+    8. Fixed a bug of `cc.Layer` that its bake function doesn't work when the layer has a parent node.
+    9. Fixed typos in `cc.ClippingNode.WebGLRenderCmd` and `cc.ParticleSystem.WebGLRenderCmd` creation.
+    10. Fixed a bug of `cc.Sprite` in `setTextureRect`. 
+    11. Fixed a bug of `cc.Screen`.
+    12. Fixed a bug of `cc.view` that it doesn't work on iOS 8.1.2.
+    13. Fixed a bug of cc.DrawNode that its lineWidth is always to default value when set linewidth to zero. 
+    14. Fixed a bug in hack for particles performance on canvas. 
+    15. Fixed a bug of `cc.audioEngine` that it doesn't work after minified/compiled.
+    16. Fixed a bug in `CCBoot.js` that WebGL is not activated in web view of iOS 8. 
+    17. Fixed a bug of `cc.CheckBox` that its position is incorrect when its texture isn't preloaded.
+    18. Fixed a bug of `cc.TMXLayer` that it stops to work after `setTileGID` called.
+    19. Fixed a bug of Cocos parser 2.x that it doesn't set widget's LayoutComponent.
+    20. Fixed a bug of `cc.isObject` that it considered function as an object.
+
+Cocos2d-JS v3.3 @ Feb.9, 2015
+
+* Upgraded spine runtime to support the latest version and updated its test case.
+* Added an option "noCache" for debugging on browsers.
+* Set the default value of `cc.ParticleSystem`'s draw mode to texture mode.  
+* Added message to `ccs.load` when loading armature json file.
+* Improved particle system test case.
+
+* Bug fixes:
+    1. Fixed a bug of `cc.Sprite` that its `setSpriteFrame` doesn't work when sprite frame's `rotated` property is true. 
+    2. Fixed a bug of `cc.ClippingNode` when its stencil is `cc.Node` object in canvas mode.
+    3. Fixed a ccui bug that the position of widgets is incorrect after loaded v2.x json file with `ccs.load`.
+    4. Fixed a bug of `cc.PhysicsSprite` that `setIgnoreBodyRotation` function doesn't work.  
+    5. Fixed a bug of `ccui.Button` that setting pressed texture doesn't work when scale9 enabled. 
+    6. Fixed a bug of `ccui.ScrollView` that its `dir` property is null when passing `DIR_NONE` as `direction` in `_endRecordSlidAction` function.
+
+Cocos2d-JS v3.3 RC0 @ Feb.1, 2015
+
+* Added web exclusive functions: `_getFontStyle`, `_setFontStyle`, `_getFontWeight` and `_setFontWeight` APIs to `cc.LabelTTF`.
+* Observed orientation change event on mobile for resolution policy adaptation.
+
+* Bug fixes:
+    1. Fixed Cocos Studio JSON parser's issues for parsing nested animation.
+    2. Fixed Cocos Studio JSON parser's parameters parsing issues.
+    3. Fixed Cocos Studio JSON parser's issue for parsing layer.
+    4. Fixed Cocos Studio JSON action parser's issues.
+    5. Fixed Cocos Studio JSON parser's issue for parsing Scale9Sprite.
+    6. Fixed Cocos Studio JSON parser's issues caused by parsing process order.
+    7. Fixed Cocos Studio JSON parser's issue for parsing loading bar's direction.
+    8. Fixed UI layout system issues.
+    9. Fixed `cc.EditBox`'s position issue under certain resolution policies.
+    10. Fixed `ccui.ListView`'s issue for setting direction.
+    11. Fixed an issue of `cc.Tween` that its `_currentPercent` is incorrect in `updateHandler` function.
+    12. Fixed an issue of `ccui.Button` that its state is incorrect in `_onPressStateChangedToNormal`.
+    13. Fixed an issue of `cc.ArmatureAnimation`'s `setMovementEventCallFunc`.
+    14. Fixed an issue of `cc.Sequence` action when it's repeated.
+    15. Fixed `_anchorPointInPoints` usage issue.
+    16. Fixed an issue of `cc.GLProgram` that it doesn't work on some devices which didn't support highp float precision.
+    17. Fixed an issue of fade actions that they don't work when duration is 0.
+    18. Fixed `onended` callback issue of audio engine on iOS.
+    19. Fixed Cocos Builder's parser issue for auto playing animations.
+    20. Added a message to `ccs.Armature` that it doesn't support adding widget as its child.
+    21. Improved test cases for stability.
+
+Cocos2d-JS v3.3 Beta @ Jan.24, 2015
+
+* Added Cocos Studio v2.x parser and refactored 1.x parser.
+* Upgraded new flow layout UI system in web engine.
+* Refactored `load` events of texture2d, sprite and so on to be more intuitive.
+* Added JavaScript file loader.
+* Allowed set texture to null in `cc.Sprite`.
+* Added full test cases for Cocos Studio v2.x parser and the new flow layout UI system.
+* Upgraded MoonWarriors sample's UI and graphic design.
+
+* Bug fixes:
+    1. Fixed a bug of Cocos2d UI, their focus event has been supported.
+    2. Fixed a buf of `ccui.Widget` that its percent position doesn't work.
+    3. Fixed a bug of `ccs.Armature` that its position doesn't update in visit on WebGL render mode.
+    4. Fixed a bug of `cc.Sprite` that its `setTextureRect` function doesn't work when `setColor` invoked.
+    5. Fixed a bug of `cc.PhysicsSprite` that its position is incorrect.
+    6. Fixed a bug of `ccs.Bone` that its `setOpacity` and `setColor` doesn't work.
+    7. Fixed a bug of `cc.LabelBMFont` that its word wrap doesn't work.
+    8. Fixed a bug of `cc.sys` that it gets the incorrect OS type when system is Linux.
+    9. Fixed a bug of `cc.audioEngine` that its loading path is incorrect.
+    10. Fixed a bug of `ccui.Widget` that it can't touch when it's reused.
+    11. Fixed a bug of UI system that the `setNormalizedPosition` doesn't work.
+    12. Fixed a bug of `cc.ActionInterval` that its `_times` conflict with `cc.Blink`.  
+    13. Fixed release texture issue in canvas mode.
+    14. Fixed a bug of `ccs.actionManager` that its `getActionByName` doesn't work.
+    15. Fixed a bug of `cc.Sprite` that it can't draw without texture on WebGL mode.
+    16. Fixed a bug of `cc.audioEngine` that it doesn't work on baidu browser.
+    17. Fixed a bug of `cc.EditBox` that its position is incorrect on Canvas Mode and its string value is wrong when PlaceHolder is showing.
+    18. Fixed a bug of `cc.loader` that its `loadImg` function doesn't work when image is accessed cross origin.
+    19. Fixed a bug of `ccui.TextField` that its `contentSize` is incorrect in text field event.
+
+Cocos2d-JS v3.2 @ Dec.29, 2014
+
+* Replaced `transform` function with `setTransform` function under canvas render mode for better performance.
+* Added a timer in `cc.audioEngine` to check audio element loading event, prevent the loading process being stucked when load audio file failed.
+* Added some new browser types to `cc.sys`.
+* Added some audio resource loading codes to ensure compatibility with Wechat browser.
+* Added check for WebAudio support to ensure compatibility.
+
+* Bug fixes:
+    1. Fixed an issue that `cc.InputManager` doesn't trigger touch event on chrome mobile emulator.
+	2. Fixed an issue that `cc.game.setFrameRate` doesn't work.
+	3. Fixed an issue that `cc.view` can't remove resize event listener.
+	4. Fixed an issue that `cc.EventManager` didn't set register flag to false when a listener is removed.
+	5. Fixed an issue that `cc.audioEngine` doesn't play some audios on some iOS devices.
+	6. Fixed an issue of ccui controls that their `setColor` doesn't work when cascade color is enabled.
+	7. Fixed an issue that `ccs.Armature`'s `setColor` doesn't work in canvas render mode.
+	8. Fixed an issue that `ccs.Armature` crashes when adding a child to it.
+	9. Fixed an issue that `cc.SpriteBatchNode`'s status is incorrect in WebGL render mode.
+	10. Fixed an issue of `cc.Layer` that its position is incorrect under bake mode.
+	11. Fixed an issue of `ccui.RichText` that its `setContentSize` doesn't work.
+	12. Fixed an issue of `cc.LabelTTF` that its `setColor` doesn't work when cascade color is enabled.
+	13. Fixed an issue of spine that its skeletons position is incorrect when scaleX equals to -1 and scaleY equals to 1.
+    14. Fixed `sp.Skeleton`'s API inconsistence by renaming `boundingBox` to `getBoundingBox`.
+    15. Removed all usages of deprecated create functions in the test cases.
+
+Cocos2d-JS v3.2 RC0 @ Dec.11, 2014
+
+* Refactoration of web engine by separating the render logic, the arthictecture level refactoration is now completed and brounght great performance improvement.
+* Refactoration of web engine's resolution adaptation and audio engine with polyfilled adaptation logics for different devices and browsers. This ensures better compatibility and better extensibility for future needs.
+* Added `setRotation` method to `ccui.ImageView`.
+* Added a function that fill sprite with repeated texture in Canvas mode.
+* Added `setLineHeight` method to `cc.LabelTTF`.
+* Added `dumpAudioInfo` to `cc.audioEngine` for debugging purpose on mobile browser.
+* Removed Cocos Studio's Protobuffer support from the framework.
+* Added an outline shader sample.
+
+* Bug fixes:
+	1. Fixed an issue of `cc.Sprite` that its rendering is incorrect without texture.
+	2. Fixed an issue of `cc.ClippingNode` that its stencil drawing is incorrect on Canvas Mode.
+	3. Fixed an issue of `TextFieldReader` that it will throw an error when 'areaWidth' and 'areaHeight' equal to zero.
+	4. Fixed an issue of `ccui.CheckBox` that its getSelectedState doesn't return its state.
+	5. Fixed an issue of `cc.LabelTTF` that it doesn't update the string when its string become to empty string.
+	6. Fixed an issue of `cc.ParticleSystem` that it can't change its texture mode and shape type in Canvas mode.
+	7. Fixed an issue of `cc.Layer`'s bake function that its position is incorrect when cc.view's scale isn't 1.
+	8. Fixed an issue of `ccs.ArmatureAnimation`'s `setMovementEventCallFunc` and `setFrameEventCallFunc`.
+	9. Fixed an issue of `console.log` that it isn't a funtion on IE9.
+	10. Fixed an issue of `CSLoader` that it will add duplicate resources to sprite frame cache.
+	11. Fixed an issue of `cc.ProgressTimer` that its setColor is not taking effect.
+	12. Fixed an issue of `cc.loader` that it will throw an error when loading a remote texture.
+    13. Upgrade html5 version chipmunk to the latest release.
+
+Cocos2d-JS-v3.1 @ Oct.22, 2014
+
+* Released Facebook Integration for Cocos2d-JS v1.0, all APIs have been significantly polished and stabilized. Improved test cases for Facebook with more features demonstrated.
+* Upgraded Cocos2d-x to v3.3 rc0
+* Supported Cocos Studio v2.0 including Timeline animation support and proto buffers format support for both web engine and JSB engine.
+* Refactored load event of texture, sprite frame and sprite for better maintainability.
+* Refactored `cc.rendererCanvas` for improving performance.
+* Moved the `CC_Texture0` definition of fragment shader to cc.GLProgram to ensure compatibility with JSB.
+* Added normalized position functions to cc.Node.
+* Refactored the constructor of Cocos Studio's classes and deprecated all create functions.
+* Refactored Cocos Studio reader for better maintainability.
+* Improved Facebook SDK.
+* Modified `cc.ProgressTo`'s behavior, its progression didn't reset to zero when the progression is 100.
+* Changed `ccui.Widget`'s default anchor point to (0, 0) in widget reader.
+* Removed all deprecated create function usage in engine and in the test cases.
+
+* Bug fixes:
+    1. Fixed an issue of `cc.UILayout` that its scissor mode didn't work.
+    2. Fixed an issue of `ccui.TextBMFont` that its 'string' property setting was incorrect.
+    3. Fixed an issue of `cc.DrawNode` that its element's position was incorrect in Canvas mode.
+    4. Fixed an issue of `cc.Layer` that its bake function didn't work in new renderer.
+    5. Fixed an issue of `cc.Scale9Sprite` that its cached canvas size was incorrect.
+    6. Fixed an issue of `cc.Director` that its position was incorrect when calling `setProjection` in new renderer.
+    7. Fixed an issue of `cc.view` that the reinitialization logic of frame size was incorrect.
+    8. Fixed incorrect usage of  `cc.progressTo` in progress action test.
+    9. Fixed an issue of CocosNodeTest for the new renderer.
+    10. Fixed minor issues in test cases.
+
+* Known Issues:
+    1. `jsb.AssetsManager` doesn't work on windows due to a bug in libcurl
+
+Cocos2d-JS v3.1 beta @ Oct.13, 2014
+
+* Refactoration of the web engine with new renderer on the architecture level, optimization is under going.
+* Released Facebook SDK for Cocos2d-JS beta2, its API have been significantly improved and stablized.
+* Upgraded MoonWarriors sample with new set of graphical assets.
+* Automatically enabled WebGL on iOS 8 safari.
+* Upgraded chipmunk.js to the newest version.
+* Supported setting color of shadow for `cc.LabelTTF`.
+* Added `getTitleRenderer` function to ccui.Button.
+* Supported Coco Studio timeline animation.
+* Set the default value of LabelAtlas's `cascadeOpacityEnabled` and `cascadeColorEnabled` to true.
+* Added a listener of texture to `cc.Sprite#setTexture` when the texture hasn't loaded.
+* Activated `cc.pool` for all kind of objects.
+* Added query test for chipmunk and added necessary JavaScript bindings.
+
+* Bugs fix:
+    1. Fixed a bug of `cc.ComponentContainer` that a 'if' statement behavior is incorrect.
+    2. Fixed a bug of `cc.Scale9Sprite` that the behavior of Canvas and WebGL is different.
+    3. Fixed a bug of `cc.EventListener` that its pause state should set to true.
+    4. Fixed a bug of `cc.ParticleSystem` that it should apply canvas scaling on canvas rendering mode.
+    5. Fixed a bug of CCBoot.js that `cc.loader` should add a condition to check whether `crossOrign` property is undefined on IE9 and IE10.
+    6. Fixed a bug of `ccui.Widget` that its `setPosition` function's behavior is incorrect.
+    7. Fixed a bug of `ccui.LoadingBar` that its `barRenderer` should add to protected children array.
+    8. Fixed a bug of `cc.Texture2D` that its `TEXTURE_MAG_FILTER` should set to LINEAR.
+    9. Fixed a bug of `cc.TMXMapInfo` that its doesn't parse `rotation` property.
+
+Cocos2d-JS-v3.0 Final @ Sep.10, 2014
+
+* Facebook SDK Beta2: Added `appRequest` API.
+* Facebook SDK Beta2: Added permission request in `login` API, removed `requestPermission` API.
+* Facebook SDK Beta2: Renamed `request` API to `api`.
+* Facebook SDK Beta2: Renamed `publishInstall` API to `activateApp`.
+* Added getter and setter function for browser's density dpi: `cc.view.setTargetDensityDPI`, `cc.view.getTargetDensityDPI`.
+* Added some type check functions.
+* Added audio support for wechat browser.
+* Added setPlaceHolderColor and setTextColor to ccui.TextField.
+* Added API reference for Cocos Studio extension.
+
+* Bugs fix:
+    1. Fixed an issue of `cc.Menu` that its item's touch priority is different than cc.eventManager.
+    2. Fixed an issue of `cc.view` that its NO_BORDER mode doesn't work correctly.
+    3. Fixed an issue of `cc.LabelBMFont` that its content size is different than JSB.
+    4. Fixed an issue of `cc.LabelBMFont` that its `setColor` is invalid on some mobile devices.
+    5. Fixed an issue of `cc.PageView` that it can't receive TOUCH_CANCEL event.
+    6. Fixed an issue of `cc.loader` that it can't load cross origin textures.
+    7. Fixed an issue that Facebook SDK Web's `appRequest` wraps info parameter incorrectly.
+    8. Fixed an issue of ccui widgets' `addEventListener` that it doesn't accept function's target as parameter.
+
+Cocos2d-JS-v3.0 RC3 @ Aug.29, 2014
+
+* Facebook SDK Beta: Unified the callback parameters for different platform.
+* Facebook SDK Beta: Added payment API on Web platform.
+* Facebook SDK Beta: Supported app request and share open graph API on Web platform.
+* Facebook SDK Beta: Remove plugin configuration for Facebook SDK to simplify the usage.
+* Facebook SDK Beta: Added test case for new features and improve all test cases.
+* Cocos Console: Improved web compile with `--advanced` tag.
+* Improved Cocos2d-JS inline docs to provide a better API reference document.
+* Refactored cc.game for maintainability.
+* Refactored cc.async to simplify and improve the usage.
+* Added `cc.formatStr` for string formatting, for example: `cc.formatStr("a: %d, b: %b", a, b)`.
+* Refactored cc.log to support formatted string.
+* Refactored cc.pool's `hasObj` to `hasObject` and `removeObj` to `removeObject`.
+* Added some state check to cc.audioEngine.
+* Refactored sprite's blend function to support more features on Canvas.
+* Refactored `cc.textureCache.textureForKey` to `cc.textureCache.getTextureForKey`, `cc.TMXTilemap#propertiesForGID` to `cc.TMXTilemap#getPropertiesForGID` to follow the standard API naming style.
+* Detected mouse event on touch screen tablets.
+* Support new construction for cc.PhysicsDebugNode and deprecated `cc.PhysicsDebugNode.create`
+* Made cc.Texture2D's setTexParameters supports two types of parameters.
+* Added test case for remote image loading.
+
+* Bugs fix:
+    1. Fixed an issue of tilemap that it can't runAction in canvas render mode.
+	2. Fixed an issue of cc.eventManager that its removeListeners' codes are unreachable.
+	3. Fixed an issue of cc.EditBox that its position is incorrect.
+    4. Fixed an issue of cc.WebAudio that its stopped state is incorrect.
+    5. Fixed an issue of cc.audioEngine that it doesn't work on firefox after it compiled with advanced mode.
+    6. Fixed an issue of ccs.Bone that it doesn't update color and opacity correctly.
+    7. Fixed an issue of ccs.Armature that its setShaderProgram doesn't work.
+    8. Fixed cc.Sprite and cc.Scale9Sprite's issue so that their texture loads incorrectly.
+    9. Fixed an issue of ccui.LoadingBar that its setPercent is invalid.
+    10. Fixed an issue of Armature reader that it can't parse isTween property.
+    11. Fixed an issue of ccui.PageView that its getTouchBeganPosition returns incorrect value.
+    12. Fixed an issue of ccui.ImageView that its setColor doesn't work.
+    13. Fixed an issue of cc.RenderTexture that it doesn't support parameter depthStencilFormat.
+    14. Fixed an issue of ccs.ArmatureAnimation.setSpeedScale.
+    15. Fixed an issue of cc.Scale9Sprite that it has a line on iOS device.
+    16. Fixed CCProgressTimer draw on canvas with colorized sprite
+    17. Fixed an issue of cc.game that its frameRate setter is invalid.
+    18. Fixed an issue of cc.loader that its callback state is incorrect.
+
+Cocos2d-html5-v3.0 RC2 @ Aug.8, 2014
+
+* Refactored Cocos UI for more stable and friendly user experience.
+* Upgraded Cocostudio reader to support version 1.2 - 1.5.x.
+* Upgraded Cocostudio Armature animation from Cocos2d-x v3.2.
+* Added back 2.x createWithXXX functions and deprecate all create/createWithXXX functions.
+* Merged cc.NodeRGBA and cc.LayerRGBA to cc.Node.
+* Fixed ctor functions bugs to support new construction.
+* Refactored cc.Sprite's setColor to improve its performance.
+* Renamed CCAffineTransform.js's functions to lowercase started functions.
+* Upgraded cc.Scale9Sprite from Cocos2d-x 3.2.
+* Improved cc.LabelTTF's line break algorithms to support multi-languages.
+* Made cc.RenderTexture's beginWithClear accept color value from 0-255.
+* Improved implementation of all Actions lower case alias creation functions.
+* Added lower case creation functions for 3d actions and progress actions.
+* Added cc.sys.platform API for detecting platform.
+* Upgraded HelloWorld project with v3.0 APIs.
+
+* Bugs fix:
+	1. Fixed a bug of cc.WebAudio that sourceNode's playbackState is invalid on some browsers.
+	2. Fixed a bug of cc.MenuItemToggle that callback is not correctly initialized when using new construction.
+	3. Fixed a bug of ccui.Layout that its clipping area is incorrect.
+	4. Fixed a bug of requestAnimFrame that it doesn't work after re-focus WeChat browser on Samsung mobile.
+	5. Fixed a bug of CCBoot.js that bind function is undefined in Safari for iOS 5.1.
+	6. Fixed a bug in cc.layer's bake function that its position is incorrect when cc.view is scaled.
+	7. Fixed a bug of cc.LayerMultiplex.
+	8. Fixed a bug of cc.TMXLayer that it can't display all map image when its type is hexagonal.
+	9. Fixed a transform error in ccs.TransformHelp.
+	10. Fixed a bug of cc.ControlSwitch.
+	11. Fixed image format constant inconsistence.
+	12. Fixed a bug of ccui.Widget that it is invisible after popScene.
+	13. Correct behavior of cc.TransitionSlideInB and cc.TransitionSlideInT.
+	14. Fixed bugs of ccui.Widget and ccui.Text's clone functions.
+
+
+Cocos2d-html5-v3.0 RC0 @ July.3, 2014
+* Added Facebook SDK plugin into Pluginx extension.
+* Refactoration of gui system `ccui` for better performance, usage and maintainbility.
+* Added `bake` function to `cc.Layer` to support layer baking.
+* Added object pool extension: `cc.pool`.
+* Added new easing functions: bezier action, quadratic actions, quartic actions, quintic actions, circle actions, cubic actions.
+* Made `cc.loader` continue the counter process even if a resource failed to be loaded.
+* Supported multiple property objects in `cc.Class.extend` function.
+* Refactored `ccui.Widget`'s `getLeftInParent`, `getBottomInParent`, `getRightInParent`, `getTopInParent` to `getLeftBoundary`, `getBottomBoundary`, `getRightBoundary`, `getTopBoundary`.
+* Refactored `cc.FadeIn.create(duration, toOpacity)` to `cc.FadeIn.create(duration)`.
+* Refactroed all string access functions in `ccui` extension to `setString` and `getString`.
+* Added `getContentSize` and `setContentSize` in `ccui` extension.
+* Changed the default alpha value of `cc.Color` from `undefined` to 255.
+* Made `cc.log` support formatted string.
+
+* Bugs fix:
+    1. Fix bugs on creating sequence objcet or spawn object using new method.
+    2. Fix a bug that `ccui.LoadingBar`'s `setPercent` function will crash when its texture is in a plist file and scale9Enabled is true.
+    3. Fixed a bug of `cc.audioEngine` that it crashs when audio isn't correctly loaded and its duration is infinity.
+    4. Correction of the calculation of `cc.visibleRect`.
+    5. Fix `cc.Skin`'s bounding box calculation for canvas rendering.
+    6. Fix an issue that `cc.TextureCache` doesn't handle loaded texture in some case.
+    7. Fix an issue that texture rect could be zero sized in `initWithFile` function of `cc.Sprite`.
+    8. Fix a bug on inverted ClippingNode with DrawNode as stencil in Canvas render mode.
+    9. Fix a bug that `cc.SpriteFrame` didn't support initialization with texture name parameter.
+    10. Fix a bug on `ccs.ArmatureAnimation`'s loop parameter.
+    11. Fix a bug that `cc.JumpTo`'s `_delta` position calculation is incorrect.
+    12. Fix a bug of `cc._audioLoader` that it doesn't work when it failed to load an audio file.
+
+Cocos2d-html5-v3.0 beta @ May.23, 2014
+
+* Refactored actions to make it more friendly and easy-to-use.
+* Integrated Spine skeleton animation feature.
+* Renamed constants of ProgressTimer, Scale9Sprite, TMXLayerInfo, Node, ParticleSystem for maintainability.
+* Modified mouseMove event behavior of cc.inputManager to compatible with Cocos2d-x
+* Modified cc.game.run to receive a canvas id as parameter.
+* Added local audio file playing from 'file://' origin.
+* Added local images file displaying from 'file://' origin.
+* Refactored cc.TMXLayer's setTileAt etc functions to support point or x,y as their parameters.
+* Added a check to cc.Sprite and cc.SpriteFrame to avoid its texture rect out of bounds.
+* Added a check to cc.SpriteFrame to avoid cc.loader release invalid sprite frame file.
+* Made cc.Touch return copies of point.
+* Made the default of cc.Color alpha value is 255 to avoid cc.Sprite's setColor is invalid.
+* Optimized cc.Node.sortAllChildren for better performance.
+* Added warning of cc.Texture2D if it has an invalid texture.
+
+* Bugs fix:
+    1. Fixed a bug of cc.winSize that it returns incorrect value when using setDesignResolution.
+    2. Added a check to cc._setup to avoid double invocation.
+    3. Fixed a bug of cc.TMXMapInfo that its tile's property id is incorrect.
+    4. Fixed a bug of cc.Scale9Sprite that its CascadeColor and CascadeOpacity are invalid.
+    5. Fixed a bug of ccs.UILoadingBar which its barRendererScaleChangedWithSize is incorrect.
+    6. Added some forgotten files to build.xml for minimize core.
+    7. Corrected a mistake of renderMode default value in CCBoot.js.
+    8. Fixed a bug of ccui.Layout's draw function that its scaleX, scaleY value is incorrect.
+    9. Fixed a bug of cc.Audio's stopMusic function.
+    10. Fixed a bug of TextureCache that it can't remove image's event handler.
+    11. Fixed ClippingNode's DrawNode stencil bug on Canvas.
+    12. Fixed a typo 'cc.radiansToDegress' function to 'cc.radiansToDegrees'.
+    13. Fixed a bug of ccui.ImageView that its setSize is invalid when the picture without pre-load.
+    14. Fixed a bug of cc.ParticleSystem that it throws a error when create from CocosBuilder.
+    15. Fixed a bug of cc.LabelAtlas that it can't display its children.
+    16. Fixed a bug of cc.fontLoader that it can't load custom font.
+    17. Fixed a bug of ccui.Widget that its setOpacity is invalid.
+    18. Fixed a bug of cc.Node that it transform value is incorrect when a node skew to a special value.
+
+Cocos2d-html5-v3.0 alpha2 @ April.14, 2014
+
+* Minimized the size of core from 254k to 113k after google closure advanced compiling
+* Made cc.DrawNode support some DrawingPrimitive's drawing function on WebGL mode
+* Added undefined checking in cc.loader for better performance.
+* cc.Sprite supports creating a sprite through external URL.
+* Added the warning information to notice developers that their project.json cannot be loaded or parsed.
+* Added retina display support to cc.Editbox.
+* cc.Node's pauseSchedulerAndActions and resumeSchedulerAndActions are deprecated, please use pause and resume instead.
+* Added render mode checking to 3D action classes.
+* Added SocketIO
+* Sync cc.eventManager to the latest version of Cocos2d-x v3.0 Stable.
+* ccui.Layout's doLayout function has been set to private function "_doLayout"
+* Made actions extendable directly via ctor
+* Added null callback check in cc.textureCache.addImage
+* Fixed the API inconsistence of ccs.ArmatureAnimation.play
+* Fixed compatibility and performance for ctor
+* Renamed all Uppercase functions to lowercase in CCMacro
+* Added necessary GL constants in H5
+* Fixed CONSTANTS inconsistence between h5 and JSB
+
+* Bugs fix:
+    1. Fixed ccs.comAttribute API incompatible issue
+    2. Fixed a bug of Cocostudio's data reader that getting isTween value is incorrect when the attribute value is false.
+	3. Fixed a bug of Sprite that it doesn't work when its texture doesn't preload and its parent is a SpriteBatchNode
+	4. Fixed a bug in CCBoot.js that console.error is invalid on firefox.
+	5. Fixed some comment errors of framework.
+	6. Fixed a bug of cc.LabelBMFont that it's multiline works incorrectly.
+	7. Fixed a bug that Touches event doesn't work in release mode on IE browser.
+	8. Fixed a bug that cc.winSize has not been reset after cc.view.setDesignResolutionSize.
+	9. Fixed typo in ccui.Widget.TOUCH_BEGAN
+	10. Fixed a bug of cc.MenuItemSprite.create that
+	11. Fixed a bug of cc.loader that it need to set value before call the callback.
+	12. Fixed a bug of cc.log that it doesn't work in IE9
+	13. Fixed IE incompatible issue with __lookupGetter__
+	14. Fixed a mistake of cc.Node that it return a reference of _position in getPosition
+	15. Fixed a bug of cc.ClippingNode that its _super is undefined
+	16. Fixed a bug of inputManager's touch event in IE browser
+
+* Known Issues:
+    1. EventListener is not extendable.
+
+
+Cocos2d-html5-v3.0 alpha @ March.15, 2014
+
+* Refactor some properties of all rendering classes with getter setter for providing javascript user friendly APIs.
+* Provide `attr` function for cc.Node and its descendants to permit modify multiple properties at the same time with a key-value object.
+* Refactor foundational data structures for better maintainability.
+* Add event manager to cocos2d-html5, all events are dispatched via cc.eventManager to event listener.
+* Refactor cc.Application to cc.game.
+* Refactor singleton Classes to javascript object.
+* Refactor all createWithXXX functions into unified create function with different parameters.
+* Use `moduleConfig.json` to config the paths of engine scripts.
+* `cocos2d.js` is replaced with `project.json`.
+* Refactoring cc.loader.
+* CocoStudio GUI updated to 3.0, and ccs prefix of UI widgets have been changed to ccui.
+* CocoStudio v1.3.0 has been supported in v3.0.
+* richText has been supported in v3.0.
+* Use `cc.BuilderReader.registerController` to register controller of ccb.
+* Add `cc.path` to handle operations of file path.
+* Add `cc.async` to handle async operations.
+* Add cc.NodeGrid in v3.0.
+* Replace `replaceWithScene` and `runWithScene` with `runScene`.
+* move sys.xxx to cc.sys.xxx.
+* Refactor CCEGLView.js for better maintainability.
+* Refactor CCScheduler.js for better maintainability.
+* Remove arguments.callee which is forbidden in ECMAScript strict mode.
+* Refactor Array clean function for better performance.
+* Refactor some functions about array operation.
+* Refactor FadeIn/FadeOut to fix a bug that it always start from/to 255.
+* Rewrite functions in CCNS.js with regex.
+* Move CCFormatHelper and CCNS content into CCCommon.js.
+* Refactor cc.Screen to support all browsers.
+* Add retina display support for Apple devices to cc.view.
+* Add "allLayers" function to cc.TMXTiledMap.
+* Make cc.p and cc.size support two types of parameters.
+* cc.DrawNode supports all functions of cc.DrawingPrimitive on Canvas mode.
+* WebAudioEngine is supported on iOS now.
+* Use event on cc.canvas to make full screen.
+* Add a browser white list that support multiple audio playback at the same time.
+* Removed in/hasOwnProperty usage in engine for better performance.
+* Refactoring CCCommon.js, delete some unused functions, rename some functions for better maintainability.
+* Add analytics plugin protocol ,Flurry plugin and ProtocolAds.js plugin protocol.
+* Arguments length check replaced by undefined check for better performance.
+* Fix legacy Function.prototype.bind support.
+
+* Bugs fix:
+    1. Avoid CCLabelTTF enter in infinite loop while character's width larger than the dimension width
+    2. Add jsDoc Flags to cc.NodeRGBA and cc.LayerRGBA
+    3. Fixed a bug that Schedule doesn't restart when widget is re-added after being removed
+    4. Correction of split logic in CCLabelTTF
+    5. Fixed a bug that armature animation does not display correctly on canvas mode
+    6. Correct gui widget clone functions
+    7. Fixed a bug of cc.SpriteFrameCache that filePath is needed in `loadedFileNames`
+    8. Add a condition check to avoid texture out of range bug
+    9. Fixed a bug of cc.Editbox that its position is incorrect when its parent node isn't root node.
+    10. Fixed a SimpleAudioEngine's state error.
+    11. Fixed a bug of cc.TMXTileMap that its `_tileProperties` should be a dictionary object
+    12. Fixed a bug of cc.DrawNode that it need to deep-copy verts in `drawPoly`
+    13. Fixed a bug of UILabelBMFont that variable `_strStringValue` should be `_stringValue`
+    14. Fixed a bug in SceneReader's `setPropertyFromJsonDict` function
+    15. Fixed a bug when margin not set in ccs.Margin
+    16. Fixed a bug of cc.TMXLayer that its `removeChild` works incorrectly.
+
+* Known Issues:
+
+Cocos2d-html5-v2.2.2 @ Dec.31, 2013
+* Resolution policy now act as a combination of cc.ContainerStrategy and cc.ContentStrategy so that user can beautifully customize its behavior.
+* cc.LabelTTF's now support perfectly automatic line break with occidental and Chinese characters.
+* cc.ClippingNode for canvas render mode is implemented.
+* Refactored cc.Node and cc.Sprite by adding cc._PointConst and cc._SizeConst for better Performance. Now the performance of setPosition and getPosition is faster 65% than before.
+* CCNode's setContentSize and setAnchorPoint support two types of parameters, more friendly and more efficient. setAnchorPoint(x,y) is faster 35% than setAnchorPoint(cc.p(x,y)).
+* Added NPM support and adjusted folder structure. It supports modules customization, the mini HelloWorld is just 185KB when package all files into single file.Please visit NPM Guide for more details.
+* Added SpriteFrameCache JSON format support.
+* Added source map generating of Closure Compiler advance mode , please make sure your JDK version is 7.0 and up.
+* Improved audio compatibility for mobile browser, added playing queue to solve the one audio restriction of some mobile browser.
+* Refactoring TMXLayer for better performance.
+* set cc.Rect's origin and size from public to private for compatibility with JSB.
+* CocoStudio supports async image loading.
+* cc.log supports printing object content to console
+* Refactoring indexing of actionManager and Scheduler for better performance.
+* ClippingNode supports some features on Canvas Mode.
+* Migrated Armature to v2.2.2.
+* Add callback function to CocoStudio action completion and refactoring it for better performance.
+* CCBReader supports that CCControl can send action by all types of event.
+* Add create function to cc.NodeRGBA
+* Add jsdoc document to CocoStudio classes
+
+* Bugs fix:
+	1. Fixed a bug of TMXLayer that it has thin lines at tile's border when EGLView's scale doesn't equal 1.
+	2. Fixed bugs of LabelBMFont about updateDisplayedOpacity and multi-line is incorrect.
+	3. Fixed a bug of LabelTTF that enter an infinite loop when setting special string and fontSize to it.
+	4. Fixed a bug of NodeRGBA and LayerRGBA about updateDisplayedColor and updateDisplayedOpacity.
+	5. Fixed a bug of ProgressTimer that it can't change color and opacity when calling setColor and setOpacity directly.
+	6. Fixed a bug of cc.ProgressTimer that it has a blink when its reverseDirection equals false and type equals cc.PROGRESS_TIMER_TYPE_RADIAL.
+	7. Some Loaders need modify their default value to adapt CocosBuilder that CocosBuilder ignores some two properties object like cc.Point when all the properties equals to zero.
+	8. Fixed a bug of Fixed a bug of TMXTileMap that its getProperty doesn't work.
+	9. Fixed a bug of ActionInterval that it throws error when its target doesn't have RGBAProtocol property.
+	10. Fixed a bug of MenuItemSprite that it throws an error when create a MenuItemSprite object with cc.Node.
+	11. Fixed a bug of UIWidget that its container intercept touch event while they can't.
+	12. Fixed a bug of ccs.UILayout about relative positioning.
+  13. Fixed a bug of Armature that its nodeToParentTransformCanvas correct.
+
+* Known Issues:
+     1. Effect Advanced Lens3D doesn't work
+     2. ClipNodeTest effects varies in different browsers
+     3. Stencil of cc.ClippingNode doesn't work well with WEBGL render mode, the stencil have the right size and shape but it masks the content with a monochrome mask.
+
+Cocos2d-html5-v2.2.1 @ Nov.19, 2013
+* CocoStudio is now supported on Cocos2d-html5. The GUI, scene and component modules have been added to it.
+* cc.EGLView and most render classes have been re-written to adapt multiple resolution resources in-order to optimize performance on mobile browsers.
+* Refactored cc.LabelTTF, now its contentSize and position is correct for labels which has defined stroke and shadow.
+* Corrected the behavior of "CascadeColorEnabled" and "CascadeOpacityEnabled" for cc.NodeRGBA and cc.LayerRGBA.
+* All cc.Assert has being replaced,  and more arguments checking and log information have added to engine's function.
+* Added cc.Screen to engine, it uses to enter/exit FullScreen mode.
+* Added cc.VisibleRect to engine, it provides nine points of game view for positioning.
+* cc.WebAudioEngine now works perfectly on chrome.
+* CocoStudio's namespace changes to 'ccs' now, and the other module's namespace will be renamed and support NPM in next version.
+* cc.rect now accepts more types of parameters on JSB and HTML5 now, for example: cc.rect(1,1,1,1) and cc.rect(aRect), and cc.rect(cc.p(1,1),cc.size(10,10));
+* Optimized cc.Node's getBoundingBoxToWorld for better Performance.
+* Modified the _sequenceCompleted method in CCBAnimation, it can set the next sequence in callback now.
+* Improved the maintainability for _drawSceneForWebGL and _drawSceneForCanvas.
+* ParticleExamples has been refactored for JSB.
+* HelloHTML5World's CircleSprite has been removed, because it doesn't work on JSB.
+
+* Bugs fix:
+  1. Fixed a Scale9Sprite's bug that setCapInsets is invalid.
+  2. Fixed a bug that prevents the game to run on Chrome 31 WebGL mode.
+  3. Fixed a bug of LabelTTF that doesn't work on Baidu browser.
+  4. Fixed a bug of Sprite that it shouldn't to set transform dirty when setting color or opacity.
+  5. Fixed a bug that cc.EditBox's setFontSize is invalid.
+  6. Fixed a bug that Particles doesn't work when search path in FileUtils was set.
+  7. Fixed a bug of Scale9Sprite that it throws an error when _scale9Image is null.
+  8. Fixed a bug of LayerGradient that it shows wrong size when setting content size.
+  9. It should listen to the method "onLoad" in cc.FileUtils when the browser isn't IE.
+
+* Known Issues:
+     1. Effect Advanced Lens3D doesn't work
+     2. ClipNodeTest effects varies in different browsers
+
+Cocos2d-html5-v2.2 @ Sep.19, 2013
+* Improved Sprite, Node, LabelTTF class define from separated code to combined code for maintainability, now it is clean and clear
+* added a new sample game "Fruit attack" which works great on PC browsers, mobile browsers, and can even be run natively as an android and iOS app with JSB
+* cc.Sprite and its subClasses's texture has been replaced from DOM element to cc.Texture2D on Canvas mode
+* Improved cc.Texture2d for direct using without pre-loading image resources, you don't need to wait resources loading when create a new scene or layers
+* Migrated CCBReader and GUI to Cocos2d-x 2.1.4
+* Improved update function of Action, and avoid using temporary object, it is good for GC and performance
+* Modified LabelTTF's rendering from direct drawing to pre-rendering for performance, 100% faster than before on mobile browser
+* Fixed APIs of HTML5 according to JSB for compatibility, e.g. cc.ParticleSystemQuad has merged into cc.ParticleSystem, please check it on upgrade guide v2.1.5 to v2.2(http://www.cocos2d-x.org/wiki/Upgrade_Guide_from_Cocos2d-html5_v215_to_v22)
+* Added Hiding url address bar for mobile browser, please check the template and hello world
+* Re-writed Canvas Mode of RenderTexture to adapt WebGL interface
+* Added frame event, collider and blend type supporting for Armature. Now Armature supports two tools:1.CocoStudio(windows,http://www.cocostudio.org),2.DragonBones(flash, https://github.com/2youyouo2/SkeletonAnimationDesignPanel)
+* Set auto render mode default value to canvas in mobile browsers and WebGL in desktop browsers
+
+* Bug fix:
+1. Fixed cc.Sprite's displayFrame returns wrong value on Canvas mode.
+2. Fixed cc.LabelBMFont is very slow when calling setString
+3. Fixed a bug of CCBReader that cc.ControlButton doesn't work when its controller is _jsControlled
+4. Fixed a bug of cc.TextureCache that the status of texture is wrong in callback
+5. Fixed a bug of cc.Scale9Sprite that its contentSize is wrong when call setCapInsets
+6. Fixed a bug of cc.TableView's that contentSize is wrong when change datasource
+7. Fixed a bug of cc.Sprite that its children also follow fliped when it was fliped
+8. Fixed cc.Node's nodeToWorldTransform returns wrong value on Canvas Mode
+9. Fixed a bug of cc.LayerColor that represent incorrect opacity passed into init method
+10. Stop listening and remove the event for HtmlImageElement object onload
+11. Fixed cc.ProgressTimer display wrong when its sprite was flipped
+12. Fixed some bugs for actions that set their object property through reference when initiating actions.
+
+* Known Issues:
+     1. Effect Advanced Lens3D doesn't work
+     2. ClipNodeTest effects varies in different browsers
+
+Cocos2d-html5-v2.1.5 @ July.24, 2013
+* Ported engine API to keep the same as Cocos2d-x v2.1.4 API
+* Optimized John Resig's inheritance pattern (cc.Class.extend) with advanced property initialization.
+* Implemented the rest of extensions features according to Cocos2d-x v2.1.4
+* Integrated Armature module
+* Rewrote CCGrid, CCMotionStreak , CCProgressTimer with TypeArray
+* Optimized performance for actions
+* Optimized performance for MoonWarriors and CocosDragonJS
+
+* Bug fix:
+  1. Fixed cc.EditBox Dom Element position issue when EGLView is set
+  2. Fixed cc.EGLView adjustSize bug
+  3. Fixed the bug of cc.ParticleBatchNode that it doesn't hide particles after particle life has expired when calling stopSystem()
+  4. Fixed a bug that LabelTTF dimension behavior doesn't support height=0
+  5. Fixed line height for multiline LabelTTF and overlapping pixels in Scale9Sprite on Canvas browsers
+  6. Fixed a bug of cc.SimpleAudioEngine that unloading effect doesn't work
+* Known Issues:
+     1. Effect Advanced Lens3D doesn't work
+     2. ClipNodeTest effects varies in different browsers
+     3. nodeToParentTransform in cc.Node returns wrong value on Canvas mode
+
+Cocos2d-html5-v2.1.4 @ Jun.12, 2013
+* Added support for multiple resources loading. This mechanic is the same as cocos2d-x now
+* Optimised "Performance Tests -> Sprites Test", and increased its benchmark to 220%!
+* Migrated audio (CocosDenshion) API to keep the same as Cocos2d JS API
+* Added auto test for NodeTests and TilemapTests
+* Changed CCTextureCache member functions such as addImage(path), addImageAysnc(path), removeTextureForKey(key) from using relative path to absolute path
+* Added support for particle batch node
+
+* Bug fix:
+  1. Fixed preLoading issue on iOS 5.1.1
+  2. Fixed cc.Menu / cc.MenuItemImage remaining touchable issue after replaceScene
+  3. Fixed Box2d and chipmunk path error for single engine file mode
+  4. Fixed cc.EditBox Dom Element position issue when cc.EditBox skewed
+  5. Fixed cc.ScrollView position issue when it's parent node moved
+  6. Fixed cc.TouchDispatcher can't touch issue when WebPage has been scrolled on Firefox or IE
+* Known Issues:
+     1. Effect Advanced Lens3D doesn't work
+     2. ClipNodeTest effects varies in different browsers
+
+Cocos2d-html5-v2.1.3 @ May.1, 2013
+* CCEditbox now implemented for WebGL and JSB
+* Updated CCBReader to latest version
+* Performance optimization on Firefox 20%
+* Added render mode flag to switch between WebGL and canvas2d
+* Added support for Tizen
+* Now able to load embedded texture file in a plist
+* EGLView now works if canvas is placed inside another DOM element
+* Added a Simulator which can be found in MoonWarriors Directory
+
+* Bug fix:
+  1. Preloading on some mobile browsers
+  2. CCLoader for WebGL
+  3. ccNode memory leak
+* Known Issues:
+     1. Effect Advanced Lens3D doesn't work
+     2. Particle System has some weird behavior when load from CCBReader
+     3. RenderTextureTest RenderTextureIssue937 & Issue1464 doesn't work properly
+     4. ClipNodeTest effects varies in different browsers
+
+
+Cocos2d-html5-v2.1.2-beta @ Mar.20, 2013
+* WebGL rendering mode implemented - blazing fast on supported browsers
+* Added many WegGL test to testbed
+* cc.Loader now supports multiple stage preloading - all tests now preload by multi resource groups
+* Now warns the user if their browser does not support html5
+* cc.Node now uses transform matrix - better performance
+* Accelerometer implemented - Also works on Javascript binding (JSB) for Cocos2d-x & Cocos2d-iPhone
+* Supports MP4 and M4a Audio format now
+* Designer resolution for multi resolution support - Also works on Javascript binding for Cocos2d-x
+* Faster Particle - thanks to Ivo Wetzel
+* Bug fixes:
+    1. File utility fixed
+    2. Audio support bug fixed
+    3. Removed some trailing coma which prevents blocks closure compiler
+    4. Local storage bug fixed
+    5. cc.MenuItemImage and cc.MenuItemToggle bugs fixed
+    6. Fixed compatibility with some UIWebView
+    7. Fixed rounding errors on ease actions
+* Known Issues:
+     1. Effect Advanced Lens3D doesn't work
+     2. particle system can't load texture from plist
+     3. EditBox doesn't work on WebGL mode
+     4. Particle System has some weird behavior when load from CCBReader
+     5. RenderTextureTest RenderTextureIssue937 & Issue1464 doesn't work properly
+     6. ClipNodeTest effects varies in different browsers
+
+Cocos2d-html5-v2.1.1 @ Jan.28, 2013
+* Fixed bugs
+* Added mouse button to MouseDispatcher, supports right-click
+* Changed  preload audio type from "bgm" and "effect" to "sound"
+* Added "Sys" class for system capabilities
+* Improved cc.BuilderReader to support .ccbi extension auto-completion
+* Improved TMXXMLParser to support XML, CSV and zlib compression
+* Changed cc.Time.gettimeofdayCocos2d to Date.now which is more javascript friendly.
+* Added support for stackable actions
+
+Cocos2d-html5-v2.1.0 @ Dec.4, 2012
+* Improved cc.Class and add Release Mode
+* All tests and games can now be run on Cocos2d-html5, Cocos2d-iPhone and Cocos2d-x
+* Added support for google.base
+* Added support for CocosBuilder and Bone Animation
+* Updated API for Javascript Binding
+* Integrated Chipmunk physical engine and chipmunk tests
+* Added physicsDebugNode, physicsSprite, drawNode
+* Built cocos2d-js-tests repo for tests
+* Fixed support for mouse/touch/keyboard
+* Fixed bugs
+* Added WaterMelon with me and CocosDragon games for sample
+* Added Edit Box for input
+
+Cocos2d-html5-v2.0.0 @ Aug.28, 2012
+* Updated API to Cocos2d-x V2.0
+* Updated template and directory name
+* Improved JS files loader
+* Added support for Dom rendering
+* Updated JSDoc comments and shell
+* Added TileMap property process and flip
+* Improved BMFont
+* Added Actions spline paths and cc.AnimationFrame
+* Added support for multi-touch
+* Added mini-framework for Dom manipulation
+* Changed cc.Animation, cc.AudioEngine, cc.LableTTF and cc.Sprite API
+
+
+Cocos2d-html5-v0.5.0-alpha2 @ Jun.18, 2012
+* Changed API, use "create" to construct all objects
+* Fixed naming of variables
+* Added JSDoc comments and shell
+* Fixed Dom Menu flicker bug
+* Changed code for closure compiler Advance optional
+* Added version control
+
+Cocos2d-html5-v0.5.0-alpha @ May.28, 2012
+* supports canvas and Dom Menu
+* part of test cases were added and tested in chrome
+* porting from cocos2d-x is not finished
+* files must load from http server
+
+Cocos2d-html5-v0.1.0 @ Jan.29, 2012
+* Build the directory structure of Engine
+* cocos2d-html5 first version
+* more details: 	http://www.cocos2d-x.org/
+
+
+
+

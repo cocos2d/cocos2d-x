@@ -1,0 +1,263 @@
+Cocos2d-html5 authors
+
+(ordered by the join in time)
+
+Core Developers:
+
+    Shun Lin (Sean Lin)
+
+    Hao Wu (WuHao)
+
+    Dingping Lv (David Lv)
+
+    Ricardo Quesada
+
+    Huabin LING (pandamicro)
+
+    Sijie Wang
+
+    Jialong Zhai
+
+Contributors:
+Name                GithubID    Main contribution
+
+Dali Kilani         @dadilcool  added instruction to read me
+
+Chris               @hannon235	added node.js api for box2d
+                                added SocketIO and SocketIO tests
+
+Jason Aeschliman    @jaeschliman  fixed cc.Node setposition
+
+Zhuoshi Sun(Intel)  @sunzhuoshi	engine loader fixed
+
+Alejandro Reyero    @KaTXi      fixed error message
+
+Long Xiang          @seanlong   resource loader count
+
+Timm Drevensek(Zynga)  @timmjd  cc.Class fixed
+                                add CCScale9Sprite test
+
+Lzzy Chen           @czizzy     audio engine fixed
+			                    cleanup comments
+
+Mcscooter           @mcscooter  tilempapxml fixed
+
+Roed                @roed       Mouse rightclick api
+                                Mouse scroll fix for firefox
+                                cc.Screen bug fix
+
+Surith Thekkiam(Zynga)  @folecr  match Cocos2dx api
+
+Robert Boyd         @rboyd       fixed stackable actions
+
+Ivo Wetzel(Zynga Germany) @BonsaiDen Fixes for Audio Support Detection,
+                                     Texture Support in Particle System,
+                                     and Performance improvements
+
+Mario Adrian        @many20        Code review, multi touch improvements,
+                                   ccbi bugs fixed
+
+keisuke hata(Square)  @Seasons7    Code review, bug fix
+
+Marat Yakupov	    @moadib        Various bug fixes
+
+Liang Wu            @akira-cn      Touch location fix for designResolution
+                                   ScrollView on paused bugs fix
+
+Jimmy Sambuo        @jsambuo       AudioEngine improvements
+
+Jose Antonio Andujar Clavell	   Scale9Sprite improvements
+
+TadeuszWlodarkiewic  @TadeuszWlodarkiewic  Tizen Compatibility
+
+smshuja              @smshuja      Parallax node bug fix
+
+rickms               @rickms	   EGLView Optimizations
+
+Szymon Piłkowski     @ardcore      CCTexture Bug fix
+
+Tomasz Tunik         @tomasztunik   CCNode Memory leak fix
+
+Xuankang Lin(Intel)  @AndriyLin     cc.WebAudioEngine implements
+
+Kang-Hao Lu(Opera/Oupeng) @kennyluck    Optimize John Resig's inheritance pattern
+                                        cc.clone improvements
+
+Mark Henderson       @MarkEHenderson    Code review, LabelTTF and Scale9Sprite bug fix
+
+Jing Wang             @06wj         CCScheduler improvements
+                                   Js file loading image add
+                                   cc.RectApplyAffineTransform improvements
+
+Ze Wang               @WanderWang   Fix crash when BrowserTypes match nothing from navigator.userAgent
+                                    LabelTTF improvements
+                                    cc.TextureCache.dumpCachedTextureInfo 's bug fix
+                                    CCTween bug fix
+                                    CCScale9Sprite bug fix
+                                    sys.localStorage bug fix
+                                    CCArmature refactoring
+                                    cc.SpriteFrame and cc.SpriteFrameCache refactoring
+
+Christian Schwartz   @cschwartz    SpriteFrame.initWithTextureFilename converted fix
+
+XiaoJun Zheng        @SmallAiTT    _getResType error fix
+                                   cc.ScrollView bug fix
+                                   cc.LabelTTF bug fix
+                                   rewrite functions in CCNS.js with regex
+                                   refactor CCScheduler.js and CCCommon.js
+                                   cc.BMFontConfiguration bug fix
+                                   refactor cc.Application to cc.game
+                                   refactor cc.loader
+                                   refactor cc.Textur2D
+                                   refactor some functions about array operation
+                                   move sys.xxx to cc.sys.xxx
+                                   refactor some public functions in cc to private
+                                   add node.js scripts for publishing game
+                                   refactor cc.CCBReader
+                                   cc.view bug fix
+                                   multiple property object supports in extend function
+
+Guozhu Cheng         @bengol       cc.SimpleAudioEngine bug fix
+
+Jing Xiao            @xbruce       cc.SAXParser bug fix
+                                   cc.ActionManager refactoring
+                                   cc.Scheduler refactoring
+                                   cc.LabelTTF refactoring
+
+JiaHui He            @garfield_ho   cc.FileUtils bug fix
+                                    cc.Builder and SpriteLoader bugs fix
+                                    CCBAnimation bug fix
+
+Luis Parravicini     @luisparravicini      cc.Director refactoring
+                                           cc.LabelTTF documentation
+                                           typo fix
+
+Jose Antonio         @jandujar      cc.ParticleSystem bug fix for CocoStudio animations
+                                    SceneReader bug fix
+
+BoHao Tang           @btspoony      cc.TableView bug fix
+
+Claudiu              @csaftoiu      cc.LabelTTF bug fix
+                                    cc.DrawNode bugs fix
+                                    cc.NodeRGBA bug fix
+                                    cc.Texture2D bug fix
+
+Pei Wu               @rablwupei     cc.ProgressTimer bug fix
+                                    cc.ParticleBatchNode bug fix
+
+kuaipao              @kuaipao       CocoStudio GUIReader bug fix
+                                    CocoStudio UIScrollView bug fix
+                                    CocoStudio UIWidget bug fix
+
+XieDaijin            @NijiadeIX     CCControl bug fix
+
+samael               @samael65535   CCPhysicsSprite bug fix
+
+NatWeiss             @NatWeiss      Add analytics plugin protocol ,Flurry plugin and ProtocolAds.js plugin protocol
+                                    cc.FileUtils refactoring
+                                    cc.Audio bugs fix
+                                    cc.Texture2D bug fix
+
+Andor Salga          @asalga        typo fix
+
+erykwalder           @erykwalder    Function.prototype.bind bug fix
+
+ZippoLag             @ZippoLag      cc.Application.getCurrentLanguage bug fix
+                                    typo fix
+
+Asano                @LaercioAsano  cc.Node bug fix
+
+Bruno Assarisse      @bassarisse    cc.LabelBMFont bug fix
+
+Mykyta Usikov        @musikov       cc.ClippingNode bugs fix
+                                    cc.fontLoader bug fix
+                                    Inverted ClippingNode with DrawNode as stencil bug fix under canvas render mode
+                                    JumpTo bug with wrong _delta position bug fix
+                                    cc.ProgressTimer bugs fix
+                                    cc.Scale9Sprite bugs fix
+                                    cc.RenderTexture bug fix
+                                    cc.ParticleSystem bug fix
+
+Han XiaoLong         @kpkhxlgy0     cc.ParticleSytem bug fix
+
+AaronRZH             @AaronRZH      Creation of a sequence objcet or a spawn object by using new method bug fix
+
+Xiaodong Liu         @tianxing113   cc.Spawn.create bug fix
+                                    ccui.LoadingBar.setPercent crash bug fix
+
+Park Hyun Chen       @sincntx       Touch anywhere of screen to finish input when using cc.EditBox
+                                    ccui.TextBMFont bug fix
+                                    cc.game bug fix
+                                    Fixed an issue of cc.ArmatureAnimation's setMovementEventCallFunc
+
+Ninja Lau            @mutoo         A typo bug in UILayout fix
+                                    One-loop CCArmatureAnimation can't finish when setSpeedScale is less than 1.0 bug fix
+                                    A transform error in CCTransformHelp.js fix
+                                    ccs.DisplayManager bug fix
+                                    Fix child armature lost _parentBone issue
+                                    cc.eventManager bug fix
+                                    ccs.Bone bug fix
+                                    ccs.ActionFrame bug fix
+                                    ccui.Widget bug fix
+                                    ccui.LoadingBar bug fix
+
+Taras Tovchenko      @tovchenko     cc.Skin bounding box calculation bug fix under canvas render mode
+
+Minh Quy             @MQuy          cc.MenuItemSprite bug fix
+                                    Check empty string for textureData
+                                    Adds type check functions
+
+Michael Yin          @layerssss     cc.game refactored
+
+Yang Yuchen          @yycdef        cc.sys bug fix
+
+K                    @kiwigrc       cc.ParticleSystem bug fix
+
+Claudio Freitas      @claudiofreitas    ccui.TextField typo fix.
+
+nopakos              @nopakos       cc.Texture2D bug fix
+
+Robert Rouhani       @Robmaister    cc.TMXMapInfo bug fix
+                                    cc.TMXLayer bug fix
+
+Igor Mats            @IgorMats      cc.Scale9Sprite bug fix
+                                    Spine runtime update
+
+Tim                  @duhaibo0404   ccs.csLoader bug fix
+
+Hermanto             @man2          cc.loader bug fix
+
+Long Jiang           @jianglong0156 cc.LabelBMFont bug fix
+                                    KeyCode bug fix
+                                    ccui.ListView bug fix
+
+Joe Lafiosca         @lafiosca      Added Javascript file loader
+
+galapagosit          @galapagosit   ccs.actionManager bug fix
+
+Dany Ellement        @DEllement     cc.FontDefinition & ccui.RichText improvements
+                                    cc.LayerGradient improvements
+
+IShm                 @IShm          cc.Screen bug fix
+                                    cc.ParticleSystem bug fix
+                                    ccui.PageView bug fix
+
+Thomas Jablonski     @thomas-jablonski  cc.audioEngine bug fix
+                                        Cocostudio typo fix
+
+WingGao              @WingGao       cc.TMXLayer bug fix
+
+Skliar Ihor          @igogo5yo      Add Bower support
+
+feijing566           @feijing566    cc.Audio bug fix
+
+
+Retired Core Developers:
+      Shengxiang Chen (Nero Chan)
+      Xingsen Ma
+
+Cocos2d-x and cocos2d-html5 can not grow so fast without the active community.
+
+Thanks to all developers who report & trace bugs, discuss the engine usage in forum & QQ groups!
+
+Special thanks to Ricardo Quesada for giving us lots of guidances & suggestions.

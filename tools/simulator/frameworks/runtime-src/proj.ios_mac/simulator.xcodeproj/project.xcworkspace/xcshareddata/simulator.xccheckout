@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>F28329C4-A57B-4FB7-A0BE-B03A83BB5E5F</string>
+	<key>IDESourceControlProjectName</key>
+	<string>simulator</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>1A7703F26CA0DEB459D4A2F1A40445CDFC9DFD9F</key>
+		<string>https://github.com/cocos2d-x/plugin-x.git</string>
+		<key>852ED3691A47A99B0D19C820A500AE9772B2A44E</key>
+		<string>github.com:quick-x-team/v3quick.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>tools/simulator/frameworks/runtime-src/proj.ios_mac/simulator.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>1A7703F26CA0DEB459D4A2F1A40445CDFC9DFD9F</key>
+		<string>../../../../../../..plugin</string>
+		<key>852ED3691A47A99B0D19C820A500AE9772B2A44E</key>
+		<string>../../../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:quick-x-team/v3quick.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>852ED3691A47A99B0D19C820A500AE9772B2A44E</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>852ED3691A47A99B0D19C820A500AE9772B2A44E</string>
+			<key>IDESourceControlWCCName</key>
+			<string>cocos2d-x</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>1A7703F26CA0DEB459D4A2F1A40445CDFC9DFD9F</string>
+			<key>IDESourceControlWCCName</key>
+			<string>cocos2d-xplugin</string>
+		</dict>
+	</array>
+</dict>
+</plist>
