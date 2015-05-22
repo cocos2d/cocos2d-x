@@ -90,7 +90,7 @@ public:
     typedef std::function<void(NavMeshAgent *agent, float totalTimeAfterMove)> MoveCallback;
 
     static NavMeshAgent* create(const NavMeshAgentParam &param);
-    static std::string& getNavMeshAgentComponentName();
+    static const std::string& getNavMeshAgentComponentName();
 
     virtual void onEnter() override;
     virtual void onExit() override;
@@ -131,7 +131,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 private:
 
-    bool init(const NavMeshAgentParam &param);
+    bool initWith(const NavMeshAgentParam &param);
     void addTo(dtCrowd *crowed);
     void removeFrom(dtCrowd *crowed);
     void setNavMeshQuery(dtNavMeshQuery *query);

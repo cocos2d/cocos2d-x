@@ -56,7 +56,7 @@ public:
     };
 
     static NavMeshObstacle* create(float radius, float height);
-    static std::string& getNavMeshObstacleComponentName();
+    static const std::string& getNavMeshObstacleComponentName();
 
     virtual void onEnter() override;
     virtual void onExit() override;
@@ -75,7 +75,7 @@ CC_CONSTRUCTOR_ACCESS:
     NavMeshObstacle();
     virtual ~NavMeshObstacle();
 
-    bool init(float radius, float height);
+    bool initWith(float radius, float height);
 
 private:
 

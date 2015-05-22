@@ -35,7 +35,7 @@ NS_CC_BEGIN
 NavMeshObstacle* NavMeshObstacle::create(float radius, float height)
 {
     auto ref = new (std::nothrow) NavMeshObstacle();
-    if (ref && ref->init(radius, height))
+    if (ref && ref->initWith(radius, height))
     {
         ref->autorelease();
         return ref;
@@ -44,7 +44,7 @@ NavMeshObstacle* NavMeshObstacle::create(float radius, float height)
     return nullptr;
 }
 
-std::string& NavMeshObstacle::getNavMeshObstacleComponentName()
+const std::string& NavMeshObstacle::getNavMeshObstacleComponentName()
 {
     static std::string comName = "___NavMeshObstacleComponent___";
     return comName;
@@ -65,7 +65,7 @@ cocos2d::NavMeshObstacle::~NavMeshObstacle()
 
 }
 
-bool NavMeshObstacle::init(float radius, float height)
+bool NavMeshObstacle::initWith(float radius, float height)
 {
     _radius = radius;
     _height = height;

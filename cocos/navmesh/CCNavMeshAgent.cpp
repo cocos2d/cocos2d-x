@@ -51,7 +51,7 @@ NavMeshAgentParam::NavMeshAgentParam()
 NavMeshAgent* NavMeshAgent::create(const NavMeshAgentParam &param)
 {
     auto ref = new (std::nothrow) NavMeshAgent();
-    if (ref && ref->init(param))
+    if (ref && ref->initWith(param))
     {
         ref->autorelease();
         return ref;
@@ -60,7 +60,7 @@ NavMeshAgent* NavMeshAgent::create(const NavMeshAgentParam &param)
     return nullptr;
 }
 
-std::string& NavMeshAgent::getNavMeshAgentComponentName()
+const std::string& NavMeshAgent::getNavMeshAgentComponentName()
 {
     static std::string comName = "___NavMeshAgentComponent___";
     return comName;
@@ -86,7 +86,7 @@ cocos2d::NavMeshAgent::~NavMeshAgent()
 {
 }
 
-bool NavMeshAgent::init(const NavMeshAgentParam &param)
+bool NavMeshAgent::initWith(const NavMeshAgentParam &param)
 {
     _param = param;
     setName(getNavMeshAgentComponentName());
