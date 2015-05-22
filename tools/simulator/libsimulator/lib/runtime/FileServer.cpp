@@ -222,17 +222,17 @@ void FileServer::stop()
 	_writeEndThread = true;
 	_responseEndThread = true;
 
-    if(_receiveRunning)
+    if (_receiveRunning && _receiveThread.joinable())
     {
         _receiveThread.join();
     }
 
-	if (_writeRunning)
+    if (_writeRunning && _writeThread.joinable())
 	{
 		_writeThread.join();
 	}
 
-	if (_responseRunning)
+    if (_responseRunning && _responseThread.joinable())
 	{
 		_responseThread.join();
 	}

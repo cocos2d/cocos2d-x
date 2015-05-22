@@ -62,6 +62,7 @@ namespace cocos2d {
                 for (int index = 0; index < _numThread; ++index) {
                     _tasks.push_back(nullptr);
                     _threads.push_back( std::thread( std::bind(&AudioEngineThreadPool::threadFunc,this,index) ) );
+                    _threads[index].detach();
                 }
             }
             
@@ -78,7 +79,7 @@ namespace cocos2d {
                 if (targetIndex == -1) {
                     _tasks.push_back(task);
                     _threads.push_back( std::thread( std::bind(&AudioEngineThreadPool::threadFunc,this,_numThread) ) );
-                    
+                    _threads[_numThread].detach();
                     _numThread++;
                 }
                 _taskMutex.unlock();
@@ -212,16 +213,14 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
     auto it = _audioCaches.find(filePath);
     if (it == _audioCaches.end()) {
         audioCache = &_audioCaches[filePath];
-        
-        auto ext = filePath.substr(filePath.rfind('.'));
-        transform(ext.begin(), ext.end(), ext.begin(), tolower);
-
+        auto ext = strchr(filePath.c_str(), '.');
         bool eraseCache = true;
-        if (ext.compare(".ogg") == 0){
+
+        if (_stricmp(ext, ".ogg") == 0){
             audioCache->_fileFormat = AudioCache::FileFormat::OGG;
             eraseCache = false;
         }
-        else if (ext.compare(".mp3") == 0){
+        else if (_stricmp(ext, ".mp3") == 0){
             audioCache->_fileFormat = AudioCache::FileFormat::MP3;
 
             if (MPG123_LAZYINIT){
@@ -239,7 +238,7 @@ int AudioEngineImpl::play2d(const std::string &filePath ,bool loop ,float volume
             }
         }
         else{
-            log("unsupported media type:%s\n",ext.c_str());
+            log("unsupported media type:%s\n", ext);
         }
         
         if (eraseCache){
@@ -380,7 +379,14 @@ bool AudioEngineImpl::stop(int audioID)
     alSourcei(player._alSource, AL_BUFFER, NULL);
     
     _alSourceUsed[player._alSource] = false;
-    _audioPlayers.erase(audioID);
+    if (player._streamingSource)
+    {
+        player.notifyExitThread();
+    } 
+    else
+    {
+        _audioPlayers.erase(audioID);
+    }
     
     return ret;
 }
@@ -394,7 +400,19 @@ void AudioEngineImpl::stopAll()
         _alSourceUsed[_alSources[index]] = false;
     }
     
-    _audioPlayers.clear();
+    for (auto it = _audioPlayers.begin(); it != _audioPlayers.end();) 
+    {
+        auto& player = it->second;
+        if (player._streamingSource)
+        {
+            player.notifyExitThread();
+            ++it;
+        }
+        else
+        {
+            it = _audioPlayers.erase(it);
+        }
+    }
 }
 
 float AudioEngineImpl::getDuration(int audioID)
@@ -498,7 +516,11 @@ void AudioEngineImpl::update(float dt)
         auto& player = it->second;
         alGetSourcei(player._alSource, AL_SOURCE_STATE, &sourceState);
         
-        if (player._ready && sourceState == AL_STOPPED) {
+        if (player._readForRemove)
+        {
+            it = _audioPlayers.erase(it);
+        }
+        else if (player._ready && sourceState == AL_STOPPED) {
             _alSourceUsed[player._alSource] = false;
             if (player._finishCallbak) {
                 auto& audioInfo = AudioEngine::_audioIDInfoMap[audioID];
@@ -507,7 +529,15 @@ void AudioEngineImpl::update(float dt)
             
             AudioEngine::remove(audioID);
             
-            it = _audioPlayers.erase(it);
+            if (player._streamingSource)
+            {
+                player.notifyExitThread();
+                ++it;
+            } 
+            else
+            {
+                it = _audioPlayers.erase(it);
+            }
         }
         else{
             ++it;

@@ -48,7 +48,7 @@ var UIScrollViewTest_Vertical = UIScene.extend({
             this._mainNode.addChild(scrollView);
 
             var imageView = new ccui.ImageView();
-            imageView.loadTexture("res/cocosui/ccicon.png");
+            imageView.loadTexture("ccs-res/cocosui/ccicon.png");
 
             var innerWidth = scrollView.width;
             var innerHeight = scrollView.height + imageView.height;
@@ -57,14 +57,14 @@ var UIScrollViewTest_Vertical = UIScene.extend({
 
             var button = new ccui.Button();
             button.setTouchEnabled(true);
-            button.loadTextures("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png", "");
+            button.loadTextures("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png", "");
             button.x = innerWidth / 2;
             button.y = scrollView.getInnerContainerSize().height - button.height / 2;
             scrollView.addChild(button);
 
             var textButton = new ccui.Button();
             textButton.setTouchEnabled(true);
-            textButton.loadTextures("res/cocosui/backtotopnormal.png", "res/cocosui/backtotoppressed.png", "");
+            textButton.loadTextures("ccs-res/cocosui/backtotopnormal.png", "ccs-res/cocosui/backtotoppressed.png", "");
             textButton.setTitleText("Text Button");
             textButton.x = innerWidth / 2;
             textButton.y = button.getBottomBoundary() - button.height;
@@ -73,7 +73,7 @@ var UIScrollViewTest_Vertical = UIScene.extend({
             var button_scale9 = new ccui.Button();
             button_scale9.setTouchEnabled(true);
             button_scale9.setScale9Enabled(true);
-            button_scale9.loadTextures("res/cocosui/button.png", "res/cocosui/buttonHighlighted.png", "");
+            button_scale9.loadTextures("ccs-res/cocosui/button.png", "ccs-res/cocosui/buttonHighlighted.png", "");
             button_scale9.width = 100;
 	        button_scale9.height = 32;
             button_scale9.x = innerWidth / 2;
@@ -117,7 +117,7 @@ var UIScrollViewTest_Horizontal = UIScene.extend({
             this._mainNode.addChild(scrollView);
 
             var imageView = new ccui.ImageView();
-            imageView.loadTexture("res/cocosui/ccicon.png");
+            imageView.loadTexture("ccs-res/cocosui/ccicon.png");
 
             var innerWidth = scrollViewRect.width + imageView.getContentSize().width;
             var innerHeight = scrollViewRect.height;
@@ -126,14 +126,14 @@ var UIScrollViewTest_Horizontal = UIScene.extend({
 
             var button = new ccui.Button();
             button.setTouchEnabled(true);
-            button.loadTextures("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png", "");
+            button.loadTextures("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png", "");
             button.x = button.width / 2;
             button.y = scrollView.getInnerContainerSize().height - button.height / 2;
             scrollView.addChild(button);
 
             var textButton = new ccui.Button();
             textButton.setTouchEnabled(true);
-            textButton.loadTextures("res/cocosui/backtotopnormal.png", "res/cocosui/backtotoppressed.png", "");
+            textButton.loadTextures("ccs-res/cocosui/backtotopnormal.png", "ccs-res/cocosui/backtotoppressed.png", "");
             textButton.setTitleText("Text Button");
             textButton.x = button.getRightBoundary() + button.width / 2;
             textButton.y = button.getBottomBoundary() - button.height;
@@ -142,7 +142,7 @@ var UIScrollViewTest_Horizontal = UIScene.extend({
             var button_scale9 = new ccui.Button();
             button_scale9.setTouchEnabled(true);
             button_scale9.setScale9Enabled(true);
-            button_scale9.loadTextures("res/cocosui/button.png", "res/cocosui/buttonHighlighted.png", "");
+            button_scale9.loadTextures("ccs-res/cocosui/button.png", "ccs-res/cocosui/buttonHighlighted.png", "");
             button_scale9.width = 100;
             button_scale9.height = 32;
             button_scale9.x = textButton.getRightBoundary() + textButton.width / 2;
@@ -179,7 +179,7 @@ var UIScrollViewTest_Both = UIScene.extend({
             scrollView.setTouchEnabled(true);
             scrollView.setBounceEnabled(true);
             scrollView.setBackGroundImageScale9Enabled(true);
-            scrollView.setBackGroundImage("res/cocosui/green_edit.png");
+            scrollView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
             scrollView.setContentSize(cc.size(210, 122));
             var scrollViewSize = scrollView.getContentSize();
 
@@ -188,7 +188,7 @@ var UIScrollViewTest_Both = UIScene.extend({
             this._mainNode.addChild(scrollView);
 
             var imageView = new ccui.ImageView();
-            imageView.loadTexture("res/cocosui/b11.png");
+            imageView.loadTexture("ccs-res/cocosui/b11.png");
             scrollView.addChild(imageView);
 
             scrollView.setInnerContainerSize(cc.size(imageView.width, imageView.height));
@@ -230,7 +230,7 @@ var UIScrollViewTest_ScrollToPercentBothDirection = UIScene.extend({
             this._mainNode.addChild(scrollView);
 
             var imageView = new ccui.ImageView();
-            imageView.loadTexture("res/cocosui/Hello.png");
+            imageView.loadTexture("ccs-res/cocosui/Hello.png");
             imageView.x = 240;
             imageView.y = 160;
             scrollView.addChild(imageView);
@@ -271,7 +271,7 @@ var UIScrollViewTest_ScrollToPercentBothDirection_Bounce = UIScene.extend({
             this._mainNode.addChild(scrollView);
 
             var imageView = new ccui.ImageView();
-            imageView.loadTexture("res/cocosui/Hello.png");
+            imageView.loadTexture("ccs-res/cocosui/Hello.png");
             imageView.x = 240;
             imageView.y = 160;
             scrollView.addChild(imageView);
@@ -310,23 +310,23 @@ var UIScrollViewNestTest = UIScene.extend({
                 (backgroundSize.height - scrollView.getContentSize().height) / 2.0));
             this._mainNode.addChild(scrollView);
 
-            var imageView = new ccui.ImageView("res/cocosui/ccicon.png");
+            var imageView = new ccui.ImageView("ccs-res/cocosui/ccicon.png");
 
             var innerWidth = scrollView.getContentSize().width;
             var innerHeight = scrollView.getContentSize().height + imageView.getContentSize().height;
 
             scrollView.setInnerContainerSize(cc.size(innerWidth, innerHeight));
 
-            var button = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
+            var button = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
             button.setPosition(cc.p(innerWidth / 2.0, scrollView.getInnerContainerSize().height - button.getContentSize().height / 2.0));
             scrollView.addChild(button);
 
-            var titleButton = new ccui.Button("res/cocosui/backtotopnormal.png", "res/cocosui/backtotoppressed.png");
+            var titleButton = new ccui.Button("ccs-res/cocosui/backtotopnormal.png", "ccs-res/cocosui/backtotoppressed.png");
             titleButton.setTitleText("Title Button");
             titleButton.setPosition(cc.p(innerWidth / 2.0, button.getBottomBoundary() - button.getContentSize().height));
             scrollView.addChild(titleButton);
 
-            var button_scale9 = new ccui.Button("res/cocosui/button.png", "res/cocosui/buttonHighlighted.png");
+            var button_scale9 = new ccui.Button("ccs-res/cocosui/button.png", "ccs-res/cocosui/buttonHighlighted.png");
             button_scale9.setScale9Enabled(true);
             button_scale9.setContentSize(cc.size(100.0, button_scale9.getVirtualRendererSize().height));
             button_scale9.setPosition(cc.p(innerWidth / 2.0, titleButton.getBottomBoundary() - titleButton.getContentSize().height));
@@ -346,7 +346,7 @@ var UIScrollViewNestTest = UIScene.extend({
             sc.setPropagateTouchEvents(false);
             sc.setPosition(cc.p(180,100));
             sc.scrollToPercentBothDirection(cc.p(50, 50), 1, true);
-            var iv = new ccui.ImageView("res/cocosui/Hello.png");
+            var iv = new ccui.ImageView("ccs-res/cocosui/Hello.png");
             iv.setPosition(cc.p(240, 160));
             sc.addChild(iv);
             scrollView.addChild(sc);
@@ -385,22 +385,22 @@ var UIScrollViewRotated = UIScene.extend({
             scrollView.setRotation(45);
             this._mainNode.addChild(scrollView);
 
-            var imageView = new ccui.ImageView("res/cocosui/ccicon.png");
+            var imageView = new ccui.ImageView("ccs-res/cocosui/ccicon.png");
 
             var innerWidth = scrollView.getContentSize().width;
             var innerHeight = scrollView.getContentSize().height + imageView.getContentSize().height;
             scrollView.setInnerContainerSize(cc.size(innerWidth, innerHeight));
 
-            var button = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
+            var button = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
             button.setPosition(cc.p(innerWidth / 2.0, scrollView.getInnerContainerSize().height - button.getContentSize().height / 2.0));
             scrollView.addChild(button);
 
-            var titleButton = new ccui.Button("res/cocosui/backtotopnormal.png", "res/cocosui/backtotoppressed.png");
+            var titleButton = new ccui.Button("ccs-res/cocosui/backtotopnormal.png", "ccs-res/cocosui/backtotoppressed.png");
             titleButton.setTitleText("Title Button");
             titleButton.setPosition(cc.p(innerWidth / 2.0, button.getBottomBoundary() - button.getContentSize().height));
             scrollView.addChild(titleButton);
 
-            var button_scale9 = new ccui.Button("res/cocosui/button.png", "res/cocosui/buttonHighlighted.png");
+            var button_scale9 = new ccui.Button("ccs-res/cocosui/button.png", "ccs-res/cocosui/buttonHighlighted.png");
             button_scale9.setScale9Enabled(true);
             button_scale9.setContentSize(cc.size(100.0, button_scale9.getVirtualRendererSize().height));
             button_scale9.setPosition(cc.p(innerWidth / 2.0, titleButton.getBottomBoundary() - titleButton.getContentSize().height));

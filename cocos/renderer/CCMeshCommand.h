@@ -28,13 +28,12 @@
 #include <unordered_map>
 #include "renderer/CCRenderCommand.h"
 #include "renderer/CCGLProgram.h"
+#include "renderer/CCRenderState.h"
 #include "math/CCMath.h"
 
 NS_CC_BEGIN
 
 class GLProgramState;
-class GLProgram;
-struct Uniform;
 class EventListenerCustom;
 class EventCustom;
 class Material;
@@ -45,32 +44,17 @@ class CC_DLL MeshCommand : public RenderCommand
 public:
 
     MeshCommand();
-    ~MeshCommand();
+    virtual ~MeshCommand();
 
     void init(float globalZOrder, Material* material, GLuint vertexBuffer, GLuint indexBuffer, GLenum primitive, GLenum indexFormat, ssize_t indexCount, const Mat4 &mv, uint32_t flags);
 
-    void init(float globalZOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, GLuint vertexBuffer, GLuint indexBuffer, GLenum primitive, GLenum indexFormat, ssize_t indexCount, const Mat4 &mv, uint32_t flags);
-    
-    CC_DEPRECATED_ATTRIBUTE void init(float globalZOrder, GLuint textureID, GLProgramState* glProgramState, BlendFunc blendType, GLuint vertexBuffer, GLuint indexBuffer, GLenum primitive, GLenum indexType, ssize_t indexCount, const Mat4 &mv);
-    
-    void setCullFaceEnabled(bool enable);
-    
-    void setCullFace(GLenum cullFace);
-    
-    void setDepthTestEnabled(bool enable);
-    
-    void setDepthWriteEnabled(bool enable);
-    
-    void setDisplayColor(const Vec4& color);
-    
-    void setMatrixPalette(const Vec4* matrixPalette);
-    
-    void setMatrixPaletteSize(int size);
+    void init(float globalZOrder, GLuint textureID, GLProgramState* glProgramState, RenderState::StateBlock* stateBlock, GLuint vertexBuffer, GLuint indexBuffer, GLenum primitive, GLenum indexFormat, ssize_t indexCount, const Mat4 &mv, uint32_t flags);
 
+    void setDisplayColor(const Vec4& color);
+    void setMatrixPalette(const Vec4* matrixPalette);
+    void setMatrixPaletteSize(int size);
     void setLightMask(unsigned int lightmask);
-    
-    void setTransparent(bool value);
-    
+
     void execute();
     
     //used for batch
@@ -93,12 +77,8 @@ protected:
     
     // apply renderstate, not used when using material
     void applyRenderState();
-    void restoreRenderState();
 
-    GLuint _textureID;
-    GLProgramState* _glProgramState;
-    BlendFunc _blendType;
-    
+
     Vec4 _displayColor; // in order to support tint and fade in fade out
     
     // used for skin
@@ -116,22 +96,21 @@ protected:
     ssize_t _indexCount;
     
     // States, default value all false
-    bool _cullFaceEnabled;
-    GLenum _cullFace;
-    bool _depthTestEnabled;
-    bool _depthWriteEnabled;
-    bool _forceDepthWrite;
-    
-    bool _renderStateCullFaceEnabled;
-    bool _renderStateDepthTest;
-    GLboolean _renderStateDepthWrite;
-    GLenum    _renderStateCullFace;
+
 
     // ModelView transform
     Mat4 _mv;
 
+    // Mode A: Material
     // weak ref
     Material* _material;
+
+    // Mode B: StateBlock
+    // weak ref
+    GLProgramState* _glProgramState;
+    RenderState::StateBlock* _stateBlock;
+    GLuint _textureID;
+
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     EventListenerCustom* _rendererRecreatedListener;

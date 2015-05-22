@@ -3090,7 +3090,7 @@ int lua_cocos2dx_physics_PhysicsBody_addShape(lua_State* tolua_S)
     {
         cocos2d::PhysicsShape* arg0;
 
-        ok &= luaval_to_object<cocos2d::PhysicsShape>(tolua_S, 2, "cc.PhysicsShape",&arg0);
+        ok &= luaval_to_object<cocos2d::PhysicsShape>(tolua_S, 2, "cc.PhysicsShape",&arg0, "cc.PhysicsBody:addShape");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics_PhysicsBody_addShape'", nullptr);
@@ -3105,7 +3105,7 @@ int lua_cocos2dx_physics_PhysicsBody_addShape(lua_State* tolua_S)
         cocos2d::PhysicsShape* arg0;
         bool arg1;
 
-        ok &= luaval_to_object<cocos2d::PhysicsShape>(tolua_S, 2, "cc.PhysicsShape",&arg0);
+        ok &= luaval_to_object<cocos2d::PhysicsShape>(tolua_S, 2, "cc.PhysicsShape",&arg0, "cc.PhysicsBody:addShape");
 
         ok &= luaval_to_boolean(tolua_S, 3,&arg1, "cc.PhysicsBody:addShape");
         if(!ok)
@@ -4548,7 +4548,7 @@ int lua_cocos2dx_physics_PhysicsBody_removeShape(lua_State* tolua_S)
     do{
         if (argc == 1) {
             cocos2d::PhysicsShape* arg0;
-            ok &= luaval_to_object<cocos2d::PhysicsShape>(tolua_S, 2, "cc.PhysicsShape",&arg0);
+            ok &= luaval_to_object<cocos2d::PhysicsShape>(tolua_S, 2, "cc.PhysicsShape",&arg0, "cc.PhysicsBody:removeShape");
 
             if (!ok) { break; }
             cobj->removeShape(arg0);
@@ -4560,7 +4560,7 @@ int lua_cocos2dx_physics_PhysicsBody_removeShape(lua_State* tolua_S)
     do{
         if (argc == 2) {
             cocos2d::PhysicsShape* arg0;
-            ok &= luaval_to_object<cocos2d::PhysicsShape>(tolua_S, 2, "cc.PhysicsShape",&arg0);
+            ok &= luaval_to_object<cocos2d::PhysicsShape>(tolua_S, 2, "cc.PhysicsShape",&arg0, "cc.PhysicsBody:removeShape");
 
             if (!ok) { break; }
             bool arg1;
@@ -6877,9 +6877,9 @@ int lua_cocos2dx_physics_EventListenerPhysicsContactWithBodies_hitTest(lua_State
         cocos2d::PhysicsShape* arg0;
         cocos2d::PhysicsShape* arg1;
 
-        ok &= luaval_to_object<cocos2d::PhysicsShape>(tolua_S, 2, "cc.PhysicsShape",&arg0);
+        ok &= luaval_to_object<cocos2d::PhysicsShape>(tolua_S, 2, "cc.PhysicsShape",&arg0, "cc.EventListenerPhysicsContactWithBodies:hitTest");
 
-        ok &= luaval_to_object<cocos2d::PhysicsShape>(tolua_S, 3, "cc.PhysicsShape",&arg1);
+        ok &= luaval_to_object<cocos2d::PhysicsShape>(tolua_S, 3, "cc.PhysicsShape",&arg1, "cc.EventListenerPhysicsContactWithBodies:hitTest");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics_EventListenerPhysicsContactWithBodies_hitTest'", nullptr);
@@ -6918,8 +6918,8 @@ int lua_cocos2dx_physics_EventListenerPhysicsContactWithBodies_create(lua_State*
     {
         cocos2d::PhysicsBody* arg0;
         cocos2d::PhysicsBody* arg1;
-        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0);
-        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1);
+        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0, "cc.EventListenerPhysicsContactWithBodies:create");
+        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1, "cc.EventListenerPhysicsContactWithBodies:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics_EventListenerPhysicsContactWithBodies_create'", nullptr);
@@ -6989,9 +6989,9 @@ int lua_cocos2dx_physics_EventListenerPhysicsContactWithShapes_hitTest(lua_State
         cocos2d::PhysicsShape* arg0;
         cocos2d::PhysicsShape* arg1;
 
-        ok &= luaval_to_object<cocos2d::PhysicsShape>(tolua_S, 2, "cc.PhysicsShape",&arg0);
+        ok &= luaval_to_object<cocos2d::PhysicsShape>(tolua_S, 2, "cc.PhysicsShape",&arg0, "cc.EventListenerPhysicsContactWithShapes:hitTest");
 
-        ok &= luaval_to_object<cocos2d::PhysicsShape>(tolua_S, 3, "cc.PhysicsShape",&arg1);
+        ok &= luaval_to_object<cocos2d::PhysicsShape>(tolua_S, 3, "cc.PhysicsShape",&arg1, "cc.EventListenerPhysicsContactWithShapes:hitTest");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics_EventListenerPhysicsContactWithShapes_hitTest'", nullptr);
@@ -7030,8 +7030,8 @@ int lua_cocos2dx_physics_EventListenerPhysicsContactWithShapes_create(lua_State*
     {
         cocos2d::PhysicsShape* arg0;
         cocos2d::PhysicsShape* arg1;
-        ok &= luaval_to_object<cocos2d::PhysicsShape>(tolua_S, 2, "cc.PhysicsShape",&arg0);
-        ok &= luaval_to_object<cocos2d::PhysicsShape>(tolua_S, 3, "cc.PhysicsShape",&arg1);
+        ok &= luaval_to_object<cocos2d::PhysicsShape>(tolua_S, 2, "cc.PhysicsShape",&arg0, "cc.EventListenerPhysicsContactWithShapes:create");
+        ok &= luaval_to_object<cocos2d::PhysicsShape>(tolua_S, 3, "cc.PhysicsShape",&arg1, "cc.EventListenerPhysicsContactWithShapes:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics_EventListenerPhysicsContactWithShapes_create'", nullptr);
@@ -7101,9 +7101,9 @@ int lua_cocos2dx_physics_EventListenerPhysicsContactWithGroup_hitTest(lua_State*
         cocos2d::PhysicsShape* arg0;
         cocos2d::PhysicsShape* arg1;
 
-        ok &= luaval_to_object<cocos2d::PhysicsShape>(tolua_S, 2, "cc.PhysicsShape",&arg0);
+        ok &= luaval_to_object<cocos2d::PhysicsShape>(tolua_S, 2, "cc.PhysicsShape",&arg0, "cc.EventListenerPhysicsContactWithGroup:hitTest");
 
-        ok &= luaval_to_object<cocos2d::PhysicsShape>(tolua_S, 3, "cc.PhysicsShape",&arg1);
+        ok &= luaval_to_object<cocos2d::PhysicsShape>(tolua_S, 3, "cc.PhysicsShape",&arg1, "cc.EventListenerPhysicsContactWithGroup:hitTest");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics_EventListenerPhysicsContactWithGroup_hitTest'", nullptr);
@@ -7854,8 +7854,8 @@ int lua_cocos2dx_physics_PhysicsJointFixed_construct(lua_State* tolua_S)
         cocos2d::PhysicsBody* arg0;
         cocos2d::PhysicsBody* arg1;
         cocos2d::Vec2 arg2;
-        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0);
-        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1);
+        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0, "cc.PhysicsJointFixed:construct");
+        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1, "cc.PhysicsJointFixed:construct");
         ok &= luaval_to_vec2(tolua_S, 4, &arg2, "cc.PhysicsJointFixed:construct");
         if(!ok)
         {
@@ -8349,10 +8349,10 @@ int lua_cocos2dx_physics_PhysicsJointLimit_construct(lua_State* tolua_S)
         if (argc == 6)
         {
             cocos2d::PhysicsBody* arg0;
-            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0);
+            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0, "cc.PhysicsJointLimit:construct");
             if (!ok) { break; }
             cocos2d::PhysicsBody* arg1;
-            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1);
+            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1, "cc.PhysicsJointLimit:construct");
             if (!ok) { break; }
             cocos2d::Vec2 arg2;
             ok &= luaval_to_vec2(tolua_S, 4, &arg2, "cc.PhysicsJointLimit:construct");
@@ -8377,10 +8377,10 @@ int lua_cocos2dx_physics_PhysicsJointLimit_construct(lua_State* tolua_S)
         if (argc == 4)
         {
             cocos2d::PhysicsBody* arg0;
-            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0);
+            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0, "cc.PhysicsJointLimit:construct");
             if (!ok) { break; }
             cocos2d::PhysicsBody* arg1;
-            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1);
+            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1, "cc.PhysicsJointLimit:construct");
             if (!ok) { break; }
             cocos2d::Vec2 arg2;
             ok &= luaval_to_vec2(tolua_S, 4, &arg2, "cc.PhysicsJointLimit:construct");
@@ -8497,10 +8497,10 @@ int lua_cocos2dx_physics_PhysicsJointPin_construct(lua_State* tolua_S)
         if (argc == 4)
         {
             cocos2d::PhysicsBody* arg0;
-            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0);
+            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0, "cc.PhysicsJointPin:construct");
             if (!ok) { break; }
             cocos2d::PhysicsBody* arg1;
-            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1);
+            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1, "cc.PhysicsJointPin:construct");
             if (!ok) { break; }
             cocos2d::Vec2 arg2;
             ok &= luaval_to_vec2(tolua_S, 4, &arg2, "cc.PhysicsJointPin:construct");
@@ -8519,10 +8519,10 @@ int lua_cocos2dx_physics_PhysicsJointPin_construct(lua_State* tolua_S)
         if (argc == 3)
         {
             cocos2d::PhysicsBody* arg0;
-            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0);
+            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0, "cc.PhysicsJointPin:construct");
             if (!ok) { break; }
             cocos2d::PhysicsBody* arg1;
-            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1);
+            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1, "cc.PhysicsJointPin:construct");
             if (!ok) { break; }
             cocos2d::Vec2 arg2;
             ok &= luaval_to_vec2(tolua_S, 4, &arg2, "cc.PhysicsJointPin:construct");
@@ -8727,8 +8727,8 @@ int lua_cocos2dx_physics_PhysicsJointDistance_construct(lua_State* tolua_S)
         cocos2d::PhysicsBody* arg1;
         cocos2d::Vec2 arg2;
         cocos2d::Vec2 arg3;
-        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0);
-        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1);
+        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0, "cc.PhysicsJointDistance:construct");
+        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1, "cc.PhysicsJointDistance:construct");
         ok &= luaval_to_vec2(tolua_S, 4, &arg2, "cc.PhysicsJointDistance:construct");
         ok &= luaval_to_vec2(tolua_S, 5, &arg3, "cc.PhysicsJointDistance:construct");
         if(!ok)
@@ -9326,8 +9326,8 @@ int lua_cocos2dx_physics_PhysicsJointSpring_construct(lua_State* tolua_S)
         cocos2d::Vec2 arg3;
         double arg4;
         double arg5;
-        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0);
-        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1);
+        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0, "cc.PhysicsJointSpring:construct");
+        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1, "cc.PhysicsJointSpring:construct");
         ok &= luaval_to_vec2(tolua_S, 4, &arg2, "cc.PhysicsJointSpring:construct");
         ok &= luaval_to_vec2(tolua_S, 5, &arg3, "cc.PhysicsJointSpring:construct");
         ok &= luaval_to_number(tolua_S, 6,&arg4, "cc.PhysicsJointSpring:construct");
@@ -9740,8 +9740,8 @@ int lua_cocos2dx_physics_PhysicsJointGroove_construct(lua_State* tolua_S)
         cocos2d::Vec2 arg2;
         cocos2d::Vec2 arg3;
         cocos2d::Vec2 arg4;
-        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0);
-        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1);
+        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0, "cc.PhysicsJointGroove:construct");
+        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1, "cc.PhysicsJointGroove:construct");
         ok &= luaval_to_vec2(tolua_S, 4, &arg2, "cc.PhysicsJointGroove:construct");
         ok &= luaval_to_vec2(tolua_S, 5, &arg3, "cc.PhysicsJointGroove:construct");
         ok &= luaval_to_vec2(tolua_S, 6, &arg4, "cc.PhysicsJointGroove:construct");
@@ -10148,8 +10148,8 @@ int lua_cocos2dx_physics_PhysicsJointRotarySpring_construct(lua_State* tolua_S)
         cocos2d::PhysicsBody* arg1;
         double arg2;
         double arg3;
-        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0);
-        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1);
+        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0, "cc.PhysicsJointRotarySpring:construct");
+        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1, "cc.PhysicsJointRotarySpring:construct");
         ok &= luaval_to_number(tolua_S, 4,&arg2, "cc.PhysicsJointRotarySpring:construct");
         ok &= luaval_to_number(tolua_S, 5,&arg3, "cc.PhysicsJointRotarySpring:construct");
         if(!ok)
@@ -10456,10 +10456,10 @@ int lua_cocos2dx_physics_PhysicsJointRotaryLimit_construct(lua_State* tolua_S)
         if (argc == 2)
         {
             cocos2d::PhysicsBody* arg0;
-            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0);
+            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0, "cc.PhysicsJointRotaryLimit:construct");
             if (!ok) { break; }
             cocos2d::PhysicsBody* arg1;
-            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1);
+            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1, "cc.PhysicsJointRotaryLimit:construct");
             if (!ok) { break; }
             cocos2d::PhysicsJointRotaryLimit* ret = cocos2d::PhysicsJointRotaryLimit::construct(arg0, arg1);
             object_to_luaval<cocos2d::PhysicsJointRotaryLimit>(tolua_S, "cc.PhysicsJointRotaryLimit",(cocos2d::PhysicsJointRotaryLimit*)ret);
@@ -10472,10 +10472,10 @@ int lua_cocos2dx_physics_PhysicsJointRotaryLimit_construct(lua_State* tolua_S)
         if (argc == 4)
         {
             cocos2d::PhysicsBody* arg0;
-            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0);
+            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0, "cc.PhysicsJointRotaryLimit:construct");
             if (!ok) { break; }
             cocos2d::PhysicsBody* arg1;
-            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1);
+            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1, "cc.PhysicsJointRotaryLimit:construct");
             if (!ok) { break; }
             double arg2;
             ok &= luaval_to_number(tolua_S, 4,&arg2, "cc.PhysicsJointRotaryLimit:construct");
@@ -10881,8 +10881,8 @@ int lua_cocos2dx_physics_PhysicsJointRatchet_construct(lua_State* tolua_S)
         cocos2d::PhysicsBody* arg1;
         double arg2;
         double arg3;
-        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0);
-        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1);
+        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0, "cc.PhysicsJointRatchet:construct");
+        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1, "cc.PhysicsJointRatchet:construct");
         ok &= luaval_to_number(tolua_S, 4,&arg2, "cc.PhysicsJointRatchet:construct");
         ok &= luaval_to_number(tolua_S, 5,&arg3, "cc.PhysicsJointRatchet:construct");
         if(!ok)
@@ -11191,8 +11191,8 @@ int lua_cocos2dx_physics_PhysicsJointGear_construct(lua_State* tolua_S)
         cocos2d::PhysicsBody* arg1;
         double arg2;
         double arg3;
-        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0);
-        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1);
+        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0, "cc.PhysicsJointGear:construct");
+        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1, "cc.PhysicsJointGear:construct");
         ok &= luaval_to_number(tolua_S, 4,&arg2, "cc.PhysicsJointGear:construct");
         ok &= luaval_to_number(tolua_S, 5,&arg3, "cc.PhysicsJointGear:construct");
         if(!ok)
@@ -11401,8 +11401,8 @@ int lua_cocos2dx_physics_PhysicsJointMotor_construct(lua_State* tolua_S)
         cocos2d::PhysicsBody* arg0;
         cocos2d::PhysicsBody* arg1;
         double arg2;
-        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0);
-        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1);
+        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0, "cc.PhysicsJointMotor:construct");
+        ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 3, "cc.PhysicsBody",&arg1, "cc.PhysicsJointMotor:construct");
         ok &= luaval_to_number(tolua_S, 4,&arg2, "cc.PhysicsJointMotor:construct");
         if(!ok)
         {
@@ -11718,7 +11718,7 @@ int lua_cocos2dx_physics_PhysicsWorld_addJoint(lua_State* tolua_S)
     {
         cocos2d::PhysicsJoint* arg0;
 
-        ok &= luaval_to_object<cocos2d::PhysicsJoint>(tolua_S, 2, "cc.PhysicsJoint",&arg0);
+        ok &= luaval_to_object<cocos2d::PhysicsJoint>(tolua_S, 2, "cc.PhysicsJoint",&arg0, "cc.PhysicsWorld:addJoint");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics_PhysicsWorld_addJoint'", nullptr);
@@ -11882,7 +11882,7 @@ int lua_cocos2dx_physics_PhysicsWorld_removeBody(lua_State* tolua_S)
     do{
         if (argc == 1) {
             cocos2d::PhysicsBody* arg0;
-            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0);
+            ok &= luaval_to_object<cocos2d::PhysicsBody>(tolua_S, 2, "cc.PhysicsBody",&arg0, "cc.PhysicsWorld:removeBody");
 
             if (!ok) { break; }
             cobj->removeBody(arg0);
@@ -11931,7 +11931,7 @@ int lua_cocos2dx_physics_PhysicsWorld_removeJoint(lua_State* tolua_S)
     {
         cocos2d::PhysicsJoint* arg0;
 
-        ok &= luaval_to_object<cocos2d::PhysicsJoint>(tolua_S, 2, "cc.PhysicsJoint",&arg0);
+        ok &= luaval_to_object<cocos2d::PhysicsJoint>(tolua_S, 2, "cc.PhysicsJoint",&arg0, "cc.PhysicsWorld:removeJoint");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_physics_PhysicsWorld_removeJoint'", nullptr);
@@ -11946,7 +11946,7 @@ int lua_cocos2dx_physics_PhysicsWorld_removeJoint(lua_State* tolua_S)
         cocos2d::PhysicsJoint* arg0;
         bool arg1;
 
-        ok &= luaval_to_object<cocos2d::PhysicsJoint>(tolua_S, 2, "cc.PhysicsJoint",&arg0);
+        ok &= luaval_to_object<cocos2d::PhysicsJoint>(tolua_S, 2, "cc.PhysicsJoint",&arg0, "cc.PhysicsWorld:removeJoint");
 
         ok &= luaval_to_boolean(tolua_S, 3,&arg1, "cc.PhysicsWorld:removeJoint");
         if(!ok)

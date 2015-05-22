@@ -340,7 +340,8 @@ void RenderState::StateBlock::restore(long stateOverrideBits)
     CC_ASSERT(_defaultState);
 
     // If there is no state to restore (i.e. no non-default state), do nothing.
-    if (_defaultState->_bits == 0)
+//    if (_defaultState->_bits == 0)
+    if ( (stateOverrideBits | _defaultState->_bits) == stateOverrideBits)
     {
         return;
     }
@@ -749,26 +750,8 @@ void RenderState::StateBlock::setBlend(bool enabled)
 
 void RenderState::StateBlock::setBlendFunc(const BlendFunc& blendFunc)
 {
-    if (blendFunc == BlendFunc::DISABLE)
-    {
-        setBlendSrc(BLEND_ONE);
-        setBlendDst(BLEND_ZERO);
-    }
-    else if (blendFunc == BlendFunc::ALPHA_PREMULTIPLIED)
-    {
-        setBlendSrc(BLEND_ONE);
-        setBlendDst(BLEND_ONE_MINUS_SRC_ALPHA);
-    }
-    else if (blendFunc == BlendFunc::ALPHA_NON_PREMULTIPLIED)
-    {
-        setBlendSrc(BLEND_SRC_ALPHA);
-        setBlendDst(BLEND_ONE_MINUS_SRC_ALPHA);
-    }
-    else if (blendFunc == BlendFunc::ADDITIVE)
-    {
-        setBlendSrc(BLEND_SRC_ALPHA);
-        setBlendDst(BLEND_ONE);
-    }
+    setBlendSrc((RenderState::Blend)blendFunc.src);
+    setBlendDst((RenderState::Blend)blendFunc.dst);
 }
 
 void RenderState::StateBlock::setBlendSrc(Blend blend)

@@ -35,7 +35,7 @@ var CustomParticleWidgetLayer = cc.Layer.extend({
 
         var custom = CustomParticleWidget.create();
         custom.setPosition(cc.p(370, 210));
-        custom.setParticlePlist("res/Particles/BoilingFoam.plist");
+        custom.setParticlePlist("Particles/BoilingFoam.plist");
 
         this.addChild(custom, 10, -1);
     }
