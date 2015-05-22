@@ -434,7 +434,6 @@ bool Console::listenOnFileDescriptor(int fd)
 
     _listenfd = fd;
     _thread = std::thread( std::bind( &Console::loop, this) );
-    _thread.detach();
 
     return true;
 }
@@ -1056,6 +1055,11 @@ void Console::addClient()
         _maxfd = std::max(_maxfd,fd);
 
         sendPrompt(fd);
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_IOS
+        int set = 1;
+        setsockopt(fd, SOL_SOCKET, SO_NOSIGPIPE, (void*)&set, sizeof(int));
+#endif
     }
 }
 
