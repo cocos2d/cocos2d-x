@@ -44,6 +44,8 @@ void km_mat4_stack_push(km_mat4_stack* stack, const kmMat4* item);
 void km_mat4_stack_pop(km_mat4_stack* stack, kmMat4* pOut);
 void km_mat4_stack_release(km_mat4_stack* stack);
 
+void km_mat4_stack_duplicate_top(km_mat4_stack* stack);
+
 #ifdef __cplusplus
 }
 #endif

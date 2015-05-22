@@ -88,13 +88,10 @@ void kmGLMatrixMode(kmGLEnum mode)
 
 void kmGLPushMatrix(void)
 {
-    kmMat4 top;
-
     lazyInitialize(); //Initialize the stacks if they haven't been already
 
     //Duplicate the top of the stack (i.e the current matrix)
-    kmMat4Assign(&top, current_stack->top);
-    km_mat4_stack_push(current_stack, &top);
+    km_mat4_stack_duplicate_top(current_stack, &top);
 }
 
 void kmGLPopMatrix(void)
