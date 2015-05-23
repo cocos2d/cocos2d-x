@@ -115,4 +115,22 @@ public:
 	CREATE_FUNC (SpineTestPerformanceLayer);
 };
 
+class SpineTestBlendModeLayer: public SpineTestLayer
+{
+public:
+    virtual std::string title() const override
+    {
+        return "Spine Test";
+    }
+    virtual std::string subtitle() const override
+    {
+        return "Blend Mode Test for Spine";
+    }
+	virtual bool init () override;
+	virtual void update (float deltaTime) override;
+    //    void animationStateEvent (spine::SkeletonAnimation* node, int trackIndex, spEventType type, spEvent* event, int loopCount);
+    
+	CREATE_FUNC (SpineTestBlendModeLayer);
+};
+
 #endif // _EXAMPLELAYER_H_
