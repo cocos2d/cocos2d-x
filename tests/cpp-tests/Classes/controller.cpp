@@ -16,13 +16,15 @@ class RootTests : public TestList
 public:
     RootTests()
     {
+        addTest("Node: Scene3D", [](){return new (std::nothrow) Scene3DTests(); });
+        addTest("SpritePolygon", [](){return new (std::nothrow) SpritePolygonTest(); });
         addTest("ActionManager", [](){return new (std::nothrow) ActionManagerTests(); });
         addTest("Actions - Basic", [](){ return new (std::nothrow) ActionsTests(); });
         addTest("Actions - Ease", [](){return new (std::nothrow) ActionsEaseTests(); });
         addTest("Actions - Progress", [](){return new (std::nothrow) ActionsProgressTests(); });
         addTest("Allocator - Basic", [](){return new (std::nothrow) AllocatorTests(); });
         addTest("Audio - CocosDenshion", []() { return new (std::nothrow) CocosDenshionTests(); });
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
         addTest("Audio - NewAudioEngine", []() { return new (std::nothrow) AudioEngineTests(); });
 #endif
 #if CC_ENABLE_BOX2D_INTEGRATION
@@ -98,7 +100,7 @@ TestController::TestController()
 , _isRunInBackground(false)
 , _testSuite(nullptr)
 {
-    _rootTestList = new (std::nothrow) RootTests;  
+    _rootTestList = new (std::nothrow) RootTests;
     _rootTestList->runThisTest();
     _director = Director::getInstance();
 

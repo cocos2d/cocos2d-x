@@ -38,6 +38,7 @@
         "src/TransitionsTest/TransitionsTest.js",
         "src/DrawPrimitivesTest/DrawPrimitivesTest.js",
         "src/ParticleTest/ParticleTest.js",
+        "src/Particle3DTest/Particle3DTest.js",
         "src/ProgressActionsTest/ProgressActionsTest.js",
         "src/LayerTest/LayerTest.js",
         "src/SceneTest/SceneTest.js",
@@ -168,6 +169,8 @@
         "src/GUITest/UITextFieldTest/UITextFieldTest.js",
         "src/GUITest/UIRichTextTest/UIRichTextTest.js",
         "src/GUITest/UITextTest/UITextTest.js",
+        "src/GUITest/UIVideoPlayerTest/UIVideoPlayerTest.js",
+        "src/GUITest/UIWebViewTest/UIWebViewTest.js",
 
         "src/CocoStudioTest/SceneTest/TriggerCode/Acts.js",
         "src/CocoStudioTest/SceneTest/TriggerCode/Cons.js",
@@ -183,6 +186,9 @@
         "src/Presentation/Presentation.js",
         "src/ReflectionTest/ReflectionTest.js",
 
-        "src/SpritePolygonTest/SpritePolygonTest.js"
+        "src/SpritePolygonTest/SpritePolygonTest.js",
+        "src/MaterialSystemTest/MaterialSystemTest.js",
+        "src/TerrainTest/TerrainTest.js",
+        "src/Physics3DTest/Physics3DTest.js"
     ]
 }

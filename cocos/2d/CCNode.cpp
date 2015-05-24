@@ -1314,9 +1314,12 @@ uint32_t Node::processParentFlags(const Mat4& parentTransform, uint32_t parentFl
             _normalizedPositionDirty = false;
         }
     }
+
+    //remove this two line given that isVisitableByVisitingCamera should not affect the calculation of transform given that we are visiting scene
+    //without involving view and projection matrix.
     
-    if (!isVisitableByVisitingCamera())
-        return parentFlags;
+//    if (!isVisitableByVisitingCamera())
+//        return parentFlags;
     
     uint32_t flags = parentFlags;
     flags |= (_transformUpdated ? FLAGS_TRANSFORM_DIRTY : 0);

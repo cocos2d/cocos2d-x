@@ -195,10 +195,19 @@ public:
     /**Called by director, please do not called outside.*/
     void waitForQuit();
 
+    /**
+     * Get the file path of the texture
+     *
+     * @param texture A Texture2D object pointer.
+     *
+     * @return The full path of the file.
+     */
+    const std::string getTextureFilePath(Texture2D* texture)const;
+
 private:
     void addImageAsyncCallBack(float dt);
     void loadImage();
-
+    void parseNinePatchImage(Image* image, Texture2D* texture, const std::string& path);
 public:
     struct AsyncStruct
     {

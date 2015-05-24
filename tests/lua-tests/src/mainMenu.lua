@@ -61,6 +61,7 @@ require "CocosStudio3DTest/CocosStudio3DTest"
 require "WebViewTest/WebViewTest"
 require "SpritePolygonTest/SpritePolygonTest"
 require "Physics3DTest/Physics3DTest"
+require "Scene3DTest/Scene3DTest"
 
 local LINE_SPACE = 40
 
@@ -124,9 +125,10 @@ local _allTests = {
     { isSupported = true,  name = "RenderTextureTest"      , create_func   =         RenderTextureTestMain  },
     { isSupported = true,  name = "RotateWorldTest"        , create_func   =           RotateWorldTest      },
     { isSupported = true,  name = "SceneTest"              , create_func   =                 SceneTestMain  },
+    { isSupported = true,  name = "Scene3DTest"             , create_func=            Scene3DTestMain      },
     { isSupported = true,  name = "SpineTest"              , create_func   =                 SpineTestMain  },
     { isSupported = false,  name = "SchdulerTest"           , create_func=              SchdulerTestMain  },
-    { isSupported = false,  name = "ShaderTest"             , create_func=            ShaderTestMain      },
+    { isSupported = false, name = "ShaderTest"             , create_func=            ShaderTestMain      },
     { isSupported = true,  name = "Sprite3DTest"           , create_func   =                Sprite3DTest    },
     { isSupported = true,  name = "TerrainTest"           , create_func   =                TerrainTest  },
     { isSupported = true,  name = "SpriteTest"             , create_func   =                SpriteTest      },
