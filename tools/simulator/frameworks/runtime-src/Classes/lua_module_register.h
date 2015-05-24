@@ -10,6 +10,7 @@
 #include "spine/lua_cocos2dx_spine_manual.hpp"
 #include "3d/lua_cocos2dx_3d_manual.h"
 #include "audioengine/lua_cocos2dx_audioengine_manual.h"
+#include "physics3d/lua_cocos2dx_physics3d_manual.h"
 
 static int lua_module_register(lua_State* L)
 {
@@ -23,6 +24,9 @@ static int lua_module_register(lua_State* L)
     register_spine_module(L);
     register_cocos3d_module(L);
     register_audioengine_module(L);
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
+    register_physics3d_module(L);
+#endif
     return 1;
 }
 
