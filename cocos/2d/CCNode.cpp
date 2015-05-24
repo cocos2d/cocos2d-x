@@ -1563,10 +1563,10 @@ void Node::stopActionByTag(int tag)
     _actionManager->removeActionByTag(tag, this);
 }
 
-void Node::stopAllActionsByTag(int tag)
+void Node::stopAllActionsByTag(int tag, bool bitwiseFilter)
 {
     CCASSERT( tag != Action::INVALID_TAG, "Invalid tag");
-    _actionManager->removeAllActionsByTag(tag, this);
+    _actionManager->removeAllActionsByTag(tag, this, bitwiseFilter);
 }
 
 Action * Node::getActionByTag(int tag)

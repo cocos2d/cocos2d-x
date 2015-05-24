@@ -287,7 +287,7 @@ void ActionManager::removeActionByTag(int tag, Node *target)
     }
 }
 
-void ActionManager::removeAllActionsByTag(int tag, Node *target)
+void ActionManager::removeAllActionsByTag(int tag, Node *target, bool bitwiseFilter)
 {
     CCASSERT(tag != Action::INVALID_TAG, "");
     CCASSERT(target != nullptr, "");
@@ -302,7 +302,7 @@ void ActionManager::removeAllActionsByTag(int tag, Node *target)
         {
             Action *action = (Action*)element->actions->arr[i];
             
-            if (action->getTag() == (int)tag && action->getOriginalTarget() == target)
+            if ((action->getTag() == (int)tag || (bitwiseFilter && action->getTag() != Action::INVALID_TAG && (action->getTag() & tag) != 0)) && action->getOriginalTarget() == target)
             {
                 removeActionAtIndex(i, element);
                 --limit;
