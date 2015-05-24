@@ -74,7 +74,7 @@ Platform::Array<byte>^ MediaStreamer::ReadData(_In_ Platform::String^ filename, 
     CREATEFILE2_EXTENDED_PARAMETERS extendedParams = {0};
     extendedParams.dwSize = sizeof(CREATEFILE2_EXTENDED_PARAMETERS);
     extendedParams.dwFileAttributes = FILE_ATTRIBUTE_NORMAL;
-    extendedParams.dwFileFlags = FILE_FLAG_SEQUENTIAL_SCAN;
+    extendedParams.dwFileFlags = from ? FILE_FLAG_RANDOM_ACCESS : FILE_FLAG_SEQUENTIAL_SCAN;
     extendedParams.dwSecurityQosFlags = SECURITY_ANONYMOUS;
     extendedParams.lpSecurityAttributes = nullptr;
     extendedParams.hTemplateFile = nullptr;

@@ -24,6 +24,9 @@
 #define __AUDIO_SOURCE_READER_H_
 
 #define NEAR near
+#include <mfapi.h>
+#include <mfidl.h>
+#include <mfreadwrite.h>
 #include "MediaStreamer.h"
 
 NS_CC_BEGIN
@@ -68,10 +71,17 @@ public:
     virtual const WAVEFORMATEX& getWaveFormatInfo() { return _wfx; }
 
 protected:
+    void flushChunks();
+
+protected:
+    bool _isDirty;
+    size_t _bytesRead;
     bool _isStreaming;
     std::string _filePath;
     size_t _audioSize;
     WAVEFORMATEX _wfx;
+    std::mutex _rwMutex;
+    std::queue<AudioDataChunk> _chnkQ;
 };
 
 class WAVReader : public AudioSourceReader
@@ -86,20 +96,34 @@ class WAVReader : public AudioSourceReader
      void produceChunk() override;
      void seekTo(const float ratio) override;
 
- protected:
-     void enqueueChunk(const AudioDataChunk& chunk);
-     void flushChunks();
-
  private:
-     bool _isDirty;
-     size_t _bytesRead;
-     std::mutex _rwMutex;
      MediaStreamer^ _streamer;
-     std::queue<AudioDataChunk> _chnkQ;
  };
 
 class MP3Reader : public AudioSourceReader
  {
+ public:
+     MP3Reader();
+     ~MP3Reader();
+
+     bool initialize(const std::string& filePath) override;
+     FileFormat getFileFormat() override { return FileFormat::WAV; }
+     bool consumeChunk(AudioDataChunk& chunk) override;
+     void produceChunk() override;
+     void seekTo(const float ratio) override;
+
+ protected:
+     HRESULT configureSourceReader(IMFSourceReader* pReader, IMFMediaType** ppDecomprsdAudioType);
+     HRESULT readAudioData(IMFSourceReader* pReader);
+     bool createMappedWavFile();
+     std::string computeHashForFile();
+     void chunkify(std::vector<BYTE> &buffer);
+     bool appendToMappedWavFile(std::vector<BYTE> &buffer);
+     void readFromMappedWavFile(BYTE *data, size_t offset, int size, UINT *pRetSize);
+     Microsoft::WRL::Wrappers::FileHandle openFile(const std::string& path, bool append = false);
+
+ private:
+     std::string _mappedWavFile;
  };
 
 }

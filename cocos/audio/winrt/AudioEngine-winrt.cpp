@@ -164,7 +164,7 @@ int AudioEngineImpl::play2d(const std::string &filePath, bool loop, float volume
         }
         else if (ext.compare(".mp3") == 0){
             audioCache->_fileFormat = FileFormat::MP3;
-            //eraseCache = false; //TODO add support for MP3
+            eraseCache = false;
         }
         else{
             log("unsupported media type:%s\n", ext.c_str());
