@@ -94,7 +94,7 @@ public:
     const std::vector<Camera*>& getCameras() const { return _cameras; }
 
     /** Get the default camera.
-	 * @js NA
+     * @js NA
      * @return The default camera of scene.
      */
     Camera* getDefaultCamera() const { return _defaultCamera; }
@@ -143,7 +143,7 @@ protected:
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Scene);
     
-#if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION))
+#if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION) || CC_USE_NAVMESH)
 public:
     virtual void addChild(Node* child, int zOrder, int tag) override;
     virtual void addChild(Node* child, int zOrder, const std::string &name) override;
@@ -197,9 +197,17 @@ public:
     void setNavMesh(NavMesh* navMesh);
     /** get navigation mesh */
     NavMesh* getNavMesh() const { return _navMesh; }
-    
+    /**
+    * Set NavMesh debug draw camera.
+    */
+    void setNavMeshDebugCamera(Camera *camera);
+
+protected:
+    void addChildToNavMesh(Node* child);
+
 protected:
     NavMesh*       _navMesh;
+    Camera *       _navMeshDebugCamera;
 #endif
 };
 

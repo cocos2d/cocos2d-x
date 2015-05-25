@@ -27,6 +27,8 @@
 #include "platform/CCFileUtils.h"
 #include "renderer/CCRenderer.h"
 #include "recast/Detour/DetourCommon.h"
+#include "recast/DebugUtils/DetourDebugDraw.h"
+#include <sstream>
 
 NS_CC_BEGIN
 
@@ -45,14 +47,47 @@ struct TileCacheTileHeader
     int dataSize;
 };
 
+static unsigned char* parseRow(unsigned char* buf, unsigned char* bufEnd, char* row, int len)
+{
+    bool start = true;
+    bool done = false;
+    int n = 0;
+    while (!done && buf < bufEnd)
+    {
+        char c = *buf;
+        buf++;
+        // multirow
+        switch (c)
+        {
+        case '\n':
+            if (start) break;
+            done = true;
+            break;
+        case '\r':
+            break;
+        case '\t':
+        case ' ':
+            if (start) break;
+        default:
+            start = false;
+            row[n++] = c;
+            if (n >= len - 1)
+                done = true;
+            break;
+        }
+    }
+    row[n] = '\0';
+    return buf;
+}
+
 static const int TILECACHESET_MAGIC = 'T' << 24 | 'S' << 16 | 'E' << 8 | 'T'; //'TSET';
 static const int TILECACHESET_VERSION = 1;
 static const int MAX_AGENTS = 128;
 
-NavMesh* NavMesh::create(const std::string &filePath)
+NavMesh* NavMesh::create(const std::string &navFilePath, const std::string &geomFilePath)
 {
     auto ref = new (std::nothrow) NavMesh();
-    if (ref && ref->initWithFilePath(filePath))
+    if (ref && ref->initWithFilePath(navFilePath, geomFilePath))
     {
         ref->autorelease();
         return ref;
@@ -69,6 +104,8 @@ NavMesh::NavMesh()
     , _allocator(nullptr)
     , _compressor(nullptr)
     , _meshProcess(nullptr)
+    , _geomData(nullptr)
+    , _isDebugDrawEnabled(false)
 {
 
 }
@@ -82,81 +119,95 @@ NavMesh::~NavMesh()
     CC_SAFE_DELETE(_allocator);
     CC_SAFE_DELETE(_compressor);
     CC_SAFE_DELETE(_meshProcess);
+    CC_SAFE_DELETE(_geomData);
+
+    for (auto iter : _agentList){
+        CC_SAFE_RELEASE(iter);
+    }
+    _agentList.clear();
+
+    for (auto iter : _obstacleList){
+        CC_SAFE_RELEASE(iter);
+    }
+    _obstacleList.clear();
 }
 
-bool NavMesh::initWithFilePath(const std::string &filePath)
+bool NavMesh::initWithFilePath(const std::string &navFilePath, const std::string &geomFilePath)
 {
-    _filePath = filePath;
+    _navFilePath = navFilePath;
+    _geomFilePath = geomFilePath;
     if (!read()) return false;
     return true;
 }
 
 bool NavMesh::read()
 {
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(_filePath);
-    FILE* fp = fopen(fullPath.c_str(), "rb");
-    if (!fp) return false;
+    if (!loadGeomFile()) return false;
+    if (!loadNavMeshFile()) return false;
+
+    return true;
+}
+
+bool NavMesh::loadNavMeshFile()
+{
+    auto data = FileUtils::getInstance()->getDataFromFile(_navFilePath);
+    if (data.isNull()) return false;
 
     // Read header.
-    TileCacheSetHeader header;
-    fread(&header, sizeof(TileCacheSetHeader), 1, fp);
+    unsigned int offset = 0;
+    TileCacheSetHeader header = *((TileCacheSetHeader*)(data.getBytes() + offset));
+    offset += sizeof(TileCacheSetHeader);
     if (header.magic != TILECACHESET_MAGIC)
     {
-        fclose(fp);
         return false;
     }
     if (header.version != TILECACHESET_VERSION)
     {
-        fclose(fp);
         return false;
     }
 
     _navMesh = dtAllocNavMesh();
     if (!_navMesh)
     {
-        fclose(fp);
         return false;
     }
     dtStatus status = _navMesh->init(&header.meshParams);
     if (dtStatusFailed(status))
     {
-        fclose(fp);
         return false;
     }
 
     _tileCache = dtAllocTileCache();
     if (!_tileCache)
     {
-        fclose(fp);
         return false;
     }
 
     _allocator = new LinearAllocator(32000);
     _compressor = new FastLZCompressor;
-    _meshProcess = new MeshProcess;
+    _meshProcess = new MeshProcess(_geomData);
     status = _tileCache->init(&header.cacheParams, _allocator, _compressor, _meshProcess);
 
     if (dtStatusFailed(status))
     {
-        fclose(fp);
         return false;
     }
 
     // Read tiles.
     for (int i = 0; i < header.numTiles; ++i)
     {
-        TileCacheTileHeader tileHeader;
-        fread(&tileHeader, sizeof(tileHeader), 1, fp);
+        TileCacheTileHeader tileHeader = *((TileCacheTileHeader*)(data.getBytes() + offset));
+        offset += sizeof(TileCacheTileHeader);
         if (!tileHeader.tileRef || !tileHeader.dataSize)
             break;
 
-        unsigned char* data = (unsigned char*)dtAlloc(tileHeader.dataSize, DT_ALLOC_PERM);
-        if (!data) break;
-        memset(data, 0, tileHeader.dataSize);
-        fread(data, tileHeader.dataSize, 1, fp);
+        unsigned char* tileData = (unsigned char*)dtAlloc(tileHeader.dataSize, DT_ALLOC_PERM);
+        if (!tileData) break;
+        memcpy(tileData, (data.getBytes() + offset), tileHeader.dataSize);
+        offset += tileHeader.dataSize;
 
         dtCompressedTileRef tile = 0;
-        _tileCache->addTile(data, tileHeader.dataSize, DT_COMPRESSEDTILE_FREE_DATA, &tile);
+        _tileCache->addTile(tileData, tileHeader.dataSize, DT_COMPRESSEDTILE_FREE_DATA, &tile);
 
         if (tile)
             _tileCache->buildNavMeshTile(tile, _navMesh);
@@ -174,6 +225,170 @@ bool NavMesh::read()
     _obstacleList.assign(header.cacheParams.maxObstacles, nullptr);
     //duDebugDrawNavMesh(&_debugDraw, *_navMesh, DU_DRAWNAVMESH_OFFMESHCONS);
     return true;
+}
+
+bool NavMesh::loadGeomFile()
+{
+    unsigned char* buf = 0;
+    auto data = FileUtils::getInstance()->getDataFromFile(_geomFilePath);
+    if (data.isNull()) return false;
+    buf = data.getBytes();
+    _geomData = new GeomData;
+    _geomData->offMeshConCount = 0;
+
+    unsigned char* src = buf;
+    unsigned char* srcEnd = buf + data.getSize();
+    char row[512];
+    while (src < srcEnd)
+    {
+        // Parse one row
+        row[0] = '\0';
+        src = parseRow(src, srcEnd, row, sizeof(row) / sizeof(char));
+        if (row[0] == 'c')
+        {
+            // Off-mesh connection
+            if (_geomData->offMeshConCount < GeomData::MAX_OFFMESH_CONNECTIONS)
+            {
+                float* v = &_geomData->offMeshConVerts[_geomData->offMeshConCount * 3 * 2];
+                int bidir, area = 0, flags = 0;
+                float rad;
+                sscanf(row + 1, "%f %f %f  %f %f %f %f %d %d %d",
+                    &v[0], &v[1], &v[2], &v[3], &v[4], &v[5], &rad, &bidir, &area, &flags);
+                _geomData->offMeshConRads[_geomData->offMeshConCount] = rad;
+                _geomData->offMeshConDirs[_geomData->offMeshConCount] = (unsigned char)bidir;
+                _geomData->offMeshConAreas[_geomData->offMeshConCount] = (unsigned char)area;
+                _geomData->offMeshConFlags[_geomData->offMeshConCount] = (unsigned short)flags;
+                _geomData->offMeshConCount++;
+            }
+        }
+    }
+
+    return true;
+}
+
+void NavMesh::dtDraw()
+{
+    drawObstacles();
+    _debugDraw.depthMask(false);
+    duDebugDrawNavMeshWithClosedList(&_debugDraw, *_navMesh, *_navMeshQuery, DU_DRAWNAVMESH_OFFMESHCONS | DU_DRAWNAVMESH_CLOSEDLIST/* | DU_DRAWNAVMESH_COLOR_TILES*/);
+    drawAgents();
+    drawOffMeshConnections();
+    _debugDraw.depthMask(true);
+}
+
+void cocos2d::NavMesh::drawOffMeshConnections()
+{
+    unsigned int conColor = duRGBA(192, 0, 128, 192);
+    unsigned int baseColor = duRGBA(0, 0, 0, 64);
+    _debugDraw.begin(DU_DRAW_LINES, 2.0f);
+    for (int i = 0; i < _geomData->offMeshConCount; ++i)
+    {
+        float* v = &_geomData->offMeshConVerts[i * 3 * 2];
+
+        _debugDraw.vertex(v[0], v[1], v[2], baseColor);
+        _debugDraw.vertex(v[0], v[1] + 0.2f, v[2], baseColor);
+
+        _debugDraw.vertex(v[3], v[4], v[5], baseColor);
+        _debugDraw.vertex(v[3], v[4] + 0.2f, v[5], baseColor);
+
+        duAppendCircle(&_debugDraw, v[0], v[1] + 0.1f, v[2], _geomData->offMeshConRads[i], baseColor);
+        duAppendCircle(&_debugDraw, v[3], v[4] + 0.1f, v[5], _geomData->offMeshConRads[i], baseColor);
+
+        if (/*hilight*/true)
+        {
+            duAppendArc(&_debugDraw, v[0], v[1], v[2], v[3], v[4], v[5], 0.25f,
+                (_geomData->offMeshConDirs[i] & 1) ? 0.6f : 0.0f, 0.6f, conColor);
+        }
+    }
+    _debugDraw.end();
+}
+
+void cocos2d::NavMesh::drawObstacles()
+{
+    // Draw obstacles
+    for (auto iter : _obstacleList)
+    {
+        if (iter){
+            const dtTileCacheObstacle* ob = _tileCache->getObstacleByRef(iter->_obstacleID);
+            if (ob->state == DT_OBSTACLE_EMPTY) continue;
+            float bmin[3], bmax[3];
+            _tileCache->getObstacleBounds(ob, bmin, bmax);
+
+            unsigned int col = 0;
+            if (ob->state == DT_OBSTACLE_PROCESSING)
+                col = duRGBA(255, 255, 0, 128);
+            else if (ob->state == DT_OBSTACLE_PROCESSED)
+                col = duRGBA(255, 192, 0, 192);
+            else if (ob->state == DT_OBSTACLE_REMOVING)
+                col = duRGBA(220, 0, 0, 128);
+
+            duDebugDrawCylinder(&_debugDraw, bmin[0], bmin[1], bmin[2], bmax[0], bmax[1], bmax[2], col);
+            duDebugDrawCylinderWire(&_debugDraw, bmin[0], bmin[1], bmin[2], bmax[0], bmax[1], bmax[2], duDarkenCol(col), 2);
+        }
+    }
+}
+
+void cocos2d::NavMesh::drawAgents()
+{
+    for (auto iter : _agentList)
+    {
+        if (iter){
+            auto agent = _crowed->getAgent(iter->_agentID);
+            float r = iter->getRadius();
+            float h = iter->getHeight();
+
+            unsigned int col = duRGBA(0, 0, 0, 32);
+            duDebugDrawCircle(&_debugDraw, agent->npos[0], agent->npos[1], agent->npos[2], r, col, 2.0f);
+
+            col = duRGBA(220, 220, 220, 128);
+            if (agent->targetState == DT_CROWDAGENT_TARGET_REQUESTING || agent->targetState == DT_CROWDAGENT_TARGET_WAITING_FOR_QUEUE)
+                col = duLerpCol(col, duRGBA(128, 0, 255, 128), 32);
+            else if (agent->targetState == DT_CROWDAGENT_TARGET_WAITING_FOR_PATH)
+                col = duLerpCol(col, duRGBA(128, 0, 255, 128), 128);
+            else if (agent->targetState == DT_CROWDAGENT_TARGET_FAILED)
+                col = duRGBA(255, 32, 16, 128);
+            else if (agent->targetState == DT_CROWDAGENT_TARGET_VELOCITY)
+                col = duLerpCol(col, duRGBA(64, 255, 0, 128), 128);
+
+            duDebugDrawCylinder(&_debugDraw, agent->npos[0] - r, agent->npos[1] + r*0.1f, agent->npos[2] - r,
+                agent->npos[0] + r, agent->npos[1] + h, agent->npos[2] + r, col);
+
+        }
+    }
+
+    // Velocity stuff.
+    for (auto iter : _agentList)
+    {
+        if (iter){
+            auto agent = _crowed->getAgent(iter->_agentID);
+
+            const float radius = agent->params.radius;
+            const float height = agent->params.height;
+            const float* pos = agent->npos;
+            const float* vel = agent->vel;
+            const float* dvel = agent->dvel;
+
+            unsigned int col = duRGBA(220, 220, 220, 192);
+            if (agent->targetState == DT_CROWDAGENT_TARGET_REQUESTING || agent->targetState == DT_CROWDAGENT_TARGET_WAITING_FOR_QUEUE)
+                col = duLerpCol(col, duRGBA(128, 0, 255, 192), 32);
+            else if (agent->targetState == DT_CROWDAGENT_TARGET_WAITING_FOR_PATH)
+                col = duLerpCol(col, duRGBA(128, 0, 255, 192), 128);
+            else if (agent->targetState == DT_CROWDAGENT_TARGET_FAILED)
+                col = duRGBA(255, 32, 16, 192);
+            else if (agent->targetState == DT_CROWDAGENT_TARGET_VELOCITY)
+                col = duLerpCol(col, duRGBA(64, 255, 0, 192), 128);
+
+            duDebugDrawCircle(&_debugDraw, pos[0], pos[1] + height, pos[2], radius, col, 2.0f);
+
+            //duDebugDrawArrow(&_debugDraw, pos[0], pos[1] + height, pos[2],
+            //    pos[0] + dvel[0], pos[1] + height + dvel[1], pos[2] + dvel[2],
+            //    0.0f, 0.4f, duRGBA(0, 192, 255, 192), 2.0f);
+
+            duDebugDrawArrow(&_debugDraw, pos[0], pos[1] + height, pos[2],
+                pos[0] + vel[0], pos[1] + height + vel[1], pos[2] + vel[2],
+                0.0f, 0.4f, duRGBA(0, 0, 0, 160), 2.0f);
+        }
+    }
 }
 
 void NavMesh::removeNavMeshObstacle(NavMeshObstacle *obstacle)
@@ -231,6 +446,8 @@ void NavMesh::setDebugDrawEnable(bool enable)
 void NavMesh::debugDraw(Renderer* renderer)
 {
     if (_isDebugDrawEnabled){
+        _debugDraw.clear();
+        dtDraw();
         _debugDraw.draw(renderer);
     }
 }
@@ -238,22 +455,29 @@ void NavMesh::debugDraw(Renderer* renderer)
 void NavMesh::update(float dt)
 {
     for (auto iter : _agentList){
-        iter->preUpdate(dt);
+        if (iter)
+            iter->preUpdate(dt);
     }
 
     for (auto iter : _obstacleList){
-        iter->preUpdate(dt);
+        if (iter)
+            iter->preUpdate(dt);
     }
 
     if (_crowed)
         _crowed->update(dt, nullptr);
 
+    if (_tileCache)
+        _tileCache->update(dt, _navMesh);
+
     for (auto iter : _agentList){
-        iter->postUpdate(dt);
+        if (iter)
+            iter->postUpdate(dt);
     }
 
     for (auto iter : _obstacleList){
-        iter->postUpdate(dt);
+        if (iter)
+            iter->postUpdate(dt);
     }
 }
 

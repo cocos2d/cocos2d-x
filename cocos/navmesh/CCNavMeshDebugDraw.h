@@ -42,13 +42,13 @@ NS_CC_BEGIN
  * @{
  */
 class Renderer;
-class NavMeshDebugDraw : duDebugDraw
+class NavMeshDebugDraw : public duDebugDraw
 {
 public:
     NavMeshDebugDraw();
     virtual ~NavMeshDebugDraw();
 
-    virtual void depthMask(bool state){};
+    virtual void depthMask(bool state);
     virtual void texture(bool state){};
     virtual void begin(duDebugDrawPrimitives prim, float size = 1.0f) override;
 
@@ -62,12 +62,13 @@ public:
 
     void draw(Renderer* renderer);
 
-private:
+    void clear();
 
-    Vec4 getColor(unsigned int col);
+private:
 
     GLenum getPrimitiveType(duDebugDrawPrimitives prim);
     void drawImplement(const cocos2d::Mat4& transform, uint32_t flags);
+    static Vec4 getColor(unsigned int col);
 
 private:
 
@@ -80,6 +81,7 @@ private:
     struct Primitive
     {
         GLenum type;
+        bool depthMask;
         unsigned short start;
         unsigned short end;
         float size;
@@ -91,6 +93,7 @@ private:
     GLProgram *_program;
     CustomCommand _customCmd;
     GLenum _primitiveType;
+    bool _currentDepthMask;
     GLuint _vbo;
     bool _dirtyBuffer;
 };

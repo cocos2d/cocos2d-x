@@ -25,6 +25,7 @@
 #if CC_USE_NAVMESH
 
 #include "recast/Detour/DetourCommon.h"
+#include "recast/Detour/DetourNavMeshBuilder.h"
 #include "recast/fastlz/fastlz.h"
 
 NS_CC_BEGIN
@@ -91,8 +92,8 @@ dtStatus cocos2d::FastLZCompressor::compress(const unsigned char* buffer, const 
     return DT_SUCCESS;
 }
 
-MeshProcess::MeshProcess()
-//	: m_geom(0)
+MeshProcess::MeshProcess(const GeomData *geom)
+    : data(geom)
 {
 }
 
@@ -104,39 +105,39 @@ MeshProcess::~MeshProcess()
 void MeshProcess::process(struct dtNavMeshCreateParams* params
     , unsigned char* polyAreas, unsigned short* polyFlags)
 {
-    //// Update poly flags from areas.
-    //for (int i = 0; i < params->polyCount; ++i)
-    //{
-    //	if (polyAreas[i] == DT_TILECACHE_WALKABLE_AREA)
-    //		polyAreas[i] = SAMPLE_POLYAREA_GROUND;
+    // Update poly flags from areas.
+    for (int i = 0; i < params->polyCount; ++i)
+    {
+        if (polyAreas[i] == DT_TILECACHE_WALKABLE_AREA)
+            polyAreas[i] = 0;
 
-    //	if (polyAreas[i] == SAMPLE_POLYAREA_GROUND ||
-    //		polyAreas[i] == SAMPLE_POLYAREA_GRASS ||
-    //		polyAreas[i] == SAMPLE_POLYAREA_ROAD)
-    //	{
-    //		polyFlags[i] = SAMPLE_POLYFLAGS_WALK;
-    //	}
-    //	else if (polyAreas[i] == SAMPLE_POLYAREA_WATER)
-    //	{
-    //		polyFlags[i] = SAMPLE_POLYFLAGS_SWIM;
-    //	}
-    //	else if (polyAreas[i] == SAMPLE_POLYAREA_DOOR)
-    //	{
-    //		polyFlags[i] = SAMPLE_POLYFLAGS_WALK | SAMPLE_POLYFLAGS_DOOR;
-    //	}
-    //}
+        if (polyAreas[i] == 0)
+            polyFlags[i] = 1;
 
-    //// Pass in off-mesh connections.
-    //if (m_geom)
-    //{
-    //	params->offMeshConVerts = m_geom->getOffMeshConnectionVerts();
-    //	params->offMeshConRad = m_geom->getOffMeshConnectionRads();
-    //	params->offMeshConDir = m_geom->getOffMeshConnectionDirs();
-    //	params->offMeshConAreas = m_geom->getOffMeshConnectionAreas();
-    //	params->offMeshConFlags = m_geom->getOffMeshConnectionFlags();
-    //	params->offMeshConUserID = m_geom->getOffMeshConnectionId();
-    //	params->offMeshConCount = m_geom->getOffMeshConnectionCount();
-    //}
+        //if (polyAreas[i] == SAMPLE_POLYAREA_GROUND ||
+        //	polyAreas[i] == SAMPLE_POLYAREA_GRASS ||
+        //	polyAreas[i] == SAMPLE_POLYAREA_ROAD)
+        //{
+        //	polyFlags[i] = SAMPLE_POLYFLAGS_WALK;
+        //}
+        //else if (polyAreas[i] == SAMPLE_POLYAREA_WATER)
+        //{
+        //	polyFlags[i] = SAMPLE_POLYFLAGS_SWIM;
+        //}
+        //else if (polyAreas[i] == SAMPLE_POLYAREA_DOOR)
+        //{
+        //	polyFlags[i] = SAMPLE_POLYFLAGS_WALK | SAMPLE_POLYFLAGS_DOOR;
+        //}
+    }
+
+    // Pass in off-mesh connections.
+    params->offMeshConVerts = data->offMeshConVerts;
+    params->offMeshConRad = data->offMeshConRads;
+    params->offMeshConDir = data->offMeshConDirs;
+    params->offMeshConAreas = data->offMeshConAreas;
+    params->offMeshConFlags = data->offMeshConFlags;
+    params->offMeshConUserID = data->offMeshConId;
+    params->offMeshConCount = data->offMeshConCount;
 }
 
 NS_CC_END

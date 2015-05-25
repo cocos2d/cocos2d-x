@@ -54,7 +54,7 @@ class CC_DLL NavMesh : public Ref
 {
 public:
 
-    static NavMesh* create(const std::string &filePath);
+    static NavMesh* create(const std::string &navFilePath, const std::string &geomFilePath);
 
     void update(float dt);
     void debugDraw(Renderer* renderer);
@@ -73,8 +73,14 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
 
-    bool initWithFilePath(const std::string &filePath);
+    bool initWithFilePath(const std::string &navFilePath, const std::string &geomFilePath);
     bool read();
+    bool loadNavMeshFile();
+    bool loadGeomFile();
+    void dtDraw();
+    void drawAgents();
+    void drawObstacles();
+    void drawOffMeshConnections();
 
 protected:
 
@@ -85,11 +91,13 @@ protected:
     LinearAllocator *_allocator;
     FastLZCompressor *_compressor;
     MeshProcess *_meshProcess;
+    GeomData *_geomData;
 
     std::vector<NavMeshAgent*> _agentList;
     std::vector<NavMeshObstacle*> _obstacleList;
     NavMeshDebugDraw _debugDraw;
-    std::string _filePath;
+    std::string _navFilePath;
+    std::string _geomFilePath;
     bool _isDebugDrawEnabled;
 };
 

@@ -27,6 +27,7 @@
 
 #include "../testBasic.h"
 #include "../BaseTest.h"
+#include "navmesh/CCNavMesh.h"
 #include <string>
 
 DEFINE_TEST_SUITE(NavMeshTests);
@@ -35,12 +36,11 @@ DEFINE_TEST_SUITE(NavMeshTests);
 class NavMeshDisabled : public TestCase
 {
 public:
-	CREATE_FUNC(NavMeshDisabled);
+    CREATE_FUNC(NavMeshDisabled);
 
-	virtual void onEnter() override;
+    virtual void onEnter() override;
 };
 #else
-
 class NavMeshTestDemo : public TestCase
 {
 public:
@@ -59,8 +59,20 @@ public:
     virtual void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
 
 protected:
+
+    void initScene();
+    void createAgent(const cocos2d::Vec3 &pos);
+    void createObstacle(const cocos2d::Vec3 &pos);
+    void moveAgents(const cocos2d::Vec3 &des);
+    void switchState();
+
+protected:
     std::string    _title;
     cocos2d::Camera *_camera;
+    std::vector<std::pair<cocos2d::NavMeshAgent *, cocos2d::Animate3D *> > _agents;
+    float _angle;
+    cocos2d::Label *_stateLabel;
+	cocos2d::Label *_debugLabel;
 };
 
 #endif

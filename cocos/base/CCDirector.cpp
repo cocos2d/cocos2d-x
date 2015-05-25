@@ -74,6 +74,10 @@ THE SOFTWARE.
 #include "physics3d/CCPhysics3DWorld.h"
 #endif
 
+#if CC_USE_NAVMESH
+#include "navmesh/CCNavMesh.h"
+#endif
+
 /**
  Position of the FPS
  
@@ -303,6 +307,13 @@ void Director::drawScene()
         if (physics3DWorld)
         {
             physics3DWorld->stepSimulate(_deltaTime);
+        }
+#endif
+#if CC_USE_NAVMESH
+        auto navMesh = _runningScene->getNavMesh();
+        if (navMesh)
+        {
+            navMesh->update(_deltaTime);
         }
 #endif
         //clear draw stats

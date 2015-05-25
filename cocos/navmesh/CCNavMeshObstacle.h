@@ -55,13 +55,12 @@ public:
         NODE_AND_NODE = NODE_TO_OBSTACLE | OBSTACLE_TO_NODE,
     };
 
-    static NavMeshObstacle* create(const Vec3 &position, float radius, float height);
+    static NavMeshObstacle* create(float radius, float height);
+    static const std::string& getNavMeshObstacleComponentName();
 
     virtual void onEnter() override;
     virtual void onExit() override;
 
-    void setPosition(const Vec3 &position);
-    const Vec3 getPosition() const { return _position;  }
     void setRadius(float radius);
     float getRadius() const { return _radius; }
     void setHeight(float height);
@@ -76,22 +75,19 @@ CC_CONSTRUCTOR_ACCESS:
     NavMeshObstacle();
     virtual ~NavMeshObstacle();
 
-    bool init(const Vec3 &position, float radius, float height);
+    bool initWith(float radius, float height);
 
 private:
 
     void addTo(dtTileCache *tileCache);
     void removeFrom(dtTileCache *tileCache);
-    void setTileCache(dtTileCache *tileCache);
     void preUpdate(float delta);
     void postUpdate(float delta);
 
 private:
 
-    Vec3 _position;
     float _radius;
     float _height;
-    bool _needUpdateObstacle;
     NavMeshObstacleSyncFlag _syncFlag;
     dtObstacleRef _obstacleID;
     dtTileCache *_tileCache;

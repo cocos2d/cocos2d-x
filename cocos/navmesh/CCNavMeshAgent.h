@@ -42,7 +42,8 @@ NS_CC_BEGIN
  */
 struct CC_DLL NavMeshAgentParam
 {
-    Vec3 position;
+    NavMeshAgentParam();
+
     float radius;						///< Agent radius. [Limit: >= 0]
     float height;						///< Agent height. [Limit: > 0]
     float maxAcceleration;				///< Maximum allowed acceleration. [Limit: >= 0]
@@ -86,15 +87,14 @@ public:
         NODE_AND_NODE = NODE_TO_AGENT | AGENT_TO_NODE,
     };
 
-    typedef std::function<void(const NavMeshAgent *, bool &)> MoveCallback;
+    typedef std::function<void(NavMeshAgent *agent, float totalTimeAfterMove)> MoveCallback;
 
     static NavMeshAgent* create(const NavMeshAgentParam &param);
+    static const std::string& getNavMeshAgentComponentName();
 
     virtual void onEnter() override;
     virtual void onExit() override;
 
-    void setPosition(const Vec3 & pos);
-    Vec3 getPosition() const;
     void setRadius(float radius);
     float getRadius() const;
     void setHeight(float height);
@@ -103,15 +103,22 @@ public:
     float getMaxAcceleration() const;
     void setMaxSpeed(float maxSpeed);
     float getMaxSpeed() const;
+    Vec3 getCurrentVelocity() const;
 
-    void move(const Vec3 &destination, const MoveCallback &callback = nullptr, const Vec3 &rotRefAxes = Vec3::UNIT_Z, bool needAutoOrientation = false);
+    void move(const Vec3 &destination, const MoveCallback &callback = nullptr);
     void pause();
     void resume();
     void stop();
 
+    void setOrientationRefAxes(const Vec3 &rotRefAxes);
+    void setAutoOrientation(bool isAuto);
+    void setAutoTraverseOffMeshLink(bool isAuto);
     bool isOnOffMeshLink();
     void completeOffMeshLink();
     OffMeshLinkData getCurrentOffMeshLinkData();
+
+    void setUserData(void *data) { _userData = data; };
+    void* getUserData() const { return _userData; };
 
     void setSyncFlag(const NavMeshAgentSyncFlag &flag) { _syncFlag = flag;  }
     NavMeshAgentSyncFlag getSyncFlag() const { return _syncFlag; }
@@ -127,7 +134,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 private:
 
-    bool init(const NavMeshAgentParam &param);
+    bool initWith(const NavMeshAgentParam &param);
     void addTo(dtCrowd *crowed);
     void removeFrom(dtCrowd *crowed);
     void setNavMeshQuery(dtNavMeshQuery *query);
@@ -148,7 +155,8 @@ private:
     int _agentID;
     bool _needUpdateAgent;
     bool _needMove;
-    bool _isOnOffMesh;
+    float _totalTimeAfterMove;
+    void *_userData;
     dtCrowd *_crowd;
     dtNavMeshQuery *_navMeshQuery;
 };
