@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="isometric" width="10" height="10" tilewidth="100" tileheight="50">
+ <tileset firstgid="1" name="wetlands-ipad" tilewidth="100" tileheight="100" spacing="1" margin="1">
+  <tileoffset x="0" y="15"/>
+  <image source="tile_iso_offset.png" width="256" height="256"/>
+     <tile id="0">
+         <properties>
+             <property name="altitude" value="0"/>
+             <property name="isWater" value="0"/>
+         </properties>
+     </tile>
+     <tile id="1">
+         <properties>
+             <property name="altitude" value="0"/>
+             <property name="isWater" value="0"/>
+         </properties>
+     </tile>
+     <tile id="2">
+         <properties>
+             <property name="altitude" value="2.5"/>
+             <property name="isWater" value="0"/>
+         </properties>
+     </tile>
+     <tile id="3">
+         <properties>
+             <property name="altitude" value="-1"/>
+             <property name="isWater" value="1"/>
+         </properties>
+     </tile>
+ </tileset>
+ <layer name="baseLayer" width="10" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxtkEEOwDAIwyDh/2/eDpsUWTlYSK0bCpoZBftygQr74fBc7lvmhktH0ZP5i+wr79Izzg+9jMp//hmcS8jNvXj6ng4OSfcBuQwA6g==
+  </data>
+ </layer>
+</map>
+
