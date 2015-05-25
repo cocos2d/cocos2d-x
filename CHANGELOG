@@ -8,6 +8,7 @@ cocos2d-x-3.7  ??
     [NEW]           FileUitls: added supporting loading files that which file path include utf-8 characters
     [NEW]           PhysicsShape: added sensor property
     [NEW]           Scale9Sprite: added Android 9-patch image support
+    [NEW]           Sprite: used triangle command
     
     [FIX]           3rd: fix PIE link error on iOS caused by libpng and libtiff
     [FIX]           AssetsManager: crashed issue
