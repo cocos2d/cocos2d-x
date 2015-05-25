@@ -818,6 +818,17 @@ extern bool luaval_to_std_vector_v3f_c4b_t2f(lua_State* L, int lo, std::vector<c
  */
 extern bool luaval_to_std_vector_vec2(lua_State* L, int lo, std::vector<cocos2d::Vec2>* ret, const char* funcName = "");
 
+/**
+ * Get a pointer points to a std::vector<cocos2d::Vec3> from a Lua array table in the stack.
+ *
+ * @param L the current lua_State.
+ * @param lo the given accpetable index of stack.
+ * @param ret a pointer points to a std::vector<cocos2d::Vec3>.
+ * @param funcName the name of calling function, it is used for error output in the debug model.
+ * @return Return true if the value at the given accpetable index of stack is a table, otherwise return false.
+ */
+extern bool luaval_to_std_vector_vec3(lua_State* L, int lo, std::vector<cocos2d::Vec3>* ret, const char* funcName = "");
+
 /**@}**/
 
 // from native
@@ -1263,6 +1274,14 @@ void quaternion_to_luaval(lua_State* L,const cocos2d::Quaternion& inValue);
  */
 void texParams_to_luaval(lua_State* L, const cocos2d::Texture2D::TexParams& inValue);
 
+/**
+ * Push a Lua array table converted from a std::vector<cocos2d::Vec3> into the Lua stack.
+ * The format of table as follows: {vec3Value1, vec3Value2, ..., vec3ValueSize}
+ *
+ * @param L the current lua_State.
+ * @param inValue a std::vector<cocos2d::Vec3> vaule.
+ */
+void std_vector_vec3_to_luaval(lua_State* L, const std::vector<cocos2d::Vec3>& inValue);
 // end group
 /// @}
 #endif //__COCOS2DX_SCRIPTING_LUA_COCOS2DXSUPPORT_LUABAISCCONVERSIONS_H__
