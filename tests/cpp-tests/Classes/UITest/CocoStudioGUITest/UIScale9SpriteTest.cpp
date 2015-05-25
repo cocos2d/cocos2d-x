@@ -52,6 +52,7 @@ UIScale9SpriteTests::UIScale9SpriteTests()
     ADD_TEST_CASE(UIS9ZOrder);
     ADD_TEST_CASE(UIS9Flip);
     ADD_TEST_CASE(UIS9ChangeAnchorPoint);
+    ADD_TEST_CASE(UIS9NinePatchTest);
 }
 
 // UIScale9SpriteTest
@@ -847,7 +848,54 @@ bool UIS9ChangeAnchorPoint::init()
                                        });
         this->addChild(button2);
         
+
+        return true;
+    }
+    return false;
+}
+
+bool UIS9NinePatchTest::init()
+{
+    if (UIScene::init()) {
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile("cocosui/android9patch.plist");
+
+        auto winSize = Director::getInstance()->getWinSize();
+        float x = winSize.width / 2;
+        float y = 0 + (winSize.height / 2 + 50);
+
+        auto preferedSize = Size(99,99);
+
+        //9-patch sprite with filename
+        auto playerSprite = ui::Scale9Sprite::create("cocosui/player.9.png");
+        playerSprite->setPosition(x, y);
+        playerSprite->setContentSize(preferedSize);
+        auto capInsets = playerSprite->getCapInsets();
+        CCLOG("player sprite capInset = %f, %f %f, %f", capInsets.origin.x,
+              capInsets.origin.y, capInsets.size.width, capInsets.size.height);
+        this->addChild(playerSprite);
+
+        auto animationBtnSprite = ui::Scale9Sprite::createWithSpriteFrameName("animationbuttonpressed.png");
+        animationBtnSprite->setPosition(x-100, y-100);
+        capInsets = animationBtnSprite->getCapInsets();
+        CCLOG("animationBtnSprite capInset = %f, %f %f, %f", capInsets.origin.x,
+              capInsets.origin.y, capInsets.size.width, capInsets.size.height);
+        this->addChild(animationBtnSprite);
         
+        
+        auto monsterSprite = ui::Scale9Sprite::createWithSpriteFrameName("monster.9.png");
+        monsterSprite->setPosition(x+100, y-100);
+        capInsets = monsterSprite->getCapInsets();
+        monsterSprite->setContentSize(preferedSize);
+        CCLOG("monsterSprite capInset = %f, %f %f, %f", capInsets.origin.x,
+              capInsets.origin.y, capInsets.size.width, capInsets.size.height);
+        this->addChild(monsterSprite);
+
+        auto spriteFrame = SpriteFrameCache::getInstance()->getSpriteFrameByName("buttonnormal.9.png");
+        auto buttonScale9Sprite = Scale9Sprite::createWithSpriteFrame(spriteFrame);
+        buttonScale9Sprite->setContentSize(Size(150,80));
+        buttonScale9Sprite->setPosition(Vec2(100,200));
+        this->addChild(buttonScale9Sprite);
+
         return true;
     }
     return false;

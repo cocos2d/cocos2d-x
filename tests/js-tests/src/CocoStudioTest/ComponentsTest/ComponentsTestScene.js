@@ -42,7 +42,7 @@ var ComponentsTestLayer = cc.LayerColor.extend({
     createGameScene: function () {
         var root = new cc.Node();
         var winSize = cc.director.getWinSize();
-        var player = new cc.Sprite("res/components/Player.png", cc.rect(0, 0, 27, 40));
+        var player = new cc.Sprite("components/Player.png", cc.rect(0, 0, 27, 40));
         player.x = 30;
         player.y = winSize.height / 2;
         root.addChild(player, 1, 1);
@@ -59,7 +59,7 @@ var ComponentsTestLayer = cc.LayerColor.extend({
     },
 
     toExtensionsMainLayer: function (sender) {
-        cc.audioEngine.stopMusic("res/Sound/background-music-aac.wav");
+        cc.audioEngine.stopMusic("background-music-aac.wav");
         var scene = new CocoStudioTestScene();
         scene.runThisTest();
     }

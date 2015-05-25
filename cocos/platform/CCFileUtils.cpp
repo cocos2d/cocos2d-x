@@ -941,23 +941,6 @@ std::string FileUtils::getFullPathForDirectoryAndFilename(const std::string& dir
     return ret;
 }
 
-std::string FileUtils::searchFullPathForFilename(const std::string& filename) const
-{
-    if (isAbsolutePath(filename))
-    {
-        return filename;
-    }
-    std::string path = fullPathForFilename(filename);
-    if (0 == path.compare(filename))
-    {
-        return "";
-    }
-    else
-    {
-        return path;
-    }
-}
-
 bool FileUtils::isFileExist(const std::string& filename) const
 {
     if (isAbsolutePath(filename))
@@ -966,7 +949,7 @@ bool FileUtils::isFileExist(const std::string& filename) const
     }
     else
     {
-        std::string fullpath = searchFullPathForFilename(filename);
+        std::string fullpath = fullPathForFilename(filename);
         if (fullpath.empty())
             return false;
         else
@@ -1327,7 +1310,7 @@ long FileUtils::getFileSize(const std::string &filepath)
     std::string fullpath = filepath;
     if (!isAbsolutePath(filepath))
     {
-        fullpath = searchFullPathForFilename(filepath);
+        fullpath = fullPathForFilename(filepath);
         if (fullpath.empty())
             return 0;
     }

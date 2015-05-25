@@ -39,6 +39,9 @@
     <Filter Include="manual\experimental">
       <UniqueIdentifier>{9f37ec66-1e00-4015-baa6-dabdf755f0ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="manual\physics3d">
+      <UniqueIdentifier>{3aaaf02d-80d8-4339-b4cd-89d89ade5293}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\auto\jsb_cocos2dx_auto.cpp">
@@ -145,6 +148,12 @@
     </ClCompile>
     <ClCompile Include="..\manual\experimental\jsb_cocos2dx_experimental_manual.cpp">
       <Filter>manual\experimental</Filter>
+    </ClCompile>
+    <ClCompile Include="..\auto\jsb_cocos2dx_physics3d_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="..\manual\physics3d\jsb_cocos2dx_physics3d_manual.cpp">
+      <Filter>manual\physics3d</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -273,6 +282,12 @@
     </ClInclude>
     <ClInclude Include="..\manual\experimental\jsb_cocos2dx_experimental_manual.h">
       <Filter>manual\experimental</Filter>
+    </ClInclude>
+    <ClInclude Include="..\auto\jsb_cocos2dx_physics3d_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\manual\physics3d\jsb_cocos2dx_physics3d_manual.h">
+      <Filter>manual\physics3d</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

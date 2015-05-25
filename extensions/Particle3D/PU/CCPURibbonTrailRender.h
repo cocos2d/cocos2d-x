@@ -126,7 +126,7 @@ public:
     void destroyAll(void);
 
     virtual PURibbonTrailRender* clone() override;
-    virtual void copyAttributesTo (PURender *render) override;
+    void copyAttributesTo(PURibbonTrailRender *render);
 
 CC_CONSTRUCTOR_ACCESS:
     PURibbonTrailRender();

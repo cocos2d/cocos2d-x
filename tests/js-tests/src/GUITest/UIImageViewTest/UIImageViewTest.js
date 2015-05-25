@@ -32,7 +32,7 @@ var UIImageViewTest = UIScene.extend({
 
             var widgetSize = this._widget.getContentSize();
             // Create the imageview
-            var imageView = new ccui.ImageView("res/cocosui/ccicon.png");
+            var imageView = new ccui.ImageView("ccs-res/cocosui/ccicon.png");
             imageView.x = widgetSize.width / 2;
 	        imageView.y = widgetSize.height / 2 + imageView.height / 4;
             this._mainNode.addChild(imageView);
@@ -54,7 +54,7 @@ var UIImageViewTest_Scale9 = UIScene.extend({
             // Create the imageview
             var imageView = new ccui.ImageView();
             imageView.setScale9Enabled(true);
-            imageView.loadTexture("res/cocosui/buttonHighlighted.png");
+            imageView.loadTexture("ccs-res/cocosui/buttonHighlighted.png");
             imageView.setContentSize(cc.size(200, 85));
             imageView.x = widgetSize.width / 2;
 	        imageView.y = widgetSize.height / 2 + imageView.getContentSize().height / 4;
@@ -85,12 +85,12 @@ var UIImageViewTest_ContentSize = UIScene.extend({
             this._mainNode.addChild(status,20);
 
             // Create the imageview
-            var imageView = new ccui.ImageView("res/cocosui/buttonHighlighted.png");
+            var imageView = new ccui.ImageView("ccs-res/cocosui/buttonHighlighted.png");
             imageView.setScale9Enabled(true);
             imageView.setContentSize(cc.size(200, 80));
             imageView.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2));
 
-            var imageViewChild = new ccui.ImageView("res/cocosui/buttonHighlighted.png");
+            var imageViewChild = new ccui.ImageView("ccs-res/cocosui/buttonHighlighted.png");
             imageViewChild.setScale9Enabled(true);
             imageViewChild.setSizeType(ccui.Widget.SIZE_PERCENT);
             imageViewChild.setPositionType(ccui.Widget.POSITION_PERCENT);
@@ -98,7 +98,7 @@ var UIImageViewTest_ContentSize = UIScene.extend({
             imageViewChild.setPositionPercent(cc.p(0.5, 0.5));
             //imageViewChild.setPosition(cc.p(widgetSize.width / 2, widgetSize.height / 2));
 
-            var imageViewChild2 = new ccui.ImageView("res/cocosui/buttonHighlighted.png");
+            var imageViewChild2 = new ccui.ImageView("ccs-res/cocosui/buttonHighlighted.png");
             imageViewChild2.setScale9Enabled(true);
             imageViewChild2.setSizeType(ccui.Widget.SIZE_PERCENT);
             imageViewChild2.setPositionType(ccui.Widget.POSITION_PERCENT);
@@ -130,7 +130,7 @@ var UIImageViewTest_ContentSize = UIScene.extend({
 var UIImageViewFlipTest = UIScene.extend({
     init: function(){
         if (this._super()) {
-            cc.spriteFrameCache.addSpriteFrames("res/Images/blocks9ss.plist");
+            cc.spriteFrameCache.addSpriteFrames("Images/blocks9ss.plist");
             var widgetSize = this._widget.getContentSize();
 
             this._bottomDisplayLabel.setString("ImageView flip test");

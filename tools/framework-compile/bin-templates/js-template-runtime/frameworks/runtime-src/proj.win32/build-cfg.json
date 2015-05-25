@@ -1,0 +1,34 @@
+{
+    "copy_resources": [
+        {
+            "from": "../../../src",
+            "to": "src"
+        },
+        {
+            "from": "../../../res",
+            "to": "res"
+        },
+        {
+            "from": "../../../main.js",
+            "to": ""
+        },
+        {
+            "from": "../../../project.json",
+            "to": ""
+        },
+        {
+            "from": "../../../config.json",
+            "to": ""
+        },
+        {
+            "from": "../Classes/ide-support/lang",
+            "to": ""
+        }
+    ],
+    "must_copy_resources": [
+        {
+            "from": "../../../script",
+            "to": "script"
+        }
+    ]	
+}

@@ -34,7 +34,7 @@ var UIButtonTest = UIScene.extend({
             // Create the button
             var button = new ccui.Button();
             button.setTouchEnabled(true);
-            button.loadTextures("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png", "");
+            button.loadTextures("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png", "");
             button.x = widgetSize.width / 2.0;
             button.y = widgetSize.height / 2.0;
             button.addTouchEventListener(this.touchEvent, this);
@@ -79,7 +79,7 @@ var UIButtonTest_Scale9 = UIScene.extend({
             var button = new ccui.Button();
             button.setTouchEnabled(true);
             button.setScale9Enabled(true);
-            button.loadTextures("res/cocosui/button.png", "res/cocosui/buttonHighlighted.png", "");
+            button.loadTextures("ccs-res/cocosui/button.png", "ccs-res/cocosui/buttonHighlighted.png", "");
             button.x = this._widget.width / 2.0;
             button.y = this._widget.height / 2.0;
             button.setContentSize(cc.size(150, 48));
@@ -124,7 +124,7 @@ var UIButtonTest_PressedAction = UIScene.extend({
             var button = new ccui.Button();
             button.setTouchEnabled(true);
             button.setPressedActionEnabled(true);
-            button.loadTextures("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png", "");
+            button.loadTextures("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png", "");
             button.x = widgetSize.width / 2;
             button.y = widgetSize.height / 2;
             button.addTouchEventListener(this.touchEvent ,this);
@@ -165,7 +165,7 @@ var UIButtonTest_Title = UIScene.extend({
             // Create the text button
             var textButton = new ccui.Button();
             textButton.setTouchEnabled(true);
-            textButton.loadTextures("res/cocosui/backtotopnormal.png", "res/cocosui/backtotoppressed.png", "");
+            textButton.loadTextures("ccs-res/cocosui/backtotopnormal.png", "ccs-res/cocosui/backtotoppressed.png", "");
             textButton.setTitleText("Title Button");
             textButton.x = widgetSize.width / 2.0;
             textButton.y = widgetSize.height / 2.0;
@@ -218,8 +218,8 @@ var UIButtonTestRemoveSelf = UIScene.extend({
             this._mainNode.addChild(layout);
 
             // Create the button
-            var button = new ccui.Button("res/cocosui/animationbuttonnormal.png",
-                "res/cocosui/animationbuttonpressed.png");
+            var button = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png",
+                "ccs-res/cocosui/animationbuttonpressed.png");
             button.setPosition(layout.width / 2.0, layout.height / 2.0);
             button.addTouchEventListener(this.touchEvent, this);
             layout.addChild(button);
@@ -264,8 +264,8 @@ var UIButtonTestSwitchScale9 = UIScene.extend({
             this._bottomDisplayLabel.setString("");
 
             // Create the button
-            var button = new ccui.Button("res/cocosui/animationbuttonnormal.png",
-                "res/cocosui/animationbuttonpressed.png");
+            var button = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png",
+                "ccs-res/cocosui/animationbuttonpressed.png");
             button.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0);
             button.addTouchEventListener(this.touchEvent, this);
             button.setTitleText("Button Title");
@@ -313,7 +313,7 @@ var UIButtonTestZoomScale = UIScene.extend({
             this._bottomDisplayLabel.setString("");
 
             // Create the button
-            var button = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
+            var button = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
             button.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0 );
             button.setPressedActionEnabled(true);
             button.addClickEventListener(function () {
@@ -324,9 +324,9 @@ var UIButtonTestZoomScale = UIScene.extend({
             button.setZoomScale(-0.5);
 
             var slider = new ccui.Slider();
-            slider.loadBarTexture("res/cocosui/sliderTrack.png");
-            slider.loadSlidBallTextures("res/cocosui/sliderThumb.png", "res/cocosui/sliderThumb.png", "");
-            slider.loadProgressBarTexture("res/cocosui/sliderProgress.png");
+            slider.loadBarTexture("ccs-res/cocosui/sliderTrack.png");
+            slider.loadSlidBallTextures("ccs-res/cocosui/sliderThumb.png", "ccs-res/cocosui/sliderThumb.png", "");
+            slider.loadProgressBarTexture("ccs-res/cocosui/sliderProgress.png");
             slider.setPosition(widgetSize.width / 2.0 , widgetSize.height / 2.0 - 50);
             slider.addEventListener(this.sliderEvent, this);
             slider.setPercent(button.getZoomScale() * 100);
@@ -382,7 +382,7 @@ var UIButtonIgnoreContentSizeTest = UIScene.extend({
             this._bottomDisplayLabel.setString("");
 
             // Create the button
-            var button = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
+            var button = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
             button.ignoreContentAdaptWithSize(false);
             button.setContentSize(200,100);
             button.setNormalizedPosition(0.3, 0.5);
@@ -396,7 +396,7 @@ var UIButtonIgnoreContentSizeTest = UIScene.extend({
             this.addChild(button);
 
             // Create the button
-            var button2 = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
+            var button2 = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
             button2.ignoreContentAdaptWithSize(false);
             button2.setContentSize(200,100);
             button2.setNormalizedPosition(0.8, 0.5);
@@ -425,10 +425,10 @@ var UIButtonTitleEffectTest = UIScene.extend({
             this._bottomDisplayLabel.setString("");
 
             // Create the button
-            var button = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
+            var button = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
             button.setNormalizedPosition(0.3, 0.5);
             button.setTitleText("PLAY GAME");
-            //button.setTitleFontName("fonts/Marker Felt.ttf");
+            //button.setTitleFontName("Marker Felt");
             button.setZoomScale(0.3);
             button.setScale(2.0);
             button.setPressedActionEnabled(true);
@@ -438,7 +438,7 @@ var UIButtonTitleEffectTest = UIScene.extend({
             this.addChild(button);
 
             // Create the button
-            var button2 = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
+            var button2 = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
             button2.setNormalizedPosition(0.8, 0.5);
             button2.setTitleText("PLAY GAME");
             var title2 = button2.getTitleRenderer();
@@ -459,10 +459,10 @@ var UIButtonFlipTest = UIScene.extend({
             this._bottomDisplayLabel.setString("");
 
             // Create the button
-            var button = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
+            var button = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
             button.setNormalizedPosition(0.3, 0.5);
             button.setTitleText("PLAY GAME");
-            //button.setTitleFontName("fonts/Marker Felt.ttf");
+            //button.setTitleFontName("Marker Felt");
             button.setZoomScale(0.3);
             button.setScale(2.0);
             button.setFlippedX(true);
@@ -474,7 +474,7 @@ var UIButtonFlipTest = UIScene.extend({
             this.addChild(titleLabel);
 
             // Create the button
-            var button2 = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
+            var button2 = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
             button2.setNormalizedPosition(0.8, 0.5);
             button2.setTitleText("PLAY GAME");
             button2.setFlippedY(true);
@@ -506,14 +506,14 @@ var UIButtonNormalDefaultTest = UIScene.extend({
             this._mainNode.addChild(alert);
 
             // Create the button
-            var button = new ccui.Button("res/cocosui/animationbuttonnormal.png");
+            var button = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png");
             button.setPosition(widgetSize.width / 2.0 - 80, widgetSize.height / 2.0 + 40);
             button.setZoomScale(0.4);
             button.setPressedActionEnabled(true);
             this._mainNode.addChild(button);
 
             // Create the button
-            var buttonScale9 = new ccui.Button("res/cocosui/button.png");
+            var buttonScale9 = new ccui.Button("ccs-res/cocosui/button.png");
             // open scale9 render
             buttonScale9.setScale9Enabled(true);
             buttonScale9.setPosition(widgetSize.width / 2.0 + 50, widgetSize.height / 2.0 + 40);
@@ -541,7 +541,7 @@ var UIButtonDisableDefaultTest = UIScene.extend({
             this._mainNode.addChild(alert);
 
             // Create the button
-            var button = new ccui.Button("res/cocosui/animationbuttonnormal.png");
+            var button = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png");
             button.setPosition(widgetSize.width / 2.0 - 80, widgetSize.height / 2.0 + 40);
             button.setZoomScale(0.4);
             button.setPressedActionEnabled(true);
@@ -552,7 +552,7 @@ var UIButtonDisableDefaultTest = UIScene.extend({
             this._mainNode.addChild(button);
 
             // Create the button
-            var buttonScale9 = new ccui.Button("res/cocosui/button.png");
+            var buttonScale9 = new ccui.Button("ccs-res/cocosui/button.png");
             // open scale9 render
             buttonScale9.setScale9Enabled(true);
             buttonScale9.setPosition(widgetSize.width / 2.0 + 50, widgetSize.height / 2.0 + 40);

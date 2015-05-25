@@ -124,7 +124,7 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
---  All supported platforms other iOS & Android use xml file to save values. This function checks whether the xml file exists or not.<br>
+--  All supported platforms other iOS & Android and CC_PLATFORM_WINRT use xml file to save values. This function checks whether the xml file exists or not.<br>
 -- return True if the xml file exists, flase if not.<br>
 -- js NA
 -- @function [parent=#UserDefault] isXMLFileExist 
