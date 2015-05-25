@@ -781,22 +781,27 @@ Color3B Button::getTitleColor() const
 
 void Button::setTitleFontSize(float size)
 {
-    if(nullptr == _titleRenderer)
+    if (nullptr == _titleRenderer)
     {
         this->createTitleRenderer();
     }
+
+    _fontSize = size;
     if (_type == FontType::SYSTEM)
     {
-        _titleRenderer->setSystemFontSize(size);
+        _titleRenderer->setSystemFontSize(_fontSize);
     }
     else if (_type == FontType::TTF)
     {
         TTFConfig config = _titleRenderer->getTTFConfig();
-        config.fontSize = size;
+        config.fontSize = _fontSize;
         _titleRenderer->setTTFConfig(config);
     }
+    else
+    {
+        return;
+    }
     updateContentSize();
-    _fontSize = size;
 }
 
 float Button::getTitleFontSize() const
