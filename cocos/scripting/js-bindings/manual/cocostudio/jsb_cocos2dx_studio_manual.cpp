@@ -303,7 +303,7 @@ static bool js_cocos2dx_studio_ActionManagerEx_initWithDictionaryEx(JSContext *c
         rapidjson::Document arg1Jsondoc;
         arg1Jsondoc.Parse<0>(arg1);
         if (arg1Jsondoc.HasParseError()) {
-            CCLOG("GetParseError %s\n",arg1Jsondoc.GetParseError());
+            CCLOG("GetParseError %d\n",arg1Jsondoc.GetParseError());
         }
         do {
             if (!args.get(2).isObject()) { ok = false; break; }

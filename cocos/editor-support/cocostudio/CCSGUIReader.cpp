@@ -212,7 +212,7 @@ Widget* GUIReader::widgetFromJsonFile(const char *fileName)
 	jsonDict.Parse<0>(contentStr.c_str());
     if (jsonDict.HasParseError())
     {
-        CCLOG("GetParseError %s\n",jsonDict.GetParseError());
+        CCLOG("GetParseError %d\n",jsonDict.GetParseError());
     }
     Widget* widget = nullptr;
     const char* fileVersion = DICTOOL->getStringValue_json(jsonDict, "version");
@@ -1373,7 +1373,7 @@ Widget* WidgetPropertiesReader0300::widgetFromBinary(CocoLoader* cocoLoader,  st
             customJsonDict.Parse<0>(customProperty);
             if (customJsonDict.HasParseError())
             {
-                CCLOG("GetParseError %s\n", customJsonDict.GetParseError());
+                CCLOG("GetParseError %d\n", customJsonDict.GetParseError());
             }
             setPropsForAllCustomWidgetFromJsonDictionary(classname, widget, customJsonDict);
         }else{
@@ -1474,7 +1474,7 @@ Widget* WidgetPropertiesReader0300::widgetFromJsonDictionary(const rapidjson::Va
             customJsonDict.Parse<0>(customProperty);
             if (customJsonDict.HasParseError())
             {
-                CCLOG("GetParseError %s\n", customJsonDict.GetParseError());
+                CCLOG("GetParseError %d\n", customJsonDict.GetParseError());
             }
             setPropsForAllCustomWidgetFromJsonDictionary(classname, widget, customJsonDict);
         }else{
