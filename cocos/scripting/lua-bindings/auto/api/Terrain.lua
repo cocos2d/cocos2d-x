@@ -35,6 +35,12 @@
 -- @return Terrain#Terrain self (return value: cc.Terrain)
         
 --------------------------------
+-- get the terrain's height data
+-- @function [parent=#Terrain] getHeightData 
+-- @param self
+-- @return array_table#array_table ret (return value: array_table)
+        
+--------------------------------
 -- set the Detail Map 
 -- @function [parent=#Terrain] setDetailMap 
 -- @param self
