@@ -48,10 +48,13 @@ def do_build_slaves():
             js_tests_build_scripts = jenkins_script_path + "win32-js-build.bat"
         elif(node_name == 'windows-universal' or node_name == 'windows-universal_bak'):
             slave_build_scripts = jenkins_script_path + "windows-universal.bat"
+            js_tests_build_scripts = jenkins_script_path + "windows-js-universal.bat"
         elif(node_name == 'ios_mac' or node_name == 'ios' or node_name == 'ios_bak'):
             slave_build_scripts = jenkins_script_path + "ios-build.sh"
+            js_tests_build_scripts = jenkins_script_path + "ios-js-build.sh"
         elif(node_name == 'mac' or node_name == 'mac_bak'):
             slave_build_scripts = jenkins_script_path + "mac-build.sh"
+            js_tests_build_scripts = jenkins_script_path + "mac-js-build.sh"
         elif(node_name == 'linux_centos' or node_name == 'linux' or node_name == 'linux_bak'):
             slave_build_scripts = jenkins_script_path + "linux-build.sh"
         elif(node_name == 'wp8'):
