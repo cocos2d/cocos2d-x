@@ -218,11 +218,10 @@ protected:
     
     std::thread* _loadingThread;
 
-    std::queue<AsyncStruct*>* _asyncStructQueue;
+    std::deque<AsyncStruct*>* _asyncStructQueue;
     std::deque<ImageInfo*>* _imageInfoQueue;
 
-    std::mutex _asyncStructQueueMutex;
-    std::mutex _imageInfoMutex;
+    std::mutex _asyncMutex;
 
     std::mutex _sleepMutex;
     std::condition_variable _sleepCondition;
