@@ -14,7 +14,7 @@
 				   android:value="cocos2dlua" />
 		
         <activity
-            android:name=".AppActivity"
+            android:name="org.cocos2dx.lua.AppActivity"
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"

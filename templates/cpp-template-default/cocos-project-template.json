@@ -53,7 +53,8 @@
             "src_package_name":"org.cocos2dx.hellocpp",
             "files":[
                "proj.android/AndroidManifest.xml",
-               "proj.android-studio/app/build.gradle"
+               "proj.android-studio/app/build.gradle",
+               "proj.android-studio/app/AndroidManifest.xml"
             ]
          },
          "project_replace_mac_bundleid": {

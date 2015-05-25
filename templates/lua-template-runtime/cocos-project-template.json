@@ -172,7 +172,8 @@
             "src_package_name": "org.cocos2dx.hellolua",
             "files": [
                 "frameworks/runtime-src/proj.android/AndroidManifest.xml",
-                "frameworks/runtime-src/proj.android-studio/app/build.gradle"
+                "frameworks/runtime-src/proj.android-studio/app/build.gradle",
+                "frameworks/runtime-src/proj.android-studio/app/AndroidManifest.xml"
             ]
         },
         "project_replace_mac_bundleid": {

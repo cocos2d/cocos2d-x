@@ -6,7 +6,10 @@
         }, 
         {
             "from": "../../../cpp-tests/Resources/", 
-            "to": "res/"
+            "to": "res/",
+            "exclude": [
+                "*.gz"
+            ]
         }, 
         {
             "from": "../../main.js", 
