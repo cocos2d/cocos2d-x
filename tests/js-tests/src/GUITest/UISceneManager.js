@@ -551,7 +551,7 @@
     global.GUITestScene = cc.Class.extend({
 
         runThisTest: function(){
-            if(guiTestScene === null)
+            if(guiTestScene === null || !cc.sys.isObjectValid(guiTestScene))
                 guiTestScene = new listScene;
             cc.director.runScene(guiTestScene);
         }

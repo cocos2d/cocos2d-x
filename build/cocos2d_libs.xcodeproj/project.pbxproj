@@ -1190,6 +1190,10 @@
 		1AC0269D1914068200FA920D /* ConvertUTF.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AC026991914068200FA920D /* ConvertUTF.h */; };
 		29031E0719BFE8D400EFA1DF /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29031E0619BFE8D400EFA1DF /* libchipmunk.a */; };
 		29031E0919BFE8DE00EFA1DF /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29031E0819BFE8DE00EFA1DF /* libchipmunk.a */; };
+		291901431B05895600F8B4BA /* CCNinePatchImageParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 291901411B05895600F8B4BA /* CCNinePatchImageParser.h */; };
+		291901441B05895600F8B4BA /* CCNinePatchImageParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 291901411B05895600F8B4BA /* CCNinePatchImageParser.h */; };
+		291901451B05895600F8B4BA /* CCNinePatchImageParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 291901421B05895600F8B4BA /* CCNinePatchImageParser.cpp */; };
+		291901461B05895600F8B4BA /* CCNinePatchImageParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 291901421B05895600F8B4BA /* CCNinePatchImageParser.cpp */; };
 		292DB13D19B4574100A80320 /* UIEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292DB12F19B4574100A80320 /* UIEditBox.cpp */; };
 		292DB13E19B4574100A80320 /* UIEditBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292DB12F19B4574100A80320 /* UIEditBox.cpp */; };
 		292DB13F19B4574100A80320 /* UIEditBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 292DB13019B4574100A80320 /* UIEditBox.h */; };
@@ -3925,6 +3929,8 @@
 		2905FA1318CF08D100240AA3 /* UIWidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIWidget.cpp; sourceTree = "<group>"; };
 		2905FA1418CF08D100240AA3 /* UIWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIWidget.h; sourceTree = "<group>"; };
 		29080DEB191B82CE0066F8DF /* UIDeprecated.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIDeprecated.h; sourceTree = "<group>"; };
+		291901411B05895600F8B4BA /* CCNinePatchImageParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCNinePatchImageParser.h; path = ../base/CCNinePatchImageParser.h; sourceTree = "<group>"; };
+		291901421B05895600F8B4BA /* CCNinePatchImageParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCNinePatchImageParser.cpp; path = ../base/CCNinePatchImageParser.cpp; sourceTree = "<group>"; };
 		292DB12F19B4574100A80320 /* UIEditBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UIEditBox.cpp; sourceTree = "<group>"; };
 		292DB13019B4574100A80320 /* UIEditBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIEditBox.h; sourceTree = "<group>"; };
 		292DB13119B4574100A80320 /* UIEditBoxImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIEditBoxImpl.h; sourceTree = "<group>"; };
@@ -5626,6 +5632,8 @@
 		1A5700A2180BC5E60088DEC7 /* base */ = {
 			isa = PBXGroup;
 			children = (
+				291901411B05895600F8B4BA /* CCNinePatchImageParser.h */,
+				291901421B05895600F8B4BA /* CCNinePatchImageParser.cpp */,
 				505385001B01887A00793096 /* CCProperties.h */,
 				505385011B01887A00793096 /* CCProperties.cpp */,
 				B63990CA1A490AFE00B07923 /* CCAsyncTaskPool.cpp */,
@@ -9417,6 +9425,7 @@
 				50ABBE211925AB6F00A911A9 /* atitc.h in Headers */,
 				15AE19A519AAD39600C27E9E /* TextFieldReader.h in Headers */,
 				B665E3401AA80A6500DDB1C5 /* CCPUOnEventFlagObserverTranslator.h in Headers */,
+				291901431B05895600F8B4BA /* CCNinePatchImageParser.h in Headers */,
 				B24AA98B195A675C007B4522 /* CCFastTMXTiledMap.h in Headers */,
 				B665E3A01AA80A6500DDB1C5 /* CCPUPositionEmitter.h in Headers */,
 				B29594B61926D5EC003EEF37 /* CCMeshCommand.h in Headers */,
@@ -10220,6 +10229,7 @@
 				50ABBE481925AB6F00A911A9 /* CCEvent.h in Headers */,
 				5027253B190BF1B900AAF4ED /* cocos2d.h in Headers */,
 				15AE1A9719AAD40300C27E9E /* b2Draw.h in Headers */,
+				291901441B05895600F8B4BA /* CCNinePatchImageParser.h in Headers */,
 				3E6176691960F89B00DE83F5 /* CCController.h in Headers */,
 				B6CAB43E1AF9AA1A00B9B856 /* btGpuDefines.h in Headers */,
 				3823841D1A2590D2002C4610 /* ComAudioReader.h in Headers */,
@@ -10693,6 +10703,7 @@
 				50ED2BD919BE5D5D00A0AB90 /* CCEventListenerController.cpp in Sources */,
 				B665E2321AA80A6500DDB1C5 /* CCPUBoxEmitter.cpp in Sources */,
 				B257B460198A353E00D9A687 /* CCPrimitiveCommand.cpp in Sources */,
+				291901451B05895600F8B4BA /* CCNinePatchImageParser.cpp in Sources */,
 				15AE19A419AAD39600C27E9E /* TextFieldReader.cpp in Sources */,
 				50ED2BDB19BE76D500A0AB90 /* UIVideoPlayer-ios.mm in Sources */,
 				B665E32A1AA80A6500DDB1C5 /* CCPUOnCountObserver.cpp in Sources */,
@@ -11653,6 +11664,7 @@
 				15AE19AA19AAD39700C27E9E /* ListViewReader.cpp in Sources */,
 				1A5701C8180BCB5A0088DEC7 /* CCLabelTextFormatter.cpp in Sources */,
 				1A5701CC180BCB5A0088DEC7 /* CCLabelTTF.cpp in Sources */,
+				291901461B05895600F8B4BA /* CCNinePatchImageParser.cpp in Sources */,
 				B665E39B1AA80A6500DDB1C5 /* CCPUPointEmitterTranslator.cpp in Sources */,
 				382384291A2590F9002C4610 /* NodeReader.cpp in Sources */,
 				15AE193419AAD35100C27E9E /* CCActionObject.cpp in Sources */,

@@ -36,14 +36,25 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcocos2d_8_1.Windows", ".
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcocos2d_8_1.WindowsPhone", "..\cocos2d\cocos\2d\libcocos2d_8_1\libcocos2d_8_1\libcocos2d_8_1.WindowsPhone\libcocos2d_8_1.WindowsPhone.vcxproj", "{22F3B9DF-1209-4574-8331-003966F562BF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libbullet", "libbullet", "{72850ED1-A006-4767-B703-27A27C3F13FC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libbullet.Shared", "..\cocos2d\external\bullet\proj.win8.1-universal\libbullet.Shared\libbullet.Shared.vcxitems", "{16AF311F-74CA-45A3-A82D-6334200FB124}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libbullet.Windows", "..\cocos2d\external\bullet\proj.win8.1-universal\libbullet.Windows\libbullet.Windows.vcxproj", "{EC2B1292-2D8C-4FEB-A84B-2550B32C1AE7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libbullet.WindowsPhone", "..\cocos2d\external\bullet\proj.win8.1-universal\libbullet.WindowsPhone\libbullet.WindowsPhone.vcxproj", "{E35634BD-B91B-4A6D-B957-96F56DD065F9}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\cocos2d\cocos\2d\libcocos2d_8_1\libcocos2d_8_1\libcocos2d_8_1.Shared\libcocos2d_8_1.Shared.vcxitems*{9335005f-678e-4e8e-9b84-50037216aec8}*SharedItemsImports = 4
 		App.Shared\HelloCpp.Shared.vcxitems*{a3ad93e4-0b2f-4c58-9181-69bed2e42e3e}*SharedItemsImports = 9
 		..\cocos2d\cocos\editor-support\spine\proj.win8.1-universal\libSpine.Shared\libSpine.Shared.vcxitems*{cc1da216-a80d-4be4-b309-acb6af313aff}*SharedItemsImports = 4
 		..\cocos2d\external\Box2D\proj.win8.1-universal\libbox2d.Shared\libbox2d.Shared.vcxitems*{4a3c6ba8-c227-498b-aa21-40bda27b461f}*SharedItemsImports = 9
+		..\cocos2d\external\bullet\proj.win8.1-universal\libbullet.Shared\libbullet.Shared.vcxitems*{e35634bd-b91b-4a6d-b957-96f56dd065f9}*SharedItemsImports = 4
 		App.Shared\HelloCpp.Shared.vcxitems*{79a8fcda-4b12-4dd1-b676-ff148d651638}*SharedItemsImports = 4
+		..\cocos2d\external\bullet\proj.win8.1-universal\libbullet.Shared\libbullet.Shared.vcxitems*{ec2b1292-2d8c-4feb-a84b-2550b32c1ae7}*SharedItemsImports = 4
 		..\cocos2d\cocos\editor-support\spine\proj.win8.1-universal\libSpine.Shared\libSpine.Shared.vcxitems*{adafd00d-a0d6-46ef-9f0b-ea2880bfe1de}*SharedItemsImports = 9
+		..\cocos2d\external\bullet\proj.win8.1-universal\libbullet.Shared\libbullet.Shared.vcxitems*{16af311f-74ca-45a3-a82d-6334200fb124}*SharedItemsImports = 9
 		..\cocos2d\cocos\2d\libcocos2d_8_1\libcocos2d_8_1\libcocos2d_8_1.Shared\libcocos2d_8_1.Shared.vcxitems*{5d6f020f-7e72-4494-90a0-2df11d235df9}*SharedItemsImports = 9
 		..\cocos2d\external\Box2D\proj.win8.1-universal\libbox2d.Shared\libbox2d.Shared.vcxitems*{3b26a12d-3a44-47ea-82d2-282660fc844d}*SharedItemsImports = 4
 		..\cocos2d\cocos\2d\libcocos2d_8_1\libcocos2d_8_1\libcocos2d_8_1.Shared\libcocos2d_8_1.Shared.vcxitems*{22f3b9df-1209-4574-8331-003966f562bf}*SharedItemsImports = 4
@@ -158,6 +169,28 @@ Global
 		{22F3B9DF-1209-4574-8331-003966F562BF}.Release|Win32.ActiveCfg = Release|Win32
 		{22F3B9DF-1209-4574-8331-003966F562BF}.Release|Win32.Build.0 = Release|Win32
 		{22F3B9DF-1209-4574-8331-003966F562BF}.Release|x64.ActiveCfg = Release|Win32
+		{EC2B1292-2D8C-4FEB-A84B-2550B32C1AE7}.Debug|ARM.ActiveCfg = Debug|ARM
+		{EC2B1292-2D8C-4FEB-A84B-2550B32C1AE7}.Debug|ARM.Build.0 = Debug|ARM
+		{EC2B1292-2D8C-4FEB-A84B-2550B32C1AE7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{EC2B1292-2D8C-4FEB-A84B-2550B32C1AE7}.Debug|Win32.Build.0 = Debug|Win32
+		{EC2B1292-2D8C-4FEB-A84B-2550B32C1AE7}.Debug|x64.ActiveCfg = Debug|x64
+		{EC2B1292-2D8C-4FEB-A84B-2550B32C1AE7}.Debug|x64.Build.0 = Debug|x64
+		{EC2B1292-2D8C-4FEB-A84B-2550B32C1AE7}.Release|ARM.ActiveCfg = Release|ARM
+		{EC2B1292-2D8C-4FEB-A84B-2550B32C1AE7}.Release|ARM.Build.0 = Release|ARM
+		{EC2B1292-2D8C-4FEB-A84B-2550B32C1AE7}.Release|Win32.ActiveCfg = Release|Win32
+		{EC2B1292-2D8C-4FEB-A84B-2550B32C1AE7}.Release|Win32.Build.0 = Release|Win32
+		{EC2B1292-2D8C-4FEB-A84B-2550B32C1AE7}.Release|x64.ActiveCfg = Release|x64
+		{EC2B1292-2D8C-4FEB-A84B-2550B32C1AE7}.Release|x64.Build.0 = Release|x64
+		{E35634BD-B91B-4A6D-B957-96F56DD065F9}.Debug|ARM.ActiveCfg = Debug|ARM
+		{E35634BD-B91B-4A6D-B957-96F56DD065F9}.Debug|ARM.Build.0 = Debug|ARM
+		{E35634BD-B91B-4A6D-B957-96F56DD065F9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E35634BD-B91B-4A6D-B957-96F56DD065F9}.Debug|Win32.Build.0 = Debug|Win32
+		{E35634BD-B91B-4A6D-B957-96F56DD065F9}.Debug|x64.ActiveCfg = Debug|Win32
+		{E35634BD-B91B-4A6D-B957-96F56DD065F9}.Release|ARM.ActiveCfg = Release|ARM
+		{E35634BD-B91B-4A6D-B957-96F56DD065F9}.Release|ARM.Build.0 = Release|ARM
+		{E35634BD-B91B-4A6D-B957-96F56DD065F9}.Release|Win32.ActiveCfg = Release|Win32
+		{E35634BD-B91B-4A6D-B957-96F56DD065F9}.Release|Win32.Build.0 = Release|Win32
+		{E35634BD-B91B-4A6D-B957-96F56DD065F9}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -177,5 +210,9 @@ Global
 		{5D6F020F-7E72-4494-90A0-2DF11D235DF9} = {80DA05C1-6532-4D2A-8606-EF02079B1373}
 		{9335005F-678E-4E8E-9B84-50037216AEC8} = {80DA05C1-6532-4D2A-8606-EF02079B1373}
 		{22F3B9DF-1209-4574-8331-003966F562BF} = {80DA05C1-6532-4D2A-8606-EF02079B1373}
+		{72850ED1-A006-4767-B703-27A27C3F13FC} = {F13CB4F7-BEE5-4368-A815-A971797387D8}
+		{16AF311F-74CA-45A3-A82D-6334200FB124} = {72850ED1-A006-4767-B703-27A27C3F13FC}
+		{EC2B1292-2D8C-4FEB-A84B-2550B32C1AE7} = {72850ED1-A006-4767-B703-27A27C3F13FC}
+		{E35634BD-B91B-4A6D-B957-96F56DD065F9} = {72850ED1-A006-4767-B703-27A27C3F13FC}
 	EndGlobalSection
 EndGlobal

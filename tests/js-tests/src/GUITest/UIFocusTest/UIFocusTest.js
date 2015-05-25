@@ -128,7 +128,7 @@ var UIFocusTestHorizontal = UIFocusTestBase.extend({
 
             var count = 3;
             for (var i=0; i<count; ++i) {
-                var w = new ccui.ImageView("res/cocosui/scrollviewbg.png");
+                var w = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
                 w.setTouchEnabled(true);
                 w.setTag(i);
                 w.addTouchEventListener(this.onImageViewClicked, this);
@@ -140,7 +140,7 @@ var UIFocusTestHorizontal = UIFocusTestBase.extend({
             this._loopText.setColor(cc.color.GREEN);
             this.addChild(this._loopText);
 
-            var btn = new ccui.Button("res/cocosui/switch-mask.png");
+            var btn = new ccui.Button("ccs-res/cocosui/switch-mask.png");
             btn.setTitleText("Toggle Loop");
             btn.setPosition(60, winSize.height - 50);
             btn.setTitleColor(cc.color.RED);
@@ -183,7 +183,7 @@ var UIFocusTestVertical = UIFocusTestBase.extend({
 
             var count = 3;
             for (var i=0; i<count; ++i) {
-                var w = new ccui.ImageView("res/cocosui/scrollviewbg.png");
+                var w = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
                 w.setTouchEnabled(true);
                 w.setTag(i);
                 w.addTouchEventListener(this.onImageViewClicked, this);
@@ -197,7 +197,7 @@ var UIFocusTestVertical = UIFocusTestBase.extend({
             this._loopText.setColor(cc.color.GREEN);
             this.addChild(this._loopText);
 
-            var btn = new ccui.Button("res/cocosui/switch-mask.png");
+            var btn = new ccui.Button("ccs-res/cocosui/switch-mask.png");
             btn.setTitleText("Toggle Loop");
             btn.setPosition(60, winSize.height - 50);
             btn.setTitleColor(cc.color.RED);
@@ -240,7 +240,7 @@ var UIFocusTestNestedLayout1 = UIFocusTestBase.extend({
 
             var count1 = 1, i, w;
             for (i = 0; i < count1; ++i) {
-                w = new ccui.ImageView("res/cocosui/scrollviewbg.png");
+                w = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
                 w.setAnchorPoint(0, 0);
                 w.setTouchEnabled(true);
                 w.setScaleX(2.5);
@@ -256,7 +256,7 @@ var UIFocusTestNestedLayout1 = UIFocusTestBase.extend({
 
             var count2 = 2;
             for (i=0; i < count2; ++i) {
-                w = new ccui.ImageView("res/cocosui/scrollviewbg.png");
+                w = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
                 w.setAnchorPoint(0,1);
                 w.setScaleY(2.0);
                 w.setTouchEnabled(true);
@@ -272,7 +272,7 @@ var UIFocusTestNestedLayout1 = UIFocusTestBase.extend({
 
             var count3 = 2;
             for (i=0; i<count3; ++i) {
-                w = new ccui.ImageView("res/cocosui/scrollviewbg.png");
+                w = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
                 w.setTouchEnabled(true);
                 w.setTag(i+count1+count2+count3);
                 w.addTouchEventListener(this.onImageViewClicked, this);
@@ -283,7 +283,7 @@ var UIFocusTestNestedLayout1 = UIFocusTestBase.extend({
             this._loopText.setColor(cc.color.GREEN);
             this.addChild(this._loopText);
 
-            var btn = new ccui.Button("res/cocosui/switch-mask.png");
+            var btn = new ccui.Button("ccs-res/cocosui/switch-mask.png");
             btn.setTitleText("Toggle Loop");
             btn.setPosition(60, winSize.height - 50);
             btn.setTitleColor(cc.color.RED);
@@ -326,7 +326,7 @@ var UIFocusTestNestedLayout2 = UIFocusTestBase.extend({
 
             var count1 = 2, i, w;
             for (i=0; i<count1; ++i) {
-                w = new ccui.ImageView("res/cocosui/scrollviewbg.png");
+                w = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
                 w.setAnchorPoint(0,1);
                 w.setTouchEnabled(true);
                 w.setTag(i+count1);
@@ -342,7 +342,7 @@ var UIFocusTestNestedLayout2 = UIFocusTestBase.extend({
             this._horizontalLayout.addChild(vbox);
             var count2 = 2;
             for (i=0; i < count2; ++i) {
-                w = new ccui.ImageView("res/cocosui/scrollviewbg.png");
+                w = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
                 w.setAnchorPoint(0,1);
                 w.setScaleX(2.0);
                 w.setTouchEnabled(true);
@@ -358,7 +358,7 @@ var UIFocusTestNestedLayout2 = UIFocusTestBase.extend({
             //innerVBox.setFocusEnabled(false);
             var count3 = 2;
             for (i = 0; i < count3; ++i) {
-                w = new ccui.ImageView("res/cocosui/scrollviewbg.png");
+                w = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
                 w.setTouchEnabled(true);
                 w.setTag(i + count1 + count2 + count3);
                 w.addTouchEventListener(this.onImageViewClicked, this);
@@ -370,7 +370,7 @@ var UIFocusTestNestedLayout2 = UIFocusTestBase.extend({
             this._loopText.setColor(cc.color.GREEN);
             this.addChild(this._loopText);
 
-            var btn = new ccui.Button("res/cocosui/switch-mask.png");
+            var btn = new ccui.Button("ccs-res/cocosui/switch-mask.png");
             btn.setTitleText("Toggle Loop");
             btn.setPosition(60, winSize.height - 50);
             btn.setTitleColor(cc.color.RED);
@@ -431,7 +431,7 @@ var UIFocusTestNestedLayout3 = UIFocusTestBase.extend({
 
                 var count1 = 3;
                 for (var j = 0; j < count1; ++j) {
-                    w = new ccui.ImageView("res/cocosui/scrollviewbg.png");
+                    w = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
                     w.setTouchEnabled(true);
                     w.setTag(j + firstVbox.getTag() + 1);
                     w.addTouchEventListener(this.onImageViewClicked, this);
@@ -448,7 +448,7 @@ var UIFocusTestNestedLayout3 = UIFocusTestBase.extend({
             var bottomParams = new ccui.LinearLayoutParameter();
             bottomParams.setMargin(new ccui.Margin(0, 0, 8, 0));
             for (i = 0; i < count; ++i) {
-                w = new ccui.ImageView("res/cocosui/scrollviewbg.png");
+                w = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
                 w.setLayoutParameter(bottomParams);
                 w.setTouchEnabled(true);
                 w.setTag(i + 601);
@@ -462,7 +462,7 @@ var UIFocusTestNestedLayout3 = UIFocusTestBase.extend({
             this._loopText.setColor(cc.color.GREEN);
             this.addChild(this._loopText);
 
-            var btn = new ccui.Button("res/cocosui/switch-mask.png");
+            var btn = new ccui.Button("ccs-res/cocosui/switch-mask.png");
             btn.setTitleText("Toggle Loop");
             btn.setPosition(60, winSize.height - 50);
             btn.setTitleColor(cc.color.RED);
@@ -496,7 +496,7 @@ var UIFocusTestListView = UIFocusTestBase.extend({
             this._listView = new ccui.ListView();
             this._listView.setDirection(ccui.ScrollView.DIR_VERTICAL);
             this._listView.setBounceEnabled(true);
-            this._listView.setBackGroundImage("res/cocosui/green_edit.png");
+            this._listView.setBackGroundImage("ccs-res/cocosui/green_edit.png");
             this._listView.setBackGroundImageScale9Enabled(true);
             this._listView.setContentSize(240, 130);
 
@@ -510,7 +510,7 @@ var UIFocusTestListView = UIFocusTestBase.extend({
             this._firstFocusedWidget = this._listView;
 
             // create model
-            var default_button = new ccui.Button("res/cocosui/backtotoppressed.png", "res/cocosui/backtotopnormal.png");
+            var default_button = new ccui.Button("ccs-res/cocosui/backtotoppressed.png", "ccs-res/cocosui/backtotopnormal.png");
             default_button.setName("Title Button");
 
             // set model
@@ -530,7 +530,7 @@ var UIFocusTestListView = UIFocusTestBase.extend({
             this._loopText.setColor(cc.color.GREEN);
             this.addChild(this._loopText);
 
-            var btn = new ccui.Button("res/cocosui/switch-mask.png");
+            var btn = new ccui.Button("ccs-res/cocosui/switch-mask.png");
             btn.setTitleText("Toggle Loop");
             btn.setPosition(60, winSize.height - 50);
             btn.setTitleColor(cc.color.RED);

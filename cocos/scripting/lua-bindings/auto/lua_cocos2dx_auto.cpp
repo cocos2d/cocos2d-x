@@ -560,7 +560,7 @@ int lua_cocos2dx_Texture2D_initWithImage(lua_State* tolua_S)
     do{
         if (argc == 2) {
             cocos2d::Image* arg0;
-            ok &= luaval_to_object<cocos2d::Image>(tolua_S, 2, "cc.Image",&arg0);
+            ok &= luaval_to_object<cocos2d::Image>(tolua_S, 2, "cc.Image",&arg0, "cc.Texture2D:initWithImage");
 
             if (!ok) { break; }
             cocos2d::Texture2D::PixelFormat arg1;
@@ -576,7 +576,7 @@ int lua_cocos2dx_Texture2D_initWithImage(lua_State* tolua_S)
     do{
         if (argc == 1) {
             cocos2d::Image* arg0;
-            ok &= luaval_to_object<cocos2d::Image>(tolua_S, 2, "cc.Image",&arg0);
+            ok &= luaval_to_object<cocos2d::Image>(tolua_S, 2, "cc.Image",&arg0, "cc.Texture2D:initWithImage");
 
             if (!ok) { break; }
             bool ret = cobj->initWithImage(arg0);
@@ -1444,7 +1444,7 @@ int lua_cocos2dx_Texture2D_setGLProgram(lua_State* tolua_S)
     {
         cocos2d::GLProgram* arg0;
 
-        ok &= luaval_to_object<cocos2d::GLProgram>(tolua_S, 2, "cc.GLProgram",&arg0);
+        ok &= luaval_to_object<cocos2d::GLProgram>(tolua_S, 2, "cc.GLProgram",&arg0, "cc.Texture2D:setGLProgram");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Texture2D_setGLProgram'", nullptr);
@@ -2899,7 +2899,7 @@ int lua_cocos2dx_Node_addChild(lua_State* tolua_S)
     do{
         if (argc == 2) {
             cocos2d::Node* arg0;
-            ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+            ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.Node:addChild");
 
             if (!ok) { break; }
             int arg1;
@@ -2915,7 +2915,7 @@ int lua_cocos2dx_Node_addChild(lua_State* tolua_S)
     do{
         if (argc == 1) {
             cocos2d::Node* arg0;
-            ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+            ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.Node:addChild");
 
             if (!ok) { break; }
             cobj->addChild(arg0);
@@ -2927,7 +2927,7 @@ int lua_cocos2dx_Node_addChild(lua_State* tolua_S)
     do{
         if (argc == 3) {
             cocos2d::Node* arg0;
-            ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+            ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.Node:addChild");
 
             if (!ok) { break; }
             int arg1;
@@ -2947,7 +2947,7 @@ int lua_cocos2dx_Node_addChild(lua_State* tolua_S)
     do{
         if (argc == 3) {
             cocos2d::Node* arg0;
-            ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+            ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.Node:addChild");
 
             if (!ok) { break; }
             int arg1;
@@ -2998,7 +2998,7 @@ int lua_cocos2dx_Node_removeComponent(lua_State* tolua_S)
     do{
         if (argc == 1) {
             cocos2d::Component* arg0;
-            ok &= luaval_to_object<cocos2d::Component>(tolua_S, 2, "cc.Component",&arg0);
+            ok &= luaval_to_object<cocos2d::Component>(tolua_S, 2, "cc.Component",&arg0, "cc.Node:removeComponent");
 
             if (!ok) { break; }
             bool ret = cobj->removeComponent(arg0);
@@ -4348,7 +4348,7 @@ int lua_cocos2dx_Node_removeChild(lua_State* tolua_S)
     {
         cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.Node:removeChild");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node_removeChild'", nullptr);
@@ -4363,7 +4363,7 @@ int lua_cocos2dx_Node_removeChild(lua_State* tolua_S)
         cocos2d::Node* arg0;
         bool arg1;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.Node:removeChild");
 
         ok &= luaval_to_boolean(tolua_S, 3,&arg1, "cc.Node:removeChild");
         if(!ok)
@@ -4609,7 +4609,7 @@ int lua_cocos2dx_Node_setGLProgramState(lua_State* tolua_S)
     {
         cocos2d::GLProgramState* arg0;
 
-        ok &= luaval_to_object<cocos2d::GLProgramState>(tolua_S, 2, "cc.GLProgramState",&arg0);
+        ok &= luaval_to_object<cocos2d::GLProgramState>(tolua_S, 2, "cc.GLProgramState",&arg0, "cc.Node:setGLProgramState");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node_setGLProgramState'", nullptr);
@@ -4817,7 +4817,7 @@ int lua_cocos2dx_Node_convertTouchToNodeSpace(lua_State* tolua_S)
     {
         cocos2d::Touch* arg0;
 
-        ok &= luaval_to_object<cocos2d::Touch>(tolua_S, 2, "cc.Touch",&arg0);
+        ok &= luaval_to_object<cocos2d::Touch>(tolua_S, 2, "cc.Touch",&arg0, "cc.Node:convertTouchToNodeSpace");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node_convertTouchToNodeSpace'", nullptr);
@@ -5012,7 +5012,7 @@ int lua_cocos2dx_Node_setParent(lua_State* tolua_S)
     {
         cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.Node:setParent");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node_setParent'", nullptr);
@@ -5250,7 +5250,7 @@ int lua_cocos2dx_Node_convertTouchToNodeSpaceAR(lua_State* tolua_S)
     {
         cocos2d::Touch* arg0;
 
-        ok &= luaval_to_object<cocos2d::Touch>(tolua_S, 2, "cc.Touch",&arg0);
+        ok &= luaval_to_object<cocos2d::Touch>(tolua_S, 2, "cc.Touch",&arg0, "cc.Node:convertTouchToNodeSpaceAR");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node_convertTouchToNodeSpaceAR'", nullptr);
@@ -5460,7 +5460,7 @@ int lua_cocos2dx_Node_reorderChild(lua_State* tolua_S)
         cocos2d::Node* arg0;
         int arg1;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.Node:reorderChild");
 
         ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.Node:reorderChild");
         if(!ok)
@@ -6097,7 +6097,7 @@ int lua_cocos2dx_Node_addComponent(lua_State* tolua_S)
     {
         cocos2d::Component* arg0;
 
-        ok &= luaval_to_object<cocos2d::Component>(tolua_S, 2, "cc.Component",&arg0);
+        ok &= luaval_to_object<cocos2d::Component>(tolua_S, 2, "cc.Component",&arg0, "cc.Node:addComponent");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node_addComponent'", nullptr);
@@ -6147,7 +6147,7 @@ int lua_cocos2dx_Node_runAction(lua_State* tolua_S)
     {
         cocos2d::Action* arg0;
 
-        ok &= luaval_to_object<cocos2d::Action>(tolua_S, 2, "cc.Action",&arg0);
+        ok &= luaval_to_object<cocos2d::Action>(tolua_S, 2, "cc.Action",&arg0, "cc.Node:runAction");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node_runAction'", nullptr);
@@ -6199,7 +6199,7 @@ int lua_cocos2dx_Node_visit(lua_State* tolua_S)
     do{
         if (argc == 3) {
             cocos2d::Renderer* arg0;
-            ok &= luaval_to_object<cocos2d::Renderer>(tolua_S, 2, "cc.Renderer",&arg0);
+            ok &= luaval_to_object<cocos2d::Renderer>(tolua_S, 2, "cc.Renderer",&arg0, "cc.Node:visit");
 
             if (!ok) { break; }
             cocos2d::Mat4 arg1;
@@ -6511,7 +6511,7 @@ int lua_cocos2dx_Node_setScheduler(lua_State* tolua_S)
     {
         cocos2d::Scheduler* arg0;
 
-        ok &= luaval_to_object<cocos2d::Scheduler>(tolua_S, 2, "cc.Scheduler",&arg0);
+        ok &= luaval_to_object<cocos2d::Scheduler>(tolua_S, 2, "cc.Scheduler",&arg0, "cc.Node:setScheduler");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node_setScheduler'", nullptr);
@@ -7084,7 +7084,7 @@ int lua_cocos2dx_Node_setActionManager(lua_State* tolua_S)
     {
         cocos2d::ActionManager* arg0;
 
-        ok &= luaval_to_object<cocos2d::ActionManager>(tolua_S, 2, "cc.ActionManager",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionManager>(tolua_S, 2, "cc.ActionManager",&arg0, "cc.Node:setActionManager");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node_setActionManager'", nullptr);
@@ -8615,7 +8615,7 @@ int lua_cocos2dx_Node_setEventDispatcher(lua_State* tolua_S)
     {
         cocos2d::EventDispatcher* arg0;
 
-        ok &= luaval_to_object<cocos2d::EventDispatcher>(tolua_S, 2, "cc.EventDispatcher",&arg0);
+        ok &= luaval_to_object<cocos2d::EventDispatcher>(tolua_S, 2, "cc.EventDispatcher",&arg0, "cc.Node:setEventDispatcher");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node_setEventDispatcher'", nullptr);
@@ -8714,7 +8714,7 @@ int lua_cocos2dx_Node_draw(lua_State* tolua_S)
     do{
         if (argc == 3) {
             cocos2d::Renderer* arg0;
-            ok &= luaval_to_object<cocos2d::Renderer>(tolua_S, 2, "cc.Renderer",&arg0);
+            ok &= luaval_to_object<cocos2d::Renderer>(tolua_S, 2, "cc.Renderer",&arg0, "cc.Node:draw");
 
             if (!ok) { break; }
             cocos2d::Mat4 arg1;
@@ -8771,7 +8771,7 @@ int lua_cocos2dx_Node_setUserObject(lua_State* tolua_S)
     {
         cocos2d::Ref* arg0;
 
-        ok &= luaval_to_object<cocos2d::Ref>(tolua_S, 2, "cc.Ref",&arg0);
+        ok &= luaval_to_object<cocos2d::Ref>(tolua_S, 2, "cc.Ref",&arg0, "cc.Node:setUserObject");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node_setUserObject'", nullptr);
@@ -9066,7 +9066,7 @@ int lua_cocos2dx_Node_setGLProgram(lua_State* tolua_S)
     {
         cocos2d::GLProgram* arg0;
 
-        ok &= luaval_to_object<cocos2d::GLProgram>(tolua_S, 2, "cc.GLProgram",&arg0);
+        ok &= luaval_to_object<cocos2d::GLProgram>(tolua_S, 2, "cc.GLProgram",&arg0, "cc.Node:setGLProgram");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node_setGLProgram'", nullptr);
@@ -9401,7 +9401,7 @@ int lua_cocos2dx_Node_stopAction(lua_State* tolua_S)
     {
         cocos2d::Action* arg0;
 
-        ok &= luaval_to_object<cocos2d::Action>(tolua_S, 2, "cc.Action",&arg0);
+        ok &= luaval_to_object<cocos2d::Action>(tolua_S, 2, "cc.Action",&arg0, "cc.Node:stopAction");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Node_stopAction'", nullptr);
@@ -9769,7 +9769,7 @@ int lua_cocos2dx_Scene_render(lua_State* tolua_S)
     {
         cocos2d::Renderer* arg0;
 
-        ok &= luaval_to_object<cocos2d::Renderer>(tolua_S, 2, "cc.Renderer",&arg0);
+        ok &= luaval_to_object<cocos2d::Renderer>(tolua_S, 2, "cc.Renderer",&arg0, "cc.Scene:render");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Scene_render'", nullptr);
@@ -9819,7 +9819,7 @@ int lua_cocos2dx_Scene_onProjectionChanged(lua_State* tolua_S)
     {
         cocos2d::EventCustom* arg0;
 
-        ok &= luaval_to_object<cocos2d::EventCustom>(tolua_S, 2, "cc.EventCustom",&arg0);
+        ok &= luaval_to_object<cocos2d::EventCustom>(tolua_S, 2, "cc.EventCustom",&arg0, "cc.Scene:onProjectionChanged");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Scene_onProjectionChanged'", nullptr);
@@ -11733,7 +11733,7 @@ int lua_cocos2dx_Director_setEventDispatcher(lua_State* tolua_S)
     {
         cocos2d::EventDispatcher* arg0;
 
-        ok &= luaval_to_object<cocos2d::EventDispatcher>(tolua_S, 2, "cc.EventDispatcher",&arg0);
+        ok &= luaval_to_object<cocos2d::EventDispatcher>(tolua_S, 2, "cc.EventDispatcher",&arg0, "cc.Director:setEventDispatcher");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Director_setEventDispatcher'", nullptr);
@@ -12021,7 +12021,7 @@ int lua_cocos2dx_Director_setActionManager(lua_State* tolua_S)
     {
         cocos2d::ActionManager* arg0;
 
-        ok &= luaval_to_object<cocos2d::ActionManager>(tolua_S, 2, "cc.ActionManager",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionManager>(tolua_S, 2, "cc.ActionManager",&arg0, "cc.Director:setActionManager");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Director_setActionManager'", nullptr);
@@ -12888,7 +12888,7 @@ int lua_cocos2dx_Director_setScheduler(lua_State* tolua_S)
     {
         cocos2d::Scheduler* arg0;
 
-        ok &= luaval_to_object<cocos2d::Scheduler>(tolua_S, 2, "cc.Scheduler",&arg0);
+        ok &= luaval_to_object<cocos2d::Scheduler>(tolua_S, 2, "cc.Scheduler",&arg0, "cc.Director:setScheduler");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Director_setScheduler'", nullptr);
@@ -13464,7 +13464,7 @@ int lua_cocos2dx_Director_setOpenGLView(lua_State* tolua_S)
     {
         cocos2d::GLView* arg0;
 
-        ok &= luaval_to_object<cocos2d::GLView>(tolua_S, 2, "cc.GLView",&arg0);
+        ok &= luaval_to_object<cocos2d::GLView>(tolua_S, 2, "cc.GLView",&arg0, "cc.Director:setOpenGLView");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Director_setOpenGLView'", nullptr);
@@ -13658,7 +13658,7 @@ int lua_cocos2dx_Director_runWithScene(lua_State* tolua_S)
     {
         cocos2d::Scene* arg0;
 
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 2, "cc.Scene",&arg0);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 2, "cc.Scene",&arg0, "cc.Director:runWithScene");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Director_runWithScene'", nullptr);
@@ -13708,7 +13708,7 @@ int lua_cocos2dx_Director_setNotificationNode(lua_State* tolua_S)
     {
         cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.Director:setNotificationNode");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Director_setNotificationNode'", nullptr);
@@ -14387,7 +14387,7 @@ int lua_cocos2dx_Director_pushScene(lua_State* tolua_S)
     {
         cocos2d::Scene* arg0;
 
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 2, "cc.Scene",&arg0);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 2, "cc.Scene",&arg0, "cc.Director:pushScene");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Director_pushScene'", nullptr);
@@ -14628,7 +14628,7 @@ int lua_cocos2dx_Director_replaceScene(lua_State* tolua_S)
     {
         cocos2d::Scene* arg0;
 
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 2, "cc.Scene",&arg0);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 2, "cc.Scene",&arg0, "cc.Director:replaceScene");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Director_replaceScene'", nullptr);
@@ -15547,7 +15547,7 @@ int lua_cocos2dx_Action_startWithTarget(lua_State* tolua_S)
     {
         cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.Action:startWithTarget");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Action_startWithTarget'", nullptr);
@@ -15597,7 +15597,7 @@ int lua_cocos2dx_Action_setOriginalTarget(lua_State* tolua_S)
     {
         cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.Action:setOriginalTarget");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Action_setOriginalTarget'", nullptr);
@@ -16032,7 +16032,7 @@ int lua_cocos2dx_Action_setTarget(lua_State* tolua_S)
     {
         cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.Action:setTarget");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Action_setTarget'", nullptr);
@@ -16326,7 +16326,7 @@ int lua_cocos2dx_Speed_setInnerAction(lua_State* tolua_S)
     {
         cocos2d::ActionInterval* arg0;
 
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.Speed:setInnerAction");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Speed_setInnerAction'", nullptr);
@@ -16474,7 +16474,7 @@ int lua_cocos2dx_Speed_initWithAction(lua_State* tolua_S)
         cocos2d::ActionInterval* arg0;
         double arg1;
 
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.Speed:initWithAction");
 
         ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.Speed:initWithAction");
         if(!ok)
@@ -16562,7 +16562,7 @@ int lua_cocos2dx_Speed_create(lua_State* tolua_S)
     {
         cocos2d::ActionInterval* arg0;
         double arg1;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.Speed:create");
         ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.Speed:create");
         if(!ok)
         {
@@ -16724,7 +16724,7 @@ int lua_cocos2dx_Follow_initWithTarget(lua_State* tolua_S)
     {
         cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.Follow:initWithTarget");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Follow_initWithTarget'", nullptr);
@@ -16739,7 +16739,7 @@ int lua_cocos2dx_Follow_initWithTarget(lua_State* tolua_S)
         cocos2d::Node* arg0;
         cocos2d::Rect arg1;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.Follow:initWithTarget");
 
         ok &= luaval_to_rect(tolua_S, 3, &arg1, "cc.Follow:initWithTarget");
         if(!ok)
@@ -16826,7 +16826,7 @@ int lua_cocos2dx_Follow_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::Node* arg0;
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.Follow:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Follow_create'", nullptr);
@@ -16840,7 +16840,7 @@ int lua_cocos2dx_Follow_create(lua_State* tolua_S)
     {
         cocos2d::Node* arg0;
         cocos2d::Rect arg1;
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.Follow:create");
         ok &= luaval_to_rect(tolua_S, 3, &arg1, "cc.Follow:create");
         if(!ok)
         {
@@ -17047,7 +17047,7 @@ int lua_cocos2dx_SpriteFrame_setTexture(lua_State* tolua_S)
     {
         cocos2d::Texture2D* arg0;
 
-        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.SpriteFrame:setTexture");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_SpriteFrame_setTexture'", nullptr);
@@ -17576,7 +17576,7 @@ int lua_cocos2dx_SpriteFrame_initWithTexture(lua_State* tolua_S)
     do{
         if (argc == 5) {
             cocos2d::Texture2D* arg0;
-            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.SpriteFrame:initWithTexture");
 
             if (!ok) { break; }
             cocos2d::Rect arg1;
@@ -17604,7 +17604,7 @@ int lua_cocos2dx_SpriteFrame_initWithTexture(lua_State* tolua_S)
     do{
         if (argc == 2) {
             cocos2d::Texture2D* arg0;
-            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.SpriteFrame:initWithTexture");
 
             if (!ok) { break; }
             cocos2d::Rect arg1;
@@ -17975,7 +17975,7 @@ int lua_cocos2dx_SpriteFrame_createWithTexture(lua_State* tolua_S)
         if (argc == 5)
         {
             cocos2d::Texture2D* arg0;
-            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.SpriteFrame:createWithTexture");
             if (!ok) { break; }
             cocos2d::Rect arg1;
             ok &= luaval_to_rect(tolua_S, 3, &arg1, "cc.SpriteFrame:createWithTexture");
@@ -18000,7 +18000,7 @@ int lua_cocos2dx_SpriteFrame_createWithTexture(lua_State* tolua_S)
         if (argc == 2)
         {
             cocos2d::Texture2D* arg0;
-            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.SpriteFrame:createWithTexture");
             if (!ok) { break; }
             cocos2d::Rect arg1;
             ok &= luaval_to_rect(tolua_S, 3, &arg1, "cc.SpriteFrame:createWithTexture");
@@ -18127,7 +18127,7 @@ int lua_cocos2dx_AnimationFrame_setSpriteFrame(lua_State* tolua_S)
     {
         cocos2d::SpriteFrame* arg0;
 
-        ok &= luaval_to_object<cocos2d::SpriteFrame>(tolua_S, 2, "cc.SpriteFrame",&arg0);
+        ok &= luaval_to_object<cocos2d::SpriteFrame>(tolua_S, 2, "cc.SpriteFrame",&arg0, "cc.AnimationFrame:setSpriteFrame");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_AnimationFrame_setSpriteFrame'", nullptr);
@@ -18467,7 +18467,7 @@ int lua_cocos2dx_AnimationFrame_initWithSpriteFrame(lua_State* tolua_S)
         double arg1;
         cocos2d::ValueMap arg2;
 
-        ok &= luaval_to_object<cocos2d::SpriteFrame>(tolua_S, 2, "cc.SpriteFrame",&arg0);
+        ok &= luaval_to_object<cocos2d::SpriteFrame>(tolua_S, 2, "cc.SpriteFrame",&arg0, "cc.AnimationFrame:initWithSpriteFrame");
 
         ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.AnimationFrame:initWithSpriteFrame");
 
@@ -18511,7 +18511,7 @@ int lua_cocos2dx_AnimationFrame_create(lua_State* tolua_S)
         cocos2d::SpriteFrame* arg0;
         double arg1;
         cocos2d::ValueMap arg2;
-        ok &= luaval_to_object<cocos2d::SpriteFrame>(tolua_S, 2, "cc.SpriteFrame",&arg0);
+        ok &= luaval_to_object<cocos2d::SpriteFrame>(tolua_S, 2, "cc.SpriteFrame",&arg0, "cc.AnimationFrame:create");
         ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.AnimationFrame:create");
         ok &= luaval_to_ccvaluemap(tolua_S, 4, &arg2, "cc.AnimationFrame:create");
         if(!ok)
@@ -18674,7 +18674,7 @@ int lua_cocos2dx_Animation_addSpriteFrame(lua_State* tolua_S)
     {
         cocos2d::SpriteFrame* arg0;
 
-        ok &= luaval_to_object<cocos2d::SpriteFrame>(tolua_S, 2, "cc.SpriteFrame",&arg0);
+        ok &= luaval_to_object<cocos2d::SpriteFrame>(tolua_S, 2, "cc.SpriteFrame",&arg0, "cc.Animation:addSpriteFrame");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Animation_addSpriteFrame'", nullptr);
@@ -19447,7 +19447,7 @@ int lua_cocos2dx_Animation_addSpriteFrameWithTexture(lua_State* tolua_S)
         cocos2d::Texture2D* arg0;
         cocos2d::Rect arg1;
 
-        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.Animation:addSpriteFrameWithTexture");
 
         ok &= luaval_to_rect(tolua_S, 3, &arg1, "cc.Animation:addSpriteFrameWithTexture");
         if(!ok)
@@ -19928,9 +19928,9 @@ int lua_cocos2dx_Sequence_initWithTwoActions(lua_State* tolua_S)
         cocos2d::FiniteTimeAction* arg0;
         cocos2d::FiniteTimeAction* arg1;
 
-        ok &= luaval_to_object<cocos2d::FiniteTimeAction>(tolua_S, 2, "cc.FiniteTimeAction",&arg0);
+        ok &= luaval_to_object<cocos2d::FiniteTimeAction>(tolua_S, 2, "cc.FiniteTimeAction",&arg0, "cc.Sequence:initWithTwoActions");
 
-        ok &= luaval_to_object<cocos2d::FiniteTimeAction>(tolua_S, 3, "cc.FiniteTimeAction",&arg1);
+        ok &= luaval_to_object<cocos2d::FiniteTimeAction>(tolua_S, 3, "cc.FiniteTimeAction",&arg1, "cc.Sequence:initWithTwoActions");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Sequence_initWithTwoActions'", nullptr);
@@ -20038,7 +20038,7 @@ int lua_cocos2dx_Repeat_setInnerAction(lua_State* tolua_S)
     {
         cocos2d::FiniteTimeAction* arg0;
 
-        ok &= luaval_to_object<cocos2d::FiniteTimeAction>(tolua_S, 2, "cc.FiniteTimeAction",&arg0);
+        ok &= luaval_to_object<cocos2d::FiniteTimeAction>(tolua_S, 2, "cc.FiniteTimeAction",&arg0, "cc.Repeat:setInnerAction");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Repeat_setInnerAction'", nullptr);
@@ -20089,7 +20089,7 @@ int lua_cocos2dx_Repeat_initWithAction(lua_State* tolua_S)
         cocos2d::FiniteTimeAction* arg0;
         unsigned int arg1;
 
-        ok &= luaval_to_object<cocos2d::FiniteTimeAction>(tolua_S, 2, "cc.FiniteTimeAction",&arg0);
+        ok &= luaval_to_object<cocos2d::FiniteTimeAction>(tolua_S, 2, "cc.FiniteTimeAction",&arg0, "cc.Repeat:initWithAction");
 
         ok &= luaval_to_uint32(tolua_S, 3,&arg1, "cc.Repeat:initWithAction");
         if(!ok)
@@ -20177,7 +20177,7 @@ int lua_cocos2dx_Repeat_create(lua_State* tolua_S)
     {
         cocos2d::FiniteTimeAction* arg0;
         unsigned int arg1;
-        ok &= luaval_to_object<cocos2d::FiniteTimeAction>(tolua_S, 2, "cc.FiniteTimeAction",&arg0);
+        ok &= luaval_to_object<cocos2d::FiniteTimeAction>(tolua_S, 2, "cc.FiniteTimeAction",&arg0, "cc.Repeat:create");
         ok &= luaval_to_uint32(tolua_S, 3,&arg1, "cc.Repeat:create");
         if(!ok)
         {
@@ -20287,7 +20287,7 @@ int lua_cocos2dx_RepeatForever_setInnerAction(lua_State* tolua_S)
     {
         cocos2d::ActionInterval* arg0;
 
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.RepeatForever:setInnerAction");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_RepeatForever_setInnerAction'", nullptr);
@@ -20337,7 +20337,7 @@ int lua_cocos2dx_RepeatForever_initWithAction(lua_State* tolua_S)
     {
         cocos2d::ActionInterval* arg0;
 
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.RepeatForever:initWithAction");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_RepeatForever_initWithAction'", nullptr);
@@ -20422,7 +20422,7 @@ int lua_cocos2dx_RepeatForever_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.RepeatForever:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_RepeatForever_create'", nullptr);
@@ -20532,9 +20532,9 @@ int lua_cocos2dx_Spawn_initWithTwoActions(lua_State* tolua_S)
         cocos2d::FiniteTimeAction* arg0;
         cocos2d::FiniteTimeAction* arg1;
 
-        ok &= luaval_to_object<cocos2d::FiniteTimeAction>(tolua_S, 2, "cc.FiniteTimeAction",&arg0);
+        ok &= luaval_to_object<cocos2d::FiniteTimeAction>(tolua_S, 2, "cc.FiniteTimeAction",&arg0, "cc.Spawn:initWithTwoActions");
 
-        ok &= luaval_to_object<cocos2d::FiniteTimeAction>(tolua_S, 3, "cc.FiniteTimeAction",&arg1);
+        ok &= luaval_to_object<cocos2d::FiniteTimeAction>(tolua_S, 3, "cc.FiniteTimeAction",&arg1, "cc.Spawn:initWithTwoActions");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Spawn_initWithTwoActions'", nullptr);
@@ -22928,7 +22928,7 @@ int lua_cocos2dx_FadeIn_setReverseAction(lua_State* tolua_S)
     {
         cocos2d::FadeTo* arg0;
 
-        ok &= luaval_to_object<cocos2d::FadeTo>(tolua_S, 2, "cc.FadeTo",&arg0);
+        ok &= luaval_to_object<cocos2d::FadeTo>(tolua_S, 2, "cc.FadeTo",&arg0, "cc.FadeIn:setReverseAction");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_FadeIn_setReverseAction'", nullptr);
@@ -23073,7 +23073,7 @@ int lua_cocos2dx_FadeOut_setReverseAction(lua_State* tolua_S)
     {
         cocos2d::FadeTo* arg0;
 
-        ok &= luaval_to_object<cocos2d::FadeTo>(tolua_S, 2, "cc.FadeTo",&arg0);
+        ok &= luaval_to_object<cocos2d::FadeTo>(tolua_S, 2, "cc.FadeTo",&arg0, "cc.FadeOut:setReverseAction");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_FadeOut_setReverseAction'", nullptr);
@@ -23697,7 +23697,7 @@ int lua_cocos2dx_Animate_initWithAnimation(lua_State* tolua_S)
     {
         cocos2d::Animation* arg0;
 
-        ok &= luaval_to_object<cocos2d::Animation>(tolua_S, 2, "cc.Animation",&arg0);
+        ok &= luaval_to_object<cocos2d::Animation>(tolua_S, 2, "cc.Animation",&arg0, "cc.Animate:initWithAnimation");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Animate_initWithAnimation'", nullptr);
@@ -23747,7 +23747,7 @@ int lua_cocos2dx_Animate_setAnimation(lua_State* tolua_S)
     {
         cocos2d::Animation* arg0;
 
-        ok &= luaval_to_object<cocos2d::Animation>(tolua_S, 2, "cc.Animation",&arg0);
+        ok &= luaval_to_object<cocos2d::Animation>(tolua_S, 2, "cc.Animation",&arg0, "cc.Animate:setAnimation");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Animate_setAnimation'", nullptr);
@@ -23785,7 +23785,7 @@ int lua_cocos2dx_Animate_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::Animation* arg0;
-        ok &= luaval_to_object<cocos2d::Animation>(tolua_S, 2, "cc.Animation",&arg0);
+        ok &= luaval_to_object<cocos2d::Animation>(tolua_S, 2, "cc.Animation",&arg0, "cc.Animate:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Animate_create'", nullptr);
@@ -23942,9 +23942,9 @@ int lua_cocos2dx_TargetedAction_initWithTarget(lua_State* tolua_S)
         cocos2d::Node* arg0;
         cocos2d::FiniteTimeAction* arg1;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.TargetedAction:initWithTarget");
 
-        ok &= luaval_to_object<cocos2d::FiniteTimeAction>(tolua_S, 3, "cc.FiniteTimeAction",&arg1);
+        ok &= luaval_to_object<cocos2d::FiniteTimeAction>(tolua_S, 3, "cc.FiniteTimeAction",&arg1, "cc.TargetedAction:initWithTarget");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TargetedAction_initWithTarget'", nullptr);
@@ -23994,7 +23994,7 @@ int lua_cocos2dx_TargetedAction_setForcedTarget(lua_State* tolua_S)
     {
         cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.TargetedAction:setForcedTarget");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TargetedAction_setForcedTarget'", nullptr);
@@ -24033,8 +24033,8 @@ int lua_cocos2dx_TargetedAction_create(lua_State* tolua_S)
     {
         cocos2d::Node* arg0;
         cocos2d::FiniteTimeAction* arg1;
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
-        ok &= luaval_to_object<cocos2d::FiniteTimeAction>(tolua_S, 3, "cc.FiniteTimeAction",&arg1);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.TargetedAction:create");
+        ok &= luaval_to_object<cocos2d::FiniteTimeAction>(tolua_S, 3, "cc.FiniteTimeAction",&arg1, "cc.TargetedAction:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TargetedAction_create'", nullptr);
@@ -27047,7 +27047,7 @@ int lua_cocos2dx_EventDispatcher_pauseEventListenersForTarget(lua_State* tolua_S
     {
         cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.EventDispatcher:pauseEventListenersForTarget");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EventDispatcher_pauseEventListenersForTarget'", nullptr);
@@ -27062,7 +27062,7 @@ int lua_cocos2dx_EventDispatcher_pauseEventListenersForTarget(lua_State* tolua_S
         cocos2d::Node* arg0;
         bool arg1;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.EventDispatcher:pauseEventListenersForTarget");
 
         ok &= luaval_to_boolean(tolua_S, 3,&arg1, "cc.EventDispatcher:pauseEventListenersForTarget");
         if(!ok)
@@ -27115,9 +27115,9 @@ int lua_cocos2dx_EventDispatcher_addEventListenerWithSceneGraphPriority(lua_Stat
         cocos2d::EventListener* arg0;
         cocos2d::Node* arg1;
 
-        ok &= luaval_to_object<cocos2d::EventListener>(tolua_S, 2, "cc.EventListener",&arg0);
+        ok &= luaval_to_object<cocos2d::EventListener>(tolua_S, 2, "cc.EventListener",&arg0, "cc.EventDispatcher:addEventListenerWithSceneGraphPriority");
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 3, "cc.Node",&arg1);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 3, "cc.Node",&arg1, "cc.EventDispatcher:addEventListenerWithSceneGraphPriority");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EventDispatcher_addEventListenerWithSceneGraphPriority'", nullptr);
@@ -27218,7 +27218,7 @@ int lua_cocos2dx_EventDispatcher_addEventListenerWithFixedPriority(lua_State* to
         cocos2d::EventListener* arg0;
         int arg1;
 
-        ok &= luaval_to_object<cocos2d::EventListener>(tolua_S, 2, "cc.EventListener",&arg0);
+        ok &= luaval_to_object<cocos2d::EventListener>(tolua_S, 2, "cc.EventListener",&arg0, "cc.EventDispatcher:addEventListenerWithFixedPriority");
 
         ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.EventDispatcher:addEventListenerWithFixedPriority");
         if(!ok)
@@ -27270,7 +27270,7 @@ int lua_cocos2dx_EventDispatcher_removeEventListener(lua_State* tolua_S)
     {
         cocos2d::EventListener* arg0;
 
-        ok &= luaval_to_object<cocos2d::EventListener>(tolua_S, 2, "cc.EventListener",&arg0);
+        ok &= luaval_to_object<cocos2d::EventListener>(tolua_S, 2, "cc.EventListener",&arg0, "cc.EventDispatcher:removeEventListener");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EventDispatcher_removeEventListener'", nullptr);
@@ -27320,7 +27320,7 @@ int lua_cocos2dx_EventDispatcher_resumeEventListenersForTarget(lua_State* tolua_
     {
         cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.EventDispatcher:resumeEventListenersForTarget");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EventDispatcher_resumeEventListenersForTarget'", nullptr);
@@ -27335,7 +27335,7 @@ int lua_cocos2dx_EventDispatcher_resumeEventListenersForTarget(lua_State* tolua_
         cocos2d::Node* arg0;
         bool arg1;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.EventDispatcher:resumeEventListenersForTarget");
 
         ok &= luaval_to_boolean(tolua_S, 3,&arg1, "cc.EventDispatcher:resumeEventListenersForTarget");
         if(!ok)
@@ -27387,7 +27387,7 @@ int lua_cocos2dx_EventDispatcher_removeEventListenersForTarget(lua_State* tolua_
     {
         cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.EventDispatcher:removeEventListenersForTarget");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EventDispatcher_removeEventListenersForTarget'", nullptr);
@@ -27402,7 +27402,7 @@ int lua_cocos2dx_EventDispatcher_removeEventListenersForTarget(lua_State* tolua_
         cocos2d::Node* arg0;
         bool arg1;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.EventDispatcher:removeEventListenersForTarget");
 
         ok &= luaval_to_boolean(tolua_S, 3,&arg1, "cc.EventDispatcher:removeEventListenersForTarget");
         if(!ok)
@@ -27455,7 +27455,7 @@ int lua_cocos2dx_EventDispatcher_setPriority(lua_State* tolua_S)
         cocos2d::EventListener* arg0;
         int arg1;
 
-        ok &= luaval_to_object<cocos2d::EventListener>(tolua_S, 2, "cc.EventListener",&arg0);
+        ok &= luaval_to_object<cocos2d::EventListener>(tolua_S, 2, "cc.EventListener",&arg0, "cc.EventDispatcher:setPriority");
 
         ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.EventDispatcher:setPriority");
         if(!ok)
@@ -27564,7 +27564,7 @@ int lua_cocos2dx_EventDispatcher_dispatchEvent(lua_State* tolua_S)
     {
         cocos2d::Event* arg0;
 
-        ok &= luaval_to_object<cocos2d::Event>(tolua_S, 2, "cc.Event",&arg0);
+        ok &= luaval_to_object<cocos2d::Event>(tolua_S, 2, "cc.Event",&arg0, "cc.EventDispatcher:dispatchEvent");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EventDispatcher_dispatchEvent'", nullptr);
@@ -27867,9 +27867,9 @@ int lua_cocos2dx_EventFocus_constructor(lua_State* tolua_S)
         cocos2d::ui::Widget* arg0;
         cocos2d::ui::Widget* arg1;
 
-        ok &= luaval_to_object<cocos2d::ui::Widget>(tolua_S, 2, "ccui.Widget",&arg0);
+        ok &= luaval_to_object<cocos2d::ui::Widget>(tolua_S, 2, "ccui.Widget",&arg0, "cc.EventFocus:EventFocus");
 
-        ok &= luaval_to_object<cocos2d::ui::Widget>(tolua_S, 3, "ccui.Widget",&arg1);
+        ok &= luaval_to_object<cocos2d::ui::Widget>(tolua_S, 3, "ccui.Widget",&arg1, "cc.EventFocus:EventFocus");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EventFocus_constructor'", nullptr);
@@ -30173,7 +30173,7 @@ int lua_cocos2dx_CardinalSplineTo_initWithDuration(lua_State* tolua_S)
 
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.CardinalSplineTo:initWithDuration");
 
-        ok &= luaval_to_object<cocos2d::PointArray>(tolua_S, 3, "cc.PointArray",&arg1);
+        ok &= luaval_to_object<cocos2d::PointArray>(tolua_S, 3, "cc.PointArray",&arg1, "cc.CardinalSplineTo:initWithDuration");
 
         ok &= luaval_to_number(tolua_S, 4,&arg2, "cc.CardinalSplineTo:initWithDuration");
         if(!ok)
@@ -30345,7 +30345,7 @@ int lua_cocos2dx_CatmullRomTo_initWithDuration(lua_State* tolua_S)
 
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.CatmullRomTo:initWithDuration");
 
-        ok &= luaval_to_object<cocos2d::PointArray>(tolua_S, 3, "cc.PointArray",&arg1);
+        ok &= luaval_to_object<cocos2d::PointArray>(tolua_S, 3, "cc.PointArray",&arg1, "cc.CatmullRomTo:initWithDuration");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_CatmullRomTo_initWithDuration'", nullptr);
@@ -30418,7 +30418,7 @@ int lua_cocos2dx_CatmullRomBy_initWithDuration(lua_State* tolua_S)
 
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.CatmullRomBy:initWithDuration");
 
-        ok &= luaval_to_object<cocos2d::PointArray>(tolua_S, 3, "cc.PointArray",&arg1);
+        ok &= luaval_to_object<cocos2d::PointArray>(tolua_S, 3, "cc.PointArray",&arg1, "cc.CatmullRomBy:initWithDuration");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_CatmullRomBy_initWithDuration'", nullptr);
@@ -30488,7 +30488,7 @@ int lua_cocos2dx_ActionEase_initWithAction(lua_State* tolua_S)
     {
         cocos2d::ActionInterval* arg0;
 
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.ActionEase:initWithAction");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ActionEase_initWithAction'", nullptr);
@@ -30657,7 +30657,7 @@ int lua_cocos2dx_EaseRateAction_initWithAction(lua_State* tolua_S)
         cocos2d::ActionInterval* arg0;
         double arg1;
 
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseRateAction:initWithAction");
 
         ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.EaseRateAction:initWithAction");
         if(!ok)
@@ -30745,7 +30745,7 @@ int lua_cocos2dx_EaseRateAction_create(lua_State* tolua_S)
     {
         cocos2d::ActionInterval* arg0;
         double arg1;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseRateAction:create");
         ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.EaseRateAction:create");
         if(!ok)
         {
@@ -30806,7 +30806,7 @@ int lua_cocos2dx_EaseIn_create(lua_State* tolua_S)
     {
         cocos2d::ActionInterval* arg0;
         double arg1;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseIn:create");
         ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.EaseIn:create");
         if(!ok)
         {
@@ -30902,7 +30902,7 @@ int lua_cocos2dx_EaseOut_create(lua_State* tolua_S)
     {
         cocos2d::ActionInterval* arg0;
         double arg1;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseOut:create");
         ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.EaseOut:create");
         if(!ok)
         {
@@ -30998,7 +30998,7 @@ int lua_cocos2dx_EaseInOut_create(lua_State* tolua_S)
     {
         cocos2d::ActionInterval* arg0;
         double arg1;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseInOut:create");
         ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.EaseInOut:create");
         if(!ok)
         {
@@ -31093,7 +31093,7 @@ int lua_cocos2dx_EaseExponentialIn_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseExponentialIn:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseExponentialIn_create'", nullptr);
@@ -31187,7 +31187,7 @@ int lua_cocos2dx_EaseExponentialOut_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseExponentialOut:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseExponentialOut_create'", nullptr);
@@ -31281,7 +31281,7 @@ int lua_cocos2dx_EaseExponentialInOut_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseExponentialInOut:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseExponentialInOut_create'", nullptr);
@@ -31375,7 +31375,7 @@ int lua_cocos2dx_EaseSineIn_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseSineIn:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseSineIn_create'", nullptr);
@@ -31469,7 +31469,7 @@ int lua_cocos2dx_EaseSineOut_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseSineOut:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseSineOut_create'", nullptr);
@@ -31563,7 +31563,7 @@ int lua_cocos2dx_EaseSineInOut_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseSineInOut:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseSineInOut_create'", nullptr);
@@ -31719,7 +31719,7 @@ int lua_cocos2dx_EaseElastic_initWithAction(lua_State* tolua_S)
     {
         cocos2d::ActionInterval* arg0;
 
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseElastic:initWithAction");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseElastic_initWithAction'", nullptr);
@@ -31734,7 +31734,7 @@ int lua_cocos2dx_EaseElastic_initWithAction(lua_State* tolua_S)
         cocos2d::ActionInterval* arg0;
         double arg1;
 
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseElastic:initWithAction");
 
         ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.EaseElastic:initWithAction");
         if(!ok)
@@ -31844,7 +31844,7 @@ int lua_cocos2dx_EaseElasticIn_create(lua_State* tolua_S)
         if (argc == 1)
         {
             cocos2d::ActionInterval* arg0;
-            ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+            ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseElasticIn:create");
             if (!ok) { break; }
             cocos2d::EaseElasticIn* ret = cocos2d::EaseElasticIn::create(arg0);
             object_to_luaval<cocos2d::EaseElasticIn>(tolua_S, "cc.EaseElasticIn",(cocos2d::EaseElasticIn*)ret);
@@ -31857,7 +31857,7 @@ int lua_cocos2dx_EaseElasticIn_create(lua_State* tolua_S)
         if (argc == 2)
         {
             cocos2d::ActionInterval* arg0;
-            ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+            ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseElasticIn:create");
             if (!ok) { break; }
             double arg1;
             ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.EaseElasticIn:create");
@@ -31953,7 +31953,7 @@ int lua_cocos2dx_EaseElasticOut_create(lua_State* tolua_S)
         if (argc == 1)
         {
             cocos2d::ActionInterval* arg0;
-            ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+            ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseElasticOut:create");
             if (!ok) { break; }
             cocos2d::EaseElasticOut* ret = cocos2d::EaseElasticOut::create(arg0);
             object_to_luaval<cocos2d::EaseElasticOut>(tolua_S, "cc.EaseElasticOut",(cocos2d::EaseElasticOut*)ret);
@@ -31966,7 +31966,7 @@ int lua_cocos2dx_EaseElasticOut_create(lua_State* tolua_S)
         if (argc == 2)
         {
             cocos2d::ActionInterval* arg0;
-            ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+            ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseElasticOut:create");
             if (!ok) { break; }
             double arg1;
             ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.EaseElasticOut:create");
@@ -32062,7 +32062,7 @@ int lua_cocos2dx_EaseElasticInOut_create(lua_State* tolua_S)
         if (argc == 1)
         {
             cocos2d::ActionInterval* arg0;
-            ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+            ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseElasticInOut:create");
             if (!ok) { break; }
             cocos2d::EaseElasticInOut* ret = cocos2d::EaseElasticInOut::create(arg0);
             object_to_luaval<cocos2d::EaseElasticInOut>(tolua_S, "cc.EaseElasticInOut",(cocos2d::EaseElasticInOut*)ret);
@@ -32075,7 +32075,7 @@ int lua_cocos2dx_EaseElasticInOut_create(lua_State* tolua_S)
         if (argc == 2)
         {
             cocos2d::ActionInterval* arg0;
-            ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+            ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseElasticInOut:create");
             if (!ok) { break; }
             double arg1;
             ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.EaseElasticInOut:create");
@@ -32189,7 +32189,7 @@ int lua_cocos2dx_EaseBounceIn_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseBounceIn:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseBounceIn_create'", nullptr);
@@ -32283,7 +32283,7 @@ int lua_cocos2dx_EaseBounceOut_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseBounceOut:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseBounceOut_create'", nullptr);
@@ -32377,7 +32377,7 @@ int lua_cocos2dx_EaseBounceInOut_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseBounceInOut:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseBounceInOut_create'", nullptr);
@@ -32471,7 +32471,7 @@ int lua_cocos2dx_EaseBackIn_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseBackIn:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseBackIn_create'", nullptr);
@@ -32565,7 +32565,7 @@ int lua_cocos2dx_EaseBackOut_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseBackOut:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseBackOut_create'", nullptr);
@@ -32659,7 +32659,7 @@ int lua_cocos2dx_EaseBackInOut_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseBackInOut:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseBackInOut_create'", nullptr);
@@ -32812,7 +32812,7 @@ int lua_cocos2dx_EaseBezierAction_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseBezierAction:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseBezierAction_create'", nullptr);
@@ -32907,7 +32907,7 @@ int lua_cocos2dx_EaseQuadraticActionIn_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseQuadraticActionIn:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseQuadraticActionIn_create'", nullptr);
@@ -33001,7 +33001,7 @@ int lua_cocos2dx_EaseQuadraticActionOut_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseQuadraticActionOut:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseQuadraticActionOut_create'", nullptr);
@@ -33095,7 +33095,7 @@ int lua_cocos2dx_EaseQuadraticActionInOut_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseQuadraticActionInOut:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseQuadraticActionInOut_create'", nullptr);
@@ -33189,7 +33189,7 @@ int lua_cocos2dx_EaseQuarticActionIn_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseQuarticActionIn:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseQuarticActionIn_create'", nullptr);
@@ -33283,7 +33283,7 @@ int lua_cocos2dx_EaseQuarticActionOut_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseQuarticActionOut:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseQuarticActionOut_create'", nullptr);
@@ -33377,7 +33377,7 @@ int lua_cocos2dx_EaseQuarticActionInOut_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseQuarticActionInOut:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseQuarticActionInOut_create'", nullptr);
@@ -33471,7 +33471,7 @@ int lua_cocos2dx_EaseQuinticActionIn_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseQuinticActionIn:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseQuinticActionIn_create'", nullptr);
@@ -33565,7 +33565,7 @@ int lua_cocos2dx_EaseQuinticActionOut_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseQuinticActionOut:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseQuinticActionOut_create'", nullptr);
@@ -33659,7 +33659,7 @@ int lua_cocos2dx_EaseQuinticActionInOut_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseQuinticActionInOut:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseQuinticActionInOut_create'", nullptr);
@@ -33753,7 +33753,7 @@ int lua_cocos2dx_EaseCircleActionIn_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseCircleActionIn:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseCircleActionIn_create'", nullptr);
@@ -33847,7 +33847,7 @@ int lua_cocos2dx_EaseCircleActionOut_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseCircleActionOut:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseCircleActionOut_create'", nullptr);
@@ -33941,7 +33941,7 @@ int lua_cocos2dx_EaseCircleActionInOut_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseCircleActionInOut:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseCircleActionInOut_create'", nullptr);
@@ -34035,7 +34035,7 @@ int lua_cocos2dx_EaseCubicActionIn_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseCubicActionIn:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseCubicActionIn_create'", nullptr);
@@ -34129,7 +34129,7 @@ int lua_cocos2dx_EaseCubicActionOut_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseCubicActionOut:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseCubicActionOut_create'", nullptr);
@@ -34223,7 +34223,7 @@ int lua_cocos2dx_EaseCubicActionInOut_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::ActionInterval* arg0;
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.EaseCubicActionInOut:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_EaseCubicActionInOut_create'", nullptr);
@@ -35309,7 +35309,7 @@ int lua_cocos2dx_CallFunc_setTargetCallback(lua_State* tolua_S)
     {
         cocos2d::Ref* arg0;
 
-        ok &= luaval_to_object<cocos2d::Ref>(tolua_S, 2, "cc.Ref",&arg0);
+        ok &= luaval_to_object<cocos2d::Ref>(tolua_S, 2, "cc.Ref",&arg0, "cc.CallFunc:setTargetCallback");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_CallFunc_setTargetCallback'", nullptr);
@@ -38693,7 +38693,7 @@ int lua_cocos2dx_ActionManager_getActionByTag(lua_State* tolua_S)
 
         ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.ActionManager:getActionByTag");
 
-        ok &= luaval_to_object<const cocos2d::Node>(tolua_S, 3, "cc.Node",&arg1);
+        ok &= luaval_to_object<const cocos2d::Node>(tolua_S, 3, "cc.Node",&arg1, "cc.ActionManager:getActionByTag");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ActionManager_getActionByTag'", nullptr);
@@ -38746,7 +38746,7 @@ int lua_cocos2dx_ActionManager_removeActionByTag(lua_State* tolua_S)
 
         ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.ActionManager:removeActionByTag");
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 3, "cc.Node",&arg1);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 3, "cc.Node",&arg1, "cc.ActionManager:removeActionByTag");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ActionManager_removeActionByTag'", nullptr);
@@ -38845,9 +38845,9 @@ int lua_cocos2dx_ActionManager_addAction(lua_State* tolua_S)
         cocos2d::Node* arg1;
         bool arg2;
 
-        ok &= luaval_to_object<cocos2d::Action>(tolua_S, 2, "cc.Action",&arg0);
+        ok &= luaval_to_object<cocos2d::Action>(tolua_S, 2, "cc.Action",&arg0, "cc.ActionManager:addAction");
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 3, "cc.Node",&arg1);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 3, "cc.Node",&arg1, "cc.ActionManager:addAction");
 
         ok &= luaval_to_boolean(tolua_S, 4,&arg2, "cc.ActionManager:addAction");
         if(!ok)
@@ -38899,7 +38899,7 @@ int lua_cocos2dx_ActionManager_resumeTarget(lua_State* tolua_S)
     {
         cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.ActionManager:resumeTarget");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ActionManager_resumeTarget'", nullptr);
@@ -38999,7 +38999,7 @@ int lua_cocos2dx_ActionManager_pauseTarget(lua_State* tolua_S)
     {
         cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.ActionManager:pauseTarget");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ActionManager_pauseTarget'", nullptr);
@@ -39049,7 +39049,7 @@ int lua_cocos2dx_ActionManager_getNumberOfRunningActionsInTarget(lua_State* tolu
     {
         const cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<const cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<const cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.ActionManager:getNumberOfRunningActionsInTarget");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ActionManager_getNumberOfRunningActionsInTarget'", nullptr);
@@ -39099,7 +39099,7 @@ int lua_cocos2dx_ActionManager_removeAllActionsFromTarget(lua_State* tolua_S)
     {
         cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.ActionManager:removeAllActionsFromTarget");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ActionManager_removeAllActionsFromTarget'", nullptr);
@@ -39199,7 +39199,7 @@ int lua_cocos2dx_ActionManager_removeAction(lua_State* tolua_S)
     {
         cocos2d::Action* arg0;
 
-        ok &= luaval_to_object<cocos2d::Action>(tolua_S, 2, "cc.Action",&arg0);
+        ok &= luaval_to_object<cocos2d::Action>(tolua_S, 2, "cc.Action",&arg0, "cc.ActionManager:removeAction");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ActionManager_removeAction'", nullptr);
@@ -39252,7 +39252,7 @@ int lua_cocos2dx_ActionManager_removeAllActionsByTag(lua_State* tolua_S)
 
         ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "cc.ActionManager:removeAllActionsByTag");
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 3, "cc.Node",&arg1);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 3, "cc.Node",&arg1, "cc.ActionManager:removeAllActionsByTag");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ActionManager_removeAllActionsByTag'", nullptr);
@@ -42602,7 +42602,7 @@ int lua_cocos2dx_GLProgramState_setUniformVec4v(lua_State* tolua_S)
 
             if (!ok) { break; }
             const cocos2d::Vec4* arg2;
-            ok &= luaval_to_object<const cocos2d::Vec4>(tolua_S, 4, "cc.Vec4",&arg2);
+            ok &= luaval_to_object<const cocos2d::Vec4>(tolua_S, 4, "cc.Vec4",&arg2, "cc.GLProgramState:setUniformVec4v");
 
             if (!ok) { break; }
             cobj->setUniformVec4v(arg0, arg1, arg2);
@@ -42622,7 +42622,7 @@ int lua_cocos2dx_GLProgramState_setUniformVec4v(lua_State* tolua_S)
 
             if (!ok) { break; }
             const cocos2d::Vec4* arg2;
-            ok &= luaval_to_object<const cocos2d::Vec4>(tolua_S, 4, "cc.Vec4",&arg2);
+            ok &= luaval_to_object<const cocos2d::Vec4>(tolua_S, 4, "cc.Vec4",&arg2, "cc.GLProgramState:setUniformVec4v");
 
             if (!ok) { break; }
             cobj->setUniformVec4v(arg0, arg1, arg2);
@@ -42786,7 +42786,7 @@ int lua_cocos2dx_GLProgramState_setUniformVec2v(lua_State* tolua_S)
 
             if (!ok) { break; }
             const cocos2d::Vec2* arg2;
-            ok &= luaval_to_object<const cocos2d::Vec2>(tolua_S, 4, "cc.Vec2",&arg2);
+            ok &= luaval_to_object<const cocos2d::Vec2>(tolua_S, 4, "cc.Vec2",&arg2, "cc.GLProgramState:setUniformVec2v");
 
             if (!ok) { break; }
             cobj->setUniformVec2v(arg0, arg1, arg2);
@@ -42806,7 +42806,7 @@ int lua_cocos2dx_GLProgramState_setUniformVec2v(lua_State* tolua_S)
 
             if (!ok) { break; }
             const cocos2d::Vec2* arg2;
-            ok &= luaval_to_object<const cocos2d::Vec2>(tolua_S, 4, "cc.Vec2",&arg2);
+            ok &= luaval_to_object<const cocos2d::Vec2>(tolua_S, 4, "cc.Vec2",&arg2, "cc.GLProgramState:setUniformVec2v");
 
             if (!ok) { break; }
             cobj->setUniformVec2v(arg0, arg1, arg2);
@@ -43010,7 +43010,7 @@ int lua_cocos2dx_GLProgramState_setGLProgram(lua_State* tolua_S)
     {
         cocos2d::GLProgram* arg0;
 
-        ok &= luaval_to_object<cocos2d::GLProgram>(tolua_S, 2, "cc.GLProgram",&arg0);
+        ok &= luaval_to_object<cocos2d::GLProgram>(tolua_S, 2, "cc.GLProgram",&arg0, "cc.GLProgramState:setGLProgram");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_GLProgramState_setGLProgram'", nullptr);
@@ -43194,7 +43194,7 @@ int lua_cocos2dx_GLProgramState_setUniformTexture(lua_State* tolua_S)
 
             if (!ok) { break; }
             cocos2d::Texture2D* arg1;
-            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 3, "cc.Texture2D",&arg1);
+            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 3, "cc.Texture2D",&arg1, "cc.GLProgramState:setUniformTexture");
 
             if (!ok) { break; }
             cobj->setUniformTexture(arg0, arg1);
@@ -43210,7 +43210,7 @@ int lua_cocos2dx_GLProgramState_setUniformTexture(lua_State* tolua_S)
 
             if (!ok) { break; }
             cocos2d::Texture2D* arg1;
-            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 3, "cc.Texture2D",&arg1);
+            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 3, "cc.Texture2D",&arg1, "cc.GLProgramState:setUniformTexture");
 
             if (!ok) { break; }
             cobj->setUniformTexture(arg0, arg1);
@@ -43450,7 +43450,7 @@ int lua_cocos2dx_GLProgramState_setUniformVec3v(lua_State* tolua_S)
 
             if (!ok) { break; }
             const cocos2d::Vec3* arg2;
-            ok &= luaval_to_object<const cocos2d::Vec3>(tolua_S, 4, "cc.Vec3",&arg2);
+            ok &= luaval_to_object<const cocos2d::Vec3>(tolua_S, 4, "cc.Vec3",&arg2, "cc.GLProgramState:setUniformVec3v");
 
             if (!ok) { break; }
             cobj->setUniformVec3v(arg0, arg1, arg2);
@@ -43470,7 +43470,7 @@ int lua_cocos2dx_GLProgramState_setUniformVec3v(lua_State* tolua_S)
 
             if (!ok) { break; }
             const cocos2d::Vec3* arg2;
-            ok &= luaval_to_object<const cocos2d::Vec3>(tolua_S, 4, "cc.Vec3",&arg2);
+            ok &= luaval_to_object<const cocos2d::Vec3>(tolua_S, 4, "cc.Vec3",&arg2, "cc.GLProgramState:setUniformVec3v");
 
             if (!ok) { break; }
             cobj->setUniformVec3v(arg0, arg1, arg2);
@@ -43554,7 +43554,7 @@ int lua_cocos2dx_GLProgramState_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::GLProgram* arg0;
-        ok &= luaval_to_object<cocos2d::GLProgram>(tolua_S, 2, "cc.GLProgram",&arg0);
+        ok &= luaval_to_object<cocos2d::GLProgram>(tolua_S, 2, "cc.GLProgram",&arg0, "cc.GLProgramState:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_GLProgramState_create'", nullptr);
@@ -43626,7 +43626,7 @@ int lua_cocos2dx_GLProgramState_getOrCreateWithGLProgram(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::GLProgram* arg0;
-        ok &= luaval_to_object<cocos2d::GLProgram>(tolua_S, 2, "cc.GLProgram",&arg0);
+        ok &= luaval_to_object<cocos2d::GLProgram>(tolua_S, 2, "cc.GLProgram",&arg0, "cc.GLProgramState:getOrCreateWithGLProgram");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_GLProgramState_getOrCreateWithGLProgram'", nullptr);
@@ -43911,7 +43911,7 @@ int lua_cocos2dx_AtlasNode_setTextureAtlas(lua_State* tolua_S)
     {
         cocos2d::TextureAtlas* arg0;
 
-        ok &= luaval_to_object<cocos2d::TextureAtlas>(tolua_S, 2, "cc.TextureAtlas",&arg0);
+        ok &= luaval_to_object<cocos2d::TextureAtlas>(tolua_S, 2, "cc.TextureAtlas",&arg0, "cc.AtlasNode:setTextureAtlas");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_AtlasNode_setTextureAtlas'", nullptr);
@@ -44152,7 +44152,7 @@ int lua_cocos2dx_AtlasNode_setTexture(lua_State* tolua_S)
     {
         cocos2d::Texture2D* arg0;
 
-        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.AtlasNode:setTexture");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_AtlasNode_setTexture'", nullptr);
@@ -44205,7 +44205,7 @@ int lua_cocos2dx_AtlasNode_initWithTexture(lua_State* tolua_S)
         int arg2;
         int arg3;
 
-        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.AtlasNode:initWithTexture");
 
         ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.AtlasNode:initWithTexture");
 
@@ -44519,7 +44519,7 @@ int lua_cocos2dx_ClippingNode_setStencil(lua_State* tolua_S)
     {
         cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.ClippingNode:setStencil");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ClippingNode_setStencil'", nullptr);
@@ -44616,7 +44616,7 @@ int lua_cocos2dx_ClippingNode_init(lua_State* tolua_S)
     {
         cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.ClippingNode:init");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ClippingNode_init'", nullptr);
@@ -44799,7 +44799,7 @@ int lua_cocos2dx_ClippingNode_create(lua_State* tolua_S)
         if (argc == 1)
         {
             cocos2d::Node* arg0;
-            ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+            ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.ClippingNode:create");
             if (!ok) { break; }
             cocos2d::ClippingNode* ret = cocos2d::ClippingNode::create(arg0);
             object_to_luaval<cocos2d::ClippingNode>(tolua_S, "cc.ClippingNode",(cocos2d::ClippingNode*)ret);
@@ -46304,7 +46304,7 @@ int lua_cocos2dx_SpriteBatchNode_appendChild(lua_State* tolua_S)
     {
         cocos2d::Sprite* arg0;
 
-        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0);
+        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0, "cc.SpriteBatchNode:appendChild");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_SpriteBatchNode_appendChild'", nullptr);
@@ -46451,7 +46451,7 @@ int lua_cocos2dx_SpriteBatchNode_setTexture(lua_State* tolua_S)
     {
         cocos2d::Texture2D* arg0;
 
-        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.SpriteBatchNode:setTexture");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_SpriteBatchNode_setTexture'", nullptr);
@@ -46554,7 +46554,7 @@ int lua_cocos2dx_SpriteBatchNode_removeSpriteFromAtlas(lua_State* tolua_S)
     {
         cocos2d::Sprite* arg0;
 
-        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0);
+        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0, "cc.SpriteBatchNode:removeSpriteFromAtlas");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_SpriteBatchNode_removeSpriteFromAtlas'", nullptr);
@@ -46606,7 +46606,7 @@ int lua_cocos2dx_SpriteBatchNode_addSpriteWithoutQuad(lua_State* tolua_S)
         int arg1;
         int arg2;
 
-        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0);
+        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0, "cc.SpriteBatchNode:addSpriteWithoutQuad");
 
         ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.SpriteBatchNode:addSpriteWithoutQuad");
 
@@ -46661,7 +46661,7 @@ int lua_cocos2dx_SpriteBatchNode_atlasIndexForChild(lua_State* tolua_S)
         cocos2d::Sprite* arg0;
         int arg1;
 
-        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0);
+        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0, "cc.SpriteBatchNode:atlasIndexForChild");
 
         ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.SpriteBatchNode:atlasIndexForChild");
         if(!ok)
@@ -46760,7 +46760,7 @@ int lua_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild(lua_State* tolua_S)
     {
         cocos2d::Sprite* arg0;
 
-        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0);
+        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0, "cc.SpriteBatchNode:lowestAtlasIndexInChild");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_SpriteBatchNode_lowestAtlasIndexInChild'", nullptr);
@@ -46857,7 +46857,7 @@ int lua_cocos2dx_SpriteBatchNode_initWithTexture(lua_State* tolua_S)
     {
         cocos2d::Texture2D* arg0;
 
-        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.SpriteBatchNode:initWithTexture");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_SpriteBatchNode_initWithTexture'", nullptr);
@@ -46872,7 +46872,7 @@ int lua_cocos2dx_SpriteBatchNode_initWithTexture(lua_State* tolua_S)
         cocos2d::Texture2D* arg0;
         ssize_t arg1;
 
-        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.SpriteBatchNode:initWithTexture");
 
         ok &= luaval_to_ssize(tolua_S, 3, &arg1, "cc.SpriteBatchNode:initWithTexture");
         if(!ok)
@@ -46924,7 +46924,7 @@ int lua_cocos2dx_SpriteBatchNode_setTextureAtlas(lua_State* tolua_S)
     {
         cocos2d::TextureAtlas* arg0;
 
-        ok &= luaval_to_object<cocos2d::TextureAtlas>(tolua_S, 2, "cc.TextureAtlas",&arg0);
+        ok &= luaval_to_object<cocos2d::TextureAtlas>(tolua_S, 2, "cc.TextureAtlas",&arg0, "cc.SpriteBatchNode:setTextureAtlas");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_SpriteBatchNode_setTextureAtlas'", nullptr);
@@ -47025,7 +47025,7 @@ int lua_cocos2dx_SpriteBatchNode_insertQuadFromSprite(lua_State* tolua_S)
         cocos2d::Sprite* arg0;
         ssize_t arg1;
 
-        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0);
+        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0, "cc.SpriteBatchNode:insertQuadFromSprite");
 
         ok &= luaval_to_ssize(tolua_S, 3, &arg1, "cc.SpriteBatchNode:insertQuadFromSprite");
         if(!ok)
@@ -47195,7 +47195,7 @@ int lua_cocos2dx_SpriteBatchNode_rebuildIndexInOrder(lua_State* tolua_S)
         cocos2d::Sprite* arg0;
         ssize_t arg1;
 
-        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0);
+        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0, "cc.SpriteBatchNode:rebuildIndexInOrder");
 
         ok &= luaval_to_ssize(tolua_S, 3, &arg1, "cc.SpriteBatchNode:rebuildIndexInOrder");
         if(!ok)
@@ -47294,7 +47294,7 @@ int lua_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild(lua_State* tolua_S)
     {
         cocos2d::Sprite* arg0;
 
-        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0);
+        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0, "cc.SpriteBatchNode:highestAtlasIndexInChild");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_SpriteBatchNode_highestAtlasIndexInChild'", nullptr);
@@ -47383,7 +47383,7 @@ int lua_cocos2dx_SpriteBatchNode_createWithTexture(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::Texture2D* arg0;
-        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.SpriteBatchNode:createWithTexture");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_SpriteBatchNode_createWithTexture'", nullptr);
@@ -47397,7 +47397,7 @@ int lua_cocos2dx_SpriteBatchNode_createWithTexture(lua_State* tolua_S)
     {
         cocos2d::Texture2D* arg0;
         ssize_t arg1;
-        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.SpriteBatchNode:createWithTexture");
         ok &= luaval_to_ssize(tolua_S, 3, &arg1, "cc.SpriteBatchNode:createWithTexture");
         if(!ok)
         {
@@ -48772,7 +48772,7 @@ int lua_cocos2dx_Label_setCharMap(lua_State* tolua_S)
     do{
         if (argc == 4) {
             cocos2d::Texture2D* arg0;
-            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.Label:setCharMap");
 
             if (!ok) { break; }
             int arg1;
@@ -49916,7 +49916,7 @@ int lua_cocos2dx_Label_createWithCharMap(lua_State* tolua_S)
         if (argc == 4)
         {
             cocos2d::Texture2D* arg0;
-            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.Label:createWithCharMap");
             if (!ok) { break; }
             int arg1;
             ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.Label:createWithCharMap");
@@ -50268,7 +50268,7 @@ int lua_cocos2dx_LabelAtlas_initWithString(lua_State* tolua_S)
 
             if (!ok) { break; }
             cocos2d::Texture2D* arg1;
-            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 3, "cc.Texture2D",&arg1);
+            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 3, "cc.Texture2D",&arg1, "cc.LabelAtlas:initWithString");
 
             if (!ok) { break; }
             int arg2;
@@ -51930,7 +51930,7 @@ int lua_cocos2dx_LayerMultiplex_addLayer(lua_State* tolua_S)
     {
         cocos2d::Layer* arg0;
 
-        ok &= luaval_to_object<cocos2d::Layer>(tolua_S, 2, "cc.Layer",&arg0);
+        ok &= luaval_to_object<cocos2d::Layer>(tolua_S, 2, "cc.Layer",&arg0, "cc.LayerMultiplex:addLayer");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_LayerMultiplex_addLayer'", nullptr);
@@ -52487,7 +52487,7 @@ int lua_cocos2dx_MenuItemLabel_setLabel(lua_State* tolua_S)
     {
         cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.MenuItemLabel:setLabel");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_MenuItemLabel_setLabel'", nullptr);
@@ -52635,7 +52635,7 @@ int lua_cocos2dx_MenuItemLabel_initWithLabel(lua_State* tolua_S)
         cocos2d::Node* arg0;
         std::function<void (cocos2d::Ref *)> arg1;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.MenuItemLabel:initWithLabel");
 
         do {
 			// Lambda binding for lua is not supported.
@@ -53532,7 +53532,7 @@ int lua_cocos2dx_MenuItemSprite_setNormalImage(lua_State* tolua_S)
     {
         cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.MenuItemSprite:setNormalImage");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_MenuItemSprite_setNormalImage'", nullptr);
@@ -53582,7 +53582,7 @@ int lua_cocos2dx_MenuItemSprite_setDisabledImage(lua_State* tolua_S)
     {
         cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.MenuItemSprite:setDisabledImage");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_MenuItemSprite_setDisabledImage'", nullptr);
@@ -53635,11 +53635,11 @@ int lua_cocos2dx_MenuItemSprite_initWithNormalSprite(lua_State* tolua_S)
         cocos2d::Node* arg2;
         std::function<void (cocos2d::Ref *)> arg3;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.MenuItemSprite:initWithNormalSprite");
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 3, "cc.Node",&arg1);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 3, "cc.Node",&arg1, "cc.MenuItemSprite:initWithNormalSprite");
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 4, "cc.Node",&arg2);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 4, "cc.Node",&arg2, "cc.MenuItemSprite:initWithNormalSprite");
 
         do {
 			// Lambda binding for lua is not supported.
@@ -53695,7 +53695,7 @@ int lua_cocos2dx_MenuItemSprite_setSelectedImage(lua_State* tolua_S)
     {
         cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.MenuItemSprite:setSelectedImage");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_MenuItemSprite_setSelectedImage'", nullptr);
@@ -54000,7 +54000,7 @@ int lua_cocos2dx_MenuItemImage_setDisabledSpriteFrame(lua_State* tolua_S)
     {
         cocos2d::SpriteFrame* arg0;
 
-        ok &= luaval_to_object<cocos2d::SpriteFrame>(tolua_S, 2, "cc.SpriteFrame",&arg0);
+        ok &= luaval_to_object<cocos2d::SpriteFrame>(tolua_S, 2, "cc.SpriteFrame",&arg0, "cc.MenuItemImage:setDisabledSpriteFrame");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_MenuItemImage_setDisabledSpriteFrame'", nullptr);
@@ -54050,7 +54050,7 @@ int lua_cocos2dx_MenuItemImage_setSelectedSpriteFrame(lua_State* tolua_S)
     {
         cocos2d::SpriteFrame* arg0;
 
-        ok &= luaval_to_object<cocos2d::SpriteFrame>(tolua_S, 2, "cc.SpriteFrame",&arg0);
+        ok &= luaval_to_object<cocos2d::SpriteFrame>(tolua_S, 2, "cc.SpriteFrame",&arg0, "cc.MenuItemImage:setSelectedSpriteFrame");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_MenuItemImage_setSelectedSpriteFrame'", nullptr);
@@ -54100,7 +54100,7 @@ int lua_cocos2dx_MenuItemImage_setNormalSpriteFrame(lua_State* tolua_S)
     {
         cocos2d::SpriteFrame* arg0;
 
-        ok &= luaval_to_object<cocos2d::SpriteFrame>(tolua_S, 2, "cc.SpriteFrame",&arg0);
+        ok &= luaval_to_object<cocos2d::SpriteFrame>(tolua_S, 2, "cc.SpriteFrame",&arg0, "cc.MenuItemImage:setNormalSpriteFrame");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_MenuItemImage_setNormalSpriteFrame'", nullptr);
@@ -54372,7 +54372,7 @@ int lua_cocos2dx_MenuItemToggle_initWithItem(lua_State* tolua_S)
     {
         cocos2d::MenuItem* arg0;
 
-        ok &= luaval_to_object<cocos2d::MenuItem>(tolua_S, 2, "cc.MenuItem",&arg0);
+        ok &= luaval_to_object<cocos2d::MenuItem>(tolua_S, 2, "cc.MenuItem",&arg0, "cc.MenuItemToggle:initWithItem");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_MenuItemToggle_initWithItem'", nullptr);
@@ -54469,7 +54469,7 @@ int lua_cocos2dx_MenuItemToggle_addSubItem(lua_State* tolua_S)
     {
         cocos2d::MenuItem* arg0;
 
-        ok &= luaval_to_object<cocos2d::MenuItem>(tolua_S, 2, "cc.MenuItem",&arg0);
+        ok &= luaval_to_object<cocos2d::MenuItem>(tolua_S, 2, "cc.MenuItem",&arg0, "cc.MenuItemToggle:addSubItem");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_MenuItemToggle_addSubItem'", nullptr);
@@ -55131,7 +55131,7 @@ int lua_cocos2dx_MotionStreak_setTexture(lua_State* tolua_S)
     {
         cocos2d::Texture2D* arg0;
 
-        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.MotionStreak:setTexture");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_MotionStreak_setTexture'", nullptr);
@@ -55576,7 +55576,7 @@ int lua_cocos2dx_MotionStreak_initWithFade(lua_State* tolua_S)
 
             if (!ok) { break; }
             cocos2d::Texture2D* arg4;
-            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 6, "cc.Texture2D",&arg4);
+            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 6, "cc.Texture2D",&arg4, "cc.MotionStreak:initWithFade");
 
             if (!ok) { break; }
             bool ret = cobj->initWithFade(arg0, arg1, arg2, arg3, arg4);
@@ -55754,7 +55754,7 @@ int lua_cocos2dx_MotionStreak_create(lua_State* tolua_S)
             ok &= luaval_to_color3b(tolua_S, 5, &arg3, "cc.MotionStreak:create");
             if (!ok) { break; }
             cocos2d::Texture2D* arg4;
-            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 6, "cc.Texture2D",&arg4);
+            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 6, "cc.Texture2D",&arg4, "cc.MotionStreak:create");
             if (!ok) { break; }
             cocos2d::MotionStreak* ret = cocos2d::MotionStreak::create(arg0, arg1, arg2, arg3, arg4);
             object_to_luaval<cocos2d::MotionStreak>(tolua_S, "cc.MotionStreak",(cocos2d::MotionStreak*)ret);
@@ -55896,7 +55896,7 @@ int lua_cocos2dx_NodeGrid_setTarget(lua_State* tolua_S)
     {
         cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.NodeGrid:setTarget");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_NodeGrid_setTarget'", nullptr);
@@ -55993,7 +55993,7 @@ int lua_cocos2dx_NodeGrid_setGrid(lua_State* tolua_S)
     {
         cocos2d::GridBase* arg0;
 
-        ok &= luaval_to_object<cocos2d::GridBase>(tolua_S, 2, "cc.GridBase",&arg0);
+        ok &= luaval_to_object<cocos2d::GridBase>(tolua_S, 2, "cc.GridBase",&arg0, "cc.NodeGrid:setGrid");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_NodeGrid_setGrid'", nullptr);
@@ -56138,7 +56138,7 @@ int lua_cocos2dx_ParticleBatchNode_setTexture(lua_State* tolua_S)
     {
         cocos2d::Texture2D* arg0;
 
-        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.ParticleBatchNode:setTexture");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ParticleBatchNode_setTexture'", nullptr);
@@ -56189,7 +56189,7 @@ int lua_cocos2dx_ParticleBatchNode_initWithTexture(lua_State* tolua_S)
         cocos2d::Texture2D* arg0;
         int arg1;
 
-        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.ParticleBatchNode:initWithTexture");
 
         ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.ParticleBatchNode:initWithTexture");
         if(!ok)
@@ -56338,7 +56338,7 @@ int lua_cocos2dx_ParticleBatchNode_setTextureAtlas(lua_State* tolua_S)
     {
         cocos2d::TextureAtlas* arg0;
 
-        ok &= luaval_to_object<cocos2d::TextureAtlas>(tolua_S, 2, "cc.TextureAtlas",&arg0);
+        ok &= luaval_to_object<cocos2d::TextureAtlas>(tolua_S, 2, "cc.TextureAtlas",&arg0, "cc.ParticleBatchNode:setTextureAtlas");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ParticleBatchNode_setTextureAtlas'", nullptr);
@@ -56636,7 +56636,7 @@ int lua_cocos2dx_ParticleBatchNode_insertChild(lua_State* tolua_S)
         cocos2d::ParticleSystem* arg0;
         int arg1;
 
-        ok &= luaval_to_object<cocos2d::ParticleSystem>(tolua_S, 2, "cc.ParticleSystem",&arg0);
+        ok &= luaval_to_object<cocos2d::ParticleSystem>(tolua_S, 2, "cc.ParticleSystem",&arg0, "cc.ParticleBatchNode:insertChild");
 
         ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.ParticleBatchNode:insertChild");
         if(!ok)
@@ -56780,7 +56780,7 @@ int lua_cocos2dx_ParticleBatchNode_createWithTexture(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::Texture2D* arg0;
-        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.ParticleBatchNode:createWithTexture");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ParticleBatchNode_createWithTexture'", nullptr);
@@ -56794,7 +56794,7 @@ int lua_cocos2dx_ParticleBatchNode_createWithTexture(lua_State* tolua_S)
     {
         cocos2d::Texture2D* arg0;
         int arg1;
-        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.ParticleBatchNode:createWithTexture");
         ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.ParticleBatchNode:createWithTexture");
         if(!ok)
         {
@@ -58169,7 +58169,7 @@ int lua_cocos2dx_ParticleSystem_setTexture(lua_State* tolua_S)
     {
         cocos2d::Texture2D* arg0;
 
-        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.ParticleSystem:setTexture");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ParticleSystem_setTexture'", nullptr);
@@ -59874,7 +59874,7 @@ int lua_cocos2dx_ParticleSystem_setBatchNode(lua_State* tolua_S)
     {
         cocos2d::ParticleBatchNode* arg0;
 
-        ok &= luaval_to_object<cocos2d::ParticleBatchNode>(tolua_S, 2, "cc.ParticleBatchNode",&arg0);
+        ok &= luaval_to_object<cocos2d::ParticleBatchNode>(tolua_S, 2, "cc.ParticleBatchNode",&arg0, "cc.ParticleSystem:setBatchNode");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ParticleSystem_setBatchNode'", nullptr);
@@ -61848,7 +61848,7 @@ int lua_cocos2dx_ParticleSystemQuad_setDisplayFrame(lua_State* tolua_S)
     {
         cocos2d::SpriteFrame* arg0;
 
-        ok &= luaval_to_object<cocos2d::SpriteFrame>(tolua_S, 2, "cc.SpriteFrame",&arg0);
+        ok &= luaval_to_object<cocos2d::SpriteFrame>(tolua_S, 2, "cc.SpriteFrame",&arg0, "cc.ParticleSystemQuad:setDisplayFrame");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ParticleSystemQuad_setDisplayFrame'", nullptr);
@@ -61899,7 +61899,7 @@ int lua_cocos2dx_ParticleSystemQuad_setTextureWithRect(lua_State* tolua_S)
         cocos2d::Texture2D* arg0;
         cocos2d::Rect arg1;
 
-        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.ParticleSystemQuad:setTextureWithRect");
 
         ok &= luaval_to_rect(tolua_S, 3, &arg1, "cc.ParticleSystemQuad:setTextureWithRect");
         if(!ok)
@@ -61951,7 +61951,7 @@ int lua_cocos2dx_ParticleSystemQuad_listenRendererRecreated(lua_State* tolua_S)
     {
         cocos2d::EventCustom* arg0;
 
-        ok &= luaval_to_object<cocos2d::EventCustom>(tolua_S, 2, "cc.EventCustom",&arg0);
+        ok &= luaval_to_object<cocos2d::EventCustom>(tolua_S, 2, "cc.EventCustom",&arg0, "cc.ParticleSystemQuad:listenRendererRecreated");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ParticleSystemQuad_listenRendererRecreated'", nullptr);
@@ -64566,7 +64566,7 @@ int lua_cocos2dx_ProgressTimer_initWithSprite(lua_State* tolua_S)
     {
         cocos2d::Sprite* arg0;
 
-        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0);
+        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0, "cc.ProgressTimer:initWithSprite");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ProgressTimer_initWithSprite'", nullptr);
@@ -64760,7 +64760,7 @@ int lua_cocos2dx_ProgressTimer_setSprite(lua_State* tolua_S)
     {
         cocos2d::Sprite* arg0;
 
-        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0);
+        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0, "cc.ProgressTimer:setSprite");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ProgressTimer_setSprite'", nullptr);
@@ -65191,7 +65191,7 @@ int lua_cocos2dx_ProgressTimer_create(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::Sprite* arg0;
-        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0);
+        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0, "cc.ProgressTimer:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ProgressTimer_create'", nullptr);
@@ -65304,7 +65304,7 @@ int lua_cocos2dx_ProtectedNode_addProtectedChild(lua_State* tolua_S)
     do{
         if (argc == 2) {
             cocos2d::Node* arg0;
-            ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+            ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.ProtectedNode:addProtectedChild");
 
             if (!ok) { break; }
             int arg1;
@@ -65320,7 +65320,7 @@ int lua_cocos2dx_ProtectedNode_addProtectedChild(lua_State* tolua_S)
     do{
         if (argc == 1) {
             cocos2d::Node* arg0;
-            ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+            ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.ProtectedNode:addProtectedChild");
 
             if (!ok) { break; }
             cobj->addProtectedChild(arg0);
@@ -65332,7 +65332,7 @@ int lua_cocos2dx_ProtectedNode_addProtectedChild(lua_State* tolua_S)
     do{
         if (argc == 3) {
             cocos2d::Node* arg0;
-            ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+            ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.ProtectedNode:addProtectedChild");
 
             if (!ok) { break; }
             int arg1;
@@ -65504,7 +65504,7 @@ int lua_cocos2dx_ProtectedNode_reorderProtectedChild(lua_State* tolua_S)
         cocos2d::Node* arg0;
         int arg1;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.ProtectedNode:reorderProtectedChild");
 
         ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.ProtectedNode:reorderProtectedChild");
         if(!ok)
@@ -65750,7 +65750,7 @@ int lua_cocos2dx_ProtectedNode_removeProtectedChild(lua_State* tolua_S)
     {
         cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.ProtectedNode:removeProtectedChild");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_ProtectedNode_removeProtectedChild'", nullptr);
@@ -65765,7 +65765,7 @@ int lua_cocos2dx_ProtectedNode_removeProtectedChild(lua_State* tolua_S)
         cocos2d::Node* arg0;
         bool arg1;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.ProtectedNode:removeProtectedChild");
 
         ok &= luaval_to_boolean(tolua_S, 3,&arg1, "cc.ProtectedNode:removeProtectedChild");
         if(!ok)
@@ -65960,7 +65960,7 @@ int lua_cocos2dx_Sprite_setSpriteFrame(lua_State* tolua_S)
     do{
         if (argc == 1) {
             cocos2d::SpriteFrame* arg0;
-            ok &= luaval_to_object<cocos2d::SpriteFrame>(tolua_S, 2, "cc.SpriteFrame",&arg0);
+            ok &= luaval_to_object<cocos2d::SpriteFrame>(tolua_S, 2, "cc.SpriteFrame",&arg0, "cc.Sprite:setSpriteFrame");
 
             if (!ok) { break; }
             cobj->setSpriteFrame(arg0);
@@ -66015,7 +66015,7 @@ int lua_cocos2dx_Sprite_setTexture(lua_State* tolua_S)
     do{
         if (argc == 1) {
             cocos2d::Texture2D* arg0;
-            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.Sprite:setTexture");
 
             if (!ok) { break; }
             cobj->setTexture(arg0);
@@ -66217,7 +66217,7 @@ int lua_cocos2dx_Sprite_initWithTexture(lua_State* tolua_S)
     do{
         if (argc == 2) {
             cocos2d::Texture2D* arg0;
-            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.Sprite:initWithTexture");
 
             if (!ok) { break; }
             cocos2d::Rect arg1;
@@ -66233,7 +66233,7 @@ int lua_cocos2dx_Sprite_initWithTexture(lua_State* tolua_S)
     do{
         if (argc == 1) {
             cocos2d::Texture2D* arg0;
-            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.Sprite:initWithTexture");
 
             if (!ok) { break; }
             bool ret = cobj->initWithTexture(arg0);
@@ -66245,7 +66245,7 @@ int lua_cocos2dx_Sprite_initWithTexture(lua_State* tolua_S)
     do{
         if (argc == 3) {
             cocos2d::Texture2D* arg0;
-            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.Sprite:initWithTexture");
 
             if (!ok) { break; }
             cocos2d::Rect arg1;
@@ -66559,7 +66559,7 @@ int lua_cocos2dx_Sprite_isFrameDisplayed(lua_State* tolua_S)
     {
         cocos2d::SpriteFrame* arg0;
 
-        ok &= luaval_to_object<cocos2d::SpriteFrame>(tolua_S, 2, "cc.SpriteFrame",&arg0);
+        ok &= luaval_to_object<cocos2d::SpriteFrame>(tolua_S, 2, "cc.SpriteFrame",&arg0, "cc.Sprite:isFrameDisplayed");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Sprite_isFrameDisplayed'", nullptr);
@@ -66656,7 +66656,7 @@ int lua_cocos2dx_Sprite_setBatchNode(lua_State* tolua_S)
     {
         cocos2d::SpriteBatchNode* arg0;
 
-        ok &= luaval_to_object<cocos2d::SpriteBatchNode>(tolua_S, 2, "cc.SpriteBatchNode",&arg0);
+        ok &= luaval_to_object<cocos2d::SpriteBatchNode>(tolua_S, 2, "cc.SpriteBatchNode",&arg0, "cc.Sprite:setBatchNode");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Sprite_setBatchNode'", nullptr);
@@ -66806,7 +66806,7 @@ int lua_cocos2dx_Sprite_setTextureAtlas(lua_State* tolua_S)
     {
         cocos2d::TextureAtlas* arg0;
 
-        ok &= luaval_to_object<cocos2d::TextureAtlas>(tolua_S, 2, "cc.TextureAtlas",&arg0);
+        ok &= luaval_to_object<cocos2d::TextureAtlas>(tolua_S, 2, "cc.TextureAtlas",&arg0, "cc.Sprite:setTextureAtlas");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Sprite_setTextureAtlas'", nullptr);
@@ -67300,7 +67300,7 @@ int lua_cocos2dx_Sprite_initWithSpriteFrame(lua_State* tolua_S)
     {
         cocos2d::SpriteFrame* arg0;
 
-        ok &= luaval_to_object<cocos2d::SpriteFrame>(tolua_S, 2, "cc.SpriteFrame",&arg0);
+        ok &= luaval_to_object<cocos2d::SpriteFrame>(tolua_S, 2, "cc.SpriteFrame",&arg0, "cc.Sprite:initWithSpriteFrame");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Sprite_initWithSpriteFrame'", nullptr);
@@ -67544,7 +67544,7 @@ int lua_cocos2dx_Sprite_createWithTexture(lua_State* tolua_S)
         if (argc == 2)
         {
             cocos2d::Texture2D* arg0;
-            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.Sprite:createWithTexture");
             if (!ok) { break; }
             cocos2d::Rect arg1;
             ok &= luaval_to_rect(tolua_S, 3, &arg1, "cc.Sprite:createWithTexture");
@@ -67560,7 +67560,7 @@ int lua_cocos2dx_Sprite_createWithTexture(lua_State* tolua_S)
         if (argc == 3)
         {
             cocos2d::Texture2D* arg0;
-            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.Sprite:createWithTexture");
             if (!ok) { break; }
             cocos2d::Rect arg1;
             ok &= luaval_to_rect(tolua_S, 3, &arg1, "cc.Sprite:createWithTexture");
@@ -67579,7 +67579,7 @@ int lua_cocos2dx_Sprite_createWithTexture(lua_State* tolua_S)
         if (argc == 1)
         {
             cocos2d::Texture2D* arg0;
-            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.Sprite:createWithTexture");
             if (!ok) { break; }
             cocos2d::Sprite* ret = cocos2d::Sprite::createWithTexture(arg0);
             object_to_luaval<cocos2d::Sprite>(tolua_S, "cc.Sprite",(cocos2d::Sprite*)ret);
@@ -67649,7 +67649,7 @@ int lua_cocos2dx_Sprite_createWithSpriteFrame(lua_State* tolua_S)
     if (argc == 1)
     {
         cocos2d::SpriteFrame* arg0;
-        ok &= luaval_to_object<cocos2d::SpriteFrame>(tolua_S, 2, "cc.SpriteFrame",&arg0);
+        ok &= luaval_to_object<cocos2d::SpriteFrame>(tolua_S, 2, "cc.SpriteFrame",&arg0, "cc.Sprite:createWithSpriteFrame");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Sprite_createWithSpriteFrame'", nullptr);
@@ -68730,7 +68730,7 @@ int lua_cocos2dx_RenderTexture_setSprite(lua_State* tolua_S)
     {
         cocos2d::Sprite* arg0;
 
-        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0);
+        ok &= luaval_to_object<cocos2d::Sprite>(tolua_S, 2, "cc.Sprite",&arg0, "cc.RenderTexture:setSprite");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_RenderTexture_setSprite'", nullptr);
@@ -69980,7 +69980,7 @@ int lua_cocos2dx_TransitionEaseScene_easeActionWithAction(lua_State* tolua_S)
     {
         cocos2d::ActionInterval* arg0;
 
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.TransitionEaseScene:easeActionWithAction");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionEaseScene_easeActionWithAction'", nullptr);
@@ -70147,7 +70147,7 @@ int lua_cocos2dx_TransitionScene_initWithDuration(lua_State* tolua_S)
 
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionScene:initWithDuration");
 
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionScene:initWithDuration");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionScene_initWithDuration'", nullptr);
@@ -70281,7 +70281,7 @@ int lua_cocos2dx_TransitionScene_create(lua_State* tolua_S)
         double arg0;
         cocos2d::Scene* arg1;
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionScene:create");
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionScene:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionScene_create'", nullptr);
@@ -70396,7 +70396,7 @@ int lua_cocos2dx_TransitionSceneOriented_initWithDuration(lua_State* tolua_S)
 
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionSceneOriented:initWithDuration");
 
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionSceneOriented:initWithDuration");
 
         ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "cc.TransitionSceneOriented:initWithDuration");
         if(!ok)
@@ -70439,7 +70439,7 @@ int lua_cocos2dx_TransitionSceneOriented_create(lua_State* tolua_S)
         cocos2d::Scene* arg1;
         cocos2d::TransitionScene::Orientation arg2;
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionSceneOriented:create");
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionSceneOriented:create");
         ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "cc.TransitionSceneOriented:create");
         if(!ok)
         {
@@ -70537,7 +70537,7 @@ int lua_cocos2dx_TransitionRotoZoom_create(lua_State* tolua_S)
         double arg0;
         cocos2d::Scene* arg1;
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionRotoZoom:create");
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionRotoZoom:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionRotoZoom_create'", nullptr);
@@ -70633,7 +70633,7 @@ int lua_cocos2dx_TransitionJumpZoom_create(lua_State* tolua_S)
         double arg0;
         cocos2d::Scene* arg1;
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionJumpZoom:create");
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionJumpZoom:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionJumpZoom_create'", nullptr);
@@ -70786,7 +70786,7 @@ int lua_cocos2dx_TransitionMoveInL_easeActionWithAction(lua_State* tolua_S)
     {
         cocos2d::ActionInterval* arg0;
 
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.TransitionMoveInL:easeActionWithAction");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionMoveInL_easeActionWithAction'", nullptr);
@@ -70826,7 +70826,7 @@ int lua_cocos2dx_TransitionMoveInL_create(lua_State* tolua_S)
         double arg0;
         cocos2d::Scene* arg1;
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionMoveInL:create");
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionMoveInL:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionMoveInL_create'", nullptr);
@@ -70924,7 +70924,7 @@ int lua_cocos2dx_TransitionMoveInR_create(lua_State* tolua_S)
         double arg0;
         cocos2d::Scene* arg1;
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionMoveInR:create");
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionMoveInR:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionMoveInR_create'", nullptr);
@@ -71020,7 +71020,7 @@ int lua_cocos2dx_TransitionMoveInT_create(lua_State* tolua_S)
         double arg0;
         cocos2d::Scene* arg1;
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionMoveInT:create");
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionMoveInT:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionMoveInT_create'", nullptr);
@@ -71116,7 +71116,7 @@ int lua_cocos2dx_TransitionMoveInB_create(lua_State* tolua_S)
         double arg0;
         cocos2d::Scene* arg1;
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionMoveInB:create");
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionMoveInB:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionMoveInB_create'", nullptr);
@@ -71269,7 +71269,7 @@ int lua_cocos2dx_TransitionSlideInL_easeActionWithAction(lua_State* tolua_S)
     {
         cocos2d::ActionInterval* arg0;
 
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.TransitionSlideInL:easeActionWithAction");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionSlideInL_easeActionWithAction'", nullptr);
@@ -71309,7 +71309,7 @@ int lua_cocos2dx_TransitionSlideInL_create(lua_State* tolua_S)
         double arg0;
         cocos2d::Scene* arg1;
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionSlideInL:create");
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionSlideInL:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionSlideInL_create'", nullptr);
@@ -71407,7 +71407,7 @@ int lua_cocos2dx_TransitionSlideInR_create(lua_State* tolua_S)
         double arg0;
         cocos2d::Scene* arg1;
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionSlideInR:create");
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionSlideInR:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionSlideInR_create'", nullptr);
@@ -71503,7 +71503,7 @@ int lua_cocos2dx_TransitionSlideInB_create(lua_State* tolua_S)
         double arg0;
         cocos2d::Scene* arg1;
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionSlideInB:create");
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionSlideInB:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionSlideInB_create'", nullptr);
@@ -71599,7 +71599,7 @@ int lua_cocos2dx_TransitionSlideInT_create(lua_State* tolua_S)
         double arg0;
         cocos2d::Scene* arg1;
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionSlideInT:create");
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionSlideInT:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionSlideInT_create'", nullptr);
@@ -71705,7 +71705,7 @@ int lua_cocos2dx_TransitionShrinkGrow_easeActionWithAction(lua_State* tolua_S)
     {
         cocos2d::ActionInterval* arg0;
 
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.TransitionShrinkGrow:easeActionWithAction");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionShrinkGrow_easeActionWithAction'", nullptr);
@@ -71745,7 +71745,7 @@ int lua_cocos2dx_TransitionShrinkGrow_create(lua_State* tolua_S)
         double arg0;
         cocos2d::Scene* arg1;
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionShrinkGrow:create");
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionShrinkGrow:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionShrinkGrow_create'", nullptr);
@@ -71844,7 +71844,7 @@ int lua_cocos2dx_TransitionFlipX_create(lua_State* tolua_S)
             ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionFlipX:create");
             if (!ok) { break; }
             cocos2d::Scene* arg1;
-            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionFlipX:create");
             if (!ok) { break; }
             cocos2d::TransitionFlipX* ret = cocos2d::TransitionFlipX::create(arg0, arg1);
             object_to_luaval<cocos2d::TransitionFlipX>(tolua_S, "cc.TransitionFlipX",(cocos2d::TransitionFlipX*)ret);
@@ -71860,7 +71860,7 @@ int lua_cocos2dx_TransitionFlipX_create(lua_State* tolua_S)
             ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionFlipX:create");
             if (!ok) { break; }
             cocos2d::Scene* arg1;
-            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionFlipX:create");
             if (!ok) { break; }
             cocos2d::TransitionScene::Orientation arg2;
             ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "cc.TransitionFlipX:create");
@@ -71959,7 +71959,7 @@ int lua_cocos2dx_TransitionFlipY_create(lua_State* tolua_S)
             ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionFlipY:create");
             if (!ok) { break; }
             cocos2d::Scene* arg1;
-            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionFlipY:create");
             if (!ok) { break; }
             cocos2d::TransitionFlipY* ret = cocos2d::TransitionFlipY::create(arg0, arg1);
             object_to_luaval<cocos2d::TransitionFlipY>(tolua_S, "cc.TransitionFlipY",(cocos2d::TransitionFlipY*)ret);
@@ -71975,7 +71975,7 @@ int lua_cocos2dx_TransitionFlipY_create(lua_State* tolua_S)
             ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionFlipY:create");
             if (!ok) { break; }
             cocos2d::Scene* arg1;
-            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionFlipY:create");
             if (!ok) { break; }
             cocos2d::TransitionScene::Orientation arg2;
             ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "cc.TransitionFlipY:create");
@@ -72074,7 +72074,7 @@ int lua_cocos2dx_TransitionFlipAngular_create(lua_State* tolua_S)
             ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionFlipAngular:create");
             if (!ok) { break; }
             cocos2d::Scene* arg1;
-            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionFlipAngular:create");
             if (!ok) { break; }
             cocos2d::TransitionFlipAngular* ret = cocos2d::TransitionFlipAngular::create(arg0, arg1);
             object_to_luaval<cocos2d::TransitionFlipAngular>(tolua_S, "cc.TransitionFlipAngular",(cocos2d::TransitionFlipAngular*)ret);
@@ -72090,7 +72090,7 @@ int lua_cocos2dx_TransitionFlipAngular_create(lua_State* tolua_S)
             ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionFlipAngular:create");
             if (!ok) { break; }
             cocos2d::Scene* arg1;
-            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionFlipAngular:create");
             if (!ok) { break; }
             cocos2d::TransitionScene::Orientation arg2;
             ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "cc.TransitionFlipAngular:create");
@@ -72189,7 +72189,7 @@ int lua_cocos2dx_TransitionZoomFlipX_create(lua_State* tolua_S)
             ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionZoomFlipX:create");
             if (!ok) { break; }
             cocos2d::Scene* arg1;
-            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionZoomFlipX:create");
             if (!ok) { break; }
             cocos2d::TransitionZoomFlipX* ret = cocos2d::TransitionZoomFlipX::create(arg0, arg1);
             object_to_luaval<cocos2d::TransitionZoomFlipX>(tolua_S, "cc.TransitionZoomFlipX",(cocos2d::TransitionZoomFlipX*)ret);
@@ -72205,7 +72205,7 @@ int lua_cocos2dx_TransitionZoomFlipX_create(lua_State* tolua_S)
             ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionZoomFlipX:create");
             if (!ok) { break; }
             cocos2d::Scene* arg1;
-            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionZoomFlipX:create");
             if (!ok) { break; }
             cocos2d::TransitionScene::Orientation arg2;
             ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "cc.TransitionZoomFlipX:create");
@@ -72304,7 +72304,7 @@ int lua_cocos2dx_TransitionZoomFlipY_create(lua_State* tolua_S)
             ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionZoomFlipY:create");
             if (!ok) { break; }
             cocos2d::Scene* arg1;
-            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionZoomFlipY:create");
             if (!ok) { break; }
             cocos2d::TransitionZoomFlipY* ret = cocos2d::TransitionZoomFlipY::create(arg0, arg1);
             object_to_luaval<cocos2d::TransitionZoomFlipY>(tolua_S, "cc.TransitionZoomFlipY",(cocos2d::TransitionZoomFlipY*)ret);
@@ -72320,7 +72320,7 @@ int lua_cocos2dx_TransitionZoomFlipY_create(lua_State* tolua_S)
             ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionZoomFlipY:create");
             if (!ok) { break; }
             cocos2d::Scene* arg1;
-            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionZoomFlipY:create");
             if (!ok) { break; }
             cocos2d::TransitionScene::Orientation arg2;
             ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "cc.TransitionZoomFlipY:create");
@@ -72419,7 +72419,7 @@ int lua_cocos2dx_TransitionZoomFlipAngular_create(lua_State* tolua_S)
             ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionZoomFlipAngular:create");
             if (!ok) { break; }
             cocos2d::Scene* arg1;
-            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionZoomFlipAngular:create");
             if (!ok) { break; }
             cocos2d::TransitionZoomFlipAngular* ret = cocos2d::TransitionZoomFlipAngular::create(arg0, arg1);
             object_to_luaval<cocos2d::TransitionZoomFlipAngular>(tolua_S, "cc.TransitionZoomFlipAngular",(cocos2d::TransitionZoomFlipAngular*)ret);
@@ -72435,7 +72435,7 @@ int lua_cocos2dx_TransitionZoomFlipAngular_create(lua_State* tolua_S)
             ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionZoomFlipAngular:create");
             if (!ok) { break; }
             cocos2d::Scene* arg1;
-            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionZoomFlipAngular:create");
             if (!ok) { break; }
             cocos2d::TransitionScene::Orientation arg2;
             ok &= luaval_to_int32(tolua_S, 4,(int *)&arg2, "cc.TransitionZoomFlipAngular:create");
@@ -72540,7 +72540,7 @@ int lua_cocos2dx_TransitionFade_initWithDuration(lua_State* tolua_S)
 
             if (!ok) { break; }
             cocos2d::Scene* arg1;
-            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionFade:initWithDuration");
 
             if (!ok) { break; }
             bool ret = cobj->initWithDuration(arg0, arg1);
@@ -72556,7 +72556,7 @@ int lua_cocos2dx_TransitionFade_initWithDuration(lua_State* tolua_S)
 
             if (!ok) { break; }
             cocos2d::Scene* arg1;
-            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionFade:initWithDuration");
 
             if (!ok) { break; }
             cocos2d::Color3B arg2;
@@ -72601,7 +72601,7 @@ int lua_cocos2dx_TransitionFade_create(lua_State* tolua_S)
             ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionFade:create");
             if (!ok) { break; }
             cocos2d::Scene* arg1;
-            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionFade:create");
             if (!ok) { break; }
             cocos2d::TransitionFade* ret = cocos2d::TransitionFade::create(arg0, arg1);
             object_to_luaval<cocos2d::TransitionFade>(tolua_S, "cc.TransitionFade",(cocos2d::TransitionFade*)ret);
@@ -72617,7 +72617,7 @@ int lua_cocos2dx_TransitionFade_create(lua_State* tolua_S)
             ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionFade:create");
             if (!ok) { break; }
             cocos2d::Scene* arg1;
-            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+            ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionFade:create");
             if (!ok) { break; }
             cocos2d::Color3B arg2;
             ok &= luaval_to_color3b(tolua_S, 4, &arg2, "cc.TransitionFade:create");
@@ -72715,7 +72715,7 @@ int lua_cocos2dx_TransitionCrossFade_create(lua_State* tolua_S)
         double arg0;
         cocos2d::Scene* arg1;
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionCrossFade:create");
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionCrossFade:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionCrossFade_create'", nullptr);
@@ -72821,7 +72821,7 @@ int lua_cocos2dx_TransitionTurnOffTiles_easeActionWithAction(lua_State* tolua_S)
     {
         cocos2d::ActionInterval* arg0;
 
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.TransitionTurnOffTiles:easeActionWithAction");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionTurnOffTiles_easeActionWithAction'", nullptr);
@@ -72861,7 +72861,7 @@ int lua_cocos2dx_TransitionTurnOffTiles_create(lua_State* tolua_S)
         double arg0;
         cocos2d::Scene* arg1;
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionTurnOffTiles:create");
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionTurnOffTiles:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionTurnOffTiles_create'", nullptr);
@@ -73015,7 +73015,7 @@ int lua_cocos2dx_TransitionSplitCols_easeActionWithAction(lua_State* tolua_S)
     {
         cocos2d::ActionInterval* arg0;
 
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.TransitionSplitCols:easeActionWithAction");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionSplitCols_easeActionWithAction'", nullptr);
@@ -73055,7 +73055,7 @@ int lua_cocos2dx_TransitionSplitCols_create(lua_State* tolua_S)
         double arg0;
         cocos2d::Scene* arg1;
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionSplitCols:create");
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionSplitCols:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionSplitCols_create'", nullptr);
@@ -73153,7 +73153,7 @@ int lua_cocos2dx_TransitionSplitRows_create(lua_State* tolua_S)
         double arg0;
         cocos2d::Scene* arg1;
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionSplitRows:create");
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionSplitRows:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionSplitRows_create'", nullptr);
@@ -73259,7 +73259,7 @@ int lua_cocos2dx_TransitionFadeTR_easeActionWithAction(lua_State* tolua_S)
     {
         cocos2d::ActionInterval* arg0;
 
-        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0);
+        ok &= luaval_to_object<cocos2d::ActionInterval>(tolua_S, 2, "cc.ActionInterval",&arg0, "cc.TransitionFadeTR:easeActionWithAction");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionFadeTR_easeActionWithAction'", nullptr);
@@ -73349,7 +73349,7 @@ int lua_cocos2dx_TransitionFadeTR_create(lua_State* tolua_S)
         double arg0;
         cocos2d::Scene* arg1;
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionFadeTR:create");
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionFadeTR:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionFadeTR_create'", nullptr);
@@ -73447,7 +73447,7 @@ int lua_cocos2dx_TransitionFadeBL_create(lua_State* tolua_S)
         double arg0;
         cocos2d::Scene* arg1;
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionFadeBL:create");
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionFadeBL:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionFadeBL_create'", nullptr);
@@ -73543,7 +73543,7 @@ int lua_cocos2dx_TransitionFadeUp_create(lua_State* tolua_S)
         double arg0;
         cocos2d::Scene* arg1;
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionFadeUp:create");
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionFadeUp:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionFadeUp_create'", nullptr);
@@ -73639,7 +73639,7 @@ int lua_cocos2dx_TransitionFadeDown_create(lua_State* tolua_S)
         double arg0;
         cocos2d::Scene* arg1;
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionFadeDown:create");
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionFadeDown:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionFadeDown_create'", nullptr);
@@ -73799,7 +73799,7 @@ int lua_cocos2dx_TransitionPageTurn_initWithDuration(lua_State* tolua_S)
 
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionPageTurn:initWithDuration");
 
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionPageTurn:initWithDuration");
 
         ok &= luaval_to_boolean(tolua_S, 4,&arg2, "cc.TransitionPageTurn:initWithDuration");
         if(!ok)
@@ -73842,7 +73842,7 @@ int lua_cocos2dx_TransitionPageTurn_create(lua_State* tolua_S)
         cocos2d::Scene* arg1;
         bool arg2;
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionPageTurn:create");
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionPageTurn:create");
         ok &= luaval_to_boolean(tolua_S, 4,&arg2, "cc.TransitionPageTurn:create");
         if(!ok)
         {
@@ -73941,7 +73941,7 @@ int lua_cocos2dx_TransitionProgress_create(lua_State* tolua_S)
         double arg0;
         cocos2d::Scene* arg1;
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionProgress:create");
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionProgress:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionProgress_create'", nullptr);
@@ -74037,7 +74037,7 @@ int lua_cocos2dx_TransitionProgressRadialCCW_create(lua_State* tolua_S)
         double arg0;
         cocos2d::Scene* arg1;
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionProgressRadialCCW:create");
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionProgressRadialCCW:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionProgressRadialCCW_create'", nullptr);
@@ -74133,7 +74133,7 @@ int lua_cocos2dx_TransitionProgressRadialCW_create(lua_State* tolua_S)
         double arg0;
         cocos2d::Scene* arg1;
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionProgressRadialCW:create");
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionProgressRadialCW:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionProgressRadialCW_create'", nullptr);
@@ -74229,7 +74229,7 @@ int lua_cocos2dx_TransitionProgressHorizontal_create(lua_State* tolua_S)
         double arg0;
         cocos2d::Scene* arg1;
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionProgressHorizontal:create");
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionProgressHorizontal:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionProgressHorizontal_create'", nullptr);
@@ -74325,7 +74325,7 @@ int lua_cocos2dx_TransitionProgressVertical_create(lua_State* tolua_S)
         double arg0;
         cocos2d::Scene* arg1;
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionProgressVertical:create");
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionProgressVertical:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionProgressVertical_create'", nullptr);
@@ -74421,7 +74421,7 @@ int lua_cocos2dx_TransitionProgressInOut_create(lua_State* tolua_S)
         double arg0;
         cocos2d::Scene* arg1;
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionProgressInOut:create");
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionProgressInOut:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionProgressInOut_create'", nullptr);
@@ -74517,7 +74517,7 @@ int lua_cocos2dx_TransitionProgressOutIn_create(lua_State* tolua_S)
         double arg0;
         cocos2d::Scene* arg1;
         ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.TransitionProgressOutIn:create");
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 3, "cc.Scene",&arg1, "cc.TransitionProgressOutIn:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TransitionProgressOutIn_create'", nullptr);
@@ -74623,7 +74623,7 @@ int lua_cocos2dx_Camera_setScene(lua_State* tolua_S)
     {
         cocos2d::Scene* arg0;
 
-        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 2, "cc.Scene",&arg0);
+        ok &= luaval_to_object<cocos2d::Scene>(tolua_S, 2, "cc.Scene",&arg0, "cc.Camera:setScene");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Camera_setScene'", nullptr);
@@ -75034,6 +75034,65 @@ int lua_cocos2dx_Camera_project(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_Camera_initOrthographic(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::Camera* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.Camera",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::Camera*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Camera_initOrthographic'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 4) 
+    {
+        double arg0;
+        double arg1;
+        double arg2;
+        double arg3;
+
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.Camera:initOrthographic");
+
+        ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.Camera:initOrthographic");
+
+        ok &= luaval_to_number(tolua_S, 4,&arg2, "cc.Camera:initOrthographic");
+
+        ok &= luaval_to_number(tolua_S, 5,&arg3, "cc.Camera:initOrthographic");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Camera_initOrthographic'", nullptr);
+            return 0;
+        }
+        bool ret = cobj->initOrthographic(arg0, arg1, arg2, arg3);
+        tolua_pushboolean(tolua_S,(bool)ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Camera:initOrthographic",argc, 4);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Camera_initOrthographic'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_Camera_getDepthInView(lua_State* tolua_S)
 {
     int argc = 0;
@@ -75181,7 +75240,7 @@ int lua_cocos2dx_Camera_isVisibleInFrustum(lua_State* tolua_S)
     {
         const cocos2d::AABB* arg0;
 
-        ok &= luaval_to_object<const cocos2d::AABB>(tolua_S, 2, "cc.AABB",&arg0);
+        ok &= luaval_to_object<const cocos2d::AABB>(tolua_S, 2, "cc.AABB",&arg0, "cc.Camera:isVisibleInFrustum");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Camera_isVisibleInFrustum'", nullptr);
@@ -75251,7 +75310,7 @@ int lua_cocos2dx_Camera_setCameraFlag(lua_State* tolua_S)
 
     return 0;
 }
-int lua_cocos2dx_Camera_initOrthographic(lua_State* tolua_S)
+int lua_cocos2dx_Camera_clearBackground(lua_State* tolua_S)
 {
     int argc = 0;
     cocos2d::Camera* cobj = nullptr;
@@ -75271,41 +75330,32 @@ int lua_cocos2dx_Camera_initOrthographic(lua_State* tolua_S)
 #if COCOS2D_DEBUG >= 1
     if (!cobj) 
     {
-        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Camera_initOrthographic'", nullptr);
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_Camera_clearBackground'", nullptr);
         return 0;
     }
 #endif
 
     argc = lua_gettop(tolua_S)-1;
-    if (argc == 4) 
+    if (argc == 1) 
     {
         double arg0;
-        double arg1;
-        double arg2;
-        double arg3;
 
-        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.Camera:initOrthographic");
-
-        ok &= luaval_to_number(tolua_S, 3,&arg1, "cc.Camera:initOrthographic");
-
-        ok &= luaval_to_number(tolua_S, 4,&arg2, "cc.Camera:initOrthographic");
-
-        ok &= luaval_to_number(tolua_S, 5,&arg3, "cc.Camera:initOrthographic");
+        ok &= luaval_to_number(tolua_S, 2,&arg0, "cc.Camera:clearBackground");
         if(!ok)
         {
-            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Camera_initOrthographic'", nullptr);
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Camera_clearBackground'", nullptr);
             return 0;
         }
-        bool ret = cobj->initOrthographic(arg0, arg1, arg2, arg3);
-        tolua_pushboolean(tolua_S,(bool)ret);
+        cobj->clearBackground(arg0);
+        lua_settop(tolua_S, 1);
         return 1;
     }
-    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Camera:initOrthographic",argc, 4);
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.Camera:clearBackground",argc, 1);
     return 0;
 
 #if COCOS2D_DEBUG >= 1
     tolua_lerror:
-    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Camera_initOrthographic'.",&tolua_err);
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_Camera_clearBackground'.",&tolua_err);
 #endif
 
     return 0;
@@ -75702,11 +75752,12 @@ int lua_register_cocos2dx_Camera(lua_State* tolua_S)
         tolua_function(tolua_S,"getType",lua_cocos2dx_Camera_getType);
         tolua_function(tolua_S,"initDefault",lua_cocos2dx_Camera_initDefault);
         tolua_function(tolua_S,"project",lua_cocos2dx_Camera_project);
+        tolua_function(tolua_S,"initOrthographic",lua_cocos2dx_Camera_initOrthographic);
         tolua_function(tolua_S,"getDepthInView",lua_cocos2dx_Camera_getDepthInView);
         tolua_function(tolua_S,"lookAt",lua_cocos2dx_Camera_lookAt);
         tolua_function(tolua_S,"isVisibleInFrustum",lua_cocos2dx_Camera_isVisibleInFrustum);
         tolua_function(tolua_S,"setCameraFlag",lua_cocos2dx_Camera_setCameraFlag);
-        tolua_function(tolua_S,"initOrthographic",lua_cocos2dx_Camera_initOrthographic);
+        tolua_function(tolua_S,"clearBackground",lua_cocos2dx_Camera_clearBackground);
         tolua_function(tolua_S,"setAdditionalProjection",lua_cocos2dx_Camera_setAdditionalProjection);
         tolua_function(tolua_S,"getDepth",lua_cocos2dx_Camera_getDepth);
         tolua_function(tolua_S,"setDepth",lua_cocos2dx_Camera_setDepth);
@@ -75849,7 +75900,7 @@ int lua_cocos2dx_GridBase_afterDraw(lua_State* tolua_S)
     {
         cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.GridBase:afterDraw");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_GridBase_afterDraw'", nullptr);
@@ -76435,7 +76486,7 @@ int lua_cocos2dx_GridBase_initWithSize(lua_State* tolua_S)
 
             if (!ok) { break; }
             cocos2d::Texture2D* arg1;
-            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 3, "cc.Texture2D",&arg1);
+            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 3, "cc.Texture2D",&arg1, "cc.GridBase:initWithSize");
 
             if (!ok) { break; }
             bool arg2;
@@ -76684,7 +76735,7 @@ int lua_cocos2dx_GridBase_create(lua_State* tolua_S)
             ok &= luaval_to_size(tolua_S, 2, &arg0, "cc.GridBase:create");
             if (!ok) { break; }
             cocos2d::Texture2D* arg1;
-            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 3, "cc.Texture2D",&arg1);
+            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 3, "cc.Texture2D",&arg1, "cc.GridBase:create");
             if (!ok) { break; }
             bool arg2;
             ok &= luaval_to_boolean(tolua_S, 4,&arg2, "cc.GridBase:create");
@@ -76874,7 +76925,7 @@ int lua_cocos2dx_Grid3D_create(lua_State* tolua_S)
             ok &= luaval_to_size(tolua_S, 2, &arg0, "cc.Grid3D:create");
             if (!ok) { break; }
             cocos2d::Texture2D* arg1;
-            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 3, "cc.Texture2D",&arg1);
+            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 3, "cc.Texture2D",&arg1, "cc.Grid3D:create");
             if (!ok) { break; }
             bool arg2;
             ok &= luaval_to_boolean(tolua_S, 4,&arg2, "cc.Grid3D:create");
@@ -76988,7 +77039,7 @@ int lua_cocos2dx_TiledGrid3D_create(lua_State* tolua_S)
             ok &= luaval_to_size(tolua_S, 2, &arg0, "cc.TiledGrid3D:create");
             if (!ok) { break; }
             cocos2d::Texture2D* arg1;
-            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 3, "cc.Texture2D",&arg1);
+            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 3, "cc.Texture2D",&arg1, "cc.TiledGrid3D:create");
             if (!ok) { break; }
             bool arg2;
             ok &= luaval_to_boolean(tolua_S, 4,&arg2, "cc.TiledGrid3D:create");
@@ -79446,7 +79497,7 @@ int lua_cocos2dx_GLProgramCache_addGLProgram(lua_State* tolua_S)
         cocos2d::GLProgram* arg0;
         std::string arg1;
 
-        ok &= luaval_to_object<cocos2d::GLProgram>(tolua_S, 2, "cc.GLProgram",&arg0);
+        ok &= luaval_to_object<cocos2d::GLProgram>(tolua_S, 2, "cc.GLProgram",&arg0, "cc.GLProgramCache:addGLProgram");
 
         ok &= luaval_to_std_string(tolua_S, 3,&arg1, "cc.GLProgramCache:addGLProgram");
         if(!ok)
@@ -80055,7 +80106,7 @@ int lua_cocos2dx_TextureCache_addImage(lua_State* tolua_S)
     do{
         if (argc == 2) {
             cocos2d::Image* arg0;
-            ok &= luaval_to_object<cocos2d::Image>(tolua_S, 2, "cc.Image",&arg0);
+            ok &= luaval_to_object<cocos2d::Image>(tolua_S, 2, "cc.Image",&arg0, "cc.TextureCache:addImage");
 
             if (!ok) { break; }
             std::string arg1;
@@ -80190,6 +80241,56 @@ int lua_cocos2dx_TextureCache_getTextureForKey(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_TextureCache_getTextureFilePath(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::TextureCache* cobj = nullptr;
+    bool ok  = true;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"cc.TextureCache",0,&tolua_err)) goto tolua_lerror;
+#endif
+
+    cobj = (cocos2d::TextureCache*)tolua_tousertype(tolua_S,1,0);
+
+#if COCOS2D_DEBUG >= 1
+    if (!cobj) 
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_TextureCache_getTextureFilePath'", nullptr);
+        return 0;
+    }
+#endif
+
+    argc = lua_gettop(tolua_S)-1;
+    if (argc == 1) 
+    {
+        cocos2d::Texture2D* arg0;
+
+        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.TextureCache:getTextureFilePath");
+        if(!ok)
+        {
+            tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TextureCache_getTextureFilePath'", nullptr);
+            return 0;
+        }
+        const std::string ret = cobj->getTextureFilePath(arg0);
+        tolua_pushcppstring(tolua_S,ret);
+        return 1;
+    }
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n", "cc.TextureCache:getTextureFilePath",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_TextureCache_getTextureFilePath'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_TextureCache_removeUnusedTextures(lua_State* tolua_S)
 {
     int argc = 0;
@@ -80267,7 +80368,7 @@ int lua_cocos2dx_TextureCache_removeTexture(lua_State* tolua_S)
     {
         cocos2d::Texture2D* arg0;
 
-        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.TextureCache:removeTexture");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TextureCache_removeTexture'", nullptr);
@@ -80393,6 +80494,7 @@ int lua_register_cocos2dx_TextureCache(lua_State* tolua_S)
         tolua_function(tolua_S,"addImage",lua_cocos2dx_TextureCache_addImage);
         tolua_function(tolua_S,"unbindImageAsync",lua_cocos2dx_TextureCache_unbindImageAsync);
         tolua_function(tolua_S,"getTextureForKey",lua_cocos2dx_TextureCache_getTextureForKey);
+        tolua_function(tolua_S,"getTextureFilePath",lua_cocos2dx_TextureCache_getTextureFilePath);
         tolua_function(tolua_S,"removeUnusedTextures",lua_cocos2dx_TextureCache_removeUnusedTextures);
         tolua_function(tolua_S,"removeTexture",lua_cocos2dx_TextureCache_removeTexture);
         tolua_function(tolua_S,"waitForQuit",lua_cocos2dx_TextureCache_waitForQuit);
@@ -81098,7 +81200,7 @@ int lua_cocos2dx_AnimationCache_addAnimation(lua_State* tolua_S)
         cocos2d::Animation* arg0;
         std::string arg1;
 
-        ok &= luaval_to_object<cocos2d::Animation>(tolua_S, 2, "cc.Animation",&arg0);
+        ok &= luaval_to_object<cocos2d::Animation>(tolua_S, 2, "cc.Animation",&arg0, "cc.AnimationCache:addAnimation");
 
         ok &= luaval_to_std_string(tolua_S, 3,&arg1, "cc.AnimationCache:addAnimation");
         if(!ok)
@@ -81486,7 +81588,7 @@ int lua_cocos2dx_SpriteFrameCache_addSpriteFramesWithFileContent(lua_State* tolu
 
         ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.SpriteFrameCache:addSpriteFramesWithFileContent");
 
-        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 3, "cc.Texture2D",&arg1);
+        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 3, "cc.Texture2D",&arg1, "cc.SpriteFrameCache:addSpriteFramesWithFileContent");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_SpriteFrameCache_addSpriteFramesWithFileContent'", nullptr);
@@ -81537,7 +81639,7 @@ int lua_cocos2dx_SpriteFrameCache_addSpriteFrame(lua_State* tolua_S)
         cocos2d::SpriteFrame* arg0;
         std::string arg1;
 
-        ok &= luaval_to_object<cocos2d::SpriteFrame>(tolua_S, 2, "cc.SpriteFrame",&arg0);
+        ok &= luaval_to_object<cocos2d::SpriteFrame>(tolua_S, 2, "cc.SpriteFrame",&arg0, "cc.SpriteFrameCache:addSpriteFrame");
 
         ok &= luaval_to_std_string(tolua_S, 3,&arg1, "cc.SpriteFrameCache:addSpriteFrame");
         if(!ok)
@@ -81615,7 +81717,7 @@ int lua_cocos2dx_SpriteFrameCache_addSpriteFramesWithFile(lua_State* tolua_S)
 
             if (!ok) { break; }
             cocos2d::Texture2D* arg1;
-            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 3, "cc.Texture2D",&arg1);
+            ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 3, "cc.Texture2D",&arg1, "cc.SpriteFrameCache:addSpriteFramesWithFile");
 
             if (!ok) { break; }
             cobj->addSpriteFramesWithFile(arg0, arg1);
@@ -82055,7 +82157,7 @@ int lua_cocos2dx_SpriteFrameCache_removeSpriteFramesFromTexture(lua_State* tolua
     {
         cocos2d::Texture2D* arg0;
 
-        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0);
+        ok &= luaval_to_object<cocos2d::Texture2D>(tolua_S, 2, "cc.Texture2D",&arg0, "cc.SpriteFrameCache:removeSpriteFramesFromTexture");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_SpriteFrameCache_removeSpriteFramesFromTexture'", nullptr);
@@ -82209,7 +82311,7 @@ int lua_cocos2dx_ParallaxNode_addChild(lua_State* tolua_S)
         cocos2d::Vec2 arg2;
         cocos2d::Vec2 arg3;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.ParallaxNode:addChild");
 
         ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "cc.ParallaxNode:addChild");
 
@@ -85397,11 +85499,11 @@ int lua_cocos2dx_TMXLayer_initWithTilesetInfo(lua_State* tolua_S)
         cocos2d::TMXLayerInfo* arg1;
         cocos2d::TMXMapInfo* arg2;
 
-        ok &= luaval_to_object<cocos2d::TMXTilesetInfo>(tolua_S, 2, "cc.TMXTilesetInfo",&arg0);
+        ok &= luaval_to_object<cocos2d::TMXTilesetInfo>(tolua_S, 2, "cc.TMXTilesetInfo",&arg0, "cc.TMXLayer:initWithTilesetInfo");
 
-        ok &= luaval_to_object<cocos2d::TMXLayerInfo>(tolua_S, 3, "cc.TMXLayerInfo",&arg1);
+        ok &= luaval_to_object<cocos2d::TMXLayerInfo>(tolua_S, 3, "cc.TMXLayerInfo",&arg1, "cc.TMXLayer:initWithTilesetInfo");
 
-        ok &= luaval_to_object<cocos2d::TMXMapInfo>(tolua_S, 4, "cc.TMXMapInfo",&arg2);
+        ok &= luaval_to_object<cocos2d::TMXMapInfo>(tolua_S, 4, "cc.TMXMapInfo",&arg2, "cc.TMXLayer:initWithTilesetInfo");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TMXLayer_initWithTilesetInfo'", nullptr);
@@ -85759,7 +85861,7 @@ int lua_cocos2dx_TMXLayer_setTileSet(lua_State* tolua_S)
     {
         cocos2d::TMXTilesetInfo* arg0;
 
-        ok &= luaval_to_object<cocos2d::TMXTilesetInfo>(tolua_S, 2, "cc.TMXTilesetInfo",&arg0);
+        ok &= luaval_to_object<cocos2d::TMXTilesetInfo>(tolua_S, 2, "cc.TMXTilesetInfo",&arg0, "cc.TMXLayer:setTileSet");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TMXLayer_setTileSet'", nullptr);
@@ -85943,9 +86045,9 @@ int lua_cocos2dx_TMXLayer_create(lua_State* tolua_S)
         cocos2d::TMXTilesetInfo* arg0;
         cocos2d::TMXLayerInfo* arg1;
         cocos2d::TMXMapInfo* arg2;
-        ok &= luaval_to_object<cocos2d::TMXTilesetInfo>(tolua_S, 2, "cc.TMXTilesetInfo",&arg0);
-        ok &= luaval_to_object<cocos2d::TMXLayerInfo>(tolua_S, 3, "cc.TMXLayerInfo",&arg1);
-        ok &= luaval_to_object<cocos2d::TMXMapInfo>(tolua_S, 4, "cc.TMXMapInfo",&arg2);
+        ok &= luaval_to_object<cocos2d::TMXTilesetInfo>(tolua_S, 2, "cc.TMXTilesetInfo",&arg0, "cc.TMXLayer:create");
+        ok &= luaval_to_object<cocos2d::TMXLayerInfo>(tolua_S, 3, "cc.TMXLayerInfo",&arg1, "cc.TMXLayer:create");
+        ok &= luaval_to_object<cocos2d::TMXMapInfo>(tolua_S, 4, "cc.TMXMapInfo",&arg2, "cc.TMXLayer:create");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_TMXLayer_create'", nullptr);
@@ -87561,7 +87663,7 @@ int lua_cocos2dx_Component_setOwner(lua_State* tolua_S)
     {
         cocos2d::Node* arg0;
 
-        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0);
+        ok &= luaval_to_object<cocos2d::Node>(tolua_S, 2, "cc.Node",&arg0, "cc.Component:setOwner");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_Component_setOwner'", nullptr);
@@ -87837,7 +87939,7 @@ int lua_cocos2dx_SpritePolygonCache_removeSpritePolygonCache(lua_State* tolua_S)
 
         ok &= luaval_to_std_string(tolua_S, 2,&arg0, "cc.SpritePolygonCache:removeSpritePolygonCache");
 
-        ok &= luaval_to_object<const cocos2d::Rect>(tolua_S, 3, "cc.Rect",&arg1);
+        ok &= luaval_to_object<const cocos2d::Rect>(tolua_S, 3, "cc.Rect",&arg1, "cc.SpritePolygonCache:removeSpritePolygonCache");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_SpritePolygonCache_removeSpritePolygonCache'", nullptr);

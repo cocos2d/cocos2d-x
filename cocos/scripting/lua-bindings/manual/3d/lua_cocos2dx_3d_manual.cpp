@@ -25,6 +25,7 @@
 #include "lua_cocos2dx_3d_auto.hpp"
 #include "LuaBasicConversions.h"
 #include "CCLuaEngine.h"
+#include "3d/CCBundle3D.h"
 
 extern int lua_cocos2dx_3d_Sprite3D_setBlendFunc(lua_State* L);
 
@@ -231,9 +232,9 @@ bool luaval_to_terraindata(lua_State* L, int lo, cocos2d::Terrain::TerrainData* 
     {
         lua_pushstring(L, "_chunkSize");
         lua_gettable(L,lo);
-        if (!lua_isnil(L, -1))
+        if (!lua_isnil(L, lua_gettop(L)))
         {
-            luaval_to_size(L, -1, &(outValue->_chunkSize));
+            luaval_to_size(L, lua_gettop(L), &(outValue->_chunkSize));
         }
         else
         {
@@ -456,7 +457,7 @@ int lua_cocos2dx_3d_Terrain_getHeight(lua_State* L)
             
             if (!ok) { break; }
             cocos2d::Vec3* arg1;
-            ok &= luaval_to_object<cocos2d::Vec3>(L, 3, "cc.Vec3",&arg1);
+            ok &= luaval_to_object<cocos2d::Vec3>(L, 3, "cc.Vec3",&arg1, "cc.Terrain:getHeight");
             
             if (!ok) { break; }
             double ret = cobj->getHeight(arg0, arg1);
@@ -526,6 +527,56 @@ static void extendTerrain(lua_State* L)
     lua_pop(L, 1);
 }
 
+int lua_cocos2dx_3d_Bundle3D_getTrianglesList(lua_State* L)
+{
+    int argc = 0;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(L,1,"cc.Bundle3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    
+    if (argc == 1)
+    {
+        std::string arg0;
+        ok &= luaval_to_std_string(L, 2,&arg0, "cc.Bundle3D:getTrianglesList");
+        if(!ok)
+        {
+            tolua_error(L,"invalid arguments in function 'lua_cocos2dx_3d_Bundle3D_getTrianglesList'", nullptr);
+            return 0;
+        }
+        
+        std::vector<cocos2d::Vec3> ret = cocos2d::Bundle3D::getTrianglesList(arg0);
+        std_vector_vec3_to_luaval(L,ret);
+        return 1;
+    }
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.Bundle3D:getTrianglesList",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_3d_Bundle3D_getTrianglesList'.",&tolua_err);
+#endif
+    return 0;
+}
+
+void extendBundle3D(lua_State* L)
+{
+    lua_pushstring(L, "cc.Bundle3D");
+    lua_rawget(L, LUA_REGISTRYINDEX);
+    if (lua_istable(L,-1))
+    {
+        tolua_function(L, "getTrianglesList", lua_cocos2dx_3d_Bundle3D_getTrianglesList);
+    }
+    lua_pop(L, 1);
+}
+
+
 static int register_all_cocos2dx_3d_manual(lua_State* L)
 {
     if (nullptr == L)
@@ -533,6 +584,7 @@ static int register_all_cocos2dx_3d_manual(lua_State* L)
     
     extendSprite3D(L);
     extendTerrain(L);
+    extendBundle3D(L);
     return 0;
 }
 
@@ -793,7 +845,7 @@ int lua_cocos2dx_3d_AABB_getCorners(lua_State* L)
     {
         cocos2d::Vec3* arg0;
         
-        ok &= luaval_to_object<cocos2d::Vec3>(L, 2, "cc.Vec3",&arg0);
+        ok &= luaval_to_object<cocos2d::Vec3>(L, 2, "cc.Vec3",&arg0, "cc.AABB:getCorners");
         if(!ok)
             return 0;
         cobj->getCorners(arg0);
@@ -840,7 +892,7 @@ int lua_cocos2dx_3d_AABB_updateMinMax(lua_State* L)
         const cocos2d::Vec3* arg0;
         ssize_t arg1;
         
-        ok &= luaval_to_object<const cocos2d::Vec3>(L, 2, "cc.Vec3",&arg0);
+        ok &= luaval_to_object<const cocos2d::Vec3>(L, 2, "cc.Vec3",&arg0, "cc.AABB:updateMinMax");
         
         ok &= luaval_to_ssize(L, 3, &arg1, "cc.AABB:updateMinMax");
         if(!ok)
@@ -1326,7 +1378,7 @@ int lua_cocos2dx_3d_OBB_constructor(lua_State* L)
     do{
         if (argc == 1) {
             cocos2d::AABB* arg0;
-            ok &= luaval_to_object<cocos2d::AABB>(L, 2, "cc.AABB",&arg0);
+            ok &= luaval_to_object<cocos2d::AABB>(L, 2, "cc.AABB",&arg0, "cc.OBB:OBB");
             
             if (!ok) { break; }
             cobj = new cocos2d::OBB(*arg0);
@@ -1348,7 +1400,7 @@ int lua_cocos2dx_3d_OBB_constructor(lua_State* L)
     do{
         if (argc == 2) {
             const cocos2d::Vec3* arg0;
-            ok &= luaval_to_object<const cocos2d::Vec3>(L, 2, "cc.Vec3",&arg0);
+            ok &= luaval_to_object<const cocos2d::Vec3>(L, 2, "cc.Vec3",&arg0, "cc.OBB:OBB");
             
             if (!ok) { break; }
             int arg1;
@@ -1394,7 +1446,7 @@ int lua_cocos2dx_3d_OBB_intersects(lua_State* L)
     if(1 == argc)
     {
         cocos2d::OBB* arg0;
-        ok &= luaval_to_object<cocos2d::OBB>(L, 2, "cc.OBB",&arg0);
+        ok &= luaval_to_object<cocos2d::OBB>(L, 2, "cc.OBB",&arg0, "cc.OBB:intersects");
         
         if (!ok)
             return 0;
@@ -1985,7 +2037,7 @@ int lua_cocos2dx_3d_Ray_intersects(lua_State* L)
     if(1 == argc)
     {
         cocos2d::OBB* arg0 = nullptr;
-        ok &= luaval_to_object<cocos2d::OBB>(L, 2, "cc.OBB",&arg0);
+        ok &= luaval_to_object<cocos2d::OBB>(L, 2, "cc.OBB",&arg0, "cc.Ray:intersects");
         
         if (!ok)
             return 0;

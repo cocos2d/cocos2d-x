@@ -51,7 +51,7 @@ void ConfigParser::readConfig(const string &filepath)
         return;
     
     if (_docRootjson.Parse<0>(fileContent.c_str()).HasParseError()) {
-        cocos2d::log("read json file %s failed because of %s", fullPathFile.c_str(), _docRootjson.GetParseError());
+        cocos2d::log("read json file %s failed because of %d", fullPathFile.c_str(), _docRootjson.GetParseError());
         return;
     }
     

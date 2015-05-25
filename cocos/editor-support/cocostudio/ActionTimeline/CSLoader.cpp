@@ -376,7 +376,7 @@ Node* CSLoader::loadNodeWithContent(const std::string& content)
     doc.Parse<0>(content.c_str());
     if (doc.HasParseError())
     {
-        CCLOG("GetParseError %s\n", doc.GetParseError());
+        CCLOG("GetParseError %d\n", doc.GetParseError());
     }
     
     // cocos2dx version mono editor is based on
@@ -724,7 +724,7 @@ Node* CSLoader::loadWidget(const rapidjson::Value& json)
             customJsonDict.Parse<0>(customProperty);
             if (customJsonDict.HasParseError())
             {
-                CCLOG("GetParseError %s\n", customJsonDict.GetParseError());
+                CCLOG("GetParseError %d\n", customJsonDict.GetParseError());
             }
             
             widgetPropertiesReader->setPropsForAllCustomWidgetFromJsonDictionary(classname, widget, customJsonDict);

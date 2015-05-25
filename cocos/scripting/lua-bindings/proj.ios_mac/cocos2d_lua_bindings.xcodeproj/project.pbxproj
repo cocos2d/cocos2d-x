@@ -151,6 +151,14 @@
 		159552411A25E4B8001E9FC9 /* lua_cocos2dx_csloader_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1595523E1A25E4B8001E9FC9 /* lua_cocos2dx_csloader_manual.cpp */; };
 		159552421A25E4B8001E9FC9 /* lua_cocos2dx_csloader_manual.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1595523F1A25E4B8001E9FC9 /* lua_cocos2dx_csloader_manual.hpp */; };
 		159552431A25E4B8001E9FC9 /* lua_cocos2dx_csloader_manual.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1595523F1A25E4B8001E9FC9 /* lua_cocos2dx_csloader_manual.hpp */; };
+		15A561E51B00A09A005D4720 /* lua_cocos2dx_physics3d_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A561E31B00A09A005D4720 /* lua_cocos2dx_physics3d_auto.cpp */; };
+		15A561E61B00A09A005D4720 /* lua_cocos2dx_physics3d_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A561E31B00A09A005D4720 /* lua_cocos2dx_physics3d_auto.cpp */; };
+		15A561E71B00A09A005D4720 /* lua_cocos2dx_physics3d_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 15A561E41B00A09A005D4720 /* lua_cocos2dx_physics3d_auto.hpp */; };
+		15A561E81B00A09A005D4720 /* lua_cocos2dx_physics3d_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 15A561E41B00A09A005D4720 /* lua_cocos2dx_physics3d_auto.hpp */; };
+		15A561EC1B00A3F1005D4720 /* lua_cocos2dx_physics3d_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A561EA1B00A3F1005D4720 /* lua_cocos2dx_physics3d_manual.cpp */; };
+		15A561ED1B00A3F1005D4720 /* lua_cocos2dx_physics3d_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A561EA1B00A3F1005D4720 /* lua_cocos2dx_physics3d_manual.cpp */; };
+		15A561EE1B00A3F1005D4720 /* lua_cocos2dx_physics3d_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A561EB1B00A3F1005D4720 /* lua_cocos2dx_physics3d_manual.h */; };
+		15A561EF1B00A3F1005D4720 /* lua_cocos2dx_physics3d_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 15A561EB1B00A3F1005D4720 /* lua_cocos2dx_physics3d_manual.h */; };
 		15AC69D519876E9300D17520 /* lua_cocos2dx_physics_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1AACE75218BC45C200215002 /* lua_cocos2dx_physics_auto.cpp */; };
 		15AC69D619876EA200D17520 /* lua_cocos2dx_physics_auto.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 1AACE75318BC45C200215002 /* lua_cocos2dx_physics_auto.hpp */; };
 		15AC69D91987710400D17520 /* tolua_event.c in Sources */ = {isa = PBXBuildFile; fileRef = 1ABCA1F918CD8F6E0087CE3A /* tolua_event.c */; };
@@ -316,6 +324,10 @@
 		159552391A25E1C5001E9FC9 /* lua_cocos2dx_csloader_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_csloader_auto.hpp; sourceTree = "<group>"; };
 		1595523E1A25E4B8001E9FC9 /* lua_cocos2dx_csloader_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_csloader_manual.cpp; sourceTree = "<group>"; };
 		1595523F1A25E4B8001E9FC9 /* lua_cocos2dx_csloader_manual.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_csloader_manual.hpp; sourceTree = "<group>"; };
+		15A561E31B00A09A005D4720 /* lua_cocos2dx_physics3d_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_physics3d_auto.cpp; sourceTree = "<group>"; };
+		15A561E41B00A09A005D4720 /* lua_cocos2dx_physics3d_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lua_cocos2dx_physics3d_auto.hpp; sourceTree = "<group>"; };
+		15A561EA1B00A3F1005D4720 /* lua_cocos2dx_physics3d_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = lua_cocos2dx_physics3d_manual.cpp; path = physics3d/lua_cocos2dx_physics3d_manual.cpp; sourceTree = "<group>"; };
+		15A561EB1B00A3F1005D4720 /* lua_cocos2dx_physics3d_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lua_cocos2dx_physics3d_manual.h; path = physics3d/lua_cocos2dx_physics3d_manual.h; sourceTree = "<group>"; };
 		15B5754D1A6F4D1500041C20 /* lua-cocos-studio-conversions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "lua-cocos-studio-conversions.cpp"; sourceTree = "<group>"; };
 		15B5754E1A6F4D1500041C20 /* lua-cocos-studio-conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "lua-cocos-studio-conversions.h"; sourceTree = "<group>"; };
 		15C1BCC019864D8700A46ACC /* lua_cocos2dx_cocosbuilder_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lua_cocos2dx_cocosbuilder_auto.cpp; sourceTree = "<group>"; };
@@ -476,6 +488,15 @@
 			path = 3d;
 			sourceTree = "<group>";
 		};
+		15A561E91B00A3D0005D4720 /* physics3d */ = {
+			isa = PBXGroup;
+			children = (
+				15A561EA1B00A3F1005D4720 /* lua_cocos2dx_physics3d_manual.cpp */,
+				15A561EB1B00A3F1005D4720 /* lua_cocos2dx_physics3d_manual.h */,
+			);
+			name = physics3d;
+			sourceTree = "<group>";
+		};
 		15C1BCD21986525900A46ACC /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
@@ -572,6 +593,8 @@
 		1AACE74818BC45C200215002 /* auto */ = {
 			isa = PBXGroup;
 			children = (
+				15A561E31B00A09A005D4720 /* lua_cocos2dx_physics3d_auto.cpp */,
+				15A561E41B00A09A005D4720 /* lua_cocos2dx_physics3d_auto.hpp */,
 				15C9A10C1AE4972500C15443 /* lua_cocos2dx_experimental_webview_auto.cpp */,
 				15C9A10D1AE4972500C15443 /* lua_cocos2dx_experimental_webview_auto.hpp */,
 				159552381A25E1C5001E9FC9 /* lua_cocos2dx_csloader_auto.cpp */,
@@ -608,6 +631,7 @@
 		1AACE75B18BC45C200215002 /* manual */ = {
 			isa = PBXGroup;
 			children = (
+				15A561E91B00A3D0005D4720 /* physics3d */,
 				3E2BDB0719C5E6100055CDCD /* audioengine */,
 				158C128419A0FA1300781A76 /* 3d */,
 				15427D41198F73F700DC375D /* cocosdenshion */,
@@ -779,6 +803,7 @@
 				15EFA1F71989E582000C57D3 /* lua_cocos2dx_experimental_auto.hpp in Headers */,
 				15415AA719A71A53004F1E71 /* auxiliar.h in Headers */,
 				155C7E1019A71C9D00F08B25 /* lua_extensions.h in Headers */,
+				15A561E71B00A09A005D4720 /* lua_cocos2dx_physics3d_auto.hpp in Headers */,
 				15415ABF19A71A53004F1E71 /* mime.h in Headers */,
 				15AC69E21987712500D17520 /* tolua_event.h in Headers */,
 				15415AD719A71A53004F1E71 /* udp.h in Headers */,
@@ -820,6 +845,7 @@
 				15C1C2DC19874B4400A46ACC /* xxtea.h in Headers */,
 				15415AD319A71A53004F1E71 /* timeout.h in Headers */,
 				15C1C2D5198749BC00A46ACC /* LuaOpengl.h in Headers */,
+				15A561EE1B00A3F1005D4720 /* lua_cocos2dx_physics3d_manual.h in Headers */,
 				155C7E2819A71CE600F08B25 /* lua_cocos2dx_ui_manual.hpp in Headers */,
 				15C1C2D6198749BC00A46ACC /* lua_cocos2dx_deprecated.h in Headers */,
 				15C1C2D7198749BC00A46ACC /* lua_cocos2dx_experimental_manual.hpp in Headers */,
@@ -860,6 +886,7 @@
 				15EFA650198B3342000C57D3 /* lualib.h in Headers */,
 				155C7E1519A71CAA00F08B25 /* Lua_web_socket.h in Headers */,
 				15EFA64B198B3320000C57D3 /* tolua_event.h in Headers */,
+				15A561EF1B00A3F1005D4720 /* lua_cocos2dx_physics3d_manual.h in Headers */,
 				15EFA64C198B3320000C57D3 /* tolua++.h in Headers */,
 				155C7DF919A71C4500F08B25 /* lua_cocos2dx_cocosdenshion_manual.h in Headers */,
 				15415AB019A71A53004F1E71 /* except.h in Headers */,
@@ -900,6 +927,7 @@
 				15EFA622198B2E74000C57D3 /* lua_cocos2dx_experimental_auto.hpp in Headers */,
 				15EFA623198B2E74000C57D3 /* lua_cocos2dx_auto.hpp in Headers */,
 				155C7E0119A71C6300F08B25 /* CCBProxy.h in Headers */,
+				15A561E81B00A09A005D4720 /* lua_cocos2dx_physics3d_auto.hpp in Headers */,
 				15415AC819A71A53004F1E71 /* select.h in Headers */,
 				155C7E1D19A71CC300F08B25 /* lua_cocos2dx_spine_manual.hpp in Headers */,
 				15EFA624198B2E74000C57D3 /* lua_cocos2dx_physics_auto.hpp in Headers */,
@@ -984,6 +1012,7 @@
 				15B5754F1A6F4D1500041C20 /* lua-cocos-studio-conversions.cpp in Sources */,
 				15415A7619A718FB004F1E71 /* lua_cocos2dx_ui_auto.cpp in Sources */,
 				15415A7719A718FB004F1E71 /* lua_cocos2dx_spine_auto.cpp in Sources */,
+				15A561E51B00A09A005D4720 /* lua_cocos2dx_physics3d_auto.cpp in Sources */,
 				15415A7819A718FB004F1E71 /* lua_cocos2dx_studio_auto.cpp in Sources */,
 				155C7DEC19A71BF200F08B25 /* lua_cocos2dx_cocosdenshion_auto.cpp in Sources */,
 				15AC69D91987710400D17520 /* tolua_event.c in Sources */,
@@ -1035,6 +1064,7 @@
 				155C7DF619A71C3E00F08B25 /* lua_cocos2dx_cocosdenshion_manual.cpp in Sources */,
 				15415AA519A71A53004F1E71 /* auxiliar.c in Sources */,
 				155C7E1A19A71CBC00F08B25 /* lua_cocos2dx_spine_manual.cpp in Sources */,
+				15A561EC1B00A3F1005D4720 /* lua_cocos2dx_physics3d_manual.cpp in Sources */,
 				15C1C2D01987498B00A46ACC /* lua_cocos2dx_experimental_manual.cpp in Sources */,
 				15C1C2D11987498B00A46ACC /* lua_cocos2dx_manual.cpp in Sources */,
 				15C1C2D21987498B00A46ACC /* lua_cocos2dx_physics_manual.cpp in Sources */,
@@ -1052,6 +1082,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				15415AC619A71A53004F1E71 /* select.c in Sources */,
+				15A561ED1B00A3F1005D4720 /* lua_cocos2dx_physics3d_manual.cpp in Sources */,
 				15EFA646198B3311000C57D3 /* tolua_event.c in Sources */,
 				3E2BDB0A19C5E6100055CDCD /* lua_cocos2dx_audioengine_manual.cpp in Sources */,
 				15415AA619A71A53004F1E71 /* auxiliar.c in Sources */,
@@ -1076,6 +1107,7 @@
 				15415AD219A71A53004F1E71 /* timeout.c in Sources */,
 				F4FE0D5819ECD00100B8B12B /* luasocket_scripts.c in Sources */,
 				15EFA639198B328B000C57D3 /* tolua_fix.cpp in Sources */,
+				15A561E61B00A09A005D4720 /* lua_cocos2dx_physics3d_auto.cpp in Sources */,
 				155C7DFF19A71C5C00F08B25 /* CCBProxy.cpp in Sources */,
 				1595523B1A25E1C5001E9FC9 /* lua_cocos2dx_csloader_auto.cpp in Sources */,
 				15C9A1121AE4973400C15443 /* lua_cocos2dx_experimental_webview_manual.cpp in Sources */,
@@ -1142,6 +1174,7 @@
 					"COCOS2D_DEBUG=1",
 					USE_FILE32API,
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
+					"CC_ENABLE_BULLET_INTEGRATION=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
@@ -1159,7 +1192,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../.. $(SRCROOT)/../../.. $(SRCROOT)/../../../base $(SRCROOT)/../../../3d $(SRCROOT)/../../../2d $(SRCROOT)/../../../deprecated $(SRCROOT)/../../../physics $(SRCROOT)/../../../math/kazmath $(SRCROOT)/../../../2d/platform $(SRCROOT)/../../../audio/include $(SRCROOT)/../../../editor-support $(SRCROOT)/../../../editor-support/spine $(SRCROOT)/../../../editor-support/cocostudio $(SRCROOT)/../../../editor-support/cocosbuilder $(SRCROOT)/../../../ui $(SRCROOT)/../../../storage $(SRCROOT)/../../../../extensions $(SRCROOT)/../../../../external $(SRCROOT)/../../../../external/chipmunk/include/chipmunk $(SRCROOT)/../../../../external/lua $(SRCROOT)/../../../../external/lua/luajit/include $(SRCROOT)/../../../../external/lua/tolua $(SRCROOT)/../../../editor-support/cocostudio/ActionTimeline";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../.. $(SRCROOT)/../../.. $(SRCROOT)/../../../base $(SRCROOT)/../../../3d $(SRCROOT)/../../../2d $(SRCROOT)/../../../deprecated $(SRCROOT)/../../../physics $(SRCROOT)/../../../math/kazmath $(SRCROOT)/../../../2d/platform $(SRCROOT)/../../../audio/include $(SRCROOT)/../../../editor-support $(SRCROOT)/../../../editor-support/spine $(SRCROOT)/../../../editor-support/cocostudio $(SRCROOT)/../../../editor-support/cocosbuilder $(SRCROOT)/../../../ui $(SRCROOT)/../../../storage $(SRCROOT)/../../../../extensions $(SRCROOT)/../../../../external $(SRCROOT)/../../../../external/chipmunk/include/chipmunk $(SRCROOT)/../../../../external/lua $(SRCROOT)/../../../../external/lua/luajit/include $(SRCROOT)/../../../../external/lua/tolua $(SRCROOT)/../../../editor-support/cocostudio/ActionTimeline $(SRCROOT)/../../../physics3d";
 			};
 			name = Debug;
 		};
@@ -1176,6 +1209,7 @@
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 					NDEBUG,
 					USE_FILE32API,
+					"CC_ENABLE_BULLET_INTEGRATION=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
@@ -1192,7 +1226,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../.. $(SRCROOT)/../../.. $(SRCROOT)/../../../base $(SRCROOT)/../../../3d $(SRCROOT)/../../../2d $(SRCROOT)/../../../deprecated $(SRCROOT)/../../../physics $(SRCROOT)/../../../math/kazmath $(SRCROOT)/../../../2d/platform $(SRCROOT)/../../../audio/include $(SRCROOT)/../../../editor-support $(SRCROOT)/../../../editor-support/spine $(SRCROOT)/../../../editor-support/cocostudio $(SRCROOT)/../../../editor-support/cocosbuilder $(SRCROOT)/../../../ui $(SRCROOT)/../../../storage $(SRCROOT)/../../../../extensions $(SRCROOT)/../../../../external $(SRCROOT)/../../../../external/chipmunk/include/chipmunk $(SRCROOT)/../../../../external/lua $(SRCROOT)/../../../../external/lua/luajit/include $(SRCROOT)/../../../../external/lua/tolua $(SRCROOT)/../../../editor-support/cocostudio/ActionTimeline";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../.. $(SRCROOT)/../../.. $(SRCROOT)/../../../base $(SRCROOT)/../../../3d $(SRCROOT)/../../../2d $(SRCROOT)/../../../deprecated $(SRCROOT)/../../../physics $(SRCROOT)/../../../math/kazmath $(SRCROOT)/../../../2d/platform $(SRCROOT)/../../../audio/include $(SRCROOT)/../../../editor-support $(SRCROOT)/../../../editor-support/spine $(SRCROOT)/../../../editor-support/cocostudio $(SRCROOT)/../../../editor-support/cocosbuilder $(SRCROOT)/../../../ui $(SRCROOT)/../../../storage $(SRCROOT)/../../../../extensions $(SRCROOT)/../../../../external $(SRCROOT)/../../../../external/chipmunk/include/chipmunk $(SRCROOT)/../../../../external/lua $(SRCROOT)/../../../../external/lua/luajit/include $(SRCROOT)/../../../../external/lua/tolua $(SRCROOT)/../../../editor-support/cocostudio/ActionTimeline $(SRCROOT)/../../../physics3d";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

@@ -598,8 +598,8 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     if(_insideBounds)
 #endif
     {
-        _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, transform, flags);
-        renderer->addCommand(&_quadCommand);
+        _trianglesCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, getRenderedTriangles(), transform, flags);
+        renderer->addCommand(&_trianglesCommand);
         
 #if CC_SPRITE_DEBUG_DRAW
         _debugDrawNode->clear();
@@ -612,6 +612,17 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         _debugDrawNode->drawPoly(vertices, 4, true, Color4F(1.0, 1.0, 1.0, 1.0));
 #endif //CC_SPRITE_DEBUG_DRAW
     }
+}
+
+TrianglesCommand::Triangles Sprite::getRenderedTriangles() const
+{
+    static unsigned short indices[6] = {0, 1, 2, 3, 2, 1};
+    TrianglesCommand::Triangles result;
+    result.indices = indices;
+    result.verts = (V3F_C4B_T2F*)&_quad;
+    result.vertCount = 4;
+    result.indexCount = 6;
+    return result;
 }
 
 // MARK: visit, draw, transform
@@ -993,6 +1004,10 @@ bool Sprite::isFrameDisplayed(SpriteFrame *frame) const
 
 SpriteFrame* Sprite::getSpriteFrame() const
 {
+    if(nullptr != this->_spriteFrame)
+    {
+        return this->_spriteFrame;
+    }
     return SpriteFrame::createWithTexture(_texture,
                                            CC_RECT_POINTS_TO_PIXELS(_rect),
                                            _rectRotated,

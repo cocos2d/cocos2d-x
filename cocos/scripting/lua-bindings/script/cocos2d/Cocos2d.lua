@@ -558,3 +558,23 @@ function cc.mat4.createRotation(q, dst)
 
     return dst
 end
+
+function cc.mat4.translate(self,vec3)
+    return mat4_translate(self,vec3)
+end
+
+function cc.mat4.createRotationZ(self,angle)
+    return mat4_createRotationZ(self,angle)
+end
+
+function cc.mat4.setIdentity(self)
+    return mat4_setIdentity(self)
+end
+
+function cc.mat4.createTranslation(...)
+    return mat4_createTranslation(...)
+end
+
+function cc.mat4.createRotation(...)
+    return mat4_createRotation(...)
+end

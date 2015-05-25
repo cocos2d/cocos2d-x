@@ -44,14 +44,14 @@ var PlayerController = ccs.ComController.extend({
     onTouchesEnded: function (touch, event) {
         var location = touch[0].getLocation();
 
-        var projectile = new cc.Sprite("res/components/Projectile.png", cc.rect(0, 0, 20, 20));
+        var projectile = new cc.Sprite("components/Projectile.png", cc.rect(0, 0, 20, 20));
         this.getOwner().parent.addChild(projectile, 1, 4);
 
         var com = ProjectileController.create();
         projectile.addComponent(com);
         com.move(location.x, location.y);
 
-        this.getOwner().getComponent("Audio").playEffect("res/Sound/pew-pew-lei.wav");
+        this.getOwner().getComponent("Audio").playEffect("pew-pew-lei.wav");
     },
     onExit:function(){
         cc.eventManager.removeListener(this._listener1);
