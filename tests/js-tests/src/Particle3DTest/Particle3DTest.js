@@ -29,9 +29,9 @@ var Particle3DTestIdx = -1;
 
 const PARTICLE_SYSTEM_TAG = 0x0001;
 
-jsb.fileUtils.addSearchPath("res/Sprite3DTest");
-jsb.fileUtils.addSearchPath("res/Particle3D/materials");
-jsb.fileUtils.addSearchPath("res/Particle3D/scripts");
+jsb.fileUtils.addSearchPath("../cpp-tests/Resources/Sprite3DTest");
+jsb.fileUtils.addSearchPath("../cpp-tests/Resources/Particle3D/materials");
+jsb.fileUtils.addSearchPath("../cpp-tests/Resources/Particle3D/scripts");
 
 var Particle3DTestDemo = cc.Layer.extend({
     _title:"Particle3D Test",

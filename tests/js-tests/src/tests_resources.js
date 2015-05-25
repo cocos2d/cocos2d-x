@@ -149,7 +149,7 @@ var s_tileISOOffsetPng = "TileMaps/tile_iso_offset.png";
 var s_tileISOOffsetTmx = "TileMaps/tile_iso_offset.tmx";
 
 var s_fnTuffyBoldItalicCharmapPng = "fonts/tuffy_bold_italic-charmap.png";
-var s_fpsImages = "fonts/fps_images.png";
+var s_fpsImages = "fps_images.png";
 var s_bitmapFontTest = "fonts/bitmapFontTest.png";
 var s_bitmapFontTest2 = "fonts/bitmapFontTest2.png";
 var s_bitmapFontTest3 = "fonts/bitmapFontTest3.png";
@@ -315,25 +315,25 @@ var g_s9s_blocks = [
 
 var g_opengl_resources = [
     //preload shader source
-    "Shaders/example_Outline.fsh",
-    "Shaders/example_Outline.vsh",
-    "Shaders/example_Blur.fsh",
-    "Shaders/example_ColorBars.fsh",
-    "Shaders/example_ColorBars.vsh",
-    "Shaders/example_Flower.fsh",
-    "Shaders/example_Flower.vsh",
-    "Shaders/example_Heart.fsh",
-    "Shaders/example_Heart.vsh",
-    "Shaders/example_Julia.fsh",
-    "Shaders/example_Julia.vsh",
-    "Shaders/example_Mandelbrot.fsh",
-    "Shaders/example_Mandelbrot.vsh",
-    "Shaders/example_Monjori.fsh",
-    "Shaders/example_Monjori.vsh",
-    "Shaders/example_Plasma.fsh",
-    "Shaders/example_Plasma.vsh",
-    "Shaders/example_Twist.fsh",
-    "Shaders/example_Twist.vsh",
+    "../../js-tests/res/Shaders/example_Outline.fsh",
+    "../../js-tests/res/Shaders/example_Outline.vsh",
+    "../../js-tests/res/Shaders/example_Blur.fsh",
+    "../../js-tests/res/Shaders/example_ColorBars.fsh",
+    "../../js-tests/res/Shaders/example_ColorBars.vsh",
+    "../../js-tests/res/Shaders/example_Flower.fsh",
+    "../../js-tests/res/Shaders/example_Flower.vsh",
+    "../../js-tests/res/Shaders/example_Heart.fsh",
+    "../../js-tests/res/Shaders/example_Heart.vsh",
+    "../../js-tests/res/Shaders/example_Julia.fsh",
+    "../../js-tests/res/Shaders/example_Julia.vsh",
+    "../../js-tests/res/Shaders/example_Mandelbrot.fsh",
+    "../../js-tests/res/Shaders/example_Mandelbrot.vsh",
+    "../../js-tests/res/Shaders/example_Monjori.fsh",
+    "../../js-tests/res/Shaders/example_Monjori.vsh",
+    "../../js-tests/res/Shaders/example_Plasma.fsh",
+    "../../js-tests/res/Shaders/example_Plasma.vsh",
+    "../../js-tests/res/Shaders/example_Twist.fsh",
+    "../../js-tests/res/Shaders/example_Twist.vsh",
 
     "fonts/west_england-64.fnt",
     "fonts/west_england-64.png"
@@ -450,22 +450,22 @@ var g_fonts = [
     {
         type:"font",
         name:"Thonburi",
-        srcs:["fonts/Thonburi.eot", "fonts/Thonburi.ttf"]
+        srcs:["../cpp-tests/Resources/fonts/Thonburi.eot", "../cpp-tests/Resources/fonts/Thonburi.ttf"]
     },
     {
         type:"font",
         name:"Schwarzwald Regular",
-        srcs:["fonts/Schwarzwald_Regular.eot", "fonts/Schwarzwald Regular.ttf"]
+        srcs:["../cpp-tests/Resources/fonts/Schwarzwald_Regular.eot", "../cpp-tests/Resources/fonts/Schwarzwald Regular.ttf"]
     },
     {
         type:"font",
         name:"ThonburiBold",
-        srcs:["fonts/ThonburiBold.eot", "fonts/ThonburiBold.ttf"]
+        srcs:["../cpp-tests/Resources/fonts/ThonburiBold.eot", "../cpp-tests/Resources/fonts/ThonburiBold.ttf"]
     },
     {
         type:"font",
         name:"Courier New",
-        srcs:["fonts/Courier New.eot", "fonts/Courier New.ttf"]
+        srcs:["../cpp-tests/Resources/fonts/Courier New.eot", "../cpp-tests/Resources/fonts/Courier New.ttf"]
     }
 ];
 
@@ -960,7 +960,7 @@ var g_ui = [
 var g_performace = [
     "animations/crystals.plist",
     "animations/crystals.png",
-    "Images/fps_images.png",
+    "fps_images.png",
     "Images/spritesheet1.png",
     "Images/sprites_test/sprite-0-0.png",
     "Images/sprites_test/sprite-0-1.png",
@@ -1075,13 +1075,13 @@ var g_tilemaps = [
 ];
 
 var g_spine = [
-    "skeletons/spineboy.atlas",
-    "skeletons/spineboy.json",
-    "skeletons/spineboy.png",
-    "skeletons/sprite.png",
-    "skeletons/goblins-ffd.png",
-    "skeletons/goblins-ffd.atlas",
-    "skeletons/goblins-ffd.json"
+    "spine/spineboy.atlas",
+    "spine/spineboy.json",
+    "spine/spineboy.png",
+    "spine/sprite.png",
+    "spine/goblins-ffd.png",
+    "spine/goblins-ffd.atlas",
+    "spine/goblins-ffd.json"
 ];
 
 var g_ccs2 = [

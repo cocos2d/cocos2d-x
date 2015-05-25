@@ -481,7 +481,7 @@ var ParticlesPage = function() {
 	meteor.x = winSize.width*3/4;
 	meteor.y = winSize.height/2;
 
-	var flower = new cc.ParticleSystem("res/Particles/Flower.plist");
+	var flower = new cc.ParticleSystem("../cpp-tests/Resources/Particles/Flower.plist");
 	this.addChild( flower );
 	flower.x = centerPos.x;
 	flower.y = centerPos.y;

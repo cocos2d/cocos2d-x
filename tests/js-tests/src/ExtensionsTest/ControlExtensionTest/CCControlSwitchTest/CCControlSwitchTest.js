@@ -37,7 +37,7 @@ var ControlSwitchTest = ControlScene.extend({
             var layer_width = 0;
 
             // Add the black background for the text
-            var background = new cc.Scale9Sprite("res/extensions/buttonBackground.png");
+            var background = new cc.Scale9Sprite("extensions/buttonBackground.png");
             background.width = 80;
 	        background.height = 50;
             background.x = layer_width + background.width / 2.0;
@@ -56,10 +56,10 @@ var ControlSwitchTest = ControlScene.extend({
             // Create the switch
             var switchControl = new cc.ControlSwitch
                 (
-                    new cc.Sprite("res/extensions/switch-mask.png"),
-                    new cc.Sprite("res/extensions/switch-on.png"),
-                    new cc.Sprite("res/extensions/switch-off.png"),
-                    new cc.Sprite("res/extensions/switch-thumb.png"),
+                    new cc.Sprite("extensions/switch-mask.png"),
+                    new cc.Sprite("extensions/switch-on.png"),
+                    new cc.Sprite("extensions/switch-off.png"),
+                    new cc.Sprite("extensions/switch-thumb.png"),
                     new cc.LabelTTF("On", "Arial-BoldMT", 16),
                     new cc.LabelTTF("Off", "Arial-BoldMT", 16)
                 );

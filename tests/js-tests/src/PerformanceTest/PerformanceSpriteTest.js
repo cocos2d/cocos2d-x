@@ -76,7 +76,7 @@ var SubTest = cc.Class.extend({
         switch (this._subtestNumber) {
             case 1:
             {
-                sprite = new cc.Sprite("res/Images/grossinis_sister1.png");
+                sprite = new cc.Sprite("Images/grossinis_sister1.png");
                 this._parent.addChild(sprite, 0, tag + 100);
                 break;
             }
@@ -91,7 +91,7 @@ var SubTest = cc.Class.extend({
             {
                 var idx = parseInt(Math.random() * 14) + 1;
                 idx = idx < 10 ? "0" + idx : idx.toString();
-                var str = "res/Images/grossini_dance_" + idx + ".png";
+                var str = "Images/grossini_dance_" + idx + ".png";
                 sprite = new cc.Sprite(str);
                 this._parent.addChild(sprite, 0, tag + 100);
                 break;
@@ -115,7 +115,7 @@ var SubTest = cc.Class.extend({
                 y = parseInt(r / 8);
                 x = parseInt(r % 8);
 
-                var str = "res/Images/sprites_test/sprite-" + x + "-" + y + ".png";
+                var str = "Images/sprites_test/sprite-" + x + "-" + y + ".png";
                 sprite = new cc.Sprite(str);
                 this._parent.addChild(sprite, 0, tag + 100);
                 break;
@@ -170,9 +170,9 @@ var SubTest = cc.Class.extend({
         //		[mgr removeAllTextures];
         if ( cc.sys.isNative) {
             var mgr = cc.textureCache;
-            mgr.removeTexture(mgr.addImage("res/Images/grossinis_sister1.png"));
-            mgr.removeTexture(mgr.addImage("res/Images/grossini_dance_atlas.png"));
-            mgr.removeTexture(mgr.addImage("res/Images/spritesheet1.png"));
+            mgr.removeTexture(mgr.addImage("Images/grossinis_sister1.png"));
+            mgr.removeTexture(mgr.addImage("Images/grossini_dance_atlas.png"));
+            mgr.removeTexture(mgr.addImage("Images/spritesheet1.png"));
         }
 
         switch (this._subtestNumber) {
@@ -184,13 +184,13 @@ var SubTest = cc.Class.extend({
             case 2:
                 if( "opengl" in cc.sys.capabilities )
                     cc.Texture2D.defaultPixelFormat = cc.Texture2D.PIXEL_FORMAT_RGBA8888;
-                this._batchNode = new cc.SpriteBatchNode("res/Images/grossinis_sister1.png", 500);
+                this._batchNode = new cc.SpriteBatchNode("Images/grossinis_sister1.png", 500);
                 p.addChild(this._batchNode, 0);
                 break;
             case 3:
                 if( "opengl" in cc.sys.capabilities )
                     cc.Texture2D.defaultPixelFormat = cc.Texture2D.PIXEL_FORMAT_RGBA4444;
-                this._batchNode = new cc.SpriteBatchNode("res/Images/grossinis_sister1.png", 500);
+                this._batchNode = new cc.SpriteBatchNode("Images/grossinis_sister1.png", 500);
                 p.addChild(this._batchNode, 0);
                 break;
 
@@ -198,13 +198,13 @@ var SubTest = cc.Class.extend({
             case 5:
                 if( "opengl" in cc.sys.capabilities )
                     cc.Texture2D.defaultPixelFormat = cc.Texture2D.PIXEL_FORMAT_RGBA8888;
-                this._batchNode = new cc.SpriteBatchNode("res/Images/grossini_dance_atlas.png", 500);
+                this._batchNode = new cc.SpriteBatchNode("Images/grossini_dance_atlas.png", 500);
                 p.addChild(this._batchNode, 0);
                 break;
             case 6:
                 if( "opengl" in cc.sys.capabilities )
                     cc.Texture2D.defaultPixelFormat = cc.Texture2D.PIXEL_FORMAT_RGBA4444;
-                this._batchNode = new cc.SpriteBatchNode("res/Images/grossini_dance_atlas.png", 500);
+                this._batchNode = new cc.SpriteBatchNode("Images/grossini_dance_atlas.png", 500);
                 p.addChild(this._batchNode, 0);
                 break;
 
@@ -212,13 +212,13 @@ var SubTest = cc.Class.extend({
             case 8:
                 if( "opengl" in cc.sys.capabilities )
                     cc.Texture2D.defaultPixelFormat = cc.Texture2D.PIXEL_FORMAT_RGBA8888;
-                this._batchNode = new cc.SpriteBatchNode("res/Images/spritesheet1.png", 500);
+                this._batchNode = new cc.SpriteBatchNode("Images/spritesheet1.png", 500);
                 p.addChild(this._batchNode, 0);
                 break;
             case 9:
                 if( "opengl" in cc.sys.capabilities )
                     cc.Texture2D.defaultPixelFormat = cc.Texture2D.PIXEL_FORMAT_RGBA4444;
-                this._batchNode = new cc.SpriteBatchNode("res/Images/spritesheet1.png", 500);
+                this._batchNode = new cc.SpriteBatchNode("Images/spritesheet1.png", 500);
                 p.addChild(this._batchNode, 0);
                 break;
 

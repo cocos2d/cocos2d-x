@@ -26,9 +26,9 @@
 
 var CocosBuilderTestScene = TestScene.extend({
      runThisTest:function(){
-         cc.BuilderReader.setResourcePath("res/");
+         //cc.BuilderReader.setResourcePath("res/");
 
-         var node = cc.BuilderReader.load("res/ccb/HelloCocosBuilder.ccbi", this);
+         var node = cc.BuilderReader.load("ccb/HelloCocosBuilder.ccbi", this);
 
          if(node != null) {
              this.addChild(node);

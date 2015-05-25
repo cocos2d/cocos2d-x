@@ -97,7 +97,7 @@ var VirtualMachineTestMainScene = cc.Scene.extend({
     },
 
     initWithQuantityOfNodes:function (nodes) {
-        this._batchNode = new cc.SpriteBatchNode("res/Images/grossinis_sister1.png");
+        this._batchNode = new cc.SpriteBatchNode("Images/grossinis_sister1.png");
         this.addChild(this._batchNode);
 
         //srand(time());

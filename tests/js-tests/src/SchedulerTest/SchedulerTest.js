@@ -557,9 +557,9 @@ var SchedulerTimeScale = SchedulerTestLayer.extend({
         var action2 = action.clone();
         var action3 = action.clone();
 
-        var grossini = new cc.Sprite("res/Images/grossini.png");
-        var tamara = new cc.Sprite("res/Images/grossinis_sister1.png");
-        var kathia = new cc.Sprite("res/Images/grossinis_sister2.png");
+        var grossini = new cc.Sprite("Images/grossini.png");
+        var tamara = new cc.Sprite("Images/grossinis_sister1.png");
+        var kathia = new cc.Sprite("Images/grossinis_sister2.png");
         
         grossini.setActionManager(this._newActionManager);
         grossini.setScheduler(this._newScheduler);

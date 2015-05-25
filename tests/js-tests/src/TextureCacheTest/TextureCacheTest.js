@@ -74,57 +74,57 @@ var TextureCacheTest = TextureCacheTestBase.extend({
 
         var texCache = cc.textureCache;
         // load textrues
-        texCache.addImageAsync("res/Images/HelloWorld.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini_dance_01.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini_dance_02.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini_dance_03.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini_dance_04.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini_dance_05.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini_dance_06.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini_dance_07.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini_dance_08.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini_dance_09.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini_dance_10.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini_dance_11.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini_dance_12.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini_dance_13.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/grossini_dance_14.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/background1.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/background2.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/background3.png", this.loadingCallBack, this);
-        texCache.addImageAsync("res/Images/blocks.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/HelloWorld.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini_dance_01.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini_dance_02.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini_dance_03.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini_dance_04.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini_dance_05.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini_dance_06.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini_dance_07.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini_dance_08.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini_dance_09.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini_dance_10.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini_dance_11.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini_dance_12.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini_dance_13.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/grossini_dance_14.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/background1.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/background2.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/background3.png", this.loadingCallBack, this);
+        texCache.addImageAsync("Images/blocks.png", this.loadingCallBack, this);
     },
     addSprite:function () {
         var size = cc.director.getWinSize();
 
         // create sprites
-        var bg = new cc.Sprite("res/Images/HelloWorld.png");
+        var bg = new cc.Sprite("Images/HelloWorld.png");
         bg.x = size.width / 2;
         bg.y = size.height / 2;
         //bg.scale = 1.7;
 
-        var s1 = new cc.Sprite("res/Images/grossini.png");
-        var s2 = new cc.Sprite("res/Images/grossini_dance_01.png");
-        var s3 = new cc.Sprite("res/Images/grossini_dance_02.png");
-        var s4 = new cc.Sprite("res/Images/grossini_dance_03.png");
-        var s5 = new cc.Sprite("res/Images/grossini_dance_04.png");
-        var s6 = new cc.Sprite("res/Images/grossini_dance_05.png");
-        var s7 = new cc.Sprite("res/Images/grossini_dance_06.png");
-        var s8 = new cc.Sprite("res/Images/grossini_dance_07.png");
-        var s9 = new cc.Sprite("res/Images/grossini_dance_08.png");
-        var s10 = new cc.Sprite("res/Images/grossini_dance_09.png");
-        var s11 = new cc.Sprite("res/Images/grossini_dance_10.png");
-        var s12 = new cc.Sprite("res/Images/grossini_dance_11.png");
-        var s13 = new cc.Sprite("res/Images/grossini_dance_12.png");
-        var s14 = new cc.Sprite("res/Images/grossini_dance_13.png");
-        var s15 = new cc.Sprite("res/Images/grossini_dance_14.png");
+        var s1 = new cc.Sprite("Images/grossini.png");
+        var s2 = new cc.Sprite("Images/grossini_dance_01.png");
+        var s3 = new cc.Sprite("Images/grossini_dance_02.png");
+        var s4 = new cc.Sprite("Images/grossini_dance_03.png");
+        var s5 = new cc.Sprite("Images/grossini_dance_04.png");
+        var s6 = new cc.Sprite("Images/grossini_dance_05.png");
+        var s7 = new cc.Sprite("Images/grossini_dance_06.png");
+        var s8 = new cc.Sprite("Images/grossini_dance_07.png");
+        var s9 = new cc.Sprite("Images/grossini_dance_08.png");
+        var s10 = new cc.Sprite("Images/grossini_dance_09.png");
+        var s11 = new cc.Sprite("Images/grossini_dance_10.png");
+        var s12 = new cc.Sprite("Images/grossini_dance_11.png");
+        var s13 = new cc.Sprite("Images/grossini_dance_12.png");
+        var s14 = new cc.Sprite("Images/grossini_dance_13.png");
+        var s15 = new cc.Sprite("Images/grossini_dance_14.png");
 
         // just loading textures to slow down
-        var s16 = new cc.Sprite("res/Images/background1.png");
-        var s17 = new cc.Sprite("res/Images/background2.png");
-        var s18 = new cc.Sprite("res/Images/background3.png");
-        var s19 = new cc.Sprite("res/Images/blocks.png");
+        var s16 = new cc.Sprite("Images/background1.png");
+        var s17 = new cc.Sprite("Images/background2.png");
+        var s18 = new cc.Sprite("Images/background3.png");
+        var s19 = new cc.Sprite("Images/blocks.png");
 
         s1.x = 50;
         s1.y = 50;

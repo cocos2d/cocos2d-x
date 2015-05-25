@@ -38,7 +38,7 @@ var ControlPotentiometerTest = ControlScene.extend({
             var layer_width = 0;
 
             // Add the black background for the text
-            var background = new cc.Scale9Sprite("res/extensions/buttonBackground.png");
+            var background = new cc.Scale9Sprite("extensions/buttonBackground.png");
             background.width = 80;
 	        background.height = 50;
             background.x = layer_width + background.width / 2.0;
@@ -54,9 +54,9 @@ var ControlPotentiometerTest = ControlScene.extend({
             layer.addChild(this._displayValueLabel);
 
             // Add the slider
-            var potentiometer = new cc.ControlPotentiometer("res/extensions/potentiometerTrack.png"
-                , "res/extensions/potentiometerProgress.png"
-                , "res/extensions/potentiometerButton.png");
+            var potentiometer = new cc.ControlPotentiometer("extensions/potentiometerTrack.png"
+                , "extensions/potentiometerProgress.png"
+                , "extensions/potentiometerButton.png");
             potentiometer.x = layer_width + 10 + potentiometer.width / 2;
             potentiometer.y = 0;
 
