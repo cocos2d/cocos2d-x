@@ -26,7 +26,10 @@
 
 cc.BuilderReader.registerController("HelloCocosBuilderLayer", {
     _openTest : function(ccbFileName) {
-        //cc.BuilderReader.setResourcePath("res/");
+        if (cc.sys.isNative)
+        {
+            cc.BuilderReader.setResourcePath("res/");
+        }
         var node = cc.BuilderReader.load(ccbFileName, this);
 
         this["mTestTitleLabelTTF"].setString(ccbFileName);

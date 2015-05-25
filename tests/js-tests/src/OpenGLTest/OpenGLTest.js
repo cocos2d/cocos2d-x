@@ -638,7 +638,7 @@ var ShaderHeartTest = OpenGLTestLayer.extend({
         this._super();
 
         if( 'opengl' in cc.sys.capabilities ) {
-            var shaderNode = new ShaderNode("../../js-tests/res/Shaders/example_Heart.vsh", "../../js-tests/res/Shaders/example_Heart.fsh");
+            var shaderNode = new ShaderNode("Shaders/example_Heart.vsh", "Shaders/example_Heart.fsh");
             this.addChild(shaderNode,10);
             shaderNode.x = winSize.width/2;
             shaderNode.y = winSize.height/2;
@@ -678,7 +678,7 @@ var ShaderMandelbrotTest = OpenGLTestLayer.extend({
         this._super();
 
         if( 'opengl' in cc.sys.capabilities ) {
-            var shaderNode = new ShaderNode("../../js-tests/res/Shaders/example_Mandelbrot.vsh", "../../js-tests/res/Shaders/example_Mandelbrot.fsh");
+            var shaderNode = new ShaderNode("Shaders/example_Mandelbrot.vsh", "Shaders/example_Mandelbrot.fsh");
             this.addChild(shaderNode,10);
             shaderNode.x = winSize.width/2;
             shaderNode.y = winSize.height/2;
@@ -713,7 +713,7 @@ var ShaderMonjoriTest = OpenGLTestLayer.extend({
         this._super();
 
         if( 'opengl' in cc.sys.capabilities ) {
-            var shaderNode = new ShaderNode("../../js-tests/res/Shaders/example_Monjori.vsh", "../../js-tests/res/Shaders/example_Monjori.fsh");
+            var shaderNode = new ShaderNode("Shaders/example_Monjori.vsh", "Shaders/example_Monjori.fsh");
             this.addChild(shaderNode,10);
             shaderNode.x = winSize.width/2;
             shaderNode.y = winSize.height/2;
@@ -748,7 +748,7 @@ var ShaderPlasmaTest = OpenGLTestLayer.extend({
         this._super();
 
         if( 'opengl' in cc.sys.capabilities ) {
-            var shaderNode = new ShaderNode("../../js-tests/res/Shaders/example_Plasma.vsh", "../../js-tests/res/Shaders/example_Plasma.fsh");
+            var shaderNode = new ShaderNode("Shaders/example_Plasma.vsh", "Shaders/example_Plasma.fsh");
             this.addChild(shaderNode,10);
             shaderNode.x = winSize.width/2;
             shaderNode.y = winSize.height/2;
@@ -787,7 +787,7 @@ var ShaderFlowerTest = OpenGLTestLayer.extend({
 
         if( 'opengl' in cc.sys.capabilities ) {
 
-            var shaderNode = new ShaderNode("../../js-tests/res/Shaders/example_Flower.vsh", "../../js-tests/res/Shaders/example_Flower.fsh");
+            var shaderNode = new ShaderNode("Shaders/example_Flower.vsh", "Shaders/example_Flower.fsh");
             this.addChild(shaderNode,10);
             shaderNode.x = winSize.width/2;
             shaderNode.y = winSize.height/2;
@@ -826,7 +826,7 @@ var ShaderJuliaTest = OpenGLTestLayer.extend({
 
         if( 'opengl' in cc.sys.capabilities ) {
 
-            var shaderNode = new ShaderNode("../../js-tests/res/Shaders/example_Julia.vsh", "../../js-tests/res/Shaders/example_Julia.fsh");
+            var shaderNode = new ShaderNode("Shaders/example_Julia.vsh", "Shaders/example_Julia.fsh");
             this.addChild(shaderNode,10);
             shaderNode.x = winSize.width/2;
             shaderNode.y = winSize.height/2;
@@ -867,12 +867,12 @@ var ShaderOutlineEffect = OpenGLTestLayer.extend({
 
         if( 'opengl' in cc.sys.capabilities ) {
             if(cc.sys.isNative){
-                this.shader = new cc.GLProgram("../../js-tests/res/Shaders/example_Outline_noMVP.vsh", "../../js-tests/res/Shaders/example_Outline.fsh");
+                this.shader = new cc.GLProgram("Shaders/example_Outline_noMVP.vsh", "Shaders/example_Outline.fsh");
                 this.shader.link();
                 this.shader.updateUniforms();
             }
             else{
-                this.shader = new cc.GLProgram("../../js-tests/res/Shaders/example_Outline.vsh", "../../js-tests/res/Shaders/example_Outline.fsh");
+                this.shader = new cc.GLProgram("Shaders/example_Outline.vsh", "Shaders/example_Outline.fsh");
                 this.shader.addAttribute(cc.ATTRIBUTE_NAME_POSITION, cc.VERTEX_ATTRIB_POSITION);
                 this.shader.addAttribute(cc.ATTRIBUTE_NAME_TEX_COORD, cc.VERTEX_ATTRIB_TEX_COORDS);
                 this.shader.addAttribute(cc.ATTRIBUTE_NAME_COLOR, cc.VERTEX_ATTRIB_COLOR);
@@ -943,7 +943,7 @@ var ShaderRetroEffect = OpenGLTestLayer.extend({
         this._super();
 
         if( 'opengl' in cc.sys.capabilities ) {
-            var program = new cc.GLProgram("../../js-tests/res/Shaders/example_ColorBars.vsh", "../../js-tests/res/Shaders/example_ColorBars.fsh");
+            var program = new cc.GLProgram("Shaders/example_ColorBars.vsh", "Shaders/example_ColorBars.fsh");
             program.addAttribute(cc.ATTRIBUTE_NAME_POSITION, cc.VERTEX_ATTRIB_POSITION);
             program.addAttribute(cc.ATTRIBUTE_NAME_TEX_COORD, cc.VERTEX_ATTRIB_TEX_COORDS);
             program.link();
