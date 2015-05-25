@@ -795,11 +795,6 @@ void Button::setTitleFontSize(float size)
         config.fontSize = size;
         _titleRenderer->setTTFConfig(config);
     }
-    else
-    {
-        // BMFont can't set its font size
-        size = _fontSize;
-    }
     updateContentSize();
     _fontSize = size;
 }
