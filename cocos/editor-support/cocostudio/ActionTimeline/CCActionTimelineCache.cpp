@@ -183,7 +183,7 @@ ActionTimeline* ActionTimelineCache::loadAnimationActionWithContent(const std::s
     doc.Parse<0>(content.c_str());
     if (doc.HasParseError()) 
     {
-        CCLOG("GetParseError %s\n", doc.GetParseError());
+        CCLOG("GetParseError %d\n", doc.GetParseError());
     }
 
     const rapidjson::Value& json = DICTOOL->getSubDictionary_json(doc, ACTION);
