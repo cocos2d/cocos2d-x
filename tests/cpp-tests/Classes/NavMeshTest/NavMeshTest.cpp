@@ -136,7 +136,7 @@ void NavMeshTestDemo::onTouchesBegan(const std::vector<Touch*>& touches, cocos2d
         _camera->unproject(size, &farP, &farP);
 
         Physics3DWorld::HitResult result;
-        bool ret = getPhysics3DWorld()->rayCast(nearP, farP, &result);
+        getPhysics3DWorld()->rayCast(nearP, farP, &result);
 
         if (_stateLabel->getString() == "Create Obstacle"){
             createObstacle(result.hitPosition);

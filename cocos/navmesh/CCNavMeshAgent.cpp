@@ -287,7 +287,7 @@ void NavMeshAgent::preUpdate(float delta)
 {
     if (_state != DT_CROWDAGENT_STATE_INVALID)
         _totalTimeAfterMove += delta;
-    if (_moveCallback)
+    if (_moveCallback && _state != DT_CROWDAGENT_STATE_INVALID)
         _moveCallback(this, _totalTimeAfterMove);
 
     if ((_syncFlag & NODE_TO_AGENT) != 0)

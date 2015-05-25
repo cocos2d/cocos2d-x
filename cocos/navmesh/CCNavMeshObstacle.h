@@ -42,6 +42,7 @@ NS_CC_BEGIN
  * @{
  */
 
+/** @brief NavMeshObstacle: The code wrapping of dtTileCacheObstacle, use component mode. */
 class CC_DLL NavMeshObstacle : public Component
 {
     friend class NavMesh;
@@ -61,14 +62,28 @@ public:
     virtual void onEnter() override;
     virtual void onExit() override;
 
+    /** Set radius of obstacle */
     void setRadius(float radius);
+
+    /** Get radius of obstacle */
     float getRadius() const { return _radius; }
+
+    /** Set height of obstacle */
     void setHeight(float height);
+
+    /** Get height of obstacle */
     float getHeight() const { return _height; }
 
+    /**
+    * synchronization between node and obstacle is time consuming, you can skip some synchronization using this function
+    */
     void setSyncFlag(const NavMeshObstacleSyncFlag &flag) { _syncFlag = flag; }
     NavMeshObstacleSyncFlag getSyncFlag() const { return _syncFlag; }
+
+    /** synchronize parameter to obstacle. */
     void syncToObstacle();
+
+    /** synchronize parameter to node. */
     void syncToNode();
 
 CC_CONSTRUCTOR_ACCESS:
