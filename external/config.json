@@ -4,6 +4,7 @@
     "repo_name":"cocos2d-x-3rd-party-libs-bin",
     "repo_parent":"https://github.com/cocos2d/",
     "move_dirs":{
-        "fbx-conv":"tools"
+        "fbx-conv":"tools",
+        "framework-compile":"tools"
     }
 }
