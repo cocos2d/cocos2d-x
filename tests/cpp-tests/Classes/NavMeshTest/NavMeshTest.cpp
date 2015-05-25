@@ -137,17 +137,19 @@ void NavMeshTestDemo::onTouchesBegan(const std::vector<Touch*>& touches, cocos2d
 
         Physics3DWorld::HitResult result;
         bool ret = getPhysics3DWorld()->rayCast(nearP, farP, &result);
-
-        if (_stateLabel->getString() == "Create Obstacle"){
-            createObstacle(result.hitPosition);
-        }
-
-        if (_stateLabel->getString() == "Create Agent"){
-            createAgent(result.hitPosition);
-        }
-
-        if (_stateLabel->getString() == "Move Agent"){
-            moveAgents(result.hitPosition);
+        if (ret)
+        {
+            if (_stateLabel->getString() == "Create Obstacle"){
+                createObstacle(result.hitPosition);
+            }
+            
+            if (_stateLabel->getString() == "Create Agent"){
+                createAgent(result.hitPosition);
+            }
+            
+            if (_stateLabel->getString() == "Move Agent"){
+                moveAgents(result.hitPosition);
+            }
         }
     }
 }
@@ -196,6 +198,11 @@ void NavMeshTestDemo::initScene()
     auto component = Physics3DComponent::create(rigidBody);
     auto sprite = Sprite3D::create("NavMesh/scene.obj");
     sprite->addComponent(component);
+    auto& children = sprite->getChildren();
+    for (auto child : children) {
+        auto sp = dynamic_cast<Sprite3D*>(child);
+        sp->setTexture("NavMesh/maps/scenetex.png");
+    }
     sprite->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(sprite);
     setPhysics3DDebugCamera(_camera);
@@ -210,7 +217,7 @@ void NavMeshTestDemo::initScene()
     ambientLight->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(ambientLight);
 
-    auto dirLight = DirectionLight::create(Vec3(-1.0f, -1.0f, -1.0f), Color3B(255, 255, 255));
+    auto dirLight = DirectionLight::create(Vec3(-1.0f, -1.0f, -1.0f), Color3B(150, 150, 150));
     dirLight->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(dirLight);
 }
