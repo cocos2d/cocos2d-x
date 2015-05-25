@@ -37,14 +37,15 @@ def do_build_slaves():
     global node_name
 
     jenkins_script_path = "tools" + os.sep + "jenkins-scripts" + os.sep + "slave-scripts" + os.sep
+    js_tests_build_scripts = ""
 
     if(branch != 'v1' and branch != 'v2'):
         slave_build_scripts = ""
         if(node_name == 'android') or (node_name == 'android_bak'):
-            # patch_cpp_empty_test()
             slave_build_scripts = jenkins_script_path + "android-build.sh"
         elif(node_name == 'win32' or node_name == 'win32_win7' or node_name == 'win32_bak'):
             slave_build_scripts = jenkins_script_path + "win32-build.bat"
+            js_tests_build_scripts = jenkins_script_path + "win32-js-build.bat"
         elif(node_name == 'windows-universal' or node_name == 'windows-universal_bak'):
             slave_build_scripts = jenkins_script_path + "windows-universal.bat"
         elif(node_name == 'ios_mac' or node_name == 'ios' or node_name == 'ios_bak'):
@@ -58,6 +59,8 @@ def do_build_slaves():
                 slave_build_scripts = jenkins_script_path + "wp8-v3.bat"
 
         ret = os.system(slave_build_scripts)
+        js_test_ret = os.system(js_tests_build_scripts)
+        ret = ret + js_test_ret
 
     #get build result
     print "build finished and return " + str(ret)
