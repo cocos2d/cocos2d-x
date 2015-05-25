@@ -355,6 +355,13 @@ public:
     void setPlaceHolderColor(const Color4B& color);
     
     /**
+     * @brief Query the text string color.
+     *
+     * @return The color of the text.
+     */
+    const Color4B& getTextColor()const;
+    
+    /**
      * @brief Change the text color.
      *
      * @param textColor The color value in `Color4B`.
