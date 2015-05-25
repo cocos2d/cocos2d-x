@@ -662,12 +662,12 @@ namespace cocostudio
             {
                 panel->setBackGroundImage(imageFileName, (Widget::TextureResType)imageFileNameType);
             }
-            else
-            {
-                auto label = Label::create();
-                label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
-                panel->addChild(label);
-            }
+            //else
+            //{
+            //    auto label = Label::create();
+            //    label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+            //    panel->addChild(label);
+            //}
         }
         
         auto widgetOptions = options->widgetOptions();

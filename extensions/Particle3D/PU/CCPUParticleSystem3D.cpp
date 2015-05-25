@@ -1056,7 +1056,7 @@ void PUParticleSystem3D::clearAllParticles()
     }
 }
 
-void PUParticleSystem3D::copyAttributesTo( PUParticleSystem3D* system )
+void PUParticleSystem3D::copyAttributesTo(PUParticleSystem3D* system )
 {
     system->removeAllEmitter();
     system->removeAllAffector();
@@ -1171,7 +1171,8 @@ void PUParticleSystem3D::draw( Renderer *renderer, const Mat4 &transform, uint32
 
     if (!_emittedSystemParticlePool.empty())
     {
-        for (auto iter : _emittedSystemParticlePool){
+        for (auto iter : _emittedSystemParticlePool)
+        {
             PUParticle3D *particle = static_cast<PUParticle3D *>(iter.second.getFirst());
             while (particle)
             {

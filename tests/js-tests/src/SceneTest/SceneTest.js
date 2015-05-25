@@ -43,8 +43,17 @@ var SceneTestLayer1 = cc.Layer.extend({
         var item3 = new cc.MenuItemFont("Quit", function () {
             cc.log("quit!")
         }, this);
+        var item4 = new cc.MenuItemFont("setNotificationNode", function () {
+            var layerTemp = new cc.LayerColor(cc.color(0, 255, 255, 120));
+            cc.director.setNotificationNode(layerTemp);
+            cc.log("setNotificationNode!");
+        }, this);
+        var item5 = new cc.MenuItemFont("clearNotificationNode", function () {
+            cc.log("clearNotificationNode!");
+            cc.director.setNotificationNode(null);
+        }, this);
 
-        var menu = new cc.Menu(item1, item2, item3);
+        var menu = new cc.Menu(item1, item2, item3, item4, item5);
         menu.alignItemsVertically();
         this.addChild(menu);
 

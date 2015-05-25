@@ -175,21 +175,7 @@ void NavMeshTestDemo::initScene()
 {
     getPhysics3DWorld()->setDebugDrawEnable(false);
     //create mesh
-    std::vector<Vec3> trianglesList;
-    auto bundle = Bundle3D::createBundle();
-    MeshDatas meshs;
-    MaterialDatas materials;
-    NodeDatas nodeDatas;
-    bundle->loadObj(meshs, materials, nodeDatas, "NavMesh/scene.obj");
-    Bundle3D::destroyBundle(bundle);
-    for (auto iter : meshs.meshDatas){
-        int preVertexSize = iter->getPerVertexSize() / sizeof(float);
-        for (auto indexArray : iter->subMeshIndices){
-            for (auto i : indexArray){
-                trianglesList.push_back(Vec3(iter->vertex[i * preVertexSize], iter->vertex[i * preVertexSize + 1], iter->vertex[i * preVertexSize + 2]));
-            }
-        }
-    }
+    std::vector<Vec3> trianglesList = Bundle3D::getTrianglesList("NavMesh/scene.obj");
 
     Physics3DRigidBodyDes rbDes;
     rbDes.mass = 0.0f;
@@ -198,11 +184,6 @@ void NavMeshTestDemo::initScene()
     auto component = Physics3DComponent::create(rigidBody);
     auto sprite = Sprite3D::create("NavMesh/scene.obj");
     sprite->addComponent(component);
-    auto& children = sprite->getChildren();
-    for (auto child : children) {
-        auto sp = dynamic_cast<Sprite3D*>(child);
-        sp->setTexture("NavMesh/maps/scenetex.png");
-    }
     sprite->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(sprite);
     setPhysics3DDebugCamera(_camera);
@@ -217,7 +198,7 @@ void NavMeshTestDemo::initScene()
     ambientLight->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(ambientLight);
 
-    auto dirLight = DirectionLight::create(Vec3(-1.0f, -1.0f, -1.0f), Color3B(150, 150, 150));
+    auto dirLight = DirectionLight::create(Vec3(0.0f, -1.0f, 0.0f), Color3B(150, 150, 150));
     dirLight->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(dirLight);
 }

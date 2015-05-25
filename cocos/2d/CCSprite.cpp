@@ -993,6 +993,10 @@ bool Sprite::isFrameDisplayed(SpriteFrame *frame) const
 
 SpriteFrame* Sprite::getSpriteFrame() const
 {
+    if(nullptr != this->_spriteFrame)
+    {
+        return this->_spriteFrame;
+    }
     return SpriteFrame::createWithTexture(_texture,
                                            CC_RECT_POINTS_TO_PIXELS(_rect),
                                            _rectRotated,

@@ -352,6 +352,8 @@ public:
         uint32_t getHash() const;
         bool isDirty() const;
 
+        static StateBlock* _defaultState;
+
     protected:
         StateBlock();
         ~StateBlock();
@@ -381,8 +383,6 @@ public:
         StencilOperation _stencilOpDppass;
 
         long _bits;
-
-        static StateBlock* _defaultState;
 
         mutable uint32_t _hash;
         mutable bool _hashDirty;
