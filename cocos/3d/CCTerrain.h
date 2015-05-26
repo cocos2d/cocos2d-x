@@ -343,6 +343,8 @@ public:
      */
     Vec3 getIntersectionPoint(const Ray & ray);
 
+    bool getIntersectionPoint(const Ray & ray, Vec3 & intersectionPoint);
+
     /**
      * set the MaxDetailAmount.
      */
