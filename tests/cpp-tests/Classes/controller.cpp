@@ -17,7 +17,6 @@ public:
     RootTests()
     {
         addTest("Node: Scene3D", [](){return new (std::nothrow) Scene3DTests(); });
-        addTest("SpritePolygon", [](){return new (std::nothrow) SpritePolygonTest(); });
         addTest("ActionManager", [](){return new (std::nothrow) ActionManagerTests(); });
         addTest("Actions - Basic", [](){ return new (std::nothrow) ActionsTests(); });
         addTest("Actions - Ease", [](){return new (std::nothrow) ActionsEaseTests(); });

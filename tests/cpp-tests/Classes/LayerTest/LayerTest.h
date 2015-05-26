@@ -116,15 +116,6 @@ public:
     virtual std::string subtitle() const override;
 };
 
-class LayerGradientTest3 : public LayerTest
-{
-public:
-    CREATE_FUNC(LayerGradientTest3);
-    LayerGradientTest3();
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-};
-
 class LayerIgnoreAnchorPointPos : public LayerTest
 {
 public:

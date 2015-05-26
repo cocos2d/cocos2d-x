@@ -21,7 +21,6 @@ LayerTests::LayerTests()
     ADD_TEST_CASE(LayerTestBlend);
     ADD_TEST_CASE(LayerGradientTest);
     ADD_TEST_CASE(LayerGradientTest2);
-    ADD_TEST_CASE(LayerGradientTest3);
     ADD_TEST_CASE(LayerIgnoreAnchorPointPos);
     ADD_TEST_CASE(LayerIgnoreAnchorPointRot);
     ADD_TEST_CASE(LayerIgnoreAnchorPointScale);
@@ -572,28 +571,6 @@ std::string LayerGradientTest2::title() const
 }
 
 std::string LayerGradientTest2::subtitle() const
-{
-    return "You should see a gradient";
-}
-
-
-//------------------------------------------------------------------
-//
-// LayerGradientTest3
-//
-//------------------------------------------------------------------
-LayerGradientTest3::LayerGradientTest3()
-{
-    auto layer1 = LayerGradient::create(Color4B(255,0,0,255), Color4B(255,255,0,255));
-    addChild(layer1);
-}
-
-std::string LayerGradientTest3::title() const
-{
-    return "LayerGradientTest 3";
-}
-
-std::string LayerGradientTest3::subtitle() const
 {
     return "You should see a gradient";
 }
