@@ -36,6 +36,8 @@ THE SOFTWARE.
 #include "base/CCIMEDispatcher.h"
 #include "base/ccUtils.h"
 #include "base/ccUTF8.h"
+#include "base/CCGameController.h"
+#include "CCController-desktop.h"
 
 
 NS_CC_BEGIN
@@ -453,6 +455,9 @@ bool GLViewImpl::windowShouldClose()
 void GLViewImpl::pollEvents()
 {
     glfwPollEvents();
+    // TODO - controller - make this optional and give the option for how many controllers to check for
+    ControllerImpl::pollJoystick(GLFW_JOYSTICK_1);
+    ControllerImpl::pollJoystick(GLFW_JOYSTICK_2);
 }
 
 void GLViewImpl::enableRetina(bool enabled)
