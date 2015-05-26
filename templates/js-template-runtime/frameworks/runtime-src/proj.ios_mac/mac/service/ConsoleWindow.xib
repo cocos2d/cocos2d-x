@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="ConsoleWindowController">
+            <connections>
+                <outlet property="checkScroll" destination="50" id="70"/>
+                <outlet property="textView" destination="6" id="20"/>
+                <outlet property="topCheckBox" destination="60" id="69"/>
+                <outlet property="window" destination="1" id="3"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Console" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" animationBehavior="default" id="1">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="40" y="40" width="854" height="400"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+            <view key="contentView" id="2">
+                <rect key="frame" x="0.0" y="0.0" width="854" height="400"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5">
+                        <rect key="frame" x="-1" y="-1" width="854" height="371"/>
+                        <clipView key="contentView" id="ddW-qo-Qe9">
+                            <rect key="frame" x="1" y="1" width="837" height="369"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <textView editable="NO" importsGraphics="NO" richText="NO" findStyle="panel" verticallyResizable="YES" allowsNonContiguousLayout="YES" id="6">
+                                    <rect key="frame" x="0.0" y="0.0" width="837" height="369"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <size key="minSize" width="837" height="369"/>
+                                    <size key="maxSize" width="888" height="10000000"/>
+                                    <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <size key="minSize" width="837" height="369"/>
+                                    <size key="maxSize" width="888" height="10000000"/>
+                                </textView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </clipView>
+                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="7">
+                            <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="8">
+                            <rect key="frame" x="838" y="1" width="15" height="369"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                    </scrollView>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="46">
+                        <rect key="frame" x="-1" y="367" width="73" height="32"/>
+                        <buttonCell key="cell" type="push" title="Clear" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="47">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="onClear:" target="-2" id="57"/>
+                        </connections>
+                    </button>
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="50">
+                        <rect key="frame" x="731" y="376" width="113" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="109" id="56"/>
+                        </constraints>
+                        <buttonCell key="cell" type="check" title="scroll bottom" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="51">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="onScrollChange:" target="-2" id="59"/>
+                        </connections>
+                    </button>
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="60">
+                        <rect key="frame" x="632" y="375" width="95" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="91" id="64"/>
+                        </constraints>
+                        <buttonCell key="cell" type="check" title="always top" bezelStyle="regularSquare" imagePosition="left" inset="2" id="61">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="onTopChange:" target="-2" id="67"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="5" secondAttribute="trailing" constant="1" id="41"/>
+                    <constraint firstAttribute="bottom" secondItem="5" secondAttribute="bottom" constant="-1" id="42"/>
+                    <constraint firstItem="5" firstAttribute="top" secondItem="2" secondAttribute="top" constant="30" id="43"/>
+                    <constraint firstItem="5" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="-1" id="44"/>
+                    <constraint firstItem="46" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="5" id="49"/>
+                    <constraint firstItem="50" firstAttribute="baseline" secondItem="46" secondAttribute="baseline" id="52"/>
+                    <constraint firstAttribute="trailing" secondItem="50" secondAttribute="trailing" constant="12" id="53"/>
+                    <constraint firstItem="5" firstAttribute="top" secondItem="50" secondAttribute="bottom" constant="8" symbolic="YES" id="54"/>
+                    <constraint firstItem="60" firstAttribute="centerY" secondItem="46" secondAttribute="centerY" id="63"/>
+                    <constraint firstItem="50" firstAttribute="leading" secondItem="60" secondAttribute="trailing" constant="8" symbolic="YES" id="66"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="4"/>
+            </connections>
+        </window>
+    </objects>
+</document>

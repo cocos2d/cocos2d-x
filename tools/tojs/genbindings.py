@@ -142,7 +142,8 @@ def main():
                     'cocos2dx_spine.ini' : ('cocos2dx_spine', 'jsb_cocos2dx_spine_auto'), \
                     'cocos2dx_3d.ini' : ('cocos2dx_3d', 'jsb_cocos2dx_3d_auto'), \
                     'cocos2dx_3d_ext.ini' : ('cocos2dx_3d_extension', 'jsb_cocos2dx_3d_extension_auto'), \
-                    'cocos2dx_experimental.ini' : ('cocos2dx_experimental', 'jsb_cocos2dx_experimental')
+                    'cocos2dx_experimental.ini' : ('cocos2dx_experimental', 'jsb_cocos2dx_experimental'), \
+                    'cocos2dx_physics3d.ini' : ('cocos2dx_physics3d', 'jsb_cocos2dx_physics3d_auto')
                     }
         target = 'spidermonkey'
         generator_py = '%s/generator.py' % cxx_generator_root

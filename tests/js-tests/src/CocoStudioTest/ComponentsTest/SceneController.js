@@ -43,7 +43,7 @@ var SceneController = ccs.ComController.extend({
         this._addTargetTime = 1;
         this._targets = [];
         this._projectiles = [];
-        this.getOwner().getComponent("Audio").playBackgroundMusic("res/Sound/background-music-aac.wav", true);
+        this.getOwner().getComponent("Audio").playBackgroundMusic("background-music-aac.wav", true);
         this.getOwner().getComponent("CCComAttribute").setInt("KillCount", 0);
     },
 
@@ -60,7 +60,7 @@ var SceneController = ccs.ComController.extend({
     },
 
     addTarget: function () {
-        var target = new cc.Sprite("res/components/Target.png", cc.rect(0, 0, 27, 40));
+        var target = new cc.Sprite("components/Target.png", cc.rect(0, 0, 27, 40));
         this.getOwner().addChild(target, 1, 2);
         target.addComponent(EnemyController.create());
         target.tag = 2;

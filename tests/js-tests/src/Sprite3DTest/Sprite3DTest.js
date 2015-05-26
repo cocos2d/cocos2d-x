@@ -1531,6 +1531,85 @@ var Sprite3DBasicToonShaderTest = Sprite3DTestDemo.extend({
     }
 });
 
+var Sprite3DCubeMapTest = Sprite3DTestDemo.extend({
+    _title:"CubeMap & Skybox Test",
+    _subtitle:"",
+    _camera:null,
+    _angle:0,
+
+    ctor:function(){
+        this._super();
+
+        var visibleSize = cc.director.getVisibleSize();
+        var camera = cc.Camera.createPerspective(60, visibleSize.width/visibleSize.height, 10, 1000);
+        camera.setCameraFlag(cc.CameraFlag.USER1);
+        camera.setPosition3D(cc.math.vec3(0, 0, 50));
+
+        cc.eventManager.addListener({
+            event:cc.EventListener.TOUCH_ALL_AT_ONCE,
+            onTouchesMoved:this.onTouchesMoved.bind(this)
+        }, this);
+
+        //create a teap
+        var teapot = new jsb.Sprite3D("Sprite3DTest/teapot.c3b");
+
+        //create and set our custom shader
+        var shader = new cc.GLProgram("Sprite3DTest/cube_map.vert","Sprite3DTest/cube_map.frag");
+        var state = cc.GLProgramState.create(shader);
+
+        //create the second texture for cylinder
+        var textureCube = jsb.TextureCube.create("Sprite3DTest/skybox/left.jpg","Sprite3DTest/skybox/right.jpg", "Sprite3DTest/skybox/top.jpg", "Sprite3DTest/skybox/bottom.jpg", "Sprite3DTest/skybox/front.jpg", "Sprite3DTest/skybox/back.jpg");
+
+        //set the texture parameters
+        textureCube.setTexParameters(gl.LINEAR, gl.LINEAR, gl.MIRRORED_REPEAT, gl.MIRRORED_REPEAT);
+
+        //pass the texture sampler to our custom shader
+        state.setUniformTexture("u_cubeTex", textureCube);
+
+        teapot.setGLProgramState(state);
+        teapot.setPosition3D(cc.math.vec3(0, -5, 0));
+        teapot.setRotation3D(cc.math.vec3(-90, 180, 0));
+
+        teapot.runAction(cc.rotateBy(1.5, cc.math.vec3(0, 30, 0)).repeatForever());
+
+        //pass mesh's attribute to shader
+        var offset = 0;
+        var attributeCount = teapot.getMesh().getMeshVertexAttribCount();
+        for(var i = 0; i < attributeCount; ++i){
+            var meshattribute = teapot.getMesh().getMeshVertexAttribute(i);
+            state.setVertexAttribPointer(cc.attributeNames[meshattribute.vertexAttrib],
+                                               meshattribute.size,
+                                               meshattribute.type,
+                                               gl.FALSE,
+                                               teapot.getMesh().getVertexSizeInBytes(),
+                                               offset);
+            offset += meshattribute.attribSizeBytes;
+        }
+
+        this.addChild(teapot);
+
+        //config skybox
+        var skybox = jsb.Skybox.create();
+        skybox.setTexture(textureCube);
+        this.addChild(skybox);
+        skybox.setScale(700);
+
+        this.addChild(camera);
+        this.setCameraMask(2);
+        this._camera = camera;
+    },
+
+    onTouchesMoved:function(touches, event){
+        if(touches.length > 0){
+            var touch = touches[0];
+            var delta = touch.getDelta();
+
+            this._angle -= cc.degreesToRadians(delta.x);
+            this._camera.setPosition3D(cc.math.vec3(50*Math.sin(this._angle), 0, 50*Math.cos(this._angle)));
+            this._camera.lookAt(cc.math.vec3(0, 0, 0), cc.math.vec3(0, 1, 0));
+        }
+    }
+});
 //
 // Flow control
 //
@@ -1548,7 +1627,8 @@ var arrayOfSprite3DTest = [
     Sprite3DEmptyTest,
     Sprite3DForceDepthTest,
     UseCaseSprite3D1,
-    UseCaseSprite3D2
+    UseCaseSprite3D2,
+    Sprite3DCubeMapTest
 ];
 
 // 3DEffect use custom shader which is not supported on WP8/WinRT yet. 

@@ -104,6 +104,7 @@ Platform::String^ PlatformStringFromString(const std::string& s)
     return ref new Platform::String(ws.data(), ws.length());
 }
 
+#if 0
 // Method to convert a length in device-independent pixels (DIPs) to a length in physical pixels.
 float ConvertDipsToPixels(float dips)
 {
@@ -115,7 +116,7 @@ float getScaledDPIValue(float v) {
 	auto dipFactor = DisplayProperties::LogicalDpi / 96.0f;
 	return v * dipFactor;
 }
-
+#endif
 
 void CC_DLL CCLogIPAddresses()
 {
