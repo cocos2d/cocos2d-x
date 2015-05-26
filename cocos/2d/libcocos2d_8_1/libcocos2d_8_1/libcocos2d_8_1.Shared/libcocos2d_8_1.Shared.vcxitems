@@ -285,6 +285,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCIMEDispatcher.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccMacros.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCMap.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNinePatchImageParser.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNS.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCProfiling.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCProperties.h" />
@@ -898,6 +899,7 @@
       </ForcedIncludeFiles>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCIMEDispatcher.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNinePatchImageParser.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNS.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCProfiling.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCProperties.cpp" />
@@ -907,7 +909,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCScriptSupport.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCTouch.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccTypes.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCUserDefault.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCUserDefault-winrt.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccUTF8.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCValue.cpp" />

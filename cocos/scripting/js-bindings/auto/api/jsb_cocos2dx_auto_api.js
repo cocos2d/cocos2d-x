@@ -20324,6 +20324,18 @@ str
 },
 
 /**
+ * @method getTextureFilePath
+ * @param {cc.Texture2D} arg0
+ * @return {String}
+ */
+getTextureFilePath : function (
+texture2d 
+)
+{
+    return ;
+},
+
+/**
  * @method removeUnusedTextures
  */
 removeUnusedTextures : function (

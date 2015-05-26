@@ -531,6 +531,14 @@ var testNames = [
         }
     },
     {
+        title:"Physics3D Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/Physics3DTest/Physics3DTest.js",
+        testScene:function () {
+            return new Physics3DTestScene();
+        }
+    },
+    {
         title:"ProgressActions Test",
         platforms: PLATFORM_ALL,
         linksrc:"src/ProgressActionsTest/ProgressActionsTest.js",

@@ -101,8 +101,8 @@ public:
             }
 
             // normal effect: order == 0
-            _quadCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, &_quad, 1, transform, flags);
-            renderer->addCommand(&_quadCommand);
+            _trianglesCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, getRenderedTriangles(), transform, flags);
+            renderer->addCommand(&_trianglesCommand);
 
             // postive effects: oder >= 0
             for(auto it = std::begin(_effects)+idx; it != std::end(_effects); ++it) {

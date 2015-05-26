@@ -62350,6 +62350,35 @@ bool js_cocos2dx_TextureCache_getTextureForKey(JSContext *cx, uint32_t argc, jsv
     JS_ReportError(cx, "js_cocos2dx_TextureCache_getTextureForKey : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_TextureCache_getTextureFilePath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::TextureCache* cobj = (cocos2d::TextureCache *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_TextureCache_getTextureFilePath : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Texture2D* arg0;
+        do {
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::Texture2D*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_TextureCache_getTextureFilePath : Error processing arguments");
+        const std::string ret = cobj->getTextureFilePath(arg0);
+        jsval jsret = JSVAL_NULL;
+        jsret = std_string_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_TextureCache_getTextureFilePath : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
 bool js_cocos2dx_TextureCache_removeUnusedTextures(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -62473,6 +62502,7 @@ void js_register_cocos2dx_TextureCache(JSContext *cx, JS::HandleObject global) {
         JS_FN("addImage", js_cocos2dx_TextureCache_addImage, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("unbindImageAsync", js_cocos2dx_TextureCache_unbindImageAsync, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getTextureForKey", js_cocos2dx_TextureCache_getTextureForKey, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getTextureFilePath", js_cocos2dx_TextureCache_getTextureFilePath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeUnusedTextures", js_cocos2dx_TextureCache_removeUnusedTextures, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("removeTexture", js_cocos2dx_TextureCache_removeTexture, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("waitForQuit", js_cocos2dx_TextureCache_waitForQuit, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),

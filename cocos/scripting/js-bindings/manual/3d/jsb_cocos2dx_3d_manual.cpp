@@ -26,6 +26,7 @@
 #include "jsb_cocos2dx_3d_manual.h"
 #include "cocos2d_specifics.hpp"
 #include "jsb_cocos2dx_3d_auto.hpp"
+#include "3d/CCBundle3D.h"
 
 using namespace cocos2d;
 
@@ -284,6 +285,60 @@ bool js_cocos2dx_Terrain_create(JSContext *cx, uint32_t argc, jsval *vp)
     return false;
 }
 
+jsval std_vector_vec3_to_jsval(JSContext* cx, const std::vector<cocos2d::Vec3>& triangles)
+{
+    JS::RootedObject jsarr(cx, JS_NewArrayObject(cx, triangles.size()));
+
+    uint32_t i = 0;
+    for(auto iter = triangles.begin(); iter != triangles.end(); ++iter)
+    {
+        JS::RootedValue element(cx, vector3_to_jsval(cx, *iter));
+        JS_SetElement(cx, jsarr, i, element);
+        ++i;
+    }
+
+    return OBJECT_TO_JSVAL(jsarr);
+}
+
+bool js_cocos2dx_Bundle3D_getTrianglesList(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    if(argc == 1)
+    {
+        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+
+        std::string path;
+        bool ok = jsval_to_std_string(cx, args.get(0), &path);
+        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
+
+        std::vector<cocos2d::Vec3> triangles = cocos2d::Bundle3D::getTrianglesList(path);
+
+        JS::RootedValue ret(cx, std_vector_vec3_to_jsval(cx, triangles));
+        args.rval().set(ret);
+        return true;
+    }
+    JS_ReportError(cx, "wrong number of arguments");
+    return false;
+}
+
+bool js_cocos2dx_Terrain_getHeightData(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    if(argc == 0)
+    {
+        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+        JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+        js_proxy_t *proxy = jsb_get_js_proxy(obj);
+        cocos2d::Terrain* cobj = (cocos2d::Terrain *)(proxy ? proxy->ptr : NULL);
+        JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Terrain_getHeightData : Invalid Native Object");
+
+        auto data = cobj->getHeightData();
+
+        args.rval().set(std_vector_float_to_jsval(cx, data));
+        return true;
+    }
+    JS_ReportError(cx, "wrong number of arguments");
+    return false;
+}
+
 void register_all_cocos2dx_3d_manual(JSContext *cx, JS::HandleObject global)
 {
     JS::RootedValue tmpVal(cx);
@@ -299,9 +354,15 @@ void register_all_cocos2dx_3d_manual(JSContext *cx, JS::HandleObject global)
     tmpObj = tmpVal.toObjectOrNull();
     JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_Terrain_create, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 
+    JS_GetProperty(cx, ccObj, "Bundle3D", &tmpVal);
+    tmpObj = tmpVal.toObjectOrNull();
+    JS_DefineFunction(cx, tmpObj, "getTrianglesList", js_cocos2dx_Bundle3D_getTrianglesList, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+
     JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_Sprite3D_prototype), "getAABB", js_cocos2dx_Sprite3D_getAABB, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 
     JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_Mesh_prototype), "getMeshVertexAttribute", js_cocos2dx_Mesh_getMeshVertexAttribute, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
     JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_TextureCube_prototype), "setTexParameters", js_cocos2dx_CCTextureCube_setTexParameters, 4, JSPROP_READONLY | JSPROP_PERMANENT);
+
+    JS_DefineFunction(cx, JS::RootedObject(cx, jsb_cocos2d_Terrain_prototype), "getHeightData", js_cocos2dx_Terrain_getHeightData, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 }

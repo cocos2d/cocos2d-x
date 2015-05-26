@@ -160,12 +160,22 @@ namespace cocostudio
         
         /* adapt screen */
         float w = 0, h = 0;
-        bool adaptScrenn = DICTOOL->getBooleanValue_json(options, P_AdaptScreen);
-        if (adaptScrenn)
+        bool adaptScrennExsit = DICTOOL->checkObjectExist_json(options, P_AdaptScreen);
+        if (adaptScrennExsit)
         {
-            Size screenSize = CCDirector::getInstance()->getWinSize();
-            w = screenSize.width;
-            h = screenSize.height;
+            bool adaptScrenn = DICTOOL->getBooleanValue_json(options, P_AdaptScreen);
+            if (adaptScrenn)
+            {
+                Size screenSize = Director::getInstance()->getWinSize();
+                w = screenSize.width;
+                h = screenSize.height;
+            }
+            else
+            {
+                w = DICTOOL->getFloatValue_json(options, P_Width);
+                h = DICTOOL->getFloatValue_json(options, P_Height);
+            }
+
         }
         else
         {

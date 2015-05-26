@@ -33,7 +33,7 @@ THE SOFTWARE.
 #include "2d/CCDrawNode.h"
 #include "base/CCProtocols.h"
 #include "renderer/CCTextureAtlas.h"
-#include "renderer/CCQuadCommand.h"
+#include "renderer/CCTrianglesCommand.h"
 #include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
@@ -538,7 +538,8 @@ protected:
     virtual void updateBlendFunc();
     virtual void setReorderChildDirtyRecursively();
     virtual void setDirtyRecursively(bool value);
-
+    
+    TrianglesCommand::Triangles getRenderedTriangles() const;
     //
     // Data used when the sprite is rendered using a SpriteSheet
     //
@@ -557,7 +558,7 @@ protected:
     BlendFunc        _blendFunc;            /// It's required for TextureProtocol inheritance
     Texture2D*       _texture;              /// Texture2D object that is used to render the sprite
     SpriteFrame*     _spriteFrame;
-    QuadCommand      _quadCommand;          /// quad command
+    TrianglesCommand _trianglesCommand;     ///
 #if CC_SPRITE_DEBUG_DRAW
     DrawNode *_debugDrawNode;
 #endif //CC_SPRITE_DEBUG_DRAW

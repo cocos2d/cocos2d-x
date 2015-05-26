@@ -213,7 +213,6 @@ bool FileServer::listenOnTCP(int port)
     _receiveThread = std::thread(std::bind( &FileServer::loopReceiveFile, this));
     _writeThread = std::thread(std::bind(&FileServer::loopWriteFile, this));
     _responseThread = std::thread(std::bind(&FileServer::loopResponse, this));
-    _responseThread.detach();
     return true;
 }
 
