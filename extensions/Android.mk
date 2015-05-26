@@ -26,6 +26,8 @@ GUI/CCControlExtension/CCInvocation.cpp \
 GUI/CCScrollView/CCScrollView.cpp \
 GUI/CCScrollView/CCTableView.cpp \
 GUI/CCScrollView/CCTableViewCell.cpp \
+GUI/CCScrollView/CCGridView.cpp \
+GUI/CCScrollView/GridViewCell.cpp \
 physics-nodes/CCPhysicsDebugNode.cpp \
 physics-nodes/CCPhysicsSprite.cpp \
 Particle3D/CCParticle3DAffector.cpp \
