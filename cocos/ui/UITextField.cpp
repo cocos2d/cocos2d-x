@@ -849,9 +849,19 @@ void TextField::setTextHorizontalAlignment(TextHAlignment alignment)
     _textFieldRenderer->setHorizontalAlignment(alignment);
 }
 
+TextHAlignment TextField::getTextHorizontalAlignment() const
+{
+    return _textFieldRenderer->getHorizontalAlignment();
+}
+
 void TextField::setTextVerticalAlignment(TextVAlignment alignment)
 {
     _textFieldRenderer->setVerticalAlignment(alignment);
+}
+
+TextVAlignment TextField::getTextVerticalAlignment() const
+{
+    return _textFieldRenderer->getVerticalAlignment();
 }
 
 }
