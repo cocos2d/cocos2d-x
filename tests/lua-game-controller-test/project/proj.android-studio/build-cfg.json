@@ -1,0 +1,28 @@
+{
+    "ndk_module_path" :[
+        "../../../..",
+        "../../../../cocos",
+        "../../../../external"
+    ],
+    "copy_resources": [
+        {
+            "from": "../../src",
+            "to": "src"
+        },
+        {
+            "from": "../../res",
+            "to": "res"
+        },
+        {
+            "from": "../../../../cocos/scripting/lua-bindings/script/",
+            "to": "src/cocos"
+        },
+        {
+            "from": "../../../game-controller-test/Resources",
+            "to": "res",
+            "exclude": [
+                "*.gz"
+            ]
+        }
+    ]
+}

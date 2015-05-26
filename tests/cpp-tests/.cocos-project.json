@@ -24,7 +24,8 @@
         "target_name": "cpp-tests Mac"
     },
     "android_cfg": {
-        "project_path": "proj.android"
+        "project_path": "proj.android",
+        "studio_proj_path" : "proj.android-studio"
     },
     "wp8_1_cfg" : {
         "project_path": "../../build",

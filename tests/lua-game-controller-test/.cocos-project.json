@@ -7,6 +7,7 @@
     "project_type": "lua", 
     "has_native": true,
     "android_cfg": {
-        "project_path": "project/proj.android"
+        "project_path": "project/proj.android",
+        "studio_proj_path" : "project/proj.android-studio"
     }
 }
