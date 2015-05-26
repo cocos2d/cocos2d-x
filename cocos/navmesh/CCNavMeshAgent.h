@@ -120,6 +120,18 @@ public:
     /** get maximal speed of agent */
     float getMaxSpeed() const;
 
+    /** set separation weight */
+    void setSeparationWeight(float weight);
+
+    /** get separation weight */
+    float getSeparationWeight() const;
+
+    /** set obstacle avoidance type */
+    void setObstacleAvoidanceType(unsigned char type);
+
+    /** get obstacle avoidance type */
+    unsigned char getObstacleAvoidanceType() const;
+
     /** get current velocity */
     Vec3 getCurrentVelocity() const;
 

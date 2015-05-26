@@ -177,7 +177,7 @@ void NavMeshBaseTestDemo::initScene()
     ambientLight->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(ambientLight);
 
-    auto dirLight = DirectionLight::create(Vec3(-1.0f, -1.0f, -1.0f), Color3B(255, 255, 255));
+    auto dirLight = DirectionLight::create(Vec3(1.2f, -1.1f, 0.5f), Color3B(255, 255, 255));
     dirLight->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(dirLight);
 }
@@ -188,6 +188,7 @@ void NavMeshBaseTestDemo::createAgent(const Vec3 &pos)
     NavMeshAgentParam param;
     param.radius = 2.0f;
     param.height = 8.0f;
+    param.maxSpeed = 8.0f;
     auto agent = NavMeshAgent::create(param);
     auto agentNode = Sprite3D::create(filePath);
     agent->setOrientationRefAxes(Vec3(-1.0f, 0.0f, 1.0f));

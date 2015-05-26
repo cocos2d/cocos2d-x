@@ -155,6 +155,28 @@ float NavMeshAgent::getMaxSpeed() const
     return _param.maxSpeed;
 }
 
+void NavMeshAgent::setSeparationWeight(float weight)
+{
+    _param.separationWeight = weight;
+    _needUpdateAgent = true;
+}
+
+float NavMeshAgent::getSeparationWeight() const
+{
+    return _param.separationWeight;
+}
+
+void cocos2d::NavMeshAgent::setObstacleAvoidanceType(unsigned char type)
+{
+    _param.obstacleAvoidanceType = type;
+    _needUpdateAgent = true;
+}
+
+unsigned char NavMeshAgent::getObstacleAvoidanceType() const
+{
+    return _param.obstacleAvoidanceType;
+}
+
 Vec3 NavMeshAgent::getCurrentVelocity() const
 {
     if (_crowd){
