@@ -246,8 +246,12 @@ void Player::update(float dt)
     default:
         break;
     }
+    // transform player position to world coord
+    auto playerPos = player->getPosition3D();
+    auto playerModelMat = player->getParent()->getNodeToWorldTransform();
+    playerModelMat.transformPoint(&playerPos);
     Vec3 Normal;
-    float player_h = _terrain->getHeight(player->getPositionX(),player->getPositionZ(),&Normal);
+    float player_h = _terrain->getHeight(playerPos.x, playerPos.z,&Normal);
 
     player->setPositionY(player_h+PLAYER_HEIGHT);
     Quaternion q2;
