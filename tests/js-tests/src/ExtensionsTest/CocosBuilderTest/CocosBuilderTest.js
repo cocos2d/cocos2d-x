@@ -30,8 +30,12 @@ var CocosBuilderTestScene = TestScene.extend({
          {
             cc.BuilderReader.setResourcePath("res/");
          }
+         else
+         {
+            cc.BuilderReader.setResourcePath(ccbjs);
+         }
 
-         var node = cc.BuilderReader.load("ccb/HelloCocosBuilder.ccbi", this);
+         var node = cc.BuilderReader.load(ccbjs + "ccb/HelloCocosBuilder.ccbi", this);
 
          if(node != null) {
              this.addChild(node);

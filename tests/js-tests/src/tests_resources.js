@@ -469,6 +469,11 @@ var g_fonts = [
     }
 ];
 
+var ccbjs = "";
+if (!cc.sys.isNative)
+{
+    ccbjs = "../../js-tests/res/";
+}
 var g_extensions = [
     s_image_icon,
     s_extensions_background,
@@ -478,46 +483,46 @@ var g_extensions = [
     s_extensions_ribbon,
 
     //ccbi resource
-    "ccb/HelloCocosBuilder.ccbi",
-    "ccb/ccb/TestAnimations.ccbi",
-    "ccb/ccb/TestAnimationsSub.ccbi",
-    "ccb/ccb/TestButtons.ccbi",
-    "ccb/ccb/TestHeader.ccbi",
-    "ccb/ccb/TestLabels.ccbi",
-    "ccb/ccb/TestMenus.ccbi",
-    "ccb/ccb/TestParticleSystems.ccbi",
-    "ccb/ccb/TestScrollViews.ccbi",
-    "ccb/ccb/TestScrollViewsContentA.ccbi",
-    "ccb/ccb/TestSprites.ccbi",
+    ccbjs + "ccb/HelloCocosBuilder.ccbi",
+    ccbjs + "ccb/ccb/TestAnimations.ccbi",
+    ccbjs + "ccb/ccb/TestAnimationsSub.ccbi",
+    ccbjs + "ccb/ccb/TestButtons.ccbi",
+    ccbjs + "ccb/ccb/TestHeader.ccbi",
+    ccbjs + "ccb/ccb/TestLabels.ccbi",
+    ccbjs + "ccb/ccb/TestMenus.ccbi",
+    ccbjs + "ccb/ccb/TestParticleSystems.ccbi",
+    ccbjs + "ccb/ccb/TestScrollViews.ccbi",
+    ccbjs + "ccb/ccb/TestScrollViewsContentA.ccbi",
+    ccbjs + "ccb/ccb/TestSprites.ccbi",
 
-    "ccb/ccbParticleStars.png",
-    "ccb/btn-test-0.png",
-    "ccb/animated-grossini.png",
-    "ccb/btn-a-0.png",
-    "ccb/btn-a-1.png",
-    "ccb/btn-a-2.png",
-    "ccb/btn-b-0.png",
-    "ccb/btn-b-1.png",
-    "ccb/btn-b-2.png",
-    "ccb/btn-back-0.png",
-    "ccb/btn-back-1.png",
-    "ccb/btn-test-0.png",
-    "ccb/btn-test-1.png",
-    "ccb/btn-test-2.png",
-    "ccb/burst.png",
-    "ccb/flower.jpg",
-    "ccb/grossini-generic.png",
-    "ccb/jungle.png",
-    "ccb/jungle-left.png",
-    "ccb/jungle-right.png",
-    "ccb/logo.png",
-    "ccb/logo-icon.png",
-    "ccb/markerfelt24shadow.png",
-    "ccb/particle-fire.png",
-    "ccb/particle-smoke.png",
-    "ccb/particle-snow.png",
-    "ccb/particle-stars.png",
-    "ccb/scale-9-demo.png",
+    ccbjs + "ccb/ccbParticleStars.png",
+    ccbjs + "ccb/btn-test-0.png",
+    ccbjs + "ccb/animated-grossini.png",
+    ccbjs + "ccb/btn-a-0.png",
+    ccbjs + "ccb/btn-a-1.png",
+    ccbjs + "ccb/btn-a-2.png",
+    ccbjs + "ccb/btn-b-0.png",
+    ccbjs + "ccb/btn-b-1.png",
+    ccbjs + "ccb/btn-b-2.png",
+    ccbjs + "ccb/btn-back-0.png",
+    ccbjs + "ccb/btn-back-1.png",
+    ccbjs + "ccb/btn-test-0.png",
+    ccbjs + "ccb/btn-test-1.png",
+    ccbjs + "ccb/btn-test-2.png",
+    ccbjs + "ccb/burst.png",
+    ccbjs + "ccb/flower.jpg",
+    ccbjs + "ccb/grossini-generic.png",
+    ccbjs + "ccb/jungle.png",
+    ccbjs + "ccb/jungle-left.png",
+    ccbjs + "ccb/jungle-right.png",
+    ccbjs + "ccb/logo.png",
+    ccbjs + "ccb/logo-icon.png",
+    ccbjs + "ccb/markerfelt24shadow.png",
+    ccbjs + "ccb/particle-fire.png",
+    ccbjs + "ccb/particle-smoke.png",
+    ccbjs + "ccb/particle-snow.png",
+    ccbjs + "ccb/particle-stars.png",
+    ccbjs + "ccb/scale-9-demo.png",
     "extensions/green_edit.png",
     "extensions/orange_edit.png",
     "extensions/yellow_edit.png",
@@ -538,10 +543,10 @@ var g_extensions = [
     "extensions/CCControlColourPickerSpriteSheet.plist",
     "extensions/CCControlColourPickerSpriteSheet.png",
 
-    "ccb/markerfelt24shadow.fnt",
+    ccbjs + "ccb/markerfelt24shadow.fnt",
 
-    "ccb/grossini-generic.plist",
-    "ccb/animated-grossini.plist"
+    ccbjs + "ccb/grossini-generic.plist",
+    ccbjs + "ccb/animated-grossini.plist"
 ];
 
 var g_cocoStudio = [

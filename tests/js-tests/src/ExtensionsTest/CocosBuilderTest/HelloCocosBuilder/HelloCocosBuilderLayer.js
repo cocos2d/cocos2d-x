@@ -30,6 +30,10 @@ cc.BuilderReader.registerController("HelloCocosBuilderLayer", {
         {
             cc.BuilderReader.setResourcePath("res/");
         }
+        else
+        {
+            cc.BuilderReader.setResourcePath(ccbjs);
+        }
         var node = cc.BuilderReader.load(ccbFileName, this);
 
         this["mTestTitleLabelTTF"].setString(ccbFileName);
@@ -42,31 +46,31 @@ cc.BuilderReader.registerController("HelloCocosBuilderLayer", {
     },
     
     "onMenuTestClicked" : function() {
-        this._openTest("ccb/ccb/TestMenus.ccbi");
+        this._openTest(ccbjs + "ccb/ccb/TestMenus.ccbi");
     },
     
     "onSpriteTestClicked" : function() {
-        this._openTest("ccb/ccb/TestSprites.ccbi");
+        this._openTest(ccbjs + "ccb/ccb/TestSprites.ccbi");
     },
     
     "onButtonTestClicked" : function() {
-        this._openTest("ccb/ccb/TestButtons.ccbi");
+        this._openTest(ccbjs + "ccb/ccb/TestButtons.ccbi");
     },
     
     "onAnimationsTestClicked" : function() {
-        this._openTest("ccb/ccb/TestAnimations.ccbi");
+        this._openTest(ccbjs + "ccb/ccb/TestAnimations.ccbi");
     },
     
     "onParticleSystemTestClicked" : function() {
-        this._openTest("ccb/ccb/TestParticleSystems.ccbi");
+        this._openTest(ccbjs + "ccb/ccb/TestParticleSystems.ccbi");
     },
     
     "onScrollViewTestClicked" : function() {
-        this._openTest("ccb/ccb/TestScrollViews.ccbi");
+        this._openTest(ccbjs + "ccb/ccb/TestScrollViews.ccbi");
     },
     
     "onTimelineCallbackSoundClicked" : function() {
-        this._openTest("ccb/ccb/TestTimelineCallback.ccbi");
+        this._openTest(ccbjs + "ccb/ccb/TestTimelineCallback.ccbi");
     }
 });
 
