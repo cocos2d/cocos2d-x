@@ -54,13 +54,19 @@ public:
     static bool isNinePatchImage(const std::string& filename);
 
     /**
+     * Default constructor.
+     *
+     */
+    NinePatchImageParser();
+
+    /**
      * Instantiate a NinePatchImageParser with a Image object.
      *
      * @param image A Image object pointer.
      *
      * @return A NinePatchImageParser instance.
      */
-    NinePatchImageParser(Image* image);
+    explicit NinePatchImageParser(Image* image);
 
     /**
      * Instantiate a NinePatchImageParser with a Image object and the spriteFrame info.
@@ -82,7 +88,7 @@ public:
      * @param frameRect The sprite frame rect in the image atlas.
      * @param rotated Whether is sprite frame is rotated in the image atlas.
      */
-    void setSpriteFrameInfo(const Rect& frameRect, bool rotated);
+    void setSpriteFrameInfo(Image* image, const Rect& frameRect, bool rotated);
 
     /**
      * Default destructor.
