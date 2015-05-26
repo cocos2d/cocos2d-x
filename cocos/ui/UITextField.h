@@ -607,7 +607,7 @@ public:
      *
      * @return The horizontal alignment
      */
-	TextHAlignment getTextHorizontalAlignment() const;
+    TextHAlignment getTextHorizontalAlignment() const;
     
     /**
      * @brief Change the vertical text alignment.
@@ -621,7 +621,7 @@ public:
      *
      * @return The horizontal alignment
      */
-	TextVAlignment getTextVerticalAlignment() const;
+    TextVAlignment getTextVerticalAlignment() const;
     
 CC_CONSTRUCTOR_ACCESS:
     virtual bool init() override;
