@@ -1,6 +1,12 @@
 // Resources prefix
 var s_resprefix = "";
 
+var ccbjs = "";
+if (!cc.sys.isNative)
+{
+    ccbjs = "../../js-tests/res/";
+}
+
 var s_pathGrossini = "Images/grossini.png";
 var s_pathSister1 = "Images/grossinis_sister1.png";
 var s_pathSister2 = "Images/grossinis_sister2.png";
@@ -315,25 +321,25 @@ var g_s9s_blocks = [
 
 var g_opengl_resources = [
     //preload shader source
-    "Shaders/example_Outline.fsh",
-    "Shaders/example_Outline.vsh",
-    "Shaders/example_Blur.fsh",
-    "Shaders/example_ColorBars.fsh",
-    "Shaders/example_ColorBars.vsh",
-    "Shaders/example_Flower.fsh",
-    "Shaders/example_Flower.vsh",
-    "Shaders/example_Heart.fsh",
-    "Shaders/example_Heart.vsh",
-    "Shaders/example_Julia.fsh",
-    "Shaders/example_Julia.vsh",
-    "Shaders/example_Mandelbrot.fsh",
-    "Shaders/example_Mandelbrot.vsh",
-    "Shaders/example_Monjori.fsh",
-    "Shaders/example_Monjori.vsh",
-    "Shaders/example_Plasma.fsh",
-    "Shaders/example_Plasma.vsh",
-    "Shaders/example_Twist.fsh",
-    "Shaders/example_Twist.vsh",
+    ccbjs + "Shaders/example_Outline.fsh",
+    ccbjs + "Shaders/example_Outline.vsh",
+    ccbjs + "Shaders/example_Blur.fsh",
+    ccbjs + "Shaders/example_ColorBars.fsh",
+    ccbjs + "Shaders/example_ColorBars.vsh",
+    ccbjs + "Shaders/example_Flower.fsh",
+    ccbjs + "Shaders/example_Flower.vsh",
+    ccbjs + "Shaders/example_Heart.fsh",
+    ccbjs + "Shaders/example_Heart.vsh",
+    ccbjs + "Shaders/example_Julia.fsh",
+    ccbjs + "Shaders/example_Julia.vsh",
+    ccbjs + "Shaders/example_Mandelbrot.fsh",
+    ccbjs + "Shaders/example_Mandelbrot.vsh",
+    ccbjs + "Shaders/example_Monjori.fsh",
+    ccbjs + "Shaders/example_Monjori.vsh",
+    ccbjs + "Shaders/example_Plasma.fsh",
+    ccbjs + "Shaders/example_Plasma.vsh",
+    ccbjs + "Shaders/example_Twist.fsh",
+    ccbjs + "Shaders/example_Twist.vsh",
 
     "fonts/west_england-64.fnt",
     "fonts/west_england-64.png"
@@ -469,11 +475,6 @@ var g_fonts = [
     }
 ];
 
-var ccbjs = "";
-if (!cc.sys.isNative)
-{
-    ccbjs = "../../js-tests/res/";
-}
 var g_extensions = [
     s_image_icon,
     s_extensions_background,
