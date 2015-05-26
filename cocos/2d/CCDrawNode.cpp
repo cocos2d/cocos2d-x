@@ -817,10 +817,10 @@ void DrawNode::drawPolygon(const Vec2 *verts, int count, const Color4F &fillColo
             Vec2 offset0 = extrude[i].offset;
             Vec2 offset1 = extrude[j].offset;
             
-            Vec2 inner0 = v2fsub(v0, v2fmult(offset0, borderWidth));
-            Vec2 inner1 = v2fsub(v1, v2fmult(offset1, borderWidth));
-            Vec2 outer0 = v2fadd(v0, v2fmult(offset0, borderWidth));
-            Vec2 outer1 = v2fadd(v1, v2fmult(offset1, borderWidth));
+            Vec2 inner0 = v2fsub(v0, v2fmult(offset0, borderWidth / 2.0f));
+            Vec2 inner1 = v2fsub(v1, v2fmult(offset1, borderWidth / 2.0f));
+            Vec2 outer0 = v2fadd(v0, v2fmult(offset0, borderWidth / 2.0f));
+            Vec2 outer1 = v2fadd(v1, v2fmult(offset1, borderWidth / 2.0f));
             
             V2F_C4B_T2F_Triangle tmp1 = {
                 {inner0, Color4B(borderColor), __t(v2fneg(n0))},
