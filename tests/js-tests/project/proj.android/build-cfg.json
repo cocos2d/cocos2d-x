@@ -22,6 +22,10 @@
         {
             "from": "../../../../cocos/scripting/js-bindings/script", 
             "to": "script"
+        },
+        {
+            "from": "../../res", 
+            "to": "res/"
         }
     ], 
     "ndk_module_path": [
