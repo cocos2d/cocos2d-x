@@ -191,6 +191,12 @@ void Scene::render(Renderer* renderer)
         camera->clearBackground(1.0);
         //visit the scene
         visit(renderer, transform, 0);
+#if CC_USE_NAVMESH
+        if (_navMesh && _navMeshDebugCamera == camera)
+        {
+            _navMesh->debugDraw(renderer);
+        }
+#endif
         
         renderer->render();
         
@@ -203,17 +209,6 @@ void Scene::render(Renderer* renderer)
         director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
         director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, _physics3dDebugCamera != nullptr ? _physics3dDebugCamera->getViewProjectionMatrix() : defaultCamera->getViewProjectionMatrix());
         _physics3DWorld->debugDraw(renderer);
-        renderer->render();
-        director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-    }
-#endif
-
-#if CC_USE_NAVMESH
-    if (_navMesh)
-    {
-        director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
-        director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, _navMeshDebugCamera != nullptr ? _navMeshDebugCamera->getViewProjectionMatrix() : defaultCamera->getViewProjectionMatrix());
-        _navMesh->debugDraw(renderer);
         renderer->render();
         director->popMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
     }

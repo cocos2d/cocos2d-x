@@ -27,6 +27,7 @@
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCRenderState.h"
 #include "base/CCDirector.h"
 #include "base/ccMacros.h"
 
@@ -38,6 +39,15 @@ NavMeshDebugDraw::NavMeshDebugDraw()
 , _currentPrimitive(nullptr)
 , _currentDepthMask(true)
 {
+    _stateBlock = RenderState::StateBlock::create();
+    _stateBlock->setCullFace(true);
+    _stateBlock->setCullFaceSide(RenderState::CullFaceSide::CULL_FACE_SIDE_BACK);
+    _stateBlock->setDepthTest(true);
+    _stateBlock->setBlend(true);
+    _stateBlock->setBlendSrc(RenderState::Blend::BLEND_SRC_ALPHA);
+    _stateBlock->setBlendDst(RenderState::Blend::BLEND_ONE);
+    CC_SAFE_RETAIN(_stateBlock);
+    
     _customCmd.set3D(true);
     _customCmd.setTransparent(true);
     _program = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_NAME_POSITION_COLOR);
@@ -69,6 +79,7 @@ void NavMeshDebugDraw::vertex(const float* pos, unsigned int color)
 
 NavMeshDebugDraw::~NavMeshDebugDraw()
 {
+    CC_SAFE_RELEASE(_stateBlock);
     for (auto iter : _primitiveList){
         delete iter;
     }
@@ -128,18 +139,7 @@ void NavMeshDebugDraw::drawImplement(const cocos2d::Mat4& transform, uint32_t fl
 {
     _program->use();
     _program->setUniformsForBuiltins(transform);
-    bool depthTest = glIsEnabled(GL_DEPTH_TEST) != GL_FALSE;
-    bool cullFace = glIsEnabled(GL_CULL_FACE) != GL_FALSE;
-    GLint cullface;
-    glGetIntegerv(GL_CULL_FACE_MODE, &cullface);
-    if (!depthTest)
-        glEnable(GL_DEPTH_TEST);
-    if (!cullFace)
-        glEnable(GL_CULL_FACE);
-    if (cullface != GL_BACK)
-        glCullFace(GL_BACK);
 
-    GL::blendFunc(BlendFunc::ALPHA_PREMULTIPLIED.src, BlendFunc::ALPHA_PREMULTIPLIED.dst);
     glBindBuffer(GL_ARRAY_BUFFER, _vbo);
     GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POSITION | GL::VERTEX_ATTRIB_FLAG_COLOR);
     glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4F), (GLvoid *)offsetof(V3F_C4F, position));
@@ -149,30 +149,23 @@ void NavMeshDebugDraw::drawImplement(const cocos2d::Mat4& transform, uint32_t fl
         _dirtyBuffer = false;
     }
     for (auto &iter : _primitiveList){
-        glDepthMask(iter->depthMask);
+        _stateBlock->setDepthWrite(iter->depthMask);
         if (iter->type == GL_POINTS){
             //glPointSize(iter->size);
         }
         else if (iter->type == GL_LINES){
             glLineWidth(iter->size);
         }
+        _stateBlock->bind();
         glDrawArrays(iter->type, iter->start, iter->end - iter->start);
-        glDepthMask(!iter->depthMask);
         CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(1, iter->end - iter->start);
     }
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    if (cullface != GL_BACK)
-        glCullFace(cullface);
-    if (!cullFace)
-        glDisable(GL_CULL_FACE);
-    if (!depthTest)
-        glDisable(GL_DEPTH_TEST);
 }
 
 void NavMeshDebugDraw::draw(Renderer* renderer)
 {
-    _customCmd.init(0, Mat4::IDENTITY, 0);
+    _customCmd.init(0, Mat4::IDENTITY, Node::FLAGS_RENDER_AS_3D);
     _customCmd.func = CC_CALLBACK_0(NavMeshDebugDraw::drawImplement, this, Mat4::IDENTITY, 0);
     renderer->addCommand(&_customCmd);
 }
