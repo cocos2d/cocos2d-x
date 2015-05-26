@@ -172,6 +172,9 @@ public:
      */
     int getDepth() const { return _depth; }
     
+    float getFarPlane() const { return _farPlane; }
+    float getNearPlane() const { return _nearPlane; }
+    
     //override
     virtual void onEnter() override;
     virtual void onExit() override;
