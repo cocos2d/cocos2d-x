@@ -30,6 +30,7 @@
 
 #include "renderer/CCGLProgram.h"
 #include "renderer/CCCustomCommand.h"
+#include "renderer/CCRenderState.h"
 #include "math/Vec3.h"
 #include "recast/DebugUtils/DebugDraw.h"
 #include <string>
@@ -92,6 +93,7 @@ private:
     Primitive *_currentPrimitive;
     GLProgram *_program;
     CustomCommand _customCmd;
+    RenderState::StateBlock* _stateBlock;
     GLenum _primitiveType;
     bool _currentDepthMask;
     GLuint _vbo;

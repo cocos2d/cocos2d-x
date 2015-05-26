@@ -366,7 +366,7 @@ void cocos2d::NavMesh::drawAgents()
             const float height = agent->params.height;
             const float* pos = agent->npos;
             const float* vel = agent->vel;
-            const float* dvel = agent->dvel;
+//            const float* dvel = agent->dvel;
 
             unsigned int col = duRGBA(220, 220, 220, 192);
             if (agent->targetState == DT_CROWDAGENT_TARGET_REQUESTING || agent->targetState == DT_CROWDAGENT_TARGET_WAITING_FOR_QUEUE)
