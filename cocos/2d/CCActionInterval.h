@@ -124,8 +124,8 @@ public:
      *
      * @return An autoreleased Sequence object.
      */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    // WP8 in VS2012 does not support nullptr in variable args lists and variadic templates are also not supported
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    // VS2013 does not support nullptr in variable args lists and variadic templates are also not supported
     typedef FiniteTimeAction* M;
     static Sequence* create(M m1, std::nullptr_t listEnd) { return variadicCreate(m1, NULL); }
     static Sequence* create(M m1, M m2, std::nullptr_t listEnd) { return variadicCreate(m1, m2, NULL); }
@@ -351,8 +351,8 @@ public:
      *
      * @return An autoreleased Spawn object.
      */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    // WP8 in VS2012 does not support nullptr in variable args lists and variadic templates are also not supported.
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+    // VS2013 does not support nullptr in variable args lists and variadic templates are also not supported.
     typedef FiniteTimeAction* M;
     static Spawn* create(M m1, std::nullptr_t listEnd) { return variadicCreate(m1, NULL); }
     static Spawn* create(M m1, M m2, std::nullptr_t listEnd) { return variadicCreate(m1, m2, NULL); }
@@ -1523,6 +1523,58 @@ protected:
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(TargetedAction);
+};
+
+/**
+ * @class ActionFloat
+ * @brief Action used to animate any value in range [from,to] over specified time interval
+ */
+class CC_DLL ActionFloat : public ActionInterval
+{
+public:
+    /**
+     *  Callback function used to report back result
+     */
+    typedef std::function<void(float value)> ActionFloatCallback;
+
+    /**
+     * Creates FloatAction with specified duration, from value, to value and callback to report back
+     * results
+     * @param duration of the action
+     * @param from value to start from
+     * @param to value to be at the end of the action
+     * @param callback to report back result
+     *
+     * @return An autoreleased ActionFloat object
+     */
+    static ActionFloat* create(float duration, float from, float to, ActionFloatCallback callback);
+
+    /**
+     * Overrided ActionInterval methods
+     */
+    void startWithTarget(Node* target) override;
+    void update(float delta) override;
+    ActionFloat* reverse() const override;
+    ActionFloat* clone() const override;
+
+CC_CONSTRUCTOR_ACCESS:
+    ActionFloat() {};
+    virtual ~ActionFloat() {};
+
+    bool initWithDuration(float duration, float from, float to, ActionFloatCallback callback);
+
+protected:
+    /* From value */
+    float _from;
+    /* To value */
+    float _to;
+    /* delta time */
+    float _delta;
+
+    /* Callback to report back results */
+    ActionFloatCallback _callback;
+private:
+    CC_DISALLOW_COPY_AND_ASSIGN(ActionFloat);
 };
 
 // end of actions group

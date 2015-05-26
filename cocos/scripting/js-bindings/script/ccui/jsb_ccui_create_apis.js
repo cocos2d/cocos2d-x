@@ -150,7 +150,7 @@ cc.Scale9Sprite.prototype._ctor = function(file, rect, capInsets){
                 this.initWithFile(file, rect, capInsets);
         }
     }else{
-        this.init();
+        cc.Node.prototype.init.call(this);
     }
 };
 

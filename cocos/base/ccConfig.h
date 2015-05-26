@@ -252,6 +252,14 @@ THE SOFTWARE.
 #define CC_USE_PHYSICS 1
 #endif
 
+/** Use 3d physics integration API. */
+#ifndef CC_USE_3D_PHYSICS
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#define CC_USE_3D_PHYSICS 1
+#define CC_USE_3D_PHYSICS 1
+#endif
+#endif
+
 /** Use culling or not. */
 #ifndef CC_USE_CULLING
 #define CC_USE_CULLING 1
@@ -278,7 +286,7 @@ THE SOFTWARE.
 /** Support webp or not. If your application don't use webp format picture, you can undefine this macro to save package size.
  */
 #ifndef CC_USE_WEBP
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
 #define CC_USE_WEBP  1
 #endif
 #endif // CC_USE_WEBP

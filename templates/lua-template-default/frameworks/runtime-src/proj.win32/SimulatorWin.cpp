@@ -31,6 +31,14 @@
 #include "platform/win32/PlayerWin.h"
 #include "platform/win32/PlayerMenuServiceWin.h"
 
+// define 1 to open console ui and setup windows system menu, 0 to disable
+#include "ide-support/CodeIDESupport.h"
+#if (CC_CODE_IDE_DEBUG_SUPPORT > 0)
+#define SIMULATOR_WITH_CONSOLE_AND_MENU 1
+#else
+#define SIMULATOR_WITH_CONSOLE_AND_MENU 0
+#endif
+
 USING_NS_CC;
 
 static WNDPROC g_oldWindowProc = NULL;
@@ -243,6 +251,7 @@ int SimulatorWin::run()
     _app = new AppDelegate();
     RuntimeEngine::getInstance()->setProjectConfig(_project);
 
+#if (SIMULATOR_WITH_CONSOLE_AND_MENU > 0)
     // create console window
     if (_project.isShowConsole())
     {
@@ -262,6 +271,7 @@ int SimulatorWin::run()
             }
         }
     }
+#endif
 
     // log file
     if (_project.isWriteDebugLogToFile())
@@ -356,9 +366,11 @@ int SimulatorWin::run()
     // path for looking Lang file, Studio Default images
     FileUtils::getInstance()->addSearchPath(getApplicationPath().c_str());
 
+#if SIMULATOR_WITH_CONSOLE_AND_MENU > 0
     // init player services
     setupUI();
     DrawMenuBar(_hwnd);
+#endif
 
     // prepare
     FileUtils::getInstance()->setPopupNotify(false);
@@ -366,11 +378,6 @@ int SimulatorWin::run()
     auto app = Application::getInstance();
 
     g_oldWindowProc = (WNDPROC)SetWindowLong(_hwnd, GWL_WNDPROC, (LONG)SimulatorWin::windowProc);
-
-    // update window size
-    RECT rect;
-    GetWindowRect(_hwnd, &rect);
-    MoveWindow(_hwnd, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top + GetSystemMetrics(SM_CYMENU), FALSE);
 
     // startup message loop
     return app->run();
@@ -441,6 +448,10 @@ void SimulatorWin::setupUI()
     scaleMenuVector.push_back(scale75Menu);
     scaleMenuVector.push_back(scale50Menu);
     scaleMenuVector.push_back(scale25Menu);
+
+    // About
+    menuBar->addItem("HELP_MENU", tr("Help"));
+    menuBar->addItem("ABOUT_MENUITEM", tr("About"), "HELP_MENU");
 
     menuBar->addItem("REFRESH_MENU_SEP", "-", "VIEW_MENU");
     menuBar->addItem("REFRESH_MENU", tr("Refresh"), "VIEW_MENU");
@@ -527,6 +538,11 @@ void SimulatorWin::setupUI()
                             project.changeFrameOrientationToLandscape();
                             _instance->openProjectWithProjectConfig(project);
                         }
+                        else if (data == "ABOUT_MENUITEM")
+                        {
+                            onHelpAbout();
+                        }
+
                     }
                 }
             }
@@ -725,6 +741,7 @@ LRESULT CALLBACK SimulatorWin::windowProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
 
     switch (uMsg)
     {
+    case WM_SYSCOMMAND:
     case WM_COMMAND:
     {
         if (HIWORD(wParam) == 0)
@@ -754,10 +771,12 @@ LRESULT CALLBACK SimulatorWin::windowProc(HWND hWnd, UINT uMsg, WPARAM wParam, L
     }
     case WM_KEYDOWN:
     {
+#if (SIMULATOR_WITH_CONSOLE_AND_MENU > 0)
         if (wParam == VK_F5)
         {
             _instance->relaunch();
         }
+#endif
         break;
     }
 

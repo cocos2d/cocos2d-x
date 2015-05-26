@@ -2,16 +2,6 @@
       "do_default":{
          "exclude_from_template":[
             "frameworks/runtime-src"
-         ],
-         "append_h5_engine":{
-            "from":"web",
-            "to":"frameworks/cocos2d-html5"
-         },
-         "append_file":[
-             {
-                 "from":"web/jsb_apis.js",
-                 "to":"frameworks/cocos2d-html5/jsb_apis.js"
-             }
          ]
       },
       "do_add_native_support":{
@@ -69,6 +59,7 @@
                "frameworks/runtime-src/proj.android/AndroidManifest.xml",
                "frameworks/runtime-src/proj.android/build.xml",
                "frameworks/runtime-src/proj.android/res/values/strings.xml",
+               "frameworks/runtime-src/proj.android-studio/settings.gradle",
                "frameworks/runtime-src/proj.ios_mac/ios/main.m",
                "frameworks/runtime-src/proj.ios_mac/ios/Prefix.pch",
                "frameworks/runtime-src/proj.ios_mac/PROJECT_NAME.xcodeproj/project.pbxproj",
@@ -87,7 +78,9 @@
          "project_replace_package_name":{
             "src_package_name":"org.cocos2dx.hellojavascript",
             "files":[
-               "frameworks/runtime-src/proj.android/AndroidManifest.xml"
+               "frameworks/runtime-src/proj.android/AndroidManifest.xml",
+               "frameworks/runtime-src/proj.android-studio/app/build.gradle",
+               "frameworks/runtime-src/proj.android-studio/app/AndroidManifest.xml"
             ]
          },
          "project_replace_mac_bundleid":{

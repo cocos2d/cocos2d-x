@@ -132,6 +132,7 @@ set(TESTS_SRC
   Classes/ShaderTest/ShaderTest.cpp
   Classes/ShaderTest/ShaderTest2.cpp
   Classes/SpineTest/SpineTest.cpp
+  Classes/Scene3DTest/Scene3DTest.cpp
   Classes/Sprite3DTest/DrawNode3D.cpp
   Classes/Sprite3DTest/Sprite3DTest.cpp
   Classes/SpritePolygonTest/SpritePolygonTest.cpp
@@ -220,6 +221,12 @@ if(USE_BOX2D)
     Classes/Box2DTestBed/GLES-Render.cpp
     Classes/Box2DTestBed/Test.cpp
     Classes/Box2DTestBed/TestEntries.cpp
+    )
+endif()
+
+if(USE_BULLET)
+  list(APPEND TESTS_SRC
+    Classes/Physics3DTest/Physics3DTest.cpp
     )
 endif()
 

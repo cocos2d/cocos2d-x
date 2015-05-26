@@ -88,6 +88,24 @@ private:
     Platform::Agile<Platform::String> m_text;
 };
 
+enum WinRTKeyboardEventType
+{
+	KeyPressed,
+	KeyReleased,
+};
+
+class CC_DLL WinRTKeyboardEvent : public InputEvent
+{
+public:
+	WinRTKeyboardEvent(WinRTKeyboardEventType type, Windows::UI::Core::KeyEventArgs^ args);
+	virtual void execute();
+
+private:
+	WinRTKeyboardEventType m_type;
+	Platform::Agile<Windows::UI::Core::KeyEventArgs> m_key;
+};
+
+
 class CC_DLL BackButtonEvent : public InputEvent
 {
 public:

@@ -1047,11 +1047,6 @@ public:
      * @param glProgramState The GLProgramState for this node.
      */
     virtual void setGLProgramState(GLProgramState *glProgramState);
-
-    /** Returns the Material used for this Node */
-    Material* getMaterial() const;
-    /** Sets the Material used for this Node */
-    void setMaterial(Material* material);
     
     /// @} end of Shader Program
 

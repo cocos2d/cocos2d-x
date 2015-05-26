@@ -12,7 +12,7 @@ bool UITextAtlasTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILabelAtlas/crossplatform_UILabelAtlas_Editor_1.csb");        
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILabelAtlas/res.csb");        
         Node* child = node->getChildByTag(5);
         child->removeFromParent();
         _layout = static_cast<Layout*>(child);

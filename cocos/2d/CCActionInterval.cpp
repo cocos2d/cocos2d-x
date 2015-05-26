@@ -165,7 +165,7 @@ Sequence* Sequence::createWithTwoActions(FiniteTimeAction *actionOne, FiniteTime
     return sequence;
 }
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 Sequence* Sequence::variadicCreate(FiniteTimeAction *action1, ...)
 {
     va_list params;
@@ -554,7 +554,7 @@ RepeatForever *RepeatForever::reverse() const
 // Spawn
 //
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 Spawn* Spawn::variadicCreate(FiniteTimeAction *action1, ...)
 {
     va_list params;
@@ -2509,6 +2509,62 @@ void TargetedAction::setForcedTarget(Node* forcedTarget)
         CC_SAFE_RELEASE(_forcedTarget);
         _forcedTarget = forcedTarget;
     }
+}
+
+// ActionFloat
+
+ActionFloat* ActionFloat::create(float duration, float from, float to, ActionFloatCallback callback)
+{
+    auto ref = new (std::nothrow) ActionFloat();
+    if (ref && ref->initWithDuration(duration, from, to, callback))
+    {
+        ref->autorelease();
+        return ref;
+    }
+    CC_SAFE_DELETE(ref);
+    return ref;
+}
+
+bool ActionFloat::initWithDuration(float duration, float from, float to, ActionFloatCallback callback)
+{
+    if (ActionInterval::initWithDuration(duration))
+    {
+        _from = from;
+        _to = to;
+        _callback = callback;
+        return true;
+    }
+    return false;
+}
+
+ActionFloat* ActionFloat::clone() const
+{
+    auto a = new (std::nothrow) ActionFloat();
+    a->initWithDuration(_duration, _from, _to, _callback);
+    a->autorelease();
+    return a;
+}
+
+void ActionFloat::startWithTarget(Node *target)
+{
+    ActionInterval::startWithTarget(target);
+    _delta = _to - _from;
+}
+
+void ActionFloat::update(float delta)
+{
+    float value = _to - _delta * (1 - delta);
+
+    if (_callback)
+    {
+        // report back value to caller
+        _callback(value);
+    }
+}
+
+ActionFloat* ActionFloat::reverse() const
+{
+    return ActionFloat::create(_duration, _to, _from, _callback);
 }
 
 NS_CC_END

@@ -10,7 +10,7 @@
         }
     },
     "win32_proj_info" : {
-        "build/cocos2d-win32.vc2012.sln" : {
+        "build/cocos2d-win32.vc2013.sln" : {
             "outputdir" : "prebuilt/win32",
             "targets" : [
                 "libcocosdenshion", "libbox2d", "libchipmunk",

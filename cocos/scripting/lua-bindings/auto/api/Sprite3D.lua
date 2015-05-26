@@ -26,6 +26,15 @@
 -- @return unsigned int#unsigned int ret (return value: unsigned int)
         
 --------------------------------
+--  Adds a new material to a particular mesh of the sprite.<br>
+-- meshIndex is the mesh that will be applied to.<br>
+-- if meshIndex == -1, then it will be applied to all the meshes that belong to the sprite.
+-- @function [parent=#Sprite3D] getMaterial 
+-- @param self
+-- @param #int meshIndex
+-- @return Material#Material ret (return value: cc.Material)
+        
+--------------------------------
 -- 
 -- @function [parent=#Sprite3D] setCullFace 
 -- @param self

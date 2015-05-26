@@ -28,7 +28,7 @@ if(u_has_alpha<=0)
     texture2D(u_texture1, v_texCoord*u_detailSize[1])*blendFactor.g + texture2D(u_texture2, v_texCoord*u_detailSize[2])*blendFactor.b;\n
     float grayFactor =dot(blendFactor.rgb, vec3(1, 1, 1));
     color +=texture2D(u_texture3, v_texCoord*u_detailSize[3])*(1.0-grayFactor);
-    gl_FragColor = color*lightFactor;
+    gl_FragColor = vec4(color.rgb*lightFactor, 1.0);
 }
 }
 );

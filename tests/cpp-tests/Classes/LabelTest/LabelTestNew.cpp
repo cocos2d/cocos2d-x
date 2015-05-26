@@ -76,7 +76,8 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelIssue10089Test);
     ADD_TEST_CASE(LabelSystemFontColor);
     ADD_TEST_CASE(LabelIssue10773Test);
-    ADD_TEST_CASE(LabelIssue10576Test);
+    ADD_TEST_CASE(LabelIssue11576Test);
+    ADD_TEST_CASE(LabelIssue11699Test);
 };
 
 LabelTTFAlignmentNew::LabelTTFAlignmentNew()
@@ -1886,7 +1887,7 @@ std::string LabelIssue10773Test::subtitle() const
     return "Should not crash!";
 }
 
-LabelIssue10576Test::LabelIssue10576Test()
+LabelIssue11576Test::LabelIssue11576Test()
 {
     auto center = VisibleRect::center();
 
@@ -1904,12 +1905,32 @@ LabelIssue10576Test::LabelIssue10576Test()
     addChild(label);
 }
 
-std::string LabelIssue10576Test::title() const
+std::string LabelIssue11576Test::title() const
 {
-    return "Test for Issue #10576";
+    return "Test for Issue #11576";
 }
 
-std::string LabelIssue10576Test::subtitle() const
+std::string LabelIssue11576Test::subtitle() const
 {
     return "You should see another string displayed correctly after 2 seconds.";
+}
+
+LabelIssue11699Test::LabelIssue11699Test()
+{
+    auto center = VisibleRect::center();
+
+    auto label = Label::createWithTTF("中国", "fonts/HKYuanMini.ttf", 150);
+    label->enableOutline(Color4B::RED, 2);
+    label->setPosition(center.x, center.y);
+    addChild(label);
+}
+
+std::string LabelIssue11699Test::title() const
+{
+    return "Test for Issue #11699";
+}
+
+std::string LabelIssue11699Test::subtitle() const
+{
+    return "Outline should match with the characters exactly.";
 }

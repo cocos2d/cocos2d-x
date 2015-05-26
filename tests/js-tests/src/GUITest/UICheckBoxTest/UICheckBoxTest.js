@@ -34,11 +34,11 @@ var UICheckBoxTest = UIScene.extend({
             // Create the checkbox
             var checkBox = new ccui.CheckBox();
             checkBox.setTouchEnabled(true);
-            checkBox.loadTextures("res/cocosui/check_box_normal.png",
-                "res/cocosui/check_box_normal_press.png",
-                "res/cocosui/check_box_active.png",
-                "res/cocosui/check_box_normal_disable.png",
-                "res/cocosui/check_box_active_disable.png");
+            checkBox.loadTextures("ccs-res/cocosui/check_box_normal.png",
+                "ccs-res/cocosui/check_box_normal_press.png",
+                "ccs-res/cocosui/check_box_active.png",
+                "ccs-res/cocosui/check_box_normal_disable.png",
+                "ccs-res/cocosui/check_box_active_disable.png");
             checkBox.x = widgetSize.width / 2.0;
 	        checkBox.y = widgetSize.height / 2.0;
             checkBox.addEventListener(this.selectedStateEvent, this);
@@ -85,14 +85,14 @@ var UICheckBoxDefaultBehaviorTest = UIScene.extend({
             this._mainNode.addChild(alert);
 
             // Create the checkbox
-            var checkBox = new ccui.CheckBox("res/cocosui/check_box_normal.png", "res/cocosui/check_box_active.png");
+            var checkBox = new ccui.CheckBox("ccs-res/cocosui/check_box_normal.png", "ccs-res/cocosui/check_box_active.png");
             checkBox.setPosition(cc.p(widgetSize.width / 2 - 50, widgetSize.height / 2));
 
             this._mainNode.addChild(checkBox);
 
 
             // Create the checkbox
-            var checkBox2 = new ccui.CheckBox("res/cocosui/check_box_normal.png", "res/cocosui/check_box_active.png");
+            var checkBox2 = new ccui.CheckBox("ccs-res/cocosui/check_box_normal.png", "ccs-res/cocosui/check_box_active.png");
             checkBox2.setPosition(cc.p(widgetSize.width / 2 - 150, widgetSize.height / 2));
             checkBox2.ignoreContentAdaptWithSize(false);
             checkBox2.setZoomScale(0.5);
@@ -102,13 +102,13 @@ var UICheckBoxDefaultBehaviorTest = UIScene.extend({
 
 
             // Create the checkbox
-            var checkBoxDisabled = new ccui.CheckBox("res/cocosui/check_box_normal.png", "res/cocosui/check_box_active.png");
+            var checkBoxDisabled = new ccui.CheckBox("ccs-res/cocosui/check_box_normal.png", "ccs-res/cocosui/check_box_active.png");
             checkBoxDisabled.setPosition(cc.p(widgetSize.width / 2 + 20, widgetSize.height / 2));
             checkBoxDisabled.setEnabled(false);
             checkBoxDisabled.setBright(false);
             this._mainNode.addChild(checkBoxDisabled);
 
-            var checkBoxDisabled2 = new ccui.CheckBox("res/cocosui/check_box_normal.png", "res/cocosui/check_box_active.png");
+            var checkBoxDisabled2 = new ccui.CheckBox("ccs-res/cocosui/check_box_normal.png", "ccs-res/cocosui/check_box_active.png");
             checkBoxDisabled2.setPosition(cc.p(widgetSize.width / 2 + 70, widgetSize.height / 2));
             checkBoxDisabled2.setBright(false);
             checkBoxDisabled2.setSelected(true);

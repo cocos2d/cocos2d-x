@@ -83,7 +83,7 @@ void RenderState::initialize()
 
 void RenderState::finalize()
 {
-    CC_SAFE_RELEASE(StateBlock::_defaultState);
+    CC_SAFE_RELEASE_NULL(StateBlock::_defaultState);
 }
 
 bool RenderState::init(RenderState* parent)
@@ -180,6 +180,22 @@ RenderState* RenderState::getTopmost(RenderState* below)
 RenderState::StateBlock* RenderState::getStateBlock() const
 {
     return _state;
+}
+
+void RenderState::cloneInto(RenderState* renderState) const
+{
+    CCASSERT(renderState, "must be non nill");
+
+    // Clone our state block
+    if (_state)
+    {
+        _state->cloneInto(renderState->getStateBlock());
+    }
+
+    renderState->_name = _name;
+    renderState->_textures = _textures;
+    // weak ref. don't retain
+    renderState->_parent = _parent;
 }
 
 //
@@ -324,7 +340,8 @@ void RenderState::StateBlock::restore(long stateOverrideBits)
     CC_ASSERT(_defaultState);
 
     // If there is no state to restore (i.e. no non-default state), do nothing.
-    if (_defaultState->_bits == 0)
+//    if (_defaultState->_bits == 0)
+    if ( (stateOverrideBits | _defaultState->_bits) == stateOverrideBits)
     {
         return;
     }
@@ -407,6 +424,45 @@ void RenderState::StateBlock::restore(long stateOverrideBits)
         _defaultState->_stencilOpDpfail = RenderState::STENCIL_OP_KEEP;
         _defaultState->_stencilOpDppass = RenderState::STENCIL_OP_KEEP;
     }
+}
+
+void RenderState::StateBlock::enableDepthWrite()
+{
+    CC_ASSERT(_defaultState);
+
+    // Internal method used to restore depth writing before a
+    // clear operation. This is necessary if the last code to draw before the
+    // next frame leaves depth writing disabled.
+    if (!_defaultState->_depthWriteEnabled)
+    {
+        glDepthMask(GL_TRUE);
+        _defaultState->_bits &= ~RS_DEPTH_WRITE;
+        _defaultState->_depthWriteEnabled = true;
+    }
+}
+
+void RenderState::StateBlock::cloneInto(StateBlock* state) const
+{
+    CC_ASSERT(state);
+
+    state->_cullFaceEnabled = _cullFaceEnabled;
+    state->_depthTestEnabled = _depthTestEnabled;
+    state->_depthWriteEnabled = _depthWriteEnabled;
+    state->_depthFunction = _depthFunction;
+    state->_blendEnabled = _blendEnabled;
+    state->_blendSrc = _blendSrc;
+    state->_blendDst = _blendDst;
+    state->_cullFaceSide = _cullFaceSide;
+    state->_frontFace = _frontFace;
+    state->_stencilTestEnabled = _stencilTestEnabled;
+    state->_stencilWrite = _stencilWrite;
+    state->_stencilFunction = _stencilFunction;
+    state->_stencilFunctionRef = _stencilFunctionRef;
+    state->_stencilFunctionMask = _stencilFunctionMask;
+    state->_stencilOpSfail = _stencilOpSfail;
+    state->_stencilOpDpfail = _stencilOpDpfail;
+    state->_stencilOpDppass = _stencilOpDppass;
+    state->_bits = _bits;
 }
 
 static bool parseBoolean(const std::string& value)
@@ -694,26 +750,8 @@ void RenderState::StateBlock::setBlend(bool enabled)
 
 void RenderState::StateBlock::setBlendFunc(const BlendFunc& blendFunc)
 {
-    if (blendFunc == BlendFunc::DISABLE)
-    {
-        setBlendSrc(BLEND_ONE);
-        setBlendDst(BLEND_ZERO);
-    }
-    else if (blendFunc == BlendFunc::ALPHA_PREMULTIPLIED)
-    {
-        setBlendSrc(BLEND_ONE);
-        setBlendDst(BLEND_ONE_MINUS_SRC_ALPHA);
-    }
-    else if (blendFunc == BlendFunc::ALPHA_NON_PREMULTIPLIED)
-    {
-        setBlendSrc(BLEND_SRC_ALPHA);
-        setBlendDst(BLEND_ONE_MINUS_SRC_ALPHA);
-    }
-    else if (blendFunc == BlendFunc::ADDITIVE)
-    {
-        setBlendSrc(BLEND_SRC_ALPHA);
-        setBlendDst(BLEND_ONE);
-    }
+    setBlendSrc((RenderState::Blend)blendFunc.src);
+    setBlendDst((RenderState::Blend)blendFunc.dst);
 }
 
 void RenderState::StateBlock::setBlendSrc(Blend blend)

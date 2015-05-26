@@ -4,316 +4,6 @@
 var cc = cc || {};
 
 /**
- * @class Action
- */
-cc.Action = {
-
-/**
- * @method startWithTarget
- * @param {cc.Node} arg0
- */
-startWithTarget : function (
-node 
-)
-{
-},
-
-/**
- * @method setOriginalTarget
- * @param {cc.Node} arg0
- */
-setOriginalTarget : function (
-node 
-)
-{
-},
-
-/**
- * @method clone
- * @return {cc.Action}
- */
-clone : function (
-)
-{
-    return cc.Action;
-},
-
-/**
- * @method getOriginalTarget
- * @return {cc.Node}
- */
-getOriginalTarget : function (
-)
-{
-    return cc.Node;
-},
-
-/**
- * @method stop
- */
-stop : function (
-)
-{
-},
-
-/**
- * @method update
- * @param {float} arg0
- */
-update : function (
-float 
-)
-{
-},
-
-/**
- * @method getTarget
- * @return {cc.Node}
- */
-getTarget : function (
-)
-{
-    return cc.Node;
-},
-
-/**
- * @method step
- * @param {float} arg0
- */
-step : function (
-float 
-)
-{
-},
-
-/**
- * @method setTag
- * @param {int} arg0
- */
-setTag : function (
-int 
-)
-{
-},
-
-/**
- * @method getTag
- * @return {int}
- */
-getTag : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setTarget
- * @param {cc.Node} arg0
- */
-setTarget : function (
-node 
-)
-{
-},
-
-/**
- * @method isDone
- * @return {bool}
- */
-isDone : function (
-)
-{
-    return false;
-},
-
-/**
- * @method reverse
- * @return {cc.Action}
- */
-reverse : function (
-)
-{
-    return cc.Action;
-},
-
-};
-
-/**
- * @class FiniteTimeAction
- */
-cc.FiniteTimeAction = {
-
-/**
- * @method setDuration
- * @param {float} arg0
- */
-setDuration : function (
-float 
-)
-{
-},
-
-/**
- * @method getDuration
- * @return {float}
- */
-getDuration : function (
-)
-{
-    return 0;
-},
-
-};
-
-/**
- * @class Speed
- */
-cc.Speed = {
-
-/**
- * @method setInnerAction
- * @param {cc.ActionInterval} arg0
- */
-setInnerAction : function (
-actioninterval 
-)
-{
-},
-
-/**
- * @method getSpeed
- * @return {float}
- */
-getSpeed : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setSpeed
- * @param {float} arg0
- */
-setSpeed : function (
-float 
-)
-{
-},
-
-/**
- * @method initWithAction
- * @param {cc.ActionInterval} arg0
- * @param {float} arg1
- * @return {bool}
- */
-initWithAction : function (
-actioninterval, 
-float 
-)
-{
-    return false;
-},
-
-/**
- * @method getInnerAction
- * @return {cc.ActionInterval}
- */
-getInnerAction : function (
-)
-{
-    return cc.ActionInterval;
-},
-
-/**
- * @method create
- * @param {cc.ActionInterval} arg0
- * @param {float} arg1
- * @return {cc.Speed}
- */
-create : function (
-actioninterval, 
-float 
-)
-{
-    return cc.Speed;
-},
-
-/**
- * @method Speed
- * @constructor
- */
-Speed : function (
-)
-{
-},
-
-};
-
-/**
- * @class Follow
- */
-cc.Follow = {
-
-/**
- * @method setBoundarySet
- * @param {bool} arg0
- */
-setBoundarySet : function (
-bool 
-)
-{
-},
-
-/**
- * @method initWithTarget
- * @param {cc.Node} arg0
- * @param {rect_object} arg1
- * @return {bool}
- */
-initWithTarget : function (
-node, 
-rect 
-)
-{
-    return false;
-},
-
-/**
- * @method isBoundarySet
- * @return {bool}
- */
-isBoundarySet : function (
-)
-{
-    return false;
-},
-
-/**
- * @method create
- * @param {cc.Node} arg0
- * @param {rect_object} arg1
- * @return {cc.Follow}
- */
-create : function (
-node, 
-rect 
-)
-{
-    return cc.Follow;
-},
-
-/**
- * @method Follow
- * @constructor
- */
-Follow : function (
-)
-{
-},
-
-};
-
-/**
  * @class Texture2D
  */
 cc.Texture2D = {
@@ -1239,16 +929,6 @@ touch
 },
 
 /**
- * @method getMaterial
- * @return {cc.Material}
- */
-getMaterial : function (
-)
-{
-    return cc.Material;
-},
-
-/**
  * @method removeAllChildrenWithCleanup
 * @param {bool} bool
 */
@@ -1296,16 +976,6 @@ isCascadeOpacityEnabled : function (
 )
 {
     return false;
-},
-
-/**
- * @method setMaterial
- * @param {cc.Material} arg0
- */
-setMaterial : function (
-material 
-)
-{
 },
 
 /**
@@ -2326,6 +1996,1475 @@ cc.NodeRGBA = {
  * @constructor
  */
 __NodeRGBA : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Scene
+ */
+cc.Scene = {
+
+/**
+ * @method setCameraOrderDirty
+ */
+setCameraOrderDirty : function (
+)
+{
+},
+
+/**
+ * @method render
+ * @param {cc.Renderer} arg0
+ */
+render : function (
+renderer 
+)
+{
+},
+
+/**
+ * @method onProjectionChanged
+ * @param {cc.EventCustom} arg0
+ */
+onProjectionChanged : function (
+eventcustom 
+)
+{
+},
+
+/**
+ * @method initWithSize
+ * @param {size_object} arg0
+ * @return {bool}
+ */
+initWithSize : function (
+size 
+)
+{
+    return false;
+},
+
+/**
+ * @method getDefaultCamera
+ * @return {cc.Camera}
+ */
+getDefaultCamera : function (
+)
+{
+    return cc.Camera;
+},
+
+/**
+ * @method createWithSize
+ * @param {size_object} arg0
+ * @return {cc.Scene}
+ */
+createWithSize : function (
+size 
+)
+{
+    return cc.Scene;
+},
+
+/**
+ * @method create
+ * @return {cc.Scene}
+ */
+create : function (
+)
+{
+    return cc.Scene;
+},
+
+/**
+ * @method Scene
+ * @constructor
+ */
+Scene : function (
+)
+{
+},
+
+};
+
+/**
+ * @class GLView
+ */
+cc.GLView = {
+
+/**
+ * @method setFrameSize
+ * @param {float} arg0
+ * @param {float} arg1
+ */
+setFrameSize : function (
+float, 
+float 
+)
+{
+},
+
+/**
+ * @method getViewPortRect
+ * @return {rect_object}
+ */
+getViewPortRect : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
+ * @method setContentScaleFactor
+ * @param {float} arg0
+ * @return {bool}
+ */
+setContentScaleFactor : function (
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method getContentScaleFactor
+ * @return {float}
+ */
+getContentScaleFactor : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setIMEKeyboardState
+ * @param {bool} arg0
+ */
+setIMEKeyboardState : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setScissorInPoints
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {float} arg3
+ */
+setScissorInPoints : function (
+float, 
+float, 
+float, 
+float 
+)
+{
+},
+
+/**
+ * @method getViewName
+ * @return {String}
+ */
+getViewName : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method isOpenGLReady
+ * @return {bool}
+ */
+isOpenGLReady : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setCursorVisible
+ * @param {bool} arg0
+ */
+setCursorVisible : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getScaleY
+ * @return {float}
+ */
+getScaleY : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getScaleX
+ * @return {float}
+ */
+getScaleX : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getVisibleOrigin
+ * @return {vec2_object}
+ */
+getVisibleOrigin : function (
+)
+{
+    return cc.Vec2;
+},
+
+/**
+ * @method getFrameSize
+ * @return {size_object}
+ */
+getFrameSize : function (
+)
+{
+    return cc.Size;
+},
+
+/**
+ * @method setFrameZoomFactor
+ * @param {float} arg0
+ */
+setFrameZoomFactor : function (
+float 
+)
+{
+},
+
+/**
+ * @method getFrameZoomFactor
+ * @return {float}
+ */
+getFrameZoomFactor : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getDesignResolutionSize
+ * @return {size_object}
+ */
+getDesignResolutionSize : function (
+)
+{
+    return cc.Size;
+},
+
+/**
+ * @method windowShouldClose
+ * @return {bool}
+ */
+windowShouldClose : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setDesignResolutionSize
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {ResolutionPolicy} arg2
+ */
+setDesignResolutionSize : function (
+float, 
+float, 
+resolutionpolicy 
+)
+{
+},
+
+/**
+ * @method getResolutionPolicy
+ * @return {ResolutionPolicy}
+ */
+getResolutionPolicy : function (
+)
+{
+    return ResolutionPolicy;
+},
+
+/**
+ * @method isRetinaDisplay
+ * @return {bool}
+ */
+isRetinaDisplay : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setViewPortInPoints
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {float} arg3
+ */
+setViewPortInPoints : function (
+float, 
+float, 
+float, 
+float 
+)
+{
+},
+
+/**
+ * @method getScissorRect
+ * @return {rect_object}
+ */
+getScissorRect : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
+ * @method getRetinaFactor
+ * @return {int}
+ */
+getRetinaFactor : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setViewName
+ * @param {String} arg0
+ */
+setViewName : function (
+str 
+)
+{
+},
+
+/**
+ * @method getVisibleRect
+ * @return {rect_object}
+ */
+getVisibleRect : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
+ * @method getVisibleSize
+ * @return {size_object}
+ */
+getVisibleSize : function (
+)
+{
+    return cc.Size;
+},
+
+/**
+ * @method isScissorEnabled
+ * @return {bool}
+ */
+isScissorEnabled : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method pollEvents
+ */
+pollEvents : function (
+)
+{
+},
+
+/**
+ * @method setGLContextAttrs
+ * @param {GLContextAttrs} arg0
+ */
+setGLContextAttrs : function (
+glcontextattrs 
+)
+{
+},
+
+/**
+ * @method getGLContextAttrs
+ * @return {GLContextAttrs}
+ */
+getGLContextAttrs : function (
+)
+{
+    return GLContextAttrs;
+},
+
+};
+
+/**
+ * @class Director
+ */
+cc.Director = {
+
+/**
+ * @method pause
+ */
+pause : function (
+)
+{
+},
+
+/**
+ * @method setEventDispatcher
+ * @param {cc.EventDispatcher} arg0
+ */
+setEventDispatcher : function (
+eventdispatcher 
+)
+{
+},
+
+/**
+ * @method setContentScaleFactor
+ * @param {float} arg0
+ */
+setContentScaleFactor : function (
+float 
+)
+{
+},
+
+/**
+ * @method getContentScaleFactor
+ * @return {float}
+ */
+getContentScaleFactor : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getWinSizeInPixels
+ * @return {size_object}
+ */
+getWinSizeInPixels : function (
+)
+{
+    return cc.Size;
+},
+
+/**
+ * @method getDeltaTime
+ * @return {float}
+ */
+getDeltaTime : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setGLDefaultValues
+ */
+setGLDefaultValues : function (
+)
+{
+},
+
+/**
+ * @method setActionManager
+ * @param {cc.ActionManager} arg0
+ */
+setActionManager : function (
+actionmanager 
+)
+{
+},
+
+/**
+ * @method setAlphaBlending
+ * @param {bool} arg0
+ */
+setAlphaBlending : function (
+bool 
+)
+{
+},
+
+/**
+ * @method popToRootScene
+ */
+popToRootScene : function (
+)
+{
+},
+
+/**
+ * @method loadMatrix
+ * @param {cc.MATRIX_STACK_TYPE} arg0
+ * @param {mat4_object} arg1
+ */
+loadMatrix : function (
+matrix_stack_type, 
+mat4 
+)
+{
+},
+
+/**
+ * @method getNotificationNode
+ * @return {cc.Node}
+ */
+getNotificationNode : function (
+)
+{
+    return cc.Node;
+},
+
+/**
+ * @method getWinSize
+ * @return {size_object}
+ */
+getWinSize : function (
+)
+{
+    return cc.Size;
+},
+
+/**
+ * @method end
+ */
+end : function (
+)
+{
+},
+
+/**
+ * @method getTextureCache
+ * @return {cc.TextureCache}
+ */
+getTextureCache : function (
+)
+{
+    return cc.TextureCache;
+},
+
+/**
+ * @method isSendCleanupToScene
+ * @return {bool}
+ */
+isSendCleanupToScene : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getVisibleOrigin
+ * @return {vec2_object}
+ */
+getVisibleOrigin : function (
+)
+{
+    return cc.Vec2;
+},
+
+/**
+ * @method mainLoop
+ */
+mainLoop : function (
+)
+{
+},
+
+/**
+ * @method setDepthTest
+ * @param {bool} arg0
+ */
+setDepthTest : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getFrameRate
+ * @return {float}
+ */
+getFrameRate : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getSecondsPerFrame
+ * @return {float}
+ */
+getSecondsPerFrame : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method resetMatrixStack
+ */
+resetMatrixStack : function (
+)
+{
+},
+
+/**
+ * @method convertToUI
+ * @param {vec2_object} arg0
+ * @return {vec2_object}
+ */
+convertToUI : function (
+vec2 
+)
+{
+    return cc.Vec2;
+},
+
+/**
+ * @method pushMatrix
+ * @param {cc.MATRIX_STACK_TYPE} arg0
+ */
+pushMatrix : function (
+matrix_stack_type 
+)
+{
+},
+
+/**
+ * @method setDefaultValues
+ */
+setDefaultValues : function (
+)
+{
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setScheduler
+ * @param {cc.Scheduler} arg0
+ */
+setScheduler : function (
+scheduler 
+)
+{
+},
+
+/**
+ * @method getMatrix
+ * @param {cc.MATRIX_STACK_TYPE} arg0
+ * @return {mat4_object}
+ */
+getMatrix : function (
+matrix_stack_type 
+)
+{
+    return cc.Mat4;
+},
+
+/**
+ * @method startAnimation
+ */
+startAnimation : function (
+)
+{
+},
+
+/**
+ * @method getOpenGLView
+ * @return {cc.GLView}
+ */
+getOpenGLView : function (
+)
+{
+    return cc.GLView;
+},
+
+/**
+ * @method getRunningScene
+ * @return {cc.Scene}
+ */
+getRunningScene : function (
+)
+{
+    return cc.Scene;
+},
+
+/**
+ * @method setViewport
+ */
+setViewport : function (
+)
+{
+},
+
+/**
+ * @method stopAnimation
+ */
+stopAnimation : function (
+)
+{
+},
+
+/**
+ * @method popToSceneStackLevel
+ * @param {int} arg0
+ */
+popToSceneStackLevel : function (
+int 
+)
+{
+},
+
+/**
+ * @method resume
+ */
+resume : function (
+)
+{
+},
+
+/**
+ * @method isNextDeltaTimeZero
+ * @return {bool}
+ */
+isNextDeltaTimeZero : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setClearColor
+ * @param {color4f_object} arg0
+ */
+setClearColor : function (
+color4f 
+)
+{
+},
+
+/**
+ * @method setOpenGLView
+ * @param {cc.GLView} arg0
+ */
+setOpenGLView : function (
+glview 
+)
+{
+},
+
+/**
+ * @method convertToGL
+ * @param {vec2_object} arg0
+ * @return {vec2_object}
+ */
+convertToGL : function (
+vec2 
+)
+{
+    return cc.Vec2;
+},
+
+/**
+ * @method purgeCachedData
+ */
+purgeCachedData : function (
+)
+{
+},
+
+/**
+ * @method getTotalFrames
+ * @return {unsigned int}
+ */
+getTotalFrames : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method runWithScene
+ * @param {cc.Scene} arg0
+ */
+runWithScene : function (
+scene 
+)
+{
+},
+
+/**
+ * @method setNotificationNode
+ * @param {cc.Node} arg0
+ */
+setNotificationNode : function (
+node 
+)
+{
+},
+
+/**
+ * @method drawScene
+ */
+drawScene : function (
+)
+{
+},
+
+/**
+ * @method restart
+ */
+restart : function (
+)
+{
+},
+
+/**
+ * @method popScene
+ */
+popScene : function (
+)
+{
+},
+
+/**
+ * @method loadIdentityMatrix
+ * @param {cc.MATRIX_STACK_TYPE} arg0
+ */
+loadIdentityMatrix : function (
+matrix_stack_type 
+)
+{
+},
+
+/**
+ * @method isDisplayStats
+ * @return {bool}
+ */
+isDisplayStats : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setProjection
+ * @param {cc.Director::Projection} arg0
+ */
+setProjection : function (
+projection 
+)
+{
+},
+
+/**
+ * @method multiplyMatrix
+ * @param {cc.MATRIX_STACK_TYPE} arg0
+ * @param {mat4_object} arg1
+ */
+multiplyMatrix : function (
+matrix_stack_type, 
+mat4 
+)
+{
+},
+
+/**
+ * @method getZEye
+ * @return {float}
+ */
+getZEye : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setNextDeltaTimeZero
+ * @param {bool} arg0
+ */
+setNextDeltaTimeZero : function (
+bool 
+)
+{
+},
+
+/**
+ * @method popMatrix
+ * @param {cc.MATRIX_STACK_TYPE} arg0
+ */
+popMatrix : function (
+matrix_stack_type 
+)
+{
+},
+
+/**
+ * @method getVisibleSize
+ * @return {size_object}
+ */
+getVisibleSize : function (
+)
+{
+    return cc.Size;
+},
+
+/**
+ * @method getScheduler
+ * @return {cc.Scheduler}
+ */
+getScheduler : function (
+)
+{
+    return cc.Scheduler;
+},
+
+/**
+ * @method pushScene
+ * @param {cc.Scene} arg0
+ */
+pushScene : function (
+scene 
+)
+{
+},
+
+/**
+ * @method getAnimationInterval
+ * @return {double}
+ */
+getAnimationInterval : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method isPaused
+ * @return {bool}
+ */
+isPaused : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setDisplayStats
+ * @param {bool} arg0
+ */
+setDisplayStats : function (
+bool 
+)
+{
+},
+
+/**
+ * @method getEventDispatcher
+ * @return {cc.EventDispatcher}
+ */
+getEventDispatcher : function (
+)
+{
+    return cc.EventDispatcher;
+},
+
+/**
+ * @method replaceScene
+ * @param {cc.Scene} arg0
+ */
+replaceScene : function (
+scene 
+)
+{
+},
+
+/**
+ * @method setAnimationInterval
+ * @param {double} arg0
+ */
+setAnimationInterval : function (
+double 
+)
+{
+},
+
+/**
+ * @method getActionManager
+ * @return {cc.ActionManager}
+ */
+getActionManager : function (
+)
+{
+    return cc.ActionManager;
+},
+
+/**
+ * @method getInstance
+ * @return {cc.Director}
+ */
+getInstance : function (
+)
+{
+    return cc.Director;
+},
+
+};
+
+/**
+ * @class Scheduler
+ */
+cc.Scheduler = {
+
+/**
+ * @method setTimeScale
+ * @param {float} arg0
+ */
+setTimeScale : function (
+float 
+)
+{
+},
+
+/**
+ * @method unscheduleAllWithMinPriority
+ * @param {int} arg0
+ */
+unscheduleAllWithMinPriority : function (
+int 
+)
+{
+},
+
+/**
+ * @method update
+ * @param {float} arg0
+ */
+update : function (
+float 
+)
+{
+},
+
+/**
+ * @method unscheduleScriptEntry
+ * @param {unsigned int} arg0
+ */
+unscheduleScriptEntry : function (
+int 
+)
+{
+},
+
+/**
+ * @method performFunctionInCocosThread
+ * @param {function} arg0
+ */
+performFunctionInCocosThread : function (
+func 
+)
+{
+},
+
+/**
+ * @method unscheduleAll
+ */
+unscheduleAll : function (
+)
+{
+},
+
+/**
+ * @method getTimeScale
+ * @return {float}
+ */
+getTimeScale : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method Scheduler
+ * @constructor
+ */
+Scheduler : function (
+)
+{
+},
+
+};
+
+/**
+ * @class AsyncTaskPool
+ */
+cc.AsyncTaskPool = {
+
+/**
+ * @method stopTasks
+ * @param {cc.AsyncTaskPool::TaskType} arg0
+ */
+stopTasks : function (
+tasktype 
+)
+{
+},
+
+/**
+ * @method destoryInstance
+ */
+destoryInstance : function (
+)
+{
+},
+
+/**
+ * @method getInstance
+ * @return {cc.AsyncTaskPool}
+ */
+getInstance : function (
+)
+{
+    return cc.AsyncTaskPool;
+},
+
+};
+
+/**
+ * @class Action
+ */
+cc.Action = {
+
+/**
+ * @method startWithTarget
+ * @param {cc.Node} arg0
+ */
+startWithTarget : function (
+node 
+)
+{
+},
+
+/**
+ * @method setOriginalTarget
+ * @param {cc.Node} arg0
+ */
+setOriginalTarget : function (
+node 
+)
+{
+},
+
+/**
+ * @method clone
+ * @return {cc.Action}
+ */
+clone : function (
+)
+{
+    return cc.Action;
+},
+
+/**
+ * @method getOriginalTarget
+ * @return {cc.Node}
+ */
+getOriginalTarget : function (
+)
+{
+    return cc.Node;
+},
+
+/**
+ * @method stop
+ */
+stop : function (
+)
+{
+},
+
+/**
+ * @method update
+ * @param {float} arg0
+ */
+update : function (
+float 
+)
+{
+},
+
+/**
+ * @method getTarget
+ * @return {cc.Node}
+ */
+getTarget : function (
+)
+{
+    return cc.Node;
+},
+
+/**
+ * @method step
+ * @param {float} arg0
+ */
+step : function (
+float 
+)
+{
+},
+
+/**
+ * @method setTag
+ * @param {int} arg0
+ */
+setTag : function (
+int 
+)
+{
+},
+
+/**
+ * @method getTag
+ * @return {int}
+ */
+getTag : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setTarget
+ * @param {cc.Node} arg0
+ */
+setTarget : function (
+node 
+)
+{
+},
+
+/**
+ * @method isDone
+ * @return {bool}
+ */
+isDone : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method reverse
+ * @return {cc.Action}
+ */
+reverse : function (
+)
+{
+    return cc.Action;
+},
+
+};
+
+/**
+ * @class FiniteTimeAction
+ */
+cc.FiniteTimeAction = {
+
+/**
+ * @method setDuration
+ * @param {float} arg0
+ */
+setDuration : function (
+float 
+)
+{
+},
+
+/**
+ * @method getDuration
+ * @return {float}
+ */
+getDuration : function (
+)
+{
+    return 0;
+},
+
+};
+
+/**
+ * @class Speed
+ */
+cc.Speed = {
+
+/**
+ * @method setInnerAction
+ * @param {cc.ActionInterval} arg0
+ */
+setInnerAction : function (
+actioninterval 
+)
+{
+},
+
+/**
+ * @method getSpeed
+ * @return {float}
+ */
+getSpeed : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setSpeed
+ * @param {float} arg0
+ */
+setSpeed : function (
+float 
+)
+{
+},
+
+/**
+ * @method initWithAction
+ * @param {cc.ActionInterval} arg0
+ * @param {float} arg1
+ * @return {bool}
+ */
+initWithAction : function (
+actioninterval, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method getInnerAction
+ * @return {cc.ActionInterval}
+ */
+getInnerAction : function (
+)
+{
+    return cc.ActionInterval;
+},
+
+/**
+ * @method create
+ * @param {cc.ActionInterval} arg0
+ * @param {float} arg1
+ * @return {cc.Speed}
+ */
+create : function (
+actioninterval, 
+float 
+)
+{
+    return cc.Speed;
+},
+
+/**
+ * @method Speed
+ * @constructor
+ */
+Speed : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Follow
+ */
+cc.Follow = {
+
+/**
+ * @method setBoundarySet
+ * @param {bool} arg0
+ */
+setBoundarySet : function (
+bool 
+)
+{
+},
+
+/**
+ * @method initWithTarget
+ * @param {cc.Node} arg0
+ * @param {rect_object} arg1
+ * @return {bool}
+ */
+initWithTarget : function (
+node, 
+rect 
+)
+{
+    return false;
+},
+
+/**
+ * @method isBoundarySet
+ * @return {bool}
+ */
+isBoundarySet : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {cc.Node} arg0
+ * @param {rect_object} arg1
+ * @return {cc.Follow}
+ */
+create : function (
+node, 
+rect 
+)
+{
+    return cc.Follow;
+},
+
+/**
+ * @method Follow
+ * @constructor
+ */
+Follow : function (
 )
 {
 },
@@ -4144,6 +5283,58 @@ TargetedAction : function (
 };
 
 /**
+ * @class ActionFloat
+ */
+cc.ActionFloat = {
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {function} arg3
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+float, 
+float, 
+func 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {function} arg3
+ * @return {cc.ActionFloat}
+ */
+create : function (
+float, 
+float, 
+float, 
+func 
+)
+{
+    return cc.ActionFloat;
+},
+
+/**
+ * @method ActionFloat
+ * @constructor
+ */
+ActionFloat : function (
+)
+{
+},
+
+};
+
+/**
  * @class Configuration
  */
 cc.Configuration = {
@@ -4395,1125 +5586,354 @@ getInstance : function (
 };
 
 /**
- * @class Scene
+ * @class Properties
  */
-cc.Scene = {
+cc.Properties = {
 
 /**
- * @method setCameraOrderDirty
+ * @method getVariable
+ * @param {char} arg0
+ * @param {char} arg1
+ * @return {char}
  */
-setCameraOrderDirty : function (
-)
-{
-},
-
-/**
- * @method render
- * @param {cc.Renderer} arg0
- */
-render : function (
-renderer 
-)
-{
-},
-
-/**
- * @method onProjectionChanged
- * @param {cc.EventCustom} arg0
- */
-onProjectionChanged : function (
-eventcustom 
-)
-{
-},
-
-/**
- * @method initWithSize
- * @param {size_object} arg0
- * @return {bool}
- */
-initWithSize : function (
-size 
-)
-{
-    return false;
-},
-
-/**
- * @method getDefaultCamera
- * @return {cc.Camera}
- */
-getDefaultCamera : function (
-)
-{
-    return cc.Camera;
-},
-
-/**
- * @method createWithSize
- * @param {size_object} arg0
- * @return {cc.Scene}
- */
-createWithSize : function (
-size 
-)
-{
-    return cc.Scene;
-},
-
-/**
- * @method create
- * @return {cc.Scene}
- */
-create : function (
-)
-{
-    return cc.Scene;
-},
-
-/**
- * @method Scene
- * @constructor
- */
-Scene : function (
-)
-{
-},
-
-};
-
-/**
- * @class GLView
- */
-cc.GLView = {
-
-/**
- * @method setFrameSize
- * @param {float} arg0
- * @param {float} arg1
- */
-setFrameSize : function (
-float, 
-float 
-)
-{
-},
-
-/**
- * @method getViewPortRect
- * @return {rect_object}
- */
-getViewPortRect : function (
-)
-{
-    return cc.Rect;
-},
-
-/**
- * @method setContentScaleFactor
- * @param {float} arg0
- * @return {bool}
- */
-setContentScaleFactor : function (
-float 
-)
-{
-    return false;
-},
-
-/**
- * @method getContentScaleFactor
- * @return {float}
- */
-getContentScaleFactor : function (
+getVariable : function (
+char, 
+char 
 )
 {
     return 0;
 },
 
 /**
- * @method setIMEKeyboardState
- * @param {bool} arg0
+ * @method getString
+ * @return {char}
  */
-setIMEKeyboardState : function (
+getString : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getLong
+ * @return {long}
+ */
+getLong : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getNamespace
+* @param {char} char
+* @param {bool} bool
+* @param {bool} bool
+* @return {char|cc.Properties}
+*/
+getNamespace : function(
+char,
+bool,
 bool 
 )
 {
+    return cc.Properties;
 },
 
 /**
- * @method setScissorInPoints
- * @param {float} arg0
- * @param {float} arg1
- * @param {float} arg2
- * @param {float} arg3
- */
-setScissorInPoints : function (
-float, 
-float, 
-float, 
-float 
-)
-{
-},
-
-/**
- * @method getViewName
- * @return {String}
- */
-getViewName : function (
-)
-{
-    return ;
-},
-
-/**
- * @method isOpenGLReady
+ * @method getPath
+ * @param {char} arg0
+ * @param {String} arg1
  * @return {bool}
  */
-isOpenGLReady : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setCursorVisible
- * @param {bool} arg0
- */
-setCursorVisible : function (
-bool 
-)
-{
-},
-
-/**
- * @method getScaleY
- * @return {float}
- */
-getScaleY : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getScaleX
- * @return {float}
- */
-getScaleX : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getVisibleOrigin
- * @return {vec2_object}
- */
-getVisibleOrigin : function (
-)
-{
-    return cc.Vec2;
-},
-
-/**
- * @method getFrameSize
- * @return {size_object}
- */
-getFrameSize : function (
-)
-{
-    return cc.Size;
-},
-
-/**
- * @method setFrameZoomFactor
- * @param {float} arg0
- */
-setFrameZoomFactor : function (
-float 
-)
-{
-},
-
-/**
- * @method getFrameZoomFactor
- * @return {float}
- */
-getFrameZoomFactor : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getDesignResolutionSize
- * @return {size_object}
- */
-getDesignResolutionSize : function (
-)
-{
-    return cc.Size;
-},
-
-/**
- * @method windowShouldClose
- * @return {bool}
- */
-windowShouldClose : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setDesignResolutionSize
- * @param {float} arg0
- * @param {float} arg1
- * @param {ResolutionPolicy} arg2
- */
-setDesignResolutionSize : function (
-float, 
-float, 
-resolutionpolicy 
-)
-{
-},
-
-/**
- * @method getResolutionPolicy
- * @return {ResolutionPolicy}
- */
-getResolutionPolicy : function (
-)
-{
-    return ResolutionPolicy;
-},
-
-/**
- * @method isRetinaDisplay
- * @return {bool}
- */
-isRetinaDisplay : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setViewPortInPoints
- * @param {float} arg0
- * @param {float} arg1
- * @param {float} arg2
- * @param {float} arg3
- */
-setViewPortInPoints : function (
-float, 
-float, 
-float, 
-float 
-)
-{
-},
-
-/**
- * @method getScissorRect
- * @return {rect_object}
- */
-getScissorRect : function (
-)
-{
-    return cc.Rect;
-},
-
-/**
- * @method getRetinaFactor
- * @return {int}
- */
-getRetinaFactor : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setViewName
- * @param {String} arg0
- */
-setViewName : function (
+getPath : function (
+char, 
 str 
 )
 {
-},
-
-/**
- * @method getVisibleRect
- * @return {rect_object}
- */
-getVisibleRect : function (
-)
-{
-    return cc.Rect;
-},
-
-/**
- * @method getVisibleSize
- * @return {size_object}
- */
-getVisibleSize : function (
-)
-{
-    return cc.Size;
-},
-
-/**
- * @method isScissorEnabled
- * @return {bool}
- */
-isScissorEnabled : function (
-)
-{
     return false;
 },
 
 /**
- * @method pollEvents
- */
-pollEvents : function (
-)
-{
-},
-
-/**
- * @method setGLContextAttrs
- * @param {GLContextAttrs} arg0
- */
-setGLContextAttrs : function (
-glcontextattrs 
-)
-{
-},
-
-/**
- * @method getGLContextAttrs
- * @return {GLContextAttrs}
- */
-getGLContextAttrs : function (
-)
-{
-    return GLContextAttrs;
-},
-
-};
-
-/**
- * @class Director
- */
-cc.Director = {
-
-/**
- * @method pause
- */
-pause : function (
-)
-{
-},
-
-/**
- * @method setEventDispatcher
- * @param {cc.EventDispatcher} arg0
- */
-setEventDispatcher : function (
-eventdispatcher 
-)
-{
-},
-
-/**
- * @method setContentScaleFactor
- * @param {float} arg0
- */
-setContentScaleFactor : function (
-float 
-)
-{
-},
-
-/**
- * @method getContentScaleFactor
- * @return {float}
- */
-getContentScaleFactor : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getWinSizeInPixels
- * @return {size_object}
- */
-getWinSizeInPixels : function (
-)
-{
-    return cc.Size;
-},
-
-/**
- * @method getDeltaTime
- * @return {float}
- */
-getDeltaTime : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setGLDefaultValues
- */
-setGLDefaultValues : function (
-)
-{
-},
-
-/**
- * @method setActionManager
- * @param {cc.ActionManager} arg0
- */
-setActionManager : function (
-actionmanager 
-)
-{
-},
-
-/**
- * @method setAlphaBlending
- * @param {bool} arg0
- */
-setAlphaBlending : function (
-bool 
-)
-{
-},
-
-/**
- * @method popToRootScene
- */
-popToRootScene : function (
-)
-{
-},
-
-/**
- * @method loadMatrix
- * @param {cc.MATRIX_STACK_TYPE} arg0
+ * @method getMat4
+ * @param {char} arg0
  * @param {mat4_object} arg1
+ * @return {bool}
  */
-loadMatrix : function (
-matrix_stack_type, 
+getMat4 : function (
+char, 
 mat4 
 )
 {
+    return false;
 },
 
 /**
- * @method getNotificationNode
- * @return {cc.Node}
- */
-getNotificationNode : function (
-)
-{
-    return cc.Node;
-},
-
-/**
- * @method getWinSize
- * @return {size_object}
- */
-getWinSize : function (
-)
-{
-    return cc.Size;
-},
-
-/**
- * @method end
- */
-end : function (
-)
-{
-},
-
-/**
- * @method getTextureCache
- * @return {cc.TextureCache}
- */
-getTextureCache : function (
-)
-{
-    return cc.TextureCache;
-},
-
-/**
- * @method isSendCleanupToScene
+ * @method exists
+ * @param {char} arg0
  * @return {bool}
  */
-isSendCleanupToScene : function (
+exists : function (
+char 
 )
 {
     return false;
 },
 
 /**
- * @method getVisibleOrigin
- * @return {vec2_object}
+ * @method setString
+ * @param {char} arg0
+ * @param {char} arg1
+ * @return {bool}
  */
-getVisibleOrigin : function (
+setString : function (
+char, 
+char 
 )
 {
-    return cc.Vec2;
+    return false;
 },
 
 /**
- * @method mainLoop
+ * @method getId
+ * @return {char}
  */
-mainLoop : function (
-)
-{
-},
-
-/**
- * @method setDepthTest
- * @param {bool} arg0
- */
-setDepthTest : function (
-bool 
-)
-{
-},
-
-/**
- * @method getFrameRate
- * @return {float}
- */
-getFrameRate : function (
+getId : function (
 )
 {
     return 0;
 },
 
 /**
- * @method getSecondsPerFrame
- * @return {float}
+ * @method rewind
  */
-getSecondsPerFrame : function (
+rewind : function (
+)
+{
+},
+
+/**
+ * @method setVariable
+ * @param {char} arg0
+ * @param {char} arg1
+ */
+setVariable : function (
+char, 
+char 
+)
+{
+},
+
+/**
+ * @method getBool
+ * @return {bool}
+ */
+getBool : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getColor
+* @param {char|char} char
+* @param {vec4_object|vec3_object} vec4
+* @return {bool|bool}
+*/
+getColor : function(
+char,
+vec3 
+)
+{
+    return false;
+},
+
+/**
+ * @method getType
+ * @return {cc.Properties::Type}
+ */
+getType : function (
 )
 {
     return 0;
 },
 
 /**
- * @method resetMatrixStack
+ * @method getNextNamespace
+ * @return {cc.Properties}
  */
-resetMatrixStack : function (
+getNextNamespace : function (
 )
 {
+    return cc.Properties;
 },
 
 /**
- * @method convertToUI
- * @param {vec2_object} arg0
- * @return {vec2_object}
+ * @method getInt
+ * @return {int}
  */
-convertToUI : function (
+getInt : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getVec3
+ * @param {char} arg0
+ * @param {vec3_object} arg1
+ * @return {bool}
+ */
+getVec3 : function (
+char, 
+vec3 
+)
+{
+    return false;
+},
+
+/**
+ * @method getVec2
+ * @param {char} arg0
+ * @param {vec2_object} arg1
+ * @return {bool}
+ */
+getVec2 : function (
+char, 
 vec2 
 )
 {
-    return cc.Vec2;
+    return false;
 },
 
 /**
- * @method pushMatrix
- * @param {cc.MATRIX_STACK_TYPE} arg0
- */
-pushMatrix : function (
-matrix_stack_type 
-)
-{
-},
-
-/**
- * @method setDefaultValues
- */
-setDefaultValues : function (
-)
-{
-},
-
-/**
- * @method init
+ * @method getVec4
+ * @param {char} arg0
+ * @param {vec4_object} arg1
  * @return {bool}
  */
-init : function (
+getVec4 : function (
+char, 
+vec4 
 )
 {
     return false;
 },
 
 /**
- * @method setScheduler
- * @param {cc.Scheduler} arg0
+ * @method getNextProperty
+ * @return {char}
  */
-setScheduler : function (
-scheduler 
+getNextProperty : function (
 )
 {
+    return 0;
 },
 
 /**
- * @method getMatrix
- * @param {cc.MATRIX_STACK_TYPE} arg0
- * @return {mat4_object}
+ * @method getFloat
+ * @return {float}
  */
-getMatrix : function (
-matrix_stack_type 
+getFloat : function (
 )
 {
-    return cc.Mat4;
+    return 0;
 },
 
 /**
- * @method startAnimation
- */
-startAnimation : function (
-)
-{
-},
-
-/**
- * @method getOpenGLView
- * @return {cc.GLView}
- */
-getOpenGLView : function (
-)
-{
-    return cc.GLView;
-},
-
-/**
- * @method getRunningScene
- * @return {cc.Scene}
- */
-getRunningScene : function (
-)
-{
-    return cc.Scene;
-},
-
-/**
- * @method setViewport
- */
-setViewport : function (
-)
-{
-},
-
-/**
- * @method stopAnimation
- */
-stopAnimation : function (
-)
-{
-},
-
-/**
- * @method popToSceneStackLevel
- * @param {int} arg0
- */
-popToSceneStackLevel : function (
-int 
-)
-{
-},
-
-/**
- * @method resume
- */
-resume : function (
-)
-{
-},
-
-/**
- * @method isNextDeltaTimeZero
+ * @method getQuaternionFromAxisAngle
+ * @param {char} arg0
+ * @param {cc.Quaternion} arg1
  * @return {bool}
  */
-isNextDeltaTimeZero : function (
+getQuaternionFromAxisAngle : function (
+char, 
+quaternion 
 )
 {
     return false;
 },
 
 /**
- * @method setClearColor
- * @param {color4f_object} arg0
- */
-setClearColor : function (
-color4f 
+ * @method parseColor
+* @param {char|char} char
+* @param {vec4_object|vec3_object} vec4
+* @return {bool|bool}
+*/
+parseColor : function(
+char,
+vec3 
 )
 {
+    return false;
 },
 
 /**
- * @method setOpenGLView
- * @param {cc.GLView} arg0
+ * @method parseVec3
+ * @param {char} arg0
+ * @param {vec3_object} arg1
+ * @return {bool}
  */
-setOpenGLView : function (
-glview 
+parseVec3 : function (
+char, 
+vec3 
 )
 {
+    return false;
 },
 
 /**
- * @method convertToGL
- * @param {vec2_object} arg0
- * @return {vec2_object}
+ * @method parseAxisAngle
+ * @param {char} arg0
+ * @param {cc.Quaternion} arg1
+ * @return {bool}
  */
-convertToGL : function (
+parseAxisAngle : function (
+char, 
+quaternion 
+)
+{
+    return false;
+},
+
+/**
+ * @method parseVec2
+ * @param {char} arg0
+ * @param {vec2_object} arg1
+ * @return {bool}
+ */
+parseVec2 : function (
+char, 
 vec2 
 )
 {
-    return cc.Vec2;
-},
-
-/**
- * @method purgeCachedData
- */
-purgeCachedData : function (
-)
-{
-},
-
-/**
- * @method getTotalFrames
- * @return {unsigned int}
- */
-getTotalFrames : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method runWithScene
- * @param {cc.Scene} arg0
- */
-runWithScene : function (
-scene 
-)
-{
-},
-
-/**
- * @method setNotificationNode
- * @param {cc.Node} arg0
- */
-setNotificationNode : function (
-node 
-)
-{
-},
-
-/**
- * @method drawScene
- */
-drawScene : function (
-)
-{
-},
-
-/**
- * @method restart
- */
-restart : function (
-)
-{
-},
-
-/**
- * @method popScene
- */
-popScene : function (
-)
-{
-},
-
-/**
- * @method loadIdentityMatrix
- * @param {cc.MATRIX_STACK_TYPE} arg0
- */
-loadIdentityMatrix : function (
-matrix_stack_type 
-)
-{
-},
-
-/**
- * @method isDisplayStats
- * @return {bool}
- */
-isDisplayStats : function (
-)
-{
     return false;
 },
 
 /**
- * @method setProjection
- * @param {cc.Director::Projection} arg0
+ * @method createNonRefCounted
+ * @param {String} arg0
+ * @return {cc.Properties}
  */
-setProjection : function (
-projection 
+createNonRefCounted : function (
+str 
 )
 {
+    return cc.Properties;
 },
 
 /**
- * @method multiplyMatrix
- * @param {cc.MATRIX_STACK_TYPE} arg0
- * @param {mat4_object} arg1
- */
-multiplyMatrix : function (
-matrix_stack_type, 
-mat4 
-)
-{
-},
-
-/**
- * @method getZEye
- * @return {float}
- */
-getZEye : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setNextDeltaTimeZero
- * @param {bool} arg0
- */
-setNextDeltaTimeZero : function (
-bool 
-)
-{
-},
-
-/**
- * @method popMatrix
- * @param {cc.MATRIX_STACK_TYPE} arg0
- */
-popMatrix : function (
-matrix_stack_type 
-)
-{
-},
-
-/**
- * @method getVisibleSize
- * @return {size_object}
- */
-getVisibleSize : function (
-)
-{
-    return cc.Size;
-},
-
-/**
- * @method getScheduler
- * @return {cc.Scheduler}
- */
-getScheduler : function (
-)
-{
-    return cc.Scheduler;
-},
-
-/**
- * @method pushScene
- * @param {cc.Scene} arg0
- */
-pushScene : function (
-scene 
-)
-{
-},
-
-/**
- * @method getAnimationInterval
- * @return {double}
- */
-getAnimationInterval : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method isPaused
+ * @method parseVec4
+ * @param {char} arg0
+ * @param {vec4_object} arg1
  * @return {bool}
  */
-isPaused : function (
+parseVec4 : function (
+char, 
+vec4 
 )
 {
     return false;
-},
-
-/**
- * @method setDisplayStats
- * @param {bool} arg0
- */
-setDisplayStats : function (
-bool 
-)
-{
-},
-
-/**
- * @method getEventDispatcher
- * @return {cc.EventDispatcher}
- */
-getEventDispatcher : function (
-)
-{
-    return cc.EventDispatcher;
-},
-
-/**
- * @method replaceScene
- * @param {cc.Scene} arg0
- */
-replaceScene : function (
-scene 
-)
-{
-},
-
-/**
- * @method setAnimationInterval
- * @param {double} arg0
- */
-setAnimationInterval : function (
-double 
-)
-{
-},
-
-/**
- * @method getActionManager
- * @return {cc.ActionManager}
- */
-getActionManager : function (
-)
-{
-    return cc.ActionManager;
-},
-
-/**
- * @method getInstance
- * @return {cc.Director}
- */
-getInstance : function (
-)
-{
-    return cc.Director;
-},
-
-};
-
-/**
- * @class Scheduler
- */
-cc.Scheduler = {
-
-/**
- * @method setTimeScale
- * @param {float} arg0
- */
-setTimeScale : function (
-float 
-)
-{
-},
-
-/**
- * @method unscheduleAllWithMinPriority
- * @param {int} arg0
- */
-unscheduleAllWithMinPriority : function (
-int 
-)
-{
-},
-
-/**
- * @method update
- * @param {float} arg0
- */
-update : function (
-float 
-)
-{
-},
-
-/**
- * @method unscheduleScriptEntry
- * @param {unsigned int} arg0
- */
-unscheduleScriptEntry : function (
-int 
-)
-{
-},
-
-/**
- * @method performFunctionInCocosThread
- * @param {function} arg0
- */
-performFunctionInCocosThread : function (
-func 
-)
-{
-},
-
-/**
- * @method unscheduleAll
- */
-unscheduleAll : function (
-)
-{
-},
-
-/**
- * @method getTimeScale
- * @return {float}
- */
-getTimeScale : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method Scheduler
- * @constructor
- */
-Scheduler : function (
-)
-{
 },
 
 };
@@ -5880,6 +6300,52 @@ getInstance : function (
 };
 
 /**
+ * @class EventAcceleration
+ */
+cc.EventAcceleration = {
+
+/**
+ * @method EventAcceleration
+ * @constructor
+ * @param {cc.Acceleration} arg0
+ */
+EventAcceleration : function (
+acceleration 
+)
+{
+},
+
+};
+
+/**
+ * @class EventCustom
+ */
+cc.EventCustom = {
+
+/**
+ * @method getEventName
+ * @return {String}
+ */
+getEventName : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method EventCustom
+ * @constructor
+ * @param {String} arg0
+ */
+EventCustom : function (
+str 
+)
+{
+},
+
+};
+
+/**
  * @class EventListener
  */
 cc.EventListener = {
@@ -6087,45 +6553,19 @@ EventDispatcher : function (
 };
 
 /**
- * @class EventListenerTouchOneByOne
+ * @class EventFocus
  */
-cc.EventListenerTouchOneByOne = {
+cc.EventFocus = {
 
 /**
- * @method isSwallowTouches
- * @return {bool}
- */
-isSwallowTouches : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setSwallowTouches
- * @param {bool} arg0
- */
-setSwallowTouches : function (
-bool 
-)
-{
-},
-
-/**
- * @method init
- * @return {bool}
- */
-init : function (
-)
-{
-    return false;
-},
-
-/**
- * @method EventListenerTouchOneByOne
+ * @method EventFocus
  * @constructor
+ * @param {ccui.Widget} arg0
+ * @param {ccui.Widget} arg1
  */
-EventListenerTouchOneByOne : function (
+EventFocus : function (
+widget, 
+widget 
 )
 {
 },
@@ -6133,9 +6573,79 @@ EventListenerTouchOneByOne : function (
 };
 
 /**
- * @class EventListenerTouchAllAtOnce
+ * @class EventListenerAcceleration
  */
-cc.EventListenerTouchAllAtOnce = {
+cc.EventListenerAcceleration = {
+
+/**
+ * @method init
+ * @param {function} arg0
+ * @return {bool}
+ */
+init : function (
+func 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {function} arg0
+ * @return {cc.EventListenerAcceleration}
+ */
+create : function (
+func 
+)
+{
+    return cc.EventListenerAcceleration;
+},
+
+/**
+ * @method EventListenerAcceleration
+ * @constructor
+ */
+EventListenerAcceleration : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EventListenerCustom
+ */
+cc.EventListenerCustom = {
+
+/**
+ * @method create
+ * @param {String} arg0
+ * @param {function} arg1
+ * @return {cc.EventListenerCustom}
+ */
+create : function (
+str, 
+func 
+)
+{
+    return cc.EventListenerCustom;
+},
+
+/**
+ * @method EventListenerCustom
+ * @constructor
+ */
+EventListenerCustom : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EventListenerFocus
+ */
+cc.EventListenerFocus = {
 
 /**
  * @method init
@@ -6148,10 +6658,10 @@ init : function (
 },
 
 /**
- * @method EventListenerTouchAllAtOnce
+ * @method EventListenerFocus
  * @constructor
  */
-EventListenerTouchAllAtOnce : function (
+EventListenerFocus : function (
 )
 {
 },
@@ -6383,145 +6893,29 @@ EventListenerMouse : function (
 };
 
 /**
- * @class EventAcceleration
+ * @class EventListenerTouchOneByOne
  */
-cc.EventAcceleration = {
+cc.EventListenerTouchOneByOne = {
 
 /**
- * @method EventAcceleration
- * @constructor
- * @param {cc.Acceleration} arg0
- */
-EventAcceleration : function (
-acceleration 
-)
-{
-},
-
-};
-
-/**
- * @class EventListenerAcceleration
- */
-cc.EventListenerAcceleration = {
-
-/**
- * @method init
- * @param {function} arg0
+ * @method isSwallowTouches
  * @return {bool}
  */
-init : function (
-func 
+isSwallowTouches : function (
 )
 {
     return false;
 },
 
 /**
- * @method create
- * @param {function} arg0
- * @return {cc.EventListenerAcceleration}
+ * @method setSwallowTouches
+ * @param {bool} arg0
  */
-create : function (
-func 
-)
-{
-    return cc.EventListenerAcceleration;
-},
-
-/**
- * @method EventListenerAcceleration
- * @constructor
- */
-EventListenerAcceleration : function (
+setSwallowTouches : function (
+bool 
 )
 {
 },
-
-};
-
-/**
- * @class EventCustom
- */
-cc.EventCustom = {
-
-/**
- * @method getEventName
- * @return {String}
- */
-getEventName : function (
-)
-{
-    return ;
-},
-
-/**
- * @method EventCustom
- * @constructor
- * @param {String} arg0
- */
-EventCustom : function (
-str 
-)
-{
-},
-
-};
-
-/**
- * @class EventListenerCustom
- */
-cc.EventListenerCustom = {
-
-/**
- * @method create
- * @param {String} arg0
- * @param {function} arg1
- * @return {cc.EventListenerCustom}
- */
-create : function (
-str, 
-func 
-)
-{
-    return cc.EventListenerCustom;
-},
-
-/**
- * @method EventListenerCustom
- * @constructor
- */
-EventListenerCustom : function (
-)
-{
-},
-
-};
-
-/**
- * @class EventFocus
- */
-cc.EventFocus = {
-
-/**
- * @method EventFocus
- * @constructor
- * @param {ccui.Widget} arg0
- * @param {ccui.Widget} arg1
- */
-EventFocus : function (
-widget, 
-widget 
-)
-{
-},
-
-};
-
-/**
- * @class EventListenerFocus
- */
-cc.EventListenerFocus = {
 
 /**
  * @method init
@@ -6534,10 +6928,36 @@ init : function (
 },
 
 /**
- * @method EventListenerFocus
+ * @method EventListenerTouchOneByOne
  * @constructor
  */
-EventListenerFocus : function (
+EventListenerTouchOneByOne : function (
+)
+{
+},
+
+};
+
+/**
+ * @class EventListenerTouchAllAtOnce
+ */
+cc.EventListenerTouchAllAtOnce = {
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method EventListenerTouchAllAtOnce
+ * @constructor
+ */
+EventListenerTouchAllAtOnce : function (
 )
 {
 },
@@ -6703,160 +7123,68 @@ OrbitCamera : function (
 };
 
 /**
- * @class ActionManager
+ * @class CardinalSplineTo
  */
-cc.ActionManager = {
+cc.CardinalSplineTo = {
 
 /**
- * @method getActionByTag
- * @param {int} arg0
- * @param {cc.Node} arg1
- * @return {cc.Action}
+ * @method getPoints
+ * @return {point_object}
  */
-getActionByTag : function (
-int, 
-node 
+getPoints : function (
 )
 {
-    return cc.Action;
+    return cc.PointArray;
 },
 
 /**
- * @method removeActionByTag
- * @param {int} arg0
- * @param {cc.Node} arg1
+ * @method updatePosition
+ * @param {vec2_object} arg0
  */
-removeActionByTag : function (
-int, 
-node 
+updatePosition : function (
+vec2 
 )
 {
 },
 
 /**
- * @method removeAllActions
- */
-removeAllActions : function (
-)
-{
-},
-
-/**
- * @method addAction
- * @param {cc.Action} arg0
- * @param {cc.Node} arg1
- * @param {bool} arg2
- */
-addAction : function (
-action, 
-node, 
-bool 
-)
-{
-},
-
-/**
- * @method resumeTarget
- * @param {cc.Node} arg0
- */
-resumeTarget : function (
-node 
-)
-{
-},
-
-/**
- * @method update
- * @param {float} arg0
- */
-update : function (
-float 
-)
-{
-},
-
-/**
- * @method pauseTarget
- * @param {cc.Node} arg0
- */
-pauseTarget : function (
-node 
-)
-{
-},
-
-/**
- * @method getNumberOfRunningActionsInTarget
- * @param {cc.Node} arg0
- * @return {long}
- */
-getNumberOfRunningActionsInTarget : function (
-node 
-)
-{
-    return 0;
-},
-
-/**
- * @method removeAllActionsFromTarget
- * @param {cc.Node} arg0
- */
-removeAllActionsFromTarget : function (
-node 
-)
-{
-},
-
-/**
- * @method resumeTargets
- * @param {Array} arg0
- */
-resumeTargets : function (
-array 
-)
-{
-},
-
-/**
- * @method removeAction
- * @param {cc.Action} arg0
- */
-removeAction : function (
-action 
-)
-{
-},
-
-/**
- * @method removeAllActionsByTag
- * @param {int} arg0
- * @param {cc.Node} arg1
- */
-removeAllActionsByTag : function (
-int, 
-node 
-)
-{
-},
-
-/**
- * @method pauseAllRunningActions
- * @return {Array}
- */
-pauseAllRunningActions : function (
-)
-{
-    return new Array();
-},
-
-/**
- * @method ActionManager
+ * @method CardinalSplineTo
  * @constructor
  */
-ActionManager : function (
+CardinalSplineTo : function (
 )
 {
 },
+
+};
+
+/**
+ * @class CardinalSplineBy
+ */
+cc.CardinalSplineBy = {
+
+/**
+ * @method CardinalSplineBy
+ * @constructor
+ */
+CardinalSplineBy : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CatmullRomTo
+ */
+cc.CatmullRomTo = {
+
+};
+
+/**
+ * @class CatmullRomBy
+ */
+cc.CatmullRomBy = {
 
 };
 
@@ -9123,6 +9451,164 @@ Twirl : function (
 };
 
 /**
+ * @class ActionManager
+ */
+cc.ActionManager = {
+
+/**
+ * @method getActionByTag
+ * @param {int} arg0
+ * @param {cc.Node} arg1
+ * @return {cc.Action}
+ */
+getActionByTag : function (
+int, 
+node 
+)
+{
+    return cc.Action;
+},
+
+/**
+ * @method removeActionByTag
+ * @param {int} arg0
+ * @param {cc.Node} arg1
+ */
+removeActionByTag : function (
+int, 
+node 
+)
+{
+},
+
+/**
+ * @method removeAllActions
+ */
+removeAllActions : function (
+)
+{
+},
+
+/**
+ * @method addAction
+ * @param {cc.Action} arg0
+ * @param {cc.Node} arg1
+ * @param {bool} arg2
+ */
+addAction : function (
+action, 
+node, 
+bool 
+)
+{
+},
+
+/**
+ * @method resumeTarget
+ * @param {cc.Node} arg0
+ */
+resumeTarget : function (
+node 
+)
+{
+},
+
+/**
+ * @method update
+ * @param {float} arg0
+ */
+update : function (
+float 
+)
+{
+},
+
+/**
+ * @method pauseTarget
+ * @param {cc.Node} arg0
+ */
+pauseTarget : function (
+node 
+)
+{
+},
+
+/**
+ * @method getNumberOfRunningActionsInTarget
+ * @param {cc.Node} arg0
+ * @return {long}
+ */
+getNumberOfRunningActionsInTarget : function (
+node 
+)
+{
+    return 0;
+},
+
+/**
+ * @method removeAllActionsFromTarget
+ * @param {cc.Node} arg0
+ */
+removeAllActionsFromTarget : function (
+node 
+)
+{
+},
+
+/**
+ * @method resumeTargets
+ * @param {Array} arg0
+ */
+resumeTargets : function (
+array 
+)
+{
+},
+
+/**
+ * @method removeAction
+ * @param {cc.Action} arg0
+ */
+removeAction : function (
+action 
+)
+{
+},
+
+/**
+ * @method removeAllActionsByTag
+ * @param {int} arg0
+ * @param {cc.Node} arg1
+ */
+removeAllActionsByTag : function (
+int, 
+node 
+)
+{
+},
+
+/**
+ * @method pauseAllRunningActions
+ * @return {Array}
+ */
+pauseAllRunningActions : function (
+)
+{
+    return new Array();
+},
+
+/**
+ * @method ActionManager
+ * @constructor
+ */
+ActionManager : function (
+)
+{
+},
+
+};
+
+/**
  * @class PageTurn3D
  */
 cc.PageTurn3D = {
@@ -9985,202 +10471,6 @@ float
 };
 
 /**
- * @class CardinalSplineTo
- */
-cc.CardinalSplineTo = {
-
-/**
- * @method getPoints
- * @return {point_object}
- */
-getPoints : function (
-)
-{
-    return cc.PointArray;
-},
-
-/**
- * @method updatePosition
- * @param {vec2_object} arg0
- */
-updatePosition : function (
-vec2 
-)
-{
-},
-
-/**
- * @method CardinalSplineTo
- * @constructor
- */
-CardinalSplineTo : function (
-)
-{
-},
-
-};
-
-/**
- * @class CardinalSplineBy
- */
-cc.CardinalSplineBy = {
-
-/**
- * @method CardinalSplineBy
- * @constructor
- */
-CardinalSplineBy : function (
-)
-{
-},
-
-};
-
-/**
- * @class CatmullRomTo
- */
-cc.CatmullRomTo = {
-
-};
-
-/**
- * @class CatmullRomBy
- */
-cc.CatmullRomBy = {
-
-};
-
-/**
- * @class ProtectedNode
- */
-cc.ProtectedNode = {
-
-/**
- * @method addProtectedChild
-* @param {cc.Node|cc.Node|cc.Node} node
-* @param {int|int} int
-* @param {int} int
-*/
-addProtectedChild : function(
-node,
-int,
-int 
-)
-{
-},
-
-/**
- * @method disableCascadeColor
- */
-disableCascadeColor : function (
-)
-{
-},
-
-/**
- * @method removeProtectedChildByTag
- * @param {int} arg0
- * @param {bool} arg1
- */
-removeProtectedChildByTag : function (
-int, 
-bool 
-)
-{
-},
-
-/**
- * @method reorderProtectedChild
- * @param {cc.Node} arg0
- * @param {int} arg1
- */
-reorderProtectedChild : function (
-node, 
-int 
-)
-{
-},
-
-/**
- * @method removeAllProtectedChildrenWithCleanup
- * @param {bool} arg0
- */
-removeAllProtectedChildrenWithCleanup : function (
-bool 
-)
-{
-},
-
-/**
- * @method disableCascadeOpacity
- */
-disableCascadeOpacity : function (
-)
-{
-},
-
-/**
- * @method sortAllProtectedChildren
- */
-sortAllProtectedChildren : function (
-)
-{
-},
-
-/**
- * @method getProtectedChildByTag
- * @param {int} arg0
- * @return {cc.Node}
- */
-getProtectedChildByTag : function (
-int 
-)
-{
-    return cc.Node;
-},
-
-/**
- * @method removeProtectedChild
- * @param {cc.Node} arg0
- * @param {bool} arg1
- */
-removeProtectedChild : function (
-node, 
-bool 
-)
-{
-},
-
-/**
- * @method removeAllProtectedChildren
- */
-removeAllProtectedChildren : function (
-)
-{
-},
-
-/**
- * @method create
- * @return {cc.ProtectedNode}
- */
-create : function (
-)
-{
-    return cc.ProtectedNode;
-},
-
-/**
- * @method ProtectedNode
- * @constructor
- */
-ProtectedNode : function (
-)
-{
-},
-
-};
-
-/**
  * @class GLProgramState
  */
 cc.GLProgramState = {
@@ -10278,13 +10568,13 @@ int
 /**
  * @method setUniformVec2v
 * @param {int|String} int
-* @param {vec2_object|vec2_object} vec2
 * @param {long|long} long
+* @param {vec2_object|vec2_object} vec2
 */
 setUniformVec2v : function(
 str,
-vec2,
-long 
+long,
+vec2 
 )
 {
 },
@@ -10330,13 +10620,13 @@ glprogram
 /**
  * @method setUniformFloatv
 * @param {int|String} int
-* @param {float|float} float
 * @param {long|long} long
+* @param {float|float} float
 */
 setUniformFloatv : function(
 str,
-float,
-long 
+long,
+float 
 )
 {
 },
@@ -10398,13 +10688,13 @@ mat4
 /**
  * @method setUniformVec3v
 * @param {int|String} int
-* @param {vec3_object|vec3_object} vec3
 * @param {long|long} long
+* @param {vec3_object|vec3_object} vec3
 */
 setUniformVec3v : function(
 str,
-vec3,
-long 
+long,
+vec3 
 )
 {
 },
@@ -10625,6 +10915,104 @@ int
  * @constructor
  */
 AtlasNode : function (
+)
+{
+},
+
+};
+
+/**
+ * @class ClippingNode
+ */
+cc.ClippingNode = {
+
+/**
+ * @method hasContent
+ * @return {bool}
+ */
+hasContent : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setInverted
+ * @param {bool} arg0
+ */
+setInverted : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setStencil
+ * @param {cc.Node} arg0
+ */
+setStencil : function (
+node 
+)
+{
+},
+
+/**
+ * @method getAlphaThreshold
+ * @return {float}
+ */
+getAlphaThreshold : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getStencil
+ * @return {cc.Node}
+ */
+getStencil : function (
+)
+{
+    return cc.Node;
+},
+
+/**
+ * @method setAlphaThreshold
+ * @param {float} arg0
+ */
+setAlphaThreshold : function (
+float 
+)
+{
+},
+
+/**
+ * @method isInverted
+ * @return {bool}
+ */
+isInverted : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+* @param {cc.Node} node
+* @return {cc.ClippingNode|cc.ClippingNode}
+*/
+create : function(
+node 
+)
+{
+    return cc.ClippingNode;
+},
+
+/**
+ * @method ClippingNode
+ * @constructor
+ */
+ClippingNode : function (
 )
 {
 },
@@ -10981,408 +11369,6 @@ create : function (
  * @constructor
  */
 DrawNode : function (
-)
-{
-},
-
-};
-
-/**
- * @class LabelAtlas
- */
-cc.LabelAtlas = {
-
-/**
- * @method setString
- * @param {String} arg0
- */
-setString : function (
-str 
-)
-{
-},
-
-/**
- * @method initWithString
-* @param {String|String|String} str
-* @param {String|String|cc.Texture2D} str
-* @param {int|int} int
-* @param {int|int} int
-* @param {int|int} int
-* @return {bool|bool|bool}
-*/
-initWithString : function(
-str,
-texture2d,
-int,
-int,
-int 
-)
-{
-    return false;
-},
-
-/**
- * @method getString
- * @return {String}
- */
-getString : function (
-)
-{
-    return ;
-},
-
-/**
- * @method create
-* @param {String|String} str
-* @param {String|String} str
-* @param {int} int
-* @param {int} int
-* @param {int} int
-* @return {cc.LabelAtlas|cc.LabelAtlas|cc.LabelAtlas}
-*/
-create : function(
-str,
-str,
-int,
-int,
-int 
-)
-{
-    return cc.LabelAtlas;
-},
-
-/**
- * @method LabelAtlas
- * @constructor
- */
-LabelAtlas : function (
-)
-{
-},
-
-};
-
-/**
- * @class LabelTTF
- */
-cc.LabelTTF = {
-
-/**
- * @method enableShadow
- * @param {size_object} arg0
- * @param {float} arg1
- * @param {float} arg2
- * @param {bool} arg3
- */
-enableShadow : function (
-size, 
-float, 
-float, 
-bool 
-)
-{
-},
-
-/**
- * @method setDimensions
- * @param {size_object} arg0
- */
-setDimensions : function (
-size 
-)
-{
-},
-
-/**
- * @method getFontSize
- * @return {float}
- */
-getFontSize : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getString
- * @return {String}
- */
-getString : function (
-)
-{
-    return ;
-},
-
-/**
- * @method setFlippedY
- * @param {bool} arg0
- */
-setFlippedY : function (
-bool 
-)
-{
-},
-
-/**
- * @method setFlippedX
- * @param {bool} arg0
- */
-setFlippedX : function (
-bool 
-)
-{
-},
-
-/**
- * @method setTextDefinition
- * @param {cc.FontDefinition} arg0
- */
-setTextDefinition : function (
-fontdefinition 
-)
-{
-},
-
-/**
- * @method setFontName
- * @param {String} arg0
- */
-setFontName : function (
-str 
-)
-{
-},
-
-/**
- * @method getHorizontalAlignment
- * @return {cc.TextHAlignment}
- */
-getHorizontalAlignment : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method initWithStringAndTextDefinition
- * @param {String} arg0
- * @param {cc.FontDefinition} arg1
- * @return {bool}
- */
-initWithStringAndTextDefinition : function (
-str, 
-fontdefinition 
-)
-{
-    return false;
-},
-
-/**
- * @method setString
- * @param {String} arg0
- */
-setString : function (
-str 
-)
-{
-},
-
-/**
- * @method initWithString
- * @param {String} arg0
- * @param {String} arg1
- * @param {float} arg2
- * @param {size_object} arg3
- * @param {cc.TextHAlignment} arg4
- * @param {cc.TextVAlignment} arg5
- * @return {bool}
- */
-initWithString : function (
-str, 
-str, 
-float, 
-size, 
-texthalignment, 
-textvalignment 
-)
-{
-    return false;
-},
-
-/**
- * @method setFontFillColor
- * @param {color3b_object} arg0
- * @param {bool} arg1
- */
-setFontFillColor : function (
-color3b, 
-bool 
-)
-{
-},
-
-/**
- * @method getBlendFunc
- * @return {cc.BlendFunc}
- */
-getBlendFunc : function (
-)
-{
-    return cc.BlendFunc;
-},
-
-/**
- * @method enableStroke
- * @param {color3b_object} arg0
- * @param {float} arg1
- * @param {bool} arg2
- */
-enableStroke : function (
-color3b, 
-float, 
-bool 
-)
-{
-},
-
-/**
- * @method getDimensions
- * @return {size_object}
- */
-getDimensions : function (
-)
-{
-    return cc.Size;
-},
-
-/**
- * @method setVerticalAlignment
- * @param {cc.TextVAlignment} arg0
- */
-setVerticalAlignment : function (
-textvalignment 
-)
-{
-},
-
-/**
- * @method setFontSize
- * @param {float} arg0
- */
-setFontSize : function (
-float 
-)
-{
-},
-
-/**
- * @method getVerticalAlignment
- * @return {cc.TextVAlignment}
- */
-getVerticalAlignment : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getTextDefinition
- * @return {cc.FontDefinition}
- */
-getTextDefinition : function (
-)
-{
-    return cc.FontDefinition;
-},
-
-/**
- * @method setBlendFunc
- * @param {cc.BlendFunc} arg0
- */
-setBlendFunc : function (
-blendfunc 
-)
-{
-},
-
-/**
- * @method getFontName
- * @return {String}
- */
-getFontName : function (
-)
-{
-    return ;
-},
-
-/**
- * @method setHorizontalAlignment
- * @param {cc.TextHAlignment} arg0
- */
-setHorizontalAlignment : function (
-texthalignment 
-)
-{
-},
-
-/**
- * @method disableShadow
- */
-disableShadow : function (
-)
-{
-},
-
-/**
- * @method disableStroke
- */
-disableStroke : function (
-)
-{
-},
-
-/**
- * @method create
-* @param {String} str
-* @param {String} str
-* @param {float} float
-* @param {size_object} size
-* @param {cc.TextHAlignment} texthalignment
-* @param {cc.TextVAlignment} textvalignment
-* @return {cc.LabelTTF|cc.LabelTTF}
-*/
-create : function(
-str,
-str,
-float,
-size,
-texthalignment,
-textvalignment 
-)
-{
-    return cc.LabelTTF;
-},
-
-/**
- * @method createWithFontDefinition
- * @param {String} arg0
- * @param {cc.FontDefinition} arg1
- * @return {cc.LabelTTF}
- */
-createWithFontDefinition : function (
-str, 
-fontdefinition 
-)
-{
-    return cc.LabelTTF;
-},
-
-/**
- * @method LabelTTF
- * @constructor
- */
-LabelTTF : function (
 )
 {
 },
@@ -12172,6 +12158,82 @@ Label : function (
 };
 
 /**
+ * @class LabelAtlas
+ */
+cc.LabelAtlas = {
+
+/**
+ * @method setString
+ * @param {String} arg0
+ */
+setString : function (
+str 
+)
+{
+},
+
+/**
+ * @method initWithString
+* @param {String|String|String} str
+* @param {String|String|cc.Texture2D} str
+* @param {int|int} int
+* @param {int|int} int
+* @param {int|int} int
+* @return {bool|bool|bool}
+*/
+initWithString : function(
+str,
+texture2d,
+int,
+int,
+int 
+)
+{
+    return false;
+},
+
+/**
+ * @method getString
+ * @return {String}
+ */
+getString : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method create
+* @param {String|String} str
+* @param {String|String} str
+* @param {int} int
+* @param {int} int
+* @param {int} int
+* @return {cc.LabelAtlas|cc.LabelAtlas|cc.LabelAtlas}
+*/
+create : function(
+str,
+str,
+int,
+int,
+int 
+)
+{
+    return cc.LabelAtlas;
+},
+
+/**
+ * @method LabelAtlas
+ * @constructor
+ */
+LabelAtlas : function (
+)
+{
+},
+
+};
+
+/**
  * @class LabelBMFont
  */
 cc.LabelBMFont = {
@@ -12325,6 +12387,332 @@ vec2
  * @constructor
  */
 LabelBMFont : function (
+)
+{
+},
+
+};
+
+/**
+ * @class LabelTTF
+ */
+cc.LabelTTF = {
+
+/**
+ * @method enableShadow
+ * @param {size_object} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {bool} arg3
+ */
+enableShadow : function (
+size, 
+float, 
+float, 
+bool 
+)
+{
+},
+
+/**
+ * @method setDimensions
+ * @param {size_object} arg0
+ */
+setDimensions : function (
+size 
+)
+{
+},
+
+/**
+ * @method getFontSize
+ * @return {float}
+ */
+getFontSize : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getString
+ * @return {String}
+ */
+getString : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method setFlippedY
+ * @param {bool} arg0
+ */
+setFlippedY : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setFlippedX
+ * @param {bool} arg0
+ */
+setFlippedX : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setTextDefinition
+ * @param {cc.FontDefinition} arg0
+ */
+setTextDefinition : function (
+fontdefinition 
+)
+{
+},
+
+/**
+ * @method setFontName
+ * @param {String} arg0
+ */
+setFontName : function (
+str 
+)
+{
+},
+
+/**
+ * @method getHorizontalAlignment
+ * @return {cc.TextHAlignment}
+ */
+getHorizontalAlignment : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method initWithStringAndTextDefinition
+ * @param {String} arg0
+ * @param {cc.FontDefinition} arg1
+ * @return {bool}
+ */
+initWithStringAndTextDefinition : function (
+str, 
+fontdefinition 
+)
+{
+    return false;
+},
+
+/**
+ * @method setString
+ * @param {String} arg0
+ */
+setString : function (
+str 
+)
+{
+},
+
+/**
+ * @method initWithString
+ * @param {String} arg0
+ * @param {String} arg1
+ * @param {float} arg2
+ * @param {size_object} arg3
+ * @param {cc.TextHAlignment} arg4
+ * @param {cc.TextVAlignment} arg5
+ * @return {bool}
+ */
+initWithString : function (
+str, 
+str, 
+float, 
+size, 
+texthalignment, 
+textvalignment 
+)
+{
+    return false;
+},
+
+/**
+ * @method setFontFillColor
+ * @param {color3b_object} arg0
+ * @param {bool} arg1
+ */
+setFontFillColor : function (
+color3b, 
+bool 
+)
+{
+},
+
+/**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
+},
+
+/**
+ * @method enableStroke
+ * @param {color3b_object} arg0
+ * @param {float} arg1
+ * @param {bool} arg2
+ */
+enableStroke : function (
+color3b, 
+float, 
+bool 
+)
+{
+},
+
+/**
+ * @method getDimensions
+ * @return {size_object}
+ */
+getDimensions : function (
+)
+{
+    return cc.Size;
+},
+
+/**
+ * @method setVerticalAlignment
+ * @param {cc.TextVAlignment} arg0
+ */
+setVerticalAlignment : function (
+textvalignment 
+)
+{
+},
+
+/**
+ * @method setFontSize
+ * @param {float} arg0
+ */
+setFontSize : function (
+float 
+)
+{
+},
+
+/**
+ * @method getVerticalAlignment
+ * @return {cc.TextVAlignment}
+ */
+getVerticalAlignment : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getTextDefinition
+ * @return {cc.FontDefinition}
+ */
+getTextDefinition : function (
+)
+{
+    return cc.FontDefinition;
+},
+
+/**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
+)
+{
+},
+
+/**
+ * @method getFontName
+ * @return {String}
+ */
+getFontName : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method setHorizontalAlignment
+ * @param {cc.TextHAlignment} arg0
+ */
+setHorizontalAlignment : function (
+texthalignment 
+)
+{
+},
+
+/**
+ * @method disableShadow
+ */
+disableShadow : function (
+)
+{
+},
+
+/**
+ * @method disableStroke
+ */
+disableStroke : function (
+)
+{
+},
+
+/**
+ * @method create
+* @param {String} str
+* @param {String} str
+* @param {float} float
+* @param {size_object} size
+* @param {cc.TextHAlignment} texthalignment
+* @param {cc.TextVAlignment} textvalignment
+* @return {cc.LabelTTF|cc.LabelTTF}
+*/
+create : function(
+str,
+str,
+float,
+size,
+texthalignment,
+textvalignment 
+)
+{
+    return cc.LabelTTF;
+},
+
+/**
+ * @method createWithFontDefinition
+ * @param {String} arg0
+ * @param {cc.FontDefinition} arg1
+ * @return {cc.LabelTTF}
+ */
+createWithFontDefinition : function (
+str, 
+fontdefinition 
+)
+{
+    return cc.LabelTTF;
+},
+
+/**
+ * @method LabelTTF
+ * @constructor
+ */
+LabelTTF : function (
 )
 {
 },
@@ -12703,1347 +13091,6 @@ int
  * @constructor
  */
 LayerMultiplex : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionEaseScene
- */
-cc.TransitionEaseScene = {
-
-/**
- * @method easeActionWithAction
- * @param {cc.ActionInterval} arg0
- * @return {cc.ActionInterval}
- */
-easeActionWithAction : function (
-actioninterval 
-)
-{
-    return cc.ActionInterval;
-},
-
-};
-
-/**
- * @class TransitionScene
- */
-cc.TransitionScene = {
-
-/**
- * @method getInScene
- * @return {cc.Scene}
- */
-getInScene : function (
-)
-{
-    return cc.Scene;
-},
-
-/**
- * @method finish
- */
-finish : function (
-)
-{
-},
-
-/**
- * @method initWithDuration
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @return {bool}
- */
-initWithDuration : function (
-float, 
-scene 
-)
-{
-    return false;
-},
-
-/**
- * @method getDuration
- * @return {float}
- */
-getDuration : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method hideOutShowIn
- */
-hideOutShowIn : function (
-)
-{
-},
-
-/**
- * @method create
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @return {cc.TransitionScene}
- */
-create : function (
-float, 
-scene 
-)
-{
-    return cc.TransitionScene;
-},
-
-/**
- * @method TransitionScene
- * @constructor
- */
-TransitionScene : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionSceneOriented
- */
-cc.TransitionSceneOriented = {
-
-/**
- * @method initWithDuration
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @param {cc.TransitionScene::Orientation} arg2
- * @return {bool}
- */
-initWithDuration : function (
-float, 
-scene, 
-orientation 
-)
-{
-    return false;
-},
-
-/**
- * @method create
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @param {cc.TransitionScene::Orientation} arg2
- * @return {cc.TransitionSceneOriented}
- */
-create : function (
-float, 
-scene, 
-orientation 
-)
-{
-    return cc.TransitionSceneOriented;
-},
-
-/**
- * @method TransitionSceneOriented
- * @constructor
- */
-TransitionSceneOriented : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionRotoZoom
- */
-cc.TransitionRotoZoom = {
-
-/**
- * @method create
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @return {cc.TransitionRotoZoom}
- */
-create : function (
-float, 
-scene 
-)
-{
-    return cc.TransitionRotoZoom;
-},
-
-/**
- * @method TransitionRotoZoom
- * @constructor
- */
-TransitionRotoZoom : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionJumpZoom
- */
-cc.TransitionJumpZoom = {
-
-/**
- * @method create
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @return {cc.TransitionJumpZoom}
- */
-create : function (
-float, 
-scene 
-)
-{
-    return cc.TransitionJumpZoom;
-},
-
-/**
- * @method TransitionJumpZoom
- * @constructor
- */
-TransitionJumpZoom : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionMoveInL
- */
-cc.TransitionMoveInL = {
-
-/**
- * @method action
- * @return {cc.ActionInterval}
- */
-action : function (
-)
-{
-    return cc.ActionInterval;
-},
-
-/**
- * @method easeActionWithAction
- * @param {cc.ActionInterval} arg0
- * @return {cc.ActionInterval}
- */
-easeActionWithAction : function (
-actioninterval 
-)
-{
-    return cc.ActionInterval;
-},
-
-/**
- * @method create
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @return {cc.TransitionMoveInL}
- */
-create : function (
-float, 
-scene 
-)
-{
-    return cc.TransitionMoveInL;
-},
-
-/**
- * @method TransitionMoveInL
- * @constructor
- */
-TransitionMoveInL : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionMoveInR
- */
-cc.TransitionMoveInR = {
-
-/**
- * @method create
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @return {cc.TransitionMoveInR}
- */
-create : function (
-float, 
-scene 
-)
-{
-    return cc.TransitionMoveInR;
-},
-
-/**
- * @method TransitionMoveInR
- * @constructor
- */
-TransitionMoveInR : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionMoveInT
- */
-cc.TransitionMoveInT = {
-
-/**
- * @method create
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @return {cc.TransitionMoveInT}
- */
-create : function (
-float, 
-scene 
-)
-{
-    return cc.TransitionMoveInT;
-},
-
-/**
- * @method TransitionMoveInT
- * @constructor
- */
-TransitionMoveInT : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionMoveInB
- */
-cc.TransitionMoveInB = {
-
-/**
- * @method create
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @return {cc.TransitionMoveInB}
- */
-create : function (
-float, 
-scene 
-)
-{
-    return cc.TransitionMoveInB;
-},
-
-/**
- * @method TransitionMoveInB
- * @constructor
- */
-TransitionMoveInB : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionSlideInL
- */
-cc.TransitionSlideInL = {
-
-/**
- * @method action
- * @return {cc.ActionInterval}
- */
-action : function (
-)
-{
-    return cc.ActionInterval;
-},
-
-/**
- * @method easeActionWithAction
- * @param {cc.ActionInterval} arg0
- * @return {cc.ActionInterval}
- */
-easeActionWithAction : function (
-actioninterval 
-)
-{
-    return cc.ActionInterval;
-},
-
-/**
- * @method create
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @return {cc.TransitionSlideInL}
- */
-create : function (
-float, 
-scene 
-)
-{
-    return cc.TransitionSlideInL;
-},
-
-/**
- * @method TransitionSlideInL
- * @constructor
- */
-TransitionSlideInL : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionSlideInR
- */
-cc.TransitionSlideInR = {
-
-/**
- * @method create
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @return {cc.TransitionSlideInR}
- */
-create : function (
-float, 
-scene 
-)
-{
-    return cc.TransitionSlideInR;
-},
-
-/**
- * @method TransitionSlideInR
- * @constructor
- */
-TransitionSlideInR : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionSlideInB
- */
-cc.TransitionSlideInB = {
-
-/**
- * @method create
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @return {cc.TransitionSlideInB}
- */
-create : function (
-float, 
-scene 
-)
-{
-    return cc.TransitionSlideInB;
-},
-
-/**
- * @method TransitionSlideInB
- * @constructor
- */
-TransitionSlideInB : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionSlideInT
- */
-cc.TransitionSlideInT = {
-
-/**
- * @method create
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @return {cc.TransitionSlideInT}
- */
-create : function (
-float, 
-scene 
-)
-{
-    return cc.TransitionSlideInT;
-},
-
-/**
- * @method TransitionSlideInT
- * @constructor
- */
-TransitionSlideInT : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionShrinkGrow
- */
-cc.TransitionShrinkGrow = {
-
-/**
- * @method easeActionWithAction
- * @param {cc.ActionInterval} arg0
- * @return {cc.ActionInterval}
- */
-easeActionWithAction : function (
-actioninterval 
-)
-{
-    return cc.ActionInterval;
-},
-
-/**
- * @method create
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @return {cc.TransitionShrinkGrow}
- */
-create : function (
-float, 
-scene 
-)
-{
-    return cc.TransitionShrinkGrow;
-},
-
-/**
- * @method TransitionShrinkGrow
- * @constructor
- */
-TransitionShrinkGrow : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionFlipX
- */
-cc.TransitionFlipX = {
-
-/**
- * @method create
-* @param {float|float} float
-* @param {cc.Scene|cc.Scene} scene
-* @param {cc.TransitionScene::Orientation} orientation
-* @return {cc.TransitionFlipX|cc.TransitionFlipX}
-*/
-create : function(
-float,
-scene,
-orientation 
-)
-{
-    return cc.TransitionFlipX;
-},
-
-/**
- * @method TransitionFlipX
- * @constructor
- */
-TransitionFlipX : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionFlipY
- */
-cc.TransitionFlipY = {
-
-/**
- * @method create
-* @param {float|float} float
-* @param {cc.Scene|cc.Scene} scene
-* @param {cc.TransitionScene::Orientation} orientation
-* @return {cc.TransitionFlipY|cc.TransitionFlipY}
-*/
-create : function(
-float,
-scene,
-orientation 
-)
-{
-    return cc.TransitionFlipY;
-},
-
-/**
- * @method TransitionFlipY
- * @constructor
- */
-TransitionFlipY : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionFlipAngular
- */
-cc.TransitionFlipAngular = {
-
-/**
- * @method create
-* @param {float|float} float
-* @param {cc.Scene|cc.Scene} scene
-* @param {cc.TransitionScene::Orientation} orientation
-* @return {cc.TransitionFlipAngular|cc.TransitionFlipAngular}
-*/
-create : function(
-float,
-scene,
-orientation 
-)
-{
-    return cc.TransitionFlipAngular;
-},
-
-/**
- * @method TransitionFlipAngular
- * @constructor
- */
-TransitionFlipAngular : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionZoomFlipX
- */
-cc.TransitionZoomFlipX = {
-
-/**
- * @method create
-* @param {float|float} float
-* @param {cc.Scene|cc.Scene} scene
-* @param {cc.TransitionScene::Orientation} orientation
-* @return {cc.TransitionZoomFlipX|cc.TransitionZoomFlipX}
-*/
-create : function(
-float,
-scene,
-orientation 
-)
-{
-    return cc.TransitionZoomFlipX;
-},
-
-/**
- * @method TransitionZoomFlipX
- * @constructor
- */
-TransitionZoomFlipX : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionZoomFlipY
- */
-cc.TransitionZoomFlipY = {
-
-/**
- * @method create
-* @param {float|float} float
-* @param {cc.Scene|cc.Scene} scene
-* @param {cc.TransitionScene::Orientation} orientation
-* @return {cc.TransitionZoomFlipY|cc.TransitionZoomFlipY}
-*/
-create : function(
-float,
-scene,
-orientation 
-)
-{
-    return cc.TransitionZoomFlipY;
-},
-
-/**
- * @method TransitionZoomFlipY
- * @constructor
- */
-TransitionZoomFlipY : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionZoomFlipAngular
- */
-cc.TransitionZoomFlipAngular = {
-
-/**
- * @method create
-* @param {float|float} float
-* @param {cc.Scene|cc.Scene} scene
-* @param {cc.TransitionScene::Orientation} orientation
-* @return {cc.TransitionZoomFlipAngular|cc.TransitionZoomFlipAngular}
-*/
-create : function(
-float,
-scene,
-orientation 
-)
-{
-    return cc.TransitionZoomFlipAngular;
-},
-
-/**
- * @method TransitionZoomFlipAngular
- * @constructor
- */
-TransitionZoomFlipAngular : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionFade
- */
-cc.TransitionFade = {
-
-/**
- * @method initWithDuration
-* @param {float|float} float
-* @param {cc.Scene|cc.Scene} scene
-* @param {color3b_object} color3b
-* @return {bool|bool}
-*/
-initWithDuration : function(
-float,
-scene,
-color3b 
-)
-{
-    return false;
-},
-
-/**
- * @method create
-* @param {float|float} float
-* @param {cc.Scene|cc.Scene} scene
-* @param {color3b_object} color3b
-* @return {cc.TransitionFade|cc.TransitionFade}
-*/
-create : function(
-float,
-scene,
-color3b 
-)
-{
-    return cc.TransitionFade;
-},
-
-/**
- * @method TransitionFade
- * @constructor
- */
-TransitionFade : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionCrossFade
- */
-cc.TransitionCrossFade = {
-
-/**
- * @method create
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @return {cc.TransitionCrossFade}
- */
-create : function (
-float, 
-scene 
-)
-{
-    return cc.TransitionCrossFade;
-},
-
-/**
- * @method TransitionCrossFade
- * @constructor
- */
-TransitionCrossFade : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionTurnOffTiles
- */
-cc.TransitionTurnOffTiles = {
-
-/**
- * @method easeActionWithAction
- * @param {cc.ActionInterval} arg0
- * @return {cc.ActionInterval}
- */
-easeActionWithAction : function (
-actioninterval 
-)
-{
-    return cc.ActionInterval;
-},
-
-/**
- * @method create
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @return {cc.TransitionTurnOffTiles}
- */
-create : function (
-float, 
-scene 
-)
-{
-    return cc.TransitionTurnOffTiles;
-},
-
-/**
- * @method TransitionTurnOffTiles
- * @constructor
- */
-TransitionTurnOffTiles : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionSplitCols
- */
-cc.TransitionSplitCols = {
-
-/**
- * @method action
- * @return {cc.ActionInterval}
- */
-action : function (
-)
-{
-    return cc.ActionInterval;
-},
-
-/**
- * @method easeActionWithAction
- * @param {cc.ActionInterval} arg0
- * @return {cc.ActionInterval}
- */
-easeActionWithAction : function (
-actioninterval 
-)
-{
-    return cc.ActionInterval;
-},
-
-/**
- * @method create
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @return {cc.TransitionSplitCols}
- */
-create : function (
-float, 
-scene 
-)
-{
-    return cc.TransitionSplitCols;
-},
-
-/**
- * @method TransitionSplitCols
- * @constructor
- */
-TransitionSplitCols : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionSplitRows
- */
-cc.TransitionSplitRows = {
-
-/**
- * @method create
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @return {cc.TransitionSplitRows}
- */
-create : function (
-float, 
-scene 
-)
-{
-    return cc.TransitionSplitRows;
-},
-
-/**
- * @method TransitionSplitRows
- * @constructor
- */
-TransitionSplitRows : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionFadeTR
- */
-cc.TransitionFadeTR = {
-
-/**
- * @method easeActionWithAction
- * @param {cc.ActionInterval} arg0
- * @return {cc.ActionInterval}
- */
-easeActionWithAction : function (
-actioninterval 
-)
-{
-    return cc.ActionInterval;
-},
-
-/**
- * @method actionWithSize
- * @param {size_object} arg0
- * @return {cc.ActionInterval}
- */
-actionWithSize : function (
-size 
-)
-{
-    return cc.ActionInterval;
-},
-
-/**
- * @method create
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @return {cc.TransitionFadeTR}
- */
-create : function (
-float, 
-scene 
-)
-{
-    return cc.TransitionFadeTR;
-},
-
-/**
- * @method TransitionFadeTR
- * @constructor
- */
-TransitionFadeTR : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionFadeBL
- */
-cc.TransitionFadeBL = {
-
-/**
- * @method create
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @return {cc.TransitionFadeBL}
- */
-create : function (
-float, 
-scene 
-)
-{
-    return cc.TransitionFadeBL;
-},
-
-/**
- * @method TransitionFadeBL
- * @constructor
- */
-TransitionFadeBL : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionFadeUp
- */
-cc.TransitionFadeUp = {
-
-/**
- * @method create
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @return {cc.TransitionFadeUp}
- */
-create : function (
-float, 
-scene 
-)
-{
-    return cc.TransitionFadeUp;
-},
-
-/**
- * @method TransitionFadeUp
- * @constructor
- */
-TransitionFadeUp : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionFadeDown
- */
-cc.TransitionFadeDown = {
-
-/**
- * @method create
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @return {cc.TransitionFadeDown}
- */
-create : function (
-float, 
-scene 
-)
-{
-    return cc.TransitionFadeDown;
-},
-
-/**
- * @method TransitionFadeDown
- * @constructor
- */
-TransitionFadeDown : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionPageTurn
- */
-cc.TransitionPageTurn = {
-
-/**
- * @method actionWithSize
- * @param {size_object} arg0
- * @return {cc.ActionInterval}
- */
-actionWithSize : function (
-size 
-)
-{
-    return cc.ActionInterval;
-},
-
-/**
- * @method initWithDuration
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @param {bool} arg2
- * @return {bool}
- */
-initWithDuration : function (
-float, 
-scene, 
-bool 
-)
-{
-    return false;
-},
-
-/**
- * @method create
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @param {bool} arg2
- * @return {cc.TransitionPageTurn}
- */
-create : function (
-float, 
-scene, 
-bool 
-)
-{
-    return cc.TransitionPageTurn;
-},
-
-/**
- * @method TransitionPageTurn
- * @constructor
- */
-TransitionPageTurn : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionProgress
- */
-cc.TransitionProgress = {
-
-/**
- * @method create
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @return {cc.TransitionProgress}
- */
-create : function (
-float, 
-scene 
-)
-{
-    return cc.TransitionProgress;
-},
-
-/**
- * @method TransitionProgress
- * @constructor
- */
-TransitionProgress : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionProgressRadialCCW
- */
-cc.TransitionProgressRadialCCW = {
-
-/**
- * @method create
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @return {cc.TransitionProgressRadialCCW}
- */
-create : function (
-float, 
-scene 
-)
-{
-    return cc.TransitionProgressRadialCCW;
-},
-
-/**
- * @method TransitionProgressRadialCCW
- * @constructor
- */
-TransitionProgressRadialCCW : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionProgressRadialCW
- */
-cc.TransitionProgressRadialCW = {
-
-/**
- * @method create
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @return {cc.TransitionProgressRadialCW}
- */
-create : function (
-float, 
-scene 
-)
-{
-    return cc.TransitionProgressRadialCW;
-},
-
-/**
- * @method TransitionProgressRadialCW
- * @constructor
- */
-TransitionProgressRadialCW : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionProgressHorizontal
- */
-cc.TransitionProgressHorizontal = {
-
-/**
- * @method create
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @return {cc.TransitionProgressHorizontal}
- */
-create : function (
-float, 
-scene 
-)
-{
-    return cc.TransitionProgressHorizontal;
-},
-
-/**
- * @method TransitionProgressHorizontal
- * @constructor
- */
-TransitionProgressHorizontal : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionProgressVertical
- */
-cc.TransitionProgressVertical = {
-
-/**
- * @method create
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @return {cc.TransitionProgressVertical}
- */
-create : function (
-float, 
-scene 
-)
-{
-    return cc.TransitionProgressVertical;
-},
-
-/**
- * @method TransitionProgressVertical
- * @constructor
- */
-TransitionProgressVertical : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionProgressInOut
- */
-cc.TransitionProgressInOut = {
-
-/**
- * @method create
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @return {cc.TransitionProgressInOut}
- */
-create : function (
-float, 
-scene 
-)
-{
-    return cc.TransitionProgressInOut;
-},
-
-/**
- * @method TransitionProgressInOut
- * @constructor
- */
-TransitionProgressInOut : function (
-)
-{
-},
-
-};
-
-/**
- * @class TransitionProgressOutIn
- */
-cc.TransitionProgressOutIn = {
-
-/**
- * @method create
- * @param {float} arg0
- * @param {cc.Scene} arg1
- * @return {cc.TransitionProgressOutIn}
- */
-create : function (
-float, 
-scene 
-)
-{
-    return cc.TransitionProgressOutIn;
-},
-
-/**
- * @method TransitionProgressOutIn
- * @constructor
- */
-TransitionProgressOutIn : function (
 )
 {
 },
@@ -14727,104 +13774,6 @@ Menu : function (
 };
 
 /**
- * @class ClippingNode
- */
-cc.ClippingNode = {
-
-/**
- * @method hasContent
- * @return {bool}
- */
-hasContent : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setInverted
- * @param {bool} arg0
- */
-setInverted : function (
-bool 
-)
-{
-},
-
-/**
- * @method setStencil
- * @param {cc.Node} arg0
- */
-setStencil : function (
-node 
-)
-{
-},
-
-/**
- * @method getAlphaThreshold
- * @return {float}
- */
-getAlphaThreshold : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getStencil
- * @return {cc.Node}
- */
-getStencil : function (
-)
-{
-    return cc.Node;
-},
-
-/**
- * @method setAlphaThreshold
- * @param {float} arg0
- */
-setAlphaThreshold : function (
-float 
-)
-{
-},
-
-/**
- * @method isInverted
- * @return {bool}
- */
-isInverted : function (
-)
-{
-    return false;
-},
-
-/**
- * @method create
-* @param {cc.Node} node
-* @return {cc.ClippingNode|cc.ClippingNode}
-*/
-create : function(
-node 
-)
-{
-    return cc.ClippingNode;
-},
-
-/**
- * @method ClippingNode
- * @constructor
- */
-ClippingNode : function (
-)
-{
-},
-
-};
-
-/**
  * @class MotionStreak
  */
 cc.MotionStreak = {
@@ -14992,1058 +13941,6 @@ str
  * @constructor
  */
 MotionStreak : function (
-)
-{
-},
-
-};
-
-/**
- * @class ProgressTimer
- */
-cc.ProgressTimer = {
-
-/**
- * @method initWithSprite
- * @param {cc.Sprite} arg0
- * @return {bool}
- */
-initWithSprite : function (
-sprite 
-)
-{
-    return false;
-},
-
-/**
- * @method isReverseDirection
- * @return {bool}
- */
-isReverseDirection : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setBarChangeRate
- * @param {vec2_object} arg0
- */
-setBarChangeRate : function (
-vec2 
-)
-{
-},
-
-/**
- * @method getPercentage
- * @return {float}
- */
-getPercentage : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setSprite
- * @param {cc.Sprite} arg0
- */
-setSprite : function (
-sprite 
-)
-{
-},
-
-/**
- * @method getType
- * @return {cc.ProgressTimer::Type}
- */
-getType : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getSprite
- * @return {cc.Sprite}
- */
-getSprite : function (
-)
-{
-    return cc.Sprite;
-},
-
-/**
- * @method setMidpoint
- * @param {vec2_object} arg0
- */
-setMidpoint : function (
-vec2 
-)
-{
-},
-
-/**
- * @method getBarChangeRate
- * @return {vec2_object}
- */
-getBarChangeRate : function (
-)
-{
-    return cc.Vec2;
-},
-
-/**
- * @method setReverseDirection
-* @param {bool|bool} bool
-*/
-setReverseDirection : function(
-bool 
-)
-{
-},
-
-/**
- * @method getMidpoint
- * @return {vec2_object}
- */
-getMidpoint : function (
-)
-{
-    return cc.Vec2;
-},
-
-/**
- * @method setPercentage
- * @param {float} arg0
- */
-setPercentage : function (
-float 
-)
-{
-},
-
-/**
- * @method setType
- * @param {cc.ProgressTimer::Type} arg0
- */
-setType : function (
-type 
-)
-{
-},
-
-/**
- * @method create
- * @param {cc.Sprite} arg0
- * @return {cc.ProgressTimer}
- */
-create : function (
-sprite 
-)
-{
-    return cc.ProgressTimer;
-},
-
-/**
- * @method ProgressTimer
- * @constructor
- */
-ProgressTimer : function (
-)
-{
-},
-
-};
-
-/**
- * @class Sprite
- */
-cc.Sprite = {
-
-/**
- * @method setSpriteFrame
-* @param {cc.SpriteFrame|String} spriteframe
-*/
-setSpriteFrame : function(
-str 
-)
-{
-},
-
-/**
- * @method setTexture
-* @param {cc.Texture2D|String} texture2d
-*/
-setTexture : function(
-str 
-)
-{
-},
-
-/**
- * @method getTexture
- * @return {cc.Texture2D}
- */
-getTexture : function (
-)
-{
-    return cc.Texture2D;
-},
-
-/**
- * @method setFlippedY
- * @param {bool} arg0
- */
-setFlippedY : function (
-bool 
-)
-{
-},
-
-/**
- * @method setFlippedX
- * @param {bool} arg0
- */
-setFlippedX : function (
-bool 
-)
-{
-},
-
-/**
- * @method setRotationSkewX
- * @param {float} arg0
- */
-setRotationSkewX : function (
-float 
-)
-{
-},
-
-/**
- * @method setRotationSkewY
- * @param {float} arg0
- */
-setRotationSkewY : function (
-float 
-)
-{
-},
-
-/**
- * @method initWithTexture
-* @param {cc.Texture2D|cc.Texture2D|cc.Texture2D} texture2d
-* @param {rect_object|rect_object} rect
-* @param {bool} bool
-* @return {bool|bool|bool}
-*/
-initWithTexture : function(
-texture2d,
-rect,
-bool 
-)
-{
-    return false;
-},
-
-/**
- * @method getBatchNode
- * @return {cc.SpriteBatchNode}
- */
-getBatchNode : function (
-)
-{
-    return cc.SpriteBatchNode;
-},
-
-/**
- * @method getOffsetPosition
- * @return {vec2_object}
- */
-getOffsetPosition : function (
-)
-{
-    return cc.Vec2;
-},
-
-/**
- * @method removeAllChildrenWithCleanup
- * @param {bool} arg0
- */
-removeAllChildrenWithCleanup : function (
-bool 
-)
-{
-},
-
-/**
- * @method setTextureRect
-* @param {rect_object|rect_object} rect
-* @param {bool} bool
-* @param {size_object} size
-*/
-setTextureRect : function(
-rect,
-bool,
-size 
-)
-{
-},
-
-/**
- * @method initWithSpriteFrameName
- * @param {String} arg0
- * @return {bool}
- */
-initWithSpriteFrameName : function (
-str 
-)
-{
-    return false;
-},
-
-/**
- * @method isFrameDisplayed
- * @param {cc.SpriteFrame} arg0
- * @return {bool}
- */
-isFrameDisplayed : function (
-spriteframe 
-)
-{
-    return false;
-},
-
-/**
- * @method getAtlasIndex
- * @return {long}
- */
-getAtlasIndex : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setBatchNode
- * @param {cc.SpriteBatchNode} arg0
- */
-setBatchNode : function (
-spritebatchnode 
-)
-{
-},
-
-/**
- * @method getBlendFunc
- * @return {cc.BlendFunc}
- */
-getBlendFunc : function (
-)
-{
-    return cc.BlendFunc;
-},
-
-/**
- * @method setDisplayFrameWithAnimationName
- * @param {String} arg0
- * @param {long} arg1
- */
-setDisplayFrameWithAnimationName : function (
-str, 
-long 
-)
-{
-},
-
-/**
- * @method setTextureAtlas
- * @param {cc.TextureAtlas} arg0
- */
-setTextureAtlas : function (
-textureatlas 
-)
-{
-},
-
-/**
- * @method getSpriteFrame
- * @return {cc.SpriteFrame}
- */
-getSpriteFrame : function (
-)
-{
-    return cc.SpriteFrame;
-},
-
-/**
- * @method isDirty
- * @return {bool}
- */
-isDirty : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setAtlasIndex
- * @param {long} arg0
- */
-setAtlasIndex : function (
-long 
-)
-{
-},
-
-/**
- * @method setDirty
- * @param {bool} arg0
- */
-setDirty : function (
-bool 
-)
-{
-},
-
-/**
- * @method isTextureRectRotated
- * @return {bool}
- */
-isTextureRectRotated : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getTextureRect
- * @return {rect_object}
- */
-getTextureRect : function (
-)
-{
-    return cc.Rect;
-},
-
-/**
- * @method initWithFile
-* @param {String|String} str
-* @param {rect_object} rect
-* @return {bool|bool}
-*/
-initWithFile : function(
-str,
-rect 
-)
-{
-    return false;
-},
-
-/**
- * @method setBlendFunc
- * @param {cc.BlendFunc} arg0
- */
-setBlendFunc : function (
-blendfunc 
-)
-{
-},
-
-/**
- * @method getTextureAtlas
- * @return {cc.TextureAtlas}
- */
-getTextureAtlas : function (
-)
-{
-    return cc.TextureAtlas;
-},
-
-/**
- * @method initWithSpriteFrame
- * @param {cc.SpriteFrame} arg0
- * @return {bool}
- */
-initWithSpriteFrame : function (
-spriteframe 
-)
-{
-    return false;
-},
-
-/**
- * @method isFlippedX
- * @return {bool}
- */
-isFlippedX : function (
-)
-{
-    return false;
-},
-
-/**
- * @method isFlippedY
- * @return {bool}
- */
-isFlippedY : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setVertexRect
- * @param {rect_object} arg0
- */
-setVertexRect : function (
-rect 
-)
-{
-},
-
-/**
- * @method create
-* @param {String|String} str
-* @param {rect_object} rect
-* @return {cc.Sprite|cc.Sprite|cc.Sprite}
-*/
-create : function(
-str,
-rect 
-)
-{
-    return cc.Sprite;
-},
-
-/**
- * @method createWithTexture
-* @param {cc.Texture2D|cc.Texture2D} texture2d
-* @param {rect_object} rect
-* @param {bool} bool
-* @return {cc.Sprite|cc.Sprite}
-*/
-createWithTexture : function(
-texture2d,
-rect,
-bool 
-)
-{
-    return cc.Sprite;
-},
-
-/**
- * @method createWithSpriteFrameName
- * @param {String} arg0
- * @return {cc.Sprite}
- */
-createWithSpriteFrameName : function (
-str 
-)
-{
-    return cc.Sprite;
-},
-
-/**
- * @method createWithSpriteFrame
- * @param {cc.SpriteFrame} arg0
- * @return {cc.Sprite}
- */
-createWithSpriteFrame : function (
-spriteframe 
-)
-{
-    return cc.Sprite;
-},
-
-/**
- * @method Sprite
- * @constructor
- */
-Sprite : function (
-)
-{
-},
-
-};
-
-/**
- * @class Image
- */
-cc.Image = {
-
-/**
- * @method hasPremultipliedAlpha
- * @return {bool}
- */
-hasPremultipliedAlpha : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getDataLen
- * @return {long}
- */
-getDataLen : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method saveToFile
- * @param {String} arg0
- * @param {bool} arg1
- * @return {bool}
- */
-saveToFile : function (
-str, 
-bool 
-)
-{
-    return false;
-},
-
-/**
- * @method hasAlpha
- * @return {bool}
- */
-hasAlpha : function (
-)
-{
-    return false;
-},
-
-/**
- * @method isCompressed
- * @return {bool}
- */
-isCompressed : function (
-)
-{
-    return false;
-},
-
-/**
- * @method getHeight
- * @return {int}
- */
-getHeight : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method initWithImageFile
- * @param {String} arg0
- * @return {bool}
- */
-initWithImageFile : function (
-str 
-)
-{
-    return false;
-},
-
-/**
- * @method getWidth
- * @return {int}
- */
-getWidth : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getBitPerPixel
- * @return {int}
- */
-getBitPerPixel : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getFileType
- * @return {cc.Image::Format}
- */
-getFileType : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getNumberOfMipmaps
- * @return {int}
- */
-getNumberOfMipmaps : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getRenderFormat
- * @return {cc.Texture2D::PixelFormat}
- */
-getRenderFormat : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getData
- * @return {unsigned char}
- */
-getData : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getMipmaps
- * @return {cc._MipmapInfo}
- */
-getMipmaps : function (
-)
-{
-    return cc._MipmapInfo;
-},
-
-/**
- * @method initWithRawData
- * @param {unsigned char} arg0
- * @param {long} arg1
- * @param {int} arg2
- * @param {int} arg3
- * @param {int} arg4
- * @param {bool} arg5
- * @return {bool}
- */
-initWithRawData : function (
-char, 
-long, 
-int, 
-int, 
-int, 
-bool 
-)
-{
-    return false;
-},
-
-/**
- * @method setPVRImagesHavePremultipliedAlpha
- * @param {bool} arg0
- */
-setPVRImagesHavePremultipliedAlpha : function (
-bool 
-)
-{
-},
-
-/**
- * @method Image
- * @constructor
- */
-Image : function (
-)
-{
-},
-
-};
-
-/**
- * @class RenderTexture
- */
-cc.RenderTexture = {
-
-/**
- * @method setVirtualViewport
- * @param {vec2_object} arg0
- * @param {rect_object} arg1
- * @param {rect_object} arg2
- */
-setVirtualViewport : function (
-vec2, 
-rect, 
-rect 
-)
-{
-},
-
-/**
- * @method clearStencil
- * @param {int} arg0
- */
-clearStencil : function (
-int 
-)
-{
-},
-
-/**
- * @method getClearDepth
- * @return {float}
- */
-getClearDepth : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getClearStencil
- * @return {int}
- */
-getClearStencil : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method end
- */
-end : function (
-)
-{
-},
-
-/**
- * @method setClearStencil
- * @param {int} arg0
- */
-setClearStencil : function (
-int 
-)
-{
-},
-
-/**
- * @method setSprite
- * @param {cc.Sprite} arg0
- */
-setSprite : function (
-sprite 
-)
-{
-},
-
-/**
- * @method getSprite
- * @return {cc.Sprite}
- */
-getSprite : function (
-)
-{
-    return cc.Sprite;
-},
-
-/**
- * @method isAutoDraw
- * @return {bool}
- */
-isAutoDraw : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setKeepMatrix
- * @param {bool} arg0
- */
-setKeepMatrix : function (
-bool 
-)
-{
-},
-
-/**
- * @method setClearFlags
- * @param {unsigned int} arg0
- */
-setClearFlags : function (
-int 
-)
-{
-},
-
-/**
- * @method begin
- */
-begin : function (
-)
-{
-},
-
-/**
- * @method setAutoDraw
- * @param {bool} arg0
- */
-setAutoDraw : function (
-bool 
-)
-{
-},
-
-/**
- * @method setClearColor
- * @param {color4f_object} arg0
- */
-setClearColor : function (
-color4f 
-)
-{
-},
-
-/**
- * @method endToLua
- */
-endToLua : function (
-)
-{
-},
-
-/**
- * @method beginWithClear
-* @param {float|float|float} float
-* @param {float|float|float} float
-* @param {float|float|float} float
-* @param {float|float|float} float
-* @param {float|float} float
-* @param {int} int
-*/
-beginWithClear : function(
-float,
-float,
-float,
-float,
-float,
-int 
-)
-{
-},
-
-/**
- * @method clearDepth
- * @param {float} arg0
- */
-clearDepth : function (
-float 
-)
-{
-},
-
-/**
- * @method getClearColor
- * @return {color4f_object}
- */
-getClearColor : function (
-)
-{
-    return cc.Color4F;
-},
-
-/**
- * @method clear
- * @param {float} arg0
- * @param {float} arg1
- * @param {float} arg2
- * @param {float} arg3
- */
-clear : function (
-float, 
-float, 
-float, 
-float 
-)
-{
-},
-
-/**
- * @method getClearFlags
- * @return {unsigned int}
- */
-getClearFlags : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method newImage
- * @return {cc.Image}
- */
-newImage : function (
-)
-{
-    return cc.Image;
-},
-
-/**
- * @method setClearDepth
- * @param {float} arg0
- */
-setClearDepth : function (
-float 
-)
-{
-},
-
-/**
- * @method initWithWidthAndHeight
-* @param {int|int} int
-* @param {int|int} int
-* @param {cc.Texture2D::PixelFormat|cc.Texture2D::PixelFormat} pixelformat
-* @param {unsigned int} int
-* @return {bool|bool}
-*/
-initWithWidthAndHeight : function(
-int,
-int,
-pixelformat,
-int 
-)
-{
-    return false;
-},
-
-/**
- * @method create
-* @param {int|int|int} int
-* @param {int|int|int} int
-* @param {cc.Texture2D::PixelFormat|cc.Texture2D::PixelFormat} pixelformat
-* @param {unsigned int} int
-* @return {cc.RenderTexture|cc.RenderTexture|cc.RenderTexture}
-*/
-create : function(
-int,
-int,
-pixelformat,
-int 
-)
-{
-    return cc.RenderTexture;
-},
-
-/**
- * @method RenderTexture
- * @constructor
- */
-RenderTexture : function (
 )
 {
 },
@@ -18015,6 +15912,2803 @@ ParticleRain : function (
 };
 
 /**
+ * @class ProgressTimer
+ */
+cc.ProgressTimer = {
+
+/**
+ * @method initWithSprite
+ * @param {cc.Sprite} arg0
+ * @return {bool}
+ */
+initWithSprite : function (
+sprite 
+)
+{
+    return false;
+},
+
+/**
+ * @method isReverseDirection
+ * @return {bool}
+ */
+isReverseDirection : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setBarChangeRate
+ * @param {vec2_object} arg0
+ */
+setBarChangeRate : function (
+vec2 
+)
+{
+},
+
+/**
+ * @method getPercentage
+ * @return {float}
+ */
+getPercentage : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setSprite
+ * @param {cc.Sprite} arg0
+ */
+setSprite : function (
+sprite 
+)
+{
+},
+
+/**
+ * @method getType
+ * @return {cc.ProgressTimer::Type}
+ */
+getType : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getSprite
+ * @return {cc.Sprite}
+ */
+getSprite : function (
+)
+{
+    return cc.Sprite;
+},
+
+/**
+ * @method setMidpoint
+ * @param {vec2_object} arg0
+ */
+setMidpoint : function (
+vec2 
+)
+{
+},
+
+/**
+ * @method getBarChangeRate
+ * @return {vec2_object}
+ */
+getBarChangeRate : function (
+)
+{
+    return cc.Vec2;
+},
+
+/**
+ * @method setReverseDirection
+* @param {bool|bool} bool
+*/
+setReverseDirection : function(
+bool 
+)
+{
+},
+
+/**
+ * @method getMidpoint
+ * @return {vec2_object}
+ */
+getMidpoint : function (
+)
+{
+    return cc.Vec2;
+},
+
+/**
+ * @method setPercentage
+ * @param {float} arg0
+ */
+setPercentage : function (
+float 
+)
+{
+},
+
+/**
+ * @method setType
+ * @param {cc.ProgressTimer::Type} arg0
+ */
+setType : function (
+type 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {cc.Sprite} arg0
+ * @return {cc.ProgressTimer}
+ */
+create : function (
+sprite 
+)
+{
+    return cc.ProgressTimer;
+},
+
+/**
+ * @method ProgressTimer
+ * @constructor
+ */
+ProgressTimer : function (
+)
+{
+},
+
+};
+
+/**
+ * @class ProtectedNode
+ */
+cc.ProtectedNode = {
+
+/**
+ * @method addProtectedChild
+* @param {cc.Node|cc.Node|cc.Node} node
+* @param {int|int} int
+* @param {int} int
+*/
+addProtectedChild : function(
+node,
+int,
+int 
+)
+{
+},
+
+/**
+ * @method disableCascadeColor
+ */
+disableCascadeColor : function (
+)
+{
+},
+
+/**
+ * @method removeProtectedChildByTag
+ * @param {int} arg0
+ * @param {bool} arg1
+ */
+removeProtectedChildByTag : function (
+int, 
+bool 
+)
+{
+},
+
+/**
+ * @method reorderProtectedChild
+ * @param {cc.Node} arg0
+ * @param {int} arg1
+ */
+reorderProtectedChild : function (
+node, 
+int 
+)
+{
+},
+
+/**
+ * @method removeAllProtectedChildrenWithCleanup
+ * @param {bool} arg0
+ */
+removeAllProtectedChildrenWithCleanup : function (
+bool 
+)
+{
+},
+
+/**
+ * @method disableCascadeOpacity
+ */
+disableCascadeOpacity : function (
+)
+{
+},
+
+/**
+ * @method sortAllProtectedChildren
+ */
+sortAllProtectedChildren : function (
+)
+{
+},
+
+/**
+ * @method getProtectedChildByTag
+ * @param {int} arg0
+ * @return {cc.Node}
+ */
+getProtectedChildByTag : function (
+int 
+)
+{
+    return cc.Node;
+},
+
+/**
+ * @method removeProtectedChild
+ * @param {cc.Node} arg0
+ * @param {bool} arg1
+ */
+removeProtectedChild : function (
+node, 
+bool 
+)
+{
+},
+
+/**
+ * @method removeAllProtectedChildren
+ */
+removeAllProtectedChildren : function (
+)
+{
+},
+
+/**
+ * @method create
+ * @return {cc.ProtectedNode}
+ */
+create : function (
+)
+{
+    return cc.ProtectedNode;
+},
+
+/**
+ * @method ProtectedNode
+ * @constructor
+ */
+ProtectedNode : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Sprite
+ */
+cc.Sprite = {
+
+/**
+ * @method setSpriteFrame
+* @param {cc.SpriteFrame|String} spriteframe
+*/
+setSpriteFrame : function(
+str 
+)
+{
+},
+
+/**
+ * @method setTexture
+* @param {cc.Texture2D|String} texture2d
+*/
+setTexture : function(
+str 
+)
+{
+},
+
+/**
+ * @method getTexture
+ * @return {cc.Texture2D}
+ */
+getTexture : function (
+)
+{
+    return cc.Texture2D;
+},
+
+/**
+ * @method setFlippedY
+ * @param {bool} arg0
+ */
+setFlippedY : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setFlippedX
+ * @param {bool} arg0
+ */
+setFlippedX : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setRotationSkewX
+ * @param {float} arg0
+ */
+setRotationSkewX : function (
+float 
+)
+{
+},
+
+/**
+ * @method setRotationSkewY
+ * @param {float} arg0
+ */
+setRotationSkewY : function (
+float 
+)
+{
+},
+
+/**
+ * @method initWithTexture
+* @param {cc.Texture2D|cc.Texture2D|cc.Texture2D} texture2d
+* @param {rect_object|rect_object} rect
+* @param {bool} bool
+* @return {bool|bool|bool}
+*/
+initWithTexture : function(
+texture2d,
+rect,
+bool 
+)
+{
+    return false;
+},
+
+/**
+ * @method getBatchNode
+ * @return {cc.SpriteBatchNode}
+ */
+getBatchNode : function (
+)
+{
+    return cc.SpriteBatchNode;
+},
+
+/**
+ * @method getOffsetPosition
+ * @return {vec2_object}
+ */
+getOffsetPosition : function (
+)
+{
+    return cc.Vec2;
+},
+
+/**
+ * @method removeAllChildrenWithCleanup
+ * @param {bool} arg0
+ */
+removeAllChildrenWithCleanup : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setTextureRect
+* @param {rect_object|rect_object} rect
+* @param {bool} bool
+* @param {size_object} size
+*/
+setTextureRect : function(
+rect,
+bool,
+size 
+)
+{
+},
+
+/**
+ * @method initWithSpriteFrameName
+ * @param {String} arg0
+ * @return {bool}
+ */
+initWithSpriteFrameName : function (
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method isFrameDisplayed
+ * @param {cc.SpriteFrame} arg0
+ * @return {bool}
+ */
+isFrameDisplayed : function (
+spriteframe 
+)
+{
+    return false;
+},
+
+/**
+ * @method getAtlasIndex
+ * @return {long}
+ */
+getAtlasIndex : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setBatchNode
+ * @param {cc.SpriteBatchNode} arg0
+ */
+setBatchNode : function (
+spritebatchnode 
+)
+{
+},
+
+/**
+ * @method getBlendFunc
+ * @return {cc.BlendFunc}
+ */
+getBlendFunc : function (
+)
+{
+    return cc.BlendFunc;
+},
+
+/**
+ * @method setDisplayFrameWithAnimationName
+ * @param {String} arg0
+ * @param {long} arg1
+ */
+setDisplayFrameWithAnimationName : function (
+str, 
+long 
+)
+{
+},
+
+/**
+ * @method setTextureAtlas
+ * @param {cc.TextureAtlas} arg0
+ */
+setTextureAtlas : function (
+textureatlas 
+)
+{
+},
+
+/**
+ * @method getSpriteFrame
+ * @return {cc.SpriteFrame}
+ */
+getSpriteFrame : function (
+)
+{
+    return cc.SpriteFrame;
+},
+
+/**
+ * @method isDirty
+ * @return {bool}
+ */
+isDirty : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setAtlasIndex
+ * @param {long} arg0
+ */
+setAtlasIndex : function (
+long 
+)
+{
+},
+
+/**
+ * @method setDirty
+ * @param {bool} arg0
+ */
+setDirty : function (
+bool 
+)
+{
+},
+
+/**
+ * @method isTextureRectRotated
+ * @return {bool}
+ */
+isTextureRectRotated : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getTextureRect
+ * @return {rect_object}
+ */
+getTextureRect : function (
+)
+{
+    return cc.Rect;
+},
+
+/**
+ * @method initWithFile
+* @param {String|String} str
+* @param {rect_object} rect
+* @return {bool|bool}
+*/
+initWithFile : function(
+str,
+rect 
+)
+{
+    return false;
+},
+
+/**
+ * @method setBlendFunc
+ * @param {cc.BlendFunc} arg0
+ */
+setBlendFunc : function (
+blendfunc 
+)
+{
+},
+
+/**
+ * @method getTextureAtlas
+ * @return {cc.TextureAtlas}
+ */
+getTextureAtlas : function (
+)
+{
+    return cc.TextureAtlas;
+},
+
+/**
+ * @method initWithSpriteFrame
+ * @param {cc.SpriteFrame} arg0
+ * @return {bool}
+ */
+initWithSpriteFrame : function (
+spriteframe 
+)
+{
+    return false;
+},
+
+/**
+ * @method isFlippedX
+ * @return {bool}
+ */
+isFlippedX : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method isFlippedY
+ * @return {bool}
+ */
+isFlippedY : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setVertexRect
+ * @param {rect_object} arg0
+ */
+setVertexRect : function (
+rect 
+)
+{
+},
+
+/**
+ * @method create
+* @param {String|String} str
+* @param {rect_object} rect
+* @return {cc.Sprite|cc.Sprite|cc.Sprite}
+*/
+create : function(
+str,
+rect 
+)
+{
+    return cc.Sprite;
+},
+
+/**
+ * @method createWithTexture
+* @param {cc.Texture2D|cc.Texture2D} texture2d
+* @param {rect_object} rect
+* @param {bool} bool
+* @return {cc.Sprite|cc.Sprite}
+*/
+createWithTexture : function(
+texture2d,
+rect,
+bool 
+)
+{
+    return cc.Sprite;
+},
+
+/**
+ * @method createWithSpriteFrameName
+ * @param {String} arg0
+ * @return {cc.Sprite}
+ */
+createWithSpriteFrameName : function (
+str 
+)
+{
+    return cc.Sprite;
+},
+
+/**
+ * @method createWithSpriteFrame
+ * @param {cc.SpriteFrame} arg0
+ * @return {cc.Sprite}
+ */
+createWithSpriteFrame : function (
+spriteframe 
+)
+{
+    return cc.Sprite;
+},
+
+/**
+ * @method Sprite
+ * @constructor
+ */
+Sprite : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Image
+ */
+cc.Image = {
+
+/**
+ * @method hasPremultipliedAlpha
+ * @return {bool}
+ */
+hasPremultipliedAlpha : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getDataLen
+ * @return {long}
+ */
+getDataLen : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method saveToFile
+ * @param {String} arg0
+ * @param {bool} arg1
+ * @return {bool}
+ */
+saveToFile : function (
+str, 
+bool 
+)
+{
+    return false;
+},
+
+/**
+ * @method hasAlpha
+ * @return {bool}
+ */
+hasAlpha : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method isCompressed
+ * @return {bool}
+ */
+isCompressed : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method getHeight
+ * @return {int}
+ */
+getHeight : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method initWithImageFile
+ * @param {String} arg0
+ * @return {bool}
+ */
+initWithImageFile : function (
+str 
+)
+{
+    return false;
+},
+
+/**
+ * @method getWidth
+ * @return {int}
+ */
+getWidth : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getBitPerPixel
+ * @return {int}
+ */
+getBitPerPixel : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getFileType
+ * @return {cc.Image::Format}
+ */
+getFileType : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getNumberOfMipmaps
+ * @return {int}
+ */
+getNumberOfMipmaps : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getRenderFormat
+ * @return {cc.Texture2D::PixelFormat}
+ */
+getRenderFormat : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getData
+ * @return {unsigned char}
+ */
+getData : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getMipmaps
+ * @return {cc._MipmapInfo}
+ */
+getMipmaps : function (
+)
+{
+    return cc._MipmapInfo;
+},
+
+/**
+ * @method initWithRawData
+ * @param {unsigned char} arg0
+ * @param {long} arg1
+ * @param {int} arg2
+ * @param {int} arg3
+ * @param {int} arg4
+ * @param {bool} arg5
+ * @return {bool}
+ */
+initWithRawData : function (
+char, 
+long, 
+int, 
+int, 
+int, 
+bool 
+)
+{
+    return false;
+},
+
+/**
+ * @method setPVRImagesHavePremultipliedAlpha
+ * @param {bool} arg0
+ */
+setPVRImagesHavePremultipliedAlpha : function (
+bool 
+)
+{
+},
+
+/**
+ * @method Image
+ * @constructor
+ */
+Image : function (
+)
+{
+},
+
+};
+
+/**
+ * @class RenderTexture
+ */
+cc.RenderTexture = {
+
+/**
+ * @method setVirtualViewport
+ * @param {vec2_object} arg0
+ * @param {rect_object} arg1
+ * @param {rect_object} arg2
+ */
+setVirtualViewport : function (
+vec2, 
+rect, 
+rect 
+)
+{
+},
+
+/**
+ * @method clearStencil
+ * @param {int} arg0
+ */
+clearStencil : function (
+int 
+)
+{
+},
+
+/**
+ * @method getClearDepth
+ * @return {float}
+ */
+getClearDepth : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getClearStencil
+ * @return {int}
+ */
+getClearStencil : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method end
+ */
+end : function (
+)
+{
+},
+
+/**
+ * @method setClearStencil
+ * @param {int} arg0
+ */
+setClearStencil : function (
+int 
+)
+{
+},
+
+/**
+ * @method setSprite
+ * @param {cc.Sprite} arg0
+ */
+setSprite : function (
+sprite 
+)
+{
+},
+
+/**
+ * @method getSprite
+ * @return {cc.Sprite}
+ */
+getSprite : function (
+)
+{
+    return cc.Sprite;
+},
+
+/**
+ * @method isAutoDraw
+ * @return {bool}
+ */
+isAutoDraw : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setKeepMatrix
+ * @param {bool} arg0
+ */
+setKeepMatrix : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setClearFlags
+ * @param {unsigned int} arg0
+ */
+setClearFlags : function (
+int 
+)
+{
+},
+
+/**
+ * @method begin
+ */
+begin : function (
+)
+{
+},
+
+/**
+ * @method setAutoDraw
+ * @param {bool} arg0
+ */
+setAutoDraw : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setClearColor
+ * @param {color4f_object} arg0
+ */
+setClearColor : function (
+color4f 
+)
+{
+},
+
+/**
+ * @method endToLua
+ */
+endToLua : function (
+)
+{
+},
+
+/**
+ * @method beginWithClear
+* @param {float|float|float} float
+* @param {float|float|float} float
+* @param {float|float|float} float
+* @param {float|float|float} float
+* @param {float|float} float
+* @param {int} int
+*/
+beginWithClear : function(
+float,
+float,
+float,
+float,
+float,
+int 
+)
+{
+},
+
+/**
+ * @method clearDepth
+ * @param {float} arg0
+ */
+clearDepth : function (
+float 
+)
+{
+},
+
+/**
+ * @method getClearColor
+ * @return {color4f_object}
+ */
+getClearColor : function (
+)
+{
+    return cc.Color4F;
+},
+
+/**
+ * @method clear
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {float} arg3
+ */
+clear : function (
+float, 
+float, 
+float, 
+float 
+)
+{
+},
+
+/**
+ * @method getClearFlags
+ * @return {unsigned int}
+ */
+getClearFlags : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method newImage
+ * @return {cc.Image}
+ */
+newImage : function (
+)
+{
+    return cc.Image;
+},
+
+/**
+ * @method setClearDepth
+ * @param {float} arg0
+ */
+setClearDepth : function (
+float 
+)
+{
+},
+
+/**
+ * @method initWithWidthAndHeight
+* @param {int|int} int
+* @param {int|int} int
+* @param {cc.Texture2D::PixelFormat|cc.Texture2D::PixelFormat} pixelformat
+* @param {unsigned int} int
+* @return {bool|bool}
+*/
+initWithWidthAndHeight : function(
+int,
+int,
+pixelformat,
+int 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+* @param {int|int|int} int
+* @param {int|int|int} int
+* @param {cc.Texture2D::PixelFormat|cc.Texture2D::PixelFormat} pixelformat
+* @param {unsigned int} int
+* @return {cc.RenderTexture|cc.RenderTexture|cc.RenderTexture}
+*/
+create : function(
+int,
+int,
+pixelformat,
+int 
+)
+{
+    return cc.RenderTexture;
+},
+
+/**
+ * @method RenderTexture
+ * @constructor
+ */
+RenderTexture : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionEaseScene
+ */
+cc.TransitionEaseScene = {
+
+/**
+ * @method easeActionWithAction
+ * @param {cc.ActionInterval} arg0
+ * @return {cc.ActionInterval}
+ */
+easeActionWithAction : function (
+actioninterval 
+)
+{
+    return cc.ActionInterval;
+},
+
+};
+
+/**
+ * @class TransitionScene
+ */
+cc.TransitionScene = {
+
+/**
+ * @method getInScene
+ * @return {cc.Scene}
+ */
+getInScene : function (
+)
+{
+    return cc.Scene;
+},
+
+/**
+ * @method finish
+ */
+finish : function (
+)
+{
+},
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+scene 
+)
+{
+    return false;
+},
+
+/**
+ * @method getDuration
+ * @return {float}
+ */
+getDuration : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method hideOutShowIn
+ */
+hideOutShowIn : function (
+)
+{
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @return {cc.TransitionScene}
+ */
+create : function (
+float, 
+scene 
+)
+{
+    return cc.TransitionScene;
+},
+
+/**
+ * @method TransitionScene
+ * @constructor
+ */
+TransitionScene : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionSceneOriented
+ */
+cc.TransitionSceneOriented = {
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @param {cc.TransitionScene::Orientation} arg2
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+scene, 
+orientation 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @param {cc.TransitionScene::Orientation} arg2
+ * @return {cc.TransitionSceneOriented}
+ */
+create : function (
+float, 
+scene, 
+orientation 
+)
+{
+    return cc.TransitionSceneOriented;
+},
+
+/**
+ * @method TransitionSceneOriented
+ * @constructor
+ */
+TransitionSceneOriented : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionRotoZoom
+ */
+cc.TransitionRotoZoom = {
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @return {cc.TransitionRotoZoom}
+ */
+create : function (
+float, 
+scene 
+)
+{
+    return cc.TransitionRotoZoom;
+},
+
+/**
+ * @method TransitionRotoZoom
+ * @constructor
+ */
+TransitionRotoZoom : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionJumpZoom
+ */
+cc.TransitionJumpZoom = {
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @return {cc.TransitionJumpZoom}
+ */
+create : function (
+float, 
+scene 
+)
+{
+    return cc.TransitionJumpZoom;
+},
+
+/**
+ * @method TransitionJumpZoom
+ * @constructor
+ */
+TransitionJumpZoom : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionMoveInL
+ */
+cc.TransitionMoveInL = {
+
+/**
+ * @method action
+ * @return {cc.ActionInterval}
+ */
+action : function (
+)
+{
+    return cc.ActionInterval;
+},
+
+/**
+ * @method easeActionWithAction
+ * @param {cc.ActionInterval} arg0
+ * @return {cc.ActionInterval}
+ */
+easeActionWithAction : function (
+actioninterval 
+)
+{
+    return cc.ActionInterval;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @return {cc.TransitionMoveInL}
+ */
+create : function (
+float, 
+scene 
+)
+{
+    return cc.TransitionMoveInL;
+},
+
+/**
+ * @method TransitionMoveInL
+ * @constructor
+ */
+TransitionMoveInL : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionMoveInR
+ */
+cc.TransitionMoveInR = {
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @return {cc.TransitionMoveInR}
+ */
+create : function (
+float, 
+scene 
+)
+{
+    return cc.TransitionMoveInR;
+},
+
+/**
+ * @method TransitionMoveInR
+ * @constructor
+ */
+TransitionMoveInR : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionMoveInT
+ */
+cc.TransitionMoveInT = {
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @return {cc.TransitionMoveInT}
+ */
+create : function (
+float, 
+scene 
+)
+{
+    return cc.TransitionMoveInT;
+},
+
+/**
+ * @method TransitionMoveInT
+ * @constructor
+ */
+TransitionMoveInT : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionMoveInB
+ */
+cc.TransitionMoveInB = {
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @return {cc.TransitionMoveInB}
+ */
+create : function (
+float, 
+scene 
+)
+{
+    return cc.TransitionMoveInB;
+},
+
+/**
+ * @method TransitionMoveInB
+ * @constructor
+ */
+TransitionMoveInB : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionSlideInL
+ */
+cc.TransitionSlideInL = {
+
+/**
+ * @method action
+ * @return {cc.ActionInterval}
+ */
+action : function (
+)
+{
+    return cc.ActionInterval;
+},
+
+/**
+ * @method easeActionWithAction
+ * @param {cc.ActionInterval} arg0
+ * @return {cc.ActionInterval}
+ */
+easeActionWithAction : function (
+actioninterval 
+)
+{
+    return cc.ActionInterval;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @return {cc.TransitionSlideInL}
+ */
+create : function (
+float, 
+scene 
+)
+{
+    return cc.TransitionSlideInL;
+},
+
+/**
+ * @method TransitionSlideInL
+ * @constructor
+ */
+TransitionSlideInL : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionSlideInR
+ */
+cc.TransitionSlideInR = {
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @return {cc.TransitionSlideInR}
+ */
+create : function (
+float, 
+scene 
+)
+{
+    return cc.TransitionSlideInR;
+},
+
+/**
+ * @method TransitionSlideInR
+ * @constructor
+ */
+TransitionSlideInR : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionSlideInB
+ */
+cc.TransitionSlideInB = {
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @return {cc.TransitionSlideInB}
+ */
+create : function (
+float, 
+scene 
+)
+{
+    return cc.TransitionSlideInB;
+},
+
+/**
+ * @method TransitionSlideInB
+ * @constructor
+ */
+TransitionSlideInB : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionSlideInT
+ */
+cc.TransitionSlideInT = {
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @return {cc.TransitionSlideInT}
+ */
+create : function (
+float, 
+scene 
+)
+{
+    return cc.TransitionSlideInT;
+},
+
+/**
+ * @method TransitionSlideInT
+ * @constructor
+ */
+TransitionSlideInT : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionShrinkGrow
+ */
+cc.TransitionShrinkGrow = {
+
+/**
+ * @method easeActionWithAction
+ * @param {cc.ActionInterval} arg0
+ * @return {cc.ActionInterval}
+ */
+easeActionWithAction : function (
+actioninterval 
+)
+{
+    return cc.ActionInterval;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @return {cc.TransitionShrinkGrow}
+ */
+create : function (
+float, 
+scene 
+)
+{
+    return cc.TransitionShrinkGrow;
+},
+
+/**
+ * @method TransitionShrinkGrow
+ * @constructor
+ */
+TransitionShrinkGrow : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionFlipX
+ */
+cc.TransitionFlipX = {
+
+/**
+ * @method create
+* @param {float|float} float
+* @param {cc.Scene|cc.Scene} scene
+* @param {cc.TransitionScene::Orientation} orientation
+* @return {cc.TransitionFlipX|cc.TransitionFlipX}
+*/
+create : function(
+float,
+scene,
+orientation 
+)
+{
+    return cc.TransitionFlipX;
+},
+
+/**
+ * @method TransitionFlipX
+ * @constructor
+ */
+TransitionFlipX : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionFlipY
+ */
+cc.TransitionFlipY = {
+
+/**
+ * @method create
+* @param {float|float} float
+* @param {cc.Scene|cc.Scene} scene
+* @param {cc.TransitionScene::Orientation} orientation
+* @return {cc.TransitionFlipY|cc.TransitionFlipY}
+*/
+create : function(
+float,
+scene,
+orientation 
+)
+{
+    return cc.TransitionFlipY;
+},
+
+/**
+ * @method TransitionFlipY
+ * @constructor
+ */
+TransitionFlipY : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionFlipAngular
+ */
+cc.TransitionFlipAngular = {
+
+/**
+ * @method create
+* @param {float|float} float
+* @param {cc.Scene|cc.Scene} scene
+* @param {cc.TransitionScene::Orientation} orientation
+* @return {cc.TransitionFlipAngular|cc.TransitionFlipAngular}
+*/
+create : function(
+float,
+scene,
+orientation 
+)
+{
+    return cc.TransitionFlipAngular;
+},
+
+/**
+ * @method TransitionFlipAngular
+ * @constructor
+ */
+TransitionFlipAngular : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionZoomFlipX
+ */
+cc.TransitionZoomFlipX = {
+
+/**
+ * @method create
+* @param {float|float} float
+* @param {cc.Scene|cc.Scene} scene
+* @param {cc.TransitionScene::Orientation} orientation
+* @return {cc.TransitionZoomFlipX|cc.TransitionZoomFlipX}
+*/
+create : function(
+float,
+scene,
+orientation 
+)
+{
+    return cc.TransitionZoomFlipX;
+},
+
+/**
+ * @method TransitionZoomFlipX
+ * @constructor
+ */
+TransitionZoomFlipX : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionZoomFlipY
+ */
+cc.TransitionZoomFlipY = {
+
+/**
+ * @method create
+* @param {float|float} float
+* @param {cc.Scene|cc.Scene} scene
+* @param {cc.TransitionScene::Orientation} orientation
+* @return {cc.TransitionZoomFlipY|cc.TransitionZoomFlipY}
+*/
+create : function(
+float,
+scene,
+orientation 
+)
+{
+    return cc.TransitionZoomFlipY;
+},
+
+/**
+ * @method TransitionZoomFlipY
+ * @constructor
+ */
+TransitionZoomFlipY : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionZoomFlipAngular
+ */
+cc.TransitionZoomFlipAngular = {
+
+/**
+ * @method create
+* @param {float|float} float
+* @param {cc.Scene|cc.Scene} scene
+* @param {cc.TransitionScene::Orientation} orientation
+* @return {cc.TransitionZoomFlipAngular|cc.TransitionZoomFlipAngular}
+*/
+create : function(
+float,
+scene,
+orientation 
+)
+{
+    return cc.TransitionZoomFlipAngular;
+},
+
+/**
+ * @method TransitionZoomFlipAngular
+ * @constructor
+ */
+TransitionZoomFlipAngular : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionFade
+ */
+cc.TransitionFade = {
+
+/**
+ * @method initWithDuration
+* @param {float|float} float
+* @param {cc.Scene|cc.Scene} scene
+* @param {color3b_object} color3b
+* @return {bool|bool}
+*/
+initWithDuration : function(
+float,
+scene,
+color3b 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+* @param {float|float} float
+* @param {cc.Scene|cc.Scene} scene
+* @param {color3b_object} color3b
+* @return {cc.TransitionFade|cc.TransitionFade}
+*/
+create : function(
+float,
+scene,
+color3b 
+)
+{
+    return cc.TransitionFade;
+},
+
+/**
+ * @method TransitionFade
+ * @constructor
+ */
+TransitionFade : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionCrossFade
+ */
+cc.TransitionCrossFade = {
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @return {cc.TransitionCrossFade}
+ */
+create : function (
+float, 
+scene 
+)
+{
+    return cc.TransitionCrossFade;
+},
+
+/**
+ * @method TransitionCrossFade
+ * @constructor
+ */
+TransitionCrossFade : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionTurnOffTiles
+ */
+cc.TransitionTurnOffTiles = {
+
+/**
+ * @method easeActionWithAction
+ * @param {cc.ActionInterval} arg0
+ * @return {cc.ActionInterval}
+ */
+easeActionWithAction : function (
+actioninterval 
+)
+{
+    return cc.ActionInterval;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @return {cc.TransitionTurnOffTiles}
+ */
+create : function (
+float, 
+scene 
+)
+{
+    return cc.TransitionTurnOffTiles;
+},
+
+/**
+ * @method TransitionTurnOffTiles
+ * @constructor
+ */
+TransitionTurnOffTiles : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionSplitCols
+ */
+cc.TransitionSplitCols = {
+
+/**
+ * @method action
+ * @return {cc.ActionInterval}
+ */
+action : function (
+)
+{
+    return cc.ActionInterval;
+},
+
+/**
+ * @method easeActionWithAction
+ * @param {cc.ActionInterval} arg0
+ * @return {cc.ActionInterval}
+ */
+easeActionWithAction : function (
+actioninterval 
+)
+{
+    return cc.ActionInterval;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @return {cc.TransitionSplitCols}
+ */
+create : function (
+float, 
+scene 
+)
+{
+    return cc.TransitionSplitCols;
+},
+
+/**
+ * @method TransitionSplitCols
+ * @constructor
+ */
+TransitionSplitCols : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionSplitRows
+ */
+cc.TransitionSplitRows = {
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @return {cc.TransitionSplitRows}
+ */
+create : function (
+float, 
+scene 
+)
+{
+    return cc.TransitionSplitRows;
+},
+
+/**
+ * @method TransitionSplitRows
+ * @constructor
+ */
+TransitionSplitRows : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionFadeTR
+ */
+cc.TransitionFadeTR = {
+
+/**
+ * @method easeActionWithAction
+ * @param {cc.ActionInterval} arg0
+ * @return {cc.ActionInterval}
+ */
+easeActionWithAction : function (
+actioninterval 
+)
+{
+    return cc.ActionInterval;
+},
+
+/**
+ * @method actionWithSize
+ * @param {size_object} arg0
+ * @return {cc.ActionInterval}
+ */
+actionWithSize : function (
+size 
+)
+{
+    return cc.ActionInterval;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @return {cc.TransitionFadeTR}
+ */
+create : function (
+float, 
+scene 
+)
+{
+    return cc.TransitionFadeTR;
+},
+
+/**
+ * @method TransitionFadeTR
+ * @constructor
+ */
+TransitionFadeTR : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionFadeBL
+ */
+cc.TransitionFadeBL = {
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @return {cc.TransitionFadeBL}
+ */
+create : function (
+float, 
+scene 
+)
+{
+    return cc.TransitionFadeBL;
+},
+
+/**
+ * @method TransitionFadeBL
+ * @constructor
+ */
+TransitionFadeBL : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionFadeUp
+ */
+cc.TransitionFadeUp = {
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @return {cc.TransitionFadeUp}
+ */
+create : function (
+float, 
+scene 
+)
+{
+    return cc.TransitionFadeUp;
+},
+
+/**
+ * @method TransitionFadeUp
+ * @constructor
+ */
+TransitionFadeUp : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionFadeDown
+ */
+cc.TransitionFadeDown = {
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @return {cc.TransitionFadeDown}
+ */
+create : function (
+float, 
+scene 
+)
+{
+    return cc.TransitionFadeDown;
+},
+
+/**
+ * @method TransitionFadeDown
+ * @constructor
+ */
+TransitionFadeDown : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionPageTurn
+ */
+cc.TransitionPageTurn = {
+
+/**
+ * @method actionWithSize
+ * @param {size_object} arg0
+ * @return {cc.ActionInterval}
+ */
+actionWithSize : function (
+size 
+)
+{
+    return cc.ActionInterval;
+},
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @param {bool} arg2
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+scene, 
+bool 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @param {bool} arg2
+ * @return {cc.TransitionPageTurn}
+ */
+create : function (
+float, 
+scene, 
+bool 
+)
+{
+    return cc.TransitionPageTurn;
+},
+
+/**
+ * @method TransitionPageTurn
+ * @constructor
+ */
+TransitionPageTurn : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionProgress
+ */
+cc.TransitionProgress = {
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @return {cc.TransitionProgress}
+ */
+create : function (
+float, 
+scene 
+)
+{
+    return cc.TransitionProgress;
+},
+
+/**
+ * @method TransitionProgress
+ * @constructor
+ */
+TransitionProgress : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionProgressRadialCCW
+ */
+cc.TransitionProgressRadialCCW = {
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @return {cc.TransitionProgressRadialCCW}
+ */
+create : function (
+float, 
+scene 
+)
+{
+    return cc.TransitionProgressRadialCCW;
+},
+
+/**
+ * @method TransitionProgressRadialCCW
+ * @constructor
+ */
+TransitionProgressRadialCCW : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionProgressRadialCW
+ */
+cc.TransitionProgressRadialCW = {
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @return {cc.TransitionProgressRadialCW}
+ */
+create : function (
+float, 
+scene 
+)
+{
+    return cc.TransitionProgressRadialCW;
+},
+
+/**
+ * @method TransitionProgressRadialCW
+ * @constructor
+ */
+TransitionProgressRadialCW : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionProgressHorizontal
+ */
+cc.TransitionProgressHorizontal = {
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @return {cc.TransitionProgressHorizontal}
+ */
+create : function (
+float, 
+scene 
+)
+{
+    return cc.TransitionProgressHorizontal;
+},
+
+/**
+ * @method TransitionProgressHorizontal
+ * @constructor
+ */
+TransitionProgressHorizontal : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionProgressVertical
+ */
+cc.TransitionProgressVertical = {
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @return {cc.TransitionProgressVertical}
+ */
+create : function (
+float, 
+scene 
+)
+{
+    return cc.TransitionProgressVertical;
+},
+
+/**
+ * @method TransitionProgressVertical
+ * @constructor
+ */
+TransitionProgressVertical : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionProgressInOut
+ */
+cc.TransitionProgressInOut = {
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @return {cc.TransitionProgressInOut}
+ */
+create : function (
+float, 
+scene 
+)
+{
+    return cc.TransitionProgressInOut;
+},
+
+/**
+ * @method TransitionProgressInOut
+ * @constructor
+ */
+TransitionProgressInOut : function (
+)
+{
+},
+
+};
+
+/**
+ * @class TransitionProgressOutIn
+ */
+cc.TransitionProgressOutIn = {
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {cc.Scene} arg1
+ * @return {cc.TransitionProgressOutIn}
+ */
+create : function (
+float, 
+scene 
+)
+{
+    return cc.TransitionProgressOutIn;
+},
+
+/**
+ * @method TransitionProgressOutIn
+ * @constructor
+ */
+TransitionProgressOutIn : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Camera
+ */
+cc.Camera = {
+
+/**
+ * @method setScene
+ * @param {cc.Scene} arg0
+ */
+setScene : function (
+scene 
+)
+{
+},
+
+/**
+ * @method initPerspective
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {float} arg3
+ * @return {bool}
+ */
+initPerspective : function (
+float, 
+float, 
+float, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method getProjectionMatrix
+ * @return {mat4_object}
+ */
+getProjectionMatrix : function (
+)
+{
+    return cc.Mat4;
+},
+
+/**
+ * @method getViewProjectionMatrix
+ * @return {mat4_object}
+ */
+getViewProjectionMatrix : function (
+)
+{
+    return cc.Mat4;
+},
+
+/**
+ * @method getViewMatrix
+ * @return {mat4_object}
+ */
+getViewMatrix : function (
+)
+{
+    return cc.Mat4;
+},
+
+/**
+ * @method getCameraFlag
+ * @return {cc.CameraFlag}
+ */
+getCameraFlag : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getType
+ * @return {cc.Camera::Type}
+ */
+getType : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method initDefault
+ * @return {bool}
+ */
+initDefault : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method project
+ * @param {vec3_object} arg0
+ * @return {vec2_object}
+ */
+project : function (
+vec3 
+)
+{
+    return cc.Vec2;
+},
+
+/**
+ * @method initOrthographic
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {float} arg3
+ * @return {bool}
+ */
+initOrthographic : function (
+float, 
+float, 
+float, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method getDepthInView
+ * @param {mat4_object} arg0
+ * @return {float}
+ */
+getDepthInView : function (
+mat4 
+)
+{
+    return 0;
+},
+
+/**
+ * @method lookAt
+ * @param {vec3_object} arg0
+ * @param {vec3_object} arg1
+ */
+lookAt : function (
+vec3, 
+vec3 
+)
+{
+},
+
+/**
+ * @method setCameraFlag
+ * @param {cc.CameraFlag} arg0
+ */
+setCameraFlag : function (
+cameraflag 
+)
+{
+},
+
+/**
+ * @method clearBackground
+ * @param {float} arg0
+ */
+clearBackground : function (
+float 
+)
+{
+},
+
+/**
+ * @method setAdditionalProjection
+ * @param {mat4_object} arg0
+ */
+setAdditionalProjection : function (
+mat4 
+)
+{
+},
+
+/**
+ * @method getDepth
+ * @return {int}
+ */
+getDepth : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setDepth
+ * @param {int} arg0
+ */
+setDepth : function (
+int 
+)
+{
+},
+
+/**
+ * @method create
+ * @return {cc.Camera}
+ */
+create : function (
+)
+{
+    return cc.Camera;
+},
+
+/**
+ * @method createPerspective
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {float} arg3
+ * @return {cc.Camera}
+ */
+createPerspective : function (
+float, 
+float, 
+float, 
+float 
+)
+{
+    return cc.Camera;
+},
+
+/**
+ * @method createOrthographic
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {float} arg3
+ * @return {cc.Camera}
+ */
+createOrthographic : function (
+float, 
+float, 
+float, 
+float 
+)
+{
+    return cc.Camera;
+},
+
+/**
+ * @method getDefaultCamera
+ * @return {cc.Camera}
+ */
+getDefaultCamera : function (
+)
+{
+    return cc.Camera;
+},
+
+/**
+ * @method getVisitingCamera
+ * @return {cc.Camera}
+ */
+getVisitingCamera : function (
+)
+{
+    return cc.Camera;
+},
+
+/**
+ * @method Camera
+ * @constructor
+ */
+Camera : function (
+)
+{
+},
+
+};
+
+/**
  * @class GridBase
  */
 cc.GridBase = {
@@ -18297,270 +18991,6 @@ bool
  * @constructor
  */
 TiledGrid3D : function (
-)
-{
-},
-
-};
-
-/**
- * @class Camera
- */
-cc.Camera = {
-
-/**
- * @method setScene
- * @param {cc.Scene} arg0
- */
-setScene : function (
-scene 
-)
-{
-},
-
-/**
- * @method initPerspective
- * @param {float} arg0
- * @param {float} arg1
- * @param {float} arg2
- * @param {float} arg3
- * @return {bool}
- */
-initPerspective : function (
-float, 
-float, 
-float, 
-float 
-)
-{
-    return false;
-},
-
-/**
- * @method getProjectionMatrix
- * @return {mat4_object}
- */
-getProjectionMatrix : function (
-)
-{
-    return cc.Mat4;
-},
-
-/**
- * @method getViewProjectionMatrix
- * @return {mat4_object}
- */
-getViewProjectionMatrix : function (
-)
-{
-    return cc.Mat4;
-},
-
-/**
- * @method getViewMatrix
- * @return {mat4_object}
- */
-getViewMatrix : function (
-)
-{
-    return cc.Mat4;
-},
-
-/**
- * @method getCameraFlag
- * @return {cc.CameraFlag}
- */
-getCameraFlag : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getType
- * @return {cc.Camera::Type}
- */
-getType : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method initDefault
- * @return {bool}
- */
-initDefault : function (
-)
-{
-    return false;
-},
-
-/**
- * @method project
- * @param {vec3_object} arg0
- * @return {vec2_object}
- */
-project : function (
-vec3 
-)
-{
-    return cc.Vec2;
-},
-
-/**
- * @method getDepthInView
- * @param {mat4_object} arg0
- * @return {float}
- */
-getDepthInView : function (
-mat4 
-)
-{
-    return 0;
-},
-
-/**
- * @method lookAt
- * @param {vec3_object} arg0
- * @param {vec3_object} arg1
- */
-lookAt : function (
-vec3, 
-vec3 
-)
-{
-},
-
-/**
- * @method setCameraFlag
- * @param {cc.CameraFlag} arg0
- */
-setCameraFlag : function (
-cameraflag 
-)
-{
-},
-
-/**
- * @method initOrthographic
- * @param {float} arg0
- * @param {float} arg1
- * @param {float} arg2
- * @param {float} arg3
- * @return {bool}
- */
-initOrthographic : function (
-float, 
-float, 
-float, 
-float 
-)
-{
-    return false;
-},
-
-/**
- * @method setAdditionalProjection
- * @param {mat4_object} arg0
- */
-setAdditionalProjection : function (
-mat4 
-)
-{
-},
-
-/**
- * @method getDepth
- * @return {int}
- */
-getDepth : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setDepth
- * @param {int} arg0
- */
-setDepth : function (
-int 
-)
-{
-},
-
-/**
- * @method create
- * @return {cc.Camera}
- */
-create : function (
-)
-{
-    return cc.Camera;
-},
-
-/**
- * @method createPerspective
- * @param {float} arg0
- * @param {float} arg1
- * @param {float} arg2
- * @param {float} arg3
- * @return {cc.Camera}
- */
-createPerspective : function (
-float, 
-float, 
-float, 
-float 
-)
-{
-    return cc.Camera;
-},
-
-/**
- * @method createOrthographic
- * @param {float} arg0
- * @param {float} arg1
- * @param {float} arg2
- * @param {float} arg3
- * @return {cc.Camera}
- */
-createOrthographic : function (
-float, 
-float, 
-float, 
-float 
-)
-{
-    return cc.Camera;
-},
-
-/**
- * @method getDefaultCamera
- * @return {cc.Camera}
- */
-getDefaultCamera : function (
-)
-{
-    return cc.Camera;
-},
-
-/**
- * @method getVisitingCamera
- * @return {cc.Camera}
- */
-getVisitingCamera : function (
-)
-{
-    return cc.Camera;
-},
-
-/**
- * @method Camera
- * @constructor
- */
-Camera : function (
 )
 {
 },
@@ -19343,6 +19773,446 @@ GLProgramCache : function (
 };
 
 /**
+ * @class RenderState
+ */
+cc.RenderState = {
+
+/**
+ * @method setTexture
+ * @param {cc.Texture2D} arg0
+ */
+setTexture : function (
+texture2d 
+)
+{
+},
+
+/**
+ * @method getTopmost
+ * @param {cc.RenderState} arg0
+ * @return {cc.RenderState}
+ */
+getTopmost : function (
+renderstate 
+)
+{
+    return cc.RenderState;
+},
+
+/**
+ * @method getTexture
+ * @return {cc.Texture2D}
+ */
+getTexture : function (
+)
+{
+    return cc.Texture2D;
+},
+
+/**
+ * @method bind
+ * @param {cc.Pass} arg0
+ */
+bind : function (
+pass 
+)
+{
+},
+
+/**
+ * @method getName
+ * @return {String}
+ */
+getName : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getStateBlock
+ * @return {cc.RenderState::StateBlock}
+ */
+getStateBlock : function (
+)
+{
+    return cc.RenderState::StateBlock;
+},
+
+/**
+ * @method getTextures
+ * @return {Array}
+ */
+getTextures : function (
+)
+{
+    return new Array();
+},
+
+/**
+ * @method initialize
+ */
+initialize : function (
+)
+{
+},
+
+/**
+ * @method finalize
+ */
+finalize : function (
+)
+{
+},
+
+};
+
+/**
+ * @class Pass
+ */
+cc.Pass = {
+
+/**
+ * @method unbind
+ */
+unbind : function (
+)
+{
+},
+
+/**
+ * @method bind
+* @param {mat4_object|mat4_object} mat4
+* @param {bool} bool
+*/
+bind : function(
+mat4,
+bool 
+)
+{
+},
+
+/**
+ * @method clone
+ * @return {cc.Pass}
+ */
+clone : function (
+)
+{
+    return cc.Pass;
+},
+
+/**
+ * @method getGLProgramState
+ * @return {cc.GLProgramState}
+ */
+getGLProgramState : function (
+)
+{
+    return cc.GLProgramState;
+},
+
+/**
+ * @method getVertexAttributeBinding
+ * @return {cc.VertexAttribBinding}
+ */
+getVertexAttributeBinding : function (
+)
+{
+    return cc.VertexAttribBinding;
+},
+
+/**
+ * @method getHash
+ * @return {unsigned int}
+ */
+getHash : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setVertexAttribBinding
+ * @param {cc.VertexAttribBinding} arg0
+ */
+setVertexAttribBinding : function (
+vertexattribbinding 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {cc.Technique} arg0
+ * @return {cc.Pass}
+ */
+create : function (
+technique 
+)
+{
+    return cc.Pass;
+},
+
+/**
+ * @method createWithGLProgramState
+ * @param {cc.Technique} arg0
+ * @param {cc.GLProgramState} arg1
+ * @return {cc.Pass}
+ */
+createWithGLProgramState : function (
+technique, 
+glprogramstate 
+)
+{
+    return cc.Pass;
+},
+
+};
+
+/**
+ * @class Technique
+ */
+cc.Technique = {
+
+/**
+ * @method getPassCount
+ * @return {long}
+ */
+getPassCount : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method clone
+ * @return {cc.Technique}
+ */
+clone : function (
+)
+{
+    return cc.Technique;
+},
+
+/**
+ * @method addPass
+ * @param {cc.Pass} arg0
+ */
+addPass : function (
+pass 
+)
+{
+},
+
+/**
+ * @method getPasses
+ * @return {Array}
+ */
+getPasses : function (
+)
+{
+    return new Array();
+},
+
+/**
+ * @method getName
+ * @return {String}
+ */
+getName : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getPassByIndex
+ * @param {long} arg0
+ * @return {cc.Pass}
+ */
+getPassByIndex : function (
+long 
+)
+{
+    return cc.Pass;
+},
+
+/**
+ * @method create
+ * @param {cc.Material} arg0
+ * @return {cc.Technique}
+ */
+create : function (
+material 
+)
+{
+    return cc.Technique;
+},
+
+/**
+ * @method createWithGLProgramState
+ * @param {cc.Material} arg0
+ * @param {cc.GLProgramState} arg1
+ * @return {cc.Technique}
+ */
+createWithGLProgramState : function (
+material, 
+glprogramstate 
+)
+{
+    return cc.Technique;
+},
+
+};
+
+/**
+ * @class Material
+ */
+cc.Material = {
+
+/**
+ * @method clone
+ * @return {cc.Material}
+ */
+clone : function (
+)
+{
+    return cc.Material;
+},
+
+/**
+ * @method getTechniqueCount
+ * @return {long}
+ */
+getTechniqueCount : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method setName
+ * @param {String} arg0
+ */
+setName : function (
+str 
+)
+{
+},
+
+/**
+ * @method getTechniqueByIndex
+ * @param {long} arg0
+ * @return {cc.Technique}
+ */
+getTechniqueByIndex : function (
+long 
+)
+{
+    return cc.Technique;
+},
+
+/**
+ * @method getName
+ * @return {String}
+ */
+getName : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method getTechniques
+ * @return {Array}
+ */
+getTechniques : function (
+)
+{
+    return new Array();
+},
+
+/**
+ * @method setTechnique
+ * @param {String} arg0
+ */
+setTechnique : function (
+str 
+)
+{
+},
+
+/**
+ * @method getTechniqueByName
+ * @param {String} arg0
+ * @return {cc.Technique}
+ */
+getTechniqueByName : function (
+str 
+)
+{
+    return cc.Technique;
+},
+
+/**
+ * @method addTechnique
+ * @param {cc.Technique} arg0
+ */
+addTechnique : function (
+technique 
+)
+{
+},
+
+/**
+ * @method getTechnique
+ * @return {cc.Technique}
+ */
+getTechnique : function (
+)
+{
+    return cc.Technique;
+},
+
+/**
+ * @method createWithFilename
+ * @param {String} arg0
+ * @return {cc.Material}
+ */
+createWithFilename : function (
+str 
+)
+{
+    return cc.Material;
+},
+
+/**
+ * @method createWithGLStateProgram
+ * @param {cc.GLProgramState} arg0
+ * @return {cc.Material}
+ */
+createWithGLStateProgram : function (
+glprogramstate 
+)
+{
+    return cc.Material;
+},
+
+/**
+ * @method createWithProperties
+ * @param {cc.Properties} arg0
+ * @return {cc.Material}
+ */
+createWithProperties : function (
+properties 
+)
+{
+    return cc.Material;
+},
+
+};
+
+/**
  * @class TextureCache
  */
 cc.TextureCache = {
@@ -19451,6 +20321,18 @@ str
 )
 {
     return cc.Texture2D;
+},
+
+/**
+ * @method getTextureFilePath
+ * @param {cc.Texture2D} arg0
+ * @return {String}
+ */
+getTextureFilePath : function (
+texture2d 
+)
+{
+    return ;
 },
 
 /**
@@ -21631,36 +22513,70 @@ getInstance : function (
 };
 
 /**
- * @class AsyncTaskPool
+ * @class SpritePolygonCache
  */
-cc.AsyncTaskPool = {
+cc.SpritePolygonCache = {
 
 /**
- * @method stopTasks
- * @param {cc.AsyncTaskPool::TaskType} arg0
+ * @method isSpritePolygonCachExist
+ * @param {String} arg0
+ * @param {rect_object} arg1
+ * @return {bool}
  */
-stopTasks : function (
-tasktype 
+isSpritePolygonCachExist : function (
+str, 
+rect 
+)
+{
+    return false;
+},
+
+/**
+ * @method removeAllSpritePolygonCache
+ */
+removeAllSpritePolygonCache : function (
 )
 {
 },
 
 /**
- * @method destoryInstance
+ * @method removeSpritePolygonCache
+ * @param {String} arg0
+ * @param {rect_object} arg1
  */
-destoryInstance : function (
+removeSpritePolygonCache : function (
+str, 
+rect 
+)
+{
+},
+
+/**
+ * @method destroyInstance
+ */
+destroyInstance : function (
+)
+{
+},
+
+/**
+ * @method printInfo
+ * @param {cc._SpritePolygonInfo} arg0
+ */
+printInfo : function (
+_spritepolygoninfo 
 )
 {
 },
 
 /**
  * @method getInstance
- * @return {cc.AsyncTaskPool}
+ * @return {cc.SpritePolygonCache}
  */
 getInstance : function (
 )
 {
-    return cc.AsyncTaskPool;
+    return cc.SpritePolygonCache;
 },
 
 };

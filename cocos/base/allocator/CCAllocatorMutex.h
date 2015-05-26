@@ -41,7 +41,7 @@
     pthread_mutex_lock(&m);
 #define MUTEX_UNLOCK(m) \
     pthread_mutex_unlock(&m);
-#elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 #include "windows.h"
 #define MUTEX HANDLE
 #if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
@@ -49,7 +49,7 @@
     m = CreateMutex(0, FALSE, 0)
 #define MUTEX_LOCK(m) \
     WaitForSingleObject(m, INFINITE)
-#elif CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+#elif CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
 #define MUTEX_INIT(m) \
 	m = CreateMutexEx(NULL,FALSE,0,NULL);
 #define MUTEX_LOCK(m) \

@@ -86,6 +86,7 @@ struct Uniform
 class CC_DLL GLProgram : public Ref
 {
     friend class GLProgramState;
+    friend class VertexAttribBinding;
 
 public:
     /**Enum the preallocated vertex attribute. */
@@ -166,10 +167,6 @@ public:
     static const char* SHADER_NAME_POSITION_COLOR_TEXASPOINTSIZE;
     /**Built in shader for 2d. Support Position, Color vertex attribute, without multiply vertex by MVP matrix.*/
     static const char* SHADER_NAME_POSITION_COLOR_NO_MVP;
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || defined(WP8_SHADER_COMPILER)
-    /**Built in shader for 2d. Support Position, Color vertex attribute, without multiply vertex by MVP matrix and have a grey scale fragment shader.*/
-    static const char* SHADER_NAME_POSITION_COLOR_NO_MVP_GRAYåSCALE;
-#endif
     /**Built in shader for 2d. Support Position, Texture vertex attribute.*/
     static const char* SHADER_NAME_POSITION_TEXTURE;
     /**Built in shader for 2d. Support Position, Texture vertex attribute. with a specified uniform as color*/
@@ -231,7 +228,11 @@ public:
      Built in shader for terrain
      */
     static const char* SHADER_3D_TERRAIN;
-
+    
+    /**
+     Built in shader for camera clear
+     */
+    static const char* SHADER_CAMERA_CLEAR;
     /**
     end of built shader types.
     @}
@@ -305,13 +306,6 @@ public:
     GLProgram();
     /**Destructor.*/
     virtual ~GLProgram();
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-    /** @{Initializes the CCGLProgram with precompiled shader program. */
-    static GLProgram* createWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
-    bool initWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
-    /**@}*/
-#endif
 
     /** @{
     Create or Initializes the GLProgram with a vertex and fragment with bytes array.
@@ -507,11 +501,6 @@ protected:
     GLint             _builtInUniforms[UNIFORM_MAX];
     /**Indicate whether it has a offline shader compiler or not.*/
     bool              _hasShaderCompiler;
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || defined(WP8_SHADER_COMPILER)
-    /**Shader ID in precompiled shaders on Windows phone.*/
-    std::string       _shaderId;
-#endif
 
     struct flag_struct {
         unsigned int usesTime:1;

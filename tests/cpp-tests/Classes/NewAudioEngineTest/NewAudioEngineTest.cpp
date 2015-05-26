@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #include "NewAudioEngineTest.h"
 #include "ui/CocosGUI.h"
@@ -288,7 +288,11 @@ bool AudioControlTest::init()
     
     auto playItem = TextButton::create("play", [&](TextButton* button){
         if (_audioID == AudioEngine::INVALID_AUDIO_ID) {
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+            _audioID = AudioEngine::play2d("background.wav", _loopEnabled, _volume);
+#else
             _audioID = AudioEngine::play2d("background.mp3", _loopEnabled, _volume);
+#endif
             
             if(_audioID != AudioEngine::INVALID_AUDIO_ID) {
                 button->setEnabled(false);
@@ -350,7 +354,11 @@ bool AudioControlTest::init()
     addChild(loopItem);
     
     auto uncacheItem = TextButton::create("uncache", [&](TextButton* button){
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+        AudioEngine::uncache("background.wav");
+#else
         AudioEngine::uncache("background.mp3");
+#endif
         
         _audioID = AudioEngine::INVALID_AUDIO_ID;
         ((TextButton*)_playItem)->setEnabled(true);
@@ -440,7 +448,11 @@ bool PlaySimultaneouslyTest::init()
     char text[36];
     int tmp = 81;
     for(int index = 0; index < TEST_COUNT; ++index){
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+        sprintf(text, "audio/SoundEffectsFX009/FX0%d.wav", tmp + index);
+#else
         sprintf(text,"audio/SoundEffectsFX009/FX0%d.mp3",tmp + index);
+#endif
         _files[index] = text;
     }
     _playingcount = 0;
@@ -490,7 +502,11 @@ bool AudioProfileTest::init()
     auto ret = AudioEngineTestDemo::init();
     
     char text[30];
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+    _files[0] = "background.wav";
+#else
     _files[0] = "background.mp3";
+#endif
 #if CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC
     _files[1] = "background.caf";
 #else
@@ -627,7 +643,11 @@ bool LargeAudioFileTest::init()
     auto ret = AudioEngineTestDemo::init();
     
     auto playItem = TextButton::create("play large audio file", [&](TextButton* button){
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT
+        AudioEngine::play2d("audio/LuckyDay.wav");
+#else
         AudioEngine::play2d("audio/LuckyDay.mp3");
+#endif
     });
     playItem->setNormalizedPosition(Vec2::ANCHOR_MIDDLE);
     this->addChild(playItem);

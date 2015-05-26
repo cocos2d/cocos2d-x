@@ -35,15 +35,6 @@ public:
     virtual std::string title() const override;
 };
 
-class Material_SpriteTest : public MaterialSystemBaseTest
-{
-public:
-    CREATE_FUNC(Material_SpriteTest);
-
-    virtual void onEnter() override;
-    virtual std::string subtitle() const override;
-};
-
 class Material_Sprite3DTest : public MaterialSystemBaseTest
 {
 public:
@@ -57,6 +48,48 @@ class Material_MultipleSprite3D : public MaterialSystemBaseTest
 {
 public:
     CREATE_FUNC(Material_MultipleSprite3D);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
+class Material_2DEffects : public MaterialSystemBaseTest
+{
+public:
+    CREATE_FUNC(Material_2DEffects);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
+class Material_setTechnique : public MaterialSystemBaseTest
+{
+public:
+    CREATE_FUNC(Material_setTechnique);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+
+private:
+    void changeMaterial(float dt);
+
+    cocos2d::Sprite3D* _sprite;
+    int _techniqueState;
+};
+
+class Material_clone : public MaterialSystemBaseTest
+{
+public:
+    CREATE_FUNC(Material_clone);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
+class Material_parsePerformance : public MaterialSystemBaseTest
+{
+public:
+    CREATE_FUNC(Material_parsePerformance);
 
     virtual void onEnter() override;
     virtual std::string subtitle() const override;

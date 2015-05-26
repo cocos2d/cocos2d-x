@@ -41,6 +41,9 @@ class EventCustom;
 #if CC_USE_PHYSICS
 class PhysicsWorld;
 #endif
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
+class Physics3DWorld;
+#endif
 /**
  * @addtogroup _2d
  * @{
@@ -136,15 +139,31 @@ protected:
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Scene);
     
-#if CC_USE_PHYSICS
+#if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION))
 public:
     virtual void addChild(Node* child, int zOrder, int tag) override;
     virtual void addChild(Node* child, int zOrder, const std::string &name) override;
+    
+#if CC_USE_PHYSICS
     /** Get the physics world of the scene.
      * @return The physics world of the scene.
      * @js NA
      */
     inline PhysicsWorld* getPhysicsWorld() { return _physicsWorld; }
+#endif
+    
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
+    /** Get the 3d physics world of the scene.
+     * @return The 3d physics world of the scene.
+     * @js NA
+     */
+    inline Physics3DWorld* getPhysics3DWorld() { return _physics3DWorld; }
+    
+    /** 
+     * Set Physics3D debug draw camera.
+     */
+    void setPhysics3DDebugCamera(Camera* camera);
+#endif
     
     /** Create a scene with physics.
      * @return An autoreleased Scene object with physics.
@@ -158,8 +177,15 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     void addChildToPhysicsWorld(Node* child);
 
+#if CC_USE_PHYSICS
     PhysicsWorld* _physicsWorld;
-#endif // CC_USE_PHYSICS
+#endif
+    
+#if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
+    Physics3DWorld*            _physics3DWorld;
+    Camera*                    _physics3dDebugCamera; //
+#endif
+#endif // (CC_USE_PHYSICS || CC_USE_3D_PHYSICS)
 };
 
 // end of _2d group

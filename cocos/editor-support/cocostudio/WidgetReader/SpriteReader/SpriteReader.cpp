@@ -226,12 +226,12 @@ namespace cocostudio
             default:
                 break;
         }
-        if (!fileExist)
-        {
-            auto label = Label::create();
-            label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
-            sprite->addChild(label);
-        }
+        //if (!fileExist)
+        //{
+        //    auto label = Label::create();
+        //    label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+        //    sprite->addChild(label);
+        //}
         
         auto f_blendFunc = options->blendFunc();
         if (f_blendFunc)

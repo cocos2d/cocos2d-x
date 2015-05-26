@@ -51,14 +51,14 @@ var UILayoutTestBase = UIScene.extend({
 
             this.button = new ccui.Button();
             this.button.setTouchEnabled(true);
-            this.button.loadTextures("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png", "");
+            this.button.loadTextures("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png", "");
             this.button.x = this.button.width / 2;
             this.button.y = layoutRect.height - this.button.height / 2;
             this.layout.addChild(this.button);
 
             this.textButton = new ccui.Button();
             this.textButton.setTouchEnabled(true);
-            this.textButton.loadTextures("res/cocosui/backtotopnormal.png", "res/cocosui/backtotoppressed.png", "");
+            this.textButton.loadTextures("ccs-res/cocosui/backtotopnormal.png", "ccs-res/cocosui/backtotoppressed.png", "");
             this.textButton.setTitleText("Text Button");
             this.textButton.x = layoutRect.width / 2;
             this.textButton.y = layoutRect.height / 2;
@@ -67,7 +67,7 @@ var UILayoutTestBase = UIScene.extend({
             this.button_scale9 = new ccui.Button();
             this.button_scale9.setTouchEnabled(true);
             this.button_scale9.setScale9Enabled(true);
-            this.button_scale9.loadTextures("res/cocosui/button.png", "res/cocosui/buttonHighlighted.png", "");
+            this.button_scale9.loadTextures("ccs-res/cocosui/button.png", "ccs-res/cocosui/buttonHighlighted.png", "");
             this.button_scale9.width = 100;
 	        this.button_scale9.height = 32;
             this.button_scale9.x = layoutRect.width - this.button_scale9.width / 2;
@@ -129,7 +129,7 @@ var UILayoutTest_BackGroundImage = UILayoutTestBase.extend({
     createLayout: function () {
         var layout = new ccui.Layout();
         layout.setClippingEnabled(true);
-        layout.setBackGroundImage("res/cocosui/Hello.png");
+        layout.setBackGroundImage("ccs-res/cocosui/Hello.png");
         layout.setContentSize(cc.size(280, 150));
         return layout;
     },
@@ -142,7 +142,7 @@ var UILayoutTest_BackGroundImage_Scale9 = UILayoutTestBase.extend({
     createLayout: function () {
         var layout = new ccui.Layout();
         layout.setBackGroundImageScale9Enabled(true);
-        layout.setBackGroundImage("res/cocosui/green_edit.png");
+        layout.setBackGroundImage("ccs-res/cocosui/green_edit.png");
         layout.setContentSize(cc.size(280, 150));
         return layout;
     },
@@ -265,7 +265,7 @@ var UILayoutTest_Layout_Relative_Align_Parent = UIScene.extend({
              this._mainNode.addChild(layout);
 
              // top left
-             var button_TopLeft = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
+             var button_TopLeft = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
              layout.addChild(button_TopLeft);
 
              var rp_TopLeft = new ccui.RelativeLayoutParameter();
@@ -273,7 +273,7 @@ var UILayoutTest_Layout_Relative_Align_Parent = UIScene.extend({
              button_TopLeft.setLayoutParameter(rp_TopLeft);
 
              // top center horizontal
-             var button_TopCenter = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
+             var button_TopCenter = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
              layout.addChild(button_TopCenter);
 
              var rp_TopCenter = new ccui.RelativeLayoutParameter();
@@ -281,21 +281,21 @@ var UILayoutTest_Layout_Relative_Align_Parent = UIScene.extend({
              button_TopCenter.setLayoutParameter(rp_TopCenter);
 
              // top right
-             var button_TopRight = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
+             var button_TopRight = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
              layout.addChild(button_TopRight);
              var rp_TopRight = new ccui.RelativeLayoutParameter();
              rp_TopRight.setAlign(ccui.RelativeLayoutParameter.PARENT_TOP_RIGHT);
              button_TopRight.setLayoutParameter(rp_TopRight);
 
              // left center
-             var button_LeftCenter = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
+             var button_LeftCenter = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
              layout.addChild(button_LeftCenter);
              var rp_LeftCenter = new ccui.RelativeLayoutParameter();
              rp_LeftCenter.setAlign(ccui.RelativeLayoutParameter.PARENT_LEFT_CENTER_VERTICAL);
              button_LeftCenter.setLayoutParameter(rp_LeftCenter);
 
              // center
-             var buttonCenter = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
+             var buttonCenter = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
              layout.addChild(buttonCenter);
 
              var rpCenter = new ccui.RelativeLayoutParameter();
@@ -303,7 +303,7 @@ var UILayoutTest_Layout_Relative_Align_Parent = UIScene.extend({
              buttonCenter.setLayoutParameter(rpCenter);
 
              // right center
-             var button_RightCenter = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
+             var button_RightCenter = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
              layout.addChild(button_RightCenter);
              var rp_RightCenter = new ccui.RelativeLayoutParameter();
              rp_RightCenter.setAlign(ccui.RelativeLayoutParameter.PARENT_RIGHT_CENTER_VERTICAL);
@@ -311,21 +311,21 @@ var UILayoutTest_Layout_Relative_Align_Parent = UIScene.extend({
 
 
              // left bottom
-             var button_LeftBottom = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
+             var button_LeftBottom = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
              layout.addChild(button_LeftBottom);
              var rp_LeftBottom = new ccui.RelativeLayoutParameter();
              rp_LeftBottom.setAlign(ccui.RelativeLayoutParameter.PARENT_LEFT_BOTTOM);
              button_LeftBottom.setLayoutParameter(rp_LeftBottom);
 
              // bottom center
-             var button_BottomCenter = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
+             var button_BottomCenter = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
              layout.addChild(button_BottomCenter);
              var rp_BottomCenter = new ccui.RelativeLayoutParameter();
              rp_BottomCenter.setAlign(ccui.RelativeLayoutParameter.PARENT_BOTTOM_CENTER_HORIZONTAL);
              button_BottomCenter.setLayoutParameter(rp_BottomCenter);
 
              // right bottom
-             var button_RightBottom = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
+             var button_RightBottom = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
              layout.addChild(button_RightBottom);
              var rp_RightBottom = new ccui.RelativeLayoutParameter();
              rp_RightBottom.setAlign(ccui.RelativeLayoutParameter.PARENT_RIGHT_BOTTOM);
@@ -343,7 +343,7 @@ var UILayoutTest_Layout_Relative_Location = UIScene.extend({
              var widgetSize = this._widget.getContentSize();
 
              // Add the alert
-             var alert = new ccui.Text("Layout Relative Location", "fonts/Marker Felt.ttf", 20);
+             var alert = new ccui.Text("Layout Relative Location", "Marker Felt", 20);
              alert.setColor(cc.color(159, 168, 176));
              alert.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0 - alert.height * 4.5);
              this._mainNode.addChild(alert);
@@ -361,7 +361,7 @@ var UILayoutTest_Layout_Relative_Location = UIScene.extend({
              this._mainNode.addChild(layout);
 
              // center
-             var imageView_Center = new ccui.ImageView("res/cocosui/scrollviewbg.png");
+             var imageView_Center = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
              layout.addChild(imageView_Center);
              var rp_Center = new ccui.RelativeLayoutParameter();
              rp_Center.setRelativeName("rp_Center");
@@ -369,7 +369,7 @@ var UILayoutTest_Layout_Relative_Location = UIScene.extend({
              imageView_Center.setLayoutParameter(rp_Center);
 
              // above center
-             var imageView_AboveCenter = new ccui.ImageView("res/cocosui/switch-mask.png");
+             var imageView_AboveCenter = new ccui.ImageView("ccs-res/cocosui/switch-mask.png");
              layout.addChild(imageView_AboveCenter);
              var rp_AboveCenter = new ccui.RelativeLayoutParameter();
              rp_AboveCenter.setRelativeToWidgetName("rp_Center");
@@ -377,7 +377,7 @@ var UILayoutTest_Layout_Relative_Location = UIScene.extend({
              imageView_AboveCenter.setLayoutParameter(rp_AboveCenter);
 
              // below center
-             var imageView_BelowCenter = new ccui.ImageView("res/cocosui/switch-mask.png");
+             var imageView_BelowCenter = new ccui.ImageView("ccs-res/cocosui/switch-mask.png");
              layout.addChild(imageView_BelowCenter);
              var rp_BelowCenter = new ccui.RelativeLayoutParameter();
              rp_BelowCenter.setRelativeToWidgetName("rp_Center");
@@ -385,7 +385,7 @@ var UILayoutTest_Layout_Relative_Location = UIScene.extend({
              imageView_BelowCenter.setLayoutParameter(rp_BelowCenter);
 
              // left center
-             var imageView_LeftCenter = new ccui.ImageView("res/cocosui/switch-mask.png");
+             var imageView_LeftCenter = new ccui.ImageView("ccs-res/cocosui/switch-mask.png");
              layout.addChild(imageView_LeftCenter);
              var rp_LeftCenter = new ccui.RelativeLayoutParameter();
              rp_LeftCenter.setRelativeToWidgetName("rp_Center");
@@ -393,7 +393,7 @@ var UILayoutTest_Layout_Relative_Location = UIScene.extend({
              imageView_LeftCenter.setLayoutParameter(rp_LeftCenter);
 
              // right center
-             var imageView_RightCenter = new ccui.ImageView("res/cocosui/switch-mask.png");
+             var imageView_RightCenter = new ccui.ImageView("ccs-res/cocosui/switch-mask.png");
              layout.addChild(imageView_RightCenter);
              var rp_RightCenter = new ccui.RelativeLayoutParameter();
              rp_RightCenter.setRelativeToWidgetName("rp_Center");
@@ -418,7 +418,7 @@ var UILayoutComponentTest = UIScene.extend({
             this._baseLayer.setContentSize(200, 200);
             this._mainNode.addChild(this._baseLayer);
 
-            var button = new ccui.Button("res/cocosui/animationbuttonnormal.png");
+            var button = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png");
             cc.log("content size should be greater than 0:  width = %f, height = %f", button.width, button.height);
             button.setPosition(widgetSize.width / 2.0, widgetSize.height / 2.0);
             button.addTouchEventListener(this.touchEvent, this);
@@ -456,25 +456,25 @@ var UILayoutComponentTest = UIScene.extend({
 var UILayoutComponent_Berth_Test = UILayoutComponentTest.extend({
      init: function(){
          if (this._super()){
-             var leftTopSprite = new cc.Sprite("res/cocosui/CloseSelected.png");
+             var leftTopSprite = new cc.Sprite("ccs-res/cocosui/CloseSelected.png");
              var leftTop = ccui.LayoutComponent.bindLayoutComponent(leftTopSprite);
              leftTop.setHorizontalEdge(ccui.LayoutComponent.horizontalEdge.LEFT);
              leftTop.setVerticalEdge(ccui.LayoutComponent.verticalEdge.TOP);
              this._baseLayer.addChild(leftTopSprite);
 
-             var leftBottomSprite = new cc.Sprite("res/cocosui/CloseSelected.png");
+             var leftBottomSprite = new cc.Sprite("ccs-res/cocosui/CloseSelected.png");
              var leftBottom = ccui.LayoutComponent.bindLayoutComponent(leftBottomSprite);
              leftBottom.setHorizontalEdge(ccui.LayoutComponent.horizontalEdge.LEFT);
              leftBottom.setVerticalEdge(ccui.LayoutComponent.verticalEdge.BOTTOM);
              this._baseLayer.addChild(leftBottomSprite);
 
-             var rightTopSprite = new cc.Sprite("res/cocosui/CloseSelected.png");
+             var rightTopSprite = new cc.Sprite("ccs-res/cocosui/CloseSelected.png");
              var rightTop = ccui.LayoutComponent.bindLayoutComponent(rightTopSprite);
              rightTop.setHorizontalEdge(ccui.LayoutComponent.horizontalEdge.RIGHT);
              rightTop.setVerticalEdge(ccui.LayoutComponent.verticalEdge.TOP);
              this._baseLayer.addChild(rightTopSprite);
 
-             var rightBottomSprite = new cc.Sprite("res/cocosui/CloseSelected.png");
+             var rightBottomSprite = new cc.Sprite("ccs-res/cocosui/CloseSelected.png");
              var rightBottom = ccui.LayoutComponent.bindLayoutComponent(rightBottomSprite);
              rightBottom.setHorizontalEdge(ccui.LayoutComponent.horizontalEdge.RIGHT);
              rightBottom.setVerticalEdge(ccui.LayoutComponent.verticalEdge.BOTTOM);
@@ -490,7 +490,7 @@ var UILayoutComponent_Berth_Test = UILayoutComponentTest.extend({
 var UILayoutComponent_Berth_Stretch_Test = UILayoutComponentTest.extend({
     init: function(){
         if (this._super()) {
-            var leftTopSprite = new ccui.ImageView("res/cocosui/CloseSelected.png");
+            var leftTopSprite = new ccui.ImageView("ccs-res/cocosui/CloseSelected.png");
             leftTopSprite.ignoreContentAdaptWithSize(false);
             var leftTop = ccui.LayoutComponent.bindLayoutComponent(leftTopSprite);
             leftTop.setHorizontalEdge(ccui.LayoutComponent.horizontalEdge.LEFT);
@@ -502,7 +502,7 @@ var UILayoutComponent_Berth_Stretch_Test = UILayoutComponentTest.extend({
             leftTop.setLeftMargin(0);
             leftTop.setTopMargin(0);
 
-            var leftBottomSprite = new ccui.ImageView("res/cocosui/CloseSelected.png");
+            var leftBottomSprite = new ccui.ImageView("ccs-res/cocosui/CloseSelected.png");
             leftBottomSprite.ignoreContentAdaptWithSize(false);
             var leftBottom = ccui.LayoutComponent.bindLayoutComponent(leftBottomSprite);
             leftBottom.setHorizontalEdge(ccui.LayoutComponent.horizontalEdge.LEFT);
@@ -514,7 +514,7 @@ var UILayoutComponent_Berth_Stretch_Test = UILayoutComponentTest.extend({
             leftBottom.setLeftMargin(0);
             leftBottom.setBottomMargin(0);
 
-            var rightTopSprite = new ccui.ImageView("res/cocosui/CloseSelected.png");
+            var rightTopSprite = new ccui.ImageView("ccs-res/cocosui/CloseSelected.png");
             rightTopSprite.ignoreContentAdaptWithSize(false);
             var rightTop = ccui.LayoutComponent.bindLayoutComponent(rightTopSprite);
             rightTop.setHorizontalEdge(ccui.LayoutComponent.horizontalEdge.RIGHT);
@@ -526,7 +526,7 @@ var UILayoutComponent_Berth_Stretch_Test = UILayoutComponentTest.extend({
             rightTop.setTopMargin(0);
             rightTop.setRightMargin(0);
 
-            var rightBottomSprite = new ccui.ImageView("res/cocosui/CloseSelected.png");
+            var rightBottomSprite = new ccui.ImageView("ccs-res/cocosui/CloseSelected.png");
             rightBottomSprite.ignoreContentAdaptWithSize(false);
             var rightBottom = ccui.LayoutComponent.bindLayoutComponent(rightBottomSprite);
             rightBottom.setHorizontalEdge(ccui.LayoutComponent.horizontalEdge.RIGHT);

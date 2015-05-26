@@ -25,6 +25,10 @@
 #include "base/CCDirector.h"
 #include "platform/CCGLView.h"
 #include "2d/CCScene.h"
+#include "renderer/CCRenderer.h"
+#include "renderer/CCQuadCommand.h"
+#include "renderer/CCGLProgramCache.h"
+#include "renderer/ccGLStateCache.h"
 
 NS_CC_BEGIN
 
@@ -205,14 +209,6 @@ bool Camera::initPerspective(float fieldOfView, float aspectRatio, float nearPla
     _nearPlane = nearPlane;
     _farPlane = farPlane;
     Mat4::createPerspective(_fieldOfView, _aspectRatio, _nearPlane, _farPlane, &_projection);
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-    //if needed, we need to add a rotation for Landscape orientations on Windows Phone 8 since it is always in Portrait Mode
-    GLView* view = Director::getInstance()->getOpenGLView();
-    if(view != nullptr)
-    {
-        setAdditionalProjection(view->getOrientationMatrix());
-    }
-#endif
     _viewProjectionDirty = true;
     _frustumDirty = true;
     
@@ -226,14 +222,6 @@ bool Camera::initOrthographic(float zoomX, float zoomY, float nearPlane, float f
     _nearPlane = nearPlane;
     _farPlane = farPlane;
     Mat4::createOrthographicOffCenter(0, _zoom[0], 0, _zoom[1], _nearPlane, _farPlane, &_projection);
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-    //if needed, we need to add a rotation for Landscape orientations on Windows Phone 8 since it is always in Portrait Mode
-    GLView* view = Director::getInstance()->getOpenGLView();
-    if(view != nullptr)
-    {
-        setAdditionalProjection(view->getOrientationMatrix());
-    }
-#endif
     _viewProjectionDirty = true;
     _frustumDirty = true;
     
@@ -374,6 +362,78 @@ void Camera::setScene(Scene* scene)
                 _scene->setCameraOrderDirty();
             }
         }
+    }
+}
+
+void Camera::clearBackground(float depth)
+{
+    GLboolean oldDepthTest;
+    GLint oldDepthFunc;
+    GLboolean oldDepthMask;
+    {
+        glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+        glStencilMask(0);
+        oldDepthTest = glIsEnabled(GL_DEPTH_TEST);
+        glGetIntegerv(GL_DEPTH_FUNC, &oldDepthFunc);
+        glGetBooleanv(GL_DEPTH_WRITEMASK, &oldDepthMask);
+        glDepthMask(GL_TRUE);
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_ALWAYS);
+    }
+    
+    //draw
+    static V3F_C4B_T2F_Quad quad;
+    quad.bl.vertices = Vec3(-1,-1,0);
+    quad.br.vertices = Vec3(1,-1,0);
+    quad.tl.vertices = Vec3(-1,1,0);
+    quad.tr.vertices = Vec3(1,1,0);
+    
+    quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = Color4B(0,0,0,1);
+    
+    quad.bl.texCoords = Tex2F(0,0);
+    quad.br.texCoords = Tex2F(1,0);
+    quad.tl.texCoords = Tex2F(0,1);
+    quad.tr.texCoords = Tex2F(1,1);
+    
+    auto shader = GLProgramCache::getInstance()->getGLProgram(GLProgram::SHADER_CAMERA_CLEAR);
+    auto programState = GLProgramState::getOrCreateWithGLProgram(shader);
+    programState->setUniformFloat("depth", 1.0);
+    programState->apply(Mat4());
+    GLshort indices[6] = {0, 1, 2, 3, 2, 1};
+    
+    {
+        GL::bindVAO(0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        
+        GL::enableVertexAttribs(GL::VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
+        
+        // vertices
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_POSITION, 3, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), &quad.tl.vertices);
+        
+        // colors
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_COLOR, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(V3F_C4B_T2F), &quad.tl.colors);
+        
+        // tex coords
+        glVertexAttribPointer(GLProgram::VERTEX_ATTRIB_TEX_COORD, 2, GL_FLOAT, GL_FALSE, sizeof(V3F_C4B_T2F), &quad.tl.texCoords);
+        
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, indices);
+    }
+
+    
+    {
+        if(GL_FALSE == oldDepthTest)
+        {
+            glDisable(GL_DEPTH_TEST);
+        }
+        glDepthFunc(oldDepthFunc);
+        if(GL_FALSE == oldDepthMask)
+        {
+            glDepthMask(GL_FALSE);
+        }
+        
+        glStencilMask(0xFFFFF);
+        glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
     }
 }
 

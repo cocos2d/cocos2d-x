@@ -33,7 +33,7 @@ var UILabelBMFontTest = UIScene.extend({
 
             // Create the LabelBMFont
             var labelBMFont = new ccui.TextBMFont();
-            labelBMFont.setFntFile("res/cocosui/bitmapFontTest2.fnt");
+            labelBMFont.setFntFile("ccs-res/cocosui/bitmapFontTest2.fnt");
             labelBMFont.setString("BMFont");
             labelBMFont.x = this._widget.width / 2;
 	        labelBMFont.y = this._widget.height / 2.0 + labelBMFont.height / 8.0;

@@ -2679,9 +2679,9 @@ ObjectActor.prototype = {
       "type": "object",
       "class": this.obj.class,
       "actor": this.actorID,
-      "extensible": this.obj.isExtensible(),
-      "frozen": this.obj.isFrozen(),
-      "sealed": this.obj.isSealed()
+      "extensible": this.obj.isExtensible && typeof this.obj.isExtensible == 'function' ? this.obj.isExtensible() : true,
+      "frozen": this.obj.isFrozen && typeof this.obj.isFrozen == 'function' ? this.obj.isFrozen() : false,
+      "sealed": this.obj.isSealed && typeof this.obj.isSealed == 'function' ? this.obj.isSealed() : false
     };
 
     // Add additional properties for functions.

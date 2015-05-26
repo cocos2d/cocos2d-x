@@ -24,7 +24,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 #include "platform/CCPlatformConfig.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) ||  (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
 
 #include "cocos2d.h"
 #include "platform/CCDevice.h"
@@ -42,14 +42,7 @@ CCFreeTypeFont sFT;
 
 int Device::getDPI()
 {
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WP8
-	static const float dipsPerInch = 96.0f;
-	return floor(DisplayProperties::LogicalDpi / dipsPerInch + 0.5f); // Round to nearest integer.
-#elif defined WP8_SHADER_COMPILER
-    return 0;
-#else
     return cocos2d::GLViewImpl::sharedOpenGLView()->GetDPI();
-#endif
 }
 
 static Accelerometer^ sAccelerometer = nullptr;
@@ -211,4 +204,4 @@ void Device::setKeepScreenOn(bool value)
 
 NS_CC_END
 
-#endif // (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) ||  (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) 
+#endif // (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) 

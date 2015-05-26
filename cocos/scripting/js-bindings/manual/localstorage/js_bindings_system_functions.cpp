@@ -69,5 +69,15 @@ bool JSB_localStorageSetItem(JSContext *cx, uint32_t argc, jsval *vp) {
     return true;
 }
 
+// Arguments: char*, char*
+// Ret value: void
+bool JSB_localStorageClear(JSContext *cx, uint32_t argc, jsval *vp) {
+    JSB_PRECONDITION2( argc == 0, cx, false, "Invalid number of arguments" );
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+
+    localStorageClear();
+    args.rval().setUndefined();
+    return true;
+}
 
 //#endif // JSB_INCLUDE_SYSTEM

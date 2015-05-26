@@ -44,6 +44,8 @@ LOCAL_SRC_FILES := ../auto/jsb_cocos2dx_3d_auto.cpp \
                    ../auto/jsb_cocos2dx_studio_auto.cpp \
                    ../auto/jsb_cocos2dx_builder_auto.cpp \
                    ../auto/jsb_cocos2dx_ui_auto.cpp \
+                   ../auto/jsb_cocos2dx_experimental.cpp \
+                   ../auto/jsb_cocos2dx_physics3d_auto.cpp \
                    ../manual/ScriptingCore.cpp \ \
                    ../manual/cocos2d_specifics.cpp \
                    ../manual/js_manual_conversions.cpp \
@@ -69,8 +71,10 @@ LOCAL_SRC_FILES := ../auto/jsb_cocos2dx_3d_auto.cpp \
                    ../manual/network/jsb_websocket.cpp \
                    ../manual/network/XMLHTTPRequest.cpp \
                    ../manual/spine/jsb_cocos2dx_spine_manual.cpp \
-                   ../manual/ui/jsb_cocos2dx_ui_manual.cpp
-                   
+                   ../manual/ui/jsb_cocos2dx_ui_manual.cpp \
+                   ../manual/experimental/jsb_cocos2dx_experimental_manual.cpp \
+                   ../manual/physics3d/jsb_cocos2dx_physics3d_manual.cpp
+
 
 LOCAL_CFLAGS := -DCOCOS2D_JAVASCRIPT
 
@@ -81,6 +85,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../manual \
                     $(LOCAL_PATH)/../manual/spine \
                     $(LOCAL_PATH)/../auto \
                     $(LOCAL_PATH)/../../../2d \
+                    $(LOCAL_PATH)/../../../3d \
+                    $(LOCAL_PATH)/../../../physics3d \
                     $(LOCAL_PATH)/../../../base \
                     $(LOCAL_PATH)/../../../ui \
                     $(LOCAL_PATH)/../../../audio/include \
@@ -93,7 +99,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../manual \
 
 LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH)/../manual \
                            $(LOCAL_PATH)/../auto \
-                           $(LOCAL_PATH)/../../../audio/include 
+                           $(LOCAL_PATH)/../../../audio/include
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2d_js_android_static
 

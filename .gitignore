@@ -113,9 +113,14 @@ build/build/
 cocos/scripting/lua-bindings/proj.ios_mac/build/
 tests/*/runtime/
 tests/*/publish/
+tests/*/project/proj.android-studio/app/build.xml
+tests/*/project/proj.android-studio/app/proguard-project.txt
+tests/*/proj.android-studio/app/build.xml
+tests/*/proj.android-studio/app/proguard-project.txt
 
 # Android
 project.properties
+*.iml
 
 # Ignore prebuilt libraries folder
 /external/*

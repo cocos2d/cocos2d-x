@@ -352,6 +352,8 @@ public:
         uint32_t getHash() const;
         bool isDirty() const;
 
+        static StateBlock* _defaultState;
+
     protected:
         StateBlock();
         ~StateBlock();
@@ -359,6 +361,8 @@ public:
         void bindNoRestore();
         static void restore(long stateOverrideBits);
         static void enableDepthWrite();
+
+        void cloneInto(StateBlock* renderState) const;
 
         bool _cullFaceEnabled;
         bool _depthTestEnabled;
@@ -380,8 +384,6 @@ public:
 
         long _bits;
 
-        static StateBlock* _defaultState;
-
         mutable uint32_t _hash;
         mutable bool _hashDirty;
     };
@@ -393,6 +395,7 @@ protected:
     RenderState();
     ~RenderState();
     bool init(RenderState* parent);
+    void cloneInto(RenderState* state) const;
 
     mutable uint32_t _hash;
     mutable bool _hashDirty;

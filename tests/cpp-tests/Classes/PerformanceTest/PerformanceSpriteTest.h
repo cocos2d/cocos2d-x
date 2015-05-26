@@ -30,8 +30,9 @@
 
 #include <vector>
 
-#include "PerformanceTest.h"
+#include "BaseTest.h"
 
+DEFINE_TEST_SUITE(PerformceSpriteTests);
 
 class SubTest
 {
@@ -46,24 +47,11 @@ protected:
     cocos2d::Node* _parentNode;
 };
 
-class SpriteMenuLayer : public PerformBasicLayer
-{
-public:
-    SpriteMenuLayer(bool bControlMenuVisible, int nMaxCases = 0, int nCurCase = 0)
-        : PerformBasicLayer(bControlMenuVisible, nMaxCases, nCurCase)
-    {
-    }
-
-    virtual void restartCallback(cocos2d::Ref* sender) override;
-    virtual void nextCallback(cocos2d::Ref* sender) override;
-    virtual void backCallback(cocos2d::Ref* sender) override;
-    virtual void showCurrentTest();
-};
-
-class SpriteMainScene : public cocos2d::Scene
+class SpriteMainScene : public TestCase
 {
 public:
     virtual ~SpriteMainScene();
+    virtual bool init() override;
     virtual std::string title() const;
     virtual std::string subtitle() const;
 
@@ -75,9 +63,6 @@ public:
     void onDecrease(cocos2d::Ref* sender);
 
     virtual void doTest(cocos2d::Sprite* sprite) = 0;
-
-    int getSubTestNum() { return _subtestNumber; }
-    int getNodesNum() { return _quantityNodes; }
     
     virtual void onEnter() override;
     virtual void onExit() override;
@@ -92,6 +77,9 @@ public:
     static std::vector<float> _s_saved_fps;
 
 protected:
+    static int _quantityNodes;
+    static int _subtestNumber;
+
     void dumpProfilerFPS();
     void saveFPS();
     void beginAutoTest();
@@ -101,14 +89,14 @@ protected:
     void autoShowSpriteTests(int curCase, int subTest,int nodes);
 
     int _lastRenderedCount;
-    int _quantityNodes;
     SubTest* _subTest;
-    int _subtestNumber;
 };
 
 class SpritePerformTestA : public SpriteMainScene
 {
 public:
+    CREATE_FUNC(SpritePerformTestA);
+
     virtual void doTest(cocos2d::Sprite* sprite) override;
     virtual std::string title() const override;
 };
@@ -116,6 +104,8 @@ public:
 class SpritePerformTestB : public SpriteMainScene
 {
 public:
+    CREATE_FUNC(SpritePerformTestB);
+
     virtual void doTest(cocos2d::Sprite* sprite) override;
     virtual std::string title() const override;
 };
@@ -123,6 +113,8 @@ public:
 class SpritePerformTestC : public SpriteMainScene
 {
 public:
+    CREATE_FUNC(SpritePerformTestC);
+
     virtual void doTest(cocos2d::Sprite* sprite) override;
     virtual std::string title() const override;
 };
@@ -130,6 +122,8 @@ public:
 class SpritePerformTestD : public SpriteMainScene
 {
 public:
+    CREATE_FUNC(SpritePerformTestD);
+
     virtual void doTest(cocos2d::Sprite* sprite) override;
     virtual std::string title() const override;
 };
@@ -137,6 +131,8 @@ public:
 class SpritePerformTestE : public SpriteMainScene
 {
 public:
+    CREATE_FUNC(SpritePerformTestE);
+
     virtual void doTest(cocos2d::Sprite* sprite) override;
     virtual std::string title() const override;
 };
@@ -144,6 +140,8 @@ public:
 class SpritePerformTestF : public SpriteMainScene
 {
 public:
+    CREATE_FUNC(SpritePerformTestF);
+
     virtual void doTest(cocos2d::Sprite* sprite) override;
     virtual std::string title() const override;
 };
@@ -151,10 +149,10 @@ public:
 class SpritePerformTestG : public SpriteMainScene
 {
 public:
+    CREATE_FUNC(SpritePerformTestG);
+
     virtual void doTest(cocos2d::Sprite* sprite) override;
     virtual std::string title() const override;
 };
-
-void runSpriteTest();
 
 #endif

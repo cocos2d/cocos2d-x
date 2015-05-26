@@ -28,7 +28,7 @@
 #include <new>
 #include <exception>
 
-#include "base/ccMacros.h"
+#include <assert.h>
 
 USING_NS_CC_ALLOCATOR;
 
@@ -45,7 +45,7 @@ namespace
 void* operator new[] (std::size_t size)
 {
     void* ptr = global.allocate(size);
-    CCASSERT(ptr, "No memory");
+    assert(ptr && "No memory");
 
     // dissabling exceptions since cocos2d-x doesn't use them
 //#if CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
@@ -59,7 +59,7 @@ void* operator new[] (std::size_t size)
 void* operator new(std::size_t size)
 {
     void* ptr = global.allocate(size);
-    CCASSERT(ptr, "No memory");
+    assert(ptr && "No memory");
 
     // dissabling exceptions since cocos2d-x doesn't use them
 //#if CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID
