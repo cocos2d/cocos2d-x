@@ -24,7 +24,7 @@
             "to": "script"
         },
         {
-            "from": "../../res", 
+            "from": "../../resjs", 
             "to": "res/"
         }
     ], 
