@@ -27,6 +27,8 @@
 #include <mfapi.h>
 #include <mfidl.h>
 #include <mfreadwrite.h>
+#include <queue>
+#include <mutex>
 #include "MediaStreamer.h"
 
 NS_CC_BEGIN
@@ -35,6 +37,8 @@ namespace experimental{
 const UINT PCMDATA_CACHEMAXSIZE = 2621440;
 const UINT QUEUEBUFFER_NUM = 4;
 const UINT CHUNK_SIZE_MAX = PCMDATA_CACHEMAXSIZE / QUEUEBUFFER_NUM;
+
+typedef std::vector<BYTE> PCMBuffer;
 
 enum class FileFormat
 {
@@ -46,8 +50,8 @@ enum class FileFormat
 
 typedef struct AudioDataChunk
 {
+    std::shared_ptr<PCMBuffer> _data;
     size_t _dataSize;
-    unsigned char *_data;
     bool _endOfStream;
     int _seqNo;
 } AudioDataChunk;
@@ -88,13 +92,13 @@ class WAVReader : public AudioSourceReader
  {
  public:
      WAVReader();
-     ~WAVReader();
+     virtual ~WAVReader();
 
-     bool initialize(const std::string& filePath) override;
-     FileFormat getFileFormat() override { return FileFormat::WAV; }
-     bool consumeChunk(AudioDataChunk& chunk) override;
-     void produceChunk() override;
-     void seekTo(const float ratio) override;
+     virtual bool initialize(const std::string& filePath) override;
+     virtual FileFormat getFileFormat() override { return FileFormat::WAV; }
+     virtual bool consumeChunk(AudioDataChunk& chunk) override;
+     virtual void produceChunk() override;
+     virtual void seekTo(const float ratio) override;
 
  private:
      MediaStreamer^ _streamer;
@@ -104,25 +108,27 @@ class MP3Reader : public AudioSourceReader
  {
  public:
      MP3Reader();
-     ~MP3Reader();
+     virtual ~MP3Reader();
 
-     bool initialize(const std::string& filePath) override;
-     FileFormat getFileFormat() override { return FileFormat::WAV; }
-     bool consumeChunk(AudioDataChunk& chunk) override;
-     void produceChunk() override;
-     void seekTo(const float ratio) override;
+     virtual bool initialize(const std::string& filePath) override;
+     virtual FileFormat getFileFormat() override { return FileFormat::WAV; }
+     virtual bool consumeChunk(AudioDataChunk& chunk) override;
+     virtual void produceChunk() override;
+     virtual void seekTo(const float ratio) override;
+
+     // for backward compatibility with simple audio engine
+     void doLargeFileSupport(bool action) { _largeFileSupport = action; }
 
  protected:
      HRESULT configureSourceReader(IMFSourceReader* pReader, IMFMediaType** ppDecomprsdAudioType);
      HRESULT readAudioData(IMFSourceReader* pReader);
-     bool createMappedWavFile();
-     std::string computeHashForFile();
-     void chunkify(std::vector<BYTE> &buffer);
-     bool appendToMappedWavFile(std::vector<BYTE> &buffer);
+     void chunkify(PCMBuffer& buffer);
+     bool appendToMappedWavFile(PCMBuffer& buffer);
      void readFromMappedWavFile(BYTE *data, size_t offset, int size, UINT *pRetSize);
      Microsoft::WRL::Wrappers::FileHandle openFile(const std::string& path, bool append = false);
 
  private:
+     bool _largeFileSupport;
      std::string _mappedWavFile;
  };
 

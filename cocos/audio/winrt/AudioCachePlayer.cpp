@@ -412,7 +412,6 @@ void AudioPlayer::popBuffer()
 {
     _bqMutex.lock();
     if (!_cachedBufferQ.empty()) {
-        delete[] _cachedBufferQ.front()._data;
         _cachedBufferQ.pop();
     }
     _bqMutex.unlock();
@@ -429,7 +428,7 @@ bool AudioPlayer::submitBuffers()
             AudioDataChunk chunk;
             if (_cache->getChunk(chunk) && chunk._dataSize) {
                 _xaBuffer.AudioBytes = chunk._dataSize;
-                _xaBuffer.pAudioData = chunk._data;
+                _xaBuffer.pAudioData = chunk._data->data();
                 _xaBuffer.Flags = chunk._endOfStream ? XAUDIO2_END_OF_STREAM : 0;
                 _cachedBufferQ.push(chunk);
                 ret = SUCCEEDED(_xaSourceVoice->SubmitSourceBuffer(&_xaBuffer));
