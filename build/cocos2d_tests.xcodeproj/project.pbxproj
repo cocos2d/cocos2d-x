@@ -60,6 +60,10 @@
 		15B3709819EE5DBA00ABE682 /* AssetsManagerExTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15B3709619EE5DBA00ABE682 /* AssetsManagerExTest.cpp */; };
 		15B3709919EE5DBA00ABE682 /* AssetsManagerExTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15B3709619EE5DBA00ABE682 /* AssetsManagerExTest.cpp */; };
 		15B3709A19EE5EED00ABE682 /* Manifests in Resources */ = {isa = PBXBuildFile; fileRef = 15B3709219EE5D1000ABE682 /* Manifests */; };
+		15B914481B156A3700C6B95B /* Materials in Resources */ = {isa = PBXBuildFile; fileRef = 5046AB5A1AF2C4180060550B /* Materials */; };
+		15B914491B15721400C6B95B /* Shaders3D in Resources */ = {isa = PBXBuildFile; fileRef = B2507B6A192589AF00FA4972 /* Shaders3D */; };
+		15B9144A1B15A18C00C6B95B /* Materials in Resources */ = {isa = PBXBuildFile; fileRef = 5046AB5A1AF2C4180060550B /* Materials */; };
+		15B9144B1B15A18C00C6B95B /* Shaders3D in Resources */ = {isa = PBXBuildFile; fileRef = B2507B6A192589AF00FA4972 /* Shaders3D */; };
 		15C64825165F3934007D4F18 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64824165F3934007D4F18 /* OpenGL.framework */; };
 		15C64827165F394E007D4F18 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64826165F394E007D4F18 /* QuartzCore.framework */; };
 		15C64829165F396B007D4F18 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15C64828165F396B007D4F18 /* OpenAL.framework */; };
@@ -4438,6 +4442,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15B914491B15721400C6B95B /* Shaders3D in Resources */,
+				15B914481B156A3700C6B95B /* Materials in Resources */,
 				1531B2501AE013DE0075DB94 /* Test.html in Resources */,
 				1502702E1AD3BDC90089CD03 /* TerrainTest in Resources */,
 				157B08EC1A90864100B7BEA4 /* Particle3D in Resources */,
@@ -4485,6 +4491,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15B9144A1B15A18C00C6B95B /* Materials in Resources */,
+				15B9144B1B15A18C00C6B95B /* Shaders3D in Resources */,
 				1531B2511AE013F00075DB94 /* Test.html in Resources */,
 				1502702D1AD3BDBC0089CD03 /* TerrainTest in Resources */,
 				157B08ED1A90865600B7BEA4 /* Particle3D in Resources */,
