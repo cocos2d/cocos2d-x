@@ -4,7 +4,7 @@ var s_resprefix = "";
 var ccbjs = "";
 if (!cc.sys.isNative)
 {
-    ccbjs = "../../js-tests/res/";
+    ccbjs = "../../js-tests/resjs/";
 }
 
 var s_pathGrossini = "Images/grossini.png";
