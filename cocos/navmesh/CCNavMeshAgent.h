@@ -70,10 +70,11 @@ struct CC_DLL NavMeshAgentParam
 
 struct CC_DLL OffMeshLinkData
 {
-    Vec3 startPosition;
-    Vec3 endPosition;
+    Vec3 startPosition;//position in local coordinate system.
+    Vec3 endPosition;//position in local coordinate system.
 };
 
+/** @brief NavMeshAgent: The code wrapping of dtCrowdAgent, use component mode. */
 class CC_DLL NavMeshAgent : public Component
 {
     friend class NavMesh;
@@ -89,40 +90,108 @@ public:
 
     typedef std::function<void(NavMeshAgent *agent, float totalTimeAfterMove)> MoveCallback;
 
+    /**
+    Create agent
+
+    @param param The parameters of agent.
+    */
     static NavMeshAgent* create(const NavMeshAgentParam &param);
     static const std::string& getNavMeshAgentComponentName();
 
     virtual void onEnter() override;
     virtual void onExit() override;
 
+    /** set agent radius */
     void setRadius(float radius);
+
+    /** get agent radius */
     float getRadius() const;
+
+    /** set agent height */
     void setHeight(float height);
+
+    /** get agent height */
     float getHeight() const;
+
+    /** set maximal acceleration of agent*/
     void setMaxAcceleration(float maxAcceleration);
+
+    /** get maximal acceleration of agent*/
     float getMaxAcceleration() const;
+
+    /** set maximal speed of agent */
     void setMaxSpeed(float maxSpeed);
+
+    /** get maximal speed of agent */
     float getMaxSpeed() const;
+
+    /** set separation weight */
+    void setSeparationWeight(float weight);
+
+    /** get separation weight */
+    float getSeparationWeight() const;
+
+    /** set obstacle avoidance type */
+    void setObstacleAvoidanceType(unsigned char type);
+
+    /** get obstacle avoidance type */
+    unsigned char getObstacleAvoidanceType() const;
+
+    /** get current velocity */
     Vec3 getCurrentVelocity() const;
 
+    /**
+    Move agent to a destination
+
+    @param destination The position in world coordinate system.
+    @param callback Use this function can catch movement state.
+    */
     void move(const Vec3 &destination, const MoveCallback &callback = nullptr);
+
+    /** puase movement */
     void pause();
+
+    /** resume movement */
     void resume();
+
+    /** stop movement */
     void stop();
 
+    /**
+    Set the reference axes of agent's orientation
+
+    @param rotRefAxes The value of reference axes in local coordinate system.
+    */
     void setOrientationRefAxes(const Vec3 &rotRefAxes);
+
+    /**Set automatic Orientation */
     void setAutoOrientation(bool isAuto);
+
+    /**Set automatic Traverse OffMeshLink */
     void setAutoTraverseOffMeshLink(bool isAuto);
+
+    /**Check agent arrived OffMeshLink */
     bool isOnOffMeshLink();
+
+    /**Traverse OffMeshLink manually*/
     void completeOffMeshLink();
+
+    /**Get current OffMeshLink information*/
     OffMeshLinkData getCurrentOffMeshLinkData();
 
     void setUserData(void *data) { _userData = data; };
     void* getUserData() const { return _userData; };
 
+    /**
+    * synchronization between node and agent is time consuming, you can skip some synchronization using this function
+    */
     void setSyncFlag(const NavMeshAgentSyncFlag &flag) { _syncFlag = flag;  }
     NavMeshAgentSyncFlag getSyncFlag() const { return _syncFlag; }
+
+    /** synchronize parameter to agent. */
     void syncToAgent();
+
+    /** synchronize parameter to node. */
     void syncToNode();
     
     /** get current velocity */

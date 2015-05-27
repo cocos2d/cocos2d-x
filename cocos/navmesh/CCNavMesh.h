@@ -50,21 +50,50 @@ NS_CC_BEGIN
  * @{
  */
 class Renderer;
+/** @brief NavMesh: The NavMesh information container, include mesh, tileCache, and so on. */
 class CC_DLL NavMesh : public Ref
 {
 public:
 
+    /**
+    Create navmesh
+
+    @param navFilePath The NavMesh File path.
+    @param geomFilePath The geometry File Path,include offmesh information,etc.
+    */
     static NavMesh* create(const std::string &navFilePath, const std::string &geomFilePath);
 
+    /** update navmesh. */
     void update(float dt);
+
+    /** Internal method, the updater of debug drawing, need called each frame. */
     void debugDraw(Renderer* renderer);
+
+    /** Enable debug draw or disable. */
     void setDebugDrawEnable(bool enable);
+
+    /** Check enabled debug draw. */
     bool isDebugDrawEnabled() const;
+
+    /** add a agent to navmesh. */
     void addNavMeshAgent(NavMeshAgent *agent);
+
+    /** remove a agent from navmesh. */
     void removeNavMeshAgent(NavMeshAgent *agent);
+
+    /** add a obstacle to navmesh. */
     void addNavMeshObstacle(NavMeshObstacle *obstacle);
+
+    /** remove a obstacle from navmesh. */
     void removeNavMeshObstacle(NavMeshObstacle *obstacle);
 
+    /**
+    find a path on navmesh
+
+    @param start The start search position in world coordinate system.
+    @param end The end search position in world coordinate system.
+    @param pathPoints the key points of path.
+    */
     void findPath(const Vec3 &start, const Vec3 &end, std::vector<Vec3> &pathPoints);
 
 CC_CONSTRUCTOR_ACCESS:

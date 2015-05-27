@@ -155,6 +155,28 @@ float NavMeshAgent::getMaxSpeed() const
     return _param.maxSpeed;
 }
 
+void NavMeshAgent::setSeparationWeight(float weight)
+{
+    _param.separationWeight = weight;
+    _needUpdateAgent = true;
+}
+
+float NavMeshAgent::getSeparationWeight() const
+{
+    return _param.separationWeight;
+}
+
+void cocos2d::NavMeshAgent::setObstacleAvoidanceType(unsigned char type)
+{
+    _param.obstacleAvoidanceType = type;
+    _needUpdateAgent = true;
+}
+
+unsigned char NavMeshAgent::getObstacleAvoidanceType() const
+{
+    return _param.obstacleAvoidanceType;
+}
+
 Vec3 NavMeshAgent::getCurrentVelocity() const
 {
     if (_crowd){
@@ -287,7 +309,7 @@ void NavMeshAgent::preUpdate(float delta)
 {
     if (_state != DT_CROWDAGENT_STATE_INVALID)
         _totalTimeAfterMove += delta;
-    if (_moveCallback)
+    if (_moveCallback && _state != DT_CROWDAGENT_STATE_INVALID)
         _moveCallback(this, _totalTimeAfterMove);
 
     if ((_syncFlag & NODE_TO_AGENT) != 0)
