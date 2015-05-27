@@ -1127,6 +1127,9 @@ Developers:
     tankorsmash
         Fixed the bug that ProgressTimer::setSprite() doesn't take effect
 
+    namezero111111
+        ui: TextField add `getTextColor`, `getTextHorizontalAlignment` and `getTextVerticalAlignment` API
+
 Retired Core Developers:
     WenSheng Yang
         Author of windows port, CCTextField,
