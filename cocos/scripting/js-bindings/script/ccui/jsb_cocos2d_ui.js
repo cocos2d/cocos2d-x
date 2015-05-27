@@ -378,10 +378,10 @@ ccui.Scale9Sprite.prototype.updateWithBatchNode = function (batchNode, originalR
  * @type {{LOADING: string, LOADED: string, ERROR: string}}
  */
 ccui.WebView.EventType = {
-    LOADING: "ui_webview_loading",
-    LOADED: "ui_webview_load",
-    ERROR: "ui_webview_error",
-    JS_EVALUATED: "ui_webview_js"
+    LOADING: "loading",
+    LOADED: "load",
+    ERROR: "error",
+    JS_EVALUATED: "js"
 };
 
 ccui.WebView.prototype._loadURL = ccui.WebView.prototype.loadURL;
