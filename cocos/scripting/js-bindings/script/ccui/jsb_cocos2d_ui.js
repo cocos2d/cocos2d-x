@@ -373,6 +373,17 @@ ccui.Scale9Sprite.prototype.updateWithBatchNode = function (batchNode, originalR
     this.updateWithSprite(sprite, originalRect, rotated, cc.p(0, 0), cc.size(originalRect.width, originalRect.height), capInsets);
 };
 
+/**
+ * The WebView support list of events
+ * @type {{LOADING: string, LOADED: string, ERROR: string}}
+ */
+ccui.WebView.EventType = {
+    LOADING: "ui_webview_loading",
+    LOADED: "ui_webview_load",
+    ERROR: "ui_webview_error",
+    JS_EVALUATED: "ui_webview_js"
+};
+
 ccui.WebView.prototype._loadURL = ccui.WebView.prototype.loadURL;
 ccui.WebView.prototype.loadURL = function (url) {
     if (url.indexOf("http://") >= 0)
