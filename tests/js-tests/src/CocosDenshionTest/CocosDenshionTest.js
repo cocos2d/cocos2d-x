@@ -26,8 +26,8 @@
 
 var audioEngine = cc.audioEngine;
 
-var MUSIC_FILE = cc.sys.os == cc.sys.OS_WINRT ? "res/background.wav" : "res/Sound/background.mp3";
-var EFFECT_FILE = cc.sys.os == cc.sys.OS_WINRT ? "res/effect1.wav" : "res/Sound/effect2.mp3";
+var MUSIC_FILE = cc.sys.os == cc.sys.OS_WINRT ? "background.wav" : "background.mp3";
+var EFFECT_FILE = cc.sys.os == cc.sys.OS_WINRT ? "effect1.wav" : "effect2.mp3";
 
 var _DenshionTests = [
     'Music Test'
