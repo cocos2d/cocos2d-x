@@ -37,8 +37,6 @@ enum {
 
 Texture2DTests::Texture2DTests()
 {
-    ADD_TEST_CASE(TexturePVRv3Premult);
-
     ADD_TEST_CASE(TextureMipMap);
     ADD_TEST_CASE(TextureMemoryAlloc);
     ADD_TEST_CASE(TextureAlias);

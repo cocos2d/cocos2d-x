@@ -32,23 +32,32 @@ NinePatchImageParser::~NinePatchImageParser()
 
 }
 
+NinePatchImageParser::NinePatchImageParser()
+:_image(nullptr)
+,_imageFrame(Rect::ZERO)
+,_isRotated(false)
+{
+
+}
+
 
 NinePatchImageParser::NinePatchImageParser(Image* image)
+:_image(image)
+,_imageFrame(Rect::ZERO)
+,_isRotated(false)
 {
-    this->_image = image;
     this->_imageFrame = Rect(0,0,image->getWidth(), image->getHeight());
     CCASSERT(image->getRenderFormat()==Texture2D::PixelFormat::RGBA8888,
              "unsupported format, currently only supports rgba8888");
-    this->_isRotated = false;
 }
 
 NinePatchImageParser::NinePatchImageParser(Image* image, const Rect& frame, bool rotated)
+:_image(image)
+,_imageFrame(frame)
+,_isRotated(rotated)
 {
-    this->_image = image;
     CCASSERT(image->getRenderFormat()==Texture2D::PixelFormat::RGBA8888,
              "unsupported format, currently only supports rgba8888");
-    this->_imageFrame = frame;
-    this->_isRotated = rotated;
 }
 
 int NinePatchImageParser::getFrameHeight()const
@@ -182,8 +191,11 @@ Rect NinePatchImageParser::parseCapInset() const
     return capInsets;
 }
 
-void NinePatchImageParser::setSpriteFrameInfo( const cocos2d::Rect& frameRect, bool rotated )
+void NinePatchImageParser::setSpriteFrameInfo(Image* image, const cocos2d::Rect& frameRect, bool rotated )
 {
+    this->_image = image;
+    CCASSERT(image->getRenderFormat()==Texture2D::PixelFormat::RGBA8888,
+             "unsupported format, currently only supports rgba8888");
     this->_imageFrame = frameRect;
     this->_isRotated = rotated;
 }

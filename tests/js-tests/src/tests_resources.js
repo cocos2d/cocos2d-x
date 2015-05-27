@@ -1,6 +1,12 @@
 // Resources prefix
 var s_resprefix = "";
 
+var ccbjs = "";
+if (!cc.sys.isNative)
+{
+    ccbjs = "../../js-tests/resjs/";
+}
+
 var s_pathGrossini = "Images/grossini.png";
 var s_pathSister1 = "Images/grossinis_sister1.png";
 var s_pathSister2 = "Images/grossinis_sister2.png";
@@ -149,7 +155,7 @@ var s_tileISOOffsetPng = "TileMaps/tile_iso_offset.png";
 var s_tileISOOffsetTmx = "TileMaps/tile_iso_offset.tmx";
 
 var s_fnTuffyBoldItalicCharmapPng = "fonts/tuffy_bold_italic-charmap.png";
-var s_fpsImages = "fonts/fps_images.png";
+var s_fpsImages = "fps_images.png";
 var s_bitmapFontTest = "fonts/bitmapFontTest.png";
 var s_bitmapFontTest2 = "fonts/bitmapFontTest2.png";
 var s_bitmapFontTest3 = "fonts/bitmapFontTest3.png";
@@ -315,25 +321,25 @@ var g_s9s_blocks = [
 
 var g_opengl_resources = [
     //preload shader source
-    "Shaders/example_Outline.fsh",
-    "Shaders/example_Outline.vsh",
-    "Shaders/example_Blur.fsh",
-    "Shaders/example_ColorBars.fsh",
-    "Shaders/example_ColorBars.vsh",
-    "Shaders/example_Flower.fsh",
-    "Shaders/example_Flower.vsh",
-    "Shaders/example_Heart.fsh",
-    "Shaders/example_Heart.vsh",
-    "Shaders/example_Julia.fsh",
-    "Shaders/example_Julia.vsh",
-    "Shaders/example_Mandelbrot.fsh",
-    "Shaders/example_Mandelbrot.vsh",
-    "Shaders/example_Monjori.fsh",
-    "Shaders/example_Monjori.vsh",
-    "Shaders/example_Plasma.fsh",
-    "Shaders/example_Plasma.vsh",
-    "Shaders/example_Twist.fsh",
-    "Shaders/example_Twist.vsh",
+    ccbjs + "Shaders/example_Outline.fsh",
+    ccbjs + "Shaders/example_Outline.vsh",
+    ccbjs + "Shaders/example_Blur.fsh",
+    ccbjs + "Shaders/example_ColorBars.fsh",
+    ccbjs + "Shaders/example_ColorBars.vsh",
+    ccbjs + "Shaders/example_Flower.fsh",
+    ccbjs + "Shaders/example_Flower.vsh",
+    ccbjs + "Shaders/example_Heart.fsh",
+    ccbjs + "Shaders/example_Heart.vsh",
+    ccbjs + "Shaders/example_Julia.fsh",
+    ccbjs + "Shaders/example_Julia.vsh",
+    ccbjs + "Shaders/example_Mandelbrot.fsh",
+    ccbjs + "Shaders/example_Mandelbrot.vsh",
+    ccbjs + "Shaders/example_Monjori.fsh",
+    ccbjs + "Shaders/example_Monjori.vsh",
+    ccbjs + "Shaders/example_Plasma.fsh",
+    ccbjs + "Shaders/example_Plasma.vsh",
+    ccbjs + "Shaders/example_Twist.fsh",
+    ccbjs + "Shaders/example_Twist.vsh",
 
     "fonts/west_england-64.fnt",
     "fonts/west_england-64.png"
@@ -450,22 +456,22 @@ var g_fonts = [
     {
         type:"font",
         name:"Thonburi",
-        srcs:["fonts/Thonburi.eot", "fonts/Thonburi.ttf"]
+        srcs:["../cpp-tests/Resources/fonts/Thonburi.eot", "../cpp-tests/Resources/fonts/Thonburi.ttf"]
     },
     {
         type:"font",
         name:"Schwarzwald Regular",
-        srcs:["fonts/Schwarzwald_Regular.eot", "fonts/Schwarzwald Regular.ttf"]
+        srcs:["../cpp-tests/Resources/fonts/Schwarzwald_Regular.eot", "../cpp-tests/Resources/fonts/Schwarzwald Regular.ttf"]
     },
     {
         type:"font",
         name:"ThonburiBold",
-        srcs:["fonts/ThonburiBold.eot", "fonts/ThonburiBold.ttf"]
+        srcs:["../cpp-tests/Resources/fonts/ThonburiBold.eot", "../cpp-tests/Resources/fonts/ThonburiBold.ttf"]
     },
     {
         type:"font",
         name:"Courier New",
-        srcs:["fonts/Courier New.eot", "fonts/Courier New.ttf"]
+        srcs:["../cpp-tests/Resources/fonts/Courier New.eot", "../cpp-tests/Resources/fonts/Courier New.ttf"]
     }
 ];
 
@@ -478,46 +484,46 @@ var g_extensions = [
     s_extensions_ribbon,
 
     //ccbi resource
-    "ccb/HelloCocosBuilder.ccbi",
-    "ccb/ccb/TestAnimations.ccbi",
-    "ccb/ccb/TestAnimationsSub.ccbi",
-    "ccb/ccb/TestButtons.ccbi",
-    "ccb/ccb/TestHeader.ccbi",
-    "ccb/ccb/TestLabels.ccbi",
-    "ccb/ccb/TestMenus.ccbi",
-    "ccb/ccb/TestParticleSystems.ccbi",
-    "ccb/ccb/TestScrollViews.ccbi",
-    "ccb/ccb/TestScrollViewsContentA.ccbi",
-    "ccb/ccb/TestSprites.ccbi",
+    ccbjs + "ccb/HelloCocosBuilder.ccbi",
+    ccbjs + "ccb/ccb/TestAnimations.ccbi",
+    ccbjs + "ccb/ccb/TestAnimationsSub.ccbi",
+    ccbjs + "ccb/ccb/TestButtons.ccbi",
+    ccbjs + "ccb/ccb/TestHeader.ccbi",
+    ccbjs + "ccb/ccb/TestLabels.ccbi",
+    ccbjs + "ccb/ccb/TestMenus.ccbi",
+    ccbjs + "ccb/ccb/TestParticleSystems.ccbi",
+    ccbjs + "ccb/ccb/TestScrollViews.ccbi",
+    ccbjs + "ccb/ccb/TestScrollViewsContentA.ccbi",
+    ccbjs + "ccb/ccb/TestSprites.ccbi",
 
-    "ccb/ccbParticleStars.png",
-    "ccb/btn-test-0.png",
-    "ccb/animated-grossini.png",
-    "ccb/btn-a-0.png",
-    "ccb/btn-a-1.png",
-    "ccb/btn-a-2.png",
-    "ccb/btn-b-0.png",
-    "ccb/btn-b-1.png",
-    "ccb/btn-b-2.png",
-    "ccb/btn-back-0.png",
-    "ccb/btn-back-1.png",
-    "ccb/btn-test-0.png",
-    "ccb/btn-test-1.png",
-    "ccb/btn-test-2.png",
-    "ccb/burst.png",
-    "ccb/flower.jpg",
-    "ccb/grossini-generic.png",
-    "ccb/jungle.png",
-    "ccb/jungle-left.png",
-    "ccb/jungle-right.png",
-    "ccb/logo.png",
-    "ccb/logo-icon.png",
-    "ccb/markerfelt24shadow.png",
-    "ccb/particle-fire.png",
-    "ccb/particle-smoke.png",
-    "ccb/particle-snow.png",
-    "ccb/particle-stars.png",
-    "ccb/scale-9-demo.png",
+    ccbjs + "ccb/ccbParticleStars.png",
+    ccbjs + "ccb/btn-test-0.png",
+    ccbjs + "ccb/animated-grossini.png",
+    ccbjs + "ccb/btn-a-0.png",
+    ccbjs + "ccb/btn-a-1.png",
+    ccbjs + "ccb/btn-a-2.png",
+    ccbjs + "ccb/btn-b-0.png",
+    ccbjs + "ccb/btn-b-1.png",
+    ccbjs + "ccb/btn-b-2.png",
+    ccbjs + "ccb/btn-back-0.png",
+    ccbjs + "ccb/btn-back-1.png",
+    ccbjs + "ccb/btn-test-0.png",
+    ccbjs + "ccb/btn-test-1.png",
+    ccbjs + "ccb/btn-test-2.png",
+    ccbjs + "ccb/burst.png",
+    ccbjs + "ccb/flower.jpg",
+    ccbjs + "ccb/grossini-generic.png",
+    ccbjs + "ccb/jungle.png",
+    ccbjs + "ccb/jungle-left.png",
+    ccbjs + "ccb/jungle-right.png",
+    ccbjs + "ccb/logo.png",
+    ccbjs + "ccb/logo-icon.png",
+    ccbjs + "ccb/markerfelt24shadow.png",
+    ccbjs + "ccb/particle-fire.png",
+    ccbjs + "ccb/particle-smoke.png",
+    ccbjs + "ccb/particle-snow.png",
+    ccbjs + "ccb/particle-stars.png",
+    ccbjs + "ccb/scale-9-demo.png",
     "extensions/green_edit.png",
     "extensions/orange_edit.png",
     "extensions/yellow_edit.png",
@@ -538,10 +544,10 @@ var g_extensions = [
     "extensions/CCControlColourPickerSpriteSheet.plist",
     "extensions/CCControlColourPickerSpriteSheet.png",
 
-    "ccb/markerfelt24shadow.fnt",
+    ccbjs + "ccb/markerfelt24shadow.fnt",
 
-    "ccb/grossini-generic.plist",
-    "ccb/animated-grossini.plist"
+    ccbjs + "ccb/grossini-generic.plist",
+    ccbjs + "ccb/animated-grossini.plist"
 ];
 
 var g_cocoStudio = [
@@ -960,7 +966,7 @@ var g_ui = [
 var g_performace = [
     "animations/crystals.plist",
     "animations/crystals.png",
-    "Images/fps_images.png",
+    "fps_images.png",
     "Images/spritesheet1.png",
     "Images/sprites_test/sprite-0-0.png",
     "Images/sprites_test/sprite-0-1.png",
@@ -1075,13 +1081,13 @@ var g_tilemaps = [
 ];
 
 var g_spine = [
-    "skeletons/spineboy.atlas",
-    "skeletons/spineboy.json",
-    "skeletons/spineboy.png",
-    "skeletons/sprite.png",
-    "skeletons/goblins-ffd.png",
-    "skeletons/goblins-ffd.atlas",
-    "skeletons/goblins-ffd.json"
+    "spine/spineboy.atlas",
+    "spine/spineboy.json",
+    "spine/spineboy.png",
+    "spine/sprite.png",
+    "spine/goblins-ffd.png",
+    "spine/goblins-ffd.atlas",
+    "spine/goblins-ffd.json"
 ];
 
 var g_ccs2 = [
