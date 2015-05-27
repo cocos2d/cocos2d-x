@@ -242,6 +242,11 @@
 
 
 --------------------------------------------------------
+-- the cc Properties
+-- @field [parent=#cc] Properties#Properties Properties preloaded module
+
+
+--------------------------------------------------------
 -- the cc UserDefault
 -- @field [parent=#cc] UserDefault#UserDefault UserDefault preloaded module
 
@@ -1179,6 +1184,26 @@
 --------------------------------------------------------
 -- the cc GLProgramCache
 -- @field [parent=#cc] GLProgramCache#GLProgramCache GLProgramCache preloaded module
+
+
+--------------------------------------------------------
+-- the cc RenderState
+-- @field [parent=#cc] RenderState#RenderState RenderState preloaded module
+
+
+--------------------------------------------------------
+-- the cc Pass
+-- @field [parent=#cc] Pass#Pass Pass preloaded module
+
+
+--------------------------------------------------------
+-- the cc Technique
+-- @field [parent=#cc] Technique#Technique Technique preloaded module
+
+
+--------------------------------------------------------
+-- the cc Material
+-- @field [parent=#cc] Material#Material Material preloaded module
 
 
 --------------------------------------------------------
