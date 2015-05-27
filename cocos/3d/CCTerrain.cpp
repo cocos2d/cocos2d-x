@@ -327,6 +327,10 @@ float Terrain::getHeight(float x, float z, Vec3 * normal)
     if(image_x>=_imageWidth-1 || image_y >=_imageHeight-1 || image_x<0 || image_y<0)
     {
         return 0;
+        if (normal)
+        {
+            normal->setZero();
+        }
     }else
     {
         float a = getImageHeight(i,j)*getScaleY();
@@ -513,12 +517,14 @@ cocos2d::Vec3 Terrain::getIntersectionPoint(const Ray & ray)
     Vec3 lastRayPosition =rayPos;
     rayPos += rayStep; 
     // Linear search - Loop until find a point inside and outside the terrain Vector3 
-    float height = getHeight(rayPos.x,rayPos.z); 
-
+    Vec3 normal;
+    float height = getHeight(rayPos.x, rayPos.z, &normal);
     while (rayPos.y > height)
     {
         lastRayPosition = rayPos; 
         rayPos += rayStep; 
+        if (normal.isZero())
+            return Vec3(0, 0, 0);
         height = getHeight(rayPos.x,rayPos.z); 
     } 
 
@@ -536,6 +542,47 @@ cocos2d::Vec3 Terrain::getIntersectionPoint(const Ray & ray)
     } 
     Vec3 collisionPoint = (startPosition + endPosition) * 0.5f; 
     return collisionPoint;
+}
+
+bool Terrain::getIntersectionPoint(const Ray & ray, Vec3 & intersectionPoint)
+{
+    Vec3 dir = ray._direction;
+    dir.normalize();
+    Vec3 rayStep = _terrainData._chunkSize.width*0.25*dir;
+    Vec3 rayPos = ray._origin;
+    Vec3 rayStartPosition = ray._origin;
+    Vec3 lastRayPosition = rayPos;
+    rayPos += rayStep;
+    // Linear search - Loop until find a point inside and outside the terrain Vector3 
+    Vec3 normal;
+    float height = getHeight(rayPos.x, rayPos.z, &normal);
+    while (rayPos.y > height)
+    {
+        lastRayPosition = rayPos;
+        rayPos += rayStep;
+        if (normal.isZero())
+        {
+            intersectionPoint = Vec3(0, 0, 0);
+            return false;
+        }
+        height = getHeight(rayPos.x, rayPos.z);
+    }
+
+    Vec3 startPosition = lastRayPosition;
+    Vec3 endPosition = rayPos;
+
+    for (int i = 0; i < 32; i++)
+    {
+        // Binary search pass 
+        Vec3 middlePoint = (startPosition + endPosition) * 0.5f;
+        if (middlePoint.y < height)
+            endPosition = middlePoint;
+        else
+            startPosition = middlePoint;
+    }
+    Vec3 collisionPoint = (startPosition + endPosition) * 0.5f;
+    intersectionPoint = collisionPoint;
+    return true;
 }
 
 void Terrain::setMaxDetailMapAmount(int max_value)
