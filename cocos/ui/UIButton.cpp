@@ -29,6 +29,7 @@ THE SOFTWARE.
 #include "2d/CCActionInterval.h"
 #include "platform/CCFileUtils.h"
 #include "ui/UIHelper.h"
+#include <algorithm>
 
 NS_CC_BEGIN
 
@@ -780,22 +781,27 @@ Color3B Button::getTitleColor() const
 
 void Button::setTitleFontSize(float size)
 {
-    if(nullptr == _titleRenderer)
+    if (nullptr == _titleRenderer)
     {
         this->createTitleRenderer();
     }
+
+    _fontSize = size;
     if (_type == FontType::SYSTEM)
     {
-        _titleRenderer->setSystemFontSize(size);
+        _titleRenderer->setSystemFontSize(_fontSize);
+    }
+    else if (_type == FontType::TTF)
+    {
+        TTFConfig config = _titleRenderer->getTTFConfig();
+        config.fontSize = _fontSize;
+        _titleRenderer->setTTFConfig(config);
     }
     else
     {
-        TTFConfig config = _titleRenderer->getTTFConfig();
-        config.fontSize = size;
-        _titleRenderer->setTTFConfig(config);
+        return;
     }
     updateContentSize();
-    _fontSize = size;
 }
 
 float Button::getTitleFontSize() const
@@ -821,11 +827,21 @@ void Button::setTitleFontName(const std::string& fontName)
     }
     if(FileUtils::getInstance()->isFileExist(fontName))
     {
-        TTFConfig config = _titleRenderer->getTTFConfig();
-        config.fontFilePath = fontName;
-        config.fontSize = _fontSize;
-        _titleRenderer->setTTFConfig(config);
-        _type = FontType::TTF;
+        std::string lowerCasedFontName = fontName;
+        std::transform(lowerCasedFontName.begin(), lowerCasedFontName.end(), lowerCasedFontName.begin(), ::tolower);
+        if (lowerCasedFontName.find(".fnt") != std::string::npos)
+        {
+            _titleRenderer->setBMFontFilePath(fontName);
+            _type = FontType::BMFONT;
+        }
+        else
+        {
+            TTFConfig config = _titleRenderer->getTTFConfig();
+            config.fontFilePath = fontName;
+            config.fontSize = _fontSize;
+            _titleRenderer->setTTFConfig(config);
+            _type = FontType::TTF;
+        }
     }
     else
     {
@@ -849,13 +865,17 @@ const std::string Button::getTitleFontName() const
 {
     if (nullptr != _titleRenderer)
     {
-        if(this->_type == FontType::SYSTEM)
+        if (this->_type == FontType::SYSTEM)
         {
             return _titleRenderer->getSystemFontName();
         }
-        else
+        else if (this->_type == FontType::TTF)
         {
             return  _titleRenderer->getTTFConfig().fontFilePath;
+        }
+        else
+        {
+            return _titleRenderer->getBMFontFilePath();
         }
     }
     else
