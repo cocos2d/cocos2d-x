@@ -52,9 +52,9 @@ class RenderTarget : public RenderTargetBase
 {
 public:
     
-    static RenderTarget* create(unsigned int width, unsigned int height);
+    static RenderTarget* create(unsigned int width, unsigned int height, Texture2D::PixelFormat format = Texture2D::PixelFormat::RGBA8888);
     
-    bool init(unsigned int width, unsigned int height);
+    bool init(unsigned int width, unsigned int height, Texture2D::PixelFormat format);
     
     Texture2D* getTexture() const { return _texture; }
 CC_CONSTRUCTOR_ACCESS:

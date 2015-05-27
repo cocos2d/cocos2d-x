@@ -46,10 +46,10 @@ bool RenderTargetBase::init(unsigned int width, unsigned int height)
     return true;
 }
 
-RenderTarget* RenderTarget::create(unsigned int width, unsigned int height)
+RenderTarget* RenderTarget::create(unsigned int width, unsigned int height, Texture2D::PixelFormat format/* = Texture2D::PixelFormat::RGBA8888*/)
 {
     auto result = new (std::nothrow) RenderTarget();
-    if(result && result->init(width, height))
+    if(result && result->init(width, height,format))
     {
         result->autorelease();
         return result;
@@ -61,7 +61,7 @@ RenderTarget* RenderTarget::create(unsigned int width, unsigned int height)
     }
 }
 
-bool RenderTarget::init(unsigned int width, unsigned int height)
+bool RenderTarget::init(unsigned int width, unsigned int height, Texture2D::PixelFormat format)
 {
     if(!RenderTargetBase::init(width, height))
     {
@@ -75,7 +75,7 @@ bool RenderTarget::init(unsigned int width, unsigned int height)
     if( nullptr == data) return false;
     
     memset(data, 0, dataLen);
-    if(_texture->initWithData(data, dataLen, Texture2D::PixelFormat::RGBA8888, width, height, Size(width, height)))
+    if(_texture->initWithData(data, dataLen, format, width, height, Size(width, height)))
     {
         _texture->autorelease();
         CC_SAFE_RETAIN(_texture);
