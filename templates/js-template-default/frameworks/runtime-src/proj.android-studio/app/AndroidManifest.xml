@@ -14,7 +14,7 @@
 				   android:value="cocos2djs" />
 		
         <activity
-            android:name=".AppActivity"
+            android:name="org.cocos2dx.javascript.AppActivity"
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"

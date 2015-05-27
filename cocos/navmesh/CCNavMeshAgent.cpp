@@ -349,16 +349,19 @@ void NavMeshAgent::syncToNode()
         _owner->setPosition3D(pos);
         _state = agent->state;
         if (_needAutoOrientation){
-            Vec3 axes(_rotRefAxes);
-            axes.normalize();
-            Vec3 dir;
-            wtop.transformVector(Vec3(agent->vel[0], agent->vel[1], agent->vel[2]), &dir);
-            dir.normalize();
-            float cosTheta = Vec3::dot(axes, dir);
-            Vec3 rotAxes;
-            Vec3::cross(axes, dir, &rotAxes);
-            Quaternion rot = Quaternion(rotAxes, acosf(cosTheta));
-            _owner->setRotationQuat(rot);
+            if ( fabs(agent->vel[0]) > 0.3f || fabs(agent->vel[1]) > 0.3f || fabs(agent->vel[2]) > 0.3f)
+            {
+                Vec3 axes(_rotRefAxes);
+                axes.normalize();
+                Vec3 dir;
+                wtop.transformVector(Vec3(agent->vel[0], agent->vel[1], agent->vel[2]), &dir);
+                dir.normalize();
+                float cosTheta = Vec3::dot(axes, dir);
+                Vec3 rotAxes;
+                Vec3::cross(axes, dir, &rotAxes);
+                Quaternion rot = Quaternion(rotAxes, acosf(cosTheta));
+                _owner->setRotationQuat(rot);
+            }
         }
     }
 }

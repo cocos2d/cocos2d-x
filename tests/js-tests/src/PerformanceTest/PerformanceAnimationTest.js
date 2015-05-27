@@ -177,7 +177,7 @@ var CharacterView = cc.Node.extend({
 
     init: function() {
         this._super();
-        cc.spriteFrameCache.addSpriteFrames("res/animations/crystals.plist");
+        cc.spriteFrameCache.addSpriteFrames("animations/crystals.plist");
         var i = 0;
         rightData = new Array(10);
         for (i = 0; i < 10; i++) {

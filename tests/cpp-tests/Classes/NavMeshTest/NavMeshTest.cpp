@@ -173,11 +173,11 @@ void NavMeshBaseTestDemo::initScene()
     setNavMeshDebugCamera(_camera);
 
 
-    auto ambientLight = AmbientLight::create(Color3B(64, 64, 64));
+    auto ambientLight = AmbientLight::create(Color3B(80, 80, 80));
     ambientLight->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(ambientLight);
 
-    auto dirLight = DirectionLight::create(Vec3(1.2f, -1.1f, 0.5f), Color3B(255, 255, 255));
+    auto dirLight = DirectionLight::create(Vec3(1.2f, -1.1f, 0.5f), Color3B(180, 180, 180));
     dirLight->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(dirLight);
 }

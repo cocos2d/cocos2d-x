@@ -3,7 +3,7 @@ var UIVideoPlayerTest = UIScene.extend({
     onEnter: function(){
         UIScene.prototype.onEnter.call(this);
 
-        var video = new ccui.VideoPlayer("res/cocosui/UITest/movie.mp4");
+        var video = new ccui.VideoPlayer("cocosui/UITest/movie.mp4");
         video.setContentSize(320, 240);
         video.setPosition(800/2, 450/2);
         video.setScale(0.5);

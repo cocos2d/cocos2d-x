@@ -44,8 +44,7 @@ NavMeshDebugDraw::NavMeshDebugDraw()
     _stateBlock->setCullFaceSide(RenderState::CullFaceSide::CULL_FACE_SIDE_BACK);
     _stateBlock->setDepthTest(true);
     _stateBlock->setBlend(true);
-    _stateBlock->setBlendSrc(RenderState::Blend::BLEND_SRC_ALPHA);
-    _stateBlock->setBlendDst(RenderState::Blend::BLEND_ONE);
+    _stateBlock->setBlendFunc(BlendFunc::ALPHA_NON_PREMULTIPLIED);
     CC_SAFE_RETAIN(_stateBlock);
     
     _customCmd.set3D(true);

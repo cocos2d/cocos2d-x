@@ -25,6 +25,7 @@
 #include "lua_cocos2dx_3d_auto.hpp"
 #include "LuaBasicConversions.h"
 #include "CCLuaEngine.h"
+#include "3d/CCBundle3D.h"
 
 extern int lua_cocos2dx_3d_Sprite3D_setBlendFunc(lua_State* L);
 
@@ -231,9 +232,9 @@ bool luaval_to_terraindata(lua_State* L, int lo, cocos2d::Terrain::TerrainData* 
     {
         lua_pushstring(L, "_chunkSize");
         lua_gettable(L,lo);
-        if (!lua_isnil(L, -1))
+        if (!lua_isnil(L, lua_gettop(L)))
         {
-            luaval_to_size(L, -1, &(outValue->_chunkSize));
+            luaval_to_size(L, lua_gettop(L), &(outValue->_chunkSize));
         }
         else
         {
@@ -526,6 +527,56 @@ static void extendTerrain(lua_State* L)
     lua_pop(L, 1);
 }
 
+int lua_cocos2dx_3d_Bundle3D_getTrianglesList(lua_State* L)
+{
+    int argc = 0;
+    bool ok  = true;
+    
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+    
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertable(L,1,"cc.Bundle3D",0,&tolua_err)) goto tolua_lerror;
+#endif
+    
+    argc = lua_gettop(L) - 1;
+    
+    if (argc == 1)
+    {
+        std::string arg0;
+        ok &= luaval_to_std_string(L, 2,&arg0, "cc.Bundle3D:getTrianglesList");
+        if(!ok)
+        {
+            tolua_error(L,"invalid arguments in function 'lua_cocos2dx_3d_Bundle3D_getTrianglesList'", nullptr);
+            return 0;
+        }
+        
+        std::vector<cocos2d::Vec3> ret = cocos2d::Bundle3D::getTrianglesList(arg0);
+        std_vector_vec3_to_luaval(L,ret);
+        return 1;
+    }
+    luaL_error(L, "%s has wrong number of arguments: %d, was expecting %d\n ", "cc.Bundle3D:getTrianglesList",argc, 1);
+    return 0;
+#if COCOS2D_DEBUG >= 1
+tolua_lerror:
+    tolua_error(L,"#ferror in function 'lua_cocos2dx_3d_Bundle3D_getTrianglesList'.",&tolua_err);
+#endif
+    return 0;
+}
+
+void extendBundle3D(lua_State* L)
+{
+    lua_pushstring(L, "cc.Bundle3D");
+    lua_rawget(L, LUA_REGISTRYINDEX);
+    if (lua_istable(L,-1))
+    {
+        tolua_function(L, "getTrianglesList", lua_cocos2dx_3d_Bundle3D_getTrianglesList);
+    }
+    lua_pop(L, 1);
+}
+
+
 static int register_all_cocos2dx_3d_manual(lua_State* L)
 {
     if (nullptr == L)
@@ -533,6 +584,7 @@ static int register_all_cocos2dx_3d_manual(lua_State* L)
     
     extendSprite3D(L);
     extendTerrain(L);
+    extendBundle3D(L);
     return 0;
 }
 

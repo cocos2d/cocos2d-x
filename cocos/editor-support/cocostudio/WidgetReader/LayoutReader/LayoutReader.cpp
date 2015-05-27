@@ -190,12 +190,21 @@ namespace cocostudio
         
         /* adapt screen gui */
         float w = 0, h = 0;
-        bool adaptScrenn = DICTOOL->getBooleanValue_json(options, P_AdaptScreen);
-        if (adaptScrenn)
+        bool adaptScrennExsit = DICTOOL->checkObjectExist_json(options, P_AdaptScreen);
+        if (adaptScrennExsit)
         {
-            Size screenSize = CCDirector::getInstance()->getWinSize();
-            w = screenSize.width;
-            h = screenSize.height;
+            bool adaptScrenn = DICTOOL->getBooleanValue_json(options, P_AdaptScreen);
+            if (adaptScrenn)
+            {
+                Size screenSize = Director::getInstance()->getWinSize();
+                w = screenSize.width;
+                h = screenSize.height;
+            }
+            else
+            {
+                w = DICTOOL->getFloatValue_json(options, P_Width);
+                h = DICTOOL->getFloatValue_json(options, P_Height);
+            }
         }
         else
         {
@@ -300,7 +309,11 @@ namespace cocostudio
             panel->setBackGroundImageCapInsets(Rect(cx, cy, cw, ch));
         }
         
-        panel->setLayoutType((Layout::Type)DICTOOL->getIntValue_json(options, P_LayoutType));
+        bool layoutTypeExsit = DICTOOL->checkObjectExist_json(options, P_LayoutType);
+        if (layoutTypeExsit)
+        {
+            panel->setLayoutType((Layout::Type)DICTOOL->getIntValue_json(options, P_LayoutType));
+        }
         
         int bgimgcr = DICTOOL->getIntValue_json(options, P_ColorR,255);
         int bgimgcg = DICTOOL->getIntValue_json(options, P_ColorG,255);
