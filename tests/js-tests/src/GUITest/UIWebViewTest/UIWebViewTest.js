@@ -60,12 +60,26 @@ var UIWebViewTest = UIScene.extend({
                 webView.reload();
             }},
             { name: "goBack", func: function(){
-                cc.log("goBack!");
-                webView.goBack();
+                if (webView.canGoBack())
+                {
+                    cc.log("goBack!");
+                    webView.goBack();    
+                }
+                else
+                {
+                    cc.log("can not goBack!");
+                }
             }},
             { name: "goForward", func: function(){
-                cc.log("goForward!");
-                webView.goForward();
+                if (webView.canGoForward())
+                {
+                    cc.log("goForward!");
+                    webView.goForward();
+                }
+                else
+                {
+                    cc.log("can not goForward!");
+                }
             }},
             { name: "evaluateJS", func: function(){
                 cc.log("evaluateJS!");

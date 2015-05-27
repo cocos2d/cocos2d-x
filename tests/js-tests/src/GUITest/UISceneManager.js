@@ -28,14 +28,6 @@
     var currentTestingArray = null;
 
     var testingItems = {
-        "UIWebViewTest": [
-            {
-                title: "UIWebViewTest",
-                func: function () {
-                    return new UIWebViewTest();
-                }
-            }
-        ],
         "UIButton": [
             {
                 title: "UIButtonTest",
