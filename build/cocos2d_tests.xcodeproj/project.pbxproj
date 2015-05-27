@@ -5787,6 +5787,7 @@
 					"$(inherited)",
 					CC_TARGET_OS_MAC,
 				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-tests/proj.mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
@@ -5802,6 +5803,7 @@
 					"$(inherited)",
 					CC_TARGET_OS_MAC,
 				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-tests/proj.mac/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../cocos/platform/mac $(SRCROOT)/../external/glfw3/include/mac";
@@ -5890,6 +5892,7 @@
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-tests/proj.ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = (
@@ -5913,6 +5916,7 @@
 					"$(inherited)",
 					CC_TARGET_OS_IPHONE,
 				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/../tests/cpp-tests/proj.ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				LIBRARY_SEARCH_PATHS = (

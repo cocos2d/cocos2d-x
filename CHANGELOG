@@ -12,8 +12,10 @@ cocos2d-x-3.7  ??
     [NEW]           Scale9Sprite: added Android 9-patch image support
     [NEW]           Sprite: used triangle command
     [NEW]           3d: add `getFarPlane` and `getNearPlane` in `Camera` class
+    [NEW]           ui: button add BMFont title support
     
     [FIX]           3d: skybox can't move to other position except origin point in world space
+    [FIX]           3d: terrain can't move to other position except origin point in world space
     [FIX]           3rd: fix PIE link error on iOS caused by libpng and libtiff
     [FIX]           AssetsManager: crashed issue
     [FIX]           Audio: can not play large ogg files on windows
