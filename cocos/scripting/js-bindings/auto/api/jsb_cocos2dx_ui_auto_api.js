@@ -1497,6 +1497,18 @@ getCapInsetsNormalRenderer : function (
 },
 
 /**
+ * @method setTitleAlignment
+* @param {cc.TextHAlignment|cc.TextHAlignment} texthalignment
+* @param {cc.TextVAlignment} textvalignment
+*/
+setTitleAlignment : function(
+texthalignment,
+textvalignment 
+)
+{
+},
+
+/**
  * @method getCapInsetsPressedRenderer
  * @return {rect_object}
  */

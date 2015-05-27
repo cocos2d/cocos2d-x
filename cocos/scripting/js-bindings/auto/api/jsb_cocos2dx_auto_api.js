@@ -1239,16 +1239,6 @@ touch
 },
 
 /**
- * @method getMaterial
- * @return {cc.Material}
- */
-getMaterial : function (
-)
-{
-    return cc.Material;
-},
-
-/**
  * @method removeAllChildrenWithCleanup
 * @param {bool} bool
 */
@@ -1296,16 +1286,6 @@ isCascadeOpacityEnabled : function (
 )
 {
     return false;
-},
-
-/**
- * @method setMaterial
- * @param {cc.Material} arg0
- */
-setMaterial : function (
-material 
-)
-{
 },
 
 /**
@@ -4144,6 +4124,58 @@ TargetedAction : function (
 };
 
 /**
+ * @class ActionFloat
+ */
+cc.ActionFloat = {
+
+/**
+ * @method initWithDuration
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {function} arg3
+ * @return {bool}
+ */
+initWithDuration : function (
+float, 
+float, 
+float, 
+func 
+)
+{
+    return false;
+},
+
+/**
+ * @method create
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {function} arg3
+ * @return {cc.ActionFloat}
+ */
+create : function (
+float, 
+float, 
+float, 
+func 
+)
+{
+    return cc.ActionFloat;
+},
+
+/**
+ * @method ActionFloat
+ * @constructor
+ */
+ActionFloat : function (
+)
+{
+},
+
+};
+
+/**
  * @class Configuration
  */
 cc.Configuration = {
@@ -5875,6 +5907,41 @@ getInstance : function (
 )
 {
     return cc.FileUtils;
+},
+
+};
+
+/**
+ * @class AsyncTaskPool
+ */
+cc.AsyncTaskPool = {
+
+/**
+ * @method stopTasks
+ * @param {cc.AsyncTaskPool::TaskType} arg0
+ */
+stopTasks : function (
+tasktype 
+)
+{
+},
+
+/**
+ * @method destoryInstance
+ */
+destoryInstance : function (
+)
+{
+},
+
+/**
+ * @method getInstance
+ * @return {cc.AsyncTaskPool}
+ */
+getInstance : function (
+)
+{
+    return cc.AsyncTaskPool;
 },
 
 };
@@ -21626,41 +21693,6 @@ getInstance : function (
 )
 {
     return cc.SimpleAudioEngine;
-},
-
-};
-
-/**
- * @class AsyncTaskPool
- */
-cc.AsyncTaskPool = {
-
-/**
- * @method stopTasks
- * @param {cc.AsyncTaskPool::TaskType} arg0
- */
-stopTasks : function (
-tasktype 
-)
-{
-},
-
-/**
- * @method destoryInstance
- */
-destoryInstance : function (
-)
-{
-},
-
-/**
- * @method getInstance
- * @return {cc.AsyncTaskPool}
- */
-getInstance : function (
-)
-{
-    return cc.AsyncTaskPool;
 },
 
 };
