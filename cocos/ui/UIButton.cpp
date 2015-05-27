@@ -151,6 +151,7 @@ void Button::createTitleRenderer()
 {
     _titleRenderer = Label::create();
     _titleRenderer->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    _titleRenderer->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
     addProtectedChild(_titleRenderer, TITLE_RENDERER_Z, -1);
 }
 
@@ -591,7 +592,7 @@ Size Button::getVirtualRendererSize() const
         return this->getNormalSize();
     }
 
-    if(nullptr != _titleRenderer)
+    if (nullptr != _titleRenderer)
     {
         Size titleSize = _titleRenderer->getContentSize();
         if (!_normalTextureLoaded && _titleRenderer->getString().size() > 0)
@@ -736,6 +737,24 @@ void Button::disabledTextureScaleChangedWithSize()
 void Button::setPressedActionEnabled(bool enabled)
 {
     _pressedActionEnabled = enabled;
+}
+
+void Button::setTitleAlignment(TextHAlignment hAlignment)
+{
+    if (nullptr == _titleRenderer)
+    {
+        this->createTitleRenderer();
+    }
+    _titleRenderer->setAlignment(hAlignment);
+}
+
+void Button::setTitleAlignment(TextHAlignment hAlignment, TextVAlignment vAlignment)
+{
+    if (nullptr == _titleRenderer)
+    {
+        this->createTitleRenderer();
+    }
+    _titleRenderer->setAlignment(hAlignment, vAlignment);
 }
 
 void Button::setTitleText(const std::string& text)
