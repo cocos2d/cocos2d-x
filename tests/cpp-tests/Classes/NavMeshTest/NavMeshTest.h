@@ -41,19 +41,17 @@ public:
     virtual void onEnter() override;
 };
 #else
-class NavMeshTestDemo : public TestCase
+
+class NavMeshBaseTestDemo : public TestCase
 {
 public:
-    CREATE_FUNC(NavMeshTestDemo);
-    NavMeshTestDemo(void);
-    virtual ~NavMeshTestDemo(void);
-    
+    CREATE_FUNC(NavMeshBaseTestDemo);
+    NavMeshBaseTestDemo(void);
+    virtual ~NavMeshBaseTestDemo(void);
+
     // overrides
     virtual bool init() override;
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
     virtual void update(float delta) override;
-    
     virtual void onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
     virtual void onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
     virtual void onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
@@ -64,15 +62,61 @@ protected:
     void createAgent(const cocos2d::Vec3 &pos);
     void createObstacle(const cocos2d::Vec3 &pos);
     void moveAgents(const cocos2d::Vec3 &des);
-    void switchState();
+    virtual void touchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event){};
+    virtual void touchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event){};
+    virtual void touchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event){};
 
 protected:
-    std::string    _title;
     cocos2d::Camera *_camera;
-    std::vector<std::pair<cocos2d::NavMeshAgent *, cocos2d::Animate3D *> > _agents;
     float _angle;
-    cocos2d::Label *_stateLabel;
-	cocos2d::Label *_debugLabel;
+    std::vector<std::pair<cocos2d::NavMeshAgent *, cocos2d::Animate3D *> > _agents;
+    bool _needMoveAgents;
+};
+
+class NavMeshBasicTestDemo : public NavMeshBaseTestDemo
+{
+public:
+    CREATE_FUNC(NavMeshBasicTestDemo);
+    NavMeshBasicTestDemo(void);
+    virtual ~NavMeshBasicTestDemo(void);
+    
+    // overrides
+    virtual bool init() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+    
+protected:
+
+    virtual void touchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event){};
+    virtual void touchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event){};
+    virtual void touchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
+
+protected:
+    cocos2d::Label *_debugLabel;
+};
+
+class NavMeshAdvanceTestDemo : public NavMeshBaseTestDemo
+{
+public:
+    CREATE_FUNC(NavMeshAdvanceTestDemo);
+    NavMeshAdvanceTestDemo(void);
+    virtual ~NavMeshAdvanceTestDemo(void);
+
+    // overrides
+    virtual bool init() override;
+    virtual std::string title() const override;
+    virtual std::string subtitle() const override;
+
+protected:
+
+    virtual void touchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event){};
+    virtual void touchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event){};
+    virtual void touchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event  *event);
+
+protected:
+    cocos2d::Label *_obstacleLabel;
+    cocos2d::Label *_agentLabel;
+    cocos2d::Label *_debugLabel;
 };
 
 #endif

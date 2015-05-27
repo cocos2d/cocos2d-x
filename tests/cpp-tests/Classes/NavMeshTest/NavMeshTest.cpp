@@ -42,7 +42,8 @@ NavMeshTests::NavMeshTests()
 #if CC_USE_NAVMESH == 0
     ADD_TEST_CASE(NavMeshDisabled);
 #else
-    ADD_TEST_CASE(NavMeshTestDemo);
+    ADD_TEST_CASE(NavMeshBasicTestDemo);
+    ADD_TEST_CASE(NavMeshAdvanceTestDemo);
 #endif
 };
 
@@ -60,17 +61,23 @@ void NavMeshDisabled::onEnter()
     TestCase::onEnter();
 }
 #else
-std::string NavMeshTestDemo::title() const
+
+NavMeshBaseTestDemo::NavMeshBaseTestDemo(void)
+    : _camera(nullptr)
+    , _needMoveAgents(false)
 {
-    return "Navigation Mesh Test";
+
 }
 
-std::string NavMeshTestDemo::subtitle() const
+NavMeshBaseTestDemo::~NavMeshBaseTestDemo(void)
 {
-    return "";
+    for (auto iter : _agents){
+        AgentUserData *data = static_cast<AgentUserData *>(iter.first->getUserData());
+        delete data;
+    }
 }
 
-bool NavMeshTestDemo::init()
+bool NavMeshBaseTestDemo::init()
 {
     if (!TestCase::init()) return false;
 
@@ -86,75 +93,26 @@ bool NavMeshTestDemo::init()
         this->addChild(_camera);
 
         auto listener = EventListenerTouchAllAtOnce::create();
-        listener->onTouchesBegan = CC_CALLBACK_2(NavMeshTestDemo::onTouchesBegan, this);
-        listener->onTouchesMoved = CC_CALLBACK_2(NavMeshTestDemo::onTouchesMoved, this);
-        listener->onTouchesEnded = CC_CALLBACK_2(NavMeshTestDemo::onTouchesEnded, this);
+        listener->onTouchesBegan = CC_CALLBACK_2(NavMeshBaseTestDemo::onTouchesBegan, this);
+        listener->onTouchesMoved = CC_CALLBACK_2(NavMeshBaseTestDemo::onTouchesMoved, this);
+        listener->onTouchesEnded = CC_CALLBACK_2(NavMeshBaseTestDemo::onTouchesEnded, this);
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
-        TTFConfig ttfConfig("fonts/arial.ttf", 15);
-        _stateLabel = Label::createWithTTF(ttfConfig, "Create Obstacle");
-        _stateLabel->retain();
-        _debugLabel = Label::createWithTTF(ttfConfig, "Debug Draw ON");
-        _debugLabel->retain();
-        auto menuItem0 = MenuItemLabel::create(_stateLabel, CC_CALLBACK_0(NavMeshTestDemo::switchState, this));
-        menuItem0->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
-        menuItem0->setPosition(Vec2(VisibleRect::left().x, VisibleRect::top().y - 50));
-        auto menuItem1 = MenuItemLabel::create(_debugLabel, [=](Ref*){
-            bool enabledDebug = !getNavMesh()->isDebugDrawEnabled();
-            getNavMesh()->setDebugDrawEnable(enabledDebug);
-            if (enabledDebug){
-                _debugLabel->setString("Debug Draw ON");
-            }
-            else{
-                _debugLabel->setString("Debug Draw OFF");
-            }
-        });
-        menuItem1->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
-        menuItem1->setPosition(Vec2(VisibleRect::left().x, VisibleRect::top().y - 100));
-        auto menu = Menu::create(menuItem0, menuItem1, nullptr);
-        menu->setPosition(Vec2::ZERO);
-        addChild(menu);
-
         initScene();
-
         scheduleUpdate();
     }
-    
-    
+
+
     return true;
 }
 
-void NavMeshTestDemo::onTouchesBegan(const std::vector<Touch*>& touches, cocos2d::Event  *event)
+void NavMeshBaseTestDemo::onTouchesBegan(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event)
 {
-    if (!touches.empty()){
-        auto touch = touches[0];
-        auto location = touch->getLocationInView();
-        Vec3 nearP(location.x, location.y, 0.0f), farP(location.x, location.y, 1.0f);
-
-        auto size = Director::getInstance()->getWinSize();
-        _camera->unproject(size, &nearP, &nearP);
-        _camera->unproject(size, &farP, &farP);
-
-        Physics3DWorld::HitResult result;
-        bool ret = getPhysics3DWorld()->rayCast(nearP, farP, &result);
-        if (ret)
-        {
-            if (_stateLabel->getString() == "Create Obstacle"){
-                createObstacle(result.hitPosition);
-            }
-            
-            if (_stateLabel->getString() == "Create Agent"){
-                createAgent(result.hitPosition);
-            }
-            
-            if (_stateLabel->getString() == "Move Agent"){
-                moveAgents(result.hitPosition);
-            }
-        }
-    }
+    _needMoveAgents = true;
+    touchesBegan(touches, event);
 }
 
-void NavMeshTestDemo::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d::Event  *event)
+void NavMeshBaseTestDemo::onTouchesMoved(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event)
 {
     if (touches.size() && _camera)
     {
@@ -164,18 +122,39 @@ void NavMeshTestDemo::onTouchesMoved(const std::vector<Touch*>& touches, cocos2d
         _angle -= CC_DEGREES_TO_RADIANS(delta.x);
         _camera->setPosition3D(Vec3(100.0f * sinf(_angle), 50.0f, 100.0f * cosf(_angle)));
         _camera->lookAt(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 1.0f, 0.0f));
+
+        if (delta.lengthSquared() > 16)
+        {
+            _needMoveAgents = false;
+        }
     }
+    touchesMoved(touches, event);
 }
 
-void NavMeshTestDemo::onTouchesEnded(const std::vector<Touch*>& touches, cocos2d::Event  *event)
+void NavMeshBaseTestDemo::onTouchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event)
 {
+    touchesEnded(touches, event);
 }
 
-void NavMeshTestDemo::initScene()
+void NavMeshBaseTestDemo::initScene()
 {
     getPhysics3DWorld()->setDebugDrawEnable(false);
     //create mesh
-    std::vector<Vec3> trianglesList = Bundle3D::getTrianglesList("NavMesh/scene.obj");
+    std::vector<Vec3> trianglesList;
+    auto bundle = Bundle3D::createBundle();
+    MeshDatas meshs;
+    MaterialDatas materials;
+    NodeDatas nodeDatas;
+    bundle->loadObj(meshs, materials, nodeDatas, "NavMesh/scene.obj");
+    Bundle3D::destroyBundle(bundle);
+    for (auto iter : meshs.meshDatas){
+        int preVertexSize = iter->getPerVertexSize() / sizeof(float);
+        for (auto indexArray : iter->subMeshIndices){
+            for (auto i : indexArray){
+                trianglesList.push_back(Vec3(iter->vertex[i * preVertexSize], iter->vertex[i * preVertexSize + 1], iter->vertex[i * preVertexSize + 2]));
+            }
+        }
+    }
 
     Physics3DRigidBodyDes rbDes;
     rbDes.mass = 0.0f;
@@ -194,21 +173,22 @@ void NavMeshTestDemo::initScene()
     setNavMeshDebugCamera(_camera);
 
 
-    auto ambientLight = AmbientLight::create(Color3B(64, 64, 64));
+    auto ambientLight = AmbientLight::create(Color3B(80, 80, 80));
     ambientLight->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(ambientLight);
 
-    auto dirLight = DirectionLight::create(Vec3(0.0f, -1.0f, 0.0f), Color3B(150, 150, 150));
+    auto dirLight = DirectionLight::create(Vec3(1.2f, -1.1f, 0.5f), Color3B(180, 180, 180));
     dirLight->setCameraMask((unsigned short)CameraFlag::USER1);
     this->addChild(dirLight);
 }
 
-void NavMeshTestDemo::createAgent(const Vec3 &pos)
+void NavMeshBaseTestDemo::createAgent(const Vec3 &pos)
 {
     std::string filePath = "Sprite3DTest/girl.c3b";
     NavMeshAgentParam param;
     param.radius = 2.0f;
     param.height = 8.0f;
+    param.maxSpeed = 8.0f;
     auto agent = NavMeshAgent::create(param);
     auto agentNode = Sprite3D::create(filePath);
     agent->setOrientationRefAxes(Vec3(-1.0f, 0.0f, 1.0f));
@@ -234,7 +214,7 @@ void NavMeshTestDemo::createAgent(const Vec3 &pos)
     _agents.push_back(std::make_pair(agent, animate));
 }
 
-void NavMeshTestDemo::createObstacle(const Vec3 &pos)
+void NavMeshBaseTestDemo::createObstacle(const Vec3 &pos)
 {
     auto obstacle = NavMeshObstacle::create(2.0f, 8.0f);
     auto obstacleNode = Sprite3D::create("Sprite3DTest/cylinder.c3b");
@@ -256,7 +236,7 @@ Vec3 jump(const Vec3* pV1, const Vec3* pV2, float height, float t)
     return pOut;
 }
 
-void NavMeshTestDemo::moveAgents(const cocos2d::Vec3 &des)
+void NavMeshBaseTestDemo::moveAgents(const cocos2d::Vec3 &des)
 {
     for (auto iter : _agents){
         NavMeshAgent::MoveCallback callback = [](NavMeshAgent *agent, float totalTimeAfterMove){
@@ -288,26 +268,7 @@ void NavMeshTestDemo::moveAgents(const cocos2d::Vec3 &des)
     }
 }
 
-void NavMeshTestDemo::switchState()
-{
-    if (_stateLabel->getString() == "Create Agent"){
-        _stateLabel->setString("Move Agent");
-    }else
-    if (_stateLabel->getString() == "Move Agent"){
-        _stateLabel->setString("Create Obstacle");
-    }else
-    if (_stateLabel->getString() == "Create Obstacle"){
-        _stateLabel->setString("Create Agent");
-    }
-}
-
-NavMeshTestDemo::NavMeshTestDemo(void)
-: _camera(nullptr)
-{
-
-}
-
-void NavMeshTestDemo::update( float delta )
+void NavMeshBaseTestDemo::update(float delta)
 {
     for (auto iter : _agents){
         float speed = iter.first->getCurrentVelocity().length() * 0.2;
@@ -315,11 +276,164 @@ void NavMeshTestDemo::update( float delta )
     }
 }
 
-NavMeshTestDemo::~NavMeshTestDemo( void )
+NavMeshBasicTestDemo::NavMeshBasicTestDemo(void)
 {
-    for (auto iter : _agents){
-        AgentUserData *data = static_cast<AgentUserData *>(iter.first->getUserData());
-        delete data;
+
+}
+
+NavMeshBasicTestDemo::~NavMeshBasicTestDemo(void)
+{
+}
+
+std::string NavMeshBasicTestDemo::title() const
+{
+    return "Navigation Mesh Test";
+}
+
+std::string NavMeshBasicTestDemo::subtitle() const
+{
+    return "Basic Test";
+}
+
+void NavMeshBasicTestDemo::touchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event)
+{
+    if (!_needMoveAgents) return;
+    if (!touches.empty()){
+        auto touch = touches[0];
+        auto location = touch->getLocationInView();
+        Vec3 nearP(location.x, location.y, 0.0f), farP(location.x, location.y, 1.0f);
+
+        auto size = Director::getInstance()->getWinSize();
+        _camera->unproject(size, &nearP, &nearP);
+        _camera->unproject(size, &farP, &farP);
+
+        Physics3DWorld::HitResult result;
+        getPhysics3DWorld()->rayCast(nearP, farP, &result);
+        moveAgents(result.hitPosition);
+    }
+}
+
+bool NavMeshBasicTestDemo::init()
+{
+    if (!NavMeshBaseTestDemo::init()) return false;
+
+    TTFConfig ttfConfig("fonts/arial.ttf", 15);
+    _debugLabel = Label::createWithTTF(ttfConfig, "Debug Draw ON");
+    _debugLabel->retain();
+    auto menuItem1 = MenuItemLabel::create(_debugLabel, [=](Ref*){
+        bool enabledDebug = !getNavMesh()->isDebugDrawEnabled();
+        getNavMesh()->setDebugDrawEnable(enabledDebug);
+        if (enabledDebug){
+            _debugLabel->setString("Debug Draw ON");
+        }
+        else{
+            _debugLabel->setString("Debug Draw OFF");
+        }
+    });
+    menuItem1->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+    menuItem1->setPosition(Vec2(VisibleRect::left().x, VisibleRect::top().y - 100));
+    auto menu = Menu::create(menuItem1, nullptr);
+    menu->setPosition(Vec2::ZERO);
+    addChild(menu);
+
+    Physics3DWorld::HitResult result;
+    getPhysics3DWorld()->rayCast(Vec3(0.0f, 50.0f, 0.0f), Vec3(0.0f, -50.0f, 0.0f), &result);
+    createAgent(result.hitPosition);
+
+    return true;
+}
+
+NavMeshAdvanceTestDemo::NavMeshAdvanceTestDemo(void)
+{
+
+}
+
+NavMeshAdvanceTestDemo::~NavMeshAdvanceTestDemo(void)
+{
+
+}
+
+bool NavMeshAdvanceTestDemo::init()
+{
+    if (!NavMeshBaseTestDemo::init()) return false;
+
+    TTFConfig ttfConfig("fonts/arial.ttf", 15);
+    _obstacleLabel = Label::createWithTTF(ttfConfig, "Create Obstacle");
+    _obstacleLabel->retain();
+    _agentLabel = Label::createWithTTF(ttfConfig, "Create Agent");
+    _agentLabel->retain();
+    _debugLabel = Label::createWithTTF(ttfConfig, "Debug Draw ON");
+    _debugLabel->retain();
+
+    auto menuItem0 = MenuItemLabel::create(_obstacleLabel, [=](Ref*){
+        float x = cocos2d::random(-50.0f, 50.0f);
+        float z = cocos2d::random(-50.0f, 50.0f);
+        Physics3DWorld::HitResult result;
+        getPhysics3DWorld()->rayCast(Vec3(x, 50.0f, z), Vec3(x, -50.0f, z), &result);
+        createObstacle(result.hitPosition);
+    });
+    menuItem0->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+    menuItem0->setPosition(Vec2(VisibleRect::left().x, VisibleRect::top().y - 50));
+
+    auto menuItem1 = MenuItemLabel::create(_agentLabel, [=](Ref*){
+        float x = cocos2d::random(-50.0f, 50.0f);
+        float z = cocos2d::random(-50.0f, 50.0f);
+        Physics3DWorld::HitResult result;
+        getPhysics3DWorld()->rayCast(Vec3(x, 50.0f, z), Vec3(x, -50.0f, z), &result);
+        createAgent(result.hitPosition);
+    });
+    menuItem1->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+    menuItem1->setPosition(Vec2(VisibleRect::left().x, VisibleRect::top().y - 100));
+
+    auto menuItem2 = MenuItemLabel::create(_debugLabel, [=](Ref*){
+        bool enabledDebug = !getNavMesh()->isDebugDrawEnabled();
+        getNavMesh()->setDebugDrawEnable(enabledDebug);
+        if (enabledDebug){
+            _debugLabel->setString("Debug Draw ON");
+        }
+        else{
+            _debugLabel->setString("Debug Draw OFF");
+        }
+    });
+    menuItem2->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+    menuItem2->setPosition(Vec2(VisibleRect::left().x, VisibleRect::top().y - 150));
+
+    auto menu = Menu::create(menuItem0, menuItem1, menuItem2, nullptr);
+    menu->setPosition(Vec2::ZERO);
+    addChild(menu);
+
+    Physics3DWorld::HitResult result;
+    getPhysics3DWorld()->rayCast(Vec3(0.0f, 50.0f, 0.0f), Vec3(0.0f, -50.0f, 0.0f), &result);
+    createAgent(result.hitPosition);
+
+    return true;
+}
+
+std::string NavMeshAdvanceTestDemo::title() const
+{
+    return "Navigation Mesh Test";
+}
+
+std::string NavMeshAdvanceTestDemo::subtitle() const
+{
+    return "Advance Test";
+}
+
+void NavMeshAdvanceTestDemo::touchesEnded(const std::vector<cocos2d::Touch*>& touches, cocos2d::Event *event)
+{
+    if (!_needMoveAgents) return;
+    if (!touches.empty()){
+        auto touch = touches[0];
+        auto location = touch->getLocationInView();
+        Vec3 nearP(location.x, location.y, 0.0f), farP(location.x, location.y, 1.0f);
+
+        auto size = Director::getInstance()->getWinSize();
+        _camera->unproject(size, &nearP, &nearP);
+        _camera->unproject(size, &farP, &farP);
+
+        Physics3DWorld::HitResult result;
+        getPhysics3DWorld()->rayCast(nearP, farP, &result);
+        moveAgents(result.hitPosition);
     }
 }
 
