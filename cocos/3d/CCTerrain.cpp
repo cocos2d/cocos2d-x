@@ -547,7 +547,7 @@ bool Terrain::getIntersectionPoint(const Ray & ray, Vec3 & intersectionPoint) co
     {
         lastRayPosition = rayPos;
         rayPos += rayStep;
-        if (normal.isZero())
+        if (normal.isZero
         {
             intersectionPoint = Vec3(0, 0, 0);
             return false;
