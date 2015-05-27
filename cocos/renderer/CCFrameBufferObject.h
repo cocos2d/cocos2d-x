@@ -31,6 +31,57 @@
 #include <set>
 NS_CC_BEGIN
 
+class RenderTargetBase : public Ref
+{
+protected:
+    RenderTargetBase();
+    virtual ~RenderTargetBase();
+    bool init(unsigned int width, unsigned int height);
+
+public:
+    unsigned int getWidth() const { return _width; }
+    unsigned int getHeight() const { return _height; }
+    
+protected:
+    unsigned int _width;
+    unsigned int _height;
+    
+};
+
+class RenderTarget : public RenderTargetBase
+{
+public:
+    
+    static RenderTarget* create(unsigned int width, unsigned int height);
+    
+    bool init(unsigned int width, unsigned int height);
+    
+    Texture2D* getTexture() const { return _texture; }
+CC_CONSTRUCTOR_ACCESS:
+    RenderTarget();
+    virtual ~RenderTarget();
+    
+protected:
+    Texture2D* _texture;
+};
+
+class RenderTargetDepthStencil : public RenderTargetBase
+{
+public:
+    
+    static RenderTargetDepthStencil* create(unsigned int width, unsigned int height);
+    
+    bool init(unsigned int width, unsigned int height);
+    
+    GLuint getDepthStencilBuffer() const { return _depthStencilBuffer; }
+CC_CONSTRUCTOR_ACCESS:
+    RenderTargetDepthStencil();
+    virtual ~RenderTargetDepthStencil();
+    
+protected:
+    GLuint _depthStencilBuffer;
+};
+
 class CC_DLL FrameBufferObject : public Ref
 {
 public:
@@ -50,14 +101,17 @@ public:
     float getClearDepth() const { return _clearDepth; }
     int8_t getClearStencil() const { return _clearStencil; }
     
-    Texture2D* getColorTexture() const { return _colorTexture; }
+    RenderTarget* getRenderTarget() const { return _rt; }
+    RenderTargetDepthStencil* getDepthStencilTarget() const { return _rtDepthStencil; }
+    void AttachRenderTarget(RenderTarget* rt);
+    void AttachDepthStencilTarget(RenderTargetDepthStencil* rt);
+    
 CC_CONSTRUCTOR_ACCESS:
     FrameBufferObject();
     virtual ~FrameBufferObject();
 private:
     //openGL content for FrameBuffer
     GLuint _fbo;
-    GLuint _depthBuffer;
     //
     uint8_t _fid;
     //
@@ -66,7 +120,8 @@ private:
     int8_t  _clearStencil;
     int _width;
     int _height;
-    Texture2D* _colorTexture;
+    RenderTarget* _rt;
+    RenderTargetDepthStencil* _rtDepthStencil;
 public:
     static void initDefaultFBO();
     static void applyDefaultFBO();

@@ -29,6 +29,122 @@ NS_CC_BEGIN
 GLuint FrameBufferObject::_defaultFBO(0);
 std::set<FrameBufferObject*> FrameBufferObject::_frameBufferObjects;
 
+RenderTargetBase::RenderTargetBase()
+{
+    
+}
+
+RenderTargetBase::~RenderTargetBase()
+{
+    
+}
+
+bool RenderTargetBase::init(unsigned int width, unsigned int height)
+{
+    _width = width;
+    _height = height;
+    return true;
+}
+
+RenderTarget* RenderTarget::create(unsigned int width, unsigned int height)
+{
+    auto result = new (std::nothrow) RenderTarget();
+    if(result && result->init(width, height))
+    {
+        result->autorelease();
+        return result;
+    }
+    else
+    {
+        CC_SAFE_DELETE(result);
+        return nullptr;
+    }
+}
+
+bool RenderTarget::init(unsigned int width, unsigned int height)
+{
+    if(!RenderTargetBase::init(width, height))
+    {
+        return false;
+    }
+    
+    _texture = new (std::nothrow) Texture2D();
+    if(nullptr == _texture) return false;
+    auto dataLen = width * height * 4;
+    auto data = malloc(dataLen);
+    if( nullptr == data) return false;
+    
+    memset(data, 0, dataLen);
+    if(_texture->initWithData(data, dataLen, Texture2D::PixelFormat::RGBA8888, width, height, Size(width, height)))
+    {
+        _texture->autorelease();
+        CC_SAFE_RETAIN(_texture);
+        free(data);
+    }
+    else
+    {
+        CC_SAFE_DELETE(_texture);
+        free(data);
+        return false;
+    }
+    return true;
+}
+
+RenderTarget::RenderTarget()
+: _texture(nullptr)
+{
+}
+
+RenderTarget::~RenderTarget()
+{
+    CC_SAFE_RELEASE_NULL(_texture);
+}
+
+RenderTargetDepthStencil::RenderTargetDepthStencil()
+: _depthStencilBuffer(0)
+{
+}
+
+RenderTargetDepthStencil::~RenderTargetDepthStencil()
+{
+    if(glIsRenderbuffer(_depthStencilBuffer))
+    {
+        glDeleteRenderbuffers(1, &_depthStencilBuffer);
+        _depthStencilBuffer = 0;
+    }
+}
+
+bool RenderTargetDepthStencil::init(unsigned int width, unsigned int height)
+{
+    if(!RenderTargetBase::init(width, height)) return false;
+    GLint oldRenderBuffer(0);
+    glGetIntegerv(GL_RENDERBUFFER_BINDING, &oldRenderBuffer);
+    
+    //generate depthStencil
+    glGenRenderbuffers(1, &_depthStencilBuffer);
+    glBindRenderbuffer(GL_RENDERBUFFER, _depthStencilBuffer);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
+    glBindRenderbuffer(GL_RENDERBUFFER, oldRenderBuffer);
+    return true;
+}
+
+
+RenderTargetDepthStencil* RenderTargetDepthStencil::create(unsigned int width, unsigned int height)
+{
+    auto result = new (std::nothrow) RenderTargetDepthStencil();
+    
+    if(result && result->init(width, height))
+    {
+        result->autorelease();
+        return result;
+    }
+    else
+    {
+        CC_SAFE_DELETE(result);
+        return nullptr;
+    }
+}
+
 void FrameBufferObject::initDefaultFBO()
 {
     GLint fbo;
@@ -70,41 +186,13 @@ bool FrameBufferObject::init(uint8_t fid, unsigned int width, unsigned int heigh
     _width = width;
     _height = height;
     
-    _colorTexture = new (std::nothrow) Texture2D();
-    if(nullptr == _colorTexture) return false;
-    auto dataLen = width * height * 4;
-    auto data = malloc(dataLen);
-    if( nullptr == data) return false;
+//    _rt = RenderTarget::create(width, height);
+//    if(nullptr == _rt) return false;
+
     
-    memset(data, 0, dataLen);
-    if(_colorTexture->initWithData(data, dataLen, Texture2D::PixelFormat::RGBA8888, width, height, Size(width, height)))
-    {
-        _colorTexture->autorelease();
-        CC_SAFE_RETAIN(_colorTexture);
-        free(data);
-    }
-    else
-    {
-        CC_SAFE_DELETE(_colorTexture);
-        free(data);
-        return false;
-    }
-    
-    
-    GLint oldRenderBuffer(0);
-    glGetIntegerv(GL_RENDERBUFFER_BINDING, &oldRenderBuffer);
-    
-    //generate depthStencil
-    glGenRenderbuffers(1, &_depthBuffer);
-    glBindRenderbuffer(GL_RENDERBUFFER, _depthBuffer);
-    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
-    glBindRenderbuffer(GL_RENDERBUFFER, oldRenderBuffer);
     //generate Frame buffer object
     glGenFramebuffers(1, &_fbo);
     glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthBuffer);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthBuffer);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _colorTexture->getName(), 0);
     applyDefaultFBO();
     return true;
 }
@@ -113,19 +201,19 @@ FrameBufferObject::FrameBufferObject()
 : _clearColor(Color4F(0, 0, 0, 1))
 , _clearDepth(1.0)
 , _clearStencil(0)
-, _depthBuffer(0)
 , _fbo(0)
-, _colorTexture(nullptr)
+, _rt(nullptr)
+, _rtDepthStencil(nullptr)
 {
     _frameBufferObjects.insert(this);
 }
 
 FrameBufferObject::~FrameBufferObject()
 {
-    CC_SAFE_RELEASE_NULL(_colorTexture);
-    glDeleteRenderbuffers(1, &_depthBuffer);
+    CC_SAFE_RELEASE_NULL(_rt);
+    CC_SAFE_RELEASE_NULL(_rtDepthStencil);
     glDeleteFramebuffers(1, &_fbo);
-    _fbo = _depthBuffer = 0;
+    _fbo = 0;
     _frameBufferObjects.erase(this);
 }
 
@@ -139,4 +227,37 @@ void FrameBufferObject::clearFBO()
     applyDefaultFBO();
 }
 
+void FrameBufferObject::AttachRenderTarget(RenderTarget* rt)
+{
+    CC_ASSERT(rt);
+    if(rt->getWidth() != _width || rt->getHeight() != _height)
+    {
+        CCLOG("Error, attach a render target with different size, Skip.");
+        return;
+    }
+    CC_SAFE_RETAIN(rt);
+    CC_SAFE_RELEASE(_rt);
+    _rt = rt;
+    glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _rt->getTexture()->getName(), 0);
+    applyDefaultFBO();
+}
+
+void FrameBufferObject::AttachDepthStencilTarget(RenderTargetDepthStencil* rt)
+{
+    CC_ASSERT(rt);
+    if(rt->getWidth() != _width || rt->getHeight() != _height)
+    {
+        CCLOG("Error, attach a render target Depth stencil with different size, Skip.");
+        return;
+    }
+    CC_SAFE_RETAIN(rt);
+    CC_SAFE_RELEASE(_rtDepthStencil);
+    _rtDepthStencil = rt;
+    glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _rtDepthStencil->getDepthStencilBuffer());
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _rtDepthStencil->getDepthStencilBuffer());
+    
+    applyDefaultFBO();
+}
 NS_CC_END
