@@ -297,7 +297,7 @@ void Terrain::setChunksLOD(Vec3 cameraPos)
         }
 }
 
-float Terrain::getHeight(float x, float z, Vec3 * normal)
+float Terrain::getHeight(float x, float z, Vec3 * normal) const
 {
     Vec2 pos(x,z);
 
@@ -326,11 +326,11 @@ float Terrain::getHeight(float x, float z, Vec3 * normal)
 
     if(image_x>=_imageWidth-1 || image_y >=_imageHeight-1 || image_x<0 || image_y<0)
     {
-        return 0;
         if (normal)
         {
             normal->setZero();
         }
+        return 0;
     }else
     {
         float a = getImageHeight(i,j)*getScaleY();
@@ -350,12 +350,12 @@ float Terrain::getHeight(float x, float z, Vec3 * normal)
     }
 }
 
-float Terrain::getHeight(Vec2 pos, Vec3*Normal)
+float Terrain::getHeight(Vec2 pos, Vec3*Normal) const
 {
     return getHeight(pos.x,pos.y,Normal);
 }
 
-float Terrain::getImageHeight(int pixel_x,int pixel_y)
+float Terrain::getImageHeight(int pixel_x,int pixel_y) const
 {
     int byte_stride =1;
     switch (_heightMapImage->getRenderFormat())
@@ -493,7 +493,7 @@ Terrain::~Terrain()
 #endif
 }
 
-cocos2d::Vec3 Terrain::getNormal(int pixel_x, int pixel_y)
+cocos2d::Vec3 Terrain::getNormal(int pixel_x, int pixel_y) const
 {
     float a = getImageHeight(pixel_x,pixel_y)*getScaleY();
     float b = getImageHeight(pixel_x,pixel_y+1)*getScaleY();
@@ -507,7 +507,7 @@ cocos2d::Vec3 Terrain::getNormal(int pixel_x, int pixel_y)
     return normal;
 }
 
-cocos2d::Vec3 Terrain::getIntersectionPoint(const Ray & ray)
+cocos2d::Vec3 Terrain::getIntersectionPoint(const Ray & ray) const
 {
     Vec3 dir = ray._direction;
     dir.normalize();
@@ -544,7 +544,7 @@ cocos2d::Vec3 Terrain::getIntersectionPoint(const Ray & ray)
     return collisionPoint;
 }
 
-bool Terrain::getIntersectionPoint(const Ray & ray, Vec3 & intersectionPoint)
+bool Terrain::getIntersectionPoint(const Ray & ray, Vec3 & intersectionPoint) const
 {
     Vec3 dir = ray._direction;
     dir.normalize();
