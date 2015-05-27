@@ -245,8 +245,7 @@ void FrameBufferObject::AttachRenderTarget(RenderTarget* rt)
 
 void FrameBufferObject::AttachDepthStencilTarget(RenderTargetDepthStencil* rt)
 {
-    CC_ASSERT(rt);
-    if(rt->getWidth() != _width || rt->getHeight() != _height)
+    if(nullptr != rt && (rt->getWidth() != _width || rt->getHeight() != _height))
     {
         CCLOG("Error, attach a render target Depth stencil with different size, Skip.");
         return;
@@ -255,8 +254,8 @@ void FrameBufferObject::AttachDepthStencilTarget(RenderTargetDepthStencil* rt)
     CC_SAFE_RELEASE(_rtDepthStencil);
     _rtDepthStencil = rt;
     glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _rtDepthStencil->getDepthStencilBuffer());
-    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _rtDepthStencil->getDepthStencilBuffer());
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, nullptr == _rtDepthStencil ? 0 : _rtDepthStencil->getDepthStencilBuffer());
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, nullptr == _rtDepthStencil ? 0 : _rtDepthStencil->getDepthStencilBuffer());
     
     applyDefaultFBO();
 }
