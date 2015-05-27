@@ -399,16 +399,16 @@ ccui.WebView.prototype.loadURL = function (url) {
 ccui.WebView.prototype.addEventListener = function(event, callback){
     switch(event)
     {
-        case LOADING:
+        case ccui.WebView.EventType.LOADING:
             this.setOnShouldStartLoading(callback);
             break;
-        case LOADED:
+        case ccui.WebView.EventType.LOADED:
             this.setOnDidFinishLoading(callback);
             break;
-        case ERROR:
+        case ccui.WebView.EventType.ERROR:
             this.setOnDidFailLoading(callback);
             break;
-        case JS_EVALUATED:
+        case ccui.WebView.EventType.JS_EVALUATED:
             this.setOnJSCallback(callback);
             break;
     }
