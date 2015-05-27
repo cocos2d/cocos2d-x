@@ -18440,41 +18440,13 @@ TransitionProgressOutIn : function (
 cc.Camera = {
 
 /**
- * @method setScene
- * @param {cc.Scene} arg0
+ * @method getDepth
+ * @return {int}
  */
-setScene : function (
-scene 
+getDepth : function (
 )
 {
-},
-
-/**
- * @method initPerspective
- * @param {float} arg0
- * @param {float} arg1
- * @param {float} arg2
- * @param {float} arg3
- * @return {bool}
- */
-initPerspective : function (
-float, 
-float, 
-float, 
-float 
-)
-{
-    return false;
-},
-
-/**
- * @method getProjectionMatrix
- * @return {mat4_object}
- */
-getProjectionMatrix : function (
-)
-{
-    return cc.Mat4;
+    return 0;
 },
 
 /**
@@ -18488,13 +18460,75 @@ getViewProjectionMatrix : function (
 },
 
 /**
- * @method getViewMatrix
+ * @method lookAt
+ * @param {vec3_object} arg0
+ * @param {vec3_object} arg1
+ */
+lookAt : function (
+vec3, 
+vec3 
+)
+{
+},
+
+/**
+ * @method getProjectionMatrix
  * @return {mat4_object}
  */
-getViewMatrix : function (
+getProjectionMatrix : function (
 )
 {
     return cc.Mat4;
+},
+
+/**
+ * @method getDepthInView
+ * @param {mat4_object} arg0
+ * @return {float}
+ */
+getDepthInView : function (
+mat4 
+)
+{
+    return 0;
+},
+
+/**
+ * @method initOrthographic
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {float} arg3
+ * @return {bool}
+ */
+initOrthographic : function (
+float, 
+float, 
+float, 
+float 
+)
+{
+    return false;
+},
+
+/**
+ * @method setDepth
+ * @param {int} arg0
+ */
+setDepth : function (
+int 
+)
+{
+},
+
+/**
+ * @method initDefault
+ * @return {bool}
+ */
+initDefault : function (
+)
+{
+    return false;
 },
 
 /**
@@ -18518,80 +18552,6 @@ getType : function (
 },
 
 /**
- * @method initDefault
- * @return {bool}
- */
-initDefault : function (
-)
-{
-    return false;
-},
-
-/**
- * @method project
- * @param {vec3_object} arg0
- * @return {vec2_object}
- */
-project : function (
-vec3 
-)
-{
-    return cc.Vec2;
-},
-
-/**
- * @method initOrthographic
- * @param {float} arg0
- * @param {float} arg1
- * @param {float} arg2
- * @param {float} arg3
- * @return {bool}
- */
-initOrthographic : function (
-float, 
-float, 
-float, 
-float 
-)
-{
-    return false;
-},
-
-/**
- * @method getDepthInView
- * @param {mat4_object} arg0
- * @return {float}
- */
-getDepthInView : function (
-mat4 
-)
-{
-    return 0;
-},
-
-/**
- * @method lookAt
- * @param {vec3_object} arg0
- * @param {vec3_object} arg1
- */
-lookAt : function (
-vec3, 
-vec3 
-)
-{
-},
-
-/**
- * @method setCameraFlag
- * @param {cc.CameraFlag} arg0
- */
-setCameraFlag : function (
-cameraflag 
-)
-{
-},
-
-/**
  * @method clearBackground
  * @param {float} arg0
  */
@@ -18612,23 +18572,83 @@ mat4
 },
 
 /**
- * @method getDepth
- * @return {int}
+ * @method setScene
+ * @param {cc.Scene} arg0
  */
-getDepth : function (
+setScene : function (
+scene 
+)
+{
+},
+
+/**
+ * @method getViewMatrix
+ * @return {mat4_object}
+ */
+getViewMatrix : function (
+)
+{
+    return cc.Mat4;
+},
+
+/**
+ * @method getNearPlane
+ * @return {float}
+ */
+getNearPlane : function (
 )
 {
     return 0;
 },
 
 /**
- * @method setDepth
- * @param {int} arg0
+ * @method project
+ * @param {vec3_object} arg0
+ * @return {vec2_object}
  */
-setDepth : function (
-int 
+project : function (
+vec3 
 )
 {
+    return cc.Vec2;
+},
+
+/**
+ * @method setCameraFlag
+ * @param {cc.CameraFlag} arg0
+ */
+setCameraFlag : function (
+cameraflag 
+)
+{
+},
+
+/**
+ * @method getFarPlane
+ * @return {float}
+ */
+getFarPlane : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method initPerspective
+ * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {float} arg3
+ * @return {bool}
+ */
+initPerspective : function (
+float, 
+float, 
+float, 
+float 
+)
+{
+    return false;
 },
 
 /**

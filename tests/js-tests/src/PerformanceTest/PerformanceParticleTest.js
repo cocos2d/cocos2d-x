@@ -108,7 +108,7 @@ var ParticleMainScene = cc.Scene.extend({
         this.addChild(infoLabel, 1, TAG_INFO_LAYER);
 
         // particles on stage
-        var labelAtlas = new cc.LabelAtlas("0000", "res/Images/fps_images.png", 16, 24, '.');
+        var labelAtlas = new cc.LabelAtlas("0000", "Images/fps_images.png", 16, 24, '.');
         // var labelAtlas = cc.LabelTTF.create("0000", "Marker Felt", 30);
         this.addChild(labelAtlas, 0, TAG_LABEL_ATLAS);
         labelAtlas.x = s.width - 66;
@@ -173,7 +173,7 @@ var ParticleMainScene = cc.Scene.extend({
         this.removeChildByTag(TAG_PARTICLE_SYSTEM, true);
 
         // remove the "fire.png" from the TextureCache cache.
-        //var texture = cc.textureCache.addImage("res/Images/fire.png");
+        //var texture = cc.textureCache.addImage("Images/fire.png");
         //cc.textureCache.removeTexture(texture);
 
         var particleSystem = new cc.ParticleSystem(this._quantityParticles);
@@ -182,17 +182,17 @@ var ParticleMainScene = cc.Scene.extend({
             case 1:
                 if ("opengl" in cc.sys.capabilities)
                     cc.Texture2D.defaultPixelFormat = cc.Texture2D.PIXEL_FORMAT_RGBA8888;
-                particleSystem.texture = cc.textureCache.addImage("res/Images/fire.png");
+                particleSystem.texture = cc.textureCache.addImage("Images/fire.png");
                 break;
             case 2:
                 if ("opengl" in cc.sys.capabilities)
                     cc.Texture2D.defaultPixelFormat = cc.Texture2D.PIXEL_FORMAT_RGBA4444;
-                particleSystem.texture = cc.textureCache.addImage("res/Images/fire.png");
+                particleSystem.texture = cc.textureCache.addImage("Images/fire.png");
                 break;
             case 3:
                 if ("opengl" in cc.sys.capabilities)
                     cc.Texture2D.defaultPixelFormat = cc.Texture2D.PIXEL_FORMAT_A8;
-                particleSystem.texture = cc.textureCache.addImage("res/Images/fire.png");
+                particleSystem.texture = cc.textureCache.addImage("Images/fire.png");
                 break;
             default:
                 particleSystem = null;
