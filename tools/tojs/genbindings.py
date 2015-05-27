@@ -114,7 +114,7 @@ def main():
     if platform == 'win32':
         config.set('DEFAULT', 'extra_flags', '-D__WCHAR_MAX__=0x7fffffff -U__MINGW32__')
 
-    conf_ini_file = os.path.abspath(os.path.join(os.path.dirname(__file__), 'userconf.ini')) 
+    conf_ini_file = os.path.abspath(os.path.join(os.path.dirname(__file__), 'userconf.ini'))
 
     print 'generating userconf.ini...'
     with open(conf_ini_file, 'w') as configfile:
