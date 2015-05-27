@@ -56,6 +56,12 @@ public:
         NODE_AND_NODE = NODE_TO_OBSTACLE | OBSTACLE_TO_NODE,
     };
 
+    /**
+    Create obstacle, shape is cylinder
+
+    @param radius The radius of obstacle.
+    @param height The height of obstacle.
+    */
     static NavMeshObstacle* create(float radius, float height);
     static const std::string& getNavMeshObstacleComponentName();
 

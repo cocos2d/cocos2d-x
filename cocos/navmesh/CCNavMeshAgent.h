@@ -90,6 +90,11 @@ public:
 
     typedef std::function<void(NavMeshAgent *agent, float totalTimeAfterMove)> MoveCallback;
 
+    /**
+    Create agent
+
+    @param param The parameters of agent.
+    */
     static NavMeshAgent* create(const NavMeshAgentParam &param);
     static const std::string& getNavMeshAgentComponentName();
 

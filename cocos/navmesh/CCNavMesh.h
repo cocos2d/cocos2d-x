@@ -55,6 +55,12 @@ class CC_DLL NavMesh : public Ref
 {
 public:
 
+    /**
+    Create navmesh
+
+    @param navFilePath The NavMesh File path.
+    @param geomFilePath The geometry File Path,include offmesh information,etc.
+    */
     static NavMesh* create(const std::string &navFilePath, const std::string &geomFilePath);
 
     /** update navmesh. */
