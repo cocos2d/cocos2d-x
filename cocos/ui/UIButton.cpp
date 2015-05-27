@@ -150,7 +150,6 @@ void Button::createTitleRenderer()
 {
     _titleRenderer = Label::create();
     _titleRenderer->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-    _titleRenderer->setAlignment(TextHAlignment::CENTER, TextVAlignment::CENTER);
     addProtectedChild(_titleRenderer, TITLE_RENDERER_Z, -1);
 }
 

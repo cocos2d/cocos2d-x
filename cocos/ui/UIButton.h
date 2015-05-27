@@ -247,7 +247,19 @@ public:
      */
     const std::string getTitleFontName() const;
 
-    void setTitleAlignment(TextHAlignment hAlignment); 
+    /**
+     * Sets the title's text horizontal alignment.
+     *
+     * @param hAlignment see TextHAlignment
+     */
+    void setTitleAlignment(TextHAlignment hAlignment);
+
+    /**
+     * Sets the title's text vertical alignment.
+     *
+     * @param hAlignment see TextHAlignment.
+     * @param vAlignment see TextVAlignment.
+     */
     void setTitleAlignment(TextHAlignment hAlignment, TextVAlignment vAlignment);
 
     /** @brief When user pressed the button, the button will zoom to a scale.
