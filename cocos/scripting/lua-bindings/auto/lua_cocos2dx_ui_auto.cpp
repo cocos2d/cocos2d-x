@@ -6986,6 +6986,65 @@ int lua_cocos2dx_ui_Button_getCapInsetsNormalRenderer(lua_State* tolua_S)
 
     return 0;
 }
+int lua_cocos2dx_ui_Button_setTitleAlignment(lua_State* tolua_S)
+{
+    int argc = 0;
+    cocos2d::ui::Button* cobj = nullptr;
+    bool ok  = true;
+#if COCOS2D_DEBUG >= 1
+    tolua_Error tolua_err;
+#endif
+
+#if COCOS2D_DEBUG >= 1
+    if (!tolua_isusertype(tolua_S,1,"ccui.Button",0,&tolua_err)) goto tolua_lerror;
+#endif
+    cobj = (cocos2d::ui::Button*)tolua_tousertype(tolua_S,1,0);
+#if COCOS2D_DEBUG >= 1
+    if (!cobj)
+    {
+        tolua_error(tolua_S,"invalid 'cobj' in function 'lua_cocos2dx_ui_Button_setTitleAlignment'", nullptr);
+        return 0;
+    }
+#endif
+    argc = lua_gettop(tolua_S)-1;
+    do{
+        if (argc == 2) {
+            cocos2d::TextHAlignment arg0;
+            ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccui.Button:setTitleAlignment");
+
+            if (!ok) { break; }
+            cocos2d::TextVAlignment arg1;
+            ok &= luaval_to_int32(tolua_S, 3,(int *)&arg1, "ccui.Button:setTitleAlignment");
+
+            if (!ok) { break; }
+            cobj->setTitleAlignment(arg0, arg1);
+            lua_settop(tolua_S, 1);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    do{
+        if (argc == 1) {
+            cocos2d::TextHAlignment arg0;
+            ok &= luaval_to_int32(tolua_S, 2,(int *)&arg0, "ccui.Button:setTitleAlignment");
+
+            if (!ok) { break; }
+            cobj->setTitleAlignment(arg0);
+            lua_settop(tolua_S, 1);
+            return 1;
+        }
+    }while(0);
+    ok  = true;
+    luaL_error(tolua_S, "%s has wrong number of arguments: %d, was expecting %d \n",  "ccui.Button:setTitleAlignment",argc, 1);
+    return 0;
+
+#if COCOS2D_DEBUG >= 1
+    tolua_lerror:
+    tolua_error(tolua_S,"#ferror in function 'lua_cocos2dx_ui_Button_setTitleAlignment'.",&tolua_err);
+#endif
+
+    return 0;
+}
 int lua_cocos2dx_ui_Button_getCapInsetsPressedRenderer(lua_State* tolua_S)
 {
     int argc = 0;
@@ -7737,6 +7796,7 @@ int lua_register_cocos2dx_ui_Button(lua_State* tolua_S)
         tolua_function(tolua_S,"loadTexturePressed",lua_cocos2dx_ui_Button_loadTexturePressed);
         tolua_function(tolua_S,"setTitleFontName",lua_cocos2dx_ui_Button_setTitleFontName);
         tolua_function(tolua_S,"getCapInsetsNormalRenderer",lua_cocos2dx_ui_Button_getCapInsetsNormalRenderer);
+        tolua_function(tolua_S,"setTitleAlignment",lua_cocos2dx_ui_Button_setTitleAlignment);
         tolua_function(tolua_S,"getCapInsetsPressedRenderer",lua_cocos2dx_ui_Button_getCapInsetsPressedRenderer);
         tolua_function(tolua_S,"loadTextures",lua_cocos2dx_ui_Button_loadTextures);
         tolua_function(tolua_S,"isScale9Enabled",lua_cocos2dx_ui_Button_isScale9Enabled);
