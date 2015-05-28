@@ -53,6 +53,14 @@ void CC_DLL CCLogIPAddresses();
 
 std::string CC_DLL getDeviceIPAddresses();
 
+std::string computeHashForFile(const std::string& filePath);
+
+// creates a  cache file path corresponding to given source file.
+// srcFilePath - source file.
+// cacheFilePath - cache file path to be used to save cache.
+// return true if file already exists
+bool createMappedCacheFile(/*In*/ const std::string& srcFilePath, /*Out*/ std::string& cacheFilePath, /*Optional*/ std::string ext = "");
+void destroyMappedCacheFile(const std::string& key);
 
 NS_CC_END
 
