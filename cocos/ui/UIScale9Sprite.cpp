@@ -793,7 +793,7 @@ namespace ui {
         //shrink the image size when it is 9-patch
         if(_isPatch9)
         {
-            float offset = 1.4;
+            float offset = 1.4f;
             //Top left
             if(!_spriteFrameRotated)
             {
