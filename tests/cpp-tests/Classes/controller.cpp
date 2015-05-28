@@ -35,7 +35,10 @@ public:
         addTest("Click and Move", [](){return new ClickAndMoveTest(); });
         addTest("Configuration", []() { return new ConfigurationTests(); });
         addTest("Console", []() { return new ConsoleTests(); });
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT && _MSC_VER < 1900)
+        // Window 10 UWP does not yet support CURL
         addTest("Curl", []() { return new CurlTests(); });
+#endif
         addTest("Current Language", []() { return new CurrentLanguageTests(); });
         addTest("CocosStudio3D Test", []() { return new CocosStudio3DTests(); });
         addTest("EventDispatcher", []() { return new EventDispatcherTests(); });
