@@ -346,6 +346,12 @@ public:
      */
     Vec3 getIntersectionPoint(const Ray & ray) const;
 
+   /**
+    * Ray-Terrain intersection.
+    * @param ray to hit the terrain
+    * @param intersectionPoint hit point if hitted
+    * @return true if hit, false otherwise
+    */
     bool getIntersectionPoint(const Ray & ray, Vec3 & intersectionPoint) const;
 
     /**
