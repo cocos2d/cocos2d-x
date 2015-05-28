@@ -1437,23 +1437,25 @@ void CameraFrameBufferObjectTest::onEnter()
     CameraBaseTest::onEnter();
     //auto sprite = Sprite::createWithTexture(fbo);
     //sprite->setPosition(Vec2(100,100));
-    std::string filename = "Sprite3DTest/girl.c3b";
-    auto sprite = Sprite3D::create(filename);
-    sprite->setScale(1.0);
-    auto animation = Animation3D::create(filename);
-    if (animation)
-    {
-        auto animate = Animate3D::create(animation);
+    //std::string filename = "Sprite3DTest/girl.c3b";
+    //auto sprite = Sprite3D::create(filename);
+    //sprite->setScale(1.0);
+    //auto animation = Animation3D::create(filename);
+    //if (animation)
+    //{
+    //    auto animate = Animate3D::create(animation);
         
-        sprite->runAction(RepeatForever::create(animate));
-    }
-    sprite->setPosition(Vec2(100,100));
+    //    sprite->runAction(RepeatForever::create(animate));
+    //}
+    //sprite->setPosition(Vec2(100,100));
     auto rt = RenderTarget::create(sizeInpixels.width, sizeInpixels.height);
     auto rtDS = RenderTargetDepthStencil::create(sizeInpixels.width, sizeInpixels.height);
     fbo->AttachRenderTarget(rt);
     fbo->AttachDepthStencilTarget(rtDS);
-    sprite->setTexture(fbo->getRenderTarget()->getTexture());
-    
+    auto sprite = Sprite::createWithTexture(fbo->getRenderTarget()->getTexture());
+    sprite->setScale(0.3);
+    sprite->runAction(RepeatForever::create(RotateBy::create(1, 90)));
+    sprite->setPosition(size.width/2, size.height/2);
     addChild(sprite);
     
     auto sprite2 = Sprite::create(s_pathGrossini);
