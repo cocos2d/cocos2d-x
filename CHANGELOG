@@ -16,6 +16,8 @@ cocos2d-x-3.7  ??
     [NEW]           ui: TextField add `getTextColor`, `getTextHorizontalAlignment` and `getTextVerticalAlignment` API
     [NEW]           audio: Added MP3 support to winrt audio
     
+    [FIX]           audio: Fixed program may freeze if `AudioEngine::stop` or `AudioEngine::stopAll()` is invoked frequently on Android
+    [FIX]           ui: TextField scale factor is wrong with multiline text.
     [FIX]           3d: skybox can't move to other position except origin point in world space
     [FIX]           3d: terrain can't move to other position except origin point in world space
     [FIX]           3rd: fix PIE link error on iOS caused by libpng and libtiff
