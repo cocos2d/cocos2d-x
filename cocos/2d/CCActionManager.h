@@ -110,10 +110,17 @@ public:
      *
      * @param tag       The actions' tag.
      * @param target    A certain target.
-     * @param bitwiseFilter If true, tag is used as a flag field using "bitwise AND"
      * @js NA
      */
-    void removeAllActionsByTag(int tag, Node *target, bool bitwiseFilter = false);
+    void removeAllActionsByTag(int tag, Node *target);
+
+    /** Removes all actions matching at least one bit in flags and the target.
+     *
+     * @param flags     The flag field to match the actions' flags based on bitwise AND.
+     * @param target    A certain target.
+     * @js NA
+     */
+    void removeActionsByFlags(unsigned int flags, Node *target);
 
     /** Gets an action given its tag an a target.
      *

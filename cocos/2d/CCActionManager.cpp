@@ -287,7 +287,7 @@ void ActionManager::removeActionByTag(int tag, Node *target)
     }
 }
 
-void ActionManager::removeAllActionsByTag(int tag, Node *target, bool bitwiseFilter)
+void ActionManager::removeAllActionsByTag(int tag, Node *target)
 {
     CCASSERT(tag != Action::INVALID_TAG, "");
     CCASSERT(target != nullptr, "");
@@ -302,7 +302,38 @@ void ActionManager::removeAllActionsByTag(int tag, Node *target, bool bitwiseFil
         {
             Action *action = (Action*)element->actions->arr[i];
             
-            if ((action->getTag() == (int)tag || (bitwiseFilter && action->getTag() != Action::INVALID_TAG && (action->getTag() & tag) != 0)) && action->getOriginalTarget() == target)
+            if (action->getTag() == (int)tag && action->getOriginalTarget() == target)
+            {
+                removeActionAtIndex(i, element);
+                --limit;
+            }
+            else
+            {
+                ++i;
+            }
+        }
+    }
+}
+
+void ActionManager::removeActionsByFlags(unsigned int flags, Node *target)
+{
+    if (flags == 0)
+    {
+        return;
+    }
+    CCASSERT(target != nullptr, "");
+
+    tHashElement *element = nullptr;
+    HASH_FIND_PTR(_targets, &target, element);
+
+    if (element)
+    {
+        auto limit = element->actions->num;
+        for (int i = 0; i < limit;)
+        {
+            Action *action = (Action*)element->actions->arr[i];
+
+            if ((action->getFlags() & flags) != 0 && action->getOriginalTarget() == target)
             {
                 removeActionAtIndex(i, element);
                 --limit;

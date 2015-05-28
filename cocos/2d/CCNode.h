@@ -1224,9 +1224,15 @@ public:
      * Removes all actions from the running action list by its tag.
      *
      * @param tag   A tag that indicates the action to be removed.
-     * @param bitwiseFilter  If true, tag is used as a flag field using "bitwise AND"
      */
-    void stopAllActionsByTag(int tag, bool bitwiseFilter = false);
+    void stopAllActionsByTag(int tag);
+
+    /**
+     * Removes all actions from the running action list by its flags.
+     *
+     * @param flags   A flag field that removes actions based on bitwise AND.
+     */
+    void stopActionsByFlags(unsigned int flags);
 
     /**
      * Gets an action from the running action list by its tag.
