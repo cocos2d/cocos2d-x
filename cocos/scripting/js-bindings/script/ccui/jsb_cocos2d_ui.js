@@ -411,8 +411,10 @@ ccui.WebView.prototype.setEventListener = function(event, callback){
         case ccui.WebView.EventType.JS_EVALUATED:
             this.setOnJSCallback(callback);
             break;
+        default:
+            cc.log("unsupport web event:" + event);
+            break;
     }
-    cc.log("unsupport web event");
 };
 
 /*
