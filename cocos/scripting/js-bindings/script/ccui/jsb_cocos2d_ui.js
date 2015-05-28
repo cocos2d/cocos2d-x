@@ -409,7 +409,8 @@ ccui.WebView.prototype.setEventListener = function(event, callback){
             this.setOnDidFailLoading(callback);
             break;
         case ccui.WebView.EventType.JS_EVALUATED:
-            this.setOnJSCallback(callback);
+            //this.setOnJSCallback(callback);
+            cc.log("unsupport web event:" + event);
             break;
         default:
             cc.log("unsupport web event:" + event);

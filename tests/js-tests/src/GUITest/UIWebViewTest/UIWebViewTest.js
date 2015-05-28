@@ -29,10 +29,11 @@ var UIWebViewTest = UIScene.extend({
     onEnter: function(){
         UIScene.prototype.onEnter.call(this);
 
-        var webView = new ccui.WebView("src/GUITest/UIWebViewTest/webview.html");
+        var webView = new ccui.WebView("http://www.baidu.com");
         webView.setContentSize(320, 240);
         webView.setPosition(800/2, 450/2);
         webView.setScale(0.5);
+        webView.setScalesPageToFit(true);
         window.webView = webView;
         this.addChild(webView);
 
@@ -45,9 +46,6 @@ var UIWebViewTest = UIScene.extend({
         });
         webView.setEventListener(ccui.WebView.EventType.ERROR, function(sender, url){
             cc.log("webview ERROR url:" + url);
-        });
-        webView.setEventListener(ccui.WebView.EventType.JS_EVALUATED, function(sender, url){
-            cc.log("webview JS_EVALUATED url:" + url);
         });
 
         var list = [
@@ -83,7 +81,7 @@ var UIWebViewTest = UIScene.extend({
             }},
             { name: "evaluateJS", func: function(){
                 cc.log("evaluateJS!");
-                var code = "document.getElementById('test').innerHTML = 'evaluateJS!'";
+                var code = "alert('evaluateJS!')";
                 webView.evaluateJS(code);
             }},
             { name: "Scale", func: function(){
