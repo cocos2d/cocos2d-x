@@ -57,7 +57,7 @@ public class Cocos2dxHelper {
     // ===========================================================
     private static final String PREFS_NAME = "Cocos2dxPrefsFile";
     private static final int RUNNABLES_PER_FRAME = 5;
-    
+
     // ===========================================================
     // Fields
     // ===========================================================
@@ -451,72 +451,62 @@ public class Cocos2dxHelper {
     }
 
     //Enhance API modification begin
-    public static int setResolutionPercent(int per)
-    {
-    	try{
-    		if(mGameServiceBinder != null)
-    		{    			
-        		return mGameServiceBinder.setPreferredResolution(per);
-    		}
-    		return -1;
-    	}catch (Exception e) {
-			e.printStackTrace(); 
+	public static int setResolutionPercent(int per) {
+		try {
+			if (mGameServiceBinder != null) {
+				return mGameServiceBinder.setPreferredResolution(per);
+			}
+			return -1;
+		} catch (Exception e) {
+			e.printStackTrace();
 			return -1;
 		}
-    }
+	}
 
-    public static int setFPS(int fps)
-    {
-    	try{
-    		if(mGameServiceBinder != null)
-    		{    			
-        		return mGameServiceBinder.setFramePerSecond(fps);
-    		}
-    		return -1;
-    	}catch (Exception e) {
-			e.printStackTrace(); 
+	public static int setFPS(int fps) {
+		try {
+			if (mGameServiceBinder != null) {
+				return mGameServiceBinder.setFramePerSecond(fps);
+			}
+			return -1;
+		} catch (Exception e) {
+			e.printStackTrace();
 			return -1;
 		}
-    }
-    
-    public static int fastLoading(int sec)
-    {
-    	try{
-    		if(mGameServiceBinder != null)
-    		{
-    			return mGameServiceBinder.boostUp(sec);
-    		}
-    		return -1;
-    	}catch (Exception e) {
-			e.printStackTrace(); 
+	}
+
+	public static int fastLoading(int sec) {
+		try {
+			if (mGameServiceBinder != null) {
+				return mGameServiceBinder.boostUp(sec);
+			}
+			return -1;
+		} catch (Exception e) {
+			e.printStackTrace();
 			return -1;
 		}
-    }
-    
-	public static int getTemperature()
-    {
-    	try{
-    		if(mGameServiceBinder != null)
-    		{
-    			return mGameServiceBinder.getAbstractTemperature();  
-    		}
-    		return -1;
-    	}catch (Exception e) {
-			e.printStackTrace(); 
+	}
+
+	public static int getTemperature() {
+		try {
+			if (mGameServiceBinder != null) {
+				return mGameServiceBinder.getAbstractTemperature();
+			}
+			return -1;
+		} catch (Exception e) {
+			e.printStackTrace();
 			return -1;
 		}
-    }
-	
-	public static int setLowPowerMode(boolean enable)
-	{
-	   	try{
-    		if(mGameServiceBinder != null)
-    		{
-    			return mGameServiceBinder.setGamePowerSaving(enable);  
-    		}
-    		return -1;
-    	}catch (Exception e) {
-			e.printStackTrace(); 
+	}
+
+	public static int setLowPowerMode(boolean enable) {
+		try {
+			if (mGameServiceBinder != null) {
+				return mGameServiceBinder.setGamePowerSaving(enable);
+			}
+			return -1;
+		} catch (Exception e) {
+			e.printStackTrace();
 			return -1;
 		}
 	}
