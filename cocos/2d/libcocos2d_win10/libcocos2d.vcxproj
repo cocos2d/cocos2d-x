@@ -574,7 +574,6 @@
     <ClCompile Include="..\..\platform\winrt\CCPThreadWinRT.cpp" />
     <ClCompile Include="..\..\platform\winrt\CCStdC.cpp" />
     <ClCompile Include="..\..\platform\winrt\CCWinRTUtils.cpp" />
-    <ClCompile Include="..\..\platform\winrt\DirectXBase.cpp" />
     <ClCompile Include="..\..\platform\winrt\InputEvent.cpp" />
     <ClCompile Include="..\..\platform\winrt\Keyboard-winrt.cpp" />
     <ClCompile Include="..\..\platform\winrt\pch.cpp">
@@ -1184,8 +1183,6 @@
     <ClInclude Include="..\..\platform\winrt\CCPThreadWinRT.h" />
     <ClInclude Include="..\..\platform\winrt\CCStdC.h" />
     <ClInclude Include="..\..\platform\winrt\CCWinRTUtils.h" />
-    <ClInclude Include="..\..\platform\winrt\DirectXBase.h" />
-    <ClInclude Include="..\..\platform\winrt\DirectXHelper.h" />
     <ClInclude Include="..\..\platform\winrt\inet_ntop_winrt.h" />
     <ClInclude Include="..\..\platform\winrt\InputEvent.h" />
     <ClInclude Include="..\..\platform\winrt\InputEventTypes.h" />
