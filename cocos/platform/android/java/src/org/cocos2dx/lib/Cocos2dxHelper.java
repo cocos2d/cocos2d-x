@@ -55,9 +55,6 @@ public class Cocos2dxHelper {
     // ===========================================================
     // Constants
     // ===========================================================
-	//Enhance API modification begin    
-    private final static String TAG = Cocos2dxHelper.class.getSimpleName();
-    //Enhance API modification end
     private static final String PREFS_NAME = "Cocos2dxPrefsFile";
     private static final int RUNNABLES_PER_FRAME = 5;
     
