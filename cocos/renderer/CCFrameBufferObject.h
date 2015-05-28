@@ -29,7 +29,9 @@
 #include "platform/CCGL.h"
 #include "renderer/CCTexture2D.h"
 #include <set>
+
 NS_CC_BEGIN
+class EventListenerCustom;
 
 class RenderTargetBase : public Ref
 {
@@ -63,6 +65,9 @@ CC_CONSTRUCTOR_ACCESS:
     
 protected:
     Texture2D* _texture;
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    EventListenerCustom* _rebuildTextureListener;
+#endif
 };
 
 class RenderTargetDepthStencil : public RenderTargetBase
@@ -79,7 +84,11 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~RenderTargetDepthStencil();
     
 protected:
+
     GLuint _depthStencilBuffer;
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    EventListenerCustom* _reBuildDepthStencilListener;
+#endif
 };
 
 class CC_DLL FrameBufferObject : public Ref
@@ -93,7 +102,7 @@ public:
     GLuint getFID() const { return _fid; }
     //call glclear to clear frame buffer object
     void clearFBO();
-    
+    void applyFBO();
     void setClearColor(const Color4F& color) { _clearColor = color;}
     void setClearDepth(float depth) { _clearDepth = depth; }
     void setClearStencil(int8_t stencil) { _clearStencil = stencil; }
@@ -112,6 +121,8 @@ CC_CONSTRUCTOR_ACCESS:
 private:
     //openGL content for FrameBuffer
     GLuint _fbo;
+    //dirty flag for fbo binding
+    bool _fboBindingDirty;
     //
     uint8_t _fid;
     //
@@ -129,6 +140,11 @@ public:
 private:
     static GLuint _defaultFBO;
     static std::set<FrameBufferObject*> _frameBufferObjects;
+    
+private:
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    EventListenerCustom* _dirtyFBOListener;
+#endif
 };
 
 NS_CC_END
