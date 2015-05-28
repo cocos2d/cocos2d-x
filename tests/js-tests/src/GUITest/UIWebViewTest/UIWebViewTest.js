@@ -37,16 +37,16 @@ var UIWebViewTest = UIScene.extend({
         this.addChild(webView);
 
 
-        webView.addEventListener(ccui.WebView.EventType.LOADED, function(sender, url){
+        webView.setEventListener(ccui.WebView.EventType.LOADED, function(sender, url){
             cc.log("webview LOADED url:" + url);
         });
-        webView.addEventListener(ccui.WebView.EventType.LOADING, function(sender, url){
+        webView.setEventListener(ccui.WebView.EventType.LOADING, function(sender, url){
             cc.log("webview LOADING url:" + url);
         });
-        webView.addEventListener(ccui.WebView.EventType.ERROR, function(sender, url){
+        webView.setEventListener(ccui.WebView.EventType.ERROR, function(sender, url){
             cc.log("webview ERROR url:" + url);
         });
-        webView.addEventListener(ccui.WebView.EventType.JS_EVALUATED, function(sender, url){
+        webView.setEventListener(ccui.WebView.EventType.JS_EVALUATED, function(sender, url){
             cc.log("webview JS_EVALUATED url:" + url);
         });
 

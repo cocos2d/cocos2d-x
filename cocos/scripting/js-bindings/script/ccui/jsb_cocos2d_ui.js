@@ -396,7 +396,7 @@ ccui.WebView.prototype.loadURL = function (url) {
     }
 };
 
-ccui.WebView.prototype.addEventListener = function(event, callback){
+ccui.WebView.prototype.setEventListener = function(event, callback){
     switch(event)
     {
         case ccui.WebView.EventType.LOADING:
