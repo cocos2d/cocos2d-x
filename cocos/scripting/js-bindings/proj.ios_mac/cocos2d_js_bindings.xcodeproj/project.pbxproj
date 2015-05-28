@@ -162,7 +162,6 @@
 		42AD25741AFF9E17000176E2 /* jsb_cocos2dx_experimental_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 42AD25711AFF9E17000176E2 /* jsb_cocos2dx_experimental_manual.cpp */; };
 		42AD25751AFF9E17000176E2 /* jsb_cocos2dx_experimental_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 42AD25721AFF9E17000176E2 /* jsb_cocos2dx_experimental_manual.h */; };
 		42AD25761AFF9E17000176E2 /* jsb_cocos2dx_experimental_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 42AD25721AFF9E17000176E2 /* jsb_cocos2dx_experimental_manual.h */; };
-		4B22F4A91B159A7A0044C14E /* jsb_cocos2dx_experimental_webView_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4B22F4A71B159A7A0044C14E /* jsb_cocos2dx_experimental_webView_manual.cpp */; };
 		4B22F4AA1B159A7A0044C14E /* jsb_cocos2dx_experimental_webView_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4B22F4A71B159A7A0044C14E /* jsb_cocos2dx_experimental_webView_manual.cpp */; };
 		4B22F4AB1B159A7A0044C14E /* jsb_cocos2dx_experimental_webView_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B22F4A81B159A7A0044C14E /* jsb_cocos2dx_experimental_webView_manual.h */; };
 		4B22F4AC1B159A7A0044C14E /* jsb_cocos2dx_experimental_webView_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B22F4A81B159A7A0044C14E /* jsb_cocos2dx_experimental_webView_manual.h */; };
@@ -813,7 +812,6 @@
 				1A119ED718BDF19200352BAA /* js_bindings_opengl.cpp in Sources */,
 				1AB5E62B18D05BC80088DAA4 /* jsb_cocos2dx_ui_auto.cpp in Sources */,
 				1A119E9B18BDF19200352BAA /* jsb_cocos2dx_spine_auto.cpp in Sources */,
-				4B22F4A91B159A7A0044C14E /* jsb_cocos2dx_experimental_webView_manual.cpp in Sources */,
 				1A119EF318BDF19200352BAA /* js_bindings_system_registration.cpp in Sources */,
 				1A119EBB18BDF19200352BAA /* cocos2d_specifics.cpp in Sources */,
 				1A119EE518BDF19200352BAA /* jsb_opengl_manual.cpp in Sources */,
