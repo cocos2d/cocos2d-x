@@ -49,7 +49,7 @@ import android.view.Display;
 import android.view.WindowManager;
 import android.content.ServiceConnection;  //Enhance API modification	
 
-import com.enhance.gameservice.IGameTunningService;  //Enhance API modification
+import com.enhance.gameservice.IGameTuningService;  //Enhance API modification
 
 public class Cocos2dxHelper {
     // ===========================================================
@@ -77,7 +77,7 @@ public class Cocos2dxHelper {
     private static Cocos2dxHelperListener sCocos2dxHelperListener;
     private static Set<OnActivityResultListener> onActivityResultListeners = new LinkedHashSet<OnActivityResultListener>();
 	//Enhance API modification begin
-    private static IGameTunningService mGameServiceBinder = null;
+    private static IGameTuningService mGameServiceBinder = null;
     private static final int BOOST_TIME = 7;
 	//Enhance API modification end
 
@@ -118,7 +118,7 @@ public class Cocos2dxHelper {
             sInited = true;
             
             //Enhance API modification begin
-            activity.getApplicationContext().bindService(new Intent(IGameTunningService.class.getName()), connection, Context.BIND_AUTO_CREATE);
+            activity.getApplicationContext().bindService(new Intent(IGameTuningService.class.getName()), connection, Context.BIND_AUTO_CREATE);
             //Enhance API modification end
         }
     }
@@ -126,7 +126,7 @@ public class Cocos2dxHelper {
     //Enhance API modification begin
 	private static ServiceConnection connection = new ServiceConnection() {
 		public void onServiceConnected(ComponentName name, IBinder service) {
-			mGameServiceBinder = IGameTunningService.Stub.asInterface(service);
+			mGameServiceBinder = IGameTuningService.Stub.asInterface(service);
 			fastLoading(BOOST_TIME);
 		}
 

@@ -93,7 +93,7 @@ int EnhanceAPI::setLowPowerMode(bool enable)
 {
     JniMethodInfo t;
 	int ret = -1;
-    if(JniHelper::getStaticMethodInfo(t, CLASS_NAME, "fastLoading", "(Z)I"))
+    if(JniHelper::getStaticMethodInfo(t, CLASS_NAME, "setLowPowerMode", "(Z)I"))
     {
         ret = t.env->CallStaticIntMethod(t.classID, t.methodID, enable);
     }

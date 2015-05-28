@@ -1,6 +1,6 @@
 package com.enhance.gameservice;
 
-interface IGameTunningService
+interface IGameTuningService
 {
     int setPreferredResolution(int resolution);
     int setFramePerSecond(int fps);
