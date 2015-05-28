@@ -59,7 +59,7 @@ typedef struct CC_DLL PhysicsMaterial
 const PhysicsMaterial PHYSICSSHAPE_MATERIAL_DEFAULT;
 
 /**
- *  @addtogroup core
+ *  @addtogroup physics
  *  @{
  */
 

@@ -40,7 +40,7 @@ class PhysicsBody;
 class PhysicsWorld;
 
 /**
- * @addtogroup core
+ * @addtogroup physics
  * @{
  */
 
