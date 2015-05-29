@@ -42,13 +42,10 @@
         
 --------------------------------
 -- 
--- @function [parent=#Camera] initOrthographic 
+-- @function [parent=#Camera] clearBackground 
 -- @param self
--- @param #float zoomX
--- @param #float zoomY
--- @param #float nearPlane
--- @param #float farPlane
--- @return bool#bool ret (return value: bool)
+-- @param #float depth
+-- @return Camera#Camera self (return value: cc.Camera)
         
 --------------------------------
 -- set depth, camera with larger depth is drawn on top of camera with smaller depth, the depth of camera with CameraFlag::DEFAULT is 0, user defined camera is -1 by default
@@ -78,10 +75,13 @@
         
 --------------------------------
 -- 
--- @function [parent=#Camera] clearBackground 
+-- @function [parent=#Camera] initOrthographic 
 -- @param self
--- @param #float depth
--- @return Camera#Camera self (return value: cc.Camera)
+-- @param #float zoomX
+-- @param #float zoomY
+-- @param #float nearPlane
+-- @param #float farPlane
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- Is this aabb visible in frustum
@@ -103,6 +103,13 @@
 -- @param self
 -- @param #cc.Scene scene
 -- @return Camera#Camera self (return value: cc.Camera)
+        
+--------------------------------
+-- 
+-- @function [parent=#Camera] projectGL 
+-- @param self
+-- @param #vec3_table src
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
         
 --------------------------------
 -- Gets the camera's view matrix.<br>

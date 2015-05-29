@@ -158,7 +158,7 @@ void AudioEngineInterruptionListenerCallback(void* user_data, UInt32 interruptio
 
 -(id) init
 {
-    if (self == [super init])
+    if (self = [super init])
     {
       if ([[[UIDevice currentDevice] systemVersion] intValue] > 5) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleInterruption:) name:AVAudioSessionInterruptionNotification object:[AVAudioSession sharedInstance]];
@@ -239,12 +239,11 @@ bool AudioEngineImpl::init()
         s_ALDevice = alcOpenDevice(nullptr);
         
         if (s_ALDevice) {
-            auto alError = alGetError();
             s_ALContext = alcCreateContext(s_ALDevice, nullptr);
             alcMakeContextCurrent(s_ALContext);
             
             alGenSources(MAX_AUDIOINSTANCES, _alSources);
-            alError = alGetError();
+            auto alError = alGetError();
             if(alError != AL_NO_ERROR)
             {
                 printf("%s:generating sources fail! error = %x\n", __PRETTY_FUNCTION__, alError);

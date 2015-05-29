@@ -207,6 +207,9 @@ THE SOFTWARE.
     #include "platform/android/CCGLViewImpl-android.h"
     #include "platform/android/CCGL-android.h"
     #include "platform/android/CCStdC-android.h"
+//Enhance modification begin
+    #include "platform/android/CCEnhanceAPI-android.h"
+//Enhance modification end
 #endif // CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_BLACKBERRY)
