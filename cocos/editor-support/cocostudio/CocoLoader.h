@@ -40,6 +40,13 @@ struct CC_STUDIO_DLL stExpCocoAttribDesc
     char	m_cTypeName;
     uint32_t m_szName;
 public:
+    /**
+    * Get type name.
+    *
+    * @parame pCoco  property loader
+    *
+    * @return type name
+    */
     char* GetName(CocoLoader*	pCoco);
 };
 
@@ -49,8 +56,27 @@ struct CC_STUDIO_DLL stExpCocoObjectDesc
     uint32_t		m_szName;
     uint32_t		m_pAttribDescArray;
 public:
+    /**
+    * Get type name.
+    *
+    * @parame pCoco  property loader
+    *
+    * @return type name
+    */
     char*	GetName(CocoLoader*	pCoco);
+    /**
+    * Get attribute count.
+    *
+    * @return count of attributes
+    */
     int		GetAttribNum();
+    /**
+    * Get attributes description array.
+    *
+    * @parame pCoco  property loader
+    *
+    * @return attributes description array
+    */
     stExpCocoAttribDesc*	GetAttribDescArray(CocoLoader*	pCoco);
 };
 
@@ -63,10 +89,43 @@ public:
     uint32_t		m_szValue;
     uint32_t		m_ChildArray;
 public:
+    /**
+    * Get json value type.
+    *
+    * @parame pCoco  property loader
+    *
+    * @return json value type
+    */
     rapidjson::Type		GetType(CocoLoader*	pCoco);
+    /**
+    * Get type name.
+    *
+    * @parame pCoco  property loader
+    *
+    * @return type name
+    */
     char*				GetName(CocoLoader*	pCoco);
+    /**
+    * Get value.
+    *
+    * @parame pCoco  property loader
+    *
+    * @return value
+    */
     char*				GetValue(CocoLoader*	pCoco);
+    /**
+    * Get child count.
+    *
+    * @return count of child
+    */
     int					GetChildNum();
+    /**
+    * Get child array.
+    *
+    * @parame pCoco  property loader
+    *
+    * @return child array
+    */
     stExpCocoNode*		GetChildArray(CocoLoader*	pCoco);
 public:
     void WriteJson(CocoLoader* pCoco,void* pFileName = nullptr, int vLayer = 0, bool bEndNode = false, bool bParentNodeIsArray = false);
@@ -96,13 +155,50 @@ public:
     CocoLoader();
     ~CocoLoader();
 public:
-    
+
+    /**
+    * Read binary data buffer.
+    *
+    * @parame pBinBuff  binary buffer
+    *
+    * @return if load success return true
+    */
     bool					ReadCocoBinBuff(char* pBinBuff);
-    stCocoFileHeader*		GetFileHeader(){return m_pFileHeader;}
-    stExpCocoNode*			GetRootCocoNode(){return	m_pRootNode;}
-    stExpCocoObjectDesc*	GetCocoObjectDescArray(){return	m_pObjectDescArray;}
+    /**
+    * Get the header of description data.
+    *
+    * @return header buffer pointer
+    */
+    stCocoFileHeader*		GetFileHeader(){ return m_pFileHeader; }
+    /**
+    * Get the root node.
+    *
+    * @return root node
+    */
+    stExpCocoNode*			GetRootCocoNode(){ return	m_pRootNode; }
+    /**
+    * Get attributes description array.
+    *
+    * @return attributes description array
+    */
+    stExpCocoObjectDesc*	GetCocoObjectDescArray(){ return	m_pObjectDescArray; }
+    /**
+    * Get attribute description buffer address
+    *
+    * @return buffer address
+    */
     char*					GetMemoryAddr_AttribDesc();
+    /**
+    * Get node address
+    *
+    * @return buffer address
+    */
     char*					GetMemoryAddr_CocoNode();
+    /**
+    * Get string buffer address
+    *
+    * @return buffer address
+    */
     char*					GetMemoryAddr_String();
     
 };

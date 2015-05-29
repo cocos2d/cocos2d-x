@@ -63,12 +63,29 @@ protected:
 	FrameEasingType _type;
 	float _fValue;
 public:
-	ActionFrameEasing();
-	virtual ~ActionFrameEasing();
+    /**
+    * Default constructor
+    */
+    ActionFrameEasing();
 
-	float bounceTime(float t);
+    /**
+    * Default destructor
+    */
+    virtual ~ActionFrameEasing();
 
-	float easeValue(float t);
+    /**
+    * Calculate bounce time
+    *
+    * @param current duration
+    */
+    float bounceTime(float t);
+
+    /**
+    * Calculate ease value
+    *
+    * @param current duration
+    */
+    float easeValue(float t);
 };
 
 }

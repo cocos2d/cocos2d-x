@@ -36,9 +36,30 @@ namespace cocostudio {
     public:
         WidgetCallBackHandlerProtocol() {};
         virtual ~WidgetCallBackHandlerProtocol() {};
-        
+
+        /**
+        * User touch event callback function.
+        *
+        * @parame callBackName  user defined callback name
+        *
+        * @return call back bundle function
+        */
         virtual cocos2d::ui::Widget::ccWidgetTouchCallback onLocateTouchCallback(const std::string &callBackName){ return nullptr; };
+        /**
+        * User click event callback function.
+        *
+        * @parame callBackName  user defined callback name
+        *
+        * @return call back bundle function
+        */
         virtual cocos2d::ui::Widget::ccWidgetClickCallback onLocateClickCallback(const std::string &callBackName){ return nullptr; };
+        /**
+        * User event callback function.
+        *
+        * @parame callBackName  user defined callback name
+        *
+        * @return call back bundle function
+        */
         virtual cocos2d::ui::Widget::ccWidgetEventCallback onLocateEventCallback(const std::string &callBackName){ return nullptr; };
     };
 
