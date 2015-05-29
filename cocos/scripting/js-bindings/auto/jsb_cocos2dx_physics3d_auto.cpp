@@ -147,6 +147,7 @@ bool js_cocos2dx_physics3d_Physics3DShape_createConvexHull(JSContext *cx, uint32
         const cocos2d::Vec3* arg0;
         int arg1;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -363,6 +364,7 @@ bool js_cocos2dx_physics3d_Physics3DObject_setPhysicsWorld(JSContext *cx, uint32
     if (argc == 1) {
         cocos2d::Physics3DWorld* arg0;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -652,6 +654,7 @@ bool js_cocos2dx_physics3d_Physics3DRigidBody_addConstraint(JSContext *cx, uint3
     if (argc == 1) {
         cocos2d::Physics3DConstraint* arg0;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -1312,6 +1315,7 @@ bool js_cocos2dx_physics3d_Physics3DRigidBody_removeConstraint(JSContext *cx, ui
         if (argc == 1) {
             cocos2d::Physics3DConstraint* arg0;
             do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -1729,6 +1733,7 @@ bool js_cocos2dx_physics3d_Physics3DComponent_addToPhysicsWorld(JSContext *cx, u
     if (argc == 1) {
         cocos2d::Physics3DWorld* arg0;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -1813,6 +1818,7 @@ bool js_cocos2dx_physics3d_Physics3DComponent_setPhysics3DObject(JSContext *cx, 
     if (argc == 1) {
         cocos2d::Physics3DObject* arg0;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -1880,6 +1886,7 @@ bool js_cocos2dx_physics3d_Physics3DComponent_create(JSContext *cx, uint32_t arg
         if (argc == 1) {
             cocos2d::Physics3DObject* arg0;
             do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -1906,6 +1913,7 @@ bool js_cocos2dx_physics3d_Physics3DComponent_create(JSContext *cx, uint32_t arg
         if (argc == 2) {
             cocos2d::Physics3DObject* arg0;
             do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -1935,6 +1943,7 @@ bool js_cocos2dx_physics3d_Physics3DComponent_create(JSContext *cx, uint32_t arg
         if (argc == 3) {
             cocos2d::Physics3DObject* arg0;
             do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -2359,6 +2368,7 @@ bool js_cocos2dx_physics3d_Physics3DWorld_removePhysics3DConstraint(JSContext *c
     if (argc == 1) {
         cocos2d::Physics3DConstraint* arg0;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -2463,6 +2473,7 @@ bool js_cocos2dx_physics3d_Physics3DWorld_addPhysics3DObject(JSContext *cx, uint
     if (argc == 1) {
         cocos2d::Physics3DObject* arg0;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -2510,6 +2521,7 @@ bool js_cocos2dx_physics3d_Physics3DWorld_removePhysics3DObject(JSContext *cx, u
     if (argc == 1) {
         cocos2d::Physics3DObject* arg0;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -2537,6 +2549,7 @@ bool js_cocos2dx_physics3d_Physics3DWorld_getPhysicsObject(JSContext *cx, uint32
     if (argc == 1) {
         const btCollisionObject* arg0;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -2573,6 +2586,7 @@ bool js_cocos2dx_physics3d_Physics3DWorld_addPhysics3DConstraint(JSContext *cx, 
     if (argc == 1) {
         cocos2d::Physics3DConstraint* arg0;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -2589,6 +2603,7 @@ bool js_cocos2dx_physics3d_Physics3DWorld_addPhysics3DConstraint(JSContext *cx, 
         cocos2d::Physics3DConstraint* arg0;
         bool arg1;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -2617,6 +2632,7 @@ bool js_cocos2dx_physics3d_Physics3DWorld_debugDraw(JSContext *cx, uint32_t argc
     if (argc == 1) {
         cocos2d::Renderer* arg0;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -2647,6 +2663,7 @@ bool js_cocos2dx_physics3d_Physics3DWorld_sweepShape(JSContext *cx, uint32_t arg
         cocos2d::Mat4 arg2;
         cocos2d::Physics3DWorld::HitResult* arg3;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -3208,6 +3225,7 @@ bool js_cocos2dx_physics3d_Physics3DPointToPointConstraint_create(JSContext *cx,
         if (argc == 4) {
             cocos2d::Physics3DRigidBody* arg0;
             do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -3218,6 +3236,7 @@ bool js_cocos2dx_physics3d_Physics3DPointToPointConstraint_create(JSContext *cx,
             if (!ok) { ok = true; break; }
             cocos2d::Physics3DRigidBody* arg1;
             do {
+                if (args.get(1).isNull()) { arg1 = nullptr; break; }
                 if (!args.get(1).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(1).toObjectOrNull();
@@ -3251,6 +3270,7 @@ bool js_cocos2dx_physics3d_Physics3DPointToPointConstraint_create(JSContext *cx,
         if (argc == 2) {
             cocos2d::Physics3DRigidBody* arg0;
             do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -3876,6 +3896,7 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
         if (argc == 3) {
             cocos2d::Physics3DRigidBody* arg0;
             do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -3908,6 +3929,7 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
         if (argc == 4) {
             cocos2d::Physics3DRigidBody* arg0;
             do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -3944,6 +3966,7 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
         if (argc == 2) {
             cocos2d::Physics3DRigidBody* arg0;
             do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -3973,6 +3996,7 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
         if (argc == 3) {
             cocos2d::Physics3DRigidBody* arg0;
             do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -4006,6 +4030,7 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
         if (argc == 6) {
             cocos2d::Physics3DRigidBody* arg0;
             do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -4016,6 +4041,7 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
             if (!ok) { ok = true; break; }
             cocos2d::Physics3DRigidBody* arg1;
             do {
+                if (args.get(1).isNull()) { arg1 = nullptr; break; }
                 if (!args.get(1).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(1).toObjectOrNull();
@@ -4054,6 +4080,7 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
         if (argc == 7) {
             cocos2d::Physics3DRigidBody* arg0;
             do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -4064,6 +4091,7 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
             if (!ok) { ok = true; break; }
             cocos2d::Physics3DRigidBody* arg1;
             do {
+                if (args.get(1).isNull()) { arg1 = nullptr; break; }
                 if (!args.get(1).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(1).toObjectOrNull();
@@ -4106,6 +4134,7 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
         if (argc == 4) {
             cocos2d::Physics3DRigidBody* arg0;
             do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -4116,6 +4145,7 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
             if (!ok) { ok = true; break; }
             cocos2d::Physics3DRigidBody* arg1;
             do {
+                if (args.get(1).isNull()) { arg1 = nullptr; break; }
                 if (!args.get(1).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(1).toObjectOrNull();
@@ -4148,6 +4178,7 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
         if (argc == 5) {
             cocos2d::Physics3DRigidBody* arg0;
             do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -4158,6 +4189,7 @@ bool js_cocos2dx_physics3d_Physics3DHingeConstraint_create(JSContext *cx, uint32
             if (!ok) { ok = true; break; }
             cocos2d::Physics3DRigidBody* arg1;
             do {
+                if (args.get(1).isNull()) { arg1 = nullptr; break; }
                 if (!args.get(1).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(1).toObjectOrNull();
@@ -5532,6 +5564,7 @@ bool js_cocos2dx_physics3d_Physics3DSliderConstraint_create(JSContext *cx, uint3
         cocos2d::Mat4 arg3;
         bool arg4;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -5540,6 +5573,7 @@ bool js_cocos2dx_physics3d_Physics3DSliderConstraint_create(JSContext *cx, uint3
             JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
         } while (0);
         do {
+            if (args.get(1).isNull()) { arg1 = nullptr; break; }
             if (!args.get(1).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(1).toObjectOrNull();
@@ -6115,6 +6149,7 @@ bool js_cocos2dx_physics3d_Physics3DConeTwistConstraint_create(JSContext *cx, ui
         if (argc == 4) {
             cocos2d::Physics3DRigidBody* arg0;
             do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -6125,6 +6160,7 @@ bool js_cocos2dx_physics3d_Physics3DConeTwistConstraint_create(JSContext *cx, ui
             if (!ok) { ok = true; break; }
             cocos2d::Physics3DRigidBody* arg1;
             do {
+                if (args.get(1).isNull()) { arg1 = nullptr; break; }
                 if (!args.get(1).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(1).toObjectOrNull();
@@ -6158,6 +6194,7 @@ bool js_cocos2dx_physics3d_Physics3DConeTwistConstraint_create(JSContext *cx, ui
         if (argc == 2) {
             cocos2d::Physics3DRigidBody* arg0;
             do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -6518,6 +6555,7 @@ bool js_cocos2dx_physics3d_Physics3D6DofConstraint_create(JSContext *cx, uint32_
         if (argc == 3) {
             cocos2d::Physics3DRigidBody* arg0;
             do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -6551,6 +6589,7 @@ bool js_cocos2dx_physics3d_Physics3D6DofConstraint_create(JSContext *cx, uint32_
         if (argc == 5) {
             cocos2d::Physics3DRigidBody* arg0;
             do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -6561,6 +6600,7 @@ bool js_cocos2dx_physics3d_Physics3D6DofConstraint_create(JSContext *cx, uint32_
             if (!ok) { ok = true; break; }
             cocos2d::Physics3DRigidBody* arg1;
             do {
+                if (args.get(1).isNull()) { arg1 = nullptr; break; }
                 if (!args.get(1).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(1).toObjectOrNull();
