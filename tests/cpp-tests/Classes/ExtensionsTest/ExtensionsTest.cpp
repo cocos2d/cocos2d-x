@@ -1,6 +1,6 @@
 #include "ExtensionsTest.h"
 #include "../testResource.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT && _MSC_VER < 1900
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT && _MSC_VER < 1900)
 // Window 10 UWP does not yet support CURL
 #include "AssetsManagerExTest/AssetsManagerExTest.h"
 #endif
