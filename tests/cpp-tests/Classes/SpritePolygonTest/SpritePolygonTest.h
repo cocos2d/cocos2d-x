@@ -1,7 +1,7 @@
 #ifndef __cocos2d_tests__SpritePolygonTest__
 #include "../testBasic.h"
 #include "../BaseTest.h"
-#include "2d/SpritePolygon.h"
+#include "2d/CCSpritePolygon.h"
 DEFINE_TEST_SUITE(SpritePolygonTest);
 
 class SpritePolygonTestCase : public TestCase

@@ -25,8 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "SpritePolygonCache.h"
-#include "AutoPolygon.h"
+#include "CCSpritePolygonCache.h"
+#include "CCAutoPolygon.h"
 #include "platform/CCFileUtils.h"
 #include "base/CCDirector.h"
 #include "renderer/CCTextureCache.h"

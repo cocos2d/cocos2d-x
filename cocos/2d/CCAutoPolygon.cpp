@@ -25,7 +25,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#include "AutoPolygon.h"
+#include "CCAutoPolygon.h"
 #include "poly2tri/poly2tri.h"
 #include <algorithm>
 #include <math.h>

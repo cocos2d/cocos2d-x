@@ -7,7 +7,6 @@
 //
 
 #include "SpritePolygonTest.h"
-#include "2d/SpritePolygon.h"
 #include "../testResource.h"
 
 USING_NS_CC;

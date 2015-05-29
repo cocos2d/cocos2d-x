@@ -25,8 +25,8 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef COCOS_2D_SpritePolygonCACHE_H__
-#define COCOS_2D_SpritePolygonCACHE_H__
+#ifndef COCOS_2D_CCSpritePolygonCACHE_H__
+#define COCOS_2D_CCSpritePolygonCACHE_H__
 
 #include "renderer/CCTrianglesCommand.h"
 
@@ -77,4 +77,4 @@ private:
 
 NS_CC_END
 
-#endif // #ifndef COCOS_2D_SpritePolygonCACHE_H__
+#endif // #ifndef COCOS_2D_CCSpritePolygonCACHE_H__

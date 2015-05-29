@@ -25,8 +25,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
-#ifndef COCOS_2D_AUTOPOLYGON_H__
-#define COCOS_2D_AUTOPOLYGON_H__
+#ifndef COCOS_2D_CCAUTOPOLYGON_H__
+#define COCOS_2D_CCAUTOPOLYGON_H__
 
 #include <string>
 #include <vector>
@@ -88,4 +88,4 @@ protected:
 
 NS_CC_END
 
-#endif // #ifndef COCOS_2D_AUTOPOLYGON_H__
+#endif // #ifndef COCOS_2D_CCAUTOPOLYGON_H__

@@ -818,18 +818,18 @@
 		15EFA212198A2BB5000C57D3 /* CCProtectedNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15EFA20F198A2BB5000C57D3 /* CCProtectedNode.cpp */; };
 		15EFA213198A2BB5000C57D3 /* CCProtectedNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 15EFA210198A2BB5000C57D3 /* CCProtectedNode.h */; };
 		15EFA214198A2BB5000C57D3 /* CCProtectedNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 15EFA210198A2BB5000C57D3 /* CCProtectedNode.h */; };
-		15FB206A1AE7BE7400C31518 /* SpritePolygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15FB20661AE7BE7400C31518 /* SpritePolygon.cpp */; };
-		15FB206B1AE7BE7400C31518 /* SpritePolygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15FB20661AE7BE7400C31518 /* SpritePolygon.cpp */; };
-		15FB206C1AE7BE7400C31518 /* SpritePolygon.h in Headers */ = {isa = PBXBuildFile; fileRef = 15FB20671AE7BE7400C31518 /* SpritePolygon.h */; };
-		15FB206D1AE7BE7400C31518 /* SpritePolygon.h in Headers */ = {isa = PBXBuildFile; fileRef = 15FB20671AE7BE7400C31518 /* SpritePolygon.h */; };
-		15FB206E1AE7BE7400C31518 /* SpritePolygonCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15FB20681AE7BE7400C31518 /* SpritePolygonCache.cpp */; };
-		15FB206F1AE7BE7400C31518 /* SpritePolygonCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15FB20681AE7BE7400C31518 /* SpritePolygonCache.cpp */; };
-		15FB20701AE7BE7400C31518 /* SpritePolygonCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 15FB20691AE7BE7400C31518 /* SpritePolygonCache.h */; };
-		15FB20711AE7BE7400C31518 /* SpritePolygonCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 15FB20691AE7BE7400C31518 /* SpritePolygonCache.h */; };
-		15FB20741AE7BF8600C31518 /* AutoPolygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15FB20721AE7BF8600C31518 /* AutoPolygon.cpp */; };
-		15FB20751AE7BF8600C31518 /* AutoPolygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15FB20721AE7BF8600C31518 /* AutoPolygon.cpp */; };
-		15FB20761AE7BF8600C31518 /* AutoPolygon.h in Headers */ = {isa = PBXBuildFile; fileRef = 15FB20731AE7BF8600C31518 /* AutoPolygon.h */; };
-		15FB20771AE7BF8600C31518 /* AutoPolygon.h in Headers */ = {isa = PBXBuildFile; fileRef = 15FB20731AE7BF8600C31518 /* AutoPolygon.h */; };
+		15FB206A1AE7BE7400C31518 /* CCSpritePolygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15FB20661AE7BE7400C31518 /* CCSpritePolygon.cpp */; };
+		15FB206B1AE7BE7400C31518 /* CCSpritePolygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15FB20661AE7BE7400C31518 /* CCSpritePolygon.cpp */; };
+		15FB206C1AE7BE7400C31518 /* CCSpritePolygon.h in Headers */ = {isa = PBXBuildFile; fileRef = 15FB20671AE7BE7400C31518 /* CCSpritePolygon.h */; };
+		15FB206D1AE7BE7400C31518 /* CCSpritePolygon.h in Headers */ = {isa = PBXBuildFile; fileRef = 15FB20671AE7BE7400C31518 /* CCSpritePolygon.h */; };
+		15FB206E1AE7BE7400C31518 /* CCSpritePolygonCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15FB20681AE7BE7400C31518 /* CCSpritePolygonCache.cpp */; };
+		15FB206F1AE7BE7400C31518 /* CCSpritePolygonCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15FB20681AE7BE7400C31518 /* CCSpritePolygonCache.cpp */; };
+		15FB20701AE7BE7400C31518 /* CCSpritePolygonCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 15FB20691AE7BE7400C31518 /* CCSpritePolygonCache.h */; };
+		15FB20711AE7BE7400C31518 /* CCSpritePolygonCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 15FB20691AE7BE7400C31518 /* CCSpritePolygonCache.h */; };
+		15FB20741AE7BF8600C31518 /* CCAutoPolygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15FB20721AE7BF8600C31518 /* CCAutoPolygon.cpp */; };
+		15FB20751AE7BF8600C31518 /* CCAutoPolygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15FB20721AE7BF8600C31518 /* CCAutoPolygon.cpp */; };
+		15FB20761AE7BF8600C31518 /* CCAutoPolygon.h in Headers */ = {isa = PBXBuildFile; fileRef = 15FB20731AE7BF8600C31518 /* CCAutoPolygon.h */; };
+		15FB20771AE7BF8600C31518 /* CCAutoPolygon.h in Headers */ = {isa = PBXBuildFile; fileRef = 15FB20731AE7BF8600C31518 /* CCAutoPolygon.h */; };
 		15FB20871AE7C57D00C31518 /* shapes.cc in Sources */ = {isa = PBXBuildFile; fileRef = 15FB207A1AE7C57D00C31518 /* shapes.cc */; };
 		15FB20881AE7C57D00C31518 /* shapes.cc in Sources */ = {isa = PBXBuildFile; fileRef = 15FB207A1AE7C57D00C31518 /* shapes.cc */; };
 		15FB20891AE7C57D00C31518 /* shapes.h in Headers */ = {isa = PBXBuildFile; fileRef = 15FB207B1AE7C57D00C31518 /* shapes.h */; };
@@ -2709,12 +2709,12 @@
 		15B3707719EE414C00ABE682 /* Manifest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Manifest.h; sourceTree = "<group>"; };
 		15EFA20F198A2BB5000C57D3 /* CCProtectedNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCProtectedNode.cpp; sourceTree = "<group>"; };
 		15EFA210198A2BB5000C57D3 /* CCProtectedNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProtectedNode.h; sourceTree = "<group>"; };
-		15FB20661AE7BE7400C31518 /* SpritePolygon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpritePolygon.cpp; sourceTree = "<group>"; };
-		15FB20671AE7BE7400C31518 /* SpritePolygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpritePolygon.h; sourceTree = "<group>"; };
-		15FB20681AE7BE7400C31518 /* SpritePolygonCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpritePolygonCache.cpp; sourceTree = "<group>"; };
-		15FB20691AE7BE7400C31518 /* SpritePolygonCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpritePolygonCache.h; sourceTree = "<group>"; };
-		15FB20721AE7BF8600C31518 /* AutoPolygon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AutoPolygon.cpp; sourceTree = "<group>"; };
-		15FB20731AE7BF8600C31518 /* AutoPolygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoPolygon.h; sourceTree = "<group>"; };
+		15FB20661AE7BE7400C31518 /* CCSpritePolygon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSpritePolygon.cpp; sourceTree = "<group>"; };
+		15FB20671AE7BE7400C31518 /* CCSpritePolygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpritePolygon.h; sourceTree = "<group>"; };
+		15FB20681AE7BE7400C31518 /* CCSpritePolygonCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSpritePolygonCache.cpp; sourceTree = "<group>"; };
+		15FB20691AE7BE7400C31518 /* CCSpritePolygonCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpritePolygonCache.h; sourceTree = "<group>"; };
+		15FB20721AE7BF8600C31518 /* CCAutoPolygon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAutoPolygon.cpp; sourceTree = "<group>"; };
+		15FB20731AE7BF8600C31518 /* CCAutoPolygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAutoPolygon.h; sourceTree = "<group>"; };
 		15FB207A1AE7C57D00C31518 /* shapes.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shapes.cc; sourceTree = "<group>"; };
 		15FB207B1AE7C57D00C31518 /* shapes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shapes.h; sourceTree = "<group>"; };
 		15FB207C1AE7C57D00C31518 /* utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
@@ -4575,12 +4575,12 @@
 		1A570275180BCC840088DEC7 /* sprite-nodes */ = {
 			isa = PBXGroup;
 			children = (
-				15FB20721AE7BF8600C31518 /* AutoPolygon.cpp */,
-				15FB20731AE7BF8600C31518 /* AutoPolygon.h */,
-				15FB20661AE7BE7400C31518 /* SpritePolygon.cpp */,
-				15FB20671AE7BE7400C31518 /* SpritePolygon.h */,
-				15FB20681AE7BE7400C31518 /* SpritePolygonCache.cpp */,
-				15FB20691AE7BE7400C31518 /* SpritePolygonCache.h */,
+				15FB20721AE7BF8600C31518 /* CCAutoPolygon.cpp */,
+				15FB20731AE7BF8600C31518 /* CCAutoPolygon.h */,
+				15FB20661AE7BE7400C31518 /* CCSpritePolygon.cpp */,
+				15FB20671AE7BE7400C31518 /* CCSpritePolygon.h */,
+				15FB20681AE7BE7400C31518 /* CCSpritePolygonCache.cpp */,
+				15FB20691AE7BE7400C31518 /* CCSpritePolygonCache.h */,
 				1A57028E180BCCAB0088DEC7 /* CCAnimation.cpp */,
 				1A57028F180BCCAB0088DEC7 /* CCAnimation.h */,
 				1A570290180BCCAB0088DEC7 /* CCAnimationCache.cpp */,
@@ -6726,7 +6726,7 @@
 				3E2F27A719CFBFE400E7C490 /* AudioEngine.h in Headers */,
 				15AE183A19AAD2F700C27E9E /* CCRay.h in Headers */,
 				15AE18A319AAD33D00C27E9E /* CCParticleSystemQuadLoader.h in Headers */,
-				15FB20761AE7BF8600C31518 /* AutoPolygon.h in Headers */,
+				15FB20761AE7BF8600C31518 /* CCAutoPolygon.h in Headers */,
 				B665E2C41AA80A6500DDB1C5 /* CCPUGeometryRotatorTranslator.h in Headers */,
 				46A170F01807CECA005B8026 /* CCPhysicsWorld.h in Headers */,
 				15AE199D19AAD39600C27E9E /* ScrollViewReader.h in Headers */,
@@ -6902,7 +6902,7 @@
 				15AE1A3319AAD3D500C27E9E /* b2CircleShape.h in Headers */,
 				1A5701E0180BCB8C0088DEC7 /* CCLayer.h in Headers */,
 				1A5701E4180BCB8C0088DEC7 /* CCScene.h in Headers */,
-				15FB20701AE7BE7400C31518 /* SpritePolygonCache.h in Headers */,
+				15FB20701AE7BE7400C31518 /* CCSpritePolygonCache.h in Headers */,
 				B665E3D81AA80A6600DDB1C5 /* CCPUScriptParser.h in Headers */,
 				382384091A25900F002C4610 /* FlatBuffersSerialize.h in Headers */,
 				15AE1BDD19AAE01E00C27E9E /* CCControlUtils.h in Headers */,
@@ -7253,7 +7253,7 @@
 				50ABBE5B1925AB6F00A911A9 /* CCEventKeyboard.h in Headers */,
 				B665E1F41AA80A6500DDB1C5 /* CCPUAffector.h in Headers */,
 				1A01C69E18F57BE800EFE3A6 /* CCString.h in Headers */,
-				15FB206C1AE7BE7400C31518 /* SpritePolygon.h in Headers */,
+				15FB206C1AE7BE7400C31518 /* CCSpritePolygon.h in Headers */,
 				50ABC00F1926664800A911A9 /* CCFileUtils.h in Headers */,
 				B665E2981AA80A6500DDB1C5 /* CCPUEmitterManager.h in Headers */,
 				15AE1A3719AAD3D500C27E9E /* b2PolygonShape.h in Headers */,
@@ -7452,7 +7452,7 @@
 				B665E4351AA80A6600DDB1C5 /* CCPUVertexEmitter.h in Headers */,
 				B665E2451AA80A6500DDB1C5 /* CCPUCollisionAvoidanceAffector.h in Headers */,
 				50ABBEC41925AB6F00A911A9 /* CCVector.h in Headers */,
-				15FB20711AE7BE7400C31518 /* SpritePolygonCache.h in Headers */,
+				15FB20711AE7BE7400C31518 /* CCSpritePolygonCache.h in Headers */,
 				50ABBE501925AB6F00A911A9 /* CCEventCustom.h in Headers */,
 				15AE1AD719AAD40300C27E9E /* b2WheelJoint.h in Headers */,
 				B665E3311AA80A6500DDB1C5 /* CCPUOnCountObserverTranslator.h in Headers */,
@@ -7776,10 +7776,10 @@
 				1A5702ED180BCE750088DEC7 /* CCTileMapAtlas.h in Headers */,
 				15AE195E19AAD35100C27E9E /* CCSkin.h in Headers */,
 				1A5702F1180BCE750088DEC7 /* CCTMXLayer.h in Headers */,
-				15FB20771AE7BF8600C31518 /* AutoPolygon.h in Headers */,
+				15FB20771AE7BF8600C31518 /* CCAutoPolygon.h in Headers */,
 				15AE18AE19AAD33D00C27E9E /* CCBFileLoader.h in Headers */,
 				15AE197819AAD35700C27E9E /* CCActionTimeline.h in Headers */,
-				15FB206D1AE7BE7400C31518 /* SpritePolygon.h in Headers */,
+				15FB206D1AE7BE7400C31518 /* CCSpritePolygon.h in Headers */,
 				15AE1AA019AAD40300C27E9E /* b2Timer.h in Headers */,
 				5034CA44191D591100CE6051 /* ccShader_Label.vert in Headers */,
 				1A5702F5180BCE750088DEC7 /* CCTMXObjectGroup.h in Headers */,
@@ -8421,7 +8421,7 @@
 				15AE199619AAD39600C27E9E /* ListViewReader.cpp in Sources */,
 				50ABC0191926664800A911A9 /* CCSAXParser.cpp in Sources */,
 				15AE189219AAD33D00C27E9E /* CCLayerGradientLoader.cpp in Sources */,
-				15FB206E1AE7BE7400C31518 /* SpritePolygonCache.cpp in Sources */,
+				15FB206E1AE7BE7400C31518 /* CCSpritePolygonCache.cpp in Sources */,
 				15AE1B6A19AADA9900C27E9E /* UIDeprecated.cpp in Sources */,
 				15AE183C19AAD2F700C27E9E /* CCSkeleton3D.cpp in Sources */,
 				15AE1A2319AAD3D500C27E9E /* b2BroadPhase.cpp in Sources */,
@@ -8506,7 +8506,7 @@
 				15AE199A19AAD39600C27E9E /* PageViewReader.cpp in Sources */,
 				1A57030C180BCF190088DEC7 /* CCComponent.cpp in Sources */,
 				382383F61A258FA7002C4610 /* idl_gen_fbs.cpp in Sources */,
-				15FB20741AE7BF8600C31518 /* AutoPolygon.cpp in Sources */,
+				15FB20741AE7BF8600C31518 /* CCAutoPolygon.cpp in Sources */,
 				B665E2A61AA80A6500DDB1C5 /* CCPUEventHandlerTranslator.cpp in Sources */,
 				15AE1A5919AAD40300C27E9E /* b2StackAllocator.cpp in Sources */,
 				B29A7E3D19EE1B7700872B35 /* AnimationState.c in Sources */,
@@ -8519,7 +8519,7 @@
 				1A01C69C18F57BE800EFE3A6 /* CCString.cpp in Sources */,
 				B665E2721AA80A6500DDB1C5 /* CCPUDoPlacementParticleEventHandler.cpp in Sources */,
 				50ABBD3C1925AB0000A911A9 /* CCGeometry.cpp in Sources */,
-				15FB206A1AE7BE7400C31518 /* SpritePolygon.cpp in Sources */,
+				15FB206A1AE7BE7400C31518 /* CCSpritePolygon.cpp in Sources */,
 				B29A7DDD19EE1B7700872B35 /* BoneData.c in Sources */,
 				15AE188A19AAD33D00C27E9E /* CCControlLoader.cpp in Sources */,
 				B665E35A1AA80A6500DDB1C5 /* CCPUOnRandomObserver.cpp in Sources */,
@@ -8981,7 +8981,7 @@
 				15AE18AB19AAD33D00C27E9E /* CCBAnimationManager.cpp in Sources */,
 				15AE1B7219AADA9A00C27E9E /* UIListView.cpp in Sources */,
 				1A5701BE180BCB5A0088DEC7 /* CCLabelAtlas.cpp in Sources */,
-				15FB20751AE7BF8600C31518 /* AutoPolygon.cpp in Sources */,
+				15FB20751AE7BF8600C31518 /* CCAutoPolygon.cpp in Sources */,
 				15AE1A3D19AAD3D500C27E9E /* b2CollideEdge.cpp in Sources */,
 				1A5701C2180BCB5A0088DEC7 /* CCLabelBMFont.cpp in Sources */,
 				1A087AE91860400400196EF5 /* edtaa3func.cpp in Sources */,
@@ -9212,7 +9212,7 @@
 				5027253D190BF1B900AAF4ED /* cocos2d.cpp in Sources */,
 				B29A7E0819EE1B7700872B35 /* SkinnedMeshAttachment.c in Sources */,
 				15AE183919AAD2F700C27E9E /* CCRay.cpp in Sources */,
-				15FB206B1AE7BE7400C31518 /* SpritePolygon.cpp in Sources */,
+				15FB206B1AE7BE7400C31518 /* CCSpritePolygon.cpp in Sources */,
 				15AE1B8219AADA9A00C27E9E /* UITextBMFont.cpp in Sources */,
 				50ABBE6A1925AB6F00A911A9 /* CCEventListenerFocus.cpp in Sources */,
 				50ABBE661925AB6F00A911A9 /* CCEventListenerCustom.cpp in Sources */,
@@ -9265,7 +9265,7 @@
 				B665E29F1AA80A6500DDB1C5 /* CCPUEventHandler.cpp in Sources */,
 				15AE195519AAD35100C27E9E /* CCDisplayManager.cpp in Sources */,
 				B665E43B1AA80A6600DDB1C5 /* CCPUVortexAffectorTranslator.cpp in Sources */,
-				15FB206F1AE7BE7400C31518 /* SpritePolygonCache.cpp in Sources */,
+				15FB206F1AE7BE7400C31518 /* CCSpritePolygonCache.cpp in Sources */,
 				15AE1BA719AADFDF00C27E9E /* UIRelativeBox.cpp in Sources */,
 				15AE1ACE19AAD40300C27E9E /* b2PulleyJoint.cpp in Sources */,
 				B665E2DF1AA80A6500DDB1C5 /* CCPULineAffector.cpp in Sources */,

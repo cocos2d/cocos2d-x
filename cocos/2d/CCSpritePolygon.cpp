@@ -25,7 +25,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "SpritePolygon.h"
+#include "CCSpritePolygon.h"
 #include "base/CCDirector.h"
 #include "renderer/CCTextureCache.h"
 #include "renderer/CCGLProgram.h"

@@ -25,12 +25,12 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef COCOS_2D_SpritePolygon_H__
-#define COCOS_2D_SpritePolygon_H__
+#ifndef COCOS_2D_CCSpritePolygon_H__
+#define COCOS_2D_CCSpritePolygon_H__
 
 #include "CCNode.h"
 #include "CCDrawNode.h"
-#include "SpritePolygonCache.h"
+#include "CCSpritePolygonCache.h"
 
 NS_CC_BEGIN
 
@@ -96,4 +96,4 @@ protected:
 
 NS_CC_END
 
-#endif // #ifndef COCOS_2D_SpritePolygon_H__
+#endif // #ifndef COCOS_2D_CCSpritePolygon_H__
