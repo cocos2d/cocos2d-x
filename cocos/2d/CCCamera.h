@@ -213,9 +213,17 @@ public:
      * Get the default camera of the current running scene.
      */
     static Camera* getDefaultCamera();
-    
+    /**
+     Before rendering scene with this camera, the background need to be cleared.
+     */
     void clearBackground(float depth);
-    
+    /**
+     Apply the FBO, RenderTargets and viewport.
+     */
+    void apply();
+    /**
+     Set FBO, which will attacha several render target for the rendered result.
+    */
     void setFrameBufferObject(FrameBufferObject* fbo);
     void setViewport(const Viewport& vp) { _viewport = vp; }
 CC_CONSTRUCTOR_ACCESS:

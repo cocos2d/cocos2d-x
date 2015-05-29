@@ -475,6 +475,11 @@ void Camera::applyFrameBufferObject()
     }
 }
 
+void Camera::apply()
+{
+    applyFrameBufferObject();
+}
+
 int Camera::getRenderOrder() const
 {
     int result(0);
