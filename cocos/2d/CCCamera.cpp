@@ -478,6 +478,12 @@ void Camera::applyFrameBufferObject()
 void Camera::apply()
 {
     applyFrameBufferObject();
+    applyViewport();
+}
+
+void Camera::applyViewport()
+{
+    //TODO: waiting for implementation
 }
 
 int Camera::getRenderOrder() const

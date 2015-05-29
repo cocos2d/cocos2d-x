@@ -225,6 +225,9 @@ public:
      Set FBO, which will attacha several render target for the rendered result.
     */
     void setFrameBufferObject(FrameBufferObject* fbo);
+    /**
+     Set Viewport for camera.
+     */
     void setViewport(const Viewport& vp) { _viewport = vp; }
 CC_CONSTRUCTOR_ACCESS:
     Camera();
@@ -243,7 +246,7 @@ CC_CONSTRUCTOR_ACCESS:
     bool initPerspective(float fieldOfView, float aspectRatio, float nearPlane, float farPlane);
     bool initOrthographic(float zoomX, float zoomY, float nearPlane, float farPlane);
     void applyFrameBufferObject();
-    
+    void applyViewport();
 protected:
 
     Scene* _scene; //Scene camera belongs to

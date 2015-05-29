@@ -115,6 +115,8 @@ public:
     void AttachRenderTarget(RenderTarget* rt);
     void AttachDepthStencilTarget(RenderTargetDepthStencil* rt);
     
+    unsigned int getWidth() const { return _width; }
+    unsigned int getHeight() const { return _height; }
 CC_CONSTRUCTOR_ACCESS:
     FrameBufferObject();
     virtual ~FrameBufferObject();
