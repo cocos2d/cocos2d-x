@@ -1497,6 +1497,18 @@ getCapInsetsNormalRenderer : function (
 },
 
 /**
+ * @method setTitleAlignment
+* @param {cc.TextHAlignment|cc.TextHAlignment} texthalignment
+* @param {cc.TextVAlignment} textvalignment
+*/
+setTitleAlignment : function(
+texthalignment,
+textvalignment 
+)
+{
+},
+
+/**
  * @method getCapInsetsPressedRenderer
  * @return {rect_object}
  */
@@ -3619,6 +3631,16 @@ getDeleteBackward : function (
 },
 
 /**
+ * @method getTextColor
+ * @return {color4b_object}
+ */
+getTextColor : function (
+)
+{
+    return cc.Color4B;
+},
+
+/**
  * @method getPlaceHolder
  * @return {String}
  */
@@ -3815,6 +3837,16 @@ bool
 },
 
 /**
+ * @method getTextHorizontalAlignment
+ * @return {cc.TextHAlignment}
+ */
+getTextHorizontalAlignment : function (
+)
+{
+    return 0;
+},
+
+/**
  * @method setFontSize
  * @param {int} arg0
  */
@@ -3892,6 +3924,16 @@ setDetachWithIME : function (
 bool 
 )
 {
+},
+
+/**
+ * @method getTextVerticalAlignment
+ * @return {cc.TextVAlignment}
+ */
+getTextVerticalAlignment : function (
+)
+{
+    return 0;
 },
 
 /**

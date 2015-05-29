@@ -177,6 +177,16 @@ public:
      */
     int getRenderOrder() const;
     
+    /**
+     * Get the frustum's far plane.
+     */
+    float getFarPlane() const { return _farPlane; }
+
+    /**
+     * Get the frustum's near plane.
+     */
+    float getNearPlane() const { return _nearPlane; }
+    
     //override
     virtual void onEnter() override;
     virtual void onExit() override;

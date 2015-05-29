@@ -113,8 +113,8 @@ var S9BatchNodeBasic = S9SpriteTestDemo.extend({
 
         cc.log("S9BatchNodeBasic ...");
 
-        var batchNode = new cc.SpriteBatchNode("res/Images/blocks9.png");
-        cc.log("batchNode created with : " + "res/Images/blocks9.png");
+        var batchNode = new cc.SpriteBatchNode("Images/blocks9.png");
+        cc.log("batchNode created with : " + "Images/blocks9.png");
 
         var blocks = new cc.Scale9Sprite();
         cc.log("... created");
@@ -207,8 +207,8 @@ var S9BatchNodeScaledNoInsets = S9SpriteTestDemo.extend({
         cc.log("S9BatchNodeScaledNoInsets ...");
 
         // scaled without insets
-        var batchNode_scaled = new cc.SpriteBatchNode("res/Images/blocks9.png");
-        cc.log("batchNode_scaled created with : " + "res/Images/blocks9.png");
+        var batchNode_scaled = new cc.SpriteBatchNode("Images/blocks9.png");
+        cc.log("batchNode_scaled created with : " + "Images/blocks9.png");
 
         var blocks_scaled = new cc.Scale9Sprite();
         cc.log("... created");
@@ -312,8 +312,8 @@ var S9BatchNodeScaleWithCapInsets = S9SpriteTestDemo.extend({
 
         cc.log("S9BatchNodeScaleWithCapInsets ...");
 
-        var batchNode_scaled_with_insets = new cc.SpriteBatchNode("res/Images/blocks9.png");
-        cc.log("batchNode_scaled_with_insets created with : " + "res/Images/blocks9.png");
+        var batchNode_scaled_with_insets = new cc.SpriteBatchNode("Images/blocks9.png");
+        cc.log("batchNode_scaled_with_insets created with : " + "Images/blocks9.png");
 
         var blocks_scaled_with_insets = new cc.Scale9Sprite();
         cc.log("... created");

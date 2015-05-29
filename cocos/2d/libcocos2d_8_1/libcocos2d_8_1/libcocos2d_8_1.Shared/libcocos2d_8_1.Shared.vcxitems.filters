@@ -1794,6 +1794,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCFrameBufferObject.h">
       <Filter>renderer</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNinePatchImageParser.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos2d.cpp" />
@@ -3411,6 +3412,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\renderer\CCFrameBufferObject.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNinePatchImageParser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="2d">

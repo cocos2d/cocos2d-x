@@ -143,6 +143,15 @@
 -- @return rect_table#rect_table ret (return value: rect_table)
         
 --------------------------------
+-- @overload self, int, int         
+-- @overload self, int         
+-- @function [parent=#Button] setTitleAlignment
+-- @param self
+-- @param #int hAlignment
+-- @param #int vAlignment
+-- @return Button#Button self (return value: ccui.Button)
+
+--------------------------------
 -- Return the capInsets of pressed state scale9sprite.<br>
 -- return The pressed scale9 renderer capInsets.
 -- @function [parent=#Button] getCapInsetsPressedRenderer 

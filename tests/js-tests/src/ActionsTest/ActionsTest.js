@@ -974,7 +974,7 @@ var ActionAnimate = ActionsDemo.extend({
         //
         var animation = new cc.Animation();
         for (var i = 1; i < 15; i++) {
-            var frameName = "res/Images/grossini_dance_" + ((i < 10) ? ("0" + i) : i) + ".png";
+            var frameName = "Images/grossini_dance_" + ((i < 10) ? ("0" + i) : i) + ".png";
             animation.addSpriteFrameWithFile(frameName);
         }
         animation.setDelayPerUnit(2.8 / 14);
@@ -2559,7 +2559,7 @@ var Issue1438 = ActionsDemo.extend({
         // Add 60 frames
         for (var j = 0; j < 4; j++) {
             for (var i = 1; i < 15; i++) {
-                var frameName = "res/Images/grossini_dance_" + ((i < 10) ? ("0" + i) : i) + ".png";
+                var frameName = "Images/grossini_dance_" + ((i < 10) ? ("0" + i) : i) + ".png";
                 animation.addSpriteFrameWithFile(frameName);
             }
         }
