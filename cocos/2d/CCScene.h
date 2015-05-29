@@ -44,6 +44,10 @@ class PhysicsWorld;
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
 class Physics3DWorld;
 #endif
+#if CC_USE_NAVMESH
+class NavMesh;
+#endif
+
 /**
  * @addtogroup _2d
  * @{
@@ -90,7 +94,7 @@ public:
     const std::vector<Camera*>& getCameras() const { return _cameras; }
 
     /** Get the default camera.
-	 * @js NA
+     * @js NA
      * @return The default camera of scene.
      */
     Camera* getDefaultCamera() const { return _defaultCamera; }
@@ -139,7 +143,7 @@ protected:
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(Scene);
     
-#if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION))
+#if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION) || CC_USE_NAVMESH)
 public:
     virtual void addChild(Node* child, int zOrder, int tag) override;
     virtual void addChild(Node* child, int zOrder, const std::string &name) override;
@@ -186,6 +190,25 @@ protected:
     Camera*                    _physics3dDebugCamera; //
 #endif
 #endif // (CC_USE_PHYSICS || CC_USE_3D_PHYSICS)
+    
+#if CC_USE_NAVMESH
+public:
+    /** set navigation mesh */
+    void setNavMesh(NavMesh* navMesh);
+    /** get navigation mesh */
+    NavMesh* getNavMesh() const { return _navMesh; }
+    /**
+    * Set NavMesh debug draw camera.
+    */
+    void setNavMeshDebugCamera(Camera *camera);
+
+protected:
+    void addChildToNavMesh(Node* child);
+
+protected:
+    NavMesh*       _navMesh;
+    Camera *       _navMeshDebugCamera;
+#endif
 };
 
 // end of _2d group
