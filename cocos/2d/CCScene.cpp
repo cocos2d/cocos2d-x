@@ -42,6 +42,10 @@ THE SOFTWARE.
 #include "physics3d/CCPhysics3DComponent.h"
 #endif
 
+#if CC_USE_NAVMESH
+#include "navmesh/CCNavMesh.h"
+#endif
+
 NS_CC_BEGIN
 
 Scene::Scene()
@@ -52,6 +56,10 @@ Scene::Scene()
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
     _physics3DWorld = nullptr;
     _physics3dDebugCamera = nullptr;
+#endif
+#if CC_USE_NAVMESH
+    _navMesh = nullptr;
+    _navMeshDebugCamera = nullptr;
 #endif
     _ignoreAnchorPointForPosition = true;
     setAnchorPoint(Vec2(0.5f, 0.5f));
@@ -75,9 +83,24 @@ Scene::~Scene()
     CC_SAFE_RELEASE(_physics3DWorld);
     CC_SAFE_RELEASE(_physics3dDebugCamera);
 #endif
+#if CC_USE_NAVMESH
+    CC_SAFE_RELEASE(_navMesh);
+#endif
     Director::getInstance()->getEventDispatcher()->removeEventListener(_event);
     CC_SAFE_RELEASE(_event);
 }
+
+#if CC_USE_NAVMESH
+void Scene::setNavMesh(NavMesh* navMesh)
+{
+    if (_navMesh != navMesh)
+    {
+        CC_SAFE_RETAIN(navMesh);
+        CC_SAFE_RELEASE(_navMesh);
+        _navMesh = navMesh;
+    }
+}
+#endif
 
 bool Scene::init()
 {
@@ -168,6 +191,12 @@ void Scene::render(Renderer* renderer)
         camera->clearBackground(1.0);
         //visit the scene
         visit(renderer, transform, 0);
+#if CC_USE_NAVMESH
+        if (_navMesh && _navMeshDebugCamera == camera)
+        {
+            _navMesh->debugDraw(renderer);
+        }
+#endif
         
         renderer->render();
         
@@ -211,17 +240,62 @@ void Scene::setPhysics3DDebugCamera(Camera* camera)
 }
 #endif
 
-#if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION))
+#if CC_USE_NAVMESH
+void Scene::setNavMeshDebugCamera(Camera *camera)
+{
+    CC_SAFE_RETAIN(camera);
+    CC_SAFE_RELEASE(_navMeshDebugCamera);
+    _navMeshDebugCamera = camera;
+}
+
+void Scene::addChildToNavMesh(Node* child)
+{
+    if (_navMesh)
+    {
+        std::function<void(Node*)> addToNavMeshFunc = nullptr;
+        addToNavMeshFunc = [this, &addToNavMeshFunc](Node* node) -> void
+        {
+            auto agCom = static_cast<NavMeshAgent*>(node->getComponent(NavMeshAgent::getNavMeshAgentComponentName()));
+            if (agCom)
+            {
+                agCom->onEnter();
+            }
+
+            auto obCom = static_cast<NavMeshObstacle*>(node->getComponent(NavMeshObstacle::getNavMeshObstacleComponentName()));
+            if (obCom)
+            {
+                obCom->onEnter();
+            }
+
+            auto& children = node->getChildren();
+            for (const auto &n : children) {
+                addToNavMeshFunc(n);
+            }
+        };
+
+        addToNavMeshFunc(child);
+    }
+}
+
+#endif
+
+#if (CC_USE_PHYSICS || (CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION) || CC_USE_NAVMESH)
 void Scene::addChild(Node* child, int zOrder, int tag)
 {
     Node::addChild(child, zOrder, tag);
     addChildToPhysicsWorld(child);
+#if CC_USE_NAVMESH
+    addChildToNavMesh(child);
+#endif
 }
 
 void Scene::addChild(Node* child, int zOrder, const std::string &name)
 {
     Node::addChild(child, zOrder, name);
     addChildToPhysicsWorld(child);
+#if CC_USE_NAVMESH
+    addChildToNavMesh(child);
+#endif
 }
 
 Scene* Scene::createWithPhysics()
