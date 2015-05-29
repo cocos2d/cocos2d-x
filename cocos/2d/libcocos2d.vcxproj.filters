@@ -1872,8 +1872,8 @@
     <ClCompile Include="..\renderer\CCVertexAttribBinding.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
-    <ClCompile Include="..\base\CCNinePatchImageParser.cpp">
-      <Filter>base</Filter>
+    <ClCompile Include="..\renderer\CCFrameBufferObject.cpp">
+      <Filter>renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -3665,8 +3665,8 @@
     <ClInclude Include="..\renderer\CCVertexAttribBinding.h">
       <Filter>renderer</Filter>
     </ClInclude>
-    <ClInclude Include="..\base\CCNinePatchImageParser.h">
-      <Filter>base</Filter>
+    <ClInclude Include="..\renderer\CCFrameBufferObject.h">
+      <Filter>renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

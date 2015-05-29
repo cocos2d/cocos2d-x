@@ -29,6 +29,7 @@
 #include "renderer/CCQuadCommand.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/ccGLStateCache.h"
+#include "renderer/CCFrameBufferObject.h"
 
 NS_CC_BEGIN
 
@@ -88,13 +89,14 @@ Camera::Camera()
 , _cameraFlag(1)
 , _frustumDirty(true)
 , _depth(-1)
+, _fbo(nullptr)
 {
     _frustum.setClipZ(true);
 }
 
 Camera::~Camera()
 {
-    
+    CC_SAFE_RELEASE_NULL(_fbo);
 }
 
 const Mat4& Camera::getProjectionMatrix() const
@@ -303,7 +305,7 @@ float Camera::getDepthInView(const Mat4& transform) const
     return depth;
 }
 
-void Camera::setDepth(int depth)
+void Camera::setDepth(int8_t depth)
 {
     if (_depth != depth)
     {
@@ -435,6 +437,44 @@ void Camera::clearBackground(float depth)
         glStencilMask(0xFFFFF);
         glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
     }
+}
+
+void Camera::setFrameBufferObject(FrameBufferObject *fbo)
+{
+    CC_SAFE_RETAIN(fbo);
+    CC_SAFE_RELEASE_NULL(_fbo);
+    _fbo = fbo;
+    if(_scene)
+    {
+        _scene->setCameraOrderDirty();
+    }
+}
+
+void Camera::applyFrameBufferObject()
+{
+    if(nullptr == _fbo)
+    {
+        FrameBufferObject::applyDefaultFBO();
+    }
+    else
+    {
+        _fbo->applyFBO();
+    }
+}
+
+int Camera::getRenderOrder() const
+{
+    int result(0);
+    if(_fbo)
+    {
+        result = _fbo->getFID()<<8;
+    }
+    else
+    {
+        result = 127 <<8;
+    }
+    result += _depth;
+    return result;
 }
 
 NS_CC_END

@@ -31,6 +31,7 @@ THE SOFTWARE.
 #include "base/CCEventDispatcher.h"
 #include "base/CCEventListenerCustom.h"
 #include "renderer/CCRenderer.h"
+#include "renderer/CCFrameBufferObject.h"
 #include "deprecated/CCString.h"
 
 #if CC_USE_PHYSICS
@@ -136,7 +137,7 @@ void Scene::onProjectionChanged(EventCustom* event)
 
 static bool camera_cmp(const Camera* a, const Camera* b)
 {
-    return a->getDepth() < b->getDepth();
+    return a->getRenderOrder() < b->getRenderOrder();
 }
 
 void Scene::render(Renderer* renderer)
@@ -163,7 +164,7 @@ void Scene::render(Renderer* renderer)
         
         director->pushMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION);
         director->loadMatrix(MATRIX_STACK_TYPE::MATRIX_STACK_PROJECTION, Camera::_visitingCamera->getViewProjectionMatrix());
-        
+        camera->applyFrameBufferObject();
         //clear background with max depth
         camera->clearBackground(1.0);
         //visit the scene
@@ -186,6 +187,7 @@ void Scene::render(Renderer* renderer)
 #endif
 
     Camera::_visitingCamera = nullptr;
+    FrameBufferObject::applyDefaultFBO();
 }
 
 void Scene::removeAllChildren()

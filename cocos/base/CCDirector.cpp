@@ -48,6 +48,7 @@ THE SOFTWARE.
 #include "renderer/ccGLStateCache.h"
 #include "renderer/CCRenderer.h"
 #include "renderer/CCRenderState.h"
+#include "renderer/CCFrameBufferObject.h"
 #include "2d/CCCamera.h"
 #include "base/CCUserDefault.h"
 #include "base/ccFPSImages.h"
@@ -278,7 +279,7 @@ void Director::drawScene()
     }
 
     _renderer->clear();
-
+    FrameBufferObject::clearAllFBOs();
     /* to avoid flickr, nextScene MUST be here: after tick and before draw.
      * FIXME: Which bug is this one. It seems that it can't be reproduced with v0.9
      */
@@ -415,6 +416,8 @@ void Director::setOpenGLView(GLView *openGLView)
         {
             _eventDispatcher->setEnabled(true);
         }
+        
+        FrameBufferObject::initDefaultFBO();
     }
 }
 
