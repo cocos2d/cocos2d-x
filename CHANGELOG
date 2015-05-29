@@ -1,8 +1,42 @@
 cocos2d-x-3.7  ??
+    [NEW]           3rd: updated rapidjson to v1.0.2
+    [NEW]           3d: added physics3d support
+    [NEW]           console: support build & run Android Studio project
+    [NEW]           Audio: added support on WP8.1, now it supports wav format
+    [NEW]           C++: added ActionFloat
+    [NEW]           C++: supported physical keyboard on WinRT
+    [NEW]           C++: added Android Studio support
     [NEW]           FileUtils: checked filename case characters on windows
+    [NEW]           FileUitls: added supporting loading files that which file path include utf-8 characters
     [NEW]           PhysicsShape: added sensor property
-
+    [NEW]           Scale9Sprite: added Android 9-patch image support
+    [NEW]           Sprite: used triangle command
+    [NEW]           3d: add `getFarPlane` and `getNearPlane` in `Camera` class
+    [NEW]           ui: button add BMFont title support
+    [NEW]           ui: TextField add `getTextColor`, `getTextHorizontalAlignment` and `getTextVerticalAlignment` API
+    [NEW]           audio: Added MP3 support to winrt audio
+    
+    [FIX]           audio: Fixed program may freeze if `AudioEngine::stop` or `AudioEngine::stopAll()` is invoked frequently on Android
+    [FIX]           ui: TextField scale factor is wrong with multiline text.
+    [FIX]           3d: skybox can't move to other position except origin point in world space
+    [FIX]           3d: terrain can't move to other position except origin point in world space
+    [FIX]           3rd: fix PIE link error on iOS caused by libpng and libtiff
+    [FIX]           AssetsManager: crashed issue
+    [FIX]           Audio: can not play large ogg files on windows
     [FIX]           EaseRateAction: no way to create an `EaseRateAction` instance
+    [FIX]           Label: crashed if invoking `setString(text` after `getLetter(letterIndex)` and `letterIndex` is greater than the length of text
+    [FIX]           Label: position is wrong if label content is changed after invoking `getLetter(letterIndex)`
+    [FIX]           Label: shadow effect cause OpenGL error on iOS
+    [FIX]           Label: outline effect doesn't match characters well
+    [FIX]           ProgressTimer: `setSprite()` doesn't take effect
+    [FIX]           Sprite3D: setGLProgram() does not work
+    [FIX]           Sprite3D: transition breaks when there is a Sprite3D in the scene
+    [FIX]           Terrain: terrain is on top of particles, particles can not be seen
+    [FIX]           TextureCache: unbindImageAsync failed to unbind all asynchronous callback for a specified bound image
+    [FIX]           TileMap: crashed if a layer contains nothing
+    [FIX]           WebView: memory leak on iOS
+    [FIX]           WebView: crashed if url contains illegal characters on Android
+    [FIX]           Lua: luaLoadChunksFromZip should just remove .lua or .luac extension
 
 cocos2d-x-3.6  Apr.30 2015
     [NEW]           3rd: update chipmunk to v 6.2.2 on Windows 8.1 Universal App

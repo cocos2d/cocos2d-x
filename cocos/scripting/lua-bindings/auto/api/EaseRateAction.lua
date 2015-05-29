@@ -13,6 +13,17 @@
 -- @return EaseRateAction#EaseRateAction self (return value: cc.EaseRateAction)
         
 --------------------------------
+-- brief Initializes the action with the inner action and the rate parameter.<br>
+-- param pAction The pointer of the inner action.<br>
+-- param fRate The value of the rate parameter.<br>
+-- return Return true when the initialization success, otherwise return false.
+-- @function [parent=#EaseRateAction] initWithAction 
+-- @param self
+-- @param #cc.ActionInterval pAction
+-- @param #float fRate
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- brief Get the rate value of the ease rate action.<br>
 -- return Return the rate value of the ease rate action.
 -- @function [parent=#EaseRateAction] getRate 

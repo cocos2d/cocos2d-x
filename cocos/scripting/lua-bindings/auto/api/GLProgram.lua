@@ -11,21 +11,25 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
--- 
--- @function [parent=#GLProgram] initWithByteArrays 
+-- @overload self, char, char, string         
+-- @overload self, char, char         
+-- @function [parent=#GLProgram] initWithByteArrays
 -- @param self
 -- @param #char vShaderByteArray
 -- @param #char fShaderByteArray
+-- @param #string compileTimeDefines
 -- @return bool#bool ret (return value: bool)
-        
+
 --------------------------------
--- 
--- @function [parent=#GLProgram] initWithFilenames 
+-- @overload self, string, string, string         
+-- @overload self, string, string         
+-- @function [parent=#GLProgram] initWithFilenames
 -- @param self
 -- @param #string vShaderFilename
 -- @param #string fShaderFilename
+-- @param #string compileTimeDefines
 -- @return bool#bool ret (return value: bool)
-        
+
 --------------------------------
 --  it will call glUseProgram() 
 -- @function [parent=#GLProgram] use 
@@ -96,28 +100,25 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
---  @{<br>
--- Create or Initializes the GLProgram with a vertex and fragment with bytes array.<br>
--- js initWithString.<br>
--- lua initWithString.
--- @function [parent=#GLProgram] createWithByteArrays 
+-- @overload self, char, char, string         
+-- @overload self, char, char         
+-- @function [parent=#GLProgram] createWithByteArrays
 -- @param self
 -- @param #char vShaderByteArray
 -- @param #char fShaderByteArray
+-- @param #string compileTimeDefines
 -- @return GLProgram#GLProgram ret (return value: cc.GLProgram)
-        
+
 --------------------------------
--- }<br>
--- {<br>
--- Create or Initializes the GLProgram with a vertex and fragment with contents of filenames.<br>
--- js init<br>
--- lua init
--- @function [parent=#GLProgram] createWithFilenames 
+-- @overload self, string, string, string         
+-- @overload self, string, string         
+-- @function [parent=#GLProgram] createWithFilenames
 -- @param self
 -- @param #string vShaderFilename
 -- @param #string fShaderFilename
+-- @param #string compileTimeDefines
 -- @return GLProgram#GLProgram ret (return value: cc.GLProgram)
-        
+
 --------------------------------
 -- Constructor.
 -- @function [parent=#GLProgram] GLProgram 

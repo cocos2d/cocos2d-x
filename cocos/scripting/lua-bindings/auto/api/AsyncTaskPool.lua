@@ -23,4 +23,10 @@
 -- @param self
 -- @return AsyncTaskPool#AsyncTaskPool ret (return value: cc.AsyncTaskPool)
         
+--------------------------------
+-- 
+-- @function [parent=#AsyncTaskPool] AsyncTaskPool 
+-- @param self
+-- @return AsyncTaskPool#AsyncTaskPool self (return value: cc.AsyncTaskPool)
+        
 return nil

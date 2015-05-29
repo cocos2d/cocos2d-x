@@ -135,6 +135,18 @@
                     "proj.win32/Debug",
                     "proj.win32/Release"
                 ]
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/Classes/ide-support",
+                "to": "frameworks/runtime-src/Classes/ide-support",
+                "exclude": [
+                    "RuntimeJsImpl.h",
+                    "RuntimeJsImpl.cpp"
+                ]
+            },
+            {
+                "from": "tools/simulator/frameworks/runtime-src/Classes/lua_module_register.h",
+                "to": "frameworks/runtime-src/Classes/"
             }
         ],
         "project_rename": {
@@ -161,6 +173,7 @@
                 "frameworks/runtime-src/proj.android/AndroidManifest.xml",
                 "frameworks/runtime-src/proj.android/build.xml",
                 "frameworks/runtime-src/proj.android/res/values/strings.xml",
+                "frameworks/runtime-src/proj.android-studio/settings.gradle",
                 "frameworks/runtime-src/proj.ios_mac/ios/main.m",
                 "frameworks/runtime-src/proj.ios_mac/ios/Prefix.pch",
                 "frameworks/runtime-src/proj.ios_mac/mac/SimulatorApp.mm",
@@ -170,7 +183,9 @@
         "project_replace_package_name": {
             "src_package_name": "org.cocos2dx.hellolua",
             "files": [
-                "frameworks/runtime-src/proj.android/AndroidManifest.xml"
+                "frameworks/runtime-src/proj.android/AndroidManifest.xml",
+                "frameworks/runtime-src/proj.android-studio/app/build.gradle",
+                "frameworks/runtime-src/proj.android-studio/app/AndroidManifest.xml"
             ]
         },
         "project_replace_mac_bundleid": {

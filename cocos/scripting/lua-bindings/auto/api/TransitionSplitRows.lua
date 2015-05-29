@@ -21,4 +21,10 @@
 -- @param self
 -- @return ActionInterval#ActionInterval ret (return value: cc.ActionInterval)
         
+--------------------------------
+-- 
+-- @function [parent=#TransitionSplitRows] TransitionSplitRows 
+-- @param self
+-- @return TransitionSplitRows#TransitionSplitRows self (return value: cc.TransitionSplitRows)
+        
 return nil

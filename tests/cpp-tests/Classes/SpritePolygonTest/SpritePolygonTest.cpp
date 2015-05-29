@@ -222,7 +222,7 @@ void SpritePolygonTestDemo::initDefaultSprite(const std::string &filename, cocos
     positions[1] = Vec2(spSize);
     positions[2] = Vec2(spSize.width, 0);
     positions[3] = Vec2(0,0);
-    debugForNormalSprite->drawPoints(positions, 4, 8, Color4F{0.0,1.0,1.0,1.0});
+    debugForNormalSprite->drawPoints(positions, 4, 8, Color4F(0.0,1.0,1.0,1.0));
     debugForNormalSprite->drawLine(positions[0], positions[1], Color4F::GREEN);
     debugForNormalSprite->drawLine(positions[1], positions[2], Color4F::GREEN);
     debugForNormalSprite->drawLine(positions[2], positions[3], Color4F::GREEN);

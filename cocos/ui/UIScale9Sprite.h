@@ -742,6 +742,7 @@ namespace ui {
         
         bool _flippedX;
         bool _flippedY;
+        bool _isPatch9;
     };
     
 }}  //end of namespace

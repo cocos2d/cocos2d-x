@@ -39,4 +39,10 @@
 -- @param self
 -- @return mat4_table#mat4_table ret (return value: mat4_table)
         
+--------------------------------
+-- 
+-- @function [parent=#AttachNode] AttachNode 
+-- @param self
+-- @return AttachNode#AttachNode self (return value: cc.AttachNode)
+        
 return nil

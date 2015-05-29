@@ -61,6 +61,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#RichText] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#RichText] getDescription 
 -- @param self
 -- @return string#string ret (return value: string)

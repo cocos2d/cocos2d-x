@@ -32,4 +32,10 @@
 -- @param self
 -- @return EaseQuadraticActionOut#EaseQuadraticActionOut ret (return value: cc.EaseQuadraticActionOut)
         
+--------------------------------
+-- 
+-- @function [parent=#EaseQuadraticActionOut] EaseQuadraticActionOut 
+-- @param self
+-- @return EaseQuadraticActionOut#EaseQuadraticActionOut self (return value: cc.EaseQuadraticActionOut)
+        
 return nil

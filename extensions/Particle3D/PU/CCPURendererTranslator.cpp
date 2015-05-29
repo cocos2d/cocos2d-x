@@ -602,6 +602,7 @@ void PURendererTranslator::translate(PUScriptCompiler* compiler, PUAbstractNode 
             if (material){
                 _renderer->setDepthTest(material->depthTest);
                 _renderer->setDepthWrite(material->depthWrite);
+                _renderer->setBlendFunc(material->blendFunc);
                 static_cast<PURender *>(_renderer)->setRenderType(type);
             }
             system->setRender(_renderer);

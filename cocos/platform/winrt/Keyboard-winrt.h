@@ -41,17 +41,10 @@ public:
     void HideKeyboard(Platform::String^ text);
 
 internal:
-    KeyBoardWinRT(Windows::UI::Core::CoreDispatcher^ dispatcher, Windows::UI::Xaml::Controls::Panel^ panel);
+    void OnWinRTKeyboardEvent(WinRTKeyboardEventType type, Windows::UI::Core::KeyEventArgs^ args);
 
 private:
-
-    void QueueKeyEvent(Cocos2dKeyEvent key);
-    void OnKeyPressed(Platform::Object^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ args);
-    void OnKeyReleased(Platform::Object^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ args);
     void OnTextChanged(Platform::Object^ sender, Windows::UI::Xaml::Controls::TextChangedEventArgs^ args);
-
-    Platform::Agile<Windows::UI::Core::CoreDispatcher> m_dispatcher;
-    Platform::Agile<Windows::UI::Xaml::Controls::Panel> m_panel;
     Windows::UI::Xaml::Controls::TextBox^ m_textBox;
 };
 

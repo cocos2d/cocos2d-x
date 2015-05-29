@@ -26,7 +26,7 @@ bool UIListViewTest_Vertical_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIListView/New/crossplatform_UIListView_Editor_Vertical.csb");
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIListView/New/resV.csb");
         Node* child = node->getChildByTag(5);
         child->removeFromParent();
         _layout = dynamic_cast<Layout*>(child);
@@ -117,7 +117,7 @@ bool UIListViewTest_Horizontal_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIListView/New/crossplatform_UIListView_Editor_Horizontal.csb");
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UIListView/New/resH.csb");
         Node* child = node->getChildByTag(5);
         child->removeFromParent();
         _layout = dynamic_cast<Layout*>(child);

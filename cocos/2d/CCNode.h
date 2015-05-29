@@ -52,6 +52,7 @@ class Renderer;
 class Director;
 class GLProgram;
 class GLProgramState;
+class Material;
 #if CC_USE_PHYSICS
 class PhysicsBody;
 class PhysicsWorld;

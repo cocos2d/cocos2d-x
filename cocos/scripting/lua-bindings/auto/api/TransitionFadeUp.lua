@@ -22,4 +22,10 @@
 -- @param #size_table size
 -- @return ActionInterval#ActionInterval ret (return value: cc.ActionInterval)
         
+--------------------------------
+-- 
+-- @function [parent=#TransitionFadeUp] TransitionFadeUp 
+-- @param self
+-- @return TransitionFadeUp#TransitionFadeUp self (return value: cc.TransitionFadeUp)
+        
 return nil

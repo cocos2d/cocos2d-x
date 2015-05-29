@@ -160,6 +160,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#PageView] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#PageView] setLayoutType 
 -- @param self
 -- @param #int type

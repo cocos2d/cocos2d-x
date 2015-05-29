@@ -75,6 +75,9 @@ NewLabelTests::NewLabelTests()
     ADD_TEST_CASE(LabelSmallDimensionsTest);
     ADD_TEST_CASE(LabelIssue10089Test);
     ADD_TEST_CASE(LabelSystemFontColor);
+    ADD_TEST_CASE(LabelIssue10773Test);
+    ADD_TEST_CASE(LabelIssue11576Test);
+    ADD_TEST_CASE(LabelIssue11699Test);
 };
 
 LabelTTFAlignmentNew::LabelTTFAlignmentNew()
@@ -1861,4 +1864,73 @@ std::string LabelSystemFontColor::title() const
 std::string LabelSystemFontColor::subtitle() const
 {
     return "Testing text color of system font";
+}
+
+LabelIssue10773Test::LabelIssue10773Test()
+{
+    auto center = VisibleRect::center();
+
+    auto label = Label::createWithTTF("create label with TTF", "fonts/arial.ttf", 24);
+    label->getLetter(5);
+    label->setString("Hi");
+    label->setPosition(center.x, center.y);
+    addChild(label);
+}
+
+std::string LabelIssue10773Test::title() const
+{
+    return "Test for Issue #10773";
+}
+
+std::string LabelIssue10773Test::subtitle() const
+{
+    return "Should not crash!";
+}
+
+LabelIssue11576Test::LabelIssue11576Test()
+{
+    auto center = VisibleRect::center();
+
+    auto label = Label::createWithTTF("abcdefg", "fonts/arial.ttf", 24);
+    for (int index = 0; index < label->getStringLength(); ++index)
+    {
+        label->getLetter(index);
+    }
+
+    this->runAction(Sequence::create(DelayTime::create(2.0f), CallFunc::create([label](){
+        label->setString("Hello World!");
+    }), nullptr));
+
+    label->setPosition(center.x, center.y);
+    addChild(label);
+}
+
+std::string LabelIssue11576Test::title() const
+{
+    return "Test for Issue #11576";
+}
+
+std::string LabelIssue11576Test::subtitle() const
+{
+    return "You should see another string displayed correctly after 2 seconds.";
+}
+
+LabelIssue11699Test::LabelIssue11699Test()
+{
+    auto center = VisibleRect::center();
+
+    auto label = Label::createWithTTF("中国", "fonts/HKYuanMini.ttf", 150);
+    label->enableOutline(Color4B::RED, 2);
+    label->setPosition(center.x, center.y);
+    addChild(label);
+}
+
+std::string LabelIssue11699Test::title() const
+{
+    return "Test for Issue #11699";
+}
+
+std::string LabelIssue11699Test::subtitle() const
+{
+    return "Outline should match with the characters exactly.";
 }

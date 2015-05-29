@@ -385,6 +385,7 @@ void Text::copySpecialProperties(Widget *widget)
     {
         setFontName(label->_fontName);
         setFontSize(label->getFontSize());
+        setTextColor(label->getTextColor());
         setString(label->getString());
         setTouchScaleChangeEnabled(label->_touchScaleChangeEnabled);
         setTextHorizontalAlignment(label->_labelRenderer->getHorizontalAlignment());

@@ -760,18 +760,27 @@ bool  Bundle3D::loadMeshDatasJson(MeshDatas& meshdatas)
             meshData->subMeshIndices.push_back(indexArray);
             meshData->numIndex = (int)meshData->subMeshIndices.size();
 
-            //meshData->subMeshAABB.push_back(calculateAABB(meshData->vertex, meshData->getPerVertexSize(), indexArray));
-            const rapidjson::Value& mesh_part_aabb = mesh_part[AABBS];
-            if (mesh_part.HasMember(AABBS) && mesh_part_aabb.Size() == 6)
+            if(mesh_data.HasMember(AABBS))
             {
-                Vec3 min(mesh_part_aabb[(rapidjson::SizeType)0].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)1].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)2].GetDouble());
-                Vec3 max(mesh_part_aabb[(rapidjson::SizeType)3].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)4].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)5].GetDouble());
-                meshData->subMeshAABB.push_back(AABB(min, max));
+                const rapidjson::Value& mesh_part_aabb = mesh_part[AABBS];
+                if (mesh_part.HasMember(AABBS) && mesh_part_aabb.Size() == 6)
+                {
+                    Vec3 min(mesh_part_aabb[(rapidjson::SizeType)0].GetDouble(),
+                             mesh_part_aabb[(rapidjson::SizeType)1].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)2].GetDouble());
+                    Vec3 max(mesh_part_aabb[(rapidjson::SizeType)3].GetDouble(),
+                             mesh_part_aabb[(rapidjson::SizeType)4].GetDouble(), mesh_part_aabb[(rapidjson::SizeType)5].GetDouble());
+                    meshData->subMeshAABB.push_back(AABB(min, max));
+                }
+                else
+                {
+                    meshData->subMeshAABB.push_back(calculateAABB(meshData->vertex, meshData->getPerVertexSize(), indexArray));
+                }
             }
             else
             {
                 meshData->subMeshAABB.push_back(calculateAABB(meshData->vertex, meshData->getPerVertexSize(), indexArray));
             }
+           
         }
         meshdatas.meshDatas.push_back(meshData);
     }
@@ -2109,6 +2118,29 @@ Reference* Bundle3D::seekToFirstType(unsigned int type, const std::string& id)
         }
     }
     return nullptr;
+}
+
+std::vector<Vec3> Bundle3D::getTrianglesList(const std::string& path)
+{
+    std::vector<Vec3> trianglesList;
+    auto bundle = Bundle3D::createBundle();
+    if (!bundle->load(path))
+    {
+        Bundle3D::destroyBundle(bundle);
+        return trianglesList;
+    }
+    MeshDatas meshs;
+    bundle->loadMeshDatas(meshs);
+    Bundle3D::destroyBundle(bundle);
+    for (auto iter : meshs.meshDatas){
+        int preVertexSize = iter->getPerVertexSize() / sizeof(float);
+        for (auto indexArray : iter->subMeshIndices){
+            for (auto i : indexArray){
+                trianglesList.push_back(Vec3(iter->vertex[i * preVertexSize], iter->vertex[i * preVertexSize + 1], iter->vertex[i * preVertexSize + 2]));
+            }
+        }
+    }
+    return trianglesList;
 }
 
 Bundle3D::Bundle3D()

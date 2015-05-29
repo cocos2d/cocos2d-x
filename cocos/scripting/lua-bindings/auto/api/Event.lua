@@ -33,4 +33,11 @@
 -- @param self
 -- @return Event#Event self (return value: cc.Event)
         
+--------------------------------
+--  Constructor 
+-- @function [parent=#Event] Event 
+-- @param self
+-- @param #int type
+-- @return Event#Event self (return value: cc.Event)
+        
 return nil

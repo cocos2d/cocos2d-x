@@ -879,10 +879,10 @@ PhysicsWorld::PhysicsWorld()
 , _updateTime(0.0f)
 , _substeps(1)
 , _cpSpace(nullptr)
+, _updateBodyTransform(false)
 , _scene(nullptr)
 , _autoStep(true)
 , _debugDraw(nullptr)
-, _updateBodyTransform(false)
 , _debugDrawMask(DEBUGDRAW_NONE)
 {
     

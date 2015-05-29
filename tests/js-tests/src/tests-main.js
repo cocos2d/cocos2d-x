@@ -447,6 +447,14 @@ var testNames = [
         }
     },
     {
+        title:"MaterialSystem Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/MaterialSystemTest/MaterialSystemTest.js",
+        testScene:function () {
+            return new MaterialSystemTestScene();
+        }
+    },
+    {
         title:"Menu Test",
         resource:g_menu,
         platforms: PLATFORM_ALL,
@@ -490,6 +498,13 @@ var testNames = [
         }
     },
     {
+        title:"Particle3D Test",
+        platforms: PLATFORM_JSB,
+        testScene:function () {
+            return new Particle3DTestScene();
+        }
+    },
+    {
         title:"Particle Test",
         platforms: PLATFORM_ALL,
         linksrc:"",
@@ -513,6 +528,14 @@ var testNames = [
         resource:g_performace,
         testScene:function () {
             return new PerformanceTestScene();
+        }
+    },
+    {
+        title:"Physics3D Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/Physics3DTest/Physics3DTest.js",
+        testScene:function () {
+            return new Physics3DTestScene();
         }
     },
     {
@@ -581,6 +604,14 @@ var testNames = [
         }
     },
     {
+        title:"SpritePolygon Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/SpritePolygonTest/SpritePolygonTest.js",
+        testScene:function () {
+            return new SpritePolygonTestScene();
+        }
+    },
+    {
         title:"Sprite Test",
         resource:g_sprites,
         platforms: PLATFORM_ALL,
@@ -596,6 +627,14 @@ var testNames = [
         linksrc:"src/ExtensionsTest/S9SpriteTest/S9SpriteTest.js",
         testScene:function () {
             return new S9SpriteTestScene();
+        }
+    },
+    {
+        title:"Terrain Test",
+        platforms: PLATFORM_JSB,
+        linksrc:"src/TerrainTest/TerrainTest.js",
+        testScene:function () {
+            return new TerrainTestScene();
         }
     },
     {

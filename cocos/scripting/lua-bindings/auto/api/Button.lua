@@ -5,6 +5,12 @@
 -- @parent_module ccui
 
 --------------------------------
+-- 
+-- @function [parent=#Button] getNormalTextureSize 
+-- @param self
+-- @return size_table#size_table ret (return value: size_table)
+        
+--------------------------------
 -- Query the button title content.<br>
 -- return Get the button's title content.
 -- @function [parent=#Button] getTitleText 
@@ -86,6 +92,16 @@
 -- @return Button#Button self (return value: ccui.Button)
         
 --------------------------------
+-- 
+-- @function [parent=#Button] init 
+-- @param self
+-- @param #string normalImage
+-- @param #string selectedImage
+-- @param #string disableImage
+-- @param #int texType
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- Change the content of button's title.<br>
 -- param text The title in std::string.
 -- @function [parent=#Button] setTitleText 
@@ -126,6 +142,15 @@
 -- @param self
 -- @return rect_table#rect_table ret (return value: rect_table)
         
+--------------------------------
+-- @overload self, int, int         
+-- @overload self, int         
+-- @function [parent=#Button] setTitleAlignment
+-- @param self
+-- @param #int hAlignment
+-- @param #int vAlignment
+-- @return Button#Button self (return value: ccui.Button)
+
 --------------------------------
 -- Return the capInsets of pressed state scale9sprite.<br>
 -- return The pressed scale9 renderer capInsets.
@@ -232,6 +257,12 @@
 -- @function [parent=#Button] getVirtualRenderer 
 -- @param self
 -- @return Node#Node ret (return value: cc.Node)
+        
+--------------------------------
+-- 
+-- @function [parent=#Button] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 

@@ -156,4 +156,19 @@ bool ComponentContainer::isEmpty() const
     return (_components == nullptr || _components->empty());
 }
 
+void ComponentContainer::onEnter()
+{
+    for (auto iter = _components->begin(); iter != _components->end(); ++iter)
+    {
+        iter->second->onEnter();
+    }
+}
+void ComponentContainer::onExit()
+{
+    for (auto iter = _components->begin(); iter != _components->end(); ++iter)
+    {
+        iter->second->onExit();
+    }
+}
+
 NS_CC_END

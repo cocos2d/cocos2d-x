@@ -15,4 +15,10 @@
 -- @param #cc.Scene scene
 -- @return TransitionProgressRadialCCW#TransitionProgressRadialCCW ret (return value: cc.TransitionProgressRadialCCW)
         
+--------------------------------
+-- js ctor
+-- @function [parent=#TransitionProgressRadialCCW] TransitionProgressRadialCCW 
+-- @param self
+-- @return TransitionProgressRadialCCW#TransitionProgressRadialCCW self (return value: cc.TransitionProgressRadialCCW)
+        
 return nil

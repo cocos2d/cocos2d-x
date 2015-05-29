@@ -95,11 +95,11 @@ PURibbonTrailRender::PURibbonTrailRender() :
     _trail(0),
     _useVertexColours(DEFAULT_USE_VERTEX_COLOURS),
     _maxChainElements(DEFAULT_MAX_ELEMENTS),
-    _setLength(false),
     _trailLength(DEFAULT_LENGTH),
-    _setWidth(false),
     _trailWidth(DEFAULT_WIDTH),
     _randomInitialColor(DEFAULT_RANDOM_INITIAL_COLOUR),
+    _setLength(false),
+    _setWidth(false),
     _initialColor(DEFAULT_INITIAL_COLOUR),
     _colorChange(DEFAULT_COLOUR_CHANGE),
     _childNode(0)
@@ -369,10 +369,9 @@ PURibbonTrailRender* PURibbonTrailRender::clone()
     return tr;
 }
 
-void PURibbonTrailRender::copyAttributesTo( PURender *render )
+void PURibbonTrailRender::copyAttributesTo(PURibbonTrailRender *trailRender)
 {
-    PURender::copyAttributesTo(render);
-    PURibbonTrailRender *trailRender = static_cast<PURibbonTrailRender*>(render);
+    PURender::copyAttributesTo(trailRender);
     trailRender->setUseVertexColors(_useVertexColours);
     trailRender->setMaxChainElements(_maxChainElements);
     trailRender->setTrailLength(_trailLength);

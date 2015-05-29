@@ -113,9 +113,14 @@ build/build/
 cocos/scripting/lua-bindings/proj.ios_mac/build/
 tests/*/runtime/
 tests/*/publish/
+tests/*/project/proj.android-studio/app/build.xml
+tests/*/project/proj.android-studio/app/proguard-project.txt
+tests/*/proj.android-studio/app/build.xml
+tests/*/proj.android-studio/app/proguard-project.txt
 
 # Android
 project.properties
+*.iml
 
 # Ignore prebuilt libraries folder
 /external/*
@@ -126,7 +131,8 @@ project.properties
 /v*-console-*.zip
 /tools/fbx-conv/
 tests/cpp-tests/Resources/audio
-/tests/js-tests/
 /tests/lua-empty-test/src/cocos/
 /tests/lua-game-controller-test/src/cocos/
 /tests/lua-tests/src/cocos/
+/tests/js-tests/res/
+/tools/framework-compile/

@@ -225,4 +225,16 @@
 -- @param #unsigned int flags
 -- @return DrawNode#DrawNode self (return value: cc.DrawNode)
         
+--------------------------------
+-- 
+-- @function [parent=#DrawNode] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#DrawNode] DrawNode 
+-- @param self
+-- @return DrawNode#DrawNode self (return value: cc.DrawNode)
+        
 return nil

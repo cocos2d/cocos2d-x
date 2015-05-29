@@ -4,17 +4,11 @@
 #ifndef __PERFORMANCE_CALLBACK_TEST_H__
 #define __PERFORMANCE_CALLBACK_TEST_H__
 
-#include "PerformanceTest.h"
+#include "BaseTest.h"
 
-class CallbackBasicLayer : public PerformBasicLayer
-{
-public:
-    CallbackBasicLayer(bool bControlMenuVisible, int nMaxCases = 0, int nCurCase = 0);
-    
-    virtual void showCurrentTest();
-};
+DEFINE_TEST_SUITE(PerformceCallbackTests);
 
-class PerformanceCallbackScene : public cocos2d::Scene
+class PerformanceCallbackScene : public TestCase
 {
 public:
     virtual void onEnter() override;
@@ -95,7 +89,5 @@ public:
 private:
     std::function<void(float)> _callback;
 };
-
-void runCallbackPerformanceTest();
 
 #endif /* __PERFORMANCE_CALLBACK_TEST_H__ */

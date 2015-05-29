@@ -114,6 +114,11 @@ cc.game.onStart = function(){
         }
         jsb.fileUtils.setSearchPaths(searchPaths);
     }
+    else
+    {
+        cc.loader.resPath = '../cpp-tests/Resources'
+    }
+
     cc.LoaderScene.preload(g_resources, function () {
         if(window.sideIndexBar && typeof sideIndexBar.start === 'function'){
             sideIndexBar.start();

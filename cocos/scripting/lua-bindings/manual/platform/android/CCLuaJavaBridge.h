@@ -4,7 +4,6 @@
 #include <jni.h>
 #include <string>
 #include <vector>
-#include "cocos2d.h"
 
 using namespace std;
 
@@ -12,7 +11,6 @@ extern "C" {
 #include "lua.h"
 }
 
-using namespace cocos2d;
 
 #define LUAJ_ERR_OK                 0
 #define LUAJ_ERR_TYPE_NOT_SUPPORT   (-1)

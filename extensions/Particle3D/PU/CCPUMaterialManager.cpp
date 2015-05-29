@@ -153,7 +153,10 @@ bool PUMaterialCache::loadMaterialsFromSearchPaths( const std::string &fileFolde
     while ((fileName = AAssetDir_getNextFileName(dir)) != nullptr)
     {
         std::string fullpath = fileFolder + seg + std::string(fileName);
-        loadMaterials(fullpath);
+        if (strlen(fileName) > 9 && (strcmp(".material", fileName + strlen(fileName) - 9) == 0))
+        {
+            loadMaterials(fullpath);
+        }
     }
     AAssetDir_close(dir);
 

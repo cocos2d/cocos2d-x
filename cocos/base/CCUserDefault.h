@@ -237,7 +237,7 @@ public:
      * @js NA
      */
     static const std::string& getXMLFilePath();
-    /** All supported platforms other iOS & Android use xml file to save values. This function checks whether the xml file exists or not.
+    /** All supported platforms other iOS & Android and CC_PLATFORM_WINRT use xml file to save values. This function checks whether the xml file exists or not.
      * @return True if the xml file exists, flase if not.
      * @js NA
      */
@@ -245,7 +245,7 @@ public:
 
 protected:
     UserDefault();
-    ~UserDefault();
+    virtual ~UserDefault();
     
 private:
     

@@ -59,6 +59,18 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
+-- 
+-- @function [parent=#CheckBox] init 
+-- @param self
+-- @param #string backGround
+-- @param #string backGroundSeleted
+-- @param #string cross
+-- @param #string backGroundDisabled
+-- @param #string frontCrossDisabled
+-- @param #int texType
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- Load all textures for initializing a checkbox.<br>
 -- param background    The background image name.<br>
 -- param backgroundSelected    The background selected image name.<br>
@@ -138,6 +150,12 @@
 -- @function [parent=#CheckBox] getVirtualRenderer 
 -- @param self
 -- @return Node#Node ret (return value: cc.Node)
+        
+--------------------------------
+-- 
+-- @function [parent=#CheckBox] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 

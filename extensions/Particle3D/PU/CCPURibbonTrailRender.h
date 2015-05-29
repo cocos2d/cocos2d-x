@@ -44,8 +44,8 @@ public:
     //Constructor
     PURibbonTrailVisualData (Node* sceneNode, PURibbonTrail* ribbonTrail) : 
         node(sceneNode),
-        trail(ribbonTrail),
         addedToTrail(false),
+        trail(ribbonTrail),
         index(0){};
 
     Node* node;
@@ -126,7 +126,7 @@ public:
     void destroyAll(void);
 
     virtual PURibbonTrailRender* clone() override;
-    virtual void copyAttributesTo (PURender *render) override;
+    void copyAttributesTo(PURibbonTrailRender *render);
 
 CC_CONSTRUCTOR_ACCESS:
     PURibbonTrailRender();

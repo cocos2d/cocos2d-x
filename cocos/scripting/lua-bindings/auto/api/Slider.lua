@@ -206,6 +206,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#Slider] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#Slider] getVirtualRendererSize 
 -- @param self
 -- @return size_table#size_table ret (return value: size_table)

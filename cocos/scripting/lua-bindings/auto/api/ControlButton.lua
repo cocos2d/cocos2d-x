@@ -58,6 +58,13 @@
         
 --------------------------------
 -- 
+-- @function [parent=#ControlButton] initWithBackgroundSprite 
+-- @param self
+-- @param #ccui.Scale9Sprite sprite
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#ControlButton] getTitleTTFSizeForState 
 -- @param self
 -- @param #int state
@@ -107,6 +114,13 @@
 -- @return ControlButton#ControlButton self (return value: cc.ControlButton)
         
 --------------------------------
+-- 
+-- @function [parent=#ControlButton] setBackgroundSprite 
+-- @param self
+-- @param #ccui.Scale9Sprite var
+-- @return ControlButton#ControlButton self (return value: cc.ControlButton)
+        
+--------------------------------
 -- Returns the background sprite used for a state.<br>
 -- param state The state that uses the background sprite. Possible values are<br>
 -- described in "CCControlState".
@@ -120,6 +134,15 @@
 -- @function [parent=#ControlButton] getHorizontalOrigin 
 -- @param self
 -- @return int#int ret (return value: int)
+        
+--------------------------------
+-- 
+-- @function [parent=#ControlButton] initWithTitleAndFontNameAndFontSize 
+-- @param self
+-- @param #string title
+-- @param #string fontName
+-- @param #float fontSize
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- Sets the font of the label, changes the label to a BMFont if neccessary.<br>
@@ -210,10 +233,10 @@
         
 --------------------------------
 -- 
--- @function [parent=#ControlButton] setBackgroundSprite 
+-- @function [parent=#ControlButton] getTitleBMFontForState 
 -- @param self
--- @param #ccui.Scale9Sprite var
--- @return ControlButton#ControlButton self (return value: cc.ControlButton)
+-- @param #int state
+-- @return string#string ret (return value: string)
         
 --------------------------------
 -- 
@@ -259,10 +282,11 @@
 
 --------------------------------
 -- 
--- @function [parent=#ControlButton] getTitleBMFontForState 
+-- @function [parent=#ControlButton] initWithLabelAndBackgroundSprite 
 -- @param self
--- @param #int state
--- @return string#string ret (return value: string)
+-- @param #cc.Node label
+-- @param #ccui.Scale9Sprite backgroundSprite
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- 
@@ -360,6 +384,12 @@
         
 --------------------------------
 -- 
+-- @function [parent=#ControlButton] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
 -- @function [parent=#ControlButton] setHighlighted 
 -- @param self
 -- @param #bool enabled
@@ -377,6 +407,12 @@
 -- @function [parent=#ControlButton] setOpacity 
 -- @param self
 -- @param #unsigned char var
+-- @return ControlButton#ControlButton self (return value: cc.ControlButton)
+        
+--------------------------------
+-- js ctor
+-- @function [parent=#ControlButton] ControlButton 
+-- @param self
 -- @return ControlButton#ControlButton self (return value: cc.ControlButton)
         
 return nil

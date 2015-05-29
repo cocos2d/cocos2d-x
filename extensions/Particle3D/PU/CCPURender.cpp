@@ -33,6 +33,7 @@
 #include "renderer/CCGLProgramState.h"
 #include "renderer/CCGLProgramCache.h"
 #include "renderer/CCVertexIndexBuffer.h"
+#include "renderer/CCVertexAttribBinding.h"
 #include "base/CCDirector.h"
 #include "3d/CCSprite3D.h"
 #include "3d/CCMesh.h"
@@ -42,18 +43,15 @@ NS_CC_BEGIN
 
 void PURender::copyAttributesTo( PURender *render )
 {
-    render->_particleSystem = _particleSystem;
-    render->_isVisible = _isVisible;
-    render->_rendererScale = _rendererScale;
-    render->_depthTest = _depthTest;
-    render->_depthWrite = _depthWrite;
+    Particle3DRender::copyAttributesTo(render);
+
     render->_renderType = _renderType;
 }
 
-static bool compareParticle3D(PUParticle3D* left, PUParticle3D* right)
-{
-    return left->depthInView > right->depthInView;
-}
+//static bool compareParticle3D(PUParticle3D* left, PUParticle3D* right)
+//{
+//    return left->depthInView > right->depthInView;
+//}
 
 PUParticle3DQuadRender* PUParticle3DQuadRender::create(const std::string& texFile)
 {
@@ -242,9 +240,23 @@ void PUParticle3DQuadRender::render(Renderer* renderer, const Mat4 &transform, P
         _vertexBuffer->updateVertices(&_vertices[0], vertexindex/* * sizeof(_posuvcolors[0])*/, 0);
         _indexBuffer->updateIndices(&_indices[0], index/* * sizeof(unsigned short)*/, 0);
 
+        _stateBlock->setBlendFunc(particleSystem->getBlendFunc());
+        
         GLuint texId = (_texture ? _texture->getName() : 0);
-        _meshCommand->init(0, texId, _glProgramState, particleSystem->getBlendFunc(), _vertexBuffer->getVBO(), _indexBuffer->getVBO(), GL_TRIANGLES, GL_UNSIGNED_SHORT, index, transform, Node::FLAGS_RENDER_AS_3D);
+        _meshCommand->init(0,
+                           texId,
+                           _glProgramState,
+                           _stateBlock,
+                           _vertexBuffer->getVBO(),
+                           _indexBuffer->getVBO(),
+                           GL_TRIANGLES,
+                           GL_UNSIGNED_SHORT,
+                           index,
+                           transform,
+                           Node::FLAGS_RENDER_AS_3D);
+        _meshCommand->setSkipBatching(true);
         _meshCommand->setTransparent(true);
+        _glProgramState->setUniformVec4("u_color", Vec4(1,1,1,1));
         renderer->addCommand(_meshCommand);
     }
 }
@@ -265,7 +277,6 @@ PUParticle3DQuadRender::PUParticle3DQuadRender()
 
 PUParticle3DQuadRender::~PUParticle3DQuadRender()
 {
-
 }
 
 void PUParticle3DQuadRender::getOriginOffset( int &offsetX, int &offsetY )
@@ -394,16 +405,15 @@ void PUParticle3DQuadRender::setType( Type type )
 {
     _type = type;
     if (_type == PERPENDICULAR_COMMON || _type == PERPENDICULAR_SELF){
-        _meshCommand->setCullFaceEnabled(false);
+        _stateBlock->setCullFace(false);
     }else{
-        _meshCommand->setCullFaceEnabled(true);
+        _stateBlock->setCullFace(true);
     }
 }
 
-void PUParticle3DQuadRender::copyAttributesTo( PURender *render )
+void PUParticle3DQuadRender::copyAttributesTo(PUParticle3DQuadRender *quadRender)
 {
-    PURender::copyAttributesTo(render);
-    PUParticle3DQuadRender *quadRender = static_cast<PUParticle3DQuadRender *>(render);
+    PURender::copyAttributesTo(quadRender);
     quadRender->_type = _type;
     quadRender->_origin = _origin;
     quadRender->_rotateType = _rotateType;
@@ -497,7 +507,7 @@ PUParticle3DModelRender::~PUParticle3DModelRender()
     }
 }
 
-void PUParticle3DModelRender::copyAttributesTo( PURender *render )
+void PUParticle3DModelRender::copyAttributesTo(PUParticle3DModelRender *render)
 {
     PURender::copyAttributesTo(render);
 }
@@ -514,15 +524,23 @@ PUParticle3DEntityRender::PUParticle3DEntityRender()
     : _meshCommand(nullptr)
     , _texture(nullptr)
     , _glProgramState(nullptr)
-    , _vertexBuffer(nullptr)
     , _indexBuffer(nullptr)
+    , _vertexBuffer(nullptr)
 {
+    _stateBlock = RenderState::StateBlock::create();
+    CC_SAFE_RETAIN(_stateBlock);
 
+    _stateBlock->setCullFace(false);
+    _stateBlock->setCullFaceSide(RenderState::CULL_FACE_SIDE_BACK);
+    _stateBlock->setDepthTest(false);
+    _stateBlock->setDepthWrite(false);
+    _stateBlock->setBlend(true);
 }
 
 PUParticle3DEntityRender::~PUParticle3DEntityRender()
 {
     CC_SAFE_DELETE(_meshCommand);
+    CC_SAFE_RELEASE(_stateBlock);
     //CC_SAFE_RELEASE(_texture);
     CC_SAFE_RELEASE(_glProgramState);
     CC_SAFE_RELEASE(_vertexBuffer);
@@ -554,27 +572,17 @@ bool PUParticle3DEntityRender::initRender( const std::string &texFile )
     _glProgramState = glProgramState;
 
     _meshCommand = new (std::nothrow) MeshCommand();
+    _meshCommand->setSkipBatching(true);
     _meshCommand->setTransparent(true);
-    _meshCommand->setDepthTestEnabled(_depthTest);
-    _meshCommand->setDepthWriteEnabled(_depthWrite);
-    _meshCommand->setCullFace(GL_BACK);
-    _meshCommand->setCullFaceEnabled(true);
+
+    _stateBlock->setDepthTest(_depthTest);
+    _stateBlock->setDepthWrite(_depthWrite);
+    _stateBlock->setCullFaceSide(RenderState::CULL_FACE_SIDE_BACK);
+    _stateBlock->setCullFace(true);
     return true;
 }
 
-void PUParticle3DEntityRender::setDepthTest( bool isDepthTest )
-{
-    Particle3DRender::setDepthTest(isDepthTest);
-    _meshCommand->setDepthTestEnabled(_depthTest);
-}
-
-void PUParticle3DEntityRender::setDepthWrite( bool isDepthWrite )
-{
-    Particle3DRender::setDepthWrite(isDepthWrite);
-    _meshCommand->setDepthWriteEnabled(_depthWrite);
-}
-
-void PUParticle3DEntityRender::copyAttributesTo( PURender *render )
+void PUParticle3DEntityRender::copyAttributesTo(PUParticle3DEntityRender *render)
 {
     PURender::copyAttributesTo(render);
 }
@@ -689,8 +697,22 @@ void PUParticle3DBoxRender::render( Renderer* renderer, const Mat4 &transform, P
         _indexBuffer->updateIndices(&_indices[0], index/* * sizeof(unsigned short)*/, 0);
 
         GLuint texId = (_texture ? _texture->getName() : 0);
-        _meshCommand->init(0, texId, _glProgramState, particleSystem->getBlendFunc(), _vertexBuffer->getVBO(), _indexBuffer->getVBO(), GL_TRIANGLES, GL_UNSIGNED_SHORT, index, transform, Node::FLAGS_RENDER_AS_3D);
+        _stateBlock->setBlendFunc(_particleSystem->getBlendFunc());
+        _meshCommand->init(0,
+                           texId,
+                           _glProgramState,
+                           _stateBlock,
+                           _vertexBuffer->getVBO(),
+                           _indexBuffer->getVBO(),
+                           GL_TRIANGLES,
+                           GL_UNSIGNED_SHORT,
+                           index,
+                           transform,
+                           Node::FLAGS_RENDER_AS_3D);
+        _meshCommand->setSkipBatching(true);
         _meshCommand->setTransparent(true);
+
+        _glProgramState->setUniformVec4("u_color", Vec4(1,1,1,1));
         renderer->addCommand(_meshCommand);
     }
 }
@@ -839,8 +861,24 @@ void PUSphereRender::render( Renderer* renderer, const Mat4 &transform, Particle
         _indexBuffer->updateIndices(&_indices[0], index/* * sizeof(unsigned short)*/, 0);
 
         GLuint texId = (_texture ? _texture->getName() : 0);
-        _meshCommand->init(0, texId, _glProgramState, particleSystem->getBlendFunc(), _vertexBuffer->getVBO(), _indexBuffer->getVBO(), GL_TRIANGLES, GL_UNSIGNED_SHORT, index, transform, Node::FLAGS_RENDER_AS_3D);
+
+        _stateBlock->setBlendFunc(particleSystem->getBlendFunc());
+        _meshCommand->init(
+                           0,
+                           texId,
+                           _glProgramState,
+                           _stateBlock,
+                           _vertexBuffer->getVBO(),
+                           _indexBuffer->getVBO(),
+                           GL_TRIANGLES,
+                           GL_UNSIGNED_SHORT,
+                           index,
+                           transform,
+                           Node::FLAGS_RENDER_AS_3D);
+        _meshCommand->setSkipBatching(true);
         _meshCommand->setTransparent(true);
+
+        _glProgramState->setUniformVec4("u_color", Vec4(1,1,1,1));
         renderer->addCommand(_meshCommand);
     }
 }
@@ -904,10 +942,9 @@ PUSphereRender::~PUSphereRender()
 
 }
 
-void PUSphereRender::copyAttributesTo( PURender *render )
+void PUSphereRender::copyAttributesTo(PUSphereRender *sphereRender)
 {
-    PURender::copyAttributesTo(render);
-    PUSphereRender *sphereRender = static_cast<PUSphereRender *>(render);
+    PURender::copyAttributesTo(sphereRender);
     sphereRender->_numberOfRings = _numberOfRings;
     sphereRender->_numberOfSegments = _numberOfSegments;
 }

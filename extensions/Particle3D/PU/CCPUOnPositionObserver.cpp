@@ -37,12 +37,12 @@ PUOnPositionObserver::PUOnPositionObserver(void) :
     _positionXThreshold(DEFAULT_POSITION_THRESHOLD.x),
     _positionYThreshold(DEFAULT_POSITION_THRESHOLD.y),
     _positionZThreshold(DEFAULT_POSITION_THRESHOLD.z),
-    _comparePositionX(CO_LESS_THAN),
-    _comparePositionY(CO_LESS_THAN),
-    _comparePositionZ(CO_LESS_THAN),
     _positionXThresholdSet(false),
     _positionYThresholdSet(false),
-    _positionZThresholdSet(false)
+    _positionZThresholdSet(false),
+    _comparePositionX(CO_LESS_THAN),
+    _comparePositionY(CO_LESS_THAN),
+    _comparePositionZ(CO_LESS_THAN)
 {
 }
 //-----------------------------------------------------------------------

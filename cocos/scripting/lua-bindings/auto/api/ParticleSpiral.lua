@@ -5,6 +5,19 @@
 -- @parent_module cc
 
 --------------------------------
+-- 
+-- @function [parent=#ParticleSpiral] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- 
+-- @function [parent=#ParticleSpiral] initWithTotalParticles 
+-- @param self
+-- @param #int numberOfParticles
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  Create a spiral particle system.<br>
 -- return An autoreleased ParticleSpiral object.
 -- @function [parent=#ParticleSpiral] create 
@@ -20,5 +33,11 @@
 -- @param self
 -- @param #int numberOfParticles
 -- @return ParticleSpiral#ParticleSpiral ret (return value: cc.ParticleSpiral)
+        
+--------------------------------
+-- js ctor
+-- @function [parent=#ParticleSpiral] ParticleSpiral 
+-- @param self
+-- @return ParticleSpiral#ParticleSpiral self (return value: cc.ParticleSpiral)
         
 return nil

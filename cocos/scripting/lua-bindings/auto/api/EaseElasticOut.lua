@@ -32,4 +32,10 @@
 -- @param self
 -- @return EaseElastic#EaseElastic ret (return value: cc.EaseElastic)
         
+--------------------------------
+-- 
+-- @function [parent=#EaseElasticOut] EaseElasticOut 
+-- @param self
+-- @return EaseElasticOut#EaseElasticOut self (return value: cc.EaseElasticOut)
+        
 return nil

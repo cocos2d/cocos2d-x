@@ -12,6 +12,14 @@
 -- @return ParticleBatchNode#ParticleBatchNode self (return value: cc.ParticleBatchNode)
         
 --------------------------------
+--  initializes the particle system with Texture2D, a capacity of particles 
+-- @function [parent=#ParticleBatchNode] initWithTexture 
+-- @param self
+-- @param #cc.Texture2D tex
+-- @param #int capacity
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  Disables a particle by inserting a 0'd quad into the texture atlas.<br>
 -- param particleIndex The index of the particle.
 -- @function [parent=#ParticleBatchNode] disableParticle 
@@ -32,6 +40,14 @@
 -- @param self
 -- @param #cc.TextureAtlas atlas
 -- @return ParticleBatchNode#ParticleBatchNode self (return value: cc.ParticleBatchNode)
+        
+--------------------------------
+--  initializes the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles 
+-- @function [parent=#ParticleBatchNode] initWithFile 
+-- @param self
+-- @param #string fileImage
+-- @param #int capacity
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- code<br>
@@ -150,6 +166,12 @@
 -- @param self
 -- @param #cc.Node child
 -- @param #bool cleanup
+-- @return ParticleBatchNode#ParticleBatchNode self (return value: cc.ParticleBatchNode)
+        
+--------------------------------
+-- js ctor
+-- @function [parent=#ParticleBatchNode] ParticleBatchNode 
+-- @param self
 -- @return ParticleBatchNode#ParticleBatchNode self (return value: cc.ParticleBatchNode)
         
 return nil

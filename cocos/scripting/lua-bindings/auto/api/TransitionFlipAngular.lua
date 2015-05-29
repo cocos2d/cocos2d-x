@@ -14,4 +14,10 @@
 -- @param #int o
 -- @return TransitionFlipAngular#TransitionFlipAngular ret (return value: cc.TransitionFlipAngular)
 
+--------------------------------
+-- 
+-- @function [parent=#TransitionFlipAngular] TransitionFlipAngular 
+-- @param self
+-- @return TransitionFlipAngular#TransitionFlipAngular self (return value: cc.TransitionFlipAngular)
+        
 return nil

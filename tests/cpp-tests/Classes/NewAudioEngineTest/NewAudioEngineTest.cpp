@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #include "platform/CCPlatformConfig.h"
-#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WINRT || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 
 #include "NewAudioEngineTest.h"
 #include "ui/CocosGUI.h"
@@ -78,8 +78,8 @@ namespace {
         
     private:
         TextButton()
-        : _enabled(true)
-        , _onTriggered(nullptr)
+        : _onTriggered(nullptr)
+        , _enabled(true)
         {
             auto listener = EventListenerTouchOneByOne::create();
             listener->setSwallowTouches(true);

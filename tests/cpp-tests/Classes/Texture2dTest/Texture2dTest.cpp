@@ -37,8 +37,6 @@ enum {
 
 Texture2DTests::Texture2DTests()
 {
-    ADD_TEST_CASE(TexturePVRv3Premult);
-
     ADD_TEST_CASE(TextureMipMap);
     ADD_TEST_CASE(TextureMemoryAlloc);
     ADD_TEST_CASE(TextureAlias);
@@ -81,7 +79,7 @@ Texture2DTests::Texture2DTests()
     ADD_TEST_CASE(TextureJPEG);
     ADD_TEST_CASE(TextureTIFF);
     ADD_TEST_CASE(TextureTGA);
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_WP8) && (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     ADD_TEST_CASE(TextureWEBP);
 #endif
     ADD_TEST_CASE(TexturePixelFormat);

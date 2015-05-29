@@ -42,4 +42,10 @@
 -- @param self
 -- @return EaseBezierAction#EaseBezierAction ret (return value: cc.EaseBezierAction)
         
+--------------------------------
+-- 
+-- @function [parent=#EaseBezierAction] EaseBezierAction 
+-- @param self
+-- @return EaseBezierAction#EaseBezierAction self (return value: cc.EaseBezierAction)
+        
 return nil

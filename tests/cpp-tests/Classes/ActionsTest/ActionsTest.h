@@ -46,15 +46,6 @@ public:
     virtual std::string title() const override;
 };
 
-class ActionManual : public ActionsDemo
-{
-public:
-    CREATE_FUNC(ActionManual);
-
-    virtual void onEnter() override;
-    virtual std::string subtitle() const override;
-};
-
 class ActionMove : public ActionsDemo
 {
 public:
@@ -310,15 +301,6 @@ public:
     virtual std::string subtitle() const override;
 };
 
-class ActionRotateJerk : public ActionsDemo
-{
-public:
-    CREATE_FUNC(ActionRotateJerk);
-
-    virtual void onEnter() override;
-    virtual std::string subtitle() const override;
-};
-
 class ActionCallFuncN : public ActionsDemo
 {
 public:
@@ -339,17 +321,6 @@ public:
     virtual std::string title() const override;
     virtual std::string subtitle() const override;
     void doRemoveFromParentAndCleanup(Node* sender, bool cleanup);
-};
-
-class ActionCallFuncO : public ActionsDemo
-{
-public:
-    CREATE_FUNC(ActionCallFuncO);
-
-    virtual void onEnter() override;
-    virtual std::string title() const override;
-    virtual std::string subtitle() const override;
-    void callback(Node* object, bool cleanup);
 };
 
 class ActionCallFunction : public ActionsDemo
@@ -578,6 +549,15 @@ public:
     virtual std::string title() const override;    
 private:
     cocos2d::Vector<Node*> _pausedTargets;
+};
+
+class ActionFloatTest : public ActionsDemo
+{
+public:
+    CREATE_FUNC(ActionFloatTest);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
 };
 
 #endif

@@ -32,4 +32,10 @@
 -- @param self
 -- @return DelayTime#DelayTime ret (return value: cc.DelayTime)
         
+--------------------------------
+-- 
+-- @function [parent=#DelayTime] DelayTime 
+-- @param self
+-- @return DelayTime#DelayTime self (return value: cc.DelayTime)
+        
 return nil

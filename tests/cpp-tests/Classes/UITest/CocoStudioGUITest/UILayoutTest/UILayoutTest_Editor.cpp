@@ -34,7 +34,7 @@ bool UILayoutTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Layout/crossplatform_UILayout_Editor_1.csb");
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Layout/res.csb");
         Node* child = node->getChildByTag(5);
         child->removeFromParent();
         _layout = static_cast<Layout*>(child);
@@ -65,7 +65,7 @@ bool UILayoutTest_Color_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Color/crossplatform_UILayout_Color_Editor_1.csb");
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Color/res.csb");
         Node* child = node->getChildByTag(5);
         child->removeFromParent();
         _layout = static_cast<Layout*>(child);
@@ -96,7 +96,7 @@ bool UILayoutTest_Gradient_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Gradient_Color/crossplatform_Gradient_Color.csb");
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Gradient_Color/res.csb");
         Node* child = node->getChildByTag(5);
         child->removeFromParent();
         _layout = static_cast<Layout*>(child);
@@ -127,7 +127,7 @@ bool UILayoutTest_BackGroundImage_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/BackgroundImage/crossplatform_BackgroundImage.csb");
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/BackgroundImage/res.csb");
         Node* child = node->getChildByTag(5);
         child->removeFromParent();
         _layout = static_cast<Layout*>(child);
@@ -158,7 +158,7 @@ bool UILayoutTest_BackGroundImage_Scale9_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Scale9_BackgroundImage/crossplatform_Scale9_BackgroundImage.csb");
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/Scale9_BackgroundImage/res.csb");
         Node* child = node->getChildByTag(5);
         child->removeFromParent();
         _layout = static_cast<Layout*>(child);
@@ -196,7 +196,7 @@ bool UILayoutTest_Layout_Linear_Vertical_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout/Linear_Vertical_Layout/windows_ui_linear_vertical_layout.json"));
+        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout/Linear_Vertical_Layout/res.json"));
 
         _touchGroup->addChild(_layout);
         
@@ -225,7 +225,7 @@ bool UILayoutTest_Layout_Linear_Horizontal_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout/Linear_Horizontal_Layout/windows_ui_linear_horizontal_layout.json"));
+        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout/Linear_Horizontal_Layout/res.json"));
         _touchGroup->addChild(_layout);
       
         this->configureGUIScene();
@@ -253,7 +253,7 @@ bool UILayoutTest_Layout_Relative_Align_Parent_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout/Relative_Align_Parent/windows_ui_relative_align_parent.json"));
+        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout/Relative_Align_Parent/res.json"));
         _touchGroup->addChild(_layout);
         this->configureGUIScene();
         
@@ -280,7 +280,7 @@ bool UILayoutTest_Layout_Relative_Location_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout/Relative_Align_Location/windows_ui_relative_align_location.json"));
+        _layout = static_cast<Layout*>(cocostudio::GUIReader::getInstance()->widgetFromJsonFile("cocosui/UIEditorTest/UILayout/Relative_Align_Location/res.json"));
         _touchGroup->addChild(_layout);
         this->configureGUIScene();
         
@@ -345,7 +345,7 @@ bool UILayoutComponentTest_Editor::init()
 {
     if (UIScene_Editor::init())
     {
-        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/LayoutComponent/UILayoutComponent.csb");
+        Node* node = CSLoader::createNode("cocosui/UIEditorTest/UILayout/LayoutComponent/res.csb");
         Node* child = node->getChildByTag(5);
         child->removeFromParent();
         _layout = static_cast<Layout*>(child);

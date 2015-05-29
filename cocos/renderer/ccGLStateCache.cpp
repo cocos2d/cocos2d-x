@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "renderer/ccGLStateCache.h"
 
 #include "renderer/CCGLProgram.h"
+#include "renderer/CCRenderState.h"
 #include "base/CCDirector.h"
 #include "base/ccConfig.h"
 #include "base/CCConfiguration.h"
@@ -109,12 +110,17 @@ static void SetBlending(GLenum sfactor, GLenum dfactor)
 	if (sfactor == GL_ONE && dfactor == GL_ZERO)
     {
 		glDisable(GL_BLEND);
+        RenderState::StateBlock::_defaultState->setBlend(false);
 	}
     else
     {
 		glEnable(GL_BLEND);
 		glBlendFunc(sfactor, dfactor);
-	}
+
+        RenderState::StateBlock::_defaultState->setBlend(true);
+        RenderState::StateBlock::_defaultState->setBlendSrc((RenderState::Blend)sfactor);
+        RenderState::StateBlock::_defaultState->setBlendSrc((RenderState::Blend)dfactor);
+    }
 }
 
 void blendFunc(GLenum sfactor, GLenum dfactor)

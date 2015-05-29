@@ -275,6 +275,16 @@
 -- @return string#string ret (return value: string)
         
 --------------------------------
+-- Windows fopen can't support UTF-8 filename<br>
+-- Need convert all parameters fopen and other 3rd-party libs<br>
+-- param filename std::string name file for convertation from utf-8<br>
+-- return std::string ansi filename in current locale
+-- @function [parent=#FileUtils] getSuitableFOpen 
+-- @param self
+-- @param #string filenameUtf8
+-- @return string#string ret (return value: string)
+        
+--------------------------------
 -- Sets writable path.
 -- @function [parent=#FileUtils] setWritablePath 
 -- @param self

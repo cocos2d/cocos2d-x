@@ -5,6 +5,13 @@
 -- @parent_module cc
 
 --------------------------------
+--  Initializes a progress timer with the sprite as the shape the timer goes through 
+-- @function [parent=#ProgressTimer] initWithSprite 
+-- @param self
+-- @param #cc.Sprite sp
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  Return the Reverse direction. <br>
 -- return If the direction is Anti-clockwise,it will return true.
 -- @function [parent=#ProgressTimer] isReverseDirection 
@@ -154,5 +161,11 @@
 -- @function [parent=#ProgressTimer] getOpacity 
 -- @param self
 -- @return unsigned char#unsigned char ret (return value: unsigned char)
+        
+--------------------------------
+-- js ctor
+-- @function [parent=#ProgressTimer] ProgressTimer 
+-- @param self
+-- @return ProgressTimer#ProgressTimer self (return value: cc.ProgressTimer)
         
 return nil

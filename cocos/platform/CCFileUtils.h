@@ -330,6 +330,15 @@ public:
     // This method is used internally.
     virtual bool writeToFile(ValueMap& dict, const std::string& fullPath);
     
+    /**
+    * Windows fopen can't support UTF-8 filename
+    * Need convert all parameters fopen and other 3rd-party libs
+    *
+    * @param filename std::string name file for convertation from utf-8
+    * @return std::string ansi filename in current locale
+    */
+    virtual std::string getSuitableFOpen(const std::string& filenameUtf8) const;
+    
     // Converts the contents of a file to a ValueVector.
     // This method is used internally.
     virtual ValueVector getValueVectorFromFile(const std::string& filename);
@@ -468,16 +477,6 @@ protected:
      *  @return The full path of the file, if the file can't be found, it will return an empty string.
      */
     virtual std::string getFullPathForDirectoryAndFilename(const std::string& directory, const std::string& filename) const;
-    
-    /** 
-     *  Returns the fullpath for a given filename.
-     *  This is an alternative for fullPathForFilename
-     *  It returns empty string instead of the original filename when no file found for the given name.
-     *  @param filename The file name to look up for
-     *  @return The full path for the file, if not found, the return value will be an empty string
-     */
-    virtual std::string searchFullPathForFilename(const std::string& filename) const;
-    
     
     /** Dictionary used to lookup filenames based on a key.
      *  It is used internally by the following methods:

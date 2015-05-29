@@ -33,6 +33,16 @@
 -- @return MenuItemSprite#MenuItemSprite self (return value: cc.MenuItemSprite)
         
 --------------------------------
+--  Initializes a menu item with a normal, selected  and disabled image with a callable object. 
+-- @function [parent=#MenuItemSprite] initWithNormalSprite 
+-- @param self
+-- @param #cc.Node normalSprite
+-- @param #cc.Node selectedSprite
+-- @param #cc.Node disabledSprite
+-- @param #function callback
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  Sets the image used when the item is selected. 
 -- @function [parent=#MenuItemSprite] setSelectedImage 
 -- @param self
@@ -60,6 +70,12 @@
 --------------------------------
 --  The item was unselected. 
 -- @function [parent=#MenuItemSprite] unselected 
+-- @param self
+-- @return MenuItemSprite#MenuItemSprite self (return value: cc.MenuItemSprite)
+        
+--------------------------------
+-- 
+-- @function [parent=#MenuItemSprite] MenuItemSprite 
 -- @param self
 -- @return MenuItemSprite#MenuItemSprite self (return value: cc.MenuItemSprite)
         

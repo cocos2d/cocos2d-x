@@ -833,6 +833,7 @@ Developers:
         
     flashjay
         Remove deprecated code in lua tests & template
+        luaLoadChunksFromZip should just remove .lua or .luac extension
         
     zukkun
         Fixed incorrect function invocation in PhysicsBody::setAngularVelocityLimit
@@ -1107,6 +1108,7 @@ Developers:
         
     milos1290
         Added Lerp for Vec3
+        Added ActionFloat
         
     perminovVS
         Optimize Vec3 and Vec2
@@ -1117,6 +1119,17 @@ Developers:
         
     HueyPark
         Fixed memory leak in HttpClient on iOS
+        
+    Dimon4eg
+        Fixed crash on AssetsManager
+        Fixed memory leak of WebView on iOS
+        Fixed crahed that if url contains illegal characters on Android
+        
+    tankorsmash
+        Fixed the bug that ProgressTimer::setSprite() doesn't take effect
+
+    namezero111111
+        ui: TextField add `getTextColor`, `getTextHorizontalAlignment` and `getTextVerticalAlignment` API
 
 Retired Core Developers:
     WenSheng Yang

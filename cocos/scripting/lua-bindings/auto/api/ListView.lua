@@ -215,6 +215,12 @@
 -- @return ListView#ListView self (return value: ccui.ListView)
         
 --------------------------------
+-- 
+-- @function [parent=#ListView] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 -- Default constructor<br>
 -- js ctor<br>
 -- lua new

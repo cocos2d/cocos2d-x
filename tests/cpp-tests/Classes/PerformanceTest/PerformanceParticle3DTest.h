@@ -1,20 +1,14 @@
 #ifndef __PERFORMANCE_PARTICLE_3D_TEST_H__
 #define __PERFORMANCE_PARTICLE_3D_TEST_H__
 
-#include "PerformanceTest.h"
+#include "BaseTest.h"
 
-class Particle3DMenuLayer : public PerformBasicLayer
-{
-public:
-    Particle3DMenuLayer(bool isControlMenuVisible, int maxCases = 0, int curCase = 0);
-    virtual void showCurrentTest();
-};
+DEFINE_TEST_SUITE(PerformceParticle3DTests);
 
-class Particle3DMainScene : public cocos2d::Scene
+class Particle3DMainScene : public TestCase
 {
 public:
     virtual void initWithSubTest(int subtest, int particles);
-    virtual std::string title() const;
 
     void step(float dt);
     void createParticleSystem(int idx);
@@ -34,10 +28,11 @@ protected:
 class Particle3DPerformTest : public Particle3DMainScene
 {
 public:
-    virtual std::string title() const override;
-    virtual void doTest();
-};
+    CREATE_FUNC(Particle3DPerformTest);
 
-void runParticle3DTest();
+    virtual bool init() override;
+    virtual std::string title() const override;
+    virtual void doTest(){};
+};
 
 #endif

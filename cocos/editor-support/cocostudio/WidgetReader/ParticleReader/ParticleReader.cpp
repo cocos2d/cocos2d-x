@@ -208,15 +208,15 @@ namespace cocostudio
                 particle->setPositionType(ParticleSystem::PositionType::GROUPED);
             }
         }
-        else
-        {
-            Node* node = Node::create();
-            setPropsWithFlatBuffers(node, (Table*)particleOptions);
-            auto label = Label::create();
-            label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
-            node->addChild(label);
-            return node;
-        }
+        //else
+        //{
+        //    Node* node = Node::create();
+        //    setPropsWithFlatBuffers(node, (Table*)particleOptions);
+        //    auto label = Label::create();
+        //    label->setString(__String::createWithFormat("%s missed", errorFilePath.c_str())->getCString());
+        //    node->addChild(label);
+        //    return node;
+        //}
         
         return particle;
     }

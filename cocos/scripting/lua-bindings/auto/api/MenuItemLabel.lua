@@ -5,6 +5,13 @@
 -- @parent_module cc
 
 --------------------------------
+--  Sets the label that is rendered. 
+-- @function [parent=#MenuItemLabel] setLabel 
+-- @param self
+-- @param #cc.Node node
+-- @return MenuItemLabel#MenuItemLabel self (return value: cc.MenuItemLabel)
+        
+--------------------------------
 --  Gets the color that will be used to disable the item. 
 -- @function [parent=#MenuItemLabel] getDisabledColor 
 -- @param self
@@ -18,11 +25,12 @@
 -- @return MenuItemLabel#MenuItemLabel self (return value: cc.MenuItemLabel)
         
 --------------------------------
---  Sets the label that is rendered. 
--- @function [parent=#MenuItemLabel] setLabel 
+--  Initializes a MenuItemLabel with a Label, target and selector. 
+-- @function [parent=#MenuItemLabel] initWithLabel 
 -- @param self
--- @param #cc.Node node
--- @return MenuItemLabel#MenuItemLabel self (return value: cc.MenuItemLabel)
+-- @param #cc.Node label
+-- @param #function callback
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 --  Sets the color that will be used to disable the item. 
@@ -59,6 +67,12 @@
 --------------------------------
 -- 
 -- @function [parent=#MenuItemLabel] selected 
+-- @param self
+-- @return MenuItemLabel#MenuItemLabel self (return value: cc.MenuItemLabel)
+        
+--------------------------------
+-- js ctor
+-- @function [parent=#MenuItemLabel] MenuItemLabel 
 -- @param self
 -- @return MenuItemLabel#MenuItemLabel self (return value: cc.MenuItemLabel)
         

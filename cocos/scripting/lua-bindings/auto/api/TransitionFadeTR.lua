@@ -40,4 +40,10 @@
 -- @param #unsigned int flags
 -- @return TransitionFadeTR#TransitionFadeTR self (return value: cc.TransitionFadeTR)
         
+--------------------------------
+-- 
+-- @function [parent=#TransitionFadeTR] TransitionFadeTR 
+-- @param self
+-- @return TransitionFadeTR#TransitionFadeTR self (return value: cc.TransitionFadeTR)
+        
 return nil

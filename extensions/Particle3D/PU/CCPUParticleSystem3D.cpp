@@ -110,26 +110,26 @@ void PUParticle3D::process( float timeElapsed )
 
 PUParticle3D::PUParticle3D():
     particleEntityPtr(nullptr),
+    parentEmitter(nullptr),
     visualData(nullptr),
     particleType(PT_VISUAL),
-    timeToLive(DEFAULT_TTL),
-    totalTimeToLive(DEFAULT_TTL),
-    timeFraction(0.0f),
-    mass(DEFAULT_MASS),
-    eventFlags(0),
-    freezed(false),
     originalDirectionLength(0.0f),
-    originalScaledDirectionLength(0.0f),
     originalVelocity(0.0f),
-    parentEmitter(nullptr),
+    originalScaledDirectionLength(0.0f),
+    rotationAxis(Vec3::UNIT_Z),
     //color(Vec4::ONE),
     originalColor(Vec4::ONE),
     //zRotation(0.0f),
     zRotationSpeed(0.0f),
     rotationSpeed(0.0f),
-    rotationAxis(Vec3::UNIT_Z),
-    ownDimensions(false),
     radius(0.87f),
+    ownDimensions(false),
+    eventFlags(0),
+    freezed(false),
+    timeToLive(DEFAULT_TTL),
+    totalTimeToLive(DEFAULT_TTL),
+    timeFraction(0.0f),
+    mass(DEFAULT_MASS),
     textureAnimationTimeStep(0.1f),
     textureAnimationTimeStepCount(0.0f),
     textureCoordsCurrent(0),
@@ -176,13 +176,13 @@ PUParticleSystem3D::PUParticleSystem3D()
 , _prepared(false)
 , _poolPrepared(false)
 , _particleSystemScaleVelocity(1.0f)
+, _timeElapsedSinceStart(0.0f)
 , _defaultWidth(DEFAULT_WIDTH)
 , _defaultHeight(DEFAULT_HEIGHT)
 , _defaultDepth(DEFAULT_DEPTH)
 , _maxVelocity(DEFAULT_MAX_VELOCITY)
 , _maxVelocitySet(false)
 , _isMarkedForEmission(false)
-, _timeElapsedSinceStart(0.0f)
 , _parentParticleSystem(nullptr)
 {
     _particleQuota = DEFAULT_PARTICLE_QUOTA;
@@ -1056,7 +1056,7 @@ void PUParticleSystem3D::clearAllParticles()
     }
 }
 
-void PUParticleSystem3D::copyAttributesTo( PUParticleSystem3D* system )
+void PUParticleSystem3D::copyAttributesTo(PUParticleSystem3D* system )
 {
     system->removeAllEmitter();
     system->removeAllAffector();
@@ -1171,7 +1171,8 @@ void PUParticleSystem3D::draw( Renderer *renderer, const Mat4 &transform, uint32
 
     if (!_emittedSystemParticlePool.empty())
     {
-        for (auto iter : _emittedSystemParticlePool){
+        for (auto iter : _emittedSystemParticlePool)
+        {
             PUParticle3D *particle = static_cast<PUParticle3D *>(iter.second.getFirst());
             while (particle)
             {

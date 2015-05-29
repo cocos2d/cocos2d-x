@@ -54,9 +54,9 @@ void PhysicsDemoDisabled::onEnter()
 #else
 
 PhysicsDemo::PhysicsDemo()
-: _debugDraw(false)
-, _spriteTexture(nullptr)
+: _spriteTexture(nullptr)
 , _ball(nullptr)
+, _debugDraw(false)
 {
 }
 

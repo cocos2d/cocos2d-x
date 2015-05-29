@@ -26,6 +26,8 @@ THE SOFTWARE.
 
 #include "2d/CCNode.h"
 #include "3d/CCFrustum.h"
+#include "renderer/CCQuadCommand.h"
+#include "renderer/CCCustomCommand.h"
 
 NS_CC_BEGIN
 
@@ -59,6 +61,7 @@ enum class CameraFlag
 class CC_DLL Camera :public Node
 {
     friend class Scene;
+    friend class EventDispatcher;
 public:
     /**
     * The type of camera.
@@ -126,30 +129,60 @@ public:
     /**get view projection matrix*/
     const Mat4& getViewProjectionMatrix() const;
     
-    /* convert the specified point of viewport from world-space coordinates into the screen-space coordinates.
+    /* convert the specified point in 3D world-space coordinates into the screen-space coordinates.
      *
+     * Origin point at left top corner in screen-space.
      * @param src The world-space position.
      * @return The screen-space position.
      */
     Vec2 project(const Vec3& src) const;
     
-    /**
-     * Convert the specified point of viewport from screen-space coordinate into the world-space coordinate.
+    /* convert the specified point in 3D world-space coordinates into the GL-screen-space coordinates.
      *
+     * Origin point at left bottom corner in GL-screen-space.
+     * @param src The 3D world-space position.
+     * @return The GL-screen-space position.
+     */
+    Vec2 projectGL(const Vec3& src) const;
+    
+    /**
+     * Convert the specified point of screen-space coordinate into the 3D world-space coordinate.
+     *
+     * Origin point at left top corner in screen-space.
      * @param src The screen-space position.
-     * @return The world-space position.
+     * @return The 3D world-space position.
      */
     Vec3 unproject(const Vec3& src) const;
-
-    /**
-     * Convert the specified point of viewport from screen-space coordinate into the world-space coordinate.
-     *
-     * @param viewport The viewport size to use.
-     * @param src The screen-space position.
-     * @param dst The world-space position.
-     */
-    void unproject(const Size& viewport, const Vec3* src, Vec3* dst) const;
     
+    /**
+     * Convert the specified point of GL-screen-space coordinate into the 3D world-space coordinate.
+     *
+     * Origin point at left bottom corner in GL-screen-space.
+     * @param src The GL-screen-space position.
+     * @return The 3D world-space position.
+     */
+    Vec3 unprojectGL(const Vec3& src) const;
+    
+    /**
+     * Convert the specified point of screen-space coordinate into the 3D world-space coordinate.
+     *
+     * Origin point at left top corner in screen-space.
+     * @param size The window size to use.
+     * @param src  The screen-space position.
+     * @param dst  The 3D world-space position.
+     */
+    void unproject(const Size& size, const Vec3* src, Vec3* dst) const;
+    
+    /**
+     * Convert the specified point of GL-screen-space coordinate into the 3D world-space coordinate.
+     *
+     * Origin point at left bottom corner in GL-screen-space.
+     * @param size The window size to use.
+     * @param src  The GL-screen-space position.
+     * @param dst  The 3D world-space position.
+     */
+    void unprojectGL(const Size& size, const Vec3* src, Vec3* dst) const;
+
     /**
      * Is this aabb visible in frustum
      */
@@ -170,6 +203,16 @@ public:
      */
     int getDepth() const { return _depth; }
     
+    /**
+     * Get the frustum's far plane.
+     */
+    float getFarPlane() const { return _farPlane; }
+
+    /**
+     * Get the frustum's near plane.
+     */
+    float getNearPlane() const { return _nearPlane; }
+    
     //override
     virtual void onEnter() override;
     virtual void onExit() override;
@@ -183,7 +226,9 @@ public:
      * Get the default camera of the current running scene.
      */
     static Camera* getDefaultCamera();
-
+    
+    void clearBackground(float depth);
+    
 CC_CONSTRUCTOR_ACCESS:
     Camera();
     ~Camera();
@@ -200,7 +245,7 @@ CC_CONSTRUCTOR_ACCESS:
     bool initDefault();
     bool initPerspective(float fieldOfView, float aspectRatio, float nearPlane, float farPlane);
     bool initOrthographic(float zoomX, float zoomY, float nearPlane, float farPlane);
-
+    
 protected:
 
     Scene* _scene; //Scene camera belongs to

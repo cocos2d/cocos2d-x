@@ -38,8 +38,8 @@ NS_TIMELINE_BEGIN
 Frame::Frame()
     : _frameIndex(0)
     , _tween(true)
-    , _tweenType(tweenfunc::TweenType::Linear)
     , _enterWhenPassed(false)
+    , _tweenType(tweenfunc::TweenType::Linear)
     , _timeline(nullptr)
     , _node(nullptr)
 {
@@ -282,7 +282,7 @@ void SkewFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 
 void SkewFrame::onApply(float percent)
 {
-    if (nullptr != _node && _betweenSkewX != 0 || _betweenSkewY != 0)
+    if ((nullptr != _node) && (_betweenSkewX != 0 || _betweenSkewY != 0))
     {
         float skewx = _skewX + percent * _betweenSkewX;
         float skewy = _skewY + percent * _betweenSkewY;
@@ -342,7 +342,7 @@ void RotationSkewFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 
 void RotationSkewFrame::onApply(float percent)
 {
-    if (nullptr != _node && _betweenSkewX != 0 || _betweenSkewY != 0)
+    if ((nullptr != _node) && (_betweenSkewX != 0 || _betweenSkewY != 0))
     {
         float skewx = _skewX + percent * _betweenSkewX;
         float skewy = _skewY + percent * _betweenSkewY;
@@ -400,7 +400,7 @@ void PositionFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 
 void PositionFrame::onApply(float percent)
 {
-    if (nullptr != _node && (_betweenX != 0 || _betweenY != 0))
+    if ((nullptr != _node) && (_betweenX != 0 || _betweenY != 0))
     {
         Point p;
         p.x = _position.x + _betweenX * percent;
@@ -460,7 +460,7 @@ void ScaleFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 
 void ScaleFrame::onApply(float percent)
 {
-    if (nullptr != _node && _betweenScaleX != 0 || _betweenScaleY != 0)
+    if ((nullptr != _node) && (_betweenScaleX != 0 || _betweenScaleY != 0))
     {
         float scaleX = _scaleX + _betweenScaleX * percent;
         float scaleY = _scaleY + _betweenScaleY * percent;
@@ -606,32 +606,20 @@ void InnerActionFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 
 void InnerActionFrame::setStartFrameIndex(int frameIndex)
 {
-    if(_enterWithName)
-    {
-        CCLOG(" cannot set start when enter frame with name. setEnterWithName false firstly!");
-        throw std::exception();
-    }
+    CCASSERT(!_enterWithName, " cannot setStartFrameIndex when enterWithName is set");
     _startFrameIndex = frameIndex;
 }
 
 
 void InnerActionFrame::setEndFrameIndex(int frameIndex)
 {
-    if(_enterWithName)
-    {
-         CCLOG(" cannot set end when enter frame with name. setEnterWithName false firstly!");
-        throw std::exception();
-    }
+    CCASSERT(!_enterWithName, " cannot setEndFrameIndex when enterWithName is set");
     _endFrameIndex = frameIndex;
 }
 
 void InnerActionFrame::setAnimationName(const std::string& animationName)
 {
-    if(!_enterWithName)
-    {
-         CCLOG(" cannot set aniamtioname when enter frame with index. setEnterWithName true firstly!");
-        throw std::exception();
-    }
+    CCASSERT(_enterWithName, " cannot set aniamtioname when enter frame with index. setEnterWithName true firstly!");
     _animationName = animationName;
    
 }
@@ -694,7 +682,7 @@ void ColorFrame::onEnter(Frame *nextFrame, int currentFrameIndex)
 
 void ColorFrame::onApply(float percent)
 {
-    if (nullptr != _node && _betweenRed != 0 || _betweenGreen != 0 || _betweenBlue != 0)
+    if ((nullptr != _node) && (_betweenRed != 0 || _betweenGreen != 0 || _betweenBlue != 0))
     {
         Color3B color;
         color.r = _color.r+ _betweenRed   * percent;

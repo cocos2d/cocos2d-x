@@ -44,6 +44,14 @@
 -- @return float#float ret (return value: float)
         
 --------------------------------
+--  Initializes a clipping node with an other node as its stencil.<br>
+-- The stencil node will be retained, and its parent will be set to this clipping node.
+-- @function [parent=#ClippingNode] init 
+-- @param self
+-- @param #cc.Node stencil
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
 --  The Node to use as a stencil to do the clipping.<br>
 -- The stencil node will be retained.<br>
 -- This default to nil.<br>
@@ -93,5 +101,11 @@
 -- @param #mat4_table parentTransform
 -- @param #unsigned int parentFlags
 -- @return ClippingNode#ClippingNode self (return value: cc.ClippingNode)
+        
+--------------------------------
+--  Initializes a clipping node without a stencil.
+-- @function [parent=#ClippingNode] init 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 return nil

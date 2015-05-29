@@ -461,7 +461,12 @@ void TextField::setPlaceHolderColor(const cocos2d::Color4B &color)
 {
     _textFieldRenderer->setColorSpaceHolder(color);
 }
-    
+
+const Color4B& TextField::getTextColor()const
+{
+    return _textFieldRenderer->getTextColor();
+}
+
 void TextField::setTextColor(const cocos2d::Color4B &textColor)
 {
     _textFieldRenderer->setTextColor(textColor);
@@ -844,9 +849,19 @@ void TextField::setTextHorizontalAlignment(TextHAlignment alignment)
     _textFieldRenderer->setHorizontalAlignment(alignment);
 }
 
+TextHAlignment TextField::getTextHorizontalAlignment() const
+{
+    return _textFieldRenderer->getHorizontalAlignment();
+}
+
 void TextField::setTextVerticalAlignment(TextVAlignment alignment)
 {
     _textFieldRenderer->setVerticalAlignment(alignment);
+}
+
+TextVAlignment TextField::getTextVerticalAlignment() const
+{
+    return _textFieldRenderer->getVerticalAlignment();
 }
 
 }

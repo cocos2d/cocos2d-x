@@ -170,7 +170,7 @@ protected:
 
     void prepareDownload(const std::string &srcUrl, const std::string &storagePath, const std::string &customId, bool resumeDownload, FileDescriptor *fDesc, ProgressData *pData);
     
-#if(CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     HeaderInfo prepare(const std::string &srcUrl);
 #endif
     HeaderInfo prepareHeader(const std::string &srcUrl, void* header = nullptr);
