@@ -32,23 +32,30 @@
 
 NS_CC_BEGIN
 
-typedef struct CC_DLL _SpritePolygonInfo
+class CC_DLL SpritePolygonInfo : public cocos2d::Ref
 {
-    cocos2d::Rect _rect;
-    cocos2d::TrianglesCommand::Triangles _triangles;
-    ~_SpritePolygonInfo()
+public:
+    SpritePolygonInfo()
+    :rect(Rect::ZERO)
+    ,triangles()
     {
-        if(nullptr != _triangles.verts)
+    };
+    cocos2d::Rect rect;
+    cocos2d::TrianglesCommand::Triangles triangles;
+protected:
+    ~SpritePolygonInfo()
+    {
+        if(nullptr != triangles.verts)
         {
-            CC_SAFE_DELETE_ARRAY(_triangles.verts);
+            CC_SAFE_DELETE_ARRAY(triangles.verts);
         }
         
-        if(nullptr != _triangles.indices)
+        if(nullptr != triangles.indices)
         {
-            CC_SAFE_DELETE_ARRAY(_triangles.indices);
+            CC_SAFE_DELETE_ARRAY(triangles.indices);
         }
     }
-} SpritePolygonInfo;
+};
 
 typedef std::vector<SpritePolygonInfo*> VecSpritePolygonInfo;
 typedef std::unordered_map<std::string, VecSpritePolygonInfo> MapSpritePolygonInfo;
@@ -61,8 +68,10 @@ public:
     static void destroyInstance();
     SpritePolygonInfo* addSpritePolygonCache(const std::string& filePath, const cocos2d::Rect& rect, const cocos2d::TrianglesCommand::Triangles& triangles);
     SpritePolygonInfo* getSpritePolygonCache(const std::string& filePath, const cocos2d::Rect& rect, float optimization);
+    
     void removeSpritePolygonCache(const std::string& filePath, const cocos2d::Rect* rect = nullptr);
     void removeAllSpritePolygonCache();
+    void removeUnusedSpritePolygonCache();
     bool isSpritePolygonCacheExist(const std::string& filePath, const cocos2d::Rect& rect);
     
     static void printInfo(SpritePolygonInfo &info);

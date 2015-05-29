@@ -77,16 +77,16 @@ SpritePolygonInfo* SpritePolygonCache::addSpritePolygonCache(const std::string& 
         auto infoIt = vecInfo.begin();
         for (; infoIt != vecInfo.end(); infoIt++)
         {
-            if ((*infoIt)->_rect.equals(rect))
+            if ((*infoIt)->rect.equals(rect))
             {
-                CC_SAFE_DELETE_ARRAY((*infoIt)->_triangles.verts);
-                CC_SAFE_DELETE_ARRAY((*infoIt)->_triangles.indices);
-                (*infoIt)->_triangles.verts = new V3F_C4B_T2F[triangles.vertCount];
-                (*infoIt)->_triangles.indices = new unsigned short[triangles.indexCount];
-                (*infoIt)->_triangles.vertCount = triangles.vertCount;
-                (*infoIt)->_triangles.indexCount = triangles.indexCount;
-                memcpy((*infoIt)->_triangles.verts, triangles.verts, triangles.vertCount*sizeof(V3F_C4B_T2F));
-                memcpy((*infoIt)->_triangles.indices, triangles.indices, triangles.indexCount*sizeof(unsigned short));
+                CC_SAFE_DELETE_ARRAY((*infoIt)->triangles.verts);
+                CC_SAFE_DELETE_ARRAY((*infoIt)->triangles.indices);
+                (*infoIt)->triangles.verts = new V3F_C4B_T2F[triangles.vertCount];
+                (*infoIt)->triangles.indices = new unsigned short[triangles.indexCount];
+                (*infoIt)->triangles.vertCount = triangles.vertCount;
+                (*infoIt)->triangles.indexCount = triangles.indexCount;
+                memcpy((*infoIt)->triangles.verts, triangles.verts, triangles.vertCount*sizeof(V3F_C4B_T2F));
+                memcpy((*infoIt)->triangles.indices, triangles.indices, triangles.indexCount*sizeof(unsigned short));
                 return *infoIt;
             }
         }
@@ -98,16 +98,16 @@ SpritePolygonInfo* SpritePolygonCache::addSpritePolygonCache(const std::string& 
     {
         vecInfo = it->second;
     }
-    SpritePolygonInfo* info = new SpritePolygonInfo;
+    SpritePolygonInfo* info = new (std::nothrow) SpritePolygonInfo();
     if (nullptr != info)
     {
-        info->_rect = rect;
-        info->_triangles.verts = new V3F_C4B_T2F[triangles.vertCount];
-        info->_triangles.indices = new unsigned short[triangles.indexCount];
-        info->_triangles.vertCount = triangles.vertCount;
-        info->_triangles.indexCount = triangles.indexCount;
-        memcpy(info->_triangles.verts, triangles.verts, triangles.vertCount*sizeof(V3F_C4B_T2F));
-        memcpy(info->_triangles.indices, triangles.indices, triangles.indexCount*sizeof(unsigned short));
+        info->rect = rect;
+        info->triangles.verts = new V3F_C4B_T2F[triangles.vertCount];
+        info->triangles.indices = new unsigned short[triangles.indexCount];
+        info->triangles.vertCount = triangles.vertCount;
+        info->triangles.indexCount = triangles.indexCount;
+        memcpy(info->triangles.verts, triangles.verts, triangles.vertCount*sizeof(V3F_C4B_T2F));
+        memcpy(info->triangles.indices, triangles.indices, triangles.indexCount*sizeof(unsigned short));
         
         vecInfo.push_back(info);
         _spritePolygonCacheMap[filePath] = vecInfo;
@@ -132,7 +132,7 @@ SpritePolygonInfo* SpritePolygonCache::getSpritePolygonCache(const std::string& 
         auto infoIter = it->second.begin();
         for (; infoIter != it->second.end(); infoIter++)
         {
-            if ((*infoIter)->_rect.equals(rect))
+            if ((*infoIter)->rect.equals(rect))
             {
                 spritePolygonInfo = *infoIter;
                 isFound = true;
@@ -168,9 +168,9 @@ void SpritePolygonCache::removeSpritePolygonCache(const std::string& filePath, c
     auto infoIter = it->second.begin();
     for (; infoIter != it->second.end(); infoIter++)
     {
-        if((*infoIter)->_rect.equals(*rect))
+        if((*infoIter)->rect.equals(*rect))
         {
-            CC_SAFE_DELETE(*infoIter);
+            CC_SAFE_RELEASE(*infoIter);
             it->second.erase(infoIter);
             break;
         }
@@ -185,11 +185,26 @@ void SpritePolygonCache::removeAllSpritePolygonCache()
     {
         for (auto infoIter = it->second.begin(); infoIter != it->second.end(); infoIter++)
         {
-            CC_SAFE_DELETE(*infoIter);
+            CC_SAFE_RELEASE(*infoIter);
         }
         it->second.clear();
     }
     _spritePolygonCacheMap.clear();
+}
+
+void SpritePolygonCache::removeUnusedSpritePolygonCache()
+{
+    for (std::unordered_map<std::string, VecSpritePolygonInfo>::iterator it = _spritePolygonCacheMap.begin(); it != _spritePolygonCacheMap.end(); ++it)
+    {
+        for (auto infoIter = it->second.begin(); infoIter != it->second.end(); infoIter++)
+        {
+            if(1==(*infoIter)->getReferenceCount())
+            {
+                CC_SAFE_RELEASE(*infoIter);
+                it->second.erase(infoIter);
+            }
+        }
+    }
 }
 
 bool SpritePolygonCache::isSpritePolygonCacheExist(const std::string& filePath, const cocos2d::Rect& rect)
@@ -205,7 +220,7 @@ bool SpritePolygonCache::isSpritePolygonCacheExist(const std::string& filePath, 
     auto infoIter = it->second.begin();
     for (; infoIter != it->second.end(); infoIter++)
     {
-        if ((*infoIter)->_rect.equals(rect))
+        if ((*infoIter)->rect.equals(rect))
             return true;
     }
     
@@ -215,21 +230,21 @@ bool SpritePolygonCache::isSpritePolygonCacheExist(const std::string& filePath, 
 
 void SpritePolygonCache::printInfo(SpritePolygonInfo &info){
     CCLOG("========================");
-    CCLOG("%zd, %zd", info._triangles.vertCount, info._triangles.indexCount);
+    CCLOG("%zd, %zd", info.triangles.vertCount, info.triangles.indexCount);
 
-    auto vertEnd = &info._triangles.verts[info._triangles.vertCount];
-    for(auto v = info._triangles.verts; v < vertEnd; v++)
+    auto vertEnd = &info.triangles.verts[info.triangles.vertCount];
+    for(auto v = info.triangles.verts; v < vertEnd; v++)
     {
         CCLOG("%f, %f", v->vertices.x, v->vertices.y);
     }
-    auto indEnd = &info._triangles.indices[info._triangles.indexCount];
-    for(auto i = info._triangles.indices; i < indEnd; i+=3)
+    auto indEnd = &info.triangles.indices[info.triangles.indexCount];
+    for(auto i = info.triangles.indices; i < indEnd; i+=3)
     {
         CCLOG("%d, %d, %d,", *i,*(i+1), *(i+2));
     }
     
-    auto uvEnd = &info._triangles.verts[info._triangles.vertCount];
-    for(auto v = info._triangles.verts; v < uvEnd; v++)
+    auto uvEnd = &info.triangles.verts[info.triangles.vertCount];
+    for(auto v = info.triangles.verts; v < uvEnd; v++)
     {
         CCLOG("%f, %f", v->texCoords.u, v->texCoords.v);
     }
