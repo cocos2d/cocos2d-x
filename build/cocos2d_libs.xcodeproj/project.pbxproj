@@ -2609,6 +2609,26 @@
 		B665E43B1AA80A6600DDB1C5 /* CCPUVortexAffectorTranslator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B665E1F01AA80A6500DDB1C5 /* CCPUVortexAffectorTranslator.cpp */; };
 		B665E43C1AA80A6600DDB1C5 /* CCPUVortexAffectorTranslator.h in Headers */ = {isa = PBXBuildFile; fileRef = B665E1F11AA80A6500DDB1C5 /* CCPUVortexAffectorTranslator.h */; };
 		B665E43D1AA80A6600DDB1C5 /* CCPUVortexAffectorTranslator.h in Headers */ = {isa = PBXBuildFile; fileRef = B665E1F11AA80A6500DDB1C5 /* CCPUVortexAffectorTranslator.h */; };
+		B677B0C91B18492D006762CB /* CCNavMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B677B0BF1B18492D006762CB /* CCNavMesh.cpp */; };
+		B677B0CA1B18492D006762CB /* CCNavMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B677B0BF1B18492D006762CB /* CCNavMesh.cpp */; };
+		B677B0CB1B18492D006762CB /* CCNavMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = B677B0C01B18492D006762CB /* CCNavMesh.h */; };
+		B677B0CC1B18492D006762CB /* CCNavMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = B677B0C01B18492D006762CB /* CCNavMesh.h */; };
+		B677B0CD1B18492D006762CB /* CCNavMeshAgent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B677B0C11B18492D006762CB /* CCNavMeshAgent.cpp */; };
+		B677B0CE1B18492D006762CB /* CCNavMeshAgent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B677B0C11B18492D006762CB /* CCNavMeshAgent.cpp */; };
+		B677B0CF1B18492D006762CB /* CCNavMeshAgent.h in Headers */ = {isa = PBXBuildFile; fileRef = B677B0C21B18492D006762CB /* CCNavMeshAgent.h */; };
+		B677B0D01B18492D006762CB /* CCNavMeshAgent.h in Headers */ = {isa = PBXBuildFile; fileRef = B677B0C21B18492D006762CB /* CCNavMeshAgent.h */; };
+		B677B0D11B18492D006762CB /* CCNavMeshDebugDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B677B0C31B18492D006762CB /* CCNavMeshDebugDraw.cpp */; };
+		B677B0D21B18492D006762CB /* CCNavMeshDebugDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B677B0C31B18492D006762CB /* CCNavMeshDebugDraw.cpp */; };
+		B677B0D31B18492D006762CB /* CCNavMeshDebugDraw.h in Headers */ = {isa = PBXBuildFile; fileRef = B677B0C41B18492D006762CB /* CCNavMeshDebugDraw.h */; };
+		B677B0D41B18492D006762CB /* CCNavMeshDebugDraw.h in Headers */ = {isa = PBXBuildFile; fileRef = B677B0C41B18492D006762CB /* CCNavMeshDebugDraw.h */; };
+		B677B0D51B18492D006762CB /* CCNavMeshObstacle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B677B0C51B18492D006762CB /* CCNavMeshObstacle.cpp */; };
+		B677B0D61B18492D006762CB /* CCNavMeshObstacle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B677B0C51B18492D006762CB /* CCNavMeshObstacle.cpp */; };
+		B677B0D71B18492D006762CB /* CCNavMeshObstacle.h in Headers */ = {isa = PBXBuildFile; fileRef = B677B0C61B18492D006762CB /* CCNavMeshObstacle.h */; };
+		B677B0D81B18492D006762CB /* CCNavMeshObstacle.h in Headers */ = {isa = PBXBuildFile; fileRef = B677B0C61B18492D006762CB /* CCNavMeshObstacle.h */; };
+		B677B0D91B18492D006762CB /* CCNavMeshTool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B677B0C71B18492D006762CB /* CCNavMeshTool.cpp */; };
+		B677B0DA1B18492D006762CB /* CCNavMeshTool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B677B0C71B18492D006762CB /* CCNavMeshTool.cpp */; };
+		B677B0DB1B18492D006762CB /* CCNavMeshTool.h in Headers */ = {isa = PBXBuildFile; fileRef = B677B0C81B18492D006762CB /* CCNavMeshTool.h */; };
+		B677B0DC1B18492D006762CB /* CCNavMeshTool.h in Headers */ = {isa = PBXBuildFile; fileRef = B677B0C81B18492D006762CB /* CCNavMeshTool.h */; };
 		B68778F81A8CA82E00643ABF /* CCParticle3DAffector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B68778F01A8CA82E00643ABF /* CCParticle3DAffector.cpp */; };
 		B68778F91A8CA82E00643ABF /* CCParticle3DAffector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B68778F01A8CA82E00643ABF /* CCParticle3DAffector.cpp */; };
 		B68778FA1A8CA82E00643ABF /* CCParticle3DAffector.h in Headers */ = {isa = PBXBuildFile; fileRef = B68778F11A8CA82E00643ABF /* CCParticle3DAffector.h */; };
@@ -3541,26 +3561,6 @@
 		B6DD2FF61B04825B00E47F5F /* fastlz.c in Sources */ = {isa = PBXBuildFile; fileRef = B6DD2FA51B04825B00E47F5F /* fastlz.c */; };
 		B6DD2FF71B04825B00E47F5F /* fastlz.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2FA61B04825B00E47F5F /* fastlz.h */; };
 		B6DD2FF81B04825B00E47F5F /* fastlz.h in Headers */ = {isa = PBXBuildFile; fileRef = B6DD2FA61B04825B00E47F5F /* fastlz.h */; };
-		B6E437A61B1463F100CC7B54 /* CCNavMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6E4379C1B1463F100CC7B54 /* CCNavMesh.cpp */; };
-		B6E437A71B1463F100CC7B54 /* CCNavMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6E4379C1B1463F100CC7B54 /* CCNavMesh.cpp */; };
-		B6E437A81B1463F100CC7B54 /* CCNavMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = B6E4379D1B1463F100CC7B54 /* CCNavMesh.h */; };
-		B6E437A91B1463F100CC7B54 /* CCNavMesh.h in Headers */ = {isa = PBXBuildFile; fileRef = B6E4379D1B1463F100CC7B54 /* CCNavMesh.h */; };
-		B6E437AA1B1463F100CC7B54 /* CCNavMeshAgent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6E4379E1B1463F100CC7B54 /* CCNavMeshAgent.cpp */; };
-		B6E437AB1B1463F100CC7B54 /* CCNavMeshAgent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6E4379E1B1463F100CC7B54 /* CCNavMeshAgent.cpp */; };
-		B6E437AC1B1463F100CC7B54 /* CCNavMeshAgent.h in Headers */ = {isa = PBXBuildFile; fileRef = B6E4379F1B1463F100CC7B54 /* CCNavMeshAgent.h */; };
-		B6E437AD1B1463F100CC7B54 /* CCNavMeshAgent.h in Headers */ = {isa = PBXBuildFile; fileRef = B6E4379F1B1463F100CC7B54 /* CCNavMeshAgent.h */; };
-		B6E437AE1B1463F100CC7B54 /* CCNavMeshDebugDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6E437A01B1463F100CC7B54 /* CCNavMeshDebugDraw.cpp */; };
-		B6E437AF1B1463F100CC7B54 /* CCNavMeshDebugDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6E437A01B1463F100CC7B54 /* CCNavMeshDebugDraw.cpp */; };
-		B6E437B01B1463F100CC7B54 /* CCNavMeshDebugDraw.h in Headers */ = {isa = PBXBuildFile; fileRef = B6E437A11B1463F100CC7B54 /* CCNavMeshDebugDraw.h */; };
-		B6E437B11B1463F100CC7B54 /* CCNavMeshDebugDraw.h in Headers */ = {isa = PBXBuildFile; fileRef = B6E437A11B1463F100CC7B54 /* CCNavMeshDebugDraw.h */; };
-		B6E437B21B1463F100CC7B54 /* CCNavMeshObstacle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6E437A21B1463F100CC7B54 /* CCNavMeshObstacle.cpp */; };
-		B6E437B31B1463F100CC7B54 /* CCNavMeshObstacle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6E437A21B1463F100CC7B54 /* CCNavMeshObstacle.cpp */; };
-		B6E437B41B1463F100CC7B54 /* CCNavMeshObstacle.h in Headers */ = {isa = PBXBuildFile; fileRef = B6E437A31B1463F100CC7B54 /* CCNavMeshObstacle.h */; };
-		B6E437B51B1463F100CC7B54 /* CCNavMeshObstacle.h in Headers */ = {isa = PBXBuildFile; fileRef = B6E437A31B1463F100CC7B54 /* CCNavMeshObstacle.h */; };
-		B6E437B61B1463F100CC7B54 /* CCNavMeshTool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6E437A41B1463F100CC7B54 /* CCNavMeshTool.cpp */; };
-		B6E437B71B1463F100CC7B54 /* CCNavMeshTool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6E437A41B1463F100CC7B54 /* CCNavMeshTool.cpp */; };
-		B6E437B81B1463F100CC7B54 /* CCNavMeshTool.h in Headers */ = {isa = PBXBuildFile; fileRef = B6E437A51B1463F100CC7B54 /* CCNavMeshTool.h */; };
-		B6E437B91B1463F100CC7B54 /* CCNavMeshTool.h in Headers */ = {isa = PBXBuildFile; fileRef = B6E437A51B1463F100CC7B54 /* CCNavMeshTool.h */; };
 		D0FD03491A3B51AA00825BB5 /* CCAllocatorBase.h in Headers */ = {isa = PBXBuildFile; fileRef = D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */; };
 		D0FD034A1A3B51AA00825BB5 /* CCAllocatorBase.h in Headers */ = {isa = PBXBuildFile; fileRef = D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */; };
 		D0FD034B1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D0FD033C1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp */; };
@@ -4994,6 +4994,16 @@
 		B665E1EF1AA80A6500DDB1C5 /* CCPUVortexAffector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPUVortexAffector.h; path = Particle3D/PU/CCPUVortexAffector.h; sourceTree = "<group>"; };
 		B665E1F01AA80A6500DDB1C5 /* CCPUVortexAffectorTranslator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCPUVortexAffectorTranslator.cpp; path = Particle3D/PU/CCPUVortexAffectorTranslator.cpp; sourceTree = "<group>"; };
 		B665E1F11AA80A6500DDB1C5 /* CCPUVortexAffectorTranslator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCPUVortexAffectorTranslator.h; path = Particle3D/PU/CCPUVortexAffectorTranslator.h; sourceTree = "<group>"; };
+		B677B0BF1B18492D006762CB /* CCNavMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCNavMesh.cpp; path = ../cocos/navmesh/CCNavMesh.cpp; sourceTree = "<group>"; };
+		B677B0C01B18492D006762CB /* CCNavMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCNavMesh.h; path = ../cocos/navmesh/CCNavMesh.h; sourceTree = "<group>"; };
+		B677B0C11B18492D006762CB /* CCNavMeshAgent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCNavMeshAgent.cpp; path = ../cocos/navmesh/CCNavMeshAgent.cpp; sourceTree = "<group>"; };
+		B677B0C21B18492D006762CB /* CCNavMeshAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCNavMeshAgent.h; path = ../cocos/navmesh/CCNavMeshAgent.h; sourceTree = "<group>"; };
+		B677B0C31B18492D006762CB /* CCNavMeshDebugDraw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCNavMeshDebugDraw.cpp; path = ../cocos/navmesh/CCNavMeshDebugDraw.cpp; sourceTree = "<group>"; };
+		B677B0C41B18492D006762CB /* CCNavMeshDebugDraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCNavMeshDebugDraw.h; path = ../cocos/navmesh/CCNavMeshDebugDraw.h; sourceTree = "<group>"; };
+		B677B0C51B18492D006762CB /* CCNavMeshObstacle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCNavMeshObstacle.cpp; path = ../cocos/navmesh/CCNavMeshObstacle.cpp; sourceTree = "<group>"; };
+		B677B0C61B18492D006762CB /* CCNavMeshObstacle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCNavMeshObstacle.h; path = ../cocos/navmesh/CCNavMeshObstacle.h; sourceTree = "<group>"; };
+		B677B0C71B18492D006762CB /* CCNavMeshTool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCNavMeshTool.cpp; path = ../cocos/navmesh/CCNavMeshTool.cpp; sourceTree = "<group>"; };
+		B677B0C81B18492D006762CB /* CCNavMeshTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCNavMeshTool.h; path = ../cocos/navmesh/CCNavMeshTool.h; sourceTree = "<group>"; };
 		B67C624319D4186F00F11FC6 /* ccShader_3D_ColorNormal.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_ColorNormal.frag; sourceTree = "<group>"; };
 		B67C624419D4186F00F11FC6 /* ccShader_3D_ColorNormalTex.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_ColorNormalTex.frag; sourceTree = "<group>"; };
 		B67C624519D4186F00F11FC6 /* ccShader_3D_PositionNormalTex.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_3D_PositionNormalTex.vert; sourceTree = "<group>"; };
@@ -5467,16 +5477,6 @@
 		B6DD2FA31B04825B00E47F5F /* DetourTileCacheBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetourTileCacheBuilder.h; sourceTree = "<group>"; };
 		B6DD2FA51B04825B00E47F5F /* fastlz.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fastlz.c; sourceTree = "<group>"; };
 		B6DD2FA61B04825B00E47F5F /* fastlz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fastlz.h; sourceTree = "<group>"; };
-		B6E4379C1B1463F100CC7B54 /* CCNavMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCNavMesh.cpp; path = ../cocos/navmesh/CCNavMesh.cpp; sourceTree = "<group>"; };
-		B6E4379D1B1463F100CC7B54 /* CCNavMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCNavMesh.h; path = ../cocos/navmesh/CCNavMesh.h; sourceTree = "<group>"; };
-		B6E4379E1B1463F100CC7B54 /* CCNavMeshAgent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCNavMeshAgent.cpp; path = ../cocos/navmesh/CCNavMeshAgent.cpp; sourceTree = "<group>"; };
-		B6E4379F1B1463F100CC7B54 /* CCNavMeshAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCNavMeshAgent.h; path = ../cocos/navmesh/CCNavMeshAgent.h; sourceTree = "<group>"; };
-		B6E437A01B1463F100CC7B54 /* CCNavMeshDebugDraw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCNavMeshDebugDraw.cpp; path = ../cocos/navmesh/CCNavMeshDebugDraw.cpp; sourceTree = "<group>"; };
-		B6E437A11B1463F100CC7B54 /* CCNavMeshDebugDraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCNavMeshDebugDraw.h; path = ../cocos/navmesh/CCNavMeshDebugDraw.h; sourceTree = "<group>"; };
-		B6E437A21B1463F100CC7B54 /* CCNavMeshObstacle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCNavMeshObstacle.cpp; path = ../cocos/navmesh/CCNavMeshObstacle.cpp; sourceTree = "<group>"; };
-		B6E437A31B1463F100CC7B54 /* CCNavMeshObstacle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCNavMeshObstacle.h; path = ../cocos/navmesh/CCNavMeshObstacle.h; sourceTree = "<group>"; };
-		B6E437A41B1463F100CC7B54 /* CCNavMeshTool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCNavMeshTool.cpp; path = ../cocos/navmesh/CCNavMeshTool.cpp; sourceTree = "<group>"; };
-		B6E437A51B1463F100CC7B54 /* CCNavMeshTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCNavMeshTool.h; path = ../cocos/navmesh/CCNavMeshTool.h; sourceTree = "<group>"; };
 		D0FD033B1A3B51AA00825BB5 /* CCAllocatorBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAllocatorBase.h; sourceTree = "<group>"; };
 		D0FD033C1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAllocatorDiagnostics.cpp; sourceTree = "<group>"; };
 		D0FD033D1A3B51AA00825BB5 /* CCAllocatorDiagnostics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAllocatorDiagnostics.h; sourceTree = "<group>"; };
@@ -8669,16 +8669,16 @@
 		B6DD2F351B04805400E47F5F /* navmesh */ = {
 			isa = PBXGroup;
 			children = (
-				B6E4379C1B1463F100CC7B54 /* CCNavMesh.cpp */,
-				B6E4379D1B1463F100CC7B54 /* CCNavMesh.h */,
-				B6E4379E1B1463F100CC7B54 /* CCNavMeshAgent.cpp */,
-				B6E4379F1B1463F100CC7B54 /* CCNavMeshAgent.h */,
-				B6E437A01B1463F100CC7B54 /* CCNavMeshDebugDraw.cpp */,
-				B6E437A11B1463F100CC7B54 /* CCNavMeshDebugDraw.h */,
-				B6E437A21B1463F100CC7B54 /* CCNavMeshObstacle.cpp */,
-				B6E437A31B1463F100CC7B54 /* CCNavMeshObstacle.h */,
-				B6E437A41B1463F100CC7B54 /* CCNavMeshTool.cpp */,
-				B6E437A51B1463F100CC7B54 /* CCNavMeshTool.h */,
+				B677B0BF1B18492D006762CB /* CCNavMesh.cpp */,
+				B677B0C01B18492D006762CB /* CCNavMesh.h */,
+				B677B0C11B18492D006762CB /* CCNavMeshAgent.cpp */,
+				B677B0C21B18492D006762CB /* CCNavMeshAgent.h */,
+				B677B0C31B18492D006762CB /* CCNavMeshDebugDraw.cpp */,
+				B677B0C41B18492D006762CB /* CCNavMeshDebugDraw.h */,
+				B677B0C51B18492D006762CB /* CCNavMeshObstacle.cpp */,
+				B677B0C61B18492D006762CB /* CCNavMeshObstacle.h */,
+				B677B0C71B18492D006762CB /* CCNavMeshTool.cpp */,
+				B677B0C81B18492D006762CB /* CCNavMeshTool.h */,
 			);
 			name = navmesh;
 			sourceTree = "<group>";
@@ -8931,7 +8931,7 @@
 				1A57006B180BC5A10088DEC7 /* CCActionCatmullRom.h in Headers */,
 				B665E3BC1AA80A6500DDB1C5 /* CCPURibbonTrailRender.h in Headers */,
 				B6CAB3371AF9AA1A00B9B856 /* btQuantization.h in Headers */,
-				B6E437A81B1463F100CC7B54 /* CCNavMesh.h in Headers */,
+				B677B0CB1B18492D006762CB /* CCNavMesh.h in Headers */,
 				B6CAB4371AF9AA1A00B9B856 /* btGpu3DGridBroadphaseSharedCode.h in Headers */,
 				B665E2A81AA80A6500DDB1C5 /* CCPUEventHandlerTranslator.h in Headers */,
 				4D76BE3C1A4AAF0A00102962 /* CCActionTimelineNode.h in Headers */,
@@ -8965,7 +8965,7 @@
 				1A57007F180BC5A10088DEC7 /* CCActionInterval.h in Headers */,
 				B6DD2FDB1B04825B00E47F5F /* DetourLocalBoundary.h in Headers */,
 				B6CAB3491AF9AA1A00B9B856 /* gim_clip_polygon.h in Headers */,
-				B6E437B81B1463F100CC7B54 /* CCNavMeshTool.h in Headers */,
+				B677B0DB1B18492D006762CB /* CCNavMeshTool.h in Headers */,
 				B6CAAFE41AF9A9E100B9B856 /* CCPhysics3D.h in Headers */,
 				15AE1A7F19AAD40300C27E9E /* b2DistanceJoint.h in Headers */,
 				B665E3301AA80A6500DDB1C5 /* CCPUOnCountObserverTranslator.h in Headers */,
@@ -9252,7 +9252,7 @@
 				B6CAB50B1AF9AA1A00B9B856 /* btHashMap.h in Headers */,
 				15AE1A6719AAD40300C27E9E /* b2World.h in Headers */,
 				B6CAB3571AF9AA1A00B9B856 /* gim_math.h in Headers */,
-				B6E437B41B1463F100CC7B54 /* CCNavMeshObstacle.h in Headers */,
+				B677B0D71B18492D006762CB /* CCNavMeshObstacle.h in Headers */,
 				15AE199B19AAD39600C27E9E /* PageViewReader.h in Headers */,
 				B665E2A41AA80A6500DDB1C5 /* CCPUEventHandlerManager.h in Headers */,
 				15AE1A6219AAD40300C27E9E /* b2Fixture.h in Headers */,
@@ -9338,7 +9338,7 @@
 				B665E3501AA80A6500DDB1C5 /* CCPUOnPositionObserverTranslator.h in Headers */,
 				B68778FA1A8CA82E00643ABF /* CCParticle3DAffector.h in Headers */,
 				15AE1BA019AADFDF00C27E9E /* UILayout.h in Headers */,
-				B6E437AC1B1463F100CC7B54 /* CCNavMeshAgent.h in Headers */,
+				B677B0CF1B18492D006762CB /* CCNavMeshAgent.h in Headers */,
 				1A570294180BCCAB0088DEC7 /* CCAnimation.h in Headers */,
 				B665E4081AA80A6600DDB1C5 /* CCPUSphereSurfaceEmitter.h in Headers */,
 				B6CAB28B1AF9AA1A00B9B856 /* btCapsuleShape.h in Headers */,
@@ -9616,7 +9616,7 @@
 				B665E2281AA80A6500DDB1C5 /* CCPUBillboardChain.h in Headers */,
 				B6DD2FD31B04825B00E47F5F /* DetourStatus.h in Headers */,
 				15AE18A919AAD33D00C27E9E /* CCSpriteLoader.h in Headers */,
-				B6E437B01B1463F100CC7B54 /* CCNavMeshDebugDraw.h in Headers */,
+				B677B0D31B18492D006762CB /* CCNavMeshDebugDraw.h in Headers */,
 				15AE198419AAD36400C27E9E /* WidgetReaderProtocol.h in Headers */,
 				B6CAB53D1AF9AA1A00B9B856 /* cl_MiniCL_Defs.h in Headers */,
 				50ABBEC91925AB6F00A911A9 /* firePngData.h in Headers */,
@@ -9891,7 +9891,7 @@
 				B665E27D1AA80A6500DDB1C5 /* CCPUDoScaleEventHandler.h in Headers */,
 				B6DD2FE81B04825B00E47F5F /* DetourPathQueue.h in Headers */,
 				B6CAB29E1AF9AA1A00B9B856 /* btConeShape.h in Headers */,
-				B6E437B51B1463F100CC7B54 /* CCNavMeshObstacle.h in Headers */,
+				B677B0D81B18492D006762CB /* CCNavMeshObstacle.h in Headers */,
 				15AE181F19AAD2F700C27E9E /* CCBundle3DData.h in Headers */,
 				15AE193119AAD35100C27E9E /* CCActionManagerEx.h in Headers */,
 				15AE185B19AAD31200C27E9E /* CDOpenALSupport.h in Headers */,
@@ -9989,7 +9989,7 @@
 				B6CAB5341AF9AA1A00B9B856 /* btTransformUtil.h in Headers */,
 				1A570088180BC5A10088DEC7 /* CCActionPageTurn3D.h in Headers */,
 				15AE1B9319AADA9A00C27E9E /* UIHelper.h in Headers */,
-				B6E437B91B1463F100CC7B54 /* CCNavMeshTool.h in Headers */,
+				B677B0DC1B18492D006762CB /* CCNavMeshTool.h in Headers */,
 				50ABBD9E1925AB4100A911A9 /* ccGLStateCache.h in Headers */,
 				B665E2111AA80A6500DDB1C5 /* CCPUBaseForceAffector.h in Headers */,
 				B665E30D1AA80A6500DDB1C5 /* CCPUNoise.h in Headers */,
@@ -10048,7 +10048,7 @@
 				50ABBD571925AB0000A911A9 /* TransformUtils.h in Headers */,
 				B665E2711AA80A6500DDB1C5 /* CCPUDoFreezeEventHandlerTranslator.h in Headers */,
 				1A570115180BC8EE0088DEC7 /* CCDrawNode.h in Headers */,
-				B6E437B11B1463F100CC7B54 /* CCNavMeshDebugDraw.h in Headers */,
+				B677B0D41B18492D006762CB /* CCNavMeshDebugDraw.h in Headers */,
 				B6CAB2341AF9AA1A00B9B856 /* btCollisionWorld.h in Headers */,
 				1A57011E180BC90D0088DEC7 /* CCGrabber.h in Headers */,
 				B6CAB4A21AF9AA1A00B9B856 /* PosixThreadSupport.h in Headers */,
@@ -10284,7 +10284,7 @@
 				15FB20961AE7C57D00C31518 /* cdt.h in Headers */,
 				15AE1AC919AAD40300C27E9E /* b2Joint.h in Headers */,
 				382383EF1A258FA7002C4610 /* flatbuffers.h in Headers */,
-				B6E437A91B1463F100CC7B54 /* CCNavMesh.h in Headers */,
+				B677B0CC1B18492D006762CB /* CCNavMesh.h in Headers */,
 				B6D38B911AC3AFAC00043997 /* CCTextureCube.h in Headers */,
 				B665E2811AA80A6500DDB1C5 /* CCPUDoScaleEventHandlerTranslator.h in Headers */,
 				15AE196819AAD35100C27E9E /* CCUtilMath.h in Headers */,
@@ -10697,7 +10697,7 @@
 				15AE18D219AAD33D00C27E9E /* CCNodeLoaderListener.h in Headers */,
 				15AE184D19AAD30800C27E9E /* SimpleAudioEngine.h in Headers */,
 				B665E3551AA80A6500DDB1C5 /* CCPUOnQuotaObserver.h in Headers */,
-				B6E437AD1B1463F100CC7B54 /* CCNavMeshAgent.h in Headers */,
+				B677B0D01B18492D006762CB /* CCNavMeshAgent.h in Headers */,
 				B665E3C91AA80A6600DDB1C5 /* CCPUScaleVelocityAffector.h in Headers */,
 				B665E3FD1AA80A6600DDB1C5 /* CCPUSphere.h in Headers */,
 				B68778FB1A8CA82E00643ABF /* CCParticle3DAffector.h in Headers */,
@@ -10880,7 +10880,7 @@
 				B6CAB41F1AF9AA1A00B9B856 /* btMLCPSolver.cpp in Sources */,
 				46A170E61807CECA005B8026 /* CCPhysicsBody.cpp in Sources */,
 				B665E40A1AA80A6600DDB1C5 /* CCPUSphereSurfaceEmitterTranslator.cpp in Sources */,
-				B6E437B61B1463F100CC7B54 /* CCNavMeshTool.cpp in Sources */,
+				B677B0D91B18492D006762CB /* CCNavMeshTool.cpp in Sources */,
 				50ABBDA71925AB4100A911A9 /* CCRenderCommand.cpp in Sources */,
 				B665E35E1AA80A6500DDB1C5 /* CCPUOnRandomObserverTranslator.cpp in Sources */,
 				B6CAB2931AF9AA1A00B9B856 /* btCompoundShape.cpp in Sources */,
@@ -10955,7 +10955,7 @@
 				B6CAB4D91AF9AA1A00B9B856 /* SpuMinkowskiPenetrationDepthSolver.cpp in Sources */,
 				B665E3CE1AA80A6600DDB1C5 /* CCPUScriptCompiler.cpp in Sources */,
 				15AE18E819AAD35000C27E9E /* CCActionManagerEx.cpp in Sources */,
-				B6E437AA1B1463F100CC7B54 /* CCNavMeshAgent.cpp in Sources */,
+				B677B0CD1B18492D006762CB /* CCNavMeshAgent.cpp in Sources */,
 				B29A7DDB19EE1B7700872B35 /* Event.c in Sources */,
 				15AE191B19AAD35000C27E9E /* CCTransformHelp.cpp in Sources */,
 				15AE190319AAD35000C27E9E /* CCComRender.cpp in Sources */,
@@ -11040,7 +11040,7 @@
 				B6CAAFF61AF9A9E100B9B856 /* CCPhysics3DShape.cpp in Sources */,
 				B6CAB3071AF9AA1A00B9B856 /* btTriangleMesh.cpp in Sources */,
 				B29A7E1319EE1B7700872B35 /* Bone.c in Sources */,
-				B6E437A61B1463F100CC7B54 /* CCNavMesh.cpp in Sources */,
+				B677B0C91B18492D006762CB /* CCNavMesh.cpp in Sources */,
 				B665E1F61AA80A6500DDB1C5 /* CCPUAffectorManager.cpp in Sources */,
 				292DB14919B4574100A80320 /* UIEditBoxImpl-ios.mm in Sources */,
 				B6CAB2511AF9AA1A00B9B856 /* btEmptyCollisionAlgorithm.cpp in Sources */,
@@ -11143,7 +11143,7 @@
 				3EACC9A419F5014D00EB3C5E /* CCLight.cpp in Sources */,
 				B6CAB4C91AF9AA1A00B9B856 /* SpuCollisionShapes.cpp in Sources */,
 				B6CAB38B1AF9AA1A00B9B856 /* btPolyhedralContactClipping.cpp in Sources */,
-				B6E437B21B1463F100CC7B54 /* CCNavMeshObstacle.cpp in Sources */,
+				B677B0D51B18492D006762CB /* CCNavMeshObstacle.cpp in Sources */,
 				B665E42E1AA80A6600DDB1C5 /* CCPUVelocityMatchingAffectorTranslator.cpp in Sources */,
 				1A5701E2180BCB8C0088DEC7 /* CCScene.cpp in Sources */,
 				B6CAB5351AF9AA1A00B9B856 /* btVector3.cpp in Sources */,
@@ -11472,7 +11472,7 @@
 				B665E2921AA80A6500DDB1C5 /* CCPUEmitter.cpp in Sources */,
 				15B3708419EE414C00ABE682 /* Downloader.cpp in Sources */,
 				50ABC0631926664800A911A9 /* CCDevice-mac.mm in Sources */,
-				B6E437AE1B1463F100CC7B54 /* CCNavMeshDebugDraw.cpp in Sources */,
+				B677B0D11B18492D006762CB /* CCNavMeshDebugDraw.cpp in Sources */,
 				15AE1A2819AAD3D500C27E9E /* b2Collision.cpp in Sources */,
 				15AE1B6719AADA9900C27E9E /* UIScale9Sprite.cpp in Sources */,
 				292DB14319B4574100A80320 /* UIEditBoxImpl-android.cpp in Sources */,
@@ -11900,7 +11900,7 @@
 				B6CAB3341AF9AA1A00B9B856 /* btGImpactShape.cpp in Sources */,
 				B6CAB4C61AF9AA1A00B9B856 /* boxBoxDistance.cpp in Sources */,
 				1A57008E180BC5A10088DEC7 /* CCActionTiledGrid.cpp in Sources */,
-				B6E437AB1B1463F100CC7B54 /* CCNavMeshAgent.cpp in Sources */,
+				B677B0CE1B18492D006762CB /* CCNavMeshAgent.cpp in Sources */,
 				B6CAB2A01AF9AA1A00B9B856 /* btConvex2dShape.cpp in Sources */,
 				1A570092180BC5A10088DEC7 /* CCActionTween.cpp in Sources */,
 				1A570099180BC5C10088DEC7 /* CCAtlasNode.cpp in Sources */,
@@ -11930,7 +11930,7 @@
 				B6CAB3F81AF9AA1A00B9B856 /* btMultiBody.cpp in Sources */,
 				503DD8E21926736A00CD74DD /* CCCommon-ios.mm in Sources */,
 				292DB14A19B4574100A80320 /* UIEditBoxImpl-ios.mm in Sources */,
-				B6E437B31B1463F100CC7B54 /* CCNavMeshObstacle.cpp in Sources */,
+				B677B0D61B18492D006762CB /* CCNavMeshObstacle.cpp in Sources */,
 				B6CAB2561AF9AA1A00B9B856 /* btGhostObject.cpp in Sources */,
 				15AE1A9419AAD40300C27E9E /* b2BlockAllocator.cpp in Sources */,
 				B29A7E3C19EE1B7700872B35 /* Animation.c in Sources */,
@@ -11952,7 +11952,7 @@
 				1A5701A6180BCB590088DEC7 /* CCFontAtlasCache.cpp in Sources */,
 				15AE192B19AAD35100C27E9E /* TriggerObj.cpp in Sources */,
 				B6CAAFEB1AF9A9E100B9B856 /* CCPhysics3DConstraint.cpp in Sources */,
-				B6E437AF1B1463F100CC7B54 /* CCNavMeshDebugDraw.cpp in Sources */,
+				B677B0D21B18492D006762CB /* CCNavMeshDebugDraw.cpp in Sources */,
 				4D76BE3B1A4AAF0A00102962 /* CCActionTimelineNode.cpp in Sources */,
 				15AE198519AAD36400C27E9E /* WidgetReader.cpp in Sources */,
 				B665E36B1AA80A6500DDB1C5 /* CCPUOnVelocityObserver.cpp in Sources */,
@@ -12390,7 +12390,7 @@
 				50ABBD5D1925AB0000A911A9 /* Vec3.cpp in Sources */,
 				B6CAB2061AF9AA1A00B9B856 /* btOverlappingPairCache.cpp in Sources */,
 				38B8E2D619E66581002D7CE7 /* CSLoader.cpp in Sources */,
-				B6E437A71B1463F100CC7B54 /* CCNavMesh.cpp in Sources */,
+				B677B0CA1B18492D006762CB /* CCNavMesh.cpp in Sources */,
 				B665E3B31AA80A6500DDB1C5 /* CCPURendererTranslator.cpp in Sources */,
 				B6CAAFE71AF9A9E100B9B856 /* CCPhysics3DComponent.cpp in Sources */,
 				B6CAB2141AF9AA1A00B9B856 /* btActivatingCollisionAlgorithm.cpp in Sources */,
@@ -12421,7 +12421,7 @@
 				D0FD034C1A3B51AA00825BB5 /* CCAllocatorDiagnostics.cpp in Sources */,
 				B665E31F1AA80A6500DDB1C5 /* CCPUOnClearObserverTranslator.cpp in Sources */,
 				B665E4331AA80A6600DDB1C5 /* CCPUVertexEmitter.cpp in Sources */,
-				B6E437B71B1463F100CC7B54 /* CCNavMeshTool.cpp in Sources */,
+				B677B0DA1B18492D006762CB /* CCNavMeshTool.cpp in Sources */,
 				B665E3C71AA80A6600DDB1C5 /* CCPUScaleVelocityAffector.cpp in Sources */,
 				B6CAB26E1AF9AA1A00B9B856 /* btSphereSphereCollisionAlgorithm.cpp in Sources */,
 				50ABBED01925AB6F00A911A9 /* TGAlib.cpp in Sources */,
