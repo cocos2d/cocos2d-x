@@ -833,6 +833,7 @@ Developers:
         
     flashjay
         Remove deprecated code in lua tests & template
+        luaLoadChunksFromZip should just remove .lua or .luac extension
         
     zukkun
         Fixed incorrect function invocation in PhysicsBody::setAngularVelocityLimit

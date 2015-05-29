@@ -3358,14 +3358,15 @@ bool js_cocos2dx_Camera_getViewProjectionMatrix(JSContext *cx, uint32_t argc, js
 bool js_cocos2dx_Camera_lookAt(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_getProjectionMatrix(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_getDepthInView(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Camera_initOrthographic(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Camera_clearBackground(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_setDepth(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_initDefault(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_getCameraFlag(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_getType(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Camera_clearBackground(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Camera_initOrthographic(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_setAdditionalProjection(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_setScene(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_cocos2dx_Camera_projectGL(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_getViewMatrix(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_getNearPlane(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_cocos2dx_Camera_project(JSContext *cx, uint32_t argc, jsval *vp);
