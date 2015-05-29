@@ -429,7 +429,7 @@ ccui.VideoPlayer.EventType = {
     COMPLETED: "complete"
 };
 
-ccui.VideoPlayer.prototype._setURL = ccui.WebView.prototype.setURL;
+ccui.VideoPlayer.prototype._setURL = ccui.VideoPlayer.prototype.setURL;
 ccui.VideoPlayer.prototype.setURL = function (url) {
     if (url.indexOf("http://") >= 0)
     {

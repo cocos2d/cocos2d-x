@@ -63,7 +63,7 @@ var UIVideoPlayerTest = UIScene.extend({
             }},
             { name: "Full Screen", func: function(){
                     cc.log("setFullScreenEnabled!");
-                    video.setFullScreenEnabled();
+                    video.setFullScreenEnabled(true);
             }},
             { name: "Scale", func: function(){
                 var scale = ((Math.random() * 0.5 + 0.2) * 100 | 0) / 100;
@@ -85,7 +85,7 @@ var UIVideoPlayerTest = UIScene.extend({
         var layer = this;
         list.forEach(function(item, i){
             var but = new ccui.Button();
-            but.setPosition( 140 + (i / 5 | 0) * 500, 300 - (i % 5) * 35);
+            but.setPosition( 140 + (i / 6 | 0) * 500, 300 - (i % 6) * 35);
             but.setTitleText(item.name);
             but.setZoomScale(0.3);
             but.setPressedActionEnabled(true);
