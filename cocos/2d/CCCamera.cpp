@@ -35,6 +35,19 @@ NS_CC_BEGIN
 
 Camera* Camera::_visitingCamera = nullptr;
 
+Viewport::Viewport(float left, float bottom, float width, float height)
+: _left(left)
+, _bottom(bottom)
+, _width(width)
+, _height(height)
+{
+}
+
+Viewport::Viewport()
+{
+    _left = _bottom = 0.f;
+    _width = _height = 1.0f;
+}
 
 Camera* Camera::getDefaultCamera()
 {

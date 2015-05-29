@@ -34,6 +34,20 @@ NS_CC_BEGIN
 class Scene;
 class FrameBufferObject;
 /**
+ Viewport is a normalized to renderTarget
+ */
+struct CC_DLL Viewport
+{
+    Viewport(float left, float bottom, float width, float height);
+    Viewport();
+    
+    float _left;
+    float _bottom;
+    float _width;
+    float _height;
+};
+
+/**
  * Note: 
  * Scene creates a default camera. And the default camera mask of Node is 1, therefore it can be seen by the default camera.
  * During rendering the scene, it draws the objects seen by each camera in the added order except default camera. The default camera is the last one being drawn with.
@@ -54,10 +68,9 @@ enum class CameraFlag
     USER7 = 1 << 7,
     USER8 = 1 << 8,
 };
-
 /**
-* Defines a camera .
-*/
+ * Defines a camera .
+ */
 class CC_DLL Camera :public Node
 {
     friend class Scene;
@@ -204,7 +217,7 @@ public:
     void clearBackground(float depth);
     
     void setFrameBufferObject(FrameBufferObject* fbo);
-    
+    void setViewport(const Viewport& vp) { _viewport = vp; }
 CC_CONSTRUCTOR_ACCESS:
     Camera();
     ~Camera();
@@ -222,6 +235,7 @@ CC_CONSTRUCTOR_ACCESS:
     bool initPerspective(float fieldOfView, float aspectRatio, float nearPlane, float farPlane);
     bool initOrthographic(float zoomX, float zoomY, float nearPlane, float farPlane);
     void applyFrameBufferObject();
+    
 protected:
 
     Scene* _scene; //Scene camera belongs to
@@ -244,6 +258,7 @@ protected:
     static Camera* _visitingCamera;
     
     friend class Director;
+    Viewport _viewport;
     
     FrameBufferObject* _fbo;
 };
