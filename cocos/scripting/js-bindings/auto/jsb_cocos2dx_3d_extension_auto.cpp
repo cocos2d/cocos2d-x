@@ -777,6 +777,7 @@ bool js_cocos2dx_3d_extension_PUParticleSystem3D_copyAttributesTo(JSContext *cx,
     if (argc == 1) {
         cocos2d::PUParticleSystem3D* arg0;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
