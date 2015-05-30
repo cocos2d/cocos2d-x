@@ -45,14 +45,19 @@
 
 NS_CC_BEGIN
 
-/** @class EventMouse
- * @brief The mouse event.
+/** @class @~english EventMouse
+ * @~chinese 鼠标事件对象
+ *
+ * @brief @~english The mouse event.
+ * @~chinese 鼠标事件
  */
 class CC_DLL EventMouse : public Event
 {
 public:
     /**
-    * MouseEventType Different types of MouseEvent.
+    * @~english MouseEventType Different types of MouseEvent.
+    * @~chinese 鼠标事件所支持的事件类型列表
+    *
     * @js NA
     */
     enum class MouseEventType
@@ -64,34 +69,50 @@ public:
         MOUSE_SCROLL,
     };
 
-    /** Constructor.
+    /** @~english Constructor.
+     * @~chinese 构造函数
      *
-     * @param mouseEventCode A given mouse event type.
+     * @param mouseEventCode @~english A given mouse event type.
+     * @~chinese mouseEventCode鼠标事件类型
      * @js ctor
      */
     EventMouse(MouseEventType mouseEventCode);
 
-    /** Set mouse scroll data.
-     * 
-     * @param scrollX The scroll data of x axis.
-     * @param scrollY The scroll data of y axis.
+    /** @~english Set mouse scroll data.
+     * @~chinese 设置鼠标的滚动数据
+     *
+     * @param scrollX @~english The scroll data of x axis.
+     * @~chinese x轴滚动的数据
+     * @param scrollY @~english The scroll data of y axis.
+     * @~chinese y轴滚动的数据
      */
     inline void setScrollData(float scrollX, float scrollY) { _scrollX = scrollX; _scrollY = scrollY; };
-    /** Get mouse scroll data of x axis.
+
+    /** @~english Get mouse scroll data of x axis.
      * 
-     * @return The scroll data of x axis.
+     * @~chinese 
+
+     * @return @~english The scroll data of x axis.
+     * @~chinese 
      */
     inline float getScrollX() const { return _scrollX; };
-    /** Get mouse scroll data of y axis.
+    /** @~english Get mouse scroll data of y axis.
      *
-     * @return The scroll data of y axis.
+     * @~chinese 
+
+     * @return @~english The scroll data of y axis.
+     * @~chinese 
      */
     inline float getScrollY() const { return _scrollY; };
 
-    /** Set the cursor position.
+    /** @~english Set the cursor position.
+     * @~chinese 设置光标位置
      *
-     * @param x The x coordinate of cursor position.
-     * @param y The y coordinate of cursor position.
+     * @param x @~english The x coordinate of cursor position.
+     * @~chinese 光标的x轴坐标
+     * @param y @~english The y coordinate of cursor position.
+     * @~chinese 光标的y轴坐标
+     *
      * @js setLocation
      */
     inline void setCursorPosition(float x, float y) { 
@@ -107,67 +128,105 @@ public:
         }
     }
 
-    /** Set mouse button.
-     * 
-     * @param button a given mouse button.
+    /** @~english Set mouse button.
+     * @~chinese 设置鼠标按钮
+     *
+     * @param button @~english a given mouse button.
+     * @~chinese 鼠标按钮
+     *
      * @js setButton
      */
     inline void setMouseButton(int button) { _mouseButton = button; };
-    /** Get mouse button.
+
+    /** @~english Get mouse button.
+     * @~chinese 获取一个鼠标按钮
      *
-     * @return The mouse button.
+     * @return @~english The mouse button.
+     * @~chinese 鼠标按钮
+     *
      * @js getButton
      */
     inline int getMouseButton() const { return _mouseButton; };
-    /** Get the cursor position of x axis.
+
+    /** @~english Get the cursor position of x axis.
+     * @~chinese 获取光标的x轴坐标
      *
-     * @return The x coordinate of cursor position.
+     * @return @~english The x coordinate of cursor position.
+     * @~chinese 光标的x轴坐标
      * @js getLocationX
      */
     inline float getCursorX() const { return _x; };
-    /** Get the cursor position of y axis.
+
+    /** @~english Get the cursor position of y axis.
+     * @~chinese 获取光标的x轴坐标
      *
-     * @return The y coordinate of cursor position.
+     * @return @~english The y coordinate of cursor position.
+     * @~chinese x轴坐标
+     *
      * @js getLocationY
      */
     inline float getCursorY() const { return _y; };
 
-    /** Returns the current touch location in OpenGL coordinates.
+    /** @~english Returns the current touch location in OpenGL coordinates.
+     * @~chinese 返回当前位置在OpenGL世界中的坐标
      *
-     * @return The current touch location in OpenGL coordinates.
+     * @return @~english The current touch location in OpenGL coordinates.
+     * @~chinese 当前光标在OpenGL中的坐标数据
      */
     Vec2 getLocation() const;
-    /** Returns the previous touch location in OpenGL coordinates.
+
+    /** @~english Returns the previous touch location in OpenGL coordinates.
+     * @~chinese 返回事件之前的光标在OpenGL世界中的坐标
      *
-     * @return The previous touch location in OpenGL coordinates.
+     * @return @~english The previous touch location in OpenGL coordinates.
+     * @~chinese 事件之前，光标在OpenGL中的坐标数据
+     *
      * @js NA
      */
     Vec2 getPreviousLocation() const;
-    /** Returns the start touch location in OpenGL coordinates.
+
+    /** @~english Returns the start touch location in OpenGL coordinates.
+     * @~chinese 返回点击开始时光标在OpenGL世界中的坐标
      *
-     * @return The start touch location in OpenGL coordinates.
+     * @return @~english The start touch location in OpenGL coordinates.
+     * @~chinese 点击开始时，光标在OpenGL世界中的坐标数据
+     *
      * @js NA
      */
     Vec2 getStartLocation() const;
-    /** Returns the delta of 2 current touches locations in screen coordinates.
+
+    /** @~english Returns the delta of 2 current touches locations in screen coordinates.
+     * @~chinese 返回鼠标事件开始到结束时，两个点之间在屏幕坐标空间内的向量
      *
-     * @return The delta of 2 current touches locations in screen coordinates.
+     * @return @~english The delta of 2 current touches locations in screen coordinates.
+     * @~chinese 鼠标事件开始到结束时，两个点之间在屏幕做表空间内的向量
      */
     Vec2 getDelta() const;
-    /** Returns the current touch location in screen coordinates.
+
+    /** @~english Returns the current touch location in screen coordinates.
+     * @~chinese 返回当前事件在屏幕空间内的坐标位置
      *
-     * @return The current touch location in screen coordinates.
+     * @return @~english The current touch location in screen coordinates.
+     * @~chinese 当前鼠标事件在屏幕内的坐标位置
      */
     Vec2 getLocationInView() const;
-    /** Returns the previous touch location in screen coordinates.
+
+    /** @~english Returns the previous touch location in screen coordinates.
+     * @~chinese 返回前一个点击事件在屏幕内的坐标
      *
-     * @return The previous touch location in screen coordinates.
+     * @return @~english The previous touch location in screen coordinates.
+     * @~chinese 前一个点击事件在屏幕内的坐标
+     *
      * @js NA
      */
     Vec2 getPreviousLocationInView() const;
-    /** Returns the start touch location in screen coordinates.
+
+    /** @~english Returns the start touch location in screen coordinates.
+     * @~chinese 返回开始点击时的光标在屏幕的内的坐标
      *
-     * @return The start touch location in screen coordinates.
+     * @return @~english The start touch location in screen coordinates.
+     * @~chinese 开始点击时的光标在屏幕的内的坐标
+     *
      * @js NA
      */
     Vec2 getStartLocationInView() const;
