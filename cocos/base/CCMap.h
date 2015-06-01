@@ -75,7 +75,7 @@ public:
     /** @~english Iterator, can be used to loop the Map.  @~chinese 迭代器,可用于遍历map。*/
     typedef typename RefMap::iterator iterator;
 
-    /** @~english Const iterator, can be used to loop the Map.  @~chinese 常量迭代器,可用于循环地图。*/
+    /** @~english Const iterator, can be used to loop the Map.  @~chinese 常量迭代器,可用于循环Map。*/
     typedef typename RefMap::const_iterator const_iterator;
     
     /** @~english Return iterator to beginning.  @~chinese 返回迭代器开始。*/
@@ -146,7 +146,7 @@ public:
         clear();
     }
     
-    /** @~english Sets capacity of the map.  @~chinese 设置地图的capacity。 */
+    /** @~english Sets capacity of the map.  @~chinese 设置Map的capacity。 */
     void reserve(ssize_t capacity)
     {
 #if USE_STD_UNORDERED_MAP
@@ -184,7 +184,7 @@ public:
 #endif
     }
     
-    /** @~english The number of elements in the map.  @~chinese 地图中的元素的数量。 */
+    /** @~english The number of elements in the map.  @~chinese Map中的元素的数量。 */
     ssize_t size() const
     {
         return _data.size();
@@ -194,7 +194,7 @@ public:
      * @~english
      * Returns a bool value indicating whether the map container is empty, i.e. whether its size is 0.
      * @~chinese 
-     * 返回一个bool值,该值指示地图容器是否为空,无论其大小是否为0。
+     * 返回一个bool值,该值指示Map容器是否为空,无论其大小是否为0。
      *  @note @~english This function does not modify the content of the container in any way.
      *        To clear the content of an array object, member function unordered_map::clear exists.
      * @~chinese 这个函数并不以任何方式修改容器的内容。
@@ -257,7 +257,7 @@ public:
      *  @param key @~english Key value of the element whose mapped value is accessed.
      *       Member type K is the keys for the elements in the container. defined in Map<K, V> as an alias of its first template parameter (Key).
      * @~chinese 映射访问元素的关键值。
-     * 成员K是在容器中的元素的键。在地图<定义> K，V作为其第一个模板参数的别名（关键）
+     * 成员K是在容器中的元素的键。在Map<定义> K，V作为其第一个模板参数的别名（关键）
      */
     const V at(const K& key) const
     {
@@ -328,11 +328,11 @@ public:
      * Removes an element with an iterator from the Map<K, V> container.
      *
      * @~chinese 
-     * 从地图中删除一个元素的迭代器< K、V >容器。
+     * 从Map中删除一个元素的迭代器< K、V >容器。
      * 
      * @param position @~english Iterator pointing to a single element to be removed from the Map<K, V>.
      *        Member type const_iterator is a forward iterator type.
-     * @~chinese 从地图上要删除迭代器指向的单个元素< K、V >。
+     * @~chinese 从Map上要删除迭代器指向的单个元素< K、V >。
      * const_iterator是一个向前迭代器的类型。
      */
     iterator erase(const_iterator position)
@@ -347,7 +347,7 @@ public:
      * Removes an element with an iterator from the Map<K, V> container.
      *
      * @~chinese 
-     * 从地图中删除一个元素的迭代器< K、V >容器。
+     * 从Map中删除一个元素的迭代器< K、V >容器。
      * 
      * @param k @~english Key of the element to be erased.
      *        Member type 'K' is the type of the keys for the elements in the container,
@@ -393,7 +393,7 @@ public:
      *  their reference count will be decreased, and they are removed from the container,
      *  leaving it with a size of 0.
      * @~chinese 
-     * 终止地图上的所有元素< K、V >容器:
+     * 终止Map上的所有元素< K、V >容器:
      * 他们的引用计数将减少并从容器中删除,
      * 留下一个大小为0的元素。
      */
@@ -413,7 +413,7 @@ public:
      * @~chinese 
      * 得到一个随机对象的映射。
      * @return @~english Returns the random object if the map isn't empty, otherwise it returns nullptr.
-     * @~chinese 如果地图不是空的，则返回随机对象,否则返回nullptr。
+     * @~chinese 如果Map不是空的，则返回随机对象,否则返回nullptr。
      */
     V getRandomObject() const
     {
@@ -477,7 +477,7 @@ public:
     
 protected:
     
-    /** @~english Retains all the objects in the map  @~chinese 保留所有的对象地图 */
+    /** @~english Retains all the objects in the map  @~chinese 保留所有的对象Map */
     void addRefForAllObjects()
     {
         for (auto iter = _data.begin(); iter != _data.end(); ++iter)
