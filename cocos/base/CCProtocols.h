@@ -116,7 +116,7 @@ public:
      * 0表示完全透明和255是完全不透明的。
      * 
      * @return  @~english The opacity of sprite, from 0 ~ 255
-     * @~chinese 精灵的不妥名都，范围从0 ~ 255
+     * @~chinese 精灵的透明度，范围从0 ~ 255
      * @js NA
      * @lua NA
      */
