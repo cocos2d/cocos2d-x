@@ -75,7 +75,7 @@ def main():
     #set commit status to pending
     target_url = os.environ['JOB_PULL_REQUEST_BUILD_URL']
 
-    if(action == 'closed' or action == 'assigned' or branch == 'v2'):
+    if(action == 'closed' or action == 'assigned' or branch == 'v2' or branch == 'v3-doc'):
         print 'pull request #' + str(pr_num) + ' is ' + action + ', no build triggered'
         return(0)
 
