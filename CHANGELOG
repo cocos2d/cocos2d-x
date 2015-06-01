@@ -14,7 +14,10 @@ cocos2d-x-3.7  ??
     [NEW]           3d: add `getFarPlane` and `getNearPlane` in `Camera` class
     [NEW]           ui: button add BMFont title support
     [NEW]           ui: TextField add `getTextColor`, `getTextHorizontalAlignment` and `getTextVerticalAlignment` API
+    [NEW]           audio: Added MP3 support to winrt audio
     
+    [FIX]           audio: Fixed program may freeze if `AudioEngine::stop` or `AudioEngine::stopAll()` is invoked frequently on Android
+    [FIX]           ui: TextField scale factor is wrong with multiline text.
     [FIX]           3d: skybox can't move to other position except origin point in world space
     [FIX]           3d: terrain can't move to other position except origin point in world space
     [FIX]           3rd: fix PIE link error on iOS caused by libpng and libtiff
@@ -33,6 +36,7 @@ cocos2d-x-3.7  ??
     [FIX]           TileMap: crashed if a layer contains nothing
     [FIX]           WebView: memory leak on iOS
     [FIX]           WebView: crashed if url contains illegal characters on Android
+    [FIX]           Lua: luaLoadChunksFromZip should just remove .lua or .luac extension
 
 cocos2d-x-3.6  Apr.30 2015
     [NEW]           3rd: update chipmunk to v 6.2.2 on Windows 8.1 Universal App
