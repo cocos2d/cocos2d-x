@@ -110,7 +110,7 @@ public:
      * IMPORTANT: You should never call "Action::stop()" manually. Instead, use: "target->stopAction(action);".
      * @~chinese 
      * 操作完成后会调用，它会将target设置为空。
-     * 重要的是: 你不应该叫手动调用这个API，请使用"target->stopAction(action);"。
+     * **注意**: 你不应该叫手动调用这个API，请使用"target->stopAction(action);"。
      */
     virtual void stop();
 
