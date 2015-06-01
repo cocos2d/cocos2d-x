@@ -47,7 +47,8 @@ class TrianglesCommand;
 class MeshCommand;
 
 /** 
-@~english Class that knows how to sort `RenderCommand` objects.
+@class RenderQueue
+@brief @~english Class that knows how to sort `RenderCommand` objects.
  Since the commands that have `z == 0` are "pushed back" in
  the correct order, the only `RenderCommand` objects that need to be sorted,
  are the ones that have `z < 0` and `z > 0`.
@@ -94,12 +95,15 @@ public:
     RenderQueue();
     /**
     @~english Push a renderCommand into current renderqueue. 
-    @~chinese 将渲染命令插入到当前渲染队列末尾
+    @~chinese 将渲染命令插入到当前渲染队列末尾。
+    @param command @~english The command to be pushed in to renderqueue
+    @~chinese 待插入渲染队列的命令。
     */
     void push_back(RenderCommand* command);
     /**
     @~english Return the number of render commands. 
     @~chinese 得到渲染命令的数量。
+    @return @~english The number of render commands @~chinese 渲染命令个数
     */
     ssize_t size() const;
     /**
@@ -110,6 +114,11 @@ public:
     /**
     @~english Treat sorted commands as an array, access them one by one. 
     @~chinese 将排序后的渲染命令当作一个数组，逐个访问
+    @param index @~english array index for commands
+    @~chinese 索引值
+    @return @~english the RenderCommand in the given index
+    @~chinese 给定位置的渲染命令
+
     */
     RenderCommand* operator[](ssize_t index) const;
     /**
@@ -121,16 +130,26 @@ public:
     @~english Realloc command queues and reserve with given size. 
     Note: this clears any existing commands. 
     @~chinese 按照指定大小重新分配渲染队列。注意:这个清除任何现有的命令。
+    @param reserveSize @~english max size for command queue
+    @~chinese 命令队列的最大容量。
     */
     void realloc(size_t reserveSize);
     /**
     @~english Get a sub group of the render queue. 
     @~chinese 得到渲染子队列
+    @param group @~english group ID for the sub queque
+    @~chinese 子渲染队列的组ID
+    @return @~english render command array
+    @~chinese 一组渲染命令
     */
     inline std::vector<RenderCommand*>& getSubQueue(QUEUE_GROUP group) { return _commands[group]; }
     /**
     @~english Get the number of render commands contained in a subqueue. 
     @~chinese 得到渲染子队列中的渲染命令数量。
+    @param group @~english group ID for the sub queque
+    @~chinese 子渲染队列的组ID
+    @return @~english the number of command in sub queque
+    @~chinese 子渲染队列的渲染命令数量。
     */
     inline ssize_t getSubQueueSize(QUEUE_GROUP group) const { return _commands[group].size();}
 
@@ -177,7 +196,8 @@ struct RenderStackElement
 class GroupCommandManager;
 
 /* 
-@~english Class responsible for the rendering in.
+@class Renderer
+@brief @~english Class responsible for the rendering in.
 
 Whenever possible prefer to use `QuadCommand` objects since the renderer will automatically batch them.
 @~chinese 负责渲染的类。 
@@ -223,18 +243,26 @@ public:
     /** 
     @~english Adds a `RenderComamnd` into the renderer  
     @~chinese 向renderer中添加一个RenderComamnd。
+    @param command @~english render command to be insert
+    @~chinese 待插入的渲染命令。
     */
     void addCommand(RenderCommand* command);
 
     /** 
     @~english Adds a `RenderComamnd` into the renderer specifying a particular render queue ID  
     @~chinese 向指定ID的渲染队列中插入RenderComamnd。
+    @param command @~english render command to be insert
+    @~chinese 待插入的渲染命令。
+    @param renderQueue @~english the queue id the command queue
+    @~chinese 命令队列的id。
     */
     void addCommand(RenderCommand* command, int renderQueue);
 
     /** 
     @~english Pushes a group into the render queue  
     @~chinese 渲染队列入栈。
+    @param renderQueueID @~english the queue id the command queue
+    @~chinese 命令队列的id。
     */
     void pushGroup(int renderQueueID);
 
@@ -247,6 +275,8 @@ public:
     /** 
     @~english Creates a render queue and returns its Id  
     @~chinese 创建一个渲染队列,并返回它的Id
+    @return @~english the id of newly created render queue.
+    @~chinese 新创建的渲染队列id。
     */
     int createRenderQueue();
 
@@ -271,26 +301,36 @@ public:
     /** 
     @~english set color for clear screen  
     @~chinese 设置屏幕清空的颜色。
+    @param clearColor @~english the clear color.
+    @~chinese 清空的颜色。
     */
     void setClearColor(const Color4F& clearColor);
     /* 
     @~english returns the number of drawn batches in the last frame  
     @~chinese 返回统计数据：渲染的batch次数。
+    @return @~english the number of draw batch.
+    @~chinese batch绘制的次数。
     */
     ssize_t getDrawnBatches() const { return _drawnBatches; }
     /* 
     @~english RenderCommands (except) QuadCommand should update this value  
     @~chinese 除了QuadCommand，其他渲染命令应该更新渲染batch这个统计数据值
+    @param number @~english the added number of draw batch
+    @~chinese 增加的batch绘制的数目。
     */
     void addDrawnBatches(ssize_t number) { _drawnBatches += number; };
     /* 
     @~english returns the number of drawn triangles in the last frame  
     @~chinese 返回统计数据：绘制的三角形数量。
+    @return @~english the number of drawn triangles
+    @~chinese 绘制的三角形数目。
     */
     ssize_t getDrawnVertices() const { return _drawnVertices; }
     /* 
     @~english RenderCommands (except) QuadCommand should update this value  
     @~chinese 除了QuadCommand，其他渲染命令应该更新渲染的顶点个数这个统计数据值。
+    @param number @~english the added number of draw vertices
+    @~chinese 增加的绘制顶点的数目。
     */
     void addDrawnVertices(ssize_t number) { _drawnVertices += number; };
     /* 
@@ -307,6 +347,9 @@ public:
      * 启用和不启用深度测试
      * 3d对象默认会启用深度测试,不能改变
      * 2d对象默认不启用深度测试。
+
+     @param enable @~english depth test enabled or not.
+     @~chinese 是否启用深度测试。
      */
     void setDepthTest(bool enable);
     
@@ -314,8 +357,10 @@ public:
     inline GroupCommandManager* getGroupCommandManager() const { return _groupCommandManager; };
 
     /** 
-    @~english returns whether or not a rectangle is visible or not  
+    @~english returns whether or not a rectangle is visible or not.
     @~chinese 判断一个长方形是否可见。
+    @param transform @~english matrix for the rect. @~chinese 给定物体的变换矩阵。
+    @param size @~english the size of rect. @~chinese 长方形的大小。
     */
     bool checkVisibility(const Mat4& transform, const Size& size);
 
