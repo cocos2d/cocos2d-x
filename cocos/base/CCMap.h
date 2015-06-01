@@ -45,12 +45,18 @@
 NS_CC_BEGIN
 
  /**
- * Similar to std::unordered_map, but it will manage reference count automatically internally.
- * Which means it will invoke Ref::retain() when adding an element, and invoke Ref::release() when removing an element.
- * @warning The element should be `Ref` or its sub-class.
- * @js NA
- * @lua NA
- */
+  * @~english
+  * Similar to std::unordered_map, but it will manage reference count automatically internally.
+  * Which means it will invoke Ref::retain() when adding an element, and invoke Ref::release() when removing an element.
+  * @~chinese 
+  * 类似于std::unordered_map,但是在内部自动管理引用计数。
+  * 这意味着它将调用裁判
+  * @warning @~english The element should be `Ref` or its sub-class.
+  * @~chinese 元素应该是“Ref”或其子类。
+  *
+  * @js NA
+  * @lua NA
+  */
 template <class K, class V>
 class Map
 {
@@ -65,27 +71,31 @@ public:
     // Iterators
     // ------------------------------------------
 
-    /** Iterator, can be used to loop the Map. */
+    /** @~english Iterator, can be used to loop the Map.  @~chinese 迭代器,可用于循环地图。*/
     typedef typename RefMap::iterator iterator;
-    /** Const iterator, can be used to loop the Map. */
+
+    /** @~english Const iterator, can be used to loop the Map.  @~chinese 常量迭代器,可用于循环地图。*/
     typedef typename RefMap::const_iterator const_iterator;
     
-    /** Return iterator to beginning. */
+    /** @~english Return iterator to beginning.  @~chinese 返回迭代器开始。*/
     iterator begin() { return _data.begin(); }
-    /** Return const_iterator to beginning. */
+
+    /** @~english Return const_iterator to beginning.  @~chinese 返回const_iterator开头。*/
     const_iterator begin() const { return _data.begin(); }
     
-    /** Return iterator to end.*/
+    /** @~english Return iterator to end. @~chinese 返回迭代器末尾。*/
     iterator end() { return _data.end(); }
-    /** Return const_iterator to end.*/
+
+    /** @~english Return const_iterator to end. @~chinese 返回const_iterator结尾。*/
     const_iterator end() const { return _data.end(); }
     
-    /** Return const_iterator to beginning.*/
+    /** @~english Return const_iterator to beginning. @~chinese 返回const_iterator开头。*/
     const_iterator cbegin() const { return _data.cbegin(); }
-    /** Return const_iterator to end.*/
+
+    /** @~english Return const_iterator to end. @~chinese 返回const_iterator结尾。*/
     const_iterator cend() const { return _data.cend(); }
     
-    /** Default constructor */
+    /** @~english Default constructor  @~chinese 默认构造函数 */
     Map<K, V>()
     : _data()
     {
@@ -93,7 +103,7 @@ public:
         CCLOGINFO("In the default constructor of Map!");
     }
     
-    /** Constructor with capacity. */
+    /** @~english Constructor with capacity.  @~chinese capacity构造函数。 */
     explicit Map<K, V>(ssize_t capacity)
     : _data()
     {
@@ -102,7 +112,7 @@ public:
         _data.reserve(capacity);
     }
     
-    /** Copy constructor. */
+    /** @~english Copy constructor.  @~chinese Copy构造函数。 */
     Map<K, V>(const Map<K, V>& other)
     {
         static_assert(std::is_convertible<V, Ref*>::value, "Invalid Type for cocos2d::Map<K, V>!");
@@ -111,7 +121,8 @@ public:
         addRefForAllObjects();
     }
     
-    /** Move constructor. */
+    /** @~english Move constructor.  @~chinese Move构造函数。 */
+
     Map<K, V>(Map<K, V>&& other)
     {
         static_assert(std::is_convertible<V, Ref*>::value, "Invalid Type for cocos2d::Map<K, V>!");
@@ -119,9 +130,14 @@ public:
         _data = std::move(other._data);
     }
     
-    /** 
+    /**
+     * @~english
      * Destructor.
      * It will release all objects in map.
+     *
+     * @~chinese 
+     * 析构函数。
+     * 释放所有对象地图。
      */
     ~Map<K, V>()
     {
@@ -129,7 +145,7 @@ public:
         clear();
     }
     
-    /** Sets capacity of the map. */
+    /** @~english Sets capacity of the map.  @~chinese 设置地图的capacity。 */
     void reserve(ssize_t capacity)
     {
 #if USE_STD_UNORDERED_MAP
@@ -137,7 +153,7 @@ public:
 #endif
     }
     
-    /** Returns the number of buckets in the Map container. */
+    /** @~english Returns the number of buckets in the Map container.  @~chinese 返回地图容器buckets的数量。 */
     ssize_t bucketCount() const
     {
 #if USE_STD_UNORDERED_MAP
@@ -147,7 +163,7 @@ public:
 #endif
     }
     
-    /** Returns the number of elements in bucket n. */
+    /** @~english Returns the number of elements in bucket n.  @~chinese 返回bucket n的元素数量。 */
     ssize_t bucketSize(ssize_t n) const
     {
 #if USE_STD_UNORDERED_MAP
@@ -157,7 +173,7 @@ public:
 #endif
     }
     
-    /** Returns the bucket number where the element with key k is located. */
+    /** @~english Returns the bucket number where the element with key k is located.  @~chinese 返回桶元素k与关键所在。 */
     ssize_t bucket(const K& k) const
     {
 #if USE_STD_UNORDERED_MAP
@@ -167,23 +183,28 @@ public:
 #endif
     }
     
-    /** The number of elements in the map. */
+    /** @~english The number of elements in the map.  @~chinese 地图中的元素的数量。 */
     ssize_t size() const
     {
         return _data.size();
     }
     
-    /** 
+    /**
+     * @~english
      * Returns a bool value indicating whether the map container is empty, i.e. whether its size is 0.
-     *  @note This function does not modify the content of the container in any way.
+     * @~chinese 
+     * 返回一个bool值,该值指示地图容器是否为空,无论其大小是否为0。
+     *  @note @~english This function does not modify the content of the container in any way.
      *        To clear the content of an array object, member function unordered_map::clear exists.
+     * @~chinese 这个函数并不以任何方式修改容器的内容。
+     *        清除一个数组对象的内容,成员函数 unordered_map:clear 存在。
      */
     bool empty() const
     {
         return _data.empty();
     }
     
-    /** Returns all keys in the map. */
+    /** @~english Returns all keys in the map.  @~chinese 返回所有键的映射。 */
     std::vector<K> keys() const
     {
         std::vector<K> keys;
@@ -200,7 +221,7 @@ public:
         return keys;
     }
     
-    /** Returns all keys that matches the object. */
+    /** @~english Returns all keys that matches the object.  @~chinese 返回所有键相匹配的对象。 */
     std::vector<K> keys(V object) const
     {
         std::vector<K> keys;
@@ -223,12 +244,19 @@ public:
         return keys;
     }
     
-    /** 
+    /**
+     * @~english
      * Returns a reference to the mapped value of the element with key k in the map.
      *
-     *  @note If key does not match the key of any element in the container, the function return nullptr.
-     *  @param key Key value of the element whose mapped value is accessed.
+     * @~chinese 
+     * 返回引用的映射值与k元素的映射。
+     * 
+     *  @note @~english If key does not match the key of any element in the container, the function return nullptr.
+     * @~chinese 如果密钥不匹配的关键任何元素的容器,该函数返回nullptr。
+     *  @param key @~english Key value of the element whose mapped value is accessed.
      *       Member type K is the keys for the elements in the container. defined in Map<K, V> as an alias of its first template parameter (Key).
+     * @~chinese 映射访问元素的关键值。
+     * 成员K是在容器中的元素的键。在地图<定义> K，V作为其第一个模板参数的别名（关键）
      */
     const V at(const K& key) const
     {
@@ -246,13 +274,21 @@ public:
         return nullptr;
     }
     
-    /** 
+    /**
+     * @~english
      * Searches the container for an element with 'key' as key and returns an iterator to it if found,
      *         otherwise it returns an iterator to Map<K, V>::end (the element past the end of the container).
      *
-     * @param key Key to be searched for.
+     * @~chinese 
+     * 搜索的容器元素与“关键”键和返回一个迭代器,如果找到,
+     * 否则返回一个迭代器映射< K、V >::结束
+     * 
+     * @param key @~english Key to be searched for.
      *        Member type 'K' is the type of the keys for the elements in the container,
      *        defined in Map<K, V> as an alias of its first template parameter (Key).
+     * @~chinese 寻找键。
+     * 成员类型“K”容器中的元素的键,
+     * Map < K、V >中定义的别名,它的第一个模板参数
      */
     const_iterator find(const K& key) const
     {
@@ -264,12 +300,19 @@ public:
         return _data.find(key);
     }
     
-    /** 
+    /**
+     * @~english
      * Inserts new elements in the map.
      *
-     * @note If the container has already contained the key, this function will erase the old pair(key, object)  and insert the new pair.
-     * @param key The key to be inserted.
-     * @param object The object to be inserted.
+     * @~chinese 
+     * 插入新元素的映射。
+     * 
+     * @note @~english If the container has already contained the key, this function will erase the old pair(key, object)  and insert the new pair.
+     * @~chinese 如果容器已经包含的关键,该函数将删除旧的一对(关键对象)并插入新的一对。
+     * @param key @~english The key to be inserted.
+     * @~chinese 被插入的键。
+     * @param object @~english The object to be inserted.
+     * @~chinese 被插入的对象。
      */
     void insert(const K& key, V object)
     {
@@ -279,11 +322,17 @@ public:
         object->retain();
     }
     
-    /** 
+    /**
+     * @~english
      * Removes an element with an iterator from the Map<K, V> container.
      *
-     * @param position Iterator pointing to a single element to be removed from the Map<K, V>.
+     * @~chinese 
+     * 从地图中删除一个元素的迭代器< K、V >容器。
+     * 
+     * @param position @~english Iterator pointing to a single element to be removed from the Map<K, V>.
      *        Member type const_iterator is a forward iterator type.
+     * @~chinese 从地图上要删除迭代器指向的单个元素< K、V >。
+     * const_iterator是一个向前迭代器的类型。
      */
     iterator erase(const_iterator position)
     {
@@ -292,13 +341,21 @@ public:
         return _data.erase(position);
     }
     
-    /** 
+    /**
+     * @~english
      * Removes an element with an iterator from the Map<K, V> container.
      *
-     * @param k Key of the element to be erased.
+     * @~chinese 
+     * 从地图中删除一个元素的迭代器< K、V >容器。
+     * 
+     * @param k @~english Key of the element to be erased.
      *        Member type 'K' is the type of the keys for the elements in the container,
      *        defined in Map<K, V> as an alias of its first template parameter (Key).
+     * @~chinese 删除的键元素。
+     * “K”类型的容器中的元素的键,
+     * Map < K、V >中定义的别名,它的第一个模板参数
      */
+
     size_t erase(const K& k)
     {
         auto iter = _data.find(k);
@@ -312,10 +369,15 @@ public:
         return 0;
     }
     
-    /** 
+    /**
+     * @~english
      * Removes some elements with a vector which contains keys in the map.
      *
-     * @param keys Keys of elements to be erased.
+     * @~chinese 
+     * 删除某些元素与向量中包含的键映射。
+     * 
+     * @param keys @~english Keys of elements to be erased.
+     * @~chinese 被删除的键元素。
      */
     void erase(const std::vector<K>& keys)
     {
@@ -324,10 +386,15 @@ public:
         }
     }
     
-    /** 
+    /**
+     * @~english
      * All the elements in the Map<K,V> container are dropped:
      *  their reference count will be decreased, and they are removed from the container,
      *  leaving it with a size of 0.
+     * @~chinese 
+     * 终止地图上的所有元素< K、V >容器:
+     * 他们的引用计数将减少并从容器中删除,
+     * 留下一个大小为0的元素。
      */
     void clear()
     {
@@ -339,9 +406,13 @@ public:
         _data.clear();
     }
     
-    /** 
+    /**
+     * @~english
      * Gets a random object in the map.
-     * @return Returns the random object if the map isn't empty, otherwise it returns nullptr.
+     * @~chinese 
+     * 得到一个随机对象的映射。
+     * @return @~english Returns the random object if the map isn't empty, otherwise it returns nullptr.
+     * @~chinese 如果地图不是空的，则返回随机对象,否则返回nullptr。
      */
     V getRandomObject() const
     {
@@ -380,7 +451,7 @@ public:
     //        return _data.at(key);
     //    }
     
-    /** Copy assignment operator. */
+    /** @~english Copy assignment operator.  @~chinese 拷贝赋值运算符。 */
     Map<K, V>& operator= ( const Map<K, V>& other )
     {
         if (this != &other) {
@@ -392,7 +463,7 @@ public:
         return *this;
     }
     
-    /** Move assignment operator. */
+    /** @~english Move assignment operator.  @~chinese 移动赋值运算符。 */
     Map<K, V>& operator= ( Map<K, V>&& other )
     {
         if (this != &other) {
@@ -405,7 +476,7 @@ public:
     
 protected:
     
-    /** Retains all the objects in the map */
+    /** @~english Retains all the objects in the map  @~chinese 保留所有的对象地图 */
     void addRefForAllObjects()
     {
         for (auto iter = _data.begin(); iter != _data.end(); ++iter)
