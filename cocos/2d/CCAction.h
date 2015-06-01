@@ -62,10 +62,10 @@ public:
 
     /** @~english Returns a clone of action.
      *
-     * @~chinese 返回一个克隆的行动。
+     * @~chinese 返回一个克隆的动作。
      * 
      * @return @~english A clone action.
-     * @~chinese 一个克隆的行动
+     * @~chinese 一个克隆的动作
      */
     virtual Action* clone() const
     {
@@ -89,16 +89,16 @@ public:
 
     /** @~english Return true if the action has finished. 
      * 
-     * @~chinese 如果行动已经完成就返回true。
+     * @~chinese 如果动作已经完成就返回true。
      * 
      * @return @~english Is true if the action has finished.
-     * @~chinese 如果行动已经完成就返回true。
+     * @~chinese 如果动作已经完成就返回true。
      */
     virtual bool isDone() const;
 
     /** @~english Called before the action start. It will also set the target. 
      *
-     * @~chinese 在行动开始之前调用，它还将设置target属性为目标节点。
+     * @~chinese 在动作开始之前调用，它还将设置target属性为目标节点。
      * 
      * @param target @~english A certain target.
      * @~chinese 一个特定的目标节点。
@@ -135,9 +135,9 @@ public:
      * 动作开始后每帧都会被调用。time是一个值在0和1之间的进度。
      * 
      * 例如:
-     * - 0意味着行动刚刚开始。
-     * - 0.5意味着行动是在中间。
-     * - 1意味着行动已经结束。
+     * - 0意味着动作刚刚开始。
+     * - 0.5意味着动作是在中间。
+     * - 1意味着动作已经结束。
      * 
      * @param time @~english A value between 0 and 1.
      * @~chinese 一个在0和1之间的值。
@@ -317,7 +317,7 @@ public:
      * @param action @~english An action.
      * @~chinese 一个动作。
      * @param speed @~english The action speed.
-     * @~chinese 行动速度。
+     * @~chinese 动作速度。
      */
     static Speed* create(ActionInterval* action, float speed);
 
@@ -326,7 +326,7 @@ public:
      * @~chinese 返回目标动作执行的速度。
      * 
      * @return @~english The action speed.
-     * @~chinese 行动速度。
+     * @~chinese 动作速度。
      */
     inline float getSpeed(void) const { return _speed; }
 
