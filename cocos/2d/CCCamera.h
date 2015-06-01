@@ -34,7 +34,8 @@ NS_CC_BEGIN
 class Scene;
 class FrameBufferObject;
 /**
- Viewport is a normalized to renderTarget
+ Viewport is a normalized to FrameBufferObject
+ But for default FBO, the size is absolute.
  */
 struct CC_DLL Viewport
 {
@@ -303,6 +304,11 @@ protected:
     Viewport _viewport;
     
     FrameBufferObject* _fbo;
+protected:
+    static Viewport _defaultViewport;
+public:
+    static const Viewport& getDefaultViewport() { return _defaultViewport; }
+    static void setDefaultViewport(const Viewport& vp) { _defaultViewport = vp; }
 };
 
 NS_CC_END

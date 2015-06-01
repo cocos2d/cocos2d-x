@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "base/CCTouch.h"
 #include "base/CCDirector.h"
 #include "base/CCEventDispatcher.h"
+#include "2d/CCCamera.h"
 
 NS_CC_BEGIN
 
@@ -226,10 +227,11 @@ Vec2 GLView::getVisibleOrigin() const
 
 void GLView::setViewPortInPoints(float x , float y , float w , float h)
 {
-    glViewport((GLint)(x * _scaleX + _viewPortRect.origin.x),
-               (GLint)(y * _scaleY + _viewPortRect.origin.y),
-               (GLsizei)(w * _scaleX),
-               (GLsizei)(h * _scaleY));
+    Viewport vp = {(float)(x * _scaleX + _viewPortRect.origin.x),
+        (float)(y * _scaleY + _viewPortRect.origin.y),
+        (float)(w * _scaleX),
+        (float)(h * _scaleY)};
+    Camera::setDefaultViewport(vp);
 }
 
 void GLView::setScissorInPoints(float x , float y , float w , float h)
