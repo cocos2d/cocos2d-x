@@ -50,7 +50,8 @@ NS_CC_BEGIN
   * Which means it will invoke Ref::retain() when adding an element, and invoke Ref::release() when removing an element.
   * @~chinese 
   * 类似于std::unordered_map,但是在内部自动管理引用计数。
-  * 这意味着它将调用裁判
+  * 这意味着它将在插入的时候调用Ref::retain()，删除的时候调用Ref::release()
+  *
   * @warning @~english The element should be `Ref` or its sub-class.
   * @~chinese 元素应该是“Ref”或其子类。
   *
@@ -71,7 +72,7 @@ public:
     // Iterators
     // ------------------------------------------
 
-    /** @~english Iterator, can be used to loop the Map.  @~chinese 迭代器,可用于循环地图。*/
+    /** @~english Iterator, can be used to loop the Map.  @~chinese 迭代器,可用于遍历map。*/
     typedef typename RefMap::iterator iterator;
 
     /** @~english Const iterator, can be used to loop the Map.  @~chinese 常量迭代器,可用于循环地图。*/
@@ -137,7 +138,7 @@ public:
      *
      * @~chinese 
      * 析构函数。
-     * 释放所有对象地图。
+     * 释放map中的所有对象。
      */
     ~Map<K, V>()
     {
@@ -153,7 +154,7 @@ public:
 #endif
     }
     
-    /** @~english Returns the number of buckets in the Map container.  @~chinese 返回地图容器buckets的数量。 */
+    /** @~english Returns the number of buckets in the Map container.  @~chinese 返回map中buckets的数量。 */
     ssize_t bucketCount() const
     {
 #if USE_STD_UNORDERED_MAP
@@ -173,7 +174,7 @@ public:
 #endif
     }
     
-    /** @~english Returns the bucket number where the element with key k is located.  @~chinese 返回桶元素k与关键所在。 */
+    /** @~english Returns the bucket number where the element with key k is located.  @~chinese 返回的bucket数与密钥K元素的位置。 */
     ssize_t bucket(const K& k) const
     {
 #if USE_STD_UNORDERED_MAP
