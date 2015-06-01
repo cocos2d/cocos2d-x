@@ -107,12 +107,12 @@ namespace utils
      * Why we need this? Because in android c++_static, atof ( and std::atof ) is unsupported for numbers have long decimal part and contain
      * several numbers can approximate to 1 ( like 90.099998474121094 ), it will return inf. This function is used to fix this bug.
      * @~chinese 和::atof类似,但带字符串,在调用atof之前保持小数点后7位数。
-     * 为什么我们需要这个?因为在android c++ _static atof(std::atof) 是不支持的一部分和比较大的十进制数
-     * 几个数字可以近似为1
+     * 为什么我们需要这个?因为在android c++ _static atof(std::atof) 是不支持的一部分比较长的数字
+     * 几个数字可以近似为1( 像 90.099998474121094 ), 原来它将会返回inf. 这个函数是用来修正这个错误。
      * @param str @~english The string be to converted to double.
-     * @~chinese The string be to converted to double.
+     * @~chinese 将字符转换为双精度数.
      * @return @~english Returns converted value of a string.
-     * @~chinese 返回转换后的值的字符串。
+     * @~chinese 返回转换后的字符串。
      */
     double CC_DLL atof(const char* str);
 
