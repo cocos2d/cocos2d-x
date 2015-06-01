@@ -140,21 +140,7 @@ void NavMeshBaseTestDemo::initScene()
 {
     getPhysics3DWorld()->setDebugDrawEnable(false);
     //create mesh
-    std::vector<Vec3> trianglesList;
-    auto bundle = Bundle3D::createBundle();
-    MeshDatas meshs;
-    MaterialDatas materials;
-    NodeDatas nodeDatas;
-    bundle->loadObj(meshs, materials, nodeDatas, "NavMesh/scene.obj");
-    Bundle3D::destroyBundle(bundle);
-    for (auto iter : meshs.meshDatas){
-        int preVertexSize = iter->getPerVertexSize() / sizeof(float);
-        for (auto indexArray : iter->subMeshIndices){
-            for (auto i : indexArray){
-                trianglesList.push_back(Vec3(iter->vertex[i * preVertexSize], iter->vertex[i * preVertexSize + 1], iter->vertex[i * preVertexSize + 2]));
-            }
-        }
-    }
+    std::vector<Vec3> trianglesList = Bundle3D::getTrianglesList("NavMesh/scene.obj");
 
     Physics3DRigidBodyDes rbDes;
     rbDes.mass = 0.0f;
