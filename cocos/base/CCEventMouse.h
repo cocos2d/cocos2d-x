@@ -45,8 +45,7 @@
 
 NS_CC_BEGIN
 
-/** @class @~english EventMouse
- * @~chinese 鼠标事件对象
+/** @class EventMouse
  *
  * @brief @~english The mouse event.
  * @~chinese 鼠标事件
@@ -89,19 +88,17 @@ public:
     inline void setScrollData(float scrollX, float scrollY) { _scrollX = scrollX; _scrollY = scrollY; };
 
     /** @~english Get mouse scroll data of x axis.
-     * 
-     * @~chinese 
-
+     * @~chinese 获取鼠标滚动的X轴数据
+     *
      * @return @~english The scroll data of x axis.
-     * @~chinese 
+     * @~chinese 鼠标滚动的X轴数据
      */
     inline float getScrollX() const { return _scrollX; };
     /** @~english Get mouse scroll data of y axis.
+     * @~chinese 获取鼠标滚的Y轴数据
      *
-     * @~chinese 
-
      * @return @~english The scroll data of y axis.
-     * @~chinese 
+     * @~chinese 鼠标滚动的Y轴数据
      */
     inline float getScrollY() const { return _scrollY; };
 
@@ -139,10 +136,10 @@ public:
     inline void setMouseButton(int button) { _mouseButton = button; };
 
     /** @~english Get mouse button.
-     * @~chinese 获取一个鼠标按钮
+     * @~chinese 获取触发事件的鼠标按键
      *
      * @return @~english The mouse button.
-     * @~chinese 鼠标按钮
+     * @~chinese 鼠标按键
      *
      * @js getButton
      */
@@ -158,10 +155,10 @@ public:
     inline float getCursorX() const { return _x; };
 
     /** @~english Get the cursor position of y axis.
-     * @~chinese 获取光标的x轴坐标
+     * @~chinese 获取光标的y轴坐标
      *
      * @return @~english The y coordinate of cursor position.
-     * @~chinese x轴坐标
+     * @~chinese y轴坐标
      *
      * @js getLocationY
      */

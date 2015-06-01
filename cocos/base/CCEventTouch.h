@@ -39,8 +39,8 @@ class Touch;
 
 #define TOUCH_PERF_DEBUG 1
 
-/** @class @~english EventTouch
- * @~chinese 触摸事件对象
+/** @class EventTouch
+ *
  * @brief @~english Touch event.
  * @~chinese 触摸事件
  */
@@ -92,10 +92,10 @@ public:
     void setEventCode(EventCode eventCode) { _eventCode = eventCode; };
 
     /** @~english Set the touches
-     * @~chinese 设置触摸列表
+     * @~chinese 设置触摸点列表
      *
      * @param touches @~english A given touches vector.
-     * @~chinese 一个触摸列表
+     * @~chinese 一个触摸点列表
      */
     void setTouches(const std::vector<Touch*>& touches) { _touches = touches; };
 #endif
