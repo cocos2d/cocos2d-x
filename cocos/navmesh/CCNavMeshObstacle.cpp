@@ -123,22 +123,40 @@ void NavMeshObstacle::syncToNode()
 {
     if (_tileCache){
         auto obstacle = _tileCache->getObstacleByRef(_obstacleID);
-        Vec3 localPos = Vec3(obstacle->pos[0], obstacle->pos[1], obstacle->pos[2]);
-        if (_owner->getParent())
-            _owner->getParent()->getWorldToNodeTransform().transformPoint(localPos, &localPos);
-        _owner->setPosition3D(localPos);
+        if (obstacle){
+            Vec3 localPos = Vec3(obstacle->pos[0], obstacle->pos[1], obstacle->pos[2]);
+            if (_owner->getParent())
+                _owner->getParent()->getWorldToNodeTransform().transformPoint(localPos, &localPos);
+            _owner->setPosition3D(localPos);
+            _radius = obstacle->radius;
+            _height = obstacle->height;
+        }
     }
+}
+
+void cocos2d::NavMeshObstacle::setRadius(float radius)
+{
+    _radius = radius;
+}
+
+void cocos2d::NavMeshObstacle::setHeight(float height)
+{
+    _height = height;
 }
 
 void NavMeshObstacle::syncToObstacle()
 {
     if (_tileCache){
         auto obstacle = _tileCache->getObstacleByRef(_obstacleID);
-        Vec3 worldPos = Vec3(obstacle->pos[0], obstacle->pos[1], obstacle->pos[2]);
-        Mat4 mat = _owner->getNodeToWorldTransform();
-        if (mat.m[12] != obstacle->pos[0] && mat.m[13] != obstacle->pos[1] && mat.m[14] != obstacle->pos[2]){
-            _tileCache->removeObstacle(_obstacleID);
-            _tileCache->addObstacle(&mat.m[12], _radius, _height, &_obstacleID);
+        if (obstacle){
+            Vec3 worldPos = Vec3(obstacle->pos[0], obstacle->pos[1], obstacle->pos[2]);
+            Mat4 mat = _owner->getNodeToWorldTransform();
+            if ((mat.m[12] != obstacle->pos[0] && mat.m[13] != obstacle->pos[1] && mat.m[14] != obstacle->pos[2])
+                || obstacle->radius != _radius
+                || obstacle->height != _height){
+                _tileCache->removeObstacle(_obstacleID);
+                _tileCache->addObstacle(&mat.m[12], _radius, _height, &_obstacleID);
+            }
         }
     }
 }
