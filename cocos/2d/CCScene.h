@@ -50,31 +50,44 @@ class Physics3DWorld;
  */
 
 /** @class Scene
-* @brief Scene is a subclass of Node that is used only as an abstract concept.
-
-Scene and Node are almost identical with the difference that Scene has its
-anchor point (by default) at the center of the screen.
-
-For the moment Scene has no other logic than that, but in future releases it might have
-additional logic.
-
-It is a good practice to use a Scene as the parent of all your nodes.
- 
-Scene will create a default camera for you.
+ * @brief @~english Scene is a subclass of Node that is used only as an abstract concept.
+ * Scene and Node are almost identical with the difference that Scene has its
+ * anchor point (by default) at the center of the screen.
+ * 
+ * For the moment Scene has no other logic than that, but in future releases it might have
+ * additional logic.
+ * 
+ * It is a good practice to use a Scene as the parent of all your nodes.
+ *  
+ * Scene will create a default camera for you.
+ * @~chinese 场景是 Node 的子类，仅作为一个抽象的概念。
+ * 
+ * 场景和节点是几乎相同，区别在于默认情况下场景的锚点在屏幕的中心。
+ * 
+ * 目前场景没有其他的逻辑处理，未来可能会有额外的逻辑处理。
+ * 
+ * 推荐使用一个场景做为父节点，场景将为您创建一个默认的相机。
 */
 class CC_DLL Scene : public Node
 {
 public:
-    /** Creates a new Scene object. 
+    /** @~english Creates a new Scene object. 
      *
-     * @return An autoreleased Scene object.
+     * @~chinese 创建一个新场景对象。
+     * 
+     * @return @~english An autoreleased Scene object.
+     * @~chinese 一个场景对象（已经被 autorelease）。
      */
     static Scene *create();
 
-    /** Creates a new Scene object with a predefined Size. 
+    /** @~english Creates a new Scene object with a predefined Size. 
      *
-     * @param size The predefined size of scene.
-     * @return An autoreleased Scene object.
+     * @~chinese 使用指定的大小创建一个新场景对象。
+     * 
+     * @param size @~english The predefined size of scene.
+     * @~chinese 预定义的场景的大小。
+     * @return @~english An autoreleased Scene object.
+     * @~chinese 一个场景对象（已经被 autorelease）。
      * @js NA
      */
     static Scene *createWithSize(const Size& size);
@@ -82,32 +95,41 @@ public:
     using Node::addChild;
     virtual std::string getDescription() const override;
     
-    /** Get all cameras.
+    /** @~english Get all cameras.
      * 
-     * @return The vector of all cameras.
+     * @~chinese 获取所有相机。
+     * 
+     * @return @~english The vector of all cameras.
+     * @~chinese 相机对象的数组。
      * @js NA
      */
     const std::vector<Camera*>& getCameras() const { return _cameras; }
 
-    /** Get the default camera.
-	 * @js NA
-     * @return The default camera of scene.
+    /** @~english Get the default camera.
+     * @~chinese 获取默认的相机。
+     * @return @~english The default camera of scene.
+     * @~chinese 默认的相机对象。
+     * @js NA
      */
     Camera* getDefaultCamera() const { return _defaultCamera; }
 
-    /** Get lights.
-     * @return The vector of lights.
+    /** @~english Get lights.
+     * @~chinese 获取灯光数组
+     * @return @~english The vector of lights.
+     * @~chinese 灯光对象的数组
      * @js NA
      */
     const std::vector<BaseLight*>& getLights() const { return _lights; }
     
-    /** Render the scene.
-     * @param renderer The renderer use to render the scene.
+    /** @~english Render the scene.
+     * @~chinese 渲染场景。
+     * @param renderer @~english The renderer use to render the scene.
+     * @~chinese 渲染场景使用的渲染器。
      * @js NA
      */
     void render(Renderer* renderer);
     
-    /** override function */
+    /** @~english override function  @~chinese 覆盖的函数*/
     virtual void removeAllChildren() override;
     
 CC_CONSTRUCTOR_ACCESS:
@@ -145,28 +167,36 @@ public:
     virtual void addChild(Node* child, int zOrder, const std::string &name) override;
     
 #if CC_USE_PHYSICS
-    /** Get the physics world of the scene.
-     * @return The physics world of the scene.
+    /** @~english Get the physics world of the scene.
+     * @~chinese 获取场景使用的物理世界对象。
+     * @return @~english The physics world of the scene.
+     * @~chinese 物理世界对象。
      * @js NA
      */
     inline PhysicsWorld* getPhysicsWorld() { return _physicsWorld; }
 #endif
     
 #if CC_USE_3D_PHYSICS && CC_ENABLE_BULLET_INTEGRATION
-    /** Get the 3d physics world of the scene.
-     * @return The 3d physics world of the scene.
+    /** @~english Get the 3d physics world of the scene.
+     * @~chinese 获得场景的 3D 物理世界。
+     * @return @~english The 3d physics world of the scene.
+     * @~chinese 3D 物理世界对象。
      * @js NA
      */
     inline Physics3DWorld* getPhysics3DWorld() { return _physics3DWorld; }
     
-    /** 
+    /** @~english
      * Set Physics3D debug draw camera.
+     * @~chinese 
+     * 设置 Physics3D 调试相机。
      */
     void setPhysics3DDebugCamera(Camera* camera);
 #endif
     
-    /** Create a scene with physics.
-     * @return An autoreleased Scene object with physics.
+    /** @~english Create a scene with physics.
+     * @~chinese 创建一个包含物理世界的场景。
+     * @return @~english An autoreleased Scene object with physics.
+     * @~chinese 一个包含物理世界的场景（已经被 autorelease）。
      * @js NA
      */
     static Scene *createWithPhysics();
