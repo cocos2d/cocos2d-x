@@ -1,4 +1,5 @@
 cocos2d-x-3.7  ??
+    [NEW]           android: Add Samsung API for cocos, please refer to the release note for more details.
     [NEW]           3rd: updated rapidjson to v1.0.2
     [NEW]           3d: added physics3d support
     [NEW]           console: support build & run Android Studio project
@@ -12,11 +13,14 @@ cocos2d-x-3.7  ??
     [NEW]           Scale9Sprite: added Android 9-patch image support
     [NEW]           Sprite: used triangle command
     [NEW]           3d: add `getFarPlane` and `getNearPlane` in `Camera` class
+    [NEW]           3d: add opengl version project/unproject function in camera.
     [NEW]           ui: button add BMFont title support
     [NEW]           ui: TextField add `getTextColor`, `getTextHorizontalAlignment` and `getTextVerticalAlignment` API
     [NEW]           audio: Added MP3 support to winrt audio
     
     [FIX]           audio: Fixed program may freeze if `AudioEngine::stop` or `AudioEngine::stopAll()` is invoked frequently on Android
+    [FIX]           audio: Fixed audio can't resume if it is interrupted by an incoming phone call.
+    [FIX]           audio: Fixed SimpleAudioEngine::playEffect() lagged on Android 5.0.x
     [FIX]           ui: TextField scale factor is wrong with multiline text.
     [FIX]           3d: skybox can't move to other position except origin point in world space
     [FIX]           3d: terrain can't move to other position except origin point in world space
