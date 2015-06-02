@@ -531,7 +531,7 @@
         ]
     };
 
-    if (cc.sys.os == cc.sys.ANDROID || cc.sys.os == cc.sys.IOS || !cc.sys.isNative)
+    if (cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS || !cc.sys.isNative)
     {
         testingItems["UIVideoPlayer"] = [
             {
