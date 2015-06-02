@@ -377,96 +377,99 @@ ccui.Scale9Sprite.prototype.updateWithBatchNode = function (batchNode, originalR
  * The WebView support list of events
  * @type {{LOADING: string, LOADED: string, ERROR: string}}
  */
-ccui.WebView.EventType = {
-    LOADING: "loading",
-    LOADED: "load",
-    ERROR: "error",
-    JS_EVALUATED: "js"
-};
 
-ccui.WebView.prototype._loadURL = ccui.WebView.prototype.loadURL;
-ccui.WebView.prototype.loadURL = function (url) {
-    if (url.indexOf("http://") >= 0)
-    {
-        this._loadURL(url);
-    }
-    else
-    {
-        this.loadFile(url);
-    }
-};
+if (cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS) {
+    ccui.WebView.EventType = {
+        LOADING: "loading",
+        LOADED: "load",
+        ERROR: "error",
+        JS_EVALUATED: "js"
+    };
 
-ccui.WebView.prototype.setEventListener = function(event, callback){
-    switch(event)
-    {
-        case ccui.WebView.EventType.LOADING:
-            this.setOnShouldStartLoading(callback);
-            break;
-        case ccui.WebView.EventType.LOADED:
-            this.setOnDidFinishLoading(callback);
-            break;
-        case ccui.WebView.EventType.ERROR:
-            this.setOnDidFailLoading(callback);
-            break;
-        case ccui.WebView.EventType.JS_EVALUATED:
-            //this.setOnJSCallback(callback);
-            cc.log("unsupport web event:" + event);
-            break;
-        default:
-            cc.log("unsupport web event:" + event);
-            break;
-    }
-};
+    ccui.WebView.prototype._loadURL = ccui.WebView.prototype.loadURL;
+    ccui.WebView.prototype.loadURL = function (url) {
+        if (url.indexOf("http://") >= 0)
+        {
+            this._loadURL(url);
+        }
+        else
+        {
+            this.loadFile(url);
+        }
+    };
+
+    ccui.WebView.prototype.setEventListener = function(event, callback){
+        switch(event)
+        {
+            case ccui.WebView.EventType.LOADING:
+                this.setOnShouldStartLoading(callback);
+                break;
+            case ccui.WebView.EventType.LOADED:
+                this.setOnDidFinishLoading(callback);
+                break;
+            case ccui.WebView.EventType.ERROR:
+                this.setOnDidFailLoading(callback);
+                break;
+            case ccui.WebView.EventType.JS_EVALUATED:
+                //this.setOnJSCallback(callback);
+                cc.log("unsupport web event:" + event);
+                break;
+            default:
+                cc.log("unsupport web event:" + event);
+                break;
+        }
+    };
+}
 
 /**
  * The VideoPlayer support list of events
  * @type {{PLAYING: string, PAUSED: string, STOPPED: string, COMPLETED: string}}
  */
-ccui.VideoPlayer.EventType = {
-    PLAYING: "play",
-    PAUSED: "pause",
-    STOPPED: "stop",
-    COMPLETED: "complete"
-};
+if (cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS) {
+    ccui.VideoPlayer.EventType = {
+        PLAYING: "play",
+        PAUSED: "pause",
+        STOPPED: "stop",
+        COMPLETED: "complete"
+    };
 
-ccui.VideoPlayer.prototype._setURL = ccui.VideoPlayer.prototype.setURL;
-ccui.VideoPlayer.prototype.setURL = function (url) {
-    if (url.indexOf("http://") >= 0)
-    {
-        this._setURL(url);
-    }
-    else
-    {
-        this.setFileName(url);
-    }
-};
+    ccui.VideoPlayer.prototype._setURL = ccui.VideoPlayer.prototype.setURL;
+    ccui.VideoPlayer.prototype.setURL = function (url) {
+        if (url.indexOf("http://") >= 0) {
+            this._setURL(url);
+        }
+        else {
+            this.setFileName(url);
+        }
+    };
 
-ccui.VideoPlayer.prototype.setEventListener = function(event, callback){
-    if (!this.videoPlayerCallback)
-    {
-        this.videoPlayerCallback = function(sender, eventType){
-            cc.log("videoEventCallback eventType:" + eventType);
-            switch (eventType) {
-                case 0:
-                    this["VideoPlayer_"+ccui.VideoPlayer.EventType.PLAYING] && this["VideoPlayer_"+ccui.VideoPlayer.EventType.PLAYING](sender);
-                    break;
-                case 1:
-                    this["VideoPlayer_"+ccui.VideoPlayer.EventType.PAUSED] && this["VideoPlayer_"+ccui.VideoPlayer.EventType.PAUSED](sender);
-                    break;
-                case 2:
-                    this["VideoPlayer_"+ccui.VideoPlayer.EventType.STOPPED] && this["VideoPlayer_"+ccui.VideoPlayer.EventType.STOPPED](sender);
-                    break;
-                case 3:
-                    this["VideoPlayer_"+ccui.VideoPlayer.EventType.COMPLETED] && this["VideoPlayer_"+ccui.VideoPlayer.EventType.COMPLETED](sender);
-                    break;
-                default:
-                    break;
-            }
-        };
-        this.addEventListener(this.videoPlayerCallback);
-    }
-    this["VideoPlayer_"+event] = callback;
-};
+    ccui.VideoPlayer.prototype.setEventListener = function (event, callback) {
+        if (!this.videoPlayerCallback) {
+            this.videoPlayerCallback = function (sender, eventType) {
+                cc.log("videoEventCallback eventType:" + eventType);
+                switch (eventType) {
+                    case 0:
+                        this["VideoPlayer_" + ccui.VideoPlayer.EventType.PLAYING] && this["VideoPlayer_" + ccui.VideoPlayer.EventType.PLAYING](sender);
+                        break;
+                    case 1:
+                        this["VideoPlayer_" + ccui.VideoPlayer.EventType.PAUSED] && this["VideoPlayer_" + ccui.VideoPlayer.EventType.PAUSED](sender);
+                        break;
+                    case 2:
+                        this["VideoPlayer_" + ccui.VideoPlayer.EventType.STOPPED] && this["VideoPlayer_" + ccui.VideoPlayer.EventType.STOPPED](sender);
+                        break;
+                    case 3:
+                        this["VideoPlayer_" + ccui.VideoPlayer.EventType.COMPLETED] && this["VideoPlayer_" + ccui.VideoPlayer.EventType.COMPLETED](sender);
+                        break;
+                    default:
+                        break;
+                }
+            };
+            this.addEventListener(this.videoPlayerCallback);
+        }
+        this["VideoPlayer_" + event] = callback;
+    };
+}
+
 /*
  * UIWidget temporary solution to addChild
  * addNode and addChild function should be merged in ccui.Widget
