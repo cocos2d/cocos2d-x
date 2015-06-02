@@ -40,14 +40,17 @@ class Touch;
 #define TOUCH_PERF_DEBUG 1
 
 /** @class EventTouch
- * @brief Touch event.
+ *
+ * @brief @~english Touch event.
+ * @~chinese 触摸事件
  */
 class CC_DLL EventTouch : public Event
 {
 public:
     static const int MAX_TOUCHES = 15;
     
-    /** EventCode Touch event code.*/
+    /** @~english EventCode Touch event code. @~chinese 触摸事件对应的类型列表 */
+
     enum class EventCode
     {
         BEGAN,
@@ -56,33 +59,43 @@ public:
         CANCELLED
     };
 
-    /** 
-     * Constructor.
+    /** @~english Constructor.
+     * @~chinese 构造函数
+     *
      * @js NA
      */
     EventTouch();
 
-    /** Get event code.
+    /** @~english Get event code.
+     * @~chinese 获取事件类型
      *
-     * @return The code of the event.
+     * @return @~english The code of the event.
+     * @~chinese 当前触摸事件所对应的事件代码
      */
     inline EventCode getEventCode() const { return _eventCode; };
     
-    /** Get the touches.
-     *
-     * @return The touches of the event.
+    /** @~english Get the touches.
+     * @~chinese 获取触摸点的列表
+
+     * @return @~english The touches of the event.
+     * @~chinese 获取当前触摸屏幕所有点的列表
      */
     inline const std::vector<Touch*>& getTouches() const { return _touches; };
 
 #if TOUCH_PERF_DEBUG
-    /** Set the event code.
-     * 
-     * @param eventCode A given EventCode.
+    /** @~english Set the event code.
+     * @~chinese 设置事件类型代码
+
+     * @param eventCode @~english A given EventCode.
+     * @~chinese 触摸事件所对应的事件类型
      */
     void setEventCode(EventCode eventCode) { _eventCode = eventCode; };
-    /** Set the touches
+
+    /** @~english Set the touches
+     * @~chinese 设置触摸点列表
      *
-     * @param touches A given touches vector.
+     * @param touches @~english A given touches vector.
+     * @~chinese 一个触摸点列表
      */
     void setTouches(const std::vector<Touch*>& touches) { _touches = touches; };
 #endif
