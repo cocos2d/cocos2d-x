@@ -32,22 +32,55 @@ NS_CC_BEGIN
 
 class ParticleSystem3D;
 struct Particle3D;
+
 /**
- * 3d particle emitter
- */
+* @addtogroup _3d
+* @{
+*/
+
+/** @class Particle3DEmitter
+*@brief @~english Particle3DEmitter is a base class, define interfaces.
+ Specific implementation decisions by different emitters.
+ Emitter is mainly determined how particles emitted, such as point emission, spherical emission, etc.
+ One particle system must have a emitter.
+
+ @~chinese Particle3DEmitter 是发射器的基类，定义发射器共有接口。
+ 具体的实现由不同的发射器类型定义。
+ 发射器主要是决定粒子如何发射，例如点发射，球面发射。
+ 粒子系统必须要有发射器。
+*/
 class CC_DLL Particle3DEmitter : public Ref
 {
     friend class ParticleSystem3D;
 public:
     
+    /**
+    * @~english Update emitter(internal method).
+    * @~chinese 更新发射器(内部方法)。
+    * @param particle   @~english The current particle. @~chinese 当前的粒子。
+    * @param deltaTime   @~english The delta time between two frames. @~chinese 两帧之间的时间间隔。
+    */
     virtual void updateEmitter(Particle3D* particle, float deltaTime);
     
+    /**
+    * @~english Emit particles(internal method).
+    * @~chinese 更新粒子(内部方法)。
+    * @param count   @~english The number of emitted particles. @~chinese 发射粒子的数量。
+    */
     virtual void emit(int count);
     
-    /** Enables or disables the emitter.
-     */
+    /**
+    * @~english Set the emitter enable or disable.
+    * @~chinese 设置发射器可用或不可用。
+    * @param enabled @~english Whether the emitter enabled. @~chinese 发射器是否可用。
+    */
     void setEnabled (bool enabled) { _isEnabled = enabled; }
     
+    /**
+    * @~english Get the emitter enabled.
+    * @~chinese 获取发射器是否可用。
+    * @return @~english Whether the emitter enabled. @~chinese 发射器是否可用。
+    */
     bool isEnabled(void) const { return _isEnabled; }
 
 CC_CONSTRUCTOR_ACCESS:
@@ -59,6 +92,9 @@ protected:
     int _emitRate;
     bool _isEnabled;
 };
+
+// end of _3d group
+/// @}
 
 NS_CC_END
 
