@@ -58,53 +58,74 @@ public:
     virtual ~ProcessBase(void);
 
     /**
-     * Play animation by animation name.
+     * @~english Play animation by animation name.
+     * @~chinese 根据动画名称播放动画。
      *
-     * @param  durationTo The frames between two animation changing-over.
+     * @param  durationTo @~english The frames between two animation changing-over.
      *         It's meaning is changing to this animation need how many frames
      *
      *         -1 : use the value from MovementData get from flash design panel
-     * @param  durationTween  The frame count you want to play in the game.
+     * @~chinese 两个动画切换时的需要的帧数。意味着切换到该动画时需要多少帧。
+     *    -1：使用Flash的设计面板中MovementData中的值
+     *
+     * @param  durationTween  @~english The frame count you want to play in the game.
      *         if  _durationTween is 80, then the animation will played 80 frames in a loop
      *
      *         -1 : use the value from MovementData get from flash design panel
+     * @~chinese 要在游戏中播放的帧总数。如果设置成80，则在动画将在循环中每次播放80帧。
+     * -1：使用Flash的设计面板中MovementData中的值
      *
-     * @param  loop   Whether the animation is loop
+     * @param  loop @~english   Whether the animation is loop
      *
      *         loop < 0 : use the value from MovementData get from flash design panel
      *         loop = 0 : this animation is not loop
      *         loop > 0 : this animation is loop
+     * @~chinese 动画是否循环。
+     *         loop < 0 : 使用Flash的设计面板中MovementData中的值
+     *         loop = 0 : 不循环
+     *         loop > 0 : 循环
      *
-     * @param  tweenEasing Tween easing is used for calculate easing effect
+     * @param  tweenEasing @~english Tween easing is used for calculate easing effect
      *
      *         TWEEN_EASING_MAX : use the value from MovementData get from flash design panel
      *         -1 : fade out
      *         0  : line
      *         1  : fade in
      *         2  : fade in and out
+     * @~chinese 帧补间缓动用来计算缓动效果
+     *         TWEEN_EASING_MAX : 使用Flash的设计面板中MovementData中的值
+     *         -1 : 淡出
+     *         0  : 线性
+     *         1  : 淡入
+     *         2  : 淡入淡出
      *
      */
     virtual void play(int durationTo, int durationTween,  int loop, int tweenEasing);
 
     /**
-     * Pause the Process
+     * @~english Pause the Process
+     * @~chinese 暂停进程
      */
     virtual void pause();
     /**
-     * Resume the Process
+     * @~english Resume the Process
+     * @~chinese 恢复进程
      */
     virtual void resume();
     /**
-     * Stop the Process
+     * @~english Stop the Process
+     * @~chinese 停止进程
      */
     virtual void stop();
 
 
     /**
-     * You should never call this function, unless you know what you do
+     * @~english You should never call this function, unless you know what you do
      * Update the Process, include current process, current frame and son on
+     * @~chinese 此方法不应被调用，除非你知道要做的事情。更新进程，包含当前进程，当前帧等等。
      *
-     * @param The duration since last update
+     * @param dt @~english The duration since last update
+     * @~chinese 从上次updat到现在的时间间隔。
      */
     virtual void update(float dt);
 

@@ -70,9 +70,13 @@ class  CC_STUDIO_DLL ArmatureAnimation : public ProcessBase
 {
 public:
     /**
-     * Create with a Armature
-     * @param armature The Armature ArmatureAnimation will bind to
-     */
+    * @~english Create with a Armature.
+    * @~chinese 使用一套骨骼来创建骨骼动画。
+    * @param armature  @~english The Armature ArmatureAnimation will bind to.
+    * @~chinese 将要绑定动画的骨骼。
+    * @return @~english Binded armature animation.
+    * @~chinese 已绑定的骨骼动画。
+    */
     static ArmatureAnimation *create(Armature *armature);
 public:
 	/**
@@ -86,22 +90,27 @@ public:
     virtual ~ArmatureAnimation(void);
 
     /**
-     * Init with a Armature
-     * @param armature The Armature ArmatureAnimation will bind to
-     */
+    * @~english Init with a Armature.
+    * @~chinese 使用一套骨骼进行初始化。
+    * @param armature  @~english The Armature ArmatureAnimation will bind to.
+    * @~chinese 将要绑定动画的骨骼。
+    */
     virtual bool init(Armature *armature);
 
     /**
-     * Scale animation play speed.
-     * This method is deprecated, please use setSpeedScale.
-     * @param animationScale Scale value
-     */
+    * @~english Scale animation play speed. This method is deprecated, please use setSpeedScale.
+    * @~chinese 设置动画播放速度缩放值. 该方法已过时，请使用`setSpeedScale`。
+    * @param animationScale @~english Scale value.
+    * @~chinese 动画播放速度缩放值。
+    */
     CC_DEPRECATED_ATTRIBUTE virtual void setAnimationScale(float animationScale);
     CC_DEPRECATED_ATTRIBUTE virtual float getAnimationScale() const;
 
     /**
-     * Scale animation play speed.
-     * @param animationScale Scale value
+     * @~english Scale animation play speed.
+     * @~chinese 缩放动画播放速度。
+     * @param speedScale @~english Scale value.
+     * @~chinese 动画播放速度缩放值。
      */
     virtual void setSpeedScale(float speedScale);
     virtual float getSpeedScale() const;
@@ -111,25 +120,33 @@ public:
 
     using ProcessBase::play;
     /**
-     * Play animation by animation name.
-     *
-     * @param  animationName  The animation name you want to play
-     * @param  durationTo The frames between two animation changing-over.
-     *         It's meaning is changing to this animation need how many frames
-     *
-     *         -1 : use the value from MovementData get from flash design panel
-     * @param  loop   Whether the animation is loop
-     *
-     *         loop < 0 : use the value from MovementData get from flash design panel
-     *         loop = 0 : this animation is not loop
-     *         loop > 0 : this animation is loop
-     */
+    * @~english Play animation by animation name.
+    * @~chinese 根据动画名称播放动画。
+    *
+    * @param  animationName  @~english The animation name you want to play
+    * @~chinese 要播放的动画名称。
+    * @param  durationTo @~english The frames between two animation changing-over.
+    *         It's meaning is changing to this animation need how many frames
+    *         -1 : use the value from MovementData get from flash design panel
+    * @~chinese 两个动画切换时的需要的帧数。意味着切换到该动画时需要多少帧。
+    *    -1：使用Flash的设计面板中MovementData中的值
+    * @param  loop @~english  Whether the animation is loop
+    *         loop < 0 : use the value from MovementData get from flash design panel
+    *         loop = 0 : this animation is not loop
+    *         loop > 0 : this animation is loop
+    * @~chinese 动画是否循环。
+    *         loop < 0 : 使用Flash的设计面板中MovementData中的值
+    *         loop = 0 : 不循环
+    *         loop > 0 : 循环
+    */
     virtual void play(const std::string& animationName, int durationTo = -1,  int loop = -1);
 
     /**
-     * Play animation by index, the other param is the same to play.
+     * @~english Play animation by index, the other param is the same to `play`.
+     * @~chinese 根据帧索引播放动画，其余参数含义见`play`。已过期，请使用`playWithIndex`。
      * @deprecated, please use playWithIndex
-     * @param  animationIndex  the animation index you want to play
+     * @param  animationIndex  @~english the animation index you want to play.
+     * @~chinese 要播放的动画起始帧索引。
      */
     CC_DEPRECATED_ATTRIBUTE virtual void playByIndex(int animationIndex,  int durationTo = -1, int loop = -1);
     virtual void playWithIndex(int animationIndex,  int durationTo = -1, int loop = -1);
@@ -138,59 +155,72 @@ public:
     virtual void playWithIndexes(const std::vector<int>& movementIndexes, int durationTo = -1, bool loop = true);
 
     /**
-     * Go to specified frame and play current movement.
+     * @~english Go to specified frame and play current movement.
      * You need first switch to the movement you want to play, then call this function.
+     * @~chinese 跳转至指定的帧并从该帧开始播放当前动作。
+     *  需要先切换至要播放的动作，再调用该函数。
      * 
-     * example : playByIndex(0);
+     * example : 
+     *@code
+     *           playByIndex(0);
      *           gotoAndPlay(0);
      *           playByIndex(1);
      *           gotoAndPlay(0);
      *           gotoAndPlay(15);
+     *@endcode
      */
     virtual void gotoAndPlay(int frameIndex);
 
     /**
-     * Go to specified frame and pause current movement.
+     * @~english Go to specified frame and pause current movement.
+     * @~chinese 跳转至指定的帧并暂停当前动作。
      */
     virtual void gotoAndPause(int frameIndex);
 
     /**
-     * Pause the Process
-     */
+    * @~english Pause the Process
+    * @~chinese 暂停进程
+    */
     virtual void pause() override;
     /**
-     * Resume the Process
-     */
+    * @~english Resume the Process
+    * @~chinese 继续进程
+    */
     virtual void resume() override;
     /**
-     * Stop the Process
-     */
+    * @~english Stop the Process
+    * @~chinese 停止进程
+    */
     virtual void stop() override;
 
-
     /**
-     * Get movement count
-     */
+    * @~english Get movement count
+    * @~chinese 获得动作数量
+    */
     ssize_t getMovementCount() const;
 
     virtual void update(float dt) override;
 
     /**
-     * Get current movementID
-     * @return The name of current movement
+     * @~english Get current movementID
+     * @~chinese 获得当前动作ID
+     * @return @~english The name of current movement
+     * @~chinese 获得当前动作名称
      */
     std::string getCurrentMovementID() const;
 
     /**
-     * Set armature's movement event callback function
+     * @~english Set armature's movement event callback function
      * To disconnect this event, just setMovementEventCallFunc(nullptr, nullptr);
+     * @~chinese 设置骨骼的动作事件回调函数， 要对该事件取消关联，请调用`setMovementEventCallFunc(nullptr, nullptr);`
      */
     CC_DEPRECATED_ATTRIBUTE void setMovementEventCallFunc(cocos2d::Ref *target, SEL_MovementEventCallFunc callFunc);
 
     /**
-     * Set armature's frame event callback function
-     * To disconnect this event, just setFrameEventCallFunc(nullptr, nullptr);
-     */
+    * @~english Set armature's movement event callback function
+    * To disconnect this event, just setMovementEventCallFunc(nullptr, nullptr);
+    * @~chinese 设置骨骼的动作事件回调函数， 要对该事件取消关联，请调用`setMovementEventCallFunc(nullptr, nullptr);`
+    */
     CC_DEPRECATED_ATTRIBUTE void setFrameEventCallFunc(cocos2d::Ref *target, SEL_FrameEventCallFunc callFunc);
     
     void setMovementEventCallFunc(std::function<void(Armature *armature, MovementEventType movementType, const std::string& movementID)> listener);
@@ -209,11 +239,10 @@ public:
 
 
     /** 
-     * Returns a user assigned Object
-     * 
-     * Similar to userData, but instead of holding a void* it holds an object
-     *
-     * @return A user assigned Object
+     * @~english Returns a user assigned Object. Similar to userData, but instead of holding a void* it holds an object
+     * @~chinese 返回用户分配的对象，类似于userData，但并非void*而是一个对象。
+     * @return @~english A user assigned Object
+     * @~chinese 用户分配的对象。
      * @js NA
      * @lua NA
      */
@@ -225,14 +254,15 @@ public:
     virtual const Ref* getUserObject() const { return _userObject; }
 
     /**
-     * Returns a user assigned Object
-     *
-     * Similar to UserData, but instead of holding a void* it holds an object.
-     * The UserObject will be retained once in this method,
-     * and the previous UserObject (if existed) will be relese.
+     * @~english Returns a user assigned Object. Similar to UserData, but instead of holding a void* it holds an object.
+     * The UserObject will be retained once in this method, and the previous UserObject (if existed) will be relese.
      * The UserObject will be released in Node's destructure.
+     * @~chinese 返回用户分配的对象，类似于userData，但并非void*而是一个对象。
+     * 用户对象将在该方法中保留一次，同时上一个用户对象（如果存在）将被释放。
+     * 用户对象会在节点的析构函数中释放。
      *
-     * @param userObject    A user assigned Object
+     * @param userObject  @~english  A user assigned Object
+     * @~chinese 返回用户分配的对象。
      */
     virtual void setUserObject(Ref *userObject);
 protected:

@@ -32,7 +32,8 @@ THE SOFTWARE.
 namespace cocostudio {
 
 /*
- * use to calculate the matrix of node from parent node
+ * @~english use to calculate the matrix of node from parent node
+ * @~chinese 用来计算节点自父节点的变换矩阵。
  * @js NA
  * @lua NA
  */

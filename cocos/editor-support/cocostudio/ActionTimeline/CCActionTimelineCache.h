@@ -58,23 +58,31 @@ class Frame;
 class CC_STUDIO_DLL ActionTimelineCache
 {
 public:    
-    
-    /** Gets the singleton */
+
+    /** @~english Gets the singleton.
+    *   @~chinese 获取单例。
+    */
     static ActionTimelineCache* getInstance();
 
-    /** Destroys the singleton */
+    /** @~english Destroys the singleton.
+    *   @~chinese 释放单例。
+    */
     static void destroyInstance();
 
     void purge();
 
     void init();
 
-    /** Remove action with filename, and also remove other resource relate with this file */
+    /** @~english Remove action with filename, and also remove other resource relate with this file.
+    *   @~chinese 通过文件名移除动作，同时移除与该文件相关的其他资源。
+    */
     void removeAction(const std::string& fileName);
     
     static ActionTimeline* createAction(const std::string& fileName);
 
-    /** Clone a action with the specified name from the container. */
+    /** @~english Clone a action with the specified name from the container. 
+    *   @~chinese 通过来自其他容器的指定名称复制一个动画。
+    */
     ActionTimeline* createActionFromJson(const std::string& fileName);
 
     ActionTimeline* loadAnimationActionWithFile(const std::string& fileName);

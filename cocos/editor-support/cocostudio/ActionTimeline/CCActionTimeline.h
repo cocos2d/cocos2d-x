@@ -74,68 +74,107 @@ public:
 
     virtual bool init();
 
-    /** Goto the specified frame index, and start playing from this index.
-     * @param startIndex The animation will play from this index.
+    /** @~english Goto the specified frame index, and start playing from this index.
+    * @~chinese 跳转至指定帧索引，并从该索引开始播放动画。
+     * @param startIndex @~english The animation will play from this index.
+     * @~chinese 动画将从该索引位置开始播放。
      */
     virtual void gotoFrameAndPlay(int startIndex);
 
-    /** Goto the specified frame index, and start playing from this index.
-     * @param startIndex The animation will play from this index.
-     * @param loop Whether or not the animation need loop. 
+    /** @~english Goto the specified frame index, and start playing from this index.
+    * @~chinese 跳转至指定帧索引，并从该索引开始播放动画。
+     * @param startIndex @~english The animation will play from this index.
+     * @~chinese 动画将从该索引位置开始播放。
+     * @param loop @~english Whether or not the animation need loop. 
+     * @~chinese 动画是否循环播放。
      */
     virtual void gotoFrameAndPlay(int startIndex, bool loop);
 
-    /** Goto the specified frame index, and start playing from start index, end at end index.
-     * @param startIndex The animation will play from this index.
-     * @param endIndex The animation will end at this index.
-     * @param loop Whether or not the animation need loop. 
+    /** @~english Goto the specified frame index, and start playing from start index, end at end index.
+    * @~chinese 跳转至指定帧索引，并从该开始索引开始播放动画，在结束索引处停止播放
+     * @param startIndex @~english The animation will play from this index.
+     * @~chinese 动画将从该索引位置开始播放。
+     * @param endIndex @~english The animation will end at this index.
+     * @~chinese 动画将从该索引位置停止播放。
+     * @param loop @~english Whether or not the animation need loop. 
+     * @~chinese 动画是否循环播放。
      */
     virtual void gotoFrameAndPlay(int startIndex, int endIndex, bool loop);
 
-    /** Goto the specified frame index, and start playing from start index, end at end index.
-     * @param startIndex The animation will play from this index.
-     * @param endIndex The animation will end at this index.
-     * @param currentFrameIndex set current frame index. 
-     * @param loop Whether or not the animation need loop. 
+    /** @~english Goto the specified frame index, and start playing from start index, end at end index.
+    * @~chinese 跳转至指定帧索引，并从该开始索引开始播放动画，在结束索引处停止播放
+     * @param startIndex @~english The animation will play from this index.
+     * @~chinese 动画将从该索引位置开始播放。
+     * @param endIndex @~english The animation will end at this index.
+     * @~chinese 动画将从该索引位置停止播放。
+     * @param currentFrameIndex @~english set current frame index. 
+     * @~chinese 设置当前帧索引。
+     * @param loop @~english Whether or not the animation need loop. 
+     * @~chinese 动画是否循环播放。
      */
     virtual void gotoFrameAndPlay(int startIndex, int endIndex, int currentFrameIndex, bool loop);
 
-    /** Goto the specified frame index, and pause at this index.
-     * @param startIndex The animation will pause at this index.
+    /** @~english Goto the specified frame index, and pause at this index.
+    * @~chinese 跳转至指定帧索引，并在该索引处暂停。
+     * @param startIndex @~english The animation will pause at this index.
+     * @~chinese 动画会在该索引处暂停。
      */
     virtual void gotoFrameAndPause(int startIndex);
 
-    /** Pause the animation. */
+    /** @~english Pause the animation. 
+     * @~chinese 暂停动画。
+    */
     virtual void pause();
-    /** Resume the animation. */
+    /** @~english Resume the animation. 
+    * @~chinese 继续动画。
+    */
     virtual void resume();
 
-    /** Whether or not Action is playing. */
+    /** @~english Whether or not Action is playing.
+    * @~chinese 是否在播放。
+    */
     virtual bool isPlaying() const;
 
-    /** Set the animation speed, this will speed up or slow down the speed. */
+    /** @~english Set the animation speed, this will speed up or slow down the speed. 
+    * @~chinese 设置动画速度，使动画加速或减速。
+    */
     virtual void  setTimeSpeed(float speed) { _timeSpeed = speed; }
-    /** Get current animation speed. */
+
+    /** @~english Get current animation speed.
+     *   @~chinese 获取当前动画速度。
+     */
     virtual float getTimeSpeed() const { return _timeSpeed; }
 
-    /** duration of the whole action*/
+    /** @~english duration of the whole action.
+    *   @~chinese 整体动画时长。
+    */
     virtual void setDuration(int duration) { _duration = duration; }
     virtual int  getDuration() const { return _duration; }
 
-    /** Start frame index of this action*/
+    /** @~english Start frame index of this action.
+    *   @~chinese 动画的起始帧索引。
+    */
     virtual int getStartFrame() const { return _startFrame; }
 
-    /** End frame of this action.
-      * When action play to this frame, if action is not loop, then it will stop, 
-      * or it will play from start frame again. */
+    /** @~english End frame of this action..
+    *   When action play to this frame, if action is not loop, then it will stop,  or it will play from start frame again. 
+    *   @~chinese 动画的结束帧索引。
+    *   当动画播放到该帧时，如果非循环播放，则动画停止。否则会从起始帧从头播放。
+    */
     virtual int  getEndFrame() const { return _endFrame; }
 
-    /** Set current frame index, this will cause action plays to this frame. */
+    /** @~english Set current frame index, this will cause action plays to this frame. 
+    *   @~chinese 设置当前帧索引，将会使动画播放至该帧。
+    */
     virtual void setCurrentFrame(int frameIndex);
-    /** Get current frame. */
+    /** @~english Get current frame. 
+    *   @~chinese 获取当前帧索引。
+    */
     virtual int  getCurrentFrame() const { return _currentFrame; }
 
-    /** add Timeline to ActionTimeline */
+    /** @~english add Timeline to ActionTimeline.
+    *   @~chinese 将时间表加入动画时间表。
+    */
     virtual void addTimeline(Timeline* timeline);
     virtual void removeTimeline(Timeline* timeline);
 
@@ -147,11 +186,15 @@ public:
     virtual bool IsAnimationInfoExists(const std::string& animationName);
     virtual AnimationInfo getAnimationInfo(const std::string& animationName);
 
-    /** Set ActionTimeline's frame event callback function */
+    /** @~english Set ActionTimeline's frame event callback function .
+    *   @~chinese 设置动画时间表的帧事件回调函数。
+    */
     void setFrameEventCallFunc(std::function<void(Frame *)> listener);
     void clearFrameEventCallFunc();
 
-    /** Last frame callback will call when arriving last frame */
+    /** @~english Last frame callback will call when arriving last frame .
+    *   @~chinese 动画播放至最后一帧时，将会调用最后一帧的回调。
+    */
     void setLastFrameCallFunc(std::function<void()> listener);
     void clearLastFrameCallFunc();
 

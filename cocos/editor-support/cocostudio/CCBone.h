@@ -42,16 +42,21 @@ class CC_STUDIO_DLL Bone : public cocos2d::Node
 {
 public:
     /**
-     * Allocates and initializes a bone.
-     * @return A initialized bone which is marked as "autorelease".
-     */
+    * @~english Allocates and initializes a bone.
+    * @~chinese 分配并且初始化一段骨头。
+    * @return @~english An initialized bone which is marked as "autorelease".
+    * @~chinese 一段初始化的骨头，该骨头会自动被标记为“autorelease”（自动释放）。
+    */
     static Bone *create();
+
     /**
-     * Allocates and initializes a bone.
-     *
-     * @param  name If name is not null, then set name to the bone's name
-     * @return A initialized bone which is marked as "autorelease".
-     */
+    * @~english Allocates and initializes a bone.
+    * @~chinese 分配并且初始化一段骨头。
+    * @param name  @~english If name is not null, then set name to the bone's name
+    * @~chinese 如果非空，则将该参数设为骨头的名称
+    * @return @~english An initialized bone which is marked as "autorelease".
+    * @~chinese 一段初始化的骨头，该骨头会自动被标记为“autorelease”（自动释放）。
+    */
     static Bone *create(const std::string& name);
 
 public:
@@ -66,26 +71,34 @@ public:
     virtual ~Bone(void);
 
     /**
-     * Initializes an empty Bone with nothing init.
+     * @~english Initializes an empty Bone with nothing init.
+     * @~chinese 初始化一段空骨头，没有其他被初始化。
      */
     virtual bool init() override;
 
     /**
-     * Initializes a Bone with the specified name
-     * @param name Bone's name.
+     * @~english Initializes a Bone with the specified name
+     * @~chinese 以指定的名称初始化一段骨头。
+     * @param name @~english Bone's name.
+     * @~chinese 骨头的名称。
      */
     virtual bool init(const std::string& name);
 
     /**
-     * Add display and use displayData to init the display.
+     * @~english Add display and use displayData to init the display.
      * If index already have a display, then replace it.
      * If index is current display index, then also change display to _index
+     * @~chinese 为骨头增加显示，并使用显示属性数据来初始化显示性。
+     * 如果索引处已有显示，则将其覆盖。
+     * 如果索引为当前显示索引，则同时将显示更改为_index处显示。
      *
-     * @param displayData it include the display information, like DisplayType.
-     *          If you want to create a sprite display, then create a SpriteDisplayData param
-     *
-     * @param index the index of the display you want to replace or add to
+     * @param @~english displayData it include the display information, like DisplayType.
+     *          If you want to create a sprite display, then create a `SpriteDisplayData` param
+     * @~chinese 显示数据，包含显示信息，例如显示种类。
+     * 要创建一个精灵显示，则创建一个`SpriteDisplayData`参数。
+     * @param index @~english the index of the display you want to replace or add to
      *          -1 : append display from back
+     * @~chinese 要添加或覆盖的显示的索引。为-1时将显示添加至最后。
      */
     void addDisplay(DisplayData *displayData, int index);
 
@@ -100,37 +113,47 @@ public:
     void changeDisplayWithName(const std::string& name, bool force);
 
     /**
-     * Add a child to this bone, and it will let this child call setParent(Bone *parent) function to set self to it's parent
-     * @param 	child  the child you want to add
+     * @~english Add a child to this bone, and it will let this child call `setParent(Bone *parent)` function to set self to it's parent
+     * @~chinese 为当前骨头添加一段子骨头，同时该子骨头会调用`setParent(Bone *parent)`函数来将当前骨头设为其父骨头。
+     * @param child @~english the child you want to add
+     * @~chinese 要添加的子骨头。
      */
     void addChildBone(Bone *child);
 
     /**
-     * Set parent bone.
+     * @~english Set parent bone.
      * If parent is NUll, then also remove this bone from armature.
-     * It will not set the Armature, if you want to add the bone to a Armature, you should use Armature::addBone(Bone *bone, const char* parentName).
-     *
-     * @param parent  the parent bone.
+     * It will not set the Armature, if you want to add the bone to a Armature, you should use `Armature::addBone(Bone *bone, const char* parentName)`.
+     * @~chinese 设置父骨头。如果父骨头参数为NULL，则将当前骨头从骨骼中移除。
+     * 本函数不会对骨骼进行设置改变，如果要将骨头加入骨骼，应调用`Armature::addBone(Bone *bone, const char* parentName)`。
+     * @param parent @~english the parent bone.
      *          nullptr : remove this bone from armature
+     * @~chinese 父骨头，为nullptr时：将当前骨头从骨骼中移除。
      */
     void setParentBone(Bone *parent);
 
     /**
-     * Get parent bone
-     * @return parent bone
+     * @~english Get parent bone
+     * @~chinese 获取父骨头
+     * @return @~english parent bone
+     * @~chinese 父骨头
      */
     Bone *getParentBone();
 
     using Node::removeFromParent;
     /**
-     * Remove itself from its parent.
-     * @param recursion    whether or not to remove childBone's display
+     * @~english Remove itself from its parent.
+     * @~chinese 将当前骨头从父骨头中移除
+     * @param recursion @~english   whether remove recursionly
+     * @~chinese 是否递归移除
      */
     void removeFromParent(bool recursion);
 
     /**
-     * Removes a child Bone
-     * @param 	bone   the bone you want to remove
+     * @~english Removes a child Bone
+     * @~chinese 将当前骨头从父骨头中移除
+     * @param bone @~english  the bone you want to remove
+     * @~chinese 要移除的骨头
      */
     void removeChildBone(Bone *bone, bool recursion);
 
@@ -139,10 +162,16 @@ public:
     void updateDisplayedColor(const cocos2d::Color3B &parentColor) override;
     void updateDisplayedOpacity(GLubyte parentOpacity) override;
 
-    //! Update color to render display
+    /**
+    * @~english Update color to render display
+    * @~chinese 更新颜色以渲染显示
+    */
     virtual void updateColor() override;
 
-    //! Update zorder
+    /**
+    * @~english Update zorder
+    * @~chinese 更新Z顺序
+    */
     void updateZOrder();
 
     virtual void setLocalZOrder(int zOrder) override;
@@ -150,7 +179,8 @@ public:
     Tween *getTween();
 
     /*
-     * Whether or not the bone's transform property changed. if true, the bone will update the transform.
+     * @~english Whether or not the bone's transform property changed. if true, the bone will update the transform.
+     * @~chinese 骨头的变形属性是否已改变，如果为真，骨头将会更新变形。
      */
     virtual void setTransformDirty(bool dirty) { _boneTransformDirty = dirty; }
     virtual bool isTransformDirty() { return _boneTransformDirty; }
@@ -162,7 +192,8 @@ public:
     DisplayType getDisplayRenderNodeType();
 
     /*
-     * Get the ColliderBody list in this bone. The object in the Array is ColliderBody.
+     * @~english Get the ColliderBody list in this bone. The object in the Array is ColliderBody.
+     * @~chinese 获取骨头的碰撞体，数组中的对象为碰撞体。
      */
     virtual ColliderDetector* getColliderDetector() const;
 
@@ -195,13 +226,15 @@ public:
 
     
     /*
-     * Set blend function
+     * @~english Set blend function
+     * @~chinese 设置混合函数。
      */
     virtual void setBlendFunc(const cocos2d::BlendFunc& blendFunc);
     virtual cocos2d::BlendFunc getBlendFunc(void) { return _blendFunc; }
 
     /*
-     * Set if blend function is dirty 
+     * @~english Set if blend function is dirty 
+     * @~chinese 混合函数为脏时设置。
      */
     virtual void setBlendDirty(bool dirty) { _blendDirty = dirty; }
     virtual bool isBlendDirty(void) { return _blendDirty; }

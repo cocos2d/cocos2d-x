@@ -96,8 +96,9 @@ public:
 	static DataReaderHelper *getInstance();
 
     /**
-     * Scale the position data, used for multiresolution adapter
+     * @~english Scale the position data, used for multiresolution adapter
      * It won't effect the data already read.
+     * @~chinese 缩放位置数据，作用于多分辨率适配。在已经读取的数据上不起作用。
      */
     static void setPositionReadScale(float scale);
     static float getPositionReadScale();
@@ -123,26 +124,29 @@ public:
 public:
 
     /**
-     * Translate XML export from Dragon Bone flash tool to datas, and save them.
+     * @~english Translate XML export from Dragon Bone flash tool to datas, and save them.
      * When you add a new xml, the data already saved will be keeped.
+     * @~chinese 把从Dragon Bone flash工具导出的XML转换为数据并保存。添加新的xml时，已保存的数据将保留。
      *
-     * @param xmlPath The cache of the xml
+     * @param xmlPath @~english The cache of the xml
+     * @~chinese xml缓存
      */
     static void addDataFromCache(const std::string& pFileContent, DataInfo *dataInfo = nullptr);
 
 
 
     /**
-     * Decode Armature Datas from xml export from Dragon Bone flash tool
+     * @~english Decode Armature Datas from xml export from Dragon Bone flash tool
+     * @~chinese 将Dragon Bone flash工具导出的XML中的数据解码。
      */
     static ArmatureData *decodeArmature(tinyxml2::XMLElement *armatureXML, DataInfo *dataInfo);
     static BoneData *decodeBone(tinyxml2::XMLElement *boneXML, tinyxml2::XMLElement *parentXML, DataInfo *dataInfo);
     static DisplayData *decodeBoneDisplay(tinyxml2::XMLElement *displayXML, DataInfo *dataInfo);
 
-
     /**
-     * Decode ArmatureAnimation Datas from xml export from Dragon Bone flash tool
-     */
+    * @~english Decode ArmatureAnimation Datas from xml export from Dragon Bone flash tool
+    * @~chinese 将Dragon Bone flash工具导出的XML中的骨骼数据解码。
+    */
     static AnimationData *decodeAnimation(tinyxml2::XMLElement *animationXML, DataInfo *dataInfo);
     static MovementData *decodeMovement(tinyxml2::XMLElement *movementXML, ArmatureData *armatureData, DataInfo *dataInfo);
     static MovementBoneData *decodeMovementBone(tinyxml2::XMLElement *movBoneXml, tinyxml2::XMLElement *parentXml, BoneData *boneData, DataInfo *dataInfo);
@@ -150,13 +154,15 @@ public:
 
 
     /**
-     * Decode Texture Datas from xml export from Dragon Bone flash tool
-     */
+    * @~english Decode Texture Datas from xml export from Dragon Bone flash tool
+    * @~chinese 将Dragon Bone flash工具导出的XML中的材质数据解码。
+    */
     static TextureData *decodeTexture(tinyxml2::XMLElement *textureXML, DataInfo *dataInfo);
 
     /**
-     * Decode Contour Datas from xml export from Dragon Bone flash tool
-     */
+    * @~english Decode Contour Datas from xml export from Dragon Bone flash tool
+    * @~chinese 将Dragon Bone flash工具导出的XML中的轮廓数据解码。
+    */
     static ContourData *decodeContour(tinyxml2::XMLElement *contourXML, DataInfo *dataInfo);
 
 public:

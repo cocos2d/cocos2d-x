@@ -127,7 +127,8 @@ private:
 };
 
 /*
- *  @brief  ContourSprite used to draw the contour of the display
+ *  @brief  @~english ContourSprite used to draw the contour of the display
+ * @~chinese 轮廓精灵用来绘制显示的轮廓。
  *  @js NA
  *  @lua NA
  */

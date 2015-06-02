@@ -40,7 +40,8 @@ struct RelativeData
 };
 
 /**
- *	@brief	format and manage armature configuration and armature animation
+ *	@brief	@~english  format and manage armature configuration and armature animation
+ * @~chinese 格式化与管理骨骼配置和骨骼动画
  */
 class CC_STUDIO_DLL ArmatureDataManager : public cocos2d::Ref
 {
@@ -68,94 +69,122 @@ private:
 public:
 
     /**
-     * Init ArmatureDataManager
+     * @~english  Init ArmatureDataManager
+     * @~chinese 初始化骨骼数据管理器
      */
     virtual bool init();
 
     /**
-     * Add armature data
-     * @param id The id of the armature data
-     * @param armatureData ArmatureData *
-     */
+    * @~english Add armature data
+    * @~chinese 增加骨骼数据
+    * @param id @~english The id of the armature data
+    * @~chinese 骨骼数据标识
+    * @param @~english armatureData ArmatureData *
+    * @~chinese 骨骼数据
+    */
     void addArmatureData(const std::string& id, ArmatureData *armatureData, const std::string& configFilePath = "");
 
     /**
-     *	@brief	get armature data
-     *	@param	id the id of the armature data you want to get
-     *  @return	ArmatureData *
+     *	@brief	@~english get armature data
+     * @~chinese 获取骨骼数据
+     *	@param	@~english id the id of the armature data you want to get
+     * @~chinese 要获取骨骼数据的标识
+     *  @return	@~english ArmatureData *
+     * @~chinese 骨骼数据
      */
     ArmatureData *getArmatureData(const std::string& id);
 
     /**
-     *	@brief	remove armature data
-     *	@param	id the id of the armature data you want to get
+     *	@brief	@~english remove armature data
+     * @~chinese 移除骨骼数据
+     *	@param	id @~english the id of the armature data you want to get
+     * @~chinese 要移除骨骼数据的标识
      */
     void removeArmatureData(const std::string& id);
 
     /**
-     *	@brief	add animation data
-     *	@param 	id the id of the animation data
-     *  @return AnimationData *
+     *	@brief	@~english add animation data
+     * @~chinese 增加动画数据
+     *	@param id @~english the id of the animation data
+     * @~chinese 动画数据的标识
+     *  @return @~english AnimationData *
+     * @~chinese 动画数据
      */
     void addAnimationData(const std::string& id, AnimationData *animationData, const std::string& configFilePath = "");
 
     /**
-     *	@brief	get animation data from _animationDatas(Dictionary)
-     *	@param 	id the id of the animation data you want to get
-     *  @return AnimationData *
+     *	@brief	@~english get animation data from _animationDatas(Dictionary)
+     * @~chinese 从_animationDatas(Dictionary)中获取动画数据
+     *	@param id @~english the id of the animation data you want to get
+     * @~chinese 要获取动画数据的标识
+     * @return @~english AnimationData *
+     * @~chinese 动画数据
      */
     AnimationData *getAnimationData(const std::string& id);
 
     /**
-     *	@brief	remove animation data
-     *	@param 	id the id of the animation data
+     *	@brief	@~english remove animation data
+     * @~chinese 移除动画数据
+     *	@param id @~english the id of the animation data
+     * @~chinese 要移除动画数据的标识
      */
     void removeAnimationData(const std::string& id);
 
     /**
-     *	@brief	add texture data
-     *	@param 	id the id of the texture data
-     *  @return TextureData *
+     *	@brief	@~english add texture data
+     * @~chinese 增加材质数据
+     *	@param id @~english the id of the texture data
+     * @~chinese 材质数据的标识
      */
     void addTextureData(const std::string& id, TextureData *textureData, const std::string& configFilePath = "");
 
     /**
-     *	@brief	get texture data
-     *	@param 	id the id of the texture data you want to get
-     *  @return TextureData *
+     *	@brief	@~english get texture data
+     * @~chinese 获取材质数据
+     *	@param id @~english the id of the texture data you want to get
+     * @~chinese 要获取材质数据的标识
+     *  @return @~english TextureData *
+     * @~chinese 材质数据
      */
     TextureData *getTextureData(const std::string& id);
 
     /**
-     *	@brief	remove texture data
-     *	@param 	id the id of the texture data you want to get
+     *	@brief	@~english remove texture data
+     * @~chinese 移除材质数据
+     *	@param id @~english the id of the texture data you want to get
+     * @~chinese 要移除材质数据的标识
      */
     void removeTextureData(const std::string& id);
 
     /**
-     *	@brief	Add ArmatureFileInfo, it is managed by ArmatureDataManager.
+     *	@brief	@~english Add ArmatureFileInfo, it is managed by ArmatureDataManager.
+     * @~chinese 添加骨骼文件信息，由骨骼数据管理器管理
      */
     void addArmatureFileInfo(const std::string& configFilePath);
 
     /**
-     *	@brief	Add ArmatureFileInfo, it is managed by ArmatureDataManager.
+     *	@brief	@~english Add ArmatureFileInfo, it is managed by ArmatureDataManager.
      *			It will load data in a new thread
+     * @~chinese 添加骨骼文件信息，由骨骼数据管理器管理，将在新线程中加载数据。
      */
     void addArmatureFileInfoAsync(const std::string& configFilePath, cocos2d::Ref *target, cocos2d::SEL_SCHEDULE selector);
 
     /**
-     *	@brief	Add ArmatureFileInfo, it is managed by ArmatureDataManager.
+     *	@brief	@~english Add ArmatureFileInfo, it is managed by ArmatureDataManager.
+     * @~chinese 添加骨骼文件信息，由骨骼数据管理器管理。
      */
     void addArmatureFileInfo(const std::string& imagePath, const std::string& plistPath, const std::string& configFilePath);
 
     /**
-     *	@brief	Add ArmatureFileInfo, it is managed by ArmatureDataManager.
-     *			It will load data in a new thread
-     */
+    *	@brief	@~english Add ArmatureFileInfo, it is managed by ArmatureDataManager.
+    *			It will load data in a new thread
+    * @~chinese 添加骨骼文件信息，由骨骼数据管理器管理，将在新线程中加载数据。
+    */
     void addArmatureFileInfoAsync(const std::string& imagePath, const std::string& plistPath, const std::string& configFilePath, cocos2d::Ref *target, cocos2d::SEL_SCHEDULE selector);
 
     /**
-     *	@brief	Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name
+     *	@brief	@~english Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name
+     * @~chinese 为CCSpriteFrameCache添加精灵帧，将会保存显示名称及相关图片名称。
      */
     void addSpriteFrameFromFile(const std::string& plistPath, const std::string& imagePath, const std::string& configFilePath = "");
 
@@ -163,7 +192,8 @@ public:
 
 
     /**
-     *	@brief	Juge whether or not need auto load sprite file
+     *	@brief	@~english Judge whether or not need auto load sprite file
+     * @~chinese 判断是否需要自动加载精灵文件。
      */
     bool isAutoLoadSpriteFile();
 

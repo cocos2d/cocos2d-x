@@ -34,7 +34,9 @@ namespace cocostudio {
 
 class Bone;
 
-/**! DisplayManager manages Bone's display
+/**
+ *  @~english DisplayManager manages Bone's display
+ * @~chinese 显示管理器管理骨头的显示。
  *  @js NA
  *  @lua NA
  */
@@ -50,22 +52,29 @@ public:
     bool init(Bone *bone);
 
     /**
-     * Use BoneData to init the display list.
+     * @~english Use BoneData to init the display list.
      * If display is a sprite, and it have texture info in the TexutreData, then use TexutreData to init the display's anchor point
      * If the display is a Armature, then create a new Armature
+     * @~chinese 使用骨头数据来初始化显示列表。如果显示为精灵并且其在材质数据中有材质信息，
+     * 那么使用材质数据初始化显示的锚点。如果显示为骨骼，那么创建一套新骨骼。
      */
     virtual void initDisplayList(BoneData *boneData);
 
     /**
-     * Add display and use  _DisplayData init the display.
+     * @~english Add display and use  _DisplayData init the display.
      * If index already have a display, then replace it.
      * If index is current display index, then also change display to _index
+     * @~chinese 添加显示并使用_DisplayData来初始化显示。如果索引处已经有显示，则将其覆盖。
+     * 如果索引为当前显示索引，则同时将显示更改为_index处显示。
      *
-     *	@param 	displayData it include the display information, like DisplayType.
-     *					If you want to create a sprite display, then create a SpriteDisplayData param
+     *	@param 	displayData @~english it include the display information, like DisplayType.
+     *					If you want to create a sprite display, then create a `SpriteDisplayData` param
+     * @~chinese 显示数据，包含显示信息，例如显示种类。
+     * 要创建一个精灵显示，则创建一个`SpriteDisplayData`参数。
      *
-     *	@param 	index the index of the display you want to replace or add to
+     *	@param 	index @~english the index of the display you want to replace or add to
      *					-1 : append display from back
+     * @~chinese 要添加或覆盖的显示的索引。为-1时将显示添加至最后
      */
     void addDisplay(DisplayData *displayData, int index);
 
@@ -82,13 +91,18 @@ public:
     CC_DEPRECATED_ATTRIBUTE void changeDisplayByName(const std::string& name, bool force);
     
     /**
-     * Change display by index. You can just use this method to change display in the display list.
+     * @~english Change display by index. You can just use this method to change display in the display list.
      * The display list is just used for this bone, and it is the displays you may use in every frame.
      *
      * Note : if index is the same with prev index, the method will not effect
      *
-     * @param index The index of the display you want to change
-     * @param force If true, then force change display to specified display, or current display will set to  display index edit in the flash every key frame.
+     * @~chinese 通过索引改变显示。可以通过此方法改变显示列表中的显示。
+     * 显示列表仅为当前骨头使用，是可在每帧中使用的显示。
+     *
+     * @param index @~english The index of the display you want to change
+     * @~chinese 要改变的显示的索引。
+     * @param force @~english If true, then force change display to specified display, or current display will set to  display index edit in the flash every key frame.
+     * @~chinese 如果为真，强制将显示改为指定的显示，或者当前的显示会被设置为在flash中每个关键帧中编辑的显示索引值。
      */
     void changeDisplayWithIndex(int index, bool force);
     void changeDisplayWithName(const std::string& name, bool force);
@@ -103,17 +117,21 @@ public:
     virtual DecorativeDisplay *getDecorativeDisplayByIndex( int index) const;
 
     /**
-     * Sets whether the display is visible
+     * @~english Sets whether the display is visible
      * The default value is true, a node is default to visible
+     * @~chinese 设置显示是否可见。默认和节点一样为可见。
      *
-     * @param visible   true if the node is visible, false if the node is hidden.
+     * @param visible @~english  true if the node is visible, false if the node is hidden.
+     * @~chinese 节点可见时为真，否则为假。
      */
     virtual void setVisible(bool visible);
     /**
-     * Determines if the display is visible
+     * @~english Determines if the display is visible
+     * @~chinese 检查显示是否可见。
      *
      * @see setVisible(bool)
-     * @return true if the node is visible, false if the node is hidden.
+     * @return @~english true if the node is visible, false if the node is hidden.
+     * @~chinese 节点可见时为真，否则为假。
      */
     virtual bool isVisible() const;
 
@@ -124,12 +142,14 @@ public:
     cocos2d::Vec2 getAnchorPointInPoints() const;
 
     /**
-     * Check if the position is inside the bone.
-     */
+    * @~english Check if the position is inside the bone.
+    * @~chinese 检查位置点坐标是否在骨头中。
+    */
     virtual bool containPoint(cocos2d::Vec2 &_point);
 
     /**
-     * Check if the position is inside the bone.
+     * @~english Check if the position is inside the bone.
+     * @~chinese 检查位置点坐标是否在骨头中。
      */
     virtual bool containPoint(float x, float y);
 
