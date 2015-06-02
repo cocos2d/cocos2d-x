@@ -140,7 +140,7 @@ public:
     
     /** 
     @~english Set transparent flag.  
-    @~chinese 设置透明的旗帜。
+    @~chinese 设置透明的标示。
     @param isTransparent
     @~english The transparent status.
     @~chinese 透明状态。
