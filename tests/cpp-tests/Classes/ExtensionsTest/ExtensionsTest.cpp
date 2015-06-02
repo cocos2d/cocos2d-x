@@ -1,6 +1,9 @@
 #include "ExtensionsTest.h"
 #include "../testResource.h"
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT && _MSC_VER < 1900)
+// Window 10 UWP does not yet support CURL
 #include "AssetsManagerExTest/AssetsManagerExTest.h"
+#endif
 #include "NotificationCenterTest/NotificationCenterTest.h"
 #include "ControlExtensionTest/CCControlSceneManager.h"
 #include "CocosBuilderTest/CocosBuilderTest.h"
@@ -21,7 +24,10 @@
 
 ExtensionsTests::ExtensionsTests()
 {
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT && _MSC_VER < 1900)
+    // Window 10 UWP does not yet support CURL
     addTest("AssetsManagerExTest", [](){ return new (std::nothrow) AssetsManagerExTests; });
+#endif
     addTest("NotificationCenterTest", [](){ return new (std::nothrow) NotificationCenterTests; });
     addTest("CCControlButtonTest", [](){ return new (std::nothrow) ControlTests; });
     addTest("CocosBuilderTest", [](){ return new (std::nothrow) CocosBuilderTests; });

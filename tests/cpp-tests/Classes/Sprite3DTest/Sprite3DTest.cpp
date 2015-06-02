@@ -2074,7 +2074,7 @@ void QuaternionTest::addNewSpriteWithCoords(Vec2 p)
 void QuaternionTest::update(float delta)
 {
     _accAngle += delta * _arcSpeed;
-    const float pi = M_PI;
+    const float pi = (float)M_PI;
     if (_accAngle >= 2 * pi)
         _accAngle -= 2 * pi;
     
