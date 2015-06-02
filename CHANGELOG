@@ -17,7 +17,10 @@ cocos2d-x-3.7  ??
     [NEW]           ui: button add BMFont title support
     [NEW]           ui: TextField add `getTextColor`, `getTextHorizontalAlignment` and `getTextVerticalAlignment` API
     [NEW]           audio: Added MP3 support to winrt audio
+    [NEW]           win10: Added Windows 10.0 Universal App(UWP) support.
     
+    [FIX]           network: Fix memory leak of HttpClient on iOS and Mac platform.
+    [FIX]           android++: Improve UserDefault's robustness, now the converting behavior is the same as iOS platform.
     [FIX]           audio: Fixed program may freeze if `AudioEngine::stop` or `AudioEngine::stopAll()` is invoked frequently on Android
     [FIX]           audio: Fixed audio can't resume if it is interrupted by an incoming phone call.
     [FIX]           audio: Fixed SimpleAudioEngine::playEffect() lagged on Android 5.0.x
