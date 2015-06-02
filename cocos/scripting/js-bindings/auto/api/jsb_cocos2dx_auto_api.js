@@ -18494,21 +18494,13 @@ mat4
 },
 
 /**
- * @method initOrthographic
+ * @method clearBackground
  * @param {float} arg0
- * @param {float} arg1
- * @param {float} arg2
- * @param {float} arg3
- * @return {bool}
  */
-initOrthographic : function (
-float, 
-float, 
-float, 
+clearBackground : function (
 float 
 )
 {
-    return false;
 },
 
 /**
@@ -18552,13 +18544,21 @@ getType : function (
 },
 
 /**
- * @method clearBackground
+ * @method initOrthographic
  * @param {float} arg0
+ * @param {float} arg1
+ * @param {float} arg2
+ * @param {float} arg3
+ * @return {bool}
  */
-clearBackground : function (
+initOrthographic : function (
+float, 
+float, 
+float, 
 float 
 )
 {
+    return false;
 },
 
 /**
@@ -18579,6 +18579,18 @@ setScene : function (
 scene 
 )
 {
+},
+
+/**
+ * @method projectGL
+ * @param {vec3_object} arg0
+ * @return {vec2_object}
+ */
+projectGL : function (
+vec3 
+)
+{
+    return cc.Vec2;
 },
 
 /**
