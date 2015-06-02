@@ -49,9 +49,9 @@ NS_CC_BEGIN
  *
  * @~chinese 返回下一个2的n次方数字
  * 例子:
- * ——如果“value”是15,它将返回16。
- * ——如果“value”是16,它将返回16。
- * ——如果17“value”,它将返回32。
+ * ——如果value是15,它将返回16。
+ * ——如果value是16,它将返回16。
+ * ——如果value是17,它将返回32。
  *
  * @param value @~english The value to get next power of two.
  * @~chinese 需要获取到下一个2的n次方数字
