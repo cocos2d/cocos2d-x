@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
  Copyright (c) 2015 Chukong Technologies Inc.
  
@@ -47,8 +47,8 @@ class PUParticleSystem3D;
 *@brief @~english PUEmitter inherit from Particle3DEmitter, the base class of pu emitter.
 Specific implementation decisions by different emitters.
 
-@~chinese PUEmitter¼Ì³Ğ×ÔParticle3DEmitter£¬ÊÇpu·¢ÉäÆ÷µÄ»ùÀà¡£
-¾ßÌåµÄÊµÏÖÓÉ²»Í¬µÄ·¢ÉäÆ÷ÀàĞÍ¶¨Òå¡£¡£
+@~chinese PUEmitterç»§æ‰¿è‡ªParticle3DEmitterï¼Œæ˜¯puå‘å°„å™¨çš„åŸºç±»ã€‚
+å…·ä½“çš„å®ç°ç”±ä¸åŒçš„å‘å°„å™¨ç±»å‹å®šä¹‰ã€‚ã€‚
 */
 class CC_DLL PUEmitter : public Particle3DEmitter
 {
@@ -59,7 +59,7 @@ public:
     @property
     @static
     @~english Default enabled
-    @~chinese Ä¬ÈÏµÄÆôÓÃ×´Ì¬
+    @~chinese é»˜è®¤çš„å¯ç”¨çŠ¶æ€
     */
     static const bool DEFAULT_ENABLED;
 
@@ -67,7 +67,7 @@ public:
     @property
     @static
     @~english Default position
-    @~chinese Ä¬ÈÏÎ»ÖÃ
+    @~chinese é»˜è®¤ä½ç½®
     */
     static const Vec3 DEFAULT_POSITION;
 
@@ -75,7 +75,7 @@ public:
     @property
     @static
     @~english Default whether use local coordinate system
-    @~chinese Ä¬ÈÏÊÇ·ñÊ¹ÓÃ¾Ö²¿×ø±êÏµ
+    @~chinese é»˜è®¤æ˜¯å¦ä½¿ç”¨å±€éƒ¨åæ ‡ç³»
     */
     static const bool DEFAULT_KEEP_LOCAL;
 
@@ -83,7 +83,7 @@ public:
     @property
     @static
     @~english Default emitted direction
-    @~chinese Ä¬ÈÏ·¢Éä·½Ïò
+    @~chinese é»˜è®¤å‘å°„æ–¹å‘
     */
     static const Vec3 DEFAULT_DIRECTION;
 
@@ -91,7 +91,7 @@ public:
     @property
     @static
     @~english Default emitted orientation
-    @~chinese Ä¬ÈÏ·¢Éä³¯Ïò
+    @~chinese é»˜è®¤å‘å°„æœå‘
     */
     static const Quaternion DEFAULT_ORIENTATION;
 
@@ -99,7 +99,7 @@ public:
     @property
     @static
     @~english Default emitted starting orientation
-    @~chinese Ä¬ÈÏ·¢Éä³¯Ïò·¶Î§ÆğÊ¼Öµ
+    @~chinese é»˜è®¤å‘å°„æœå‘èŒƒå›´èµ·å§‹å€¼
     */
     static const Quaternion DEFAULT_ORIENTATION_RANGE_START;
 
@@ -107,7 +107,7 @@ public:
     @property
     @static
     @~english Default emitted ending orientation
-    @~chinese Ä¬ÈÏ·¢Éä³¯Ïò·¶Î§½áÊøÖµ
+    @~chinese é»˜è®¤å‘å°„æœå‘èŒƒå›´ç»“æŸå€¼
     */
     static const Quaternion DEFAULT_ORIENTATION_RANGE_END;
 
@@ -115,7 +115,7 @@ public:
     @property
     @static
     @~english Default texture starting coords
-    @~chinese Ä¬ÈÏÎÆÀíÆğÊ¼×ø±ê
+    @~chinese é»˜è®¤çº¹ç†èµ·å§‹åæ ‡
     */
     static const unsigned short DEFAULT_START_TEXTURE_COORDS;
 
@@ -123,7 +123,7 @@ public:
     @property
     @static
     @~english Default texture ending coords
-    @~chinese Ä¬ÈÏÎÆÀí½áÊø×ø±ê
+    @~chinese é»˜è®¤çº¹ç†ç»“æŸåæ ‡
     */
     static const unsigned short DEFAULT_END_TEXTURE_COORDS;
 
@@ -131,7 +131,7 @@ public:
     @property
     @static
     @~english Default texture coords
-    @~chinese Ä¬ÈÏÎÆÀí×ø±ê
+    @~chinese é»˜è®¤çº¹ç†åæ ‡
     */
     static const unsigned short DEFAULT_TEXTURE_COORDS;
 
@@ -139,7 +139,7 @@ public:
     @property
     @static
     @~english Default color starting range
-    @~chinese Ä¬ÈÏÑÕÉ«·¶Î§ÆğÊ¼Öµ
+    @~chinese é»˜è®¤é¢œè‰²èŒƒå›´èµ·å§‹å€¼
     */
     static const Vec4 DEFAULT_START_COLOUR_RANGE;
 
@@ -147,7 +147,7 @@ public:
     @property
     @static
     @~english Default color ending range
-    @~chinese Ä¬ÈÏÑÕÉ«·¶Î§½áÊøÖµ
+    @~chinese é»˜è®¤é¢œè‰²èŒƒå›´ç»“æŸå€¼
     */
     static const Vec4 DEFAULT_END_COLOUR_RANGE;
 
@@ -155,7 +155,7 @@ public:
     @property
     @static
     @~english Default color
-    @~chinese Ä¬ÈÏÑÕÉ«Öµ
+    @~chinese é»˜è®¤é¢œè‰²å€¼
     */
     static const Vec4 DEFAULT_COLOUR;
 
@@ -163,7 +163,7 @@ public:
     @property
     @static
     @~english Default whether use auto direction
-    @~chinese Ä¬ÈÏÊÇ·ñÊ¹ÓÃ×Ô¶¯³¯Ïò
+    @~chinese é»˜è®¤æ˜¯å¦ä½¿ç”¨è‡ªåŠ¨æœå‘
     */
     static const bool DEFAULT_AUTO_DIRECTION;
 
@@ -171,7 +171,7 @@ public:
     @property
     @static
     @~english Default whether force emission
-    @~chinese Ä¬ÈÏÊÇ·ñÇ¿ÖÆ·¢Éä
+    @~chinese é»˜è®¤æ˜¯å¦å¼ºåˆ¶å‘å°„
     */
     static const bool DEFAULT_FORCE_EMISSION;
 
@@ -179,7 +179,7 @@ public:
     @property
     @static
     @~english Default emission rate
-    @~chinese Ä¬ÈÏ·¢ÉäÂÊ
+    @~chinese é»˜è®¤å‘å°„ç‡
     */
     static const float DEFAULT_EMISSION_RATE;
 
@@ -187,7 +187,7 @@ public:
     @property
     @static
     @~english Default particle time to live
-    @~chinese Ä¬ÈÏÁ£×ÓÉú´æÊ±¼ä
+    @~chinese é»˜è®¤ç²’å­ç”Ÿå­˜æ—¶é—´
     */
     static const float DEFAULT_TIME_TO_LIVE;
 
@@ -195,7 +195,7 @@ public:
     @property
     @static
     @~english Default particle mass
-    @~chinese Ä¬ÈÏÁ£×ÓÖÊÁ¿
+    @~chinese é»˜è®¤ç²’å­è´¨é‡
     */
     static const float DEFAULT_MASS;
 
@@ -203,7 +203,7 @@ public:
     @property
     @static
     @~english Default particle velocity
-    @~chinese Ä¬ÈÏÁ£×ÓËÙÂÊ
+    @~chinese é»˜è®¤ç²’å­é€Ÿç‡
     */
     static const float DEFAULT_VELOCITY;
 
@@ -211,7 +211,7 @@ public:
     @property
     @static
     @~english Default emitted duration
-    @~chinese Ä¬ÈÏ·¢Éä³ÖĞøÊ±¼ä
+    @~chinese é»˜è®¤å‘å°„æŒç»­æ—¶é—´
     */
     static const float DEFAULT_DURATION;
 
@@ -219,7 +219,7 @@ public:
     @property
     @static
     @~english Default emitted repeat delay
-    @~chinese Ä¬ÈÏÖØ¸´·¢Éä¼ä¸ô
+    @~chinese é»˜è®¤é‡å¤å‘å°„é—´éš”
     */
     static const float DEFAULT_REPEAT_DELAY;
 
@@ -227,7 +227,7 @@ public:
     @property
     @static
     @~english Default emitted angle
-    @~chinese Ä¬ÈÏ·¢Éä½Ç¶È
+    @~chinese é»˜è®¤å‘å°„è§’åº¦
     */
     static const float DEFAULT_ANGLE;
 
@@ -235,7 +235,7 @@ public:
     @property
     @static
     @~english Default emitted particle dimensions
-    @~chinese Ä¬ÈÏ·¢ÉäÁ£×Ó³ß´ç
+    @~chinese é»˜è®¤å‘å°„ç²’å­å°ºå¯¸
     */
     static const float DEFAULT_DIMENSIONS;
 
@@ -243,7 +243,7 @@ public:
     @property
     @static
     @~english Default emitted particle width
-    @~chinese Ä¬ÈÏ·¢ÉäÁ£×Ó¿í¶È
+    @~chinese é»˜è®¤å‘å°„ç²’å­å®½åº¦
     */
     static const float DEFAULT_WIDTH;
 
@@ -251,7 +251,7 @@ public:
     @property
     @static
     @~english Default emitted particle height
-    @~chinese Ä¬ÈÏ·¢ÉäÁ£×Ó¸ß¶È
+    @~chinese é»˜è®¤å‘å°„ç²’å­é«˜åº¦
     */
     static const float DEFAULT_HEIGHT;
 
@@ -259,7 +259,7 @@ public:
     @property
     @static
     @~english Default emitted particle depth
-    @~chinese Ä¬ÈÏ·¢ÉäÁ£×ÓÉî¶È
+    @~chinese é»˜è®¤å‘å°„ç²’å­æ·±åº¦
     */
     static const float DEFAULT_DEPTH;
 
@@ -268,345 +268,345 @@ public:
     
     /**
     * @~english Perform activities when a emitter is started(internal method).
-    * @~chinese µ±·¢ÉäÆ÷¿ªÊ¼ÔËĞĞÊ±Ö´ĞĞ(ÄÚ²¿·½·¨)¡£
+    * @~chinese å½“å‘å°„å™¨å¼€å§‹è¿è¡Œæ—¶æ‰§è¡Œ(å†…éƒ¨æ–¹æ³•)ã€‚
     */
     virtual void notifyStart();
 
     /**
     * @~english Perform activities when a emitter is stopped(internal method).
-    * @~chinese µ±·¢ÉäÆ÷Í£Ö¹ÔËĞĞÊ±Ö´ĞĞ(ÄÚ²¿·½·¨)¡£
+    * @~chinese å½“å‘å°„å™¨åœæ­¢è¿è¡Œæ—¶æ‰§è¡Œ(å†…éƒ¨æ–¹æ³•)ã€‚
     */
     virtual void notifyStop();
 
     /**
     * @~english Perform activities when a emitter is paused(internal method).
-    * @~chinese µ±·¢ÉäÆ÷ÔİÍ£ÔËĞĞÊ±Ö´ĞĞ(ÄÚ²¿·½·¨)¡£
+    * @~chinese å½“å‘å°„å™¨æš‚åœè¿è¡Œæ—¶æ‰§è¡Œ(å†…éƒ¨æ–¹æ³•)ã€‚
     */
     virtual void notifyPause();
 
     /**
     * @~english Perform activities when a emitter is paused(internal method).
-    * @~chinese µ±·¢ÉäÆ÷»Ö¸´ÔËĞĞÊ±Ö´ĞĞ(ÄÚ²¿·½·¨)¡£
+    * @~chinese å½“å‘å°„å™¨æ¢å¤è¿è¡Œæ—¶æ‰§è¡Œ(å†…éƒ¨æ–¹æ³•)ã€‚
     */
     virtual void notifyResume();
 
     /**
     * @~english Notify that the emitter is rescaled(internal method).
-    * @~chinese µ±·¢ÉäÆ÷ĞèÒªËõ·ÅÊ±Ö´ĞĞ(ÄÚ²¿·½·¨)¡£
+    * @~chinese å½“å‘å°„å™¨éœ€è¦ç¼©æ”¾æ—¶æ‰§è¡Œ(å†…éƒ¨æ–¹æ³•)ã€‚
     */
     virtual void notifyRescaled(const Vec3& scale);
 
     /**
     * @~english The function is automatically called during initialisation (prepare) activities of a ParticleSystem(internal method).
-    * @~chinese µ±Ò»¸öÁ£×ÓÏµÍ³³õÊ¼»¯Ê±×Ô¶¯Ö´ĞĞ(ÄÚ²¿·½·¨)¡£
+    * @~chinese å½“ä¸€ä¸ªç²’å­ç³»ç»Ÿåˆå§‹åŒ–æ—¶è‡ªåŠ¨æ‰§è¡Œ(å†…éƒ¨æ–¹æ³•)ã€‚
     */
     virtual void prepare();
 
     /**
     * @~english The function is automatically called when a ParticleSystem is expired(internal method).
-    * @~chinese µ±Ò»¸öÁ£×ÓÏµÍ³Ê§Ğ§Ê±×Ô¶¯Ö´ĞĞ(ÄÚ²¿·½·¨)¡£
+    * @~chinese å½“ä¸€ä¸ªç²’å­ç³»ç»Ÿå¤±æ•ˆæ—¶è‡ªåŠ¨æ‰§è¡Œ(å†…éƒ¨æ–¹æ³•)ã€‚
     */
     virtual void unPrepare();
 
     /**
     * @~english This function is called before the ParticleSystem update-loop where all particles are traversed(internal method).
-    * @~chinese ÔÚÁ£×ÓÏµÍ³¸üĞÂÑ­»·Á£×Ó±éÀúÇ°Ö´ĞĞ(ÄÚ²¿·½·¨)¡£
-    * @param deltaTime   @~english The delta time between two frames. @~chinese Á½Ö¡Ö®¼äµÄÊ±¼ä¼ä¸ô¡£
+    * @~chinese åœ¨ç²’å­ç³»ç»Ÿæ›´æ–°å¾ªç¯ç²’å­éå†å‰æ‰§è¡Œ(å†…éƒ¨æ–¹æ³•)ã€‚
+    * @param deltaTime   @~english The delta time between two frames. @~chinese ä¸¤å¸§ä¹‹é—´çš„æ—¶é—´é—´éš”ã€‚
     */
     virtual void preUpdateEmitter(float deltaTime);
 
     /**
     * @~english This function is called when the ParticleSystem update-loop where all particles are traversed(internal method).
-    * @~chinese ÔÚÁ£×ÓÏµÍ³¸üĞÂÑ­»·Á£×Ó±éÀúÊ±Ö´ĞĞ(ÄÚ²¿·½·¨)¡£
-    * @param particle   @~english The current traversed particle. @~chinese µ±Ç°±éÀúµ½µÄÁ£×Ó¡£
-    * @param delta   @~english The delta time between two frames. @~chinese Á½Ö¡Ö®¼äµÄÊ±¼ä¼ä¸ô¡£
+    * @~chinese åœ¨ç²’å­ç³»ç»Ÿæ›´æ–°å¾ªç¯ç²’å­éå†æ—¶æ‰§è¡Œ(å†…éƒ¨æ–¹æ³•)ã€‚
+    * @param particle   @~english The current traversed particle. @~chinese å½“å‰éå†åˆ°çš„ç²’å­ã€‚
+    * @param delta   @~english The delta time between two frames. @~chinese ä¸¤å¸§ä¹‹é—´çš„æ—¶é—´é—´éš”ã€‚
     */
     virtual void updateEmitter(Particle3D *particle, float deltaTime) override;
 
     /**
     * @~english This function is called after the ParticleSystem update-loop where all particles are traversed(internal method).
-    * @~chinese ÔÚÁ£×ÓÏµÍ³¸üĞÂÑ­»·Á£×Ó±éÀúºóÖ´ĞĞ(ÄÚ²¿·½·¨)¡£
-    * @param deltaTime   @~english The delta time between two frames. @~chinese Á½Ö¡Ö®¼äµÄÊ±¼ä¼ä¸ô¡£
+    * @~chinese åœ¨ç²’å­ç³»ç»Ÿæ›´æ–°å¾ªç¯ç²’å­éå†åæ‰§è¡Œ(å†…éƒ¨æ–¹æ³•)ã€‚
+    * @param deltaTime   @~english The delta time between two frames. @~chinese ä¸¤å¸§ä¹‹é—´çš„æ—¶é—´é—´éš”ã€‚
     */
     virtual void postUpdateEmitter(float deltaTime);
 
     /**
     * @~english Calculate the number of particles that the emitter wants to emit.
-    * @~chinese ¼ÆËãÏëÒª·¢ÉäÁ£×ÓµÄÊıÁ¿¡£
-    * @param timeElapsed   @~english The delta time between two frames. @~chinese Á½Ö¡Ö®¼äµÄÊ±¼ä¼ä¸ô¡£
+    * @~chinese è®¡ç®—æƒ³è¦å‘å°„ç²’å­çš„æ•°é‡ã€‚
+    * @param timeElapsed   @~english The delta time between two frames. @~chinese ä¸¤å¸§ä¹‹é—´çš„æ—¶é—´é—´éš”ã€‚
     */
     virtual unsigned short calculateRequestedParticles(float timeElapsed);
     
     /**
     * @~english Overwrite function.
-    * @~chinese ÖØĞ´µÄº¯Êı¡£
+    * @~chinese é‡å†™çš„å‡½æ•°ã€‚
     * @see Particle3DEmitter emit(int count);
     */
     virtual void emit(int count) override;
 
     /**
     * @~english Set position of emitter.
-    * @~chinese ÉèÖÃ·¢ÉäÆ÷µÄÎ»ÖÃ¡£
-    * @param pos   @~english The position in local coordinate system. @~chinese ¾Ö²¿×ø±êÏµÏÂµÄÎ»ÖÃ¡£
+    * @~chinese è®¾ç½®å‘å°„å™¨çš„ä½ç½®ã€‚
+    * @param pos   @~english The position in local coordinate system. @~chinese å±€éƒ¨åæ ‡ç³»ä¸‹çš„ä½ç½®ã€‚
     */
     void setLocalPosition(const Vec3 &pos) { _position = pos; };
 
     /**
     * @~english Get position of emitter.
-    * @~chinese »ñÈ¡·¢ÉäÆ÷µÄÎ»ÖÃ¡£
-    * @return   @~english The position in local coordinate system. @~chinese ¾Ö²¿×ø±êÏµÏÂµÄÎ»ÖÃ¡£
+    * @~chinese è·å–å‘å°„å™¨çš„ä½ç½®ã€‚
+    * @return   @~english The position in local coordinate system. @~chinese å±€éƒ¨åæ ‡ç³»ä¸‹çš„ä½ç½®ã€‚
     */
     const Vec3 getLocalPosition() const { return _position; };
 
     /**
     * @~english Calculate the world position of the emitter.
-    * @~chinese ¼ÆËã·¢ÉäÆ÷µÄÊÀ½çÎ»ÖÃ¡£
-    * @return      @~english The position in world coordinate system. @~chinese ·¢ÉäÆ÷ÔÚÊÀ½ç×ø±êÏµÏÂµÄÎ»ÖÃ¡£
+    * @~chinese è®¡ç®—å‘å°„å™¨çš„ä¸–ç•Œä½ç½®ã€‚
+    * @return      @~english The position in world coordinate system. @~chinese å‘å°„å™¨åœ¨ä¸–ç•Œåæ ‡ç³»ä¸‹çš„ä½ç½®ã€‚
     */
     const Vec3& getDerivedPosition();
     
     /**
     * @~english Set the emitter enable or disable.
-    * @~chinese ÉèÖÃ·¢ÉäÆ÷¿ÉÓÃ»ò²»¿ÉÓÃ¡£
-    * @param enabled @~english Whether the emitter enabled. @~chinese ·¢ÉäÆ÷ÊÇ·ñ¿ÉÓÃ¡£
+    * @~chinese è®¾ç½®å‘å°„å™¨å¯ç”¨æˆ–ä¸å¯ç”¨ã€‚
+    * @param enabled @~english Whether the emitter enabled. @~chinese å‘å°„å™¨æ˜¯å¦å¯ç”¨ã€‚
     */
     void setEnabled (bool enabled);
 
     /**
     * @~english Get the emitter enabled.
-    * @~chinese »ñÈ¡·¢ÉäÆ÷ÊÇ·ñ¿ÉÓÃ¡£
-    * @return @~english Whether the emitter enabled. @~chinese ·¢ÉäÆ÷ÊÇ·ñ¿ÉÓÃ¡£
+    * @~chinese è·å–å‘å°„å™¨æ˜¯å¦å¯ç”¨ã€‚
+    * @return @~english Whether the emitter enabled. @~chinese å‘å°„å™¨æ˜¯å¦å¯ç”¨ã€‚
     */
     bool isEnabled(void) const;
 
     /**
     * @~english Is the emitter emission done.
-    * @~chinese ·¢ÉäÆ÷ÊÇ·ñ·¢ÉäÍê³É¡£
-    * @return @~english Whether the emission done. @~chinese ·¢ÉäÊÇ·ñÍê³É¡£
+    * @~chinese å‘å°„å™¨æ˜¯å¦å‘å°„å®Œæˆã€‚
+    * @return @~english Whether the emission done. @~chinese å‘å°„æ˜¯å¦å®Œæˆã€‚
     */
     bool isEmitterDone() const;
 
     /**
     * @~english Get the emitter type.
-    * @~chinese »ñÈ¡·¢ÉäÆ÷ÀàĞÍ¡£
-    * @return @~english The type. @~chinese ÀàĞÍ¡£
+    * @~chinese è·å–å‘å°„å™¨ç±»å‹ã€‚
+    * @return @~english The type. @~chinese ç±»å‹ã€‚
     */
     inline const std::string& getEmitterType(void) const {return _emitterType;};
 
     /**
     * @~english Set the emitter type.
-    * @~chinese ÉèÖÃ·¢ÉäÆ÷ÀàĞÍ¡£
-    * @param emitterType @~english The type. @~chinese ÀàĞÍ¡£
+    * @~chinese è®¾ç½®å‘å°„å™¨ç±»å‹ã€‚
+    * @param emitterType @~english The type. @~chinese ç±»å‹ã€‚
     */
     void setEmitterType(const std::string& emitterType) {_emitterType = emitterType;};
 
     /**
     * @~english Get the name of emitter.
-    * @~chinese »ñÈ¡·¢ÉäÆ÷Ãû³Æ¡£
-    * @return @~english The name. @~chinese Ãû³Æ¡£
+    * @~chinese è·å–å‘å°„å™¨åç§°ã€‚
+    * @return @~english The name. @~chinese åç§°ã€‚
     */
     inline const std::string& getName(void) const {return _name;};
 
     /**
     * @~english Set the name of emitter.
-    * @~chinese ÉèÖÃ·¢ÉäÆ÷Ãû³Æ¡£
-    * @param name @~english The name. @~chinese Ãû³Æ¡£
+    * @~chinese è®¾ç½®å‘å°„å™¨åç§°ã€‚
+    * @param name @~english The name. @~chinese åç§°ã€‚
     */
     void setName(const std::string& name) {_name = name;};
 
     /**
     * @~english Get the emission angle attribute.
-    * @~chinese »ñÈ¡·¢Éä½ÇÊôĞÔ¡£
-    * @return @~english The attribute. @~chinese ÊôĞÔ¡£
+    * @~chinese è·å–å‘å°„è§’å±æ€§ã€‚
+    * @return @~english The attribute. @~chinese å±æ€§ã€‚
     */
     inline PUDynamicAttribute* getDynAngle(void) const {return _dynAngle;};
 
     /**
     * @~english Set the emission angle attribute.
-    * @~chinese ÉèÖÃ·¢Éä½ÇÊôĞÔ¡£
-    * @param dynAngle @~english The attribute. @~chinese ÊôĞÔ¡£
+    * @~chinese è®¾ç½®å‘å°„è§’å±æ€§ã€‚
+    * @param dynAngle @~english The attribute. @~chinese å±æ€§ã€‚
     */
     void setDynAngle(PUDynamicAttribute* dynAngle);
 
     /**
     * @~english Get the emission rate attribute.
-    * @~chinese »ñÈ¡·¢ÉäÂÊÊôĞÔ¡£
-    * @return @~english The attribute. @~chinese ÊôĞÔ¡£
+    * @~chinese è·å–å‘å°„ç‡å±æ€§ã€‚
+    * @return @~english The attribute. @~chinese å±æ€§ã€‚
     */
     inline PUDynamicAttribute* getDynEmissionRate(void) const {return _dynEmissionRate;};
 
     /**
     * @~english Set the emission rate attribute.
-    * @~chinese ÉèÖÃ·¢ÉäÂÊÊôĞÔ¡£
-    * @param dynEmissionRate @~english The attribute. @~chinese ÊôĞÔ¡£
+    * @~chinese è®¾ç½®å‘å°„ç‡å±æ€§ã€‚
+    * @param dynEmissionRate @~english The attribute. @~chinese å±æ€§ã€‚
     */
     void setDynEmissionRate(PUDynamicAttribute* dynEmissionRate);
 
     /**
     * @~english Get the time to live attribute.
-    * @~chinese »ñÈ¡´æ»îÊ±¼äÊôĞÔ¡£
-    * @return @~english The attribute. @~chinese ÊôĞÔ¡£
+    * @~chinese è·å–å­˜æ´»æ—¶é—´å±æ€§ã€‚
+    * @return @~english The attribute. @~chinese å±æ€§ã€‚
     */
     inline PUDynamicAttribute* getDynTotalTimeToLive(void) const {return _dynTotalTimeToLive;};
 
     /**
     * @~english Set the time to live attribute.
-    * @~chinese ÉèÖÃ´æ»îÊ±¼äÊôĞÔ¡£
-    * @param dynTotalTimeToLive @~english The attribute. @~chinese ÊôĞÔ¡£
+    * @~chinese è®¾ç½®å­˜æ´»æ—¶é—´å±æ€§ã€‚
+    * @param dynTotalTimeToLive @~english The attribute. @~chinese å±æ€§ã€‚
     */
     void setDynTotalTimeToLive(PUDynamicAttribute* dynTotalTimeToLive);
 
     /**
     * @~english Get the mass of emission particle.
-    * @~chinese »ñÈ¡·¢ÉäÁ£×ÓµÄÖÊÁ¿¡£
-    * @return @~english The attribute. @~chinese ÊôĞÔ¡£
+    * @~chinese è·å–å‘å°„ç²’å­çš„è´¨é‡ã€‚
+    * @return @~english The attribute. @~chinese å±æ€§ã€‚
     */
     inline PUDynamicAttribute* getDynParticleMass(void) const {return _dynParticleMass;};
 
     /**
     * @~english Set the mass of emission particle.
-    * @~chinese ÉèÖÃ·¢ÉäÁ£×ÓµÄÖÊÁ¿¡£
-    * @param dynParticleMass @~english The attribute. @~chinese ÊôĞÔ¡£
+    * @~chinese è®¾ç½®å‘å°„ç²’å­çš„è´¨é‡ã€‚
+    * @param dynParticleMass @~english The attribute. @~chinese å±æ€§ã€‚
     */
     void setDynParticleMass(PUDynamicAttribute* dynParticleMass);
 
     /**
     * @~english Get the emission velocity.
-    * @~chinese »ñÈ¡·¢ÉäËÙÂÊ¡£
-    * @return @~english The attribute. @~chinese ÊôĞÔ¡£
+    * @~chinese è·å–å‘å°„é€Ÿç‡ã€‚
+    * @return @~english The attribute. @~chinese å±æ€§ã€‚
     */
     inline PUDynamicAttribute* getDynVelocity(void) const {return _dynVelocity;};
 
     /**
     * @~english Set the emission velocity.
-    * @~chinese ÉèÖÃ·¢ÉäËÙÂÊ¡£
-    * @param dynVelocity @~english The attribute. @~chinese ÊôĞÔ¡£
+    * @~chinese è®¾ç½®å‘å°„é€Ÿç‡ã€‚
+    * @param dynVelocity @~english The attribute. @~chinese å±æ€§ã€‚
     */
     void setDynVelocity(PUDynamicAttribute* dynVelocity);
 
     /**
     * @~english Get the emission duration.
-    * @~chinese »ñÈ¡·¢Éä³ÖĞøÊ±¼ä¡£
-    * @return @~english The attribute. @~chinese ÊôĞÔ¡£
+    * @~chinese è·å–å‘å°„æŒç»­æ—¶é—´ã€‚
+    * @return @~english The attribute. @~chinese å±æ€§ã€‚
     */
     inline PUDynamicAttribute* getDynDuration(void) const {return _dynDuration;};
 
     /**
     * @~english Set the emission duration.
-    * @~chinese ÉèÖÃ·¢Éä³ÖĞøÊ±¼ä¡£
-    * @param dynDuration @~english The attribute. @~chinese ÊôĞÔ¡£
+    * @~chinese è®¾ç½®å‘å°„æŒç»­æ—¶é—´ã€‚
+    * @param dynDuration @~english The attribute. @~chinese å±æ€§ã€‚
     */
     void setDynDuration(PUDynamicAttribute* dynDuration);
 
     /**
     * @~english Whether use duration(unused means infinite time).
-    * @~chinese ÊÇ·ñÉèÖÃ³ÖĞøÊ±¼ä(²»ÉèÖÃÒâÎ¶ÎŞÏŞÊ±¼ä)¡£
-    * @param durationSet @~english Whether use. @~chinese ÊÇ·ñÊ¹ÓÃ¡£
+    * @~chinese æ˜¯å¦è®¾ç½®æŒç»­æ—¶é—´(ä¸è®¾ç½®æ„å‘³æ— é™æ—¶é—´)ã€‚
+    * @param durationSet @~english Whether use. @~chinese æ˜¯å¦ä½¿ç”¨ã€‚
     */
     void setDynDurationSet(bool durationSet);
 
     /**
     * @~english Get the delay of repeat emission.
-    * @~chinese »ñÈ¡ÖØ¸´·¢ÉäµÄ¼ä¸ôÊ±¼ä¡£
-    * @return @~english The delay. @~chinese ¼ä¸ôÊ±¼ä¡£
+    * @~chinese è·å–é‡å¤å‘å°„çš„é—´éš”æ—¶é—´ã€‚
+    * @return @~english The delay. @~chinese é—´éš”æ—¶é—´ã€‚
     */
     inline PUDynamicAttribute* getDynRepeatDelay(void) const {return _dynRepeatDelay;};
 
     /**
     * @~english Set the delay of repeat emission.
-    * @~chinese ÉèÖÃÖØ¸´·¢ÉäµÄ¼ä¸ôÊ±¼ä¡£
-    * @param dynRepeatDelay @~english The delay. @~chinese ¼ä¸ôÊ±¼ä¡£
+    * @~chinese è®¾ç½®é‡å¤å‘å°„çš„é—´éš”æ—¶é—´ã€‚
+    * @param dynRepeatDelay @~english The delay. @~chinese é—´éš”æ—¶é—´ã€‚
     */
     void setDynRepeatDelay(PUDynamicAttribute* dynRepeatDelay);
 
     /**
     * @~english Whether use delay of repeat emission(unused means emit once).
-    * @~chinese ÊÇ·ñÉèÖÃÖØ¸´¼ä¸ô£¨²»ÉèÖÃÒâÎ¶·¢ÉäÒ»´Î£©¡£
-    * @param repeatDelaySet @~english Whether use. @~chinese ÊÇ·ñÊ¹ÓÃ¡£
+    * @~chinese æ˜¯å¦è®¾ç½®é‡å¤é—´éš”ï¼ˆä¸è®¾ç½®æ„å‘³å‘å°„ä¸€æ¬¡ï¼‰ã€‚
+    * @param repeatDelaySet @~english Whether use. @~chinese æ˜¯å¦ä½¿ç”¨ã€‚
     */
     void setDynRepeatDelaySet(bool repeatDelaySet);
 
     /**
     * @~english Get the all dimensions attribute of particle.
-    * @~chinese »ñÈ¡Á£×ÓËùÓĞÎ¬¶ÈÊôĞÔ¡£
-    * @return @~english The attribute. @~chinese ÊôĞÔ¡£
+    * @~chinese è·å–ç²’å­æ‰€æœ‰ç»´åº¦å±æ€§ã€‚
+    * @return @~english The attribute. @~chinese å±æ€§ã€‚
     */
     inline PUDynamicAttribute* getDynParticleAllDimensions(void) const {return _dynParticleAllDimensions;};
 
     /**
     * @~english Set the all dimensions attribute of particle.
-    * @~chinese ÉèÖÃÁ£×ÓËùÓĞÎ¬¶ÈÊôĞÔ¡£
-    * @param dynParticleAllDimensions @~english The attribute. @~chinese ÊôĞÔ¡£
+    * @~chinese è®¾ç½®ç²’å­æ‰€æœ‰ç»´åº¦å±æ€§ã€‚
+    * @param dynParticleAllDimensions @~english The attribute. @~chinese å±æ€§ã€‚
     */
     void setDynParticleAllDimensions(PUDynamicAttribute* dynParticleAllDimensions);
 
     /**
     * @~english Whether use all dimensions setting.
-    * @~chinese ÊÇ·ñÊ¹ÓÃËùÓĞÎ¬¶ÈµÄÉèÖÃ¡£
-    * @param particleAllDimensionsSet @~english Whether use. @~chinese ÊÇ·ñÊ¹ÓÃ¡£
+    * @~chinese æ˜¯å¦ä½¿ç”¨æ‰€æœ‰ç»´åº¦çš„è®¾ç½®ã€‚
+    * @param particleAllDimensionsSet @~english Whether use. @~chinese æ˜¯å¦ä½¿ç”¨ã€‚
     */
     void setDynParticleAllDimensionsSet(bool particleAllDimensionsSet);
 
     /**
     * @~english Get the attribute of particle width.
-    * @~chinese »ñÈ¡Á£×Ó¿í¶ÈµÄÊôĞÔ¡£
-    * @return @~english The attribute. @~chinese ÊôĞÔ¡£
+    * @~chinese è·å–ç²’å­å®½åº¦çš„å±æ€§ã€‚
+    * @return @~english The attribute. @~chinese å±æ€§ã€‚
     */
     inline PUDynamicAttribute* getDynParticleWidth(void) const {return _dynParticleWidth;};
 
     /**
     * @~english Set the attribute of particle width.
-    * @~chinese ÉèÖÃÁ£×Ó¿í¶ÈµÄÊôĞÔ¡£
-    * @return @~english The attribute. @~chinese ÊôĞÔ¡£
+    * @~chinese è®¾ç½®ç²’å­å®½åº¦çš„å±æ€§ã€‚
+    * @return @~english The attribute. @~chinese å±æ€§ã€‚
     */
     void setDynParticleWidth(PUDynamicAttribute* dynParticleWidth);
 
     /**
     * @~english Whether use the attribute of particle width.
-    * @~chinese ÊÇ·ñÊ¹ÓÃÁ£×Ó¿í¶ÈµÄÊôĞÔ¡£
-    * @param particleWidthSet @~english Whether use. @~chinese ÊÇ·ñÊ¹ÓÃ¡£
+    * @~chinese æ˜¯å¦ä½¿ç”¨ç²’å­å®½åº¦çš„å±æ€§ã€‚
+    * @param particleWidthSet @~english Whether use. @~chinese æ˜¯å¦ä½¿ç”¨ã€‚
     */
     void setDynParticleWidthSet(bool particleWidthSet);
 
     /**
     * @~english Get the attribute of particle height.
-    * @~chinese »ñÈ¡Á£×Ó¸ß¶ÈµÄÊôĞÔ¡£
-    * @return @~english The attribute. @~chinese ÊôĞÔ¡£
+    * @~chinese è·å–ç²’å­é«˜åº¦çš„å±æ€§ã€‚
+    * @return @~english The attribute. @~chinese å±æ€§ã€‚
     */
     inline PUDynamicAttribute* getDynParticleHeight(void) const {return _dynParticleHeight;};
 
     /**
     * @~english Set the attribute of particle height.
-    * @~chinese ÉèÖÃÁ£×Ó¸ß¶ÈµÄÊôĞÔ¡£
-    * @return @~english The attribute. @~chinese ÊôĞÔ¡£
+    * @~chinese è®¾ç½®ç²’å­é«˜åº¦çš„å±æ€§ã€‚
+    * @return @~english The attribute. @~chinese å±æ€§ã€‚
     */
     void setDynParticleHeight(PUDynamicAttribute* dynParticleHeight);
 
     /**
     * @~english Whether use the attribute of particle height.
-    * @~chinese ÊÇ·ñÊ¹ÓÃÁ£×Ó¸ß¶ÈµÄÊôĞÔ¡£
-    * @param particleWidthSet @~english Whether use. @~chinese ÊÇ·ñÊ¹ÓÃ¡£
+    * @~chinese æ˜¯å¦ä½¿ç”¨ç²’å­é«˜åº¦çš„å±æ€§ã€‚
+    * @param particleWidthSet @~english Whether use. @~chinese æ˜¯å¦ä½¿ç”¨ã€‚
     */
     void setDynParticleHeightSet(bool particleHeightSet);
 
     /**
     * @~english Get the attribute of particle depth.
-    * @~chinese »ñÈ¡Á£×ÓÉî¶ÈµÄÊôĞÔ¡£
-    * @return @~english The attribute. @~chinese ÊôĞÔ¡£
+    * @~chinese è·å–ç²’å­æ·±åº¦çš„å±æ€§ã€‚
+    * @return @~english The attribute. @~chinese å±æ€§ã€‚
     */
     inline PUDynamicAttribute* getDynParticleDepth(void) const {return _dynParticleDepth;};
 
     /**
     * @~english Set the attribute of particle depth.
-    * @~chinese ÉèÖÃÁ£×ÓÉî¶ÈµÄÊôĞÔ¡£
-    * @return @~english The attribute. @~chinese ÊôĞÔ¡£
+    * @~chinese è®¾ç½®ç²’å­æ·±åº¦çš„å±æ€§ã€‚
+    * @return @~english The attribute. @~chinese å±æ€§ã€‚
     */
     void setDynParticleDepth(PUDynamicAttribute* dynParticleDepth);
 
     /**
     * @~english Whether use the attribute of particle depth.
-    * @~chinese ÊÇ·ñÊ¹ÓÃÁ£×Ó¸ß¶ÈµÄÊôĞÔ¡£
-    * @param particleDepthSet @~english Whether use. @~chinese ÊÇ·ñÊ¹ÓÃ¡£
+    * @~chinese æ˜¯å¦ä½¿ç”¨ç²’å­é«˜åº¦çš„å±æ€§ã€‚
+    * @param particleDepthSet @~english Whether use. @~chinese æ˜¯å¦ä½¿ç”¨ã€‚
     */
     void setDynParticleDepthSet(bool particleDepthSet);
 
@@ -617,192 +617,192 @@ public:
 
     /**
     * @~english Get the name of emits.
-    * @~chinese »ñÈ¡·¢Éä¶ÔÏóµÄÃû³Æ¡£
-    * @return @~english The name. @~chinese Ãû³Æ¡£
+    * @~chinese è·å–å‘å°„å¯¹è±¡çš„åç§°ã€‚
+    * @return @~english The name. @~chinese åç§°ã€‚
     */
     inline const std::string& getEmitsName(void) const {return _emitsName;};
 
     /**
     * @~english Set the name of emits.
-    * @~chinese ÉèÖÃ·¢Éä¶ÔÏóµÄÃû³Æ¡£
-    * @return @~english The name. @~chinese Ãû³Æ¡£
+    * @~chinese è®¾ç½®å‘å°„å¯¹è±¡çš„åç§°ã€‚
+    * @return @~english The name. @~chinese åç§°ã€‚
     */
     void setEmitsName(const std::string& emitsName);
 
     /**
     * @~english Get the type of emits.
-    * @~chinese »ñÈ¡·¢Éä¶ÔÏóµÄÀàĞÍ¡£
+    * @~chinese è·å–å‘å°„å¯¹è±¡çš„ç±»å‹ã€‚
     * @see ParticleType
-    * @return @~english The type. @~chinese ÀàĞÍ¡£
+    * @return @~english The type. @~chinese ç±»å‹ã€‚
     */
     inline PUParticle3D::ParticleType getEmitsType() const {return _emitsType;};
 
     /**
     * @~english Set the type of emits.
-    * @~chinese ÉèÖÃ·¢Éä¶ÔÏóµÄÀàĞÍ¡£
+    * @~chinese è®¾ç½®å‘å°„å¯¹è±¡çš„ç±»å‹ã€‚
     * @see ParticleType
-    * @param type @~english The type. @~chinese ÀàĞÍ¡£
+    * @param type @~english The type. @~chinese ç±»å‹ã€‚
     */
     void setEmitsType(PUParticle3D::ParticleType type) {_emitsType = type;};
 
     /**
     * @~english Get the pointer of emits(PUEmitter, PUParticleSystem3D, etc).
-    * @~chinese »ñÈ¡·¢Éä¶ÔÏóµÄÖ¸Õë£¨PUEmitter, PUParticleSystem3DµÈ£©¡£
-    * @return @~english The pointer of emits. @~chinese ·¢Éä¶ÔÏóÖ¸Õë¡£
+    * @~chinese è·å–å‘å°„å¯¹è±¡çš„æŒ‡é’ˆï¼ˆPUEmitter, PUParticleSystem3Dç­‰ï¼‰ã€‚
+    * @return @~english The pointer of emits. @~chinese å‘å°„å¯¹è±¡æŒ‡é’ˆã€‚
     */
     Ref* getEmitsEntityPtr() const;
 
     /**
     * @~english Whether this emitter marked for emission.
-    * @~chinese µ±Ç°·¢ÉäÆ÷ÊÇ·ñ±ê¼ÇÎª±»·¢Éä¶ÔÏó¡£
-    * @return @~english The pointer of emits. @~chinese ·¢Éä¶ÔÏóÖ¸Õë¡£
+    * @~chinese å½“å‰å‘å°„å™¨æ˜¯å¦æ ‡è®°ä¸ºè¢«å‘å°„å¯¹è±¡ã€‚
+    * @return @~english The pointer of emits. @~chinese å‘å°„å¯¹è±¡æŒ‡é’ˆã€‚
     */
     bool isMarkedForEmission() const {return _isMarkedForEmission;};
 
     /**
     * @~english Set this emitter marked for emission.
-    * @~chinese ±ê¼Çµ±Ç°·¢ÉäÆ÷Îª±»·¢Éä¶ÔÏó¡£
-    * @param isMarked @~english Whether marked. @~chinese ÊÇ·ñ±ê¼Ç¡£
+    * @~chinese æ ‡è®°å½“å‰å‘å°„å™¨ä¸ºè¢«å‘å°„å¯¹è±¡ã€‚
+    * @param isMarked @~english Whether marked. @~chinese æ˜¯å¦æ ‡è®°ã€‚
     */
     void setMarkedForEmission(bool isMarked) {_isMarkedForEmission = isMarked;};
 
     /**
     * @~english Returns the base direction of the particle that is going to be emitted.
-    * @~chinese ·µ»Ø·¢ÉäÁ£×ÓµÄ»ù×¼·½Ïò¡£
-    * @return @~english The base direction of the particle. @~chinese Á£×Ó·½Ïò¡£
+    * @~chinese è¿”å›å‘å°„ç²’å­çš„åŸºå‡†æ–¹å‘ã€‚
+    * @return @~english The base direction of the particle. @~chinese ç²’å­æ–¹å‘ã€‚
     */
     const Vec3& getParticleDirection(void);
 
     /**
     * @~english Returns the originally set particle direction. This value is not affected by affectors, angle, etc.
-    * @~chinese ·µ»ØÁ£×Ó³õÊ¼·½Ïò£¬¸ÃÖµ²»»á±»ĞŞ¸Ä¡£
-    * @return @~english The originally set particle direction. @~chinese Á£×Ó³õÊ¼·½Ïò¡£
+    * @~chinese è¿”å›ç²’å­åˆå§‹æ–¹å‘ï¼Œè¯¥å€¼ä¸ä¼šè¢«ä¿®æ”¹ã€‚
+    * @return @~english The originally set particle direction. @~chinese ç²’å­åˆå§‹æ–¹å‘ã€‚
     */
     const Vec3& getOriginalParticleDirection(void) const;
 
     /**
     * @~english Returns the base orientation of the particle that is going to be emitted.
-    * @~chinese ·µ»Ø·¢ÉäÁ£×ÓµÄ»ù×¼³¯Ïò¡£
-    * @return @~english The base orientation of the particle. @~chinese Á£×Ó»ù×¼³¯Ïò¡£
+    * @~chinese è¿”å›å‘å°„ç²’å­çš„åŸºå‡†æœå‘ã€‚
+    * @return @~english The base orientation of the particle. @~chinese ç²’å­åŸºå‡†æœå‘ã€‚
     */
     const Quaternion& getParticleOrientation(void) const;
 
     /**
     * @~english Set the orientation of the particle.
-    * @~chinese ÉèÖÃÁ£×ÓµÄ³¯Ïò¡£
-    * @param orientation @~english The orientation. @~chinese ³¯Ïò¡£
+    * @~chinese è®¾ç½®ç²’å­çš„æœå‘ã€‚
+    * @param orientation @~english The orientation. @~chinese æœå‘ã€‚
     */
     void setParticleOrientation(const Quaternion& orientation);
 
     /**
     * @~english Returns the start orientation of the particle that is going to be emitted
-    * @~chinese ·µ»Ø±»·¢ÉäÁ£×ÓµÄÆğÊ¼³¯Ïò¡£
-    * @return @~english The start orientation. @~chinese ÆğÊ¼³¯Ïò¡£
+    * @~chinese è¿”å›è¢«å‘å°„ç²’å­çš„èµ·å§‹æœå‘ã€‚
+    * @return @~english The start orientation. @~chinese èµ·å§‹æœå‘ã€‚
     */
     const Quaternion& getParticleOrientationRangeStart(void) const;
 
     /**
     * @~english Set start orientation of the particle that is going to be emitted.
-    * @~chinese ÉèÖÃ±»·¢ÉäÁ£×ÓµÄÆğÊ¼³¯Ïò¡£
-    * @param orientationRangeStart @~english The start orientation. @~chinese ÆğÊ¼³¯Ïò¡£
+    * @~chinese è®¾ç½®è¢«å‘å°„ç²’å­çš„èµ·å§‹æœå‘ã€‚
+    * @param orientationRangeStart @~english The start orientation. @~chinese èµ·å§‹æœå‘ã€‚
     */
     void setParticleOrientationRangeStart(const Quaternion& orientationRangeStart);
 
     /**
     * @~english Returns the end orientation of the particle that is going to be emitted.
-    * @~chinese ·µ»Ø±»·¢ÉäÁ£×ÓµÄÖÕÖ¹³¯Ïò¡£
-    * @return @~english The end orientation. @~chinese ÖÕÖ¹³¯Ïò¡£
+    * @~chinese è¿”å›è¢«å‘å°„ç²’å­çš„ç»ˆæ­¢æœå‘ã€‚
+    * @return @~english The end orientation. @~chinese ç»ˆæ­¢æœå‘ã€‚
     */
     const Quaternion& getParticleOrientationRangeEnd(void) const;
 
     /**
     * @~english Set end orientation of the particle that is going to be emitted.
-    * @~chinese ÉèÖÃ±»·¢ÉäÁ£×ÓµÄÖÕÖ¹³¯Ïò¡£
-    * @param orientationRangeEnd @~english The end orientation. @~chinese ÖÕÖ¹³¯Ïò¡£
+    * @~chinese è®¾ç½®è¢«å‘å°„ç²’å­çš„ç»ˆæ­¢æœå‘ã€‚
+    * @param orientationRangeEnd @~english The end orientation. @~chinese ç»ˆæ­¢æœå‘ã€‚
     */
     void setParticleOrientationRangeEnd(const Quaternion& orientationRangeEnd);
             
     /**
     * @~english Sets the direction of the particle that the emitter is emitting.
-    * @~chinese ÉèÖÃ±»·¢ÉäÁ£×ÓµÄ·½Ïò¡£
-    * @param direction @~english The base direction of emitted particles. @~chinese Á£×Ó»ù×¼·½Ïò¡£
+    * @~chinese è®¾ç½®è¢«å‘å°„ç²’å­çš„æ–¹å‘ã€‚
+    * @param direction @~english The base direction of emitted particles. @~chinese ç²’å­åŸºå‡†æ–¹å‘ã€‚
     */
     void setParticleDirection(const Vec3& direction);
 
     /**
     * @~english Whether use auto direction.
-    * @~chinese ÊÇ·ñÊ¹ÓÃ×Ô¶¯·½Ïò¼ÆËã¡£
-    * @return @~english Whether use. @~chinese ÊÇ·ñÊ¹ÓÃ¡£
+    * @~chinese æ˜¯å¦ä½¿ç”¨è‡ªåŠ¨æ–¹å‘è®¡ç®—ã€‚
+    * @return @~english Whether use. @~chinese æ˜¯å¦ä½¿ç”¨ã€‚
     */
     bool isAutoDirection(void) const;
 
     /**
     * @~english Set use auto direction.
-    * @~chinese ÉèÖÃÊ¹ÓÃ×Ô¶¯·½Ïò¼ÆËã¡£
-    * @param autoDirection @~english Whether use. @~chinese ÊÇ·ñÊ¹ÓÃ¡£
+    * @~chinese è®¾ç½®ä½¿ç”¨è‡ªåŠ¨æ–¹å‘è®¡ç®—ã€‚
+    * @param autoDirection @~english Whether use. @~chinese æ˜¯å¦ä½¿ç”¨ã€‚
     */
     void setAutoDirection(bool autoDirection);
 
     /**
     * @~english Whether force emission.
-    * @~chinese ÊÇ·ñÇ¿ÖÆ·¢Éä¡£
-    * @return @~english Whether force. @~chinese ÊÇ·ñÇ¿ÖÆ¡£
+    * @~chinese æ˜¯å¦å¼ºåˆ¶å‘å°„ã€‚
+    * @return @~english Whether force. @~chinese æ˜¯å¦å¼ºåˆ¶ã€‚
     */
     bool isForceEmission(void) const;
 
     /**
     * @~english Set force emission.
-    * @~chinese ÉèÖÃÇ¿ÖÆ·¢Éä¡£
-    * @param forceEmission @~english Whether force. @~chinese ÊÇ·ñÇ¿ÖÆ¡£
+    * @~chinese è®¾ç½®å¼ºåˆ¶å‘å°„ã€‚
+    * @param forceEmission @~english Whether force. @~chinese æ˜¯å¦å¼ºåˆ¶ã€‚
     */
     void setForceEmission(bool forceEmission);
 
     /**
     * @~english Get the color of a particle that will be emitted.
-    * @~chinese »ñÈ¡·¢ÉäÁ£×ÓµÄÑÕÉ«¡£
-    * @return @~english The color of a particle. @~chinese Á£×ÓÑÕÉ«¡£
+    * @~chinese è·å–å‘å°„ç²’å­çš„é¢œè‰²ã€‚
+    * @return @~english The color of a particle. @~chinese ç²’å­é¢œè‰²ã€‚
     */
     const Vec4& getParticleColor(void) const;
 
     /**
     * @~english Set the color of an emitted particle.
-    * @~chinese ÉèÖÃÁ£×ÓÑÕÉ«¡£
-    * @param forceEmission @~english The color of a particle. @~chinese Á£×ÓÑÕÉ«¡£
+    * @~chinese è®¾ç½®ç²’å­é¢œè‰²ã€‚
+    * @param forceEmission @~english The color of a particle. @~chinese ç²’å­é¢œè‰²ã€‚
     */
     void setParticleColor(const Vec4& particleColour);
 
     /**
     * @~english Get the color range start of an emitted particle.
-    * @~chinese »ñÈ¡·¢ÉäÁ£×ÓµÄÑÕÉ«·¶Î§µÄÆğÊ¼Öµ¡£
-    * @return @~english The color range start. @~chinese ÑÕÉ«·¶Î§ÆğÊ¼Öµ¡£
+    * @~chinese è·å–å‘å°„ç²’å­çš„é¢œè‰²èŒƒå›´çš„èµ·å§‹å€¼ã€‚
+    * @return @~english The color range start. @~chinese é¢œè‰²èŒƒå›´èµ·å§‹å€¼ã€‚
     */
     const Vec4& getParticleColorRangeStart(void) const;
 
     /**
     * @~english Set the color range start of an emitted particle
-    * @~chinese ÉèÖÃ·¢ÉäÁ£×ÓµÄÑÕÉ«·¶Î§µÄÆğÊ¼Öµ¡£
-    * @param particleColourRangeStart @~english The color range start. @~chinese ÑÕÉ«·¶Î§ÆğÊ¼Öµ¡£
+    * @~chinese è®¾ç½®å‘å°„ç²’å­çš„é¢œè‰²èŒƒå›´çš„èµ·å§‹å€¼ã€‚
+    * @param particleColourRangeStart @~english The color range start. @~chinese é¢œè‰²èŒƒå›´èµ·å§‹å€¼ã€‚
     */
     void setParticleColorRangeStart(const Vec4& particleColourRangeStart);
 
     /**
     * @~english Get the color range end of an emitted particle.
-    * @~chinese »ñÈ¡·¢ÉäÁ£×ÓµÄÑÕÉ«·¶Î§µÄÖÕÖ¹Öµ¡£
-    * @return @~english The color range end. @~chinese ÑÕÉ«·¶Î§ÖÕÖ¹Öµ¡£
+    * @~chinese è·å–å‘å°„ç²’å­çš„é¢œè‰²èŒƒå›´çš„ç»ˆæ­¢å€¼ã€‚
+    * @return @~english The color range end. @~chinese é¢œè‰²èŒƒå›´ç»ˆæ­¢å€¼ã€‚
     */
     const Vec4& getParticleColorRangeEnd(void) const;
 
     /**
     * @~english Set the color range end of an emitted particle
-    * @~chinese ÉèÖÃ·¢ÉäÁ£×ÓµÄÑÕÉ«·¶Î§µÄÖÕÖ¹Öµ¡£
-    * @param particleColourRangeEnd @~english The color range end. @~chinese ÑÕÉ«·¶Î§ÖÕÖ¹Öµ¡£
+    * @~chinese è®¾ç½®å‘å°„ç²’å­çš„é¢œè‰²èŒƒå›´çš„ç»ˆæ­¢å€¼ã€‚
+    * @param particleColourRangeEnd @~english The color range end. @~chinese é¢œè‰²èŒƒå›´ç»ˆæ­¢å€¼ã€‚
     */
     void setParticleColorRangeEnd(const Vec4& particleColourRangeEnd);
 
     /**
     * @~english Get the texture coords of an emitted particle.
-    * @~chinese »ñÈ¡·¢ÉäÁ£×ÓµÄÎÆÀí×ø±ê¡£
-    * @return @~english The texture coords. @~chinese ÎÆÀí×ø±ê¡£
+    * @~chinese è·å–å‘å°„ç²’å­çš„çº¹ç†åæ ‡ã€‚
+    * @return @~english The texture coords. @~chinese çº¹ç†åæ ‡ã€‚
     */
     const unsigned short& getParticleTextureCoords(void) const;
 
@@ -811,70 +811,70 @@ public:
 
     /**
     * @~english Set the texture coords of an emitted particle.
-    * @~chinese ÉèÖÃ·¢ÉäÁ£×ÓµÄÎÆÀí×ø±ê¡£
-    * @param particleTextureCoords @~english The texture coords. @~chinese ÎÆÀí×ø±ê¡£
+    * @~chinese è®¾ç½®å‘å°„ç²’å­çš„çº¹ç†åæ ‡ã€‚
+    * @param particleTextureCoords @~english The texture coords. @~chinese çº¹ç†åæ ‡ã€‚
     */
     void setParticleTextureCoords(const unsigned short& particleTextureCoords);
 
     /**
     * @~english Get the texture coords range start  of an emitted particle.
-    * @~chinese »ñÈ¡·¢ÉäÁ£×ÓµÄÎÆÀí×ø±ê·¶Î§µÄÆğÊ¼Öµ¡£
-    * @return @~english The texture coords range start. @~chinese ÎÆÀí×ø±ê·¶Î§µÄÆğÊ¼Öµ¡£
+    * @~chinese è·å–å‘å°„ç²’å­çš„çº¹ç†åæ ‡èŒƒå›´çš„èµ·å§‹å€¼ã€‚
+    * @return @~english The texture coords range start. @~chinese çº¹ç†åæ ‡èŒƒå›´çš„èµ·å§‹å€¼ã€‚
     */
     const unsigned short& getParticleTextureCoordsRangeStart(void) const;
 
     /**
     * @~english Set the texture coords range start of an emitted particle.
-    * @~chinese ÉèÖÃ·¢ÉäÁ£×ÓµÄÎÆÀí×ø±ê·¶Î§µÄÆğÊ¼Öµ¡£
-    * @param particleTextureCoordsRangeStart @~english The texture coords range start. @~chinese ÎÆÀí×ø±ê·¶Î§µÄÆğÊ¼Öµ¡£
+    * @~chinese è®¾ç½®å‘å°„ç²’å­çš„çº¹ç†åæ ‡èŒƒå›´çš„èµ·å§‹å€¼ã€‚
+    * @param particleTextureCoordsRangeStart @~english The texture coords range start. @~chinese çº¹ç†åæ ‡èŒƒå›´çš„èµ·å§‹å€¼ã€‚
     */
     void setParticleTextureCoordsRangeStart(const unsigned short& particleTextureCoordsRangeStart);
             
     /**
     * @~english Get the texture coords range end of an emitted particle.
-    * @~chinese »ñÈ¡·¢ÉäÁ£×ÓµÄÎÆÀí×ø±ê·¶Î§µÄÖÕÖ¹Öµ¡£
-    * @return @~english The texture coords range end. @~chinese ÎÆÀí×ø±ê·¶Î§µÄÖÕÖ¹Öµ¡£
+    * @~chinese è·å–å‘å°„ç²’å­çš„çº¹ç†åæ ‡èŒƒå›´çš„ç»ˆæ­¢å€¼ã€‚
+    * @return @~english The texture coords range end. @~chinese çº¹ç†åæ ‡èŒƒå›´çš„ç»ˆæ­¢å€¼ã€‚
     */
     const unsigned short& getParticleTextureCoordsRangeEnd(void) const;
 
     /**
     * @~english Set the texture coords range end of an emitted particle.
-    * @~chinese ÉèÖÃ·¢ÉäÁ£×ÓµÄÎÆÀí×ø±ê·¶Î§µÄÖÕÖ¹Öµ¡£
-    * @param particleTextureCoordsRangeEnd @~english The texture coords range end. @~chinese ÎÆÀí×ø±ê·¶Î§µÄÖÕÖ¹Öµ¡£
+    * @~chinese è®¾ç½®å‘å°„ç²’å­çš„çº¹ç†åæ ‡èŒƒå›´çš„ç»ˆæ­¢å€¼ã€‚
+    * @param particleTextureCoordsRangeEnd @~english The texture coords range end. @~chinese çº¹ç†åæ ‡èŒƒå›´çš„ç»ˆæ­¢å€¼ã€‚
     */
     void setParticleTextureCoordsRangeEnd(const unsigned short& particleTextureCoordsRangeEnd);
 
     /**
     * @~english Whether use local coordinate system.
-    * @~chinese ÊÇ·ñÊ¹ÓÃ¾Ö²¿×ø±êÏµ¡£
-    * @return @~english Whether use. @~chinese ÊÇ·ñÊ¹ÓÃ¡£
+    * @~chinese æ˜¯å¦ä½¿ç”¨å±€éƒ¨åæ ‡ç³»ã€‚
+    * @return @~english Whether use. @~chinese æ˜¯å¦ä½¿ç”¨ã€‚
     */
     bool isKeepLocal(void) const;
 
     /**
     * @~english Set use local coordinate system, If this attribute is set to 'true', the particles are emitted relative to the emitter.
-    * @~chinese ÉèÖÃÊ¹ÓÃ¾Ö²¿×ø±êÏµ,Èç¹ûÉèÖÃµÄÖµÎªtrue£¬Á£×ÓµÄÎ»ÖÃºÍ·¢ÉäÆ÷Î»ÖÃÊÇÏà¹ØµÄ¡£
-    * @param keepLocal @~english Whether use. @~chinese ÊÇ·ñÊ¹ÓÃ¡£
+    * @~chinese è®¾ç½®ä½¿ç”¨å±€éƒ¨åæ ‡ç³»,å¦‚æœè®¾ç½®çš„å€¼ä¸ºtrueï¼Œç²’å­çš„ä½ç½®å’Œå‘å°„å™¨ä½ç½®æ˜¯ç›¸å…³çš„ã€‚
+    * @param keepLocal @~english Whether use. @~chinese æ˜¯å¦ä½¿ç”¨ã€‚
     */
     void setKeepLocal(bool keepLocal);
 
     /**
     * @~english Transforms the particle position in a local position relative to the emitter
-    * @~chinese °ÑÁ£×ÓµÄÎ»ÖÃ±ä»»µ½·¢ÉäÆ÷µÄ¾Ö²¿×ø±êÏµÏÂ¡£
-    * @param particle @~english The transformed particle. @~chinese ĞèÒª±ä»»µÄÁ£×Ó¡£
+    * @~chinese æŠŠç²’å­çš„ä½ç½®å˜æ¢åˆ°å‘å°„å™¨çš„å±€éƒ¨åæ ‡ç³»ä¸‹ã€‚
+    * @param particle @~english The transformed particle. @~chinese éœ€è¦å˜æ¢çš„ç²’å­ã€‚
     */
     bool makeParticleLocal(PUParticle3D* particle);
 
     /**
     * @~english Clone this emitter.
-    * @~chinese ¿½±´µ±Ç°·¢ÉäÆ÷¡£
+    * @~chinese æ‹·è´å½“å‰å‘å°„å™¨ã€‚
     */
     virtual PUEmitter* clone() = 0;
 
     /**
     * @~english Copy one emitter's attributes to another's(internal method).
-    * @~chinese ¿½±´Ò»¸ö·¢ÉäÆ÷µÄÊôĞÔµ½ÁíÍâÒ»¸ö(ÄÚ²¿·½·¨)¡£
-    * @param emitter @~english The emitter need be copied. @~chinese ¿½±´ÊôĞÔµÄ·¢ÉäÆ÷¡£
+    * @~chinese æ‹·è´ä¸€ä¸ªå‘å°„å™¨çš„å±æ€§åˆ°å¦å¤–ä¸€ä¸ª(å†…éƒ¨æ–¹æ³•)ã€‚
+    * @param emitter @~english The emitter need be copied. @~chinese æ‹·è´å±æ€§çš„å‘å°„å™¨ã€‚
     */
     virtual void copyAttributesTo (PUEmitter* emitter);
 

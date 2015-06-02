@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
  Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -44,10 +44,10 @@ struct Particle3D;
  Emitter is mainly determined how particles emitted, such as point emission, spherical emission, etc.
  One particle system must have a emitter.
 
- @~chinese Particle3DEmitter ÊÇ·¢ÉäÆ÷µÄ»ùÀà£¬¶¨Òå·¢ÉäÆ÷¹²ÓĞ½Ó¿Ú¡£
- ¾ßÌåµÄÊµÏÖÓÉ²»Í¬µÄ·¢ÉäÆ÷ÀàĞÍ¶¨Òå¡£
- ·¢ÉäÆ÷Ö÷ÒªÊÇ¾ö¶¨Á£×ÓÈçºÎ·¢Éä£¬ÀıÈçµã·¢Éä£¬ÇòÃæ·¢Éä¡£
- Á£×ÓÏµÍ³±ØĞëÒªÓĞ·¢ÉäÆ÷¡£
+ @~chinese Particle3DEmitter æ˜¯å‘å°„å™¨çš„åŸºç±»ï¼Œå®šä¹‰å‘å°„å™¨å…±æœ‰æ¥å£ã€‚
+ å…·ä½“çš„å®ç°ç”±ä¸åŒçš„å‘å°„å™¨ç±»å‹å®šä¹‰ã€‚
+ å‘å°„å™¨ä¸»è¦æ˜¯å†³å®šç²’å­å¦‚ä½•å‘å°„ï¼Œä¾‹å¦‚ç‚¹å‘å°„ï¼Œçƒé¢å‘å°„ã€‚
+ ç²’å­ç³»ç»Ÿå¿…é¡»è¦æœ‰å‘å°„å™¨ã€‚
 */
 class CC_DLL Particle3DEmitter : public Ref
 {
@@ -56,30 +56,30 @@ public:
     
     /**
     * @~english Update emitter(internal method).
-    * @~chinese ¸üĞÂ·¢ÉäÆ÷(ÄÚ²¿·½·¨)¡£
-    * @param particle   @~english The current particle. @~chinese µ±Ç°µÄÁ£×Ó¡£
-    * @param deltaTime   @~english The delta time between two frames. @~chinese Á½Ö¡Ö®¼äµÄÊ±¼ä¼ä¸ô¡£
+    * @~chinese æ›´æ–°å‘å°„å™¨(å†…éƒ¨æ–¹æ³•)ã€‚
+    * @param particle   @~english The current particle. @~chinese å½“å‰çš„ç²’å­ã€‚
+    * @param deltaTime   @~english The delta time between two frames. @~chinese ä¸¤å¸§ä¹‹é—´çš„æ—¶é—´é—´éš”ã€‚
     */
     virtual void updateEmitter(Particle3D* particle, float deltaTime);
     
     /**
     * @~english Emit particles(internal method).
-    * @~chinese ¸üĞÂÁ£×Ó(ÄÚ²¿·½·¨)¡£
-    * @param count   @~english The number of emitted particles. @~chinese ·¢ÉäÁ£×ÓµÄÊıÁ¿¡£
+    * @~chinese æ›´æ–°ç²’å­(å†…éƒ¨æ–¹æ³•)ã€‚
+    * @param count   @~english The number of emitted particles. @~chinese å‘å°„ç²’å­çš„æ•°é‡ã€‚
     */
     virtual void emit(int count);
     
     /**
     * @~english Set the emitter enable or disable.
-    * @~chinese ÉèÖÃ·¢ÉäÆ÷¿ÉÓÃ»ò²»¿ÉÓÃ¡£
-    * @param enabled @~english Whether the emitter enabled. @~chinese ·¢ÉäÆ÷ÊÇ·ñ¿ÉÓÃ¡£
+    * @~chinese è®¾ç½®å‘å°„å™¨å¯ç”¨æˆ–ä¸å¯ç”¨ã€‚
+    * @param enabled @~english Whether the emitter enabled. @~chinese å‘å°„å™¨æ˜¯å¦å¯ç”¨ã€‚
     */
     void setEnabled (bool enabled) { _isEnabled = enabled; }
     
     /**
     * @~english Get the emitter enabled.
-    * @~chinese »ñÈ¡·¢ÉäÆ÷ÊÇ·ñ¿ÉÓÃ¡£
-    * @return @~english Whether the emitter enabled. @~chinese ·¢ÉäÆ÷ÊÇ·ñ¿ÉÓÃ¡£
+    * @~chinese è·å–å‘å°„å™¨æ˜¯å¦å¯ç”¨ã€‚
+    * @return @~english Whether the emitter enabled. @~chinese å‘å°„å™¨æ˜¯å¦å¯ç”¨ã€‚
     */
     bool isEnabled(void) const { return _isEnabled; }
 

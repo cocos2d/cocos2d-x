@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
  Copyright (c) 2015 Chukong Technologies Inc.
  
@@ -46,8 +46,8 @@ struct PUParticle3D;
 *@brief @~english PURender inherit from Particle3DRender, is base class of pu renderer.
 Specific implementation decisions by different renderers.
 
-@~chinese PURender ¼Ì³Ğ×ÔParticle3DRender£¬ÊÇpuäÖÈ¾Æ÷µÄ»ùÀà¡£
-¾ßÌåµÄÊµÏÖÓÉ²»Í¬µÄäÖÈ¾Æ÷ÀàĞÍ¶¨Òå¡£
+@~chinese PURender ç»§æ‰¿è‡ªParticle3DRenderï¼Œæ˜¯puæ¸²æŸ“å™¨çš„åŸºç±»ã€‚
+å…·ä½“çš„å®ç°ç”±ä¸åŒçš„æ¸²æŸ“å™¨ç±»å‹å®šä¹‰ã€‚
 */
 class CC_DLL PURender : public Particle3DRender
 {
@@ -55,51 +55,51 @@ public:
 
     /**
     * @~english The function is automatically called during initialisation (prepare) activities of a ParticleSystem(internal method).
-    * @~chinese µ±Ò»¸öÁ£×ÓÏµÍ³³õÊ¼»¯Ê±×Ô¶¯Ö´ĞĞ(ÄÚ²¿·½·¨)¡£
+    * @~chinese å½“ä¸€ä¸ªç²’å­ç³»ç»Ÿåˆå§‹åŒ–æ—¶è‡ªåŠ¨æ‰§è¡Œ(å†…éƒ¨æ–¹æ³•)ã€‚
     */
     virtual void prepare(){};
 
     /**
     * @~english The function is automatically called when a ParticleSystem is expired(internal method).
-    * @~chinese µ±Ò»¸öÁ£×ÓÏµÍ³Ê§Ğ§Ê±×Ô¶¯Ö´ĞĞ(ÄÚ²¿·½·¨)¡£
+    * @~chinese å½“ä¸€ä¸ªç²’å­ç³»ç»Ÿå¤±æ•ˆæ—¶è‡ªåŠ¨æ‰§è¡Œ(å†…éƒ¨æ–¹æ³•)ã€‚
     */
     virtual void unPrepare(){};
 
     /**
     * @~english This function is called when the ParticleSystem update-loop where all particles are traversed(internal method).
-    * @~chinese ÔÚÁ£×ÓÏµÍ³¸üĞÂÑ­»·Á£×Ó±éÀúÊ±Ö´ĞĞ(ÄÚ²¿·½·¨)¡£
-    * @param particle   @~english The current traversed particle. @~chinese µ±Ç°±éÀúµ½µÄÁ£×Ó¡£
-    * @param deltaTime   @~english The delta time between two frames. @~chinese Á½Ö¡Ö®¼äµÄÊ±¼ä¼ä¸ô¡£
-    * @param firstParticle   @~english Is first update particle. @~chinese ÊÇ·ñÊÇµÚÒ»¸ö¸üĞÂµÄÁ£×Ó¡£
+    * @~chinese åœ¨ç²’å­ç³»ç»Ÿæ›´æ–°å¾ªç¯ç²’å­éå†æ—¶æ‰§è¡Œ(å†…éƒ¨æ–¹æ³•)ã€‚
+    * @param particle   @~english The current traversed particle. @~chinese å½“å‰éå†åˆ°çš„ç²’å­ã€‚
+    * @param deltaTime   @~english The delta time between two frames. @~chinese ä¸¤å¸§ä¹‹é—´çš„æ—¶é—´é—´éš”ã€‚
+    * @param firstParticle   @~english Is first update particle. @~chinese æ˜¯å¦æ˜¯ç¬¬ä¸€ä¸ªæ›´æ–°çš„ç²’å­ã€‚
     */
     virtual void updateRender(PUParticle3D *particle, float deltaTime, bool firstParticle){};
 
     /**
     * @~english Get render type.
     * quad,model,box,sphere,beam, or ribbon trail.
-    * @~chinese »ñÈ¡äÖÈ¾ÀàĞÍ¡£
-    * ËÄ±ßĞÎ£¬Ä£ĞÍ£¬ÏäĞÎ£¬ÇòĞÎ£¬¹âÏßĞÎ£¬ÍÏÎ²ĞÎ¡£
-    * @return   @~english The type name. @~chinese ÀàĞÍÃû³Æ¡£
+    * @~chinese è·å–æ¸²æŸ“ç±»å‹ã€‚
+    * å››è¾¹å½¢ï¼Œæ¨¡å‹ï¼Œç®±å½¢ï¼Œçƒå½¢ï¼Œå…‰çº¿å½¢ï¼Œæ‹–å°¾å½¢ã€‚
+    * @return   @~english The type name. @~chinese ç±»å‹åç§°ã€‚
     */
     const std::string& getRenderType(void) const {return _renderType;};
 
     /**
     * @~english Set render type.
-    * @~chinese ÉèÖÃäÖÈ¾ÀàĞÍ¡£
-    * @param observerType   @~english The type name. @~chinese ÀàĞÍÃû³Æ¡£
+    * @~chinese è®¾ç½®æ¸²æŸ“ç±»å‹ã€‚
+    * @param observerType   @~english The type name. @~chinese ç±»å‹åç§°ã€‚
     */
     void setRenderType(const std::string& observerType) {_renderType = observerType;};
 
     /**
     * @~english Clone this renderer.
-    * @~chinese ¿½±´µ±Ç°äÖÈ¾Æ÷¡£
+    * @~chinese æ‹·è´å½“å‰æ¸²æŸ“å™¨ã€‚
     */
     virtual PURender* clone() = 0;
 
     /**
     * @~english Copy one renderer's attributes to another's(internal method).
-    * @~chinese ¿½±´Ò»¸öäÖÈ¾Æ÷µÄÊôĞÔµ½ÁíÍâÒ»¸ö(ÄÚ²¿·½·¨)¡£
-    * @param render @~english the renderer need be copied. @~chinese ¿½±´ÊôĞÔµÄäÖÈ¾Æ÷¡£
+    * @~chinese æ‹·è´ä¸€ä¸ªæ¸²æŸ“å™¨çš„å±æ€§åˆ°å¦å¤–ä¸€ä¸ª(å†…éƒ¨æ–¹æ³•)ã€‚
+    * @param render @~english the renderer need be copied. @~chinese æ‹·è´å±æ€§çš„æ¸²æŸ“å™¨ã€‚
     */
     void copyAttributesTo(PURender* render);
 
@@ -114,16 +114,16 @@ protected:
 
 /** @class PUParticle3DEntityRender
 *@brief @~english PUParticle3DEntityRender inherit from PURender, is base class of entity renderer.
-entity include£º
+entity includeï¼š
 quad(billboard).
 box.
 sphere.
 
-@~chinese PUParticle3DEntityRender ¼Ì³Ğ×ÔPURender£¬ÊÇÊµÌåäÖÈ¾Æ÷µÄ»ùÀà¡£
-ÊµÌå°üÀ¨£º
-ËÄ±ßĞÎ£¨¹«¸æ°å£©
-ÏäĞÎ
-ÇòĞÎ
+@~chinese PUParticle3DEntityRender ç»§æ‰¿è‡ªPURenderï¼Œæ˜¯å®ä½“æ¸²æŸ“å™¨çš„åŸºç±»ã€‚
+å®ä½“åŒ…æ‹¬ï¼š
+å››è¾¹å½¢ï¼ˆå…¬å‘Šæ¿ï¼‰
+ç®±å½¢
+çƒå½¢
 */
 class CC_DLL PUParticle3DEntityRender : public PURender
 {
@@ -131,8 +131,8 @@ public:
 
     /**
     * @~english Copy one entity renderer's attributes to another's(internal method).
-    * @~chinese ¿½±´Ò»¸öÊµÌåäÖÈ¾Æ÷µÄÊôĞÔµ½ÁíÍâÒ»¸ö(ÄÚ²¿·½·¨)¡£
-    * @param render @~english the renderer need be copied. @~chinese ¿½±´ÊôĞÔµÄäÖÈ¾Æ÷¡£
+    * @~chinese æ‹·è´ä¸€ä¸ªå®ä½“æ¸²æŸ“å™¨çš„å±æ€§åˆ°å¦å¤–ä¸€ä¸ª(å†…éƒ¨æ–¹æ³•)ã€‚
+    * @param render @~english the renderer need be copied. @~chinese æ‹·è´å±æ€§çš„æ¸²æŸ“å™¨ã€‚
     */
     void copyAttributesTo(PUParticle3DEntityRender *render);
 
@@ -168,7 +168,7 @@ protected:
 /** @class PUParticle3DQuadRender
 *@brief @~english PUParticle3DQuadRender inherit from PUParticle3DEntityRender, , implement pu quad rendering.
 
-@~chinese PUParticle3DQuadRender ¼Ì³Ğ×ÔPUParticle3DEntityRender£¬ÊµÏÖÁËpuµÄËÄ±ßĞÎäÖÈ¾¡£
+@~chinese PUParticle3DQuadRender ç»§æ‰¿è‡ªPUParticle3DEntityRenderï¼Œå®ç°äº†puçš„å››è¾¹å½¢æ¸²æŸ“ã€‚
 */
 class CC_DLL PUParticle3DQuadRender : public PUParticle3DEntityRender
 {
@@ -205,133 +205,133 @@ public:
 
     /**
     * @~english Create a new quad renderer.
-    * @~chinese ´´½¨Ò»¸öĞÂµÄËÄ±ßĞÎäÖÈ¾Æ÷¡£
-    * @param texFile @~english The texture of particles. @~chinese Á£×ÓÊ¹ÓÃµÄÎÆÀí¡£
+    * @~chinese åˆ›å»ºä¸€ä¸ªæ–°çš„å››è¾¹å½¢æ¸²æŸ“å™¨ã€‚
+    * @param texFile @~english The texture of particles. @~chinese ç²’å­ä½¿ç”¨çš„çº¹ç†ã€‚
     */
     static PUParticle3DQuadRender* create(const std::string& texFile = "");
     
     /**
     * @~english Set the orientation type of quad.
-    * @~chinese ÉèÖÃËÄ±ßĞÎµÄ³¯ÏòÀàĞÍ¡£
-    * @param type @~english The orientation type. @~chinese ³¯ÏòÀàĞÍ¡£
+    * @~chinese è®¾ç½®å››è¾¹å½¢çš„æœå‘ç±»å‹ã€‚
+    * @param type @~english The orientation type. @~chinese æœå‘ç±»å‹ã€‚
     */
     void setType(Type type);
 
     /**
     * @~english Get the orientation type of quad.
-    * @~chinese »ñÈ¡ËÄ±ßĞÎµÄ³¯ÏòÀàĞÍ¡£
-    * @param type @~english The orientation type. @~chinese ³¯ÏòÀàĞÍ¡£
+    * @~chinese è·å–å››è¾¹å½¢çš„æœå‘ç±»å‹ã€‚
+    * @param type @~english The orientation type. @~chinese æœå‘ç±»å‹ã€‚
     */
     Type getType() const { return _type; }
 
     /**
     * @~english Set the center of quad.
-    * @~chinese ÉèÖÃËÄ±ßĞÎµÄÖĞĞÄ¡£
-    * @param origin @~english The center of quad. @~chinese ËÄ±ßĞÎÖĞĞÄ¡£
+    * @~chinese è®¾ç½®å››è¾¹å½¢çš„ä¸­å¿ƒã€‚
+    * @param origin @~english The center of quad. @~chinese å››è¾¹å½¢ä¸­å¿ƒã€‚
     */
     void setOrigin(Origin origin) { _origin = origin; }
 
     /**
     * @~english Get the center of quad.
-    * @~chinese »ñÈ¡ËÄ±ßĞÎµÄÖĞĞÄ¡£
-    * @return @~english The center of quad. @~chinese ËÄ±ßĞÎÖĞĞÄ¡£
+    * @~chinese è·å–å››è¾¹å½¢çš„ä¸­å¿ƒã€‚
+    * @return @~english The center of quad. @~chinese å››è¾¹å½¢ä¸­å¿ƒã€‚
     */
     Origin getOrigin() const { return _origin; }
 
     /**
     * @~english Set the rotation type of quad.
-    * @~chinese ÉèÖÃËÄ±ßĞÎµÄĞı×ªÀàĞÍ¡£
-    * @param type @~english The orientation type. @~chinese Ğı×ªÀàĞÍ¡£
+    * @~chinese è®¾ç½®å››è¾¹å½¢çš„æ—‹è½¬ç±»å‹ã€‚
+    * @param type @~english The orientation type. @~chinese æ—‹è½¬ç±»å‹ã€‚
     */
     void setRotateType(RotateType type) { _rotateType = type; }
 
     /**
     * @~english Get the rotation type of quad.
-    * @~chinese »ñÈ¡ËÄ±ßĞÎµÄĞı×ªÀàĞÍ¡£
-    * @param type @~english The orientation type. @~chinese Ğı×ªÀàĞÍ¡£
+    * @~chinese è·å–å››è¾¹å½¢çš„æ—‹è½¬ç±»å‹ã€‚
+    * @param type @~english The orientation type. @~chinese æ—‹è½¬ç±»å‹ã€‚
     */
     RotateType getRotateType() const { return _rotateType; }
 
     /**
     * @~english Set the direction when type is ORIENTED_COMMON or PERPENDICULAR_COMMON.
-    * @~chinese µ±³¯ÏòÀàĞÍÎªORIENTED_COMMON»òPERPENDICULAR_COMMONÊ±ÉèÖÃ·½Ïò¡£
-    * @param dir @~english The direction. @~chinese ·½Ïò¡£
+    * @~chinese å½“æœå‘ç±»å‹ä¸ºORIENTED_COMMONæˆ–PERPENDICULAR_COMMONæ—¶è®¾ç½®æ–¹å‘ã€‚
+    * @param dir @~english The direction. @~chinese æ–¹å‘ã€‚
     */
     void setCommonDirection(const Vec3 &dir) { _commonDir = dir; }
 
     /**
     * @~english Get the direction when type is ORIENTED_COMMON or PERPENDICULAR_COMMON.
-    * @~chinese µ±³¯ÏòÀàĞÍÎªORIENTED_COMMON»òPERPENDICULAR_COMMONÊ±»ñÈ¡·½Ïò¡£
-    * @return @~english The direction. @~chinese ·½Ïò¡£
+    * @~chinese å½“æœå‘ç±»å‹ä¸ºORIENTED_COMMONæˆ–PERPENDICULAR_COMMONæ—¶è·å–æ–¹å‘ã€‚
+    * @return @~english The direction. @~chinese æ–¹å‘ã€‚
     */
     const Vec3& getCommonDirection() const { return _commonDir; }
 
     /**
     * @~english Set the up when type is ORIENTED_COMMON or PERPENDICULAR_COMMON.
-    * @~chinese µ±³¯ÏòÀàĞÍÎªORIENTED_COMMON»òPERPENDICULAR_COMMONÊ±ÉèÖÃËÄ±ßĞÎÉÏ³¯Ïò¡£
-    * @param up @~english The up. @~chinese ËÄ±ßĞÎÉÏ³¯Ïò¡£
+    * @~chinese å½“æœå‘ç±»å‹ä¸ºORIENTED_COMMONæˆ–PERPENDICULAR_COMMONæ—¶è®¾ç½®å››è¾¹å½¢ä¸Šæœå‘ã€‚
+    * @param up @~english The up. @~chinese å››è¾¹å½¢ä¸Šæœå‘ã€‚
     */
     void setCommonUp(const Vec3 &up) { _commonUp = up; }
 
     /**
     * @~english Get the up when type is ORIENTED_COMMON or PERPENDICULAR_COMMON.
-    * @~chinese µ±³¯ÏòÀàĞÍÎªORIENTED_COMMON»òPERPENDICULAR_COMMONÊ±»ñÈ¡ËÄ±ßĞÎÉÏ³¯Ïò¡£
-    * @return @~english The up. @~chinese ËÄ±ßĞÎÉÏ³¯Ïò¡£
+    * @~chinese å½“æœå‘ç±»å‹ä¸ºORIENTED_COMMONæˆ–PERPENDICULAR_COMMONæ—¶è·å–å››è¾¹å½¢ä¸Šæœå‘ã€‚
+    * @return @~english The up. @~chinese å››è¾¹å½¢ä¸Šæœå‘ã€‚
     */
     const Vec3& getCommonUp() const { return _commonUp; }
 
     /**
     * @~english Get frame texture row count.
-    * @~chinese »ñÈ¡ĞòÁĞÖ¡ÎÆÀíµÄĞĞÊı¡£
-    * @return @~english The row count. @~chinese ĞĞÊı¡£
+    * @~chinese è·å–åºåˆ—å¸§çº¹ç†çš„è¡Œæ•°ã€‚
+    * @return @~english The row count. @~chinese è¡Œæ•°ã€‚
     */
     unsigned short getTextureCoordsRows() const;
 
     /**
     * @~english Set frame texture row count.
-    * @~chinese ÉèÖÃĞòÁĞÖ¡ÎÆÀíµÄĞĞÊı¡£
-    * @param textureCoordsRows @~english The row count. @~chinese ĞĞÊı¡£
+    * @~chinese è®¾ç½®åºåˆ—å¸§çº¹ç†çš„è¡Œæ•°ã€‚
+    * @param textureCoordsRows @~english The row count. @~chinese è¡Œæ•°ã€‚
     */
     void setTextureCoordsRows(unsigned short textureCoordsRows);
 
     /**
     * @~english Get frame texture column count.
-    * @~chinese »ñÈ¡ĞòÁĞÖ¡ÎÆÀíµÄÁĞÊı¡£
-    * @param textureCoordsRows @~english The column count. @~chinese ÁĞÊı¡£
+    * @~chinese è·å–åºåˆ—å¸§çº¹ç†çš„åˆ—æ•°ã€‚
+    * @param textureCoordsRows @~english The column count. @~chinese åˆ—æ•°ã€‚
     */
     unsigned short getTextureCoordsColumns() const;
 
     /**
     * @~english Set frame texture column count.
-    * @~chinese ÉèÖÃĞòÁĞÖ¡ÎÆÀíµÄÁĞÊı¡£
-    * @param textureCoordsColumns @~english The column count. @~chinese ÁĞÊı¡£
+    * @~chinese è®¾ç½®åºåˆ—å¸§çº¹ç†çš„åˆ—æ•°ã€‚
+    * @param textureCoordsColumns @~english The column count. @~chinese åˆ—æ•°ã€‚
     */
     void setTextureCoordsColumns(unsigned short textureCoordsColumns);
 
     /**
     * @~english Get frame texture count(row x column).
-    * @~chinese »ñÈ¡ĞòÁĞÖ¡ÎÆÀí×ÜÊı£¨ĞĞÊıxÁĞÊı£©¡£
-    * @return @~english The total count. @~chinese ×ÜÊı¡£
+    * @~chinese è·å–åºåˆ—å¸§çº¹ç†æ€»æ•°ï¼ˆè¡Œæ•°xåˆ—æ•°ï¼‰ã€‚
+    * @return @~english The total count. @~chinese æ€»æ•°ã€‚
     */
     unsigned int getNumTextureCoords();
 
     /**
     * @~english Overwrite function.
-    * @~chinese ÖØĞ´µÄº¯Êı¡£
+    * @~chinese é‡å†™çš„å‡½æ•°ã€‚
     * @see Particle3DRender render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem);
     */
     virtual void render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem) override;
 
     /**
     * @~english Clone this renderer.
-    * @~chinese ¿½±´µ±Ç°äÖÈ¾Æ÷¡£
+    * @~chinese æ‹·è´å½“å‰æ¸²æŸ“å™¨ã€‚
     */
     virtual PUParticle3DQuadRender* clone() override;
 
     /**
     * @~english Copy one quad renderer's attributes to another's(internal method).
-    * @~chinese ¿½±´Ò»¸öËÄ±ßĞÎäÖÈ¾Æ÷µÄÊôĞÔµ½ÁíÍâÒ»¸ö(ÄÚ²¿·½·¨)¡£
-    * @param render @~english The renderer need be copied. @~chinese ¿½±´ÊôĞÔµÄäÖÈ¾Æ÷¡£
+    * @~chinese æ‹·è´ä¸€ä¸ªå››è¾¹å½¢æ¸²æŸ“å™¨çš„å±æ€§åˆ°å¦å¤–ä¸€ä¸ª(å†…éƒ¨æ–¹æ³•)ã€‚
+    * @param render @~english The renderer need be copied. @~chinese æ‹·è´å±æ€§çš„æ¸²æŸ“å™¨ã€‚
     */
     void copyAttributesTo(PUParticle3DQuadRender *render);
     
@@ -363,7 +363,7 @@ protected:
 /** @class PUParticle3DModelRender
 *@brief @~english PUParticle3DModelRender inherit from PURender, , implement pu model rendering.
 
-@~chinese PUParticle3DModelRender ¼Ì³Ğ×ÔPURender£¬ÊµÏÖÁËpuµÄÄ£ĞÍäÖÈ¾¡£
+@~chinese PUParticle3DModelRender ç»§æ‰¿è‡ªPURenderï¼Œå®ç°äº†puçš„æ¨¡å‹æ¸²æŸ“ã€‚
 */
 class CC_DLL PUParticle3DModelRender : public PURender
 {
@@ -371,29 +371,29 @@ public:
 
     /**
     * @~english Create a new model renderer.
-    * @~chinese ´´½¨Ò»¸öĞÂµÄÄ£ĞÍäÖÈ¾Æ÷¡£
-    * @param modelFile @~english The model of particles. @~chinese Á£×ÓÊ¹ÓÃµÄÄ£ĞÍ¡£
-    * @param texFile @~english The texture of particles. @~chinese Á£×ÓÊ¹ÓÃµÄÎÆÀí¡£
+    * @~chinese åˆ›å»ºä¸€ä¸ªæ–°çš„æ¨¡å‹æ¸²æŸ“å™¨ã€‚
+    * @param modelFile @~english The model of particles. @~chinese ç²’å­ä½¿ç”¨çš„æ¨¡å‹ã€‚
+    * @param texFile @~english The texture of particles. @~chinese ç²’å­ä½¿ç”¨çš„çº¹ç†ã€‚
     */
     static PUParticle3DModelRender* create(const std::string& modelFile, const std::string &texFile = "");
 
     /**
     * @~english Overwrite function.
-    * @~chinese ÖØĞ´µÄº¯Êı¡£
+    * @~chinese é‡å†™çš„å‡½æ•°ã€‚
     * @see Particle3DRender render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem);
     */
     virtual void render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem) override;
 
     /**
     * @~english Clone this renderer.
-    * @~chinese ¿½±´µ±Ç°äÖÈ¾Æ÷¡£
+    * @~chinese æ‹·è´å½“å‰æ¸²æŸ“å™¨ã€‚
     */
     virtual PUParticle3DModelRender* clone() override;
 
     /**
     * @~english Copy one model renderer's attributes to another's(internal method).
-    * @~chinese ¿½±´Ò»¸öÄ£ĞÍäÖÈ¾Æ÷µÄÊôĞÔµ½ÁíÍâÒ»¸ö(ÄÚ²¿·½·¨)¡£
-    * @param render @~english The renderer need be copied. @~chinese ¿½±´ÊôĞÔµÄäÖÈ¾Æ÷¡£
+    * @~chinese æ‹·è´ä¸€ä¸ªæ¨¡å‹æ¸²æŸ“å™¨çš„å±æ€§åˆ°å¦å¤–ä¸€ä¸ª(å†…éƒ¨æ–¹æ³•)ã€‚
+    * @param render @~english The renderer need be copied. @~chinese æ‹·è´å±æ€§çš„æ¸²æŸ“å™¨ã€‚
     */
     void copyAttributesTo(PUParticle3DModelRender *render);
 
@@ -412,7 +412,7 @@ protected:
 /** @class PUParticle3DBoxRender
 *@brief @~english PUParticle3DBoxRender inherit from PUParticle3DEntityRender, , implement pu box rendering.
 
-@~chinese PUParticle3DBoxRender ¼Ì³Ğ×ÔPUParticle3DEntityRender£¬ÊµÏÖÁËpuµÄÏäĞÎäÖÈ¾¡£
+@~chinese PUParticle3DBoxRender ç»§æ‰¿è‡ªPUParticle3DEntityRenderï¼Œå®ç°äº†puçš„ç®±å½¢æ¸²æŸ“ã€‚
 */
 class CC_DLL PUParticle3DBoxRender : public PUParticle3DEntityRender
 {
@@ -420,21 +420,21 @@ public:
 
     /**
     * @~english Create a new box renderer.
-    * @~chinese ´´½¨Ò»¸öĞÂµÄÏäĞÎäÖÈ¾Æ÷¡£
-    * @param texFile @~english The texture of particles. @~chinese Á£×ÓÊ¹ÓÃµÄÎÆÀí¡£
+    * @~chinese åˆ›å»ºä¸€ä¸ªæ–°çš„ç®±å½¢æ¸²æŸ“å™¨ã€‚
+    * @param texFile @~english The texture of particles. @~chinese ç²’å­ä½¿ç”¨çš„çº¹ç†ã€‚
     */
     static PUParticle3DBoxRender* create(const std::string &texFile = "");
 
     /**
     * @~english Overwrite function.
-    * @~chinese ÖØĞ´µÄº¯Êı¡£
+    * @~chinese é‡å†™çš„å‡½æ•°ã€‚
     * @see Particle3DRender render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem);
     */
     virtual void render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem) override;
 
     /**
     * @~english Clone this renderer.
-    * @~chinese ¿½±´µ±Ç°äÖÈ¾Æ÷¡£
+    * @~chinese æ‹·è´å½“å‰æ¸²æŸ“å™¨ã€‚
     */
     virtual PUParticle3DBoxRender* clone() override;
 
@@ -450,7 +450,7 @@ protected:
 /** @class PUSphereRender
 *@brief @~english PUSphereRender inherit from PUParticle3DEntityRender, , implement pu sphere rendering.
 
-@~chinese PUSphereRender ¼Ì³Ğ×ÔPUParticle3DEntityRender£¬ÊµÏÖÁËpuµÄÇòĞÎäÖÈ¾¡£
+@~chinese PUSphereRender ç»§æ‰¿è‡ªPUParticle3DEntityRenderï¼Œå®ç°äº†puçš„çƒå½¢æ¸²æŸ“ã€‚
 */
 class CC_DLL PUSphereRender : public PUParticle3DEntityRender
 {
@@ -458,28 +458,28 @@ public:
 
     /**
     * @~english Create a sphere renderer.
-    * @~chinese ´´½¨Ò»¸öĞÂµÄÇòĞÎäÖÈ¾Æ÷¡£
-    * @param texFile @~english The texture of particles. @~chinese Á£×ÓÊ¹ÓÃµÄÎÆÀí¡£
+    * @~chinese åˆ›å»ºä¸€ä¸ªæ–°çš„çƒå½¢æ¸²æŸ“å™¨ã€‚
+    * @param texFile @~english The texture of particles. @~chinese ç²’å­ä½¿ç”¨çš„çº¹ç†ã€‚
     */
     static PUSphereRender* create(const std::string &texFile = "");
 
     /**
     * @~english Overwrite function.
-    * @~chinese ÖØĞ´µÄº¯Êı¡£
+    * @~chinese é‡å†™çš„å‡½æ•°ã€‚
     * @see Particle3DRender render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem);
     */
     virtual void render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem) override;
 
     /**
     * @~english Clone this renderer.
-    * @~chinese ¿½±´µ±Ç°äÖÈ¾Æ÷¡£
+    * @~chinese æ‹·è´å½“å‰æ¸²æŸ“å™¨ã€‚
     */
     virtual PUSphereRender* clone() override;
 
     /**
     * @~english Copy one sphere renderer's attributes to another's(internal method).
-    * @~chinese ¿½±´Ò»¸öÇòĞÎäÖÈ¾Æ÷µÄÊôĞÔµ½ÁíÍâÒ»¸ö(ÄÚ²¿·½·¨)¡£
-    * @param render @~english The renderer need be copied. @~chinese ¿½±´ÊôĞÔµÄäÖÈ¾Æ÷¡£
+    * @~chinese æ‹·è´ä¸€ä¸ªçƒå½¢æ¸²æŸ“å™¨çš„å±æ€§åˆ°å¦å¤–ä¸€ä¸ª(å†…éƒ¨æ–¹æ³•)ã€‚
+    * @param render @~english The renderer need be copied. @~chinese æ‹·è´å±æ€§çš„æ¸²æŸ“å™¨ã€‚
     */
     void copyAttributesTo(PUSphereRender *render);
 

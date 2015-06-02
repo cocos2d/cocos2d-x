@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
  Copyright (C) 2013 Henry van Merode. All rights reserved.
  Copyright (c) 2015 Chukong Technologies Inc.
  
@@ -59,7 +59,7 @@ enum PUComponentType
 
 /** @struct PUParticle3D
 *@brief @~english PUParticle3D inherit from Particle3D, includes all properties of PU particles.
- @~chinese PUParticle3D¼Ì³Ğ×ÔParticle3D£¬°üÀ¨PUÁ£×ÓµÄËùÓĞÊôĞÔ¡£
+ @~chinese PUParticle3Dç»§æ‰¿è‡ªParticle3Dï¼ŒåŒ…æ‹¬PUç²’å­çš„æ‰€æœ‰å±æ€§ã€‚
 */
 struct CC_DLL PUParticle3D : public Particle3D
 {
@@ -67,7 +67,7 @@ struct CC_DLL PUParticle3D : public Particle3D
     @property
     @static
     @~english Default time to alive
-    @~chinese Á£×ÓÄ¬ÈÏµÄÉú´æÊ±¼ä
+    @~chinese ç²’å­é»˜è®¤çš„ç”Ÿå­˜æ—¶é—´
     */
     static float DEFAULT_TTL;
 
@@ -75,7 +75,7 @@ struct CC_DLL PUParticle3D : public Particle3D
     @property
     @static
     @~english Default mass
-    @~chinese Á£×ÓÄ¬ÈÏµÄÖÊÁ¿
+    @~chinese ç²’å­é»˜è®¤çš„è´¨é‡
     */
     static float DEFAULT_MASS;
 
@@ -237,15 +237,15 @@ struct CC_DLL PUParticle3D : public Particle3D
  ----------- scripts
  ----------- materials
 
- @~chinese PUParticleSystem3D¼Ì³Ğ×ÔParticleSystem3D£¬ÊÇpuµÄÁ£×ÓÏµÍ³Àà¡£
- PUParticleSystem3DµÄ¸¸ÀàParticleSystem3DÊÇ´ÓNodeÅÉÉú¶øÀ´£¬ËùÒÔÒ»¸öÁ£×ÓÏµÍ³¿ÉÒÔ°üº¬¶à¸öÁ£×ÓÏµÍ³£¬
- Í¨¹ıaddChildµÄ·½Ê½°ÑÒ»¸öPUParticleSystem3D¹ÒÔØµ½ÁíÒ»¸öPUParticleSystem3DÏÂ¡£
- Ã¿¸öÁ£×ÓÏµÍ³¶¼¿É¶¨Òå·¢ÉäÆ÷£¬Ó°ÏìÆ÷£¬äÖÈ¾Æ÷µÈµÈ¡£
- PUParticleSystem3DÌá¹©ÁËÈıÖÖ´´½¨µÄ·½Ê½£º
- - Ö±½Ó´´½¨Ò»¸ö¿ÕµÄPUParticleSystem3D£¬ÊÖ¶¯Ìí¼Ó·¢ÉäÆ÷£¬Ó°ÏìÆ÷µÈ(»ù±¾²»Ê¹ÓÃ)
- - Í¨¹ıÒ»¸öpuÎÄ¼şÂ·¾¶À´´´½¨PUParticleSystem3D£¬pu²ÄÖÊÎÄ¼ş»á×Ô¶¯ËÑË÷¡££¨²»½¨ÒéÊ¹ÓÃ£©
- - Í¨¹ıÒ»¸öpuÎÄ¼şÂ·¾¶ºÍÒ»¸öpu²ÄÖÊÎÄ¼şÂ·¾¶À´´´½¨PUParticleSystem3D¡££¨½¨ÒéÊ¹ÓÃ£©
- puµÄÁ£×ÓÏµÍ³Ê¹ÓÃµÄ×ÊÔ´(ÎÆÀí¡¢pu½Å±¾¡¢²ÄÖÊÎÄ¼ş)Ğè²ÉÓÃÈçÏÂÎÄ¼ş½á¹¹ºÍÃû³Æ£¨Ä¿Ç°²»¿É¸ü¸Ä£©£º
+ @~chinese PUParticleSystem3Dç»§æ‰¿è‡ªParticleSystem3Dï¼Œæ˜¯puçš„ç²’å­ç³»ç»Ÿç±»ã€‚
+ PUParticleSystem3Dçš„çˆ¶ç±»ParticleSystem3Dæ˜¯ä»Nodeæ´¾ç”Ÿè€Œæ¥ï¼Œæ‰€ä»¥ä¸€ä¸ªç²’å­ç³»ç»Ÿå¯ä»¥åŒ…å«å¤šä¸ªç²’å­ç³»ç»Ÿï¼Œ
+ é€šè¿‡addChildçš„æ–¹å¼æŠŠä¸€ä¸ªPUParticleSystem3DæŒ‚è½½åˆ°å¦ä¸€ä¸ªPUParticleSystem3Dä¸‹ã€‚
+ æ¯ä¸ªç²’å­ç³»ç»Ÿéƒ½å¯å®šä¹‰å‘å°„å™¨ï¼Œå½±å“å™¨ï¼Œæ¸²æŸ“å™¨ç­‰ç­‰ã€‚
+ PUParticleSystem3Dæä¾›äº†ä¸‰ç§åˆ›å»ºçš„æ–¹å¼ï¼š
+ - ç›´æ¥åˆ›å»ºä¸€ä¸ªç©ºçš„PUParticleSystem3Dï¼Œæ‰‹åŠ¨æ·»åŠ å‘å°„å™¨ï¼Œå½±å“å™¨ç­‰(åŸºæœ¬ä¸ä½¿ç”¨)
+ - é€šè¿‡ä¸€ä¸ªpuæ–‡ä»¶è·¯å¾„æ¥åˆ›å»ºPUParticleSystem3Dï¼Œpuæè´¨æ–‡ä»¶ä¼šè‡ªåŠ¨æœç´¢ã€‚ï¼ˆä¸å»ºè®®ä½¿ç”¨ï¼‰
+ - é€šè¿‡ä¸€ä¸ªpuæ–‡ä»¶è·¯å¾„å’Œä¸€ä¸ªpuæè´¨æ–‡ä»¶è·¯å¾„æ¥åˆ›å»ºPUParticleSystem3Dã€‚ï¼ˆå»ºè®®ä½¿ç”¨ï¼‰
+ puçš„ç²’å­ç³»ç»Ÿä½¿ç”¨çš„èµ„æº(çº¹ç†ã€puè„šæœ¬ã€æè´¨æ–‡ä»¶)éœ€é‡‡ç”¨å¦‚ä¸‹æ–‡ä»¶ç»“æ„å’Œåç§°ï¼ˆç›®å‰ä¸å¯æ›´æ”¹ï¼‰ï¼š
  - Folder - textures
  ----------- scripts
  ----------- materials
@@ -260,7 +260,7 @@ public:
     @property
     @static
     @~english Default width of particle
-    @~chinese Á£×ÓÄ¬ÈÏµÄ¿í¶È
+    @~chinese ç²’å­é»˜è®¤çš„å®½åº¦
     */
     static const float DEFAULT_WIDTH;
 
@@ -268,7 +268,7 @@ public:
     @property
     @static
     @~english Default height of particle
-    @~chinese Á£×ÓÄ¬ÈÏµÄ¸ß¶È
+    @~chinese ç²’å­é»˜è®¤çš„é«˜åº¦
     */
     static const float DEFAULT_HEIGHT;
 
@@ -276,7 +276,7 @@ public:
     @property
     @static
     @~english Default depth of particle
-    @~chinese Á£×ÓÄ¬ÈÏµÄÉî¶È
+    @~chinese ç²’å­é»˜è®¤çš„æ·±åº¦
     */
     static const float DEFAULT_DEPTH;
 
@@ -284,7 +284,7 @@ public:
     @property
     @static
     @~english Default quota of particle
-    @~chinese Á£×ÓÄ¬ÈÏµÄÊıÁ¿ÉÏÏŞ
+    @~chinese ç²’å­é»˜è®¤çš„æ•°é‡ä¸Šé™
     */
     static const unsigned int DEFAULT_PARTICLE_QUOTA;
 
@@ -292,7 +292,7 @@ public:
     @property
     @static
     @~english Default quota of emitted emitter
-    @~chinese ±»·¢ÉäµÄ·¢ÉäÆ÷Ä¬ÈÏµÄÊıÁ¿ÉÏÏŞ
+    @~chinese è¢«å‘å°„çš„å‘å°„å™¨é»˜è®¤çš„æ•°é‡ä¸Šé™
     */
     static const unsigned int DEFAULT_EMITTED_EMITTER_QUOTA;
 
@@ -300,7 +300,7 @@ public:
     @property
     @static
     @~english Default quota of emitted system
-    @~chinese ±»·¢ÉäµÄÁ£×ÓÏµÍ³Ä¬ÈÏµÄÊıÁ¿ÉÏÏŞ
+    @~chinese è¢«å‘å°„çš„ç²’å­ç³»ç»Ÿé»˜è®¤çš„æ•°é‡ä¸Šé™
     */
     static const unsigned int DEFAULT_EMITTED_SYSTEM_QUOTA;
 
@@ -308,403 +308,403 @@ public:
     @property
     @static
     @~english Default maximum velocity of particle
-    @~chinese Á£×ÓÄ¬ÈÏµÄ×î´óËÙ¶È
+    @~chinese ç²’å­é»˜è®¤çš„æœ€å¤§é€Ÿåº¦
     */
     static const float DEFAULT_MAX_VELOCITY;
 
     /**
     * @~english Create a empty particle system.
-    * @~chinese ´´½¨Ò»¸ö¿ÕµÄÁ£×ÓÏµÍ³¡£
+    * @~chinese åˆ›å»ºä¸€ä¸ªç©ºçš„ç²’å­ç³»ç»Ÿã€‚
     */
     static PUParticleSystem3D* create();
 
     /**
     * @~english Create a particle system with pu file.
-    * @~chinese Í¨¹ıpuÎÄ¼ş´´½¨Ò»¸öÁ£×ÓÏµÍ³¡£
-    * @param filePath @~english The file path of pu. @~chinese puÎÄ¼şÂ·¾¶¡£
+    * @~chinese é€šè¿‡puæ–‡ä»¶åˆ›å»ºä¸€ä¸ªç²’å­ç³»ç»Ÿã€‚
+    * @param filePath @~english The file path of pu. @~chinese puæ–‡ä»¶è·¯å¾„ã€‚
     */
     static PUParticleSystem3D* create(const std::string &filePath);
 
     /**
     * @~english Create a particle system with pu file and pu material file.
-    * @~chinese Í¨¹ıpuÎÄ¼şºÍ²ÄÖÊÎÄ¼ş´´½¨Ò»¸öÁ£×ÓÏµÍ³¡£
-    * @param filePath @~english  The file path of pu. @~chinese puÎÄ¼şÂ·¾¶¡£
-    * @param materialPath @~english The file path of pu material. @~chinese pu²ÄÖÊÎÄ¼şÂ·¾¶¡£
+    * @~chinese é€šè¿‡puæ–‡ä»¶å’Œæè´¨æ–‡ä»¶åˆ›å»ºä¸€ä¸ªç²’å­ç³»ç»Ÿã€‚
+    * @param filePath @~english  The file path of pu. @~chinese puæ–‡ä»¶è·¯å¾„ã€‚
+    * @param materialPath @~english The file path of pu material. @~chinese puæè´¨æ–‡ä»¶è·¯å¾„ã€‚
     */
     static PUParticleSystem3D* create(const std::string &filePath, const std::string &materialPath);
     
     /**
     * @~english Overwrite function.
-    * @~chinese ÖØĞ´µÄº¯Êı¡£
+    * @~chinese é‡å†™çš„å‡½æ•°ã€‚
     * @see node draw(Renderer *renderer, const Mat4 &transform, uint32_t flags);
     */
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
 
     /**
     * @~english Overwrite function.
-    * @~chinese ÖØĞ´µÄº¯Êı¡£
+    * @~chinese é‡å†™çš„å‡½æ•°ã€‚
     * @see node update(float delta);
     */
     virtual void update(float delta) override;
 
     /**
     * @~english Force update system.
-    * @~chinese Ç¿ÖÆ¸üĞÂÁ£×ÓÏµÍ³¡£
-    * @param delta @~english The delta time between two frames. @~chinese Á½Ö¡Ö®¼äµÄÊ±¼ä¼ä¸ô¡£
+    * @~chinese å¼ºåˆ¶æ›´æ–°ç²’å­ç³»ç»Ÿã€‚
+    * @param delta @~english The delta time between two frames. @~chinese ä¸¤å¸§ä¹‹é—´çš„æ—¶é—´é—´éš”ã€‚
     */
     void forceUpdate(float delta);
     
     /**
     * @~english Overwrite function.
-    * @~chinese ÖØĞ´µÄº¯Êı¡£
+    * @~chinese é‡å†™çš„å‡½æ•°ã€‚
     * @see ParticleSystem3D startParticleSystem();
     */
     virtual void startParticleSystem() override;
     
     /**
     * @~english Overwrite function.
-    * @~chinese ÖØĞ´µÄº¯Êı¡£
+    * @~chinese é‡å†™çš„å‡½æ•°ã€‚
     * @see ParticleSystem3D stopParticleSystem();
     */
     virtual void stopParticleSystem() override;
     
     /**
     * @~english Overwrite function.
-    * @~chinese ÖØĞ´µÄº¯Êı¡£
+    * @~chinese é‡å†™çš„å‡½æ•°ã€‚
     * @see ParticleSystem3D pauseParticleSystem();
     */
     virtual void pauseParticleSystem() override;
     
     /**
     * @~english Overwrite function.
-    * @~chinese ÖØĞ´µÄº¯Êı¡£
+    * @~chinese é‡å†™çš„å‡½æ•°ã€‚
     * @see ParticleSystem3D resumeParticleSystem();
     */
     virtual void resumeParticleSystem() override;
 
     /**
     * @~english Overwrite function.
-    * @~chinese ÖØĞ´µÄº¯Êı¡£
+    * @~chinese é‡å†™çš„å‡½æ•°ã€‚
     * @see ParticleSystem3D getAliveParticleCount();
     */
     virtual int getAliveParticleCount() const override;
 
     /**
     * @~english Get the velocity scale, used for scale all particles velocity.
-    * @~chinese »ñÈ¡Ëõ·ÅËÙÂÊ£¬³£ÓÃÓÚËõ·ÅËùÓĞµÄÁ£×Ó¡£
-    * @return @~english The velocity scale. @~chinese Ëõ·ÅËÙÂÊ¡£
+    * @~chinese è·å–ç¼©æ”¾é€Ÿç‡ï¼Œå¸¸ç”¨äºç¼©æ”¾æ‰€æœ‰çš„ç²’å­ã€‚
+    * @return @~english The velocity scale. @~chinese ç¼©æ”¾é€Ÿç‡ã€‚
     */
     float getParticleSystemScaleVelocity() const;
 
     /**
     * @~english Set the velocity scale, used for scale all particles velocity.
-    * @~chinese ÉèÖÃËõ·ÅËÙÂÊ£¬³£ÓÃÓÚËõ·ÅËùÓĞµÄÁ£×Ó¡£
-    * @param scaleVelocity @~english The velocity scale. @~chinese Ëõ·ÅËÙÂÊ¡£
+    * @~chinese è®¾ç½®ç¼©æ”¾é€Ÿç‡ï¼Œå¸¸ç”¨äºç¼©æ”¾æ‰€æœ‰çš„ç²’å­ã€‚
+    * @param scaleVelocity @~english The velocity scale. @~chinese ç¼©æ”¾é€Ÿç‡ã€‚
     */
     void setParticleSystemScaleVelocity(float scaleVelocity) { _particleSystemScaleVelocity = scaleVelocity; }
 
     /**
     * @~english Set the rotation offset(internal method).
     * If the orientation of the particle system has been changed since the last update, the passed vector is rotated accordingly.
-    * @~chinese ÉèÖÃĞı×ªÆ«ÒÆÁ¿(ÄÚ²¿·½·¨)¡£
-    * Èç¹ûÁ£×ÓÏµÍ³µÄ³¯Ïò×Ô´ÓÉÏ´Î¸üĞÂºó¸Ä±äÁË£¬´«µİµÄÏòÁ¿Ò²ĞèÒªÏàÓ¦Ğı×ª¡£
-    * @param pos @~english The position. @~chinese Î»ÖÃ¡£
+    * @~chinese è®¾ç½®æ—‹è½¬åç§»é‡(å†…éƒ¨æ–¹æ³•)ã€‚
+    * å¦‚æœç²’å­ç³»ç»Ÿçš„æœå‘è‡ªä»ä¸Šæ¬¡æ›´æ–°åæ”¹å˜äº†ï¼Œä¼ é€’çš„å‘é‡ä¹Ÿéœ€è¦ç›¸åº”æ—‹è½¬ã€‚
+    * @param pos @~english The position. @~chinese ä½ç½®ã€‚
     */
     void rotationOffset(Vec3& pos);
 
     /**
     * @~english Get the time elapsed since sysytem started.
-    * @~chinese »ñÈ¡×Ô´ÓÁ£×ÓÏµÍ³¿ªÊ¼ÔËĞĞºóÁ÷ÊÅµÄÊ±¼ä¡£
-    * @return @~english The time. @~chinese Á÷ÊÅµÄÊ±¼ä¡£
+    * @~chinese è·å–è‡ªä»ç²’å­ç³»ç»Ÿå¼€å§‹è¿è¡Œåæµé€çš„æ—¶é—´ã€‚
+    * @return @~english The time. @~chinese æµé€çš„æ—¶é—´ã€‚
     */
     inline float getTimeElapsedSinceStart(void) const {return _timeElapsedSinceStart;};
 
     /**
     * @~english Get the default width of particle.
-    * @~chinese »ñÈ¡Á£×ÓÄ¬ÈÏµÄ¿í¶È¡£
-    * @return @~english The width of particle. @~chinese Á£×ÓµÄ¿í¶È¡£
+    * @~chinese è·å–ç²’å­é»˜è®¤çš„å®½åº¦ã€‚
+    * @return @~english The width of particle. @~chinese ç²’å­çš„å®½åº¦ã€‚
     */
     const float getDefaultWidth(void) const;
 
     /**
     * @~english Set the default width of particle.
-    * @~chinese ÉèÖÃÁ£×ÓÄ¬ÈÏµÄ¿í¶È¡£
-    * @param width @~english The width of particle. @~chinese Á£×ÓµÄ¿í¶È¡£
+    * @~chinese è®¾ç½®ç²’å­é»˜è®¤çš„å®½åº¦ã€‚
+    * @param width @~english The width of particle. @~chinese ç²’å­çš„å®½åº¦ã€‚
     */
     void setDefaultWidth(const float width);
 
     /**
     * @~english Get the default height of particle.
-    * @~chinese »ñÈ¡Á£×ÓÄ¬ÈÏµÄ¸ß¶È¡£
-    * @return @~english The height of particle. @~chinese Á£×ÓµÄ¸ß¶È¡£
+    * @~chinese è·å–ç²’å­é»˜è®¤çš„é«˜åº¦ã€‚
+    * @return @~english The height of particle. @~chinese ç²’å­çš„é«˜åº¦ã€‚
     */
     const float getDefaultHeight(void) const;
 
     /**
     * @~english Set the default height of particle.
-    * @~chinese ÉèÖÃÁ£×ÓÄ¬ÈÏµÄ¸ß¶È¡£
-    * @param width @~english The height of particle. @~chinese Á£×ÓµÄ¸ß¶È¡£
+    * @~chinese è®¾ç½®ç²’å­é»˜è®¤çš„é«˜åº¦ã€‚
+    * @param width @~english The height of particle. @~chinese ç²’å­çš„é«˜åº¦ã€‚
     */
     void setDefaultHeight(const float height);
 
     /**
     * @~english Get the default depth of particle.
-    * @~chinese »ñÈ¡Á£×ÓÄ¬ÈÏµÄÉî¶È¡£
-    * @return @~english The depth of particle. @~chinese Á£×ÓµÄÉî¶È¡£
+    * @~chinese è·å–ç²’å­é»˜è®¤çš„æ·±åº¦ã€‚
+    * @return @~english The depth of particle. @~chinese ç²’å­çš„æ·±åº¦ã€‚
     */
     const float getDefaultDepth(void) const;
 
     /**
     * @~english Set the default depth of particle.
-    * @~chinese ÉèÖÃÁ£×ÓÄ¬ÈÏµÄÉî¶È¡£
-    * @param width @~english The depth of particle. @~chinese Á£×ÓµÄÉî¶È¡£
+    * @~chinese è®¾ç½®ç²’å­é»˜è®¤çš„æ·±åº¦ã€‚
+    * @param width @~english The depth of particle. @~chinese ç²’å­çš„æ·±åº¦ã€‚
     */
     void setDefaultDepth(const float depth);
 
     /**
     * @~english Get the world position of system.
-    * @~chinese »ñÈ¡Á£×ÓÏµÍ³ÊÀ½ç×ø±êÏµÏÂµÄÎ»ÖÃ¡£
-    * @return @~english The world position. @~chinese ÊÀ½ç×ø±êÏµÎ»ÖÃ¡£
+    * @~chinese è·å–ç²’å­ç³»ç»Ÿä¸–ç•Œåæ ‡ç³»ä¸‹çš„ä½ç½®ã€‚
+    * @return @~english The world position. @~chinese ä¸–ç•Œåæ ‡ç³»ä½ç½®ã€‚
     */
     Vec3 getDerivedPosition();
 
     /**
     * @~english Get the world rotation of system.
-    * @~chinese »ñÈ¡Á£×ÓÏµÍ³ÊÀ½ç×ø±êÏµÏÂµÄĞı×ª¡£
-    * @return @~english The world rotation. @~chinese ÊÀ½ç×ø±êÏµĞı×ª¡£
+    * @~chinese è·å–ç²’å­ç³»ç»Ÿä¸–ç•Œåæ ‡ç³»ä¸‹çš„æ—‹è½¬ã€‚
+    * @return @~english The world rotation. @~chinese ä¸–ç•Œåæ ‡ç³»æ—‹è½¬ã€‚
     */
     Quaternion getDerivedOrientation();
 
     /**
     * @~english Get the world scale of system.
-    * @~chinese »ñÈ¡Á£×ÓÏµÍ³ÊÀ½ç×ø±êÏµÏÂµÄËõ·Å¡£
-    * @return @~english The world scale. @~chinese ÊÀ½ç×ø±êÏµËõ·Å¡£
+    * @~chinese è·å–ç²’å­ç³»ç»Ÿä¸–ç•Œåæ ‡ç³»ä¸‹çš„ç¼©æ”¾ã€‚
+    * @return @~english The world scale. @~chinese ä¸–ç•Œåæ ‡ç³»ç¼©æ”¾ã€‚
     */
     Vec3 getDerivedScale();
 
     /**
     * @~english Get the maximum velocity of particle.
     * Return the maximum velocity a particle can have, even if the velocity of the particle has been set higher (either by initialisation of the particle or by means of an affector).
-    * @~chinese »ñÈ¡Á£×Ó×î´óËÙÂÊ¡£
-    * ·µ»ØµÄÊÇÁ£×ÓµÄ×î´óËÙÂÊ£¬¾ÍËãËÙÂÊ±»ÉèÎª¸ü¸ßµÄÖµ£¬Ò²»á±»½ØÈ¡µ½·¶Î§ÒÔÄÚ¡£
-    * @return @~english The maximum velocity. @~chinese Á£×Ó×î´óËÙÂÊ¡£
+    * @~chinese è·å–ç²’å­æœ€å¤§é€Ÿç‡ã€‚
+    * è¿”å›çš„æ˜¯ç²’å­çš„æœ€å¤§é€Ÿç‡ï¼Œå°±ç®—é€Ÿç‡è¢«è®¾ä¸ºæ›´é«˜çš„å€¼ï¼Œä¹Ÿä¼šè¢«æˆªå–åˆ°èŒƒå›´ä»¥å†…ã€‚
+    * @return @~english The maximum velocity. @~chinese ç²’å­æœ€å¤§é€Ÿç‡ã€‚
     */
     float getMaxVelocity() const;
 
     /**
     * @~english Set the maximum velocity of particle.
-    * @~chinese ÉèÖÃÁ£×ÓµÄ×î´óËÙÂÊ¡£
-    * @param maxVelocity @~english The maximum velocity. @~chinese Á£×Ó×î´óËÙÂÊ¡£
+    * @~chinese è®¾ç½®ç²’å­çš„æœ€å¤§é€Ÿç‡ã€‚
+    * @param maxVelocity @~english The maximum velocity. @~chinese ç²’å­æœ€å¤§é€Ÿç‡ã€‚
     */
     void setMaxVelocity(float maxVelocity);
 
     /**
     * @~english Set the using material of this system(internal method).
-    * @~chinese ÉèÖÃÁ£×ÓÏµÍ³Ê¹ÓÃµÄ²ÄÖÊÃû³Æ(ÄÚ²¿·½·¨)¡£
-    * @param name @~english The name of material. @~chinese ²ÄÖÊÃû³Æ¡£
+    * @~chinese è®¾ç½®ç²’å­ç³»ç»Ÿä½¿ç”¨çš„æè´¨åç§°(å†…éƒ¨æ–¹æ³•)ã€‚
+    * @param name @~english The name of material. @~chinese æè´¨åç§°ã€‚
     */
     void setMaterialName(const std::string &name) { _matName = name; };
 
     /**
     * @~english Get the using material of this system(internal method).
-    * @~chinese »ñÈ¡Á£×ÓÏµÍ³Ê¹ÓÃµÄ²ÄÖÊÃû³Æ(ÄÚ²¿·½·¨)¡£
-    * @return @~english The name of material. @~chinese ²ÄÖÊÃû³Æ¡£
+    * @~chinese è·å–ç²’å­ç³»ç»Ÿä½¿ç”¨çš„æè´¨åç§°(å†…éƒ¨æ–¹æ³•)ã€‚
+    * @return @~english The name of material. @~chinese æè´¨åç§°ã€‚
     */
     const std::string getMaterialName() const { return _matName; };
 
     /**
     * @~english Forces emission of particles.
     * The number of requested particles are the exact number that are emitted
-    * @~chinese Ç¿ÖÆ·¢ÉäÖ¸¶¨ÊıÄ¿µÄÁ£×Ó¡£
-    * requestedÖ¸¶¨µÄÖµÊÇ·¢ÉäÊıÄ¿µÄÈ·ÇĞÖµ¡£
-    * @param emitter @~english Which emitter need emit particle. @~chinese ĞèÒª·¢ÉäÁ£×ÓµÄ·¢ÉäÆ÷¡£
-    * @param requested @~english The number of requested particles. @~chinese ÇëÇó·¢ÉäÁ£×ÓµÄÊıÁ¿¡£
+    * @~chinese å¼ºåˆ¶å‘å°„æŒ‡å®šæ•°ç›®çš„ç²’å­ã€‚
+    * requestedæŒ‡å®šçš„å€¼æ˜¯å‘å°„æ•°ç›®çš„ç¡®åˆ‡å€¼ã€‚
+    * @param emitter @~english Which emitter need emit particle. @~chinese éœ€è¦å‘å°„ç²’å­çš„å‘å°„å™¨ã€‚
+    * @param requested @~english The number of requested particles. @~chinese è¯·æ±‚å‘å°„ç²’å­çš„æ•°é‡ã€‚
     */
     void forceEmission(PUEmitter* emitter, unsigned requested);
 
     /**
     * @~english Add a Emitter.
     * The pu particle system allows the use of multiple emitters
-    * @~chinese Ìí¼ÓÒ»¸ö·¢ÉäÆ÷¡£
-    * puÁ£×ÓÏµÍ³ÔÊĞíÊ¹ÓÃ¶à¸ö·¢ÉäÆ÷¡£
-    * @param emitter @~english The pointer of emitter. @~chinese ·¢ÉäÆ÷Ö¸Õë¡£
+    * @~chinese æ·»åŠ ä¸€ä¸ªå‘å°„å™¨ã€‚
+    * puç²’å­ç³»ç»Ÿå…è®¸ä½¿ç”¨å¤šä¸ªå‘å°„å™¨ã€‚
+    * @param emitter @~english The pointer of emitter. @~chinese å‘å°„å™¨æŒ‡é’ˆã€‚
     */
     void addEmitter(PUEmitter* emitter);
 
     /**
     * @~english Get the affector by name.
-    * @~chinese ¸ù¾İÃû´Ê»ñÈ¡Ó°ÏìÆ÷¡£
-    * @return @~english The name of affector. @~chinese Ó°ÏìÆ÷Ãû´Ê¡£
+    * @~chinese æ ¹æ®åè¯è·å–å½±å“å™¨ã€‚
+    * @return @~english The name of affector. @~chinese å½±å“å™¨åè¯ã€‚
     */
     PUAffector* getAffector(const std::string &name);
 
     /**
     * @~english Get the emitter by name.
-    * @~chinese ¸ù¾İÃû´Ê»ñÈ¡·¢ÉäÆ÷¡£
-    * @return @~english The name of emitter. @~chinese ·¢ÉäÆ÷Ãû´Ê¡£
+    * @~chinese æ ¹æ®åè¯è·å–å‘å°„å™¨ã€‚
+    * @return @~english The name of emitter. @~chinese å‘å°„å™¨åè¯ã€‚
     */
     PUEmitter* getEmitter(const std::string &name);
 
     /**
     * @~english Remove all emitters.
-    * @~chinese ÒÆ³ıËùÓĞµÄ·¢ÉäÆ÷¡£
+    * @~chinese ç§»é™¤æ‰€æœ‰çš„å‘å°„å™¨ã€‚
     */
     void removeAllEmitter();
 
     /**
     * @~english Add a Listener(internal method).
     * Listener is mainly used to monitor particle emissions and disappearance.
-    * @~chinese Ìí¼ÓÒ»¸ö¼àÌıÆ÷¡£
-    * ¼àÌıÆ÷Ö÷ÒªÓÃÀ´¼àÌıÁ£×Ó·¢ÉäºÍÏûÍö¡£
+    * @~chinese æ·»åŠ ä¸€ä¸ªç›‘å¬å™¨ã€‚
+    * ç›‘å¬å™¨ä¸»è¦ç”¨æ¥ç›‘å¬ç²’å­å‘å°„å’Œæ¶ˆäº¡ã€‚
     * @see PUListener
-    * @param listener @~english The pointer of listener. @~chinese ¼àÌıÆ÷Ö¸Õë¡£
+    * @param listener @~english The pointer of listener. @~chinese ç›‘å¬å™¨æŒ‡é’ˆã€‚
     */
     void addListener(PUListener *listener);
 
     /**
     * @~english Remove a Listener(internal method).
-    * @~chinese ÒÆ³ıÒ»¸ö¼àÌıÆ÷¡£
-    * @param listener @~english The pointer of listener. @~chinese ¼àÌıÆ÷Ö¸Õë¡£
+    * @~chinese ç§»é™¤ä¸€ä¸ªç›‘å¬å™¨ã€‚
+    * @param listener @~english The pointer of listener. @~chinese ç›‘å¬å™¨æŒ‡é’ˆã€‚
     */
     void removeListener(PUListener *listener);
 
     /**
     * @~english Add a Emitter.
     * The pu particle system allows the use of multiple emitters
-    * @~chinese Ìí¼ÓÒ»¸ö·¢ÉäÆ÷¡£
-    * puÁ£×ÓÏµÍ³ÔÊĞíÊ¹ÓÃ¶à¸ö·¢ÉäÆ÷¡£
-    * @param emitter @~english The pointer of emitter. @~chinese ·¢ÉäÆ÷Ö¸Õë¡£
+    * @~chinese æ·»åŠ ä¸€ä¸ªå‘å°„å™¨ã€‚
+    * puç²’å­ç³»ç»Ÿå…è®¸ä½¿ç”¨å¤šä¸ªå‘å°„å™¨ã€‚
+    * @param emitter @~english The pointer of emitter. @~chinese å‘å°„å™¨æŒ‡é’ˆã€‚
     */
     void removeAllListener();
 
     /**
     * @~english Add a Observer.
-    * @~chinese Ìí¼ÓÒ»¸ö¹Û²ìÆ÷¡£
+    * @~chinese æ·»åŠ ä¸€ä¸ªè§‚å¯Ÿå™¨ã€‚
     * @see PUObserver
-    * @param observer @~english The pointer of observer. @~chinese ¹Û²ìÆ÷Ö¸Õë¡£
+    * @param observer @~english The pointer of observer. @~chinese è§‚å¯Ÿå™¨æŒ‡é’ˆã€‚
     */
     void addObserver(PUObserver *observer);
 
     /**
     * @~english Get a Observer.
-    * @~chinese »ñÈ¡Ò»¸ö¹Û²ìÆ÷¡£
+    * @~chinese è·å–ä¸€ä¸ªè§‚å¯Ÿå™¨ã€‚
     * @see PUObserver
-    * @return @~english The name of observer. @~chinese ¹Û²ìÆ÷Ãû³Æ¡£
+    * @return @~english The name of observer. @~chinese è§‚å¯Ÿå™¨åç§°ã€‚
     */
     PUObserver* getObserver(const std::string &name);
 
     /**
     * @~english Remove all Observers.
-    * @~chinese ÒÆ³ıËùÓĞ¹Û²ìÆ÷¡£
+    * @~chinese ç§»é™¤æ‰€æœ‰è§‚å¯Ÿå™¨ã€‚
     */
     void removerAllObserver();
 
     /**
     * @~english Add a behaviour template of particle(internal method).
-    * @~chinese Ìí¼ÓÒ»¸öÁ£×ÓµÄĞĞÎªÄ£°å¡£
+    * @~chinese æ·»åŠ ä¸€ä¸ªç²’å­çš„è¡Œä¸ºæ¨¡æ¿ã€‚
     * @see PUBehaviour
-    * @param behaviour @~english The pointer of behaviour. @~chinese ĞĞÎªÄ£°åÖ¸Õë¡£
+    * @param behaviour @~english The pointer of behaviour. @~chinese è¡Œä¸ºæ¨¡æ¿æŒ‡é’ˆã€‚
     */
     void addBehaviourTemplate(PUBehaviour *behaviour);
 
     /**
     * @~english Remove all behaviour templates.
-    * @~chinese ÒÆ³ıËùÓĞĞĞÎªÄ£°å¡£
+    * @~chinese ç§»é™¤æ‰€æœ‰è¡Œä¸ºæ¨¡æ¿ã€‚
     */
     void removeAllBehaviourTemplate();
 
     /**
     * @~english Check this system is mark for emission.
-    * @~chinese ¼ì²éµ±Ç°Á£×ÓÏµÍ³ÊÇ·ñ±ê¼ÇÎª±»·¢ÉäÆ÷·¢Éä¡£
-    * @return @~english Whether this system is mark for emission. @~chinese µ±Ç°Á£×ÓÏµÍ³ÊÇ·ñ±ê¼ÇÎª·¢Éä¡£
+    * @~chinese æ£€æŸ¥å½“å‰ç²’å­ç³»ç»Ÿæ˜¯å¦æ ‡è®°ä¸ºè¢«å‘å°„å™¨å‘å°„ã€‚
+    * @return @~english Whether this system is mark for emission. @~chinese å½“å‰ç²’å­ç³»ç»Ÿæ˜¯å¦æ ‡è®°ä¸ºå‘å°„ã€‚
     */
     bool isMarkedForEmission() const {return _isMarkedForEmission;};
 
     /**
     * @~english Mark this system for emission.
-    * @~chinese ±ê¼Çµ±Ç°Á£×ÓÏµÍ³±»·¢ÉäÆ÷·¢Éä¡£
-    * @param isMarked @~english Whether this system is mark for emission. @~chinese µ±Ç°Á£×ÓÏµÍ³ÊÇ·ñ±ê¼ÇÎª·¢Éä¡£
+    * @~chinese æ ‡è®°å½“å‰ç²’å­ç³»ç»Ÿè¢«å‘å°„å™¨å‘å°„ã€‚
+    * @param isMarked @~english Whether this system is mark for emission. @~chinese å½“å‰ç²’å­ç³»ç»Ÿæ˜¯å¦æ ‡è®°ä¸ºå‘å°„ã€‚
     */
     void setMarkedForEmission(bool isMarked) {_isMarkedForEmission = isMarked;};
 
     /**
     * @~english Clear all particles.
-    * @~chinese Çå³ıËùÓĞÁ£×Ó¡£
+    * @~chinese æ¸…é™¤æ‰€æœ‰ç²’å­ã€‚
     */
     void clearAllParticles();
 
     /**
     * @~english Get the quota of emitted emitters .
-    * @~chinese »ñÈ¡±»·¢ÉäµÄ·¢ÉäÆ÷ÉÏÏŞÖµ¡£
-    * @return @~english The quota of emitted emitters. @~chinese ±»·¢ÉäµÄ·¢ÉäÆ÷ÉÏÏŞÖµ¡£
+    * @~chinese è·å–è¢«å‘å°„çš„å‘å°„å™¨ä¸Šé™å€¼ã€‚
+    * @return @~english The quota of emitted emitters. @~chinese è¢«å‘å°„çš„å‘å°„å™¨ä¸Šé™å€¼ã€‚
     */
     unsigned int getEmittedEmitterQuota() const { return _emittedEmitterQuota; };
 
     /**
     * @~english Set the quota of emitted emitters .
-    * @~chinese ÉèÖÃ±»·¢ÉäµÄ·¢ÉäÆ÷ÉÏÏŞÖµ¡£
-    * @param quota @~english The quota of emitted emitters. @~chinese ±»·¢ÉäµÄ·¢ÉäÆ÷ÉÏÏŞÖµ¡£
+    * @~chinese è®¾ç½®è¢«å‘å°„çš„å‘å°„å™¨ä¸Šé™å€¼ã€‚
+    * @param quota @~english The quota of emitted emitters. @~chinese è¢«å‘å°„çš„å‘å°„å™¨ä¸Šé™å€¼ã€‚
     */
     void setEmittedEmitterQuota(unsigned int quota) { _emittedEmitterQuota = quota; };
 
     /**
     * @~english Get the quota of emitted systems .
-    * @~chinese »ñÈ¡±»·¢ÉäµÄÁ£×ÓÏµÍ³ÉÏÏŞÖµ¡£
-    * @return @~english The quota of emitted systems. @~chinese ±»·¢ÉäµÄÁ£×ÓÏµÍ³ÉÏÏŞÖµ¡£
+    * @~chinese è·å–è¢«å‘å°„çš„ç²’å­ç³»ç»Ÿä¸Šé™å€¼ã€‚
+    * @return @~english The quota of emitted systems. @~chinese è¢«å‘å°„çš„ç²’å­ç³»ç»Ÿä¸Šé™å€¼ã€‚
     */
     unsigned int getEmittedSystemQuota() const { return _emittedSystemQuota; };
 
     /**
     * @~english Set the quota of emitted systems .
-    * @~chinese ÉèÖÃ±»·¢ÉäµÄÁ£×ÓÏµÍ³ÉÏÏŞÖµ¡£
-    * @param quota @~english The quota of emitted systems. @~chinese ±»·¢ÉäµÄÁ£×ÓÏµÍ³ÉÏÏŞÖµ¡£
+    * @~chinese è®¾ç½®è¢«å‘å°„çš„ç²’å­ç³»ç»Ÿä¸Šé™å€¼ã€‚
+    * @param quota @~english The quota of emitted systems. @~chinese è¢«å‘å°„çš„ç²’å­ç³»ç»Ÿä¸Šé™å€¼ã€‚
     */
     void setEmittedSystemQuota(unsigned int quota) { _emittedSystemQuota = quota; };
 
     /**
     * @~english Get the partent system of this system.
-    * @~chinese »ñÈ¡µ±Ç°Á£×ÓÏµÍ³µÄ¸¸ÏµÍ³¡£
-    * @return @~english The partent system of this system. @~chinese Á£×ÓÏµÍ³µÄ¸¸ÏµÍ³¡£
+    * @~chinese è·å–å½“å‰ç²’å­ç³»ç»Ÿçš„çˆ¶ç³»ç»Ÿã€‚
+    * @return @~english The partent system of this system. @~chinese ç²’å­ç³»ç»Ÿçš„çˆ¶ç³»ç»Ÿã€‚
     */
     PUParticleSystem3D* getParentParticleSystem()const { return _parentParticleSystem; };
 
     /**
     * @~english Get the emitted emitter pool.
-    * @~chinese »ñÈ¡±»·¢ÉäµÄ·¢ÉäÆ÷Êı¾İ³Ø¡£
-    * @return @~english The emitted emitter pool. @~chinese ·¢ÉäÆ÷Êı¾İ³Ø¡£
+    * @~chinese è·å–è¢«å‘å°„çš„å‘å°„å™¨æ•°æ®æ± ã€‚
+    * @return @~english The emitted emitter pool. @~chinese å‘å°„å™¨æ•°æ®æ± ã€‚
     */
     const ParticlePoolMap& getEmittedEmitterParticlePool() const { return _emittedEmitterParticlePool; };
 
     /**
     * @~english Get the emitted system pool.
-    * @~chinese »ñÈ¡±»·¢ÉäµÄÁ£×ÓÏµÍ³Êı¾İ³Ø¡£
-    * @return @~english The emitted system pool. @~chinese Á£×ÓÏµÍ³Êı¾İ³Ø¡£
+    * @~chinese è·å–è¢«å‘å°„çš„ç²’å­ç³»ç»Ÿæ•°æ®æ± ã€‚
+    * @return @~english The emitted system pool. @~chinese ç²’å­ç³»ç»Ÿæ•°æ®æ± ã€‚
     */
     const ParticlePoolMap& getEmittedSystemParticlePool() const { return _emittedSystemParticlePool; };
 
     /**
     * @~english Calculate the real position of the particle(internal method).
-    * @~chinese ¼ÆËãÁ£×ÓµÄÕæÊµÎ»ÖÃ(ÄÚ²¿·½·¨)¡£
-    * @param particle @~english Need handled particle. @~chinese ĞèÒª±»´¦ÀíµÄÁ£×Ó¡£
+    * @~chinese è®¡ç®—ç²’å­çš„çœŸå®ä½ç½®(å†…éƒ¨æ–¹æ³•)ã€‚
+    * @param particle @~english Need handled particle. @~chinese éœ€è¦è¢«å¤„ç†çš„ç²’å­ã€‚
     */
     bool makeParticleLocal(PUParticle3D* particle);
 
     /**
     * @~english Calculate rotation offset(internal method).
-    * @~chinese ¼ÆËãĞı×ªÆ«ÒÆÁ¿(ÄÚ²¿·½·¨)¡£
+    * @~chinese è®¡ç®—æ—‹è½¬åç§»é‡(å†…éƒ¨æ–¹æ³•)ã€‚
     */
     void calulateRotationOffset(void);
 
     /**
     * @~english Clone this system.
-    * @~chinese ¿ËÂ¡µ±Ç°Á£×ÓÏµÍ³¡£
+    * @~chinese å…‹éš†å½“å‰ç²’å­ç³»ç»Ÿã€‚
     */
     virtual PUParticleSystem3D* clone();
 
     /**
     * @~english Copy one system's attributes to another's(internal method).
-    * @~chinese ¿½±´Ò»¸öÁ£×ÓÏµÍ³µÄÊôĞÔµ½ÁíÍâÒ»¸ö(ÄÚ²¿·½·¨)¡£
-    * @param system @~english the system which need be copied. @~chinese ¿½±´ÊôĞÔµÄÁ£×ÓÏµÍ³¡£
+    * @~chinese æ‹·è´ä¸€ä¸ªç²’å­ç³»ç»Ÿçš„å±æ€§åˆ°å¦å¤–ä¸€ä¸ª(å†…éƒ¨æ–¹æ³•)ã€‚
+    * @param system @~english the system which need be copied. @~chinese æ‹·è´å±æ€§çš„ç²’å­ç³»ç»Ÿã€‚
     */
     virtual void copyAttributesTo(PUParticleSystem3D* system);
 

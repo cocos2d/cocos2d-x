@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
  Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -44,7 +44,7 @@ class Particle3DRender;
 
 /** @struct Particle3D
 *@brief @~english Particle3D is a container of particle Properties.
- @~chinese Particle3D ÊÇÁ£×ÓÊôĞÔµÄÈİÆ÷
+ @~chinese Particle3D æ˜¯ç²’å­å±æ€§çš„å®¹å™¨
 */
 struct CC_DLL Particle3D
 {
@@ -65,7 +65,7 @@ struct CC_DLL Particle3D
 
 /** @class DataPool<template> 
 *@brief @~english DataPool is a data pool, used for recycling data.
- @~chinese DataPool ÊÇÊı¾İ³Ø£¬ÓÃÒÔÊı¾İµÄÔÙÀûÓÃ¡£
+ @~chinese DataPool æ˜¯æ•°æ®æ± ï¼Œç”¨ä»¥æ•°æ®çš„å†åˆ©ç”¨ã€‚
 */
 template<typename T>
 class CC_DLL DataPool
@@ -79,8 +79,8 @@ public:
 
     /**
     * @~english Allocates a data from unallocated pool.
-    * @~chinese ´ÓÎ´·ÖÅä³ØÖĞÈ¡³öÒ»¸öÊı¾İ
-    * @return @~english A allocated data. @~chinese Ò»¸öÒÑ·ÖÅäµÄÊı¾İ¡£
+    * @~chinese ä»æœªåˆ†é…æ± ä¸­å–å‡ºä¸€ä¸ªæ•°æ®
+    * @return @~english A allocated data. @~chinese ä¸€ä¸ªå·²åˆ†é…çš„æ•°æ®ã€‚
     */
     T* createData(){
         if (_locked.empty()) return nullptr;
@@ -93,7 +93,7 @@ public:
 
     /**
     * @~english Push current data into unallocated pool.
-    * @~chinese °Ñµ±Ç°µÄÊı¾İ·ÅÈëÎ´·ÖÅä³Ø¡£
+    * @~chinese æŠŠå½“å‰çš„æ•°æ®æ”¾å…¥æœªåˆ†é…æ± ã€‚
     */
     void lockLatestData(){
         _locked.push_back(*_releasedIter);
@@ -106,8 +106,8 @@ public:
 
     /**
     * @~english Push the specified data into unallocated pool.
-    * @~chinese °ÑÖ¸¶¨µÄÊı¾İ·ÅÈëÎ´·ÖÅä³Ø¡£
-    * @param data   @~english The pointer of data. @~chinese Êı¾İµÄÖ¸Õë¡£
+    * @~chinese æŠŠæŒ‡å®šçš„æ•°æ®æ”¾å…¥æœªåˆ†é…æ± ã€‚
+    * @param data   @~english The pointer of data. @~chinese æ•°æ®çš„æŒ‡é’ˆã€‚
     */
     void lockData(T *data){
         PoolIterator tempIter = _releasedIter;
@@ -124,7 +124,7 @@ public:
 
     /**
     * @~english Push all allocated datas into unallocated pool.
-    * @~chinese °ÑÒÑ·ÖÅä³ØÖĞµÄËùÓĞÊı¾İ·ÅÈëÎ´·ÖÅä³ØÖĞ¡£
+    * @~chinese æŠŠå·²åˆ†é…æ± ä¸­çš„æ‰€æœ‰æ•°æ®æ”¾å…¥æœªåˆ†é…æ± ä¸­ã€‚
     */
     void lockAllDatas(){
         _locked.splice(_locked.end(), _released);
@@ -135,8 +135,8 @@ public:
 
     /**
     * @~english Get the first data of allocated pool.
-    * @~chinese »ñÈ¡ÒÑ·ÖÅä³ØÖĞµÄµÚÒ»¸öÊı¾İ¡£
-    * @return @~english The pointer of data. @~chinese Êı¾İµÄÖ¸Õë¡£
+    * @~chinese è·å–å·²åˆ†é…æ± ä¸­çš„ç¬¬ä¸€ä¸ªæ•°æ®ã€‚
+    * @return @~english The pointer of data. @~chinese æ•°æ®çš„æŒ‡é’ˆã€‚
     */
     T* getFirst(){
         _releasedIter = _released.begin();
@@ -146,8 +146,8 @@ public:
 
     /**
     * @~english Get the next data of allocated pool.
-    * @~chinese »ñÈ¡ÒÑ·ÖÅä³ØÖĞµÄÏÂÒ»¸öÊı¾İ¡£
-    * @return @~english The pointer of data. @~chinese Êı¾İµÄÖ¸Õë¡£
+    * @~chinese è·å–å·²åˆ†é…æ± ä¸­çš„ä¸‹ä¸€ä¸ªæ•°æ®ã€‚
+    * @return @~english The pointer of data. @~chinese æ•°æ®çš„æŒ‡é’ˆã€‚
     */
     T* getNext(){
         if (_releasedIter == _released.end()) return nullptr;
@@ -158,21 +158,21 @@ public:
 
     /**
     * @~english Get the allocated pool.
-    * @~chinese »ñÈ¡ÒÑ·ÖÅä³Ø¡£
-    * @return @~english The allocated pool. @~chinese ÒÑ·ÖÅä³Ø¡£
+    * @~chinese è·å–å·²åˆ†é…æ± ã€‚
+    * @return @~english The allocated pool. @~chinese å·²åˆ†é…æ± ã€‚
     */
     const PoolList& getActiveDataList() const { return _released; };
 
     /**
     * @~english Get the unallocated pool.
-    * @~chinese »ñÈ¡Î´·ÖÅä³Ø¡£
-    * @return @~english The unallocated pool. @~chinese Î´·ÖÅä³Ø¡£
+    * @~chinese è·å–æœªåˆ†é…æ± ã€‚
+    * @return @~english The unallocated pool. @~chinese æœªåˆ†é…æ± ã€‚
     */
     const PoolList& getUnActiveDataList() const { return _locked; };
 
     /**
     * @~english add a new data into unallocated pool.
-    * @~chinese Ìí¼ÓÒ»¸öĞÂÊı¾İµ½Î´·ÖÅä³ØÖĞ¡£
+    * @~chinese æ·»åŠ ä¸€ä¸ªæ–°æ•°æ®åˆ°æœªåˆ†é…æ± ä¸­ã€‚
     */
     void addData(T* data){
         _locked.push_back(data); 
@@ -180,13 +180,13 @@ public:
 
     /**
     * @~english To determine whether the allocated pool is empty.
-    * @~chinese ÅĞ¶ÏÒÑ·ÖÅä³ØÊÇ·ñÎª¿Õ¡£
+    * @~chinese åˆ¤æ–­å·²åˆ†é…æ± æ˜¯å¦ä¸ºç©ºã€‚
     */
     bool empty() const { return _released.empty(); };
 
     /**
     * @~english Remove all datas.
-    * @~chinese ÒÆ³ıËùÓĞµÄÊı¾İ¡£
+    * @~chinese ç§»é™¤æ‰€æœ‰çš„æ•°æ®ã€‚
     */
     void removeAllDatas(){
         lockAllDatas();
@@ -213,12 +213,12 @@ typedef DataPool<Particle3D> ParticlePool;
  - multiple affector(how particles motion)
  - one renderer(how to render the particles)
 
- @~chinese ParticleSystem3D ÊÇ3DÁ£×ÓÏµÍ³µÄ»ùÀà£¬¶¨ÒåÁË3DÁ£×ÓÏµÍ³ËùĞèµÄ¸÷ÖÖ½Ó¿Ú¡£
- ¾ßÌåµÄÊµÏÖÓÉ²»Í¬µÄÁ£×ÓÏµÍ³¾ö¶¨¡£
- Ò»¸öÁ£×ÓÏµÍ³×é³É£º
- - Ò»¸ö·¢ÉäÆ÷(ÈçºÎ·¢ÉäÁ£×Ó)
- - ¶à¸öÓ°ÏìÆ÷(Á£×ÓÈçºÎÔË¶¯)
- - Ò»¸öäÖÈ¾Æ÷(Á£×ÓÈçºÎäÖÈ¾)
+ @~chinese ParticleSystem3D æ˜¯3Dç²’å­ç³»ç»Ÿçš„åŸºç±»ï¼Œå®šä¹‰äº†3Dç²’å­ç³»ç»Ÿæ‰€éœ€çš„å„ç§æ¥å£ã€‚
+ å…·ä½“çš„å®ç°ç”±ä¸åŒçš„ç²’å­ç³»ç»Ÿå†³å®šã€‚
+ ä¸€ä¸ªç²’å­ç³»ç»Ÿç»„æˆï¼š
+ - ä¸€ä¸ªå‘å°„å™¨(å¦‚ä½•å‘å°„ç²’å­)
+ - å¤šä¸ªå½±å“å™¨(ç²’å­å¦‚ä½•è¿åŠ¨)
+ - ä¸€ä¸ªæ¸²æŸ“å™¨(ç²’å­å¦‚ä½•æ¸²æŸ“)
 */
 class CC_DLL ParticleSystem3D : public Node, public BlendProtocol
 {
@@ -233,116 +233,116 @@ public:
     
     /**
     * @~english Overwrite function.
-    * @~chinese ÖØĞ´µÄº¯Êı¡£
+    * @~chinese é‡å†™çš„å‡½æ•°ã€‚
     * @see node update(float delta);
     */
     virtual void update(float delta) override;
     
     /**
     * @~english Overwrite function.
-    * @~chinese ÖØĞ´µÄº¯Êı¡£
+    * @~chinese é‡å†™çš„å‡½æ•°ã€‚
     * @see node draw(Renderer *renderer, const Mat4 &transform, uint32_t flags);
     */
     virtual void draw(Renderer *renderer, const Mat4 &transform, uint32_t flags) override;
     
     /**
     * @~english Set the blend function.
-    * @~chinese ÉèÖÃÍ¸Ã÷µÄ»ìºÏ·½³Ì¡£
-    * @param blendFunc   @~english The parameter of blend. @~chinese »ìºÏ²ÎÊı¡£
+    * @~chinese è®¾ç½®é€æ˜çš„æ··åˆæ–¹ç¨‹ã€‚
+    * @param blendFunc   @~english The parameter of blend. @~chinese æ··åˆå‚æ•°ã€‚
     * @see glBlendFunc(GLenum sfactor,GLenum dfactor);
     */
     virtual void setBlendFunc(const BlendFunc &blendFunc) override;
     
     /**
     * @~english Get the blend function.
-    * @~chinese »ñÈ¡Í¸Ã÷µÄ»ìºÏ·½³Ì¡£
-    * @return @~english The parameter of blend. @~chinese »ìºÏ²ÎÊı¡£
+    * @~chinese è·å–é€æ˜çš„æ··åˆæ–¹ç¨‹ã€‚
+    * @return @~english The parameter of blend. @~chinese æ··åˆå‚æ•°ã€‚
     */
     virtual const BlendFunc &getBlendFunc() const override;
     
     /**
     * @~english Start particle system simulation.
-    * @~chinese ¿ªÊ¼Á£×ÓÏµÍ³Ä£Äâ¡£
+    * @~chinese å¼€å§‹ç²’å­ç³»ç»Ÿæ¨¡æ‹Ÿã€‚
     */
     virtual void startParticleSystem();
     
     /**
     * @~english Stop particle system simulation.
-    * @~chinese Í£Ö¹Á£×ÓÏµÍ³Ä£Äâ¡£
+    * @~chinese åœæ­¢ç²’å­ç³»ç»Ÿæ¨¡æ‹Ÿã€‚
     */
     virtual void stopParticleSystem();
     
     /**
     * @~english Pause particle system simulation.
-    * @~chinese ÔİÍ£Á£×ÓÏµÍ³Ä£Äâ¡£
+    * @~chinese æš‚åœç²’å­ç³»ç»Ÿæ¨¡æ‹Ÿã€‚
     */
     virtual void pauseParticleSystem();
     
     /**
     * @~english Resume particle system simulation.
-    * @~chinese »Ö¸´Á£×ÓÏµÍ³Ä£Äâ¡£
+    * @~chinese æ¢å¤ç²’å­ç³»ç»Ÿæ¨¡æ‹Ÿã€‚
     */
     virtual void resumeParticleSystem();
     
     /**
     * @~english Set Emitter.
-    * @~chinese ÉèÖÃ·¢ÉäÆ÷¡£
-    * @param emitter   @~english The pointer of emitter. @~chinese ·¢ÉäÆ÷Ö¸Õë¡£
+    * @~chinese è®¾ç½®å‘å°„å™¨ã€‚
+    * @param emitter   @~english The pointer of emitter. @~chinese å‘å°„å™¨æŒ‡é’ˆã€‚
     */
     void setEmitter(Particle3DEmitter* emitter);
 
     /**
     * @~english Set Render.
-    * @~chinese ÉèÖÃäÖÈ¾Æ÷¡£
-    * @param render   @~english The pointer of render. @~chinese äÖÈ¾Æ÷Ö¸Õë¡£
+    * @~chinese è®¾ç½®æ¸²æŸ“å™¨ã€‚
+    * @param render   @~english The pointer of render. @~chinese æ¸²æŸ“å™¨æŒ‡é’ˆã€‚
     */
     void setRender(Particle3DRender* render);
 
     /**
     * @~english Add one affector.
-    * @~chinese Ìí¼ÓÒ»¸öÓ°ÏìÆ÷¡£
-    * @param affector   @~english The pointer of affector. @~chinese Ó°ÏìÆ÷Ö¸Õë¡£
+    * @~chinese æ·»åŠ ä¸€ä¸ªå½±å“å™¨ã€‚
+    * @param affector   @~english The pointer of affector. @~chinese å½±å“å™¨æŒ‡é’ˆã€‚
     */
     void addAffector(Particle3DAffector* affector);
     
     /**
     * @~english Remove one affector.
-    * @~chinese ÒÆ³ıÒ»¸öÓ°ÏìÆ÷¡£
-    * @param index   @~english The index of affector. @~chinese Ó°ÏìÆ÷µÄË÷ÒıºÅ¡£
+    * @~chinese ç§»é™¤ä¸€ä¸ªå½±å“å™¨ã€‚
+    * @param index   @~english The index of affector. @~chinese å½±å“å™¨çš„ç´¢å¼•å·ã€‚
     */
     void removeAffector(int index);
     
     /**
     * @~english Remove all affectors.
-    * @~chinese ÒÆ³ıËùÓĞµÄÓ°ÏìÆ÷¡£
+    * @~chinese ç§»é™¤æ‰€æœ‰çš„å½±å“å™¨ã€‚
     */
     void removeAllAffector();
 
     /**
     * @~english Get the quota of particle.
-    * @~chinese »ñÈ¡¿É·¢ÉäµÄÁ£×ÓÊıÁ¿ÉÏÏŞ¡£
-    * @return @~english The quota. @~chinese ÉÏÏŞÖµ¡£
+    * @~chinese è·å–å¯å‘å°„çš„ç²’å­æ•°é‡ä¸Šé™ã€‚
+    * @return @~english The quota. @~chinese ä¸Šé™å€¼ã€‚
     */
     unsigned int getParticleQuota() const;
 
     /**
     * @~english Set particle quota.
-    * @~chinese ÉèÖÃ¿É·¢ÉäÁ£×Ó×î´óÉÏÏŞ¡£
-    * @param quota   @~english The quota. @~chinese ÉÏÏŞÖµ¡£
+    * @~chinese è®¾ç½®å¯å‘å°„ç²’å­æœ€å¤§ä¸Šé™ã€‚
+    * @param quota   @~english The quota. @~chinese ä¸Šé™å€¼ã€‚
     */
     void setParticleQuota(unsigned int quota);
     
     /**
     * @~english Get one affector.
-    * @~chinese »ñÈ¡·¢ÉäÆ÷¡£
-    * @return @~english The pointer of affector. @~chinese ·¢ÉäÆ÷Ö¸Õë¡£
+    * @~chinese è·å–å‘å°„å™¨ã€‚
+    * @return @~english The pointer of affector. @~chinese å‘å°„å™¨æŒ‡é’ˆã€‚
     */
     Particle3DAffector* getAffector(int index);
     
     /**
     * @~english Get particle pool.
-    * @~chinese »ñÈ¡Á£×Ó³Ø¡£
-    * @return @~english The particle pool. @~chinese Á£×Ó³Ø¡£
+    * @~chinese è·å–ç²’å­æ± ã€‚
+    * @return @~english The particle pool. @~chinese ç²’å­æ± ã€‚
     */
     const ParticlePool& getParticlePool()
     {
@@ -351,8 +351,8 @@ public:
     
     /**
     * @~english Get the number of alive particles .
-    * @~chinese »ñÈ¡´æ»îµÄÁ£×ÓÊıÁ¿¡£
-    * @return @~english The number of alive particles. @~chinese ´æ»îµÄÁ£×ÓÊıÁ¿¡£
+    * @~chinese è·å–å­˜æ´»çš„ç²’å­æ•°é‡ã€‚
+    * @return @~english The number of alive particles. @~chinese å­˜æ´»çš„ç²’å­æ•°é‡ã€‚
     */
     virtual int getAliveParticleCount() const
     {
@@ -361,36 +361,36 @@ public:
     
     /**
     * @~english Get the state of particle system(running, paused, stopped).
-    * @~chinese »ñÈ¡µ±Ç°Á£×ÓÏµÍ³µÄ×´Ì¬(ÔËĞĞ¡¢ÔİÍ£¡¢Í£Ö¹)¡£
-    * @return @~english The state. @~chinese µ±Ç°×´Ì¬¡£
+    * @~chinese è·å–å½“å‰ç²’å­ç³»ç»Ÿçš„çŠ¶æ€(è¿è¡Œã€æš‚åœã€åœæ­¢)ã€‚
+    * @return @~english The state. @~chinese å½“å‰çŠ¶æ€ã€‚
     */
     State getState() const { return _state; }
 
     /**
     * @~english Checks whether the particle using local coordinate.
-    * @~chinese ÅĞ¶ÏÊÇ·ñÁ£×ÓÊÇ·ñ²ÉÓÃ¾Ö²¿×ø±êÏµ¡£
-    * @return @~english Whether the particle using local coordinate. @~chinese Á£×ÓÊÇ·ñ²ÉÓÃ¾Ö²¿×ø±êÏµ¡£
+    * @~chinese åˆ¤æ–­æ˜¯å¦ç²’å­æ˜¯å¦é‡‡ç”¨å±€éƒ¨åæ ‡ç³»ã€‚
+    * @return @~english Whether the particle using local coordinate. @~chinese ç²’å­æ˜¯å¦é‡‡ç”¨å±€éƒ¨åæ ‡ç³»ã€‚
     */
     bool isKeepLocal(void) const { return _keepLocal; }
 
     /**
     * @~english Set the particle using local coordinate or world coordinate.
-    * @~chinese ÉèÖÃÁ£×Ó²ÉÓÃ¾Ö²¿×ø±êÏµ»òÈ«¾Ö×ø±êÏµ¡£
-    * @return @~english Whether the particle using local coordinate. @~chinese Á£×ÓÊÇ·ñ²ÉÓÃ¾Ö²¿×ø±êÏµ¡£
+    * @~chinese è®¾ç½®ç²’å­é‡‡ç”¨å±€éƒ¨åæ ‡ç³»æˆ–å…¨å±€åæ ‡ç³»ã€‚
+    * @return @~english Whether the particle using local coordinate. @~chinese ç²’å­æ˜¯å¦é‡‡ç”¨å±€éƒ¨åæ ‡ç³»ã€‚
     */
     void setKeepLocal(bool keepLocal);
 
     /**
     * @~english Set the particle System enable or disable.
-    * @~chinese ÉèÖÃÁ£×ÓÏµÍ³¿ÉÓÃ»ò²»¿ÉÓÃ¡£
-    * @param enabled @~english Whether the particle system enabled. @~chinese Á£×ÓÏµÍ³ÊÇ·ñ¿ÉÓÃ¡£
+    * @~chinese è®¾ç½®ç²’å­ç³»ç»Ÿå¯ç”¨æˆ–ä¸å¯ç”¨ã€‚
+    * @param enabled @~english Whether the particle system enabled. @~chinese ç²’å­ç³»ç»Ÿæ˜¯å¦å¯ç”¨ã€‚
     */
     void setEnabled (bool enabled);
     
     /**
     * @~english Get the particle System enabled.
-    * @~chinese »ñÈ¡Á£×ÓÏµÍ³ÊÇ·ñ¿ÉÓÃ¡£
-    * @return @~english Whether the particle system enabled. @~chinese Á£×ÓÏµÍ³ÊÇ·ñ¿ÉÓÃ¡£
+    * @~chinese è·å–ç²’å­ç³»ç»Ÿæ˜¯å¦å¯ç”¨ã€‚
+    * @return @~english Whether the particle system enabled. @~chinese ç²’å­ç³»ç»Ÿæ˜¯å¦å¯ç”¨ã€‚
     */
     bool isEnabled(void) const { return _isEnabled; }
 

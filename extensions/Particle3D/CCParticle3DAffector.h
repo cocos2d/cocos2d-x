@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
  Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -44,10 +44,10 @@ struct Particle3D;
  Affector is mainly bound particles behavior after launch, such as acceleration, rotation, etc.
  One particle system works well without affector.
 
- @~chinese Particle3DAffector ÊÇÓ°ÏìÆ÷µÄ»ùÀà£¬¶¨ÒåÓ°ÏìÆ÷¹²ÓĞ½Ó¿Ú¡£
- ¾ßÌåµÄÊµÏÖÓÉ²»Í¬µÄÓ°ÏìÆ÷ÀàĞÍ¶¨Òå¡£
- Ó°ÏìÆ÷Ö÷ÒªÊÇÔ¼ÊøÁ£×ÓÔÚ·¢ÉäºóµÄĞĞÎª£¬ÀıÈç¼ÓËÙ¡¢Ğı×ªµÈ¡£
- Á£×ÓÏµÍ³¿ÉÒÔÃ»ÓĞÓ°ÏìÆ÷¡£
+ @~chinese Particle3DAffector æ˜¯å½±å“å™¨çš„åŸºç±»ï¼Œå®šä¹‰å½±å“å™¨å…±æœ‰æ¥å£ã€‚
+ å…·ä½“çš„å®ç°ç”±ä¸åŒçš„å½±å“å™¨ç±»å‹å®šä¹‰ã€‚
+ å½±å“å™¨ä¸»è¦æ˜¯çº¦æŸç²’å­åœ¨å‘å°„åçš„è¡Œä¸ºï¼Œä¾‹å¦‚åŠ é€Ÿã€æ—‹è½¬ç­‰ã€‚
+ ç²’å­ç³»ç»Ÿå¯ä»¥æ²¡æœ‰å½±å“å™¨ã€‚
 */
 class CC_DLL Particle3DAffector : public Ref
 {
@@ -56,23 +56,23 @@ public:
     
     /**
     * @~english Update affector(internal method).
-    * @~chinese ¸üĞÂÓ°ÏìÆ÷(ÄÚ²¿·½·¨)
-    * @param particle   @~english The current particle. @~chinese µ±Ç°µÄÁ£×Ó¡£
-    * @param deltaTime   @~english The delta time between two frames. @~chinese Á½Ö¡Ö®¼äµÄÊ±¼ä¼ä¸ô¡£
+    * @~chinese æ›´æ–°å½±å“å™¨(å†…éƒ¨æ–¹æ³•)
+    * @param particle   @~english The current particle. @~chinese å½“å‰çš„ç²’å­ã€‚
+    * @param deltaTime   @~english The delta time between two frames. @~chinese ä¸¤å¸§ä¹‹é—´çš„æ—¶é—´é—´éš”ã€‚
     */
     virtual void updateAffector(Particle3D* particle, float deltaTime);
     
     /**
     * @~english Set the affector enable or disable.
-    * @~chinese ÉèÖÃÓ°ÏìÆ÷¿ÉÓÃ»ò²»¿ÉÓÃ¡£
-    * @param enabled @~english Whether the affector enabled. @~chinese Ó°ÏìÆ÷ÊÇ·ñ¿ÉÓÃ¡£
+    * @~chinese è®¾ç½®å½±å“å™¨å¯ç”¨æˆ–ä¸å¯ç”¨ã€‚
+    * @param enabled @~english Whether the affector enabled. @~chinese å½±å“å™¨æ˜¯å¦å¯ç”¨ã€‚
     */
     void setEnabled (bool enabled) { _isEnabled = enabled; }
     
     /**
     * @~english Get the affector enabled.
-    * @~chinese »ñÈ¡Ó°ÏìÆ÷ÊÇ·ñ¿ÉÓÃ¡£
-    * @return @~english Whether the affector enabled. @~chinese Ó°ÏìÆ÷ÊÇ·ñ¿ÉÓÃ¡£
+    * @~chinese è·å–å½±å“å™¨æ˜¯å¦å¯ç”¨ã€‚
+    * @return @~english Whether the affector enabled. @~chinese å½±å“å™¨æ˜¯å¦å¯ç”¨ã€‚
     */
     bool isEnabled(void) const { return _isEnabled; }
 

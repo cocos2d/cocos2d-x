@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
  Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -54,10 +54,10 @@ class Texture2D;
  Renderer is mainly determined how particles rendered, such as billboard rendering, model rendering, etc.
  One particle system must have a renderer.
 
- @~chinese Particle3DRender ÊÇäÖÈ¾Æ÷µÄ»ùÀà£¬¶¨ÒåäÖÈ¾Æ÷¹²ÓĞ½Ó¿Ú¡£
- ¾ßÌåµÄÊµÏÖÓÉ²»Í¬µÄäÖÈ¾Æ÷ÀàĞÍ¶¨Òå¡£
- äÖÈ¾Æ÷Ö÷ÒªÊÇ¾ö¶¨Á£×ÓÈçºÎ±»äÖÈ¾£¬ÀıÈç¹«¸æ°åäÖÈ¾£¬Ä£ĞÍäÖÈ¾¡£
- Á£×ÓÏµÍ³±ØĞëÒªÓĞäÖÈ¾Æ÷¡£
+ @~chinese Particle3DRender æ˜¯æ¸²æŸ“å™¨çš„åŸºç±»ï¼Œå®šä¹‰æ¸²æŸ“å™¨å…±æœ‰æ¥å£ã€‚
+ å…·ä½“çš„å®ç°ç”±ä¸åŒçš„æ¸²æŸ“å™¨ç±»å‹å®šä¹‰ã€‚
+ æ¸²æŸ“å™¨ä¸»è¦æ˜¯å†³å®šç²’å­å¦‚ä½•è¢«æ¸²æŸ“ï¼Œä¾‹å¦‚å…¬å‘Šæ¿æ¸²æŸ“ï¼Œæ¨¡å‹æ¸²æŸ“ã€‚
+ ç²’å­ç³»ç»Ÿå¿…é¡»è¦æœ‰æ¸²æŸ“å™¨ã€‚
 */
 class CC_DLL Particle3DRender : public Ref
 {
@@ -66,73 +66,73 @@ public:
 
     /**
     * @~english Render particles(internal method).
-    * @~chinese äÖÈ¾Á£×Ó(ÄÚ²¿·½·¨)
-    * @param renderer   @~english The pointer of cocos renderer. @~chinese cocosäÖÈ¾Æ÷µÄÖ¸Õë¡£
-    * @param transform   @~english The model-view matrix. @~chinese Ä£ĞÍÊÓÍ¼±ä»»¾ØÕó¡£
-    * @param particleSystem   @~english The pointer of particle system. @~chinese Á£×ÓÏµÍ³µÄÖ¸Õë¡£
+    * @~chinese æ¸²æŸ“ç²’å­(å†…éƒ¨æ–¹æ³•)
+    * @param renderer   @~english The pointer of cocos renderer. @~chinese cocosæ¸²æŸ“å™¨çš„æŒ‡é’ˆã€‚
+    * @param transform   @~english The model-view matrix. @~chinese æ¨¡å‹è§†å›¾å˜æ¢çŸ©é˜µã€‚
+    * @param particleSystem   @~english The pointer of particle system. @~chinese ç²’å­ç³»ç»Ÿçš„æŒ‡é’ˆã€‚
     */
     virtual void render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem) = 0;
 
     /**
     * @~english Perform activities when a Renderer is started(internal method).
-    * @~chinese äÖÈ¾Æ÷¿ªÊ¼Ê±Ö´ĞĞµÄ»î¶¯(ÄÚ²¿·½·¨)
+    * @~chinese æ¸²æŸ“å™¨å¼€å§‹æ—¶æ‰§è¡Œçš„æ´»åŠ¨(å†…éƒ¨æ–¹æ³•)
     */
     virtual void notifyStart();
 
     /**
     * @~english Perform activities when a Renderer is stopped(internal method).
-    * @~chinese äÖÈ¾Æ÷Í£Ö¹Ê±Ö´ĞĞµÄ»î¶¯(ÄÚ²¿·½·¨)
+    * @~chinese æ¸²æŸ“å™¨åœæ­¢æ—¶æ‰§è¡Œçš„æ´»åŠ¨(å†…éƒ¨æ–¹æ³•)
     */
     virtual void notifyStop();
 
     /**
     * @~english Notify that the Particle System is rescaled(internal method).
-    * @~chinese Á£×ÓÏµÍ³±»Ëõ·ÅºóÖ´ĞĞµÄ»Øµ÷(ÄÚ²¿·½·¨)
+    * @~chinese ç²’å­ç³»ç»Ÿè¢«ç¼©æ”¾åæ‰§è¡Œçš„å›è°ƒ(å†…éƒ¨æ–¹æ³•)
     */
     virtual void notifyRescaled(const Vec3& scale);
     
     /**
     * @~english Set the render visible or invisible.
-    * @~chinese ÉèÖÃäÖÈ¾ÊÇ·ñ¿É¼û¡£
-    * @param isVisible @~english Whether the render is visible. @~chinese äÖÈ¾ÊÇ·ñ¿É¼û¡£
+    * @~chinese è®¾ç½®æ¸²æŸ“æ˜¯å¦å¯è§ã€‚
+    * @param isVisible @~english Whether the render is visible. @~chinese æ¸²æŸ“æ˜¯å¦å¯è§ã€‚
     */
     void setVisible(bool isVisible) { _isVisible = isVisible; }
     
 
     /**
     * @~english Checks the render visible.
-    * @~chinese ¼ì²éäÖÈ¾ÊÇ·ñ¿É¼û¡£
-    * @return @~english Whether the render is visible. @~chinese äÖÈ¾ÊÇ·ñ¿É¼û¡£
+    * @~chinese æ£€æŸ¥æ¸²æŸ“æ˜¯å¦å¯è§ã€‚
+    * @return @~english Whether the render is visible. @~chinese æ¸²æŸ“æ˜¯å¦å¯è§ã€‚
     */
     bool isVisible() const { return _isVisible; }
 
     /**
     * @~english Set the depth test enable or disable, default is enabled.
-    * @~chinese ÉèÖÃÉî¶È²âÊÔ¿ªÆô£¬Ä¬ÈÏ¿ªÆô¡£
-    * @param isDepthTest @~english Whether the depth test enabled. @~chinese Éî¶È²âÊÔÊÇ·ñ¿ªÆô¡£
+    * @~chinese è®¾ç½®æ·±åº¦æµ‹è¯•å¼€å¯ï¼Œé»˜è®¤å¼€å¯ã€‚
+    * @param isDepthTest @~english Whether the depth test enabled. @~chinese æ·±åº¦æµ‹è¯•æ˜¯å¦å¼€å¯ã€‚
     * @see glEnable(GL_DEPTH_TEST) and glDisable(GL_DEPTH_TEST);
     */
     void setDepthTest(bool isDepthTest);
 
     /**
     * @~english Set the depth write enable or disable, default is disable.
-    * @~chinese ÉèÖÃÉî¶ÈĞ´¿ªÆô£¬Ä¬ÈÏ¹Ø±Õ¡£
-    * @param isDepthWrite @~english Whether the depth write enabled. @~chinese Éî¶ÈĞ´ÊÇ·ñ¿ªÆô¡£
+    * @~chinese è®¾ç½®æ·±åº¦å†™å¼€å¯ï¼Œé»˜è®¤å…³é—­ã€‚
+    * @param isDepthWrite @~english Whether the depth write enabled. @~chinese æ·±åº¦å†™æ˜¯å¦å¼€å¯ã€‚
     */
     void setDepthWrite(bool isDepthWrite);
 
     /**
     * @~english Set the blend function.
-    * @~chinese ÉèÖÃÍ¸Ã÷µÄ»ìºÏ·½³Ì¡£
-    * @param blendFunc   @~english The parameter of blend. @~chinese »ìºÏ²ÎÊı¡£
+    * @~chinese è®¾ç½®é€æ˜çš„æ··åˆæ–¹ç¨‹ã€‚
+    * @param blendFunc   @~english The parameter of blend. @~chinese æ··åˆå‚æ•°ã€‚
     * @see glBlendFunc(GLenum sfactor,GLenum dfactor);
     */
     void setBlendFunc(const BlendFunc& blendFunc);
 
     /**
     * @~english Copy one renderer's attributes to another's(internal method).
-    * @~chinese ¿½±´Ò»¸öäÖÈ¾Æ÷µÄÊôĞÔµ½ÁíÍâÒ»¸ö(ÄÚ²¿·½·¨)¡£
-    * @param render @~english the renderer which need be copied. @~chinese ¿½±´ÊôĞÔµÄäÖÈ¾Æ÷¡£
+    * @~chinese æ‹·è´ä¸€ä¸ªæ¸²æŸ“å™¨çš„å±æ€§åˆ°å¦å¤–ä¸€ä¸ª(å†…éƒ¨æ–¹æ³•)ã€‚
+    * @param render @~english the renderer which need be copied. @~chinese æ‹·è´å±æ€§çš„æ¸²æŸ“å™¨ã€‚
     */
     void copyAttributesTo (Particle3DRender *render);
 
@@ -152,7 +152,7 @@ protected:
 
 /** @class Particle3DQuadRender
 *@brief @~english Particle3DQuadRender inherit from Particle3DRender, implement billboard rendering.
- @~chinese Particle3DQuadRender ¼Ì³Ğ×ÔParticle3DRender£¬ÊµÏÖÁ£×ÓµÄbillboardäÖÈ¾¡£
+ @~chinese Particle3DQuadRender ç»§æ‰¿è‡ªParticle3DRenderï¼Œå®ç°ç²’å­çš„billboardæ¸²æŸ“ã€‚
 */
 class CC_DLL Particle3DQuadRender : public Particle3DRender
 {
@@ -160,14 +160,14 @@ public:
 
     /**
     * @~english Create a new billboard renderer.
-    * @~chinese ´´½¨Ò»¸öĞÂµÄ¹«¸æ°åäÖÈ¾Æ÷¡£
-    * @param texFile @~english The texture of particles. @~chinese Á£×ÓÊ¹ÓÃµÄÎÆÀí¡£
+    * @~chinese åˆ›å»ºä¸€ä¸ªæ–°çš„å…¬å‘Šæ¿æ¸²æŸ“å™¨ã€‚
+    * @param texFile @~english The texture of particles. @~chinese ç²’å­ä½¿ç”¨çš„çº¹ç†ã€‚
     */
     static Particle3DQuadRender* create(const std::string& texFile = "");
     
     /**
     * @~english Overwrite function.
-    * @~chinese ÖØĞ´µÄº¯Êı¡£
+    * @~chinese é‡å†™çš„å‡½æ•°ã€‚
     * @see Particle3DRender render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem);
     */
     virtual void render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem) override;
@@ -200,7 +200,7 @@ protected:
 
 /** @class Particle3DModelRender
 *@brief @~english Particle3DModelRender inherit from Particle3DRender, implement model rendering.
-@~chinese Particle3DModelRender ¼Ì³Ğ×ÔParticle3DRender£¬ÊµÏÖÁ£×ÓµÄÄ£ĞÍäÖÈ¾¡£
+@~chinese Particle3DModelRender ç»§æ‰¿è‡ªParticle3DRenderï¼Œå®ç°ç²’å­çš„æ¨¡å‹æ¸²æŸ“ã€‚
 */
 class CC_DLL Particle3DModelRender : public Particle3DRender
 {
@@ -208,15 +208,15 @@ public:
 
     /**
     * @~english Create a new model renderer.
-    * @~chinese ´´½¨Ò»¸öĞÂµÄÄ£ĞÍäÖÈ¾Æ÷¡£
-    * @param modelFile @~english The model of particles. @~chinese Á£×ÓÊ¹ÓÃµÄÄ£ĞÍ¡£
-    * @param texFile @~english The texture of particles. @~chinese Á£×ÓÊ¹ÓÃµÄÎÆÀí¡£
+    * @~chinese åˆ›å»ºä¸€ä¸ªæ–°çš„æ¨¡å‹æ¸²æŸ“å™¨ã€‚
+    * @param modelFile @~english The model of particles. @~chinese ç²’å­ä½¿ç”¨çš„æ¨¡å‹ã€‚
+    * @param texFile @~english The texture of particles. @~chinese ç²’å­ä½¿ç”¨çš„çº¹ç†ã€‚
     */
     static Particle3DModelRender* create(const std::string& modelFile, const std::string &texFile = "");
 
     /**
     * @~english Overwrite function.
-    * @~chinese ÖØĞ´µÄº¯Êı¡£
+    * @~chinese é‡å†™çš„å‡½æ•°ã€‚
     * @see Particle3DRender render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem);
     */
     virtual void render(Renderer* renderer, const Mat4 &transform, ParticleSystem3D* particleSystem) override;
