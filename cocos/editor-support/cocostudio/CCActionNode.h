@@ -152,6 +152,7 @@ public:
 
 	/*init properties with a json dictionary*/
 	virtual void initWithDictionary(const rapidjson::Value& dic, cocos2d::Ref* root);
+    /*init properties with binary file*/
     virtual void initWithBinary(CocoLoader* cocoLoader, stExpCocoNode*	pCocoNode, Ref* root);
 
 	/**

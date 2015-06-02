@@ -44,28 +44,86 @@ namespace cocostudio
     public:
         WidgetReader();
         virtual ~WidgetReader();
-        
+
+        /**
+        * Gets the static instance of WidgetReader.
+        */
         static WidgetReader* getInstance();
+        /**
+        * Destroy WidgetReader instance.
+        */
+        static void destroyInstance();
         /** @deprecated Use method destroyInstance() instead */
         CC_DEPRECATED_ATTRIBUTE static void purge();
-        static void destroyInstance();
-        
+
+        /**
+        * Set properties to widget from a json description object
+        *
+        * @parame widget    widget to be config
+        *
+        * @parame options   json object contain the description of properties 
+        */
         virtual void setPropsFromJsonDictionary(cocos2d::ui::Widget* widget,
                                                 const rapidjson::Value& options);
-        
+
+        /**
+        * Set properties to widget from a json description object
+        *
+        * @parame widget    widget to be config
+        *
+        * @parame options   json object contain the description of properties
+        */
         virtual void setColorPropsFromJsonDictionary(cocos2d::ui::Widget* widget,
                                                      const rapidjson::Value& options);
-        
-        virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader,  stExpCocoNode*	pCocoNode);        
+
+        /**
+        * Set properties to widget from a binary description data
+        *
+        * @parame widget      widget to be config
+        *
+        * @parame cocoLoader  property loader
+        *
+        * @parame pCocoNode   child nodes
+        */
+        virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader, stExpCocoNode*	pCocoNode);
         
         /* flatbuffers refactoring */
+        /**
+        * Serialize flat buffers with XML object.
+        *
+        * @parame objectData   XML description object
+        *
+        * @parame builder      flat buffer builder
+        *
+        * @return flat buffer data structure
+        */
         flatbuffers::Offset<flatbuffers::Table> createOptionsWithFlatBuffers(const tinyxml2::XMLElement* objectData,
                                                                              flatbuffers::FlatBufferBuilder* builder);
+        /**
+        * Set properties to node from a flat buffer description table
+        *
+        * @parame node          node to be config
+        *
+        * @parame widgetOptions flat buffer table contain the description of properties 
+        */
         void setPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* widgetOptions);
+        /**
+        * Set properties of layout from a flat buffer description table
+        *
+        * @parame node          node to be config
+        *
+        * @parame widgetOptions flat buffer table contain the description of properties
+        */
         void setLayoutComponentPropsWithFlatBuffers(cocos2d::Node* node, const flatbuffers::Table* widgetOptions);
+        /**
+        * Create node with a flat buffer table contains description of properties.
+        *
+        * @parame widgetOptions flat buffer table contain the description of properties
+        *
+        * @return created node
+        */
         cocos2d::Node* createNodeWithFlatBuffers(const flatbuffers::Table* widgetOptions);
-        /**/
-        
+
     protected:
         std::string getResourcePath(const rapidjson::Value& dict,
                                     const std::string& key,

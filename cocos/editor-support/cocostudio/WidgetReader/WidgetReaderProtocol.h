@@ -51,8 +51,25 @@ namespace cocostudio
     {
     public:
         virtual ~WidgetReaderProtocol() {};
+
+        /**
+        * Set properties to widget from a json description object
+        *
+        * @parame widget    widget to be config
+        *
+        * @parame options   json object contain the description of properties
+        */
         virtual void setPropsFromJsonDictionary(cocos2d::ui::Widget* widget, const rapidjson::Value& options) = 0;
-        virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader,  stExpCocoNode*	pCocoNode) = 0;        
+        /**
+        * Set properties to widget from a binary description data
+        *
+        * @parame widget      widget to be config
+        *
+        * @parame cocoLoader  property loader
+        *
+        * @parame pCocoNode   child nodes
+        */
+        virtual void setPropsFromBinary(cocos2d::ui::Widget* widget, CocoLoader* cocoLoader, stExpCocoNode*	pCocoNode) = 0;
     };
 }
 

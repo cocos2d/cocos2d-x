@@ -40,26 +40,206 @@ class CC_STUDIO_DLL DictionaryHelper
 public:
     DictionaryHelper();
     ~DictionaryHelper();
+
+    /**
+    * Gets the static instance of DictionaryHelper.
+    */
     static DictionaryHelper* getInstance();
-	static void destroyInstance();
+    /**
+    * Destroy DictionaryHelper instance.
+    */
+    static void destroyInstance();
     
-	const rapidjson::Value& getSubDictionary_json(const rapidjson::Value &root, const char* key);
+    /**
+    * Get a child json item from the root node.
+    *
+    * @parame root   root node of json
+    *
+    * @parame key    key of child json item
+    *
+    * @return child json item
+    */
+    const rapidjson::Value& getSubDictionary_json(const rapidjson::Value &root, const char* key);
+    /**
+    * Get a child json item from the root node.
+    *
+    * @parame root   root node of json
+    *
+    * @parame key    key of child json item
+    *
+    * @parame idx    index of child json item in root[key]
+    *
+    * @return child json item
+    */
     const rapidjson::Value& getSubDictionary_json(const rapidjson::Value &root, const char* key, int idx);
+    /**
+    * Get a child json item from the root node.
+    *
+    * @parame root   root node of json
+    *
+    * @parame idx    index of child json item
+    *
+    * @return child json item
+    */
     const rapidjson::Value& getSubDictionary_json(const rapidjson::Value &root, int idx);
     
-	int   getIntValue_json(const rapidjson::Value& root, const char* key, int def = 0);
-	float getFloatValue_json(const rapidjson::Value& root,const char* key, float def = 0.0f);
-    bool  getBooleanValue_json(const rapidjson::Value& root,const char* key, bool def = false);
-    const char* getStringValue_json(const rapidjson::Value& root,const char* key, const char *def = NULL);
-    int   getArrayCount_json(const rapidjson::Value& root,const char* key, int def = 0);
-	
-    int   getIntValueFromArray_json(const rapidjson::Value& root,const char* arrayKey,int idx, int def = 0);
-	float getFloatValueFromArray_json(const rapidjson::Value& root,const char* arrayKey,int idx, float def = 0.0f);
-	bool  getBoolValueFromArray_json(const rapidjson::Value& root,const char* arrayKey,int idx, bool def = false);
-	const char* getStringValueFromArray_json(const rapidjson::Value& root,const char* arrayKey,int idx, const char *def = NULL);
-	const rapidjson::Value &getDictionaryFromArray_json(const rapidjson::Value &root, const char* key,int idx);
-	bool checkObjectExist_json(const rapidjson::Value &root);
+    /**
+    * Get the integer value of a child json item from the root node.
+    *
+    * @parame root   root node of json
+    *
+    * @parame key    key of child json item
+    *
+    * @parame def    default value to be returned if child not found
+    *
+    * @return integer value of item
+    */
+    int   getIntValue_json(const rapidjson::Value& root, const char* key, int def = 0);
+    /**
+    * Get the float value of a child json item from the root node.
+    *
+    * @parame root   root node of json
+    *
+    * @parame key    key of child json item
+    *
+    * @parame def    default value to be returned if child not found
+    *
+    * @return float value of item
+    */
+    float getFloatValue_json(const rapidjson::Value& root, const char* key, float def = 0.0f);
+    /**
+    * Get the boolean value of a child json item from the root node.
+    *
+    * @parame root   root node of json
+    *
+    * @parame key    key of child json item
+    *
+    * @parame def    default value to be returned if child not found
+    *
+    * @return boolean value of item
+    */
+    bool  getBooleanValue_json(const rapidjson::Value& root, const char* key, bool def = false);
+    /**
+    * Get the string value of a child json item from the root node.
+    *
+    * @parame root   root node of json
+    *
+    * @parame key    key of child json item
+    *
+    * @parame def    default value to be returned if child not found
+    *
+    * @return string value of item
+    */
+    const char* getStringValue_json(const rapidjson::Value& root, const char* key, const char *def = NULL);
+    /**
+    * Get the size of a child json array from the root node.
+    *
+    * @parame root   root node of json
+    *
+    * @parame key    key of child json item
+    *
+    * @parame def    default value to be returned if child not found
+    *
+    * @return size of child json array
+    */
+    int   getArrayCount_json(const rapidjson::Value& root, const char* key, int def = 0);
+
+    /**
+    * Get the integer value at desired index of a child array item from the root node.
+    *
+    * @parame root   root node of json
+    *
+    * @parame key    key of child json item
+    *
+    * @parame idx    index of item in child json
+    *
+    * @parame def    default value to be returned if child not found
+    *
+    * @return integer value of item
+    */
+    int   getIntValueFromArray_json(const rapidjson::Value& root, const char* arrayKey, int idx, int def = 0);
+    /**
+    * Get the float value at desired index of a child array item from the root node.
+    *
+    * @parame root   root node of json
+    *
+    * @parame key    key of child json item
+    *
+    * @parame idx    index of item in child json
+    *
+    * @parame def    default value to be returned if child not found
+    *
+    * @return float value of item
+    */
+    float getFloatValueFromArray_json(const rapidjson::Value& root, const char* arrayKey, int idx, float def = 0.0f);
+    /**
+    * Get the boolean value at desired index of a child array item from the root node.
+    *
+    * @parame root   root node of json
+    *
+    * @parame key    key of child json item
+    *
+    * @parame idx    index of item in child json
+    *
+    * @parame def    default value to be returned if child not found
+    *
+    * @return boolean value of item
+    */
+    bool  getBoolValueFromArray_json(const rapidjson::Value& root, const char* arrayKey, int idx, bool def = false);
+    /**
+    * Get the string value at desired index of a child array item from the root node.
+    *
+    * @parame root   root node of json
+    *
+    * @parame key    key of child json item
+    *
+    * @parame idx    index of item in child json
+    *
+    * @parame def    default value to be returned if child not found
+    *
+    * @return string value of item
+    */
+    const char* getStringValueFromArray_json(const rapidjson::Value& root, const char* arrayKey, int idx, const char *def = NULL);
+    /**
+    * Get the child json item at desired index of a child array item from the root node.
+    *
+    * @parame root   root node of json
+    *
+    * @parame key    key of child json item
+    *
+    * @parame idx    index of item in child json
+    *
+    * @return child json item
+    */
+    const rapidjson::Value &getDictionaryFromArray_json(const rapidjson::Value &root, const char* key, int idx);
+
+    /**
+    * Check whether a json item is valid or not.
+    *
+    * @parame root   root node of json
+    *
+    * @return if the item is valid return true
+    */
+    bool checkObjectExist_json(const rapidjson::Value &root);
+    /**
+    * Check whether a json item is valid or not.
+    *
+    * @parame root   root node of json
+    *
+    * @parame key    key of child json item
+    *
+    * @return if the item is valid return true
+    */
     bool checkObjectExist_json(const rapidjson::Value &root, const char* key);
+    /**
+    * Check whether a json item is valid or not.
+    *
+    * @parame root   root node of json
+    *
+    * @parame idx    index of child item
+    *
+    * @return if the item is valid return true
+    */
     bool checkObjectExist_json(const rapidjson::Value &root, int index);
 };
 

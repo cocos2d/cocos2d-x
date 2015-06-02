@@ -58,19 +58,50 @@ public:
     CC_DEPRECATED_ATTRIBUTE static GUIReader* shareReader() { return GUIReader::getInstance(); };
     CC_DEPRECATED_ATTRIBUTE static void purgeGUIReader() { GUIReader::destroyInstance(); };
     
-    static GUIReader* getInstance();
-    static void destroyInstance();
-    
-    cocos2d::ui::Widget* widgetFromJsonFile(const char* fileName);
-    
-    cocos2d::ui::Widget* widgetFromBinaryFile(const char* fileName);
-    
-    int getVersionInteger(const char* str);
     /**
+    * Gets the static instance of GUIReader.
+    */
+    static GUIReader* getInstance();
+
+    /**
+    * Destroy GUIReader instance.
+    */
+    static void destroyInstance();
+
+    /**
+    * Create a UI widget from file contain Json description data.
+    *
+    * @parame fileName   full path of Json description file
+    *
+    * @return UI widget node
+    */
+    cocos2d::ui::Widget* widgetFromJsonFile(const char* fileName);
+
+    /**
+    * Create a UI widget from file contain binary description data.
+    *
+    * @parame fileName   full path of binary description file
+    *
+    * @return UI widget node
+    */
+    cocos2d::ui::Widget* widgetFromBinaryFile(const char* fileName);
+
+    /**
+    * Get int value of a version string
+    *
+    * @parame str   string value of version
+    *
+    * @return integer value of version
+    */
+    int getVersionInteger(const char* str);
+
+    /**
+     *  Store design screen size
      *  @js NA
      */
     void storeFileDesignSize(const char* fileName, const cocos2d::Size &size);
     /**
+     *  Get design screen size
      *  @js NA
      */
     const cocos2d::Size getFileDesignSize(const char* fileName) const;
@@ -78,11 +109,17 @@ public:
     void setFilePath(const std::string& strFilePath) { m_strFilePath = strFilePath; }
     const std::string& getFilePath() const { return m_strFilePath; }
 
+    /**
+    *  Register type to ObjectFactory
+    */
     void registerTypeAndCallBack(const std::string& classType,
                                  cocos2d::ObjectFactory::Instance ins,
                                  Ref* object,
                                  SEL_ParseEvent callBack);
 
+    /**
+    *  Register type to ObjectFactory
+    */
     void registerTypeAndCallBack(const std::string& classType,
                                  cocos2d::ObjectFactory::InstanceFunc ins,
                                  Ref* object,
