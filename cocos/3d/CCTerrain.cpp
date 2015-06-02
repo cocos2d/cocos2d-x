@@ -100,6 +100,13 @@ void Terrain::draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, 
 
 void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
 {
+    auto modelMatrix = getNodeToWorldTransform();
+    if(memcmp(&modelMatrix,&_terrainModelMatrix,sizeof(Mat4))!=0)
+    {
+        _terrainModelMatrix = modelMatrix;
+        _quadRoot->preCalculateAABB(_terrainModelMatrix);
+    }
+    
     auto glProgram = getGLProgram();
     glProgram->use();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
@@ -153,6 +160,8 @@ void Terrain::onDraw(const Mat4 &transform, uint32_t flags)
     if(_isCameraViewChanged )
     {
         auto camPos = camera->getPosition3D();
+        auto camModelMat = camera->getNodeToWorldTransform();
+        camModelMat.transformPoint(&camPos);
         //set lod
         setChunksLOD(camPos);
     }

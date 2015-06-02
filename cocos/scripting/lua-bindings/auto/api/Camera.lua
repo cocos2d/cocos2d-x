@@ -5,21 +5,26 @@
 -- @parent_module cc
 
 --------------------------------
--- Set the scene,this method shall not be invoke manually
--- @function [parent=#Camera] setScene 
+-- get depth, camera with larger depth is drawn on top of camera with smaller depth, the depth of camera with CameraFlag::DEFAULT is 0, user defined camera is -1 by default
+-- @function [parent=#Camera] getDepth 
 -- @param self
--- @param #cc.Scene scene
--- @return Camera#Camera self (return value: cc.Camera)
+-- @return int#int ret (return value: int)
         
 --------------------------------
--- 
--- @function [parent=#Camera] initPerspective 
+-- get view projection matrix
+-- @function [parent=#Camera] getViewProjectionMatrix 
 -- @param self
--- @param #float fieldOfView
--- @param #float aspectRatio
--- @param #float nearPlane
--- @param #float farPlane
--- @return bool#bool ret (return value: bool)
+-- @return mat4_table#mat4_table ret (return value: mat4_table)
+        
+--------------------------------
+-- Make Camera looks at target<br>
+-- param target The target camera is point at<br>
+-- param up The up vector, usually it's Y axis
+-- @function [parent=#Camera] lookAt 
+-- @param self
+-- @param #vec3_table target
+-- @param #vec3_table up
+-- @return Camera#Camera self (return value: cc.Camera)
         
 --------------------------------
 -- Gets the camera's projection matrix.<br>
@@ -29,17 +34,31 @@
 -- @return mat4_table#mat4_table ret (return value: mat4_table)
         
 --------------------------------
--- get view projection matrix
--- @function [parent=#Camera] getViewProjectionMatrix 
+-- Get object depth towards camera
+-- @function [parent=#Camera] getDepthInView 
 -- @param self
--- @return mat4_table#mat4_table ret (return value: mat4_table)
+-- @param #mat4_table transform
+-- @return float#float ret (return value: float)
         
 --------------------------------
--- Gets the camera's view matrix.<br>
--- return The camera view matrix.
--- @function [parent=#Camera] getViewMatrix 
+-- 
+-- @function [parent=#Camera] clearBackground 
 -- @param self
--- @return mat4_table#mat4_table ret (return value: mat4_table)
+-- @param #float depth
+-- @return Camera#Camera self (return value: cc.Camera)
+        
+--------------------------------
+-- set depth, camera with larger depth is drawn on top of camera with smaller depth, the depth of camera with CameraFlag::DEFAULT is 0, user defined camera is -1 by default
+-- @function [parent=#Camera] setDepth 
+-- @param self
+-- @param #int depth
+-- @return Camera#Camera self (return value: cc.Camera)
+        
+--------------------------------
+--  init camera 
+-- @function [parent=#Camera] initDefault 
+-- @param self
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 -- get & set Camera flag
@@ -55,19 +74,6 @@
 -- @return int#int ret (return value: int)
         
 --------------------------------
---  init camera 
--- @function [parent=#Camera] initDefault 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- 
--- @function [parent=#Camera] project 
--- @param self
--- @param #vec3_table src
--- @return vec2_table#vec2_table ret (return value: vec2_table)
-        
---------------------------------
 -- 
 -- @function [parent=#Camera] initOrthographic 
 -- @param self
@@ -78,42 +84,11 @@
 -- @return bool#bool ret (return value: bool)
         
 --------------------------------
--- Get object depth towards camera
--- @function [parent=#Camera] getDepthInView 
--- @param self
--- @param #mat4_table transform
--- @return float#float ret (return value: float)
-        
---------------------------------
--- Make Camera looks at target<br>
--- param target The target camera is point at<br>
--- param up The up vector, usually it's Y axis
--- @function [parent=#Camera] lookAt 
--- @param self
--- @param #vec3_table target
--- @param #vec3_table up
--- @return Camera#Camera self (return value: cc.Camera)
-        
---------------------------------
 -- Is this aabb visible in frustum
 -- @function [parent=#Camera] isVisibleInFrustum 
 -- @param self
 -- @param #cc.AABB aabb
 -- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- 
--- @function [parent=#Camera] setCameraFlag 
--- @param self
--- @param #int flag
--- @return Camera#Camera self (return value: cc.Camera)
-        
---------------------------------
--- 
--- @function [parent=#Camera] clearBackground 
--- @param self
--- @param #float depth
--- @return Camera#Camera self (return value: cc.Camera)
         
 --------------------------------
 -- set additional matrix for the projection matrix, it multiplys mat to projection matrix when called, used by WP8
@@ -123,17 +98,61 @@
 -- @return Camera#Camera self (return value: cc.Camera)
         
 --------------------------------
--- get depth, camera with larger depth is drawn on top of camera with smaller depth, the depth of camera with CameraFlag::DEFAULT is 0, user defined camera is -1 by default
--- @function [parent=#Camera] getDepth 
+-- Set the scene,this method shall not be invoke manually
+-- @function [parent=#Camera] setScene 
 -- @param self
--- @return int#int ret (return value: int)
+-- @param #cc.Scene scene
+-- @return Camera#Camera self (return value: cc.Camera)
         
 --------------------------------
--- set depth, camera with larger depth is drawn on top of camera with smaller depth, the depth of camera with CameraFlag::DEFAULT is 0, user defined camera is -1 by default
--- @function [parent=#Camera] setDepth 
+-- 
+-- @function [parent=#Camera] projectGL 
 -- @param self
--- @param #int depth
+-- @param #vec3_table src
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
+        
+--------------------------------
+-- Gets the camera's view matrix.<br>
+-- return The camera view matrix.
+-- @function [parent=#Camera] getViewMatrix 
+-- @param self
+-- @return mat4_table#mat4_table ret (return value: mat4_table)
+        
+--------------------------------
+-- Get the frustum's near plane.
+-- @function [parent=#Camera] getNearPlane 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
+-- 
+-- @function [parent=#Camera] project 
+-- @param self
+-- @param #vec3_table src
+-- @return vec2_table#vec2_table ret (return value: vec2_table)
+        
+--------------------------------
+-- 
+-- @function [parent=#Camera] setCameraFlag 
+-- @param self
+-- @param #int flag
 -- @return Camera#Camera self (return value: cc.Camera)
+        
+--------------------------------
+-- Get the frustum's far plane.
+-- @function [parent=#Camera] getFarPlane 
+-- @param self
+-- @return float#float ret (return value: float)
+        
+--------------------------------
+-- 
+-- @function [parent=#Camera] initPerspective 
+-- @param self
+-- @param #float fieldOfView
+-- @param #float aspectRatio
+-- @param #float nearPlane
+-- @param #float farPlane
+-- @return bool#bool ret (return value: bool)
         
 --------------------------------
 --  create default camera, the camera type depends on Director::getProjection, the depth of the default camera is 0 
