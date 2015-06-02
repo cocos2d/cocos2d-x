@@ -418,6 +418,55 @@ ccui.WebView.prototype.setEventListener = function(event, callback){
     }
 };
 
+/**
+ * The VideoPlayer support list of events
+ * @type {{PLAYING: string, PAUSED: string, STOPPED: string, COMPLETED: string}}
+ */
+ccui.VideoPlayer.EventType = {
+    PLAYING: "play",
+    PAUSED: "pause",
+    STOPPED: "stop",
+    COMPLETED: "complete"
+};
+
+ccui.VideoPlayer.prototype._setURL = ccui.VideoPlayer.prototype.setURL;
+ccui.VideoPlayer.prototype.setURL = function (url) {
+    if (url.indexOf("http://") >= 0)
+    {
+        this._setURL(url);
+    }
+    else
+    {
+        this.setFileName(url);
+    }
+};
+
+ccui.VideoPlayer.prototype.setEventListener = function(event, callback){
+    if (!this.videoPlayerCallback)
+    {
+        this.videoPlayerCallback = function(sender, eventType){
+            cc.log("videoEventCallback eventType:" + eventType);
+            switch (eventType) {
+                case 0:
+                    this["VideoPlayer_"+ccui.VideoPlayer.EventType.PLAYING] && this["VideoPlayer_"+ccui.VideoPlayer.EventType.PLAYING](sender);
+                    break;
+                case 1:
+                    this["VideoPlayer_"+ccui.VideoPlayer.EventType.PAUSED] && this["VideoPlayer_"+ccui.VideoPlayer.EventType.PAUSED](sender);
+                    break;
+                case 2:
+                    this["VideoPlayer_"+ccui.VideoPlayer.EventType.STOPPED] && this["VideoPlayer_"+ccui.VideoPlayer.EventType.STOPPED](sender);
+                    break;
+                case 3:
+                    this["VideoPlayer_"+ccui.VideoPlayer.EventType.COMPLETED] && this["VideoPlayer_"+ccui.VideoPlayer.EventType.COMPLETED](sender);
+                    break;
+                default:
+                    break;
+            }
+        };
+        this.addEventListener(this.videoPlayerCallback);
+    }
+    this["VideoPlayer_"+event] = callback;
+};
 /*
  * UIWidget temporary solution to addChild
  * addNode and addChild function should be merged in ccui.Widget
