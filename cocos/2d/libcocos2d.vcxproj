@@ -432,6 +432,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClCompile Include="..\base\CCEventTouch.cpp" />
     <ClCompile Include="..\base\ccFPSImages.c" />
     <ClCompile Include="..\base\CCIMEDispatcher.cpp" />
+    <ClCompile Include="..\base\CCNinePatchImageParser.cpp" />
     <ClCompile Include="..\base\CCNS.cpp" />
     <ClCompile Include="..\base\CCProfiling.cpp" />
     <ClCompile Include="..\base\CCProperties.cpp" />
@@ -995,6 +996,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\external\chipmunk\prebuilt\win32\release-lib\*.*
     <ClInclude Include="..\base\CCIMEDispatcher.h" />
     <ClInclude Include="..\base\ccMacros.h" />
     <ClInclude Include="..\base\CCMap.h" />
+    <ClInclude Include="..\base\CCNinePatchImageParser.h" />
     <ClInclude Include="..\base\CCNS.h" />
     <ClInclude Include="..\base\CCProfiling.h" />
     <ClInclude Include="..\base\CCProperties.h" />

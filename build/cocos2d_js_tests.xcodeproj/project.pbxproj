@@ -596,7 +596,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\ncocos_dir=${SRCROOT}/../tests/js-tests/res\nif [ -d \"${cocos_dir}\" ]; then\nrm -rv \"${cocos_dir}\"\nmkdir \"${cocos_dir}\"\nelse\nmkdir \"${cocos_dir}\"\nfi\n\ncp -r \"${SRCROOT}/../tests/cpp-tests/Resources/\" \"${cocos_dir}\"";
+			shellScript = "#!/bin/bash\ncocos_dir=${SRCROOT}/../tests/js-tests/res\nif [ -d \"${cocos_dir}\" ]; then\nrm -rv \"${cocos_dir}\"\nmkdir \"${cocos_dir}\"\nelse\nmkdir \"${cocos_dir}\"\nfi\n\ncp -r \"${SRCROOT}/../tests/cpp-tests/Resources/\" \"${cocos_dir}\"\ncp -r \"${SRCROOT}/../tests/js-tests/resjs/\" \"${cocos_dir}\"";
 		};
 		EDCA13EE1AEA4E7B00F445CA /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -609,7 +609,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\ncocos_dir=${SRCROOT}/../tests/js-tests/res\nif [ -d \"${cocos_dir}\" ]; then\nrm -rv \"${cocos_dir}\"\nmkdir \"${cocos_dir}\"\nelse\nmkdir \"${cocos_dir}\"\nfi\n\ncp -r \"${SRCROOT}/../tests/cpp-tests/Resources/\" \"${cocos_dir}\"";
+			shellScript = "#!/bin/bash\ncocos_dir=${SRCROOT}/../tests/js-tests/res\nif [ -d \"${cocos_dir}\" ]; then\nrm -rv \"${cocos_dir}\"\nmkdir \"${cocos_dir}\"\nelse\nmkdir \"${cocos_dir}\"\nfi\n\ncp -r \"${SRCROOT}/../tests/cpp-tests/Resources/\" \"${cocos_dir}\"\ncp -r \"${SRCROOT}/../tests/js-tests/resjs/\" \"${cocos_dir}\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -821,7 +821,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/gui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../cocos/scripting/js-bindings/auto $(SRCROOT)/../cocos/scripting/js-bindings/manual";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/gui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../cocos/scripting/js-bindings/auto $(SRCROOT)/../cocos/scripting/js-bindings/manual";
 			};
 			name = Debug;
 		};
@@ -845,7 +845,7 @@
 				HEADER_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/physics $(SRCROOT)/../cocos/math/kazmath $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/gui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../cocos/scripting/js-bindings/auto $(SRCROOT)/../cocos/scripting/js-bindings/manual";
+				USER_HEADER_SEARCH_PATHS = "$(SRCROOT)/.. $(SRCROOT)/../cocos $(SRCROOT)/../cocos/base $(SRCROOT)/../cocos/2d $(SRCROOT)/../cocos/gui $(SRCROOT)/../cocos/network $(SRCROOT)/../cocos/audio/include $(SRCROOT)/../cocos/editor-support $(SRCROOT)/../extensions $(SRCROOT)/../external $(SRCROOT)/../external/chipmunk/include/chipmunk $(SRCROOT)/../cocos/scripting/js-bindings/auto $(SRCROOT)/../cocos/scripting/js-bindings/manual";
 			};
 			name = Release;
 		};

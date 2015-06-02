@@ -142,7 +142,9 @@ def main():
                     'cocos2dx_spine.ini' : ('cocos2dx_spine', 'jsb_cocos2dx_spine_auto'), \
                     'cocos2dx_3d.ini' : ('cocos2dx_3d', 'jsb_cocos2dx_3d_auto'), \
                     'cocos2dx_3d_ext.ini' : ('cocos2dx_3d_extension', 'jsb_cocos2dx_3d_extension_auto'), \
-                    'cocos2dx_experimental.ini' : ('cocos2dx_experimental', 'jsb_cocos2dx_experimental')
+                    'cocos2dx_experimental_webView.ini' : ('cocos2dx_experimental_webView', 'jsb_cocos2dx_experimental_webView_auto'), \
+                    'cocos2dx_experimental.ini' : ('cocos2dx_experimental', 'jsb_cocos2dx_experimental'), \
+                    'cocos2dx_physics3d.ini' : ('cocos2dx_physics3d', 'jsb_cocos2dx_physics3d_auto')
                     }
         target = 'spidermonkey'
         generator_py = '%s/generator.py' % cxx_generator_root
@@ -153,9 +155,9 @@ def main():
             command = '%s %s %s -s %s -t %s -o %s -n %s' % (python_bin, generator_py, cfg, args[0], target, output_dir, args[1])
             _run_cmd(command)
 
-        if platform == 'win32':
-            with _pushd(output_dir):
-                _run_cmd('dos2unix *')
+        # if platform == 'win32':
+        #     with _pushd(output_dir):
+        #         _run_cmd('dos2unix *')
 
 
         custom_cmd_args = {}
@@ -167,9 +169,9 @@ def main():
                 print 'Generating bindings for %s...' % (key[:-4])
                 command = '%s %s %s -s %s -t %s -o %s -n %s' % (python_bin, generator_py, cfg, args[0], target, output_dir, args[1])
                 _run_cmd(command)
-            if platform == 'win32':
-                with _pushd(output_dir):
-                    _run_cmd('dos2unix *')
+            # if platform == 'win32':
+            #     with _pushd(output_dir):
+            #         _run_cmd('dos2unix *')
 
         print '----------------------------------------'
         print 'Generating javascript bindings succeeds.'

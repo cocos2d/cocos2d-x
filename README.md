@@ -186,7 +186,7 @@ $ bin/lua-empty-test/lua-empty-test
 
 * For Windows
 
-Open the `cocos2d-x/build/cocos2d-win32.vc2013.sln`
+Open the `cocos2d-x/build/cocos2d-win32.sln`
 
 * For Windows 8.1 Universal Apps (Phone and Store)
 

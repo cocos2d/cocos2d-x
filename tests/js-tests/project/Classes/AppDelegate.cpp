@@ -10,6 +10,8 @@
 #include "jsb_cocos2dx_3d_auto.hpp"
 #include "jsb_cocos2dx_3d_extension_auto.hpp"
 #include "jsb_cocos2dx_experimental.hpp"
+#include "jsb_cocos2dx_physics3d_auto.hpp"
+#include "physics3d/jsb_cocos2dx_physics3d_manual.h"
 #include "experimental/jsb_cocos2dx_experimental_manual.h"
 #include "3d/jsb_cocos2dx_3d_manual.h"
 #include "extension/jsb_cocos2dx_extension_manual.h"
@@ -35,8 +37,11 @@
 #include "platform/ios/JavaScriptObjCBridge.h"
 #endif
 
-#if(CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
 #include "js_Effect3D_bindings.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#include "jsb_cocos2dx_experimental_webView_auto.hpp"
+#include "experimental/jsb_cocos2dx_experimental_webView_manual.h"
 #endif
 
 USING_NS_CC;
@@ -65,7 +70,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-#if(CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
+#if(CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
         glview = cocos2d::GLViewImpl::create("js-tests");
 #else
         glview = cocos2d::GLViewImpl::createWithRect("js-tests", Rect(0,0,900,640));
@@ -109,6 +114,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     sc->addRegisterCallback(register_all_cocos2dx_experimental);
     sc->addRegisterCallback(register_all_cocos2dx_experimental_manual);
+
+    sc->addRegisterCallback(register_all_cocos2dx_physics3d);
+    sc->addRegisterCallback(register_all_cocos2dx_physics3d_manual);
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     sc->addRegisterCallback(JavascriptJavaBridge::_js_register);
@@ -117,8 +125,11 @@ bool AppDelegate::applicationDidFinishLaunching()
 #endif
 
     sc->addRegisterCallback(register_DrawNode3D_bindings);
-#if(CC_TARGET_PLATFORM != CC_PLATFORM_WP8)
     sc->addRegisterCallback(register_Effect3D_bindings);
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    sc->addRegisterCallback(register_all_cocos2dx_experimental_webView);
+    sc->addRegisterCallback(register_all_cocos2dx_experimental_webView_manual);
 #endif
 
     sc->start();

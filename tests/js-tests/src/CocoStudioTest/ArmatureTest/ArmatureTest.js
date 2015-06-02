@@ -558,9 +558,9 @@ var TestParticleDisplay = ArmatureTestLayer.extend({
         this.armature.getAnimation().setSpeedScale(0.5);
         this.addChild(this.armature);
 
-        var p1 = new cc.ParticleSystem("res/Particles/SmallSun.plist");
+        var p1 = new cc.ParticleSystem("Particles/SmallSun.plist");
         p1.setTotalParticles(30);
-        var p2 = new cc.ParticleSystem("res/Particles/SmallSun.plist");
+        var p2 = new cc.ParticleSystem("Particles/SmallSun.plist");
         p2.setTotalParticles(30);
         var bone = new ccs.Bone("p1");
         bone.addDisplay(p1, 0);

@@ -28,7 +28,7 @@
 var UITextAtlasEditorTest = UIBaseLayer.extend({
     ctor: function () {
         this._super();
-        var root = this._parseUIFile("res/cocosui/CCS/LabelAtlas/labelatlas_1.json");
+        var root = this._parseUIFile("ccs-res/cocosui/UIEditorTest/UILabelAtlas/labelatlas_1.json");
 
         this._mainNode.addChild(root);
 

@@ -181,6 +181,7 @@ bool jsval_to_ccvaluevector(JSContext* cx, JS::HandleValue v, cocos2d::ValueVect
 bool jsval_to_ssize( JSContext *cx, JS::HandleValue vp, ssize_t* ret);
 bool jsval_to_std_vector_string( JSContext *cx, JS::HandleValue vp, std::vector<std::string>* ret);
 bool jsval_to_std_vector_int( JSContext *cx, JS::HandleValue vp, std::vector<int>* ret);
+bool jsval_to_std_vector_float( JSContext *cx, JS::HandleValue vp, std::vector<float>* ret);
 bool jsval_to_matrix(JSContext *cx, JS::HandleValue vp, cocos2d::Mat4* ret);
 bool jsval_to_vector2(JSContext *cx, JS::HandleValue vp, cocos2d::Vec2* ret);
 bool jsval_to_vector3(JSContext *cx, JS::HandleValue vp, cocos2d::Vec3* ret);
@@ -327,6 +328,7 @@ jsval ccvaluevector_to_jsval(JSContext* cx, const cocos2d::ValueVector& v);
 jsval ssize_to_jsval(JSContext *cx, ssize_t v);
 jsval std_vector_string_to_jsval( JSContext *cx, const std::vector<std::string>& v);
 jsval std_vector_int_to_jsval( JSContext *cx, const std::vector<int>& v);
+jsval std_vector_float_to_jsval( JSContext *cx, const std::vector<float>& v);
 jsval matrix_to_jsval(JSContext *cx, const cocos2d::Mat4& v);
 jsval vector2_to_jsval(JSContext *cx, const cocos2d::Vec2& v);
 jsval vector3_to_jsval(JSContext *cx, const cocos2d::Vec3& v);

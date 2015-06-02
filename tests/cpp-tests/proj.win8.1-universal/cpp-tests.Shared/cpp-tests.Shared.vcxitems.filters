@@ -787,6 +787,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\Physics3DTest\Physics3DTest.cpp">
       <Filter>Classes\Physics3DTest</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\NewAudioEngineTest\NewAudioEngineTest.cpp">
+      <Filter>Classes\NewAudioEngineTest</Filter>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\Scene3DTest\Scene3DTest.cpp">
       <Filter>Classes\Scene3DTest</Filter>
     </ClCompile>
@@ -1748,6 +1751,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\Physics3DTest\Physics3DTest.h">
       <Filter>Classes\Physics3DTest</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\NewAudioEngineTest\NewAudioEngineTest.h">
+      <Filter>Classes\NewAudioEngineTest</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\Scene3DTest\Scene3DTest.h">
       <Filter>Classes\Scene3DTest</Filter>

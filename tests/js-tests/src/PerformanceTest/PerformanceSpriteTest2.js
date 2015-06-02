@@ -206,7 +206,7 @@ var PerformanceSpriteTest1 = PerformanceTestBase.extend({
         this.addChild(parent,0,10);
 
         for( var i=0; i<num; i++) {
-            var sprite = new cc.Sprite('res/Images/grossini.png');
+            var sprite = new cc.Sprite('Images/grossini.png');
             parent.addChild( sprite );
 
             var x = Math.random() * winSize.width;
@@ -227,10 +227,10 @@ var PerformanceSpriteTest1 = PerformanceTestBase.extend({
 
         // use the same seed for the tests
         Math.seedrandom('perftest');
-        var parent = new cc.SpriteBatchNode('res/Images/grossini.png',num);
+        var parent = new cc.SpriteBatchNode('Images/grossini.png',num);
         this.addChild(parent,0,10);
         for( var i=0; i<num; i++) {
-            var sprite = new cc.Sprite('res/Images/grossini.png');
+            var sprite = new cc.Sprite('Images/grossini.png');
             parent.addChild( sprite );
 
             var x = Math.random() * winSize.width;

@@ -24,15 +24,18 @@ THE SOFTWARE.
 #ifndef CC_TERRAIN_H
 #define CC_TERRAIN_H
 
+#include <vector>
+
 #include "2d/CCNode.h"
 #include "2d/CCCamera.h"
 #include "renderer/CCTexture2D.h"
 #include "renderer/CCCustomCommand.h"
+#include "renderer/CCRenderState.h"
 #include "3d/CCAABB.h"
 #include "3d/CCRay.h"
-#include <vector>
 #include "base/CCEventListenerCustom.h"
 #include "base/CCEventDispatcher.h"
+
 NS_CC_BEGIN
 
 /**
@@ -81,7 +84,7 @@ NS_CC_BEGIN
     * We can use ray-terrain intersection to pick a point of the terrain;
     * Also we can get an arbitrary point of the terrain's height and normal vector for convenience .
     **/
-class CC_DLL Terrain :public Node
+class CC_DLL Terrain : public Node
 {
 public:
 
@@ -433,6 +436,7 @@ protected:
     ChunkIndices insertIndicesLOD(int neighborLod[4], int selfLod, GLushort * indices, int size);
 
     ChunkIndices insertIndicesLODSkirt(int selfLod, GLushort * indices, int size);
+
 protected:
     std::vector <ChunkLODIndices> _chunkLodIndicesSet;
     std::vector<ChunkLODIndicesSkirt> _chunkLodIndicesSkirtSet;
@@ -469,6 +473,9 @@ protected:
     GLint _alphaMapLocation;
     GLint _alphaIsHasAlphaMapLocation;
     GLint _detailMapSizeLocation[4];
+
+    RenderState::StateBlock* _stateBlock;
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     EventListenerCustom* _backToForegroundListener;
 #endif

@@ -351,7 +351,7 @@ public:
     void calulateRotationOffset(void);
 
     virtual PUParticleSystem3D* clone();
-    virtual void copyAttributesTo (PUParticleSystem3D* system);
+    virtual void copyAttributesTo(PUParticleSystem3D* system);
 
 CC_CONSTRUCTOR_ACCESS:
     PUParticleSystem3D();

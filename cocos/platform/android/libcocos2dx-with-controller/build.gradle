@@ -26,5 +26,4 @@ android {
 
 dependencies {
     compile fileTree(dir: '../ControllerManualAdapter/libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.1.1'
 }

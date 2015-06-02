@@ -461,7 +461,7 @@ std::string LabelKeyboardEventTest::title() const
 
 std::string LabelKeyboardEventTest::subtitle() const
 {
-    return "Please click keyboard\n(Only available on Desktop and Android)";
+    return "Please click keyboard\n(Only available on Desktop, Android\nand Windows Universal Apps)";
 }
 
 // SpriteAccelerationEventTest

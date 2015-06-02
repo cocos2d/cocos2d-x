@@ -69,6 +69,12 @@ function TerrainSimple:init()
 
     local eventDispatcher = self:getEventDispatcher()
     eventDispatcher:addEventListenerWithSceneGraphPriority(listener, self)
+
+    --add Particle3D for test blend
+    local rootps = cc.PUParticleSystem3D:create("Particle3D/scripts/mp_torch.pu")
+    rootps:setCameraMask(cc.CameraFlag.USER1)
+    rootps:startParticleSystem()
+    self:addChild(rootps, 0, 0)
 end
 
 function TerrainSimple:title()
@@ -272,7 +278,6 @@ function TerrainWalkThru:init()
     local terrainData = { _heightMapSrc = "TerrainTest/heightmap16.jpg", _alphaMapSrc = "TerrainTest/alphamap.png" , _detailMaps = {detailMapR, detailMapG, detailMapB, detailMapA}, _detailMapAmount = 4, _mapHeight = 40.0, _mapScale = 2.0 }
 
     self._terrain = cc.Terrain:create(terrainData,cc.Terrain.CrackFixedType.SKIRT)
-    self._terrain:setLODDistance(1000.2, 6.4, 9.6)
     self._terrain:setMaxDetailMapAmount(4)
     self._terrain:setCameraMask(2)
     self._terrain:setDrawWire(false)
@@ -284,6 +289,19 @@ function TerrainWalkThru:init()
     self._player:setCameraMask(2)
     self._player:setScale(0.08)
     self._player:setPositionY(self._terrain:getHeight(self._player:getPositionX(), self._player:getPositionZ()) + PLAYER_HEIGHT)
+
+    --add Particle3D for test blend
+    local rootps = cc.PUParticleSystem3D:create("Particle3D/scripts/mp_torch.pu")
+    rootps:setCameraMask(cc.CameraFlag.USER1)
+    rootps:setScale(30.0)
+    rootps:startParticleSystem()
+    self._player:addChild(rootps)
+
+    --add BillBoard for test blend
+    local billboard = cc.BillBoard:create("Images/btn-play-normal.png")
+    billboard:setPosition3D(cc.vec3(0,180,0))
+    billboard:setCameraMask(cc.CameraFlag.USER1)
+    self._player:addChild(billboard)
 
     local animation = cc.Animation3D:create("Sprite3DTest/girl.c3b","Take 001")
     if nil ~= animation then

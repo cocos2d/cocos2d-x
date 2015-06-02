@@ -22,15 +22,13 @@ else:
 # this scripts in your local machine
 remote_build = 1
 
-def download_3rd_library(branch):
+def download_3rd_library():
     #run download-deps.py
     print("prepare to downloading ...")
     os.system('python download-deps.py -r no')
 
 
 def sync_remote_repo():
-    global workspace
-    global branch
     #reset path to workspace root
     os.system("cd " + workspace)
 
@@ -50,7 +48,6 @@ def sync_remote_repo():
 
 
 def gen_scripting_bindings():
-    global branch
     # Generate binding glue codes
     if(branch == 'v3' or branch == 'v4-develop'):
         ret = os.system("python tools/jenkins-scripts/slave-scripts/gen_jsb.py")
@@ -59,31 +56,34 @@ def gen_scripting_bindings():
 
 
 def do_build_slaves():
-    global branch
-    global node_name
-
     jenkins_script_path = "tools" + os.sep + "jenkins-scripts" + os.sep + "slave-scripts" + os.sep
+    js_tests_build_scripts = ""
 
     if(branch == 'v3' or branch == 'v4-develop'):
         slave_build_scripts = ""
         if(node_name == 'android') or (node_name == 'android_bak'):
-            # patch_cpp_empty_test()
             slave_build_scripts = jenkins_script_path + "android-build.sh"
         elif(node_name == 'win32' or node_name == 'win32_win7' or node_name == 'win32_bak'):
-            slave_build_scripts = jenkins_script_path + "win32-vs2013-build.bat"
+            slave_build_scripts = jenkins_script_path + "win32-build.bat"
+            js_tests_build_scripts = jenkins_script_path + "win32-js-build.bat"
         elif(node_name == 'windows-universal' or node_name == 'windows-universal_bak'):
             slave_build_scripts = jenkins_script_path + "windows-universal.bat"
+            js_tests_build_scripts = jenkins_script_path + "windows-js-universal.bat"
         elif(node_name == 'ios_mac' or node_name == 'ios' or node_name == 'ios_bak'):
             slave_build_scripts = jenkins_script_path + "ios-build.sh"
+            js_tests_build_scripts = jenkins_script_path + "ios-js-build.sh"
         elif(node_name == 'mac' or node_name == 'mac_bak'):
             slave_build_scripts = jenkins_script_path + "mac-build.sh"
+            js_tests_build_scripts = jenkins_script_path + "mac-js-build.sh"
         elif(node_name == 'linux_centos' or node_name == 'linux' or node_name == 'linux_bak'):
             slave_build_scripts = jenkins_script_path + "linux-build.sh"
         elif(node_name == 'wp8'):
-            if(branch == 'v3'):
+            if(branch != 'v4'):
                 slave_build_scripts = jenkins_script_path + "wp8-v3.bat"
 
         ret = os.system(slave_build_scripts)
+        js_test_ret = os.system(js_tests_build_scripts)
+        ret = ret + js_test_ret
 
     #get build result
     print "build finished and return " + str(ret)
@@ -91,16 +91,11 @@ def do_build_slaves():
 
 
 def main():
-    global workspace
-    global branch
-    global node_name
-    global remote_build
-
     if remote_build == 1:
         #syntronize local git repository with remote and merge the PR
         sync_remote_repo()
         #copy check_current_3rd_libs
-        download_3rd_library(branch)
+        download_3rd_library()
         #generate jsb and luabindings
         gen_scripting_bindings()
 

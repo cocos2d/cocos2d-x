@@ -660,7 +660,7 @@ int lua_cocos2dx_audioengine_AudioEngine_play2d(lua_State* tolua_S)
         ok &= luaval_to_std_string(tolua_S, 2,&arg0, "ccexp.AudioEngine:play2d");
         ok &= luaval_to_boolean(tolua_S, 3,&arg1, "ccexp.AudioEngine:play2d");
         ok &= luaval_to_number(tolua_S, 4,&arg2, "ccexp.AudioEngine:play2d");
-        ok &= luaval_to_object<const cocos2d::experimental::AudioProfile>(tolua_S, 5, "ccexp.AudioProfile",&arg3);
+        ok &= luaval_to_object<const cocos2d::experimental::AudioProfile>(tolua_S, 5, "ccexp.AudioProfile",&arg3, "ccexp.AudioEngine:play2d");
         if(!ok)
         {
             tolua_error(tolua_S,"invalid arguments in function 'lua_cocos2dx_audioengine_AudioEngine_play2d'", nullptr);

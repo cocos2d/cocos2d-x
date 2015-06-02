@@ -30,4 +30,17 @@ protected:
     cocos2d::Menu* menu;
 };
 
+class BugCameraMask : public BugsTestBase
+{
+public:
+    CREATE_FUNC(BugCameraMask);
+    
+    virtual bool init() override;
+    
+    void switchSpriteFlag(cocos2d::Ref* sender);
+    void updateSpriteMaskLabel();
+    Node* _sprite;
+    cocos2d::Label* _spriteMaskLabel;
+};
+
 #endif /* defined(__Bug_Child__) */
