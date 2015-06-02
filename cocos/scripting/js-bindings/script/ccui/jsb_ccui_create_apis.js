@@ -136,15 +136,19 @@ ccui.RichElementCustomNode.prototype._ctor = function(tag, color, opacity, custo
     customNode !== undefined && this.init(tag, color, opacity, customNode);
 };
 
-ccui.WebView.prototype._ctor = function(url){
-    this.init();
-    url !== undefined && this.loadURL(url);
-};
+if (cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS) {
+    ccui.WebView.prototype._ctor = function (url) {
+        this.init();
+        url !== undefined && this.loadURL(url);
+    };
+}
 
-ccui.VideoPlayer.prototype._ctor = function(url){
-    this.init();
-    url !== undefined && this.setURL(url);
-};
+if (cc.sys.os == cc.sys.OS_ANDROID || cc.sys.os == cc.sys.OS_IOS) {
+    ccui.VideoPlayer.prototype._ctor = function (url) {
+        this.init();
+        url !== undefined && this.setURL(url);
+    };
+}
 
 cc.Scale9Sprite.prototype._ctor = function(file, rect, capInsets){
     rect = rect || cc.rect(0, 0, 0, 0);
