@@ -62,6 +62,15 @@ public:
     virtual std::string subtitle() const override;
 };
 
+class Material_AutoBindings : public MaterialSystemBaseTest
+{
+public:
+    CREATE_FUNC(Material_AutoBindings);
+
+    virtual void onEnter() override;
+    virtual std::string subtitle() const override;
+};
+
 class Material_setTechnique : public MaterialSystemBaseTest
 {
 public:

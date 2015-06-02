@@ -20,6 +20,9 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
+
+ Code based GamePlay3D's Camera: http://gameplay3d.org
+
  ****************************************************************************/
 #include "2d/CCCamera.h"
 #include "base/CCDirector.h"
