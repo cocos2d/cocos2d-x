@@ -107,7 +107,7 @@ public:
         std::string url;
         std::string contentType;
         double contentSize;
-        double responseCode;
+        long responseCode;
     };
     
     typedef std::unordered_map<std::string, DownloadUnit> DownloadUnits;
@@ -138,6 +138,8 @@ public:
     HeaderCallback getHeaderCallback() const { return _onHeader; };
     
     long getContentSize(const std::string &srcUrl);
+    
+    HeaderInfo getHeader(const std::string &srcUrl);
     
     void getHeaderAsync(const std::string &srcUrl, const HeaderCallback &callback);
     
