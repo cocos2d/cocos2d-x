@@ -127,8 +127,9 @@ var XHRTestLayer = cc.Layer.extend({
         
         var xhr = cc.loader.getXMLHttpRequest();
         streamXHREventsToLabel(xhr, statusPostLabel, responseLabel, "POST");
+        xhr.setRequestHeader("Accept-Encoding","gzip,deflate");
+        xhr.open("POST", "http://httpbin.org/post", true);
 
-        xhr.open("POST", "http://httpbin.org/post");
         //set Content-type "text/plain;charset=UTF-8" to post plain text
         xhr.setRequestHeader("Content-Type","text/plain;charset=UTF-8");
         xhr.send("plain text message");
