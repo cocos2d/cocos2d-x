@@ -528,24 +528,29 @@
                     return new UIRichTextTest();
                 }
             }
-        ],
-        "UIVideoPlayer": [
+        ]
+    };
+
+    if (cc.sys.os == cc.sys.ANDROID || cc.sys.os == cc.sys.IOS || !cc.sys.isNative)
+    {
+        testingItems["UIVideoPlayer"] = [
             {
                 title: "UIVideoPlayerTest",
                 func: function () {
                     return new UIVideoPlayerTest();
                 }
             }
-        ],
-        "UIWebViewTest": [
+        ];
+
+        testingItems["UIWebViewTest"] = [
             {
                 title: "UIWebViewTest",
                 func: function () {
                     return new UIWebViewTest();
                 }
             }
-        ]
-    };
+        ];
+    }
 
     var guiTestScene = null;
     global.GUITestScene = cc.Class.extend({
