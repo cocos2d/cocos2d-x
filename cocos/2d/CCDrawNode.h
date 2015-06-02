@@ -74,7 +74,6 @@ public:
      * @~chinese 点的颜色
      * @js NA
      */
-
     void drawPoint(const Vec2& point, const float pointSize, const Color4F &color);
     
     /** @~english Draw a group point.
@@ -89,7 +88,6 @@ public:
      * @~chinese 点的颜色。
      * @js NA
      */
-
     void drawPoints(const Vec2 *position, unsigned int numberOfPoints, const Color4F &color);
     
     /** @~english Draw a group point.
@@ -106,7 +104,6 @@ public:
      * @~chinese 点的颜色。
      * @js NA
      */
-
     void drawPoints(const Vec2 *position, unsigned int numberOfPoints, const float pointSize, const Color4F &color);
     
     /** @~english Draw an line from origin to destination with color. 
@@ -121,7 +118,6 @@ public:
      * @~chinese 线的颜色。
      * @js NA
      */
-
     void drawLine(const Vec2 &origin, const Vec2 &destination, const Color4F &color);
     
     /** @~english Draws a rectangle given the origin and destination point measured in points.
@@ -137,7 +133,6 @@ public:
      * @param color @~english The rectangle color.
      * @~chinese 矩形的颜色。
      */
-
     void drawRect(const Vec2 &origin, const Vec2 &destination, const Color4F &color);
     
     /** @~english Draws a polygon given a pointer to point coordinates and the number of vertices measured in points.
@@ -155,12 +150,11 @@ public:
      * @param color @~english The polygon color.
      * @~chinese 多边形的颜色。
      */
-
     void drawPoly(const Vec2 *poli, unsigned int numberOfPoints, bool closePolygon, const Color4F &color);
     
-    /** @~english Draws a circle given the center, radius and number of segments.
+    /** @~english Draws a circle given the center, radius, number of segments and a border color.
      *
-     * @~chinese 给定圆的中心,半径和线段数量来绘制一个圆。
+     * @~chinese 给定圆的中心,半径，线段数量和线段颜色来绘制一个圆。如果要绘制带填充色的圆，请使用 drawSolidCircle函数。
      * 
      * @param center @~english The circle center point.
      * @~chinese 圆中心点。
@@ -179,7 +173,6 @@ public:
      * @param color @~english Set the circle color.
      * @~chinese 圆的颜色。
      */
-
     void drawCircle( const Vec2& center, float radius, float angle, unsigned int segments, bool drawLineToCenter, float scaleX, float scaleY, const Color4F &color);
     
     /** @~english Draws a circle given the center, radius and number of segments.
@@ -199,7 +192,6 @@ public:
      * @param color @~english Set the circle color.
      * @~chinese 圆的颜色
      */
-
     void drawCircle(const Vec2 &center, float radius, float angle, unsigned int segments, bool drawLineToCenter, const Color4F &color);
     
     /** @~english Draws a quad bezier path.
@@ -217,7 +209,6 @@ public:
      * @param color @~english Set the quad bezier color.
      * @~chinese 设置四次贝塞尔曲线的颜色。
      */
-
     void drawQuadBezier(const Vec2 &origin, const Vec2 &control, const Vec2 &destination, unsigned int segments, const Color4F &color);
 
     /** @~english Draw a cubic bezier curve with color and number of segments
@@ -237,7 +228,6 @@ public:
      * @param color @~english Set the cubic bezier color.
      * @~chinese 设置三次贝塞尔曲线的颜色。
      */
-
     void drawCubicBezier(const Vec2 &origin, const Vec2 &control1, const Vec2 &control2, const Vec2 &destination, unsigned int segments, const Color4F &color);
     
     /** @~english Draws a Cardinal Spline path.
@@ -253,7 +243,6 @@ public:
      * @param color @~english Set the Spline color.
      * @~chinese 设置样条的颜色。
      */
-
     void drawCardinalSpline(PointArray *config, float tension,  unsigned int segments, const Color4F &color);
     
     /** @~english Draws a Catmull Rom path.
@@ -267,7 +256,6 @@ public:
      * @param color @~english The Catmull Rom color.
      * @~chinese 卡特莫尔罗的颜色。
      */
-
     void drawCatmullRom(PointArray *points, unsigned int segments, const Color4F &color);
     
     /** @~english draw a dot at a position, with a given radius and color. 
@@ -281,12 +269,11 @@ public:
      * @param color @~english The dot color.
      * @~chinese 点的颜色。
      */
-
     void drawDot(const Vec2 &pos, float radius, const Color4F &color);
     
     /** @~english Draws a rectangle with 4 points.
      *
-     * @~chinese 画一个包含4个顶点的矩形。
+     * @~chinese 画一个包含4个顶点的矩形
      * 
      * @param p1 @~english The rectangle vertex point.
      * @~chinese 矩形的顶点。
@@ -299,7 +286,6 @@ public:
      * @param color @~english The rectangle color.
      * @~chinese 矩形的颜色。
      */
-
     void drawRect(const Vec2 &p1, const Vec2 &p2, const Vec2 &p3, const Vec2& p4, const Color4F &color);
     
     /** @~english Draws a solid rectangle given the origin and destination point measured in points.
@@ -316,7 +302,6 @@ public:
      * @~chinese 矩形的颜色。
      * @js NA
      */
-
     void drawSolidRect(const Vec2 &origin, const Vec2 &destination, const Color4F &color);
     
     /** @~english Draws a solid polygon given with a pointer to coordinates, the number of vertices measured in points, and a color.
@@ -331,7 +316,6 @@ public:
      * @~chinese 实心多边形的颜色。
      * @js NA
      */
-
     void drawSolidPoly(const Vec2 *poli, unsigned int numberOfPoints, const Color4F &color);
     
     /** @~english Draws a solid circle given the center, radius and number of segments.
@@ -352,7 +336,6 @@ public:
      * @~chinese 实心圆的颜色。
      * @js NA
      */
-
     void drawSolidCircle(const Vec2& center, float radius, float angle, unsigned int segments, float scaleX, float scaleY, const Color4F &color);
     
     /** @~english Draws a solid circle given the center, radius and number of segments.
@@ -369,7 +352,6 @@ public:
      * @~chinese 实心圆的颜色。
      * @js NA
      */
-
     void drawSolidCircle(const Vec2& center, float radius, float angle, unsigned int segments, const Color4F& color);
     
     /** @~english draw a segment with a radius and color. 
@@ -385,7 +367,6 @@ public:
      * @param color @~english The segment color.
      * @~chinese 线段的颜色。
      */
-
     void drawSegment(const Vec2 &from, const Vec2 &to, float radius, const Color4F &color);
     
     /** @~english draw a polygon with a fill color and line color
@@ -403,12 +384,11 @@ public:
      * @~chinese 多边形的线宽的颜色。
     * @js NA
     */
-
     void drawPolygon(const Vec2 *verts, int count, const Color4F &fillColor, float borderWidth, const Color4F &borderColor);
 	
-    /** @~english draw a triangle with color. 
+    /** @~english draw a triangle with color, the color will fill in the triangle.
      *
-     * @~chinese 使用给定颜色绘制一个三角形。
+     * @~chinese 使用给定颜色绘制一个三角形,该颜色会填充矩形。
      * 
      * @param p1 @~english The triangle vertex point.
      * @~chinese 三角形的顶点。
@@ -420,7 +400,6 @@ public:
      * @~chinese 三角形的颜色。
      * @js NA
      */
-
     void drawTriangle(const Vec2 &p1, const Vec2 &p2, const Vec2 &p3, const Color4F &color);
 
     /** @~english draw a quadratic bezier curve with color and number of segments, use drawQuadBezier instead.
@@ -439,7 +418,6 @@ public:
      * @~chinese 二次贝塞尔曲线的颜色。
      * @js NA
      */
-
     CC_DEPRECATED_ATTRIBUTE void drawQuadraticBezier(const Vec2& from, const Vec2& control, const Vec2& to, unsigned int segments, const Color4F &color);
     
     /** @~english Clear the geometry in the node's buffer.  @~chinese 清除节点的缓冲区中的几何数据。*/
@@ -462,11 +440,11 @@ public:
     /**
      * @js NA
      */
-  void onDraw(const Mat4 &transform, uint32_t flags);
+    void onDraw(const Mat4 &transform, uint32_t flags);
     /**
      * @js NA
      */
-  void onDrawGLLine(const Mat4 &transform, uint32_t flags);
+    void onDrawGLLine(const Mat4 &transform, uint32_t flags);
     /**
      * @js NA
      */
