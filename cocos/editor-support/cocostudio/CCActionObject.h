@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
@@ -44,131 +44,161 @@ class CC_STUDIO_DLL ActionObject : public cocos2d::Ref
 public:
 
 	/**
-	* Default constructor
-	*/
+    * @~english Default constructor.
+    * @~chinese 默认构造函数.
+    */
 	ActionObject();
 
 	/**
-	* Default destructor
-	*/
+    * @~english Default destructor.
+    * @~chinese 默认析构函数.
+    */
 	virtual ~ActionObject();
 
 	/**
-	* Sets name for object
-	*
-	* @param name    name of object
+	* @~english Sets name for object
+    * @~chinese 设定对象名称
+    *
+	* @param name    @~english name of object @~chinese 对象名称
 	*/
 	void setName(const char* name);
 
 	/**
-	* Gets name of object
-	*
-	* @return name of object
+	* @~english Gets name of object
+    * @~chinese 获取对象名称
+    *
+	* @return @~english name of object @~chinese 对象名称
 	*/
 	const char* getName();
 
 	/**
-	* Sets if the action will loop play.
-	*
-	* @param bLoop     that if the action will loop play
+	* @~english Sets if the action will loop play.
+    * @~chinese 摄动动作是否循环播放.
+    *
+	* @param bLoop     @~english that if the action will loop play @~chinese 动作是否循环播放
 	*/
 	void setLoop(bool bLoop);
 
 	/**
-	* Gets if the action will loop play.
-	*
-	* @return   that if the action will loop play
+	* @~english Gets if the action will loop play.
+    * @~chinese 获取动作是否循环播放.
+    *
+	* @return   @~english that if the action will loop play @~chinese 动作是否循环播放
 	*/
 	bool getLoop();
 
 	/**
-	* Sets the time interval of frame.
-	*
-	* @param fTime   the time interval of frame
+	* @~english Sets the time interval of frame.
+    * @~chinese 设定帧间隔时间.
+    *
+	* @param fTime   @~english the time interval of frame @~chinese 帧间隔时间
 	*/
 	void setUnitTime(float fTime);
 
 	/**
-	* Gets the time interval of frame.
-	*
-	* @return the time interval of frame
+	* @~english Gets the time interval of frame.
+    * @~chinese 获取帧间隔时间.
+    *
+	* @return @~english the time interval of frame @~chinese 帧间隔时间
 	*/
 	float getUnitTime();
 
 	/**
-	* Sets the current time of frame.
-	*
-	* @param fTime   the current time of frame
+	* @~english Sets the current time of frame.
+    * @~chinese 设定帧动画当前时间.
+    *
+	* @param fTime   @~english the current time of frame @~chinese 当前时间
 	*/
 	void setCurrentTime(float fTime);
 
 	/**
-	* Gets the current time of frame.
-	*
-	* @return the current time of frame
+	* @~english Gets the current time of frame.
+    * @~chinese 获取帧动画当前时间.
+    *
+	* @return @~english the current time of frame @~chinese 当前时间
 	*/
 	float getCurrentTime();
 
 	/**
-	* Gets the total time of frame.
-	*
-	* @return the total time of frame
+	* @~english Gets the total time of frame.
+    * @~chinese 获取帧动画总时长.
+    *
+	* @return @~english the total time of frame @~chinese 帧动画总时长
 	*/
 	float getTotalTime();
 
 	/**
-	* Return if the action is playing.
-	*
-	* @return true if the action is playing, false the otherwise
+	* @~english Return if the action is playing.
+    * @~chinese 获取动作是否正在播放.
+    *
+	* @return @~english true if the action is playing, false the otherwise @~chinese 正在播放返回true，否则返回false
 	*/
 	bool isPlaying();
 
 	/**
-	* Play the action.
-	*/
+	* @~english Play the action.
+    * @~chinese 播放动作.
+    */
 	void play();
 
 	/**
-	* Play the action.
-	*
-	* @param func Action Call Back
+	* @~english Play the action.
+    * @~chinese 播放动作.
+    *
+	* @param func  @~english Action Call Back @~chinese 动作回调函数
 	*/
 	void play(cocos2d::CallFunc* func);
 
 	/** 
-	* Pause the action.
-	*/
+	* @~english Pause the action.
+    * @~chinese 暂停动作.
+    */
 	void pause();
 
 	/**
-	* Stop the action.
-	*/
+	* @~english Stop the action.
+    * @~chinese 停止动作.
+    */
 	void stop();
 
 	/**
-	* Adds a ActionNode to play the action.
-	*
-	* @param node    the ActionNode which will play the action
+	* @~english Adds a ActionNode to play the action.
+    * @~chinese 在节点列表中添加一个动作节点.
+    *
+	* @param node    @~english the ActionNode which will play the action @~chinese 将添加的动作节点
 	*/
 	void addActionNode(ActionNode* node);
 
 	/**
-	* Removes a ActionNode which play the action.
-	*
-	* @param node    the ActionNode which play the action
+	* @~english Removes a ActionNode which play the action.
+    * @~chinese 从节点列表中删除一个节点.
+    *
+	* @param node    @~english the ActionNode which play the action @~chinese 将删除的动作节点
 	*/
 	void removeActionNode(ActionNode* node);
 
-	/*update frame method*/
+	/** 
+    * @~english update frame action to special time
+    * @~chinese 更新动作到指定时间点
+    */
 	void updateToFrameByTime(float fTime);
 
-	/*init properties with a json dictionary*/
-	void initWithDictionary(const rapidjson::Value& dic, cocos2d::Ref* root);
-    
+    /**
+    * @~english init properties with a json dictionary
+    * @~chinese 使用json字典初始化属性值
+    */
+    void initWithDictionary(const rapidjson::Value& dic, cocos2d::Ref* root);
+    /**
+    * @~english init properties with binary file
+    * @~chinese 使用二进制数据初始化属性值
+    */
     void initWithBinary(CocoLoader* cocoLoader, stExpCocoNode*	pCocoNode, cocos2d::Ref* root);
 
 
-	/*scheduler update function*/
+	/**
+    * @~english scheduler update function
+    * @~chinese 状态更新回调函数
+    */
 	void simulationActionUpdate(float dt);
 protected:
     int valueToInt(const std::string& value);
