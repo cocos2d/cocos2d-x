@@ -49,140 +49,166 @@ CC_DLL extern const ValueMap ValueMapNull;
 CC_DLL extern const ValueMapIntKey ValueMapIntKeyNull;
 
 /*
- * This class is provide as a wrapper of basic types, such as int and bool.
+ * @~english This class is provide as a wrapper of basic types, such as int and bool.
+ * @~chinese 这个类提供wrapper的基本类型,如int和bool。
  */
 class CC_DLL Value
 {
 public:
-    /** A predefined Value that has not value. */
+
+    /** @~english A predefined Value that has not value.  @~chinese 一个预定义的空值。*/
     static const Value Null;
 
-    /** Default constructor. */
+    /** @~english Default constructor.  @~chinese 默认构造函数。*/
     Value();
     
-    /** Create a Value by an unsigned char value. */
+    /** @~english Create a Value by an unsigned char value.  @~chinese 由一个无符号字符值创建一个Value。*/
     explicit Value(unsigned char v);
     
-    /** Create a Value by an integer value. */
+    /** @~english Create a Value by an integer value.  @~chinese 由一个整数创建一个Value。*/
     explicit Value(int v);
     
-    /** Create a Value by a float value. */
+    /** @~english Create a Value by a float value.  @~chinese 由一个浮点数创建一个Value。*/
     explicit Value(float v);
     
-    /** Create a Value by a double value. */
+    /** @~english Create a Value by a double value.  @~chinese 从一个双精度数字创建一个Value。*/
     explicit Value(double v);
     
-    /** Create a Value by a bool value. */
+    /** @~english Create a Value by a bool value.  @~chinese 从一个bool值创建一个Value。*/
     explicit Value(bool v);
     
-    /** Create a Value by a char pointer. It will copy the chars internally. */
+    /** @~english Create a Value by a char pointer. It will copy the chars internally.  @~chinese 从一个字符指针创建一个Value。它将复制字符内部。*/
     explicit Value(const char* v);
     
-    /** Create a Value by a string. */
+    /** @~english Create a Value by a string.  @~chinese 从一个字符串创建一个Value。*/
     explicit Value(const std::string& v);
     
-    /** Create a Value by a ValueVector object. */
+    /** @~english Create a Value by a ValueVector object.  @~chinese 使用ValueVector对象创建一个Value。*/
     explicit Value(const ValueVector& v);
-    /** Create a Value by a ValueVector object. It will use std::move internally. */
+
+    /** @~english Create a Value by a ValueVector object. It will use std::move internally.  @~chinese 使用ValueVector对象创建一个Value。它将使用std::move移动到内部。*/
     explicit Value(ValueVector&& v);
     
-    /** Create a Value by a ValueMap object. */
+    /** @~english Create a Value by a ValueMap object.  @~chinese 使用ValueMap对象创建一个Value。*/
     explicit Value(const ValueMap& v);
-    /** Create a Value by a ValueMap object. It will use std::move internally. */
+
+    /** @~english Create a Value by a ValueMap object. It will use std::move internally.  @~chinese 使用ValueMap对象创建一个Value。它将使用std::move移动到内部。*/
     explicit Value(ValueMap&& v);
     
-    /** Create a Value by a ValueMapIntKey object. */
+    /** @~english Create a Value by a ValueMapIntKey object.  @~chinese 使用ValueMapIntKey创建一个Value对象。*/
     explicit Value(const ValueMapIntKey& v);
-    /** Create a Value by a ValueMapIntKey object. It will use std::move internally. */
+
+    /** @~english Create a Value by a ValueMapIntKey object. It will use std::move internally.  @~chinese 使用ValueMapIntKey创建一个Value对象。它将使用std::move移动到内部。*/
     explicit Value(ValueMapIntKey&& v);
 
-    /** Create a Value by anthoer Value object. */
+    /** @~english Create a Value by another Value object.  @~chinese 使用一个Value创建另一个Value。*/
     Value(const Value& other);
-    /** Create a Value by a Value object. It will use std::move internally. */
+
+    /** @~english Create a Value by a Value object. It will use std::move internally.  @~chinese 使用一个Value创建另一个Value。它将使用std::move移动到内部。*/
     Value(Value&& other);
     
-    /** Destructor. */
+    /** @~english Destructor.  @~chinese 析构函数。*/
     ~Value();
 
-    /** Assignment operator, assign from Value to Value. */
+    /** @~english Assignment operator, assign from Value to Value.  @~chinese 赋值运算符,从Value赋值到Value。*/
     Value& operator= (const Value& other);
-    /** Assignment operator, assign from Value to Value. It will use std::move internally. */
+
+    /** @~english Assignment operator, assign from Value to Value. It will use std::move internally.  @~chinese 赋值运算符,从Value赋值到Value。它将使用std::move移动到内部。*/
     Value& operator= (Value&& other);
 
-    /** Assignment operator, assign from unsigned char to Value. */
+    /** @~english Assignment operator, assign from unsigned char to Value.  @~chinese 赋值运算符，从无符号字符赋值。*/
     Value& operator= (unsigned char v);
-    /** Assignment operator, assign from integer to Value. */
+
+    /** @~english Assignment operator, assign from integer to Value.  @~chinese 赋值运算符,从整数赋值。*/
     Value& operator= (int v);
-    /** Assignment operator, assign from float to Value. */
+
+    /** @~english Assignment operator, assign from float to Value.  @~chinese 赋值运算符,从浮点数赋值。*/
     Value& operator= (float v);
-    /** Assignment operator, assign from double to Value. */
+
+    /** @~english Assignment operator, assign from double to Value.  @~chinese 赋值运算符,从双精度数字赋值。*/
     Value& operator= (double v);
-    /** Assignment operator, assign from bool to Value. */
+
+    /** @~english Assignment operator, assign from bool to Value.  @~chinese 赋值运算符,从布尔值赋值。*/
     Value& operator= (bool v);
-    /** Assignment operator, assign from char* to Value. */
-    Value& operator= (const char* v);
-    /** Assignment operator, assign from string to Value. */
+
+    /** @~english Assignment operator, assign from string to Value.  @~chinese 赋值运算符,从字符串赋值。*/
     Value& operator= (const std::string& v);
 
-    /** Assignment operator, assign from ValueVector to Value. */
+    /** @~english Assignment operator, assign from ValueVector to Value.  @~chinese 赋值运算符,从ValueVector赋值。*/
     Value& operator= (const ValueVector& v);
-    /** Assignment operator, assign from ValueVector to Value. */
+
+    /** @~english Assignment operator, assign from ValueVector to Value.  @~chinese 赋值运算符,从ValueVector赋值。*/
     Value& operator= (ValueVector&& v);
 
-    /** Assignment operator, assign from ValueMap to Value. */
+    /** @~english Assignment operator, assign from ValueMap to Value.  @~chinese 赋值运算符,从ValueMap赋值。*/
     Value& operator= (const ValueMap& v);
-    /** Assignment operator, assign from ValueMap to Value. It will use std::move internally. */
+
+    /** @~english Assignment operator, assign from ValueMap to Value. It will use std::move internally.  @~chinese 赋值运算符,从ValueMap分配值。它将使用std::move移动到内部。*/
     Value& operator= (ValueMap&& v);
 
-    /** Assignment operator, assign from ValueMapIntKey to Value. */
+    /** @~english Assignment operator, assign from ValueMapIntKey to Value.  @~chinese赋值运算符,从ValueMapIntKey赋值。*/
     Value& operator= (const ValueMapIntKey& v);
-    /** Assignment operator, assign from ValueMapIntKey to Value. It will use std::move internally. */
+
+    /** @~english Assignment operator, assign from ValueMapIntKey to Value. It will use std::move internally.  @~chinese赋值运算符,从ValueMapIntKey赋值。它将使用std::move移动到内部。*/
     Value& operator= (ValueMapIntKey&& v);
 
-    /** != operator overloading */
+    /** @~english != operator overloading  @~chinese != 操作符重载*/
     bool operator!= (const Value& v);
-    /** != operator overloading */
+
+    /** @~english != operator overloading  @~chinese != 操作符重载*/
     bool operator!= (const Value& v) const;
-    /** == operator overloading */
+
+    /** @~english == operator overloading  @~chinese == 操作符重载*/
     bool operator== (const Value& v);
-    /** == operator overloading */
+
+    /** @~english == operator overloading  @~chinese == 操作符重载*/
     bool operator== (const Value& v) const;
 
-    /** Gets as a byte value. Will convert to unsigned char if possible, or will trigger assert error. */
+    /** @~english Gets as a byte value. Will convert to unsigned char if possible, or will trigger assert error.  @~chinese 获取一个字节值。如果可能将转换为无符号字符,否则引发断言错误。*/
     unsigned char asByte() const;
-    /** Gets as an integer value. Will convert to integer if possible, or will trigger assert error. */
+
+    /** @~english Gets as an integer value. Will convert to integer if possible, or will trigger assert error.  @~chinese 获取一个整数值。如果可能将转换为整数,否则引发断言错误。*/
     int asInt() const;
-    /** Gets as a float value. Will convert to float if possible, or will trigger assert error. */
+
+    /** @~english Gets as a float value. Will convert to float if possible, or will trigger assert error.  @~chinese 获取一个浮点数。如果可能将转换为浮动,否则引发断言错误。*/
     float asFloat() const;
-    /** Gets as a double value. Will convert to double if possible, or will trigger assert error. */
+
+    /** @~english Gets as a double value. Will convert to double if possible, or will trigger assert error.  @~chinese 获取一个双精度数。如果可能将转换为双,否则引发断言错误。*/
     double asDouble() const;
-    /** Gets as a bool value. Will convert to bool if possible, or will trigger assert error. */
+
+    /** @~english Gets as a bool value. Will convert to bool if possible, or will trigger assert error.  @~chinese 获取一个bool值。如果可能将转换为bool,否则引发断言错误。*/
     bool asBool() const;
-    /** Gets as a string value. Will convert to string if possible, or will trigger assert error. */
+
+    /** @~english Gets as a string value. Will convert to string if possible, or will trigger assert error.  @~chinese 获取一个字符串。如果可能将转换为字符串,否则引发断言错误。*/
     std::string asString() const;
 
-    /** Gets as a ValueVector reference. Will convert to ValueVector if possible, or will trigger assert error. */
+    /** @~english Gets as a ValueVector reference. Will convert to ValueVector if possible, or will trigger assert error.  @~chinese 获取ValueVector。如果可能将转换为ValueVector,否则引发断言错误。*/
     ValueVector& asValueVector();
-    /** Gets as a const ValueVector reference. Will convert to ValueVector if possible, or will trigger assert error. */
+
+    /** @~english Gets as a const ValueVector reference. Will convert to ValueVector if possible, or will trigger assert error.  @~chinese 获取一个常量ValueVector。如果可能将转换为ValueVector,否则引发断言错误。*/
     const ValueVector& asValueVector() const;
 
-    /** Gets as a ValueMap reference. Will convert to ValueMap if possible, or will trigger assert error. */
+    /** @~english Gets as a ValueMap reference. Will convert to ValueMap if possible, or will trigger assert error.  @~chinese 获取ValueMap。如果可能将转换为ValueMap,否则引发断言错误。*/
     ValueMap& asValueMap();
-    /** Gets as a const ValueMap reference. Will convert to ValueMap if possible, or will trigger assert error. */
+
+    /** @~english Gets as a const ValueMap reference. Will convert to ValueMap if possible, or will trigger assert error.  @~chinese 获取一个一个常量ValueMap。如果可能将转换为ValueMap,否则引发断言错误。*/
     const ValueMap& asValueMap() const;
 
-    /** Gets as a ValueMapIntKey reference. Will convert to ValueMapIntKey if possible, or will trigger assert error. */
+    /** @~english Gets as a ValueMapIntKey reference. Will convert to ValueMapIntKey if possible, or will trigger assert error.  @~chinese 获取ValueMapIntKey。如果可能将转换为ValueMapIntKey,否则引发断言错误。*/
     ValueMapIntKey& asIntKeyMap();
-    /** Gets as a const ValueMapIntKey reference. Will convert to ValueMapIntKey if possible, or will trigger assert error. */
+
+    /** @~english Gets as a const ValueMapIntKey reference. Will convert to ValueMapIntKey if possible, or will trigger assert error.  @~chinese 获取一个常量ValueMapIntKey。如果可能将转换为ValueMapIntKey,否则引发断言错误。*/
     const ValueMapIntKey& asIntKeyMap() const;
 
     /**
-     * Checks if the Value is null.
-     * @return True if the Value is null, false if not.
+     * @~english Checks if the Value is null.
+     * @~chinese  检查值是否为null。
+     * @return @~english True if the Value is null, false if not.
+     * @~chinese 真如果该值为null则为true,否则为false。
      */
     inline bool isNull() const { return _type == Type::NONE; }
 
-    /** Value type wrapped by Value. */
+    /** @~english Value type wrapped by Value.  @~chinese Value的类型。*/
     enum class Type
     {
         /// no value is wrapped, an empty Value
@@ -207,10 +233,10 @@ public:
         INT_KEY_MAP
     };
 
-    /** Gets the value type. */
+    /** @~english Gets the value type.  @~chinese 获取Value的类型。*/
     inline Type getType() const { return _type; }
 
-    /** Gets the description of the class. */
+    /** @~english Gets the description of the class.  @~chinese 获取Value类的描述。*/
     std::string getDescription() const;
 
 private:
