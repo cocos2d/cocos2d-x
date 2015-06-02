@@ -51,10 +51,10 @@
     [sslFile release];
     [responseHeader release];
     [responseData release];
-    [statusString release];
     [responseError release];
     [conn release];
     [runLoop release];
+    [connError release];
     
     [super dealloc];
 }
@@ -178,10 +178,12 @@
     {
         CFDataRef errDataRef = SecTrustCopyExceptions(serverTrust);
         SecTrustSetExceptions(serverTrust, errDataRef);
-        
         SecTrustEvaluate(serverTrust, &trustResult);
+        [(id)errDataRef release];
     }
-    
+    [certData release];
+    [(id)certArrayRef release];
+    [(id)certArrayRef release];
     //Did our custom trust chain evaluate successfully?
     return trustResult = kSecTrustResultUnspecified || trustResult == kSecTrustResultProceed;    
 }
