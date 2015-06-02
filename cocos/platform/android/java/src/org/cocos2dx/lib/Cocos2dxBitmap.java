@@ -38,7 +38,7 @@ import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.Log;
 
-public class Cocos2dxBitmap {
+public final class Cocos2dxBitmap {
     // ===========================================================
     // Constants
     // ===========================================================
@@ -75,17 +75,6 @@ public class Cocos2dxBitmap {
 
     private static native void nativeInitBitmapDC(final int width,
             final int height, final byte[] pixels);
-
-    public static void createTextBitmap(String string, final String fontName,
-            final int fontSize, final int alignment, final int width,
-            final int height) {
-        
-        createTextBitmapShadowStroke( string.getBytes(), fontName, fontSize, 255, 255, 255, 255,   // text font and color
-                                      alignment, width, height,                         // alignment and size
-                                      false, 0.0f, 0.0f, 0.0f, 0.0f,                    // no shadow
-                                      false, 255, 255, 255, 255, 0.0f);                   // no stroke
-                                     
-    }
 
     public static boolean createTextBitmapShadowStroke(byte[] bytes,  final String fontName, int fontSize,
                                                     int fontTintR, int fontTintG, int fontTintB, int fontTintA,
