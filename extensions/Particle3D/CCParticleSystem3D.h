@@ -63,7 +63,7 @@ struct CC_DLL Particle3D
     std::map<std::string, void*> userDefs; ///<user defined property
 };
 
-/** @class DataPool<template> 
+/** @class DataPool 
 *@brief @~english DataPool is a data pool, used for recycling data.
  @~chinese DataPool 是数据池，用以数据的再利用。
 */

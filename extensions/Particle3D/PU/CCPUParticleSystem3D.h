@@ -234,8 +234,8 @@ struct CC_DLL PUParticle3D : public Particle3D
  - Create PUParticleSystem3D with pu file path and pu material file path.(recommended)
  The resources(textures,scripts,materials) used by pu particle system must use the following file structure and name definition(Can not be modified):
  - Folder - textures
- ----------- scripts
- ----------- materials
+ - --------- scripts
+ - --------- materials
 
  @~chinese PUParticleSystem3D继承自ParticleSystem3D，是pu的粒子系统类。
  PUParticleSystem3D的父类ParticleSystem3D是从Node派生而来，所以一个粒子系统可以包含多个粒子系统，
@@ -247,8 +247,8 @@ struct CC_DLL PUParticle3D : public Particle3D
  - 通过一个pu文件路径和一个pu材质文件路径来创建PUParticleSystem3D。（建议使用）
  pu的粒子系统使用的资源(纹理、pu脚本、材质文件)需采用如下文件结构和名称（目前不可更改）：
  - Folder - textures
- ----------- scripts
- ----------- materials
+ - --------- scripts
+ - --------- materials
 */
 class CC_DLL PUParticleSystem3D : public ParticleSystem3D
 {

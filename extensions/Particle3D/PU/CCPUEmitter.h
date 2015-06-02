@@ -43,7 +43,7 @@ class PUParticleSystem3D;
 * @{
 */
 
-/** @class Particle3DEmitter
+/** @class PUEmitter
 *@brief @~english PUEmitter inherit from Particle3DEmitter, the base class of pu emitter.
 Specific implementation decisions by different emitters.
 
@@ -805,9 +805,6 @@ public:
     * @return @~english The texture coords. @~chinese 纹理坐标。
     */
     const unsigned short& getParticleTextureCoords(void) const;
-
-    /** Set the texture coords of an emitted particle.
-    */
 
     /**
     * @~english Set the texture coords of an emitted particle.
