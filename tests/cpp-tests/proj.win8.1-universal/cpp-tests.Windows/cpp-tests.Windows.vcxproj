@@ -180,6 +180,9 @@
     <ProjectReference Include="..\..\..\..\external\bullet\proj.win8.1-universal\libbullet.Windows\libbullet.Windows.vcxproj">
       <Project>{ec2b1292-2d8c-4feb-a84b-2550b32c1ae7}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\external\recast\proj.win8.1-universal\librecast.Windows\librecast.Windows.vcxproj">
+      <Project>{19e35654-a3ec-48fa-bb21-082a2356c87c}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
