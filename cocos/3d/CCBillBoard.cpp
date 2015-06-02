@@ -230,7 +230,7 @@ void BillBoard::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
     //FIXME: frustum culling here
     flags |= Node::FLAGS_RENDER_AS_3D;
-    _trianglesCommand.init(0, _texture->getName(), getGLProgramState(), _blendFunc, getRenderedTriangles(), _modelViewTransform, flags);
+    _trianglesCommand.init(0, _texture->getName(), getGLProgramState(), _blendFunc, _polyInfo->triangles, _modelViewTransform, flags);
     _trianglesCommand.setTransparent(true);
     _trianglesCommand.set3D(true);
     renderer->addCommand(&_trianglesCommand);

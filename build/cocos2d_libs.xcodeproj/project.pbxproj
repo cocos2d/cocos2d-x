@@ -818,10 +818,6 @@
 		15EFA212198A2BB5000C57D3 /* CCProtectedNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15EFA20F198A2BB5000C57D3 /* CCProtectedNode.cpp */; };
 		15EFA213198A2BB5000C57D3 /* CCProtectedNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 15EFA210198A2BB5000C57D3 /* CCProtectedNode.h */; };
 		15EFA214198A2BB5000C57D3 /* CCProtectedNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 15EFA210198A2BB5000C57D3 /* CCProtectedNode.h */; };
-		15FB206A1AE7BE7400C31518 /* CCSpritePolygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15FB20661AE7BE7400C31518 /* CCSpritePolygon.cpp */; };
-		15FB206B1AE7BE7400C31518 /* CCSpritePolygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15FB20661AE7BE7400C31518 /* CCSpritePolygon.cpp */; };
-		15FB206C1AE7BE7400C31518 /* CCSpritePolygon.h in Headers */ = {isa = PBXBuildFile; fileRef = 15FB20671AE7BE7400C31518 /* CCSpritePolygon.h */; };
-		15FB206D1AE7BE7400C31518 /* CCSpritePolygon.h in Headers */ = {isa = PBXBuildFile; fileRef = 15FB20671AE7BE7400C31518 /* CCSpritePolygon.h */; };
 		15FB206E1AE7BE7400C31518 /* CCSpritePolygonCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15FB20681AE7BE7400C31518 /* CCSpritePolygonCache.cpp */; };
 		15FB206F1AE7BE7400C31518 /* CCSpritePolygonCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15FB20681AE7BE7400C31518 /* CCSpritePolygonCache.cpp */; };
 		15FB20701AE7BE7400C31518 /* CCSpritePolygonCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 15FB20691AE7BE7400C31518 /* CCSpritePolygonCache.h */; };
@@ -1845,6 +1841,10 @@
 		5E9F612B1A3FFE3D0038DE01 /* CCPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E9F61241A3FFE3D0038DE01 /* CCPlane.cpp */; };
 		5E9F612C1A3FFE3D0038DE01 /* CCPlane.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E9F61251A3FFE3D0038DE01 /* CCPlane.h */; };
 		5E9F612D1A3FFE3D0038DE01 /* CCPlane.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E9F61251A3FFE3D0038DE01 /* CCPlane.h */; };
+		68B39B3C1B1C5C670084F72C /* clipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68B39B3A1B1C5C670084F72C /* clipper.cpp */; };
+		68B39B3D1B1C5C670084F72C /* clipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68B39B3A1B1C5C670084F72C /* clipper.cpp */; };
+		68B39B3E1B1C5C670084F72C /* clipper.h in Headers */ = {isa = PBXBuildFile; fileRef = 68B39B3B1B1C5C670084F72C /* clipper.h */; };
+		68B39B3F1B1C5C670084F72C /* clipper.h in Headers */ = {isa = PBXBuildFile; fileRef = 68B39B3B1B1C5C670084F72C /* clipper.h */; };
 		826294331AAF001C00CB7CF7 /* HttpAsynConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2A1A5349A3004E4C60 /* HttpAsynConnection.m */; };
 		826294341AAF003E00CB7CF7 /* HttpClient-apple.mm in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2B1A5349A3004E4C60 /* HttpClient-apple.mm */; };
 		826294351AAF004C00CB7CF7 /* HttpCookie.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2C1A5349A3004E4C60 /* HttpCookie.cpp */; };
@@ -3563,8 +3563,6 @@
 		15B3707719EE414C00ABE682 /* Manifest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Manifest.h; sourceTree = "<group>"; };
 		15EFA20F198A2BB5000C57D3 /* CCProtectedNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCProtectedNode.cpp; sourceTree = "<group>"; };
 		15EFA210198A2BB5000C57D3 /* CCProtectedNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProtectedNode.h; sourceTree = "<group>"; };
-		15FB20661AE7BE7400C31518 /* CCSpritePolygon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSpritePolygon.cpp; sourceTree = "<group>"; };
-		15FB20671AE7BE7400C31518 /* CCSpritePolygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpritePolygon.h; sourceTree = "<group>"; };
 		15FB20681AE7BE7400C31518 /* CCSpritePolygonCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSpritePolygonCache.cpp; sourceTree = "<group>"; };
 		15FB20691AE7BE7400C31518 /* CCSpritePolygonCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpritePolygonCache.h; sourceTree = "<group>"; };
 		15FB20721AE7BF8600C31518 /* CCAutoPolygon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCAutoPolygon.cpp; sourceTree = "<group>"; };
@@ -4495,6 +4493,8 @@
 		5E9F61231A3FFE3D0038DE01 /* CCFrustum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFrustum.h; sourceTree = "<group>"; };
 		5E9F61241A3FFE3D0038DE01 /* CCPlane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPlane.cpp; sourceTree = "<group>"; };
 		5E9F61251A3FFE3D0038DE01 /* CCPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlane.h; sourceTree = "<group>"; };
+		68B39B3A1B1C5C670084F72C /* clipper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = clipper.cpp; sourceTree = "<group>"; };
+		68B39B3B1B1C5C670084F72C /* clipper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = clipper.h; sourceTree = "<group>"; };
 		A07A4D641783777C0073F6A7 /* libcocos2d iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20564AA1A6E5744001C1B6E /* ccShader_PositionColorTextureAsPointsize.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionColorTextureAsPointsize.vert; sourceTree = "<group>"; };
 		B217703B1977ECB4009EE11B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
@@ -5865,8 +5865,6 @@
 			children = (
 				15FB20721AE7BF8600C31518 /* CCAutoPolygon.cpp */,
 				15FB20731AE7BF8600C31518 /* CCAutoPolygon.h */,
-				15FB20661AE7BE7400C31518 /* CCSpritePolygon.cpp */,
-				15FB20671AE7BE7400C31518 /* CCSpritePolygon.h */,
 				15FB20681AE7BE7400C31518 /* CCSpritePolygonCache.cpp */,
 				15FB20691AE7BE7400C31518 /* CCSpritePolygonCache.h */,
 				1A57028E180BCCAB0088DEC7 /* CCAnimation.cpp */,
@@ -5931,6 +5929,7 @@
 		1A57033E180BD0490088DEC7 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				68B39B391B1C5C670084F72C /* clipper */,
 				B6CAB0021AF9A9EE00B9B856 /* bullet */,
 				15FB20781AE7C57D00C31518 /* poly2tri */,
 				382383E11A258FA7002C4610 /* flatbuffers */,
@@ -7556,6 +7555,16 @@
 			path = TextReader;
 			sourceTree = "<group>";
 		};
+		68B39B391B1C5C670084F72C /* clipper */ = {
+			isa = PBXGroup;
+			children = (
+				68B39B3A1B1C5C670084F72C /* clipper.cpp */,
+				68B39B3B1B1C5C670084F72C /* clipper.h */,
+			);
+			name = clipper;
+			path = ../external/clipper;
+			sourceTree = "<group>";
+		};
 		B29594B81926D61F003EEF37 /* 3d */ = {
 			isa = PBXGroup;
 			children = (
@@ -8552,6 +8561,7 @@
 				292DB14B19B4574100A80320 /* UIEditBoxImpl-mac.h in Headers */,
 				B6CAB39D1AF9AA1A00B9B856 /* btCharacterControllerInterface.h in Headers */,
 				B29A7E3F19EE1B7700872B35 /* AnimationState.h in Headers */,
+				68B39B3E1B1C5C670084F72C /* clipper.h in Headers */,
 				B6CAB50F1AF9AA1A00B9B856 /* btList.h in Headers */,
 				D0FD03591A3B51AA00825BB5 /* CCAllocatorStrategyDefault.h in Headers */,
 				B665E2901AA80A6500DDB1C5 /* CCPUDynamicAttributeTranslator.h in Headers */,
@@ -9370,7 +9380,6 @@
 				B6CAB2D31AF9AA1A00B9B856 /* btMultiSphereShape.h in Headers */,
 				B665E1F41AA80A6500DDB1C5 /* CCPUAffector.h in Headers */,
 				1A01C69E18F57BE800EFE3A6 /* CCString.h in Headers */,
-				15FB206C1AE7BE7400C31518 /* CCSpritePolygon.h in Headers */,
 				50ABC00F1926664800A911A9 /* CCFileUtils.h in Headers */,
 				B665E2981AA80A6500DDB1C5 /* CCPUEmitterManager.h in Headers */,
 				15AE1A3719AAD3D500C27E9E /* b2PolygonShape.h in Headers */,
@@ -9767,6 +9776,7 @@
 				B6CAB2EC1AF9AA1A00B9B856 /* btStaticPlaneShape.h in Headers */,
 				B6CAB2DC1AF9AA1A00B9B856 /* btPolyhedralConvexShape.h in Headers */,
 				292DB14819B4574100A80320 /* UIEditBoxImpl-ios.h in Headers */,
+				68B39B3F1B1C5C670084F72C /* clipper.h in Headers */,
 				B6CAB54A1AF9AA1A00B9B856 /* MiniCLTaskScheduler.h in Headers */,
 				B6CAB3621AF9AA1A00B9B856 /* gim_tri_collision.h in Headers */,
 				3E2BDADE19C030ED0055CDCD /* AudioEngine.h in Headers */,
@@ -10077,7 +10087,6 @@
 				15AE18AE19AAD33D00C27E9E /* CCBFileLoader.h in Headers */,
 				B6CAB2D41AF9AA1A00B9B856 /* btMultiSphereShape.h in Headers */,
 				15AE197819AAD35700C27E9E /* CCActionTimeline.h in Headers */,
-				15FB206D1AE7BE7400C31518 /* CCSpritePolygon.h in Headers */,
 				B6CAAFF11AF9A9E100B9B856 /* CCPhysics3DDebugDrawer.h in Headers */,
 				15AE1AA019AAD40300C27E9E /* b2Timer.h in Headers */,
 				5034CA44191D591100CE6051 /* ccShader_Label.vert in Headers */,
@@ -10772,6 +10781,7 @@
 				B6CAB4C51AF9AA1A00B9B856 /* boxBoxDistance.cpp in Sources */,
 				B6CAB29F1AF9AA1A00B9B856 /* btConvex2dShape.cpp in Sources */,
 				B6CAB4331AF9AA1A00B9B856 /* btGpu3DGridBroadphase.cpp in Sources */,
+				68B39B3C1B1C5C670084F72C /* clipper.cpp in Sources */,
 				15AE1A8819AAD40300C27E9E /* b2PrismaticJoint.cpp in Sources */,
 				182C5CB21A95964700C30D34 /* Node3DReader.cpp in Sources */,
 				50ABBE491925AB6F00A911A9 /* CCEventAcceleration.cpp in Sources */,
@@ -11041,7 +11051,6 @@
 				B6CAB3251AF9AA1A00B9B856 /* btGImpactBvh.cpp in Sources */,
 				B665E2721AA80A6500DDB1C5 /* CCPUDoPlacementParticleEventHandler.cpp in Sources */,
 				50ABBD3C1925AB0000A911A9 /* CCGeometry.cpp in Sources */,
-				15FB206A1AE7BE7400C31518 /* CCSpritePolygon.cpp in Sources */,
 				B6CAB3C31AF9AA1A00B9B856 /* btHingeConstraint.cpp in Sources */,
 				B29A7DDD19EE1B7700872B35 /* BoneData.c in Sources */,
 				15AE188A19AAD33D00C27E9E /* CCControlLoader.cpp in Sources */,
@@ -11908,7 +11917,6 @@
 				B6CAB2AC1AF9AA1A00B9B856 /* btConvexPointCloudShape.cpp in Sources */,
 				B6CAB22C1AF9AA1A00B9B856 /* btCollisionObject.cpp in Sources */,
 				15AE183919AAD2F700C27E9E /* CCRay.cpp in Sources */,
-				15FB206B1AE7BE7400C31518 /* CCSpritePolygon.cpp in Sources */,
 				15AE1B8219AADA9A00C27E9E /* UITextBMFont.cpp in Sources */,
 				B6CAB29C1AF9AA1A00B9B856 /* btConeShape.cpp in Sources */,
 				50ABBE6A1925AB6F00A911A9 /* CCEventListenerFocus.cpp in Sources */,
@@ -11998,6 +12006,7 @@
 				B665E3131AA80A6500DDB1C5 /* CCPUObserverManager.cpp in Sources */,
 				50CB248019D9C5A100687767 /* AudioPlayer.mm in Sources */,
 				50ABBE9A1925AB6F00A911A9 /* CCRef.cpp in Sources */,
+				68B39B3D1B1C5C670084F72C /* clipper.cpp in Sources */,
 				15AE18BF19AAD33D00C27E9E /* CCLabelTTFLoader.cpp in Sources */,
 				B6CAB27E1AF9AA1A00B9B856 /* btBox2dShape.cpp in Sources */,
 				15AE1B9519AADA9A00C27E9E /* CocosGUI.cpp in Sources */,

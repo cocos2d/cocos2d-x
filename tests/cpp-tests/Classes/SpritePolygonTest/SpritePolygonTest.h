@@ -17,9 +17,9 @@ protected:
 class SpritePolygonTestDemo : public SpritePolygonTestCase
 {
 public:
-    void initDefaultSprite(const std::string &filename, cocos2d::experimental::SpritePolygon *inst);
+    void initDefaultSprite(const std::string &filename, cocos2d::Node *inst);
 protected:
-    cocos2d::experimental::SpritePolygon* spp;
+    cocos2d::Node* spp;
     cocos2d::Sprite* sp;
     cocos2d::DrawNode *debugForNormalSprite;
 };
@@ -119,12 +119,12 @@ public:
 //    CREATE_FUNC(SpritePolygonTest3);
 //    SpritePolygonTest3();
 //};
-//
-//class SpritePolygonTest4 : public SpritePolygonTestDemo
-//{
-//public:
-//    CREATE_FUNC(SpritePolygonTest4);
-//    SpritePolygonTest4();
-//};
+
+class SpritePolygonTest4 : public SpritePolygonTestDemo
+{
+public:
+    CREATE_FUNC(SpritePolygonTest4);
+    SpritePolygonTest4();
+};
 
 #endif /* defined(__cocos2d_tests__SpritePolygonTest__) */

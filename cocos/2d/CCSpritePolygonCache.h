@@ -29,35 +29,13 @@
 #define COCOS_2D_CCSpritePolygonCACHE_H__
 
 #include "renderer/CCTrianglesCommand.h"
+#include "2d/CCAutoPolygon.h"
 
 NS_CC_BEGIN
 
-class CC_DLL SpritePolygonInfo : public cocos2d::Ref
-{
-public:
-    SpritePolygonInfo()
-    :rect(Rect::ZERO)
-    ,triangles()
-    {
-    };
-    cocos2d::Rect rect;
-    cocos2d::TrianglesCommand::Triangles triangles;
-protected:
-    ~SpritePolygonInfo()
-    {
-        if(nullptr != triangles.verts)
-        {
-            CC_SAFE_DELETE_ARRAY(triangles.verts);
-        }
-        
-        if(nullptr != triangles.indices)
-        {
-            CC_SAFE_DELETE_ARRAY(triangles.indices);
-        }
-    }
-};
 
-typedef std::vector<SpritePolygonInfo*> VecSpritePolygonInfo;
+
+typedef std::vector<PolygonInfo*> VecSpritePolygonInfo;
 typedef std::unordered_map<std::string, VecSpritePolygonInfo> MapSpritePolygonInfo;
 
 class CC_DLL SpritePolygonCache: public cocos2d::Ref
@@ -66,15 +44,15 @@ public:
     virtual ~SpritePolygonCache();
     static SpritePolygonCache* getInstance();
     static void destroyInstance();
-    SpritePolygonInfo* addSpritePolygonCache(const std::string& filePath, const cocos2d::Rect& rect, const cocos2d::TrianglesCommand::Triangles& triangles);
-    SpritePolygonInfo* getSpritePolygonCache(const std::string& filePath, const cocos2d::Rect& rect, float optimization);
+    PolygonInfo* addSpritePolygonCache(const std::string& filePath, const cocos2d::Rect& rect, const cocos2d::TrianglesCommand::Triangles& triangles);
+    PolygonInfo* getSpritePolygonCache(const std::string& filePath, const cocos2d::Rect& rect, float optimization);
     
     void removeSpritePolygonCache(const std::string& filePath, const cocos2d::Rect* rect = nullptr);
     void removeAllSpritePolygonCache();
     void removeUnusedSpritePolygonCache();
     bool isSpritePolygonCacheExist(const std::string& filePath, const cocos2d::Rect& rect);
     
-    static void printInfo(SpritePolygonInfo &info);
+    static void printInfo(PolygonInfo &info);
 protected:
     SpritePolygonCache();
     void init();

@@ -86,6 +86,18 @@ Sprite* Sprite::create(const std::string& filename)
     return nullptr;
 }
 
+Sprite* Sprite::create(const PolygonInfo& info)
+{
+    Sprite *sprite = new (std::nothrow) Sprite();
+    if(sprite && sprite->initWithPolygon(info))
+    {
+        sprite->autorelease();
+        return sprite;
+    }
+    CC_SAFE_DELETE(sprite);
+    return nullptr;
+}
+
 Sprite* Sprite::create(const std::string& filename, const Rect& rect)
 {
     Sprite *sprite = new (std::nothrow) Sprite();
@@ -207,6 +219,13 @@ bool Sprite::initWithSpriteFrame(SpriteFrame *spriteFrame)
     return bRet;
 }
 
+bool Sprite::initWithPolygon(const cocos2d::PolygonInfo &info)
+{
+    Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(info.filename);
+    initWithTexture(texture);
+    _polyInfo = new PolygonInfo(info);
+}
+
 // designated initializer
 bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
 {
@@ -238,6 +257,8 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         _quad.br.colors = Color4B::WHITE;
         _quad.tl.colors = Color4B::WHITE;
         _quad.tr.colors = Color4B::WHITE;
+        
+        _polyInfo = new PolygonInfo(&_quad);
         
         // shader state
         setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
@@ -277,6 +298,7 @@ Sprite::~Sprite(void)
 {
     CC_SAFE_RELEASE(_spriteFrame);
     CC_SAFE_RELEASE(_texture);
+    delete _polyInfo;
 }
 
 /*
@@ -598,7 +620,7 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     if(_insideBounds)
 #endif
     {
-        _trianglesCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, getRenderedTriangles(), transform, flags);
+        _trianglesCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _polyInfo->triangles, transform, flags);
         renderer->addCommand(&_trianglesCommand);
         
 #if CC_SPRITE_DEBUG_DRAW
@@ -612,17 +634,6 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         _debugDrawNode->drawPoly(vertices, 4, true, Color4F(1.0, 1.0, 1.0, 1.0));
 #endif //CC_SPRITE_DEBUG_DRAW
     }
-}
-
-TrianglesCommand::Triangles Sprite::getRenderedTriangles() const
-{
-    static unsigned short indices[6] = {0, 1, 2, 3, 2, 1};
-    TrianglesCommand::Triangles result;
-    result.indices = indices;
-    result.verts = (V3F_C4B_T2F*)&_quad;
-    result.vertCount = 4;
-    result.indexCount = 6;
-    return result;
 }
 
 // MARK: visit, draw, transform

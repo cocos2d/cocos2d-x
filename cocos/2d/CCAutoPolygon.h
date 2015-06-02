@@ -30,41 +30,52 @@ THE SOFTWARE.
 
 #include <string>
 #include <vector>
-#include "cocos2d.h"
+#include "platform/CCImage.h"
+#include "renderer/CCTrianglesCommand.h"
 
 NS_CC_BEGIN
+
+class CC_DLL PolygonInfo
+{
+public:
+    PolygonInfo():
+    triangles(),
+    isVertsOwner(true)
+    {
+    };
+    PolygonInfo(const PolygonInfo& other);
+    PolygonInfo(V3F_C4B_T2F_Quad *quad);
+    ~PolygonInfo();
+    
+    std::string filename;
+    TrianglesCommand::Triangles triangles;
+protected:
+    bool isVertsOwner;
+};
 
 class CC_DLL AutoPolygon
 {
 public:
     AutoPolygon(const std::string &filename);
+    AutoPolygon();
     ~AutoPolygon();
     
-    void setThreshold(unsigned int threshold){_threshold = threshold;};
-    const unsigned int getThreshold(){return _threshold;};
-    
-    ssize_t getVecCount(){return _points.size();};
-    const std::vector<cocos2d::Vec2>& getPoints(){return _points;};
-    
-    const TrianglesCommand::Triangles& getTriangles(){return _triangles;};
-    void printPoints();
-    
     //using Ramer–Douglas–Peucker algorithm
-    void trace(const cocos2d::Rect& rect, const unsigned int threshold = 0);
-    void optimize(const float& optimization);
-    void expand(const cocos2d::Rect& rect, const float& optimization);
-    void triangulate();
-    void calculateUV();
+    std::vector<Vec2> trace(const cocos2d::Rect& rect, const float& threshold = 0.0);
+    std::vector<Vec2> reduce(const std::vector<Vec2>& points, const float& epsilon = 2.0);
+    std::vector<Vec2> expand(const std::vector<Vec2>& points, const cocos2d::Rect& rect, const float& epsilon);
+    TrianglesCommand::Triangles triangulate(const std::vector<Vec2>& points);
+    void calculateUV(V3F_C4B_T2F* verts, const unsigned int& count);
     
-    void generateTriangles(const cocos2d::Rect& rect, const float& optimization, const unsigned int threshold = 0);
+    PolygonInfo generateTriangles(const Rect& rect, const float& epsilon, const float& threshold = 0);
 
 protected:
-    unsigned int findFirstNoneTransparentPixel();
-    void marchSquare(const unsigned int& startx, const unsigned int& starty);
-    unsigned int getSquareValue(const unsigned int& x, const unsigned int& y);
+    Vec2 findFirstNoneTransparentPixel(const Rect& rect);
+    std::vector<cocos2d::Vec2> marchSquare(const Rect& rect, const Vec2& first, const float& threshold);
+    unsigned int getSquareValue(const unsigned int& x, const unsigned int& y, const Rect& rect, const float& threshold);
 
     unsigned char getAlphaByIndex(const unsigned int& i);
-    unsigned char getAlphaByPos(const unsigned int& x, const unsigned int& y);
+    unsigned char getAlphaByPos(const Vec2& i);
 
     int getIndexFromPos(const unsigned int& x, const unsigned int& y){return y*_width+x;};
     cocos2d::Vec2 getPosFromIndex(const unsigned int& i){return cocos2d::Vec2(i%_width, i/_width);};
@@ -74,16 +85,13 @@ protected:
 
     bool isAConvexPoint(const cocos2d::Vec2& p1, const cocos2d::Vec2& p2);
     
-    cocos2d::Image* _image;
+    Image* _image;
     unsigned char * _data;
     std::string _filename;
     unsigned int _width;
     unsigned int _height;
     float _scaleFactor;
-    cocos2d::Rect _rect;
     unsigned int _threshold;
-    std::vector<cocos2d::Vec2> _points;
-    TrianglesCommand::Triangles _triangles;
 };
 
 NS_CC_END
