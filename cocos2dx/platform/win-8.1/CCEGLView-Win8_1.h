@@ -81,6 +81,9 @@ public:
 	void OnResuming(Platform::Object^ sender, Platform::Object^ args);
 	void OnSuspending(Platform::Object^ sender, Windows::ApplicationModel::SuspendingEventArgs^ args);
     
+    void OnBackKeyPress();
+    bool AppShouldExit();
+
     void QueueBackKeyPress();
     void QueuePointerEvent(PointerEventType type, Windows::UI::Core::PointerEventArgs^ args);
     void QueueEvent(std::shared_ptr<InputEvent>& event);
@@ -139,6 +142,7 @@ private:
     kmMat4 m_orientationMatrix;
     kmMat4 m_reverseOrientationMatrix;
     
+    bool m_appShouldExit;
     bool m_running;
 	bool m_initialized;
     bool m_bSupportTouch;

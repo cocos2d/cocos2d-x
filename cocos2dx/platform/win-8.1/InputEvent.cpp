@@ -119,7 +119,7 @@ BackButtonEvent::BackButtonEvent()
 
 void BackButtonEvent::execute()
 {
-    //CCEGLView::sharedOpenGLView()->OnBackKeyPress();
+    CCEGLView::sharedOpenGLView()->OnBackKeyPress();
 }
 
 CustomInputEvent::CustomInputEvent(const std::function<void()>& fun)

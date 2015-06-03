@@ -96,3 +96,12 @@ void Cocos2dRenderer::QueueKeyBoardEvent(cocos2d::Cocos2dKeyEvent type, Windows:
     //CCEGLView::sharedOpenGLView()->QueuePointerEvent(type, e);
 }
 
+void Cocos2dRenderer::QueueBackButtonEvent()
+{
+    CCEGLView::sharedOpenGLView()->QueueBackKeyPress();
+}
+
+bool Cocos2dRenderer::AppShouldExit()
+{
+    return CCEGLView::sharedOpenGLView()->AppShouldExit();
+}

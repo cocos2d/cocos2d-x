@@ -71,6 +71,7 @@ CCEGLView::CCEGLView()
     , m_width(0)
     , m_height(0)
     , m_orientation(DisplayOrientations::Landscape)
+    , m_appShouldExit(false)
 {
 	s_pEglView = this;
     strcpy_s(m_szViewName, "Cocos2dxWP8.1");
@@ -129,6 +130,7 @@ bool CCEGLView::isOpenGLReady()
 void CCEGLView::end()
 {
 	m_windowClosed = true;
+    m_appShouldExit = true;
 }
 
 void CCEGLView::OnSuspending(Platform::Object^ sender, SuspendingEventArgs^ args)
@@ -420,6 +422,51 @@ void CCEGLView::setScissorInPoints(float x , float y , float w , float h)
         (GLsizei) (h * m_fScaleY));
 }
 
+bool CCEGLView::AppShouldExit()
+{
+    return m_appShouldExit;
+}
+
+// user pressed the Back Key on the phone
+void CCEGLView::OnBackKeyPress()
+{
+    auto dispatcher = CCDirector::sharedDirector()->getKeypadDispatcher();
+    if (dispatcher->hasDelegates())
+    {
+        dispatcher->dispatchKeypadMSG(ccKeypadMSGType::kTypeBackClicked);
+    }
+    else
+    {
+        CCLOG("*********************************************************************");
+        CCLOG("CCEGLView::OnBackKeyPress: Exiting application!");
+        CCLOG("");
+        CCLOG("If you want to listen for Windows Phone back button events,");
+        CCLOG("Call setKeypadEnabled(true); from your scene's init() method");
+        CCLOG("Override the CCLayer::keyBackClicked() method");
+        CCLOG("Make sure you call CCDirector::sharedDirector()->end() if you");
+        CCLOG("want your app to exit when the back button is pressed.");
+        CCLOG("");
+        CCLOG("For example, add the following to your scene's init() method...");
+        CCLOG("");
+        CCLOG("     setKeypadEnabled(true);");
+        CCLOG("");
+        CCLOG("Add the keyBackClicked() method to your Scene class...");
+        CCLOG("");
+        CCLOG("void HelloWorld::keyBackClicked()");
+        CCLOG("{");
+        CCLOG("     if (myAppShouldQuit) // or whatever logic you want...");
+        CCLOG("     {");
+        CCLOG("         CCDirector::sharedDirector()->end();");
+        CCLOG("         return;");
+        CCLOG("     }");
+        CCLOG("     // Handle the back button event for your app");
+        CCLOG("}");
+        CCLOG("");
+        CCLOG("*********************************************************************");
+
+        CCDirector::sharedDirector()->end();
+    }
+}
 
 void CCEGLView::QueueBackKeyPress()
 {

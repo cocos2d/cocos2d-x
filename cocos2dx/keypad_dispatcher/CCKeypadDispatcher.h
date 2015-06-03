@@ -79,6 +79,8 @@ public:
     */
     bool dispatchKeypadMSG(ccKeypadMSGType nMsgType);
 
+    bool hasDelegates() { return m_pDelegates->count() > 0; };
+
 protected:
 
     CCArray* m_pDelegates;
