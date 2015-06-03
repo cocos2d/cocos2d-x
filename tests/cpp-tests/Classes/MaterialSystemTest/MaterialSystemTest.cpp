@@ -155,7 +155,7 @@ std::string Material_2DEffects::subtitle() const
 /*
  * Custom material auto-binding resolver for terrain.
  */
-class EffectAutoBindingResolver : GLProgramState::AutoBindingResolver
+class EffectAutoBindingResolver : public GLProgramState::AutoBindingResolver
 {
     bool resolveAutoBinding(GLProgramState* glProgramState, Node* node, const std::string& uniform, const std::string& autoBinding);
 
@@ -180,21 +180,27 @@ bool EffectAutoBindingResolver::resolveAutoBinding(GLProgramState* glProgramStat
 
 void EffectAutoBindingResolver::callbackRadius(GLProgram* glProgram, Uniform* uniform)
 {
-    glProgram->setUniformLocationWith1f(uniform->location, 0.3);
+    float f = CCRANDOM_0_1() * 10;
+    glProgram->setUniformLocationWith1f(uniform->location, f);
 }
 
 void EffectAutoBindingResolver::callbackColor(GLProgram* glProgram, Uniform* uniform)
 {
-    glProgram->setUniformLocationWith4f(uniform->location, 0.1, 0.2, 0.3, 1);
+    float r = CCRANDOM_0_1();
+    float g = CCRANDOM_0_1();
+    float b = CCRANDOM_0_1();
+
+    glProgram->setUniformLocationWith3f(uniform->location, r, g, b);
 }
 
 Material_AutoBindings::Material_AutoBindings()
 {
+    _resolver = new EffectAutoBindingResolver;
 }
 
-Material_AutoBindings::~Material_MultipleSprite3D()
+Material_AutoBindings::~Material_AutoBindings()
 {
-
+    delete _resolver;
 }
 
 
@@ -202,6 +208,7 @@ void Material_AutoBindings::onEnter()
 {
     MaterialSystemBaseTest::onEnter();
 
+//    auto properties = Properties::createNonRefCounted("Materials/2d_effects.material#sample");
     auto properties = Properties::createNonRefCounted("Materials/auto_binding_test.material#sample");
 
     // Print the properties of every namespace within this one.
