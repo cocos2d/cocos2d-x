@@ -908,9 +908,7 @@ Node* GLProgramState::getNodeBinding() const
 //
 GLProgramState::AutoBindingResolver::AutoBindingResolver()
 {
-    log("_customAutoBindingResolvers size: %d", _customAutoBindingResolvers.size());
     _customAutoBindingResolvers.push_back(this);
-    log("_customAutoBindingResolvers size: %d", _customAutoBindingResolvers.size());
 }
 
 GLProgramState::AutoBindingResolver::~AutoBindingResolver()
