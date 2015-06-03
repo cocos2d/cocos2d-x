@@ -1814,7 +1814,8 @@ bool Blink::initWithDuration(float duration, int blinks)
 
 void Blink::stop()
 {
-    _target->setVisible(_originalState);
+    if(NULL != _target)
+        _target->setVisible(_originalState);
     ActionInterval::stop();
 }
 
