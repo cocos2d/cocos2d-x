@@ -42,7 +42,8 @@ struct _ccCArray;
  * @{
  */
 
-/** @brief TMXLayer represents the TMX layer.
+
+/** @brief @~english TMXLayer represents the TMX layer.
  * It is a subclass of SpriteBatchNode. By default the tiles are rendered using a TextureAtlas.
  * If you modify a tile on runtime, then, that tile will become a Sprite, otherwise no Sprite objects are created.
  * The benefits of using Sprite objects as tiles are:
@@ -57,71 +58,124 @@ struct _ccCArray;
  * value, like 0.5.
  * For further information, please see the programming guide:
  * http://www.cocos2d-iphone.org/wiki/doku.php/prog_guide:tiled_maps
+ 
+ * @~chinese TMXLayer用来表示TMX layer，
+ * 继承自SpriteBatchNode。tiles使用TextureAtlas进行渲染。
+ * 如果运行时修改一个tile，那么tile将变成一个Sprite，反之，则不会有Sprite对象被创建。
+ * 使用Sprite对象作为Tile的好处是:
+ * -  tiles(即Sprite)可以通过完善的API进行旋转/缩放/移动
+
+ * 如果layer包含一个属性名为"cc_vertexz"的整数(正整数/负整数)，那么属于layer的tiles将使用该属性值作为它们OpenGL用来渲染显示层次的Z值。
+ * 另外,如果“cc_vertexz”属性值为“automatic”，那么这些tiles将使用一个自分配的Z值。
+
+ * 在绘制这些tiles时，在绘制前，必须设置GL_ALPHA_TEST为可用，绘制后设置为禁用。使用的Alpha函数如下：
+ * glAlphaFunc( GL_GREATER, value ).
+ * “value”默认为0,但是你可以通过向层添加“cc_alpha_func”属性来改变该值.
+ * 大多数情况value的值是0，但如果有些tiles是半透明的，那么该值则可能会有所不同，比如0.5。
+ * 进一步的信息,请参见编程指南(注：此链接已不可用):
+ * http://www.cocos2d-iphone.org/wiki/doku.php/prog_guide:tiled_maps
  * @since v0.8.1
- * Tiles can have tile flags for additional properties. At the moment only flip horizontal and flip vertical are used. These bit flags are defined in TMXXMLParser.h.
+ * @~english Tiles can have tile flags for additional properties. At the moment only flip horizontal and flip vertical are used. These bit flags are defined in TMXXMLParser.h.
+ * @~chinese 瓦片可以有tile flags附加属性。目前只有水平翻转和垂直翻转用到。这些bit flags在TMXXMLParser.h中定义.
  * @since 1.1
  */
+
 
 class CC_DLL TMXLayer : public SpriteBatchNode
 {
 public:
-    /** Creates a TMXLayer with an tileset info, a layer info and a map info.
+    /** @~english Creates a TMXLayer with an tileset info, a layer info and a map info.
      *
-     * @param tilesetInfo An tileset info.
-     * @param layerInfo A layer info.
-     * @param mapInfo A map info.
-     * @return An autorelease object.
+     * @~chinese 通过指定TMXTilesetInfo,TMXLayerInfo和TMXMapInfo创建一个TMXLayer
+     * 
+     * @param tilesetInfo @~english An tileset info.
+     * @~chinese TMXTilesetInfo数据.
+     * @param layerInfo @~english A layer info.
+     * @~chinese TMXLayerInfo数据.
+     * @param mapInfo @~english A map info.
+     * @~chinese TMXMapInfo数据.
+     * @return @~english An autorelease object.
+     * @~chinese 一个autorelease对象.
      */
     static TMXLayer * create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
+
     /**
      * @js ctor
      */
     TMXLayer();
+
     /**
      * @js NA
      * @lua NA
      */
     virtual ~TMXLayer();
 
-    /** Initializes a TMXLayer with a tileset info, a layer info and a map info.
+    /** @~english Initializes a TMXLayer with a tileset info, a layer info and a map info.
      *
-     * @param tilesetInfo An tileset info.
-     * @param layerInfo A layer info.
-     * @param mapInfo A map info.
-     * @return If initializes success，it will return true.
+     * @~chinese 使用指定TMXTilesetInfo,TMXLayerInfo和TMXMapInfo初始化一个TMXLayer
+     * 
+     * @param tilesetInfo @~english An tileset info.
+     * @~chinese TMXTilesetInfo数据.
+     * @param layerInfo @~english A layer info.
+     * @~chinese TMXLayerInfo数据.
+     * @param mapInfo @~english A map info.
+     * @~chinese TMXMapInfo数据.
+     * @return @~english If initializes success,it will return true.
+     * @~chinese 如果初始化成功,将返回true.
      */
     bool initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
 
-    /** Dealloc the map that contains the tile position from memory.
+    /** @~english Dealloc the map that contains the tile position from memory.
      * Unless you want to know at runtime the tiles positions, you can safely call this method.
      * If you are going to call layer->tileGIDAt() then, don't release the map.
+     * @~chinese 从内存中释放包含tile位置信息的地图。
+     * 除了在运行时想要知道tiles的位置信息外，你都可安全的调用此方法。
+     * 如果你之后还要调用layer->tileGIDAt(),请不要释放地图.
      */
     void releaseMap();
 
-    /** Returns the tile (Sprite) at a given a tile coordinate.
+    /** @~english Returns the tile (Sprite) at a given a tile coordinate.
      * The returned Sprite will be already added to the TMXLayer. Don't add it again.
      * The Sprite can be treated like any other Sprite: rotated, scaled, translated, opacity, color, etc.
      * You can remove either by calling:
      * - layer->removeChild(sprite, cleanup);
      * - or layer->removeTileAt(Vec2(x,y));
      *
-     * @param tileCoordinate A tile coordinate.
-     * @return Returns the tile (Sprite) at a given a tile coordinate.
+     * @~chinese  通过指定的tile坐标获取对应的tile(Sprite)。
+     * 返回的tile(Sprite)应是已经添加到TMXLayer，请不要重复添加。
+	 * 这个tile(Sprite)如同其他的Sprite一样，可以旋转、缩放、翻转、透明化、设置颜色等。
+     * 你可以通过调用以下方法来对它进行删除:
+     * - layer->removeChild(sprite, cleanup);
+     * - 或 layer->removeTileAt(Vec2(x,y));
+     * 
+     * @param tileCoordinate @~english A tile coordinate.
+     * @~chinese 瓦片坐标.
+     * @return @~english Returns the tile (Sprite) at a given a tile coordinate.
+     * @~chinese 返回指定坐标位置的瓦片(Sprite).
      */
     Sprite* getTileAt(const Vec2& tileCoordinate);
+
     /**
      * @js NA
      */
     CC_DEPRECATED_ATTRIBUTE Sprite* tileAt(const Vec2& tileCoordinate) { return getTileAt(tileCoordinate); };
     
-    /** Returns the tile gid at a given tile coordinate. It also returns the tile flags.
+    /** @~english Returns the tile gid at a given tile coordinate. It also returns the tile flags.
      * This method requires the the tile map has not been previously released (eg. don't call [layer releaseMap]).
      * 
-     * @param tileCoordinate The tile coordinate.
-     * @param flags Tile flags.
-     * @return Returns the tile gid at a given tile coordinate. It also returns the tile flags.
+     * @~chinese 通过给定的瓦片坐标、flags（可选）返回瓦片GID.
+     * 该方法要求瓦片地图之前没有被释放过(如：没有调用过layer->releaseMap()).
+     * 
+     * @param tileCoordinate @~english The tile coordinate.
+     * @~chinese 瓦片坐标.
+     * @param flags @~english Tile flags.
+     * @~chinese 瓦片flags.
+     * @return @~english Returns the tile gid at a given tile coordinate. It also returns the tile flags.
+     * @~chinese 返回过给定的瓦片坐标、flags（可选）的瓦片GID.
      */
+
 	uint32_t getTileGIDAt(const Vec2& tileCoordinate, TMXTileFlags* flags = nullptr);
+
     /**
      * @js NA
      */
@@ -129,116 +183,172 @@ public:
         return getTileGIDAt(tileCoordinate, flags);
     };
 
-    /** Sets the tile gid (gid = tile global id) at a given tile coordinate.
+    /** @~english Sets the tile gid (gid = tile global id) at a given tile coordinate.
      * The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
      * If a tile is already placed at that position, then it will be removed.
      *
-     * @param gid The tile gid.
-     * @param tileCoordinate The tile coordinate.
+     * @~chinese 设置给定坐标的瓦片的gid(gid =瓦片全局id)
+     * 瓦片GID可以使用方法“tileGIDAt”来获得，或使用TMX编辑器 -> Tileset Mgr +1得到.
+     * 如果该位置上已有一个tile，那么该位置上已有的tile将会被移除。
+     * 
+     * @param gid @~english The tile gid.
+     * @~chinese 瓦片gid.
+     * @param tileCoordinate @~english The tile coordinate.
+     * @~chinese 瓦片坐标.
      */
     void setTileGID(uint32_t gid, const Vec2& tileCoordinate);
 
-    /** Sets the tile gid (gid = tile global id) at a given tile coordinate.
+    /** @~english Sets the tile gid (gid = tile global id) at a given tile coordinate.
      * The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
      * If a tile is already placed at that position, then it will be removed.
      * Use withFlags if the tile flags need to be changed as well.
      * 
-     * @param gid The tile gid.
-     * @param tileCoordinate The tile coordinate.
-     * @param flags The tile flags.
+     * @~chinese 设置给定坐标、flags的瓦片的gid(gid =瓦片全局id)
+     * 瓦片GID可以使用方法“tileGIDAt”来获得，或使用TMX编辑器 -> Tileset Mgr +1.
+     * 如果一个瓦片已经放在那个位置,那么它将被删除.
+     * 使用flags如果瓦片flags需要更改.
+     * 
+     * @param gid @~english The tile gid.
+     * @~chinese 瓦片gid.
+     * @param tileCoordinate @~english The tile coordinate.
+     * @~chinese 瓦片坐标.
+     * @param flags @~english The tile flags.
+     * @~chinese 瓦片的flags.
      */
-
     void setTileGID(uint32_t gid, const Vec2& tileCoordinate, TMXTileFlags flags);
 
-    /** Removes a tile at given tile coordinate. 
+    /** @~english Removes a tile at given tile coordinate. 
      *
-     * @param tileCoordinate The tile coordinate.
+     * @~chinese 删除指定坐标上的瓦片.
+     * 
+     * @param tileCoordinate @~english The tile coordinate.
+     * @~chinese 瓦片坐标.
      */
     void removeTileAt(const Vec2& tileCoordinate);
 
-    /** Returns the position in points of a given tile coordinate.
+    /** @~english Returns the position in points of a given tile coordinate.
      *
-     * @param tileCoordinate The tile coordinate.
-     * @return The position in points of a given tile coordinate.
+     * @~chinese 获取指定坐标的位置(以点为单位)
+     * 
+     * @param tileCoordinate @~english The tile coordinate.
+     * @~chinese 瓦片坐标.
+     * @return @~english The position in points of a given tile coordinate.
+     * @~chinese 给定瓦片坐标点的位置.
      */
 	Vec2 getPositionAt(const Vec2& tileCoordinate);
+
     /**
     * @js NA
     */
     CC_DEPRECATED_ATTRIBUTE Vec2 positionAt(const Vec2& tileCoordinate) { return getPositionAt(tileCoordinate); };
 
-    /** Return the value for the specific property name.
+    /** @~english Return the value for the specific property name.
      *
-     * @param propertyName The specific property name.
-     * @return Return the value for the specific property name.
+     * @~chinese 获取指定属性名(propertyName)的值
+     * 
+     * @param propertyName @~english The specific property name.
+     * @~chinese 特定的属性名.
+     * @return @~english Return the value for the specific property name.
+     * @~chinese 返回指定属性名(propertyName)的值.
      */
+
 	Value getProperty(const std::string& propertyName) const;
+
     /**
     * @js NA
     */
     CC_DEPRECATED_ATTRIBUTE Value propertyNamed(const std::string& propertyName) const { return getProperty(propertyName); };
 
-    /** Creates the tiles. */
+    /** @~english Creates the tiles.  @~chinese 创建tiles*/
     void setupTiles();
     
-    /** Get the layer name. 
+    /** @~english Get the layer name. 
      *
-     * @return The layer name.
+     * @~chinese 获取层的名称.
+     * 
+     * @return @~english The layer name.
+     * @~chinese 层的名称.
      */
     inline const std::string& getLayerName(){ return _layerName; }
     
-    /** Set the layer name.
+    /** @~english Set the layer name.
      *
-     * @param layerName The layer name.
+     * @~chinese 设置层的名称.
+     * 
+     * @param layerName @~english The layer name.
+     * @~chinese 层的名称.
      */
     inline void setLayerName(const std::string& layerName){ _layerName = layerName; }
 
-    /** Size of the layer in tiles.
+    /** @~english Size of the layer in tiles.
      *
-     * @return Size of the layer in tiles.
+     * @~chinese 获取层的尺寸.
+     * 
+     * @return @~english Size of the layer in tiles.
+     * @~chinese 瓦片层的尺寸.
      */
     inline const Size& getLayerSize() const { return _layerSize; };
     
-    /** Set size of the layer in tiles.
+    /** @~english Set size of the layer in tiles.
      *
-     * @param size Size of the layer in tiles.
+     * @~chinese 设置层瓦片层的尺寸.
+     * 
+     * @param size @~english Size of the layer in tiles.
+     * @~chinese 瓦片层的尺寸.
      */
     inline void setLayerSize(const Size& size) { _layerSize = size; };
     
-    /** Size of the map's tile (could be different from the tile's size).
+    /** @~english Size of the map's tile (could be different from the tile's size).
      *
-     * @return The size of the map's tile.
+     * @~chinese 获取瓦片的尺寸(瓦片的尺寸可能会有所不同).
+     * 
+     * @return @~english The size of the map's tile.
+     * @~chinese 瓦片的尺寸.
      */
     inline const Size& getMapTileSize() const { return _mapTileSize; };
     
-    /** Set the size of the map's tile.
+    /** @~english Set the size of the map's tile.
      *
-     * @param size The size of the map's tile.
+     * @~chinese 设置瓦片的尺寸.
+     * 
+     * @param size @~english The size of the map's tile.
+     * @~chinese 瓦片的尺寸.
      */
     inline void setMapTileSize(const Size& size) { _mapTileSize = size; };
     
-    /** Pointer to the map of tiles.
+    /** @~english Pointer to the map of tiles.
+     * @~chinese 获取指向tiles地图的指针.
      * @js NA
      * @lua NA
-     * @return Pointer to the map of tiles.
+     * @return @~english Pointer to the map of tiles.
+     * @~chinese 指向tiles地图的指针.
      */
     uint32_t* getTiles() const { return _tiles; };
     
-    /** Set a pointer to the map of tiles.
+    /** @~english Set a pointer to the map of tiles.
      *
-     * @param tiles A pointer to the map of tiles.
+     * @~chinese 设置指向tiles地图的指针。
+     * 
+     * @param tiles @~english A pointer to the map of tiles.
+     * @~chinese 指向tiles地图的指针
      */
     void setTiles(uint32_t* tiles) { _tiles = tiles; };
     
-    /** Tileset information for the layer. 
+    /** @~english Tileset information for the layer. 
      *
-     * @return Tileset information for the layer.
+     * @~chinese 获取layer的Tileset信息
+     * 
+     * @return @~english Tileset information for the layer.
+     * @~chinese layer的Tileset信息
      */
     inline TMXTilesetInfo* getTileSet() const { return _tileSet; };
     
-    /** Set tileset information for the layer.
+    /** @~english Set tileset information for the layer.
      *
-     * @param info The tileset information for the layer.
+     * @~chinese 设置layer的Tileset信息
+     * 
+     * @param info @~english The tileset information for the layer.
+     * @~chinese layer的Tileset信息
      * @js NA
      */
     inline void setTileSet(TMXTilesetInfo* info) {
@@ -247,47 +357,67 @@ public:
         _tileSet = info;
     };
     
-    /** Layer orientation, which is the same as the map orientation.
+    /** @~english Layer orientation, which is the same as the map orientation.
      *
-     * @return Layer orientation, which is the same as the map orientation.
+     * @~chinese  获取Layer定向(同地图定向)
+     * 
+     * @return @~english Layer orientation, which is the same as the map orientation.
+     * @~chinese  Layer定向(同地图定向)
      */
     inline int getLayerOrientation() const { return _layerOrientation; };
     
-    /** Set layer orientation, which is the same as the map orientation.
+    /** @~english Set layer orientation, which is the same as the map orientation.
      *
-     * @param orientation Layer orientation,which is the same as the map orientation.
+     * @~chinese 设置 Layer定向(同地图定向)
+     * 
+     * @param orientation @~english Layer orientation,which is the same as the map orientation.
+     * @~chinese  Layer定向(同地图定向)
      */
     inline void setLayerOrientation(int orientation) { _layerOrientation = orientation; };
     
-    /** Properties from the layer. They can be added using Tiled.
+    /** @~english Properties from the layer. They can be added using Tiled.
      *
-     * @return Properties from the layer. They can be added using Tiled.
+     * @~chinese 获取layer的属性，可以被当作Tile添加
+     * 
+     * @return @~english Properties from the layer. They can be added using Tiled.
+     * @~chinese layer的属性
      */
     inline const ValueMap& getProperties() const { return _properties; };
     
-    /** Properties from the layer. They can be added using Tiled.
+    /** @~english Properties from the layer. They can be added using Tiled.
      *
-     * @return Properties from the layer. They can be added using Tiled.
+     * @~chinese 获取layer的属性，可以被当作Tile添加
+     * 
+     * @return @~english Properties from the layer. They can be added using Tiled.
+     * @~chinese layer的属性
      */
     inline ValueMap& getProperties() { return _properties; };
     
-    /** Set an Properties from to layer.
+    /** @~english Set an Properties from to layer.
      *
-     * @param properties It is used to set the layer Properties.
+     * @~chinese 设置层属性.
+     * 
+     * @param properties @~english It is used to set the layer Properties.
+     * @~chinese 它是用来设置图层的属性.
      */
     inline void setProperties(const ValueMap& properties) {
         _properties = properties;
     };
+
     //
     // Override
     //
-    /** TMXLayer doesn't support adding a Sprite manually.
-     @warning addchild(z, tag); is not supported on TMXLayer. Instead of setTileGID.
+    /** @~english TMXLayer doesn't support adding a Sprite manually.
+     * @~chinese TMXLayer不支持手动添加一个Sprite.
+     @warning @~english addchild(z, tag); is not supported on TMXLayer. Instead of setTileGID.
+     * @~chinese addchild(z, tag);不能在TMXLayer中使用，请用setTileGID代替
      */
     using SpriteBatchNode::addChild;
     virtual void addChild(Node * child, int zOrder, int tag) override;
+
     // super method
     void removeChild(Node* child, bool cleanup) override;
+
     /**
     * @js NA
     */
@@ -300,12 +430,14 @@ protected:
     Vec2 getPositionForStaggeredAt(const Vec2& pos);
     Vec2 calculateLayerOffset(const Vec2& offset);
 
-    /* optimization methods */
+    /* @~english optimization methods  @~chinese 优化方法*/
+
     Sprite* appendTileForGID(uint32_t gid, const Vec2& pos);
     Sprite* insertTileForGID(uint32_t gid, const Vec2& pos);
     Sprite* updateTileForGID(uint32_t gid, const Vec2& pos);
 
-    /* The layer recognizes some special properties, like cc_vertez */
+    /* @~english The layer recognizes some special properties, like cc_vertez  @~chinese 《公约》承认解决some special返回家园并归还其财产、cc_vertez like*/
+
     void parseInternalProperties();
     void setupTileSprite(Sprite* sprite, Vec2 pos, int gid);
     Sprite* reusedTileWithRect(Rect rect);
@@ -332,22 +464,29 @@ protected:
     // used for retina display
     float _contentScaleFactor;
     
-    /** size of the layer in tiles */
+    /** @~english size of the layer in tiles  @~chinese 层瓦片的大小*/
+
     Size _layerSize;
-    /** size of the map's tile (could be different from the tile's size) */
+    /** @~english size of the map's tile (could be different from the tile's size)  @~chinese 地图大小的瓦片(从瓦片的大小可能会有所不同)*/
+
     Size _mapTileSize;
-    /** pointer to the map of tiles */
+    /** @~english pointer to the map of tiles  @~chinese 指针的地图瓦片*/
+
     uint32_t* _tiles;
-    /** Tileset information for the layer */
+    /** @~english Tileset information for the layer  @~chinese 确定信息层*/
+
     TMXTilesetInfo* _tileSet;
-    /** Layer orientation, which is the same as the map orientation */
+    /** @~english Layer orientation, which is the same as the map orientation  @~chinese 层取向,它是一样的地图定位*/
+
     int _layerOrientation;
-    /** properties from the layer. They can be added using Tiled */
+    /** @~english properties from the layer. They can be added using Tiled  @~chinese 从层属性.他们可以添加使用瓦片*/
+
     ValueMap _properties;
 };
 
 // end of tilemap_parallax_nodes group
 /** @} */
+
 
 NS_CC_END
 
