@@ -204,7 +204,7 @@ void OpenGLESPage::OnKeyReleased(CoreWindow^ sender, KeyEventArgs^ e)
 void OpenGLESPage::OnOrientationChanged(DisplayInformation^ sender, Object^ args)
 {
     critical_section::scoped_lock lock(mSwapChainPanelSizeCriticalSection);
-   mOrientation = sender->CurrentOrientation;
+    mOrientation = sender->CurrentOrientation;
 }
 
 void OpenGLESPage::OnVisibilityChanged(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::VisibilityChangedEventArgs^ args)
@@ -241,7 +241,6 @@ void OpenGLESPage::OnBackButtonPressed(Object^ sender, BackPressedEventArgs^ arg
     }
 }
 #endif
-
 
 void OpenGLESPage::OnSwapChainPanelSizeChanged(Object^ sender, Windows::UI::Xaml::SizeChangedEventArgs^ e)
 {
@@ -314,7 +313,6 @@ void OpenGLESPage::TerminateApp()
             mOpenGLES->DestroySurface(mRenderSurface);
             mOpenGLES->Cleanup();
         }
-
     }
     Windows::UI::Xaml::Application::Current->Exit();
 }
@@ -355,6 +353,7 @@ void OpenGLESPage::StartRenderLoop()
                 mRenderer->Pause();
             }
 
+            // wait until app is visible again or thread is cancelled
             while (!mVisible)
             {
                 std::unique_lock<std::mutex> lock(mSleepMutex);
@@ -406,9 +405,9 @@ void OpenGLESPage::StartRenderLoop()
                 swapChainPanel->Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::High, ref new Windows::UI::Core::DispatchedHandler([=]()
                 {
                     RecoverFromLostDevice();
-
                 }, CallbackContext::Any));
 
+                // wait until OpenGL is reset or thread is cancelled
                 while (mDeviceLost)
                 {
                     std::unique_lock<std::mutex> lock(mSleepMutex);
