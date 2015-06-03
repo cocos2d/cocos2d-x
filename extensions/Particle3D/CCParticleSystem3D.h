@@ -209,16 +209,16 @@ typedef DataPool<Particle3D> ParticlePool;
 *@brief @~english ParticleSystem3D is a base class, define interfaces.
  specific implementation decisions by different particle systems.
  a particle system consist of:
- - one Emitter(how emitted particles)
- - multiple affector(how particles motion)
- - one renderer(how to render the particles)
+ - one Emitter(how to emit particles)
+ - multiple affector(how to affect particles)
+ - one renderer(how to render particles)
 
  @~chinese ParticleSystem3D 是3D粒子系统的基类，定义了3D粒子系统所需的各种接口。
  具体的实现由不同的粒子系统决定。
  一个粒子系统组成：
  - 一个发射器(如何发射粒子)
- - 多个影响器(粒子如何运动)
- - 一个渲染器(粒子如何渲染)
+ - 多个影响器(如何影响粒子)
+ - 一个渲染器(如何渲染粒子)
 */
 class CC_DLL ParticleSystem3D : public Node, public BlendProtocol
 {
