@@ -108,7 +108,7 @@ bool luaval_to_navmeshagentparam(lua_State* L, int lo, cocos2d::NavMeshAgentPara
     return false;
 }
 
-bool luaval_to_offmeshlinkdata(lua_State* L, int lo, cocos2d::OffMeshLinkData* outValue , const char* funcName = "")
+bool luaval_to_offmeshlinkdata(lua_State* L, int lo, cocos2d::OffMeshLinkData* outValue , const char* funcName)
 {
     if (nullptr == L || nullptr == outValue)
         return false;

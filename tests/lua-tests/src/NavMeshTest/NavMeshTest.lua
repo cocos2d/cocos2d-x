@@ -19,19 +19,21 @@ local actionManager = cc.Director:getInstance():getActionManager()
 ----------------------------------------
 local NavMeshBaseTestDemo = class("NavMeshBaseTestDemo", function ()
     -- body
-    local layer = cc.Layer:create()
-    return layer
+    local scene = cc.Scene:createWithPhysics()
+    return scene
 end)
 
 function NavMeshBaseTestDemo:ctor()
 
-    Helper.initWithLayer(self)
-    Helper.titleLabel:setString(self:title())
-    Helper.subtitleLabel:setString(self:subtitle())
+    TestCastScene.initWithLayer(self)
+    TestCastScene.titleLabel:setString(self:title())
+    TestCastScene.subtitleLabel:setString(self:subtitle())
+
+    self:init()
 
     local function onNodeEvent(event)
         if "enter" == event then
-            self:onEnter()
+            -- self:onEnter()
         elseif "exit" == event then
             self:onExit()
         end
@@ -48,49 +50,43 @@ function NavMeshBaseTestDemo:subtitle()
     return ""
 end
 
-function NavMeshBaseTestDemo:onEnter()
-    local scene = cc.Director:getInstance():getRunningScene()
-    if nil ~= scene then
-        self._angle = 0.0
-        self._agents = {}
-        self._agentNode = nil
-        self._resumeFlag = false
-        local size = cc.Director:getInstance():getWinSize()
-        self._camera = cc.Camera:createPerspective(30.0, size.width / size.height, 1.0, 1000.0)
-        self._camera:setPosition3D(cc.vec3(0.0, 50.0, 100.0))
-        self._camera:lookAt(cc.vec3(0.0, 0.0, 0.0), cc.vec3(0.0, 1.0, 0.0))
-        self._camera:setCameraFlag(cc.CameraFlag.USER1)
-        self:addChild(self._camera)
+function NavMeshBaseTestDemo:init()
+    self._angle = 0.0
+    self._agents = {}
+    local size = cc.Director:getInstance():getWinSize()
+    self._camera = cc.Camera:createPerspective(30.0, size.width / size.height, 1.0, 1000.0)
+    self._camera:setPosition3D(cc.vec3(0.0, 50.0, 100.0))
+    self._camera:lookAt(cc.vec3(0.0, 0.0, 0.0), cc.vec3(0.0, 1.0, 0.0))
+    self._camera:setCameraFlag(cc.CameraFlag.USER1)
+    self:addChild(self._camera)
 
-        self:registerTouchEvent()
+    self:registerTouchEvent()
 
-        self:initScene()
+    self:initScene()
 
-        self:scheduleUpdateWithPriorityLua(function(dt)
+    self:scheduleUpdateWithPriorityLua(function(dt)
+        if #self._agents == 0 then
+            return
+        end
 
-            if #self._agents == 0 then
-                return
+        if not self._resumeFlag and nil ~= self._agentNode then
+            self._resumeFlag = true
+            actionManager:resumeTarget(self._agentNode)
+        end
+
+        local currentVelocity = nil
+        local speed = 0
+        for i = 1, #self._agents do
+            currentVelocity = self._agents[i][1]:getCurrentVelocity()
+            speed = math.sqrt(currentVelocity.x * currentVelocity.x + currentVelocity.y * currentVelocity.y + currentVelocity.z * currentVelocity.z) * 0.2
+            if speed < 0 then
+                speed = 0.0
             end
+            self._agents[i][2]:setSpeed(speed)
+        end
+    end, 0)
 
-            if not self._resumeFlag then
-                self._resumeFlag = true
-                actionManager:resumeTarget(self._agentNode)
-            end
-
-            local currentVelocity = nil
-            local speed = 0
-            for i = 1, #self._agents do
-                currentVelocity = self._agents[i][1]:getCurrentVelocity()
-                speed = math.sqrt(currentVelocity.x * currentVelocity.x + currentVelocity.y * currentVelocity.y + currentVelocity.z * currentVelocity.z) * 0.2
-                if speed < 0 then
-                    speed = 0.0
-                end
-                self._agents[i][2]:setSpeed(speed)
-            end
-        end, 0)
-
-        self:extend()
-    end
+    self:extend()
 end
 
 function NavMeshBaseTestDemo:onExit()
@@ -106,8 +102,7 @@ function NavMeshBaseTestDemo:extend()
 end
 
 function NavMeshBaseTestDemo:initScene()
-    local scene = cc.Director:getInstance():getRunningScene()
-    scene:getPhysics3DWorld():setDebugDrawEnable(false)
+    self:getPhysics3DWorld():setDebugDrawEnable(false)
 
     local trianglesList = cc.Bundle3D:getTrianglesList("NavMesh/scene.obj")
 
@@ -120,12 +115,12 @@ function NavMeshBaseTestDemo:initScene()
     sprite:addComponent(component)
     sprite:setCameraMask(cc.CameraFlag.USER1)
     self:addChild(sprite)
-    scene:setPhysics3DDebugCamera(self._camera)
+    self:setPhysics3DDebugCamera(self._camera)
 
     local navMesh = cc.NavMesh:create("NavMesh/all_tiles_tilecache.bin", "NavMesh/geomset.txt")
     navMesh:setDebugDrawEnable(true)
-    scene:setNavMesh(navMesh)
-    scene:setNavMeshDebugCamera(self._camera)
+    self:setNavMesh(navMesh)
+    self:setNavMeshDebugCamera(self._camera)
 
     local ambientLight = cc.AmbientLight:create(cc.c3b(64, 64, 64))
     ambientLight:setCameraMask(cc.CameraFlag.USER1)
@@ -151,12 +146,11 @@ function NavMeshBaseTestDemo:createAgent(pos)
     agentNode:setScale(0.05)
     agentNode:addComponent(agent)
 
-    local scene = cc.Director:getInstance():getRunningScene()
     local node = cc.Node:create()
     node:addChild(agentNode)
     node:setPosition3D(pos)
     node:setCameraMask(cc.CameraFlag.USER1)
-    scene:addChild(node)
+    self:addChild(node)
 
     local animation = cc.Animation3D:create(filePath)
     local animate   = cc.Animate3D:create(animation)
@@ -165,15 +159,10 @@ function NavMeshBaseTestDemo:createAgent(pos)
         animate:setSpeed(0.0)
     end
 
-    -- if nil == self._agentNode then
-    --     self._agentNode = agentNode
-    -- end
-
     self._agents[#self._agents + 1] =  {agent, animate}
 end
 
 function NavMeshBaseTestDemo:createObstacle(pos)
-    local scene = cc.Director:getInstance():getRunningScene()
     local obstacle = cc.NavMeshObstacle:create(2.0, 8.0)
     local obstacleNode = cc.Sprite3D:create("Sprite3DTest/cylinder.c3b")
     obstacleNode:setPosition3D(cc.vec3(pos.x, pos.y -0.5, pos.z))
@@ -181,7 +170,7 @@ function NavMeshBaseTestDemo:createObstacle(pos)
     obstacleNode:setScale(0.3)
     obstacleNode:addComponent(obstacle)
     obstacleNode:setCameraMask(cc.CameraFlag.USER1)
-    scene:addChild(obstacleNode)
+    self:addChild(obstacleNode)
 end
 
 function NavMeshBaseTestDemo:moveAgents(des)
@@ -266,7 +255,7 @@ function NavMeshBasicTestDemo:registerTouchEvent()
         if not self._needMoveAgents then
             return
         end
-        local physicsWorld = cc.Director:getInstance():getRunningScene():getPhysics3DWorld()
+        local physicsWorld = self:getPhysics3DWorld()
         if #touches > 0 then
             local touch = touches[1]
             local location = touch:getLocationInView()
@@ -314,7 +303,7 @@ function NavMeshBasicTestDemo:extend()
 
     local hitResult = {}
     local ret = false
-    local physicsWorld = cc.Director:getInstance():getRunningScene():getPhysics3DWorld()
+    local physicsWorld = self:getPhysics3DWorld()
     ret, hitResult = physicsWorld:rayCast(cc.vec3(0.0, 50.0, 0.0), cc.vec3(0.0, -50.0, 0.0), hitResult)
     self:createAgent(hitResult.hitPosition)
 end
@@ -358,7 +347,7 @@ function NavMeshAdvanceTestDemo:registerTouchEvent()
         if not self._needMoveAgents then
             return
         end
-        local physicsWorld = cc.Director:getInstance():getRunningScene():getPhysics3DWorld()
+        local physicsWorld = self:getPhysics3DWorld()
         if #touches > 0 then
             local touch = touches[1]
             local location = touch:getLocationInView()
@@ -450,15 +439,13 @@ end
 function NavMeshTest()
     Helper.usePhysics = true
 
-    local scene = cc.Scene:createWithPhysics()
-
-    Helper.createFunctionTable = 
+    TestCastScene.createFunctionTable = 
     {
         NavMeshBasicTestDemo.create,
         NavMeshAdvanceTestDemo.create,
     }
 
-    scene:addChild(NavMeshBasicTestDemo.create())
+    local scene = NavMeshBasicTestDemo.create()
     scene:addChild(CreateBackMenuItem())
 
     return scene
