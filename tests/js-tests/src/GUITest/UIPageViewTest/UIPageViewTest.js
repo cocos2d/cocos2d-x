@@ -52,7 +52,7 @@ var UIPageViewTest = UIScene.extend({
                 var imageView = new ccui.ImageView();
                 imageView.setTouchEnabled(true);
                 imageView.setScale9Enabled(true);
-                imageView.loadTexture("res/cocosui/scrollviewbg.png");
+                imageView.loadTexture("ccs-res/cocosui/scrollviewbg.png");
                 imageView.setContentSize(cc.size(240, 130));
                 imageView.x = layoutRect.width / 2;
                 imageView.y = layoutRect.height / 2;
@@ -126,7 +126,7 @@ var UIPageViewButtonTest = UIScene.extend({
                     var innerBox = new ccui.VBox();
 
                     for (var j = 0; j < 3; j++) {
-                        var btn = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
+                        var btn = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
                         btn.setName("button " + j);
                         btn.addTouchEventListener( this.onButtonClicked, this);
                         innerBox.addChild(btn);
@@ -196,7 +196,7 @@ var UIPageViewCustomScrollThreshold = UIScene.extend({
                 var layout = new ccui.Layout();
                 layout.setContentSize(cc.size(240.0, 130.0));
 
-                var imageView = new ccui.ImageView("res/cocosui/scrollviewbg.png");
+                var imageView = new ccui.ImageView("ccs-res/cocosui/scrollviewbg.png");
                 imageView.setScale9Enabled(true);
                 imageView.setContentSize(cc.size(240, 130));
                 imageView.setPosition(cc.p(layout.getContentSize().width / 2.0, layout.getContentSize().height / 2.0));
@@ -214,9 +214,9 @@ var UIPageViewCustomScrollThreshold = UIScene.extend({
             pageView.setName("pageView");
 
             var slider = new ccui.Slider();
-            slider.loadBarTexture("res/cocosui/sliderTrack.png");
-            slider.loadSlidBallTextures("res/cocosui/sliderThumb.png", "res/cocosui/sliderThumb.png", "");
-            slider.loadProgressBarTexture("res/cocosui/sliderProgress.png");
+            slider.loadBarTexture("ccs-res/cocosui/sliderTrack.png");
+            slider.loadSlidBallTextures("ccs-res/cocosui/sliderThumb.png", "ccs-res/cocosui/sliderThumb.png", "");
+            slider.loadProgressBarTexture("ccs-res/cocosui/sliderProgress.png");
             slider.setPosition(cc.p(widgetSize.width / 2.0 , widgetSize.height / 2.0 - 40));
             slider.addEventListener(this.sliderEvent, this);
             slider.setPercent(50);
@@ -275,7 +275,7 @@ var UIPageViewTouchPropagationTest = UIScene.extend({
                     var innerBox = new ccui.VBox();
 
                     for (var j = 0; j < 3; j++) {
-                        var btn = new ccui.Button("res/cocosui/animationbuttonnormal.png", "res/cocosui/animationbuttonpressed.png");
+                        var btn = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png", "ccs-res/cocosui/animationbuttonpressed.png");
                         btn.setName("button " + j);
                         btn.addTouchEventListener(this.onButtonClicked, this);
                         innerBox.addChild(btn);
@@ -318,11 +318,11 @@ var UIPageViewTouchPropagationTest = UIScene.extend({
             this._mainNode.addChild(swallowTouchText);
 
             // Create the checkbox
-            var checkBox1 = new ccui.CheckBox("res/cocosui/check_box_normal.png",
-                "res/cocosui/check_box_normal_press.png",
-                "res/cocosui/check_box_active.png",
-                "res/cocosui/check_box_normal_disable.png",
-                "res/cocosui/check_box_active_disable.png");
+            var checkBox1 = new ccui.CheckBox("ccs-res/cocosui/check_box_normal.png",
+                "ccs-res/cocosui/check_box_normal_press.png",
+                "ccs-res/cocosui/check_box_active.png",
+                "ccs-res/cocosui/check_box_normal_disable.png",
+                "ccs-res/cocosui/check_box_active_disable.png");
             var propagationPosition = propagationText.getPosition();
             checkBox1.setPosition(
                 propagationPosition.x + propagationText.getContentSize().width/2,
@@ -333,11 +333,11 @@ var UIPageViewTouchPropagationTest = UIScene.extend({
             this._mainNode.addChild(checkBox1);
 
             // Create the checkbox
-            var checkBox2 = new ccui.CheckBox("res/cocosui/check_box_normal.png",
-                "res/cocosui/check_box_normal_press.png",
-                "res/cocosui/check_box_active.png",
-                "res/cocosui/check_box_normal_disable.png",
-                "res/cocosui/check_box_active_disable.png");
+            var checkBox2 = new ccui.CheckBox("ccs-res/cocosui/check_box_normal.png",
+                "ccs-res/cocosui/check_box_normal_press.png",
+                "ccs-res/cocosui/check_box_active.png",
+                "ccs-res/cocosui/check_box_normal_disable.png",
+                "ccs-res/cocosui/check_box_active_disable.png");
             var swallowPosition = swallowTouchText.getPosition();
             checkBox2.setPosition(
                 swallowPosition.x + swallowTouchText.getContentSize().width/2,
@@ -431,8 +431,8 @@ var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
                 for (var k = 0; k < 2; ++k){
                     var innerBox = new ccui.VBox();
                     for (var j = 0; j < 3; j++){
-                        var btn = new ccui.Button("res/cocosui/animationbuttonnormal.png",
-                            "res/cocosui/animationbuttonpressed.png");
+                        var btn = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png",
+                            "ccs-res/cocosui/animationbuttonpressed.png");
                         btn.setName("button " + j);
                         innerBox.addChild(btn);
                     }
@@ -465,8 +465,8 @@ var UIPageViewDynamicAddAndRemoveTest = UIScene.extend({
                 for (var k = 0; k < 2; ++k){
                     var innerBox = new ccui.VBox();
                     for (var j = 0; j < 3; j++){
-                        var btn = new ccui.Button("res/cocosui/animationbuttonnormal.png",
-                            "res/cocosui/animationbuttonpressed.png");
+                        var btn = new ccui.Button("ccs-res/cocosui/animationbuttonnormal.png",
+                            "ccs-res/cocosui/animationbuttonpressed.png");
                         btn.setName("button " + j);
                         innerBox.addChild(btn);
                     }

@@ -17,8 +17,8 @@
 */
 
 #include "Audio.h"
-#include "MediaStreamer.h"
-//#include "CCCommon.h"
+#include "CCCommon.h"
+#include "AudioSourceReader.h"
 
 inline void ThrowIfFailed(HRESULT hr)
 {
@@ -522,13 +522,34 @@ void Audio::PreloadSoundEffect(const char* pszFilePath, bool isMusic)
 
     int sound = Hash(pszFilePath);
 
-	MediaStreamer mediaStreamer;
-	mediaStreamer.Initialize(CCUtf8ToUnicode(pszFilePath).c_str());
-	m_soundEffects[sound].m_soundID = sound;	
-	
-	uint32 bufferLength = mediaStreamer.GetMaxStreamLengthInBytes();
-	m_soundEffects[sound].m_soundEffectBufferData = new byte[bufferLength];
-	mediaStreamer.ReadAll(m_soundEffects[sound].m_soundEffectBufferData, bufferLength, &m_soundEffects[sound].m_soundEffectBufferLength);
+    std::unique_ptr<cocos2d::experimental::AudioSourceReader> reader = std::make_unique<cocos2d::experimental::MP3Reader>();
+
+    if (!reader) {
+        return;
+    }
+
+    static_cast<cocos2d::experimental::MP3Reader*>(reader.get())->doLargeFileSupport(false);
+
+    if (!reader->initialize(pszFilePath)) {
+        return;
+    }
+
+    m_soundEffects[sound].m_soundID = sound;
+    uint32 bufferLength = reader->getTotalAudioBytes();
+    WAVEFORMATEX wfx = reader->getWaveFormatInfo();
+
+    cocos2d::experimental::AudioDataChunk chunk;
+    if (!reader->consumeChunk(chunk)) {
+        return;
+    }
+
+    m_soundEffects[sound].m_soundEffectBufferData = new (std::nothrow) BYTE[chunk._dataSize];
+    if (nullptr == m_soundEffects[sound].m_soundEffectBufferData) {
+        return;
+    }
+
+    m_soundEffects[sound].m_soundEffectBufferLength = chunk._dataSize;
+    CopyMemory(m_soundEffects[sound].m_soundEffectBufferData, chunk._data->data(), chunk._dataSize);
 
     if (isMusic)
     {
@@ -541,7 +562,7 @@ void Audio::PreloadSoundEffect(const char* pszFilePath, bool isMusic)
 
         ThrowIfFailed(
 	    m_musicEngine->CreateSourceVoice(&m_soundEffects[sound].m_soundEffectSourceVoice,
-            &(mediaStreamer.GetOutputWaveFormatEx()), 0, 1.0f, &m_voiceContext, &sends)
+            &wfx, 0, 1.0f, &m_voiceContext, &sends)
 	    );
 		//fix bug: set a initial volume
 		m_soundEffects[sound].m_soundEffectSourceVoice->SetVolume(m_backgroundMusicVolume);
@@ -556,13 +577,13 @@ void Audio::PreloadSoundEffect(const char* pszFilePath, bool isMusic)
 
         ThrowIfFailed(
 	    m_soundEffectEngine->CreateSourceVoice(&m_soundEffects[sound].m_soundEffectSourceVoice,
-            &(mediaStreamer.GetOutputWaveFormatEx()), 0, 1.0f, &m_voiceContext, &sends, nullptr)
+            &wfx, 0, 1.0f, &m_voiceContext, &sends, nullptr)
         );
 		//fix bug: set a initial volume
 		m_soundEffects[sound].m_soundEffectSourceVoice->SetVolume(m_soundEffctVolume);
     }
 
-	m_soundEffects[sound].m_soundEffectSampleRate = mediaStreamer.GetOutputWaveFormatEx().nSamplesPerSec;
+	m_soundEffects[sound].m_soundEffectSampleRate = wfx.nSamplesPerSec;
 
 	// Queue in-memory buffer for playback
 	ZeroMemory(&m_soundEffects[sound].m_audioBuffer, sizeof(m_soundEffects[sound].m_audioBuffer));

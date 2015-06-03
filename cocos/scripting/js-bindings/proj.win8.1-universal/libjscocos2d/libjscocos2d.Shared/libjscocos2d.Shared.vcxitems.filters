@@ -128,6 +128,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\experimental\jsb_cocos2dx_experimental_manual.h">
       <Filter>manual\experimental</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_physics3d_auto.hpp">
+      <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\manual\physics3d\jsb_cocos2dx_physics3d_manual.h">
+      <Filter>manual\physics3d</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_3d_auto.cpp">
@@ -235,6 +241,12 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\experimental\jsb_cocos2dx_experimental_manual.cpp">
       <Filter>manual\experimental</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\auto\jsb_cocos2dx_physics3d_auto.cpp">
+      <Filter>auto</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\manual\physics3d\jsb_cocos2dx_physics3d_manual.cpp">
+      <Filter>manual\physics3d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="auto">
@@ -275,6 +287,9 @@
     </Filter>
     <Filter Include="manual\experimental">
       <UniqueIdentifier>{ddd3651e-c6e7-4dea-80c1-a0a3dc51a740}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manual\physics3d">
+      <UniqueIdentifier>{511b128d-2604-48af-88e1-8cc0eba79e19}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

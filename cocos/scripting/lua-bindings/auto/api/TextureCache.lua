@@ -86,6 +86,15 @@
 -- @return Texture2D#Texture2D ret (return value: cc.Texture2D)
         
 --------------------------------
+-- Get the file path of the texture<br>
+-- param texture A Texture2D object pointer.<br>
+-- return The full path of the file.
+-- @function [parent=#TextureCache] getTextureFilePath 
+-- @param self
+-- @param #cc.Texture2D texture
+-- @return string#string ret (return value: string)
+        
+--------------------------------
 --  Removes unused textures.<br>
 -- Textures that have a retain count of 1 will be deleted.<br>
 -- It is convenient to call this method after when starting a new Scene.<br>

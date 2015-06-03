@@ -77,7 +77,7 @@ public:
     
 CC_CONSTRUCTOR_ACCESS:
     PUTranslateManager();
-    ~PUTranslateManager();
+    virtual ~PUTranslateManager();
 };
 
 NS_CC_END

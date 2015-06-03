@@ -35,7 +35,6 @@ USING_NS_CC;
 
 ActionsTests::ActionsTests()
 {
-    ADD_TEST_CASE(ActionManual);
     ADD_TEST_CASE(ActionMove);
     ADD_TEST_CASE(ActionMove3D);
     ADD_TEST_CASE(ActionRotate);
@@ -62,11 +61,9 @@ ActionsTests::ActionsTests()
     ADD_TEST_CASE(ActionRepeat);
     ADD_TEST_CASE(ActionRepeatForever);
     ADD_TEST_CASE(ActionRotateToRepeat);
-    ADD_TEST_CASE(ActionRotateJerk);
     ADD_TEST_CASE(ActionCallFunction);
     ADD_TEST_CASE(ActionCallFuncN);
     ADD_TEST_CASE(ActionCallFuncND);
-    ADD_TEST_CASE(ActionCallFuncO);
     ADD_TEST_CASE(ActionReverseSequence);
     ADD_TEST_CASE(ActionReverseSequence2);
     ADD_TEST_CASE(ActionOrbit);
@@ -178,35 +175,6 @@ void ActionsDemo::alignSpritesLeft(unsigned int numberOfSprites)
         _tamara->setPosition(60, 2*s.height/3);
         _kathia->setPosition(60, s.height/3);
     }
-}
-
-//------------------------------------------------------------------
-//
-// ActionManual
-//
-//------------------------------------------------------------------
-void ActionManual::onEnter()
-{
-    ActionsDemo::onEnter();
-
-    auto s = Director::getInstance()->getWinSize();
-
-    _tamara->setScaleX( 2.5f);
-    _tamara->setScaleY( -1.0f);
-    _tamara->setPosition(100,70);
-    _tamara->setOpacity( 128);
-
-    _grossini->setRotation( 120);
-    _grossini->setPosition(s.width/2, s.height/2);
-    _grossini->setColor( Color3B( 255,0,0));
-
-    _kathia->setPosition(s.width-100, s.height/2);
-    _kathia->setColor( Color3B::BLUE);
-}
-
-std::string ActionManual::subtitle() const
-{
-    return "Manual Transformation";
 }
 
 //------------------------------------------------------------------
@@ -879,40 +847,6 @@ void ActionCallFuncND::doRemoveFromParentAndCleanup(Node* sender, bool cleanup)
 
 //------------------------------------------------------------------
 //
-// ActionCallFuncO
-// CallFuncO is no longer needed. It can simulated with std::bind()
-//
-//------------------------------------------------------------------
-void ActionCallFuncO::onEnter()
-{
-    ActionsDemo::onEnter();
-
-    centerSprites(1);
-
-    auto action = Sequence::create(
-        MoveBy::create(2.0f, Vec2(200,0)),
-        CallFunc::create( CC_CALLBACK_0(ActionCallFuncO::callback, this, _grossini, true)),
-        nullptr);
-    _grossini->runAction(action);
-}
-
-std::string ActionCallFuncO::title() const
-{
-    return "CallFuncO + autoremove";
-}
-
-std::string ActionCallFuncO::subtitle() const
-{
-    return "simulates CallFuncO with std::bind()";
-}
-
-void ActionCallFuncO::callback(Node* node, bool cleanup)
-{
-    node->removeFromParentAndCleanup(cleanup);
-}
-
-//------------------------------------------------------------------
-//
 //    ActionCallFunction
 //
 //------------------------------------------------------------------
@@ -1070,35 +1004,6 @@ void ActionRotateToRepeat::onEnter()
 std::string ActionRotateToRepeat ::subtitle() const
 {
     return "Repeat/RepeatForever + RotateTo";
-}
-
-
-//------------------------------------------------------------------
-//
-// ActionRotateJerk
-//
-//------------------------------------------------------------------
-void ActionRotateJerk::onEnter()
-{
-    ActionsDemo::onEnter();
-
-    centerSprites(2);
-
-	auto seq = Sequence::create(
-        RotateTo::create(0.5f, -20),
-        RotateTo::create(0.5f, 20),
-        nullptr);
-
-	auto rep1 = Repeat::create(seq, 10);
-	auto rep2 = RepeatForever::create( seq->clone() );
-
-    _tamara->runAction(rep1);
-    _kathia->runAction(rep2);
-}
-
-std::string ActionRotateJerk::subtitle() const
-{
-    return "RepeatForever / Repeat + Rotate";
 }
 
 //------------------------------------------------------------------

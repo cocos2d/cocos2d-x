@@ -1827,6 +1827,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\audio\winrt\AudioSourceReader.h">
       <Filter>audioengine</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNinePatchImageParser.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\cocos2d.cpp" />
@@ -2812,9 +2813,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccTypes.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCUserDefault.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\ccUTF8.cpp">
       <Filter>base</Filter>
     </ClCompile>
@@ -3477,6 +3475,10 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\physics3d\CCPhysicsSprite3D.cpp">
       <Filter>physics3d</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCUserDefault-winrt.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\..\..\base\CCNinePatchImageParser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="2d">

@@ -123,6 +123,7 @@ bool js_cocos2dx_ui_LayoutParameter_copyProperties(JSContext *cx, uint32_t argc,
     if (argc == 1) {
         cocos2d::ui::LayoutParameter* arg0;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -1139,6 +1140,7 @@ bool js_cocos2dx_ui_Widget_findNextFocusedWidget(JSContext *cx, uint32_t argc, j
         cocos2d::ui::Widget* arg1;
         ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
         do {
+            if (args.get(1).isNull()) { arg1 = nullptr; break; }
             if (!args.get(1).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(1).toObjectOrNull();
@@ -1475,6 +1477,7 @@ bool js_cocos2dx_ui_Widget_setLayoutParameter(JSContext *cx, uint32_t argc, jsva
     if (argc == 1) {
         cocos2d::ui::LayoutParameter* arg0;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -1584,6 +1587,7 @@ bool js_cocos2dx_ui_Widget_dispatchFocusEvent(JSContext *cx, uint32_t argc, jsva
         cocos2d::ui::Widget* arg0;
         cocos2d::ui::Widget* arg1;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -1592,6 +1596,7 @@ bool js_cocos2dx_ui_Widget_dispatchFocusEvent(JSContext *cx, uint32_t argc, jsva
             JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
         } while (0);
         do {
+            if (args.get(1).isNull()) { arg1 = nullptr; break; }
             if (!args.get(1).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(1).toObjectOrNull();
@@ -1772,6 +1777,7 @@ bool js_cocos2dx_ui_Widget_onFocusChange(JSContext *cx, uint32_t argc, jsval *vp
         cocos2d::ui::Widget* arg0;
         cocos2d::ui::Widget* arg1;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -1780,6 +1786,7 @@ bool js_cocos2dx_ui_Widget_onFocusChange(JSContext *cx, uint32_t argc, jsval *vp
             JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
         } while (0);
         do {
+            if (args.get(1).isNull()) { arg1 = nullptr; break; }
             if (!args.get(1).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(1).toObjectOrNull();
@@ -1900,6 +1907,7 @@ bool js_cocos2dx_ui_Widget_propagateTouchEvent(JSContext *cx, uint32_t argc, jsv
         cocos2d::Touch* arg2;
         ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
         do {
+            if (args.get(1).isNull()) { arg1 = nullptr; break; }
             if (!args.get(1).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(1).toObjectOrNull();
@@ -1908,6 +1916,7 @@ bool js_cocos2dx_ui_Widget_propagateTouchEvent(JSContext *cx, uint32_t argc, jsv
             JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
         } while (0);
         do {
+            if (args.get(2).isNull()) { arg2 = nullptr; break; }
             if (!args.get(2).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(2).toObjectOrNull();
@@ -2064,6 +2073,7 @@ bool js_cocos2dx_ui_Widget_interceptTouchEvent(JSContext *cx, uint32_t argc, jsv
         cocos2d::Touch* arg2;
         ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
         do {
+            if (args.get(1).isNull()) { arg1 = nullptr; break; }
             if (!args.get(1).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(1).toObjectOrNull();
@@ -2072,6 +2082,7 @@ bool js_cocos2dx_ui_Widget_interceptTouchEvent(JSContext *cx, uint32_t argc, jsv
             JSB_PRECONDITION2( arg1, cx, false, "Invalid Native Object");
         } while (0);
         do {
+            if (args.get(2).isNull()) { arg2 = nullptr; break; }
             if (!args.get(2).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(2).toObjectOrNull();
@@ -3595,6 +3606,45 @@ bool js_cocos2dx_ui_Button_getCapInsetsNormalRenderer(JSContext *cx, uint32_t ar
     JS_ReportError(cx, "js_cocos2dx_ui_Button_getCapInsetsNormalRenderer : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_cocos2dx_ui_Button_setTitleAlignment(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+
+    JS::RootedObject obj(cx);
+    cocos2d::ui::Button* cobj = NULL;
+    obj = args.thisv().toObjectOrNull();
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cobj = (cocos2d::ui::Button *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_Button_setTitleAlignment : Invalid Native Object");
+    do {
+        if (argc == 2) {
+            cocos2d::TextHAlignment arg0;
+            ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+            if (!ok) { ok = true; break; }
+            cocos2d::TextVAlignment arg1;
+            ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
+            if (!ok) { ok = true; break; }
+            cobj->setTitleAlignment(arg0, arg1);
+            args.rval().setUndefined();
+            return true;
+        }
+    } while(0);
+
+    do {
+        if (argc == 1) {
+            cocos2d::TextHAlignment arg0;
+            ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+            if (!ok) { ok = true; break; }
+            cobj->setTitleAlignment(arg0);
+            args.rval().setUndefined();
+            return true;
+        }
+    } while(0);
+
+    JS_ReportError(cx, "js_cocos2dx_ui_Button_setTitleAlignment : wrong number of arguments");
+    return false;
+}
 bool js_cocos2dx_ui_Button_getCapInsetsPressedRenderer(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -4051,6 +4101,7 @@ void js_register_cocos2dx_ui_Button(JSContext *cx, JS::HandleObject global) {
         JS_FN("loadTexturePressed", js_cocos2dx_ui_Button_loadTexturePressed, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTitleFontName", js_cocos2dx_ui_Button_setTitleFontName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCapInsetsNormalRenderer", js_cocos2dx_ui_Button_getCapInsetsNormalRenderer, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTitleAlignment", js_cocos2dx_ui_Button_setTitleAlignment, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getCapInsetsPressedRenderer", js_cocos2dx_ui_Button_getCapInsetsPressedRenderer, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("loadTextures", js_cocos2dx_ui_Button_loadTextures, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isScale9Enabled", js_cocos2dx_ui_Button_isScale9Enabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -7334,6 +7385,7 @@ bool js_cocos2dx_ui_ListView_getIndex(JSContext *cx, uint32_t argc, jsval *vp)
     if (argc == 1) {
         cocos2d::ui::Widget* arg0;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -7399,6 +7451,7 @@ bool js_cocos2dx_ui_ListView_pushBackCustomItem(JSContext *cx, uint32_t argc, js
     if (argc == 1) {
         cocos2d::ui::Widget* arg0;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -7617,6 +7670,7 @@ bool js_cocos2dx_ui_ListView_setItemModel(JSContext *cx, uint32_t argc, jsval *v
     if (argc == 1) {
         cocos2d::ui::Widget* arg0;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -7677,6 +7731,7 @@ bool js_cocos2dx_ui_ListView_insertCustomItem(JSContext *cx, uint32_t argc, jsva
         cocos2d::ui::Widget* arg0;
         ssize_t arg1;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -8515,6 +8570,7 @@ bool js_cocos2dx_ui_UICCTextField_onTextFieldAttachWithIME(JSContext *cx, uint32
     if (argc == 1) {
         cocos2d::TextFieldTTF* arg0;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -8622,6 +8678,7 @@ bool js_cocos2dx_ui_UICCTextField_onTextFieldDeleteBackward(JSContext *cx, uint3
         const char* arg1;
         unsigned long arg2;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -8861,6 +8918,7 @@ bool js_cocos2dx_ui_UICCTextField_onTextFieldInsertText(JSContext *cx, uint32_t 
         const char* arg1;
         unsigned long arg2;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -8892,6 +8950,7 @@ bool js_cocos2dx_ui_UICCTextField_onTextFieldDetachWithIME(JSContext *cx, uint32
     if (argc == 1) {
         cocos2d::TextFieldTTF* arg0;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -9262,6 +9321,24 @@ bool js_cocos2dx_ui_TextField_getDeleteBackward(JSContext *cx, uint32_t argc, js
     }
 
     JS_ReportError(cx, "js_cocos2dx_ui_TextField_getDeleteBackward : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_ui_TextField_getTextColor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::TextField* cobj = (cocos2d::ui::TextField *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_getTextColor : Invalid Native Object");
+    if (argc == 0) {
+        const cocos2d::Color4B& ret = cobj->getTextColor();
+        jsval jsret = JSVAL_NULL;
+        jsret = cccolor4b_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_TextField_getTextColor : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_ui_TextField_getPlaceHolder(JSContext *cx, uint32_t argc, jsval *vp)
@@ -9636,6 +9713,24 @@ bool js_cocos2dx_ui_TextField_setDeleteBackward(JSContext *cx, uint32_t argc, js
     JS_ReportError(cx, "js_cocos2dx_ui_TextField_setDeleteBackward : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_ui_TextField_getTextHorizontalAlignment(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::TextField* cobj = (cocos2d::ui::TextField *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_getTextHorizontalAlignment : Invalid Native Object");
+    if (argc == 0) {
+        int ret = (int)cobj->getTextHorizontalAlignment();
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_TextField_getTextHorizontalAlignment : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_ui_TextField_setFontSize(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -9806,6 +9901,24 @@ bool js_cocos2dx_ui_TextField_setDetachWithIME(JSContext *cx, uint32_t argc, jsv
     }
 
     JS_ReportError(cx, "js_cocos2dx_ui_TextField_setDetachWithIME : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_ui_TextField_getTextVerticalAlignment(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::ui::TextField* cobj = (cocos2d::ui::TextField *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ui_TextField_getTextVerticalAlignment : Invalid Native Object");
+    if (argc == 0) {
+        int ret = (int)cobj->getTextVerticalAlignment();
+        jsval jsret = JSVAL_NULL;
+        jsret = int32_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_ui_TextField_getTextVerticalAlignment : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_ui_TextField_setTouchAreaEnabled(JSContext *cx, uint32_t argc, jsval *vp)
@@ -10033,6 +10146,7 @@ void js_register_cocos2dx_ui_TextField(JSContext *cx, JS::HandleObject global) {
         JS_FN("getString", js_cocos2dx_ui_TextField_getString, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setPasswordStyleText", js_cocos2dx_ui_TextField_setPasswordStyleText, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getDeleteBackward", js_cocos2dx_ui_TextField_getDeleteBackward, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getTextColor", js_cocos2dx_ui_TextField_getTextColor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getPlaceHolder", js_cocos2dx_ui_TextField_getPlaceHolder, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getAttachWithIME", js_cocos2dx_ui_TextField_getAttachWithIME, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setFontName", js_cocos2dx_ui_TextField_setFontName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -10053,6 +10167,7 @@ void js_register_cocos2dx_ui_TextField(JSContext *cx, JS::HandleObject global) {
         JS_FN("setMaxLengthEnabled", js_cocos2dx_ui_TextField_setMaxLengthEnabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isPasswordEnabled", js_cocos2dx_ui_TextField_isPasswordEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setDeleteBackward", js_cocos2dx_ui_TextField_setDeleteBackward, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getTextHorizontalAlignment", js_cocos2dx_ui_TextField_getTextHorizontalAlignment, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setFontSize", js_cocos2dx_ui_TextField_setFontSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setPlaceHolder", js_cocos2dx_ui_TextField_setPlaceHolder, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setPlaceHolderColor", js_cocos2dx_ui_TextField_setPlaceHolderColor, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -10061,6 +10176,7 @@ void js_register_cocos2dx_ui_TextField(JSContext *cx, JS::HandleObject global) {
         JS_FN("getMaxLength", js_cocos2dx_ui_TextField_getMaxLength, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isMaxLengthEnabled", js_cocos2dx_ui_TextField_isMaxLengthEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setDetachWithIME", js_cocos2dx_ui_TextField_setDetachWithIME, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getTextVerticalAlignment", js_cocos2dx_ui_TextField_getTextVerticalAlignment, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTouchAreaEnabled", js_cocos2dx_ui_TextField_setTouchAreaEnabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setMaxLength", js_cocos2dx_ui_TextField_setMaxLength, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setTouchSize", js_cocos2dx_ui_TextField_setTouchSize, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -10415,6 +10531,7 @@ bool js_cocos2dx_ui_PageView_addWidgetToPage(JSContext *cx, uint32_t argc, jsval
         ssize_t arg1;
         bool arg2;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -10491,6 +10608,7 @@ bool js_cocos2dx_ui_PageView_removePage(JSContext *cx, uint32_t argc, jsval *vp)
     if (argc == 1) {
         cocos2d::ui::Layout* arg0;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -10559,6 +10677,7 @@ bool js_cocos2dx_ui_PageView_insertPage(JSContext *cx, uint32_t argc, jsval *vp)
         cocos2d::ui::Layout* arg0;
         int arg1;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -10661,6 +10780,7 @@ bool js_cocos2dx_ui_PageView_addPage(JSContext *cx, uint32_t argc, jsval *vp)
     if (argc == 1) {
         cocos2d::ui::Layout* arg0;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -10891,6 +11011,7 @@ bool js_cocos2dx_ui_Helper_seekActionWidgetByActionTag(JSContext *cx, uint32_t a
         cocos2d::ui::Widget* arg0;
         int arg1;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -10925,6 +11046,7 @@ bool js_cocos2dx_ui_Helper_seekWidgetByName(JSContext *cx, uint32_t argc, jsval 
         cocos2d::ui::Widget* arg0;
         std::string arg1;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -10959,6 +11081,7 @@ bool js_cocos2dx_ui_Helper_seekWidgetByTag(JSContext *cx, uint32_t argc, jsval *
         cocos2d::ui::Widget* arg0;
         int arg1;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -11012,6 +11135,7 @@ bool js_cocos2dx_ui_Helper_doLayout(JSContext *cx, uint32_t argc, jsval *vp)
     if (argc == 1) {
         cocos2d::Node* arg0;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -11599,6 +11723,7 @@ bool js_cocos2dx_ui_RichElementCustomNode_init(JSContext *cx, uint32_t argc, jsv
         ok &= jsval_to_cccolor3b(cx, args.get(1), &arg1);
         ok &= jsval_to_uint16(cx, args.get(2), &arg2);
         do {
+            if (args.get(3).isNull()) { arg3 = nullptr; break; }
             if (!args.get(3).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(3).toObjectOrNull();
@@ -11630,6 +11755,7 @@ bool js_cocos2dx_ui_RichElementCustomNode_create(JSContext *cx, uint32_t argc, j
         ok &= jsval_to_cccolor3b(cx, args.get(1), &arg1);
         ok &= jsval_to_uint16(cx, args.get(2), &arg2);
         do {
+            if (args.get(3).isNull()) { arg3 = nullptr; break; }
             if (!args.get(3).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(3).toObjectOrNull();
@@ -11779,6 +11905,7 @@ bool js_cocos2dx_ui_RichText_insertElement(JSContext *cx, uint32_t argc, jsval *
         cocos2d::ui::RichElement* arg0;
         int arg1;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -11807,6 +11934,7 @@ bool js_cocos2dx_ui_RichText_pushBackElement(JSContext *cx, uint32_t argc, jsval
     if (argc == 1) {
         cocos2d::ui::RichElement* arg0;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -11874,6 +12002,7 @@ bool js_cocos2dx_ui_RichText_removeElement(JSContext *cx, uint32_t argc, jsval *
         if (argc == 1) {
             cocos2d::ui::RichElement* arg0;
             do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -12604,6 +12733,7 @@ bool js_cocos2dx_ui_Scale9Sprite_updateWithSprite(JSContext *cx, uint32_t argc, 
         if (argc == 6) {
             cocos2d::Sprite* arg0;
             do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -12638,6 +12768,7 @@ bool js_cocos2dx_ui_Scale9Sprite_updateWithSprite(JSContext *cx, uint32_t argc, 
         if (argc == 4) {
             cocos2d::Sprite* arg0;
             do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -12931,6 +13062,7 @@ bool js_cocos2dx_ui_Scale9Sprite_init(JSContext *cx, uint32_t argc, jsval *vp)
         if (argc == 3) {
             cocos2d::Sprite* arg0;
             do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -12957,6 +13089,7 @@ bool js_cocos2dx_ui_Scale9Sprite_init(JSContext *cx, uint32_t argc, jsval *vp)
         if (argc == 4) {
             cocos2d::Sprite* arg0;
             do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -12985,6 +13118,7 @@ bool js_cocos2dx_ui_Scale9Sprite_init(JSContext *cx, uint32_t argc, jsval *vp)
         if (argc == 6) {
             cocos2d::Sprite* arg0;
             do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -13049,6 +13183,7 @@ bool js_cocos2dx_ui_Scale9Sprite_setSpriteFrame(JSContext *cx, uint32_t argc, js
     if (argc == 1) {
         cocos2d::SpriteFrame* arg0;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -13065,6 +13200,7 @@ bool js_cocos2dx_ui_Scale9Sprite_setSpriteFrame(JSContext *cx, uint32_t argc, js
         cocos2d::SpriteFrame* arg0;
         cocos2d::Rect arg1;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -13341,6 +13477,7 @@ bool js_cocos2dx_ui_Scale9Sprite_initWithSpriteFrame(JSContext *cx, uint32_t arg
         if (argc == 1) {
             cocos2d::SpriteFrame* arg0;
             do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -13361,6 +13498,7 @@ bool js_cocos2dx_ui_Scale9Sprite_initWithSpriteFrame(JSContext *cx, uint32_t arg
         if (argc == 2) {
             cocos2d::SpriteFrame* arg0;
             do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -13652,6 +13790,7 @@ bool js_cocos2dx_ui_Scale9Sprite_createWithSpriteFrame(JSContext *cx, uint32_t a
         if (argc == 2) {
             cocos2d::SpriteFrame* arg0;
             do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -13682,6 +13821,7 @@ bool js_cocos2dx_ui_Scale9Sprite_createWithSpriteFrame(JSContext *cx, uint32_t a
         if (argc == 1) {
             cocos2d::SpriteFrame* arg0;
             do {
+                if (args.get(0).isNull()) { arg0 = nullptr; break; }
                 if (!args.get(0).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(0).toObjectOrNull();
@@ -14120,6 +14260,7 @@ bool js_cocos2dx_ui_EditBox_initWithSizeAndBackgroundSprite(JSContext *cx, uint3
             if (!ok) { ok = true; break; }
             cocos2d::ui::Scale9Sprite* arg1;
             do {
+                if (args.get(1).isNull()) { arg1 = nullptr; break; }
                 if (!args.get(1).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(1).toObjectOrNull();
@@ -14354,6 +14495,7 @@ bool js_cocos2dx_ui_EditBox_create(JSContext *cx, uint32_t argc, jsval *vp)
             if (!ok) { ok = true; break; }
             cocos2d::ui::Scale9Sprite* arg1;
             do {
+                if (args.get(1).isNull()) { arg1 = nullptr; break; }
                 if (!args.get(1).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(1).toObjectOrNull();
@@ -14383,6 +14525,7 @@ bool js_cocos2dx_ui_EditBox_create(JSContext *cx, uint32_t argc, jsval *vp)
             if (!ok) { ok = true; break; }
             cocos2d::ui::Scale9Sprite* arg1;
             do {
+                if (args.get(1).isNull()) { arg1 = nullptr; break; }
                 if (!args.get(1).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(1).toObjectOrNull();
@@ -14393,6 +14536,7 @@ bool js_cocos2dx_ui_EditBox_create(JSContext *cx, uint32_t argc, jsval *vp)
             if (!ok) { ok = true; break; }
             cocos2d::ui::Scale9Sprite* arg2;
             do {
+                if (args.get(2).isNull()) { arg2 = nullptr; break; }
                 if (!args.get(2).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(2).toObjectOrNull();
@@ -14422,6 +14566,7 @@ bool js_cocos2dx_ui_EditBox_create(JSContext *cx, uint32_t argc, jsval *vp)
             if (!ok) { ok = true; break; }
             cocos2d::ui::Scale9Sprite* arg1;
             do {
+                if (args.get(1).isNull()) { arg1 = nullptr; break; }
                 if (!args.get(1).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(1).toObjectOrNull();
@@ -14432,6 +14577,7 @@ bool js_cocos2dx_ui_EditBox_create(JSContext *cx, uint32_t argc, jsval *vp)
             if (!ok) { ok = true; break; }
             cocos2d::ui::Scale9Sprite* arg2;
             do {
+                if (args.get(2).isNull()) { arg2 = nullptr; break; }
                 if (!args.get(2).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(2).toObjectOrNull();
@@ -14442,6 +14588,7 @@ bool js_cocos2dx_ui_EditBox_create(JSContext *cx, uint32_t argc, jsval *vp)
             if (!ok) { ok = true; break; }
             cocos2d::ui::Scale9Sprite* arg3;
             do {
+                if (args.get(3).isNull()) { arg3 = nullptr; break; }
                 if (!args.get(3).isObject()) { ok = false; break; }
                 js_proxy_t *jsProxy;
                 JSObject *tmpObj = args.get(3).toObjectOrNull();
@@ -15554,6 +15701,7 @@ bool js_cocos2dx_ui_LayoutComponent_bindLayoutComponent(JSContext *cx, uint32_t 
     if (argc == 1) {
         cocos2d::Node* arg0;
         do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();

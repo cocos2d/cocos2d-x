@@ -5343,7 +5343,7 @@ var SpriteBlendFuncTest = SpriteTestDemo.extend({
         var destTitles = ["ZERO", "ONE", "SRC_COLOR", "ONE_MINUS_SRC_COLOR", "SRC_ALPHA", "ONE_MINUS_SRC_ALPHA"],
             srcTitles = ["ZERO", "ONE", "DST_COLOR", "ONE_MINUS_DST_COLOR", "SRC_ALPHA", "ONE_MINUS_SRC_ALPHA"];
 
-        var sourceImg = "res/Images/dot.png", destImg = "res/Images/wood.jpg";
+        var sourceImg = "Images/dot.png", destImg = "Images/wood.jpg";
         var sourceTexture = cc.textureCache.addImage(sourceImg);
         sourceTexture.handleLoadedTexture(true);
         var sourceSprite = new cc.Sprite(sourceImg);

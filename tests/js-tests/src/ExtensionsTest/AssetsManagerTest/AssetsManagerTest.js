@@ -39,7 +39,7 @@ var AssetsManagerTestLayer = BaseTestLayer.extend({
     ctor : function (spritePath) {
         this._super();
         this._spritePath = spritePath;
-        cc.loader.resPath = "res/";
+        cc.loader.resPath = "../cpp-tests/Resources/";
     },
 
     getTitle : function() {
@@ -115,12 +115,12 @@ var AssetsManagerLoaderScene = TestScene.extend({
         icon.y = cc.winSize.height/2;
         layer.addChild(icon);
 
-        this._loadingBar = new ccui.LoadingBar("res/cocosui/sliderProgress.png");
+        this._loadingBar = new ccui.LoadingBar("ccs-res/cocosui/sliderProgress.png");
         this._loadingBar.x = cc.visibleRect.center.x;
         this._loadingBar.y = cc.visibleRect.top.y - 40;
         layer.addChild(this._loadingBar);
 
-        this._fileLoadingBar = new ccui.LoadingBar("res/cocosui/sliderProgress.png");
+        this._fileLoadingBar = new ccui.LoadingBar("ccs-res/cocosui/sliderProgress.png");
         this._fileLoadingBar.x = cc.visibleRect.center.x;
         this._fileLoadingBar.y = cc.visibleRect.top.y - 80;
         layer.addChild(this._fileLoadingBar);
