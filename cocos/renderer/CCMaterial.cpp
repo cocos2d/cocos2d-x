@@ -329,6 +329,8 @@ bool Material::parseShader(Pass* pass, Properties* shaderProperties)
 
 bool Material::parseUniform(GLProgramState* programState, Properties* properties, const char* uniformName)
 {
+    bool ret = true;
+
     auto type = properties->getType(uniformName);
 
     switch (type) {
@@ -338,11 +340,6 @@ bool Material::parseUniform(GLProgramState* programState, Properties* properties
             programState->setUniformFloat(uniformName, f);
             break;
         }
-
-        case Properties::Type::STRING:
-            CCASSERT(false, "invalid type for a uniform");
-            return false;
-            break;
 
         case Properties::Type::VECTOR2:
         {
@@ -376,11 +373,15 @@ bool Material::parseUniform(GLProgramState* programState, Properties* properties
             break;
         }
 
+        case Properties::Type::STRING:
         default:
-            return false;
+        {
+            // Assume this is a parameter auto-binding.
+            programState->setParameterAutoBinding(uniformName, properties->getString());
             break;
+        }
     }
-    return true;
+    return ret;
 }
 
 
