@@ -89,7 +89,7 @@ public:
      * Stop tasks.
      *
      * @~chinese 
-     * 停止任务
+     * 停止指定类型的所有任务
      * 
      * @param type @~english Task type you want to stop.
      * @~chinese 待停止的任务类型。

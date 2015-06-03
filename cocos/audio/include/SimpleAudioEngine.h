@@ -135,7 +135,7 @@ public:
 
     /**
      * @brief @~english Rewind playing background music.
-     * @~chinese 把背景音乐倒过来放。
+     * @~chinese 将背景音乐倒回起始点播放。
      * @js rewindMusic
      * @lua rewindMusic
      */
@@ -213,7 +213,7 @@ public:
      * @param pitch @~english Frequency, normal value is 1.0. Will also change effect play time. @~chinese 频率，正常情况下为1.0,在播放时也可以改变该值。
      * @param pan @~english Stereo effect, in the range of [-1..1] where -1 enables only left channel. @~chinese 声道，范围为-1到1，为-1时表示只有左声道，为1时表示只有右声道。
      * @param gain @~english Volume, in the range of [0..1]. The normal value is 1. @~chinese 音量增益, 范围为0到1，默认值为1。
-     * @return @~english The sound id. @~chinese OpenAL的资源id。
+     * @return @~english The sound id. @~chinese 声音id。
      * 
      * @note @~english Full support is under development, now there are limitations:
      *     - no pitch effect on Samsung Galaxy S2 with OpenSL backend enabled;
@@ -227,10 +227,10 @@ public:
 
     /**
      * @brief @~english Pause playing sound effect.
-     * @~chinese 暂停播放音效。
+     * @~chinese 暂停播放指定音效。
      *
      * @param soundId @~english The return value of function playEffect.
-     * @~chinese playEffect返回的资源id。
+     * @~chinese 音效id。
      */
     virtual void pauseEffect(unsigned int soundId);
 
@@ -242,7 +242,7 @@ public:
 
     /**
      * @brief @~english Resume playing sound effect.
-     * @~chinese 恢复暂停播放的音效。
+     * @~chinese 恢复暂停播放指定的音效。
      *
      * @param soundId @~english The return value of function playEffect.
      * @~chinese playEffect返回的资源id。
@@ -257,7 +257,7 @@ public:
 
     /**
      * @brief @~english Stop playing sound effect.
-     * @~chinese 停止播放音效。
+     * @~chinese 停止播放指定的音效。
      *
      * @param soundId @~english The return value of function playEffect.
      * @~chinese playEffect返回的资源id。
@@ -273,7 +273,7 @@ public:
     /**
      * @brief @~english Preload a compressed audio file.
      * The compressed audio will be decoded to wave, then written into an internal buffer in SimpleAudioEngine.
-     * @~chinese 加载压缩过的音效文件，压缩过的音频文件会解码成wave文件，并且写入SimpleAudioEngine的内存中。
+     * @~chinese 预加载音效文件。
      *
      * @param filePath @~english The path of the effect file. 
      * @~chinese 音效文件路径。

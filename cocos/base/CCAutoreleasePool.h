@@ -123,7 +123,7 @@ public:
      * Whether the autorelease pool is doing `clear` operation.
      *
      * @~chinese 
-     * autorelease池是否做清空的操作。
+     * 获取管理池当前是否正在做清空操作。
      * 
      * @return @~english True if autorelase pool is clearning, false if not.
      *
@@ -161,7 +161,7 @@ public:
      * @~chinese 
      * 输出放在autorelease池的对象。用于调试。
      * 
-     * 结果是这样的:
+     * 输出格式：
      * 对象 指针地址 对象id 引用计数
      * 
      * @js NA
