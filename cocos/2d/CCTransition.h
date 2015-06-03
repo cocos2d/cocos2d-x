@@ -9,7 +9,7 @@ http://www.cocos2d-x.org
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sel
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 
@@ -24,7 +24,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-
 #ifndef __CCTRANSITION_H__
 #define __CCTRANSITION_H__
 
@@ -45,34 +44,41 @@ class ActionInterval;
 class Node;
 class NodeGrid;
 
-/** @class TransitionEaseScene
- * @brief TransitionEaseScene can ease the actions of the scene protocol.
-@since v0.8.2
-@js NA
+/** 
+ * @brief @~english TransitionEaseScene can ease the actions of the scene protocol.
+ * @~chinese TransitionEaseScene类可以使场景动画协议更灵活。
+ * @since v0.8.2
+ * @js NA
 */
 class CC_DLL TransitionEaseScene// : public Ref
 {
 public:
-    /** Constructor.
+    /** @~english Constructor.
+     * @~chinese 构造函数。
      */
     virtual ~TransitionEaseScene() {}
 
-    /** Returns the Ease action that will be performed on a linear action.
-    @since v0.8.2
+    /** @~english Returns the Ease action that will be performed on a linear action.
+     * @~chinese 返回缓解行动将执行在一个线性的行动。
+     * @since v0.8.2
      *
-     * @param action A given interval action.
-     * @return The Ease action that will be performed on a linear action.
+     * @param action @~english A given interval action.
+     * @~chinese 返回在一个线性动作上执行更灵活的动作。
+     * @return @~english The Ease action that will be performed on a linear action.
+     * @~chinese 返回在一个线性动作上执行更灵活的动作。
      */
     virtual ActionInterval * easeActionWithAction(ActionInterval * action) = 0;
 };
 
-/** @class TransitionScene
- * @brief Base class for Transition scenes.
-*/
+/** 
+ * @brief @~english Base class for Transition scenes.
+ * @~chinese 场景转换的基类。
+ */
 class CC_DLL TransitionScene : public Scene
 {
 public:
-    /** Orientation Type used by some transitions.
+    /** @~english Orientation Type used by some transitions.
+     * @~chinese 一些用于转换的方向类型。
      */
     enum class Orientation
     {
@@ -86,19 +92,26 @@ public:
         DOWN_OVER = 1,
     };
     
-    /** Creates a base transition with duration and incoming scene.
+    /** @~english Creates a base transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param scene A given scene.
-     * @return A autoreleased TransitionScene object.
+     * @~chinese 创建一个基本的具有持续时间和进入场景的转换(transition)。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english A autoreleased TransitionScene object.
+     * @~chinese autoreleased TransitionScene对象。
      */
     static TransitionScene * create(float t, Scene *scene);
 
-    /** Called after the transition finishes.
+    /** @~english Called after the transition finishes.
+     * @~chinese 转换结束调用此方法。
      */
     void finish(void);
 
-    /** Used by some transitions to hide the outer scene.
+    /** @~english Used by some transitions to hide the outer scene.
+     * @~chinese 用于一些转换去隐藏淡出的场景。
      */
     void hideOutShowIn(void);
 
@@ -116,7 +129,9 @@ CC_CONSTRUCTOR_ACCESS:
     TransitionScene();
     virtual ~TransitionScene();
 
-    /** initializes a transition with duration and incoming scene */
+    /** @~english initializes a transition with duration and incoming scene
+     * @~chinese 初始化一个具有持续时间和进入的场景转换
+     */
     bool initWithDuration(float t,Scene* scene);
     
 protected:
@@ -133,19 +148,27 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionScene);
 };
 
-/** @class TransitionSceneOriented
- * @brief A Transition that supports orientation like.
+/** 
+ * @brief @~english A Transition that supports orientation like.
  * Possible orientation: LeftOver, RightOver, UpOver, DownOver
+ * @~chinese 支持方向的转换。
+ * 可能的方向：LeftOver，RightOver，UpOver，DownOver
  */
 class CC_DLL TransitionSceneOriented : public TransitionScene
 {
 public:
-    /** Creates a transition with duration, incoming scene and orientation.
+    /** @~english Creates a transition with duration, incoming scene and orientation.
      * 
-     * @param t Duration time, in seconds.
-     * @param scene A given scene.
-     * @param orientation A given orientation: LeftOver, RightOver, UpOver, DownOver.
-     * @return A autoreleased TransitionSceneOriented object.
+     * @~chinese 创建一个基本的具有持续时间和进入场景的转换(transition)。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @param orientation @~english A given orientation: LeftOver, RightOver, UpOver, DownOver.
+     * @~chinese 一个给定的方向:LeftOver, RightOver, UpOver, DownOver。
+     * @return @~english A autoreleased TransitionSceneOriented object.
+     * @~chinese autoreleased TransitionSceneOriented对象。
      */
     static TransitionSceneOriented * create(float t,Scene* scene, Orientation orientation);
     
@@ -153,7 +176,10 @@ CC_CONSTRUCTOR_ACCESS:
     TransitionSceneOriented();
     virtual ~TransitionSceneOriented();
 
-    /** initializes a transition with duration and incoming scene */
+    /**
+    * @~english initializes a transition with duration and incoming scene
+    * @~chinese 初始化一个具有持续时间和进入的场景转换
+    */
     bool initWithDuration(float t,Scene* scene,Orientation orientation);
 
 protected:
@@ -163,18 +189,25 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionSceneOriented);
 };
 
-/** @class TransitionRotoZoom
- * @brief TransitionRotoZoom:
-Rotate and zoom out the outgoing scene, and then rotate and zoom in the incoming 
+/** 
+ * @brief @~english TransitionRotoZoom:
+ * Rotate and zoom out the outgoing scene, and then rotate and zoom in the incoming 
+ * @~chinese TransitionRotoZoom:
+ * 旋转和缩放离开前一个场景，同时旋转缩放进入下一个场景
 */
 class CC_DLL TransitionRotoZoom : public TransitionScene
 {
 public:
-    /** Creates a transition with duration and incoming scene.
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param scene A given scene.
-     * @return A autoreleased TransitionRotoZoom object.
+     * @~chinese 创建一个旋转和缩放场景过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english A autoreleased TransitionRotoZoom object.
+     * @~chinese autoreleased TransitionRotoZoom对象。
      */
     static TransitionRotoZoom* create(float t, Scene* scene);
 
@@ -192,18 +225,25 @@ private:
 
 };
 
-/** @class TransitionJumpZoom
- * @brief TransitionJumpZoom:
-Zoom out and jump the outgoing scene, and then jump and zoom in the incoming 
+/** 
+ * @brief @~english TransitionJumpZoom:
+ * Zoom out and jump the outgoing scene, and then jump and zoom in the incoming 
+ * @~chinese TransitionJumpZoom:
+ * 缩小跳着切出场景, 同时跳着放大传人场景
 */
 class CC_DLL TransitionJumpZoom : public TransitionScene
 {
 public:
-    /** Creates a transition with duration and incoming scene.
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param scene A given scene.
-     * @return A autoreleased TransitionJumpZoom object.
+     * @~chinese 创建一个缩小跳着切出场景, 同时跳着放大传入场景过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english A autoreleased TransitionJumpZoom object.
+     * @~chinese autoreleased TransitionJumpZoom对象。
      */
     static TransitionJumpZoom* create(float t, Scene* scene);
 
@@ -220,24 +260,34 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionJumpZoom);
 };
 
-/** @class TransitionMoveInL
- * @brief TransitionMoveInL:
-Move in from to the left the incoming scene.
+/** 
+ * @brief @~english TransitionMoveInL:
+ * Move in from to the left the incoming scene.
+ * @~chinese TransitionMoveInL:
+ * 从左侧传入场景。
 */
 class CC_DLL TransitionMoveInL : public TransitionScene, public TransitionEaseScene
 {
 public:
-    /** Creates a transition with duration and incoming scene.
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param scene A given scene.
-     * @return A autoreleased TransitionMoveInL object.
+     * @~chinese 从左侧传入场景。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english A autoreleased TransitionMoveInL object.
+     * @~chinese autoreleased TransitionMoveInL对象。
      */
     static TransitionMoveInL* create(float t, Scene* scene);
 
-    /** Returns the action that will be performed. 
+    /** @~english Returns the action that will be performed. 
      * 
-     * @return The action that will be performed.
+     * @~chinese 返回将要执行的动作。
+     * 
+     * @return @~english The action that will be performed.
+     * @~chinese 返回将要执行的动作。
      */
     virtual ActionInterval* action(void);
 
@@ -253,25 +303,32 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~TransitionMoveInL();
 
 protected:
-    /** initializes the scenes */
+    /** @~english initializes the scenes  @~chinese 初始化的场景*/
     virtual void initScenes();
 
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionMoveInL);
 };
 
-/** @class TransitionMoveInR
- * @brief TransitionMoveInR:
-Move in from to the right the incoming scene.
+/** 
+ * @brief @~english TransitionMoveInR:
+ * Move in from to the right the incoming scene.
+ * @~chinese TransitionMoveInR:
+ * 从右侧传人场景。
 */
 class CC_DLL TransitionMoveInR : public TransitionMoveInL
 {
 public:
-    /** Creates a transition with duration and incoming scene.
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param scene A given scene.
-     * @return A autoreleased TransitionMoveInR object.
+     * @~chinese 从右侧传入场景。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english A autoreleased TransitionMoveInR object.
+     * @~chinese autoreleased TransitionMoveInR对象。
      */
     static TransitionMoveInR* create(float t, Scene* scene);
 
@@ -286,18 +343,25 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionMoveInR);
 };
 
-/** @class TransitionMoveInT
- * @brief TransitionMoveInT:
-Move in from to the top the incoming scene.
+/** 
+ * @brief @~english TransitionMoveInT:
+ * Move in from to the top the incoming scene.
+ * @~chinese TransitionMoveInT:
+ * 从顶部传入场景。
 */
 class CC_DLL TransitionMoveInT : public TransitionMoveInL 
 {
 public:
-    /** Creates a transition with duration and incoming scene.
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param scene A given scene.
-     * @return A autoreleased TransitionMoveInT object.
+     * @~chinese 创建一个从顶部传入的场景过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english A autoreleased TransitionMoveInT object.
+     * @~chinese autoreleased TransitionMoveInT对象。
      */
     static TransitionMoveInT* create(float t, Scene* scene);
 
@@ -312,18 +376,25 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionMoveInT);
 };
 
-/** @class TransitionMoveInB
- * @brief TransitionMoveInB:
-Move in from to the bottom the incoming scene.
+/** 
+ * @brief @~english TransitionMoveInB:
+ * Move in from to the bottom the incoming scene.
+ * @~chinese TransitionMoveInB:
+ * 从底部传入。
 */
 class CC_DLL TransitionMoveInB : public TransitionMoveInL
 {
 public:
-    /** Creates a transition with duration and incoming scene.
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param scene A given scene.
-     * @return A autoreleased TransitionMoveInB object.
+     * @~chinese 创建一个从底部传入的场景过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english A autoreleased TransitionMoveInB object.
+     * @~chinese autoreleased TransitionMoveInB对象。
      */
     static TransitionMoveInB* create(float t, Scene* scene);
 
@@ -338,26 +409,36 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionMoveInB);
 };
 
-/** @class TransitionSlideInL
- * @brief TransitionSlideInL:
-Slide in the incoming scene from the left border.
+/** 
+ * @brief @~english TransitionSlideInL:
+ * Slide in the incoming scene from the left border.
+ * @~chinese TransitionSlideInL:
+ * 从左边滑入传人场景。
 */
 class CC_DLL TransitionSlideInL : public TransitionScene, public TransitionEaseScene
 {
 public:
-    /** Creates a transition with duration and incoming scene.
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param scene A given scene.
-     * @return A autoreleased TransitionSlideInL object.
+     * @~chinese 创建从左边滑入传人场景的过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english A autoreleased TransitionSlideInL object.
+     * @~chinese autoreleased TransitionSlideInL对象。
      */
     static TransitionSlideInL* create(float t, Scene* scene);
 
     virtual ActionInterval* easeActionWithAction(ActionInterval * action) override;
 
-    /** Returns the action that will be performed by the incoming and outgoing scene.
+    /** @~english Returns the action that will be performed by the incoming and outgoing scene.
      *
-     * @return The action that will be performed by the incoming and outgoing scene.
+     * @~chinese 返回传入/传出 scene 要执行的 action。
+     * 
+     * @return @~english The action that will be performed by the incoming and outgoing scene.
+     * @~chinese 返回传入/传出 scene 要执行的 action。
      */
     virtual ActionInterval* action(void);
 
@@ -371,7 +452,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~TransitionSlideInL();
 
 protected:
-    /** initializes the scenes */
+    /** @~english initializes the scenes  @~chinese Initializes the scenes*/
     virtual void initScenes(void);
 
     virtual void sceneOrder() override;
@@ -380,22 +461,29 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionSlideInL);
 };
 
-/** @class TransitionSlideInR
- *@brief TransitionSlideInR:
-Slide in the incoming scene from the right border.
+/** 
+ * @brief @~english TransitionSlideInR:
+ * Slide in the incoming scene from the right border.
+ * @~chinese TransitionSlideInR:
+ * 从右边滑入传入场景。
 */
 class CC_DLL TransitionSlideInR : public TransitionSlideInL 
 {
 public:
-    /** Creates a transition with duration and incoming scene.
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param scene A given scene.
-     * @return A autoreleased TransitionSlideInR object.
+     * @~chinese 创建一个从右边滑入的场景过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english A autoreleased TransitionSlideInR object.
+     * @~chinese autoreleased TransitionSlideInR对象。
      */
     static TransitionSlideInR* create(float t, Scene* scene);
 
-    /** Returns the action that will be performed by the incoming and outgoing scene. */
+    /** @~english Returns the action that will be performed by the incoming and outgoing scene.  @~chinese 返回传入/传出 scene 要执行的 action。*/
     virtual ActionInterval* action(void) override;
 
 CC_CONSTRUCTOR_ACCESS:
@@ -403,7 +491,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~TransitionSlideInR();
 
 protected:
-    /** initializes the scenes */
+    /** @~english initializes the scenes  @~chinese 初始化的场景*/
     virtual void initScenes(void) override;
 
     virtual void sceneOrder() override;
@@ -412,22 +500,29 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionSlideInR);
 };
 
-/** @class TransitionSlideInB
- * @brief TransitionSlideInB:
-Slide in the incoming scene from the bottom border.
-*/
+/** 
+ * @brief @~english TransitionSlideInB:
+ * Slide in the incoming scene from the bottom border.
+ * @~chinese TransitionSlideInB:
+ * 从底部滑入场景。
+ */
 class CC_DLL TransitionSlideInB : public TransitionSlideInL
 {
 public:
-    /** Creates a transition with duration and incoming scene.
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param scene A given scene.
-     * @return A autoreleased TransitionSlideInB object.
+     * @~chinese 创建一个从底部滑入的场景过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english A autoreleased TransitionSlideInB object.
+     * @~chinese autoreleased TransitionSlideInB对象。
      */
     static TransitionSlideInB* create(float t, Scene* scene);
 
-    /** returns the action that will be performed by the incoming and outgoing scene */
+    /** @~english returns the action that will be performed by the incoming and outgoing scene  @~chinese 返回传入/传出 scene 要执行的 action*/
     virtual ActionInterval* action(void) override;
 
 CC_CONSTRUCTOR_ACCESS:
@@ -435,7 +530,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~TransitionSlideInB();
 
 protected:
-    /** initializes the scenes */
+    /** @~english initializes the scenes  @~chinese 初始化的场景*/
     virtual void initScenes() override;
 
     virtual void sceneOrder() override;
@@ -444,22 +539,29 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionSlideInB);
 };
 
-/** @class TransitionSlideInT
- * @brief TransitionSlideInT:
-Slide in the incoming scene from the top border.
+/** 
+ * @brief @~english TransitionSlideInT:
+ * Slide in the incoming scene from the top border.
+ * @~chinese TransitionSlideInT:
+ * 从顶部滑入场景。
 */
 class CC_DLL TransitionSlideInT : public TransitionSlideInL
 {
 public:
-    /** Creates a transition with duration and incoming scene.
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param scene A given scene.
-     * @return A autoreleased TransitionSlideInT object.
+     * @~chinese 创建一个从顶部滑入场景的过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english A autoreleased TransitionSlideInT object.
+     * @~chinese autoreleased TransitionSlideInT对象。
      */
     static TransitionSlideInT* create(float t, Scene* scene);
 
-    /** returns the action that will be performed by the incoming and outgoing scene */
+    /** @~english returns the action that will be performed by the incoming and outgoing scene  @~chinese 返回传入/传出 scene 要执行的 action*/
     virtual ActionInterval* action(void) override;
 
 CC_CONSTRUCTOR_ACCESS:
@@ -467,7 +569,7 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~TransitionSlideInT();
 
 protected:
-    /** initializes the scenes */
+    /** @~english initializes the scenes  @~chinese 初始化的场景*/
     virtual void initScenes(void) override;
 
     virtual void sceneOrder() override;
@@ -476,17 +578,23 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionSlideInT);
 };
 
-/** @class TransitionShrinkGrow
-* @brief Shrink the outgoing scene while grow the incoming scene
-*/
+/** 
+ * @brief @~english Shrink the outgoing scene while grow the incoming scene
+ * @~chinese 收缩切出场景，同时放大切入场景
+ */
 class CC_DLL TransitionShrinkGrow : public TransitionScene , public TransitionEaseScene
 {
 public:
-    /** Creates a transition with duration and incoming scene.
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param scene A given scene.
-     * @return A autoreleased TransitionShrinkGrow object.
+     * @~chinese 创建一个收缩切出场景，同时放大切入场景的过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english A autoreleased TransitionShrinkGrow object.
+     * @~chinese autoreleased TransitionShrinkGrow对象。
      */
     static TransitionShrinkGrow* create(float t, Scene* scene);
 
@@ -507,27 +615,42 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionShrinkGrow);
 };
 
-/** @class TransitionFlipX
- * @brief TransitionFlipX:
-Flips the screen horizontally.
-The front face is the outgoing scene and the back face is the incoming scene.
+/** 
+ * @brief @~english TransitionFlipX:
+ * Flips the screen horizontally.
+ * The front face is the outgoing scene and the back face is the incoming scene.
+ * @~chinese TransitionFlipX:
+ * 水平翻转屏幕。
+ * 正面是传出的场景，背面是传入的场景。
 */
 class CC_DLL TransitionFlipX : public TransitionSceneOriented
 {
 public:
-    /** Creates a transition with duration, incoming scene and orientation.
+    /** @~english Creates a transition with duration, incoming scene and orientation.
      *
-     * @param t Duration time, in seconds.
-     * @param s A given scene.
-     * @param o A given orientation.
-     * @return A autoreleased TransitionFlipX object.
+     * @~chinese 创建一个水平翻转过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param s @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @param o @~english A given orientation.
+     * @~chinese 一个给定的方向。
+     * @return @~english A autoreleased TransitionFlipX object.
+     * @~chinese autoreleased TransitionFlipX对象。
      */
     static TransitionFlipX* create(float t, Scene* s, Orientation o);
-    /** Creates a transition with duration and incoming scene.
+
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param s A given scene.
-     * @return A autoreleased TransitionFlipX object.
+     * @~chinese 创建一个水平翻转过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param s @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english A autoreleased TransitionFlipX object.
+     * @~chinese autoreleased TransitionFlipX对象。
      */
     static TransitionFlipX* create(float t, Scene* s);
 
@@ -547,27 +670,42 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionFlipX);
 };
 
-/** @class TransitionFlipY
- * @brief TransitionFlipY:
-Flips the screen vertically.
-The front face is the outgoing scene and the back face is the incoming scene.
+/** 
+ * @brief @~english TransitionFlipY:
+ * Flips the screen vertically.
+ * The front face is the outgoing scene and the back face is the incoming scene.
+ * @~chinese TransitionFlipY:
+ * 垂直翻转屏幕。
+ * 正面是传出的场景，背面是传入的场景。
 */
 class CC_DLL TransitionFlipY : public TransitionSceneOriented
 {
 public:
-    /** Creates a transition with duration, incoming scene and orientation.
+    /** @~english Creates a transition with duration, incoming scene and orientation.
      *
-     * @param t Duration time, in seconds.
-     * @param s A given scene.
-     * @param o A given orientation.
-     * @return A autoreleased TransitionFlipY object.
+     * @~chinese 创建一个垂直翻转屏幕过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param s @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @param o @~english A given orientation.
+     * @~chinese 一个给定的方向。
+     * @return @~english A autoreleased TransitionFlipY object.
+     * @~chinese autoreleased TransitionFlipY对象。
      */
     static TransitionFlipY* create(float t, Scene* s, Orientation o);
-    /** Creates a transition with duration and incoming scene.
+
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param s A given scene.
-     * @return A autoreleased TransitionFlipY object.
+     * @~chinese 创建一个垂直翻转屏幕过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param s @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english A autoreleased TransitionFlipY object.
+     * @~chinese autoreleased TransitionFlipY对象。
      */
     static TransitionFlipY* create(float t, Scene* s);
 
@@ -587,27 +725,42 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionFlipY);
 };
 
-/** @class TransitionFlipAngular
- * @brief TransitionFlipAngular:
-Flips the screen half horizontally and half vertically.
-The front face is the outgoing scene and the back face is the incoming scene.
+/** 
+ * @brief @~english TransitionFlipAngular:
+ * Flips the screen half horizontally and half vertically.
+ * The front face is the outgoing scene and the back face is the incoming scene.
+ * @~chinese TransitionFlipAngular:
+ * 水平垂直翻转屏幕.（类似一种镜面）。
+ * 正面是传出的场景，背面是传入的场景。
 */
 class CC_DLL TransitionFlipAngular : public TransitionSceneOriented
 {
 public:
-    /** Creates a transition with duration, incoming scene and orientation.
+    /** @~english Creates a transition with duration, incoming scene and orientation.
      *
-     * @param t Duration time, in seconds.
-     * @param s A given scene.
-     * @param o A given orientation.
-     * @return A autoreleased TransitionFlipAngular object.
+     * @~chinese 创建一个水平垂直翻转过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param s @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @param o @~english A given orientation.
+     * @~chinese 一个给定的方向。
+     * @return @~english A autoreleased TransitionFlipAngular object.
+     * @~chinese autoreleased TransitionFlipAngular对象。
      */
     static TransitionFlipAngular* create(float t, Scene* s, Orientation o);
-    /** Creates a transition with duration and incoming scene.
+
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param s A given scene.
-     * @return A autoreleased TransitionFlipAngular object.
+     * @~chinese 创建一个水平垂直翻转过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param s @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english A autoreleased TransitionFlipAngular object.
+     * @~chinese autoreleased TransitionFlipAngular对象。
      */
     static TransitionFlipAngular* create(float t, Scene* s);
 
@@ -627,27 +780,42 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionFlipAngular);
 };
 
-/** @class TransitionZoomFlipX
- * @brief TransitionZoomFlipX:
-Flips the screen horizontally doing a zoom out/in
-The front face is the outgoing scene and the back face is the incoming scene.
+/** 
+ * @brief @~english TransitionZoomFlipX:
+ * Flips the screen horizontally doing a zoom out/in
+ * The front face is the outgoing scene and the back face is the incoming scene.
+ * @~chinese TransitionZoomFlipX:
+ * 水平翻转同时缩放屏幕
+ * 正面是传出的场景，背面是传入的场景。
 */
 class CC_DLL TransitionZoomFlipX : public TransitionSceneOriented
 {
 public:
-    /** Creates a transition with duration, incoming scene and orientation.
+    /** @~english Creates a transition with duration, incoming scene and orientation.
      *
-     * @param t Duration time, in seconds.
-     * @param s A given scene.
-     * @param o A given orientation.
-     * @return A autoreleased TransitionZoomFlipX object.
+     * @~chinese 创建一个水平翻转同时缩放屏幕。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param s @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @param o @~english A given orientation.
+     * @~chinese 一个给定的方向。
+     * @return @~english A autoreleased TransitionZoomFlipX object.
+     * @~chinese autoreleased TransitionZoomFlipX对象。
      */
     static TransitionZoomFlipX* create(float t, Scene* s, Orientation o);
-    /** Creates a transition with duration and incoming scene.
+
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param s A given scene.
-     * @return A autoreleased TransitionZoomFlipX object.
+     * @~chinese 创建一个水平翻转同时缩放屏幕。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 在全国,后者。
+     * @param s @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english A autoreleased TransitionZoomFlipX object.
+     * @~chinese autoreleased TransitionZoomFlipX对象。
      */
     static TransitionZoomFlipX* create(float t, Scene* s);
 
@@ -667,27 +835,42 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionZoomFlipX);
 };
 
-/** @class TransitionZoomFlipY
- * @brief TransitionZoomFlipY:
-Flips the screen vertically doing a little zooming out/in
-The front face is the outgoing scene and the back face is the incoming scene.
+/** 
+ * @brief @~english TransitionZoomFlipY:
+ * Flips the screen vertically doing a little zooming out/in
+ * The front face is the outgoing scene and the back face is the incoming scene.
+ * @~chinese TransitionZoomFlipY:
+ * 垂直翻转同时缩放屏幕。
+ * 正面是传出的场景，背面是传入的场景。
 */
 class CC_DLL TransitionZoomFlipY : public TransitionSceneOriented
 {
 public:
-    /** Creates a transition with duration, incoming scene and orientation.
+    /** @~english Creates a transition with duration, incoming scene and orientation.
      *
-     * @param t Duration time, in seconds.
-     * @param s A given scene.
-     * @param o A given orientation.
-     * @return A autoreleased TransitionZoomFlipY object.
+     * @~chinese 创建一个垂直翻转同时缩放屏幕过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param s @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @param o @~english A given orientation.
+     * @~chinese 一个给定的方向。
+     * @return @~english A autoreleased TransitionZoomFlipY object.
+     * @~chinese autoreleased TransitionZoomFlipY对象。
      */
     static TransitionZoomFlipY* create(float t, Scene* s, Orientation o);
-    /** Creates a transition with duration and incoming scene.
+
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param s A given scene.
-     * @return A autoreleased TransitionZoomFlipY object.
+     * @~chinese 创建一个垂直翻转同时缩放屏幕过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param s @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english A autoreleased TransitionZoomFlipY object.
+     * @~chinese autoreleased TransitionZoomFlipY对象。
      */
     static TransitionZoomFlipY* create(float t, Scene* s);
 
@@ -707,27 +890,42 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionZoomFlipY);
 };
 
-/** @class TransitionZoomFlipAngular
- * @brief TransitionZoomFlipAngular:
-Flips the screen half horizontally and half vertically doing a little zooming out/in.
-The front face is the outgoing scene and the back face is the incoming scene.
+/** 
+ * @brief @~english TransitionZoomFlipAngular:
+ * Flips the screen half horizontally and half vertically doing a little zooming out/in.
+ * The front face is the outgoing scene and the back face is the incoming scene.
+ * @~chinese TransitionZoomFlipAngular:
+ * 对角翻转同时缩放屏幕
+ * 正面是传出的场景，背面是传入的场景。
 */
 class CC_DLL TransitionZoomFlipAngular : public TransitionSceneOriented
 {
 public:
-    /** Creates a transition with duration, incoming scene and orientation.
+    /** @~english Creates a transition with duration, incoming scene and orientation.
      *
-     * @param t Duration time, in seconds.
-     * @param s A given scene.
-     * @param o A given orientation.
-     * @return A autoreleased TransitionZoomFlipAngular object.
+     * @~chinese 创建一个对角翻转同时缩放屏幕过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param s @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @param o @~english A given orientation.
+     * @~chinese 一个给定的方向。
+     * @return @~english A autoreleased TransitionZoomFlipAngular object.
+     * @~chinese autoreleased TransitionZoomFlipAngular对象。
      */
     static TransitionZoomFlipAngular* create(float t, Scene* s, Orientation o);
-    /** Creates a transition with duration and incoming scene.
+
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param s A given scene.
-     * @return A autoreleased TransitionZoomFlipAngular object.
+     * @~chinese 创建一个对角翻转同时缩放屏幕过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param s @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english A autoreleased TransitionZoomFlipAngular object.
+     * @~chinese autoreleased TransitionZoomFlipAngular对象。
      */
     static TransitionZoomFlipAngular* create(float t, Scene* s);
 
@@ -747,27 +945,42 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionZoomFlipAngular);
 };
 
-/** @class TransitionFade
- * @brief TransitionFade:
-Fade out the outgoing scene and then fade in the incoming scene.'''
+/** 
+ * @brief @~english TransitionFade:
+ * Fade out the outgoing scene and then fade in the incoming scene.'''
+ * @~chinese TransitionFade:
+ * 淡入淡出
 */
 class CC_DLL TransitionFade : public TransitionScene
 {
 public:
-    /** Creates the transition with a duration and with an RGB color
+    /** @~english Creates the transition with a duration and with an RGB color
      * Example: FadeTransition::create(2, scene, Color3B(255,0,0); // red color
      *
-     * @param duration Duration time, in seconds.
-     * @param scene A given scene.
-     * @param color A given transition color.
-     * @return A autoreleased TransitionFade object.
+     * @~chinese 创建一个淡入淡出场景过渡
+     * 例如: FadeTransition::create(2, scene, Color3B(255,0,0); //红色
+     * 
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @param color @~english A given transition color.
+     * @~chinese 一个给定的过渡色。
+     * @return @~english A autoreleased TransitionFade object.
+     * @~chinese autoreleased TransitionFade对象。
      */
     static TransitionFade* create(float duration, Scene* scene, const Color3B& color);
-    /** Creates the transition with a duration.
+
+    /** @~english Creates the transition with a duration.
      *
-     * @param duration Duration time, in seconds.
-     * @param scene A given scene.
-     * @return A autoreleased TransitionFade object.
+     * @~chinese 创建一个淡入淡出场景过渡。
+     * 
+     * @param duration @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english A autoreleased TransitionFade object.
+     * @~chinese autoreleased TransitionFade对象。
      */
     static TransitionFade* create(float duration, Scene* scene);
 
@@ -784,7 +997,7 @@ CC_CONSTRUCTOR_ACCESS:
     TransitionFade();
     virtual ~TransitionFade();
 
-    /** initializes the transition with a duration and with an RGB color */
+    /** @~english initializes the transition with a duration and with an RGB color  @~chinese 使用 duration、RGB color 初始化一个 transition（过渡）*/
     bool initWithDuration(float t, Scene*scene, const Color3B& color);
     bool initWithDuration(float t, Scene* scene);
 
@@ -797,18 +1010,26 @@ private:
 };
 
 class RenderTexture;
-/** @class TransitionCrossFade
-@brief TransitionCrossFade:
-Cross fades two scenes using the RenderTexture object.
-*/
+
+/** 
+ * @brief @~english TransitionCrossFade:
+ * Cross fades two scenes using the RenderTexture object.
+ * @~chinese TransitionCrossFade:
+ * 交叉淡入淡出
+ */
 class CC_DLL TransitionCrossFade : public TransitionScene
 {
 public :
-    /** Creates a transition with duration and incoming scene.
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param scene A given scene.
-     * @return A autoreleased TransitionCrossFade object.
+     * @~chinese 创建一个交叉淡入淡出过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english A autoreleased TransitionCrossFade object.
+     * @~chinese autoreleased TransitionCrossFade对象。
      */
     static TransitionCrossFade* create(float t, Scene* scene);
 
@@ -836,18 +1057,25 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionCrossFade);
 };
 
-/** @class TransitionTurnOffTiles
- * @brief TransitionTurnOffTiles:
-Turn off the tiles of the outgoing scene in random order
+/** 
+ * @brief @~english TransitionTurnOffTiles:
+ * Turn off the tiles of the outgoing scene in random order
+ * @~chinese TransitionTurnOffTiles:
+ * 随机瓦片
 */
 class CC_DLL TransitionTurnOffTiles : public TransitionScene ,public TransitionEaseScene
 {
 public :
-    /** Creates a transition with duration and incoming scene.
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param scene A given scene.
-     * @return A autoreleased TransitionTurnOffTiles object.
+     * @~chinese 创建一个随机瓦片过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english A autoreleased TransitionTurnOffTiles object.
+     * @~chinese autoreleased TransitionTurnOffTiles对象。
      */
     static TransitionTurnOffTiles* create(float t, Scene* scene);
 
@@ -880,24 +1108,34 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionTurnOffTiles);
 };
 
-/** @class TransitionSplitCols
- * @brief TransitionSplitCols:
-The odd columns goes upwards while the even columns goes downwards.
+/** 
+ * @brief @~english TransitionSplitCols:
+ * The odd columns goes upwards while the even columns goes downwards.
+ * @~chinese TransitionSplitCols:
+ * 奇数列向上推移而偶数列向下推移。
 */
 class CC_DLL TransitionSplitCols : public TransitionScene , public TransitionEaseScene
 {
 public:
-    /** Creates a transition with duration and incoming scene.
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param scene A given scene.
-     * @return A autoreleased TransitionSplitCols object.
+     * @~chinese 创建一个奇数列向上推移而偶数列向下推移过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english A autoreleased TransitionSplitCols object.
+     * @~chinese autoreleased TransitionSplitCols对象。
      */
     static TransitionSplitCols* create(float t, Scene* scene);
 
-    /** Returns the action that will be performed.
+    /** @~english Returns the action that will be performed.
      *
-     * @return The action that will be performed.
+     * @~chinese 返回将要被执行的action。
+     * 
+     * @return @~english The action that will be performed.
+     * @~chinese 将要被执行的action。
      */
     virtual ActionInterval* action();
 
@@ -923,18 +1161,25 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionSplitCols);
 };
 
-/** @class TransitionSplitRows
- * @brief TransitionSplitRows:
-The odd rows goes to the left while the even rows goes to the right.
-*/
+/** 
+ * @brief @~english TransitionSplitRows:
+ * The odd rows goes to the left while the even rows goes to the right.
+ * @~chinese TransitionSplitRows:
+ * 奇数行从左侧推移，偶数行从右侧推移。
+ */
 class CC_DLL TransitionSplitRows : public TransitionSplitCols
 {
 public:
-    /** Creates a transition with duration and incoming scene.
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param scene A given scene.
-     * @return A autoreleased TransitionSplitRows object.
+     * @~chinese 创建一个奇数行从左侧推移，偶数行从右侧推移过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english A autoreleased TransitionSplitRows object.
+     * @~chinese autoreleased TransitionSplitRows对象。
      */
     static TransitionSplitRows* create(float t, Scene* scene);
 
@@ -951,25 +1196,36 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionSplitRows);
 };
 
-/** @class TransitionFadeTR
- * @brief TransitionFadeTR:
-Fade the tiles of the outgoing scene from the left-bottom corner the to top-right corner.
+/** 
+ * @brief @~english TransitionFadeTR:
+ * Fade the tiles of the outgoing scene from the left-bottom corner the to top-right corner.
+ * @~chinese TransitionFadeTR:
+ * 从从左下角到右上角淡出瓦片。
 */
 class CC_DLL TransitionFadeTR : public TransitionScene , public TransitionEaseScene
 {
 public:
-    /** Creates a transition with duration and incoming scene.
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param scene A given scene.
-     * @return A autoreleased TransitionFadeTR object.
+     * @~chinese 创建一个从从左下角到右上角淡出瓦片过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english A autoreleased TransitionFadeTR object.
+     * @~chinese autoreleased TransitionFadeTR对象。
      */
     static TransitionFadeTR* create(float t, Scene* scene);
 
-    /** Returns the action that will be performed with size.
+    /** @~english Returns the action that will be performed with size.
      *
-     * @param size A given size.
-     * @return The action that will be performed.
+     * @~chinese 返回将要被执行的action。
+     * 
+     * @param size @~english A given size.
+     * @~chinese 一个给定的大小。
+     * @return @~english The action that will be performed.
+     * @~chinese 将要被执行的action
      */
     virtual ActionInterval* actionWithSize(const Size& size);
 
@@ -998,18 +1254,25 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionFadeTR);
 };
 
-/** @class TransitionFadeBL
- * @brief TransitionFadeBL:
-Fade the tiles of the outgoing scene from the top-right corner to the bottom-left corner.
+/** 
+ * @brief @~english TransitionFadeBL:
+ * Fade the tiles of the outgoing scene from the top-right corner to the bottom-left corner.
+ * @~chinese TransitionFadeBL:
+ * 从右上角到左下角淡出瓦片。
 */
 class CC_DLL TransitionFadeBL : public TransitionFadeTR
 {
 public:
-    /** Creates a transition with duration and incoming scene.
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param scene A given scene.
-     * @return A autoreleased TransitionFadeBL object.
+     * @~chinese 创建一个从右上角到左下角淡出瓦片过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese seconds in,time duration。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english A autoreleased TransitionFadeBL object.
+     * @~chinese autoreleased TransitionFadeBL对象。
      */
     static TransitionFadeBL* create(float t, Scene* scene);
 
@@ -1026,18 +1289,25 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionFadeBL);
 };
 
-/** @class TransitionFadeUp
- * @brief TransitionFadeUp:
-* Fade the tiles of the outgoing scene from the bottom to the top.
-*/
+/** 
+ * @brief @~english TransitionFadeUp:
+ * Fade the tiles of the outgoing scene from the bottom to the top.
+ * @~chinese TransitionFadeUp:
+ * 从下向上淡出瓦片。
+ */
 class CC_DLL TransitionFadeUp : public TransitionFadeTR
 {
 public:
-    /** Creates a transition with duration and incoming scene.
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param scene A given scene.
-     * @return A autoreleased TransitionFadeUp object.
+     * @~chinese 创建一个从下向上淡出瓦片过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english A autoreleased TransitionFadeUp object.
+     * @~chinese autoreleased TransitionFadeUp对象。
      */
     static TransitionFadeUp* create(float t, Scene* scene);
 
@@ -1054,18 +1324,25 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionFadeUp);
 };
 
-/** @class TransitionFadeDown
- * @brief TransitionFadeDown:
-* Fade the tiles of the outgoing scene from the top to the bottom.
-*/
+/** 
+ * @brief @~english TransitionFadeDown:
+ * Fade the tiles of the outgoing scene from the top to the bottom.
+ * @~chinese TransitionFadeDown:
+ * 从上向下淡出瓦片。
+ */
 class CC_DLL TransitionFadeDown : public TransitionFadeTR
 {
 public:
-    /** Creates a transition with duration and incoming scene.
+    /** @~english Creates a transition with duration and incoming scene.
      *
-     * @param t Duration time, in seconds.
-     * @param scene A given scene.
-     * @return A autoreleased TransitionFadeDown object.
+     * @~chinese 创建一个从上向下淡出瓦片过渡。
+     * 
+     * @param t @~english Duration time, in seconds.
+     * @~chinese 持续时间,以秒为单位。
+     * @param scene @~english A given scene.
+     * @~chinese 一个给定的场景。
+     * @return @~english A autoreleased TransitionFadeDown object.
+     * @~chinese autoreleased TransitionFadeDown对象。
      */
     static TransitionFadeDown* create(float t, Scene* scene);
 
