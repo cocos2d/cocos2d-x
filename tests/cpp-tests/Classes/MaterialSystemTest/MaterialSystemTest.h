@@ -49,6 +49,9 @@ class Material_MultipleSprite3D : public MaterialSystemBaseTest
 public:
     CREATE_FUNC(Material_MultipleSprite3D);
 
+    Material_MultipleSprite3D();
+    virtual ~Material_MultipleSprite3D();
+
     virtual void onEnter() override;
     virtual std::string subtitle() const override;
 };

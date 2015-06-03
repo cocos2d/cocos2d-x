@@ -227,7 +227,7 @@ public:
 
     bool init()
     {
-        initGLProgramState("Shaders/example_outline.fsh");
+        initGLProgramState("Shaders/example_Outline.fsh");
 
         Vec3 color(1.0f, 0.2f, 0.3f);
         GLfloat radius = 0.01f;
@@ -267,7 +267,7 @@ public:
 
 protected:
     bool init() {
-        initGLProgramState("Shaders/example_edgeDetection.fsh");
+        initGLProgramState("Shaders/example_EdgeDetection.fsh");
         return true;
     }
 
@@ -286,7 +286,7 @@ public:
 
 protected:
     bool init() {
-        initGLProgramState("Shaders/example_greyScale.fsh");
+        initGLProgramState("Shaders/example_GreyScale.fsh");
         return true;
     }
 };
@@ -299,7 +299,7 @@ public:
 
 protected:
     bool init() {
-        initGLProgramState("Shaders/example_sepia.fsh");
+        initGLProgramState("Shaders/example_Sepia.fsh");
         return true;
     }
 };
@@ -312,7 +312,7 @@ public:
 
 protected:
     bool init() {
-        initGLProgramState("Shaders/example_bloom.fsh");
+        initGLProgramState("Shaders/example_Bloom.fsh");
         return true;
     }
 
@@ -331,7 +331,7 @@ public:
 
 protected:
     bool init() {
-        initGLProgramState("Shaders/example_celShading.fsh");
+        initGLProgramState("Shaders/example_CelShading.fsh");
         return true;
     }
 
@@ -350,7 +350,7 @@ public:
 
 protected:
     bool init() {
-        initGLProgramState("Shaders/example_lensFlare.fsh");
+        initGLProgramState("Shaders/example_LensFlare.fsh");
         return true;
     }
 

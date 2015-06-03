@@ -45,17 +45,6 @@ AudioCache::AudioCache()
     memset(&_audInfo, 0, sizeof(AudioInfo));
 }
 
-AudioCache::AudioCache(const AudioCache& obj)
-{
-    // TODO
-}
-
-AudioCache& AudioCache::operator=(const AudioCache& rhs)
-{
-    // TODO
-    return *this;
-}
-
 AudioCache::~AudioCache()
 {
     _callbacks.clear();
@@ -79,7 +68,7 @@ void AudioCache::readDataTask()
     {
     case FileFormat::WAV:
         _srcReader = new (std::nothrow) WAVReader();
-        if (_srcReader->initialize(_fileFullPath)) {
+        if (_srcReader && _srcReader->initialize(_fileFullPath)) {
             _audInfo._totalAudioBytes = _srcReader->getTotalAudioBytes();
             _audInfo._wfx = _srcReader->getWaveFormatInfo();
             _isReady = true;
@@ -91,6 +80,13 @@ void AudioCache::readDataTask()
         break;
 
     case FileFormat::MP3:
+        _srcReader = new (std::nothrow) MP3Reader();
+        if (_srcReader && _srcReader->initialize(_fileFullPath)) {
+            _audInfo._totalAudioBytes = _srcReader->getTotalAudioBytes();
+            _audInfo._wfx = _srcReader->getWaveFormatInfo();
+            _isReady = true;
+            invokeCallbacks();
+        }
         break;
 
     case FileFormat::UNKNOWN:
@@ -416,7 +412,6 @@ void AudioPlayer::popBuffer()
 {
     _bqMutex.lock();
     if (!_cachedBufferQ.empty()) {
-        delete[] _cachedBufferQ.front()._data;
         _cachedBufferQ.pop();
     }
     _bqMutex.unlock();
@@ -431,9 +426,9 @@ bool AudioPlayer::submitBuffers()
         if (nullptr == _xaSourceVoice) break;
         if (!_cachedBufferQ.size() || (_isStreaming && _cachedBufferQ.size() < QUEUEBUFFER_NUM)) {
             AudioDataChunk chunk;
-            if (_cache->getChunk(chunk)) {
+            if (_cache->getChunk(chunk) && chunk._dataSize) {
                 _xaBuffer.AudioBytes = chunk._dataSize;
-                _xaBuffer.pAudioData = chunk._data;
+                _xaBuffer.pAudioData = chunk._data->data();
                 _xaBuffer.Flags = chunk._endOfStream ? XAUDIO2_END_OF_STREAM : 0;
                 _cachedBufferQ.push(chunk);
                 ret = SUCCEEDED(_xaSourceVoice->SubmitSourceBuffer(&_xaBuffer));

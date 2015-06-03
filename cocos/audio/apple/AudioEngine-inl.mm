@@ -158,10 +158,11 @@ void AudioEngineInterruptionListenerCallback(void* user_data, UInt32 interruptio
 
 -(id) init
 {
-    if (self == [super init])
+    if (self = [super init])
     {
       if ([[[UIDevice currentDevice] systemVersion] intValue] > 5) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleInterruption:) name:AVAudioSessionInterruptionNotification object:[AVAudioSession sharedInstance]];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleInterruption:) name:UIApplicationDidBecomeActiveNotification object:[AVAudioSession sharedInstance]];
       }
       else {
         AudioSessionInitialize(NULL, NULL, AudioEngineInterruptionListenerCallback, self);
@@ -172,6 +173,8 @@ void AudioEngineInterruptionListenerCallback(void* user_data, UInt32 interruptio
 
 -(void)handleInterruption:(NSNotification*)notification
 {
+    static bool resumeOnBecomingActive = false;
+    
     if ([notification.name isEqualToString:AVAudioSessionInterruptionNotification]) {
         NSInteger reason = [[[notification userInfo] objectForKey:AVAudioSessionInterruptionTypeKey] integerValue];
         if (reason == AVAudioSessionInterruptionTypeBegan) {
@@ -179,17 +182,35 @@ void AudioEngineInterruptionListenerCallback(void* user_data, UInt32 interruptio
         }
         
         if (reason == AVAudioSessionInterruptionTypeEnded) {
-            OSStatus result = AudioSessionSetActive(true);
-            if (result) NSLog(@"Error setting audio session active! %d\n", result);
-            
-            alcMakeContextCurrent(s_ALContext);
+            if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+                NSError *error = nil;
+                [[AVAudioSession sharedInstance] setActive:YES error:&error];
+                alcMakeContextCurrent(s_ALContext);
+            } else {
+                resumeOnBecomingActive = true;
+            }
         }
+    }
+    
+    if ([notification.name isEqualToString:UIApplicationDidBecomeActiveNotification] && resumeOnBecomingActive) {
+        resumeOnBecomingActive = false;
+        NSError *error = nil;
+        BOOL success = [[AVAudioSession sharedInstance]
+                        setCategory: AVAudioSessionCategoryAmbient
+                        error: &error];
+        if (!success) {
+            printf("Fail to set audio session.\n");
+            return;
+        }
+        [[AVAudioSession sharedInstance] setActive:YES error:&error];
+        alcMakeContextCurrent(s_ALContext);
     }
 }
 
 -(void) dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:AVAudioSessionInterruptionNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
     
     [super dealloc];
 }
@@ -239,12 +260,11 @@ bool AudioEngineImpl::init()
         s_ALDevice = alcOpenDevice(nullptr);
         
         if (s_ALDevice) {
-            auto alError = alGetError();
             s_ALContext = alcCreateContext(s_ALDevice, nullptr);
             alcMakeContextCurrent(s_ALContext);
             
             alGenSources(MAX_AUDIOINSTANCES, _alSources);
-            alError = alGetError();
+            auto alError = alGetError();
             if(alError != AL_NO_ERROR)
             {
                 printf("%s:generating sources fail! error = %x\n", __PRETTY_FUNCTION__, alError);

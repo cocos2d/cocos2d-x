@@ -120,22 +120,22 @@ void Material_2DEffects::onEnter()
     Material *mat1 = Material::createWithProperties(properties);
 
     auto spriteBlur = Sprite::create("Images/grossini.png");
-    spriteBlur->setNormalizedPosition(Vec2(0.2, 0.5));
+    spriteBlur->setNormalizedPosition(Vec2(0.2f, 0.5f));
     this->addChild(spriteBlur);
     spriteBlur->setGLProgramState(mat1->getTechniqueByName("blur")->getPassByIndex(0)->getGLProgramState());
 
     auto spriteOutline = Sprite::create("Images/grossini.png");
-    spriteOutline->setNormalizedPosition(Vec2(0.4, 0.5));
+    spriteOutline->setNormalizedPosition(Vec2(0.4f, 0.5f));
     this->addChild(spriteOutline);
     spriteOutline->setGLProgramState(mat1->getTechniqueByName("outline")->getPassByIndex(0)->getGLProgramState());
 
     auto spriteNoise = Sprite::create("Images/grossini.png");
-    spriteNoise->setNormalizedPosition(Vec2(0.6, 0.5));
+    spriteNoise->setNormalizedPosition(Vec2(0.6f, 0.5f));
     this->addChild(spriteNoise);
     spriteNoise->setGLProgramState(mat1->getTechniqueByName("noise")->getPassByIndex(0)->getGLProgramState());
 
     auto spriteEdgeDetect = Sprite::create("Images/grossini.png");
-    spriteEdgeDetect->setNormalizedPosition(Vec2(0.8, 0.5));
+    spriteEdgeDetect->setNormalizedPosition(Vec2(0.8f, 0.5f));
     this->addChild(spriteEdgeDetect);
     spriteEdgeDetect->setGLProgramState(mat1->getTechniqueByName("edge_detect")->getPassByIndex(0)->getGLProgramState());
 
@@ -162,7 +162,6 @@ class EffectAutoBindingResolver : GLProgramState::AutoBindingResolver
     void callbackRadius(GLProgram* glProgram, Uniform* uniform);
     void callbackColor(GLProgram* glProgram, Uniform* uniform);
 };
-static EffectAutoBindingResolver __autoBindingResolver;
 
 bool EffectAutoBindingResolver::resolveAutoBinding(GLProgramState* glProgramState, Node* node, const std::string& uniform, const std::string& autoBinding)
 {
@@ -188,6 +187,16 @@ void EffectAutoBindingResolver::callbackColor(GLProgram* glProgram, Uniform* uni
 {
     glProgram->setUniformLocationWith4f(uniform->location, 0.1, 0.2, 0.3, 1);
 }
+
+Material_AutoBindings::Material_AutoBindings()
+{
+}
+
+Material_AutoBindings::~Material_MultipleSprite3D()
+{
+
+}
+
 
 void Material_AutoBindings::onEnter()
 {

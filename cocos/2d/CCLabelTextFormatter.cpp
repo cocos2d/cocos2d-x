@@ -40,23 +40,21 @@ bool LabelTextFormatter::multilineText(Label *theLabel)
 
     std::vector<char16_t> multiline_string;
     multiline_string.reserve( limit );
-
     std::vector<char16_t> last_word;
     last_word.reserve( 25 );
 
-    bool   isStartOfLine  = false, isStartOfWord = false;
-    float  startOfLine = -1, startOfWord   = -1;
+    bool lineIsEmpty = true;
+    bool calculateLineStart = false;
+    float startOfLine = 0.f;
 
-    int skip = 0;
-    
+    int skip = 0;  
     int tIndex = 0;
-    float scalsX = theLabel->getScaleX();
     float lineWidth = theLabel->_maxLineWidth;
     bool breakLineWithoutSpace = theLabel->_lineBreakWithoutSpaces;
     Label::LetterInfo* info = nullptr;
 
     for (int j = 0; j+skip < limit; j++)
-    {            
+    {         
         info = & theLabel->_lettersInfo.at(j+skip);
 
         unsigned int justSkipped = 0;
@@ -72,10 +70,10 @@ bool LabelTextFormatter::multilineText(Label *theLabel)
                 last_word.push_back('\n');
                 multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
                 last_word.clear();
-                isStartOfWord = false;
-                isStartOfLine = false;
-                startOfWord = -1;
-                startOfLine = -1;
+
+                calculateLineStart = false;
+                startOfLine = 0.f;
+                lineIsEmpty = true;
             }
             if(tIndex < limit)
             {
@@ -90,69 +88,21 @@ bool LabelTextFormatter::multilineText(Label *theLabel)
         if (tIndex >= limit)
             break;
 
-        char16_t character = strWhole[tIndex];
-
-        if (!isStartOfWord)
+        if (calculateLineStart)
         {
-            startOfWord = info->position.x * scalsX;
-            isStartOfWord = true;
+            startOfLine = info->position.x - info->def.offsetX - theLabel->_horizontalKernings[tIndex];
+            calculateLineStart = false;
+            lineIsEmpty = true;
         }
 
-        if (!isStartOfLine)
+        auto character = strWhole[tIndex];     
+        if (breakLineWithoutSpace)
         {
-            startOfLine = startOfWord;
-            isStartOfLine  = true;
-        }
-        
-        // 1) Whitespace.
-        // 2) This character is non-CJK, but the last character is CJK
-        bool isspace = StringUtils::isUnicodeSpace(character);
-        bool isCJK = false;
-        if(!isspace)
-        {
-            isCJK = StringUtils::isCJKUnicode(character);
-        }
-
-        if (isspace ||
-            (!last_word.empty() && StringUtils::isCJKUnicode(last_word.back()) && !isCJK))
-        {
-            // if current character is white space, put it into the current word
-            if (isspace) last_word.push_back(character);
-            multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
-            last_word.clear();
-            isStartOfWord = false;
-            startOfWord = -1;
-            // put the CJK character in the last word
-            // and put the non-CJK(ASCII) character in the current word
-            if (!isspace) last_word.push_back(character);
-            continue;
-        }
-        
-        float posRight = (info->position.x + info->contentSize.width) * scalsX;
-        // Out of bounds.
-        if (posRight - startOfLine > lineWidth)
-        {
-            if (!breakLineWithoutSpace && !isCJK)
+            float posRight = info->position.x + info->contentSize.width;
+            if (posRight - startOfLine > lineWidth)
             {
-                last_word.push_back(character);
-                
-                int found = StringUtils::getIndexOfLastNotChar16(multiline_string, ' ');
-                if (found != -1)
-                    StringUtils::trimUTF16Vector(multiline_string);
-                else
-                    multiline_string.clear();
-
-                if (multiline_string.size() > 0)
-                    multiline_string.push_back('\n');
-
-                isStartOfLine = false;
-                startOfLine = -1;
-            }
-            else
-            {
-                StringUtils::trimUTF16Vector(last_word);
                 //issue #8492:endless loop if not using system font, and constrained length is less than one character width
-                if (isStartOfLine && last_word.size() == 0)
+                if (last_word.empty())
                     last_word.push_back(character);
                 else
                     --j;
@@ -160,22 +110,102 @@ bool LabelTextFormatter::multilineText(Label *theLabel)
                 last_word.push_back('\n');
                 multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
                 last_word.clear();
-                
-                isStartOfWord = false;
-                isStartOfLine = false;
-                startOfWord = -1;
-                startOfLine = -1;
+
+                startOfLine = 0.f;
+            }
+            else
+            {
+                last_word.push_back(character);
             }
         }
+        //Break line with space.
         else
         {
-            // Character is normal.
-            last_word.push_back(character);
+            std::vector<char16_t> nonCJKword;
+            int wordIndex = tIndex;
+            for (; wordIndex < limit; ++wordIndex)
+            {
+                auto ch = strWhole[wordIndex];
+                if (ch == '\n' || StringUtils::isUnicodeSpace(ch) || StringUtils::isCJKUnicode(ch))
+                {
+                    break;
+                }
+                
+                nonCJKword.push_back(ch);
+            }
+
+            if (!nonCJKword.empty())
+            {
+                auto wordLenth = nonCJKword.size();
+                auto lastCharacterInfo = &theLabel->_lettersInfo.at(tIndex + wordLenth - 1);
+
+                float posRight = lastCharacterInfo->position.x + lastCharacterInfo->contentSize.width;
+                if (posRight - startOfLine > lineWidth)
+                {
+                    if (last_word.empty())
+                    {
+                        nonCJKword.push_back('\n');
+                        multiline_string.insert(multiline_string.end(), nonCJKword.begin(), nonCJKword.end());
+
+                        calculateLineStart = true;
+                    }
+                    else
+                    {
+                        last_word.push_back('\n');
+                        multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
+                        last_word.clear();
+
+                        startOfLine = info->position.x - info->def.offsetX - theLabel->_horizontalKernings[tIndex];
+                        if (posRight - startOfLine > lineWidth)
+                        {
+                            nonCJKword.push_back('\n');
+                            multiline_string.insert(multiline_string.end(), nonCJKword.begin(), nonCJKword.end());
+                            calculateLineStart = true;
+                        } 
+                        else
+                        {
+                            multiline_string.insert(multiline_string.end(), nonCJKword.begin(), nonCJKword.end());
+                            lineIsEmpty = false;
+                            calculateLineStart = false;
+                        }
+                    }
+                } 
+                else
+                {
+                    multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
+                    last_word.clear();
+
+                    multiline_string.insert(multiline_string.end(), nonCJKword.begin(), nonCJKword.end());
+                    lineIsEmpty = false;
+                }
+
+                j += wordLenth - 1;
+                continue;
+            }          
+
+            float posRight = info->position.x + info->contentSize.width;
+            if (posRight - startOfLine > lineWidth)
+            {
+                //issue #8492:endless loop if not using system font, and constrained length is less than one character width
+                if (lineIsEmpty && last_word.empty())
+                    last_word.push_back(character);
+                else
+                    --j;
+
+                last_word.push_back('\n');
+                multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
+                last_word.clear();
+
+                calculateLineStart = true;
+            }
+            else
+            {
+                last_word.push_back(character);
+            }
         }
     }
 
     multiline_string.insert(multiline_string.end(), last_word.begin(), last_word.end());
-
     std::u16string strNew(multiline_string.begin(), multiline_string.end());
     
     theLabel->_currentUTF16String = strNew;
@@ -386,33 +416,16 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
             continue;
         }
         
-        nextFontPositionX += charAdvance + kernings[i];
+        nextFontPositionX += charAdvance + theLabel->_additionalKerning;
         
-        if (longestLine < nextFontPositionX)
+        auto letterRight = letterPosition.x + tempDefinition.width;
+        if (longestLine < letterRight)
         {
-            longestLine = nextFontPositionX;
+            longestLine = letterRight;
         }
-        
-        // check longest line before adding additional kerning
-        nextFontPositionX += theLabel->_additionalKerning;
     }
     
-    float lastCharWidth = tempDefinition.width * contentScaleFactor;
-    Size tmpSize;
-    // If the last character processed has an xAdvance which is less that the width of the characters image, then we need
-    // to adjust the width of the string to take this into account, or the character will overlap the end of the bounding
-    // box
-    if(charAdvance < lastCharWidth)
-    {
-        tmpSize.width = longestLine - charAdvance + lastCharWidth;
-    }
-    else
-    {
-        tmpSize.width = longestLine;
-    }
-    
-    tmpSize.height = totalHeight;
-    
+    Size tmpSize(longestLine * contentScaleFactor, totalHeight);
     if (theLabel->_labelHeight > 0)
     {
         tmpSize.height = theLabel->_labelHeight * contentScaleFactor;
