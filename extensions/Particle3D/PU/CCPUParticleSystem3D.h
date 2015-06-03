@@ -224,7 +224,7 @@ struct CC_DLL PUParticle3D : public Particle3D
 };
 
 /** @class PUParticleSystem3D
-*@brief @~english PUParticleSystem3D inherit from ParticleSystem3D, the class of pu particle system.
+*@brief @~english PUParticleSystem3D, the class of pu particle system, inherit from ParticleSystem3D.
  The ParticleSystem3D,the parent of PUParticleSystem3D, is derived from Node, so one particle system can contain multiple particle systems,
  By addChild way to mount a PUParticleSystem3D under another PUParticleSystem3D.
  Each particle system can be defined emitter,affector,renderer,etc. 
@@ -702,9 +702,9 @@ public:
     virtual PUParticleSystem3D* clone();
 
     /**
-    * @~english Copy one system's attributes to another's(internal method).
-    * @~chinese 拷贝一个粒子系统的属性到另外一个(内部方法)。
-    * @param system @~english the system which need be copied. @~chinese 拷贝属性的粒子系统。
+    * @~english Copy attributes to another particle system(internal method).
+    * @~chinese 拷贝属性到另外一个粒子系统(内部方法)。
+    * @param system @~english The particle system. @~chinese 粒子系统。
     */
     virtual void copyAttributesTo(PUParticleSystem3D* system);
 
@@ -739,23 +739,23 @@ protected:
 
 protected:
 
-    std::vector<PUEmitter*>      _emitters;
-    std::vector<PUObserver *>    _observers;
+    std::vector<PUEmitter*>      _emitters;///< The emitter list
+    std::vector<PUObserver *>    _observers;///< The observer list
 
-    ParticlePoolMap              _emittedEmitterParticlePool;
-    ParticlePoolMap              _emittedSystemParticlePool;
+    ParticlePoolMap              _emittedEmitterParticlePool;///< The emitted emitter pool
+    ParticlePoolMap              _emittedSystemParticlePool;///< The emitted system pool
 
-    unsigned int                 _emittedEmitterQuota;
-    unsigned int                 _emittedSystemQuota;
+    unsigned int                 _emittedEmitterQuota;///< The quota of emitted emitter
+    unsigned int                 _emittedSystemQuota;///< The quota of emitted system
 
     //internal
-    PUParticle3D::ParticleBehaviourList _behaviourTemplates;
-    std::vector<PUListener *>           _listeners;
+    PUParticle3D::ParticleBehaviourList _behaviourTemplates;///< Used by particle
+    std::vector<PUListener *>           _listeners;///< Used by system
 
     bool                                _prepared;
-    bool                                _poolPrepared;
+    bool                                _poolPrepared;///<Used by pools
 
-    float                               _particleSystemScaleVelocity;
+    float                               _particleSystemScaleVelocity;///< scale velocity of particles
     float                               _timeElapsedSinceStart;
 
     Quaternion                          _rotationOffset; ///< Rotation offset between 2 updates.
@@ -773,7 +773,7 @@ protected:
 
     std::string                         _matName;///< material name
 
-    bool                                _isMarkedForEmission;
+    bool                                _isMarkedForEmission;///< True means this system emitted by one emitter
 
     Vec3                                _latestPositionDiff;
     Vec3                                _latestPosition;///<  Keep latest position

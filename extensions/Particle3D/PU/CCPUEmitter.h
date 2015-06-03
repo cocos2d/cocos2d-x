@@ -44,7 +44,7 @@ class PUParticleSystem3D;
 */
 
 /** @class PUEmitter
-*@brief @~english PUEmitter inherit from Particle3DEmitter, the base class of pu emitter.
+*@brief @~english PUEmitter，the base class of pu emitter，inherit from Particle3DEmitter.
 Specific implementation decisions by different emitters.
 
 @~chinese PUEmitter继承自Particle3DEmitter，是pu发射器的基类。
@@ -869,9 +869,9 @@ public:
     virtual PUEmitter* clone() = 0;
 
     /**
-    * @~english Copy one emitter's attributes to another's(internal method).
-    * @~chinese 拷贝一个发射器的属性到另外一个(内部方法)。
-    * @param emitter @~english The emitter need be copied. @~chinese 拷贝属性的发射器。
+    * @~english Copy attributes to another emitter(internal method).
+    * @~chinese 拷贝属性到另外一个发射器(内部方法)。
+    * @param render @~english The emitter. @~chinese 发射器。
     */
     virtual void copyAttributesTo (PUEmitter* emitter);
 

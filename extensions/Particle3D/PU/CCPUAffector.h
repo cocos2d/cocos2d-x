@@ -43,7 +43,7 @@ class PUParticleSystem3D;
 */
 
 /** @class PUAffector
-*@brief @~english PUAffector inherit from Particle3DAffector, the base class of pu affector.
+*@brief @~english PUAffector, the base class of pu affector, inherit from Particle3DAffector.
  affectors modify particles in a particle system over their lifetime. This class defines
  the interface, and provides a few implementations of some basic functions.
 
@@ -246,9 +246,9 @@ public:
     void setName(const std::string& name) {_name = name;};
 
     /**
-    * @~english Copy one affector's attributes to another's(internal method).
-    * @~chinese 拷贝一个影响器的属性到另外一个(内部方法)。
-    * @param affector @~english The affector need be copied. @~chinese 拷贝属性的影响器。
+    * @~english Copy attributes to another affector(internal method).
+    * @~chinese 拷贝属性到另外一个影响器(内部方法)。
+    * @param affector @~english The affector. @~chinese 影响器。
     */
     virtual void copyAttributesTo (PUAffector* affector);
 

@@ -43,7 +43,7 @@ struct PUParticle3D;
 */
 
 /** @class PURender
-*@brief @~english PURender inherit from Particle3DRender, is base class of pu renderer.
+*@brief @~english PURender, the base class of pu renderer, inherit from Particle3DRender.
 Specific implementation decisions by different renderers.
 
 @~chinese PURender 继承自Particle3DRender，是pu渲染器的基类。
@@ -97,9 +97,9 @@ public:
     virtual PURender* clone() = 0;
 
     /**
-    * @~english Copy one renderer's attributes to another's(internal method).
-    * @~chinese 拷贝一个渲染器的属性到另外一个(内部方法)。
-    * @param render @~english the renderer need be copied. @~chinese 拷贝属性的渲染器。
+    * @~english Copy attributes to another renderer(internal method).
+    * @~chinese 拷贝属性到另外一个渲染器(内部方法)。
+    * @param render @~english The renderer. @~chinese 渲染器。
     */
     void copyAttributesTo(PURender* render);
 
@@ -113,7 +113,7 @@ protected:
 };
 
 /** @class PUParticle3DEntityRender
-*@brief @~english PUParticle3DEntityRender inherit from PURender, is base class of entity renderer.
+*@brief @~english PUParticle3DEntityRender, the base class of entity renderer, inherit from PURender.
 entity include：
 quad(billboard).
 box.
@@ -130,9 +130,9 @@ class CC_DLL PUParticle3DEntityRender : public PURender
 public:
 
     /**
-    * @~english Copy one entity renderer's attributes to another's(internal method).
-    * @~chinese 拷贝一个实体渲染器的属性到另外一个(内部方法)。
-    * @param render @~english the renderer need be copied. @~chinese 拷贝属性的渲染器。
+    * @~english Copy attributes to another entity renderer(internal method).
+    * @~chinese 拷贝属性到另外一个实体渲染器(内部方法)。
+    * @param render @~english The entity renderer. @~chinese 实体渲染器。
     */
     void copyAttributesTo(PUParticle3DEntityRender *render);
 
@@ -166,7 +166,7 @@ protected:
 };
 
 /** @class PUParticle3DQuadRender
-*@brief @~english PUParticle3DQuadRender inherit from PUParticle3DEntityRender, , implement pu quad rendering.
+*@brief @~english PUParticle3DQuadRender inherit from PUParticle3DEntityRender,implement pu quad rendering.
 
 @~chinese PUParticle3DQuadRender 继承自PUParticle3DEntityRender，实现了pu的四边形渲染。
 */
@@ -329,9 +329,9 @@ public:
     virtual PUParticle3DQuadRender* clone() override;
 
     /**
-    * @~english Copy one quad renderer's attributes to another's(internal method).
-    * @~chinese 拷贝一个四边形渲染器的属性到另外一个(内部方法)。
-    * @param render @~english The renderer need be copied. @~chinese 拷贝属性的渲染器。
+    * @~english Copy attributes to another quad renderer(internal method).
+    * @~chinese 拷贝属性到另外一个四边形渲染器(内部方法)。
+    * @param render @~english The quad renderer. @~chinese 四边形渲染器。
     */
     void copyAttributesTo(PUParticle3DQuadRender *render);
     
@@ -361,7 +361,7 @@ protected:
 };
 
 /** @class PUParticle3DModelRender
-*@brief @~english PUParticle3DModelRender inherit from PURender, , implement pu model rendering.
+*@brief @~english PUParticle3DModelRender inherit from PURender,implement pu model rendering.
 
 @~chinese PUParticle3DModelRender 继承自PURender，实现了pu的模型渲染。
 */
@@ -391,9 +391,9 @@ public:
     virtual PUParticle3DModelRender* clone() override;
 
     /**
-    * @~english Copy one model renderer's attributes to another's(internal method).
-    * @~chinese 拷贝一个模型渲染器的属性到另外一个(内部方法)。
-    * @param render @~english The renderer need be copied. @~chinese 拷贝属性的渲染器。
+    * @~english Copy attributes to another model renderer(internal method).
+    * @~chinese 拷贝属性到另外一个模型渲染器(内部方法)。
+    * @param render @~english The model renderer. @~chinese 模型渲染器。
     */
     void copyAttributesTo(PUParticle3DModelRender *render);
 
@@ -410,7 +410,7 @@ protected:
 };
 
 /** @class PUParticle3DBoxRender
-*@brief @~english PUParticle3DBoxRender inherit from PUParticle3DEntityRender, , implement pu box rendering.
+*@brief @~english PUParticle3DBoxRender inherit from PUParticle3DEntityRender,implement pu box rendering.
 
 @~chinese PUParticle3DBoxRender 继承自PUParticle3DEntityRender，实现了pu的箱形渲染。
 */
@@ -448,7 +448,7 @@ protected:
 };
 
 /** @class PUSphereRender
-*@brief @~english PUSphereRender inherit from PUParticle3DEntityRender, , implement pu sphere rendering.
+*@brief @~english PUSphereRender inherit from PUParticle3DEntityRender,implement pu sphere rendering.
 
 @~chinese PUSphereRender 继承自PUParticle3DEntityRender，实现了pu的球形渲染。
 */
@@ -477,9 +477,9 @@ public:
     virtual PUSphereRender* clone() override;
 
     /**
-    * @~english Copy one sphere renderer's attributes to another's(internal method).
-    * @~chinese 拷贝一个球形渲染器的属性到另外一个(内部方法)。
-    * @param render @~english The renderer need be copied. @~chinese 拷贝属性的渲染器。
+    * @~english Copy attributes to another sphere renderer(internal method).
+    * @~chinese 拷贝属性到另外一个球形渲染器(内部方法)。
+    * @param render @~english The sphere renderer. @~chinese 球形渲染器。
     */
     void copyAttributesTo(PUSphereRender *render);
 
