@@ -787,14 +787,11 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\Physics3DTest\Physics3DTest.cpp">
       <Filter>Classes\Physics3DTest</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\NavMeshTest\NavMeshTest.cpp">
-      <Filter>Classes\NavMeshTest</Filter>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\NewAudioEngineTest\NewAudioEngineTest.cpp">
+      <Filter>Classes\NewAudioEngineTest</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\Scene3DTest\Scene3DTest.cpp">
       <Filter>Classes\Scene3DTest</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\Classes\NewAudioEngineTest\NewAudioEngineTest.cpp">
-      <Filter>Classes\NewAudioEngineTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1710,11 +1707,8 @@
     <Filter Include="Classes\Physics3DTest">
       <UniqueIdentifier>{dbeed6f6-158b-4f99-8196-61616f724ae1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\NavMeshTest">
-      <UniqueIdentifier>{db639276-cb94-4c06-be4f-290bb9ab2c8f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Classes\Scene3DTest">
-      <UniqueIdentifier>{c1aa6812-fab4-4a2f-816b-bb0c16d96509}</UniqueIdentifier>
+      <UniqueIdentifier>{77f319c0-fd62-4505-b872-a2fd52375636}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1758,14 +1752,11 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\Physics3DTest\Physics3DTest.h">
       <Filter>Classes\Physics3DTest</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\NavMeshTest\NavMeshTest.h">
-      <Filter>Classes\NavMeshTest</Filter>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\NewAudioEngineTest\NewAudioEngineTest.h">
+      <Filter>Classes\NewAudioEngineTest</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\Scene3DTest\Scene3DTest.h">
       <Filter>Classes\Scene3DTest</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\..\Classes\NewAudioEngineTest\NewAudioEngineTest.h">
-      <Filter>Classes\NewAudioEngineTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
