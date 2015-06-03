@@ -884,7 +884,7 @@ void SIOClientImpl::onMessage(WebSocket* ws, const WebSocket::Data& data)
                 }
                 break;
             case 4:
-
+            {
                 const char second = payload.at(0);
                 int control2 = atoi(&second);
                 CCLOGINFO("Message code: [%i]", control);
@@ -965,12 +965,13 @@ void SIOClientImpl::onMessage(WebSocket* ws, const WebSocket::Data& data)
                 }
             }
             break;
-        case 5:
-            CCLOGINFO("Upgrade required");
-            break;
-        case 6:
-            CCLOGINFO("Noop\n");
-            break;
+            case 5:
+                CCLOGINFO("Upgrade required");
+                break;
+            case 6:
+                CCLOGINFO("Noop\n");
+                break;
+            }
         }
         break;
     }
