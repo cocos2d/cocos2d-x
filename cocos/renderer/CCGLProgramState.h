@@ -398,7 +398,7 @@ public:
      *
      * @script{ignore}
      */
-    class AutoBindingResolver
+    class CC_DLL AutoBindingResolver
     {
     public:
 
