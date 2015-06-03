@@ -32979,6 +32979,28 @@ bool js_cocos2dx_GLProgramState_getVertexAttribsFlags(JSContext *cx, uint32_t ar
     JS_ReportError(cx, "js_cocos2dx_GLProgramState_getVertexAttribsFlags : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_cocos2dx_GLProgramState_applyAutoBinding(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::GLProgramState* cobj = (cocos2d::GLProgramState *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgramState_applyAutoBinding : Invalid Native Object");
+    if (argc == 2) {
+        std::string arg0;
+        std::string arg1;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GLProgramState_applyAutoBinding : Error processing arguments");
+        cobj->applyAutoBinding(arg0, arg1);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_GLProgramState_applyAutoBinding : wrong number of arguments: %d, was expecting %d", argc, 2);
+    return false;
+}
 bool js_cocos2dx_GLProgramState_setUniformVec2(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -33133,6 +33155,31 @@ bool js_cocos2dx_GLProgramState_apply(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_GLProgramState_apply : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
+bool js_cocos2dx_GLProgramState_getNodeBinding(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::GLProgramState* cobj = (cocos2d::GLProgramState *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgramState_getNodeBinding : Invalid Native Object");
+    if (argc == 0) {
+        cocos2d::Node* ret = cobj->getNodeBinding();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Node>(cx, (cocos2d::Node*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_GLProgramState_getNodeBinding : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_GLProgramState_applyGLProgram(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -33151,6 +33198,34 @@ bool js_cocos2dx_GLProgramState_applyGLProgram(JSContext *cx, uint32_t argc, jsv
     }
 
     JS_ReportError(cx, "js_cocos2dx_GLProgramState_applyGLProgram : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_cocos2dx_GLProgramState_setNodeBinding(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::GLProgramState* cobj = (cocos2d::GLProgramState *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgramState_setNodeBinding : Invalid Native Object");
+    if (argc == 1) {
+        cocos2d::Node* arg0;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (cocos2d::Node*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GLProgramState_setNodeBinding : Error processing arguments");
+        cobj->setNodeBinding(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_GLProgramState_setNodeBinding : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
 bool js_cocos2dx_GLProgramState_setUniformInt(JSContext *cx, uint32_t argc, jsval *vp)
@@ -33193,6 +33268,28 @@ bool js_cocos2dx_GLProgramState_setUniformInt(JSContext *cx, uint32_t argc, jsva
     } while(0);
 
     JS_ReportError(cx, "js_cocos2dx_GLProgramState_setUniformInt : wrong number of arguments");
+    return false;
+}
+bool js_cocos2dx_GLProgramState_setParameterAutoBinding(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::GLProgramState* cobj = (cocos2d::GLProgramState *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgramState_setParameterAutoBinding : Invalid Native Object");
+    if (argc == 2) {
+        std::string arg0;
+        std::string arg1;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GLProgramState_setParameterAutoBinding : Error processing arguments");
+        cobj->setParameterAutoBinding(arg0, arg1);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_GLProgramState_setParameterAutoBinding : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
 bool js_cocos2dx_GLProgramState_setUniformVec2v(JSContext *cx, uint32_t argc, jsval *vp)
@@ -33845,12 +33942,16 @@ void js_register_cocos2dx_GLProgramState(JSContext *cx, JS::HandleObject global)
     static JSFunctionSpec funcs[] = {
         JS_FN("setUniformCallback", js_cocos2dx_GLProgramState_setUniformCallback, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getVertexAttribsFlags", js_cocos2dx_GLProgramState_getVertexAttribsFlags, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("applyAutoBinding", js_cocos2dx_GLProgramState_applyAutoBinding, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setUniformVec2", js_cocos2dx_GLProgramState_setUniformVec2, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setUniformVec3", js_cocos2dx_GLProgramState_setUniformVec3, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setVertexAttribCallback", js_cocos2dx_GLProgramState_setVertexAttribCallback, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("apply", js_cocos2dx_GLProgramState_apply, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getNodeBinding", js_cocos2dx_GLProgramState_getNodeBinding, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("applyGLProgram", js_cocos2dx_GLProgramState_applyGLProgram, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setNodeBinding", js_cocos2dx_GLProgramState_setNodeBinding, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setUniformInt", js_cocos2dx_GLProgramState_setUniformInt, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setParameterAutoBinding", js_cocos2dx_GLProgramState_setParameterAutoBinding, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setUniformVec2v", js_cocos2dx_GLProgramState_setUniformVec2v, 3, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getUniformCount", js_cocos2dx_GLProgramState_getUniformCount, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("applyAttributes", js_cocos2dx_GLProgramState_applyAttributes, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
