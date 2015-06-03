@@ -1414,6 +1414,11 @@ void Node::onEnter()
     if (_onEnterCallback)
         _onEnterCallback();
 
+    if (_componentContainer && !_componentContainer->isEmpty())
+    {
+        _componentContainer->onEnter();
+    }
+
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
@@ -1493,6 +1498,11 @@ void Node::onExit()
     if (_onExitCallback)
         _onExitCallback();
     
+    if (_componentContainer && !_componentContainer->isEmpty())
+    {
+        _componentContainer->onExit();
+    }
+
 #if CC_ENABLE_SCRIPT_BINDING
     if (_scriptType == kScriptTypeJavascript)
     {
