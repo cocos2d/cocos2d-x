@@ -163,7 +163,7 @@ do {                                                            \
 #define CC_CONTENT_SCALE_FACTOR() cocos2d::Director::getInstance()->getContentScaleFactor()
 
 /****************************/
-/** @~english RETINA DISPLAY ENABLED  @~chinese 启用视网膜显示
+/** @~english RETINA DISPLAY ENABLED  @~chinese 启用视网膜显示 */
 /****************************/
 
 /**
