@@ -31,7 +31,7 @@
 
 NS_CC_BEGIN
 
-GLuint FrameBufferObject::_defaultFBO(0);
+FrameBufferObject* FrameBufferObject::_defaultFBO = nullptr;
 std::set<FrameBufferObject*> FrameBufferObject::_frameBufferObjects;
 
 RenderTargetBase::RenderTargetBase()
@@ -266,16 +266,46 @@ RenderTargetDepthStencil* RenderTargetDepthStencil::create(unsigned int width, u
     }
 }
 
-void FrameBufferObject::initDefaultFBO()
+bool FrameBufferObject::initWithGLView(GLView* view)
 {
+    if(view == nullptr)
+    {
+        return false;
+    }
     GLint fbo;
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &fbo);
-    _defaultFBO = fbo;
+    _fbo = fbo;
+    return true;
+}
+
+FrameBufferObject* FrameBufferObject::getOrCreateDefaultFBO(GLView* view)
+{
+    if(nullptr == _defaultFBO)
+    {
+        auto result = new (std::nothrow) FrameBufferObject();
+        
+        if(result && result->initWithGLView(view))
+        {
+            result->autorelease();
+            result->_isDefault = true;
+        }
+        else
+        {
+            CC_SAFE_DELETE(result);
+        }
+        
+        _defaultFBO = result;
+    }
+    
+    return _defaultFBO;
 }
 
 void FrameBufferObject::applyDefaultFBO()
 {
-    glBindFramebuffer(GL_FRAMEBUFFER, _defaultFBO);
+    if(_defaultFBO)
+    {
+        _defaultFBO->applyFBO();
+    }
 }
 
 void FrameBufferObject::clearAllFBOs()
@@ -319,6 +349,7 @@ bool FrameBufferObject::init(uint8_t fid, unsigned int width, unsigned int heigh
     
 #if CC_ENABLE_CACHE_TEXTURE_DATA
     _dirtyFBOListener = EventListenerCustom::create(EVENT_RENDERER_RECREATED, [this](EventCustom* event){
+        if(isDefaultFBO()) return;
         GLint oldfbo;
         glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldfbo);
 
@@ -342,6 +373,7 @@ FrameBufferObject::FrameBufferObject()
 , _rt(nullptr)
 , _rtDepthStencil(nullptr)
 , _fboBindingDirty(true)
+, _isDefault(false)
 #if CC_ENABLE_CACHE_TEXTURE_DATA
 , _dirtyFBOListener(nullptr)
 #endif
@@ -351,14 +383,17 @@ FrameBufferObject::FrameBufferObject()
 
 FrameBufferObject::~FrameBufferObject()
 {
-    CC_SAFE_RELEASE_NULL(_rt);
-    CC_SAFE_RELEASE_NULL(_rtDepthStencil);
-    glDeleteFramebuffers(1, &_fbo);
-    _fbo = 0;
-    _frameBufferObjects.erase(this);
+    if(!isDefaultFBO())
+    {
+        CC_SAFE_RELEASE_NULL(_rt);
+        CC_SAFE_RELEASE_NULL(_rtDepthStencil);
+        glDeleteFramebuffers(1, &_fbo);
+        _fbo = 0;
+        _frameBufferObjects.erase(this);
 #if CC_ENABLE_CACHE_TEXTURE_DATA
-    Director::getInstance()->getEventDispatcher()->removeEventListener(_dirtyFBOListener);
+        Director::getInstance()->getEventDispatcher()->removeEventListener(_dirtyFBOListener);
 #endif
+    }
 }
 
 void FrameBufferObject::clearFBO()
@@ -373,6 +408,11 @@ void FrameBufferObject::clearFBO()
 
 void FrameBufferObject::AttachRenderTarget(RenderTargetBase* rt)
 {
+    if(isDefaultFBO())
+    {
+        CCLOG("Can not apply render target to default FBO");
+        return;
+    }
     CC_ASSERT(rt);
     if(rt->getWidth() != _width || rt->getHeight() != _height)
     {
@@ -390,7 +430,7 @@ void FrameBufferObject::applyFBO()
     CHECK_GL_ERROR_DEBUG();
     glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
     CHECK_GL_ERROR_DEBUG();
-    if(_fboBindingDirty)
+    if(_fboBindingDirty && !isDefaultFBO())
     {
         CHECK_GL_ERROR_DEBUG();
         if(RenderTargetBase::Type::Texture2D == _rt->getType())
@@ -414,6 +454,12 @@ void FrameBufferObject::applyFBO()
 
 void FrameBufferObject::AttachDepthStencilTarget(RenderTargetDepthStencil* rt)
 {
+    if(isDefaultFBO())
+    {
+        CCLOG("Can not apply depth stencil target to default FBO");
+        return;
+    }
+    
     if(nullptr != rt && (rt->getWidth() != _width || rt->getHeight() != _height))
     {
         CCLOG("Error, attach a render target Depth stencil with different size, Skip.");

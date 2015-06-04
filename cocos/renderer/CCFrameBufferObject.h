@@ -126,6 +126,8 @@ protected:
 #endif
 };
 
+class GLView;
+
 class CC_DLL FrameBufferObject : public Ref
 {
 public:
@@ -150,9 +152,11 @@ public:
     void AttachRenderTarget(RenderTargetBase* rt);
     void AttachDepthStencilTarget(RenderTargetDepthStencil* rt);
     
+    bool isDefaultFBO() const { return _isDefault; }
 CC_CONSTRUCTOR_ACCESS:
     FrameBufferObject();
     virtual ~FrameBufferObject();
+    bool initWithGLView(GLView* view);
 private:
     //openGL content for FrameBuffer
     GLuint _fbo;
@@ -168,12 +172,14 @@ private:
     int _height;
     RenderTargetBase* _rt;
     RenderTargetDepthStencil* _rtDepthStencil;
+    bool _isDefault;
 public:
-    static void initDefaultFBO();
+    static FrameBufferObject* getOrCreateDefaultFBO(GLView* glView);
     static void applyDefaultFBO();
     static void clearAllFBOs();
 private:
-    static GLuint _defaultFBO;
+    //static GLuint _defaultFBO;
+    static FrameBufferObject* _defaultFBO;
     static std::set<FrameBufferObject*> _frameBufferObjects;
     
 private:

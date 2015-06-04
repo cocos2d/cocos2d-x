@@ -61,6 +61,8 @@ class Camera;
 
 class Console;
 
+class FrameBufferObject;
+
 /**
  * @brief Matrix stack type.
  */
@@ -593,6 +595,9 @@ protected:
 
     /* Renderer for the Director */
     Renderer *_renderer;
+    
+    /* Default FrameBufferObject*/
+    FrameBufferObject* _defaultFBO;
 
     /* Console for the director */
     Console *_console;
