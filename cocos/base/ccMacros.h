@@ -61,9 +61,13 @@ THE SOFTWARE.
 
 #include "base/ccConfig.h"
 
-/** @def CC_SWAP
-simple macro that swaps 2 variables
- @deprecated use std::swap() instead
+/**
+ * @def @~english CC_SWAP
+ * simple macro that swaps 2 variables
+ * @~chinese CC_SWAP
+ * 交换两个变量的简单宏
+ * @deprecated @~english use std::swap() instead
+ * @~chinese 使用std::swap()
 */
 #define CC_SWAP(x, y, type)    \
 {    type temp = (x);        \
@@ -72,39 +76,57 @@ simple macro that swaps 2 variables
 
 #include "base/ccRandom.h"
 
-/** @def CCRANDOM_MINUS1_1
- returns a random float between -1 and 1
+/**
+ * @def @~english CCRANDOM_MINUS1_1
+ * returns a random float between -1 and 1
+ * @~chinese CCRANDOM_MINUS1_1
+ * 返回一个随机-1到1之间的随机数
  */
 #define CCRANDOM_MINUS1_1() cocos2d::rand_minus1_1()
 
-/** @def CCRANDOM_0_1
- returns a random float between 0 and 1
+/**
+ * @def @~english CCRANDOM_0_1
+ * returns a random float between 0 and 1
+ * @~chinese CCRANDOM_0_1
+ * 返回一个0和1之间的随机数
  */
 #define CCRANDOM_0_1() cocos2d::rand_0_1()
 
-/** @def CC_DEGREES_TO_RADIANS
- converts degrees to radians
+/**
+ * @def @~english CC_DEGREES_TO_RADIANS
+ * converts degrees to radians
+ * @~chinese CC_DEGREES_TO_RADIANS
+ * 将度转换为弧度
  */
 #define CC_DEGREES_TO_RADIANS(__ANGLE__) ((__ANGLE__) * 0.01745329252f) // PI / 180
 
-/** @def CC_RADIANS_TO_DEGREES
- converts radians to degrees
+/**
+ * @def @~english CC_RADIANS_TO_DEGREES
+ * converts radians to degrees
+ * @~chinese CC_RADIANS_TO_DEGREES
+ * 将弧度转换成度
  */
 #define CC_RADIANS_TO_DEGREES(__ANGLE__) ((__ANGLE__) * 57.29577951f) // PI * 180
 
 #define CC_REPEAT_FOREVER (UINT_MAX -1)
 #define kRepeatForever CC_REPEAT_FOREVER
 
-/** @def CC_BLEND_SRC
-default gl blend src function. Compatible with premultiplied alpha images.
+/**
+ * @def @~english CC_BLEND_SRC
+ * default gl blend src function. Compatible with premultiplied alpha images.
+ * @~chinese CC_BLEND_SRC
+ * 默认gl混合src功能。兼容左乘阿尔法图像。
 */
 #define CC_BLEND_SRC GL_ONE
 #define CC_BLEND_DST GL_ONE_MINUS_SRC_ALPHA
 
 
-/** @def CC_NODE_DRAW_SETUP
- Helpful macro that setups the GL server state, the correct GL program and sets the Model View Projection matrix
- @since v2.0
+/**
+ * @def @~english CC_NODE_DRAW_SETUP
+ * Helpful macro that setups the GL server state, the correct GL program and sets the Model View Projection matrix
+ * @~chinese CC_NODE_DRAW_SETUP
+ * 设置GL服务器状态,调整GL程序并设置模型视图投影矩阵
+ * @since v2.0
  */
 #define CC_NODE_DRAW_SETUP() \
 do { \
@@ -116,11 +138,13 @@ do { \
 } while(0)
 
 
- /** @def CC_DIRECTOR_END
-  Stops and removes the director from memory.
-  Removes the GLView from its parent
-
-  @since v0.99.4
+ /**
+  * @def @~english CC_DIRECTOR_END
+  * Stops and removes the director from memory. Removes the GLView from its parent
+  * @~chinese CC_DIRECTOR_END
+  * 停止并清除director的内存。从父节点删除GLView
+  * 
+  * @since v0.99.4
   */
 #define CC_DIRECTOR_END()                                       \
 do {                                                            \
@@ -128,50 +152,72 @@ do {                                                            \
     __director->end();                                          \
 } while(0)
 
-/** @def CC_CONTENT_SCALE_FACTOR
-On Mac it returns 1;
-On iPhone it returns 2 if RetinaDisplay is On. Otherwise it returns 1
+/**
+ * @def @~english CC_CONTENT_SCALE_FACTOR
+ * On Mac it returns 1;
+ * On iPhone it returns 2 if RetinaDisplay is On. Otherwise it returns 1
+ * @~chinese CC_CONTENT_SCALE_FACTOR
+ * 在Mac它返回1;
+ * 在iPhone上开启了RetinaDisplay则它返回2。否则返回1
 */
 #define CC_CONTENT_SCALE_FACTOR() cocos2d::Director::getInstance()->getContentScaleFactor()
 
 /****************************/
-/** RETINA DISPLAY ENABLED **/
+/** @~english RETINA DISPLAY ENABLED  @~chinese 启用视网膜显示 */
 /****************************/
 
-/** @def CC_RECT_PIXELS_TO_POINTS
- Converts a rect in pixels to points
+/**
+ * @def @~english CC_RECT_PIXELS_TO_POINTS
+ * Converts a rect in pixels to points
+ * @~chinese CC_RECT_PIXELS_TO_POINTS
+ * 将一个矩形的像素转换成点
  */
 #define CC_RECT_PIXELS_TO_POINTS(__rect_in_pixels__)                                                                        \
     Rect( (__rect_in_pixels__).origin.x / CC_CONTENT_SCALE_FACTOR(), (__rect_in_pixels__).origin.y / CC_CONTENT_SCALE_FACTOR(),    \
             (__rect_in_pixels__).size.width / CC_CONTENT_SCALE_FACTOR(), (__rect_in_pixels__).size.height / CC_CONTENT_SCALE_FACTOR() )
 
-/** @def CC_RECT_POINTS_TO_PIXELS
- Converts a rect in points to pixels
+/**
+ * @def @~english CC_RECT_POINTS_TO_PIXELS
+ * Converts a rect in points to pixels
+ * @~chinese CC_RECT_POINTS_TO_PIXELS
+ * 将一个矩形的点转换成像素
  */
 #define CC_RECT_POINTS_TO_PIXELS(__rect_in_points_points__)                                                                        \
     Rect( (__rect_in_points_points__).origin.x * CC_CONTENT_SCALE_FACTOR(), (__rect_in_points_points__).origin.y * CC_CONTENT_SCALE_FACTOR(),    \
             (__rect_in_points_points__).size.width * CC_CONTENT_SCALE_FACTOR(), (__rect_in_points_points__).size.height * CC_CONTENT_SCALE_FACTOR() )
 
-/** @def CC_POINT_PIXELS_TO_POINTS
- Converts a rect in pixels to points
+/**
+ * @def @~english CC_POINT_PIXELS_TO_POINTS
+ * Converts a pixels to points
+ * @~chinese CC_POINT_PIXELS_TO_POINTS
+ * 将一个像素转换成点
  */
 #define CC_POINT_PIXELS_TO_POINTS(__pixels__)                                                                        \
 Vec2( (__pixels__).x / CC_CONTENT_SCALE_FACTOR(), (__pixels__).y / CC_CONTENT_SCALE_FACTOR())
 
-/** @def CC_POINT_POINTS_TO_PIXELS
- Converts a rect in points to pixels
+/**
+ * @def @~english CC_POINT_POINTS_TO_PIXELS
+ * Converts a points to pixels
+ * @~chinese CC_POINT_POINTS_TO_PIXELS
+ * 将一个点转换成像素值
  */
 #define CC_POINT_POINTS_TO_PIXELS(__points__)                                                                        \
 Vec2( (__points__).x * CC_CONTENT_SCALE_FACTOR(), (__points__).y * CC_CONTENT_SCALE_FACTOR())
 
-/** @def CC_POINT_PIXELS_TO_POINTS
- Converts a rect in pixels to points
+/**
+ * @def @~english CC_POINT_PIXELS_TO_POINTS
+ * Converts a size in pixels to points
+ * @~chinese CC_POINT_PIXELS_TO_POINTS
+ * 将一个size内的像素值转换成点
  */
 #define CC_SIZE_PIXELS_TO_POINTS(__size_in_pixels__)                                                                        \
 Size( (__size_in_pixels__).width / CC_CONTENT_SCALE_FACTOR(), (__size_in_pixels__).height / CC_CONTENT_SCALE_FACTOR())
 
-/** @def CC_POINT_POINTS_TO_PIXELS
- Converts a rect in points to pixels
+/**
+ * @def @~english CC_POINT_POINTS_TO_PIXELS
+ * Converts a size in points to pixels
+ * @~chinese CC_POINT_POINTS_TO_PIXELS
+ * 将一个size内的点转换成像素值
  */
 #define CC_SIZE_POINTS_TO_PIXELS(__size_in_points__)                                                                        \
 Size( (__size_in_points__).width * CC_CONTENT_SCALE_FACTOR(), (__size_in_points__).height * CC_CONTENT_SCALE_FACTOR())
@@ -186,10 +232,9 @@ Size( (__size_in_points__).width * CC_CONTENT_SCALE_FACTOR(), (__size_in_points_
             void operator=(const TypeName&)
 
 /**
-Helper macros which converts 4-byte little/big endian 
-integral number to the machine native number representation
- 
-It should work same as apples CFSwapInt32LittleToHost(..)
+ * Helper macros which converts 4-byte little/big endian
+ * integral number to the machine native number representation
+ * It should work same as apples CFSwapInt32LittleToHost(..)
 */
 
 /// when define returns true it means that our architecture uses big endian
@@ -253,9 +298,10 @@ It should work same as apples CFSwapInt32LittleToHost(..)
     } while (false)
 #endif
 
-/** @def CC_INCREMENT_GL_DRAWS_BY_ONE
- Increments the GL Draws counts by one.
- The number of calls per frame are displayed on the screen when the Director's stats are enabled.
+/**
+ * @def CC_INCREMENT_GL_DRAWS_BY_ONE
+ *  Increments the GL Draws counts by one.
+ *  The number of calls per frame are displayed on the screen when the Director's stats are enabled.
  */
 #define CC_INCREMENT_GL_DRAWS(__n__) cocos2d::Director::getInstance()->getRenderer()->addDrawnBatches(__n__)
 #define CC_INCREMENT_GL_DRAWN_BATCHES_AND_VERTICES(__drawcalls__, __vertices__) \
@@ -268,8 +314,9 @@ It should work same as apples CFSwapInt32LittleToHost(..)
 /*******************/
 /** Notifications **/
 /*******************/
-/** @def AnimationFrameDisplayedNotification
- Notification name when a SpriteFrame is displayed
+/**
+ * @def AnimationFrameDisplayedNotification
+ * Notification name when a SpriteFrame is displayed
  */
 #define AnimationFrameDisplayedNotification "CCAnimationFrameDisplayedNotification"
 

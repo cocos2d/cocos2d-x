@@ -36,13 +36,14 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * A static global empty std::string install.
+ * @~english A static global empty std::string install.
+ * @~chinese 一个全局的空字符
  */
 extern const std::string CC_DLL STD_STRING_EMPTY;
 
-
 /**
- * Keyboard notification event type.
+ * @~english Keyboard notification event type.
+ * @~chinese 键盘事件的类型
  */
 typedef struct
 {
@@ -52,27 +53,35 @@ typedef struct
 } IMEKeyboardNotificationInfo;
 
 /**
- *@brief    Input method editor delegate.
+ * @brief @~english Input method editor delegate.
+ * @~chinese 输入代理
  */
 class CC_DLL IMEDelegate
 {
 public:
+
     /**
-     * Default constructor.
+     * @~english Default destructor.
+     * @~chinese 析构函数
+     *
      * @js NA
      * @lua NA
      */
     virtual ~IMEDelegate();
     
     /**
-     * Default destructor.
+     * @~english attach with IME.
+     * @~chinese 挂载IME
+     *
      * @js NA
      * @lua NA
      */
     virtual bool attachWithIME();
     
     /**
-     * Determine whether the IME is detached or not.
+     * @~english detach with IME
+     * @~chinese 分离IME
+     *
      * @js NA
      * @lua NA
      */
@@ -82,53 +91,64 @@ protected:
     friend class IMEDispatcher;
 
     /**
-    @brief    Decide if the delegate instance is ready to receive an IME message.
-
-    Called by IMEDispatcher.
-    * @js NA
-    * @lua NA
-    */
+     * @brief @~english Could mount an IME
+     * @~chinese 能否挂载IME
+     *
+     * @js NA
+     * @lua NA
+     */
     virtual bool canAttachWithIME() { return false; }
+
     /**
-    @brief    When the delegate detaches from the IME, this method is called by IMEDispatcher.
-    * @js NA
-    * @lua NA
-    */
+     * @brief @~english Whether have mounted the IME
+     * @~chinese 是否已经挂载了IME
+     * @js NA
+     * @lua NA
+     */
     virtual void didAttachWithIME() {}
 
     /**
-    @brief    Decide if the delegate instance can stop receiving IME messages.
-    * @js NA
-    * @lua NA
-    */
+     * @brief @~english Could detach an IME
+     * @~chinese 能否分离一个IME
+     *
+     * @js NA
+     * @lua NA
+     */
     virtual bool canDetachWithIME() { return false; }
 
     /**
-    @brief    When the delegate detaches from the IME, this method is called by IMEDispatcher.
-    * @js NA
-    * @lua NA
-    */
+     * @brief @~english Whether have detached the IME.
+     * @~chinese 是否已经分离了IME
+     *
+     * @js NA
+     * @lua NA
+     */
     virtual void didDetachWithIME() {}
 
     /**
-    @brief    Called by IMEDispatcher when text input received from the IME.
-    * @js NA
-    * @lua NA
-    */
+     * @brief @~english insert text
+     * @~chinese 插入文本
+     * @js NA
+     * @lua NA
+     */
     virtual void insertText(const char * text, size_t len) {CC_UNUSED_PARAM(text);CC_UNUSED_PARAM(len);}
 
     /**
-    @brief    Called by IMEDispatcher after the user clicks the backward key.
-    * @js NA
-    * @lua NA
-    */
+     * @brief @~english delete back ward
+     * @~chinese 回退删除
+     *
+     * @js NA
+     * @lua NA
+     */
     virtual void deleteBackward() {}
 
     /**
-    @brief    Called by IMEDispatcher for text stored in delegate.
-    * @js NA
-    * @lua NA
-    */
+     * @brief @~english get content text
+     * @~chinese 获取内容文本
+     *
+     * @js NA
+     * @lua NA
+     */
     virtual const std::string& getContentText() { return STD_STRING_EMPTY; }
 
     //////////////////////////////////////////////////////////////////////////
