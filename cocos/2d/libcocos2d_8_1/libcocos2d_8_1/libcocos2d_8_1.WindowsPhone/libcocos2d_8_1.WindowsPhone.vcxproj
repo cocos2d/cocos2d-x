@@ -25,6 +25,9 @@
     <ProjectReference Include="..\..\..\..\..\external\bullet\proj.win8.1-universal\libbullet.WindowsPhone\libbullet.WindowsPhone.vcxproj">
       <Project>{e35634bd-b91b-4a6d-b957-96f56dd065f9}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\external\recast\proj.win8.1-universal\librecast.WindowsPhone\librecast.WindowsPhone.vcxproj">
+      <Project>{d3bcfc1a-94bd-43b7-9c15-3f48ac6a9fac}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\editor-support\spine\proj.win8.1-universal\libSpine.WindowsPhone\libSpine.WindowsPhone.vcxproj">
       <Project>{cc1da216-a80d-4be4-b309-acb6af313aff}</Project>
     </ProjectReference>
