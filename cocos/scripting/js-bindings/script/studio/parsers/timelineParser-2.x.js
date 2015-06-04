@@ -574,7 +574,6 @@
      * @param resourcePath
      */
     parser.initButton = function(json, resourcePath){
-
         var widget = new ccui.Button();
 
         loadTexture(json["NormalFileData"], resourcePath, function(path, type){
@@ -1131,13 +1130,10 @@
         var volume = json["Volume"] || 0;
         cc.audioEngine.setMusicVolume(volume);
         //var name = json["Name"];
-        var resPath = "";
-        if(cc.loader.resPath)
-            resPath = (cc.loader.resPath + "/").replace(/\/\/$/, "/");
 
         loadTexture(json["FileData"], resourcePath, function(path, type){
             cc.loader.load(path, function(){
-                cc.audioEngine.playMusic(resPath + path, loop);
+                cc.audioEngine.playMusic(path, loop);
             });
         });
 
@@ -1235,6 +1231,7 @@
                 node.getAnimation().play(currentAnimationName, -1, isLoop);
 
         });
+        node.setColor(getColor(json["CColor"]));
         return node;
     };
 
