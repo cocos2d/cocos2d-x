@@ -20,7 +20,10 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-****************************************************************************/
+
+ Code based GamePlay3D's Camera: http://gameplay3d.org
+
+ ****************************************************************************/
 #ifndef _CCCAMERA_H__
 #define _CCCAMERA_H__
 
@@ -61,6 +64,7 @@ enum class CameraFlag
 class CC_DLL Camera :public Node
 {
     friend class Scene;
+    friend class Director;
     friend class EventDispatcher;
 public:
     /**
@@ -266,8 +270,6 @@ protected:
     mutable bool _frustumDirty;
     int  _depth;                 //camera depth, the depth of camera with CameraFlag::DEFAULT flag is 0 by default, a camera with larger depth is drawn on top of camera with smaller detph
     static Camera* _visitingCamera;
-    
-    friend class Director;
 };
 
 NS_CC_END
