@@ -48,9 +48,25 @@ class Node;
 class CC_DLL GridBase : public Ref
 {
 public:
-    /** @~english create one Grid  @~chinese 创建一个网格*/
+    /**
+     *
+     * @~english create one Grid  @~chinese 创建一个网格
+     *
+     * @param gridSize @~english The grid size @~chinese 网格的大小
+     * @param texture @~english The texture pointer. @~chinese 一个纹理指针
+     * @param flipped @~english Whether flipped or not. @~chinese 是否翻转
+     *
+     * @return @~english A GridBase instance. @~chinese 一个GridBase实例
+     */
     static GridBase* create(const Size& gridSize, Texture2D *texture, bool flipped);
-    /** @~english create one Grid  @~chinese 创建一个网格*/
+
+    /**
+     * @~english create one Grid  @~chinese 创建一个网格
+     *
+     * @param gridSize @~english The gride size. @~chinese 网络的大小
+     *
+     * @return @~english A GridBase instance. @~chinese 一个GridBase实例
+     */
     static GridBase* create(const Size& gridSize);
     /**@~english
      * Destructor.
@@ -143,7 +159,7 @@ public:
     virtual void blit(void);
     /**@~english Reuse the grid vertices. @~chinese 重用网格顶点。*/
     virtual void reuse(void);
-    /**@~english Calculate the vertices used for the blit. @~chinese 计算用于位块传输的顶点。*/
+    /**@~english Calculate the vertices used for the blit. @~chinese 计算用于blit的顶点。*/
     virtual void calculateVertexPoints(void);
     
     /**@~english Change projection to 2D for grabbing. @~chinese 改变投影为抓住2 d。*/
@@ -230,13 +246,13 @@ public:
     /**@{@~english
      * Set the depth test state when blit.
      * @~chinese 
-     * 设置位块传送时的深度测试状态。
+     * 设置blit的深度测试状态。
      @js NA
      */
     void setNeedDepthTestForBlit( bool neededDepthTest) { _needDepthTestForBlit = neededDepthTest; }
     /**
      * @~english Get the depth test state when blit.
-     * @~chinese 获取位块传送时的深度测试状态
+     * @~chinese 获取blit的深度测试状态
      *
      * @return @~english Return true if depth test is enabled, false otherwise. @~chinese 如果深度测试是开启的，则返回真，否则返回假。
      */
