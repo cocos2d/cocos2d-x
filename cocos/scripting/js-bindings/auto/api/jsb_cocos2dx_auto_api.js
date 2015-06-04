@@ -22214,6 +22214,14 @@ isEnabled : function (
 },
 
 /**
+ * @method onRemove
+ */
+onRemove : function (
+)
+{
+},
+
+/**
  * @method update
  * @param {float} arg0
  */
@@ -22244,11 +22252,9 @@ init : function (
 },
 
 /**
- * @method setOwner
- * @param {cc.Node} arg0
+ * @method onAdd
  */
-setOwner : function (
-node 
+onAdd : function (
 )
 {
 },
@@ -22261,6 +22267,16 @@ getName : function (
 )
 {
     return ;
+},
+
+/**
+ * @method setOwner
+ * @param {cc.Node} arg0
+ */
+setOwner : function (
+node 
+)
+{
 },
 
 /**
