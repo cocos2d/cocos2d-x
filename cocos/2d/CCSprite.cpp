@@ -92,6 +92,8 @@ Sprite* Sprite::create(const PolygonInfo& info)
     if(sprite && sprite->initWithPolygon(info))
     {
         sprite->autorelease();
+//        auto clamp = Texture2D::TexParams{GL_LINEAR,GL_LINEAR,GL_CLAMP_TO_BORDER, GL_CLAMP_TO_BORDER};
+//        sprite->getTexture()->setTexParameters(clamp);
         return sprite;
     }
     CC_SAFE_DELETE(sprite);
@@ -222,8 +224,14 @@ bool Sprite::initWithSpriteFrame(SpriteFrame *spriteFrame)
 bool Sprite::initWithPolygon(const cocos2d::PolygonInfo &info)
 {
     Texture2D *texture = Director::getInstance()->getTextureCache()->addImage(info.filename);
-    initWithTexture(texture);
-    _polyInfo = new PolygonInfo(info);
+    bool res = false;
+    if(initWithTexture(texture));
+    {
+        _polyInfo = new PolygonInfo(info);
+        setContentSize(_polyInfo->rect.size/Director::getInstance()->getContentScaleFactor());
+        res = true;
+    }
+    return res;
 }
 
 // designated initializer
@@ -258,7 +266,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         _quad.tl.colors = Color4B::WHITE;
         _quad.tr.colors = Color4B::WHITE;
         
-        _polyInfo = new PolygonInfo(&_quad);
+
         
         // shader state
         setGLProgramState(GLProgramState::getOrCreateWithGLProgramName(GLProgram::SHADER_NAME_POSITION_TEXTURE_COLOR_NO_MVP));
@@ -267,6 +275,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         setTexture(texture);
         setTextureRect(rect, rotated, rect.size);
         
+        _polyInfo = new PolygonInfo(&_quad);
         // by default use "Self Render".
         // if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
         setBatchNode(nullptr);
@@ -289,8 +298,7 @@ Sprite::Sprite(void)
 , _insideBounds(true)
 {
 #if CC_SPRITE_DEBUG_DRAW
-    _debugDrawNode = DrawNode::create();
-    addChild(_debugDrawNode);
+    debugDraw(true)
 #endif //CC_SPRITE_DEBUG_DRAW
 }
 
@@ -428,6 +436,59 @@ void Sprite::setTextureRect(const Rect& rect, bool rotated, const Size& untrimme
         _quad.tr.vertices.set(x2, y2, 0.0f);
     }
 }
+
+void Sprite::debugDraw(bool on)
+{
+    DrawNode* draw = getChildByName<DrawNode*>("debugDraw");
+    if(on)
+    {
+        if(!draw)
+        {
+            draw = DrawNode::create();
+            draw->setName("debugDraw");
+            addChild(draw);
+        }
+        draw->setVisible(true);
+        draw->clear();
+        //draw all points
+        auto positions = new (std::nothrow) Vec2[_polyInfo->triangles.vertCount];
+        Vec2 *pos = &positions[0];
+        auto verts = _polyInfo->triangles.verts;
+        auto end =  &verts[_polyInfo->triangles.vertCount];
+        for(V3F_C4B_T2F *v = verts; v != end; pos++, v++)
+        {
+            pos->x = v->vertices.x;
+            pos->y = v->vertices.y;
+        }
+        draw->drawPoints(positions, (unsigned int)_polyInfo->triangles.vertCount, 8, Color4F(0.0f, 1.0f, 1.0f, 1.0f));
+        //draw lines
+        auto last = _polyInfo->triangles.indexCount/3;
+        auto _indices = _polyInfo->triangles.indices;
+        auto _verts = _polyInfo->triangles.verts;
+        for(unsigned int i = 0; i < last; i++)
+        {
+            //draw 3 lines
+            Vec3 from =_verts[_indices[i*3]].vertices;
+            Vec3 to = _verts[_indices[i*3+1]].vertices;
+            draw->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::GREEN);
+            
+            from =_verts[_indices[i*3+1]].vertices;
+            to = _verts[_indices[i*3+2]].vertices;
+            draw->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::GREEN);
+            
+            from =_verts[_indices[i*3+2]].vertices;
+            to = _verts[_indices[i*3]].vertices;
+            draw->drawLine(Vec2(from.x, from.y), Vec2(to.x,to.y), Color4F::GREEN);
+        }
+        CC_SAFE_DELETE_ARRAY(positions);
+    }
+    else
+    {
+        if(draw)
+            draw->setVisible(false);
+    }
+}
+
 
 // override this method to generate "double scale" sprites
 void Sprite::setVertexRect(const Rect& rect)
@@ -622,17 +683,6 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     {
         _trianglesCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _polyInfo->triangles, transform, flags);
         renderer->addCommand(&_trianglesCommand);
-        
-#if CC_SPRITE_DEBUG_DRAW
-        _debugDrawNode->clear();
-        Vec2 vertices[4] = {
-            Vec2( _quad.bl.vertices.x, _quad.bl.vertices.y ),
-            Vec2( _quad.br.vertices.x, _quad.br.vertices.y ),
-            Vec2( _quad.tr.vertices.x, _quad.tr.vertices.y ),
-            Vec2( _quad.tl.vertices.x, _quad.tl.vertices.y ),
-        };
-        _debugDrawNode->drawPoly(vertices, 4, true, Color4F(1.0, 1.0, 1.0, 1.0));
-#endif //CC_SPRITE_DEBUG_DRAW
     }
 }
 
@@ -1086,6 +1136,17 @@ std::string Sprite::getDescription() const
     else
         texture_id = _texture->getName();
     return StringUtils::format("<Sprite | Tag = %d, TextureID = %d>", _tag, texture_id );
+}
+
+PolygonInfo Sprite::getPolygonInfo() const
+{
+    return PolygonInfo(*_polyInfo);
+}
+
+void Sprite::setPolygonInfo(const PolygonInfo& info)
+{
+    delete _polyInfo;
+    _polyInfo = new PolygonInfo(info);
 }
 
 NS_CC_END

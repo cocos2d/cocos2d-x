@@ -40,15 +40,23 @@ class CC_DLL PolygonInfo
 public:
     PolygonInfo():
     triangles(),
-    isVertsOwner(true)
+    isVertsOwner(true),
+    rect()
     {
     };
     PolygonInfo(const PolygonInfo& other);
     PolygonInfo(V3F_C4B_T2F_Quad *quad);
+    
+    PolygonInfo& operator= (const PolygonInfo &other);
     ~PolygonInfo();
     
+    Rect rect;
     std::string filename;
     TrianglesCommand::Triangles triangles;
+    
+    const unsigned int getVertCount() const;
+    const float getArea() const;
+    
 protected:
     bool isVertsOwner;
 };
@@ -62,15 +70,15 @@ public:
     
     //using Ramer–Douglas–Peucker algorithm
     std::vector<Vec2> trace(const cocos2d::Rect& rect, const float& threshold = 0.0);
-    std::vector<Vec2> reduce(const std::vector<Vec2>& points, const float& epsilon = 2.0);
-    std::vector<Vec2> expand(const std::vector<Vec2>& points, const cocos2d::Rect& rect, const float& epsilon);
+    std::vector<Vec2> reduce(const std::vector<Vec2>& points, const Rect& rect, const float& epsilon = 2.0);
+    std::vector<Vec2> expand(const std::vector<Vec2>& points, const Rect& rect, const float& epsilon);
     TrianglesCommand::Triangles triangulate(const std::vector<Vec2>& points);
-    void calculateUV(V3F_C4B_T2F* verts, const unsigned int& count);
+    void calculateUV(const Rect& rect, V3F_C4B_T2F* verts, const ssize_t& count);
     
-    PolygonInfo generateTriangles(const Rect& rect, const float& epsilon, const float& threshold = 0);
-
+    PolygonInfo generateTriangles(const Rect& rect = Rect::ZERO, const float& epsilon = 2.0, const float& threshold = 0.05);
+    static PolygonInfo generatePolygon(const std::string& filename, const Rect& rect = Rect::ZERO, const float epsilon = 2.0, const float threshold = 0.05);
 protected:
-    Vec2 findFirstNoneTransparentPixel(const Rect& rect);
+    Vec2 findFirstNoneTransparentPixel(const Rect& rect, const float& threshold);
     std::vector<cocos2d::Vec2> marchSquare(const Rect& rect, const Vec2& first, const float& threshold);
     unsigned int getSquareValue(const unsigned int& x, const unsigned int& y, const Rect& rect, const float& threshold);
 
@@ -84,6 +92,8 @@ protected:
     float perpendicularDistance(const cocos2d::Vec2& i, const cocos2d::Vec2& start, const cocos2d::Vec2& end);
 
     bool isAConvexPoint(const cocos2d::Vec2& p1, const cocos2d::Vec2& p2);
+    //real rect is the size that is in scale with the texture file
+    Rect getRealRect(const Rect& rect);
     
     Image* _image;
     unsigned char * _data;

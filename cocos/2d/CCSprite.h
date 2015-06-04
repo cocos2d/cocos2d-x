@@ -554,6 +554,22 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual bool initWithFile(const std::string& filename, const Rect& rect);
 
+    void debugDraw(bool on);
+    
+    /**
+     * returns a copy of the polygon information associated with this sprite
+     * because this is a copy process it is slower than getting the reference, so use wisely
+     *
+     * @return a copy of PolygonInfo
+     */
+    PolygonInfo getPolygonInfo() const;
+    
+    /**
+     * set the sprite to use this new PolygonInfo
+     *
+     * @param PolygonInfo the polygon information object
+     */
+    void setPolygonInfo(const PolygonInfo& info);
 protected:
 
     void updateColor() override;
@@ -562,6 +578,8 @@ protected:
     virtual void setReorderChildDirtyRecursively();
     virtual void setDirtyRecursively(bool value);
 
+
+    
     //
     // Data used when the sprite is rendered using a SpriteSheet
     //
@@ -581,9 +599,10 @@ protected:
     Texture2D*       _texture;              /// Texture2D object that is used to render the sprite
     SpriteFrame*     _spriteFrame;
     TrianglesCommand _trianglesCommand;     ///
-#if CC_SPRITE_DEBUG_DRAW
-    DrawNode *_debugDrawNode;
-#endif //CC_SPRITE_DEBUG_DRAW
+
+//    DrawNode *_debugDrawNode;
+
+
     //
     // Shared data
     //
