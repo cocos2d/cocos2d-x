@@ -38,8 +38,8 @@ class Node;
 enum {
     kComponentOnEnter,
     kComponentOnExit,
-	kComponentOnAdd,
-	kComponentOnRemove,
+    kComponentOnAdd,
+    kComponentOnRemove,
     kComponentOnUpdate
 };
 
