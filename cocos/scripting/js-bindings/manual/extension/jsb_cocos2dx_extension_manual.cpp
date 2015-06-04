@@ -951,11 +951,7 @@ void __JSDownloaderDelegator::startDownload()
         
         cocos2d::extension::Downloader::HeaderInfo info = _downloader->getHeader(_url);
         long contentSize = info.contentSize;
-        if (contentSize == -1 || info.responseCode >= 400) {
-            cocos2d::extension::Downloader::Error err;
-            onError(err);
-        }
-        else {
+        if (contentSize > 0 && info.responseCode < 400) {
             _size = contentSize / sizeof(unsigned char);
             _buffer = (unsigned char*)malloc(contentSize);
             _downloader->downloadToBufferSync(_url, _buffer, _size);
