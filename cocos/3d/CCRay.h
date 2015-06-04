@@ -39,8 +39,8 @@ NS_CC_BEGIN
 
 /**
  * @class Ray
- * @brief @~english Ray is a line with one end. usually use it to check intersects with some object,such as Plane, OBB, AABB
- * @~chinese 射线是朝单方向延伸的直线，通常用来与一些物体进行相交测试，如平面，OBB包围盒，AABB包围盒
+ * @brief @~english Ray is a line with a start point. usually use it to check intersects with some object,such as Plane, OBB, AABB
+ * @~chinese 射线是一种从给定起点触发，朝给定的单方向延伸的直线，通常用来与一些物体进行相交测试，如平面，OBB包围盒，AABB包围盒
  * @js NA
  **/
 class CC_DLL Ray

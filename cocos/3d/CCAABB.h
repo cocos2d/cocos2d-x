@@ -37,9 +37,9 @@ NS_CC_BEGIN
 
 /**
  * @class AABB
- * @brief  @~english Axis Aligned Bounding Box (AABB), usually caculate some rough but fast collision detection. 
+ * @brief  @~english Axis Aligned Bounding Box (AABB), usually used to detect the collision at early step
  * @~chinese 轴对齐包围盒，轴对齐包围盒是一种特殊的包围盒，
- * 它的边与世界坐标系中的轴平行，通常用其来做粗略的碰撞检测.
+ * 它的边与世界坐标系中的轴平行，通常用其在碰撞检测之间做前期判断.
  */
 class CC_DLL AABB
 {
@@ -105,7 +105,7 @@ public:
     void getCorners(Vec3 *dst) const;
 
     /**
-     * @~english Tests whether this bounding box intersects the specified bounding object.
+     * @~english Tests whether this bounding box intersects with the specified bounding object.
      * @~chinese 测试与指定的AABB是否相交
      * @param aabb @~english The specified bounding box.
      * @~chinese 指定的AABB

@@ -48,7 +48,7 @@ enum class PointSide
      */
     FRONT_PLANE,
     /**
-     * @~english The point which in the front side of the plane, which means the dot product for point and normal is less  than 0 
+     * @~english The point which in the back side of the plane, which means the dot product for point and normal is less  than 0 
      * @~chinese 点在平面的反面，即点向量（原点到该点的向量）与平面法线的点积小于零
      */
     BEHIND_PLANE,

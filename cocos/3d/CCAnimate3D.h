@@ -38,18 +38,38 @@ NS_CC_BEGIN
 class Bone3D;
 class Sprite3D;
 
-
-enum class Animate3DQuality
-{
-    QUALITY_NONE = 0,          // it'll be ignore the curve-evaluating(the animation looks like stop), just acculate transition time.
-    QUALITY_LOW,               // low animation quality, it'll be more efficient.
-    QUALITY_HIGH,              // high animation quality.
-};
+/**
+* @addtogroup _3d
+* @{
+*/
 
 /**
- * @addtogroup _3d
- * @{
+ * @enum Animate3DQuality
+ * @brief @~english This enum control the animation's quality.
+ * @~chinese 该枚举用于控制动画的质量
  */
+enum class Animate3DQuality
+{
+    /**
+     * @~english It'll be ignore the curve-evaluating(the animation looks like stop), just acculate transition time.
+     * @~chinese 忽略动画播放时的曲线求解（插值），动画会有卡顿，仅能加速动画过渡时间
+     **/
+    QUALITY_NONE = 0, 
+
+    /**
+    * @~english Low animation quality, it'll be more efficient.
+    * @~chinese 低动画质量，较高动画质量而言，效率更高
+    **/
+    QUALITY_LOW, 
+
+    /**
+    * @~english High animation quality, which also means more cpu time occupy.
+    * @~chinese 高动画质量，效果最好，同时也意味着更多的CPU时间占用
+    **/
+    QUALITY_HIGH,              
+};
+
+
 
 /**
  * @class Animate3D
@@ -136,15 +156,18 @@ public:
     float getWeight() const { return _weight; }
 
     /**
-     * @~english Set the blend weight
-     * @~chinese 设置动画混合权重
+     * @~english Set the blend weight. It is internally used currently. For example, Sprite3D is playing an Animate3D,
+     * and then another Animate3D is going to be played. This function will be used to make the transition from on 
+     * Animate3D to another smoothly. 
+     * @~chinese 设置动画混合权重，该函数目前仅在内部使用，举例来说，当一个Sprite3D对象处在播放一个动画同时另一个动画即将要被播放的情形下，
+     * 该函数将被用来调整从一个动画到另一个动画之间的过渡.
      * @param weight @~english The blend weight, the blend weight must be positive
      * @~chinese 权重，权值必须为正
      */
     void setWeight(float weight);
     
     /**
-     * @~english Set origin interval
+     * @~english Set origin interval.
      * @~chinese 设置初始播放间隔
      * @param interval @~english The new interval
      * @~chinese 新的播放间隔
@@ -180,16 +203,16 @@ public:
     CC_DEPRECATED_ATTRIBUTE void setPlayBack(bool reverse) { _playReverse = reverse; }
     
     /**
-     * @~english Set the animate quality
-     * @~chinese 设置动画质量
+     * @~english Set the animate quality, see also Animate3DQuality
+     * @~chinese 设置动画质量，关于动画质量的详情请见Animate3DQuality枚举
      * @param quality @~english The animate quality
      * @~chinese 动画质量的枚举
      * */
     void setQuality(Animate3DQuality quality);
     
     /**
-     * @~english Get animate quality
-     * @~chinese 设置动画质量
+     * @~english Get animate quality, see also Animate3DQuality
+     * @~chinese 获取当前动画的动画质量，光宇动画质量的详情请见Animate3DQuality枚举
      * @return @~english The animate quality
      * @~chinese 动画质量的枚举
      **/
