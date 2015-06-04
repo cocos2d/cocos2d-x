@@ -201,12 +201,6 @@
         
 --------------------------------
 -- 
--- @function [parent=#ComAudio] isEnabled 
--- @param self
--- @return bool#bool ret (return value: bool)
-        
---------------------------------
--- 
 -- @function [parent=#ComAudio] serialize 
 -- @param self
 -- @param #void r
@@ -214,8 +208,28 @@
         
 --------------------------------
 -- 
+-- @function [parent=#ComAudio] isEnabled 
+-- @param self
+-- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- js NA<br>
+-- lua NA
+-- @function [parent=#ComAudio] onRemove 
+-- @param self
+-- @return ComAudio#ComAudio self (return value: ccs.ComAudio)
+        
+--------------------------------
+-- 
 -- @function [parent=#ComAudio] init 
 -- @param self
 -- @return bool#bool ret (return value: bool)
+        
+--------------------------------
+-- js NA<br>
+-- lua NA
+-- @function [parent=#ComAudio] onAdd 
+-- @param self
+-- @return ComAudio#ComAudio self (return value: ccs.ComAudio)
         
 return nil

@@ -288,6 +288,7 @@ Downloader::HeaderInfo Downloader::prepareHeader(const std::string &srcUrl, void
     curl_easy_setopt(header, CURLOPT_URL, srcUrl.c_str());
     curl_easy_setopt(header, CURLOPT_HEADER, 1);
     curl_easy_setopt(header, CURLOPT_NOBODY, 1);
+    curl_easy_setopt(header, CURLOPT_NOSIGNAL, 1);
     if (curl_easy_perform(header) == CURLE_OK)
     {
         char *url;
@@ -296,16 +297,24 @@ Downloader::HeaderInfo Downloader::prepareHeader(const std::string &srcUrl, void
         curl_easy_getinfo(header, CURLINFO_CONTENT_TYPE, &contentType);
         curl_easy_getinfo(header, CURLINFO_CONTENT_LENGTH_DOWNLOAD, &info.contentSize);
         curl_easy_getinfo(header, CURLINFO_RESPONSE_CODE, &info.responseCode);
-        info.url = url;
-        info.contentType = contentType;
-        info.valid = true;
         
-        if (_onHeader)
+        if (contentType == nullptr || info.contentSize == -1 || info.responseCode >= 400)
         {
-            _onHeader(srcUrl, info);
+            info.valid = false;
+        }
+        else
+        {
+            info.url = url;
+            info.contentType = contentType;
+            info.valid = true;
         }
     }
-    else
+    
+    if (info.valid && _onHeader)
+    {
+        _onHeader(srcUrl, info);
+    }
+    else if (!info.valid)
     {
         info.contentSize = -1;
         std::string msg = StringUtils::format("Can not get content size of file (%s) : Request header failed", srcUrl.c_str());
