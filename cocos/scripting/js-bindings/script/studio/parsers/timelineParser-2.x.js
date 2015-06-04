@@ -574,6 +574,7 @@
      * @param resourcePath
      */
     parser.initButton = function(json, resourcePath){
+
         var widget = new ccui.Button();
 
         loadTexture(json["NormalFileData"], resourcePath, function(path, type){
