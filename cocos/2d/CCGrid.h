@@ -42,81 +42,127 @@ class Node;
  * @{
  */
 
-/** Base class for Other grid.
+/** @~english Base class for Other grid.
+ * @~chinese 其他网格类的基类。
 */
 class CC_DLL GridBase : public Ref
 {
 public:
-    /** create one Grid */
-    static GridBase* create(const Size& gridSize, Texture2D *texture, bool flipped);
-    /** create one Grid */
-    static GridBase* create(const Size& gridSize);
     /**
-    Destructor.
+     *
+     * @~english create one Grid  @~chinese 创建一个网格
+     *
+     * @param gridSize @~english The grid size @~chinese 网格的大小
+     * @param texture @~english The texture pointer. @~chinese 一个纹理指针
+     * @param flipped @~english Whether flipped or not. @~chinese 是否翻转
+     *
+     * @return @~english A GridBase instance. @~chinese 一个GridBase实例
+     */
+    static GridBase* create(const Size& gridSize, Texture2D *texture, bool flipped);
+
+    /**
+     * @~english create one Grid  @~chinese 创建一个网格
+     *
+     * @param gridSize @~english The gride size. @~chinese 网络的大小
+     *
+     * @return @~english A GridBase instance. @~chinese 一个GridBase实例
+     */
+    static GridBase* create(const Size& gridSize);
+    /**@~english
+     * Destructor.
+     * @~chinese 
+     * 析构函数。
      * @js NA
      * @lua NA
      */
     virtual ~GridBase(void);
 
-    /**@{
-     Init the Grid base.
-     @param gridSize the size of the grid.
-     @param texture The texture used for grab.
-     @param flipped whether or not the grab texture should be flip by Y or not.
-    */
+    /**@{@~english
+     *Init the Grid base.
+     * @~chinese 
+     * 初始化网格基类。
+     @param gridSize @~english the size of the grid.
+     * @~chinese 网格的大小。
+     @param texture @~english The texture used for grab.
+     * @~chinese 待抓取的纹理。
+     @param flipped @~english whether or not the grab texture should be flip by Y or not.
+     * @~chinese 是否应该在Y轴方向翻转待抓取的纹理。
+     * @return @~english True if initailize success, false otherwise. @~chinese 如果初始化成功，则返回真，否则返回假。
+     */
     bool initWithSize(const Size& gridSize, Texture2D *texture, bool flipped);
+
+    /**
+     * @~english Init the Grid base.
+     * @~chinese 初始化网格基类
+     *
+     * @param gridSize @~english the size of grid. @~chinese 网格的大小
+     *
+     * @return @~english True if initailize success, false otherwise. @~chinese 如果初始化成功，则返回真，否则返回假。
+     */
     bool initWithSize(const Size& gridSize);
     /**@}*/
-    /** @{
-    Getter and setter of the active state of the grid.
+    /** @{@~english
+     * Get the active state of grid.
+     * @~chinese 
+     * 获取网格的活动状态。
     */
     inline bool isActive(void) const { return _active; }
+    /**
+     * @~english Set the active state of grid.
+     * @~chinese 设置网格的活动状态
+     *
+     * @param active @~english true if the grid is active, false otherwise @~chinese 如果网格处于活动状态，则返回真，否则返回假。
+     */
     void setActive(bool active);
     /**@}*/
 
-    /** Get number of times that the grid will be reused. */
+    /** @~english Get number of times that the grid will be reused.  @~chinese 获取网格将被重用的次数。*/
     inline int getReuseGrid(void) const { return _reuseGrid; }
-    /** Set number of times that the grid will be reused. */
+    /** @~english Set number of times that the grid will be reused.  @~chinese 设置网格将被重用的次数。*/
     inline void setReuseGrid(int reuseGrid) { _reuseGrid = reuseGrid; }
 
-    /** Size of the grid. */
+    /** @~english Get the size of the grid.  @~chinese 获取网格的大小。*/
     inline const Size& getGridSize(void) const { return _gridSize; }
-    /**Set the size of the grid.*/
+    /**@~english Set the size of the grid. @~chinese 设置网格的大小*/
     inline void setGridSize(const Size& gridSize) { _gridSize = gridSize; }
 
-    /** Pixels between the grids. */
+    /** @~english Pixels between the grids.  @~chinese 获取网格之间的像素。*/
     inline const Vec2& getStep(void) const { return _step; }
-    /**Get the pixels between the grids.*/
+    /**@~english Get the pixels between the grids. @~chinese 设置网格之间的像素。*/
     inline void setStep(const Vec2& step) { _step = step; }
 
-    /** is texture flipped. */
+    /** @~english is texture flipped.  @~chinese 纹理是否翻转。*/
     inline bool isTextureFlipped(void) const { return _isTextureFlipped; }
-    /**Set the texture flipped or not.*/
+    /**@~english Set the texture flipped or not. @~chinese 设置纹理是否翻转。*/
     void setTextureFlipped(bool flipped);
     
-    /**@{
-     Init and reset the status when render effects by using the grid.
+    /**@{@~english
+     * Init and reset the status when render effects by using the grid.
+     * @~chinese 
+     * 在绘制前后，用来初始化和重置渲染网格的状态。
      */
     void beforeDraw(void);
     void afterDraw(Node *target);
     /**@}*/
     
-    /**@{
-     Interface for custom action when before or after draw.
+    /**@{@~english
+     * Interface for custom action when before or after draw.
+     * @~chinese 
+     * 在绘制前后，用来定制动作。
      @js NA
      */
     virtual void beforeBlit() {}
     virtual void afterBlit() {}
     /**@}*/
     
-    /**Interface used to blit the texture with grid to screen.*/
+    /**@~english Used to blit the texture with grid to screen. @~chinese 用于拷贝网格纹理贴图到屏幕。*/
     virtual void blit(void);
-    /**Interface, Reuse the grid vertices.*/
+    /**@~english Reuse the grid vertices. @~chinese 重用网格顶点。*/
     virtual void reuse(void);
-    /**Interface, Calculate the vertices used for the blit.*/
+    /**@~english Calculate the vertices used for the blit. @~chinese 计算用于blit的顶点。*/
     virtual void calculateVertexPoints(void);
     
-    /**Change projection to 2D for grabbing.*/
+    /**@~english Change projection to 2D for grabbing. @~chinese 改变投影为抓住2 d。*/
     void set2DProjection(void);
 
 protected:
@@ -131,29 +177,36 @@ protected:
     Director::Projection _directorProjection;
 };
 
-/**
- Grid3D is a 3D grid implementation. Each vertex has 3 dimensions: x,y,z
+/**@~english
+ * Grid3D is a 3D grid implementation. Each vertex has 3 dimensions: x,y,z
+ * @~chinese 
+ * Grid3D是一个3D网格实现。每个顶点都有三个维度:x,y,z
  */
 class CC_DLL Grid3D : public GridBase
 {
 public:
-    /** create one Grid. */
+    /** @~english create one Grid.  @~chinese 创建一个网格。*/
     static Grid3D* create(const Size& gridSize, Texture2D *texture, bool flipped);
-    /** create one Grid. */
+    /** @~english create one Grid.  @~chinese 创建一个网格。*/
     static Grid3D* create(const Size& gridSize);
-    /**
-     Constructor.
+    /**@~english
+     * Constructor.
+     * @~chinese 
+     * 构造函数。
      * @js ctor
      */
     Grid3D();
-    /**
-     Destructor.
+    /**@~english
+     * Destructor.
+     * @~chinese 
+     * 析构函数。
      * @js NA
      * @lua NA
      */
     ~Grid3D(void);
 
-    /** Returns the vertex at a given position.
+    /** @~english Returns the vertex at a given position.
+     * @~chinese 返回一个给定的位置的顶点。
      * @js NA
      * @lua NA
      */
@@ -162,7 +215,8 @@ public:
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE Vec3 vertex(const Vec2& pos) const { return getVertex(pos); }
-    /** Returns the original (non-transformed) vertex at a given position.
+    /** @~english Returns the original (non-transformed) vertex at a given position.
+     * @~chinese 返回一个给定的位置的原始的(没有经过坐标变换的)顶点。
      * @js NA
      * @lua NA
      */
@@ -172,12 +226,15 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE Vec3 originalVertex(const Vec2& pos) const { return getOriginalVertex(pos); }
 
-    /** Sets a new vertex at a given position.
+    /** @~english Sets a new vertex at a given position.
+     * @~chinese 在一个给定的位置上设置一个新的顶点。
      * @lua NA
      */
     void setVertex(const Vec2& pos, const Vec3& vertex);
-    /**@{
-     Implementations for interfaces in base calss.
+    /**@{@~english
+     * Implementations for interfaces in base calss.
+     * @~chinese 
+     * 实现Grid基类的一些接口
      */
     virtual void beforeBlit() override;
     virtual void afterBlit() override;
@@ -186,11 +243,19 @@ public:
     virtual void calculateVertexPoints() override;
     /**@}*/
     
-    /**@{
-     Getter and Setter for depth test state when blit.
+    /**@{@~english
+     * Set the depth test state when blit.
+     * @~chinese 
+     * 设置blit的深度测试状态。
      @js NA
      */
     void setNeedDepthTestForBlit( bool neededDepthTest) { _needDepthTestForBlit = neededDepthTest; }
+    /**
+     * @~english Get the depth test state when blit.
+     * @~chinese 获取blit的深度测试状态
+     *
+     * @return @~english Return true if depth test is enabled, false otherwise. @~chinese 如果深度测试是开启的，则返回真，否则返回假。
+     */
     bool getNeedDepthTestForBlit() const { return _needDepthTestForBlit; }
     /**@}*/
 protected:
@@ -203,55 +268,71 @@ protected:
     bool _oldDepthWriteValue;
 };
 
-/**
- TiledGrid3D is a 3D grid implementation. It differs from Grid3D in that
- the tiles can be separated from the grid.
+/**@~english
+ * TiledGrid3D is a 3D grid implementation. It differs from Grid3D in that
+ * the tiles can be separated from the grid.
+ * @~chinese 
+ * TiledGrid3D是一个3D网格实现。它不同于Grid3D,
+ * 每一个瓦片(tile)可以独立于网格。
 */
 class CC_DLL TiledGrid3D : public GridBase
 {
 public:
-    /** Create one Grid. */
+    /** @~english Create one Grid.  @~chinese 创建一个网格。*/
     static TiledGrid3D* create(const Size& gridSize, Texture2D *texture, bool flipped);
-    /** Create one Grid. */
+    /** @~english Create one Grid.  @~chinese 创建一个网格。*/
     static TiledGrid3D* create(const Size& gridSize);
-    /**
-     Constructor.
+    /**@~english
+     * Constructor.
+     * @~chinese 
+     * 构造函数。
      * @js ctor
      */
     TiledGrid3D();
-    /**
-     Destructor.
+    /**@~english
+     * Destructor.
+     * @~chinese 
+     * 析构函数。
      * @js NA
      * @lua NA
      */
     ~TiledGrid3D();
 
-    /** Returns the tile at the given position.
+    /** @~english Returns the tile at the given position.
+     * @~chinese 返回给定位置的瓦片。
      * @js NA
      * @lua NA
      */
     Quad3 getTile(const Vec2& pos) const;
-    /** returns the tile at the given position 
+    /** @~english returns the tile at the given position 
+     * @~chinese 返回给定位置的瓦片.
+     * @deprecated Use getTile instead.
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE Quad3 tile(const Vec2& pos) const { return getTile(pos); }
-    /** Returns the original tile (untransformed) at the given position.
+    /** @~english Returns the original tile (untransformed) at the given position.
+     * @~chinese 返回给定位置的没有经过坐标变换的瓦片。
      * @js NA
      * @lua NA
      */
     Quad3 getOriginalTile(const Vec2& pos) const;
-    /** returns the original tile (untransformed) at the given position 
+    /** @~english returns the original tile (untransformed) at the given position 
+     * @~chinese 返回给定位置的没有经过坐标变换的瓦片。
+     * @deprecated use getOriginalTile instead.
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE Quad3 originalTile(const Vec2& pos) const { return getOriginalTile(pos); }
 
-    /** Sets a new tile.
+    /** @~english Sets a new tile.
+     * @~chinese 设置一个新的瓦片。
      * @lua NA
      */
     void setTile(const Vec2& pos, const Quad3& coords);
 
-    /**@{
-     Implementations for interfaces in base calss.
+    /**@{@~english
+     * Implementations for interfaces in base calss.
+     * @~chinese 
+     * 实现Grid基类的一些接口。
      */
     virtual void blit() override;
     virtual void reuse() override;
