@@ -45,10 +45,10 @@ class PUParticleSystem3D;
 
 /** @class PUEmitter
 *@brief @~english PUEmitter，the base class of pu emitter，inherit from Particle3DEmitter.
-Specific implementation decisions by different emitters.
+ Specific implementation decisions by different emitters.
 
-@~chinese PUEmitter继承自Particle3DEmitter，是pu发射器的基类。
-具体的实现由不同的发射器类型定义。。
+ @~chinese PUEmitter继承自Particle3DEmitter，是pu发射器的基类。
+ 具体的实现由不同的发射器类型定义。。
 */
 class CC_DLL PUEmitter : public Particle3DEmitter
 {

@@ -200,7 +200,7 @@ protected:
 
 /** @class Particle3DModelRender
 *@brief @~english Particle3DModelRender inherit from Particle3DRender, implement model rendering.
-@~chinese Particle3DModelRender 继承自Particle3DRender，实现粒子的模型渲染。
+ @~chinese Particle3DModelRender 继承自Particle3DRender，实现粒子的模型渲染。
 */
 class CC_DLL Particle3DModelRender : public Particle3DRender
 {

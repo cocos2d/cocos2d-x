@@ -44,10 +44,10 @@ struct PUParticle3D;
 
 /** @class PURender
 *@brief @~english PURender, the base class of pu renderer, inherit from Particle3DRender.
-Specific implementation decisions by different renderers.
+ Specific implementation decisions by different renderers.
 
-@~chinese PURender 继承自Particle3DRender，是pu渲染器的基类。
-具体的实现由不同的渲染器类型定义。
+ @~chinese PURender 继承自Particle3DRender，是pu渲染器的基类。
+ 具体的实现由不同的渲染器类型定义。
 */
 class CC_DLL PURender : public Particle3DRender
 {
@@ -114,16 +114,16 @@ protected:
 
 /** @class PUParticle3DEntityRender
 *@brief @~english PUParticle3DEntityRender, the base class of entity renderer, inherit from PURender.
-entity include：
-quad(billboard).
-box.
-sphere.
+ entity include：
+ quad(billboard).
+ box.
+ sphere.
 
-@~chinese PUParticle3DEntityRender 继承自PURender，是实体渲染器的基类。
-实体包括：
-四边形（公告板）
-箱形
-球形
+ @~chinese PUParticle3DEntityRender 继承自PURender，是实体渲染器的基类。
+ 实体包括：
+ 四边形（公告板）
+ 箱形
+ 球形
 */
 class CC_DLL PUParticle3DEntityRender : public PURender
 {
@@ -168,7 +168,7 @@ protected:
 /** @class PUParticle3DQuadRender
 *@brief @~english PUParticle3DQuadRender inherit from PUParticle3DEntityRender,implement pu quad rendering.
 
-@~chinese PUParticle3DQuadRender 继承自PUParticle3DEntityRender，实现了pu的四边形渲染。
+ @~chinese PUParticle3DQuadRender 继承自PUParticle3DEntityRender，实现了pu的四边形渲染。
 */
 class CC_DLL PUParticle3DQuadRender : public PUParticle3DEntityRender
 {
@@ -363,7 +363,7 @@ protected:
 /** @class PUParticle3DModelRender
 *@brief @~english PUParticle3DModelRender inherit from PURender,implement pu model rendering.
 
-@~chinese PUParticle3DModelRender 继承自PURender，实现了pu的模型渲染。
+ @~chinese PUParticle3DModelRender 继承自PURender，实现了pu的模型渲染。
 */
 class CC_DLL PUParticle3DModelRender : public PURender
 {
@@ -412,7 +412,7 @@ protected:
 /** @class PUParticle3DBoxRender
 *@brief @~english PUParticle3DBoxRender inherit from PUParticle3DEntityRender,implement pu box rendering.
 
-@~chinese PUParticle3DBoxRender 继承自PUParticle3DEntityRender，实现了pu的箱形渲染。
+ @~chinese PUParticle3DBoxRender 继承自PUParticle3DEntityRender，实现了pu的箱形渲染。
 */
 class CC_DLL PUParticle3DBoxRender : public PUParticle3DEntityRender
 {
@@ -450,7 +450,7 @@ protected:
 /** @class PUSphereRender
 *@brief @~english PUSphereRender inherit from PUParticle3DEntityRender,implement pu sphere rendering.
 
-@~chinese PUSphereRender 继承自PUParticle3DEntityRender，实现了pu的球形渲染。
+ @~chinese PUSphereRender 继承自PUParticle3DEntityRender，实现了pu的球形渲染。
 */
 class CC_DLL PUSphereRender : public PUParticle3DEntityRender
 {
