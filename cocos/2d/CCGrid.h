@@ -49,12 +49,11 @@ class CC_DLL GridBase : public Ref
 {
 public:
     /**
-     *
      * @~english create one Grid  @~chinese 创建一个网格
      *
      * @param gridSize @~english The grid size @~chinese 网格的大小
      * @param texture @~english The texture pointer. @~chinese 一个纹理指针
-     * @param flipped @~english Whether flipped or not. @~chinese 是否翻转
+     * @param flipped @~english Whether texture flipped or not. @~chinese 是否纹理需要翻转
      *
      * @return @~english A GridBase instance. @~chinese 一个GridBase实例
      */
@@ -77,7 +76,7 @@ public:
      */
     virtual ~GridBase(void);
 
-    /**@{@~english
+    /**@~english
      *Init the Grid base.
      * @~chinese 
      * 初始化网格基类。
@@ -100,8 +99,8 @@ public:
      * @return @~english True if initailize success, false otherwise. @~chinese 如果初始化成功，则返回真，否则返回假。
      */
     bool initWithSize(const Size& gridSize);
-    /**@}*/
-    /** @{@~english
+
+    /** @~english
      * Get the active state of grid.
      * @~chinese 
      * 获取网格的活动状态。
@@ -114,7 +113,6 @@ public:
      * @param active @~english true if the grid is active, false otherwise @~chinese 如果网格处于活动状态，则返回真，否则返回假。
      */
     void setActive(bool active);
-    /**@}*/
 
     /** @~english Get number of times that the grid will be reused.  @~chinese 获取网格将被重用的次数。*/
     inline int getReuseGrid(void) const { return _reuseGrid; }
@@ -136,25 +134,33 @@ public:
     /**@~english Set the texture flipped or not. @~chinese 设置纹理是否翻转。*/
     void setTextureFlipped(bool flipped);
     
-    /**@{@~english
-     * Init and reset the status when render effects by using the grid.
+    /**@~english
+     * Init and reset the Grid status before draw.
      * @~chinese 
-     * 在绘制前后，用来初始化和重置渲染网格的状态。
+     * 在绘制前，用来初始化和重置渲染网格的状态。
      */
     void beforeDraw(void);
+    /**
+     * @~english  Init and reset the Grid status before draw.
+     * @~chinese 在绘制后，用来初始化和重置渲染网格的状态
+     *
+     * @param target @~english A Node pointer. @~chinese 一个Node节点指针
+     */
     void afterDraw(Node *target);
-    /**@}*/
-    
-    /**@{@~english
-     * Interface for custom action when before or after draw.
+
+    /**@~english
+     * Interface for custom action when before blit.
      * @~chinese 
-     * 在绘制前后，用来定制动作。
-     @js NA
+     * 在Blit前，用来定制动作
+     * @js NA
      */
     virtual void beforeBlit() {}
+    /**
+     * @~english Interface for custom action when after blit.
+     * @~chinese 在Blit后，用来定制动作
+     */
     virtual void afterBlit() {}
-    /**@}*/
-    
+
     /**@~english Used to blit the texture with grid to screen. @~chinese 用于拷贝网格纹理贴图到屏幕。*/
     virtual void blit(void);
     /**@~english Reuse the grid vertices. @~chinese 重用网格顶点。*/
@@ -185,9 +191,23 @@ protected:
 class CC_DLL Grid3D : public GridBase
 {
 public:
-    /** @~english create one Grid.  @~chinese 创建一个网格。*/
+    /**
+     * @~english create one Grid  @~chinese 创建一个网格
+     *
+     * @param gridSize @~english The grid size @~chinese 网格的大小
+     * @param texture @~english The texture pointer. @~chinese 一个纹理指针
+     * @param flipped @~english Whether texture flipped or not. @~chinese 是否纹理需要翻转
+     *
+     * @return @~english A Grid3D instance. @~chinese 一个Grid3D实例
+     */
     static Grid3D* create(const Size& gridSize, Texture2D *texture, bool flipped);
-    /** @~english create one Grid.  @~chinese 创建一个网格。*/
+    /**
+     * @~english create one Grid.  @~chinese 创建一个网格。
+     *
+     * @param gridSize @~english The grid size. @~chinese 网格的大小
+     *
+     * @return @~english A Grid3D instance. @~chinese 一个Grid3D实例
+     */
     static Grid3D* create(const Size& gridSize);
     /**@~english
      * Constructor.
@@ -231,7 +251,7 @@ public:
      * @lua NA
      */
     void setVertex(const Vec2& pos, const Vec3& vertex);
-    /**@{@~english
+    /**@~english
      * Implementations for interfaces in base calss.
      * @~chinese 
      * 实现Grid基类的一些接口
@@ -241,9 +261,8 @@ public:
     virtual void blit() override;
     virtual void reuse() override;
     virtual void calculateVertexPoints() override;
-    /**@}*/
-    
-    /**@{@~english
+
+    /**@~english
      * Set the depth test state when blit.
      * @~chinese 
      * 设置blit的深度测试状态。
@@ -257,7 +276,6 @@ public:
      * @return @~english Return true if depth test is enabled, false otherwise. @~chinese 如果深度测试是开启的，则返回真，否则返回假。
      */
     bool getNeedDepthTestForBlit() const { return _needDepthTestForBlit; }
-    /**@}*/
 protected:
     GLvoid *_texCoordinates;
     GLvoid *_vertices;
@@ -278,9 +296,23 @@ protected:
 class CC_DLL TiledGrid3D : public GridBase
 {
 public:
-    /** @~english Create one Grid.  @~chinese 创建一个网格。*/
+    /**
+     * @~english Create one Grid.  @~chinese 创建一个网格
+     *
+     * @param gridSize @~english The grid size. @~chinese 网格的大小
+     * @param texture @~english A texture2D pointer. @~chinese 一个纹理指针
+     * @param flipped @~english Whether the texture is flipped or not. @~chinese 是否纹理应该翻转。
+     *
+     * @return @~english A TiledGrid3D instance. @~chinese 一个 TiledGrid3D 实例。
+     */
     static TiledGrid3D* create(const Size& gridSize, Texture2D *texture, bool flipped);
-    /** @~english Create one Grid.  @~chinese 创建一个网格。*/
+    /**
+     * @~english Create one Grid.  @~chinese 创建一个网格
+     *
+     * @param gridSize @~english The grid size. @~chinese 网格的大小
+     *
+     * @return @~english A TiledGrid3D instance. @~chinese 一个 TiledGrid3D 实例。
+     */
     static TiledGrid3D* create(const Size& gridSize);
     /**@~english
      * Constructor.
@@ -329,7 +361,7 @@ public:
      */
     void setTile(const Vec2& pos, const Quad3& coords);
 
-    /**@{@~english
+    /**@~english
      * Implementations for interfaces in base calss.
      * @~chinese 
      * 实现Grid基类的一些接口。
@@ -337,7 +369,6 @@ public:
     virtual void blit() override;
     virtual void reuse() override;
     virtual void calculateVertexPoints() override;
-    /**@}*/
 protected:
     GLvoid *_texCoordinates;
     GLvoid *_vertices;
