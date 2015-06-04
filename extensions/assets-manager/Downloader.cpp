@@ -325,6 +325,11 @@ long Downloader::getContentSize(const std::string &srcUrl)
     return info.contentSize;
 }
 
+Downloader::HeaderInfo Downloader::getHeader(const std::string &srcUrl)
+{
+    return prepareHeader(srcUrl);
+}
+
 void Downloader::getHeaderAsync(const std::string &srcUrl, const HeaderCallback &callback)
 {
     setHeaderCallback(callback);
@@ -401,25 +406,26 @@ void Downloader::downloadToBuffer(const std::string &srcUrl, const std::string &
     CURLcode res = curl_easy_perform(curl);
     if (res != CURLE_OK)
     {
-        _fileUtils->removeFile(data.path + data.name + TEMP_EXT);
-        std::string msg = StringUtils::format("Unable to download file: [curl error]%s", curl_easy_strerror(res));
+        std::string msg = StringUtils::format("Unable to download file to buffer: [curl error]%s", curl_easy_strerror(res));
         this->notifyError(msg, customId, res);
+    }
+    else
+    {
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
+            if (!ptr.expired())
+            {
+                std::shared_ptr<Downloader> downloader = ptr.lock();
+                
+                auto successCB = downloader->getSuccessCallback();
+                if (successCB != nullptr)
+                {
+                    successCB(data.url, "", data.customId);
+                }
+            }
+        });
     }
     
     curl_easy_cleanup(curl);
-    
-    Director::getInstance()->getScheduler()->performFunctionInCocosThread([=]{
-        if (!ptr.expired())
-        {
-            std::shared_ptr<Downloader> downloader = ptr.lock();
-            
-            auto successCB = downloader->getSuccessCallback();
-            if (successCB != nullptr)
-            {
-                successCB(data.url, "", data.customId);
-            }
-        }
-    });
 }
 
 void Downloader::downloadAsync(const std::string &srcUrl, const std::string &storagePath, const std::string &customId/* = ""*/)
