@@ -407,7 +407,7 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
             }
         }
         
-        letterPosition.x = (nextFontPositionX + charXOffset + kernings[i]) / contentScaleFactor;
+        letterPosition.x = (nextFontPositionX + charXOffset) / contentScaleFactor;
         letterPosition.y = (nextFontPositionY - charYOffset) / contentScaleFactor;
                
         if( theLabel->recordLetterInfo(letterPosition, tempDefinition, i) == false)
@@ -417,6 +417,10 @@ bool LabelTextFormatter::createStringSprites(Label *theLabel)
         }
         
         nextFontPositionX += charAdvance + theLabel->_additionalKerning;
+        if (i < stringLen - 1)
+        {
+            nextFontPositionX += kernings[i + 1];
+        }
         
         auto letterRight = letterPosition.x + tempDefinition.width;
         if (longestLine < letterRight)
