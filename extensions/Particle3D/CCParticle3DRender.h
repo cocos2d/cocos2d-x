@@ -50,8 +50,8 @@ class Texture2D;
 
 /** @class Particle3DRender
 *@brief @~english Particle3DRender is a base class, define interfaces.
- Specific implementation decisions by different renderers.
- Renderer is mainly determined how particles rendered, such as billboard rendering, model rendering, etc.
+ Different renderers can have their own implementation
+ Renderer mainly determines how particles are rendered, such as billboard rendering, model rendering, etc.
  One particle system must have a renderer.
 
  @~chinese Particle3DRender 是渲染器的基类，定义渲染器共有接口。

@@ -207,7 +207,7 @@ typedef DataPool<Particle3D> ParticlePool;
 
 /** @class ParticleSystem3D
 *@brief @~english ParticleSystem3D is a base class, define interfaces.
- specific implementation decisions by different particle systems.
+ Different particle systems can have their own implementation.
  a particle system consist of:
  - one Emitter(how to emit particles)
  - multiple affector(how to affect particles)

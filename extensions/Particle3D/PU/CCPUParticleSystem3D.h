@@ -132,7 +132,9 @@ struct CC_DLL PUParticle3D : public Particle3D
     float zRotationSpeed; //radian
 
     //Quaternion orientationInWorld;
-    /*@remarks
+
+    /** The orientation of the particle
+    @remarks
         The orientation of the particle is only visible if the Particle Renderer - such as the Box renderer - 
         supports orientation.
     */
@@ -183,18 +185,24 @@ struct CC_DLL PUParticle3D : public Particle3D
     */
     inline bool hasEventFlags(unsigned int flags) const {return (eventFlags & flags) != 0;}
 
-    unsigned int eventFlags;
+    unsigned int eventFlags; ///<event flags
 
+    /** Returns true if the particle is freezed and doesn't move anymore.
+    @remarks
+    Although it is freezed, repositioning the particle is still possible.
+    */
     bool isFreezed(void) const
     {
         return freezed;
     }
-    //-----------------------------------------------------------------------
+    
+    /** Freeze the particle, so it doesn't move anymore.
+    */
     void setFreezed(bool fzd)
     {
         freezed = fzd;
     }
-    bool freezed;
+    bool freezed;///< freezed
 
     ///< Time to live, number of seconds left of particles natural life
     float timeToLive;
@@ -206,7 +214,12 @@ struct CC_DLL PUParticle3D : public Particle3D
     ///< better to calculate it once at the Particle level.
     float timeFraction;
 
-    float mass;///< mass of a particle
+    /**  Mass of a particle.
+    @remarks
+        In case of simulations where mass of a particle is needed (i.e. exploding particles of different
+        mass) this attribute can be used.
+    */
+    float mass;
 
     /** Animation attributes
     */
@@ -226,9 +239,9 @@ struct CC_DLL PUParticle3D : public Particle3D
 /** @class PUParticleSystem3D
 *@brief @~english PUParticleSystem3D, the class of pu particle system, inherit from ParticleSystem3D.
  The ParticleSystem3D,the parent of PUParticleSystem3D, is derived from Node, so one particle system can contain multiple particle systems,
- By addChild way to mount a PUParticleSystem3D under another PUParticleSystem3D.
+ You can mount a PUParticleSystem3D under another by addChild.
  Each particle system can be defined emitter,affector,renderer,etc. 
- PUParticleSystem3D provides three ways to be created:
+ There are three ways to create a PUParticleSystem3D:
  - Directly create an empty PUParticleSystem3D, manually add emitter, affector, etc.(useless)
  - Create PUParticleSystem3D with pu file path, pu material file will be automatically searched.(not recommended)
  - Create PUParticleSystem3D with pu file path and pu material file path.(recommended)
@@ -533,15 +546,15 @@ public:
 
     /**
     * @~english Get the affector by name.
-    * @~chinese 根据名词获取影响器。
-    * @return @~english The name of affector. @~chinese 影响器名词。
+    * @~chinese 根据名称获取影响器。
+    * @return @~english The name of affector. @~chinese 影响器名称。
     */
     PUAffector* getAffector(const std::string &name);
 
     /**
     * @~english Get the emitter by name.
-    * @~chinese 根据名词获取发射器。
-    * @return @~english The name of emitter. @~chinese 发射器名词。
+    * @~chinese 根据名称获取发射器。
+    * @return @~english The name of emitter. @~chinese 发射器名称。
     */
     PUEmitter* getEmitter(const std::string &name);
 
@@ -553,7 +566,7 @@ public:
 
     /**
     * @~english Add a Listener(internal method).
-    * Listener is mainly used to monitor particle emissions and disappearance.
+    * Listener is mainly used to monitor particle emission and death.
     * @~chinese 添加一个监听器。
     * 监听器主要用来监听粒子发射和消亡。
     * @see PUListener

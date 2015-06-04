@@ -41,7 +41,7 @@ struct Particle3D;
 /** @class Particle3DAffector
 *@brief @~english Particle3DAffector is a base class, define interfaces.
  Specific implementation decisions by different affectors.
- Affector is mainly bound particles behavior after launch, such as acceleration, rotation, etc.
+ Affector is mainly bound particles behavior after being launch, such as acceleration, rotation, etc.
  One particle system works well without affector.
 
  @~chinese Particle3DAffector 是影响器的基类，定义影响器共有接口。

@@ -40,8 +40,8 @@ struct Particle3D;
 
 /** @class Particle3DEmitter
 *@brief @~english Particle3DEmitter is a base class, define interfaces.
- Specific implementation decisions by different emitters.
- Emitter is mainly determined how particles emitted, such as point emission, spherical emission, etc.
+ Different emitters can have their own implementation.
+ Emitter mainly decides how particles are emitted, such as point emission, spherical emission, etc.
  One particle system must have a emitter.
 
  @~chinese Particle3DEmitter 是发射器的基类，定义发射器共有接口。

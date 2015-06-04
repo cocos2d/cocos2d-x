@@ -44,7 +44,7 @@ struct PUParticle3D;
 
 /** @class PURender
 *@brief @~english PURender, the base class of pu renderer, inherit from Particle3DRender.
- Specific implementation decisions by different renderers.
+ Different renderers can have their own implementation.
 
  @~chinese PURender 继承自Particle3DRender，是pu渲染器的基类。
  具体的实现由不同的渲染器类型定义。

@@ -45,7 +45,7 @@ class PUParticleSystem3D;
 
 /** @class PUEmitter
 *@brief @~english PUEmitter，the base class of pu emitter，inherit from Particle3DEmitter.
- Specific implementation decisions by different emitters.
+ Different emitters can have their own implementation.
 
  @~chinese PUEmitter继承自Particle3DEmitter，是pu发射器的基类。
  具体的实现由不同的发射器类型定义。。
@@ -971,6 +971,8 @@ protected:
     Vec3 _upVector;///<Notional up vector, just used to speed up generation of variant directions.
 
     float _remainder;///<Particles that are left to be emitted from the previous time.
+                     ///<As you know that the emitted particles must be int.
+                     ///<This is the time left by last emit circle which is not enough to emit one particle.
 
     ///** Helper factory
     //*/
