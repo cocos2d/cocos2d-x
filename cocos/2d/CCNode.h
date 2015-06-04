@@ -125,13 +125,6 @@ class EventListener;
 class CC_DLL Node : public Ref
 {
 public:
-    /** 
-     @property
-     @static
-     @~english Default tag used for all the nodes 
-     @~chinese 用于所有的节点的默认Tag
-     */
-    static const int INVALID_TAG = -1;
 
     enum {
         FLAGS_TRANSFORM_DIRTY = (1 << 0),
@@ -140,6 +133,22 @@ public:
 
         FLAGS_DIRTY_MASK = (FLAGS_TRANSFORM_DIRTY | FLAGS_CONTENT_SIZE_DIRTY),
     };
+    /**
+     @{
+     @name Properties
+     */
+
+    /** 
+     @property
+     @~english Default tag used for all the nodes 
+     @~chinese 用于所有的节点的默认Tag
+     @static
+     @const 
+     */
+    static const int INVALID_TAG = -1;
+
+    /// @} end of properties
+
     /**
      @{
      @name Constructor, Destructor and Initializers
