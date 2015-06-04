@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -38,70 +38,113 @@ NS_CC_BEGIN
  */
 
 /**
- * @brief Ray is a line with one end. usually use it to check intersects with some object,such as Plane, OBB, AABB
+ * @class Ray
+ * @brief @~english Ray is a line with one end. usually use it to check intersects with some object,such as Plane, OBB, AABB
+ * @~chinese 射线是朝单方向延伸的直线，通常用来与一些物体进行相交测试，如平面，OBB包围盒，AABB包围盒
  * @js NA
  **/
 class CC_DLL Ray
 {
 public:
     /**
-     * Constructor.
-     *
+     * @~english Constructor.
+     * @~chinese 构造函数
      * @lua new
      */
     Ray();
 
     /**
-     * Constructor.
+     * @~english Copy Constructor.
+     * @~chinese 拷贝构造函数
      * @lua NA
      */
     Ray(const Ray& ray);
     
     /**
-     * Constructs a new ray initialized to the specified values.
-     *
-     * @param origin The ray's origin.
-     * @param direction The ray's direction.
+     * @~english Constructs a new ray initialized to the specified origin and direction.
+     * @~chinese 通过给定的起始点以及方向用来创建射线
+     * @param origin @~english The ray's origin.
+     * @~chinese 射线的起点
+     * @param direction @~english The ray's direction.
+     * @~chinese 射线的方向
      * @lua new
      */
     Ray(const Vec3& origin, const Vec3& direction);
 
     /**
-     * Destructor.
+     * @~english Destructor.
+     * @~chinese 析构函数
      * @lua NA
      */
     ~Ray();
 
     /**
-     * Check whether this ray intersects with the specified AABB.
+     * @~english Check whether this ray intersects with the specified AABB.
+     * @param aabb @~english The AABB object.
+     * @param distance @~english The distance between the orign to the intersection point.
+     * @return @~english Return true if the AABB intersect with the ray, otherwise return false.
      */
     bool intersects(const AABB& aabb, float* distance = nullptr) const;
     
     /**
-     * Check whether this ray intersects with the specified OBB.
+     * @~english Check whether this ray intersects with the specified OBB.
+     * @~chinese 检查该射线是否与给定的OBB包围盒相交
+     * @param obb @~english The OBB object.
+     * @~chinese 指定的OBB包围盒
+     * @param distance @~english The distance between the orign to the intersection point.
+     * @~chinese 从起始点到与包围盒橡胶垫的距离
+     * @return @~english Return true if the OBB intersect with the ray, otherwise return false.
+     * @~chinese 与OBB包围盒相交时返回true，反之返回false
      */
     bool intersects(const OBB& obb, float* distance = nullptr) const;
 
+    /**
+     * @~english Get the distance to the plane.
+     * @~chinese 获取射线到平面的距离
+     * @param plane @~english The specified plane.
+     * @~chinese 指定的平面
+     * @return @~english The distance to the plane.
+     * @~chinese 射线起始点到平面的距离
+     */
     float dist(const Plane& plane) const;
+
+    /**
+     * @~english Check whether this ray intersects with the specified Plane.
+     * @~chinese 检查射线是否与指定平面相交
+     * @param plane @~english The Plane object.
+     * @~chinese 指定的平面对象
+     * @return @~english The intersection point.
+     * @~chinese 射线与平面的交点
+     */
     Vec3 intersects(const Plane& plane) const;
     
     /**
-     * Sets this ray to the specified values.
-     *
-     * @param origin The ray's origin.
-     * @param direction The ray's direction.
+     * @~english Sets this ray to the specified origin and direction.
+     * @~chinese 设置射线的起点与方向
+     * @param origin @~english The ray's origin.
+     * @~chinese 射线的起点
+     * @param direction @~english The ray's direction.
+     * @~chinese 射线的方向
      */
     void set(const Vec3& origin, const Vec3& direction);
 
     /**
-     * Transforms this ray by the given transformation matrix.
-     *
-     * @param matrix The transformation matrix to transform by.
+     * @~english Transforms this ray by the given transformation matrix.
+     * @~chinese 通过给定的变换矩阵变换射线
+     * @param matrix @~english The transformation matrix to transform by.
+     * @~chinese 给定的变换矩阵
      */
     void transform(const Mat4& matrix);
-
-    Vec3 _origin;        // The ray origin position.
-    Vec3 _direction;     // The ray direction vector.
+    /**
+     * @~english The ray origin position.
+     * @~chinese 射线的起始点
+     */
+    Vec3 _origin;
+    /**
+     * @~english The ray direction vector.
+     * @~chinese 射线的方向向量
+     */
+    Vec3 _direction; 
 };
 
 // end of 3d group

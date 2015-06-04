@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2014 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -33,11 +33,17 @@
 
 NS_CC_BEGIN
 
+/**
+* @addtogroup _3d
+* @{
+*/
 class Camera;
 
 /**
- * the frustum is a six-side geometry, usually use the frustum to do fast-culling:
- * check a entity whether is a potential visible entity
+ * @class Frustum
+ * @brief @~english The frustum is a six-side geometry, usually use the frustum to do fast-culling:
+ * check a entity whether is a potential visible entity.
+ * @~chinese 平截头体，平截头体是一个六面的几何体，通常使用它来进行快速的裁剪，来确定一个物体是否是潜在可见的.
  * @js NA
  * @lua NA
  */
@@ -46,29 +52,58 @@ class CC_DLL Frustum
     friend class Camera;
 public:
     /**
-     * Constructor & Destructor.
+     * @~english Constructor.
+     * @~chinese 构造函数
      */
     Frustum(): _clipZ(true), _initialized(false) {}
+    /**
+    * @~english Destructor.
+    * @~chinese 析构函数
+    */
     ~Frustum(){}
 
     /**
-     * init frustum from camera.
+     * @~english Init frustum from camera.
+     * @~chinese 通过相机来初始化平截头体
+     * @param camera @~english The specified camera.
+     * @~chinese 指定的相机
+     * @return @~english Return true if success, otherwise return false.
+     * @~chinese 创建成功返回true，反之返回false
      */
     bool initFrustum(const Camera* camera);
 
     /**
-     * is aabb out of frustum.
+     * @~english Check an AABB whether out of frustum or not.
+     * @~chinese 检查一个AABB包围盒是否在平截头体之外
+     * @param aabb @~english The specified AABB object.
+     * @~chinese 指定的AABB包围盒
+     * @return @~english Return true if the specified AABB object is out of the frustum, otherwise return false.
+     * @~chinese 若指定的AABB包围盒在平截头体之外返回true，反之返回false
      */
     bool isOutOfFrustum(const AABB& aabb) const;
     /**
-     * is obb out of frustum
+     * @~english Check is an OBB whether out of frustum or not.
+     * @~chinese 检查一个OBB包围盒是否在平截头体之外
+     * @param obb @~english The specified OBB object.
+     * @~chinese 指定的OBB包围盒
+     * @return @~english Return true if the specified OBB object is out of the frustum, otherwise return false.
+     * @~chinese 若指定的OBB包围盒在平截头体之外返回true，反之返回false
      */
     bool isOutOfFrustum(const OBB& obb) const;
 
     /**
-     * get & set z clip. if bclipZ == true use near and far plane
+     * @~english Set z clip.
+     * @~chinese 设置Z裁剪
+     * @param clipZ @~english If clipz == true use the near and far plane.
+     * @~chinese Z裁剪，如果Z裁剪为true，则使用相机的近裁面与远裁面.
      */
     void setClipZ(bool clipZ) { _clipZ = clipZ; }
+    /**
+     * @~english Get Z clip.
+     * @~chinese 获取平截头体是否使用了Z裁剪
+     * @return @~english Return true if use the near and far plane, otherwise return false.
+     * @~chinese 如果使用了相机的近裁面和远裁面进行Z裁剪返回true，反之返回false.
+     */
     bool isClipZ() { return _clipZ; }
     
 protected:
@@ -81,6 +116,9 @@ protected:
     bool _clipZ;                // use near and far clip plane
     bool _initialized;
 };
+
+// end of 3d group
+/// @}
 
 NS_CC_END
 
