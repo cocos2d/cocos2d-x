@@ -67823,6 +67823,22 @@ bool js_cocos2dx_Component_isEnabled(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_Component_isEnabled : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_cocos2dx_Component_onRemove(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Component* cobj = (cocos2d::Component *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Component_onRemove : Invalid Native Object");
+    if (argc == 0) {
+        cobj->onRemove();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Component_onRemove : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_Component_update(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -67886,6 +67902,40 @@ bool js_cocos2dx_Component_init(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_cocos2dx_Component_init : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
+bool js_cocos2dx_Component_onAdd(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Component* cobj = (cocos2d::Component *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Component_onAdd : Invalid Native Object");
+    if (argc == 0) {
+        cobj->onAdd();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Component_onAdd : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_cocos2dx_Component_getName(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Component* cobj = (cocos2d::Component *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Component_getName : Invalid Native Object");
+    if (argc == 0) {
+        const std::string& ret = cobj->getName();
+        jsval jsret = JSVAL_NULL;
+        jsret = std_string_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_Component_getName : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_Component_setOwner(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -67912,24 +67962,6 @@ bool js_cocos2dx_Component_setOwner(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     JS_ReportError(cx, "js_cocos2dx_Component_setOwner : wrong number of arguments: %d, was expecting %d", argc, 1);
-    return false;
-}
-bool js_cocos2dx_Component_getName(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Component* cobj = (cocos2d::Component *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Component_getName : Invalid Native Object");
-    if (argc == 0) {
-        const std::string& ret = cobj->getName();
-        jsval jsret = JSVAL_NULL;
-        jsret = std_string_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_Component_getName : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_Component_create(JSContext *cx, uint32_t argc, jsval *vp)
@@ -68026,11 +68058,13 @@ void js_register_cocos2dx_Component(JSContext *cx, JS::HandleObject global) {
         JS_FN("setEnabled", js_cocos2dx_Component_setEnabled, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setName", js_cocos2dx_Component_setName, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isEnabled", js_cocos2dx_Component_isEnabled, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onRemove", js_cocos2dx_Component_onRemove, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("update", js_cocos2dx_Component_update, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getOwner", js_cocos2dx_Component_getOwner, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("init", js_cocos2dx_Component_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("setOwner", js_cocos2dx_Component_setOwner, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onAdd", js_cocos2dx_Component_onAdd, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getName", js_cocos2dx_Component_getName, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setOwner", js_cocos2dx_Component_setOwner, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("ctor", js_cocos2d_Component_ctor, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
