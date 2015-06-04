@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿﻿/****************************************************************************
  Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -38,30 +38,41 @@ NS_CC_BEGIN
 /**
  * @addtogroup _3d
  * @{
- */
+*/
 
- /**
- * @brief Convenient class to create a rigid body with Sprite3D
- */
+/**
+* @brief @~english Convenient class to create a rigid body with Sprite3D
+  @~chinese 辅助类用来便利的创建一个拥有rigit的Sprite3D
+*/
 class CC_DLL PhysicsSprite3D : public cocos2d::Sprite3D
 {
 public:
 
-    /** creates a PhysicsSprite3D*/
-    static PhysicsSprite3D* create(const std::string &modelPath, Physics3DRigidBodyDes* rigidDes, const cocos2d::Vec3& translateInPhysics = cocos2d::Vec3::ZERO, const cocos2d::Quaternion& rotInPhsyics = cocos2d::Quaternion::ZERO);
-    
-    /** Get the Physics3DObject. */
+    /** @~english creates a PhysicsSprite3D
+    @~chinese 创建一个physicssprite3d
+    */
+    static PhysicsSprite3D* create(const std::string& modelPath, Physics3DRigidBodyDes* rigidDes, const cocos2d::Vec3& translateInPhysics = cocos2d::Vec3::ZERO, const cocos2d::Quaternion& rotInPhsyics = cocos2d::Quaternion::ZERO);
+
+    /** @~english Get the Physics3DObject.
+    @~chinese 得到physics3dobject。
+    */
     Physics3DObject* getPhysicsObj() const;
-    
-    /** Set synchronization flag, see Physics3DComponent. */
+
+    /** @~english Set synchronization flag, see Physics3DComponent.
+    @~chinese 设置同步标志，参考physics3dcomponent。
+    */
     void setSyncFlag(Physics3DComponent::PhysicsSyncFlag syncFlag);
-    
-    /** Physics synchronize rendering. */
+
+    /** @~english Physics synchronize rendering.
+    @~chinese 物理同步渲染。
+    */
     void syncToPhysics();
-    
-    /** Rendering synchronize physics. */
+
+    /** @~english Rendering synchronize physics.
+    @~chinese 同步物理渲染。
+    */
     void syncToNode();
-    
+
 CC_CONSTRUCTOR_ACCESS:
     PhysicsSprite3D();
     virtual ~PhysicsSprite3D();

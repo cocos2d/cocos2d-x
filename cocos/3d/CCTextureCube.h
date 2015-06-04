@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+﻿﻿﻿/****************************************************************************
  Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -34,45 +34,51 @@
 NS_CC_BEGIN
 
 /**
- * @addtogroup _3d
- * @{
- */
+    @addtogroup _3d
+    @{
+*/
 
-/**
- TextureCube is a collection of six separate square textures that are put 
- onto the faces of an imaginary cube.
+/** @class TextureCube
+    TextureCube is a collection of six separate square textures that are put
+    onto the faces of an imaginary cube.
 */
 class CC_DLL TextureCube: public Texture2D
 {
 public:
-    /** create cube texture from 6 textures.
-       @param positive_x texture for the right side of the texture cube face.
-       @param negative_x texture for the up side of the texture cube face.
-       @param positive_y texture for the top side of the texture cube face
-       @param negative_y texture for the bottom side of the texture cube face
-       @param positive_z texture for the forward side of the texture cube face.
-       @param negative_z texture for the rear side of the texture cube face.
-       @return  A new texture cube inited with given parameters.
+    /** @~english create cube texture from 6 textures.
+        @~chinese 6纹理创建立方体纹理。
+        @param positive_x @~english  texture for the right side of the texture cube face. @~chinese 立方体的右侧纹理。
+        @param negative_x @~english  texture for the left side of the texture cube face. @~chinese 立方体的左侧纹理。
+        @param positive_y @~english  texture for the top side of the texture cube face @~chinese 立方体的上侧纹理
+        @param negative_y @~english  texture for the bottom side of the texture cube face @~chinese 立方体的底侧纹理
+        @param positive_z @~english  texture for the forward side of the texture cube face. @~chinese 立方体的前侧纹理。
+        @param negative_z @~english  texture for the rear side of the texture cube face. @~chinese 立方体的背侧纹理。
+        @return @~english  A new texture cube inited with given parameters. @~chinese 一种新的纹理的立方体。
     */
     static TextureCube* create(const std::string& positive_x, const std::string& negative_x,
                                const std::string& positive_y, const std::string& negative_y,
                                const std::string& positive_z, const std::string& negative_z);
 
-    /** Sets the min filter, mag filter, wrap s and wrap t texture parameters.
-    If the texture size is NPOT (non power of 2), then in can only use GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}.
+    /** @~english Sets the min filter, mag filter, wrap s and wrap t texture parameters.
+        @~chinese 设置min滤波器，mag滤波器，纹理包裹参数。
+        If the texture size is NPOT (non power of 2), then in can only use GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}.
+        @param TexParams @~english  the min/mag filter of TextureCube @~chinese texturecube min/mag过滤器
     */
     void setTexParameters(const TexParams&);
 
-    /** reload texture cube after GLESContext reconstructed.*/
+    /** @~english reload texture cube after GLESContext reconstructed.
+        @~chinese 在glescontext重建后重新加载纹理。
+        @return @~english True if the reloading is succeed, otherwise return false. @~chinese 如果重装成功真，否则返回假。
+    */
     bool reloadTexture();
 CC_CONSTRUCTOR_ACCESS:
     /**
-    * Constructor.
+        Constructor.
     */
     TextureCube();
 
     /**
-    * Destructor.
+        Destructor.
     */
     virtual ~TextureCube();
 protected:

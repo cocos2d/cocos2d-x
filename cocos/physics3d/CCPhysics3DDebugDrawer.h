@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿﻿/****************************************************************************
  Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -40,14 +40,17 @@
 NS_CC_BEGIN
 
 /**
- * @addtogroup _3d
- * @{
- */
+    @addtogroup _3d
+    @{
+*/
 
 class GLProgram;
 class Renderer;
 
-/** @brief Physics3DDebugDrawer: debug draw the physics object, used by Physics3DWorld */
+/** @brief
+    @~english Physics3DDebugDrawer: debug draw the physics object, used by Physics3DWorld
+    @~chinese physics3ddebugdrawer：调试绘制物理对象，用physics3dworld
+*/
 class Physics3DDebugDrawer : public btIDebugDraw
 {
 public:
@@ -55,23 +58,55 @@ public:
     Physics3DDebugDrawer();
     virtual ~Physics3DDebugDrawer();
 
-    void draw(cocos2d::Renderer *renderer);
+    void draw(cocos2d::Renderer* renderer);
 
-    // override function
-    virtual void	drawLine(const btVector3& from,const btVector3& to,const btVector3& color) override;
-    virtual void	drawContactPoint(const btVector3& PointOnB,const btVector3& normalOnB,btScalar distance,int lifeTime,const btVector3& color) override;
-    virtual void	reportErrorWarning(const char* warningString) override;
-    virtual void	draw3dText(const btVector3& location,const char* textString) override;
-    virtual void	setDebugMode(int debugMode) override;
-    virtual int		getDebugMode() const override;
+    /**
+        @~english Overwrite function.
+        @~chinese 覆盖功能。
+    */
+    virtual void    drawLine(const btVector3& from,const btVector3& to,const btVector3& color) override;
 
+    /**
+        @~english Overwrite function.
+        @~chinese 覆盖功能。
+    */
+    virtual void    drawContactPoint(const btVector3& PointOnB,const btVector3& normalOnB,btScalar distance,int lifeTime,const btVector3& color) override;
+
+    /**
+        @~english Overwrite function.
+        @~chinese 覆盖功能。
+    */
+    virtual void    reportErrorWarning(const char* warningString) override;
+
+    /**
+        @~english Overwrite function.
+        @~chinese 覆盖功能。
+    */
+    virtual void    draw3dText(const btVector3& location,const char* textString) override;
+
+    /**
+        @~english Overwrite function.
+        @~chinese 覆盖功能。
+    */
+    virtual void    setDebugMode(int debugMode) override;
+
+    /**
+        @~english Overwrite function.
+        @~chinese 覆盖功能。
+    */
+    virtual int     getDebugMode() const override;
+
+    /**
+        @~english Overwrite function.
+        @~chinese 覆盖功能。
+    */
     void clear();
 
 protected:
 
     void init();
     void ensureCapacity(int count);
-    void drawImplementation(const cocos2d::Mat4 &transform, uint32_t flags);
+    void drawImplementation(const cocos2d::Mat4& transform, uint32_t flags);
 
 protected:
 
@@ -90,7 +125,7 @@ protected:
 
     cocos2d::BlendFunc   _blendFunc;
     cocos2d::CustomCommand _customCommand;
-    cocos2d::GLProgram *_program;
+    cocos2d::GLProgram* _program;
 
     bool        _dirty;
     int _debugMode;

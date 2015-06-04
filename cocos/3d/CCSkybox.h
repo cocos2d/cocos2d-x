@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
  Copyright (c) 2015 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -33,70 +33,75 @@
 NS_CC_BEGIN
 
 /**
- * @addtogroup _3d
- * @{
- */
+    @addtogroup _3d
+    @{
+*/
 
 class TextureCube;
 
-/**
-* Sky box technology usually used to simulate infinity sky, mountains and other phenomena.
+/** @class Skybox
+    @brief @~english Sky box technology usually used to simulate infinity sky, mountains and other phenomena.
+    @~chinese 天空盒技术通常用于模拟无限的天空，山脉和其他现象。
 */
 class CC_DLL Skybox : public Node
 {
 public:
     CREATE_FUNC(Skybox);
-    
-    /** create skybox from 6 textures.
-     @param positive_x texture for the right side of the texture cube face.
-     @param negative_x texture for the up side of the texture cube face.
-     @param positive_y texture for the top side of the texture cube face
-     @param negative_y texture for the bottom side of the texture cube face
-     @param positive_z texture for the forward side of the texture cube face.
-     @param negative_z texture for the rear side of the texture cube face.
-     @return  A new skybox inited with given parameters.
-     */
-    static Skybox* create(const std::string& positive_x, const std::string& negative_x,
-                               const std::string& positive_y, const std::string& negative_y,
-                               const std::string& positive_z, const std::string& negative_z);
 
-    /**texture getter and setter*/
+    /** @~english create skybox from 6 textures.
+        @~chinese 使用6个纹理创建天空盒。
+        @param positive_x @~english  texture for the right side of the texture cube face. @~chinese 立方体的右侧纹理。
+        @param negative_x @~english  texture for the left side of the texture cube face. @~chinese 立方体的左侧纹理。
+        @param positive_y @~english  texture for the top side of the texture cube face @~chinese 立方体的上侧纹理。
+        @param negative_y @~english  texture for the bottom side of the texture cube face @~chinese 立方体的下侧纹理。
+        @param positive_z @~english  texture for the forward side of the texture cube face. @~chinese 立方体的前侧纹理。
+        @param negative_z @~english  texture for the rear side of the texture cube face. @~chinese 立方体的后侧纹理。
+        @return @~english  A new skybox inited with given parameters. @~chinese 返回一个新的Skybox。
+    */
+    static Skybox* create(const std::string& positive_x, const std::string& negative_x,
+                          const std::string& positive_y, const std::string& negative_y,
+                          const std::string& positive_z, const std::string& negative_z);
+
+    /** @~english texture getter and setter
+        @~chinese 纹理的getter和setter
+        @param TextureCube @~english  cube texture @~chinese 纹理贴图
+    */
     void setTexture(TextureCube*);
 
-    /** draw Skybox object */
+    /** @~english draw Skybox object
+        @~chinese 绘制天空体对象
+    */
     virtual void draw(Renderer* renderer, const Mat4& transform, uint32_t flags) override;
 
-    /** reload sky box after GLESContext reconstructed.*/
+    /** @~english reload sky box after GLESContext reconstructed.
+        @~chinese glescontext重装后重建天空盒。
+    */
     void reload();
 
 CC_CONSTRUCTOR_ACCESS:
-    /**
-    * Constructor.
+    /** @~english Constructor.
+        @~chinese 构造函数。
     */
     Skybox();
 
-    /**
-    * Destructor.
+    /** @~english Destructor.
+        @~chinese 析构函数。
     */
     virtual ~Skybox();
 
-    /**
-    * init Skybox.
+    /** @~english init Skybox.
+        @~chinese init Skybox。
     */
     virtual bool init();
-    
-    /**
-     * initialize with texture path
-     */
+
+    /** @~english initialize with texture path
+        @~chinese 纹理路径初始化
+    */
     bool init(const std::string& positive_x, const std::string& negative_x,
               const std::string& positive_y, const std::string& negative_y,
               const std::string& positive_z, const std::string& negative_z);
 
 protected:
-
-    /**
-    * init internal buffers for Skybox.
-    */
     void initBuffers();
 
     void onDraw(const Mat4& transform, uint32_t flags);
