@@ -35,16 +35,27 @@ class EventListenerCustom;
 
 class RenderTargetBase : public Ref
 {
+public:
+    enum class Type
+    {
+        RenderBuffer,
+        Texture2D,
+    };
 protected:
     RenderTargetBase();
     virtual ~RenderTargetBase();
     bool init(unsigned int width, unsigned int height);
 
 public:
+    
+    virtual Texture2D* getTexture() const { return nullptr; }
+    virtual GLuint getBuffer() const { return 0; }
+    
     unsigned int getWidth() const { return _width; }
     unsigned int getHeight() const { return _height; }
-    
+    Type getType() const { return _type; }
 protected:
+    Type _type;
     unsigned int _width;
     unsigned int _height;
     
@@ -58,7 +69,7 @@ public:
     
     bool init(unsigned int width, unsigned int height, Texture2D::PixelFormat format);
     
-    Texture2D* getTexture() const { return _texture; }
+    virtual Texture2D* getTexture() const { return _texture; }
 CC_CONSTRUCTOR_ACCESS:
     RenderTarget();
     virtual ~RenderTarget();
@@ -70,6 +81,28 @@ protected:
 #endif
 };
 
+class RenderTargetRenderBuffer : public RenderTargetBase
+{
+public:
+    
+    static RenderTargetRenderBuffer* create(unsigned int width, unsigned int height);
+    
+    bool init(unsigned int width, unsigned int height);
+    
+    virtual GLuint getBuffer() const { return _colorBuffer; }
+    
+CC_CONSTRUCTOR_ACCESS:
+    RenderTargetRenderBuffer();
+    virtual ~RenderTargetRenderBuffer();
+    
+protected:
+    GLenum _format;
+    GLuint _colorBuffer;
+#if CC_ENABLE_CACHE_TEXTURE_DATA
+    EventListenerCustom* _reBuildRenderBufferListener;
+#endif
+};
+
 class RenderTargetDepthStencil : public RenderTargetBase
 {
 public:
@@ -78,7 +111,9 @@ public:
     
     bool init(unsigned int width, unsigned int height);
     
-    GLuint getDepthStencilBuffer() const { return _depthStencilBuffer; }
+    virtual GLuint getBuffer() const { return _depthStencilBuffer; }
+    
+    CC_DEPRECATED(3.7) GLuint getDepthStencilBuffer() const { return _depthStencilBuffer; }
 CC_CONSTRUCTOR_ACCESS:
     RenderTargetDepthStencil();
     virtual ~RenderTargetDepthStencil();
@@ -110,9 +145,9 @@ public:
     float getClearDepth() const { return _clearDepth; }
     int8_t getClearStencil() const { return _clearStencil; }
     
-    RenderTarget* getRenderTarget() const { return _rt; }
+    RenderTargetBase* getRenderTarget() const { return _rt; }
     RenderTargetDepthStencil* getDepthStencilTarget() const { return _rtDepthStencil; }
-    void AttachRenderTarget(RenderTarget* rt);
+    void AttachRenderTarget(RenderTargetBase* rt);
     void AttachDepthStencilTarget(RenderTargetDepthStencil* rt);
     
 CC_CONSTRUCTOR_ACCESS:
@@ -131,7 +166,7 @@ private:
     int8_t  _clearStencil;
     int _width;
     int _height;
-    RenderTarget* _rt;
+    RenderTargetBase* _rt;
     RenderTargetDepthStencil* _rtDepthStencil;
 public:
     static void initDefaultFBO();
