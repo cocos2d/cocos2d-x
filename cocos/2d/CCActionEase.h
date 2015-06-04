@@ -52,9 +52,9 @@ public:
 
     /**
     @brief @~english Get the pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 获得内部动作。
     @return @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
     */
     virtual ActionInterval* getInnerAction();
 
@@ -81,15 +81,17 @@ CC_CONSTRUCTOR_ACCESS:
     ActionEase() {}
     virtual ~ActionEase();
     /** 
-     @brief @~english Initializes the action.
-     * @~chinese 初始化动作。
+     @brief @~english Initializes the action with the inner action.
+     * @~chinese 用内部动作初始化动作。
+     * @param action @~english The pointer of the inner action.
+     * @~chinese 内部动作。
      @return @~english Return true when the initialization success, otherwise return false.
-     * @~chinese 返回true时,初始化成功,否则返回假。
+     * @~chinese 返回true时，初始化成功，否则返回false。
     */
     bool initWithAction(ActionInterval *action);
 
 protected:
-    /** @~english The inner action  @~chinese 内部的行动*/
+    /** @~english The inner action  @~chinese 内部动作*/
     ActionInterval *_inner;
 private:
     CC_DISALLOW_COPY_AND_ASSIGN(ActionEase);
@@ -98,9 +100,9 @@ private:
 /** 
  @class EaseRateAction
  @brief @~english Base class for Easing actions with rate parameters.
- * @~chinese 基类与速度参数对宽松政策的行为。
+ * @~chinese 基于速率曲线的缓动动作基类。
  @details @~english Ease the inner action with specified rate.
- * @~chinese 缓解内心的动作与指定利率。
+ * @~chinese 用一定速率曲线来执行内部动作。
  @ingroup Actions
  */
 class CC_DLL EaseRateAction : public ActionEase
@@ -108,28 +110,28 @@ class CC_DLL EaseRateAction : public ActionEase
 public:
     /**
      @brief @~english Creates the action with the inner action and the rate parameter.
-     * @~chinese 创建行动的内在行动和速度参数。
+     * @~chinese 用内部动作和速率参数来创建一个动作。
      @param action @~english A given ActionInterval
-     * @~chinese 一个给定ActionInterval
+     * @~chinese 一个给定的内部动作
      @param rate @~english A given rate
-     * @~chinese 一个给定的速度
+     * @~chinese 一个给定的速率
      @return @~english An autoreleased EaseRateAction object.
-     * @~chinese 一个autoreleased EaseRateAction对象。
+     * @~chinese 一个自动释放的缓动动作
     **/
     static EaseRateAction* create(ActionInterval* action, float rate);
     
     /**
      @brief @~english Set the rate value for the ease rate action.
-     * @~chinese 设定的速度值缓解率的行动。
-     @param rate @~english The value will be set.
-     * @~chinese 值将被设置。
+     * @~chinese 设定速率。
+     @param rate @~english The rate value.
+     * @~chinese 速率。
      */
     inline void setRate(float rate) { _rate = rate; }
     /**
      @brief @~english Get the rate value of the ease rate action.
-     * @~chinese 缓解率行动的速度值。
+     * @~chinese 获取速率。
      @return @~english Return the rate value of the ease rate action.
-     * @~chinese 返回的值的缓解率的行动。
+     * @~chinese 速率。
      */
     inline float getRate() const { return _rate; }
 
@@ -152,13 +154,13 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~EaseRateAction();
     /** 
      @brief @~english Initializes the action with the inner action and the rate parameter.
-     * @~chinese 初始化动作与内在的行动和速度参数。
+     * @~chinese 用内部动作和速率参数来初始化一个动作。
      @param pAction @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @param fRate @~english The value of the rate parameter.
-     * @~chinese 速度参数的值。
+     * @~chinese 速率。
      @return @~english Return true when the initialization success, otherwise return false.
-     * @~chinese 返回true时,初始化成功,否则返回假。
+     * @~chinese 返回true时，初始化成功，否则返回false。
      */
     bool initWithAction(ActionInterval *pAction, float fRate);
 
@@ -172,11 +174,10 @@ private:
 /** 
  @class EaseIn
  @brief @~english EaseIn action with a rate.
- * @~chinese EaseIn行动速度。
+ * @~chinese 设定速率的EaseIn动作。
  @details @~english The timeline of inner action will be changed by:
-         \f${ time }^{ rate }\f$.
- * @~chinese 内心的行动将改变的时间表:
- * \ f ^ } { { time雷亚尔} \ f脾美元。
+ * @~chinese 内部动作的时间轴将会按照下面的公式代表的曲线被修改:
+ * \f${ time }^{ rate }\f$
  @ingroup Actions
  */
 class CC_DLL EaseIn : public EaseRateAction
@@ -184,13 +185,13 @@ class CC_DLL EaseIn : public EaseRateAction
 public:
     /** 
      @brief @~english Create the action with the inner action and the rate parameter.
-     * @~chinese 创建行动的内在行动和速度参数。
+     * @~chinese 用内部动作和速率参数来创建一个EaseIn动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @param rate @~english The value of the rate parameter.
-     * @~chinese 速度参数的值。
+     * @~chinese 速率。
      @return @~english A pointer of EaseIn action. If creation failed, return nil.
-     * @~chinese EaseIn行动的指针。如果创建失败,返回零。
+     * @~chinese 如果创建成功，返回一个EaseIn动作。如果创建失败，返回空指针。
     */
     static EaseIn* create(ActionInterval* action, float rate);
 
@@ -210,11 +211,10 @@ private:
 /** 
  @class EaseOut
  @brief @~english EaseOut action with a rate.
- * @~chinese EaseOut行动速度。
+ * @~chinese 设定速率的EaseOut动作。
  @details @~english The timeline of inner action will be changed by:
-         \f${ time }^ { (1/rate) }\f$.
- * @~chinese 内心的行动将改变的时间表:
- * \ f ^ } { { time雷亚尔(1
+ * @~chinese 内部动作的时间轴将会按照下面的公式代表的曲线被修改:
+ * \f${ time }^ { (1/rate) }\f$.
  @ingroup Actions
  */
 class CC_DLL EaseOut : public EaseRateAction
@@ -222,13 +222,13 @@ class CC_DLL EaseOut : public EaseRateAction
 public:
     /** 
      @brief @~english Create the action with the inner action and the rate parameter.
-     * @~chinese Create the action with the inner action and the rate parameter.
+     * @~chinese 用内部动作和速率参数来创建一个动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @param rate @~english The value of the rate parameter.
-     * @~chinese 速度参数的值。
+     * @~chinese 速率。
      @return @~english A pointer of EaseOut action. If creation failed, return nil.
-     * @~chinese EaseOut行动的指针。如果创建失败,返回零。
+     * @~chinese EaseOut动作的指针。如果创建失败，返回空指针。
     */
     static EaseOut* create(ActionInterval* action, float rate);
 
@@ -248,15 +248,15 @@ private:
 /** 
  @class EaseInOut
  @brief @~english EaseInOut action with a rate
- * @~chinese EaseInOut行动速度
+ * @~chinese 设定速率的EaseInOut动作
  @details @~english If time * 2 < 1, the timeline of inner action will be changed by:
          \f$0.5*{ time }^{ rate }\f$.
          Else, the timeline of inner action will be changed by:
          \f$1.0-0.5*{ 2-time }^{ rate }\f$.
- * @~chinese 如果时间* 2 < 1,内在的行动将改变的时间表:
- * $ 0.5 f \
- * 别的,内在的行动将改变的时间表:
- * \ f 1.0美元1.0
+ * @~chinese 如果time * 2 < 1，内部动作的时间轴将会按照下面的公式代表的曲线被修改:
+ * \f$0.5*{ time }^{ rate }\f$.
+ * 否则，内部动作的时间轴将会按照下面的公式代表的曲线被修改:
+ * \f$1.0-0.5*{ 2-time }^{ rate }\f$.
  @ingroup Actions
  */
 class CC_DLL EaseInOut : public EaseRateAction
@@ -264,13 +264,13 @@ class CC_DLL EaseInOut : public EaseRateAction
 public:
     /** 
      @brief @~english Create the action with the inner action and the rate parameter.
-     * @~chinese 创建行动的内在行动和速度参数。
+     * @~chinese 创建动作的内在动作和速度参数。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @param rate @~english The value of the rate parameter.
-     * @~chinese 速度参数的值。
+     * @~chinese 速率。
      @return @~english A pointer of EaseInOut action. If creation failed, return nil.
-     * @~chinese EaseInOut行动的指针。如果创建失败,返回零。
+     * @~chinese EaseInOut动作的指针。如果创建失败，返回空指针。
     */
     static EaseInOut* create(ActionInterval* action, float rate);
 
@@ -289,12 +289,12 @@ private:
 
 /** 
  @class EaseExponentialIn
- @brief @~english Ease Exponential In action.
- * @~chinese 缓解指数。
+ @brief @~english EaseExponentialIn action.
+ * @~chinese EaseExponentialIn是按指数函数缓动进入的动作。
  @details @~english The timeline of inner action will be changed by:
          \f${ 2 }^{ 10*(time-1) }-1*0.001\f$.
- * @~chinese 内心的行动将改变的时间表:
- * \ f $ { 2 } { 10 ^
+ * @~chinese 内部动作的时间轴将会按照下面的公式代表的曲线被修改:
+ * \f${ 2 }^{ 10*(time-1) }-1*0.001\f$.
  @ingroup Actions
  */
 class CC_DLL EaseExponentialIn : public ActionEase
@@ -302,11 +302,11 @@ class CC_DLL EaseExponentialIn : public ActionEase
 public:
     /** 
      @brief @~english Create the action with the inner action.
-     * @~chinese 创建行动与内心的行动。
+     * @~chinese 使用内部动作创建动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseExponentialIn action. If creation failed, return nil.
-     * @~chinese EaseExponentialIn行动的指针。如果创建失败,返回零。
+     * @~chinese EaseExponentialIn动作的指针。如果创建失败，返回空指针。
     */
     static EaseExponentialIn* create(ActionInterval* action);
 
@@ -325,12 +325,11 @@ private:
 
 /** 
  @class EaseExponentialOut
- @brief @~english Ease Exponential Out
- * @~chinese 缓解指数从
+ @brief @~english EaseExponentialOut action
+ * @~chinese EaseExponentialOut是按指数函数缓动退出的动作。
  @details @~english The timeline of inner action will be changed by:
-         \f$1-{ 2 }^{ -10*(time-1) }\f$.
- * @~chinese 内心的行动将改变的时间表:
- * \ f 1 - { 2 } ^ { -10美元
+ * @~chinese 内部动作的时间轴将会按照下面的公式代表的曲线被修改:
+ * \f$1-{ 2 }^{ -10*(time-1) }\f$
  @ingroup Actions
  */
 class CC_DLL EaseExponentialOut : public ActionEase
@@ -338,11 +337,11 @@ class CC_DLL EaseExponentialOut : public ActionEase
 public:
     /** 
      @brief @~english Create the action with the inner action.
-     * @~chinese 创建行动与内心的行动。
+     * @~chinese 使用内部动作创建动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseExponentialOut action. If creation failed, return nil.
-     * @~chinese EaseExponentialOut行动的指针。如果创建失败,返回零。
+     * @~chinese EaseExponentialOut动作的指针。如果创建失败，返回空指针。
     */
     static EaseExponentialOut* create(ActionInterval* action);
 
@@ -361,16 +360,16 @@ private:
 
 /** 
  @class EaseExponentialInOut
- @brief @~english Ease Exponential InOut
- * @~chinese 缓解指数InOut
+ @brief @~english EaseExponentialInOut action
+ * @~chinese EaseExponentialInOut是按指数函数缓动进入并退出的动作
  @details @~english If time * 2 < 1, the timeline of inner action will be changed by:
          \f$0.5*{ 2 }^{ 10*(time-1) }\f$.
          else, the timeline of inner action will be changed by:
          \f$0.5*(2-{ 2 }^{ -10*(time-1) })\f$.
- * @~chinese 如果时间* 2 < 1,内在的行动将改变的时间表:
- * \ f 0.5美元
- * 别的,内在的行动将改变的时间表:
- * \ f 0.5美元
+ * @~chinese 如果time * 2 < 1，内部动作的时间轴将会按照下面的公式代表的曲线被修改:
+ * \f$0.5*{ 2 }^{ 10*(time-1) }\f$.
+ * 否则，内部动作的时间轴将会按照下面的公式代表的曲线被修改:
+ * \f$0.5*(2-{ 2 }^{ -10*(time-1) })\f$.
  @ingroup Actions
  */
 class CC_DLL EaseExponentialInOut : public ActionEase
@@ -378,11 +377,11 @@ class CC_DLL EaseExponentialInOut : public ActionEase
 public:
     /** 
      @brief @~english Create the action with the inner action.
-     * @~chinese 创建行动与内心的行动。
+     * @~chinese 使用内部动作创建动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseExponentialInOut action. If creation failed, return nil.
-     * @~chinese EaseExponentialInOut行动的指针。如果创建失败,返回零。
+     * @~chinese EaseExponentialInOut动作的指针。如果创建失败，返回空指针。
     */
     static EaseExponentialInOut* create(ActionInterval* action);
 
@@ -401,12 +400,11 @@ private:
 
 /** 
  @class EaseSineIn
- @brief @~english Ease Sine In
- * @~chinese 缓解的正弦
+ @brief @~english EaseSineIn action
+ * @~chinese EaseSineIn是按正弦函数缓动进入的动作
  @details @~english The timeline of inner action will be changed by:
-         \f$1-cos(time*\frac { \pi  }{ 2 } )\f$.
- * @~chinese 内心的行动将改变的时间表:
- * \ f $ 1-cos(时间
+ * @~chinese 内部动作的时间轴将会按照下面的公式代表的曲线被修改:
+ * \f$1-cos(time*\frac { \pi  }{ 2 } )\f$.
  @ingroup Actions
  */
 class CC_DLL EaseSineIn : public ActionEase
@@ -414,11 +412,11 @@ class CC_DLL EaseSineIn : public ActionEase
 public:
     /** 
      @brief @~english Create the action with the inner action.
-     * @~chinese 创建行动与内心的行动。
+     * @~chinese 使用内部动作创建动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseSineIn action. If creation failed, return nil.
-     * @~chinese EaseSineIn行动的指针。如果创建失败,返回零。
+     * @~chinese EaseSineIn动作的指针。如果创建失败，返回空指针。
     */
     static EaseSineIn* create(ActionInterval* action);
 
@@ -437,12 +435,11 @@ private:
 
 /** 
  @class EaseSineOut
- @brief @~english Ease Sine Out
- * @~chinese 缓解正弦出来
- @details @~english The timeline of inner action will be changed by:
-         \f$sin(time*\frac { \pi  }{ 2 } )\f$.
- * @~chinese 内心的行动将改变的时间表:
- * \ f(time sin美元
+ @brief @~english EaseSineOut action
+ * @~chinese EaseSineIn是按正弦函数缓动退出的动作
+ @details @~english The timeline of inner action will be changed by:   
+ * @~chinese 内部动作的时间轴将会按照下面的公式代表的曲线被修改:
+ * \f$sin(time*\frac { \pi  }{ 2 } )\f$.
  @ingroup Actions
  */
 class CC_DLL EaseSineOut : public ActionEase
@@ -450,11 +447,11 @@ class CC_DLL EaseSineOut : public ActionEase
 public:
     /** 
      @brief @~english Create the action with the inner action.
-     * @~chinese 创建行动与内心的行动。
+     * @~chinese 使用内部动作创建动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseSineOut action. If creation failed, return nil.
-     * @~chinese EaseSineOut of A对准行动。如果就业机会、尼罗河破产。
+     * @~chinese EaseSineOut of A对准动作。如果就业机会、尼罗河破产。
     */
     static EaseSineOut* create(ActionInterval* action);
 
@@ -473,12 +470,11 @@ private:
 
 /** 
  @class EaseSineInOut
- @brief @~english Ease Sine InOut
- * @~chinese 缓解正弦InOut
+ @brief @~english EaseSineInOut action
+ * @~chinese EaseSineIn是按正弦函数缓动进入并退出的动作
  @details @~english The timeline of inner action will be changed by:
-         \f$-0.5*(cos(\pi *time)-1)\f$.
- * @~chinese 内心的行动将改变的时间表:
- * \ f - 0.5美元
+ * @~chinese 内部动作的时间轴将会按照下面的公式代表的曲线被修改:
+ * \f$-0.5*(cos(\pi *time)-1)\f$.
  @ingroup Actions
  */
 class CC_DLL EaseSineInOut : public ActionEase
@@ -486,11 +482,11 @@ class CC_DLL EaseSineInOut : public ActionEase
 public:
     /** 
      @brief @~english Create the action with the inner action.
-     * @~chinese 创建行动与内心的行动。
+     * @~chinese 使用内部动作创建动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseSineInOut action. If creation failed, return nil.
-     * @~chinese EaseSineInOut行动的指针。如果创建失败,返回零。
+     * @~chinese EaseSineInOut动作的指针。如果创建失败，返回空指针。
     */
     static EaseSineInOut* create(ActionInterval* action);
 
@@ -509,8 +505,8 @@ private:
 
 /** 
  @class EaseElastic
- @brief @~english Ease Elastic abstract class
- * @~chinese 缓解弹性抽象类
+ @brief @~english EaseElastic base action
+ * @~chinese EaseElastic是按弹性缓动的动作基类
  @since v0.8.2
  @ingroup Actions
  */
@@ -519,17 +515,17 @@ class CC_DLL EaseElastic : public ActionEase
 public:
 
     /** 
-     @brief @~english Get period of the wave in radians. Default value is 0.3.
-     * @~chinese 周期波的弧度。默认值是0.3。
+     @brief @~english Get period of the curve in radians. Default value is 0.3.
+     * @~chinese 获取缓动曲线的周期，单位是弧度值，默认值是0.3。
      @return @~english Return the period of the wave in radians.
-     * @~chinese 回报周期波的弧度。
+     * @~chinese 返回缓动曲线的周期。
     */
     inline float getPeriod() const { return _period; }
     /**
      @brief @~english Set period of the wave in radians.
-     * @~chinese 设置周期波的弧度。
-     @param fPeriod @~english The value will be set.
-     * @~chinese 值将被设置。
+     * @~chinese 设置缓动曲线的周期。
+     @param fPeriod @~english Period of the curve in radians.
+     * @~chinese 缓动曲线的周期，单位是弧度值。
     */
     inline void setPeriod(float fPeriod) { _period = fPeriod; }
 
@@ -553,13 +549,13 @@ CC_CONSTRUCTOR_ACCESS:
     virtual ~EaseElastic() {}
     /** 
      @brief @~english Initializes the action with the inner action and the period in radians.
-     * @~chinese 初始化动作与内在的行动和弧度的时期。
+     * @~chinese 使用内部动作和周期的弧度值来初始化动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
-     @param period @~english Period of the wave in radians. Default is 0.3.
-     * @~chinese 波的弧度。默认是0.3。
+     * @~chinese 内部动作。
+     @param period @~english Period of the curve in radians. Default is 0.3.
+     * @~chinese 缓动曲线的周期，默认是0.3。
      @return @~english Return true when the initialization success, otherwise return false.
-     * @~chinese 返回true时,初始化成功,否则返回假。
+     * @~chinese 返回true时，初始化成功，否则返回false。
     */
     bool initWithAction(ActionInterval *action, float period = 0.3f);
 
@@ -573,20 +569,18 @@ private:
 
 /** 
  @class EaseElasticIn
- @brief @~english Ease Elastic In action.
- * @~chinese 缓解弹性。
+ @brief @~english EaseElasticIn action.
+ * @~chinese EaseElasticIn是按弹性曲线缓动进入的动作。
  @details @~english If time == 0 or time == 1, the timeline of inner action will not be changed.
          Else, the timeline of inner action will be changed by:
-         \f$-{ 2 }^{ 10*(time-1) }*sin((time-1-\frac { period }{ 4 } )*\pi *2/period)\f$.
-
- * @~chinese 如果时间= = = = 1,0或时间内行动的时间表将不会改变。
- * 别的,内在的行动将改变的时间表:
- * \ f $ { 2 } { ^ - 10
+ * @~chinese 如果time == 0或者time == 1，内部动作的时间轴将不会被改变。
+ * 除此之外，内部动作的时间轴将会按照下面的公式代表的曲线被修改:
+ * \f$-{ 2 }^{ 10*(time-1) }*sin((time-1-\frac { period }{ 4 } )*\pi *2/period)\f$.
  * 
  @warning @~english This action doesn't use a bijective function.
           Actions like Sequence might have an unexpected result when used with this action.
- * @~chinese 这个动作不使用一个双射函数。
- * 等操作序列可能会使用这个动作时一个意想不到的结果。
+ * @~chinese 这个动作不使用双射函数。
+ * 和序列动作等结合使用这个动作时可能会得到意想不到的结果。
  @since v0.8.2
  @ingroup Actions
  */
@@ -595,23 +589,23 @@ class CC_DLL EaseElasticIn : public EaseElastic
 public:
     /** 
      @brief @~english Create the EaseElasticIn action with the inner action and the period in radians.
-     * @~chinese 创建EaseElasticIn行动的内在行动和弧度的时期。
+     * @~chinese 用内部动作和缓动曲线周期（弧度值）创建EaseElasticIn动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @param period @~english Period of the wave in radians.
-     * @~chinese 波的弧度。
+     * @~chinese 曲线的弧度。
      @return @~english A pointer of EaseElasticIn action. If creation failed, return nil.
-     * @~chinese EaseElasticIn行动的指针。如果创建失败,返回零。
+     * @~chinese EaseElasticIn动作的指针。如果创建失败，返回空指针。
     */
     static EaseElasticIn* create(ActionInterval *action, float period);
 
     /** 
      @brief @~english Create the EaseElasticIn action with the inner action and period value is 0.3.
-     * @~chinese 创建EaseElasticIn行动的内在行动和时间值是0.3。
+     * @~chinese 用内部动作创建EaseElasticIn动作，缓动曲线周期（弧度值）是0.3。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseElasticIn action. If creation failed, return nil.
-     * @~chinese EaseElasticIn行动的指针。如果创建失败,返回零。
+     * @~chinese EaseElasticIn动作的指针。如果创建失败，返回空指针。
     */
     static EaseElasticIn* create(ActionInterval *action);
 
@@ -630,18 +624,17 @@ private:
 
 /** 
  @class EaseElasticOut
- @brief @~english Ease Elastic Out action.
- * @~chinese 缓解弹性行为。
+ @brief @~english EaseElasticOut action.
+ * @~chinese EaseElasticOut是按弹性曲线缓动退出的动作。
  @details @~english If time == 0 or time == 1, the timeline of inner action will not be changed.
          Else, the timeline of inner action will be changed by:
-         \f${ 2 }^{ -10*time }*sin((time-\frac { period }{ 4 } )*\pi *2/period)+1\f$.
- * @~chinese 如果时间= = = = 1,0或时间内行动的时间表将不会改变。
- * 别的,内在的行动将改变的时间表:
- * \ f $ { 2 } {约^
+ * @~chinese 如果time == 0或者time == 1，内部动作的时间轴将不会被改变。
+ * 除此之外，内部动作的时间轴将会按照下面的公式代表的曲线被修改:
+ * \f${ 2 }^{ -10*time }*sin((time-\frac { period }{ 4 } )*\pi *2/period)+1\f$.
  @warning @~english This action doesn't use a bijective function.
           Actions like Sequence might have an unexpected result when used with this action.
- * @~chinese 这个动作不使用一个双射函数。
- * 等操作序列可能会使用这个动作时一个意想不到的结果。
+ * @~chinese 这个动作不使用双射函数。
+ * 和序列动作等结合使用这个动作时可能会得到意想不到的结果。
  @since v0.8.2
  @ingroup Actions
  */
@@ -650,23 +643,23 @@ class CC_DLL EaseElasticOut : public EaseElastic
 public:
     /** 
      @brief @~english Create the EaseElasticOut action with the inner action and the period in radians.
-     * @~chinese 创建EaseElasticOut行动的内在行动和弧度的时期。
+     * @~chinese 用内部动作和缓动曲线周期（弧度值）创建EaseElasticOut动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @param period @~english Period of the wave in radians.
-     * @~chinese 波的弧度。
+     * @~chinese 曲线的弧度。
      @return @~english A pointer of EaseElasticOut action. If creation failed, return nil.
-     * @~chinese EaseElasticOut行动的指针。如果创建失败,返回零。
+     * @~chinese EaseElasticOut动作的指针。如果创建失败，返回空指针。
     */
     static EaseElasticOut* create(ActionInterval *action, float period);
 
     /** 
      @brief @~english Create the EaseElasticOut action with the inner action and period value is 0.3.
-     * @~chinese 创建EaseElasticOut行动的内在行动和时间值是0.3。
+     * @~chinese 用内部动作创建EaseElasticOut动作，缓动曲线周期（弧度值）是0.3。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseElasticOut action. If creation failed, return nil.
-     * @~chinese EaseElasticOut行动的指针。如果创建失败,返回零。
+     * @~chinese EaseElasticOut动作的指针。如果创建失败，返回空指针。
     */
     static EaseElasticOut* create(ActionInterval *action);
 
@@ -685,12 +678,12 @@ private:
 
 /** 
  @class EaseElasticInOut
- @brief @~english Ease Elastic InOut action.
- * @~chinese 缓解弹性InOut行动。
+ @brief @~english EaseElasticInOut action.
+ * @~chinese EaseElasticInOut是按弹性曲线缓动进入并退出的动作。
  @warning @~english This action doesn't use a bijective function.
           Actions like Sequence might have an unexpected result when used with this action.
- * @~chinese 这个动作不使用一个双射函数。
- * 等操作序列可能会使用这个动作时一个意想不到的结果。
+ * @~chinese 这个动作不使用双射函数。
+ * 和序列动作等结合使用这个动作时可能会得到意想不到的结果。
  @since v0.8.2
  @ingroup Actions
  */
@@ -699,23 +692,23 @@ class CC_DLL EaseElasticInOut : public EaseElastic
 public:
     /** 
      @brief @~english Create the EaseElasticInOut action with the inner action and the period in radians.
-     * @~chinese 创建EaseElasticInOut行动的内在行动和弧度的时期。
+     * @~chinese 用内部动作和缓动曲线周期（弧度值）创建EaseElasticInOut动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @param period @~english Period of the wave in radians.
      * @~chinese 波的弧度。
      @return @~english A pointer of EaseElasticInOut action. If creation failed, return nil.
-     * @~chinese EaseElasticInOut行动的指针。如果创建失败,返回零。
+     * @~chinese EaseElasticInOut动作的指针。如果创建失败，返回空指针。
     */
     static EaseElasticInOut* create(ActionInterval *action, float period);
 
     /** 
      @brief @~english Create the EaseElasticInOut action with the inner action and period value is 0.3.
-     * @~chinese 创建EaseElasticInOut行动的内在行动和时间值是0.3。
+     * @~chinese 用内部动作创建EaseElasticInOut动作，缓动曲线周期（弧度值）是0.3。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseElasticInOut action. If creation failed, return nil.
-     * @~chinese EaseElasticInOut行动的指针。如果创建失败,返回零。
+     * @~chinese EaseElasticInOut动作的指针。如果创建失败，返回空指针。
     */
     static EaseElasticInOut* create(ActionInterval *action);
 
@@ -734,8 +727,8 @@ private:
 
 /** 
  @class EaseBounce
- @brief @~english EaseBounce abstract class.
- * @~chinese EaseBounce抽象类。
+ @brief @~english EaseBounce base action.
+ * @~chinese EaseBounce是按弹跳动作缓动的动作基类。
  @since v0.8.2
  @ingroup Actions
 */
@@ -767,11 +760,11 @@ private:
 /** 
  @class EaseBounceIn
  @brief @~english EaseBounceIn action.
- * @~chinese EaseBounceIn行动。
+ * @~chinese EaseBounceIn是按弹跳动作缓动进入的动作。
  @warning @~english This action doesn't use a bijective function.
           Actions like Sequence might have an unexpected result when used with this action.
- * @~chinese 这个动作不使用一个双射函数。
- * 等操作序列可能会使用这个动作时一个意想不到的结果。
+ * @~chinese 这个动作不使用双射函数。
+ * 和序列动作等结合使用这个动作时可能会得到意想不到的结果。
  @since v0.8.2
  @ingroup Actions
 */
@@ -780,11 +773,11 @@ class CC_DLL EaseBounceIn : public EaseBounce
 public:
     /** 
      @brief @~english Create the action with the inner action.
-     * @~chinese 创建行动与内心的行动。
+     * @~chinese 使用内部动作创建动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseBounceIn action. If creation failed, return nil.
-     * @~chinese EaseBounceIn行动的指针。如果创建失败,返回零。
+     * @~chinese EaseBounceIn动作的指针。如果创建失败，返回空指针。
     */
     static EaseBounceIn* create(ActionInterval* action);
 
@@ -804,11 +797,11 @@ private:
 /** 
  @class EaseBounceOut
  @brief @~english EaseBounceOut action.
- * @~chinese EaseBounceOut行动。
+ * @~chinese EaseBounceOut是按弹跳动作缓动退出的动作。
  @warning @~english This action doesn't use a bijective function.
           Actions like Sequence might have an unexpected result when used with this action.
- * @~chinese This action doesn 't use a bijective function.
- * 有可能像行动顺序发生an action因此当used with this。
+ * @~chinese 这个动作不使用双射函数。
+ * 和序列动作等结合使用这个动作时可能会得到意想不到的结果。
  @since v0.8.2
  @ingroup Actions
  */
@@ -817,11 +810,11 @@ class CC_DLL EaseBounceOut : public EaseBounce
 public:
     /** 
      @brief @~english Create the action with the inner action.
-     * @~chinese 创建行动与内心的行动。
+     * @~chinese 使用内部动作创建动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseBounceOut action. If creation failed, return nil.
-     * @~chinese EaseBounceOut行动的指针。如果创建失败,返回零。
+     * @~chinese EaseBounceOut动作的指针。如果创建失败，返回空指针。
     */
     static EaseBounceOut* create(ActionInterval* action);
 
@@ -841,11 +834,11 @@ private:
 /** 
  @class EaseBounceInOut
  @brief @~english EaseBounceInOut action.
- * @~chinese EaseBounceInOut行动。
+ * @~chinese EaseBounceInOut是按弹跳动作缓动进入并退出的动作。
  @warning @~english This action doesn't use a bijective function.
           Actions like Sequence might have an unexpected result when used with this action.
- * @~chinese 这个动作不使用一个双射函数。
- * 等操作序列可能会使用这个动作时一个意想不到的结果。
+ * @~chinese 这个动作不使用双射函数。
+ * 和序列动作等结合使用这个动作时可能会得到意想不到的结果。
  @since v0.8.2
  @ingroup Actions
  */
@@ -854,11 +847,11 @@ class CC_DLL EaseBounceInOut : public EaseBounce
 public:
     /** 
      @brief @~english Create the action with the inner action.
-     * @~chinese 创建行动与内心的行动。
+     * @~chinese 使用内部动作创建动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseBounceInOut action. If creation failed, return nil.
-     * @~chinese EaseBounceInOut行动的指针。如果创建失败,返回零。
+     * @~chinese EaseBounceInOut动作的指针。如果创建失败，返回空指针。
     */
     static EaseBounceInOut* create(ActionInterval* action);
 
@@ -878,11 +871,11 @@ private:
 /** 
  @class EaseBackIn
  @brief @~english EaseBackIn action.
- * @~chinese EaseBackIn行动。
+ * @~chinese EaseBackIn缓动动作。
  @warning @~english This action doesn't use a bijective function.
           Actions like Sequence might have an unexpected result when used with this action.
- * @~chinese 这个动作不使用一个双射函数。
- * 等操作序列可能会使用这个动作时一个意想不到的结果。
+ * @~chinese 这个动作不使用双射函数。
+ * 和序列动作等结合使用这个动作时可能会得到意想不到的结果。
  @since v0.8.2
  @ingroup Actions
  */
@@ -891,11 +884,11 @@ class CC_DLL EaseBackIn : public ActionEase
 public:
     /** 
      @brief @~english Create the action with the inner action.
-     * @~chinese 创建行动与内心的行动。
+     * @~chinese 使用内部动作创建动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseBackIn action. If creation failed, return nil.
-     * @~chinese EaseBackIn行动的指针。如果创建失败,返回零。
+     * @~chinese EaseBackIn动作的指针。如果创建失败，返回空指针。
     */
     static EaseBackIn* create(ActionInterval* action);
 
@@ -915,11 +908,11 @@ private:
 /** 
  @class EaseBackOut
  @brief @~english EaseBackOut action.
- * @~chinese EaseBackOut行动。
+ * @~chinese EaseBackOut缓动动作。
  @warning @~english This action doesn't use a bijective function.
           Actions like Sequence might have an unexpected result when used with this action.
- * @~chinese 这个动作不使用一个双射函数。
- * 等操作序列可能会使用这个动作时一个意想不到的结果。
+ * @~chinese 这个动作不使用双射函数。
+ * 和序列动作等结合使用这个动作时可能会得到意想不到的结果。
  @since v0.8.2
  @ingroup Actions
  */
@@ -928,11 +921,11 @@ class CC_DLL EaseBackOut : public ActionEase
 public:
     /** 
      @brief @~english Create the action with the inner action.
-     * @~chinese 创建行动与内心的行动。
+     * @~chinese 使用内部动作创建动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseBackOut action. If creation failed, return nil.
-     * @~chinese EaseBackOut行动的指针。如果创建失败,返回零。
+     * @~chinese EaseBackOut动作的指针。如果创建失败，返回空指针。
     */
     static EaseBackOut* create(ActionInterval* action);
 
@@ -952,7 +945,7 @@ private:
 /** 
  @class EaseBackInOut
  @brief @~english EaseBackInOut action.
- * @~chinese EaseBackInOut行动。
+ * @~chinese EaseBackInOut缓动动作。
  @warning @~english This action doesn't use a bijective function.
           Actions like Sequence might have an unexpected result when used with this action.
  * @~chinese 这个动作不使用一个双射函数。
@@ -965,9 +958,9 @@ class CC_DLL EaseBackInOut : public ActionEase
 public:
     /** 
      @brief @~english Create the action with the inner action.
-     * @~chinese 创建行动与内心的行动。
+     * @~chinese 使用内部动作创建动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseBackInOut action. If creation failed, return nil.
      * @~chinese A pointer of EaseBackInOut action. If creation failed, return nil.
     */
@@ -989,8 +982,8 @@ private:
 
 /** 
 @class EaseBezierAction
-@brief @~english Ease Bezier
- * @~chinese 缓解贝塞尔曲线
+@brief @~english EaseBezierAction
+@~chinese EaseBezierAction是按贝塞尔曲线缓动的动作
 @ingroup Actions
 */
 class CC_DLL EaseBezierAction : public ActionEase
@@ -998,11 +991,11 @@ class CC_DLL EaseBezierAction : public ActionEase
 public:
     /** 
      @brief @~english Create the action with the inner action.
-     * @~chinese 创建行动与内心的行动。
+     * @~chinese 使用内部动作创建动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseBezierAction action. If creation failed, return nil.
-     * @~chinese EaseBezierAction行动的指针。如果创建失败,返回零。
+     * @~chinese EaseBezierAction动作的指针。如果创建失败，返回空指针。
     */
     static EaseBezierAction* create(ActionInterval* action);
     
@@ -1032,8 +1025,8 @@ private:
 
 /** 
 @class EaseQuadraticActionIn
-@brief @~english Ease Quadratic In
- * @~chinese 减轻二次的
+@brief @~english EaseQuadraticIn
+ * @~chinese EaseQuadraticIn是按二次函数缓动进入的动作
 @ingroup Actions
 */
 class CC_DLL EaseQuadraticActionIn : public ActionEase
@@ -1041,11 +1034,11 @@ class CC_DLL EaseQuadraticActionIn : public ActionEase
 public:
     /** 
      @brief @~english Create the action with the inner action.
-     * @~chinese 创建行动与内心的行动。
+     * @~chinese 使用内部动作创建动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseQuadraticActionIn action. If creation failed, return nil.
-     * @~chinese EaseQuadraticActionIn行动的指针。如果创建失败,返回零。
+     * @~chinese EaseQuadraticActionIn动作的指针。如果创建失败，返回空指针。
     */
     static EaseQuadraticActionIn* create(ActionInterval* action);
     
@@ -1064,8 +1057,8 @@ private:
 
 /** 
 @class EaseQuadraticActionOut
-@brief @~english Ease Quadratic Out
- * @~chinese 减轻二次了
+@brief @~english EaseQuadraticOut action
+ * @~chinese EaseQuadraticOut是按二次函数缓动退出的动作
 @ingroup Actions
 */
 class CC_DLL EaseQuadraticActionOut : public ActionEase
@@ -1073,11 +1066,11 @@ class CC_DLL EaseQuadraticActionOut : public ActionEase
 public:
     /** 
      @brief @~english Create the action with the inner action.
-     * @~chinese 创建行动与内心的行动。
+     * @~chinese 使用内部动作创建动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseQuadraticActionOut action. If creation failed, return nil.
-     * @~chinese EaseQuadraticActionOut行动的指针。如果创建失败,返回零。
+     * @~chinese EaseQuadraticActionOut动作的指针。如果创建失败，返回空指针。
     */
     static EaseQuadraticActionOut* create(ActionInterval* action);
     
@@ -1096,8 +1089,8 @@ private:
 
 /** 
 @class EaseQuadraticActionInOut
-@brief @~english Ease Quadratic InOut
- * @~chinese 减轻二次InOut
+@brief @~english EaseQuadraticInOut action
+ * @~chinese EaseQuadraticInOut是按二次函数缓动进入并退出的动作
 @ingroup Actions
 */
 class CC_DLL EaseQuadraticActionInOut : public ActionEase
@@ -1105,11 +1098,11 @@ class CC_DLL EaseQuadraticActionInOut : public ActionEase
 public:
     /** 
      @brief @~english Create the action with the inner action.
-     * @~chinese 创建行动与内心的行动。
+     * @~chinese 使用内部动作创建动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseQuadraticActionInOut action. If creation failed, return nil.
-     * @~chinese EaseQuadraticActionInOut行动的指针。如果创建失败,返回零。
+     * @~chinese EaseQuadraticActionInOut动作的指针。如果创建失败，返回空指针。
     */
     static EaseQuadraticActionInOut* create(ActionInterval* action);
     
@@ -1127,8 +1120,8 @@ private:
 
 /** 
 @class EaseQuarticActionIn
-@brief @~english Ease Quartic In
- * @~chinese 缓解四次在
+@brief @~english EaseQuarticIn action
+ * @~chinese EaseQuarticIn是按四次函数缓动进入的动作
 @ingroup Actions
 */
 class CC_DLL EaseQuarticActionIn : public ActionEase
@@ -1136,11 +1129,11 @@ class CC_DLL EaseQuarticActionIn : public ActionEase
 public:
     /** 
      @brief @~english Create the action with the inner action.
-     * @~chinese 创建行动与内心的行动。
+     * @~chinese 使用内部动作创建动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseQuarticActionIn action. If creation failed, return nil.
-     * @~chinese EaseQuarticActionIn行动的指针。如果创建失败,返回零。
+     * @~chinese EaseQuarticActionIn动作的指针。如果创建失败，返回空指针。
     */
     static EaseQuarticActionIn* create(ActionInterval* action);
     
@@ -1158,8 +1151,8 @@ private:
 
 /** 
 @class EaseQuarticActionOut
-@brief @~english Ease Quartic Out
- * @~chinese 缓解四次了
+@brief @~english EaseQuarticOut action
+ * @~chinese EaseQuarticOut是按四次函数缓动退出的动作
 @ingroup Actions
 */
 class CC_DLL EaseQuarticActionOut : public ActionEase
@@ -1167,11 +1160,11 @@ class CC_DLL EaseQuarticActionOut : public ActionEase
 public:
     /** 
      @brief @~english Create the action with the inner action.
-     * @~chinese 创建行动与内心的行动。
+     * @~chinese 使用内部动作创建动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseQuarticActionOut action. If creation failed, return nil.
-     * @~chinese EaseQuarticActionOut行动的指针。如果创建失败,返回零。
+     * @~chinese EaseQuarticActionOut动作的指针。如果创建失败，返回空指针。
     */
     static EaseQuarticActionOut* create(ActionInterval* action);
     
@@ -1189,8 +1182,8 @@ private:
 
 /** 
 @class EaseQuarticActionInOut
-@brief @~english Ease Quartic InOut
- * @~chinese 缓解四次InOut
+@brief @~english EaseQuarticInOut action
+ * @~chinese EaseQuarticInOut是按四次函数缓动进入并退出的动作
 @ingroup Actions
 */
 class CC_DLL EaseQuarticActionInOut : public ActionEase
@@ -1198,11 +1191,11 @@ class CC_DLL EaseQuarticActionInOut : public ActionEase
 public:
     /** 
      @brief @~english Create the action with the inner action.
-     * @~chinese 创建行动与内心的行动。
+     * @~chinese 使用内部动作创建动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseQuarticActionInOut action. If creation failed, return nil.
-     * @~chinese EaseQuarticActionInOut行动的指针。如果创建失败,返回零。
+     * @~chinese EaseQuarticActionInOut动作的指针。如果创建失败，返回空指针。
     */
     static EaseQuarticActionInOut* create(ActionInterval* action);
     
@@ -1221,8 +1214,8 @@ private:
 
 /** 
 @class EaseQuinticActionIn
-@brief @~english Ease Quintic In
- * @~chinese 缓解五次在
+@brief @~english EaseQuinticIn action
+ * @~chinese EaseQuinticIn是按五次函数缓动进的动作
 @ingroup Actions
 */
 class CC_DLL EaseQuinticActionIn : public ActionEase
@@ -1230,11 +1223,11 @@ class CC_DLL EaseQuinticActionIn : public ActionEase
 public:
     /** 
      @brief @~english Create the action with the inner action.
-     * @~chinese 创建行动与内心的行动。
+     * @~chinese 使用内部动作创建动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseQuinticActionIn action. If creation failed, return nil.
-     * @~chinese EaseQuinticActionIn行动的指针。如果创建失败,返回零。
+     * @~chinese EaseQuinticActionIn动作的指针。如果创建失败，返回空指针。
     */
     static EaseQuinticActionIn* create(ActionInterval* action);
     
@@ -1252,8 +1245,8 @@ private:
 
 /** 
 @class EaseQuinticActionOut
-@brief @~english Ease Quintic Out
- * @~chinese 缓解五次了
+@brief @~english EaseQuinticOut action
+ * @~chinese EaseQuinticOut是按五次函数缓动退出的动作
 @ingroup Actions
 */
 class CC_DLL EaseQuinticActionOut : public ActionEase
@@ -1261,11 +1254,11 @@ class CC_DLL EaseQuinticActionOut : public ActionEase
 public:
     /** 
      @brief @~english Create the action with the inner action.
-     * @~chinese 创建行动与内心的行动。
+     * @~chinese 使用内部动作创建动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseQuinticActionOut action. If creation failed, return nil.
-     * @~chinese EaseQuinticActionOut行动的指针。如果创建失败,返回零。
+     * @~chinese EaseQuinticActionOut动作的指针。如果创建失败，返回空指针。
     */
     static EaseQuinticActionOut* create(ActionInterval* action);
     
@@ -1283,8 +1276,8 @@ private:
 
 /** 
 @class EaseQuinticActionInOut
-@brief @~english Ease Quintic InOut
- * @~chinese 缓解五次InOut
+@brief @~english EaseQuinticInOut action
+ * @~chinese EaseQuinticInOut是按五次函数缓动进入并退出的动作
 @ingroup Actions
 */
 class CC_DLL EaseQuinticActionInOut : public ActionEase
@@ -1292,11 +1285,11 @@ class CC_DLL EaseQuinticActionInOut : public ActionEase
 public:
     /** 
      @brief @~english Create the action with the inner action.
-     * @~chinese 创建行动与内心的行动。
+     * @~chinese 使用内部动作创建动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseQuinticActionInOut action. If creation failed, return nil.
-     * @~chinese EaseQuinticActionInOut行动的指针。如果创建失败,返回零。
+     * @~chinese EaseQuinticActionInOut动作的指针。如果创建失败，返回空指针。
     */
     static EaseQuinticActionInOut* create(ActionInterval* action);
     
@@ -1314,8 +1307,8 @@ private:
 
 /** 
 @class EaseCircleActionIn
-@brief @~english Ease Circle In
- * @~chinese 缓解循环
+@brief @~english EaseCircleIn action
+ * @~chinese EaseCircleIn是按圆形曲线缓动进入的动作
 @ingroup Actions
 */
 class CC_DLL EaseCircleActionIn : public ActionEase
@@ -1323,11 +1316,11 @@ class CC_DLL EaseCircleActionIn : public ActionEase
 public:
     /** 
      @brief @~english Create the action with the inner action.
-     * @~chinese 创建行动与内心的行动。
+     * @~chinese 使用内部动作创建动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseCircleActionIn action. If creation failed, return nil.
-     * @~chinese EaseCircleActionIn行动的指针。如果创建失败,返回零。
+     * @~chinese EaseCircleActionIn动作的指针。如果创建失败，返回空指针。
     */
     static EaseCircleActionIn* create(ActionInterval* action);
     
@@ -1345,8 +1338,8 @@ private:
 
 /** 
 @class EaseCircleActionOut
-@brief @~english Ease Circle Out
- * @~chinese 缓解圈出来
+@brief @~english EaseCircleOut action
+ * @~chinese EaseCircleOut是按圆形曲线缓动退出的动作
 @ingroup Actions
 */
 class CC_DLL EaseCircleActionOut : public ActionEase
@@ -1354,11 +1347,11 @@ class CC_DLL EaseCircleActionOut : public ActionEase
 public:
     /** 
      @brief @~english Create the action with the inner action.
-     * @~chinese 创建行动与内心的行动。
+     * @~chinese 使用内部动作创建动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseCircleActionOut action. If creation failed, return nil.
-     * @~chinese EaseCircleActionOut行动的指针。如果创建失败,返回零。
+     * @~chinese EaseCircleActionOut动作的指针。如果创建失败，返回空指针。
     */
     static EaseCircleActionOut* create(ActionInterval* action);
     
@@ -1376,8 +1369,8 @@ private:
 
 /** 
 @class EaseCircleActionInOut
-@brief @~english Ease Circle InOut
- * @~chinese 缓解圈InOut
+@brief @~english EaseCircleInOut action
+ * @~chinese EaseCircleInOut是按圆形曲线缓动进入并退出的动作
 @ingroup Actions
 */
 class CC_DLL EaseCircleActionInOut:public ActionEase
@@ -1385,11 +1378,11 @@ class CC_DLL EaseCircleActionInOut:public ActionEase
 public:
     /** 
      @brief @~english Create the action with the inner action.
-     * @~chinese 创建行动与内心的行动。
+     * @~chinese 使用内部动作创建动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseCircleActionInOut action. If creation failed, return nil.
-     * @~chinese EaseCircleActionInOut行动的指针。如果创建失败,返回零。
+     * @~chinese EaseCircleActionInOut动作的指针。如果创建失败，返回空指针。
     */
     static EaseCircleActionInOut* create(ActionInterval* action);
     
@@ -1407,8 +1400,8 @@ private:
 
 /** 
 @class EaseCubicActionIn
-@brief @~english Ease Cubic In
- * @~chinese 缓解立方的
+@brief @~english EaseCubicIn action
+ * @~chinese EaseCubicIn是按三次函数缓动进入的动作
 @ingroup Actions
 */
 class CC_DLL EaseCubicActionIn:public ActionEase
@@ -1416,11 +1409,11 @@ class CC_DLL EaseCubicActionIn:public ActionEase
 public:
     /** 
      @brief @~english Create the action with the inner action.
-     * @~chinese 创建行动与内心的行动。
+     * @~chinese 使用内部动作创建动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseCubicActionIn action. If creation failed, return nil.
-     * @~chinese EaseCubicActionIn行动的指针。如果创建失败,返回零。
+     * @~chinese EaseCubicActionIn动作的指针。如果创建失败，返回空指针。
     */
     static EaseCubicActionIn* create(ActionInterval* action);
     
@@ -1438,8 +1431,8 @@ private:
 
 /** 
 @class EaseCubicActionOut
-@brief @~english Ease Cubic Out
- * @~chinese 缓解立方了
+@brief @~english EaseCubicOut action
+ * @~chinese EaseCubicOut是按三次函数缓动退出的动作
 @ingroup Actions
 */
 class CC_DLL EaseCubicActionOut : public ActionEase
@@ -1447,11 +1440,11 @@ class CC_DLL EaseCubicActionOut : public ActionEase
 public:
     /** 
      @brief @~english Create the action with the inner action.
-     * @~chinese 创建行动与内心的行动。
+     * @~chinese 使用内部动作创建动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseCubicActionOut action. If creation failed, return nil.
-     * @~chinese EaseCubicActionOut行动的指针。如果创建失败,返回零。
+     * @~chinese EaseCubicActionOut动作的指针。如果创建失败，返回空指针。
     */
     static EaseCubicActionOut* create(ActionInterval* action);
     
@@ -1469,8 +1462,8 @@ private:
 
 /** 
 @class EaseCubicActionInOut
-@brief @~english Ease Cubic InOut
- * @~chinese 缓解立方InOut
+@brief @~english EaseCubicInOut action
+ * @~chinese EaseCubicInOut是按三次函数缓动进入并退出的动作
 @ingroup Actions
 */
 class CC_DLL EaseCubicActionInOut : public ActionEase
@@ -1478,11 +1471,11 @@ class CC_DLL EaseCubicActionInOut : public ActionEase
 public:
     /** 
      @brief @~english Create the action with the inner action.
-     * @~chinese 创建行动与内心的行动。
+     * @~chinese 使用内部动作创建动作。
      @param action @~english The pointer of the inner action.
-     * @~chinese 内行动的指针。
+     * @~chinese 内部动作。
      @return @~english A pointer of EaseCubicActionInOut action. If creation failed, return nil.
-     * @~chinese EaseCubicActionInOut行动的指针。如果创建失败,返回零。
+     * @~chinese EaseCubicActionInOut动作的指针。如果创建失败，返回空指针。
     */
     static EaseCubicActionInOut* create(ActionInterval* action);
     
