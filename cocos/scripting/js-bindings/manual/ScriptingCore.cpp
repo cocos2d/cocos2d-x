@@ -1058,7 +1058,21 @@ int ScriptingCore::handleComponentEvent(void* data)
     JS::RootedValue retval(_cx);
     jsval dataVal = INT_TO_JSVAL(1);
     
-    if (action == kComponentOnEnter)
+    if (action == kComponentOnAdd)
+    {
+        if (isFunctionOverridedInJS(JS::RootedObject(_cx, p->obj.get()), "onAdd", js_cocos2dx_Component_onEnter))
+        {
+            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onAdd", 1, &dataVal, &retval);
+        }
+    }
+    else if (action == kComponentOnRemove)
+    {
+        if (isFunctionOverridedInJS(JS::RootedObject(_cx, p->obj.get()), "onRemove", js_cocos2dx_Component_onExit))
+        {
+            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onRemove", 1, &dataVal, &retval);
+        }
+    }
+    else if (action == kComponentOnEnter)
     {
         if (isFunctionOverridedInJS(JS::RootedObject(_cx, p->obj.get()), "onEnter", js_cocos2dx_Component_onEnter))
         {
