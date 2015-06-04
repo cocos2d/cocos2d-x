@@ -288,6 +288,7 @@ Downloader::HeaderInfo Downloader::prepareHeader(const std::string &srcUrl, void
     curl_easy_setopt(header, CURLOPT_URL, srcUrl.c_str());
     curl_easy_setopt(header, CURLOPT_HEADER, 1);
     curl_easy_setopt(header, CURLOPT_NOBODY, 1);
+    curl_easy_setopt(header, CURLOPT_NOSIGNAL, 1);
     if (curl_easy_perform(header) == CURLE_OK)
     {
         char *url;
