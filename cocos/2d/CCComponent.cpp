@@ -91,6 +91,28 @@ void Component::onExit()
 #endif
 }
 
+void Component::onAdd()
+{
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (sendComponentEventToJS(this, kComponentOnAdd))
+             return;
+    }
+#endif
+}
+
+void Component::onRemove()
+{
+#if CC_ENABLE_SCRIPT_BINDING
+    if (_scriptType == kScriptTypeJavascript)
+    {
+        if (sendComponentEventToJS(this, kComponentOnRemove))
+             return;
+    }
+#endif
+}
+
 void Component::update(float delta)
 {
 #if CC_ENABLE_SCRIPT_BINDING
