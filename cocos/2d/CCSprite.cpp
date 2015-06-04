@@ -227,8 +227,8 @@ bool Sprite::initWithPolygon(const cocos2d::PolygonInfo &info)
     bool res = false;
     if(initWithTexture(texture));
     {
-        _polyInfo = new PolygonInfo(info);
-        setContentSize(_polyInfo->rect.size/Director::getInstance()->getContentScaleFactor());
+        _polyInfo = info;
+        setContentSize(_polyInfo.rect.size/Director::getInstance()->getContentScaleFactor());
         res = true;
     }
     return res;
@@ -275,7 +275,7 @@ bool Sprite::initWithTexture(Texture2D *texture, const Rect& rect, bool rotated)
         setTexture(texture);
         setTextureRect(rect, rotated, rect.size);
         
-        _polyInfo = new PolygonInfo(&_quad);
+        _polyInfo = PolygonInfo(&_quad);
         // by default use "Self Render".
         // if the sprite is added to a batchnode, then it will automatically switch to "batchnode Render"
         setBatchNode(nullptr);
@@ -306,7 +306,7 @@ Sprite::~Sprite(void)
 {
     CC_SAFE_RELEASE(_spriteFrame);
     CC_SAFE_RELEASE(_texture);
-    delete _polyInfo;
+//    delete _polyInfo;
 }
 
 /*
@@ -451,20 +451,20 @@ void Sprite::debugDraw(bool on)
         draw->setVisible(true);
         draw->clear();
         //draw all points
-        auto positions = new (std::nothrow) Vec2[_polyInfo->triangles.vertCount];
+        auto positions = new (std::nothrow) Vec2[_polyInfo.triangles.vertCount];
         Vec2 *pos = &positions[0];
-        auto verts = _polyInfo->triangles.verts;
-        auto end =  &verts[_polyInfo->triangles.vertCount];
+        auto verts = _polyInfo.triangles.verts;
+        auto end =  &verts[_polyInfo.triangles.vertCount];
         for(V3F_C4B_T2F *v = verts; v != end; pos++, v++)
         {
             pos->x = v->vertices.x;
             pos->y = v->vertices.y;
         }
-        draw->drawPoints(positions, (unsigned int)_polyInfo->triangles.vertCount, 8, Color4F(0.0f, 1.0f, 1.0f, 1.0f));
+        draw->drawPoints(positions, (unsigned int)_polyInfo.triangles.vertCount, 8, Color4F(0.0f, 1.0f, 1.0f, 1.0f));
         //draw lines
-        auto last = _polyInfo->triangles.indexCount/3;
-        auto _indices = _polyInfo->triangles.indices;
-        auto _verts = _polyInfo->triangles.verts;
+        auto last = _polyInfo.triangles.indexCount/3;
+        auto _indices = _polyInfo.triangles.indices;
+        auto _verts = _polyInfo.triangles.verts;
         for(unsigned int i = 0; i < last; i++)
         {
             //draw 3 lines
@@ -681,7 +681,7 @@ void Sprite::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     if(_insideBounds)
 #endif
     {
-        _trianglesCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _polyInfo->triangles, transform, flags);
+        _trianglesCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _polyInfo.triangles, transform, flags);
         renderer->addCommand(&_trianglesCommand);
     }
 }
@@ -1115,7 +1115,7 @@ void Sprite::updateBlendFunc(void)
 {
     CCASSERT(! _batchNode, "CCSprite: updateBlendFunc doesn't work when the sprite is rendered using a SpriteBatchNode");
 
-    // it is possible to have an untextured sprite
+    // it is possible to have an untextured spritec
     if (! _texture || ! _texture->hasPremultipliedAlpha())
     {
         _blendFunc = BlendFunc::ALPHA_NON_PREMULTIPLIED;
@@ -1140,13 +1140,13 @@ std::string Sprite::getDescription() const
 
 PolygonInfo Sprite::getPolygonInfo() const
 {
-    return PolygonInfo(*_polyInfo);
+    return _polyInfo;
 }
 
 void Sprite::setPolygonInfo(const PolygonInfo& info)
 {
-    delete _polyInfo;
-    _polyInfo = new PolygonInfo(info);
+//    delete _polyInfo;
+    _polyInfo = info;
 }
 
 NS_CC_END

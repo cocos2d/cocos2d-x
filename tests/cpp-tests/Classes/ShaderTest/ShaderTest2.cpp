@@ -101,7 +101,7 @@ public:
             }
 
             // normal effect: order == 0
-            _trianglesCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _polyInfo->triangles, transform, flags);
+            _trianglesCommand.init(_globalZOrder, _texture->getName(), getGLProgramState(), _blendFunc, _polyInfo.triangles, transform, flags);
             renderer->addCommand(&_trianglesCommand);
 
             // postive effects: oder >= 0

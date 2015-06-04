@@ -617,7 +617,7 @@ protected:
 
     // vertex coords, texture coords and color info
     V3F_C4B_T2F_Quad _quad;
-    PolygonInfo * _polyInfo;
+    PolygonInfo  _polyInfo;
 
     // opacity and RGB protocol
     bool _opacityModifyRGB;
