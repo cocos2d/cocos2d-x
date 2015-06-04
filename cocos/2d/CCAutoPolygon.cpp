@@ -41,6 +41,7 @@ isVertsOwner(true),
 rect()
 {
     filename = other.filename;
+    isVertsOwner = other.isVertsOwner;
     rect = other.rect;
     triangles.verts = new V3F_C4B_T2F[other.triangles.vertCount];
     triangles.indices = new unsigned short[other.triangles.indexCount];
@@ -49,24 +50,31 @@ rect()
     memcpy(triangles.verts, other.triangles.verts, other.triangles.vertCount*sizeof(V3F_C4B_T2F));
     memcpy(triangles.indices, other.triangles.indices, other.triangles.indexCount*sizeof(unsigned short));
 };
-PolygonInfo::PolygonInfo(V3F_C4B_T2F_Quad *quad):
-triangles(),
-isVertsOwner(true),
-rect()
+
+void PolygonInfo::setQuad(V3F_C4B_T2F_Quad *quad)
 {
+    if(nullptr != triangles.verts && isVertsOwner)
+    {
+        CC_SAFE_DELETE_ARRAY(triangles.verts);
+    }
+    
+    if(nullptr != triangles.indices)
+    {
+        CC_SAFE_DELETE_ARRAY(triangles.indices);
+    }
+    
     isVertsOwner = false;
-    unsigned short *indices  = new unsigned short[6]{0,1,2, 3,2,1};
-    triangles.indices = indices;
+    triangles.indices = new unsigned short[6]{0,1,2, 3,2,1};
     triangles.vertCount = 4;
     triangles.indexCount = 6;
     triangles.verts = (V3F_C4B_T2F*)quad;
-    
 }
 PolygonInfo& PolygonInfo::operator= (const PolygonInfo& other)
 {
     if(this != &other)
     {
         filename = other.filename;
+        isVertsOwner = other.isVertsOwner;
         rect = other.rect;
         triangles.verts = new V3F_C4B_T2F[other.triangles.vertCount];
         triangles.indices = new unsigned short[other.triangles.indexCount];
