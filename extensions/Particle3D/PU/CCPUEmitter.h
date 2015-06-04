@@ -970,8 +970,7 @@ protected:
 
     Vec3 _upVector;///<Notional up vector, just used to speed up generation of variant directions.
 
-    float _remainder;///<Particles that are left to be emitted from the previous time.
-                     ///<As you know that the emitted particles must be int.
+    float _remainder;///<As you know that the emitted particles must be int.
                      ///<This is the time left by last emit circle which is not enough to emit one particle.
 
     ///** Helper factory
