@@ -217,7 +217,7 @@ static int processTask(HttpClient* client, HttpRequest* request, NSString* reque
         long len = sslCaFileName.length();
         long pos = sslCaFileName.rfind('.', len-1);
         
-        httpAsynConn.sslFile = [NSString stringWithUTF8String:sslCaFileName.substr(0, pos-1).c_str()];
+        httpAsynConn.sslFile = [NSString stringWithUTF8String:sslCaFileName.substr(0, pos).c_str()];
     }
     [httpAsynConn startRequest:nsrequest];
     

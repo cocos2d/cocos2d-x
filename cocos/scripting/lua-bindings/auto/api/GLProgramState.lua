@@ -20,6 +20,16 @@
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
 
 --------------------------------
+-- Applies the specified custom auto-binding.<br>
+-- param uniformName Name of the shader uniform.<br>
+-- param autoBinding Name of the auto binding.
+-- @function [parent=#GLProgramState] applyAutoBinding 
+-- @param self
+-- @param #string uniformName
+-- @param #string autoBinding
+-- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
+        
+--------------------------------
 -- @overload self, int, vec2_table         
 -- @overload self, string, vec2_table         
 -- @function [parent=#GLProgramState] setUniformVec2
@@ -46,6 +56,12 @@
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
         
 --------------------------------
+-- Returns the Node bound to the GLProgramState
+-- @function [parent=#GLProgramState] getNodeBinding 
+-- @param self
+-- @return Node#Node ret (return value: cc.Node)
+        
+--------------------------------
 -- @overload self, int, long, vec4_table         
 -- @overload self, string, long, vec4_table         
 -- @function [parent=#GLProgramState] setUniformVec4v
@@ -64,6 +80,17 @@
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
         
 --------------------------------
+-- Sets the node that this render state is bound to.<br>
+-- The specified node is used to apply auto-bindings for the render state.<br>
+-- This is typically set to the node of the model that a material is<br>
+-- applied to.<br>
+-- param node The node to use for applying auto-bindings.
+-- @function [parent=#GLProgramState] setNodeBinding 
+-- @param self
+-- @param #cc.Node node
+-- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
+        
+--------------------------------
 -- @overload self, int, int         
 -- @overload self, string, int         
 -- @function [parent=#GLProgramState] setUniformInt
@@ -72,6 +99,19 @@
 -- @param #int value
 -- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
 
+--------------------------------
+-- Sets a uniform auto-binding.<br>
+-- This method parses the passed in autoBinding string and attempts to convert it<br>
+-- to an enumeration value. If it matches to one of the predefined strings, it will create a<br>
+-- callback to get the correct value at runtime.<br>
+-- param name The name of the material parameter to store an auto-binding for.<br>
+-- param autoBinding A string matching one of the built-in AutoBinding enum constants.
+-- @function [parent=#GLProgramState] setParameterAutoBinding 
+-- @param self
+-- @param #string uniformName
+-- @param #string autoBinding
+-- @return GLProgramState#GLProgramState self (return value: cc.GLProgramState)
+        
 --------------------------------
 -- @overload self, int, long, vec2_table         
 -- @overload self, string, long, vec2_table         

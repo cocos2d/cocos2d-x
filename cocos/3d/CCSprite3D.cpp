@@ -418,7 +418,7 @@ void Sprite3D::createAttachSprite3DNode(NodeData* nodedata, const MaterialDatas&
 
 void Sprite3D::setMaterial(Material *material)
 {
-    setMaterial(material, -1);
+    setMaterial(material, -1); 
 }
 
 void Sprite3D::setMaterial(Material *material, int meshIndex)
@@ -730,7 +730,7 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
         }
     }
     
-    for (auto mesh : _meshes)
+    for (auto mesh: _meshes)
     {
         mesh->draw(renderer,
                    _globalZOrder,
@@ -743,25 +743,25 @@ void Sprite3D::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
     }
 }
 
-void Sprite3D::setGLProgramState(GLProgramState *glProgramState)
+void Sprite3D::setGLProgramState(GLProgramState* glProgramState)
 {
     Node::setGLProgramState(glProgramState);
-    for (auto& state : _meshes) {
+    for (auto state : _meshes) {
         state->setGLProgramState(glProgramState);
     }
 }
-void Sprite3D::setGLProgram(GLProgram *glprogram)
+void Sprite3D::setGLProgram(GLProgram* glprogram)
 {
     auto glProgramState = GLProgramState::create(glprogram);
     setGLProgramState(glProgramState);
 }
 
-void Sprite3D::setBlendFunc(const BlendFunc &blendFunc)
+void Sprite3D::setBlendFunc(const BlendFunc& blendFunc)
 {
     if(_blend.src != blendFunc.src || _blend.dst != blendFunc.dst)
     {
         _blend = blendFunc;
-        for(auto& mesh : _meshes)
+        for(auto mesh: _meshes)
         {
             mesh->setBlendFunc(blendFunc);
         }
@@ -776,8 +776,8 @@ const BlendFunc& Sprite3D::getBlendFunc() const
 AABB Sprite3D::getAABBRecursively()
 {
     AABB aabb;
-    const Vector<Node*>& children = getChildren();
-    for (const auto& iter : children)
+    const auto children = getChildren();
+    for (const auto iter: children)
     {
         Sprite3D* child = dynamic_cast<Sprite3D*>(iter);
         if(child)
