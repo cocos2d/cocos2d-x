@@ -58,7 +58,7 @@ enum
 
 
 RenderState::RenderState()
-: _textures()
+: _texture(nullptr)
 , _hash(0)
 , _hashDirty(true)
 , _parent(nullptr)
@@ -102,32 +102,27 @@ std::string RenderState::getName() const
 }
 
 
-const Vector<Texture2D*>& RenderState::getTextures() const
-{
-    return _textures;
-}
-
 void RenderState::setTexture(Texture2D* texture)
 {
-    if (_textures.size() > 0)
-        _textures.replace(0, texture);
-    else
-        _textures.pushBack(texture);
+    if (_texture != texture)
+    {
+        CC_SAFE_RELEASE(_texture);
+        _texture = texture;
+        CC_SAFE_RETAIN(_texture);
+    }
 }
 
 Texture2D* RenderState::getTexture() const
 {
-    if (_textures.size() > 0)
-        return _textures.at(0);
-    return nullptr;
+    return _texture;
 }
 
 void RenderState::bind(Pass* pass)
 {
     CC_ASSERT(pass);
 
-    if (_textures.size() > 0)
-        GL::bindTexture2D(_textures.at(0)->getName());
+    if (_texture)
+        GL::bindTexture2D(_texture->getName());
 
     // Get the combined modified state bits for our RenderState hierarchy.
     long stateOverrideBits = _state ? _state->_bits : 0;
@@ -193,7 +188,8 @@ void RenderState::cloneInto(RenderState* renderState) const
     }
 
     renderState->_name = _name;
-    renderState->_textures = _textures;
+    renderState->_texture = _texture;
+    CC_SAFE_RETAIN(renderState->_texture);
     // weak ref. don't retain
     renderState->_parent = _parent;
 }
