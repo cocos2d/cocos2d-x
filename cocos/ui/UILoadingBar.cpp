@@ -173,28 +173,28 @@ void LoadingBar::setupTexture()
 
     switch (_direction)
     {
-    case Direction::LEFT:
-        _barRenderer->setAnchorPoint(Vec2(0.0f,0.5f));
-        if (!_scale9Enabled)
-        {
-            auto innerSprite = _barRenderer->getSprite();
-            if (nullptr != innerSprite)
+        case Direction::LEFT:
+            _barRenderer->setAnchorPoint(Vec2(0.0f,0.5f));
+            if (!_scale9Enabled)
             {
-                innerSprite->setFlippedX(false);
+                auto innerSprite = _barRenderer->getSprite();
+                if (nullptr != innerSprite)
+                {
+                    innerSprite->setFlippedX(false);
+                }
             }
-        }
-        break;
-    case Direction::RIGHT:
-        _barRenderer->setAnchorPoint(Vec2(1.0f,0.5f));
-        if (!_scale9Enabled)
-        {
-            auto innerSprite = _barRenderer->getSprite();
-            if (nullptr != innerSprite)
+            break;
+        case Direction::RIGHT:
+            _barRenderer->setAnchorPoint(Vec2(1.0f,0.5f));
+            if (!_scale9Enabled)
             {
-                innerSprite->setFlippedX(true);
+                auto innerSprite = _barRenderer->getSprite();
+                if (nullptr != innerSprite)
+                {
+                    innerSprite->setFlippedX(true);
+                }
             }
-        }
-        break;
+            break;
     }
     _barRenderer->setCapInsets(_capInsets);
     this->updateChildrenDisplayedRGBA();
