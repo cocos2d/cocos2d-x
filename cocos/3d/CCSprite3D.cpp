@@ -606,8 +606,8 @@ void Sprite3D::setTexture(const std::string& texFile)
 
 void Sprite3D::setTexture(Texture2D* texture)
 {
-    for (auto& state : _meshes) {
-        state->setTexture(texture);
+    for (auto mesh: _meshes) {
+        mesh->setTexture(texture);
     }
 }
 AttachNode* Sprite3D::getAttachNode(const std::string& boneName)

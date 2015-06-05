@@ -31,7 +31,6 @@
 #include <functional>
 #include <cstdint>
 
-#include "renderer/CCTexture2D.h"
 #include "platform/CCPlatformMacros.h"
 #include "base/CCRef.h"
 #include "base/ccTypes.h"
@@ -65,14 +64,12 @@ public:
     std::string getName() const;
 
 
-    const Vector<Texture2D*>& getTextures() const;
-
-    /** Replaces the texture that is at the front of _textures array.
-     Added to be backwards compatible.
+    /** Texture that will use in the CC_Texture0 uniform.
+     Added to be backwards compatible. Use Samplers from .material instead.
      */
     void setTexture(Texture2D* texture);
 
-    /** Returns the texture that is at the front of the _textures array.
+    /** Returns the texture that is going to be used for CC_Texture0.
      Added to be backwards compatible.
      */
     Texture2D* getTexture() const;
@@ -413,7 +410,7 @@ protected:
     // name, for filtering
     std::string _name;
 
-    Vector<Texture2D*> _textures;
+    Texture2D* _texture;
 };
 
 NS_CC_END

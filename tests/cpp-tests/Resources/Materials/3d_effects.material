@@ -22,19 +22,20 @@ material spaceship
 		// renderState:
 		//   resposinble for depth buffer, cullface, stencil, blending, etc.
 		// shader:
-		//   responsible for the vertex and frag shaders, and its uniforms
-		// sampler:
-		//   responsible for setting the texture and its parameters
+		//   responsible for the vertex and frag shaders, and its uniforms, including the samplers
 		pass 0
 		{
 			shader
 			{
 				vertexShader = Shaders3D/3d_position_tex.vert
 				fragmentShader = Shaders3D/3d_color_tex.frag
-			}
-			sampler 0
-			{
-				path = Sprite3DTest/boss.png
+				// sampler:
+				//   responsible for setting the texture and its parameters
+				//   the Id of the sampler is the uniform name
+				sampler u_sampler0
+				{
+					path = Sprite3DTest/boss.png
+				}
 			}
 		}
 	}
@@ -61,10 +62,6 @@ material spaceship
 				OutLineColor = 1,1,0
 				OutlineWidth = 0.04
 			}
-			sampler 0
-			{
-				path = Sprite3DTest/boss.png
-			}
 		}
 
 		// 2nd pass:
@@ -85,10 +82,6 @@ material spaceship
 				OutLineColor = 0,0,1
 				OutlineWidth = 0.02
 			}
-			sampler 0
-			{
-				path = Sprite3DTest/boss.png
-			}
 		}
 		// 3rd pass
 		// Renders the model "normally"
@@ -99,10 +92,10 @@ material spaceship
 			{
 				vertexShader = Shaders3D/3d_position_tex.vert
 				fragmentShader = Shaders3D/3d_color_tex.frag
-			}
-			sampler 0
-			{
-				path = Sprite3DTest/boss.png
+				sampler u_sampler0
+				{
+					path = Sprite3DTest/boss.png
+				}
 			}
 		}
 	}
@@ -118,10 +111,10 @@ material spaceship
 				defines = MAX_POINT_LIGHT_NUM 1;MAX_SPOT_LIGHT_NUM 1;MAX_DIRECTIONAL_LIGHT_NUM 1
 				vertexShader = Shaders3D/3d_position_normal_tex.vert
 				fragmentShader = Shaders3D/3d_color_normal_tex.frag
-			}
-			sampler 0
-			{
-				path = Sprite3DTest/boss.png
+				sampler u_sampler0
+				{
+					path = Sprite3DTest/boss.png
+				}
 			}
 		}
 	}
