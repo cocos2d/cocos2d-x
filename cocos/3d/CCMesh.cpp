@@ -283,6 +283,9 @@ void Mesh::setTexture(Texture2D* tex)
         auto technique = _material->_currentTechnique;
         for(auto& pass: technique->_passes)
         {
+            // FIXME: Ideally it should use glProgramState->setUniformTexture()
+            // and set CC_Texture0 that way. But trying to it, will trigger
+            // another bug
             pass->setTexture(tex);
         }
     }
