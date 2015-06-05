@@ -332,7 +332,7 @@ protected:
 };
 
 // end of sprite_nodes group
-/** @} */
+/// @}
 
 NS_CC_END
 
