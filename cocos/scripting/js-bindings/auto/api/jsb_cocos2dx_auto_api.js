@@ -22214,24 +22214,6 @@ isEnabled : function (
 },
 
 /**
- * @method onRemove
- */
-onRemove : function (
-)
-{
-},
-
-/**
- * @method update
- * @param {float} arg0
- */
-update : function (
-float 
-)
-{
-},
-
-/**
  * @method getOwner
  * @return {cc.Node}
  */
@@ -22249,14 +22231,6 @@ init : function (
 )
 {
     return false;
-},
-
-/**
- * @method onAdd
- */
-onAdd : function (
-)
-{
 },
 
 /**
