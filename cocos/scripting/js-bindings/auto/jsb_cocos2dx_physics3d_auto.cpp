@@ -1722,6 +1722,22 @@ void js_register_cocos2dx_physics3d_Physics3DRigidBody(JSContext *cx, JS::Handle
 JSClass  *jsb_cocos2d_Physics3DComponent_class;
 JSObject *jsb_cocos2d_Physics3DComponent_prototype;
 
+bool js_cocos2dx_physics3d_Physics3DComponent_syncNodeToPhysics(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    cocos2d::Physics3DComponent* cobj = (cocos2d::Physics3DComponent *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_Physics3DComponent_syncNodeToPhysics : Invalid Native Object");
+    if (argc == 0) {
+        cobj->syncNodeToPhysics();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3DComponent_syncNodeToPhysics : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
 bool js_cocos2dx_physics3d_Physics3DComponent_addToPhysicsWorld(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -1750,36 +1766,20 @@ bool js_cocos2dx_physics3d_Physics3DComponent_addToPhysicsWorld(JSContext *cx, u
     JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3DComponent_addToPhysicsWorld : wrong number of arguments: %d, was expecting %d", argc, 1);
     return false;
 }
-bool js_cocos2dx_physics3d_Physics3DComponent_syncToPhysics(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_physics3d_Physics3DComponent_syncPhysicsToNode(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::Physics3DComponent* cobj = (cocos2d::Physics3DComponent *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_Physics3DComponent_syncToPhysics : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_Physics3DComponent_syncPhysicsToNode : Invalid Native Object");
     if (argc == 0) {
-        cobj->syncToPhysics();
+        cobj->syncPhysicsToNode();
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3DComponent_syncToPhysics : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
-bool js_cocos2dx_physics3d_Physics3DComponent_syncToNode(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::Physics3DComponent* cobj = (cocos2d::Physics3DComponent *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_Physics3DComponent_syncToNode : Invalid Native Object");
-    if (argc == 0) {
-        cobj->syncToNode();
-        args.rval().setUndefined();
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3DComponent_syncToNode : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_cocos2dx_physics3d_Physics3DComponent_syncPhysicsToNode : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_physics3d_Physics3DComponent_getPhysics3DObject(JSContext *cx, uint32_t argc, jsval *vp)
@@ -2061,9 +2061,9 @@ void js_register_cocos2dx_physics3d_Physics3DComponent(JSContext *cx, JS::Handle
     };
 
     static JSFunctionSpec funcs[] = {
+        JS_FN("syncNodeToPhysics", js_cocos2dx_physics3d_Physics3DComponent_syncNodeToPhysics, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("addToPhysicsWorld", js_cocos2dx_physics3d_Physics3DComponent_addToPhysicsWorld, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("syncToPhysics", js_cocos2dx_physics3d_Physics3DComponent_syncToPhysics, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("syncToNode", js_cocos2dx_physics3d_Physics3DComponent_syncToNode, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("syncPhysicsToNode", js_cocos2dx_physics3d_Physics3DComponent_syncPhysicsToNode, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getPhysics3DObject", js_cocos2dx_physics3d_Physics3DComponent_getPhysics3DObject, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setPhysics3DObject", js_cocos2dx_physics3d_Physics3DComponent_setPhysics3DObject, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSyncFlag", js_cocos2dx_physics3d_Physics3DComponent_setSyncFlag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -2108,36 +2108,36 @@ void js_register_cocos2dx_physics3d_Physics3DComponent(JSContext *cx, JS::Handle
 JSClass  *jsb_cocos2d_PhysicsSprite3D_class;
 JSObject *jsb_cocos2d_PhysicsSprite3D_prototype;
 
-bool js_cocos2dx_physics3d_PhysicsSprite3D_syncToPhysics(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_physics3d_PhysicsSprite3D_syncNodeToPhysics(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::PhysicsSprite3D* cobj = (cocos2d::PhysicsSprite3D *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_PhysicsSprite3D_syncToPhysics : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_PhysicsSprite3D_syncNodeToPhysics : Invalid Native Object");
     if (argc == 0) {
-        cobj->syncToPhysics();
+        cobj->syncNodeToPhysics();
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_physics3d_PhysicsSprite3D_syncToPhysics : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_cocos2dx_physics3d_PhysicsSprite3D_syncNodeToPhysics : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_cocos2dx_physics3d_PhysicsSprite3D_syncToNode(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_cocos2dx_physics3d_PhysicsSprite3D_syncPhysicsToNode(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     cocos2d::PhysicsSprite3D* cobj = (cocos2d::PhysicsSprite3D *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_PhysicsSprite3D_syncToNode : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_physics3d_PhysicsSprite3D_syncPhysicsToNode : Invalid Native Object");
     if (argc == 0) {
-        cobj->syncToNode();
+        cobj->syncPhysicsToNode();
         args.rval().setUndefined();
         return true;
     }
 
-    JS_ReportError(cx, "js_cocos2dx_physics3d_PhysicsSprite3D_syncToNode : wrong number of arguments: %d, was expecting %d", argc, 0);
+    JS_ReportError(cx, "js_cocos2dx_physics3d_PhysicsSprite3D_syncPhysicsToNode : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
 bool js_cocos2dx_physics3d_PhysicsSprite3D_getPhysicsObj(JSContext *cx, uint32_t argc, jsval *vp)
@@ -2240,8 +2240,8 @@ void js_register_cocos2dx_physics3d_PhysicsSprite3D(JSContext *cx, JS::HandleObj
     };
 
     static JSFunctionSpec funcs[] = {
-        JS_FN("syncToPhysics", js_cocos2dx_physics3d_PhysicsSprite3D_syncToPhysics, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("syncToNode", js_cocos2dx_physics3d_PhysicsSprite3D_syncToNode, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("syncNodeToPhysics", js_cocos2dx_physics3d_PhysicsSprite3D_syncNodeToPhysics, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("syncPhysicsToNode", js_cocos2dx_physics3d_PhysicsSprite3D_syncPhysicsToNode, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getPhysicsObj", js_cocos2dx_physics3d_PhysicsSprite3D_getPhysicsObj, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("setSyncFlag", js_cocos2dx_physics3d_PhysicsSprite3D_setSyncFlag, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END

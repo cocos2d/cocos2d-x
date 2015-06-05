@@ -727,6 +727,14 @@ Physics3DRigidBody : function (
 cc.Physics3DComponent = {
 
 /**
+ * @method syncNodeToPhysics
+ */
+syncNodeToPhysics : function (
+)
+{
+},
+
+/**
  * @method addToPhysicsWorld
  * @param {cc.Physics3DWorld} arg0
  */
@@ -737,17 +745,9 @@ physics3dworld
 },
 
 /**
- * @method syncToPhysics
+ * @method syncPhysicsToNode
  */
-syncToPhysics : function (
-)
-{
-},
-
-/**
- * @method syncToNode
- */
-syncToNode : function (
+syncPhysicsToNode : function (
 )
 {
 },
@@ -837,17 +837,17 @@ Physics3DComponent : function (
 cc.PhysicsSprite3D = {
 
 /**
- * @method syncToPhysics
+ * @method syncNodeToPhysics
  */
-syncToPhysics : function (
+syncNodeToPhysics : function (
 )
 {
 },
 
 /**
- * @method syncToNode
+ * @method syncPhysicsToNode
  */
-syncToNode : function (
+syncPhysicsToNode : function (
 )
 {
 },

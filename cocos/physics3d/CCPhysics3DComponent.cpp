@@ -147,7 +147,7 @@ void Physics3DComponent::preSimulate()
 {
     if (((int)_syncFlag & (int)Physics3DComponent::PhysicsSyncFlag::NODE_TO_PHYSICS) && _physics3DObj && _owner)
     {
-        syncToNode();
+        syncNodeToPhysics();
     }
 }
 
@@ -155,7 +155,7 @@ void Physics3DComponent::postSimulate()
 {
     if (((int)_syncFlag & (int)Physics3DComponent::PhysicsSyncFlag::PHYSICS_TO_NODE) && _physics3DObj && _owner)
     {
-        syncToPhysics();
+        syncPhysicsToNode();
     }
 }
 
@@ -174,7 +174,7 @@ void Physics3DComponent::setSyncFlag(PhysicsSyncFlag syncFlag)
     _syncFlag = syncFlag;
 }
 
-void Physics3DComponent::syncToPhysics()
+void Physics3DComponent::syncPhysicsToNode()
 {
     if (_physics3DObj->getObjType() == Physics3DObject::PhysicsObjType::RIGID_BODY)
     {
@@ -207,7 +207,7 @@ void Physics3DComponent::syncToPhysics()
     }
 }
 
-void Physics3DComponent::syncToNode()
+void Physics3DComponent::syncNodeToPhysics()
 {
     if (_physics3DObj->getObjType() == Physics3DObject::PhysicsObjType::RIGID_BODY)
     {
