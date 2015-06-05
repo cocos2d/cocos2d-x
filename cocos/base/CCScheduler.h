@@ -668,7 +668,7 @@ protected:
 };
 
 // end of base group
-/** @~english @}  @~chinese @ }*/
+/// @}
 
 NS_CC_END
 
