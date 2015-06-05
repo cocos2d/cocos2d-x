@@ -57,16 +57,16 @@ void PhysicsSprite3D::setSyncFlag(Physics3DComponent::PhysicsSyncFlag syncFlag)
         _physicsComponent->setSyncFlag(syncFlag);
 }
 
-void PhysicsSprite3D::syncToPhysics()
+void PhysicsSprite3D::syncNodeToPhysics()
 {
     if (_physicsComponent)
-        _physicsComponent->syncToPhysics();
+        _physicsComponent->syncNodeToPhysics();
 }
 
-void PhysicsSprite3D::syncToNode()
+void PhysicsSprite3D::syncPhysicsToNode()
 {
     if (_physicsComponent)
-        _physicsComponent->syncToNode();
+        _physicsComponent->syncPhysicsToNode();
 }
 
 PhysicsSprite3D::PhysicsSprite3D()
