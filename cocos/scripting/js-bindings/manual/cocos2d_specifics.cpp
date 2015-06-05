@@ -2693,36 +2693,6 @@ bool js_cocos2dx_CCNode_convertToWorldSpaceAR(JSContext *cx, uint32_t argc, jsva
     return true;
 }
 
-bool js_cocos2dx_Component_onEnter(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *thisObj = JS_THIS_OBJECT(cx, vp);
-    if (thisObj) {
-        js_proxy_t *proxy = jsb_get_js_proxy(thisObj);
-        if (proxy) {
-            ScriptingCore::getInstance()->setCalledFromScript(true);
-            static_cast<Component*>(proxy->ptr)->onEnter();
-            return true;
-        }
-    }
-    JS_ReportError(cx, "Invalid Native Object.");
-    return false;
-}
-
-bool js_cocos2dx_Component_onExit(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *thisObj = JS_THIS_OBJECT(cx, vp);
-    if (thisObj) {
-        js_proxy_t *proxy = jsb_get_js_proxy(thisObj);
-        if (proxy) {
-            ScriptingCore::getInstance()->setCalledFromScript(true);
-            static_cast<Component*>(proxy->ptr)->onExit();
-            return true;
-        }
-    }
-    JS_ReportError(cx, "Invalid Native Object.");
-    return false;
-}
-
 bool js_cocos2dx_CCTMXLayer_tileFlagsAt(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -5490,10 +5460,6 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
     tmpObj.set(jsb_cocos2d_GLProgramState_prototype);
     JS_DefineFunction(cx, tmpObj, "setVertexAttribPointer", js_cocos2dx_GLProgramState_setVertexAttribPointer, 6, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "setUniformVec4", js_cocos2dx_GLProgramState_setUniformVec4, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    
-    tmpObj.set(jsb_cocos2d_Component_prototype);
-    JS_DefineFunction(cx, tmpObj, "onEnter", js_cocos2dx_Component_onEnter, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "onExit", js_cocos2dx_Component_onExit, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
 
     tmpObj.set(jsb_cocos2d_Scheduler_prototype);
     JS_DefineFunction(cx, tmpObj, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);

@@ -1058,42 +1058,29 @@ int ScriptingCore::handleComponentEvent(void* data)
     JS::RootedValue retval(_cx);
     jsval dataVal = INT_TO_JSVAL(1);
     
+    JS::RootedValue nodeValue(_cx, OBJECT_TO_JSVAL(p->obj.get()));
+    
     if (action == kComponentOnAdd)
     {
-        if (isFunctionOverridedInJS(JS::RootedObject(_cx, p->obj.get()), "onAdd", js_cocos2dx_Component_onEnter))
-        {
-            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onAdd", 1, &dataVal, &retval);
-        }
+        ret = executeFunctionWithOwner(nodeValue, "onAdd", 1, &dataVal, &retval);
     }
     else if (action == kComponentOnRemove)
     {
-        if (isFunctionOverridedInJS(JS::RootedObject(_cx, p->obj.get()), "onRemove", js_cocos2dx_Component_onExit))
-        {
-            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onRemove", 1, &dataVal, &retval);
-        }
+        ret = executeFunctionWithOwner(nodeValue, "onRemove", 1, &dataVal, &retval);
     }
     else if (action == kComponentOnEnter)
     {
-        if (isFunctionOverridedInJS(JS::RootedObject(_cx, p->obj.get()), "onEnter", js_cocos2dx_Component_onEnter))
-        {
-            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onEnter", 1, &dataVal, &retval);
-        }
+        ret = executeFunctionWithOwner(nodeValue, "onEnter", 1, &dataVal, &retval);
         resumeSchedulesAndActions(p);
     }
     else if (action == kComponentOnExit)
     {
-        if (isFunctionOverridedInJS(JS::RootedObject(_cx, p->obj.get()), "onExit", js_cocos2dx_Component_onExit))
-        {
-            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onExit", 1, &dataVal, &retval);
-        }
+        ret = executeFunctionWithOwner(nodeValue, "onExit", 1, &dataVal, &retval);
         pauseSchedulesAndActions(p);
     }
     else if (action == kComponentOnUpdate)
     {
-        if (isFunctionOverridedInJS(JS::RootedObject(_cx, p->obj.get()), "update", js_cocos2dx_Component_update))
-        {
-            ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "update", 1, &dataVal, &retval);
-        }
+        ret = executeFunctionWithOwner(nodeValue, "update", 1, &dataVal, &retval);
     }
     
     return ret;
