@@ -229,6 +229,6 @@ typedef void (Ref::*SEL_SCHEDULE)(float);
 
 NS_CC_END
 // end of base group
-/** @~english @}  @~chinese @ }*/
+/// @}
 
 #endif // __BASE_CCREF_H__
