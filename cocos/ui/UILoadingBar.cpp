@@ -45,7 +45,6 @@ _barRendererTextureSize(Size::ZERO),
 _scale9Enabled(false),
 _prevIgnoreSize(true),
 _capInsets(Rect::ZERO),
-_textureFile(""),
 _barRendererAdaptDirty(true)
 {
 }
@@ -148,7 +147,6 @@ void LoadingBar::loadTexture(const std::string& texture,TextureResType texType)
         return;
     }
     _renderBarTexType = texType;
-    _textureFile = texture;
     switch (_renderBarTexType)
     {
         case TextureResType::LOCAL:
@@ -160,40 +158,50 @@ void LoadingBar::loadTexture(const std::string& texture,TextureResType texType)
         default:
             break;
     }
-    
+    this->setupTexture();
+}
+
+void LoadingBar::loadTexture(SpriteFrame* spriteframe)
+{
+    this->_barRenderer->initWithSpriteFrame(spriteframe);
+    this->setupTexture();
+}
+
+void LoadingBar::setupTexture()
+{
     _barRendererTextureSize = _barRenderer->getContentSize();
-    
+
     switch (_direction)
     {
-        case Direction::LEFT:
-            _barRenderer->setAnchorPoint(Vec2(0.0f,0.5f));
-            if (!_scale9Enabled)
+    case Direction::LEFT:
+        _barRenderer->setAnchorPoint(Vec2(0.0f,0.5f));
+        if (!_scale9Enabled)
+        {
+            auto innerSprite = _barRenderer->getSprite();
+            if (nullptr != innerSprite)
             {
-                auto innerSprite = _barRenderer->getSprite();
-                if (nullptr != innerSprite)
-                {
-                    innerSprite->setFlippedX(false);
-                }
+                innerSprite->setFlippedX(false);
             }
-            break;
-        case Direction::RIGHT:
-            _barRenderer->setAnchorPoint(Vec2(1.0f,0.5f));
-            if (!_scale9Enabled)
+        }
+        break;
+    case Direction::RIGHT:
+        _barRenderer->setAnchorPoint(Vec2(1.0f,0.5f));
+        if (!_scale9Enabled)
+        {
+            auto innerSprite = _barRenderer->getSprite();
+            if (nullptr != innerSprite)
             {
-                auto innerSprite = _barRenderer->getSprite();
-                if (nullptr != innerSprite)
-                {
-                    innerSprite->setFlippedX(true);
-                }
+                innerSprite->setFlippedX(true);
             }
-            break;
+        }
+        break;
     }
     _barRenderer->setCapInsets(_capInsets);
     this->updateChildrenDisplayedRGBA();
 
     barRendererScaleChangedWithSize();
     updateContentSizeWithTextureSize(_barRendererTextureSize);
-    
+
     this->updateProgressBar();
     _barRendererAdaptDirty = true;
 }
@@ -396,7 +404,11 @@ void LoadingBar::copySpecialProperties(Widget *widget)
     {
         _prevIgnoreSize = loadingBar->_prevIgnoreSize;
         setScale9Enabled(loadingBar->_scale9Enabled);
-        loadTexture(loadingBar->_textureFile, loadingBar->_renderBarTexType);
+        auto barSprite = loadingBar->_barRenderer->getSprite();
+        if(nullptr != barSprite)
+        {
+            loadTexture(barSprite->getSpriteFrame());
+        }
         setCapInsets(loadingBar->_capInsets);
         setPercent(loadingBar->_percent);
         setDirection(loadingBar->_direction);
