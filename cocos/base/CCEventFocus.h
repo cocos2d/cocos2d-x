@@ -40,15 +40,20 @@ namespace ui {
 }
 
 /** @class EventFocus
- * @brief Focus event.
+ * @brief @~english Focus event.
+ * @~chinese 焦点事件.
  */
 class CC_DLL EventFocus : public Event
 {
 public:
-    /** Constructor.
+    /** @~english Constructor.
      *
-     * @param widgetLoseFocus The widget which lose focus.
-     * @param widgetGetFocus The widget which get focus.
+     * @~chinese 构造函数.
+     * 
+     * @param widgetLoseFocus @~english The widget which lose focus.
+     * @~chinese 失去焦点的界面组件.
+     * @param widgetGetFocus @~english The widget which get focus.
+     * @~chinese 获得焦点的界面组件.
      * @js ctor
      */
     EventFocus(ui::Widget* widgetLoseFocus, ui::Widget* widgetGetFocus);

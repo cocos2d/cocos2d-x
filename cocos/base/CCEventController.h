@@ -41,12 +41,13 @@ class Controller;
 class EventListenerController;
 
 /** @class EventController
- * @brief Controller event.
+ * @brief @~english Controller event.
+ * @~chinese 事件控制器。
  */
 class EventController : public Event
 {
 public:
-    /** ControllerEventType Controller event type.*/
+    /** @~english ControllerEventType Controller event type. @~chinese 事件控制器类型。*/
     enum class ControllerEventType
     {
         CONNECTION,
@@ -54,45 +55,69 @@ public:
         AXIS_STATUS_CHANGED,
     };
     
-    /** Create a EventController with controller event type, contrlloer and key code.
+    /** @~english Create a EventController with controller event type, contrlloer and key code.
      *
-     * @param type A given controller event type.
-     * @param controller A given controller pointer.
-     * @param keyCode A given key code.
-     * @return An autoreleased EventController object.
+     * @~chinese 根据事件类型,控制器对象和事件码，创建一个事件控制器
+     * 
+     * @param type @~english A given controller event type.
+     * @~chinese 一个给定控制器事件类型。
+     * @param controller @~english A given controller pointer.
+     * @~chinese 一个给定控制器指针。
+     * @param keyCode @~english A given key code.
+     * @~chinese 一个给定的事件码。
+     * @return @~english An autoreleased EventController object.
+     * @~chinese 一个自动释放的事件控制器对象。
      */
 	EventController(ControllerEventType type, Controller* controller, int keyCode);
-    /** Create a EventController with controller event type, contrlloer and whether or not is connected.
+    /** @~english Create a EventController with controller event type, contrlloer and whether or not is connected.
      *
-     * @param type A given controller event type.
-     * @param controller A given controller pointer.
-     * @param isConnected True if it is connected.
-     * @return An autoreleased EventController object.
+     * @~chinese 根据事件类型、控制器对象和是否已连接，创建一个事件控制器
+     * 
+     * @param type @~english A given controller event type.
+     * @~chinese 一个给定控制器事件类型。
+     * @param controller @~english A given controller pointer.
+     * @~chinese 一个给定控制器指针。
+     * @param isConnected @~english True if it is connected.
+     * @~chinese 是否已连接。
+     * @return @~english An autoreleased EventController object.
+     * @~chinese 一个自动释放的事件控制器对象。
      */
     EventController(ControllerEventType type, Controller* controller, bool isConnected);
 
-    /** Gets the event type of the controller.
+    /** @~english Gets the event type of the controller.
      *
-     * @return The event type of the controller.
+     * @~chinese 获取控制器的事件类型。
+     * 
+     * @return @~english The event type of the controller.
+     * @~chinese 返回控制器的事件类型。
      */
     ControllerEventType getControllerEventType() const { return _controllerEventType; }
     Controller* getController() const { return _controller; }
 
-    /** Gets the key code of the controller.
+    /** @~english Gets the key code of the controller.
      *
-     * @return The key code of the controller.
+     * @~chinese 获取控制器的事件码。
+     * 
+     * @return @~english The key code of the controller.
+     * @~chinese 返回控制器的事件码。
      */
     int getKeyCode() const{ return _keyCode; }
     void setKeyCode(int keyCode) { _keyCode = keyCode;}
 
-    /** Sets the connect status.
+    /** @~english Sets the connect status.
      *
-     * @param True if it's connected.
+     * @~chinese 设置连接状态。
+     * 
+     * @param True @~english if it's connected.
+     * @~chinese 设置为连接，值为true。
      */
     void setConnectStatus(bool isConnected) {_isConnected = isConnected;}
-    /** Gets the connect status.
+    /** @~english Gets the connect status.
      *
-     * @return True if it's connected.
+     * @~chinese 获取连接状态。
+     * 
+     * @return @~english True if it's connected.
+     * @~chinese 如果已连接,值为true。
      */
     bool isConnected() const { return _isConnected; }
     
