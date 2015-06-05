@@ -56,6 +56,16 @@ void ComAudio::onExit()
     stopAllEffects();
 }
 
+void ComAudio::onAdd()
+{
+}
+
+void ComAudio::onRemove()
+{
+    stopBackgroundMusic(true);
+    stopAllEffects();
+}
+
 bool ComAudio::isEnabled() const
 {
     return _enabled;
