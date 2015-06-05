@@ -710,6 +710,9 @@ void CheckBox::copySpecialProperties(Widget *widget)
         _zoomScale = checkBox->_zoomScale;
         _backgroundTextureScaleX = checkBox->_backgroundTextureScaleX;
         _backgroundTextureScaleY = checkBox->_backgroundTextureScaleY;
+        _isBackgroundSelectedTextureLoaded = checkBox->_isBackgroundSelectedTextureLoaded;
+        _isBackgroundDisabledTextureLoaded = checkBox->_isBackgroundDisabledTextureLoaded;
+        _isFrontCrossDisabledTextureLoaded = checkBox->_isFrontCrossDisabledTextureLoaded;
     }
 }
 
