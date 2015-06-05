@@ -71,7 +71,7 @@ public:
 
     static LuaStack *attach(lua_State *L);
     
-    /** @~english Destructor.  @~chinese析构函数。*/
+    /** @~english Destructor.  @~chinese 析构函数。*/
 
     virtual ~LuaStack();
     
