@@ -202,7 +202,7 @@ static bool configureCURL(HttpClient* client, CURL* handle, char* errorBuffer)
     // Document is here: http://curl.haxx.se/libcurl/c/curl_easy_setopt.html#CURLOPTNOSIGNAL 
     curl_easy_setopt(handle, CURLOPT_NOSIGNAL, 1L);
 
-	curl_easy_setopt(handle, CURLOPT_ACCEPT_ENCODING, "");
+    curl_easy_setopt(handle, CURLOPT_ACCEPT_ENCODING, "");
 
     return true;
 }
