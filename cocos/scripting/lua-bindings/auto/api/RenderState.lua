@@ -5,8 +5,8 @@
 -- @parent_module cc
 
 --------------------------------
---  Replaces the texture that is at the front of _textures array.<br>
--- Added to be backwards compatible.
+--  Texture that will use in the CC_Texture0 uniform.<br>
+-- Added to be backwards compatible. Use Samplers from .material instead.
 -- @function [parent=#RenderState] setTexture 
 -- @param self
 -- @param #cc.Texture2D texture
@@ -20,7 +20,7 @@
 -- @return RenderState#RenderState ret (return value: cc.RenderState)
         
 --------------------------------
---  Returns the texture that is at the front of the _textures array.<br>
+--  Returns the texture that is going to be used for CC_Texture0.<br>
 -- Added to be backwards compatible.
 -- @function [parent=#RenderState] getTexture 
 -- @param self
@@ -45,12 +45,6 @@
 -- @function [parent=#RenderState] getStateBlock 
 -- @param self
 -- @return RenderState::StateBlock#RenderState::StateBlock ret (return value: cc.RenderState::StateBlock)
-        
---------------------------------
--- 
--- @function [parent=#RenderState] getTextures 
--- @param self
--- @return array_table#array_table ret (return value: array_table)
         
 --------------------------------
 -- Static initializer that is called during game startup.

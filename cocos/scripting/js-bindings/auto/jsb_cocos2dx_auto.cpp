@@ -61442,24 +61442,6 @@ bool js_cocos2dx_RenderState_getStateBlock(JSContext *cx, uint32_t argc, jsval *
     JS_ReportError(cx, "js_cocos2dx_RenderState_getStateBlock : wrong number of arguments: %d, was expecting %d", argc, 0);
     return false;
 }
-bool js_cocos2dx_RenderState_getTextures(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    cocos2d::RenderState* cobj = (cocos2d::RenderState *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_RenderState_getTextures : Invalid Native Object");
-    if (argc == 0) {
-        const cocos2d::Vector<cocos2d::Texture2D *>& ret = cobj->getTextures();
-        jsval jsret = JSVAL_NULL;
-        jsret = ccvector_to_jsval(cx, ret);
-        args.rval().set(jsret);
-        return true;
-    }
-
-    JS_ReportError(cx, "js_cocos2dx_RenderState_getTextures : wrong number of arguments: %d, was expecting %d", argc, 0);
-    return false;
-}
 bool js_cocos2dx_RenderState_initialize(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -61515,7 +61497,6 @@ void js_register_cocos2dx_RenderState(JSContext *cx, JS::HandleObject global) {
         JS_FN("bind", js_cocos2dx_RenderState_bind, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getName", js_cocos2dx_RenderState_getName, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getStateBlock", js_cocos2dx_RenderState_getStateBlock, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("getTextures", js_cocos2dx_RenderState_getTextures, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
 
