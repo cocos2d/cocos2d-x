@@ -45,10 +45,11 @@ public:
     {
     };
     PolygonInfo(const PolygonInfo& other);
-    PolygonInfo(V3F_C4B_T2F_Quad *quad);
     
     PolygonInfo& operator= (const PolygonInfo &other);
     ~PolygonInfo();
+    
+    void setQuad(V3F_C4B_T2F_Quad *quad);
     
     Rect rect;
     std::string filename;

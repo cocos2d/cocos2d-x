@@ -1841,13 +1841,13 @@
 		5E9F612B1A3FFE3D0038DE01 /* CCPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E9F61241A3FFE3D0038DE01 /* CCPlane.cpp */; };
 		5E9F612C1A3FFE3D0038DE01 /* CCPlane.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E9F61251A3FFE3D0038DE01 /* CCPlane.h */; };
 		5E9F612D1A3FFE3D0038DE01 /* CCPlane.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E9F61251A3FFE3D0038DE01 /* CCPlane.h */; };
-		68B39B3C1B1C5C670084F72C /* clipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68B39B3A1B1C5C670084F72C /* clipper.cpp */; };
-		68B39B3D1B1C5C670084F72C /* clipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68B39B3A1B1C5C670084F72C /* clipper.cpp */; };
-		68B39B3E1B1C5C670084F72C /* clipper.h in Headers */ = {isa = PBXBuildFile; fileRef = 68B39B3B1B1C5C670084F72C /* clipper.h */; };
-		68B39B3F1B1C5C670084F72C /* clipper.h in Headers */ = {isa = PBXBuildFile; fileRef = 68B39B3B1B1C5C670084F72C /* clipper.h */; };
 		826294331AAF001C00CB7CF7 /* HttpAsynConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2A1A5349A3004E4C60 /* HttpAsynConnection.m */; };
 		826294341AAF003E00CB7CF7 /* HttpClient-apple.mm in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2B1A5349A3004E4C60 /* HttpClient-apple.mm */; };
 		826294351AAF004C00CB7CF7 /* HttpCookie.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 52B47A2C1A5349A3004E4C60 /* HttpCookie.cpp */; };
+		85B3743A1B204B9400C488D6 /* clipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85B374381B204B9400C488D6 /* clipper.cpp */; };
+		85B3743B1B204B9400C488D6 /* clipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 85B374381B204B9400C488D6 /* clipper.cpp */; };
+		85B3743C1B204B9400C488D6 /* clipper.h in Headers */ = {isa = PBXBuildFile; fileRef = 85B374391B204B9400C488D6 /* clipper.h */; };
+		85B3743D1B204B9400C488D6 /* clipper.h in Headers */ = {isa = PBXBuildFile; fileRef = 85B374391B204B9400C488D6 /* clipper.h */; };
 		A07A4CAF1783777C0073F6A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1551A342158F2AB200E66CFE /* Foundation.framework */; };
 		B2165EEA19921124000BE3E6 /* CCPrimitiveCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B257B45E198A353E00D9A687 /* CCPrimitiveCommand.cpp */; };
 		B217703C1977ECB4009EE11B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B217703B1977ECB4009EE11B /* IOKit.framework */; };
@@ -4493,8 +4493,8 @@
 		5E9F61231A3FFE3D0038DE01 /* CCFrustum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFrustum.h; sourceTree = "<group>"; };
 		5E9F61241A3FFE3D0038DE01 /* CCPlane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPlane.cpp; sourceTree = "<group>"; };
 		5E9F61251A3FFE3D0038DE01 /* CCPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPlane.h; sourceTree = "<group>"; };
-		68B39B3A1B1C5C670084F72C /* clipper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = clipper.cpp; sourceTree = "<group>"; };
-		68B39B3B1B1C5C670084F72C /* clipper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = clipper.h; sourceTree = "<group>"; };
+		85B374381B204B9400C488D6 /* clipper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = clipper.cpp; sourceTree = "<group>"; };
+		85B374391B204B9400C488D6 /* clipper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = clipper.h; sourceTree = "<group>"; };
 		A07A4D641783777C0073F6A7 /* libcocos2d iOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d iOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B20564AA1A6E5744001C1B6E /* ccShader_PositionColorTextureAsPointsize.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ccShader_PositionColorTextureAsPointsize.vert; sourceTree = "<group>"; };
 		B217703B1977ECB4009EE11B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
@@ -7558,8 +7558,8 @@
 		68B39B391B1C5C670084F72C /* clipper */ = {
 			isa = PBXGroup;
 			children = (
-				68B39B3A1B1C5C670084F72C /* clipper.cpp */,
-				68B39B3B1B1C5C670084F72C /* clipper.h */,
+				85B374381B204B9400C488D6 /* clipper.cpp */,
+				85B374391B204B9400C488D6 /* clipper.h */,
 			);
 			name = clipper;
 			path = ../external/clipper;
@@ -8561,7 +8561,7 @@
 				292DB14B19B4574100A80320 /* UIEditBoxImpl-mac.h in Headers */,
 				B6CAB39D1AF9AA1A00B9B856 /* btCharacterControllerInterface.h in Headers */,
 				B29A7E3F19EE1B7700872B35 /* AnimationState.h in Headers */,
-				68B39B3E1B1C5C670084F72C /* clipper.h in Headers */,
+				85B3743C1B204B9400C488D6 /* clipper.h in Headers */,
 				B6CAB50F1AF9AA1A00B9B856 /* btList.h in Headers */,
 				D0FD03591A3B51AA00825BB5 /* CCAllocatorStrategyDefault.h in Headers */,
 				B665E2901AA80A6500DDB1C5 /* CCPUDynamicAttributeTranslator.h in Headers */,
@@ -9776,7 +9776,7 @@
 				B6CAB2EC1AF9AA1A00B9B856 /* btStaticPlaneShape.h in Headers */,
 				B6CAB2DC1AF9AA1A00B9B856 /* btPolyhedralConvexShape.h in Headers */,
 				292DB14819B4574100A80320 /* UIEditBoxImpl-ios.h in Headers */,
-				68B39B3F1B1C5C670084F72C /* clipper.h in Headers */,
+				85B3743D1B204B9400C488D6 /* clipper.h in Headers */,
 				B6CAB54A1AF9AA1A00B9B856 /* MiniCLTaskScheduler.h in Headers */,
 				B6CAB3621AF9AA1A00B9B856 /* gim_tri_collision.h in Headers */,
 				3E2BDADE19C030ED0055CDCD /* AudioEngine.h in Headers */,
@@ -10781,7 +10781,7 @@
 				B6CAB4C51AF9AA1A00B9B856 /* boxBoxDistance.cpp in Sources */,
 				B6CAB29F1AF9AA1A00B9B856 /* btConvex2dShape.cpp in Sources */,
 				B6CAB4331AF9AA1A00B9B856 /* btGpu3DGridBroadphase.cpp in Sources */,
-				68B39B3C1B1C5C670084F72C /* clipper.cpp in Sources */,
+				85B3743A1B204B9400C488D6 /* clipper.cpp in Sources */,
 				15AE1A8819AAD40300C27E9E /* b2PrismaticJoint.cpp in Sources */,
 				182C5CB21A95964700C30D34 /* Node3DReader.cpp in Sources */,
 				50ABBE491925AB6F00A911A9 /* CCEventAcceleration.cpp in Sources */,
@@ -12006,7 +12006,7 @@
 				B665E3131AA80A6500DDB1C5 /* CCPUObserverManager.cpp in Sources */,
 				50CB248019D9C5A100687767 /* AudioPlayer.mm in Sources */,
 				50ABBE9A1925AB6F00A911A9 /* CCRef.cpp in Sources */,
-				68B39B3D1B1C5C670084F72C /* clipper.cpp in Sources */,
+				85B3743B1B204B9400C488D6 /* clipper.cpp in Sources */,
 				15AE18BF19AAD33D00C27E9E /* CCLabelTTFLoader.cpp in Sources */,
 				B6CAB27E1AF9AA1A00B9B856 /* btBox2dShape.cpp in Sources */,
 				15AE1B9519AADA9A00C27E9E /* CocosGUI.cpp in Sources */,
