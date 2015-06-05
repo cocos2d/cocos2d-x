@@ -93,7 +93,7 @@ Vec2 CC_DLL PointFromString(const std::string& str);
 Size CC_DLL SizeFromString(const std::string& str);
 
 // end of data_structure group
-/** @} */
+/// @}
 
 NS_CC_END
 
