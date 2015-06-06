@@ -39,10 +39,12 @@ NS_CC_BEGIN
  */
 
 /**
- * @brief Possible GlyphCollection used by Label.
+ * @brief @~english Possible GlyphCollection used by Label.
+ * @~chinese 文本可以使用的字形集合
  *
- * Specify a collections of characters to be load when Label created.
+ * @~english Specify a collections of characters to be load when Label created.
  * Consider using DYNAMIC.
+ * @~chinese 当文本被创建的时候，指定加载一个字符集。推荐使用DYNAMIC.
  */
 enum class GlyphCollection {
     DYNAMIC,
@@ -53,7 +55,7 @@ enum class GlyphCollection {
 
 
 /**
- * @struct TTFConfig
+ * @struct @~english TTFConfig
  * @see `GlyphCollection`
  */
 typedef struct _ttfConfig
@@ -84,7 +86,7 @@ typedef struct _ttfConfig
 }TTFConfig;
 
 /**
- * @brief Label is a subclass of SpriteBatchNode that knows how to render text labels.
+ * @brief @~english Label is a subclass of SpriteBatchNode that knows how to render text labels.
  *
  * Label can be created with:
  * - A true type font file.
@@ -97,6 +99,19 @@ typedef struct _ttfConfig
  * - http://www.n4te.com/hiero/hiero.jnlp (Free, Java)
  * - http://slick.cokeandcode.com/demos/hiero.jnlp (Free, Java)
  * - http://www.angelcode.com/products/bmfont/ (Free, Windows only)
+ * @~chinese Label(文本)是SpriteBatchNode的子类,它知道如何渲染文本。
+ * 
+ * 文本可以通过以下方法来创建:
+ * - 一个TTF字体文件。
+ * - 一个位图字体文件。
+ * - 一个字符映射文件。
+ * -  内置的系统字体。
+ * 
+ * 支持位图字体的编辑器:
+ * - http://glyphdesigner.71squared.com/ (商业的, Mac OS X)
+ * - http://www.n4te.com/hiero/hiero.jnlp (免费的, Java)
+ * - http://slick.cokeandcode.com/demos/hiero.jnlp (免费的, Java)
+ * - http://www.angelcode.com/products/bmfont/ (免费的, Windows only)
  * @js NA
  */
 class CC_DLL Label : public SpriteBatchNode, public LabelProtocol
@@ -107,107 +122,178 @@ public:
     /// @name Creators
     /// @{
 
-    /**
-    * Allocates and initializes a Label, with default settings.
-    *
-    * @return An automatically released Label object.
-    */
+    /**@~english
+     * Allocates and initializes a Label, with default settings.
+     *
+     * @~chinese 
+     * 使用默认设置分配和初始化一个文本。
+     * 
+     * @return @~english An automatically released Label object.
+     * @~chinese 一个自动释放的文本对象。
+     */
     static Label* create();
 
-    /**
+    /**@~english
      * Allocates and initializes a Label, base on platform-dependent API.
      *
-     * @param text The initial text.
-     * @param font A font file or a font family name.
-     * @param fontSize The font size. This value must be > 0.
-     * @param dimensions
-     * @param hAlignment The text horizontal alignment.
-     * @param vAlignment The text vertical alignment.
+     * @~chinese 
+     * 基于平台相关的API创建和初始化一个文本
+     * 
+     * @param text @~english The initial text.
+     * @~chinese 最始文本内容。
+     * @param font @~english A font file or a font family name.
+     * @~chinese 一个字体文件或字体名称。
+     * @param fontSize @~english The font size. This value must be > 0.
+     * @~chinese 字体大小。这个值必须大于0。
+     * @param @~english dimensions
+     * @~chinese 文本的内容大小。
+     * @param hAlignment @~english The text horizontal alignment.
+     * @~chinese 水平对齐方式。
+     * @param vAlignment @~english The text vertical alignment.
      *
-     * @warning It will generate texture by the platform-dependent code.
+     * @~chinese 垂直对齐方式。
+     * 
+     * @warning @~english It will generate texture by the platform-dependent code.
      *
-     * @return An automatically released Label object.
+     * @~chinese 它将通过平台相关的代码来生成纹理。
+     * 
+     * @return @~english An automatically released Label object.
+     * @~chinese 一个自动释放的文本对象。
      */
     static Label* createWithSystemFont(const std::string& text, const std::string& font, float fontSize,
         const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT,
         TextVAlignment vAlignment = TextVAlignment::TOP);
 
-    /**
-    * Allocates and initializes a Label, base on FreeType2.
-    *
-    * @param text The initial text.
-    * @param fontFilePath A font file.
-    * @param fontSize The font size. This value must be > 0.
-    * @param dimensions
-    * @param hAlignment The text horizontal alignment.
-    * @param vAlignment The text vertical alignment.
-    *
-    * @return An automatically released Label object.
-    */
+    /**@~english
+     * Allocates and initializes a Label, base on FreeType2.
+     *
+     * @~chinese 
+     * 使用FreeType2库创建和初始化一个文本。
+     * 
+     * @param text @~english The initial text.
+     * @~chinese 最初文本内容。
+     * @param fontFilePath @~english A font file.
+     * @~chinese 一个TTF字体文件。
+     * @param fontSize @~english The font size. This value must be > 0.
+     * @~chinese 字体大小。这个值必须大于0。
+     * @param @~english dimensions
+     * @~chinese 文本的内容大小
+     * @param hAlignment @~english The text horizontal alignment.
+     * @~chinese 水平对齐方式。
+     * @param vAlignment @~english The text vertical alignment.
+     *
+     * @~chinese 垂直对齐方式。
+     * 
+     * @return @~english An automatically released Label object.
+     * @~chinese 一个自动释放的文本对象。
+     */
     static Label * createWithTTF(const std::string& text, const std::string& fontFilePath, float fontSize,
         const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT,
         TextVAlignment vAlignment = TextVAlignment::TOP);
 
-    /**
-    * Allocates and initializes a Label, base on FreeType2.
-    *
-    * @param ttfConfig A pointer to a TTFConfig object.
-    * @param text The initial text.
-    * @param hAlignment The text horizontal alignment.
-    * @param maxLineWidth The max line width.
-    *
-    * @return An automatically released Label object.
-    * @see TTFConfig setTTFConfig setMaxLineWidth
-    */
+    /**@~english
+     * Allocates and initializes a Label, base on FreeType2.
+     *
+     * @~chinese 
+     * 使用FreeType2库创建和初始化一个文本
+     * 
+     * @param ttfConfig @~english A pointer to a TTFConfig object.
+     * @~chinese 一个TTFConfig对象实例。
+     * @param text @~english The initial text.
+     * @~chinese 最初文本内容。
+     * @param hAlignment @~english The text horizontal alignment.
+     * @~chinese 水平对齐方式
+     * @param maxLineWidth @~english The max line width.
+     *
+     * @~chinese 最大线宽
+     * 
+     * @return @~english An automatically released Label object.
+     * @~chinese 一个自动释放的文本对象。
+     * @see TTFConfig setTTFConfig setMaxLineWidth
+     */
     static Label* createWithTTF(const TTFConfig& ttfConfig, const std::string& text, TextHAlignment hAlignment = TextHAlignment::LEFT, int maxLineWidth = 0);
 
-    /**
-    * Allocates and initializes a Label, with a bitmap font file.
-    *
-    * @param bmfontPath A bitmap font file, it's a FNT format.
-    * @param text The initial text.
-    * @param hAlignment Text horizontal alignment.
-    * @param maxLineWidth The max line width.
-    * @param imageOffset
-    *
-    * @return An automatically released Label object.
-    * @see setBMFontFilePath setMaxLineWidth
-    */
+    /**@~english
+     * Allocates and initializes a Label, with a bitmap font file.
+     *
+     * @~chinese 
+     * 使用位图字体文件创建和初始化一个文本。
+     * 
+     * @param bmfontPath @~english A bitmap font file, it's a FNT format.
+     * @~chinese 一个位图字体文件,它是FNT格式。
+     * @param text @~english The initial text.
+     * @~chinese 初始文本内容。
+     * @param hAlignment @~english Text horizontal alignment.
+     * @~chinese 水平对齐方式。
+     * @param maxLineWidth @~english The max line width.
+     * @~chinese 最大线宽
+     * @param imageOffset The first character offset in BMfont
+     *@~english
+     * @~chinese 第一个字符的在位图文件中的偏移
+     * 
+     * @return @~english An automatically released Label object.
+     * @~chinese 一个标签自动释放对象。
+     * @see setBMFontFilePath setMaxLineWidth
+     */
     static Label* createWithBMFont(const std::string& bmfontPath, const std::string& text,
         const TextHAlignment& hAlignment = TextHAlignment::LEFT, int maxLineWidth = 0,
         const Vec2& imageOffset = Vec2::ZERO);
 
-    /**
-    * Allocates and initializes a Label, with char map configuration.
-    *
-    * @param charMapFile A char map file, it's a PNG format.
-    * @param itemWidth The width in points of each element.
-    * @param itemHeight The height in points of each element.
-    * @param startCharMap The starting char of the char map.
-    *
-    * @return An automatically released Label object.
-    */
+    /**@~english
+     * Allocates and initializes a Label, with char map configuration.
+     *
+     * @~chinese 
+     * 使用字符映射文件来创建和初始化一个文本
+     * 
+     * @param charMapFile @~english A char map file, it's a PNG format.
+     * @~chinese 一个字符映射文件,它是一个PNG格式的文件。
+     * @param itemWidth @~english The width in points of each element.
+     * @~chinese 每个元素的宽度,单位是“点”。
+     * @param itemHeight @~english The height in points of each element.
+     * @~chinese 每个元素的高度,单位“点”。
+     * @param startCharMap @~english The starting char of the char map.
+     *
+     * @~chinese 字符映射文件的起始字符
+     * 
+     * @return @~english An automatically released Label object.
+     * @~chinese 一个自动释放的文本对象。
+     */
     static Label * createWithCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
 
-    /**
-    * Allocates and initializes a Label, with char map configuration.
-    *
-    * @param texture A pointer to an existing Texture2D object.
-    * @param itemWidth The width in points of each element.
-    * @param itemHeight The height in points of each element.
-    * @param startCharMap The starting char of the char map.
-    *
-    * @return An automatically released Label object.
-    */
+    /**@~english
+     * Allocates and initializes a Label, with char map configuration.
+     *
+     * @~chinese 
+     * 使用字符映射文件创建和初始化一个文本
+     * 
+     * @param texture @~english A pointer to an existing Texture2D object.
+     * @~chinese 一个已有的纹理对象指针。
+     * @param itemWidth @~english The width in points of each element.
+     * @~chinese 每个元素的宽度,单位是“点”。
+     * @param itemHeight @~english The height in points of each element.
+     * @~chinese 每个元素的高度，单位是“点”。
+     * @param startCharMap @~english The starting char of the char map.
+     *
+     * @~chinese 字符映射文件的起始字符
+     * 
+     * @return @~english An automatically released Label object.
+     * @~chinese 一个自动释放的文本对象
+     */
     static Label * createWithCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
 
-    /**
-    * Allocates and initializes a Label, with char map configuration.
-    *
-    * @param plistFile A configuration file of char map.
-    *
-    * @return An automatically released Label object.
-    */
+    /**@~english
+     * Allocates and initializes a Label, with char map configuration.
+     *
+     * @~chinese 
+     * 使用字符映射文件来创建和初始化一个文本
+     * 
+     * @param plistFile @~english A configuration file of char map.
+     *
+     * @~chinese 一个字符映射的配置文件。
+     * 
+     * @return @~english An automatically released Label object.
+     * @~chinese 一个自动释放的文本对象
+     */
     static Label * createWithCharMap(const std::string& plistFile);
 
     //  end of creators group
@@ -216,219 +302,292 @@ public:
     /// @{
     /// @name Font methods
 
-    /**
+    /**@~english
      * Sets a new TTF configuration to Label.
+     * @~chinese
+     * 设置一个新的TTFConfig
      * @see `TTFConfig`
      */
     virtual bool setTTFConfig(const TTFConfig& ttfConfig);
 
-    /**
+    /**@~english
      * Returns the TTF configuration object used by the Label.
+     * @~chinese 
+     * 返回并配置对象使用的标签。
      * @see `TTFConfig`
      */
     virtual const TTFConfig& getTTFConfig() const { return _fontConfig;}
 
-    /** Sets a new bitmap font to Label */
+    /** @~english Sets a new bitmap font to Label  @~chinese 设置一个新的位图字体标签*/
     virtual bool setBMFontFilePath(const std::string& bmfontFilePath, const Vec2& imageOffset = Vec2::ZERO);
 
-    /** Returns the bitmap font used by the Label.*/
+    /** @~english Returns the bitmap font used by the Label. @~chinese Returns the bitmap font, informs by the Label.*/
     const std::string& getBMFontFilePath() const { return _bmFontPath;}
 
-    /**
+    /**@~english
      * Sets a new char map configuration to Label.
      *
+     * @~chinese 
+     * 设置一个新的字符映射配置标签。
+     * 
      * @see `createWithCharMap(const std::string&,int,int,int)`
      */
     virtual bool setCharMap(const std::string& charMapFile, int itemWidth, int itemHeight, int startCharMap);
 
-    /**
+    /**@~english
      * Sets a new char map configuration to Label.
      *
+     * @~chinese 
+     * 设置一个新的字符映射配置标签。
+     * 
      * @see `createWithCharMap(Texture2D*,int,int,int)`
      */
     virtual bool setCharMap(Texture2D* texture, int itemWidth, int itemHeight, int startCharMap);
 
-    /**
+    /**@~english
      * Sets a new char map configuration to Label.
      *
+     * @~chinese 
+     * 设置一个新的字符映射配置标签。
+     * 
      * @see `createWithCharMap(const std::string&)`
      */
     virtual bool setCharMap(const std::string& plistFile);
 
-    /**
+    /**@~english
      * Sets a new system font to Label.
      *
-     * @param font A font file or a font family name.
+     * @~chinese 
+     * 设置一个新的系统字体标签。
+     * 
+     * @param font @~english A font file or a font family name.
+     * @warning
+     * @~chinese A font file or A font family name.
      * @warning
      */
     virtual void setSystemFontName(const std::string& font);
 
-    /** Returns the system font used by the Label.*/
+    /** @~english Returns the system font used by the Label. @~chinese 返回系统字体使用的标签。*/
     virtual const std::string& getSystemFontName() const { return _systemFont;}
 
-    /* Sets the system font size of Label.*/
+    /* @~english Sets the system font size of Label. @~chinese 设置系统字体大小的标签。*/
     virtual void setSystemFontSize(float fontSize);
 
-    /** Returns the bitmap font path used by the Label.*/
+    /** @~english Returns the bitmap font path used by the Label. @~chinese 返回标签使用的位图字体路径。*/
     virtual float getSystemFontSize() const { return _systemFontSize;}
 
     /**
-     * @warning This method is not recommended for game developers.
+     * @warning @~english This method is not recommended for game developers.
+     * @~chinese 这个方法不推荐游戏开发者。
      */
     virtual void requestSystemFontRefresh() { _systemFontDirty = true;}
 
     //  end of font methods
     /// @}
 
-    /** Sets the text that this Label is to display.*/
+    /** @~english Sets the text that this Label is to display. @~chinese 设置这个标签是显示的文本。*/
     virtual void setString(const std::string& text) override;
 
-    /** Return the text the Label is displaying.*/
+    /** @~english Return the text the Label is displaying. @~chinese 返回标签显示的文本。*/
     virtual const std::string& getString() const override {  return _originalUTF8String; }
 
     int getStringNumLines() const;
 
     int getStringLength() const;
 
-    /**
+    /**@~english
      * Sets the text color of Label.
      *
      * The text color is different from the color of Node.
      *
-     * @warning Limiting use to only when the Label created with true type font or system font.
+     * @~chinese 
+     * 设置文本颜色的标签。
+     * 
+     * 文本的颜色不同于节点的颜色。
+     * 
+     * @warning @~english Limiting use to only when the Label created with true type font or system font.
+     * @~chinese 限制使用只有当标签创建真正的字体或系统字体。
      */
     virtual void setTextColor(const Color4B &color);
 
-    /** Returns the text color of the Label.*/
+    /** @~english Returns the text color of the Label. @~chinese 返回标签的文本颜色。*/
     const Color4B& getTextColor() const { return _textColor;}
 
-    /**
+    /**@~english
      * Enable shadow effect to Label.
      *
-     * @todo Support blur for shadow effect.
+     * @~chinese 
+     * 使阴影效果标签。
+     * 
+     * @todo @~english Support blur for shadow effect.
+     * @~chinese 支持模糊阴影效果。
      */
     virtual void enableShadow(const Color4B& shadowColor = Color4B::BLACK,const Size &offset = Size(2,-2), int blurRadius = 0);
 
-    /**
+    /**@~english
      * Enable outline effect to Label.
-     * @warning Limiting use to only when the Label created with true type font or system font.
+     * @~chinese 
+     * 使轮廓效应标签。
+     * @warning @~english Limiting use to only when the Label created with true type font or system font.
+     * @~chinese 限制使用只有当标签创建真正的字体或系统字体。
      */
     virtual void enableOutline(const Color4B& outlineColor,int outlineSize = -1);
 
-    /**
+    /**@~english
     * Enable glow effect to Label.
-    * @warning Limiting use to only when the Label created with true type font.
+     * @~chinese 
+     * 使发光效应标签。
+    * @warning @~english Limiting use to only when the Label created with true type font.
+     * @~chinese 限制使用只有当标签创建真正的字体。
     */
     virtual void enableGlow(const Color4B& glowColor);
 
-    /**
+    /**@~english
      * Disable all effect to Label.
-     * @warning Please use disableEffect(LabelEffect::ALL) instead of this API.
+     * @~chinese 
+     * 禁用所有标签效应。
+     * @warning @~english Please use disableEffect(LabelEffect::ALL) instead of this API.
+     * @~chinese 请使用disableEffect(LabelEffect:全部)而不是这个API。
      */
     virtual void disableEffect();
 
-    /**
+    /**@~english
      * Disable effect to Label.
      *
+     * @~chinese 
+     * 禁用标签效应。
+     * 
      * @see `LabelEffect`
      */
     virtual void disableEffect(LabelEffect effect);
 
-    /** Sets the Label's text horizontal alignment.*/
+    /** @~english Sets the Label's text horizontal alignment. @~chinese 设置标签的文本的水平对齐。*/
     void setAlignment(TextHAlignment hAlignment) { setAlignment(hAlignment,_vAlignment);}
 
-    /** Returns the Label's text horizontal alignment.*/
+    /** @~english Returns the Label's text horizontal alignment. @~chinese 横向text ' s the Label Returns alignment。*/
     TextHAlignment getTextAlignment() const { return _hAlignment;}
 
-    /** Sets the Label's text alignment.*/
+    /** @~english Sets the Label's text alignment. @~chinese 设置标签的文本对齐方式。*/
     void setAlignment(TextHAlignment hAlignment,TextVAlignment vAlignment);
 
-    /** Sets the Label's text horizontal alignment.*/
+    /** @~english Sets the Label's text horizontal alignment. @~chinese 设置标签的文本的水平对齐。*/
     void setHorizontalAlignment(TextHAlignment hAlignment) { setAlignment(hAlignment,_vAlignment); }
 
-    /** Returns the Label's text horizontal alignment.*/
+    /** @~english Returns the Label's text horizontal alignment. @~chinese 返回标签的文本的水平对齐。*/
     TextHAlignment getHorizontalAlignment() const { return _hAlignment; }
 
-    /** Sets the Label's text vertical alignment.*/
+    /** @~english Sets the Label's text vertical alignment. @~chinese 设置标签的文本垂直对齐。*/
     void setVerticalAlignment(TextVAlignment vAlignment) { setAlignment(_hAlignment,vAlignment); }
 
-    /** Returns the Label's text vertical alignment.*/
+    /** @~english Returns the Label's text vertical alignment. @~chinese 返回标签的文本垂直对齐。*/
     TextVAlignment getVerticalAlignment() const { return _vAlignment; }
 
-    /**
+    /**@~english
      * Specify what happens when a line is too long for Label.
      *
-     * @param breakWithoutSpace Lines are automatically broken between words if this value is false.
+     * @~chinese 
+     * 指定当一行太长标签。
+     * 
+     * @param breakWithoutSpace @~english Lines are automatically broken between words if this value is false.
+     * @~chinese 线自动破碎的单词之间如果这个值是错误的。
      */
     void setLineBreakWithoutSpace(bool breakWithoutSpace);
 
-    /**
+    /**@~english
      * Makes the Label at most this line untransformed width.
      * The Label's max line width be used for force line breaks if the value not equal zero.
+     * @~chinese 
+     * 使标签最多这行untransformed宽度。
+     * 标签的max线宽用于强制换行符,如果值不等于零。
      */
     void setMaxLineWidth(float maxLineWidth);
     float getMaxLineWidth() { return _maxLineWidth; }
 
-    /**
+    /**@~english
      * Makes the Label exactly this untransformed width.
      *
      * The Label's width be used for text align if the value not equal zero.
+     * @~chinese 
+     * 使标签这个untransformed宽度。
+     * 
+     * 标签的宽度被用于文本对齐如果值不等于零。
      */
     void setWidth(float width) { setDimensions(width,_labelHeight);}
     float getWidth() const { return _labelWidth; }
 
-    /**
+    /**@~english
      * Makes the Label exactly this untransformed height.
      *
      * The Label's height be used for text align if the value not equal zero.
      * The text will display of incomplete when the size of Label not enough to support display all text.
+     * @~chinese 
+     * 使标签到底这untransformed高度。
+     * 
+     * 标签的高度被用于文本对齐如果值不等于零。
+     * 不完整的文本将显示在标签的大小不足以支持显示所有文本。
      */
     void setHeight(float height){ setDimensions(_labelWidth, height); }
     float getHeight() const { return _labelHeight; }
 
-    /** Sets the untransformed size of the Label in a more efficient way. */
+    /** @~english Sets the untransformed size of the Label in a more efficient way.  @~chinese 集的untransformed大小标签以一种更有效的方式。*/
     void setDimensions(float width, float height);
     const Size& getDimensions() const{ return _labelDimensions;}
 
-    /** Update content immediately.*/
+    /** @~english Update content immediately. @~chinese 立即更新内容。*/
     virtual void updateContent();
 
-    /**
+    /**@~english
      * Provides a way to treats each character like a Sprite.
-     * @warning No support system font.
+     * @~chinese 
+     * 提供了一种方法来对待每个字符就像一个精灵。
+     * @warning @~english No support system font.
+     * @~chinese 不支持系统字体。
      */
     virtual Sprite * getLetter(int lettetIndex);
 
-    /** Makes the Label to clip upper and lower margin for reduce height of Label.*/
+    /** @~english Makes the Label to clip upper and lower margin for reduce height of Label. @~chinese 使标签夹上部和更低的利润率降低标签的高度。*/
     void setClipMarginEnabled(bool clipEnabled) { _clipEnabled = clipEnabled; }
 
     bool isClipMarginEnabled() const { return _clipEnabled; }
 
-    /** Sets the line height of the Label.
-     * @warning Not support system font.
+    /** @~english Sets the line height of the Label.
+     * @~chinese 设置行高的标签。
+     * @warning @~english Not support system font.
+     * @~chinese 不支持系统字体。
      * @since v3.2.0
      */
     void setLineHeight(float height);
 
-    /**
+    /**@~english
      * Returns the line height of this Label.
-     * @warning Not support system font.
+     * @~chinese 
+     * 返回这个标签的行高。
+     * @warning @~english Not support system font.
+     * @~chinese Not support system font.
      * @since v3.2.0
      */
     float getLineHeight() const;
 
-    /**
+    /**@~english
      * Sets the additional kerning of the Label.
      *
-     * @warning Not support system font.
+     * @~chinese 
+     * 设置额外的字距调整的标签。
+     * 
+     * @warning @~english Not support system font.
+     * @~chinese 不支持系统字体。
      * @since v3.2.0
      */
     void setAdditionalKerning(float space);
 
-    /**
+    /**@~english
      * Returns the additional kerning of the Label.
      *
-     * @warning Not support system font.
+     * @~chinese 
+     * Returns the additional kerning of the Label.
+     * 
+     * @warning @~english Not support system font.
+     * @~chinese 不支持系统字体。
      * @since v3.2.0
      */
     float getAdditionalKerning() const;
@@ -475,15 +634,19 @@ public:
     CC_DEPRECATED_ATTRIBUTE int getCommonLineHeight() const { return (int)getLineHeight();}
 
 CC_CONSTRUCTOR_ACCESS:
-    /**
+    /**@~english
      * Constructor of Label.
+     * @~chinese 
+     * 构造函数的标签。
      * @js NA
      */
     Label(FontAtlas *atlas = nullptr, TextHAlignment hAlignment = TextHAlignment::LEFT,
       TextVAlignment vAlignment = TextVAlignment::TOP,bool useDistanceField = false,bool useA8Shader = false);
 
-    /**
+    /**@~english
      * Destructor of Label.
+     * @~chinese 
+     * 析构函数的标签。
      * @js NA
      * @lua NA
      */
